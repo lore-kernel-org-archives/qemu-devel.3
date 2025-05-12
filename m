@@ -4,69 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D313BC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 12:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CFDDC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 12:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uESdG-0008R5-MZ; Mon, 12 May 2025 08:51:46 -0400
+	id 1uESdO-0008Uz-OT; Mon, 12 May 2025 08:51:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uESdE-0008OW-RL
- for qemu-devel@nongnu.org; Mon, 12 May 2025 08:51:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uESdB-0005aZ-Gd
- for qemu-devel@nongnu.org; Mon, 12 May 2025 08:51:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747054299;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=9SaQ2nHVHgoVhRAcXRlbrOBK2RodLUlDb6G3j6SEUpQ=;
- b=iiJGLyhRzR38VtauFU64DDdCC1jKLddryp+bf6rhrC3VCpPW36//PlE5UXzSutdpE2M6mp
- k5ppKGXJunFLwdS5GJehKSxytDqinQ6EHyFuKnajLb1kpKNuILp4+E4sL3sJN7wYVH/zVq
- TY2B0KvEsYG2pKDJgbZPMZASvKRJ7c0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-601-JamkrzsyMDGaLenyvpdAOA-1; Mon,
- 12 May 2025 08:51:37 -0400
-X-MC-Unique: JamkrzsyMDGaLenyvpdAOA-1
-X-Mimecast-MFC-AGG-ID: JamkrzsyMDGaLenyvpdAOA_1747054296
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 837981800261; Mon, 12 May 2025 12:51:36 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.74.80.184])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB7E119560A3; Mon, 12 May 2025 12:51:30 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v11 0/3] Allow to enable multifd and postcopy migration
- together
-Date: Mon, 12 May 2025 18:21:21 +0530
-Message-ID: <20250512125124.147064-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uESdL-0008Rh-TF
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 08:51:51 -0400
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uESdJ-0005cQ-UP
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 08:51:51 -0400
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-8783d2bf386so1136993241.0
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 05:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1747054307; x=1747659107; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0dMbmUTO+d1NfmxBMkSxF5qFgaq9PUVR8zKUYgXgECo=;
+ b=aDJSu2J0pscQJZbaAgf8lCorpYX//wwQs3No3uotuIBNeyv+PDjrzjawRV7wpHIHQN
+ NShUVWQzuI8UAe16FSXotPY/6nYNKu5y2us0n8SVGEce3Tp685lpKrPikIVXHtCuEjXt
+ E2bFqAMICFdtHJ/L/auTTHdYqZlSp9rkUpxqh1+iekLLoa9/ztzhgtJmz9iy2ksA0ORz
+ zMzRgZAQzYUxfg4aPrO7zIpcMn4RW1zPMJfWcdOYezim/GQLdGmJaQQ3D6z++0PqsL4F
+ rovhD4hZ7WB4InqHxE/aSOm6WSIzY/RuCV1w43caI0d4dO4N+F7ML1qtMXd9LOsQ8/xe
+ 29og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747054307; x=1747659107;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0dMbmUTO+d1NfmxBMkSxF5qFgaq9PUVR8zKUYgXgECo=;
+ b=tD6ptkvYj2MOFIFVQZraCJ9qvzxHEfpxXIHvj6g0OQDm4ohbAevXGQuQQxFxYXfU+A
+ e7OpT+ymvpzw/OYPXB10GNntILa/QFWj7jT4/fagWELr2iOqBxBEpRC1aWHG2yyCWdPf
+ GJ30yFjft8+FPcd7UVE5ybQT6+I5ZBrqyPBJFPCrbRqsHe3FWN8to6ree2KHwyRLoEPG
+ eUiZGHJxePkFvQZPbzVZ7OcJiYZRLKyjEI7vm7XIgSYMVTdesilrIHnw3OfFuDYswltx
+ 9K60SzQKkOv5syx/8EZsct05ZoLdlwQFD+CjIvoRgQxct7pSlbVEC+tafrWRal/sYYB8
+ zJUw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrTPUpbTfBIiARRQ9mr62KCTop/nOz4cWJAxwMTOe4u9XBb6F+hKLFSvpK4RvhofnzN44p7La6l9AO@nongnu.org
+X-Gm-Message-State: AOJu0YwBVKIvbJMVzTo4gsdBvLCjVC1I/08C98AfZgHL5NVV3kWQHkak
+ FjixfYbdklETKeCiNK4DpO4gaYZQgu8B5kAhWr2CHzm9FiXTZgBbyQvSs5KzeI4=
+X-Gm-Gg: ASbGncu0yeBdUsS4HO/8CgjrqK/xRD+rGmL5E8Ua8Y0BlHRVqEonZrD/4Yc58o2b9HY
+ CwbviyJCIziDWmKgoVKaMbiwYqfMf9zy6SR6G8ToHHhZwfj65zc7t4pBDfARfxGRhCsJyU/56jA
+ f2zavcliA5Gh2vcBd9yNH9aFt244T+hKOk2voRTHnkuA2W1TUzA6lwuytpqX90JiBkABq5sX/jz
+ hnhxZLt7OGsO+DL3jAxordE2zXwmPWS8bwdAZPqr5O5m0rLQH8gZNx7giXihTAYk/BGnEdKRRP7
+ 10snAp06XEtGyF1/GBXHWZSkCZQMI/PeYCDtC3qdixqCAFgcjHO4XA1juL+L1MTsIoOXh8Ms51e
+ L
+X-Google-Smtp-Source: AGHT+IG47Wb+tkjW1BSM/M92+Qe2QP7JWTBypFWGjiwzlXM5kWvqICfu5AVo6+NOE7JTxz6ERVIalw==
+X-Received: by 2002:a05:6102:15a0:b0:4dd:b9bc:df71 with SMTP id
+ ada2fe7eead31-4deed3552b0mr9757958137.10.1747054307161; 
+ Mon, 12 May 2025 05:51:47 -0700 (PDT)
+Received: from [192.168.68.110] ([152.234.125.33])
+ by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-879f613b5d0sm5012615241.6.2025.05.12.05.51.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 05:51:46 -0700 (PDT)
+Message-ID: <76f367f0-c92d-46e3-97a4-daa8c594b5ad@ventanamicro.com>
+Date: Mon, 12 May 2025 09:51:43 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 23/23] tests: add test with interrupted memory accesses
+ on rv64
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+References: <cover.1746968215.git.neither@nut.email>
+ <1e94b1c43e90ec21333dcf5ddcf5130090cabfe3.1746968215.git.neither@nut.email>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <1e94b1c43e90ec21333dcf5ddcf5130090cabfe3.1746968215.git.neither@nut.email>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ua1-x92c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,160 +108,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
-
- Hello,
-
-* This series (v11) fixes spelling and capitalisations glitches and
-  does some refactoring and reordering changes as suggested in the
-  review of v10.
-===
-67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             196.69s   81 subtests passed
-===
 
 
-v10: https://lore.kernel.org/qemu-devel/20250508122849.207213-2-ppandit@redhat.com/T/#t
-* This series (v10) fixes the migration hang issue caused by optimised
-  writing of the zero pages during multifd phase. It also fixes the qtest
-  failure caused by missing 'env->has_uffd' check before running a postcopy
-  test.
-
-  Some of the patches from v9 series were pulled upstream. This series
-  has the remaining few patches.
-===
-67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             191.80s   81 subtests passed
-===
-
-
-v9: https://lore.kernel.org/qemu-devel/20250411114534.3370816-1-ppandit@redhat.com/T/#t
-* This series (v9) does minor refactoring and reordering changes as
-  suggested in the review of earlier series (v8). Also tried to
-  reproduce/debug a qtest hang issue, but it could not be reproduced.
-  From the shared stack traces it looked like Postcopy thread was
-  preparing to finish before migrating all the pages.
-===
-67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             170.50s   81 subtests passed
-===
+On 5/11/25 10:22 AM, Julian Ganz wrote:
+> This test aims at catching API misbehaviour w.r.t. the interaction
+> between interrupts and memory accesses, such as the bug fixed in
+> 
+>      27f347e6a1d269c533633c812321cabb249eada8
+> 
+> Because the condition for triggering misbehaviour may not be
+> deterministic and the cross-section between memory accesses and
+> interrupt handlers may be small, we have to place our trust in large
+> numbers. Instead of guessing/trying an arbitrary, fixed loop-bound, we
+> decided to loop for a fixed amount of real-time. This avoids the test
+> running into a time-out on slower machines while enabling a high number
+> of possible interactions on faster machines.
+> 
+> Signed-off-by: Julian Ganz <neither@nut.email>
+> ---
 
 
-v8: https://lore.kernel.org/qemu-devel/20250318123846.1370312-1-ppandit@redhat.com/T/#t
-* This series (v8) splits earlier patch-2 which enabled multifd and
-  postcopy options together into two separate patches. One modifies
-  the channel discovery in migration_ioc_process_incoming() function,
-  and second one enables the multifd and postcopy migration together.
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-  It also adds the 'save_postcopy_prepare' savevm_state handler to
-  enable different sections to take an action just before the Postcopy
-  phase starts. Thank you Peter for these patches.
-===
-67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             152.66s   81 subtests passed
-===
-
-
-v7: https://lore.kernel.org/qemu-devel/20250228121749.553184-1-ppandit@redhat.com/T/#t
-* This series (v7) adds 'MULTIFD_RECV_SYNC' migration command. It is used
-  to notify the destination migration thread to synchronise with the Multifd
-  threads. This allows Multifd ('mig/dst/recv_x') threads on the destination
-  to receive all their data, before they are shutdown.
-
-  This series also updates the channel discovery function and qtests as
-  suggested in the previous review comments.
-===
-67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             147.84s   81 subtests passed
-===
-
-
-v6: https://lore.kernel.org/qemu-devel/20250215123119.814345-1-ppandit@redhat.com/T/#t
-* This series (v6) shuts down Multifd threads before starting Postcopy
-  migration. It helps to avoid an issue of multifd pages arriving late
-  at the destination during Postcopy phase and corrupting the vCPU
-  state. It also reorders the qtest patches and does some refactoring
-  changes as suggested in previous review.
-===
-67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             161.35s   73 subtests passed
-===
-
-
-v5: https://lore.kernel.org/qemu-devel/20250205122712.229151-1-ppandit@redhat.com/T/#t
-* This series (v5) consolidates migration capabilities setting in one
-  'set_migration_capabilities()' function, thus simplifying test sources.
-  It passes all migration tests.
-===
-66/66 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             143.66s   71 subtests passed
-===
-
-
-v4: https://lore.kernel.org/qemu-devel/20250127120823.144949-1-ppandit@redhat.com/T/#t
-* This series (v4) adds more 'multifd+postcopy' qtests which test
-  Precopy migration with 'postcopy-ram' attribute set. And run
-  Postcopy migrations with 'multifd' channels enabled.
-===
-$ ../qtest/migration-test --tap -k -r '/x86_64/migration/multifd+postcopy' | grep -i 'slow test'
-# slow test /x86_64/migration/multifd+postcopy/plain executed in 1.29 secs
-# slow test /x86_64/migration/multifd+postcopy/recovery/tls/psk executed in 2.48 secs
-# slow test /x86_64/migration/multifd+postcopy/preempt/plain executed in 1.49 secs
-# slow test /x86_64/migration/multifd+postcopy/preempt/recovery/tls/psk executed in 2.52 secs
-# slow test /x86_64/migration/multifd+postcopy/tcp/tls/psk/match executed in 3.62 secs
-# slow test /x86_64/migration/multifd+postcopy/tcp/plain/zstd executed in 1.34 secs
-# slow test /x86_64/migration/multifd+postcopy/tcp/plain/cancel executed in 2.24 secs
-...
-66/66 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             148.41s   71 subtests passed
-===
-
-
-v3: https://lore.kernel.org/qemu-devel/20250121131032.1611245-1-ppandit@redhat.com/T/#t
-* This series (v3) passes all existing 'tests/qtest/migration/*' tests
-  and adds a new one to enable multifd channels with postcopy migration.
-
-
-v2: https://lore.kernel.org/qemu-devel/20241129122256.96778-1-ppandit@redhat.com/T/#u
-* This series (v2) further refactors the 'ram_save_target_page'
-  function to make it independent of the multifd & postcopy change.
-
-
-v1: https://lore.kernel.org/qemu-devel/20241126115748.118683-1-ppandit@redhat.com/T/#u
-* This series removes magic value (4-bytes) introduced in the
-  previous series for the Postcopy channel.
-
-
-v0: https://lore.kernel.org/qemu-devel/20241029150908.1136894-1-ppandit@redhat.com/T/#u
-* Currently Multifd and Postcopy migration can not be used together.
-  QEMU shows "Postcopy is not yet compatible with multifd" message.
-
-  When migrating guests with large (100's GB) RAM, Multifd threads
-  help to accelerate migration, but inability to use it with the
-  Postcopy mode delays guest start up on the destination side.
-
-* This patch series allows to enable both Multifd and Postcopy
-  migration together. Precopy and Multifd threads work during
-  the initial guest (RAM) transfer. When migration moves to the
-  Postcopy phase, Multifd threads are restrained and the Postcopy
-  threads start to request pages from the source side.
-
-* This series introduces magic value (4-bytes) to be sent on the
-  Postcopy channel. It helps to differentiate channels and properly
-  setup incoming connections on the destination side.
-
-
-Thank you.
----
-Prasad Pandit (3):
-  migration: write zero pages when postcopy enabled
-  migration: enable multifd and postcopy together
-  tests/qtest/migration: add postcopy tests with multifd
-
- migration/multifd-nocomp.c                |  3 +-
- migration/multifd-zero-page.c             | 22 +++++++++-
- migration/multifd.c                       |  7 ++++
- migration/options.c                       |  5 ---
- migration/ram.c                           |  5 +--
- tests/qtest/migration/compression-tests.c | 18 ++++++++
- tests/qtest/migration/postcopy-tests.c    | 27 ++++++++++++
- tests/qtest/migration/precopy-tests.c     | 28 ++++++++++++-
- tests/qtest/migration/tls-tests.c         | 50 +++++++++++++++++++++++
- 9 files changed, 152 insertions(+), 13 deletions(-)
-
---
-2.49.0
+>   tests/tcg/riscv64/Makefile.softmmu-target |  6 ++
+>   tests/tcg/riscv64/interruptedmemory.S     | 67 +++++++++++++++++++++++
+>   2 files changed, 73 insertions(+)
+>   create mode 100644 tests/tcg/riscv64/interruptedmemory.S
+> 
+> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+> index 5fba973e18..5d07755964 100644
+> --- a/tests/tcg/riscv64/Makefile.softmmu-target
+> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
+> @@ -26,5 +26,11 @@ run-plugin-doubletrap: doubletrap
+>   	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
+>   	  $(QEMU_OPTS)$<)
+>   
+> +EXTRA_RUNS += run-plugin-interruptedmemory
+> +run-plugin-interruptedmemory: interruptedmemory
+> +	$(call run-test, $<, \
+> +	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
+> +	  $(QEMU_OPTS)$<)
+> +
+>   # We don't currently support the multiarch system tests
+>   undefine MULTIARCH_TESTS
+> diff --git a/tests/tcg/riscv64/interruptedmemory.S b/tests/tcg/riscv64/interruptedmemory.S
+> new file mode 100644
+> index 0000000000..a32d672849
+> --- /dev/null
+> +++ b/tests/tcg/riscv64/interruptedmemory.S
+> @@ -0,0 +1,67 @@
+> +	.option norvc
+> +
+> +	.text
+> +	.global _start
+> +_start:
+> +	# Set up trap vector
+> +	lla	t0, trap
+> +	csrw	mtvec, t0
+> +
+> +	# Set up timer
+> +	lui	t1, 0x02004
+> +	sd	zero, 0(t1) # MTIMECMP0
+> +
+> +	# Enable timer interrupts
+> +	li	t0, 0x80
+> +	csrrs	zero, mie, t0
+> +	csrrsi	zero, mstatus, 0x8
+> +
+> +	# Find out when to stop
+> +	call	rtc_get
+> +	li	t0, 60
+> +	slli	t0, t0, 30 # Approx. 10e9 ns
+> +	add	t0, t0, a0
+> +
+> +	# Loop with memory accesses
+> +	la	t1, semiargs
+> +0:
+> +	ld	t2, 0(t1)
+> +	sd	t2, 0(t1)
+> +	call	rtc_get
+> +	bltu	a0, t0, 0b
+> +
+> +	li	a0, 0
+> +	lla	a1, semiargs
+> +	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
+> +	sd	t0, 0(a1)
+> +	sd	a0, 8(a1)
+> +	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
+> +
+> +	# Semihosting call sequence
+> +	.balign	16
+> +	slli	zero, zero, 0x1f
+> +	ebreak
+> +	srai	zero, zero, 0x7
+> +	j	.
+> +
+> +rtc_get:
+> +	# Get current time from the goldfish RTC
+> +	lui	t3, 0x0101
+> +	lw	a0, 0(t3)
+> +	lw	t3, 4(t3)
+> +	slli	t3, t3, 32
+> +	add	a0, a0, t3
+> +	ret
+> +
+> +trap:
+> +	lui	t5, 0x0200c
+> +	ld	t6, -0x8(t5) # MTIME
+> +	addi	t6, t6, 100
+> +	lui	t5, 0x02004
+> +	sd	t6, 0(t5) # MTIMECMP
+> +	mret
+> +
+> +	.data
+> +	.balign	16
+> +semiargs:
+> +	.space	16
 
 
