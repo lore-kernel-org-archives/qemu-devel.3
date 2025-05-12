@@ -4,79 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF56BC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F6EC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:47:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEULD-0004bE-RU; Mon, 12 May 2025 10:41:16 -0400
+	id 1uEUQi-0006tn-RN; Mon, 12 May 2025 10:46:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uEULB-0004ah-M5; Mon, 12 May 2025 10:41:13 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uEUL9-0000Di-3y; Mon, 12 May 2025 10:41:13 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0683755BC03;
- Mon, 12 May 2025 16:41:03 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Z7rQEdTdCDjh; Mon, 12 May 2025 16:41:00 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DEB0955BC02; Mon, 12 May 2025 16:41:00 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DB06B745682;
- Mon, 12 May 2025 16:41:00 +0200 (CEST)
-Date: Mon, 12 May 2025 16:41:00 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-cc: Markus Armbruster <armbru@redhat.com>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org, 
- Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org, 
- Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha <anisinha@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- =?ISO-8859-15?Q?Cl=E9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>, 
- qemu-arm@nongnu.org, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
-Subject: Re: How to mark internal properties
-In-Reply-To: <e5a305cc-4c8b-48df-99fe-539ebd9b72f9@intel.com>
-Message-ID: <f342557b-e589-f51d-cfd8-04f97e9c5efd@eik.bme.hu>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-13-philmd@linaro.org>
- <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com> <aB2vjuT07EuO6JSQ@intel.com>
- <2f526570-7ab0-479c-967c-b3f95f9f19e3@redhat.com>
- <CAFEAcA-kuHvxjuV_cMh-Px3C-k2Gd51jFqhwndO52vm++M_jAA@mail.gmail.com>
- <aCG6MuDLrQpoTqpg@redhat.com> <87jz6mqeu5.fsf@pond.sub.org>
- <e5a305cc-4c8b-48df-99fe-539ebd9b72f9@intel.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uEUQa-0006n3-Qk
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:46:51 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uEUQY-0000xp-Db
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:46:48 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-440685d6afcso51100215e9.0
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:46:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747061204; x=1747666004; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YdI+i4zev0OQ7/OBo6IO5PLh4ziQxP2ot1AsLf6mhbc=;
+ b=JQi16qP1PYx9ASsCMR0/XO1FRVZdUwlwtNJwVthAxplWfRn1Sid5VyFwOMBFxcgwLf
+ H4MwXMS92JgW9odbxRkCgs1KQBmgyFwa8MknOINVkDI5wPmMaTMI7X5sqO+qAGAudSK3
+ MkxqCncOFYoz8sBU4fV/gZ2eRLVZGAwdVvQtDZd+fowsIUSpIprffrZsFlGal3aJ3r8D
+ 8DdAXenhxlIMuMS/GgLkYpIseaZOKZTCffEjknKPMEUZWSS4Xs6pDNzuZU9UrdQhwBYg
+ kSeHc6MRtdxPJkD2HIyBAA9JsU9LAaNVAt/cgaAvQEZBfzT8m5ptFG+qBGQxdagCNs7S
+ 3/OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747061204; x=1747666004;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YdI+i4zev0OQ7/OBo6IO5PLh4ziQxP2ot1AsLf6mhbc=;
+ b=fDefRHMm8fx8sBXwu6qayRDB9dfbkRyyAz5Rx/1cEueu4j3tFot0C+plMpUd4MfDX0
+ OcqMSBAzbfgIsS2ipwlw5W/0PQ5KKZW8MY0lSRlDQCHeJl4tZkTDXYrQkTCkatu30VNe
+ RgV3/y5FbssKZ0rm8NulwAAV4AsIrevKnHjnUmqmRQ+bQ2PU4J4uOu2Hkc5Wgskxm2BY
+ sHQYrs3MXQqtV46t6XMsm63sKySRGFLXwvwHgoBEpxYdQ1S8BdzFLcpAa7rpmFGG87qH
+ 8NHfiJENl6JtlHbbfTs/00Mg0DkeibVRmBHWsUHwq8udjczQhtzpvvZrRXbauUvgyjiY
+ K/zQ==
+X-Gm-Message-State: AOJu0YzB4PTdn4oX0+x/4MdbqNDPRiWJkuiSADNpWs87wpoiifThGv8P
+ ZRbUA5GFS3zXlXTIttH5boND2jjzLywh0CNVJBs98O5r75/ANrCySXvztAms7+BnCNULs9k016F
+ 1
+X-Gm-Gg: ASbGncuP6ggnC4rWJdPZ2RTBE2qxo0izc7TeDWtYeJG4vbfwgu82IL3sQzl4r67m8ul
+ Bqytjy7Rfykd42nYnN6KZli+JXkOfenyqw0l7eYZgvBkLJHwdf3u+mtYScAJAdykuQLTvaW0oBH
+ Vkzpdtubq8TjLtCDfDlQAjekKDrsmiCIxUMRkBNdiZ2s+RSkXX9A/Ytj3OIk4s7OOjdlte2Pa6h
+ /n4C5eibhESiVEmily9Y9LlCcSzIkTcRMPUma6z4STuZQaVebinPRiRpPHFbpA9apbUBFwk1r3k
+ 4H3H+5CAsBVdK75vQC6AchuOTupySWmONwGvOF33dqLW/xaV582vpE/SH5t+AeXTynRi3k9N52B
+ ubOamrsQzHflN6aT6v6eD1D4U5fZZq2k7
+X-Google-Smtp-Source: AGHT+IEJcNtepBTtSyidNPWfopTkNDkFWovfT5ZLmLhkGXOvIk00cQ0ltg5PYK7+UFqsTiggrnU14w==
+X-Received: by 2002:a05:600c:3b84:b0:43d:683:8cb2 with SMTP id
+ 5b1f17b1804b1-442d6d44b30mr120675365e9.14.1747061204308; 
+ Mon, 12 May 2025 07:46:44 -0700 (PDT)
+Received: from xps13.c.hoisthospitality.com (110.8.30.213.rev.vodafone.pt.
+ [213.30.8.110]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442d68585d1sm129173445e9.31.2025.05.12.07.46.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 May 2025 07:46:43 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org,
+	thuth@redhat.com,
+	berrange@redhat.com
+Cc: gustavo.romero@linaro.org, eric.auger@redhat.com, alex.bennee@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, qemu-arm@nongnu.org
+Subject: [PATCH v4] tests/functional: Add PCI hotplug test for aarch64
+Date: Mon, 12 May 2025 15:45:45 +0100
+Message-ID: <20250512144629.182340-1-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-2120470484-1747060860=:11021"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,79 +101,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
+hot-unplug on arm64.
 
---3866299591-2120470484-1747060860=:11021
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ MAINTAINERS                                  |  5 ++
+ tests/functional/meson.build                 |  1 +
+ tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
+ 3 files changed, 80 insertions(+)
+ create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
 
-On Mon, 12 May 2025, Xiaoyao Li wrote:
-> On 5/12/2025 6:54 PM, Markus Armbruster wrote:
->> Daniel P. Berrangé<berrange@redhat.com> writes:
->>> On Mon, May 12, 2025 at 09:46:30AM +0100, Peter Maydell wrote:
->>>> On Fri, 9 May 2025 at 11:04, Thomas Huth<thuth@redhat.com> wrote:
->>>>> Thanks for your clarifications, Zhao! But I think this shows again the
->>>>> problem that we have hit a couple of times in the past already: 
->>>>> Properties
->>>>> are currently used for both, config knobs for the users and internal
->>>>> switches for configuration of the machine. We lack a proper way to say 
->>>>> "this
->>>>> property is usable for the user" and "this property is meant for 
->>>>> internal
->>>>> configuration only".
->>>>> 
->>>>> I wonder whether we could maybe come up with a naming scheme to better
->>>>> distinguish the two sets, e.g. by using a prefix similar to the "x-" 
->>>>> prefix
->>>>> for experimental properties? We could e.g. say that all properties 
->>>>> starting
->>>>> with a "q-" are meant for QEMU-internal configuration only or something
->>>>> similar (and maybe even hide those from the default help output when 
->>>>> running
->>>>> "-device xyz,help" ?)? Anybody any opinions or better ideas on this?
->>>> I think a q-prefix is potentially a bit clunky unless we also have
->>>> infrastructure to say eg DEFINE_INTERNAL_PROP_BOOL("foo", ...)
->>>> and have it auto-add the prefix, and to have the C APIs for
->>>> setting properties search for both "foo" and "q-foo" so you
->>>> don't have to write qdev_prop_set_bit(dev, "q-foo", ...).
->
->> If we make intent explicit with DEFINE_INTERNAL_PROP_FOO(), is repeating
->> intent in the name useful?
->
-> +1 for DEFINE_INTERNAL_PROP_FOO(). I have the same thought.
->
-> We need something in code to restrict the *internal* property really 
-> internal, i.e., not user settable. What the name of the property is doesn't 
-> matter.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 23174b4ca7..9ebb768214 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2065,6 +2065,11 @@ S: Supported
+ F: include/hw/pci/pcie_doe.h
+ F: hw/pci/pcie_doe.c
+ 
++ARM PCI Hotplug
++M: Gustavo Romero <gustavo.romero@linaro.org>
++S: Supported
++F: tests/functional/test_aarch64_hotplug_pci.py
++
+ ACPI/SMBIOS
+ M: Michael S. Tsirkin <mst@redhat.com>
+ M: Igor Mammedov <imammedo@redhat.com>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 52b4706cfe..2d68840fa2 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -83,6 +83,7 @@ tests_aarch64_system_quick = [
+ tests_aarch64_system_thorough = [
+   'aarch64_aspeed_ast2700',
+   'aarch64_aspeed_ast2700fc',
++  'aarch64_hotplug_pci',
+   'aarch64_imx8mp_evk',
+   'aarch64_raspi3',
+   'aarch64_raspi4',
+diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
+new file mode 100755
+index 0000000000..fa1bb62c8f
+--- /dev/null
++++ b/tests/functional/test_aarch64_hotplug_pci.py
+@@ -0,0 +1,74 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# The test hotplugs a PCI device and checks it on a Linux guest.
++#
++# Copyright (c) 2025 Linaro Ltd.
++#
++# Author:
++#  Gustavo Romero <gustavo.romero@linaro.org>
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
++
++from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import BUILD_DIR
++
++class HotplugPCI(LinuxKernelTest):
++
++    ASSET_KERNEL = Asset(
++        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
++         'current/images/netboot/debian-installer/arm64/linux'),
++        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b2')
++
++    ASSET_INITRD = Asset(
++        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
++         'current/images/netboot/debian-installer/arm64/initrd.gz'),
++        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
++
++    def test_hotplug_pci(self):
++
++        self.set_machine('virt')
++        self.vm.add_args('-m', '512M')
++        self.vm.add_args('-cpu', 'cortex-a57')
++        self.vm.add_args('-append',
++                         'console=ttyAMA0,115200 init=/bin/sh')
++        self.vm.add_args('-device',
++                         'pcie-root-port,bus=pcie.0,chassis=1,slot=1,id=pcie.1')
++        self.vm.add_args('-bios', self.build_file('pc-bios',
++                                                  'edk2-aarch64-code.fd'))
++
++        # BusyBox prompt
++        prompt = "~ #"
++        self.launch_kernel(self.ASSET_KERNEL.fetch(),
++                           self.ASSET_INITRD.fetch(),
++                           wait_for=prompt)
++
++        # Check for initial state: 2 network adapters, lo and enp0s1.
++        exec_command_and_wait_for_pattern(self,
++                                          'ls -l /sys/class/net | wc -l',
++                                          '2')
++
++        # Hotplug one network adapter to the root port, i.e. pcie.1 bus.
++        self.vm.cmd('device_add',
++                    driver='virtio-net-pci',
++                    bus='pcie.1',
++                    addr=0,
++                    id='na')
++        # Wait for the kernel to recognize the new device.
++        self.wait_for_console_pattern('virtio-pci')
++        self.wait_for_console_pattern('virtio_net')
++
++        # Check if there is a new network adapter.
++        exec_command_and_wait_for_pattern(self,
++                                          'ls -l /sys/class/net | wc -l',
++                                          '3')
++
++        self.vm.cmd('device_del', id='na')
++        exec_command_and_wait_for_pattern(self,
++                                          'ls -l /sys/class/net | wc -l',
++                                          '2')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
+-- 
+2.43.0
 
-What's an internal property? Properties are there to make some field of an 
-object introspectable and settable from command line and QEMU monitor or 
-other external interfaces. If that's not needed for something why is it 
-defined as a property in the first place and not just e.g. C accessor 
-functions as part of the device's interface instead? I think this may be 
-overusing QOM for things that may not need it and adding complexity where 
-not needed. It reminds me of patches that wanted to export via-ide IRQs or 
-ISA IRQs just to be able to connect them to other parts _of the same chip_ 
-becuase this chip is modeled as multiple QOM objects for reusing code from 
-those. But in reality the chip does not have such pins and these are 
-internal connections so I think it would be better to model these as 
-functions and not QOM constructs that the user can change. In general, if 
-the device or object has an external connection or a knob that the user 
-may need to change or connect to another device (like building a board 
-from parts you can wire pins together) then those need properties or 
-qemu_irqs but other "internal properties" may need some other way to 
-access and often simple accessor functions are enough for this as these 
-internal properties are only accessed form the code. That way we would not 
-need even more complexity to hide these from the user, instead of that 
-just don't expose them but use something else where a property is not 
-needed. A property is just like an accessor function with additional 
-complexity to expose it to other interfaces so it's externally settable 
-and introspectable but we don't need those for internal properties so we 
-can drop that complexity and get back to the accessor function at the 
-bottom of it.
-
-Regards,
-BALATON Zoltan
---3866299591-2120470484-1747060860=:11021--
 
