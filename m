@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EEC5C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5572AC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEOkE-0002LT-LB; Mon, 12 May 2025 04:42:44 -0400
+	id 1uEOk3-0001kw-Sy; Mon, 12 May 2025 04:42:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOj4-00081U-BK
- for qemu-devel@nongnu.org; Mon, 12 May 2025 04:41:32 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOj0-0007zK-7i
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:41:30 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOiz-0001my-61
- for qemu-devel@nongnu.org; Mon, 12 May 2025 04:41:27 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-441ab63a415so41134715e9.3
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 01:41:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOiq-0001mI-9o
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:41:22 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3a0ac853894so3598259f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 01:41:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747039281; x=1747644081; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747039273; x=1747644073; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CG3XKTeWK0piQR2+smzX+3iwbFcRaTIDsL5MWdVVSjk=;
- b=NgN58Vp0KK14rmsg8K/JzayyitXi+jDgEUKWK37Hl5s3U10Q1B3OvSCgQzYLHKs29W
- WY3A97ktkH+Q1EFn63mPgnfGBLxnMSNvp84Tr2CZyQEiLFkpRaJV/xQ0YAvZl3iYqH+Z
- ws6fYilPcHg0DedR6zchNwJFS4dIGNmsim0GuhR0wlMlm6CZQpRcfI7aaZgDK8VNkik0
- Fo0+Dpbyp8j6YaijDsHQYatqNlal2B2viYpLRO99KgsgdzJEpKt1Y/mJsf5dO6km/OBV
- ZiyOzWKfFqddsWCg0N2UVfAcjcpP+kMIHwVkB4S0QaIBLeMchT1PN4qnoeHl2WLcXm0i
- Ygxg==
+ bh=jmmxRVO0JjDAOZF2VaJXzWNNbUhPq/11vrvQt3l5Apo=;
+ b=Yd+Ymkg0ZrB8Rv0TUMqTDUcmdOrmmELLc20zAvqLzF66+WCrTq60Pediwqi62CJl2g
+ L+1mY5mC7fZFk21wseoLWeE3vq2gGXpwm39Ji4PTytzpDXIJBCd+odvKKyHlSWyuAOAc
+ Vbkf+vPsPQWyO+CSsgs8AR+sP0rlXZ99+0cX/FniTRGgXzZM1GDdZ4Te1HxQ+9Yrhgkf
+ dX9JWPUZChyzSoPZwb6F62jRDBDQFOdWKPNV2oDoq7XqQZndso+hU1zO5wcIdyD6yVwX
+ HSjDZN8yAAd3evKcxxphoCCLwlanIAWW6A29xpbdTpuJmS29mcnmzl6GqJfjdgzIGsDI
+ jOJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747039281; x=1747644081;
+ d=1e100.net; s=20230601; t=1747039273; x=1747644073;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CG3XKTeWK0piQR2+smzX+3iwbFcRaTIDsL5MWdVVSjk=;
- b=ZTpmEkCBhETFm7XcQJWCDP4bwCcJdprohk9j6utDlKa0Tv99j9mcXuM85XTQ5goDem
- WzuL91necxxoeT2WQltTY3mzX2AJOrrXTD2Zv3R3uWqkIRulr5qfswDvb8nrt6FERT3u
- JFfoBSPfcGEamAaCGdCJ22ZZ8FNAcCxjJI9yh8Jmkm4ZZkwzIqyhlkbe1uuiUB4NNaAE
- ewhUtmC+DFauxKfRtGvVYd9WYOgsSaJhAC9Ajr9lzDZAj3QU+QoOZGBWc8oZO0RgdAep
- J5O1MZ5g6vGHpplDEeRF/0r7OZw89AtkwhBzIIDzGDekqBEwGd1elmn4d7braPeNSHh4
- tBkQ==
-X-Gm-Message-State: AOJu0YyrnapRF4LNUg+Sj3cwsiZj85RSXXldSDV/huBGf3lMMJY4Yycn
- +Dfxc6UQF0/6HDvUbSPlbBCBjqbRvz70T7t5afiWSJMOaSZZyr+lNYsRRtDV28KdcyWRISOYcVC
- 7SXIwAw==
-X-Gm-Gg: ASbGncufjmw0bQAFgS4Tt/a82rk1qBUOemd03ayWF+b4RXUEPTQrYImMSHwK/3jmmPa
- iyrfskwkvSiETM3srgKm1zpUzpl9YUrf+a9bsa2LmYEMUW9DLiNZ5i5wPZrkIL7c8Jcf8rdtnNL
- fhs0bRpmLtgLvFwOq85/fCczu3aIhkiVNvdfNkwqgQ/C8oTDhTKHtsOi2fuJmevJz611xwlFV3+
- fcqq6PHlWT1pylw6cna3hbvU5Cfu1CaNx+qvOnbbQTbcuLjb7QLUWOyj+0xHyLfs3CPlez5uuzl
- 3GLeTmyFGh+1Y26b2Nm1Cwi8NVqhzKnktpLtgo+uj04x9OWoeEYlThnSLWrhNwLCCYp+v6YHe6w
- NHSZpz9E4B8rkfr479iLJ1MM=
-X-Google-Smtp-Source: AGHT+IE9XmsM/v4yWMXYFciqcglmvn2szksPoXVqFdfTER40y3qoX1HDq+UNbSmntNIeLW3HYfeyqA==
-X-Received: by 2002:a05:600c:46c3:b0:43c:fc04:6d35 with SMTP id
- 5b1f17b1804b1-442d6d0a9f6mr98072835e9.4.1747039281017; 
- Mon, 12 May 2025 01:41:21 -0700 (PDT)
+ bh=jmmxRVO0JjDAOZF2VaJXzWNNbUhPq/11vrvQt3l5Apo=;
+ b=R+C+A7Rluy50mmXq61On6zXA6wms0SB5THU/stAv60+zQFAt8Espl8muCt6JmiJNE7
+ hXY7q8hNKHV98QQS+qQt7EVi5pST9lNekAUdJs33pR3QIXpikyTD/r+cIEf6CfPQnDjQ
+ kCScCEes9jasbvnLSOZWOlU2N2nqdzWvGG7Zl+WK+/OVopY5WkZ3tbh4z60Fp4fJlbyC
+ gQuNCGPaWxsN5El5PRBCqiEnCMYoXvaTixuZjMFuDtNdNhOENPmQTqxHYEFRl/tfTprE
+ a1pW7D4zYpEHgblysI4kX+7UAsc228gIxc7FC11azVk7yEToDk0nye71NYGtGX9HWcTy
+ bR0w==
+X-Gm-Message-State: AOJu0YyqkZBNBQJGLirdIDvP272HWwmxgBJQgzGA2MG1wbR/md4BpaOL
+ nJseu1q0VosWUT+6vmFvawsCjC6LN/+D/ZudBU10eofcbp15nkhD8l61/FYdPlpZy8GisZf2dDI
+ SI2scjA==
+X-Gm-Gg: ASbGncs8MsvAnL0DDJqgg67QUUzZcQFj208YtnNS4jfDK42kx8hkEAjYIpihh5AWVU+
+ QzM+nmfeNz0jA3pmlEsonXGn3nXOjcNOObYcKWiByHi1Ksmp+CTxtFgYISUOB2MyI6Xdl8DDRSp
+ KRGFNz2SCWNpUuurVUExQ94spp/2qGGqHWaMuKcQex+FGoPjWY5sk8Gu7gMxqAvhIiZwalWTtQ2
+ YWmmXc5B0Lu4zzoo/hkSi3IBuesdBDovdp+TqqHCHlDAp4UkAbDTAijdD+cBjsOEN1SFM/kK06a
+ 1sn7dy0OpO3dkXqgrcP2XNnAVULPl9GRiplK+l7NVEt6GttPbcBCPh62sqJMLkM5zP64YHcrKn4
+ RI8lIj0nv3X0Us4K9NghUOVY=
+X-Google-Smtp-Source: AGHT+IFFsxqp3h0hfWIHh9th8nQ7pxDuuFj2+3qs0CZo1L8UuMdE0l/zlsI1ppdRq31qYOfHpLJTlA==
+X-Received: by 2002:a05:6000:4006:b0:39e:f9e8:d07d with SMTP id
+ ffacd0b85a97d-3a1f6437e6emr10056092f8f.20.1747039272908; 
+ Mon, 12 May 2025 01:41:12 -0700 (PDT)
 Received: from localhost.localdomain (129.163.185.81.rev.sfr.net.
  [81.185.163.129]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd34bd84sm159345165e9.22.2025.05.12.01.41.17
+ ffacd0b85a97d-3a1f5a2ceccsm11807739f8f.64.2025.05.12.01.41.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 May 2025 01:41:20 -0700 (PDT)
+ Mon, 12 May 2025 01:41:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -76,20 +76,19 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, John Snow <jsnow@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v4 10/19] hw/i386/x86: Remove X86MachineClass::save_tsc_khz
- field
-Date: Mon, 12 May 2025 10:39:39 +0200
-Message-ID: <20250512083948.39294-11-philmd@linaro.org>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 09/19] hw/i386/pc: Remove deprecated pc-q35-2.5 and
+ pc-i440fx-2.5 machines
+Date: Mon, 12 May 2025 10:39:38 +0200
+Message-ID: <20250512083948.39294-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250512083948.39294-1-philmd@linaro.org>
 References: <20250512083948.39294-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,66 +111,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The X86MachineClass::save_tsc_khz boolean was only used
-by the pc-q35-2.5 and pc-i440fx-2.5 machines, which got
-removed. Remove it and simplify tsc_khz_needed().
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
+
+Remove the now unused empty pc_compat_2_5[] array.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/hw/i386/x86.h | 5 -----
- hw/i386/x86.c         | 1 -
- target/i386/machine.c | 5 ++---
- 3 files changed, 2 insertions(+), 9 deletions(-)
+ include/hw/i386/pc.h |  3 ---
+ hw/i386/pc.c         |  3 ---
+ hw/i386/pc_piix.c    | 13 -------------
+ hw/i386/pc_q35.c     | 13 -------------
+ 4 files changed, 32 deletions(-)
 
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index 258b1343a16..fc460b82f82 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -27,13 +27,8 @@
- #include "qom/object.h"
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index b34aa25fdce..79b72c54dd3 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -298,9 +298,6 @@ extern const size_t pc_compat_2_7_len;
+ extern GlobalProperty pc_compat_2_6[];
+ extern const size_t pc_compat_2_6_len;
  
- struct X86MachineClass {
--    /*< private >*/
-     MachineClass parent;
- 
--    /*< public >*/
+-extern GlobalProperty pc_compat_2_5[];
+-extern const size_t pc_compat_2_5_len;
 -
--    /* TSC rate migration: */
--    bool save_tsc_khz;
-     /* use DMA capable linuxboot option rom */
-     bool fwcfg_dma_enabled;
-     /* CPU and apic information: */
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index e2d04092992..f80533df1c5 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -382,7 +382,6 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
-     mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
-     mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
-     mc->kvm_type = x86_kvm_type;
--    x86mc->save_tsc_khz = true;
-     x86mc->fwcfg_dma_enabled = true;
-     nc->nmi_monitor_handler = x86_nmi;
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+                                                  const void *data) \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2b46714a5ac..cb375aabdc5 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -259,9 +259,6 @@ GlobalProperty pc_compat_2_6[] = {
+ };
+ const size_t pc_compat_2_6_len = G_N_ELEMENTS(pc_compat_2_6);
  
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 6cb561c6322..dd2dac1d443 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -1060,9 +1060,8 @@ static bool tsc_khz_needed(void *opaque)
+-GlobalProperty pc_compat_2_5[] = {};
+-const size_t pc_compat_2_5_len = G_N_ELEMENTS(pc_compat_2_5);
+-
+ /*
+  * @PC_FW_DATA:
+  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 04213b45b44..7a62bb06500 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -778,19 +778,6 @@ static void pc_i440fx_machine_2_6_options(MachineClass *m)
+ 
+ DEFINE_I440FX_MACHINE(2, 6);
+ 
+-static void pc_i440fx_machine_2_5_options(MachineClass *m)
+-{
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+-
+-    pc_i440fx_machine_2_6_options(m);
+-    x86mc->save_tsc_khz = false;
+-    m->legacy_fw_cfg_order = 1;
+-    compat_props_add(m->compat_props, hw_compat_2_5, hw_compat_2_5_len);
+-    compat_props_add(m->compat_props, pc_compat_2_5, pc_compat_2_5_len);
+-}
+-
+-DEFINE_I440FX_MACHINE(2, 5);
+-
+ #ifdef CONFIG_ISAPC
+ static void isapc_machine_options(MachineClass *m)
  {
-     X86CPU *cpu = opaque;
-     CPUX86State *env = &cpu->env;
--    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
--    X86MachineClass *x86mc = X86_MACHINE_CLASS(mc);
--    return env->tsc_khz && x86mc->save_tsc_khz;
-+
-+    return env->tsc_khz;
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 47e12602413..33211b1876f 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -672,16 +672,3 @@ static void pc_q35_machine_2_6_options(MachineClass *m)
  }
  
- static const VMStateDescription vmstate_tsc_khz = {
+ DEFINE_Q35_MACHINE(2, 6);
+-
+-static void pc_q35_machine_2_5_options(MachineClass *m)
+-{
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+-
+-    pc_q35_machine_2_6_options(m);
+-    x86mc->save_tsc_khz = false;
+-    m->legacy_fw_cfg_order = 1;
+-    compat_props_add(m->compat_props, hw_compat_2_5, hw_compat_2_5_len);
+-    compat_props_add(m->compat_props, pc_compat_2_5, pc_compat_2_5_len);
+-}
+-
+-DEFINE_Q35_MACHINE(2, 5);
 -- 
 2.47.1
 
