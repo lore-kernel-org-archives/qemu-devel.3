@@ -4,101 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E57CC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B52C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:43:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEV9u-0004rc-F8; Mon, 12 May 2025 11:33:38 -0400
+	id 1uEVB8-0006x2-9Z; Mon, 12 May 2025 11:34:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uEV9h-0004VL-0K
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:26 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uEV9e-0006gU-LA
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:24 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9md0027390;
- Mon, 12 May 2025 15:33:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=J7O0G6R+T7Thp9NkLQR+2RFhO7PQo45vh9/97Q0mb98=; b=
- j0mAPbw6pPAHjphuONVmhINBKhXQG4Q7RKTyuG3ASEFNrBxkGAR4CM1SxOhXFBST
- zAsJ32dMKPIwnodfEuxao7113vQiz+iIKhdIls0WiRzTgRnz9ooIhChrjeLZfN92
- x5XnfGuHRW45JrS+YtJoCiUtzUf3Ok/akZvb8jq/hlLwqbw+B+QTkNjSZ571oGsZ
- u3M+jotkQSOVRDq19vOcpWMCyeqcaFsVTCBGsAqISqBoQN8wch+fHBF3WoXuCFRh
- 31DBrhBgdkceE5XlTd/Xsg+HKIyPLfw9t6W/ZDX3diQROwVETnzb73h1odbcNt12
- j2HKyo74MHe86s6PZOvYQg==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j1662us2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 May 2025 15:33:09 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54CERhNl002421; Mon, 12 May 2025 15:33:09 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46jwx366gg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 May 2025 15:33:09 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CFWk5G030605;
- Mon, 12 May 2025 15:33:08 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46jwx36627-20; Mon, 12 May 2025 15:33:08 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 19/42] vfio/pci: vfio_notifier_init cpr parameters
-Date: Mon, 12 May 2025 08:32:30 -0700
-Message-Id: <1747063973-124548-20-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
-References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-12_05,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- mlxscore=0 spamscore=0
- bulkscore=0 suspectscore=0 phishscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2504070000
- definitions=main-2505120161
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE2MSBTYWx0ZWRfX/YthC5zGIwmh
- n640hUoicPEXmANpS3lP55yk5gq2h/Yx+og+inlHHs2gApGNcHJHUToxMJIGUm0D6IvWQoqTNuo
- KNlHefNHKR6ryGgbVoBWDKaaxqhRYnoVqEJoOO0M/vvf73bIBQNw0GxQ/MFv3CVvH8lqSFSdSjx
- zcLuG5YufO/NAyareqXw4r5dKV7MiJXWPzqBADd7gH7s2ArzZnFX/8A++GXWQaU/cgzVJpEDunf
- pwgcsZhAMqVKkytTKfBDTJQOYbhc0S+gHUJTGGoY700Lk/EtgqkLTVEEq+m76a1rhq11eLpP4J7
- o02CVD4+dn2Qaxe4Kul+9UvGQ0bGVmtc02vLt5xoeoqYDMaHOcC6hR3GjWlndIl0FZvFwW+6kBd
- c/uq/lkSzE7iO1wk8ExTo00AfjKN5gQ1H+BK2wT+dZz6xC0jLupAD0pU8FUWXAlkYrNgWKyI
-X-Authority-Analysis: v=2.4 cv=VMDdn8PX c=1 sm=1 tr=0 ts=682214b6 b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=jKZADUptkdJhXbhI8koA:9
-X-Proofpoint-ORIG-GUID: pUDHeHEFKARWUc13Cj5bBQ4mLxQatXEI
-X-Proofpoint-GUID: pUDHeHEFKARWUc13Cj5bBQ4mLxQatXEI
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uEVA2-0005Jm-Rj
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:48 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uEVA0-0006oG-Q6
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:46 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id AF7E01F38A;
+ Mon, 12 May 2025 15:33:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747064022; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+2Hwodhp35T11MPXcJZli19P+KVAl/XPeRthO1NKrko=;
+ b=Ddue1M/V2xZGsoJYa+/af8B6avPrRoYSwXH5pNMeSNmC3R88IgBegh8SthzuXiGUHQre/3
+ yipv04zx9gzVD1HgzbTx/Xd4m8QUpInYT9OWjLl0jxfTC5/QfNEgPOU/3/jqWHYF3V7Jnr
+ HLBWDAfwuCDZo82IGFg/KvVVnfgvlbY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747064022;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+2Hwodhp35T11MPXcJZli19P+KVAl/XPeRthO1NKrko=;
+ b=bKlao+h5LEzH67Af3Nkg3urW9Rdj2qvAg0brOnlWSvSb+5ya+uD1wfUlZ39c60m7wU6OPv
+ b1NZtrkDy6hTlFDA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="Ddue1M/V";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bKlao+h5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747064022; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+2Hwodhp35T11MPXcJZli19P+KVAl/XPeRthO1NKrko=;
+ b=Ddue1M/V2xZGsoJYa+/af8B6avPrRoYSwXH5pNMeSNmC3R88IgBegh8SthzuXiGUHQre/3
+ yipv04zx9gzVD1HgzbTx/Xd4m8QUpInYT9OWjLl0jxfTC5/QfNEgPOU/3/jqWHYF3V7Jnr
+ HLBWDAfwuCDZo82IGFg/KvVVnfgvlbY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747064022;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+2Hwodhp35T11MPXcJZli19P+KVAl/XPeRthO1NKrko=;
+ b=bKlao+h5LEzH67Af3Nkg3urW9Rdj2qvAg0brOnlWSvSb+5ya+uD1wfUlZ39c60m7wU6OPv
+ b1NZtrkDy6hTlFDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 223E0137D2;
+ Mon, 12 May 2025 15:33:41 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id csIHNdUUImhXUgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 12 May 2025 15:33:41 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Bernhard Beschow <shentey@gmail.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 00/22] usb/xhci and usb/msd improvements and tests
+In-Reply-To: <CAFEAcA_giWU5xC8GqjbvQUV7K-M_1iKrKoQBvB9Xj3qtLRZtxg@mail.gmail.com>
+References: <20250502033047.102465-1-npiggin@gmail.com>
+ <D9NUVWSVJKHN.3T7M6OPALIGYC@gmail.com> <aBh-tXqR6RqXvx9D@redhat.com>
+ <CAFEAcA_giWU5xC8GqjbvQUV7K-M_1iKrKoQBvB9Xj3qtLRZtxg@mail.gmail.com>
+Date: Mon, 12 May 2025 12:33:39 -0300
+Message-ID: <87v7q5etd8.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: AF7E01F38A
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[12];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FREEMAIL_CC(0.00)[gmail.com,redhat.com,nongnu.org,philjordan.eu,linaro.org];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ RCVD_COUNT_TWO(0.00)[2];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ TAGGED_RCPT(0.00)[]; MISSING_XM_UA(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:mid,suse.de:dkim]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,97 +137,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass vdev and nr to vfio_notifier_init, for use by CPR in a subsequent
-patch.  No functional change.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- hw/vfio/pci.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+> On Mon, 5 May 2025 at 10:03, Kevin Wolf <kwolf@redhat.com> wrote:
+>>
+>> Am 05.05.2025 um 04:03 hat Nicholas Piggin geschrieben:
+>> > I would like to get this series merged, but I realize the mass storage
+>> > change to relax packet ordering of a command particularly is quite
+>> > complicated and under-reviewed.
+>>
+>> I can try to find the time to have a look at the series, but given that
+>> I'll have to familiarise myself with the specs again, it might take a
+>> while.
+>>
+>> > Would there be objection if I made a pull request for Guenter's
+>> > patches, the hcd stuff, the qtests, and some of the easier / reviewed
+>> > bits of msd?
+>>
+>> That makes sense to me. I suppose I can also give a quick review for the
+>> initial part of the msd patches, at lot of which seems to be more or
+>> less just refactoring.
+>
+> I've now reviewed the hw/usb/xhci patches, so I think you
+> now have reviews for everything here except the tests/qtest/
+> patches (3, 4, 5, 7, 8, 21).
+>
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index dad6209..bfeaafa 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -56,7 +56,8 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev);
- static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled);
- static void vfio_msi_disable_common(VFIOPCIDevice *vdev);
- 
--static bool vfio_notifier_init(EventNotifier *e, const char *name, Error **errp)
-+static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
-+                               const char *name, int nr, Error **errp)
- {
-     int ret = event_notifier_init(e, 0);
- 
-@@ -146,7 +147,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-     pci_irq_deassert(&vdev->pdev);
- 
-     /* Get an eventfd for resample/unmask */
--    if (!vfio_notifier_init(&vdev->intx.unmask, "intx-unmask", errp)) {
-+    if (!vfio_notifier_init(vdev, &vdev->intx.unmask, "intx-unmask", 0, errp)) {
-         goto fail;
-     }
- 
-@@ -299,7 +300,8 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     }
- #endif
- 
--    if (!vfio_notifier_init(&vdev->intx.interrupt, "intx-interrupt", errp)) {
-+    if (!vfio_notifier_init(vdev, &vdev->intx.interrupt, "intx-interrupt", 0,
-+                            errp)) {
-         return false;
-     }
-     fd = event_notifier_get_fd(&vdev->intx.interrupt);
-@@ -485,7 +487,8 @@ static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
-         return;
-     }
- 
--    if (!vfio_notifier_init(&vector->kvm_interrupt, name, NULL)) {
-+    if (!vfio_notifier_init(vector->vdev, &vector->kvm_interrupt, name, nr,
-+                            NULL)) {
-         goto fail_notifier;
-     }
- 
-@@ -528,7 +531,7 @@ static void vfio_vector_init(VFIOPCIDevice *vdev, int nr)
- 
-     vector->vdev = vdev;
-     vector->virq = -1;
--    if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
-+    if (!vfio_notifier_init(vdev, &vector->interrupt, "interrupt", nr, &err)) {
-         error_report_err(err);
-     }
-     vector->use = true;
-@@ -765,7 +768,8 @@ retry:
-         vector->virq = -1;
-         vector->use = true;
- 
--        if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
-+        if (!vfio_notifier_init(vdev, &vector->interrupt, "interrupt", i,
-+                                &err)) {
-             error_report_err(err);
-         }
- 
-@@ -2918,7 +2922,8 @@ static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
- 
--    if (!vfio_notifier_init(&vdev->err_notifier, "err_notifier", &err)) {
-+    if (!vfio_notifier_init(vdev, &vdev->err_notifier, "err_notifier", 0,
-+                            &err)) {
-         error_report_err(err);
-         vdev->pci_aer = false;
-         return;
-@@ -2985,7 +2990,8 @@ static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
- 
--    if (!vfio_notifier_init(&vdev->req_notifier, "req_notifier", &err)) {
-+    if (!vfio_notifier_init(vdev, &vdev->req_notifier, "req_notifier", 0,
-+                            &err)) {
-         error_report_err(err);
-         return;
-     }
--- 
-1.8.3.1
-
+I'll get to them this week. It'd be nice to see the new version of the
+pending dependency series that's mentioned in the cover letter. For
+these subsystems I'm not familiar with, most of my qtest review will
+rely on putting the series through asan and tests on a loaded
+machine. If there's latent bugs in qtest, it gets super confusing.
 
