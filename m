@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E87C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264F5C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:07:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEYTQ-0005Tc-7F; Mon, 12 May 2025 15:06:04 -0400
+	id 1uEYTe-0005mb-OJ; Mon, 12 May 2025 15:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEYT9-0005S8-UC
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:05:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uEYTM-0005UL-H1
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:06:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEYT8-0007Un-Bi
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:05:43 -0400
+ id 1uEYTK-0007WA-NC
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:05:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747076741;
+ s=mimecast20190719; t=1747076754;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9rRJjZJliGh6hgVUcZDujfGoc4FtIeQ+1jIdIdwQh1g=;
- b=Ll0pEo2/UMi+poHKGkYF5wssxP/TfHOwLW1HuHeEiLyI9ha8LrwgIFEFYBIziNC7FoJCjP
- YwxTgV7yMa85ra9LUIhmu9TcsoYk6oLt70nVTwE9BQ2rskHHqH4fYeVcoNjRFJo2Pxr5oK
- tAQRVy3HBnOnz3H+rdoS98ETzuBAMfo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pcsCKBv6s0E+eFJ6qpqRFsRKmqbdvOjhgTl4jheLWXs=;
+ b=L8NrvwTMoU8//7gVsJ7tRMgvoVyAUSLyHDshb7vo/78n1pPR2eaRzSiUkBbrNSvGJP7Pqx
+ kMqyZ2kalm9PwBV7htceQ9lAy0Fabm2ZjlfPJThtkhXs9CEyzR0g04I4naOJH2uRmQPC5H
+ nO5Lf2oOBr4bESwryhIrgNwdhVy/+Qg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-573-8vLnEx8SMIa8ZVgQgtGlwg-1; Mon, 12 May 2025 15:05:39 -0400
-X-MC-Unique: 8vLnEx8SMIa8ZVgQgtGlwg-1
-X-Mimecast-MFC-AGG-ID: 8vLnEx8SMIa8ZVgQgtGlwg_1747076739
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a0af6219a5so2206530f8f.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:05:39 -0700 (PDT)
+ us-mta-614-4cL16mIlN2imwtgbnW6uxQ-1; Mon, 12 May 2025 15:05:52 -0400
+X-MC-Unique: 4cL16mIlN2imwtgbnW6uxQ-1
+X-Mimecast-MFC-AGG-ID: 4cL16mIlN2imwtgbnW6uxQ_1747076751
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43cf3168b87so20599995e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:05:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747076738; x=1747681538;
+ d=1e100.net; s=20230601; t=1747076751; x=1747681551;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9rRJjZJliGh6hgVUcZDujfGoc4FtIeQ+1jIdIdwQh1g=;
- b=NZLlufFpZnAUtiBqKMfhJXQk35nTuj96tyHTYkj5q8ZKuC5FXoGIpIPhdB5wNOUvWl
- jwighQKJT821LEf3RzDxEE/rtY+dtDtmhXTJE1GDqK4nttI3/zmk4EAltl6Q5bem09F5
- Nv7fOaYUkAQ3FqnQxEIr6Pq8DoJeu5eO8y0MseXDin/s3wE4Y/Xiyxv24HrTY2Ov9Qgd
- qmPBMyZNqlwkWhYCg1DEX6b4zQuLHuVwaTRLT7/yXW1dY0DGlufM2Ws3TPKLNATkCtId
- MQNN7Adf6mjbONWPfgsrNSSJHhsJ04n66OVO2Hxngpm2WDj2hccPs5KiIHSR9QJAMnfg
- pVpA==
-X-Gm-Message-State: AOJu0YwVaeZ/dMB6bgc1HRbfcAlqa8PlcEmahu56JRr6haK4JmFI8jWY
- CNyBXaDD2zTkMfE1L9joyR1MxX7QijI37PlOjva1naoMHRZpIIdBDyq34uVJOZkK69cXZ722vIB
- IUVkpcdJ8LD6mwxJoIkcEuXY32A5/ExDtSzI6P/j0LE5m69ORob9OYJbZp9N88wElnLCHN2ER5G
- cucs9ISqx/e/1dmmYHzAbM9sDzY1Q6vsjQZW0P
-X-Gm-Gg: ASbGnctrB4wdBbhSkZ8Bzb/MOGm5LTz4q/9XAee13VomsoGfOjK6UwyCufAGEIEkLQh
- lMDfQuS4lSiGH6R+iWDT+eiVX1ya6oPeDf7rKy3OY/GOrgvx7KAI/1M7Wo2ftN3Ey/jzfj1US13
- hXFqv9xE4erk4MXsKSIqbs4hH7dOwOyGzMXowSd7zM6TUeQP0TIE8zikdRp2AHiOL4DjSafiU21
- S0nVJqTVYriPcOSFMS8E26ICkI5D5LZM55S3ESk9BLm+IIX4vWex66IkGDz3fZxtBrPZYcYD19Y
- cWH+erUcoii93Ik=
-X-Received: by 2002:a5d:648a:0:b0:3a1:f70a:1f65 with SMTP id
- ffacd0b85a97d-3a33f9e5a81mr622668f8f.0.1747076737953; 
- Mon, 12 May 2025 12:05:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEDcK5dIk6tJCLaXP2z83N/9DziM9BCdrcE+cFNm3TygWjzbR0sJftZL8iTTjWIVI1c4XwqCg==
-X-Received: by 2002:a5d:648a:0:b0:3a1:f70a:1f65 with SMTP id
- ffacd0b85a97d-3a33f9e5a81mr622650f8f.0.1747076737610; 
- Mon, 12 May 2025 12:05:37 -0700 (PDT)
+ bh=pcsCKBv6s0E+eFJ6qpqRFsRKmqbdvOjhgTl4jheLWXs=;
+ b=YOG8sSvGhG4ckff6GLh4LPW5UrcacE5ma2ie1TxMXerGzDiWSZ151fL37WonyGCNX8
+ z+wqrcdKsjKZ2IF/XR2+gFHXQSHynDjhLY8ufLQwwtppUElyAVeZFsHaf0qqK4l0GYP9
+ YovOKaWATe1Ys0R/NtvJuyINVvgTdtwaLW2qP6Vf3uJoKi3y01K0tSLqq/b/a2goSVGZ
+ NlKGY9cV9iu2cCDBdW/iHkVLRNZyAYoUEgTYaDyjzhFdeMxEMHVb+imun/d2tcWF1DgI
+ NgSATl6ZqouvBs4tMls9xUBpogynaRY9EXIe+EAJ7DOKmLJuinJC+cv5l6ZBj2r7zai8
+ nMCw==
+X-Gm-Message-State: AOJu0Ywbc5a0QYIIGtc8vKkC9cHMjcMaArLrXKSc/9BQvMxaTXlfIH8U
+ 2GT/d04LmSop/p1ccmY9cqfIICxDxMxe6EN9iTaAIsp9Nx/IsRCIkrpSaNf8vm1wTEJOFP9Fw+p
+ J+ck4LOzc4bagMdzcmtO8heWckB5hnLz7foPrxHJAvEHHAwVlPKshc7xVtDlxYf/PGJ0b9hkEqD
+ w904vfJhQPy9Gs/61sfcApVqN0LPyMWtONgFdR
+X-Gm-Gg: ASbGncun9L/NbwzA+vwN+V43BEOXM8IvuvtF53CYtFbCDHlYrypEWeQiHl0BX+hjcBw
+ dDQoELjKHLLz47xjajujTKdIyY2OKdQvZK3jJDFCicfFqcvegWoVABO3IHTlEqXqOi7vr6I7QFB
+ 34kotG72K08xXhdNtt1v+tzaLdkuu9xUDQ1Ds/2kcZ9wxSeglgVCLjiLipgu0Po1iX5zSLjrSSs
+ ctBLi/ORGcBnu4V4uFKWPK4AlU+5N1dASucQJ/mo1Mg5IrL4gJbsU8u+3uyBe1PkBFtgndM3nEw
+ 4M3XAJUs0hSTLNA=
+X-Received: by 2002:a05:600c:6090:b0:43b:c95f:fd9 with SMTP id
+ 5b1f17b1804b1-442d6d18bfamr129435085e9.5.1747076750994; 
+ Mon, 12 May 2025 12:05:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFHKGSlx8VVe8aiMl/QUDW5KAVb8jUF3yHiqL+RmROFltzM5ComA24djasdKhelczyH93C7Q==
+X-Received: by 2002:a05:600c:6090:b0:43b:c95f:fd9 with SMTP id
+ 5b1f17b1804b1-442d6d18bfamr129434895e9.5.1747076750479; 
+ Mon, 12 May 2025 12:05:50 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.45.141])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a4d21esm13582685f8f.99.2025.05.12.12.05.35
+ ffacd0b85a97d-3a1f58f2a07sm13647653f8f.50.2025.05.12.12.05.49
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 12:05:35 -0700 (PDT)
+ Mon, 12 May 2025 12:05:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 05/16] rust: pl011: Rename RX FIFO methods
-Date: Mon, 12 May 2025 21:05:13 +0200
-Message-ID: <20250512190524.179419-6-pbonzini@redhat.com>
+Subject: [PULL 10/16] target/i386: implement TSS trap bit
+Date: Mon, 12 May 2025 21:05:18 +0200
+Message-ID: <20250512190524.179419-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512190524.179419-1-pbonzini@redhat.com>
 References: <20250512190524.179419-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -110,57 +108,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of having a TX FIFO, rename the RX FIFO methods.
-This is the Rust version of commit 40871ca758cf ("hw/char/pl011:
-Rename RX FIFO methods").
+Now that we can do so after the error code has been pushed, raising
+the #DB exception for task-switch traps is trivial.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/i386/tcg/seg_helper.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 7c563ade9cd..94b31659849 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -329,7 +329,7 @@ fn loopback_tx(&mut self, value: registers::Data) -> bool {
-         // hardware flow-control is enabled.
-         //
-         // For simplicity, the above described is not emulated.
--        self.loopback_enabled() && self.put_fifo(value)
-+        self.loopback_enabled() && self.fifo_rx_put(value)
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index cb90ccd2adc..071f3fbd83d 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -473,10 +473,6 @@ static void switch_tss_ra(CPUX86State *env, int tss_selector,
+         new_segs[R_GS] = 0;
+         new_trap = 0;
      }
+-    /* XXX: avoid a compiler warning, see
+-     http://support.amd.com/us/Processor_TechDocs/24593.pdf
+-     chapters 12.2.5 and 13.2.4 on how to implement TSS Trap bit */
+-    (void)new_trap;
  
-     #[must_use]
-@@ -439,7 +439,7 @@ pub fn fifo_depth(&self) -> u32 {
+     /* clear busy bit (it is restartable) */
+     if (source == SWITCH_TSS_JMP || source == SWITCH_TSS_IRET) {
+@@ -622,6 +618,11 @@ static void switch_tss_ra(CPUX86State *env, int tss_selector,
+         }
+         SET_ESP(sa.sp, sa.sp_mask);
      }
++
++    if (new_trap) {
++        env->dr[6] |= DR6_BT;
++        raise_exception_ra(env, EXCP01_DB, retaddr);
++    }
+ }
  
-     #[must_use]
--    pub fn put_fifo(&mut self, value: registers::Data) -> bool {
-+    pub fn fifo_rx_put(&mut self, value: registers::Data) -> bool {
-         let depth = self.fifo_depth();
-         assert!(depth > 0);
-         let slot = (self.read_pos + self.read_count) & (depth - 1);
-@@ -589,7 +589,7 @@ fn receive(&self, buf: &[u8]) {
-         }
-         let mut regs = self.regs.borrow_mut();
-         let c: u32 = buf[0].into();
--        let update_irq = !regs.loopback_enabled() && regs.put_fifo(c.into());
-+        let update_irq = !regs.loopback_enabled() && regs.fifo_rx_put(c.into());
-         // Release the BqlRefCell before calling self.update()
-         drop(regs);
- 
-@@ -602,7 +602,7 @@ fn event(&self, event: Event) {
-         let mut update_irq = false;
-         let mut regs = self.regs.borrow_mut();
-         if event == Event::CHR_EVENT_BREAK && !regs.loopback_enabled() {
--            update_irq = regs.put_fifo(registers::Data::BREAK);
-+            update_irq = regs.fifo_rx_put(registers::Data::BREAK);
-         }
-         // Release the BqlRefCell before calling self.update()
-         drop(regs);
+ static void switch_tss(CPUX86State *env, int tss_selector,
 -- 
 2.49.0
 
