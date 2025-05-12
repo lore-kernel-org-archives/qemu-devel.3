@@ -4,94 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B139BC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD198C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEV95-0003Zw-O9; Mon, 12 May 2025 11:32:47 -0400
+	id 1uEV9M-0003hf-Lq; Mon, 12 May 2025 11:33:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEV91-0003Wq-6D
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:32:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uEV9K-0003hH-D9
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:02 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEV8z-0006cE-Ds
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:32:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747063960;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TV73wcNQFlOn9H+VGZko9zPxOzSyXvcFGEr4s16QJzM=;
- b=f+Q07vVxVQbJF9CwKJU9g+27dl6Jm+i5HvceTYYEEYJupspJoThtZXMQpbrlJ0I2F+036A
- J3l7EuGPIu5SYkwyPEsSCN+jUjHNe8wWvgCYtBDUIoj/Un6+qY9TAWBoxR+W83Lhg4axhC
- RG1BNuhDnuNIesqtBvL6XeSMatpJjM0=
-Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
- [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-XV6fso3TNyqnK3os5hdLxg-1; Mon, 12 May 2025 11:32:36 -0400
-X-MC-Unique: XV6fso3TNyqnK3os5hdLxg-1
-X-Mimecast-MFC-AGG-ID: XV6fso3TNyqnK3os5hdLxg_1747063955
-Received: by mail-oa1-f71.google.com with SMTP id
- 586e51a60fabf-2c72e6e51ceso1447923fac.3
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 08:32:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747063953; x=1747668753;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TV73wcNQFlOn9H+VGZko9zPxOzSyXvcFGEr4s16QJzM=;
- b=wIUY77+1RdiSn9Hj2fDnlC8pEYW8cz8TfKZYi38jw1ZQXBCCfRuxCwGzUo1KJaA03n
- ebtnv4VcdnNQpnrMxc1XgsDaB2U+DhefI+EuTeuri5uA+RYQ83I1WQQvDUxhaIq5yn2F
- 8j88HE6W/CqO1HClfoxxvbrpyNlpQ8coK6KWLl0BTILsJLBs0Fq28pyzlxAoSMOAb9N4
- +kpBwJYYgthxKi609nxZA5K76h8NcPuB44+QDV2XNxrHOqdYspRLythh7Ho7KLvDDS3e
- FK9O5cEIk++oWZ6KwYn7lS59QCJKqQFgPZTx6hXuzQOHCpcmbqsc5z3knyHZPEn+BX29
- E5pg==
-X-Gm-Message-State: AOJu0YwS/J8KfgasZYEivpNVBehiM6Qd92WOiTgtKFIkIvhvTstkNDD9
- pmLXi8Rc6m/nX9mlTl0NX6zxTo6PXiOJecgUoRVB73nXjqLmrgdbJ1CIR+7tykfPiOe94fm2OA9
- DpJRV4XcOQGvU1rWHKHRxRyQYPKM5T90Yc5zoBgIFXio9NRAScmswwjRU7jrHCHbaFlXZMPhr8I
- LVwV+w7gmeQDMEf7JrrVgkf+Yczh+FTZOUq7/3gw==
-X-Gm-Gg: ASbGncu5Vtrp9Pxapg+Is7bD8d3jrXmb0TduyGffuZKY6nTz8trmqayr8H5wmekn2FG
- wSuqiva6dsJepWjpk6SrkmZVxGyiJaCga0TDuTc1EruMSI2dpB+MnoUlXzxa0yuVsYXsF
-X-Received: by 2002:a05:6870:b01f:b0:2c2:b9cc:afb8 with SMTP id
- 586e51a60fabf-2dba420dca0mr6813476fac.7.1747063952494; 
- Mon, 12 May 2025 08:32:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFUne/1srv24pUyqTUsq1t4n9Ymxk5oJ+OrDmlVNSdtiO/2Ad704sGNZSZ7QOmbpmrqjw4Nj7Pqnr03eyNL5Cg=
-X-Received: by 2002:a17:90b:4fd2:b0:30a:3e8e:492c with SMTP id
- 98e67ed59e1d1-30c3d650661mr19906857a91.32.1747063941182; Mon, 12 May 2025
- 08:32:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250330205857.1615-1-shentey@gmail.com>
- <20250330205857.1615-2-shentey@gmail.com>
- <340649cf-9348-458d-97e7-aee73c02217c@redhat.com>
- <540905F9-7DF7-436F-905C-A7F225F5E156@gmail.com>
- <CABC6E67-C4C7-481F-BB96-BF60957D7A84@gmail.com>
-In-Reply-To: <CABC6E67-C4C7-481F-BB96-BF60957D7A84@gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 12 May 2025 17:32:08 +0200
-X-Gm-Features: AX0GCFtdPQrLMnjbXmXY9PO9w_MYLjuvu-yvzQ4zP88fiRLBQeslotB6kcCsMEU
-Message-ID: <CABgObfbD-yHee4TXKqQ2gw7N8dtuB1wKqPLD5jLKXtJ8hx2xSw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] rust/qemu-api: Add initial logging support based on C
- API
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uEV9I-0006dz-Bu
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:02 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9epP017588;
+ Mon, 12 May 2025 15:32:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=st7Mm3PlhXzH7vX8uMOmGtjIQplLsJJflVI4scUaJ/I=; b=
+ o6ry2AfT37nbT+vzxMoIPCnuovesAqCNRpsbnnFzCmo2Y1Qsqc3wGkogsq+nqG1y
+ pX/KVGphvtY3Ka2x9IpY/aVaq09ajbRZpkXzzaJzfF4DMAfgxerUcN01ivKtC7zl
+ wFC26tjftDMmMBCK5qoJZeatD+EMFoCfFjYG+KWHnOPyTQTwxvvT4Qgn59/UEbwk
+ /uJHxXsrKesjMp8HOgEHarGvuQKAeidl7sOIgh4uXFtQPMJm3exnfAGAwXDKKiXm
+ 7km7TmaR+hsbAJXTAhZktohnpVGzN8S2PKYWCDAERNFVO5vqumECb3MdlKdAnLWC
+ xbL75NVP2h9mXW+XTNIgrA==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j059tveh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 12 May 2025 15:32:56 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54CE0qCD002414; Mon, 12 May 2025 15:32:56 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46jwx3663m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 12 May 2025 15:32:56 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CFWk4e030605;
+ Mon, 12 May 2025 15:32:55 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 46jwx36627-2; Mon, 12 May 2025 15:32:55 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V3 01/42] MAINTAINERS: Add reviewer for CPR
+Date: Mon, 12 May 2025 08:32:12 -0700
+Message-Id: <1747063973-124548-2-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-12_05,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ mlxscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 phishscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2504070000
+ definitions=main-2505120161
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE2MSBTYWx0ZWRfX8MzNtjG359VE
+ L79KjdIv9sbnI1i7kx1zJhXqCYQVcmEX8zpr/Z4gEq1NGLDG4EjDcK3xgtOgvRu47EG+zI/xQVe
+ qGsn/Dipk9GayzTAlPvNr4fpBYHXkDapl+kO0XQb5NDcKg71XBEHkiC6osyZQFmsTundMAVW0S4
+ DhZimLBXw0634nu2ZQGNe97njzmK4xkBgLsfdjtVYT8pyflarEcieefvsXugOgF5bFStKcfGOqp
+ JjfvJWp4H3u2RSw9e5llXW75rkW66lXNLTAxhchgb2f+35Bi9hwcL1Lktgt8z5OI0goegXoHWiw
+ virYHTZp85YQb9cgtwuo0vd+2cDgNYQHsaDdWmdecGaEDaIsh23G9f+onYMJoKI3jS2xNrKDSzU
+ kXvxXHW/EpWzFCSI35cZkh2abkL+tL20VibbcwI0lBvxVLoQqmEN2jWuqYobGWkgosw9ACFn
+X-Authority-Analysis: v=2.4 cv=RPmzH5i+ c=1 sm=1 tr=0 ts=682214a8 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=dt9VzEwgFbYA:10 a=p0WdMEafAAAA:8 a=yPCof4ZbAAAA:8 a=i0EeH86SAAAA:8
+ a=hD80L64hAAAA:8 a=HbCQL4OLKEBnww3_1lQA:9
+X-Proofpoint-ORIG-GUID: Oj05_ziILG6p7sI23mQyRA2npe9dwqSf
+X-Proofpoint-GUID: Oj05_ziILG6p7sI23mQyRA2npe9dwqSf
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
 X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,56 +115,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, now that GSoC selection is over I'm back. Sorry for the delay;
-Tanish Desai will work mostly on tracing, so logging can remain yours.
+CPR is integrated with live migration, and has the same maintainers.
+But, add a CPR section to add a reviewer.
 
-On Tue, Apr 8, 2025 at 10:59=E2=80=AFPM Bernhard Beschow <shentey@gmail.com=
-> wrote:
-> >Currently the #defines contain some holes for "private" mask bits. Turni=
-ng these into an
-> >enum without exposing all publicly, and changing the type of qemu_loglev=
-el for
-> >consistency, would result in undefined behavior. Or do you suggest to co=
-nvert just
-> >the public #defines into an enum to expose them to Rust, and keep the re=
-st of
-> >the C API including the type of qemu_loglevel as is?
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ MAINTAINERS | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Yes, only in Rust.
-
-> >There are surely several tradeoffs and/or cleanups possible here, but th=
-at's way beyond for
-> >what I wanted to achieve -- which is closing a gap between C and Rust. M=
-y main goal is just
-> >to get my feet wet with Rust.
-
-I understand, however there is no point in defining an API and then changin=
-g it.
-
-So we need to answer the questions I wrote a few messages ago, namely:
-
-- the mapping the LOG_* constants into Rust (e.g. whether to keep the
-uppercase SNAKE_CASE or switch to something like Log::GuestError).
-
-- whether to keep the "qemu" prefix for the API (personal opinion: no)
-
-I agree with not having macros such as log_guest_error! for now, or
-not wrapping functions like qemu_log_trylock/qemu_log_unlock that
-would be implemented as RAII (i.e. returning a "guard" object) in
-Rust.
-
-> >>Also, while this is good for now, later on we probably want to reimplem=
-ent logging at a lower level via the std::fmt::Write trait.  But that's jus=
-t for efficiency and your macro is indeed good enough to define what the AP=
-I would look like.
-> >
-> >Can we live with an easy solution then for now? As you suggest below, fu=
-rther abstractions like log_guest_error! can be built on top which further =
-insulates client code from implementation details such as the representatio=
-n of the mask bits.
-
-Yes, of course.
-
-Paolo
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6dacd6d..d54a532 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3019,6 +3019,15 @@ F: include/qemu/co-shared-resource.h
+ T: git https://gitlab.com/jsnow/qemu.git jobs
+ T: git https://gitlab.com/vsementsov/qemu.git block
+ 
++CheckPoint and Restart (CPR)
++R: Steve Sistare <steven.sistare@oracle.com>
++S: Supported
++F: hw/vfio/cpr*
++F: include/migration/cpr.h
++F: migration/cpr*
++F: tests/qtest/migration/cpr*
++F: docs/devel/migration/CPR.rst
++
+ Compute Express Link
+ M: Jonathan Cameron <jonathan.cameron@huawei.com>
+ R: Fan Ni <fan.ni@samsung.com>
+-- 
+1.8.3.1
 
 
