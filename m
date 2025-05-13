@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF564C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 18:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D14C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 18:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEuKR-0004vF-9t; Tue, 13 May 2025 14:26:11 -0400
+	id 1uEuL4-0005U0-Ns; Tue, 13 May 2025 14:26:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uZst=X5=kaod.org=clg@ozlabs.org>)
- id 1uEuKM-0004tA-9n
- for qemu-devel@nongnu.org; Tue, 13 May 2025 14:26:06 -0400
+ id 1uEuKu-0005MK-BG; Tue, 13 May 2025 14:26:40 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uZst=X5=kaod.org=clg@ozlabs.org>)
- id 1uEuKJ-00086h-TY
- for qemu-devel@nongnu.org; Tue, 13 May 2025 14:26:05 -0400
+ id 1uEuKq-0008CI-Jn; Tue, 13 May 2025 14:26:39 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZxlKL0zrcz4x8f;
- Wed, 14 May 2025 04:25:58 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZxlL21hY8z4x5g;
+ Wed, 14 May 2025 04:26:34 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZxlKD6R7fz4wyV;
- Wed, 14 May 2025 04:25:52 +1000 (AEST)
-Message-ID: <dfb70412-7b22-4444-971a-b2a87355d4d7@kaod.org>
-Date: Tue, 13 May 2025 20:25:48 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZxlKy2ww2z4wyV;
+ Wed, 14 May 2025 04:26:30 +1000 (AEST)
+Message-ID: <401e82f8-f573-4534-9dcf-eb6d251e9cfb@kaod.org>
+Date: Tue, 13 May 2025 20:26:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest/ast2700-smc-test: Fix leak
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH v1] tests/qtest/aspeed_smc-test: Fix memory leaks
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250509175047.26066-1-farosas@suse.de>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250513080806.1005996-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -85,7 +86,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250509175047.26066-1-farosas@suse.de>
+In-Reply-To: <20250513080806.1005996-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -111,34 +112,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/9/25 19:50, Fabiano Rosas wrote:
-> ASAN spotted a leak of the memory used to hold the tmp_path:
+On 5/13/25 10:08, Jamin Lin wrote:
+> Link: https://patchwork.kernel.org/project/qemu-devel/patch/20250509175047.26066-1-farosas@suse.de/
 > 
-> Direct leak of 35 byte(s) in 1 object(s) allocated from:
->      #0 0x55e29aa96da9 in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:69:3
->      #1 0x7fe0cfb26518 in g_malloc ../glib/gmem.c:106
->      #2 0x7fe0cfb4146e in g_strconcat ../glib/gstrfuncs.c:629
->      #3 0x7fe0cfb0a78f in g_get_tmp_name ../glib/gfileutils.c:1742
->      #4 0x7fe0cfb0b00b in g_file_open_tmp ../glib/gfileutils.c:1802
->      #5 0x55e29ab53961 in test_ast2700_evb ../tests/qtest/ast2700-smc-test.c:20:10
->      #6 0x55e29ab53803 in main ../tests/qtest/ast2700-smc-test.c:65:5
->      #7 0x7fe0cf7bd24c in __libc_start_main ../csu/libc-start.c:308
->      #8 0x55e29a9f7759 in _start ../sysdeps/x86_64/start.S:120
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   tests/qtest/ast2700-smc-test.c | 1 +
->   1 file changed, 1 insertion(+)
+>   tests/qtest/aspeed_smc-test.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-> diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-test.c
-> index d1c4856307..62d538d8a3 100644
-> --- a/tests/qtest/ast2700-smc-test.c
-> +++ b/tests/qtest/ast2700-smc-test.c
-> @@ -67,5 +67,6 @@ int main(int argc, char **argv)
->   
->       qtest_quit(ast2700_evb_data.s);
->       unlink(ast2700_evb_data.tmp_path);
-> +    g_free(ast2700_evb_data.tmp_path);
+> diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
+> index 4e1389385d..52a00e6f0a 100644
+> --- a/tests/qtest/aspeed_smc-test.c
+> +++ b/tests/qtest/aspeed_smc-test.c
+> @@ -228,5 +228,10 @@ int main(int argc, char **argv)
+>       unlink(ast2500_evb_data.tmp_path);
+>       unlink(ast2600_evb_data.tmp_path);
+>       unlink(ast1030_evb_data.tmp_path);
+> +    g_free(palmetto_data.tmp_path);
+> +    g_free(ast2500_evb_data.tmp_path);
+> +    g_free(ast2600_evb_data.tmp_path);
+> +    g_free(ast1030_evb_data.tmp_path);
+> +
 >       return ret;
 >   }
 
