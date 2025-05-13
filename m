@@ -4,79 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED89C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 07:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5602CC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 07:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEjkQ-0003Dn-MA; Tue, 13 May 2025 03:08:18 -0400
+	id 1uEjyj-0004s3-Vi; Tue, 13 May 2025 03:23:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uEjkN-0003Ct-Cm
- for qemu-devel@nongnu.org; Tue, 13 May 2025 03:08:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uEjkK-0005qZ-3t
- for qemu-devel@nongnu.org; Tue, 13 May 2025 03:08:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747120089;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=iw5z9Rznei1fH4XcL4DBoBaD4UqM7WmuhuZMJRlWDs0=;
- b=i0a0lrCuVIqVRoZAsggAwK9SdlGeSUpsXK276X9HOswlg7xa46F9ZyDQDZNeMBE/UPUign
- YU1TdzhYhh+L7U+XUPyzC79760WzGa5rQg/+hx0tqoWmSpjqzj4w7Ky+qhrDuf6TN8Jn9l
- DSVcK2mysR/DwdHLG2EvJ7GGGLLR73Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-1gwwMHe2Pyix-Iq5CCiuYA-1; Tue,
- 13 May 2025 03:08:05 -0400
-X-MC-Unique: 1gwwMHe2Pyix-Iq5CCiuYA-1
-X-Mimecast-MFC-AGG-ID: 1gwwMHe2Pyix-Iq5CCiuYA_1747120084
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CB33180087B; Tue, 13 May 2025 07:08:04 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7210319560A3; Tue, 13 May 2025 07:08:03 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D23B921E66C3; Tue, 13 May 2025 09:08:00 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org,
- alex.bennee@linaro.org,  stefanha@redhat.com,  peter.maydell@linaro.org,
- richard.henderson@linaro.org,  pbonzini@redhat.com,  jsnow@redhat.com,
- philmd@linaro.org,  thuth@redhat.com,  Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 09/13] qapi: transform target specific 'if' in runtime
- checks
-In-Reply-To: <cb2adbec-d098-4211-8781-c3027de59e69@linaro.org> (Pierrick
- Bouvier's message of "Mon, 12 May 2025 17:36:49 -0700")
-References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
- <20250507231442.879619-10-pierrick.bouvier@linaro.org>
- <aBzCXNTebh8B5sQ_@redhat.com> <87msbl0x7f.fsf@pond.sub.org>
- <cb2adbec-d098-4211-8781-c3027de59e69@linaro.org>
-Date: Tue, 13 May 2025 09:08:00 +0200
-Message-ID: <87h61phttb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uEjyg-0004rc-1i
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 03:23:02 -0400
+Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uEjyd-0007Wj-Lt
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 03:23:01 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id D066218013E
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 09:22:48 +0200 (CEST)
+Received: (qmail 32643 invoked by uid 990); 13 May 2025 07:22:48 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Tue, 13 May 2025 09:22:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Tue, 13 May 2025 07:22:48 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <94d24d5eea72d7f628f90b68e29d7a8eb7a578c3@nut.email>
+TLS-Required: No
+Subject: Re: [PATCH v4 04/23] contrib/plugins: add plugin showcasing new
+ dicontinuity related API
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
+ Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
+In-Reply-To: <fd63b27c-e1e2-4741-ab86-911c14a27bca@linaro.org>
+References: <cover.1746968215.git.neither@nut.email>
+ <4ed6d35c186719fd20d4abe5c73b80b0901a96fa.1746968215.git.neither@nut.email>
+ <fd63b27c-e1e2-4741-ab86-911c14a27bca@linaro.org>
+X-Rspamd-Bar: -
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-2.721752) MIME_GOOD(-0.1)
+X-Rspamd-Score: -1.321752
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=3XvcxIZLnr+OVQuqsrLH5Am/djl/kP4YTH6WOZZ8uKg=;
+ b=E10UHtDmNsGGDl3FlyhlyU6beRGS+dazUBR3cmG76CDMi6szfRSTCakYLD0uyiMPMWBH4Zqu/R
+ pFD25zkxEY/0NRjGo/stJhYTlFkeWcSglb5irg2jjDBK440v8Gwyi/YLvFvv3CeJ//LoACoH9aoQ
+ pssEhzrv74bH1l9jwuzMDI1V1BRX1askU7ZWfNhTaKLiPf0ln80InsM9dmmAO6BPmNZR5lgWqypd
+ o2N2bfE36kAK/+iLbcosO6zMGBR7c2HNu1iDuICmX+spNhH9hEwMdv1ySqF3Jag+Na/5wTfuG8Gm
+ BkX2/IDxmbyfe20zSvN0ESp52s3ynkHv7aICbRoihkhXoJWsfV2B/KJr+7PZXg8eQAu62xcWsxIu
+ In7fPuE/8gdUU7AwYbu1LmUdbDXDHpclriNKYNpgAKklf2AN5iUQJWu7tORroadt0P3XcZnwy+n6
+ 0TpJm0fzoWUA3l2lwvFnQsPOT62bqmG0r6J9dXUMW21PWP/GNI80uBwuN5w1dbzr4siyrBf20sc4
+ R2rE4hDB20h14oTjEhyDQAa9J/z9zpKBMBWRtz+if0GexYQN7JPm+WYgQnfhpo5CMw7zCrNHmdXH
+ n6Vtm95Kgvp4jtAUjjMv9YJ/wUl39zAsHdPW4XNE7vtCTug8nd1YOpjcdAlyvR5ORfIsY+47MPOJ
+ Y=
+Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
+ envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NEW_PRODUCTS=1.25,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,45 +82,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Hi Pierrick,
 
-> On 5/9/25 11:57 PM, Markus Armbruster wrote:
->>> The build system would need generate an input document for the
->>> QAPI visitor that defines whether each constant is set to true
->>> or false, based on suitable CONFIG/TARGET conditions from meson.
->> 
->> I think the conditions that are evaluated at build time in handwritten C
->> code (with #if) should also be evaluated at build time in generated C
->> code.
->> 
->> Certain conditions are evaluated at build time in target-specific code,
->> and at runtime in target-independent code.  Again, I think handwritten
->> and generated code should work the same way.
->> 
->> Thus, to eliminate target-specific QAPI-generated code, we either
->> evaluate them at runtime, or simply eliminate them.  Elsewhere, we've
->> come to the conclusion (I think) that the latter should do at least for
->> now, likely forever, so we should try that first.
->>
->
-> I'm not sure if you mean you'd prefer to eradicate #if completely.
+May 13, 2025 at 12:45 AM, Pierrick Bouvier wrote:
+> On 5/11/25 6:13 AM, Julian Ganz wrote:
+>=20
+>=20>=20
+>=20> We recently introduced new plugin API for registration of discontin=
+uity
+> >  related callbacks. This change introduces a minimal plugin showcasin=
+g
+> >  the new API. It simply counts the occurances of interrupts, exceptio=
+ns
+> >  and host calls per CPU and reports the counts when exitting.
+> >  Signed-off-by: Julian Ganz <neither@nut.email>
+> >  ---
+> >  contrib/plugins/meson.build | 3 +-
+> >  contrib/plugins/traps.c | 100 ++++++++++++++++++++++++++++++++++++
+> >  docs/about/emulation.rst | 8 +++
+> >  3 files changed, 110 insertions(+), 1 deletion(-)
+> >  create mode 100644 contrib/plugins/traps.c
+> >  +typedef struct {
+> >  + uint64_t interrupts;
+> >  + uint64_t exceptions;
+> >  + uint64_t hostcalls;
+> >  + bool active;
+> >=20
+>=20The scoreboard is automatically resized only when a new vcpu is initi=
+alized, so if an entry is present, it means it's present by definition.
+> Thus, you can remove the active field.
 
-I do not!
+In plugin_exit we iterate over all VCPUs and retrieve the corresponding
+entry via qemu_plugin_scoreboard_find, which will initialize a new
+entry if one didn't exist at that point. We used the active field to
+distinguish between entries we created and those created while printing
+the results.
 
-> We have to keep in mind that some config host #if have to stay there, or 
-> they expose things that the rest of QEMU code is not supposed to see 
-> (hidden under those same CONFIG_ ifdef also).
+Using qemu_plugin_num_vcpus instead of storing max_vcpus will
+(probably) solve this issue. I'll check to make sure and then remove
+this field.
 
-Letting people configure their QEMU build is useful and must stay.
+> > +} TrapCounters;
+> >  +
+> >  +static struct qemu_plugin_scoreboard *traps;
+> >  +static size_t max_vcpus;
+> >  +
+> >=20
+>=20You can use qemu_plugin_num_vcpus() instead of keeping a copy of max_=
+vcpus. It returns the number of vcpus started, which guarantees you'll fi=
+nd associated entries in any scoreboard.
 
-We provide this via conditional compilation, of complete source files
-(done in meson), as well as within source files (#if in C and 'if' in
-QAPI).
+Thanks, I must have missed that function.
 
-> So we would need both if and runtime_if.
-
-I don't understand the need for runtime_if.  Can you give an example?
-
-[...]
-
+Regards,
+Julian
 
