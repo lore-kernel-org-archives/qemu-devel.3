@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7927C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 01:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67709C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 01:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEeYm-0002If-SP; Mon, 12 May 2025 21:35:56 -0400
+	id 1uEeYk-0002Go-Q8; Mon, 12 May 2025 21:35:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeYi-0002F1-Cy; Mon, 12 May 2025 21:35:52 -0400
+ id 1uEeYi-0002Ey-8J; Mon, 12 May 2025 21:35:52 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeYf-00021T-Vp; Mon, 12 May 2025 21:35:52 -0400
+ id 1uEeYg-00021Z-6k; Mon, 12 May 2025 21:35:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=o76L16+85oXwxINpy+kttS3ujUGzFeqh/Z5rK6Yd30A=; b=sYq6qqZJtCIi
- mob/IlvSIwTcwVRxDbI2ZBcogj/VFPV27TEIVL2GpW/Ybg/MQlnE9Ax5z0j2VN46VokneLb9CKyAc
- oowjJ6K0Wxolize8ytDSwdaQBcHv6UeOAJ04jmD9y0up9yyzig0I2J2FR1uEeDRUm0ypk3YB0ehb6
- EoWpmjAEgC7+ZRiva5VJVTwqK8xp/rBrgPwPu4RG/mQmt0wQOOCbGIwtyZAjzK7L04qdsjKEZwPMV
- mbMYbajDft+Zmd4psP+DzcFw7Oau67H3zkgDJDmihiNEYgWWqw36+lDzrwHj/znYK/H41EetFVolQ
- MKeaLjmQhLfL+hU0zs/4Wg==;
+ Content-Type; bh=t1AoeW5+yWy2YGfiL3VknobGzbBoiHSM2roimpSm4Xc=; b=FEhJgPZGgukQ
+ aiUOT9l8c0zq61uLDwXRtl9hLV9N3DbJUjrsmvBvsApfN/5uH3iL7etV3cQN+SNAXTO79NrpVh4vP
+ buUMblYHQ5Q6V4h29HS5GHgQiNVGc27MDNPsdu+IS1QSK5oNxmX7PQRZpP/nQ7N9h1P2m3xhJYFMh
+ B3J4lzy8zDOBeewsDb75+JQa8FDBKa9BYgiB44gYEJPcgHgLydm6q1VJ27PSqR8HahsWq6jSRgt4C
+ x4vJwKtPQ+RajpHMCFjrMDRN5MlJwxeoUSrggjN1KcfngrIcer84+MYzZT/jMtOBxQij48Q2Djvtc
+ JWAHFojyFavTWkCY9W38pQ==;
 Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=debian.fritz.box)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
  (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeUe-00DboQ-0k; Tue, 13 May 2025 03:35:36 +0200
+ id 1uEeUf-00DboQ-18; Tue, 13 May 2025 03:35:38 +0200
 From: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 To: qemu-block@nongnu.org,
 	vsementsov@yandex-team.ru,
 	eblake@redhat.com
 Cc: jsnow@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
  qemu-devel@nongnu.org, andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH 1/4] hbitmap: drop meta bitmap leftovers
-Date: Tue, 13 May 2025 03:32:35 +0200
-Message-ID: <20250513013238.1213539-2-andrey.zhadchenko@virtuozzo.com>
+Subject: [PATCH 4/4] block/copy-before-write: report partial block status to
+ snapshot
+Date: Tue, 13 May 2025 03:32:38 +0200
+Message-ID: <20250513013238.1213539-5-andrey.zhadchenko@virtuozzo.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250513013238.1213539-1-andrey.zhadchenko@virtuozzo.com>
 References: <20250513013238.1213539-1-andrey.zhadchenko@virtuozzo.com>
@@ -69,69 +70,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-API to manipulate meta bitmap was removed with commit 0c88f1970c76
+until the non-accessible area
 
 Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 ---
- util/hbitmap.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ block/copy-before-write.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/util/hbitmap.c b/util/hbitmap.c
-index d9a1dabc63..16674f33e4 100644
---- a/util/hbitmap.c
-+++ b/util/hbitmap.c
-@@ -84,9 +84,6 @@ struct HBitmap {
-      */
-     int granularity;
- 
--    /* A meta dirty bitmap to track the dirtiness of bits in this HBitmap. */
--    HBitmap *meta;
--
-     /* A number of progressively less coarse bitmaps (i.e. level 0 is the
-      * coarsest).  Each bit in level N represents a word in level N+1 that
-      * has a set bit, except the last level where each bit represents the
-@@ -480,10 +477,7 @@ void hbitmap_set(HBitmap *hb, uint64_t start, uint64_t count)
-     n = last - first + 1;
- 
-     hb->count += n - hb_count_between(hb, first, last);
--    if (hb_set_between(hb, HBITMAP_LEVELS - 1, first, last) &&
--        hb->meta) {
--        hbitmap_set(hb->meta, start, count);
--    }
-+    hb_set_between(hb, HBITMAP_LEVELS - 1, first, last);
- }
- 
- /* Resetting works the other way round: propagate up if the new
-@@ -577,10 +571,7 @@ void hbitmap_reset(HBitmap *hb, uint64_t start, uint64_t count)
-     assert(last < hb->size);
- 
-     hb->count -= hb_count_between(hb, first, last);
--    if (hb_reset_between(hb, HBITMAP_LEVELS - 1, first, last) &&
--        hb->meta) {
--        hbitmap_set(hb->meta, start, count);
--    }
-+    hb_reset_between(hb, HBITMAP_LEVELS - 1, first, last);
- }
- 
- void hbitmap_reset_all(HBitmap *hb)
-@@ -784,7 +775,6 @@ void hbitmap_deserialize_finish(HBitmap *bitmap)
- void hbitmap_free(HBitmap *hb)
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index 5f5b3e7515..81d7f40b13 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -207,10 +207,11 @@ static int coroutine_fn GRAPH_RDLOCK cbw_co_flush(BlockDriverState *bs)
+  */
+ static BlockReq * coroutine_fn GRAPH_RDLOCK
+ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
+-                       int64_t *pnum, BdrvChild **file)
++                       int64_t *pnum, BdrvChild **file, bool query)
  {
-     unsigned i;
--    assert(!hb->meta);
-     for (i = HBITMAP_LEVELS; i-- > 0; ) {
-         g_free(hb->levels[i]);
-     }
-@@ -868,9 +858,6 @@ void hbitmap_truncate(HBitmap *hb, uint64_t size)
-                    (size - old) * sizeof(*hb->levels[i]));
-         }
-     }
--    if (hb->meta) {
--        hbitmap_truncate(hb->meta, hb->size << hb->granularity);
--    }
- }
+     BDRVCopyBeforeWriteState *s = bs->opaque;
+     BlockReq *req = g_new(BlockReq, 1);
++    int64_t next_dirty;
+     bool done;
  
- /**
+     QEMU_LOCK_GUARD(&s->lock);
+@@ -220,9 +221,13 @@ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
+         return NULL;
+     }
+ 
+-    if (bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes) != -1) {
+-        g_free(req);
+-        return NULL;
++    next_dirty = bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes);
++    if (next_dirty != -1) {
++        if (!query || next_dirty == offset) {
++            g_free(req);
++            return NULL;
++        }
++        bytes = offset + bytes - next_dirty;
+     }
+ 
+     done = bdrv_dirty_bitmap_status(s->done_bitmap, offset, bytes, pnum);
+@@ -270,7 +275,8 @@ cbw_co_preadv_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes,
+     while (bytes) {
+         int64_t cur_bytes;
+ 
+-        req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &file);
++        req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &file,
++                                     false);
+         if (!req) {
+             return -EACCES;
+         }
+@@ -302,7 +308,7 @@ cbw_co_snapshot_block_status(BlockDriverState *bs,
+     int64_t cur_bytes;
+     BdrvChild *child;
+ 
+-    req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &child);
++    req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &child, true);
+     if (!req) {
+         return -EACCES;
+     }
 -- 
 2.43.0
 
