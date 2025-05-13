@@ -4,93 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FE9C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 10:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E6B7C3ABD9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 10:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEmYT-0000Nc-Qq; Tue, 13 May 2025 06:08:09 -0400
+	id 1uEmYq-0000vh-Bi; Tue, 13 May 2025 06:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEmYM-0000I9-2p
- for qemu-devel@nongnu.org; Tue, 13 May 2025 06:08:03 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEmYJ-0007uN-Ex
- for qemu-devel@nongnu.org; Tue, 13 May 2025 06:08:00 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43cf06eabdaso54161525e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 03:07:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747130878; x=1747735678; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=q5InSWHz49sEJKfoQ2QNQ6ZQPGuqc5C2fmBxgyhIp60=;
- b=ZFnEXPCjVPUD5cCedfvBVxFJvEvwoUiJt7+UXmi+t3ntXd9uPWvJyc3WEshCj108y/
- zU+i7GlX4oOXSHeZTJczc1dLS2gku/WeQ0qgWwXtkgruEiz9/EXcOcX94KTb775QOUR0
- cGfOh0adC0qrdGxEuYhMGfwYYVEjyBatasSkhqiNADpC3kGubV2D7emPpNjIays9G3T6
- EUSc9yNSLdIeahfCbGZJvFIREtvjERt9UKKPZuI8DUq47QlH53eamq9Q0r1yNZCSqOFS
- lyrlMPh3HmCoCL/+0DTWfoIp/c6564/uOdjCPHlQGiecGpA7mwEEpm0lYYCbwLVo6wgX
- VKzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747130878; x=1747735678;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=q5InSWHz49sEJKfoQ2QNQ6ZQPGuqc5C2fmBxgyhIp60=;
- b=EbfDkbJNud9uka7EnyC+QTQLVLlAxT3eWYv0kLQOVkGIO6qqxCBvAsHjmHKpAN6oen
- mA+Lg5nTe558qxI0+4DpfTjAAFW9BGBYuQciBZjQZRt4ItBIDiRaYWvN5un+cHg4mjK6
- EUGrDcVmwg2OeSXU9HrBDLRjeL7e3uIn4M2JRM0G6gp2ZFnqU1c1Si0tZBUABI/eCP+E
- 1L3pLFbdRnIgfWJiWOFqTBcgbWTAReUy6yZKlCptQd0vSJ+Kl8YYMpmfbuSxdv0vxvMy
- NxHWmuuKHQzhWciNmZgf/lsnISaVRU/7nD6txeyUNtou6jv+QXMI7fxl6zNOIYbVjyOh
- gY6g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwODaSOxZWMq7aUj+IwzejQmSwcDbC2V9uzQMDOfjS1oCA3pS50CP5k8pJrNFJgoC7d05IQAXmTTQP@nongnu.org
-X-Gm-Message-State: AOJu0YwgIoV0Tfg9yR5DfU1piqAyHOW/uvasojlUNeZaXw5K2ioSxuNb
- eDTmMkcjhD2qIRhvYnD5BR94CAQ7wBshjUhuawf3cK6zU9Xn+TDNaXxRVLrFGCY=
-X-Gm-Gg: ASbGncsAvgXpaWMaKCdHsQuTBJafjZOQpGbMTwgakL+4EZygQvbXdqKqgA+UuJGk3DQ
- yVkovsI7aAJnjwOpz9a7bi5Q7u1Gn+plQJWaoeDSz7Fbw1XK4BWFTDkQUYbqUROgbspop1nl2jc
- V0j+rOaCgbsFgtiKIXYjK5gQ8ul9f0QbXArJzml69Xd0rJ13a321nsLJV3bocmWJ4VxQoEDqBVo
- cz6VeWtBWDDxTCgCq7p+kM4g1Z2nTnlUkJxvWwfXVAM0ZbwlZKhqa/3rpBeKDjaXp0OGnDJ6KqU
- MIcFQzTw/FozZl4hbQF1EgyxGOqrZnlRy60y3hTJ3xsEVXXsktDMHhXZ5JJXZINHSJk8HxNuTkP
- eIYgqYJ+LiLVpBzTsFf3y70oiXnmj
-X-Google-Smtp-Source: AGHT+IGVl3rC7KK+BwwSzbsyoT3gT98jHfPfE5lBvTNtcTCODedbnoCbc3sTwSrgs84c28D80Z+Seg==
-X-Received: by 2002:a05:600c:608b:b0:43c:efed:732d with SMTP id
- 5b1f17b1804b1-442d6d6ab7cmr158700585e9.16.1747130877943; 
- Tue, 13 May 2025 03:07:57 -0700 (PDT)
-Received: from [10.61.1.197] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd328455sm209323035e9.2.2025.05.13.03.07.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 03:07:57 -0700 (PDT)
-Message-ID: <09194fbf-a2a3-4166-8f28-9a43f02b0df8@linaro.org>
-Date: Tue, 13 May 2025 11:07:56 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uEmYo-0000s4-MN
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 06:08:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uEmYm-0007w6-Es
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 06:08:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747130907;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lZUSMweSqLYmiILgrECbaPfCTGxuVsnyfUaa8kHY29E=;
+ b=QrYER3/l+lYlR0xeJXScqJbP5T9SuxduZOCTRkDB4HyITklHaou6J7JmuQaLkYZCEz4q+z
+ uZFiMA6qHMzaP+Nmzs0wKcm+g0JM0v+1J7LzbkXoUgVWt6oahlovC1msVbooZ4s4hHLJX6
+ RO56I4lI2TBwQTrkO/o1tzDjZRDrBRs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-EIofWRUAMQW6VMszJFpaNg-1; Tue,
+ 13 May 2025 06:08:26 -0400
+X-MC-Unique: EIofWRUAMQW6VMszJFpaNg-1
+X-Mimecast-MFC-AGG-ID: EIofWRUAMQW6VMszJFpaNg_1747130905
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E7BF19560AD
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 10:08:25 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.110])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AE0C219560AB; Tue, 13 May 2025 10:08:22 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 1/3] ui/vnc.c: replace big endian flag with byte order value
+Date: Tue, 13 May 2025 11:08:17 +0100
+Message-ID: <20250513100819.1179249-2-berrange@redhat.com>
+In-Reply-To: <20250513100819.1179249-1-berrange@redhat.com>
+References: <20250513100819.1179249-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 27/48] target/arm/arm-powerctl: compile file once
- (system)
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, alex.bennee@linaro.org, anjo@rev.ng,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
- <20250512180502.2395029-28-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250512180502.2395029-28-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,13 +86,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 20:04, Pierrick Bouvier wrote:
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+It will make it easier to do certain comparisons in future if we
+store G_BIG_ENDIAN/G_LITTLE_ENDIAN directly, instead of a boolean
+flag.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ ui/vnc-enc-tight.c | 2 +-
+ ui/vnc-enc-zrle.c  | 2 +-
+ ui/vnc-jobs.c      | 2 +-
+ ui/vnc.c           | 6 +++---
+ ui/vnc.h           | 2 +-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/ui/vnc-enc-tight.c b/ui/vnc-enc-tight.c
+index 41f559eb83..f51f618e46 100644
+--- a/ui/vnc-enc-tight.c
++++ b/ui/vnc-enc-tight.c
+@@ -150,7 +150,7 @@ tight_detect_smooth_image24(VncState *vs, int w, int h)
+      * If client is big-endian, color samples begin from the second
+      * byte (offset 1) of a 32-bit pixel value.
+      */
+-    off = vs->client_be;
++    off = vs->client_bo == G_BIG_ENDIAN ? 1 : 0;
+ 
+     memset(stats, 0, sizeof (stats));
+ 
+diff --git a/ui/vnc-enc-zrle.c b/ui/vnc-enc-zrle.c
+index bd33b89063..9032e82ee5 100644
+--- a/ui/vnc-enc-zrle.c
++++ b/ui/vnc-enc-zrle.c
+@@ -255,7 +255,7 @@ static void zrle_write_u8(VncState *vs, uint8_t value)
+ static int zrle_send_framebuffer_update(VncState *vs, int x, int y,
+                                         int w, int h)
+ {
+-    bool be = vs->client_be;
++    bool be = vs->client_bo == G_BIG_ENDIAN;
+     size_t bytes;
+     int zywrle_level;
+ 
+diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
+index fcca7ec632..fd019e0a35 100644
+--- a/ui/vnc-jobs.c
++++ b/ui/vnc-jobs.c
+@@ -188,7 +188,7 @@ static void vnc_async_encoding_start(VncState *orig, VncState *local)
+     local->lossy_rect = orig->lossy_rect;
+     local->write_pixels = orig->write_pixels;
+     local->client_pf = orig->client_pf;
+-    local->client_be = orig->client_be;
++    local->client_bo = orig->client_bo;
+     local->tight = orig->tight;
+     local->zlib = orig->zlib;
+     local->hextile = orig->hextile;
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 9e097dc4b4..2c640d8be4 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -891,7 +891,7 @@ void vnc_convert_pixel(VncState *vs, uint8_t *buf, uint32_t v)
+         buf[0] = v;
+         break;
+     case 2:
+-        if (vs->client_be) {
++        if (vs->client_bo == G_BIG_ENDIAN) {
+             buf[0] = v >> 8;
+             buf[1] = v;
+         } else {
+@@ -901,7 +901,7 @@ void vnc_convert_pixel(VncState *vs, uint8_t *buf, uint32_t v)
+         break;
+     default:
+     case 4:
+-        if (vs->client_be) {
++        if (vs->client_bo == G_BIG_ENDIAN) {
+             buf[0] = v >> 24;
+             buf[1] = v >> 16;
+             buf[2] = v >> 8;
+@@ -2312,7 +2312,7 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
+     vs->client_pf.bits_per_pixel = bits_per_pixel;
+     vs->client_pf.bytes_per_pixel = bits_per_pixel / 8;
+     vs->client_pf.depth = bits_per_pixel == 32 ? 24 : bits_per_pixel;
+-    vs->client_be = big_endian_flag;
++    vs->client_bo = big_endian_flag ? G_BIG_ENDIAN : G_LITTLE_ENDIAN;
+ 
+     if (!true_color_flag) {
+         send_color_map(vs);
+diff --git a/ui/vnc.h b/ui/vnc.h
+index acc53a2cc1..f2a627dcdf 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -323,7 +323,7 @@ struct VncState
+     VncWritePixels *write_pixels;
+     PixelFormat client_pf;
+     pixman_format_code_t client_format;
+-    bool client_be;
++    int client_bo; /* G_LITTLE_ENDIAN or G_BIG_ENDIAN */
+ 
+     CaptureVoiceOut *audio_cap;
+     struct audsettings as;
+-- 
+2.49.0
 
 
