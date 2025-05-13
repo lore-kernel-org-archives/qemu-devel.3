@@ -4,106 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FDA2C3ABC9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE2BEC3ABD8
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 08:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEl5f-0005l4-7L; Tue, 13 May 2025 04:34:19 -0400
+	id 1uEl5P-0005Y4-3w; Tue, 13 May 2025 04:34:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uEl5d-0005kT-Ky
- for qemu-devel@nongnu.org; Tue, 13 May 2025 04:34:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uEl5M-0005RH-M6
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 04:34:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uEl5Z-0006Rw-83
- for qemu-devel@nongnu.org; Tue, 13 May 2025 04:34:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uEl5I-0006Qa-LA
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 04:34:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747125251;
+ s=mimecast20190719; t=1747125235;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4VUUz/K3vD5ynFqMRnkFNAMs82oWIMcdZAYYGqNsb/s=;
- b=SpVrHuJWQSEBVYVzZT5dcYNUTJEpvXZBMcQ8iir4AOnqYt0ADl3JO1WnCutLVjiBkgPUZZ
- kWzotGolQ5ZQRKLmXuZDI2wGlO7BZJUz/gWacAlKWIgOynIDoBmYUENW9/0oKOcDI/kvge
- fvWZlOIv4Wzok0gQ9eL2DqRCOqnOry0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-aPcWs7CbMky71VPFfUzjTg-1; Tue, 13 May 2025 04:34:09 -0400
-X-MC-Unique: aPcWs7CbMky71VPFfUzjTg-1
-X-Mimecast-MFC-AGG-ID: aPcWs7CbMky71VPFfUzjTg_1747125248
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43eea5a5d80so30301885e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 01:34:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747125248; x=1747730048;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4VUUz/K3vD5ynFqMRnkFNAMs82oWIMcdZAYYGqNsb/s=;
- b=N7E8bG89S1Ts+DszuoSrjJib6WgPbaShMXy6QY/BMtGJz2ZxePvjiVlMxl251IAon0
- 2XKINsQ5BfgF4wtDQKufp7dwxVnBdgWUXD3WJ4AnxRKCqlKK1uCMeKHgrQATIYXs4VXb
- l9f86IS3xY5WvZSEjkMksUjakAtp9n0LEeyHuETTzSvTlADMWBAI/MzMLxJRtndnmI+p
- XSeRP62jMmImn2aqC56/mYipeT27VyYtqjB2nJF+uIZjyUEjvkzpsYeMGe7q+Zh1PGdz
- 8wDBedF0dxPGpoazoPEsdDugL2E0Ox/nvRH2FN2TcRZHl85TQKmlift1is7SNNMDQqjV
- H9yQ==
-X-Gm-Message-State: AOJu0YzRJy3xDaHJlyXTtCkiXT4iCILByx3BzB2HzO+DeSRh4tLct/zm
- iU+iWSRLCAGjBvVcRnXe+EeFxPl1FSqv9vCvxie8wY5PayrOL0fvt4fGxb3JsanbVObuEnd+dcu
- eatfh7bQyr7xIkozKwT2mdOF/YvtYJ+C/sQ58Af/DK8cNHRSTUfIJ
-X-Gm-Gg: ASbGnctqvyKlwe0PZi6Zue4xDl7JA/MsFXPPkRUkzXyr03fgmmOp2N9CarYiwKTIRgJ
- 6HlU/p7ySit2NC+9URrjzDepP4jwyXMullhfyoVHauwju7qgANQd/kTEWlQhLE08EOe6SHUdVol
- 3KME8FkyVeEoDoDkt7frat/JRFA5JqMdz/1AVuvP2mdBaSu6I8rfMzm64cSE2/Zotf1C2Di9093
- I8DRL5D6Bn9sHrqtxWWHjbXBC+Mfm+M5d2e6uEHMYS5Lob5ZHwCLQR+jziC+95lEc0R7xtTlRPu
- EOGKdUIpgNg2so7Md+UArm6ZrGRgFbyv
-X-Received: by 2002:a05:600c:628c:b0:43c:f689:dd with SMTP id
- 5b1f17b1804b1-442d6d71df0mr146869905e9.19.1747125248011; 
- Tue, 13 May 2025 01:34:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSlfEs20rOFjqqrW5vXRv0rjvijsDxbmGSr2wixU5yagOHT15C4yLbypPTku5RDF+DKRHL5Q==
-X-Received: by 2002:a05:600c:628c:b0:43c:f689:dd with SMTP id
- 5b1f17b1804b1-442d6d71df0mr146869485e9.19.1747125247581; 
- Tue, 13 May 2025 01:34:07 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442e9d00bacsm40155815e9.12.2025.05.13.01.34.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 May 2025 01:34:07 -0700 (PDT)
-Date: Tue, 13 May 2025 10:34:05 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>, Gerd Hoffmann
- <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Laurent
- Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu
- <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Eduardo
- Habkost <eduardo@habkost.net>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, qemu-riscv@nongnu.org, Weiwei Li
- <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>, Zhao Liu
- <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>, Helge Deller
- <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha
- <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
- <pbonzini@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
- <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Jason
- Wang <jasowang@redhat.com>, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v4 14/27] hw/intc/apic: Remove
- APICCommonState::legacy_instance_id field
-Message-ID: <20250513103405.6c502bbc@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250508133550.81391-15-philmd@linaro.org>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-15-philmd@linaro.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TqM99o8hq6ejXQr8Ag8go9dDfz10eSysRHw7IIJ+3sg=;
+ b=FqLixeSpmxYsaG9KVKWzp1y/El++rer19D8BOIqVi+z4oyBm0rTpQiZRF8BNwIbdwmZx5I
+ PdWh88Q005Tjq1HvGkhzn9WYlcFLEKLUDA0ZcMX/tjZZabuMaDh15+PLPGgr/NDPvE8cuO
+ SlBw/rULx6v3PzAwXcIQAnqimNNejBw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-lpSzAbdyMqalurRxKN1qBg-1; Tue,
+ 13 May 2025 04:33:51 -0400
+X-MC-Unique: lpSzAbdyMqalurRxKN1qBg-1
+X-Mimecast-MFC-AGG-ID: lpSzAbdyMqalurRxKN1qBg_1747125230
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6363A180056F; Tue, 13 May 2025 08:33:50 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.32.62])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8CCFF1943282; Tue, 13 May 2025 08:33:45 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Brad Smith <brad@comstyle.com>
+Subject: [PATCH] meson.build: Compile common_ss files with right system header
+ include paths
+Date: Tue, 13 May 2025 10:33:43 +0200
+Message-ID: <20250513083343.148497-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -112,7 +67,7 @@ X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,74 +83,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  8 May 2025 15:35:37 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+From: Thomas Huth <thuth@redhat.com>
 
-> The APICCommonState::legacy_instance_id boolean was only set
-> in the pc_compat_2_6[] array, via the 'legacy-instance-id=3Don'
-> property. We removed all machines using that array, lets remove
-> that property, simplifying apic_common_realize().
->=20
-> Because instance_id is initialized as initial_apic_id, we can
-> not register vmstate_apic_common directly via dc->vmsd.
+Since commit 6f4e8a92bbd ("hw/arm: make most of the compilation units
+common"), compilation of some arm machines (like musicpal) fails on
+certain host systems like OpenBSD 7.6/7.7 since headers like <epoxy/gl.h>
+don't reside in /usr/include and we currently don't add the right
+CFLAGS for the common files to include the additional header search
+paths. Add a loop similar to what we already did in commit 727bb5b477e6
+to fix it.
 
-I think just removing this property is pretty save,
-it's highly unlikely to be used by any external user
-as it's purpose was to keep migration working for 2.6.
-With the later gone there is not need for the property at all.
- =20
+With this fix applied, we can now also drop the explicit dependency
+on pixman for the arm musicpal machine.
 
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
+Fixes: 6f4e8a92bbd ("hw/arm: make most of the compilation units common")
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[thuth: Add commit message + changes in hw/arm/meson.build]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ meson.build        | 27 ++++++++++++++++-----------
+ hw/arm/meson.build |  2 +-
+ 2 files changed, 17 insertions(+), 12 deletions(-)
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  include/hw/i386/apic_internal.h | 1 -
->  hw/intc/apic_common.c           | 5 -----
->  2 files changed, 6 deletions(-)
->=20
-> diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_inter=
-nal.h
-> index 429278da618..db6a9101530 100644
-> --- a/include/hw/i386/apic_internal.h
-> +++ b/include/hw/i386/apic_internal.h
-> @@ -188,7 +188,6 @@ struct APICCommonState {
->      uint32_t vapic_control;
->      DeviceState *vapic;
->      hwaddr vapic_paddr; /* note: persistence via kvmvapic */
-> -    bool legacy_instance_id;
->      uint32_t extended_log_dest;
->  };
-> =20
-> diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-> index 37a7a7019d3..1d259b97e63 100644
-> --- a/hw/intc/apic_common.c
-> +++ b/hw/intc/apic_common.c
-> @@ -294,9 +294,6 @@ static void apic_common_realize(DeviceState *dev, Err=
-or **errp)
->          info->enable_tpr_reporting(s, true);
->      }
-> =20
-> -    if (s->legacy_instance_id) {
-> -        instance_id =3D VMSTATE_INSTANCE_ID_ANY;
-> -    }
->      vmstate_register_with_alias_id(NULL, instance_id, &vmstate_apic_comm=
-on,
->                                     s, -1, 0, NULL);
-> =20
-> @@ -412,8 +409,6 @@ static const Property apic_properties_common[] =3D {
->      DEFINE_PROP_UINT8("version", APICCommonState, version, 0x14),
->      DEFINE_PROP_BIT("vapic", APICCommonState, vapic_control, VAPIC_ENABL=
-E_BIT,
->                      true),
-> -    DEFINE_PROP_BOOL("legacy-instance-id", APICCommonState, legacy_insta=
-nce_id,
-> -                     false),
->  };
-> =20
->  static void apic_common_get_id(Object *obj, Visitor *v, const char *name,
+diff --git a/meson.build b/meson.build
+index 5ac64075be7..7131aa2b21d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3228,6 +3228,7 @@ config_devices_mak_list = []
+ config_devices_h = {}
+ config_target_h = {}
+ config_target_mak = {}
++config_base_arch_mak = {}
+ 
+ disassemblers = {
+   'alpha' : ['CONFIG_ALPHA_DIS'],
+@@ -3419,6 +3420,11 @@ foreach target : target_dirs
+     config_all_devices += config_devices
+   endif
+   config_target_mak += {target: config_target}
++
++  # build a merged config for all targets with the same TARGET_BASE_ARCH
++  target_base_arch = config_target['TARGET_BASE_ARCH']
++  config_base_arch = config_base_arch_mak.get(target_base_arch, {}) + config_target
++  config_base_arch_mak += {target_base_arch: config_base_arch}
+ endforeach
+ target_dirs = actual_target_dirs
+ 
+@@ -4099,28 +4105,27 @@ common_all = static_library('common',
+ 
+ # construct common libraries per base architecture
+ hw_common_arch_libs = {}
+-foreach target : target_dirs
+-  config_target = config_target_mak[target]
+-  target_base_arch = config_target['TARGET_BASE_ARCH']
++foreach target_base_arch, config_base_arch : config_base_arch_mak
++  if target_base_arch in hw_common_arch
++    base_arch_hw = hw_common_arch[target_base_arch].apply(config_base_arch, strict: false)
++    base_arch_common = common_ss.apply(config_base_arch, strict: false)
+ 
+-  # check if already generated
+-  if target_base_arch in hw_common_arch_libs
+-    continue
+-  endif
++    lib_deps = base_arch_hw.dependencies()
++    foreach dep : base_arch_common.dependencies()
++      lib_deps += dep.partial_dependency(compile_args: true, includes: true)
++    endforeach
+ 
+-  if target_base_arch in hw_common_arch
+     target_inc = [include_directories('target' / target_base_arch)]
+-    src = hw_common_arch[target_base_arch]
+     lib = static_library(
+       'hw_' + target_base_arch,
+       build_by_default: false,
+-      sources: src.all_sources() + genh,
++      sources: base_arch_hw.sources() + genh,
+       include_directories: common_user_inc + target_inc,
+       implicit_include_directories: false,
+       # prevent common code to access cpu compile time
+       # definition, but still allow access to cpu.h
+       c_args: ['-DCPU_DEFS_H', '-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU'],
+-      dependencies: src.all_dependencies())
++      dependencies: lib_deps)
+     hw_common_arch_libs += {target_base_arch: lib}
+   endif
+ endforeach
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 5098795f61d..8e3bf495dbf 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -8,7 +8,7 @@ arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
+ arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
+ arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
+ arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
+-arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
++arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: files('musicpal.c'))
+ arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
+ arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
+ arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
+-- 
+2.49.0
 
 
