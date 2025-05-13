@@ -4,95 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0704C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A121FC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEjJz-0008DK-O6; Tue, 13 May 2025 02:40:59 -0400
+	id 1uEjTs-0002iG-Rq; Tue, 13 May 2025 02:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uEjJw-0008CY-RX; Tue, 13 May 2025 02:40:56 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1uEjTp-0002hA-Dj; Tue, 13 May 2025 02:51:09 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uEjJu-0003I6-Q7; Tue, 13 May 2025 02:40:56 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 58EE8121287;
- Tue, 13 May 2025 09:40:44 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 05FB220A240;
- Tue, 13 May 2025 09:40:52 +0300 (MSK)
-Message-ID: <16ac7bdb-9df1-4951-bf3b-0b6cddbee358@tls.msk.ru>
-Date: Tue, 13 May 2025 09:40:51 +0300
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1uEjTm-0004Bh-9b; Tue, 13 May 2025 02:51:09 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D0K2bg005028;
+ Tue, 13 May 2025 06:50:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=RNfCmR
+ x9NO47/r3D3wcvaaroKqlVv2Uuz0WNzRJlAbs=; b=MfbP4Fuy7L40QXnzfEFsCg
+ kuT2O5VJ3pfT+05J4HqAcRdog5GbZgDk5Rnsyi0xQ3OCgsGQAYcI7aJAp/X2T+k6
+ g8x6P8JQKkZfdi2mL/QiYzWBKxeEBmICvkziTqtnNky4ivC+9WUDaQOmvWIBGGpA
+ MDYZzPt74Il2J5veHmOCVFfpGGofS3kA9m6ImUQaUPp84ASiopnLse3EcugzuMjX
+ 57zwuq7NAC7GbwkAUBPupNzEDRrdkDkY+seIRPuLF3rWs/WrdykVynGj94eggVP5
+ Brs7fl41+V1kyf+E2qAT1y6QYo+wC+fGdGdNU/uQH6ciq/Xc/utPmBR6g1uKyhDQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46kuephatr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 May 2025 06:50:38 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54D3NNeq003606;
+ Tue, 13 May 2025 06:50:37 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 46jkbkhjqu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 May 2025 06:50:37 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54D6oY2754723054
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 May 2025 06:50:34 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EE127201CF;
+ Tue, 13 May 2025 06:50:33 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 93FE3201CC;
+ Tue, 13 May 2025 06:50:33 +0000 (GMT)
+Received: from [9.152.224.40] (unknown [9.152.224.40])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 13 May 2025 06:50:33 +0000 (GMT)
+Message-ID: <14b9b607-c88a-4691-9872-cc6a51834c95@linux.ibm.com>
+Date: Tue, 13 May 2025 08:50:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] audio related fixes for 10.1
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <d456c188-0463-4dc2-9178-469f840eaebe@t-online.de>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <d456c188-0463-4dc2-9178-469f840eaebe@t-online.de>
+Subject: Re: [PATCH] s390x: Clear RAM on diag308 subcode 3 reset
+To: Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>,
+ Nicholas Miehlbradt <nicholas@linux.ibm.com>, thuth@redhat.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, pasic@linux.ibm.com,
+ farman@linux.ibm.com, qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250429052021.10789-1-nicholas@linux.ibm.com>
+ <489d0473-579a-4850-a6d5-be38bf2954b9@redhat.com>
+ <5863e80e-8296-4f63-bf7d-783b2a9aca0a@linux.ibm.com>
+ <27d5d332-bc7c-4036-a3d9-d4666411bd4a@linux.ibm.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <27d5d332-bc7c-4036-a3d9-d4666411bd4a@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: o0ZzgkByD79XdfSB9jfxwu9W3Gz4MQ2_
+X-Authority-Analysis: v=2.4 cv=e4gGSbp/ c=1 sm=1 tr=0 ts=6822ebbe cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=SUMUnBiYsSFdsSyGjGkA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: o0ZzgkByD79XdfSB9jfxwu9W3Gz4MQ2_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDA1NiBTYWx0ZWRfXyu95meOZZSKS
+ FemxNVxc4FcDZZVqC5RIXIy3UwjDEFmeHXQWgcyP21IRIkjw/XLeAm18KUsqYvntz5Q0uRg0Y5k
+ bSKZicKY0Wjt4hvsff5JJAf/R9/gLXbZI8hnnqpePrpXzm3c9eLZGVZgifG+rMAfQ+UlA3AfjwT
+ +MY2RLqqTfNci4U0VGVGufNg/u5XbIFwEAnrCLJd3IB53RpVDU8KC9JusJj/UKP0aDv+SeQfjFd
+ 0qoMpNCOeLtqlmdHm5WRjVtxO8dKXwesK8R5GfeR+rAcLkOlWYy0T9Iy82ne0vzuDSYIRk2vHer
+ TVHVX8oJmhWVgLl1e+Zp8z7/IKEM2+NPdkcqGUPPGZT/O2HAYP8OEPMuCkKIuGr4Fwv8KDnAgCt
+ /YZM2ymyZZ2zbIWX4EktLIfXFzQVVftU7Wyee5sLkVgngAZObszctvjaCZb70gL7Zg3Gdf0n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-12_07,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 phishscore=0
+ spamscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 mlxlogscore=823 adultscore=0
+ malwarescore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505130056
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,35 +127,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-11.05.2025 10:36, Volker Rümelin wrote:
-> A few audio related fixes for 10.1.
+Am 29.04.25 um 16:09 schrieb Matthew Rosato:
+> On 4/29/25 3:45 AM, Christian Borntraeger wrote:
+>> Am 29.04.25 um 09:37 schrieb David Hildenbrand:
+>> [...]
+>>> The only problem I see is with vfio devices is the new "memory pinned" mode. [1]
+>>>
+>>> There, we'd have to check if any such device is around (discarding of ram is disabled?), and fallback to actual zeroing of memory.
+>>
+>> CC Matt to double check.
 > 
-> The virtio-sound device is the first QEMU audio front end that supports floating point samples. The audio subsystem is only partially prepared for this. The commit message of patch 7/7 "audio: add float sample endianness converters" has the details. The new code paths in patch 7/7 are only compile tested. I don't have a big endian host to test.
+> When triggering the "relaxed translation" mode via iommu.passthrough in the guest, we now take the default (for other platforms) memory_region_is_ram() path in vfio_listener_region_add/del() which handles the pin/unpin from vfio common code.  As for ram discarding, we then also use the vfio common path and only uncoordinated discards are disabled via:
 > 
-> checkpatch.pl complains about missing space characters in the type punning macros in patch 7/7. I don't agree.
-> 
-> Volker Rümelin (7):
->    tests/functional: use 'none' audio driver for q800 tests
->    audio: fix SIGSEGV in AUD_get_buffer_size_out()
->    audio: fix size calculation in AUD_get_buffer_size_out()
->    hw/audio/asc: fix SIGSEGV in asc_realize()
->    hw/audio/asc: replace g_malloc0() with g_malloc()
->    audio/mixeng: remove unnecessary pointer type casts
->    audio: add float sample endianness converters
-> 
->   audio/audio.c                        | 11 +++-
->   audio/audio_template.h               | 12 ++--
->   audio/mixeng.c                       | 83 ++++++++++++++++++++++++----
->   audio/mixeng.h                       |  6 +-
->   hw/audio/asc.c                       |  9 ++-
->   tests/functional/test_m68k_q800.py   |  3 +-
->   tests/functional/test_m68k_replay.py |  3 +-
->   7 files changed, 106 insertions(+), 21 deletions(-)
+> vfio_ram_block_discard_disable() -> ram_block_uncoordinated_discard_disable()
 
-It looks like (some of) these patches should go to 10.0-stable too,
-what do you think?
+So this patch is good?
 
-Thanks,
-
-/mjt
 
