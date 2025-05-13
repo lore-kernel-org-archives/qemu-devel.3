@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA542C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 01:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7927C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 01:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEeYk-0002Gp-RK; Mon, 12 May 2025 21:35:55 -0400
+	id 1uEeYm-0002If-SP; Mon, 12 May 2025 21:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeYi-0002Ez-AG; Mon, 12 May 2025 21:35:52 -0400
+ id 1uEeYi-0002F1-Cy; Mon, 12 May 2025 21:35:52 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeYf-00021S-VD; Mon, 12 May 2025 21:35:52 -0400
+ id 1uEeYf-00021T-Vp; Mon, 12 May 2025 21:35:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=+L+BU/R0UiYOQwIozPYQoIx70UFXZ5v2qWVT4AX4P+k=; b=NunU+OlPGWG5
- LSJYo929eb6VBFhzL7W4jiA4pDRDuawj0nwHUzXmz3DnJCRiZeEygk48Vbr4wPBkVDREAp99fbI7Y
- jSffTuBvXystnAvZNmKSzmF2ROG0Ml+Yc50XL42OMsqK7s/Kuc3f+H0uJZas78Ah0B4BrPTjub96w
- ZKPp41DFHCI4bX3ntF2pomPzzJOxb4QvLWx4/lJUxGUS/cxq502G+o610dyFaiuQog4jTPEczQ6rq
- VuHde+tHVLYaFu/gfLQ8JuCWHfnjd3ryyxGk3iM8v9N4HZN8PS1Y2k+7NLlBNaBVubGI003i3ndy2
- Ho6SVyZPDsSPUleyxG2yFg==;
+ Content-Type; bh=o76L16+85oXwxINpy+kttS3ujUGzFeqh/Z5rK6Yd30A=; b=sYq6qqZJtCIi
+ mob/IlvSIwTcwVRxDbI2ZBcogj/VFPV27TEIVL2GpW/Ybg/MQlnE9Ax5z0j2VN46VokneLb9CKyAc
+ oowjJ6K0Wxolize8ytDSwdaQBcHv6UeOAJ04jmD9y0up9yyzig0I2J2FR1uEeDRUm0ypk3YB0ehb6
+ EoWpmjAEgC7+ZRiva5VJVTwqK8xp/rBrgPwPu4RG/mQmt0wQOOCbGIwtyZAjzK7L04qdsjKEZwPMV
+ mbMYbajDft+Zmd4psP+DzcFw7Oau67H3zkgDJDmihiNEYgWWqw36+lDzrwHj/znYK/H41EetFVolQ
+ MKeaLjmQhLfL+hU0zs/4Wg==;
 Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=debian.fritz.box)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
  (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeUe-00DboQ-1z; Tue, 13 May 2025 03:35:37 +0200
+ id 1uEeUe-00DboQ-0k; Tue, 13 May 2025 03:35:36 +0200
 From: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 To: qemu-block@nongnu.org,
 	vsementsov@yandex-team.ru,
 	eblake@redhat.com
 Cc: jsnow@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
  qemu-devel@nongnu.org, andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH 2/4] hbitmap: introduce hbitmap_reverse()
-Date: Tue, 13 May 2025 03:32:36 +0200
-Message-ID: <20250513013238.1213539-3-andrey.zhadchenko@virtuozzo.com>
+Subject: [PATCH 1/4] hbitmap: drop meta bitmap leftovers
+Date: Tue, 13 May 2025 03:32:35 +0200
+Message-ID: <20250513013238.1213539-2-andrey.zhadchenko@virtuozzo.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250513013238.1213539-1-andrey.zhadchenko@virtuozzo.com>
 References: <20250513013238.1213539-1-andrey.zhadchenko@virtuozzo.com>
@@ -69,85 +69,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-and bdrv_dirty_bitmap_reverse() helper
+API to manipulate meta bitmap was removed with commit 0c88f1970c76
 
 Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 ---
- block/dirty-bitmap.c         |  9 +++++++++
- include/block/block_int-io.h |  1 +
- include/qemu/hbitmap.h       |  8 ++++++++
- util/hbitmap.c               | 15 +++++++++++++++
- 4 files changed, 33 insertions(+)
+ util/hbitmap.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/block/dirty-bitmap.c b/block/dirty-bitmap.c
-index 13a1979755..c7f453fdb9 100644
---- a/block/dirty-bitmap.c
-+++ b/block/dirty-bitmap.c
-@@ -888,3 +888,12 @@ void bdrv_dirty_bitmap_merge_internal(BdrvDirtyBitmap *dest,
-         }
-     }
- }
-+
-+void bdrv_dirty_bitmap_reverse(BdrvDirtyBitmap *bitmap)
-+{
-+    assert(!bdrv_dirty_bitmap_readonly(bitmap));
-+    assert(!bdrv_dirty_bitmap_inconsistent(bitmap));
-+    bdrv_dirty_bitmaps_lock(bitmap->bs);
-+    hbitmap_reverse(bitmap->bitmap);
-+    bdrv_dirty_bitmaps_unlock(bitmap->bs);
-+}
-diff --git a/include/block/block_int-io.h b/include/block/block_int-io.h
-index 4a7cf2b4fd..093613e7d1 100644
---- a/include/block/block_int-io.h
-+++ b/include/block/block_int-io.h
-@@ -109,6 +109,7 @@ void bdrv_clear_dirty_bitmap(BdrvDirtyBitmap *bitmap, HBitmap **out);
- void bdrv_dirty_bitmap_merge_internal(BdrvDirtyBitmap *dest,
-                                       const BdrvDirtyBitmap *src,
-                                       HBitmap **backup, bool lock);
-+void bdrv_dirty_bitmap_reverse(BdrvDirtyBitmap *bitmap);
- 
- void bdrv_inc_in_flight(BlockDriverState *bs);
- void bdrv_dec_in_flight(BlockDriverState *bs);
-diff --git a/include/qemu/hbitmap.h b/include/qemu/hbitmap.h
-index 8136e33674..dbdc9aa2d4 100644
---- a/include/qemu/hbitmap.h
-+++ b/include/qemu/hbitmap.h
-@@ -350,4 +350,12 @@ bool hbitmap_status(const HBitmap *hb, int64_t start, int64_t count,
-  */
- int64_t hbitmap_iter_next(HBitmapIter *hbi);
- 
-+/**
-+ * hbitmap_reverse:
-+ * @bitmap: The HBitmap to operate on
-+ *
-+ * Reverse the bits in the bitmap.
-+ */
-+void hbitmap_reverse(HBitmap *bitmap);
-+
- #endif
 diff --git a/util/hbitmap.c b/util/hbitmap.c
-index 16674f33e4..b99c4b1eec 100644
+index d9a1dabc63..16674f33e4 100644
 --- a/util/hbitmap.c
 +++ b/util/hbitmap.c
-@@ -940,3 +940,18 @@ char *hbitmap_sha256(const HBitmap *bitmap, Error **errp)
+@@ -84,9 +84,6 @@ struct HBitmap {
+      */
+     int granularity;
  
-     return hash;
+-    /* A meta dirty bitmap to track the dirtiness of bits in this HBitmap. */
+-    HBitmap *meta;
+-
+     /* A number of progressively less coarse bitmaps (i.e. level 0 is the
+      * coarsest).  Each bit in level N represents a word in level N+1 that
+      * has a set bit, except the last level where each bit represents the
+@@ -480,10 +477,7 @@ void hbitmap_set(HBitmap *hb, uint64_t start, uint64_t count)
+     n = last - first + 1;
+ 
+     hb->count += n - hb_count_between(hb, first, last);
+-    if (hb_set_between(hb, HBITMAP_LEVELS - 1, first, last) &&
+-        hb->meta) {
+-        hbitmap_set(hb->meta, start, count);
+-    }
++    hb_set_between(hb, HBITMAP_LEVELS - 1, first, last);
  }
-+
-+void hbitmap_reverse(HBitmap *bitmap)
-+{
-+    int64_t pnum, pos = 0;
-+    int64_t size = bitmap->orig_size;
-+
-+    while (pos < size) {
-+        if (hbitmap_status(bitmap, pos, size - pos, &pnum)) {
-+            hbitmap_reset(bitmap, pos, pnum);
-+        } else {
-+            hbitmap_set(bitmap, pos, pnum);
-+        }
-+        pos += pnum;
-+    }
-+}
+ 
+ /* Resetting works the other way round: propagate up if the new
+@@ -577,10 +571,7 @@ void hbitmap_reset(HBitmap *hb, uint64_t start, uint64_t count)
+     assert(last < hb->size);
+ 
+     hb->count -= hb_count_between(hb, first, last);
+-    if (hb_reset_between(hb, HBITMAP_LEVELS - 1, first, last) &&
+-        hb->meta) {
+-        hbitmap_set(hb->meta, start, count);
+-    }
++    hb_reset_between(hb, HBITMAP_LEVELS - 1, first, last);
+ }
+ 
+ void hbitmap_reset_all(HBitmap *hb)
+@@ -784,7 +775,6 @@ void hbitmap_deserialize_finish(HBitmap *bitmap)
+ void hbitmap_free(HBitmap *hb)
+ {
+     unsigned i;
+-    assert(!hb->meta);
+     for (i = HBITMAP_LEVELS; i-- > 0; ) {
+         g_free(hb->levels[i]);
+     }
+@@ -868,9 +858,6 @@ void hbitmap_truncate(HBitmap *hb, uint64_t size)
+                    (size - old) * sizeof(*hb->levels[i]));
+         }
+     }
+-    if (hb->meta) {
+-        hbitmap_truncate(hb->meta, hb->size << hb->granularity);
+-    }
+ }
+ 
+ /**
 -- 
 2.43.0
 
