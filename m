@@ -4,91 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037AFC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 11:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BEBC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 11:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEnao-0005JK-62; Tue, 13 May 2025 07:14:38 -0400
+	id 1uEnbX-0005qO-7y; Tue, 13 May 2025 07:15:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEnam-0005JC-Iy
- for qemu-devel@nongnu.org; Tue, 13 May 2025 07:14:36 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEnak-0006SW-JH
- for qemu-devel@nongnu.org; Tue, 13 May 2025 07:14:36 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-442ccf0e1b3so63194125e9.3
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 04:14:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747134873; x=1747739673; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=84dCeypP7NHvHY71PW84LFsdDpsiAsS4J6CFVx9jUoI=;
- b=LRR6npcsG+oETSVQLN6Vb0K8GhfuT3rJNxe0KI6kA8HPC6oza10fJrByApr2usKKig
- deE6O+62R559avR4xMB0ToiNQO+Eam5yzubCCrkGVjS0QCjh0Edxoi0z7n75093UxtRR
- EUJHhezok9nxLVE07C+9EVQ7bzL7DNm3YiIIHTvQi4Wprf2mdWLquVB2HCXrois4SkQJ
- vvHOd6QMNRXbFaweB6jidNAESpaeRgZQfw7eUtaWpkt73DmsWsxh+87Zuruj5bT02yS/
- TYwU6j2z8stnOvQwqIEwkMO4VxkWOwACR+fRmfQxBsYuq4amLZtrq6v+w2nEQxFIQRrE
- FkAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747134873; x=1747739673;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=84dCeypP7NHvHY71PW84LFsdDpsiAsS4J6CFVx9jUoI=;
- b=HFmb2e3QvIkQau0yDszVw1p/Re9b/CmBDdysopqALAWy/7JRU9KPaapMY7QajTeo2e
- 015KhndXeUieoU4MnBVz5LopdXs6/Lg+wQ3EQgsuGA9PZ7kDwIvlAV/U6jbSeOoczIG7
- kx0az+pPirO+EvdfKz4c7GxDTDnBox8kZ++v+3Z55yCFfqupRDigrBidCZc0PZxbtpvy
- 4FcjtVWhbQrieB1dMelg6VcsOMeuqwzoupX+fZy1KkScRNpbIFfIfoDLeAybuW7XAnSD
- srhzrAJfVji99tocugXbZ0Lz+fKrbTuoDcUIsqaaz+k/zikabWvjL8vxUpS0Yo+jtd/l
- i0aQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVqfCcmFHsjpr/kDHIlNN6wXCNK6nC9lNni6Ib2EAlzEjIOD5NmAnAxbdqQAyij3Q/7lawwLu4VqxRf@nongnu.org
-X-Gm-Message-State: AOJu0YxT1fzXlM7SBWCOvKTYM9GAucnaqxRQhZ2y56WmUeGe3UQHV27I
- QbSRDFhjCKdVZQ5OBaJpiypGLvYTrya8vPO5nWrpAsKvW14+FXQbKxwfRykTf61Eji1JBUnNNcj
- dHvzSeMfa
-X-Gm-Gg: ASbGncuoFdpVkhppfmRIg/iIa3aT0g7XMrAwqZxOtUp69BcaRO/v7rPTjFNz7jRS/Qb
- 2RFdNzPhMbp3Xxo/92AvuWMxq03I/9E6WogtoDtEJikSAIIeoQ5/BJeg8Zd6QCPw2WbskbQkwJ/
- ReGSre4vfvBkOkk2Il57cxSDlregpLLHn/dLmKaMvVDlSwmgQd3b02aVnl5H9jH2v+1lPKHkgM+
- O+7t5nwD7+8l1cZI5RnLbmssgr8X6q9+Ey7nzzioMoUKy8w2baN9PlaQnrr3Tc/NBCGzSLn1JJj
- K03iQDK4rrEfNzcuY6QuoZJE6sUgfUaPkAl0ihSwoKNkPwEAb+/RmyUihqajCOHCQZZEfWYol2e
- 4zTBuwkwUrYjB
-X-Google-Smtp-Source: AGHT+IGGWyMeHJwkha/TU3oYySfCXdQFkgwYvCZfWqU1cOTC711T8NsKj8GGMQkJRp73zvYHCw0BEw==
-X-Received: by 2002:a05:600c:5299:b0:441:b076:fce8 with SMTP id
- 5b1f17b1804b1-442d6d44960mr157200505e9.14.1747134872726; 
- Tue, 13 May 2025 04:14:32 -0700 (PDT)
-Received: from [10.61.1.197] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442ebd6fe86sm17308025e9.0.2025.05.13.04.14.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 04:14:32 -0700 (PDT)
-Message-ID: <12efedf5-3cea-49ff-aef0-f5da851b14ed@linaro.org>
-Date: Tue, 13 May 2025 12:14:31 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uEnbP-0005kr-92
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 07:15:17 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uEnbM-0006UH-EV
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 07:15:14 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZxYfc4GSHz6M4Wr;
+ Tue, 13 May 2025 19:10:16 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id D54D61402F4;
+ Tue, 13 May 2025 19:14:56 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 13 May 2025 13:14:56 +0200
+To: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <mst@redhat.com>
+CC: <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>, <qemu-arm@nongnu.org>, 
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>, Itaru Kitayama
+ <itaru.kitayama@linux.dev>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: [PATCH v13 0/5] arm/virt: CXL support via pxb_cxl
+Date: Tue, 13 May 2025 12:14:50 +0100
+Message-ID: <20250513111455.128266-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] ui/vnc: take account of client byte order in pixman
- format
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250513100819.1179249-1-berrange@redhat.com>
- <20250513100819.1179249-3-berrange@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250513100819.1179249-3-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,189 +69,144 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/5/25 12:08, Daniel P. Berrangé wrote:
-> From: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> The set_pixel_conversion() method is responsible for determining whether
-> the VNC client pixel format matches the server format, and thus whether
-> we can use the fast path "copy" impl for sending pixels, or must use
-> the generic impl with bit swizzling.
-> 
-> The VNC server format is set at build time to VNC_SERVER_FB_FORMAT,
-> which corresponds to PIXMAN_x8r8g8b8.
-> 
-> The qemu_pixman_get_format() method is then responsible for converting
-> the VNC pixel format into a pixman format.
-> 
-> The VNC client pixel shifts are relative to the associated endianness.
-> 
-> The pixman formats are always relative to the host native endianness.
-> 
-> The qemu_pixman_get_format() method does not take into account the
-> VNC client endianness, and is thus returning a pixman format that is
-> only valid with the host endianness matches that of the VNC client.
-> 
-> This has been broken since pixman was introduced to the VNC server:
-> 
->    commit 9f64916da20eea67121d544698676295bbb105a7
->    Author: Gerd Hoffmann <kraxel@redhat.com>
->    Date:   Wed Oct 10 13:29:43 2012 +0200
-> 
->      pixman/vnc: use pixman images in vnc.
-> 
-> The flaw can be demonstrated using the Tigervnc client by using
-> 
->     vncviewer -AutoSelect=0 -PreferredEncoding=raw server:display
-> 
-> connecting from a LE client to a QEMU on a BE server, or the
-> reverse.
-> 
-> The bug was masked, however, because almost all VNC clients will
-> advertize support for the "tight" encoding and the QEMU VNC server
-> will prefer "tight" if advertized.
-> 
-> The tight_pack24 method is responsible for taking a set of pixels
-> which have already been converted into client endianness and then
-> repacking them into the TPIXEL format which the RFB spec defines
-> as
-> 
->    "TPIXEL is only 3 bytes long, where the first byte is the
->     red component, the second byte is the green component,
->     and the third byte is the blue component of the pixel
->     color value"
-> 
-> IOW, the TPIXEL format is fixed on the wire, regardless of what
-> the VNC client declare as its endianness.
-> 
-> Since the VNC pixel encoding code was failing to honour the endian
-> flag of the client, the tight_pack24 method was always operating
-> on data in native endianness. Its impl cancelled out the VNC pixel
-> encoding bug.
-> 
-> With the VNC pixel encoding code now fixed, the tight_pack24 method
-> needs to take into account that it is operating on data in client
-> endianness, not native endianness. It thus may need to invert the
-> pixel shifts.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   include/ui/qemu-pixman.h |  4 ++--
->   ui/qemu-pixman.c         | 15 ++++++++-------
->   ui/vnc-enc-tight.c       |  2 +-
->   ui/vnc.c                 |  3 ++-
->   4 files changed, 13 insertions(+), 11 deletions(-)
-> 
-> diff --git a/include/ui/qemu-pixman.h b/include/ui/qemu-pixman.h
-> index 193bc046d1..2ca0ed7029 100644
-> --- a/include/ui/qemu-pixman.h
-> +++ b/include/ui/qemu-pixman.h
-> @@ -75,12 +75,12 @@ PixelFormat qemu_pixelformat_from_pixman(pixman_format_code_t format);
->   pixman_format_code_t qemu_default_pixman_format(int bpp, bool native_endian);
->   pixman_format_code_t qemu_drm_format_to_pixman(uint32_t drm_format);
->   uint32_t qemu_pixman_to_drm_format(pixman_format_code_t pixman);
-> -int qemu_pixman_get_type(int rshift, int gshift, int bshift);
-> +int qemu_pixman_get_type(int rshift, int gshift, int bshift, int endian);
+V13:
+- Make CXL fixed memory windows sysbus devices.
+  IIRC this was requested by Peter in one of the reviews a long time back
+  but at the time the motivation was less strong than it becomes with some
+  WiP patches for hotness monitoring and high performance direct connect
+  where we need a machine type independent way to iterate all the CXL
+  fixed memory windows. This is a convenient place to do it so drag that
+  work forward into this series.
 
-Too bad there is no GLib enum. Maybe name 'g_endian'?
+  This allows us to drop separate list and necessary machine specific
+  access code in favour of
+  object_child_foreach_recursive(object_get_root(),...)
+  One snag is that the ordering of multiple fixed memory windows in that
+  walk depends on the underlying g_hash_table iterations rather than the
+  order of creation. In the memory map layout and ACPI table creation we
+  need both stable and predictable ordering. Resolve this in a similar
+  fashion to object_class_get_list_sorted() be throwing them in a GSList
+  and sorting that. Only use this when a sorted list is needed.
 
->   bool qemu_pixman_check_format(DisplayChangeListener *dcl,
->                                 pixman_format_code_t format);
->   
->   #ifdef CONFIG_PIXMAN
-> -pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf);
-> +pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf, int endian);
+  Dropped RFC as now I'm happy with this code and would like to get it
+  upstream!  Particularly as it broken even today due to enscripten
+  related changes that stop us using g_slist_sort(). Easy fix though.
 
-(Ditto)
+Note that we have an issue for CXL emulation in general and TCG which
+is being discussed in:
+https://lore.kernel.org/all/20250425183524.00000b28@huawei.com/
+(also affects some other platforms)
 
->   pixman_image_t *qemu_pixman_linebuf_create(pixman_format_code_t format,
->                                              int width);
->   void qemu_pixman_linebuf_fill(pixman_image_t *linebuf, pixman_image_t *fb,
-> diff --git a/ui/qemu-pixman.c b/ui/qemu-pixman.c
-> index 6ef4376f4e..9ca420ff78 100644
-> --- a/ui/qemu-pixman.c
-> +++ b/ui/qemu-pixman.c
-> @@ -126,33 +126,34 @@ uint32_t qemu_pixman_to_drm_format(pixman_format_code_t pixman_format)
->       return 0;
->   }
->   
-> -int qemu_pixman_get_type(int rshift, int gshift, int bshift)
-> +int qemu_pixman_get_type(int rshift, int gshift, int bshift, int endian)
->   {
->       int type = PIXMAN_TYPE_OTHER;
-> +    bool native = (endian == G_BYTE_ORDER);
+Until that is resolved, either rebase this back on 10.0 or just
+don't let code run out of it (don't use KMEM to expose it as normal
+memory, use DAX instead).
 
-Preferably "native_endian" like in qemu_default_pixman_format().
+Previous cover letter.
 
->   
->       if (rshift > gshift && gshift > bshift) {
->           if (bshift == 0) {
-> -            type = PIXMAN_TYPE_ARGB;
-> +            type = native ? PIXMAN_TYPE_ARGB : PIXMAN_TYPE_BGRA;
->           } else {
-> -            type = PIXMAN_TYPE_RGBA;
-> +            type = native ? PIXMAN_TYPE_RGBA : PIXMAN_TYPE_ABGR;
->           }
->       } else if (rshift < gshift && gshift < bshift) {
->           if (rshift == 0) {
-> -            type = PIXMAN_TYPE_ABGR;
-> +            type = native ? PIXMAN_TYPE_ABGR : PIXMAN_TYPE_RGBA;
->           } else {
-> -            type = PIXMAN_TYPE_BGRA;
-> +            type = native ? PIXMAN_TYPE_BGRA : PIXMAN_TYPE_ARGB;
->           }
->       }
->       return type;
->   }
->   
->   #ifdef CONFIG_PIXMAN
-> -pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf)
-> +pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf, int endian)
->   {
->       pixman_format_code_t format;
->       int type;
->   
-> -    type = qemu_pixman_get_type(pf->rshift, pf->gshift, pf->bshift);
-> +    type = qemu_pixman_get_type(pf->rshift, pf->gshift, pf->bshift, endian);
->       format = PIXMAN_FORMAT(pf->bits_per_pixel, type,
->                              pf->abits, pf->rbits, pf->gbits, pf->bbits);
->       if (!pixman_format_supported_source(format)) {
-> diff --git a/ui/vnc-enc-tight.c b/ui/vnc-enc-tight.c
-> index f51f618e46..c6e8d71d4f 100644
-> --- a/ui/vnc-enc-tight.c
-> +++ b/ui/vnc-enc-tight.c
-> @@ -891,7 +891,7 @@ static void tight_pack24(VncState *vs, uint8_t *buf, size_t count, size_t *ret)
->   
->       buf8 = buf;
->   
-> -    if (1 /* FIXME */) {
-> +    if (vs->client_bo == G_BYTE_ORDER) {
+Back in 2022, this series stalled on the absence of a solution to device
+tree support for PCI Expander Bridges (PXB) and we ended up only having
+x86 support upstream. I've been carrying the arm64 support out of tree
+since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
+a few weeks ago) and a fair number of fiddly rebases.
+gitlab.com/jic23/qemu cxl-<latest date>
 
-More explicit as:
+A recent discussion with Peter Maydell indicated that there are various
+other ACPI only features now, so in general he might be more relaxed
+about DT support being necessary. The upcoming vSMMUv3 support would
+run into this problem as well.
 
-   bool native_endian = (vs->client_endian == G_BYTE_ORDER);
-   if (native_endian) {
+I presented the background to the PXB issue at Linaro connect 2022. In
+short the issue is that PXBs steal MMIO space from the main PCI root
+bridge. The challenge is knowing how much to steal.
 
->           rshift = vs->client_pf.rshift;
->           gshift = vs->client_pf.gshift;
->           bshift = vs->client_pf.bshift;
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 2c640d8be4..c0b8ad9cc1 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -2240,7 +2240,8 @@ static void set_encodings(VncState *vs, int32_t *encodings, size_t n_encodings)
->   
->   static void set_pixel_conversion(VncState *vs)
->   {
-> -    pixman_format_code_t fmt = qemu_pixman_get_format(&vs->client_pf);
-> +    pixman_format_code_t fmt = qemu_pixman_get_format(&vs->client_pf,
-> +                                                      vs->client_bo);
->   
->       if (fmt == VNC_SERVER_FB_FORMAT) {
->           vs->write_pixels = vnc_write_pixels_copy;
+On ACPI platforms, we can rely on EDK2 to perform an enumeration and
+configuration of the PCI topology and QEMU can update the ACPI tables
+after EDK2 has done this when it can simply read the space used by the
+root ports. On device tree, there is no entity to figure out that
+enumeration so we don't know how to size the stolen region.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Three approaches were discussed:
+1) Enumerating in QEMU. Horribly complex and the last thing we want is a
+   3rd enumeration implementation that ends up out of sync with EDK2 and
+   the kernel (there are frequent issues because of how those existing
+   implementations differ.
+2) Figure out how to enumerate in kernel. I never put a huge amount of work
+   into this, but it seemed likely to involve a nasty dance with similar
+   very specific code to that EDK2 is carrying and would very challenging
+   to upstream (given the lack of clarity on real use cases for PXBs and
+   DT).
+3) Hack it based on the control we have which is bus numbers.
+   No one liked this but it worked :)
+
+The other little wrinkle would be the need to define full bindings for CXL
+on DT + implement a fairly complex kernel stack as equivalent in ACPI
+involves a static table, CEDT, new runtime queries via _DSM and a description
+of various components. Doable, but so far there is no interest on physical
+platforms. Worth noting that for now, the QEMU CXL emulation is all about
+testing and developing the OS stack, not about virtualization (performance
+is terrible except in some very contrived situations!)
+
+Back to posting as an RFC because there was some discussion of approach to
+modelling the devices that may need a bit of redesign.
+The discussion kind of died out on the back of DT issue and I doubt anyone
+can remember the details.
+
+https://lore.kernel.org/qemu-devel/20220616141950.23374-1-Jonathan.Cameron@huawei.com/
+
+There is only a very simple test in here, because my intent is not to
+duplicate what we have on x86, but just to do a smoke test that everything
+is hooked up.  In general we need much more comprehensive end to end CXL
+tests but that requires a reaonsably stable guest software stack. A few
+people have expressed interest in working on that, but we aren't there yet.
+
+Note that this series has a very different use case to that in the proposed
+SBSA-ref support:
+https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
+
+SBSA-ref is a good choice if you want a relatively simple mostly fixed
+configuration.  That works well with the limited host system
+discoverability etc as EDK2 can be build against a known configuration.
+
+My interest with this support in arm/virt is support host software stack
+development (we have a wide range of contributors, most of whom are working
+on emulation + the kernel support). I care about the weird corners. As such
+I need to be able to bring up variable numbers of host bridges, multiple CXL
+Fixed Memory Windows with varying characteristics (interleave etc), complex
+NUMA topologies with wierd performance characteristics etc. We can do that
+on x86 upstream today, or my gitlab tree. Note that we need arm support
+for some arch specific features in the near future (cache flushing).
+Doing kernel development with this need for flexibility on SBSA-ref is not
+currently practical. SBSA-ref CXL support is an excellent thing, just
+not much use to me for this work.
+
+Jonathan Cameron (5):
+  hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+  hw/cxl: Make the CXL fixed memory windows devices.
+  hw/cxl-host: Allow split of establishing memory address and mmio
+    setup.
+  hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
+    pxb-cxl
+  qtest/cxl: Add aarch64 virt test for CXL
+
+ include/hw/arm/virt.h     |   4 +
+ include/hw/cxl/cxl.h      |   4 +
+ include/hw/cxl/cxl_host.h |   6 +-
+ hw/acpi/cxl.c             |  83 +++++++++------
+ hw/arm/virt-acpi-build.c  |  34 ++++++
+ hw/arm/virt.c             |  29 +++++
+ hw/cxl/cxl-host-stubs.c   |   8 +-
+ hw/cxl/cxl-host.c         | 218 ++++++++++++++++++++++++++++++++------
+ hw/i386/pc.c              |  51 ++++-----
+ tests/qtest/cxl-test.c    |  59 ++++++++---
+ tests/qtest/meson.build   |   1 +
+ 11 files changed, 389 insertions(+), 108 deletions(-)
+
+-- 
+2.43.0
 
 
