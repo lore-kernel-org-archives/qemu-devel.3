@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DEAC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 22:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBBEC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 00:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEbz4-0000Z6-Ja; Mon, 12 May 2025 18:50:54 -0400
+	id 1uEdSe-0008EX-HF; Mon, 12 May 2025 20:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uEbz3-0000Yp-Bd; Mon, 12 May 2025 18:50:53 -0400
-Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uEdSc-0008EH-O9
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 20:25:30 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uEbz1-0001x2-3f; Mon, 12 May 2025 18:50:52 -0400
-Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-52c55db3743so1273702e0c.1; 
- Mon, 12 May 2025 15:50:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uEdSa-0003Dz-Nk
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 20:25:30 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b239763eeddso3158384a12.1
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 17:25:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747090249; x=1747695049; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UVZmC3NLKELZ8+sF0ymWu0+rEBEHAecwjsCl4g4zr8w=;
- b=brCD5jxEN9LZgJiK2m9AhJrZE971AtXTJTDeLOTgnLd+hu8Enb8U3rkZrqp15mXvwb
- V1+tEn5zJrap+/9NhXCIqq6qSIKV3UceIRAZUwSV23YvWFkkFwZRL7qUHkNpg0vIRUZw
- JQyU/RhmF0Qg26aqSRi0cpSmOY5Wbuq/9hl1YR2srwFkzfwyn8Z9GU2TwpzXgkHgzJqk
- pDgpo1SLISa2tmPPMY4yHMF0Rl/qVG+lR9Mn9iIMaqkKzTCzyWXq3RhtjgQQs0KkbAhj
- jZSCJbi91yQ1CaCk/0Hb4PzRLWYOvxzP/OcTGcSgrOOqvshoqrCFJG/6vh0N0bRULknZ
- T+IA==
+ d=linaro.org; s=google; t=1747095926; x=1747700726; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=alnSTY1IP8VPrlw0VN3FMRTgS+Ijz3Rk+FY2NcG6Iaw=;
+ b=UvPwRsA/lZYUb8nOj9/0fggM9KdxnmSmJ/hEMpY31Us8TAvJGZEz6qunkLAOxL2i93
+ Als4NL7cxnNRvmUPx9b7nA43SnOap1vd/KuGCd4D/yQR7M1P8lyXSMnBj7PEwVngLXWG
+ wiiPjzMi1nN5NRcsI4AJdMR7KfUR2T886Z/aNxzIdFx5kQX7RaC8mdZetUg7xnL/U4Oh
+ fTLkbUyiQkdhRp92HvfDSUf1mO81Fb8Ky+bz+XuvlKZbCMYGrwy5AWxvdlH/JE5NTBY2
+ Za5IcqlbAghZumwUYt+OYjJpMvbAA79n+h6fAB7Xwz5UdVHLr15DvlS3tH/2CpYoQy2G
+ 95Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747090249; x=1747695049;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UVZmC3NLKELZ8+sF0ymWu0+rEBEHAecwjsCl4g4zr8w=;
- b=X28kA39LvXbAGzgDetwRY1iM7wPN6KS8b+xBDcmaJl8VecB4eytznjC1yAt70VsAVp
- 7rAtpMjwmxvFf8m6xVSq8Zbye+Bz8snHym9z6H7UY49pSCDLDI35CRqlanLMCGpGqImG
- d6hc5MACyV5NkHOikkmlUOmaGfBFAr14P5OwccIrFURz8n+kgIsMczcadr56WtcSNA6r
- AcyN2MoIf3IOVi8ApI9Lwean10+XJNvYzgqEZF3iaXc50dr5pIZYvtUb6MDyNHZ6G1++
- hQ5Tf1Pqtx4p9taNExvcBdssxdPQAzhYEBblWJ7t+zBDkS3i4ns029Nnuh9LCLA3DLY/
- 4uSA==
+ d=1e100.net; s=20230601; t=1747095926; x=1747700726;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=alnSTY1IP8VPrlw0VN3FMRTgS+Ijz3Rk+FY2NcG6Iaw=;
+ b=rHqBCwNmL3QWO/6E+6GJfukBemXpJ4ApTYaYIDh3jA+wvmjjB58Zi2OLHpYpFM8SMo
+ jl2TVEsDmr9cw/vVRwepcX++gFyZEx2ffgKXeMB9d2maIGxaxs7bmOWcvLz8MkJQaHaY
+ lg/W3V15zLP6FMAnjGu8PMWvzan2yKs91EbyA6YIpLneAqqSzmWz+NMzR8r1wGUiWW4f
+ kViWZ0rTijiGYhiX27YsRI2moQJ3gR8hmrvQWY2TBpB9l/DD6Pu4DcQm9BTx7jqQVXrP
+ mKUyI0ckK+CN5AbFI6nyIceSdIOSfW6oteFoyuzT3XOIWtfPJ1QUUbEoqmwbsyQXJvtG
+ sKlw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5oy+RSmwbdIYuW8EjDPQDBMguWnaRINktcqRPEgH9flNzhMedyzUj4HYE+eC3Y+imtBPeWVQRtB60@nongnu.org
-X-Gm-Message-State: AOJu0YzdFVM4nCFIvIXnxpynTSmY7siT3cFoMZANwgABBEdKkMhW6YfG
- WsAdPc43avIL04xUYKGwrPK+SzEDLaNcJhbs8QgedlHyeZs6dUcXUFkGUlJQhc0wiZoCvzAjBzO
- GH4wb95loNj3dyqBwxaIomRjPD9Y=
-X-Gm-Gg: ASbGnctsNPy46JBh48v9eVG5OQGXr3gndeYg69q8svFV5W7vPP2G4l5cYe/tfoooz6g
- hmSBbbCMUEl7m2CkGvbWcYdGS3xjNL3wFtwwUH68P8thm4S6/PAhTRuWi1nYQiuo2XVaiT3jIEi
- G0fzHB41UNBoAqS/k3tz+GlXJU0T6iQdSA2od+1EsykZcrZdPc9/PNeaZGMj1MyQk=
-X-Google-Smtp-Source: AGHT+IFS6+sKDgdtJRjCFUUbvab3mLR67n+l8BZV1MAX0PCtNk1xRq83zGAB1tz0D/6RbIJFF8UXQCd9b7iwqvLuhlg=
-X-Received: by 2002:a05:6122:828d:b0:52c:5062:c84d with SMTP id
- 71dfb90a1353d-52c538121aemr9412682e0c.0.1747090249224; Mon, 12 May 2025
- 15:50:49 -0700 (PDT)
+ AJvYcCWMqWOWKWE1NQoveuC4U9AsYQj0EDA8F0snfzOiHoQ8RiEUk4rykfeAg+8jjhalOJjAzinUKVZvcpsB@nongnu.org
+X-Gm-Message-State: AOJu0YxEq9ULyljY8unvVYO8AHVKCAwl0iwMUuME9rHS+NujbfRceII4
+ XY6IJJeB/YIgYNOCSYA6vXNMmtiuFo8AG593gVs/+oyTNwGXc0NkIUn3ALuf5sY=
+X-Gm-Gg: ASbGncufwSxxTlKassb8dqjE9064+f37N/sUurBTTsTfxvgpNS9XECzkP/usxSoKETB
+ pFnMbLqwWgnPpbEGGWAFhvVHy4Q8zai+4tLXa9h0jsZn4LtwmZtSxnSNPBHFsCVbhSNE2xax1N3
+ WKzE2fggwreP0WB68JZ6SMtJcsd8PaF8TwKWzF8za3O4P3pYeGxSfwzOtknxq/D6d+ECHo31hUt
+ YhMDhHnPMFVSJ9VjqdfSm0EVcI6HGP5Imfw7AB7a/OKfrwc50JYjgBu7+wOAQjEOm/KaNsCr+VU
+ JeBBzvSl3UojrHd+9nOOcrnmYB0nmP8pqv5/ypZhzn8w4O2lF6CKBngGEAzhXB+K
+X-Google-Smtp-Source: AGHT+IG/5i0lNs/TJHFN33mRH7K/O8cW5lmEkzfXsn2VKjNLEDmz9ibbmBCeHZ6JFP7AfU3z74kpag==
+X-Received: by 2002:a17:903:3baf:b0:224:18bb:44c2 with SMTP id
+ d9443c01a7336-22fc8b0faeamr175670745ad.6.1747095926269; 
+ Mon, 12 May 2025 17:25:26 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22fc8290110sm69410805ad.198.2025.05.12.17.25.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 17:25:25 -0700 (PDT)
+Message-ID: <53632928-0367-44cf-a93e-6ba14bb85458@linaro.org>
+Date: Mon, 12 May 2025 17:25:24 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 21/23] tests: add plugin asserting correctness of
+ discon event's to_pc
+Content-Language: en-US
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <cover.1746968215.git.neither@nut.email>
- <40c7216b842b7d06a0b947a7eee7cc11b9305b15.1746968215.git.neither@nut.email>
-In-Reply-To: <40c7216b842b7d06a0b947a7eee7cc11b9305b15.1746968215.git.neither@nut.email>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 13 May 2025 08:50:23 +1000
-X-Gm-Features: AX0GCFtC_8yO4px2eHIpPXvURVdxBA33BKDXu2crm9lxd5YpaR3NfWKvRK9gFtA
-Message-ID: <CAKmqyKNmHYuyvG8w5ELL2nheS332YLLuQsVrnKiE-A0-Kt_Bww@mail.gmail.com>
-Subject: Re: [PATCH v4 16/23] target/riscv: call plugin trap callbacks
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ <e212e53b98c264366458654493e2fa2e2cdecdcc.1746968215.git.neither@nut.email>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <e212e53b98c264366458654493e2fa2e2cdecdcc.1746968215.git.neither@nut.email>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,71 +105,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 11, 2025 at 11:18=E2=80=AFPM Julian Ganz <neither@nut.email> wr=
-ote:
->
-> We recently introduced API for registering callbacks for trap related
-> events as well as the corresponding hook functions. Due to differences
-> between architectures, the latter need to be called from target specific
-> code.
->
-> This change places hooks for RISC-V targets.
->
+On 5/11/25 6:14 AM, Julian Ganz wrote:
+> We recently introduced plugin API for the registration of callbacks for
+> discontinuity events, specifically for interrupts, exceptions and host
+> call events. The callback receives various bits of information,
+> including the VCPU index and PCs.
+> 
+> This change introduces a test plugin asserting the correctness of that
+> behaviour in cases where this is possible with reasonable effort. Since
+> instruction PCs are recorded at translation blocks translation time and
+> a TB may be used in multiple processes running in distinct virtual
+> memory, the plugin allows comparing not full addresses but a subset of
+> address bits via the `compare-addr-bits` option.
+> 
 > Signed-off-by: Julian Ganz <neither@nut.email>
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
 > ---
->  target/riscv/cpu_helper.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index d5039f69a9..dce7e34cba 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -36,6 +36,7 @@
->  #include "cpu_bits.h"
->  #include "debug.h"
->  #include "pmp.h"
-> +#include "qemu/plugin.h"
->
->  int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
->  {
-> @@ -2173,6 +2174,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->      uint64_t hdeleg =3D async ? env->hideleg : env->hedeleg;
->      const bool prev_virt =3D env->virt_enabled;
->      const target_ulong prev_priv =3D env->priv;
-> +    uint64_t last_pc =3D env->pc;
->      target_ulong tval =3D 0;
->      target_ulong tinst =3D 0;
->      target_ulong htval =3D 0;
-> @@ -2195,6 +2197,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->          case RISCV_EXCP_SEMIHOST:
->              do_common_semihosting(cs);
->              env->pc +=3D 4;
-> +            qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
->              return;
->  #endif
->          case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
-> @@ -2464,6 +2467,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->                          prev_priv, prev_virt);
->      }
->
-> +    if (async) {
-> +        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> +    } else {
-> +        qemu_plugin_vcpu_exception_cb(cs, last_pc);
+>   tests/tcg/plugins/discons.c   | 219 ++++++++++++++++++++++++++++++++++
+>   tests/tcg/plugins/meson.build |   2 +-
+>   2 files changed, 220 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/tcg/plugins/discons.c
+> 
+
+[...]
+
+> +static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
+> +                        enum qemu_plugin_discon_type type, uint64_t from_pc,
+> +                        uint64_t to_pc)
+> +{
+> +    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
+> +
+> +    switch (type) {
+> +    case QEMU_PLUGIN_DISCON_EXCEPTION:
+> +        /*
+> +         * For some types of exceptions, insn_exec will be called for the
+> +         * instruction that caused the exception.
+> +         */
+> +        if (addr_eq(state->last_pc, from_pc)) {
+> +            break;
+> +        }
+> +        __attribute__((fallthrough));
+
+It's a bit hard to follow the codepath with the switch and the 
+fallthrough. Maybe we can simply use an empty if for that.
+
+if (type == QEMU_PLUGIN_DISCON_EXCEPTION &&
+     addr_eq(state->last_pc, from_pc))
+{
+   /*
+    * For some types of exceptions, insn_exec will be called for the
+    * instruction that caused the exception, so we don't report this
+    * case.
+    */
+} else if (state->has_next) {
+   ...
+} else if (state->has_from) {
+   ...
+}
+
+...
+set state
+...
+
+> +    default:
+> +        if (state->has_next) {
+> +            /*
+> +             * We may encounter discontinuity chains without any instructions
+> +             * being executed in between.
+> +             */
+> +            report_mismatch("source", vcpu_index, type, state->last_pc,
+> +                            state->next_pc, from_pc);
+> +        } else if (state->has_from) {
+> +            report_mismatch("source", vcpu_index, type, state->last_pc,
+> +                            state->from_pc, from_pc);
+> +        }
 > +    }
 > +
->      /*
->       * Interrupt/exception/trap delivery is asynchronous event and as pe=
-r
->       * zicfilp spec CPU should clear up the ELP state. No harm in cleari=
-ng
-> --
-> 2.49.0
->
->
+> +    state->has_from = false;
+> +
+> +    state->next_pc = to_pc;
+> +    state->next_type = type;
+> +    state->has_next = true;
+> +}
+> +
+> +static void insn_exec(unsigned int vcpu_index, void *userdata)
+> +{
+> +    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
+> +    struct insn_data* insn = (struct insn_data *) userdata;
+> +
+> +    state->last_pc = insn->addr;
+> +    state->has_last = true;
+> +
+> +    if (insn->next_valid) {
+> +        state->from_pc = insn->next_pc;
+> +    }
+> +    state->has_from = insn->next_valid;
+> +
+> +    if (state->has_next) {
+> +        report_mismatch("target", vcpu_index, state->next_type, state->last_pc,
+> +                        state->next_pc, insn->addr);
+> +        state->has_next = false;
+> +    }
+> +
+> +    if (trace_all_insns) {
+> +        g_autoptr(GString) report = g_string_new(NULL);
+> +        g_string_append_printf(report, "Exec insn at %"PRIx64" on VCPU %d\n",
+> +                               insn->addr, vcpu_index);
+> +        qemu_plugin_outs(report->str);
+> +    }
+> +}
+> +
+> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> +{
+> +    size_t i;
+> +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
+> +    struct insn_data *udata = calloc(n_insns, sizeof(struct insn_data));
+> +
+
+With this, for every TB translated, we'll perform an allocation, and 
+then lose track of the pointer. It's usually a pain to pass this kind of 
+"dynamic" information through udata.
+
+A more elegant solution is to perform a QEMU_PLUGIN_INLINE_STORE_U64 to 
+store this information under a new cpu_state.current_insn field directly.
+Callbacks are installed in the order you register them, so by storing 
+information inline *before* the insn_exec callback, it will work as 
+expected, as cpu_static.current_insn will be already updated.
+You can find some other plugins which use this trick.
+
+> +    for (i = 0; i < n_insns; i++) {
+
+Feel free to declare i in the loop directly.
+
+> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> +        uint64_t pc = qemu_plugin_insn_vaddr(insn);
+> +        udata[i].addr = pc;
+> +        udata[i].next_pc = pc + qemu_plugin_insn_size(insn);
+> +        udata[i].next_valid = true;
+> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, insn_exec,
+> +                                               QEMU_PLUGIN_CB_NO_REGS,
+> +                                               &udata[i]);
+> +    }
+> +
+> +    udata[n_insns - 1].next_valid = false;
+> +}
+
+[...]
+
+Otherwise, the logic of the plugin is ok for me.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
