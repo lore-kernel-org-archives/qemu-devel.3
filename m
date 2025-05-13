@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E4B9C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70DD2C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEj9D-0002iC-GP; Tue, 13 May 2025 02:29:51 -0400
+	id 1uEj9y-0004GI-If; Tue, 13 May 2025 02:30:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEj98-0002S1-3A; Tue, 13 May 2025 02:29:46 -0400
+ id 1uEj9t-0003xY-Ck; Tue, 13 May 2025 02:30:33 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEj96-0001lo-Ad; Tue, 13 May 2025 02:29:45 -0400
+ id 1uEj9q-00022O-Lh; Tue, 13 May 2025 02:30:33 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 13 May
- 2025 14:29:03 +0800
+ 2025 14:29:04 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 13 May 2025 14:29:03 +0800
+ Transport; Tue, 13 May 2025 14:29:04 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 03/25] hw/misc/aspeed_hace: Ensure HASH_IRQ is always set
- to prevent firmware hang
-Date: Tue, 13 May 2025 14:28:33 +0800
-Message-ID: <20250513062901.2256865-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 07/25] hw/misc/aspeed_hace: Rename R_HASH_DEST to
+ R_HASH_DIGEST and introduce 64-bit hash digest address helper
+Date: Tue, 13 May 2025 14:28:37 +0800
+Message-ID: <20250513062901.2256865-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
 References: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
@@ -68,63 +68,75 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, if the program encounters an unsupported algorithm, it does not set
-the HASH_IRQ bit in the status register and send an interrupt to indicate
-command completion. As a result, the FW gets stuck waiting for a completion
-signal from the HACE module.
+Renaming R_HASH_DEST to R_HASH_DIGEST for better semantic clarity.
 
-Additionally, in do_hash_operation, if an error occurs within the conditional
-statement, the HASH_IRQ bit is not set in the status register. This causes the
-firmware to continuously send HASH commands, as it is unaware that the HACE
-model has completed processing the command.
-
-To fix this, the HASH_IRQ bit in the status register must always be set to
-ensure that the firmware receives an interrupt from the HACE module, preventing
-it from getting stuck or repeatedly sending HASH commands.
+The AST2700 CPU, based on the Cortex-A35, features a 64-bit DRAM address space.
+To prepare for future AST2700 support, this change introduces a new helper
+function hash_get_digest_addr() to encapsulate digest address extraction logic
+and improve code readability.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Fixes: c5475b3 ("hw: Model ASPEED's Hash and Crypto Engine")
 ---
- hw/misc/aspeed_hace.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ hw/misc/aspeed_hace.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
 diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 6be94963bc..1256926d22 100644
+index 5f3c8190ef..c5ddc1c99a 100644
 --- a/hw/misc/aspeed_hace.c
 +++ b/hw/misc/aspeed_hace.c
-@@ -267,12 +267,6 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-                             iov[iov_idx - 1].iov_len, false,
-                             iov[iov_idx - 1].iov_len);
-     }
--
--    /*
--     * Set status bits to indicate completion. Testing shows hardware sets
--     * these irrespective of HASH_IRQ_EN.
--     */
--    s->regs[R_STATUS] |= HASH_IRQ;
+@@ -27,7 +27,7 @@
+ #define TAG_IRQ         BIT(15)
+ 
+ #define R_HASH_SRC      (0x20 / 4)
+-#define R_HASH_DEST     (0x24 / 4)
++#define R_HASH_DIGEST   (0x24 / 4)
+ #define R_HASH_KEY_BUFF (0x28 / 4)
+ #define R_HASH_SRC_LEN  (0x2c / 4)
+ 
+@@ -238,17 +238,30 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+     return iov_idx;
  }
  
- static uint64_t aspeed_hace_read(void *opaque, hwaddr addr, unsigned int size)
-@@ -356,10 +350,16 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-                 qemu_log_mask(LOG_GUEST_ERROR,
-                         "%s: Invalid hash algorithm selection 0x%"PRIx64"\n",
-                         __func__, data & ahc->hash_mask);
--                break;
-+        } else {
-+            do_hash_operation(s, algo, data & HASH_SG_EN,
-+                    ((data & HASH_HMAC_MASK) == HASH_DIGEST_ACCUM));
-         }
--        do_hash_operation(s, algo, data & HASH_SG_EN,
--                ((data & HASH_HMAC_MASK) == HASH_DIGEST_ACCUM));
++static uint64_t hash_get_digest_addr(AspeedHACEState *s)
++{
++    uint64_t digest_addr = 0;
 +
-+        /*
-+         * Set status bits to indicate completion. Testing shows hardware sets
-+         * these irrespective of HASH_IRQ_EN.
-+         */
-+        s->regs[R_STATUS] |= HASH_IRQ;
++    digest_addr = deposit64(digest_addr, 0, 32, s->regs[R_HASH_DIGEST]);
++
++    return digest_addr;
++}
++
+ static void hash_write_digest_and_unmap_iov(AspeedHACEState *s,
+                                             struct iovec *iov,
+                                             int iov_idx,
+                                             uint8_t *digest_buf,
+                                             size_t digest_len)
+ {
+-    if (address_space_write(&s->dram_as, s->regs[R_HASH_DEST],
+-                            MEMTXATTRS_UNSPECIFIED, digest_buf, digest_len)) {
++    uint64_t digest_addr = 0;
++
++    digest_addr = hash_get_digest_addr(s);
++    if (address_space_write(&s->dram_as, digest_addr,
++                            MEMTXATTRS_UNSPECIFIED,
++                            digest_buf, digest_len)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Failed to write digest to 0x%x\n",
+-                      __func__, s->regs[R_HASH_DEST]);
++                      "%s: Failed to write digest to 0x%" HWADDR_PRIx "\n",
++                      __func__, digest_addr);
+     }
  
-         if (data & HASH_IRQ_EN) {
-             qemu_irq_raise(s->irq);
+     for (; iov_idx > 0; iov_idx--) {
+@@ -402,7 +415,7 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+     case R_HASH_SRC:
+         data &= ahc->src_mask;
+         break;
+-    case R_HASH_DEST:
++    case R_HASH_DIGEST:
+         data &= ahc->dest_mask;
+         break;
+     case R_HASH_KEY_BUFF:
 -- 
 2.43.0
 
