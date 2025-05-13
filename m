@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C3CC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 22:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19853C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 22:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEyUT-0005Ea-9u; Tue, 13 May 2025 18:52:49 -0400
+	id 1uEyXX-00061z-0i; Tue, 13 May 2025 18:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uEyUP-0005EN-5J
- for qemu-devel@nongnu.org; Tue, 13 May 2025 18:52:46 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1uEyXV-00061M-0d
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 18:55:57 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uEyUN-0003MY-JO
- for qemu-devel@nongnu.org; Tue, 13 May 2025 18:52:44 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7415d28381dso5273582b3a.1
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 15:52:42 -0700 (PDT)
+ id 1uEyXT-0003lq-CT
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 18:55:56 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-b24f986674fso327122a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 15:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747176761; x=1747781561; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1747176954; x=1747781754; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gdKsNg5FkFc8M09aSO0bo8M5ouf3s2GYvRUg59sTK50=;
- b=d2r4HsIb7T4jlDZYBeL1W53e4KPho0BlVU91zgWDj6Diue7Dn71eKS+5ZUU3j+asUv
- 6cCYB4+zXcIzpM/xbVlntx9gJl1QmLPxtFIV7q/7qPvKx4ARoV/GdBPC/EUYhdtFlGbV
- fitbN+9YyKrxOzc27RCXHFdpGJVyhqUyEXCDQZp3M6o9uQbFGQQZESJ8Ee/Racwz/QdC
- yuxjjgnG/p1ha3Js6EA1q6rG3kyVhxBq2cjn9Ngrmf5+GyZH+vRtHctKf+vOt6my38g8
- fFKK5XXicvoTlUxZthv3sbZE3m+G2HwmI5S75VLpOGKoGe5X4EDKg4tZ8gyMr8e+kdyi
- hftg==
+ bh=LBJDbb+g+rnG8821hA+sNUH+3t1umps8kf5QOmsN0dM=;
+ b=eEekhJ6WlQnt0wZusp+z9QV5rvDfaZixX2XBij8byAbVug9ZUYkdxg+iC3TR2FnqJz
+ nhhtDqm4gz4+3atXMou1zLaU1lxouPnDCt/cTtCXwsNlBSJoyTZlTKtgHs0iSO187rqe
+ St4KnFz+rPQQ0DhEYzjwOHrPiTrPZ4PTzt9CjQTYYqaTak4tofbI1nXQ6vFio/MrlMDS
+ gKKxNSealfRH3a9k99rXvgIsH4i3kDMa9z/n+0ZI/teUjPBAc7qvtSWOYpUsfp0BtS4u
+ 6WcF3DcKVHg3DrREToanBaNNTkIHb0Aihn5UUH+QuGJisg8elG/F7AyBxVYPn3fc+oMr
+ Y4Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747176761; x=1747781561;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1747176954; x=1747781754;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gdKsNg5FkFc8M09aSO0bo8M5ouf3s2GYvRUg59sTK50=;
- b=mYEDwTT1Yd8tV/uC17qXVa62GFBWctyh54CNUpGXQWynBPlCTwYXgSRiJd+ygcAAsJ
- fJwI8Ef1qHxY8Qg3p17UekqiyPTJTlb4cT9cR86qilYFh7ANB+pXxWD/GuwoCfliCF4n
- MFzwAge7GSTZ8wVOouMgzN/mCd6usrtI8NlyeU+GfYfDtnwoccLr1EcEkA6tBc/PKGWa
- uEXz7Fh2EQoq5uHC3VuDuk+ApyIhda4B2DiNPo0dmsufnCgYm/lYMrLRSl2dkSHLdfnP
- GUyAI1HAbzPPSo3P/yMx375dWnIZvf59T1PlzuEFUcCGM0RKdQaPd+RL7OLBJODmenNR
- E9qw==
+ bh=LBJDbb+g+rnG8821hA+sNUH+3t1umps8kf5QOmsN0dM=;
+ b=kc52KB0n+dXBhcJM0ds76CAJVx6eBGzns6EL5yMHo0Z1ahnOj2mv7NfsHaMD19XQeR
+ Zf9eekkcQntqPMHmGsd5+DORqfCPK5MH8RuipeS6PCxXcd4eOLLC3VpedjE573MeB8nI
+ /kZWlDK7fFahD8opuACXK8qrZIGOD2e368KHW6yOP6Ri5IHd69aPZ4gaYyvTCP6bQq2o
+ pYylkODa/MuDAJnG5uaHxYj3H+cEf32/vup3eSkVTcxitFFeRpJsi8uUIpC2udzPot+S
+ biAklC3H1dQ4YgmmOU0785DbgBMXHWcYs5JbuUYv2WkHjk0s9XBJLtIsXkzGjhSLWbhv
+ rFfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdvbda3/mYyjT707DdLfEEKr10sQjXltJCxxBL+0Bw8qTZ9JwjG87Oh7KXqZ8/+4JoOF07Nal6KPqk@nongnu.org
-X-Gm-Message-State: AOJu0YzlOLLvse778IuPzQYZAoKcHzc+1AD1fxz9tKYf/z0nlVIZ06Fm
- NTtVWpad/uNDdD65S5xnReEfyXjtHiZeBCJB10kZ5IO5gwBUZUrk2D0OadGfIto=
-X-Gm-Gg: ASbGnctqOaQMk7Oa+npqnLiH7boFFDHtGIu39qPh8U9Sah/aXnOzijc+9WkrrPHkxYs
- jOakqgFHxMuiyZ3aK6ndwf5Hu5+azq/0O4wDlAUAXa8FJalw4G/zH4SRK6ABN3HcLDuwgl2PAkv
- K1mW+gTzE4opcrSG/G2uMjtIFwiwJpWlLdz12kM4YJHInvOBj0aHZ3mi3nz0Jd26MznHo9SW8X5
- w0wSf90kHZRi267Nhz9Aex7upy50Ea32b5749PqFD7tAUJJ8e6b/1QuvaSEEfWUjS+pKmkg/cUZ
- nUN/6Rs/fKlmTbKQm/Kbfowf9pfaHiOr23fKrQG7ePRhIlGGkwQ6POGb6YbtBJD6
-X-Google-Smtp-Source: AGHT+IE0rTzpup4IYYmjD+SospHbxjN4TM4IJTV12OD2IPMReHdceEX8h45b/qIC/3t7lfaITuI/nw==
-X-Received: by 2002:a17:903:41c1:b0:224:de2:7fd0 with SMTP id
- d9443c01a7336-23198154a76mr15915545ad.25.1747176761110; 
- Tue, 13 May 2025 15:52:41 -0700 (PDT)
+ AJvYcCWsiwOgrStldgstXbFOc2LKZLcF/C0tSqNIXlk5ZvjtMqRn+M5g8XOHXzHdRwNG3LI63IKoT4CUVrAd@nongnu.org
+X-Gm-Message-State: AOJu0YxPvo8RqyUjuEDK+yerDg4umXGzXjNBpWdHqM3H1CYqw7XqLMZ4
+ W/aggfm6ZvLLTtL1mkqhghLTvGVo0jylDTuYwS5s42lTlLAzA/ngOj57B0xm2js=
+X-Gm-Gg: ASbGncsep1SVe9gFtlYsQOuMXFFst/I9SRaMTLbHIzPfKDUPUhwYn0Wm6bwUC4lqO3/
+ 2HUOkliaePsdXdogDO0xBLBV6kpEb/xu9GyCRV/1u+WgIEFa5AEr5VDjuzUAtzjyN7dzmI6z6S8
+ L8nJ6w4dg7A1rDMr8xQP+vn643MgCXUf5yfvuZtuspRBbaLyB7IvLVkmPDrJFuifND5SmkYggm0
+ kBGtKMjSyS/UHm2+9NKklIH6bJH+AWSqx7m5Be5fLSn3qW8iJ8TCY4sVfiSGAggpjTBaVNNi+AF
+ g5expXJRAwYDMa960kTvDzWnyDc+IAEYYabxhcxQ3Y+KrcgjpidQdbrVqxGPlIGp
+X-Google-Smtp-Source: AGHT+IHdeevlFHLxUccT1xfjG6u5tqxbZV9hv1bsXOwnio3wriSr/+Avu60k8tk0djcNq0ykX0Xh9w==
+X-Received: by 2002:a17:90b:33c8:b0:2fa:2268:1af4 with SMTP id
+ 98e67ed59e1d1-30e0db01419mr7180936a91.7.1747176953809; 
+ Tue, 13 May 2025 15:55:53 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc774134fsm86819375ad.56.2025.05.13.15.52.40
+ 98e67ed59e1d1-30e33482fd3sm136941a91.37.2025.05.13.15.55.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 15:52:40 -0700 (PDT)
-Message-ID: <e33c5751-6db2-4ca7-9a6e-b992a399e696@linaro.org>
-Date: Tue, 13 May 2025 15:52:39 -0700
+ Tue, 13 May 2025 15:55:53 -0700 (PDT)
+Message-ID: <d7e3158c-2115-4a74-96a1-aec7fa99e172@linaro.org>
+Date: Tue, 13 May 2025 15:55:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/13] qapi: transform target specific 'if' in runtime
- checks
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, alex.bennee@linaro.org, stefanha@redhat.com,
- peter.maydell@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com,
- jsnow@redhat.com, philmd@linaro.org, thuth@redhat.com,
- Michael Roth <michael.roth@amd.com>
-References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
- <20250507231442.879619-10-pierrick.bouvier@linaro.org>
- <aBzCXNTebh8B5sQ_@redhat.com> <87msbl0x7f.fsf@pond.sub.org>
- <cb2adbec-d098-4211-8781-c3027de59e69@linaro.org>
- <87h61phttb.fsf@pond.sub.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] hw/xen/arch_hvm: Unify x86 and ARM variants
 Content-Language: en-US
-In-Reply-To: <87h61phttb.fsf@pond.sub.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, Anthony PERARD <anthony@xenproject.org>,
+ David Woodhouse <dwmw@amazon.co.uk>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
+ Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250513171737.74386-1-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250513171737.74386-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,64 +108,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/13/25 12:08 AM, Markus Armbruster wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 5/13/25 10:17 AM, Philippe Mathieu-Daudé wrote:
+> As each target declares the same prototypes, we can
+> use a single header, removing the TARGET_XXX uses.
 > 
->> On 5/9/25 11:57 PM, Markus Armbruster wrote:
->>>> The build system would need generate an input document for the
->>>> QAPI visitor that defines whether each constant is set to true
->>>> or false, based on suitable CONFIG/TARGET conditions from meson.
->>>
->>> I think the conditions that are evaluated at build time in handwritten C
->>> code (with #if) should also be evaluated at build time in generated C
->>> code.
->>>
->>> Certain conditions are evaluated at build time in target-specific code,
->>> and at runtime in target-independent code.  Again, I think handwritten
->>> and generated code should work the same way.
->>>
->>> Thus, to eliminate target-specific QAPI-generated code, we either
->>> evaluate them at runtime, or simply eliminate them.  Elsewhere, we've
->>> come to the conclusion (I think) that the latter should do at least for
->>> now, likely forever, so we should try that first.
->>>
->>
->> I'm not sure if you mean you'd prefer to eradicate #if completely.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/arm/xen_arch_hvm.h  |  9 ---------
+>   include/hw/i386/xen_arch_hvm.h | 11 -----------
+>   include/hw/xen/arch_hvm.h      | 14 ++++++++++----
+>   hw/arm/xen-pvh.c               |  1 -
+>   4 files changed, 10 insertions(+), 25 deletions(-)
+>   delete mode 100644 include/hw/arm/xen_arch_hvm.h
+>   delete mode 100644 include/hw/i386/xen_arch_hvm.h
 > 
-> I do not!
-> 
->> We have to keep in mind that some config host #if have to stay there, or
->> they expose things that the rest of QEMU code is not supposed to see
->> (hidden under those same CONFIG_ ifdef also).
-> 
-> Letting people configure their QEMU build is useful and must stay.
-> 
-> We provide this via conditional compilation, of complete source files
-> (done in meson), as well as within source files (#if in C and 'if' in
-> QAPI).
-> 
->> So we would need both if and runtime_if.
-> 
-> I don't understand the need for runtime_if.  Can you give an example?
->
+> diff --git a/include/hw/arm/xen_arch_hvm.h b/include/hw/arm/xen_arch_hvm.h
+> deleted file mode 100644
+> index 8fd645e7232..00000000000
+> --- a/include/hw/arm/xen_arch_hvm.h
+> +++ /dev/null
+> @@ -1,9 +0,0 @@
+> -#ifndef HW_XEN_ARCH_ARM_HVM_H
+> -#define HW_XEN_ARCH_ARM_HVM_H
+> -
+> -#include <xen/hvm/ioreq.h>
+> -void arch_handle_ioreq(XenIOState *state, ioreq_t *req);
+> -void arch_xen_set_memory(XenIOState *state,
+> -                         MemoryRegionSection *section,
+> -                         bool add);
+> -#endif
+> diff --git a/include/hw/i386/xen_arch_hvm.h b/include/hw/i386/xen_arch_hvm.h
+> deleted file mode 100644
+> index 1000f8f5433..00000000000
+> --- a/include/hw/i386/xen_arch_hvm.h
+> +++ /dev/null
+> @@ -1,11 +0,0 @@
+> -#ifndef HW_XEN_ARCH_I386_HVM_H
+> -#define HW_XEN_ARCH_I386_HVM_H
+> -
+> -#include <xen/hvm/ioreq.h>
+> -#include "hw/xen/xen-hvm-common.h"
+> -
+> -void arch_handle_ioreq(XenIOState *state, ioreq_t *req);
+> -void arch_xen_set_memory(XenIOState *state,
+> -                         MemoryRegionSection *section,
+> -                         bool add);
+> -#endif
+> diff --git a/include/hw/xen/arch_hvm.h b/include/hw/xen/arch_hvm.h
+> index df39c819c8f..8bacaa4ec41 100644
+> --- a/include/hw/xen/arch_hvm.h
+> +++ b/include/hw/xen/arch_hvm.h
+> @@ -1,5 +1,11 @@
+> -#if defined(TARGET_I386) || defined(TARGET_X86_64)
+> -#include "hw/i386/xen_arch_hvm.h"
+> -#elif defined(TARGET_ARM) || defined(TARGET_AARCH64)
+> -#include "hw/arm/xen_arch_hvm.h"
+> +#ifndef HW_XEN_ARCH_HVM_H
+> +#define HW_XEN_ARCH_HVM_H
+> +
+> +#include <xen/hvm/ioreq.h>
+> +#include "hw/xen/xen-hvm-common.h"
+> +
+> +void arch_handle_ioreq(XenIOState *state, ioreq_t *req);
+> +void arch_xen_set_memory(XenIOState *state,
+> +                         MemoryRegionSection *section,
+> +                         bool add);
+>   #endif
+> diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
+> index 4b26bcff7a5..1a9eeb01c8e 100644
+> --- a/hw/arm/xen-pvh.c
+> +++ b/hw/arm/xen-pvh.c
+> @@ -10,7 +10,6 @@
+>   #include "hw/boards.h"
+>   #include "system/system.h"
+>   #include "hw/xen/xen-pvh-common.h"
+> -#include "hw/xen/arch_hvm.h"
+>   
+>   #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
+>   
 
-That is the point of this whole series, which explores introducing a 
-'runtime' if in the schema, to keep it as it is today, while removing 
-target specific compile time defines.
-It is another approach that one Daniel followed on his series.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-I invite you to give a quick read to this series, especially the related 
-commit introducing 'runtime_if' 
-(20250507231442.879619-2-pierrick.bouvier@linaro.org).
-
-As well, I would appreciate if you could state clearly where we are 
-going with all this (or at least, where you *don't* want this to go), so 
-we can avoid spending time in the wrong direction.
-
-I am ok to pursue Daniel's approach, or continue the approach in the 
-current series, no strong opinion in my side, I am just trying to move 
-QAPI generated code out of the way for the single binary goal.
-
-Thanks,
-Pierrick
 
