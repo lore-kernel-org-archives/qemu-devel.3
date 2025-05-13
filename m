@@ -4,71 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE88C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 15:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1205FC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 16:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEs2g-0005Fz-TK; Tue, 13 May 2025 11:59:44 -0400
+	id 1uEs8e-0000X9-Fb; Tue, 13 May 2025 12:05:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uEs2S-0005EB-L8
- for qemu-devel@nongnu.org; Tue, 13 May 2025 11:59:29 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uEs8Q-0000V7-K8
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 12:05:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uEs2Q-0001Hx-9L
- for qemu-devel@nongnu.org; Tue, 13 May 2025 11:59:28 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uEs8K-0002Ch-Uq
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 12:05:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747151964;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=cpCyPlJZciumqABeN28iV1xD7w0u8enH0cNn7I7ljKI=;
- b=PQ1CUNbwnLO+H+AGxO98Ob5Y5FT7JYOKdVeghJXUOs+j4g8lDz2+RrZ45J3FP2H5P4eSz0
- RoY5RqtP3Qk5O/VYzUWu1yzGr+d6Yb/fEwmkGNa6ivo3+BYO5OkVV7QYoK7HdtkrJGqRHa
- H8hi2SQknFv4IfHELITLiAgg7PluBHo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1747152329;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JAWCEpEERRtHQQUn57UD7ViTWx3F4eLWwh0oi9keL3I=;
+ b=d6QfUp9HGLWCd4TswP2q5s70j9VzFmBxUoaGUDfa6+UFsSAJ8TwQOEXGtv4OpBCMmQ2djM
+ bAh/pkrUkqQMwqYd1INoEmRQjTNBv5SIoCZvbntsvq5LpPgsAMeaOjjGE9HPluUqiaqZjq
+ xYsfdmHr/deOK031neb4mzAfa5iGlSs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-453-mvwAL7mfMS-wz8sakA9hjg-1; Tue,
- 13 May 2025 11:59:21 -0400
-X-MC-Unique: mvwAL7mfMS-wz8sakA9hjg-1
-X-Mimecast-MFC-AGG-ID: mvwAL7mfMS-wz8sakA9hjg_1747151958
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-RXElZWBZMuCQ1u858iaIOg-1; Tue,
+ 13 May 2025 12:05:25 -0400
+X-MC-Unique: RXElZWBZMuCQ1u858iaIOg-1
+X-Mimecast-MFC-AGG-ID: RXElZWBZMuCQ1u858iaIOg_1747152325
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 037E61955BC7; Tue, 13 May 2025 15:59:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.110])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4874B30002E3; Tue, 13 May 2025 15:59:10 +0000 (UTC)
-Date: Tue, 13 May 2025 16:59:05 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
- philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [PATCH v3 08/10] arm/cpu: more customization for the kvm host
- cpu model
-Message-ID: <aCNsSbDoi5oKWYul@redhat.com>
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <20250414163849.321857-9-cohuck@redhat.com>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D9317195609F; Tue, 13 May 2025 16:05:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.238])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 995CC19560BC; Tue, 13 May 2025 16:05:23 +0000 (UTC)
+Date: Tue, 13 May 2025 18:05:20 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH 08/27] qemu-img: simplify --repair error message
+Message-ID: <aCNtwKrHlZxs0v0I@redhat.com>
+References: <20240927061121.573271-1-mjt@tls.msk.ru>
+ <20240927061121.573271-9-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250414163849.321857-9-cohuck@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240927061121.573271-9-mjt@tls.msk.ru>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -90,39 +81,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 14, 2025 at 06:38:47PM +0200, Cornelia Huck wrote:
-> From: Eric Auger <eric.auger@redhat.com>
+Am 27.09.2024 um 08:11 hat Michael Tokarev geschrieben:
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  qemu-img.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> If the interface for writable ID registers is available, expose uint64
-> SYSREG properties for writable ID reg fields exposed by the host
-> kernel. Properties are named  SYSREG_<REG>_<FIELD> with REG and FIELD
-> being those used  in linux arch/arm64/tools/sysreg. This done by
-> matching the writable fields retrieved from the host kernel against the
-> generated description of sysregs.
-> 
-> An example of invocation is:
-> -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
-> which sets DP field of ID_AA64ISAR0_EL1 to 0.
+> diff --git a/qemu-img.c b/qemu-img.c
+> index 1bd88fcf63..9157a6b45d 100644
+> --- a/qemu-img.c
+> +++ b/qemu-img.c
+> @@ -859,8 +859,9 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
+>              } else if (!strcmp(optarg, "all")) {
+>                  fix = BDRV_FIX_LEAKS | BDRV_FIX_ERRORS;
+>              } else {
+> -                error_exit(argv[0], "Unknown option value for -r "
+> -                           "(expecting 'leaks' or 'all'): %s", optarg);
+> +                error_exit(argv[0],
+> +                           "--repair (-r) expects 'leaks' or 'all' not '%s'",
+> +                           optarg);
 
-For the value you are illustrating 0x0 - is this implying that
-all the flags take an arbitrary integer hex value ?
+Again the comma before "not '%s'". With that added:
 
-This would be different from x86, where CPU feature flags are
-a boolean on/off state.
-
-> [CH: add properties to the host model instead of introducing a new
-> "custom" model]
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 
 
