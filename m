@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFAFCC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718ECC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEjER-0003Ti-7M; Tue, 13 May 2025 02:35:17 -0400
+	id 1uEjEI-0002U6-1G; Tue, 13 May 2025 02:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEjC2-0006Kr-PQ; Tue, 13 May 2025 02:32:51 -0400
+ id 1uEjB5-0005YF-BS; Tue, 13 May 2025 02:31:52 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEjC1-0002Ee-07; Tue, 13 May 2025 02:32:46 -0400
+ id 1uEjB2-00026a-1p; Tue, 13 May 2025 02:31:45 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 13 May
- 2025 14:29:11 +0800
+ 2025 14:29:08 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 13 May 2025 14:29:11 +0800
+ Transport; Tue, 13 May 2025 14:29:08 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,17 +32,17 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 25/25] test/qtest/hace: Add tests for AST2700
-Date: Tue, 13 May 2025 14:28:55 +0800
-Message-ID: <20250513062901.2256865-26-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v2 17/25] test/qtest/hace: Adjust test address range for
+ AST1030 due to SRAM limitations
+Date: Tue, 13 May 2025 14:28:47 +0800
+Message-ID: <20250513062901.2256865-18-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
 References: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -68,146 +68,126 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HACE models in AST2600 and AST2700 are nearly identical. Based on the
-AST2600 test cases, new tests have been added for AST2700.
+The digest_addr is set to "src_addr + 0x1000000", where src_addr is the DRAM
+base address. However, the value 0x1000000 (16MB) is too large because the
+AST1030 does not support DRAM, and its SRAM size is only 768KB.
 
-Implemented test functions for SHA-256, SHA-384, SHA-512, and MD5.
-Added scatter-gather and accumulation test variants.
-For AST2700, the HACE controller base address starts at "0x12070000", and
-the DRAM start address is "0x4_00000000".
+A range size of 0x10000 (64KB) is sufficient for HACE test cases, as the test
+vector size does not exceed 64KB.
+
+Updates:
+1. Direct Access Mode
+Update digest_addr to "src_addr + 0x10000" in the following functions:
+aspeed_test_md5
+aspeed_test_sha256
+aspeed_test_sha512
+
+2. Scatter-Gather (SG) Mode
+Update source address for different SG buffer addresses in the following
+functions:
+src_addr1 = src_addr + 0x10000
+src_addr2 = src_addr + 0x20000
+src_addr3 = src_addr + 0x30000
+digest_addr = src_addr + 0x40000
+
+aspeed_test_sha256_sg
+aspeed_test_sha512_sg
+
+3. ACC Mode Update
+Update the SG List start address: src_addr + 0x10000
+Update the SG List buffer size to 0x30000 (192KB).
+
+buffer_addr = src_addr + 0x10000
+digest_addr = src_addr + 0x40000
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/qtest/ast2700-hace-test.c | 98 +++++++++++++++++++++++++++++++++
- tests/qtest/meson.build         |  2 +
- 2 files changed, 100 insertions(+)
- create mode 100644 tests/qtest/ast2700-hace-test.c
+ tests/qtest/aspeed-hace-utils.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qtest/ast2700-hace-test.c b/tests/qtest/ast2700-hace-test.c
-new file mode 100644
-index 0000000000..a400e2962b
---- /dev/null
-+++ b/tests/qtest/ast2700-hace-test.c
-@@ -0,0 +1,98 @@
-+/*
-+ * QTest testcase for the ASPEED Hash and Crypto Engine
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "qemu/bitops.h"
-+#include "aspeed-hace-utils.h"
-+
-+static const struct AspeedMasks as2700_masks = {
-+    .src  = 0x7fffffff,
-+    .dest = 0x7ffffff8,
-+    .key = 0x7ffffff8,
-+    .len  = 0x0fffffff,
-+    .src_hi  = 0x00000003,
-+    .dest_hi = 0x00000003,
-+    .key_hi = 0x00000003,
-+};
-+
-+/* ast2700 */
-+static void test_md5_ast2700(void)
-+{
-+    aspeed_test_md5("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha256_ast2700(void)
-+{
-+    aspeed_test_sha256("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha256_sg_ast2700(void)
-+{
-+    aspeed_test_sha256_sg("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha384_ast2700(void)
-+{
-+    aspeed_test_sha384("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha384_sg_ast2700(void)
-+{
-+    aspeed_test_sha384_sg("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha512_ast2700(void)
-+{
-+    aspeed_test_sha512("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha512_sg_ast2700(void)
-+{
-+    aspeed_test_sha512_sg("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha256_accum_ast2700(void)
-+{
-+    aspeed_test_sha256_accum("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha384_accum_ast2700(void)
-+{
-+    aspeed_test_sha384_accum("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_sha512_accum_ast2700(void)
-+{
-+    aspeed_test_sha512_accum("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-+}
-+
-+static void test_addresses_ast2700(void)
-+{
-+    aspeed_test_addresses("-machine ast2700a1-evb", 0x12070000, &as2700_masks);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("ast2700/hace/addresses", test_addresses_ast2700);
-+    qtest_add_func("ast2700/hace/sha512", test_sha512_ast2700);
-+    qtest_add_func("ast2700/hace/sha384", test_sha384_ast2700);
-+    qtest_add_func("ast2700/hace/sha256", test_sha256_ast2700);
-+    qtest_add_func("ast2700/hace/md5", test_md5_ast2700);
-+
-+    qtest_add_func("ast2700/hace/sha512_sg", test_sha512_sg_ast2700);
-+    qtest_add_func("ast2700/hace/sha384_sg", test_sha384_sg_ast2700);
-+    qtest_add_func("ast2700/hace/sha256_sg", test_sha256_sg_ast2700);
-+
-+    qtest_add_func("ast2700/hace/sha512_accum", test_sha512_accum_ast2700);
-+    qtest_add_func("ast2700/hace/sha384_accum", test_sha384_accum_ast2700);
-+    qtest_add_func("ast2700/hace/sha256_accum", test_sha256_accum_ast2700);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index bb14a22ebe..c587688f67 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -216,6 +216,7 @@ qtests_aspeed = \
-    'aspeed_smc-test']
- qtests_aspeed64 = \
-   ['ast2700-gpio-test',
-+   'ast2700-hace-test',
-    'ast2700-smc-test']
+diff --git a/tests/qtest/aspeed-hace-utils.c b/tests/qtest/aspeed-hace-utils.c
+index 777fa5b986..539d06e4f8 100644
+--- a/tests/qtest/aspeed-hace-utils.c
++++ b/tests/qtest/aspeed-hace-utils.c
+@@ -132,7 +132,7 @@ void aspeed_test_md5(const char *machine, const uint32_t base,
+ {
+     QTestState *s = qtest_init(machine);
  
- qtests_stm32l4x5 = \
-@@ -362,6 +363,7 @@ endif
- qtests = {
-   'aspeed_hace-test': files('aspeed-hace-utils.c', 'aspeed_hace-test.c'),
-   'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
-+  'ast2700-hace-test': files('aspeed-hace-utils.c', 'ast2700-hace-test.c'),
-   'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
-   'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
-   'cdrom-test': files('boot-sector.c'),
+-    uint32_t digest_addr = src_addr + 0x01000000;
++    uint32_t digest_addr = src_addr + 0x010000;
+     uint8_t digest[16] = {0};
+ 
+     /* Check engine is idle, no busy or irq bits set */
+@@ -166,7 +166,7 @@ void aspeed_test_sha256(const char *machine, const uint32_t base,
+ {
+     QTestState *s = qtest_init(machine);
+ 
+-    const uint32_t digest_addr = src_addr + 0x1000000;
++    const uint32_t digest_addr = src_addr + 0x10000;
+     uint8_t digest[32] = {0};
+ 
+     /* Check engine is idle, no busy or irq bits set */
+@@ -200,7 +200,7 @@ void aspeed_test_sha512(const char *machine, const uint32_t base,
+ {
+     QTestState *s = qtest_init(machine);
+ 
+-    const uint32_t digest_addr = src_addr + 0x1000000;
++    const uint32_t digest_addr = src_addr + 0x10000;
+     uint8_t digest[64] = {0};
+ 
+     /* Check engine is idle, no busy or irq bits set */
+@@ -234,10 +234,10 @@ void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
+ {
+     QTestState *s = qtest_init(machine);
+ 
+-    const uint32_t src_addr_1 = src_addr + 0x1000000;
+-    const uint32_t src_addr_2 = src_addr + 0x2000000;
+-    const uint32_t src_addr_3 = src_addr + 0x3000000;
+-    const uint32_t digest_addr = src_addr + 0x4000000;
++    const uint32_t src_addr_1 = src_addr + 0x10000;
++    const uint32_t src_addr_2 = src_addr + 0x20000;
++    const uint32_t src_addr_3 = src_addr + 0x30000;
++    const uint32_t digest_addr = src_addr + 0x40000;
+     uint8_t digest[32] = {0};
+     struct AspeedSgList array[] = {
+         {  cpu_to_le32(sizeof(test_vector_sg1)),
+@@ -285,10 +285,10 @@ void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
+ {
+     QTestState *s = qtest_init(machine);
+ 
+-    const uint32_t src_addr_1 = src_addr + 0x1000000;
+-    const uint32_t src_addr_2 = src_addr + 0x2000000;
+-    const uint32_t src_addr_3 = src_addr + 0x3000000;
+-    const uint32_t digest_addr = src_addr + 0x4000000;
++    const uint32_t src_addr_1 = src_addr + 0x10000;
++    const uint32_t src_addr_2 = src_addr + 0x20000;
++    const uint32_t src_addr_3 = src_addr + 0x30000;
++    const uint32_t digest_addr = src_addr + 0x40000;
+     uint8_t digest[64] = {0};
+     struct AspeedSgList array[] = {
+         {  cpu_to_le32(sizeof(test_vector_sg1)),
+@@ -336,8 +336,8 @@ void aspeed_test_sha256_accum(const char *machine, const uint32_t base,
+ {
+     QTestState *s = qtest_init(machine);
+ 
+-    const uint32_t buffer_addr = src_addr + 0x1000000;
+-    const uint32_t digest_addr = src_addr + 0x4000000;
++    const uint32_t buffer_addr = src_addr + 0x10000;
++    const uint32_t digest_addr = src_addr + 0x40000;
+     uint8_t digest[32] = {0};
+     struct AspeedSgList array[] = {
+         {  cpu_to_le32(sizeof(test_vector_accum_256) | SG_LIST_LEN_LAST),
+@@ -377,8 +377,8 @@ void aspeed_test_sha512_accum(const char *machine, const uint32_t base,
+ {
+     QTestState *s = qtest_init(machine);
+ 
+-    const uint32_t buffer_addr = src_addr + 0x1000000;
+-    const uint32_t digest_addr = src_addr + 0x4000000;
++    const uint32_t buffer_addr = src_addr + 0x10000;
++    const uint32_t digest_addr = src_addr + 0x40000;
+     uint8_t digest[64] = {0};
+     struct AspeedSgList array[] = {
+         {  cpu_to_le32(sizeof(test_vector_accum_512) | SG_LIST_LEN_LAST),
 -- 
 2.43.0
 
