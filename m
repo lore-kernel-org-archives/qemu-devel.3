@@ -4,136 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D829C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:59:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8C5C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 15:05:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEr5m-0004UT-C1; Tue, 13 May 2025 10:58:50 -0400
+	id 1uErAr-0006qN-Jk; Tue, 13 May 2025 11:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uEr5j-0004Tr-Iv
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:58:47 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uErAo-0006pc-Uy
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 11:04:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uEr5h-0002Pm-O0
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:58:47 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uErAm-00035L-CJ
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 11:04:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747148324;
+ s=mimecast20190719; t=1747148638;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=x1vufKv0U2HdDN3hTmD6ObRWeRBVUzANgRpBYBzNHPY=;
- b=fRTQsSOg5L+Rwrfc9Ccbzn+adJ3Qs8VmgBIPivm+ZAR7NGehItrm/qixxtY+H2x73Ujx3g
- 8h1o75TjRJfxkN3komNc4Fh5NmUVfFlzYXoKzU+jBeRi63o52+BXYWNpoTPwFfBjBiVmmp
- /CzbQx0kLGxVXOli5xTgRR+WBEJfuog=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-hS45rK_hPsi3BWWCrQAwMA-1; Tue, 13 May 2025 10:58:43 -0400
-X-MC-Unique: hS45rK_hPsi3BWWCrQAwMA-1
-X-Mimecast-MFC-AGG-ID: hS45rK_hPsi3BWWCrQAwMA_1747148323
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-442ccf0eb4eso42439525e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:58:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747148322; x=1747753122;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=x1vufKv0U2HdDN3hTmD6ObRWeRBVUzANgRpBYBzNHPY=;
- b=RE96xuqHdGsi0TnGp56Kpd30tFsD82N1fKcNbL8mw2h4WO9uydsn6l0cwxyEytXWDp
- TmfBjF0ahaM1z1aCCNe5IZFDEpBN+e1lv45Q1VHWxnZF63lLLj+WcTcDQ+S/l/ZDYlu0
- JE1bn+4GJTT5IMs1970ybsnUaHzvclflaTu/yVLtAErs07yq01ljJ5vt2Brl4A2GJGtm
- 9X+7NsNxm+a0mdBxivhAFu2YOtYLcu9tsi7Hvb6a18gBhv3TO22ACZeKUM/1XO9rU60k
- PRwFp80C6/kF6yWk8Co3wEDeAtr8zaVP5ENGfkBJ2GzmGOzPzE8KJRGz5mFKV0XARLc4
- yUBQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtt7aIsWYUnhaWNOa6FKydJP0MpE5pwFxfRLciC5RVAiPG0oaL6qCsoqc5ypnHXH9HzaVtSQpnbkbx@nongnu.org
-X-Gm-Message-State: AOJu0Yx/QBEidTZbJokEM+B5FDn3wFcg47dGyhi6hR40CSp442TJ0hwt
- giFX8NyV/L0ADDUsL4kWrQhiTeyDUyzRPRzZmx//5fTz9nuIOE7rbFDwd+7mo1Pub6WrC2X4Fl9
- wLNo8O9rUnXGu79XeccEVZ/DrKKqSHqAivz/B7Qw/1kL/ScxaIijP
-X-Gm-Gg: ASbGncvsypFOJHFO7bINT3bKU4CtwMVtGWO+n87JaDrNpzwvB1y9W9CkPaM891J/83B
- A552GlENygMYzsruqo/nDISPtbVmkRGePBUcQFpY66Zzgy2ITRAIHkm3rW9ZuJOSoaXwj8JpdBN
- H9AQdVM8r08wwTGA5MOg+21LlJ4/F1QfTdhF4Z9F9D66Wov24QY+De6J7jR90dvJqwi9LiiiggY
- +ZM2sZbsah9k47BNj9N4p9kcnQidUeX0yv1PMMGF2ecGBkmdg9e4KJT8cwW602MshXh5p5qiXO7
- N0fTksjAfKsHqMdKayPq+7PtCa9/9HZdHtfLvf/yR/8=
-X-Received: by 2002:a05:600c:8707:b0:43c:fd72:f039 with SMTP id
- 5b1f17b1804b1-442d6d3e13bmr140888715e9.11.1747148322513; 
- Tue, 13 May 2025 07:58:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGw505m/XwZgZRp1on7wjlNFJBV38/M/wnlZOc6aEs17DgYP3cEuiP8RUozsJLgBsBEpykqjg==
-X-Received: by 2002:a05:600c:8707:b0:43c:fd72:f039 with SMTP id
- 5b1f17b1804b1-442d6d3e13bmr140888485e9.11.1747148322106; 
- Tue, 13 May 2025 07:58:42 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-48-129.web.vodafone.de.
- [109.42.48.129]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d67ed1bcsm168438245e9.18.2025.05.13.07.58.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 07:58:41 -0700 (PDT)
-Message-ID: <16b58a8b-38ef-4a78-b3c1-103d69b56af4@redhat.com>
-Date: Tue, 13 May 2025 16:58:39 +0200
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jIgGRdk4wDHR13EIann1hKkSdob6KVG0A8frMh8d7tU=;
+ b=SMKpK/WFo4EAGObBWUy0dy1Ay0F/7i6cH/JohRXF9hJXdelE2gzksrFS/q0BxFlrVZCe9U
+ uUK95O5hqwIIUpMFQmVZSeEghS6dYQ3zsLzbDkZjn0bImgaGlKAdxWueQpJVJ5DPXrNyv1
+ V01pn4GChpdb/+RvS+lM6fp2DdOcDv8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-lKbiCQq7M0W36j--oADmRA-1; Tue,
+ 13 May 2025 11:03:55 -0400
+X-MC-Unique: lKbiCQq7M0W36j--oADmRA-1
+X-Mimecast-MFC-AGG-ID: lKbiCQq7M0W36j--oADmRA_1747148634
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78CE91800374; Tue, 13 May 2025 15:03:54 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.110])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E139618003FC; Tue, 13 May 2025 15:03:47 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2] linux-user: fix resource leaks in gen-vdso
+Date: Tue, 13 May 2025 16:03:46 +0100
+Message-ID: <20250513150346.1328217-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/25] Add -boot-certificates to s390-ccw-virtio
- machine type option
-To: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
- david@redhat.com, pbonzini@redhat.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
- fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250508225042.313672-1-zycai@linux.ibm.com>
- <20250508225042.313672-2-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250508225042.313672-2-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -158,106 +82,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi!
+There are a number of resource leaks in gen-vdso. In theory they are
+harmless because this is a short lived process, but when building QEMU
+with --extra-cflags="-fsanitize=address" problems ensure. The gen-vdso
+program is run as part of the build, and that aborts due to the
+sanitizer identifying memory leaks, leaving QEMU unbuildable.
 
-On 09/05/2025 00.50, Zhuoying Cai wrote:
-> Add -boot-certificates as a parameter of s390-ccw-virtio machine type option.
+FAILED: libqemu-x86_64-linux-user.a.p/vdso.c.inc
+/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso -o libqemu-x86_64-linux-user.a.p/vdso.c.inc ../linux-user/x86_64/vdso.so
 
-> The `-boot-certificates /path/dir:/path/file` option is implemented
-> to provide path to either a directory or a single certificate.
+=================================================================
+==1696332==ERROR: LeakSanitizer: detected memory leaks
 
-Nit: Remove the "-" before "boot-certificates" now in the patch description 
-and in the patch subject since this is not a stand-alone option anymore.
+Direct leak of 2968 byte(s) in 1 object(s) allocated from:
+    #0 0x56495873f1f3  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xa11f3) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
+    #1 0x564958780b90  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xe2b90) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
 
-> Multiple paths can be delineated using a colon.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   hw/s390x/s390-virtio-ccw.c         | 22 ++++++++++++++++++++++
->   include/hw/s390x/s390-virtio-ccw.h |  1 +
->   qemu-options.hx                    |  7 ++++++-
->   3 files changed, 29 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 192feb128b..f82f78255a 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -824,6 +824,22 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
->       s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
->   }
->   
-> +static inline char *machine_get_boot_certificates(Object *obj, Error **errp)
-> +{
-> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
-> +
-> +    return g_strdup(ms->boot_certificates);
-> +}
-> +
-> +static void machine_set_boot_certificates(Object *obj, const char *str,
-> +                                          Error **errp)
-> +{
-> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
-> +
-> +    g_free(ms->boot_certificates);
-> +    ms->boot_certificates = g_strdup(str);
-> +}
-> +
->   static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->   {
->       MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -878,6 +894,12 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->               "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars converted"
->               " to upper case) to pass to machine loader, boot manager,"
->               " and guest kernel");
-> +
-> +    object_class_property_add_str(oc, "boot-certificates",
-> +                                  machine_get_boot_certificates,
-> +                                  machine_set_boot_certificates);
-> +    object_class_property_set_description(oc, "boot-certificates",
-> +            "provide path to a direcotry or a single certificate for secure boot");
+This complaint is about the 'buf' variable, however, the FILE objects
+are also leaked in some error scenarios, so this fix refactors the
+cleanup paths to fix all leaks. For completeness it also reports an
+error if fclose() fails on 'inf'.
 
-s/direcotry/directory/
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
 
->   }
->   
->   static inline void s390_machine_initfn(Object *obj)
-> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-> index fc4112fbf5..ed25939243 100644
-> --- a/include/hw/s390x/s390-virtio-ccw.h
-> +++ b/include/hw/s390x/s390-virtio-ccw.h
-> @@ -31,6 +31,7 @@ struct S390CcwMachineState {
->       uint8_t loadparm[8];
->       uint64_t memory_limit;
->       uint64_t max_pagesize;
-> +    char *boot_certificates;
->   
->       SCLPDevice *sclp;
->   };
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index dc694a99a3..e592f6a757 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -43,7 +43,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->   #endif
->       "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->       "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
-> -    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
-> +    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n"
-> +    "                boot-certificates='/path/directory:/path/file' provide a path to a directory or a boot certificate\n",
->       QEMU_ARCH_ALL)
->   SRST
->   ``-machine [type=]name[,prop=value[,...]]``
-> @@ -200,6 +201,10 @@ SRST
->           ::
->   
->               -machine smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core
-> +
-> +    ``boot-certificates='/path/directory:/path/file'``
-> +        Provide a path to a directory or a boot certificate on s390-ccw host.
+Changed in v2:
 
-"s390-ccw" does not make too much sense when talking about the host. I'd 
-maybe rather say "on the host [s390x only]" instead?
+ - Add missing braces
 
-  Thomas
+ linux-user/gen-vdso.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/linux-user/gen-vdso.c b/linux-user/gen-vdso.c
+index 721f38d5a3..fce9d5cbc3 100644
+--- a/linux-user/gen-vdso.c
++++ b/linux-user/gen-vdso.c
+@@ -56,13 +56,14 @@ static unsigned rt_sigreturn_addr;
+ 
+ int main(int argc, char **argv)
+ {
+-    FILE *inf, *outf;
++    FILE *inf = NULL, *outf = NULL;
+     long total_len;
+     const char *prefix = "vdso";
+     const char *inf_name;
+     const char *outf_name = NULL;
+-    unsigned char *buf;
++    unsigned char *buf = NULL;
+     bool need_bswap;
++    int ret = EXIT_FAILURE;
+ 
+     while (1) {
+         int opt = getopt(argc, argv, "o:p:r:s:");
+@@ -129,7 +130,6 @@ int main(int argc, char **argv)
+         fprintf(stderr, "%s: incomplete read\n", inf_name);
+         return EXIT_FAILURE;
+     }
+-    fclose(inf);
+ 
+     /*
+      * Identify which elf flavor we're processing.
+@@ -205,19 +205,24 @@ int main(int argc, char **argv)
+     fprintf(outf, "    .rt_sigreturn_ofs = 0x%x,\n", rt_sigreturn_addr);
+     fprintf(outf, "};\n");
+ 
+-    /*
+-     * Everything should have gone well.
+-     */
+-    if (fclose(outf)) {
+-        goto perror_outf;
++    ret = EXIT_SUCCESS;
++
++ cleanup:
++    free(buf);
++
++    if (outf && fclose(outf) != 0) {
++        ret = EXIT_FAILURE;
++    }
++    if (inf && fclose(inf) != 0) {
++        ret = EXIT_FAILURE;
+     }
+-    return EXIT_SUCCESS;
++    return ret;
+ 
+  perror_inf:
+     perror(inf_name);
+-    return EXIT_FAILURE;
++    goto cleanup;
+ 
+  perror_outf:
+     perror(outf_name);
+-    return EXIT_FAILURE;
++    goto cleanup;
+ }
+-- 
+2.49.0
 
 
