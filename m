@@ -4,60 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBEEEC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 15:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 207F4C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 15:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEryG-0000oJ-98; Tue, 13 May 2025 11:55:08 -0400
+	id 1uEs09-0003Tu-Ol; Tue, 13 May 2025 11:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uEryD-0000nT-NQ
- for qemu-devel@nongnu.org; Tue, 13 May 2025 11:55:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uEs07-0003SZ-M5
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 11:57:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uEryB-0000qB-T7
- for qemu-devel@nongnu.org; Tue, 13 May 2025 11:55:05 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uEs06-0001BD-4t
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 11:57:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747151701;
+ s=mimecast20190719; t=1747151820;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mUQFWdF6kFe9d6XArj8QB92Y69q3nyIaETSGA3jRHiY=;
- b=XQ6mkEHmR5x2waPeSQ/fCYyyA5xuQGyRogb94yVgGx0Txb7nlxMdcZJT2dnrWrnSc6zFoi
- HusKBLPa7L9V80YVqSCvX4UxRRK7jhr+zPtnmr/ImpHzrZurhcN92VPE7S02ATCzfduHiL
- Nn4UkGwd6qtepqOwC8m4iKm1OGLYhio=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=R4b+q5DZaq+brNYajdSGnOlZv1xADptKpVhan1d0w/M=;
+ b=ePqPqhg47lpW8yfebl/mRuVUTJAgikobszBBQQlUam9V0Tidqhau+BHNzfG7/2Zim9X7aZ
+ p110h3OAH+18Po9yXWXLkqXDg7JOShVWV5BBN6KOsvmkmphzW49snBdHpGJyAL919XhEqC
+ lk/ow/4CkOx8xtOrS1f9b5rmE59keLU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-L6eFuBIkNkaUBSCKF7W5CA-1; Tue,
- 13 May 2025 11:55:00 -0400
-X-MC-Unique: L6eFuBIkNkaUBSCKF7W5CA-1
-X-Mimecast-MFC-AGG-ID: L6eFuBIkNkaUBSCKF7W5CA_1747151699
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-VdcnpdnAO2uV663BGQNMMg-1; Tue,
+ 13 May 2025 11:56:56 -0400
+X-MC-Unique: VdcnpdnAO2uV663BGQNMMg-1
+X-Mimecast-MFC-AGG-ID: VdcnpdnAO2uV663BGQNMMg_1747151812
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 658511800370; Tue, 13 May 2025 15:54:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.238])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0961530001A1; Tue, 13 May 2025 15:54:56 +0000 (UTC)
-Date: Tue, 13 May 2025 17:54:54 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 07/27] qemu-img: check: refresh options/--help
-Message-ID: <aCNrThMpezno1o1Z@redhat.com>
-References: <20240927061121.573271-1-mjt@tls.msk.ru>
- <20240927061121.573271-8-mjt@tls.msk.ru>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CB36195DE45; Tue, 13 May 2025 15:56:51 +0000 (UTC)
+Received: from localhost (dhcp-192-216.str.redhat.com [10.33.192.216])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ECD791955E74; Tue, 13 May 2025 15:56:48 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, agraf@csgraf.de,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [PATCH for-10.1 v5 02/13] arm/cpu: Store aa64isar0/aa64zfr0
+ into the idregs arrays
+In-Reply-To: <aCNoEs-jQ7IUTt8q@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20250409144304.912325-1-cohuck@redhat.com>
+ <20250409144304.912325-3-cohuck@redhat.com> <aCNoEs-jQ7IUTt8q@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Tue, 13 May 2025 17:56:46 +0200
+Message-ID: <875xi4pkqp.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240927061121.573271-8-mjt@tls.msk.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -66,7 +81,7 @@ X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,119 +97,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 27.09.2024 um 08:11 hat Michael Tokarev geschrieben:
-> Add missing long options and --help output.
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  qemu-img.c | 38 ++++++++++++++++++++++++++++++--------
->  1 file changed, 30 insertions(+), 8 deletions(-)
-> 
-> diff --git a/qemu-img.c b/qemu-img.c
-> index 08536553c7..1bd88fcf63 100644
-> --- a/qemu-img.c
-> +++ b/qemu-img.c
-> @@ -805,7 +805,9 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
->          int option_index = 0;
->          static const struct option long_options[] = {
->              {"help", no_argument, 0, 'h'},
-> +            {"quiet", no_argument, 0, 'q'},
->              {"format", required_argument, 0, 'f'},
-> +            {"cache", required_argument, 0, 'T'},
->              {"repair", required_argument, 0, 'r'},
->              {"output", required_argument, 0, OPTION_OUTPUT},
->              {"object", required_argument, 0, OPTION_OBJECT},
-> @@ -813,20 +815,38 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
->              {"force-share", no_argument, 0, 'U'},
->              {0, 0, 0, 0}
->          };
-> -        c = getopt_long(argc, argv, ":hf:r:T:qU",
-> +        c = getopt_long(argc, argv, "hf:r:T:qU",
->                          long_options, &option_index);
->          if (c == -1) {
->              break;
->          }
->          switch(c) {
-> -        case ':':
-> -            missing_argument(argv[optind - 1]);
-> -            break;
-> -        case '?':
-> -            unrecognized_option(argv[optind - 1]);
-> -            break;
->          case 'h':
-> -            help();
-> +            cmd_help(ccmd,
-> +"[-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]\n"
-> +"        [--output human|json] [--object OBJDEF] FILENAME\n"
-> +,
-> +"  -q, --quiet\n"
-> +"     quiet operations\n"
+On Tue, May 13 2025, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
 
-Let's keep the help text more in line with the terminology used in the
-man page, even if shorter at times.
+> On Wed, Apr 09, 2025 at 04:42:53PM +0200, Cornelia Huck wrote:
+>> From: Eric Auger <eric.auger@redhat.com>
+>>=20
+>> Also add kvm add accessors for storing host features into idregs.
+>>=20
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>> ---
+>>  target/arm/cpu-features.h | 57 ++++++++++++++++++++-------------------
+>>  target/arm/cpu-sysregs.h  |  4 +++
+>>  target/arm/cpu.c          | 10 +++----
+>>  target/arm/cpu.h          |  2 --
+>>  target/arm/cpu64.c        |  8 +++---
+>>  target/arm/helper.c       |  6 +++--
+>>  target/arm/hvf/hvf.c      |  3 ++-
+>>  target/arm/kvm.c          | 30 ++++++++++++++++++---
+>>  target/arm/tcg/cpu64.c    | 44 ++++++++++++++++++------------
+>>  9 files changed, 101 insertions(+), 63 deletions(-)
+>
+>> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+>> index 7877a3b06a8e..e89a1105904c 100644
+>> --- a/target/arm/cpu-sysregs.h
+>> +++ b/target/arm/cpu-sysregs.h
+>> @@ -39,4 +39,8 @@ extern const uint32_t id_register_sysreg[NUM_ID_IDX];
+>>=20=20
+>>  int get_sysreg_idx(ARMSysRegs sysreg);
+>>=20=20
+>> +#ifdef CONFIG_KVM
+>> +uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg);
+>> +#endif
+>
+> This breaks the build when KVM is disabled, and/or not available
+> on the build target architecture
+>
+> In file included from ../target/arm/cpu.h:35,
+>                  from /var/home/berrange/src/virt/qemu/include/hw/arm/dig=
+ic.h:21,
+>                  from ../hw/arm/digic_boards.c:31:
+> /var/home/berrange/src/virt/qemu/target/arm/cpu-sysregs.h:42:8: error: at=
+tempt to use poisoned =E2=80=98CONFIG_KVM=E2=80=99
+>    42 | #ifdef CONFIG_KVM
+>       |        ^
+> In file included from /var/home/berrange/src/virt/qemu/include/exec/poiso=
+n.h:7,
+>                  from /var/home/berrange/src/virt/qemu/include/qemu/osdep=
+.h:38,
+>                  from ../hw/arm/digic_boards.c:26:
+> ./config-poison.h:185:20: note: poisoned here
+>   185 | #pragma GCC poison CONFIG_KVM
+>       |                    ^~~~~~~~~~
+> ninja: build stopped: subcommand failed.
 
-I would use the first sentence from it here: "Quiet mode - do not print
-any output (except errors)"
-
-> +"  -f, --format FMT\n"
-> +"     specifies format of the image explicitly\n"
-
-Maybe "format of the image (default: probing is used)"?
-
-> +"  --image-opts\n"
-> +"     indicates that FILENAME is a complete image specification\n"
-> +"     instead of a file name (incompatible with --format)\n"
-
-The man page has:
-
-  Indicates that the source *FILENAME* parameter is to be interpreted as a
-  full option string, not a plain filename. This parameter is mutually
-  exclusive with the *-f* parameter.
-
-A possible adaptation for qemu-img check specially:
-
-  indicates that FILENAME is a full option string, not a plain filename
-  (incompatible with --format)
-
-> +"  -T, --cache CACHE_MODE\n"
-> +"     image cache mode (" BDRV_DEFAULT_CACHE ")\n"
-
-+"     image cache mode (default: " BDRV_DEFAULT_CACHE ")\n"
-
-> +"  -U, --force-share\n"
-> +"     open image in shared mode for concurrent access\n"
-> +"  --output human|json\n"
-> +"     output format\n"
-> +"  -r, --repair leaks|all\n"
-> +"     repair particular aspect of the image\n"
-
-"repair errors of the given category in the image"?
-
-> +"     (image will be open in read-write mode, incompatible with --force-share)\n"
-> +"  --object OBJDEF\n"
-> +"     QEMU user-creatable object (eg encryption key)\n"
-
-"e.g."
-
-> +"  FILENAME\n"
-> +"     the image file (or image specification) to operate on\n"
-
-To keep consistency with the above suggestion: "(or option string)"
-
-> +);
->              break;
->          case 'f':
->              fmt = optarg;
-> @@ -861,6 +881,8 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
->          case OPTION_IMAGE_OPTS:
->              image_opts = true;
->              break;
-> +        default:
-> +            tryhelp(argv[0]);
->          }
->      }
->      if (optind != argc - 1) {
-
-Kevin
+I have already fixed that one in v6.
 
 
