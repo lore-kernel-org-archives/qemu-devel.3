@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884EDC3ABC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D24C3ABD7
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEqQM-00046T-Sf; Tue, 13 May 2025 10:16:03 -0400
+	id 1uEqQ4-000439-5S; Tue, 13 May 2025 10:15:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1uEqQ4-00043k-Qc
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:47 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1uEqPy-00041z-0w
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:38 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1uEqQ2-0005bX-Sb
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:44 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43d2d952eb1so42104685e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:15:42 -0700 (PDT)
+ id 1uEqPw-0005Yx-8c
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:37 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-442ec3ce724so5332685e9.0
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1747145741; x=1747750541; darn=nongnu.org;
+ d=adacore.com; s=google; t=1747145734; x=1747750534; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=98OOmrWk25E/kwedxRasvOoS2mo+ShZuSOIhL7Rf3TY=;
- b=UbA1purcJ66oyDt1g9lAjt1woRnpsgNUKH0XeXK58Niy8zCqdYLFHO7WP53zMEFfmV
- MdcezDKEM1fD0ZZNJnStZX/sJfcAv+p3Rgh4u6rNAG1XBTvuOZwCWRJk/+EygJsCasIH
- mKCOrc8ihCONWH9SpI61oELGW9yvkvmLu1Se+6hsKnUfFXfmfpf8HH9ACvIMWTdGEDIZ
- MLQ47FYW/BrpBFS8+gEx7Z2XUXY44E8+iyj2VSm2aiY6AKQClzIydGocuxH8XOhMTlqD
- asVLDabsSxT72ICZSQam5YUjPOgI9UtKfWiHx2sCLNVIKDAYyodNrKpJ0OAOR92UWRxP
- XW0g==
+ bh=LygLYLUFHvvftBVrooqDvqdi3Y2+LGMw70v0Ar+6UnA=;
+ b=SuQwc2y6dpVjxGihv9FqGCZPmDki2l0IBPVAgyfF4+GFZ5FlQexahEQ/ILQ4i8qOqQ
+ Uuw6JkLAyFJGzSBs+sSI14b06TEWDXw8koq0Tw0kcTBj9jyB0FgYZ0/eSFakGDFBQhNX
+ 4vHPckk9vYD5LXkPbS6X9WScVG4e71C23MVRSMZiLmdnsjEluHKcF6UYgeO5e1cHrpeY
+ 0nF5W4RmvBUtC40tZU2XGR4QhzSrGBC6cEGA5aIpAPneJT3W0lJv30zmZnUcs3R/Ep/s
+ 9Zj+ykxI15gK+PH2qUqETqWoI/ARV4XSzrsCC9W+9aR70G/XplxIl9HsQwNr87qbFYTd
+ YHfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747145741; x=1747750541;
+ d=1e100.net; s=20230601; t=1747145734; x=1747750534;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=98OOmrWk25E/kwedxRasvOoS2mo+ShZuSOIhL7Rf3TY=;
- b=ePHfaERiXdtxEGKJVqR7lcAVfyUX6UkXykRcrn17EqE+KPiHhbTksI05C2d9UqgJDR
- hvw0+ad+AaoY72/XuXlO+0IIA8NTSlhdSTAL2Wu+2AZq//+BR6pUcPtv/ekMLQNTH34I
- 8R6aOTh5tep1IK3opZH2g0Jn42OTS1Naljsj8aEseYKhRUWyfBFupyJW4HQYHd/hKpZ/
- Zi1WU34iwPyWS64/N+H+hOSdtAm6nFaktEijFYrIzLycayqmTmjsz+Gv1tia7QXtnv+e
- sUVorVASaHLFYK+nGaqfg6BTEjvKDvRW5JTrKsGQjlcbfkRmMkG5B4C6fd2SgqzoyEtR
- 7Glg==
-X-Gm-Message-State: AOJu0YysiLnxI9dzZ7kb9ELM2xj7pWAPqh0FW4ACUrUf9pp7miT5b3Av
- c1pPeQydl8vt6uCi9MJlZ9PLECkWJ16slAwSJDxcxX9c312CCnPGQdIzu9dfJ89wPGLYOLoNZH4
+ bh=LygLYLUFHvvftBVrooqDvqdi3Y2+LGMw70v0Ar+6UnA=;
+ b=v5ZYVLcuw5pNi/tUuPMFuO8xNw2AinHDkjdVwI3/ewGe5QGQT09KyAngFQ29BJRDzX
+ IkeVfY8BdxfD5a/DsOHTsUWP6hEX5x/yb0FAim6KVQRtJjlq5S9LL8ETc7WFpDa4Gzxb
+ bGziJreUhNdZrvRBFVWsUa3GSuGJ1qNhW+i5lyGnSGAFIq7CpRiHSGsVFUH5TCC7L92m
+ uj8wMPZsImJ/oriWNUVT/iko5mp08FcT36Pqikv82y4yBQnRRH1R52n9Y+o8B3Kau6kW
+ WkdfqZqb6+rbNua64dQCk7pmnyDT2C2VK7xswWjxFqJXfmHYW+vpuHoF0s5aa1wKtoQ+
+ 5F6g==
+X-Gm-Message-State: AOJu0YwFFlgSYOHA2wuA0fe1bc+WFWMZBcOxOT32s71VqWf1MVj+rRFs
+ t2J9FhhU66fiJj0wH9xeZAVpYxDqFbXSZKdvRDmbzmMWbdgLsAbVhMYRvvkMR9Qm1rbmLbo/FA0
  =
-X-Gm-Gg: ASbGncua7uSuMzxPld5E+rXzoXBpYmb5U+fxK9DhJASxooAX8Eod2kZLgNfyIr2K/9F
- djalpOSegCdduw1iN9ByeGaTJgFK02G8SOrHCStKcrfjb+Z5PaJIPcInWhqS7jH/dUHS2gv3fK0
- azrP6DasFWvOt+s82fFrmsbz6d1wv7zb44/ZwYVFSCwrdsVdWLj8pfIhguSA0WcOkeRTDQ7C4as
- Y9jUzeV+kOrHcJUDd6olh8xQgbwfQpIC2to6BCZbcksyNKleUlkPo1AoLR1aFWq012zrxLX+ZUs
- poawfUz5264rVNw6mZ6ZEsZnQvFCNChZawJvpW/dZf6uI/C/+qd3n24Z05l9myvdds3rwRy5UEK
- RUcwCZfK2/PLQ7et21b5EBX+eMOBhxtQl6XD0hmgv1l3L5gJsH9ZIgpM+dNc=
-X-Google-Smtp-Source: AGHT+IGvqRaK+FTGLRpircEGGo5AQcMitbUzwfvXykGemkI2WAM7g40PBcwY8T4rzfABAay2k9Lp5w==
-X-Received: by 2002:a05:600c:4451:b0:43d:526:e0ce with SMTP id
- 5b1f17b1804b1-442d6dc51e8mr128437535e9.21.1747145740789; 
- Tue, 13 May 2025 07:15:40 -0700 (PDT)
+X-Gm-Gg: ASbGnct4b8hgKUMWZfiyVVvRmZBj6iztf0IlKza2P7bOfa9HtFt+eETxRaM7E2y4aN3
+ lfzzMV4qd0mlCcudWhaaT88gjOnIlrIxrWfppzHv9FqQIJdtT1htfMLi6ZZW3yBxlHvDCdqhcgS
+ 73DT0INJFD8zuKKSr206E8p6U6o5Br8v3KQS49Mt51kFaqXGTovpEVHKL+YrAyQoFuc2PqOPOLK
+ zK9zOdy+2KGXIQkqIvFRkK11fAGoLHfufMvf12IH9xC4L4at/llcDg0lpWBHLQ5zJJTEs0aPlqI
+ /5CZth9in0AjNRjzY9+sV8wR3rihHe/zHpvrnvD9MJ8oNWHTxbSyqbp1CwwHkBS3ezhJsn/NTWT
+ yEfSi34GN/2CZh9pJsCjPfR7n3R5bIDH6cOGYYf9JAbTSnYSa
+X-Google-Smtp-Source: AGHT+IFwO114jKeApDv2zf8RhwRk921BqjFPHbXa41HoxAKPSK0jRov+YMf23lYYa9uzqJFBS+TsEA==
+X-Received: by 2002:a05:600c:3e8c:b0:43d:fa58:81d3 with SMTP id
+ 5b1f17b1804b1-442d6ddf4d7mr128742945e9.32.1747145734371; 
+ Tue, 13 May 2025 07:15:34 -0700 (PDT)
 Received: from chigot-Dell.telnowedge.local
  (lmontsouris-659-1-24-67.w81-250.abo.wanadoo.fr. [81.250.175.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3b7e7fsm213438805e9.39.2025.05.13.07.15.40
+ 5b1f17b1804b1-442cd3b7e7fsm213438805e9.39.2025.05.13.07.15.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 May 2025 07:15:40 -0700 (PDT)
+ Tue, 13 May 2025 07:15:34 -0700 (PDT)
 From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, edgar.iglesias@gmail.com,
  alistair@alistair23.me,
  =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [PATCH 4/4] hw/arm/xlnx-zynqmp: adapt cluster-id based on the boot cpu
-Date: Tue, 13 May 2025 16:14:48 +0200
-Message-Id: <20250513141448.297946-5-chigot@adacore.com>
+Subject: [PATCH 1/4] hw/arm: make cpu targeted by arm_load_kernel the primary
+ CPU.
+Date: Tue, 13 May 2025 16:14:45 +0200
+Message-Id: <20250513141448.297946-2-chigot@adacore.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250513141448.297946-1-chigot@adacore.com>
 References: <20250513141448.297946-1-chigot@adacore.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=chigot@adacore.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=chigot@adacore.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,70 +105,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When gdb is being connected to QEmu, it will be attached to the first
-CPU cluster. However, the ZynqMP board has two clusters, those being of
-two different architectures.
-Therefore, when gdb is connecting to the ZynqMP, it receives the target
-descriptor of the first CPU cluster. Up to now, it was always the APU
-cluster, which is AARCH64.
+Currently, arm booting processus assumes that the first_cpu is the CPU
+that will boot: `arm_load_kernel` is powering off all but the `first_cpu`;
+`do_cpu_reset` is setting the loader address only for this `first_cpu`.
 
-When booting on a RPU, gdb will still connect to the APU. If gdb is
-supporting only ARM32, it will receive the APU target descriptor,
-resulting in:
-  | (gdb) target remote :1234
-  | warning: while parsing target description (at line 1): Target
-  | description specified unknown architecture "aarch64"
+For most of the boards, this isn't an issue as the kernel is loaded and
+booted on the first CPU anyway. However, for zynqmp, the option
+"boot-cpu" allows to choose any CPUs.
 
-Adjust the cluster-id based on the boot cpu will resolve the above
-issue; allowing a pure ARM32 toolchain to debug programs running on
-RPUs.
+Create a new arm_boot_info entry `primary_cpu` recording which CPU will
+be boot first. This one is set when `arm_boot_kernel` is called.
 
 Signed-off-by: Clément Chigot <chigot@adacore.com>
 ---
- hw/arm/xlnx-zynqmp.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ hw/arm/boot.c         | 15 +++++++--------
+ include/hw/arm/boot.h |  3 +++
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
-index be33669f87..f23ace6446 100644
---- a/hw/arm/xlnx-zynqmp.c
-+++ b/hw/arm/xlnx-zynqmp.c
-@@ -221,7 +221,13 @@ static void xlnx_zynqmp_create_rpu(MachineState *ms, XlnxZynqMPState *s,
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index f94b940bc3..8da4c67fa9 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -743,7 +743,7 @@ static void do_cpu_reset(void *opaque)
+             } else {
+                 if (arm_feature(env, ARM_FEATURE_EL3) &&
+                     (info->secure_boot ||
+-                     (info->secure_board_setup && cs == first_cpu))) {
++                     (info->secure_board_setup && cpu == info->primary_cpu))) {
+                     /* Start this CPU in Secure SVC */
+                     target_el = 3;
+                 }
+@@ -751,7 +751,7 @@ static void do_cpu_reset(void *opaque)
  
-     object_initialize_child(OBJECT(s), "rpu-cluster", &s->rpu_cluster,
-                             TYPE_CPU_CLUSTER);
--    qdev_prop_set_uint32(DEVICE(&s->rpu_cluster), "cluster-id", 1);
+             arm_emulate_firmware_reset(cs, target_el);
+ 
+-            if (cs == first_cpu) {
++            if (cpu == info->primary_cpu) {
+                 AddressSpace *as = arm_boot_address_space(cpu, info);
+ 
+                 cpu_set_pc(cs, info->loader_start);
+@@ -1238,6 +1238,9 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *ms, struct arm_boot_info *info)
+     info->dtb_filename = ms->dtb;
+     info->dtb_limit = 0;
+ 
++    /* We assume the CPU passed as argument is the primary CPU.  */
++    info->primary_cpu = cpu;
 +
-+    /* In order to connect gdb to the boot cpu, adjust the cluster-id.  */
-+    if (!strncmp(boot_cpu, "rpu-cpu", 7)) {
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_cluster), "cluster-id", 0);
-+    } else {
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_cluster), "cluster-id", 1);
-+    }
+     /* Load the kernel.  */
+     if (!info->kernel_filename || info->firmware_loaded) {
+         arm_setup_firmware_boot(cpu, info);
+@@ -1287,12 +1290,8 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *ms, struct arm_boot_info *info)
  
-     for (i = 0; i < num_rpus; i++) {
-         const char *name;
-@@ -380,7 +386,6 @@ static void xlnx_zynqmp_init(Object *obj)
+             object_property_set_int(cpuobj, "psci-conduit", info->psci_conduit,
+                                     &error_abort);
+-            /*
+-             * Secondary CPUs start in PSCI powered-down state. Like the
+-             * code in do_cpu_reset(), we assume first_cpu is the primary
+-             * CPU.
+-             */
+-            if (cs != first_cpu) {
++            /* Secondary CPUs start in PSCI powered-down state.  */
++            if (ARM_CPU(cs) != info->primary_cpu) {
+                 object_property_set_bool(cpuobj, "start-powered-off", true,
+                                          &error_abort);
+             }
+diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
+index b12bf61ca8..a2e22bda8a 100644
+--- a/include/hw/arm/boot.h
++++ b/include/hw/arm/boot.h
+@@ -132,6 +132,9 @@ struct arm_boot_info {
+     bool secure_board_setup;
  
-     object_initialize_child(obj, "apu-cluster", &s->apu_cluster,
-                             TYPE_CPU_CLUSTER);
--    qdev_prop_set_uint32(DEVICE(&s->apu_cluster), "cluster-id", 0);
- 
-     for (i = 0; i < num_apus; i++) {
-         object_initialize_child(OBJECT(&s->apu_cluster), "apu-cpu[*]",
-@@ -475,6 +480,13 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
- 
-     ram_size = memory_region_size(s->ddr_ram);
- 
-+    /* In order to connect gdb to the boot cpu, adjust the cluster-id.  */
-+    if (!strncmp(boot_cpu, "apu-cpu", 7)) {
-+        qdev_prop_set_uint32(DEVICE(&s->apu_cluster), "cluster-id", 0);
-+    } else {
-+        qdev_prop_set_uint32(DEVICE(&s->apu_cluster), "cluster-id", 1);
-+    }
+     arm_endianness endianness;
 +
-     /*
-      * Create the DDR Memory Regions. User friendly checks should happen at
-      * the board level
++    /* CPU having load the kernel and that should be the first to boot.  */
++    ARMCPU *primary_cpu;
+ };
+ 
+ /**
 -- 
 2.34.1
 
