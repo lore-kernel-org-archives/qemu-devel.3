@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D14C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 18:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F140FC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 18:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEuL4-0005U0-Ns; Tue, 13 May 2025 14:26:50 -0400
+	id 1uEuWN-00055q-F8; Tue, 13 May 2025 14:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uZst=X5=kaod.org=clg@ozlabs.org>)
- id 1uEuKu-0005MK-BG; Tue, 13 May 2025 14:26:40 -0400
+ id 1uEuQF-0002Z8-C7
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 14:32:15 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uZst=X5=kaod.org=clg@ozlabs.org>)
- id 1uEuKq-0008CI-Jn; Tue, 13 May 2025 14:26:39 -0400
+ id 1uEuQD-0000XQ-2r
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 14:32:11 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZxlL21hY8z4x5g;
- Wed, 14 May 2025 04:26:34 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZxlSN625zz4x8P;
+ Wed, 14 May 2025 04:32:04 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZxlKy2ww2z4wyV;
- Wed, 14 May 2025 04:26:30 +1000 (AEST)
-Message-ID: <401e82f8-f573-4534-9dcf-eb6d251e9cfb@kaod.org>
-Date: Tue, 13 May 2025 20:26:28 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZxlSM4ffRz4x3d;
+ Wed, 14 May 2025 04:32:03 +1000 (AEST)
+Message-ID: <f34badd0-948c-401c-9143-f2afe4002e9b@kaod.org>
+Date: Tue, 13 May 2025 20:32:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] tests/qtest/aspeed_smc-test: Fix memory leaks
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250513080806.1005996-1-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH v2 7/7] scripts/checkpatch: reimplement mandate for
+ SPDX-License-Identifier
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20250512182447.1139105-1-berrange@redhat.com>
+ <20250512182447.1139105-8-berrange@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,9 +84,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250513080806.1005996-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250512182447.1139105-8-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=uZst=X5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -112,32 +110,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/13/25 10:08, Jamin Lin wrote:
-> Link: https://patchwork.kernel.org/project/qemu-devel/patch/20250509175047.26066-1-farosas@suse.de/
+On 5/12/25 20:24, Daniel P. Berrangé wrote:
+> From: Daniel P. Berrangé <berrange@redhat.com>
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Going forward we want all newly created source files to have an
+> SPDX-License-Identifier tag present.
+> 
+> Initially mandate this for C, Python, Perl, Shell source files,
+> as well as JSON (QAPI) and Makefiles, while encouraging users
+> to consider it for other file types.
+> 
+> The new attempt at detecting missing SPDX-License-Identifier relies
+> on the hooks for relying triggering logic at the end of scanning a
+> new file in the diff.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/qtest/aspeed_smc-test.c | 5 +++++
->   1 file changed, 5 insertions(+)
+>   scripts/checkpatch.pl | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
 > 
-> diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
-> index 4e1389385d..52a00e6f0a 100644
-> --- a/tests/qtest/aspeed_smc-test.c
-> +++ b/tests/qtest/aspeed_smc-test.c
-> @@ -228,5 +228,10 @@ int main(int argc, char **argv)
->       unlink(ast2500_evb_data.tmp_path);
->       unlink(ast2600_evb_data.tmp_path);
->       unlink(ast1030_evb_data.tmp_path);
-> +    g_free(palmetto_data.tmp_path);
-> +    g_free(ast2500_evb_data.tmp_path);
-> +    g_free(ast2600_evb_data.tmp_path);
-> +    g_free(ast1030_evb_data.tmp_path);
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index d416a6dcf9..95609ca010 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -1482,6 +1482,20 @@ sub process_start_of_file {
+>   # Called at the end of processing a diff hunk for a file
+>   sub process_end_of_file {
+>   	my $fileinfo = shift;
 > +
->       return ret;
+> +	if ($fileinfo->{action} eq "new" &&
+> +	    !exists $fileinfo->{facts}->{sawspdx}) {
+> +		if ($fileinfo->{filenew} =~
+> +		    /\.(c|h|py|pl|sh|json|inc|Makefile)$/) {
+> +			# source code files MUST have SPDX license declared
+> +			ERROR("New file '" . $fileinfo->{filenew} .
+> +			      "' requires 'SPDX-License-Identifier'");
+> +		} else {
+> +			# Other files MAY have SPDX license if appropriate
+> +			WARN("Does new file '" . $fileinfo->{filenew} .
+> +			     "' need 'SPDX-License-Identifier'?");
+> +		}
+> +	}
 >   }
+>   
+>   sub process {
+> @@ -1780,6 +1794,7 @@ sub process {
+>   
+>   # Check SPDX-License-Identifier references a permitted license
+>   		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
+> +			$fileinfo->{facts}->{sawspdx} = 1;
+>   			&checkspdx($realfile, $1);
+>   		}
+>   
+
+When run on patch :
+
+   https://lore.kernel.org/qemu-devel/20250512091014.3454083-2-kane_chen@aspeedtech.com/
+
+./scripts/checkpatch.pl outputs :
+   
+   ERROR: New file 'hw/misc/aspeed_otpmem.c' requires 'SPDX-License-Identifier'
+   WARNING: line over 80 characters
+   #288: FILE: include/hw/misc/aspeed_otpmem.h:22:
+   +    void (*prog)(AspeedOTPMemState *s, uint32_t addr, uint32_t val, Error **errp);
+   
+   WARNING: line over 80 characters
+   #289: FILE: include/hw/misc/aspeed_otpmem.h:23:
+   +    void (*set_default)(AspeedOTPMemState *s, uint32_t addr, uint32_t val, Error **errp);
+   
+   ERROR: New file 'include/hw/misc/aspeed_otpmem.h' requires 'SPDX-License-Identifier'
+   WARNING: added, moved or deleted file(s):
+   
+     hw/misc/aspeed_otpmem.c
+     include/hw/misc/aspeed_otpmem.h
+   
+   Does MAINTAINERS need updating?
+   
+   total: 2 errors, 3 warnings, 255 lines checked
+   
+Looks good.
 
 
-Applied to aspeed-next.
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
