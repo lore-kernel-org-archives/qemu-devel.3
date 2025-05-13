@@ -4,54 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED76C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 12:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDB0C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 12:08:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEoJ0-0004pT-6a; Tue, 13 May 2025 08:00:18 -0400
+	id 1uEoPZ-0006v9-LJ; Tue, 13 May 2025 08:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uEoIu-0004oD-U7; Tue, 13 May 2025 08:00:13 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uEoPP-0006u3-Ub
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 08:06:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uEoIs-0003ZG-AS; Tue, 13 May 2025 08:00:12 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0B5DF55CA5C;
- Tue, 13 May 2025 14:00:06 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id XT7LZgVRll34; Tue, 13 May 2025 14:00:03 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id CDE7C55CA61; Tue, 13 May 2025 14:00:03 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id CBC60745682;
- Tue, 13 May 2025 14:00:03 +0200 (CEST)
-Date: Tue, 13 May 2025 14:00:03 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Alexey Kardashevskiy <aik@ozlabs.ru>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v3] ppc/vof: Make nextprop behave more like Open Firmware
-In-Reply-To: <2bdfcf77-ff5d-4c26-839e-23f831f4abe1@app.fastmail.com>
-Message-ID: <a947a1c1-c4cc-d2bd-9a59-f5ce97c6ea1d@eik.bme.hu>
-References: <20250423101931.A0A6B55D23A@zero.eik.bme.hu>
- <cacfd877-8a93-1a1f-21c6-43743cc1bfc4@eik.bme.hu>
- <2bdfcf77-ff5d-4c26-839e-23f831f4abe1@app.fastmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uEoPK-0004Jw-Nw
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 08:06:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747138007;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GIYdh6aj0ntYCjyEH1vNNlmdCgzEXnaaUKLyoGaZJMk=;
+ b=gfB7NsXzFMn+/+HpG8IZkIWswIbEnrHwpgKc8eJKWwzg60GxbtjV1AnEvsDyxe9R4bq39u
+ AgtzRUMuRp3jR92KdFgeecXWkk6GQ3u21WUP02ZBbY6LfuLG26Mrit4ElQvusadnzodDhj
+ DTKSlGcAW+GMBTip5iV2e7hMx2LO6W4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-4wU0s_3LMC2FA9cj6bozwA-1; Tue,
+ 13 May 2025 08:06:44 -0400
+X-MC-Unique: 4wU0s_3LMC2FA9cj6bozwA-1
+X-Mimecast-MFC-AGG-ID: 4wU0s_3LMC2FA9cj6bozwA_1747138003
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3363E1955D45; Tue, 13 May 2025 12:06:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE5B1180045B; Tue, 13 May 2025 12:06:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3728921E66C3; Tue, 13 May 2025 14:06:40 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 02/10] qapi: expand docs for SEV commands
+In-Reply-To: <20250508135816.673087-3-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 8 May 2025 14:58:08
+ +0100")
+References: <20250508135816.673087-1-berrange@redhat.com>
+ <20250508135816.673087-3-berrange@redhat.com>
+Date: Tue, 13 May 2025 14:06:40 +0200
+Message-ID: <8734d8emun.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,56 +91,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 May 2025, Alexey Kardashevskiy wrote:
-> On Wed, 30 Apr 2025, at 21:21, BALATON Zoltan wrote:
->> On Wed, 23 Apr 2025, BALATON Zoltan wrote:
->>> The FDT does not normally store name properties but reconstructs it
->>> from path but Open Firmware specification says each node should at
->>> least have this property. This is correctly handled in getprop but
->>> nextprop should also return it even if not present as a property.
->>>
->>> Explicit name properties are still allowed because they are needed
->>> e.g. on the root node that guests expect to have specific names as
->>> seen on real machines instead of being empty so sometimes the node
->>> name may need to be overriden. For example on pegasos MorphOS checks
->>> the name of "/" and expects to find bplan,Pegasos2 which is how it
->>> identifies the machine.
->>>
->>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>> ---
->>> v3:
->>> Keep phandle properties
->>> Changed commit message
->>
->> Ping?
->>
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+
+> This gives some more context about the behaviour of the commands in
+> unsupported guest configuration or platform scenarios.
 >
-> sorry for the delay, looks okay to me but (probably was answered but I 
-> forgot because I am slow) I still do not understand what is adding the 
-> explicit property called "name" so vof_nextprop() needs to check if it 
-> is the actual property. Thanks,
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  qapi/misc-target.json | 43 ++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 36 insertions(+), 7 deletions(-)
+>
+> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+> index 5d0ffb0164..ae55e437a5 100644
+> --- a/qapi/misc-target.json
+> +++ b/qapi/misc-target.json
+> @@ -110,7 +110,11 @@
+>  ##
+>  # @query-sev:
+>  #
+> -# Returns information about SEV
+> +# Returns information about SEV/SEV-ES/SEV-SNP.
+> +#
+> +# If unavailable due to an incompatible configuration the
+> +# returned @enabled field will be set to 'false' and the
+> +# state of all other fields is undefined.
 
-Look at this series where this is used (I also included this patch there 
-as patch 2 which is identical to this v3 standalone patch):
+That's awful.  Not this patch's fault.
 
-https://patchew.org/QEMU/cover.1746139668.git.balaton@eik.bme.hu/
+What's "incompatible configuration"?
 
-This patch allows removing explicit name properties in patch 3 and move 
-the static parts into a dtb file in patch 4. Dtb does not allow to set 
-name property and will use the path name for it but e.g. the root of the 
-device tree on some machines must have a specific name. On Apple it's 
-called device-tree and on pegasos it's bPlan,Pegasos and some guests (e.g. 
-MorphOS) checks this to detect what machine they run on so will fail it we 
-return / or no name for the name of the root node. Therefore in patch 4 I 
-still have a
+Actual behavior as far as I can tell:
 
-qemu_fdt_setprop_string(fdt, "/", "name", "bplan,Pegasos2");
+* If !CONFIG_SEV: GenericError "SEV is not available in this QEMU".
 
-to make this work, and for some nodes it may still be needed although for 
-most the path name from dtb will be correct so no need to add a name 
-property for those. But becuase of these nodes that need a name different 
-from their path we still need to allow explicit name properties.
+* If CONFIG_SEV and !sev_enabled(): SevInfo filled with zero bytes
 
-Regards,
-BALATON Zoltan
+* If CONFIG_SEV and sev_enabled(): SevInfo filled properly
+
+sev_enabled() is true when the machine's cgs member is an instance of
+"sev-common".
+
+>  #
+>  # Returns: @SevInfo
+>  #
+> @@ -141,7 +145,16 @@
+>  ##
+>  # @query-sev-launch-measure:
+>  #
+> -# Query the SEV guest launch information.
+> +# Query the SEV/SEV-ES guest launch information.
+> +#
+> +# This is only valid on x86 machines configured with KVM and the
+> +# 'sev-guest' confidential virtualization object. The launch
+> +# measurement for SEV-SNP guests is only available within
+> +# the guest.
+> +#
+> +# This will return an error if the launch measurement is
+> +# unavailable, either due to an invalid guest configuration
+> +# or if the guest has not reached the required SEV state.
+>  #
+>  # Returns: The @SevLaunchMeasureInfo for the guest
+>  #
+> @@ -185,8 +198,9 @@
+>  ##
+>  # @query-sev-capabilities:
+>  #
+> -# This command is used to get the SEV capabilities, and is supported
+> -# on AMD X86 platforms only.
+> +# This command is used to get the SEV capabilities, and is only
+> +# supported on AMD X86 platforms with KVM enabled. If SEV is not
+> +# available on the platform an error will be returned.
+
+What does "not supported" mean here?
+
+>  #
+>  # Returns: SevCapability objects.
+>  #
+> @@ -205,7 +219,15 @@
+>  ##
+>  # @sev-inject-launch-secret:
+>  #
+> -# This command injects a secret blob into memory of SEV guest.
+> +# This command injects a secret blob into memory of a SEV/SEV-ES guest.
+> +#
+> +# This is only valid on x86 machines configured with KVM and the
+> +# 'sev-guest' confidential virtualization object. SEV-SNP guests
+> +# do not support launch secret injection
+> +#
+> +# This will return an error if launch secret injection is not possible,
+> +# either due to an invalid guest configuration, or if the guest has not
+> +# reached the required SEV state.
+>  #
+>  # @packet-header: the launch secret packet header encoded in base64
+>  #
+> @@ -236,8 +258,15 @@
+>  ##
+>  # @query-sev-attestation-report:
+>  #
+> -# This command is used to get the SEV attestation report, and is
+> -# supported on AMD X86 platforms only.
+> +# This command is used to get the SEV attestation report.
+> +#
+> +# This is only valid on x86 machines configured with KVM and the
+> +# 'sev-guest' confidential virtualization object. The attestation
+> +# report for SEV-SNP guests is only available within the guest.
+> +#
+> +# This will return an error if the attestation report is
+> +# unavailable, either due to an invalid guest configuration
+> +# or if the guest has not reached the required SEV state.
+>  #
+>  # @mnonce: a random 16 bytes value encoded in base64 (it will be
+>  #     included in report)
+
+Strict improvemement already, so
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
 
