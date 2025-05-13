@@ -4,108 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E82C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 15:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C77C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 15:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uErZs-0007P7-Hk; Tue, 13 May 2025 11:29:56 -0400
+	id 1uErio-0003Pn-Il; Tue, 13 May 2025 11:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uErZo-0007On-Sg
- for qemu-devel@nongnu.org; Tue, 13 May 2025 11:29:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uErZm-0006UG-SR
- for qemu-devel@nongnu.org; Tue, 13 May 2025 11:29:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747150189;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n3SV9RrB4pXNYv42wcSIPomPi1fFx4e4cmy7nDRktu8=;
- b=Y8N/NSRIWjpTa3xCMrcq0oeZ3pYgRGHxz2BHPdF2W1KCAEZxH2k6vQuRRi2ozq6avnAd1Q
- te60/kKJ9uqnJS6Eo690cVp5wxDhkpFO7qftjeg0gCWss2++rqEagzWDfpLbnp2s52b8t5
- REtt9jihOPdWVZml7pnMW/AP5qMYNWM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-385-dIyIBkDxPkOJHbZqcpyLdQ-1; Tue, 13 May 2025 11:29:48 -0400
-X-MC-Unique: dIyIBkDxPkOJHbZqcpyLdQ-1
-X-Mimecast-MFC-AGG-ID: dIyIBkDxPkOJHbZqcpyLdQ_1747150187
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a0bcaf5f45so1840008f8f.1
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 08:29:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uErim-0003Pc-RP
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 11:39:08 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uErik-0007Sd-Qa
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 11:39:08 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a0ba0b6b76so4121365f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 08:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747150745; x=1747755545; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1aB1bR5uYVtXnisXsyHLAxy/NZGcPHLGwq4sthZMzJY=;
+ b=yGTBCOwZmzffOhOOah4CQ+WZexD49cZimiriI105xWDBVcyg9sd/X1S1PZphhAB7gY
+ ISsTefwsM1PHLh9XoR4iJqFgM2EZEQxtX4Rh59X8gqlGlyKMt7VwsQ4bfGRKAtBWclNW
+ z+a9y+4LaX9SNZvnx+CfcIeXQWAAOWy/aDdjC5GCTv50yHSpej341hljkitSSCLtOwL8
+ HV2G/jBfOvrpPSCxbeNykyd79obCJHUJ8TqEIDHSdTnQgbsw14+4t6eLwnNAywwsPuqL
+ 66g1LxDZ4BBTH9JbG7n8fEeJLa1tDayehdmSKvLJukiIUxEROhulTT54ma2YkyQqiXWU
+ BggQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747150187; x=1747754987;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n3SV9RrB4pXNYv42wcSIPomPi1fFx4e4cmy7nDRktu8=;
- b=BCPZ4BwVFfpXR5gOEnuLlhYZ+tcQ1wYvMDVn2UUgdrsnZiK+Skz+LdfY+gE4uoV9hC
- nWKQ1nzmduiWdzsjTJH6qxuGoZJh6gAf8Sx1a9FjAawtDaeU8M4O49XaY0UP8TYroPt/
- XUeBcI3/0KUoZxtUkZiVcsU546ceN27nZJapukawiTN+6uxjLlKDDbJZ2DNyaW8i9d0j
- jKU00ButuS1u5n8p3JqMk0pcH3YUxBRS0q9T85ZPiOpZhZaA5QT/L6cDLY6+z9p4rFd6
- NqtTOUnmZgYFbHAzAx6ds6g8ndTjTid1+yAC5GlW7wv6ldvskomkugVt92zTDehxuquo
- x9yQ==
+ d=1e100.net; s=20230601; t=1747150745; x=1747755545;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1aB1bR5uYVtXnisXsyHLAxy/NZGcPHLGwq4sthZMzJY=;
+ b=hc6Pbd8azkeAtYs8msLjBZd2eGApMfvNkmTrK1T+AiZu/lb6VftdprDVG8aun3Cpj9
+ uGa1rm40X7I4J6v/5/dv8d7E7pzNJHYCVbu4cVQIr2Rxa1FHl8c9bQy+Xs8qxnsRspG7
+ 538fQaf1mh0JJiUzljShnNJ5UacJhRiOmEd97epDzEQZJuJTC5RrtvAbswo2lQEjjFxt
+ FqSz7fNpTBCgvLj2sICCdECcU8atitxMkwBJK8YGwfLgK4foOLStNNk9svm6OQ3WiOoU
+ iA3GNkQuEQ3QJnH5YDCh7wfz5BegulWeyhMZuJbeD6g82FWl+XdgW4jCmDjmhDA6KUb/
+ aZCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2mBWr2iKiUBjQHjhdXjanoXBS/5XuddTr/gquKHD119GtAt32hlDmYgCpKq3V7hc+h8zstZIUvLAo@nongnu.org
-X-Gm-Message-State: AOJu0YwymNDXuSwPXS01Tnlbi2ApVk67yNBzGKLtjqMrM6gWkP7MbHGt
- 5cce+NWG4/W0qE8WySaykEAhmYORSAB/hj4pYVxZw/sxKVbktTLMSw6jLBRd6vKFBVBnuMbNcIo
- HHN9aWdQGhoQMJurUOPcPCr/sYWHkrQJ7Tc0RbX8vvgyIkIIgeTBH
-X-Gm-Gg: ASbGncs9pHrwm8aieQ9vK8ROgUYPkhjY85qIQ+dH89rF/F9nIOmVFC8cZZsXCLKwxid
- NZFieC5mYhDXYip0Qbnf074jcMHw5pWXMJspGl4xa6wNqX8OF0j6Cb4FOOnGR+jWvr0+1zYcAn7
- sGUYvCj7jRGjtntHBV+A4CzMzJA07SP7FR6OBX6Vd/4tRE68KUGDz7RTqv40SfdZEMblagvCg2r
- HJaLfiUaBbVTfPUynsfFwHweJuckopyH4vyRk18z1ktmHlAHEmFUwJRejpEQD2epn05K7KwQEzt
- ni+i5GCy1KrAofaLJAUu9W+YiEwolRPBiq+mbeSXXdg9Ie5pKDhPukKD5Ik=
-X-Received: by 2002:a5d:650b:0:b0:3a1:f655:c5b2 with SMTP id
- ffacd0b85a97d-3a1f655c5femr12607481f8f.39.1747150186965; 
- Tue, 13 May 2025 08:29:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6BYhz3sS/2QCPLewK9ErS8eQbRmCxmvRhFud2ois3UN8iIw2F7w+3qHCqvVGzq9QngAQ0gA==
-X-Received: by 2002:a5d:650b:0:b0:3a1:f655:c5b2 with SMTP id
- ffacd0b85a97d-3a1f655c5femr12607460f8f.39.1747150186559; 
- Tue, 13 May 2025 08:29:46 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AJvYcCX+yzHYYHxH8Az877fP4nIl7idsHLXAEv1KwQtfCsclVaGt31QbKhNbX/sUDR0sMS9gN5m+2ZApFWbP@nongnu.org
+X-Gm-Message-State: AOJu0YwdoIK0kC+fOd134tvNqL8HtCXagEl+rWQyCowWPNBTXOSBJwZc
+ QqHjBCDgNwAWdrp2Xu8fyVSDLK6rHXDmcBZwjRvrd3ZR07/emFsvyqU3oCu+U6uK5tdu9HIr02H
+ Yg6ZHfg==
+X-Gm-Gg: ASbGncvvR32QGYrKxLbWuN0plJx78JA8Q4hCaHkG8T8cwDP7ixLyMupZ4/pcvRJNzYS
+ WdWF9iXTC9PP28LRmM1VXLiWUywJKnpM3Mc5aWW9y7lBwxLrYcoGyZVKHZnmPTldECIckvgvnK+
+ DgOKECWfX4KYbScQvzRDV3XmEn+hy7Ce6YjpLHG19lYfvO1a/xo3ifEQXXfue5zj17vFnPA6dXx
+ pjHv3Z1WQoYFJ9yHGCc20VVEPWYHTgEgW8yKKvfqrJJ1iPioI6pQzSO/zFWGOeFE81Ni9lV59t+
+ 3L+k0uTGP9ggP7MyEkcsHIWC/vMfP5OPL3mnOAnPqouFDTlXNYhJe5bp4Ad41k6dSdjx+e9IPYX
+ ElhqpigD3Dx9J
+X-Google-Smtp-Source: AGHT+IFxKfWecEWGkr8SFgolB2gDXwLfwsSyvhrpPdv46ezRqgPwKv9xC9rgSH/rk4eQp3aLVh/qIg==
+X-Received: by 2002:a5d:64c4:0:b0:3a1:fdff:5394 with SMTP id
+ ffacd0b85a97d-3a1fdff552fmr10206373f8f.57.1747150744829; 
+ Tue, 13 May 2025 08:39:04 -0700 (PDT)
+Received: from [10.61.1.197] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f58ebe00sm16888782f8f.38.2025.05.13.08.29.44
+ ffacd0b85a97d-3a1f58f2af7sm16816967f8f.52.2025.05.13.08.39.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 08:29:45 -0700 (PDT)
-Message-ID: <dadc4acd-97c8-4647-9467-89cd1966a6f2@redhat.com>
-Date: Tue, 13 May 2025 17:29:44 +0200
+ Tue, 13 May 2025 08:39:04 -0700 (PDT)
+Message-ID: <3314f721-9c5e-479b-9fcc-3b8a021efde9@linaro.org>
+Date: Tue, 13 May 2025 16:39:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
- host model
+Subject: Re: [PATCH 2/4] hw/intc/arm_gic: introduce a first-cpu-index property
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
+ qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, edgar.iglesias@gmail.com,
+ alistair@alistair23.me, Frederic Konrad <konrad.frederic@yahoo.fr>
+References: <20250513141448.297946-1-chigot@adacore.com>
+ <20250513141448.297946-3-chigot@adacore.com>
 Content-Language: en-US
-To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
-Cc: agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
- philmd@linaro.org, pbonzini@redhat.com
-References: <20250414163849.321857-1-cohuck@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250414163849.321857-1-cohuck@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250513141448.297946-3-chigot@adacore.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,113 +102,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 13/5/25 16:14, Clément Chigot wrote:
+> From: Frederic Konrad <konrad.frederic@yahoo.fr>
+> 
+> This introduces a first-cpu-index property to the arm-gic, as some SOCs
+> could have two separate GIC (ie: the zynqmp).
+> 
+> Signed-off-by: Clément Chigot <chigot@adacore.com>
+> ---
+>   hw/intc/arm_gic.c                | 2 +-
+>   hw/intc/arm_gic_common.c         | 1 +
+>   include/hw/intc/arm_gic_common.h | 2 ++
+>   3 files changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+> index d18bef40fc..899f133363 100644
+> --- a/hw/intc/arm_gic.c
+> +++ b/hw/intc/arm_gic.c
+> @@ -59,7 +59,7 @@ static const uint8_t gic_id_gicv2[] = {
+>   static inline int gic_get_current_cpu(GICState *s)
+>   {
+>       if (!qtest_enabled() && s->num_cpu > 1) {
+> -        return current_cpu->cpu_index;
+> +        return current_cpu->cpu_index - s->first_cpu_index;
 
-On 4/14/25 6:38 PM, Cornelia Huck wrote:
-> [This is on top of v5 of the ID register storage rework:
-> https://lore.kernel.org/qemu-devel/20250409144304.912325-1-cohuck@redhat.com/T/#t]
->
-> It's been a while, but here's finally a respin of the series to make ID
-> registers configurable directly via the command line.
->
-> Major changes from v2 include:
-> - split out the rework of ID register storage (see above) and rebased on top
->   of that
-> - hopefully improved the documentation
-> - fixed some bugs along the way (including output of the cpu model expansion
->   command, and compilation with HVF on)
->
-> Decided against zeroing unknown registers; it's mostly a "dammed if you do,
-> dammed if you don't" situation as one case or the other will not quite work
-> as desired, even disregarding fields like AA64PFR1_EL1.MTE_frac where 0
-> might indicate things we do not support. You'll need to be careful when
-> doing kernel updates and be explicit with configuring fields.
-This is not totally clear to me. Is it possible to come with examples
-and also derive some guidelines to avoid pitfalls? I guess this kind of
-aknowledgement can be scary.
->
-> The current cpu properties stay as they are; we can work on converting them
-> to compatibility props once we have support for configuring the ID register
-> fields on the command line for the other accelerators (this is still KVM only.)
+Note, CPUState::cpu_index is meant for accelerators code and shouldn't
+be used in hw/ (in particular because it vary when using hotplug).
 
-At least what can we do to make sure they are not inconsistent and work
-well together. Looks like a must have before being non RFC.
->
-> The FEAT_xxx features only support a subset of what we need to configure in
-> real life; for example, different AltraMax machines differ in CTR_EL0, which
-> is not covered by any FEAT_. It might make sense to provide them as syntactic
-> sugar on top.
+>       }
+>       return 0;
+>   }
+> diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
+> index 0f0c48d89a..ed5be05645 100644
+> --- a/hw/intc/arm_gic_common.c
+> +++ b/hw/intc/arm_gic_common.c
+> @@ -350,6 +350,7 @@ static void arm_gic_common_linux_init(ARMLinuxBootIf *obj,
+>   
+>   static const Property arm_gic_common_properties[] = {
+>       DEFINE_PROP_UINT32("num-cpu", GICState, num_cpu, 1),
+> +    DEFINE_PROP_UINT32("first-cpu-index", GICState, first_cpu_index, 0),
+>       DEFINE_PROP_UINT32("num-irq", GICState, num_irq, 32),
+>       /* Revision can be 1 or 2 for GIC architecture specification
+>        * versions 1 or 2, or 0 to indicate the legacy 11MPCore GIC.
+> diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
+> index 97fea4102d..93a3cc2bf8 100644
+> --- a/include/hw/intc/arm_gic_common.h
+> +++ b/include/hw/intc/arm_gic_common.h
+> @@ -129,6 +129,8 @@ struct GICState {
+>       uint32_t num_lrs;
+>   
+>       uint32_t num_cpu;
+> +    /* cpu_index of the first CPU, attached to this GIC.  */
+> +    uint32_t first_cpu_index;
+>   
+>       MemoryRegion iomem; /* Distributor */
+>       /* This is just so we can have an opaque pointer which identifies
 
-I agree that anyway we will need an ID reg field granularity for some
-real life cases. On top of that we shall try to build higher level props
-matching to features as requested by an overwhelming majority in earlier
-comments.
->
-> We still have to deal with MIDR/REVIDR/AIDR differences by exploiting
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit?id=d300b0168ea8fd5022a1413bd37ab63f4e5a7d4d
-> (in a different series.)
-Shameer, do you plan to contribute the qemu integration of this feature
-you developped on kernel side; or do you allow us to integrate it in
-this series?
-
-Thanks
-
-Eric
->
-> I have not ignored the issue of named models on Arm, I just wanted to get the
-> base infrastructure into place first :)
->
-> Real world example (migration Graviton 3 -> 4, thx to Sebastian):
->
-> -cpu host,pauth=off,SYSREG_ID_AA64PFR0_EL1_SEL2=0,SYSREG_ID_AA64PFR0_EL1_EL0=1,
->  SYSREG_ID_AA64ISAR0_EL1_TLB=0,SYSREG_ID_AA64ISAR0_EL1_TS=0,
->  SYSREG_ID_AA64ISAR0_EL1_SM4=0,SYSREG_ID_AA64ISAR0_EL1_SM3=0,
->  SYSREG_ID_AA64ISAR1_EL1_SPECRES=0,SYSREG_ID_AA64ISAR1_EL1_SB=0,
->  SYSREG_ID_AA64ISAR1_EL1_FRINTTS=0,SYSREG_ID_AA64MMFR0_EL1_TGRAN4_2=1,
->  SYSREG_ID_AA64MMFR0_EL1_TGRAN16_2=1,SYSREG_ID_AA64MMFR0_EL1_TGRAN64_2=1
->
-> (not including handling MIDR differences, which is out of scope for this series)
->
-> Code also available at
-> https://gitlab.com/cohuck/qemu/-/tree/arm-cpu-model-rfcv3?ref_type=heads
->
->
-> Cornelia Huck (5):
->   arm/cpu: Add generated sysreg properties
->   kvm: kvm_get_writable_id_regs
->   arm/cpu: accessors for writable id registers
->   arm-qmp-cmds: introspection for ID register props
->   arm/cpu-features: document ID reg properties
->
-> Eric Auger (5):
->   arm/cpu: Add infra to handle generated ID register definitions
->   arm/cpu: Add sysreg properties generation
->   arm/kvm: Allow reading all the writable ID registers
->   arm/kvm: write back modified ID regs to KVM
->   arm/cpu: more customization for the kvm host cpu model
->
->  docs/system/arm/cpu-features.rst      | 104 +++-
->  scripts/gen-cpu-sysreg-properties.awk | 325 ++++++++++++
->  scripts/update-aarch64-sysreg-code.sh |   5 +-
->  target/arm/arm-qmp-cmds.c             |  19 +
->  target/arm/cpu-custom.h               |  60 +++
->  target/arm/cpu-sysreg-properties.c    | 713 ++++++++++++++++++++++++++
->  target/arm/cpu-sysregs.h              |   2 +
->  target/arm/cpu.c                      |  12 +
->  target/arm/cpu.h                      |  47 ++
->  target/arm/cpu64.c                    |  24 +-
->  target/arm/kvm.c                      | 289 ++++++++++-
->  target/arm/kvm_arm.h                  |  26 +-
->  target/arm/meson.build                |   1 +
->  target/arm/trace-events               |   6 +
->  14 files changed, 1617 insertions(+), 16 deletions(-)
->  create mode 100755 scripts/gen-cpu-sysreg-properties.awk
->  create mode 100644 target/arm/cpu-custom.h
->  create mode 100644 target/arm/cpu-sysreg-properties.c
->
+Alternative series motivated to remove &first_cpu / qemu_get_cpu():
+https://lore.kernel.org/qemu-devel/20231212162935.42910-1-philmd@linaro.org/
 
 
