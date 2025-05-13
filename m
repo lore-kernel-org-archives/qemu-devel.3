@@ -4,65 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71676C3ABC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5698CC3ABCC
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 12:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEp1S-0006R6-2O; Tue, 13 May 2025 08:46:15 -0400
+	id 1uEp1N-0006IV-T1; Tue, 13 May 2025 08:46:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uEp16-00064X-2x
- for qemu-devel@nongnu.org; Tue, 13 May 2025 08:46:00 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uEp0f-0005qc-Q9
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 08:45:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uEp11-0000jF-6z
- for qemu-devel@nongnu.org; Tue, 13 May 2025 08:45:50 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uEp0d-0000hp-S4
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 08:45:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747140343;
+ s=mimecast20190719; t=1747140321;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=33gV2tY7Ey99HGWPeHstkZjrry0ZsSMPfUTu/Oyxy+E=;
- b=BDXqn5RLCeE0Blxma3HitFljMC973BB6rwVM2HEjQWgzfznISDrd+axq7Zvcx0mgmpn3fz
- 8chq5zl3hstz2PgHsVf+/L5C04c1TLrLmxTops/ZdynPvf+XHkt+HLRkMX+knORdc+cNua
- m6GhBB4soHhq3zIpXqYyBh1jkZlJO0Y=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-186-azfRvRXwO9yzDN2gA7v9Ow-1; Tue,
- 13 May 2025 08:45:39 -0400
-X-MC-Unique: azfRvRXwO9yzDN2gA7v9Ow-1
-X-Mimecast-MFC-AGG-ID: azfRvRXwO9yzDN2gA7v9Ow_1747140338
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88EB01800984; Tue, 13 May 2025 12:45:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.238])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7C8D180087C; Tue, 13 May 2025 12:45:33 +0000 (UTC)
-Date: Tue, 13 May 2025 14:45:31 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Alberto Faria <afaria@redhat.com>
-Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v3 0/2] scsi-disk: Add FUA write support
-Message-ID: <aCM-6_zEQBqtpzc5@redhat.com>
-References: <20250502121115.3613717-1-afaria@redhat.com>
+ bh=9qbzKwIrC2/FHuWNCqW2F1uNvDxrKnayEbn3X40B/pY=;
+ b=Nr7gFpjWCLFN1lcsrWcYhK8HGndsLdGp8kR5SILl88eWe8J9dVGaQvFoLGTDeIn1/dHsiu
+ tndLJxGXHM5DFOWBkzYp/RjR7aLc0aW3KOWLGgXinda+zhFuXTzc2fHucwaoxOvpzoSxFy
+ voKvtwoZLvCbshR0G+k7OuDkGhXxlIU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-554-eV9EVsQhOUmbpd9PQabylA-1; Tue, 13 May 2025 08:45:20 -0400
+X-MC-Unique: eV9EVsQhOUmbpd9PQabylA-1
+X-Mimecast-MFC-AGG-ID: eV9EVsQhOUmbpd9PQabylA_1747140319
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43efa869b0aso41919555e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 05:45:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747140319; x=1747745119;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9qbzKwIrC2/FHuWNCqW2F1uNvDxrKnayEbn3X40B/pY=;
+ b=LvpHnI2ZUe6zWvZVKTYC6kFYyvsLfIdmQ9h1ns98C9Qd2DBoLBj00OD3FSVDE6Ssm/
+ 1DCvoBpsVNGXg6uil6MDQoC3rkh0KllfzGKh6qj3iGldefBaLsc/nUgEQ38wgLsiNBTm
+ kLN11pK7gxzuwB8vOvZP/hMZLBHI8vuq8UaoSKhFbyU3tJG/sfw3HJastxieZqTcaVmJ
+ axMqvyv58cxxSjp+CSrZAXwM8j0JJbk3lyILsnlubfryd9rJBeWQKUjlL31RnJIHo39p
+ Nu2q2GRbFmmN3j+y+f+MRRMMKKGwsSx3OmDNozxpBvgj+1DCr2F0AOjMSpJ6EErhesBr
+ wKnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWr/SWzLW7LxeGVU9Y+k/KN8oXEbH0eEGIsAKdGFPiWElQWnzDjWyEq7HSjkFbe3lyD3Q0ldu3HbLNz@nongnu.org
+X-Gm-Message-State: AOJu0Yz4b3arP561YIe5zvJGgkAAIrpGzi0YBpyn/7c3TCj8I1qhE962
+ 9C3pvC7xElq/Ho3Kp02w1YB8yWZAQ/0u1HiSoh3vRufq1pry3YXjORZsI/g/kFuHhQl7ohH1lhB
+ SXc7+TPiFpp4SSf0Jrs6qddnhIRwEaG6CBYCdZn7E+78qxO0TktyX
+X-Gm-Gg: ASbGncsJg64B4BGgZosZGzN8l+QHyHW7Gf3Xet9fF50uMOaZtk80R1IYlQdKvKbIuC0
+ 8/aEw3IQD17tjRsNhvKDaRppxv33pp2euzH8cPTdRQE2JgnIc5xxAJshn7YWxkS+EODAVbTiLsF
+ Eb5KhCgb1ww48su6QTQoAleeGeIeucUxBMZw06iA2fDkEQ+O3bMrB4leJMJjyEF3ffMyIj5xSpn
+ vGNpqK/z/af0DbQll031wbZ3yyso3j9kBDzNZGeMbOhALOj3ekL2tw/Z5x3P9aPB0ix6l/nh7u4
+ t2/vAou3SJS96el623UAmTRVuWX6658z
+X-Received: by 2002:a05:600c:6819:b0:442:cab1:e092 with SMTP id
+ 5b1f17b1804b1-442d6d1fadamr135825295e9.11.1747140318798; 
+ Tue, 13 May 2025 05:45:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGwUzWUPASx2NiQ1Kn3uuvcgEdnOm17Ak4ZkvlCvpTjzcgN+0pD9VaNQeoqRZ/ENeDLe7VIdA==
+X-Received: by 2002:a05:600c:6819:b0:442:cab1:e092 with SMTP id
+ 5b1f17b1804b1-442d6d1fadamr135824865e9.11.1747140318428; 
+ Tue, 13 May 2025 05:45:18 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f58eb91bsm16387897f8f.33.2025.05.13.05.45.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 May 2025 05:45:18 -0700 (PDT)
+Date: Tue, 13 May 2025 14:45:15 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Babu Moger <babu.moger@amd.com>, Ewan Hai
+ <ewanhai-oc@zhaoxin.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Tejus GK
+ <tejus.gk@nutanix.com>, Jason Zeng <jason.zeng@intel.com>, Manish Mishra
+ <manish.mishra@nutanix.com>, Tao Su <tao1.su@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Subject: Re: [RFC 06/10] i386/cpu: Introduce enable_cpuid_0x1f to force
+ exposing CPUID 0x1f
+Message-ID: <20250513144515.37615651@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250423114702.1529340-7-zhao1.liu@intel.com>
+References: <20250423114702.1529340-1-zhao1.liu@intel.com>
+ <20250423114702.1529340-7-zhao1.liu@intel.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250502121115.3613717-1-afaria@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -87,25 +118,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 02.05.2025 um 14:11 hat Alberto Faria geschrieben:
-> Add scsi-disk support for Force Unit Access (FUA) writes. The first patch lets
-> us avoid FUA emulation when the underlying driver supports it natively. The
-> second patch makes scsi-disk devices advertise FUA support by default.
-> 
-> v3:
-> - Restore flush on VERIFY.
-> - Modify hw_compat_10_0 instead of hw_compat_9_2.
-> 
-> v2:
-> - Drop FUA write emulation logic since the block layer already does that.
-> - Add machine type compat for "dpofua".
-> 
-> Alberto Faria (2):
->   scsi-disk: Add native FUA write support
->   scsi-disk: Advertise FUA support by default
+On Wed, 23 Apr 2025 19:46:58 +0800
+Zhao Liu <zhao1.liu@intel.com> wrote:
 
-Thanks, applied to the block branch.
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> 
+> Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
+> when topology level that cannot be enumerated by leaf 0xB, e.g., die or
+> module level, are configured for the guest, e.g., -smp xx,dies=2.
+> 
+> However, TDX architecture forces to require CPUID 0x1f to configure CPU
+> topology.
+> 
+> Introduce a bool flag, enable_cpuid_0x1f, in CPU for the case that
+> requires CPUID leaf 0x1f to be exposed to guest.
+> 
+> Introduce a new function x86_has_cpuid_0x1f(), which is the warpper of
+> cpu->enable_cpuid_0x1f and x86_has_extended_topo() to check if it needs
+> to enable cpuid leaf 0x1f for the guest.
 
-Kevin
+that reminds me about recent attempt to remove enable_cpuid_0xb,
+
+So is enable_cpuid_0x1f inteded to be used by external users or
+it's internal only knob for TDX sake?
+
+I'd push for it being marked as internal|unstable with the means
+we currently have (i.e. adding 'x-' prefix)
+
+and also enable_ is not right here, the leaf is enabled when
+topology requires it.
+perhaps s/enable_/force_/
+ 
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>  target/i386/cpu.c     | 4 ++--
+>  target/i386/cpu.h     | 9 +++++++++
+>  target/i386/kvm/kvm.c | 2 +-
+>  3 files changed, 12 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index d90e048d48f2..e0716dbe5934 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7292,7 +7292,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          break;
+>      case 0x1F:
+>          /* V2 Extended Topology Enumeration Leaf */
+> -        if (!x86_has_extended_topo(env->avail_cpu_topo)) {
+> +        if (!x86_has_cpuid_0x1f(cpu)) {
+>              *eax = *ebx = *ecx = *edx = 0;
+>              break;
+>          }
+> @@ -8178,7 +8178,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>           * cpu->vendor_cpuid_only has been unset for compatibility with older
+>           * machine types.
+>           */
+> -        if (x86_has_extended_topo(env->avail_cpu_topo) &&
+> +        if (x86_has_cpuid_0x1f(cpu) &&
+>              (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
+>              x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
+>          }
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 76f24446a55d..3910b488f775 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2251,6 +2251,9 @@ struct ArchCPU {
+>      /* Compatibility bits for old machine types: */
+>      bool enable_cpuid_0xb;
+>  
+> +    /* Force to enable cpuid 0x1f */
+> +    bool enable_cpuid_0x1f;
+> +
+>      /* Enable auto level-increase for all CPUID leaves */
+>      bool full_cpuid_auto_level;
+>  
+> @@ -2513,6 +2516,12 @@ void host_cpuid(uint32_t function, uint32_t count,
+>                  uint32_t *eax, uint32_t *ebx, uint32_t *ecx, uint32_t *edx);
+>  bool cpu_has_x2apic_feature(CPUX86State *env);
+>  
+> +static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
+> +{
+> +    return cpu->enable_cpuid_0x1f ||
+> +           x86_has_extended_topo(cpu->env.avail_cpu_topo);
+> +}
+> +
+>  /* helper.c */
+>  void x86_cpu_set_a20(X86CPU *cpu, int a20_state);
+>  void cpu_sync_avx_hflag(CPUX86State *env);
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 6c749d4ee812..23b8de308525 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -1863,7 +1863,7 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
+>              break;
+>          }
+>          case 0x1f:
+> -            if (!x86_has_extended_topo(env->avail_cpu_topo)) {
+> +            if (!x86_has_cpuid_0x1f(env_archcpu(env))) {
+>                  cpuid_i--;
+>                  break;
+>              }
 
 
