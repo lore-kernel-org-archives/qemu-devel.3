@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C77C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 15:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91BA3C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 15:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uErio-0003Pn-Il; Tue, 13 May 2025 11:39:10 -0400
+	id 1uErl4-0005hB-9n; Tue, 13 May 2025 11:41:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uErim-0003Pc-RP
- for qemu-devel@nongnu.org; Tue, 13 May 2025 11:39:08 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uErik-0007Sd-Qa
- for qemu-devel@nongnu.org; Tue, 13 May 2025 11:39:08 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3a0ba0b6b76so4121365f8f.1
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 08:39:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747150745; x=1747755545; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1aB1bR5uYVtXnisXsyHLAxy/NZGcPHLGwq4sthZMzJY=;
- b=yGTBCOwZmzffOhOOah4CQ+WZexD49cZimiriI105xWDBVcyg9sd/X1S1PZphhAB7gY
- ISsTefwsM1PHLh9XoR4iJqFgM2EZEQxtX4Rh59X8gqlGlyKMt7VwsQ4bfGRKAtBWclNW
- z+a9y+4LaX9SNZvnx+CfcIeXQWAAOWy/aDdjC5GCTv50yHSpej341hljkitSSCLtOwL8
- HV2G/jBfOvrpPSCxbeNykyd79obCJHUJ8TqEIDHSdTnQgbsw14+4t6eLwnNAywwsPuqL
- 66g1LxDZ4BBTH9JbG7n8fEeJLa1tDayehdmSKvLJukiIUxEROhulTT54ma2YkyQqiXWU
- BggQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747150745; x=1747755545;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1aB1bR5uYVtXnisXsyHLAxy/NZGcPHLGwq4sthZMzJY=;
- b=hc6Pbd8azkeAtYs8msLjBZd2eGApMfvNkmTrK1T+AiZu/lb6VftdprDVG8aun3Cpj9
- uGa1rm40X7I4J6v/5/dv8d7E7pzNJHYCVbu4cVQIr2Rxa1FHl8c9bQy+Xs8qxnsRspG7
- 538fQaf1mh0JJiUzljShnNJ5UacJhRiOmEd97epDzEQZJuJTC5RrtvAbswo2lQEjjFxt
- FqSz7fNpTBCgvLj2sICCdECcU8atitxMkwBJK8YGwfLgK4foOLStNNk9svm6OQ3WiOoU
- iA3GNkQuEQ3QJnH5YDCh7wfz5BegulWeyhMZuJbeD6g82FWl+XdgW4jCmDjmhDA6KUb/
- aZCA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX+yzHYYHxH8Az877fP4nIl7idsHLXAEv1KwQtfCsclVaGt31QbKhNbX/sUDR0sMS9gN5m+2ZApFWbP@nongnu.org
-X-Gm-Message-State: AOJu0YwdoIK0kC+fOd134tvNqL8HtCXagEl+rWQyCowWPNBTXOSBJwZc
- QqHjBCDgNwAWdrp2Xu8fyVSDLK6rHXDmcBZwjRvrd3ZR07/emFsvyqU3oCu+U6uK5tdu9HIr02H
- Yg6ZHfg==
-X-Gm-Gg: ASbGncvvR32QGYrKxLbWuN0plJx78JA8Q4hCaHkG8T8cwDP7ixLyMupZ4/pcvRJNzYS
- WdWF9iXTC9PP28LRmM1VXLiWUywJKnpM3Mc5aWW9y7lBwxLrYcoGyZVKHZnmPTldECIckvgvnK+
- DgOKECWfX4KYbScQvzRDV3XmEn+hy7Ce6YjpLHG19lYfvO1a/xo3ifEQXXfue5zj17vFnPA6dXx
- pjHv3Z1WQoYFJ9yHGCc20VVEPWYHTgEgW8yKKvfqrJJ1iPioI6pQzSO/zFWGOeFE81Ni9lV59t+
- 3L+k0uTGP9ggP7MyEkcsHIWC/vMfP5OPL3mnOAnPqouFDTlXNYhJe5bp4Ad41k6dSdjx+e9IPYX
- ElhqpigD3Dx9J
-X-Google-Smtp-Source: AGHT+IFxKfWecEWGkr8SFgolB2gDXwLfwsSyvhrpPdv46ezRqgPwKv9xC9rgSH/rk4eQp3aLVh/qIg==
-X-Received: by 2002:a5d:64c4:0:b0:3a1:fdff:5394 with SMTP id
- ffacd0b85a97d-3a1fdff552fmr10206373f8f.57.1747150744829; 
- Tue, 13 May 2025 08:39:04 -0700 (PDT)
-Received: from [10.61.1.197] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f58f2af7sm16816967f8f.52.2025.05.13.08.39.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 08:39:04 -0700 (PDT)
-Message-ID: <3314f721-9c5e-479b-9fcc-3b8a021efde9@linaro.org>
-Date: Tue, 13 May 2025 16:39:03 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uErl2-0005gr-EQ
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 11:41:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uErl0-0007o2-Le
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 11:41:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747150885;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cmcBme9RJOCaIz52I3Nem99kp82JzzM+3hYCaD81L68=;
+ b=gLDBX6ZN14TPIBkLAkA7cQdm8k7eorokC8BUcPwzob9BXdzRNsiIr4WlVdTZ6PqIk0PZwn
+ oVq8ArwdchN0FJMljpTOXxnFqXCB3++Zg7fTxf3g2GNs4VgNVjDBqj2x2RAtTqSBYUYkNO
+ TUJmCZPTe9B5wcOSUy/QQsxQXQejE5U=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-kY9XtUMzOoagtJuJDj4qRA-1; Tue,
+ 13 May 2025 11:41:21 -0400
+X-MC-Unique: kY9XtUMzOoagtJuJDj4qRA-1
+X-Mimecast-MFC-AGG-ID: kY9XtUMzOoagtJuJDj4qRA_1747150879
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB0531956086; Tue, 13 May 2025 15:41:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.110])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A681E1953B82; Tue, 13 May 2025 15:41:10 +0000 (UTC)
+Date: Tue, 13 May 2025 16:41:06 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
+ armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
+ philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH for-10.1 v5 02/13] arm/cpu: Store aa64isar0/aa64zfr0 into
+ the idregs arrays
+Message-ID: <aCNoEs-jQ7IUTt8q@redhat.com>
+References: <20250409144304.912325-1-cohuck@redhat.com>
+ <20250409144304.912325-3-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/intc/arm_gic: introduce a first-cpu-index property
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
- qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, edgar.iglesias@gmail.com,
- alistair@alistair23.me, Frederic Konrad <konrad.frederic@yahoo.fr>
-References: <20250513141448.297946-1-chigot@adacore.com>
- <20250513141448.297946-3-chigot@adacore.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250513141448.297946-3-chigot@adacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250409144304.912325-3-cohuck@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,66 +93,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/5/25 16:14, Clément Chigot wrote:
-> From: Frederic Konrad <konrad.frederic@yahoo.fr>
+On Wed, Apr 09, 2025 at 04:42:53PM +0200, Cornelia Huck wrote:
+> From: Eric Auger <eric.auger@redhat.com>
 > 
-> This introduces a first-cpu-index property to the arm-gic, as some SOCs
-> could have two separate GIC (ie: the zynqmp).
+> Also add kvm add accessors for storing host features into idregs.
 > 
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 > ---
->   hw/intc/arm_gic.c                | 2 +-
->   hw/intc/arm_gic_common.c         | 1 +
->   include/hw/intc/arm_gic_common.h | 2 ++
->   3 files changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-> index d18bef40fc..899f133363 100644
-> --- a/hw/intc/arm_gic.c
-> +++ b/hw/intc/arm_gic.c
-> @@ -59,7 +59,7 @@ static const uint8_t gic_id_gicv2[] = {
->   static inline int gic_get_current_cpu(GICState *s)
->   {
->       if (!qtest_enabled() && s->num_cpu > 1) {
-> -        return current_cpu->cpu_index;
-> +        return current_cpu->cpu_index - s->first_cpu_index;
+>  target/arm/cpu-features.h | 57 ++++++++++++++++++++-------------------
+>  target/arm/cpu-sysregs.h  |  4 +++
+>  target/arm/cpu.c          | 10 +++----
+>  target/arm/cpu.h          |  2 --
+>  target/arm/cpu64.c        |  8 +++---
+>  target/arm/helper.c       |  6 +++--
+>  target/arm/hvf/hvf.c      |  3 ++-
+>  target/arm/kvm.c          | 30 ++++++++++++++++++---
+>  target/arm/tcg/cpu64.c    | 44 ++++++++++++++++++------------
+>  9 files changed, 101 insertions(+), 63 deletions(-)
 
-Note, CPUState::cpu_index is meant for accelerators code and shouldn't
-be used in hw/ (in particular because it vary when using hotplug).
+> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+> index 7877a3b06a8e..e89a1105904c 100644
+> --- a/target/arm/cpu-sysregs.h
+> +++ b/target/arm/cpu-sysregs.h
+> @@ -39,4 +39,8 @@ extern const uint32_t id_register_sysreg[NUM_ID_IDX];
+>  
+>  int get_sysreg_idx(ARMSysRegs sysreg);
+>  
+> +#ifdef CONFIG_KVM
+> +uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg);
+> +#endif
 
->       }
->       return 0;
->   }
-> diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
-> index 0f0c48d89a..ed5be05645 100644
-> --- a/hw/intc/arm_gic_common.c
-> +++ b/hw/intc/arm_gic_common.c
-> @@ -350,6 +350,7 @@ static void arm_gic_common_linux_init(ARMLinuxBootIf *obj,
->   
->   static const Property arm_gic_common_properties[] = {
->       DEFINE_PROP_UINT32("num-cpu", GICState, num_cpu, 1),
-> +    DEFINE_PROP_UINT32("first-cpu-index", GICState, first_cpu_index, 0),
->       DEFINE_PROP_UINT32("num-irq", GICState, num_irq, 32),
->       /* Revision can be 1 or 2 for GIC architecture specification
->        * versions 1 or 2, or 0 to indicate the legacy 11MPCore GIC.
-> diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
-> index 97fea4102d..93a3cc2bf8 100644
-> --- a/include/hw/intc/arm_gic_common.h
-> +++ b/include/hw/intc/arm_gic_common.h
-> @@ -129,6 +129,8 @@ struct GICState {
->       uint32_t num_lrs;
->   
->       uint32_t num_cpu;
-> +    /* cpu_index of the first CPU, attached to this GIC.  */
-> +    uint32_t first_cpu_index;
->   
->       MemoryRegion iomem; /* Distributor */
->       /* This is just so we can have an opaque pointer which identifies
+This breaks the build when KVM is disabled, and/or not available
+on the build target architecture
 
-Alternative series motivated to remove &first_cpu / qemu_get_cpu():
-https://lore.kernel.org/qemu-devel/20231212162935.42910-1-philmd@linaro.org/
+In file included from ../target/arm/cpu.h:35,
+                 from /var/home/berrange/src/virt/qemu/include/hw/arm/digic.h:21,
+                 from ../hw/arm/digic_boards.c:31:
+/var/home/berrange/src/virt/qemu/target/arm/cpu-sysregs.h:42:8: error: attempt to use poisoned ‘CONFIG_KVM’
+   42 | #ifdef CONFIG_KVM
+      |        ^
+In file included from /var/home/berrange/src/virt/qemu/include/exec/poison.h:7,
+                 from /var/home/berrange/src/virt/qemu/include/qemu/osdep.h:38,
+                 from ../hw/arm/digic_boards.c:26:
+./config-poison.h:185:20: note: poisoned here
+  185 | #pragma GCC poison CONFIG_KVM
+      |                    ^~~~~~~~~~
+ninja: build stopped: subcommand failed.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
