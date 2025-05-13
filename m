@@ -4,56 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0787AC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 13:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60EBEC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 13:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEpg3-0007CO-32; Tue, 13 May 2025 09:28:13 -0400
+	id 1uEplv-0001ec-Dt; Tue, 13 May 2025 09:34:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1uEpfV-0006fI-CR; Tue, 13 May 2025 09:27:42 -0400
-Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1uEpfR-000790-0G; Tue, 13 May 2025 09:27:35 -0400
-Received: from [IPV6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2] (unknown
- [IPv6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2])
- by apollo.dupie.be (Postfix) with ESMTPSA id DCBFC1520BB6;
- Tue, 13 May 2025 15:27:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1747142851;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6jxRhm2BBQz8CLpjjhJ20WZa2cSa6qmql/muBZxp/jg=;
- b=cl+L1i6W6V5UAuQBescA2uqmWLurAxmrcKInVrj//ZijTXjViIa/hUaDghdbOxTXIIxYUf
- t//A211km/GJbwZHoCftbL2oLzzH8fqAwJittI8y1yBpgry9FOeXStK295sgi/Wz3mJHBp
- ryKWgshGF0F6oK3wFYQOhYra4oz/kt0txX0qte2tdyUW4T/1fosSa/tQBP2k2y1sgg8VlB
- Z51gDenjqC2D9ldI5MYsvMR1DfzlrOn0bNQnu0tPUYzWiS0eyktSuvjovZtgM/IX+yRrUO
- 1rUkcIj9cHxQOci92d30mAit3pJ4LsjGhH6j2Khsh0LrC5gaeAfcn/jyE61Xvg==
-Message-ID: <3143e992-b3e8-4ae4-90ec-39a8eb3e02f7@dupond.be>
-Date: Tue, 13 May 2025 15:27:30 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uEplm-0001dW-FS
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 09:34:07 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uEpli-0007uj-QH
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 09:34:05 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 5E2D1211F5;
+ Tue, 13 May 2025 13:33:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747143237; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=UDQ56gzHPaY4/ZNVvi6iKkQUCtS/V6eUV5VpJUlYG4o=;
+ b=oi30xVr9XzpjgUMatR6BeZBOJpSKev3Cq3XFdnDaz3u5kaMpUMSpSGa7SqnkVXulMxBpdm
+ ZPqMrpaDJEOGu91Ouhx7ibIgZgB6EgsCbHCI64esgI6rr9tvJkPaM1RaI1ESfaGzeD5nGJ
+ sHqB3BRjMFtRdv0OX36ct4HkFLaPE70=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747143237;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=UDQ56gzHPaY4/ZNVvi6iKkQUCtS/V6eUV5VpJUlYG4o=;
+ b=nQ6P1/baFOPeR5aj8PiYFZpZFFjHDldzs/z5Dbqhpo2ZpHADmC8VN85+1SBv8ur/Tfmbff
+ +XKEO2rimdhwvTBw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747143237; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=UDQ56gzHPaY4/ZNVvi6iKkQUCtS/V6eUV5VpJUlYG4o=;
+ b=oi30xVr9XzpjgUMatR6BeZBOJpSKev3Cq3XFdnDaz3u5kaMpUMSpSGa7SqnkVXulMxBpdm
+ ZPqMrpaDJEOGu91Ouhx7ibIgZgB6EgsCbHCI64esgI6rr9tvJkPaM1RaI1ESfaGzeD5nGJ
+ sHqB3BRjMFtRdv0OX36ct4HkFLaPE70=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747143237;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=UDQ56gzHPaY4/ZNVvi6iKkQUCtS/V6eUV5VpJUlYG4o=;
+ b=nQ6P1/baFOPeR5aj8PiYFZpZFFjHDldzs/z5Dbqhpo2ZpHADmC8VN85+1SBv8ur/Tfmbff
+ +XKEO2rimdhwvTBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 508E51365D;
+ Tue, 13 May 2025 13:33:56 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id i+fiBERKI2gMXgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 13 May 2025 13:33:56 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PATCH v2 0/3] migration, ci: Tweaks to migration-compat jobs
+Date: Tue, 13 May 2025 10:33:50 -0300
+Message-Id: <20250513133353.23022-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] qcow2: put discards in discard queue when
- discard-no-unref is enabled
-To: Hanna Czenczek <hreitz@redhat.com>, qemu-devel@nongnu.org
-Cc: Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
- Kevin Wolf <kwolf@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
-References: <20250429103110.761910-1-jean-louis@dupond.be>
- <20250429103110.761910-3-jean-louis@dupond.be>
- <c43d6a3b-ac4e-4cee-b034-7ddcdf7dedf8@redhat.com>
-Content-Language: en-US
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-In-Reply-To: <c43d6a3b-ac4e-4cee-b034-7ddcdf7dedf8@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
- envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -75,134 +107,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+- changed migration-compat job to also check VERSION [peterx]
 
-On 5/12/25 14:28, Hanna Czenczek wrote:
-> On 29.04.25 12:31, Jean-Louis Dupond wrote:
->> When discard-no-unref is enabled, discards are not queued like it
->> should.
->> This was broken since discard-no-unref was added.
->>
->> Add some helper function qcow2_discard_cluster which handles some common
->> checks and calls the queue_discards function if needed to add the
->> discard request to the queue.
->>
->> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
->> ---
->>   block/qcow2-cluster.c  | 16 ++++++----------
->>   block/qcow2-refcount.c | 19 ++++++++++++++++++-
->>   block/qcow2.h          |  4 ++++
->>   3 files changed, 28 insertions(+), 11 deletions(-)
->>
->> diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
->> index ce8c0076b3..c655bf6df4 100644
->> --- a/block/qcow2-cluster.c
->> +++ b/block/qcow2-cluster.c
->> @@ -1978,12 +1978,10 @@ discard_in_l2_slice(BlockDriverState *bs, 
->> uint64_t offset, uint64_t nb_clusters,
->>           if (!keep_reference) {
->>               /* Then decrease the refcount */
->>               qcow2_free_any_cluster(bs, old_l2_entry, type);
->> -        } else if (s->discard_passthrough[type] &&
->> -                   (cluster_type == QCOW2_CLUSTER_NORMAL ||
->> -                    cluster_type == QCOW2_CLUSTER_ZERO_ALLOC)) {
->> +        } else {
->>               /* If we keep the reference, pass on the discard still */
->> -            bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
->> -                          s->cluster_size);
->> +            qcow2_discard_cluster(bs, old_l2_entry & L2E_OFFSET_MASK,
->> +                                  s->cluster_size, cluster_type, type);
->>           }
->>       }
->>   @@ -2092,12 +2090,10 @@ zero_in_l2_slice(BlockDriverState *bs, 
->> uint64_t offset,
->>               if (!keep_reference) {
->>                   /* Then decrease the refcount */
->>                   qcow2_free_any_cluster(bs, old_l2_entry, 
->> QCOW2_DISCARD_REQUEST);
->> -            } else if (s->discard_passthrough[QCOW2_DISCARD_REQUEST] &&
->> -                       (type == QCOW2_CLUSTER_NORMAL ||
->> -                        type == QCOW2_CLUSTER_ZERO_ALLOC)) {
->> +            } else {
->>                   /* If we keep the reference, pass on the discard 
->> still */
->> -                bdrv_pdiscard(s->data_file, old_l2_entry & 
->> L2E_OFFSET_MASK,
->> -                            s->cluster_size);
->> +                qcow2_discard_cluster(bs, old_l2_entry & 
->> L2E_OFFSET_MASK,
->> +                            s->cluster_size, type, 
->> QCOW2_DISCARD_REQUEST);
->>               }
->>           }
->>       }
->> diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
->> index d796018970..e1f830504d 100644
->> --- a/block/qcow2-refcount.c
->> +++ b/block/qcow2-refcount.c
->> @@ -1205,6 +1205,23 @@ void qcow2_free_any_cluster(BlockDriverState 
->> *bs, uint64_t l2_entry,
->>       }
->>   }
->>   +void qcow2_discard_cluster(BlockDriverState *bs, uint64_t offset,
->> +                           uint64_t length, QCow2ClusterType ctype,
->> +                           enum qcow2_discard_type dtype) {
->> +
->
-> QEMU coding style requires putting the { on a separate line.
->
-Fixed
->> +    BDRVQcow2State *s = bs->opaque;
->> +
->> +    if (s->discard_passthrough[dtype] &&
->> +        (ctype == QCOW2_CLUSTER_NORMAL ||
->> +         ctype == QCOW2_CLUSTER_ZERO_ALLOC)) {
->> +        if (has_data_file(bs)) {
->> +            bdrv_pdiscard(s->data_file, offset, length);
->> +        } else {
->> +            queue_discard(bs, offset, length);
->> +        }
->> +    }
->> +}
->> +
->>   int qcow2_write_caches(BlockDriverState *bs)
->>   {
->>       BDRVQcow2State *s = bs->opaque;
->> @@ -3619,7 +3636,7 @@ qcow2_discard_refcount_block(BlockDriverState 
->> *bs, uint64_t discard_block_offs)
->>           /* discard refblock from the cache if refblock is cached */
->>           qcow2_cache_discard(s->refcount_block_cache, refblock);
->>       }
->> -    update_refcount_discard(bs, discard_block_offs, s->cluster_size);
->> +    queue_discard(bs, discard_block_offs, s->cluster_size);
->>         return 0;
->>   }
->
-> This hunk should go into the previous patch.
->
-Fixed
->> diff --git a/block/qcow2.h b/block/qcow2.h
->> index a9e3481c6e..547bb2b814 100644
->> --- a/block/qcow2.h
->> +++ b/block/qcow2.h
->> @@ -880,6 +880,10 @@ void GRAPH_RDLOCK 
->> qcow2_free_clusters(BlockDriverState *bs,
->>   void GRAPH_RDLOCK
->>   qcow2_free_any_cluster(BlockDriverState *bs, uint64_t l2_entry,
->>                          enum qcow2_discard_type type);
->> +void GRAPH_RDLOCK
->> +qcow2_discard_cluster(BlockDriverState *bs, uint64_t offset,
->> +                      uint64_t length, QCow2ClusterType ctype,
->> +                      enum qcow2_discard_type dtype);
->>     int GRAPH_RDLOCK
->>   qcow2_update_snapshot_refcount(BlockDriverState *bs, int64_t 
->> l1_table_offset,
->
-> With the above done, for both patch 1 and 2:
->
-> Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
->
-Send v2 patch with comments addressed.
+v1:
+https://lore.kernel.org/r/20250507155835.31074-1-farosas@suse.de
 
-Thanks
-Jean-Louis
+A couple of cleanups to the migration jobs, plus a fix for an issue
+that may happen during the QEMU release.
+
+Fabiano Rosas (3):
+  ci: Re-enable python subtests in qtest migration suite
+  ci: Fix build-previous-qemu when the version tag is absent
+  ci: Reduce the size of artifacts for build-previous-qemu
+
+ .gitlab-ci.d/buildtest.yml | 27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
+
+-- 
+2.35.3
+
 
