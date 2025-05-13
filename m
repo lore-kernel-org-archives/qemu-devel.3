@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFE8C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD56C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:34:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEjD2-00080J-JF; Tue, 13 May 2025 02:33:50 -0400
+	id 1uEj9u-00041B-LG; Tue, 13 May 2025 02:30:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEjAk-0005K7-S5; Tue, 13 May 2025 02:31:39 -0400
+ id 1uEj9d-0003Zr-D4; Tue, 13 May 2025 02:30:20 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEjAj-00026a-6C; Tue, 13 May 2025 02:31:26 -0400
+ id 1uEj9Y-0001oe-Vf; Tue, 13 May 2025 02:30:15 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 13 May
- 2025 14:29:07 +0800
+ 2025 14:29:04 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 13 May 2025 14:29:07 +0800
+ Transport; Tue, 13 May 2025 14:29:04 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,9 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 14/25] tests/qtest: Reorder aspeed test list
-Date: Tue, 13 May 2025 14:28:44 +0800
-Message-ID: <20250513062901.2256865-15-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 06/25] hw/misc/aspeed_hace: Introduce 64-bit hash source
+ address helper function
+Date: Tue, 13 May 2025 14:28:36 +0800
+Message-ID: <20250513062901.2256865-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
 References: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
@@ -67,49 +68,89 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reordered the aspeed test list to keep the alphabetical order.
-No functional changes in test behavior.
+The AST2700 CPU, based on the Cortex-A35, is a 64-bit processor, and its DRAM
+address space is also 64-bit. To support future AST2700 updates, the source
+hash buffer address data type is being updated to 64-bit.
+
+Introduces the "hash_get_source_addr()" helper function to extract the source hash
+buffer address.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/qtest/meson.build | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ hw/misc/aspeed_hace.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 3136d15e0f..6b5161a643 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -211,9 +211,9 @@ qtests_npcm7xx = \
-    'npcm_gmac-test'] + \
-    (slirp.found() ? ['npcm7xx_emc-test'] : [])
- qtests_aspeed = \
--  ['aspeed_hace-test',
--   'aspeed_smc-test',
--   'aspeed_gpio-test']
-+  ['aspeed_gpio-test',
-+   'aspeed_hace-test',
-+   'aspeed_smc-test']
- qtests_aspeed64 = \
-   ['ast2700-gpio-test',
-    'ast2700-smc-test']
-@@ -360,6 +360,8 @@ if gnutls.found()
- endif
- 
- qtests = {
-+  'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
-+  'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
-   'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
-   'cdrom-test': files('boot-sector.c'),
-   'dbus-vmstate-test': files('migration/migration-qmp.c',
-@@ -381,8 +383,6 @@ qtests = {
-   'virtio-net-failover': migration_files,
-   'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
-   'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
--  'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
--  'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index eb513ba00f..5f3c8190ef 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -142,21 +142,30 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+     return false;
  }
  
- if vnc.found()
++static uint64_t hash_get_source_addr(AspeedHACEState *s)
++{
++    uint64_t src_addr = 0;
++
++    src_addr = deposit64(src_addr, 0, 32, s->regs[R_HASH_SRC]);
++
++    return src_addr;
++}
++
+ static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov)
+ {
+-    uint32_t src;
++    uint64_t src;
+     void *haddr;
+     hwaddr plen;
+     int iov_idx;
+ 
+     plen = s->regs[R_HASH_SRC_LEN];
+-    src = s->regs[R_HASH_SRC];
++    src = hash_get_source_addr(s);
+     haddr = address_space_map(&s->dram_as, src, &plen, false,
+                               MEMTXATTRS_UNSPECIFIED);
+     if (haddr == NULL) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Unable to map address, addr=0x%x, "
+-                      "plen=0x%" HWADDR_PRIx "\n",
++                      "%s: Unable to map address, addr=0x%" HWADDR_PRIx
++                      " ,plen=0x%" HWADDR_PRIx "\n",
+                       __func__, src, plen);
+         return -1;
+     }
+@@ -175,11 +184,12 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+     uint32_t pad_offset;
+     uint32_t len = 0;
+     uint32_t sg_addr;
+-    uint32_t src;
++    uint64_t src;
+     int iov_idx;
+     hwaddr plen;
+     void *haddr;
+ 
++    src = hash_get_source_addr(s);
+     for (iov_idx = 0; !(len & SG_LIST_LEN_LAST); iov_idx++) {
+         if (iov_idx == ASPEED_HACE_MAX_SG) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+@@ -188,8 +198,6 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+             return -1;
+         }
+ 
+-        src = s->regs[R_HASH_SRC] + (iov_idx * SG_LIST_ENTRY_SIZE);
+-
+         len = address_space_ldl_le(&s->dram_as, src,
+                                    MEMTXATTRS_UNSPECIFIED, NULL);
+         sg_addr = address_space_ldl_le(&s->dram_as, src + SG_LIST_LEN_SIZE,
+@@ -208,6 +216,8 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+             return -1;
+         }
+ 
++        src += SG_LIST_ENTRY_SIZE;
++
+         iov[iov_idx].iov_base = haddr;
+         if (acc_mode) {
+             s->total_req_len += plen;
 -- 
 2.43.0
 
