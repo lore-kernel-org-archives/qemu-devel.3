@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70DD2C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B77C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEj9y-0004GI-If; Tue, 13 May 2025 02:30:38 -0400
+	id 1uEjAe-00056W-6B; Tue, 13 May 2025 02:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEj9t-0003xY-Ck; Tue, 13 May 2025 02:30:33 -0400
+ id 1uEjA9-0004VV-1t; Tue, 13 May 2025 02:30:49 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEj9q-00022O-Lh; Tue, 13 May 2025 02:30:33 -0400
+ id 1uEjA6-00023Q-Og; Tue, 13 May 2025 02:30:48 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 13 May
- 2025 14:29:04 +0800
+ 2025 14:29:05 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 13 May 2025 14:29:04 +0800
+ Transport; Tue, 13 May 2025 14:29:05 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 07/25] hw/misc/aspeed_hace: Rename R_HASH_DEST to
- R_HASH_DIGEST and introduce 64-bit hash digest address helper
-Date: Tue, 13 May 2025 14:28:37 +0800
-Message-ID: <20250513062901.2256865-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 08/25] hw/misc/aspeed_hace: Support accumulative mode for
+ direct access mode
+Date: Tue, 13 May 2025 14:28:38 +0800
+Message-ID: <20250513062901.2256865-9-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
 References: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
@@ -68,75 +68,69 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Renaming R_HASH_DEST to R_HASH_DIGEST for better semantic clarity.
-
-The AST2700 CPU, based on the Cortex-A35, features a 64-bit DRAM address space.
-To prepare for future AST2700 support, this change introduces a new helper
-function hash_get_digest_addr() to encapsulate digest address extraction logic
-and improve code readability.
+Enable accumulative mode for direct access mode operations. In direct access
+mode, only a single source buffer is used, so the "iovec" count is set to 1.
+If "acc_mode" is enabled:
+1. Accumulate "total_req_len" with the current request length ("plen").
+2. Check for padding and determine whether this is the final request.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_hace.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ hw/misc/aspeed_hace.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
 diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 5f3c8190ef..c5ddc1c99a 100644
+index c5ddc1c99a..ef777bb594 100644
 --- a/hw/misc/aspeed_hace.c
 +++ b/hw/misc/aspeed_hace.c
-@@ -27,7 +27,7 @@
- #define TAG_IRQ         BIT(15)
+@@ -151,8 +151,11 @@ static uint64_t hash_get_source_addr(AspeedHACEState *s)
+     return src_addr;
+ }
  
- #define R_HASH_SRC      (0x20 / 4)
--#define R_HASH_DEST     (0x24 / 4)
-+#define R_HASH_DIGEST   (0x24 / 4)
- #define R_HASH_KEY_BUFF (0x28 / 4)
- #define R_HASH_SRC_LEN  (0x2c / 4)
+-static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov)
++static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov,
++                                   bool acc_mode, bool *acc_final_request)
+ {
++    uint32_t total_msg_len;
++    uint32_t pad_offset;
+     uint64_t src;
+     void *haddr;
+     hwaddr plen;
+@@ -171,9 +174,23 @@ static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov)
+     }
  
-@@ -238,17 +238,30 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+     iov[0].iov_base = haddr;
+-    iov[0].iov_len = plen;
+     iov_idx = 1;
+ 
++    if (acc_mode) {
++        s->total_req_len += plen;
++
++        if (has_padding(s, &iov[0], plen, &total_msg_len,
++                        &pad_offset)) {
++            /* Padding being present indicates the final request */
++            *acc_final_request = true;
++            iov[0].iov_len = pad_offset;
++        } else {
++            iov[0].iov_len = plen;
++        }
++    } else {
++        iov[0].iov_len = plen;
++    }
++
      return iov_idx;
  }
  
-+static uint64_t hash_get_digest_addr(AspeedHACEState *s)
-+{
-+    uint64_t digest_addr = 0;
-+
-+    digest_addr = deposit64(digest_addr, 0, 32, s->regs[R_HASH_DIGEST]);
-+
-+    return digest_addr;
-+}
-+
- static void hash_write_digest_and_unmap_iov(AspeedHACEState *s,
-                                             struct iovec *iov,
-                                             int iov_idx,
-                                             uint8_t *digest_buf,
-                                             size_t digest_len)
- {
--    if (address_space_write(&s->dram_as, s->regs[R_HASH_DEST],
--                            MEMTXATTRS_UNSPECIFIED, digest_buf, digest_len)) {
-+    uint64_t digest_addr = 0;
-+
-+    digest_addr = hash_get_digest_addr(s);
-+    if (address_space_write(&s->dram_as, digest_addr,
-+                            MEMTXATTRS_UNSPECIFIED,
-+                            digest_buf, digest_len)) {
-         qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: Failed to write digest to 0x%x\n",
--                      __func__, s->regs[R_HASH_DEST]);
-+                      "%s: Failed to write digest to 0x%" HWADDR_PRIx "\n",
-+                      __func__, digest_addr);
+@@ -345,7 +362,8 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+     if (sg_mode) {
+         iov_idx = hash_prepare_sg_iov(s, iov, acc_mode, &acc_final_request);
+     } else {
+-        iov_idx = hash_prepare_direct_iov(s, iov);
++        iov_idx = hash_prepare_direct_iov(s, iov, acc_mode,
++                                          &acc_final_request);
      }
  
-     for (; iov_idx > 0; iov_idx--) {
-@@ -402,7 +415,7 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-     case R_HASH_SRC:
-         data &= ahc->src_mask;
-         break;
--    case R_HASH_DEST:
-+    case R_HASH_DIGEST:
-         data &= ahc->dest_mask;
-         break;
-     case R_HASH_KEY_BUFF:
+     if (iov_idx <= 0) {
 -- 
 2.43.0
 
