@@ -4,73 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F237C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524B4C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEqin-0000B3-3R; Tue, 13 May 2025 10:35:05 -0400
+	id 1uEqju-0003Ge-EA; Tue, 13 May 2025 10:36:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uEqil-0008W6-33
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:35:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uEqij-0008EG-8r
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:35:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747146900;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=FjeP5uamtaabe/ZeZC10KsaNZwk5FGaquTM1+X8OlNw=;
- b=AmVmzV9epb34yoDfJWB3logoHNjw/+5ZRGcPEeO6zvVcjFB5NmN+82DHmU7Vq4G36v3BEv
- jU0ImbeYCKSH8KjiM7to0sl2ZMKCUtJxPRddbka57TLtPl5ye8Pl01A70qw6k9LxQtzgTo
- B6xhsE86f/BdDard5A8aoHTYIKLenY8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-_6UdslWGN1SH5cxrWtUuYA-1; Tue,
- 13 May 2025 10:34:55 -0400
-X-MC-Unique: _6UdslWGN1SH5cxrWtUuYA-1
-X-Mimecast-MFC-AGG-ID: _6UdslWGN1SH5cxrWtUuYA_1747146894
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D797195FCD0; Tue, 13 May 2025 14:34:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.110])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F8D41801490; Tue, 13 May 2025 14:34:51 +0000 (UTC)
-Date: Tue, 13 May 2025 15:34:47 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Dietmar Maurer <dietmar@proxmox.com>
-Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 7/7] h264: stop gstreamer pipeline before destroying,
- cleanup on exit
-Message-ID: <aCNYhxD4tn0f5_i5@redhat.com>
-References: <20250430072524.3650582-1-dietmar@proxmox.com>
- <20250430072524.3650582-8-dietmar@proxmox.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uEqjr-0003G5-JF
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:36:12 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uEqjn-0008UH-RT
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:36:11 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-22fb33898bbso70623785ad.3
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:36:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747146965; x=1747751765; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UkHClKw2p4tVXZ8FBXxTzKaa+162QbJ7dG0yrCSWS8I=;
+ b=jrMq5//3uoYzh2dgHmcM1sRaUw63+PMcfRTZ8T6AvjYqIAkqgk2JKRY1uOfLpkWhrb
+ cex5SphOkMVLAb8gPeklRA/jtLD3laG+mYpcvZ2vq+WDFtXJSOkwoMm8+FksQYR+V88B
+ ttYS1r3kA0NbKvhHFqNb1CCIcg1pF7e8tUKxI4YTXSehtnZSyNEBi1H8as0yPGpfvz5N
+ gSicjPH5mpuwZ9xwW2YXj+HEJZz7pYREttyyQprnDlu5+NpZLwgYHrp0cGYcbp0ScS6b
+ acur76SX0FyFnizueLrbhMxuIdk41XkdtHK3JQw4v7lyXJYNjoDULe9kkMdO67NxIBWV
+ OSlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747146965; x=1747751765;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UkHClKw2p4tVXZ8FBXxTzKaa+162QbJ7dG0yrCSWS8I=;
+ b=FYGSyqqJHAYeL9dk7o2xswfbPT2ma7nYnoAdwFLxWFdHNSM9T0hR8XrbsEVxyD/+q1
+ htyKSjh+MBl/aGtD02XkQDooU9qVCA0FGPKt741ual+qB6H3L5q8+u+cDVsjl85ADlfk
+ pyt+QAsyd4k0D7yB32vUr2OcU6KI9Da8O1Bdwsy6uKByqArDGl7htzS4oAaoKv49nqBE
+ 7KbVtWGeeSXqNSMGfYVd6+Bared0DygnWxwcW7t4lj0S+CFVPihcHwVvCqGWXL1UE2bC
+ CWMESzgSB4tTBdZuPPNq20Q/Z71NAcpfaWcpMfXoC2UBLL0xb3tnFt2906xDJIsM+CtS
+ FQ+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUzecZs3W3+N1y+1m3dA4ghtziSXJW7+pvMCyedzj2sVPK7Or24mQaNPOpBiUFyMMwCMcHqEXoxdOAk@nongnu.org
+X-Gm-Message-State: AOJu0Yy+0+aPW1TgLN2cuTSLjtk5+dgA/y+ajXlBCI+masxNfm346Q3a
+ LLdktYRnCtqo+r3wrqADiLxy7wt1r7+Rn05i747zTabJ4ugeMdAVQEWicQdy3ZM=
+X-Gm-Gg: ASbGnctKXEEooXxGmUAXy/XZM5uzv+VXLFtyFxIVRPDE2UiMcr1fr4aablMl9s0T2Z/
+ tRD5X9P1fumc8gLWBtuoG/fSxbrfroHFRl/HewpqeyB2ZXcCm/0Xlu4RvbyBa2/phKdZ9qCyxXg
+ MuQdfPBxh3u6Z51dxdAVbtwWKYlLDoWiZSxYqvIkm74UOvSYqpnjTH/dReSNPHatMThyXsCEOMo
+ Qj1Y/4yUKc4rqjVxV5ftyMlIYeyQiIjYlDPpfRB7ENWl0SXIdde8lg4YIcXJo6r9i7t6EF9/JDo
+ h08C5y//iVBH2COes7usQnvhGZkMpk/IAY54Njq2Y9+HW0PWAZtOnFFoOy1qk7dC
+X-Google-Smtp-Source: AGHT+IHpDBpQw7oTxKesy58GKYFLHbQP11NvPVqr6A+6kMbuymY0sTmZvNn+5VRP4qc38YVm3h287g==
+X-Received: by 2002:a17:902:e0c4:b0:231:7f29:bda0 with SMTP id
+ d9443c01a7336-2317f29c031mr30036095ad.52.1747146964987; 
+ Tue, 13 May 2025 07:36:04 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22fc77421b2sm82745255ad.70.2025.05.13.07.36.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 May 2025 07:36:04 -0700 (PDT)
+Message-ID: <61564c23-833c-4ea9-9d93-af6c5be95eb9@linaro.org>
+Date: Tue, 13 May 2025 07:36:03 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250430072524.3650582-8-dietmar@proxmox.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 00/10] qapi: remove all TARGET_* conditionals from the
+ schema
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250508135816.673087-1-berrange@redhat.com>
+ <87y0v4zuec.fsf@pond.sub.org> <aCJAaawKsNFAtSmy@redhat.com>
+ <26fb50ca-36fd-4aca-908c-272c5a109bac@linaro.org>
+ <87v7q5gcuz.fsf@pond.sub.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87v7q5gcuz.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,72 +107,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 30, 2025 at 09:25:24AM +0200, Dietmar Maurer wrote:
-> Some encoders can hang indefinitely (i.e. nvh264enc) if
-> the pipeline is not stopped before it is destroyed
-> (Observed on Debian bookworm).
+On 5/13/25 12:59 AM, Markus Armbruster wrote:
+>> Just for information, I'll apply a Signed-off-by with my name to all
+>> patches posted (including the ones I won't touch) simply because I use
+>> git rebase --signoff by default, and don't want to have to do this
+>> manually and selectively, as I work with a single master, with stacked
+>> branches and update-refs.
 > 
-> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
-> ---
->  include/system/system.h |  1 +
->  include/ui/console.h    |  1 +
->  system/runstate.c       |  2 ++
->  system/vl.c             |  7 +++++++
->  ui/vnc-enc-h264.c       | 18 ++++++++++++++++++
->  ui/vnc.c                | 15 +++++++++++++++
->  6 files changed, 44 insertions(+)
-> 
+> We actually expect you to add your S-o-B to patches that go through your
+> tree whether you changed them or not.
+>
 
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index c707b9da37..578d9eea32 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -4368,6 +4368,21 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
->      return 0;
->  }
->  
-> +void vnc_cleanup(void)
-> +{
-> +    VncDisplay *vd;
-> +    VncState *vs;
-> +
-> +    QTAILQ_FOREACH(vd, &vnc_displays, next) {
-> +        QTAILQ_FOREACH(vs, &vd->clients, next) {
-> +#ifdef CONFIG_GSTREAMER
-> +            /* correctly close all h264 encoder pipelines */
-> +            vnc_h264_clear(vs);
-> +#endif
+Oh ok, it's good then!
+I was thinking it was deserved to "I'm the author of this patch".
 
-How is this safe to do ?
-
-If we have an active client, we have to assume that the jobs
-thread may be in the middle of processing an update, and thus
-the jobs thread wil be using the h264 encoder. If we blindly
-tear down the encoder I think we're liable to trigger
-non-deterministic crashes in QEMU in the vnc jobs thread
-accessing free'd memory.
-
-> +        }
-> +    }
-> +}
-> +
->  static void vnc_register_config(void)
->  {
->      qemu_add_opts(&qemu_vnc_opts);
-> -- 
-> 2.39.5
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Thanks,
+Pierrick
 
