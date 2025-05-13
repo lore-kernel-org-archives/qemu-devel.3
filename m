@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06FB1C3ABD9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A5C3C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEqQC-00044p-4F; Tue, 13 May 2025 10:15:52 -0400
+	id 1uEqPu-00041N-DM; Tue, 13 May 2025 10:15:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1uEqQ1-00042I-CG
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:42 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1uEqPr-000411-Nz
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:31 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1uEqPy-0005aH-W9
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:40 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43cfebc343dso37945255e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:15:38 -0700 (PDT)
+ id 1uEqPp-0005Wx-OM
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:31 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3a0b291093fso4230589f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1747145737; x=1747750537; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=omIYyhjnPokjM8hDN/Na4Ta4HqneXcIGJ9F+NHfzW2Y=;
- b=N3RNAS/kcPvaRIMAwAHBFz/jmVa6PtPaMkvItl3pj3R2itmoIid0gCCU03iH/DP0dc
- uQYGjZtRcpnKu743TWIa/HfwbEbeRtHQPQKs0cdmyUtIOYrarhs640Ako2Aeyjz03gJw
- xUK2Kd8jBdi2RCRgQRyjrg28HjJI7aKGOmqXWVfo78paR3rpin7nFZZDFRkgvrkLz5/P
- rvf15z7UjdDSq2emgQMJMzd38xplHYO+XfIDlvTU0poItmuAsq9ZTwXc/2MhlNlQsC6e
- ukFM/a/syFYzZ6jYMB0mn0VV/Ywp5PJP2CxoRdoH4Z11TIwYAxRsYafvD7diz1z4PgVp
- 1N+A==
+ d=adacore.com; s=google; t=1747145727; x=1747750527; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=F+maDH+SeTIObLyt1PoV+b1biPi7a1G5liB2x6ZkIPE=;
+ b=OeIQM7MnnDagy+LiETWgfWvZt8tzoQfk8VjEK8t438bQbQ0Sr041Pk0hxvdauGJsIt
+ 6XBvKwE9W+qjScJsF+aQthSfA2RLxb0tCQZOGobdYw//V6XWbuDkmHK+UQriEowOhRk6
+ zymj8Va7hwkvws9sgc5cYosQYQnorYN6KMqhSy4rDhLiLcXgwbuWlXuWAah98nhmZHMQ
+ 0jDOET4xPVoHNcvrIPqSV171DrBb1/aCPaLEpVP3V8he+xLVdMMlS06CXaHHLDmWAThd
+ 39iI/60vUua0dQkx9Erd+yIlA1JtSE7E8fjE4ttbgexTMq4AspwiY1QyG6r4ZlQaWgqk
+ 94kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747145737; x=1747750537;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=omIYyhjnPokjM8hDN/Na4Ta4HqneXcIGJ9F+NHfzW2Y=;
- b=fSDuaDEM3Xpr5EFlSvbyvTZ+20UtqfpdmWAe327JGEtI/2O1O1fdcOk7fMgBPSbved
- 8J/LY4CTI2wIVqz/0qJyGP6OdeolJ4xU1YR8a+9dFDew46wEiuza+q20/47Xb7IJN4ea
- kwbRpuR8yBRfhhaAasNRZX0rkOZd6Dl9Og4D/MYDigfTmjrRbm/Dd8dc4o15RZx4xbZm
- fxczl+ShL1tdIMIrHQAv03HebG1fsEvRoR9Iftv+8XdbYA8TkOV9U1f2i6dkhiE4wlKk
- UwnUc42qr9oUf5DOd3ho4+KF/fJVotC9ghmf4tTkvH5LDeuqsSLmAIzVKLIdWAdpWfuo
- tpUw==
-X-Gm-Message-State: AOJu0YxkBktFvX6mtn7eG7hvUxUjBHue1i+K+9GNYMFQnqSy8soGp47c
- qqy+uUfH1BTTeqZcmEVeZ0gzqkQ9GK0K66BAipoiUarQMt6mm08apiTd98s76bQUCzIvhp1AG6s
+ d=1e100.net; s=20230601; t=1747145727; x=1747750527;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=F+maDH+SeTIObLyt1PoV+b1biPi7a1G5liB2x6ZkIPE=;
+ b=JTAzukQr/tS+tBcF8LZayEmZT8kHdNas9ujecl9j9Oe1pDlVL9HVlwtZcuLGvIf2PE
+ kS5N4jGx1lMghx9BApc0JT7NO8zPKh5yBOAV7JLtuXcgeDD6q3I1vlKUkvDN2TVaaFxi
+ 8dnIvwlt1XQepVsAQcyrPLw+ZX5OqHzL7jagm2Al/o519IPTdYtqxQzml4Ubi74Vklqz
+ DbUFt/lmM9KVfXsXNVLEJD79ybaEkC00nj+Glr7xusZ7krAji3n6aHI3oq1DcI5IijeR
+ N+wOm4yhR+6LYwQ3BTJrU4Phr5GwY6fQyyRzhsQ+clSeitTB825lKdY7a9O+/NrIM5wE
+ cH4w==
+X-Gm-Message-State: AOJu0YwCAOLEZTu5EPhvegcizUUgvWGjhPo6wnQPP1fCRMOL3xJcb349
+ 0b5AXkYk2W2ltcZ9UyzKpc4mVulxMP8NRT+eJQvzxwnOZEwhQdjZoC2tckm+m94SlMuiHmjiFVM
  =
-X-Gm-Gg: ASbGnct2dyHsf8nnRVSzT+kce+DKXY2Ed2pl3bRjtIkpfaGrB+4zD5hFBZkTdaEs1p3
- WJv5ky+1DDHpJPKVNXueiiZ4TAyrFpevfcNSgIpxdPYGihK7cNSGn55b/PNXWKQrR3uuK0LeR4A
- E7emvoSGV3yKDK56HDx0XM9y2fd5N+GGrRFNksJqQyMIX/64GUZEjaQnhAHw2YvZ2CVmElJB8hi
- zr29CH0k9VlfZ3gCEDSE1bBnc550Rlj/6OPsptb/KWX6+fHUpf9WHIwweI8cOy0cbpm6l2tyYyB
- n+qrl9385aOa1Qztu6vBk8LOxKm6nkeDDwzlLrMPcNrVfjggMyO9QuDhF9bmp7DevwzuAiwPuTK
- 7NsFWUdOfF+qBWA54ZlgG3AtjOWPwbO4o5jVKO9t97LxOM35T
-X-Google-Smtp-Source: AGHT+IHt0y8nmUC0Y4PYrR4A7wNXnR/5DJ6Mkxa6dbXXAZts3LxUiFYAlg42jDhzoxp2RSqeQ0xIpg==
-X-Received: by 2002:a05:600c:37cd:b0:43c:e6d1:efe7 with SMTP id
- 5b1f17b1804b1-442d6dd21e9mr122130445e9.26.1747145737182; 
- Tue, 13 May 2025 07:15:37 -0700 (PDT)
+X-Gm-Gg: ASbGncuAF3QePaOjfTEMIbMFHNm+bbJpErdquNlGwKYH9Bb725tOhVw1NpVXs/5+2oW
+ hWE88YIqm+E8uV6cf04/8jwoPxlW0/NOYZ1D+1SI/5OkhSWOpFKo2GErBn53b+vyujG85DU4r24
+ 5oUTS4pAW0u3mLUD0MNGgZfTkStu4ZPAIRYEgWq2zHzKkM4mH788LJZvMMm3odQ/50IzmUS3uB5
+ 6fp0ymTBaPVQu5hpHmkUo8mxFEDxh6TkjBO+vRbz1GGwmb2rYo4CHnngf7LqsRYS8dVtHwNrY/M
+ P6clqn0rcalzzch11Zw1tZ4k2XAmzfjCoCSonojIN6okZqVLs5yyAnclJWfXFrg6j1BMF6OYpdQ
+ oqcomJacK3qh+cpxtyNUqnQ4HRQtS2pUBVFUOLD7kT5R67K1u
+X-Google-Smtp-Source: AGHT+IEcOyVOEHfKNQjhWJliAvd9bfwxuukvTRBrTZxcLdwMka8L6bMixMAA75YVRK6O5cW0e6n4rw==
+X-Received: by 2002:a05:6000:1847:b0:3a1:f538:d9d5 with SMTP id
+ ffacd0b85a97d-3a340d345f1mr2724047f8f.28.1747145727135; 
+ Tue, 13 May 2025 07:15:27 -0700 (PDT)
 Received: from chigot-Dell.telnowedge.local
  (lmontsouris-659-1-24-67.w81-250.abo.wanadoo.fr. [81.250.175.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3b7e7fsm213438805e9.39.2025.05.13.07.15.36
+ 5b1f17b1804b1-442cd3b7e7fsm213438805e9.39.2025.05.13.07.15.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 May 2025 07:15:36 -0700 (PDT)
+ Tue, 13 May 2025 07:15:26 -0700 (PDT)
 From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, edgar.iglesias@gmail.com,
- alistair@alistair23.me, Frederic Konrad <konrad.frederic@yahoo.fr>,
+ alistair@alistair23.me,
  =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [PATCH 2/4] hw/intc/arm_gic: introduce a first-cpu-index property
-Date: Tue, 13 May 2025 16:14:46 +0200
-Message-Id: <20250513141448.297946-3-chigot@adacore.com>
+Subject: [PATCH 0/4] xlnx-zynqmp: add support to boot on RPUs
+Date: Tue, 13 May 2025 16:14:44 +0200
+Message-Id: <20250513141448.297946-1-chigot@adacore.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250513141448.297946-1-chigot@adacore.com>
-References: <20250513141448.297946-1-chigot@adacore.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=chigot@adacore.com; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=chigot@adacore.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,56 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Konrad <konrad.frederic@yahoo.fr>
+This series enhances Xilinx ZynqMP support to allow booting on RPUs and
+ease gdb connections to them.
 
-This introduces a first-cpu-index property to the arm-gic, as some SOCs
-could have two separate GIC (ie: the zynqmp).
+It was validated with home-made binaries. FreeRTOS was tested but without
+success: outputs/IRQ seems broken. AFAICT, FreeRTOS is expecting Xilinx's
+QEMU thus I didn't investigate further, but I'd still like advice
+on the 3rd patch ("wire a second GIC") since it could be related to it.
 
-Signed-off-by: Clément Chigot <chigot@adacore.com>
----
- hw/intc/arm_gic.c                | 2 +-
- hw/intc/arm_gic_common.c         | 1 +
- include/hw/intc/arm_gic_common.h | 2 ++
- 3 files changed, 4 insertions(+), 1 deletion(-)
+Clément Chigot (2):
+  hw/arm: make cpu targeted by arm_load_kernel the primary CPU.
+  hw/arm/xlnx-zynqmp: adapt cluster-id based on the boot cpu
 
-diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-index d18bef40fc..899f133363 100644
---- a/hw/intc/arm_gic.c
-+++ b/hw/intc/arm_gic.c
-@@ -59,7 +59,7 @@ static const uint8_t gic_id_gicv2[] = {
- static inline int gic_get_current_cpu(GICState *s)
- {
-     if (!qtest_enabled() && s->num_cpu > 1) {
--        return current_cpu->cpu_index;
-+        return current_cpu->cpu_index - s->first_cpu_index;
-     }
-     return 0;
- }
-diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
-index 0f0c48d89a..ed5be05645 100644
---- a/hw/intc/arm_gic_common.c
-+++ b/hw/intc/arm_gic_common.c
-@@ -350,6 +350,7 @@ static void arm_gic_common_linux_init(ARMLinuxBootIf *obj,
- 
- static const Property arm_gic_common_properties[] = {
-     DEFINE_PROP_UINT32("num-cpu", GICState, num_cpu, 1),
-+    DEFINE_PROP_UINT32("first-cpu-index", GICState, first_cpu_index, 0),
-     DEFINE_PROP_UINT32("num-irq", GICState, num_irq, 32),
-     /* Revision can be 1 or 2 for GIC architecture specification
-      * versions 1 or 2, or 0 to indicate the legacy 11MPCore GIC.
-diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
-index 97fea4102d..93a3cc2bf8 100644
---- a/include/hw/intc/arm_gic_common.h
-+++ b/include/hw/intc/arm_gic_common.h
-@@ -129,6 +129,8 @@ struct GICState {
-     uint32_t num_lrs;
- 
-     uint32_t num_cpu;
-+    /* cpu_index of the first CPU, attached to this GIC.  */
-+    uint32_t first_cpu_index;
- 
-     MemoryRegion iomem; /* Distributor */
-     /* This is just so we can have an opaque pointer which identifies
+Frederic Konrad (2):
+  hw/intc/arm_gic: introduce a first-cpu-index property
+  hw/arm/xlnx-zynqmp: wire a second GIC for the Cortex-R5
+
+ hw/arm/boot.c                    |  15 +++--
+ hw/arm/xlnx-zynqmp.c             | 104 ++++++++++++++++++++++++++++---
+ hw/intc/arm_gic.c                |   2 +-
+ hw/intc/arm_gic_common.c         |   1 +
+ include/hw/arm/boot.h            |   3 +
+ include/hw/arm/xlnx-zynqmp.h     |   6 ++
+ include/hw/intc/arm_gic_common.h |   2 +
+ 7 files changed, 115 insertions(+), 18 deletions(-)
+
 -- 
 2.34.1
 
