@@ -4,93 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA6EC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 10:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941C7C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 10:49:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEn8Z-0006oH-TJ; Tue, 13 May 2025 06:45:27 -0400
+	id 1uEnC9-0007YN-HY; Tue, 13 May 2025 06:49:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEn8X-0006nx-RF
- for qemu-devel@nongnu.org; Tue, 13 May 2025 06:45:26 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEn8W-00031o-A7
- for qemu-devel@nongnu.org; Tue, 13 May 2025 06:45:25 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a0b308856fso4011378f8f.2
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 03:45:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747133123; x=1747737923; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PQV+7dB2bIIgAZan0TAPV10yQXx671Pd1FMs0t1F1F8=;
- b=rb/iMEMjQSMkAp1C5peoKszTrF76ymkPksK54yj3j9Y2SHSifMqh/sX98ZcG7ZBRjJ
- FTsJ3ggkgFCkm2391J0mL4XYxkGA+RRkAwxJPa9+M5krZ+UM4agHb3VClo3hhyEdiFoi
- lyLm3/oBjuS0RXRLU6rZpcqedT2gS/1kVcREiy33x1eHJ/NlacMO1AMUd3BlgssRl6At
- DyrzdFOXm73WPwYNP5xlwGJg52Mx0xrlbh8XlGBXng6ItPm0EhxCMGOoG1tkOcJLl+3h
- CZFMCZZCkPM0K2NDoBKBGkFSbHyRXTJWsa8u1CSJ+W1QBohvMSgH0oCVrv7dPmMtuHgK
- 3QFQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uEnBu-0007Xr-Rr
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 06:48:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uEnBs-00039X-UR
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 06:48:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747133330;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Gz6YcumP7UgPrL/99BZYderRp5B/M2Kk31LyOBDbBAY=;
+ b=XAeaRsr/6UVHvu22LzWO13gJvEbcPWJ7dhswat8H6IcFqNB9ncr+gGIER2ABrU+U1I8HUI
+ GoV2RZa3PJUrOcZUzaRASNJ6zC+eXE0tVrETKE05OZOjS/VceGQ7HMWxB/XK+aKBLgzZti
+ 7lxpJ/Lh/iDKjzypKL5m1b5qofPJqvE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-169-7sd2c-4oN7WtVr4XioleAA-1; Tue, 13 May 2025 06:48:49 -0400
+X-MC-Unique: 7sd2c-4oN7WtVr4XioleAA-1
+X-Mimecast-MFC-AGG-ID: 7sd2c-4oN7WtVr4XioleAA_1747133328
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d0a037f97so28351315e9.2
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 03:48:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747133123; x=1747737923;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PQV+7dB2bIIgAZan0TAPV10yQXx671Pd1FMs0t1F1F8=;
- b=hHktni+7GVHwVqHAFHU8x9HTjZwWPG7WhX3VyEUhEbjMcUKF539Pu9T9vStcZqjy4J
- KMH29AGGraYqHJuZe2CttThilRopJnMmyhN7raSjXEhizZjpg6aDtXsvVUiYd+AZzrz6
- DObgv4v6lZdjBW+2kJ4IzcA05H9QJ2Qe2vlDs3blcu3gftKx6swKu247v3plv8drg50w
- TxPcSiziDzaz73kHGHGiig75vU8AN7z/e7VCaXTE/EX0HNNEDbP8gxyTjLqmdoyMVmz/
- 99oawoZVQQvVRC2pLIxpDonc7fpV3QPU75STDjdpUgT6u+SasFYCLcQgJkOR8nkjJGWd
- ESSQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU+tn69BNc6JSHr85RCf+j+tHmekFao6+m6WqSqdHAslCdg85QTDtBs2TCg62w9OU8YL79IP2Eb8hnF@nongnu.org
-X-Gm-Message-State: AOJu0Yy13FVr17enZL3+5rge/ApvdpgM0ZbhOdMoGRam5S8/Ua6LPzOm
- wqTyc0ZEejrEU3ZSM1QLtseV3aWiBBOcDdaGIxsvLZcHsLNA5E9IAMH55BXmiZ0=
-X-Gm-Gg: ASbGncs2ZZyD6XHRVjfM4fCu00UWRAlBwe4lqDsN0eVMNjOupvkaAf466+JJwmj4mZe
- 2bCBqNacNlUKQDO7uOPYtJew7/33L5yRUjS7wV8sIkluZg+zLvYPIKLviiE8aW3xcR2HHjoBP7U
- SzrI1o0VB/lGCBCDqMUTiQbGTBnnULH5GzswAXpDE+TiDs9MpAcKOScrKVLl7EQvBeG3n4E+Jlj
- Km3SVFaySADYcbc2Z93e+svgt9mz1zoTEzo28claFmk/KJxeA4+xxm/sTjrOkR4nqxhhnNL/dfT
- t6DvSmwzsR0UMukvU5IYnvfr3T6SqWOyhT/T6mwdtu9oIPMvW+jdX3YtTcH8r5smKiLumZt8F3J
- QbxE+y5KL+5nE/XJ5cg==
-X-Google-Smtp-Source: AGHT+IFw3reMRUBDNST3NUnjyeu+5GloTdANb9TuZA9BtpnHKd4htSDtQ4ZnlvnFdVWLpaXAtu6R8Q==
-X-Received: by 2002:a05:6000:420f:b0:39e:e438:8e4b with SMTP id
- ffacd0b85a97d-3a1f64ae792mr12932586f8f.50.1747133122641; 
- Tue, 13 May 2025 03:45:22 -0700 (PDT)
-Received: from [10.61.1.197] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+ d=1e100.net; s=20230601; t=1747133328; x=1747738128;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Gz6YcumP7UgPrL/99BZYderRp5B/M2Kk31LyOBDbBAY=;
+ b=KZYRHAihE1t9UgvkVaeXkjHOssVGepdmVE4X2AvFmUZLMGpGYEVACnIQf8bSDVYQ7+
+ FIX2zi2o9Vu7fwMdjdPg40cvT5udz6hRQv16DdrDSyj9DQcVuV74uNA1E8JwVVUvt+Xn
+ 7Z+XRn6XFP7YUNe7F9luQlnBdEV1Lx1vm0dTuJ2s1WopGyo9XCURG5Hp1yZWw6QoLHpg
+ wlFOuShRPf2T9ih136bloMZV/Tb0UynUlAh7TXLabTnHEBGbxbE0jVAGkb9SQ6dyGG0Q
+ GhZumMv5YJEAVB7ydGphRPH2bXEdpRqGVzEfi3DWTWDIxab2mJTbpsjvisWTaH7sOHau
+ tprg==
+X-Gm-Message-State: AOJu0YwDhBTyd7o8OaT4fItboDN38xzhrZtASRWw0CXy4M0WPmxk0CDN
+ QBQWeka7QS5yVRWtAARAQbo3VI4M4GgcHT0yJ5XUbQkOMmKHm3HB+0NEyGTMLWdAGNdwWgjoF1g
+ TfYBqur0L5tsHm3jzt6bT8pyo1HU2qILRsyboszj9QvnIndekcfRV
+X-Gm-Gg: ASbGncsuYHUB7f89DvwcFc3qibY+gFpzP3wnq9tykfdnjeKka0V7TTfyedNGpCtOHxB
+ 0aEIJnDyc7zo51o6ro8r5ErSPGrdBMWqkHpifktOJaL3OOXpRwomg2MKAzUFXkHhqkLG+MeB4N3
+ PfrcJiR65lU2nvYeyLiSFLmd6yA7qDBKJo2osH3V6eVzhsxSdHq+uWoBrePHMjLtZhQeY3Wst2Y
+ SeQ1u2L9ifDsXcGs68stiKPwAQCu/A2SJicZxlj4HGE/Bm6ldJLfvwRe2mQqx96ADREozSZwrw6
+ aUNAtS1fEEdJGj01f4+/K1k/kMgVZhKm
+X-Received: by 2002:a05:600c:528a:b0:43d:abd:ad0e with SMTP id
+ 5b1f17b1804b1-442d6d6b6ecmr146028115e9.18.1747133328284; 
+ Tue, 13 May 2025 03:48:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEcwjBFTjV45mCS7DLcHQ0i7qrk4kDcqsqOuuofJLKIQCV8x75e3d1qbOKxSD4iBS2kSrMvQw==
+X-Received: by 2002:a05:600c:528a:b0:43d:abd:ad0e with SMTP id
+ 5b1f17b1804b1-442d6d6b6ecmr146027595e9.18.1747133327880; 
+ Tue, 13 May 2025 03:48:47 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a2ca31sm15852338f8f.65.2025.05.13.03.45.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 03:45:22 -0700 (PDT)
-Message-ID: <7c4e1607-98d6-4040-ab78-317fb6a58e68@linaro.org>
-Date: Tue, 13 May 2025 11:45:21 +0100
+ 5b1f17b1804b1-442d67df639sm162625765e9.13.2025.05.13.03.48.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 May 2025 03:48:47 -0700 (PDT)
+Date: Tue, 13 May 2025 12:48:45 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>, Gerd Hoffmann
+ <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Laurent
+ Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu
+ <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, qemu-riscv@nongnu.org, Weiwei Li
+ <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>, Zhao Liu
+ <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>, Helge Deller
+ <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha
+ <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
+ <pbonzini@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ qemu-arm@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
+ <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Jason
+ Wang <jasowang@redhat.com>, Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v4 27/27] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_PAGE_PER_VQ definition
+Message-ID: <20250513124845.0399f5f1@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250508133550.81391-28-philmd@linaro.org>
+References: <20250508133550.81391-1-philmd@linaro.org>
+ <20250508133550.81391-28-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 36/48] target/arm/machine: move cpu_post_load kvm bits
- to kvm_arm_cpu_post_load function
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, alex.bennee@linaro.org, anjo@rev.ng,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
- <20250512180502.2395029-37-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250512180502.2395029-37-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,15 +127,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 20:04, Pierrick Bouvier wrote:
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/kvm_arm.h |  4 +++-
->   target/arm/kvm.c     | 13 ++++++++++++-
->   target/arm/machine.c |  8 +-------
->   3 files changed, 16 insertions(+), 9 deletions(-)
+On Thu,  8 May 2025 15:35:50 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> VIRTIO_PCI_FLAG_PAGE_PER_VQ was only used by the hw_compat_2_7[]
+> array, via the 'page-per-vq=3Don' property. We removed all
+> machines using that array, lets remove all the code around
+> VIRTIO_PCI_FLAG_PAGE_PER_VQ (see commit 9a4c0e220d8 for similar
+> VIRTIO_PCI_FLAG_* enum removal).
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>  include/hw/virtio/virtio-pci.h |  1 -
+>  hw/display/virtio-vga.c        | 10 ----------
+>  hw/virtio/virtio-pci.c         |  7 +------
+>  3 files changed, 1 insertion(+), 17 deletions(-)
+>=20
+> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pc=
+i.h
+> index 9838e8650a6..8abc5f8f20d 100644
+> --- a/include/hw/virtio/virtio-pci.h
+> +++ b/include/hw/virtio/virtio-pci.h
+> @@ -33,7 +33,6 @@ enum {
+>      VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
+>      VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+>      VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+> -    VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+
+there is also=20
+
+/* page per vq flag to be used by split drivers within guests */           =
+     =20
+#define VIRTIO_PCI_FLAG_PAGE_PER_VQ \                                      =
+     =20
+    (1 << VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT)=20
+
+left behind
+
+
+nevertheless, I'm not sure if we should remove this at all,
+it seems that there are external users
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1925363
+
+>      VIRTIO_PCI_FLAG_ATS_BIT,
+>      VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
+>      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
+> diff --git a/hw/display/virtio-vga.c b/hw/display/virtio-vga.c
+> index 40e60f70fcd..83d01f089b5 100644
+> --- a/hw/display/virtio-vga.c
+> +++ b/hw/display/virtio-vga.c
+> @@ -141,16 +141,6 @@ static void virtio_vga_base_realize(VirtIOPCIProxy *=
+vpci_dev, Error **errp)
+>                                 VIRTIO_GPU_SHM_ID_HOST_VISIBLE);
+>      }
+> =20
+> -    if (!(vpci_dev->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)) {
+> -        /*
+> -         * with page-per-vq=3Doff there is no padding space we can use
+> -         * for the stdvga registers.  Make the common and isr regions
+> -         * smaller then.
+> -         */
+> -        vpci_dev->common.size /=3D 2;
+> -        vpci_dev->isr.size /=3D 2;
+> -    }
+> -
+>      offset =3D memory_region_size(&vpci_dev->modern_bar);
+>      offset -=3D vpci_dev->notify.size;
+>      vpci_dev->notify.offset =3D offset;
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index 7c965771907..4e0d4bda6ed 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -314,12 +314,9 @@ static bool virtio_pci_ioeventfd_enabled(DeviceState=
+ *d)
+>      return (proxy->flags & VIRTIO_PCI_FLAG_USE_IOEVENTFD) !=3D 0;
+>  }
+> =20
+> -#define QEMU_VIRTIO_PCI_QUEUE_MEM_MULT 0x1000
+> -
+>  static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy *proxy)
+>  {
+> -    return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
+> -        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
+> +    return 4;
+>  }
+> =20
+>  static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier *no=
+tifier,
+> @@ -2348,8 +2345,6 @@ static const Property virtio_pci_properties[] =3D {
+>                      VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
+>      DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
+>                      VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+> -    DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
+> -                    VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
+>      DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
+>                      VIRTIO_PCI_FLAG_ATS_BIT, false),
+>      DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
 
 
