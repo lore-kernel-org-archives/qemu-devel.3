@@ -4,101 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A794C3ABCC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 011F5C3ABD7
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEqfY-0003dB-6c; Tue, 13 May 2025 10:31:44 -0400
+	id 1uEqfW-0003c5-7c; Tue, 13 May 2025 10:31:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uEqfW-0003c4-3D
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:31:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uEqfU-0003Yy-00
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:31:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uEqfS-0007w1-9y
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:31:41 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uEqfR-0007vp-Kv
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:31:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747146697;
+ s=mimecast20190719; t=1747146695;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kJnrKexwHwdXj+CB7Gav0WgyIYENhp5GhJAlL4b2KHY=;
- b=MpfryKzJHsSxaozgGP0S1dnBncbv9NmEDJhHokZJYWbIGynRgOqVgTm4ramOOa9VOUwelL
- kKKzM6G+gNyb87MlA2wGzqAMGlLydQAt2tuhlESaSmQPE2GfhGJPQUPztup85dd8Vvbxh3
- zEBsa548UdwK5RFqgkBqCuHpL+eWwjM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-c2DdhED0O2yDzrzq1RDQvw-1; Tue, 13 May 2025 10:31:35 -0400
-X-MC-Unique: c2DdhED0O2yDzrzq1RDQvw-1
-X-Mimecast-MFC-AGG-ID: c2DdhED0O2yDzrzq1RDQvw_1747146694
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43cf172ffe1so39817355e9.3
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:31:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747146694; x=1747751494;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kJnrKexwHwdXj+CB7Gav0WgyIYENhp5GhJAlL4b2KHY=;
- b=CvVTw4nBmd/LBxufHWIuIs5uzonqaHKQyhq6/T/ZCbrA/yR0I707i5/czqRcrVHkXs
- CfZbiWZMDdv0WWoIWz8f7K9tWHg4PWFrDNB2W1R0aU7tFWB7XvmDnbrcw6dQXswwuwk9
- lV1Vq5XcniEvuT5I54C0GvEfxyxOfs2GyK6becEyjHFRfYtqFq+Bxkdo/XHOlGhnczIE
- W6q0iHycx3hVfyiOZOHOvxyzr7QNv3xiEWNioxdBtMhy1g1aJqEpL0TGeWOLmc7qO8zn
- gGVQBWi4Zh7YROFEUTHiZ3IksYtbrgWCCZRk/xqIVFeSjoOrHn58/Yn0OPPQIPnAews4
- MtVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnjr0xMB2dJuVqhcKX7OnwotDEkQGCp+JqtfbJfUvmrqWSfyRGbYOcMltH2BNTeWt446mvPYOEbRMc@nongnu.org
-X-Gm-Message-State: AOJu0YzNTkaoWKdVpcbNsCzU79CwBKLPx/opnLlshUcACrVkDcmwvr+U
- TLk1uZEP2v3qHTmjfCWgi0rj7JoxXYYhaG334tREXEyBu+wL9agnGcA0wexyH2qgI/SlAG5/Psw
- 3L2SsAIpCWZByT83Ix5vKfCfenORNatS6ezhi6Tyq5z2WhLTqwgz+
-X-Gm-Gg: ASbGncsOjVhO0gVDVKaLP1r5Llbic40wmLZ5nyR2tgiNolRjgMwyd2tRH9dP3WpLcku
- LEisMN/GC/9P/FHfkV+l8pgNnqLvSt2f1m5b1nFbRskkaAI+YG9u1zMMa5Newesv1p0e+J76sud
- 3HswHhWxyoqr/oY+TY5WjluKr4CYoQUR397l4WRhXKHMimNMLR/j8EazF9q9Ap0EIA7ttP8Nfat
- ndC94HWAjlU3PpADPrRtgr9HJMUHcf/UUaR60kdI4eUF/yvBHESJOOgqfKLDqa76yiT5XoBX9K8
- Uj9ggDmhZje98xjuiLkipEH8BTy3ALI6nkigdxW4AA7G5+BDsEue5qFb9Ds=
-X-Received: by 2002:a05:600c:8284:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-442d6dd2478mr127725815e9.20.1747146694232; 
- Tue, 13 May 2025 07:31:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGFLJWt2QiNaKo97Dk/ZflyIag+3rx1lRvEaHhwYl2oiZBkI8lMmCjRt1/4I5/C2hIUHb2WNQ==
-X-Received: by 2002:a05:600c:8284:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-442d6dd2478mr127725245e9.20.1747146693778; 
- Tue, 13 May 2025 07:31:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3aeb6esm216527915e9.25.2025.05.13.07.31.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 07:31:33 -0700 (PDT)
-Message-ID: <a706e9a2-0a49-4296-ba0a-8001f433b8b8@redhat.com>
-Date: Tue, 13 May 2025 16:31:30 +0200
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=g1byauJJ8F1ZIxa4Uifv/Nq5XjvjE/dRgS9nc6jECpU=;
+ b=QH9IxYXyuEObKWswZnJ5OIz2uYwSvO/oktYcltp3MkZVBnehGJdNgJZmWMCkkhZzQpDFOy
+ 0+i+oyNJG2hICw0yY4BABqMZmu0U15uKeFCztb+6LFwrtoJ8+V0n7pZ+AOVXSY7Tf0Czeq
+ 7rsliW9OeTdc5+Wq5G8YNIYmxuoXEn8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-jepMzmegM-myPU1KYS7nBw-1; Tue,
+ 13 May 2025 10:31:33 -0400
+X-MC-Unique: jepMzmegM-myPU1KYS7nBw-1
+X-Mimecast-MFC-AGG-ID: jepMzmegM-myPU1KYS7nBw_1747146692
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D33719560AB; Tue, 13 May 2025 14:31:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.110])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77CE91953B82; Tue, 13 May 2025 14:31:30 +0000 (UTC)
+Date: Tue, 13 May 2025 15:31:26 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Dietmar Maurer <dietmar@proxmox.com>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 2/7] add vnc h264 encoder
+Message-ID: <aCNXvhsU72ZtwKMd@redhat.com>
+References: <20250430072524.3650582-1-dietmar@proxmox.com>
+ <20250430072524.3650582-3-dietmar@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/10] arm/kvm: Allow reading all the writable ID
- registers
-Content-Language: en-US
-To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
-Cc: agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
- philmd@linaro.org, pbonzini@redhat.com
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <20250414163849.321857-7-cohuck@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250414163849.321857-7-cohuck@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250430072524.3650582-3-dietmar@proxmox.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
@@ -106,7 +69,7 @@ X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,237 +82,347 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/14/25 6:38 PM, Cornelia Huck wrote:
-> From: Eric Auger <eric.auger@redhat.com>
->
-> At the moment kvm_arm_get_host_cpu_features() reads a subset of the
-> ID regs. As we want to introduce properties for all writable ID reg
-> fields, we want more genericity and read more default host register
-> values.
->
-> Introduce a new get_host_cpu_idregs() helper and add a new exhaustive
-> boolean parameter to kvm_arm_get_host_cpu_features() and
-> kvm_arm_set_cpu_features_from_host() to select the right behavior.
-> The host cpu model will keep the legacy behavior unless the writable
-> id register interface is available.
->
-> A writable_map IdRegMap is introduced in the CPU object. A subsequent
-> patch will populate it.
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+On Wed, Apr 30, 2025 at 09:25:19AM +0200, Dietmar Maurer wrote:
+> This patch implements H264 support for VNC. The RFB protocol
+> extension is defined in:
+> 
+> https://github.com/rfbproto/rfbproto/blob/master/rfbproto.rst#open-h-264-encoding
+> 
+> Currently the Gstreamer x264enc plugin (software encoder) is used
+> to encode the video stream.
+> 
+> The gstreamer pipe is:
+> 
+> appsrc -> videoconvert -> x264enc -> appsink
+> 
+> Note: videoconvert is required for RGBx to YUV420 conversion.
+> 
+> The code still use the VNC server framebuffer change detection,
+> and only encodes and sends video frames if there are changes.
+> 
+> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 > ---
->  target/arm/cpu-sysregs.h |  2 ++
->  target/arm/cpu.h         |  3 ++
->  target/arm/cpu64.c       |  2 +-
->  target/arm/kvm.c         | 78 ++++++++++++++++++++++++++++++++++++++--
->  target/arm/kvm_arm.h     |  9 +++--
->  target/arm/trace-events  |  1 +
->  6 files changed, 89 insertions(+), 6 deletions(-)
->
-> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-> index e89a1105904c..367fab51f19e 100644
-> --- a/target/arm/cpu-sysregs.h
-> +++ b/target/arm/cpu-sysregs.h
-> @@ -41,6 +41,8 @@ int get_sysreg_idx(ARMSysRegs sysreg);
->  
->  #ifdef CONFIG_KVM
->  uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg);
-> +int kvm_idx_to_idregs_idx(int kidx);
-> +int idregs_idx_to_kvm_idx(ARMIDRegisterIdx idx);
->  #endif
->  
->  #endif /* ARM_CPU_SYSREGS_H */
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 775a8aebc5d3..8717c5e7695b 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1088,6 +1088,9 @@ struct ArchCPU {
->       */
->      ARMIdRegsState writable_id_regs;
->  
-> +    /* ID reg writable bitmask (KVM only) */
-> +    IdRegMap *writable_map;
-as it is KVM only we may put it in ifdef CONFIG_KVM block above
+>  ui/meson.build    |   1 +
+>  ui/vnc-enc-h264.c | 255 ++++++++++++++++++++++++++++++++++++++++++++++
+>  ui/vnc-jobs.c     |  53 +++++++---
+>  ui/vnc.c          |  37 ++++++-
+>  ui/vnc.h          |  21 ++++
+>  5 files changed, 350 insertions(+), 17 deletions(-)
+>  create mode 100644 ui/vnc-enc-h264.c
+
+> diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
+> new file mode 100644
+> index 0000000000..26e8c19270
+> --- /dev/null
+> +++ b/ui/vnc-enc-h264.c
+> @@ -0,0 +1,255 @@
+> +/*
+> + * QEMU VNC display driver: H264 encoding
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
->      /* QOM property to indicate we should use the back-compat CNTFRQ default */
->      bool backcompat_cntfrq;
->  
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 839442745ea4..60a709502697 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -757,7 +757,7 @@ static void aarch64_host_initfn(Object *obj)
->  {
->  #if defined(CONFIG_KVM)
->      ARMCPU *cpu = ARM_CPU(obj);
-> -    kvm_arm_set_cpu_features_from_host(cpu);
-> +    kvm_arm_set_cpu_features_from_host(cpu, false);
->      if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
->          aarch64_add_sve_properties(obj);
->          aarch64_add_pauth_properties(obj);
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 6e3cd06e9bc5..b07d5f16db50 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -41,6 +41,7 @@
->  #include "hw/acpi/ghes.h"
->  #include "target/arm/gtimer.h"
->  #include "migration/blocker.h"
-> +#include "cpu-custom.h"
->  
->  const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
->      KVM_CAP_INFO(DEVICE_CTRL),
-> @@ -270,7 +271,73 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf, ARMIDRegisterIdx i
->      return ret;
->  }
->  
-> -static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-> +int kvm_idx_to_idregs_idx(int kidx)
+> +#include "qemu/osdep.h"
+> +#include "vnc.h"
+> +
+> +#include <gst/gst.h>
+> +
+> +static void destroy_encoder_context(VncState *vs)
 > +{
-> +    int op1, crm, op2;
-> +    ARMSysRegs sysreg;
+> +    gst_clear_object(&vs->h264->source);
+> +    gst_clear_object(&vs->h264->convert);
+> +    gst_clear_object(&vs->h264->gst_encoder);
+> +    gst_clear_object(&vs->h264->sink);
+> +    gst_clear_object(&vs->h264->pipeline);
+> +}
 > +
-> +    op1 = kidx / 64;
-> +    if (op1 == 2) {
-> +        op1 = 3;
+> +static bool create_encoder_context(VncState *vs, int w, int h)
+> +{
+> +    g_autoptr(GstCaps) source_caps = NULL;
+> +    GstStateChangeReturn state_change_ret;
+> +
+> +    g_assert(vs->h264 != NULL);
+> +
+> +    if (vs->h264->sink && w == vs->h264->width && h == vs->h264->height) {
+> +        return TRUE;
 > +    }
-> +    crm = (kidx % 64) / 8;
-> +    op2 = kidx % 8;
-> +    sysreg = ENCODE_ID_REG(3, op1, 0, crm, op2);
-> +    return get_sysreg_idx(sysreg);
+> +
+> +    destroy_encoder_context(vs);
+> +
+> +    vs->h264->width = w;
+> +    vs->h264->height = h;
+> +
+> +    vs->h264->source = gst_element_factory_make("appsrc", "source");
+> +    if (!vs->h264->source) {
+> +        VNC_DEBUG("Could not create gst source\n");
+> +        goto error;
+> +    }
+> +
+> +    vs->h264->convert = gst_element_factory_make("videoconvert", "convert");
+> +    if (!vs->h264->convert) {
+> +        VNC_DEBUG("Could not create gst convert element\n");
+> +        goto error;
+> +    }
+> +
+> +    vs->h264->gst_encoder = gst_element_factory_make("x264enc", "gst-encoder");
+> +    if (!vs->h264->gst_encoder) {
+> +        VNC_DEBUG("Could not create gst x264 encoder\n");
+> +        goto error;
+> +    }
+> +
+> +    g_object_set(
+> +        vs->h264->gst_encoder,
+> +        "tune", 4, /* zerolatency */
+> +        /*
+> +         * fix for zerolatency with novnc (without, noVNC displays
+> +         * green stripes)
+> +         */
+> +        "threads", 1,
+> +        "pass", 5, /* Constant Quality */
+> +        "quantizer", 26,
+> +        /* avoid access unit delimiters (Nal Unit Type 9) - not required */
+> +        "aud", false,
+> +        NULL);
+> +
+> +    vs->h264->sink = gst_element_factory_make("appsink", "sink");
+> +    if (!vs->h264->sink) {
+> +        VNC_DEBUG("Could not create gst sink\n");
+> +        goto error;
+> +    }
+> +
+> +    vs->h264->pipeline = gst_pipeline_new("vnc-h264-pipeline");
+> +    if (!vs->h264->pipeline) {
+> +        VNC_DEBUG("Could not create gst pipeline\n");
+> +        goto error;
+> +    }
+> +
+> +    gst_object_ref(vs->h264->source);
+> +    if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->source)) {
+> +        gst_object_unref(vs->h264->source);
+> +        VNC_DEBUG("Could not add source to gst pipeline\n");
+> +        goto error;
+> +    }
+> +
+> +    gst_object_ref(vs->h264->convert);
+> +    if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->convert)) {
+> +        gst_object_unref(vs->h264->convert);
+> +        VNC_DEBUG("Could not add convert to gst pipeline\n");
+> +        goto error;
+> +    }
+> +
+> +    gst_object_ref(vs->h264->gst_encoder);
+> +    if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->gst_encoder)) {
+> +        gst_object_unref(vs->h264->gst_encoder);
+> +        VNC_DEBUG("Could not add encoder to gst pipeline\n");
+> +        goto error;
+> +    }
+> +
+> +    gst_object_ref(vs->h264->sink);
+> +    if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->sink)) {
+> +        gst_object_unref(vs->h264->sink);
+> +        VNC_DEBUG("Could not add sink to gst pipeline\n");
+> +        goto error;
+> +    }
+> +
+> +    source_caps = gst_caps_new_simple(
+> +        "video/x-raw",
+> +        "format", G_TYPE_STRING, "BGRx",
+> +        "framerate", GST_TYPE_FRACTION, 33, 1,
+> +        "width", G_TYPE_INT, w,
+> +        "height", G_TYPE_INT, h,
+> +        NULL);
+> +
+> +    if (!source_caps) {
+> +        VNC_DEBUG("Could not create source caps filter\n");
+> +        goto error;
+> +    }
+> +
+> +    g_object_set(vs->h264->source, "caps", source_caps, NULL);
+> +
+> +    if (gst_element_link_many(
+> +            vs->h264->source,
+> +            vs->h264->convert,
+> +            vs->h264->gst_encoder,
+> +            vs->h264->sink,
+> +            NULL
+> +        ) != TRUE) {
+> +        VNC_DEBUG("Elements could not be linked.\n");
+> +        goto error;
+> +    }
+> +
+> +    /* Start playing */
+> +    state_change_ret = gst_element_set_state(
+> +        vs->h264->pipeline, GST_STATE_PLAYING);
+> +
+> +    if (state_change_ret == GST_STATE_CHANGE_FAILURE) {
+> +        VNC_DEBUG("Unable to set the pipeline to the playing state.\n");
+> +        goto error;
+> +    }
+> +
+> +    return TRUE;
+> +
+> + error:
+> +    destroy_encoder_context(vs);
+> +    return FALSE;
 > +}
 > +
-> +int idregs_idx_to_kvm_idx(ARMIDRegisterIdx idx)
+> +bool vnc_h264_encoder_init(VncState *vs)
 > +{
-> +    ARMSysRegs sysreg = id_register_sysreg[idx];
+> +    g_assert(vs->h264 == NULL);
 > +
-> +    return KVM_ARM_FEATURE_ID_RANGE_IDX((sysreg & CP_REG_ARM64_SYSREG_OP0_MASK) >> CP_REG_ARM64_SYSREG_OP0_SHIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_OP1_MASK) >> CP_REG_ARM64_SYSREG_OP1_SHIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_CRN_MASK) >> CP_REG_ARM64_SYSREG_CRN_SHIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_CRM_MASK) >> CP_REG_ARM64_SYSREG_CRM_SHIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_OP2_MASK) >> CP_REG_ARM64_SYSREG_OP2_SHIFT);
+> +    vs->h264 = g_new0(VncH264, 1);
+> +
+> +    return true;
 > +}
-> +
 > +
 > +/*
-> + * get_host_cpu_idregs: Read all the writable ID reg host values
-> + *
-> + * Need to be called once the writable mask has been populated
-> + * Note we may want to read all the known id regs but some of them are not
-> + * writable and return an error, hence the choice of reading only those which
-> + * are writable. Those are also readable!
+> + * Returns the number of generated framebuffer updates,
+> + * or -1 in case of errors
 > + */
-> +static int get_host_cpu_idregs(ARMCPU *cpu, int fd, ARMHostCPUFeatures *ahcf)
+> +int vnc_h264_send_framebuffer_update(VncState *vs)
 > +{
-> +    int err = 0;
-> +    int i;
+> +    int n = 0;
+> +    int rdb_h264_flags = 0;
+> +    int width, height;
+> +    uint8_t *src_data_ptr = NULL;
+> +    size_t src_data_size;
+> +    GstFlowReturn flow_ret = GST_FLOW_ERROR;
+> +    GstBuffer *src_buffer = NULL;
 > +
-> +    for (i = 0; i < NUM_ID_IDX; i++) {
-> +        ARM64SysReg *sysregdesc = &arm64_id_regs[i];
-> +        ARMSysRegs sysreg = sysregdesc->sysreg;
-> +        uint64_t writable_mask = cpu->writable_map->regs[idregs_idx_to_kvm_idx(i)];
-> +        uint64_t *reg;
-> +        int ret;
+> +    g_assert(vs->h264 != NULL);
+> +    g_assert(vs->vd != NULL);
+> +    g_assert(vs->vd->server != NULL);
 > +
-> +        if (!writable_mask) {
-> +            continue;
+> +    width = pixman_image_get_width(vs->vd->server);
+> +    height = pixman_image_get_height(vs->vd->server);
+> +
+> +    g_assert(width == vs->client_width);
+> +    g_assert(height == vs->client_height);
+> +
+> +    if (vs->h264->sink) {
+> +        if (width != vs->h264->width || height != vs->h264->height) {
+> +            rdb_h264_flags = 2;
 > +        }
-> +
-> +        reg = &ahcf->isar.idregs[i];
-> +        ret = read_sys_reg64(fd, reg, idregs_sysreg_to_kvm_reg(sysreg));
-> +        trace_get_host_cpu_idregs(sysregdesc->name, *reg);
-> +        if (ret) {
-> +            error_report("%s error reading value of host %s register (%m)",
-> +                         __func__, sysregdesc->name);
-> +
-> +            err = ret;
-> +        }
+> +    } else {
+> +        rdb_h264_flags = 2;
 > +    }
-> +    return err;
+> +
+> +    if (!create_encoder_context(vs, width, height)) {
+> +        VNC_DEBUG("Create encoder context failed\n");
+> +        return -1;
+> +    }
+> +
+> +    g_assert(vs->h264->sink != NULL);
+> +
+> +    src_data_ptr = vnc_server_fb_ptr(vs->vd, 0, 0);
+> +    src_data_size = width * height * VNC_SERVER_FB_BYTES;
+> +
+> +    src_buffer = gst_buffer_new_wrapped_full(
+> +        0, src_data_ptr, src_data_size, 0, src_data_size, NULL, NULL);
+> +
+> +    g_signal_emit_by_name(
+> +        vs->h264->source, "push-buffer", src_buffer, &flow_ret);
+> +
+> +    if (flow_ret != GST_FLOW_OK) {
+> +        VNC_DEBUG("gst appsrc push buffer failed\n");
+> +        return -1;
+> +    }
+> +
+> +    do {
+> +        GstSample *sample = NULL;
+> +        GstMapInfo map;
+> +        GstBuffer *out_buffer;
+> +
+> +        /* Retrieve the buffer */
+> +        g_signal_emit_by_name(vs->h264->sink, "try-pull-sample", 0, &sample);
+> +        if (!sample) {
+> +            break;
+> +        }
+> +        out_buffer = gst_sample_get_buffer(sample);
+> +        if (gst_buffer_map(out_buffer, &map, 0)) {
+> +            vnc_framebuffer_update(vs, 0, 0, width, height, VNC_ENCODING_H264);
+> +            vnc_write_s32(vs, map.size); /* write data length */
+> +            vnc_write_s32(vs, rdb_h264_flags); /* write flags */
+> +            rdb_h264_flags = 0;
+> +
+> +            VNC_DEBUG("GST vnc_h264_update send %ld\n", map.size);
+> +
+> +            vnc_write(vs, map.data, map.size);
+> +
+> +            gst_buffer_unmap(out_buffer, &map);
+> +
+> +            n += 1;
+> +        } else {
+> +            VNC_DEBUG("unable to map sample\n");
+> +        }
+> +        gst_sample_unref(sample);
+> +    } while (true);
+> +
+> +    return n;
 > +}
 > +
-> +static bool
-> +kvm_arm_get_host_cpu_features(ARMCPU *cpu, ARMHostCPUFeatures *ahcf,
-> +                              bool exhaustive)
-maybe the exhaustive term shall be replaced by handle_writable_id_regs
-which tells more explicitly what it does
->  {
->      /* Identify the feature bits corresponding to the host CPU, and
->       * fill out the ARMHostCPUClass fields accordingly. To do this
-> @@ -398,6 +465,11 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->          err |= get_host_cpu_reg(fd, ahcf, ID_DFR1_EL1_IDX);
->          err |= get_host_cpu_reg(fd, ahcf, ID_MMFR5_EL1_IDX);
->  
-> +        /* Make sure writable ID reg values are read */
-> +        if (exhaustive) {
-> +            err |= get_host_cpu_idregs(cpu, fd, ahcf);
-> +        }
+> +void vnc_h264_clear(VncState *vs)
+> +{
+> +    if (!vs->h264) {
+> +        return;
+> +    }
 > +
->          /*
->           * DBGDIDR is a bit complicated because the kernel doesn't
->           * provide an accessor for it in 64-bit mode, which is what this
-> @@ -467,13 +539,13 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->      return true;
->  }
->  
-> -void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-> +void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool exhaustive)
->  {
->      CPUARMState *env = &cpu->env;
->  
->      if (!arm_host_cpu_features.dtb_compatible) {
->          if (!kvm_enabled() ||
-> -            !kvm_arm_get_host_cpu_features(&arm_host_cpu_features)) {
-> +            !kvm_arm_get_host_cpu_features(cpu, &arm_host_cpu_features, exhaustive)) {
->              /* We can't report this error yet, so flag that we need to
->               * in arm_cpu_realizefn().
->               */
-> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-> index 8d1f20ca8d89..90ba4f7d8987 100644
-> --- a/target/arm/kvm_arm.h
-> +++ b/target/arm/kvm_arm.h
-> @@ -141,8 +141,12 @@ uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu);
->   *
->   * Set up the ARMCPU struct fields up to match the information probed
->   * from the host CPU.
-> + *
-> + * @cpu: cpu object
-> + * @exhaustive: if true, all the feature ID regs are queried instead of
-s/queried/handled
-> + *              a subset
->   */
-> -void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
-> +void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool exhaustive);
->  
->  /**
->   * kvm_arm_add_vcpu_properties:
-> @@ -257,7 +261,8 @@ static inline int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
->  /*
->   * These functions should never actually be called without KVM support.
->   */
-> -static inline void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-> +static inline void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu,
-> +                                                      bool exhaustive)
->  {
->      g_assert_not_reached();
->  }
-> diff --git a/target/arm/trace-events b/target/arm/trace-events
-> index 4438dce7becc..17e52c0705f2 100644
-> --- a/target/arm/trace-events
-> +++ b/target/arm/trace-events
-> @@ -13,3 +13,4 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
->  
->  # kvm.c
->  kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
-> +get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
+> +    destroy_encoder_context(vs);
+> +
+> +    g_clear_pointer(&vs->h264, g_free);
+> +}
 
-Eric
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index 9e097dc4b4..ba71589c6f 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+
+
+> @@ -4289,6 +4320,10 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
+>      Error *local_err = NULL;
+>      char *id = (char *)qemu_opts_id(opts);
+>  
+> +#ifdef CONFIG_GSTREAMER
+> +    gst_init(NULL, NULL);
+
+This method aborts the process on failure. We need to use
+
+  gst_init_check(NULL, NULL, &err)
+
+and report the 'err' result with error_report() so it
+integrates with QEMU's normal error reporting mechanisms.
+
+
+> @@ -625,6 +642,10 @@ int vnc_zrle_send_framebuffer_update(VncState *vs, int x, int y, int w, int h);
+>  int vnc_zywrle_send_framebuffer_update(VncState *vs, int x, int y, int w, int h);
+>  void vnc_zrle_clear(VncState *vs);
+>
+> +bool vnc_h264_encoder_init(VncState *vs);
+> +int vnc_h264_send_framebuffer_update(VncState *vs);
+> +void vnc_h264_clear(VncState *vs);
+
+These ought to be wrapped in '#ifdef CONFIG_GSTREAMER' too, so that is
+obvious they're conditionally available, and it'll trigger a compiler
+error if someone tries to call them outside a matching #ifdef
+
+> +
+>  /* vnc-clipboard.c */
+>  void vnc_server_cut_text_caps(VncState *vs);
+>  void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+> -- 
+> 2.39.5
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
