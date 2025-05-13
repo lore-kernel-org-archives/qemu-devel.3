@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC847C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 01:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA542C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 01:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEeYl-0002Gy-AZ; Mon, 12 May 2025 21:35:55 -0400
+	id 1uEeYk-0002Gp-RK; Mon, 12 May 2025 21:35:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeYi-0002FB-Fi; Mon, 12 May 2025 21:35:52 -0400
+ id 1uEeYi-0002Ez-AG; Mon, 12 May 2025 21:35:52 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeYg-00021W-2P; Mon, 12 May 2025 21:35:52 -0400
+ id 1uEeYf-00021S-VD; Mon, 12 May 2025 21:35:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=M37sAYz/UezG1DeFTg2QB3ntIIKeW+/F83Bp66GbxIc=; b=jUFHjnULNk8S
- m+RbMFS0hpJriwh63ow/z2GI7mKAswBT8JrAwQG7ga9KJz3B2ov0E43SPC+UrIHXyToeY0s2UKDDN
- hn1UALkDcu1FXifNGx+ji+uD+IzNc4EaxczW4zW9lrWtIxHOhs/1DJUYXl+O7K7H9CtEIU/SN97x3
- F5AUoH1gCaTZ6ZGnb5plP2z1ivgfAsuKAUhmqkbI7ptxqb9SAHNerf9puxdpQV2VPEeFNfq3yNe8M
- ECi1l1vNu2wx6/ty7QLMB8peIQCjTeWogr+P9+EQe7/pnNq3Vsk/C+be21gtHBM51tNYp9K7kJD7D
- l1GYVgsamdT4Vku9T0FHNw==;
+ Content-Type; bh=+L+BU/R0UiYOQwIozPYQoIx70UFXZ5v2qWVT4AX4P+k=; b=NunU+OlPGWG5
+ LSJYo929eb6VBFhzL7W4jiA4pDRDuawj0nwHUzXmz3DnJCRiZeEygk48Vbr4wPBkVDREAp99fbI7Y
+ jSffTuBvXystnAvZNmKSzmF2ROG0Ml+Yc50XL42OMsqK7s/Kuc3f+H0uJZas78Ah0B4BrPTjub96w
+ ZKPp41DFHCI4bX3ntF2pomPzzJOxb4QvLWx4/lJUxGUS/cxq502G+o610dyFaiuQog4jTPEczQ6rq
+ VuHde+tHVLYaFu/gfLQ8JuCWHfnjd3ryyxGk3iM8v9N4HZN8PS1Y2k+7NLlBNaBVubGI003i3ndy2
+ Ho6SVyZPDsSPUleyxG2yFg==;
 Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=debian.fritz.box)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
  (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uEeUe-00DboQ-3A; Tue, 13 May 2025 03:35:37 +0200
+ id 1uEeUe-00DboQ-1z; Tue, 13 May 2025 03:35:37 +0200
 From: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 To: qemu-block@nongnu.org,
 	vsementsov@yandex-team.ru,
 	eblake@redhat.com
 Cc: jsnow@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
  qemu-devel@nongnu.org, andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH 3/4] block/copy-before-write: reverse access bitmap
-Date: Tue, 13 May 2025 03:32:37 +0200
-Message-ID: <20250513013238.1213539-4-andrey.zhadchenko@virtuozzo.com>
+Subject: [PATCH 2/4] hbitmap: introduce hbitmap_reverse()
+Date: Tue, 13 May 2025 03:32:36 +0200
+Message-ID: <20250513013238.1213539-3-andrey.zhadchenko@virtuozzo.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250513013238.1213539-1-andrey.zhadchenko@virtuozzo.com>
 References: <20250513013238.1213539-1-andrey.zhadchenko@virtuozzo.com>
@@ -69,218 +69,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HBitmaps allow us to search set bits pretty fast. On the contrary,
-when searching zeroes, we may be forced to fully traverse the lower
-level.
-When we run blockdev-backup with mode=full on top of snapshot filter
-+ cbw filter, the job fills copy bitmap by calling block_status()
-with range (X, virtual_size). The problem is that we check for zeroes
-in this whole range. We also hit the worst case here, as access
-bitmap is fully set and we need to scan the entire lowest level.
-After scanning the full bitmap we actually ask the block status of
-original image, which may return significantly lower amount of empty
-clusters.
-Beacuse of this, the backup job 'hangs' on block copy initializaiton
-for a long time with 100% CPU.
-
-Example copy bitmap buildup time for image with clu_size=65536 and
-preallocated metadata
-size                 10T   11T
-blockdev-backup      52s   57s
-cbw + snap           325s  413s
-cbw + snap + patch   55s   61s
-
-To fix it, reverse the access bitmap in cbw filter: rather set it
-when the user is not allowed to read the cluster.
-
-Update qemu-iotest 257: now access bitmap have count 0 instead of
-the image size 67108864
+and bdrv_dirty_bitmap_reverse() helper
 
 Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 ---
- block/copy-before-write.c  | 17 ++++++++++-------
- tests/qemu-iotests/257.out | 28 ++++++++++++++--------------
- 2 files changed, 24 insertions(+), 21 deletions(-)
+ block/dirty-bitmap.c         |  9 +++++++++
+ include/block/block_int-io.h |  1 +
+ include/qemu/hbitmap.h       |  8 ++++++++
+ util/hbitmap.c               | 15 +++++++++++++++
+ 4 files changed, 33 insertions(+)
 
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index fd470f5f92..5f5b3e7515 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -53,7 +53,7 @@ typedef struct BDRVCopyBeforeWriteState {
-     CoMutex lock;
- 
-     /*
--     * @access_bitmap: represents areas allowed for reading by fleecing user.
-+     * @access_bitmap: represents areas disallowed for reading by fleecing user.
-      * Reading from non-dirty areas leads to -EACCES.
-      */
-     BdrvDirtyBitmap *access_bitmap;
-@@ -220,7 +220,7 @@ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
-         return NULL;
+diff --git a/block/dirty-bitmap.c b/block/dirty-bitmap.c
+index 13a1979755..c7f453fdb9 100644
+--- a/block/dirty-bitmap.c
++++ b/block/dirty-bitmap.c
+@@ -888,3 +888,12 @@ void bdrv_dirty_bitmap_merge_internal(BdrvDirtyBitmap *dest,
+         }
      }
+ }
++
++void bdrv_dirty_bitmap_reverse(BdrvDirtyBitmap *bitmap)
++{
++    assert(!bdrv_dirty_bitmap_readonly(bitmap));
++    assert(!bdrv_dirty_bitmap_inconsistent(bitmap));
++    bdrv_dirty_bitmaps_lock(bitmap->bs);
++    hbitmap_reverse(bitmap->bitmap);
++    bdrv_dirty_bitmaps_unlock(bitmap->bs);
++}
+diff --git a/include/block/block_int-io.h b/include/block/block_int-io.h
+index 4a7cf2b4fd..093613e7d1 100644
+--- a/include/block/block_int-io.h
++++ b/include/block/block_int-io.h
+@@ -109,6 +109,7 @@ void bdrv_clear_dirty_bitmap(BdrvDirtyBitmap *bitmap, HBitmap **out);
+ void bdrv_dirty_bitmap_merge_internal(BdrvDirtyBitmap *dest,
+                                       const BdrvDirtyBitmap *src,
+                                       HBitmap **backup, bool lock);
++void bdrv_dirty_bitmap_reverse(BdrvDirtyBitmap *bitmap);
  
--    if (bdrv_dirty_bitmap_next_zero(s->access_bitmap, offset, bytes) != -1) {
-+    if (bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes) != -1) {
-         g_free(req);
-         return NULL;
-     }
-@@ -338,8 +338,8 @@ cbw_co_pdiscard_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes)
-     aligned_bytes = aligned_end - aligned_offset;
+ void bdrv_inc_in_flight(BlockDriverState *bs);
+ void bdrv_dec_in_flight(BlockDriverState *bs);
+diff --git a/include/qemu/hbitmap.h b/include/qemu/hbitmap.h
+index 8136e33674..dbdc9aa2d4 100644
+--- a/include/qemu/hbitmap.h
++++ b/include/qemu/hbitmap.h
+@@ -350,4 +350,12 @@ bool hbitmap_status(const HBitmap *hb, int64_t start, int64_t count,
+  */
+ int64_t hbitmap_iter_next(HBitmapIter *hbi);
  
-     WITH_QEMU_LOCK_GUARD(&s->lock) {
--        bdrv_reset_dirty_bitmap(s->access_bitmap, aligned_offset,
--                                aligned_bytes);
-+        bdrv_set_dirty_bitmap(s->access_bitmap, aligned_offset,
-+                              aligned_bytes);
-     }
++/**
++ * hbitmap_reverse:
++ * @bitmap: The HBitmap to operate on
++ *
++ * Reverse the bits in the bitmap.
++ */
++void hbitmap_reverse(HBitmap *bitmap);
++
+ #endif
+diff --git a/util/hbitmap.c b/util/hbitmap.c
+index 16674f33e4..b99c4b1eec 100644
+--- a/util/hbitmap.c
++++ b/util/hbitmap.c
+@@ -940,3 +940,18 @@ char *hbitmap_sha256(const HBitmap *bitmap, Error **errp)
  
-     block_copy_reset(s->bcs, aligned_offset, aligned_bytes);
-@@ -501,9 +501,12 @@ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
-         return -EINVAL;
-     }
-     bdrv_disable_dirty_bitmap(s->access_bitmap);
--    bdrv_dirty_bitmap_merge_internal(s->access_bitmap,
--                                     block_copy_dirty_bitmap(s->bcs), NULL,
--                                     true);
-+    if (bitmap) {
-+        bdrv_dirty_bitmap_merge_internal(s->access_bitmap,
-+                                         block_copy_dirty_bitmap(s->bcs), NULL,
-+                                         true);
-+        bdrv_dirty_bitmap_reverse(s->access_bitmap);
+     return hash;
+ }
++
++void hbitmap_reverse(HBitmap *bitmap)
++{
++    int64_t pnum, pos = 0;
++    int64_t size = bitmap->orig_size;
++
++    while (pos < size) {
++        if (hbitmap_status(bitmap, pos, size - pos, &pnum)) {
++            hbitmap_reset(bitmap, pos, pnum);
++        } else {
++            hbitmap_set(bitmap, pos, pnum);
++        }
++        pos += pnum;
 +    }
- 
-     qemu_co_mutex_init(&s->lock);
-     QLIST_INIT(&s->frozen_read_reqs);
-diff --git a/tests/qemu-iotests/257.out b/tests/qemu-iotests/257.out
-index c33dd7f3a9..55efb418e6 100644
---- a/tests/qemu-iotests/257.out
-+++ b/tests/qemu-iotests/257.out
-@@ -109,7 +109,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -585,7 +585,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -854,7 +854,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -1330,7 +1330,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -1599,7 +1599,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -2075,7 +2075,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -2344,7 +2344,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -2820,7 +2820,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -3089,7 +3089,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -3565,7 +3565,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -3834,7 +3834,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -4310,7 +4310,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -4579,7 +4579,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -5055,7 +5055,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
++}
 -- 
 2.43.0
 
