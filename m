@@ -4,72 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60EBEC3ABC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF939C3ABCC
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 13:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEplv-0001ec-Dt; Tue, 13 May 2025 09:34:15 -0400
+	id 1uEpmC-0001ho-HC; Tue, 13 May 2025 09:34:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uEplm-0001dW-FS
- for qemu-devel@nongnu.org; Tue, 13 May 2025 09:34:07 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uEpm8-0001hQ-Tb
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 09:34:30 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uEpli-0007uj-QH
- for qemu-devel@nongnu.org; Tue, 13 May 2025 09:34:05 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uEpm6-0007yk-TI
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 09:34:28 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5E2D1211F5;
- Tue, 13 May 2025 13:33:57 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 20D6E211F8;
+ Tue, 13 May 2025 13:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747143237; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=UDQ56gzHPaY4/ZNVvi6iKkQUCtS/V6eUV5VpJUlYG4o=;
- b=oi30xVr9XzpjgUMatR6BeZBOJpSKev3Cq3XFdnDaz3u5kaMpUMSpSGa7SqnkVXulMxBpdm
- ZPqMrpaDJEOGu91Ouhx7ibIgZgB6EgsCbHCI64esgI6rr9tvJkPaM1RaI1ESfaGzeD5nGJ
- sHqB3BRjMFtRdv0OX36ct4HkFLaPE70=
+ t=1747143242; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zTtvBJB97Erg9BMKeOMZwlfTIUYnRf6ZaPjp7thBFOA=;
+ b=KuH6YjAH+k9Rcz1quAXlpkswzHn5L2iRC/v2792DxVK89i/Hcno8+e1ggMTvVkLuxXFg1F
+ QOwyaAbO+ua+V5oFmkLZ60K21AYKd3c1P7UIfPFj0TLY4FqsAfz+0IfShpA2FIjAsEPlac
+ 7mMz0whZecR8VIcWunC6QAYceyqInj0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747143237;
+ s=susede2_ed25519; t=1747143242;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=UDQ56gzHPaY4/ZNVvi6iKkQUCtS/V6eUV5VpJUlYG4o=;
- b=nQ6P1/baFOPeR5aj8PiYFZpZFFjHDldzs/z5Dbqhpo2ZpHADmC8VN85+1SBv8ur/Tfmbff
- +XKEO2rimdhwvTBw==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zTtvBJB97Erg9BMKeOMZwlfTIUYnRf6ZaPjp7thBFOA=;
+ b=OHLhteixFaW6AG7vLU3qhkJ/WAUJydDF7GO6b7XPSUSOrKM6juG6+IQFVvx0lTFqogB4RH
+ GSm0Jg4k25ds+FBw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747143237; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=UDQ56gzHPaY4/ZNVvi6iKkQUCtS/V6eUV5VpJUlYG4o=;
- b=oi30xVr9XzpjgUMatR6BeZBOJpSKev3Cq3XFdnDaz3u5kaMpUMSpSGa7SqnkVXulMxBpdm
- ZPqMrpaDJEOGu91Ouhx7ibIgZgB6EgsCbHCI64esgI6rr9tvJkPaM1RaI1ESfaGzeD5nGJ
- sHqB3BRjMFtRdv0OX36ct4HkFLaPE70=
+ t=1747143242; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zTtvBJB97Erg9BMKeOMZwlfTIUYnRf6ZaPjp7thBFOA=;
+ b=KuH6YjAH+k9Rcz1quAXlpkswzHn5L2iRC/v2792DxVK89i/Hcno8+e1ggMTvVkLuxXFg1F
+ QOwyaAbO+ua+V5oFmkLZ60K21AYKd3c1P7UIfPFj0TLY4FqsAfz+0IfShpA2FIjAsEPlac
+ 7mMz0whZecR8VIcWunC6QAYceyqInj0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747143237;
+ s=susede2_ed25519; t=1747143242;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=UDQ56gzHPaY4/ZNVvi6iKkQUCtS/V6eUV5VpJUlYG4o=;
- b=nQ6P1/baFOPeR5aj8PiYFZpZFFjHDldzs/z5Dbqhpo2ZpHADmC8VN85+1SBv8ur/Tfmbff
- +XKEO2rimdhwvTBw==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zTtvBJB97Erg9BMKeOMZwlfTIUYnRf6ZaPjp7thBFOA=;
+ b=OHLhteixFaW6AG7vLU3qhkJ/WAUJydDF7GO6b7XPSUSOrKM6juG6+IQFVvx0lTFqogB4RH
+ GSm0Jg4k25ds+FBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 508E51365D;
- Tue, 13 May 2025 13:33:56 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1BF301365D;
+ Tue, 13 May 2025 13:34:00 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id i+fiBERKI2gMXgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 13 May 2025 13:33:56 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WIewM0hKI2gMXgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 13 May 2025 13:34:00 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>
-Subject: [PATCH v2 0/3] migration, ci: Tweaks to migration-compat jobs
-Date: Tue, 13 May 2025 10:33:50 -0300
-Message-Id: <20250513133353.23022-1-farosas@suse.de>
+Subject: [PATCH v2 3/3] ci: Reduce the size of artifacts for
+ build-previous-qemu
+Date: Tue, 13 May 2025 10:33:53 -0300
+Message-Id: <20250513133353.23022-4-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250513133353.23022-1-farosas@suse.de>
+References: <20250513133353.23022-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
@@ -84,13 +95,15 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
  RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,22 +120,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- changed migration-compat job to also check VERSION [peterx]
+The build-previous-qemu job is intented to produce a build of the
+previous QEMU release for consumption by the migration-compat-*
+jobs. Keep only the pieces of the build that are necessary.
 
-v1:
-https://lore.kernel.org/r/20250507155835.31074-1-farosas@suse.de
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ .gitlab-ci.d/buildtest.yml | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-A couple of cleanups to the migration jobs, plus a fix for an issue
-that may happen during the QEMU release.
-
-Fabiano Rosas (3):
-  ci: Re-enable python subtests in qtest migration suite
-  ci: Fix build-previous-qemu when the version tag is absent
-  ci: Reduce the size of artifacts for build-previous-qemu
-
- .gitlab-ci.d/buildtest.yml | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
-
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index b4e39fd7c1..ca1a9c6f70 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -188,12 +188,11 @@ build-previous-qemu:
+     when: on_success
+     expire_in: 2 days
+     paths:
+-      - build-previous
+-    exclude:
+-      - build-previous/**/*.p
+-      - build-previous/**/*.a.p
+-      - build-previous/**/*.c.o
+-      - build-previous/**/*.c.o.d
++      - build-previous/qemu-bundle
++      - build-previous/qemu-system-aarch64
++      - build-previous/qemu-system-x86_64
++      - build-previous/tests/qtest/migration-test
++      - build-previous/scripts
+   needs:
+     job: amd64-opensuse-leap-container
+   variables:
 -- 
 2.35.3
 
