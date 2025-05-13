@@ -4,92 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE767C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398EDC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEj10-00016u-Pa; Tue, 13 May 2025 02:21:23 -0400
+	id 1uEj92-0002G0-ST; Tue, 13 May 2025 02:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uEj0u-00016S-Lu
- for qemu-devel@nongnu.org; Tue, 13 May 2025 02:21:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uEj8t-0002E3-Dh; Tue, 13 May 2025 02:29:31 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uEj0r-0001Cu-LM
- for qemu-devel@nongnu.org; Tue, 13 May 2025 02:21:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747117271;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6eLhr2L+9qOFaS1s2HNVztxs5zRUy9kWOjKJpy7LwTs=;
- b=Q/KTEu/S7lg9kpqVFSXITgs3vjn8GvM5E9gEwl0j30YaApfG5ji2sck0sd64CfAjCqlgRb
- Nmnyet2NhXDCxUto0ikA13bKraN0tH9Wqv3HcJEdeY5aJ9lG6EWWOtfPd7ouO7DbWlpdf1
- TqYAOIg/mQUKqH6E0u56AODxJcCrbmM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-u747PWdXNNaiSTfYnoLdww-1; Tue, 13 May 2025 02:21:09 -0400
-X-MC-Unique: u747PWdXNNaiSTfYnoLdww-1
-X-Mimecast-MFC-AGG-ID: u747PWdXNNaiSTfYnoLdww_1747117269
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-442cd12d151so35187155e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 23:21:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747117269; x=1747722069;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6eLhr2L+9qOFaS1s2HNVztxs5zRUy9kWOjKJpy7LwTs=;
- b=BaaIFp49t+qYMYpgvmP9CVW5sl+bPId+g1+VEnh9Klxat9huDi3/ANVVf7sFj8WNxh
- 07495Nz5AkzRuE4i/gpnn1ZS1XJIvpcHMx2y1lqwj/NKmAH3GVH2e2z/+lzUQbwWLTd4
- v2rIkgUb67a76X8+sX3GM7g8UKmsRiVOKH47pq54HBjsGgvIdDYLmWz9KbLWmbmtNSz1
- raWl3p64xhPx2uUTkG+YhSc7oTH+8Dmhnj3hh+KjNawO/rNBHbtb849Bh7WlNSViTMVv
- rnebcTmBKHOxnjSTsHskt+9n+TPRqhGBk5SiELbAWkMFLINFmmKMMEU4YFAgNImZUYG6
- xytQ==
-X-Gm-Message-State: AOJu0Yyd14SWSRl94KYfJXlQsZHUdnUBxsPAteWFAb3U+RlsqdElCs8D
- q5K/pXEvcIulMKaXGYakc6/h2qZphwX2jtsbsH8iHt//Wn33paH2+N9FxHQfoYrVGOnKjJEGA0f
- Hz3EnSSLCiPwY+SAmVTwq9b4ymZJ5ISh7MtfiJShp8XFTFbNQfT57ysg80MNBbuXmPNNd4tuRTK
- SyXV4saf5SilnTRfIF0ki4r1THJ2s=
-X-Gm-Gg: ASbGncvkWpGwqwmT4ZtIoT2w2/DO0nPYyQUj5bAs7zeg2jfER7xUH3L2ggYmilC7krY
- YGet9rDKHfL6llZ+v/AnqMRNVBsAPBpFeVZCbgFj26uMlAWubPxzz6tzliqWv02Vu9Pc=
-X-Received: by 2002:a05:600c:1d07:b0:440:6852:5b31 with SMTP id
- 5b1f17b1804b1-442d6d37079mr150180435e9.10.1747117268658; 
- Mon, 12 May 2025 23:21:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUmgFSZ4cb3RGFItFhdDF3+1SbYOqvV4nlQme4X+UiL+6EXZN0T36rQg+zxuBKpDaSttl+DipBBdZ8AmebC1E=
-X-Received: by 2002:a05:600c:1d07:b0:440:6852:5b31 with SMTP id
- 5b1f17b1804b1-442d6d37079mr150180225e9.10.1747117268368; Mon, 12 May 2025
- 23:21:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uEj8q-0001kC-ER; Tue, 13 May 2025 02:29:31 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 13 May
+ 2025 14:29:02 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 13 May 2025 14:29:02 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v2 01/25] hw/misc/aspeed_hace: Remove unused code for better
+ readability
+Date: Tue, 13 May 2025 14:28:31 +0800
+Message-ID: <20250513062901.2256865-2-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
+References: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-References: <20250508122849.207213-1-ppandit@redhat.com>
- <20250508122849.207213-3-ppandit@redhat.com>
- <aB0AMQdPbcdNy_bS@x1.local>
- <CAE8KmOx_7EXXNQa0q0gKvZmWMT-0hYcKH6wRFiUEs_-KANf1Ow@mail.gmail.com>
- <aB4Rgj5nghklODSq@x1.local>
-In-Reply-To: <aB4Rgj5nghklODSq@x1.local>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 13 May 2025 11:50:51 +0530
-X-Gm-Features: AX0GCFsZoVTtYg195Whh72gh1N1yW1IL6k6aIapcV0-7GpAnabXgGYEPr3Sagv4
-Message-ID: <CAE8KmOweYYgZKK8dgts=xex_segpwS_Ts2_R7qcXq61XKn1Yig@mail.gmail.com>
-Subject: Re: [PATCH v10 2/3] tests/qtest/migration: add postcopy tests with
- multifd
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,65 +63,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 May 2025 at 20:00, Peter Xu <peterx@redhat.com> wrote:
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index a575791c72..441a65bcf5 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -34,7 +34,6 @@
->  #define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
->
->  static char *tmpfs;
-> -static bool postcopy_ram = false;
->
->  static void test_precopy_unix_plain(void)
->  {
-> @@ -525,7 +524,7 @@ static void test_multifd_tcp_channels_none(void)
->   *
->   *  And see that it works
->   */
-> -static void test_multifd_tcp_cancel(void)
-> +static void test_multifd_tcp_cancel(bool postcopy_ram)
->  {
->      MigrateStart args = {
->          .hide_stderr = true,
-> @@ -612,11 +611,14 @@ static void test_multifd_tcp_cancel(void)
->      migrate_end(from, to2, true);
->  }
->
-> +static void test_multifd_precopy_tcp_cancel(void)
-> +{
-> +    test_multifd_tcp_cancel(false);
-> +}
-> +
->  static void test_multifd_postcopy_tcp_cancel(void)
->  {
-> -    postcopy_ram = true;
-> -    test_multifd_tcp_cancel();
-> -    postcopy_ram = false;
-> +    test_multifd_tcp_cancel(true);
->  }
->
->  static void test_cancel_src_after_failed(QTestState *from, QTestState *to,
-> @@ -1205,7 +1207,7 @@ static void migration_test_add_precopy_smoke(MigrationTestEnv *env)
->      migration_test_add("/migration/multifd/tcp/uri/plain/none",
->                         test_multifd_tcp_uri_none);
->      migration_test_add("/migration/multifd/tcp/plain/cancel",
-> -                       test_multifd_tcp_cancel);
-> +                       test_multifd_precopy_tcp_cancel);
->      if (env->has_uffd) {
->          migration_test_add("/migration/multifd+postcopy/tcp/plain/cancel",
->                             test_multifd_postcopy_tcp_cancel);
->
->
-> Would this work?
->
+In the previous design of the hash framework, accumulative hashing was not
+supported. To work around this limitation, commit 5cd7d85 introduced an
+iov_cache array to store all the hash data from firmware.
+Once the ASPEED HACE model collected all the data, it passed the iov_cache to
+the hash API to calculate the final digest.
 
-* I did; v11 includes it. Thank you.
+However, with commit e3c0752, the hash framework now supports accumulative
+hashing. This allows us to refactor the ASPEED HACE model, removing redundant
+logic and simplifying the implementation for better readability and
+maintainability.
+
+As a result, the iov_count variable is no longer needed—it was previously used
+to track how many cached entries were used for hashing.
+To maintain VMSTATE compatibility after removing this field, the VMSTATE_VERSION
+is bumped to 2
+
+This cleanup follows significant changes in commit 4c1d0af4a28d, making the
+model more readable.
+
+- Deleted "iov_cache" and "iov_count" from "AspeedHACEState".
+- Removed "reconstruct_iov" function and related logic.
+- Simplified "do_hash_operation" by eliminating redundant checks.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
-  - Prasad
+ include/hw/misc/aspeed_hace.h |  2 --
+ hw/misc/aspeed_hace.c         | 39 ++---------------------------------
+ 2 files changed, 2 insertions(+), 39 deletions(-)
+
+diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
+index 5d4aa19cfe..b69a038d35 100644
+--- a/include/hw/misc/aspeed_hace.h
++++ b/include/hw/misc/aspeed_hace.h
+@@ -31,10 +31,8 @@ struct AspeedHACEState {
+     MemoryRegion iomem;
+     qemu_irq irq;
+ 
+-    struct iovec iov_cache[ASPEED_HACE_MAX_SG];
+     uint32_t regs[ASPEED_HACE_NR_REGS];
+     uint32_t total_req_len;
+-    uint32_t iov_count;
+ 
+     MemoryRegion *dram_mr;
+     AddressSpace dram_as;
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index f4bff32a00..9263739ea6 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -142,25 +142,6 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+     return false;
+ }
+ 
+-static int reconstruct_iov(AspeedHACEState *s, struct iovec *iov, int id,
+-                           uint32_t *pad_offset)
+-{
+-    int i, iov_count;
+-    if (*pad_offset != 0) {
+-        s->iov_cache[s->iov_count].iov_base = iov[id].iov_base;
+-        s->iov_cache[s->iov_count].iov_len = *pad_offset;
+-        ++s->iov_count;
+-    }
+-    for (i = 0; i < s->iov_count; i++) {
+-        iov[i].iov_base = s->iov_cache[i].iov_base;
+-        iov[i].iov_len = s->iov_cache[i].iov_len;
+-    }
+-    iov_count = s->iov_count;
+-    s->iov_count = 0;
+-    s->total_req_len = 0;
+-    return iov_count;
+-}
+-
+ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+                               bool acc_mode)
+ {
+@@ -242,19 +223,6 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+         iov[0].iov_base = haddr;
+         iov[0].iov_len = len;
+         i = 1;
+-
+-        if (s->iov_count) {
+-            /*
+-             * In aspeed sdk kernel driver, sg_mode is disabled in hash_final().
+-             * Thus if we received a request with sg_mode disabled, it is
+-             * required to check whether cache is empty. If no, we should
+-             * combine cached iov and the current iov.
+-             */
+-            s->total_req_len += len;
+-            if (has_padding(s, iov, len, &total_msg_len, &pad_offset)) {
+-                i = reconstruct_iov(s, iov, 0, &pad_offset);
+-            }
+-        }
+     }
+ 
+     if (acc_mode) {
+@@ -278,7 +246,6 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+             qcrypto_hash_free(s->hash_ctx);
+ 
+             s->hash_ctx = NULL;
+-            s->iov_count = 0;
+             s->total_req_len = 0;
+         }
+     } else if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf,
+@@ -437,7 +404,6 @@ static void aspeed_hace_reset(DeviceState *dev)
+     }
+ 
+     memset(s->regs, 0, sizeof(s->regs));
+-    s->iov_count = 0;
+     s->total_req_len = 0;
+ }
+ 
+@@ -469,12 +435,11 @@ static const Property aspeed_hace_properties[] = {
+ 
+ static const VMStateDescription vmstate_aspeed_hace = {
+     .name = TYPE_ASPEED_HACE,
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32_ARRAY(regs, AspeedHACEState, ASPEED_HACE_NR_REGS),
+         VMSTATE_UINT32(total_req_len, AspeedHACEState),
+-        VMSTATE_UINT32(iov_count, AspeedHACEState),
+         VMSTATE_END_OF_LIST(),
+     }
+ };
+-- 
+2.43.0
 
 
