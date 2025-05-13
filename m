@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A729BC3ABD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FC14C3ABC9
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 06:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEjDl-0000Zo-Sx; Tue, 13 May 2025 02:34:35 -0400
+	id 1uEjCW-0006kW-Fw; Tue, 13 May 2025 02:33:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEjAa-00059v-2e; Tue, 13 May 2025 02:31:22 -0400
+ id 1uEjAe-0005Fn-0F; Tue, 13 May 2025 02:31:23 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uEjAX-00026a-FY; Tue, 13 May 2025 02:31:15 -0400
+ id 1uEjAb-00026a-73; Tue, 13 May 2025 02:31:18 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 13 May
@@ -33,9 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 11/25] hw/misc/aspeed_hace: Support DMA 64 bits dram address
-Date: Tue, 13 May 2025 14:28:41 +0800
-Message-ID: <20250513062901.2256865-12-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 12/25] hw/misc/aspeed_hace: Add trace-events for better
+ debugging
+Date: Tue, 13 May 2025 14:28:42 +0800
+Message-ID: <20250513062901.2256865-13-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
 References: <20250513062901.2256865-1-jamin_lin@aspeedtech.com>
@@ -67,93 +68,105 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the AST2700 design, the data source address is 64-bit, with
-R_HASH_SRC_HI storing bits [63:32] and R_HASH_SRC storing bits [31:0].
-
-Similarly, the digest address is 64-bit, with R_HASH_DEST_HI storing bits
-[63:32] and R_HASH_DEST storing bits [31:0].
-
-To maintain compatibility with older SoCs such as the AST2600, the AST2700 HW
-automatically set bit 34 of the 64-bit sg_addr. As a result, the firmware
-only needs to provide a 32-bit sg_addr containing bits [31:0]. This is
-sufficient for the AST2700, as it uses a DRAM offset rather than a DRAM
-address.
-
-Introduce a has_dma64 class attribute and set it to true for the AST2700.
+Introduced "trace_aspeed_hace_hash_addr", "trace_aspeed_hace_hash_sg",
+"trace_aspeed_hace_read", "trace_aspeed_hace_hash_execute_acc_mode",
+and "trace_aspeed_hace_write" trace events.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/misc/aspeed_hace.h |  1 +
- hw/misc/aspeed_hace.c         | 17 ++++++++++++++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ hw/misc/aspeed_hace.c | 11 +++++++++++
+ hw/misc/trace-events  |  7 +++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
-index 9945b61863..d5d07c6c02 100644
---- a/include/hw/misc/aspeed_hace.h
-+++ b/include/hw/misc/aspeed_hace.h
-@@ -53,6 +53,7 @@ struct AspeedHACEClass {
-     uint32_t src_hi_mask;
-     uint32_t dest_hi_mask;
-     uint32_t key_hi_mask;
-+    bool has_dma64;
- };
- 
- #endif /* ASPEED_HACE_H */
 diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 0fd8a167a2..5454f51aa6 100644
+index 5454f51aa6..1ffec029dc 100644
 --- a/hw/misc/aspeed_hace.c
 +++ b/hw/misc/aspeed_hace.c
-@@ -147,9 +147,13 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+@@ -18,6 +18,7 @@
+ #include "crypto/hash.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/irq.h"
++#include "trace.h"
  
- static uint64_t hash_get_source_addr(AspeedHACEState *s)
- {
-+    AspeedHACEClass *ahc = ASPEED_HACE_GET_CLASS(s);
-     uint64_t src_addr = 0;
+ #define R_CRYPT_CMD     (0x10 / 4)
  
-     src_addr = deposit64(src_addr, 0, 32, s->regs[R_HASH_SRC]);
-+    if (ahc->has_dma64) {
-+        src_addr = deposit64(src_addr, 32, 32, s->regs[R_HASH_SRC_HI]);
-+    }
+@@ -170,6 +171,7 @@ static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov,
  
-     return src_addr;
- }
-@@ -223,7 +227,13 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+     plen = s->regs[R_HASH_SRC_LEN];
+     src = hash_get_source_addr(s);
++    trace_aspeed_hace_hash_addr("src", src);
+     haddr = address_space_map(&s->dram_as, src, &plen, false,
+                               MEMTXATTRS_UNSPECIFIED);
+     if (haddr == NULL) {
+@@ -214,6 +216,7 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+     void *haddr;
+ 
+     src = hash_get_source_addr(s);
++    trace_aspeed_hace_hash_addr("src", src);
+     for (iov_idx = 0; !(len & SG_LIST_LEN_LAST); iov_idx++) {
+         if (iov_idx == ASPEED_HACE_MAX_SG) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+@@ -227,6 +230,7 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
          sg_addr = address_space_ldl_le(&s->dram_as, src + SG_LIST_LEN_SIZE,
                                         MEMTXATTRS_UNSPECIFIED, NULL);
          sg_addr &= SG_LIST_ADDR_MASK;
--
-+        /*
-+         * To maintain compatibility with older SoCs such as the AST2600,
-+         * the AST2700 HW automatically set bit 34 of the 64-bit sg_addr.
-+         * As a result, the firmware only needs to provide a 32-bit sg_addr
-+         * containing bits [31:0]. This is sufficient for the AST2700, as
-+         * it uses a DRAM offset rather than a DRAM address.
-+         */
-         plen = len & SG_LIST_LEN_MASK;
-         haddr = address_space_map(&s->dram_as, sg_addr, &plen, false,
-                                   MEMTXATTRS_UNSPECIFIED);
-@@ -260,9 +270,13 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
- 
- static uint64_t hash_get_digest_addr(AspeedHACEState *s)
- {
-+    AspeedHACEClass *ahc = ASPEED_HACE_GET_CLASS(s);
++        trace_aspeed_hace_hash_sg(iov_idx, sg_addr, len);
+         /*
+          * To maintain compatibility with older SoCs such as the AST2600,
+          * the AST2700 HW automatically set bit 34 of the 64-bit sg_addr.
+@@ -290,6 +294,7 @@ static void hash_write_digest_and_unmap_iov(AspeedHACEState *s,
      uint64_t digest_addr = 0;
  
-     digest_addr = deposit64(digest_addr, 0, 32, s->regs[R_HASH_DIGEST]);
-+    if (ahc->has_dma64) {
-+        digest_addr = deposit64(digest_addr, 32, 32, s->regs[R_HASH_DIGEST_HI]);
-+    }
+     digest_addr = hash_get_digest_addr(s);
++    trace_aspeed_hace_hash_addr("digest", digest_addr);
+     if (address_space_write(&s->dram_as, digest_addr,
+                             MEMTXATTRS_UNSPECIFIED,
+                             digest_buf, digest_len)) {
+@@ -332,6 +337,8 @@ static void hash_execute_acc_mode(AspeedHACEState *s, int algo,
+     Error *local_err = NULL;
+     size_t digest_len;
  
-     return digest_addr;
- }
-@@ -697,6 +711,7 @@ static void aspeed_ast2700_hace_class_init(ObjectClass *klass, const void *data)
-      * has completed. It is a temporary workaround.
-      */
-     ahc->raise_crypt_interrupt_workaround = true;
-+    ahc->has_dma64 = true;
++    trace_aspeed_hace_hash_execute_acc_mode(final_request);
++
+     if (s->hash_ctx == NULL) {
+         s->hash_ctx = qcrypto_hash_new(algo, &local_err);
+         if (s->hash_ctx == NULL) {
+@@ -403,6 +410,8 @@ static uint64_t aspeed_hace_read(void *opaque, hwaddr addr, unsigned int size)
+ 
+     addr >>= 2;
+ 
++    trace_aspeed_hace_read(addr << 2, s->regs[addr]);
++
+     return s->regs[addr];
  }
  
- static const TypeInfo aspeed_ast2700_hace_info = {
+@@ -414,6 +423,8 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+ 
+     addr >>= 2;
+ 
++    trace_aspeed_hace_write(addr << 2, data);
++
+     switch (addr) {
+     case R_STATUS:
+         if (data & HASH_IRQ) {
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 4383808d7a..b2587c37d7 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -302,6 +302,13 @@ aspeed_peci_read(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " data 0x%"
+ aspeed_peci_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " data 0x%" PRIx64
+ aspeed_peci_raise_interrupt(uint32_t ctrl, uint32_t status) "ctrl 0x%" PRIx32 " status 0x%" PRIx32
+ 
++# aspeed_hace.c
++aspeed_hace_read(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " data 0x%" PRIx64
++aspeed_hace_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " data 0x%" PRIx64
++aspeed_hace_hash_sg(int index, uint64_t addr, uint32_t len) "%d: addr 0x%" PRIx64 " len 0x%" PRIx32
++aspeed_hace_hash_addr(const char *s, uint64_t addr) "%s: 0x%" PRIx64
++aspeed_hace_hash_execute_acc_mode(bool final_request) "final request: %d"
++
+ # bcm2835_property.c
+ bcm2835_mbox_property(uint32_t tag, uint32_t bufsize, size_t resplen) "mbox property tag:0x%08x in_sz:%u out_sz:%zu"
+ 
 -- 
 2.43.0
 
