@@ -4,91 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F2C2C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434B0C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 14:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEqQI-00045m-Df; Tue, 13 May 2025 10:15:58 -0400
+	id 1uEqUj-0007qv-CT; Tue, 13 May 2025 10:20:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1uEqQ3-00043D-FK
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:43 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1uEqQ1-0005b0-9k
- for qemu-devel@nongnu.org; Tue, 13 May 2025 10:15:43 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-441d1ed82faso39761125e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:15:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1747145739; x=1747750539; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e3t/nIVRg+2jwmgdqscl/THpDb4n/5JCjlQr5Qe7fL8=;
- b=Sry6ZYwpleV+byZK1JOUxOmixbn7WeItJOsf/MgVP1MRFwv9Srr0um2UUnQEmh614I
- JnqYmMWS8cT1i3SVl+3EJOWYQnFjkEk7RC2VRUjIa/OuQlhVLTVycOgsrrsXZFm5fpps
- lgwTjoemvd9W533qecwSkJjyh22jE7GuQ61Us1yO2DzHJdqKr+IbK8K4RLDOzrtOml4M
- 1B+qjyEZWohJ37HeBIFmEjTX6PsI01L9aoAsgqAMjYdOBK0DNPMXmwkbWWTq99+zafCQ
- jUDOGn3VdBjiZQACagWgpuvoP6GAy9p757TFCu25oQwDbWjFhUfKuXTDRYT94GT75mx1
- XaAA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uEqUe-0007ms-MX
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:20:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uEqUa-0006Ev-OD
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 10:20:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747146021;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eyscc4t3yNl1uSrVJZkh3Y4b61e+bOq9gii8cVcyfdc=;
+ b=ZdikAzTahXhYYnth9sL17oyMtKMesOMdl0aONlOJ8DwRGuxi8REPq0ijZAbybdbdiiS+0D
+ y0EWdPHdPML79yVdDa35OwVOsC3u7GlnQRC3lYZ8fuYptUz98ADBuzcZtCvvFVk21NNOlo
+ lnMUcg/lv//iILJSuh31opMWpoRwtIM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-54-V5FshCKPPcK0awLcTepTaA-1; Tue, 13 May 2025 10:20:17 -0400
+X-MC-Unique: V5FshCKPPcK0awLcTepTaA-1
+X-Mimecast-MFC-AGG-ID: V5FshCKPPcK0awLcTepTaA_1747146014
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-442cdf07ad9so23951625e9.2
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 07:20:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747145739; x=1747750539;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=e3t/nIVRg+2jwmgdqscl/THpDb4n/5JCjlQr5Qe7fL8=;
- b=hEHOxJUJBreT2yBESSuTymHuzt483aWeRhA6yb6wRQ4FUIwpkQH1sE/Qi09/779qf8
- SOZL727F2fyaVtRI64sbrGOGP14V4cv9dUw0Y9o49vMGHBsBfKrabmZrxomVcebAR6H8
- n6fJ8t2koeGqPy+XB7CfKWXOs8skCck2Hj8Y2R4MeoRMEQ1rbGFM8q7sk3cxV8BqXikF
- BtGGZIg70w9o7i4bNkf25D7BjNGWcGOo31XK8DZYzBYZjOdK9puLrT+IIaTVhGQws3zM
- NC0OBNdMD3FTEpHUQRQAmWQOGEloxR45+VfC2wdvJSu4GQ1xl1Rkk7XEShd9bSa0yXtc
- EMig==
-X-Gm-Message-State: AOJu0Yw8Ez9kd+kTJxT8yqC8tI7bH+ZHCsvwqCnQSvJdTnJljillbiXJ
- KhLpZ6cSSbmF0gb8MCIWBFO32YNMBU2BjGJbEfqqKHI1WCDYSLPa+n1d39QE8Cb/AgxS7S/KOus
- =
-X-Gm-Gg: ASbGnctiH082ahRN8eQ3eeOB6IJmS5F55dyJLzx9mGdxp/1VpsW9kakqXbDS0Qrao/m
- L/CF/yuAiLiEy59iUr3gHnU8eEh0v0rE6RpZiSRDLJjTbBjwoOItdeXEBWGE+O4yp7rHw/i9EVa
- Wbr6aA1iIYICsAu7wvLsQP8+e84botaAOAEPAmtKgoEwDi2IF3sz4mw692X84c5NWBsHjfT8BFz
- SgfuSEIpUAd0dG6PWEqApVp5r9NP4oefMB7E/JS6hHhnm1+HCUFvLkInSwMrhlkPZDDLYkhAbRp
- iKT1p/MX9s0vNjHVb8zdZ/ArR4YMf04llxMoXnO6EzrK49uFHyeo09fw8ok+DVgy2O5At4+yGsc
- apiEV9GGxZidd8XGPNnzG6gbCkRv8QaPyKNlkIP2fyLiyHlWQ
-X-Google-Smtp-Source: AGHT+IHWSajJZ6WfViJEDnRWZO/QuobAgMzhlzMwcfuSCWNFAgIueY2VXPgfH7lHFDKOYZEmFhrX9Q==
-X-Received: by 2002:a05:600c:3d14:b0:43c:fd27:a216 with SMTP id
- 5b1f17b1804b1-442d6dd21demr135625765e9.23.1747145739335; 
- Tue, 13 May 2025 07:15:39 -0700 (PDT)
-Received: from chigot-Dell.telnowedge.local
- (lmontsouris-659-1-24-67.w81-250.abo.wanadoo.fr. [81.250.175.67])
+ d=1e100.net; s=20230601; t=1747146014; x=1747750814;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eyscc4t3yNl1uSrVJZkh3Y4b61e+bOq9gii8cVcyfdc=;
+ b=r1EF0MMRCIDiwmDgly+WWpkVGSiKB8BKk9DzrSCzv4yweO2jxwl1qtK+BXkBbhpopL
+ KwXGqCncgH1+BkRwSoiV33T/3wAL1QbtQqpLAgUGM7l3dqBjUH1jSr56Lr5+xaUuQto/
+ GjosfDqEerY2MJr7F39X7WvlQhHZU0lAnvj6qO1TK41b7TnJrFO/YT+e5NxmT6+VbDqS
+ pAVjQoDkBYBDbFUmZZubXWXJmWXK/LjCTyYrc//PCpRCJITj01O8a/+Q9QbRJByV81Fr
+ ZGKHrWfzz51CAtJh/ipt8cP2gP0tDQM6t1WFuagySj89eO+ZnW2O6URqr+JA45hRVWRm
+ xWMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8qO6Jofig4wOf4UStZJQwqgPCNRpoZoSn4m0i1FMCbGQkXA7Qe3Cs9O9cIoxudkXwgElv9zKx3OUc@nongnu.org
+X-Gm-Message-State: AOJu0YxcoUqTJjmXSAFYQv1M0/oeK3FhYk6au1axGV3LPYnUUwLEjfkB
+ arvEXx2zl3awuK0kt3piRE9ZItryP/byJGhTGGf75n1lBfMaD9fp+KI7nZ9rM2qgkHTCNwXoybK
+ ahvgTxMKBKoe8YDkGmShbY/gK/bzfT2GovlTI9PyNgg9et2Xbfi8V
+X-Gm-Gg: ASbGncshiJLHEF4yuS0XzqJ81E36g0RY9FrbbdbilLT8dO/Qts9Lp31zjSU1/fJb3O4
+ OsLLGGkxaXxNZcP/uGewYtQoKEv1Axd2OSQXx9dMQma66LDik8GuDqgoM8FQ/HFyzbkEtbsqh6L
+ 24D+ulWV78wEysyiuMWf/vvHs9bWCHn2YUeQ2Q7HjvTghUCBbNg/YAykW4A9kJyizsMQTzC7nCq
+ Qlkb+xY/DzN3fKStZ+SIWDFAoC6CQVJiKKJfhWlB/8qzl3f5+XtzL0H4MwLPSgbW/RXUWcYcSrg
+ U8L3u7CQAUr11aVq/MNBl0Y3PLHP7gmCbmP4vAz2pHYFye/h4/UOt3W23fk=
+X-Received: by 2002:a05:600c:8887:b0:440:6a37:be0d with SMTP id
+ 5b1f17b1804b1-442d6d6ac34mr142266745e9.15.1747146013767; 
+ Tue, 13 May 2025 07:20:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMJd0Y4ol20KqwlD/xjV97DJlvepa/eAx0yECTHw2Xv6k+BGIX3yLcJJl1tDp+QEbkSi1Nbw==
+X-Received: by 2002:a05:600c:8887:b0:440:6a37:be0d with SMTP id
+ 5b1f17b1804b1-442d6d6ac34mr142266335e9.15.1747146013344; 
+ Tue, 13 May 2025 07:20:13 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3b7e7fsm213438805e9.39.2025.05.13.07.15.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 May 2025 07:15:39 -0700 (PDT)
-From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, edgar.iglesias@gmail.com,
- alistair@alistair23.me, Frederic Konrad <konrad.frederic@yahoo.fr>,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [PATCH 3/4] hw/arm/xlnx-zynqmp: wire a second GIC for the Cortex-R5
-Date: Tue, 13 May 2025 16:14:47 +0200
-Message-Id: <20250513141448.297946-4-chigot@adacore.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250513141448.297946-1-chigot@adacore.com>
-References: <20250513141448.297946-1-chigot@adacore.com>
+ 5b1f17b1804b1-442cd3285f9sm215246655e9.8.2025.05.13.07.20.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 May 2025 07:20:12 -0700 (PDT)
+Message-ID: <4f370fae-8234-48ca-97e2-3b7038092974@redhat.com>
+Date: Tue, 13 May 2025 16:20:10 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/10] kvm: kvm_get_writable_id_regs
+Content-Language: en-US
+To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
+Cc: agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
+ philmd@linaro.org, pbonzini@redhat.com
+References: <20250414163849.321857-1-cohuck@redhat.com>
+ <20250414163849.321857-5-cohuck@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250414163849.321857-5-cohuck@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=chigot@adacore.com; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,220 +118,153 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Konrad <konrad.frederic@yahoo.fr>
+Hi Connie,
 
-This wires a second GIC for the Cortex-R5, all the IRQs are split when there
-is an RPU instanciated.
+On 4/14/25 6:38 PM, Cornelia Huck wrote:
+> Add an helper to retrieve the writable id reg bitmask. The
+> status of the query is stored in the CPU struct so that an
+> an error, if any, can be reported on vcpu realize().
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>  target/arm/cpu.h     | 26 ++++++++++++++++++++++++++
+>  target/arm/kvm.c     | 32 ++++++++++++++++++++++++++++++++
+>  target/arm/kvm_arm.h |  7 +++++++
+>  3 files changed, 65 insertions(+)
+>
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index d27134f4a025..bbee7ff2414a 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -856,6 +856,26 @@ typedef struct {
+>      uint32_t map, init, supported;
+>  } ARMVQMap;
+>  
+> +typedef enum ARMIdRegsState {
+> +    WRITABLE_ID_REGS_UNKNOWN,
+> +    WRITABLE_ID_REGS_NOT_DISCOVERABLE,
+> +    WRITABLE_ID_REGS_FAILED,
+> +    WRITABLE_ID_REGS_AVAIL,
+> +} ARMIdRegsState;
+> +
+> +/*
+> + * The following structures are for the purpose of mapping the output of
+> + * KVM_ARM_GET_REG_WRITABLE_MASKS that also may cover id registers we do
+> + * not support in QEMU
+> + * ID registers in op0==3, op1=={0,1,3}, crn=0, crm=={0-7}, op2=={0-7},
+> + * as used by the KVM_ARM_GET_REG_WRITABLE_MASKS ioctl call.
+> + */
+> +#define NR_ID_REGS (3 * 8 * 8)
+We may rename this define to better associate to the KVM API. I tend to
+mix it with NUM_ID_IDX now ;-)
+maybe something like KVM_NR_EXPOSED_ID_REGS
+> +
+> +typedef struct IdRegMap {
+> +    uint64_t regs[NR_ID_REGS];
+> +} IdRegMap;
+I would add a comment saying this is the mask array, just to prevent the
+reading from thinking it is the actual reg content.
+> +
+>  /* REG is ID_XXX */
+>  #define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       \
+>      ({                                                                  \
+> @@ -1044,6 +1064,12 @@ struct ArchCPU {
+>       */
+>      bool host_cpu_probe_failed;
+>  
+> +    /*
+> +     * state of writable id regs query used to report an error, if any,
+> +     * on KVM custom vcpu model realize
+> +     */
+> +    ARMIdRegsState writable_id_regs;
+maybe rename into writable_id_reg_status that would better reflect what
+it is.
+> +
+>      /* QOM property to indicate we should use the back-compat CNTFRQ default */
+>      bool backcompat_cntfrq;
+>  
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 8491f42a18d2..6e3cd06e9bc5 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -50,6 +50,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+>  static bool cap_has_mp_state;
+>  static bool cap_has_inject_serror_esr;
+>  static bool cap_has_inject_ext_dabt;
+> +static int cap_writable_id_regs;
+>  
+>  /**
+>   * ARMHostCPUFeatures: information about the host CPU (identified
+> @@ -488,6 +489,37 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+>      env->features = arm_host_cpu_features.features;
+>  }
+>  
+> +int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
+> +{
+> +    struct reg_mask_range range = {
+> +        .range = 0, /* up to now only a single range is supported */
+> +        .addr = (uint64_t)idregmap,
+> +    };
+> +    int ret;
+> +
+> +    if (!kvm_enabled()) {
+> +        cpu->writable_id_regs = WRITABLE_ID_REGS_NOT_DISCOVERABLE;
+> +        return -ENOSYS;
+> +    }
+> +
+> +    cap_writable_id_regs =
+> +        kvm_check_extension(kvm_state, KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES);
+> +
+> +    if (!cap_writable_id_regs ||
+> +        !(cap_writable_id_regs & (1 << KVM_ARM_FEATURE_ID_RANGE))) {
+> +        cpu->writable_id_regs = WRITABLE_ID_REGS_NOT_DISCOVERABLE;
+> +        return -ENOSYS;
+> +    }
+> +
+> +    ret = kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS, &range);
+> +    if (ret) {
+> +        cpu->writable_id_regs = WRITABLE_ID_REGS_FAILED;
+> +        return ret;
+> +     }
+> +    cpu->writable_id_regs = WRITABLE_ID_REGS_AVAIL;
+> +    return ret;
+> +}
+> +
+>  static bool kvm_no_adjvtime_get(Object *obj, Error **errp)
+>  {
+>      return !ARM_CPU(obj)->kvm_adjvtime;
+> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+> index 05c3de8cd46e..8d1f20ca8d89 100644
+> --- a/target/arm/kvm_arm.h
+> +++ b/target/arm/kvm_arm.h
+> @@ -221,6 +221,8 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
+>  
+>  void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
+>  
+> +int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap);
+> +
+>  #else
+>  
+>  /*
+> @@ -247,6 +249,11 @@ static inline bool kvm_arm_mte_supported(void)
+>      return false;
+>  }
+>  
+> +static inline int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
+> +{
+> +    return -ENOSYS;
+> +}
+> +
+>  /*
+>   * These functions should never actually be called without KVM support.
+>   */
+Cheers
 
-Signed-off-by: Clément Chigot <chigot@adacore.com>
----
- hw/arm/xlnx-zynqmp.c         | 88 +++++++++++++++++++++++++++++++++---
- include/hw/arm/xlnx-zynqmp.h |  6 +++
- 2 files changed, 87 insertions(+), 7 deletions(-)
-
-diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
-index ec96a46eec..be33669f87 100644
---- a/hw/arm/xlnx-zynqmp.c
-+++ b/hw/arm/xlnx-zynqmp.c
-@@ -26,8 +26,6 @@
- #include "target/arm/cpu-qom.h"
- #include "target/arm/gtimer.h"
- 
--#define GIC_NUM_SPI_INTR 160
--
- #define ARM_PHYS_TIMER_PPI  30
- #define ARM_VIRT_TIMER_PPI  27
- #define ARM_HYP_TIMER_PPI   26
-@@ -206,7 +204,7 @@ static const XlnxZynqMPGICRegion xlnx_zynqmp_gic_regions[] = {
- 
- static inline int arm_gic_ppi_index(int cpu_nr, int ppi_index)
- {
--    return GIC_NUM_SPI_INTR + cpu_nr * GIC_INTERNAL + ppi_index;
-+    return XLXN_ZYNQMP_GIC_NUM_SPI_INTR + cpu_nr * GIC_INTERNAL + ppi_index;
- }
- 
- static void xlnx_zynqmp_create_rpu(MachineState *ms, XlnxZynqMPState *s,
-@@ -377,6 +375,8 @@ static void xlnx_zynqmp_init(Object *obj)
-     XlnxZynqMPState *s = XLNX_ZYNQMP(obj);
-     int i;
-     int num_apus = MIN(ms->smp.cpus, XLNX_ZYNQMP_NUM_APU_CPUS);
-+    int num_rpus = MIN((int)(ms->smp.cpus - XLNX_ZYNQMP_NUM_APU_CPUS),
-+                       XLNX_ZYNQMP_NUM_RPU_CPUS);
- 
-     object_initialize_child(obj, "apu-cluster", &s->apu_cluster,
-                             TYPE_CPU_CLUSTER);
-@@ -390,6 +390,12 @@ static void xlnx_zynqmp_init(Object *obj)
- 
-     object_initialize_child(obj, "gic", &s->gic, gic_class_name());
- 
-+    if (num_rpus > 0) {
-+        /* Do not create the rpu_gic in case we don't have rpus..  */
-+        object_initialize_child(obj, "rpu_gic", &s->rpu_gic,
-+                                gic_class_name());
-+    }
-+
-     for (i = 0; i < XLNX_ZYNQMP_NUM_GEMS; i++) {
-         object_initialize_child(obj, "gem[*]", &s->gem[i], TYPE_CADENCE_GEM);
-         object_initialize_child(obj, "gem-irq-orgate[*]",
-@@ -439,6 +445,13 @@ static void xlnx_zynqmp_init(Object *obj)
-     object_initialize_child(obj, "qspi-irq-orgate",
-                             &s->qspi_irq_orgate, TYPE_OR_IRQ);
- 
-+    for (i = 0; i < ARRAY_SIZE(s->splitter); i++) {
-+        g_autofree char *name = g_strdup_printf("irq-splitter%d", i);
-+        object_initialize_child(obj, name, &s->splitter[i], TYPE_SPLIT_IRQ);
-+    }
-+
-+
-+
-     for (i = 0; i < XLNX_ZYNQMP_NUM_USB; i++) {
-         object_initialize_child(obj, "usb[*]", &s->usb[i], TYPE_USB_DWC3);
-     }
-@@ -452,10 +465,13 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-     uint8_t i;
-     uint64_t ram_size;
-     int num_apus = MIN(ms->smp.cpus, XLNX_ZYNQMP_NUM_APU_CPUS);
-+    int num_rpus = MIN((int)(ms->smp.cpus - XLNX_ZYNQMP_NUM_APU_CPUS),
-+                       XLNX_ZYNQMP_NUM_RPU_CPUS);
-     const char *boot_cpu = s->boot_cpu ? s->boot_cpu : "apu-cpu[0]";
-     ram_addr_t ddr_low_size, ddr_high_size;
--    qemu_irq gic_spi[GIC_NUM_SPI_INTR];
-+    qemu_irq gic_spi[XLXN_ZYNQMP_GIC_NUM_SPI_INTR];
-     Error *err = NULL;
-+    DeviceState *splitter;
- 
-     ram_size = memory_region_size(s->ddr_ram);
- 
-@@ -502,13 +518,21 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-         g_free(ocm_name);
-     }
- 
--    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq", GIC_NUM_SPI_INTR + 32);
-+    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq", XLXN_ZYNQMP_GIC_NUM_SPI_INTR + 32);
-     qdev_prop_set_uint32(DEVICE(&s->gic), "revision", 2);
-     qdev_prop_set_uint32(DEVICE(&s->gic), "num-cpu", num_apus);
-     qdev_prop_set_bit(DEVICE(&s->gic), "has-security-extensions", s->secure);
-     qdev_prop_set_bit(DEVICE(&s->gic),
-                       "has-virtualization-extensions", s->virt);
- 
-+    if (num_rpus > 0) {
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "num-irq",
-+                             XLXN_ZYNQMP_GIC_NUM_SPI_INTR + 32);
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "revision", 1);
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "num-cpu", num_rpus);
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "first-cpu-index", 4);
-+    }
-+
-     qdev_realize(DEVICE(&s->apu_cluster), NULL, &error_fatal);
- 
-     /* Realize APUs before realizing the GIC. KVM requires this.  */
-@@ -608,13 +632,63 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    if (num_rpus > 0) {
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->rpu_gic), errp)) {
-+            return;
-+        }
-+
-+        for (i = 0; i < num_rpus; i++) {
-+            qemu_irq irq;
-+
-+            sysbus_mmio_map(SYS_BUS_DEVICE(&s->rpu_gic), i + 1,
-+                            GIC_BASE_ADDR + i * 0x1000);
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->rpu_gic), i,
-+                               qdev_get_gpio_in(DEVICE(&s->rpu_cpu[i]),
-+                                                ARM_CPU_IRQ));
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->rpu_gic), i + num_rpus,
-+                               qdev_get_gpio_in(DEVICE(&s->rpu_cpu[i]),
-+                                                ARM_CPU_FIQ));
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->rpu_gic), i + num_rpus * 2,
-+                               qdev_get_gpio_in(DEVICE(&s->rpu_cpu[i]),
-+                                                ARM_CPU_VIRQ));
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->rpu_gic), i + num_rpus * 3,
-+                               qdev_get_gpio_in(DEVICE(&s->rpu_cpu[i]),
-+                                                ARM_CPU_VFIQ));
-+            irq = qdev_get_gpio_in(DEVICE(&s->rpu_gic),
-+                                   arm_gic_ppi_index(i, ARM_PHYS_TIMER_PPI));
-+            qdev_connect_gpio_out(DEVICE(&s->rpu_cpu[i]), GTIMER_PHYS, irq);
-+            irq = qdev_get_gpio_in(DEVICE(&s->rpu_gic),
-+                                   arm_gic_ppi_index(i, ARM_VIRT_TIMER_PPI));
-+            qdev_connect_gpio_out(DEVICE(&s->rpu_cpu[i]), GTIMER_VIRT, irq);
-+            irq = qdev_get_gpio_in(DEVICE(&s->rpu_gic),
-+                                   arm_gic_ppi_index(i, ARM_HYP_TIMER_PPI));
-+            qdev_connect_gpio_out(DEVICE(&s->rpu_cpu[i]), GTIMER_HYP, irq);
-+            irq = qdev_get_gpio_in(DEVICE(&s->rpu_gic),
-+                                   arm_gic_ppi_index(i, ARM_SEC_TIMER_PPI));
-+            qdev_connect_gpio_out(DEVICE(&s->rpu_cpu[i]), GTIMER_SEC, irq);
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->rpu_gic), 0, GIC_BASE_ADDR);
-+    }
-+
-     if (!s->boot_cpu_ptr) {
-         error_setg(errp, "ZynqMP Boot cpu %s not found", boot_cpu);
-         return;
-     }
- 
--    for (i = 0; i < GIC_NUM_SPI_INTR; i++) {
--        gic_spi[i] = qdev_get_gpio_in(DEVICE(&s->gic), i);
-+    for (i = 0; i < XLXN_ZYNQMP_GIC_NUM_SPI_INTR; i++) {
-+        splitter = DEVICE(&s->splitter[i]);
-+        qdev_prop_set_uint16(splitter, "num-lines", 2);
-+        qdev_realize(splitter, NULL, &error_abort);
-+        if (num_rpus > 0) {
-+            gic_spi[i] = qdev_get_gpio_in(splitter, 0);
-+            qdev_connect_gpio_out(splitter, 0,
-+                                  qdev_get_gpio_in(DEVICE(&s->gic), i));
-+            qdev_connect_gpio_out(splitter, 1,
-+                                  qdev_get_gpio_in(DEVICE(&s->rpu_gic), i));
-+        } else {
-+            gic_spi[i] = qdev_get_gpio_in(DEVICE(&s->gic), i);
-+        }
-     }
- 
-     for (i = 0; i < XLNX_ZYNQMP_NUM_GEMS; i++) {
-diff --git a/include/hw/arm/xlnx-zynqmp.h b/include/hw/arm/xlnx-zynqmp.h
-index c137ac59e8..a69953650d 100644
---- a/include/hw/arm/xlnx-zynqmp.h
-+++ b/include/hw/arm/xlnx-zynqmp.h
-@@ -42,6 +42,7 @@
- #include "hw/misc/xlnx-zynqmp-crf.h"
- #include "hw/timer/cadence_ttc.h"
- #include "hw/usb/hcd-dwc3.h"
-+#include "hw/core/split-irq.h"
- 
- #define TYPE_XLNX_ZYNQMP "xlnx-zynqmp"
- OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqMPState, XLNX_ZYNQMP)
-@@ -87,12 +88,14 @@ OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqMPState, XLNX_ZYNQMP)
-                                   XLNX_ZYNQMP_MAX_HIGH_RAM_SIZE)
- 
- #define XLNX_ZYNQMP_NUM_TTC 4
-+#define XLXN_ZYNQMP_GIC_NUM_SPI_INTR 160
- 
- /*
-  * Unimplemented mmio regions needed to boot some images.
-  */
- #define XLNX_ZYNQMP_NUM_UNIMP_AREAS 1
- 
-+
- struct XlnxZynqMPState {
-     /*< private >*/
-     DeviceState parent_obj;
-@@ -105,6 +108,9 @@ struct XlnxZynqMPState {
-     GICState gic;
-     MemoryRegion gic_mr[XLNX_ZYNQMP_GIC_REGIONS][XLNX_ZYNQMP_GIC_ALIASES];
- 
-+    GICState rpu_gic;
-+    SplitIRQ splitter[XLXN_ZYNQMP_GIC_NUM_SPI_INTR];
-+
-     MemoryRegion ocm_ram[XLNX_ZYNQMP_NUM_OCM_BANKS];
- 
-     MemoryRegion *ddr_ram;
--- 
-2.34.1
+Eric
 
 
