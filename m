@@ -4,139 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662EAC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 10:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBC35C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 10:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEmjh-00019m-Al; Tue, 13 May 2025 06:19:45 -0400
+	id 1uEmsp-0004Ls-Ad; Tue, 13 May 2025 06:29:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uEmjd-00018w-OG
- for qemu-devel@nongnu.org; Tue, 13 May 2025 06:19:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uEmsk-0004GA-PZ
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 06:29:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uEmjb-0000YJ-4T
- for qemu-devel@nongnu.org; Tue, 13 May 2025 06:19:41 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uEmsi-0001YY-Uz
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 06:29:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747131576;
+ s=mimecast20190719; t=1747132144;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cRFVwNL/q1APjBkV0o0pxCp932asVyl0IyTJ08vI01U=;
- b=W0dE3m1/nhWQVlVBQRDn39MnxFLZcWeTp2CjIMARZm1n+tVpIr/cE0aV3R+eNljPMPbllN
- L+yGgGYFXrmIEYRLKdFFxgxzJe297Ef+4sgjTLteLkcjO1R4O0aYrz59dqz4dUxD8JqGDU
- yl0TOZ6rvm8DZDV4wYjRAE8ISFKLt1Q=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=2Q9Purpm/K4u0zXRViMrb/8QUlPpX+E7LaiOih2O93w=;
+ b=R011LYuoW/LFcJLF+vvXgLVR8LLrY4lk9boS+gPScb5CuJHwDSIa5tbZqBNiFBCKrFuH6+
+ 3FdRYEZ3SMdoZa7OoLH3ICacBXBX8cbsXAbAEGmAfZp+MDfRq+IpyP9aNvzLCgELxWCSHY
+ /wPulp6tLPMRKE9Fde+KUA0WcfHyDK0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-epgPalCtPyy9ud1VNtrPrw-1; Tue, 13 May 2025 06:19:35 -0400
-X-MC-Unique: epgPalCtPyy9ud1VNtrPrw-1
-X-Mimecast-MFC-AGG-ID: epgPalCtPyy9ud1VNtrPrw_1747131575
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-44059976a1fso18462555e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 03:19:35 -0700 (PDT)
+ us-mta-486-RBipaNbRNTmS61TtlCM-Bw-1; Tue, 13 May 2025 06:29:02 -0400
+X-MC-Unique: RBipaNbRNTmS61TtlCM-Bw-1
+X-Mimecast-MFC-AGG-ID: RBipaNbRNTmS61TtlCM-Bw_1747132142
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43cf3168b87so23976855e9.2
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 03:29:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747131574; x=1747736374;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cRFVwNL/q1APjBkV0o0pxCp932asVyl0IyTJ08vI01U=;
- b=BKLDhylxgxIOT39l8XsVrsFs3amkWnXVdSEYMC21dIz+yrQZwvFACa6JYicR5jXj1q
- /POeZDPNTkFhXzf3n1anp3OMxgdEXAxtLCHTh975cOx/rEUPBL+9iGHaCxpk64WvhXS5
- vlAIVTu9SGNANeEtdjjTh8l82EBIcEOPwrmYygAgHLLJJCXJrstNoU91w7IN5mVpWWaf
- +aNmMYSIlosg9eQTF2h5QLTBxA8Ib8o7t1eaq7GpRFhH6zbBtMqT3G5jZDxkNermoqus
- iEK4SRYoRkOogXKkt/cAlmL+eaAaEnjX7GXGSubOn181kq+C3C2vxGqQTE7ThvfyW6Ls
- GRZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2NIVLwg419k7CDQwOAFa2uNXbOMLXigKU6sxPqpI41iPKixpwNxJiQdyngjQYCFFNwHqOkC6As2cu@nongnu.org
-X-Gm-Message-State: AOJu0YxAz/+3EtGolvaKXW0S40X2zvepsfIilMtWnZtI/mQlQGrs3r3b
- 6fEwBf2r8PddgvFYa/8hgRxLfvbs07Wu0LCP4vJ1908agOuoPb6jxz4O1mtY1rs4ghZusQOVhtM
- WsL96QgYjE/SJn88WJRsOqq3PlEUNoZqt4ltAh4UrURcefFkUrSpyhc/7S8CCpl4=
-X-Gm-Gg: ASbGncs6d0oRl5fi66LswTVxdAd8GXsv52KzDAPoyUAE3lDgYfn6J+ymlosdlo2qSZY
- 8d1ajYljw+0AWG9kTCuCvQ5MLHaevxZ9scjg2xrDSxudvUj89g/lpTBTzgfxLDUz0tw5zHcWwFH
- Fq66vpungU2hpiD93Xgz7iea3DbZRxZU4CoSbQAzHEJtqDkdP1wFsD1ClHvCnJcCW2PytWoq98N
- USwcfx6wGYfcqHMXpuvVd/3Ku8dHUwV1YgyJruoSlfI6KUBBAWX9afMvzryuHBzrMxds0d/JvzB
- RwfMLQOUuCSjbj2bRMSO4eoK4FOevYQaiB/4Ue+Ubw3r4ybVrg==
-X-Received: by 2002:a05:600c:528e:b0:43d:7413:cb3e with SMTP id
- 5b1f17b1804b1-442d6d17f7cmr124317975e9.1.1747131574437; 
- Tue, 13 May 2025 03:19:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNUIon00bmYlDe7stP5DZ8HC4iMOU4AHZ9WLY6KLjjXT1qIJwzTiHomLVsefjc0OfbTGmBFA==
-X-Received: by 2002:a05:600c:528e:b0:43d:7413:cb3e with SMTP id
- 5b1f17b1804b1-442d6d17f7cmr124317655e9.1.1747131574054; 
- Tue, 13 May 2025 03:19:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
- ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
+ d=1e100.net; s=20230601; t=1747132141; x=1747736941;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2Q9Purpm/K4u0zXRViMrb/8QUlPpX+E7LaiOih2O93w=;
+ b=uL3fMgemZ8+q0cc2WMk6VV5NGH/m2tG0N4LxX61SIyF7NFegVgwsPiRG7Fb3wdORuW
+ yaIbd6m1G/P511BInM3U6d4YBC7+YS8k7oxqpGvzScHqrMaBE/VLbPWZP5ATtTaFDGLe
+ XsV2Gew9ebYflxc6zp9vgnzYE6amyfqaXtrapP63y6g4BxBr9IPDoy8LW91Y3moa9fio
+ C8MwwD+7zs3WUoaD6/4UOLUaQku6p3T62dedluxyH8rPz+nIcAioZ9jJIms8D3gU612o
+ rH3W0gxsON6B0aVkM9aHcipLs7/7NPU/i6Vu25JQyDVwR70NDJ5GuFrl9/bYK7PlxGj0
+ mBBA==
+X-Gm-Message-State: AOJu0YxgPsFYrwURJ+43LIsNKygHN8tpkeP8pN9zzABvDVhal9PEA9qk
+ yXG81L7rG/rRhZipNiyw8zrS2L2eIfnHbRyyBXGUQwEiCzwoG+nbp5SrGBmARDXKBW64GVEngqK
+ Pr7APGs9cbMjNJQHmzXptpiEONFhZzFmrjnSuiTU+1iNDzwyPXDmM
+X-Gm-Gg: ASbGncvaD3zZG1R+xB7ZVdfQFpqD8SpLQGCkWaTxWhwBLdLP7a1DaFq/g0olfqgJ/3A
+ ek+lYWe99e8NocxsAmiaGjBPemlfgDYjjSzOp52VdcY/Ex+TQCFlzneU63C0U1TYCnISii8dFJo
+ HTuBok3KeZ+vo4urcapBTpnEQePfakfJtbvqkUOpdW2p/SljOPMcy5GS+ecMyJhRr7gIto2ES93
+ N2aV6q8pvqgjfCtkOM4qrhezoMurmjEKDQTdesRSSUl8NZeGEeOZbYg+9ijar8HDsIDMH2SGMa4
+ Q0uBOqLxHEXOLH/OYNyEDUC9X27Xjkqw
+X-Received: by 2002:a05:600c:a089:b0:43c:e9d0:9ee5 with SMTP id
+ 5b1f17b1804b1-442d6d6ad82mr144907065e9.18.1747132141545; 
+ Tue, 13 May 2025 03:29:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHi10nzAH1EKGO/kzFRGmvYqSgNFAee4ggzvFi1MDmC4i0/84NFAoHOBMIjVrdAh6iczoq/8A==
+X-Received: by 2002:a05:600c:a089:b0:43c:e9d0:9ee5 with SMTP id
+ 5b1f17b1804b1-442d6d6ad82mr144906565e9.18.1747132141134; 
+ Tue, 13 May 2025 03:29:01 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442e9f1d1bbsm41332385e9.25.2025.05.13.03.19.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 03:19:33 -0700 (PDT)
-Message-ID: <cf58909d-f0cd-453f-baf6-898139cc8bd5@redhat.com>
-Date: Tue, 13 May 2025 12:19:32 +0200
+ 5b1f17b1804b1-442cd34bde2sm201853865e9.19.2025.05.13.03.28.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 May 2025 03:29:00 -0700 (PDT)
+Date: Tue, 13 May 2025 12:28:58 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>, Gerd Hoffmann
+ <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Laurent
+ Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu
+ <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, qemu-riscv@nongnu.org, Weiwei Li
+ <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>, Zhao Liu
+ <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>, Helge Deller
+ <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha
+ <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
+ <pbonzini@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ qemu-arm@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
+ <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Jason
+ Wang <jasowang@redhat.com>, Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v4 24/27] hw/intc/ioapic: Remove
+ IOAPICCommonState::version field
+Message-ID: <20250513122858.2a596bd9@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250508133550.81391-25-philmd@linaro.org>
+References: <20250508133550.81391-1-philmd@linaro.org>
+ <20250508133550.81391-25-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] tests/qtest/aspeed_smc-test: Fix memory leaks
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250513080806.1005996-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US
-From: Laurent Vivier <lvivier@redhat.com>
-Autocrypt: addr=lvivier@redhat.com; keydata=
- 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
-In-Reply-To: <20250513080806.1005996-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -161,30 +127,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/05/2025 10:08, Jamin Lin wrote:
-> Link: https://patchwork.kernel.org/project/qemu-devel/patch/20250509175047.26066-1-farosas@suse.de/
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   tests/qtest/aspeed_smc-test.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
-> index 4e1389385d..52a00e6f0a 100644
-> --- a/tests/qtest/aspeed_smc-test.c
-> +++ b/tests/qtest/aspeed_smc-test.c
-> @@ -228,5 +228,10 @@ int main(int argc, char **argv)
->       unlink(ast2500_evb_data.tmp_path);
->       unlink(ast2600_evb_data.tmp_path);
->       unlink(ast1030_evb_data.tmp_path);
-> +    g_free(palmetto_data.tmp_path);
-> +    g_free(ast2500_evb_data.tmp_path);
-> +    g_free(ast2600_evb_data.tmp_path);
-> +    g_free(ast1030_evb_data.tmp_path);
-> +
->       return ret;
->   }
+On Thu,  8 May 2025 15:35:47 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-Reviewed-by: Laurent Vivier <lvivier@redhat.com>
+> The IOAPICCommonState::version integer was only set
+> in the hw_compat_2_7[] array, via the 'version=3D0x11'
+> property. We removed all machines using that array,
+> lets remove that property, simplify by only using the
+> default version (defined as IOAPIC_VER_DEF).
+>=20
+> For the record, this field was introduced in commit
+> 20fd4b7b6d9 ("x86: ioapic: add support for explicit EOI"):
+>=20
+>  >   Some old Linux kernels (upstream before v4.0), or any released RHEL
+>  >   kernels has problem in sending APIC EOI when IR is enabled.
+>  >   Meanwhile, many of them only support explicit EOI for IOAPIC, which
+>  >   is only introduced in IOAPIC version 0x20. This patch provide a way
+>  >   to boost QEMU IOAPIC to version 0x20, in order for QEMU to correctly
+>  >   receive EOI messages.
+>  >
+>  >   Without boosting IOAPIC version to 0x20, kernels before commit
+>  >   d32932d ("x86/irq: Convert IOAPIC to use hierarchical irqdomain
+>  >   interfaces") will have trouble enabling both IR and level-triggered
+>  >   interrupt devices (like e1000).
+>  >
+>  >   To upgrade IOAPIC to version 0x20, we need to specify:
+>  >
+>  >     -global ioapic.version=3D0x20
+>  >
+
+that crutch might be in-use by external users, and even if they use
+0x20, removing property will break CLI.
+
+I'd deprecate it first and then remove.
+
+>  >   To be compatible with old systems, 0x11 will still be the default
+>  >   IOAPIC version. Here 0x11 and 0x20 are the only versions to be
+>  >   supported.
+looking at the code removed, default is 0x20 which doesn't match above
+statement. Have something changed between then and now (missing ref to
+0x20 becoming default)?
+
+>  >
+>  >   One thing to mention: this patch only applies to emulated IOAPIC. It
+>  >   does not affect kernel IOAPIC behavior. =20
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>  hw/intc/ioapic_internal.h |  3 +--
+>  hw/intc/ioapic.c          | 18 ++----------------
+>  hw/intc/ioapic_common.c   |  2 +-
+>  3 files changed, 4 insertions(+), 19 deletions(-)
+>=20
+> diff --git a/hw/intc/ioapic_internal.h b/hw/intc/ioapic_internal.h
+> index 51205767f44..330ce195222 100644
+> --- a/hw/intc/ioapic_internal.h
+> +++ b/hw/intc/ioapic_internal.h
+> @@ -82,7 +82,7 @@
+>  #define IOAPIC_ID_MASK                  0xf
+> =20
+>  #define IOAPIC_VER_ENTRIES_SHIFT        16
+> -
+> +#define IOAPIC_VER_DEF                  0x20
+> =20
+>  #define TYPE_IOAPIC_COMMON "ioapic-common"
+>  OBJECT_DECLARE_TYPE(IOAPICCommonState, IOAPICCommonClass, IOAPIC_COMMON)
+> @@ -104,7 +104,6 @@ struct IOAPICCommonState {
+>      uint32_t irr;
+>      uint64_t ioredtbl[IOAPIC_NUM_PINS];
+>      Notifier machine_done;
+> -    uint8_t version;
+>      uint64_t irq_count[IOAPIC_NUM_PINS];
+>      int irq_level[IOAPIC_NUM_PINS];
+>      int irq_eoi[IOAPIC_NUM_PINS];
+> diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
+> index 133bef852d1..5cc97767d9d 100644
+> --- a/hw/intc/ioapic.c
+> +++ b/hw/intc/ioapic.c
+> @@ -315,7 +315,7 @@ ioapic_mem_read(void *opaque, hwaddr addr, unsigned i=
+nt size)
+>              val =3D s->id << IOAPIC_ID_SHIFT;
+>              break;
+>          case IOAPIC_REG_VER:
+> -            val =3D s->version |
+> +            val =3D IOAPIC_VER_DEF |
+>                  ((IOAPIC_NUM_PINS - 1) << IOAPIC_VER_ENTRIES_SHIFT);
+>              break;
+>          default:
+> @@ -411,8 +411,7 @@ ioapic_mem_write(void *opaque, hwaddr addr, uint64_t =
+val,
+>          }
+>          break;
+>      case IOAPIC_EOI:
+> -        /* Explicit EOI is only supported for IOAPIC version 0x20 */
+> -        if (size !=3D 4 || s->version !=3D 0x20) {
+> +        if (size !=3D 4) {
+>              break;
+>          }
+>          ioapic_eoi_broadcast(val);
+> @@ -444,18 +443,10 @@ static void ioapic_machine_done_notify(Notifier *no=
+tifier, void *data)
+>  #endif
+>  }
+> =20
+> -#define IOAPIC_VER_DEF 0x20
+> -
+>  static void ioapic_realize(DeviceState *dev, Error **errp)
+>  {
+>      IOAPICCommonState *s =3D IOAPIC_COMMON(dev);
+> =20
+> -    if (s->version !=3D 0x11 && s->version !=3D 0x20) {
+> -        error_setg(errp, "IOAPIC only supports version 0x11 or 0x20 "
+> -                   "(default: 0x%x).", IOAPIC_VER_DEF);
+> -        return;
+> -    }
+> -
+>      memory_region_init_io(&s->io_memory, OBJECT(s), &ioapic_io_ops, s,
+>                            "ioapic", 0x1000);
+> =20
+> @@ -476,10 +467,6 @@ static void ioapic_unrealize(DeviceState *dev)
+>      timer_free(s->delayed_ioapic_service_timer);
+>  }
+> =20
+> -static const Property ioapic_properties[] =3D {
+> -    DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_=
+DEF),
+> -};
+> -
+>  static void ioapic_class_init(ObjectClass *klass, const void *data)
+>  {
+>      IOAPICCommonClass *k =3D IOAPIC_COMMON_CLASS(klass);
+> @@ -493,7 +480,6 @@ static void ioapic_class_init(ObjectClass *klass, con=
+st void *data)
+>       */
+>      k->post_load =3D ioapic_update_kvm_routes;
+>      device_class_set_legacy_reset(dc, ioapic_reset_common);
+> -    device_class_set_props(dc, ioapic_properties);
+>  }
+> =20
+>  static const TypeInfo ioapic_info =3D {
+> diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
+> index fce3486e519..8b3e2ba9384 100644
+> --- a/hw/intc/ioapic_common.c
+> +++ b/hw/intc/ioapic_common.c
+> @@ -83,7 +83,7 @@ static void ioapic_print_redtbl(GString *buf, IOAPICCom=
+monState *s)
+>      int i;
+> =20
+>      g_string_append_printf(buf, "ioapic0: ver=3D0x%x id=3D0x%02x sel=3D0=
+x%02x",
+> -                           s->version, s->id, s->ioregsel);
+> +                           IOAPIC_VER_DEF, s->id, s->ioregsel);
+>      if (s->ioregsel) {
+>          g_string_append_printf(buf, " (redir[%u])\n",
+>                                 (s->ioregsel - IOAPIC_REG_REDTBL_BASE) >>=
+ 1);
 
 
