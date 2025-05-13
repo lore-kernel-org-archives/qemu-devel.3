@@ -4,89 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DCBC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 11:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A25BC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 May 2025 11:39:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEnox-0000BJ-VH; Tue, 13 May 2025 07:29:15 -0400
+	id 1uEnxz-0005Ux-5N; Tue, 13 May 2025 07:38:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oenhan@gmail.com>)
- id 1uEnow-0000AP-81; Tue, 13 May 2025 07:29:14 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oenhan@gmail.com>)
- id 1uEnou-0008K4-B1; Tue, 13 May 2025 07:29:13 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-30c54b40112so2544004a91.2; 
- Tue, 13 May 2025 04:29:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747135749; x=1747740549; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xhmxb4a6WZjdZz3HEKgEU9W5XYrpcopDPVVKtj10jFo=;
- b=At8+QkrSURvNMZIOi07KzU9ilqjDeOcn0yjJxthonOvuXc4xsq1u75fNkzIZY75Wt4
- AhvvijFQrPSWQCAYmaBEit52aK7gH9gsHCB1evH+XsRnHdL1Y0Qxc2mTI6gMUsfpMdBO
- zDOY8Hscr6MBvIjTQh4GHiz63Y1x0Vi4GgSmHzh3LpAg8jJvC+reMttP6lcoHBbxnPHp
- e6fPLvIskAHZ2BRsLKwgNCRq2m+esn+YWtyJg88shc8fDx3M0/8NCvVbLDl6YkV6VGE0
- qLANwRNO0j0dnfPpNEPgUgzTlnOcQ3Zg2CnIXabS/e3+FyMFvkyDqeLrORj03FiI0+jX
- Qfhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747135749; x=1747740549;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xhmxb4a6WZjdZz3HEKgEU9W5XYrpcopDPVVKtj10jFo=;
- b=cxEmW7ZDvfdxCkVj0uUsQm7OXOjvdJtapp7FiIHfvsM86ZFypUbuGtm9V7VA+g8oCy
- g0qkLqiXKiksYwbdjGmNrpds2URY20e2ina0LntozCsrRtR9Xcp9z5U2TPK7e6njPxNt
- 35YJOBXh/gOkIMdpxHXf6N6yO8gF7Xvos1hZP/akF61G9LbEhtEn9im2N7kO/eCxIEQv
- lGDeqEmc1trICXe/KZfLAQQZjLNfzbEVKfkEtPSWTDTl0F4F3e3SaHFzI6s927+rShPC
- IlS8dI2OEqWdK3E80hGilKLpI0ewrLa7dHxv1gr+nVWJbaaD4vDJ/lp/Sg8cHpcbVH3f
- pJxA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGC5a7kDK0P/yDcGWOx8tH8tyWzIQlRtwKSvBX/3aSaQFb6fEK+MUtxOaDISvmAA5qe1VGfrGoUZEJVw==@nongnu.org
-X-Gm-Message-State: AOJu0YyxO+7EA473GtMg4fbksSyXcabrVY4f842Yh/PwfuXVaeC/o2Tp
- F6DIfGepzHIpLxVxtTavy7PPt0ytKb+dCBSOLEkYmfPYRJ1CrnKhIBa8d0VT
-X-Gm-Gg: ASbGnct7g/o3GRQ4u6AWGj/lN+GMNWtvrKckp3yN6IwXo6ccgaD9Kcfl3ts7yDYhGq0
- dfkf38ih8b8dXIVMw24LbO6sGrb0pCa7y4KMJYFwkyAK8ZIuYIvJT+UIN7kHyms1m3zGju/AI6w
- Fjr9lBCTgXIclLa7vkTDWle49rThTPmTu5HZX/1BQbJ+BvTdJ3C1Fbz3ql80/TJYgD0G8uYv5LT
- XMUvn4rHHWpwZ37d0m31TKea394QHa3pRKGQJ9GP/bUBtPi40Wqyx/U9C7LwHPtbSNNQmjQ2rAA
- OzyhEO3tRjxJyHZ7BHjFco2jmRR6N+815YkjOq4wU+zi8nc1F3s/kQSJvTaUFk2wvc5kJZFw/eW
- DkxHMim5iKSp7XVKyNfpZBIF3DomFNkEDEA==
-X-Google-Smtp-Source: AGHT+IHUcIXsNN686+xZzXo4DXzzchFLYn0+OEXKusmx/4NG6kCVWWJV49gsYYenpp+bYSfxRiRz1Q==
-X-Received: by 2002:a17:90b:3b91:b0:2ff:7ad4:77af with SMTP id
- 98e67ed59e1d1-30c3d2e52femr22553654a91.20.1747135749382; 
- Tue, 13 May 2025 04:29:09 -0700 (PDT)
-Received: from localhost.localdomain (172-234-80-15.ip.linodeusercontent.com.
- [172.234.80.15]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b2349ec816esm7102821a12.22.2025.05.13.04.29.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 May 2025 04:29:08 -0700 (PDT)
-From: oenhan@gmail.com
-X-Google-Original-From: hanht2@chinatelecom.cn
-To: mst@redhat.com, sgarzare@redhat.com, marcel.apfelbaum@gmail.com,
- cohuck@redhat.com, pasic@linux.ibm.com, farman@linux.ibm.com,
- borntraeger@linux.ibm.com, leiyang@redhat.com
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Huaitong Han <hanht2@chinatelecom.cn>,
- Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>,
- Jidong Xia <xiajd@chinatelecom.cn>
-Subject: [PATCH V2] vhost: Don't set vring call if guest notifier is unused
-Date: Tue, 13 May 2025 19:28:25 +0800
-Message-ID: <20250513112825.1731347-1-hanht2@chinatelecom.cn>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1uEnxu-0005UM-LR; Tue, 13 May 2025 07:38:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1uEnxs-0000uO-5B; Tue, 13 May 2025 07:38:30 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D9F71b030046;
+ Tue, 13 May 2025 11:38:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=iq0TZf
+ FPDU+ruLkHg7c0vAoeMctdus2BwzX2dq5gcRg=; b=URQr3GrrbJdfqnN+vgHz2I
+ D9NoVVQh3FTM6KfWq3giJc6mDUIq9CdijbGscMukBY2xNBkQSUi56/WXQECtTVjN
+ OmOrj/D3Z2zYdFwafsqtV3t7ijkEyG8PWPsYcJDIpYMWLXWHDvU4v+LwVY9x/F2F
+ somIju2dZLf0JiN6aZhlsYltBalL1b2soo6FaARTXMQMN691QTbff1SaiwDwUTMP
+ m9of5q0CKtmdPKrxsv2JdR1dIPNhK+dUsTasIW4r5tegZ8WKGHyg+i+1QNSYuUEF
+ WBZU8kKV1iMmYjm9ovShLXcNLsxfWkrN96QibcNaHGFvopJ89RQOKRbysyPQxNJg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46m39j8p19-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 May 2025 11:38:20 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54D9BcUS016348;
+ Tue, 13 May 2025 11:38:19 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 46jh4tk2e5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 May 2025 11:38:19 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54DBcIeQ20709924
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 May 2025 11:38:18 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3614A5805F;
+ Tue, 13 May 2025 11:38:18 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CCEBC58064;
+ Tue, 13 May 2025 11:38:16 +0000 (GMT)
+Received: from [9.61.132.237] (unknown [9.61.132.237])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 13 May 2025 11:38:16 +0000 (GMT)
+Message-ID: <527b09b6-b7cc-4d5e-a82f-5ee87a7ca91e@linux.ibm.com>
+Date: Tue, 13 May 2025 07:38:16 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=oenhan@gmail.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v9 2/4] hw/vfio/ap: store object indicating AP config
+ changed in a queue
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com
+References: <20250512180230.50129-1-rreyes@linux.ibm.com>
+ <20250512180230.50129-3-rreyes@linux.ibm.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20250512180230.50129-3-rreyes@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 5xFgkTGWdvC5odoFtxH2ADn27hIDI-sL
+X-Proofpoint-ORIG-GUID: 5xFgkTGWdvC5odoFtxH2ADn27hIDI-sL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDExMCBTYWx0ZWRfX9Cw0jdszVu7G
+ xEcejQzI5GLuVpPbqYqks3kQHafDbK8ewOIJekKUtMzW9DyLzIkOVx2UNMARI1ib+Xnkn2HoERO
+ R7uVlDKG31ctK3UOjY1KQKXOw2rdDLuD3h9ibIn9yi+UrA860K96of/NjqNa4vkBH/M4KawWSXN
+ HvOADNKX66iveiEgyadT5Tge42pk0oMCGdxLaxNBiJWieasYQjZNhEftfa6cRCv1lqgwYmmKfBR
+ JeF40FmDrLIHgqqu9lBs/gNGOcgJmalolRGej6ltbGNqpAO9HvZz/tD0nO+CmQqJryl+JiJeGNV
+ ucO/1ut/+HX0z9gmenfSg5uZr7KZYDQZuRd9Q8P5h24ZTQ02CqG6f/g+/Oqg5Kq0K0UN8Hj2iXX
+ /9i6Px39xWndm7zXkzFtmnob52vr2Wt0Lzhqjuw63NBr1H7M79Y1p9HBVYVd+PEJhbTZgY5S
+X-Authority-Analysis: v=2.4 cv=Sfb3duRu c=1 sm=1 tr=0 ts=68232f2c cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=5v0q2DLhJsiMCMKXfuEA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-13_01,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 spamscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505130110
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,135 +125,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Huaitong Han <hanht2@chinatelecom.cn>
 
-The vring call fd is set even when the guest does not use MSI-X (e.g., in the
-case of virtio PMD), leading to unnecessary CPU overhead for processing
-interrupts.
 
-The commit 96a3d98d2c("vhost: don't set vring call if no vector") optimized the
-case where MSI-X is enabled but the queue vector is unset. However, there's an
-additional case where the guest uses INTx and the INTx_DISABLED bit in the PCI
-config is set, meaning that no interrupt notifier will actually be used.
 
-In such cases, the vring call fd should also be cleared to avoid redundant
-interrupt handling.
+On 5/12/25 2:02 PM, Rorie Reyes wrote:
+> Creates an object indicating that an AP configuration change event
+> has been received and stores it in a queue. These objects will later
+> be used to store event information for an AP configuration change
+> when the CHSC instruction is intercepted.
+>
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
 
-Fixes: 96a3d98d2c("vhost: don't set vring call if no vector")
-Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
-Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
-Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
----
-V2:
-- Retain the name `query_guest_notifiers`
-- All qtest/unit test cases pass
-- Fix V1 patch style problems
+Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
 
- hw/pci/pci.c                   |  2 +-
- hw/s390x/virtio-ccw.c          |  7 +++++--
- hw/virtio/vhost.c              |  3 +--
- hw/virtio/virtio-pci.c         | 10 ++++++++--
- include/hw/pci/pci.h           |  1 +
- include/hw/virtio/virtio-bus.h |  2 +-
- 6 files changed, 17 insertions(+), 8 deletions(-)
-
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 352b3d12c8..45b491412a 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1712,7 +1712,7 @@ static void pci_update_mappings(PCIDevice *d)
-     pci_update_vga(d);
- }
- 
--static inline int pci_irq_disabled(PCIDevice *d)
-+int pci_irq_disabled(PCIDevice *d)
- {
-     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
- }
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index d2f85b39f3..632708ba4d 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState *d, bool running)
-     }
- }
- 
--static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
-+static bool virtio_ccw_query_guest_notifiers(DeviceState *d, int n)
- {
-     CcwDevice *dev = CCW_DEVICE(d);
-+    VirtioCcwDevice *vdev = VIRTIO_CCW_DEVICE(d);
-+    VirtIODevice *virtio_dev = virtio_bus_get_device(&vdev->bus);
- 
--    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
-+    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
-+            && virtio_queue_vector(virtio_dev, n) != VIRTIO_NO_VECTOR;
- }
- 
- static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 4cae7c1664..2a9a839763 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1341,8 +1341,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-     }
- 
-     if (k->query_guest_notifiers &&
--        k->query_guest_notifiers(qbus->parent) &&
--        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
-+        !k->query_guest_notifiers(qbus->parent, idx)) {
-         file.fd = -1;
-         r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
-         if (r) {
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 0fa8fe4955..d62e199489 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1212,10 +1212,16 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
-     return 0;
- }
- 
--static bool virtio_pci_query_guest_notifiers(DeviceState *d)
-+static bool virtio_pci_query_guest_notifiers(DeviceState *d, int n)
- {
-     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
--    return msix_enabled(&proxy->pci_dev);
-+    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-+
-+    if (msix_enabled(&proxy->pci_dev)) {
-+        return virtio_queue_vector(vdev, n) != VIRTIO_NO_VECTOR;
-+    } else {
-+        return !pci_irq_disabled(&proxy->pci_dev);
-+    }
- }
- 
- static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index c2fe6caa2c..8c24bd97db 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -668,6 +668,7 @@ void lsi53c8xx_handle_legacy_cmdline(DeviceState *lsi_dev);
- 
- qemu_irq pci_allocate_irq(PCIDevice *pci_dev);
- void pci_set_irq(PCIDevice *pci_dev, int level);
-+int pci_irq_disabled(PCIDevice *d);
- 
- static inline void pci_irq_assert(PCIDevice *pci_dev)
- {
-diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
-index 7ab8c9dab0..75d43b508a 100644
---- a/include/hw/virtio/virtio-bus.h
-+++ b/include/hw/virtio/virtio-bus.h
-@@ -48,7 +48,7 @@ struct VirtioBusClass {
-     int (*load_done)(DeviceState *d, QEMUFile *f);
-     int (*load_extra_state)(DeviceState *d, QEMUFile *f);
-     bool (*has_extra_state)(DeviceState *d);
--    bool (*query_guest_notifiers)(DeviceState *d);
-+    bool (*query_guest_notifiers)(DeviceState *d, int n);
-     int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
-     int (*set_host_notifier_mr)(DeviceState *d, int n,
-                                 MemoryRegion *mr, bool assign);
--- 
-2.43.5
+> ---
+>   hw/vfio/ap.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+>
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 3d0af7a54a..5ea5dd9cca 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -41,6 +41,13 @@ struct VFIOAPDevice {
+>       EventNotifier cfg_notifier;
+>   };
+>   
+> +typedef struct APConfigChgEvent {
+> +    QTAILQ_ENTRY(APConfigChgEvent) next;
+> +} APConfigChgEvent;
+> +
+> +QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+> +    QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
+> +
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+>   
+>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+> @@ -74,12 +81,17 @@ static void vfio_ap_req_notifier_handler(void *opaque)
+>   
+>   static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>   {
+> +    APConfigChgEvent *cfg_chg_event;
+>       VFIOAPDevice *vapdev = opaque;
+>   
+>       if (!event_notifier_test_and_clear(&vapdev->cfg_notifier)) {
+>           return;
+>       }
+>   
+> +    cfg_chg_event = g_new0(APConfigChgEvent, 1);
+> +
+> +    QTAILQ_INSERT_TAIL(&cfg_chg_events, cfg_chg_event, next);
+> +
+>       css_generate_css_crws(0);
+>   
+>   }
 
 
