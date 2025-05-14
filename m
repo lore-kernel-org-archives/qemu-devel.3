@@ -4,49 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B853EC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 14:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04425C3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 14:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFCk3-0001Wj-Ti; Wed, 14 May 2025 10:05:52 -0400
+	id 1uFCnk-0005pO-5F; Wed, 14 May 2025 10:09:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1uFCk2-0001VP-3f
- for qemu-devel@nongnu.org; Wed, 14 May 2025 10:05:50 -0400
-Received: from bm.lauterbach.com ([62.154.241.218])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFCnO-0005mz-Ge
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 10:09:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1uFCjz-0002VA-Ar
- for qemu-devel@nongnu.org; Wed, 14 May 2025 10:05:49 -0400
-Received: from [10.2.13.100] (unknown [10.2.13.100])
- (Authenticated sender: mario.fleischmann@lauterbach.com)
- by bm.lauterbach.com (Postfix) with ESMTPSA id 9200F2412D095;
- Wed, 14 May 2025 16:05:44 +0200 (CEST)
-Message-ID: <68665dcb-c5d4-4770-8e9b-9baa3dd87c71@lauterbach.com>
-Date: Wed, 14 May 2025 16:05:44 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFCnL-0002j5-EK
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 10:09:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747231753;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MQxsHOuQU8L5KFbmMmnhXYJ3WF+OAA11pUt+6vQYcKQ=;
+ b=EwfCpSDNSfmvNO9r8vSFtDG92rZT5dTLzbWOc+8K/V8YmgZAPXyPOI/TRoyV6+cHUvU54M
+ LtszhMOii6x8wfhtDaDN7fyInd4XLYdzT4qU9BZ+CRx6dAvqG2vEapRdYdrVmgjawM511x
+ LCRMAZpWO8X5KJbcIHIIc6jiruwqnJw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-Zx7A7GK3PxqqsKBXcyCyTg-1; Wed,
+ 14 May 2025 10:09:10 -0400
+X-MC-Unique: Zx7A7GK3PxqqsKBXcyCyTg-1
+X-Mimecast-MFC-AGG-ID: Zx7A7GK3PxqqsKBXcyCyTg_1747231749
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B3BA21800374; Wed, 14 May 2025 14:09:08 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D1ED1800879; Wed, 14 May 2025 14:09:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4046A21E66C3; Wed, 14 May 2025 16:09:05 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  alex.bennee@linaro.org,  stefanha@redhat.com,
+ peter.maydell@linaro.org,  richard.henderson@linaro.org,
+ pbonzini@redhat.com,  jsnow@redhat.com,  philmd@linaro.org,
+ berrange@redhat.com,  thuth@redhat.com,  Michael Roth
+ <michael.roth@amd.com>
+Subject: Re: [PATCH 09/13] qapi: transform target specific 'if' in runtime
+ checks
+In-Reply-To: <20250507231442.879619-10-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Wed, 7 May 2025 16:14:39 -0700")
+References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
+ <20250507231442.879619-10-pierrick.bouvier@linaro.org>
+Date: Wed, 14 May 2025 16:09:05 +0200
+Message-ID: <87h61n8eta.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/20] Add Multi-Core Debug (MCD) API support
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org,
- christian.boenig@lauterbach.com
-References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
- <87tt5ve3jc.fsf@pond.sub.org>
-Content-Language: en-US
-From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
-In-Reply-To: <87tt5ve3jc.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 166a2dfb-2e12-4590-8fa5-72e30323519f
-X-Bm-Transport-Timestamp: 1747231544603
-Received-SPF: pass client-ip=62.154.241.218;
- envelope-from=mario.fleischmann@lauterbach.com; helo=bm.lauterbach.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -64,45 +90,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.05.2025 13:38, Markus Armbruster wrote:
+Fails to build:
 
-> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
-> 
->> This patch series introduces support for the Multi-Core Debug (MCD) API, a
->> commonly used debug interface by emulators. The MCD API, defined through a
->> header file, consists of 54 functions for implementing debug and trace.
->> However, since it is a header-file-only interface, MCD does not specify a
->> communication protocol.
->>
->> To keep the overhead of a communication protocol on top of MCD minimal,
->> we follow a remote procedure call approach by using QAPI as an interface
->> definition and transport infrastructure. This way, we can use qapi-gen to
->> take care of generating the infrastructure to dispatch MCD functions and
->> to (un)marshal their arguments and results. Furthermore, qapi-doc and qtest
->> provide good integration into QEMU's documentation and test frameworks.
->>
->> In v1 of this patch series, the MCD protocol was directly integrated in QMP
->> and the QMP monitor was responsible for dispatching MCD's server stub. This
->> introduced a dependency between QEMU's machine protocol and the MCD debug
->> protocol which is not to be expected. For this reason, v2 introduces a MCD
->> monitor which uses as much of the QMP monitor's framework as possible but
->> keeps the two protocols separate from each other.
->> Similarly, MCD's test suite uses as much of the qtest framework as is useful
->> for sending JSON commands to the QEMU under test but adds new code where
->> required to prevent dependencies to QMP.
->>
->> To enable MCD, configure QEMU with `--enable-mcd`.
->>
->> To start the MCD monitor, run QEMU with the `-mcd` option:
->> qemu-system-<arch> [options] -qmp tcp::1235,server=on,wait=off
-> 
-> -mcd, I presume.
+        /usr/bin/ld: libqemu-x86_64-softmmu.a.p/meson-generated_.._qapi_qapi-commands-machine-target.c.o: in function `qmp_marshal_query_cpu_model_comparison':
+        /work/armbru/qemu/bld-x86/qapi/qapi-commands-machine-target.c:66:(.text+0x10c9): undefined reference to `qmp_query_cpu_model_comparison'
+        /usr/bin/ld: libqemu-x86_64-softmmu.a.p/meson-generated_.._qapi_qapi-commands-machine-target.c.o: in function `qmp_marshal_query_cpu_model_baseline':
+        /work/armbru/qemu/bld-x86/qapi/qapi-commands-machine-target.c:131:(.text+0x143c): undefined reference to `qmp_query_cpu_model_baseline'
+        /usr/bin/ld: libqemu-x86_64-softmmu.a.p/meson-generated_.._qapi_qapi-commands-machine-target.c.o: in function `qmp_marshal_set_cpu_topology':
+        /work/armbru/qemu/bld-x86/qapi/qapi-commands-machine-target.c:306:(.text+0x1de1): undefined reference to `qmp_set_cpu_topology'
+        /usr/bin/ld: libqemu-x86_64-softmmu.a.p/meson-generated_.._qapi_qapi-commands-machine-target.c.o: in function `qmp_marshal_query_s390x_cpu_polarization':
+        /work/armbru/qemu/bld-x86/qapi/qapi-commands-machine-target.c:362:(.text+0x20c6): undefined reference to `qmp_query_s390x_cpu_polarization'
+        /usr/bin/ld: libqemu-x86_64-softmmu.a.p/meson-generated_.._qapi_qapi-commands-misc-target.c.o: in function `qmp_marshal_query_gic_capabilities':
+        /work/armbru/qemu/bld-x86/qapi/qapi-commands-misc-target.c:393:(.text+0x2d2d): undefined reference to `qmp_query_gic_capabilities'
+        collect2: error: ld returned 1 exit status
 
-Yes, that one slip through.
+The next commit fixes it.  It then fails tests:
 
->> To run the MCD test suite independently, start `mcd-test`:
->> V=1 QTEST_QEMU_BINARY="./qemu-system-<arch> [options]" tests/qtest/mcd-test
->>
->> To connect from a MCD client, a client stub corresponding to this
->> patch series can be found at https://gitlab.com/lauterbach/mcdrefsrv
+    stdout:
+    --- /work/armbru/qemu/bld-x86/../tests/qapi-schema/unknown-expr-key.err
+    +++ 
+    @@ -1,3 +1,3 @@
+     unknown-expr-key.json: In struct 'Bar':
+     unknown-expr-key.json:2: struct has unknown keys 'bogus', 'phony'
+    -Valid keys are 'base', 'data', 'features', 'if', 'struct'.
+    +Valid keys are 'base', 'data', 'features', 'if', 'runtime_if', 'struct'.
+    stderr:
+    unknown-expr-key FAIL
+
+Fixup:
+
+diff --git a/tests/qapi-schema/unknown-expr-key.err b/tests/qapi-schema/unknown-expr-key.err
+index f2538e3ce7..8184f3c768 100644
+--- a/tests/qapi-schema/unknown-expr-key.err
++++ b/tests/qapi-schema/unknown-expr-key.err
+@@ -1,3 +1,3 @@
+ unknown-expr-key.json: In struct 'Bar':
+ unknown-expr-key.json:2: struct has unknown keys 'bogus', 'phony'
+-Valid keys are 'base', 'data', 'features', 'if', 'struct'.
++Valid keys are 'base', 'data', 'features', 'if', 'runtime_if', 'struct'.
+
 
