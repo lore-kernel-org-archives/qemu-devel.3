@@ -4,52 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E2CC3ABD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 09:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E861CC3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 09:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF828-0006er-JW; Wed, 14 May 2025 05:04:12 -0400
+	id 1uF8AG-0005PK-4D; Wed, 14 May 2025 05:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uF825-0006dC-Pq; Wed, 14 May 2025 05:04:09 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uF8AE-0005MB-Af
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 05:12:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uF824-0002Ei-3C; Wed, 14 May 2025 05:04:09 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 14 May
- 2025 17:03:54 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 14 May 2025 17:03:54 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
- <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
-Subject: [PATCH v2 1/5] hw/arm/aspeed_ast2700-fc: Fix null pointer dereference
- in ca35 init
-Date: Wed, 14 May 2025 17:03:49 +0800
-Message-ID: <20250514090354.1461717-2-steven_lee@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250514090354.1461717-1-steven_lee@aspeedtech.com>
-References: <20250514090354.1461717-1-steven_lee@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uF8AB-0003Bv-Np
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 05:12:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747213949;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fa07lKXLVNmfZrVEu1PlbE/kwWhJEykL17/zMyKV0b8=;
+ b=TI7QVDW/rh3fVxfQafiePKWSgaB522US21A6kRWZJdfLAeW2hF54OIg5Yjv2EhoisLWGE8
+ CrHsidMsaSIpJS0YY9YdTjq5NhvqvjxWK9L+HX63xe0VBqpssLK/tncxQ6ShQsnvtLXp0I
+ 2QGAEk/xl60FzGtWnI7QIgnrKBZVNLY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-564-pjilvmwdNemuEufjmFqD5A-1; Wed, 14 May 2025 05:12:27 -0400
+X-MC-Unique: pjilvmwdNemuEufjmFqD5A-1
+X-Mimecast-MFC-AGG-ID: pjilvmwdNemuEufjmFqD5A_1747213946
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43ea256f039so48060475e9.0
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 02:12:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747213946; x=1747818746;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fa07lKXLVNmfZrVEu1PlbE/kwWhJEykL17/zMyKV0b8=;
+ b=u6NCAs+PNxZuIkzO56+38y4SIOTMuexVggdWBGA9kMwryjwjMvE76aQuRIPAs/rjY0
+ QoT0C01GjbtajyiOqhgOyrq4zADo/wLijV9m4+45RKOu3r4iXfC13I8oWPJnwprWhzXF
+ LVQqN7CWKLXBUCZYLDGqXZbxdTarH27a59eHNoZjzhIIpms7719ELtA1gf9j5sOWFgkE
+ Y4KZBhnDI5MK7wBWZnkXG4LYC40e7gXR5cienZJTPJIpcMbtRGC1IDXXcA6/4TaGZYBC
+ bXlmKgXi0fmBSBmLrXTvrpr+Sy3CsJ1YQTFt0NveQCpdXFNZqaNHMUYHmNN0AzWoeyHH
+ /aiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIqMvnReN6xsMtHoCVFLhvimaT54GlooQRCTAJjky++E2PO9RCFE6kRmgwW8NXDFsBUXSlgHT8ahpN@nongnu.org
+X-Gm-Message-State: AOJu0Yy+ybeZ2/NH7jnPg7n4azXI13F4wUSgd2/EdqNLc8pG6wxnyiEd
+ jpbYZ9QHBUYEW8lVFh/MvV4+E/4QkOQ0PsYzpsm12MyaJ2wrhJ9Zt53FgqJNcLErzg9cshdnUHp
+ L7LhK0HmhLkXYGU2amLTjWTXpEU87+iEoMzUVjJK0PBpNhiUnANLk
+X-Gm-Gg: ASbGncsIwwO4QAQj0USJAodRY9F/7yrlSwloxpG7CpZ/yamaK8T8RiQYOjH1uYVu9bZ
+ i25XGF9mUaONGtEtgwvXp022hHo1+1/6mFdBAhfUgixMZETd6Uvgrk8sz/GNIPQmfRFCCS768ow
+ 3rg/bSIkagcSTa8h2W37i/KS8JAr/UaJw15fbIlgmUVYlznNwCYt4jY5aDtizEBABPCywefk3RY
+ V9lT9GZRtDl7/KtlHVkNbq0GWqryj0rsRlwCKqA7ggYDS1WKZyawEzBcctsRuOCsX9JXpmys9Do
+ FMsy2CUW1ph7iAMWl4TcxU5Ayyf1SLAn
+X-Received: by 2002:a05:600c:3d15:b0:441:b076:fce8 with SMTP id
+ 5b1f17b1804b1-442f20e73e8mr24297035e9.14.1747213946498; 
+ Wed, 14 May 2025 02:12:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBl6LhRJo6ZV3ARjGkyt/GT22J+KLQibrhClLrRKCXyeVyR3RRpU//qqdonG4106XBmo4RXg==
+X-Received: by 2002:a05:600c:3d15:b0:441:b076:fce8 with SMTP id
+ 5b1f17b1804b1-442f20e73e8mr24296785e9.14.1747213946151; 
+ Wed, 14 May 2025 02:12:26 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f57de100sm18745827f8f.2.2025.05.14.02.12.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 May 2025 02:12:25 -0700 (PDT)
+Date: Wed, 14 May 2025 11:12:24 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: yuanminghao <yuanmh12@chinatelecom.cn>, qemu-devel@nongnu.org, "Michael
+ S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH 1/1] vhost: do not reset used_memslots when destroying
+ vhost dev
+Message-ID: <20250514111224.7fb1263f@imammedo.users.ipa.redhat.com>
+In-Reply-To: <36d6672a-6d06-4af2-bdc6-4349df570662@redhat.com>
+References: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
+ <20250513141341.5f3ffa57@imammedo.users.ipa.redhat.com>
+ <36d6672a-6d06-4af2-bdc6-4349df570662@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=steven_lee@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,89 +111,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
-From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clang's sanitizer reports a runtime error when booting with
-'-net nic -net user', due to a null pointer being passed
-to memory_region_find(), which subsequently triggers a crash in
-flatview_lookup().
+On Tue, 13 May 2025 15:12:11 +0200
+David Hildenbrand <david@redhat.com> wrote:
 
-Root cause:
-- Missing NIC configuration in the CA35 initialization.
+> On 13.05.25 14:13, Igor Mammedov wrote:
+> > On Mon,  3 Mar 2025 13:02:17 -0500
+> > yuanminghao <yuanmh12@chinatelecom.cn> wrote:
+> >   
+> >>>> Global used_memslots or used_shared_memslots is updated to 0 unexpectly  
+> >>>
+> >>> it shouldn't be 0 in practice, as it comes from number of RAM regions VM has.
+> >>> It's likely a bug somewhere else.  
+> > 
+> > I haven't touched this code for a long time, but I'd say if we consider multiple
+> > devices, we shouldn't do following:
+> > 
+> > static void vhost_commit(MemoryListener *listener)
+> >      ...
+> >      if (dev->vhost_ops->vhost_backend_no_private_memslots &&
+> >          dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+> >          used_shared_memslots = dev->mem->nregions;
+> >      } else {
+> >          used_memslots = dev->mem->nregions;
+> >      }
+> > 
+> > where value dev->mem->nregions gets is well hidden/obscured
+> > and hard to trace where tail ends => fragile.
+> > 
+> > CCing David (accidental victim) who rewrote this part the last time,
+> > perhaps he can suggest a better way to fix the issue.  
+> 
+> I think the original idea is that all devices (of on type: private vs. 
+> non-private memslots) have the same number of memslots.
+> 
+> This avoids having to loop over all devices to figure out the number of 
+> memslots.
+> 
+> ... but in vhost_get_free_memslots() we already loop over all devices.
+> 
+> The check in vhost_dev_init() needs to be taken care of.
+> 
+> So maybe we can get rid of both variables completely?
 
-Fix:
-- Reduce ca35 ram size from 2GiB to 1GiB to align with ast2700a1-evb,
-  where the ram-container is defined as 1GiB in its class.
-- Add nic configuration in ast2700fc's ca35 init function.
+looks reasonable to me,  (instead of current state which is
+juggling with  dev->mem->nregions that can become 0 on unplug
+as it was reported).
 
-Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
----
- hw/arm/aspeed_ast27x0-fc.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 125a3ade40..ff64605663 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -48,7 +48,7 @@ struct Ast2700FCState {
-     bool mmio_exec;
- };
- 
--#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
-+#define AST2700FC_BMC_RAM_SIZE (1 * GiB)
- #define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
- 
- #define AST2700FC_HW_STRAP1 0x000000C0
-@@ -59,6 +59,7 @@ struct Ast2700FCState {
- static void ast2700fc_ca35_init(MachineState *machine)
- {
-     Ast2700FCState *s = AST2700A1FC(machine);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
-     AspeedSoCState *soc;
-     AspeedSoCClass *sc;
- 
-@@ -86,6 +87,14 @@ static void ast2700fc_ca35_init(MachineState *machine)
-                                  AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-         return;
-     }
-+
-+    for (int i = 0; i < sc->macs_num; i++) {
-+        if ((amc->macs_mask & (1 << i)) &&
-+            !qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
-+                                       true, NULL)) {
-+            break;
-+        }
-+    }
-     if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
-                                  AST2700FC_HW_STRAP1, &error_abort)) {
-         return;
-@@ -171,6 +180,7 @@ static void ast2700fc_init(MachineState *machine)
- static void ast2700fc_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
- 
-     mc->alias = "ast2700fc";
-     mc->desc = "ast2700 full core support";
-@@ -178,12 +188,13 @@ static void ast2700fc_class_init(ObjectClass *oc, const void *data)
-     mc->no_floppy = 1;
-     mc->no_cdrom = 1;
-     mc->min_cpus = mc->max_cpus = mc->default_cpus = 6;
-+    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
- }
- 
- static const TypeInfo ast2700fc_types[] = {
-     {
-         .name           = MACHINE_TYPE_NAME("ast2700fc"),
--        .parent         = TYPE_MACHINE,
-+        .parent         = TYPE_ASPEED_MACHINE,
-         .class_init     = ast2700fc_class_init,
-         .instance_size  = sizeof(Ast2700FCState),
-     },
--- 
-2.43.0
+David,
+do you have time to fix it?
 
 
