@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7C44C3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 18:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE076C3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 18:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFH6N-0006dk-6p; Wed, 14 May 2025 14:45:11 -0400
+	id 1uFH8d-00080F-0R; Wed, 14 May 2025 14:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFH6K-0006bn-1o; Wed, 14 May 2025 14:45:08 -0400
+ id 1uFH7k-0007Zq-FU; Wed, 14 May 2025 14:46:58 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFH6I-0004Js-1L; Wed, 14 May 2025 14:45:07 -0400
+ id 1uFH7e-0004WL-Md; Wed, 14 May 2025 14:46:36 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGVAnR029463;
- Wed, 14 May 2025 18:45:04 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGTiW9029370;
+ Wed, 14 May 2025 18:46:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=62F+YK
- 53OzG5R+Z1m2trtDgAUyFEwTh+vP3GPipYSu4=; b=Bc6esl09InccedbcE3Kvsa
- +vnPFZzGlMd8RQhmBIVR5dS85rhYpjfVZNPKJCpS2dz2QTWj1KE2aoXKEslcePXX
- sFQQrp83k2Z5jT5qGQTg5dV8zTKZ+XvBuQyTJw4bpHy+Mctv4B7FSaCAsTfXEHPq
- s3pPRYWqiuyNlZmx0+/PoqpMapYqWvmq+Y9KZ1xD6VDpRcZkkMJLCmzvKBAfM/f0
- dldnlm13OqpiPSyE8kYd8YvKT4SWgjqpM6Q1k3U1+RygInEItuCZtnP7P7QD6aRu
- gza+U/zPxOkPgyn34KfaxQUcE1DqtbHh3HL0wFs9DwKh48M2B5wNU3ndIONWYSsQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=HHTJhu
+ g0TgYFXwupMNdjbMCS1Ktfnwi98LEXWwdf/a0=; b=sBhYUs8DUUXlu3auqxW+jT
+ VjpTYO8fvmHdxQr+qsZu8P8eonYSvnC7cuEJ9yD1R2kuVDlnYItN/8EOfU57/ank
+ 63tWLnYt1Ysw9zo83794TlqNsRN5cfIP7fxgLgeKJp059o8Q5WfJ5bDb4DBHYRfU
+ 3pZQRHruPpWYP9bS9/eT0YWL2claX9BoVq0uGeuggMsRYLgOLmoC4Sv+g3XLExFY
+ JepKHrjHSW8lC/kzCPz7E0gAjAaD+HCJk6BPns+QYScr9U25UaVrpuSXR8rMP5wd
+ a5dG4MCUouYeMwskP/oidMVy/CRr5F7hC7q6N4Lp1ei/ZjvY1bOqoiiq6hctTC8A
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mr1gk398-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mr1gk3gu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 18:45:04 +0000 (GMT)
+ Wed, 14 May 2025 18:46:28 +0000 (GMT)
 Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54EIj3gm018013;
- Wed, 14 May 2025 18:45:03 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mr1gk392-1
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54EIjMIb019316;
+ Wed, 14 May 2025 18:46:27 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mr1gk3gr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 18:45:03 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGgeFA024281;
- Wed, 14 May 2025 18:45:02 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfs5v9n-1
+ Wed, 14 May 2025 18:46:27 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGG3uw021455;
+ Wed, 14 May 2025 18:46:26 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfrnv7a-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 18:45:02 +0000
+ Wed, 14 May 2025 18:46:26 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54EIj1nH29164070
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54EIkPNd29491920
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 May 2025 18:45:01 GMT
+ Wed, 14 May 2025 18:46:25 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1F2CD58060;
- Wed, 14 May 2025 18:45:01 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3BF385804E;
+ Wed, 14 May 2025 18:46:25 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 97C8B58056;
- Wed, 14 May 2025 18:45:00 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B5BE05803F;
+ Wed, 14 May 2025 18:46:24 +0000 (GMT)
 Received: from [9.10.80.143] (unknown [9.10.80.143])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 May 2025 18:45:00 +0000 (GMT)
-Message-ID: <1959e0bc-155e-4e1d-a709-176a5e936b13@linux.ibm.com>
-Date: Wed, 14 May 2025 13:45:00 -0500
+ Wed, 14 May 2025 18:46:24 +0000 (GMT)
+Message-ID: <10995b6a-bdb9-45c7-83a7-770b090e65fc@linux.ibm.com>
+Date: Wed, 14 May 2025 13:46:24 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/50] ppc/xive2: Fix calculation of END queue sizes
+Subject: Re: [PATCH 04/50] ppc/xive2: Remote VSDs need to match on forwarding
+ address
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
  <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-4-npiggin@gmail.com>
+ <20250512031100.439842-5-npiggin@gmail.com>
 Content-Language: en-US
 From: Mike Kowal <kowal@linux.ibm.com>
-In-Reply-To: <20250512031100.439842-4-npiggin@gmail.com>
+In-Reply-To: <20250512031100.439842-5-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: _cUQj95Vux7EHVQMAFPjTYSbPqch_jC6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE2OSBTYWx0ZWRfXxNAPVROYjEAk
- biEvcRE1sdPjkCV2Y6qI8itEN+yVaArbJC6d9I0MdUg8UXVsAnXKpQRDHZS9J6+URBXzJGk50Ni
- wrQ1EN9kjMfw8bRewqqspCzFM9OWA07OfVt4vfMAmBVupk0Jxl0PKiVEW2GBgiJ3UIGFBReeThA
- vPvuuafrlA0q4/m5oimyyMFmQXO2h1KjCikbJ7530PfO0xFI0r6KfaECiq7h1jxVC+qaWV5P1ln
- HmUER9Kt9FyvHJ4+VddYqs4c0Z56i1v9hDWZuumWVzKsTvg71cTYjE89gg1PqT8Qp/Rv8gs08nG
- NA+RlOdNxvFq5MeWw1kxiTHYhox0e8Ey/uvGf1Lt6kzI0uW8g+Id18b8HXXlFntqsya+qDbfJcf
- 1arnntpfCB+rCittSYbzl3+MuKEwSzb+A3tBbollDfA7hvCsmAbb4jvTaDirX6atMU1v5wyK
-X-Proofpoint-GUID: yPHThfgSnuEzYN0VoLl9HKMsYjanqVy4
-X-Authority-Analysis: v=2.4 cv=QOxoRhLL c=1 sm=1 tr=0 ts=6824e4b0 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=As9iCtooMvz10sf0nk0A:9
+X-Proofpoint-ORIG-GUID: zUvgbKkgvNX8gL8za3XZeSDRCBxRwl0v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE2OSBTYWx0ZWRfX2LrLu7dttknq
+ ump9Se6i8Qxu8ukLseSJBrdxoruVIbg/Gi1vJM23Y6uX74CAydyFo0yU/LIauy+zkbD7ObjDb9Q
+ YXdGcVCP2EYPghKpJwJosBnW+ci7ZcGAfmSO2n2L2QFKu+CE9ASkNnGkur9FVoFIW9X6iltOAJ1
+ 4vafgxNvUyQ+QzCt2bUZrgns2y1mY+KrQALgvJg2hN8l4feygjbsnQ1LFZ1Gmq5Ys4qGHo6tzu7
+ 1iAjUDh/Kc75N6ACOb6MdCY9m4Nfef0z+gLWywsP1Rc4WX9YajPTU2lSWR+diLSWQ/eI33r+zA1
+ jWe7edE1ahnj4uPLALijVtu9GP7Y8IUptbZWg+VVJn5ONhSGV5C5WFkux/dTieg5qZQAsSBQeIq
+ GlyTGu5QcWCeTcRwfAGgZpettrKZwW1SvbKnHO09mMKi1cKcVNKpFKP4JtfJu1JRAaKMgrWu
+X-Proofpoint-GUID: DZe3zD3gB0vE-Nty_sqSLSdQR6XQIZRT
+X-Authority-Analysis: v=2.4 cv=QOxoRhLL c=1 sm=1 tr=0 ts=6824e504 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=BZqlLmCw9VANlYX6ozUA:9
  a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
@@ -132,14 +133,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
-> From: Glenn Miles <milesg@linux.ibm.com>
+> From: Michael Kowal <kowal@linux.ibm.com>
 >
-> The queue size of an Event Notification Descriptor (END)
-> is determined by the 'cl' and QsZ fields of the END.
-> If the cl field is 1, then the queue size (in bytes) will
-> be the size of a cache line 128B * 2^QsZ and QsZ is limited
-> to 4.  Otherwise, it will be 4096B * 2^QsZ with QsZ limited
-> to 12.
+> In a multi chip environment there will be remote/forwarded VSDs.  The check
+> to find a matching INT controller (XIVE) of the remote block number was
+> checking the INTs chip number.  Block numbers are not tied to a chip number.
+> The matching remote INT is the one that matches the forwarded VSD address
+> with VSD types associated MMIO BAR.
 
 Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
 
@@ -147,82 +147,63 @@ Thanks MAK
 
 
 >
-> Fixes: f8a233dedf2 ("ppc/xive2: Introduce a XIVE2 core framework")
-> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
->   hw/intc/xive2.c             | 25 +++++++++++++++++++------
->   include/hw/ppc/xive2_regs.h |  1 +
->   2 files changed, 20 insertions(+), 6 deletions(-)
+>   hw/intc/pnv_xive2.c | 25 +++++++++++++++++--------
+>   1 file changed, 17 insertions(+), 8 deletions(-)
 >
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 7d584dfafa..790152a2a6 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -188,12 +188,27 @@ void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf)
->                              (uint32_t) xive_get_field64(EAS2_END_DATA, eas->w));
+> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> index d1713b406c..30b4ab2efe 100644
+> --- a/hw/intc/pnv_xive2.c
+> +++ b/hw/intc/pnv_xive2.c
+> @@ -102,12 +102,10 @@ static uint32_t pnv_xive2_block_id(PnvXive2 *xive)
 >   }
 >   
-> +#define XIVE2_QSIZE_CHUNK_CL    128
-> +#define XIVE2_QSIZE_CHUNK_4k   4096
-> +/* Calculate max number of queue entries for an END */
-> +static uint32_t xive2_end_get_qentries(Xive2End *end)
-> +{
-> +    uint32_t w3 = end->w3;
-> +    uint32_t qsize = xive_get_field32(END2_W3_QSIZE, w3);
-> +    if (xive_get_field32(END2_W3_CL, w3)) {
-> +        g_assert(qsize <= 4);
-> +        return (XIVE2_QSIZE_CHUNK_CL << qsize) / sizeof(uint32_t);
-> +    } else {
-> +        g_assert(qsize <= 12);
-> +        return (XIVE2_QSIZE_CHUNK_4k << qsize) / sizeof(uint32_t);
-> +    }
-> +}
-> +
->   void xive2_end_queue_pic_print_info(Xive2End *end, uint32_t width, GString *buf)
+>   /*
+> - * Remote access to controllers. HW uses MMIOs. For now, a simple scan
+> - * of the chips is good enough.
+> - *
+> - * TODO: Block scope support
+> + * Remote access to INT controllers. HW uses MMIOs(?). For now, a simple
+> + * scan of all the chips INT controller is good enough.
+>    */
+> -static PnvXive2 *pnv_xive2_get_remote(uint8_t blk)
+> +static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
 >   {
->       uint64_t qaddr_base = xive2_end_qaddr(end);
-> -    uint32_t qsize = xive_get_field32(END2_W3_QSIZE, end->w3);
->       uint32_t qindex = xive_get_field32(END2_W1_PAGE_OFF, end->w1);
-> -    uint32_t qentries = 1 << (qsize + 10);
-> +    uint32_t qentries = xive2_end_get_qentries(end);
+>       PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
 >       int i;
+> @@ -116,10 +114,22 @@ static PnvXive2 *pnv_xive2_get_remote(uint8_t blk)
+>           Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
+>           PnvXive2 *xive = &chip10->xive;
 >   
->       /*
-> @@ -223,8 +238,7 @@ void xive2_end_pic_print_info(Xive2End *end, uint32_t end_idx, GString *buf)
->       uint64_t qaddr_base = xive2_end_qaddr(end);
->       uint32_t qindex = xive_get_field32(END2_W1_PAGE_OFF, end->w1);
->       uint32_t qgen = xive_get_field32(END2_W1_GENERATION, end->w1);
-> -    uint32_t qsize = xive_get_field32(END2_W3_QSIZE, end->w3);
-> -    uint32_t qentries = 1 << (qsize + 10);
-> +    uint32_t qentries = xive2_end_get_qentries(end);
+> -        if (pnv_xive2_block_id(xive) == blk) {
+> +        /*
+> +         * Is this the XIVE matching the forwarded VSD address is for this
+> +         * VSD type
+> +         */
+> +        if ((vsd_type == VST_ESB   && fwd_addr == xive->esb_base) ||
+> +            (vsd_type == VST_END   && fwd_addr == xive->end_base)  ||
+> +            ((vsd_type == VST_NVP ||
+> +              vsd_type == VST_NVG) && fwd_addr == xive->nvpg_base) ||
+> +            (vsd_type == VST_NVC   && fwd_addr == xive->nvc_base)) {
+>               return xive;
+>           }
+>       }
+> +
+> +    qemu_log_mask(LOG_GUEST_ERROR,
+> +                 "XIVE: >>>>> pnv_xive2_get_remote() vsd_type %u  fwd_addr 0x%lX NOT FOUND\n",
+> +                 vsd_type, fwd_addr);
+>       return NULL;
+>   }
 >   
->       uint32_t nvx_blk = xive_get_field32(END2_W6_VP_BLOCK, end->w6);
->       uint32_t nvx_idx = xive_get_field32(END2_W6_VP_OFFSET, end->w6);
-> @@ -341,13 +355,12 @@ void xive2_nvgc_pic_print_info(Xive2Nvgc *nvgc, uint32_t nvgc_idx, GString *buf)
->   static void xive2_end_enqueue(Xive2End *end, uint32_t data)
->   {
->       uint64_t qaddr_base = xive2_end_qaddr(end);
-> -    uint32_t qsize = xive_get_field32(END2_W3_QSIZE, end->w3);
->       uint32_t qindex = xive_get_field32(END2_W1_PAGE_OFF, end->w1);
->       uint32_t qgen = xive_get_field32(END2_W1_GENERATION, end->w1);
+> @@ -252,8 +262,7 @@ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
 >   
->       uint64_t qaddr = qaddr_base + (qindex << 2);
->       uint32_t qdata = cpu_to_be32((qgen << 31) | (data & 0x7fffffff));
-> -    uint32_t qentries = 1 << (qsize + 10);
-> +    uint32_t qentries = xive2_end_get_qentries(end);
+>       /* Remote VST access */
+>       if (GETFIELD(VSD_MODE, vsd) == VSD_MODE_FORWARD) {
+> -        xive = pnv_xive2_get_remote(blk);
+> -
+> +        xive = pnv_xive2_get_remote(type, (vsd & VSD_ADDRESS_MASK));
+>           return xive ? pnv_xive2_vst_addr(xive, type, blk, idx) : 0;
+>       }
 >   
->       if (dma_memory_write(&address_space_memory, qaddr, &qdata, sizeof(qdata),
->                            MEMTXATTRS_UNSPECIFIED)) {
-> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-> index b11395c563..3c28de8a30 100644
-> --- a/include/hw/ppc/xive2_regs.h
-> +++ b/include/hw/ppc/xive2_regs.h
-> @@ -87,6 +87,7 @@ typedef struct Xive2End {
->   #define END2_W2_EQ_ADDR_HI         PPC_BITMASK32(8, 31)
->           uint32_t       w3;
->   #define END2_W3_EQ_ADDR_LO         PPC_BITMASK32(0, 24)
-> +#define END2_W3_CL                 PPC_BIT32(27)
->   #define END2_W3_QSIZE              PPC_BITMASK32(28, 31)
->           uint32_t       w4;
->   #define END2_W4_END_BLOCK          PPC_BITMASK32(4, 7)
 
