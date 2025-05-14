@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF99C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE03C3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHQ1-00045w-06; Wed, 14 May 2025 15:05:29 -0400
+	id 1uFHQ9-0004Tz-Cc; Wed, 14 May 2025 15:05:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHMI-0004x8-Lr; Wed, 14 May 2025 15:01:39 -0400
+ id 1uFHML-00051z-H4; Wed, 14 May 2025 15:01:44 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHMF-0007SW-9B; Wed, 14 May 2025 15:01:38 -0400
+ id 1uFHMI-0007Yh-UZ; Wed, 14 May 2025 15:01:41 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9E682121D97;
+ by isrv.corpit.ru (Postfix) with ESMTP id A9A50121D98;
  Wed, 14 May 2025 22:00:32 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9BBC020BA89;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B1CDC20BA8A;
  Wed, 14 May 2025 22:00:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Tim Lee <timlee660101@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Tyrone Ting <kfting@nuvoton.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 13/23] hw/arm/npcm8xx_boards: Correct valid_cpu_types
- setting of NPCM8XX SoC
-Date: Wed, 14 May 2025 22:00:25 +0300
-Message-Id: <20250514190041.104759-13-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 14/23] target/arm: Don't assert() for ISB/SB inside IT
+ block
+Date: Wed, 14 May 2025 22:00:26 +0300
+Message-Id: <20250514190041.104759-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
@@ -61,35 +61,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tim Lee <timlee660101@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-NPCM8XX SoC is the successor of the NPCM7XX. It features quad-core
-Cortex-A35 (Armv8, 64-bit) CPUs and some additional peripherals.
-Correct the `valid_cpu_types` setting to match the NPCM8XX SoC.
+If the guest code has an ISB or SB insn inside an IT block, we
+generate incorrect code which trips a TCG assertion:
+
+qemu-system-arm: ../tcg/tcg-op.c:3343: void tcg_gen_goto_tb(unsigned int): Assertion `(tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0' failed.
+
+This is because we call gen_goto_tb(dc, 1, ...) twice:
+
+ brcond_i32 ZF,$0x0,ne,$L1
+ add_i32 pc,pc,$0x4
+ goto_tb $0x1
+ exit_tb $0x73d948001b81
+ set_label $L1
+ add_i32 pc,pc,$0x4
+ goto_tb $0x1
+ exit_tb $0x73d948001b81
+
+Both calls are in arm_tr_tb_stop(), one for the
+DISAS_NEXT/DISAS_TOO_MANY handling, and one for the dc->condjump
+condition-failed codepath.  The DISAS_NEXT handling doesn't have this
+problem because arm_post_translate_insn() does the handling of "emit
+the label for the condition-failed conditional execution" and so
+arm_tr_tb_stop() doesn't have dc->condjump set.  But for
+DISAS_TOO_MANY we don't do that.
+
+Fix the bug by making arm_post_translate_insn() handle the
+DISAS_TOO_MANY case.  This only affects the SB and ISB insns when
+used in Thumb mode inside an IT block: only these insns specifically
+set is_jmp to TOO_MANY, and their A32 encodings are unconditional.
+
+For the major TOO_MANY case (breaking the TB because it would cross a
+page boundary) we do that check and set is_jmp to TOO_MANY only after
+the call to arm_post_translate_insn(); so arm_post_translate_insn()
+sees is_jmp == DISAS_NEXT, and  we emit the correct code for that
+situation.
+
+With this fix we generate the somewhat more sensible set of TCG ops:
+ brcond_i32 ZF,$0x0,ne,$L1
+ set_label $L1
+ add_i32 pc,pc,$0x4
+ goto_tb $0x1
+ exit_tb $0x7c5434001b81
+
+(NB: the TCG optimizer doesn't optimize out the jump-to-next, but
+we can't really avoid emitting it because we don't know at the
+point we're emitting the handling for the condexec check whether
+this insn is going to happen to be a nop for us or not.)
 
 Cc: qemu-stable@nongnu.org
-Fixes: 7e70eb3cad7c83 ("hw/arm: Add NPCM845 Evaluation board")
-Signed-off-by: Tim Lee <timlee660101@gmail.com>
-Message-id: 20250428022934.3081139-1-timlee660101@gmail.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Tyrone Ting <kfting@nuvoton.com>
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2942
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 97cdd1b0a7a010702a1d118b74c3af3bb2edb35c)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250501125544.727038-1-peter.maydell@linaro.org
+(cherry picked from commit 8ed7c0b6488a7f20318d6ba414f1cbcd0ed92afe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
-index 3fb8478e72..6d3e59f6b9 100644
---- a/hw/arm/npcm8xx_boards.c
-+++ b/hw/arm/npcm8xx_boards.c
-@@ -213,7 +213,7 @@ static void npcm8xx_machine_class_init(ObjectClass *oc, void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-     static const char * const valid_cpu_types[] = {
--        ARM_CPU_TYPE_NAME("cortex-a9"),
-+        ARM_CPU_TYPE_NAME("cortex-a35"),
-         NULL
-     };
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index d280018138..7e749fc15b 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -7770,7 +7770,8 @@ static bool arm_check_ss_active(DisasContext *dc)
  
+ static void arm_post_translate_insn(DisasContext *dc)
+ {
+-    if (dc->condjmp && dc->base.is_jmp == DISAS_NEXT) {
++    if (dc->condjmp &&
++        (dc->base.is_jmp == DISAS_NEXT || dc->base.is_jmp == DISAS_TOO_MANY)) {
+         if (dc->pc_save != dc->condlabel.pc_save) {
+             gen_update_pc(dc, dc->condlabel.pc_save - dc->pc_save);
+         }
 -- 
 2.39.5
 
