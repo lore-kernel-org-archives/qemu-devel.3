@@ -4,88 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 285CEC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1114C3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFAeI-0006vU-A1; Wed, 14 May 2025 07:51:46 -0400
+	id 1uFAfu-0000HR-L5; Wed, 14 May 2025 07:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdl-00069H-Fi
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:14 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFAfE-00086N-Hy
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:52:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdj-0006JN-9e
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:13 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFAfA-0006vg-Gp
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:52:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747223470;
+ s=mimecast20190719; t=1747223559;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PhRXtmUdCm+S5qOy3Bl4Anc/xV95bi9unHwGtH+zUJg=;
- b=Slj4UgXJ87xUZDKY4W8WrA0EZIKft9w2x09jGGv2OkEs5ppfjl83DSn/yWxggR1EKcW+lD
- Ltb4qAE8TGTfHB4joAb7fpCE9L9plg3Qhg7TtIsga6e1L3GDB6fkE4WSP1GDRhjW6oOEqF
- QvXRxjz+7Ul2RErguXBlNV8L1MRqjOM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Ro1U1fcUObrd80Z56tOU0j5iAX6aRgj7l9qD79xyIR0=;
+ b=WuiO3mwDxWELWnF/0ge97dxFQj5Loyra7GCtuRQQQNmv1pdyYOGA//8QtnQW/1k0YVdlFP
+ ySIQTON2mpYknswMyQ0vr29pTNheKCRxKXo674OpyEjls364eOqUtbEeAsMYmmjeigozFP
+ CGHp4wfxg6h3onqU7zfD7Jqc4aqvh2E=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-YfgmrVS-Pe6zl-6hjdSkBg-1; Wed, 14 May 2025 07:51:09 -0400
-X-MC-Unique: YfgmrVS-Pe6zl-6hjdSkBg-1
-X-Mimecast-MFC-AGG-ID: YfgmrVS-Pe6zl-6hjdSkBg_1747223468
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a1f6c5f4f2so1842405f8f.2
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:51:08 -0700 (PDT)
+ us-mta-153-F41azCvHMECxXUEkp_iUNQ-1; Wed, 14 May 2025 07:52:37 -0400
+X-MC-Unique: F41azCvHMECxXUEkp_iUNQ-1
+X-Mimecast-MFC-AGG-ID: F41azCvHMECxXUEkp_iUNQ_1747223556
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a0b7c8b3e2so4338568f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:52:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747223467; x=1747828267;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1747223556; x=1747828356;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PhRXtmUdCm+S5qOy3Bl4Anc/xV95bi9unHwGtH+zUJg=;
- b=tMEfx2JnrSnnQgOAkLEG4SrG8e2+wSTufQU0PkuFiOuiSElsKlSRLGXXgfm3ZWLKej
- dZtQObBqrfk+s8I7F0j5QAloLEsmA8cAHsgWMDaIR4uf6supFramP6vJbltJBSwD26E+
- zLqGGCu/Nngo0KKbOB5FkjQmSGgfrpdvjtytPIk1yzc/V2GI63gOjDQiXkJCMtYZgJlz
- 9wHNElHGPZsHZXkRkvgbDdCxCiAZlMK0CS9zQFL1JALDiIMF9W8IzrHlrMr4EXi7yS41
- BFyXJlMrmFLjy99t2OWzlAsYscV8W8P0A2SbrMcbfMXHDtlWHwpSpmOlsTqEjDsehX/F
- NNWw==
-X-Gm-Message-State: AOJu0YxpMT/UxgHMAQ/2FDJSZGYln+2tar4MvD20TkUAb7EQ8UA32IkV
- 1y5JNJbBVlT3FUKA+dlj+cZTkEPjhuZ6CD5CoilsC+d3K2IugtBGsw4sH7K4buzky7KYw4hoE82
- QlgRzF1hYYrupY1EKfBd8nOCF/8vuGeLutUdUOFz9IIRdkGs1joI7pWcWhB5+y8p8W5t8kPMVpz
- L9aml+zo6T8RnLMSFBksl++R+iWnzSEQ==
-X-Gm-Gg: ASbGncsWNHJHCuR0L0UE/AwRNwWGmlgxfgonrQ1eO5Dx8iDbDJg8ZGZnGEBAFO9L68L
- khjITXl2n+7/sXSps1fxvNwIXEPalXbVnpEW/BjxHV30iD9LWf93bIO/dGYlvYfHECq553TLSjF
- fXI8oefDdPQy7z+/hJXtgBMcnK4wgsjPMNGRRnmn+CDxXGQd9IDeCkrECKppNsokKQMZg1GnVHv
- 4UGodKjLr3Hm6fICoQZmFUdyM8qQkYCAvBfL2kwqqim4LVatoBTwlEuoW50KHeC3fO7LvJZMAzx
- P9H4FA==
-X-Received: by 2002:a05:6000:2a8:b0:3a2:3c51:f4a1 with SMTP id
- ffacd0b85a97d-3a34969ad98mr2493688f8f.7.1747223467378; 
- Wed, 14 May 2025 04:51:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqXEE1dBvEGd9csjBwRFzOTLi/ecDj3LPyQvogr/wQAiWezzPb/qqRk28CDGGK1A/POmB8mg==
-X-Received: by 2002:a05:6000:2a8:b0:3a2:3c51:f4a1 with SMTP id
- ffacd0b85a97d-3a34969ad98mr2493670f8f.7.1747223466872; 
- Wed, 14 May 2025 04:51:06 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ bh=Ro1U1fcUObrd80Z56tOU0j5iAX6aRgj7l9qD79xyIR0=;
+ b=j9EBXq5V1bVeOy/fx5LDrYmnPnFPKypsdhez/rWGCSOeXmnq84NWa/9JjtlZk+muEi
+ +VJQmhxGC4TdV+2/KkSGCIe+aQKAkkQGDxCAmze+YNbtr2CuTykOcC3p+Xl6uAlY5ANh
+ g0e60Gkh0oxulhbs98i8KYGDf/SQO8VCq225SLHxed/AFSeTHBCekD5HAEXP+BiHry9o
+ 0Dw0spfe9HivPobnUhPoikWwNKnDb5hV5MnRoEjlCmYVTda4PNKf7UJmxp5YX38wtPJu
+ eOYIghNq5NYCrWEfozL8WUPfq4wIBfIVoh54lIrucwQ5lXq2v3cbYL/AX2vjSOkMqK8Y
+ SpEw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmp+WCUhPOjBAygkrkdxreARDRdM5rqnVhf8Tg/yFvXFaK0CYcFYdnwTwhj8fTEip63LkgjJWs/udp@nongnu.org
+X-Gm-Message-State: AOJu0YwHre88/FRUuQI+PzTfVtaDfCgVMnxiWdi/YIFUnyaV6EDUSwfd
+ ET5i0PeSxxsjeatOCSh48G473g5zfmM9tiWn5vxyEP7Tx5w1JKxpy288zCoX7DMAw1NWbfzo1q2
+ fD7asEQCjIN8O32UF/JOrjc4bTf++KBACC5ooK1PYAWU4jYsy7ohy
+X-Gm-Gg: ASbGnctBy086Ccm0VHWhtoxQKCIoBOggq2cBl1CCY2vN0lcQ2M0Ns9EF8kMT3fwSEXO
+ TiPZUHRI6kQBH1lK2CcXPnCyywsMVBx5IqLkbSGwyohlRWcLdPSqGIhWexhNltmwRWJ1GS9f4j/
+ uIEjBFpRwyvobNLj+PI1zbsO9TuFzRFaWGV39fH6gROccKki+C4VTWBLmzB/RwqhFgkeCWyD1yS
+ jrdyyGQcNk2sGC+YnMn75f5g+EZPMP7N459Htdx+EGvLskOBNP7qPEbZ7bjYVY68GFU11JTinfi
+ qy8/9UUW6KbnKOicn2ueBLdS1bAw6xRU/tDUU1FebtTWiDEXVA==
+X-Received: by 2002:a5d:588d:0:b0:3a2:38e:c0b0 with SMTP id
+ ffacd0b85a97d-3a349922514mr2863559f8f.45.1747223556533; 
+ Wed, 14 May 2025 04:52:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQbm/SfZMIirrf9QOlsCXGDQbx5GYkbSfQHSB/kHkrQRMAwwSQhrZB9ky0z6xCImsXAv7rVA==
+X-Received: by 2002:a5d:588d:0:b0:3a2:38e:c0b0 with SMTP id
+ ffacd0b85a97d-3a349922514mr2863533f8f.45.1747223556177; 
+ Wed, 14 May 2025 04:52:36 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a2cf38sm19366554f8f.77.2025.05.14.04.51.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 04:51:03 -0700 (PDT)
-Date: Wed, 14 May 2025 07:51:02 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Haoqian He <haoqian.he@smartx.com>, Lei Yang <leiyang@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 19/27] vhost: return failure if stop virtqueue failed in
- vhost_dev_stop
-Message-ID: <5a317017b827e338358792cd07663f8ea25f1ffe.1747223385.git.mst@redhat.com>
-References: <cover.1747223385.git.mst@redhat.com>
+ ffacd0b85a97d-3a1f5a2cf0esm19567906f8f.79.2025.05.14.04.52.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 May 2025 04:52:35 -0700 (PDT)
+Message-ID: <7e471ac0-7d8e-47a5-8249-24134261837d@redhat.com>
+Date: Wed, 14 May 2025 13:52:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1747223385.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/7] scripts/checkpatch: use new hook for file
+ permissions check
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20250512182447.1139105-1-berrange@redhat.com>
+ <20250512182447.1139105-6-berrange@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250512182447.1139105-6-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -110,132 +157,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haoqian He <haoqian.he@smartx.com>
+On 5/12/25 20:24, Daniel P. Berrangé wrote:
+> From: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> The file permissions check is the kind of check intended to be performed
+> in the new start of file hook.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
-This patch captures the error of vhost_virtqueue_stop() in vhost_dev_stop()
-and returns the error upward.
 
-Specifically, if QEMU is disconnected from the vhost backend, some actions
-in vhost_dev_stop() will fail, such as sending vhost-user messages to the
-backend (GET_VRING_BASE, SET_VRING_ENABLE) and vhost_reset_status.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Considering that both set_vring_enable and vhost_reset_status require setting
-the specific virtio feature bit, we can capture vhost_virtqueue_stop()'s
-error to indicate that QEMU has lost connection with the backend.
+Thanks,
 
-This patch is the pre patch for 'vhost-user: return failure if backend crashes
-when live migration', which makes the live migration aware of the loss of
-connection with the vhost-user backend and aborts the live migration.
+C.
 
-Signed-off-by: Haoqian He <haoqian.he@smartx.com>
-Message-Id: <20250416024729.3289157-3-haoqian.he@smartx.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- include/hw/virtio/vhost.h |  8 +++++---
- hw/virtio/vhost.c         | 23 +++++++++++++----------
- 2 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index bb4b58e115..38800a7156 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -232,8 +232,10 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-  * Stop the vhost device. After the device is stopped the notifiers
-  * can be disabled (@vhost_dev_disable_notifiers) and the device can
-  * be torn down (@vhost_dev_cleanup).
-+ *
-+ * Return: 0 on success, != 0 on error when stopping dev.
-  */
--void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
- 
- /**
-  * DOC: vhost device configuration handling
-@@ -333,8 +335,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write);
- 
- int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vdev,
-                           struct vhost_virtqueue *vq, unsigned idx);
--void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
--                          struct vhost_virtqueue *vq, unsigned idx);
-+int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq, unsigned idx);
- 
- void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
- void vhost_dev_free_inflight(struct vhost_inflight *inflight);
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 4cae7c1664..fc43853704 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1367,10 +1367,10 @@ fail_alloc_desc:
-     return r;
- }
- 
--void vhost_virtqueue_stop(struct vhost_dev *dev,
--                          struct VirtIODevice *vdev,
--                          struct vhost_virtqueue *vq,
--                          unsigned idx)
-+int vhost_virtqueue_stop(struct vhost_dev *dev,
-+                         struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq,
-+                         unsigned idx)
- {
-     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
-     struct vhost_vring_state state = {
-@@ -1380,7 +1380,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
- 
-     if (virtio_queue_get_desc_addr(vdev, idx) == 0) {
-         /* Don't stop the virtqueue which might have not been started */
--        return;
-+        return 0;
-     }
- 
-     r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
-@@ -1411,6 +1411,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
-                        0, virtio_queue_get_avail_size(vdev, idx));
-     vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
-                        0, virtio_queue_get_desc_size(vdev, idx));
-+    return r;
- }
- 
- static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
-@@ -2135,9 +2136,10 @@ fail_features:
- }
- 
- /* Host notifiers must be enabled at this point. */
--void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
- {
-     int i;
-+    int rc = 0;
- 
-     /* should only be called after backend is connected */
-     assert(hdev->vhost_ops);
-@@ -2156,10 +2158,10 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         vhost_dev_set_vring_enable(hdev, false);
-     }
-     for (i = 0; i < hdev->nvqs; ++i) {
--        vhost_virtqueue_stop(hdev,
--                             vdev,
--                             hdev->vqs + i,
--                             hdev->vq_index + i);
-+        rc |= vhost_virtqueue_stop(hdev,
-+                                   vdev,
-+                                   hdev->vqs + i,
-+                                   hdev->vq_index + i);
-     }
-     if (hdev->vhost_ops->vhost_reset_status) {
-         hdev->vhost_ops->vhost_reset_status(hdev);
-@@ -2176,6 +2178,7 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-     hdev->started = false;
-     vdev->vhost_started = false;
-     hdev->vdev = NULL;
-+    return rc;
- }
- 
- int vhost_net_set_backend(struct vhost_dev *hdev,
--- 
-MST
+> ---
+>   scripts/checkpatch.pl | 19 +++++++++++--------
+>   1 file changed, 11 insertions(+), 8 deletions(-)
+> 
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 6a7b543ddf..4a18daa384 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -1447,6 +1447,17 @@ sub process_file_list {
+>   # Called at the start of processing a diff hunk for a file
+>   sub process_start_of_file {
+>   	my $fileinfo = shift;
+> +
+> +	# Check for incorrect file permissions
+> +	if ($fileinfo->{action} eq "new" && ($fileinfo->{mode} & 0111)) {
+> +		my $permhere = $fileinfo->{linestart} . "FILE: " .
+> +			$fileinfo->{filenew} . "\n";
+> +		if ($fileinfo->{filenew} =~
+> +		    /(\bMakefile(?:\.objs)?|\.(c|cc|cpp|h|mak|s|S))$/) {
+> +			ERROR("do not set execute permissions for source " .
+> +			      "files\n" . $permhere);
+> +		}
+> +	}
+>   }
+>   
+>   # Called at the end of processing a diff hunk for a file
+> @@ -1718,14 +1729,6 @@ sub process {
+>   
+>   		$cnt_lines++ if ($realcnt != 0);
+>   
+> -# Check for incorrect file permissions
+> -		if ($line =~ /^new (file )?mode.*[7531]\d{0,2}$/) {
+> -			my $permhere = $here . "FILE: $realfile\n";
+> -			if ($realfile =~ /(\bMakefile(?:\.objs)?|\.c|\.cc|\.cpp|\.h|\.mak|\.[sS])$/) {
+> -				ERROR("do not set execute permissions for source files\n" . $permhere);
+> -			}
+> -		}
+> -
+>   # Only allow Python 3 interpreter
+>   		if ($realline == 1 &&
+>   			$line =~ /^\+#!\ *\/usr\/bin\/(?:env )?python$/) {
 
 
