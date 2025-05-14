@@ -4,88 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74BD6C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 01:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BFEC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 01:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF19P-0002Uk-Gr; Tue, 13 May 2025 21:43:15 -0400
+	id 1uF1H4-0003zA-Gn; Tue, 13 May 2025 21:51:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uF19N-0002Ua-Ei
- for qemu-devel@nongnu.org; Tue, 13 May 2025 21:43:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1uF1H2-0003yP-4r; Tue, 13 May 2025 21:51:08 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uF19F-0003xy-0h
- for qemu-devel@nongnu.org; Tue, 13 May 2025 21:43:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747186982;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nmjdMTVETLyOTCibj6FURra4JiSgrtYc3AGrj83wkrI=;
- b=XwxhWeGLFVDo1pah67AjOm6RAd0WbDeTxTF4iCFuOfrgw9YXpn3IJ6G5lb5uLW/H/5a42A
- 4ErUve0WBmHJUWUTgmyEbhKCmTOnXB3Hkaq7mrDVgJmeCWyVydntBBY5XophlLZX5MQp8P
- sNiP4e6qLxTxviHp/wRWFYBTFm97+Fo=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-nS6Dqrq8OqCe2Dr_1L-DxA-1; Tue, 13 May 2025 21:43:01 -0400
-X-MC-Unique: nS6Dqrq8OqCe2Dr_1L-DxA-1
-X-Mimecast-MFC-AGG-ID: nS6Dqrq8OqCe2Dr_1L-DxA_1747186980
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5fc1796ff88so5729979a12.2
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 18:43:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747186980; x=1747791780;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nmjdMTVETLyOTCibj6FURra4JiSgrtYc3AGrj83wkrI=;
- b=wiS2WDyg7DhTLYsLU32owXfUBaTjg1CQqYAAIL+8Lx9vsr5QIhRrQYLZ2a06bZwWXT
- 55y0GyR3btxD7tlXIWL1TBbDpaYSB8YBOHhkzenUUSkyF/4KfU862+Cw0etZWO6y6dKe
- ilYSygp7ALZHqhMYDtJNFv4t2kZi8+pQlnzQ2Cq0YW3Qvpp/NoKn8EzxKl/LVsbgoMpS
- +6gJ+j5iKNUCYRse6x0Mv6h6WpZ+rrMG3RaePvmGO2L+HangcuSPVXKQbZ6t6JiaT+2y
- fMN5zvHYBfwRZU3cyzW9Zbh6ybSC0yQ0zjmJlYs9yLYpTSWLuH5VAABiBe8nAbAVm4Pz
- Yn8A==
-X-Gm-Message-State: AOJu0YzyhdBcEIlCdhvYXfoGz3YcmigMYKU/eH/TcCCNbFsu0+RQixfC
- iKX434kyA05apTGu2+4NX0drrl5gVzoA2kwmc31TVn5XyWvLJtkQ59SMI4nokZJ3wVnWzI8SWqj
- UEFT57IAHHXc1DS0XzKJ9NusIZoge7FDuy6n9uoaEeekV2EZFhwPeo3uv2gA2Z/yGv63AnfHNgN
- KWs58uqRZ7oV7W1495qjc6ph8Gp9U=
-X-Gm-Gg: ASbGncv2ejzfTIU3pDZ6R3rcU4UXb2ZY9TaG9q45x2WcrCgElI31fCmzr4GdNSiyKpD
- cHvGZqHHz5T+63C+jTVEKxHTgKyx9jy3SDO7OkdE6cBUTX3hnnDJ4noMcUUsAZGQmBnbARQ==
-X-Received: by 2002:a05:6402:26d1:b0:5ec:cbf8:ab28 with SMTP id
- 4fb4d7f45d1cf-5ff988d4535mr1070044a12.22.1747186980139; 
- Tue, 13 May 2025 18:43:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/B3P8bmw4vFWMvCZFqZ9/srw3K+bt7DXu3/9AWCmGsd5Q+QR2bjToLvimOn0k1ZQZ+wWCz00gMngb38Dw8Rs=
-X-Received: by 2002:a05:6402:26d1:b0:5ec:cbf8:ab28 with SMTP id
- 4fb4d7f45d1cf-5ff988d4535mr1070025a12.22.1747186979797; Tue, 13 May 2025
- 18:42:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250507184647.15580-1-jonah.palmer@oracle.com>
-In-Reply-To: <20250507184647.15580-1-jonah.palmer@oracle.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Wed, 14 May 2025 09:42:22 +0800
-X-Gm-Features: AX0GCFtDj_FmJIn2Vxf2J6Il3Ydvj1YYLqAOSdk2QCtV4qFvkPE3UnZYe-VHTOo
-Message-ID: <CAPpAL=zXoYhqp1J-OmexXA1ftGfCWetCR3J18p_ZWnj7p-M37w@mail.gmail.com>
-Subject: Re: [PATCH v4 0/7] Move memory listener register to vhost_vdpa_init
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, eperezma@redhat.com, peterx@redhat.com, 
- mst@redhat.com, jasowang@redhat.com, lvivier@redhat.com, dtatulea@nvidia.com, 
- parav@mellanox.com, sgarzare@redhat.com, si-wei.liu@oracle.com, 
- lingshan.zhu@intel.com, boris.ostrovsky@oracle.com
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1uF1Gz-0004cX-4s; Tue, 13 May 2025 21:51:07 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54DIbL58019722;
+ Wed, 14 May 2025 01:51:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3TmlgH
+ ZALTWqS81chkCb8NRkxHLignnYMhvhlXZJoRM=; b=Dr5CmMO0SgSYH3iOX3tKOF
+ L+ZyvB99RjBJ17b4b5YjQQufZ9pSXp/TajeWstYr4P2ryUTw3Egcl/QCrz79FDJ5
+ fcgD/c9gsqnxFbQYYyjfK0RiwaydhKYWgdi5hztO+w11TkeSEZLLfd2t9x4+1k1o
+ bEG+EHOoy/t2FuF1q+Z8jQ+lzoYJnDdb3nr/oO+D8XVzuEP7J8UxV5aMc+4+gl5k
+ rTGeD+zTXvCivYfYHUuWjBdfnBJu48AYx7zxgL5e/7yLTOfiI9dL+KTJt9Yh0O6k
+ ZA8VmcjuChSxjhyjWgRDLpS0ffyeefWW1gubw5PUZJDttGJLlf8iyw/sTsDc0rwA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mbh79hua-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 May 2025 01:51:01 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54DM78Eh021396;
+ Wed, 14 May 2025 01:51:00 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfrhp1u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 May 2025 01:51:00 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54E1oxPK31982318
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 May 2025 01:50:59 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1A84E58054;
+ Wed, 14 May 2025 01:50:59 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F9BE5804E;
+ Wed, 14 May 2025 01:50:58 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.144.77]) by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 May 2025 01:50:57 +0000 (GMT)
+Message-ID: <6e9032190e5899124829a322687f8eafb5d9898a.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 0/9] s390x: Remove deprecated machine types up to v4.0
+From: Eric Farman <farman@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Halil Pasic
+ <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>, Ilya
+ Leoshkevich <iii@linux.ibm.com>
+Date: Tue, 13 May 2025 21:50:57 -0400
+In-Reply-To: <20250506062148.306084-1-thuth@redhat.com>
+References: <20250506062148.306084-1-thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=YbW95xRf c=1 sm=1 tr=0 ts=6823f705 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=FyhYd2wihLo59oQhctUA:9
+ a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: XSYuiwszhYH45_X99lf7WVnXOEeOGlw3
+X-Proofpoint-ORIG-GUID: XSYuiwszhYH45_X99lf7WVnXOEeOGlw3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDAwOCBTYWx0ZWRfX6DoRpYJPg10t
+ CK7nRA3mDyr/Yl9M3BryhZdTsuDnuS9VuGj87LMkQMC8Uk1dBeI1V3YtzNavyu4pdv2L4eI8cPY
+ NKMu0q3d2kUglNnRAT7BmJcjoYitwPX/RxM2brCfE9xvcuu7qobFDet4eLjEKD26xAf8DmsCBBA
+ y0jVxlLIm/Ql8Mh8WnqbhoiKd23i4hue+6nWTPdXGEwj2kRk+cE7MKFU1z3knCSDNK4dsGsQ/k5
+ IKp/aL1EkR8YCIsn8chIaXNZoXKyKEZ4yTJ9zcmbKzb+ZscD6WRJkLaKd28i7hxDqGimkiDMVGB
+ BVrXMPcS840naD8ziaXTOrcbHxNib4MgINz25UmAKLP1GU7l3JBSeN1w0rBgZrGEtZKQHdxN3r5
+ pIZzY8TUnkU2EDwkpr7FKiCGiHxko/Ln/RbbIiZiIIThOlVkwPX/9Rg7Omevxasszu/bOnW8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-13_03,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 bulkscore=0
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 mlxlogscore=906 clxscore=1015 phishscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505140008
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -104,100 +121,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested pass with vhost_vdpa device's regression tests.
-
-Tested-by: Lei Yang <leiyang@redhat.com>
-
-On Thu, May 8, 2025 at 2:47=E2=80=AFAM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
->
-> Current memory operations like pinning may take a lot of time at the
-> destination.  Currently they are done after the source of the migration i=
-s
-> stopped, and before the workload is resumed at the destination.  This is =
-a
-> period where neigher traffic can flow, nor the VM workload can continue
-> (downtime).
->
-> We can do better as we know the memory layout of the guest RAM at the
-> destination from the moment that all devices are initializaed.  So
-> moving that operation allows QEMU to communicate the kernel the maps
-> while the workload is still running in the source, so Linux can start
-> mapping them.
->
-> As a small drawback, there is a time in the initialization where QEMU
-> cannot respond to QMP etc.  By some testing, this time is about
-> 0.2seconds.  This may be further reduced (or increased) depending on the
-> vdpa driver and the platform hardware, and it is dominated by the cost
-> of memory pinning.
->
-> This matches the time that we move out of the called downtime window.
-> The downtime is measured as checking the trace timestamp from the moment
-> the source suspend the device to the moment the destination starts the
-> eight and last virtqueue pair.  For a 39G guest, it goes from ~2.2526
-> secs to 2.0949.
->
-> Future directions on top of this series may include to move more things a=
-head
-> of the migration time, like set DRIVER_OK or perform actual iterative mig=
-ration
-> of virtio-net devices.
->
-> Comments are welcome.
->
-> This series is a different approach of series [1]. As the title does not
-> reflect the changes anymore, please refer to the previous one to know the
-> series history.
->
-> This series is based on [2], it must be applied after it.
->
-> [Jonah Palmer]
-> This series was rebased after [3] was pulled in, as [3] was a prerequisit=
-e
-> fix for this series.
->
-> v4:
-> ---
-> * Add memory listener unregistration to vhost_vdpa_reset_device.
-> * Remove memory listener unregistration from vhost_vdpa_reset_status.
->
-> v3:
-> ---
-> * Rebase
->
+On Tue, 2025-05-06 at 08:21 +0200, Thomas Huth wrote:
+> The machine types up to s390-ccw-virtio-4.0 are older than 6 years
+> and thus, according to our support policy, are scheduled for being
+> deletion now. These patches remove the machines and clean up the
+> related compatibility handling that is not required anymore.
+>=20
 > v2:
-> ---
-> * Move the memory listener registration to vhost_vdpa_set_owner function.
-> * Move the iova_tree allocation to net_vhost_vdpa_init.
->
-> v1 at https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02136.html=
-.
->
-> [1] https://patchwork.kernel.org/project/qemu-devel/cover/20231215172830.=
-2540987-1-eperezma@redhat.com/
-> [2] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg05910.html
-> [3] https://lore.kernel.org/qemu-devel/20250217144936.3589907-1-jonah.pal=
-mer@oracle.com/
->
-> Jonah - note: I'll be on vacation from May 10-19. Will respond to
->               comments when I return.
->
-> Eugenio P=C3=A9rez (7):
->   vdpa: check for iova tree initialized at net_client_start
->   vdpa: reorder vhost_vdpa_set_backend_cap
->   vdpa: set backend capabilities at vhost_vdpa_init
->   vdpa: add listener_registered
->   vdpa: reorder listener assignment
->   vdpa: move iova_tree allocation to net_vhost_vdpa_init
->   vdpa: move memory listener register to vhost_vdpa_init
->
->  hw/virtio/vhost-vdpa.c         | 107 +++++++++++++++++++++------------
->  include/hw/virtio/vhost-vdpa.h |  22 ++++++-
->  net/vhost-vdpa.c               |  34 +----------
->  3 files changed, 93 insertions(+), 70 deletions(-)
->
-> --
-> 2.43.5
->
+> - Some patches are already upstream, thus dropped them from the series
+> - Split the patch to remove 2.10 and 2.11 into two separate patches
+>   (for consistency with other patches)
+> - Fixed a problem with the QemuFeatDef feature set
+
+Ah, I was wondering about this part in particular before you'd sent this v2=
+, so now my question is
+moot.
+
+For the series:
+
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+
+>=20
+> Thomas Huth (9):
+>   hw/s390x/s390-virtio-ccw: Remove the deprecated 2.10 machine type
+>   hw/s390x/s390-virtio-ccw: Remove the deprecated 2.11 machine type
+>   hw/s390x/event-facility: Remove the obsolete "allow_all_mask_sizes"
+>     code
+>   target/s390x: Rename the qemu_V2_11 feature set to qemu_MIN
+>   hw/s390x/s390-virtio-ccw: Remove the deprecated 2.12 machine type
+>   hw/s390x/s390-virtio-ccw: Remove the deprecated 3.0 machine type
+>   hw/s390x: Remove the obsolete hpage_1m_allowed switch
+>   hw/s390x/s390-virtio-ccw: Remove the deprecated 3.1 machine type
+>   hw/s390x/s390-virtio-ccw: Remove the deprecated 4.0 machine type
+>=20
+>  include/hw/s390x/s390-virtio-ccw.h |   4 -
+>  hw/s390x/event-facility.c          |  37 +-------
+>  hw/s390x/s390-virtio-ccw.c         | 131 -----------------------------
+>  target/s390x/gen-features.c        |  13 +--
+>  target/s390x/kvm/kvm.c             |   6 --
+>  5 files changed, 4 insertions(+), 187 deletions(-)
+>=20
 
 
