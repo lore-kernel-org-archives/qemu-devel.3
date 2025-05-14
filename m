@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687ACC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE618C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:02:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBgE-0001Y7-4j; Wed, 14 May 2025 08:57:50 -0400
+	id 1uFBfi-0000TH-O0; Wed, 14 May 2025 08:57:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBgC-0001Us-Bm; Wed, 14 May 2025 08:57:48 -0400
+ id 1uFBfQ-0008S0-Ku; Wed, 14 May 2025 08:57:08 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBgA-0007lL-17; Wed, 14 May 2025 08:57:47 -0400
+ id 1uFBfN-0007hk-EE; Wed, 14 May 2025 08:57:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6C9C7121ACE;
- Wed, 14 May 2025 15:56:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BE745121AC3;
+ Wed, 14 May 2025 15:56:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 18E0D20B846;
- Wed, 14 May 2025 15:56:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5E22520B83B;
+ Wed, 14 May 2025 15:56:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Joey <jeundery@gmail.com>, Gustavo Romero <gustavo.romero@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.18 14/18] target/arm: Don't assert() for ISB/SB inside IT
- block
-Date: Wed, 14 May 2025 15:56:20 +0300
-Message-Id: <20250514125640.91677-14-mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 03/18] hw/pci-host/designware: Fix ATU_UPPER_TARGET
+ register access
+Date: Wed, 14 May 2025 15:56:09 +0300
+Message-Id: <20250514125640.91677-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,77 +63,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-If the guest code has an ISB or SB insn inside an IT block, we
-generate incorrect code which trips a TCG assertion:
-
-qemu-system-arm: ../tcg/tcg-op.c:3343: void tcg_gen_goto_tb(unsigned int): Assertion `(tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0' failed.
-
-This is because we call gen_goto_tb(dc, 1, ...) twice:
-
- brcond_i32 ZF,$0x0,ne,$L1
- add_i32 pc,pc,$0x4
- goto_tb $0x1
- exit_tb $0x73d948001b81
- set_label $L1
- add_i32 pc,pc,$0x4
- goto_tb $0x1
- exit_tb $0x73d948001b81
-
-Both calls are in arm_tr_tb_stop(), one for the
-DISAS_NEXT/DISAS_TOO_MANY handling, and one for the dc->condjump
-condition-failed codepath.  The DISAS_NEXT handling doesn't have this
-problem because arm_post_translate_insn() does the handling of "emit
-the label for the condition-failed conditional execution" and so
-arm_tr_tb_stop() doesn't have dc->condjump set.  But for
-DISAS_TOO_MANY we don't do that.
-
-Fix the bug by making arm_post_translate_insn() handle the
-DISAS_TOO_MANY case.  This only affects the SB and ISB insns when
-used in Thumb mode inside an IT block: only these insns specifically
-set is_jmp to TOO_MANY, and their A32 encodings are unconditional.
-
-For the major TOO_MANY case (breaking the TB because it would cross a
-page boundary) we do that check and set is_jmp to TOO_MANY only after
-the call to arm_post_translate_insn(); so arm_post_translate_insn()
-sees is_jmp == DISAS_NEXT, and  we emit the correct code for that
-situation.
-
-With this fix we generate the somewhat more sensible set of TCG ops:
- brcond_i32 ZF,$0x0,ne,$L1
- set_label $L1
- add_i32 pc,pc,$0x4
- goto_tb $0x1
- exit_tb $0x7c5434001b81
-
-(NB: the TCG optimizer doesn't optimize out the jump-to-next, but
-we can't really avoid emitting it because we don't know at the
-point we're emitting the handling for the condexec check whether
-this insn is going to happen to be a nop for us or not.)
+Fix copy/paste error writing to the ATU_UPPER_TARGET
+register, we want to update the upper 32 bits.
 
 Cc: qemu-stable@nongnu.org
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2942
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250501125544.727038-1-peter.maydell@linaro.org
-(cherry picked from commit 8ed7c0b6488a7f20318d6ba414f1cbcd0ed92afe)
+Reported-by: Joey <jeundery@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2861
+Fixes: d64e5eabc4c ("pci: Add support for Designware IP block")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-Id: <20250331152041.74533-2-philmd@linaro.org>
+(cherry picked from commit 04e99f9eb7920b0f0fcce65686c3bedf5e32a1f9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/translate.c b/target/arm/translate.c
-index 10dfa11a2b..ed9ed8ed0a 100644
---- a/target/arm/translate.c
-+++ b/target/arm/translate.c
-@@ -9545,7 +9545,8 @@ static bool arm_check_ss_active(DisasContext *dc)
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index c235b9daa3..2156c7f9de 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -362,7 +362,7 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
  
- static void arm_post_translate_insn(DisasContext *dc)
- {
--    if (dc->condjmp && dc->base.is_jmp == DISAS_NEXT) {
-+    if (dc->condjmp &&
-+        (dc->base.is_jmp == DISAS_NEXT || dc->base.is_jmp == DISAS_TOO_MANY)) {
-         if (dc->pc_save != dc->condlabel.pc_save) {
-             gen_update_pc(dc, dc->condlabel.pc_save - dc->pc_save);
-         }
+     case DESIGNWARE_PCIE_ATU_UPPER_TARGET:
+         viewport->target &= 0x00000000FFFFFFFFULL;
+-        viewport->target |= val;
++        viewport->target |= (uint64_t)val << 32;
+         break;
+ 
+     case DESIGNWARE_PCIE_ATU_LIMIT:
 -- 
 2.39.5
 
