@@ -4,31 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03BBC3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 09:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA3DC3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 09:31:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF8QB-0000NP-Eb; Wed, 14 May 2025 05:29:03 -0400
+	id 1uF8SC-0001CY-T8; Wed, 14 May 2025 05:31:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uF8Q9-0000NA-Fu; Wed, 14 May 2025 05:29:01 -0400
+ id 1uF8SB-0001CD-29; Wed, 14 May 2025 05:31:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uF8Q7-0004qp-0P; Wed, 14 May 2025 05:29:00 -0400
+ id 1uF8S8-0005Fe-SA; Wed, 14 May 2025 05:31:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8DC4412199C;
- Wed, 14 May 2025 12:28:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BF03A1219A1;
+ Wed, 14 May 2025 12:30:53 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EEDAC20B706;
- Wed, 14 May 2025 12:28:56 +0300 (MSK)
-Message-ID: <ca2765ba-c026-44fb-a1ca-e29c52cef0ad@tls.msk.ru>
-Date: Wed, 14 May 2025 12:28:56 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2D9D620B70C;
+ Wed, 14 May 2025 12:31:03 +0300 (MSK)
+Message-ID: <474dedb7-6b8b-49bb-b91f-f2272ef3684f@tls.msk.ru>
+Date: Wed, 14 May 2025 12:31:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 4/4] qemu-img: improve queue depth validation in img_bench
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Kevin Wolf <kwolf@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
 References: <20250425175252.316807-1-kwolf@redhat.com>
@@ -36,8 +37,8 @@ References: <20250425175252.316807-1-kwolf@redhat.com>
  <8fb759d6-6682-4962-b81d-ea20dbecd1e9@tls.msk.ru>
  <45fec2ac-9c59-4fe9-b750-8d04aa3e473f@tls.msk.ru>
  <aCNf_6rx07U6Qmgm@redhat.com>
+ <ca2765ba-c026-44fb-a1ca-e29c52cef0ad@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -81,7 +82,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <aCNf_6rx07U6Qmgm@redhat.com>
+In-Reply-To: <ca2765ba-c026-44fb-a1ca-e29c52cef0ad@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -107,71 +108,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.05.2025 18:06, Kevin Wolf wrote:
-> Am 28.04.2025 um 15:58 hat Michael Tokarev geschrieben:
->> 28.04.2025 16:54, Michael Tokarev пишет:
->>> 25.04.2025 20:52, Kevin Wolf wrote:
->>>> From: Denis Rastyogin <gerben@altlinux.org>
+On 14.05.2025 12:28, Michael Tokarev wrote:
+> On 13.05.2025 18:06, Kevin Wolf wrote:
+>> Am 28.04.2025 um 15:58 hat Michael Tokarev geschrieben:
+>>> 28.04.2025 16:54, Michael Tokarev пишет:
+>>>> 25.04.2025 20:52, Kevin Wolf wrote:
+>>>>> From: Denis Rastyogin <gerben@altlinux.org>
+>>>>>
+>>>>> This error was discovered by fuzzing qemu-img.
+>>>>>
+>>>>> Currently, running `qemu-img bench -d 0` in img_bench is allowed,
+>>>>> which is a pointless operation and causes qemu-img to hang.
+>>>>>
+>>>>> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+>>>>> Message-ID: <20250327162423.25154-5-gerben@altlinux.org>
+>>>>> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+>>>>> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+>>>>> ---
+>>>>>    qemu-img.c | 2 +-
+>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/qemu-img.c b/qemu-img.c
+>>>>> index 2044c22a4c..76ac5d3028 100644
+>>>>> --- a/qemu-img.c
+>>>>> +++ b/qemu-img.c
+>>>>> @@ -4571,7 +4571,7 @@ static int img_bench(int argc, char **argv)
+>>>>>            {
+>>>>>                unsigned long res;
+>>>>> -            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > 
+>>>>> INT_MAX) {
+>>>>> +            if (qemu_strtoul(optarg, NULL, 0, &res) <= 0 || res > 
+>>>>> INT_MAX) {
+>>>>>                    error_report("Invalid queue depth specified");
+>>>>>                    return 1;
+>>>>>                }
 >>>>
->>>> This error was discovered by fuzzing qemu-img.
->>>>
->>>> Currently, running `qemu-img bench -d 0` in img_bench is allowed,
->>>> which is a pointless operation and causes qemu-img to hang.
->>>>
->>>> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
->>>> Message-ID: <20250327162423.25154-5-gerben@altlinux.org>
->>>> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
->>>> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
->>>> ---
->>>>    qemu-img.c | 2 +-
->>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/qemu-img.c b/qemu-img.c
->>>> index 2044c22a4c..76ac5d3028 100644
->>>> --- a/qemu-img.c
->>>> +++ b/qemu-img.c
->>>> @@ -4571,7 +4571,7 @@ static int img_bench(int argc, char **argv)
->>>>            {
->>>>                unsigned long res;
->>>> -            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
->>>> +            if (qemu_strtoul(optarg, NULL, 0, &res) <= 0 || res > INT_MAX) {
->>>>                    error_report("Invalid queue depth specified");
->>>>                    return 1;
->>>>                }
+>>>> FWIW, it's been covered by my qemu-img options patches for way over 
+>>>> a year.
 >>>
->>> FWIW, it's been covered by my qemu-img options patches for way over a year.
+>>> In particular:
+>>>
+>>> https://lore.kernel.org/qemu-devel/20240927061121.573271-28- 
+>>> mjt@tls.msk.ru/
+>>>
+>>> I'm still waiting for some feedback from these patches - heard 
+>>> neither ACK
+>>> nor NACK for this rather large work.
 >>
->> In particular:
+>> Oops, seems I never continued review after patch 5. I'll get back to it.
 >>
->> https://lore.kernel.org/qemu-devel/20240927061121.573271-28-mjt@tls.msk.ru/
->>
->> I'm still waiting for some feedback from these patches - heard neither ACK
->> nor NACK for this rather large work.
+>> However, I don't see the above hunk in that series. Am I missing it or
+>> is there another series of yours waiting for review?
 > 
-> Oops, seems I never continued review after patch 5. I'll get back to it.
-> 
-> However, I don't see the above hunk in that series. Am I missing it or
-> is there another series of yours waiting for review?
+> This one:
 
-This one:
-
-@@ -4791,27 +4788,17 @@ static int img_bench(const img_cmd_t *ccmd, int 
-argc, char **argv)
-  );
-              break;
-          case 'c':
--        {
--            unsigned long res;
--
--            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
--                error_report("Invalid request count specified");
-+            count = cvtnum_full("request count", optarg, false, 1, 
-INT_MAX);
-+            if (count < 0) {
-                  return 1;
-              }
-
-Thanks,
+Actually it is the next very similar hunk.  But doesn't matter anymore,
+since this 4/4 partial patch has been applied already.
 
 /mjt
+
+> @@ -4791,27 +4788,17 @@ static int img_bench(const img_cmd_t *ccmd, int 
+> argc, char **argv)
+>   );
+>               break;
+>           case 'c':
+> -        {
+> -            unsigned long res;
+> -
+> -            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > 
+> INT_MAX) {
+> -                error_report("Invalid request count specified");
+> +            count = cvtnum_full("request count", optarg, false, 1, 
+> INT_MAX);
+> +            if (count < 0) {
+>                   return 1;
+>               }
 
