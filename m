@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30CACC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 23:49:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC47C54754
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 23:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFLpw-0003ih-LN; Wed, 14 May 2025 19:48:32 -0400
+	id 1uFLq1-0003jQ-Gr; Wed, 14 May 2025 19:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1uFLpu-0003iP-G1
- for qemu-devel@nongnu.org; Wed, 14 May 2025 19:48:30 -0400
+ id 1uFLpy-0003j1-KC
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 19:48:34 -0400
 Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1uFLpr-0003uo-TO
- for qemu-devel@nongnu.org; Wed, 14 May 2025 19:48:30 -0400
+ id 1uFLpw-0003v8-1K
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 19:48:34 -0400
 Received: from localhost.localdomain (dynamic-cpe-pool.orcon.net.nz
  [121.99.116.25] (may be forged)) (authenticated bits=0)
  by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 54ENmDXs1233147
+ 54ENmDXu1233147
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Wed, 14 May 2025 23:48:18 GMT
+ Wed, 14 May 2025 23:48:25 GMT
 Authentication-Results: anarch128.org; auth=pass;
  dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=ixUzlPUW header.a=rsa-sha256 header.s=100003;
+ header.i=@anarch128.org header.b=NYrVtE0j header.a=rsa-sha256 header.s=100003;
  x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org); 
  x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1747266501;
- bh=pR9DQt8BAQGDGy1JZ4htqnI6R5H8unWvUaS9zdFyptE=;
- h=From:To:Cc:Subject:Date:From;
- b=ixUzlPUW7CczypznYwXQ8gD9yxVZKMP8Tx3E+eJWCKsttltedsJVVq6CXLXmqsoo9
- rymfrb/qz+bdD2QkG39yxC7zHz0W6U3FI/JjLXfn4DFPZnTJrUlKD5/7wj6Oebp9EM
- /QilLaJhxbk6W/qKH98QEEcDrnROV8UtbnrG9ybOvB6PHHodjWamPlYBLnoBXewiQ8
- 7sFq85j1/j4xW+UOlF+RxMZtt5YNn6111CrbSTm7DoNdCN+8L+LwX+IxR0iOHmTBRB
- nzqVbC7EfXAZv1zs/L6Cb0KSp0ycrj/F5rv4AWEue/v4Rlc/R6svrx4w/b9NaWFxMR
- 2Ito0m0bOFzCQ==
+ s=100003; t=1747266508;
+ bh=MIo6G6bBkblBxY2cWoVUex6gvV5Ux11YKYQaCxtvx5Y=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=NYrVtE0jt3t3vKB05i+ciJvyDbYnr6iJvIfZT9t7+sFe0q108hYuriqaipbJgD20y
+ ykSqugbi2rlNiqq41b4B7QzyBcBFdxt2jSonCZ9Qv11jTENGYK8wPwbz8rh0daazBD
+ oJHo7vtjRCEWBqjhR2cQb9411rCHjadxSjzph5GflXvyfsrAyW4XKrf9VKdBqfxpVC
+ 8KTsMbSkyqLe4UU7Yrjnz0hio6MVuxZ6e8biVl2J0y1hmWapdtEaxYlD9RY4aZX40m
+ cyLcs2Z2yR4Vi4m+xNz0yUbJu4wMSKPyf/RWbQa0ugaAsxIbicIjy2GMd2pIGASttO
+ PzA5XNJ/uFrqw==
 From: Michael Clark <michael@anarch128.org>
 To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
 Cc: Michael Clark <michael@anarch128.org>
-Subject: [PATCH v4 0/4] x86-disas: port x86-mini disassembler to QEMU
-Date: Thu, 15 May 2025 11:47:07 +1200
-Message-ID: <20250514234711.2766881-1-michael@anarch128.org>
+Subject: [PATCH v4 2/4] x86-disas: add x86-mini metadata documentation
+Date: Thu, 15 May 2025 11:47:09 +1200
+Message-ID: <20250514234711.2766881-3-michael@anarch128.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250514234711.2766881-1-michael@anarch128.org>
+References: <20250514234711.2766881-1-michael@anarch128.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
@@ -77,283 +79,330 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-a port of an embeddable x86-mini disassembler to QEMU.
+add detailed information on the instruction opcode encoding
+format for LEX/VEX/EVEX prefix, map and opcode encoding, the
+operand encoding format, the field order encoding format and
+notes on instruction synthesis for parameterized opcodes.
 
-- https://github.com/michaeljclark/qemu/tree/x86-mini-v4
+these docs are from an external project with an MIT license:
 
-# x86-mini disassembler
+- https://github.com/michaeljclark/x86
 
-the x86-mini library is a lightweight x86 encoder, decoder, and
-disassembler that uses extensions to the Intel instruction set
-metadata format to encode modern VEX/EVEX instructions and legacy
-instructions using a parameterized LEX (legacy extension) format.
-
-- metadata-driven disassembler with Intel format output.
-- written in C11 for compatibility with projects written in C.
-- low-level instruction encoder and decoder uses <= 32-bytes.
-- python tablegen program to generate C tables from CSV metadata.
-- metadata table tool to inspect operand encode and decode tables.
-- carefully checked machine-readable instruction set metadata.
-- support for REX/VEX/EVEX and preliminary support for REX2.
-
-the x86-mini x86 encoder and decoder library has been written from
-scratch to be modern and as simple as possible while also covering
-recent additions to the Intel and AMD 64-bit instruction sets such
-as the EVEX encodings for recent AVX-512 extensions and soon REX2/
-EVEX encodings for Intel APX, as it is written with that in mind.
-
-## interest to the QEMU community
-
-- x86-mini is fast. raw decode performance is ~100-200MiB/sec.
-- x86-mini is small. 5 files, ~5 KLOC or ~13 KLOC including tables.
-- x86-mini is complete and includes the latest AVX-512 extensions.
-- x86-mini is easy to extend and uses extended Intel format metadata.
-- x86-mini is documented with detailed info on the metadata format.
-- x86-mini has CLI tools for searching x86 instruction set metadata.
-
-it would be nice to have an x86 disassembler building out-of-the-box
-as I find QEMU's built-in tracing extremely useful and given x86 is
-a popular target, a small embedded disassembler might be useful.
-
-- https://github.com/michaeljclark/x86/tree/x86-mini
-
-## techinical notes
-
-- the decoder is table-based and uses a metadata interpreter.
-- the decode table is ~66KiB with a ~150KiB acceleration trie.
-- there are currently 3658 opcode entries active on x86-64
-  which expands to 4775 table entries due to parameterization.
-
-after cherry-picking the commits, one can test host and target
-disassembly support. e.g. for an x86-64 target on an x86-64 host:
-
-$ echo aaa | qemu-x86_64 -d in_asm,out_asm /usr/bin/openssl sha256
-
-## caveats
-
-- supports 32-bit and 64-bit disassembly, and theoretically 16-bit.
-- designed to support 16-bit. base index formats are not done yet.
-- x86-64 is exhaustively fuzz-tested against the LLVM disassembler.
-- but x86-mini is new and hasn't been battle-tested in production.
-
-## conclusion
-
-the metadata is based on x86-csv but has had numerous inaccuracies
-fixed plus conversion of legacy instructions to the new LEX format.
-in effect the metadata has been fuzz-tested against LLVM for x86-64
-and ISA coverage is in the order of ~99.9%. the main branch of the
-linked repo has a procedural fuzzer for metadata-based instruction
-synthesis that could be useful for generating test cases for QEMU.
-
-## summary of changes
-
-v4
-- add MIT license file to disas/x86-data directory.
-- add notes about the MIT license to commit messages.
-- change disas/x86-disas.c license to GPL-2.0-or-later.
-- add const to several arrays and function delclarations.
-- eliminate some dead code for printing out metadata.
-
-v3
-- add SPDX license identifier to source files.
-- fix some typographical mistakes in header comments.
-- add control register, debug register, and MSR enumerations.
-- add x86_flag enumeration values for rflags register.
-- removed custom snprintf.
-
-v2
-- improve grouping of encode, decode, and disasm functions.
-- fix some metadata documentation errors and ommissions.
-- use g_malloc/g_malloc0/g_free instead of malloc/calloc/free.
-- use cpu_to_{le16|le32|le64}, {le16|le32|le64}_to_cpu.
-- move bitfield documentation comments next to definitions.
-- redefine condition codes enum and remove redundant functions.
-- reduce snprintf performance cost with optimized version.
-- remove duplicate unused definition of ctz/clz/popcnt.
-- remove duplicate host endianness conversion functions.
-- remove some magic constants and replace with math.
-- remove some unnecessary casts.
-
-v1
-- simplification to memory operand formatting logic.
-- fixed VSIB pointer formatting for consistency with LLVM.
-- 64-bit disasembly exhaustively fuzz tested against LLVM.
-- includes x86 metadata and x86-tablegen.py python script.
-- includes x86 metadata opcode and operand documentation.
-- addressed non-whitespace related checkpatch.pl warnings.
-
-Michael Clark (4):
-  x86-disas: add x86-mini instruction set metadata
-  x86-disas: add x86-mini metadata documentation
-  x86-disas: add x86-mini metadata tablegen script
-  x86-disas: add x86-mini disassembler implementation
-
- disas/disas-host.c                        |    5 +
- disas/meson.build                         |   97 +
- disas/x86-core.c                          | 2588 +++++++++++++++++++++
- disas/x86-data/LICENSE                    |   22 +
- disas/x86-data/x86_adx.csv                |    5 +
- disas/x86-data/x86_aes.csv                |   13 +
- disas/x86-data/x86_aeskle.csv             |    3 +
- disas/x86-data/x86_aesklewide.csv         |    3 +
- disas/x86-data/x86_avx.csv                |  375 +++
- disas/x86-data/x86_avx2.csv               |  171 ++
- disas/x86-data/x86_avx5124fmaps.csv       |    5 +
- disas/x86-data/x86_avx5124vnniw.csv       |    3 +
- disas/x86-data/x86_avx512b.csv            |    3 +
- disas/x86-data/x86_avx512bf16.csv         |   10 +
- disas/x86-data/x86_avx512bitalg.csv       |   10 +
- disas/x86-data/x86_avx512bw.csv           |  291 +++
- disas/x86-data/x86_avx512cd.csv           |   19 +
- disas/x86-data/x86_avx512d.csv            |    2 +
- disas/x86-data/x86_avx512dq.csv           |  143 ++
- disas/x86-data/x86_avx512er.csv           |   11 +
- disas/x86-data/x86_avx512f.csv            |  901 +++++++
- disas/x86-data/x86_avx512fp16.csv         |  237 ++
- disas/x86-data/x86_avx512ifma.csv         |    7 +
- disas/x86-data/x86_avx512pf.csv           |   17 +
- disas/x86-data/x86_avx512vbmi.csv         |   13 +
- disas/x86-data/x86_avx512vbmi2.csv        |   61 +
- disas/x86-data/x86_avx512vl.csv           |    2 +
- disas/x86-data/x86_avx512vnni.csv         |   13 +
- disas/x86-data/x86_avx512vp2intersect.csv |    7 +
- disas/x86-data/x86_avx512vpopcntdq.csv    |    7 +
- disas/x86-data/x86_avxneconvert.csv       |   15 +
- disas/x86-data/x86_avxvnni.csv            |    9 +
- disas/x86-data/x86_avxvnniint8.csv        |   13 +
- disas/x86-data/x86_base.csv               |  549 +++++
- disas/x86-data/x86_bmi1.csv               |   13 +
- disas/x86-data/x86_bmi2.csv               |   17 +
- disas/x86-data/x86_cet.csv                |   15 +
- disas/x86-data/x86_cldemote.csv           |    2 +
- disas/x86-data/x86_clwb.csv               |    2 +
- disas/x86-data/x86_enqcmd.csv             |    3 +
- disas/x86-data/x86_f16c.csv               |    5 +
- disas/x86-data/x86_fma.csv                |   97 +
- disas/x86-data/x86_fsgsbase.csv           |    9 +
- disas/x86-data/x86_gfni.csv               |   19 +
- disas/x86-data/x86_hreset.csv             |    2 +
- disas/x86-data/x86_invpcid.csv            |    2 +
- disas/x86-data/x86_lzcnt.csv              |    3 +
- disas/x86-data/x86_mmx.csv                |   60 +
- disas/x86-data/x86_movdir64b.csv          |    2 +
- disas/x86-data/x86_movdiri.csv            |    3 +
- disas/x86-data/x86_mpx.csv                |    9 +
- disas/x86-data/x86_msrlist.csv            |    4 +
- disas/x86-data/x86_ospke.csv              |    3 +
- disas/x86-data/x86_pclmulqdq.csv          |    3 +
- disas/x86-data/x86_pconfig.csv            |    2 +
- disas/x86-data/x86_prefetchw.csv          |    7 +
- disas/x86-data/x86_raoint.csv             |    9 +
- disas/x86-data/x86_rdpid.csv              |    2 +
- disas/x86-data/x86_rdrand.csv             |    2 +
- disas/x86-data/x86_rdseed.csv             |    2 +
- disas/x86-data/x86_rtm.csv                |    5 +
- disas/x86-data/x86_serialize.csv          |    2 +
- disas/x86-data/x86_sha.csv                |    8 +
- disas/x86-data/x86_smap.csv               |    3 +
- disas/x86-data/x86_sse.csv                |   58 +
- disas/x86-data/x86_sse2.csv               |  148 ++
- disas/x86-data/x86_sse3.csv               |   11 +
- disas/x86-data/x86_sse4_1.csv             |   48 +
- disas/x86-data/x86_sse4_2.csv             |    7 +
- disas/x86-data/x86_sse4_3.csv             |    2 +
- disas/x86-data/x86_ssse3.csv              |   33 +
- disas/x86-data/x86_uintr.csv              |    6 +
- disas/x86-data/x86_vaes.csv               |   17 +
- disas/x86-data/x86_vmx.csv                |   14 +
- disas/x86-data/x86_waitpkg.csv            |    4 +
- disas/x86-data/x86_wbnoinvd.csv           |    2 +
- disas/x86-data/x86_x87.csv                |  145 ++
- disas/x86-data/x86_xsaveopt.csv           |    3 +
- disas/x86-disas.c                         |   78 +
- disas/x86.h                               | 1860 +++++++++++++++
- docs/x86-metadata.txt                     |  303 +++
- include/disas/dis-asm.h                   |    1 +
- scripts/x86-tablegen.py                   |  695 ++++++
- target/i386/cpu.c                         |    7 +
- 84 files changed, 9387 insertions(+)
- create mode 100644 disas/x86-core.c
- create mode 100644 disas/x86-data/LICENSE
- create mode 100644 disas/x86-data/x86_adx.csv
- create mode 100644 disas/x86-data/x86_aes.csv
- create mode 100644 disas/x86-data/x86_aeskle.csv
- create mode 100644 disas/x86-data/x86_aesklewide.csv
- create mode 100644 disas/x86-data/x86_avx.csv
- create mode 100644 disas/x86-data/x86_avx2.csv
- create mode 100644 disas/x86-data/x86_avx5124fmaps.csv
- create mode 100644 disas/x86-data/x86_avx5124vnniw.csv
- create mode 100644 disas/x86-data/x86_avx512b.csv
- create mode 100644 disas/x86-data/x86_avx512bf16.csv
- create mode 100644 disas/x86-data/x86_avx512bitalg.csv
- create mode 100644 disas/x86-data/x86_avx512bw.csv
- create mode 100644 disas/x86-data/x86_avx512cd.csv
- create mode 100644 disas/x86-data/x86_avx512d.csv
- create mode 100644 disas/x86-data/x86_avx512dq.csv
- create mode 100644 disas/x86-data/x86_avx512er.csv
- create mode 100644 disas/x86-data/x86_avx512f.csv
- create mode 100644 disas/x86-data/x86_avx512fp16.csv
- create mode 100644 disas/x86-data/x86_avx512ifma.csv
- create mode 100644 disas/x86-data/x86_avx512pf.csv
- create mode 100644 disas/x86-data/x86_avx512vbmi.csv
- create mode 100644 disas/x86-data/x86_avx512vbmi2.csv
- create mode 100644 disas/x86-data/x86_avx512vl.csv
- create mode 100644 disas/x86-data/x86_avx512vnni.csv
- create mode 100644 disas/x86-data/x86_avx512vp2intersect.csv
- create mode 100644 disas/x86-data/x86_avx512vpopcntdq.csv
- create mode 100644 disas/x86-data/x86_avxneconvert.csv
- create mode 100644 disas/x86-data/x86_avxvnni.csv
- create mode 100644 disas/x86-data/x86_avxvnniint8.csv
- create mode 100644 disas/x86-data/x86_base.csv
- create mode 100644 disas/x86-data/x86_bmi1.csv
- create mode 100644 disas/x86-data/x86_bmi2.csv
- create mode 100644 disas/x86-data/x86_cet.csv
- create mode 100644 disas/x86-data/x86_cldemote.csv
- create mode 100644 disas/x86-data/x86_clwb.csv
- create mode 100644 disas/x86-data/x86_enqcmd.csv
- create mode 100644 disas/x86-data/x86_f16c.csv
- create mode 100644 disas/x86-data/x86_fma.csv
- create mode 100644 disas/x86-data/x86_fsgsbase.csv
- create mode 100644 disas/x86-data/x86_gfni.csv
- create mode 100644 disas/x86-data/x86_hreset.csv
- create mode 100644 disas/x86-data/x86_invpcid.csv
- create mode 100644 disas/x86-data/x86_lzcnt.csv
- create mode 100644 disas/x86-data/x86_mmx.csv
- create mode 100644 disas/x86-data/x86_movdir64b.csv
- create mode 100644 disas/x86-data/x86_movdiri.csv
- create mode 100644 disas/x86-data/x86_mpx.csv
- create mode 100644 disas/x86-data/x86_msrlist.csv
- create mode 100644 disas/x86-data/x86_ospke.csv
- create mode 100644 disas/x86-data/x86_pclmulqdq.csv
- create mode 100644 disas/x86-data/x86_pconfig.csv
- create mode 100644 disas/x86-data/x86_prefetchw.csv
- create mode 100644 disas/x86-data/x86_raoint.csv
- create mode 100644 disas/x86-data/x86_rdpid.csv
- create mode 100644 disas/x86-data/x86_rdrand.csv
- create mode 100644 disas/x86-data/x86_rdseed.csv
- create mode 100644 disas/x86-data/x86_rtm.csv
- create mode 100644 disas/x86-data/x86_serialize.csv
- create mode 100644 disas/x86-data/x86_sha.csv
- create mode 100644 disas/x86-data/x86_smap.csv
- create mode 100644 disas/x86-data/x86_sse.csv
- create mode 100644 disas/x86-data/x86_sse2.csv
- create mode 100644 disas/x86-data/x86_sse3.csv
- create mode 100644 disas/x86-data/x86_sse4_1.csv
- create mode 100644 disas/x86-data/x86_sse4_2.csv
- create mode 100644 disas/x86-data/x86_sse4_3.csv
- create mode 100644 disas/x86-data/x86_ssse3.csv
- create mode 100644 disas/x86-data/x86_uintr.csv
- create mode 100644 disas/x86-data/x86_vaes.csv
- create mode 100644 disas/x86-data/x86_vmx.csv
- create mode 100644 disas/x86-data/x86_waitpkg.csv
- create mode 100644 disas/x86-data/x86_wbnoinvd.csv
- create mode 100644 disas/x86-data/x86_x87.csv
- create mode 100644 disas/x86-data/x86_xsaveopt.csv
- create mode 100644 disas/x86-disas.c
- create mode 100644 disas/x86.h
+Signed-off-by: Michael Clark <michael@anarch128.org>
+---
+ docs/x86-metadata.txt | 303 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 303 insertions(+)
  create mode 100644 docs/x86-metadata.txt
- create mode 100755 scripts/x86-tablegen.py
 
+diff --git a/docs/x86-metadata.txt b/docs/x86-metadata.txt
+new file mode 100644
+index 000000000000..ce96cedfe100
+--- /dev/null
++++ b/docs/x86-metadata.txt
+@@ -0,0 +1,303 @@
++x86 Instruction Set Metadata
++============================
++
++Legacy x86 instructions have been parameterized in the instruction set
++metadata using a new LEX prefix for instruction encoding with abstract width
++suffix codes that synthesize multiple instruction widths using combinations
++of operand size prefixes and `REX.W` bits. This new LEX format makes legacy
++instruction encodings consistent with VEX and EVEX encodings as well as
++eliminating some redundancy in the metadata.
++
++There are a small number of special cases for legacy instructions which need
++mode-dependent overrides for cases such as, a different opcode is used for
++different modes, or the instruction has a quirk where the operand size does
++not follow the default rules for instruction word and address sizes:
++
++- `.wx` is used to specify 64-bit instructions that default to 32-bit
++  operands in 64-bit mode.
++- `.ww` is used to specify 64-bit instructions that default to 64-bit
++  operands in 64-bit mode.
++- `.o16` is used to specify an instruction override specific to 16-bit mode.
++- `.o32` is used to specify an instruction override specific to 32-bit mode.
++- `.o64` is used to specify an instruction override specific to 64-bit mode.
++
++CSV File Format
++===============
++
++The instruction set metadata in the `disas/x86-data` directory has the
++following fields which map to instruction encoding tables in the Intel
++Architecture Software Developer's Manual:
++
++- _Instruction_: opcode and operands from Opcode/Instruction column.
++- _Opcode_: instruction encoding from Opcode/Instruction column.
++- _Valid 64-bit_: 64-bit valid field from 64/32 bit Mode Support column.
++- _Valid 32-bit_: 32-bit valid field from 64/32 bit Mode Support column.
++- _Valid 16-bit_: 16-bit valid field from Compat/Legacy Mode column.
++- _Feature Flags_: extension name from CPUID Feature Flag column.
++- _Operand 1_: Operand 1 column from Instruction Operand Encoding table.
++- _Operand 2_: Operand 2 column from Instruction Operand Encoding table.
++- _Operand 3_: Operand 3 column from Instruction Operand Encoding table.
++- _Operand 4_: Operand 4 column from Instruction Operand Encoding table.
++- _Tuple Type_: Tuple Type column from Instruction Operand Encoding table.
++
++The instruction set metadata in the `data` directory is derived from
++[x86-csv](https://github.com/GregoryComer/x86-csv), although it has had
++extensive modifications to fix transcription errors, to revise legacy
++instruction encodings to conform to the new LEX format, as well as add
++missing details such as missing operands or recently added AVX-512
++instruction encodings and various other instruction set extensions.
++
++Table Generation
++================
++
++The appendices outline the printable form of the mnemonics used in the
++generated tables to describe operands, instruction encodings and field order.
++The mnemonics are referenced in the instruction set metadata files which are
++translated to enums and arrays by `scripts/x86-tablegen.py` which then map to
++the enum type and set definitions in `disas/x86.h`:
++
++- _enum x86_opr_ - operand encoding enum type and set attributes.
++- _enum x86_enc_ - instruction encoding enum type and set attributes.
++- _enum x86_ord_ - operand to instruction encoding field map set attributes.
++
++The enum values are combined together with _logical or_ combinations to
++form the primary metadata tables used by the encoder and decoder library:
++
++- _struct x86_opc_data_ - table type for instruction opcode encodings.
++- _struct x86_opr_data_ - table type for unique sets of instruction operands.
++- _struct x86_ord_data_ - table type for unique sets of instruction field orders.
++
++***Note***: There are some differences between the mnemonics used in the
++CSV metadata and the C enums. Exceptions are described in `operand_map` and
++`opcode_map` within `scripts/x86_tablegen.py`. The primary differences are
++in the names used in the operand columns to indicate operand field order,
++otherwise a type prefix is added, dots and brackets are omitted, and forward
++slashes are translated to underscores.
++
++Appendices
++==========
++
++This section describes the mnemonics used in the primary data structures:
++
++- _Appendix A - Operand Encoding_ - describes instruction operands.
++- _Appendix B - Operand Order_ - describes instruction field ordering.
++- _Appendix C - Instruction Encoding Prefixes_ - describes encoding prefixes.
++- _Appendix D - Instruction Encoding Suffixes_ - describes encoding suffixes.
++- _Appendix E - Instruction Synthesis Notes_ - notes on prefix synthesis.
++
++Appendix A - Operand Encoding
++=============================
++
++This table outlines the operand mnemonics used in instruction operands
++_(enum x86_opr)_.
++
++| operand            | description                                           |
++|:-------------------|:------------------------------------------------------|
++| `r`                | integer register                                      |
++| `v`                | vector register                                       |
++| `k`                | mask register                                         |
++| `seg`              | segment register                                      |
++| `creg`             | control register                                      |
++| `dreg`             | debug register                                        |
++| `bnd`              | bound register                                        |
++| `mem`              | memory reference                                      |
++| `rw`               | integer register word-sized (16/32/64 bit)            |
++| `ra`               | integer register addr-sized (16/32/64 bit)            |
++| `mw`               | memory reference word-sized (16/32/64 bit)            |
++| `mm`               | vector register 64-bit                                |
++| `xmm`              | vector register 128-bit                               |
++| `ymm`              | vector register 256-bit                               |
++| `zmm`              | vector register 512-bit                               |
++| `r8`               | register 8-bit                                        |
++| `r16`              | register 16-bit                                       |
++| `r32`              | register 32-bit                                       |
++| `r64`              | register 64-bit                                       |
++| `m8`               | memory reference 8-bit byte                           |
++| `m16`              | memory reference 16-bit word                          |
++| `m32`              | memory reference 32-bit dword                         |
++| `m64`              | memory reference 64-bit qword                         |
++| `m128`             | memory reference 128-bit oword/xmmword                |
++| `m256`             | memory reference 256-bit ymmword                      |
++| `m512`             | memory reference 512-bit zmmword                      |
++| `m80`              | memory reference 80-bit tword/tbyte                   |
++| `m384`             | memory reference 384-bit key locker handle            |
++| `mib`              | memory reference bound                                |
++| `m16bcst`          | memory reference 16-bit word broadcast                |
++| `m32bcst`          | memory reference 32-bit word broadcast                |
++| `m64bcst`          | memory reference 64-bit word broadcast                |
++| `vm32`             | vector memory 32-bit                                  |
++| `vm64`             | vector memory 64-bit                                  |
++| `{er}`             | operand suffix - embedded rounding control            |
++| `{k}`              | operand suffix - apply mask register                  |
++| `{sae}`            | operand suffix - suppress all execptions              |
++| `{z}`              | operand suffix - zero instead of merge                |
++| `{rs2}`            | operand suffix - register stride 2                    |
++| `{rs4}`            | operand suffix - register stride 4                    |
++| `r/m8`             | register unsized memory 8-bit                         |
++| `r/m16`            | register unsized memory 16-bit                        |
++| `r/m32`            | register unsized memory 32-bit                        |
++| `r/m64`            | register unsized memory 64-bit                        |
++| `k/m8`             | mask register memory 8-bit                            |
++| `k/m16`            | mask register memory 16-bit                           |
++| `k/m32`            | mask register memory 32-bit                           |
++| `k/m64`            | mask register memory 64-bit                           |
++| `bnd/m64`          | bound register memory 64-bit                          |
++| `bnd/m128`         | bound register memory 128-bit                         |
++| `rw/mw`            | register or memory 16/32/64-bit (word size)           |
++| `r8/m8`            | 8-bit register 8-bit memory                           |
++| `r?/m?`            | N-bit register N-bit memory                           |
++| `mm/m?`            | 64-bit vector N-bit memory                            |
++| `xmm/m?`           | 128-bit vector N-bit memory                           |
++| `ymm/m?`           | 256-bit vector N-bit memory                           |
++| `zmm/m?`           | 512-bit vector N-bit memory                           |
++| `xmm/m?/m?bcst`    | 128-bit vector N-bit memory N-bit broadcast           |
++| `ymm/m?/m?bcst`    | 256-bit vector N-bit memory N-bit broadcast           |
++| `zmm/m?/m?bcst`    | 512-bit vector N-bit memory N-bit broadcast           |
++| `vm32x`            | 32-bit vector memory in xmm                           |
++| `vm32y`            | 32-bit vector memory in ymm                           |
++| `vm32z`            | 32-bit vector memory in zmm                           |
++| `vm64x`            | 64-bit vector memory in xmm                           |
++| `vm64y`            | 64-bit vector memory in ymm                           |
++| `vm64z`            | 64-bit vector memory in zmm                           |
++| `st0`              | implicit register st0                                 |
++| `st1`              | implicit register st1                                 |
++| `es`               | implicit segment es                                   |
++| `cs`               | implicit segment cs                                   |
++| `ss`               | implicit segment ss                                   |
++| `ds`               | implicit segment ds                                   |
++| `fs`               | implicit segment fs                                   |
++| `gs`               | implicit segment gs                                   |
++| `aw`               | implicit register (ax/eax/rax)                        |
++| `cw`               | implicit register (cx/ecx/rcx)                        |
++| `dw`               | implicit register (dx/edx/rdx)                        |
++| `bw`               | implicit register (bx/ebx/rbx)                        |
++| `pa`               | implicit indirect register (ax/eax/rax)               |
++| `pc`               | implicit indirect register (cx/ecx/rcx)               |
++| `pd`               | implicit indirect register (dx/edx/rdx)               |
++| `pb`               | implicit indirect register (bx/ebx/rbx)               |
++| `psi`              | implicit indirect register (si/esi/rsi)               |
++| `pdi`              | implicit indirect register (di/edi/rdi)               |
++| `xmm0`             | implicit register xmm0                                |
++| `xmm0_7`           | implicit registers xmm0-xmm7                          |
++| `1`                | constant 1                                            |
++| `ib`               | 8-bit immediate                                       |
++| `iw`               | 16-bit or 32-bit immediate (mode + operand size)      |
++| `iwd`              | 16-bit or 32-bit immediate (mode)                     |
++| `id`               | 32-bit immediate                                      |
++| `iq`               | 64-bit immediate                                      |
++| `rel8`             | 8-bit displacement                                    |
++| `relw`             | 6-bit or 32-bit displacement (mode + operand size)    |
++| `moffs`            | indirect memory offset                                |
++| `far16/16`         | 16-bit seg 16-bit far displacement                    |
++| `far16/32`         | 16-bit seg 32-bit far displacement                    |
++| `memfar16/16`      | indirect 16-bit seg 16-bit far displacement           |
++| `memfar16/32`      | indirect 16-bit seg 32-bit far displacement           |
++| `memfar16/64`      | indirect 16-bit seg 64-bit far displacement           |
++
++Appendix B - Operand Order
++==========================
++
++This table outlines the mnemonics used to map operand field order
++_(enum x86_ord)_.
++
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `imm`    | ib, iw, i16, i32, i64                                           |
++| `reg`    | modrm.reg                                                       |
++| `mrm`    | modrm.r/m                                                       |
++| `sib`    | modrm.r/m sib                                                   |
++| `is4`    | register from ib                                                |
++| `ime`    | i8, i16 (special case for CALLF/JMPF/ENTER)                     |
++| `vec`    | VEX.vvvv                                                        |
++| `opr`    | opcode +r                                                       |
++| `one`    | constant 1                                                      |
++| `rax`    | constant al/ax/eax/rax                                          |
++| `rcx`    | constant cl/cx/ecx/rcx                                          |
++| `rdx`    | constant dl/dx/edx/rdx                                          |
++| `rbx`    | constant bl/bx/ebx/rbx                                          |
++| `rsp`    | constant sp/esp/rsp                                             |
++| `rbp`    | constant bp/ebp/rbp                                             |
++| `rsi`    | constant si/esi/rsi                                             |
++| `rdi`    | constant di/edi/rdi                                             |
++| `st0`    | constant st(0)                                                  |
++| `stx`    | constant st(i)                                                  |
++| `seg`    | constant segment                                                |
++| `xmm0`   | constant xmm0                                                   |
++| `xmm0_7` | constant xmm0-xmm7                                              |
++| `mxcsr`  | constant mxcsr                                                  |
++| `rflags` | constant rflags                                                 |
++
++Appendix C - Instruction Encoding Prefixes
++==========================================
++
++This table outlines the mnemonic prefixes used in instruction encodings
++_(enum x86_enc)_.
++
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `lex`    | legacy instruction                                              |
++| `vex`    | VEX encoded instruction                                         |
++| `evex`   | EVEX encoded instruction                                        |
++| `.lz`    | VEX encoding L=0 and L=1 is unassigned                          |
++| `.l0`    | VEX encoding L=0                                                |
++| `.l1`    | VEX encoding L=1                                                |
++| `.lig`   | VEX/EVEX encoding ignores length L=any                          |
++| `.128`   | VEX/EVEX encoding uses 128-bit vector L=0                       |
++| `.256`   | VEX/EVEX encoding uses 256-bit vector L=1                       |
++| `.512`   | EVEX encoding uses 512-bit vector L=2                           |
++| `.66`    | prefix byte 66 is used for opcode mapping                       |
++| `.f2`    | prefix byte f2 is used for opcode mapping                       |
++| `.f3`    | prefix byte f3 is used for opcode mapping                       |
++| `.9b`    | prefix byte 9b is used for opcode mapping (x87 only)            |
++| `.0f`    | map 0f is used in opcode                                        |
++| `.0f38`  | map 0f38 is used in opcode                                      |
++| `.0f3a`  | map 0f3a is used in opcode                                      |
++| `.wn`    | no register extension, fixed operand size                       |
++| `.wb`    | register extension, fixed operand size                          |
++| `.wx`    | REX and/or operand size extension, optional 66 or REX.W0/W1     |
++| `.ww`    | REX and/or operand size extension, optional 66 and REX.WIG      |
++| `.w0`    | LEX/VEX/EVEX optional REX W0 with operand size used in opcode   |
++| `.w1`    | LEX/VEX/EVEX mandatory REX W1 with operand size used in opcode  |
++| `.wig`   | VEX/EVEX encoding width ignored                                 |
++
++Appendix D - Instruction Encoding Suffixes
++==========================================
++
++This table outlines the mnemonic suffixes used in instruction encodings
++_(enum x86_enc)_.
++
++| mnemonic | description                                                     |
++|:---------|:----------------------------------------------------------------|
++| `/r`     | ModRM byte                                                      |
++| `/0../7` | ModRM byte with 'r' field used for functions 0 to 7             |
++| `XX+r`   | opcode byte with 3-bit register added to the opcode             |
++| `XX`     | opcode byte                                                     |
++| `ib`     | 8-bit immediate                                                 |
++| `iw`     | 16-bit or 32-bit immediate (real mode XOR operand size)         |
++| `i16`    | 16-bit immediate                                                |
++| `i32`    | 32-bit immediate                                                |
++| `i64`    | 64-bit immediate                                                |
++| `o16`    | encoding uses prefix 66 in 32-bit and 64-bit modes              |
++| `o32`    | encoding uses prefix 66 in 16-bit mode                          |
++| `o64`    | encoding is used exclusively in 64-bit mode with REX.W=1        |
++| `a16`    | encoding uses prefix 67 in 32-bit and 64-bit modes              |
++| `a32`    | encoding uses prefix 67 in 16-bit mode                          |
++| `a64`    | encoding is used exclusively in 64-bit mode                     |
++| `lock`   | memory operand encodings can be used with the LOCK prefix       |
++| `rep`    | string instructions that can be used with the REP prefix        |
++
++Appendix E - Instruction Synthesis Notes
++========================================
++
++The `.wx` and `.ww` mnemonics are used to synthesize prefix combinations:
++
++- `.wx` labels opcodes with _default 32-bit operand size in 64-bit mode_
++  to synthesize 16/32/64-bit versions using REX and operand size prefix,
++  or in 16/32-bit modes synthesizes 16/32-bit versions using only the
++  operand size prefix. REX is used for register extension on opcodes
++  with `rw` or `rw/mw` operands or fixed register operands like `aw`.
++- `.ww` labels opcodes with _default 64-bit operand size in 64-bit mode_
++  to synthesize 16/64-bit versions using only the operand size prefix,
++  or in 16/32-bit modes. synthesizes 16/32-bit versions using only the
++  operand size prefix. REX is used for register extension on opcodes
++  with `rw` or `rw/mw` operands or fixed register operands like `aw`.
 -- 
 2.43.0
 
