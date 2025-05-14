@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B4FC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D28FC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBlj-0002Fx-Hq; Wed, 14 May 2025 09:03:32 -0400
+	id 1uFBhK-0003j1-Ea; Wed, 14 May 2025 08:58:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBiy-0007VH-2G; Wed, 14 May 2025 09:00:55 -0400
+ id 1uFBgp-0002rR-UU; Wed, 14 May 2025 08:58:27 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBit-0008BU-Fb; Wed, 14 May 2025 09:00:37 -0400
+ id 1uFBgn-0007qX-IW; Wed, 14 May 2025 08:58:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1E5D7121AF3;
- Wed, 14 May 2025 15:57:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 08E4A121AE0;
+ Wed, 14 May 2025 15:57:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BBDAF20B861;
- Wed, 14 May 2025 15:57:59 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A852D20B84E;
+ Wed, 14 May 2025 15:57:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Frederik Du Toit Lotter <fred.lotter@canonical.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 21/34] hw/core: Get default_cpu_type calling
- machine_class_default_cpu_type()
-Date: Wed, 14 May 2025 15:57:43 +0300
-Message-Id: <20250514125758.92030-21-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 02/34] hw/rtc/goldfish: keep time offset when resetting
+Date: Wed, 14 May 2025 15:57:24 +0300
+Message-Id: <20250514125758.92030-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
@@ -64,58 +63,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-Since commit 62b4a227a33 the default cpu type can come from the
-valid_cpu_types[] array. Call the machine_class_default_cpu_type()
-instead of accessing MachineClass::default_cpu_type field.
+Currently resetting the leads to resynchronizing the Goldfish RTC
+with the system clock of the host. In real hardware an RTC reset
+would not change the wall time. Other RTCs like pl031 do not show
+this behavior.
+
+Move the synchronization of the RTC with the system clock to the
+instance realization.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 62b4a227a33 ("hw/core: Add machine_class_default_cpu_type()")
+Reported-by: Frederik Du Toit Lotter <fred.lotter@canonical.com>
+Fixes: 9a5b40b8427 ("hw: rtc: Add Goldfish RTC device")
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250321221248.17764-1-heinrich.schuchardt@canonical.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20250422084114.39499-1-philmd@linaro.org>
-(cherry picked from commit d5f241834be1b323ea697a469ff0f1335a1823fe)
+(cherry picked from commit 2542d5cf471a38c4ceb9717708178938b96ded47)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 130217da8f..ea59acb224 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -72,6 +72,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
+index 3dcf307e99..75d4cb0f31 100644
+--- a/hw/rtc/goldfish_rtc.c
++++ b/hw/rtc/goldfish_rtc.c
+@@ -239,15 +239,8 @@ static const VMStateDescription goldfish_rtc_vmstate = {
+ static void goldfish_rtc_reset(DeviceState *dev)
+ {
+     GoldfishRTCState *s = GOLDFISH_RTC(dev);
+-    struct tm tm;
  
-     for (el = machines; el; el = el->next) {
-         MachineClass *mc = el->data;
-+        const char *default_cpu_type = machine_class_default_cpu_type(mc);
-         MachineInfo *info;
+     timer_del(s->timer);
+-
+-    qemu_get_timedate(&tm, 0);
+-    s->tick_offset = mktimegm(&tm);
+-    s->tick_offset *= NANOSECONDS_PER_SECOND;
+-    s->tick_offset -= qemu_clock_get_ns(rtc_clock);
+-    s->tick_offset_vmstate = 0;
+     s->alarm_next = 0;
+     s->alarm_running = 0;
+     s->irq_pending = 0;
+@@ -258,6 +251,7 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
+ {
+     SysBusDevice *dev = SYS_BUS_DEVICE(d);
+     GoldfishRTCState *s = GOLDFISH_RTC(d);
++    struct tm tm;
  
-         info = g_malloc0(sizeof(*info));
-@@ -90,8 +91,8 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-         info->numa_mem_supported = mc->numa_mem_supported;
-         info->deprecated = !!mc->deprecation_reason;
-         info->acpi = !!object_class_property_find(OBJECT_CLASS(mc), "acpi");
--        if (mc->default_cpu_type) {
--            info->default_cpu_type = g_strdup(mc->default_cpu_type);
-+        if (default_cpu_type) {
-+            info->default_cpu_type = g_strdup(default_cpu_type);
-         }
-         if (mc->default_ram_id) {
-             info->default_ram_id = g_strdup(mc->default_ram_id);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index b68a9cb9b4..ca9cf56aa4 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7034,7 +7034,7 @@ ObjectClass *ppc_cpu_class_by_name(const char *name)
-     if (strcmp(name, "max") == 0) {
-         MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-         if (mc) {
--            return object_class_by_name(mc->default_cpu_type);
-+            return object_class_by_name(machine_class_default_cpu_type(mc));
-         }
-     }
- #endif
+     memory_region_init_io(&s->iomem, OBJECT(s),
+                           &goldfish_rtc_ops[s->big_endian], s,
+@@ -267,6 +261,11 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
+     sysbus_init_irq(dev, &s->irq);
+ 
+     s->timer = timer_new_ns(rtc_clock, goldfish_rtc_interrupt, s);
++
++    qemu_get_timedate(&tm, 0);
++    s->tick_offset = mktimegm(&tm);
++    s->tick_offset *= NANOSECONDS_PER_SECOND;
++    s->tick_offset -= qemu_clock_get_ns(rtc_clock);
+ }
+ 
+ static Property goldfish_rtc_properties[] = {
 -- 
 2.39.5
 
