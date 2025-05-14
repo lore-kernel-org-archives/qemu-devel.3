@@ -4,110 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC58C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 18:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4613BC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 18:59:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHIR-0001Fm-9l; Wed, 14 May 2025 14:57:39 -0400
+	id 1uFHJn-0002rh-DJ; Wed, 14 May 2025 14:59:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFHIP-0001Cz-3J; Wed, 14 May 2025 14:57:37 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1uFHJZ-0002Ui-QX; Wed, 14 May 2025 14:58:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFHIN-0006d9-1B; Wed, 14 May 2025 14:57:36 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGVAoh029463;
- Wed, 14 May 2025 18:57:33 GMT
+ id 1uFHJY-0006su-2A; Wed, 14 May 2025 14:58:49 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EI5Fvs012963;
+ Wed, 14 May 2025 18:58:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=cOp+P6
- 7UZLUQfCeVN72EctqgLS68yoiVHuvPSoalQC0=; b=M1Jm6LpfuUi3qpRbPTNaTn
- 1gjdwGN0xGVDvWDEvg0IAQg1BUjlG+fi6egPSYud9WiqTzi00II+uXyh4oWCW1WR
- OkSNpQOcXClO+N9QoxgOo3VRqsksr8RnL0jGrGssMdquGRgosH8V4IJZZCPV5kT9
- b1DZK+ogOgB8bPzsPaZTpM9rtXRgRmB/CjQc9aL6IC/uF+1z/XwMVXDOVXPGe2kN
- AyoUxckitd7ZegILaMjsSzEsW8/C1VAn0NxPDCjz1Fn6NakZ5N5yYxWW1EXqKb0q
- QNH/4252/mGvudL+1VAxKYDxwGRXgV4RZmzXHrTlkwR3YaYIyN9Epe946kA3yPOg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=CSQaGM
+ YYsEs2RHEct7TArD7A582vitw57wC2rb28J58=; b=FiPLc1q0Y5zywRzaaXB+M2
+ ZxoK3P42x4bSgypVchfR08qvcSuJGBSXjEQU17DZYr+NbXvPLgooFl4RTUS16LR+
+ hdQLuLhhGuRgd6/tcoIjafAxCppIj9s8PeF+8SrZFjDg4A9wanW1qnufIwlim+0l
+ x83cKJ31fAKm4eu/OOa/W9/Bx2/uY+DOgp+lUWz2vyFXUayuHyjRKG9E42GOUhfH
+ bkvQCPCU3F+S2LcT2wXcF2MKZL17raceDt0afpTgsM/rhj+RChpnB69rIe/JeLDj
+ zQrg/RcYD0ZGbdRWUwPxpMhQCfkOmQtrVGPMdPhIsay/qUl8AnVi1Lo3PXSQ3bLQ
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mr1gk5qj-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mrcjb0j5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 18:57:32 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54EIjMIj019316;
- Wed, 14 May 2025 18:57:32 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mr1gk5qg-1
+ Wed, 14 May 2025 18:58:43 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54EIo72u016448;
+ Wed, 14 May 2025 18:58:42 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mrcjb0j3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 18:57:32 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGes5c026947;
- Wed, 14 May 2025 18:57:31 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfpdx3m-1
+ Wed, 14 May 2025 18:58:42 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGaBQ2021797;
+ Wed, 14 May 2025 18:58:42 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfpny1v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 18:57:31 +0000
+ Wed, 14 May 2025 18:58:42 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54EIvTwS19989146
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54EIwebZ24183226
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 May 2025 18:57:30 GMT
+ Wed, 14 May 2025 18:58:41 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D4A2458055;
- Wed, 14 May 2025 18:57:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E159058054;
+ Wed, 14 May 2025 18:58:40 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5252F5804E;
- Wed, 14 May 2025 18:57:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 61BEB5804E;
+ Wed, 14 May 2025 18:58:40 +0000 (GMT)
 Received: from [9.10.80.143] (unknown [9.10.80.143])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 May 2025 18:57:29 +0000 (GMT)
-Message-ID: <3e1eeae3-5090-46e4-98d1-473d269891b5@linux.ibm.com>
-Date: Wed, 14 May 2025 13:57:28 -0500
+ Wed, 14 May 2025 18:58:40 +0000 (GMT)
+Message-ID: <6db13316-fe73-4c72-94ec-4d7f4d22bb3e@linux.ibm.com>
+Date: Wed, 14 May 2025 13:58:39 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/50] ppc/xive2: Set CPPR delivery should account for
- group priority
+Subject: Re: [PATCH 13/50] ppc/xive: tctx_notify should clear the precluded
+ interrupt
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
  <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-13-npiggin@gmail.com>
+ <20250512031100.439842-14-npiggin@gmail.com>
 Content-Language: en-US
 From: Mike Kowal <kowal@linux.ibm.com>
-In-Reply-To: <20250512031100.439842-13-npiggin@gmail.com>
+In-Reply-To: <20250512031100.439842-14-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: alLcKTQSN0yPXBev0Put54A54T5Qp71i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE2OSBTYWx0ZWRfX58XAh5tasYcY
- YbPWf4mbcXyalz0Oa4NipyInqvUIoWLNe0sBVueXaye+LIoKovwRZLjp5UyxF/FX8OXW3TWLNkN
- pYqK3G5necZsftPwz80gAfg4/Jim6QCviZzmg0ym9jWflwYxM/hFa2ruJuUoZBOunDGWLeCRyor
- 9tLvRCnNp8c48mVj53+cpDenYezZCeRZ4ayaX4IrwW2sC7HJL2IwFJEAERyPOk5eCOVH9D0XRjI
- ReSN6ig10BcDYbgyBpTxodfAiUIEa0XYOGffx2drNLpNbXwT6IyTyeogmdGkmZT9WvuoAdJ9heG
- nQrSHioVnL0ijfusygx2Ekd8mGaLVFOGFa25P/b8xpqBp/e8OykILpNvwdU/Cm21Yov++437Fjy
- YqHCGJj84L4ij54N14tBrWKm3bk6EzVojjYOmiaDDodnOsjk/xdqHbnvGCleF4vezt+R5/qJ
-X-Proofpoint-GUID: 1xPSw8FOM-jKASgVBv-FYQII5-dKBpfh
-X-Authority-Analysis: v=2.4 cv=QOxoRhLL c=1 sm=1 tr=0 ts=6824e79c cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Authority-Analysis: v=2.4 cv=ZYgdNtVA c=1 sm=1 tr=0 ts=6824e7e3 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=zSV6phptauE46_GIRisA:9 a=QEXdDO2ut3YA:10
+ a=KyNRirOTzh_n4JZT_p0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 0Hr72IyPY7LIaufERwUzK1IJvZY1cz99
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE2OSBTYWx0ZWRfXyeOWI5v7u6r+
+ pb8yNles/jdqQqT6f06ovUnNzTUgV7X98gs+Mbx4ztw80Vxn+E6BaRYhG/+bPRnFRxW7p8hdgZ5
+ q21iz9hJuwJz513hu3mc9NB7bMRi6flqv36i05NYVYd8FlXCFipylnTOBDKqi58S2cBDQvQLY7v
+ dYBqiO3ifJ0XXZPz+P2FVvZonyWyEo2ZEWXAgbnWWjTHiRnWqN1yAg9aaoF81gr91vUtINxcKM6
+ TIRYsqS83XF/ob6JUHv0yT6fsaq6I/dcm9SsfLAy5ml4aH+zJfMpaMGR93E/KNs7bUax0FRBWaJ
+ KAFiF5tzoLdQfc6N3h+trGu5zgLSJy6z53k/UKm9DB3uinDJoQMHSzDlez+9+EKAwRSmliDpTR/
+ k9N20gxR10paYa6kvFo22lbzMSHsRTqi8J+A7wsUQ9gb5nJ6y1eMdVdoCR/mjfXy0dY33JNU
+X-Proofpoint-GUID: 26UnuFXL8ffXJ_MyAbGQ-cyk-QRHJa-T
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-14_04,2025-05-14_03,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0
- phishscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 mlxscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
+ malwarescore=0 phishscore=0
+ clxscore=1015 lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 mlxlogscore=890 adultscore=0
  classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505140169
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -133,15 +133,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
-> The group interrupt delivery flow selects the group backlog scan if
-> LSMFB < IPB, but that scan may find an interrupt with a priority >=
-> IPB. In that case, the VP-direct interrupt should be chosen. This
-> extends to selecting the lowest prio between POOL and PHYS rings.
->
-> Implement this just by re-starting the selection logic if the
-> backlog irq was not found or priority did not match LSMFB (LSMFB
-> is updated so next time around it would see the right value and
-> not loop infinitely).
+> If CPPR is lowered to preclude the pending interrupt, NSR should be
+> cleared and the qemu_irq should be lowered. This avoids some cases
+> of supurious interrupts.
 
 Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
 
@@ -151,83 +145,21 @@ Thanks MAK
 >
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   hw/intc/xive2.c | 32 ++++++++++++++++++++++----------
->   1 file changed, 22 insertions(+), 10 deletions(-)
+>   hw/intc/xive.c | 3 +++
+>   1 file changed, 3 insertions(+)
 >
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 8ede95b671..de139dcfbf 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -939,7 +939,7 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
->   {
->       uint8_t *regs = &tctx->regs[ring];
->       Xive2Router *xrtr = XIVE2_ROUTER(tctx->xptr);
-> -    uint8_t old_cppr, backlog_prio, first_group, group_level = 0;
-> +    uint8_t old_cppr, backlog_prio, first_group, group_level;
->       uint8_t pipr_min, lsmfb_min, ring_min;
->       bool group_enabled;
->       uint32_t nvp_blk, nvp_idx;
-> @@ -961,10 +961,12 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
->        * Recompute the PIPR based on local pending interrupts. It will
->        * be adjusted below if needed in case of pending group interrupts.
->        */
-> +again:
->       pipr_min = xive_ipb_to_pipr(regs[TM_IPB]);
->       group_enabled = !!regs[TM_LGS];
-> -    lsmfb_min = (group_enabled) ? regs[TM_LSMFB] : 0xff;
-> +    lsmfb_min = group_enabled ? regs[TM_LSMFB] : 0xff;
->       ring_min = ring;
-> +    group_level = 0;
->   
->       /* PHYS updates also depend on POOL values */
->       if (ring == TM_QW3_HV_PHYS) {
-> @@ -998,9 +1000,6 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
->           }
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index cebe409a1a..6293ea4361 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -110,6 +110,9 @@ void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring, uint8_t group_level)
+>                                  regs[TM_IPB], alt_regs[TM_PIPR],
+>                                  alt_regs[TM_CPPR], alt_regs[TM_NSR]);
+>           qemu_irq_raise(xive_tctx_output(tctx, ring));
+> +    } else {
+> +        alt_regs[TM_NSR] = 0;
+> +        qemu_irq_lower(xive_tctx_output(tctx, ring));
 >       }
->   
-> -    /* PIPR should not be set to a value greater than CPPR */
-> -    regs[TM_PIPR] = (pipr_min > cppr) ? cppr : pipr_min;
-> -
->       rc = xive2_tctx_get_nvp_indexes(tctx, ring_min, &nvp_blk, &nvp_idx);
->       if (rc) {
->           qemu_log_mask(LOG_GUEST_ERROR, "XIVE: set CPPR on invalid context\n");
-> @@ -1019,7 +1018,7 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
->   
->       if (group_enabled &&
->           lsmfb_min < cppr &&
-> -        lsmfb_min < regs[TM_PIPR]) {
-> +        lsmfb_min < pipr_min) {
->           /*
->            * Thread has seen a group interrupt with a higher priority
->            * than the new cppr or pending local interrupt. Check the
-> @@ -1048,12 +1047,25 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
->                                                       nvp_blk, nvp_idx,
->                                                       first_group, &group_level);
->           tctx->regs[ring_min + TM_LSMFB] = backlog_prio;
-> -        if (backlog_prio != 0xFF) {
-> -            xive2_presenter_backlog_decr(tctx->xptr, nvp_blk, nvp_idx,
-> -                                         backlog_prio, group_level);
-> -            regs[TM_PIPR] = backlog_prio;
-> +        if (backlog_prio != lsmfb_min) {
-> +            /*
-> +             * If the group backlog scan finds a less favored or no interrupt,
-> +             * then re-do the processing which may turn up a more favored
-> +             * interrupt from IPB or the other pool. Backlog should not
-> +             * find a priority < LSMFB.
-> +             */
-> +            g_assert(backlog_prio >= lsmfb_min);
-> +            goto again;
->           }
-> +
-> +        xive2_presenter_backlog_decr(tctx->xptr, nvp_blk, nvp_idx,
-> +                                     backlog_prio, group_level);
-> +        pipr_min = backlog_prio;
->       }
-> +
-> +    /* PIPR should not be set to a value greater than CPPR */
-> +    regs[TM_PIPR] = (pipr_min > cppr) ? cppr : pipr_min;
-> +
->       /* CPPR has changed, check if we need to raise a pending exception */
->       xive_tctx_notify(tctx, ring_min, group_level);
 >   }
+>   
 
