@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D96C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB78C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBhh-0004NN-Dr; Wed, 14 May 2025 08:59:21 -0400
+	id 1uFBgQ-0001hM-0h; Wed, 14 May 2025 08:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhG-0003lJ-L9; Wed, 14 May 2025 08:58:57 -0400
+ id 1uFBgG-0001c4-7y; Wed, 14 May 2025 08:57:52 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhE-0007rW-Hq; Wed, 14 May 2025 08:58:54 -0400
+ id 1uFBgE-0007nH-6i; Wed, 14 May 2025 08:57:51 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 33483121AE3;
- Wed, 14 May 2025 15:57:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8D68C121AD0;
+ Wed, 14 May 2025 15:56:31 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D31F620B851;
- Wed, 14 May 2025 15:57:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 381F120B848;
+ Wed, 14 May 2025 15:56:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+ Corey Minyard <cminyard@mvista.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 05/34] target/mips: Revert TARGET_PAGE_BITS_VARY
-Date: Wed, 14 May 2025 15:57:27 +0300
-Message-Id: <20250514125758.92030-5-mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 16/18] hw/i2c/imx: Always set interrupt status bit if
+ interrupt condition occurs
+Date: Wed, 14 May 2025 15:56:22 +0300
+Message-Id: <20250514125640.91677-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
-References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,104 +63,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Revert ee3863b9d41 and a08d60bc6c2b.  The logic behind changing
-the system page size because of what the Loongson kernel "prefers"
-is flawed.
+According to the i.MX 8M Plus reference manual, the status flag
+I2C_I2SR[IIF] continues to be set when an interrupt condition
+occurs even when I2C interrupts are disabled (I2C_I2CR[IIEN] is
+clear). However, the device model only sets the flag when I2C
+interrupts are enabled which causes U-Boot to loop forever. Fix
+the device model by always setting the flag and let I2C_I2CR[IIEN]
+guard I2C interrupts only.
 
-In the Loongson-2E manual, section 5.5, it is clear that the cpu
-supports a 4k page size (along with many others).  Similarly for
-the Loongson-3 series CPUs, the 4k page size is mentioned in the
-section 7.7 (PageMask Register).  Therefore we must continue to
-support a 4k page size.
+Also remove the comment in the code since it merely stated the
+obvious and would be outdated now.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250328175526.368121-2-richard.henderson@linaro.org>
-[PMD: Mention Loongson-3 series CPUs]
+Cc: qemu-stable@nongnu.org
+Fixes: 20d0f9cf6a41 ("i.MX: Add I2C controller emulator")
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Acked-by: Corey Minyard <cminyard@mvista.com>
+Message-ID: <20250507124040.425773-1-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit fca2817fdcb00e65020c2dcfcb0b23b2a20ea3c4)
+(cherry picked from commit 54e54e594bc8273d210f7ff4448c165a989cbbe8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index 7fd8296ccb..7124f1893f 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -333,7 +333,6 @@ static void mips_fuloong2e_machine_init(MachineClass *mc)
-     mc->default_cpu_type = MIPS_CPU_TYPE_NAME("Loongson-2E");
-     mc->default_ram_size = 256 * MiB;
-     mc->default_ram_id = "fuloong2e.ram";
--    mc->minimum_page_bits = 14;
-     machine_add_audiodev_property(mc);
- }
+diff --git a/hw/i2c/imx_i2c.c b/hw/i2c/imx_i2c.c
+index 9792583fea..64dbea41ee 100644
+--- a/hw/i2c/imx_i2c.c
++++ b/hw/i2c/imx_i2c.c
+@@ -90,13 +90,12 @@ static void imx_i2c_reset(DeviceState *dev)
  
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index f3b6326cc5..bb8e1ab2e5 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -670,7 +670,6 @@ static void loongson3v_machine_class_init(ObjectClass *oc, void *data)
-     mc->max_cpus = LOONGSON_MAX_VCPUS;
-     mc->default_ram_id = "loongson3.highram";
-     mc->default_ram_size = 1600 * MiB;
--    mc->minimum_page_bits = 14;
-     mc->default_nic = "virtio-net-pci";
- }
- 
-diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
-index f3a37e2dbe..26b7e4ceba 100644
---- a/target/mips/cpu-param.h
-+++ b/target/mips/cpu-param.h
-@@ -23,12 +23,7 @@
- #  define TARGET_VIRT_ADDR_SPACE_BITS 32
- #endif
- #endif
--#ifdef CONFIG_USER_ONLY
- #define TARGET_PAGE_BITS 12
--#else
--#define TARGET_PAGE_BITS_VARY
--#define TARGET_PAGE_BITS_MIN 12
--#endif
- 
- #define TCG_GUEST_DEFAULT_MO (0)
- 
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index 79a5c833ce..fb394bf0ed 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -877,18 +877,13 @@ void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
-     if ((mask >> maskbits) != 0) {
-         goto invalid;
+ static inline void imx_i2c_raise_interrupt(IMXI2CState *s)
+ {
+-    /*
+-     * raise an interrupt if the device is enabled and it is configured
+-     * to generate some interrupts.
+-     */
+-    if (imx_i2c_is_enabled(s) && imx_i2c_interrupt_is_enabled(s)) {
++    if (imx_i2c_is_enabled(s)) {
+         s->i2sr |= I2SR_IIF;
+-        qemu_irq_raise(s->irq);
++
++        if (imx_i2c_interrupt_is_enabled(s)) {
++            qemu_irq_raise(s->irq);
++        }
      }
--    /* We don't support VTLB entry smaller than target page */
--    if ((maskbits + TARGET_PAGE_BITS_MIN) < TARGET_PAGE_BITS) {
--        goto invalid;
--    }
-     env->CP0_PageMask = mask << CP0PM_MASK;
- 
-     return;
- 
- invalid:
-     /* When invalid, set to default target page size. */
--    mask = (~TARGET_PAGE_MASK >> TARGET_PAGE_BITS_MIN);
--    env->CP0_PageMask = mask << CP0PM_MASK;
-+    env->CP0_PageMask = 0;
  }
  
- void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index e98bb95951..62a3a86d80 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -874,7 +874,7 @@ refill:
-             break;
-         }
-     }
--    pw_pagemask = m >> TARGET_PAGE_BITS_MIN;
-+    pw_pagemask = m >> TARGET_PAGE_BITS;
-     update_pagemask(env, pw_pagemask << CP0PM_MASK, &pw_pagemask);
-     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
-     {
 -- 
 2.39.5
 
