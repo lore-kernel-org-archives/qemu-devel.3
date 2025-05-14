@@ -4,101 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA4BFC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0438C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFFCH-0004i8-7J; Wed, 14 May 2025 12:43:09 -0400
+	id 1uFFCP-0004pP-0l; Wed, 14 May 2025 12:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFFBL-0002WZ-Op
- for qemu-devel@nongnu.org; Wed, 14 May 2025 12:42:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFF0L-0001rS-TF
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 12:30:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFFBK-00042h-66
- for qemu-devel@nongnu.org; Wed, 14 May 2025 12:42:11 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFF0J-0002LB-I6
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 12:30:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747240927;
+ s=mimecast20190719; t=1747240246;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WaWGEkoii+uGxN6gbkJXwtwMe35TndMZFEH2bAYHZ1o=;
- b=dsKvT+LCc5t+UztDqmutoD421TSPuczu9nYDggAYMeT6I9B+q142xXl8XPsCjXnFU++j3Z
- UwBupvLiKZKQg3a5NalNTdli7fKnv3x6eA5ettWZYgsPckhbQsv0WRetLMOF1B7ODSvuXZ
- LT9CIuP0KGy/jk9GSykZgkFybp3UBwc=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-IEOKATSuPE6hXfAMnwO4tA-1; Wed, 14 May 2025 12:42:06 -0400
-X-MC-Unique: IEOKATSuPE6hXfAMnwO4tA-1
-X-Mimecast-MFC-AGG-ID: IEOKATSuPE6hXfAMnwO4tA_1747240926
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-47b36edcdb1so618551cf.2
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 09:42:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747240924; x=1747845724;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WaWGEkoii+uGxN6gbkJXwtwMe35TndMZFEH2bAYHZ1o=;
- b=Pa1PMB6pqs5XOrtrxwA32vyg+mJ5cR5vIN/FVOI26+LLTddpblyZkkKEx5gw7dghVt
- /YkPPiGw8Q+/+FseU4VlTAp0oi0F7/7wZdAD2OXLYD1AGimCLiX4lYWb4bRdP5zklIpb
- NQbV7b3g2OSL0LUWwfN8eIzj8YX8JlMgB/jq+M7gfjTB8ZGBg5Mf4JDygrYHDzDekaKx
- DrJbFgaMpT8dCNAOxjRyFcJxT0VMZV8o7GIHhK2abT335FmWh0Cc/jNxX47Gtc8fFarO
- 1QDbBlF4c8JEXcXV4IHGFiRsRaTe47D/v2B1bx1wk1RWdmU0r0rX6PVIjtZ4u+Fd61OO
- xAgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVkfeLka33hJ+zitKDSTGtZQGomMZf20dHhc3Qk3UTxcaUcWtnHMFX4p4eQEdz0hZLN6otMIoyATi9x@nongnu.org
-X-Gm-Message-State: AOJu0Yxxt7Svk9Nn7DYM9B3piIsw8ZYG8F66Z5OmBCQxrTREGNFjO78r
- kOXXPxAWWbvSFKhmvZ1qVuMr/eriMvAK0+bGcIk/Orw1P8/4wdC0+VBHIFRoGA1jAxhg85ddjY7
- 2ZLQpvIZNOpNpJLIzHLSXdo6bHIsbAng3X2HyD8LJukfrBDBtNywka3sMP2N1
-X-Gm-Gg: ASbGncsIC5NVLZ4nN2fR16uJw9w8L4MB4Wk0Qs/gnfnCsUGjEPShuLvZkJHWQ0dFZwh
- mhw8PgdCE0O8mvLtvuh2+KxtrGT0n/YmBew9LiM1jrEG6diBQbzJKxAOgjgfso8XE/P4Ykr5mY+
- RLFb+GfhfRs3vmTLdnEbVd+eMzpqIU6sLiamq7+JzaWaKsX2OCrmJo4n91Xoc5QWblLkICzRFax
- b8rxp58Y7xLF0evBZ+1xhqoz0JvJdhJl9jaG8UiRNjRMSuu9XZhjp1VUJweN6P7HQSpXP8xfJpd
- Lgc=
-X-Received: by 2002:a05:622a:244e:b0:478:f4bd:8b8e with SMTP id
- d75a77b69052e-49495cdca8fmr79406011cf.39.1747240913195; 
- Wed, 14 May 2025 09:41:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgghIw/BMWi0V0FM/3mYFEYUwp4H5FmsmXtr416IfSbehDHWrxuU02SCOlGDc+lvW/UwxppA==
-X-Received: by 2002:a05:622a:5a8a:b0:476:7f5c:e303 with SMTP id
- d75a77b69052e-49495c97000mr67512221cf.26.1747240902411; 
- Wed, 14 May 2025 09:41:42 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6f6e3a52490sm82830346d6.96.2025.05.14.09.41.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 09:41:41 -0700 (PDT)
-Date: Wed, 14 May 2025 12:41:38 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Chaney, Ben" <bchaney@akamai.com>
-Cc: "yury-kotov@yandex-team.ru" <yury-kotov@yandex-team.ru>,
- "dgilbert@redhat.com" <dgilbert@redhat.com>,
- "beata.michalska@linaro.org" <beata.michalska@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "junyan.he@intel.com" <junyan.he@intel.com>,
- "stefanha@redhat.com" <stefanha@redhat.com>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "david@redhat.com" <david@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "xiaoguangrong.eric@gmail.com" <xiaoguangrong.eric@gmail.com>,
- "Tottenham, Max" <mtottenh@akamai.com>, "Hunt, Joshua" <johunt@akamai.com>,
- "Glasgall, Anna" <aglasgal@akamai.com>
-Subject: Re: live-migration performance regression when using pmem
-Message-ID: <aCTHwhrXROReEPEh@x1.local>
-References: <1385969E-EC2D-4262-9072-29F520D0DF81@akamai.com>
- <aCJC8U_TJXcQcPmk@x1.local>
- <777D8A12-8D44-4A67-B767-988C81C60D21@akamai.com>
+ bh=ADmLI46nf7hxkIM7gp4tYeOv1LXBJgYTVb4Ms4kLRlE=;
+ b=ROm6WYqWTIL0ZrxDyvbmnlNNMMrRvlHPXg7c8fF5sjINmHjzLBVgkwVEojNDni+qsdE8F2
+ VbptXYGopJdmX8itfu8v/tk9sAQz6Q60Y1n6pQ3cRezSBvHvLXT5oWz0FGbINZ+KyDiyB2
+ PgABxtKnLAd494oT2T6hZ8PZk3CYDeM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-BMyqbC_gMaqmt46g8ReYgw-1; Wed,
+ 14 May 2025 12:30:42 -0400
+X-MC-Unique: BMyqbC_gMaqmt46g8ReYgw-1
+X-Mimecast-MFC-AGG-ID: BMyqbC_gMaqmt46g8ReYgw_1747240241
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2F76180034E; Wed, 14 May 2025 16:30:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.66])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB32619560AE; Wed, 14 May 2025 16:30:38 +0000 (UTC)
+Date: Wed, 14 May 2025 11:30:36 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Sunny Zhu <sunnyzhyy@qq.com>
+Cc: hreitz@redhat.com, jsnow@redhat.com, kwolf@redhat.com, 
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, stefanha@redhat.com, 
+ vsementsov@yandex-team.ru
+Subject: Re: [PATCH v4 11/13] mirror: Skip writing zeroes when target is
+ already zero
+Message-ID: <ppa5ptqxmk3vakmrogia7cvlhd5jxy7dhqiozhbyvcczo5mnjb@oqjcg6aeuv6z>
+References: <20250509204341.3553601-26-eblake@redhat.com>
+ <tencent_80394492ED0159599D33DE267BDA007A1C06@qq.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <777D8A12-8D44-4A67-B767-988C81C60D21@akamai.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <tencent_80394492ED0159599D33DE267BDA007A1C06@qq.com>
+User-Agent: NeoMutt/20250404
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -123,70 +86,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 13, 2025 at 03:48:06PM +0000, Chaney, Ben wrote:
-> On 5/12/25, 2:50 PM, "Peter Xu" <peterx@redhat.com <mailto:peterx@redhat.com>> wrote:
+On Wed, May 14, 2025 at 11:37:54PM +0800, Sunny Zhu wrote:
+> On Fri, 9 May 2025 15:40:28 -0500, Eric Blake wrote:
+> > @@ -847,8 +887,10 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+> >      bool punch_holes =
+> >          target_bs->detect_zeroes == BLOCKDEV_DETECT_ZEROES_OPTIONS_UNMAP &&
+> >          bdrv_can_write_zeroes_with_unmap(target_bs);
+> > +    int64_t bitmap_length = DIV_ROUND_UP(s->bdev_length, s->granularity);
+> > 
+> >      /* Determine if the image is already zero, regardless of sync mode.  */
+> > +    s->zero_bitmap = bitmap_new(bitmap_length);
+> >      bdrv_graph_co_rdlock();
+> >      bs = s->mirror_top_bs->backing->bs;
+> >      if (s->target_is_zero) {
+> > @@ -862,7 +904,14 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+> >      if (ret < 0) {
+> >          return ret;
+> >      } else if (s->sync_mode == MIRROR_SYNC_MODE_TOP) {
+> > -        /* In TOP mode, there is no benefit to a pre-zeroing pass.  */
+> > +        /*
+> > +         * In TOP mode, there is no benefit to a pre-zeroing pass, but
+> > +         * the zero bitmap can be set if the destination already reads
+> > +         * as zero and we are not punching holes.
+> > +         */
+> > +        if (ret > 0 && !punch_holes) {
+> > +            bitmap_set(s->zero_bitmap, 0, bitmap_length);
 > 
+> It's ok when ret > 0 is obtained through bdrv_co_is_all_zeroes(target_bs). However,
+> if ret = 1 originates by target-is-zero == true from qmp_blockdev_mirror, this means
+> that target-is-zero also takes effect under sync=TOP. I am uncertain whether this
+> aligns with our intended behavior.
 > 
-> > What you said makes sense to me, but I'm neither pmem user nor
-> > expert. Let's wait to see whether others would like to chime in.
+> Under sync=TOP, target-is-zero could carry two distinct meanings:
+> [1] The top snapshot reads as fully zero.
+> [2] The entire destination snapshot chain reads as fully zero.
 > 
-> 
-> > What's the first bad commit of the regression? Is it since v10.0 release?
-> 
-> Hi Peter,
->         We are still on an old branch (7.2). The issue began when we enabled pmem, not as the result of a code change.
+> Currently, target-is-zero is designed to represent scenario [2] on sync=TOP.
 
-OK.  Then I think it's not strictly a regression, as it may have been like
-that forever.
+As written, we are telling the user they should not set target-is-zero
+unless the entire destination (including through any snapshot chain)
+reads as zero.  Offhand (but untested) I think you can get by with
+passing target-is-zero:true even when the destination is not fully
+zero, _IF_ all portions of the image that will be mirrored read as
+zero (and by doing that, the portions that will not be mirrored are
+not cleared as a result).  If my assumption is plausible, that would
+be a slick way to do a sync=TOP mirror to copy just the dirty portions
+of an image into a destination that already contains all contents from
+the clean portions of the image prior to the point in time of the
+dirty bitmap, in order to rehydrate a full image from an incremental
+mirror.  But given that it is not tested, I wouldn't recommend trying
+it in a production environment.
 
-I do see that qemu_ram_msync() has this anyway:
+I doubt that sync=TOP users will ever want to manually set
+target-is-zero:true, but don't see any reason to change the series as
+reviewed, because the documentation for target-is-zero was clear that
+that manually setting it when the image is not actually zero can
+possibly cause corruption (even if it ends up working without
+corruption in some corner cases).
 
-#ifdef CONFIG_LIBPMEM
-    /* The lack of support for pmem should not block the sync */
-    if (ramblock_is_pmem(block)) {
-        void *addr = ramblock_ptr(block, start);
-        pmem_persist(addr, length);
-        return;
-    }
-#endif
-
-Does it mean that you're using pmem but without libpmem compiled?  From
-your stack dump, it looks like msync() is triggered and I would expect that
-won't happen if the ramblock in question is pmem.
-
-Is your case using DRAM as the backing storage (in form of DAX) for the
-ext4 file, while exposed as a pmem to the guest?  I'd expect if at least
-with above check pass then pmem_persist() would be faster, though I don't
-know how much.
-
-It looks still reasonable for QEMU to always sync here if it's pmem then,
-because qemu still sees this ramblock a persist storage, and after
-migration qemu wants to make sure all things are persisted.  Said that, I
-wonder if David was right in the other email that we still have some
-regression and at least migration should skip the sync for !pmem, that is:
-
-diff --git a/migration/ram.c b/migration/ram.c
-index d26dbd37c4..a93da18842 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3672,7 +3672,9 @@ static int ram_load_cleanup(void *opaque)
-     RAMBlock *rb;
- 
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
--        qemu_ram_block_writeback(rb);
-+        if (ramblock_is_pmem(block)) {
-+            qemu_ram_block_writeback(rb);
-+        }
-     }
- 
-     xbzrle_load_cleanup();
-
-But if you're using a real pmem ramblock, it shouldn't affect your use
-case.
-
-Thanks,
+Meanwhile, the only effect of having the zero bitmap set when
+target-is-zero was passed to sync=TOP (even if that is not what most
+users will do) is that _if_ the portion of the image that is dirty and
+needs to be mirrored reads as zero on the source, it will not be
+written to the destination.  It doesn't punch holes in the portions of
+the destionation that correspond to unallocated bits of the source.
 
 -- 
-Peter Xu
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
