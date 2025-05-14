@@ -4,46 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A65C3ABDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E5A1C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBfc-0000Cr-GG; Wed, 14 May 2025 08:57:13 -0400
+	id 1uFBsS-00048t-3Q; Wed, 14 May 2025 09:10:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBfV-00006r-HZ; Wed, 14 May 2025 08:57:09 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uFBqu-0000sW-E2
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 09:08:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBfS-0007iL-AE; Wed, 14 May 2025 08:57:04 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D2939121AC5;
- Wed, 14 May 2025 15:56:30 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7E76E20B83D;
- Wed, 14 May 2025 15:56:40 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.18 05/18] target/mips: Revert TARGET_PAGE_BITS_VARY
-Date: Wed, 14 May 2025 15:56:11 +0300
-Message-Id: <20250514125640.91677-5-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
-References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uFBqs-0000il-2Y
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 09:08:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747228126;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UjvPFTZxlUTCgxQgiB+/awojF3gbVDt0w+ZaWf8Kprk=;
+ b=YUvRcQ7kK4Z3gd+ThwgjJWB1OI5k/9YC0zVYb8Vmhy2Tp0tmkH+BiKKeJ26KJ+8t5tY+/w
+ MxAeiX5eUfXEKq2DvM+ONPpHY299jRh4oO6LR/dlzS1ON/b/exrj/VNZDxeis5y8fUy+Vj
+ sV1asYmj8VZDsPFM8puZsXkYFM5DLpI=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-nOdf0NAWO3iJs7FOzJVNKw-1; Wed, 14 May 2025 09:08:45 -0400
+X-MC-Unique: nOdf0NAWO3iJs7FOzJVNKw-1
+X-Mimecast-MFC-AGG-ID: nOdf0NAWO3iJs7FOzJVNKw_1747228124
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-acbbb00099eso620741066b.2
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 06:08:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747228124; x=1747832924;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UjvPFTZxlUTCgxQgiB+/awojF3gbVDt0w+ZaWf8Kprk=;
+ b=eQrJ7P/YCvF2d+8sAm31GC0rnWD2f00Jj23s6CbBiT0WwgkUljFkz1YMXTyjKuD0Fd
+ 7u6yHz7VSj5d6MqFj08KkY/0+JnEwAM0KBZVY8AcuICnVPJScbSM6+ofCMHbtrPf4Paf
+ rEZsrbYWKBO2MBxn9pwLKhVzpf/LAJNakojvauFevEnXI16A1JS6O7mVie9wVSENjJL0
+ /3TnFBWsv2lN/0WrHg5dXaM2wpGbRELE8ehd5VuaIgYVTL6eSRLIVy5Vt1MQN8GD7pic
+ X0nNipxyKZhl/p6Q/kfwnxhdhDwY9t+eo6715F08AKsV0HjrfGpOqy+VBIcVRySxFV8M
+ XtcA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBLOItp/m4dlCHhp56N3XDKZRut3rALLDQ7MzyrtoTD7q+5GNgSaK2+ZuinlDHtZKIp+XSQNgxGOQm@nongnu.org
+X-Gm-Message-State: AOJu0YyyiURLalUo187FNq8RZCg97dXYJ/ny9ydp25+0fcu5gwHRR68A
+ Xk5ToWM0p/uTGsqdXjTRg4G4t1X2/qCcbjNMu+o26gEc0JZmqk0ukW/PNI6lX82a31H+lYnLFZh
+ DbYcsc2sC8eP1TbYlTGWkOF1eB2JzO3XIkdGo7bSgOb78/cdbgXPNOb9W5SRWGDtZjYJKKS3zlN
+ w4NtpUbTGXuXCrHbfaX62wrct1Ofs=
+X-Gm-Gg: ASbGncu3cnBgZOWwRpzKKW4FGKHNy1etGHXjdHAVbdjM7rpKXW3sHY6iCZxjp5JYDfv
+ AR0eijB2risyKWMywWeu2xkS/Fp4IDYPULibV07aLrOyqBzAOenbEsjqiURX5cvVWyPt8sQ==
+X-Received: by 2002:a17:907:7e8b:b0:ad2:5657:3161 with SMTP id
+ a640c23a62f3a-ad4f74a836emr371089466b.59.1747228123870; 
+ Wed, 14 May 2025 06:08:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHsDNHGfAzkup7t7LmuEjs9mO0TvsN/0cCBnh8QYpnknCDfmai+awibI2DOsk+myFjrs4Vq+fITNPfIB8Zq12Q=
+X-Received: by 2002:a17:907:7e8b:b0:ad2:5657:3161 with SMTP id
+ a640c23a62f3a-ad4f74a836emr371086066b.59.1747228123483; Wed, 14 May 2025
+ 06:08:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+References: <20250514084957.2221975-1-zhao1.liu@intel.com>
+ <20250514084957.2221975-4-zhao1.liu@intel.com>
+In-Reply-To: <20250514084957.2221975-4-zhao1.liu@intel.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Wed, 14 May 2025 18:38:32 +0530
+X-Gm-Features: AX0GCFvztF3hOmQVCp-L4OH09uBMSDdE9_k3iVSa8ZrM9g2Xy8s75S1BT2Nw-WE
+Message-ID: <CAK3XEhPuL8YBdnTekTOBdE09ZegLgpBxHey9iDX61ewj98n1XQ@mail.gmail.com>
+Subject: Re: [PATCH 3/9] hw/acpi/pci: Consolidate
+ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -61,106 +109,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Wed, May 14, 2025 at 1:59=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
+e:
+>
+> The QOM types of AcpiGenericInitiator and AcpiGenericPort are declared
+> by OBJECT_DECLARE_SIMPLE_TYPE, which means they don't need the class!
+>
+> Therefore, use OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES to implement
+> the type, then there's no need for class definition.
+>
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Igor Mammedov <imammedo@redhat.com>
+> Cc: Ani Sinha <anisinha@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-Revert ee3863b9d41 and a08d60bc6c2b.  The logic behind changing
-the system page size because of what the Loongson kernel "prefers"
-is flawed.
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
-In the Loongson-2E manual, section 5.5, it is clear that the cpu
-supports a 4k page size (along with many others).  Similarly for
-the Loongson-3 series CPUs, the 4k page size is mentioned in the
-section 7.7 (PageMask Register).  Therefore we must continue to
-support a 4k page size.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250328175526.368121-2-richard.henderson@linaro.org>
-[PMD: Mention Loongson-3 series CPUs]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit fca2817fdcb00e65020c2dcfcb0b23b2a20ea3c4)
-(Mjt: context fixes for 7.2.x)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index 34befa5dd5..dbd26df00b 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -336,7 +336,6 @@ static void mips_fuloong2e_machine_init(MachineClass *mc)
-     mc->default_cpu_type = MIPS_CPU_TYPE_NAME("Loongson-2E");
-     mc->default_ram_size = 256 * MiB;
-     mc->default_ram_id = "fuloong2e.ram";
--    mc->minimum_page_bits = 14;
- }
- 
- DEFINE_MACHINE("fuloong2e", mips_fuloong2e_machine_init)
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index b4f6bff1b8..dc94e21438 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -616,7 +616,6 @@ static void loongson3v_machine_class_init(ObjectClass *oc, void *data)
-     mc->max_cpus = LOONGSON_MAX_VCPUS;
-     mc->default_ram_id = "loongson3.highram";
-     mc->default_ram_size = 1600 * MiB;
--    mc->minimum_page_bits = 14;
- }
- 
- static const TypeInfo loongson3_machine_types[] = {
-diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
-index f4c76994ea..4d9f4297f1 100644
---- a/target/mips/cpu-param.h
-+++ b/target/mips/cpu-param.h
-@@ -23,12 +23,7 @@
- #  define TARGET_VIRT_ADDR_SPACE_BITS 32
- #endif
- #endif
--#ifdef CONFIG_USER_ONLY
- #define TARGET_PAGE_BITS 12
--#else
--#define TARGET_PAGE_BITS_VARY
--#define TARGET_PAGE_BITS_MIN 12
--#endif
- #define NB_MMU_MODES 4
- 
- #endif
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index 5da1124589..f0459a85e6 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -900,18 +900,13 @@ void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
-     if ((mask >> maskbits) != 0) {
-         goto invalid;
-     }
--    /* We don't support VTLB entry smaller than target page */
--    if ((maskbits + TARGET_PAGE_BITS_MIN) < TARGET_PAGE_BITS) {
--        goto invalid;
--    }
-     env->CP0_PageMask = mask << CP0PM_MASK;
- 
-     return;
- 
- invalid:
-     /* When invalid, set to default target page size. */
--    mask = (~TARGET_PAGE_MASK >> TARGET_PAGE_BITS_MIN);
--    env->CP0_PageMask = mask << CP0PM_MASK;
-+    env->CP0_PageMask = 0;
- }
- 
- void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index 9d16859c0a..f0a513365b 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -877,7 +877,7 @@ refill:
-             break;
-         }
-     }
--    pw_pagemask = m >> TARGET_PAGE_BITS_MIN;
-+    pw_pagemask = m >> TARGET_PAGE_BITS;
-     update_pagemask(env, pw_pagemask << CP0PM_MASK, &pw_pagemask);
-     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
-     {
--- 
-2.39.5
+> ---
+>  hw/acpi/pci.c | 24 ++++++++----------------
+>  1 file changed, 8 insertions(+), 16 deletions(-)
+>
+> diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
+> index d511a8502954..acac6744525e 100644
+> --- a/hw/acpi/pci.c
+> +++ b/hw/acpi/pci.c
+> @@ -75,16 +75,12 @@ typedef struct AcpiGenericInitiator {
+>      uint32_t node;
+>  } AcpiGenericInitiator;
+>
+> -typedef struct AcpiGenericInitiatorClass {
+> -    ObjectClass parent_class;
+> -} AcpiGenericInitiatorClass;
+> -
+>  #define TYPE_ACPI_GENERIC_INITIATOR "acpi-generic-initiator"
+>
+> -OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_generic_in=
+itiator,
+> -                   ACPI_GENERIC_INITIATOR, OBJECT,
+> -                   { TYPE_USER_CREATABLE },
+> -                   { NULL })
+> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_gen=
+eric_initiator,
+> +                                          ACPI_GENERIC_INITIATOR, OBJECT=
+,
+> +                                          { TYPE_USER_CREATABLE },
+> +                                          { NULL })
+>
+>  OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericInitiator, ACPI_GENERIC_INITIATOR)
+>
+> @@ -191,16 +187,12 @@ typedef struct AcpiGenericPort {
+>      uint32_t node;
+>  } AcpiGenericPort;
+>
+> -typedef struct AcpiGenericPortClass {
+> -    ObjectClass parent_class;
+> -} AcpiGenericPortClass;
+> -
+>  #define TYPE_ACPI_GENERIC_PORT "acpi-generic-port"
+>
+> -OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericPort, acpi_generic_port,
+> -                   ACPI_GENERIC_PORT, OBJECT,
+> -                   { TYPE_USER_CREATABLE },
+> -                   { NULL })
+> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(AcpiGenericPort, acpi_generic_=
+port,
+> +                                          ACPI_GENERIC_PORT, OBJECT,
+> +                                          { TYPE_USER_CREATABLE },
+> +                                          { NULL })
+>
+>  OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericPort, ACPI_GENERIC_PORT)
+>
+> --
+> 2.34.1
+>
 
 
