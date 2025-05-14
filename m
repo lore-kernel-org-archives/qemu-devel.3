@@ -4,161 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC6BC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEDFEC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 14:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFCdE-0005Jc-3h; Wed, 14 May 2025 09:58:48 -0400
+	id 1uFCeV-0000y8-Tt; Wed, 14 May 2025 10:00:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uFCdC-0005AL-9D
- for qemu-devel@nongnu.org; Wed, 14 May 2025 09:58:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1uFCeM-0000Cc-EQ
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 10:00:02 -0400
+Received: from bm.lauterbach.com ([62.154.241.218])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uFCd9-0001Z7-AE
- for qemu-devel@nongnu.org; Wed, 14 May 2025 09:58:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747231121;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jwcZ4GZ8HHVD1ukpomEmS3Iftui0aAFFOJ+emh4s7kI=;
- b=jEEBXPSzmmcSJDYFdaMqdLsNHsFbJQTPioUPvM2+hMrpzTQJPDaMY+aRkT2asJvS7127Kb
- 7xlJtmip0ffnIln0bjOA9li4N0IDfqZXqy9EJW0hj2xkHgreVdt90kck/Xm+CNCT7bi1nW
- AzMYg/lqZEkJo4R72vMNk465ywJDGI4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-IODpto9DNlui7Oa45LL6Ag-1; Wed, 14 May 2025 09:57:31 -0400
-X-MC-Unique: IODpto9DNlui7Oa45LL6Ag-1
-X-Mimecast-MFC-AGG-ID: IODpto9DNlui7Oa45LL6Ag_1747231050
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a0ba24d233so2389619f8f.2
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 06:57:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747231050; x=1747835850;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=jwcZ4GZ8HHVD1ukpomEmS3Iftui0aAFFOJ+emh4s7kI=;
- b=emjsyoQBRpt8mfkj7FACkiuU6yA6hzx6oMjogRb61fIeYuewhYW8ZO8GGDyBmUmPLu
- 4ugO4jfrMIkGMkrFsWkh0pWgLqZrNo4mqDtFWK9CzPBFmnHsGyMgCPP0aNyiKotAVyI3
- 7eX7VtjwTeAxW/99E5sLIG5UINglXjVrtJIzz2TyqQ/LxaAhtECYRoWAsGy4ddiIKO3A
- taGf7V8k52QuQssLfXw8kCR0Af7VMZl9dJ021XvfA2x3lI3OqTyFQRmCVUH3sPYVj/0W
- xQ73JWvXe56DMFOBThlDudjpqezFfXwx/I5WF2opI2p7tuU2crUsN1VSTKxOw6umVQGJ
- hDFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXmUAzowqchhRoLUX2yYcc3igdgyDfFi84G+UYn3C/n1Pn5ofJ51/96XgvClZXIM1RONbVZhFYYI97F@nongnu.org
-X-Gm-Message-State: AOJu0YzZcXjaZXsL9UXOFI7KoCP1dFcYeeKKG7p6tliGNHmRw5m2fDPG
- fP3JehJ1LfTJ5OmjL2bnXxE+qX4a+466GilPGcqWohz3N7O+d8efhCpC1mIIGJVjocQ3i5Noafj
- RxssSBRgVl/DbhLFhbLJ4BClfQx0z7CCniC2DINZisXTe8nBvTJBX
-X-Gm-Gg: ASbGncstqXb4b7Bm9yjoi06Wq/vzEX8gXVtO2JKSUEQBQ8cYll6mWVNbRFH+cn+opyF
- By6fT+Du8Yhcd5iqToY5mp3sHcY4Y7VI+nGEzVaw/9LauJ6nd4jD311q+iBlEkvxZ1VaOkMdioV
- Bz8nZucKB/1PNXOggtgEBYFeZK6LBf637qRVXKG5pkhRL2vOcwhc5/aiRAjgdlVpDii4/9D+ppW
- fCNOhd7NNfMGPRZ9O8qz2Ec2mT+UsLv7sNAamErBcK9JUalmbIVIIRlBCQbiAzaOTB5qLHrYENE
- Mbe2vz737X17b8r3W2sEkoGGMyMgqK57n09RwUrsS9WaM5dtSiurszufFnLNQksTJ1MiAl7oCYV
- p3qmFvA2neHExG0n58vpnedFtnvtExl1hzlG0GfA=
-X-Received: by 2002:a5d:5f91:0:b0:3a0:7017:61f6 with SMTP id
- ffacd0b85a97d-3a3496a40f6mr3385161f8f.14.1747231049975; 
- Wed, 14 May 2025 06:57:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFl7tHcB8gaiVEPddNqHlH/ICCu7ZjgGfosPjmrNj0Jh/aUIsq0SQwft+uNyNO+kzp8ND8EtA==
-X-Received: by 2002:a5d:5f91:0:b0:3a0:7017:61f6 with SMTP id
- ffacd0b85a97d-3a3496a40f6mr3385122f8f.14.1747231049526; 
- Wed, 14 May 2025 06:57:29 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f15:6200:d485:1bcd:d708:f5df?
- (p200300d82f156200d4851bcdd708f5df.dip0.t-ipconnect.de.
- [2003:d8:2f15:6200:d485:1bcd:d708:f5df])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a2ca31sm19931594f8f.65.2025.05.14.06.57.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 May 2025 06:57:29 -0700 (PDT)
-Message-ID: <cac9c790-c195-4d06-b3ac-894320ccbb97@redhat.com>
-Date: Wed, 14 May 2025 15:57:27 +0200
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1uFCeH-0001bY-Rf
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 09:59:57 -0400
+Received: from [10.2.13.100] (unknown [10.2.13.100])
+ (Authenticated sender: mario.fleischmann@lauterbach.com)
+ by bm.lauterbach.com (Postfix) with ESMTPSA id 8E0961CBFC1B3;
+ Wed, 14 May 2025 15:59:32 +0200 (CEST)
+Message-ID: <2699a98b-ca71-4cda-acfc-e334d765c9cb@lauterbach.com>
+Date: Wed, 14 May 2025 15:59:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: live-migration performance regression when using pmem
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: "Chaney, Ben" <bchaney@akamai.com>,
- "yury-kotov@yandex-team.ru" <yury-kotov@yandex-team.ru>,
- "dgilbert@redhat.com" <dgilbert@redhat.com>,
- "beata.michalska@linaro.org" <beata.michalska@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "junyan.he@intel.com" <junyan.he@intel.com>,
- "stefanha@redhat.com" <stefanha@redhat.com>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "xiaoguangrong.eric@gmail.com" <xiaoguangrong.eric@gmail.com>,
- "Tottenham, Max" <mtottenh@akamai.com>, "Hunt, Joshua" <johunt@akamai.com>,
- "Glasgall, Anna" <aglasgal@akamai.com>, Junyan He <junyan.he@intel.com>
-References: <1385969E-EC2D-4262-9072-29F520D0DF81@akamai.com>
- <802008e8-5661-4475-a99c-09f0524f1a8a@redhat.com>
- <20250513161036-mutt-send-email-mst@kernel.org>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v2 07/20] mcd: Implement target initialization API
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org,
+ christian.boenig@lauterbach.com
+References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
+ <20250430052741.21145-8-mario.fleischmann@lauterbach.com>
+ <87jz6re2ch.fsf@pond.sub.org>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250513161036-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+In-Reply-To: <87jz6re2ch.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 166a2dfb-2e12-4590-8fa5-72e30323519f
+X-Bm-Transport-Timestamp: 1747231172588
+Received-SPF: pass client-ip=62.154.241.218;
+ envelope-from=mario.fleischmann@lauterbach.com; helo=bm.lauterbach.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -176,181 +65,609 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.05.25 22:11, Michael S. Tsirkin wrote:
-> On Tue, May 13, 2025 at 07:21:36PM +0200, David Hildenbrand wrote:
->> On 12.05.25 17:16, Chaney, Ben wrote:
->>> Hello,
->>>
->>>           When live migrating to a destination host with pmem there is a very long downtime where the guest is paused. In some cases, this can be as high as 5 minutes, compared to less than one second in the good case.
->>>
->>>
->>>           Profiling suggests very high activity in this code path:
->>>
->>>
->>> ffffffffa2956de6 clean_cache_range+0x26 ([kernel.kallsyms])
->>> ffffffffa2359b0f dax_writeback_mapping_range+0x1ef ([kernel.kallsyms])
->>> ffffffffc0c6336d ext4_dax_writepages+0x7d ([kernel.kallsyms])
->>> ffffffffa2242dac do_writepages+0xbc ([kernel.kallsyms])
->>> ffffffffa2235ea6 filemap_fdatawrite_wbc+0x66 ([kernel.kallsyms])
->>> ffffffffa223a896 __filemap_fdatawrite_range+0x46 ([kernel.kallsyms])
->>> ffffffffa223af73 file_write_and_wait_range+0x43 ([kernel.kallsyms])
->>> ffffffffc0c57ecb ext4_sync_file+0xfb ([kernel.kallsyms])
->>> ffffffffa228a331 __do_sys_msync+0x1c1 ([kernel.kallsyms])
->>> ffffffffa2997fe6 do_syscall_64+0x56 ([kernel.kallsyms])
->>> ffffffffa2a00126 entry_SYSCALL_64_after_hwframe+0x6e ([kernel.kallsyms])
->>> 11ec5f msync+0x4f (/usr/lib/x86_64-linux-gnu/libc.so.6)
->>> 675ada qemu_ram_msync+0x8a (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
->>> 6873c7 xbzrle_load_cleanup+0x37 (inlined)
->>> 6873c7 ram_load_cleanup+0x37 (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
->>> 4ff375 qemu_loadvm_state_cleanup+0x55 (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
->>> 500f0b qemu_loadvm_state+0x15b (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
->>> 4ecf85 process_incoming_migration_co+0x95 (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
->>> 8b6412 qemu_coroutine_self+0x2 (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
->>> ffffffffffffffff [unknown] ([unknown])
->>>
->>>
->>>           I was able to resolve the performance issue by removing the call to qemu_ram_block_writeback in ram_load_cleanup. This causes the performance to return to normal. It looks like this code path was initially added to ensure the memory was synchronized if the persistent memory region is backed by an NVDIMM device. Does it serve any purpose if pmem is instead backed by standard DRAM?
->>
->> Are you using a read-only NVDIMM?
->>
->> In that case, I assume we would never need msync.
->>
->>
->> diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
->> index 94bb3ccbe4..819b8ef829 100644
->> --- a/include/exec/ram_addr.h
->> +++ b/include/exec/ram_addr.h
->> @@ -153,7 +153,8 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length);
->>   /* Clear whole block of mem */
->>   static inline void qemu_ram_block_writeback(RAMBlock *block)
->>   {
->> -    qemu_ram_msync(block, 0, block->used_length);
->> +    if (!(block->flags & RAM_READONLY))
->> +        qemu_ram_msync(block, 0, block->used_length);
->>   }
->>
->>
->> -- 
->> Cheers,
->>
->> David / dhildenb
+Thank you very much for the review!
+
+On 08.05.2025 14:04, Markus Armbruster wrote:
+
+> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
 > 
-> I acked the original change but now I don't understand why is it
-> critical to preserve memory at a random time that has nothing
-> to do with guest state.
-> David, maybe you understand?
+>> The target initialization API ensures that the requested and provided
+>> MCD versions are compatible.
+>>
+>> * implement mcd_initialize_f and mcd_qry_error_info_f in mcdserver
+>> * implement QMP stub functionality
+>> * add QTest
+>>
+>> Thanks to the QMP integration in QTest, function arguments and results
+>> can be (de)serialized automatically.
+>>
+>> Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+>> ---
+>>  mcd/mcd_qapi.c          |  66 +++++++++++++++
+>>  mcd/mcd_qapi.h          |  26 ++++++
+>>  mcd/mcd_server.c        |  44 +++++++++-
+>>  mcd/mcd_stub.c          |  35 ++++++++
+>>  mcd/meson.build         |  49 +++++++----
+>>  qapi/mcd.json           | 183 ++++++++++++++++++++++++++++++++++++++++
+>>  tests/qtest/mcd-test.c  |  62 ++++++++++++++
+>>  tests/qtest/mcd-util.c  |  99 ++++++++++++++++++++++
+>>  tests/qtest/mcd-util.h  |   6 ++
+>>  tests/qtest/meson.build |   2 +-
+>>  10 files changed, 554 insertions(+), 18 deletions(-)
+>>  create mode 100644 mcd/mcd_qapi.c
+>>  create mode 100644 mcd/mcd_qapi.h
+>>  create mode 100644 tests/qtest/mcd-util.c
+>>
+>> diff --git a/mcd/mcd_qapi.c b/mcd/mcd_qapi.c
+>> new file mode 100644
+>> index 0000000..9a99866
+>> --- /dev/null
+>> +++ b/mcd/mcd_qapi.c
+>> @@ -0,0 +1,66 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>> +/*
+>> + * QAPI marshalling helpers for structures of the MCD API
+>> + *
+>> + * Copyright (c) 2025 Lauterbach GmbH
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+>> + * See the COPYING file in the top-level directory.
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "mcd_qapi.h"
+>> +
+>> +MCDAPIVersion *marshal_mcd_api_version(const mcd_api_version_st *api_version)
+>> +{
+>> +    MCDAPIVersion *marshal = g_malloc0(sizeof(*marshal));
+>> +
+>> +    *marshal = (MCDAPIVersion) {
+>> +        .v_api_major = api_version->v_api_major,
+>> +        .v_api_minor = api_version->v_api_minor,
+>> +        .author = g_strdup(api_version->author),
+>> +    };
+>> +
+>> +    return marshal;
+>> +}
+>> +
+>> +mcd_api_version_st unmarshal_mcd_api_version(MCDAPIVersion *api_version)
+>> +{
+>> +    mcd_api_version_st unmarshal =  {
+>> +        .v_api_major = api_version->v_api_major,
+>> +        .v_api_minor = api_version->v_api_minor,
+>> +    };
+>> +    strncpy(unmarshal.author, api_version->author, MCD_API_IMP_VENDOR_LEN - 1);
+> 
+> Have you considered sizeof(unmarshal.author) - 1 ?
 
-Let me dig ...
+I'm not expecting the sizes of fixed arrays to change anytime soon in
+the API but also don't see a reason why not to use sizeof. I guess
+you're right, sizeof is the less error-prone option.
 
-As you said, we originally added pmem_persist() in:
+> pstrcpy() from qemu/cutils.h is easier to use safely.
 
+Thanks for pointing that out.
 
-commit 56eb90af39abf66c0e80588a9f50c31e7df7320b (mst/mst-next)
-Author: Junyan He <junyan.he@intel.com>
-Date:   Wed Jul 18 15:48:03 2018 +0800
+>> +    return unmarshal;
+>> +}
+>> +
+>> +MCDImplVersionInfo *marshal_mcd_impl_version_info(
+>> +    const mcd_impl_version_info_st *impl_info)
+>> +{
+>> +    MCDImplVersionInfo *marshal = g_malloc0(sizeof(*marshal));
+>> +
+>> +    *marshal = (MCDImplVersionInfo) {
+>> +        .v_api = marshal_mcd_api_version(&impl_info->v_api),
+>> +        .v_imp_major = impl_info->v_imp_major,
+>> +        .v_imp_minor = impl_info->v_imp_minor,
+>> +        .v_imp_build = impl_info->v_imp_build,
+>> +        .vendor = g_strdup(impl_info->vendor),
+>> +        .date = g_strdup(impl_info->date),
+>> +    };
+>> +
+>> +    return marshal;
+>> +}
+>> +
+>> +MCDErrorInfo *marshal_mcd_error_info(const mcd_error_info_st *error_info)
+>> +{
+>> +    MCDErrorInfo *marshal = g_malloc0(sizeof(*marshal));
+>> +
+>> +    *marshal = (MCDErrorInfo) {
+>> +        .return_status = error_info->return_status,
+>> +        .error_code = error_info->error_code,
+>> +        .error_events = error_info->error_events,
+>> +        .error_str = g_strdup(error_info->error_str),
+>> +    };
+>> +
+>> +    return marshal;
+>> +}
+>> diff --git a/mcd/mcd_qapi.h b/mcd/mcd_qapi.h
+>> new file mode 100644
+>> index 0000000..47f4e16
+>> --- /dev/null
+>> +++ b/mcd/mcd_qapi.h
+>> @@ -0,0 +1,26 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>> +/*
+>> + * QAPI marshalling helpers for structures of the MCD API
+>> + *
+>> + * Copyright (c) 2025 Lauterbach GmbH
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+>> + * See the COPYING file in the top-level directory.
+>> + */
+>> +
+>> +#ifndef MCD_QAPI_H
+>> +#define MCD_QAPI_H
+>> +
+>> +#include "mcd_api.h"
+>> +#include "mcd/mcd-qapi-types.h"
+>> +
+>> +MCDAPIVersion *marshal_mcd_api_version(const mcd_api_version_st *api_version);
+>> +
+>> +MCDImplVersionInfo *marshal_mcd_impl_version_info(
+>> +    const mcd_impl_version_info_st *impl_info);
+>> +
+>> +MCDErrorInfo *marshal_mcd_error_info(const mcd_error_info_st *error_info);
+>> +
+>> +mcd_api_version_st unmarshal_mcd_api_version(MCDAPIVersion *api_version);
+>> +
+>> +#endif /* MCD_QAPI_H */
+>> diff --git a/mcd/mcd_server.c b/mcd/mcd_server.c
+>> index a20708d..6e941f0 100644
+>> --- a/mcd/mcd_server.c
+>> +++ b/mcd/mcd_server.c
+>> @@ -8,6 +8,7 @@
+>>   * See the COPYING file in the top-level directory.
+>>   */
+>>  
+>> +#include "qemu/osdep.h"
+>>  #include "mcd_api.h"
+>>  
+>>  static const mcd_error_info_st MCD_ERROR_NOT_IMPLEMENTED = {
+>> @@ -17,6 +18,13 @@ static const mcd_error_info_st MCD_ERROR_NOT_IMPLEMENTED = {
+>>      .error_str = "",
+>>  };
+>>  
+>> +static const mcd_error_info_st MCD_ERROR_INVALID_NULL_PARAM = {
+>> +    .return_status = MCD_RET_ACT_HANDLE_ERROR,
+>> +    .error_code = MCD_ERR_PARAM,
+>> +    .error_events = MCD_ERR_EVT_NONE,
+>> +    .error_str = "null was invalidly passed as a parameter",
+>> +};
+>> +
+>>  static const mcd_error_info_st MCD_ERROR_NONE = {
+>>      .return_status = MCD_RET_ACT_NONE,
+>>      .error_code = MCD_ERR_NONE,
+>> @@ -24,6 +32,9 @@ static const mcd_error_info_st MCD_ERROR_NONE = {
+>>      .error_str = "",
+>>  };
+>>  
+>> +/* reserves memory for custom errors */
+>> +static mcd_error_info_st custom_mcd_error;
+>> +
+>>  /**
+>>   * struct mcdserver_state - State of the MCD server
+>>   *
+>> @@ -40,12 +51,43 @@ static mcdserver_state g_server_state = {
+>>  mcd_return_et mcd_initialize_f(const mcd_api_version_st *version_req,
+>>                                 mcd_impl_version_info_st *impl_info)
+>>  {
+>> -    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+>> +    if (!version_req || !impl_info) {
+>> +        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
+>> +        return g_server_state.last_error->return_status;
+>> +    }
+>> +
+>> +    *impl_info = (mcd_impl_version_info_st) {
+>> +        .v_api = (mcd_api_version_st) {
+>> +            .v_api_major = MCD_API_VER_MAJOR,
+>> +            .v_api_minor = MCD_API_VER_MINOR,
+>> +            .author = MCD_API_VER_AUTHOR,
+>> +        },
+>> +        .v_imp_major = QEMU_VERSION_MAJOR,
+>> +        .v_imp_minor = QEMU_VERSION_MINOR,
+>> +        .v_imp_build = 0,
+>> +        .vendor = "QEMU",
+>> +        .date = __DATE__,
+>> +    };
+>> +
+>> +    if (version_req->v_api_major == MCD_API_VER_MAJOR &&
+>> +        version_req->v_api_minor <= MCD_API_VER_MINOR) {
+>> +        g_server_state.last_error = &MCD_ERROR_NONE;
+>> +    } else {
+>> +        custom_mcd_error = (mcd_error_info_st) {
+>> +            .return_status = MCD_RET_ACT_HANDLE_ERROR,
+>> +            .error_code = MCD_ERR_GENERAL,
+>> +            .error_events = MCD_ERR_EVT_NONE,
+>> +            .error_str = "incompatible versions",
+>> +        };
+>> +        g_server_state.last_error = &custom_mcd_error;
+>> +    }
+>> +
+>>      return g_server_state.last_error->return_status;
+>>  }
+>>  
+>>  void mcd_exit_f(void)
+>>  {
+>> +    g_server_state.last_error = &MCD_ERROR_NONE;
+>>      return;
+>>  }
+>>  
+>> diff --git a/mcd/mcd_stub.c b/mcd/mcd_stub.c
+>> index de679a4..23db1cf 100644
+>> --- a/mcd/mcd_stub.c
+>> +++ b/mcd/mcd_stub.c
+>> @@ -8,4 +8,39 @@
+>>   * See the COPYING file in the top-level directory.
+>>   */
+>>  
+>> +#include "qemu/osdep.h"
+>>  #include "mcd_api.h"
+>> +#include "mcd_qapi.h"
+>> +#include "mcd/mcd-qapi-commands.h"
+>> +
+>> +MCDInitializeResult *qmp_mcd_initialize(MCDAPIVersion *version_req,
+>> +                                        Error **errp)
+>> +{
+>> +    mcd_impl_version_info_st impl_info;
+>> +    MCDInitializeResult *result = g_malloc0(sizeof(*result));
+>> +    mcd_api_version_st version_req_unmarshalled =
+>> +        unmarshal_mcd_api_version(version_req);
+>> +
+>> +    result->return_status = mcd_initialize_f(&version_req_unmarshalled,
+>> +                                             &impl_info);
+>> +
+>> +    if (result->return_status == MCD_RET_ACT_NONE) {
+>> +        result->impl_info = marshal_mcd_impl_version_info(&impl_info);
+>> +    }
+>> +
+>> +    return result;
+>> +}
+>> +
+>> +void qmp_mcd_exit(Error **errp)
+>> +{
+>> +    mcd_exit_f();
+>> +}
+>> +
+>> +MCDErrorInfo *qmp_mcd_qry_error_info(Error **errp)
+>> +{
+>> +    MCDErrorInfo *result;
+>> +    mcd_error_info_st error_info;
+>> +    mcd_qry_error_info_f(NULL, &error_info);
+>> +    result = marshal_mcd_error_info(&error_info);
+>> +    return result;
+>> +}
+>> diff --git a/mcd/meson.build b/mcd/meson.build
+>> index 191f0cc..2adaa1b 100644
+>> --- a/mcd/meson.build
+>> +++ b/mcd/meson.build
+>> @@ -1,14 +1,10 @@
+>>  mcd_qapi_outputs = [
+>> -  'mcd-qapi-commands.c',
+>> -  'mcd-qapi-commands.h',
+>>    'mcd-qapi-emit-events.c',
+>>    'mcd-qapi-emit-events.h',
+>>    'mcd-qapi-events.c',
+>>    'mcd-qapi-events.h',
+>>    'mcd-qapi-features.c',
+>>    'mcd-qapi-features.h',
+>> -  'mcd-qapi-init-commands.c',
+>> -  'mcd-qapi-init-commands.h',
+>>    'mcd-qapi-introspect.c',
+>>    'mcd-qapi-introspect.h',
+>>    'mcd-qapi-types.c',
+>> @@ -17,27 +13,48 @@ mcd_qapi_outputs = [
+>>    'mcd-qapi-visit.h',
+>>  ]
+>>  
+>> +# QAPI outputs that will only be used by the MCD server
+>> +mcd_qapi_server_outputs = [
+>> +  'mcd-qapi-commands.c',
+>> +  'mcd-qapi-commands.h',
+>> +  'mcd-qapi-init-commands.c',
+>> +  'mcd-qapi-init-commands.h'
+>> +]
+>> +
+>>  mcd_qapi_files = custom_target('MCD QAPI files',
+>> -                               output: mcd_qapi_outputs,
+>> +                               output: mcd_qapi_outputs + mcd_qapi_server_outputs,
+>>                                 input: '../qapi/mcd.json',
+>>                                 command: [ qapi_gen, '-p', 'mcd-', '-o', 'mcd',
+>>                                            '--suppress-tracing','@INPUT0@'],
+>>                                 depend_files: qapi_gen_depends)
+>>  
+>> -mcd_ss = ss.source_set()
+>> +mcd_qapi_ss = ss.source_set()
+>>  
+>> -mcd_ss.add(mcd_qapi_files.to_list())
+>> -mcd_ss.add(files(
+>> -  'mcd_server.c',
+>> -  'mcd_stub.c',
+>> -  'mcd_monitor.c'))
+>> +foreach f : mcd_qapi_files.to_list()
+>> +  if mcd_qapi_outputs.contains(fs.name(f))
+>> +    mcd_qapi_ss.add([f])
+>> +  endif
+>> +endforeach
+>>  
+>> -mcd_ss = mcd_ss.apply({})
+>> +mcd_qapi_ss.add(files('mcd_qapi.c'))
+>> +mcd_qapi_ss = mcd_qapi_ss.apply({})
+>>  
+>> -libmcd = static_library('mcd_system',
+>> -                        mcd_ss.sources() + genh,
+>> +libmcd_qapi = static_library('mcd_qapi',
+>> +                        mcd_qapi_ss.sources() + genh,
+>>                          build_by_default: false)
+>>  
+>> -mcd = declare_dependency(objects: libmcd.extract_all_objects(recursive: false))
+>> +mcd_qapi = declare_dependency(
+>> +    objects: libmcd_qapi.extract_all_objects(recursive: false))
+>> +
+>> +foreach f : mcd_qapi_files.to_list()
+>> +  if mcd_qapi_server_outputs.contains(fs.name(f))
+>> +    libsystem_ss.add([f])
+>> +  endif
+>> +endforeach
+>> +
+>> +libsystem_ss.add(files(
+>> +  'mcd_server.c',
+>> +  'mcd_stub.c',
+>> +  'mcd_monitor.c'))
+>>  
+>> -system_ss.add(mcd)
+>> +libsystem_ss.add(mcd_qapi)
+> 
+> The commit message did not prepare me for such changes to meson.build.
+> What are you doing here?
 
-     migration/ram: ensure write persistence on loading all data to PMEM.
+I understand that this requires further comments...
+The goal is to provide the marshal helpers from mcd_qapi to mcd-test. We
+cannot use meson's mcd dependency for that since that would result in
+linker errors for functions that are not needed anyway:
 
-     Because we need to make sure the pmem kind memory data is synced
-     after migration, we choose to call pmem_persist() when the migration
-     finish. This will make sure the data of pmem is safe and will not
-     lose if power is off.
+  cc -m64  -o tests/qtest/mcd-test [...]
+  build/../mcd/mcd_monitor.c:53: undefined reference to `monitor_puts'
 
-     Signed-off-by: Junyan He <junyan.he@intel.com>
-     Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-     Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-     Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+So we split meson's mcd dependency into two parts, one of them being
+mcd_qapi which will be used by mcd-test:
 
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 3dc9508..11a9270 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -398,7 +398,7 @@ if dbus_display
+>  endif
+>  
+>  if get_option('mcd').enabled()
+> -  qtests += { 'mcd-test': files('mcd-test.c') }
+> +  qtests += { 'mcd-test': files('mcd-test.c', 'mcd-util.c') + mcd_qapi }
+>    qtests_generic += [ 'mcd-test' ]
+>  endif
 
-Then, we generalized to not using pmem_persist() but doing a 
-qemu_ram_block_writeback() -- that includes a conditional pmem_persist() in:
+I should've probably included this already in
+  [PATCH v2 06/20] qtest: Introduce MCD test suite
+instead of keeping that version's meson files as simple as possible.
+Provided the explanation above makes sense, I will add a variant of it
+in the commit message for more context.
 
-commit bd108a44bc29cb648dd930564996b0128e66ac01
-Author: Beata Michalska <beata.michalska@linaro.org>
-Date:   Thu Nov 21 00:08:42 2019 +0000
+Thanks for pointing that out. After a working a longer stretch on a
+larger patch set, it's quite difficult to see which parts of the
+submission might be unclear.
 
-     migration: ram: Switch to ram block writeback
+>> diff --git a/qapi/mcd.json b/qapi/mcd.json
+>> index 701fd03..7b42a74 100644
+>> --- a/qapi/mcd.json
+>> +++ b/qapi/mcd.json
+>> @@ -4,3 +4,186 @@
+>>  ##
+>>  # = Multi-Core Debug (MCD) API
+>>  ##
+>> +
+>> +
+>> +##
+>> +# == Definition of Structures
+>> +##
+>> +
+>> +
+>> +##
+>> +# @MCDAPIVersion:
+>> +#
+>> +# Structure type containing the MCD API version information of the tool.
+>> +#
+>> +# @v-api-major: API major version.
+>> +# @v-api-minor: API minor version.
+>> +# @author:      API name of the author of this MCD API version.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'struct': 'MCDAPIVersion',
+>> +  'data': {
+>> +    'v-api-major': 'uint16',
+>> +    'v-api-minor': 'uint16',
+>> +    'author':      'str' } }
+>> +
+>> +
+>> +##
+>> +# @MCDImplVersionInfo:
+>> +#
+>> +# Structure type containing the MCD API implementation information.
+>> +#
+>> +# @v-api:       Implemented API version.
+>> +# @v-imp-major: Major version number of this implementation.
+>> +# @v-imp-minor: Minor version number of this implementation.
+>> +# @v-imp-build: Build number of this implementation.
+>> +# @vendor:      Name of vendor of the implementation.
+>> +# @date:        String from __DATE__ macro at compile time.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'struct': 'MCDImplVersionInfo',
+>> +  'data': {
+>> +    'v-api'      : 'MCDAPIVersion',
+>> +    'v-imp-major': 'uint16',
+>> +    'v-imp-minor': 'uint16',
+>> +    'v-imp-build': 'uint16',
+>> +    'vendor'     : 'str',
+>> +    'date'       : 'str' } }
+>> +
+>> +
+>> +##
+>> +# @MCDErrorInfo:
+>> +#
+>> +# Structure type containing the error status and error event notification.
+>> +#
+>> +# @return-status: Return status from the last API call.
+>> +# @error-code:    Detailed error code from the last API call.
+>> +# @error-events:  Detailed event code from the last API call.
+>> +# @error-str:     Detailed error text string from the last API call.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'struct': 'MCDErrorInfo',
+>> +  'data': {
+>> +    'return-status': 'uint32',
+>> +    'error-code'   : 'uint32',
+>> +    'error-events' : 'uint32',
+>> +    'error-str'    : 'str' }}
+>> +
+>> +
+>> +##
+>> +# == Target Initialization API
+>> +##
+>> +
+>> +
+>> +##
+>> +# @MCDInitializeResult:
+>> +#
+>> +# Return value of @mcd-initialize.
+>> +#
+>> +# @return-status: Return code.
+>> +#
+>> +# @impl-info: Information about the QEMU build, its version and the version of
+>> +#             the implemented MCD API.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'struct': 'MCDInitializeResult',
+>> +  'data': {
+>> +    'return-status': 'uint32',
+>> +    '*impl-info'   : 'MCDImplVersionInfo' } }
+>> +
+>> +
+>> +##
+>> +# @mcd-initialize:
+>> +#
+>> +# Function initializing the interaction between a tool-side implementation and
+>> +# target-side implementation.
+>> +#
+>> +# @version-req: MCD API version as requested by an upper layer.
+>> +#
+>> +# Returns: @MCDInitializeResult
+>> +#
+>> +# Since: 9.1
+>> +#
+>> +# .. qmp-example::
+>> +#    :title: Check compatibility with MCD server
+>> +#
+>> +#     -> { "execute": "mcd-initialize",
+>> +#          "arguments": { "version-req": { "v-api-major": 1,
+>> +#                                          "v-api-minor": 1,
+>> +#                                          "author": "" } } }
+>> +#     <- {
+>> +#            "return": {
+>> +#                "impl-info": {
+>> +#                    "v-api": {
+>> +#                        "v-api-minor": 1,
+>> +#                        "v-api-major": 1,
+>> +#                        "author": "QEMU Release"
+>> +#                    },
+>> +#                    "vendor": "QEMU",
+>> +#                    "v-imp-minor": 2,
+>> +#                    "v-imp-major": 9,
+>> +#                    "v-imp-build": 0,
+>> +#                    "date": "Dec 18 2024"
+>> +#                },
+>> +#                "return-status": 0
+>> +#            }
+>> +#        }
+>> +##
+>> +{ 'command': 'mcd-initialize',
+>> +  'data': { 'version-req': 'MCDAPIVersion' },
+>> +  'returns': 'MCDInitializeResult' }
+>> +
+>> +
+>> +##
+>> +# @mcd-exit:
+>> +#
+>> +# Function cleaning up all core and server connections from a tool.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'command': 'mcd-exit' }
+>> +
+>> +
+>> +##
+>> +# == Core Connection API
+>> +##
+>> +
+>> +
+>> +##
+>> +# @mcd-qry-error-info:
+>> +#
+>> +# Function allowing the access to detailed error and/or event information after
+>> +# an API call.
+>> +#
+>> +# Returns: @MCDErrorInfo
+>> +#
+>> +# Since: 9.1
+>> +#
+>> +# .. qmp-example::
+>> +#    :title: Incompatible MCD versions
+>> +#
+>> +#     -> { "execute": "mcd-initialize",
+>> +#          "arguments": { "version-req": { "v-api-major": 2,
+>> +#                                          "v-api-minor": 0,
+>> +#                                          "author": "" } } }
+>> +#     <- {
+>> +#            "return": {
+>> +#                "return-status": 3
+>> +#            }
+>> +#        }
+>> +#     -> { "execute": "mcd-qry-error-info" }
+>> +#     <- {
+>> +#            "return": {
+>> +#                "error-str": "incompatible versions",
+>> +#                "error-code": 3840,
+>> +#                "error-events": 0,
+>> +#                "return-status": 3
+>> +#            }
+>> +#        }
+>> +##
+>> +{ 'command': 'mcd-qry-error-info',
+>> +  'returns': 'MCDErrorInfo' }
+> 
+> You need "Since: 10.0" now.
+> 
+> From docs/devel/qapi-code-gen.rst:
+> 
+>     For legibility, wrap text paragraphs so every line is at most 70
+>     characters long.
+> 
+> and
+> 
+>     Descriptions start with '\@name:'.  The description text must be
+>     indented like this::
+> 
+>      # @name: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+>      #     do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+> 
+> [...]
 
-     Switch to ram block writeback for pmem migration.
+Will be changed in v3!
 
-     Signed-off-by: Beata Michalska <beata.michalska@linaro.org>
-     Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-     Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-     Acked-by: Dr. David Alan Gilbert <dgilbert@redhat.com>
-     Message-id: 20191121000843.24844-4-beata.michalska@linaro.org
-     Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-
-
-That was part of a patch series "[PATCH 0/4] target/arm: Support for 
-Data Cache Clean up to PoP" [1].
-
-At first, it looks like a cleanup, but has the effect of also affecting 
-non-pmem memory backends.
-
-A discussion [2] includes some reasoning around libpmem not being 
-around, and msync being a suitable replacement in that case [3]: "
-According to the PMDG man page, pmem_persist is supposed to be
-equivalent for the msync. It's just more performant. So in case of real 
-pmem hardware it should be all good."
-
-
-So, the real question is: why do have to sync *after* migration on the 
-migration *destination*?
-
-I think the reason is simple if you assume that the pmem device will 
-differ between source and destination, and that we actually migrated 
-that data in the migration stream.
-
-On the migration destination, we will fill pmem with data we obtained 
-from the src via the migration stream: writing the data to pmem using 
-ordinary memory writes.
-
-pmem requires a sync to make sure that the data is *actually* persisted. 
-The VM will certainly not issue a sync, because it didn't modify any 
-pages. So we have to issue a sync such that pmem is guaranteed to be 
-persisted.
-
-
-In case of ordinary files, this means writing data back to disk 
-("persist on disk"). I'll note that NVDIMMs are not suitable for 
-ordinary files in general, because we cannot easily implement 
-guest-triggered pmem syncs using basic instruction set. For R/O NVDIMMs 
-it's fine.
-
-For the R/W use case, virtio-pmem was invented, whereby the VM will do 
-the sync -> msync using an explicit guest->host call. So once the guest 
-sync'ed, it's actually persisted.
-
-
-Now, NVDIMMs could be safely used in R/O mode backed by ordinary files. 
-Here, we would *still* want to do this msync.
-
-So, we can really only safely ignore the msync if we know that the 
-mmap() is R/O (in which case, migration probably would fail either way? 
-unless the RAMBlock is ignored).
-
-
-While we could not perform the msync if we detect that we have an 
-ordinary file, there might still be the case where we have a R/W NVDIMM, 
-just nobody actually ever writes to it ... so it's tricky. Certainly 
-worth exploring. But there would be the chance of data loss for R/O 
-NVDIMMs after migration on hypervisor crash ...
-
-
-
-[1] 
-https://patchew.org/QEMU/20191121000843.24844-1-beata.michalska@linaro.org/
-
-[2] 
-https://lists.libreplanet.org/archive/html/qemu-devel/2019-09/msg01750.html
-
-[3] 
-https://lists.libreplanet.org/archive/html/qemu-devel/2019-09/msg01772.html
-
--- 
-Cheers,
-
-David / dhildenb
+Best regards,
+Mario
 
 
