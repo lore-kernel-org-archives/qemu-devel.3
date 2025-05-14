@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0336AC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1711FC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFAdB-0005qU-O9; Wed, 14 May 2025 07:50:37 -0400
+	id 1uFAds-0006Dx-Kq; Wed, 14 May 2025 07:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAd9-0005q2-Qp
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:50:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdj-00066w-60
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAd6-00063Q-HV
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:50:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdd-0006FY-6s
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747223428;
+ s=mimecast20190719; t=1747223460;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0fJgSbXc546dwe+4Ew3aID1Zi5bepWCH2l5RAH/aT3s=;
- b=JRarwsNWDbuLmY6zeF2Ld5lqg2Hs13pM5rwFuqiyhqRXdwFvWsgKBUMciMr21g8e2U7pV2
- t5oK4vMeS2cc9oiXdA7weoDBNO0LcGrXVvdj4m+fdFHMN/5Sn43NTqTPho1j62vmbI70fY
- BLulcWSd9KdC2FQEft8pfScqq+h5S0I=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CyHusw9AnpZuF7E04bQzWNuAptqIyO52JzaZ4eBsnI8=;
+ b=Z3J/02Ovf1doSZFudF2mZOJYjxggxnzfZNEAfBEXdfyLNVFACRD1I3O7Qwr007LBa0aD0R
+ Kddufy5uoeM/Y26os797rWV/XCE+L7jUT6Oj2T5W26KXfV5N2nxC+Or7I6B22r5BUSYFGz
+ 0PmH1NOHKU9BrkJ1Ey4DOQ5s3NQhtk0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-547-KLdPkNfJPDWI5Ls_LoXXmg-1; Wed, 14 May 2025 07:50:27 -0400
-X-MC-Unique: KLdPkNfJPDWI5Ls_LoXXmg-1
-X-Mimecast-MFC-AGG-ID: KLdPkNfJPDWI5Ls_LoXXmg_1747223426
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so41300765e9.2
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:50:27 -0700 (PDT)
+ us-mta-651-FBmpcN-QOTSf64SSH4KNhA-1; Wed, 14 May 2025 07:50:59 -0400
+X-MC-Unique: FBmpcN-QOTSf64SSH4KNhA-1
+X-Mimecast-MFC-AGG-ID: FBmpcN-QOTSf64SSH4KNhA_1747223458
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d209dc2d3so33229155e9.3
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:50:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747223425; x=1747828225;
+ d=1e100.net; s=20230601; t=1747223457; x=1747828257;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0fJgSbXc546dwe+4Ew3aID1Zi5bepWCH2l5RAH/aT3s=;
- b=duOVMG/9S9R6TZi2KUYcjX+Mqmat7mhvaipY/XD3ZyFlLqECz8Lrai2pSB9hmSFfUr
- 7Ll9QFFqj4fl8w234Hd7/7FNZ53iTY/kDL9xQbGsm/3z/qdLV7QkEV9roDV/uR5yL303
- koOtUWlj8lCCXO9rzgSfqrlDufHfYoT9jLVi6zDE4VvLLIe8HAFcknLW0/roOfwHMdTl
- bS8lmIgxMPcj/zt4WQK7RFR3DCc6BICX3tV6EZjckGkudk6V+zLKAN3LHsosSC2idmsC
- IAhPvdgu+Eg4O95HqbxDKgl/RX8lhxoDTQksiLUjvSkXI2+DExdcHRX6EArMFRgoSt+i
- ejDg==
-X-Gm-Message-State: AOJu0YwdCTBJVa40sYajetOogkaNzVgv9tr00bL6SKZNiUR2/PVJHcHJ
- sQpKIlGSYpCUAE50Bo7WgzHuSEtuoezb6N3wMrizRzwhIN7CQHNACfGaSfgdlLsUO33x0/IKVKq
- OAQgygXDV525aMccl2AiBumcEWAa8Cj2YdyywxZuJSv9/OQvRiad9uah6088ptJgbFq6xX+p9nU
- mfkkcFd6hnSzYzjrA1sX1ptAZ4WAr4PA==
-X-Gm-Gg: ASbGncv6OBTSO3CLZ6sVeQWrZpMIxkqmofq6pYbkXvQzh0IWvaAJu/dkEnnR1Q43DdF
- J4twwK7FsdbbJYHhSGSBsfpbEpyd2DuJzumPCJKfWL3fSCEXTU1oErB6Ymv4ivtWyUm6ZFLanRI
- Wuti3TswTyKqbIiui2L694BtiWbIn3k+qe3f1o8sf75eOZvMm+dBj3ohrdMsuxOrTfvKGKc/GjP
- tzU8BpXmB9WXt1yz52FCvv4/vOzueKV9QA68FzmGDb3rGsMUkiFVDrr5q565UV4ClYraqIhWHlL
- W26DpQ==
-X-Received: by 2002:a05:6000:40dc:b0:3a0:b539:f330 with SMTP id
- ffacd0b85a97d-3a3496999e0mr2602490f8f.2.1747223425578; 
- Wed, 14 May 2025 04:50:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3ixA3LrF3ohTDjsAXpI7B90nqWULVqAZvTiHrwD0KQdt1iIoyobl81S0SFHavH40RYe1NCQ==
-X-Received: by 2002:a05:6000:40dc:b0:3a0:b539:f330 with SMTP id
- ffacd0b85a97d-3a3496999e0mr2602448f8f.2.1747223425032; 
- Wed, 14 May 2025 04:50:25 -0700 (PDT)
+ bh=CyHusw9AnpZuF7E04bQzWNuAptqIyO52JzaZ4eBsnI8=;
+ b=RwOJBDdGIo0QF/GrhMUHQN9NgNhiLQM9y6t0r5OqMfcf58C8sZmPcSgewxB5hrmQkO
+ s+TxUaDilEZ6ukagkoaYggUaCexZy4P8Lk8uPShtc2atpqrmnU31EjAt1bPmMwpKW/Rt
+ GtJ9Xq5wAVa57d9JJ5PZC8k+9aa3KX87gVpnvhBH36ucOfs2my2QrJRCJnT7GGmngUHH
+ 0JZK0uL3lRB5oh6Ns6eC84pfJRuihFIVFAMTqpDAudmdEugMRkzmhqOyhPOb4UWkQ7iq
+ S8wtMXESxkebngHkjHEI8c1ae0FunZLfrXZEKDtRLFxfS9ChkeafSNg70kqYuiJe3r43
+ p6Dw==
+X-Gm-Message-State: AOJu0YyQKBvLNm7UAIXrzScGG2ix0S305NkhDtmWdhQXZqApB4aLD8J7
+ P8xX5hYScI7eT7UiQ2M/iz/i8kWv5q41+VHf8kf9e1Wy2NEof6L2YwQWcUXyZhtu8jj5BJz5xun
+ qxFS71A7nOM7cF5+nLG00N0ElAROb2yst/dBWXPKtyJel2aYAtC2LEJgND63YMlUhCkldcGSd0H
+ pNc/ziY0p//M38C7EULEELAtt8Kougrw==
+X-Gm-Gg: ASbGncua7k/n8IP+jSlNQHcmEGGIq9kI7aoXb1PomArxOz4G11ONkFCdh1rndfNavhn
+ Fo//ezUQkGgYjqQK66tGWBl4QBjwNTMEnZEWLssIvFFwcFbUInXkQaocKHMvyzzu5zTmwy6UpFr
+ vS8WM3muiyA8K6b5FRoSR4778hvKgrhICOlnnf0n9Lf2zW7ocnXeZX4N9qhE7pmrRWSJXbp9EQ/
+ G7ZkAr6dsL0GFoLUbNdnhQHv6Lp1YSBHEa2MxiFte10iD/2y3ECHJ+2nRQWuUdb9iV9OyrZYjVu
+ 9DC3lQ==
+X-Received: by 2002:a05:600c:3c8c:b0:442:ccf9:e6f2 with SMTP id
+ 5b1f17b1804b1-442f210f732mr32145565e9.16.1747223457597; 
+ Wed, 14 May 2025 04:50:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFpiCCiX0V5P01m0JQc/+q1+SwvrKE6uWNXqF6ovzQX2rNTLKAy4fP48qbHCyi9G9XywEqQaA==
+X-Received: by 2002:a05:600c:3c8c:b0:442:ccf9:e6f2 with SMTP id
+ 5b1f17b1804b1-442f210f732mr32145175e9.16.1747223457167; 
+ Wed, 14 May 2025 04:50:57 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f3979275sm27340185e9.34.2025.05.14.04.50.23
+ ffacd0b85a97d-3a1f5a4c5e1sm19237061f8f.89.2025.05.14.04.50.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 04:50:24 -0700 (PDT)
-Date: Wed, 14 May 2025 07:50:22 -0400
+ Wed, 14 May 2025 04:50:56 -0700 (PDT)
+Date: Wed, 14 May 2025 07:50:54 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vinayak Holikatti <vinayak.kh@samsung.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 03/27] hw/cxl/cxl-mailbox-utils: Add support for Media
- operations discovery commands cxl r3.2 (8.2.10.9.5.3)
-Message-ID: <77a8e9fe0ecb71b260d17f43221df5b18769b359.1747223385.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Yui Washizu <yui.washidu@gmail.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 16/27] pcie_sriov: Make a PCI device with user-created VF
+ ARI-capable
+Message-ID: <d0c280d3fac644c26a86d2fb70c5920b3d5bef85.1747223385.git.mst@redhat.com>
 References: <cover.1747223385.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -110,170 +112,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vinayak Holikatti <vinayak.kh@samsung.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-CXL spec 3.2 section 8.2.10.9.5.3 describes media operations commands.
-CXL devices supports media operations discovery command.
-
-Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20250305092501.191929-4-Jonathan.Cameron@huawei.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20250314-sriov-v9-9-57dae8ae3ab5@daynix.com>
+Tested-by: Yui Washizu <yui.washidu@gmail.com>
+Tested-by: Pasha Tatashin <pasha.tatashin@soleen.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 125 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 125 insertions(+)
+ include/hw/pci/pcie_sriov.h |  7 +++++--
+ hw/pci/pcie_sriov.c         |  8 +++++++-
+ hw/virtio/virtio-pci.c      | 16 ++++++++++------
+ docs/system/sriov.rst       |  3 ++-
+ 4 files changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index bd25df033a..79b35d1405 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -89,6 +89,7 @@ enum {
-     SANITIZE    = 0x44,
-         #define OVERWRITE     0x0
-         #define SECURE_ERASE  0x1
-+        #define MEDIA_OPERATIONS 0x2
-     PERSISTENT_MEM = 0x45,
-         #define GET_SECURITY_STATE     0x0
-     MEDIA_AND_POISON = 0x43,
-@@ -1705,6 +1706,126 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
-     return CXL_MBOX_BG_STARTED;
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index f75b8f22ee..aeaa38cf34 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -43,12 +43,15 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
+ 
+ /**
+  * pcie_sriov_pf_init_from_user_created_vfs() - Initialize PF with user-created
+- *                                              VFs.
++ *                                              VFs, adding ARI to PF
+  * @dev: A PCIe device being realized.
+  * @offset: The offset of the SR-IOV capability.
+  * @errp: pointer to Error*, to store an error if it happens.
+  *
+- * Return: The size of added capability. 0 if the user did not create VFs.
++ * Initializes a PF with user-created VFs, adding the ARI extended capability to
++ * the PF. The VFs should call pcie_ari_init() to form an ARI device.
++ *
++ * Return: The size of added capabilities. 0 if the user did not create VFs.
+  *         -1 if failed.
+  */
+ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 08f707e847..3ad18744f4 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -245,6 +245,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+     PCIDevice **vfs;
+     BusState *bus = qdev_get_parent_bus(DEVICE(dev));
+     uint16_t ven_id = pci_get_word(dev->config + PCI_VENDOR_ID);
++    uint16_t size = PCI_EXT_CAP_SRIOV_SIZEOF;
+     uint16_t vf_dev_id;
+     uint16_t vf_offset;
+     uint16_t vf_stride;
+@@ -311,6 +312,11 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+         return -1;
+     }
+ 
++    if (!pcie_find_capability(dev, PCI_EXT_CAP_ID_ARI)) {
++        pcie_ari_init(dev, offset + size);
++        size += PCI_ARI_SIZEOF;
++    }
++
+     for (i = 0; i < pf->len; i++) {
+         vfs[i]->exp.sriov_vf.pf = dev;
+         vfs[i]->exp.sriov_vf.vf_number = i;
+@@ -331,7 +337,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+         }
+     }
+ 
+-    return PCI_EXT_CAP_SRIOV_SIZEOF;
++    return size;
  }
  
-+enum {
-+    MEDIA_OP_CLASS_GENERAL  = 0x0,
-+        #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
-+    MEDIA_OP_CLASS_SANITIZE = 0x1,
-+        #define MEDIA_OP_SAN_SUBC_SANITIZE 0x0
-+        #define MEDIA_OP_SAN_SUBC_ZERO 0x1
-+};
-+
-+struct media_op_supported_list_entry {
-+    uint8_t media_op_class;
-+    uint8_t media_op_subclass;
-+};
-+
-+struct media_op_discovery_out_pl {
-+    uint64_t dpa_range_granularity;
-+    uint16_t total_supported_operations;
-+    uint16_t num_of_supported_operations;
-+    struct media_op_supported_list_entry entry[];
-+} QEMU_PACKED;
-+
-+static const struct media_op_supported_list_entry media_op_matrix[] = {
-+    { MEDIA_OP_CLASS_GENERAL, MEDIA_OP_GEN_SUBC_DISCOVERY },
-+    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_SANITIZE },
-+    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_ZERO },
-+};
-+
-+static CXLRetCode media_operations_discovery(uint8_t *payload_in,
-+                                             size_t len_in,
-+                                             uint8_t *payload_out,
-+                                             size_t *len_out)
-+{
-+    struct {
-+        uint8_t media_operation_class;
-+        uint8_t media_operation_subclass;
-+        uint8_t rsvd[2];
-+        uint32_t dpa_range_count;
-+        struct {
-+            uint16_t start_index;
-+            uint16_t num_ops;
-+        } discovery_osa;
-+    } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
-+    struct media_op_discovery_out_pl *media_out_pl =
-+        (struct media_op_discovery_out_pl *)payload_out;
-+    int num_ops, start_index, i;
-+    int count = 0;
-+
-+    if (len_in < sizeof(*media_op_in_disc_pl)) {
-+        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+    }
-+
-+    num_ops = media_op_in_disc_pl->discovery_osa.num_ops;
-+    start_index = media_op_in_disc_pl->discovery_osa.start_index;
-+
-+    /*
-+     * As per spec CXL r3.2 8.2.10.9.5.3 dpa_range_count should be zero and
-+     * start index should not exceed the total number of entries for discovery
-+     * sub class command.
-+     */
-+    if (media_op_in_disc_pl->dpa_range_count ||
-+        start_index > ARRAY_SIZE(media_op_matrix)) {
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    media_out_pl->dpa_range_granularity = CXL_CACHE_LINE_SIZE;
-+    media_out_pl->total_supported_operations =
-+                                     ARRAY_SIZE(media_op_matrix);
-+    if (num_ops > 0) {
-+        for (i = start_index; i < start_index + num_ops; i++) {
-+            media_out_pl->entry[count].media_op_class =
-+                    media_op_matrix[i].media_op_class;
-+            media_out_pl->entry[count].media_op_subclass =
-+                        media_op_matrix[i].media_op_subclass;
-+            count++;
-+            if (count == num_ops) {
-+                break;
-+            }
+ bool pcie_sriov_register_device(PCIDevice *dev, Error **errp)
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index fee65d3645..9b48aa8c3e 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2111,12 +2111,16 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
+                          PCI_BASE_ADDRESS_SPACE_IO, &proxy->bar);
+     }
+ 
+-    res = pcie_sriov_pf_init_from_user_created_vfs(&proxy->pci_dev,
+-                                                   proxy->last_pcie_cap_offset,
+-                                                   errp);
+-    if (res > 0) {
+-        proxy->last_pcie_cap_offset += res;
+-        virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
++    if (pci_is_vf(&proxy->pci_dev)) {
++        pcie_ari_init(&proxy->pci_dev, proxy->last_pcie_cap_offset);
++        proxy->last_pcie_cap_offset += PCI_ARI_SIZEOF;
++    } else {
++        res = pcie_sriov_pf_init_from_user_created_vfs(
++            &proxy->pci_dev, proxy->last_pcie_cap_offset, errp);
++        if (res > 0) {
++            proxy->last_pcie_cap_offset += res;
++            virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
 +        }
-+    }
-+
-+    media_out_pl->num_of_supported_operations = count;
-+    *len_out = sizeof(*media_out_pl) + count * sizeof(*media_out_pl->entry);
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
-+                                       uint8_t *payload_in,
-+                                       size_t len_in,
-+                                       uint8_t *payload_out,
-+                                       size_t *len_out,
-+                                       CXLCCI *cci)
-+{
-+    struct {
-+        uint8_t media_operation_class;
-+        uint8_t media_operation_subclass;
-+        uint8_t rsvd[2];
-+        uint32_t dpa_range_count;
-+    } QEMU_PACKED *media_op_in_common_pl = (void *)payload_in;
-+    uint8_t media_op_cl = 0;
-+    uint8_t media_op_subclass = 0;
-+
-+    if (len_in < sizeof(*media_op_in_common_pl)) {
-+        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+    }
-+
-+    media_op_cl = media_op_in_common_pl->media_operation_class;
-+    media_op_subclass = media_op_in_common_pl->media_operation_subclass;
-+
-+    switch (media_op_cl) {
-+    case MEDIA_OP_CLASS_GENERAL:
-+        if (media_op_subclass != MEDIA_OP_GEN_SUBC_DISCOVERY) {
-+            return CXL_MBOX_UNSUPPORTED;
-+        }
-+
-+        return media_operations_discovery(payload_in, len_in, payload_out,
-+                                             len_out);
-+    default:
-+        return CXL_MBOX_UNSUPPORTED;
-+    }
-+}
-+
- static CXLRetCode cmd_get_security_state(const struct cxl_cmd *cmd,
-                                          uint8_t *payload_in,
-                                          size_t len_in,
-@@ -2850,6 +2971,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-          CXL_MBOX_SECURITY_STATE_CHANGE |
-          CXL_MBOX_BACKGROUND_OPERATION |
-          CXL_MBOX_BACKGROUND_OPERATION_ABORT)},
-+    [SANITIZE][MEDIA_OPERATIONS] = { "MEDIA_OPERATIONS", cmd_media_operations,
-+        ~0,
-+        (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
-+         CXL_MBOX_BACKGROUND_OPERATION)},
-     [PERSISTENT_MEM][GET_SECURITY_STATE] = { "GET_SECURITY_STATE",
-         cmd_get_security_state, 0, 0 },
-     [MEDIA_AND_POISON][GET_POISON_LIST] = { "MEDIA_AND_POISON_GET_POISON_LIST",
+     }
+ }
+ 
+diff --git a/docs/system/sriov.rst b/docs/system/sriov.rst
+index a851a66a4b..d12178f3c3 100644
+--- a/docs/system/sriov.rst
++++ b/docs/system/sriov.rst
+@@ -28,7 +28,8 @@ virtio-net-pci functions to a bus. Below is a command line example:
+ The VFs specify the paired PF with ``sriov-pf`` property. The PF must be
+ added after all VFs. It is the user's responsibility to ensure that VFs have
+ function numbers larger than one of the PF, and that the function numbers
+-have a consistent stride.
++have a consistent stride. Both the PF and VFs are ARI-capable so you can have
++255 VFs at maximum.
+ 
+ You may also need to perform additional steps to activate the SR-IOV feature on
+ your guest. For Linux, refer to [1]_.
 -- 
 MST
 
