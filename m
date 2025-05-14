@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E0FC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:20:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 339D8C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBn9-0003x2-3S; Wed, 14 May 2025 09:04:59 -0400
+	id 1uFBmD-0002lr-SW; Wed, 14 May 2025 09:04:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBj7-0007Xy-Uw; Wed, 14 May 2025 09:00:59 -0400
+ id 1uFBjO-0007dE-T0; Wed, 14 May 2025 09:01:15 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBiy-0008Cv-UJ; Wed, 14 May 2025 09:00:44 -0400
+ id 1uFBjK-0008GK-IV; Wed, 14 May 2025 09:01:05 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 29158121AF4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B726121AF8;
  Wed, 14 May 2025 15:57:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C822E20B862;
+ by tsrv.corpit.ru (Postfix) with ESMTP id F10D320B866;
  Wed, 14 May 2025 15:57:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 22/34] hw/core/cpu: gdb_arch_name string should not be
- freed
-Date: Wed, 14 May 2025 15:57:44 +0300
-Message-Id: <20250514125758.92030-22-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 26/34] accel/tcg: Don't use TARGET_LONG_BITS in
+ decode_sleb128
+Date: Wed, 14 May 2025 15:57:48 +0300
+Message-Id: <20250514125758.92030-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
@@ -63,39 +63,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The documentation for the CPUClass::gdb_arch_name method claims that
-the returned string should be freed with g_free().  This is not
-correct: in commit a650683871ba728 we changed this method to
-instead return a simple constant string, but forgot to update
-the documentation.
+When we changed decode_sleb128 from target_long to
+int64_t, we failed to adjust the shift limit.
 
-Make the documentation match the new semantics.
-
-Fixes: a650683871ba728 ("hw/core/cpu: Return static value with gdb_arch_name()")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: c9ad8d27caa ("tcg: Widen gen_insn_data to uint64_t")
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250317142819.900029-2-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 56a9f0d4c4a483ce217e5290db69cb1788586787)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 9401f91b9b0c46886388735b3f2033a9c254895a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index c3ca0babcb..0e4d6f1c98 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -134,7 +134,8 @@ struct SysemuCPUOps;
-  * @gdb_stop_before_watchpoint: Indicates whether GDB expects the CPU to stop
-  *           before the insn which triggers a watchpoint rather than after it.
-  * @gdb_arch_name: Optional callback that returns the architecture name known
-- * to GDB. The caller must free the returned string with g_free.
-+ * to GDB. The returned value is expected to be a simple constant string:
-+ * the caller will not g_free() it.
-  * @disas_set_info: Setup architecture specific components of disassembly info
-  * @adjust_watchpoint_address: Perform a target-specific adjustment to an
-  * address before attempting to match it against watchpoints.
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index fdf6d8ac19..8531a27f1e 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -105,7 +105,7 @@ static int64_t decode_sleb128(const uint8_t **pp)
+         val |= (int64_t)(byte & 0x7f) << shift;
+         shift += 7;
+     } while (byte & 0x80);
+-    if (shift < TARGET_LONG_BITS && (byte & 0x40)) {
++    if (shift < 64 && (byte & 0x40)) {
+         val |= -(int64_t)1 << shift;
+     }
+ 
 -- 
 2.39.5
 
