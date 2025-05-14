@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B148C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42C7FC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFFND-0004xP-DR; Wed, 14 May 2025 12:54:27 -0400
+	id 1uFFOA-0007Ws-Es; Wed, 14 May 2025 12:55:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFFNB-0004vI-Oc
- for qemu-devel@nongnu.org; Wed, 14 May 2025 12:54:25 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFFO7-0007WI-QS
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 12:55:23 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFFN5-00064q-5J
- for qemu-devel@nongnu.org; Wed, 14 May 2025 12:54:20 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-b1fd59851baso4670898a12.0
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 09:54:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFFO5-0006Lg-9A
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 12:55:22 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43ea40a6e98so439985e9.1
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 09:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747241657; x=1747846457; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1747241719; x=1747846519; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SQXUMPZ25qjiXWkGJhr0BnN7diC5Qo56A6LIBjOi6as=;
- b=DKwMrzEjMJPjXzWbYMC7pmYIQxfNWghdtwzyp0vJY9YMI0mc6wMAhBsUgTzyGgIm1I
- PR6xsOBBY6mh7wC6DPLV44bMT2njFxArvH21mt/SPqmbkrgfqZ0+l/IiSMYD4hgRBnSP
- +y+iIL02w2YUDtzW4B4ZAMgGqj2CkweLzn2iBxU6vuykY052fMbZeJ7PcXhraz012VDI
- v9MUlvKcL7u2W1wr9fqVMesRpw4H74f3II27GXYZR0M2oVwKUlNvEEvBoYpKNnaU4l0b
- QlXbq86iBKLj6uDAky281O5D/YEgFUXWwZRB1H/3T6wqn9tubEb/2kndY6KcVgNZRW3j
- bxYA==
+ bh=5YmH83DL5qCu2KgAqq3e5Mot8qF1ZcGRJ0pxxN+rW0Y=;
+ b=Cf8j+fxpdgPDcSLD48/qoR8ntiGmF+8zRbsmtbBmTjhAVeAuK7/6cunGJVpmW0JvL/
+ oxsFkbikRTE7eJyBaYsBPNxGrsLvtXUwrzGDl2+TXDqiPkvMbS7g7L4j1j5fy+nD/0JL
+ WOx55VLtKAHqsfIiIR7ibTjTHmW9frL/WcCjp4dOjX4PlpCc4c4sbmvJqKZTXx2eS/y1
+ mw7eLkCcBJVk7lx/f46m6Y7DViwBUvuOkxRj8k72dL6dIavSOaDJCoTO35QpTMSsXNtu
+ Sy3ZtupYnqXbPMgy9WDWBg/6d5x7wdDCcsmIeo6RIlaKD3kOmCzXJB+LFTBg5UTws3WI
+ Q5wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747241657; x=1747846457;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1747241719; x=1747846519;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SQXUMPZ25qjiXWkGJhr0BnN7diC5Qo56A6LIBjOi6as=;
- b=Z0RfmtVniWxf1aQBfXeStqf9ilj9buVrCNf35blOem37RmF5fIZ+uEjWZAuqzRtoPL
- 3vOiBB8drs73RA4Aqd8g+CxxCHNImWMZ/+4vhNFsiDHygr0UP8940w/fiqUK5zx1K/F8
- z6ZFvEdcyXPx7uZZCzqs/r7nR7N2ld3I98gDoGktorm6OV2uYnOqMv58pXUvhNcE0jUG
- XdL0OztGsM6Cp8zuGHLYNfrCrfJkhpL3WN6AkKb0f+NmiqODnaH1KPCvXV7TOxEyIQQh
- 4WdCu/bkNG6IBbjAM95pVlrAbAAPBX3FPewpIESUBnv8eWrA12wyROO/JPXlOcJSq7cM
- 5O8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX+kCEBRrJQ0MnX3NS8vQ2smRWUVzzyGpPbsS6aUJvQJuzyyvY10FelCmJmNeP8EhRt6Af/8zrpbAM2@nongnu.org
-X-Gm-Message-State: AOJu0Yy/u0tPwAHoZQZ6o4G1aBANHrg1dDlJk76/OL/VMNInuRa6OjRR
- Upj0ZK1w4q/p6TvK2YRRi3dPrh0cZZQaTvrFWWADk8LMeeAqXaKt6yNDLVYd4Ak=
-X-Gm-Gg: ASbGncsYFieX36YE/DoyYfkGl4zFu4DZiMTv627gUtiydfgO7Wkt0iV3T+7MDiOBfKu
- cTfAHphFoYKAZ4I8W8YJ9sZ2OGX50LiAWBaSKsh48B6xpLpnW+MQ8BMrMxgNmSHp9lb5jQk9F+8
- wG3z+L6OoEglcq/q5RxeQ27qLD4zlfX9oo3Zz+vNwOXkqeDxbmTutsnQ8ft77yg0AlsyYzlkthF
- q6EDVsVcn3ki1AN3QpWo+8+LALvbpYaDK3NpSzAswBdk0+4WtfiF0HXebQyqVZcg5jwo0myKJwh
- UfeWuer5uDy/w6IXqH9/Q//tsajwY1rxnjvSMGJE6eIqVq3wnet2wwF/Wf8SiGONAedFxfnVPF0
- =
-X-Google-Smtp-Source: AGHT+IHhCnG4RCY7JSDZ1bFz5StvCx3lPsqnZO7DTHlDYDjby9RmosQ+Vi6UVaxFBAtx02lda2AUYA==
-X-Received: by 2002:a17:90b:5404:b0:2ff:7ad4:77b1 with SMTP id
- 98e67ed59e1d1-30e2e588680mr6935498a91.2.1747241657466; 
- Wed, 14 May 2025 09:54:17 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ bh=5YmH83DL5qCu2KgAqq3e5Mot8qF1ZcGRJ0pxxN+rW0Y=;
+ b=E7TB7iIN05Pe2U1CoP4fDG4REcLM91LXXN735x9F4yk3XsdWYtDncH1RRSgWhQKfcW
+ 7UAwvkVBjQIJn2eReOVUxLlEkvObtgG3rB4EJ/u6h4ytFqhUrEFRfMhKFOmg297ACHEB
+ vKmKe3bsGg7hXoDnbe0qWuvPxIHvxooSn39WTLHktIz+pNOeRRpYX3ys6ERcEiUCboF8
+ Q/J/hIkBQHHVDHs0BdVoCwfrYKvdY2iwow2w2t+4yJegkKRcvsbt4/Wk/MEXv0IpuA4u
+ gyRQWB/JBMd7Dej/+PHIiAXR5lbVIQVh+aLFY11ezJWbjk05XqbtoKUvT55XbCeQUtxM
+ QTgQ==
+X-Gm-Message-State: AOJu0YzsY+CkxmkDLUWfE2cjOxfue/GRGEwx2vtTVRxKtVqzY2S9LZla
+ vCsiqEBSaeGxJJYkDA1sbaelZ+YPoh+zMhFyYl1WAAQx1LXRXKvhDP4E+Dm5nUo=
+X-Gm-Gg: ASbGncthMdlnN+0kXlXgR4YcfYRs25WLGvntAeMt013T9cS1x2Addh+B+8XBDIYmoJg
+ +3m42pwsyGgDIV2HiwN/E//qJbckN4iNkDgJ5SnGQWWyD91LTKSpMJROkt1X6LX5+ZPwGPMA4jv
+ cn1/J7QwwmiBA01SZhSj2/yvz4UzDYI+HrqtaGDJQYimDfk+MPekhDUocMqQLQQnt4DK2FG7bM0
+ 1hQ792xQ0dZglOjc09auc0KGV7CiVGCDytRXbSa5AtWku8jhl+tW9QNAWzNKwbLVkCN1UfY6Asa
+ DLnH1wTjlizzFf4jIDV9owxdHIu4LibRk5S+wlyNJnrCyZMArSp5+TTR1m93Gg92HaYEhGY9ADe
+ Brvw3l5959kb4vWxfDSmZE/qYsHW0
+X-Google-Smtp-Source: AGHT+IFGTmOgrNZAMcWEtFGHGlA0YOqV/sL0anwCJgY5gjRcMmrErrxpuCAIcvrXcG2hbHEWuycqVA==
+X-Received: by 2002:a05:600c:a42:b0:442:cd13:f15d with SMTP id
+ 5b1f17b1804b1-442f217a65fmr35862965e9.29.1747241719502; 
+ Wed, 14 May 2025 09:55:19 -0700 (PDT)
+Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30e33233f57sm1948732a91.0.2025.05.14.09.54.16
+ 5b1f17b1804b1-442f3369138sm40081985e9.8.2025.05.14.09.55.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 May 2025 09:54:17 -0700 (PDT)
-Message-ID: <93aeb6e7-409b-4264-ac53-9a19ea947df2@linaro.org>
-Date: Wed, 14 May 2025 09:54:16 -0700
+ Wed, 14 May 2025 09:55:19 -0700 (PDT)
+Message-ID: <bb021456-83d4-4a7b-96fe-0ddc1c0fac7a@linaro.org>
+Date: Wed, 14 May 2025 17:55:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/13] qapi: transform target specific 'if' in runtime
- checks
+Subject: Re: [PATCH 9/9] ui/console-vc: Consolidate OBJECT_DEFINE_SIMPLE_TYPE
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20250514084957.2221975-1-zhao1.liu@intel.com>
+ <20250514084957.2221975-10-zhao1.liu@intel.com>
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, alex.bennee@linaro.org, stefanha@redhat.com,
- peter.maydell@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com,
- jsnow@redhat.com, philmd@linaro.org, thuth@redhat.com,
- Michael Roth <michael.roth@amd.com>
-References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
- <20250507231442.879619-10-pierrick.bouvier@linaro.org>
- <aBzCXNTebh8B5sQ_@redhat.com> <87msbl0x7f.fsf@pond.sub.org>
- <cb2adbec-d098-4211-8781-c3027de59e69@linaro.org>
- <87h61phttb.fsf@pond.sub.org>
- <e33c5751-6db2-4ca7-9a6e-b992a399e696@linaro.org>
- <87cycbacmr.fsf@pond.sub.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87cycbacmr.fsf@pond.sub.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250514084957.2221975-10-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,116 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/14/25 12:13 AM, Markus Armbruster wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 14/5/25 10:49, Zhao Liu wrote:
+> The QOM types of QemuTextConsole and QemuFixedTextConsole are declared
+> by OBJECT_DECLARE_SIMPLE_TYPE, which means they don't need the class!
 > 
->> On 5/13/25 12:08 AM, Markus Armbruster wrote:
->>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>>
->>>> On 5/9/25 11:57 PM, Markus Armbruster wrote:
->>>>>> The build system would need generate an input document for the
->>>>>> QAPI visitor that defines whether each constant is set to true
->>>>>> or false, based on suitable CONFIG/TARGET conditions from meson.
->>>>>
->>>>> I think the conditions that are evaluated at build time in handwritten C
->>>>> code (with #if) should also be evaluated at build time in generated C
->>>>> code.
->>>>>
->>>>> Certain conditions are evaluated at build time in target-specific code,
->>>>> and at runtime in target-independent code.  Again, I think handwritten
->>>>> and generated code should work the same way.
->>>>>
->>>>> Thus, to eliminate target-specific QAPI-generated code, we either
->>>>> evaluate them at runtime, or simply eliminate them.  Elsewhere, we've
->>>>> come to the conclusion (I think) that the latter should do at least for
->>>>> now, likely forever, so we should try that first.
->>>>>
->>>>
->>>> I'm not sure if you mean you'd prefer to eradicate #if completely.
->>>
->>> I do not!
->>>
->>>> We have to keep in mind that some config host #if have to stay there, or
->>>> they expose things that the rest of QEMU code is not supposed to see
->>>> (hidden under those same CONFIG_ ifdef also).
->>>
->>> Letting people configure their QEMU build is useful and must stay.
->>>
->>> We provide this via conditional compilation, of complete source files
->>> (done in meson), as well as within source files (#if in C and 'if' in
->>> QAPI).
->>>
->>>> So we would need both if and runtime_if.
->>>
->>> I don't understand the need for runtime_if.  Can you give an example?
->>>
->>
->> That is the point of this whole series, which explores introducing a
->> 'runtime' if in the schema, to keep it as it is today, while removing
->> target specific compile time defines.
+> Therefore, use OBJECT_DEFINE_SIMPLE_TYPE to implement the type, then
+> there's no need for class definition.
 > 
-> Ah, I lost the wider context, sorry!
->
+> Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   ui/console-vc.c | 14 ++++++++------
+>   1 file changed, 8 insertions(+), 6 deletions(-)
 
-No worries, I was not sure if you missed information or simply waited 
-for more feedback, so I did well to ask you directly.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> We identified three ways to deal with target-specific conditionals in a
-> single binary, and 'runtime_if' is one of them:
-> 
-> (1) Drop target-specific conditionals.
-> 
-> (2) Replace them by run-time checks.
-> 
-> (3) Have target-specific QAPI-generated code for multiple targets
->      coexist in the single binary.
-> 
-> Both (2) and (3) keep the QAPI schema work as it does now.  None of us
-> likes (3) due to bloat and complexity.
-> 
-> The other two look both workable to me.  (2) keeps the QAPI schema work
-> exactly as it does now.  (1) is simpler, but the external interface
-> changes somewhat.  Its users seem to be okay with it.
-> 
-> So let's go with (1).
->
-
-Sounds good to me. I agree that Daniel approach is simpler and better as 
-well, as long as we accept the resulting changes in the schema, which 
-seems ok for users.
-
-Thus, I'll drop current series, and focus on respinning Daniel series 
-and adding the changes requested.
-
->> It is another approach that one Daniel followed on his series.
->>
->> I invite you to give a quick read to this series, especially the related
->> commit introducing 'runtime_if'
->> (20250507231442.879619-2-pierrick.bouvier@linaro.org).
-> 
-> I can't afford a thorough review now, but I'll have a look, and I will
-> hold onto your series just in case.
-> 
->> As well, I would appreciate if you could state clearly where we are
->> going with all this (or at least, where you *don't* want this to go), so
->> we can avoid spending time in the wrong direction.
-> 
-> The discussion was spread over multiple threads, which makes it hard to
-> follow.  I hope the conclusion is clear now.  If not, please ask for
-> further clarification.
->
-
-Yes, I agree. At least we are all on the same page right now, I'll 
-pursue Daniel's approach.
-
->> I am ok to pursue Daniel's approach, or continue the approach in the
->> current series, no strong opinion in my side, I am just trying to move
->> QAPI generated code out of the way for the single binary goal.
-> 
-> Understood!
-> 
-
-Thanks Markus!
-
-Pierrick
 
