@@ -4,101 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015DCC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F74C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFCOZ-0001Q8-6L; Wed, 14 May 2025 09:43:39 -0400
+	id 1uFCTK-0006jb-6F; Wed, 14 May 2025 09:48:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uFCOX-0001PV-P8
- for qemu-devel@nongnu.org; Wed, 14 May 2025 09:43:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uFCTH-0006gI-Fr; Wed, 14 May 2025 09:48:31 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uFCOS-0008Jf-1c
- for qemu-devel@nongnu.org; Wed, 14 May 2025 09:43:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747230205;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wVeA15JjBG1Z3rVOep18THL7YrFTvml76cJ1Cr/Fiv8=;
- b=eIUntIaGq9WPLoWTkwIudsal43jXFv1NGYWcISZu4c+4fBa/2PV+olVMFlVUF6rKnarE5L
- ZY98/QUgwwgDbcnxWSE2Rge71Upzq6GkZMsZgnHYxiShapTIh80ocEbjO3GrmuK6YC6f5m
- G0OffElkrgilgDePNA7TB7Ar0Ieez6k=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-at4x2fiPNPOJIV-47o1JoA-1; Wed, 14 May 2025 09:43:24 -0400
-X-MC-Unique: at4x2fiPNPOJIV-47o1JoA-1
-X-Mimecast-MFC-AGG-ID: at4x2fiPNPOJIV-47o1JoA_1747230203
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cec217977so34663355e9.0
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 06:43:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747230201; x=1747835001;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wVeA15JjBG1Z3rVOep18THL7YrFTvml76cJ1Cr/Fiv8=;
- b=ClqwWII9iBx2Y+avLcmhu3dUP+BwdNXhcJnkAK57nSTVlVan0a/kthDIp2E75nWxqk
- 8h/5NguJZ3NWvEjoB2VZ4j1bicUN9+Qo5DfIa84yVR8G70PKIRyrJKIokjcmxM5D62F2
- lOp718JbjXF7G1FNouInybexubfS3r9WOu7PEl4kasEYaCp80+/USrVferaVNhwzq63s
- 3gFP5ik25pPD7SUVo4GqCB+UsvyrlUMuQPOa+9CsEoYnaguQWUJIOOcp1qemC5s568Ue
- fUHHCBNzm5WQNgLTOzBNgcsvOjkBxOm2j6VNzjTtXB9JZU5hPYP4nrgM9G1UWfQt5GJ5
- /w4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEbNAbsSnxOsFWqHgdXDIzKg5j9JrFvblHCNr+rn67ivY6CP5i2IRq0XtQQSDD3Ixj48sjublLid75@nongnu.org
-X-Gm-Message-State: AOJu0YwvQeT7rzHURrM+9X9JWRPlEMHgjUmpPzfF/YfMXrGxBM63KVp2
- 9dISG76UO+SvJQd+hM+xZp4sCLAJqpmZHf1HNsD7mTID2XPlduR2ueRCBeyBzGq+JSZGkWpOdq4
- +VP1MNNlBxhg9l6zvUzH9hth31Vy4WM5ocuWTHSeGqaUjJbvMTBAv
-X-Gm-Gg: ASbGnctdsP6zo/VCY1WSC0Hjx9nxZi2/NZHtZm1e25biarbXxRhYfbXkJAsQKabMmT1
- 253oLmieGH6xH9P3egbYprVqLNicnn8+ZgAvvnP+brJicagAg7OoiiSWLGQzlvC3grH1t4hULQe
- X2ZSIN/tfscbOmrDT9uL5jnc7uhJH+eTa7jFc0QtuAhQ0eKfuQycOLuD/5/jhfvRG4EIBA6TNnw
- kLj3E/SNOgRWTkI8shZeJ1r+zjsbWnZlBKPddVnmZLi+XOBVBSoYWSVM/j+U5H9uMG5sQp9OGJO
- y8H2S9Z6tvm8EpORZGF0ZjuLGZRmdn2qTeqj6kUKcEzCgsTvaqeuYIOMcdFVqb7vtb8SilIg4ms
- qGkdoK/dlYevxdiu2qFpkkGjVJHhQk9pBes/DQ57l
-X-Received: by 2002:a05:600c:a09:b0:43c:f513:958a with SMTP id
- 5b1f17b1804b1-442f20d65f9mr30132105e9.13.1747230201572; 
- Wed, 14 May 2025 06:43:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEwYzMoUgF50d2lh6eODwOZwOPUgoGsy2/S17cRM3NndSDMcoyZTOKc7f8W51kHhFMY2f3NWg==
-X-Received: by 2002:a05:600c:a09:b0:43c:f513:958a with SMTP id
- 5b1f17b1804b1-442f20d65f9mr30131855e9.13.1747230201145; 
- Wed, 14 May 2025 06:43:21 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d728:a0e0:44e3:3ed5:b7d1:f2e5?
- (p200300cfd728a0e044e33ed5b7d1f2e5.dip0.t-ipconnect.de.
- [2003:cf:d728:a0e0:44e3:3ed5:b7d1:f2e5])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f395096csm30767415e9.18.2025.05.14.06.43.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 May 2025 06:43:19 -0700 (PDT)
-Message-ID: <ce352802-6951-4249-a806-2e0b1ea9d5f2@redhat.com>
-Date: Wed, 14 May 2025 15:43:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] file-posix: Probe paths and retry SG_IO on potential path
- errors
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: stefanha@redhat.com, pbonzini@redhat.com, bmarzins@redhat.com,
- qemu-devel@nongnu.org
-References: <20250513113730.37404-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uFCTE-0000OR-9S; Wed, 14 May 2025 09:48:30 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZyF3333rdz6H7jl;
+ Wed, 14 May 2025 21:45:19 +0800 (CST)
+Received: from frapeml100007.china.huawei.com (unknown [7.182.85.133])
+ by mail.maildlp.com (Postfix) with ESMTPS id E8EF01400DC;
+ Wed, 14 May 2025 21:48:08 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100007.china.huawei.com (7.182.85.133) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 14 May 2025 15:47:53 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 14 May 2025 15:47:53 +0200
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "maz@kernel.org"
+ <maz@kernel.org>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "sebott@redhat.com" <sebott@redhat.com>, "armbru@redhat.com"
+ <armbru@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>, "jdenemar@redhat.com"
+ <jdenemar@redhat.com>
+CC: "agraf@csgraf.de" <agraf@csgraf.de>, "shahuang@redhat.com"
+ <shahuang@redhat.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>
+Subject: RE: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+Thread-Topic: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+Thread-Index: AQHbrVvRKlWe4qTsaku+jGkyYZoxlrPQu3UAgAGVOyA=
+Date: Wed, 14 May 2025 13:47:52 +0000
+Message-ID: <4fcfb4624f90491ebb238de76f04e4e5@huawei.com>
+References: <20250414163849.321857-1-cohuck@redhat.com>
+ <dadc4acd-97c8-4647-9467-89cd1966a6f2@redhat.com>
+In-Reply-To: <dadc4acd-97c8-4647-9467-89cd1966a6f2@redhat.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20250513113730.37404-1-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,33 +89,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.05.25 13:37, Kevin Wolf wrote:
-> When scsi-block is used on a host multipath device, it runs into the
-> problem that the kernel dm-mpath doesn't know anything about SCSI or
-> SG_IO and therefore can't decide if a SG_IO request returned an error
-> and needs to be retried on a different path. Instead of getting working
-> failover, an error is returned to scsi-block and handled according to
-> the configured error policy. Obviously, this is not what users want,
-> they want working failover.
->
-> QEMU can parse the SG_IO result and determine whether this could have
-> been a path error, but just retrying the same request could just send it
-> to the same failing path again and result in the same error.
->
-> With a kernel that supports the DM_MPATH_PROBE_PATHS ioctl on dm-mpath
-> block devices (queued in the device mapper tree for Linux 6.16), we can
-> tell the kernel to probe all paths and tell us if any usable paths
-> remained. If so, we can now retry the SG_IO ioctl and expect it to be
-> sent to a working path.
->
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   block/file-posix.c | 82 +++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 81 insertions(+), 1 deletion(-)
-
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
+Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiBUdWVzZGF5LCBNYXkgMTMsIDIwMjUgNDozMCBQ
+TQ0KPiBUbzogQ29ybmVsaWEgSHVjayA8Y29odWNrQHJlZGhhdC5jb20+OyBlcmljLmF1Z2VyLnBy
+b0BnbWFpbC5jb207IHFlbXUtDQo+IGRldmVsQG5vbmdudS5vcmc7IHFlbXUtYXJtQG5vbmdudS5v
+cmc7IGt2bWFybUBsaXN0cy5saW51eC5kZXY7DQo+IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsg
+cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZzsNCj4gYWxleC5iZW5uZWVAbGluYXJvLm9yZzsg
+bWF6QGtlcm5lbC5vcmc7IG9saXZlci51cHRvbkBsaW51eC5kZXY7DQo+IHNlYm90dEByZWRoYXQu
+Y29tOyBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+IDxzaGFtZWVyYWxpLmtvbG90aHVtLnRo
+b2RpQGh1YXdlaS5jb20+OyBhcm1icnVAcmVkaGF0LmNvbTsNCj4gYmVycmFuZ2VAcmVkaGF0LmNv
+bTsgYWJvbG9nbmFAcmVkaGF0LmNvbTsgamRlbmVtYXJAcmVkaGF0LmNvbQ0KPiBDYzogYWdyYWZA
+Y3NncmFmLmRlOyBzaGFodWFuZ0ByZWRoYXQuY29tOyBtYXJrLnJ1dGxhbmRAYXJtLmNvbTsNCj4g
+cGhpbG1kQGxpbmFyby5vcmc7IHBib256aW5pQHJlZGhhdC5jb20NCj4gU3ViamVjdDogUmU6IFtQ
+QVRDSCB2MyAwMC8xMF0ga3ZtL2FybTogSW50cm9kdWNlIGEgY3VzdG9taXphYmxlIGFhcmNoNjQN
+Cj4gS1ZNIGhvc3QgbW9kZWwNCg0KWy4uLl0NCg0KPiA+IFdlIHN0aWxsIGhhdmUgdG8gZGVhbCB3
+aXRoIE1JRFIvUkVWSURSL0FJRFIgZGlmZmVyZW5jZXMgYnkgZXhwbG9pdGluZw0KPiA+DQo+IGh0
+dHBzOi8vZ2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L3RvcnZhbGRzL2xp
+bnV4LmdpdC9jb21taXQ/aQ0KPiBkPWQzMDBiMDE2OGVhOGZkNTAyMmExNDEzYmQzN2FiNjNmNGU1
+YTdkNGQNCj4gPiAoaW4gYSBkaWZmZXJlbnQgc2VyaWVzLikNCj4gU2hhbWVlciwgZG8geW91IHBs
+YW4gdG8gY29udHJpYnV0ZSB0aGUgcWVtdSBpbnRlZ3JhdGlvbiBvZiB0aGlzIGZlYXR1cmUNCj4g
+eW91IGRldmVsb3BwZWQgb24ga2VybmVsIHNpZGU7IG9yIGRvIHlvdSBhbGxvdyB1cyB0byBpbnRl
+Z3JhdGUgaXQgaW4NCj4gdGhpcyBzZXJpZXM/DQoNClllcywgaXQncyBvbiBteSBUb0RvIGxpc3Qu
+IEknbGwgZmlyc3QgZ28gdGhyb3VnaCB0aGlzIHNlcmllcyBhbmQgdGhlbiB3b3JrIG9uDQphZGRp
+bmcgdGhlIGFib3ZlIHN1cHBvcnQgb24gdG9wIG9mIGl0Lg0KDQpUaGFua3MsDQpTaGFtZWVyDQoN
+Cg==
 
