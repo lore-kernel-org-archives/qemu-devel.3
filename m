@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F271C3ABD9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37C55C3ABDE
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF74B-0002am-6j; Wed, 14 May 2025 04:02:15 -0400
+	id 1uF74Z-0002ec-4b; Wed, 14 May 2025 04:02:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uF749-0002Zi-L2
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:13 -0400
+ id 1uF74X-0002eC-Um
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:37 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uF744-0002Az-Kz
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:13 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uF74V-0002EM-N6
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:37 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxHHL9TSRowFbmAA--.47300S3;
- Wed, 14 May 2025 16:02:05 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxjmsNTiRo5VbmAA--.46431S3;
+ Wed, 14 May 2025 16:02:21 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S8;
- Wed, 14 May 2025 16:02:04 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S15;
+ Wed, 14 May 2025 16:02:20 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
 	maobibo@loongson.cn
-Subject: [PULL 06/17] hw/intc/loongarch_pch: Discard write operation with ISR
- register
-Date: Wed, 14 May 2025 15:39:16 +0800
-Message-Id: <20250514073927.2424543-7-gaosong@loongson.cn>
+Subject: [PULL 13/17] hw/intc/loongarch_pch: Use unified trace event for
+ memory region ops
+Date: Wed, 14 May 2025 15:39:23 +0800
+Message-Id: <20250514073927.2424543-14-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250514073927.2424543-1-gaosong@loongson.cn>
 References: <20250514073927.2424543-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S8
+X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S15
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,34 +68,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-With the latest 7A1000 user manual, interrupt status register ISR is
-read only. Here discard write operation with ISR register.
+Add trace event trace_loongarch_pch_pic_read(), replaces the following
+three events:
+  trace_loongarch_pch_pic_low_readw()
+  trace_loongarch_pch_pic_high_readw()
+  trace_loongarch_pch_pic_readb()
+The similiar with write trace event.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20250507023148.1877287-7-maobibo@loongson.cn>
+Message-Id: <20250507023754.1877445-2-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c | 6 ------
- 1 file changed, 6 deletions(-)
+ hw/intc/loongarch_pch_pic.c | 24 ++++++------------------
+ hw/intc/trace-events        |  8 ++------
+ 2 files changed, 8 insertions(+), 24 deletions(-)
 
 diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 9b64bf938f..e6fcf645eb 100644
+index 556349a150..c06ef0df3f 100644
 --- a/hw/intc/loongarch_pch_pic.c
 +++ b/hw/intc/loongarch_pch_pic.c
-@@ -234,12 +234,6 @@ static void loongarch_pch_pic_high_writew(void *opaque, hwaddr addr,
-     trace_loongarch_pch_pic_high_writew(size, addr, data);
- 
-     switch (addr) {
--    case PCH_PIC_INT_STATUS:
--        s->intisr = get_writew_val(s->intisr, data, 0);
--        break;
--    case PCH_PIC_INT_STATUS + 4:
--        s->intisr = get_writew_val(s->intisr, data, 1);
--        break;
-     case PCH_PIC_INT_POL:
-         s->int_polarity = get_writew_val(s->int_polarity, data, 0);
+@@ -200,12 +200,15 @@ static uint64_t loongarch_pch_pic_read(void *opaque, hwaddr addr,
          break;
+     }
+ 
++    trace_loongarch_pch_pic_read(size, addr, val);
+     return val;
+ }
+ 
+ static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
+                                     uint64_t value, unsigned size)
+ {
++    trace_loongarch_pch_pic_write(size, addr, value);
++
+     switch (size) {
+     case 1:
+         pch_pic_write(opaque, addr, value, UCHAR_MAX);
+@@ -230,55 +233,40 @@ static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
+ static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
+                                             unsigned size)
+ {
+-    uint64_t val;
+-
+-    val = loongarch_pch_pic_read(opaque, addr, size);
+-    trace_loongarch_pch_pic_low_readw(size, addr, val);
+-    return val;
++    return loongarch_pch_pic_read(opaque, addr, size);
+ }
+ 
+ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
+                                          uint64_t value, unsigned size)
+ {
+-    trace_loongarch_pch_pic_low_writew(size, addr, value);
+     loongarch_pch_pic_write(opaque, addr, value, size);
+ }
+ 
+ static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
+                                         unsigned size)
+ {
+-    uint64_t val;
+-
+     addr += PCH_PIC_INT_STATUS;
+-    val = loongarch_pch_pic_read(opaque, addr, size);
+-    trace_loongarch_pch_pic_high_readw(size, addr, val);
+-    return val;
++    return loongarch_pch_pic_read(opaque, addr, size);
+ }
+ 
+ static void loongarch_pch_pic_high_writew(void *opaque, hwaddr addr,
+                                      uint64_t value, unsigned size)
+ {
+     addr += PCH_PIC_INT_STATUS;
+-    trace_loongarch_pch_pic_high_writew(size, addr, value);
+     loongarch_pch_pic_write(opaque, addr, value, size);
+ }
+ 
+ static uint64_t loongarch_pch_pic_readb(void *opaque, hwaddr addr,
+                                         unsigned size)
+ {
+-    uint64_t val;
+-
+     addr += PCH_PIC_ROUTE_ENTRY;
+-    val = loongarch_pch_pic_read(opaque, addr, size);
+-    trace_loongarch_pch_pic_readb(size, addr, val);
+-    return val;
++    return loongarch_pch_pic_read(opaque, addr, size);
+ }
+ 
+ static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
+                                      uint64_t data, unsigned size)
+ {
+     addr += PCH_PIC_ROUTE_ENTRY;
+-    trace_loongarch_pch_pic_writeb(size, addr, data);
+     loongarch_pch_pic_write(opaque, addr, data, size);
+ }
+ 
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 0ba9a02e73..334aa6a97b 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -314,12 +314,8 @@ loongson_ipi_read(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x
+ loongson_ipi_write(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%"PRIx64
+ # loongarch_pch_pic.c
+ loongarch_pch_pic_irq_handler(int irq, int level) "irq %d level %d"
+-loongarch_pch_pic_low_readw(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+-loongarch_pch_pic_low_writew(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+-loongarch_pch_pic_high_readw(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+-loongarch_pch_pic_high_writew(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+-loongarch_pch_pic_readb(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+-loongarch_pch_pic_writeb(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
++loongarch_pch_pic_read(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
++loongarch_pch_pic_write(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+ 
+ # loongarch_pch_msi.c
+ loongarch_msi_set_irq(int irq_num) "set msi irq %d"
 -- 
 2.34.1
 
