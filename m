@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F882C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0336AC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFAbt-00050k-8R; Wed, 14 May 2025 07:49:17 -0400
+	id 1uFAdB-0005qU-O9; Wed, 14 May 2025 07:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAbr-0004zb-Uu
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:49:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAd9-0005q2-Qp
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:50:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAbj-0005Nf-4x
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:49:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAd6-00063Q-HV
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:50:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747223344;
+ s=mimecast20190719; t=1747223428;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=dKDKP2CybvJwX5OWiss/TmLn/tGD0MYYzTlBPD2bEhg=;
- b=IFaQJDfq1PYPXbz/e9+K2f5akTV0OX1oakbrVNBxO4qmclDFazV+tXcbCcP+1/Me4NziYk
- UciCsTj6fB525Gajfdi89Z5qPelQdGbAaceONjzJWvH/vbjYnUPmXDSCyObqSPeGd2kjOZ
- hR2rN/fSEwixlMc1fgPBcFveWa3TXM0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0fJgSbXc546dwe+4Ew3aID1Zi5bepWCH2l5RAH/aT3s=;
+ b=JRarwsNWDbuLmY6zeF2Ld5lqg2Hs13pM5rwFuqiyhqRXdwFvWsgKBUMciMr21g8e2U7pV2
+ t5oK4vMeS2cc9oiXdA7weoDBNO0LcGrXVvdj4m+fdFHMN/5Sn43NTqTPho1j62vmbI70fY
+ BLulcWSd9KdC2FQEft8pfScqq+h5S0I=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-OwusI4pjPAusF_rhg_JIPA-1; Wed, 14 May 2025 07:49:03 -0400
-X-MC-Unique: OwusI4pjPAusF_rhg_JIPA-1
-X-Mimecast-MFC-AGG-ID: OwusI4pjPAusF_rhg_JIPA_1747223342
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a206f05150so2220225f8f.0
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:49:03 -0700 (PDT)
+ us-mta-547-KLdPkNfJPDWI5Ls_LoXXmg-1; Wed, 14 May 2025 07:50:27 -0400
+X-MC-Unique: KLdPkNfJPDWI5Ls_LoXXmg-1
+X-Mimecast-MFC-AGG-ID: KLdPkNfJPDWI5Ls_LoXXmg_1747223426
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d007b2c79so41300765e9.2
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:50:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747223342; x=1747828142;
+ d=1e100.net; s=20230601; t=1747223425; x=1747828225;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dKDKP2CybvJwX5OWiss/TmLn/tGD0MYYzTlBPD2bEhg=;
- b=jdhvNNEO48HxYKCLN6HtJB+z15cypUaK81PTxHPpF2E8JOMCvZ2cblg3mocc5lsxVz
- lJtL2pdBE/EzItXzfi77TQkD0LkmlLGLuisDqT2uh2LvaD5F2gqSYNp9EIAkAbEDl4cj
- KRBJ1MqWjipwaVKnujmkutmSaKGxK3BddkG67xLbCoE+k1Q5mTusI2johzBp02SYXDhD
- f2+Iax02MpOIEfvTv0zJcZ4F0sD1SAX4k6PihK52YoZ/m9YoQOmbvABD153KS0m7ybWC
- A2QPyB4z1Qs8gTLOLN4dvT8edWhspTJTNXIqthAOieZnh0A609J6QUUaa/khYiapWRAD
- maGA==
-X-Gm-Message-State: AOJu0Yzv5fziacN0nUkbZW7iOAdgS8NNY6ce2cYRffA3D69TAv7XqgHB
- TkmwGoWkdUBtVnWZetzbWrrFh0iA0+vsuEnZ3v3pWAO5CBhhgHOUJtwBIAf7n2U6FYqWSxz5ygW
- dQjG8N7g92Iq8x+SPNJzYwzBZ4aStehP2CMk9DjgIGssvfmaSTqpS
-X-Gm-Gg: ASbGncv+VM8jViYdV0y8rIxOLlzHyup9pmXu12GuywRClOdpO7LOtU0bwwJlEMFq3gy
- uhThq4kgsTHsPNF/9fW/YFV0mwVFCMRbJqIw/OZoXZbYgslmFtlRz91oBo4h5CVX/8wCsg5XGQI
- CiiYFbhAL4W1BF4mHI6WDIPT37qBcFAgoxZ9vEH0KkCFagVvuZ6tIPDn0KxvKUdTQbeiNvoPSed
- FTm2DeUUA4pWUDDuPftlvMj9uB21nf38zX+oo5ZmmuYoN8c0oJH4KMGrqAFUDmtPjuaJ6VRsS6S
- /EgH0w==
-X-Received: by 2002:a05:6000:420e:b0:39e:e75b:5cc with SMTP id
- ffacd0b85a97d-3a3496a303bmr2814041f8f.16.1747223341993; 
- Wed, 14 May 2025 04:49:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELVIZcUGrVHWRNylZ787AvqMdjL2Xxrc3mRcZqKJBjC3FEEO55OGrBcJ+nYxUIC4uW0phEiA==
-X-Received: by 2002:a05:6000:420e:b0:39e:e75b:5cc with SMTP id
- ffacd0b85a97d-3a3496a303bmr2814016f8f.16.1747223341561; 
- Wed, 14 May 2025 04:49:01 -0700 (PDT)
+ bh=0fJgSbXc546dwe+4Ew3aID1Zi5bepWCH2l5RAH/aT3s=;
+ b=duOVMG/9S9R6TZi2KUYcjX+Mqmat7mhvaipY/XD3ZyFlLqECz8Lrai2pSB9hmSFfUr
+ 7Ll9QFFqj4fl8w234Hd7/7FNZ53iTY/kDL9xQbGsm/3z/qdLV7QkEV9roDV/uR5yL303
+ koOtUWlj8lCCXO9rzgSfqrlDufHfYoT9jLVi6zDE4VvLLIe8HAFcknLW0/roOfwHMdTl
+ bS8lmIgxMPcj/zt4WQK7RFR3DCc6BICX3tV6EZjckGkudk6V+zLKAN3LHsosSC2idmsC
+ IAhPvdgu+Eg4O95HqbxDKgl/RX8lhxoDTQksiLUjvSkXI2+DExdcHRX6EArMFRgoSt+i
+ ejDg==
+X-Gm-Message-State: AOJu0YwdCTBJVa40sYajetOogkaNzVgv9tr00bL6SKZNiUR2/PVJHcHJ
+ sQpKIlGSYpCUAE50Bo7WgzHuSEtuoezb6N3wMrizRzwhIN7CQHNACfGaSfgdlLsUO33x0/IKVKq
+ OAQgygXDV525aMccl2AiBumcEWAa8Cj2YdyywxZuJSv9/OQvRiad9uah6088ptJgbFq6xX+p9nU
+ mfkkcFd6hnSzYzjrA1sX1ptAZ4WAr4PA==
+X-Gm-Gg: ASbGncv6OBTSO3CLZ6sVeQWrZpMIxkqmofq6pYbkXvQzh0IWvaAJu/dkEnnR1Q43DdF
+ J4twwK7FsdbbJYHhSGSBsfpbEpyd2DuJzumPCJKfWL3fSCEXTU1oErB6Ymv4ivtWyUm6ZFLanRI
+ Wuti3TswTyKqbIiui2L694BtiWbIn3k+qe3f1o8sf75eOZvMm+dBj3ohrdMsuxOrTfvKGKc/GjP
+ tzU8BpXmB9WXt1yz52FCvv4/vOzueKV9QA68FzmGDb3rGsMUkiFVDrr5q565UV4ClYraqIhWHlL
+ W26DpQ==
+X-Received: by 2002:a05:6000:40dc:b0:3a0:b539:f330 with SMTP id
+ ffacd0b85a97d-3a3496999e0mr2602490f8f.2.1747223425578; 
+ Wed, 14 May 2025 04:50:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3ixA3LrF3ohTDjsAXpI7B90nqWULVqAZvTiHrwD0KQdt1iIoyobl81S0SFHavH40RYe1NCQ==
+X-Received: by 2002:a05:6000:40dc:b0:3a0:b539:f330 with SMTP id
+ ffacd0b85a97d-3a3496999e0mr2602448f8f.2.1747223425032; 
+ Wed, 14 May 2025 04:50:25 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f58ebe00sm19804553f8f.38.2025.05.14.04.49.00
+ 5b1f17b1804b1-442f3979275sm27340185e9.34.2025.05.14.04.50.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 04:49:00 -0700 (PDT)
-Date: Wed, 14 May 2025 07:48:58 -0400
+ Wed, 14 May 2025 04:50:24 -0700 (PDT)
+Date: Wed, 14 May 2025 07:50:22 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "peterx@redhat.com" <peterx@redhat.com>
-Subject: Re: [PATCH v5 2/2] intel_iommu: Take locks when looking for and
- creating address spaces
-Message-ID: <20250514074821-mutt-send-email-mst@kernel.org>
-References: <20250430124750.240412-1-clement.mathieu--drif@eviden.com>
- <20250430124750.240412-3-clement.mathieu--drif@eviden.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Vinayak Holikatti <vinayak.kh@samsung.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 03/27] hw/cxl/cxl-mailbox-utils: Add support for Media
+ operations discovery commands cxl r3.2 (8.2.10.9.5.3)
+Message-ID: <77a8e9fe0ecb71b260d17f43221df5b18769b359.1747223385.git.mst@redhat.com>
+References: <cover.1747223385.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250430124750.240412-3-clement.mathieu--drif@eviden.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <cover.1747223385.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -111,76 +110,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 30, 2025 at 12:48:06PM +0000, CLEMENT MATHIEU--DRIF wrote:
-> vtd_find_add_as can be called by multiple threads which leads to a race
-> condition. Taking the IOMMU lock ensures we avoid such a race.
-> Moreover we also need to take the bql to avoid an assert to fail in
-> memory_region_add_subregion_overlap when actually allocating a new
-> address space.
-> 
-> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> ---
->  hw/i386/intel_iommu.c | 25 ++++++++++++++++++++++++-
->  1 file changed, 24 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index dad1d9f300..144e25622a 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -4205,9 +4205,30 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->      VTDAddressSpace *vtd_dev_as;
->      char name[128];
->  
-> +    vtd_iommu_lock(s);
->      vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
-> +    vtd_iommu_unlock(s);
-> +
->      if (!vtd_dev_as) {
-> -        struct vtd_as_key *new_key = g_malloc(sizeof(*new_key));
-> +        struct vtd_as_key *new_key;
-> +        /* Slow path */
-> +
-> +        /*
-> +        * memory_region_add_subregion_overlap requires the bql,
-> +        * make sure we own it.
-> +        */
+From: Vinayak Holikatti <vinayak.kh@samsung.com>
 
+CXL spec 3.2 section 8.2.10.9.5.3 describes media operations commands.
+CXL devices supports media operations discovery command.
 
-not how comments should look
+Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20250305092501.191929-4-Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/cxl/cxl-mailbox-utils.c | 125 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 125 insertions(+)
 
-> +        BQL_LOCK_GUARD();
-> +        vtd_iommu_lock(s);
-> +
-> +        /* Check again as we released the lock for a moment */
-> +        vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
-> +        if (vtd_dev_as) {
-> +            vtd_iommu_unlock(s);
-> +            return vtd_dev_as;
-> +        }
-> +
-> +        /* Still nothing, allocate a new address space */
-> +        new_key = g_malloc(sizeof(*new_key));
->  
->          new_key->bus = bus;
->          new_key->devfn = devfn;
-> @@ -4298,6 +4319,8 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->          vtd_switch_address_space(vtd_dev_as);
->  
->          g_hash_table_insert(s->vtd_address_spaces, new_key, vtd_dev_as);
-> +    
-
-trailing whitespace here
-
-> +        vtd_iommu_unlock(s);
->      }
->      return vtd_dev_as;
->  }
-
-
-
-I fixed these up but pls take care, Clement.
-
-> -- 
-> 2.49.0
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index bd25df033a..79b35d1405 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -89,6 +89,7 @@ enum {
+     SANITIZE    = 0x44,
+         #define OVERWRITE     0x0
+         #define SECURE_ERASE  0x1
++        #define MEDIA_OPERATIONS 0x2
+     PERSISTENT_MEM = 0x45,
+         #define GET_SECURITY_STATE     0x0
+     MEDIA_AND_POISON = 0x43,
+@@ -1705,6 +1706,126 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
+     return CXL_MBOX_BG_STARTED;
+ }
+ 
++enum {
++    MEDIA_OP_CLASS_GENERAL  = 0x0,
++        #define MEDIA_OP_GEN_SUBC_DISCOVERY 0x0
++    MEDIA_OP_CLASS_SANITIZE = 0x1,
++        #define MEDIA_OP_SAN_SUBC_SANITIZE 0x0
++        #define MEDIA_OP_SAN_SUBC_ZERO 0x1
++};
++
++struct media_op_supported_list_entry {
++    uint8_t media_op_class;
++    uint8_t media_op_subclass;
++};
++
++struct media_op_discovery_out_pl {
++    uint64_t dpa_range_granularity;
++    uint16_t total_supported_operations;
++    uint16_t num_of_supported_operations;
++    struct media_op_supported_list_entry entry[];
++} QEMU_PACKED;
++
++static const struct media_op_supported_list_entry media_op_matrix[] = {
++    { MEDIA_OP_CLASS_GENERAL, MEDIA_OP_GEN_SUBC_DISCOVERY },
++    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_SANITIZE },
++    { MEDIA_OP_CLASS_SANITIZE, MEDIA_OP_SAN_SUBC_ZERO },
++};
++
++static CXLRetCode media_operations_discovery(uint8_t *payload_in,
++                                             size_t len_in,
++                                             uint8_t *payload_out,
++                                             size_t *len_out)
++{
++    struct {
++        uint8_t media_operation_class;
++        uint8_t media_operation_subclass;
++        uint8_t rsvd[2];
++        uint32_t dpa_range_count;
++        struct {
++            uint16_t start_index;
++            uint16_t num_ops;
++        } discovery_osa;
++    } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
++    struct media_op_discovery_out_pl *media_out_pl =
++        (struct media_op_discovery_out_pl *)payload_out;
++    int num_ops, start_index, i;
++    int count = 0;
++
++    if (len_in < sizeof(*media_op_in_disc_pl)) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
++    num_ops = media_op_in_disc_pl->discovery_osa.num_ops;
++    start_index = media_op_in_disc_pl->discovery_osa.start_index;
++
++    /*
++     * As per spec CXL r3.2 8.2.10.9.5.3 dpa_range_count should be zero and
++     * start index should not exceed the total number of entries for discovery
++     * sub class command.
++     */
++    if (media_op_in_disc_pl->dpa_range_count ||
++        start_index > ARRAY_SIZE(media_op_matrix)) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    media_out_pl->dpa_range_granularity = CXL_CACHE_LINE_SIZE;
++    media_out_pl->total_supported_operations =
++                                     ARRAY_SIZE(media_op_matrix);
++    if (num_ops > 0) {
++        for (i = start_index; i < start_index + num_ops; i++) {
++            media_out_pl->entry[count].media_op_class =
++                    media_op_matrix[i].media_op_class;
++            media_out_pl->entry[count].media_op_subclass =
++                        media_op_matrix[i].media_op_subclass;
++            count++;
++            if (count == num_ops) {
++                break;
++            }
++        }
++    }
++
++    media_out_pl->num_of_supported_operations = count;
++    *len_out = sizeof(*media_out_pl) + count * sizeof(*media_out_pl->entry);
++    return CXL_MBOX_SUCCESS;
++}
++
++static CXLRetCode cmd_media_operations(const struct cxl_cmd *cmd,
++                                       uint8_t *payload_in,
++                                       size_t len_in,
++                                       uint8_t *payload_out,
++                                       size_t *len_out,
++                                       CXLCCI *cci)
++{
++    struct {
++        uint8_t media_operation_class;
++        uint8_t media_operation_subclass;
++        uint8_t rsvd[2];
++        uint32_t dpa_range_count;
++    } QEMU_PACKED *media_op_in_common_pl = (void *)payload_in;
++    uint8_t media_op_cl = 0;
++    uint8_t media_op_subclass = 0;
++
++    if (len_in < sizeof(*media_op_in_common_pl)) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
++    media_op_cl = media_op_in_common_pl->media_operation_class;
++    media_op_subclass = media_op_in_common_pl->media_operation_subclass;
++
++    switch (media_op_cl) {
++    case MEDIA_OP_CLASS_GENERAL:
++        if (media_op_subclass != MEDIA_OP_GEN_SUBC_DISCOVERY) {
++            return CXL_MBOX_UNSUPPORTED;
++        }
++
++        return media_operations_discovery(payload_in, len_in, payload_out,
++                                             len_out);
++    default:
++        return CXL_MBOX_UNSUPPORTED;
++    }
++}
++
+ static CXLRetCode cmd_get_security_state(const struct cxl_cmd *cmd,
+                                          uint8_t *payload_in,
+                                          size_t len_in,
+@@ -2850,6 +2971,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+          CXL_MBOX_SECURITY_STATE_CHANGE |
+          CXL_MBOX_BACKGROUND_OPERATION |
+          CXL_MBOX_BACKGROUND_OPERATION_ABORT)},
++    [SANITIZE][MEDIA_OPERATIONS] = { "MEDIA_OPERATIONS", cmd_media_operations,
++        ~0,
++        (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
++         CXL_MBOX_BACKGROUND_OPERATION)},
+     [PERSISTENT_MEM][GET_SECURITY_STATE] = { "GET_SECURITY_STATE",
+         cmd_get_security_state, 0, 0 },
+     [MEDIA_AND_POISON][GET_POISON_LIST] = { "MEDIA_AND_POISON_GET_POISON_LIST",
+-- 
+MST
 
 
