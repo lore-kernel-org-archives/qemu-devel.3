@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B974C3ABC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 06:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6774FC3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 07:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF64i-00047q-ML; Wed, 14 May 2025 02:58:44 -0400
+	id 1uF6J1-00018U-Dp; Wed, 14 May 2025 03:13:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uF64h-00047h-5F
- for qemu-devel@nongnu.org; Wed, 14 May 2025 02:58:43 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uF64e-0002Sr-OP
- for qemu-devel@nongnu.org; Wed, 14 May 2025 02:58:42 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-22d95f0dda4so74847735ad.2
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 23:58:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747205918; x=1747810718;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VSFp+RXw6HN9au3WOIq7H6c+SMWJI/Bam2L1ETV9WJs=;
- b=yjYkOtrKgcfzdo0mn61Qd0uyfADC02SuauI2jb13gJ+ecxcVS1Shj1d+neA5FE+BJ9
- jCWsU8eLRFolmayazOGI0O10PWYhRE0VGSRdLsMfeOdn0uiH1ooTFVXysNSNIAbhRgRh
- IDS3dQOLFgm2J2HGkx2jIsmR23Zv9WuUy8JNk746Eiu4oLPjhy5oLLNPVIYK4L1DVqnQ
- u/+yi3KgRb+iySJE4UfkskTy/NgiH802x6Q+IyXa+xO2yCkg3c4f7l41mwPgHyCHW+0y
- frLnz2IoZizipop+6eSPu9vJxg3ArqGnwxbC5xHE3eoKaVkip96VxXzlPuP25GSv3thN
- jd4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747205918; x=1747810718;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VSFp+RXw6HN9au3WOIq7H6c+SMWJI/Bam2L1ETV9WJs=;
- b=sGDvsbbbAIF+KeLlLViZDARmRhIwczg/QhmBsl+2xU1uKz9ZBZzqwFVZGqXuLhYRGo
- Yt8m9N+/6yGpE6NglygAt7E5plkyiVpAVGYLfjKzNoFnYJHKYlTU0rmavvbdHGTSr9Sf
- ChCV0BAuvn9wbhIlJlHcZiYY6D0CiLo62UMyHO+LjYp48+ZIlAc2svymwfiowSgfFyN+
- cwic8djKd8+gmsad4CLi26tDluDDMPEOGv5UUCqv4qVYQKtufQO+TzMy+EktHGEKf4jh
- p+mAJJYpXqV+wi3vHm4eUkjyr+Xlc6E3KCyTd0YLBWDRYOjFkruwlXTna285AsH0G/5P
- fkMw==
-X-Gm-Message-State: AOJu0Yy6NwwvlrOtnnvNqoMfAeZ2BvNJ3uBY9+xekWe614WljCMAzDU9
- 8gBL30PqM5xnmQOIciSnqk0Thkiv5oLIv51hHg5PJo/vxMzTIblXQG4h1BRyLWU=
-X-Gm-Gg: ASbGnctVTO78pAhNas8clQKHvBI/WRpeUmcVUeKoLaqmM/qazdjL3botHzp8bFKjsGI
- Xrcse8baQmWAUw6QtvBeQbJ1vkHEpYzvLvdjMNR38/KqblZ6e2PO9MF7OOI48Z9towymCzZc9Y9
- jBPgBUnCq0rocG9M36asA2fQA4BOiewS/CjiTOA13gbcz0tNyCGdVL0RNLItpntoZjEtVupv859
- 1ILuwH1KSVl8LjbkLxVWmDC2pbsl7K2PyteYWjN8vrnWzvFD3vlJxVan2JjkvLwAy7+/3+XNwwk
- Ij/jSkOLs+V+36OWyAlXL2SV1nntqv0MlB5PrR3qdbZ1igYE3AdScQ9eDbFSOzeY
-X-Google-Smtp-Source: AGHT+IG8d/t3S0SCmuhrMj1hHh9/OsNd9KheKfpl9cg19P1CqTQAdtselDyDk/6PfsBMs/g9xkx5bw==
-X-Received: by 2002:a17:903:3baf:b0:22e:5df9:8f67 with SMTP id
- d9443c01a7336-23198129730mr38912685ad.34.1747205918503; 
- Tue, 13 May 2025 23:58:38 -0700 (PDT)
-Received: from [157.82.203.223] ([157.82.203.223])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc7743633sm92600335ad.103.2025.05.13.23.58.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 May 2025 23:58:38 -0700 (PDT)
-Message-ID: <f3d10b18-9755-46af-9623-fb0ed7d99c51@daynix.com>
-Date: Wed, 14 May 2025 15:58:35 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uF6Iy-00018L-OE
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 03:13:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uF6Iw-0004Xl-P1
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 03:13:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747206804;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ToCcTOC4GXWRRg2dO6o66w91/l5MPwIgTN14/u958z8=;
+ b=ak4PQIBbuhqYu/UFPvfAQYRaaF5o1FuLNiNSQCiTrK3Nyj/eMm/R4n9Ej7Yiliw4qKP4nw
+ JKywz5jA62lbi8fXxfaw4YbJAimMdg43BE66+KMOlP20a7Uwn8S/TymRAT4uB+f9wG6UR1
+ KbfH/u/EZRLVtkK6IXfsFrT28r5SEr0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-FrS6TRE3OGS8ts2Qaxku7g-1; Wed,
+ 14 May 2025 03:13:21 -0400
+X-MC-Unique: FrS6TRE3OGS8ts2Qaxku7g-1
+X-Mimecast-MFC-AGG-ID: FrS6TRE3OGS8ts2Qaxku7g_1747206799
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9849F1800989; Wed, 14 May 2025 07:13:19 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F282E19373DE; Wed, 14 May 2025 07:13:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7F5BB21E6768; Wed, 14 May 2025 09:13:16 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,
+ alex.bennee@linaro.org,  stefanha@redhat.com,  peter.maydell@linaro.org,
+ richard.henderson@linaro.org,  pbonzini@redhat.com,  jsnow@redhat.com,
+ philmd@linaro.org,  thuth@redhat.com,  Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH 09/13] qapi: transform target specific 'if' in runtime
+ checks
+In-Reply-To: <e33c5751-6db2-4ca7-9a6e-b992a399e696@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 13 May 2025 15:52:39 -0700")
+References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
+ <20250507231442.879619-10-pierrick.bouvier@linaro.org>
+ <aBzCXNTebh8B5sQ_@redhat.com> <87msbl0x7f.fsf@pond.sub.org>
+ <cb2adbec-d098-4211-8781-c3027de59e69@linaro.org>
+ <87h61phttb.fsf@pond.sub.org>
+ <e33c5751-6db2-4ca7-9a6e-b992a399e696@linaro.org>
+Date: Wed, 14 May 2025 09:13:16 +0200
+Message-ID: <87cycbacmr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-net: Add queues for RSS during migration
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- devel@daynix.com
-References: <20250510-n-v1-1-19ee26ac3ca6@daynix.com>
- <CACGkMEt7xoX-HvV1mOo=zqpyV0se2ELBMvNV-uGpKUZPQ-PB2A@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CACGkMEt7xoX-HvV1mOo=zqpyV0se2ELBMvNV-uGpKUZPQ-PB2A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,71 +94,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/14 14:05, 'Jason Wang' via devel wrote:
-> On Sat, May 10, 2025 at 3:24 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+
+> On 5/13/25 12:08 AM, Markus Armbruster wrote:
+>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>> 
+>>> On 5/9/25 11:57 PM, Markus Armbruster wrote:
+>>>>> The build system would need generate an input document for the
+>>>>> QAPI visitor that defines whether each constant is set to true
+>>>>> or false, based on suitable CONFIG/TARGET conditions from meson.
+>>>>
+>>>> I think the conditions that are evaluated at build time in handwritten C
+>>>> code (with #if) should also be evaluated at build time in generated C
+>>>> code.
+>>>>
+>>>> Certain conditions are evaluated at build time in target-specific code,
+>>>> and at runtime in target-independent code.  Again, I think handwritten
+>>>> and generated code should work the same way.
+>>>>
+>>>> Thus, to eliminate target-specific QAPI-generated code, we either
+>>>> evaluate them at runtime, or simply eliminate them.  Elsewhere, we've
+>>>> come to the conclusion (I think) that the latter should do at least for
+>>>> now, likely forever, so we should try that first.
+>>>>
+>>>
+>>> I'm not sure if you mean you'd prefer to eradicate #if completely.
+>> 
+>> I do not!
+>> 
+>>> We have to keep in mind that some config host #if have to stay there, or
+>>> they expose things that the rest of QEMU code is not supposed to see
+>>> (hidden under those same CONFIG_ ifdef also).
+>> 
+>> Letting people configure their QEMU build is useful and must stay.
+>> 
+>> We provide this via conditional compilation, of complete source files
+>> (done in meson), as well as within source files (#if in C and 'if' in
+>> QAPI).
+>> 
+>>> So we would need both if and runtime_if.
+>> 
+>> I don't understand the need for runtime_if.  Can you give an example?
 >>
->> virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
->> VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
->> number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
->> VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_features
->> is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
->> VIRTIO_NET_F_MQ uses bit 22.
->>
->> Instead of inferring the required number of queues from
->> vdev->guest_features, use the number loaded from the vm state.
->>
->> Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing")
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   include/hw/virtio/virtio.h |  2 +-
->>   hw/net/virtio-net.c        | 11 ++++-------
->>   hw/virtio/virtio.c         | 14 +++++++-------
->>   3 files changed, 12 insertions(+), 15 deletions(-)
->>
->> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->> index 638691028050..af52580c1e63 100644
->> --- a/include/hw/virtio/virtio.h
->> +++ b/include/hw/virtio/virtio.h
->> @@ -211,7 +211,7 @@ struct VirtioDeviceClass {
->>       int (*start_ioeventfd)(VirtIODevice *vdev);
->>       void (*stop_ioeventfd)(VirtIODevice *vdev);
->>       /* Called before loading queues. Useful to add queues before loading. */
->> -    int (*pre_load_queues)(VirtIODevice *vdev);
->> +    int (*pre_load_queues)(VirtIODevice *vdev, uint32_t n);
-> 
-> This turns out to be tricky as it has a lot of assumptions as
-> described in the changelog (e.g only lower 32bit of guest_features is
-> correct etc when calling this function).
+>
+> That is the point of this whole series, which explores introducing a 
+> 'runtime' if in the schema, to keep it as it is today, while removing 
+> target specific compile time defines.
 
-The problem is that I missed the following comment in
-hw/virtio/virtio.c:
-     /*
-      * Temporarily set guest_features low bits - needed by
-      * virtio net load code testing for VIRTIO_NET_F_CTRL_GUEST_OFFLOADS
-      * VIRTIO_NET_F_GUEST_ANNOUNCE and VIRTIO_NET_F_CTRL_VQ.
-      *
-      * Note: devices should always test host features in future - don't 
-create
-      * new dependencies like this.
-      */
-     vdev->guest_features = features;
+Ah, I lost the wider context, sorry!
 
-This problem is specific to guest_features so avoiding it should give us 
-a reliable solution.
+We identified three ways to deal with target-specific conditionals in a
+single binary, and 'runtime_if' is one of them:
 
-> 
-> Looking at the commit that introduces this which is 9379ea9db3c that says:
-> 
-> """
-> Otherwise the loaded queues will not have handlers and elements
-> in them will not be processed.
-> """
-> 
-> I fail to remember what it means or what happens if we don't do 9379ea9db3c.
+(1) Drop target-specific conditionals.
 
-The packets and control commands in the queues except the first queue 
-will not be processed because they do not have handle_output set.
+(2) Replace them by run-time checks.
 
-Regards,
-Akihiko Odaki
+(3) Have target-specific QAPI-generated code for multiple targets
+    coexist in the single binary.
+
+Both (2) and (3) keep the QAPI schema work as it does now.  None of us
+likes (3) due to bloat and complexity.
+
+The other two look both workable to me.  (2) keeps the QAPI schema work
+exactly as it does now.  (1) is simpler, but the external interface
+changes somewhat.  Its users seem to be okay with it.
+
+So let's go with (1).
+
+> It is another approach that one Daniel followed on his series.
+>
+> I invite you to give a quick read to this series, especially the related 
+> commit introducing 'runtime_if' 
+> (20250507231442.879619-2-pierrick.bouvier@linaro.org).
+
+I can't afford a thorough review now, but I'll have a look, and I will
+hold onto your series just in case.
+
+> As well, I would appreciate if you could state clearly where we are 
+> going with all this (or at least, where you *don't* want this to go), so 
+> we can avoid spending time in the wrong direction.
+
+The discussion was spread over multiple threads, which makes it hard to
+follow.  I hope the conclusion is clear now.  If not, please ask for
+further clarification.
+
+> I am ok to pursue Daniel's approach, or continue the approach in the 
+> current series, no strong opinion in my side, I am just trying to move 
+> QAPI generated code out of the way for the single binary goal.
+
+Understood!
+
 
