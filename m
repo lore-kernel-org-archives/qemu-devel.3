@@ -4,95 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33545C3ABC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 04:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9253C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 05:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF3T3-00024f-Lr; Wed, 14 May 2025 00:11:41 -0400
+	id 1uF4Jt-0003lC-HD; Wed, 14 May 2025 01:06:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1uF3T1-0001zM-0S
- for qemu-devel@nongnu.org; Wed, 14 May 2025 00:11:39 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1uF3Sz-0001jG-2w
- for qemu-devel@nongnu.org; Wed, 14 May 2025 00:11:38 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-30820167b47so412620a91.0
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 21:11:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1747195895; x=1747800695; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1A6Tdq+NlocQQr+dW43vTkDs6+pSgcMdXP/qV+lPTUo=;
- b=ilmsAxtmrG0uEHZnamDZTyxMGKuf3/EQxzIPMsuCpvHgBaZgDZsgz9szUFN/UNLsT3
- dJDcOxBcYIQHbYDmDSt+tST49ojNViR8JZR7ldLoykDOIY6qhKzrrecup5Fsz/dlWRV4
- K+0h3owIBoyfx4P3MoVkypNWD907ZvVvEXzcqG7m0hzvUPZV0gkBT3NwBhTorOr3Se80
- BC5VBG9pp3v7AXOJILAKmbtYQjY+8VUmBJ2JnEVAvEJlP7OiZBLLD7UdJbk0/SGqneTo
- W4CUYcgMrFYmcuRLPpJzpqQ6DE4sjBDoKfHIagtwjcTNZtRps1HZDMJmJV2dlO87ESbY
- THRg==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1uF4Jr-0003g6-SP
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 01:06:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1uF4Jq-0007Dm-8R
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 01:06:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747199172;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qIq2vTZ/lFGWxb1y9RYqkYNealT0sSrdwaDrnzrSjBI=;
+ b=Nc8A1Md0FQ6ILd8m3BLqVfuLUn1JlbOqXK1chGuM/ylCjR2esVrlptDB3E5EaoiPMdPNDd
+ o7vGthNWY/U6JiIMKE+C4KFOEyk41IPbUNji6GBcev3Jvtonn2ZzBF0Z3C8mxuFVcXtU+N
+ OX2hYQV2MPVIDn0X+D4NS1rA3WHZpP0=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-607-nPAnmKvlOcGrVc3tG6JZ7g-1; Wed, 14 May 2025 01:06:11 -0400
+X-MC-Unique: nPAnmKvlOcGrVc3tG6JZ7g-1
+X-Mimecast-MFC-AGG-ID: nPAnmKvlOcGrVc3tG6JZ7g_1747199170
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-30a29af28d1so5536945a91.0
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 22:06:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747195895; x=1747800695;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1747199170; x=1747803970;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1A6Tdq+NlocQQr+dW43vTkDs6+pSgcMdXP/qV+lPTUo=;
- b=KvYF5peQBl8uMBickH1V2P8aWC/kuEcQQ3V9fBg6CWn5UAXwjjhyv8fG+iAS3/ZhCM
- W7c60/1C/mL8mA6Feod7g6wDIo1TC3NchlbBwbPk37TRee0T8vEM7IjDD7l9eqP2atet
- jooycj6dZM1n+/s6OUyP1jNtpQpHGdYotGQIf8PjIys9HiVNOCLbNVTL3VZxsS9jCFRW
- sxkepABJbEwyHCeffkbZCThLp0X7tMLIU7uaW22pAz9hm5DOGY4beE6fw6vMD5dFizwn
- mj5cNKb4YeGKUdN/k/BYhJuyNcZ0W5XtuULBj/jhKkf2YJcnUZvMLF8PU3ZDRrxCBeMX
- muVw==
-X-Gm-Message-State: AOJu0Yws1kn8U/sYgwum3YX/7YzevYhtKe5i4TWEaAPbi/0zsZe4gSQ3
- LAj4hG2ZFKpkY9Ycuah0+4+vBkE+vMHTeC32buoVvnbXwXYamNrC4N3XP4IMAXZwIW1vGFcMycg
- RGSvxXYHZKNAnaSPf64+MkKvj+1gyELpLmXba8Jvwn+kxaU0ZaXSg7RfSplTm+tn/mHiTeN/gKz
- +0pHay6v27zk/MTrIZ++lWfS9iEaOJ7WkbBbEwueYGzw==
-X-Gm-Gg: ASbGnctCfXIFctvFHpUkh1Wwp25UDkhD+wyqv6ds/KavVOuLW3mDQnAo41V8oknOfU1
- HbdgBJL/EmglHv3ZEmqI/wt15S7UshfnVXdMCgFJ6rsBKnBi50yzUCynzndluNLva5jsR20E1ZL
- FXZ7NYR0QWakAw5k+ENdKnO1cHFaV1CbS9s5yh+45q4gPzl2lyYTn5asrorPaOiOhpQd+Il3PZ2
- tm7ZIi0/cwJwZHdP9iwgSfvvwk1kmJALRYqq3LMB36/HXgXYQAnEqUMAb9KKUooGsNOhVQ9KlKz
- +VgZ2LFBFoXVrsMPCyrutIdD+Kfi0ZrjzPnC2yYklAXAYu/aG+DcJ/5pxORu3Z8cBAiE3W9qSjZ
- 7b4M=
-X-Google-Smtp-Source: AGHT+IGbn8Wg/ANip1Vr5TSN3ZvLJF31+rLv1UOgk+0WGEUycv8aF2qmAOByzPeAvwLSWvnVQMdUTA==
-X-Received: by 2002:a17:90b:51cf:b0:2fa:42f3:e3e4 with SMTP id
- 98e67ed59e1d1-30e0daf5dd2mr8260370a91.3.1747195894836; 
- Tue, 13 May 2025 21:11:34 -0700 (PDT)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30e3354b633sm533552a91.49.2025.05.13.21.11.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 May 2025 21:11:34 -0700 (PDT)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- Frank Chang <frank.chang@sifive.com>,
- Jerry Zhang Jian <jerry.zhangjian@sifive.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH 2/2] target/riscv: Add standard B extension implied rule
-Date: Wed, 14 May 2025 12:11:18 +0800
-Message-ID: <20250514041118.1614-2-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250514041118.1614-1-frank.chang@sifive.com>
-References: <20250514041118.1614-1-frank.chang@sifive.com>
+ bh=qIq2vTZ/lFGWxb1y9RYqkYNealT0sSrdwaDrnzrSjBI=;
+ b=pZ3Z+SRnzEa2/4Iw8mEYGfCvns0cXoIs4h6EI5WuPsv3CggidPSLXcl9tqytBGGOZl
+ TZP6iLX+AgPGb7AWQlxGedqH1iKqECtI0JNcUYquDnJIrzVyXaygW24zkpHefTWf5JV0
+ 6AkYmcSmdlYYhLoYH4CCNyCxU3/TS/A4W67lAxapLGeKrUQoZPuC/bCutlKWmmCNR1wP
+ k4sa0kMpzDLeRn1Bs32JEuecAR0kBmCkGz8bd1pXwvXdUYRq/o3PotqruGjltmInZJaY
+ 33I4xyagYVD0j9dvMi6PkkM9wFChvH1tTM8GkNZM//vXIKJBnlxjEa2I8XXR1mTZpVJz
+ adXA==
+X-Gm-Message-State: AOJu0Ywime8ZTGfoo00j3ef+c8JPXji13TkI+y8072/VZ/6Eb/NHvxft
+ vPGEV9TjVvJC9uvG+KkNroBTK0ldGk5ZM9wV8vmqfDATF10IaKmbUkbk80ERJ/dDC7BiEVFD6/Q
+ pYiNPNAgcJhOR1kbmzIHOlJWqT8qvcLi7UwtVqb/qcNlClE0YoRjlI0UVWGxFE6E8uQep/+tACf
+ 57sBevZMAd2l6XmMpuGqwv6+ebwnM=
+X-Gm-Gg: ASbGncs/MLb+pFb6ehW5wD8siMflVaZJmfwHBHB8eVSeJw6lzlXYUDTx8pyHhUnttA5
+ kZpQWXLb087sX0cUYDu7dsM+2gR/aEia5/SIHKl1/r1mBBukOdEB4dbyyNpMrKhLV9yUp
+X-Received: by 2002:a17:90b:6c6:b0:30c:540b:9ba with SMTP id
+ 98e67ed59e1d1-30e2e5b947emr3530441a91.10.1747199169966; 
+ Tue, 13 May 2025 22:06:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/zQjz2dSgnpDBY9onIxez7dUd+JJoSKed4nBIMcpIzzypJaIoUDp7Hjbr+g5Jnsie3hJmx4ucd37tO7gbA8Q=
+X-Received: by 2002:a17:90b:6c6:b0:30c:540b:9ba with SMTP id
+ 98e67ed59e1d1-30e2e5b947emr3530401a91.10.1747199169509; Tue, 13 May 2025
+ 22:06:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=frank.chang@sifive.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250510-n-v1-1-19ee26ac3ca6@daynix.com>
+In-Reply-To: <20250510-n-v1-1-19ee26ac3ca6@daynix.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 14 May 2025 13:05:58 +0800
+X-Gm-Features: AX0GCFuq8jQlq26IJa6Kbl37pUgLHON74m03g32riiDNXa32BFQzQPjZr-rowBs
+Message-ID: <CACGkMEt7xoX-HvV1mOo=zqpyV0se2ELBMvNV-uGpKUZPQ-PB2A@mail.gmail.com>
+Subject: Re: [PATCH] virtio-net: Add queues for RSS during migration
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,53 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+On Sat, May 10, 2025 at 3:24=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
+>
+> virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
+> VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
+> number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
+> VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_features
+> is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
+> VIRTIO_NET_F_MQ uses bit 22.
+>
+> Instead of inferring the required number of queues from
+> vdev->guest_features, use the number loaded from the vm state.
+>
+> Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing"=
+)
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  include/hw/virtio/virtio.h |  2 +-
+>  hw/net/virtio-net.c        | 11 ++++-------
+>  hw/virtio/virtio.c         | 14 +++++++-------
+>  3 files changed, 12 insertions(+), 15 deletions(-)
+>
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 638691028050..af52580c1e63 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -211,7 +211,7 @@ struct VirtioDeviceClass {
+>      int (*start_ioeventfd)(VirtIODevice *vdev);
+>      void (*stop_ioeventfd)(VirtIODevice *vdev);
+>      /* Called before loading queues. Useful to add queues before loading=
+. */
+> -    int (*pre_load_queues)(VirtIODevice *vdev);
+> +    int (*pre_load_queues)(VirtIODevice *vdev, uint32_t n);
 
-Add the missing implied rule for standard B extension.
-Standard B extension implies Zba, Zbb, Zbs extensions.
+This turns out to be tricky as it has a lot of assumptions as
+described in the changelog (e.g only lower 32bit of guest_features is
+correct etc when calling this function).
 
-RISC-V B spec: https://github.com/riscv/riscv-b
+Looking at the commit that introduces this which is 9379ea9db3c that says:
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-Reviewed-by: Jim Shu <jim.shu@sifive.com>
----
- target/riscv/cpu.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+"""
+Otherwise the loaded queues will not have handlers and elements
+in them will not be processed.
+"""
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 27edd5af62..f737b703da 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2532,6 +2532,17 @@ static RISCVCPUImpliedExtsRule RVG_IMPLIED = {
-     },
- };
- 
-+static RISCVCPUImpliedExtsRule RVB_IMPLIED = {
-+    .is_misa = true,
-+    .ext = RVB,
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_zba), CPU_CFG_OFFSET(ext_zbb),
-+        CPU_CFG_OFFSET(ext_zbs),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- static RISCVCPUImpliedExtsRule ZCB_IMPLIED = {
-     .ext = CPU_CFG_OFFSET(ext_zcb),
-     .implied_multi_exts = {
-@@ -2910,7 +2921,8 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
- 
- RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
-     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
--    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED, NULL
-+    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED,
-+    &RVB_IMPLIED, NULL
- };
- 
- RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
--- 
-2.49.0
+I fail to remember what it means or what happens if we don't do 9379ea9db3c=
+.
+
+Thanks
 
 
