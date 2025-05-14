@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17517C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E645C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFAeI-0006ww-QB; Wed, 14 May 2025 07:51:47 -0400
+	id 1uFAdI-0005sG-Ql; Wed, 14 May 2025 07:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdw-0006UZ-J4
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdH-0005rx-Mi
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:50:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdt-0006ND-JG
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdF-00067J-Or
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:50:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747223477;
+ s=mimecast20190719; t=1747223440;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=r130SNDHPsyHuJY951ydcB9zf5qK/Ak7BggOv+qCFfw=;
- b=CQT+u1+Wsl3fiOjQ/M5ySHvPIXUsvx3olaTllpOmZrLTjIyRVlj1MqfQYCynjsMM0xQqOA
- UIw6JkR6aZ0EqhvJPKt8u1XElnfyrE+tWbqa6YXXLIp8u7tINO5Xamen1u7NSviynQCXxz
- S7tsj6Cfqz3zaasdkZqoyqB+4hAO+UQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qTrSTVnWfY0mmIhrJkPgqINBw1atoPtzXJd/8tKth6w=;
+ b=WO134a3YDrbuzdPtkWQrCO9il/WaaXadobEpyTDjAZkyMQgT83VFAzOsm3RIc20AoRXh9q
+ AMOaorIBUro9NZmgzqWSg3wJjJBJ5HlQncfE0i2DOA77+VcN+d8/i1lwTVkw5kp1XbQ1FS
+ pI+h25oIReX9bFUjmN6oguy6/6hcTVg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-221-c2fIguB9PxO4ypV2nSxp9w-1; Wed, 14 May 2025 07:51:16 -0400
-X-MC-Unique: c2fIguB9PxO4ypV2nSxp9w-1
-X-Mimecast-MFC-AGG-ID: c2fIguB9PxO4ypV2nSxp9w_1747223475
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43eed325461so35271335e9.3
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:51:16 -0700 (PDT)
+ us-mta-35-j3eOuvgEM462cHmgU-hzPw-1; Wed, 14 May 2025 07:50:39 -0400
+X-MC-Unique: j3eOuvgEM462cHmgU-hzPw-1
+X-Mimecast-MFC-AGG-ID: j3eOuvgEM462cHmgU-hzPw_1747223438
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-440a4e2bad7so4456235e9.0
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:50:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747223475; x=1747828275;
+ d=1e100.net; s=20230601; t=1747223438; x=1747828238;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r130SNDHPsyHuJY951ydcB9zf5qK/Ak7BggOv+qCFfw=;
- b=IOLzcBqmdM8YAEgb1Z4XhlqEtWkRzuSDj490tXjgFtI4iOunfTEJKnswb2rnASj+iv
- pm0KZN45KCt2KJDGXTGCj+O0LN2TQhywE44dMdUMFMT5Zc2YpNrwL4w+d+/2cR5mVe2M
- 2E9WVpb4MnAWuNlhzP7kZPn63lFUXAQexFjT1OWtxg6egj8EnLktFIKWp7zslNB6P5er
- oJd9HS4v3t2PiDa9WlxYocdsR7HB1ISpFlZoRh+IOHo8mXReShJoxVgUJ2HwE1npQ+8r
- 5DN/vnBt4RVNpfW49YkowOr1LhN56s3VgKuzHMYuVKdVQ1cbrNl7EOtTlrYo+dICgiDS
- FKEA==
-X-Gm-Message-State: AOJu0YxOsv6nBcwN+C8j2E9pwxo/0N7h0Cz9CgFUApQAXh68qKGl1fO4
- vvxWyIU7/oW04XSHEbYvxXHuB2kkkceVtA3jF7BhUZuheskGS9T1nRqIQ2dbnb87xM++sgbyGoC
- zcwHIBJWNISa8U9MaK+hAPKl3UU0jxg32Gr4R9v9U8QVdP7OTDBa1kroo1X8r2b9O4XzSYsGkHe
- qfs0/bE1gG3iA3u/Fa/9mlQKRs+SLBwg==
-X-Gm-Gg: ASbGncupgwgNfCNrQ9zd8Spya8vkv9TAkNAiW2EYluWPQPtloDXZr4pBXoHiaqcwsq+
- MiExbPOg7QAllWubksx5LUavKJDHvWcSU5R93hneuN3JDMph5K87jD3zlH6YwS5jY7bZJdJdgUX
- 1/MKUPk4RXEdanPTOZdPfEOil4nFI1f3UDf/YlnLwQf/BkRUdAqU7CH8cC56Xh+dlzCJKiCc8KN
- VQk5pziErrKt1vRY8nxXjDNbtTgfczJGigIpdP6svlmqE53mMGW1IQtBigvD1BlmiS95nvC6rvS
- bEddsg==
-X-Received: by 2002:a05:600c:1547:b0:43d:db5:7b1a with SMTP id
- 5b1f17b1804b1-442f20e4994mr25701025e9.12.1747223474982; 
- Wed, 14 May 2025 04:51:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7lIZMd/cE34Bndss/Hyr5hiGECAzKCJvvcxAa35zIkhklTc/65+IM8CP+zhpE16E6Gr8mSA==
-X-Received: by 2002:a05:600c:1547:b0:43d:db5:7b1a with SMTP id
- 5b1f17b1804b1-442f20e4994mr25700775e9.12.1747223474496; 
- Wed, 14 May 2025 04:51:14 -0700 (PDT)
+ bh=qTrSTVnWfY0mmIhrJkPgqINBw1atoPtzXJd/8tKth6w=;
+ b=N99kKZLdE48WsB0JiPyJmZMXt//iNRy81epCL48AgMaMIrcHVTyOBBwhaKYncV/xuT
+ ch1eqkAQYvNmkn2DpMkA1s6382NGn4UHLEqLjaqyByeLNKLFY2GNDYtkLkEHbCrYu1sZ
+ oJbZaxuMg4Cnh0nr6GxdyNBzFWgQbmpkmCvWay5mIoEgv2F6q0lQNkT2yhMfDiDd0Zc5
+ 7cKPpbhuzK/9uF7y85Z9QT7xkI8oJjg7wyzJj6ApOqL4JBw7rg19uBqyxS7mWoLdrEQc
+ YjvWPw+BBQQjMaVQmWeN1IoxDxVmAyBDXwlrOoffogNlismNP8IPjs90U9s8v7VERrjq
+ jOwA==
+X-Gm-Message-State: AOJu0YwtKdogE9sfjwVzEn0eN1arUmv35snpn5u3iMO+d5zojOvfZIvf
+ k1ZrYU5Ixg8e7/w8vKkMg34MW8YJA4gx16TSxx4Hew7fZSoYQMS9CNC6K/LlVeMLa8+qGu9aFvE
+ pBgYTFKso2ceg7uTMlBBZUEUXH9jR9oukM86SLACsKlCMR4kHgPfyKybwy/w776aqEDgNPKn1Vo
+ p+7d1b0D75kUIwDgMOwZLWZMqCobCuog==
+X-Gm-Gg: ASbGncvS3GJE/OChaKXN/+d97Agz3l/hIwo06t6bUrLXNqLX4n24tJumrQULlRzTq6X
+ 4gsBkIu2e/yolkyqYyX7HURqlNA7skW1s5cLd1QIF6bAr6dyOgWj6sR7dQipjtqcNbMw3Umwd4a
+ +7EmpnlctLlhVgeHmIB7CdT5vt6JTzIr9W0aVVa1OejMj12M9yrXtmrHFziinnNm33fp7nUzAJT
+ eJXvM/dKbozUZ+RBgMvBjosQD6tXiBDCM/jKmIDXo7/vtxudrH0SEatH+xjZrSqFRmHGE2WoA2Y
+ yxOJLw==
+X-Received: by 2002:a05:600c:3b86:b0:442:cd12:c68a with SMTP id
+ 5b1f17b1804b1-442f1a0d8f9mr30006795e9.1.1747223437992; 
+ Wed, 14 May 2025 04:50:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHenNJ49ygUiV5zCRp3t1kn3VlupfpdZHkRyK70zrYvITwom17cIpnvCCvZwq6btdSorgC0ew==
+X-Received: by 2002:a05:600c:3b86:b0:442:cd12:c68a with SMTP id
+ 5b1f17b1804b1-442f1a0d8f9mr30006495e9.1.1747223437582; 
+ Wed, 14 May 2025 04:50:37 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f395166fsm27410915e9.18.2025.05.14.04.51.13
+ 5b1f17b1804b1-442f39ef8f7sm26028285e9.39.2025.05.14.04.50.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 04:51:14 -0700 (PDT)
-Date: Wed, 14 May 2025 07:51:12 -0400
+ Wed, 14 May 2025 04:50:36 -0700 (PDT)
+Date: Wed, 14 May 2025 07:50:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-stable@nongnu.org
-Subject: [PULL 22/27] virtio: Call set_features during reset
-Message-ID: <0caed25cd171c611781589b5402161d27d57229c.1747223385.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Yui Washizu <yui.washidu@gmail.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 08/27] hw/pci: Do not add ROM BAR for SR-IOV VF
+Message-ID: <3a031e395dc65239d031890d038bc354af61dc35.1747223385.git.mst@redhat.com>
 References: <cover.1747223385.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -110,50 +113,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-virtio-net expects set_features() will be called when the feature set
-used by the guest changes to update the number of virtqueues but it is
-not called during reset, which will clear all features, leaving the
-queues added for VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS. Not only these
-extra queues are visible to the guest, they will cause segmentation
-fault during migration.
+A SR-IOV VF cannot have a ROM BAR.
 
-Call set_features() during reset to remove those queues for virtio-net
-as we call set_status(). It will also prevent similar bugs for
-virtio-net and other devices in the future.
-
-Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
-Buglink: https://issues.redhat.com/browse/RHEL-73842
-Cc: qemu-stable@nongnu.org
+Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20250421-reset-v2-1-e4c1ead88ea1@daynix.com>
+Message-Id: <20250314-sriov-v9-1-57dae8ae3ab5@daynix.com>
+Tested-by: Yui Washizu <yui.washidu@gmail.com>
+Tested-by: Pasha Tatashin <pasha.tatashin@soleen.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/pci/pci.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 1b55d8d8a2..3300f4afb0 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2320,6 +2320,8 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index fe38c4c028..6d9d3ce90f 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2522,6 +2522,14 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+         return;
      }
- }
  
-+static int virtio_set_features_nocheck(VirtIODevice *vdev, uint64_t val);
++    if (pci_is_vf(pdev)) {
++        if (pdev->rom_bar > 0) {
++            error_setg(errp, "ROM BAR cannot be enabled for SR-IOV VF");
++        }
 +
- void virtio_reset(void *opaque)
- {
-     VirtIODevice *vdev = opaque;
-@@ -2350,7 +2352,7 @@ void virtio_reset(void *opaque)
-     vdev->start_on_kick = false;
-     vdev->started = false;
-     vdev->broken = false;
--    vdev->guest_features = 0;
-+    virtio_set_features_nocheck(vdev, 0);
-     vdev->queue_sel = 0;
-     vdev->status = 0;
-     vdev->disabled = false;
++        return;
++    }
++
+     if (load_file || pdev->romsize == UINT32_MAX) {
+         path = qemu_find_file(QEMU_FILE_TYPE_BIOS, pdev->romfile);
+         if (path == NULL) {
 -- 
 MST
 
