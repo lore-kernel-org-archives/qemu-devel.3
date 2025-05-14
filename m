@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E9DC3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 21:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A16C3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 21:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFJTX-0002PF-W7; Wed, 14 May 2025 17:17:16 -0400
+	id 1uFJjr-0005vr-54; Wed, 14 May 2025 17:34:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFJTV-0002MG-IY
- for qemu-devel@nongnu.org; Wed, 14 May 2025 17:17:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFJTT-0004Eo-LP
- for qemu-devel@nongnu.org; Wed, 14 May 2025 17:17:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747257430;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JjxGDz/ZMZG1oZxZHYRKYYs5/6n/8rLhPLqVcw2z4WI=;
- b=fYIQLR3xJJTSUYZDfSXo1sm4rQGBGv87lNC9GQhmjr3eLHNHcsbnu/sODNRMBbl1/z/aCG
- +dTUuE55fOczUHBDoZzcVKJSG7CKXEmlE6lvqTfN6hw5s9WHWWjw9d+z2uLP82XPkvsOKX
- yC2th/XuFUqQnt7qrMsOq4FgYuWlsJ8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-220-jnJmnfzSNRW_9_cWGVjYhQ-1; Wed, 14 May 2025 17:17:07 -0400
-X-MC-Unique: jnJmnfzSNRW_9_cWGVjYhQ-1
-X-Mimecast-MFC-AGG-ID: jnJmnfzSNRW_9_cWGVjYhQ_1747257427
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c9305d29abso38205185a.1
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 14:17:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uFJjp-0005vF-09
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 17:34:05 -0400
+Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uFJjn-00062D-BS
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 17:34:04 -0400
+Received: by mail-ua1-x936.google.com with SMTP id
+ a1e0cc1a2514c-8792b6d756fso62007241.2
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 14:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1747258442; x=1747863242; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0CKhmihup1Qwffg7785kc7S9/MLcRLKMAG1DNsHXFpw=;
+ b=LTsDYIA5OcxoICNUP0IFcYn4xE/FHJqUsPXDq1okvekz55q8w1GvnjHabZpJKBEnb2
+ JcM3UL+DgLjh6D5UKRj49ysRAIAcGG/xpz98KL8OmmD4yFIXFVfVrHtsrhBsXPYXZVBV
+ diXNq1URFTDocaMZnmym/KvaaIl2XDinul/4xU/KxBAQQJQ5/cy9emCfzqOZR0fHkL/g
+ BrwC+HrMOtvqa6kpJSqllEnwp82//esjwE/kthMCDDOSyslYwtimX8Ca1MZtVVHreNB5
+ r7rDDD0ZwFTwreRoWDuMRWkCTGab6PVyU3xn5fcTYsMgdoX5a8WpduKd2z++1yW6gVjU
+ 0Rmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747257427; x=1747862227;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JjxGDz/ZMZG1oZxZHYRKYYs5/6n/8rLhPLqVcw2z4WI=;
- b=Zifoh5FpC6cOL9nw4cQo3rlqAEMGIkMgwoXAC8lDXowEkddSKo6NHYGWdQNou+uaOl
- 6uHNXScQy2no+mL01/SHBxn9UKiZeeBduzl+rQ8FOo82If59EbQV8QjuYIRJ0NBMk9Es
- jBh77W/vTyvis4/2k3IKDPw55113ZpTi1OK5Azy9QI4nFsECyK3WpW0wS4Juwp6mcSKw
- N13P7SHDjLWg0ToTi1Kwm3tikMH3eMD8weAJ+vcsnua65Fefii6NisdVCo2aUpINobV4
- aMgS99pETI7k2N/sObmB32d9OHLzjwteF9q3rFbJtx67wYC6M30nS02V6X/uwnWRF0En
- 3EZA==
-X-Gm-Message-State: AOJu0YxfwLMjYzO4CLuX4GmNwGjXGf88wXPmY3C2FXAKWVR58MrjMhHc
- rEbuw5mu+DNgUhi9Uv5wmKvXu+wZQ35lTeXqD0zo2SrBL9lTj28JCakt+YqqEYSzTcA3xtVTgga
- JzLozkc7o8mM3WOeAXYMfWuGiCAC+/gU1wVrZ72MDhOPUir4ALbdv
-X-Gm-Gg: ASbGncvYIZNrfXsErCLs4skf8atk9vy4aTBN/RAoxL221a1FS0jEZzdX3ujXVjB/gxt
- 3cVliwk85yN/QKW4bWATFyzfyE+yfBAFQGi4wZ6cP1BHTI1YnXXpa7TAVhLKkmgG5kSIKZ58kSA
- /WRLgArV2CUhoAlnG9SVGRDMccnrgnIIgFpwSsWbeKU1sH5tNO8Asie4TrPeKMZw5zifOxLYGbc
- FfagGVZbF7CrbcUnopiREPzy1kt5EwORopL99PAgKCJ2VN6tBOSqbHNj7DZaNdckDy1/fPc5X5A
- 8tw=
-X-Received: by 2002:a05:620a:1713:b0:7c0:c3ea:6982 with SMTP id
- af79cd13be357-7cd287e8c91mr764673385a.14.1747257426916; 
- Wed, 14 May 2025 14:17:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAU+YtOoXRLqJy6LnGGPjmSaZkRv2or0fq1qZTeUCJAPvaz5suJ6b3zz9/Th5QUCRs+VQqXQ==
-X-Received: by 2002:a05:620a:1713:b0:7c0:c3ea:6982 with SMTP id
- af79cd13be357-7cd287e8c91mr764669485a.14.1747257426443; 
- Wed, 14 May 2025 14:17:06 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd076ca10esm784359985a.48.2025.05.14.14.17.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 14:17:05 -0700 (PDT)
-Date: Wed, 14 May 2025 17:17:02 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Prasad Pandit <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 2/2] migration/hmp: Add "info migrate -a", reorg the
- dump
-Message-ID: <aCUITicykC-ppJrv@x1.local>
-References: <20250514200137.581935-1-peterx@redhat.com>
- <20250514200137.581935-3-peterx@redhat.com>
- <aCT9QRPd4cDSshGI@gallifrey>
+ d=1e100.net; s=20230601; t=1747258442; x=1747863242;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0CKhmihup1Qwffg7785kc7S9/MLcRLKMAG1DNsHXFpw=;
+ b=Pq42pr0b1zB2I/cNbMk89rRqbuuZTZXOANfr5wEYfBG2NlKGjN27wzyP5LMabW951G
+ 1zw8qgrqWfl7vD7kwFzjox/Sz8c1J3CIUaVOqSOgRpKMMrCmB+Qjskm/+aWEa6w3xNM3
+ THuMlWMjmbaywWXhyy72Y1P08n4tW8K/e2GiP9XXjhN5IV+oAbpQHEpKWU70BZuRWtUH
+ xTfyJ+8vmp8x6HDZTpv0JaRbg4PFbaUu3+rv+nqvL395KyFlRrnGgndgJ99iYSA5rIRx
+ EEbSK0UOnK4AA4sRLKKRTisCnhaH/bqwG/YmeFYBFIADyjJ9k83sbr64pc0ZONTEi0wJ
+ 5WTw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5YlpN+Dj9slp9lIMXdcHVJ+ounK2DL1hHcU83kU+V/JSF4t46Ngg7nRL4og/xdRZQHl9hKrTRCjoi@nongnu.org
+X-Gm-Message-State: AOJu0YzHcBBb/5/qTJxbGcaFI8mSZ6daVZb4wYQEms4gylSsXsBxLksp
+ UYFHKVh3ClTDCq6n6SqkwhUWbR87PH9NxIgRGQRIuwo2BbI5q6xCdivbC7DlyLk=
+X-Gm-Gg: ASbGncsvo9E10G+l43z4SiyPN4uSBLaut7jZD3vKzuoU9oRRBCtbVZB1PXOFeLpSeM7
+ RFxU8zC+dkuSyDhN8y5h0KrUAz/JjYCaMY6wC+TgqNfU0PwcwEcuEYAX5juwR9gHylj4p6d/+Y8
+ 6s6EkP8wFGPFbPjtAd5zsPGYbvtNOOsDHXeSyaHlzcIor2zk2gyFMjODKFJi7zOT1xm9K+0zCyj
+ E7tKP90nc7eE3yykMWVz/cI2GJw6efrTqhJdHKA4jLU6X1v3ztcFMGjrrWsu+fK141DEJya01uh
+ gtDc+EeFQC0YE1i38idbDBKC9KcobmYNvJ0MaqjkvKXX4TmeC3mAUG8cjl0qdGvKEp8hL5bu4NN
+ t
+X-Google-Smtp-Source: AGHT+IEsmntuqiPCQELWVImqdxhiy+GKc7xaYngAHzB41ue/+g8E7pGci8OoKUkeepwdBWJteXcXGA==
+X-Received: by 2002:a05:6102:2d09:b0:4de:1ab2:ac67 with SMTP id
+ ada2fe7eead31-4df953f7c08mr102747137.2.1747258441793; 
+ Wed, 14 May 2025 14:34:01 -0700 (PDT)
+Received: from [192.168.68.110] ([152.234.125.33])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-52c5375fde5sm10467747e0c.27.2025.05.14.14.34.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 May 2025 14:34:01 -0700 (PDT)
+Message-ID: <b1b72b45-d1fe-4ff4-8649-cbfd32e5f8a8@ventanamicro.com>
+Date: Wed, 14 May 2025 18:33:58 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aCT9QRPd4cDSshGI@gallifrey>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] target/riscv: Fix write_misa vs aligned next_pc
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com
+References: <20250425152311.804338-1-richard.henderson@linaro.org>
+ <20250425152311.804338-8-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250425152311.804338-8-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ua1-x936.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,71 +104,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 08:29:53PM +0000, Dr. David Alan Gilbert wrote:
-> * Peter Xu (peterx@redhat.com) wrote:
-> > A new parameter "-a" is added to "info migrate" to dump all info, while
-> > when not specified it only dumps the important ones.  When at it, reorg
-> > everything to make it easier to read for human.
-> > 
-> > The general rule is:
-> > 
-> >   - Put important things at the top
-> >   - Reuse a single line when things are very relevant, hence reducing lines
-> >     needed to show the results
-> >   - Remove almost useless ones (e.g. "normal_bytes", while we also have
-> >     both "page size" and "normal" pages)
-> >   - Regroup things, so that related fields will show together
-> >   - etc.
+Richard,
+
+On 4/25/25 12:23 PM, Richard Henderson wrote:
+> Do not examine a random host return address, but
+> properly compute the next pc for the guest cpu.
 > 
-> Thanks for the update,
+> Fixes: f18637cd611 ("RISC-V: Add misa runtime write support")
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/riscv/csr.c | 22 +++++++++++++++++-----
+>   1 file changed, 17 insertions(+), 5 deletions(-)
 > 
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index a663f527a4..85f9b4c3d2 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -30,6 +30,8 @@
+>   #include "exec/icount.h"
+>   #include "qemu/guest-random.h"
+>   #include "qapi/error.h"
+> +#include "tcg/insn-start-words.h"
+> +#include "internals.h"
+>   #include <stdbool.h>
+>   
+>   /* CSR function table public API */
+> @@ -2099,6 +2101,19 @@ static RISCVException read_misa(CPURISCVState *env, int csrno,
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> +static target_ulong get_next_pc(CPURISCVState *env, uintptr_t ra)
+> +{
+> +    uint64_t data[TARGET_INSN_START_WORDS];
 
-Thanks for the quick comments!
+Isn't this 'INSN_START_WORDS'?  I'm seeing code in i386 that is similar
+to what we're doing here and it's using INSN_START_WORDS:
 
-> 
-> Note that you did miss the change (which would be fine as a follow up)
-> where I point out that I think your unit abbreviations are slightly wrong
+====
+static inline target_ulong get_memio_eip(CPUX86State *env)
+{
+#ifdef CONFIG_TCG
+     uint64_t data[INSN_START_WORDS];
+     CPUState *cs = env_cpu(env);
 
-Ouch, it's in the spam filter... :-( I would have missed that if you didn't
-mention it. I would think any decent AI models would do better than this..
-I have no idea how this could ever happen in 2025.
+     if (!cpu_unwind_state_data(cs, cs->mem_io_pc, data)) {
+         return env->eip;
+     }
 
-> (although I think I was wrong as well...)
-> I think your throughput is in Mbps (capital M or Mb/s or Mbit/s) - ie.
-> 10^6 bits/second.
-> 
-> While I think all your KB are KiB not KB (i.e. 2^10 bytes).
+     /* Per x86_restore_state_to_opc. */
+     if (tcg_cflags_has(cs, CF_PCREL)) {
+         return (env->eip & TARGET_PAGE_MASK) | data[0];
+     } else {
+         return data[0] - env->segs[R_CS].base;
+     }
+#else
+     qemu_build_not_reached();
+#endif
+}
+====
 
-True..
+I'm asking because the build in Alistair's branch is failing with this error:
 
-Now I've read the missing reply:
 
-https://lore.kernel.org/qemu-devel/aCSXjRCTYKbDf9le@gallifrey/
+../target/riscv/csr.c: In function ‘get_next_pc’:
+../target/riscv/csr.c:2106:19: error: ‘TARGET_INSN_START_WORDS’ undeclared (first use in this function); did you mean ‘TCG_INSN_START_WORDS’?
+  2106 |     uint64_t data[TARGET_INSN_START_WORDS];
+       |                   ^~~~~~~~~~~~~~~~~~~~~~~
+       |                   TCG_INSN_START_WORDS
+../target/riscv/csr.c:2106:19: note: each undeclared identifier is reported only once for each function it appears in
+../target/riscv/csr.c:2106:14: error: unused variable ‘data’ [-Werror=unused-variable]
+  2106 |     uint64_t data[TARGET_INSN_START_WORDS];
+       |              ^~~~
+../target/riscv/csr.c:2115:1: error: control reaches end of non-void function [-Werror=return-type]
+  2115 | }
+       | ^
+cc1: all warnings being treated as errors
+[2206/3000] Compiling C object libqemu-riscv
 
-So yeh, mbps is in unit of bit, but all the rest needs fixing.  How about
-below fixup to be squashed (if I won't need to repost for v3):
 
-PS: in the fixup I also did s/psize/pagesize/ to be clear
+Changing TARGET_INSN_START_WORDS to INSN_START_WORDS fixes the build issue.
+Thanks,
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 13e93d3c54..ea76f72fa4 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -111,9 +111,9 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
- 
-     if (info->ram) {
-         monitor_printf(mon, "RAM info:\n");
--        monitor_printf(mon, "  Throughput (mbps): %0.2f\n",
-+        monitor_printf(mon, "  Throughput (Mbps): %0.2f\n",
-                        info->ram->mbps);
--        monitor_printf(mon, "  Sizes (KB): psize=%" PRIu64
-+        monitor_printf(mon, "  Sizes (KiB): pagesize=%" PRIu64
-                        ", total=%" PRIu64 "\n",
-                        info->ram->page_size >> 10,
-                        info->ram->total >> 10);
 
--- 
-Peter Xu
+Daniel
+
+> +
+> +    /* Outside of a running cpu, env contains the next pc. */
+> +    if (ra == 0 || !cpu_unwind_state_data(env_cpu(env), ra, data)) {
+> +        return env->pc;
+> +    }
+> +
+> +    /* Within unwind data, [0] is pc and [1] is the opcode. */
+> +    return data[0] + insn_len(data[1]);
+> +}
+> +
+>   static RISCVException write_misa(CPURISCVState *env, int csrno,
+>                                    target_ulong val, uintptr_t ra)
+>   {
+> @@ -2114,11 +2129,8 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
+>       /* Mask extensions that are not supported by this hart */
+>       val &= env->misa_ext_mask;
+>   
+> -    /*
+> -     * Suppress 'C' if next instruction is not aligned
+> -     * TODO: this should check next_pc
+> -     */
+> -    if ((val & RVC) && (GETPC() & ~3) != 0) {
+> +    /* Suppress 'C' if next instruction is not aligned. */
+> +    if ((val & RVC) && (get_next_pc(env, ra) & ~3) != 0) {
+>           val &= ~RVC;
+>       }
+>   
 
 
