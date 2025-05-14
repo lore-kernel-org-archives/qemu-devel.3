@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC46CC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD8BC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBfm-0000iy-Ai; Wed, 14 May 2025 08:57:22 -0400
+	id 1uFBiB-0005U5-ND; Wed, 14 May 2025 08:59:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBfc-0000Fu-GS; Wed, 14 May 2025 08:57:13 -0400
+ id 1uFBhu-0004jB-KC; Wed, 14 May 2025 08:59:38 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBfY-0007im-RK; Wed, 14 May 2025 08:57:11 -0400
+ id 1uFBhr-0007uT-NX; Wed, 14 May 2025 08:59:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DC1B8121AC6;
- Wed, 14 May 2025 15:56:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 871D9121AE9;
+ Wed, 14 May 2025 15:57:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 87FDB20B83E;
- Wed, 14 May 2025 15:56:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 31FE520B857;
+ Wed, 14 May 2025 15:57:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.18 06/18] target/mips: Require even maskbits in
- update_pagemask
-Date: Wed, 14 May 2025 15:56:12 +0300
-Message-Id: <20250514125640.91677-6-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>, Helge Konetzka <hk@zapateado.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [Stable-9.2.4 11/34] tcg: Allocate TEMP_VAL_MEM frame in temp_load()
+Date: Wed, 14 May 2025 15:57:33 +0300
+Message-Id: <20250514125758.92030-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
-References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -62,56 +62,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The number of bits set in PageMask must be even.
+Be sure to allocate the temp frame if it wasn't.
 
-Fixes: d40b55bc1b86 ("target/mips: Fix PageMask with variable page size")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250328175526.368121-3-richard.henderson@linaro.org>
+In the resolved issues, incomplete dead code elimination left a load
+at the top of an unreachable loop.  We simply need to allocate the
+stack slot to avoid crashing.
+
+Fixes: c896fe29d6c ("TCG code generator")
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+Reported-by: Helge Konetzka <hk@zapateado.de>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2891
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2899
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit d89b9899babcc01d7ee75f2917da861dc2afbc27)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250401144332.41615-1-philmd@linaro.org>
+(cherry picked from commit e139bc4b1772575e1f2dcf8e3dbe1df2b684ef1f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index f0459a85e6..a4a6282827 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -889,24 +889,17 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
- 
- void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
- {
--    uint32_t mask;
--    int maskbits;
--
-     /* Don't care MASKX as we don't support 1KB page */
--    mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
--    maskbits = cto32(mask);
-+    uint32_t mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
-+    int maskbits = cto32(mask);
- 
--    /* Ensure no more set bit after first zero */
--    if ((mask >> maskbits) != 0) {
--        goto invalid;
-+    /* Ensure no more set bit after first zero, and maskbits even. */
-+    if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
-+        env->CP0_PageMask = mask << CP0PM_MASK;
-+    } else {
-+        /* When invalid, set to default target page size. */
-+        env->CP0_PageMask = 0;
-     }
--    env->CP0_PageMask = mask << CP0PM_MASK;
--
--    return;
--
--invalid:
--    /* When invalid, set to default target page size. */
--    env->CP0_PageMask = 0;
- }
- 
- void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 4578b185be..13f735b246 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -4461,6 +4461,9 @@ static void temp_load(TCGContext *s, TCGTemp *ts, TCGRegSet desired_regs,
+         ts->mem_coherent = 0;
+         break;
+     case TEMP_VAL_MEM:
++        if (!ts->mem_allocated) {
++            temp_allocate_frame(s, ts);
++        }
+         reg = tcg_reg_alloc(s, desired_regs, allocated_regs,
+                             preferred_regs, ts->indirect_base);
+         tcg_out_ld(s, ts->type, reg, ts->mem_base->reg, ts->mem_offset);
 -- 
 2.39.5
 
