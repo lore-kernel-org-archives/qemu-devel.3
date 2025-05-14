@@ -4,34 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10F0C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84948C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBkv-0000bg-El; Wed, 14 May 2025 09:02:42 -0400
+	id 1uFBk3-0007qt-Ez; Wed, 14 May 2025 09:01:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBjI-0007bn-Gw; Wed, 14 May 2025 09:01:07 -0400
+ id 1uFBi2-0004qH-0s; Wed, 14 May 2025 08:59:42 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBjB-0008FM-0Z; Wed, 14 May 2025 09:00:56 -0400
+ id 1uFBhz-0007wk-Sk; Wed, 14 May 2025 08:59:41 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3DB39121AF6;
- Wed, 14 May 2025 15:57:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BB1FA121AED;
+ Wed, 14 May 2025 15:57:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DE1F020B864;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5A99F20B85B;
  Wed, 14 May 2025 15:57:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+Cc: qemu-stable@nongnu.org, Daan De Meyer <daan.j.demeyer@gmail.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Valentin David <valentin.david@canonical.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 24/34] meson: Use has_header_symbol() to check getcpu()
-Date: Wed, 14 May 2025 15:57:46 +0300
-Message-Id: <20250514125758.92030-24-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 15/34] smbios: Fix buffer overrun when using path=
+ option
+Date: Wed, 14 May 2025 15:57:37 +0300
+Message-Id: <20250514125758.92030-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
@@ -61,44 +64,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Daan De Meyer <daan.j.demeyer@gmail.com>
 
-The use of gnu_source_prefix in the detection of getcpu() was
-ineffective because the header file that declares getcpu() when
-_GNU_SOURCE is defined was not included. Pass sched.h to
-has_header_symbol() so that the existence of the declaration will be
-properly checked.
+We have to make sure the array of bytes read from the path= file
+is null-terminated, otherwise we run into a buffer overrun later on.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250424-buildsys-v1-1-97655e3b25d7@daynix.com>
+Fixes: bb99f4772f54017490e3356ecbb3df25c5d4537f ("hw/smbios: support loading OEM strings values from a file")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2879
+
+Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Tested-by: Valentin David <valentin.david@canonical.com>
+Message-ID: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 563cd698dffb977eea0ccfef3b95f6f9786766f3)
+(cherry picked from commit a7a05f5f6a4085afbede315e749b1c67e78c966b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index 7f6f638676..a1113b86fe 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2603,7 +2603,6 @@ config_host_data.set('CONFIG_CLOCK_ADJTIME', cc.has_function('clock_adjtime'))
- config_host_data.set('CONFIG_DUP3', cc.has_function('dup3'))
- config_host_data.set('CONFIG_FALLOCATE', cc.has_function('fallocate'))
- config_host_data.set('CONFIG_POSIX_FALLOCATE', cc.has_function('posix_fallocate'))
--config_host_data.set('CONFIG_GETCPU', cc.has_function('getcpu', prefix: gnu_source_prefix))
- config_host_data.set('CONFIG_SCHED_GETCPU', cc.has_function('sched_getcpu', prefix: '#include <sched.h>'))
- # Note that we need to specify prefix: here to avoid incorrectly
- # thinking that Windows has posix_memalign()
-@@ -2680,6 +2679,8 @@ config_host_data.set('CONFIG_FALLOCATE_ZERO_RANGE',
- config_host_data.set('CONFIG_FIEMAP',
-                      cc.has_header('linux/fiemap.h') and
-                      cc.has_header_symbol('linux/fs.h', 'FS_IOC_FIEMAP'))
-+config_host_data.set('CONFIG_GETCPU',
-+                     cc.has_header_symbol('sched.h', 'getcpu', prefix: gnu_source_prefix))
- config_host_data.set('CONFIG_GETRANDOM',
-                      cc.has_function('getrandom') and
-                      cc.has_header_symbol('sys/random.h', 'GRND_NONBLOCK'))
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index a394514264..8feb54f229 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -1285,6 +1285,9 @@ static int save_opt_one(void *opaque,
+             g_byte_array_append(data, (guint8 *)buf, ret);
+         }
+ 
++        buf[0] = '\0';
++        g_byte_array_append(data, (guint8 *)buf, 1);
++
+         qemu_close(fd);
+ 
+         *opt->dest = g_renew(char *, *opt->dest, (*opt->ndest) + 1);
 -- 
 2.39.5
 
