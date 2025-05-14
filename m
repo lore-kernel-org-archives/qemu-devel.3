@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB789C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E7B7C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBiG-0005rw-IE; Wed, 14 May 2025 08:59:57 -0400
+	id 1uFBfp-0000tj-Jj; Wed, 14 May 2025 08:57:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhy-0004n2-3g; Wed, 14 May 2025 08:59:40 -0400
+ id 1uFBfj-0000WK-7N; Wed, 14 May 2025 08:57:19 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhu-0007wF-NQ; Wed, 14 May 2025 08:59:36 -0400
+ id 1uFBfh-0007kG-6m; Wed, 14 May 2025 08:57:18 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 99B94121AEB;
- Wed, 14 May 2025 15:57:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 30147121ACA;
+ Wed, 14 May 2025 15:56:31 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4568D20B859;
- Wed, 14 May 2025 15:57:59 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C3BA320B842;
+ Wed, 14 May 2025 15:56:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+Cc: qemu-stable@nongnu.org, Daan De Meyer <daan.j.demeyer@gmail.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Valentin David <valentin.david@canonical.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 13/34] target/ppc: Fix SPRC/SPRD SPRs for P9/10
-Date: Wed, 14 May 2025 15:57:35 +0300
-Message-Id: <20250514125758.92030-13-mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 10/18] smbios: Fix buffer overrun when using path=
+ option
+Date: Wed, 14 May 2025 15:56:16 +0300
+Message-Id: <20250514125640.91677-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
-References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,61 +64,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Daan De Meyer <daan.j.demeyer@gmail.com>
 
-Commit 60d30cff847 ("target/ppc: Move SPR indirect registers into
-PnvCore") was mismerged and moved the SPRs to power8-only, instead
-of power9/10-only.
+We have to make sure the array of bytes read from the path= file
+is null-terminated, otherwise we run into a buffer overrun later on.
 
-Fixes: 60d30cff847 ("target/ppc: Move SPR indirect registers into PnvCore")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit b3d47c8303b8be2c3693c5704012b3334741b7ed)
-(Mjt: adjust context for v9.2.0-2634-gffb6440cc5 "ppc/pnv: Add new PowerPC Special Purpose Registers (RWMR)")
+Fixes: bb99f4772f54017490e3356ecbb3df25c5d4537f ("hw/smbios: support loading OEM strings values from a file")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2879
+
+Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Tested-by: Valentin David <valentin.david@canonical.com>
+Message-ID: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit a7a05f5f6a4085afbede315e749b1c67e78c966b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 158b8035be..b68a9cb9b4 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -5765,6 +5765,18 @@ static void register_power9_book4_sprs(CPUPPCState *env)
-                      SPR_NOACCESS, SPR_NOACCESS,
-                      &spr_read_generic, &spr_write_generic,
-                      KVM_REG_PPC_WORT, 0);
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index 9f4d007d96..44a88ab69d 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -1221,6 +1221,9 @@ static int save_opt_one(void *opaque,
+             g_byte_array_append(data, (guint8 *)buf, ret);
+         }
+ 
++        buf[0] = '\0';
++        g_byte_array_append(data, (guint8 *)buf, 1);
 +
-+    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
-+    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_sprc,
-+                 0x00000000);
-+    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_sprd, &spr_write_sprd,
-+                 0x00000000);
- #endif
- }
+         qemu_close(fd);
  
-@@ -5786,17 +5798,6 @@ static void register_power8_book4_sprs(CPUPPCState *env)
-                      SPR_NOACCESS, SPR_NOACCESS,
-                      &spr_read_generic, &spr_write_generic,
-                      KVM_REG_PPC_WORT, 0);
--    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
--    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_generic, &spr_write_sprc,
--                 0x00000000);
--    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_sprd, &spr_write_sprd,
--                 0x00000000);
- #endif
- }
- 
+         *opt->dest = g_renew(char *, *opt->dest, (*opt->ndest) + 1);
 -- 
 2.39.5
 
