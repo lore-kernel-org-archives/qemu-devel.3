@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A121C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1973C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:08:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBiO-0006Rx-Rt; Wed, 14 May 2025 09:00:09 -0400
+	id 1uFBjx-0007jD-Af; Wed, 14 May 2025 09:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhM-0003tJ-4i; Wed, 14 May 2025 08:59:00 -0400
+ id 1uFBhO-0003yK-P8; Wed, 14 May 2025 08:59:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhJ-0007t1-DX; Wed, 14 May 2025 08:58:59 -0400
+ id 1uFBhM-0007tJ-UF; Wed, 14 May 2025 08:59:02 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 47381121AE5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B6CC121AE6;
  Wed, 14 May 2025 15:57:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E7C3A20B853;
+ by tsrv.corpit.ru (Postfix) with ESMTP id F134C20B854;
  Wed, 14 May 2025 15:57:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 07/34] target/mips: Simplify and fix update_pagemask
-Date: Wed, 14 May 2025 15:57:29 +0300
-Message-Id: <20250514125758.92030-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Marco Cavenati <Marco.Cavenati@eurecom.fr>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, Fabiano Rosas <farosas@suse.de>
+Subject: [Stable-9.2.4 08/34] migration: fix SEEK_CUR offset calculation in
+ qio_channel_block_seek
+Date: Wed, 14 May 2025 15:57:30 +0300
+Message-Id: <20250514125758.92030-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
@@ -61,86 +62,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Marco Cavenati <Marco.Cavenati@eurecom.fr>
 
-When update_pagemask was split from helper_mtc0_pagemask,
-we failed to actually write to the new parameter but continue
-to write to env->CP0_PageMask.  Thus the use within
-page_table_walk_refill modifies cpu state and not the local
-variable as expected.
+The SEEK_CUR case in qio_channel_block_seek was incorrectly using the
+'whence' parameter instead of the 'offset' parameter when calculating the
+new position.
 
-Simplify by renaming to compute_pagemask and returning the
-value directly.  No need for either env or pointer return.
-
-Fixes: 074cfcb4dae ("target/mips: Implement hardware page table walker for MIPS32")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250328175526.368121-4-richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit 256ba7715b109c080c0c77a3923df9e69736ba17)
+Fixes: 65cf200a51 ("migration: introduce a QIOChannel impl for BlockDriverState VMState")
+Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-ID: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit c0b32426ce56182c1ce2a12904f3a702c2ecc460)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index 4796638126..3bfb6edbd0 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -864,24 +864,24 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
-     }
- }
- 
--void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
-+uint32_t compute_pagemask(uint32_t val)
- {
-     /* Don't care MASKX as we don't support 1KB page */
--    uint32_t mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
-+    uint32_t mask = extract32(val, CP0PM_MASK, 16);
-     int maskbits = cto32(mask);
- 
-     /* Ensure no more set bit after first zero, and maskbits even. */
-     if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
--        env->CP0_PageMask = mask << CP0PM_MASK;
-+        return mask << CP0PM_MASK;
-     } else {
-         /* When invalid, set to default target page size. */
--        env->CP0_PageMask = 0;
-+        return 0;
-     }
- }
- 
- void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
- {
--    update_pagemask(env, arg1, &env->CP0_PageMask);
-+    env->CP0_PageMask = compute_pagemask(arg1);
- }
- 
- void helper_mtc0_pagegrain(CPUMIPSState *env, target_ulong arg1)
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index 62a3a86d80..56b1e8a36e 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -875,7 +875,7 @@ refill:
-         }
-     }
-     pw_pagemask = m >> TARGET_PAGE_BITS;
--    update_pagemask(env, pw_pagemask << CP0PM_MASK, &pw_pagemask);
-+    pw_pagemask = compute_pagemask(pw_pagemask << CP0PM_MASK);
-     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
-     {
-         target_ulong tmp_entryhi = env->CP0_EntryHi;
-diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
-index aef032c48d..be398665e6 100644
---- a/target/mips/tcg/tcg-internal.h
-+++ b/target/mips/tcg/tcg-internal.h
-@@ -45,7 +45,7 @@ bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
- 
- void mmu_init(CPUMIPSState *env, const mips_def_t *def);
- 
--void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask);
-+uint32_t compute_pagemask(uint32_t val);
- 
- void r4k_invalidate_tlb(CPUMIPSState *env, int idx, int use_extra);
- uint32_t cpu_mips_get_random(CPUMIPSState *env);
+diff --git a/migration/channel-block.c b/migration/channel-block.c
+index fff8d87094..b0477f5b6d 100644
+--- a/migration/channel-block.c
++++ b/migration/channel-block.c
+@@ -123,7 +123,7 @@ qio_channel_block_seek(QIOChannel *ioc,
+         bioc->offset = offset;
+         break;
+     case SEEK_CUR:
+-        bioc->offset += whence;
++        bioc->offset += offset;
+         break;
+     case SEEK_END:
+         error_setg(errp, "Size of VMstate region is unknown");
 -- 
 2.39.5
 
