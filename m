@@ -4,56 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4004BC3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:29:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC5BC3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF7U8-0006c3-PM; Wed, 14 May 2025 04:29:04 -0400
+	id 1uF7U9-0006fq-Sn; Wed, 14 May 2025 04:29:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uF7U5-0006V4-BK; Wed, 14 May 2025 04:29:01 -0400
+ id 1uF7U8-0006ao-0L; Wed, 14 May 2025 04:29:04 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uF7U2-0006Fg-Ov; Wed, 14 May 2025 04:29:01 -0400
+ id 1uF7U6-0006Fg-6y; Wed, 14 May 2025 04:29:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747211339; x=1778747339;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=egObq7r+bAUf06a07tyz1db9wNYsBeBm+FIL2c4bTpk=;
- b=ApB1ofOmwYVtXN4COedsSVOwFVuBaNiXRCvTHBUkLsXWgeB3ZiGTkTCL
- phaLd9peE7F1BcpvyNRrbFcwlLmRXcBssHRq/G8BP+z0B7JNOspubOjll
- ghL0rEvh7we86SurWCa5XRQn5ABj/ZVFmsG0o1txVK4Qg21TeTz7dFEMl
- tikOJrDQDhXRpCK0Nq8Nc7u8nC7EmUsgVkQq1zt5M8qcnt0eAw//GXopA
- yY6JAKYwRwJL4GrNCKqbq6CiUnZep4ghCNlCBUn15Fz0MCHQgzxkpLiVI
- kuNXgoSntpImcQQ2N7v1nox320i/YSFpuhvHxgB2Hh4C0BVbFXnH8pzOO w==;
-X-CSE-ConnectionGUID: RZGOl9klT2is/Sg2gjqEoQ==
-X-CSE-MsgGUID: G5acNfiSRRCsluhR75KhbA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11432"; a="66505563"
-X-IronPort-AV: E=Sophos;i="6.15,287,1739865600"; d="scan'208";a="66505563"
+ t=1747211342; x=1778747342;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=D1v/A0ZXU1bNqLebJ7M+DCdIHB/C2f5yFTku3+t4lqY=;
+ b=aL6iuwKH8FKJ3jmOsSgjnQLk9Kvlyivwo82GisfHtSlvt/WuQuLvAfbZ
+ 0N5IvjM0srSRNLoR6JRMHxoFpHt9E3Mo1E04xQDIxDj3PIR1IipDi0H8Y
+ yKKQ2C7FZreTk+V5fiv76I8I2t2lITKE+JUPSWNEZG0YlBuaUcSmcNXtP
+ RaRaiw0lFwJdPhgGgBRTgOw7HKth9xAqnhLNb4c+R9Hok+ff5WFaNZzAI
+ Dcrfy+mHB0N71HIxAHAz73OK9SfT5CZyCZGt0/3WTyC6aRNwR/WePaT9A
+ ey6B4yXdHH4uiqbUb9z7NtRqQG0s9gvrKZoky80nm0T+KnVJM4x///pn7 w==;
+X-CSE-ConnectionGUID: S4V9GTZVTOSMngMjl4M58Q==
+X-CSE-MsgGUID: lliDimEnQcKzaMLUgrpX+A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11432"; a="66505574"
+X-IronPort-AV: E=Sophos;i="6.15,287,1739865600"; d="scan'208";a="66505574"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2025 01:28:55 -0700
-X-CSE-ConnectionGUID: /ajFYO2HT1CTKSRzKHxO9A==
-X-CSE-MsgGUID: zTsZLN5wSDO/sn1lXmS3EQ==
+ 14 May 2025 01:28:58 -0700
+X-CSE-ConnectionGUID: 6pjiF2b2SlGOFoe6V1Bv2A==
+X-CSE-MsgGUID: ifdDoHMvQYKKJ3s1zzQVkg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,287,1739865600"; d="scan'208";a="169065802"
+X-IronPort-AV: E=Sophos;i="6.15,287,1739865600"; d="scan'208";a="169065810"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 14 May 2025 01:28:52 -0700
+ by fmviesa001.fm.intel.com with ESMTP; 14 May 2025 01:28:56 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>
 Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 0/9] qom: Consolidate OBJECT_{DEFINE|DECLARE}_SIMPLE_TYPE*
-Date: Wed, 14 May 2025 16:49:48 +0800
-Message-Id: <20250514084957.2221975-1-zhao1.liu@intel.com>
+Subject: [PATCH 2/9] docs/devel/qom: Fix the doc about
+ OBJECT_DECLARE_SIMPLE_TYPE
+Date: Wed, 14 May 2025 16:49:50 +0800
+Message-Id: <20250514084957.2221975-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250514084957.2221975-1-zhao1.liu@intel.com>
+References: <20250514084957.2221975-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -80,48 +84,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Currently, the expansion example of OBJECT_DECLARE_SIMPLE_TYPE "roughly"
+reflects what OBJECT_DECLARE_TYPE is doing.
 
-When I read the qom doc (qom.rst) about OBJECT_DECLARE_SIMPLE_TYPE, I
-found there's the wrong example. So I tried to fix the doc and cleaned
-up the relevant code case to correctly show that for simple type, the
-class definition is not needed.
+Why "roughly"? Because this line -
 
-This series tries to:
+>    G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDeviceClass, object_unref)
 
- * fix & improve the documentation of OBJECT_{DEFINE|DECLARE}_SIMPLE_TYPE*,
+- is also wrong for OBJECT_DECLARE_TYPE.
 
- * and clean up several cases that could have used simple type macros
-   (mainly by dropping unneeded class definitions).
+Fix the expansion example of OBJECT_DECLARE_SIMPLE_TYPE, especially
+drop that definition of MyDeviceClass.
 
-Thanks and Best Regards,
-Zhao
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Daniel P. Berrangé" <berrange@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Zhao Liu (9):
-  qom/object: Improve the doc of macros related with simple type
-  docs/devel/qom: Fix the doc about OBJECT_DECLARE_SIMPLE_TYPE
-  hw/acpi/pci: Consolidate OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
-  hw/char/sh_serial: Consolidate
-    OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
-  hw/hyperv/hv-balloon: Consolidate
-    OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
-  hw/ppc/pef: Consolidate OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
-  hw/core/resetcontainer: Consolidate OBJECT_DECLARE_SIMPLE_TYPE
-  target/s390x/kvm/pv: Consolidate
-    OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
-  ui/console-vc: Consolidate OBJECT_DEFINE_SIMPLE_TYPE
+ docs/devel/qom.rst | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
- docs/devel/qom.rst               | 11 +----------
- hw/acpi/pci.c                    | 24 ++++++++----------------
- hw/char/sh_serial.c              |  4 +---
- hw/hyperv/hv-balloon.c           |  8 ++------
- hw/ppc/pef.c                     | 17 ++++++-----------
- include/hw/core/resetcontainer.h |  2 +-
- include/qom/object.h             |  5 +++--
- target/s390x/kvm/pv.c            | 18 ++++++------------
- ui/console-vc.c                  | 14 ++++++++------
- 9 files changed, 36 insertions(+), 67 deletions(-)
-
+diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
+index 5870745ba27b..185f4c2f5921 100644
+--- a/docs/devel/qom.rst
++++ b/docs/devel/qom.rst
+@@ -326,21 +326,12 @@ This is equivalent to the following:
+    :caption: Expansion from declaring a simple type
+ 
+    typedef struct MyDevice MyDevice;
+-   typedef struct MyDeviceClass MyDeviceClass;
+ 
+-   G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDeviceClass, object_unref)
++   G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDevice, object_unref)
+ 
+-   #define MY_DEVICE_GET_CLASS(void *obj) \
+-           OBJECT_GET_CLASS(MyDeviceClass, obj, TYPE_MY_DEVICE)
+-   #define MY_DEVICE_CLASS(void *klass) \
+-           OBJECT_CLASS_CHECK(MyDeviceClass, klass, TYPE_MY_DEVICE)
+    #define MY_DEVICE(void *obj)
+            OBJECT_CHECK(MyDevice, obj, TYPE_MY_DEVICE)
+ 
+-   struct MyDeviceClass {
+-       DeviceClass parent_class;
+-   };
+-
+ The 'struct MyDevice' needs to be declared separately.
+ If the type requires virtual functions to be declared in the class
+ struct, then the alternative OBJECT_DECLARE_TYPE() macro can be
 -- 
 2.34.1
 
