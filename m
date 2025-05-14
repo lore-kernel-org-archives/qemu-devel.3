@@ -4,81 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6774FC3ABD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 07:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A571C3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 07:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF6J1-00018U-Dp; Wed, 14 May 2025 03:13:31 -0400
+	id 1uF6da-0000Gt-8Q; Wed, 14 May 2025 03:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uF6Iy-00018L-OE
- for qemu-devel@nongnu.org; Wed, 14 May 2025 03:13:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uF6Iw-0004Xl-P1
- for qemu-devel@nongnu.org; Wed, 14 May 2025 03:13:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747206804;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ToCcTOC4GXWRRg2dO6o66w91/l5MPwIgTN14/u958z8=;
- b=ak4PQIBbuhqYu/UFPvfAQYRaaF5o1FuLNiNSQCiTrK3Nyj/eMm/R4n9Ej7Yiliw4qKP4nw
- JKywz5jA62lbi8fXxfaw4YbJAimMdg43BE66+KMOlP20a7Uwn8S/TymRAT4uB+f9wG6UR1
- KbfH/u/EZRLVtkK6IXfsFrT28r5SEr0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-FrS6TRE3OGS8ts2Qaxku7g-1; Wed,
- 14 May 2025 03:13:21 -0400
-X-MC-Unique: FrS6TRE3OGS8ts2Qaxku7g-1
-X-Mimecast-MFC-AGG-ID: FrS6TRE3OGS8ts2Qaxku7g_1747206799
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9849F1800989; Wed, 14 May 2025 07:13:19 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F282E19373DE; Wed, 14 May 2025 07:13:18 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7F5BB21E6768; Wed, 14 May 2025 09:13:16 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org,
- alex.bennee@linaro.org,  stefanha@redhat.com,  peter.maydell@linaro.org,
- richard.henderson@linaro.org,  pbonzini@redhat.com,  jsnow@redhat.com,
- philmd@linaro.org,  thuth@redhat.com,  Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 09/13] qapi: transform target specific 'if' in runtime
- checks
-In-Reply-To: <e33c5751-6db2-4ca7-9a6e-b992a399e696@linaro.org> (Pierrick
- Bouvier's message of "Tue, 13 May 2025 15:52:39 -0700")
-References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
- <20250507231442.879619-10-pierrick.bouvier@linaro.org>
- <aBzCXNTebh8B5sQ_@redhat.com> <87msbl0x7f.fsf@pond.sub.org>
- <cb2adbec-d098-4211-8781-c3027de59e69@linaro.org>
- <87h61phttb.fsf@pond.sub.org>
- <e33c5751-6db2-4ca7-9a6e-b992a399e696@linaro.org>
-Date: Wed, 14 May 2025 09:13:16 +0200
-Message-ID: <87cycbacmr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uF6dW-0000Bh-44
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 03:34:42 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uF6dT-0007Da-FW
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 03:34:41 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-74019695377so4844046b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 00:34:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747208078; x=1747812878;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=shNje0Eftl8ySbsWxsa6S7rWKiXpCwd+AvcbjjfbNvc=;
+ b=reR2p8PyCHoNyW7F+clSjRaxumppFRaosB7fVytZQKYCByb0z72qui248BntcrTujQ
+ HQmqLuaqAs7WKolKpDl73rXkeuaP6lbHD5rj8Yd63zviClYn7i/GuR9RfZU3ly5g2lVt
+ R3zrTgVeNWf6JdbRY0ddhJTEU7yDpdL5yNYoCIGaaQC0amuVqhJzffg9mZrRt864DLFK
+ Qy3y34jSJBH2q3DlgPJySk2xPwVGR2X0rQ2aWa4ZEmhxitmiRTzwrmNWHRKj8zIEQG3l
+ BES76i7Th4aujfnyntuyzEB2yYcTj53BT0UNrG0gZvcSDGmAo2jzHRAyrNF6RBIZZqCU
+ uEOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747208078; x=1747812878;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=shNje0Eftl8ySbsWxsa6S7rWKiXpCwd+AvcbjjfbNvc=;
+ b=kSp0hkBgclbxEg41rDBMjuAsV1gj4X0EKjtxyZNSgeTw3lr/Wv1giOgPUHuwAEtw7U
+ KUm365lYNnSoJMPLvkCqcNL68Z83gWC5axTMffQrh/x9ee/PjjYdjwKgQNeuNRJ6yX9k
+ CQPqKvBpWu8amIlNd4TIygOH9Brh29my9M4ZePlhqcdOb47pjl0vbRajYERtA5977vTW
+ XkmCqN256ykkI8rlw6+6XatRvOEdXS/kUf+fXoHuhzqaDpHkeQCxbHSt4QBmaLQcN2Oy
+ jElchBsCf97stnwOYOKZMuenfpJ/ld8/Qy6dteznq17FbGt5RKCPzzm3MYu5l7ZgbWr/
+ 5jCQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTq7qsNVC72qkalh+jZxdNy+GUz3Nbu68bs8DvnItoX3LV+cUr+Qw8fvFU66JYsV+mWez0wqiUHoKo@nongnu.org
+X-Gm-Message-State: AOJu0YyFxLg1rZzjC2uBBegNEdHOF0rOuJus0vVC9nGdIR4NW9Ohh9Sn
+ 2PD/BYLg50CoCBgmxP4wnOectlNi1KiyvrpY6nagK7pAuWCeFUUkF/xO54lHklc=
+X-Gm-Gg: ASbGncvE59fZMDgV8G8c6oagSx8QGJwN84X1ASqmkFKeRFPOdpU/5wBn2B6TihKfsap
+ GcZC/31aN5uDRxIxDSyl2J9VyIBUYa9qHV2qnUtqlDiBe8IABIoti87S073Qe5RWh1vqnrVKF8m
+ wjoWDaiJkWPRec3F/bSc2o3PyUXTISUT3zeY+PyYbDijFzlZpbIL/BCIkT3pq+TfJ6iaf3eLkbo
+ ClcEffqMsaCaQpGY2oTCaLZfVESCfKWLYJ5Md0fXF1cjWPo3niZeB4zC5fwfuZ/SdEChnsBOM9P
+ YydYngAkubWT9XQagZF9/brfufXVs9WNgcz2sX9W6rFZsMOFBDuAhm2LXuKpS1Lg
+X-Google-Smtp-Source: AGHT+IHUtCeetFlkBE8KGuI++TuPPlpyfKtk6rk+NUhLuGWbrWaW1uE6cHBGQJElCGMkfHGQ096TWA==
+X-Received: by 2002:a05:6300:8d:b0:1f5:8126:8a5d with SMTP id
+ adf61e73a8af0-215ff0db872mr3368359637.17.1747208077890; 
+ Wed, 14 May 2025 00:34:37 -0700 (PDT)
+Received: from [157.82.203.223] ([157.82.203.223])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b2349ec816esm8375231a12.22.2025.05.14.00.34.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 May 2025 00:34:37 -0700 (PDT)
+Message-ID: <b1b6574c-1ddb-4129-8a68-fe88f93caecd@daynix.com>
+Date: Wed, 14 May 2025 16:34:33 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/10] futex: Check value after qemu_futex_wait()
+To: Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Fabiano Rosas <farosas@suse.de>, Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
+ devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250511-event-v3-0-f7f69247d303@daynix.com>
+ <20250511-event-v3-1-f7f69247d303@daynix.com> <aCNZk73GuEaU-gcK@x1.local>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <aCNZk73GuEaU-gcK@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,95 +109,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-
-> On 5/13/25 12:08 AM, Markus Armbruster wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->> 
->>> On 5/9/25 11:57 PM, Markus Armbruster wrote:
->>>>> The build system would need generate an input document for the
->>>>> QAPI visitor that defines whether each constant is set to true
->>>>> or false, based on suitable CONFIG/TARGET conditions from meson.
->>>>
->>>> I think the conditions that are evaluated at build time in handwritten C
->>>> code (with #if) should also be evaluated at build time in generated C
->>>> code.
->>>>
->>>> Certain conditions are evaluated at build time in target-specific code,
->>>> and at runtime in target-independent code.  Again, I think handwritten
->>>> and generated code should work the same way.
->>>>
->>>> Thus, to eliminate target-specific QAPI-generated code, we either
->>>> evaluate them at runtime, or simply eliminate them.  Elsewhere, we've
->>>> come to the conclusion (I think) that the latter should do at least for
->>>> now, likely forever, so we should try that first.
->>>>
->>>
->>> I'm not sure if you mean you'd prefer to eradicate #if completely.
->> 
->> I do not!
->> 
->>> We have to keep in mind that some config host #if have to stay there, or
->>> they expose things that the rest of QEMU code is not supposed to see
->>> (hidden under those same CONFIG_ ifdef also).
->> 
->> Letting people configure their QEMU build is useful and must stay.
->> 
->> We provide this via conditional compilation, of complete source files
->> (done in meson), as well as within source files (#if in C and 'if' in
->> QAPI).
->> 
->>> So we would need both if and runtime_if.
->> 
->> I don't understand the need for runtime_if.  Can you give an example?
+On 2025/05/13 23:39, 'Peter Xu' via devel wrote:
+> On Sun, May 11, 2025 at 03:08:18PM +0900, Akihiko Odaki wrote:
+>> futex(2) - Linux manual page
+>> https://man7.org/linux/man-pages/man2/futex.2.html
+>>> Note that a wake-up can also be caused by common futex usage patterns
+>>> in unrelated code that happened to have previously used the futex
+>>> word's memory location (e.g., typical futex-based implementations of
+>>> Pthreads mutexes can cause this under some conditions).  Therefore,
+>>> callers should always conservatively assume that a return value of 0
+>>> can mean a spurious wake-up, and use the futex word's value (i.e.,
+>>> the user-space synchronization scheme) to decide whether to continue
+>>> to block or not.
+> 
+> I'm just curious - do you know when this will happen?
+> 
+> AFAIU, QEMU uses futex always on private mappings, internally futex does
+> use (mm, HVA) tuple to index a futex, afaict.  Hence, I don't see how it
+> can get spurious wakeups..  And _if_ it happens, since mm pointer can't
+> change it must mean the HVA of the futex word is reused, it sounds like an
+> UAF user bug to me instead.
+> 
+> I checked the man-pages git repo, this line was introduced in:
+> 
+> https://github.com/mkerrisk/man-pages/commit/4b35dc5dabcf356ce6dcb1f949f7b00e76c7587d
+> 
+> I also didn't see details yet in commit message on why that paragraph was
+> added.
+> 
+> And..
+> 
 >>
->
-> That is the point of this whole series, which explores introducing a 
-> 'runtime' if in the schema, to keep it as it is today, while removing 
-> target specific compile time defines.
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   include/qemu/futex.h              |  9 +++++++++
+>>   tests/unit/test-aio-multithread.c |  4 +++-
+>>   util/qemu-thread-posix.c          | 28 ++++++++++++++++------------
+>>   3 files changed, 28 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/include/qemu/futex.h b/include/qemu/futex.h
+>> index 91ae88966e12..f57774005330 100644
+>> --- a/include/qemu/futex.h
+>> +++ b/include/qemu/futex.h
+>> @@ -24,6 +24,15 @@ static inline void qemu_futex_wake(void *f, int n)
+>>       qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
+>>   }
+>>   
+>> +/*
+>> + * Note that a wake-up can also be caused by common futex usage patterns in
+>> + * unrelated code that happened to have previously used the futex word's
+>> + * memory location (e.g., typical futex-based implementations of Pthreads
+>> + * mutexes can cause this under some conditions).  Therefore, callers should
+> 
+> .. another thing that was unclear to me is, here it's mentioning "typical
+> futex-based implementations of pthreads mutexes..", but here
+> qemu_futex_wait() is using raw futex without any pthread impl.  Does it
+> also mean that this may not be applicable to whatever might cause a
+> spurious wakeup?
 
-Ah, I lost the wider context, sorry!
+No. The man-page mentions "unrelated code that happened to have 
+previously used the futex word's memory location", so it doesn't matter 
+whether we use pthread here.
 
-We identified three ways to deal with target-specific conditionals in a
-single binary, and 'runtime_if' is one of them:
+libpthread and even this QemuEvent follows the "common futex usage" so 
+we should do what is written in the man page.
 
-(1) Drop target-specific conditionals.
+Unfortunately the man page does not describe the "common futex usage 
+pattern". It looks like as follows:
 
-(2) Replace them by run-time checks.
+Assume there are two threads, one atomic variable, and one futex.
 
-(3) Have target-specific QAPI-generated code for multiple targets
-    coexist in the single binary.
+Thread A does the following:
+A1. Read the atomic variable.
+A2. Go A5 if the atomic variable is zero.
+A3. Wait using the futex.
+A4. Go A1.
+A5. Free the atomic variable and the futex.
 
-Both (2) and (3) keep the QAPI schema work as it does now.  None of us
-likes (3) due to bloat and complexity.
+Thread B does the following:
+B1. Set the atomic variable to zero.
+B2. Wake up using the futex.
 
-The other two look both workable to me.  (2) keeps the QAPI schema work
-exactly as it does now.  (1) is simpler, but the external interface
-changes somewhat.  Its users seem to be okay with it.
+In this example, the execution may happen in the following order:
+B1 -> A1 -> A2 -> A5 -> B2
 
-So let's go with (1).
+Here, B2 will cause a spurious wake up of QemuEvent if the freed memory 
+gets reused for QemuEvent.
 
-> It is another approach that one Daniel followed on his series.
->
-> I invite you to give a quick read to this series, especially the related 
-> commit introducing 'runtime_if' 
-> (20250507231442.879619-2-pierrick.bouvier@linaro.org).
-
-I can't afford a thorough review now, but I'll have a look, and I will
-hold onto your series just in case.
-
-> As well, I would appreciate if you could state clearly where we are 
-> going with all this (or at least, where you *don't* want this to go), so 
-> we can avoid spending time in the wrong direction.
-
-The discussion was spread over multiple threads, which makes it hard to
-follow.  I hope the conclusion is clear now.  If not, please ask for
-further clarification.
-
-> I am ok to pursue Daniel's approach, or continue the approach in the 
-> current series, no strong opinion in my side, I am just trying to move 
-> QAPI generated code out of the way for the single binary goal.
-
-Understood!
-
+Regards,
+Akihiko Odaki
 
