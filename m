@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51594C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7A0C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFFLq-0001LY-E0; Wed, 14 May 2025 12:53:02 -0400
+	id 1uFFML-0002yB-Lw; Wed, 14 May 2025 12:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uFFLo-0001Gn-US
- for qemu-devel@nongnu.org; Wed, 14 May 2025 12:53:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uFFLn-0005zU-Ey
- for qemu-devel@nongnu.org; Wed, 14 May 2025 12:53:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747241578;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0EY4ve/+Lp62bT0DfzCnPV7RhgdlVV/6MA/q9pFP7zs=;
- b=d+lN8QyxsrTT38H+v5/naIo+gweyPNmOdFEyRs056XTCSOstNJl04fN8lHcS3UPIvct7QE
- Y9KhQdlbm7zbafNZ45RAIE6HB5yOHrY3vPKopLM6fufku8G/tziEIAh/f4XD0FnlCar9cW
- FRJx35JKFlPSXfxeQBPTAZeK4spy0ms=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-b68njEjdMiuvRi_cjqllTQ-1; Wed,
- 14 May 2025 12:52:53 -0400
-X-MC-Unique: b68njEjdMiuvRi_cjqllTQ-1
-X-Mimecast-MFC-AGG-ID: b68njEjdMiuvRi_cjqllTQ_1747241571
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D560719560AB; Wed, 14 May 2025 16:52:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.207])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0E03730001A1; Wed, 14 May 2025 16:52:46 +0000 (UTC)
-Date: Wed, 14 May 2025 18:52:44 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, hreitz@redhat.com,
- stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
- vsementsov@yandex-team.ru
-Subject: Re: [PATCH 03/11] block/snapshot: move drain outside of read-locked
- bdrv_snapshot_delete()
-Message-ID: <aCTKXFeACdBnrIZ-@redhat.com>
-References: <20250508140936.3344485-1-f.ebner@proxmox.com>
- <20250508140936.3344485-4-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFFMH-0002pN-6n
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 12:53:29 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFFMF-00060v-CF
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 12:53:28 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43cfebc343dso237215e9.2
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 09:53:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747241605; x=1747846405; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EJDvpjsckjvN0xZPH1wXDoMTsindwY7WPuMUHXI/XOA=;
+ b=xSACArT7WXbRyt4GDoACwBIbYeFQCCcDHsguPHKeKKUViMrrBI2idcjTisMvsZ0xIp
+ xiA6IVwXOC5fJA4wqHMZW3Vzq0KZ+stFOGTDp26hp4Ivd7VXZKCaGYa4hlKOaoGmrpJn
+ nyoLbcTST327oYJDOQM96at4BcYh9XVCtADnxKZS8RrjnfdfxtoOE4+6NAosIEW3mZwF
+ qZaJUToesb31OkgJo7E8ujkts9VJYi42Xtkt/9F3eFLKa27tSsZiksAk+mrqxC5Xhdpi
+ eM7cG6tvc5iTIzmvjnv2Z0WU59hLCmwJPfNBb7DQqcqh8HV/UGjbbLvh7HeXcFB8UNRK
+ ji2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747241605; x=1747846405;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EJDvpjsckjvN0xZPH1wXDoMTsindwY7WPuMUHXI/XOA=;
+ b=aXNBIenrUOLwptgnnH4OJeiiUAL0PR8rI76ETYDxrKNPsrcvIMkZdDdr/Trl4OAMEU
+ nSrIgs7o0aliYnIKRgnRYTGYc4DU5TZs5F5MSAVGQK3j5hYAVRRX4u+dsbWLn6CzuUFD
+ Dl2dFfgCuTGWgP1QftA4c/wH5zozM65ipFGDmHNmvcxDfP7qsLRr1v+/hUYYQDOIb0GY
+ uwTdO/92mvLgmaSvjneN1+4XEev0aZBtsJnQwIv7hz0RdPw5Sulm0vydaz5pL1NkfPs3
+ AYoXc019VFQtw2IisOqxFX56jtKLVStOh7vHveM6MtQH18b89hHX95oVgL604Eeh3/ZX
+ eXTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1Fm1zGTMFRzEeLq981dSY9w0YlkD6dIdlYxVKZYHOaLr3VaXkouiJjlSuwgKcaOkq6ixUI9QzscAT@nongnu.org
+X-Gm-Message-State: AOJu0Yz3oK2hmX7oJXSrvHuDnuGHqOddo+zTHfwBdkSqgqTZCrD34yLb
+ CGvgQq5w05b45TEkeMSmNLnplYajF/v5iy40FjldB18q7H9/Ut+ZqbP17VJA2wk=
+X-Gm-Gg: ASbGncvE1BXCTQnL0QoLjQQe6JPQ3BdWFtBAtHelrfIqYm13aWjceL1KZISbC3injxt
+ kn9bQ4Tz/MDFH1LmYGteaMazCdgVPffeU/84V3889yF2tz1+gc2jvQPfnCWY/hgH7Ke75kL8g3K
+ Xyyfc+0sZV6T58h4a8v12XG8MEs205/ecdKNx1zB3sNOj/t2TxC0Q6an+IqAjmsTrvAiSF6HFG3
+ cMha0ppx7IMLaPQ4Qa8xa+yEfzPaISOes/M/jdLhEttdr3XfiDtCDAjvQ1IV14p1FyM+7dlQoPz
+ fAZ/CRfLQt0M8MBlAfbiu16Bq8ckx1i3/Jfy1SXvPjocbQ6gF3wyduWHJthuNtoKaHybMwTjW6X
+ t3tttpiOl7Z/FUWQuZw==
+X-Google-Smtp-Source: AGHT+IGuBwssz8RIInxR+1zCl34Lwg+moYy+U57cD5N0/AcjbTEuZaCbQXSxdkJZifomQxcVgSpx+g==
+X-Received: by 2002:a05:600c:609a:b0:441:d43d:4f68 with SMTP id
+ 5b1f17b1804b1-442f210de3dmr46598685e9.15.1747241605605; 
+ Wed, 14 May 2025 09:53:25 -0700 (PDT)
+Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442f397b6fbsm37092555e9.39.2025.05.14.09.53.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 May 2025 09:53:25 -0700 (PDT)
+Message-ID: <f7bcd8b2-2c0c-4907-8a0e-af172c235d56@linaro.org>
+Date: Wed, 14 May 2025 17:53:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250508140936.3344485-4-f.ebner@proxmox.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 16/19] target/arm: Add arm_cpu_has_feature() helper
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250513173928.77376-1-philmd@linaro.org>
+ <20250513173928.77376-17-philmd@linaro.org>
+ <b6c81748-091b-4d61-8d34-beaa0442aab3@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b6c81748-091b-4d61-8d34-beaa0442aab3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,109 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 08.05.2025 um 16:09 hat Fiona Ebner geschrieben:
-> This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
+On 14/5/25 10:24, Richard Henderson wrote:
+> On 5/13/25 18:39, Philippe Mathieu-Daudé wrote:
+>> arm_cpu_has_feature() is equivalent of arm_feature(), however
+>> while the latter uses CPUARMState so is target-specific, the
+>> former doesn't and can be called by target-agnostic code in hw/.
 > 
-> More granular draining is not trivially possible, because
-> bdrv_snapshot_delete() can recursively call itself.
+> CPUARMState is no more target-specific than ARMCPU.
+
+ARMCPU is forward-declared as opaque pointer in target/arm/cpu-qom.h,
+so we can expose prototypes using it to non-ARM units.
+CPUARMState is only declared in "cpu.h", itself only accessible by
+ARM-related units.
+
 > 
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->  block/snapshot.c | 18 ++++++++++++------
->  blockdev.c       | 25 +++++++++++++++++--------
->  qemu-img.c       |  2 ++
->  3 files changed, 31 insertions(+), 14 deletions(-)
+> Did you really mean to use CPUState?
+> Or is it merely that arm_cpu_has_feature is out-of-line?
 > 
-> diff --git a/block/snapshot.c b/block/snapshot.c
-> index 22567f1fb9..7788e1130b 100644
-> --- a/block/snapshot.c
-> +++ b/block/snapshot.c
-> @@ -327,7 +327,7 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
->  
->  /**
->   * Delete an internal snapshot by @snapshot_id and @name.
-> - * @bs: block device used in the operation
-> + * @bs: block device used in the operation, needs to be drained
-
-Forgot to add this piece of nitpicking on the previous patch: Other
-places say "must be drained", which I slightly prefer because of how
-RFC 2119 has "MUST", but not "NEEDS TO". Matter of taste, I guess, but
-if you agree, we could change it for the non-RFC series.
-
->   * @snapshot_id: unique snapshot ID, or NULL
->   * @name: snapshot name, or NULL
->   * @errp: location to store error
-> @@ -356,6 +356,8 @@ int bdrv_snapshot_delete(BlockDriverState *bs,
->      BlockDriverState *fallback_bs = bdrv_snapshot_fallback(bs);
->      int ret;
->  
-> +    assert(qatomic_read(&bs->quiesce_counter) > 0);
-> +
->      GLOBAL_STATE_CODE();
->  
->      if (!drv) {
-> @@ -368,9 +370,6 @@ int bdrv_snapshot_delete(BlockDriverState *bs,
->          return -EINVAL;
->      }
->  
-> -    /* drain all pending i/o before deleting snapshot */
-> -    bdrv_drained_begin(bs);
-> -
->      if (drv->bdrv_snapshot_delete) {
->          ret = drv->bdrv_snapshot_delete(bs, snapshot_id, name, errp);
->      } else if (fallback_bs) {
-> @@ -382,7 +381,6 @@ int bdrv_snapshot_delete(BlockDriverState *bs,
->          ret = -ENOTSUP;
->      }
->  
-> -    bdrv_drained_end(bs);
->      return ret;
->  }
->  
-> @@ -573,9 +571,13 @@ int bdrv_all_delete_snapshot(const char *name,
->      GList *iterbdrvs;
->  
->      GLOBAL_STATE_CODE();
-> -    GRAPH_RDLOCK_GUARD_MAINLOOP();
-> +
-> +    bdrv_drain_all_begin();
-> +    bdrv_graph_rdlock_main_loop();
->  
->      if (bdrv_all_get_snapshot_devices(has_devices, devices, &bdrvs, errp) < 0) {
-> +        bdrv_graph_rdunlock_main_loop();
-> +        bdrv_drain_all_end();
->          return -1;
->      }
-
-I think this wants to be changed into:
-
-    ret = bdrv_all_get_snapshot_devices(has_devices, devices, &bdrvs, errp);
-    if (ret < 0) {
-        goto out;
-    }
-
-(Changing the return value from -1 to -errno is fine for the callers.)
-
-> @@ -594,12 +596,16 @@ int bdrv_all_delete_snapshot(const char *name,
->          if (ret < 0) {
->              error_prepend(errp, "Could not delete snapshot '%s' on '%s': ",
->                            name, bdrv_get_device_or_node_name(bs));
-> +            bdrv_graph_rdunlock_main_loop();
-> +            bdrv_drain_all_end();
->              return -1;
->          }
-
-Same here.
-
->  
->          iterbdrvs = iterbdrvs->next;
->      }
->  
-> +    bdrv_graph_rdunlock_main_loop();
-> +    bdrv_drain_all_end();
->      return 0;
->  }
-
-Kevin
+> 
+> r~
+> 
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   target/arm/cpu_has_feature.h | 2 ++
+>>   target/arm/cpu.c             | 7 +++++++
+>>   2 files changed, 9 insertions(+)
+>>
+>> diff --git a/target/arm/cpu_has_feature.h b/target/arm/cpu_has_feature.h
+>> index 2adfccd9208..352f9d75bed 100644
+>> --- a/target/arm/cpu_has_feature.h
+>> +++ b/target/arm/cpu_has_feature.h
+>> @@ -62,4 +62,6 @@ typedef enum arm_features {
+>>       ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
+>>   } ArmCpuFeature;
+>> +bool arm_cpu_has_feature(ARMCPU *cpu, ArmCpuFeature feature);
+>> +
+>>   #endif
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index 8c9d161f2ef..759636a3b0e 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -54,6 +54,13 @@
+>>   #include "target/arm/gtimer.h"
+>>   #include "target/arm/multiprocessing.h"
+>> +bool arm_cpu_has_feature(ARMCPU *cpu, ArmCpuFeature feature)
+>> +{
+>> +    CPUARMState *env = &cpu->env;
+>> +
+>> +    return arm_feature(env, feature);
+>> +}
+>> +
+>>   static void arm_cpu_set_pc(CPUState *cs, vaddr value)
+>>   {
+>>       ARMCPU *cpu = ARM_CPU(cs);
+> 
 
 
