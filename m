@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54EC1C3ABD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A62D4C3ABCC
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFAdt-0006Ik-Dx; Wed, 14 May 2025 07:51:21 -0400
+	id 1uFAeJ-000711-Ig; Wed, 14 May 2025 07:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdg-00062v-KV
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAe6-0006hJ-19
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdY-0006Ek-34
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdz-0006Q1-0d
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747223457;
+ s=mimecast20190719; t=1747223485;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kBvJJ1guqk+Wh8WSiEg/aaEDfWIkM3a0BJ0cG44g7BE=;
- b=P0FsWYSZb0kCcjreZoQdDQx86qMpDPsVbqGr/FwP3D+SAtrLrmyh6PxzasjDM0SfOh5yze
- yoF0V2NPeizOvPcdgziVtORRqJ4Grzn7jBAhOVH7wq+2ZOsKqI+38b5CTvr55FGfgbXySV
- RrRRLQb93i7MQ7858qo/IZkk4Jbpluo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0awWa+sd4n9SFgUr0omak6uEhyaTwUgBMVocontbFgE=;
+ b=D+azzMqFS0x1gw8j2Ku0eD1jyeQce25LzInmWSy2ZLT83LbHYe91T2F2wQYU4ctSst8IOi
+ DsAAEyZmcDQWlF6Q5fxciZBmOvh/81+Dp8u5AtzPq0QQK/pfwLLFvN9sN8UPJWu7FnbNuK
+ DK3H0cOdR2sgLP76RLSi/3gE0PKTuc8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-352-63sCOTZNPnKAfhCjOb46sQ-1; Wed, 14 May 2025 07:50:56 -0400
-X-MC-Unique: 63sCOTZNPnKAfhCjOb46sQ-1
-X-Mimecast-MFC-AGG-ID: 63sCOTZNPnKAfhCjOb46sQ_1747223455
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-441d438a9b7so3167505e9.1
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:50:56 -0700 (PDT)
+ us-mta-227-lEYO9fiGP4C3W25H38jnSw-1; Wed, 14 May 2025 07:51:24 -0400
+X-MC-Unique: lEYO9fiGP4C3W25H38jnSw-1
+X-Mimecast-MFC-AGG-ID: lEYO9fiGP4C3W25H38jnSw_1747223483
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d5ca7c86aso32991985e9.0
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:51:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747223455; x=1747828255;
+ d=1e100.net; s=20230601; t=1747223483; x=1747828283;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kBvJJ1guqk+Wh8WSiEg/aaEDfWIkM3a0BJ0cG44g7BE=;
- b=dE7CFzYKjLDpxLXihp/ximpPp9h63wdcTjKg5vNlQhgpQgbuzWh461StxE5ATokyYP
- yrClRqFrCV3m+mRQAAMuE38uXfhVQVYD9OufLkeyKvxl2yCjCkiSavaKy1GJsG93s6ur
- eZYmrFDoXNKkb89fP+CaeTZShNvoUU6di9WHpibxeNMHXaLtYrnhve/bMrHZ4zKakyuS
- FHCLP9MwBaCmDwQIHk9juYhcUFW74/x/J4EVlWyI1Y1aCezdijE9rxpTfLfqn7w2UtZ5
- Pn0HbqwmNE+ktQFqDJc3jFmH2ZpgpKrO/UhKVPyDqip7EWrceIkP82NHvaCUWlWCklBE
- IzIA==
-X-Gm-Message-State: AOJu0YzZ0pUBkdLmxV03vqBzr16OB9CBRp1Zb/f1946LlMCTOMcNniXp
- ksiEMMGUIVwA21YkCnq30RNln52ay43LKONyCENMnYcIjYA292A9FARY0OsZeaX6+2pajhUus4K
- vWdqcEefgbgFZ8y87NdZQHWRE3Oj9fn7rbDGkvLE6W37YTXpssRFbJtPL1fAqnvgoo+UmyC/B7S
- LoseNulk2Qxm7RxPd8JylKCu0Xttm1tA==
-X-Gm-Gg: ASbGncvXQJcmO/rjz0pRqXGZrP5AJcCLIIWPqAw1UVZyxLQHFJyvd5CCXZhZfgWoA5B
- qcvwqjoXro9tQ784nzKqbiu8lFbMmidFNKPDv/sjYRcNYftZNTVM66aCmAZ49iKjLpJzfl4KVzS
- Srk7zJBqleJtKBuEb+2yGAw7cSI8dKMNndaivknb3dyy6CXIQ9i6mh0aC6dJWA9KynVsxGz1NlX
- jDjt7Pd4b759jRcz5103pzxozrg6sV796E/OLGbUjpMZk7pHAtbpG9QU6VuXgj2wpYQJ5OgtTcI
- +ft+qw==
-X-Received: by 2002:a05:600c:4f53:b0:439:8878:5029 with SMTP id
- 5b1f17b1804b1-442f1a0d906mr25135305e9.2.1747223455027; 
- Wed, 14 May 2025 04:50:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnWl41lYrbfwjbiy1PM1u2OOHTggK1qSmnllwJQPj4jtb2JnyoXL+84o5BHp2qS2crE0qSbg==
-X-Received: by 2002:a05:600c:4f53:b0:439:8878:5029 with SMTP id
- 5b1f17b1804b1-442f1a0d906mr25135095e9.2.1747223454616; 
- Wed, 14 May 2025 04:50:54 -0700 (PDT)
+ bh=0awWa+sd4n9SFgUr0omak6uEhyaTwUgBMVocontbFgE=;
+ b=gPi5PppwNRNZu0YIHcM6IHqjOlgMIG+CRlZSAn13+4gg1RxLBCHJ+VIY6hhejUZgaB
+ JMvzOWiMDBgmVZn8fkLUwv/kHlW+H+20x2RK6xRmxpClxMrnkf5YJ6bBlPbSBH3Lfmno
+ tCmAVH8qkX/Mk0c1VcPNI1xpwsYmEhmhynZJefsR2Ii02YQukF7JZCHiUk5+Qe58MlfU
+ zVuP89P6CZ8xwu7wKBjK5QbbElQEVkJZf0qtAOYATYSKGdsjR3T0FFKDIsEuHA7w18qR
+ yOBuJzO11DT7WHSCdSWe442+cpLfgtX14fIB8mjGnvICKbjIfhOVy2CS1VDdF/o+mfy+
+ VNfQ==
+X-Gm-Message-State: AOJu0YwAipvXYbgdsXgmvH6+SD92QJJBi+e5ZUST/8Bj1bRm26zWE9Fs
+ UqQAT9VCDlsIGI//PGygROVITOUphqjcGL8ULJR5RPyNER1XmLTYkmfe8+dd+jPBkFMpw1pV3O6
+ w9g80hN1P16EQms8pvsqGQCZv27rpY2JMIo7meafMRBl1GREOWtq3dYJkQaUgkX/dNgMiMbvm43
+ Rm2Ay9k57ocJcvQQa0JZ8PYHhuiTjumg==
+X-Gm-Gg: ASbGncv0PwzjMZt5Wfvg9xn/aQHPQVOEUKEXbk/4tgiVFX++BWRjiUmVFXvQKvE8sDT
+ I/BNIHq640AM80EQ/zFbNiuomU7MhbUX9EkEF/acckIlxylmvarvFnzVF6R73XlIfX2QxXnb2cX
+ nM7WlzYYjk96V55AM4jBEosSoAo+Lo5G0YbxGNW3fUaaSZwMah5/wLjI04BrjAXPyxk97EGg74X
+ x6Ew+MktmMwSGLtBBZfDW9sq0pcm1NQUCU0ejIJ/P71lbYNDVfPYyQoM/y5ZnMJEgAKbUrXpXAL
+ W0RK/w==
+X-Received: by 2002:a05:600c:609b:b0:43c:fbba:41ba with SMTP id
+ 5b1f17b1804b1-442f21798ddmr22865015e9.28.1747223482987; 
+ Wed, 14 May 2025 04:51:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMFe0AufQ68xuHNIUOE8flzQfg1eQBJDbiPllCR7h8gdgK4PeI9WTiRSLyXgXn2KYs66oLXQ==
+X-Received: by 2002:a05:600c:609b:b0:43c:fbba:41ba with SMTP id
+ 5b1f17b1804b1-442f21798ddmr22864645e9.28.1747223482535; 
+ Wed, 14 May 2025 04:51:22 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f396c052sm27873355e9.29.2025.05.14.04.50.53
+ 5b1f17b1804b1-442f482f1d6sm22734075e9.14.2025.05.14.04.51.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 04:50:54 -0700 (PDT)
-Date: Wed, 14 May 2025 07:50:52 -0400
+ Wed, 14 May 2025 04:51:22 -0700 (PDT)
+Date: Wed, 14 May 2025 07:51:20 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Yui Washizu <yui.washidu@gmail.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 15/27] docs: Document composable SR-IOV device
-Message-ID: <6f9bebf1dc6b54b63be739ea247b3942f841b9e3.1747223385.git.mst@redhat.com>
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 25/27] intel_iommu: Take locks when looking for and creating
+ address spaces
+Message-ID: <1b85dff5f0be30ddbcb7edbd3c084c9c5ee351ca.1747223385.git.mst@redhat.com>
 References: <cover.1747223385.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -86,16 +90,16 @@ Content-Disposition: inline
 In-Reply-To: <cover.1747223385.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,84 +115,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20250314-sriov-v9-8-57dae8ae3ab5@daynix.com>
-Tested-by: Yui Washizu <yui.washidu@gmail.com>
-Tested-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+vtd_find_add_as can be called by multiple threads which leads to a race
+condition. Taking the IOMMU lock ensures we avoid such a race.
+Moreover we also need to take the bql to avoid an assert to fail in
+memory_region_add_subregion_overlap when actually allocating a new
+address space.
+
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Message-Id: <20250430124750.240412-3-clement.mathieu--drif@eviden.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- MAINTAINERS           |  1 +
- docs/system/index.rst |  1 +
- docs/system/sriov.rst | 36 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+)
- create mode 100644 docs/system/sriov.rst
+ hw/i386/intel_iommu.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6dacd6d004..b579358cdd 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2058,6 +2058,7 @@ F: hw/pci-bridge/*
- F: qapi/pci.json
- F: docs/pci*
- F: docs/specs/*pci*
-+F: docs/system/sriov.rst
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index b925e65b02..69d72ad35c 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4205,9 +4205,30 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+     VTDAddressSpace *vtd_dev_as;
+     char name[128];
  
- PCIE DOE
- M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
-diff --git a/docs/system/index.rst b/docs/system/index.rst
-index c21065e519..718e9d3c56 100644
---- a/docs/system/index.rst
-+++ b/docs/system/index.rst
-@@ -39,3 +39,4 @@ or Hypervisor.Framework.
-    multi-process
-    confidential-guest-support
-    vm-templating
-+   sriov
-diff --git a/docs/system/sriov.rst b/docs/system/sriov.rst
-new file mode 100644
-index 0000000000..a851a66a4b
---- /dev/null
-+++ b/docs/system/sriov.rst
-@@ -0,0 +1,36 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
++    vtd_iommu_lock(s);
+     vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
++    vtd_iommu_unlock(s);
 +
-+Compsable SR-IOV device
-+=======================
+     if (!vtd_dev_as) {
+-        struct vtd_as_key *new_key = g_malloc(sizeof(*new_key));
++        struct vtd_as_key *new_key;
++        /* Slow path */
 +
-+SR-IOV (Single Root I/O Virtualization) is an optional extended capability of a
-+PCI Express device. It allows a single physical function (PF) to appear as
-+multiple virtual functions (VFs) for the main purpose of eliminating software
-+overhead in I/O from virtual machines.
++        /*
++         * memory_region_add_subregion_overlap requires the bql,
++         * make sure we own it.
++         */
++        BQL_LOCK_GUARD();
++        vtd_iommu_lock(s);
 +
-+There are devices with predefined SR-IOV configurations, but it is also possible
-+to compose an SR-IOV device yourself. Composing an SR-IOV device is currently
-+only supported by virtio-net-pci.
++        /* Check again as we released the lock for a moment */
++        vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
++        if (vtd_dev_as) {
++            vtd_iommu_unlock(s);
++            return vtd_dev_as;
++        }
 +
-+Users can configure an SR-IOV-capable virtio-net device by adding
-+virtio-net-pci functions to a bus. Below is a command line example:
++        /* Still nothing, allocate a new address space */
++        new_key = g_malloc(sizeof(*new_key));
+ 
+         new_key->bus = bus;
+         new_key->devfn = devfn;
+@@ -4298,6 +4319,8 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+         vtd_switch_address_space(vtd_dev_as);
+ 
+         g_hash_table_insert(s->vtd_address_spaces, new_key, vtd_dev_as);
 +
-+.. code-block:: shell
-+
-+    -netdev user,id=n -netdev user,id=o
-+    -netdev user,id=p -netdev user,id=q
-+    -device pcie-root-port,id=b
-+    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
-+    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
-+    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
-+    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
-+
-+The VFs specify the paired PF with ``sriov-pf`` property. The PF must be
-+added after all VFs. It is the user's responsibility to ensure that VFs have
-+function numbers larger than one of the PF, and that the function numbers
-+have a consistent stride.
-+
-+You may also need to perform additional steps to activate the SR-IOV feature on
-+your guest. For Linux, refer to [1]_.
-+
-+.. [1] https://docs.kernel.org/PCI/pci-iov-howto.html
++        vtd_iommu_unlock(s);
+     }
+     return vtd_dev_as;
+ }
 -- 
 MST
 
