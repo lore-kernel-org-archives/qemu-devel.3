@@ -4,112 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E01C3ABDE
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC63FC3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFDl4-0004KY-M2; Wed, 14 May 2025 11:10:58 -0400
+	id 1uFDl1-0004If-N6; Wed, 14 May 2025 11:10:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1uFDEO-0002XA-7g; Wed, 14 May 2025 10:37:13 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1uFDDV-0001OL-VA; Wed, 14 May 2025 10:36:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1uFDEM-0007Sk-Im; Wed, 14 May 2025 10:37:11 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54E6IORM026369;
- Wed, 14 May 2025 14:37:08 GMT
+ id 1uFDDT-0007Gh-UI; Wed, 14 May 2025 10:36:17 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54E738eS026867;
+ Wed, 14 May 2025 14:36:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=8QprLZ
- PhsvjDwhLwtBS9z4rQ5HwGpqMv2eQh0g4uSzA=; b=CODRudmP5Hcg/HoJn44JdT
- etq0e83syj+rzRs28Sj9+aRAY5pkEzhGshXD7ov93reQw0lcAV6zAu8gW7RJoQsQ
- IKHChXITLS9+qpsJSUdSxBtTz8luUVC3ZAyu9U9FrvMNU9h8twwop8dMMtBRui42
- LgkDVEiSez5s564/qXRokA8DmH6KMjfi/mAI1DxCosQav/7T140Dz5/KU80zERj+
- DfG9486r1Noff0CofO1nvUD/rPXKUFh2f7ptyE3BQjYcXo04vMOK7HAtc6LeIBRL
- j+gkFoIjVxSoneMdrmuq+4QnhkVgTMj71wNrp8C19oLBpIG+qOhhZbCRGl+FKSeg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=1ekLl5
+ LlnyS39zPlTFviV8iM0EW/k8lJVdpORbDeCMc=; b=dZO+GlsMMo0Sv9DggDLBoV
+ 5nFMxMh2v8DP5wzpI2WM63FGHID7BARdj5rJEDAu3hZCEA9pzYYwq4ZVn3QGUDBu
+ 9KOhCiM1VyE8TW5j/3qObnA7cICDgzvvbvLXyhyZYdVfBuonL6GRwmuiX89F4y+O
+ PC6Hnq1pos/QfG+DV43VWCiDzLS7PKNpphUtT/rOG9JTwgvqHRelhR1avO1mX+6O
+ U3Q+PjME0kYuzvQXBDVnGJjyAAd0SdRRMpaQJam/zWazrssRZQ7LO52ENNhZXyWj
+ 3llHaFvGsgUfksj8lpFdqgm4yADclfvO+6cRJ3zh1lYZYgdePZZ9inLBm9HCVV4A
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mnst2c19-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mbs6mrwk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 14:37:08 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54EEYM5c025168;
- Wed, 14 May 2025 14:37:08 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mnst2c14-1
+ Wed, 14 May 2025 14:36:14 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54EEaDxX012313;
+ Wed, 14 May 2025 14:36:13 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mbs6mrvr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 14:37:08 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54EDSdMt019466;
- Wed, 14 May 2025 14:37:07 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfrmpcx-1
+ Wed, 14 May 2025 14:36:13 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54EDg3as024449;
+ Wed, 14 May 2025 14:36:03 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfs4p0r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 14:37:07 +0000
+ Wed, 14 May 2025 14:36:03 +0000
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54EEb52g25362892
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54EEa16C30015974
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 May 2025 14:37:05 GMT
+ Wed, 14 May 2025 14:36:02 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2BBEF58056;
- Wed, 14 May 2025 14:37:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D10745805A;
+ Wed, 14 May 2025 14:36:01 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C61D75805E;
- Wed, 14 May 2025 14:37:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 701F958052;
+ Wed, 14 May 2025 14:36:01 +0000 (GMT)
 Received: from [9.10.255.115] (unknown [9.10.255.115])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 May 2025 14:37:04 +0000 (GMT)
-Message-ID: <b71663ee-a4b0-442e-a304-c20097a2838e@linux.ibm.com>
-Date: Wed, 14 May 2025 09:37:04 -0500
+ Wed, 14 May 2025 14:36:01 +0000 (GMT)
+Message-ID: <44d9933c-bc59-4baa-aebd-2c6726a393ca@linux.ibm.com>
+Date: Wed, 14 May 2025 09:36:01 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/50] pnv/xive2: VC_ENDC_WATCH_SPEC regs should read back
- WATCH_FULL
+Subject: Re: [PATCH 16/50] ppc/xive: Fix pulling pool and phys contexts
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
  <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
  Michael Kowal <kowal@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-20-npiggin@gmail.com>
+ <20250512031100.439842-17-npiggin@gmail.com>
 Content-Language: en-US
 From: Caleb Schlossin <calebs@linux.ibm.com>
-In-Reply-To: <20250512031100.439842-20-npiggin@gmail.com>
+In-Reply-To: <20250512031100.439842-17-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: UB4xNkVJb_NhQDTUZNxqojzhjKRtk3Md
-X-Authority-Analysis: v=2.4 cv=V+590fni c=1 sm=1 tr=0 ts=6824aa94 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDEzMCBTYWx0ZWRfX0hil/Agy+b25
+ DMpmgrJL5TqIckZCiLakhw/ifyXiXBKDFUGo2NzSDOlrA8xLpgX1+T3IMWK9UxKdrSYb1PNqM/B
+ R8LM2np26I0xCtv0j93NsLk+aYKpOFHBKgQFA28/yegBCUNawqJmXeJOL1Q082s+JQoJst/okPT
+ pBLGbBf1dPvDK8PwzJzxuFQ6dhjkj58uza6XtZ/8/mSbEOpLMRbLiKqO/v4fV8ZpD9T7kJWg4EE
+ mx6kIHIfbN6qkCfdhQwwesYo5yQ4+icr2iQdEAPRiukW34R2A1KuD+2W4GfPLPdzkTMaAapo5MV
+ 0GY/BAwOq/5piz5ViOCZIg/LEL/lP4tKdvD8vY47XLYZLj5GqaJ12pNyirR2xhaLyyToAsECwq2
+ eRSs3naV9iJPtgtol/6kqOExqb2QTOc52atvutbA2EgfDLeK6P+uhJWPJ18d3WHy6DbJnSrS
+X-Proofpoint-ORIG-GUID: jedyu46ra6SnGcrXlDfPGhew3l7V22k8
+X-Authority-Analysis: v=2.4 cv=d5f1yQjE c=1 sm=1 tr=0 ts=6824aa5e cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=OIwot2dQPgAvwoVT6JIA:9 a=QEXdDO2ut3YA:10
- a=gZLHJPz4sbkA:10
-X-Proofpoint-ORIG-GUID: As7kAhjD9ZQlCkxKBB1NjZmnGTu60kIi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDEzMCBTYWx0ZWRfX/arWsACsM2h/
- UfougMkXx7c3qeFvto1RPPf6HyXkYLSMnulFvMPLE2mnWNUsEiGWn250vfrHQNAws3yWY18ySBs
- bd0aklE1Bmz2cz6G0Uemde9B4brODcIKlnvQfSht5eJnZaAChVsuCQBnpiJGkWIpBwFw04/o7ke
- ve/s+MLsSgetA0CpJpKhofGQzyhgXE5BT6tbk9d9Qxp+RhdTvPGByDg3VeftQd62DsYXi4vHT81
- htWqlxxg6FAhojHdYd0h+va9SR5mjUtSc24aawWHUCv6h/T5N8BSZFoTudwRZvhAG34t4ZcxFO/
- Edi893uZV89sllhEJGzACKhLDqDaWZXQgKHONfLoq7GljlMn1J2sheMY1fluTU/7mxdi3m6/XHt
- sAeve2cwpqdKt728ANjAydLcUv9kkRedrdtB5ZyI+x7URFRIOk7fLVmCRVwvTldvhvTHSWsp
+ a=Z2M4xorl1dFmOFgaFRYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Ou-wyoNUxexElXllS9QKH8T-BUcejcPv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-14_04,2025-05-14_03,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501
- mlxlogscore=888 lowpriorityscore=0 bulkscore=0 suspectscore=0
- impostorscore=0 malwarescore=0 phishscore=0 adultscore=0 clxscore=1015
- spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ malwarescore=0 bulkscore=0
+ spamscore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 mlxlogscore=945 impostorscore=0 adultscore=0 phishscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505140130
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -138,28 +136,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
 
 On 5/11/25 10:10 PM, Nicholas Piggin wrote:
-> Firmware expects to read back the WATCH_FULL bit from the VC_ENDC_WATCH_SPEC
-> register, so don't clear it on read.
+> This improves the implementation of pulling pool and phys contexts in
+> XIVE1, by following closer the OS pulling code.
 > 
-> Don't bother clearing the reads-as-zero CONFLICT bit because it's masked
-> at write already.
+> In particular, the old ring data is returned rather than the modified,
+> and irq signals are reset on pull.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  hw/intc/pnv_xive2.c | 1 -
->  1 file changed, 1 deletion(-)
+>  hw/intc/xive.c | 66 ++++++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 58 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index fcf5b2e75c..3c26cd6b77 100644
-> --- a/hw/intc/pnv_xive2.c
-> +++ b/hw/intc/pnv_xive2.c
-> @@ -1329,7 +1329,6 @@ static uint64_t pnv_xive2_ic_vc_read(void *opaque, hwaddr offset,
->      case VC_ENDC_WATCH2_SPEC:
->      case VC_ENDC_WATCH3_SPEC:
->          watch_engine = (offset - VC_ENDC_WATCH0_SPEC) >> 6;
-> -        xive->vc_regs[reg] &= ~(VC_ENDC_WATCH_FULL | VC_ENDC_WATCH_CONFLICT);
->          pnv_xive2_endc_cache_watch_release(xive, watch_engine);
->          val = xive->vc_regs[reg];
->          break;
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index c2da23f9ea..1a94642c62 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -241,25 +241,75 @@ static uint64_t xive_tm_ack_hv_reg(XivePresenter *xptr, XiveTCTX *tctx,
+>      return xive_tctx_accept(tctx, TM_QW3_HV_PHYS);
+>  }
+> 
+> +static void xive_pool_cam_decode(uint32_t cam, uint8_t *nvt_blk,
+> +                                 uint32_t *nvt_idx, bool *vp)
+> +{
+> +    if (nvt_blk) {
+> +        *nvt_blk = xive_nvt_blk(cam);
+> +    }
+> +    if (nvt_idx) {
+> +        *nvt_idx = xive_nvt_idx(cam);
+> +    }
+> +    if (vp) {
+> +        *vp = !!(cam & TM_QW2W2_VP);
+> +    }
+> +}
+> +
+> +static uint32_t xive_tctx_get_pool_cam(XiveTCTX *tctx, uint8_t *nvt_blk,
+> +                                       uint32_t *nvt_idx, bool *vp)
+> +{
+> +    uint32_t qw2w2 = xive_tctx_word2(&tctx->regs[TM_QW2_HV_POOL]);
+> +    uint32_t cam = be32_to_cpu(qw2w2);
+> +
+> +    xive_pool_cam_decode(cam, nvt_blk, nvt_idx, vp);
+> +    return qw2w2;
+> +}
+> +
+> +static void xive_tctx_set_pool_cam(XiveTCTX *tctx, uint32_t qw2w2)
+> +{
+> +    memcpy(&tctx->regs[TM_QW2_HV_POOL + TM_WORD2], &qw2w2, 4);
+> +}
+> +
+>  static uint64_t xive_tm_pull_pool_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>                                        hwaddr offset, unsigned size)
+>  {
+> -    uint32_t qw2w2_prev = xive_tctx_word2(&tctx->regs[TM_QW2_HV_POOL]);
+>      uint32_t qw2w2;
+> +    uint32_t qw2w2_new;
+> +    uint8_t nvt_blk;
+> +    uint32_t nvt_idx;
+> +    bool vp;
+> 
+> -    qw2w2 = xive_set_field32(TM_QW2W2_VP, qw2w2_prev, 0);
+> -    memcpy(&tctx->regs[TM_QW2_HV_POOL + TM_WORD2], &qw2w2, 4);
+> +    qw2w2 = xive_tctx_get_pool_cam(tctx, &nvt_blk, &nvt_idx, &vp);
+> +
+> +    if (!vp) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pull invalid POOL NVT %x/%x !?\n",
+> +                      nvt_blk, nvt_idx);
+> +    }
+> +
+> +    /* Invalidate CAM line */
+> +    qw2w2_new = xive_set_field32(TM_QW2W2_VP, qw2w2, 0);
+> +    xive_tctx_set_pool_cam(tctx, qw2w2_new);
+> +
+> +    xive_tctx_reset_signal(tctx, TM_QW1_OS);
+> +    xive_tctx_reset_signal(tctx, TM_QW2_HV_POOL);
+>      return qw2w2;
+>  }
+> 
+>  static uint64_t xive_tm_pull_phys_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>                                        hwaddr offset, unsigned size)
+>  {
+> -    uint8_t qw3b8_prev = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
+> -    uint8_t qw3b8;
+> +    uint8_t qw3b8 = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
+> +    uint8_t qw3b8_new;
+> +
+> +    qw3b8 = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
+> +    if (!(qw3b8 & TM_QW3B8_VT)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid PHYS thread!?\n");
+> +    }
+> +    qw3b8_new = qw3b8 & ~TM_QW3B8_VT;
+> +    tctx->regs[TM_QW3_HV_PHYS + TM_WORD2] = qw3b8_new;
+> 
+> -    qw3b8 = qw3b8_prev & ~TM_QW3B8_VT;
+> -    tctx->regs[TM_QW3_HV_PHYS + TM_WORD2] = qw3b8;
+> +    xive_tctx_reset_signal(tctx, TM_QW1_OS);
+> +    xive_tctx_reset_signal(tctx, TM_QW3_HV_PHYS);
+>      return qw3b8;
+>  }
+> 
+> @@ -489,7 +539,7 @@ static uint64_t xive_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>      qw1w2 = xive_tctx_get_os_cam(tctx, &nvt_blk, &nvt_idx, &vo);
+> 
+>      if (!vo) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid NVT %x/%x !?\n",
+> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pull invalid OS NVT %x/%x !?\n",
+>                        nvt_blk, nvt_idx);
+>      }
+> 
 
 
