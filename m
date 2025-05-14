@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 981CDC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C7FC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHNu-0007vc-RN; Wed, 14 May 2025 15:03:19 -0400
+	id 1uFHO0-0008O5-0o; Wed, 14 May 2025 15:03:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLj-0004Jv-AM; Wed, 14 May 2025 15:01:03 -0400
+ id 1uFHLm-0004Pk-QW; Wed, 14 May 2025 15:01:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLf-0007LE-QR; Wed, 14 May 2025 15:01:02 -0400
+ id 1uFHLk-0007Nk-RI; Wed, 14 May 2025 15:01:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3ACA6121D90;
+ by isrv.corpit.ru (Postfix) with ESMTP id 57A26121D93;
  Wed, 14 May 2025 22:00:32 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3E70D20BA82;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 609BF20BA85;
  Wed, 14 May 2025 22:00:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 06/23] hw/core/cpu: gdb_arch_name string should not be
- freed
-Date: Wed, 14 May 2025 22:00:18 +0300
-Message-Id: <20250514190041.104759-6-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 09/23] meson: Remove CONFIG_STATX and
+ CONFIG_STATX_MNT_ID
+Date: Wed, 14 May 2025 22:00:21 +0300
+Message-Id: <20250514190041.104759-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
@@ -63,39 +62,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The documentation for the CPUClass::gdb_arch_name method claims that
-the returned string should be freed with g_free().  This is not
-correct: in commit a650683871ba728 we changed this method to
-instead return a simple constant string, but forgot to update
-the documentation.
+CONFIG_STATX and CONFIG_STATX_MNT_ID are not used since commit
+e0dc2631ec4 ("virtiofsd: Remove source").
 
-Make the documentation match the new semantics.
-
-Fixes: a650683871ba728 ("hw/core/cpu: Return static value with gdb_arch_name()")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250317142819.900029-2-peter.maydell@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250424-buildsys-v1-2-97655e3b25d7@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 56a9f0d4c4a483ce217e5290db69cb1788586787)
+(cherry picked from commit 6804b89fb531f5dd49c1e038214c89272383e220)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index abd8764e83..e136b067cd 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -135,7 +135,8 @@ struct SysemuCPUOps;
-  * @gdb_stop_before_watchpoint: Indicates whether GDB expects the CPU to stop
-  *           before the insn which triggers a watchpoint rather than after it.
-  * @gdb_arch_name: Optional callback that returns the architecture name known
-- * to GDB. The caller must free the returned string with g_free.
-+ * to GDB. The returned value is expected to be a simple constant string:
-+ * the caller will not g_free() it.
-  * @disas_set_info: Setup architecture specific components of disassembly info
-  * @adjust_watchpoint_address: Perform a target-specific adjustment to an
-  * address before attempting to match it against watchpoints.
+diff --git a/meson.build b/meson.build
+index c0ecb6feab..1a02cd8990 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2191,14 +2191,6 @@ gnu_source_prefix = '''
+   #endif
+ '''
+ 
+-# Check whether the glibc provides STATX_BASIC_STATS
+-
+-has_statx = cc.has_header_symbol('sys/stat.h', 'STATX_BASIC_STATS', prefix: gnu_source_prefix)
+-
+-# Check whether statx() provides mount ID information
+-
+-has_statx_mnt_id = cc.has_header_symbol('sys/stat.h', 'STATX_MNT_ID', prefix: gnu_source_prefix)
+-
+ have_vhost_user_blk_server = get_option('vhost_user_blk_server') \
+   .require(host_os == 'linux',
+            error_message: 'vhost_user_blk_server requires linux') \
+@@ -2560,8 +2552,6 @@ config_host_data.set('CONFIG_CRYPTO_SM3', crypto_sm3.found())
+ config_host_data.set('CONFIG_HOGWEED', hogweed.found())
+ config_host_data.set('CONFIG_QEMU_PRIVATE_XTS', xts == 'private')
+ config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
+-config_host_data.set('CONFIG_STATX', has_statx)
+-config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+ config_host_data.set('CONFIG_ZSTD', zstd.found())
+ config_host_data.set('CONFIG_QPL', qpl.found())
+ config_host_data.set('CONFIG_UADK', uadk.found())
 -- 
 2.39.5
 
