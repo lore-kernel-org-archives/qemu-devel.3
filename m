@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB2BC3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:03:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5EBEC3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF74J-0002ci-4c; Wed, 14 May 2025 04:02:23 -0400
+	id 1uF74B-0002ar-OJ; Wed, 14 May 2025 04:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uF74I-0002cI-4A
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:22 -0400
+ id 1uF74A-0002aD-0J
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:14 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uF74F-0002DW-TS
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:21 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uF748-0002CG-0W
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:13 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxquAJTiRo01bmAA--.6112S3;
- Wed, 14 May 2025 16:02:17 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxjmsCTiRoyFbmAA--.46430S3;
+ Wed, 14 May 2025 16:02:10 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S12;
- Wed, 14 May 2025 16:02:13 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S10;
+ Wed, 14 May 2025 16:02:06 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
 	maobibo@loongson.cn
-Subject: [PULL 10/17] hw/intc/loongarch_pch: Use generic write callback for
- iomem32_low region
-Date: Wed, 14 May 2025 15:39:20 +0800
-Message-Id: <20250514073927.2424543-11-gaosong@loongson.cn>
+Subject: [PULL 08/17] hw/intc/loongarch_pch: Use generic read callback for
+ iomem32_high region
+Date: Wed, 14 May 2025 15:39:18 +0800
+Message-Id: <20250514073927.2424543-9-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250514073927.2424543-1-gaosong@loongson.cn>
 References: <20250514073927.2424543-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S12
+X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S10
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,181 +68,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-For memory region iomem32_low, generic write callback is used.
+Add register read operation emulation in generic read function
+loongarch_pch_pic_read(), and use this function for iomem32_high region.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20250507023148.1877287-11-maobibo@loongson.cn>
+Message-Id: <20250507023148.1877287-9-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c | 140 +++++++++++++++++++-----------------
- 1 file changed, 73 insertions(+), 67 deletions(-)
+ hw/intc/loongarch_pch_pic.c | 27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
 diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index dbfc178e5d..07f9b07b09 100644
+index 599a27197f..e477a6033b 100644
 --- a/hw/intc/loongarch_pch_pic.c
 +++ b/hw/intc/loongarch_pch_pic.c
-@@ -118,6 +118,53 @@ static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
-     return (val >> (offset * 8)) & field_mask;
- }
- 
-+static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
-+                          uint64_t field_mask)
-+{
-+    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
-+    uint32_t offset;
-+    uint64_t old, mask, data;
-+
-+    offset = addr & 7;
-+    addr -= offset;
-+    mask = field_mask << (offset * 8);
-+    data = (value & field_mask) << (offset * 8);
-+    switch (addr) {
-+    case PCH_PIC_INT_MASK:
-+        old = s->int_mask;
-+        s->int_mask = (old & ~mask) | data;
-+        if (old & ~data) {
-+            pch_pic_update_irq(s, old & ~data, 1);
-+        }
-+
-+        if (~old & data) {
-+            pch_pic_update_irq(s, ~old & data, 0);
-+        }
+@@ -97,6 +97,12 @@ static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
+     case PCH_PIC_AUTO_CTRL1:
+         /* PCH PIC connect to EXTIOI always, discard auto_ctrl access */
+         break;
++    case PCH_PIC_INT_STATUS:
++        val = s->intisr & (~s->int_mask);
 +        break;
-+    case PCH_PIC_INT_EDGE:
-+        s->intedge = (s->intedge & ~mask) | data;
++    case PCH_PIC_INT_POL:
++        val = s->int_polarity;
 +        break;
-+    case PCH_PIC_INT_CLEAR:
-+        if (s->intedge & data) {
-+            s->intirr &= ~data;
-+            pch_pic_update_irq(s, data, 0);
-+            s->intisr &= ~data;
-+        }
-+        break;
-+    case PCH_PIC_HTMSI_EN:
-+        s->htmsi_en = (s->htmsi_en & ~mask) | data;
-+        break;
-+    case PCH_PIC_AUTO_CTRL0:
-+    case PCH_PIC_AUTO_CTRL1:
-+        /* Discard auto_ctrl access */
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "pch_pic_write: Bad address 0x%"PRIx64"\n", addr);
-+        break;
-+    }
-+}
-+
- static uint64_t loongarch_pch_pic_read(void *opaque, hwaddr addr,
-                                        unsigned size)
- {
-@@ -145,6 +192,30 @@ static uint64_t loongarch_pch_pic_read(void *opaque, hwaddr addr,
-     return val;
- }
- 
-+static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
-+                                    uint64_t value, unsigned size)
-+{
-+    switch (size) {
-+    case 1:
-+        pch_pic_write(opaque, addr, value, UCHAR_MAX);
-+        break;
-+    case 2:
-+        pch_pic_write(opaque, addr, value, USHRT_MAX);
-+        break;
-+        break;
-+    case 4:
-+        pch_pic_write(opaque, addr, value, UINT_MAX);
-+        break;
-+    case 8:
-+        pch_pic_write(opaque, addr, value, UINT64_MAX);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "loongarch_pch_pic_write: Bad size %d\n", size);
-+        break;
-+    }
-+}
-+
- static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
-                                             unsigned size)
- {
-@@ -166,73 +237,8 @@ static uint64_t get_writew_val(uint64_t value, uint32_t target, bool hi)
- static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-                                          uint64_t value, unsigned size)
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "pch_pic_read: Bad address 0x%"PRIx64"\n", addr);
+@@ -226,27 +232,10 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
+ static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
+                                         unsigned size)
  {
 -    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
--    uint32_t old_valid, data = (uint32_t)value;
--    uint64_t old, int_mask;
--
--    trace_loongarch_pch_pic_low_writew(size, addr, data);
--
+-    uint64_t val = 0;
++    uint64_t val;
+ 
+     addr += PCH_PIC_INT_STATUS;
 -    switch (addr) {
--    case PCH_PIC_INT_MASK:
--        old = s->int_mask;
--        s->int_mask = get_writew_val(old, data, 0);
--        old_valid = (uint32_t)old;
--        if (old_valid & ~data) {
--            pch_pic_update_irq(s, (old_valid & ~data), 1);
--        }
--        if (~old_valid & data) {
--            pch_pic_update_irq(s, (~old_valid & data), 0);
--        }
+-    case PCH_PIC_INT_STATUS:
+-        val = (uint32_t)(s->intisr & (~s->int_mask));
 -        break;
--    case PCH_PIC_INT_MASK + 4:
--        old = s->int_mask;
--        s->int_mask = get_writew_val(old, data, 1);
--        old_valid = (uint32_t)(old >> 32);
--        int_mask = old_valid & ~data;
--        if (int_mask) {
--            pch_pic_update_irq(s, int_mask << 32, 1);
--        }
--        int_mask = ~old_valid & data;
--        if (int_mask) {
--            pch_pic_update_irq(s, int_mask << 32, 0);
--        }
+-    case PCH_PIC_INT_STATUS + 4:
+-        val = (s->intisr & (~s->int_mask)) >> 32;
 -        break;
--    case PCH_PIC_INT_EDGE:
--        s->intedge = get_writew_val(s->intedge, data, 0);
+-    case PCH_PIC_INT_POL:
+-        val = (uint32_t)s->int_polarity;
 -        break;
--    case PCH_PIC_INT_EDGE + 4:
--        s->intedge = get_writew_val(s->intedge, data, 1);
--        break;
--    case PCH_PIC_INT_CLEAR:
--        if (s->intedge & data) {
--            s->intirr &= (~data);
--            pch_pic_update_irq(s, data, 0);
--            s->intisr &= (~data);
--        }
--        break;
--    case PCH_PIC_INT_CLEAR + 4:
--        value <<= 32;
--        if (s->intedge & value) {
--            s->intirr &= (~value);
--            pch_pic_update_irq(s, value, 0);
--            s->intisr &= (~value);
--        }
--        break;
--    case PCH_PIC_HTMSI_EN:
--        s->htmsi_en = get_writew_val(s->htmsi_en, data, 0);
--        break;
--    case PCH_PIC_HTMSI_EN + 4:
--        s->htmsi_en = get_writew_val(s->htmsi_en, data, 1);
--        break;
--    case PCH_PIC_AUTO_CTRL0:
--    case PCH_PIC_AUTO_CTRL0 + 4:
--    case PCH_PIC_AUTO_CTRL1:
--    case PCH_PIC_AUTO_CTRL1 + 4:
--        /* discard auto_ctrl access */
+-    case PCH_PIC_INT_POL + 4:
+-        val = s->int_polarity >> 32;
 -        break;
 -    default:
 -        break;
 -    }
-+    trace_loongarch_pch_pic_low_writew(size, addr, value);
-+    loongarch_pch_pic_write(opaque, addr, value, size);
+-
++    val = loongarch_pch_pic_read(opaque, addr, size);
+     trace_loongarch_pch_pic_high_readw(size, addr, val);
+     return val;
  }
- 
- static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
 -- 
 2.34.1
 
