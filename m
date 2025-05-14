@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA74DC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 12:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BE8C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBhC-0003fl-Gn; Wed, 14 May 2025 08:58:54 -0400
+	id 1uFBfl-0000ds-AW; Wed, 14 May 2025 08:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBgs-000356-P2; Wed, 14 May 2025 08:58:30 -0400
+ id 1uFBfb-0000Ey-Uc; Wed, 14 May 2025 08:57:12 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBgq-0007qz-HI; Wed, 14 May 2025 08:58:30 -0400
+ id 1uFBfZ-0007ix-TN; Wed, 14 May 2025 08:57:11 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1CE5C121AE1;
- Wed, 14 May 2025 15:57:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E5535121AC7;
+ Wed, 14 May 2025 15:56:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B2BC920B84F;
- Wed, 14 May 2025 15:57:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 916E120B83F;
+ Wed, 14 May 2025 15:56:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Joey <jeundery@gmail.com>, Gustavo Romero <gustavo.romero@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 03/34] hw/pci-host/designware: Fix ATU_UPPER_TARGET
- register access
-Date: Wed, 14 May 2025 15:57:25 +0300
-Message-Id: <20250514125758.92030-3-mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 07/18] target/mips: Simplify and fix update_pagemask
+Date: Wed, 14 May 2025 15:56:13 +0300
+Message-Id: <20250514125640.91677-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
-References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,34 +61,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Fix copy/paste error writing to the ATU_UPPER_TARGET
-register, we want to update the upper 32 bits.
+When update_pagemask was split from helper_mtc0_pagemask,
+we failed to actually write to the new parameter but continue
+to write to env->CP0_PageMask.  Thus the use within
+page_table_walk_refill modifies cpu state and not the local
+variable as expected.
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Joey <jeundery@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2861
-Fixes: d64e5eabc4c ("pci: Add support for Designware IP block")
+Simplify by renaming to compute_pagemask and returning the
+value directly.  No need for either env or pointer return.
+
+Fixes: 074cfcb4dae ("target/mips: Implement hardware page table walker for MIPS32")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250328175526.368121-4-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-Id: <20250331152041.74533-2-philmd@linaro.org>
-(cherry picked from commit 04e99f9eb7920b0f0fcce65686c3bedf5e32a1f9)
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit 256ba7715b109c080c0c77a3923df9e69736ba17)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index c3fc37b904..cc3ff0a45a 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -362,7 +362,7 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
+diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
+index a4a6282827..80260ecd8a 100644
+--- a/target/mips/tcg/sysemu/cp0_helper.c
++++ b/target/mips/tcg/sysemu/cp0_helper.c
+@@ -887,24 +887,24 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
+     }
+ }
  
-     case DESIGNWARE_PCIE_ATU_UPPER_TARGET:
-         viewport->target &= 0x00000000FFFFFFFFULL;
--        viewport->target |= val;
-+        viewport->target |= (uint64_t)val << 32;
-         break;
+-void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
++uint32_t compute_pagemask(uint32_t val)
+ {
+     /* Don't care MASKX as we don't support 1KB page */
+-    uint32_t mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
++    uint32_t mask = extract32(val, CP0PM_MASK, 16);
+     int maskbits = cto32(mask);
  
-     case DESIGNWARE_PCIE_ATU_LIMIT:
+     /* Ensure no more set bit after first zero, and maskbits even. */
+     if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
+-        env->CP0_PageMask = mask << CP0PM_MASK;
++        return mask << CP0PM_MASK;
+     } else {
+         /* When invalid, set to default target page size. */
+-        env->CP0_PageMask = 0;
++        return 0;
+     }
+ }
+ 
+ void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
+ {
+-    update_pagemask(env, arg1, &env->CP0_PageMask);
++    env->CP0_PageMask = compute_pagemask(arg1);
+ }
+ 
+ void helper_mtc0_pagegrain(CPUMIPSState *env, target_ulong arg1)
+diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
+index f0a513365b..cce3dcdc0e 100644
+--- a/target/mips/tcg/sysemu/tlb_helper.c
++++ b/target/mips/tcg/sysemu/tlb_helper.c
+@@ -878,7 +878,7 @@ refill:
+         }
+     }
+     pw_pagemask = m >> TARGET_PAGE_BITS;
+-    update_pagemask(env, pw_pagemask << CP0PM_MASK, &pw_pagemask);
++    pw_pagemask = compute_pagemask(pw_pagemask << CP0PM_MASK);
+     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
+     {
+         target_ulong tmp_entryhi = env->CP0_EntryHi;
+diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
+index aef032c48d..be398665e6 100644
+--- a/target/mips/tcg/tcg-internal.h
++++ b/target/mips/tcg/tcg-internal.h
+@@ -45,7 +45,7 @@ bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
+ 
+ void mmu_init(CPUMIPSState *env, const mips_def_t *def);
+ 
+-void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask);
++uint32_t compute_pagemask(uint32_t val);
+ 
+ void r4k_invalidate_tlb(CPUMIPSState *env, int idx, int use_extra);
+ uint32_t cpu_mips_get_random(CPUMIPSState *env);
 -- 
 2.39.5
 
