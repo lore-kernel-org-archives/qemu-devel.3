@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9253C3ABC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 05:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E061C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 05:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF4Jt-0003lC-HD; Wed, 14 May 2025 01:06:17 -0400
+	id 1uF4Ox-0000lj-9D; Wed, 14 May 2025 01:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1uF4Jr-0003g6-SP
- for qemu-devel@nongnu.org; Wed, 14 May 2025 01:06:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uF4Ou-0000lS-7U; Wed, 14 May 2025 01:11:28 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1uF4Jq-0007Dm-8R
- for qemu-devel@nongnu.org; Wed, 14 May 2025 01:06:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747199172;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qIq2vTZ/lFGWxb1y9RYqkYNealT0sSrdwaDrnzrSjBI=;
- b=Nc8A1Md0FQ6ILd8m3BLqVfuLUn1JlbOqXK1chGuM/ylCjR2esVrlptDB3E5EaoiPMdPNDd
- o7vGthNWY/U6JiIMKE+C4KFOEyk41IPbUNji6GBcev3Jvtonn2ZzBF0Z3C8mxuFVcXtU+N
- OX2hYQV2MPVIDn0X+D4NS1rA3WHZpP0=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-nPAnmKvlOcGrVc3tG6JZ7g-1; Wed, 14 May 2025 01:06:11 -0400
-X-MC-Unique: nPAnmKvlOcGrVc3tG6JZ7g-1
-X-Mimecast-MFC-AGG-ID: nPAnmKvlOcGrVc3tG6JZ7g_1747199170
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-30a29af28d1so5536945a91.0
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 22:06:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747199170; x=1747803970;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qIq2vTZ/lFGWxb1y9RYqkYNealT0sSrdwaDrnzrSjBI=;
- b=pZ3Z+SRnzEa2/4Iw8mEYGfCvns0cXoIs4h6EI5WuPsv3CggidPSLXcl9tqytBGGOZl
- TZP6iLX+AgPGb7AWQlxGedqH1iKqECtI0JNcUYquDnJIrzVyXaygW24zkpHefTWf5JV0
- 6AkYmcSmdlYYhLoYH4CCNyCxU3/TS/A4W67lAxapLGeKrUQoZPuC/bCutlKWmmCNR1wP
- k4sa0kMpzDLeRn1Bs32JEuecAR0kBmCkGz8bd1pXwvXdUYRq/o3PotqruGjltmInZJaY
- 33I4xyagYVD0j9dvMi6PkkM9wFChvH1tTM8GkNZM//vXIKJBnlxjEa2I8XXR1mTZpVJz
- adXA==
-X-Gm-Message-State: AOJu0Ywime8ZTGfoo00j3ef+c8JPXji13TkI+y8072/VZ/6Eb/NHvxft
- vPGEV9TjVvJC9uvG+KkNroBTK0ldGk5ZM9wV8vmqfDATF10IaKmbUkbk80ERJ/dDC7BiEVFD6/Q
- pYiNPNAgcJhOR1kbmzIHOlJWqT8qvcLi7UwtVqb/qcNlClE0YoRjlI0UVWGxFE6E8uQep/+tACf
- 57sBevZMAd2l6XmMpuGqwv6+ebwnM=
-X-Gm-Gg: ASbGncs/MLb+pFb6ehW5wD8siMflVaZJmfwHBHB8eVSeJw6lzlXYUDTx8pyHhUnttA5
- kZpQWXLb087sX0cUYDu7dsM+2gR/aEia5/SIHKl1/r1mBBukOdEB4dbyyNpMrKhLV9yUp
-X-Received: by 2002:a17:90b:6c6:b0:30c:540b:9ba with SMTP id
- 98e67ed59e1d1-30e2e5b947emr3530441a91.10.1747199169966; 
- Tue, 13 May 2025 22:06:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/zQjz2dSgnpDBY9onIxez7dUd+JJoSKed4nBIMcpIzzypJaIoUDp7Hjbr+g5Jnsie3hJmx4ucd37tO7gbA8Q=
-X-Received: by 2002:a17:90b:6c6:b0:30c:540b:9ba with SMTP id
- 98e67ed59e1d1-30e2e5b947emr3530401a91.10.1747199169509; Tue, 13 May 2025
- 22:06:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uF4Or-0007da-Tq; Wed, 14 May 2025 01:11:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747199486; x=1778735486;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=UNNz5FIvJ/cXIxaiZEfi5bWCBZhv2ZCY4UIp4PhuOTU=;
+ b=BSvQVRbpqUDp/0vZ+i80vkSOXnaGWn0Jv9z5ogx248OG/cd/I/hlRmPr
+ GH5tbjXR4uYicw8HJacn5IaCg1L7WSWjvbKrHWKKXvIE5JiTPaTTTFtrS
+ PkcQCyD9CN2R5EnctbFNt+n+WuA0vbKd02ZTjKtuF8YN4fUIfAwAKNOIg
+ 985lM5ts/NMSJDdUdBJh+LKx6BmpZG5tCPYXVI7u75sNHLlb1viBiwbnO
+ qdlAbB7WzPTtCzWH0x0m3ss/1vsOzcFjB/35JZNBO4g+7d3+5MknaNnAJ
+ BqnxjZ8UqcpjMO6UO6HlGI/w6XcDhfoJC1DsEKOhI2OI/CPHLQOpo9nog A==;
+X-CSE-ConnectionGUID: 334eVy1HR4K9SM4pfrVGmw==
+X-CSE-MsgGUID: jmUlabDKSO2lbqTBqSZX3Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11432"; a="74477107"
+X-IronPort-AV: E=Sophos;i="6.15,287,1739865600"; d="scan'208";a="74477107"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 May 2025 22:11:23 -0700
+X-CSE-ConnectionGUID: JIMf2Mp5SKqc1Xeo6bCBcw==
+X-CSE-MsgGUID: oRVSeXRaSpWBlNMRE3ptkA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,287,1739865600"; d="scan'208";a="161221528"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 May 2025 22:11:20 -0700
+Message-ID: <ae482293-80a0-4b94-9c34-4a8d5ce18b49@intel.com>
+Date: Wed, 14 May 2025 13:11:17 +0800
 MIME-Version: 1.0
-References: <20250510-n-v1-1-19ee26ac3ca6@daynix.com>
-In-Reply-To: <20250510-n-v1-1-19ee26ac3ca6@daynix.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 14 May 2025 13:05:58 +0800
-X-Gm-Features: AX0GCFuq8jQlq26IJa6Kbl37pUgLHON74m03g32riiDNXa32BFQzQPjZr-rowBs
-Message-ID: <CACGkMEt7xoX-HvV1mOo=zqpyV0se2ELBMvNV-uGpKUZPQ-PB2A@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: Add queues for RSS during migration
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/xen/arch_hvm: Unify x86 and ARM variants
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, Anthony PERARD <anthony@xenproject.org>,
+ David Woodhouse <dwmw@amazon.co.uk>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
+ Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250513171737.74386-1-philmd@linaro.org>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250513171737.74386-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,54 +90,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 10, 2025 at 3:24=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
-> VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
-> number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
-> VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_features
-> is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
-> VIRTIO_NET_F_MQ uses bit 22.
->
-> Instead of inferring the required number of queues from
-> vdev->guest_features, use the number loaded from the vm state.
->
-> Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing"=
-)
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  include/hw/virtio/virtio.h |  2 +-
->  hw/net/virtio-net.c        | 11 ++++-------
->  hw/virtio/virtio.c         | 14 +++++++-------
->  3 files changed, 12 insertions(+), 15 deletions(-)
->
-> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index 638691028050..af52580c1e63 100644
-> --- a/include/hw/virtio/virtio.h
-> +++ b/include/hw/virtio/virtio.h
-> @@ -211,7 +211,7 @@ struct VirtioDeviceClass {
->      int (*start_ioeventfd)(VirtIODevice *vdev);
->      void (*stop_ioeventfd)(VirtIODevice *vdev);
->      /* Called before loading queues. Useful to add queues before loading=
-. */
-> -    int (*pre_load_queues)(VirtIODevice *vdev);
-> +    int (*pre_load_queues)(VirtIODevice *vdev, uint32_t n);
+On 5/14/2025 1:17 AM, Philippe Mathieu-Daudé wrote:
+> As each target declares the same prototypes, we can
+> use a single header, removing the TARGET_XXX uses.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+...
+> diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
+> index 4b26bcff7a5..1a9eeb01c8e 100644
+> --- a/hw/arm/xen-pvh.c
+> +++ b/hw/arm/xen-pvh.c
+> @@ -10,7 +10,6 @@
+>   #include "hw/boards.h"
+>   #include "system/system.h"
+>   #include "hw/xen/xen-pvh-common.h"
+> -#include "hw/xen/arch_hvm.h"
+>   
+>   #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
+>   
 
-This turns out to be tricky as it has a lot of assumptions as
-described in the changelog (e.g only lower 32bit of guest_features is
-correct etc when calling this function).
-
-Looking at the commit that introduces this which is 9379ea9db3c that says:
-
-"""
-Otherwise the loaded queues will not have handlers and elements
-in them will not be processed.
-"""
-
-I fail to remember what it means or what happens if we don't do 9379ea9db3c=
-.
-
-Thanks
-
+This chunk seems unrelated.
 
