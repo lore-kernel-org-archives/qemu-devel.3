@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A8FC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2460C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFAHF-0001Uf-HC; Wed, 14 May 2025 07:27:57 -0400
+	id 1uFAHP-0001ZK-JA; Wed, 14 May 2025 07:28:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFAHD-0001Qd-Q7
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:27:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFAHL-0001Xx-71
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:28:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFAHB-0002BP-Tq
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:27:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFAHI-0002Fg-V6
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:28:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747222073;
+ s=mimecast20190719; t=1747222080;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vlA943oQJGEwAWWws1YgfQMSoX60VXBkTWh3JFNkbH4=;
- b=gE6poFKw4lnqyiyoi1Oy6OL/HitA/562ae/uNP+Wf3nnVCDIN2ZTusDkwQlzrtaeZfCDUC
- EXVazTQKLLubEPg71jwHZ+PBi2lnjrM531/puJPmJa9ldsAJ0+oT+j9TTp+PWOsRaJBpUy
- xFrV/CbYXqAITifFUH4+5fbOBZ3ABUY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=kBT4hYmsb0TweLp2rWxreoLY89nvdW4z8t01VceREM8=;
+ b=f2bmq1wpQyHgj5MJAG7fU/095h4e0DA4wkl997cEXKxZRy+iXS4uknDi7UrtQdTsmN2KUf
+ 1a1ttAoIC8ORmbO0kDmojpZ8TDtk6W2v5CBy8qNyhAKAZwxkdnME+sbSzIVhCB7147DZqu
+ Sa9rJ8WJ9tT1NvRKsRrxEjGWibHFEyE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-QZyqzEJPM_6vJu6C4jtaMg-1; Wed,
- 14 May 2025 07:27:50 -0400
-X-MC-Unique: QZyqzEJPM_6vJu6C4jtaMg-1
-X-Mimecast-MFC-AGG-ID: QZyqzEJPM_6vJu6C4jtaMg_1747222069
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-542-_H0Hs5hvO82bMQujnYW9ew-1; Wed,
+ 14 May 2025 07:27:58 -0400
+X-MC-Unique: _H0Hs5hvO82bMQujnYW9ew-1
+X-Mimecast-MFC-AGG-ID: _H0Hs5hvO82bMQujnYW9ew_1747222078
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC7861801A24; Wed, 14 May 2025 11:27:49 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C6D71800115
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 11:27:58 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6C90F19560A3; Wed, 14 May 2025 11:27:48 +0000 (UTC)
+ id 360F219560A3; Wed, 14 May 2025 11:27:57 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 08/13] hw/s390x/s390-virtio-ccw: Remove the deprecated 3.1
- machine type
-Date: Wed, 14 May 2025 13:27:28 +0200
-Message-ID: <20250514112733.456644-9-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 13/13] tests/functional: Skip the screendump tests if the
+ command is not available
+Date: Wed, 14 May 2025 13:27:33 +0200
+Message-ID: <20250514112733.456644-14-thuth@redhat.com>
 In-Reply-To: <20250514112733.456644-1-thuth@redhat.com>
 References: <20250514112733.456644-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -88,68 +86,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The s390-ccw-virtio-3.1 machine is older than 6 years, so according to
-our machine support policy, it can be removed now. The v3.1 CPU feature
-group gets merged into the minimum CPU feature group now.
+It is possible nowadays to compile QEMU without pixman support - in that
+case the screendump command is not available and the related tests fail.
+Thus skip these tests if the screendump command could not be executed.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250506062148.306084-9-thuth@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250325081713.283490-2-thuth@redhat.com>
 ---
- hw/s390x/s390-virtio-ccw.c  | 16 ----------------
- target/s390x/gen-features.c |  4 ----
- 2 files changed, 20 deletions(-)
+ tests/functional/test_arm_integratorcp.py | 6 ++++--
+ tests/functional/test_m68k_nextcube.py    | 6 ++++--
+ tests/functional/test_mips64el_malta.py   | 6 ++++--
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index b013bcd076a..95c12a41773 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -1172,22 +1172,6 @@ static void ccw_machine_4_0_class_options(MachineClass *mc)
- }
- DEFINE_CCW_MACHINE(4, 0);
+diff --git a/tests/functional/test_arm_integratorcp.py b/tests/functional/test_arm_integratorcp.py
+index a85b339d772..4f00924aa03 100755
+--- a/tests/functional/test_arm_integratorcp.py
++++ b/tests/functional/test_arm_integratorcp.py
+@@ -73,8 +73,10 @@ def test_framebuffer_tux_logo(self):
+         framebuffer_ready = 'Console: switching to colour frame buffer device'
+         wait_for_console_pattern(self, framebuffer_ready)
+         self.vm.cmd('human-monitor-command', command_line='stop')
+-        self.vm.cmd('human-monitor-command',
+-                    command_line='screendump %s' % screendump_path)
++        res = self.vm.cmd('human-monitor-command',
++                          command_line='screendump %s' % screendump_path)
++        if 'unknown command' in res:
++            self.skipTest('screendump not available')
+         logger = logging.getLogger('framebuffer')
  
--static void ccw_machine_3_1_instance_options(MachineState *machine)
--{
--    static const S390FeatInit qemu_cpu_feat = { S390_FEAT_LIST_QEMU_V3_1 };
--    ccw_machine_4_0_instance_options(machine);
--    s390_cpudef_featoff_greater(14, 1, S390_FEAT_MULTIPLE_EPOCH);
--    s390_cpudef_group_featoff_greater(14, 1, S390_FEAT_GROUP_MULTIPLE_EPOCH_PTFF);
--    s390_set_qemu_cpu_model(0x2827, 12, 2, qemu_cpu_feat);
--}
--
--static void ccw_machine_3_1_class_options(MachineClass *mc)
--{
--    ccw_machine_4_0_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_3_1, hw_compat_3_1_len);
--}
--DEFINE_CCW_MACHINE(3, 1);
--
- static void ccw_machine_register_types(void)
- {
-     type_register_static(&ccw_machine_info);
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 754fc843d24..4346b92431b 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -849,9 +849,6 @@ static uint16_t qemu_MIN[] = {
-     S390_FEAT_GROUP_PLO,
-     S390_FEAT_ESAN3,
-     S390_FEAT_ZARCH,
--};
--
--static uint16_t qemu_V3_1[] = {
-     S390_FEAT_DAT_ENH,
-     S390_FEAT_IDTE_SEGMENT,
-     S390_FEAT_STFLE,
-@@ -1055,7 +1052,6 @@ static FeatGroupDefSpec FeatGroupDef[] = {
-  *******************************/
- static FeatGroupDefSpec QemuFeatDef[] = {
-     QEMU_FEAT_INITIALIZER(MIN),
--    QEMU_FEAT_INITIALIZER(V3_1),
-     QEMU_FEAT_INITIALIZER(V4_0),
-     QEMU_FEAT_INITIALIZER(V4_1),
-     QEMU_FEAT_INITIALIZER(V6_0),
+         cpu_count = 1
+diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/test_m68k_nextcube.py
+index ff773a7994f..13c72bd136a 100755
+--- a/tests/functional/test_m68k_nextcube.py
++++ b/tests/functional/test_m68k_nextcube.py
+@@ -32,8 +32,10 @@ def check_bootrom_framebuffer(self, screenshot_path):
+         # TODO: wait for the 'displaysurface_create 1120x832' trace-event.
+         time.sleep(2)
+ 
+-        self.vm.cmd('human-monitor-command',
+-                    command_line='screendump %s' % screenshot_path)
++        res = self.vm.cmd('human-monitor-command',
++                          command_line='screendump %s' % screenshot_path)
++        if 'unknown command' in res:
++            self.skipTest('screendump not available')
+ 
+     @skipIfMissingImports("PIL")
+     def test_bootrom_framebuffer_size(self):
+diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
+index dd37212f9df..3cc79b74c18 100755
+--- a/tests/functional/test_mips64el_malta.py
++++ b/tests/functional/test_mips64el_malta.py
+@@ -155,8 +155,10 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+         framebuffer_ready = 'Console: switching to colour frame buffer device'
+         self.wait_for_console_pattern(framebuffer_ready)
+         self.vm.cmd('human-monitor-command', command_line='stop')
+-        self.vm.cmd('human-monitor-command',
+-                    command_line='screendump %s' % screendump_path)
++        res = self.vm.cmd('human-monitor-command',
++                          command_line='screendump %s' % screendump_path)
++        if 'unknown command' in res:
++            self.skipTest('screendump not available')
+         logger = logging.getLogger('framebuffer')
+ 
+         match_threshold = 0.95
 -- 
 2.49.0
 
