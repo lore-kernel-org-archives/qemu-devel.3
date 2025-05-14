@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB1A0C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BA2C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:31:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFE3u-0001ek-LW; Wed, 14 May 2025 11:30:27 -0400
+	id 1uFE4A-0001zd-4q; Wed, 14 May 2025 11:30:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uFDyR-00006E-9C; Wed, 14 May 2025 11:24:51 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
+ id 1uFDz7-0000vU-Ul; Wed, 14 May 2025 11:25:38 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uFDyM-0008B8-IJ; Wed, 14 May 2025 11:24:46 -0400
+ id 1uFDz4-0008Un-Ng; Wed, 14 May 2025 11:25:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747236282; x=1778772282;
+ t=1747236326; x=1778772326;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=8hlLEz0kqpHVicvAXJe3vwAsfoWGV3WwpwkMfltOaRI=;
- b=f2geVkBKe/+nxCrjizqaIMBclv4Vw6TU+vtLcRTjR+1Tu6RVM7Axlg+n
- 3qZweRXMHEtkJ0ylN5xH7KMrdnc11Dc9qJezkiS0V0ovHl2I7mX5ijv5W
- lREr0cdk1UIuEYedfhadPrLwH2bws7MIZewidgcIAYEwc/cEojMhVFS5/
- BXAZWdE6aXHkK+ZH5urSCvAsNC1ckBMR3A2zu6JAZaAdxtpJXkDQO5DtY
- TbZYpmkcAD6T2/ufChAxWvkh/zZmeVFE6Z2xKepf/2KQKuXCguk/Ok4BO
- jRfnRbLFtTA+HmnAmhY+Ww+5iZuiGB9JboFjqNccFooBdOGt719IcYn4k Q==;
-X-CSE-ConnectionGUID: 1DryphlkRpmPtnYKNEZPyg==
-X-CSE-MsgGUID: V3a8yt3jTJ2hmZSGI/XESw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="49214148"
-X-IronPort-AV: E=Sophos;i="6.15,288,1739865600"; d="scan'208";a="49214148"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2025 08:24:38 -0700
-X-CSE-ConnectionGUID: PiOpA8BtQcyp/ftDLTm7qg==
-X-CSE-MsgGUID: 6tCcbs4GTDGJ2bGVVaiZHA==
+ mime-version:in-reply-to;
+ bh=ThBSYUvZ/XFGiiD4RABQ4r41Ig4HRacFIVGrlo60hFA=;
+ b=du19S7cKvtYSIdS7jNOuD7watvtUrtMw71ZiCUQ5lLGnCtoe4ivYerVS
+ D1Uwt/ODo7cQoDz2phx+oHFXTFwFQLxHeZ7W/hjVd0w4qvtpB4XgKUIMY
+ yol8kKtvtylqWyBVgUpsQ/Y6XwU4hYZDRMZFUsWvMP+hgcHphGW93nASG
+ JW0HVR3H4lhvtrIcvmr8eLhkd8Kv5XkWQ945yfkKJVWnIekd2XFeo2GeU
+ cxa8hm5uf6O1e4BjioyoY2rLHPIfz3SiudzuVYngwxYx3ar1/sEpHESCP
+ qKWeSSiXHJu/TzEGfmiBCuZQf/o8qJ5bE+bGhhM7eJcurqOgpt+pfW2f5 w==;
+X-CSE-ConnectionGUID: TSiOSmtASQalooKNknahFw==
+X-CSE-MsgGUID: GUMaQocqTMu/XSXZLapbGA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="66694050"
+X-IronPort-AV: E=Sophos;i="6.15,288,1739865600"; d="scan'208";a="66694050"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 May 2025 08:25:24 -0700
+X-CSE-ConnectionGUID: OKPjvWWoTPyP9Up68FI36g==
+X-CSE-MsgGUID: vgqUiby3SQig+cuf6cDfEA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,288,1739865600"; d="scan'208";a="161363041"
+X-IronPort-AV: E=Sophos;i="6.15,288,1739865600"; d="scan'208";a="142101402"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 14 May 2025 08:24:36 -0700
-Date: Wed, 14 May 2025 23:45:40 +0800
+ by fmviesa003.fm.intel.com with ESMTP; 14 May 2025 08:25:22 -0700
+Date: Wed, 14 May 2025 23:46:26 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH 2/9] docs/devel/qom: Fix the doc about
- OBJECT_DECLARE_SIMPLE_TYPE
-Message-ID: <aCS6pLuiFaeEmeEu@intel.com>
+ qemu-trivial@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ =?utf-8?B?TWFyYy1BbmRy77+9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 4/9] hw/char/sh_serial: Consolidate
+ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
+Message-ID: <aCS60tfK6hEh3n25@intel.com>
 References: <20250514084957.2221975-1-zhao1.liu@intel.com>
- <20250514084957.2221975-3-zhao1.liu@intel.com>
- <c179270c-d636-e20a-2043-38c09b81b4c6@eik.bme.hu>
+ <20250514084957.2221975-5-zhao1.liu@intel.com>
+ <f8d5d5ac-9b79-ab87-6fd7-ac7bf025c3e7@eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c179270c-d636-e20a-2043-38c09b81b4c6@eik.bme.hu>
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <f8d5d5ac-9b79-ab87-6fd7-ac7bf025c3e7@eik.bme.hu>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -60
 X-Spam_score: -6.1
@@ -87,78 +88,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 02:06:14PM +0200, BALATON Zoltan wrote:
-> Date: Wed, 14 May 2025 14:06:14 +0200
+On Wed, May 14, 2025 at 02:07:41PM +0200, BALATON Zoltan wrote:
+> Date: Wed, 14 May 2025 14:07:41 +0200
 > From: BALATON Zoltan <balaton@eik.bme.hu>
-> Subject: Re: [PATCH 2/9] docs/devel/qom: Fix the doc about
->  OBJECT_DECLARE_SIMPLE_TYPE
+> Subject: Re: [PATCH 4/9] hw/char/sh_serial: Consolidate
+>  OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
 > 
 > On Wed, 14 May 2025, Zhao Liu wrote:
-> > Currently, the expansion example of OBJECT_DECLARE_SIMPLE_TYPE "roughly"
-> > reflects what OBJECT_DECLARE_TYPE is doing.
+> > The QOM type of SHSerialState is declared by OBJECT_DECLARE_SIMPLE_TYPE,
+> > which means it doesn't need the class!
 > > 
-> > Why "roughly"? Because this line -
-> > 
-> > >    G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDeviceClass, object_unref)
-> > 
-> > - is also wrong for OBJECT_DECLARE_TYPE.
-> > 
-> > Fix the expansion example of OBJECT_DECLARE_SIMPLE_TYPE, especially
-> > drop that definition of MyDeviceClass.
-> > 
-> > Cc: Paolo Bonzini <pbonzini@redhat.com>
-> > Cc: "Daniel P. Berrangé" <berrange@redhat.com>
-> > Cc: Eduardo Habkost <eduardo@habkost.net>
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> > docs/devel/qom.rst | 11 +----------
-> > 1 file changed, 1 insertion(+), 10 deletions(-)
-> > 
-> > diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
-> > index 5870745ba27b..185f4c2f5921 100644
-> > --- a/docs/devel/qom.rst
-> > +++ b/docs/devel/qom.rst
-> > @@ -326,21 +326,12 @@ This is equivalent to the following:
-> >    :caption: Expansion from declaring a simple type
-> > 
-> >    typedef struct MyDevice MyDevice;
-> > -   typedef struct MyDeviceClass MyDeviceClass;
-> > 
-> > -   G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDeviceClass, object_unref)
-> > +   G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDevice, object_unref)
-> > 
-> > -   #define MY_DEVICE_GET_CLASS(void *obj) \
-> > -           OBJECT_GET_CLASS(MyDeviceClass, obj, TYPE_MY_DEVICE)
-> > -   #define MY_DEVICE_CLASS(void *klass) \
-> > -           OBJECT_CLASS_CHECK(MyDeviceClass, klass, TYPE_MY_DEVICE)
-> >    #define MY_DEVICE(void *obj)
-> >            OBJECT_CHECK(MyDevice, obj, TYPE_MY_DEVICE)
-> > 
-> > -   struct MyDeviceClass {
-> > -       DeviceClass parent_class;
-> > -   };
-> > -
-> > The 'struct MyDevice' needs to be declared separately.
-> > If the type requires virtual functions to be declared in the class
-> > struct, then the alternative OBJECT_DECLARE_TYPE() macro can be
+> > Therefore, use OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES to implement
 > 
-> Maybe you need to adjust the text here about OBJECT_DECLARE_TYPE here and
-> show how to define Class sturct?
+> Patch uses OBJECT_DEFINE_SIMPLE_TYPE not
+> OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES so change commit message to match
+> the patch.
 
-Then it's not easy to organize the structure in this document, since
-most of the content is now make "OBJECT_DECLARE_SIMPLE_TYPE" as well as
-"OBJECT_DEFINE_SIMPLE_TYPE" as examples... I'm a bit unsure, and we can
-wait and see what others would say.
+Good catch! Thanks!
 
-BTW, I found I missed this sentence:
-
-"(OBJECT_DECLARE_TYPE) This does the same as OBJECT_DECLARE_SIMPLE_TYPE(),
-but without the 'struct MyDeviceClass' definition."
-
-It should be: This does the same as OBJECT_DECLARE_SIMPLE_TYPE(),
-but with the class type.
-
-Thanks,
+Regards,
 Zhao
 
 
