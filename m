@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E60A3C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C54FC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHOu-00026Q-VO; Wed, 14 May 2025 15:04:21 -0400
+	id 1uFHPx-0003rC-3A; Wed, 14 May 2025 15:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLs-0004b7-VR; Wed, 14 May 2025 15:01:13 -0400
+ id 1uFHMR-00054y-3a; Wed, 14 May 2025 15:01:49 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLo-0007OL-CO; Wed, 14 May 2025 15:01:12 -0400
+ id 1uFHMN-0007aw-EJ; Wed, 14 May 2025 15:01:46 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 704DA121D95;
+ by isrv.corpit.ru (Postfix) with ESMTP id CDDD0121D9A;
  Wed, 14 May 2025 22:00:32 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 75D6120BA87;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C9A7320BA8C;
  Wed, 14 May 2025 22:00:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 11/23] meson: Use osdep_prefix for strchrnul()
-Date: Wed, 14 May 2025 22:00:23 +0300
-Message-Id: <20250514190041.104759-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 16/23] hw/gpio/imx_gpio: Fix interpretation of GDIR
+ polarity
+Date: Wed, 14 May 2025 22:00:28 +0300
+Message-Id: <20250514190041.104759-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,43 +60,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-macOS SDK may have the symbol of strchrnul(), but it is actually
-available only on macOS 15.4 or later and that fact is codified in
-string.h. Include the header file using osdep_prefix to check if the
-function is available on the deployment target.
+According to the i.MX 8M Plus reference manual, a GPIO pin is
+configured as an output when the corresponding bit in the GDIR
+register is set.  The function imx_gpio_set_int_line() is intended to
+be a no-op if the pin is configured as an output, returning early in
+such cases.  However, it inverts the condition.  Fix this by
+returning early when the bit is set.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250424-buildsys-v1-4-97655e3b25d7@daynix.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit a5b30be534538dc6e44a68ce9734e45dd08f52ec)
+cc: qemu-stable@nongnu.org
+Fixes: f44272809779 ("i.MX: Add GPIO device")
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-id: 20250501183445.2389-4-shentey@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit eba837a31b9579e30cc6d7ecb4b5c2662a6ffaba)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index 0a35fc3fa9..8ec796d835 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2193,6 +2193,7 @@ osdep_prefix = '''
-   #include <stddef.h>
-   #include <sys/types.h>
+diff --git a/hw/gpio/imx_gpio.c b/hw/gpio/imx_gpio.c
+index 549a281ed7..8e0ee3048a 100644
+--- a/hw/gpio/imx_gpio.c
++++ b/hw/gpio/imx_gpio.c
+@@ -72,7 +72,7 @@ static void imx_gpio_update_int(IMXGPIOState *s)
+ static void imx_gpio_set_int_line(IMXGPIOState *s, int line, IMXGPIOLevel level)
+ {
+     /* if this signal isn't configured as an input signal, nothing to do */
+-    if (!extract32(s->gdir, line, 1)) {
++    if (extract32(s->gdir, line, 1)) {
+         return;
+     }
  
-+  #include <string.h>
-   #include <limits.h>
-   /* Put unistd.h before time.h as that triggers localtime_r/gmtime_r
-    * function availability on recentish Mingw-w64 platforms. */
-@@ -2657,7 +2658,7 @@ config_host_data.set('HAVE_GETIFADDRS', cc.has_function('getifaddrs'))
- config_host_data.set('HAVE_GLIB_WITH_SLICE_ALLOCATOR', glib_has_gslice)
- config_host_data.set('HAVE_GLIB_WITH_ALIGNED_ALLOC', glib_has_aligned_alloc)
- config_host_data.set('HAVE_OPENPTY', cc.has_function('openpty', dependencies: util))
--config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul'))
-+config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul', prefix: osdep_prefix))
- config_host_data.set('HAVE_SYSTEM_FUNCTION', cc.has_function('system', prefix: '#include <stdlib.h>'))
- if rbd.found()
-   config_host_data.set('HAVE_RBD_NAMESPACE_EXISTS',
 -- 
 2.39.5
 
