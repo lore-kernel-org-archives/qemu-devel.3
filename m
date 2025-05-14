@@ -4,41 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5A1C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AFEBC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:14:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBfc-0000CI-8Y; Wed, 14 May 2025 08:57:13 -0400
+	id 1uFBgs-0002zo-5L; Wed, 14 May 2025 08:58:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBfP-0008Qk-KE; Wed, 14 May 2025 08:57:00 -0400
+ id 1uFBgg-00029M-1r; Wed, 14 May 2025 08:58:18 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBfN-0007hf-9o; Wed, 14 May 2025 08:56:59 -0400
+ id 1uFBgd-0007nq-DM; Wed, 14 May 2025 08:58:17 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A8F94121AC2;
- Wed, 14 May 2025 15:56:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9FD20121AD2;
+ Wed, 14 May 2025 15:56:31 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5395020B83A;
- Wed, 14 May 2025 15:56:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4C08620B84A;
+ Wed, 14 May 2025 15:56:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Frederik Du Toit Lotter <fred.lotter@canonical.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.18 02/18] hw/rtc/goldfish: keep time offset when resetting
-Date: Wed, 14 May 2025 15:56:08 +0300
-Message-Id: <20250514125640.91677-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 18/18] 9pfs: fix FD leak and reduce latency of
+ v9fs_reclaim_fd()
+Date: Wed, 14 May 2025 15:56:24 +0300
+Message-Id: <20250514125640.91677-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,66 +60,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Currently resetting the leads to resynchronizing the Goldfish RTC
-with the system clock of the host. In real hardware an RTC reset
-would not change the wall time. Other RTCs like pl031 do not show
-this behavior.
+This patch fixes two different bugs in v9fs_reclaim_fd():
 
-Move the synchronization of the RTC with the system clock to the
-instance realization.
+1. Reduce latency:
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Frederik Du Toit Lotter <fred.lotter@canonical.com>
-Fixes: 9a5b40b8427 ("hw: rtc: Add Goldfish RTC device")
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250321221248.17764-1-heinrich.schuchardt@canonical.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 2542d5cf471a38c4ceb9717708178938b96ded47)
+This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
+one of the calls adds two thread hops (between main thread and a fs driver
+background thread). Each thread hop adds latency, which sums up in
+function's loop to a significant duration.
+
+Reduce overall latency by open coding what v9fs_co_close() and
+v9fs_co_closedir() do, executing those and the loop itself altogether in
+only one background thread block, hence reducing the total amount of
+thread hops to only two.
+
+2. Fix file descriptor leak:
+
+The existing code called v9fs_co_close() and v9fs_co_closedir() to close
+file descriptors. Both functions check right at the beginning if the 9p
+request was cancelled:
+
+    if (v9fs_request_cancelled(pdu)) {
+        return -EINTR;
+    }
+
+So if client sent a 'Tflush' message, v9fs_co_close() / v9fs_co_closedir()
+returned without having closed the file descriptor and v9fs_reclaim_fd()
+subsequently freed the FID without its file descriptor being closed, hence
+leaking those file descriptors.
+
+This 2nd bug is fixed by this patch as well by open coding v9fs_co_close()
+and v9fs_co_closedir() inside of v9fs_reclaim_fd() and not performing the
+v9fs_request_cancelled(pdu) check there.
+
+Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
+Fixes: bccacf6c792 ('hw/9pfs: Implement TFLUSH operation')
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Message-Id: <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
+(cherry picked from commit 89f7b4da7662ecc6840ffb0846045f03f9714bc6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
-index 81cc942b46..84778bbc36 100644
---- a/hw/rtc/goldfish_rtc.c
-+++ b/hw/rtc/goldfish_rtc.c
-@@ -239,15 +239,8 @@ static const VMStateDescription goldfish_rtc_vmstate = {
- static void goldfish_rtc_reset(DeviceState *dev)
- {
-     GoldfishRTCState *s = GOLDFISH_RTC(dev);
--    struct tm tm;
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 0afaf93645..e7cfc77071 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -440,6 +440,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     V9fsFidState *f;
+     GHashTableIter iter;
+     gpointer fid;
++    int err;
++    int nclosed = 0;
  
-     timer_del(s->timer);
--
--    qemu_get_timedate(&tm, 0);
--    s->tick_offset = mktimegm(&tm);
--    s->tick_offset *= NANOSECONDS_PER_SECOND;
--    s->tick_offset -= qemu_clock_get_ns(rtc_clock);
--    s->tick_offset_vmstate = 0;
-     s->alarm_next = 0;
-     s->alarm_running = 0;
-     s->irq_pending = 0;
-@@ -258,6 +251,7 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
- {
-     SysBusDevice *dev = SYS_BUS_DEVICE(d);
-     GoldfishRTCState *s = GOLDFISH_RTC(d);
-+    struct tm tm;
+     /* prevent multiple coroutines running this function simultaniously */
+     if (s->reclaiming) {
+@@ -452,10 +454,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     QSLIST_HEAD(, V9fsFidState) reclaim_list =
+         QSLIST_HEAD_INITIALIZER(reclaim_list);
  
-     memory_region_init_io(&s->iomem, OBJECT(s),
-                           &goldfish_rtc_ops[s->big_endian], s,
-@@ -267,6 +261,11 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
-     sysbus_init_irq(dev, &s->irq);
- 
-     s->timer = timer_new_ns(rtc_clock, goldfish_rtc_interrupt, s);
-+
-+    qemu_get_timedate(&tm, 0);
-+    s->tick_offset = mktimegm(&tm);
-+    s->tick_offset *= NANOSECONDS_PER_SECOND;
-+    s->tick_offset -= qemu_clock_get_ns(rtc_clock);
- }
- 
- static Property goldfish_rtc_properties[] = {
++    /* Pick FIDs to be closed, collect them on reclaim_list. */
+     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
+         /*
+-         * Unlink fids cannot be reclaimed. Check
+-         * for them and skip them. Also skip fids
++         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
+          * currently being operated on.
+          */
+         if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
+@@ -505,17 +507,26 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+         }
+     }
+     /*
+-     * Now close the fid in reclaim list. Free them if they
+-     * are already clunked.
++     * Close the picked FIDs altogether on a background I/O driver thread. Do
++     * this all at once to keep latency (i.e. amount of thread hops between main
++     * thread <-> fs driver background thread) as low as possible.
+      */
++    v9fs_co_run_in_worker({
++        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
++            err = (f->fid_type == P9_FID_DIR) ?
++                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
++                s->ops->close(&s->ctx, &f->fs_reclaim);
++            if (!err) {
++                /* total_open_fd must only be mutated on main thread */
++                nclosed++;
++            }
++        }
++    });
++    total_open_fd -= nclosed;
++    /* Free the closed FIDs. */
+     while (!QSLIST_EMPTY(&reclaim_list)) {
+         f = QSLIST_FIRST(&reclaim_list);
+         QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
+-        if (f->fid_type == P9_FID_FILE) {
+-            v9fs_co_close(pdu, &f->fs_reclaim);
+-        } else if (f->fid_type == P9_FID_DIR) {
+-            v9fs_co_closedir(pdu, &f->fs_reclaim);
+-        }
+         /*
+          * Now drop the fid reference, free it
+          * if clunked.
 -- 
 2.39.5
 
