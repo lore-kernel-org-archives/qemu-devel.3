@@ -4,109 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18E3C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62BEC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFI4N-0008TO-NO; Wed, 14 May 2025 15:47:12 -0400
+	id 1uFI5d-0001eY-S2; Wed, 14 May 2025 15:48:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFI3n-0007wn-00; Wed, 14 May 2025 15:46:37 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1uFI4N-0008Sa-9W; Wed, 14 May 2025 15:47:11 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFI3j-0000ur-6w; Wed, 14 May 2025 15:46:34 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGnIvE012692;
- Wed, 14 May 2025 19:46:28 GMT
+ id 1uFI4L-00010D-IE; Wed, 14 May 2025 15:47:11 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EIoMA3031095;
+ Wed, 14 May 2025 19:47:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=LXdzTS
- rx/U11AB0lt5wH/r8LDTwFRY3aeUynqvDreO0=; b=CAW4PtOZpR+iNrjfK02k0U
- kCKyTCffiscJbYdbsYczLdVyCjlO20fq/KpF4XpG6/q1LjWE9ozPI4u2TL1M6j18
- i5VNiFXCKV9AEGeh9PE4LUY6dceJ11Xpr9hTnJ5pR78Wi3911h06WM8hLhRPSNTW
- CuwVwWO/xhRQdNF4ui2QIhuWLfLyE6I8hY+dmVq++nS4BlNcpg7nq6Iso6IBjNZk
- Wq2IwzGxluKiTILhHUrt+QF5z9r3xUPPpcYlm6nyhR4963YGr+jADyZMRHcSlw3i
- 2w2fCRMZyIVXqE1tO3RYfsXZWqolhILfG+BN90Pw2RKWGEoU6f1+7GN/l4buWcYA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=kVNLkD
+ CbbKdbDxO3S+UlVaL72iTo4v9ZQxP7hgYHPEA=; b=SRoZEw42g0dOlWu7PRSgXC
+ Zk7YSD+nETK2UeeWhb558/xGcwfzCkLmdVFpfsXP0IeEDSAvj+bCDBaExh6NJ2dZ
+ TrqVIHdtYFfx3fnpR8HRO2ykyN8IMRdRkUkXjHT8+MddCcUkeUzGDiCiVkh3cREZ
+ C6JGMQ/pPRwIQpl3iSY8REzRx2z5fmQxg9tllR3ruyGWz3mFMH3awEGR4rBDF04y
+ 3tWplKcVqm2TA72bjQVm4tkmOTAWrWgl4OW1CA6rOtkoQY4oAw0FndddtwboveRZ
+ nWI55i60VPRNr+/Kjod296QBV+vfDJ28df/x9khPV0zFmFy64eeETe/ZEbyEHXxg
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mrcjb8dt-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0t98a1b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 19:46:28 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54EJkRiL014365;
- Wed, 14 May 2025 19:46:27 GMT
+ Wed, 14 May 2025 19:47:07 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54EJl67M025304;
+ Wed, 14 May 2025 19:47:06 GMT
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46mrcjb8dr-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0t98a19-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 19:46:27 +0000 (GMT)
+ Wed, 14 May 2025 19:47:06 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54EGncSs021574;
- Wed, 14 May 2025 19:46:27 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfrp5vj-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54EJQwGi021455;
+ Wed, 14 May 2025 19:47:05 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfrp5y9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 May 2025 19:46:27 +0000
+ Wed, 14 May 2025 19:47:05 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54EJkQ0n19399392
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54EJl4d523724566
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 May 2025 19:46:26 GMT
+ Wed, 14 May 2025 19:47:04 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1855058054;
- Wed, 14 May 2025 19:46:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3D10858054;
+ Wed, 14 May 2025 19:47:04 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 887535804E;
- Wed, 14 May 2025 19:46:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ACA715804E;
+ Wed, 14 May 2025 19:47:03 +0000 (GMT)
 Received: from [9.10.80.143] (unknown [9.10.80.143])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 May 2025 19:46:25 +0000 (GMT)
-Message-ID: <99c13d39-9fc4-4121-97a8-a103d2013fc3@linux.ibm.com>
-Date: Wed, 14 May 2025 14:46:24 -0500
+ Wed, 14 May 2025 19:47:03 +0000 (GMT)
+Message-ID: <71381de3-796a-4707-840d-48ada1ab7059@linux.ibm.com>
+Date: Wed, 14 May 2025 14:47:03 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/50] ppc/xive: Add more interrupt notification tracing
+Subject: Re: [PATCH 24/50] ppc/xive2: Improve pool regs variable name
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
  <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-24-npiggin@gmail.com>
+ <20250512031100.439842-25-npiggin@gmail.com>
 Content-Language: en-US
 From: Mike Kowal <kowal@linux.ibm.com>
-In-Reply-To: <20250512031100.439842-24-npiggin@gmail.com>
+In-Reply-To: <20250512031100.439842-25-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=ZYgdNtVA c=1 sm=1 tr=0 ts=6824f314 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=etzfzppX c=1 sm=1 tr=0 ts=6824f33b cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=hmiCZ5762WqYC9sDUSgA:9
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=zwZabxx_P4Ew84Oz15sA:9
  a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: sOtxOkertloPzCc1He5i2p50icWH97tJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE4MCBTYWx0ZWRfX1dz0GHoL4Gl5
- 9AZ4yHqHKH4GNmjjE22MukcIu1WnYCCGA7XTIQExtR0hNFY/WjntqB4EeUwIh6oTfnGQ3w+jiQ3
- aTUTCYvJnXEuDgYAG7ZnEW6gHrVAvr20KGnOSyP7w+Vu+hbeHRJ/M6rGfblUxUAT8EcddTUiB0z
- SMoOQdm9utU6oqpsKDQDPxO2tM2pTiWPGDl+4KP07Vt6wuUaf37LrGEH7dEGfsRFY/aqIXfC4JF
- Xtx/+Urws+kDI+/XY4BPoN/QY/6gluGekgv3eSAK7WlY9EvHqWQgX2bXYKp6XZjDtAfu0KlsGeQ
- BM7nwwq0Sl/F/qPmNBYuFhlekRtRyA1UazdbsTwjOZAIwPPGXIFgGwU/6cK6T7qn3BFNthAgCr6
- bWEtfb+6twc73EIW+RhYh8mwJaDsskhsH4O+VqUFU+gwJ6Ao2qlEnMr4Mur4LgOJZlCWWwXP
-X-Proofpoint-GUID: -0SW7ISdMGpwdF4TH1QhZXvSDEH1IS-_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE0MDE4MCBTYWx0ZWRfX5jsOJkoTtQrd
+ 0oVGitO4oCdkwvxswod2OrUUBvFynKX2Y3eCXRMZRNiJ6AbmzUR3PKwvG4i6Pl9XEZUul4kbFjB
+ jtF9OZ8fAWR4Rx7Kbd2g8+VNlk4yNdMpzdFAyXQlyhLcAe/3mplx0HMwsTLQ8AHdWZjxRbDXuvv
+ mZiLcxWG4m9GKR4T4SnHyHwY9aAOzLkfQlxAYW0x+nwApznIo7rZSpk9kecg21GTPRvJikJGhVW
+ ueMsVTg6I7w0C6YqfolQXAHjyvUXfxlfqK6iX/YNFMtQucxGrBKur1Z+gN8Kd334ZEBhoO2jvjB
+ Z3Sdz90ah2gZJfbTjkKIX1oC+wA2gK6+KCeS07jaRDIg5gEZxOALasZyF/nfaIEfINn0eQS7Cgq
+ /Kx/XhTA5CzADQPl5PadL/1naDysPVWnXArwibPaB8Ca7aFbApmXuHf2LlUyK24dYykr0252
+X-Proofpoint-ORIG-GUID: _qHLdI9YIbmzI4u2OLTHpGb_7_gnyY8F
+X-Proofpoint-GUID: 7TyviRGtIBOYOWmKmE7gVKGE6XNZTbzt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-14_04,2025-05-14_03,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0
- clxscore=1015 lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0
- suspectscore=0 bulkscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2505070000
+ impostorscore=0
+ lowpriorityscore=0 phishscore=0 mlxscore=0 mlxlogscore=944 bulkscore=0
+ suspectscore=0 spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505140180
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -134,108 +134,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
 > From: Glenn Miles <milesg@linux.ibm.com>
 >
-> Add more tracing around notification, redistribution, and escalation.
+> Change pregs to pool_regs, for clarity.
 
 Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
 
 Thanks,  MAK
 
 >
+> [npiggin: split from larger patch]
 > Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
 > ---
->   hw/intc/trace-events |  6 ++++++
->   hw/intc/xive.c       |  3 +++
->   hw/intc/xive2.c      | 13 ++++++++-----
->   3 files changed, 17 insertions(+), 5 deletions(-)
+>   hw/intc/xive2.c | 11 +++++------
+>   1 file changed, 5 insertions(+), 6 deletions(-)
 >
-> diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-> index f77f9733c9..9eca0925b6 100644
-> --- a/hw/intc/trace-events
-> +++ b/hw/intc/trace-events
-> @@ -279,6 +279,8 @@ xive_tctx_notify(uint32_t index, uint8_t ring, uint8_t ipb, uint8_t pipr, uint8_
->   xive_tctx_set_cppr(uint32_t index, uint8_t ring, uint8_t ipb, uint8_t pipr, uint8_t cppr, uint8_t nsr) "target=%d ring=0x%x IPB=0x%02x PIPR=0x%02x new CPPR=0x%02x NSR=0x%02x"
->   xive_source_esb_read(uint64_t addr, uint32_t srcno, uint64_t value) "@0x%"PRIx64" IRQ 0x%x val=0x%"PRIx64
->   xive_source_esb_write(uint64_t addr, uint32_t srcno, uint64_t value) "@0x%"PRIx64" IRQ 0x%x val=0x%"PRIx64
-> +xive_source_notify(uint32_t srcno) "Processing notification for queued IRQ 0x%x"
-> +xive_source_blocked(uint32_t srcno) "No action needed for IRQ 0x%x currently"
->   xive_router_end_notify(uint8_t end_blk, uint32_t end_idx, uint32_t end_data) "END 0x%02x/0x%04x -> enqueue 0x%08x"
->   xive_router_end_escalate(uint8_t end_blk, uint32_t end_idx, uint8_t esc_blk, uint32_t esc_idx, uint32_t end_data) "END 0x%02x/0x%04x -> escalate END 0x%02x/0x%04x data 0x%08x"
->   xive_tctx_tm_write(uint32_t index, uint64_t offset, unsigned int size, uint64_t value) "target=%d @0x%"PRIx64" sz=%d val=0x%" PRIx64
-> @@ -289,6 +291,10 @@ xive_end_source_read(uint8_t end_blk, uint32_t end_idx, uint64_t addr) "END 0x%x
->   # xive2.c
->   xive_nvp_backlog_op(uint8_t blk, uint32_t idx, uint8_t op, uint8_t priority, uint8_t rc) "NVP 0x%x/0x%x operation=%d priority=%d rc=%d"
->   xive_nvgc_backlog_op(bool c, uint8_t blk, uint32_t idx, uint8_t op, uint8_t priority, uint32_t rc) "NVGC crowd=%d 0x%x/0x%x operation=%d priority=%d rc=%d"
-> +xive_redistribute(uint32_t index, uint8_t ring, uint8_t end_blk, uint32_t end_idx) "Redistribute from target=%d ring=0x%x NVP 0x%x/0x%x"
-> +xive_end_enqueue(uint8_t end_blk, uint32_t end_idx, uint32_t end_data) "Queue event for END 0x%x/0x%x data=0x%x"
-> +xive_escalate_end(uint8_t end_blk, uint32_t end_idx, uint8_t esc_blk, uint32_t esc_idx, uint32_t esc_data) "Escalate from END 0x%x/0x%x to END 0x%x/0x%x data=0x%x"
-> +xive_escalate_esb(uint8_t end_blk, uint32_t end_idx, uint32_t lisn) "Escalate from END 0x%x/0x%x to LISN=0x%x"
->   
->   # pnv_xive.c
->   pnv_xive_ic_hw_trigger(uint64_t addr, uint64_t val) "@0x%"PRIx64" val=0x%"PRIx64
-> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-> index 1a94642c62..7461dbecb8 100644
-> --- a/hw/intc/xive.c
-> +++ b/hw/intc/xive.c
-> @@ -1276,6 +1276,7 @@ static uint64_t xive_source_esb_read(void *opaque, hwaddr addr, unsigned size)
->   
->           /* Forward the source event notification for routing */
->           if (ret) {
-> +            trace_xive_source_notify(srcno);
->               xive_source_notify(xsrc, srcno);
->           }
->           break;
-> @@ -1371,6 +1372,8 @@ out:
->       /* Forward the source event notification for routing */
->       if (notify) {
->           xive_source_notify(xsrc, srcno);
-> +    } else {
-> +        trace_xive_source_blocked(srcno);
->       }
->   }
->   
 > diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 34fc561c9c..968b698677 100644
+> index 968b698677..ec4b9320b4 100644
 > --- a/hw/intc/xive2.c
 > +++ b/hw/intc/xive2.c
-> @@ -616,6 +616,7 @@ static void xive2_redistribute(Xive2Router *xrtr, XiveTCTX *tctx,
->       uint8_t prio_limit;
->       uint32_t cfg;
+> @@ -1044,13 +1044,12 @@ again:
 >   
-> +    trace_xive_redistribute(tctx->cs->cpu_index, ring, nvp_blk, nvp_idx);
->       /* convert crowd/group to blk/idx */
->       if (group > 0) {
->           nvgc_idx = (nvp_idx & (0xffffffff << group)) |
-> @@ -1455,6 +1456,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
->       }
+>       /* PHYS updates also depend on POOL values */
+>       if (ring == TM_QW3_HV_PHYS) {
+> -        uint8_t *pregs = &tctx->regs[TM_QW2_HV_POOL];
+> +        uint8_t *pool_regs = &tctx->regs[TM_QW2_HV_POOL];
 >   
->       if (!redistribute && xive2_end_is_enqueue(&end)) {
-> +        trace_xive_end_enqueue(end_blk, end_idx, end_data);
->           xive2_end_enqueue(&end, end_data);
->           /* Enqueuing event data modifies the EQ toggle and index */
->           xive2_router_write_end(xrtr, end_blk, end_idx, &end, 1);
-> @@ -1631,11 +1633,11 @@ do_escalation:
->            * Perform END Adaptive escalation processing
->            * The END trigger becomes an Escalation trigger
->            */
-> -        xive2_router_end_notify(xrtr,
-> -                               xive_get_field32(END2_W4_END_BLOCK,     end.w4),
-> -                               xive_get_field32(END2_W4_ESC_END_INDEX, end.w4),
-> -                               xive_get_field32(END2_W5_ESC_END_DATA,  end.w5),
-> -                               false);
-> +        uint8_t esc_blk = xive_get_field32(END2_W4_END_BLOCK, end.w4);
-> +        uint32_t esc_idx = xive_get_field32(END2_W4_ESC_END_INDEX, end.w4);
-> +        uint32_t esc_data = xive_get_field32(END2_W5_ESC_END_DATA, end.w5);
-> +        trace_xive_escalate_end(end_blk, end_idx, esc_blk, esc_idx, esc_data);
-> +        xive2_router_end_notify(xrtr, esc_blk, esc_idx, esc_data, false);
->       } /* end END adaptive escalation */
+>           /* POOL values only matter if POOL ctx is valid */
+> -        if (pregs[TM_WORD2] & 0x80) {
+> -
+> -            uint8_t pool_pipr = xive_ipb_to_pipr(pregs[TM_IPB]);
+> -            uint8_t pool_lsmfb = pregs[TM_LSMFB];
+> +        if (pool_regs[TM_WORD2] & 0x80) {
+> +            uint8_t pool_pipr = xive_ipb_to_pipr(pool_regs[TM_IPB]);
+> +            uint8_t pool_lsmfb = pool_regs[TM_LSMFB];
 >   
->       else {
-> @@ -1652,6 +1654,7 @@ do_escalation:
->           lisn = XIVE_EAS(xive_get_field32(END2_W4_END_BLOCK,     end.w4),
->                           xive_get_field32(END2_W4_ESC_END_INDEX, end.w4));
+>               /*
+>                * Determine highest priority interrupt and
+> @@ -1064,7 +1063,7 @@ again:
+>               }
 >   
-> +        trace_xive_escalate_esb(end_blk, end_idx, lisn);
->           xive2_notify(xrtr, lisn, true /* pq_checked */);
->       }
->   
+>               /* Values needed for group priority calculation */
+> -            if (pregs[TM_LGS] && (pool_lsmfb < lsmfb_min)) {
+> +            if (pool_regs[TM_LGS] && (pool_lsmfb < lsmfb_min)) {
+>                   group_enabled = true;
+>                   lsmfb_min = pool_lsmfb;
+>                   if (lsmfb_min < pipr_min) {
 
