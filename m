@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E4EC3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5B9C3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF74f-0002fc-52; Wed, 14 May 2025 04:02:45 -0400
+	id 1uF745-0002XG-Aj; Wed, 14 May 2025 04:02:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uF74d-0002ey-K0
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:43 -0400
+ id 1uF743-0002X0-6F
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:07 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uF74W-0002EQ-Ma
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:43 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uF740-00029m-4s
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:06 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxXWsPTiRo8VbmAA--.47180S3;
- Wed, 14 May 2025 16:02:23 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxaeH4TSRotlbmAA--.3659S3;
+ Wed, 14 May 2025 16:02:00 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S16;
- Wed, 14 May 2025 16:02:21 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S5;
+ Wed, 14 May 2025 16:01:59 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
 	maobibo@loongson.cn
-Subject: [PULL 14/17] hw/intc/loongarch_pch: Rename memory region iomem32_low
- with iomem
-Date: Wed, 14 May 2025 15:39:24 +0800
-Message-Id: <20250514073927.2424543-15-gaosong@loongson.cn>
+Subject: [PULL 03/17] hw/intc/loongarch_pch: Remove some duplicate macro
+Date: Wed, 14 May 2025 15:39:13 +0800
+Message-Id: <20250514073927.2424543-4-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250514073927.2424543-1-gaosong@loongson.cn>
 References: <20250514073927.2424543-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S16
+X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S5
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,90 +67,91 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Rename memory region iomem32_low with iomem, also change ops name
-as follows:
-  loongarch_pch_pic_reg32_low_ops  --> loongarch_pch_pic_ops
-  loongarch_pch_pic_low_readw      --> loongarch_pch_pic_read
-  loongarch_pch_pic_low_writew     --> loongarch_pch_pic_write
+The meaning of macro definition STATUS_LO_START is simliar with
+PCH_PIC_INT_STATUS, only that offset is different, the same for
+macro POL_LO_START. Now remove these duplicated macro definitions.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20250507023754.1877445-3-maobibo@loongson.cn>
+Message-Id: <20250507023148.1877287-4-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c            | 26 +++++++-------------------
- include/hw/intc/loongarch_pic_common.h |  2 +-
- 2 files changed, 8 insertions(+), 20 deletions(-)
+ hw/intc/loongarch_pch_pic.c            | 20 ++++++++++----------
+ include/hw/intc/loongarch_pic_common.h |  5 -----
+ 2 files changed, 10 insertions(+), 15 deletions(-)
 
 diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index c06ef0df3f..076b984d93 100644
+index 52ae360fdc..17ab071a6b 100644
 --- a/hw/intc/loongarch_pch_pic.c
 +++ b/hw/intc/loongarch_pch_pic.c
-@@ -230,18 +230,6 @@ static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
-     }
- }
- 
--static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
--                                            unsigned size)
--{
--    return loongarch_pch_pic_read(opaque, addr, size);
--}
--
--static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
--                                         uint64_t value, unsigned size)
--{
--    loongarch_pch_pic_write(opaque, addr, value, size);
--}
--
- static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
-                                         unsigned size)
+@@ -208,19 +208,19 @@ static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
  {
-@@ -270,9 +258,9 @@ static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
-     loongarch_pch_pic_write(opaque, addr, data, size);
- }
+     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+     uint64_t val = 0;
+-    uint32_t offset = addr & 0xfff;
++    uint32_t offset = addr + PCH_PIC_INT_STATUS;
  
--static const MemoryRegionOps loongarch_pch_pic_reg32_low_ops = {
--    .read = loongarch_pch_pic_low_readw,
--    .write = loongarch_pch_pic_low_writew,
-+static const MemoryRegionOps loongarch_pch_pic_ops = {
-+    .read = loongarch_pch_pic_read,
-+    .write = loongarch_pch_pic_write,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 8,
-@@ -336,15 +324,15 @@ static void loongarch_pic_realize(DeviceState *dev, Error **errp)
+     switch (offset) {
+-    case STATUS_LO_START:
++    case PCH_PIC_INT_STATUS:
+         val = (uint32_t)(s->intisr & (~s->int_mask));
+         break;
+-    case STATUS_HI_START:
++    case PCH_PIC_INT_STATUS + 4:
+         val = (s->intisr & (~s->int_mask)) >> 32;
+         break;
+-    case POL_LO_START:
++    case PCH_PIC_INT_POL:
+         val = (uint32_t)s->int_polarity;
+         break;
+-    case POL_HI_START:
++    case PCH_PIC_INT_POL + 4:
+         val = s->int_polarity >> 32;
+         break;
+     default:
+@@ -236,21 +236,21 @@ static void loongarch_pch_pic_high_writew(void *opaque, hwaddr addr,
+ {
+     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+     uint32_t offset, data = (uint32_t)value;
+-    offset = addr & 0xfff;
++    offset = addr + PCH_PIC_INT_STATUS;
  
-     qdev_init_gpio_out(dev, s->parent_irq, s->irq_num);
-     qdev_init_gpio_in(dev, pch_pic_irq_handler, s->irq_num);
--    memory_region_init_io(&s->iomem32_low, OBJECT(dev),
--                          &loongarch_pch_pic_reg32_low_ops,
--                          s, PCH_PIC_NAME(.reg32_part1), 0x100);
-+    memory_region_init_io(&s->iomem, OBJECT(dev),
-+                          &loongarch_pch_pic_ops,
-+                          s, TYPE_LOONGARCH_PIC, 0x100);
-     memory_region_init_io(&s->iomem8, OBJECT(dev), &loongarch_pch_pic_reg8_ops,
-                           s, PCH_PIC_NAME(.reg8), 0x2a0);
-     memory_region_init_io(&s->iomem32_high, OBJECT(dev),
-                           &loongarch_pch_pic_reg32_high_ops,
-                           s, PCH_PIC_NAME(.reg32_part2), 0xc60);
--    sysbus_init_mmio(sbd, &s->iomem32_low);
-+    sysbus_init_mmio(sbd, &s->iomem);
-     sysbus_init_mmio(sbd, &s->iomem8);
-     sysbus_init_mmio(sbd, &s->iomem32_high);
+     trace_loongarch_pch_pic_high_writew(size, addr, data);
  
+     switch (offset) {
+-    case STATUS_LO_START:
++    case PCH_PIC_INT_STATUS:
+         s->intisr = get_writew_val(s->intisr, data, 0);
+         break;
+-    case STATUS_HI_START:
++    case PCH_PIC_INT_STATUS + 4:
+         s->intisr = get_writew_val(s->intisr, data, 1);
+         break;
+-    case POL_LO_START:
++    case PCH_PIC_INT_POL:
+         s->int_polarity = get_writew_val(s->int_polarity, data, 0);
+         break;
+-    case POL_HI_START:
++    case PCH_PIC_INT_POL + 4:
+         s->int_polarity = get_writew_val(s->int_polarity, data, 1);
+         break;
+     default:
 diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index 7a9a2bdd46..dc03056227 100644
+index caf712eae0..2b4b483c63 100644
 --- a/include/hw/intc/loongarch_pic_common.h
 +++ b/include/hw/intc/loongarch_pic_common.h
-@@ -65,7 +65,7 @@ struct LoongArchPICCommonState {
-     uint8_t route_entry[64];  /* 0x100 - 0x138 */
-     uint8_t htmsi_vector[64]; /* 0x200 - 0x238 */
+@@ -26,11 +26,6 @@
+ #define PCH_PIC_INT_STATUS              0x3a0
+ #define PCH_PIC_INT_POL                 0x3e0
  
--    MemoryRegion iomem32_low;
-+    MemoryRegion iomem;
-     MemoryRegion iomem32_high;
-     MemoryRegion iomem8;
-     unsigned int irq_num;
+-#define STATUS_LO_START                 0
+-#define STATUS_HI_START                 0x4
+-#define POL_LO_START                    0x40
+-#define POL_HI_START                    0x44
+-
+ #define TYPE_LOONGARCH_PIC_COMMON "loongarch_pic_common"
+ OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
+                     LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
 -- 
 2.34.1
 
