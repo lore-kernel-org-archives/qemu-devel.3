@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B04C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C977BC3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHRR-0006hX-Eg; Wed, 14 May 2025 15:06:57 -0400
+	id 1uFHSB-00005S-FK; Wed, 14 May 2025 15:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHNE-0005pK-P6; Wed, 14 May 2025 15:02:38 -0400
+ id 1uFHN7-0005g1-NB; Wed, 14 May 2025 15:02:32 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHNC-0007p4-O3; Wed, 14 May 2025 15:02:36 -0400
+ id 1uFHN2-0007cl-Ca; Wed, 14 May 2025 15:02:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1C7A7121DA0;
- Wed, 14 May 2025 22:00:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E2899121D9C;
+ Wed, 14 May 2025 22:00:32 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2403120BA92;
- Wed, 14 May 2025 22:00:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EA9E320BA8E;
+ Wed, 14 May 2025 22:00:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 22/23] 9pfs: fix concurrent v9fs_reclaim_fd() calls
-Date: Wed, 14 May 2025 22:00:34 +0300
-Message-Id: <20250514190041.104759-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 18/23] target/i386: do not block singlestep for STI
+Date: Wed, 14 May 2025 22:00:30 +0300
+Message-Id: <20250514190041.104759-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
@@ -59,72 +59,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Even though this function is serialized to be always called from main
-thread, v9fs_reclaim_fd() is dispatching the coroutine to a worker thread
-in between via its v9fs_co_*() calls, hence leading to the situation where
-v9fs_reclaim_fd() is effectively executed multiple times simultaniously,
-which renders its LRU algorithm useless and causes high latency.
+STI will trigger a singlestep exception even if it has inhibit-IRQ
+behavior.  Do not suppress single-step for all IRQ-inhibiting
+instructions, instead special case MOV SS and POP SS.
 
-Fix this by adding a simple boolean variable to ensure this function is
-only called once at a time. No synchronization needed for this boolean
-variable as this function is only entered and returned on main thread.
-
-Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <5c622067efd66dd4ee5eca740dcf263f41db20b2.1741339452.git.qemu_oss@crudebyte.com>
-(cherry picked from commit 61da38db70affd925226ce1e8a61d761c20d045b)
+Cc: qemu-stable@nongnu.org
+Fixes: f0f0136abba ("target/i386: no single-step exception after MOV or POP SS", 2024-05-25)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 1e94ddc6854431064c94a7d8f2f2886def285829)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 7cad2bce62..4f9c2dde9c 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -435,6 +435,12 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-     GHashTableIter iter;
-     gpointer fid;
- 
-+    /* prevent multiple coroutines running this function simultaniously */
-+    if (s->reclaiming) {
-+        return;
-+    }
-+    s->reclaiming = true;
-+
-     g_hash_table_iter_init(&iter, s->fids);
- 
-     QSLIST_HEAD(, V9fsFidState) reclaim_list =
-@@ -510,6 +516,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-          */
-         put_fid(pdu, f);
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 390018fdec..50cf56175f 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2013,11 +2013,15 @@ static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src, bool inhibit
+      * stop as a special handling must be done to disable hardware
+      * interrupts for the next instruction.
+      *
++     * This is the last instruction, so it's okay to overwrite
++     * HF_TF_MASK; the next TB will start with the flag set.
++     *
+      * DISAS_EOB_INHIBIT_IRQ is a superset of DISAS_EOB_NEXT which
+      * might have been set above.
+      */
+     if (inhibit_irq) {
+         s->base.is_jmp = DISAS_EOB_INHIBIT_IRQ;
++        s->flags &= ~HF_TF_MASK;
      }
-+
-+    s->reclaiming = false;
  }
  
- /*
-@@ -4324,6 +4332,8 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
-     s->ctx.fst = &fse->fst;
-     fsdev_throttle_init(s->ctx.fst);
- 
-+    s->reclaiming = false;
-+
-     rc = 0;
- out:
-     if (rc) {
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index 5e041e1f60..259ad32ed1 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -362,6 +362,7 @@ struct V9fsState {
-     uint64_t qp_ndevices; /* Amount of entries in qpd_table. */
-     uint16_t qp_affix_next;
-     uint64_t qp_fullpath_next;
-+    bool reclaiming;
- };
- 
- /* 9p2000.L open flags */
+@@ -2265,7 +2269,7 @@ gen_eob(DisasContext *s, int mode)
+     if (mode == DISAS_EOB_RECHECK_TF) {
+         gen_helper_rechecking_single_step(tcg_env);
+         tcg_gen_exit_tb(NULL, 0);
+-    } else if ((s->flags & HF_TF_MASK) && mode != DISAS_EOB_INHIBIT_IRQ) {
++    } else if (s->flags & HF_TF_MASK) {
+         gen_helper_single_step(tcg_env);
+     } else if (mode == DISAS_JUMP &&
+                /* give irqs a chance to happen */
 -- 
 2.39.5
 
