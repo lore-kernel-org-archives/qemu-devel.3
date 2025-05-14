@@ -4,41 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90180C3ABCC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5309C3ABDE
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBnx-00062B-1p; Wed, 14 May 2025 09:05:49 -0400
+	id 1uFBgm-0002cU-WF; Wed, 14 May 2025 08:58:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBjl-0007jm-I4; Wed, 14 May 2025 09:01:36 -0400
+ id 1uFBgL-0001qH-5y; Wed, 14 May 2025 08:58:01 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBjh-0008Hg-Vs; Wed, 14 May 2025 09:01:27 -0400
+ id 1uFBgJ-0007ng-1T; Wed, 14 May 2025 08:57:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 95BE8121AFD;
- Wed, 14 May 2025 15:57:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9754C121AD1;
+ Wed, 14 May 2025 15:56:31 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4127120B86B;
- Wed, 14 May 2025 15:58:00 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 42BD120B849;
+ Wed, 14 May 2025 15:56:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 31/34] gitlab: use --refetch in check-patch/check-dco
- jobs
-Date: Wed, 14 May 2025 15:57:53 +0300
-Message-Id: <20250514125758.92030-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 17/18] 9pfs: fix concurrent v9fs_reclaim_fd() calls
+Date: Wed, 14 May 2025 15:56:23 +0300
+Message-Id: <20250514125640.91677-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
-References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,51 +59,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-When gitlab initializes the repo checkout for a CI job, it will have
-done a shallow clone with only partial history. Periodically the objects
-that are omitted cause trouble with the check-patch/check-dco jobs. This
-is exhibited as reporting strange errors being unable to fetch certain
-objects that are known to exist.
+Even though this function is serialized to be always called from main
+thread, v9fs_reclaim_fd() is dispatching the coroutine to a worker thread
+in between via its v9fs_co_*() calls, hence leading to the situation where
+v9fs_reclaim_fd() is effectively executed multiple times simultaniously,
+which renders its LRU algorithm useless and causes high latency.
 
-Passing the --refetch flag to 'git fetch' causes it to not assume the
-local checkout has all common objects and thus re-fetch everything that
-is needed. This appears to solve the check-patch/check-dco job failures.
+Fix this by adding a simple boolean variable to ensure this function is
+only called once at a time. No synchronization needed for this boolean
+variable as this function is only entered and returned on main thread.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250225110525.2209854-1-berrange@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit d5d028eee38d4107821c0d2cfdb0dd04b9ba5ca3)
+Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Message-Id: <5c622067efd66dd4ee5eca740dcf263f41db20b2.1741339452.git.qemu_oss@crudebyte.com>
+(cherry picked from commit 61da38db70affd925226ce1e8a61d761c20d045b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/check-dco.py b/.gitlab-ci.d/check-dco.py
-index 70dec7d6ee..2fd56683dc 100755
---- a/.gitlab-ci.d/check-dco.py
-+++ b/.gitlab-ci.d/check-dco.py
-@@ -21,7 +21,7 @@
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index d950ad6de6..0afaf93645 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -441,6 +441,12 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     GHashTableIter iter;
+     gpointer fid;
  
- print(f"adding upstream git repo @ {repourl}")
- subprocess.check_call(["git", "remote", "add", "check-dco", repourl])
--subprocess.check_call(["git", "fetch", "check-dco", "master"])
-+subprocess.check_call(["git", "fetch", "--refetch", "check-dco", "master"])
++    /* prevent multiple coroutines running this function simultaniously */
++    if (s->reclaiming) {
++        return;
++    }
++    s->reclaiming = true;
++
+     g_hash_table_iter_init(&iter, s->fids);
  
- ancestor = subprocess.check_output(["git", "merge-base",
-                                     "check-dco/master", "HEAD"],
-diff --git a/.gitlab-ci.d/check-patch.py b/.gitlab-ci.d/check-patch.py
-index 68c549a146..be13e6f77d 100755
---- a/.gitlab-ci.d/check-patch.py
-+++ b/.gitlab-ci.d/check-patch.py
-@@ -24,7 +24,7 @@
- # base for the user's branch. We thus need to figure out a common
- # ancestor between the user's branch and current git master.
- subprocess.check_call(["git", "remote", "add", "check-patch", repourl])
--subprocess.check_call(["git", "fetch", "check-patch", "master"])
-+subprocess.check_call(["git", "fetch", "--refetch", "check-patch", "master"])
+     QSLIST_HEAD(, V9fsFidState) reclaim_list =
+@@ -516,6 +522,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+          */
+         put_fid(pdu, f);
+     }
++
++    s->reclaiming = false;
+ }
  
- ancestor = subprocess.check_output(["git", "merge-base",
-                                     "check-patch/master", "HEAD"],
+ /*
+@@ -4300,6 +4308,8 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
+     s->ctx.fst = &fse->fst;
+     fsdev_throttle_init(s->ctx.fst);
+ 
++    s->reclaiming = false;
++
+     rc = 0;
+ out:
+     if (rc) {
+diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+index 2fce4140d1..1f0449f305 100644
+--- a/hw/9pfs/9p.h
++++ b/hw/9pfs/9p.h
+@@ -363,6 +363,7 @@ struct V9fsState {
+     uint64_t qp_ndevices; /* Amount of entries in qpd_table. */
+     uint16_t qp_affix_next;
+     uint64_t qp_fullpath_next;
++    bool reclaiming;
+ };
+ 
+ /* 9p2000.L open flags */
 -- 
 2.39.5
 
