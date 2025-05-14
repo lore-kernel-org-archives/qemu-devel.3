@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE619C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C33C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFF6J-0000zl-TV; Wed, 14 May 2025 12:37:00 -0400
+	id 1uFF84-0004fJ-2c; Wed, 14 May 2025 12:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uFEjm-0006g4-GQ; Wed, 14 May 2025 12:13:46 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1uFEmg-0000Vf-QO; Wed, 14 May 2025 12:16:47 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uFEjj-0007t2-SN; Wed, 14 May 2025 12:13:42 -0400
+ id 1uFEma-0008QH-DF; Wed, 14 May 2025 12:16:41 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 69EF155BC02;
- Wed, 14 May 2025 18:13:35 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id ADD5455CA4E;
+ Wed, 14 May 2025 18:16:33 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id FzcH6DRRnUzI; Wed, 14 May 2025 18:13:33 +0200 (CEST)
+ with ESMTP id IYIIGMZu_Ksr; Wed, 14 May 2025 18:16:31 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1F4E555CA5C; Wed, 14 May 2025 18:13:33 +0200 (CEST)
+ id A735C55CA4D; Wed, 14 May 2025 18:16:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 115E1745682;
- Wed, 14 May 2025 18:13:33 +0200 (CEST)
-Date: Wed, 14 May 2025 18:13:33 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id A5440745682;
+ Wed, 14 May 2025 18:16:31 +0200 (CEST)
+Date: Wed, 14 May 2025 18:16:31 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Zhao Liu <zhao1.liu@intel.com>
 cc: Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?Q?Daniel_P_=2E_Berrang=EF=BF=BD?= <berrange@redhat.com>, 
  Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org, 
  qemu-trivial@nongnu.org
-Subject: Re: [PATCH 1/9] qom/object: Improve the doc of macros related with
- simple type
-In-Reply-To: <aCS3gS3+qdxZof75@intel.com>
-Message-ID: <e034853a-beaf-f5d8-4eb3-069538b012c6@eik.bme.hu>
+Subject: Re: [PATCH 2/9] docs/devel/qom: Fix the doc about
+ OBJECT_DECLARE_SIMPLE_TYPE
+In-Reply-To: <aCS6pLuiFaeEmeEu@intel.com>
+Message-ID: <abd48771-90ba-fd25-e59f-3c6f90d5c0e5@eik.bme.hu>
 References: <20250514084957.2221975-1-zhao1.liu@intel.com>
- <20250514084957.2221975-2-zhao1.liu@intel.com>
- <e213c4bf-1b26-f1c3-c3ed-10c2adff4a5d@eik.bme.hu>
- <aCS3gS3+qdxZof75@intel.com>
+ <20250514084957.2221975-3-zhao1.liu@intel.com>
+ <c179270c-d636-e20a-2043-38c09b81b4c6@eik.bme.hu>
+ <aCS6pLuiFaeEmeEu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Content-Type: multipart/mixed;
+ boundary="3866299591-1059840066-1747239391=:95746"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,90 +71,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-1059840066-1747239391=:95746
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
+
 On Wed, 14 May 2025, Zhao Liu wrote:
-> Hi BALATON,
-
-In case you did not know:
-https://en.wikipedia.org/wiki/Name_order#Hungary
-
-> On Wed, May 14, 2025 at 02:02:48PM +0200, BALATON Zoltan wrote:
->> Date: Wed, 14 May 2025 14:02:48 +0200
+> On Wed, May 14, 2025 at 02:06:14PM +0200, BALATON Zoltan wrote:
+>> Date: Wed, 14 May 2025 14:06:14 +0200
 >> From: BALATON Zoltan <balaton@eik.bme.hu>
->> Subject: Re: [PATCH 1/9] qom/object: Improve the doc of macros related with
->>  simple type
+>> Subject: Re: [PATCH 2/9] docs/devel/qom: Fix the doc about
+>>  OBJECT_DECLARE_SIMPLE_TYPE
 >>
 >> On Wed, 14 May 2025, Zhao Liu wrote:
->>> There're 2 changes:
->>> - For OBJECT_DECLARE_SIMPLE_TYPE:
+>>> Currently, the expansion example of OBJECT_DECLARE_SIMPLE_TYPE "roughly"
+>>> reflects what OBJECT_DECLARE_TYPE is doing.
 >>>
->>>   Since a clase may not only has virtual method, but also field, thus
->>
->> class may not only have virtual methods but also fields, clarify when class
->> is not needed
->
-> Thanks for the polish! It sounds better.
-
-It's also grammatically more correct. But I'm not a native English speaker 
-so may still be wrong.
-
->>>   mention when class is not needed for either, then there is no need
->>>   to have the class.
+>>> Why "roughly"? Because this line -
 >>>
->>> - For OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES:
+>>>>    G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDeviceClass, object_unref)
 >>>
->>>   And the words like OBJECT_DEFINE_SIMPLE_TYPE about when the type is
->>>   declared by OBJECT_DECLARE_SIMPLE_TYPE, then user should consider
->>>   to define the type via OBJECT_DEFINE_SIMPLE_TYPE or
->>>   OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES.
+>>> - is also wrong for OBJECT_DECLARE_TYPE.
+>>>
+>>> Fix the expansion example of OBJECT_DECLARE_SIMPLE_TYPE, especially
+>>> drop that definition of MyDeviceClass.
 >>>
 >>> Cc: Paolo Bonzini <pbonzini@redhat.com>
->>> Cc: "Daniel P. Berrang?" <berrange@redhat.com>
+>>> Cc: "Daniel P. Berrangé" <berrange@redhat.com>
 >>> Cc: Eduardo Habkost <eduardo@habkost.net>
 >>> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 >>> ---
->>> include/qom/object.h | 5 +++--
->>> 1 file changed, 3 insertions(+), 2 deletions(-)
+>>> docs/devel/qom.rst | 11 +----------
+>>> 1 file changed, 1 insertion(+), 10 deletions(-)
 >>>
->>> diff --git a/include/qom/object.h b/include/qom/object.h
->>> index 1d5b03372429..14f84ae454d3 100644
->>> --- a/include/qom/object.h
->>> +++ b/include/qom/object.h
->>> @@ -249,7 +249,7 @@ struct Object
->>>  * declared.
->>>  *
->>>  * This macro should be used unless the class struct needs to have
->>> - * virtual methods declared.
->>> + * virtual methods or fields declared.
->>>  */
->>> #define OBJECT_DECLARE_SIMPLE_TYPE(InstanceType, MODULE_OBJ_NAME) \
->>>     typedef struct InstanceType InstanceType; \
->>> @@ -402,7 +402,8 @@ struct Object
->>>  *
->>>  * This is a variant of OBJECT_DEFINE_TYPE_EXTENDED, which is suitable for
->>>  * the case of a non-abstract type, with interfaces, and with no requirement
->>> - * for a class struct.
->>> + * for a class struct. If you declared your type with OBJECT_DECLARE_SIMPLE_TYPE
->>> + * then this is probably the right choice for defining it.
+>>> diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
+>>> index 5870745ba27b..185f4c2f5921 100644
+>>> --- a/docs/devel/qom.rst
+>>> +++ b/docs/devel/qom.rst
+>>> @@ -326,21 +326,12 @@ This is equivalent to the following:
+>>>    :caption: Expansion from declaring a simple type
+>>>
+>>>    typedef struct MyDevice MyDevice;
+>>> -   typedef struct MyDeviceClass MyDeviceClass;
+>>>
+>>> -   G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDeviceClass, object_unref)
+>>> +   G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDevice, object_unref)
+>>>
+>>> -   #define MY_DEVICE_GET_CLASS(void *obj) \
+>>> -           OBJECT_GET_CLASS(MyDeviceClass, obj, TYPE_MY_DEVICE)
+>>> -   #define MY_DEVICE_CLASS(void *klass) \
+>>> -           OBJECT_CLASS_CHECK(MyDeviceClass, klass, TYPE_MY_DEVICE)
+>>>    #define MY_DEVICE(void *obj)
+>>>            OBJECT_CHECK(MyDevice, obj, TYPE_MY_DEVICE)
+>>>
+>>> -   struct MyDeviceClass {
+>>> -       DeviceClass parent_class;
+>>> -   };
+>>> -
+>>> The 'struct MyDevice' needs to be declared separately.
+>>> If the type requires virtual functions to be declared in the class
+>>> struct, then the alternative OBJECT_DECLARE_TYPE() macro can be
 >>
->> Is "probably" correct here? Is it a must or can still use other defining
->> macros?
+>> Maybe you need to adjust the text here about OBJECT_DECLARE_TYPE here and
+>> show how to define Class sturct?
 >
-> Yes, because there's another choice: OBJECT_DEFINE_SIMPLE_TYPE.
+> Then it's not easy to organize the structure in this document, since
+> most of the content is now make "OBJECT_DECLARE_SIMPLE_TYPE" as well as
+> "OBJECT_DEFINE_SIMPLE_TYPE" as examples... I'm a bit unsure, and we can
+> wait and see what others would say.
 >
->> If correct maybe saying "this might be the right choice" is simpler.
+> BTW, I found I missed this sentence:
 >
-> :-) I copied this sentence from the documentation of
-> OBJECT_DEFINE_SIMPLE_TYPE. The difference between these 2 macros is
-> OBJECT_DEFINE_SIMPLE_TYPE doesn't support interface.
+> "(OBJECT_DECLARE_TYPE) This does the same as OBJECT_DECLARE_SIMPLE_TYPE(),
+> but without the 'struct MyDeviceClass' definition."
 >
-> So I'd like to keep this sentence, consistent with the description of
-> OBJECT_DEFINE_SIMPLE_TYPE.
+> It should be: This does the same as OBJECT_DECLARE_SIMPLE_TYPE(),
+> but with the class type.
 
-OK in that case no problem to keep consistency. It still sounds a bit 
-unspecific for documentation to me because it leaves the question open of 
-what is it when it's not the right choice but if this is already there 
-then that's another unrelated question.
+Yes that's what I meant. If you remove the class example then how will 
+readers know how to define that so a new example for that may be needed 
+but you can wait for others' opinion too.
 
 Regards,
 BALATON Zoltan
+--3866299591-1059840066-1747239391=:95746--
 
