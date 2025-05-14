@@ -4,94 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E5A1C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D2C6C3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBsS-00048t-3Q; Wed, 14 May 2025 09:10:28 -0400
+	id 1uFBme-0003NH-Ep; Wed, 14 May 2025 09:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uFBqu-0000sW-E2
- for qemu-devel@nongnu.org; Wed, 14 May 2025 09:08:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uFBj8-0007Xz-0K; Wed, 14 May 2025 09:01:00 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uFBqs-0000il-2Y
- for qemu-devel@nongnu.org; Wed, 14 May 2025 09:08:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747228126;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UjvPFTZxlUTCgxQgiB+/awojF3gbVDt0w+ZaWf8Kprk=;
- b=YUvRcQ7kK4Z3gd+ThwgjJWB1OI5k/9YC0zVYb8Vmhy2Tp0tmkH+BiKKeJ26KJ+8t5tY+/w
- MxAeiX5eUfXEKq2DvM+ONPpHY299jRh4oO6LR/dlzS1ON/b/exrj/VNZDxeis5y8fUy+Vj
- sV1asYmj8VZDsPFM8puZsXkYFM5DLpI=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-nOdf0NAWO3iJs7FOzJVNKw-1; Wed, 14 May 2025 09:08:45 -0400
-X-MC-Unique: nOdf0NAWO3iJs7FOzJVNKw-1
-X-Mimecast-MFC-AGG-ID: nOdf0NAWO3iJs7FOzJVNKw_1747228124
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-acbbb00099eso620741066b.2
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 06:08:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747228124; x=1747832924;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UjvPFTZxlUTCgxQgiB+/awojF3gbVDt0w+ZaWf8Kprk=;
- b=eQrJ7P/YCvF2d+8sAm31GC0rnWD2f00Jj23s6CbBiT0WwgkUljFkz1YMXTyjKuD0Fd
- 7u6yHz7VSj5d6MqFj08KkY/0+JnEwAM0KBZVY8AcuICnVPJScbSM6+ofCMHbtrPf4Paf
- rEZsrbYWKBO2MBxn9pwLKhVzpf/LAJNakojvauFevEnXI16A1JS6O7mVie9wVSENjJL0
- /3TnFBWsv2lN/0WrHg5dXaM2wpGbRELE8ehd5VuaIgYVTL6eSRLIVy5Vt1MQN8GD7pic
- X0nNipxyKZhl/p6Q/kfwnxhdhDwY9t+eo6715F08AKsV0HjrfGpOqy+VBIcVRySxFV8M
- XtcA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBLOItp/m4dlCHhp56N3XDKZRut3rALLDQ7MzyrtoTD7q+5GNgSaK2+ZuinlDHtZKIp+XSQNgxGOQm@nongnu.org
-X-Gm-Message-State: AOJu0YyyiURLalUo187FNq8RZCg97dXYJ/ny9ydp25+0fcu5gwHRR68A
- Xk5ToWM0p/uTGsqdXjTRg4G4t1X2/qCcbjNMu+o26gEc0JZmqk0ukW/PNI6lX82a31H+lYnLFZh
- DbYcsc2sC8eP1TbYlTGWkOF1eB2JzO3XIkdGo7bSgOb78/cdbgXPNOb9W5SRWGDtZjYJKKS3zlN
- w4NtpUbTGXuXCrHbfaX62wrct1Ofs=
-X-Gm-Gg: ASbGncu3cnBgZOWwRpzKKW4FGKHNy1etGHXjdHAVbdjM7rpKXW3sHY6iCZxjp5JYDfv
- AR0eijB2risyKWMywWeu2xkS/Fp4IDYPULibV07aLrOyqBzAOenbEsjqiURX5cvVWyPt8sQ==
-X-Received: by 2002:a17:907:7e8b:b0:ad2:5657:3161 with SMTP id
- a640c23a62f3a-ad4f74a836emr371089466b.59.1747228123870; 
- Wed, 14 May 2025 06:08:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHsDNHGfAzkup7t7LmuEjs9mO0TvsN/0cCBnh8QYpnknCDfmai+awibI2DOsk+myFjrs4Vq+fITNPfIB8Zq12Q=
-X-Received: by 2002:a17:907:7e8b:b0:ad2:5657:3161 with SMTP id
- a640c23a62f3a-ad4f74a836emr371086066b.59.1747228123483; Wed, 14 May 2025
- 06:08:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uFBj0-0008EQ-EJ; Wed, 14 May 2025 09:00:45 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 34ED0121AF5;
+ Wed, 14 May 2025 15:57:50 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D327D20B863;
+ Wed, 14 May 2025 15:57:59 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Hauke Mehrtens <hauke@hauke-m.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 23/34] target/mips: Fix MIPS16e translation
+Date: Wed, 14 May 2025 15:57:45 +0300
+Message-Id: <20250514125758.92030-23-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 MIME-Version: 1.0
-References: <20250514084957.2221975-1-zhao1.liu@intel.com>
- <20250514084957.2221975-4-zhao1.liu@intel.com>
-In-Reply-To: <20250514084957.2221975-4-zhao1.liu@intel.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Wed, 14 May 2025 18:38:32 +0530
-X-Gm-Features: AX0GCFvztF3hOmQVCp-L4OH09uBMSDdE9_k3iVSa8ZrM9g2Xy8s75S1BT2Nw-WE
-Message-ID: <CAK3XEhPuL8YBdnTekTOBdE09ZegLgpBxHey9iDX61ewj98n1XQ@mail.gmail.com>
-Subject: Re: [PATCH 3/9] hw/acpi/pci: Consolidate
- OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,78 +61,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 1:59=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
->
-> The QOM types of AcpiGenericInitiator and AcpiGenericPort are declared
-> by OBJECT_DECLARE_SIMPLE_TYPE, which means they don't need the class!
->
-> Therefore, use OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES to implement
-> the type, then there's no need for class definition.
->
-> Cc: "Michael S. Tsirkin" <mst@redhat.com>
-> Cc: Igor Mammedov <imammedo@redhat.com>
-> Cc: Ani Sinha <anisinha@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+From: Hauke Mehrtens <hauke@hauke-m.de>
 
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Fix a wrong conversion to gen_op_addr_addi(). The framesize should be
+added like it was done before.
 
-> ---
->  hw/acpi/pci.c | 24 ++++++++----------------
->  1 file changed, 8 insertions(+), 16 deletions(-)
->
-> diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
-> index d511a8502954..acac6744525e 100644
-> --- a/hw/acpi/pci.c
-> +++ b/hw/acpi/pci.c
-> @@ -75,16 +75,12 @@ typedef struct AcpiGenericInitiator {
->      uint32_t node;
->  } AcpiGenericInitiator;
->
-> -typedef struct AcpiGenericInitiatorClass {
-> -    ObjectClass parent_class;
-> -} AcpiGenericInitiatorClass;
-> -
->  #define TYPE_ACPI_GENERIC_INITIATOR "acpi-generic-initiator"
->
-> -OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_generic_in=
-itiator,
-> -                   ACPI_GENERIC_INITIATOR, OBJECT,
-> -                   { TYPE_USER_CREATABLE },
-> -                   { NULL })
-> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_gen=
-eric_initiator,
-> +                                          ACPI_GENERIC_INITIATOR, OBJECT=
-,
-> +                                          { TYPE_USER_CREATABLE },
-> +                                          { NULL })
->
->  OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericInitiator, ACPI_GENERIC_INITIATOR)
->
-> @@ -191,16 +187,12 @@ typedef struct AcpiGenericPort {
->      uint32_t node;
->  } AcpiGenericPort;
->
-> -typedef struct AcpiGenericPortClass {
-> -    ObjectClass parent_class;
-> -} AcpiGenericPortClass;
-> -
->  #define TYPE_ACPI_GENERIC_PORT "acpi-generic-port"
->
-> -OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericPort, acpi_generic_port,
-> -                   ACPI_GENERIC_PORT, OBJECT,
-> -                   { TYPE_USER_CREATABLE },
-> -                   { NULL })
-> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(AcpiGenericPort, acpi_generic_=
-port,
-> +                                          ACPI_GENERIC_PORT, OBJECT,
-> +                                          { TYPE_USER_CREATABLE },
-> +                                          { NULL })
->
->  OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericPort, ACPI_GENERIC_PORT)
->
-> --
-> 2.34.1
->
+This bug broke booting OpenWrt MIPS32 BE malta Linux system images
+generated by OpenWrt.
+
+Cc: qemu-stable@nongnu.org
+Fixes: d0b24b7f50e1 ("target/mips: Use gen_op_addr_addi() when possible")
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250412194003.181411-1-hauke@hauke-m.de>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit d4a785ba30ce6d8acf0206f049fb4a7494e0898a)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/mips/tcg/mips16e_translate.c.inc b/target/mips/tcg/mips16e_translate.c.inc
+index a9af8f1e74..97da3456ea 100644
+--- a/target/mips/tcg/mips16e_translate.c.inc
++++ b/target/mips/tcg/mips16e_translate.c.inc
+@@ -306,7 +306,7 @@ static void gen_mips16_restore(DisasContext *ctx,
+     int astatic;
+     TCGv t0 = tcg_temp_new();
+ 
+-    gen_op_addr_addi(ctx, t0, cpu_gpr[29], -framesize);
++    gen_op_addr_addi(ctx, t0, cpu_gpr[29], framesize);
+ 
+     if (do_ra) {
+         decr_and_load(ctx, 31, t0);
+@@ -386,7 +386,7 @@ static void gen_mips16_restore(DisasContext *ctx,
+         }
+     }
+ 
+-    gen_op_addr_addi(ctx, cpu_gpr[29], cpu_gpr[29], -framesize);
++    gen_op_addr_addi(ctx, cpu_gpr[29], cpu_gpr[29], framesize);
+ }
+ 
+ #if defined(TARGET_MIPS64)
+-- 
+2.39.5
 
 
