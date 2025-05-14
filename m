@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B8F6C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 17:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22832C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 17:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFFvP-00082D-Do; Wed, 14 May 2025 13:29:47 -0400
+	id 1uFG4r-00081N-U9; Wed, 14 May 2025 13:39:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFFvL-0007m9-9Z
- for qemu-devel@nongnu.org; Wed, 14 May 2025 13:29:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFG3W-0006FW-94
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 13:38:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFFvJ-0002bh-Ld
- for qemu-devel@nongnu.org; Wed, 14 May 2025 13:29:42 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFG3T-0003ZP-GE
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 13:38:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747243780;
+ s=mimecast20190719; t=1747244284;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=N8QSixm0bm9djZ6dFN+wfoKnT4AYnjqbzBBaht/B2LA=;
- b=AxIgN762fCT1BVFflayS+q9mR8ppyGpTdzWq2oKdzkHM3sj33zsP4B0H6xAHXQKNIwd8K5
- W7k0gi9CDSml5nMjht6MGbXV6JZrgfhaJkC3PZY3n/4gTnOx+fTiqNrSR+zi4JV2GEzqAz
- x09ry3QX9XtTlnnO1nIiZ/k9GYc8S6I=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=A7dgFPquZzfHYR2FZ0ZwBIpCNC1/E45uftUDmnHsywg=;
+ b=PBQPoWYgwXCK0h6nzm7Zii4Srk5Ksj4HIhhSwyFmpqosXVUMIr3BolK77PFuGjLy3rg/RU
+ KM8DznXoclDafZInj573lZx2mD4SiX8T4DxOJb8RRn32jQVlh8Uxp7YHlFICpZ7GhD74u3
+ 0HqBjNiZ/AG0HbALpE7eTEDleoGkPDM=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-yMJywiL3NHuoORgYiqwnlA-1; Wed, 14 May 2025 13:29:39 -0400
-X-MC-Unique: yMJywiL3NHuoORgYiqwnlA-1
-X-Mimecast-MFC-AGG-ID: yMJywiL3NHuoORgYiqwnlA_1747243778
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-22e815dd332so758205ad.3
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 10:29:39 -0700 (PDT)
+ us-mta-331-iMZpREAEPyKRjRBddVHkKQ-1; Wed, 14 May 2025 13:38:02 -0400
+X-MC-Unique: iMZpREAEPyKRjRBddVHkKQ-1
+X-Mimecast-MFC-AGG-ID: iMZpREAEPyKRjRBddVHkKQ_1747244282
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7caee988153so794785a.1
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 10:38:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747243778; x=1747848578;
+ d=1e100.net; s=20230601; t=1747244282; x=1747849082;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N8QSixm0bm9djZ6dFN+wfoKnT4AYnjqbzBBaht/B2LA=;
- b=nQ/0Z4oFinjqAcFucIMg3+sv66a6gz/LNGOGTHnoSt6st4pUycyuYG/9BiLuN2yGG6
- Be7nBySbF2M6JVNTNkUW8cFUI3YFXUuixOTBNGg9bIm/b2KexSJUBEJ5UWgV6w60NyuL
- Q+9ISeUwv+emSMgLsyI8Ek9C+fiRHDPHFOJhdTCG8TACoWg0heB7gsTm6s7vQ3vS1OWp
- Qtw9MDwjnxXYfglRmUn2ucqznuBeGlTh0NVSzkLabmHWIx8kcA4EupQurwjHYPPOiZrv
- a05pY5U1uz2dQ0mgLHbyhEhQjdFt8lFWSLuv1CGnsoWrrtuTjomm9n9Cvs2TzQdM8HhS
- pYug==
-X-Gm-Message-State: AOJu0YyBk8GW7LAsZ5dmKUzmoy24n6sN6q5vNoi7VYa1Mh6RnU9w40FV
- 1T3qUTUfgmKz5vcKjEMgnLk4cKeFolvkyWarr0oDkacqXBpRlPtEJ8sSRcSiq1fmp5p5x+oSCxr
- l2J+gwJ+JLVxljfT2mUFmiFQ3JPA0kMgakHWTJo2eEmLrreDftzEpUUW+Ke3d
-X-Gm-Gg: ASbGncuyJ/muRlIbV6RZLpW4Au/R2dIYYzax2Fi/sjEH8CHpdM88stk6fFLCoxBHr/e
- FlDbm2rjOUxkAnx6u9BcjnlttxUirsRKQbAXrREjLBrpxghrzJkJUSO5Ona4GVA8cLg4Q3rUU/k
- EAo5j7hXV929vpB9yUXEErv9FvFO/4iJOD/x6boYezO1F5PheVgvPugm/tT4oWjHCBr6vXsBNA5
- LCyoiu7HQBbLLJK4WWBrB/aNrRuWvd32CNPxGLSKxLH6CPqTbYxSw+3lwuxxsqXnQ8TdEu3Cm3t
- CHA=
-X-Received: by 2002:a17:902:db10:b0:21f:7a8b:d675 with SMTP id
- d9443c01a7336-23198116744mr67583435ad.4.1747243777744; 
- Wed, 14 May 2025 10:29:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHpAFXZp93RM6kir7+7G9sbA0uzrJ1hwpIoJXG6lcz9AYFAusqTEqIS92lkaMPbL3WsIyJg6Q==
-X-Received: by 2002:a05:620a:45a5:b0:7c3:d711:6ffb with SMTP id
- af79cd13be357-7cd2887804dmr665092485a.41.1747243766582; 
- Wed, 14 May 2025 10:29:26 -0700 (PDT)
+ bh=A7dgFPquZzfHYR2FZ0ZwBIpCNC1/E45uftUDmnHsywg=;
+ b=vA0Lhv7vzYIj6ZihuUXhXl9QL3j8Wbh78TqkIg7w1t3rPnf2ZOOnlXWsHmuAoX5bGW
+ X2Yohv5UjsU/ktAhN94uu70Uol2anhsjsOysQ6vGv8l0nSPI9/Cwn7he5QrBCUXQyxIo
+ uwfBFKqZ89/K+4fVLKfvlhU3JXHepor5tBubmIpR3/FHn2Yh7rfdoaY+FljhgNitE1AX
+ QqwM08JcZxzLyqVzziWp2psBHvTkCbSp1i/8bJe+JwqvZ10WelSbjkO9eZ4AFNmWV7Fu
+ G0QxWGbOHDyaTgFdAXhU6IYP5kOIYpYsXMMM8K6PrbeFa5B0zPmnaLhDmQJjKuWQqIAE
+ 0sbw==
+X-Gm-Message-State: AOJu0YxuMfXhwePodjO2hUXGGJhPZkTVSRn0y+DKRThkJXFRty7zsmGx
+ +0RUDy6I8BpTgGTRV63IdCGZ94ncRIoRvqxQ9Zsp8qMCehsYf3zrgPzmys8G+Xwn/RhSvzSDU6i
+ I0VCjVBOOUfH8jTlfi9Z91GjsJsWVI7E2rEdXTccsH/OUskWJ3Ok0
+X-Gm-Gg: ASbGncvUQ8O7R6hPvunSL7T6uCnL0D7lWKz6BH1OdyV/JYohwWPk6cFA15rn6j36YK2
+ dM32/zKkJIfXi6UaJ7rKLDrBFMOVOiV7teKlID1qYcZXTHbqaBsyzv/Ld0Xg1p1XsLVb7oAM6b8
+ EvRVnNiq+qnkU1oFybBvBhYxuatTJctLZZj2iZonejNMkPhzAyC0MldgpSP9fKfWdtPy3v2GPru
+ EUXzHitVYK6qnULeYfo4yGqns7CXOtpTcq+sNfjWt0d3+6peBw1UKm7u7J72lyS0R+qw+gyVaw3
+ BJ8=
+X-Received: by 2002:a05:620a:26a1:b0:7c5:ccc0:2382 with SMTP id
+ af79cd13be357-7cd2885d28bmr627464885a.52.1747244281881; 
+ Wed, 14 May 2025 10:38:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQXCiAg97NAo4vteZMIwgtFE3HWgXYpZ9YBM27LVxompj3HgMAbDF8ZQMtUlrhu4OfOSQiHw==
+X-Received: by 2002:a05:620a:26a1:b0:7c5:ccc0:2382 with SMTP id
+ af79cd13be357-7cd2885d28bmr627462085a.52.1747244281569; 
+ Wed, 14 May 2025 10:38:01 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd00f4d797sm877963085a.11.2025.05.14.10.29.25
+ af79cd13be357-7cd00f4d54fsm874866285a.14.2025.05.14.10.38.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 10:29:26 -0700 (PDT)
-Date: Wed, 14 May 2025 13:29:17 -0400
+ Wed, 14 May 2025 10:38:00 -0700 (PDT)
+Date: Wed, 14 May 2025 13:37:57 -0400
 From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Juraj Marcin <jmarcin@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Prasad Pandit <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 2/3] migration/hmp: Dump global in "info
- migrate_parameters" instead
-Message-ID: <aCTS7UkAqMnHitlo@x1.local>
+ Prasad Pandit <ppandit@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 3/3] migration/hmp: Add "info migrate -a", reorg the dump
+Message-ID: <aCTU9aFgbt4-ZbYz@x1.local>
 References: <20250513220923.518025-1-peterx@redhat.com>
- <20250513220923.518025-3-peterx@redhat.com>
- <aCSZsXvHy0u_5LaP@gallifrey>
+ <20250513220923.518025-4-peterx@redhat.com>
+ <lu4vgrxl2b5kgg5jdfnucqfvu2wh3rudhya5jarw2auyh62mge@onoeum25ttzm>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aCSZsXvHy0u_5LaP@gallifrey>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <lu4vgrxl2b5kgg5jdfnucqfvu2wh3rudhya5jarw2auyh62mge@onoeum25ttzm>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -107,35 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 01:25:05PM +0000, Dr. David Alan Gilbert wrote:
-> * Peter Xu (peterx@redhat.com) wrote:
-> > "info migrate" is the command people would frequently use to query
-> > migration status.  We may not want it to dump global configurations because
-> > dumping the same things over and over won't help.
-> > 
-> > The globals are just more suitable for a parameter dump instead.  Hence
-> > move it over.
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
+On Wed, May 14, 2025 at 04:33:16PM +0200, Juraj Marcin wrote:
+> >      if (info->ram) {
+> > -        monitor_printf(mon, "transferred ram: %" PRIu64 " kbytes\n",
+> > -                       info->ram->transferred >> 10);
+> > -        monitor_printf(mon, "throughput: %0.2f mbps\n",
+> > +        monitor_printf(mon, "RAM info:\n");
+> > +        monitor_printf(mon, "  Bandwidth (mbps): %0.2f\n",
+> >                         info->ram->mbps);
 > 
-> I think this is a *little* odd, since 'info migrate_parameters'
-> is a list of the things you can set with 'migrate_set_parameters'
-> Perhaps it would be better to add it under the 'info migrate -a' option
-> you add in the next patch?
+> I think the previous name (throughput) was better suited for this
+> metric. IIUC '->mbps' is the actual amount of data that has been sent
+> over a period of time, which is exactly the definition of throughput.
+> Bandwidth, on the other hand, is more of a (theoretical) maximum that
+> could be sent.
 
-Makes sense.
+Heh, it's interesting you found this change, I should have mentioned it.
 
-> 
-> However, one other thing, the globals stuff prints a
-> 'globals:'  at the start,  but doesn't print anything at the end,
-> so if you make this change, you end up with out being able to tell
-> where the globals end and the parameters start, so maybe a
-> 'parameters:' after it?
+I think I saw more use of the word "bandwidth" from people to describe
+miration throughput, but I don't think I was able to distinguish the two
+before, after checking I think you're right.
 
-I'll drop this patch, but only dump the globals if "-a" is specified in the
-next patch.
+I believe you demostrated solid understanding in networking issues. :-D
 
-Thanks!
+I'll use "Throughput" when repost. Thanks!
 
 -- 
 Peter Xu
