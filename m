@@ -4,33 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD74C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E30BBC3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHRv-0007YX-1C; Wed, 14 May 2025 15:07:27 -0400
+	id 1uFHRl-00070M-Fa; Wed, 14 May 2025 15:07:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHMw-0005Ve-TC; Wed, 14 May 2025 15:02:24 -0400
+ id 1uFHNF-0005q3-GI; Wed, 14 May 2025 15:02:38 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHMk-0007bg-RH; Wed, 14 May 2025 15:02:12 -0400
+ id 1uFHND-0007p8-2C; Wed, 14 May 2025 15:02:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D8C79121D9B;
- Wed, 14 May 2025 22:00:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 283FB121DA2;
+ Wed, 14 May 2025 22:00:33 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DFDF520BA8D;
- Wed, 14 May 2025 22:00:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2EF5320BA93;
+ Wed, 14 May 2025 22:00:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 17/23] target/i386: do not trigger IRQ shadow for LSS
-Date: Wed, 14 May 2025 22:00:29 +0300
-Message-Id: <20250514190041.104759-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 23/23] 9pfs: fix FD leak and reduce latency of
+ v9fs_reclaim_fd()
+Date: Wed, 14 May 2025 22:00:35 +0300
+Message-Id: <20250514190041.104759-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
@@ -59,90 +60,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Because LSS need not trigger an IRQ shadow, gen_movl_seg can't just use
-the destination register to decide whether to inhibit IRQs.  Add an
-argument.
+This patch fixes two different bugs in v9fs_reclaim_fd():
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit e54ef98c8a80d16158bab4341d9a898701270528)
-(back-ported to 10.0)
+1. Reduce latency:
+
+This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
+one of the calls adds two thread hops (between main thread and a fs driver
+background thread). Each thread hop adds latency, which sums up in
+function's loop to a significant duration.
+
+Reduce overall latency by open coding what v9fs_co_close() and
+v9fs_co_closedir() do, executing those and the loop itself altogether in
+only one background thread block, hence reducing the total amount of
+thread hops to only two.
+
+2. Fix file descriptor leak:
+
+The existing code called v9fs_co_close() and v9fs_co_closedir() to close
+file descriptors. Both functions check right at the beginning if the 9p
+request was cancelled:
+
+    if (v9fs_request_cancelled(pdu)) {
+        return -EINTR;
+    }
+
+So if client sent a 'Tflush' message, v9fs_co_close() / v9fs_co_closedir()
+returned without having closed the file descriptor and v9fs_reclaim_fd()
+subsequently freed the FID without its file descriptor being closed, hence
+leaking those file descriptors.
+
+This 2nd bug is fixed by this patch as well by open coding v9fs_co_close()
+and v9fs_co_closedir() inside of v9fs_reclaim_fd() and not performing the
+v9fs_request_cancelled(pdu) check there.
+
+Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
+Fixes: bccacf6c792 ('hw/9pfs: Implement TFLUSH operation')
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Message-Id: <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
+(cherry picked from commit 89f7b4da7662ecc6840ffb0846045f03f9714bc6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 0fa1664a24..b4dcb46e81 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -352,7 +352,7 @@ static void gen_writeback(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv
-         break;
-     case X86_OP_SEG:
-         /* Note that gen_movl_seg takes care of interrupt shadow and TF.  */
--        gen_movl_seg(s, op->n, s->T0);
-+        gen_movl_seg(s, op->n, v, op->n == R_SS);
-         break;
-     case X86_OP_INT:
-         if (op->has_ea) {
-@@ -2372,7 +2372,7 @@ static void gen_lxx_seg(DisasContext *s, X86DecodedInsn *decode, int seg)
-     gen_op_ld_v(s, MO_16, s->T1, s->A0);
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 4f9c2dde9c..80b190ff5b 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -434,6 +434,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     V9fsFidState *f;
+     GHashTableIter iter;
+     gpointer fid;
++    int err;
++    int nclosed = 0;
  
-     /* load the segment here to handle exceptions properly */
--    gen_movl_seg(s, seg, s->T1);
-+    gen_movl_seg(s, seg, s->T1, false);
- }
+     /* prevent multiple coroutines running this function simultaniously */
+     if (s->reclaiming) {
+@@ -446,10 +448,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     QSLIST_HEAD(, V9fsFidState) reclaim_list =
+         QSLIST_HEAD_INITIALIZER(reclaim_list);
  
- static void gen_LDS(DisasContext *s, X86DecodedInsn *decode)
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index a8935f487a..390018fdec 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -1992,25 +1992,32 @@ static void gen_op_movl_seg_real(DisasContext *s, X86Seg seg_reg, TCGv seg)
- 
- /* move SRC to seg_reg and compute if the CPU state may change. Never
-    call this function with seg_reg == R_CS */
--static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src)
-+static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src, bool inhibit_irq)
- {
-     if (PE(s) && !VM86(s)) {
--        tcg_gen_trunc_tl_i32(s->tmp2_i32, src);
--        gen_helper_load_seg(tcg_env, tcg_constant_i32(seg_reg), s->tmp2_i32);
--        /* abort translation because the addseg value may change or
--           because ss32 may change. For R_SS, translation must always
--           stop as a special handling must be done to disable hardware
--           interrupts for the next instruction */
--        if (seg_reg == R_SS) {
--            s->base.is_jmp = DISAS_EOB_INHIBIT_IRQ;
--        } else if (CODE32(s) && seg_reg < R_FS) {
-+        TCGv_i32 sel = tcg_temp_new_i32();
-+
-+        tcg_gen_trunc_tl_i32(sel, src);
-+        gen_helper_load_seg(tcg_env, tcg_constant_i32(seg_reg), sel);
-+
-+        /* For move to DS/ES/SS, the addseg or ss32 flags may change.  */
-+        if (CODE32(s) && seg_reg < R_FS) {
-             s->base.is_jmp = DISAS_EOB_NEXT;
++    /* Pick FIDs to be closed, collect them on reclaim_list. */
+     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
+         /*
+-         * Unlink fids cannot be reclaimed. Check
+-         * for them and skip them. Also skip fids
++         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
+          * currently being operated on.
+          */
+         if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
+@@ -499,17 +501,26 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
          }
-     } else {
-         gen_op_movl_seg_real(s, seg_reg, src);
--        if (seg_reg == R_SS) {
--            s->base.is_jmp = DISAS_EOB_INHIBIT_IRQ;
--        }
-+    }
-+
-+    /*
-+     * For MOV or POP to SS (but not LSS) translation must always
-+     * stop as a special handling must be done to disable hardware
-+     * interrupts for the next instruction.
-+     *
-+     * DISAS_EOB_INHIBIT_IRQ is a superset of DISAS_EOB_NEXT which
-+     * might have been set above.
-+     */
-+    if (inhibit_irq) {
-+        s->base.is_jmp = DISAS_EOB_INHIBIT_IRQ;
      }
- }
- 
+     /*
+-     * Now close the fid in reclaim list. Free them if they
+-     * are already clunked.
++     * Close the picked FIDs altogether on a background I/O driver thread. Do
++     * this all at once to keep latency (i.e. amount of thread hops between main
++     * thread <-> fs driver background thread) as low as possible.
+      */
++    v9fs_co_run_in_worker({
++        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
++            err = (f->fid_type == P9_FID_DIR) ?
++                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
++                s->ops->close(&s->ctx, &f->fs_reclaim);
++            if (!err) {
++                /* total_open_fd must only be mutated on main thread */
++                nclosed++;
++            }
++        }
++    });
++    total_open_fd -= nclosed;
++    /* Free the closed FIDs. */
+     while (!QSLIST_EMPTY(&reclaim_list)) {
+         f = QSLIST_FIRST(&reclaim_list);
+         QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
+-        if (f->fid_type == P9_FID_FILE) {
+-            v9fs_co_close(pdu, &f->fs_reclaim);
+-        } else if (f->fid_type == P9_FID_DIR) {
+-            v9fs_co_closedir(pdu, &f->fs_reclaim);
+-        }
+         /*
+          * Now drop the fid reference, free it
+          * if clunked.
 -- 
 2.39.5
 
