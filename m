@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD2FC3ABD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B4FC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBiV-0006Yp-3l; Wed, 14 May 2025 09:00:12 -0400
+	id 1uFBlj-0002Fx-Hq; Wed, 14 May 2025 09:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhz-0004nO-QB; Wed, 14 May 2025 08:59:40 -0400
+ id 1uFBiy-0007VH-2G; Wed, 14 May 2025 09:00:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhx-0007wQ-6o; Wed, 14 May 2025 08:59:39 -0400
+ id 1uFBit-0008BU-Fb; Wed, 14 May 2025 09:00:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A47CA121AEC;
- Wed, 14 May 2025 15:57:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E5D7121AF3;
+ Wed, 14 May 2025 15:57:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4F8EE20B85A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BBDAF20B861;
  Wed, 14 May 2025 15:57:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 14/34] scsi-disk: Apply error policy for host_status
- errors again
-Date: Wed, 14 May 2025 15:57:36 +0300
-Message-Id: <20250514125758.92030-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 21/34] hw/core: Get default_cpu_type calling
+ machine_class_default_cpu_type()
+Date: Wed, 14 May 2025 15:57:43 +0300
+Message-Id: <20250514125758.92030-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,144 +64,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Originally, all failed SG_IO requests called scsi_handle_rw_error() to
-apply the configured error policy. However, commit f3126d65, which was
-supposed to be a mere refactoring for scsi-disk.c, broke this and
-accidentally completed the SCSI request without considering the error
-policy any more if the error was signalled in the host_status field.
-
-Apart from the commit message not describing the change as intended,
-errors indicated in host_status are also obviously backend errors and
-not something the guest must deal with independently of the error
-policy.
-
-This behaviour means that some recoverable errors (such as a path error
-in multipath configurations) were reported to the guest anyway, which
-might not expect it and might consider its disk broken.
-
-Make sure that we apply the error policy again for host_status errors,
-too. This addresses an existing FIXME comment and allows us to remove
-some comments warning that callbacks weren't always called. With this
-fix, they are called in all cases again.
-
-The return value passed to the request callback doesn't have more free
-values that could be used to indicate host_status errors as well as SAM
-status codes and negative errno. Store the value in the host_status
-field of the SCSIRequest instead and use -ENODEV as the return value (if
-a path hasn't been reachable for a while, blk_aio_ioctl() will return
--ENODEV instead of just setting host_status, so just reuse it here -
-it's not necessarily entirely accurate, but it's as good as any errno).
+Since commit 62b4a227a33 the default cpu type can come from the
+valid_cpu_types[] array. Call the machine_class_default_cpu_type()
+instead of accessing MachineClass::default_cpu_type field.
 
 Cc: qemu-stable@nongnu.org
-Fixes: f3126d65b393 ('scsi: move host_status handling into SCSI drivers')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20250407155949.44736-1-kwolf@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 61b6d9b749ba233784c7214cfe9585ea321159dc)
+Fixes: 62b4a227a33 ("hw/core: Add machine_class_default_cpu_type()")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-Id: <20250422084114.39499-1-philmd@linaro.org>
+(cherry picked from commit d5f241834be1b323ea697a469ff0f1335a1823fe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 7f13b0588f..7af476dfed 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -68,10 +68,9 @@ struct SCSIDiskClass {
-     SCSIDeviceClass parent_class;
-     /*
-      * Callbacks receive ret == 0 for success. Errors are represented either as
--     * negative errno values, or as positive SAM status codes.
--     *
--     * Beware: For errors returned in host_status, the function may directly
--     * complete the request and never call the callback.
-+     * negative errno values, or as positive SAM status codes. For host_status
-+     * errors, the function passes ret == -ENODEV and sets the host_status field
-+     * of the SCSIRequest.
-      */
-     DMAIOFunc       *dma_readv;
-     DMAIOFunc       *dma_writev;
-@@ -226,11 +225,26 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
-     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-     SCSIDiskClass *sdc = (SCSIDiskClass *) object_get_class(OBJECT(s));
-     SCSISense sense = SENSE_CODE(NO_SENSE);
-+    int16_t host_status;
-     int error;
-     bool req_has_sense = false;
-     BlockErrorAction action;
-     int status;
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 130217da8f..ea59acb224 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -72,6 +72,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
  
-+    /*
-+     * host_status should only be set for SG_IO requests that came back with a
-+     * host_status error in scsi_block_sgio_complete(). This error path passes
-+     * -ENODEV as the return value.
-+     *
-+     * Reset host_status in the request because we may still want to complete
-+     * the request successfully with the 'stop' or 'ignore' error policy.
-+     */
-+    host_status = r->req.host_status;
-+    if (host_status != -1) {
-+        assert(ret == -ENODEV);
-+        r->req.host_status = -1;
-+    }
-+
-     if (ret < 0) {
-         status = scsi_sense_from_errno(-ret, &sense);
-         error = -ret;
-@@ -290,6 +304,10 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
-         if (acct_failed) {
-             block_acct_failed(blk_get_stats(s->qdev.conf.blk), &r->acct);
+     for (el = machines; el; el = el->next) {
+         MachineClass *mc = el->data;
++        const char *default_cpu_type = machine_class_default_cpu_type(mc);
+         MachineInfo *info;
+ 
+         info = g_malloc0(sizeof(*info));
+@@ -90,8 +91,8 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+         info->numa_mem_supported = mc->numa_mem_supported;
+         info->deprecated = !!mc->deprecation_reason;
+         info->acpi = !!object_class_property_find(OBJECT_CLASS(mc), "acpi");
+-        if (mc->default_cpu_type) {
+-            info->default_cpu_type = g_strdup(mc->default_cpu_type);
++        if (default_cpu_type) {
++            info->default_cpu_type = g_strdup(default_cpu_type);
          }
-+        if (host_status != -1) {
-+            scsi_req_complete_failed(&r->req, host_status);
-+            return true;
-+        }
-         if (req_has_sense) {
-             sdc->update_sense(&r->req);
-         } else if (status == CHECK_CONDITION) {
-@@ -411,7 +429,6 @@ done:
-     scsi_req_unref(&r->req);
- }
- 
--/* May not be called in all error cases, don't rely on cleanup here */
- static void scsi_dma_complete(void *opaque, int ret)
- {
-     SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-@@ -452,7 +469,6 @@ done:
-     scsi_req_unref(&r->req);
- }
- 
--/* May not be called in all error cases, don't rely on cleanup here */
- static void scsi_read_complete(void *opaque, int ret)
- {
-     SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-@@ -592,7 +608,6 @@ done:
-     scsi_req_unref(&r->req);
- }
- 
--/* May not be called in all error cases, don't rely on cleanup here */
- static void scsi_write_complete(void * opaque, int ret)
- {
-     SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-@@ -2854,14 +2869,10 @@ static void scsi_block_sgio_complete(void *opaque, int ret)
-     sg_io_hdr_t *io_hdr = &req->io_header;
- 
-     if (ret == 0) {
--        /* FIXME This skips calling req->cb() and any cleanup in it */
-         if (io_hdr->host_status != SCSI_HOST_OK) {
--            scsi_req_complete_failed(&r->req, io_hdr->host_status);
--            scsi_req_unref(&r->req);
--            return;
--        }
--
--        if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
-+            r->req.host_status = io_hdr->host_status;
-+            ret = -ENODEV;
-+        } else if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
-             ret = BUSY;
-         } else {
-             ret = io_hdr->status;
+         if (mc->default_ram_id) {
+             info->default_ram_id = g_strdup(mc->default_ram_id);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index b68a9cb9b4..ca9cf56aa4 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7034,7 +7034,7 @@ ObjectClass *ppc_cpu_class_by_name(const char *name)
+     if (strcmp(name, "max") == 0) {
+         MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+         if (mc) {
+-            return object_class_by_name(mc->default_cpu_type);
++            return object_class_by_name(machine_class_default_cpu_type(mc));
+         }
+     }
+ #endif
 -- 
 2.39.5
 
