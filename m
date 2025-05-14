@@ -4,42 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84948C3ABD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7117CC3ABCC
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBk3-0007qt-Ez; Wed, 14 May 2025 09:01:49 -0400
+	id 1uFBfs-0000z6-AY; Wed, 14 May 2025 08:57:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBi2-0004qH-0s; Wed, 14 May 2025 08:59:42 -0400
+ id 1uFBfg-0000NF-8l; Wed, 14 May 2025 08:57:16 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhz-0007wk-Sk; Wed, 14 May 2025 08:59:41 -0400
+ id 1uFBfe-0007jh-5j; Wed, 14 May 2025 08:57:15 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BB1FA121AED;
- Wed, 14 May 2025 15:57:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A4F1121AC9;
+ Wed, 14 May 2025 15:56:31 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5A99F20B85B;
- Wed, 14 May 2025 15:57:59 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AF38D20B841;
+ Wed, 14 May 2025 15:56:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daan De Meyer <daan.j.demeyer@gmail.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Valentin David <valentin.david@canonical.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 15/34] smbios: Fix buffer overrun when using path=
- option
-Date: Wed, 14 May 2025 15:57:37 +0300
-Message-Id: <20250514125758.92030-15-mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 09/18] virtio-net: Fix num_buffers for version 1
+Date: Wed, 14 May 2025 15:56:15 +0300
+Message-Id: <20250514125640.91677-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
-References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,36 +60,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daan De Meyer <daan.j.demeyer@gmail.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-We have to make sure the array of bytes read from the path= file
-is null-terminated, otherwise we run into a buffer overrun later on.
+The specification says the device MUST set num_buffers to 1 if
+VIRTIO_NET_F_MRG_RXBUF has not been negotiated.
 
-Fixes: bb99f4772f54017490e3356ecbb3df25c5d4537f ("hw/smbios: support loading OEM strings values from a file")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2879
-
-Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Tested-by: Valentin David <valentin.david@canonical.com>
-Message-ID: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit a7a05f5f6a4085afbede315e749b1c67e78c966b)
+Fixes: df91055db5c9 ("virtio-net: enable virtio 1.0")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20250108-buffers-v1-1-a0c85ff31aeb@daynix.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit c17ad4b11bd268a35506cd976884562df6ca69d7)
+(Mjt: adjust for 7.2.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index a394514264..8feb54f229 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -1285,6 +1285,9 @@ static int save_opt_one(void *opaque,
-             g_byte_array_append(data, (guint8 *)buf, ret);
-         }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 204a80ec71..0ba1db5b14 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1914,6 +1914,8 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+                                     sg, elem->in_num,
+                                     offsetof(typeof(mhdr), num_buffers),
+                                     sizeof(mhdr.num_buffers));
++            } else {
++                mhdr.num_buffers = cpu_to_le16(1);
+             }
  
-+        buf[0] = '\0';
-+        g_byte_array_append(data, (guint8 *)buf, 1);
-+
-         qemu_close(fd);
- 
-         *opt->dest = g_renew(char *, *opt->dest, (*opt->ndest) + 1);
+             receive_header(n, sg, elem->in_num, buf, size);
 -- 
 2.39.5
 
