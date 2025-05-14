@@ -4,57 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B34C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 06:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B974C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 06:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF5ZV-0003l1-Ak; Wed, 14 May 2025 02:26:29 -0400
+	id 1uF64i-00047q-ML; Wed, 14 May 2025 02:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1uF5ZP-0003iY-2m; Wed, 14 May 2025 02:26:23 -0400
-Received: from mailout07.t-online.de ([194.25.134.83])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1uF5ZN-0007S7-49; Wed, 14 May 2025 02:26:22 -0400
-Received: from fwd75.aul.t-online.de (fwd75.aul.t-online.de [10.223.144.101])
- by mailout07.t-online.de (Postfix) with SMTP id 93804129D;
- Wed, 14 May 2025 08:26:16 +0200 (CEST)
-Received: from [192.168.211.200] ([84.175.230.13]) by fwd75.t-online.de
- with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
- esmtp id 1uF5ZH-2XjkOH0; Wed, 14 May 2025 08:26:15 +0200
-Message-ID: <0deee33d-d0c1-4319-8833-59ebc031baec@t-online.de>
-Date: Wed, 14 May 2025 08:26:14 +0200
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uF64h-00047h-5F
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 02:58:43 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uF64e-0002Sr-OP
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 02:58:42 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-22d95f0dda4so74847735ad.2
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 23:58:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747205918; x=1747810718;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VSFp+RXw6HN9au3WOIq7H6c+SMWJI/Bam2L1ETV9WJs=;
+ b=yjYkOtrKgcfzdo0mn61Qd0uyfADC02SuauI2jb13gJ+ecxcVS1Shj1d+neA5FE+BJ9
+ jCWsU8eLRFolmayazOGI0O10PWYhRE0VGSRdLsMfeOdn0uiH1ooTFVXysNSNIAbhRgRh
+ IDS3dQOLFgm2J2HGkx2jIsmR23Zv9WuUy8JNk746Eiu4oLPjhy5oLLNPVIYK4L1DVqnQ
+ u/+yi3KgRb+iySJE4UfkskTy/NgiH802x6Q+IyXa+xO2yCkg3c4f7l41mwPgHyCHW+0y
+ frLnz2IoZizipop+6eSPu9vJxg3ArqGnwxbC5xHE3eoKaVkip96VxXzlPuP25GSv3thN
+ jd4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747205918; x=1747810718;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VSFp+RXw6HN9au3WOIq7H6c+SMWJI/Bam2L1ETV9WJs=;
+ b=sGDvsbbbAIF+KeLlLViZDARmRhIwczg/QhmBsl+2xU1uKz9ZBZzqwFVZGqXuLhYRGo
+ Yt8m9N+/6yGpE6NglygAt7E5plkyiVpAVGYLfjKzNoFnYJHKYlTU0rmavvbdHGTSr9Sf
+ ChCV0BAuvn9wbhIlJlHcZiYY6D0CiLo62UMyHO+LjYp48+ZIlAc2svymwfiowSgfFyN+
+ cwic8djKd8+gmsad4CLi26tDluDDMPEOGv5UUCqv4qVYQKtufQO+TzMy+EktHGEKf4jh
+ p+mAJJYpXqV+wi3vHm4eUkjyr+Xlc6E3KCyTd0YLBWDRYOjFkruwlXTna285AsH0G/5P
+ fkMw==
+X-Gm-Message-State: AOJu0Yy6NwwvlrOtnnvNqoMfAeZ2BvNJ3uBY9+xekWe614WljCMAzDU9
+ 8gBL30PqM5xnmQOIciSnqk0Thkiv5oLIv51hHg5PJo/vxMzTIblXQG4h1BRyLWU=
+X-Gm-Gg: ASbGnctVTO78pAhNas8clQKHvBI/WRpeUmcVUeKoLaqmM/qazdjL3botHzp8bFKjsGI
+ Xrcse8baQmWAUw6QtvBeQbJ1vkHEpYzvLvdjMNR38/KqblZ6e2PO9MF7OOI48Z9towymCzZc9Y9
+ jBPgBUnCq0rocG9M36asA2fQA4BOiewS/CjiTOA13gbcz0tNyCGdVL0RNLItpntoZjEtVupv859
+ 1ILuwH1KSVl8LjbkLxVWmDC2pbsl7K2PyteYWjN8vrnWzvFD3vlJxVan2JjkvLwAy7+/3+XNwwk
+ Ij/jSkOLs+V+36OWyAlXL2SV1nntqv0MlB5PrR3qdbZ1igYE3AdScQ9eDbFSOzeY
+X-Google-Smtp-Source: AGHT+IG8d/t3S0SCmuhrMj1hHh9/OsNd9KheKfpl9cg19P1CqTQAdtselDyDk/6PfsBMs/g9xkx5bw==
+X-Received: by 2002:a17:903:3baf:b0:22e:5df9:8f67 with SMTP id
+ d9443c01a7336-23198129730mr38912685ad.34.1747205918503; 
+ Tue, 13 May 2025 23:58:38 -0700 (PDT)
+Received: from [157.82.203.223] ([157.82.203.223])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22fc7743633sm92600335ad.103.2025.05.13.23.58.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 May 2025 23:58:38 -0700 (PDT)
+Message-ID: <f3d10b18-9755-46af-9623-fb0ed7d99c51@daynix.com>
+Date: Wed, 14 May 2025 15:58:35 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] audio related fixes for 10.1
-To: Michael Tokarev <mjt@tls.msk.ru>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <d456c188-0463-4dc2-9178-469f840eaebe@t-online.de>
- <16ac7bdb-9df1-4951-bf3b-0b6cddbee358@tls.msk.ru>
+Subject: Re: [PATCH] virtio-net: Add queues for RSS during migration
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ devel@daynix.com
+References: <20250510-n-v1-1-19ee26ac3ca6@daynix.com>
+ <CACGkMEt7xoX-HvV1mOo=zqpyV0se2ELBMvNV-uGpKUZPQ-PB2A@mail.gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-In-Reply-To: <16ac7bdb-9df1-4951-bf3b-0b6cddbee358@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CACGkMEt7xoX-HvV1mOo=zqpyV0se2ELBMvNV-uGpKUZPQ-PB2A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TOI-EXPURGATEID: 150726::1747203975-A0FF7517-F300A5BE/0/0 CLEAN NORMAL
-X-TOI-MSGID: 23276547-9317-4b3f-be52-ee0055f400fd
-Received-SPF: pass client-ip=194.25.134.83; envelope-from=vr_qemu@t-online.de;
- helo=mailout07.t-online.de
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,53 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 13.05.25 um 08:40 schrieb Michael Tokarev:
-> 11.05.2025 10:36, Volker Rümelin wrote:
->> A few audio related fixes for 10.1.
+On 2025/05/14 14:05, 'Jason Wang' via devel wrote:
+> On Sat, May 10, 2025 at 3:24 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >>
->> The virtio-sound device is the first QEMU audio front end that
->> supports floating point samples. The audio subsystem is only
->> partially prepared for this. The commit message of patch 7/7 "audio:
->> add float sample endianness converters" has the details. The new code
->> paths in patch 7/7 are only compile tested. I don't have a big endian
->> host to test.
+>> virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
+>> VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
+>> number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
+>> VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_features
+>> is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
+>> VIRTIO_NET_F_MQ uses bit 22.
 >>
->> checkpatch.pl complains about missing space characters in the type
->> punning macros in patch 7/7. I don't agree.
+>> Instead of inferring the required number of queues from
+>> vdev->guest_features, use the number loaded from the vm state.
 >>
->> Volker Rümelin (7):
->>    tests/functional: use 'none' audio driver for q800 tests
->>    audio: fix SIGSEGV in AUD_get_buffer_size_out()
->>    audio: fix size calculation in AUD_get_buffer_size_out()
->>    hw/audio/asc: fix SIGSEGV in asc_realize()
->>    hw/audio/asc: replace g_malloc0() with g_malloc()
->>    audio/mixeng: remove unnecessary pointer type casts
->>    audio: add float sample endianness converters
+>> Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing")
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   include/hw/virtio/virtio.h |  2 +-
+>>   hw/net/virtio-net.c        | 11 ++++-------
+>>   hw/virtio/virtio.c         | 14 +++++++-------
+>>   3 files changed, 12 insertions(+), 15 deletions(-)
 >>
->>   audio/audio.c                        | 11 +++-
->>   audio/audio_template.h               | 12 ++--
->>   audio/mixeng.c                       | 83 ++++++++++++++++++++++++----
->>   audio/mixeng.h                       |  6 +-
->>   hw/audio/asc.c                       |  9 ++-
->>   tests/functional/test_m68k_q800.py   |  3 +-
->>   tests/functional/test_m68k_replay.py |  3 +-
->>   7 files changed, 106 insertions(+), 21 deletions(-)
->
-> It looks like (some of) these patches should go to 10.0-stable too,
-> what do you think?
+>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>> index 638691028050..af52580c1e63 100644
+>> --- a/include/hw/virtio/virtio.h
+>> +++ b/include/hw/virtio/virtio.h
+>> @@ -211,7 +211,7 @@ struct VirtioDeviceClass {
+>>       int (*start_ioeventfd)(VirtIODevice *vdev);
+>>       void (*stop_ioeventfd)(VirtIODevice *vdev);
+>>       /* Called before loading queues. Useful to add queues before loading. */
+>> -    int (*pre_load_queues)(VirtIODevice *vdev);
+>> +    int (*pre_load_queues)(VirtIODevice *vdev, uint32_t n);
+> 
+> This turns out to be tricky as it has a lot of assumptions as
+> described in the changelog (e.g only lower 32bit of guest_features is
+> correct etc when calling this function).
 
-I would perhaps select patch 1/7 (‘tests/functional: use “none” audio
-driver for q800 tests’). I don't see any serious bugs fixed by these
-patches.
+The problem is that I missed the following comment in
+hw/virtio/virtio.c:
+     /*
+      * Temporarily set guest_features low bits - needed by
+      * virtio net load code testing for VIRTIO_NET_F_CTRL_GUEST_OFFLOADS
+      * VIRTIO_NET_F_GUEST_ANNOUNCE and VIRTIO_NET_F_CTRL_VQ.
+      *
+      * Note: devices should always test host features in future - don't 
+create
+      * new dependencies like this.
+      */
+     vdev->guest_features = features;
 
-With best regards,
-Volker
+This problem is specific to guest_features so avoiding it should give us 
+a reliable solution.
 
->
-> Thanks,
->
-> /mjt
->
->
+> 
+> Looking at the commit that introduces this which is 9379ea9db3c that says:
+> 
+> """
+> Otherwise the loaded queues will not have handlers and elements
+> in them will not be processed.
+> """
+> 
+> I fail to remember what it means or what happens if we don't do 9379ea9db3c.
 
+The packets and control commands in the queues except the first queue 
+will not be processed because they do not have handle_output set.
+
+Regards,
+Akihiko Odaki
 
