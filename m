@@ -4,71 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7944FC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6149AC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFEiW-0005ZH-Ag; Wed, 14 May 2025 12:12:24 -0400
+	id 1uFEmG-0000MU-LY; Wed, 14 May 2025 12:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
- id 1uFEIV-00033y-3H; Wed, 14 May 2025 11:45:38 -0400
-Received: from out203-205-221-233.mail.qq.com ([203.205.221.233])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1uFEN6-000601-VJ
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 11:50:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
- id 1uFEIL-0002hn-9Y; Wed, 14 May 2025 11:45:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1747237504; bh=Ff40hSDHf23i9uNqj7BBEdJRrJ6S5X3vmaz8E1KcQiM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B8FinTztXeBFZ4+Tv3i65DZ1W5HO7AjMugWO8ElsrWI+PEc/LrdgDm4KX6U0+ROpE
- ds4M8tv4quilGke1lX1jHdz506mNU5xpPdZU8EFIK8+zdFkPAwdph3t0ukk8BdMCz2
- Z3f+uSlYB+xER+3aigF5klcBPXtnZCk9SoTmXHnA=
-Received: from localhost.localdomain ([117.147.34.74])
- by newxmesmtplogicsvrszb21-0.qq.com (NewEsmtp) with SMTP
- id 9B390847; Wed, 14 May 2025 23:38:51 +0800
-X-QQ-mid: xmsmtpt1747237131t6ffa1ypv
-Message-ID: <tencent_80394492ED0159599D33DE267BDA007A1C06@qq.com>
-X-QQ-XMAILINFO: NnYhxYSyuBnLo9ACLs+1+raiu1u9PBH7rrFGLWUTaJz1OXthURDbmELOkvMF2f
- YXiWNQTnVNq+LQp5SCP/uYOeDS+ri/08C9vks7XF9DnWVsFelgtkjm2ibT+AylnXziNjKVwm6QxF
- FZJLOr4qJjX/TeCoF/eearRMaX/qT52WmJO9i6S50g4HQ1e6vsrgJKCo+c5Igli9MYGn7j65VbbF
- Ayo+ST3oIH97Vyn/YDlZgtZ2IMTKN4KklIVdUU9opJ5HvdgRK1ggcAnBXZhuF3QNcPlevi4xDWXc
- wZVu0OJCXmNFPCg9LJ7Zo1pIpf4qHA0RhiyPIncmFgOgA5r/2816jAe70wEoeXHngdvS1rRp4uXb
- 8QVEd1A2LtZ78aYMxmtpxgljf6GhXPwzvaMXHvNQqZDyon4/0mFDS/PYAY1BlRPM7lNGfzhEHz9b
- Jcu/30xBMjqHccJmfeVHLAMiCSGDyPqORvSpmHEqP7TxcwaT3c84+xF0DAiXGI+5w+2NxXU5tKed
- 6XrAr5zkrZv7z0YKbCos0Xxn93jNeLTyzTA4Pne+URc3Of4VGY0Zq4ufU4MQR4/IR1YNwHUzxGn/
- ymh/qkRDyvnAv1p9yhA/dtyID/gIae8rPIaJ6TejFsVV0R6dNFrcSqfKCuk1hfEY+oIlkql0zP+P
- /wuyFDIYrkRvxk5anOUj0LE887eaqc07RL3ZLmWnT9SJtlM0wVjlY8tnUAp9zbSi2voPTsLQL0S8
- rXOJJw7YF0Tj6vB+l6ARZ3Lb5g2QtN7IwasjI2lTW7VSKRmEErkfQdNQlZaUU9vmmr5FbArD8CU5
- +0x1zPA795GREixOUsBElOtTaB4viKnoSoc45QksclCkjfRUEtys+dRUSa4JSlf0umY5/i8RQLhD
- 2AFDvN1bvVpKrL2CLEuYLQ22nWMgvXs5iaJeLlwMe2fEO4nJiUslEuqHUI8MLP7ZPxaE0ZtsMXwI
- PNaAGjrz3fVEOpN0tu6J75c36RYUsSAiMvTsOxcXIvQw7Wsdm6BQ==
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
-From: Sunny Zhu <sunnyzhyy@qq.com>
-To: eblake@redhat.com
-Cc: hreitz@redhat.com, jsnow@redhat.com, kwolf@redhat.com,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, stefanha@redhat.com,
- sunnyzhyy@qq.com, vsementsov@yandex-team.ru
-Subject: Re: [PATCH v4 11/13] mirror: Skip writing zeroes when target is
- already zero
-Date: Wed, 14 May 2025 23:37:54 +0800
-X-OQ-MSGID: <20250514153754.53829-1-sunnyzhyy@qq.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250509204341.3553601-26-eblake@redhat.com>
-References: <20250509204341.3553601-26-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1uFEN4-0003vr-P0
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 11:50:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747237811;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EkTX29+Ajze/blrMWIOR1Q1IBk2VHDB5D5YBIXNBaqc=;
+ b=VOyTd+SBwrsboKBkVpL80man/5dBiT8Ix5aLxlqOf+NoSMSlfezDci6LE9ETglGvFmic58
+ 9l9M3s8zeng9NPwCN/wKjD+2UVXXrQonhxdPkoZuJYLBJHCWoZniKGVE76ghaQQjmd+BXs
+ V6qw6z4LYNva8NZ7kKHu0kM24pr1y9g=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-_-7tSZ4jO3CeC2Iv0DfuEg-1; Wed, 14 May 2025 11:50:10 -0400
+X-MC-Unique: _-7tSZ4jO3CeC2Iv0DfuEg-1
+X-Mimecast-MFC-AGG-ID: _-7tSZ4jO3CeC2Iv0DfuEg_1747237809
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-30c9b0aa4ccso3655764a91.3
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 08:50:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747237809; x=1747842609;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EkTX29+Ajze/blrMWIOR1Q1IBk2VHDB5D5YBIXNBaqc=;
+ b=grgfZHfMRDfWGDQjOuLPi/DZCl9Lr1dMykwpIy2w5eTj7w5Ud55Tsefv5l1mzK2kZw
+ zos3qvO3ZAT+7RUrK+a70AqkwUabraHA86alkKMxiF3biqagTVvd5/1HsH8cWw00u5/I
+ n4JVSl5DVhJwevgsR18qtTevizcZnCoXve5wnr0svQJ/q04SEilmpYk8DcxHSnt1yOT6
+ h6MPJhEIsiXsU6+BTVfqnU9D+iI/Inj+P4HIYcGhT7f4QfKFzUMY1HE73tuph30pQ7Pk
+ LHntoZFU9T3qJh7ivRI4IP6xV0m5kDc5gMFPa22wQlf3lxcPQBhWwvQWrPhUQnEYlbZb
+ vvmA==
+X-Gm-Message-State: AOJu0Yx3FtFPo+dnZu3N0HHM9mPMnxFTAUb6zErUT88l/B6fivogtnd0
+ baa4o98tkQ8mB4K7ZFlX6vZSzuWo0r1WwUROKKbSIjwOWUbg+TDONa/kZZduOP4xQrDeqhjWkH3
+ W07eaqzq1lPbwn5ERmeXvwmaraiRm8DORjvzAoX7WCuO8fSltO/miO0AZ380jBOb2R63gqhKYE5
+ tINhNwHybMaRLjVJqqAs6Qoi6clvc=
+X-Gm-Gg: ASbGncsSkUT/qYCT6JS2WZWTMYDxh2RUlIxgwXeD6Vxej+hBukua3JxNB5LLMEvBzfA
+ 3jxLjrUnk4xmG/Jv5QufvxerKKKXKTvS1gjC/9Ab/VIDXcNCSM3Pz14XV/K9X6FT3/ZpF
+X-Received: by 2002:a17:90b:17cb:b0:2f8:b2c:5ef3 with SMTP id
+ 98e67ed59e1d1-30e2e5ba291mr7422429a91.14.1747237809502; 
+ Wed, 14 May 2025 08:50:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNZcgZhDBEE31sJa3kO13e6hw1JsdiiM7Nf1kY2GZyedHNkJxnzwYTzBPGhm0H+eunSpGW0AOejcMH4+cJt4E=
+X-Received: by 2002:a17:90b:17cb:b0:2f8:b2c:5ef3 with SMTP id
+ 98e67ed59e1d1-30e2e5ba291mr7422377a91.14.1747237809104; Wed, 14 May 2025
+ 08:50:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.233; envelope-from=sunnyzhyy@qq.com;
- helo=out203-205-221-233.mail.qq.com
-X-Spam_score_int: 33
-X-Spam_score: 3.3
-X-Spam_bar: +++
-X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
+References: <20250507184647.15580-1-jonah.palmer@oracle.com>
+In-Reply-To: <20250507184647.15580-1-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Wed, 14 May 2025 17:49:32 +0200
+X-Gm-Features: AX0GCFueevwCAJD03TfYwMTsm-mpafyxV_NwP1-xQ1iCM8lG6E20eMuucQfaZIk
+Message-ID: <CAJaqyWcOaGKaCeT1sifCE_sau1Ac2g=F62TkD=arntQ8ka4aDQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] Move memory listener register to vhost_vdpa_init
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com, 
+ jasowang@redhat.com, lvivier@redhat.com, dtatulea@nvidia.com, 
+ leiyang@redhat.com, parav@mellanox.com, sgarzare@redhat.com, 
+ si-wei.liu@oracle.com, lingshan.zhu@intel.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,54 +104,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 May 2025 15:40:28 -0500, Eric Blake wrote:
-> @@ -847,8 +887,10 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
->      bool punch_holes =
->          target_bs->detect_zeroes == BLOCKDEV_DETECT_ZEROES_OPTIONS_UNMAP &&
->          bdrv_can_write_zeroes_with_unmap(target_bs);
-> +    int64_t bitmap_length = DIV_ROUND_UP(s->bdev_length, s->granularity);
-> 
->      /* Determine if the image is already zero, regardless of sync mode.  */
-> +    s->zero_bitmap = bitmap_new(bitmap_length);
->      bdrv_graph_co_rdlock();
->      bs = s->mirror_top_bs->backing->bs;
->      if (s->target_is_zero) {
-> @@ -862,7 +904,14 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
->      if (ret < 0) {
->          return ret;
->      } else if (s->sync_mode == MIRROR_SYNC_MODE_TOP) {
-> -        /* In TOP mode, there is no benefit to a pre-zeroing pass.  */
-> +        /*
-> +         * In TOP mode, there is no benefit to a pre-zeroing pass, but
-> +         * the zero bitmap can be set if the destination already reads
-> +         * as zero and we are not punching holes.
-> +         */
-> +        if (ret > 0 && !punch_holes) {
-> +            bitmap_set(s->zero_bitmap, 0, bitmap_length);
+On Wed, May 7, 2025 at 8:47=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
+m> wrote:
+>
+> Current memory operations like pinning may take a lot of time at the
+> destination.  Currently they are done after the source of the migration i=
+s
+> stopped, and before the workload is resumed at the destination.  This is =
+a
+> period where neigher traffic can flow, nor the VM workload can continue
+> (downtime).
+>
+> We can do better as we know the memory layout of the guest RAM at the
+> destination from the moment that all devices are initializaed.  So
+> moving that operation allows QEMU to communicate the kernel the maps
+> while the workload is still running in the source, so Linux can start
+> mapping them.
+>
+> As a small drawback, there is a time in the initialization where QEMU
+> cannot respond to QMP etc.  By some testing, this time is about
+> 0.2seconds.  This may be further reduced (or increased) depending on the
+> vdpa driver and the platform hardware, and it is dominated by the cost
+> of memory pinning.
+>
+> This matches the time that we move out of the called downtime window.
+> The downtime is measured as checking the trace timestamp from the moment
+> the source suspend the device to the moment the destination starts the
+> eight and last virtqueue pair.  For a 39G guest, it goes from ~2.2526
+> secs to 2.0949.
+>
 
-It's ok when ret > 0 is obtained through bdrv_co_is_all_zeroes(target_bs). However,
-if ret = 1 originates by target-is-zero == true from qmp_blockdev_mirror, this means
-that target-is-zero also takes effect under sync=TOP. I am uncertain whether this
-aligns with our intended behavior.
+Hi Jonah,
 
-Under sync=TOP, target-is-zero could carry two distinct meanings:
-[1] The top snapshot reads as fully zero.
-[2] The entire destination snapshot chain reads as fully zero.
+Could you update this benchmark? I don't think it changed a lot but
+just to be as updated as possible.
 
-Currently, target-is-zero is designed to represent scenario [2] on sync=TOP.
+I think I cannot ack the series as I sent the first revision. Jason or
+Si-Wei, could you ack it?
 
-> +        }
->      } else if (ret == 0 || punch_holes) {
->          /*
->           * Here, we are in FULL mode; our goal is to avoid writing
-> @@ -871,8 +920,9 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
->           * zeroing happened externally (ret > 0) or if we have a fast
->           * way to pre-zero the image (the dirty bitmap will be
->           * populated later by the non-zero portions, the same as for
-> -         * TOP mode).  If pre-zeroing is not fast, or we need to punch
-> -         * holes, then our only recourse is to write the entire image.
-> +         * TOP mode).  If pre-zeroing is not fast, then our only
-> +         * recourse is to mark the entire image dirty.  The act of
-> +         * pre-zeroing will populate the zero bitmap.
+Thanks!
+
+> Future directions on top of this series may include to move more things a=
+head
+> of the migration time, like set DRIVER_OK or perform actual iterative mig=
+ration
+> of virtio-net devices.
+>
+> Comments are welcome.
+>
+> This series is a different approach of series [1]. As the title does not
+> reflect the changes anymore, please refer to the previous one to know the
+> series history.
+>
+> This series is based on [2], it must be applied after it.
+>
+> [Jonah Palmer]
+> This series was rebased after [3] was pulled in, as [3] was a prerequisit=
+e
+> fix for this series.
+>
+> v4:
+> ---
+> * Add memory listener unregistration to vhost_vdpa_reset_device.
+> * Remove memory listener unregistration from vhost_vdpa_reset_status.
+>
+> v3:
+> ---
+> * Rebase
+>
+> v2:
+> ---
+> * Move the memory listener registration to vhost_vdpa_set_owner function.
+> * Move the iova_tree allocation to net_vhost_vdpa_init.
+>
+> v1 at https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02136.html=
+.
+>
+> [1] https://patchwork.kernel.org/project/qemu-devel/cover/20231215172830.=
+2540987-1-eperezma@redhat.com/
+> [2] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg05910.html
+> [3] https://lore.kernel.org/qemu-devel/20250217144936.3589907-1-jonah.pal=
+mer@oracle.com/
+>
+> Jonah - note: I'll be on vacation from May 10-19. Will respond to
+>               comments when I return.
+>
+> Eugenio P=C3=A9rez (7):
+>   vdpa: check for iova tree initialized at net_client_start
+>   vdpa: reorder vhost_vdpa_set_backend_cap
+>   vdpa: set backend capabilities at vhost_vdpa_init
+>   vdpa: add listener_registered
+>   vdpa: reorder listener assignment
+>   vdpa: move iova_tree allocation to net_vhost_vdpa_init
+>   vdpa: move memory listener register to vhost_vdpa_init
+>
+>  hw/virtio/vhost-vdpa.c         | 107 +++++++++++++++++++++------------
+>  include/hw/virtio/vhost-vdpa.h |  22 ++++++-
+>  net/vhost-vdpa.c               |  34 +----------
+>  3 files changed, 93 insertions(+), 70 deletions(-)
+>
+> --
+> 2.43.5
+>
 
 
