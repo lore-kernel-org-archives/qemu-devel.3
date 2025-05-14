@@ -4,138 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF6BEC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CEE0C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFEIK-0002rH-A9; Wed, 14 May 2025 11:45:20 -0400
+	id 1uFEHA-0000bV-Rs; Wed, 14 May 2025 11:44:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFE6Q-0005aC-Sh
- for qemu-devel@nongnu.org; Wed, 14 May 2025 11:33:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFE5u-0004Vb-9o
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 11:32:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFE6N-0001D1-Un
- for qemu-devel@nongnu.org; Wed, 14 May 2025 11:33:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFE5q-0001A0-AK
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 11:32:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747236779;
+ s=mimecast20190719; t=1747236743;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TmdMe2lbnU6i1EE6DgHrHUWFPxIJNIaFivomhQpt0IM=;
- b=EhMitUPtVBcBvM3uoVaM8Spa4BjmkxlRqt/KIn+mlmF69ocXvXP5dQB3/0Td4I/L0H+tAf
- d1FRvGuubbD5h3hC+wt4Q0kmeZpbhI16my0JJzeVZC3g/S7rnBZlV8UbCE7uQKA80dEE2i
- BEzh/u2LjM2G/xj+ayfkyFn79fxSqtI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9I2Ae++q3e7qQPkI8PqmjDyCOw60TogaMewg6s/InaQ=;
+ b=d3ocRGH/MCZLLjnLx0kDGoo1Bf6fj0mNkjzk7dDIgnKl3iXYPuvLNMIJa8w0KdJffH4fLc
+ bRbwm9rdbkHjJlOTo0ueLFkRZ3YqvaQBtUpjI+yg5ZYcN85fsmm0DrWGzkL5alt2ciOMbW
+ UPplQqzQn6mbb1byy5X0a9vKvDJUvPY=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-5l6z1OJ9N0K7feeirN-KdA-1; Wed, 14 May 2025 11:32:57 -0400
-X-MC-Unique: 5l6z1OJ9N0K7feeirN-KdA-1
-X-Mimecast-MFC-AGG-ID: 5l6z1OJ9N0K7feeirN-KdA_1747236775
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a1f6c5f54cso2219669f8f.3
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 08:32:56 -0700 (PDT)
+ us-mta-685-kCq2h72WON221GuQG30hPA-1; Wed, 14 May 2025 11:32:21 -0400
+X-MC-Unique: kCq2h72WON221GuQG30hPA-1
+X-Mimecast-MFC-AGG-ID: kCq2h72WON221GuQG30hPA_1747236741
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5fbb82101d4so6055409a12.2
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 08:32:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747236775; x=1747841575;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TmdMe2lbnU6i1EE6DgHrHUWFPxIJNIaFivomhQpt0IM=;
- b=SDsiMqfBXa5BgmtTBBaPULwkFbF8umUqLN0DHltNWwjKPSkcgIaaZ9nAKiqTCd8nay
- qKI4/GEESeQI4EtDWTMf1DLEBihxDx6sY6GuWoepcxsGkxCp1w5Fpo/OPpLtJHSOm0ae
- hUsVMASfzL2OFeV27nBAvD0XMPXkJwA37G2HCNTXHIVCa9HTD843/TJpDErvzkFAeX7X
- Ujgtqx4QANgtQWpCn1hmjfV/FH5dc6ovN3oehbnZrf7kiKzoaA5KtgZvDdrHnnJw0jym
- oltwaQH3zsfab5Z7lvkUGDBp9TVYbvOOrqFPW5+kXoi0Lj3zVm+Sa1kjkWuO9KQyG98n
- GEwg==
+ d=1e100.net; s=20230601; t=1747236740; x=1747841540;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9I2Ae++q3e7qQPkI8PqmjDyCOw60TogaMewg6s/InaQ=;
+ b=NgE+JgSY2t0IvUSsIMDeRU1UNZ8n5HDJoqrAjk7Dyi/uq0L5Od34Ic23IVHz1s33lf
+ m39Kd8wDLrxOrvJvYh1bWQzlHB3yTvahkqXmn7AU0DR04NI4FPg9HA2/TMS53paQtWNu
+ fPW8BAmxDQrXeANYN4vOIRWHjlRWClJtE+/VF9T92eLY5Yzey0JX4CsvxT6TzuSZsBrI
+ DSQW2HEwNdoFhGmdAqY0QhyeDjyYn1B/kTtMMlsEQ5agAWqDF3lqbWEWqvSycANLl0gM
+ jvqY24U92ooH3d//nncxazOvhIMy5d0KdkZAwUttNeDjrnXFOmNMrFXUJNMxaJt4vvyS
+ iXNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFoM5UPZFWfCmfJ51LCAhyRh/db11dETBFgoxrkWL/MMlWGvTFTJOO7gYHVaZMesTHtDpXz7ojj8Y7@nongnu.org
-X-Gm-Message-State: AOJu0YwL5HcvG44J3rSs83CosnODtVs8TDRHLkOmLAK83i+A3dX3d4Zy
- haXFW8kWm3dRtAemuArmJb4Tsd4ZE0riVdlMFeL9v6k1I90x/oHu/FEJzlme2g2nTGaOaCXlTrW
- 5+udCTIes8lsWKikVINW84akG1RdlO69p6OzRJuJXk+ObOkNW8Is/
-X-Gm-Gg: ASbGncs8cQhA9lKKEjoERHYBhxGl/JM1VV5IbOVv2G0JSFMs2JIHXVybrx1u+c6NCQ/
- 9kGc3fA0rVUqnJ8ywI/esAq+ZH4+M0z91vkUyXPgARX+0j5iWydWs7wcRnGf/zu7Md0c0J37cKV
- qDqgUeRDmNHQQS3lj5mwWvUTz7MN08DA7At7+ZU8UK06ZmtnhcBXdnb8uW5tX+pXfQOvszxGqft
- 7Z8jTQLZMhuzOkkWrxJYA6Jt5vUhJ78DhJWVLTazrNuSMEZeGqDdAZmnC9g7phaQcUui9Lg4pHn
- uMLt2KKRT3sxLQ8nXVwaPC+GWiuYpsXXWwViw4BekNFE7sM6zw==
-X-Received: by 2002:a5d:5f8e:0:b0:3a1:f535:e9be with SMTP id
- ffacd0b85a97d-3a349694ac7mr3138870f8f.7.1747236775368; 
- Wed, 14 May 2025 08:32:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEGJ/di50oiGFbb5Yfh5nlBM7l31mPC2fYyS9Ggs8Y6wQpbeDbP3HBDqHkgY5y+Zs3f7zRl2A==
-X-Received: by 2002:a5d:5f8e:0:b0:3a1:f535:e9be with SMTP id
- ffacd0b85a97d-3a349694ac7mr3138838f8f.7.1747236774942; 
- Wed, 14 May 2025 08:32:54 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f3368f2bsm37110115e9.4.2025.05.14.08.32.54
+ AJvYcCUEGd9hLecS3ZAmySWlofUIzaCDh1OKPoADUWM/PH0fERiu9EIVo1fQ+R6TGBYemsmArvSm/8txPQD2@nongnu.org
+X-Gm-Message-State: AOJu0YzjFwtLq03EMsFLujvILizF+YB1dIKh77to4lReP2ybsfLuIj/l
+ ThS5uAblMnxXUj0KIo2pNcmQQ59RhA+dm7PTTjrdCEDuUaedzBCeblHQcXQsf3DNkL3hk420gcv
+ xbzO6rcgCmok+o8JJnPhj5jMvYcJrG+yzWE1haQgliLoI/Y4mnENs
+X-Gm-Gg: ASbGnctwRz2KH9JPGPS12BXGmksIninL63bBQf821yHmoTnqKQ6cBosUXMT7DhloHCR
+ HdfV7zMsREKUhScT9w/LP2K8zeH/OdiDtlEkhJJBYQGOq8wCQHjyFFNfINXt+2QOvH6whgZ0HSQ
+ zwLYzqJ9oNQFf+jMrkeCFb5sEuGBSlyeT5b3AO16ZxBIOyTuYuE2GhwGLydSVze1JkGM0vlrMj7
+ gMFu1h+xABb053SZc6O4Lr/biTwr0wQfyNcm2W72nbnH+7MsW+SZqXDBdAlaNVeFZYpY3xmN3pE
+ XKkspG0aRKkGh9/tc4hAiKL7SJ6KEqAl+Nt8Mo7g460=
+X-Received: by 2002:a05:6402:280d:b0:5fe:e393:808d with SMTP id
+ 4fb4d7f45d1cf-5ff988a53eemr2735249a12.9.1747236740440; 
+ Wed, 14 May 2025 08:32:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+/UaopRWPHGkNV7lqxKvbbxchXXSflkAfneAZcv8FhxTa064+kJH8Y55KUzERglKdY78J6w==
+X-Received: by 2002:a05:6402:280d:b0:5fe:e393:808d with SMTP id
+ 4fb4d7f45d1cf-5ff988a53eemr2735234a12.9.1747236739985; 
+ Wed, 14 May 2025 08:32:19 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-48-129.web.vodafone.de.
+ [109.42.48.129]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5ff969f67c2sm1458948a12.60.2025.05.14.08.32.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 May 2025 08:32:54 -0700 (PDT)
-Message-ID: <fc2da193-dc90-4824-b7de-fc426c38029a@redhat.com>
-Date: Wed, 14 May 2025 17:32:53 +0200
+ Wed, 14 May 2025 08:32:19 -0700 (PDT)
+Message-ID: <aa0dd561-b217-480d-a993-e8ca50fb7f22@redhat.com>
+Date: Wed, 14 May 2025 17:32:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] hw/arm/fby35: Map BMC memory into system memory
-To: Steven Lee <steven_lee@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
-References: <20250514090354.1461717-1-steven_lee@aspeedtech.com>
- <20250514090354.1461717-5-steven_lee@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250514090354.1461717-5-steven_lee@aspeedtech.com>
+Subject: Re: [PATCH v2 06/25] s390x/diag: Implement DIAG 320 subcode 1
+To: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
+ david@redhat.com, pbonzini@redhat.com
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
+ fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250508225042.313672-1-zycai@linux.ibm.com>
+ <20250508225042.313672-7-zycai@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250508225042.313672-7-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -144,7 +141,7 @@ X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,35 +157,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/14/25 11:03, Steven Lee wrote:
-> Add the BMC memory region as a subregion of system_memory so that
-> modules relying on system memory can operate correctly.
+On 09/05/2025 00.50, Zhuoying Cai wrote:
+> DIAG 320 subcode 1 provides information needed to determine
+> the amount of storage to store one or more certificates.
 > 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> The subcode value is denoted by setting the left-most bit
+> of an 8-byte field.
+> 
+> The verification-certificate-storage-size block (VCSSB) contains
+> the output data when the operation completes successfully.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   hw/arm/fby35.c | 1 +
->   1 file changed, 1 insertion(+)
+>   include/hw/s390x/ipl/diag320.h | 25 ++++++++++++++++++++++
+>   target/s390x/diag.c            | 38 +++++++++++++++++++++++++++++++++-
+>   2 files changed, 62 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/arm/fby35.c b/hw/arm/fby35.c
-> index e123fa69e1..c14fc2efe9 100644
-> --- a/hw/arm/fby35.c
-> +++ b/hw/arm/fby35.c
-> @@ -77,6 +77,7 @@ static void fby35_bmc_init(Fby35State *s)
+> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+> index 713570545d..e91eb7238c 100644
+> --- a/include/hw/s390x/ipl/diag320.h
+> +++ b/include/hw/s390x/ipl/diag320.h
+> @@ -11,7 +11,32 @@
+>   #define S390X_DIAG320_H
 >   
->       memory_region_init(&s->bmc_memory, OBJECT(&s->bmc), "bmc-memory",
->                          UINT64_MAX);
-> +    memory_region_add_subregion(get_system_memory(), 0, &s->bmc_memory);
->       memory_region_init_ram(&s->bmc_dram, OBJECT(&s->bmc), "bmc-dram",
->                              FBY35_BMC_RAM_SIZE, &error_abort);
+>   #define DIAG_320_SUBC_QUERY_ISM     0
+> +#define DIAG_320_SUBC_QUERY_VCSI    1
 >   
+>   #define DIAG_320_RC_OK              0x0001
+> +#define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
+> +
+> +#define VCSSB_MAX_LEN   128
+> +#define VCE_HEADER_LEN  128
+> +#define VCB_HEADER_LEN  64
+> +
+> +#define DIAG_320_ISM_QUERY_VCSI     0x4000000000000000
+> +
+> +struct VCStorageSizeBlock {
+> +    uint32_t length;
+> +    uint8_t reserved0[3];
+> +    uint8_t version;
+> +    uint32_t reserved1[6];
+> +    uint16_t total_vc_ct;
+> +    uint16_t max_vc_ct;
+> +    uint32_t reserved3[7];
+> +    uint32_t max_vce_len;
+> +    uint32_t reserved4[3];
+> +    uint32_t max_single_vcb_len;
+> +    uint32_t total_vcb_len;
+> +    uint32_t reserved5[10];
+> +} QEMU_PACKED;
+
+Please try to avoid QEMU_PACKED as long as it is not really necessary. The 
+compiler can create better code without it and we have less trouble on 
+exotic host architectures that way.
+
+Here, all members seem to have proper natural alignment, so you don't need 
+it. You can use something like this to make sure that there is no unexpected 
+padding in the structure:
+
+QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != ...,
+                           "size of VCStorageSizeBlock is wrong");
+
+> +typedef struct VCStorageSizeBlock \
+> +VCStorageSizeBlock;
+
+That looks like it fits into one line.
+
+>   #endif
+> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+> index 9d249831b3..0743f5ec0e 100644
+> --- a/target/s390x/diag.c
+> +++ b/target/s390x/diag.c
+> @@ -194,6 +194,7 @@ out:
+>   void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>   {
+>       S390CPU *cpu = env_archcpu(env);
+> +    S390IPLCertificateStore *qcs = s390_ipl_get_certificate_store();
+>       uint64_t subcode = env->regs[r3];
+>       uint64_t addr = env->regs[r1];
+>       int rc;
+> @@ -215,13 +216,48 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>   
+>       switch (subcode) {
+>       case DIAG_320_SUBC_QUERY_ISM:
+> -        uint64_t ism =  0;
+> +        uint64_t ism = cpu_to_be64(DIAG_320_ISM_QUERY_VCSI);
+>   
+>           if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism, sizeof(ism))) {
+>               s390_cpu_virt_mem_handle_exc(cpu, ra);
+>               return;
+>           }
+>   
+> +        rc = DIAG_320_RC_OK;
+> +        break;
+> +    case DIAG_320_SUBC_QUERY_VCSI:
+> +        VCStorageSizeBlock vcssb;
+> +
+> +        if (!diag_parm_addr_valid(addr, sizeof(VCStorageSizeBlock),
+> +                                  true)) {
+> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
+> +            return;
+> +        }
+> +
+> +        if (!qcs || !qcs->count) {
+> +            vcssb.length = 4;
+
+You missed the cpu_to_be32() here.
+
+> +        } else {
+> +            vcssb.length = cpu_to_be32(VCSSB_MAX_LEN);
+> +            vcssb.version = 0;
+> +            vcssb.total_vc_ct = cpu_to_be16(qcs->count);
+> +            vcssb.max_vc_ct = cpu_to_be16(MAX_CERTIFICATES);
+> +            vcssb.max_vce_len = cpu_to_be32(VCE_HEADER_LEN + qcs->max_cert_size);
+> +            vcssb.max_single_vcb_len = cpu_to_be32(VCB_HEADER_LEN + VCE_HEADER_LEN +
+> +                                                   qcs->max_cert_size);
+> +            vcssb.total_vcb_len = cpu_to_be32(VCB_HEADER_LEN +
+> +                                              qcs->count * VCE_HEADER_LEN +
+> +                                              qcs->total_bytes);
+> +        }
+> +
+> +        if (be32_to_cpu(vcssb.length) > 4 && be32_to_cpu(vcssb.length) < 128) {
+
+How is this supposed to happen? There are only two hard-coded values for 
+this field above?
+
+> +            rc = DIAG_320_RC_INVAL_VCSSB_LEN;
+> +            break;
+> +        }
+> +
+> +        if (s390_cpu_virt_mem_write(cpu, addr, r1, &vcssb, sizeof(VCStorageSizeBlock))) {
+> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +            return;
+> +        }
+>           rc = DIAG_320_RC_OK;
+>           break;
+>       default:
+
+  Thomas
 
 
