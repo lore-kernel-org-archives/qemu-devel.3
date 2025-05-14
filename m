@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1620C3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD0FC3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:02:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHMJ-0004sX-91; Wed, 14 May 2025 15:01:39 -0400
+	id 1uFHM4-0004ld-Ok; Wed, 14 May 2025 15:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLc-0004D3-Nv; Wed, 14 May 2025 15:00:58 -0400
+ id 1uFHLZ-0004BO-6d; Wed, 14 May 2025 15:00:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLa-0007JM-PP; Wed, 14 May 2025 15:00:56 -0400
+ id 1uFHLW-0007Hr-8G; Wed, 14 May 2025 15:00:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2B2E5121D8F;
- Wed, 14 May 2025 22:00:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F3081121D8C;
+ Wed, 14 May 2025 22:00:31 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 311C620BA81;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0876F20BA7E;
  Wed, 14 May 2025 22:00:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 05/23] hw/core: Get default_cpu_type calling
- machine_class_default_cpu_type()
-Date: Wed, 14 May 2025 22:00:17 +0300
-Message-Id: <20250514190041.104759-5-mjt@tls.msk.ru>
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 02/23] target/i386: Reset parked vCPUs together with
+ the online ones
+Date: Wed, 14 May 2025 22:00:14 +0300
+Message-Id: <20250514190041.104759-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,58 +61,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Since commit 62b4a227a33 the default cpu type can come from the
-valid_cpu_types[] array. Call the machine_class_default_cpu_type()
-instead of accessing MachineClass::default_cpu_type field.
+Commit 3f2a05b31ee9 ("target/i386: Reset TSCs of parked vCPUs too on VM
+reset") introduced a way to reset TSCs of parked vCPUs during VM reset to
+prevent them getting desynchronized with the online vCPUs and therefore
+causing the KVM PV clock to lose PVCLOCK_TSC_STABLE_BIT.
 
+The way this was done was by registering a parked vCPU-specific QEMU reset
+callback via qemu_register_reset().
+
+However, it turns out that on particularly device-rich VMs QEMU reset
+callbacks can take a long time to execute (which isn't surprising,
+considering that they involve resetting all of VM devices).
+
+In particular, their total runtime can exceed the 1-second TSC
+synchronization window introduced in KVM commit 5d3cb0f6a8e3 ("KVM:
+Improve TSC offset matching").
+Since the TSCs of online vCPUs are only reset from "synchronize_post_reset"
+AccelOps handler (which runs after all qemu_register_reset() handlers) this
+essentially makes that fix ineffective on these VMs.
+
+The easiest way to guarantee that these parked vCPUs are reset at the same
+time as the online ones (regardless how long it takes for VM devices to
+reset) is to piggyback on post-reset vCPU synchronization handler for one
+of online vCPUs - as there is no generic post-reset AccelOps handler that
+isn't per-vCPU.
+
+The first online vCPU was selected for that since it is easily available
+under "first_cpu" define.
+This does not create an ordering issue since the order of vCPU TSC resets
+does not matter.
+
+Fixes: 3f2a05b31ee9 ("target/i386: Reset TSCs of parked vCPUs too on VM reset")
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Link: https://lore.kernel.org/r/e8b85a5915f79aa177ca49eccf0e9b534470c1cd.1743099810.git.maciej.szmigiero@oracle.com
 Cc: qemu-stable@nongnu.org
-Fixes: 62b4a227a33 ("hw/core: Add machine_class_default_cpu_type()")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20250422084114.39499-1-philmd@linaro.org>
-(cherry picked from commit d5f241834be1b323ea697a469ff0f1335a1823fe)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit f6b5f71f04529d3f56b35f91badac9f5e7e225ca)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 3130c5cd45..1bc21b84a4 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -72,6 +72,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index f89568bfa3..951e8214e0 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -437,9 +437,8 @@ int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+     return kvm_fd;
+ }
  
-     for (el = machines; el; el = el->next) {
-         MachineClass *mc = el->data;
-+        const char *default_cpu_type = machine_class_default_cpu_type(mc);
-         MachineInfo *info;
+-static void kvm_reset_parked_vcpus(void *param)
++static void kvm_reset_parked_vcpus(KVMState *s)
+ {
+-    KVMState *s = param;
+     struct KVMParkedVcpu *cpu;
  
-         info = g_malloc0(sizeof(*info));
-@@ -90,8 +91,8 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-         info->numa_mem_supported = mc->numa_mem_supported;
-         info->deprecated = !!mc->deprecation_reason;
-         info->acpi = !!object_class_property_find(OBJECT_CLASS(mc), "acpi");
--        if (mc->default_cpu_type) {
--            info->default_cpu_type = g_strdup(mc->default_cpu_type);
-+        if (default_cpu_type) {
-+            info->default_cpu_type = g_strdup(default_cpu_type);
-         }
-         if (mc->default_ram_id) {
-             info->default_ram_id = g_strdup(mc->default_ram_id);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index f81cb680fc..21a76e904a 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7082,7 +7082,7 @@ ObjectClass *ppc_cpu_class_by_name(const char *name)
-     if (strcmp(name, "max") == 0) {
-         MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-         if (mc) {
--            return object_class_by_name(mc->default_cpu_type);
-+            return object_class_by_name(machine_class_default_cpu_type(mc));
-         }
+     QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+@@ -2738,7 +2737,6 @@ static int kvm_init(MachineState *ms)
      }
- #endif
+ 
+     qemu_register_reset(kvm_unpoison_all, NULL);
+-    qemu_register_reset(kvm_reset_parked_vcpus, s);
+ 
+     if (s->kernel_irqchip_allowed) {
+         kvm_irqchip_create(s);
+@@ -2908,6 +2906,10 @@ static void do_kvm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg
+ void kvm_cpu_synchronize_post_reset(CPUState *cpu)
+ {
+     run_on_cpu(cpu, do_kvm_cpu_synchronize_post_reset, RUN_ON_CPU_NULL);
++
++    if (cpu == first_cpu) {
++        kvm_reset_parked_vcpus(kvm_state);
++    }
+ }
+ 
+ static void do_kvm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
 -- 
 2.39.5
 
