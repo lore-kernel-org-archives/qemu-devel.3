@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42847C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398DBC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBiG-0005sZ-KO; Wed, 14 May 2025 08:59:56 -0400
+	id 1uFBi4-0004nb-Jp; Wed, 14 May 2025 08:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhL-0003pR-2a; Wed, 14 May 2025 08:58:59 -0400
+ id 1uFBgv-0003Fy-9a; Wed, 14 May 2025 08:58:33 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhI-0007rp-JN; Wed, 14 May 2025 08:58:58 -0400
+ id 1uFBgt-0007rC-6W; Wed, 14 May 2025 08:58:32 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3DE34121AE4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 286FF121AE2;
  Wed, 14 May 2025 15:57:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DD76E20B852;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C786B20B850;
  Wed, 14 May 2025 15:57:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 06/34] target/mips: Require even maskbits in
- update_pagemask
-Date: Wed, 14 May 2025 15:57:28 +0300
-Message-Id: <20250514125758.92030-6-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 04/34] target/avr: Fix buffer read in avr_print_insn
+Date: Wed, 14 May 2025 15:57:26 +0300
+Message-Id: <20250514125758.92030-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
@@ -64,54 +64,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-The number of bits set in PageMask must be even.
+Do not unconditionally attempt to read 4 bytes, as there
+may only be 2 bytes remaining in the translator cache.
 
-Fixes: d40b55bc1b86 ("target/mips: Fix PageMask with variable page size")
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250328175526.368121-3-richard.henderson@linaro.org>
+Message-Id: <20250325224403.4011975-2-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit d89b9899babcc01d7ee75f2917da861dc2afbc27)
+(cherry picked from commit 070a500cc0da70c1b4c62a6c95e41f0a1b19dc0b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index fb394bf0ed..4796638126 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -866,24 +866,17 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
+diff --git a/target/avr/disas.c b/target/avr/disas.c
+index b7689e8d7c..d341030174 100644
+--- a/target/avr/disas.c
++++ b/target/avr/disas.c
+@@ -68,28 +68,35 @@ static bool decode_insn(DisasContext *ctx, uint16_t insn);
  
- void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
+ int avr_print_insn(bfd_vma addr, disassemble_info *info)
  {
--    uint32_t mask;
--    int maskbits;
--
-     /* Don't care MASKX as we don't support 1KB page */
--    mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
--    maskbits = cto32(mask);
-+    uint32_t mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
-+    int maskbits = cto32(mask);
+-    DisasContext ctx;
++    DisasContext ctx = { info };
+     DisasContext *pctx = &ctx;
+     bfd_byte buffer[4];
+     uint16_t insn;
+     int status;
  
--    /* Ensure no more set bit after first zero */
--    if ((mask >> maskbits) != 0) {
--        goto invalid;
-+    /* Ensure no more set bit after first zero, and maskbits even. */
-+    if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
-+        env->CP0_PageMask = mask << CP0PM_MASK;
-+    } else {
-+        /* When invalid, set to default target page size. */
-+        env->CP0_PageMask = 0;
+-    ctx.info = info;
+-
+-    status = info->read_memory_func(addr, buffer, 4, info);
++    status = info->read_memory_func(addr, buffer, 2, info);
+     if (status != 0) {
+         info->memory_error_func(status, addr, info);
+         return -1;
      }
--    env->CP0_PageMask = mask << CP0PM_MASK;
--
--    return;
--
--invalid:
--    /* When invalid, set to default target page size. */
--    env->CP0_PageMask = 0;
+     insn = bfd_getl16(buffer);
+-    ctx.next_word = bfd_getl16(buffer + 2);
+-    ctx.next_word_used = false;
++
++    status = info->read_memory_func(addr + 2, buffer + 2, 2, info);
++    if (status == 0) {
++        ctx.next_word = bfd_getl16(buffer + 2);
++    }
+ 
+     if (!decode_insn(&ctx, insn)) {
+         output(".db", "0x%02x, 0x%02x", buffer[0], buffer[1]);
+     }
+ 
+-    return ctx.next_word_used ? 4 : 2;
++    if (!ctx.next_word_used) {
++        return 2;
++    } else if (status == 0) {
++        return 4;
++    }
++    info->memory_error_func(status, addr + 2, info);
++    return -1;
  }
  
- void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
+ 
 -- 
 2.39.5
 
