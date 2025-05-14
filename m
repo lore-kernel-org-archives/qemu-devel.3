@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD8BC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB789C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBiB-0005U5-ND; Wed, 14 May 2025 08:59:52 -0400
+	id 1uFBiG-0005rw-IE; Wed, 14 May 2025 08:59:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhu-0004jB-KC; Wed, 14 May 2025 08:59:38 -0400
+ id 1uFBhy-0004n2-3g; Wed, 14 May 2025 08:59:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhr-0007uT-NX; Wed, 14 May 2025 08:59:34 -0400
+ id 1uFBhu-0007wF-NQ; Wed, 14 May 2025 08:59:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 871D9121AE9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 99B94121AEB;
  Wed, 14 May 2025 15:57:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 31FE520B857;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4568D20B859;
  Wed, 14 May 2025 15:57:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Helge Konetzka <hk@zapateado.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [Stable-9.2.4 11/34] tcg: Allocate TEMP_VAL_MEM frame in temp_load()
-Date: Wed, 14 May 2025 15:57:33 +0300
-Message-Id: <20250514125758.92030-11-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 13/34] target/ppc: Fix SPRC/SPRD SPRs for P9/10
+Date: Wed, 14 May 2025 15:57:35 +0300
+Message-Id: <20250514125758.92030-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
@@ -62,40 +61,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Be sure to allocate the temp frame if it wasn't.
+Commit 60d30cff847 ("target/ppc: Move SPR indirect registers into
+PnvCore") was mismerged and moved the SPRs to power8-only, instead
+of power9/10-only.
 
-In the resolved issues, incomplete dead code elimination left a load
-at the top of an unreachable loop.  We simply need to allocate the
-stack slot to avoid crashing.
-
-Fixes: c896fe29d6c ("TCG code generator")
-Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-Reported-by: Helge Konetzka <hk@zapateado.de>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2891
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2899
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250401144332.41615-1-philmd@linaro.org>
-(cherry picked from commit e139bc4b1772575e1f2dcf8e3dbe1df2b684ef1f)
+Fixes: 60d30cff847 ("target/ppc: Move SPR indirect registers into PnvCore")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+(cherry picked from commit b3d47c8303b8be2c3693c5704012b3334741b7ed)
+(Mjt: adjust context for v9.2.0-2634-gffb6440cc5 "ppc/pnv: Add new PowerPC Special Purpose Registers (RWMR)")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 4578b185be..13f735b246 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -4461,6 +4461,9 @@ static void temp_load(TCGContext *s, TCGTemp *ts, TCGRegSet desired_regs,
-         ts->mem_coherent = 0;
-         break;
-     case TEMP_VAL_MEM:
-+        if (!ts->mem_allocated) {
-+            temp_allocate_frame(s, ts);
-+        }
-         reg = tcg_reg_alloc(s, desired_regs, allocated_regs,
-                             preferred_regs, ts->indirect_base);
-         tcg_out_ld(s, ts->type, reg, ts->mem_base->reg, ts->mem_offset);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 158b8035be..b68a9cb9b4 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -5765,6 +5765,18 @@ static void register_power9_book4_sprs(CPUPPCState *env)
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_WORT, 0);
++
++    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
++    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 &spr_read_generic, &spr_write_sprc,
++                 0x00000000);
++    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 &spr_read_sprd, &spr_write_sprd,
++                 0x00000000);
+ #endif
+ }
+ 
+@@ -5786,17 +5798,6 @@ static void register_power8_book4_sprs(CPUPPCState *env)
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_WORT, 0);
+-    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
+-    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_sprc,
+-                 0x00000000);
+-    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_sprd, &spr_write_sprd,
+-                 0x00000000);
+ #endif
+ }
+ 
 -- 
 2.39.5
 
