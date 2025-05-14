@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AA0C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54EC1C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFAeS-0007Pc-DG; Wed, 14 May 2025 07:51:56 -0400
+	id 1uFAdt-0006Ik-Dx; Wed, 14 May 2025 07:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAeF-0006p5-8T
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdg-00062v-KV
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAe5-0006Rv-Sm
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:38 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uFAdY-0006Ek-34
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:51:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747223490;
+ s=mimecast20190719; t=1747223457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CPjE//v0FbHndDkIbo/kN/ViVZAa/5rEK/Vw1YXqcLc=;
- b=AY6PtHZZeMb37Bpfti8FDXmh/NXyQjX9/3psTrqROu+8+JmwZtkFCfxBlxkJVzAZt/5oR/
- 2BJPY+SDfGghasrI1AGY+/Pwp7fpOj2O7e+/d6r2kXkJ9O8d++vra2/uwWKXUgvt3F1mqx
- lg48kiSvpFXCK7hdKt8vaHSIckhTsHM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kBvJJ1guqk+Wh8WSiEg/aaEDfWIkM3a0BJ0cG44g7BE=;
+ b=P0FsWYSZb0kCcjreZoQdDQx86qMpDPsVbqGr/FwP3D+SAtrLrmyh6PxzasjDM0SfOh5yze
+ yoF0V2NPeizOvPcdgziVtORRqJ4Grzn7jBAhOVH7wq+2ZOsKqI+38b5CTvr55FGfgbXySV
+ RrRRLQb93i7MQ7858qo/IZkk4Jbpluo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-PLuNCbasM-ihZbcX03yThQ-1; Wed, 14 May 2025 07:51:29 -0400
-X-MC-Unique: PLuNCbasM-ihZbcX03yThQ-1
-X-Mimecast-MFC-AGG-ID: PLuNCbasM-ihZbcX03yThQ_1747223488
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43eea5a5d80so38032635e9.1
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:51:29 -0700 (PDT)
+ us-mta-352-63sCOTZNPnKAfhCjOb46sQ-1; Wed, 14 May 2025 07:50:56 -0400
+X-MC-Unique: 63sCOTZNPnKAfhCjOb46sQ-1
+X-Mimecast-MFC-AGG-ID: 63sCOTZNPnKAfhCjOb46sQ_1747223455
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-441d438a9b7so3167505e9.1
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:50:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747223488; x=1747828288;
+ d=1e100.net; s=20230601; t=1747223455; x=1747828255;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CPjE//v0FbHndDkIbo/kN/ViVZAa/5rEK/Vw1YXqcLc=;
- b=B3lZt9W9U7i+sJ9+fwW1TnF1qRFYFQTM03SGw79IO+lQmJbGsQAxfqy/e6TW7t60qE
- s9Dc+OOFSBpTjxQmZ2R+DdPWn2g5ksJCBpFL30Xgk9yBVwQgFZzh/3lKptThZQrBT1wB
- BuYR7E97OFk321rDrvnN2ReVguVennSPY+ci9nYfOr1fbdgekS/ezIVwyfvsy+m/YfUh
- +Uv/BI4PYM64CqoMJr0n0mziYLEkhh+ldmHWiyX3gZvIxf1mMdzhk627rAv4bz22kFSa
- JfoDJEnVkxeFgaJ3JnDr+rjsjIIDu/GC4IIFVB9FHdxgLSm4yVzZNrRo8XtGnX2OvUBU
- dsqg==
-X-Gm-Message-State: AOJu0YxbuIkzkJXh1BEv8FZpUXIWPEaq+dSlrrRGxabj//O35U1TqQDm
- 2aYa6bsUxUaYVEa9n5T8jmrPjKqpnWvn28pexiJh0KE6tK5y+CUA/y59o8NrnRAoWeJLeLg34k6
- ugvsaE5dUO7ZaiJALcj6ng/sCASHyKfeghroBjZFuUHELbBlkjrNxA0rACXTGMPgwH6qMmvW3bJ
- pOgi1HkPo9yxqO7Uzsfr9CpGA4WliBNQ==
-X-Gm-Gg: ASbGncu3IpnZU6Nh+WBUKI/4EcXWvqkoDEQYtDBOpZqLPh0VM9F4M+naORxdteGiQhd
- l4gxukO+HIGgCR/dpubUxfLf0lRxHRQ2jYnHc6YQ9ZjuOD0cig/wA8taPa9kBgSOL4sSd34judl
- PHgpiWJP9Ugt89XGo48aIeflA8asc/GGZiL5XZFouapgZHv6l/leLJ1BBQd9yeY/3x6VAGckcNe
- m0u3atky8Nbr7HGjt1QRzdj6dQ+xZrAmQDf1Hg33yNrQRVEBJwtYtBZ6k4qm2ailZPadoXyVe58
- y5kH3w==
-X-Received: by 2002:a05:600c:8505:b0:43d:45a:8fca with SMTP id
- 5b1f17b1804b1-442f216d56emr35291945e9.30.1747223487770; 
- Wed, 14 May 2025 04:51:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQKp3y7z+0XmconLflEqMvyMcNL5AHLdiz2BSm621czVY4VwhYK0zld+RQYlKIFZwYJnb0hw==
-X-Received: by 2002:a05:600c:8505:b0:43d:45a:8fca with SMTP id
- 5b1f17b1804b1-442f216d56emr35291535e9.30.1747223487342; 
- Wed, 14 May 2025 04:51:27 -0700 (PDT)
+ bh=kBvJJ1guqk+Wh8WSiEg/aaEDfWIkM3a0BJ0cG44g7BE=;
+ b=dE7CFzYKjLDpxLXihp/ximpPp9h63wdcTjKg5vNlQhgpQgbuzWh461StxE5ATokyYP
+ yrClRqFrCV3m+mRQAAMuE38uXfhVQVYD9OufLkeyKvxl2yCjCkiSavaKy1GJsG93s6ur
+ eZYmrFDoXNKkb89fP+CaeTZShNvoUU6di9WHpibxeNMHXaLtYrnhve/bMrHZ4zKakyuS
+ FHCLP9MwBaCmDwQIHk9juYhcUFW74/x/J4EVlWyI1Y1aCezdijE9rxpTfLfqn7w2UtZ5
+ Pn0HbqwmNE+ktQFqDJc3jFmH2ZpgpKrO/UhKVPyDqip7EWrceIkP82NHvaCUWlWCklBE
+ IzIA==
+X-Gm-Message-State: AOJu0YzZ0pUBkdLmxV03vqBzr16OB9CBRp1Zb/f1946LlMCTOMcNniXp
+ ksiEMMGUIVwA21YkCnq30RNln52ay43LKONyCENMnYcIjYA292A9FARY0OsZeaX6+2pajhUus4K
+ vWdqcEefgbgFZ8y87NdZQHWRE3Oj9fn7rbDGkvLE6W37YTXpssRFbJtPL1fAqnvgoo+UmyC/B7S
+ LoseNulk2Qxm7RxPd8JylKCu0Xttm1tA==
+X-Gm-Gg: ASbGncvXQJcmO/rjz0pRqXGZrP5AJcCLIIWPqAw1UVZyxLQHFJyvd5CCXZhZfgWoA5B
+ qcvwqjoXro9tQ784nzKqbiu8lFbMmidFNKPDv/sjYRcNYftZNTVM66aCmAZ49iKjLpJzfl4KVzS
+ Srk7zJBqleJtKBuEb+2yGAw7cSI8dKMNndaivknb3dyy6CXIQ9i6mh0aC6dJWA9KynVsxGz1NlX
+ jDjt7Pd4b759jRcz5103pzxozrg6sV796E/OLGbUjpMZk7pHAtbpG9QU6VuXgj2wpYQJ5OgtTcI
+ +ft+qw==
+X-Received: by 2002:a05:600c:4f53:b0:439:8878:5029 with SMTP id
+ 5b1f17b1804b1-442f1a0d906mr25135305e9.2.1747223455027; 
+ Wed, 14 May 2025 04:50:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnWl41lYrbfwjbiy1PM1u2OOHTggK1qSmnllwJQPj4jtb2JnyoXL+84o5BHp2qS2crE0qSbg==
+X-Received: by 2002:a05:600c:4f53:b0:439:8878:5029 with SMTP id
+ 5b1f17b1804b1-442f1a0d906mr25135095e9.2.1747223454616; 
+ Wed, 14 May 2025 04:50:54 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f3951a8csm27659315e9.23.2025.05.14.04.51.26
+ 5b1f17b1804b1-442f396c052sm27873355e9.29.2025.05.14.04.50.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 04:51:26 -0700 (PDT)
-Date: Wed, 14 May 2025 07:51:25 -0400
+ Wed, 14 May 2025 04:50:54 -0700 (PDT)
+Date: Wed, 14 May 2025 07:50:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 27/27] hw/i386/amd_iommu: Allow migration when explicitly
- create the AMDVI-PCI device
-Message-ID: <28931c2e1591deb4bfaaf744fdc8813e96c230f1.1747223385.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Yui Washizu <yui.washidu@gmail.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 15/27] docs: Document composable SR-IOV device
+Message-ID: <6f9bebf1dc6b54b63be739ea247b3942f841b9e3.1747223385.git.mst@redhat.com>
 References: <cover.1747223385.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -88,7 +86,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1747223385.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -113,105 +111,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Add migration support for AMD IOMMU model by saving necessary AMDVIState
-parameters for MMIO registers, device table, command buffer, and event
-buffers.
-
-Also change devtab_len type from size_t to uint64_t to avoid 32-bit build
-issue.
-
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Message-Id: <20250504170405.12623-3-suravee.suthikulpanit@amd.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20250314-sriov-v9-8-57dae8ae3ab5@daynix.com>
+Tested-by: Yui Washizu <yui.washidu@gmail.com>
+Tested-by: Pasha Tatashin <pasha.tatashin@soleen.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.h |  2 +-
- hw/i386/amd_iommu.c | 48 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 1 deletion(-)
+ MAINTAINERS           |  1 +
+ docs/system/index.rst |  1 +
+ docs/system/sriov.rst | 36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+)
+ create mode 100644 docs/system/sriov.rst
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 7a28181d9c..5672bdef89 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -329,7 +329,7 @@ struct AMDVIState {
-     bool excl_enabled;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6dacd6d004..b579358cdd 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2058,6 +2058,7 @@ F: hw/pci-bridge/*
+ F: qapi/pci.json
+ F: docs/pci*
+ F: docs/specs/*pci*
++F: docs/system/sriov.rst
  
-     hwaddr devtab;               /* base address device table    */
--    size_t devtab_len;           /* device table length          */
-+    uint64_t devtab_len;         /* device table length          */
- 
-     hwaddr cmdbuf;               /* command buffer base address  */
-     uint64_t cmdbuf_len;         /* command buffer length        */
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index f5466fdc98..0775c8f3bb 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1611,8 +1611,55 @@ static void amdvi_sysbus_reset(DeviceState *dev)
-     amdvi_init(s);
- }
- 
-+static const VMStateDescription vmstate_amdvi_sysbus_migratable = {
-+    .name = "amd-iommu",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .priority = MIG_PRI_IOMMU,
-+    .fields = (VMStateField[]) {
-+      /* Updated in  amdvi_handle_control_write() */
-+      VMSTATE_BOOL(enabled, AMDVIState),
-+      VMSTATE_BOOL(ga_enabled, AMDVIState),
-+      VMSTATE_BOOL(ats_enabled, AMDVIState),
-+      VMSTATE_BOOL(cmdbuf_enabled, AMDVIState),
-+      VMSTATE_BOOL(completion_wait_intr, AMDVIState),
-+      VMSTATE_BOOL(evtlog_enabled, AMDVIState),
-+      VMSTATE_BOOL(evtlog_intr, AMDVIState),
-+      /* Updated in amdvi_handle_devtab_write() */
-+      VMSTATE_UINT64(devtab, AMDVIState),
-+      VMSTATE_UINT64(devtab_len, AMDVIState),
-+      /* Updated in amdvi_handle_cmdbase_write() */
-+      VMSTATE_UINT64(cmdbuf, AMDVIState),
-+      VMSTATE_UINT64(cmdbuf_len, AMDVIState),
-+      /* Updated in amdvi_handle_cmdhead_write() */
-+      VMSTATE_UINT32(cmdbuf_head, AMDVIState),
-+      /* Updated in amdvi_handle_cmdtail_write() */
-+      VMSTATE_UINT32(cmdbuf_tail, AMDVIState),
-+      /* Updated in amdvi_handle_evtbase_write() */
-+      VMSTATE_UINT64(evtlog, AMDVIState),
-+      VMSTATE_UINT32(evtlog_len, AMDVIState),
-+      /* Updated in amdvi_handle_evthead_write() */
-+      VMSTATE_UINT32(evtlog_head, AMDVIState),
-+      /* Updated in amdvi_handle_evttail_write() */
-+      VMSTATE_UINT32(evtlog_tail, AMDVIState),
-+      /* Updated in amdvi_handle_pprbase_write() */
-+      VMSTATE_UINT64(ppr_log, AMDVIState),
-+      VMSTATE_UINT32(pprlog_len, AMDVIState),
-+      /* Updated in amdvi_handle_pprhead_write() */
-+      VMSTATE_UINT32(pprlog_head, AMDVIState),
-+      /* Updated in amdvi_handle_tailhead_write() */
-+      VMSTATE_UINT32(pprlog_tail, AMDVIState),
-+      /* MMIO registers */
-+      VMSTATE_UINT8_ARRAY(mmior, AMDVIState, AMDVI_MMIO_SIZE),
-+      VMSTATE_UINT8_ARRAY(romask, AMDVIState, AMDVI_MMIO_SIZE),
-+      VMSTATE_UINT8_ARRAY(w1cmask, AMDVIState, AMDVI_MMIO_SIZE),
-+      VMSTATE_END_OF_LIST()
-+    }
-+};
+ PCIE DOE
+ M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
+diff --git a/docs/system/index.rst b/docs/system/index.rst
+index c21065e519..718e9d3c56 100644
+--- a/docs/system/index.rst
++++ b/docs/system/index.rst
+@@ -39,3 +39,4 @@ or Hypervisor.Framework.
+    multi-process
+    confidential-guest-support
+    vm-templating
++   sriov
+diff --git a/docs/system/sriov.rst b/docs/system/sriov.rst
+new file mode 100644
+index 0000000000..a851a66a4b
+--- /dev/null
++++ b/docs/system/sriov.rst
+@@ -0,0 +1,36 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
 +
- static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
- {
-+    DeviceClass *dc = (DeviceClass *) object_get_class(OBJECT(dev));
-     AMDVIState *s = AMD_IOMMU_DEVICE(dev);
-     MachineState *ms = MACHINE(qdev_get_machine());
-     PCMachineState *pcms = PC_MACHINE(ms);
-@@ -1634,6 +1681,7 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
-         }
- 
-         s->pci = AMD_IOMMU_PCI(pdev);
-+        dc->vmsd = &vmstate_amdvi_sysbus_migratable;
-     } else {
-         s->pci = AMD_IOMMU_PCI(object_new(TYPE_AMD_IOMMU_PCI));
-         /* This device should take care of IOMMU PCI properties */
++Compsable SR-IOV device
++=======================
++
++SR-IOV (Single Root I/O Virtualization) is an optional extended capability of a
++PCI Express device. It allows a single physical function (PF) to appear as
++multiple virtual functions (VFs) for the main purpose of eliminating software
++overhead in I/O from virtual machines.
++
++There are devices with predefined SR-IOV configurations, but it is also possible
++to compose an SR-IOV device yourself. Composing an SR-IOV device is currently
++only supported by virtio-net-pci.
++
++Users can configure an SR-IOV-capable virtio-net device by adding
++virtio-net-pci functions to a bus. Below is a command line example:
++
++.. code-block:: shell
++
++    -netdev user,id=n -netdev user,id=o
++    -netdev user,id=p -netdev user,id=q
++    -device pcie-root-port,id=b
++    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
++    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
++    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
++    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
++
++The VFs specify the paired PF with ``sriov-pf`` property. The PF must be
++added after all VFs. It is the user's responsibility to ensure that VFs have
++function numbers larger than one of the PF, and that the function numbers
++have a consistent stride.
++
++You may also need to perform additional steps to activate the SR-IOV feature on
++your guest. For Linux, refer to [1]_.
++
++.. [1] https://docs.kernel.org/PCI/pci-iov-howto.html
 -- 
 MST
 
