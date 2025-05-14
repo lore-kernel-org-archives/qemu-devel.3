@@ -4,72 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041C6C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 22:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 557B1C54754
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 23:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFKI6-0001rk-1M; Wed, 14 May 2025 18:09:30 -0400
+	id 1uFL5B-0005eL-Ct; Wed, 14 May 2025 19:00:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFKI4-0001oz-7n
- for qemu-devel@nongnu.org; Wed, 14 May 2025 18:09:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uFL57-0005Y9-PK
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 19:00:11 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFKI2-0001o7-Ee
- for qemu-devel@nongnu.org; Wed, 14 May 2025 18:09:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747260565;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7kewLgeOc4r/UNXZtcdTrRla51mHw8civBNuL47kL00=;
- b=bFurbidhDVxAhUSdFICKPLOQWA8DmmvLUXoJwxY8sxZXYQdQp8/XThTiMNCMa1aT/vigrZ
- UWCzql52RhbUYA8/1C15zCGwxvKsLZdF7BThNqtJULq2agj3BDEdY+awZG/hobRYyP4kG0
- Eu2iky/I65/bsJsht60IQ3pCHmAaHO4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-CU4CWMcAPJypVF81RT6Gdg-1; Wed,
- 14 May 2025 18:09:22 -0400
-X-MC-Unique: CU4CWMcAPJypVF81RT6Gdg-1
-X-Mimecast-MFC-AGG-ID: CU4CWMcAPJypVF81RT6Gdg_1747260561
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3FC81800446; Wed, 14 May 2025 22:09:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.66])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 906ED19560B4; Wed, 14 May 2025 22:09:17 +0000 (UTC)
-Date: Wed, 14 May 2025 17:09:14 -0500
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, sunnyzhyy@qq.com, stefanha@redhat.com, 
- vsementsov@yandex-team.ru, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v4 09/13] mirror: Drop redundant zero_target parameter
-Message-ID: <2xpsd2wwy5zxictj3lty67xx4l36qpn7mhfg3jcmvmhmv7q2jb@vrjlivmanxwm>
-References: <20250509204341.3553601-15-eblake@redhat.com>
- <20250509204341.3553601-24-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uFL55-0007QY-3n
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 19:00:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=yk0zoAr2QeV7ZF2HeaL/feAt9Q4dM/rOTh+hsCowH/0=; b=Q0dF1lfxZvzY2Zkj
+ xkN64IKjeZxXMgc2xSw5zAgeDBC/XAJ4pne+xbPOZW0+FWu+9njnjyKQYatPXOjOTfxZm+mB1bkT6
+ Lk0NSpZGKRVuZA3JSaTduRDLQT9Sc9hdOk0IQqNbCHPoZsuLMtZAObJ9MUsSRQ2Wsvwbna+IJc49h
+ /+WFoid6NFoPPusNfzaajTHo6kmHKtSWOI3iYeANhdRM4VFJAKaJ5SFTLEp6/dqFb7LG2UuaLSwJe
+ HfpiuRMpBCtC1npSsZ267hQZnNZ0TjRrbVzZ7CnDtexLLdMbeU1Ravg4ttYMrj+4tJUs36Y7/ww7w
+ Ue+Tc5fu9JOLha2lgw==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1uFL52-003e2a-1N;
+ Wed, 14 May 2025 23:00:04 +0000
+Date: Wed, 14 May 2025 23:00:04 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Prasad Pandit <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v2 2/2] migration/hmp: Add "info migrate -a", reorg the
+ dump
+Message-ID: <aCUgdAj1PWfPZKIJ@gallifrey>
+References: <20250514200137.581935-1-peterx@redhat.com>
+ <20250514200137.581935-3-peterx@redhat.com>
+ <aCT9QRPd4cDSshGI@gallifrey> <aCUITicykC-ppJrv@x1.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250509204341.3553601-24-eblake@redhat.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <aCUITicykC-ppJrv@x1.local>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
+X-Uptime: 22:57:09 up 17 days, 7:10, 1 user, load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,40 +72,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 09, 2025 at 03:40:26PM -0500, Eric Blake wrote:
-> The two callers to a mirror job (drive-mirror and blockdev-mirror) set
-> zero_target precisely when sync mode == FULL, with the one exception
-> that drive-mirror skips zeroing the target if it was newly created and
-> reads as zero.  But given the previous patch, that exception is
-> equally captured by target_is_zero.  And since we recently updated
-> things to pass the sync mode all the way through to
-> mirror_dirty_init(), we can now reconstruct the same conditionals
-> without the redundant parameter.
+* Peter Xu (peterx@redhat.com) wrote:
+> On Wed, May 14, 2025 at 08:29:53PM +0000, Dr. David Alan Gilbert wrote:
+> > * Peter Xu (peterx@redhat.com) wrote:
+> > > A new parameter "-a" is added to "info migrate" to dump all info, while
+> > > when not specified it only dumps the important ones.  When at it, reorg
+> > > everything to make it easier to read for human.
+> > > 
+> > > The general rule is:
+> > > 
+> > >   - Put important things at the top
+> > >   - Reuse a single line when things are very relevant, hence reducing lines
+> > >     needed to show the results
+> > >   - Remove almost useless ones (e.g. "normal_bytes", while we also have
+> > >     both "page size" and "normal" pages)
+> > >   - Regroup things, so that related fields will show together
+> > >   - etc.
+> > 
+> > Thanks for the update,
+> > 
+> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 > 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+> Thanks for the quick comments!
 > 
-> ---
+> > 
+> > Note that you did miss the change (which would be fine as a follow up)
+> > where I point out that I think your unit abbreviations are slightly wrong
 > 
-> v4: new patch
+> Ouch, it's in the spam filter... :-( I would have missed that if you didn't
+> mention it. I would think any decent AI models would do better than this..
+> I have no idea how this could ever happen in 2025.
 
-I was about to send the pull request, and noticed that this patch
-reliably makes iotest 185 fail:
+Ah...
 
- {"return": {}}
--{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "mirror", "len": 0, "offset": 0, "speed": 0, "type": "mirror"}}
----- Writing data to the virtio-blk device ---
-...
--*** done
-+Timeout waiting for event BLOCK_JOB_READY on handle 5
-Failures: 185
+> > (although I think I was wrong as well...)
+> > I think your throughput is in Mbps (capital M or Mb/s or Mbit/s) - ie.
+> > 10^6 bits/second.
+> > 
+> > While I think all your KB are KiB not KB (i.e. 2^10 bytes).
+> 
+> True..
+> 
+> Now I've read the missing reply:
+> 
+> https://lore.kernel.org/qemu-devel/aCSXjRCTYKbDf9le@gallifrey/
+> 
+> So yeh, mbps is in unit of bit, but all the rest needs fixing.  How about
+> below fixup to be squashed (if I won't need to repost for v3):
+> 
+> PS: in the fixup I also did s/psize/pagesize/ to be clear
 
+That's fine.
 
-Investigating now...
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 13e93d3c54..ea76f72fa4 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -111,9 +111,9 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+>  
+>      if (info->ram) {
+>          monitor_printf(mon, "RAM info:\n");
+> -        monitor_printf(mon, "  Throughput (mbps): %0.2f\n",
+> +        monitor_printf(mon, "  Throughput (Mbps): %0.2f\n",
+>                         info->ram->mbps);
 
+Right.
 
+> -        monitor_printf(mon, "  Sizes (KB): psize=%" PRIu64
+> +        monitor_printf(mon, "  Sizes (KiB): pagesize=%" PRIu64
+
+Right.
+
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+>                         ", total=%" PRIu64 "\n",
+>                         info->ram->page_size >> 10,
+>                         info->ram->total >> 10);
+> 
+> -- 
+> Peter Xu
+> 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
