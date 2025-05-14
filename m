@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EAFDC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:08:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A121C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBnw-00060j-Em; Wed, 14 May 2025 09:05:48 -0400
+	id 1uFBiO-0006Rx-Rt; Wed, 14 May 2025 09:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBk6-0007ze-Cg; Wed, 14 May 2025 09:01:54 -0400
+ id 1uFBhM-0003tJ-4i; Wed, 14 May 2025 08:59:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBk3-0008KP-6k; Wed, 14 May 2025 09:01:50 -0400
+ id 1uFBhJ-0007t1-DX; Wed, 14 May 2025 08:58:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B5DC9121B01;
- Wed, 14 May 2025 15:57:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 47381121AE5;
+ Wed, 14 May 2025 15:57:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5FF2020B86E;
- Wed, 14 May 2025 15:58:00 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E7C3A20B853;
+ Wed, 14 May 2025 15:57:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 34/34] 9pfs: fix FD leak and reduce latency of
- v9fs_reclaim_fd()
-Date: Wed, 14 May 2025 15:57:56 +0300
-Message-Id: <20250514125758.92030-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 07/34] target/mips: Simplify and fix update_pagemask
+Date: Wed, 14 May 2025 15:57:29 +0300
+Message-Id: <20250514125758.92030-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,109 +61,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This patch fixes two different bugs in v9fs_reclaim_fd():
+When update_pagemask was split from helper_mtc0_pagemask,
+we failed to actually write to the new parameter but continue
+to write to env->CP0_PageMask.  Thus the use within
+page_table_walk_refill modifies cpu state and not the local
+variable as expected.
 
-1. Reduce latency:
+Simplify by renaming to compute_pagemask and returning the
+value directly.  No need for either env or pointer return.
 
-This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
-one of the calls adds two thread hops (between main thread and a fs driver
-background thread). Each thread hop adds latency, which sums up in
-function's loop to a significant duration.
-
-Reduce overall latency by open coding what v9fs_co_close() and
-v9fs_co_closedir() do, executing those and the loop itself altogether in
-only one background thread block, hence reducing the total amount of
-thread hops to only two.
-
-2. Fix file descriptor leak:
-
-The existing code called v9fs_co_close() and v9fs_co_closedir() to close
-file descriptors. Both functions check right at the beginning if the 9p
-request was cancelled:
-
-    if (v9fs_request_cancelled(pdu)) {
-        return -EINTR;
-    }
-
-So if client sent a 'Tflush' message, v9fs_co_close() / v9fs_co_closedir()
-returned without having closed the file descriptor and v9fs_reclaim_fd()
-subsequently freed the FID without its file descriptor being closed, hence
-leaking those file descriptors.
-
-This 2nd bug is fixed by this patch as well by open coding v9fs_co_close()
-and v9fs_co_closedir() inside of v9fs_reclaim_fd() and not performing the
-v9fs_request_cancelled(pdu) check there.
-
-Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
-Fixes: bccacf6c792 ('hw/9pfs: Implement TFLUSH operation')
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Message-Id: <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
-(cherry picked from commit 89f7b4da7662ecc6840ffb0846045f03f9714bc6)
+Fixes: 074cfcb4dae ("target/mips: Implement hardware page table walker for MIPS32")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250328175526.368121-4-richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit 256ba7715b109c080c0c77a3923df9e69736ba17)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index f9aad55fdf..16207bdf22 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -434,6 +434,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-     V9fsFidState *f;
-     GHashTableIter iter;
-     gpointer fid;
-+    int err;
-+    int nclosed = 0;
+diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
+index 4796638126..3bfb6edbd0 100644
+--- a/target/mips/tcg/sysemu/cp0_helper.c
++++ b/target/mips/tcg/sysemu/cp0_helper.c
+@@ -864,24 +864,24 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
+     }
+ }
  
-     /* prevent multiple coroutines running this function simultaniously */
-     if (s->reclaiming) {
-@@ -446,10 +448,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-     QSLIST_HEAD(, V9fsFidState) reclaim_list =
-         QSLIST_HEAD_INITIALIZER(reclaim_list);
+-void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
++uint32_t compute_pagemask(uint32_t val)
+ {
+     /* Don't care MASKX as we don't support 1KB page */
+-    uint32_t mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
++    uint32_t mask = extract32(val, CP0PM_MASK, 16);
+     int maskbits = cto32(mask);
  
-+    /* Pick FIDs to be closed, collect them on reclaim_list. */
-     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
-         /*
--         * Unlink fids cannot be reclaimed. Check
--         * for them and skip them. Also skip fids
-+         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
-          * currently being operated on.
-          */
-         if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
-@@ -499,17 +501,26 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+     /* Ensure no more set bit after first zero, and maskbits even. */
+     if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
+-        env->CP0_PageMask = mask << CP0PM_MASK;
++        return mask << CP0PM_MASK;
+     } else {
+         /* When invalid, set to default target page size. */
+-        env->CP0_PageMask = 0;
++        return 0;
+     }
+ }
+ 
+ void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
+ {
+-    update_pagemask(env, arg1, &env->CP0_PageMask);
++    env->CP0_PageMask = compute_pagemask(arg1);
+ }
+ 
+ void helper_mtc0_pagegrain(CPUMIPSState *env, target_ulong arg1)
+diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
+index 62a3a86d80..56b1e8a36e 100644
+--- a/target/mips/tcg/sysemu/tlb_helper.c
++++ b/target/mips/tcg/sysemu/tlb_helper.c
+@@ -875,7 +875,7 @@ refill:
          }
      }
-     /*
--     * Now close the fid in reclaim list. Free them if they
--     * are already clunked.
-+     * Close the picked FIDs altogether on a background I/O driver thread. Do
-+     * this all at once to keep latency (i.e. amount of thread hops between main
-+     * thread <-> fs driver background thread) as low as possible.
-      */
-+    v9fs_co_run_in_worker({
-+        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
-+            err = (f->fid_type == P9_FID_DIR) ?
-+                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
-+                s->ops->close(&s->ctx, &f->fs_reclaim);
-+            if (!err) {
-+                /* total_open_fd must only be mutated on main thread */
-+                nclosed++;
-+            }
-+        }
-+    });
-+    total_open_fd -= nclosed;
-+    /* Free the closed FIDs. */
-     while (!QSLIST_EMPTY(&reclaim_list)) {
-         f = QSLIST_FIRST(&reclaim_list);
-         QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
--        if (f->fid_type == P9_FID_FILE) {
--            v9fs_co_close(pdu, &f->fs_reclaim);
--        } else if (f->fid_type == P9_FID_DIR) {
--            v9fs_co_closedir(pdu, &f->fs_reclaim);
--        }
-         /*
-          * Now drop the fid reference, free it
-          * if clunked.
+     pw_pagemask = m >> TARGET_PAGE_BITS;
+-    update_pagemask(env, pw_pagemask << CP0PM_MASK, &pw_pagemask);
++    pw_pagemask = compute_pagemask(pw_pagemask << CP0PM_MASK);
+     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
+     {
+         target_ulong tmp_entryhi = env->CP0_EntryHi;
+diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
+index aef032c48d..be398665e6 100644
+--- a/target/mips/tcg/tcg-internal.h
++++ b/target/mips/tcg/tcg-internal.h
+@@ -45,7 +45,7 @@ bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
+ 
+ void mmu_init(CPUMIPSState *env, const mips_def_t *def);
+ 
+-void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask);
++uint32_t compute_pagemask(uint32_t val);
+ 
+ void r4k_invalidate_tlb(CPUMIPSState *env, int idx, int use_extra);
+ uint32_t cpu_mips_get_random(CPUMIPSState *env);
 -- 
 2.39.5
 
