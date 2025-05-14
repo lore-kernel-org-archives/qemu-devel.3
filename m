@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FE5C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF6BEC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFEH0-0000Vh-1x; Wed, 14 May 2025 11:43:58 -0400
+	id 1uFEIK-0002rH-A9; Wed, 14 May 2025 11:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFE5k-0004IT-8d
- for qemu-devel@nongnu.org; Wed, 14 May 2025 11:32:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFE6Q-0005aC-Sh
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 11:33:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFE5g-00019B-KG
- for qemu-devel@nongnu.org; Wed, 14 May 2025 11:32:19 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFE6N-0001D1-Un
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 11:33:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747236734;
+ s=mimecast20190719; t=1747236779;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Cmi8Edr/NLECiZ1BeZfRRGGRmp8fYyIvNxsmMEjd2iw=;
- b=eFx/JaoNYNcbOKgsdon38bsw0AXaBJT7tqnOwArYbo1NChw0rW/L2L6i8apvYw2qifzjnv
- IDfs6cpuF6P/bwXX5A3EYEcotNvWKrQ9FCK37Rez1rgOolPsnYCm5mVRuiCqMyFKEoPyzi
- SYedXRWHwl64AuZMMoCApoy835qor2E=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TmdMe2lbnU6i1EE6DgHrHUWFPxIJNIaFivomhQpt0IM=;
+ b=EhMitUPtVBcBvM3uoVaM8Spa4BjmkxlRqt/KIn+mlmF69ocXvXP5dQB3/0Td4I/L0H+tAf
+ d1FRvGuubbD5h3hC+wt4Q0kmeZpbhI16my0JJzeVZC3g/S7rnBZlV8UbCE7uQKA80dEE2i
+ BEzh/u2LjM2G/xj+ayfkyFn79fxSqtI=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-F36H9P1KPUCWA2deP8m--Q-1; Wed, 14 May 2025 11:32:11 -0400
-X-MC-Unique: F36H9P1KPUCWA2deP8m--Q-1
-X-Mimecast-MFC-AGG-ID: F36H9P1KPUCWA2deP8m--Q_1747236730
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a0b9bbfb0fso3934395f8f.1
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 08:32:10 -0700 (PDT)
+ us-mta-576-5l6z1OJ9N0K7feeirN-KdA-1; Wed, 14 May 2025 11:32:57 -0400
+X-MC-Unique: 5l6z1OJ9N0K7feeirN-KdA-1
+X-Mimecast-MFC-AGG-ID: 5l6z1OJ9N0K7feeirN-KdA_1747236775
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a1f6c5f54cso2219669f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 08:32:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747236730; x=1747841530;
+ d=1e100.net; s=20230601; t=1747236775; x=1747841575;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cmi8Edr/NLECiZ1BeZfRRGGRmp8fYyIvNxsmMEjd2iw=;
- b=db39SroDpm3FIp6NpyTkIm2KSavKVPd2oi/Z2CsOnCBiN1nXCdyW5vGIuL0N+91otb
- E/fuDHloYkc4zg5g9htv/EJqflcMnoeBJ0AKs7K0zzdoN6ArNPFkdHbEaSbqGmwqOXCH
- +uRpQxwM9IDj8iKBQhJ6IwBb13x12mpXtiyZSlp8KHoDdKhQrwZD0rh+Z0lN6f+VR5sc
- 31P6pYwMNQY/76FTRqEIbj2SV1HwyDw+OdKf84D3MZJ3Gmo07xdWK+3kM8zsenZe2cvl
- HCJxhF7nS1pXkZDc1Nlhlwm4A0HezT3KFt22+QPMCtpEKkOSHZraeF0MhbVuYWriKLlu
- hxjg==
+ bh=TmdMe2lbnU6i1EE6DgHrHUWFPxIJNIaFivomhQpt0IM=;
+ b=SDsiMqfBXa5BgmtTBBaPULwkFbF8umUqLN0DHltNWwjKPSkcgIaaZ9nAKiqTCd8nay
+ qKI4/GEESeQI4EtDWTMf1DLEBihxDx6sY6GuWoepcxsGkxCp1w5Fpo/OPpLtJHSOm0ae
+ hUsVMASfzL2OFeV27nBAvD0XMPXkJwA37G2HCNTXHIVCa9HTD843/TJpDErvzkFAeX7X
+ Ujgtqx4QANgtQWpCn1hmjfV/FH5dc6ovN3oehbnZrf7kiKzoaA5KtgZvDdrHnnJw0jym
+ oltwaQH3zsfab5Z7lvkUGDBp9TVYbvOOrqFPW5+kXoi0Lj3zVm+Sa1kjkWuO9KQyG98n
+ GEwg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUr4vj6WLa7jDaT73k56AUUYQcQKmzLOuRn59QzPOFCkyVWv3iCzjdNqVprw7K6VZ1DL8U2mgAttYg0@nongnu.org
-X-Gm-Message-State: AOJu0Yx6UyUTxrZoIsKRpeABz98hU7gc4qz73d331Tw5MLlnhwY+Ok9p
- anH23R8O8/DQasSaY54NfVWyAF8dO9EFXelEbNvC9aUl+8XiHIu95yeIZJ9aW3nFyMp4kefNQNt
- yInlzfFya/nHVPL/LrxfpjeCYBj4qcC+IZlhwMJx9S5qgOaX6faEz
-X-Gm-Gg: ASbGncsNpglyyBENcd+5CxuJX9SqZ9ZtuD75uOcJEJTztijvyifcKcdlNZtlOW+LHgN
- 4Vrmwe5A2VUpF1MfDMpIR7vSqXAw5weQiDxqGkjPbO0t5nXIkkLuOQHT+1WlteuoE/wvIKwYB3m
- GpKeSw2ShOsyBO32lfBTti7gc8bv4OPsZFd+1INBiYt6NgTJJ7o1NnAPIWdp7x3Z+Cta+W9afYa
- lUI0+Og2YDxwt9lTLwLENTNXGBD9pgxuEFISpAX+32vScm+vw2DW+W1BmPreuFt0/W/OrWrAv9y
- 62DMarYcBDOybwSBeCoybR7f7xhCt+pUQdSFpWC9NGANLzNEWg==
-X-Received: by 2002:adf:fb03:0:b0:3a3:4a11:3377 with SMTP id
- ffacd0b85a97d-3a34a1134ccmr2578144f8f.38.1747236730012; 
- Wed, 14 May 2025 08:32:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbk0T3UCicf55PP24nutl3C7Aw58d77UmDmE4CxO0Zlb/RYV18fI63euehD4zjsaRoPwiJEw==
-X-Received: by 2002:adf:fb03:0:b0:3a3:4a11:3377 with SMTP id
- ffacd0b85a97d-3a34a1134ccmr2578120f8f.38.1747236729619; 
- Wed, 14 May 2025 08:32:09 -0700 (PDT)
+ AJvYcCWFoM5UPZFWfCmfJ51LCAhyRh/db11dETBFgoxrkWL/MMlWGvTFTJOO7gYHVaZMesTHtDpXz7ojj8Y7@nongnu.org
+X-Gm-Message-State: AOJu0YwL5HcvG44J3rSs83CosnODtVs8TDRHLkOmLAK83i+A3dX3d4Zy
+ haXFW8kWm3dRtAemuArmJb4Tsd4ZE0riVdlMFeL9v6k1I90x/oHu/FEJzlme2g2nTGaOaCXlTrW
+ 5+udCTIes8lsWKikVINW84akG1RdlO69p6OzRJuJXk+ObOkNW8Is/
+X-Gm-Gg: ASbGncs8cQhA9lKKEjoERHYBhxGl/JM1VV5IbOVv2G0JSFMs2JIHXVybrx1u+c6NCQ/
+ 9kGc3fA0rVUqnJ8ywI/esAq+ZH4+M0z91vkUyXPgARX+0j5iWydWs7wcRnGf/zu7Md0c0J37cKV
+ qDqgUeRDmNHQQS3lj5mwWvUTz7MN08DA7At7+ZU8UK06ZmtnhcBXdnb8uW5tX+pXfQOvszxGqft
+ 7Z8jTQLZMhuzOkkWrxJYA6Jt5vUhJ78DhJWVLTazrNuSMEZeGqDdAZmnC9g7phaQcUui9Lg4pHn
+ uMLt2KKRT3sxLQ8nXVwaPC+GWiuYpsXXWwViw4BekNFE7sM6zw==
+X-Received: by 2002:a5d:5f8e:0:b0:3a1:f535:e9be with SMTP id
+ ffacd0b85a97d-3a349694ac7mr3138870f8f.7.1747236775368; 
+ Wed, 14 May 2025 08:32:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGJ/di50oiGFbb5Yfh5nlBM7l31mPC2fYyS9Ggs8Y6wQpbeDbP3HBDqHkgY5y+Zs3f7zRl2A==
+X-Received: by 2002:a5d:5f8e:0:b0:3a1:f535:e9be with SMTP id
+ ffacd0b85a97d-3a349694ac7mr3138838f8f.7.1747236774942; 
+ Wed, 14 May 2025 08:32:54 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f58ebd6asm20362153f8f.35.2025.05.14.08.32.08
+ 5b1f17b1804b1-442f3368f2bsm37110115e9.4.2025.05.14.08.32.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 May 2025 08:32:09 -0700 (PDT)
-Message-ID: <58fd39ee-0294-4a05-ad5a-76a144a36e91@redhat.com>
-Date: Wed, 14 May 2025 17:32:08 +0200
+ Wed, 14 May 2025 08:32:54 -0700 (PDT)
+Message-ID: <fc2da193-dc90-4824-b7de-fc426c38029a@redhat.com>
+Date: Wed, 14 May 2025 17:32:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] hw/arm/aspeed_ast27x0-fc: Map ca35 memory into
- system memory
+Subject: Re: [PATCH v2 4/5] hw/arm/fby35: Map BMC memory into system memory
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -87,7 +86,7 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
 References: <20250514090354.1461717-1-steven_lee@aspeedtech.com>
- <20250514090354.1461717-4-steven_lee@aspeedtech.com>
+ <20250514090354.1461717-5-steven_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,10 +132,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250514090354.1461717-4-steven_lee@aspeedtech.com>
+In-Reply-To: <20250514090354.1461717-5-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -145,7 +144,7 @@ X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,49 +160,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Steven,
-
 On 5/14/25 11:03, Steven Lee wrote:
-> Attach CA35 memory to system_memory to ensure a valid FlatView.
-> Without this, dma_memory_write() used by ftgmac fail silently,
-> causing dhcp to break on ast2700fc, as flatview_write() returns
-> an error when system_memory is empty.
+> Add the BMC memory region as a subregion of system_memory so that
+> modules relying on system memory can operate correctly.
+> 
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 
-The change below fixes the network DMA transactions indeed but I think
-this case can be addressed differently.
 
-The transactions on address_space_memory in the ftgmac100 device model
-should be replaced by transactions on a local address space which would
-be initialized from a memory region passed to the model with a property.
-This is very similar to what we do in the Aspeed SMC model. Since it is
-more work, it can be addressed separately and later.
-
-However, let's keep the change below for all other places which are
-difficult to address, like rom_check_and_register_reset(). The commit
-should be rephrased.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 1 +
+>   hw/arm/fby35.c | 1 +
 >   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index ff64605663..ccba5fc8a1 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -69,6 +69,7 @@ static void ast2700fc_ca35_init(MachineState *machine)
+> diff --git a/hw/arm/fby35.c b/hw/arm/fby35.c
+> index e123fa69e1..c14fc2efe9 100644
+> --- a/hw/arm/fby35.c
+> +++ b/hw/arm/fby35.c
+> @@ -77,6 +77,7 @@ static void fby35_bmc_init(Fby35State *s)
 >   
->       memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
+>       memory_region_init(&s->bmc_memory, OBJECT(&s->bmc), "bmc-memory",
 >                          UINT64_MAX);
-> +    memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
+> +    memory_region_add_subregion(get_system_memory(), 0, &s->bmc_memory);
+>       memory_region_init_ram(&s->bmc_dram, OBJECT(&s->bmc), "bmc-dram",
+>                              FBY35_BMC_RAM_SIZE, &error_abort);
 >   
->       if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
->                                   AST2700FC_BMC_RAM_SIZE, &error_abort)) {
 
 
