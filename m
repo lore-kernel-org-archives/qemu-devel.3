@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB78C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42847C3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBgQ-0001hM-0h; Wed, 14 May 2025 08:58:05 -0400
+	id 1uFBiG-0005sZ-KO; Wed, 14 May 2025 08:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBgG-0001c4-7y; Wed, 14 May 2025 08:57:52 -0400
+ id 1uFBhL-0003pR-2a; Wed, 14 May 2025 08:58:59 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBgE-0007nH-6i; Wed, 14 May 2025 08:57:51 -0400
+ id 1uFBhI-0007rp-JN; Wed, 14 May 2025 08:58:58 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8D68C121AD0;
- Wed, 14 May 2025 15:56:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3DE34121AE4;
+ Wed, 14 May 2025 15:57:49 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 381F120B848;
- Wed, 14 May 2025 15:56:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DD76E20B852;
+ Wed, 14 May 2025 15:57:58 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Corey Minyard <cminyard@mvista.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.18 16/18] hw/i2c/imx: Always set interrupt status bit if
- interrupt condition occurs
-Date: Wed, 14 May 2025 15:56:22 +0300
-Message-Id: <20250514125640.91677-16-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 06/34] target/mips: Require even maskbits in
+ update_pagemask
+Date: Wed, 14 May 2025 15:57:28 +0300
+Message-Id: <20250514125758.92030-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
-References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,51 +62,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-According to the i.MX 8M Plus reference manual, the status flag
-I2C_I2SR[IIF] continues to be set when an interrupt condition
-occurs even when I2C interrupts are disabled (I2C_I2CR[IIEN] is
-clear). However, the device model only sets the flag when I2C
-interrupts are enabled which causes U-Boot to loop forever. Fix
-the device model by always setting the flag and let I2C_I2CR[IIEN]
-guard I2C interrupts only.
+The number of bits set in PageMask must be even.
 
-Also remove the comment in the code since it merely stated the
-obvious and would be outdated now.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 20d0f9cf6a41 ("i.MX: Add I2C controller emulator")
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Acked-by: Corey Minyard <cminyard@mvista.com>
-Message-ID: <20250507124040.425773-1-shentey@gmail.com>
+Fixes: d40b55bc1b86 ("target/mips: Fix PageMask with variable page size")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250328175526.368121-3-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 54e54e594bc8273d210f7ff4448c165a989cbbe8)
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit d89b9899babcc01d7ee75f2917da861dc2afbc27)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i2c/imx_i2c.c b/hw/i2c/imx_i2c.c
-index 9792583fea..64dbea41ee 100644
---- a/hw/i2c/imx_i2c.c
-+++ b/hw/i2c/imx_i2c.c
-@@ -90,13 +90,12 @@ static void imx_i2c_reset(DeviceState *dev)
+diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
+index fb394bf0ed..4796638126 100644
+--- a/target/mips/tcg/sysemu/cp0_helper.c
++++ b/target/mips/tcg/sysemu/cp0_helper.c
+@@ -866,24 +866,17 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
  
- static inline void imx_i2c_raise_interrupt(IMXI2CState *s)
+ void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
  {
--    /*
--     * raise an interrupt if the device is enabled and it is configured
--     * to generate some interrupts.
--     */
--    if (imx_i2c_is_enabled(s) && imx_i2c_interrupt_is_enabled(s)) {
-+    if (imx_i2c_is_enabled(s)) {
-         s->i2sr |= I2SR_IIF;
--        qemu_irq_raise(s->irq);
-+
-+        if (imx_i2c_interrupt_is_enabled(s)) {
-+            qemu_irq_raise(s->irq);
-+        }
+-    uint32_t mask;
+-    int maskbits;
+-
+     /* Don't care MASKX as we don't support 1KB page */
+-    mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
+-    maskbits = cto32(mask);
++    uint32_t mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
++    int maskbits = cto32(mask);
+ 
+-    /* Ensure no more set bit after first zero */
+-    if ((mask >> maskbits) != 0) {
+-        goto invalid;
++    /* Ensure no more set bit after first zero, and maskbits even. */
++    if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
++        env->CP0_PageMask = mask << CP0PM_MASK;
++    } else {
++        /* When invalid, set to default target page size. */
++        env->CP0_PageMask = 0;
      }
+-    env->CP0_PageMask = mask << CP0PM_MASK;
+-
+-    return;
+-
+-invalid:
+-    /* When invalid, set to default target page size. */
+-    env->CP0_PageMask = 0;
  }
  
+ void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
 -- 
 2.39.5
 
