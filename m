@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06CDDC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 02:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44043C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 02:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF2D3-0003XB-B9; Tue, 13 May 2025 22:51:05 -0400
+	id 1uF2Df-0003pQ-6P; Tue, 13 May 2025 22:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uF2D0-0003Wh-P0
- for qemu-devel@nongnu.org; Tue, 13 May 2025 22:51:02 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uF2Cy-0001lo-Ov
- for qemu-devel@nongnu.org; Tue, 13 May 2025 22:51:02 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22fbbf9c01bso52307295ad.3
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 19:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747191059; x=1747795859; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=dLWEgJABiENSVVLSR6HV7vU5EjLKWYMzAoabF8kwAUE=;
- b=fALCuFQRUuFacdJuzVKMxV9FnmZaWVwCmR5ZXlYx6RJcvpFaQFloDMd80x+oPAXvr0
- XPlfd3C/D/ehxgGs9AJXdX5FCvwKRuSmtj9CgxWyuSAFpQ7WQpNYvMRdMUWG4BBzo3W0
- nzWUXo8WNXaSDWVRCoi9EWhUjEb4f8oJbpEcKsraaqBfN/lLhg6K+I9whoJrEX+KmmNQ
- /amI9ZtbJYEW/Rm7dXBi5QsRAe2/z+og7qKPPc7jLj/jAe2TYbCy6ovYvciOdsjrMU72
- LbCnf9JvElQKdOr7cfUeFkTHJRGabfxa8jDUUoP3a7zRL1IdnCl+1A2NhI2uB9Zbo+Bn
- 7A8Q==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1uF2Db-0003lT-NF
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 22:51:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1uF2Da-0001oG-1T
+ for qemu-devel@nongnu.org; Tue, 13 May 2025 22:51:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747191096;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zN/+lU/jBzKzkoAs282f93FiHOE2f9+lilVoPHwFzbU=;
+ b=gL7EXMXA4I2C57dSIFJf2ElcNc5OEDG5kHMCOlu/NO2jYjL4jK0t0Omi/qxjatjDc1EopA
+ OfCkdRO+9xiOtSQJBpvUV3Fm6OxVzpmAPlVU4RgY+9xmbxkKHceg/LmKaDBbr9Ki5Vu2uw
+ pcRdB19Vm2uzt9eadDBf+4BVqAo7TKU=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-cSRnxBczMYSsM_7jktRFCw-1; Tue, 13 May 2025 22:51:34 -0400
+X-MC-Unique: cSRnxBczMYSsM_7jktRFCw-1
+X-Mimecast-MFC-AGG-ID: cSRnxBczMYSsM_7jktRFCw_1747191094
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-30c54b40096so4666537a91.1
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 19:51:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747191059; x=1747795859;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dLWEgJABiENSVVLSR6HV7vU5EjLKWYMzAoabF8kwAUE=;
- b=tVmM188YuqgHedPccANzRKHIPVGuOlSjmwNkYuRudMLq9pGCJTnwe5CzGsn7Ag4c2L
- l6m+FAQdQg1EUQrcYWi3NbkzopgLKp4piwIFjW5bfpdRNs5Txnz0ts4k5URx0ehJVNAF
- SM38P0uLsgurhwJcQW0mkwyo5KOukZ0wPByvpKQJPW4X4CM2i5UZu75uMn9bVT72DzCG
- rNSlkYt4qSUV6BIiWMPczUvNhOv9t1BQyXwowdPTcE5/ODvVO7OPtAXU7nshS6VRAw2s
- 9fDwUYIACI+uiJnuzw9NofGKi1s4+tKPX6RtE8/dC0uUpAJO7whfubW5QyTzN/6lg7Vu
- 4DCA==
-X-Gm-Message-State: AOJu0YxmjGS4p2Q92uHCuT1YR+2wl3+1U1OWxZkVuKvTmvHahaCqJa8I
- 34cgHINm9poud//FTEGN/eyVzzxhvL+/RHgIkUgSFyxuFn3M8DXq
-X-Gm-Gg: ASbGnctpzYeIFFkgfR9q3jTlnb6Zex2Sy8/Cj5xtKOKSVi0dFMMxnLlTihXuBKfnUUm
- Jq7AeCf1sm4c/RPdTjC9xWuaUwKqLMS5eeIkcc6eG2H+RDbRzBlWsjTb7tM+ljF1wICeAtxZZhc
- lBMO7Rti9vL55wyFfssaFPZyq7zolHaqKzyEdTJYPE3vSji0SPHb2Y29E/e4VixwaNyj65pmtLV
- oDAZKKVcTLwhDEgE0oH+EwfAYsfoPZEhyVFx0Hp9TBx8PUzvYfqIbyC1QynIj26HkWYkQlRkGnv
- /oQ0ecS2257NxTfSZldy2qCyO/qIgF5xXEuqGkvmFkCXcj1fVGIo59TWwAOeIk8=
-X-Google-Smtp-Source: AGHT+IHj4acyvC6ctips+JtuUU7agPz9x78XHG67ExUTO6PzyyUZ6LLc8oK51q1+RrKbotTGQOLPRg==
-X-Received: by 2002:a17:902:d2cf:b0:223:5e56:a1ce with SMTP id
- d9443c01a7336-23198148cf8mr27225275ad.32.1747191058839; 
- Tue, 13 May 2025 19:50:58 -0700 (PDT)
-Received: from [10.239.152.184] ([134.134.139.75])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc828b3a0sm89319595ad.179.2025.05.13.19.50.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 May 2025 19:50:58 -0700 (PDT)
-Message-ID: <ce6e4a42353118fe41e59f2e6ef79d6df959692b.camel@gmail.com>
-Subject: Re: [PATCH 1/9] ui/gtk: Document scale and coordinate handling
-From: Weifeng Liu <weifeng.liu.z@gmail.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau
- <marcandre.lureau@redhat.com>, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau
- <marcandre.lureau@gmail.com>
-Date: Wed, 14 May 2025 10:50:55 +0800
-In-Reply-To: <hyeijrn3pxl5r5ij2zryiaar5xcqpj7oigpzwgdl3bl5wslddu@fdfgzn27uy52>
-References: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
- <20250511073337.876650-2-weifeng.liu.z@gmail.com>
- <hyeijrn3pxl5r5ij2zryiaar5xcqpj7oigpzwgdl3bl5wslddu@fdfgzn27uy52>
+ d=1e100.net; s=20230601; t=1747191093; x=1747795893;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zN/+lU/jBzKzkoAs282f93FiHOE2f9+lilVoPHwFzbU=;
+ b=oQICxXDntVmFD1UuCcKhtVFp6L487o6NSj7dz3702Zpip2c0UDFMYH8dZAzgZvKcHe
+ 1+n6+eQaIGXj+/MQ0zxjuoGRKbswJaf3t7yTj/zAAz1QLCM3DygxOGL43mNosCZaIPKJ
+ SQXQQjoRwvmXn9f2nGM8rbW5Oxym9nRzaMxdaBGQd3sVSZcavXsHKQc6gq+RUAkwbtRv
+ iVF8GB4ktVkkQdU4/1uasiJ5nLQbd88G8NJyGClRiFwy5X09BuBWlO2fFWAO2NLNHrMh
+ ewiTP7bHb9gcIl0zSWak72fGRWc00BTF1kEtfpI0Pgutrm11ALH13kUjdbxO2492Ml5d
+ BKZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdIS7bBpKajCDrCUoKIC66V0GzgjYp7Pt6HKQYS3nH4CQUlyv/qq63x8j+l1EHco9uLlOEGccLmugB@nongnu.org
+X-Gm-Message-State: AOJu0YynfHzwsh+XDanraJKk6RpZ5fvBe/ubGjHAKQ3bR2QIjpmlqjQV
+ WV3V0mUnLqHX3kvoy1mO/VkJXm6fwP2jiqzDC10gbs1AgK6Q3WBVkkjlP8anLDU4NJmMhHGKxBq
+ q65AQve/wa6fOT9YwsXCZXb70ONBHaEEnUXgvYL+NEol8uwY5cf+SfkHGbE4cHLrYd5UCHhkRC5
+ 2S747ygsGe9IPJGhQnUoP6lxRIoxA=
+X-Gm-Gg: ASbGnctD8WGjI2wDX6rc7hYv9iO4GddJMsoqHz3nmmYT3gNY90NUbnAmYQYVv05xOLk
+ i8xEH1oIGVzWcDJqfuS4+QKCK8WHApoxLELJgT3bYHGNk8tw1/nC9PivKkDulXLHW4Hs3
+X-Received: by 2002:a17:90b:5148:b0:2f2:ab09:c256 with SMTP id
+ 98e67ed59e1d1-30e2e642616mr3406361a91.33.1747191093607; 
+ Tue, 13 May 2025 19:51:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5Vnumb2av8E1DoKJ+g5yQsrHuwT4nMWW1HCD7v3uFLMoIgd4kh5lJiD4Go6157BjRfUYlnfVE9jojBwYbDoE=
+X-Received: by 2002:a17:90b:5148:b0:2f2:ab09:c256 with SMTP id
+ 98e67ed59e1d1-30e2e642616mr3406319a91.33.1747191093105; Tue, 13 May 2025
+ 19:51:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
+ <3fe33f8e-79c1-4757-8e06-f2aedd652222@tls.msk.ru>
+In-Reply-To: <3fe33f8e-79c1-4757-8e06-f2aedd652222@tls.msk.ru>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 14 May 2025 10:51:21 +0800
+X-Gm-Features: AX0GCFtuqJ_UJ4b8oS86rU9Li_gWOl3GWXN4etDU6KbOL15NjkXbglxj7BWAexQ
+Message-ID: <CACGkMEsN339U2xk21Z_OE0DLY9TRJOiPkrxRtBHg-BgDP_V6tw@mail.gmail.com>
+Subject: Re: [PATCH] virtio-net: Copy all for dhclient workaround
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org, 
+ Antoine Damhet <adamhet@scaleway.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ devel@daynix.com, qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1 (3.56.1-1.fc42) 
-MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=weifeng.liu.z@gmail.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,132 +106,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gerd,
+On Mon, May 12, 2025 at 6:11=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+>
+> On 05.04.2025 11:04, Akihiko Odaki wrote:
+> > The goal of commit 7987d2be5a8b ("virtio-net: Copy received header to
+> > buffer") was to remove the need to patch the (const) input buffer with =
+a
+> > recomputed UDP checksum by copying headers to a RW region and inject th=
+e
+> > checksum there. The patch computed the checksum only from the header
+> > fields (missing the rest of the payload) producing an invalid one
+> > and making guests fail to acquire a DHCP lease.
+> >
+> > Fix the issue by copying the entire packet instead of only copying the
+> > headers.
+> >
+> > Fixes: 7987d2be5a8b ("virtio-net: Copy received header to buffer")
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2727
+> > Cc: qemu-stable@nongnu.org
+> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>
+> Ping?  Is this change still needed?
 
-On Mon, 2025-05-12 at 13:46 +0200, Gerd Hoffmann wrote:
-> On Sun, May 11, 2025 at 03:33:11PM +0800, Weifeng Liu wrote:
-> > The existence of multiple scaling factors forces us to deal with
-> > various
-> > coordinate systems and this would be confusing. It would be
-> > beneficial
-> > to define the concepts clearly and use consistent representation
-> > for
-> > variables in different coordinates.
-> >=20
-> > Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
-> > ---
-> > =C2=A0ui/gtk.c | 65
-> > ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> > =C2=A01 file changed, 65 insertions(+)
-> >=20
-> > diff --git a/ui/gtk.c b/ui/gtk.c
-> > index 982037b2c0..9f3171abc5 100644
-> > --- a/ui/gtk.c
-> > +++ b/ui/gtk.c
-> > @@ -800,6 +800,71 @@ void
-> > gd_update_monitor_refresh_rate(VirtualConsole *vc, GtkWidget
-> > *widget)
-> > =C2=A0#endif
-> > =C2=A0}
-> > =C2=A0
-> > +/**
-> > + * DOC: Coordinate handling.
-> > + *
-> > + * We are coping with sizes and positions in various coordinates
-> > and the
-> > + * handling of these coordinates is somewhat confusing. It would
-> > benefit us
-> > + * all if we define these coordinates explicitly and clearly.
-> > Besides, it's
-> > + * also helpful to follow the same naming convention for variables
-> > + * representing values in different coordinates.
-> > + *
-> > + * I. Definitions
-> > + *
-> > + * - (guest) buffer coordinate: this is the coordinates that the
-> > guest will
-> > + *=C2=A0=C2=A0 see. The x/y offsets and width/height specified in comm=
-ands
-> > sent by
-> > + *=C2=A0=C2=A0 guest is basically in buffer coordinate.
-> > + *
-> > + * - (host) pixel coordinate: this is the coordinate in pixel
-> > level on the
-> > + *=C2=A0=C2=A0 host destop. A window/widget of width 300 in pixel coor=
-dinate
-> > means it
-> > + *=C2=A0=C2=A0 occupies 300 pixels horizontally.
-> > + *
-> > + * - (host) logical window coordinate: the existence of global
-> > scaling
-> > + *=C2=A0=C2=A0 factor in desktop level makes this kind of coordinate p=
-lay a
-> > role. It
-> > + *=C2=A0=C2=A0 always holds that (logical window size) * (global scale
-> > factor) =3D
-> > + *=C2=A0=C2=A0 (pixel size).
-> > + *
-> > + * - global scale factor: this is specified in desktop level and
-> > is
-> > + *=C2=A0=C2=A0 typically invariant during the life cycle of the proces=
-s.
-> > Users with
-> > + *=C2=A0=C2=A0 high-DPI monitors might set this scale, for example, to=
- 2, in
-> > order to
-> > + *=C2=A0=C2=A0 make the UI look larger.
-> > + *
-> > + * - zooming scale: this can be freely controlled by the QEMU user
-> > to zoom
-> > + *=C2=A0=C2=A0 in/out the guest content.
-> > + *
-> > + * II. Representation
-> > + *
-> > + * We'd like to use consistent representation for variables in
-> > different
-> > + * coordinates:
-> > + * - buffer coordinate: prefix fb
-> > + * - pixel coordinate: prefix p
-> > + * - logical window coordinate: prefix w
-> > + *
-> > + * For scales:
-> > + * - global scale factor: prefix gs
-> > + * - zooming scale: prefix scale/s
-> > + *
-> > + * Example: fbw, pw, ww for width in different coordinates
-> > + *
-> > + * III. Equation
-> > + *
-> > + * - fbw * gs * scale_x =3D pw
->=20
-> Well.=C2=A0 That is one possible approach (and this is what qemu is doing
-> today, for historical reasons, because most code dates back to pre
-> high-dpi days).
->=20
-> A possible alternative would be to go for fbw * scale_x =3D pw, i.e.
-> let
-> the guest run in pixel coordinates instead of window coordinates.=C2=A0
-> The
-> guest would do the high-dpi scaling then.=C2=A0 That requires setting
-> physical display width and height in ui_info, so the guest can figure
-> what the display resolution is and go into high-dpi mode if needed.
->=20
+Yes, Michael asked for more details for the problem solved here. So
+I'd expect there would be a respin here.
 
-Thanks for your suggestion. Sounds like code could be simplified and be
-much easier to understand in this way. I will investigate it on top of
-this change.
+https://patchew.org/QEMU/20250424-reapply-v2-1-d0ba763ac782@daynix.com/
 
-Best regards,
-Weifeng
+Thanks
 
-> We probably also need a non-high-dpi compatibility mode for old
-> guests.
-> That mode would start with "zooming scale =3D global scale" instead of
-> "zooming scale =3D 1", and the dpi calculation would have to consider
-> that too.
->=20
-> (maybe best done on top of this nice cleanup).
->=20
-> take care,
-> =C2=A0 Gerd
+>
+> Thanks,
+>
+> /mjt
+>
+
 
