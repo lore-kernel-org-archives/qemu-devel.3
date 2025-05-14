@@ -4,74 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F56C3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30951C3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF7Iq-0005Tn-6I; Wed, 14 May 2025 04:17:24 -0400
+	id 1uF7KD-0006vY-HK; Wed, 14 May 2025 04:18:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uF7Im-0005Sd-MV
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:17:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uF7Ik-0004Tp-LS
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:17:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747210637;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=1IoPZUq8AKIoU8mXCBXS4i4jGAxjjlqQQupZeESyuoQ=;
- b=FlZFPS8w4HzMpHLzArOAMGBNsf+RA4Uz/q9lxIaxB0A0VQ+NlnrwmzKeCdeaYdjTQRJYIC
- Cy27uZI/vVGrvtO9VyNUUSMDsf1yu/tUnahXYQeb8N24KCaOXVxwuIjtGSXaJBLDBtieCi
- DMve837P+rTRT2Xq6SACYy7FTqS7gQw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-453-sn0ZpgPnOxCzVFO2U3J6pg-1; Wed,
- 14 May 2025 04:17:14 -0400
-X-MC-Unique: sn0ZpgPnOxCzVFO2U3J6pg-1
-X-Mimecast-MFC-AGG-ID: sn0ZpgPnOxCzVFO2U3J6pg_1747210633
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 005D9195DB98; Wed, 14 May 2025 08:17:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.147])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C814830001A1; Wed, 14 May 2025 08:17:10 +0000 (UTC)
-Date: Wed, 14 May 2025 09:17:07 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Clark <michael@anarch128.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v3 4/4] x86-disas: add x86-mini disassembler implementation
-Message-ID: <aCRROhtUyLK7axOf@redhat.com>
-References: <20250514073927.2735727-1-michael@anarch128.org>
- <20250514073927.2735727-5-michael@anarch128.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uF7KA-0006tM-Or
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:18:46 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uF7K5-0004hH-G6
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:18:46 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43cf680d351so3827315e9.0
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 01:18:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747210718; x=1747815518; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TSd9zCPFpm9xCB2kRVM1sXd7mZ4FOuxpIOIZe1xh1bs=;
+ b=YK56yLCxckAgmzXZ5+RntEs3fV1T7PqlAygpur0KeMdb5rSsSyCLv0YwHJNA0cyiiY
+ D4lGVhfSFtt0RYsOo+WHLNc8f4agjZMpT5LAwvlPJJmQmcknNYdxHRiF1sNfV46OFG/I
+ 8uf/EoSdgpL6auP0NRIy5ddNjwUkIJ5+DPqpNScPE0F7e3cNacUuY3EneL0zXDZ5DTZ/
+ gyv6l8KEhV3LEKRzTU8ekKoLOmx8vyNhaOfGNdpUgI3BxfkXqnOgFtkhy8YkT0rPDmv3
+ BlVVJqEmPJAWKHlRMHgUHVa73twTd6IIhoeVPZ1UPCP27gx2SUqCZ50fJCOaPjsSkxsa
+ ss8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747210718; x=1747815518;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TSd9zCPFpm9xCB2kRVM1sXd7mZ4FOuxpIOIZe1xh1bs=;
+ b=S8NYZV5SVz3T5ZJnNv52/LtCHmFjH1eNgvSnN2a5ewoHtw4063pF8jzdY90YlLcDlO
+ ga35qgCouadEjCWXvSSHyvpROQTPPhZVxa0NDtD1815YNQuF7T50iJH916dFNcHolsvW
+ 7bBL4VTK9k3g6EGXUFfcGM8O25HOUwbG0e9TXKOH6IX+qOFzLzC9ygdPFLcgxeH9Hdql
+ JYJ2RXZcR7/LUwguCchEfFxOMJSn3Vl/fwKlprnyIqcJVU+z712pqtU3MovJIKbZiXcl
+ PdKVQhJ186PgssWOLmupDlLpnSkGE0Tk9v75/unhYZgWKB9rTBx3/ovcpoaqoWqAumJM
+ oI9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUv7QNFfwQ/vqYvskrlsb0QoMdfKbC3AuJswe23C6QvD5UGYVoL/iKF9Lzpc3iKqBuZ9FuKKyWNE61b@nongnu.org
+X-Gm-Message-State: AOJu0YyH35VVMd6wEvXqIo0iEGGOirMadtoBvuZSnYTTngXA3d8rS2KC
+ M95LReGSyeHLnYkrUfChklUEh2wf9JQPegBdlRVJkO0nrTD9Itfh0igElE8MrhQ=
+X-Gm-Gg: ASbGnctJEZmk87+D45z+xI3xgD7rchxDeiozx1ecJ0dl1tR9mbldcyiiKa6lcJlAjwl
+ b7wAKw9Q3yIFyS9iSbx3BEQBMCXd2RFK5aWXL0m9qexzpJXinmDhpXQFm7tiZh15FYmm5EwajCG
+ z5kpEZlciRhh2Xyu0KtNi0eJ7kAvqXb5MxIwmy5l5jIerudn8BqpsZ/8nejTxtpVagZApL/bOcq
+ I+uyUrRC22RikfNHyO346b4RJhdv9oz/kbJnN6VwssBO+suMJLinvOKLdcP95obSNQNv1A4/AXm
+ /deCrS2XoSdwtgpgY/NIP2KYB4g/SBj+HfKkccg1nGT6raa67GgEXxf+6Kdbci6MazGHt9caQU+
+ Vws5dsW563t4gC4/9
+X-Google-Smtp-Source: AGHT+IECyAAZq2FFWogvLnu9qcVnNjQwot7cxGTPLLdYpGuy3kThkOZBrQOcBBt+M4jhMzAbyiPzmA==
+X-Received: by 2002:a5d:62d0:0:b0:3a3:4220:1bb0 with SMTP id
+ ffacd0b85a97d-3a342201bd8mr4357468f8f.18.1747210718595; 
+ Wed, 14 May 2025 01:18:38 -0700 (PDT)
+Received: from [10.61.1.204] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f5a4c5d6sm18613745f8f.83.2025.05.14.01.18.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 May 2025 01:18:38 -0700 (PDT)
+Message-ID: <05b1a81f-9eb4-4066-8a0d-8c13a9a34332@linaro.org>
+Date: Wed, 14 May 2025 09:18:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250514073927.2735727-5-michael@anarch128.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/19] target/arm/tcg-stubs: compile file once (system)
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250513173928.77376-1-philmd@linaro.org>
+ <20250513173928.77376-2-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250513173928.77376-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,55 +103,30 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 07:39:27PM +1200, Michael Clark wrote:
-> the x86-mini library is a lightweight x86 encoder, decoder, and
-> disassembler that uses extensions to the Intel instruction set
-> metadata to encode modern VEX/EVEX instructions and legacy
-> instructions with a parameterized LEX (legacy extension) format.
-> 
-> this patch adds the x86-tablegen.py script, the disassembler,
-> a print_insn_x86 implementation plus host and target cpu stubs.
-> 
-> Signed-off-by: Michael Clark <michael@anarch128.org>
+On 5/13/25 18:39, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  disas/disas-host.c      |    5 +
->  disas/meson.build       |   97 ++
->  disas/x86-core.c        | 2716 +++++++++++++++++++++++++++++++++++++++
->  disas/x86-disas.c       |   96 ++
->  disas/x86.h             | 1860 +++++++++++++++++++++++++++
->  include/disas/dis-asm.h |    1 +
->  target/i386/cpu.c       |    7 +
->  7 files changed, 4782 insertions(+)
->  create mode 100644 disas/x86-core.c
->  create mode 100644 disas/x86-disas.c
->  create mode 100644 disas/x86.h
+>   target/arm/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
+> diff --git a/target/arm/meson.build b/target/arm/meson.build
+> index b404fa54863..e568dfb706a 100644
+> --- a/target/arm/meson.build
+> +++ b/target/arm/meson.build
+> @@ -48,7 +48,7 @@ subdir('hvf')
+>   if 'CONFIG_TCG' in config_all_accel
+>      subdir('tcg')
+>   else
+> -    arm_ss.add(files('tcg-stubs.c'))
+> +    arm_common_system_ss.add(files('tcg-stubs.c'))
+>   endif
+>   
+>   target_arch += {'arm': arm_ss}
 
-> diff --git a/disas/x86-core.c b/disas/x86-core.c
-> new file mode 100644
-> index 000000000000..c4f7034e3420
-> --- /dev/null
-> +++ b/disas/x86-core.c
-> @@ -0,0 +1,2716 @@
-> +/*
-> + * Copyright (c) 2024-2025 Michael Clark
-> + *
-> + * SPDX-License-Identifier: MIT
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Note that we expect contributions to be under GPL-2.0-or-later, unless
-derived from existing code that forces use of a different license, which
-needs to be explained in the commit message
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
