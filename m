@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B9DC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 12:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E0BC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 12:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBbT-0002r5-45; Wed, 14 May 2025 08:52:55 -0400
+	id 1uFBbW-0002sH-J8; Wed, 14 May 2025 08:52:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1uFAm7-0000Mg-MS
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:59:52 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1uF9LC-00064n-PK
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 06:27:58 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1uFAm2-0000JL-TL
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:59:51 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7410c18bb00so8057745b3a.3
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:59:45 -0700 (PDT)
+ id 1uF9LA-0003sg-3q
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 06:27:58 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-403407e998eso4740389b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 03:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1747223984; x=1747828784; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1747218472; x=1747823272; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
  bh=Xsw48AKk8CYEWDlWDcJoP4kYuHx7KlGPMhpRO9e6nME=;
- b=URS1Ay2KV9VQ6ojyOlBvozi+F4p8O6gcs5xbzEfQaLh4MiwIsxVHf/5W7M9lp7MJ6K
- HJtWTxkojsqVNJYTfyeZA9sFkfhl3tnpQ1R3s4gWawxGq3f23pLQHVQVU83gv5XTlDEL
- JQEFGuX6/6TwJTZoEWzXPEPvy7uHo53LbSlHDe8y+PWjdAD8AeqZwyjPlXbo5jUBITNn
- 6DJng5RrgLpif9+iDoq3qtL28jIf3y5QHDkUeTRz0dOUfFXs38JtmDGn1Dn/kMyhXSe9
- LcwtnfZKerVt72mh6nw0YHOEh+TvJD9z7QaQhoaU+9zDyGm7r3StBxySYC08w53ZwbnV
- s77A==
+ b=LvuYxUy0u5dC7vUMOdoBguMBP1Wm1RUk7fjIjTvTH8x49/pDeJWg3za8vX1u+qcEnn
+ tQRcdLJ+/7oqmhoyhh/ZpSnQEjEpi6Tt4UJZ72VF2u6m8lULvbn6TEEl7xcKmRoIXZss
+ 9b2F1mHsOydywILkZScvKSmO3ycqezTHTTPW5jdrOJFLRIzNpibBS5yBIoGiSAvw1wLG
+ wUmwCM+w9Hc2R36yqPhGMzVAABzBFKagFxDwK/KDwjgueZ+txiX4QJS7TjjzygRt3BOm
+ o76p5ViVU0Ay2uTq5xQcqGXZqx+cKLKCFupoKz5kGjJbeCEJIYvLG/qU9l0KaWmDZ+I2
+ Tvzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747223984; x=1747828784;
+ d=1e100.net; s=20230601; t=1747218472; x=1747823272;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
  bh=Xsw48AKk8CYEWDlWDcJoP4kYuHx7KlGPMhpRO9e6nME=;
- b=n4b4FU6hM5sCFOwmZ3KRXMP9MqN2KTFTCz6ZVBBZyvoxAwCe80MlAjSiWMKGV4vSJR
- 0d5VzNTzyOuG0WKdLQ0NzZlf0sPI+24YszxuNaKDaqAppfkwu4wIxiU8p6a17viDGDIH
- m7ekA/x30j/HR6rmAzABdVp9B+V9FR5W2YbymhlXmGASDgqhFbwh6G8kTQdrmv2SSTSD
- 2OeI8sjj5IVfgrxyTY9C3sTiB/lYku0r/QJyK8S/2eek44MpjKLkK/D9aUlhu0iJl5IE
- e/Oobb1UrP/WPT9rYlAzrTWN8vXRcTr33WV9Skj4TGqqlkOQI2joUC9V1af2zlz8d2L3
- K1nQ==
-X-Gm-Message-State: AOJu0YxvtxiHgGOK8ciK+pAP17hyhG2VMyHIj9DiOz6Xmc0Nh/Ot9wSg
- eg0zMlS68fNx6ejssWbYFSL9qkcoECtGT/n7Qu/NgowIeFkbEl4lr02lcvGDaHA=
-X-Gm-Gg: ASbGnctZf2MmXIopUoHuLVjzcWBMW0R55Zyixi9aPIwFZJzHzhze1dY6BFoA8pU/MAt
- ajlVv6yWo7wyGwY8sP087KdyOhiB7zAD9yorBVVkmmSiQnC2St2PZCl8diPrKSy8RBZsg1zazKZ
- q7XOIGzjeS8EJnFMygRQSs0njV1GVJ5td5GnElPLCRjHDwd7odCbNlQWEswuVbn8Y8RwPplhnLN
- 3d6Am/20v41sNpE70Vq1guSw5xpSlfwWAEue2VtvnfGU1rN13ln5Y4vBqvpt4BCgn/WXbLSrBHr
- sPx+6NDeOslVwfJGd26T/8L+hChLVlzgbdya74Tljujgy9RYaBIR9ocsGTuEMEntlSGaHw==
-X-Google-Smtp-Source: AGHT+IE+tGbSxo25JTfQgRJG0YRuAZnH99p+Vda0DChGHrFzAKzgKRsT1PHPK0TekB3KyYJf9bR2eA==
-X-Received: by 2002:a05:6a20:914e:b0:1f5:709d:e0c6 with SMTP id
- adf61e73a8af0-215ff1b725amr4466320637.42.1747223984316; 
- Wed, 14 May 2025 04:59:44 -0700 (PDT)
-Received: from n37-071-053.byted.org ([115.190.40.15])
+ b=tlyPsvvmnRSPZdvVromFN2cw7Fal3ek8ka6+DKC1h2HzYw2BHvkghcRjMnbDRR+DIV
+ qN3oref0660MuVBA1N8mkS8AwkwHiGjffKkmuuJL6md0zsUFGZ8jOi4L+lbvesXzjilD
+ oiPqoL4pvL7de7pjD6Qkom0cqeoFpC9dDLDBtWVbRbOeMx6ynNeVqSmBvHweiBvIUp7u
+ DssoZjsJi0F1byGmxlvx3vf0wdqYOhS4Hi5CH0QfNTar0BV8nrV6cBpD4yphhcP22URp
+ nFKMPKtEet013Etn4iDhX9XNbIL/V3mu2gj88L6xcfTn/6ija/GUMnQsvmgmK3NUjXKb
+ EuXQ==
+X-Gm-Message-State: AOJu0Yxib3jaBmmfP3FKC0NEyXL3a9Uaj33OHRirWWLqKsstW58igVx2
+ uLh/ZngJg3EfpCNZMW1BN7r5zUs+jzmhDO4BKEBanzejiLhCFbEcSfk5cttF2OEa6hZBV4wN+ZR
+ KIlo=
+X-Gm-Gg: ASbGncvBCzaNemPfssipxG/sbsqWucEr7KzpiBKFFDq3oLfYrKSLf9OoZsHSRvLwCub
+ JQwHJCgXL60P0Mood+wdlyQ27OJ8yfHr9HB1ydBZRjcgzcm11OMgxKyZYAmYn12GirNXSPt0Or4
+ eGlkAj3sQxfHJ/tvNRtcSzPwtOeWn7gwQsn1V4A2eZaorkR1HSlA3fXYt6chjNAhEjv/h0F5G1j
+ aeN1OjFalFbkQyJwmuHWFmWW5Mmcvp/woBCbQtB9Gk+5c1RN/KRn2WvfEkVTCSJTmu+i7jz2TRe
+ kKpdYpTviE45sym2/QuDhiSSjtWR4Uiu4iqVFHGcba9gH3RycBQz6p1m6a8IKWge3HTR7Q==
+X-Google-Smtp-Source: AGHT+IFonfmw3Xf4VKFBloalAvK7boQoglZBFIOQlVlwCGSJsSO7Ydqn6oruG1VBTUpO0OGjgPkpAw==
+X-Received: by 2002:a17:90b:4c51:b0:309:cf0b:cb37 with SMTP id
+ 98e67ed59e1d1-30e2e56f634mr5078606a91.7.1747218461472; 
+ Wed, 14 May 2025 03:27:41 -0700 (PDT)
+Received: from n37-071-053.byted.org ([115.190.40.10])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74237a0cfc5sm9699366b3a.91.2025.05.14.04.59.42
+ 98e67ed59e1d1-30e33482fd3sm1211762a91.37.2025.05.14.03.27.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 May 2025 04:59:43 -0700 (PDT)
+ Wed, 14 May 2025 03:27:40 -0700 (PDT)
 From: Yanfei Xu <yanfei.xu@bytedance.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org,
 	Yanfei Xu <yanfei.xu@bytedance.com>
 Subject: [RFC PATCH] migration/ram: avoid to do log clear in the last round
-Date: Wed, 14 May 2025 19:58:27 +0800
-Message-Id: <20250514115827.3216082-1-yanfei.xu@bytedance.com>
+Date: Wed, 14 May 2025 18:27:33 +0800
+Message-Id: <20250514102733.3114824-1-yanfei.xu@bytedance.com>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=yanfei.xu@bytedance.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=yanfei.xu@bytedance.com; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -83,7 +84,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 14 May 2025 08:52:48 -0400
+X-Mailman-Approved-At: Wed, 14 May 2025 08:52:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
