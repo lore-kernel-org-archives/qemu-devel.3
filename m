@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1973C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF1BC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBjx-0007jD-Af; Wed, 14 May 2025 09:01:44 -0400
+	id 1uFBkv-0000bl-J2; Wed, 14 May 2025 09:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhO-0003yK-P8; Wed, 14 May 2025 08:59:07 -0400
+ id 1uFBiX-0006vz-Me; Wed, 14 May 2025 09:00:14 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhM-0007tJ-UF; Wed, 14 May 2025 08:59:02 -0400
+ id 1uFBiU-0008AT-Pi; Wed, 14 May 2025 09:00:13 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B6CC121AE6;
- Wed, 14 May 2025 15:57:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 088B3121AF1;
+ Wed, 14 May 2025 15:57:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F134C20B854;
- Wed, 14 May 2025 15:57:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9BAD120B85F;
+ Wed, 14 May 2025 15:57:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Marco Cavenati <Marco.Cavenati@eurecom.fr>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Fabiano Rosas <farosas@suse.de>
-Subject: [Stable-9.2.4 08/34] migration: fix SEEK_CUR offset calculation in
- qio_channel_block_seek
-Date: Wed, 14 May 2025 15:57:30 +0300
-Message-Id: <20250514125758.92030-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Liu <liuwe@linux.microsoft.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 19/34] target/i386/hvf: fix lflags_to_rflags
+Date: Wed, 14 May 2025 15:57:41 +0300
+Message-Id: <20250514125758.92030-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
@@ -62,34 +62,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The SEEK_CUR case in qio_channel_block_seek was incorrectly using the
-'whence' parameter instead of the 'offset' parameter when calculating the
-new position.
+Clear the flags before adding in the ones computed from lflags.
 
-Fixes: 65cf200a51 ("migration: introduce a QIOChannel impl for BlockDriverState VMState")
-Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit c0b32426ce56182c1ce2a12904f3a702c2ecc460)
+Cc: Wei Liu <liuwe@linux.microsoft.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 94a159f3dc737d00749cc930adaec112abe07b3c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/channel-block.c b/migration/channel-block.c
-index fff8d87094..b0477f5b6d 100644
---- a/migration/channel-block.c
-+++ b/migration/channel-block.c
-@@ -123,7 +123,7 @@ qio_channel_block_seek(QIOChannel *ioc,
-         bioc->offset = offset;
-         break;
-     case SEEK_CUR:
--        bioc->offset += whence;
-+        bioc->offset += offset;
-         break;
-     case SEEK_END:
-         error_setg(errp, "Size of VMstate region is unknown");
+diff --git a/target/i386/hvf/x86_flags.c b/target/i386/hvf/x86_flags.c
+index 03d6de5efc..fedc70a1b8 100644
+--- a/target/i386/hvf/x86_flags.c
++++ b/target/i386/hvf/x86_flags.c
+@@ -293,6 +293,7 @@ void set_SF(CPUX86State *env, bool val)
+ 
+ void lflags_to_rflags(CPUX86State *env)
+ {
++    env->eflags &= ~(CC_C|CC_P|CC_A|CC_Z|CC_S|CC_O);
+     env->eflags |= get_CF(env) ? CC_C : 0;
+     env->eflags |= get_PF(env) ? CC_P : 0;
+     env->eflags |= get_AF(env) ? CC_A : 0;
 -- 
 2.39.5
 
