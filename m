@@ -4,84 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 567A5C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 15:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7944FC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFEPD-00076j-9O; Wed, 14 May 2025 11:52:27 -0400
+	id 1uFEiW-0005ZH-Ag; Wed, 14 May 2025 12:12:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uFEAT-0003du-GW
- for qemu-devel@nongnu.org; Wed, 14 May 2025 11:37:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
+ id 1uFEIV-00033y-3H; Wed, 14 May 2025 11:45:38 -0400
+Received: from out203-205-221-233.mail.qq.com ([203.205.221.233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uFEAR-0001ht-Q9
- for qemu-devel@nongnu.org; Wed, 14 May 2025 11:37:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747237030;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rNqpKMDVkRLgudOp61Ys+LEkD187I+q8Zkd/KYUyD+A=;
- b=Y59z4dosBrHGE9Ou9nUu0aL+mKtSjaL0s1STcSrIWSN1SMluudC6C1RywP/0GvE8m+J/uM
- HNOfBVBUOFJcjgOQu2b9VmHPGBOz/GmL1dSUysDJrzDPsFGRZwbJj0tIs+pHo6FUloRMaY
- Y9fhWwTxXdd37vYhAay/QDPQl0OgnWI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-8-jyKCLfMyKwIM9GNFW6lg-1; Wed,
- 14 May 2025 11:37:07 -0400
-X-MC-Unique: 8-jyKCLfMyKwIM9GNFW6lg-1
-X-Mimecast-MFC-AGG-ID: 8-jyKCLfMyKwIM9GNFW6lg_1747237025
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 745621955DB1; Wed, 14 May 2025 15:37:02 +0000 (UTC)
-Received: from localhost (dhcp-192-216.str.redhat.com [10.33.192.216])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DDB421955BC0; Wed, 14 May 2025 15:37:00 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- abologna@redhat.com, jdenemar@redhat.com, agraf@csgraf.de,
- shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [PATCH v3 08/10] arm/cpu: more customization for the kvm host
- cpu model
-In-Reply-To: <aCNsSbDoi5oKWYul@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <20250414163849.321857-9-cohuck@redhat.com> <aCNsSbDoi5oKWYul@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Wed, 14 May 2025 17:36:58 +0200
-Message-ID: <875xi3cig5.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
+ id 1uFEIL-0002hn-9Y; Wed, 14 May 2025 11:45:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1747237504; bh=Ff40hSDHf23i9uNqj7BBEdJRrJ6S5X3vmaz8E1KcQiM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=B8FinTztXeBFZ4+Tv3i65DZ1W5HO7AjMugWO8ElsrWI+PEc/LrdgDm4KX6U0+ROpE
+ ds4M8tv4quilGke1lX1jHdz506mNU5xpPdZU8EFIK8+zdFkPAwdph3t0ukk8BdMCz2
+ Z3f+uSlYB+xER+3aigF5klcBPXtnZCk9SoTmXHnA=
+Received: from localhost.localdomain ([117.147.34.74])
+ by newxmesmtplogicsvrszb21-0.qq.com (NewEsmtp) with SMTP
+ id 9B390847; Wed, 14 May 2025 23:38:51 +0800
+X-QQ-mid: xmsmtpt1747237131t6ffa1ypv
+Message-ID: <tencent_80394492ED0159599D33DE267BDA007A1C06@qq.com>
+X-QQ-XMAILINFO: NnYhxYSyuBnLo9ACLs+1+raiu1u9PBH7rrFGLWUTaJz1OXthURDbmELOkvMF2f
+ YXiWNQTnVNq+LQp5SCP/uYOeDS+ri/08C9vks7XF9DnWVsFelgtkjm2ibT+AylnXziNjKVwm6QxF
+ FZJLOr4qJjX/TeCoF/eearRMaX/qT52WmJO9i6S50g4HQ1e6vsrgJKCo+c5Igli9MYGn7j65VbbF
+ Ayo+ST3oIH97Vyn/YDlZgtZ2IMTKN4KklIVdUU9opJ5HvdgRK1ggcAnBXZhuF3QNcPlevi4xDWXc
+ wZVu0OJCXmNFPCg9LJ7Zo1pIpf4qHA0RhiyPIncmFgOgA5r/2816jAe70wEoeXHngdvS1rRp4uXb
+ 8QVEd1A2LtZ78aYMxmtpxgljf6GhXPwzvaMXHvNQqZDyon4/0mFDS/PYAY1BlRPM7lNGfzhEHz9b
+ Jcu/30xBMjqHccJmfeVHLAMiCSGDyPqORvSpmHEqP7TxcwaT3c84+xF0DAiXGI+5w+2NxXU5tKed
+ 6XrAr5zkrZv7z0YKbCos0Xxn93jNeLTyzTA4Pne+URc3Of4VGY0Zq4ufU4MQR4/IR1YNwHUzxGn/
+ ymh/qkRDyvnAv1p9yhA/dtyID/gIae8rPIaJ6TejFsVV0R6dNFrcSqfKCuk1hfEY+oIlkql0zP+P
+ /wuyFDIYrkRvxk5anOUj0LE887eaqc07RL3ZLmWnT9SJtlM0wVjlY8tnUAp9zbSi2voPTsLQL0S8
+ rXOJJw7YF0Tj6vB+l6ARZ3Lb5g2QtN7IwasjI2lTW7VSKRmEErkfQdNQlZaUU9vmmr5FbArD8CU5
+ +0x1zPA795GREixOUsBElOtTaB4viKnoSoc45QksclCkjfRUEtys+dRUSa4JSlf0umY5/i8RQLhD
+ 2AFDvN1bvVpKrL2CLEuYLQ22nWMgvXs5iaJeLlwMe2fEO4nJiUslEuqHUI8MLP7ZPxaE0ZtsMXwI
+ PNaAGjrz3fVEOpN0tu6J75c36RYUsSAiMvTsOxcXIvQw7Wsdm6BQ==
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+From: Sunny Zhu <sunnyzhyy@qq.com>
+To: eblake@redhat.com
+Cc: hreitz@redhat.com, jsnow@redhat.com, kwolf@redhat.com,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, stefanha@redhat.com,
+ sunnyzhyy@qq.com, vsementsov@yandex-team.ru
+Subject: Re: [PATCH v4 11/13] mirror: Skip writing zeroes when target is
+ already zero
+Date: Wed, 14 May 2025 23:37:54 +0800
+X-OQ-MSGID: <20250514153754.53829-1-sunnyzhyy@qq.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250509204341.3553601-26-eblake@redhat.com>
+References: <20250509204341.3553601-26-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=203.205.221.233; envelope-from=sunnyzhyy@qq.com;
+ helo=out203-205-221-233.mail.qq.com
+X-Spam_score_int: 33
+X-Spam_score: 3.3
+X-Spam_bar: +++
+X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_DYNAMIC=0.982, SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,39 +84,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 13 2025, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+On Fri, 9 May 2025 15:40:28 -0500, Eric Blake wrote:
+> @@ -847,8 +887,10 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+>      bool punch_holes =
+>          target_bs->detect_zeroes == BLOCKDEV_DETECT_ZEROES_OPTIONS_UNMAP &&
+>          bdrv_can_write_zeroes_with_unmap(target_bs);
+> +    int64_t bitmap_length = DIV_ROUND_UP(s->bdev_length, s->granularity);
+> 
+>      /* Determine if the image is already zero, regardless of sync mode.  */
+> +    s->zero_bitmap = bitmap_new(bitmap_length);
+>      bdrv_graph_co_rdlock();
+>      bs = s->mirror_top_bs->backing->bs;
+>      if (s->target_is_zero) {
+> @@ -862,7 +904,14 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+>      if (ret < 0) {
+>          return ret;
+>      } else if (s->sync_mode == MIRROR_SYNC_MODE_TOP) {
+> -        /* In TOP mode, there is no benefit to a pre-zeroing pass.  */
+> +        /*
+> +         * In TOP mode, there is no benefit to a pre-zeroing pass, but
+> +         * the zero bitmap can be set if the destination already reads
+> +         * as zero and we are not punching holes.
+> +         */
+> +        if (ret > 0 && !punch_holes) {
+> +            bitmap_set(s->zero_bitmap, 0, bitmap_length);
 
-> On Mon, Apr 14, 2025 at 06:38:47PM +0200, Cornelia Huck wrote:
->> From: Eric Auger <eric.auger@redhat.com>
->>=20
->> If the interface for writable ID registers is available, expose uint64
->> SYSREG properties for writable ID reg fields exposed by the host
->> kernel. Properties are named  SYSREG_<REG>_<FIELD> with REG and FIELD
->> being those used  in linux arch/arm64/tools/sysreg. This done by
->> matching the writable fields retrieved from the host kernel against the
->> generated description of sysregs.
->>=20
->> An example of invocation is:
->> -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=3D0x0
->> which sets DP field of ID_AA64ISAR0_EL1 to 0.
->
-> For the value you are illustrating 0x0 - is this implying that
-> all the flags take an arbitrary integer hex value ?
->
-> This would be different from x86, where CPU feature flags are
-> a boolean on/off state.
+It's ok when ret > 0 is obtained through bdrv_co_is_all_zeroes(target_bs). However,
+if ret = 1 originates by target-is-zero == true from qmp_blockdev_mirror, this means
+that target-is-zero also takes effect under sync=TOP. I am uncertain whether this
+aligns with our intended behavior.
 
-Most of the fields are 4 bits, the allowed values vary (there are also
-some fields that are single bits, or wider.) The FEAT_xxx values (which
-can be expressed via ID register fields, or a combination thereof) are
-mostly boolean, but there are also some of them that can take values.
+Under sync=TOP, target-is-zero could carry two distinct meanings:
+[1] The top snapshot reads as fully zero.
+[2] The entire destination snapshot chain reads as fully zero.
 
-We could cook up pseudo-features that are always on/off, but I don't
-like that approach: they would be QEMU only, whereas the ID register
-fields and FEAT_xxx features are all defined in the Arm documentation.
+Currently, target-is-zero is designed to represent scenario [2] on sync=TOP.
 
-An additional difference from x86 would be that FEAT_xxx featues are not
-neccessarily configurable (only if the host kernel supports changing the
-ID register field(s) backing the feature.)
+> +        }
+>      } else if (ret == 0 || punch_holes) {
+>          /*
+>           * Here, we are in FULL mode; our goal is to avoid writing
+> @@ -871,8 +920,9 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+>           * zeroing happened externally (ret > 0) or if we have a fast
+>           * way to pre-zero the image (the dirty bitmap will be
+>           * populated later by the non-zero portions, the same as for
+> -         * TOP mode).  If pre-zeroing is not fast, or we need to punch
+> -         * holes, then our only recourse is to write the entire image.
+> +         * TOP mode).  If pre-zeroing is not fast, then our only
+> +         * recourse is to mark the entire image dirty.  The act of
+> +         * pre-zeroing will populate the zero bitmap.
 
 
