@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECCEC3ABD9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D09F0C3ABDA
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 11:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFAH9-0001Pr-Vu; Wed, 14 May 2025 07:27:52 -0400
+	id 1uFAH3-0001Nt-T6; Wed, 14 May 2025 07:27:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFAH7-0001P2-PV
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:27:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFAH1-0001Kv-Dd
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:27:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFAH6-00028X-2i
- for qemu-devel@nongnu.org; Wed, 14 May 2025 07:27:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFAGz-00025O-BO
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:27:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747222067;
+ s=mimecast20190719; t=1747222060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fkj8p1SHc4LTcZxf/Gjpvgyfmhti4sgCBlDf4R8FyzQ=;
- b=B8N15UwgPdj5gwMNMUjqUoUCjthHcrjVTJJTsZmhbm7xtuTk7eg2D1saEZHsmrJxrBpC7Y
- cVlrXzoSOU9asPMq8qrSZdBIDVYzHqnozymbIX/NgOMx1YlB+3V9NEY87ca2SH5Hq9asO4
- 0Q2mYBqK7OwjzG+9zbygzGsJML5u0Ms=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=jECHodVbgas22a0VE4hhXYUoi0MupJJkQ+xRgSyTGYE=;
+ b=FHBgxQTCOqHK5PSKDmHYxIkCzK/ZivSDncHTuoZJLwyt+cU0nK5xsG6tYvSWm1zS6ts0LK
+ MFQ2Pfp19HaeISnTAgnQAdy2fHLbAR+dITFgQe0HJk5sqFHyyVgfdVU9xUUq/CBJOrgg1L
+ tGu7uL2jn6CccTwncN+0/+ZJsv9cLAc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-A2XlSbumMR24hKRDvFkYww-1; Wed,
- 14 May 2025 07:27:43 -0400
-X-MC-Unique: A2XlSbumMR24hKRDvFkYww-1
-X-Mimecast-MFC-AGG-ID: A2XlSbumMR24hKRDvFkYww_1747222062
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-3zFuw3CLMGaJluEuHKWgrA-1; Wed,
+ 14 May 2025 07:27:38 -0400
+X-MC-Unique: 3zFuw3CLMGaJluEuHKWgrA-1
+X-Mimecast-MFC-AGG-ID: 3zFuw3CLMGaJluEuHKWgrA_1747222057
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADAF0180035C; Wed, 14 May 2025 11:27:42 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 61D311956087; Wed, 14 May 2025 11:27:37 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5BECE19560A3; Wed, 14 May 2025 11:27:41 +0000 (UTC)
+ id 004BE19560A3; Wed, 14 May 2025 11:27:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 04/13] target/s390x: Rename the qemu_V2_11 feature set to
- qemu_MIN
-Date: Wed, 14 May 2025 13:27:24 +0200
-Message-ID: <20250514112733.456644-5-thuth@redhat.com>
+Subject: [PULL 01/13] hw/s390x/s390-virtio-ccw: Remove the deprecated 2.10
+ machine type
+Date: Wed, 14 May 2025 13:27:21 +0200
+Message-ID: <20250514112733.456644-2-thuth@redhat.com>
 In-Reply-To: <20250514112733.456644-1-thuth@redhat.com>
 References: <20250514112733.456644-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,42 +88,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Now that the v2.11 machine type has been removed, it does not make
-sense to keep the qemu_V2_11 feature set around. This is rather
-the (minimum) feature set of the oldest supported machine now, so
-rename it to qemu_MIN.
+The s390-ccw-virtio-2.10 machine is older than 6 years, so according
+to our machine support policy, it can be removed now.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250506062148.306084-5-thuth@redhat.com>
+Message-ID: <20250506062148.306084-2-thuth@redhat.com>
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/gen-features.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 41840677ce7..754fc843d24 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -844,7 +844,8 @@ static uint16_t default_GEN17_GA1[] = {
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index d5658afed96..206124f7a46 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1275,18 +1275,6 @@ static void ccw_machine_2_11_class_options(MachineClass *mc)
+ }
+ DEFINE_CCW_MACHINE(2, 11);
  
- /* QEMU (CPU model) features */
+-static void ccw_machine_2_10_instance_options(MachineState *machine)
+-{
+-    ccw_machine_2_11_instance_options(machine);
+-}
+-
+-static void ccw_machine_2_10_class_options(MachineClass *mc)
+-{
+-    ccw_machine_2_11_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_10, hw_compat_2_10_len);
+-}
+-DEFINE_CCW_MACHINE(2, 10);
+-
+ #endif
  
--static uint16_t qemu_V2_11[] = {
-+static uint16_t qemu_MIN[] = {
-+    /* Features supported by the default CPU of the oldest machine type */
-     S390_FEAT_GROUP_PLO,
-     S390_FEAT_ESAN3,
-     S390_FEAT_ZARCH,
-@@ -1053,7 +1054,7 @@ static FeatGroupDefSpec FeatGroupDef[] = {
-  * QEMU (CPU model) features
-  *******************************/
- static FeatGroupDefSpec QemuFeatDef[] = {
--    QEMU_FEAT_INITIALIZER(V2_11),
-+    QEMU_FEAT_INITIALIZER(MIN),
-     QEMU_FEAT_INITIALIZER(V3_1),
-     QEMU_FEAT_INITIALIZER(V4_0),
-     QEMU_FEAT_INITIALIZER(V4_1),
+ static void ccw_machine_register_types(void)
 -- 
 2.49.0
 
