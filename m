@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFB4EC3ABC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 03:55:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10594C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 04:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF3CF-0003w3-Qc; Tue, 13 May 2025 23:54:19 -0400
+	id 1uF3T0-0001yI-Rq; Wed, 14 May 2025 00:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uF3CE-0003vW-7y
- for qemu-devel@nongnu.org; Tue, 13 May 2025 23:54:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uF3CC-0008Jx-Q4
- for qemu-devel@nongnu.org; Tue, 13 May 2025 23:54:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747194855;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=xLR8sU1BF5A6HcCAyYFe2oaaAHR40jdW0ueKmStF/tg=;
- b=ICZkuATraHEpdVf1na/6Qr6jBraRMhc0ujzdudLxGkuT4uAqwngzeTpZKOCILATL4zAo+f
- BYPZ5nn/Ez0ob73BdRYcKEsdnSeFY/0Ho/xNXwt7fdxCEM3caFVS94l/5DGGUus13/Qh62
- Un/h1cQCYZPxCiL0v6ufES91XJiESlg=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-WYXgzILNOG6MB0rmBan-tw-1; Tue, 13 May 2025 23:54:09 -0400
-X-MC-Unique: WYXgzILNOG6MB0rmBan-tw-1
-X-Mimecast-MFC-AGG-ID: WYXgzILNOG6MB0rmBan-tw_1747194849
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6f541b32bffso165975036d6.1
- for <qemu-devel@nongnu.org>; Tue, 13 May 2025 20:54:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1uF3Sz-0001v5-Cb
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 00:11:37 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1uF3Sx-0001j7-9c
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 00:11:36 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-af51596da56so5589122a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 May 2025 21:11:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1747195893; x=1747800693; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wN3YlUiAm/cXhzU0srk9qkT9z264xyyEyveTz+GbTJA=;
+ b=M6yPX538in0Z4Dqc65a6aEj7L09vPhguqfjeSDrbCICOLmzpY43kxOznfAnzyTD5wp
+ h7dDTCgFMA17xef45yNkSBnwr1Vrud+ECctbKTpdZhgEuVimcemYKnOuHEuv+QyV4dua
+ hlae9uy8s3T5XndSG/3x6ZuV/5fyRiYc13M6h6Ad84waBO+BwuIo8u04xXLQ3uGHCh2W
+ nFmnjfq/bnCyk+UhQGgC0WMMMsrHBaWCEsH7Mfqs1iLS70thyuTEyhTEouCkrSVHSg0a
+ wi0X3w7sFIlpSjvRRV8dLGNNLR2EX10gkn7gHPexFz03g1KauqHItuvL1rWir4giyKhU
+ VsZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747194847; x=1747799647;
+ d=1e100.net; s=20230601; t=1747195893; x=1747800693;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xLR8sU1BF5A6HcCAyYFe2oaaAHR40jdW0ueKmStF/tg=;
- b=aTyahOoNVJ/bCi/mkDiuhHHbHM/iWslDz3f6f+tE8RN2YW3XnW8j9ydpNRbeQ5P8nN
- FjpdPTo190JspWGGDPzPpC2zTnE06DbUBSoNuulzu+0nOq+GE9ePafb9iq6V48h33zjY
- Cs0evoFpoXoSes3xjvjYQrRO+vOHheX4QoUKVIX+86uifnZ16cRkGyRsc65HoP0K7w+m
- IN3K1JnwJfZof9LAfK4MUQaHIm4ti5kIdLYt8J5hEqtEzxRKy4xs5AQE+zkyIARuNbcK
- VLtUDV3idQNUCzfaAGJkKbAryGtNpCfYoft7KJhroY6KBrZF/TvQW5jGmncFHqNzHt3F
- XQqQ==
-X-Gm-Message-State: AOJu0YxkSHhQ7BNc7S2q8S7hPcbc5tOE6kH3QsNEb5EnyvJ6qFplOUIm
- DIPLijbgB6nxgdmrmPwVSA+uPNbv4uewuETIQGs8MKw8j4K/Qy86iDFlymYyDwjc2vSWXoC7PQV
- eXdYz3kpzPJQ+5Bd1yPGjpv55c2uCVo9WLhgGvEzcwXv3cQAWsH72sqI++u+DJXicJpLeqt4BMu
- NGsLoquWmV3QgbmjxRnxAh3xT1Niz/Fh26B7uNoyWvtQ==
-X-Gm-Gg: ASbGncuOGEU67o3UmVVtCHFO0eOVvJou9Ttoyu1nzpRkk5rer/kNE5/fBKB2cS9/vl7
- ghOFxUNy5+WpkV+ZmrAYfarD+wsQ8mcRBwikXuIDpWu3I38G9ynUi1o3vZla5bIjus8DM5rpso+
- rR7Vfq39IMFlv6FCi1FiRfYRoNgIN4iVjJtKJMYTekE9dXY9aJZ38bjFTxB/EJLz0gYil45CG0x
- f+y2zlv2ED7LeOL99qkrVUNqnMRIhW4w3gEhgJHS1/bmMp8P7XIt8PQTp4ZwcTwv7FVS2DjQqpx
- Xhev0YaBnUV4WeIW
-X-Received: by 2002:a05:6214:1bc8:b0:6f2:b7d4:afb9 with SMTP id
- 6a1803df08f44-6f896e2ee1bmr30069206d6.2.1747194847509; 
- Tue, 13 May 2025 20:54:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHW3/xsSRD46qoyyXTs5q5myJ6g3Lolyb0nKC0BS4OkGNeCzwEVKxz4Pj0L67LiEMdmkbz2Mg==
-X-Received: by 2002:a05:6214:1bc8:b0:6f2:b7d4:afb9 with SMTP id
- 6a1803df08f44-6f896e2ee1bmr30069056d6.2.1747194847133; 
- Tue, 13 May 2025 20:54:07 -0700 (PDT)
-Received: from [192.168.122.1] ([69.164.134.123])
+ bh=wN3YlUiAm/cXhzU0srk9qkT9z264xyyEyveTz+GbTJA=;
+ b=BtyOO7O1C7KK5l89HTgdVuqqGe+4U9cCp705chqU9y5VAVC5gYGOMOX5cMN8AqSG/Y
+ CUfC4zj0rhq+WsMXuftNpF4luJPR79YYaiFrjZkjtLgPwNP+UyShrF+FGWWo+PBoGwQ0
+ HymAiXuaJCqXH60v//fAxLeOW+c9KrjpaE2tesyjk6TLWifoglgFp39k2n1Tcc3IUSI7
+ duoEYFvDRISx2Q37juB7IRDQGZZc3rYuNq9Z02Bu88XvpaodxZgSSv+YMg/Kh1d+DGyo
+ C0qpWrRKdgHbDoJtXry6ZyZLwMCUJGqichfIwSdxB9cC6EJ+hu/L9qbwfc3pRY5g9y1a
+ pnSg==
+X-Gm-Message-State: AOJu0Yw6wX2gOronWcT9stsaHA3IDWvHMA0Sbm4r9/B5FKNuSrvBHXOs
+ BhT9xyYIaN3UOcfNfL9NJvuZEOK0pnwY+3NOQxJl//z4nwExIvCFGGz0lZo4SoncywQty4G8O4V
+ Z7t4B/YQUcqDwHXzSf+3gPfjq4iywLAG7p8z81nOKIEonmw217zfOZYA9HaLkELL6MhZYy6JcMV
+ jIjsl8i7ImbavhdXbY4zEez0CThFfMwelAoaTfPrNaLA==
+X-Gm-Gg: ASbGncvGIKPYoolIXVbe7FmuzCZGynONxftRaoTI7XKpfW6QJaDyDa0sKwVnT2NrfzW
+ Mg5Bb99cnBAPQYDXLd7f3M3MPdckULcEOnC17bxu+dcO9NeJAcrdNV28YSwuSuRUtmXP1wQIHbb
+ SEi7ROUbLj4xp/RRw8VJiyUW4UWPMRxW45Qbg2N4z0qnACUl8ha2af/TeSiKAat3fE2Eb9yq0Qk
+ eHqt6G4FHeShFo+1x8qfhklTBxU0iuttC1JBqzLIM8zOZ2xGmyIw3BsltOBowaXSgFO5CyFgTfA
+ IJEz1jMXAXoTINVrjko7kDgvmdAkTKU4q4kjpN0+I4W47c4+hT7f5WVPX0Pkt4HjjfLk050WF2t
+ 7bQu7XiIlcR9lZQ==
+X-Google-Smtp-Source: AGHT+IEp8KcgB4TqXNlmrxHCZxS+26fan2NPyOUD68baPR7U3/AybFUsRdgXVTVVh4DEn98r4MtJHQ==
+X-Received: by 2002:a17:90b:5148:b0:2fe:b937:2a51 with SMTP id
+ 98e67ed59e1d1-30e2e643b39mr3881160a91.33.1747195892562; 
+ Tue, 13 May 2025 21:11:32 -0700 (PDT)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6f6e39e0347sm76029006d6.1.2025.05.13.20.54.06
+ 98e67ed59e1d1-30e3354b633sm533552a91.49.2025.05.13.21.11.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 May 2025 20:54:06 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Tue, 13 May 2025 21:11:32 -0700 (PDT)
+From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org
-Subject: [PATCH] rust: hpet: rename hpet module to "device"
-Date: Wed, 14 May 2025 05:54:05 +0200
-Message-ID: <20250514035405.295861-1-pbonzini@redhat.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
+ Jim Shu <jim.shu@sifive.com>, Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH 1/2] target/riscv: Add the implied rule for G extension
+Date: Wed, 14 May 2025 12:11:17 +0800
+Message-ID: <20250514041118.1614-1-frank.chang@sifive.com>
 X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.549,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=frank.chang@sifive.com; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,31 +104,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow a similar convention as pl011.
+From: Jim Shu <jim.shu@sifive.com>
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Add the missing implied rule from G to imafd_zicsr_zifencei.
+
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
 ---
- rust/hw/timer/hpet/src/{hpet.rs => device.rs} | 0
- rust/hw/timer/hpet/src/lib.rs                 | 2 +-
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename rust/hw/timer/hpet/src/{hpet.rs => device.rs} (100%)
+ target/riscv/cpu.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/device.rs
-similarity index 100%
-rename from rust/hw/timer/hpet/src/hpet.rs
-rename to rust/hw/timer/hpet/src/device.rs
-diff --git a/rust/hw/timer/hpet/src/lib.rs b/rust/hw/timer/hpet/src/lib.rs
-index 1954584a87e..d4b6e015506 100644
---- a/rust/hw/timer/hpet/src/lib.rs
-+++ b/rust/hw/timer/hpet/src/lib.rs
-@@ -8,6 +8,6 @@
- //! Precision Event Timers) device in QEMU.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index d92874baa0..27edd5af62 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2520,6 +2520,18 @@ static RISCVCPUImpliedExtsRule RVV_IMPLIED = {
+     },
+ };
  
- pub mod fw_cfg;
--pub mod hpet;
-+pub mod device;
++static RISCVCPUImpliedExtsRule RVG_IMPLIED = {
++    .is_misa = true,
++    .ext = RVG,
++    .implied_misa_exts = RVI | RVM | RVA | RVF | RVD,
++    .implied_multi_exts = {
++        CPU_CFG_OFFSET(ext_zicsr),
++        CPU_CFG_OFFSET(ext_zifencei),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
+ static RISCVCPUImpliedExtsRule ZCB_IMPLIED = {
+     .ext = CPU_CFG_OFFSET(ext_zcb),
+     .implied_multi_exts = {
+@@ -2898,7 +2910,7 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
  
- pub const TYPE_HPET: &::std::ffi::CStr = c"hpet";
+ RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
+     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
+-    &RVM_IMPLIED, &RVV_IMPLIED, NULL
++    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED, NULL
+ };
+ 
+ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
 -- 
 2.49.0
 
