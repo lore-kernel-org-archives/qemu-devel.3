@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9533C3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E4EC3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF746-0002Yb-Jy; Wed, 14 May 2025 04:02:10 -0400
+	id 1uF74f-0002fc-52; Wed, 14 May 2025 04:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uF744-0002XI-Hg
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:08 -0400
+ id 1uF74d-0002ey-K0
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:43 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uF740-0002A0-Rb
- for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:08 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uF74W-0002EQ-Ma
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:43 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx7eL5TSRoulbmAA--.12154S3;
- Wed, 14 May 2025 16:02:02 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxXWsPTiRo8VbmAA--.47180S3;
+ Wed, 14 May 2025 16:02:23 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S6;
- Wed, 14 May 2025 16:02:00 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S16;
+ Wed, 14 May 2025 16:02:21 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
 	maobibo@loongson.cn
-Subject: [PULL 04/17] hw/intc/loongarch_pch: Set version information at
- initial stage
-Date: Wed, 14 May 2025 15:39:14 +0800
-Message-Id: <20250514073927.2424543-5-gaosong@loongson.cn>
+Subject: [PULL 14/17] hw/intc/loongarch_pch: Rename memory region iomem32_low
+ with iomem
+Date: Wed, 14 May 2025 15:39:24 +0800
+Message-Id: <20250514073927.2424543-15-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250514073927.2424543-1-gaosong@loongson.cn>
 References: <20250514073927.2424543-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S6
+X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S16
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,106 +68,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Register PCH_PIC_INT_ID constains version and supported irq number
-information, and it is read only register. The detailed value can
-be set at initial stage, rather than read callback.
+Rename memory region iomem32_low with iomem, also change ops name
+as follows:
+  loongarch_pch_pic_reg32_low_ops  --> loongarch_pch_pic_ops
+  loongarch_pch_pic_low_readw      --> loongarch_pch_pic_read
+  loongarch_pch_pic_low_writew     --> loongarch_pch_pic_write
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20250507023148.1877287-5-maobibo@loongson.cn>
+Message-Id: <20250507023754.1877445-3-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c            |  9 ++-------
- hw/intc/loongarch_pic_common.c         | 13 +++++++++++++
- include/hw/intc/loongarch_pic_common.h | 17 +++++++++++++++--
- 3 files changed, 30 insertions(+), 9 deletions(-)
+ hw/intc/loongarch_pch_pic.c            | 26 +++++++-------------------
+ include/hw/intc/loongarch_pic_common.h |  2 +-
+ 2 files changed, 8 insertions(+), 20 deletions(-)
 
 diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 17ab071a6b..f732c292f8 100644
+index c06ef0df3f..076b984d93 100644
 --- a/hw/intc/loongarch_pch_pic.c
 +++ b/hw/intc/loongarch_pch_pic.c
-@@ -80,15 +80,10 @@ static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
+@@ -230,18 +230,6 @@ static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
+     }
+ }
  
-     switch (offset) {
-     case PCH_PIC_INT_ID:
--        val = PCH_PIC_INT_ID_VAL;
-+        val = s->id.data & UINT_MAX;
-         break;
-     case PCH_PIC_INT_ID + 4:
--        /*
--         * With 7A1000 manual
--         *   bit  0-15 pch irqchip version
--         *   bit 16-31 irq number supported with pch irqchip
--         */
--        val = deposit32(PCH_PIC_INT_ID_VER, 16, 16, s->irq_num - 1);
-+        val = s->id.data >> 32;
-         break;
-     case PCH_PIC_INT_MASK:
-         val = (uint32_t)s->int_mask;
-diff --git a/hw/intc/loongarch_pic_common.c b/hw/intc/loongarch_pic_common.c
-index 6dccacc741..de170501cf 100644
---- a/hw/intc/loongarch_pic_common.c
-+++ b/hw/intc/loongarch_pic_common.c
-@@ -49,6 +49,19 @@ static void loongarch_pic_common_reset_hold(Object *obj, ResetType type)
-     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(obj);
-     int i;
+-static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
+-                                            unsigned size)
+-{
+-    return loongarch_pch_pic_read(opaque, addr, size);
+-}
+-
+-static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
+-                                         uint64_t value, unsigned size)
+-{
+-    loongarch_pch_pic_write(opaque, addr, value, size);
+-}
+-
+ static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
+                                         unsigned size)
+ {
+@@ -270,9 +258,9 @@ static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
+     loongarch_pch_pic_write(opaque, addr, data, size);
+ }
  
-+    /*
-+     * With Loongson 7A1000 user manual
-+     * Chapter 5.2 "Description of Interrupt-related Registers"
-+     *
-+     * Interrupt controller identification register 1
-+     *   Bit 24-31 Interrupt Controller ID
-+     * Interrupt controller identification register 2
-+     *   Bit  0-7  Interrupt Controller version number
-+     *   Bit 16-23 The number of interrupt sources supported
-+     */
-+    s->id.desc.id = PCH_PIC_INT_ID_VAL;
-+    s->id.desc.version = PCH_PIC_INT_ID_VER;
-+    s->id.desc.irq_num = s->irq_num - 1;
-     s->int_mask = UINT64_MAX;
-     s->htmsi_en = 0x0;
-     s->intedge  = 0x0;
+-static const MemoryRegionOps loongarch_pch_pic_reg32_low_ops = {
+-    .read = loongarch_pch_pic_low_readw,
+-    .write = loongarch_pch_pic_low_writew,
++static const MemoryRegionOps loongarch_pch_pic_ops = {
++    .read = loongarch_pch_pic_read,
++    .write = loongarch_pch_pic_write,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 8,
+@@ -336,15 +324,15 @@ static void loongarch_pic_realize(DeviceState *dev, Error **errp)
+ 
+     qdev_init_gpio_out(dev, s->parent_irq, s->irq_num);
+     qdev_init_gpio_in(dev, pch_pic_irq_handler, s->irq_num);
+-    memory_region_init_io(&s->iomem32_low, OBJECT(dev),
+-                          &loongarch_pch_pic_reg32_low_ops,
+-                          s, PCH_PIC_NAME(.reg32_part1), 0x100);
++    memory_region_init_io(&s->iomem, OBJECT(dev),
++                          &loongarch_pch_pic_ops,
++                          s, TYPE_LOONGARCH_PIC, 0x100);
+     memory_region_init_io(&s->iomem8, OBJECT(dev), &loongarch_pch_pic_reg8_ops,
+                           s, PCH_PIC_NAME(.reg8), 0x2a0);
+     memory_region_init_io(&s->iomem32_high, OBJECT(dev),
+                           &loongarch_pch_pic_reg32_high_ops,
+                           s, PCH_PIC_NAME(.reg32_part2), 0xc60);
+-    sysbus_init_mmio(sbd, &s->iomem32_low);
++    sysbus_init_mmio(sbd, &s->iomem);
+     sysbus_init_mmio(sbd, &s->iomem8);
+     sysbus_init_mmio(sbd, &s->iomem32_high);
+ 
 diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index 2b4b483c63..7a9a2bdd46 100644
+index 7a9a2bdd46..dc03056227 100644
 --- a/include/hw/intc/loongarch_pic_common.h
 +++ b/include/hw/intc/loongarch_pic_common.h
-@@ -10,9 +10,9 @@
- #include "hw/pci-host/ls7a.h"
- #include "hw/sysbus.h"
+@@ -65,7 +65,7 @@ struct LoongArchPICCommonState {
+     uint8_t route_entry[64];  /* 0x100 - 0x138 */
+     uint8_t htmsi_vector[64]; /* 0x200 - 0x238 */
  
--#define PCH_PIC_INT_ID_VAL              0x7000000UL
--#define PCH_PIC_INT_ID_VER              0x1UL
- #define PCH_PIC_INT_ID                  0x00
-+#define  PCH_PIC_INT_ID_VAL             0x7
-+#define  PCH_PIC_INT_ID_VER             0x1
- #define PCH_PIC_INT_MASK                0x20
- #define PCH_PIC_HTMSI_EN                0x40
- #define PCH_PIC_INT_EDGE                0x60
-@@ -30,10 +30,23 @@
- OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
-                     LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
- 
-+union LoongArchPIC_ID {
-+    struct {
-+        uint8_t _reserved_0[3];
-+        uint8_t id;
-+        uint8_t version;
-+        uint8_t _reserved_1;
-+        uint8_t irq_num;
-+        uint8_t _reserved_2;
-+    } QEMU_PACKED desc;
-+    uint64_t data;
-+};
-+
- struct LoongArchPICCommonState {
-     SysBusDevice parent_obj;
- 
-     qemu_irq parent_irq[64];
-+    union LoongArchPIC_ID id; /* 0x00  interrupt ID register */
-     uint64_t int_mask;        /* 0x020 interrupt mask register */
-     uint64_t htmsi_en;        /* 0x040 1=msi */
-     uint64_t intedge;         /* 0x060 edge=1 level=0 */
+-    MemoryRegion iomem32_low;
++    MemoryRegion iomem;
+     MemoryRegion iomem32_high;
+     MemoryRegion iomem8;
+     unsigned int irq_num;
 -- 
 2.34.1
 
