@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08A8C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1620C3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHM1-0004if-S1; Wed, 14 May 2025 15:01:22 -0400
+	id 1uFHMJ-0004sX-91; Wed, 14 May 2025 15:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLY-0004BI-Sm; Wed, 14 May 2025 15:00:54 -0400
+ id 1uFHLc-0004D3-Nv; Wed, 14 May 2025 15:00:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLW-0007Hu-6c; Wed, 14 May 2025 15:00:52 -0400
+ id 1uFHLa-0007JM-PP; Wed, 14 May 2025 15:00:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 13562121D8D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B2E5121D8F;
  Wed, 14 May 2025 22:00:32 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 128F520BA7F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 311C620BA81;
  Wed, 14 May 2025 22:00:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Wei Liu <liuwe@linux.microsoft.com>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 03/23] target/i386/hvf: fix lflags_to_rflags
-Date: Wed, 14 May 2025 22:00:15 +0300
-Message-Id: <20250514190041.104759-3-mjt@tls.msk.ru>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 05/23] hw/core: Get default_cpu_type calling
+ machine_class_default_cpu_type()
+Date: Wed, 14 May 2025 22:00:17 +0300
+Message-Id: <20250514190041.104759-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
@@ -62,29 +64,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Clear the flags before adding in the ones computed from lflags.
+Since commit 62b4a227a33 the default cpu type can come from the
+valid_cpu_types[] array. Call the machine_class_default_cpu_type()
+instead of accessing MachineClass::default_cpu_type field.
 
-Cc: Wei Liu <liuwe@linux.microsoft.com>
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 94a159f3dc737d00749cc930adaec112abe07b3c)
+Fixes: 62b4a227a33 ("hw/core: Add machine_class_default_cpu_type()")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-Id: <20250422084114.39499-1-philmd@linaro.org>
+(cherry picked from commit d5f241834be1b323ea697a469ff0f1335a1823fe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/hvf/x86_flags.c b/target/i386/hvf/x86_flags.c
-index 03d6de5efc..fedc70a1b8 100644
---- a/target/i386/hvf/x86_flags.c
-+++ b/target/i386/hvf/x86_flags.c
-@@ -293,6 +293,7 @@ void set_SF(CPUX86State *env, bool val)
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 3130c5cd45..1bc21b84a4 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -72,6 +72,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
  
- void lflags_to_rflags(CPUX86State *env)
- {
-+    env->eflags &= ~(CC_C|CC_P|CC_A|CC_Z|CC_S|CC_O);
-     env->eflags |= get_CF(env) ? CC_C : 0;
-     env->eflags |= get_PF(env) ? CC_P : 0;
-     env->eflags |= get_AF(env) ? CC_A : 0;
+     for (el = machines; el; el = el->next) {
+         MachineClass *mc = el->data;
++        const char *default_cpu_type = machine_class_default_cpu_type(mc);
+         MachineInfo *info;
+ 
+         info = g_malloc0(sizeof(*info));
+@@ -90,8 +91,8 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+         info->numa_mem_supported = mc->numa_mem_supported;
+         info->deprecated = !!mc->deprecation_reason;
+         info->acpi = !!object_class_property_find(OBJECT_CLASS(mc), "acpi");
+-        if (mc->default_cpu_type) {
+-            info->default_cpu_type = g_strdup(mc->default_cpu_type);
++        if (default_cpu_type) {
++            info->default_cpu_type = g_strdup(default_cpu_type);
+         }
+         if (mc->default_ram_id) {
+             info->default_ram_id = g_strdup(mc->default_ram_id);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index f81cb680fc..21a76e904a 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7082,7 +7082,7 @@ ObjectClass *ppc_cpu_class_by_name(const char *name)
+     if (strcmp(name, "max") == 0) {
+         MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+         if (mc) {
+-            return object_class_by_name(mc->default_cpu_type);
++            return object_class_by_name(machine_class_default_cpu_type(mc));
+         }
+     }
+ #endif
 -- 
 2.39.5
 
