@@ -4,59 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB0BC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 12:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B9DC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 12:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBap-0002Ss-43; Wed, 14 May 2025 08:52:15 -0400
+	id 1uFBbT-0002r5-45; Wed, 14 May 2025 08:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uFBal-0002SS-Hk
- for qemu-devel@nongnu.org; Wed, 14 May 2025 08:52:12 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uFBag-0007Ej-Pi
- for qemu-devel@nongnu.org; Wed, 14 May 2025 08:52:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=B3E2JSocqCqYXDyRA6TovwjUWmZcV/Gq3FxDvfzoWR8=; b=Xxpzb2Y4kxgTdLei
- Z0CCWqOAH/qkwWBBxf/BFytV6FIef8QpH+N3em0CNHs2Yqud85pN4nlbHTK9/j7O08aP5OD2IAY+a
- aHJF1a8E3UaC/OkpfeoXs4AcWw+pIJmONZqC5tPhqCoewGDTylwlXZj6QVxUjU+9mBQlwkmHP4wwo
- eXrQGr6NREMHRGOgu1AEhrehxWH8Z/SBab4xZe+XGC/yAt7mBJ0p0NAILDq++XZ2oqioqWpfFDZ19
- ToEZRrGKQqvO362qOn65QRx5hg21TuE1eEtVTqdzRLsGK+Ui8Ng6dp+VqB3c3aFt4jAfu1EgR4dgA
- 538sp9uK6VVSDv9r3Q==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1uFBab-003VvO-1O;
- Wed, 14 May 2025 12:52:01 +0000
-Date: Wed, 14 May 2025 12:52:01 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Prasad Pandit <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 1/3] migration: Allow caps to be set when preempt or
- multifd cap enabled
-Message-ID: <aCSR8URGirnb8SX-@gallifrey>
-References: <20250513220923.518025-1-peterx@redhat.com>
- <20250513220923.518025-2-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
+ id 1uFAm7-0000Mg-MS
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:59:52 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
+ id 1uFAm2-0000JL-TL
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 07:59:51 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7410c18bb00so8057745b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 04:59:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1747223984; x=1747828784; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Xsw48AKk8CYEWDlWDcJoP4kYuHx7KlGPMhpRO9e6nME=;
+ b=URS1Ay2KV9VQ6ojyOlBvozi+F4p8O6gcs5xbzEfQaLh4MiwIsxVHf/5W7M9lp7MJ6K
+ HJtWTxkojsqVNJYTfyeZA9sFkfhl3tnpQ1R3s4gWawxGq3f23pLQHVQVU83gv5XTlDEL
+ JQEFGuX6/6TwJTZoEWzXPEPvy7uHo53LbSlHDe8y+PWjdAD8AeqZwyjPlXbo5jUBITNn
+ 6DJng5RrgLpif9+iDoq3qtL28jIf3y5QHDkUeTRz0dOUfFXs38JtmDGn1Dn/kMyhXSe9
+ LcwtnfZKerVt72mh6nw0YHOEh+TvJD9z7QaQhoaU+9zDyGm7r3StBxySYC08w53ZwbnV
+ s77A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747223984; x=1747828784;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Xsw48AKk8CYEWDlWDcJoP4kYuHx7KlGPMhpRO9e6nME=;
+ b=n4b4FU6hM5sCFOwmZ3KRXMP9MqN2KTFTCz6ZVBBZyvoxAwCe80MlAjSiWMKGV4vSJR
+ 0d5VzNTzyOuG0WKdLQ0NzZlf0sPI+24YszxuNaKDaqAppfkwu4wIxiU8p6a17viDGDIH
+ m7ekA/x30j/HR6rmAzABdVp9B+V9FR5W2YbymhlXmGASDgqhFbwh6G8kTQdrmv2SSTSD
+ 2OeI8sjj5IVfgrxyTY9C3sTiB/lYku0r/QJyK8S/2eek44MpjKLkK/D9aUlhu0iJl5IE
+ e/Oobb1UrP/WPT9rYlAzrTWN8vXRcTr33WV9Skj4TGqqlkOQI2joUC9V1af2zlz8d2L3
+ K1nQ==
+X-Gm-Message-State: AOJu0YxvtxiHgGOK8ciK+pAP17hyhG2VMyHIj9DiOz6Xmc0Nh/Ot9wSg
+ eg0zMlS68fNx6ejssWbYFSL9qkcoECtGT/n7Qu/NgowIeFkbEl4lr02lcvGDaHA=
+X-Gm-Gg: ASbGnctZf2MmXIopUoHuLVjzcWBMW0R55Zyixi9aPIwFZJzHzhze1dY6BFoA8pU/MAt
+ ajlVv6yWo7wyGwY8sP087KdyOhiB7zAD9yorBVVkmmSiQnC2St2PZCl8diPrKSy8RBZsg1zazKZ
+ q7XOIGzjeS8EJnFMygRQSs0njV1GVJ5td5GnElPLCRjHDwd7odCbNlQWEswuVbn8Y8RwPplhnLN
+ 3d6Am/20v41sNpE70Vq1guSw5xpSlfwWAEue2VtvnfGU1rN13ln5Y4vBqvpt4BCgn/WXbLSrBHr
+ sPx+6NDeOslVwfJGd26T/8L+hChLVlzgbdya74Tljujgy9RYaBIR9ocsGTuEMEntlSGaHw==
+X-Google-Smtp-Source: AGHT+IE+tGbSxo25JTfQgRJG0YRuAZnH99p+Vda0DChGHrFzAKzgKRsT1PHPK0TekB3KyYJf9bR2eA==
+X-Received: by 2002:a05:6a20:914e:b0:1f5:709d:e0c6 with SMTP id
+ adf61e73a8af0-215ff1b725amr4466320637.42.1747223984316; 
+ Wed, 14 May 2025 04:59:44 -0700 (PDT)
+Received: from n37-071-053.byted.org ([115.190.40.15])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74237a0cfc5sm9699366b3a.91.2025.05.14.04.59.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 May 2025 04:59:43 -0700 (PDT)
+From: Yanfei Xu <yanfei.xu@bytedance.com>
+To: peterx@redhat.com,
+	farosas@suse.de
+Cc: qemu-devel@nongnu.org,
+	Yanfei Xu <yanfei.xu@bytedance.com>
+Subject: [RFC PATCH] migration/ram: avoid to do log clear in the last round
+Date: Wed, 14 May 2025 19:58:27 +0800
+Message-Id: <20250514115827.3216082-1-yanfei.xu@bytedance.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20250513220923.518025-2-peterx@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 12:51:53 up 16 days, 21:05, 1 user, load average: 0.01, 0.02, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=yanfei.xu@bytedance.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 14 May 2025 08:52:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,54 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
-> With commit 82137e6c8c ("migration: enforce multifd and postcopy preempt to
-> be set before incoming"), and if postcopy preempt / multifd is enabled, one
-> cannot setup any capability because these checks would always fail.
-> 
-> (qemu) migrate_set_capability xbzrle off
-> Error: Postcopy preempt must be set before incoming starts
-> 
-> To fix it, check existing cap and only raise an error if the specific cap
-> changed.
-> 
-> Fixes: 82137e6c8c ("migration: enforce multifd and postcopy preempt to be set before incoming")
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+There won't be any ram sync after the stage of save_complete, therefore
+it's unnecessary to do manually protect for dirty pages being sent. Skip
+to do this in last round can reduce noticeable downtime.
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+---
+As I don't have proper machine to test this patch in qemu and verify if it has
+risks like in postcopy, colo and so on.(But I tested this idea on my rust VMM,
+it works and can reduce ~50ms for a 128GB guest). So I raise the patch with RFC
+for suggestions.
 
-> ---
->  migration/options.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/migration/options.c b/migration/options.c
-> index 3fcd577cd7..162c72cda4 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -568,7 +568,7 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
->              return false;
->          }
->  
-> -        if (migrate_incoming_started()) {
-> +        if (!migrate_postcopy_preempt() && migrate_incoming_started()) {
->              error_setg(errp,
->                         "Postcopy preempt must be set before incoming starts");
->              return false;
-> @@ -576,7 +576,7 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
->      }
->  
->      if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
-> -        if (migrate_incoming_started()) {
-> +        if (!migrate_multifd() && migrate_incoming_started()) {
->              error_setg(errp, "Multifd must be set before incoming starts");
->              return false;
->          }
-> -- 
-> 2.49.0
-> 
+ migration/ram.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/migration/ram.c b/migration/ram.c
+index e12913b43e..2b169cdd18 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -838,7 +838,9 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
+      * the page in the chunk we clear the remote dirty bitmap for all.
+      * Clearing it earlier won't be a problem, but too late will.
+      */
+-    migration_clear_memory_region_dirty_bitmap(rb, page);
++    if (!rs->last_stage) {
++        migration_clear_memory_region_dirty_bitmap(rb, page);
++    }
+ 
+     ret = test_and_clear_bit(page, rb->bmap);
+     if (ret) {
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.20.1
+
 
