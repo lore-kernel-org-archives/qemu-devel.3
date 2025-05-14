@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FD0C3ABD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 07:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0305C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 07:40:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF6iv-00087B-Eu; Wed, 14 May 2025 03:40:17 -0400
+	id 1uF6ix-0008C6-Sr; Wed, 14 May 2025 03:40:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1uF6it-00081E-3X
- for qemu-devel@nongnu.org; Wed, 14 May 2025 03:40:15 -0400
+ id 1uF6iv-00087A-B0
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 03:40:17 -0400
 Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1uF6ip-00083T-W9
- for qemu-devel@nongnu.org; Wed, 14 May 2025 03:40:14 -0400
+ id 1uF6iq-00087B-1B
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 03:40:15 -0400
 Received: from localhost.localdomain (dynamic-cpe-pool.orcon.net.nz
  [121.99.116.25] (may be forged)) (authenticated bits=0)
  by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 54E7dqAd1188565
+ 54E7dqAg1188565
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Wed, 14 May 2025 07:39:56 GMT
+ Wed, 14 May 2025 07:40:05 GMT
 Authentication-Results: anarch128.org; auth=pass;
  dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=bAc+wPSM header.a=rsa-sha256 header.s=100003;
+ header.i=@anarch128.org header.b=ZabzjLed header.a=rsa-sha256 header.s=100003;
  x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org); 
  x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1747208399;
- bh=mvpIL220DVElNQuRrsgRMFcLVTUDP+GOhrPvWy9xxvA=;
- h=From:To:Cc:Subject:Date:From;
- b=bAc+wPSMRomFDHrXE3i8nTvnP+3fear+vl/GZ8ezpxAuWzaJxoeOC3NaKt+wW7STk
- QBMyGl1KqAdcijArT570fDxcr5aRsCc4yfOTd7KxvyT78mFGCiijUx6on9zdE2nAXl
- CkW744W2H6QZnAK8/7gNnnO47YaUmpzbQzwPHP4HveThXpUufjxV/OJ9tQ0bL2bDRz
- Y2x+8q1aWq+9m0yj5jldDpvPM0/pYApZ7oxfRGiWyUz7xz4r8zZbHyg7Hq96D4WRmw
- zoJsZ7HUSz1rqz/8qUMx258YXOzFED6Mb9d6D6+kGHp4rkDV8OlTR1FzVLyT6A8dgk
- 6E5u03WkGJehQ==
+ s=100003; t=1747208408;
+ bh=6fTPcD3H82wsrd/LfEFcrqJ+lj9aEDLV2mk8c4mO4o4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ZabzjLedMLXbqrYziijRxq/fdNnFfZzQFj3QEnFRb7pZk4az06QvhJElKMVAqLCLh
+ PgZXaOWE+Xv86epN6Y9BPu7FY2CQbM6TGX2Uu7P+Fu/byEsZMCMsJj0NMJR+okx120
+ wuyvFEIodP0gcRiLxllQYX7IawhG96m5Qd+qm0mWr6ZQnjz/V8Jgb1iI6Ye5Enemnv
+ SMz+JZClsrQmbrH6Zv7sY4tyF7Qsts+xPmu2mVC3vlvCCKxL0u4CqpkG1dbtI53TGy
+ ZEC2d64MyYj0nkpwpeQ7kxWDSW7QI8/TP6S18zN4eblg86vVdpUvqvOweZ82XJASu3
+ fwMrdUH0BFZyA==
 From: Michael Clark <michael@anarch128.org>
 To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
 Cc: Michael Clark <michael@anarch128.org>
-Subject: [PATCH v3 0/4] x86-disas: port x86-mini disassembler to QEMU
-Date: Wed, 14 May 2025 19:39:23 +1200
-Message-ID: <20250514073927.2735727-1-michael@anarch128.org>
+Subject: [PATCH v3 3/4] x86-disas: add x86-mini metadata tablegen script
+Date: Wed, 14 May 2025 19:39:26 +1200
+Message-ID: <20250514073927.2735727-4-michael@anarch128.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250514073927.2735727-1-michael@anarch128.org>
+References: <20250514073927.2735727-1-michael@anarch128.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
@@ -77,274 +79,723 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-a port of an embeddable x86-mini disassembler to QEMU.
+the x86-mini metadata tablegen python script reads instruction
+set metadata CSV files and translates them into tables used
+by the disassembler. it generates the following tables:
 
-- https://github.com/michaeljclark/qemu/tree/x86-mini-v3
+- x86_opc_table that encodes prefix, map, and opcode
+- x86_opr_table that encodes instruction operands
+- x86_ord_table that encodes operand field order
+- x86 register enum and string table
+- x86 opcode enum and string table
 
-# x86-mini disassembler
-
-the x86-mini library is a lightweight x86 encoder, decoder, and
-disassembler that uses extensions to the Intel instruction set
-metadata format to encode modern VEX/EVEX instructions and legacy
-instructions using a parameterized LEX (legacy extension) format.
-
-- metadata-driven disassembler with Intel format output.
-- written in C11 for compatibility with projects written in C.
-- low-level instruction encoder and decoder uses <= 32-bytes.
-- python tablegen program to generate C tables from CSV metadata.
-- metadata table tool to inspect operand encode and decode tables.
-- carefully checked machine-readable instruction set metadata.
-- support for REX/VEX/EVEX and preliminary support for REX2.
-
-the x86-mini x86 encoder and decoder library has been written from
-scratch to be modern and as simple as possible while also covering
-recent additions to the Intel and AMD 64-bit instruction sets such
-as the EVEX encodings for recent AVX-512 extensions and soon REX2/
-EVEX encodings for Intel APX, as it is written with that in mind.
-
-## interest to the QEMU community
-
-- x86-mini is fast. raw decode performance is ~100-200MiB/sec.
-- x86-mini is small. 5 files, ~5 KLOC or ~13 KLOC including tables.
-- x86-mini is complete and includes the latest AVX-512 extensions.
-- x86-mini is easy to extend and uses extended Intel format metadata.
-- x86-mini is documented with detailed info on the metadata format.
-- x86-mini has CLI tools for searching x86 instruction set metadata.
-
-it would be nice to have an x86 disassembler building out-of-the-box
-as I find QEMU's built-in tracing extremely useful and given x86 is
-a popular target, a small embedded disassembler might be useful.
-
-- https://github.com/michaeljclark/x86/tree/x86-mini
-
-## techinical notes
-
-- the decoder is table-based and uses a metadata interpreter.
-- the decode table is ~66KiB with a ~150KiB acceleration trie.
-- there are currently 3658 opcode entries active on x86-64
-  which expands to 4775 table entries due to parameterization.
-
-after cherry-picking the commits, one can test host and target
-disassembly support. e.g. for an x86-64 target on an x86-64 host:
-
-$ echo aaa | qemu-x86_64 -d in_asm,out_asm /usr/bin/openssl sha256
-
-## caveats
-
-- supports 32-bit and 64-bit disassembly, and theoretically 16-bit.
-- designed to support 16-bit. base index formats are not done yet.
-- x86-64 is exhaustively fuzz-tested against the LLVM disassembler.
-- but x86-mini is new and hasn't been battle-tested in production.
-
-## conclusion
-
-the metadata is based on x86-csv but has had numerous inaccuracies
-fixed plus conversion of legacy instructions to the new LEX format.
-in effect the metadata has been fuzz-tested against LLVM for x86-64
-and ISA coverage is in the order of ~99.9%. the main branch of the
-linked repo has a procedural fuzzer for metadata-based instruction
-synthesis that could be useful for generating test cases for QEMU.
-
-## summary of changes
-
-v3
-- add SPDX license identifier to source files.
-- fix some typographical mistakes in header comments.
-- add control register, debug register, and MSR enumerations.
-- add x86_flag enumeration values for rflags register.
-- removed custom snprintf.
-
-v2
-- improve grouping of encode, decode, and disasm functions.
-- fix some metadata documentation errors and ommissions.
-- use g_malloc/g_malloc0/g_free instead of malloc/calloc/free.
-- use cpu_to_{le16|le32|le64}, {le16|le32|le64}_to_cpu.
-- move bitfield documentation comments next to definitions.
-- redefine condition codes enum and remove redundant functions.
-- reduce snprintf performance cost with optimized version.
-- remove duplicate unused definition of ctz/clz/popcnt.
-- remove duplicate host endianness conversion functions.
-- remove some magic constants and replace with math.
-- remove some unnecessary casts.
-
-v1
-- simplification to memory operand formatting logic.
-- fixed VSIB pointer formatting for consistency with LLVM.
-- 64-bit disasembly exhaustively fuzz tested against LLVM.
-- includes x86 metadata and x86-tablegen.py python script.
-- includes x86 metadata opcode and operand documentation.
-- addressed non-whitespace related checkpatch.pl warnings.
-
-Michael Clark (4):
-  x86-disas: add x86-mini instruction set metadata
-  x86-disas: add x86-mini metadata documentation
-  x86-disas: add x86-mini metadata tablegen script
-  x86-disas: add x86-mini disassembler implementation
-
- disas/disas-host.c                        |    5 +
- disas/meson.build                         |   97 +
- disas/x86-core.c                          | 2716 +++++++++++++++++++++
- disas/x86-data/x86_adx.csv                |    5 +
- disas/x86-data/x86_aes.csv                |   13 +
- disas/x86-data/x86_aeskle.csv             |    3 +
- disas/x86-data/x86_aesklewide.csv         |    3 +
- disas/x86-data/x86_avx.csv                |  375 +++
- disas/x86-data/x86_avx2.csv               |  171 ++
- disas/x86-data/x86_avx5124fmaps.csv       |    5 +
- disas/x86-data/x86_avx5124vnniw.csv       |    3 +
- disas/x86-data/x86_avx512b.csv            |    3 +
- disas/x86-data/x86_avx512bf16.csv         |   10 +
- disas/x86-data/x86_avx512bitalg.csv       |   10 +
- disas/x86-data/x86_avx512bw.csv           |  291 +++
- disas/x86-data/x86_avx512cd.csv           |   19 +
- disas/x86-data/x86_avx512d.csv            |    2 +
- disas/x86-data/x86_avx512dq.csv           |  143 ++
- disas/x86-data/x86_avx512er.csv           |   11 +
- disas/x86-data/x86_avx512f.csv            |  901 +++++++
- disas/x86-data/x86_avx512fp16.csv         |  237 ++
- disas/x86-data/x86_avx512ifma.csv         |    7 +
- disas/x86-data/x86_avx512pf.csv           |   17 +
- disas/x86-data/x86_avx512vbmi.csv         |   13 +
- disas/x86-data/x86_avx512vbmi2.csv        |   61 +
- disas/x86-data/x86_avx512vl.csv           |    2 +
- disas/x86-data/x86_avx512vnni.csv         |   13 +
- disas/x86-data/x86_avx512vp2intersect.csv |    7 +
- disas/x86-data/x86_avx512vpopcntdq.csv    |    7 +
- disas/x86-data/x86_avxneconvert.csv       |   15 +
- disas/x86-data/x86_avxvnni.csv            |    9 +
- disas/x86-data/x86_avxvnniint8.csv        |   13 +
- disas/x86-data/x86_base.csv               |  549 +++++
- disas/x86-data/x86_bmi1.csv               |   13 +
- disas/x86-data/x86_bmi2.csv               |   17 +
- disas/x86-data/x86_cet.csv                |   15 +
- disas/x86-data/x86_cldemote.csv           |    2 +
- disas/x86-data/x86_clwb.csv               |    2 +
- disas/x86-data/x86_enqcmd.csv             |    3 +
- disas/x86-data/x86_f16c.csv               |    5 +
- disas/x86-data/x86_fma.csv                |   97 +
- disas/x86-data/x86_fsgsbase.csv           |    9 +
- disas/x86-data/x86_gfni.csv               |   19 +
- disas/x86-data/x86_hreset.csv             |    2 +
- disas/x86-data/x86_invpcid.csv            |    2 +
- disas/x86-data/x86_lzcnt.csv              |    3 +
- disas/x86-data/x86_mmx.csv                |   60 +
- disas/x86-data/x86_movdir64b.csv          |    2 +
- disas/x86-data/x86_movdiri.csv            |    3 +
- disas/x86-data/x86_mpx.csv                |    9 +
- disas/x86-data/x86_msrlist.csv            |    4 +
- disas/x86-data/x86_ospke.csv              |    3 +
- disas/x86-data/x86_pclmulqdq.csv          |    3 +
- disas/x86-data/x86_pconfig.csv            |    2 +
- disas/x86-data/x86_prefetchw.csv          |    7 +
- disas/x86-data/x86_raoint.csv             |    9 +
- disas/x86-data/x86_rdpid.csv              |    2 +
- disas/x86-data/x86_rdrand.csv             |    2 +
- disas/x86-data/x86_rdseed.csv             |    2 +
- disas/x86-data/x86_rtm.csv                |    5 +
- disas/x86-data/x86_serialize.csv          |    2 +
- disas/x86-data/x86_sha.csv                |    8 +
- disas/x86-data/x86_smap.csv               |    3 +
- disas/x86-data/x86_sse.csv                |   58 +
- disas/x86-data/x86_sse2.csv               |  148 ++
- disas/x86-data/x86_sse3.csv               |   11 +
- disas/x86-data/x86_sse4_1.csv             |   48 +
- disas/x86-data/x86_sse4_2.csv             |    7 +
- disas/x86-data/x86_sse4_3.csv             |    2 +
- disas/x86-data/x86_ssse3.csv              |   33 +
- disas/x86-data/x86_uintr.csv              |    6 +
- disas/x86-data/x86_vaes.csv               |   17 +
- disas/x86-data/x86_vmx.csv                |   14 +
- disas/x86-data/x86_waitpkg.csv            |    4 +
- disas/x86-data/x86_wbnoinvd.csv           |    2 +
- disas/x86-data/x86_x87.csv                |  145 ++
- disas/x86-data/x86_xsaveopt.csv           |    3 +
- disas/x86-disas.c                         |   96 +
- disas/x86.h                               | 1860 ++++++++++++++
- docs/x86-metadata.txt                     |  303 +++
- include/disas/dis-asm.h                   |    1 +
- scripts/x86-tablegen.py                   |  695 ++++++
- target/i386/cpu.c                         |    7 +
- 83 files changed, 9511 insertions(+)
- create mode 100644 disas/x86-core.c
- create mode 100644 disas/x86-data/x86_adx.csv
- create mode 100644 disas/x86-data/x86_aes.csv
- create mode 100644 disas/x86-data/x86_aeskle.csv
- create mode 100644 disas/x86-data/x86_aesklewide.csv
- create mode 100644 disas/x86-data/x86_avx.csv
- create mode 100644 disas/x86-data/x86_avx2.csv
- create mode 100644 disas/x86-data/x86_avx5124fmaps.csv
- create mode 100644 disas/x86-data/x86_avx5124vnniw.csv
- create mode 100644 disas/x86-data/x86_avx512b.csv
- create mode 100644 disas/x86-data/x86_avx512bf16.csv
- create mode 100644 disas/x86-data/x86_avx512bitalg.csv
- create mode 100644 disas/x86-data/x86_avx512bw.csv
- create mode 100644 disas/x86-data/x86_avx512cd.csv
- create mode 100644 disas/x86-data/x86_avx512d.csv
- create mode 100644 disas/x86-data/x86_avx512dq.csv
- create mode 100644 disas/x86-data/x86_avx512er.csv
- create mode 100644 disas/x86-data/x86_avx512f.csv
- create mode 100644 disas/x86-data/x86_avx512fp16.csv
- create mode 100644 disas/x86-data/x86_avx512ifma.csv
- create mode 100644 disas/x86-data/x86_avx512pf.csv
- create mode 100644 disas/x86-data/x86_avx512vbmi.csv
- create mode 100644 disas/x86-data/x86_avx512vbmi2.csv
- create mode 100644 disas/x86-data/x86_avx512vl.csv
- create mode 100644 disas/x86-data/x86_avx512vnni.csv
- create mode 100644 disas/x86-data/x86_avx512vp2intersect.csv
- create mode 100644 disas/x86-data/x86_avx512vpopcntdq.csv
- create mode 100644 disas/x86-data/x86_avxneconvert.csv
- create mode 100644 disas/x86-data/x86_avxvnni.csv
- create mode 100644 disas/x86-data/x86_avxvnniint8.csv
- create mode 100644 disas/x86-data/x86_base.csv
- create mode 100644 disas/x86-data/x86_bmi1.csv
- create mode 100644 disas/x86-data/x86_bmi2.csv
- create mode 100644 disas/x86-data/x86_cet.csv
- create mode 100644 disas/x86-data/x86_cldemote.csv
- create mode 100644 disas/x86-data/x86_clwb.csv
- create mode 100644 disas/x86-data/x86_enqcmd.csv
- create mode 100644 disas/x86-data/x86_f16c.csv
- create mode 100644 disas/x86-data/x86_fma.csv
- create mode 100644 disas/x86-data/x86_fsgsbase.csv
- create mode 100644 disas/x86-data/x86_gfni.csv
- create mode 100644 disas/x86-data/x86_hreset.csv
- create mode 100644 disas/x86-data/x86_invpcid.csv
- create mode 100644 disas/x86-data/x86_lzcnt.csv
- create mode 100644 disas/x86-data/x86_mmx.csv
- create mode 100644 disas/x86-data/x86_movdir64b.csv
- create mode 100644 disas/x86-data/x86_movdiri.csv
- create mode 100644 disas/x86-data/x86_mpx.csv
- create mode 100644 disas/x86-data/x86_msrlist.csv
- create mode 100644 disas/x86-data/x86_ospke.csv
- create mode 100644 disas/x86-data/x86_pclmulqdq.csv
- create mode 100644 disas/x86-data/x86_pconfig.csv
- create mode 100644 disas/x86-data/x86_prefetchw.csv
- create mode 100644 disas/x86-data/x86_raoint.csv
- create mode 100644 disas/x86-data/x86_rdpid.csv
- create mode 100644 disas/x86-data/x86_rdrand.csv
- create mode 100644 disas/x86-data/x86_rdseed.csv
- create mode 100644 disas/x86-data/x86_rtm.csv
- create mode 100644 disas/x86-data/x86_serialize.csv
- create mode 100644 disas/x86-data/x86_sha.csv
- create mode 100644 disas/x86-data/x86_smap.csv
- create mode 100644 disas/x86-data/x86_sse.csv
- create mode 100644 disas/x86-data/x86_sse2.csv
- create mode 100644 disas/x86-data/x86_sse3.csv
- create mode 100644 disas/x86-data/x86_sse4_1.csv
- create mode 100644 disas/x86-data/x86_sse4_2.csv
- create mode 100644 disas/x86-data/x86_sse4_3.csv
- create mode 100644 disas/x86-data/x86_ssse3.csv
- create mode 100644 disas/x86-data/x86_uintr.csv
- create mode 100644 disas/x86-data/x86_vaes.csv
- create mode 100644 disas/x86-data/x86_vmx.csv
- create mode 100644 disas/x86-data/x86_waitpkg.csv
- create mode 100644 disas/x86-data/x86_wbnoinvd.csv
- create mode 100644 disas/x86-data/x86_x87.csv
- create mode 100644 disas/x86-data/x86_xsaveopt.csv
- create mode 100644 disas/x86-disas.c
- create mode 100644 disas/x86.h
- create mode 100644 docs/x86-metadata.txt
+Signed-off-by: Michael Clark <michael@anarch128.org>
+---
+ scripts/x86-tablegen.py | 695 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 695 insertions(+)
  create mode 100755 scripts/x86-tablegen.py
 
+diff --git a/scripts/x86-tablegen.py b/scripts/x86-tablegen.py
+new file mode 100755
+index 000000000000..8e1ecac0c410
+--- /dev/null
++++ b/scripts/x86-tablegen.py
+@@ -0,0 +1,695 @@
++#!/usr/bin/env python3
++#
++# Copyright (c) 2024-2025 Michael Clark
++#
++# SPDX-License-Identifier: MIT
++#
++# Permission is hereby granted, free of charge, to any person obtaining a
++# copy of this software and associated documentation files (the "Software"),
++# to deal in the Software without restriction, including without limitation
++# the rights to use, copy, modify, merge, publish, distribute, sublicense,
++# and/or sell copies of the Software, and to permit persons to whom the
++# Software is furnished to do so, subject to the following conditions:
++#
++# The above copyright notice and this permission notice shall be included
++# in all copies or substantial portions of the Software.
++#
++# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
++# OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
++# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
++# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++# OTHER DEALINGS IN THE SOFTWARE.
++
++import re
++import sys
++import csv
++import glob
++import string
++import argparse
++
++gpr_bh = ["ah", "ch", "dh", "bh"]
++gpr_b = ["al", "cl", "dl", "bl", "spl", "bpl", "sil", "dil"]
++gpr_w = ["ax", "cx", "dx", "bx", "sp", "bp", "si", "di"]
++gpr_d = ["eax", "ecx", "edx", "ebx", "esp", "ebp", "esi", "edi"]
++gpr_q = ["rax", "rcx", "rdx", "rbx", "rsp", "rbp", "rsi", "rdi"]
++seg_r = ["es", "cs", "ss", "ds", "fs", "gs", "seg6", "seg7"]
++sys_r = ["rip", "rflags","fpcsr", "mxcsr"]
++sys_n = ["none"]
++
++cc_all = [ 'EQ', 'NEQ', 'GT', 'NLE', 'GE', 'NLT', 'LT', 'NGE', 'LE', 'NGT',
++                        'A',  'NBE', 'AE', 'NB',  'B',  'NAE', 'BE', 'NA' ]
++cc_signed = [ 'EQ', 'GE', 'GT', 'LE', 'LT', 'NEQ', 'NGT', 'NLE', 'NLT' ]
++cc_unsigned = [ 'EQ', 'AE', 'A',  'BE', 'B',  'NEQ', 'NA',  'NBE', 'NB' ]
++
++def gen_range(fmt,f,s,e):
++    t = []
++    for i in range(s,e):
++        t += [[i, fmt % i, f]]
++    return t
++
++def gen_list(l,f,start):
++    t = []
++    for i, s in enumerate(l):
++        t += [[i + start, s, f]]
++    return t
++
++def gen_sep():
++    return [[0, "", ""]]
++
++def reg_table():
++    t = []
++    t += gen_list(gpr_bh, "reg_bl", 4)
++    t += gen_sep()
++    t += gen_list(gpr_b, "reg_b", 0)
++    t += gen_range("r%db", "reg_b", 8, 32)
++    t += gen_sep()
++    t += gen_list(gpr_w, "reg_w", 0)
++    t += gen_range("r%dw", "reg_w", 8, 32)
++    t += gen_sep()
++    t += gen_list(gpr_d, "reg_d", 0)
++    t += gen_range("r%dd", "reg_d", 8, 32)
++    t += gen_sep()
++    t += gen_list(gpr_q, "reg_q", 0)
++    t += gen_range("r%d", "reg_q", 8, 32)
++    t += gen_sep()
++    t += gen_range("mm%d", "reg_mmx", 0, 8)
++    t += gen_sep()
++    t += gen_range("xmm%d", "reg_xmm", 0, 32)
++    t += gen_sep()
++    t += gen_range("ymm%d", "reg_ymm", 0, 32)
++    t += gen_sep()
++    t += gen_range("zmm%d", "reg_zmm", 0, 32)
++    t += gen_sep()
++    t += gen_range("k%d", "reg_kmask", 0, 8)
++    t += gen_sep()
++    t += gen_range("st(%d)", "reg_fpu", 0, 8)
++    t += gen_sep()
++    t += gen_range("bnd%d", "reg_bnd", 0, 8)
++    t += gen_sep()
++    t += gen_range("dr%d", "reg_dreg", 0, 16)
++    t += gen_sep()
++    t += gen_range("cr%d", "reg_creg", 0, 16)
++    t += gen_sep()
++    t += gen_list(seg_r, "reg_sreg", 0)
++    t += gen_sep()
++    t += gen_list(sys_r, "reg_sys", 0)
++    t += gen_sep()
++    t += gen_list(sys_n, "reg_sys", 31)
++    return t
++
++operand_map = {
++    '1'                                                     : 'one/r',
++    'RAX (r)'                                               : 'rax/r',
++    'RAX (r, w)'                                            : 'rax/rw',
++    'RAX (w)'                                               : 'rax/w',
++    'RCX (r)'                                               : 'rcx/r',
++    'RCX (r, w)'                                            : 'rcx/rw',
++    'RCX (w)'                                               : 'rcx/w',
++    'RDX (r)'                                               : 'rdx/r',
++    'RDX (r, w)'                                            : 'rdx/rw',
++    'RDX (w)'                                               : 'rdx/w',
++    'RBX (r)'                                               : 'rbx/r',
++    'RBX (r, w)'                                            : 'rbx/rw',
++    'RBX (w)'                                               : 'rbx/w',
++    'RSI (r)'                                               : 'rsi/r',
++    'RSI (r, w)'                                            : 'rsi/rw',
++    'RSI (w)'                                               : 'rsi/w',
++    'RDI (r)'                                               : 'rdi/r',
++    'RDI (r, w)'                                            : 'rdi/rw',
++    'RDI (w)'                                               : 'rdi/w',
++    'ST0 (r)'                                               : 'st0/r',
++    'ST0 (r, w)'                                            : 'st0/rw',
++    'ST0 (w)'                                               : 'st0/w',
++    'STX (r)'                                               : 'stx/r',
++    'STX (r, w)'                                            : 'stx/rw',
++    'STX (w)'                                               : 'stx/w',
++    'SEG (r)'                                               : 'seg/r',
++    'SEG (r, w)'                                            : 'seg/rw',
++    'SEG (w)'                                               : 'seg/w',
++    'RSP (r, w, i)'                                         : 'rsp/rwi',
++    'RBP (r, w, i)'                                         : 'rbp/rwi',
++    'MXCSR (r, i)'                                          : 'mxcsr/ri',
++    'MXCSR (w, i)'                                          : 'mxcsr/wi',
++    'RFLAGS (r, i)'                                         : 'rflags/ri',
++    'RFLAGS (w, i)'                                         : 'rflags/wi',
++    'ModRM:reg (r)'                                         : 'reg/r',
++    'ModRM:reg (r, w)'                                      : 'reg/rw',
++    'ModRM:reg (w)'                                         : 'reg/w',
++    'ModRM:r/m (r)'                                         : 'mrm/r',
++    'ModRM:r/m (r, w)'                                      : 'mrm/rw',
++    'ModRM:r/m (w)'                                         : 'mrm/w',
++    'ModRM:r/m (r, ModRM:[7:6] must be 11b)'                : 'mrm/r',
++    'ModRM:r/m (r, ModRM:[7:6] must not be 11b)'            : 'mrm/r',
++    'ModRM:r/m (w, ModRM:[7:6] must not be 11b)'            : 'mrm/w',
++    'ModRM:r/m (r, w, ModRM:[7:6] must not be 11b)'         : 'mrm/rw',
++    'BaseReg (r): VSIB:base, VectorReg (r): VSIB:index'     : 'sib/r',
++    'SIB.base (r): Address of pointer SIB.index (r)'        : 'sib/r',
++    'EVEX.vvvv (r)'                                         : 'vec/r',
++    'EVEX.vvvv (w)'                                         : 'vec/w',
++    'VEX.vvvv (r)'                                          : 'vec/r',
++    'VEX.vvvv (r, w)'                                       : 'vec/rw',
++    'VEX.vvvv (w)'                                          : 'vec/w',
++    'ib'                                                    : 'imm',
++    'iw'                                                    : 'imm',
++    'iwd'                                                   : 'imm',
++    'i16'                                                   : 'imm',
++    'i32'                                                   : 'imm',
++    'i64'                                                   : 'imm',
++    'imm'                                                   : 'imm',
++    'ime'                                                   : 'ime',
++    'ib[3:0]'                                               : 'imm',
++    'ib[7:4]'                                               : 'is4/r',
++    'Implicit XMM0 (r)'                                     : 'xmm0/r',
++    'Implicit XMM0-7 (r, w)'                                : 'xmm0_7/rw',
++    'opcode +r (r)'                                         : 'opr/r',
++    'opcode +r (r, w)'                                      : 'opr/rw',
++    'opcode +r (w)'                                         : 'opr/w',
++    'NA'                                                    : None,
++    ''                                                      : None
++}
++
++opcode_map = {
++    '<xmm0>'  : 'reg_xmm0',
++    '<xmm0-7>': 'reg_xmm0_7',
++    '1'       : '1',
++    'm'       : 'mem',
++    'al'      : 'reg_al',
++    'cl'      : 'reg_cl',
++    'ah'      : 'reg_ah',
++    'aw'      : 'reg_aw',
++    'cw'      : 'reg_cw',
++    'dw'      : 'reg_dw',
++    'bw'      : 'reg_bw',
++    'ax'      : 'reg_ax',
++    'cx'      : 'reg_cx',
++    'dx'      : 'reg_dx',
++    'bx'      : 'reg_bx',
++    'eax'     : 'reg_eax',
++    'ecx'     : 'reg_ecx',
++    'edx'     : 'reg_edx',
++    'ebx'     : 'reg_ebx',
++    'rax'     : 'reg_rax',
++    'rcx'     : 'reg_rcx',
++    'rdx'     : 'reg_rdx',
++    'rbx'     : 'reg_rbx',
++    'si'      : 'reg_si',
++    'di'      : 'reg_di',
++    'pa'      : 'reg_pa',
++    'pc'      : 'reg_pc',
++    'pd'      : 'reg_pd',
++    'pb'      : 'reg_pb',
++    'psi'     : 'reg_psi',
++    'pdi'     : 'reg_pdi',
++    'cs'      : 'seg_cs',
++    'ds'      : 'seg_ds',
++    'ss'      : 'seg_ss',
++    'es'      : 'seg_es',
++    'fs'      : 'seg_fs',
++    'gs'      : 'seg_gs',
++    'sreg'    : 'seg',
++    'dr0-dr7' : 'dreg',
++    'cr0-cr15': 'creg',
++    'cr8'     : 'creg8',
++    'st(0)'   : 'reg_st0',
++    'st(1)'   : 'reg_st1',
++    'st(i)'   : 'st'
++}
++
++def x86_mode(row):
++    l = list()
++    if row['Valid 64-bit'] == 'Valid':
++        l.append('64')
++    if row['Valid 32-bit'] == 'Valid':
++        l.append('32')
++    if row['Valid 16-bit'] == 'Valid':
++        l.append('16')
++    return "/".join(l)
++
++def x86_operand(opcode,row):
++    l = list()
++    opcode = opcode.split(' ')[0]
++    operand1 = operand_map[row['Operand 1']]
++    operand2 = operand_map[row['Operand 2']]
++    operand3 = operand_map[row['Operand 3']]
++    operand4 = operand_map[row['Operand 4']]
++    if operand1:
++        l += [operand1]
++    if operand2:
++        l += [operand2]
++    if operand3:
++        l += [operand3]
++    if operand4:
++        l += [operand4]
++    return ",".join(l)
++
++def cleanup_oprs(args):
++    args = list(map(lambda x : x.lstrip().rstrip(), args.split(",")))
++    args = list(map(lambda x : x.replace('&',':'), args))
++    args = list(map(lambda x : x.replace('{k1}','{k}'), args))
++    args = list(map(lambda x : x.lower(), args))
++    args = list(map(lambda x : opcode_map[x] if x in opcode_map else x, args))
++    for reg in ('r32', 'r64'):
++        for suffix in ('a', 'b'):
++            args = list(map(lambda x : x.replace(reg + suffix, reg), args))
++    args = list(map(lambda x : 'rw' if x == 'r' else x, args))
++    args = list(map(lambda x : 'rw/mw' if x == 'r/m' else x, args))
++    for reg in ('k', 'bnd', 'mm', 'xmm', 'ymm', 'zmm'):
++        for i in range(0,5):
++            args = list(map(lambda x : x.replace(reg + str(i), reg) \
++                if x.find(reg) == 0 else x, args))
++    args = list(map(lambda x : x.replace(' ', ''), args))
++    return args
++
++def split_opcode(opcode):
++    space_idx = opcode.find(' ')
++    if space_idx == -1:
++        return (opcode,list())
++    else:
++        return (opcode[:space_idx], cleanup_oprs(opcode[space_idx:]))
++
++def cleanup_opcode(opcode):
++    op, args = split_opcode(opcode)
++    if len(args) > 0:
++        return "%s %s " % (op, ",".join(args))
++    else:
++        return op
++
++def cleanup_encoding(enc):
++    enc = enc.lower()
++    enc = enc.replace('/is4', 'ib')
++    enc = enc.replace('0f 38', '0f38')
++    enc = enc.replace('0f 3a', '0f3a')
++    enc = enc.replace('  ', ' ')
++    return enc
++
++def translate_modes(modes):
++    modelist = []
++    if modes == '':
++        return '0'
++    for m in modes.split('/'):
++        modelist += ['x86_modes_%s' % m]
++    return "|".join(modelist)
++
++# add 9b, del rex rex.w
++def translate_encoding(enc):
++    prefixes = [ 'hex', 'lex', 'vex', 'evex' ]
++    r_suffixes = [ 'rep', 'lock', 'norexb' ]
++    s_suffixes = [ 'o16', 'o32', 'o64', 'a16', 'a32', 'a64' ]
++    pbytes = [ '66', '9b', 'f2', 'f3' ]
++    maps = { '0f', '0f38', '0f3a', 'map4', 'map5', 'map6' }
++    widths = { 'w0', 'w1', 'wig', 'wb', 'wn', 'ws', 'wx', 'ww' }
++    lengths = { 'lig', 'lz', 'l0', 'l1', '128', '256', '512' }
++    flags = { 'nds', 'ndd', 'dds' }
++    imm = { 'ib', 'iw', 'iwd', 'i16', 'i32', 'i64' }
++    mods = { '/r', '/0', '/1', '/2', '/3', '/4', '/5', '/6', '/7' }
++    pl = []
++    opc = ['0x00','0x00']
++    opm = ['0x00','0x00']
++    oplen = 0
++    has_imm, has_pfx, has_pbyte, has_map = False, False, False, False
++    comps = enc.split(" ")
++    for el in comps:
++        is_hex = all(c in string.hexdigits for c in el[0:2])
++        p = None
++        for sel in prefixes:
++            if el.find(sel) == 0 and ( p == None or len(sel) > len(p) ):
++                p = sel
++        if p:
++            pl += ['x86_enc_t_%s' % p.replace('.', '_')]
++            el = el[len(p):]
++            vp, vm, vw, vl, vf = None, None, None, None, None
++            for sel in el.split('.'):
++                if sel == '':
++                    pass
++                elif sel in pbytes:
++                    vp = 'x86_enc_p_%s' % sel
++                elif sel in maps:
++                    vm = 'x86_enc_m_%s' % sel
++                elif sel in widths:
++                    vw = 'x86_enc_w_%s' % sel
++                elif sel in lengths:
++                    vl = 'x86_enc_l_%s' % sel
++                elif sel in flags:
++                    vf = 'x86_enc_f_%s' % sel
++                else:
++                    raise Exception("unknown element '%s' for encoding"
++                        " '%s" % (sel, enc))
++            if vp:
++                pl += [vp]
++            if vm:
++                pl += [vm]
++            if vw:
++                pl += [vw]
++            if vl:
++                pl += [vl]
++            if vf:
++                pl += [vf]
++            if p == 'vex' or p == 'evex' or p == 'lex':
++                has_pfx = True
++        elif el in maps and len(comps) > 1 and not (has_map or has_pfx):
++            pl += ['x86_enc_m_%s' % el]
++            has_map = True
++        elif el in r_suffixes:
++            pl += ['x86_enc_r_%s' % el]
++        elif el in s_suffixes:
++            pl += ['x86_enc_s_%s' % el]
++        elif el in imm:
++            if has_imm:
++                # additional immediate used by CALLF/JMPF/ENTER
++                if el in { 'ib', 'i16' }:
++                    pl += ['x86_enc_j_%s' % el]
++                else:
++                    raise Exception("illegal immediate '%s' for encoding"
++                        " '%s" % (el, enc))
++            else:
++                pl += ['x86_enc_i_%s' % el]
++                has_imm = True
++        elif el in mods:
++            if oplen == 2:
++                raise Exception("opcode '%s' limit exceeded for encoding"
++                    " '%s" % (el, enc))
++            pl += ['x86_enc_f_modrm_r' if el == '/r' else 'x86_enc_f_modrm_n']
++            if el != '/r':
++                opc[oplen] = '0x{:02x}'.format(int(el[1]) << 3)
++                opm[oplen] = '0x38'
++            oplen += 1
++        elif len(el) == 2 and is_hex:
++            if oplen == 2:
++                raise Exception("opcode '%s' limit exceeded for encoding"
++                    " '%s" % (el, enc))
++            if oplen == 1:
++                pl += ['x86_enc_f_opcode']
++            opc[oplen] = '0x%s' % el[0:2]
++            opm[oplen] = '0xff'
++            oplen += 1
++        elif len(el) == 4 and is_hex and el[2:4] == '+r':
++            if oplen == 2:
++                raise Exception("opcode '%s' limit exceeded for encoding "
++                    "'%s" % (el, enc))
++            pl += ['x86_enc_%s_opcode_r' % ('o' if oplen == 0 else 'f')]
++            opc[oplen] = '0x%s' % el[0:2]
++            opm[oplen] = '0xf8'
++            oplen += 1
++        else:
++            raise Exception("unknown element '%s' for encoding "
++                "'%s" % (el, enc))
++    return "|".join(pl), opc, opm
++
++def translate_operands(operands):
++    oprlist = []
++    typpat = re.compile('([if])(\\d+)x(\\d+)')
++    for i,arg0 in enumerate(operands):
++        flags = arg0.split('{')
++        argcomps = []
++        for j,arg1 in enumerate(flags):
++            cp = arg1.find('}')
++            if cp == -1:
++                arg1 = arg1.replace(':','_')
++                argp = []
++                for arg2 in arg1.split('/'):
++                    m = typpat.match(arg2)
++                    if m:
++                        argcomps += ['x86_opr_' + arg2]
++                    else:
++                        argp += [arg2]
++                argcomps += ['x86_opr_' + '_'.join(argp)]
++            else:
++                arg1 = arg1.replace('}','')
++                argcomps += ['x86_opr_flag_' + arg1]
++        oprlist += ["|".join(argcomps)]
++    return oprlist
++
++def translate_order(order):
++    ol = []
++    if order:
++        for o in order.split(','):
++            o = o.replace(':','_')
++            ol.append("|".join(map(lambda x: 'x86_ord_' + x, o.split('/'))))
++    return ol
++
++def print_insn(x86_insn):
++    for row in x86_insn:
++        opcode, enc, modes, ext, order, tt, desc = row
++        opcode = opcode.replace('reg_','')
++        print("| %-53s | %-31s | %-23s | %-8s |" % \
++            (opcode, enc, order, modes))
++
++def opcode_list(x86_insn):
++    ops = set()
++    for row in x86_insn:
++        opcode, enc, modes, ext, order, tt, desc = row
++        op, opr = split_opcode(opcode)
++        ops.add(op)
++    return ['NIL'] + sorted(ops)
++
++def operand_list(x86_insn):
++    oprset = set()
++    for idx, row in enumerate(x86_insn):
++        opcode, enc, modes, ext, order, tt, desc = row
++        op, opr = split_opcode(opcode)
++        oprset.add(tuple(translate_operands(opr)))
++    return sorted(oprset)
++
++def order_list(x86_insn):
++    ordset = set()
++    for idx, row in enumerate(x86_insn):
++        opcode, enc, modes, ext, order, tt, desc = row
++        ordset.add(tuple(translate_order(order)))
++    return sorted(ordset)
++
++opcode_enums_template = """/* generated source */
++enum x86_reg\n{%s};
++enum x86_op\n{%s};"""
++
++opcode_table_template = """/* generated source */
++const size_t x86_opc_table_size = %d;
++const size_t x86_opr_table_size = %d;
++const size_t x86_ord_table_size = %d;
++const size_t x86_op_names_size = %d;
++const x86_opc_data x86_opc_table[] =\n{
++  { x86_op_NIL, 0, 0, 0, 0, { { 0, 0 } }, { { 0, 0 } } },%s};
++const x86_opr_data x86_opr_table[] =\n{%s};
++const x86_ord_data x86_ord_table[] =\n{%s};
++const char* x86_op_names[] =\n{%s};
++const char* x86_reg_names[512] =\n{%s};"""
++
++def print_opcode_enums(x86_reg, x86_insn):
++    regstr, opstr = '\n', '\n'
++    for i,s,f in x86_reg:
++        n = s.replace('(','').replace(')','')
++        regstr += '\n' if len(s) == 0 else \
++            '  %-10s = %s,\n' % ('x86_%s' % n, 'x86_%s | %d' % (f, i))
++    for op in opcode_list(x86_insn):
++        opstr += '    x86_op_%s,\n' % op
++    print(opcode_enums_template % (regstr, opstr))
++
++def print_opcode_tables(x86_reg, x86_insn):
++    oplist = opcode_list(x86_insn)
++    oprlist = operand_list(x86_insn)
++    ordlist = order_list(x86_insn)
++    oprmap = {v: i for i, v in enumerate(oprlist)}
++    ordmap = {v: i for i, v in enumerate(ordlist)}
++    opcstr, oprstr, ordstr, opsstr, regstr = '\n', '\n', '\n', '\n', '\n'
++    for idx, row in enumerate(x86_insn):
++        opcode, enc, modes, ext, order, tt, desc = row
++        op, opr = split_opcode(opcode)
++        oprl = translate_operands(opr)
++        ordl = translate_order(order)
++        oprc = oprmap[tuple(oprl)]
++        ordc = ordmap[tuple(ordl)]
++        modes = translate_modes(modes)
++        enc, opc, opm = translate_encoding(enc)
++        opcstr += '  { %s, %s, %d, %d, %s, { %s }, { %s } },\n' % \
++            ('x86_op_%s' % op, modes, oprc, ordc, enc,
++                '{ %s, %s }' % (opc[0], opc[1]),
++                '{ %s, %s }' % (opm[0], opm[1]))
++    for x in oprlist:
++        oprstr += '  { { %s } },\n' % (", ".join(['0'] if not x else x))
++    for x in ordlist:
++        ordstr += '  { { %s } },\n' % (", ".join(['0'] if not x else x))
++    for op in oplist:
++        opsstr += '    "' + op.lower() + '",\n'
++    for i,s,f in x86_reg:
++        n = s.replace('(','').replace(')','')
++        regstr += '\n' if len(s) == 0 else \
++                  '    %-12s = \"%s\",\n' % ('[x86_%s]' % n, s)
++    print(opcode_table_template % (
++        len(x86_insn) + 1, len(oprlist), len(ordlist), len(oplist),
++        opcstr, oprstr, ordstr, opsstr, regstr)
++    )
++
++def read_data(files):
++    data = []
++    if not isinstance(files, list):
++        files = glob.glob(files)
++    for csvpath in files:
++        file = open(csvpath, encoding='utf-8-sig', newline='')
++        reader = csv.DictReader(file, delimiter=',', quotechar='"')
++        for row in reader:
++            data += [row]
++    data.sort(key=lambda x: (
++            x['Instruction'].split(' ')[0],
++            x['Opcode'].split(' ')[1],
++            x['Instruction']))
++    insn = []
++    for row in data:
++        opcode = cleanup_opcode(row['Instruction'])
++        enc = cleanup_encoding(row['Opcode'])
++        modes = x86_mode(row)
++        ext = row['Feature Flags']
++        order = x86_operand(opcode,row)
++        tt = row['Tuple Type']
++        desc = row['Description']
++        insn += [[opcode, enc, modes, ext, order, tt, desc]]
++    return insn
++
++def parse_table(rows):
++    rows = [row.strip() for row in rows]
++    data = []
++    obj = []
++    h1 = None
++    begun = False
++    for row in rows:
++        if row.startswith("#"):
++            space = row.index(' ')
++            hashes = row[:space]
++            heading = row[space+1:]
++            depth = hashes.count('#')
++            if not h1:
++                h1 = heading
++            obj.append(TableSection(heading, depth))
++        elif row.startswith("|"):
++            cells = row.split('|')
++            cells = [cell.strip() for cell in cells if cell.strip()]
++            if cells[0].startswith("-") or cells[0].startswith(":"):
++                begun = True
++                obj.append(TableHeader())
++            elif begun:
++                data.append(cells)
++                obj.append(TableData(cells))
++        else:
++            begun = False
++            obj.append(TableText(row))
++    return { 'title': h1, 'data': data, 'obj': obj }
++
++def read_file(file_path):
++    try:
++        with open(file_path, 'r') as file:
++            lines = file.readlines()
++            lines = [line.strip() for line in lines]
++        return lines
++    except FileNotFoundError:
++        print(f"File not found: {file_path}")
++        return []
++
++def make_map(x86_insn):
++    insn_map = dict()
++    for row in x86_insn:
++        opcode, enc, modes, ext, order, tt, desc = row
++        op, opr = split_opcode(opcode)
++        if op not in insn_map:
++            insn_map[op] = list()
++        insn_map[op].append(row)
++    return insn_map
++
++#
++# description table types
++#
++class TableText():
++    def __init__(self,text):
++        self.text = text
++class TableSection():
++    def __init__(self,heading,depth):
++        self.heading = heading
++        self.depth = depth
++class TableHeader():
++    def __init__(self):
++        return
++class TableData():
++    def __init__(self,cells):
++        self.cells = cells
++
++#
++# print descriptions with instructions
++#
++def table_text_insn(self,x86_desc):
++    return ""
++def table_section_insn(self,x86_desc):
++    return "%s %s\n\n" % ("#" * self.depth, self.heading)
++def table_header_insn(self,x86_desc):
++    return ""
++def table_data_insn(self,x86_desc):
++    insn_map = x86_desc['insn']
++    insn, desc = self.cells
++    text = ""
++    insn_list = []
++    o = insn.find("cc")
++    if insn.startswith("v"):
++        insn_list.append(insn[1:])
++        insn_list.append(insn.upper())
++    elif o >= 0:
++        for cc in cc_all:
++            new_insn = '%s%s%s' % (insn[0:o], cc, insn[o+2:])
++            insn_list.append(new_insn)
++    else:
++        insn_list.append(insn)
++    if len(insn_list) > 0:
++        text += "\n"
++        text += "| %-51s | %-29s | %-23s | %-8s |\n" % \
++            ("opcode", "encoding", "order", "modes")
++        text += "|:%-51s-|:%-29s-|:%-23s-|:%-8s-|\n" % \
++            ("-"*51, "-"*29, "-"*23, "-"*8)
++        for insn_name in insn_list:
++            if insn_name in insn_map:
++                for row in insn_map[insn_name]:
++                    opcode, enc, modes, ext, order, tt, desc = row
++                    opcode = opcode.replace('reg_','')
++                    text += "| %-51s | %-29s | %-23s | %-8s |\n" % \
++                        (opcode, enc, order, modes)
++        text += "|:%-51s-|:%-29s-|:%-23s-|:%-8s-|\n" % \
++            ("-"*51, "-"*29, "-"*23, "-"*8)
++    text += "\n\n"
++    return "%s %s\n%s" % ("[%s]" % insn, "# %s" % desc, text)
++
++table_insn = {
++    TableText: table_text_insn, TableSection: table_section_insn,
++    TableHeader: table_header_insn, TableData: table_data_insn,
++}
++
++def print_fancy_insn(x86_desc):
++    for obj in x86_desc['tab']['obj']:
++        print(table_insn[type(obj)](obj, x86_desc), end="")
++
++parser = argparse.ArgumentParser(description='x86 table generator')
++parser.add_argument('files',
++                    default='data/*.csv', nargs='*',
++                    help='x86 csv metadata')
++parser.add_argument('--print-insn',
++                    default=False, action='store_true',
++                    help='print instructions')
++parser.add_argument('--print-fancy-insn',
++                    default=False, action='store_true',
++                    help='print fancy instructions')
++parser.add_argument('--print-opcode-enums',
++                    default=False, action='store_true',
++                    help='print register enum')
++parser.add_argument('--print-opcode-tables',
++                    default=False, action='store_true',
++                    help='print register strings')
++parser.add_argument('--output-file', type=argparse.FileType('w'),
++                    help="filename to write output to")
++args = parser.parse_args()
++
++x86_reg = reg_table()
++x86_insn = read_data(args.files)
++
++if args.output_file:
++    sys.stdout = args.output_file
++if args.print_insn:
++    print_insn(x86_insn)
++if args.print_opcode_enums:
++    print_opcode_enums(x86_reg, x86_insn)
++if args.print_opcode_tables:
++    print_opcode_tables(x86_reg, x86_insn)
 -- 
 2.43.0
 
