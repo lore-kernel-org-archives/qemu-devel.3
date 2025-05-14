@@ -4,75 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 399F4C3ABD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8FBCC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFC4y-00006R-2e; Wed, 14 May 2025 09:23:24 -0400
+	id 1uFC6r-00052G-38; Wed, 14 May 2025 09:25:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uFC21-0006QK-2X
- for qemu-devel@nongnu.org; Wed, 14 May 2025 09:20:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uFC6h-0004s4-DC
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 09:25:16 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uFC1y-0003ji-Rx
- for qemu-devel@nongnu.org; Wed, 14 May 2025 09:20:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747228817;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pRM1TDvgW+RV5ttYK6nGoQgoJAfUYxhjn2bG25m9g4U=;
- b=Q/nShbn0PnAjdoyfPr76dRilGRkw1E3GjXq2qlKibU0j/1ltwbqerxmTUTRD8NI0n59DiG
- 2UhHUu494JvKLJJtDguHGLPa7/JylRxN83x8B37EPz2q0JceO2uvlaXw3bydktHcsn7HIB
- /o2ITMTDleAov129lz+X6D8lixPiIBo=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-KMJQQO99N--QmPC5UQCM5g-1; Wed,
- 14 May 2025 09:20:15 -0400
-X-MC-Unique: KMJQQO99N--QmPC5UQCM5g-1
-X-Mimecast-MFC-AGG-ID: KMJQQO99N--QmPC5UQCM5g_1747228814
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 052191956095; Wed, 14 May 2025 13:20:14 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.56])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A0D8B1953B80; Wed, 14 May 2025 13:20:13 +0000 (UTC)
-Date: Wed, 14 May 2025 09:20:12 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, sunnyzhyy@qq.com,
- vsementsov@yandex-team.ru, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v4 14/13] mirror: Reduce I/O when destination is
- detect-zeroes:unmap
-Message-ID: <20250514132012.GA265337@fedora>
-References: <20250509204341.3553601-15-eblake@redhat.com>
- <20250513220142.535200-2-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uFC6e-0005Zo-1D
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 09:25:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=BRr8R1+RZBSSWOY8fB0CcmwDTVNO/WKd20ALx8dqPWQ=; b=Wq6cY1fXwn2B8yo4
+ z+SE5wpKi6JNkb3bwdKDCIfjoa+3al5lokg4JO+Xz0P/Ek8yLHoLIDFhhww8yJ3BZO+VNvGtvKkEo
+ GlcR+1GMla3tKyENSiIInIs/rIR3Dsooq7Ou+ZD+3bRMRwLdSADbQ7fuAU/ngZUgsC1RFK4LrsUGZ
+ ahvycRTPzHncdWA64ZtTMrMYnQ9JSaj4zuRbsROnqH8aIDt3ZDa4VCMPz5I/WjA390QWQAIOzHcwr
+ GYdPEWvgTA0qU8mf4Yv0R7o56UVLa0GdcskzZ+j+rFkNqhBPpT4BSYNGCd9V8ZixT7qdOemPY+bjz
+ Xt+JWhE/e0cJ47pEVA==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1uFC6b-003WGn-21;
+ Wed, 14 May 2025 13:25:05 +0000
+Date: Wed, 14 May 2025 13:25:05 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Prasad Pandit <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 2/3] migration/hmp: Dump global in "info
+ migrate_parameters" instead
+Message-ID: <aCSZsXvHy0u_5LaP@gallifrey>
+References: <20250513220923.518025-1-peterx@redhat.com>
+ <20250513220923.518025-3-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="a09RcEafyDB/LYmI"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250513220142.535200-2-eblake@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250513220923.518025-3-peterx@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
+X-Uptime: 13:18:34 up 16 days, 21:32, 1 user, load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,41 +71,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+* Peter Xu (peterx@redhat.com) wrote:
+> "info migrate" is the command people would frequently use to query
+> migration status.  We may not want it to dump global configurations because
+> dumping the same things over and over won't help.
+> 
+> The globals are just more suitable for a parameter dump instead.  Hence
+> move it over.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
---a09RcEafyDB/LYmI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think this is a *little* odd, since 'info migrate_parameters'
+is a list of the things you can set with 'migrate_set_parameters'
+Perhaps it would be better to add it under the 'info migrate -a' option
+you add in the next patch?
 
-On Tue, May 13, 2025 at 05:00:45PM -0500, Eric Blake wrote:
-> If we are going to punch holes in the mirror destination even for the
-> portions where the source image is unallocated, it is nicer to treat
-> the entire image as dirty and punch as we go, rather than pre-zeroing
-> the entire image just to re-do I/O to the allocated portions of the
-> image.
->=20
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+However, one other thing, the globals stuff prints a
+'globals:'  at the start,  but doesn't print anything at the end,
+so if you make this change, you end up with out being able to tell
+where the globals end and the parameters start, so maybe a
+'parameters:' after it?
+
+Dave
+
 > ---
->  block/mirror.c | 13 +++++++++----
->  1 file changed, 9 insertions(+), 4 deletions(-)
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---a09RcEafyDB/LYmI
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgkmIwACgkQnKSrs4Gr
-c8ghOQgAtyKRBx8fxDLcwKD9v782jeLlQJdhjhUsJi2c/zkypV0KdnBIUAU//H/h
-fENksWN/wHgAy5Di+MhH2u65RdjeWGapaFNAzn3WgtSP5xaGvg79QfYl7s3MNIZU
-vPg6Q7HUvqn48PeAF0rnw70NrBGnMB6jTNNRsUv0ct8B1YnWE4nZ0exrV1RqzWkB
-85WnyNvv/PwWZdidFGke6KNYqXK9OBz5qaO1gTNjgEzxwAeLHOotjxk3+bOfiEKH
-kDr8pe9KTJ2nzf8tuasnO4TFrf75RzVUNJFWxvnmJ23dac31OmQVJ8nFFGZi2Gf/
-UBwlTNC22lNdRh+wSksCQUb9nLmy+Q==
-=w2iG
------END PGP SIGNATURE-----
-
---a09RcEafyDB/LYmI--
-
+>  migration/migration-hmp-cmds.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 49c26daed3..0034dbe47f 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -58,8 +58,6 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+>  
+>      info = qmp_query_migrate(NULL);
+>  
+> -    migration_global_dump(mon);
+> -
+>      if (info->blocked_reasons) {
+>          strList *reasons = info->blocked_reasons;
+>          monitor_printf(mon, "Outgoing migration blocked:\n");
+> @@ -235,6 +233,8 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>  {
+>      MigrationParameters *params;
+>  
+> +    migration_global_dump(mon);
+> +
+>      params = qmp_query_migrate_parameters(NULL);
+>  
+>      if (params) {
+> -- 
+> 2.49.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
