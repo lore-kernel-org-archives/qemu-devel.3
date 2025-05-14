@@ -4,67 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EDEDC3ABDA
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 07:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B554EC3ABD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 08:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF6p2-0004G4-Eb; Wed, 14 May 2025 03:46:36 -0400
+	id 1uF749-0002ZY-JN; Wed, 14 May 2025 04:02:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1uF6oz-0004Fg-RD
- for qemu-devel@nongnu.org; Wed, 14 May 2025 03:46:33 -0400
-Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1uF6ow-0000Id-Pm
- for qemu-devel@nongnu.org; Wed, 14 May 2025 03:46:33 -0400
-Received: from [192.168.1.4] (dynamic-cpe-pool.orcon.net.nz [121.99.116.25]
- (may be forged)) (authenticated bits=0)
- by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 54E7kJgV1188897
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
- Wed, 14 May 2025 07:46:22 GMT
-Authentication-Results: anarch128.org; auth=pass;
- dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=UwW50cuy header.a=rsa-sha256 header.s=100003;
- x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org); 
- x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1747208785;
- bh=ouh2Gt06bzkO5uthzTqI7krTWBr8mkpoM9Mb0UjJ17M=;
- h=Date:Subject:To:References:From:In-Reply-To:From;
- b=UwW50cuyIwlOn13q67HnRliyPoey95Hniff+DNgUhGqJguNeqBq7eaOwVVMhrmgXZ
- YQxzqTev5uUS2LSt7Ax/fnjKzh6YEeTBYjV16DQO1eJWYu31ba0+RLeiQZRND2JM27
- Ir6MVyAoLgzhdQPTLtMjNlFIuzxBKcqIj07vE+d/47BkIF3VsbR1FNha6fq3vqMPkf
- Uv7sarpZbz6sclg8gp9CYQ2icrIa93U5TEwiQRJLfxRbM0zWOblfmfCqEIuAJGlKxT
- EbL37Q+d5J87s8aahoeIyXf201ucHJ1StjdaW8ySOwkprNeeXFjyBBq/83Gkn6H4xL
- /a0Ze7qE/xo1g==
-Message-ID: <4d13e769-b2f7-4afe-be77-c9525141548e@anarch128.org>
-Date: Wed, 14 May 2025 19:46:14 +1200
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uF748-0002ZA-FR
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:12 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uF746-0002Bp-Ae
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 04:02:12 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxLGv+TSRow1bmAA--.47205S3;
+ Wed, 14 May 2025 16:02:06 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMBxn8XkTSRofwHRAA--.9319S9;
+ Wed, 14 May 2025 16:02:05 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: stefanha@gmail.com,
+	maobibo@loongson.cn
+Subject: [PULL 07/17] hw/intc/loongarch_pch: Use generic read callback for
+ iomem32_low region
+Date: Wed, 14 May 2025 15:39:17 +0800
+Message-Id: <20250514073927.2424543-8-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250514073927.2424543-1-gaosong@loongson.cn>
+References: <20250514073927.2424543-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] x86-disas: port x86-mini disassembler to QEMU
-To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20250514073927.2735727-1-michael@anarch128.org>
-Content-Language: en-US
-From: Michael Clark <michael@anarch128.org>
-In-Reply-To: <20250514073927.2735727-1-michael@anarch128.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
- envelope-from=michael@anarch128.org; helo=anarch128.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxn8XkTSRofwHRAA--.9319S9
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,290 +66,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Folks,
+From: Bibo Mao <maobibo@loongson.cn>
 
-this is tangentially related because it is the reason for
-developing the x86 assembler and disassembler library.
+For memory region iomem32_low, generic read callback is used.
 
-introducing a new RISC instruction set with a variable length
-instruction packet using a super regular extension scheme with
-compression techniques to separate the instruction stream into
-two streams, one for instructions and and one for constants:
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20250507023148.1877287-8-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/intc/loongarch_pch_pic.c | 67 ++++++++++++++++++++++++++-----------
+ 1 file changed, 47 insertions(+), 20 deletions(-)
 
-- latest: https://metaparadigm.com/~mclark/glyph.pdf
-- current: https://metaparadigm.com/~mclark/glyph-20250512.pdf
-- emulator: https://github.com/michaeljclark/glyph
-
-Michael.
-
-On 5/14/25 19:39, Michael Clark wrote:
-> a port of an embeddable x86-mini disassembler to QEMU.
-> 
-> - https://github.com/michaeljclark/qemu/tree/x86-mini-v3
-> 
-> # x86-mini disassembler
-> 
-> the x86-mini library is a lightweight x86 encoder, decoder, and
-> disassembler that uses extensions to the Intel instruction set
-> metadata format to encode modern VEX/EVEX instructions and legacy
-> instructions using a parameterized LEX (legacy extension) format.
-> 
-> - metadata-driven disassembler with Intel format output.
-> - written in C11 for compatibility with projects written in C.
-> - low-level instruction encoder and decoder uses <= 32-bytes.
-> - python tablegen program to generate C tables from CSV metadata.
-> - metadata table tool to inspect operand encode and decode tables.
-> - carefully checked machine-readable instruction set metadata.
-> - support for REX/VEX/EVEX and preliminary support for REX2.
-> 
-> the x86-mini x86 encoder and decoder library has been written from
-> scratch to be modern and as simple as possible while also covering
-> recent additions to the Intel and AMD 64-bit instruction sets such
-> as the EVEX encodings for recent AVX-512 extensions and soon REX2/
-> EVEX encodings for Intel APX, as it is written with that in mind.
-> 
-> ## interest to the QEMU community
-> 
-> - x86-mini is fast. raw decode performance is ~100-200MiB/sec.
-> - x86-mini is small. 5 files, ~5 KLOC or ~13 KLOC including tables.
-> - x86-mini is complete and includes the latest AVX-512 extensions.
-> - x86-mini is easy to extend and uses extended Intel format metadata.
-> - x86-mini is documented with detailed info on the metadata format.
-> - x86-mini has CLI tools for searching x86 instruction set metadata.
-> 
-> it would be nice to have an x86 disassembler building out-of-the-box
-> as I find QEMU's built-in tracing extremely useful and given x86 is
-> a popular target, a small embedded disassembler might be useful.
-> 
-> - https://github.com/michaeljclark/x86/tree/x86-mini
-> 
-> ## techinical notes
-> 
-> - the decoder is table-based and uses a metadata interpreter.
-> - the decode table is ~66KiB with a ~150KiB acceleration trie.
-> - there are currently 3658 opcode entries active on x86-64
->    which expands to 4775 table entries due to parameterization.
-> 
-> after cherry-picking the commits, one can test host and target
-> disassembly support. e.g. for an x86-64 target on an x86-64 host:
-> 
-> $ echo aaa | qemu-x86_64 -d in_asm,out_asm /usr/bin/openssl sha256
-> 
-> ## caveats
-> 
-> - supports 32-bit and 64-bit disassembly, and theoretically 16-bit.
-> - designed to support 16-bit. base index formats are not done yet.
-> - x86-64 is exhaustively fuzz-tested against the LLVM disassembler.
-> - but x86-mini is new and hasn't been battle-tested in production.
-> 
-> ## conclusion
-> 
-> the metadata is based on x86-csv but has had numerous inaccuracies
-> fixed plus conversion of legacy instructions to the new LEX format.
-> in effect the metadata has been fuzz-tested against LLVM for x86-64
-> and ISA coverage is in the order of ~99.9%. the main branch of the
-> linked repo has a procedural fuzzer for metadata-based instruction
-> synthesis that could be useful for generating test cases for QEMU.
-> 
-> ## summary of changes
-> 
-> v3
-> - add SPDX license identifier to source files.
-> - fix some typographical mistakes in header comments.
-> - add control register, debug register, and MSR enumerations.
-> - add x86_flag enumeration values for rflags register.
-> - removed custom snprintf.
-> 
-> v2
-> - improve grouping of encode, decode, and disasm functions.
-> - fix some metadata documentation errors and ommissions.
-> - use g_malloc/g_malloc0/g_free instead of malloc/calloc/free.
-> - use cpu_to_{le16|le32|le64}, {le16|le32|le64}_to_cpu.
-> - move bitfield documentation comments next to definitions.
-> - redefine condition codes enum and remove redundant functions.
-> - reduce snprintf performance cost with optimized version.
-> - remove duplicate unused definition of ctz/clz/popcnt.
-> - remove duplicate host endianness conversion functions.
-> - remove some magic constants and replace with math.
-> - remove some unnecessary casts.
-> 
-> v1
-> - simplification to memory operand formatting logic.
-> - fixed VSIB pointer formatting for consistency with LLVM.
-> - 64-bit disasembly exhaustively fuzz tested against LLVM.
-> - includes x86 metadata and x86-tablegen.py python script.
-> - includes x86 metadata opcode and operand documentation.
-> - addressed non-whitespace related checkpatch.pl warnings.
-> 
-> Michael Clark (4):
->    x86-disas: add x86-mini instruction set metadata
->    x86-disas: add x86-mini metadata documentation
->    x86-disas: add x86-mini metadata tablegen script
->    x86-disas: add x86-mini disassembler implementation
-> 
->   disas/disas-host.c                        |    5 +
->   disas/meson.build                         |   97 +
->   disas/x86-core.c                          | 2716 +++++++++++++++++++++
->   disas/x86-data/x86_adx.csv                |    5 +
->   disas/x86-data/x86_aes.csv                |   13 +
->   disas/x86-data/x86_aeskle.csv             |    3 +
->   disas/x86-data/x86_aesklewide.csv         |    3 +
->   disas/x86-data/x86_avx.csv                |  375 +++
->   disas/x86-data/x86_avx2.csv               |  171 ++
->   disas/x86-data/x86_avx5124fmaps.csv       |    5 +
->   disas/x86-data/x86_avx5124vnniw.csv       |    3 +
->   disas/x86-data/x86_avx512b.csv            |    3 +
->   disas/x86-data/x86_avx512bf16.csv         |   10 +
->   disas/x86-data/x86_avx512bitalg.csv       |   10 +
->   disas/x86-data/x86_avx512bw.csv           |  291 +++
->   disas/x86-data/x86_avx512cd.csv           |   19 +
->   disas/x86-data/x86_avx512d.csv            |    2 +
->   disas/x86-data/x86_avx512dq.csv           |  143 ++
->   disas/x86-data/x86_avx512er.csv           |   11 +
->   disas/x86-data/x86_avx512f.csv            |  901 +++++++
->   disas/x86-data/x86_avx512fp16.csv         |  237 ++
->   disas/x86-data/x86_avx512ifma.csv         |    7 +
->   disas/x86-data/x86_avx512pf.csv           |   17 +
->   disas/x86-data/x86_avx512vbmi.csv         |   13 +
->   disas/x86-data/x86_avx512vbmi2.csv        |   61 +
->   disas/x86-data/x86_avx512vl.csv           |    2 +
->   disas/x86-data/x86_avx512vnni.csv         |   13 +
->   disas/x86-data/x86_avx512vp2intersect.csv |    7 +
->   disas/x86-data/x86_avx512vpopcntdq.csv    |    7 +
->   disas/x86-data/x86_avxneconvert.csv       |   15 +
->   disas/x86-data/x86_avxvnni.csv            |    9 +
->   disas/x86-data/x86_avxvnniint8.csv        |   13 +
->   disas/x86-data/x86_base.csv               |  549 +++++
->   disas/x86-data/x86_bmi1.csv               |   13 +
->   disas/x86-data/x86_bmi2.csv               |   17 +
->   disas/x86-data/x86_cet.csv                |   15 +
->   disas/x86-data/x86_cldemote.csv           |    2 +
->   disas/x86-data/x86_clwb.csv               |    2 +
->   disas/x86-data/x86_enqcmd.csv             |    3 +
->   disas/x86-data/x86_f16c.csv               |    5 +
->   disas/x86-data/x86_fma.csv                |   97 +
->   disas/x86-data/x86_fsgsbase.csv           |    9 +
->   disas/x86-data/x86_gfni.csv               |   19 +
->   disas/x86-data/x86_hreset.csv             |    2 +
->   disas/x86-data/x86_invpcid.csv            |    2 +
->   disas/x86-data/x86_lzcnt.csv              |    3 +
->   disas/x86-data/x86_mmx.csv                |   60 +
->   disas/x86-data/x86_movdir64b.csv          |    2 +
->   disas/x86-data/x86_movdiri.csv            |    3 +
->   disas/x86-data/x86_mpx.csv                |    9 +
->   disas/x86-data/x86_msrlist.csv            |    4 +
->   disas/x86-data/x86_ospke.csv              |    3 +
->   disas/x86-data/x86_pclmulqdq.csv          |    3 +
->   disas/x86-data/x86_pconfig.csv            |    2 +
->   disas/x86-data/x86_prefetchw.csv          |    7 +
->   disas/x86-data/x86_raoint.csv             |    9 +
->   disas/x86-data/x86_rdpid.csv              |    2 +
->   disas/x86-data/x86_rdrand.csv             |    2 +
->   disas/x86-data/x86_rdseed.csv             |    2 +
->   disas/x86-data/x86_rtm.csv                |    5 +
->   disas/x86-data/x86_serialize.csv          |    2 +
->   disas/x86-data/x86_sha.csv                |    8 +
->   disas/x86-data/x86_smap.csv               |    3 +
->   disas/x86-data/x86_sse.csv                |   58 +
->   disas/x86-data/x86_sse2.csv               |  148 ++
->   disas/x86-data/x86_sse3.csv               |   11 +
->   disas/x86-data/x86_sse4_1.csv             |   48 +
->   disas/x86-data/x86_sse4_2.csv             |    7 +
->   disas/x86-data/x86_sse4_3.csv             |    2 +
->   disas/x86-data/x86_ssse3.csv              |   33 +
->   disas/x86-data/x86_uintr.csv              |    6 +
->   disas/x86-data/x86_vaes.csv               |   17 +
->   disas/x86-data/x86_vmx.csv                |   14 +
->   disas/x86-data/x86_waitpkg.csv            |    4 +
->   disas/x86-data/x86_wbnoinvd.csv           |    2 +
->   disas/x86-data/x86_x87.csv                |  145 ++
->   disas/x86-data/x86_xsaveopt.csv           |    3 +
->   disas/x86-disas.c                         |   96 +
->   disas/x86.h                               | 1860 ++++++++++++++
->   docs/x86-metadata.txt                     |  303 +++
->   include/disas/dis-asm.h                   |    1 +
->   scripts/x86-tablegen.py                   |  695 ++++++
->   target/i386/cpu.c                         |    7 +
->   83 files changed, 9511 insertions(+)
->   create mode 100644 disas/x86-core.c
->   create mode 100644 disas/x86-data/x86_adx.csv
->   create mode 100644 disas/x86-data/x86_aes.csv
->   create mode 100644 disas/x86-data/x86_aeskle.csv
->   create mode 100644 disas/x86-data/x86_aesklewide.csv
->   create mode 100644 disas/x86-data/x86_avx.csv
->   create mode 100644 disas/x86-data/x86_avx2.csv
->   create mode 100644 disas/x86-data/x86_avx5124fmaps.csv
->   create mode 100644 disas/x86-data/x86_avx5124vnniw.csv
->   create mode 100644 disas/x86-data/x86_avx512b.csv
->   create mode 100644 disas/x86-data/x86_avx512bf16.csv
->   create mode 100644 disas/x86-data/x86_avx512bitalg.csv
->   create mode 100644 disas/x86-data/x86_avx512bw.csv
->   create mode 100644 disas/x86-data/x86_avx512cd.csv
->   create mode 100644 disas/x86-data/x86_avx512d.csv
->   create mode 100644 disas/x86-data/x86_avx512dq.csv
->   create mode 100644 disas/x86-data/x86_avx512er.csv
->   create mode 100644 disas/x86-data/x86_avx512f.csv
->   create mode 100644 disas/x86-data/x86_avx512fp16.csv
->   create mode 100644 disas/x86-data/x86_avx512ifma.csv
->   create mode 100644 disas/x86-data/x86_avx512pf.csv
->   create mode 100644 disas/x86-data/x86_avx512vbmi.csv
->   create mode 100644 disas/x86-data/x86_avx512vbmi2.csv
->   create mode 100644 disas/x86-data/x86_avx512vl.csv
->   create mode 100644 disas/x86-data/x86_avx512vnni.csv
->   create mode 100644 disas/x86-data/x86_avx512vp2intersect.csv
->   create mode 100644 disas/x86-data/x86_avx512vpopcntdq.csv
->   create mode 100644 disas/x86-data/x86_avxneconvert.csv
->   create mode 100644 disas/x86-data/x86_avxvnni.csv
->   create mode 100644 disas/x86-data/x86_avxvnniint8.csv
->   create mode 100644 disas/x86-data/x86_base.csv
->   create mode 100644 disas/x86-data/x86_bmi1.csv
->   create mode 100644 disas/x86-data/x86_bmi2.csv
->   create mode 100644 disas/x86-data/x86_cet.csv
->   create mode 100644 disas/x86-data/x86_cldemote.csv
->   create mode 100644 disas/x86-data/x86_clwb.csv
->   create mode 100644 disas/x86-data/x86_enqcmd.csv
->   create mode 100644 disas/x86-data/x86_f16c.csv
->   create mode 100644 disas/x86-data/x86_fma.csv
->   create mode 100644 disas/x86-data/x86_fsgsbase.csv
->   create mode 100644 disas/x86-data/x86_gfni.csv
->   create mode 100644 disas/x86-data/x86_hreset.csv
->   create mode 100644 disas/x86-data/x86_invpcid.csv
->   create mode 100644 disas/x86-data/x86_lzcnt.csv
->   create mode 100644 disas/x86-data/x86_mmx.csv
->   create mode 100644 disas/x86-data/x86_movdir64b.csv
->   create mode 100644 disas/x86-data/x86_movdiri.csv
->   create mode 100644 disas/x86-data/x86_mpx.csv
->   create mode 100644 disas/x86-data/x86_msrlist.csv
->   create mode 100644 disas/x86-data/x86_ospke.csv
->   create mode 100644 disas/x86-data/x86_pclmulqdq.csv
->   create mode 100644 disas/x86-data/x86_pconfig.csv
->   create mode 100644 disas/x86-data/x86_prefetchw.csv
->   create mode 100644 disas/x86-data/x86_raoint.csv
->   create mode 100644 disas/x86-data/x86_rdpid.csv
->   create mode 100644 disas/x86-data/x86_rdrand.csv
->   create mode 100644 disas/x86-data/x86_rdseed.csv
->   create mode 100644 disas/x86-data/x86_rtm.csv
->   create mode 100644 disas/x86-data/x86_serialize.csv
->   create mode 100644 disas/x86-data/x86_sha.csv
->   create mode 100644 disas/x86-data/x86_smap.csv
->   create mode 100644 disas/x86-data/x86_sse.csv
->   create mode 100644 disas/x86-data/x86_sse2.csv
->   create mode 100644 disas/x86-data/x86_sse3.csv
->   create mode 100644 disas/x86-data/x86_sse4_1.csv
->   create mode 100644 disas/x86-data/x86_sse4_2.csv
->   create mode 100644 disas/x86-data/x86_sse4_3.csv
->   create mode 100644 disas/x86-data/x86_ssse3.csv
->   create mode 100644 disas/x86-data/x86_uintr.csv
->   create mode 100644 disas/x86-data/x86_vaes.csv
->   create mode 100644 disas/x86-data/x86_vmx.csv
->   create mode 100644 disas/x86-data/x86_waitpkg.csv
->   create mode 100644 disas/x86-data/x86_wbnoinvd.csv
->   create mode 100644 disas/x86-data/x86_x87.csv
->   create mode 100644 disas/x86-data/x86_xsaveopt.csv
->   create mode 100644 disas/x86-disas.c
->   create mode 100644 disas/x86.h
->   create mode 100644 docs/x86-metadata.txt
->   create mode 100755 scripts/x86-tablegen.py
-> 
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index e6fcf645eb..599a27197f 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -7,6 +7,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/bitops.h"
++#include "qemu/log.h"
+ #include "hw/irq.h"
+ #include "hw/intc/loongarch_pch_pic.h"
+ #include "trace.h"
+@@ -71,47 +72,73 @@ static void pch_pic_irq_handler(void *opaque, int irq, int level)
+     pch_pic_update_irq(s, mask, level);
+ }
+ 
+-static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
+-                                            unsigned size)
++static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
+ {
+     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+     uint64_t val = 0;
++    uint32_t offset;
+ 
++    offset = addr & 7;
++    addr -= offset;
+     switch (addr) {
+     case PCH_PIC_INT_ID:
+-        val = s->id.data & UINT_MAX;
+-        break;
+-    case PCH_PIC_INT_ID + 4:
+-        val = s->id.data >> 32;
++        val = s->id.data;
+         break;
+     case PCH_PIC_INT_MASK:
+-        val = (uint32_t)s->int_mask;
+-        break;
+-    case PCH_PIC_INT_MASK + 4:
+-        val = s->int_mask >> 32;
++        val = s->int_mask;
+         break;
+     case PCH_PIC_INT_EDGE:
+-        val = (uint32_t)s->intedge;
+-        break;
+-    case PCH_PIC_INT_EDGE + 4:
+-        val = s->intedge >> 32;
++        val = s->intedge;
+         break;
+     case PCH_PIC_HTMSI_EN:
+-        val = (uint32_t)s->htmsi_en;
+-        break;
+-    case PCH_PIC_HTMSI_EN + 4:
+-        val = s->htmsi_en >> 32;
++        val = s->htmsi_en;
+         break;
+     case PCH_PIC_AUTO_CTRL0:
+-    case PCH_PIC_AUTO_CTRL0 + 4:
+     case PCH_PIC_AUTO_CTRL1:
+-    case PCH_PIC_AUTO_CTRL1 + 4:
+         /* PCH PIC connect to EXTIOI always, discard auto_ctrl access */
+         break;
+     default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "pch_pic_read: Bad address 0x%"PRIx64"\n", addr);
++        break;
++    }
++
++    return (val >> (offset * 8)) & field_mask;
++}
++
++static uint64_t loongarch_pch_pic_read(void *opaque, hwaddr addr,
++                                       unsigned size)
++{
++    uint64_t val = 0;
++
++    switch (size) {
++    case 1:
++        val = pch_pic_read(opaque, addr, UCHAR_MAX);
++        break;
++    case 2:
++        val = pch_pic_read(opaque, addr, USHRT_MAX);
++        break;
++    case 4:
++        val = pch_pic_read(opaque, addr, UINT_MAX);
++        break;
++    case 8:
++        val = pch_pic_read(opaque, addr, UINT64_MAX);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "loongarch_pch_pic_read: Bad size %d\n", size);
+         break;
+     }
+ 
++    return val;
++}
++
++static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
++                                            unsigned size)
++{
++    uint64_t val;
++
++    val = loongarch_pch_pic_read(opaque, addr, size);
+     trace_loongarch_pch_pic_low_readw(size, addr, val);
+     return val;
+ }
+-- 
+2.34.1
 
 
