@@ -4,49 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47552C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:00:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D557DC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBiH-0005wO-TF; Wed, 14 May 2025 08:59:58 -0400
+	id 1uFBgF-0001a3-2C; Wed, 14 May 2025 08:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhn-0004fN-0H; Wed, 14 May 2025 08:59:34 -0400
+ id 1uFBgB-0001UC-Uf; Wed, 14 May 2025 08:57:47 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBhk-0007ts-JK; Wed, 14 May 2025 08:59:26 -0400
+ id 1uFBg5-0007l1-Tl; Wed, 14 May 2025 08:57:47 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7C100121AE8;
- Wed, 14 May 2025 15:57:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 631AA121ACD;
+ Wed, 14 May 2025 15:56:31 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 266D320B856;
- Wed, 14 May 2025 15:57:59 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0EF8F20B845;
+ Wed, 14 May 2025 15:56:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Yan Vugenfirer <yvugenfi@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 10/34] hw/i386/amd_iommu: Assign pci-id 0x1419 for the
- AMD IOMMU device
-Date: Wed, 14 May 2025 15:57:32 +0300
-Message-Id: <20250514125758.92030-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 13/18] target/avr: Improve decode of LDS, STS
+Date: Wed, 14 May 2025 15:56:19 +0300
+Message-Id: <20250514125640.91677-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
-References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
+References: <qemu-stable-7.2.18-20250514114012@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -64,41 +60,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Currently, the QEMU-emulated AMD IOMMU device use PCI vendor id 0x1022
-(AMD) with device id zero (undefined). Eventhough this does not cause any
-functional issue for AMD IOMMU driver since it normally uses information
-in the ACPI IVRS table to probe and initialize the device per
-recommendation in the AMD IOMMU specification, the device id zero causes
-the Windows Device Manager utility to show the device as an unknown device.
+The comment about not being able to define a field with
+zero bits is out of date since 94597b6146f3
+("decodetree: Allow !function with no input bits").
 
-Since Windows only recognizes AMD IOMMU device with device id 0x1419 as
-listed in the machine.inf file, modify the QEMU AMD IOMMU model to use
-the id 0x1419 to avoid the issue. This advertise the IOMMU as the AMD
-IOMMU device for Family 15h (Models 10h-1fh).
+This fixes the missing load of imm in the disassembler.
 
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Message-Id: <20250325021140.5676-1-suravee.suthikulpanit@amd.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 719255486df2fcbe1b8599786b37f4bb80272f1a)
+Cc: qemu-stable@nongnu.org
+Fixes: 9d8caa67a24 ("target/avr: Add support for disassembling via option '-d in_asm'")
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 6b661b7ed7cd02c54a78426d5eb7dd8543b030ed)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index ffb234fb5c..23584f89ab 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1716,6 +1716,7 @@ static void amdvi_pci_class_init(ObjectClass *klass, void *data)
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+diff --git a/target/avr/insn.decode b/target/avr/insn.decode
+index 482c23ad0c..cc302249db 100644
+--- a/target/avr/insn.decode
++++ b/target/avr/insn.decode
+@@ -118,11 +118,8 @@ BRBC            1111 01 ....... ...         @op_bit_imm
+ @io_rd_imm      .... . .. ..... ....        &rd_imm     rd=%rd imm=%io_imm
+ @ldst_d         .. . . .. . rd:5  . ...     &rd_imm     imm=%ldst_d_imm
  
-     k->vendor_id = PCI_VENDOR_ID_AMD;
-+    k->device_id = 0x1419;
-     k->class_id = 0x0806;
-     k->realize = amdvi_pci_realize;
+-# The 16-bit immediate is completely in the next word.
+-# Fields cannot be defined with no bits, so we cannot play
+-# the same trick and append to a zero-bit value.
+-# Defer reading the immediate until trans_{LDS,STS}.
+-@ldst_s         .... ... rd:5 ....          imm=0
++%ldst_imm       !function=next_word
++@ldst_s         .... ... rd:5 ....          imm=%ldst_imm
  
+ MOV             0010 11 . ..... ....        @op_rd_rr
+ MOVW            0000 0001 .... ....         &rd_rr      rd=%rd_d rr=%rr_d
+diff --git a/target/avr/translate.c b/target/avr/translate.c
+index 2bed56f135..a1bfa500bf 100644
+--- a/target/avr/translate.c
++++ b/target/avr/translate.c
+@@ -1690,7 +1690,6 @@ static bool trans_LDS(DisasContext *ctx, arg_LDS *a)
+     TCGv Rd = cpu_r[a->rd];
+     TCGv addr = tcg_temp_new_i32();
+     TCGv H = cpu_rampD;
+-    a->imm = next_word(ctx);
+ 
+     tcg_gen_mov_tl(addr, H); /* addr = H:M:L */
+     tcg_gen_shli_tl(addr, addr, 16);
+@@ -1925,7 +1924,6 @@ static bool trans_STS(DisasContext *ctx, arg_STS *a)
+     TCGv Rd = cpu_r[a->rd];
+     TCGv addr = tcg_temp_new_i32();
+     TCGv H = cpu_rampD;
+-    a->imm = next_word(ctx);
+ 
+     tcg_gen_mov_tl(addr, H); /* addr = H:M:L */
+     tcg_gen_shli_tl(addr, addr, 16);
 -- 
 2.39.5
 
