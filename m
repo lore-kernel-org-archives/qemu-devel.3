@@ -4,91 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7A0C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B148C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 16:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFFML-0002yB-Lw; Wed, 14 May 2025 12:53:38 -0400
+	id 1uFFND-0004xP-DR; Wed, 14 May 2025 12:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFFMH-0002pN-6n
- for qemu-devel@nongnu.org; Wed, 14 May 2025 12:53:29 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uFFNB-0004vI-Oc
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 12:54:25 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFFMF-00060v-CF
- for qemu-devel@nongnu.org; Wed, 14 May 2025 12:53:28 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cfebc343dso237215e9.2
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 09:53:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uFFN5-00064q-5J
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 12:54:20 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b1fd59851baso4670898a12.0
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 09:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747241605; x=1747846405; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1747241657; x=1747846457; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EJDvpjsckjvN0xZPH1wXDoMTsindwY7WPuMUHXI/XOA=;
- b=xSACArT7WXbRyt4GDoACwBIbYeFQCCcDHsguPHKeKKUViMrrBI2idcjTisMvsZ0xIp
- xiA6IVwXOC5fJA4wqHMZW3Vzq0KZ+stFOGTDp26hp4Ivd7VXZKCaGYa4hlKOaoGmrpJn
- nyoLbcTST327oYJDOQM96at4BcYh9XVCtADnxKZS8RrjnfdfxtoOE4+6NAosIEW3mZwF
- qZaJUToesb31OkgJo7E8ujkts9VJYi42Xtkt/9F3eFLKa27tSsZiksAk+mrqxC5Xhdpi
- eM7cG6tvc5iTIzmvjnv2Z0WU59hLCmwJPfNBb7DQqcqh8HV/UGjbbLvh7HeXcFB8UNRK
- ji2Q==
+ bh=SQXUMPZ25qjiXWkGJhr0BnN7diC5Qo56A6LIBjOi6as=;
+ b=DKwMrzEjMJPjXzWbYMC7pmYIQxfNWghdtwzyp0vJY9YMI0mc6wMAhBsUgTzyGgIm1I
+ PR6xsOBBY6mh7wC6DPLV44bMT2njFxArvH21mt/SPqmbkrgfqZ0+l/IiSMYD4hgRBnSP
+ +y+iIL02w2YUDtzW4B4ZAMgGqj2CkweLzn2iBxU6vuykY052fMbZeJ7PcXhraz012VDI
+ v9MUlvKcL7u2W1wr9fqVMesRpw4H74f3II27GXYZR0M2oVwKUlNvEEvBoYpKNnaU4l0b
+ QlXbq86iBKLj6uDAky281O5D/YEgFUXWwZRB1H/3T6wqn9tubEb/2kndY6KcVgNZRW3j
+ bxYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747241605; x=1747846405;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1747241657; x=1747846457;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EJDvpjsckjvN0xZPH1wXDoMTsindwY7WPuMUHXI/XOA=;
- b=aXNBIenrUOLwptgnnH4OJeiiUAL0PR8rI76ETYDxrKNPsrcvIMkZdDdr/Trl4OAMEU
- nSrIgs7o0aliYnIKRgnRYTGYc4DU5TZs5F5MSAVGQK3j5hYAVRRX4u+dsbWLn6CzuUFD
- Dl2dFfgCuTGWgP1QftA4c/wH5zozM65ipFGDmHNmvcxDfP7qsLRr1v+/hUYYQDOIb0GY
- uwTdO/92mvLgmaSvjneN1+4XEev0aZBtsJnQwIv7hz0RdPw5Sulm0vydaz5pL1NkfPs3
- AYoXc019VFQtw2IisOqxFX56jtKLVStOh7vHveM6MtQH18b89hHX95oVgL604Eeh3/ZX
- eXTA==
+ bh=SQXUMPZ25qjiXWkGJhr0BnN7diC5Qo56A6LIBjOi6as=;
+ b=Z0RfmtVniWxf1aQBfXeStqf9ilj9buVrCNf35blOem37RmF5fIZ+uEjWZAuqzRtoPL
+ 3vOiBB8drs73RA4Aqd8g+CxxCHNImWMZ/+4vhNFsiDHygr0UP8940w/fiqUK5zx1K/F8
+ z6ZFvEdcyXPx7uZZCzqs/r7nR7N2ld3I98gDoGktorm6OV2uYnOqMv58pXUvhNcE0jUG
+ XdL0OztGsM6Cp8zuGHLYNfrCrfJkhpL3WN6AkKb0f+NmiqODnaH1KPCvXV7TOxEyIQQh
+ 4WdCu/bkNG6IBbjAM95pVlrAbAAPBX3FPewpIESUBnv8eWrA12wyROO/JPXlOcJSq7cM
+ 5O8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1Fm1zGTMFRzEeLq981dSY9w0YlkD6dIdlYxVKZYHOaLr3VaXkouiJjlSuwgKcaOkq6ixUI9QzscAT@nongnu.org
-X-Gm-Message-State: AOJu0Yz3oK2hmX7oJXSrvHuDnuGHqOddo+zTHfwBdkSqgqTZCrD34yLb
- CGvgQq5w05b45TEkeMSmNLnplYajF/v5iy40FjldB18q7H9/Ut+ZqbP17VJA2wk=
-X-Gm-Gg: ASbGncvE1BXCTQnL0QoLjQQe6JPQ3BdWFtBAtHelrfIqYm13aWjceL1KZISbC3injxt
- kn9bQ4Tz/MDFH1LmYGteaMazCdgVPffeU/84V3889yF2tz1+gc2jvQPfnCWY/hgH7Ke75kL8g3K
- Xyyfc+0sZV6T58h4a8v12XG8MEs205/ecdKNx1zB3sNOj/t2TxC0Q6an+IqAjmsTrvAiSF6HFG3
- cMha0ppx7IMLaPQ4Qa8xa+yEfzPaISOes/M/jdLhEttdr3XfiDtCDAjvQ1IV14p1FyM+7dlQoPz
- fAZ/CRfLQt0M8MBlAfbiu16Bq8ckx1i3/Jfy1SXvPjocbQ6gF3wyduWHJthuNtoKaHybMwTjW6X
- t3tttpiOl7Z/FUWQuZw==
-X-Google-Smtp-Source: AGHT+IGuBwssz8RIInxR+1zCl34Lwg+moYy+U57cD5N0/AcjbTEuZaCbQXSxdkJZifomQxcVgSpx+g==
-X-Received: by 2002:a05:600c:609a:b0:441:d43d:4f68 with SMTP id
- 5b1f17b1804b1-442f210de3dmr46598685e9.15.1747241605605; 
- Wed, 14 May 2025 09:53:25 -0700 (PDT)
-Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+ AJvYcCX+kCEBRrJQ0MnX3NS8vQ2smRWUVzzyGpPbsS6aUJvQJuzyyvY10FelCmJmNeP8EhRt6Af/8zrpbAM2@nongnu.org
+X-Gm-Message-State: AOJu0Yy/u0tPwAHoZQZ6o4G1aBANHrg1dDlJk76/OL/VMNInuRa6OjRR
+ Upj0ZK1w4q/p6TvK2YRRi3dPrh0cZZQaTvrFWWADk8LMeeAqXaKt6yNDLVYd4Ak=
+X-Gm-Gg: ASbGncsYFieX36YE/DoyYfkGl4zFu4DZiMTv627gUtiydfgO7Wkt0iV3T+7MDiOBfKu
+ cTfAHphFoYKAZ4I8W8YJ9sZ2OGX50LiAWBaSKsh48B6xpLpnW+MQ8BMrMxgNmSHp9lb5jQk9F+8
+ wG3z+L6OoEglcq/q5RxeQ27qLD4zlfX9oo3Zz+vNwOXkqeDxbmTutsnQ8ft77yg0AlsyYzlkthF
+ q6EDVsVcn3ki1AN3QpWo+8+LALvbpYaDK3NpSzAswBdk0+4WtfiF0HXebQyqVZcg5jwo0myKJwh
+ UfeWuer5uDy/w6IXqH9/Q//tsajwY1rxnjvSMGJE6eIqVq3wnet2wwF/Wf8SiGONAedFxfnVPF0
+ =
+X-Google-Smtp-Source: AGHT+IHhCnG4RCY7JSDZ1bFz5StvCx3lPsqnZO7DTHlDYDjby9RmosQ+Vi6UVaxFBAtx02lda2AUYA==
+X-Received: by 2002:a17:90b:5404:b0:2ff:7ad4:77b1 with SMTP id
+ 98e67ed59e1d1-30e2e588680mr6935498a91.2.1747241657466; 
+ Wed, 14 May 2025 09:54:17 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f397b6fbsm37092555e9.39.2025.05.14.09.53.24
+ 98e67ed59e1d1-30e33233f57sm1948732a91.0.2025.05.14.09.54.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 May 2025 09:53:25 -0700 (PDT)
-Message-ID: <f7bcd8b2-2c0c-4907-8a0e-af172c235d56@linaro.org>
-Date: Wed, 14 May 2025 17:53:24 +0100
+ Wed, 14 May 2025 09:54:17 -0700 (PDT)
+Message-ID: <93aeb6e7-409b-4264-ac53-9a19ea947df2@linaro.org>
+Date: Wed, 14 May 2025 09:54:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/19] target/arm: Add arm_cpu_has_feature() helper
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250513173928.77376-1-philmd@linaro.org>
- <20250513173928.77376-17-philmd@linaro.org>
- <b6c81748-091b-4d61-8d34-beaa0442aab3@linaro.org>
+Subject: Re: [PATCH 09/13] qapi: transform target specific 'if' in runtime
+ checks
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b6c81748-091b-4d61-8d34-beaa0442aab3@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, alex.bennee@linaro.org, stefanha@redhat.com,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com,
+ jsnow@redhat.com, philmd@linaro.org, thuth@redhat.com,
+ Michael Roth <michael.roth@amd.com>
+References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
+ <20250507231442.879619-10-pierrick.bouvier@linaro.org>
+ <aBzCXNTebh8B5sQ_@redhat.com> <87msbl0x7f.fsf@pond.sub.org>
+ <cb2adbec-d098-4211-8781-c3027de59e69@linaro.org>
+ <87h61phttb.fsf@pond.sub.org>
+ <e33c5751-6db2-4ca7-9a6e-b992a399e696@linaro.org>
+ <87cycbacmr.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87cycbacmr.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,61 +114,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/5/25 10:24, Richard Henderson wrote:
-> On 5/13/25 18:39, Philippe Mathieu-Daudé wrote:
->> arm_cpu_has_feature() is equivalent of arm_feature(), however
->> while the latter uses CPUARMState so is target-specific, the
->> former doesn't and can be called by target-agnostic code in hw/.
+On 5/14/25 12:13 AM, Markus Armbruster wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 > 
-> CPUARMState is no more target-specific than ARMCPU.
-
-ARMCPU is forward-declared as opaque pointer in target/arm/cpu-qom.h,
-so we can expose prototypes using it to non-ARM units.
-CPUARMState is only declared in "cpu.h", itself only accessible by
-ARM-related units.
-
-> 
-> Did you really mean to use CPUState?
-> Or is it merely that arm_cpu_has_feature is out-of-line?
-> 
-> 
-> r~
-> 
+>> On 5/13/25 12:08 AM, Markus Armbruster wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>>>
+>>>> On 5/9/25 11:57 PM, Markus Armbruster wrote:
+>>>>>> The build system would need generate an input document for the
+>>>>>> QAPI visitor that defines whether each constant is set to true
+>>>>>> or false, based on suitable CONFIG/TARGET conditions from meson.
+>>>>>
+>>>>> I think the conditions that are evaluated at build time in handwritten C
+>>>>> code (with #if) should also be evaluated at build time in generated C
+>>>>> code.
+>>>>>
+>>>>> Certain conditions are evaluated at build time in target-specific code,
+>>>>> and at runtime in target-independent code.  Again, I think handwritten
+>>>>> and generated code should work the same way.
+>>>>>
+>>>>> Thus, to eliminate target-specific QAPI-generated code, we either
+>>>>> evaluate them at runtime, or simply eliminate them.  Elsewhere, we've
+>>>>> come to the conclusion (I think) that the latter should do at least for
+>>>>> now, likely forever, so we should try that first.
+>>>>>
+>>>>
+>>>> I'm not sure if you mean you'd prefer to eradicate #if completely.
+>>>
+>>> I do not!
+>>>
+>>>> We have to keep in mind that some config host #if have to stay there, or
+>>>> they expose things that the rest of QEMU code is not supposed to see
+>>>> (hidden under those same CONFIG_ ifdef also).
+>>>
+>>> Letting people configure their QEMU build is useful and must stay.
+>>>
+>>> We provide this via conditional compilation, of complete source files
+>>> (done in meson), as well as within source files (#if in C and 'if' in
+>>> QAPI).
+>>>
+>>>> So we would need both if and runtime_if.
+>>>
+>>> I don't understand the need for runtime_if.  Can you give an example?
+>>>
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   target/arm/cpu_has_feature.h | 2 ++
->>   target/arm/cpu.c             | 7 +++++++
->>   2 files changed, 9 insertions(+)
+>> That is the point of this whole series, which explores introducing a
+>> 'runtime' if in the schema, to keep it as it is today, while removing
+>> target specific compile time defines.
+> 
+> Ah, I lost the wider context, sorry!
+>
+
+No worries, I was not sure if you missed information or simply waited 
+for more feedback, so I did well to ask you directly.
+
+> We identified three ways to deal with target-specific conditionals in a
+> single binary, and 'runtime_if' is one of them:
+> 
+> (1) Drop target-specific conditionals.
+> 
+> (2) Replace them by run-time checks.
+> 
+> (3) Have target-specific QAPI-generated code for multiple targets
+>      coexist in the single binary.
+> 
+> Both (2) and (3) keep the QAPI schema work as it does now.  None of us
+> likes (3) due to bloat and complexity.
+> 
+> The other two look both workable to me.  (2) keeps the QAPI schema work
+> exactly as it does now.  (1) is simpler, but the external interface
+> changes somewhat.  Its users seem to be okay with it.
+> 
+> So let's go with (1).
+>
+
+Sounds good to me. I agree that Daniel approach is simpler and better as 
+well, as long as we accept the resulting changes in the schema, which 
+seems ok for users.
+
+Thus, I'll drop current series, and focus on respinning Daniel series 
+and adding the changes requested.
+
+>> It is another approach that one Daniel followed on his series.
 >>
->> diff --git a/target/arm/cpu_has_feature.h b/target/arm/cpu_has_feature.h
->> index 2adfccd9208..352f9d75bed 100644
->> --- a/target/arm/cpu_has_feature.h
->> +++ b/target/arm/cpu_has_feature.h
->> @@ -62,4 +62,6 @@ typedef enum arm_features {
->>       ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
->>   } ArmCpuFeature;
->> +bool arm_cpu_has_feature(ARMCPU *cpu, ArmCpuFeature feature);
->> +
->>   #endif
->> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
->> index 8c9d161f2ef..759636a3b0e 100644
->> --- a/target/arm/cpu.c
->> +++ b/target/arm/cpu.c
->> @@ -54,6 +54,13 @@
->>   #include "target/arm/gtimer.h"
->>   #include "target/arm/multiprocessing.h"
->> +bool arm_cpu_has_feature(ARMCPU *cpu, ArmCpuFeature feature)
->> +{
->> +    CPUARMState *env = &cpu->env;
->> +
->> +    return arm_feature(env, feature);
->> +}
->> +
->>   static void arm_cpu_set_pc(CPUState *cs, vaddr value)
->>   {
->>       ARMCPU *cpu = ARM_CPU(cs);
+>> I invite you to give a quick read to this series, especially the related
+>> commit introducing 'runtime_if'
+>> (20250507231442.879619-2-pierrick.bouvier@linaro.org).
+> 
+> I can't afford a thorough review now, but I'll have a look, and I will
+> hold onto your series just in case.
+> 
+>> As well, I would appreciate if you could state clearly where we are
+>> going with all this (or at least, where you *don't* want this to go), so
+>> we can avoid spending time in the wrong direction.
+> 
+> The discussion was spread over multiple threads, which makes it hard to
+> follow.  I hope the conclusion is clear now.  If not, please ask for
+> further clarification.
+>
+
+Yes, I agree. At least we are all on the same page right now, I'll 
+pursue Daniel's approach.
+
+>> I am ok to pursue Daniel's approach, or continue the approach in the
+>> current series, no strong opinion in my side, I am just trying to move
+>> QAPI generated code out of the way for the single binary goal.
+> 
+> Understood!
 > 
 
+Thanks Markus!
+
+Pierrick
 
