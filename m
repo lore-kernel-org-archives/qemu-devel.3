@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C057FC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9513EC3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 19:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFHNc-0006vD-Ba; Wed, 14 May 2025 15:03:00 -0400
+	id 1uFHNg-0007Dp-Ns; Wed, 14 May 2025 15:03:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLU-0004A5-5z; Wed, 14 May 2025 15:00:52 -0400
+ id 1uFHLc-0004Cw-Cn; Wed, 14 May 2025 15:00:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFHLR-0007FF-Rt; Wed, 14 May 2025 15:00:47 -0400
+ id 1uFHLa-0007J8-Gu; Wed, 14 May 2025 15:00:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DF6B9121D8A;
- Wed, 14 May 2025 22:00:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E18D121D8E;
+ Wed, 14 May 2025 22:00:32 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E4F0120BA7C;
- Wed, 14 May 2025 22:00:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 26CFB20BA80;
+ Wed, 14 May 2025 22:00:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 00/23] Patch Round-up for stable 10.0.1,
- freeze on 2025-05-24
-Date: Wed, 14 May 2025 22:00:12 +0300
-Message-Id: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 04/23] target/avr: Improve decode of LDS, STS
+Date: Wed, 14 May 2025 22:00:16 +0300
+Message-Id: <20250514190041.104759-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
+References: <qemu-stable-10.0.1-20250514114019@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,69 +60,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v10.0.1:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
+The comment about not being able to define a field with
+zero bits is out of date since 94597b6146f3
+("decodetree: Allow !function with no input bits").
 
-Patch freeze is 2025-05-24, and the release is planned for 2025-05-26:
+This fixes the missing load of imm in the disassembler.
 
-  https://wiki.qemu.org/Planning/10.0
+Cc: qemu-stable@nongnu.org
+Fixes: 9d8caa67a24 ("target/avr: Add support for disassembling via option '-d in_asm'")
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 6b661b7ed7cd02c54a78426d5eb7dd8543b030ed)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+diff --git a/target/avr/insn.decode b/target/avr/insn.decode
+index 482c23ad0c..cc302249db 100644
+--- a/target/avr/insn.decode
++++ b/target/avr/insn.decode
+@@ -118,11 +118,8 @@ BRBC            1111 01 ....... ...         @op_bit_imm
+ @io_rd_imm      .... . .. ..... ....        &rd_imm     rd=%rd imm=%io_imm
+ @ldst_d         .. . . .. . rd:5  . ...     &rd_imm     imm=%ldst_d_imm
+ 
+-# The 16-bit immediate is completely in the next word.
+-# Fields cannot be defined with no bits, so we cannot play
+-# the same trick and append to a zero-bit value.
+-# Defer reading the immediate until trans_{LDS,STS}.
+-@ldst_s         .... ... rd:5 ....          imm=0
++%ldst_imm       !function=next_word
++@ldst_s         .... ... rd:5 ....          imm=%ldst_imm
+ 
+ MOV             0010 11 . ..... ....        @op_rd_rr
+ MOVW            0000 0001 .... ....         &rd_rr      rd=%rd_d rr=%rr_d
+diff --git a/target/avr/translate.c b/target/avr/translate.c
+index 4ab71d8138..e7f8ced9b3 100644
+--- a/target/avr/translate.c
++++ b/target/avr/translate.c
+@@ -1578,7 +1578,6 @@ static bool trans_LDS(DisasContext *ctx, arg_LDS *a)
+     TCGv Rd = cpu_r[a->rd];
+     TCGv addr = tcg_temp_new_i32();
+     TCGv H = cpu_rampD;
+-    a->imm = next_word(ctx);
+ 
+     tcg_gen_mov_tl(addr, H); /* addr = H:M:L */
+     tcg_gen_shli_tl(addr, addr, 16);
+@@ -1783,7 +1782,6 @@ static bool trans_STS(DisasContext *ctx, arg_STS *a)
+     TCGv Rd = cpu_r[a->rd];
+     TCGv addr = tcg_temp_new_i32();
+     TCGv H = cpu_rampD;
+-    a->imm = next_word(ctx);
+ 
+     tcg_gen_mov_tl(addr, H); /* addr = H:M:L */
+     tcg_gen_shli_tl(addr, addr, 16);
+-- 
+2.39.5
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01 280712b78781 Ewan Hai:
-   target/i386: Fix model number of Zhaoxin YongFeng vCPU template
-02 f6b5f71f0452 Maciej S. Szmigiero:
-   target/i386: Reset parked vCPUs together with the online ones
-03 94a159f3dc73 Paolo Bonzini:
-   target/i386/hvf: fix lflags_to_rflags
-04 6b661b7ed7cd Richard Henderson:
-   target/avr: Improve decode of LDS, STS
-05 d5f241834be1 Philippe Mathieu-Daudé:
-   hw/core: Get default_cpu_type calling machine_class_default_cpu_type()
-06 56a9f0d4c4a4 Peter Maydell:
-   hw/core/cpu: gdb_arch_name string should not be freed
-07 d4a785ba30ce Hauke Mehrtens:
-   target/mips: Fix MIPS16e translation
-08 563cd698dffb Akihiko Odaki:
-   meson: Use has_header_symbol() to check getcpu()
-09 6804b89fb531 Akihiko Odaki:
-   meson: Remove CONFIG_STATX and CONFIG_STATX_MNT_ID
-10 797150d69d2e Akihiko Odaki:
-   meson: Share common C source prefixes
-11 a5b30be53453 Akihiko Odaki:
-   meson: Use osdep_prefix for strchrnul()
-12 9401f91b9b0c Richard Henderson:
-   accel/tcg: Don't use TARGET_LONG_BITS in decode_sleb128
-13 97cdd1b0a7a0 Tim Lee:
-   hw/arm/npcm8xx_boards: Correct valid_cpu_types setting of NPCM8XX SoC
-14 8ed7c0b6488a Peter Maydell:
-   target/arm: Don't assert() for ISB/SB inside IT block
-15 82707dd4f076 Peter Maydell:
-   docs: Don't define duplicate label in qemu-block-drivers.rst.inc
-16 eba837a31b95 Bernhard Beschow:
-   hw/gpio/imx_gpio: Fix interpretation of GDIR polarity
-17 e54ef98c8a80 Paolo Bonzini:
-   target/i386: do not trigger IRQ shadow for LSS
-18 1e94ddc68544 Paolo Bonzini:
-   target/i386: do not block singlestep for STI
-19 a4b20f737cda Aleksandr Partanen:
-   xen: mapcache: Fix finding matching entry
-20 88fb705600a3 Edgar E. Iglesias:
-   xen: mapcache: Split mapcache_grants by ro and rw
-21 54e54e594bc8 Bernhard Beschow:
-   hw/i2c/imx: Always set interrupt status bit if interrupt condition occurs
-22 61da38db70af Christian Schoenebeck:
-   9pfs: fix concurrent v9fs_reclaim_fd() calls
-23 89f7b4da7662 Christian Schoenebeck:
-   9pfs: fix FD leak and reduce latency of v9fs_reclaim_fd()
 
