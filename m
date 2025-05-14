@@ -4,41 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DADB2C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E9CC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 13:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFBmE-0002mf-U1; Wed, 14 May 2025 09:04:03 -0400
+	id 1uFBnG-0004E1-OO; Wed, 14 May 2025 09:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBk0-0007uA-Lh; Wed, 14 May 2025 09:01:46 -0400
+ id 1uFBjt-0007o0-0I; Wed, 14 May 2025 09:01:39 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uFBjo-0008If-V9; Wed, 14 May 2025 09:01:41 -0400
+ id 1uFBji-0008Hh-Lk; Wed, 14 May 2025 09:01:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A098A121AFE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8B8A4121AFC;
  Wed, 14 May 2025 15:57:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4B4C020B86C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 384F420B86A;
  Wed, 14 May 2025 15:58:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Corey Minyard <cminyard@mvista.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 32/34] hw/i2c/imx: Always set interrupt status bit if
- interrupt condition occurs
-Date: Wed, 14 May 2025 15:57:54 +0300
-Message-Id: <20250514125758.92030-32-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 30/34] target/i386: do not block singlestep for STI
+Date: Wed, 14 May 2025 15:57:52 +0300
+Message-Id: <20250514125758.92030-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250514155748@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,51 +59,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-According to the i.MX 8M Plus reference manual, the status flag
-I2C_I2SR[IIF] continues to be set when an interrupt condition
-occurs even when I2C interrupts are disabled (I2C_I2CR[IIEN] is
-clear). However, the device model only sets the flag when I2C
-interrupts are enabled which causes U-Boot to loop forever. Fix
-the device model by always setting the flag and let I2C_I2CR[IIEN]
-guard I2C interrupts only.
-
-Also remove the comment in the code since it merely stated the
-obvious and would be outdated now.
+STI will trigger a singlestep exception even if it has inhibit-IRQ
+behavior.  Do not suppress single-step for all IRQ-inhibiting
+instructions, instead special case MOV SS and POP SS.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 20d0f9cf6a41 ("i.MX: Add I2C controller emulator")
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Acked-by: Corey Minyard <cminyard@mvista.com>
-Message-ID: <20250507124040.425773-1-shentey@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 54e54e594bc8273d210f7ff4448c165a989cbbe8)
+Fixes: f0f0136abba ("target/i386: no single-step exception after MOV or POP SS", 2024-05-25)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 1e94ddc6854431064c94a7d8f2f2886def285829)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i2c/imx_i2c.c b/hw/i2c/imx_i2c.c
-index c565fd5b8a..1dd0167e47 100644
---- a/hw/i2c/imx_i2c.c
-+++ b/hw/i2c/imx_i2c.c
-@@ -90,13 +90,12 @@ static void imx_i2c_reset(DeviceState *dev)
- 
- static inline void imx_i2c_raise_interrupt(IMXI2CState *s)
- {
--    /*
--     * raise an interrupt if the device is enabled and it is configured
--     * to generate some interrupts.
--     */
--    if (imx_i2c_is_enabled(s) && imx_i2c_interrupt_is_enabled(s)) {
-+    if (imx_i2c_is_enabled(s)) {
-         s->i2sr |= I2SR_IIF;
--        qemu_irq_raise(s->irq);
-+
-+        if (imx_i2c_interrupt_is_enabled(s)) {
-+            qemu_irq_raise(s->irq);
-+        }
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 77c294d485..2b08ddf2cf 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -1897,11 +1897,15 @@ static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src, bool inhibit
+      * stop as a special handling must be done to disable hardware
+      * interrupts for the next instruction.
+      *
++     * This is the last instruction, so it's okay to overwrite
++     * HF_TF_MASK; the next TB will start with the flag set.
++     *
+      * DISAS_EOB_INHIBIT_IRQ is a superset of DISAS_EOB_NEXT which
+      * might have been set above.
+      */
+     if (inhibit_irq) {
+         s->base.is_jmp = DISAS_EOB_INHIBIT_IRQ;
++        s->flags &= ~HF_TF_MASK;
      }
  }
  
+@@ -2189,7 +2193,7 @@ gen_eob(DisasContext *s, int mode)
+     if (mode == DISAS_EOB_RECHECK_TF) {
+         gen_helper_rechecking_single_step(tcg_env);
+         tcg_gen_exit_tb(NULL, 0);
+-    } else if ((s->flags & HF_TF_MASK) && mode != DISAS_EOB_INHIBIT_IRQ) {
++    } else if (s->flags & HF_TF_MASK) {
+         gen_helper_single_step(tcg_env);
+     } else if (mode == DISAS_JUMP &&
+                /* give irqs a chance to happen */
 -- 
 2.39.5
 
