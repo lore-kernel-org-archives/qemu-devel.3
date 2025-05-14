@@ -2,56 +2,56 @@ Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE99C3ABD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 07:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CBBC3ABDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 May 2025 23:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uF6j7-0008Ii-9n; Wed, 14 May 2025 03:40:29 -0400
+	id 1uFLq3-0003jy-Fc; Wed, 14 May 2025 19:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1uF6j0-0008FR-VD
- for qemu-devel@nongnu.org; Wed, 14 May 2025 03:40:24 -0400
+ id 1uFLpz-0003j9-Ll
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 19:48:35 -0400
 Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1uF6it-00086S-Nz
- for qemu-devel@nongnu.org; Wed, 14 May 2025 03:40:22 -0400
+ id 1uFLpt-0003uy-Nk
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 19:48:35 -0400
 Received: from localhost.localdomain (dynamic-cpe-pool.orcon.net.nz
  [121.99.116.25] (may be forged)) (authenticated bits=0)
  by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 54E7dqAe1188565
+ 54ENmDXt1233147
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Wed, 14 May 2025 07:40:00 GMT
+ Wed, 14 May 2025 23:48:22 GMT
 Authentication-Results: anarch128.org; auth=pass;
  dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=UI6TGCXz header.a=rsa-sha256 header.s=100003;
+ header.i=@anarch128.org header.b=QrmfPqI0 header.a=rsa-sha256 header.s=100003;
  x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org); 
  x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
  found: mail.anarch128.org)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1747208402;
- bh=3g4XuKlwn9MTjDsIvlxVRCeAKfOq1JLsz8BQ5SKR/7k=;
+ s=100003; t=1747266505;
+ bh=G9uuuijzUGJSZ79rPFJK73q1O2/wJXpLTtiL35Zm7MM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=UI6TGCXzNGaRF/npWJLuwTBL8Gca1hct0tltu5AKa7mbzfno+5RmFiVDxDwa2jncN
- 1Jm9kTY+8X3iF6cbwZJk3DkXaqFjXiH5LdtIIn7GrkFNjw+Ep7ou9Jy8Zikq0gWa5e
- AdGt0ev8SxivZyX9czYcWgYnJ9CdgTYRVxjeuMOGkjswQKlesbeZOy7Y03wezUXciB
- 8AtPS3+VIRx+r9bvM0p4Mnx1UeEEdd8h7PGUQuLBcfND3WnxkXUMNr/fICQAhZ8rxY
- apeDJeHq9QnpK62sIur9ojDmD0y4/1x2BppW1rcLiaztAYkw799vWRTPaCMtIgO36Z
- mDInJAkiYQAsg==
+ b=QrmfPqI0uOrkmvn82msJtegWGd0vJHzYcmpaV1AdkAjqR7Av+xNzOA55kkdWJB+AY
+ w1jkDruuI4skk1x8yMEiiQIpHb6FFileEiEKfEzAE5fiXTaTt6lxj5Ivp2pKQMvWbh
+ tto1FW3+SyotWgChiFQB8xCI2PVq/HNMNr4nW+4OlP6A44qDxHtjr6f+0k17qH3DpA
+ 7k19yp9cpd1BhXRb3XkSWpJZvSvndRRxNX6UrHFPkY0tSw4A50zhy/v34ujfk+0k4u
+ hEKSubuYf2DVZu2Rdfu/wKY5DWts69NF0zJ2RQhUO5bJNIy9Ti32ZSQPLy7493Ekyf
+ k/SB4o4bFwXmA==
 From: Michael Clark <michael@anarch128.org>
 To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
 Cc: Michael Clark <michael@anarch128.org>
-Subject: [PATCH v3 1/4] x86-disas: add x86-mini instruction set metadata
-Date: Wed, 14 May 2025 19:39:24 +1200
-Message-ID: <20250514073927.2735727-2-michael@anarch128.org>
+Subject: [PATCH v4 1/4] x86-disas: add x86-mini instruction set metadata
+Date: Thu, 15 May 2025 11:47:08 +1200
+Message-ID: <20250514234711.2766881-2-michael@anarch128.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250514073927.2735727-1-michael@anarch128.org>
-References: <20250514073927.2735727-1-michael@anarch128.org>
+In-Reply-To: <20250514234711.2766881-1-michael@anarch128.org>
+References: <20250514234711.2766881-1-michael@anarch128.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
@@ -82,8 +82,13 @@ fixed plus conversion of legacy instructions to a new LEX format.
 this metadata has been fuzz-tested against the LLVM disassembler
 for x86-64 with 64-bit ISA coverage in the order of ~99.9%.
 
+this metadata is from an external project with an MIT license:
+
+- https://github.com/michaeljclark/x86
+
 Signed-off-by: Michael Clark <michael@anarch128.org>
 ---
+ disas/x86-data/LICENSE                    |  22 +
  disas/x86-data/x86_adx.csv                |   5 +
  disas/x86-data/x86_aes.csv                |  13 +
  disas/x86-data/x86_aeskle.csv             |   3 +
@@ -158,7 +163,8 @@ Signed-off-by: Michael Clark <michael@anarch128.org>
  disas/x86-data/x86_wbnoinvd.csv           |   2 +
  disas/x86-data/x86_x87.csv                | 145 ++++
  disas/x86-data/x86_xsaveopt.csv           |   3 +
- 74 files changed, 3731 insertions(+)
+ 75 files changed, 3753 insertions(+)
+ create mode 100644 disas/x86-data/LICENSE
  create mode 100644 disas/x86-data/x86_adx.csv
  create mode 100644 disas/x86-data/x86_aes.csv
  create mode 100644 disas/x86-data/x86_aeskle.csv
@@ -234,6 +240,34 @@ Signed-off-by: Michael Clark <michael@anarch128.org>
  create mode 100644 disas/x86-data/x86_x87.csv
  create mode 100644 disas/x86-data/x86_xsaveopt.csv
 
+diff --git a/disas/x86-data/LICENSE b/disas/x86-data/LICENSE
+new file mode 100644
+index 000000000000..4c6251a127d9
+--- /dev/null
++++ b/disas/x86-data/LICENSE
+@@ -0,0 +1,22 @@
++MIT License
++
++Copyright (c) 2017 Gregory Comer
++Copyright (c) 2024, 2025 Michael Clark <michaeljclark@mac.com>
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++SOFTWARE.
 diff --git a/disas/x86-data/x86_adx.csv b/disas/x86-data/x86_adx.csv
 new file mode 100644
 index 000000000000..c09d68445804
