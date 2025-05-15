@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 172E0C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC19C54755
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:19:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFTi6-0003tb-Uo; Thu, 15 May 2025 04:12:59 -0400
+	id 1uFTi2-0003F1-JD; Thu, 15 May 2025 04:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFTh4-00079t-Nn; Thu, 15 May 2025 04:11:57 -0400
+ id 1uFTgn-00063Y-MJ; Thu, 15 May 2025 04:11:38 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFTgw-00018W-V6; Thu, 15 May 2025 04:11:54 -0400
+ id 1uFTgf-00018W-6S; Thu, 15 May 2025 04:11:31 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 15 May
@@ -33,10 +33,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 19/28] test/qtest/hace: Specify explicit array sizes for
- test vectors and hash results
-Date: Thu, 15 May 2025 16:09:51 +0800
-Message-ID: <20250515081008.583578-20-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 17/28] tests/qtest: Reorder aspeed test list
+Date: Thu, 15 May 2025 16:09:49 +0800
+Message-ID: <20250515081008.583578-18-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
 References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
@@ -68,107 +67,49 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To enhance code readability and prevent potential buffer overflows or unintended
-size assumptions, this commit updates all fixed-size array declarations to use
-explicit array sizes.
+Reordered the aspeed test list to keep the alphabetical order.
+No functional changes in test behavior.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/qtest/aspeed-hace-utils.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ tests/qtest/meson.build | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tests/qtest/aspeed-hace-utils.c b/tests/qtest/aspeed-hace-utils.c
-index 8582847945..777fa5b986 100644
---- a/tests/qtest/aspeed-hace-utils.c
-+++ b/tests/qtest/aspeed-hace-utils.c
-@@ -19,9 +19,9 @@
-  *  for hash in sha512sum sha256sum md5sum; do $hash /tmp/test; done
-  *
-  */
--static const uint8_t test_vector[] = {0x61, 0x62, 0x63};
-+static const uint8_t test_vector[3] = {0x61, 0x62, 0x63};
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 3136d15e0f..6b5161a643 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -211,9 +211,9 @@ qtests_npcm7xx = \
+    'npcm_gmac-test'] + \
+    (slirp.found() ? ['npcm7xx_emc-test'] : [])
+ qtests_aspeed = \
+-  ['aspeed_hace-test',
+-   'aspeed_smc-test',
+-   'aspeed_gpio-test']
++  ['aspeed_gpio-test',
++   'aspeed_hace-test',
++   'aspeed_smc-test']
+ qtests_aspeed64 = \
+   ['ast2700-gpio-test',
+    'ast2700-smc-test']
+@@ -360,6 +360,8 @@ if gnutls.found()
+ endif
  
--static const uint8_t test_result_sha512[] = {
-+static const uint8_t test_result_sha512[64] = {
-     0xdd, 0xaf, 0x35, 0xa1, 0x93, 0x61, 0x7a, 0xba, 0xcc, 0x41, 0x73, 0x49,
-     0xae, 0x20, 0x41, 0x31, 0x12, 0xe6, 0xfa, 0x4e, 0x89, 0xa9, 0x7e, 0xa2,
-     0x0a, 0x9e, 0xee, 0xe6, 0x4b, 0x55, 0xd3, 0x9a, 0x21, 0x92, 0x99, 0x2a,
-@@ -29,12 +29,12 @@ static const uint8_t test_result_sha512[] = {
-     0x45, 0x4d, 0x44, 0x23, 0x64, 0x3c, 0xe8, 0x0e, 0x2a, 0x9a, 0xc9, 0x4f,
-     0xa5, 0x4c, 0xa4, 0x9f};
+ qtests = {
++  'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
++  'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
+   'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
+   'cdrom-test': files('boot-sector.c'),
+   'dbus-vmstate-test': files('migration/migration-qmp.c',
+@@ -381,8 +383,6 @@ qtests = {
+   'virtio-net-failover': migration_files,
+   'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
+   'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
+-  'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
+-  'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
+ }
  
--static const uint8_t test_result_sha256[] = {
-+static const uint8_t test_result_sha256[32] = {
-     0xba, 0x78, 0x16, 0xbf, 0x8f, 0x01, 0xcf, 0xea, 0x41, 0x41, 0x40, 0xde,
-     0x5d, 0xae, 0x22, 0x23, 0xb0, 0x03, 0x61, 0xa3, 0x96, 0x17, 0x7a, 0x9c,
-     0xb4, 0x10, 0xff, 0x61, 0xf2, 0x00, 0x15, 0xad};
- 
--static const uint8_t test_result_md5[] = {
-+static const uint8_t test_result_md5[16] = {
-     0x90, 0x01, 0x50, 0x98, 0x3c, 0xd2, 0x4f, 0xb0, 0xd6, 0x96, 0x3f, 0x7d,
-     0x28, 0xe1, 0x7f, 0x72};
- 
-@@ -48,11 +48,11 @@ static const uint8_t test_result_md5[] = {
-  *  for hash in sha512sum sha256sum; do $hash /tmp/test; done
-  *
-  */
--static const uint8_t test_vector_sg1[] = {0x61, 0x62, 0x63, 0x64, 0x65, 0x66};
--static const uint8_t test_vector_sg2[] = {0x67, 0x68, 0x69};
--static const uint8_t test_vector_sg3[] = {0x6a, 0x6b, 0x6c};
-+static const uint8_t test_vector_sg1[6] = {0x61, 0x62, 0x63, 0x64, 0x65, 0x66};
-+static const uint8_t test_vector_sg2[3] = {0x67, 0x68, 0x69};
-+static const uint8_t test_vector_sg3[3] = {0x6a, 0x6b, 0x6c};
- 
--static const uint8_t test_result_sg_sha512[] = {
-+static const uint8_t test_result_sg_sha512[64] = {
-     0x17, 0x80, 0x7c, 0x72, 0x8e, 0xe3, 0xba, 0x35, 0xe7, 0xcf, 0x7a, 0xf8,
-     0x23, 0x11, 0x6d, 0x26, 0xe4, 0x1e, 0x5d, 0x4d, 0x6c, 0x2f, 0xf1, 0xf3,
-     0x72, 0x0d, 0x3d, 0x96, 0xaa, 0xcb, 0x6f, 0x69, 0xde, 0x64, 0x2e, 0x63,
-@@ -60,7 +60,7 @@ static const uint8_t test_result_sg_sha512[] = {
-     0x84, 0x25, 0x7c, 0x32, 0xc8, 0xf6, 0xd0, 0x85, 0x4a, 0xe6, 0xb5, 0x40,
-     0xf8, 0x6d, 0xda, 0x2e};
- 
--static const uint8_t test_result_sg_sha256[] = {
-+static const uint8_t test_result_sg_sha256[32] = {
-     0xd6, 0x82, 0xed, 0x4c, 0xa4, 0xd9, 0x89, 0xc1, 0x34, 0xec, 0x94, 0xf1,
-     0x55, 0x1e, 0x1e, 0xc5, 0x80, 0xdd, 0x6d, 0x5a, 0x6e, 0xcd, 0xe9, 0xf3,
-     0xd3, 0x5e, 0x6e, 0x4a, 0x71, 0x7f, 0xbd, 0xe4};
-@@ -76,7 +76,7 @@ static const uint8_t test_result_sg_sha256[] = {
-  *  echo -n -e 'abc' | dd of=/tmp/test
-  *  for hash in sha512sum sha256sum; do $hash /tmp/test; done
-  */
--static const uint8_t test_vector_accum_512[] = {
-+static const uint8_t test_vector_accum_512[128] = {
-     0x61, 0x62, 0x63, 0x80, 0x00, 0x00, 0x00, 0x00,
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-@@ -94,7 +94,7 @@ static const uint8_t test_vector_accum_512[] = {
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18};
- 
--static const uint8_t test_vector_accum_256[] = {
-+static const uint8_t test_vector_accum_256[64] = {
-     0x61, 0x62, 0x63, 0x80, 0x00, 0x00, 0x00, 0x00,
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-@@ -104,7 +104,7 @@ static const uint8_t test_vector_accum_256[] = {
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18};
- 
--static const uint8_t test_result_accum_sha512[] = {
-+static const uint8_t test_result_accum_sha512[64] = {
-     0xdd, 0xaf, 0x35, 0xa1, 0x93, 0x61, 0x7a, 0xba, 0xcc, 0x41, 0x73, 0x49,
-     0xae, 0x20, 0x41, 0x31, 0x12, 0xe6, 0xfa, 0x4e, 0x89, 0xa9, 0x7e, 0xa2,
-     0x0a, 0x9e, 0xee, 0xe6, 0x4b, 0x55, 0xd3, 0x9a, 0x21, 0x92, 0x99, 0x2a,
-@@ -112,7 +112,7 @@ static const uint8_t test_result_accum_sha512[] = {
-     0x45, 0x4d, 0x44, 0x23, 0x64, 0x3c, 0xe8, 0x0e, 0x2a, 0x9a, 0xc9, 0x4f,
-     0xa5, 0x4c, 0xa4, 0x9f};
- 
--static const uint8_t test_result_accum_sha256[] = {
-+static const uint8_t test_result_accum_sha256[32] = {
-     0xba, 0x78, 0x16, 0xbf, 0x8f, 0x01, 0xcf, 0xea, 0x41, 0x41, 0x40, 0xde,
-     0x5d, 0xae, 0x22, 0x23, 0xb0, 0x03, 0x61, 0xa3, 0x96, 0x17, 0x7a, 0x9c,
-     0xb4, 0x10, 0xff, 0x61, 0xf2, 0x00, 0x15, 0xad};
+ if vnc.found()
 -- 
 2.43.0
 
