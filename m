@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A94FC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944F4C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:57:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFUNo-0002Wj-VL; Thu, 15 May 2025 04:56:05 -0400
+	id 1uFUOT-0003Ym-Eh; Thu, 15 May 2025 04:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFUNm-0002SB-9c
- for qemu-devel@nongnu.org; Thu, 15 May 2025 04:56:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uFUOP-0003QC-H6
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 04:56:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFUNk-0006jF-Gl
- for qemu-devel@nongnu.org; Thu, 15 May 2025 04:56:02 -0400
+ id 1uFUOM-0006kW-N1
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 04:56:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747299357;
+ s=mimecast20190719; t=1747299397;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hcWMoz2dpUrz2ZNbYFcxdq4hJLH6tzAKQM4YlqWqjws=;
- b=Kuuu9i0vg0ZT4Kf0ye3jcvobv0sX6kHtBOYLMhV0Ba/7WTkVfSmHDwiC8rp03QfNDKNvqh
- YJ4aSNlnIE2FqviyA/8/qhyQitNdP16nh3KR/pG8KMKlT5mi9rn3vBUr31IFHen/ngWJA/
- Ti6p0K7mQ6v2zL+gCX9WiS02ENcuBAE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ACaUX1W1QpMEXQ2tAcQ4wjEi0ltp7tqKO7sDZ5E7rJQ=;
+ b=fxOBcq88vOEALcgUa/BRaT/U/hIZABNeLnr2l4mdhsmy5su8K5DboBmIFnZDrN6nBZw104
+ 2b8CWvtSDnUq9McBZhmurBgYuOPVDESMZyqExX9FJ0HC/9Scy7Rp35wQnlAbEqBHrDc4pu
+ Pc8qNCaB6EBpO1LZ7LHoFXpdlWiCCZ8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-1whEkTnCPFa3OBBXdDzv5w-1; Thu,
- 15 May 2025 04:55:55 -0400
-X-MC-Unique: 1whEkTnCPFa3OBBXdDzv5w-1
-X-Mimecast-MFC-AGG-ID: 1whEkTnCPFa3OBBXdDzv5w_1747299354
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-ooyV1yTuOCaAmJmMKxjnQQ-1; Thu,
+ 15 May 2025 04:56:32 -0400
+X-MC-Unique: ooyV1yTuOCaAmJmMKxjnQQ-1
+X-Mimecast-MFC-AGG-ID: ooyV1yTuOCaAmJmMKxjnQQ_1747299391
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 645BD195609F; Thu, 15 May 2025 08:55:54 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 57E11195608B; Thu, 15 May 2025 08:56:31 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.135])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC5D71956094; Thu, 15 May 2025 08:55:50 +0000 (UTC)
-Date: Thu, 15 May 2025 09:55:45 +0100
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9F1E1956066; Thu, 15 May 2025 08:56:27 +0000 (UTC)
+Date: Thu, 15 May 2025 09:56:23 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
@@ -57,18 +57,18 @@ Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  peter.maydell@linaro.org, Markus Armbruster <armbru@redhat.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 11/12] qapi: remove qapi_specific_outputs from meson.build
-Message-ID: <aCWsER8FeMUwlVVB@redhat.com>
+Subject: Re: [PATCH 12/12] qapi: make all generated files common
+Message-ID: <aCWsN06DV1MdJP8t@redhat.com>
 References: <20250514234108.3746675-1-pierrick.bouvier@linaro.org>
- <20250514234108.3746675-12-pierrick.bouvier@linaro.org>
+ <20250514234108.3746675-13-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250514234108.3746675-12-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250514234108.3746675-13-pierrick.bouvier@linaro.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -94,14 +94,11 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 04:41:07PM -0700, Pierrick Bouvier wrote:
-> There is no more QAPI files that need to be compiled per target, so we
-> can remove this.
-> 
+On Wed, May 14, 2025 at 04:41:08PM -0700, Pierrick Bouvier wrote:
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->  qapi/meson.build | 11 +++--------
->  1 file changed, 3 insertions(+), 8 deletions(-)
+>  qapi/meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
