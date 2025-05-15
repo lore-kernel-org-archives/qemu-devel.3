@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1634EC3ABD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 583B7C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 02:50:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFOf6-0006kX-Tc; Wed, 14 May 2025 22:49:33 -0400
+	id 1uFOf6-0006k7-2e; Wed, 14 May 2025 22:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uFOf5-0006jU-Bo
- for qemu-devel@nongnu.org; Wed, 14 May 2025 22:49:31 -0400
+ id 1uFOf4-0006i3-LF
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 22:49:30 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uFOf3-0005iL-DS
- for qemu-devel@nongnu.org; Wed, 14 May 2025 22:49:31 -0400
+ id 1uFOf2-0005hp-O4
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 22:49:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1747277369; x=1778813369;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=STthhcuiYFhtaPFn0z3oX1IbTphb/i1MPiWVLMqKqJI=;
- b=lvVbuurdjY/pj1QDTE0dsFNzC1s2u0ZsiHs19gHbMigJ6oGvg5tNvdt9
- yiK8ugN4ugDVhepgafWGu8QqHsuMRjtpyU1iIl6zHA3vkugzz356pPrcS
- WRwutw/Zxk5xEglVHSMxvNvH4DnmeZ3/FyFoBuE8KSA0ub2wI1w62E83E
- kJJ5+fFHpvzCxWaTpIBIbyXIf87JsI9bKOi2se8h89E7vsmZIJl6FyW0i
- CVvsySJPQwhUY4dO17ZQcxedQFqeMtPwQKqYCkOqRCwOQ6io8JFIEuga4
- Pm214+3Ujm3ThqMJVplaN1eMbS2ePzPBtV06SHkJYKQDBHpX/F2gaYFG8 Q==;
-X-CSE-ConnectionGUID: XD083olhSVu6ml71s8h6gw==
-X-CSE-MsgGUID: dwYHp72AQDy/GTrImhzA0Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="36819309"
-X-IronPort-AV: E=Sophos;i="6.15,289,1739865600"; d="scan'208";a="36819309"
+ bh=KKt9VbiO6D4vGHHdtSdCWLYNyMy3i/lYilY4X9dAV9Q=;
+ b=CmPRS0b992IMBIzbRemQ1Npio0chkKlIAYtRGGLzg3Mzr/pl/sGvn+Bb
+ u7L1ymk7pUPTqRP9f4pCh0LRDwHI83QODZYosOZkDy6FJ210Z2ClFZMwx
+ NG/frgzK2TRpBqSOv1u+3NaQO6B07heMbSmjqfuiY6qW9AeRDr9f/qq8W
+ OykXkWu/oYbk7wlUt4ocdO6qTclR9nLm6lY30ZbGaPGwYR1vCW/q8Q0bt
+ taRBRFCHVGpAP6lwb85v+7tNjtEa7f5RQpgOl/S9l4UH1sCiOV4yVGMDC
+ gQdeRT7Z31/gWm67I0WGayIBJjRKIC0EUOrJTgLPfKGE7vl/fpJ0sKqTt g==;
+X-CSE-ConnectionGUID: KnFZ7D1WSHS72OekrA/0JA==
+X-CSE-MsgGUID: sujwXiDwSdO0a1gH7XNBeA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="36819297"
+X-IronPort-AV: E=Sophos;i="6.15,289,1739865600"; d="scan'208";a="36819297"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  14 May 2025 19:49:19 -0700
-X-CSE-ConnectionGUID: YImCxpjPTGKvLXh+wYKggw==
-X-CSE-MsgGUID: vCrJft5PR6S+vBrtvqknpg==
+X-CSE-ConnectionGUID: HurVam2lSOi2EQJrnAEesw==
+X-CSE-MsgGUID: bbkPlyHySre6CLjpjmcEvA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,289,1739865600"; d="scan'208";a="142246658"
+X-IronPort-AV: E=Sophos;i="6.15,289,1739865600"; d="scan'208";a="142246648"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  14 May 2025 19:49:19 -0700
@@ -53,10 +53,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-Subject: [PATCH v4 5/7] ui/console-gl: Add a helper to create a texture with
- linear memory layout
-Date: Wed, 14 May 2025 19:45:43 -0700
-Message-ID: <20250515024734.758335-6-vivek.kasireddy@intel.com>
+Subject: [PATCH v4 2/7] ui/spice: Add an option for users to provide a
+ preferred codec
+Date: Wed, 14 May 2025 19:45:40 -0700
+Message-ID: <20250515024734.758335-3-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250515024734.758335-1-vivek.kasireddy@intel.com>
 References: <20250515024734.758335-1-vivek.kasireddy@intel.com>
@@ -88,11 +88,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are cases where we do not want the memory layout of a texture to
-be tiled as the component processing the texture would not know how to
-de-tile either via software or hardware. Therefore, ensuring that the
-memory backing the texture has a linear layout is absolutely necessary
-in these situations.
+Giving users an option to choose a particular codec will enable
+them to make an appropriate decision based on their hardware and
+use-case.
 
 Cc: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
@@ -101,73 +99,70 @@ Cc: Frediano Ziglio <freddy77@gmail.com>
 Cc: Dongwon Kim <dongwon.kim@intel.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- include/ui/console.h |  2 ++
- ui/console-gl.c      | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+ qemu-options.hx |  5 +++++
+ ui/spice-core.c | 12 ++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 46b3128185..5cfa6ae215 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -422,6 +422,8 @@ bool console_gl_check_format(DisplayChangeListener *dcl,
-                              pixman_format_code_t format);
- void surface_gl_create_texture(QemuGLShader *gls,
-                                DisplaySurface *surface);
-+bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
-+                                       int fd, GLuint *texture);
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h);
-diff --git a/ui/console-gl.c b/ui/console-gl.c
-index 103b954017..97f7989651 100644
---- a/ui/console-gl.c
-+++ b/ui/console-gl.c
-@@ -25,6 +25,7 @@
-  * THE SOFTWARE.
-  */
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/shader.h"
+diff --git a/qemu-options.hx b/qemu-options.hx
+index aab53bcfe8..97c63d9b31 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2281,6 +2281,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
+     "       [,streaming-video=[off|all|filter]][,disable-copy-paste=on|off]\n"
+     "       [,disable-agent-file-xfer=on|off][,agent-mouse=[on|off]]\n"
+     "       [,playback-compression=[on|off]][,seamless-migration=[on|off]]\n"
++    "       [,video-codecs=<encoder>:<codec>\n"
+     "       [,gl=[on|off]][,rendernode=<file>]\n"
+     "                enable spice\n"
+     "                at least one of {port, tls-port} is mandatory\n",
+@@ -2369,6 +2370,10 @@ SRST
+     ``seamless-migration=[on|off]``
+         Enable/disable spice seamless migration. Default is off.
  
-@@ -96,6 +97,37 @@ void surface_gl_create_texture(QemuGLShader *gls,
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
- }
- 
-+bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
-+                                       int fd, GLuint *texture)
-+{
-+    unsigned long size = surface_stride(surface) * surface_height(surface);
-+    GLenum err = glGetError();
-+    GLuint mem_obj;
++    ``video-codecs=<encoder>:<codec>``
++        Provide the preferred codec the Spice server should use.
++        Default would be spice:mjpeg.
 +
-+    if (!epoxy_has_gl_extension("GL_EXT_memory_object") ||
-+        !epoxy_has_gl_extension("GL_EXT_memory_object_fd")) {
-+        return false;
+     ``gl=[on|off]``
+         Enable/disable OpenGL context. Default is off.
+ 
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 0326c63bec..907b0e9a81 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -488,6 +488,9 @@ static QemuOptsList qemu_spice_opts = {
+         },{
+             .name = "streaming-video",
+             .type = QEMU_OPT_STRING,
++        },{
++            .name = "video-codecs",
++            .type = QEMU_OPT_STRING,
+         },{
+             .name = "agent-mouse",
+             .type = QEMU_OPT_BOOL,
+@@ -662,6 +665,7 @@ static void qemu_spice_init(void)
+     char *x509_key_file = NULL,
+         *x509_cert_file = NULL,
+         *x509_cacert_file = NULL;
++    const char *video_codecs = NULL;
+     int port, tls_port, addr_flags;
+     spice_image_compression_t compression;
+     spice_wan_compression_t wan_compr;
+@@ -801,6 +805,14 @@ static void qemu_spice_init(void)
+         spice_server_set_streaming_video(spice_server, SPICE_STREAM_VIDEO_OFF);
+     }
+ 
++    video_codecs = qemu_opt_get(opts, "video-codecs");
++    if (video_codecs) {
++        if (spice_server_set_video_codecs(spice_server, video_codecs)) {
++            error_report("invalid video codecs");
++            exit(1);
++        }
 +    }
 +
-+#ifdef GL_EXT_memory_object_fd
-+    glCreateMemoryObjectsEXT(1, &mem_obj);
-+    glImportMemoryFdEXT(mem_obj, size, GL_HANDLE_TYPE_OPAQUE_FD_EXT, fd);
-+
-+    err = glGetError();
-+    if (err != GL_NO_ERROR) {
-+        error_report("spice: cannot import memory object from fd");
-+        return false;
-+    }
-+
-+    glGenTextures(1, texture);
-+    glBindTexture(GL_TEXTURE_2D, *texture);
-+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_TILING_EXT, GL_LINEAR_TILING_EXT);
-+    glTexStorageMem2DEXT(GL_TEXTURE_2D, 1, GL_RGBA8, surface_width(surface),
-+                         surface_height(surface), mem_obj, 0);
-+#endif
-+    return *texture > 0 && glGetError() == GL_NO_ERROR;
-+}
-+
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h)
+     spice_server_set_agent_mouse
+         (spice_server, qemu_opt_get_bool(opts, "agent-mouse", 1));
+     spice_server_set_playback_compression
 -- 
 2.49.0
 
