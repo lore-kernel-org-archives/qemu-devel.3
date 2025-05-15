@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B2EC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 14:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A737FC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 14:03:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFZ7w-0002SI-UR; Thu, 15 May 2025 10:00:01 -0400
+	id 1uFZAZ-0004E2-K8; Thu, 15 May 2025 10:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFZ7r-0002RB-Gk
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:59:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uFZ9o-0003pj-Hz
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 10:02:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFZ7p-0007qZ-6R
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:59:55 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uFZ9k-000896-1T
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 10:01:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747317591;
+ s=mimecast20190719; t=1747317710;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yY0034+dLlvt+8K1D+vx4cXEv2LUnKHQjrjWN9QxREU=;
- b=DsRG41V0Cg40JQfFIPeKNpZxXziqlsU1g+i58ldxRGr0YK95eQmnVnXMGEVtzMsh7AtY68
- Fp5odWTA0plKCows0q/nTdHzgX0ywX/4j88fxHLfTH8sInaEoRLu0SFYIfbxBqV1O+xrKB
- wlPpWx85W+i5Jgvp7V3Ke2eZ4yyjff0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=xKplkudCQQeev75cQQnxtQKnjfU6fBv/8/4p03hIWn0=;
+ b=EZb8wa4zugk/R35jcarl7gOoBsdqxx+8ubnW7oTPQEaXfszDO7NveXOOKi+OTyPgvOh3Fx
+ PQ4aYA6iXGGTPKe7yxZ0XbkOisNEHpHAq9AagJUT1vtcoo7bcdDVfJuOJT3ymFDRPu3mK8
+ 9wv5w0GanpzUQtqkb9dCBnqFxUcgV2Y=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-Aeb1sYA5PYOxw3f6XcYSnA-1; Thu,
- 15 May 2025 09:59:48 -0400
-X-MC-Unique: Aeb1sYA5PYOxw3f6XcYSnA-1
-X-Mimecast-MFC-AGG-ID: Aeb1sYA5PYOxw3f6XcYSnA_1747317587
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-sBi451pTNqm5EOSbPos8yQ-1; Thu,
+ 15 May 2025 10:01:45 -0400
+X-MC-Unique: sBi451pTNqm5EOSbPos8yQ-1
+X-Mimecast-MFC-AGG-ID: sBi451pTNqm5EOSbPos8yQ_1747317704
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D59961800115; Thu, 15 May 2025 13:59:46 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.135])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F355730075D4; Thu, 15 May 2025 13:59:43 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 2/9] scripts/checkpatch.pl: fix various indentation mistakes
-Date: Thu, 15 May 2025 14:59:29 +0100
-Message-ID: <20250515135936.86760-3-berrange@redhat.com>
-In-Reply-To: <20250515135936.86760-1-berrange@redhat.com>
-References: <20250515135936.86760-1-berrange@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB7A31801A15; Thu, 15 May 2025 14:01:44 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.170])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3C7B9195608D; Thu, 15 May 2025 14:01:43 +0000 (UTC)
+Date: Thu, 15 May 2025 10:01:42 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com,
+ bmarzins@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH] file-posix: Probe paths and retry SG_IO on potential
+ path errors
+Message-ID: <20250515140142.GA333399@fedora>
+References: <20250513113730.37404-1-kwolf@redhat.com>
+ <20250513135148.GB227327@fedora> <aCWiuYUWiwKJz4_j@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="MOCXL0TR7BkIAWtm"
+Content-Disposition: inline
+In-Reply-To: <aCWiuYUWiwKJz4_j@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -71,7 +71,7 @@ X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,154 +87,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Various checks in the code were under-indented relative to other
-surrounding code.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/checkpatch.pl | 98 +++++++++++++++++++++----------------------
- 1 file changed, 49 insertions(+), 49 deletions(-)
+--MOCXL0TR7BkIAWtm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index d355c0dad5..7675418b0b 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1681,19 +1681,19 @@ sub process {
- 
- # Check SPDX-License-Identifier references a permitted license
- 		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
--		    &checkspdx($realfile, $1);
-+			&checkspdx($realfile, $1);
- 		}
- 
- 		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
--		    my $tag = $1;
--		    my @permitted = qw(
--			SPDX-License-Identifier
--		    );
--
--		    unless (grep { /^$tag$/ } @permitted) {
--			ERROR("Tag $tag not permitted in QEMU code, valid " .
--			      "choices are: " . join(", ", @permitted));
--		    }
-+			my $tag = $1;
-+			my @permitted = qw(
-+				SPDX-License-Identifier
-+			);
-+
-+			unless (grep { /^$tag$/ } @permitted) {
-+				ERROR("Tag $tag not permitted in QEMU code, valid " .
-+				      "choices are: " . join(", ", @permitted));
-+			}
- 		}
- 
- # Check for wrappage within a valid hunk of the file
-@@ -2274,7 +2274,7 @@ sub process {
- 
- # missing space after union, struct or enum definition
- 		if ($line =~ /^.\s*(?:typedef\s+)?(enum|union|struct)(?:\s+$Ident)?(?:\s+$Ident)?[=\{]/) {
--		    ERROR("missing space after $1 definition\n" . $herecurr);
-+			ERROR("missing space after $1 definition\n" . $herecurr);
- 		}
- 
- # check for spacing round square brackets; allowed:
-@@ -2569,7 +2569,7 @@ sub process {
- 
- 		if ($line =~ /^.\s*(Q(?:S?LIST|SIMPLEQ|TAILQ)_HEAD)\s*\(\s*[^,]/ &&
- 		    $line !~ /^.typedef/) {
--		    ERROR("named $1 should be typedefed separately\n" . $herecurr);
-+			ERROR("named $1 should be typedefed separately\n" . $herecurr);
- 		}
- 
- # Need a space before open parenthesis after if, while etc
-@@ -3118,48 +3118,48 @@ sub process {
- 
- # Qemu error function tests
- 
--	# Find newlines in error messages
--	my $qemu_error_funcs = qr{error_setg|
--				error_setg_errno|
--				error_setg_win32|
--				error_setg_file_open|
--				error_set|
--				error_prepend|
--				warn_reportf_err|
--				error_reportf_err|
--				error_vreport|
--				warn_vreport|
--				info_vreport|
--				error_report|
--				warn_report|
--				info_report|
--				g_test_message}x;
--
--	if ($rawline =~ /\b(?:$qemu_error_funcs)\s*\(.*\".*\\n/) {
--		ERROR("Error messages should not contain newlines\n" . $herecurr);
--	}
-+		# Find newlines in error messages
-+		my $qemu_error_funcs = qr{error_setg|
-+					 error_setg_errno|
-+					 error_setg_win32|
-+					 error_setg_file_open|
-+					 error_set|
-+					 error_prepend|
-+					 warn_reportf_err|
-+					 error_reportf_err|
-+					 error_vreport|
-+					 warn_vreport|
-+					 info_vreport|
-+					 error_report|
-+					 warn_report|
-+					 info_report|
-+					 g_test_message}x;
-+
-+		if ($rawline =~ /\b(?:$qemu_error_funcs)\s*\(.*\".*\\n/) {
-+			ERROR("Error messages should not contain newlines\n" . $herecurr);
-+		}
- 
--	# Continue checking for error messages that contains newlines. This
--	# check handles cases where string literals are spread over multiple lines.
--	# Example:
--	# error_report("Error msg line #1"
--	#              "Error msg line #2\n");
--	my $quoted_newline_regex = qr{\+\s*\".*\\n.*\"};
--	my $continued_str_literal = qr{\+\s*\".*\"};
-+		# Continue checking for error messages that contains newlines. This
-+		# check handles cases where string literals are spread over multiple lines.
-+		# Example:
-+		# error_report("Error msg line #1"
-+		#              "Error msg line #2\n");
-+		my $quoted_newline_regex = qr{\+\s*\".*\\n.*\"};
-+		my $continued_str_literal = qr{\+\s*\".*\"};
- 
--	if ($rawline =~ /$quoted_newline_regex/) {
--		# Backtrack to first line that does not contain only a quoted literal
--		# and assume that it is the start of the statement.
--		my $i = $linenr - 2;
-+		if ($rawline =~ /$quoted_newline_regex/) {
-+			# Backtrack to first line that does not contain only a quoted literal
-+			# and assume that it is the start of the statement.
-+			my $i = $linenr - 2;
- 
--		while (($i >= 0) & $rawlines[$i] =~ /$continued_str_literal/) {
--			$i--;
--		}
-+			while (($i >= 0) & $rawlines[$i] =~ /$continued_str_literal/) {
-+				$i--;
-+			}
- 
--		if ($rawlines[$i] =~ /\b(?:$qemu_error_funcs)\s*\(/) {
--			ERROR("Error messages should not contain newlines\n" . $herecurr);
-+			if ($rawlines[$i] =~ /\b(?:$qemu_error_funcs)\s*\(/) {
-+				ERROR("Error messages should not contain newlines\n" . $herecurr);
-+			}
- 		}
--	}
- 
- # check for non-portable libc calls that have portable alternatives in QEMU
- 		if ($line =~ /\bffs\(/) {
--- 
-2.49.0
+On Thu, May 15, 2025 at 10:15:53AM +0200, Kevin Wolf wrote:
+> Am 13.05.2025 um 15:51 hat Stefan Hajnoczi geschrieben:
+> > On Tue, May 13, 2025 at 01:37:30PM +0200, Kevin Wolf wrote:
+> > > When scsi-block is used on a host multipath device, it runs into the
+> > > problem that the kernel dm-mpath doesn't know anything about SCSI or
+> > > SG_IO and therefore can't decide if a SG_IO request returned an error
+> > > and needs to be retried on a different path. Instead of getting worki=
+ng
+> > > failover, an error is returned to scsi-block and handled according to
+> > > the configured error policy. Obviously, this is not what users want,
+> > > they want working failover.
+> > >=20
+> > > QEMU can parse the SG_IO result and determine whether this could have
+> > > been a path error, but just retrying the same request could just send=
+ it
+> > > to the same failing path again and result in the same error.
+> > >=20
+> > > With a kernel that supports the DM_MPATH_PROBE_PATHS ioctl on dm-mpath
+> > > block devices (queued in the device mapper tree for Linux 6.16), we c=
+an
+> > > tell the kernel to probe all paths and tell us if any usable paths
+> > > remained. If so, we can now retry the SG_IO ioctl and expect it to be
+> > > sent to a working path.
+> > >=20
+> > > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > > ---
+> > >  block/file-posix.c | 82 ++++++++++++++++++++++++++++++++++++++++++++=
++-
+> > >  1 file changed, 81 insertions(+), 1 deletion(-)
+> >=20
+> > Maybe the probability of retry success would be higher with a delay so
+> > that intermittent issues have time to resolve themselves. Either way,
+> > the patch looks good.
+>=20
+> I don't think adding a delay here would be helpful. The point of
+> multipath isn't that you wait until a bad path comes back, but that you
+> just switch to a different path until it is restored.
+
+That's not what this loop does. DM_MPATH_PROBE_PATHS probes all paths
+and fails when no paths are available. The delay would only apply in the
+case when there are no paths available.
+
+If the point is not to wait until some path comes back, then why loop at
+all?
+
+> Ideally, calling DM_MPATH_PROBE_PATHS would just remove all the bad
+> paths instantaneously and we would either be able to send the request
+> using one of the remaining good paths, or know that we have to fail. In
+> practice, the ioctl will probably have to wait for a timeout, so you get
+> a delay anyway.
+
+True, if the read requests themselves time out rather than failing with
+an immediate error, then no delay is required. I guess both cases can
+happen and userspace has no visibility aside from measuring the time
+spent in the ioctl.
+
+> What could potentially be useful is a new error policy [rw]error=3Dretry
+> with a configurable delay. This wouldn't be in file-posix, but in the
+> devices after file-posix came to the conclusion that there is currently
+> no usable path. On the other hand, retrying indefinitely is probably not
+> what you want either, so that could quickly become rather complex.
+
+Yes, it will be complex. I have no objection to this patch as-is.
+
+Stefan
+
+--MOCXL0TR7BkIAWtm
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgl88YACgkQnKSrs4Gr
+c8jKjggAk7dp1gz+BITrYQH15on3Yq2ucW8EyD0Gcbv7lTPkyJtwG57ZCwICtTkt
+0uhJ+lkGpMn3WCCORHzsliY2+L23hQbgTnJIcfjHP6NDDj+ZwDcrhmpCpSo1Cvrv
+NadJ+ebp2xiV+GJswRH8kg//Gnbwylwm5WLFq01s7HnVnuNhNS0a0XtDd8Yv7/+t
+kKUSP04XsNU7ZjkeFOMfZeBKz2oNHJpfwamU7IXvQlfrSu7A3j6U+l5+j/MtCA0I
+wa2RF6/yzrmbJJrUQa3b/J2ylywJRrWVs2trmmnVQua92tp5BMtISCknaKf5SHzM
+rJnW532Met/EmkCZu9HnoM2SZwWfSw==
+=0bym
+-----END PGP SIGNATURE-----
+
+--MOCXL0TR7BkIAWtm--
 
 
