@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A5C0C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F80C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFTiC-0004UV-0E; Thu, 15 May 2025 04:13:04 -0400
+	id 1uFTiY-0005tQ-Bh; Thu, 15 May 2025 04:13:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFThd-0001fH-Ut; Thu, 15 May 2025 04:12:30 -0400
+ id 1uFTi1-0003Im-68; Thu, 15 May 2025 04:12:54 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFThc-0001HG-1A; Thu, 15 May 2025 04:12:29 -0400
+ id 1uFThz-0001HG-9B; Thu, 15 May 2025 04:12:52 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 15 May
@@ -34,10 +34,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 26/28] test/qtest/hace: Support to test upper 32 bits of
- digest and source addresses
-Date: Thu, 15 May 2025 16:09:58 +0800
-Message-ID: <20250515081008.583578-27-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 27/28] test/qtest/hace: Support to validate 64-bit hmac key
+ buffer addresses
+Date: Thu, 15 May 2025 16:09:59 +0800
+Message-ID: <20250515081008.583578-28-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
 References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
@@ -69,9 +69,9 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added "src_hi" and "dest_hi" fields to "AspeedMasks" for 64-bit addresses test.
-Updated "aspeed_test_addresses" to validate "HACE_HASH_SRC_HI" and
-"HACE_HASH_DIGEST_HI".
+Added "key" and "key_hi" fields to "AspeedMasks" for 64-bit addresses test.
+Updated "aspeed_test_addresses" to validate "HACE_HASH_KEY_BUFF" and
+"HACE_HASH_KEY_BUFF_HI".
 Ensured correct masking of 64-bit addresses by checking both lower and upper
 32-bit registers.
 
@@ -79,71 +79,105 @@ Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
  tests/qtest/aspeed-hace-utils.h |  2 ++
- tests/qtest/aspeed-hace-utils.c | 15 ++++++++++++++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ tests/qtest/aspeed-hace-utils.c | 14 ++++++++++++++
+ tests/qtest/aspeed_hace-test.c  |  4 ++++
+ 3 files changed, 20 insertions(+)
 
 diff --git a/tests/qtest/aspeed-hace-utils.h b/tests/qtest/aspeed-hace-utils.h
-index d8684d3f83..de8055a1db 100644
+index de8055a1db..c8b2ec45af 100644
 --- a/tests/qtest/aspeed-hace-utils.h
 +++ b/tests/qtest/aspeed-hace-utils.h
-@@ -51,6 +51,8 @@ struct AspeedMasks {
+@@ -50,9 +50,11 @@ struct AspeedSgList {
+ struct AspeedMasks {
      uint32_t src;
      uint32_t dest;
++    uint32_t key;
      uint32_t len;
-+    uint32_t src_hi;
-+    uint32_t dest_hi;
+     uint32_t src_hi;
+     uint32_t dest_hi;
++    uint32_t key_hi;
  };
  
  void aspeed_test_md5(const char *machine, const uint32_t base,
 diff --git a/tests/qtest/aspeed-hace-utils.c b/tests/qtest/aspeed-hace-utils.c
-index 842bf5630d..cb78f18117 100644
+index cb78f18117..0f7f911e5e 100644
 --- a/tests/qtest/aspeed-hace-utils.c
 +++ b/tests/qtest/aspeed-hace-utils.c
-@@ -588,30 +588,43 @@ void aspeed_test_addresses(const char *machine, const uint32_t base,
-      */
-     g_assert_cmphex(qtest_readl(s, base + HACE_CMD), ==, 0);
-     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_SRC), ==, 0);
-+    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_SRC_HI), ==, 0);
+@@ -591,6 +591,8 @@ void aspeed_test_addresses(const char *machine, const uint32_t base,
+     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_SRC_HI), ==, 0);
      g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST), ==, 0);
-+    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST_HI), ==, 0);
+     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST_HI), ==, 0);
++    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_KEY_BUFF), ==, 0);
++    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_KEY_BUFF_HI), ==, 0);
      g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DATA_LEN), ==, 0);
  
--
      /* Check that the address masking is correct */
-     qtest_writel(s, base + HACE_HASH_SRC, 0xffffffff);
-     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_SRC), ==, expected->src);
+@@ -609,6 +611,14 @@ void aspeed_test_addresses(const char *machine, const uint32_t base,
+     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST_HI), ==,
+                     expected->dest_hi);
  
-+    qtest_writel(s, base + HACE_HASH_SRC_HI, 0xffffffff);
-+    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_SRC_HI),
-+                    ==, expected->src_hi);
++    qtest_writel(s, base + HACE_HASH_KEY_BUFF, 0xffffffff);
++    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_KEY_BUFF), ==,
++                    expected->key);
 +
-     qtest_writel(s, base + HACE_HASH_DIGEST, 0xffffffff);
-     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST), ==,
-                     expected->dest);
- 
-+    qtest_writel(s, base + HACE_HASH_DIGEST_HI, 0xffffffff);
-+    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST_HI), ==,
-+                    expected->dest_hi);
++    qtest_writel(s, base + HACE_HASH_KEY_BUFF_HI, 0xffffffff);
++    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_KEY_BUFF_HI), ==,
++                    expected->key_hi);
 +
      qtest_writel(s, base + HACE_HASH_DATA_LEN, 0xffffffff);
      g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DATA_LEN), ==,
                      expected->len);
- 
-     /* Reset to zero */
-     qtest_writel(s, base + HACE_HASH_SRC, 0);
-+    qtest_writel(s, base + HACE_HASH_SRC_HI, 0);
+@@ -618,6 +628,8 @@ void aspeed_test_addresses(const char *machine, const uint32_t base,
+     qtest_writel(s, base + HACE_HASH_SRC_HI, 0);
      qtest_writel(s, base + HACE_HASH_DIGEST, 0);
-+    qtest_writel(s, base + HACE_HASH_DIGEST_HI, 0);
+     qtest_writel(s, base + HACE_HASH_DIGEST_HI, 0);
++    qtest_writel(s, base + HACE_HASH_KEY_BUFF, 0);
++    qtest_writel(s, base + HACE_HASH_KEY_BUFF_HI, 0);
      qtest_writel(s, base + HACE_HASH_DATA_LEN, 0);
  
      /* Check that all bits are now zero */
-     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_SRC), ==, 0);
-+    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_SRC_HI), ==, 0);
+@@ -625,6 +637,8 @@ void aspeed_test_addresses(const char *machine, const uint32_t base,
+     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_SRC_HI), ==, 0);
      g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST), ==, 0);
-+    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST_HI), ==, 0);
+     g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DIGEST_HI), ==, 0);
++    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_KEY_BUFF), ==, 0);
++    g_assert_cmphex(qtest_readl(s, base + HACE_HASH_KEY_BUFF_HI), ==, 0);
      g_assert_cmphex(qtest_readl(s, base + HACE_HASH_DATA_LEN), ==, 0);
  
      qtest_quit(s);
+diff --git a/tests/qtest/aspeed_hace-test.c b/tests/qtest/aspeed_hace-test.c
+index 31890d574e..38777020ca 100644
+--- a/tests/qtest/aspeed_hace-test.c
++++ b/tests/qtest/aspeed_hace-test.c
+@@ -13,24 +13,28 @@
+ static const struct AspeedMasks ast1030_masks = {
+     .src  = 0x7fffffff,
+     .dest = 0x7ffffff8,
++    .key = 0x7ffffff8,
+     .len  = 0x0fffffff,
+ };
+ 
+ static const struct AspeedMasks ast2600_masks = {
+     .src  = 0x7fffffff,
+     .dest = 0x7ffffff8,
++    .key = 0x7ffffff8,
+     .len  = 0x0fffffff,
+ };
+ 
+ static const struct AspeedMasks ast2500_masks = {
+     .src  = 0x3fffffff,
+     .dest = 0x3ffffff8,
++    .key = 0x3fffffc0,
+     .len  = 0x0fffffff,
+ };
+ 
+ static const struct AspeedMasks ast2400_masks = {
+     .src  = 0x0fffffff,
+     .dest = 0x0ffffff8,
++    .key = 0x0fffffc0,
+     .len  = 0x0fffffff,
+ };
+ 
 -- 
 2.43.0
 
