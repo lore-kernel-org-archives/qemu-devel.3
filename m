@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AB70C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 10:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6911AC54754
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 10:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFVmr-0004Jk-Rn; Thu, 15 May 2025 06:26:01 -0400
+	id 1uFVo9-00065E-U0; Thu, 15 May 2025 06:27:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uFVmo-0004GI-3j
- for qemu-devel@nongnu.org; Thu, 15 May 2025 06:25:58 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1uFVnB-0004ot-Rz
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:21 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uFVmm-00086Y-4s
- for qemu-devel@nongnu.org; Thu, 15 May 2025 06:25:57 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43cfba466b2so8367505e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 03:25:55 -0700 (PDT)
+ id 1uFVn9-0008BE-Rz
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:21 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3a206845eadso427406f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 03:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747304754; x=1747909554; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747304778; x=1747909578; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7QtsMbWF7VE6Px6bLjp5onVkzczQnDLHxWTCi6gF8ps=;
- b=vL7bC4/5r4i4GuqhwXZAXFaO8mc4/35wlFZbZmipaYUfnxSsRePslhPubL8L/wUmG3
- mMJBlu8qF5B9K+t7YZlJArdH/z3CiGUoeWVpIpfASOOsnffVrlK+yKmJBsJKMdZrA7cM
- J8JOCTi1XUTDqZMq1RCHzul6DCrN7mVJZrZVvuGdsWU30cr0e8YiUqSE3dEoPIP8t8PG
- RlI7+n9yy4munKFjcyr9fmOvALOHG752xKShBg2eer5pW//2Gv4wRUJbJXtAMLwj7Uvk
- 7bdPhcQfmG4RY/uNB5sqWu0fL54idCtS4DqKi4egkgslKG/xWEZGWk8ItPn4WvqRYjAL
- +Bpg==
+ :reply-to; bh=JBwP4MINLJbGQNTaVfNpgXGCUDV61F8mAdNh5p7lyQQ=;
+ b=PKsc4F5CRS4zcTDIm1s32VA3CEvfJAnm1cDEui6MQ/4cy7JWx3dUyeADSFcJDDw9HX
+ U638S0wIleTnv0HYFvneL3nX/7C13k3x8cm98kwbwpUbrdEXBRU9sGl1y8YwdrdN+cXe
+ hqff1fzB9OyboWw1pWXZHsr7zR5I8302vd+Erfaag5jgxZD6vX+stWMqJsMU9rAkc0K0
+ bZmkewarMAnwI0vr+FN4FmT11vXXq5okNX6eTgHLA0vf0t0fspBX5VjVwQvoZeTgoR6V
+ JncSY+t+67ALMmzyoC5chGe2DrI7hP6CVtVq8Tlr+sL7XP7QV+f4aXGa/hfjukcVGkBK
+ 4BaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747304754; x=1747909554;
+ d=1e100.net; s=20230601; t=1747304778; x=1747909578;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7QtsMbWF7VE6Px6bLjp5onVkzczQnDLHxWTCi6gF8ps=;
- b=xPLS48LPGzn3Or7SGSnSZVjBu7imMkk0xOu2vh15adqecLdZc8b5z7EXsT9weCeGzF
- vV7bUlZmmPuyVOi0YGcGtchhp4uCRVbJ6Je0JajKSf9J/dzA8N1VMuWsmkAtog0v1NAD
- wBD3izE4ZA1OOfneWkgH6wq6FvFJb1ukfOgiR4c3RbNVIFhBxGAKyrdA33jT7UN6sAJY
- nmkhZ1t1ZOp/b/S6ZyX9GILkRpMl0954a2RfKlz4uB5Jql98/0+BNhfvToQu9sGOKb3H
- ihACtk4e//GHJKlG9gfn1tMu66zbeNp2hwZ3FRG1peAAMcjzkmQ+GoWYQbrzouXqVScE
- maZQ==
-X-Gm-Message-State: AOJu0YxMiaRyxd1I9qNSSfSOI3cBKo1ee0hgENqxMrngFbeRtL9FqmQs
- hLX8dCygNcnl/PB3WTxifpy8VMAYCiN74TcmW7GtKsgi9ynedF62FpuNO4fHKiUIpQXhDr2SWsN
- +iMQ=
-X-Gm-Gg: ASbGncskAT4iqAbY0wXxF8zH5I2CbD2ozhQKjQbSLacT/S5Aa73N2y6b2hUqFilg8pE
- 5LU3RJQWczEk1hOQ3Bsz/zI/vv1In7zEtoTK3klE9EaA+9tDYQisTy8QiQ0B2v2bmYxziwU2Lc+
- 7v/KtVRn/9vnQ/Y6qWr2FAVG8rfpUTYan4ReRvcnOzWCXOf0gIyGXoMMqVY/V6AVKikQftYT4XE
- 0WpBrWPF12L+cZuDfCVgL+ooazExywrn/sHDmceubwcI558joaraR2kSzwdQW0H2uSUif7TwSWC
- m9kHQu3YhehgBKjw6uuCAZe+doD/uNs93zJ1vD0vyZiKWRBJtr/JTVSzcg==
-X-Google-Smtp-Source: AGHT+IHlFbT0p+7Se7sYBLG2Ww4KJIDgkIg1oh/aojKGaXwTeHLZ0RPSWnuba1h4Zylawr2K8dIRqw==
-X-Received: by 2002:a05:600c:83c8:b0:442:f485:6fa4 with SMTP id
- 5b1f17b1804b1-442f971924amr21742645e9.31.1747304754143; 
- Thu, 15 May 2025 03:25:54 -0700 (PDT)
+ bh=JBwP4MINLJbGQNTaVfNpgXGCUDV61F8mAdNh5p7lyQQ=;
+ b=Lxl3pF3YxNTK0a+aGYf4o6ocwF8FkoGUXo1T8DL7LrxyIiCxRNSXyH2o285DCE2mmF
+ ZQdwKNqT2vKm1Rp7Cn2bvZkOQ/8S7nZCGjvUqP0qkojHQrp80uV3L7t5tn1shP95iDl3
+ TAEqJoYLxfxBiFVC+MHfcCl7Ia/YRlebo3S8YuggGr6LH/RjV5twLPBZtCguOHtezway
+ rzUAcAXvpYHU9vCHgsB8jNLb+fGL9x9SHKU9L6PB5ik7WGIkZy9LducIdwxSO8hx9efs
+ vggvIhWXqo/WlGUrfSmQLAW7n4fhygolEBGbNWJtXqQdpH9+jR/FT86XvT8IHra/MoIp
+ kIzw==
+X-Gm-Message-State: AOJu0Yw9N5LQxw/Sd7J5B4M1MllNoOGBTUlSCNl4Cydf8cy591nGn87D
+ ZdVI3re3E7EXLAschhApeGyVIkL0Jg8QJCQVq8mXGccUBnaSILXVPbg0l4P/9vgtywUTBApFcTj
+ jdEU=
+X-Gm-Gg: ASbGnctpBFd3CcldbnZgglOg6j/FRcndOubiR9dhInib1HSkmQ0z4OVrJojSsG7LPfF
+ AZ+8inCRbfedb7KE3tXedlDcGaC8gZJfy4lGIaf33V5St7KFXupsWYVgGhIq2EhrGESk1V2N4Dw
+ 2tY2Chn/QlS/Ygy01mDYVwOPji5X+/fwVg5QXCodx+nI9TDLrhKPFvCbVzDW/oyLVpTaT/zUM0o
+ pcWvxUvtulWn+5I/2CLUiyQcMvOLgSkGA4maAHmn40TIdVWxQDO32FRqBpjoKhsYtCv96ArHQv2
+ FqChsABFHKSPrF7jdMlWrZjvN+n7rXnt1JBXRVenQFnNP72CtHY2XFTSGPR7ZnAKlXO3
+X-Google-Smtp-Source: AGHT+IGtOQlUXFzwrnfc12eEZhS72PYLuZHeqzaV60tY8lD4yR24nuiRcKt6AKL17Swek2FWbMVt1A==
+X-Received: by 2002:a5d:598f:0:b0:3a3:4a1a:de6f with SMTP id
+ ffacd0b85a97d-3a353748601mr1742158f8f.26.1747304778277; 
+ Thu, 15 May 2025 03:26:18 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f396c3a4sm65657855e9.26.2025.05.15.03.25.52
+ 5b1f17b1804b1-442f396c3a4sm65657855e9.26.2025.05.15.03.26.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 03:25:52 -0700 (PDT)
+ Thu, 15 May 2025 03:26:17 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/58] hw/core/cpu-common: Don't init gdbstub until
- cpu_exec_realizefn()
-Date: Thu, 15 May 2025 11:24:51 +0100
-Message-ID: <20250515102546.2149601-4-peter.maydell@linaro.org>
+Subject: [PULL 22/58] tcg: add vaddr type for helpers
+Date: Thu, 15 May 2025 11:25:10 +0100
+Message-ID: <20250515102546.2149601-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250515102546.2149601-1-peter.maydell@linaro.org>
 References: <20250515102546.2149601-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,68 +99,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we call gdb_init_cpu() in cpu_common_initfn(), which is
-very early in the CPU object's init->realize creation sequence.  In
-particular this happens before the architecture-specific subclass's
-init fn has even run.  This means that gdb_init_cpu() can only do
-things that depend strictly on the class, not on the object, because
-the CPUState* that it is passed is currently half-initialized.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-In commit a1f728ecc90cf6c6 we accidentally broke this rule, by adding
-a call to the gdb_get_core_xml_file method which takes the CPUState.
-At the moment we get away with this because the only implementation
-doesn't actually look at the pointer it is passed.  However the whole
-reason we created that method was so that we could make the "which
-XML file?" decision based on a property of the CPU object, and we
-currently can't change the Arm implementation of the method to do
-what we want without causing wrong behaviour or a crash.
+Defined as an alias of i32/i64 depending on host pointer size.
 
-The ordering restrictions here are:
- * we must call gdb_init_cpu before:
-   - any call to gdb_register_coprocessor()
-   - any use of the gdb_num_regs field (this is only used
-     in code that's about to call gdb_register_coprocessor()
-     and wants to know the first register number of the
-     set of registers it's about to add)
- * we must call gdb_init_cpu after CPU properties have been
-   set, which is to say somewhere in realize
-
-The function cpu_exec_realizefn() meets both of these requirements,
-as it is called by the architecture-specific CPU realize function
-early in realize, before any calls ot gdb_register_coprocessor().
-Move the gdb_init_cpu() call to there.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250429132200.605611-4-peter.maydell@linaro.org
+Message-id: 20250512180502.2395029-13-pierrick.bouvier@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/core/cpu-common.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/tcg/tcg-op-common.h    |  1 +
+ include/tcg/tcg.h              | 14 ++++++++++++++
+ include/exec/helper-head.h.inc | 11 +++++++++++
+ tcg/tcg.c                      |  5 +++++
+ 4 files changed, 31 insertions(+)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 92c40b6bf83..39e674aca21 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -234,6 +234,8 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
-         return false;
-     }
+diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+index b439bdb385a..e1071adebf2 100644
+--- a/include/tcg/tcg-op-common.h
++++ b/include/tcg/tcg-op-common.h
+@@ -14,6 +14,7 @@
  
-+    gdb_init_cpu(cpu);
+ TCGv_i32 tcg_constant_i32(int32_t val);
+ TCGv_i64 tcg_constant_i64(int64_t val);
++TCGv_vaddr tcg_constant_vaddr(uintptr_t val);
+ TCGv_vec tcg_constant_vec(TCGType type, unsigned vece, int64_t val);
+ TCGv_vec tcg_constant_vec_matching(TCGv_vec match, unsigned vece, int64_t val);
+ 
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index a8c00c72cc8..3fa5a7aed2c 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -189,6 +189,7 @@ typedef tcg_target_ulong TCGArg;
+     * TCGv_i64  : 64 bit integer type
+     * TCGv_i128 : 128 bit integer type
+     * TCGv_ptr  : a host pointer type
++    * TCGv_vaddr: an integer type wide enough to hold a target pointer type
+     * TCGv_vec  : a host vector type; the exact size is not exposed
+                   to the CPU front-end code.
+     * TCGv      : an integer type the same size as target_ulong
+@@ -217,6 +218,14 @@ typedef struct TCGv_ptr_d *TCGv_ptr;
+ typedef struct TCGv_vec_d *TCGv_vec;
+ typedef TCGv_ptr TCGv_env;
+ 
++#if __SIZEOF_POINTER__ == 4
++typedef TCGv_i32 TCGv_vaddr;
++#elif __SIZEOF_POINTER__ == 8
++typedef TCGv_i64 TCGv_vaddr;
++#else
++# error "sizeof pointer is different from {4,8}"
++#endif /* __SIZEOF_POINTER__ */
 +
-     /* Wait until cpu initialization complete before exposing cpu. */
-     cpu_list_add(cpu);
+ /* call flags */
+ /* Helper does not read globals (either directly or through an exception). It
+    implies TCG_CALL_NO_WRITE_GLOBALS. */
+@@ -577,6 +586,11 @@ static inline TCGv_ptr temp_tcgv_ptr(TCGTemp *t)
+     return (TCGv_ptr)temp_tcgv_i32(t);
+ }
  
-@@ -304,7 +306,6 @@ static void cpu_common_initfn(Object *obj)
-     /* cache the cpu class for the hotpath */
-     cpu->cc = CPU_GET_CLASS(cpu);
++static inline TCGv_vaddr temp_tcgv_vaddr(TCGTemp *t)
++{
++    return (TCGv_vaddr)temp_tcgv_i32(t);
++}
++
+ static inline TCGv_vec temp_tcgv_vec(TCGTemp *t)
+ {
+     return (TCGv_vec)temp_tcgv_i32(t);
+diff --git a/include/exec/helper-head.h.inc b/include/exec/helper-head.h.inc
+index bce5db06ef3..5b248fd7138 100644
+--- a/include/exec/helper-head.h.inc
++++ b/include/exec/helper-head.h.inc
+@@ -58,6 +58,17 @@
+ # define dh_ctype_tl target_ulong
+ #endif /* COMPILING_PER_TARGET */
  
--    gdb_init_cpu(cpu);
-     cpu->cpu_index = UNASSIGNED_CPU_INDEX;
-     cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
-     cpu->as = NULL;
++#if __SIZEOF_POINTER__ == 4
++# define dh_alias_vaddr i32
++# define dh_typecode_vaddr dh_typecode_i32
++#elif __SIZEOF_POINTER__ == 8
++# define dh_alias_vaddr i64
++# define dh_typecode_vaddr dh_typecode_i64
++#else
++# error "sizeof pointer is different from {4,8}"
++#endif /* __SIZEOF_POINTER__ */
++# define dh_ctype_vaddr uintptr_t
++
+ /* We can't use glue() here because it falls foul of C preprocessor
+    recursive expansion rules.  */
+ #define dh_retvar_decl0_void void
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 648333a9fb7..ae27a2607df 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -2367,6 +2367,11 @@ TCGv_i64 tcg_constant_i64(int64_t val)
+     return temp_tcgv_i64(tcg_constant_internal(TCG_TYPE_I64, val));
+ }
+ 
++TCGv_vaddr tcg_constant_vaddr(uintptr_t val)
++{
++    return temp_tcgv_vaddr(tcg_constant_internal(TCG_TYPE_PTR, val));
++}
++
+ TCGv_ptr tcg_constant_ptr_int(intptr_t val)
+ {
+     return temp_tcgv_ptr(tcg_constant_internal(TCG_TYPE_PTR, val));
 -- 
 2.43.0
 
