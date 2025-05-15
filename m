@@ -4,70 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D58C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 13:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B19C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 13:30:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFYVv-0008KI-NV; Thu, 15 May 2025 09:20:43 -0400
+	id 1uFYeV-00053u-NF; Thu, 15 May 2025 09:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFYVs-0008Jt-6z
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:20:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uFYeP-000511-Cj; Thu, 15 May 2025 09:29:29 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFYVq-0003an-BK
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:20:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747315236;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=eWAQav3oZRwcI4Yz65PWMHYpkd524jMlB/PEv9XTogA=;
- b=cmrIlqHC9p7ZarC2gOx0DiJOhf6nGkKA7c0LO27uHLvAJjpWt7KMwldEYq/hpM9WZLoiHw
- +2hhP0tJXslZaGF5NOP5PALzY/2NQyE7SqGQADIEnhj+gUgWZYv2vGmPXLXixogipn9My3
- +BSY+4uI1RubbnGe5zK0J/QMEiPygwo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-KDYnmGJBMSiQFDnBlRBPkQ-1; Thu,
- 15 May 2025 09:20:33 -0400
-X-MC-Unique: KDYnmGJBMSiQFDnBlRBPkQ-1
-X-Mimecast-MFC-AGG-ID: KDYnmGJBMSiQFDnBlRBPkQ_1747315232
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1F641800447; Thu, 15 May 2025 13:20:31 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.27])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AFF181956094; Thu, 15 May 2025 13:20:27 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
-	qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 0/4] hw/microblaze: Endianness clean-ups and deprecations
-Date: Thu, 15 May 2025 15:20:15 +0200
-Message-ID: <20250515132019.569365-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uFYeJ-0004eZ-LF; Thu, 15 May 2025 09:29:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747315764; x=1778851764;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=nD4jIMzPEL9GlBRMVD8jm1YlOuSAxd1LZIi/qkLyWyA=;
+ b=Fvki2vRJyNjhad6+Qy58SR22nQs5CQQxJa0Cx9BKzB3JNPIDnSy55ykH
+ tn+En0eIX4WCUl/vO12QWt8V5yb34oCFqFCYyF90Y8XSlmGmr1O6fJSGE
+ PLteH2/0yAxC8QuVi3SHGkqZ7nGzGUK+ZMrxARVx5EgABRSnQVXBpeSIp
+ rhVigrm0VnI2RA2pZ5JvRDxj7q79k0vlHmgDJqVnAR2IPiNVukjuWGFDL
+ KxUS6qrFQEwmakrdZ0gFJiMprjRDaEjrJeZIrkeHbyEQ1jzueweQonflO
+ jqMoZFtcGGNjYPJrPp97ubUUM/94XHqQ98/obgYqzuE13OCCGFcPLNBtk Q==;
+X-CSE-ConnectionGUID: NbWoZR5+Sfi047jRu5WFLQ==
+X-CSE-MsgGUID: I1ZWHCMeQcmR4zLMMd+kmA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11434"; a="66658082"
+X-IronPort-AV: E=Sophos;i="6.15,291,1739865600"; d="scan'208";a="66658082"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 May 2025 06:29:19 -0700
+X-CSE-ConnectionGUID: M8NdgvHtQnKdJ4IAlWQcfw==
+X-CSE-MsgGUID: McE69DKsTyyJ1kCYn0ABkw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,291,1739865600"; d="scan'208";a="142386727"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 15 May 2025 06:29:16 -0700
+Date: Thu, 15 May 2025 21:50:20 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org
+Subject: Re: [PATCH 8/9] target/s390x/kvm/pv: Consolidate
+ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
+Message-ID: <aCXxHEVZb8+ZCW/m@intel.com>
+References: <20250514084957.2221975-1-zhao1.liu@intel.com>
+ <20250514084957.2221975-9-zhao1.liu@intel.com>
+ <e0146386-ccf4-44ba-b58f-0bb4d3317f89@redhat.com>
+ <aCS8aHsF+VAuj01D@intel.com>
+ <7dec9c8e-93d6-81f0-b075-e29b8ede44a2@eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7dec9c8e-93d6-81f0-b075-e29b8ede44a2@eik.bme.hu>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,35 +92,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks to the great reworks from Philippe, the microblaze targets
-can now handle both endiannesses. I'd like to suggest now to use
-a "endianness" property to allow to switch the endianness of the
-petalogix-s3adsp1800 machine. The endiannes of the other two
-microblaze machines should be hard-wired to little-endian now
-since the big-endian mode likely never worked. With all those
-modifications in place, we can then finally deprecate the little-endian
-target binary qemu-system-microblazeel since the qemu-system-microblaze
-can handle all use cases. This will help us in the future to reduce
-our compilation and testing times.
+On Wed, May 14, 2025 at 06:24:03PM +0200, BALATON Zoltan wrote:
+> Date: Wed, 14 May 2025 18:24:03 +0200
+> From: BALATON Zoltan <balaton@eik.bme.hu>
+> Subject: Re: [PATCH 8/9] target/s390x/kvm/pv: Consolidate
+>  OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
+> 
+> On Wed, 14 May 2025, Zhao Liu wrote:
+> > > > +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(S390PVGuest,
+> > > > +                                          s390_pv_guest,
+> > > > +                                          S390_PV_GUEST,
+> > > > +                                          CONFIDENTIAL_GUEST_SUPPORT,
+> > > > +                                          { TYPE_USER_CREATABLE },
+> > > > +                                          { NULL })
+> > > 
+> > > I'll note that existing callers of OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
+> > > happily ignore the line limit and put it into a single line.
+> > > 
+> > > (which ends up looking better IMHO)
+> > 
+> > Ok, I'll onor the existing conventions (which I'll apply to other
+> > patches as well).
+> 
+> There are two line limits. If something is clearer on one line you could
+> exceed the normal 80 chars and put up to 90 chars on one line for which
+> checkpatch will issue a warning that can be ignored for these cases. Over 90
+> lines checkpatch will give an error and I think you should not ignore that.
 
-Thomas Huth (4):
-  hw/microblaze: Add endianness property to the petalogix_s3adsp1800
-    machine
-  tests/functional: Test both microblaze s3adsp1800 endianness variants
-  hw/microblaze: Remove the big-endian variants of ml605 and
-    xlnx-zynqmp-pmu
-  docs: Deprecate the qemu-system-microblazeel binary
+Thank you. This makes sense!
 
- docs/about/deprecated.rst                     | 19 ++++++---
- docs/about/removed-features.rst               |  9 ++++
- hw/microblaze/petalogix_ml605_mmu.c           | 15 ++-----
- hw/microblaze/petalogix_s3adsp1800_mmu.c      | 41 ++++++++++++++++---
- hw/microblaze/xlnx-zynqmp-pmu.c               |  7 +---
- .../functional/test_microblaze_s3adsp1800.py  | 17 +++++---
- .../test_microblazeel_s3adsp1800.py           |  5 ++-
- 7 files changed, 79 insertions(+), 34 deletions(-)
+> Maybe try to put as much on one line as possible instead of new line after
+> each argument but without exceeding the 80 chars or if the whole line fits
+> in 90 chars then use that. Or maybe do not indent second line under ( but
+> with 4 spaces then you can fit it in two lines but lines over 90 chars are
+> undesirable.
 
--- 
-2.49.0
+HMM, I understand you mean:
+
+OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(S390PVGuest, s390_pv_guest,
+    S390_PV_GUEST, CONFIDENTIAL_GUEST_SUPPORT, { TYPE_USER_CREATABLE }, { NULL })
+
+The second line is 82 chars and now I think this version is better.
+
+Thanks,
+Zhao
 
 
