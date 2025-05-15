@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E36D4C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 12:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A3AC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 12:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFXhn-0005Lm-Uw; Thu, 15 May 2025 08:28:56 -0400
+	id 1uFXpQ-0003t2-LE; Thu, 15 May 2025 08:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uFXhe-0005I0-Qd
- for qemu-devel@nongnu.org; Thu, 15 May 2025 08:28:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1uFXpM-0003sO-Tz; Thu, 15 May 2025 08:36:44 -0400
+Received: from sender4-op-o15.zoho.com ([136.143.188.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uFXhd-00066V-9d
- for qemu-devel@nongnu.org; Thu, 15 May 2025 08:28:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747312124;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YsGYCkJDGc/e3Cub3C34msTbjsaBQCcTJWVOrPQcNQ8=;
- b=jWLQNwq6cgyEmRCss9OFOE514MXVXoMQ/YcQn50Y3APV0v4HiU30gJjg5kAvg2Tc1LxXWk
- X4tilFUPw3H6Iudkv6ZeZTVc53kzktJKX5Jkvr9LFQVtAU3yR1ykkAoxPS/PmuaMv5fVvG
- iYDDtuSr97hLvXVFFLuWwV40fp0mx0U=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-bLqzSPH9P8KK5xEGFGcfYw-1; Thu,
- 15 May 2025 08:28:41 -0400
-X-MC-Unique: bLqzSPH9P8KK5xEGFGcfYw-1
-X-Mimecast-MFC-AGG-ID: bLqzSPH9P8KK5xEGFGcfYw_1747312119
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05F4A1956089; Thu, 15 May 2025 12:28:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.242])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2001D19560A7; Thu, 15 May 2025 12:28:34 +0000 (UTC)
-Date: Thu, 15 May 2025 14:28:32 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, hreitz@redhat.com,
- stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
- vsementsov@yandex-team.ru, pbonzini@redhat.com
-Subject: Re: [PATCH 02/11] block: move drain outside of read-locked
- bdrv_reopen_queue_child()
-Message-ID: <aCXd8MvDPnmKWiRI@redhat.com>
-References: <20250508140936.3344485-1-f.ebner@proxmox.com>
- <20250508140936.3344485-3-f.ebner@proxmox.com>
- <aCTGceRCQ4bywHx5@redhat.com>
- <d1d0c8c3-9cba-4916-877b-95ccd718a817@proxmox.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d1d0c8c3-9cba-4916-877b-95ccd718a817@proxmox.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1uFXpK-0006xc-1b; Thu, 15 May 2025 08:36:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1747312559; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=mJI7QE8vwde86Qo38uW5D6665a7D6zQ/BVn1bDgSWq0OsYac6nHB8e/JoRjLSXbG5xt/s6kn5ZQy0n1gIIxVdZL9mfXIrJlYspy3qZvN2JTU/ZPJzYmC9q2qCEIdInpuWL4CjAPFMtYFc48ctBOvlUpN9tNh9nZSECrDTx9uIe0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1747312559;
+ h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc;
+ bh=DhzVf+/zd/L811b/GSupjdEZC8EpQtL3QJUTQukMbIw=; 
+ b=jnB/yQ4yAOMhCr0uETg6sfy0kkQtC3XZeW9oNnzlbBCH1rozlud59e8+UcI9S0gn7EGpUTqxzNC0mdyojk17bIv3huIfIjyS33QvPe8M2lXCzWLwGP1aClz4nli5U+G0nMnvcoiZstP/IFn80lOILnG0DwAZnEyNGRf+ZC0o34c=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747312559; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:Message-ID:From:From:To:To:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+ bh=DhzVf+/zd/L811b/GSupjdEZC8EpQtL3QJUTQukMbIw=;
+ b=KVBl7vQolcvK5GQOEmkMlTAqOOhzdKjyKQAlfPkIUbv3xwj9GPwvMB9t5cM2DUJu
+ ec0PpFvf4DExolA8Q3Lprhtoybiq0Iks4mCuGmnwUrV/OwLiAXlJWCMfC10FpWVOVXx
+ CLh/5sDRQopsIwmruolDe0QoKJGfkTvSclaE1iok=
+Received: by mx.zohomail.com with SMTPS id 1747312555901507.4337961815878;
+ Thu, 15 May 2025 05:35:55 -0700 (PDT)
+Date: Thu, 15 May 2025 20:35:45 +0800
+Message-ID: <87msberqzi.wl-me@linux.beauty>
+From: Li Chen <me@linux.beauty>
+To: "Peter Maydell" <peter.maydell@linaro.org>,"Shannon Zhao"
+ <shannon.zhaosl@gmail.com>,"Michael S. Tsirkin"
+ <mst@redhat.com>,"Igor Mammedov" <imammedo@redhat.com>,"Ani Sinha"
+ <anisinha@redhat.com>,"Eduardo Habkost"
+ <eduardo@habkost.net>,"Marcel Apfelbaum"
+ <marcel.apfelbaum@gmail.com>,=?ISO-8859-1?Q?=22Philippe_Mathieu-Daud=E9?=
+ =?ISO-8859-1?Q?=22?= <philmd@linaro.org>,"Yanan Wang"
+ <wangyanan55@huawei.com>,"Zhao Liu" <zhao1.liu@intel.com>,"Song Gao"
+ <gaosong@loongson.cn>,"Jiaxun Yang" <jiaxun.yang@flygoat.com>,"Sunil V L"
+ <sunilvl@ventanamicro.com>,"Palmer Dabbelt"
+ <palmer@dabbelt.com>,"Alistair Francis"
+ <alistair.francis@wdc.com>,"Weiwei Li" <liwei1518@gmail.com>,"qemu-arm"
+ <qemu-arm@nongnu.org>,"qemu-devel" <qemu-devel@nongnu.org>,"qemu-riscv"
+ <qemu-riscv@nongnu.org>
+Subject: [PATCH V3 0/4] acpi: Add machine option to disable SPCR table
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@linux.beauty;
+ helo=sender4-op-o15.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,43 +89,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 15.05.2025 um 13:48 hat Fiona Ebner geschrieben:
-> Am 14.05.25 um 18:36 schrieb Kevin Wolf:
-> > Am 08.05.2025 um 16:09 hat Fiona Ebner geschrieben:
-> >> @@ -4368,6 +4368,7 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
-> >>                          bool keep_old_opts)
-> >>  {
-> >>      assert(bs != NULL);
-> >> +    assert(qatomic_read(&bs->quiesce_counter) > 0);
-> > 
-> > BlockDriverState.quiesce_counter isn't accessed with atomics elsewhere.
-> > Did you confuse it with BlockBackend.quiesce_counter?
-> 
-> No, but I saw that it is modified via qatomic_fetch_inc/dec(). And those
-> modifications are in bdrv_do_drained_begin/end() which are
-> IO_OR_GS_CODE(). So isn't it more correct to read via atomics here?
 
-Aha, I missed these two places. Looks like Paolo's commit 414c2ec wasn't
-very thorough with converting.
+This series introduces a new machine option, spcr=3Don|off, allowing users
+to disable the ACPI SPCR (Serial Port Console Redirection) table.
+By default, SPCR is enabled. Disabling it can help ensure that the guest's
+console behavior is determined solely by kernel command-line parameters
+on arch like arm64, avoiding unintended serial console configurations impos=
+ed
+ by firmware.
 
-The commit message is also empty, so I don't know why we made this
-change. Both places are GLOBAL_STATE_CODE(), so I don't think we
-actually need atomics to synchronise these two places. Maybe there are
-other accesses in iothreads, but then those should have been using
-atomics, too.
+Also add tests on AArch64 and RISC-V virt machines using TCG and UEFI boot.
 
-> The documentation in include/block/block_int-common.h for struct
-> BlockDriverState also states:
-> >     /* Accessed with atomic ops.  */
-> >     int quiesce_counter;
-> 
-> Should I rather add a patch to have the other readers use atomics too?
+Changes since v2:
+- Omit UART device from DSDT and SPCR construction if no serial device is p=
+resent,
+  as suggested by Philippe Mathieu-Daud=E9.
+- Add Reviewed-by from Gavin Shan <gshan@redhat.com> for the first patch an=
+d fix style issue.
 
-Either all accesses should use atomics or none of them. I'm not
-completely sure which way is the right one. Using atomics everywhere is
-the safe option, but I'm not sure if we ever access quiesce_counter
-outside of the main thread.
+Changes since v1:
+- Add bios-tables-test for RISC-V and ARM as suggested by=20
+- Add Acked-by from Michael S. Tsirkin for the first patch
+- Add Reviewed-by from Bibo Mao for the first patch
 
-Kevin
+Li Chen (4):
+  acpi: Add machine option to disable SPCR table
+  tests/qtest/bios-tables-test: Add test for disabling SPCR on AArch64
+  tests/qtest/bios-tables-test: Add test for disabling SPCR on RISC-V
+  acpi/virt: suppress UART device & SPCR when guest has no serial
+    hardware
+
+ hw/arm/virt-acpi-build.c       | 18 ++++++++++-----
+ hw/core/machine.c              | 22 ++++++++++++++++++
+ hw/loongarch/virt-acpi-build.c |  4 +++-
+ hw/riscv/virt-acpi-build.c     |  9 ++++++--
+ include/hw/boards.h            |  1 +
+ include/system/system.h        |  2 ++
+ qemu-options.hx                |  5 ++++
+ system/vl.c                    |  5 ++++
+ tests/qtest/bios-tables-test.c | 42 ++++++++++++++++++++++++++++++++++
+ 9 files changed, 99 insertions(+), 9 deletions(-)
+
+--=20
+2.49.0
 
 
