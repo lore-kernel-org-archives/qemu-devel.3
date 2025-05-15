@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D024C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 20:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7536C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 20:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFfPN-0001xB-Ge; Thu, 15 May 2025 16:42:25 -0400
+	id 1uFfdt-0004di-2M; Thu, 15 May 2025 16:57:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFfPL-0001wb-9L
- for qemu-devel@nongnu.org; Thu, 15 May 2025 16:42:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uFfdr-0004cy-Na
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 16:57:23 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFfPJ-00072S-Nc
- for qemu-devel@nongnu.org; Thu, 15 May 2025 16:42:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747341739;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kzh2DG0hKMbQLD8dnFsbg4ucR+lGRycstwMYFi+DnAw=;
- b=AxW0+MQZETlaeXicEAsqeBD1VP7SY4sLRP3uQSPQJK8Duc1nLZhbFeT0ICD8Hd1uXigMsD
- yzyQiSdpC++UZRIQWjgiw9EjoULtUvkC/QXHGqT06NmDulcEZJ4YJUgFN/xhKOaM/AQ0gv
- ABdvGzSsywoj4FW9mgWhyIzzoRNZORE=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-261-6q9WAnSlPeicK0MGmiMxxg-1; Thu, 15 May 2025 16:42:17 -0400
-X-MC-Unique: 6q9WAnSlPeicK0MGmiMxxg-1
-X-Mimecast-MFC-AGG-ID: 6q9WAnSlPeicK0MGmiMxxg_1747341736
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-22e3abea7e8so15884995ad.2
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 13:42:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747341736; x=1747946536;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kzh2DG0hKMbQLD8dnFsbg4ucR+lGRycstwMYFi+DnAw=;
- b=DClYMK7ZIi0bx6hGzDFvQFC5V2PlQQ58GfrozS8IMB1sLcCfg7vhVZLFLWAGrPc+s/
- KbhtOx3+OIyL44be3gWgv5Sf12pU0I8ahuAWVzHfwhL/gdbkYcAPGLzPhtV7HFwndvej
- DUU3wEigVieTXU2FdDKgvYuFAWwxX+IDqlpRPyz1Hu6XkHBHu80sAlDdRqFFCNjh9jTB
- l8cBW7i/aVRcP+K7uVnSO1kx+fnGQ64Bli8EfcYgPz6oHRP7jsPqbgeKC7v4ii1Qn6lC
- jMr8ZfJuaVz1jlpIcW3y9t29P0G5hyNhZi+lZikCbT6JayTDcnaFiG/BgUwWAZs5eH3g
- WWVQ==
-X-Gm-Message-State: AOJu0YzwmgrUZN9psNiQBD87rIZKxlJKi0gI2RioJhglXJ5rpNaBFI42
- PagIb5MxdICUZgLUie7RQcEh79FkvGRRWAzjnT1vPr35PnTEOfGTsFaA7foCkZPxXAuDdgJqbU4
- zHDEMAKfK2C+4kfcHqsP6Cu0N+psBZs9FdYYT/s0Ac275XTWt+GXKc8Ap
-X-Gm-Gg: ASbGncs9AaCSDXQ/3vrllYKP2lrYZIfv2S4AtaEExciT6j9rF09OY0wa1f06KLiGVEc
- m1dxppEsLUDYeGKpiw4va8W/7GUGfQEg3y8xNAmgVoDtX+HqLN/AZJAQ35wh+8I9vyTah0Xupd+
- IHpJantNuk3HqPg9vLDoEk81xHNT8TX6dElTQM4CV8QfID79C2WGQ9PUKAcaclK2ljDW2dd30wF
- YJvNYx5tE7S9PyjnJl81+dPerx9AIgHy92uWB4Q9a5vaNb6HUand5hkW+m+0UjCGK/3NkzfWO8C
- abw=
-X-Received: by 2002:a17:903:1a68:b0:231:c9bb:60fd with SMTP id
- d9443c01a7336-231d4596c61mr9902775ad.33.1747341736478; 
- Thu, 15 May 2025 13:42:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+hVQTtiLRg1ndRCMRdUXsX8UMJ32R3L8dOCHCqs6yqDkvEYqrO8kxyqwlpIapOCzC2eSSHQ==
-X-Received: by 2002:a17:903:1a68:b0:231:c9bb:60fd with SMTP id
- d9443c01a7336-231d4596c61mr9902615ad.33.1747341736123; 
- Thu, 15 May 2025 13:42:16 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ebad00sm1860035ad.169.2025.05.15.13.42.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 13:42:15 -0700 (PDT)
-Date: Thu, 15 May 2025 16:42:11 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 03/13] migration: Run a post update routine after
- setting parameters
-Message-ID: <aCZRozMezmt88WcW@x1.local>
-References: <20250411191443.22565-1-farosas@suse.de>
- <20250411191443.22565-4-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uFfdp-0008DZ-UL
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 16:57:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=qiNZiQRUQ2ja0Lc/c78MXCO3CMw6EOFd5NIjapJUHaM=; b=BeFrc2iEAA6fyuCHRnqmUTFRB0
+ MolrtscFflS2OaI5CV8RnoRPEVr042fVaPPC/Tn6vIqs5SUSY42u9iluEuk73oKjhmXIRDwSKuKzH
+ iHwgRZt2XkyJWaU80JQtF7Uodgv6y8m2V5Q0oDxECdYFGAkWWkjyKHspdFdCJ7Qw/5n8SjS8C65mV
+ WntwBXDPhVsc9amy+GEse9+OPHh/E5FU6FlprBJ60slC4efh7H7jzTq2p/+GgyGaiOSTzl9V/VrjG
+ q0v1FCBcMnjpicKLy7AD1/Vme80LZs8MXf6ZWqzenjJS+mlMWx0wJ41x8/pMzdwG3aoJUGrNQ9ZRd
+ KxFKfPyxeCMZGmzXS5+1XLnJkMI8t26DVjmfKmIvA1TOiY83btQVNpTlfFc5cRVQV8h/GpCZpbUZd
+ oouBN3d44e0B1eSO8/l63l0xohApPQYMAx2wGGNlF6Ma0/BZT16Yvb1Cvg/0miuvO1DEpzKv07mSE
+ 82E8d4HjP7WFzj6KTTyiy5ezNbe6kCRX6ZcwpuvyZ9rBFXzH6tCuY+KGdECkdjsF9u2mU5Dtbzi44
+ zcSRcVTPi4ctfFk6vf/rUsENAKXFwO1raLu/JFqdMa4S/NDrJ9U6q+T1ySfQIxMh3ZbLHDL2Si0G9
+ 7XIEDeUGFjMMx3J2ZInyF1IRgiUU5JDKe9MOogZRg=;
+Received: from [2a02:8012:2f01:0:aa9f:6066:67ff:432a]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uFfcQ-0009ji-LV; Thu, 15 May 2025 21:55:58 +0100
+Message-ID: <f93dad3a-970c-46a0-8eea-8aa9e827739b@ilande.co.uk>
+Date: Thu, 15 May 2025 21:57:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250411191443.22565-4-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+References: <0bb1a55e-70f1-410b-8b59-78eed7f4c8f7@t-online.de>
+ <20250515054429.7385-4-vr_qemu@t-online.de>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20250515054429.7385-4-vr_qemu@t-online.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:aa9f:6066:67ff:432a
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 4/7] hw/audio/asc: fix SIGSEGV in asc_realize()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,18 +109,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 11, 2025 at 04:14:33PM -0300, Fabiano Rosas wrote:
-> Some migration parameters are updated immediately once they are set
-> via migrate-set-parameters. Move that work outside of
-> migrate_params_apply() and leave that function with the single
-> responsibility of setting s->parameters and not doing any
-> side-effects.
+On 15/05/2025 06:44, Volker Rümelin wrote:
+
+> AUD_open_out() may fail and return NULL. This may then lead to
+> a segmentation fault in memset() below. The memset() behaviour
+> is undefined if the pointer to the destination object is a null
+> pointer.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Add the missing error handling code.
+> 
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+> ---
+>   hw/audio/asc.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/hw/audio/asc.c b/hw/audio/asc.c
+> index 18382ccf6a..6721c0d9fb 100644
+> --- a/hw/audio/asc.c
+> +++ b/hw/audio/asc.c
+> @@ -12,6 +12,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include "qemu/timer.h"
+> +#include "qapi/error.h"
+>   #include "hw/sysbus.h"
+>   #include "hw/irq.h"
+>   #include "audio/audio.h"
+> @@ -653,6 +654,12 @@ static void asc_realize(DeviceState *dev, Error **errp)
+>   
+>       s->voice = AUD_open_out(&s->card, s->voice, "asc.out", s, asc_out_cb,
+>                               &as);
+> +    if (!s->voice) {
+> +        AUD_remove_card(&s->card);
+> +        error_setg(errp, "Initializing audio stream failed");
+> +        return;
+> +    }
+> +
+>       s->shift = 1;
+>       s->samples = AUD_get_buffer_size_out(s->voice) >> s->shift;
+>       s->mixbuf = g_malloc0(s->samples << s->shift);
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
--- 
-Peter Xu
+
+ATB,
+
+Mark.
 
 
