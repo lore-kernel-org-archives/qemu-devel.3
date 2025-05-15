@@ -4,115 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6948C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 12:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF84C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 12:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFY0q-0006mx-4g; Thu, 15 May 2025 08:48:36 -0400
+	id 1uFY42-0000OC-PQ; Thu, 15 May 2025 08:51:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel@iogearbox.net>)
- id 1uFTWh-0008Uk-EB
- for qemu-devel@nongnu.org; Thu, 15 May 2025 04:01:11 -0400
-Received: from www62.your-server.de ([213.133.104.62])
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1uFY40-0000Nl-IA
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 08:51:52 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel@iogearbox.net>)
- id 1uFTWd-0008Hm-O2
- for qemu-devel@nongnu.org; Thu, 15 May 2025 04:01:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=fPqe/p3OanfghkAvpdvI9qrN0wxJL4H3kiaNy0aFhaY=; b=bNrJXW6uKthSaFFnaLfCEFkhI+
- A1AJfT9XetN0y3fOIALbLnVocZSPjg+VPfVqrHn/aaFlz7Aa74mtNhssgWoQ2M/CgcR3LZb5gcGDu
- 7Yt2V5puy49gxKqK6qqHb8JMNK9zCwjRHBGG3qUrxY8MiVpJHDqpOsi2WERy+ILR/IPl/UxOQ83Z/
- Z+mJ5ajd5hTe/8Ipr1WLMP2Xmt/Xd+EPZKJFc2owRZdHkVbBG/aTFHDXWgHVv2U6gzX1ReDV39RA7
- hVkUvbxA/QwIuU4f2DC7TIM2ti6AfvOvCK1eM7frToCrO7Qav6hRWW/aZwvABRl/i876SA/E4Ob4w
- DMFis+yQ==;
-Received: from sslproxy04.your-server.de ([78.46.152.42])
- by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <daniel@iogearbox.net>)
- id 1uFTWT-000D8Q-2d; Thu, 15 May 2025 10:00:57 +0200
-Received: from localhost ([127.0.0.1])
- by sslproxy04.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <daniel@iogearbox.net>)
- id 1uFTWT-0002m1-1Y; Thu, 15 May 2025 10:00:57 +0200
-Message-ID: <5b624484-dae9-4ff1-9c84-5b13b46abd2d@iogearbox.net>
-Date: Thu, 15 May 2025 10:00:57 +0200
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1uFY3y-0000GC-Hu
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 08:51:52 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg0KO016372;
+ Thu, 15 May 2025 12:51:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=p5kJ/X
+ 6l6SY9vigCKwp5CnTHiPwsAXj0BoSosbsea/8=; b=TI5TNF1YiZDwI0LpLBumtD
+ v+E+ErvNO2i+sSatlooba+AlT8H4FSmtyy70k/WpG5tXhIGjtTdL0h8fCp/l3ma/
+ rSkZs/2CtFt/IsGpmmgZmOEweu6E86Mo4U/pm52Nlqsk+qYlTNsHO/fsmTFUxgHN
+ kr5zw5eCukSBBWAZB+tguS+ZMadoTJa2nm0ARVBhSK3WFTlyt+H5qR5aKjWnUZjD
+ XrMv0yQE4I2tmLIC3akmHum9UbyHVp1RUS3oaj/xZAoqDmPYVVGsfftbgivFzAUL
+ tO0fRKLWK7b4fAEPl1T48O4bIboKhvY/mNx8ioLBbjzyOcdV6tI8QrX8y3DnTmZw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46nd4gs4k1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 May 2025 12:51:46 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FAVUTt021822;
+ Thu, 15 May 2025 12:51:45 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfpt77s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 May 2025 12:51:45 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54FCpf4956164614
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 May 2025 12:51:41 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7AB6A20160;
+ Thu, 15 May 2025 12:51:41 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 33AA42015F;
+ Thu, 15 May 2025 12:51:41 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown
+ [9.152.224.212])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 12:51:41 +0000 (GMT)
+Date: Thu, 15 May 2025 14:51:29 +0200
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Eric Farman
+ <farman@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>
+Subject: Re: [PATCH] s390x: Fix leak in machine_set_loadparm
+Message-ID: <20250515145129.4182bcca.pasic@linux.ibm.com>
+In-Reply-To: <20250509174938.25935-1-farosas@suse.de>
+References: <20250509174938.25935-1-farosas@suse.de>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] net/af-xdp: Support pinned map path for AF_XDP sockets
-To: Ilya Maximets <i.maximets@ovn.org>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Anton Protopopov <aspsk@isovalent.com>
-References: <20250508123436.461030-1-daniel@iogearbox.net>
- <f044b02b-3b7a-4a64-ab38-3298f96955a9@ovn.org>
- <0d7285c0-15dc-4dcd-9436-b9134f07242d@iogearbox.net>
- <18f6aae8-2fa2-4fb6-a518-67e982623a5e@ovn.org>
- <e61edfd9-8979-4ef4-b1a5-28dfd802cba6@iogearbox.net>
- <03180a8b-bd9e-40c1-8711-bddf04d84aa3@ovn.org>
-Content-Language: en-US
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <03180a8b-bd9e-40c1-8711-bddf04d84aa3@ovn.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Sender: daniel@iogearbox.net
-X-Virus-Scanned: Clear (ClamAV 1.0.7/27637/Wed May 14 10:35:50 2025)
-Received-SPF: pass client-ip=213.133.104.62; envelope-from=daniel@iogearbox.net;
- helo=www62.your-server.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: koha7vWX59X567Kk9eKeMQQETAwqNYgU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDEyNCBTYWx0ZWRfX0lJcfasK2yhv
+ rXhdMb2sx7c6BgNOFeCJwf/0grMUYRskXaZfIR/AZxPLwW68x+8XItWL2P0Smq78PuoqhfMlnjy
+ oegNDEI8nEhtqH3YrEgoUiudbStpLl7LDIfGUcgAqgohNLeJKGlJ5mvyrVQUHKQ2EQ7kfT9L7Lx
+ Im68ii3BP/Z7Blw32w02p9BRkj4JJe0fRWsNBSxwU1uZWIU2gd0IIRBeyFG6qcoTqrHi1hgf3dE
+ HuwCA4lTe/6GPb0ZVgwMjiQixEgmy7bdGvLqSahohM/Exo18unwK2CQiPG4zQpTZbcRVCrG6S1g
+ Y6c8ijHx3slmi7J0s4Iji/XFnhcdWN9EYkLseNhE1e1+n4WO+W4XmlHnJPhs4PKlcvAPgmU57ce
+ eEKbuN5RfIGg1Jp/Yth0E7QVCBqzEXLebIeWbh4vMTew/JLaAjbH2G48tZfYsEcnN81qZ1wP
+X-Proofpoint-ORIG-GUID: koha7vWX59X567Kk9eKeMQQETAwqNYgU
+X-Authority-Analysis: v=2.4 cv=OsNPyz/t c=1 sm=1 tr=0 ts=6825e362 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=X7Hbc9okz4KFaIvFruIA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-15_05,2025-05-14_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0 clxscore=1011
+ impostorscore=0 mlxlogscore=999 mlxscore=0 adultscore=0 bulkscore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505150124
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=pasic@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 15 May 2025 08:48:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -124,117 +124,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Daniel Borkmann <daniel@iogearbox.net>
-From:  Daniel Borkmann via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/14/25 9:02 PM, Ilya Maximets wrote:
-> On 5/12/25 4:23 PM, Daniel Borkmann wrote:
->> On 5/12/25 2:03 PM, Ilya Maximets wrote:
->>> On 5/9/25 4:05 PM, Daniel Borkmann wrote:
->>>> On 5/9/25 12:53 AM, Ilya Maximets wrote:
->>>>> On 5/8/25 2:34 PM, Daniel Borkmann wrote:
->>>>>> Extend inhibit=on setting with the option to specify a pinned XSK map
->>>>>> path along with a starting index (default 0) to push the created XSK
->>>>>> sockets into. Example usage:
->>>>>>
->>>>>>      # ./build/qemu-system-x86_64 [...] \
->>>>>>        -netdev af-xdp,ifname=eth0,id=net0,mode=native,queues=2,inhibit=on,map-path=/sys/fs/bpf/foo,map-start-index=2
->>>>>>        -device virtio-net-pci,netdev=net0 [...]
->>>>>>
->>>>>> This is useful for the case where an existing XDP program with XSK map
->>>>>> is present on the AF_XDP supported phys device and the XSK map not yet
->>>>>> populated. Qemu will then push the XSK sockets into the specified map.
->>>>>
->>>>> Thanks for the patch!
->>>>>
->>>>> Could you, please, explain the use case a little more?  Is this patch
->>>>> aiming to improve usability?  Do you have a specific use case in mind?
->>>>
->>>> The use case we have is basically that the phys NIC has an XDP program
->>>> already attached which redirects into xsk map (e.g. installed from separate
->>>> control plane), the xsk map got pinned during that process into bpf fs,
->>>> and now qemu is launched, it creates the xsk sockets and then places them
->>>> into the map by gathering the map fd from the pinned bpf fs file.
->>>
->>> OK.  That's what I thought.  Would be good to expand the commit message
->>> a bit explaining the use case.
->>
->> Ack, I already adjusted locally. Planning to send v2 ~today with your feedback
->> incorporated. Much appreciated!
->>
->>>>> The main idea behind 'inhibit' is that the qemu doesn't need to have a lot
->>>>> of privileges to use the pre-loaded program and the pre-created sockets.
->>>>> But creating the sockets and setting them into a map doesn't allow us to
->>>>> run without privileges, IIUC.  May be worth mentioning at least in the
->>>>> commit message.
->>>>
->>>> Yes, privileges for above use case are still needed. Will clarify in the
->>>> description.
->>>
->>> OK.
->>>
->>>>> Also, isn't map-start-index the same thing as start-queue ?  Do we need
->>>>> both of them?
->>>>
->>>> I'd say yes given it does not have to be an exact mapping wrt queue index
->>>> to map slot. The default is 0 though and I expect this to be the most used
->>>> scenario.
->>>
->>> I'm still not sure about this.  For example, libxdp treats queue id as a map
->>> index.  And this value is actually not being used much in libxdp when the
->>> program load is inhibited.  I see that with a custom XDP program the indexes
->>> inside the map may not directly correspond to queues in the device, and, in
->>> fact, may have no relation to the actual queues in the device at all.
->>
->> Right, that's correct.
->>
->>> However, we're still calling them "queues" from the QEMU interface (as in the
->>> "queues" parameter of the net/af-xdp device), and QEMU will just treat every
->>> slot in the BPF map as separate queues, as this BPF map is essentially the
->>> network device that QEMU is working with, it doesn't actually know what's
->>> behind it.
->>>
->>> So, I think, it should be appropriate to simplify the interface and
->>> just use existing start-queue configuration knob for this.
->>>
->>> What do you think?
->>
->> I was thinking of an example like the below (plainly taken from the XDP example
->> programs at github.com/xdp-project/bpf-examples).
->>
->>     struct {
->> 	__uint(type, BPF_MAP_TYPE_XSKMAP);
->> 	__uint(max_entries, MAX_SOCKS);
->> 	__uint(key_size, sizeof(int));
->> 	__uint(value_size, sizeof(int));
->>     } xsks_map SEC(".maps");
->>
->>     int num_socks = 0;
->>     static unsigned int rr;
->>
->>     SEC("xdp_sock") int xdp_sock_prog(struct xdp_md *ctx)
->>     {
->> 	rr = (rr + 1) & (num_socks - 1);
->> 	return bpf_redirect_map(&xsks_map, rr, XDP_DROP);
->>     }
->>
->> If we'd just reuse the start-queue configuration knob for this, then it wouldn't
->> work. So I think having the flexibility of where to place the sockets in the map
->> would make sense. But I can also drop that part of you think it does not warrant
->> the extra knob and align to start-queue then the map always needs to be of the
->> same size as the combined NIC queues.
+On Fri,  9 May 2025 14:49:38 -0300
+Fabiano Rosas <farosas@suse.de> wrote:
+
+> ASAN spotted a leaking string in machine_set_loadparm():
 > 
-> I'm a little confused here.  The 'start-queue' is not used for anything important,
-> AFAICT, in case of inhibit=on.  So, why re-using it instead of adding a new
-> config option reduces the number of available use cases?
+> Direct leak of 9 byte(s) in 1 object(s) allocated from:
+>     #0 0x560ffb5bb379 in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:69:3
+>     #1 0x7f1aca926518 in g_malloc ../glib/gmem.c:106
+>     #2 0x7f1aca94113e in g_strdup ../glib/gstrfuncs.c:364
+>     #3 0x560ffc8afbf9 in qobject_input_type_str ../qapi/qobject-input-visitor.c:542:12
+>     #4 0x560ffc8a80ff in visit_type_str ../qapi/qapi-visit-core.c:349:10
+>     #5 0x560ffbe6053a in machine_set_loadparm ../hw/s390x/s390-virtio-ccw.c:802:10
+>     #6 0x560ffc0c5e52 in object_property_set ../qom/object.c:1450:5
+>     #7 0x560ffc0d4175 in object_property_set_qobject ../qom/qom-qobject.c:28:10
+>     #8 0x560ffc0c6004 in object_property_set_str ../qom/object.c:1458:15
+>     #9 0x560ffbe2ae60 in update_machine_ipl_properties ../hw/s390x/ipl.c:569:9
+>     #10 0x560ffbe2aa65 in s390_ipl_update_diag308 ../hw/s390x/ipl.c:594:5
+>     #11 0x560ffbdee132 in handle_diag_308 ../target/s390x/diag.c:147:9
+>     #12 0x560ffbebb956 in helper_diag ../target/s390x/tcg/misc_helper.c:137:9
+>     #13 0x7f1a3c51c730  (/memfd:tcg-jit (deleted)+0x39730)
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Hm, maybe I'm missing something, but we use inhibit=on and do /not/ pass sock-fds as
-a parameter and instead fully rely on qemu to create all related af_xdp sockets. So
-the start-queue /is/ relevant for the underlying NIC queue selection as we pass the
-queue_id to xsk_socket__create().
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
 
-Thanks,
-Daniel
 
