@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7536C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 20:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0D2EC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 20:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFfdt-0004di-2M; Thu, 15 May 2025 16:57:25 -0400
+	id 1uFffp-0005M3-Ea; Thu, 15 May 2025 16:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uFfdr-0004cy-Na
- for qemu-devel@nongnu.org; Thu, 15 May 2025 16:57:23 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFffn-0005Lp-Rk
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 16:59:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uFfdp-0008DZ-UL
- for qemu-devel@nongnu.org; Thu, 15 May 2025 16:57:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=qiNZiQRUQ2ja0Lc/c78MXCO3CMw6EOFd5NIjapJUHaM=; b=BeFrc2iEAA6fyuCHRnqmUTFRB0
- MolrtscFflS2OaI5CV8RnoRPEVr042fVaPPC/Tn6vIqs5SUSY42u9iluEuk73oKjhmXIRDwSKuKzH
- iHwgRZt2XkyJWaU80JQtF7Uodgv6y8m2V5Q0oDxECdYFGAkWWkjyKHspdFdCJ7Qw/5n8SjS8C65mV
- WntwBXDPhVsc9amy+GEse9+OPHh/E5FU6FlprBJ60slC4efh7H7jzTq2p/+GgyGaiOSTzl9V/VrjG
- q0v1FCBcMnjpicKLy7AD1/Vme80LZs8MXf6ZWqzenjJS+mlMWx0wJ41x8/pMzdwG3aoJUGrNQ9ZRd
- KxFKfPyxeCMZGmzXS5+1XLnJkMI8t26DVjmfKmIvA1TOiY83btQVNpTlfFc5cRVQV8h/GpCZpbUZd
- oouBN3d44e0B1eSO8/l63l0xohApPQYMAx2wGGNlF6Ma0/BZT16Yvb1Cvg/0miuvO1DEpzKv07mSE
- 82E8d4HjP7WFzj6KTTyiy5ezNbe6kCRX6ZcwpuvyZ9rBFXzH6tCuY+KGdECkdjsF9u2mU5Dtbzi44
- zcSRcVTPi4ctfFk6vf/rUsENAKXFwO1raLu/JFqdMa4S/NDrJ9U6q+T1ySfQIxMh3ZbLHDL2Si0G9
- 7XIEDeUGFjMMx3J2ZInyF1IRgiUU5JDKe9MOogZRg=;
-Received: from [2a02:8012:2f01:0:aa9f:6066:67ff:432a]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uFfcQ-0009ji-LV; Thu, 15 May 2025 21:55:58 +0100
-Message-ID: <f93dad3a-970c-46a0-8eea-8aa9e827739b@ilande.co.uk>
-Date: Thu, 15 May 2025 21:57:09 +0100
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFffm-0008Hn-6c
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 16:59:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747342760;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ptKn1OBLdx6WI0wPlKtqIwZnc5jfSZtxXEXK6AMwr1g=;
+ b=K4f9m829WYzCcFZCKPOy+HEImYSxOFaY6+RGEGadT5m92t8f7rNrEenMTnt9gVEEsEcZVo
+ nlq+guRY0gQIR6GSeCRsbwEe10ao78Ls2SsrgERHu5QRa1kKeF9uCeuxMIshALTcggm1WH
+ yq12swmXuQRVrEKTYgcIeNsSgwiKUXs=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-547-48PHfjGOPX-mjX7qAjx-eA-1; Thu, 15 May 2025 16:59:18 -0400
+X-MC-Unique: 48PHfjGOPX-mjX7qAjx-eA-1
+X-Mimecast-MFC-AGG-ID: 48PHfjGOPX-mjX7qAjx-eA_1747342758
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7c5d608e6f5so346508985a.0
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 13:59:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747342758; x=1747947558;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ptKn1OBLdx6WI0wPlKtqIwZnc5jfSZtxXEXK6AMwr1g=;
+ b=Lq+8+LaUbJ+pWVBKUSixNx1kd3Xz2gWIhsl4gNY1CR6ZS49zdHU+LVZ+xJBW73JltL
+ IjotO7Laz+brOqV7BFwDR7hW0cGG7okns8rzAdHBipqYagkZw8V9fY8cRrwxar4Nw525
+ z1k46PZQZK6R/6UM18BrUKzSC6SqQzcdMCUWkN6bMuXA6IlSYFpITtRbHeQLmazymKcB
+ mHpMEmwcymhdza+in3ObH52tGZwAsX8oN9eFqoo5LdaJYYA8akgJ1gY++1ZlDQIJ2YOl
+ DP2ZBOYgsDku12Ch+x2hPfum7zz3/fBML0uiX0qyrujRhDWLKJh7Z6XcTgCCIQSpUlOE
+ AEIg==
+X-Gm-Message-State: AOJu0YxeuCG6FQlybgR1ixAvw5eJj6gCZUe8aGV1CG4zlUQwvybZWg5H
+ yohPh5q4CkV7sEHI7G8u3bzK8Ut3zNLe/DbFGz+O2cJ+J6AbM0+u+yHklio5mjH6vtKPzCgLORy
+ /V6ySOEczpGfQWIfwbBfL0JvnombqMWLaHCS+KCqqtBonHRo4wmivQlin
+X-Gm-Gg: ASbGncvhtwzEiCwW8waSLqcbJAG35QLxtUJXNlcRmAkarilD9I/0p/fCvxyUY0svm7C
+ Ad21+N2pQ/Jz3AH+yojyGlapcpvetUQ0WPf/vzeK1ynq5LWXZQslK/rn+0Yy3X6vcJBDoAHGope
+ gDxGyxylvRcBnIK+o+EYPZyGByUBDK68Y12KdcLL3/3RqJ5EuZP6Vfr+SvTxmT4Z2FAVExaYPjK
+ rkLRq03lhx/KErzfPvO/PVFP2crzKFYcoqB/5QbOE8rjkVC/BGpfz5qtoISXiJJTrVaI90E76g2
+ AeE=
+X-Received: by 2002:a05:620a:4306:b0:7c5:cdb4:6230 with SMTP id
+ af79cd13be357-7cd47f12e4amr30680485a.17.1747342758169; 
+ Thu, 15 May 2025 13:59:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwEG5IpAfL8uemhQAJODlphLCYEChxnAgBz7iPhXQcUaRb+an7XFWoMxnBpYsMQFIit8Xm4A==
+X-Received: by 2002:a05:620a:4306:b0:7c5:cdb4:6230 with SMTP id
+ af79cd13be357-7cd47f12e4amr30678785a.17.1747342757740; 
+ Thu, 15 May 2025 13:59:17 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7cd468d220bsm29386485a.108.2025.05.15.13.59.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 May 2025 13:59:17 -0700 (PDT)
+Date: Thu, 15 May 2025 16:59:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 04/13] migration: Fix parameter validation
+Message-ID: <aCZVolkNMBZb5KvC@x1.local>
+References: <20250411191443.22565-1-farosas@suse.de>
+ <20250411191443.22565-5-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-References: <0bb1a55e-70f1-410b-8b59-78eed7f4c8f7@t-online.de>
- <20250515054429.7385-4-vr_qemu@t-online.de>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20250515054429.7385-4-vr_qemu@t-online.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:aa9f:6066:67ff:432a
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 4/7] hw/audio/asc: fix SIGSEGV in asc_realize()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250411191443.22565-5-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,52 +105,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/05/2025 06:44, Volker Rümelin wrote:
+On Fri, Apr 11, 2025 at 04:14:34PM -0300, Fabiano Rosas wrote:
+> The migration parameters validation involves producing a temporary
+> structure which merges the current parameter values with the new
+> parameters set by the user.
+> 
+> The has_ boolean fields of MigrateSetParameter are taken into
+> consideration when writing the temporary structure, however the copy
+> of the current parameters also copies all the has_ fields of
+> s->parameters and those are (almost) all true due to being initialized
+> by migrate_params_init().
+> 
+> Since the temporary structure copy does not carry over the has_ fields
+> from MigrateSetParameters, only the values which were initialized in
+> migrate_params_init() will end up being validated. This causes
+> (almost) all of the migration parameters to be validated again every
+> time a parameter is set, which could be considered a bug. But it also
+> skips validation of those values which are not set in
+> migrate_params_init(), which is a worse issue.
 
-> AUD_open_out() may fail and return NULL. This may then lead to
-> a segmentation fault in memset() below. The memset() behaviour
-> is undefined if the pointer to the destination object is a null
-> pointer.
+IMHO it's ok to double check all parameters in slow path.  Definitely not
+ok to skip them.. So now the question is, if migrate_params_test_apply() so
+far should check all params anyway...
+
+Shall we drop the checking for all has_ there, then IIUC we also don't need
+any initializations for has_* in migrate_params_init() here?
+
+So, admittedly s->parameters.has_* is still ugly to be present.. we declare
+all of them not used and ignore them always at least in s->parameters.
+
 > 
-> Add the missing error handling code.
+> Fix by initializing the missing values in migrate_params_init().
+> Currently 'avail_switchover_bandwidth' and 'block_bitmap_mapping' are
+> affected.
 > 
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   hw/audio/asc.c | 7 +++++++
->   1 file changed, 7 insertions(+)
+>  migration/options.c | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/hw/audio/asc.c b/hw/audio/asc.c
-> index 18382ccf6a..6721c0d9fb 100644
-> --- a/hw/audio/asc.c
-> +++ b/hw/audio/asc.c
-> @@ -12,6 +12,7 @@
->   
->   #include "qemu/osdep.h"
->   #include "qemu/timer.h"
-> +#include "qapi/error.h"
->   #include "hw/sysbus.h"
->   #include "hw/irq.h"
->   #include "audio/audio.h"
-> @@ -653,6 +654,12 @@ static void asc_realize(DeviceState *dev, Error **errp)
->   
->       s->voice = AUD_open_out(&s->card, s->voice, "asc.out", s, asc_out_cb,
->                               &as);
-> +    if (!s->voice) {
-> +        AUD_remove_card(&s->card);
-> +        error_setg(errp, "Initializing audio stream failed");
-> +        return;
-> +    }
-> +
->       s->shift = 1;
->       s->samples = AUD_get_buffer_size_out(s->voice) >> s->shift;
->       s->mixbuf = g_malloc0(s->samples << s->shift);
+> diff --git a/migration/options.c b/migration/options.c
+> index cac28540dd..625d597a85 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -987,6 +987,8 @@ void migrate_params_init(MigrationParameters *params)
+>      params->has_mode = true;
+>      params->has_zero_page_detection = true;
+>      params->has_direct_io = true;
+> +    params->has_avail_switchover_bandwidth = true;
+> +    params->has_block_bitmap_mapping = true;
+>  }
+>  
+>  /*
+> -- 
+> 2.35.3
+> 
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
+-- 
+Peter Xu
 
 
