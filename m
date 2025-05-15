@@ -4,95 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F206DC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 06:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE17DC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 06:24:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFRxB-00057T-FJ; Thu, 15 May 2025 02:20:25 -0400
+	id 1uFS09-0005l3-RI; Thu, 15 May 2025 02:23:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1uFRx7-00057B-P6
- for qemu-devel@nongnu.org; Thu, 15 May 2025 02:20:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1uFS03-0005kU-UP; Thu, 15 May 2025 02:23:24 -0400
+Received: from mail-eastasiaazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c400::3] helo=HK3PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1uFRx3-0004rL-EU
- for qemu-devel@nongnu.org; Thu, 15 May 2025 02:20:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747290015;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=E2xmYv3z3UaoGCp9yXll/TGIYGDrCH4HhTigQeBcYRU=;
- b=c0RYRKJ+P09ujBP8Asp6u9d2+Foyl3v70UVDOZSH985f3I4ogIKxQcrAO0wAgZFU3Uxrn3
- yQsMy1AuBt5NPx9ff08UzNzetLjEhcep4U1diJabYWBLoGnbNbfDjTjOYY9s3J4DQRFHWw
- 1qVWvbr0/MUbRLx1MtFmIIfAoo/tgQU=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-281-eTHpfHG0Mh6OCc6beIz9nA-1; Thu, 15 May 2025 02:20:12 -0400
-X-MC-Unique: eTHpfHG0Mh6OCc6beIz9nA-1
-X-Mimecast-MFC-AGG-ID: eTHpfHG0Mh6OCc6beIz9nA_1747290012
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-30a80fe759bso986960a91.1
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 23:20:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747290011; x=1747894811;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=E2xmYv3z3UaoGCp9yXll/TGIYGDrCH4HhTigQeBcYRU=;
- b=RRrYJkJGupiWtoNidEmIl/xxJvIUrf1V8pfLshZdK69h/fkFVCnM8ngNZi/J1ODqFA
- y5ciDkAQJeLRh2acl+ZDssuS0pEgWgbnoHeODoVfXRwGwlXrEIKU8AGto+TfrvERqX05
- vR36OD71lVYuFyV7craSCxXmkk0AoU1sgbW6QJWdN1XC00DoXnI2JwrdOJz54KcjA4cR
- d75uV2Sbk4zu/I6RcmYdRqLpzu/rdx0cCoVyuOMBeWzymOk/Twhs0l5KBH15YZT5fkao
- G65/0szSENTQ8GGmxppn0IYAQ45VAEL0I+YSzzt+YG8UPsW6GpsnTgrt2Xlqi6PNadbe
- INfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4ZetCMOR6OzJvqob/L+8TofyATDhJmDAjMHK41MqoeAcGl2NIcIgRcsfZcSNKXD3ONH7mfix3Op1U@nongnu.org
-X-Gm-Message-State: AOJu0YyhAtGThNq2kVZTn2EEXJCviLjB6auAZOCptNgNEpKk+cYZQ1+D
- 8Qt6P3L8FNLGWCigDQai7uP5E5YBwaF0JhxO19XeC1oyJhZ1xgNMewYtFUOstdLVkYey6YDzx2P
- Kf3i846GjsQrXeRsDHnMHiwlS24iWqVvWO9oz8lSKLMh6HT82d4L03IVG+gzGJUYZj4sGBFHY/Z
- 4M0elktGJ+zGR8Q38DCNOJ0UEyItQ=
-X-Gm-Gg: ASbGncuo2a+/RSY3/0u5vQLGc0bONSmc+DMiNtbSPcOsbyTome1gKvAYbOuNMz56pG/
- bNHsxB9hJSgoUjp15K17/GWlbA+YwdqTY53IBpjnzOKA6pMTOlUsvEoDg4U6Gvk3w+8vo
-X-Received: by 2002:a17:90a:d650:b0:2ff:72f8:3708 with SMTP id
- 98e67ed59e1d1-30e5178abaemr2558327a91.17.1747290011461; 
- Wed, 14 May 2025 23:20:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+CPktLBN5MuT56E9OwbfislfSiHW+W6PUKRSiHY5Qhxfyj90vyeGHoVwc6Tv2G8FNxOSUw/lqS1JT3WoGXFc=
-X-Received: by 2002:a17:90a:d650:b0:2ff:72f8:3708 with SMTP id
- 98e67ed59e1d1-30e5178abaemr2558283a91.17.1747290010908; Wed, 14 May 2025
- 23:20:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1uFS01-00054q-8Z; Thu, 15 May 2025 02:23:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZQAUWg/i9UqtYf2JokpTbYLLE2bcy0dnzl29Yng7NsuKzeBaa7XynT3fSooRkvmjKa5AnHeEMSlQf+1N8PAWDZmwkqZ3kOMqBSv52b0k09FQ/mmnvNb+IlDT8ICzzWJ2g3ksqxv++fRTHsiu3TpfdkyMKJRHvi2Hl1H/+LdRP8M60YSdSYZ+SbJlzVc6LavFuc2dFf23CjMcgmEkpkak7HAMBZ0YahXm6cCj3gRxuxELo61XbmdnsYCnGvxi8msIe2isO1m4FHOms+xrSFDaBmDKdR2MiS7d9KcVY7wfI2gof2HWQqS6QDoU2P2wfzmXm2p95wfnva8Z0LwoAEer7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ow6s8fsIXcmNKVM/MMVHnHB4ZICGM2z9HproV/H9Lko=;
+ b=A0f6sPaTi9nx2Smf0gxEaAPxaHYNjoZeDCvtqFM8/wr4NFwHQawYRwA+ZzcD9VX18iV97qo/0N9RGf137QD8Uch59mvx+xbZnLjfZYtf6bAxtC932IBHd3Ud6+PkcFfFUizQpn7ZNlbwDKfZ5Xz7nSL3EQ3VHu06HLLhMFuOft3X3pDxy6IDZxKP+T0fb02Gtm7cTAaGShLE7ANWks6vLzUTh2i1slu5zbma81KLMpHaLJL/SPyQxW+e6vbwHOhgOfYpYbvZ8qP0C5XUBXtgzHipYeXNbT0LOwWSH1k/xQRqzI20y9n+cN5xFBz2Lx+tuJnldpm2qXNYVw5h/IK6sQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ow6s8fsIXcmNKVM/MMVHnHB4ZICGM2z9HproV/H9Lko=;
+ b=YFsmcWo76GKzTRTehRiyUQQgcrE0nuF/8crgAQHurBQxuplAb+neyimV/C3W/oE8ny2oMiXHJBzYYqidIJRiOsYD1GsOgcNyiBoxnnhNYFl8GH+FkU4ExR2hqXpFNzH4LZMpd3cx+c2kJ2on1i80yuY6cbqrIOPqXT16nK5v9vbhfkFNcq+XmgcJRkRxg+TQS6EdDECVQh/1yGh0gW1QdDTPpLZGIe/RQMNcTK7ClLrfQIrBDqvKSujxq0Pt88ZabPX5qtNlDQf8jg3Ss3sMD6jBq036ArTPaVpeGdqhjWMXJx3OnervR1j4cqTx4CuUZf/Hy5e8Znu6Ng4KH6zrXQ==
+Received: from KL1PR0601MB4180.apcprd06.prod.outlook.com
+ (2603:1096:820:29::12) by SEZPR06MB7138.apcprd06.prod.outlook.com
+ (2603:1096:101:225::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Thu, 15 May
+ 2025 06:23:08 +0000
+Received: from KL1PR0601MB4180.apcprd06.prod.outlook.com
+ ([fe80::6fe5:1995:96a2:552a]) by KL1PR0601MB4180.apcprd06.prod.outlook.com
+ ([fe80::6fe5:1995:96a2:552a%6]) with mapi id 15.20.8722.027; Thu, 15 May 2025
+ 06:23:08 +0000
+From: Steven Lee <steven_lee@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, "longzl2@lenovo.com"
+ <longzl2@lenovo.com>, Yunlin Tang <yunlin.tang@aspeedtech.com>
+Subject: RE: [PATCH v2 3/5] hw/arm/aspeed_ast27x0-fc: Map ca35 memory into
+ system memory
+Thread-Topic: [PATCH v2 3/5] hw/arm/aspeed_ast27x0-fc: Map ca35 memory into
+ system memory
+Thread-Index: AQHbxK8ktEuudT7umEyNRCy5cBcUmrPSQVYAgAD4tpA=
+Date: Thu, 15 May 2025 06:23:08 +0000
+Message-ID: <KL1PR0601MB4180E9F7CE0955D784B3EED98590A@KL1PR0601MB4180.apcprd06.prod.outlook.com>
+References: <20250514090354.1461717-1-steven_lee@aspeedtech.com>
+ <20250514090354.1461717-4-steven_lee@aspeedtech.com>
+ <58fd39ee-0294-4a05-ad5a-76a144a36e91@redhat.com>
+In-Reply-To: <58fd39ee-0294-4a05-ad5a-76a144a36e91@redhat.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: KL1PR0601MB4180:EE_|SEZPR06MB7138:EE_
+x-ms-office365-filtering-correlation-id: 499cab7e-cd80-4d8e-15ad-08dd9378f593
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?QW9pVlZqbVZzU0lqVkZWOGdZSkN6N2tBL1FBdGhhQkN3cXRnVTdIYXVxTjBk?=
+ =?utf-8?B?NVRJTXNuQ1NNNXBnYTlYdGRUWXlNeXd6NlNheTNIS21xVis4U2QzeE1SZ3Rx?=
+ =?utf-8?B?a0k1VmFoenFub2xqRzRhd0pENTlUa0JYMC84N2RYVklITU9rOWdmZHBGcmpy?=
+ =?utf-8?B?aWJ1ZnJtUmlBMlAzWXRBR0ZYeDFBVVFINzdJK292SkJFdlhqelhUOVExM1Q1?=
+ =?utf-8?B?clZVK0xsOXJNZE5kN2Q2M0NxRk1OYjJ2eE9uUDlzdnZmNzAxeEhVVHhMb3R0?=
+ =?utf-8?B?MnR2eXVEUHoyZWVZdlVwUExHOUFmRzVZQU1iOW5FcnRCTElzRnZKU0lyRzIz?=
+ =?utf-8?B?Mk5JZkU1SGF5dEFJOU5UNjBIanlPVlVUT0tWRGh1SElnSDF1N3pWLzFiQjBJ?=
+ =?utf-8?B?QUtLazgwVkJ1UUkxR05yUzJRakRnTWhKVkpQV0ZSRElEc2x0akVqOVhDNXJE?=
+ =?utf-8?B?ZHpBT0F4Q3N5cFU3MmszU2hRUnhNTVBOZnIycElUOHdRaGJnQlhLRDFBUHJH?=
+ =?utf-8?B?cVRFS2J3V1hIeDE0RFliRWgxbU5lRnZvbEVJZno1N2JsdFZJM1p0Y3N4ZzNK?=
+ =?utf-8?B?NzJSUWE3eFBzS1RCbHI4WWNIS3JRQ2NuZ0hJdTI3N2wvS0FjSkRDYm4vSVhu?=
+ =?utf-8?B?RlZvWG1uSmo3TUt3ZnI1WWU0Z0lxVTAwZWxtK0tXYWNLd3BQQytBTkFnZ291?=
+ =?utf-8?B?VGN0TFJnRmxBeFJ4cWNwUGUvaVl0bFllN2NLVktBalJDeWY4eUZTVnFYUHhT?=
+ =?utf-8?B?bDJtRUt2TndCYjk1bm5PeEpvaUxSajQwU0RaQytMT2VqOVpHNUhmTHZuT0t4?=
+ =?utf-8?B?SXU5OUxZREFuQTR6OUl3Q1FtaUxoRUhtSjc1S0V1Rm8wVXNKQ3dWK2JGcS85?=
+ =?utf-8?B?cWxhMmFMa0puUHYyRTBxRVQvam5NSExQcXpSdUV5M2RTTWt3M2lScWJiMk5t?=
+ =?utf-8?B?UGI4bXo4K29FT1dRK0cyZHo2Ly8wbUVmUnVlaXlabHcvbUU0NUdhVDZJYk96?=
+ =?utf-8?B?U0ZibXdzaGVCOFdlWHgyNXNPYnFtbkhoaFdwY3hzTWFnLzB6RXFBbk5EM2w1?=
+ =?utf-8?B?dTh0Vm9nWk5hdTFnWXNiZ1hCcG1MZmxldDBJbWpad3Q1SFp5NlRxYjNwWHVI?=
+ =?utf-8?B?ZHdiQWtQZm00aG5zNTFJTWNMYS9hTkJSdGNpekFoSUlnZEJwZ2JXczVEVEJo?=
+ =?utf-8?B?SFo5b2ltUDN1czIxeG1ZRVhXQml3cXU1MUV0dEJCYVpGczJ3VWpRVnVOVU1I?=
+ =?utf-8?B?TWs4MCs1UCt6bWpwVVJLR1NXSzBVWCt4UzkzYzdhWTR0Qk9XbVRMWWs5T0Jk?=
+ =?utf-8?B?QXA3Y3M1Y1AvYVBjK3RlSW9DcEtUcWVZSFFWYlZlL0dZTUkvVzNIeThDdk55?=
+ =?utf-8?B?aXlWNE5rNkR2cG5JRVdCUUE2akR5blcxZkk0cHd5emg1Z0FsZWhvTEdKQzZ0?=
+ =?utf-8?B?SU81Y0NFbmc2ckV0dEVpWE9YdnJWY0l5ejZKdFRvYUxXcUtCamU5QU9MSlRu?=
+ =?utf-8?B?UUFIazlOQnFpaUI3M0dtdDRpSHJFZjRlcmdSTEh6WVZPRUlCY1BWdldsSXhC?=
+ =?utf-8?B?bHlpcUpobDExaDMrSDNZblBEYnVjK25HTzBmWnNldE5CR0RCWmlxMDdSNXJX?=
+ =?utf-8?B?cVJUenZyLzBpd3lRSmFMSjdqNE5TejMvY1NIR09KUDk0WWl1SVNnandsQ2JC?=
+ =?utf-8?B?OFgrM29iYzJac0JUa2NOMTF1R1ZadWdRZThCaGkwRW9qQ3JzWWVsckxraTVL?=
+ =?utf-8?B?L3hVdzJHaVNSU3JGb0tyRzVxSWZ3emJIaS9zV00vWjQ3RWlKSW5YYXpMZ29N?=
+ =?utf-8?B?eEl3ZHFIZUNsb281aGo2QkFnZVZyMFFoWjJTK2ZSSjcyU1c2bXZ4NEdva2hO?=
+ =?utf-8?B?bFQwMXYvQXJPNmU4TVN0c2VZSGxYWWhwVENsZEloTXdqL2FyTEtieXlHdits?=
+ =?utf-8?B?S2k3YzQ1eHIwWkFnZzRkWDVBdTJvZTJHTEg3eVJHZG9iSXBQMTBjdkFxaVdh?=
+ =?utf-8?B?RTZUdGp0R0FRPT0=?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:KL1PR0601MB4180.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RUtkMVJzVzJSOTR1Uk05aGhCb0xsbVdVQ3ZqeGV1SXhNajFlVU9EY3A5ckxa?=
+ =?utf-8?B?N1hmL3ZRMzE1Tys0NzlCUThjVjhJTUt0YW9zUWVsbDRGZzE5MVBVSTFhL0VL?=
+ =?utf-8?B?clV1emlIeVdlS045emttS0RNRUEzRGNoYmMwY3JYcHVVeTlNSlFLeW82eFpY?=
+ =?utf-8?B?WE9rckxxQnRwWDVmS1krY1VwSFh4RnhPNWRza3NFdGJTZGZwYyt6Qlh3WW5h?=
+ =?utf-8?B?cEdqSzY2TlNlUUlMeXpOam5nUy9yOEVWUUQ3MDkyRGJYK3F4TGpIOXJuNm1F?=
+ =?utf-8?B?N2NZcXBRd1ZSNWZ0UUxtTGJVUGZLVTdteGZkdEdqNXZmWHB1dDdoNm0wcXdj?=
+ =?utf-8?B?aWxmSERGUU1XdUcvaG8zU0MwVGJ6c2lYOWg0REVlZnc0K0Y4OWZ1TjhFUEJW?=
+ =?utf-8?B?ckwvZlFQRndPNU5VQVo0SE5EOXluMWhaZmJIcysyTTBvYW1PVlhnRGFUbGFH?=
+ =?utf-8?B?MFhTVE1GQjlvVnN5clh2cy84bUUvZjgrMXpER0paK2FWbWRRZGVxUXEvS2ov?=
+ =?utf-8?B?WXo2cEZNemIzTTM1YzdRZXpvVUU5T2VRdVZLM0FURGRTV1RoZUlyaDllK2hS?=
+ =?utf-8?B?aGg4WkVkdTljVFozRUt3RVNDcU4wQUVIcmMwVlhPYWo1U2ZYZ1hjRldzbnM0?=
+ =?utf-8?B?MGg2VnFrMy9UTk5ZQmM0STBhSmJVbmQ0SjFBTy9WLzR2SXI5TGorWGE0QXlk?=
+ =?utf-8?B?TW9NVjVlQk1LM21wM3FQOVNvMjJNYWNjcFZpeUhNOHQ2NHpxYmZZdkRqSHQv?=
+ =?utf-8?B?NXVqUldlNUx0U1d3aVVpV3hPTUZ0TG9ndDB5d2R2SUtjdFBCK2dtZHRMMTFn?=
+ =?utf-8?B?dldIZkgxT25YT2Y1TmJSdnZGa2lVMDgyenM0aXRCNHBocmFZVFFBUHhWQi9H?=
+ =?utf-8?B?OXA2Ukp5cXN3UjFmbkdFaHNyenVLY2R3eFBoRjRYbTFVYVNzWC9ObUtESkhT?=
+ =?utf-8?B?dWpBZXI1YkFxcElDaDV0OE05MmhuNUxHNU4xUkpFT2FYTnFxeEgybFROenZ4?=
+ =?utf-8?B?QTBoQ3hxajFPUUlTeE1YYm9XYnVXYUp5b0w4MGdFVTQ2WnR3YlhxajRHMU5I?=
+ =?utf-8?B?NTBwTFhSWk41VHRzNmFrQnZTSFB5eUVhbWpCSllXTzNVbFBwS0pvMnJBa3hO?=
+ =?utf-8?B?RjRtaFlyTERyUExkdjloazhsc1FPTmVsbHJlL2Z1Wm85YXUvVFBvOWRmUThP?=
+ =?utf-8?B?M3ZnMWtrN2VOR1g2WVZNbGxMbFQwM1BaYjJ0aGEvYWhsaHVuUlFyMitFMVBp?=
+ =?utf-8?B?bm1BTi9vVWFEaDRZbXFoc244SjJEVkVMUnlOam4wZWJIYTdUdk1Ld2dFMElP?=
+ =?utf-8?B?akp5a25vOVN6SU9iNkRTOFoxdXJ2ekZyeE1uSkZpdkFyajk1NnJIbFp1T1BM?=
+ =?utf-8?B?Y3dadytMQVBoQVZNOVY5ejJHT3JiMGpqNVpQUmphdXNyUUxMc2FxTXhpbkpj?=
+ =?utf-8?B?cW0xY3EzL3l6OEM0eXo3Tm4vVWl5cFZ6ZE1wL051MmJaWWFzRnlnai9DRVhO?=
+ =?utf-8?B?bmdhWE1JeFNWQW9hdzA2NzBuZ2tYMTNlb3pSQVJtblg0eTBwem9OZHZ6MUN2?=
+ =?utf-8?B?a1pGSnZsU0hSTEZacTZvT1VOR1JJMUE2cnhZYW9VM2lrYktNWXdoNXBLc0ov?=
+ =?utf-8?B?Rys3dDEzUFFzaUtraEVHZTQxRHdCejh3YWVVNkRvaUlHUG9ZTElRdG5lbUox?=
+ =?utf-8?B?TUNDdEszYVRvYkNWcXplRDVlTEJCZjJra0FTVHZnRElRUERHelNUNE9zTlNX?=
+ =?utf-8?B?bVVVaEl3aktKaWVZd0pSeGlVajh1ZWV1THlRNFFJa0x6ZVdycUNhZmticnNK?=
+ =?utf-8?B?RWgwUjVVNVdRQzQ2QW04eFhyOWdYMDZ0aTZSTUcwQ2tuMUpNOVN4YnpNTVA4?=
+ =?utf-8?B?UGdoUGRNdXE1bmF4SzJ2U013MFJyZ1dycVNQTEtZTFllSkZPbkJIbFpKS2hn?=
+ =?utf-8?B?RzR6UjRMT2hhZm94STR5aEZkZVNWOFRUNDhKcXNDSFVOVVVURGFkbTFQUm4x?=
+ =?utf-8?B?SUJNN2F1NjA5QUNOY3F2RVJPWU4wa2toQUIrY2oxaFdTQUxaUStiZGtQNUpG?=
+ =?utf-8?B?eG9WcFo0eVlpdW1MakFTSFVSRUxYVHVCTWZaUVh3MXhzY1Fsc2lvenFWa3B1?=
+ =?utf-8?Q?Fry8vOqUuk/QKLGABM5T5ftKE?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20250324135929.74945-1-sahilcdq@proton.me>
- <CAJaqyWdXat-ugJHEcZyB5dbTuwGgvrO2+DdDd9YneS0=j-99NA@mail.gmail.com>
- <f1354888-74fb-44d8-8b48-c6a6a13db1a7@gmail.com>
- <CAJaqyWd=ssa5fkmV7Z=tzJvFeciC1P2U2pYheaSrZ2PZCaejHg@mail.gmail.com>
- <9a7c409f-cd7e-4906-812b-c8a4d77cfc4d@gmail.com>
-In-Reply-To: <9a7c409f-cd7e-4906-812b-c8a4d77cfc4d@gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 15 May 2025 08:19:34 +0200
-X-Gm-Features: AX0GCFu3HthfabTp9d5O7RT6lPnGcjKy4ze-XJg4KmzgqKhB6FVvXnKhDjs7yvM
-Message-ID: <CAJaqyWdme4GSTQr-mbGiWvV5Wu0Mnjc467ptWFoX2i3zHygf3g@mail.gmail.com>
-Subject: Re: [RFC v5 0/7] Add packed format to shadow virtqueue
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- sahilcdq@proton.me
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR0601MB4180.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 499cab7e-cd80-4d8e-15ad-08dd9378f593
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 May 2025 06:23:08.1620 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: hzk7KKkEYvBXYeUQmcCfLvjeY39A40cGsKxzqOBJO2k+z3Gm6WkV4PUEGjXnYJhyKr4aQNvdDwBmp17ZSAqksMLjqZAU7MvTOvrjRAIo6qU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB7138
+Received-SPF: pass client-ip=2a01:111:f403:c400::3;
+ envelope-from=steven_lee@aspeedtech.com;
+ helo=HK3PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,267 +186,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 8:22=E2=80=AFAM Sahil Siddiq <icegambit91@gmail.com=
-> wrote:
->
-> Hi,
->
-> Apologies, I haven't been in touch for a while. I have an update that
-> I would like to give.
->
-> On 4/16/25 12:50 PM, Eugenio Perez Martin wrote:
-> > On Mon, Apr 14, 2025 at 11:20=E2=80=AFAM Sahil Siddiq <icegambit91@gmai=
-l.com> wrote:
-> >>
-> >> Hi,
-> >>
-> >> On 3/26/25 1:05 PM, Eugenio Perez Martin wrote:
-> >>> On Mon, Mar 24, 2025 at 2:59=E2=80=AFPM Sahil Siddiq <icegambit91@gma=
-il.com> wrote:
-> >>>> I managed to fix a few issues while testing this patch series.
-> >>>> There is still one issue that I am unable to resolve. I thought
-> >>>> I would send this patch series for review in case I have missed
-> >>>> something.
-> >>>>
-> >>>> The issue is that this patch series does not work every time. I
-> >>>> am able to ping L0 from L2 and vice versa via packed SVQ when it
-> >>>> works.
-> >>>
-> >>> So we're on a very good track then!
-> >>>
-> >>>> When this doesn't work, both VMs throw a "Destination Host
-> >>>> Unreachable" error. This is sometimes (not always) accompanied
-> >>>> by the following kernel error (thrown by L2-kernel):
-> >>>>
-> >>>> virtio_net virtio1: output.0:id 1 is not a head!
-> >>>>
-> >>>
-> >>> How many packets have been sent or received before hitting this? If
-> >>> the answer to that is "the vq size", maybe there is a bug in the code
-> >>> that handles the wraparound of the packed vq, as the used and avail
-> >>> flags need to be twisted. You can count them in the SVQ code.
-> >>
-> >> I did a lot more testing. This issue is quite unpredictable in terms
-> >> of the time at which it appears after booting L2. So far, it almost
-> >> always appears after booting L2. Even when pinging works, this issue
-> >> appears after several seconds of pinging.
-> >>
-> >
-> > Maybe you can speed it up with ping -f?
->
-> Thank you, I was able to run tests much faster with the -f option. So
-> far I have noticed that the RX queue does not give problems. When all
-> the descriptors are used it is able to wrap around without issues.
->
-> >> The total number of svq descriptors varied in every test run. But in
-> >> every case, all 256 indices were filled in the descriptor region for
-> >> vq with vq_idx =3D 0. This is the RX vq, right?
-> >
-> > Right!
->
-> The TX queue seems to be problematic. More on this below.
->
-> >> This was filled while L2
-> >> was booting. In the case when the ctrl vq is disabled, I am not sure
-> >> what is responsible for filling the vqs in the data plane during
-> >> booting.
-> >>
-> > The nested guest's driver fills the rx queue at startup. After that,
-> > that nested guest kicks and SVQ receives the descriptors. It copies
-> > the descriptors to the shadow virtqueue and then kicks L0 QEMU.
->
-> Understood.
->
-> >> =3D=3D=3D=3D=3D
-> >> The issue is hit most frequently when the following command is run
-> >> in L0:
-> >> $ ip addr add 111.1.1.1/24 dev tap0
-> >> $ ip link set tap0 up
-> >>
-> >> or, running the following in L2:
-> >> # ip addr add 111.1.1.2/24 dev eth0
-> >>
-> >
-> > I guess those are able to start the network, aren't they?
->
-> Yes, that's correct.
->
-> >> The other vq (vq_idx=3D1) is not filled completely before the issue is
-> >> hit.
-> >> I have been noting down the numbers and here is an example:
-> >>
-> >> 295 descriptors were added individually to the queues i.e., there were=
- no chains (vhost_svq_add_packed)
-> >> |_ 256 additions in vq_idx =3D 0, all with unique ids
-> >>       |---- 27 descriptors (ids 0 through 26) were received later from=
- the device (vhost_svq_get_buf_packed)
-> >> |_ 39 additions in vq_idx =3D 1
-> >>       |_ 13 descriptors had id =3D 0
-> >>       |_ 26 descriptors had id =3D 1
-> >>       |---- All descriptors were received at some point from the devic=
-e (vhost_svq_get_buf_packed)
-> >>
-> >> There was one case in which vq_idx=3D0 had wrapped around. I verified
-> >> that flags were set appropriately during the wrap (avail and used flag=
-s
-> >> were flipped as expected).
-> >>
-> >
-> > Ok sounds like you're able to reach it before filling the queue. I'd
-> > go for debugging notifications for this one then. More on this below.
-> >
-> >> =3D=3D=3D=3D=3D
-> >> The next common situation where this issue is hit is during startup.
-> >> Before L2 can finish booting successfully, this error is thrown:
-> >>
-> >> virtio_net virtio1: output.0:id 0 is not a head!
-> >>
-> >> 258 descriptors were added individually to the queues during startup (=
-there were no chains) (vhost_svq_add_packed)
-> >> |_ 256 additions in vq_idx =3D 0, all with unique ids
-> >>      |---- None of them were received by the device (vhost_svq_get_buf=
-_packed)
-> >> |_ 2 additions in vq_idx =3D 1
-> >>      |_ id =3D 0 in index 0
-> >>      |_ id =3D 1 in index 1
-> >>      |---- Both descriptors were received at some point during startup=
- from the device (vhost_svq_get_buf_packed)
-> >>
-> >> =3D=3D=3D=3D=3D
-> >> Another case is after several seconds of pinging L0 from L2.
-> >>
-> >> [   99.034114] virtio_net virtio1: output.0:id 0 is not a head!
-> >>
-> >
-> > So the L2 guest sees a descriptor it has not made available
-> > previously. This can be caused because SVQ returns the same descriptor
-> > twice, or it doesn't fill the id or flags properly. It can also be
-> > caused because we're not protecting the write ordering in the ring,
-> > but I don't see anything obviously wrong by looking at the code.
-> >
-> >> 366 descriptors were added individually to the queues i.e., there were=
- no chains (vhost_svq_add_packed)
-> >> |_ 289 additions in vq_idx =3D 0, wrap-around was observed with avail =
-and used flags inverted for 33 descriptors
-> >> |   |---- 40 descriptors (ids 0 through 39) were received from the dev=
-ice (vhost_svq_get_buf_packed)
-> >> |_ 77 additions in vq_idx =3D 1
-> >>       |_ 76 descriptors had id =3D 0
-> >>       |_ 1 descriptor had id =3D 1
-> >>       |---- all 77 descriptors were received at some point from the de=
-vice (vhost_svq_get_buf_packed)
-> >>
-> >> I am not entirely sure now if there's an issue in the packed vq
-> >> implementation in QEMU or if this is being caused due to some sort
-> >> of race condition in linux.
-> >>
-> >> "id is not a head" is being thrown because vq->packed.desc_state[id].d=
-ata
-> >> doesn't exist for the corresponding id in Linux [1]. But QEMU seems to=
- have
-> >> stored some data for this id via vhost_svq_add() [2]. Linux sets the v=
-alue
-> >> of vq->packed.desc_state[id].data in its version of virtqueue_add_pack=
-ed() [3].
-> >>
-> >
-> > Let's keep debugging further. Can you trace the ids that the L2 kernel
-> > makes available, and then the ones that it uses? At the same time, can
-> > you trace the ids that the svq sees in vhost_svq_get_buf and the ones
-> > that flushes? This allows us to check the set of available descriptors
-> > at any given time.
-> >
-> In the linux kernel, I am printing which descriptor is received in which
-> queue in drivers/virtio/virtio_ring.c:virtqueue_get_buf_ctx_packed() [1].
-> I see the following lines getting printed for the TX queue:
->
-> [  192.101591] output.0 -> id: 0
-> [  213.737417] output.0 -> id: 0
-> [  213.738714] output.0 -> id: 1
-> [  213.740093] output.0 -> id: 0
-> [  213.741521] virtio_net virtio1: output.0:id 0 is not a head!
->
-
-I find it particular that it is the first descriptor with id 1. Do you
-have any other descriptor with id 1 previously? Does it fail
-consistently with id 1?
-
-You should have descriptors with id 1 and more in the rx queue and the
-code should not be able to tell the difference, so it seems weird it
-fails with tx. But who knows :).
-
-> In QEMU's hw/virtio/vhost-shadow-virtqueue.c:vhost_svq_add_packed(), I am
-> printing the head_idx, id, len, flags and vq_idx. Just before the crash,
-> the following lines are printed:
->
-> head_idx: 157, id: 0, len: 122, flags: 32768, vq idx: 1
-> head_idx: 158, id: 0, len: 122, flags: 32768, vq idx: 1
-> head_idx: 159, id: 0, len: 66, flags: 32768, vq idx: 1
-> head_idx: 160, id: 1, len: 102, flags: 32768, vq idx: 1
->
-> In QEMU's hw/virtio/vhost-shadow-virtqueue.c:vhost_svq_get_buf_packed(), =
-I
-> am printing the id, last_used index, used wrap counter and vq_idx. These
-> are the lines just before the crash:
->
-> id: 0, last_used: 158, used_wrap_counter: 0, vq idx: 1
-> id: 0, last_used: 159, used_wrap_counter: 0, vq idx: 1
-> id: 0, last_used: 160, used_wrap_counter: 0, vq idx: 1
-> id: 1, last_used: 161, used_wrap_counter: 0, vq idx: 1
->
-> In QEMU's hw/virtio/vhost-shadow-virtqueue.c:vhost_svq_flush() [2], I am =
-tracking
-> the values of i and vq_idx in the outer do..while() loop as well as in th=
-e inner
-> while(true) loop. The value of i is used as the "idx" in virtqueue_fill()=
- [3] and
-> as "count" in virtqueue_flush() [4]. Lines printed in each iteration of t=
-he outer
-> do...while loop are enclosed between "=3D=3D=3D" lines. These are the lin=
-es just before
-> the crash:
->
-
-I'd print VirtQueueElement members too.
-
-It seems you're super close to fix it :).
-
-Thanks!
-
-> =3D=3D=3D
-> in_loop: i: 0, vq idx: 1
-> in_loop: i: 1, vq idx: 1
-> out_loop: i: 1, vq idx: 1
-> =3D=3D=3D
-> in_loop: i: 0, vq idx: 1
-> in_loop: i: 1, vq idx: 1
-> out_loop: i: 1, vq idx: 1
-> =3D=3D=3D
-> in_loop: i: 0, vq idx: 1
-> in_loop: i: 1, vq idx: 1
-> in_loop: i: 2, vq idx: 1
-> out_loop: i: 2, vq idx: 1
-> =3D=3D=3D
-> in_loop: i: 0, vq idx: 1
-> out_loop: i: 0, vq idx: 1
->
-> I have only investigated which descriptors the kernel uses. I'll also che=
-ck
-> which descriptors are made available by the kernel. I'll let you know wha=
-t I
-> find.
->
-> Thanks,
-> Sahil
->
-> [1] https://github.com/torvalds/linux/blob/master/drivers/virtio/virtio_r=
-ing.c#L1727
-> [2] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-sh=
-adow-virtqueue.c#L499
-> [3] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/virtio.c=
-#L1008
-> [4] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/virtio.c=
-#L1147
->
-
+SGkgQ8OpZHJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBDw6lk
+cmljIExlIEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+DQo+IFNlbnQ6IFdlZG5lc2RheSwgTWF5IDE0
+LCAyMDI1IDExOjMyIFBNDQo+IFRvOiBTdGV2ZW4gTGVlIDxzdGV2ZW5fbGVlQGFzcGVlZHRlY2gu
+Y29tPjsgUGV0ZXIgTWF5ZGVsbA0KPiA8cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnPjsgVHJveSBM
+ZWUgPGxlZXRyb3lAZ21haWwuY29tPjsgSmFtaW4gTGluDQo+IDxqYW1pbl9saW5AYXNwZWVkdGVj
+aC5jb20+OyBBbmRyZXcgSmVmZmVyeQ0KPiA8YW5kcmV3QGNvZGVjb25zdHJ1Y3QuY29tLmF1Pjsg
+Sm9lbCBTdGFubGV5IDxqb2VsQGptcy5pZC5hdT47IG9wZW4NCj4gbGlzdDpBU1BFRUQgQk1DcyA8
+cWVtdS1hcm1Abm9uZ251Lm9yZz47IG9wZW4gbGlzdDpBbGwgcGF0Y2hlcyBDQyBoZXJlDQo+IDxx
+ZW11LWRldmVsQG5vbmdudS5vcmc+DQo+IENjOiBUcm95IExlZSA8dHJveV9sZWVAYXNwZWVkdGVj
+aC5jb20+OyBsb25nemwyQGxlbm92by5jb207IFl1bmxpbiBUYW5nDQo+IDx5dW5saW4udGFuZ0Bh
+c3BlZWR0ZWNoLmNvbT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MiAzLzVdIGh3L2FybS9hc3Bl
+ZWRfYXN0Mjd4MC1mYzogTWFwIGNhMzUgbWVtb3J5DQo+IGludG8gc3lzdGVtIG1lbW9yeQ0KPiAN
+Cj4gSGVsbG8gU3RldmVuLA0KPiANCj4gT24gNS8xNC8yNSAxMTowMywgU3RldmVuIExlZSB3cm90
+ZToNCj4gPiBBdHRhY2ggQ0EzNSBtZW1vcnkgdG8gc3lzdGVtX21lbW9yeSB0byBlbnN1cmUgYSB2
+YWxpZCBGbGF0Vmlldy4NCj4gPiBXaXRob3V0IHRoaXMsIGRtYV9tZW1vcnlfd3JpdGUoKSB1c2Vk
+IGJ5IGZ0Z21hYyBmYWlsIHNpbGVudGx5LCBjYXVzaW5nDQo+ID4gZGhjcCB0byBicmVhayBvbiBh
+c3QyNzAwZmMsIGFzIGZsYXR2aWV3X3dyaXRlKCkgcmV0dXJucyBhbiBlcnJvciB3aGVuDQo+ID4g
+c3lzdGVtX21lbW9yeSBpcyBlbXB0eS4NCj4gDQo+IFRoZSBjaGFuZ2UgYmVsb3cgZml4ZXMgdGhl
+IG5ldHdvcmsgRE1BIHRyYW5zYWN0aW9ucyBpbmRlZWQgYnV0IEkgdGhpbmsgdGhpcw0KPiBjYXNl
+IGNhbiBiZSBhZGRyZXNzZWQgZGlmZmVyZW50bHkuDQo+IA0KPiBUaGUgdHJhbnNhY3Rpb25zIG9u
+IGFkZHJlc3Nfc3BhY2VfbWVtb3J5IGluIHRoZSBmdGdtYWMxMDAgZGV2aWNlIG1vZGVsDQo+IHNo
+b3VsZCBiZSByZXBsYWNlZCBieSB0cmFuc2FjdGlvbnMgb24gYSBsb2NhbCBhZGRyZXNzIHNwYWNl
+IHdoaWNoIHdvdWxkIGJlDQo+IGluaXRpYWxpemVkIGZyb20gYSBtZW1vcnkgcmVnaW9uIHBhc3Nl
+ZCB0byB0aGUgbW9kZWwgd2l0aCBhIHByb3BlcnR5Lg0KPiBUaGlzIGlzIHZlcnkgc2ltaWxhciB0
+byB3aGF0IHdlIGRvIGluIHRoZSBBc3BlZWQgU01DIG1vZGVsLiBTaW5jZSBpdCBpcyBtb3JlDQo+
+IHdvcmssIGl0IGNhbiBiZSBhZGRyZXNzZWQgc2VwYXJhdGVseSBhbmQgbGF0ZXIuDQo+IA0KPiBI
+b3dldmVyLCBsZXQncyBrZWVwIHRoZSBjaGFuZ2UgYmVsb3cgZm9yIGFsbCBvdGhlciBwbGFjZXMg
+d2hpY2ggYXJlIGRpZmZpY3VsdCB0bw0KPiBhZGRyZXNzLCBsaWtlIHJvbV9jaGVja19hbmRfcmVn
+aXN0ZXJfcmVzZXQoKS4gVGhlIGNvbW1pdCBzaG91bGQgYmUNCj4gcmVwaHJhc2VkLg0KPiANCg0K
+DQpUaGFua3MgZm9yIHRoZSBzdWdnZXN0aW9uLCBJIHdpbGwgcmV3cml0ZSB0aGUgY29tbWl0IG1l
+c3NhZ2UNCg0KUmVnYXJkcywNClN0ZXZlbg0KDQo+IA0KPiANCj4gPiBTaWduZWQtb2ZmLWJ5OiBT
+dGV2ZW4gTGVlIDxzdGV2ZW5fbGVlQGFzcGVlZHRlY2guY29tPg0KPiA+IC0tLQ0KPiA+ICAgaHcv
+YXJtL2FzcGVlZF9hc3QyN3gwLWZjLmMgfCAxICsNCj4gPiAgIDEgZmlsZSBjaGFuZ2VkLCAxIGlu
+c2VydGlvbigrKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2h3L2FybS9hc3BlZWRfYXN0Mjd4MC1m
+Yy5jIGIvaHcvYXJtL2FzcGVlZF9hc3QyN3gwLWZjLmMNCj4gPiBpbmRleCBmZjY0NjA1NjYzLi5j
+Y2JhNWZjOGExIDEwMDY0NA0KPiA+IC0tLSBhL2h3L2FybS9hc3BlZWRfYXN0Mjd4MC1mYy5jDQo+
+ID4gKysrIGIvaHcvYXJtL2FzcGVlZF9hc3QyN3gwLWZjLmMNCj4gPiBAQCAtNjksNiArNjksNyBA
+QCBzdGF0aWMgdm9pZCBhc3QyNzAwZmNfY2EzNV9pbml0KE1hY2hpbmVTdGF0ZQ0KPiA+ICptYWNo
+aW5lKQ0KPiA+DQo+ID4gICAgICAgbWVtb3J5X3JlZ2lvbl9pbml0KCZzLT5jYTM1X21lbW9yeSwg
+T0JKRUNUKCZzLT5jYTM1KSwNCj4gImNhMzUtbWVtb3J5IiwNCj4gPiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgVUlOVDY0X01BWCk7DQo+ID4gKyAgICBtZW1vcnlfcmVnaW9uX2FkZF9zdWJyZWdp
+b24oZ2V0X3N5c3RlbV9tZW1vcnkoKSwgMCwNCj4gPiArICZzLT5jYTM1X21lbW9yeSk7DQo+ID4N
+Cj4gPiAgICAgICBpZiAoIW1lbW9yeV9yZWdpb25faW5pdF9yYW0oJnMtPmNhMzVfZHJhbSwgT0JK
+RUNUKCZzLT5jYTM1KSwNCj4gImNhMzUtZHJhbSIsDQo+ID4gICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIEFTVDI3MDBGQ19CTUNfUkFNX1NJWkUsDQo+ID4gJmVycm9yX2Fib3J0KSkg
+ew0KDQo=
 
