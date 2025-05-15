@@ -4,111 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C33C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A7CC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:45:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFakC-0001Gs-Og; Thu, 15 May 2025 11:43:36 -0400
+	id 1uFaiN-00058u-Fl; Thu, 15 May 2025 11:41:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFakB-0001CK-BE; Thu, 15 May 2025 11:43:35 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uFai8-0004uu-0y; Thu, 15 May 2025 11:41:29 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFak9-00067u-5E; Thu, 15 May 2025 11:43:34 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg561002277;
- Thu, 15 May 2025 15:43:29 GMT
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uFai0-0005zB-Na; Thu, 15 May 2025 11:41:27 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg4Zg004735;
+ Thu, 15 May 2025 15:41:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wNLaAT
- ms/IfH4TryaYduKLF3sLhTtn659EMkwMekuvU=; b=X2WFi9YSBcsRbSUI2WuPOJ
- Ax9S2JbCVGcve2WPGm4X6/YOl4q8wUuLvFfuRLdcWfeUZyZaWlz/cAtALvb+hGzw
- RMCuX7Bz4+04fbS6cdHp1rEU2vr14XhBGxl0/RHHlZO5sz5DMpNQdBMw0Rpq5mtv
- OIqBRyN3TQoqFyaXhvV18/1b2DTskZS8RhCg2I5Rm3VS6wmCM6ifTltQkZAz6Yun
- Are6lci1s3wgDFMW194TXxmCuWnmrPSuR+Zx2pE+so5ORaWeQG8T4UDzuM4tXC5I
- /6eUXRae0kp3aZ7ijAub4UcNjVT4T0RsbgZuGhRsGazOx6ApuHq0FWLsdHv0c/2w
- ==
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=8G6dQGfbJS6mL5ZWHNtGFdVyH+8WuRRIFuT2tiGvUtw=; b=AFDlcukVq+1+
+ Cd+4QwKGYb8PC4CCieMAMYh7+7q7zAEy8cbRaq/bnMsp8o1wfKLVhtiGEIp979wo
+ sj28WusBM/PSbI7vxKMVBEAzkjezH7/I/KfYD5S9axG2Pip9oNKZBs46RmaebqGe
+ chygtnmy3qGeNf8+K0Q0C+kLXGvn6fg5gKLZBSEarPwLITQ5w/YeOWOr7FGM0vcM
+ vX5HoFUlPW59zRNJokTxx4HiDbhtqFuTphCaWwstRphyvOntFzikG/IjzvzQTsux
+ 3rulqI741i11VHEEU/82liekPxwmsqUFS7iu/pYRD/NuLXOaCuyPkn2MUJCSnPvy
+ h9tsQaNLmA==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0v6ndjm-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2v57-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:43:28 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFTPpE011769;
- Thu, 15 May 2025 15:43:28 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0v6ndjk-1
+ Thu, 15 May 2025 15:41:12 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFfCwr013853;
+ Thu, 15 May 2025 15:41:12 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2v55-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:43:28 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE3Xot021793;
- Thu, 15 May 2025 15:43:27 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfpu16h-1
+ Thu, 15 May 2025 15:41:12 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE8T4O024281;
+ Thu, 15 May 2025 15:41:11 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfsb0rj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:43:27 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFhQ4K30147178
+ Thu, 15 May 2025 15:41:10 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54FFf9kr31982286
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:43:26 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 76B7D58058;
- Thu, 15 May 2025 15:43:26 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 245BC5805D;
- Thu, 15 May 2025 15:43:26 +0000 (GMT)
-Received: from [9.10.80.143] (unknown [9.10.80.143])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:43:26 +0000 (GMT)
-Message-ID: <01a04608-18ba-4a83-9627-34a596e6a11d@linux.ibm.com>
-Date: Thu, 15 May 2025 10:43:25 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 41/50] ppc/xive2: Prevent pulling of pool context losing
- phys interrupt
+ Thu, 15 May 2025 15:41:09 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B8C4758043;
+ Thu, 15 May 2025 15:41:09 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 606C158055;
+ Thu, 15 May 2025 15:41:09 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 15:41:09 +0000 (GMT)
+Message-ID: <a8d2f0c6392d4b7918e8eb87a5b0ec4f65f84326.camel@linux.ibm.com>
+Subject: Re: [PATCH 07/50] ppc/xive2: Reset Generation Flipped bit on END
+ Cache Watch
+From: Miles Glenn <milesg@linux.ibm.com>
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Caleb Schlossin <calebs@linux.vnet.ibm.com>
+Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
+ <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
+ Schlossin <calebs@linux.vnet.ibm.com>
+Date: Thu, 15 May 2025 10:41:09 -0500
+In-Reply-To: <20250512031100.439842-8-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-42-npiggin@gmail.com>
-Content-Language: en-US
-From: Mike Kowal <kowal@linux.ibm.com>
-In-Reply-To: <20250512031100.439842-42-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <20250512031100.439842-8-npiggin@gmail.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=IqAecK/g c=1 sm=1 tr=0 ts=68260ba0 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=N5jOW-pyvUPM4XXbhVEA:9 a=3ZKOabzyN94A:10
+X-Proofpoint-ORIG-GUID: -2qw1m5wWPGJomI4zsSJiv6IUBaaU6CI
+X-Authority-Analysis: v=2.4 cv=XK4wSRhE c=1 sm=1 tr=0 ts=68260b18 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=u5XRYQ9GfIdERzJa8uoA:9
  a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: Fb0Vg-_sJBIT5HBmh4n-G6c_PRTm_gJd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX2EEE9M0/ddkB
- Bh1iQQwcCS+093UtigWU9ELza6zvdZ5e5VSizrBcZ5MnN413vQZ6Yk4552WO1K7iFXDfsdkGAkN
- bwXOCkK9haySsABP2woixPm654p7MmaUi1gx7oxUZNGuAIz+a++4+DzqVm5jb9Bv4X0+h/eiE7v
- 1JJIm9HufKfeBg5clpdSQvxhlOQilIp/TAx8Z4nTrymVNvAsb6puQdA1XrOxDgHhv7i3OXEFk+g
- y6Bb7awnoDZKYyh7t44/jYghM0IsKGnmJfycxh9s837ThysR4xH+LXhT1iHDUs6q+sSctyoNGkN
- woMPle48KJWl6f2s1S7BfwqlVW5coUCQDrxc/Ql4bMpZ89ahm8HF03yRpfuajjJZRGfB3lZiZaP
- g/bDbFt82k2riY/wSPC1dGpczm/4pVEAqDuDheGi+lXxumXXxJVsqXLjeEHzXn+a+osqgu7N
-X-Proofpoint-GUID: -Rn6wBYcbe0IZTuxF8B3F67H_2UfigY4
+X-Proofpoint-GUID: DfvAENBixb9VOz-SzfNE6Ea9XGnU98nu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX0kmkRYufV1Hg
+ s2cJ2s5VxWlbnA79hQXfYidgItaVr24Qsc+q/XEeKMVJf9X3w7VdaZteHDbFB0L+Ej1nyNH70lg
+ 0m7K662ET8RyzSqfJBCxEIfQfdQbGd79/QFtQUxDMfQ4czouwvp+hj7nPd418TQLNPEytPqQK9g
+ 2gQn8DJ/jQ29A1GGcyNrPXCiZsgsaQPm84Fp8qGrtJ2seDQHrlV7CzNWYEyhP8IPZkp5dHlM6Nr
+ dRIaB8/FmfsSnsQbnUAzJ4AvZLsoPxKYVmw1hmC0GmCMUhK7fiNrnqk79FNpB4gEBixpqPaxc8C
+ 4j58E9mOuRHQCjoUfJ9j3m/GMlF5hNCei01RXcQkzyaDaSk2zfz8EDCTwlvMZAeOEbqNGJzkAHp
+ Up/sh0N7DTfgNN0NnC+ZruVGmCZZWvVYOIyw1psG4cTTXuSlcNd71P5XhUYClJzabKIJCdlp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 clxscore=1015 spamscore=0 mlxlogscore=904 bulkscore=0
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ spamscore=0 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505150155
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -129,58 +128,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
-> When the pool context is pulled, the shared pool/phys signal is
-> reset, which loses the qemu irq if a phys interrupt was presented.
->
-> Only reset the signal if a poll irq was presented.
-
-Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
-
-Thanks,  MAK
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+On Mon, 2025-05-12 at 13:10 +1000, Nicholas Piggin wrote:
+> From: Michael Kowal <kowal@linux.ibm.com>
+> 
+> When the END Event Queue wraps the END EQ Generation bit is flipped and the
+> Generation Flipped bit is set to one.  On a END cache Watch read operation,
+> the Generation Flipped bit needs to be reset.
+> 
+> While debugging an error modified END not valid error messages to include
+> the method since all were the same.
+> 
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
->   hw/intc/xive2.c | 18 ++++++++++--------
->   1 file changed, 10 insertions(+), 8 deletions(-)
->
+>  hw/intc/pnv_xive2.c | 3 ++-
+>  hw/intc/xive2.c     | 4 ++--
+>  2 files changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> index 30b4ab2efe..72cdf0f20c 100644
+> --- a/hw/intc/pnv_xive2.c
+> +++ b/hw/intc/pnv_xive2.c
+> @@ -1325,10 +1325,11 @@ static uint64_t pnv_xive2_ic_vc_read(void *opaque, hwaddr offset,
+>      case VC_ENDC_WATCH3_DATA0:
+>          /*
+>           * Load DATA registers from cache with data requested by the
+> -         * SPEC register
+> +         * SPEC register.  Clear gen_flipped bit in word 1.
+>           */
+>          watch_engine = (offset - VC_ENDC_WATCH0_DATA0) >> 6;
+>          pnv_xive2_end_cache_load(xive, watch_engine);
+> +        xive->vc_regs[reg] &= ~(uint64_t)END2_W1_GEN_FLIPPED;
+>          val = xive->vc_regs[reg];
+>          break;
+>  
 > diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index d899c1fb14..aeeb901b6a 100644
+> index 4dd04a0398..453fe37f18 100644
 > --- a/hw/intc/xive2.c
 > +++ b/hw/intc/xive2.c
-> @@ -727,20 +727,22 @@ static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
->                   xive2_redistribute(xrtr, tctx, cur_ring);
->               }
->           }
-> +
-> +        /*
-> +         * Lower external interrupt line of requested ring and below except for
-> +         * USER, which doesn't exist.
-> +         */
-> +        if (xive_nsr_indicates_exception(cur_ring, nsr)) {
-> +            if (cur_ring == xive_nsr_exception_ring(cur_ring, nsr)) {
-> +                xive_tctx_reset_signal(tctx, cur_ring);
-> +            }
-> +        }
->       }
->   
->       if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_save) {
->           xive2_tctx_save_ctx(xrtr, tctx, ring, nvp_blk, nvp_idx);
->       }
->   
-> -    /*
-> -     * Lower external interrupt line of requested ring and below except for
-> -     * USER, which doesn't exist.
-> -     */
-> -    for (cur_ring = TM_QW1_OS; cur_ring <= ring;
-> -         cur_ring += XIVE_TM_RING_SIZE) {
-> -        xive_tctx_reset_signal(tctx, cur_ring);
-> -    }
->       return target_ringw2;
->   }
->   
+> @@ -374,8 +374,8 @@ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
+>          qgen ^= 1;
+>          end->w1 = xive_set_field32(END2_W1_GENERATION, end->w1, qgen);
+>  
+> -        /* TODO(PowerNV): reset GF bit on a cache watch operation */
+> -        end->w1 = xive_set_field32(END2_W1_GEN_FLIPPED, end->w1, qgen);
+> +        /* Set gen flipped to 1, it gets reset on a cache watch operation */
+> +        end->w1 = xive_set_field32(END2_W1_GEN_FLIPPED, end->w1, 1);
+>      }
+>      end->w1 = xive_set_field32(END2_W1_PAGE_OFF, end->w1, qindex);
+>  }
+
 
