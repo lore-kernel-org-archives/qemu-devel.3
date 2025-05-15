@@ -4,117 +4,192 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C29C54754
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D204C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFaoy-0000XD-G8; Thu, 15 May 2025 11:48:32 -0400
+	id 1uFani-0003BK-RH; Thu, 15 May 2025 11:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFaot-00005f-0j; Thu, 15 May 2025 11:48:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1uFamC-0007pq-Pu
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 11:45:41 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFaom-0006gR-3p; Thu, 15 May 2025 11:48:26 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg44T004680;
- Thu, 15 May 2025 15:48:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=4yjmpH0400ZrmT9Y9Fdw7fqIGgJobuwOJdA8Lx3z29E=; b=iKXJqEBy/VT3
- V8bk5ZvfYKpx55Z/aP41FgF4ZAWLTF0l9FlC47a8NqTP93dvrM/7kYwx1RM2kywT
- p3MeGraIlvHTtfLhr6n5TtP3cYLGvvBXEplNlTSFzZ+r29mvBWn3roV7pDR7niQr
- Fln63OOI93+6eb4Uor9q7dpi9srCMfP1709rjKm1lld5DBs0aPUuolHp0pOcjmA0
- Cy6UIEfNVsvU2kyTD6g2Tv3VajuLnuOWiVEAwpslJPCbwI+XtiYJuijiOPS132Xk
- 6LhQCwgkkdW/a1JcFZwNM5XblWM+spFYebqmLx4XLJWvLhLoxQkySJx8kdukd1Xu
- kslOSl8Syw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2wd0-1
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1uFam1-0006SW-7X
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 11:45:40 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54F8OI9n011847;
+ Thu, 15 May 2025 08:45:24 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=9dGMxStAEXVrqnkq/UwR1NKDWitb8XE1YlNoGCuiq
+ G0=; b=ZJ0Z3YJ4q0qBcM3I4sAkGrEiyqhdvqODzvs1sa75FOpTkJdM9URHHtQfP
+ sJiC0z2+l5ZyL3/3sKCH2zV5vHjQ8dxh09bK1wv+24u5FgrxRkLQH5iY75Lp/qOG
+ E2XfcnoffndhpvYR4CDOMWKvfSKPHBv88XDOOlyD3k0aF9lq5q/VT8eaBSI3DU57
+ cNgtTa0Ta69Ck5XAuP38WGeRQMtd9aBIT0zrgBl4I06322CmNw5vsgr0EssuIm9s
+ +8vmcBpqzs2bV63r7mUbIxgloww/M5yDUasiU9kC78IWo82miZGrUaJYy0XKqIxR
+ 2o03J3BHeFWRx6sAix3PwTE3yY0Fw==
+Received: from dm5pr21cu001.outbound.protection.outlook.com
+ (mail-centralusazlp17011029.outbound.protection.outlook.com [40.93.13.29])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 46mxh32yn2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:48:14 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFbOv3004980;
- Thu, 15 May 2025 15:48:14 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2wcv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:48:14 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FDqFL4026954;
- Thu, 15 May 2025 15:48:13 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfpk197-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:48:13 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFmCkY21693122
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:48:12 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F421958058;
- Thu, 15 May 2025 15:48:11 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5F41C5805B;
- Thu, 15 May 2025 15:48:11 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:48:11 +0000 (GMT)
-Message-ID: <27fe9973722d8fc025f22336c77a4a4e1a18b591.camel@linux.ibm.com>
-Subject: Re: [PATCH 15/50] ppc/xive: Move NSR decoding into helper functions
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
- <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
- Schlossin <calebs@linux.vnet.ibm.com>
-Date: Thu, 15 May 2025 10:48:10 -0500
-In-Reply-To: <20250512031100.439842-16-npiggin@gmail.com>
-References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-16-npiggin@gmail.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: F6NGbNW3sRVsTmz0oydBNZCpES1PFGjQ
-X-Authority-Analysis: v=2.4 cv=XK4wSRhE c=1 sm=1 tr=0 ts=68260cbf cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=4UZJbdheEuQRtzx_KTAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 4lRB4XiZeSmcUODOjGWb3ui-QHC78fHx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX7HtgRP0qBi2z
- DXsgCgiN0MGmE8ShHEts6eUPzpy1SmzJXYCY9VbhC++is2YNTJs4kok5n3PC8hQA2025SahuGvW
- Jhf8Jf06CtLN/NleXmH860DXPDzt1/cHLqAgxcP9jHr4wpPsd6Jwi5IVUvxX/9nGiHa4T1Z1hXs
- hiNOuAejHOqwbM2lovc0sxi93NjkEMyU6pczSNOh6HaljgySD7Qo4w6TzEgeABzReyYznoohgn2
- HN8oskRwPoeI1XBKHp4mcoIruAt+EfUQ0pi0/2nHF+XAA5w9z7Y+7tfopE3DGH/anld9FgfMDSB
- y0ZvvGDnn+j5wBnAS+25gzg9jczqfqIIOp6VqbMbJ3lEzUXnjd1X7oIGdE9UybPvrzB4TrkLeQw
- mZETdhPt3jnQh7lC9/bK5yM+5kH1Zg4R590dN2vY2o/Sbmc8GQJJWwsetnXwz30/o1UXqcu8
+ Thu, 15 May 2025 08:45:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ocGisLPvo0UUIjWwDeAANL0pycWsJiyPJbajzG8qon9erc8e0eXAk/Hxm9yXA17KWIETLnfjQPHlVIQwGYGCT7ARxzd3BWm3rrn8gImT1SPmDU1PQENbzNfHFgr8kl2Je1mrWxcI+g+tpUDTcFzU0H/bdvr6yg49+9O+loR6RXM4Wznucy8Un+/C/4oXlGT4s48G0bz/+BKfwPd9JD70FVMAB4YVwMazX76/cCgOUeYylscbXABmwQXPOVTYV2BXF67V9lC7R5BfQwa85PZK+jrLUCuqBlLNSfcbtIH2RRu2Jpsr5gTs58aKywGvQMGPTJdAcfnYwJfb8W7s+G3GIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9dGMxStAEXVrqnkq/UwR1NKDWitb8XE1YlNoGCuiqG0=;
+ b=SsXnptLLh0ZFSjCIPSRthDf6Ja+oXxt0D90CCz/2tUQElX8dNDec4Kp1lHvTbbDCc1lx7tbX8bNBayxy3Btu47a8iLTzDgyBJWnaAzQuMWKNpWUB2FoCYlTDGplHOQpNFW+5JY8D07xyLThKQdFNdVsK3a2M3CMjtJiD3/i6XTIFy8/Z2qEFnCWigddJC+n0tNXpg+uisI5flZV6kspM8b0zfWCgftN1OyPsKaj65ZA8u0txHEEUHOeg1c51uWGLa1R+rL9BAuXqPRcXy/1HKpURQF8ar5P1D9yF7Qf4aZE44gijmahYH5lHfmqwy2Tqsi901Pg2gQ8uiLQchQpqDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9dGMxStAEXVrqnkq/UwR1NKDWitb8XE1YlNoGCuiqG0=;
+ b=Eyu6wjV80GSVF+ZJrvqbmKq1HQZJDP48Q5XibDDteDcDcOjc4sm4zym3ft+Ed15YMS4jrMQnzy53wZ/cSeh77sPIW1JEljL4kD/lUA6fjDUbPZJoJGwipRiApGo93s1jP/FrYW/4XY14wbIENhPspF+2Xx0gwm5fVti20xinP9eZqr67uhPX1SgwWuJBHvL8VjFZ6N4qd7UdevFUPNYaP/FkgF2t7KLflA5nlSULQA1TYzDgtuNSbKtA1cX/EyPUCHnJzGQFB5c88p1qXozcpoKlLISyREIgemlxan8k3nBNbGOBDuHKZXaxRSdKj8Dtg5o0wSQEeVHh2iwL7qRqWg==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by PH0PR02MB8470.namprd02.prod.outlook.com (2603:10b6:510:10e::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.17; Thu, 15 May
+ 2025 15:45:20 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8722.024; Thu, 15 May 2025
+ 15:45:20 +0000
+From: John Levon <john.levon@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Levon <john.levon@nutanix.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+Subject: [PATCH 24/27] vfio-user: add 'x-msg-timeout' option
+Date: Thu, 15 May 2025 16:44:09 +0100
+Message-ID: <20250515154413.210315-25-john.levon@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250515154413.210315-1-john.levon@nutanix.com>
+References: <20250515154413.210315-1-john.levon@nutanix.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: AM8P190CA0010.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:20b:219::15) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB8470:EE_
+X-MS-Office365-Filtering-Correlation-Id: 85f8ee66-204c-4d41-3218-08dd93c77f3b
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?UncoEMnP8ts1FQR665yDaotoDkRzy/NoPDmhwgpLyxgkp9dt1wI5JRCypBlp?=
+ =?us-ascii?Q?jDw4zCqMxlyRQQ/VFLlCs+UICdK0/d5wEHMAGm14cjgTi6IAr7foqAJx39B/?=
+ =?us-ascii?Q?HihpYj1ziEsQphl/4z/j/qpnGzEbWQhip8+sa7H94yCAkME7Ps7op7mHQS8y?=
+ =?us-ascii?Q?u70NT1BQHtkTep6nLydVWiMWhPqHFxAzL+gxj3bfrzM+A6e7FkKWYD6T4H+B?=
+ =?us-ascii?Q?PWNeRTOV5vHdrEGrlEHzwd9Rfjhwz35xXd6F2wY7YyFgcFwbJh7ZB8slHvUx?=
+ =?us-ascii?Q?vDD8n5JpI0vIJyeL4cif6UGvX+AYqFS/dInceYBgM0bzckM+CJAGCCjDP5ar?=
+ =?us-ascii?Q?22HQBG/TGKw0sf7MbeojkDlxamFyRhLUDuVZckdA6A6+AwKE/ntppxn4517g?=
+ =?us-ascii?Q?yBpPFU9WaQACrzSY6ikf5eIaQUEyrliXdN0SsbUOuNV13/0xFOmMnFYABJE/?=
+ =?us-ascii?Q?VT8X39j+2ch3w8sIKsYu/ZjjyvBMJDgTUbkWB80bsuKlHV/J8RKT3coPNGJF?=
+ =?us-ascii?Q?92r18wvmYCz9uMoN2EpgTzVccKFBRTrZvwiDwAgIFnT2j0G9aapIVPa2GRVy?=
+ =?us-ascii?Q?mXC7QWGQtl5V1lM5lFOFCo/TN3BgPksSDX/kz+HCmCiUMZRYY4OeWoH8ZEVP?=
+ =?us-ascii?Q?a8oPIOjYeYrBSLHv2dlxOpmWuVCIiwtoJXlyGGBU89PCSVoAH2pBdF4vBUa9?=
+ =?us-ascii?Q?bTZgyQnP5SogEbyry8EasFQwKFKqMtmUVoc6SM98aFdNOvrakF3o9yloV4Hs?=
+ =?us-ascii?Q?ssq0Ajs78O9zDm5B2WdShanS6HdaAjuT8X05URhz6hQJYId2i6LXZoPFpzaV?=
+ =?us-ascii?Q?zf/vRvqyXvhLEB9aK537fUkpt79PACR18MlItV9NDPjLJaWaDdPUASqz29Pa?=
+ =?us-ascii?Q?UMHfDPgp0I0rfbtfq29pwA3VbOczx+ajdV7GEiYphlc3vl0z3EXGsrCchE9b?=
+ =?us-ascii?Q?aYgdm2Ha/bkdQVVh5a5A1Dpn6C/aDueLUvweIO87OEE3Bd/cYMblz8fGJY66?=
+ =?us-ascii?Q?7HEOzDeum5hxM42G5fW0FSMXYP2lLdH43F488ETcq60WF/2CryZfuoKsZDHT?=
+ =?us-ascii?Q?4n+eDFhmEHoMUwyI9jMsPbwUlFlfp30a7hJYhOWyk3KGtA5O4je8RQWExiHg?=
+ =?us-ascii?Q?b1A+Auw41fudfCg8coQ3L7I8EJA930RxZaQaNsLWabTRVxgwtMcbgeuIOMnK?=
+ =?us-ascii?Q?jpSPUFnHY/ALNwHMHAGAtuzPxvXowOVjZjEysFUJ9WxtWijDdV9qkLdoQjWs?=
+ =?us-ascii?Q?8EKqJ5zeCpdrPJsLN2IbGHByT5QD+zdJyXFw5zuwCIUyo8zxCVQQjMpQSNB5?=
+ =?us-ascii?Q?yRU6RofRAemRuE1xF8+rZqCD3kqyYFjb588Yo1k9PoohhhUWehAyxWwXZ+2L?=
+ =?us-ascii?Q?QBOnnSkMchmbGciV3Nyl2PVFKL0wx1X38DG3kEUwWnkBHaK8pQ=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?9FyhzMW71nE/hwi/kwAeP0jciQn5W9MyVh5pdKIeNp6ErFXyFNI1hrDgiwKq?=
+ =?us-ascii?Q?NpomSHcA4R9SHPPzhQfhYP4OM9WSgu+FFrmU3y+smY6EIXj7CCQB1YLd23o4?=
+ =?us-ascii?Q?3YYpzBaYVkDwRs8CIJWwr0eI5Cl9E/VciVwqQLgsxG0NafDPFFWIQGB8gH7r?=
+ =?us-ascii?Q?lhRyl6vYwtCGHsg5fWDgu6Md1DsG7azYxJkYHxiH0upY5x+Ewo8cGRU7UQ4B?=
+ =?us-ascii?Q?1wrPhjxFjxorIlwiX4QzhnmGIpG68YKMoK/Y5VZT0yfxan+oAv5kyMh2lv5l?=
+ =?us-ascii?Q?N1tLzUI4y8H5cHOm66eT8MNHaXpev+SU00QdRAnilXweD6Af0/1nc9j2kAyP?=
+ =?us-ascii?Q?HNXB7h/JpFOOHp9sc0XesW+yQz6O7XdNYeOvuHV8d/Q87Ou1SRjGNzqr4pdf?=
+ =?us-ascii?Q?zmiZtwie+eKvu0AHkXs4VI0Wl9AZjldsHxKqB9ak9iJrYw8EWS7sVDq8BEcT?=
+ =?us-ascii?Q?L/iGsF43H7u5UA9XvoSRIbaOlNp1AOYExRP4fHougve1xvz01/Feyppvox0+?=
+ =?us-ascii?Q?pnbEvpRdgPI0uDvHDBJkiQx9ps+q4mUGBmq5A7/WegIs84oy/ujR1stgHHDS?=
+ =?us-ascii?Q?WwL+LLcmv6wLfxCzXWeWfV12bfXuN8RNFg8CbhoJ5GBxP9o4iSlNEJzi+KFR?=
+ =?us-ascii?Q?i3taq0TmriTKmo8VzKLlci7xCQVFGxPF7cQiFCV2MhK9QIyiAnm+7GnGY5h3?=
+ =?us-ascii?Q?Yjbqb3KN6hchRlqEXAEuzIAU8YqSjl8TgbD8FuskOZWbdPUqphkJbvkbzpIX?=
+ =?us-ascii?Q?JtkGycO0qGLBEleUYDpBWvNeH9+VwWGsCTT1r/uzunag9uO9y/ukNMwkRqsZ?=
+ =?us-ascii?Q?RpOXYTf1vXTsa21iXH85XLcNsY6wJKQ4bDYPebZFP66bLDaIhJxBgmZFozpV?=
+ =?us-ascii?Q?e8IbamWbcbhG3xevl1RAhbGhzHVS5wIrL02g9EoS8VMKeDCS3wHtAIpBUaAg?=
+ =?us-ascii?Q?6louDoOcqDcP0sHMpz9OZUM8KoyCE7QpIjJkRj5OzFuaM/o3JuYQ1nv/fQ6m?=
+ =?us-ascii?Q?j4C6IayFJQcEj0iTFHgg8CsKARKw9Xa2SIwI9IiURuS3txZ9Xlhu4ADWP4Qc?=
+ =?us-ascii?Q?1B01Sb+jyJ2MKlKHCud8kBvIjkJu7ZcxcansOA9w9RffW2MiNqz1ngn2cLwV?=
+ =?us-ascii?Q?SwILDZ/LJU5+RNeaPVoMmhj9XB5YJE7q9t02LB+/K4n1fYoEJuoVb7NutN7+?=
+ =?us-ascii?Q?2+YWM43AUDHqsEO01krE9a58BUjYWfbJNaCpfKBkKjrtUMVxzaLL5acKvkLe?=
+ =?us-ascii?Q?R9WczkBZzh8eJrFvWygWnsURmjiomFRSgyQqQ6flkRMg+0QS0qJpF9GyDaLF?=
+ =?us-ascii?Q?gi3GEynU3AZV59+8w9ufrGvVqlc3jAptAU+QqKWZAHm2kRVaL0+zcSwh/gFn?=
+ =?us-ascii?Q?WTl4ionjAos2zl+TlDoMx8+u61zFpJlSDlZu2RWv6OleXEdp6trsQMIBR9y1?=
+ =?us-ascii?Q?8eFcb6qrVZUtH1/FTjmL/JJLXXuyYGG5wCx3t7pXPtIA7KPrsQrUjxp9krAk?=
+ =?us-ascii?Q?jgwcWOXRdic/IDkKlc3i3jolazm622Z2Qv+gKtBYqOHPk5jRXMyL59YQaA2Z?=
+ =?us-ascii?Q?bA5TYAZhe9zRxh/fiY8qVT8ZamZSOnN6+6cCWjJN?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 85f8ee66-204c-4d41-3218-08dd93c77f3b
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2025 15:45:20.0206 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: fdhGKWqV7X9XqclmA3tguIs1pJ9EUH/pHb9Fe43aALMn5ZpmTRn8n3xGXCP+R5ByR7Xfpq7QDRVti6MH8D8NVg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB8470
+X-Proofpoint-ORIG-GUID: ze8bdAUKGu7w-52LMiHmecj5_r4iZrX4
+X-Authority-Analysis: v=2.4 cv=TeWWtQQh c=1 sm=1 tr=0 ts=68260c13 cx=c_pps
+ a=SA2dW19TPv9rE6CiBNbh3A==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=dt9VzEwgFbYA:10
+ a=0kUYKlekyDsA:10 a=yPCof4ZbAAAA:8 a=64Cc0HZtAAAA:8 a=Ql6ANm6PklPDYutWWPYA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NiBTYWx0ZWRfXxurMqFSSX6et
+ GD2eH5CjWU1lA3vRIXmF+tbWSCk8L9fl6ht2v7Qawedxg197xakR6w38WP7oQSKw9GZ3BbCj3ra
+ yZ6snsXR/CCcJPg3Nyg7H+OgZy0J4oVpJ49kuEHbdVl2sgGCT0ZnOx2V1ErxJdz8KX+dyEZIGql
+ 7hd/tlw1T25U5suNypJhIB66HiZ5OZ44skuddxd2ZyCxRSjSU5vElBPWdelxkRl+lDpZnNQDQcA
+ ROYLYWKjJVYIJ9SrFQj+rX6KLOXUsvcrEUa/6ooeW0PyGPdU8TXNVWTr8C9W6ORM1Cpyj6Ner2F
+ YTG7avr15Yzj6m68GqvL0y4pur7tS4hAkr01xftAPgS2rBnGeBPcCdqdU1k/pYbYRZs13S3o5Mf
+ YQf8VzgERFmBB/ag+VQmIOO+HXVP+ifZZaP3+LsbJWqHqdoligVr+ZD7UyaJGcB1+rAbOBsU
+X-Proofpoint-GUID: ze8bdAUKGu7w-52LMiHmecj5_r4iZrX4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0
- mlxscore=0 bulkscore=0 mlxlogscore=620 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505150155
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,117 +202,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+By default, the vfio-user subsystem will wait 5 seconds for a message
+reply from the server. Add an option to allow this to be configurable.
 
-On Mon, 2025-05-12 at 13:10 +1000, Nicholas Piggin wrote:
-> Rather than functions to return masks to test NSR bits, have functions
-> to test those bits directly. This should be no functional change, it
-> just makes the code more readable.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  hw/intc/xive.c        | 51 +++++++++++++++++++++++++++++++++++--------
->  include/hw/ppc/xive.h |  4 ++++
->  2 files changed, 46 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-> index bb40a69c5b..c2da23f9ea 100644
-> --- a/hw/intc/xive.c
-> +++ b/hw/intc/xive.c
-> @@ -25,6 +25,45 @@
->  /*
->   * XIVE Thread Interrupt Management context
->   */
-> +bool xive_nsr_indicates_exception(uint8_t ring, uint8_t nsr)
-> +{
-> +    switch (ring) {
-> +    case TM_QW1_OS:
-> +        return !!(nsr & TM_QW1_NSR_EO);
-> +    case TM_QW2_HV_POOL:
-> +    case TM_QW3_HV_PHYS:
-> +        return !!(nsr & TM_QW3_NSR_HE);
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +
-> +bool xive_nsr_indicates_group_exception(uint8_t ring, uint8_t nsr)
-> +{
-> +    if ((nsr & TM_NSR_GRP_LVL) > 0) {
-> +        g_assert(xive_nsr_indicates_exception(ring, nsr));
-> +        return true;
-> +    }
-> +    return false;
-> +}
-> +
-> +uint8_t xive_nsr_exception_ring(uint8_t ring, uint8_t nsr)
-> +{
-> +    /* NSR determines if pool/phys ring is for phys or pool interrupt */
-> +    if ((ring == TM_QW3_HV_PHYS) || (ring == TM_QW2_HV_POOL)) {
-> +        uint8_t he = (nsr & TM_QW3_NSR_HE) >> 6;
-> +
-> +        if (he == TM_QW3_NSR_HE_PHYS) {
-> +            return TM_QW3_HV_PHYS;
-> +        } else if (he == TM_QW3_NSR_HE_POOL) {
-> +            return TM_QW2_HV_POOL;
-> +        } else {
-> +            /* Don't support LSI mode */
-> +            g_assert_not_reached();
-> +        }
-> +    }
-> +    return ring;
-> +}
->  
->  static qemu_irq xive_tctx_output(XiveTCTX *tctx, uint8_t ring)
->  {
-> @@ -48,18 +87,12 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
->  
->      qemu_irq_lower(xive_tctx_output(tctx, ring));
->  
-> -    if (regs[TM_NSR] != 0) {
-> +    if (xive_nsr_indicates_exception(ring, nsr)) {
->          uint8_t cppr = regs[TM_PIPR];
->          uint8_t alt_ring;
->          uint8_t *alt_regs;
->  
-> -        /* POOL interrupt uses IPB in QW2, POOL ring */
-> -        if ((ring == TM_QW3_HV_PHYS) &&
-> -            ((nsr & TM_QW3_NSR_HE) == (TM_QW3_NSR_HE_POOL << 6))) {
-> -            alt_ring = TM_QW2_HV_POOL;
-> -        } else {
-> -            alt_ring = ring;
-> -        }
-> +        alt_ring = xive_nsr_exception_ring(ring, nsr);
->          alt_regs = &tctx->regs[alt_ring];
->  
->          regs[TM_CPPR] = cppr;
-> @@ -68,7 +101,7 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
->           * If the interrupt was for a specific VP, reset the pending
->           * buffer bit, otherwise clear the logical server indicator
->           */
-> -        if (!(regs[TM_NSR] & TM_NSR_GRP_LVL)) {
-> +        if (!xive_nsr_indicates_group_exception(ring, nsr)) {
->              alt_regs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
->          }
->  
-> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
-> index 538f438681..28f0f1b79a 100644
-> --- a/include/hw/ppc/xive.h
-> +++ b/include/hw/ppc/xive.h
-> @@ -365,6 +365,10 @@ static inline uint32_t xive_tctx_word2(uint8_t *ring)
->      return *((uint32_t *) &ring[TM_WORD2]);
->  }
->  
-> +bool xive_nsr_indicates_exception(uint8_t ring, uint8_t nsr);
-> +bool xive_nsr_indicates_group_exception(uint8_t ring, uint8_t nsr);
-> +uint8_t xive_nsr_exception_ring(uint8_t ring, uint8_t nsr);
-> +
->  /*
->   * XIVE Router
->   */
+Originally-by: John Johnson <john.g.johnson@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: John Levon <john.levon@nutanix.com>
+---
+ hw/vfio-user/proxy.h | 1 +
+ hw/vfio-user/pci.c   | 5 +++++
+ hw/vfio-user/proxy.c | 7 ++++---
+ 3 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
+index 8f2d529846..da29674fdc 100644
+--- a/hw/vfio-user/proxy.h
++++ b/hw/vfio-user/proxy.h
+@@ -70,6 +70,7 @@ typedef struct VFIOUserProxy {
+     uint64_t max_bitmap;
+     uint64_t migr_pgsize;
+     int flags;
++    uint32_t wait_time;
+     QemuCond close_cv;
+     AioContext *ctx;
+     QEMUBH *req_bh;
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index a55a0a0972..3df92acb82 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -25,6 +25,7 @@ struct VFIOUserPCIDevice {
+     VFIOPCIDevice device;
+     char *sock_name;
+     bool send_queued;   /* all sends are queued */
++    uint32_t wait_time; /* timeout for message replies */
+ };
+ 
+ /*
+@@ -254,6 +255,9 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         proxy->flags |= VFIO_PROXY_FORCE_QUEUED;
+     }
+ 
++    /* user specified or 5 sec default */
++    proxy->wait_time = udev->wait_time;
++
+     if (!vfio_user_validate_version(proxy, errp)) {
+         goto error;
+     }
+@@ -387,6 +391,7 @@ static const Property vfio_user_pci_dev_properties[] = {
+                        sub_device_id, PCI_ANY_ID),
+     DEFINE_PROP_STRING("socket", VFIOUserPCIDevice, sock_name),
+     DEFINE_PROP_BOOL("x-send-queued", VFIOUserPCIDevice, send_queued, false),
++    DEFINE_PROP_UINT32("x-msg-timeout", VFIOUserPCIDevice, wait_time, 5000),
+ };
+ 
+ static void vfio_user_pci_dev_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 0935b72e9f..74cfaff6fa 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -24,7 +24,6 @@
+ #include "qemu/main-loop.h"
+ #include "system/iothread.h"
+ 
+-static int wait_time = 5000;   /* wait up to 5 sec for busy servers */
+ static IOThread *vfio_user_iothread;
+ 
+ static void vfio_user_shutdown(VFIOUserProxy *proxy);
+@@ -665,7 +664,8 @@ void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+ 
+     if (ret == 0) {
+         while (!msg->complete) {
+-            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock, wait_time)) {
++            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock,
++                                     proxy->wait_time)) {
+                 VFIOUserMsgQ *list;
+ 
+                 list = msg->pending ? &proxy->pending : &proxy->outgoing;
+@@ -725,7 +725,8 @@ void vfio_user_wait_reqs(VFIOUserProxy *proxy)
+         msg->type = VFIO_MSG_WAIT;
+         proxy->last_nowait = NULL;
+         while (!msg->complete) {
+-            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock, wait_time)) {
++            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock,
++                                     proxy->wait_time)) {
+                 VFIOUserMsgQ *list;
+ 
+                 list = msg->pending ? &proxy->pending : &proxy->outgoing;
+-- 
+2.43.0
 
 
