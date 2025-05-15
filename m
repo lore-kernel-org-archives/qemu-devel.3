@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4109C3ABDD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98895C3ABC9
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 10:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFVqj-0002YM-44; Thu, 15 May 2025 06:30:01 -0400
+	id 1uFVp1-0000OL-59; Thu, 15 May 2025 06:28:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uFVnh-0005VU-4y
- for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:53 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1uFVnk-0005Yn-Du
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 06:27:00 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uFVne-0008HI-J3
- for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:52 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43edecbfb46so6076625e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 03:26:49 -0700 (PDT)
+ id 1uFVne-0008H2-Jc
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:56 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43cfe63c592so8059485e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 03:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747304808; x=1747909608; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747304807; x=1747909607; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jw/rhXzTJkD4qjTI9+CXYnTXfSZ81oHFEWVxFDqeKqA=;
- b=wmmiv0ttPIWJTZCoZ1kVHiqu7aC8eyrzou7pnio1zlJZwwC8U+nI2JjWm+atMtuopj
- Gxn5A1LTngdCpN0ROG/VVTvk6va2Q/pAtUz519uwdGnRnPrI11KMhlsciS9J0Ja5bKdF
- obvlsGAaFafu1k6kYmqK/R+efCZJ3VESd2FsNAYXHNDNTa9mdhpnq52wHmxUw8tp3Ze7
- Im5fR8NyI0424iqiwmQaAi2OBE19FjFpWbDgUxjPWN7a9Rb5iC/b9glRaQZukrdCDVN+
- oDPZCRiuzsZaGG6Gw7dbgBEHIwOp8crj2cCFM5N3E9DI9Ws6fGneVXDothjpz3f2QDUF
- 2sAg==
+ :reply-to; bh=/5UHyMTmrHQ5mwQcvuo9BiQqIMdODzOxHwcQCEhq1rs=;
+ b=n2JhF6fhi+TbjQ7iV0dWvfCz3Y5oJfSTR3ZViNOrqhT6n9pxUHMz1ri1IahLT2pGIF
+ wn3QTstsubEUc1fyl/jZxceFt+NVAZ+ONUeG98ToocWkv7OKpP0sNTzalmBWSw/E9p1Q
+ xXGSsPAYAbeYDddfd/qCSCkKp7Xlig1yWpX1YGK7ge4Xz4fd54xYCEHtE3kcanL7mw6Y
+ NLtyHVUci3h6zZfKhjKWjlmzpogBnjWB8PmYgJ8i8IAf5OA1wDQh5Kpmnq00hzB0+IoF
+ ZjfmX6JqMhXB59/xbAr6tT5uHl4ve1OUSZKXYwBa+lG0MDcUR6qc2wBZxZ10lqPRieP1
+ iPqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747304808; x=1747909608;
+ d=1e100.net; s=20230601; t=1747304807; x=1747909607;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jw/rhXzTJkD4qjTI9+CXYnTXfSZ81oHFEWVxFDqeKqA=;
- b=K0pj8dnKFR6bHOqajtl8VCbFcMADg5Sx/w3L0XdTo+Z9xWgAelRZBXSSyvqhQa1H4G
- NtG6UIRmo08aNx/1Mhg3bBcddJspoBfOm8NeMRWA9aJT0sAZd+LMXNEx1vCqmCoNdPjR
- ZWnmrMQDc3lgMp4oTUex0L8w+tHNuOhAAKfsRjbIKzz63pfjTUBmwVyZeeM06umrnVo/
- 7JtrzqimXhtAZNWx5Po0sKk+4yXEGJ1B//Drv5YC6L7eeKqyZCZjpbtZBzmOIQrnbMEl
- 8YVjs0ZCMLAAp3TNgeibgBh7tMfTOMv0BtygapKYmS4tyx71NB27JX8qP6TJudaYLuTQ
- pyIw==
-X-Gm-Message-State: AOJu0YxJpEwHQ5XqdSP+s/YINVO9/svh+zY4OHsKxPsSqeJ3XjQQALwV
- 7Y/C9ZiCpnizrQY1A+QTAdqAjxGhErvYUn61mia/rifS7wA3s1sJ0pksC1QlAeQv8XNi9YRaHhP
- UsVA=
-X-Gm-Gg: ASbGncs59WddTrSnn+IFcV3lIuIAGXwrVqoXVbVQ7z+/+i8wkq6uXi9/0wQbauCZYqb
- LYODvw6jNMe+ZKPsFC+ats2/l5LJM9dirlB5SN52eb5Do7QsUDIeToyrmqMcJ/XNYnXa43lv0mw
- DLggkv+H0gt4MzXXk30lsmllSwQwZ7hP5sa9xgwHohKJGIkSWWeWaRt9m9FdCd0/xsLx0l5DyvP
- bmrMLbsOcfFRvbFc35zpLF3FdqtncA/uBYwI3+m15oVC4vlKjlZF676up6D6SlVUHSbIGQgTg+K
- RBLa/9wzGeDYPQinPsQl/YZ4U/l7DlWi2SQDGIaBOvuLgPTH/NHfilZn3Gx1lRZt8RTr
-X-Google-Smtp-Source: AGHT+IGF8KwPfCXKKf1isGOXrm8MrG3m6F3y5y0OcLt5RJL2ojiJ+b8reF7d3bNIk+WGEFLARp1/eA==
-X-Received: by 2002:a05:600c:154a:b0:440:54ef:dfdc with SMTP id
- 5b1f17b1804b1-442f96e671dmr15109755e9.8.1747304808611; 
- Thu, 15 May 2025 03:26:48 -0700 (PDT)
+ bh=/5UHyMTmrHQ5mwQcvuo9BiQqIMdODzOxHwcQCEhq1rs=;
+ b=gpBVQkWDp/LFshHTutwhSyxxf4oLA/rCGz1w9vq93D0ng53d8MBOffKtbrNskj8kdE
+ WG4JBthyvVtfFLc5nvco7C5yWwnAlQk355VleBvYJAHj+9HR3aJI2JJnh80kOoXgoqBE
+ Z7MLGlZsqk77907H2mXF4CY6lID42m9GWfsTXTQWl+5lGbAkfoT8HEkkxZvLtoykVCrY
+ AdnFgNlCIEyoW4Q/xnptZ5eKUTmJV+DhgLyMHi9as4oN0MNZVZEigIIeUIsXmquKGGhL
+ 5AxCrzQa1w+H1rLlWHxNynniMSVsr/8RWcMNqVE/SMl3Ll/6/A866pMPw9ik92e5Gl2I
+ cWcw==
+X-Gm-Message-State: AOJu0Yww1chtIy+6WKlVtuG1I8uAchDjEBuTEUmFCBFPXnJTRlOnAe/Z
+ TwgHTq+McFZqFfC9HuI7WBK+ewi4msl50hA4hHCheBlyGZbia/1irqRRdrsU+SYFz5BuFavo5l4
+ KGkQ=
+X-Gm-Gg: ASbGncsgpEe/WN28cCygZNFKkenibo2JWCwnMVgY4E5hV2vOJe9vZ6LnYw6UwOLfqZy
+ xh7d5JFN7sSWeutQ92V1x5Grfn47jFHPsRk2ICVnIL1rLU0W2G+6qboi7GdW3KXEz/MQDh7KYZI
+ kVOgGQN7tfpGV16/XlNKr7fNObrDN6FJJLBxyh7wMLdiFHPOyuKHWO4dvs9urrjrM5dcZSVBuar
+ Ls/f14y2DFzckVQR1mTPN+ScMREelbQoo8GUcu71ngLtdro8JYnRCd3OpT72O3Y8wDqn4sVtY8W
+ Jou5S80lFKSTmQsN0YyWGmVmOeBFxBoXQ6A10ADOECUsb+NKUKv0tToVLg==
+X-Google-Smtp-Source: AGHT+IGf7hZnvOiIN0+4HEWTQOqIW0DMNb5ZLrUxIg3euIQNqK0DQJnsEvXdbdD36PfcI3yybSWGWg==
+X-Received: by 2002:a05:600c:a42:b0:442:f4d4:522 with SMTP id
+ 5b1f17b1804b1-442f4d44013mr49324945e9.5.1747304807223; 
+ Thu, 15 May 2025 03:26:47 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f396c3a4sm65657855e9.26.2025.05.15.03.26.47
+ 5b1f17b1804b1-442f396c3a4sm65657855e9.26.2025.05.15.03.26.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 03:26:47 -0700 (PDT)
+ Thu, 15 May 2025 03:26:46 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/58] target/arm/tcg/vec_internal: use forward declaration for
- CPUARMState
-Date: Thu, 15 May 2025 11:25:37 +0100
-Message-ID: <20250515102546.2149601-50-peter.maydell@linaro.org>
+Subject: [PULL 48/58] target/arm/machine: compile file once (system)
+Date: Thu, 15 May 2025 11:25:36 +0100
+Message-ID: <20250515102546.2149601-49-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250515102546.2149601-1-peter.maydell@linaro.org>
 References: <20250515102546.2149601-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,29 +101,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Needed so this header can be included without requiring cpu.h.
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20250512180502.2395029-40-pierrick.bouvier@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250512180502.2395029-39-pierrick.bouvier@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/vec_internal.h | 2 ++
- 1 file changed, 2 insertions(+)
+ target/arm/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
-index 6b93b5aeb94..c02f9c37f83 100644
---- a/target/arm/tcg/vec_internal.h
-+++ b/target/arm/tcg/vec_internal.h
-@@ -22,6 +22,8 @@
- 
- #include "fpu/softfloat.h"
- 
-+typedef struct CPUArchState CPUARMState;
-+
- /*
-  * Note that vector data is stored in host-endian 64-bit chunks,
-  * so addressing units smaller than that needs a host-endian fixup.
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index bb1c09676d5..b404fa54863 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -13,7 +13,6 @@ arm_system_ss = ss.source_set()
+ arm_common_system_ss = ss.source_set()
+ arm_system_ss.add(files(
+   'arm-qmp-cmds.c',
+-  'machine.c',
+ ))
+ arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
+ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+@@ -39,6 +38,7 @@ arm_common_system_ss.add(files(
+   'cortex-regs.c',
+   'debug_helper.c',
+   'helper.c',
++  'machine.c',
+   'ptw.c',
+   'vfp_fpscr.c',
+ ))
 -- 
 2.43.0
 
