@@ -4,85 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB562C3ABDD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8570C2D0CD
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 22:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFgwS-0006cR-2R; Thu, 15 May 2025 18:20:40 -0400
+	id 1uFgwL-0006a1-F5; Thu, 15 May 2025 18:20:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uFgwQ-0006bu-6g
- for qemu-devel@nongnu.org; Thu, 15 May 2025 18:20:38 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uFgwI-0006Xc-Rf
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 18:20:30 -0400
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uFgwO-0000ZL-1l
- for qemu-devel@nongnu.org; Thu, 15 May 2025 18:20:37 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uFgwD-0000Xn-RA
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 18:20:30 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B046E1F7F5;
- Thu, 15 May 2025 22:20:23 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6E2F01F7EF;
+ Thu, 15 May 2025 22:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747347623; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c7V3pk0hf/BePuUnMB/AIoL4/3z/5fFir7975cFBizY=;
- b=XDVw8kS+YOmJScWqvzyUM28WwExr2MebBQjzsnWbDNCl6l+bbSY49m9e+DmuqnXkhOs6el
- b6s4BwwzHzy5TFPJZOYU4efu7Who5uHP6PD8xprDB1hhlT/JMD5RtJDtgmJ/6XTO3UDswg
- UrsoHJqEG0dCP34UR7Ss+hWa03+Rll0=
+ t=1747347619; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=jPKuBxHBeREsdn7zjPw2/YPqO1WVgcDCcgB1PR0eYE8=;
+ b=rNxyHwFfhJhfbwREiwox+fGJnn4cGtxyNKX6f04gUbdkM9k9uv0X/5Cexo/4jtw7vxbfFJ
+ QAcbjzTcHJOxM2orUjx8jVK4KrcLbXF0ykqgB7VsUcAoaYqPyzMacJ+d3eLLkPuNBhUbiC
+ UvppJ2+vp6FAWuHv7f9qHZiyZxrNNoI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747347623;
+ s=susede2_ed25519; t=1747347619;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c7V3pk0hf/BePuUnMB/AIoL4/3z/5fFir7975cFBizY=;
- b=KM/P0LAR6n4wyiAzfL+MwcQB1BK0KpyxR29yamBx51JSxXQ/5roqpVgKiF0REbrfq6otUY
- 9GEFxsLgJjU4jTAA==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=jPKuBxHBeREsdn7zjPw2/YPqO1WVgcDCcgB1PR0eYE8=;
+ b=mmtzZpQNEbVWrxLcDD9VfUVt0KCRn2/4N+Wn2EfskyUMHHrfNtfdVBoS8Foa+heo3e5+f8
+ 1+61QjxH7O+ea/Ag==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747347623; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c7V3pk0hf/BePuUnMB/AIoL4/3z/5fFir7975cFBizY=;
- b=XDVw8kS+YOmJScWqvzyUM28WwExr2MebBQjzsnWbDNCl6l+bbSY49m9e+DmuqnXkhOs6el
- b6s4BwwzHzy5TFPJZOYU4efu7Who5uHP6PD8xprDB1hhlT/JMD5RtJDtgmJ/6XTO3UDswg
- UrsoHJqEG0dCP34UR7Ss+hWa03+Rll0=
+ t=1747347619; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=jPKuBxHBeREsdn7zjPw2/YPqO1WVgcDCcgB1PR0eYE8=;
+ b=rNxyHwFfhJhfbwREiwox+fGJnn4cGtxyNKX6f04gUbdkM9k9uv0X/5Cexo/4jtw7vxbfFJ
+ QAcbjzTcHJOxM2orUjx8jVK4KrcLbXF0ykqgB7VsUcAoaYqPyzMacJ+d3eLLkPuNBhUbiC
+ UvppJ2+vp6FAWuHv7f9qHZiyZxrNNoI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747347623;
+ s=susede2_ed25519; t=1747347619;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c7V3pk0hf/BePuUnMB/AIoL4/3z/5fFir7975cFBizY=;
- b=KM/P0LAR6n4wyiAzfL+MwcQB1BK0KpyxR29yamBx51JSxXQ/5roqpVgKiF0REbrfq6otUY
- 9GEFxsLgJjU4jTAA==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=jPKuBxHBeREsdn7zjPw2/YPqO1WVgcDCcgB1PR0eYE8=;
+ b=mmtzZpQNEbVWrxLcDD9VfUVt0KCRn2/4N+Wn2EfskyUMHHrfNtfdVBoS8Foa+heo3e5+f8
+ 1+61QjxH7O+ea/Ag==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1D4BF137E8;
- Thu, 15 May 2025 22:20:21 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CEF1813A3E;
+ Thu, 15 May 2025 22:20:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4CocM6VoJmhUNgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 15 May 2025 22:20:21 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id U735IqFoJmhUNgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 15 May 2025 22:20:17 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com,
 	berrange@redhat.com,
 	pbonzini@redhat.com
-Subject: [PATCH 2/4] chardev: Don't attempt to unregister yank function more
- than once
-Date: Thu, 15 May 2025 19:20:12 -0300
-Message-Id: <20250515222014.4161-3-farosas@suse.de>
+Subject: [PATCH 0/4] chardev: Fix issues found by vhost-user-test
+Date: Thu, 15 May 2025 19:20:10 -0300
+Message-Id: <20250515222014.4161-1-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20250515222014.4161-1-farosas@suse.de>
-References: <20250515222014.4161-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
@@ -92,7 +81,7 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
  ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_NONE(0.00)[];
@@ -121,71 +110,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tcp_chr_free_connection() can be called multiple times in succession,
-in which case the yank function will get as argument a NULL s->sioc
-that has been cleared by the previous tcp_chr_free_connection() call.
+Running vhost-user-test with ASAN on a loaded machine reveals several
+intermittent issues. These show up every time I test the qtest tree so
+I'm trying to get rid of them.
 
-This leads to an abort() at yank_unregister_function().
+1- UAF of IOWatchPoll.
+   This one is self explanatory, ASAN caught it.
 
- #0  __GI_raise (sig=6) at ../sysdeps/unix/sysv/linux/raise.c:51
- #1  __GI_abort () at abort.c:79
- #2  qtest_check_status (s=0x513000005600) at ../tests/qtest/libqtest.c:209
- #3  qtest_wait_qemu (s=0x513000005600) at ../tests/qtest/libqtest.c:273
- #4  qtest_kill_qemu (s=0x513000005600) at ../tests/qtest/libqtest.c:285
- #5  kill_qemu_hook_func (s=0x513000005600) at ../tests/qtest/libqtest.c:294
- #6  g_hook_list_invoke (hook_list=0x55ea9cc750c0 <abrt_hooks>, may_recurse=0) at ../glib/ghook.c:534
- #7  sigabrt_handler (signo=6) at ../tests/qtest/libqtest.c:299
- #8  <signal handler called>
- #9  __GI_raise (sig=6) at ../sysdeps/unix/sysv/linux/raise.c:51
- #10 __GI_abort () at abort.c:79
- #11 yank_unregister_function (instance=0x7fb26f2ea9a0,
-     func=0x55ea9bcc0a10 <char_socket_yank_iochannel>, opaque=0x0) at
-     ../util/yank.c:151
- #12 tcp_chr_free_connection (chr=0x51300000ffc0) at ../chardev/char-socket.c:385
- #13 tcp_chr_disconnect_locked (chr=0x51300000ffc0) at ../chardev/char-socket.c:477
- #14 tcp_chr_disconnect (chr=0x51300000ffc0) at ../chardev/char-socket.c:495
- #15 tcp_chr_hup (channel=0x514000000040, cond=G_IO_HUP, opaque=0x51300000ffc0) at ../chardev/char-socket.c:536
- #16 qio_channel_fd_source_dispatch (source=0x50c0000b5fc0, callback=0x55ea9bcd6770 <tcp_chr_hup>,
-     user_data=0x51300000ffc0) at ../io/channel-watch.c:84
- #17 g_main_dispatch (context=0x50f000000040) at ../glib/gmain.c:3381
- #18 g_main_context_dispatch (context=context@entry=0x50f000000040) at ../glib/gmain.c:4099
- #19 g_main_context_iterate (context=0x50f000000040, block=block@entry=1, dispatch=dispatch@entry=1,
-     self=<optimized out>) at ../glib/gmain.c:4175
- #20 g_main_loop_run (loop=0x502000055690) at ../glib/gmain.c:4373
+2- Reference counting issues in glib. It seems it's possible to unref
+   a source while adding a callback to it, and glib asserts. This
+   shows up on all architectures, only on the ASAN build after
+   hundreds of iterations.
 
-Commit ebae6477dc ("chardev: check if the chardev is registered for
-yanking") seems to have encountered a similar issue, but checking
-s->registered_yank is not a complete solution because that flag
-pertains to the yank instance, not to each individual function.
+3- Extra yank_unregister_function call leads to abort(). This shows up
+   on all architectures, but it's quite hidden due to vhost-user-test
+   using a dedicated server thread which dies and causes timeouts in
+   the test.
 
-Skip the yank_unregister_function() in case s->sioc is already NULL,
-which indicates the last yank function was already removed.
+   Manifests as assert(s->fds_num) failing. Only on the ASAN build,
+   after tens of iterations (quite common).
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-Can tcp_chr_free_connection() race with itself? I'm assuming no.
+Thanks
 
-Could we just make yank_unregister_instance() remove all yank
-functions at once? Those asserts/abort in the yank code are a bit
-masochistic.
----
- chardev/char-socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Fabiano Rosas (4):
+  chardev: Fix QIOChannel refcount
+  chardev: Don't attempt to unregister yank function more than once
+  chardev: Consolidate yank registration
+  chardev: Introduce a lock for hup_source
 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index e8dd2931dc..8ae225d953 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -378,7 +378,8 @@ static void tcp_chr_free_connection(Chardev *chr)
- 
-     tcp_set_msgfds(chr, NULL, 0);
-     remove_fd_in_watch(chr);
--    if (s->registered_yank &&
-+
-+    if (s->registered_yank && s->sioc &&
-         (s->state == TCP_CHARDEV_STATE_CONNECTING
-         || s->state == TCP_CHARDEV_STATE_CONNECTED)) {
-         yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
+ chardev/char-io.c      |  5 +++++
+ chardev/char-socket.c  | 38 ++++++++++++--------------------------
+ chardev/char.c         |  2 ++
+ include/chardev/char.h |  1 +
+ 4 files changed, 20 insertions(+), 26 deletions(-)
+
 -- 
 2.35.3
 
