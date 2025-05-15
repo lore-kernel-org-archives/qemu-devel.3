@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F20CAC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 14:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3EAFC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 14:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFZ7t-0002RY-VG; Thu, 15 May 2025 09:59:57 -0400
+	id 1uFZ8A-0002a6-AJ; Thu, 15 May 2025 10:00:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFZ7p-0002R1-MZ
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:59:55 -0400
+ id 1uFZ83-0002Y0-VN
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 10:00:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFZ7k-0007p7-DV
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:59:53 -0400
+ id 1uFZ81-0007xg-Qk
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 10:00:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747317585;
+ s=mimecast20190719; t=1747317603;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q0gImdQxkJqUZljePZBk5hAkUoWnefXUp1VXf/8wrsc=;
- b=GSXo+iQOU54plqf2+kKzHK6FagOjzvb6e8cwVYAHDExKvL0bLeaKFCQ1NHh1UIi3TOQKZZ
- NV4paBEPQmZZ7M6fNOKdQupcw+BxGsIDGuc3GMTWaV3Z3aJ5PRBDk5nFXjfOBUk2UGdE5g
- 5BcVtxjMhB9rcL4pj330Bd9l7SBVhI0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=AEI6TSfRzyBZWoQLpr5ygDxIVdrgpnlK8dZ+WiSaUVI=;
+ b=FO1IfpRAUGjLjYAIvKuO0qLxxG+yq0URxCpyyqrYPflxlAOQ4Od2ta53ZDCz5WmAPCFCM7
+ xs209kp506A+C6aBQgASnCqRTQnG6PFzVt2zqgOj5HZL8V43t66c08GnT2Kw+fOubXQ3or
+ bWC64K7Ugk/EZ6SS5NLB689JRqoH+Hg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-RhQ36V0PPoKtMqGaZc0sdA-1; Thu,
- 15 May 2025 09:59:44 -0400
-X-MC-Unique: RhQ36V0PPoKtMqGaZc0sdA-1
-X-Mimecast-MFC-AGG-ID: RhQ36V0PPoKtMqGaZc0sdA_1747317583
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-Dwt8wQfgPqyejD35qcV86A-1; Thu,
+ 15 May 2025 10:00:01 -0400
+X-MC-Unique: Dwt8wQfgPqyejD35qcV86A-1
+X-Mimecast-MFC-AGG-ID: Dwt8wQfgPqyejD35qcV86A_1747317600
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 355871956046; Thu, 15 May 2025 13:59:43 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 812D2180087F; Thu, 15 May 2025 14:00:00 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.135])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E6A4430075D4; Thu, 15 May 2025 13:59:40 +0000 (UTC)
+ id 55A3030075D4; Thu, 15 May 2025 13:59:58 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 1/9] Revert "scripts: mandate that new files have
- SPDX-License-Identifier"
-Date: Thu, 15 May 2025 14:59:28 +0100
-Message-ID: <20250515135936.86760-2-berrange@redhat.com>
+Subject: [PATCH v3 7/9] scripts/checkpatch: use new hook for MAINTAINERS
+ update check
+Date: Thu, 15 May 2025 14:59:34 +0100
+Message-ID: <20250515135936.86760-8-berrange@redhat.com>
 In-Reply-To: <20250515135936.86760-1-berrange@redhat.com>
 References: <20250515135936.86760-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,77 +88,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit fa4d79c64dae03ffa269e42e21822453856618b7.
+When seeing a new/deleted/renamed file we check to see if MAINTAINERS
+is updated, but we don't give the user a list of files affected, as
+we don't want to repeat the same warning many times over.
 
-The logic in this commit was flawed in two critical ways
+Using the new file list hook, we can give a single warning at the
+end with a list of filenames included.
 
- * It always failed to report SPDX validation on the last newly
-   added file. IOW, it only worked if at least 2 new files were
-   added in a commit
-
- * If an existing file change, followed a new file change, in
-   the commit and the existing file context/changed lines
-   included SPDX-License-Identifier, it would incorrectly
-   associate this with the previous newly added file.
-
-Simply reverting this commit will make it significantly easier to
-understand the improved logic in the following commit.
-
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/checkpatch.pl | 30 ------------------------------
- 1 file changed, 30 deletions(-)
+ scripts/checkpatch.pl | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
 diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 365892de04..d355c0dad5 100755
+index 00d7d72e53..6adef12871 100755
 --- a/scripts/checkpatch.pl
 +++ b/scripts/checkpatch.pl
-@@ -1442,8 +1442,6 @@ sub process {
+@@ -1442,6 +1442,25 @@ sub process_file_list {
+ 		      join("\n  ", @acpi_nontestexpected) .
+ 		      "\n\nfound in the same patch\n");
+ 	}
++
++	my $sawmaintainers = 0;
++	my @maybemaintainers;
++	foreach my $fileinfo (@fileinfos) {
++		if ($fileinfo->{action} ne "modified" &&
++		    $fileinfo->{filenew} !~ m#^tests/data/acpi/#) {
++			push @maybemaintainers, $fileinfo->{filenew};
++		}
++		if ($fileinfo->{filenew} eq "MAINTAINERS") {
++			$sawmaintainers = 1;
++		}
++	}
++
++	# If we don't see a MAINTAINERS update, prod the user to check
++	if (int(@maybemaintainers) > 0 && !$sawmaintainers) {
++		WARN("added, moved or deleted file(s):\n\n  " .
++		     join("\n  ", @maybemaintainers) .
++		     "\n\nDoes MAINTAINERS need updating?\n");
++	}
+ }
+ 
+ # Called at the start of processing a diff hunk for a file
+@@ -1485,7 +1504,6 @@ sub process {
+ 
+ 	my $in_header_lines = $file ? 0 : 1;
+ 	my $in_commit_log = 0;		#Scanning lines before patch
+-	my $reported_maintainer_file = 0;
+ 	my $reported_mixing_imported_file = 0;
  	my $in_imported_file = 0;
  	my $in_no_imported_file = 0;
- 	my $non_utf8_charset = 0;
--	my $expect_spdx = 0;
--	my $expect_spdx_file;
- 
- 	our @report = ();
- 	our $cnt_lines = 0;
-@@ -1681,34 +1679,6 @@ sub process {
- 			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
+@@ -1760,23 +1778,6 @@ sub process {
+ 			}
  		}
  
--# All new files should have a SPDX-License-Identifier tag
--		if ($line =~ /^new file mode\s*\d+\s*$/) {
--		    if ($expect_spdx) {
--			if ($expect_spdx_file =~
--			    /\.(c|h|py|pl|sh|json|inc|Makefile)$/) {
--			    # source code files MUST have SPDX license declared
--			    ERROR("New file '$expect_spdx_file' requires " .
--				  "'SPDX-License-Identifier'");
--			} else {
--			    # Other files MAY have SPDX license if appropriate
--			    WARN("Does new file '$expect_spdx_file' need " .
--				 "'SPDX-License-Identifier'?");
--			}
--		    }
--		    $expect_spdx = 1;
--		    $expect_spdx_file = undef;
--		} elsif ($expect_spdx) {
--		    $expect_spdx_file = $realfile unless
--			defined $expect_spdx_file;
+-# Check if MAINTAINERS is being updated.  If so, there's probably no need to
+-# emit the "does MAINTAINERS need updating?" message on file add/move/delete
+-		if ($line =~ /^\s*MAINTAINERS\s*\|/) {
+-			$reported_maintainer_file = 1;
+-		}
 -
--		    # SPDX tags may occurr in comments which were
--		    # stripped from '$line', so use '$rawline'
--		    if ($rawline =~ /SPDX-License-Identifier/) {
--			$expect_spdx = 0;
--			$expect_spdx_file = undef;
--		    }
+-# Check for added, moved or deleted files
+-		if (!$reported_maintainer_file && !$in_commit_log &&
+-		    ($line =~ /^(?:new|deleted) file mode\s*\d+\s*$/ ||
+-		     $line =~ /^rename (?:from|to) [\w\/\.\-]+\s*$/ ||
+-		     ($line =~ /\{\s*([\w\/\.\-]*)\s*\=\>\s*([\w\/\.\-]*)\s*\}/ &&
+-		      (defined($1) || defined($2)))) &&
+-		    $realfile !~ m#^tests/data/acpi/#) {
+-			$reported_maintainer_file = 1;
+-			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
 -		}
 -
  # Check SPDX-License-Identifier references a permitted license
  		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
- 		    &checkspdx($realfile, $1);
+ 			&checkspdx($realfile, $1);
 -- 
 2.49.0
 
