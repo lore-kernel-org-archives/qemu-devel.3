@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B750C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 13:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F5CC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 13:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFYqx-00059N-Eo; Thu, 15 May 2025 09:42:27 -0400
+	id 1uFYrb-00062P-9r; Thu, 15 May 2025 09:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFYqv-00056v-3m
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:42:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFYra-00062G-Af
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 09:43:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFYqs-00067X-Qw
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:42:24 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFYrX-0006AW-UG
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 09:43:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747316539;
+ s=mimecast20190719; t=1747316582;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gerI6pAQd3otOZeWKAxZKQLFGWPF2PevMlcAg8il2qo=;
- b=JEiCD8KMfSb5txeZ9CNJ1j1mj806u47vHK/Ty5e6+un1gMjMwXKukrn1ALKB0KXBH9uoYx
- njWy20gUrW3ibHrVXLKw+lO0IAzbu5P9lvJVSmK+RVVx7SKrV3bCRAYeYog4Jc+VTI4PCB
- IpKOYEyXZGM9865MPKt9PL+jaRM5L+g=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=L74gZTw6R64M7gGl9eo7cvBdXWjk4ImVIkppazpL8Bg=;
+ b=eCsqNdU9pLs/G56jQcwSmV7x9KjT3Q74zekgP7W8oXWHb14Puw7F4x5UOd0FavbGybBljV
+ KqiCZSa2MDrw56veBO1rIhaQ1MohDIdOaqqOEylysOv8uYmb4MEQyQU6GrOIzHxVxeyv30
+ VW7eH+H6sytXYIb1vAS22LqP1g4wL+8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-BmvrNPxePleb3GaLb-aHkw-1; Thu, 15 May 2025 09:42:17 -0400
-X-MC-Unique: BmvrNPxePleb3GaLb-aHkw-1
-X-Mimecast-MFC-AGG-ID: BmvrNPxePleb3GaLb-aHkw_1747316536
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a3561206b3so297492f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 06:42:17 -0700 (PDT)
+ us-mta-612-MNs4i61yObihP38o-nzwhg-1; Thu, 15 May 2025 09:43:00 -0400
+X-MC-Unique: MNs4i61yObihP38o-nzwhg-1
+X-Mimecast-MFC-AGG-ID: MNs4i61yObihP38o-nzwhg_1747316579
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a0b9bbfb0fso671689f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 06:43:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747316536; x=1747921336;
+ d=1e100.net; s=20230601; t=1747316579; x=1747921379;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gerI6pAQd3otOZeWKAxZKQLFGWPF2PevMlcAg8il2qo=;
- b=WDixa0SONFx3yjeF73CeoT9ECD3Zp6vtVklAZm9DjEhJBtXleS0qNNgkUneIlRqhFg
- GYeqBQg1U53AZi1OijdGf0jNhcbKE6e1s412qynUYJ6QERz6i7F+xlAxxEMWi8jhYlcG
- c9QuJan9YaFFFrJoBfvqH9wU0LFn1ZcL64se/8lKhQyDR+UZfVPx9nqaKyCGOZxaaTxA
- /NIQgCSLehzr7mD2PHUXVm9M/CCt1vcjgG6v03C2l/5YqFM1iEPg/2d1ce7A8G/OG1fP
- RMB6W4Ef0BiwPpWdjwQ95jR97lwznDsvG0gH859CZOemB2LMjY444Mgwht16lripwfGg
- +WHA==
+ bh=L74gZTw6R64M7gGl9eo7cvBdXWjk4ImVIkppazpL8Bg=;
+ b=Nlj7/XLuyE+4Ctr1vl7jwCDy8oXoSpoVhE9zdUGwFgxdZcLemYLckMILuff5szUDYa
+ sK3uQSmeNJi2ppSvumlzxscCclV7HZk8cJSKv5a4X0b+qKr73J/2yqxHYR8sF++PfhgD
+ PHamVqUMe4FSadU2pMRHcVjO98Qt+l+lViPpJMrOUwucs52TI1McnQElyR4b1nLH7RAp
+ 8uTVRd/WxbZdvCyQNwhjNgLLPKsjju+8j9ud9JuO5mrU0o/fEGTq17nh8WbHYySXlKYS
+ 1K0MhYjnNjJHTgKIxbVIS9WK0x1FHcjWnwQaOFZzIdiV10hqO4ELJgz5M5mrNcxrvvaN
+ dtSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFl1ynhc25aMfG8jGhCR8T3ZRFBYidm2KsiioKvnX6SlrblyNrsQZz1p+IaK7QP+AR7v9861HcTMXK@nongnu.org
-X-Gm-Message-State: AOJu0YyxxQwzAydmSCBNb9rm7E3xAzrF/GNZjiorhcsSRNd8NYZqLAEo
- acSmbhvewRgZQoy3y87IAz5bScjnG6x+kD/dG7CXN3V3kd+0WZsC5DrjimnDtc68DNGoDc3HHPU
- ZP3w6gepHpRREr4slK0/TkOnEnIUVtZWsom8xHCnRZAdjOjGfIKSL
-X-Gm-Gg: ASbGncurcD1NPEWt1qjb3LEHEtV80VAQfPKJXnM78JMXAKNqQcNDVC2m3RQIMzX49hs
- Xf94N1CxALCaWbLniPrAYymXrRyRawKNmLAR9lYjq8UYcYPjgMw4KX238QDkAQTF/PChNTNWIAK
- /FmEWBeGQ7wawbiGMImWFiVApwpaeRBoHuXF3j/A7lU9ruIoPlZ7EpSEQUgiR4q7AJ9r6YrE5V1
- fIsd5+AtLsLVDnQlEDYvXABoANft/I/Z0GnNx1H4TrhD2qpSJVkpxgWGumrIaOG9CFZVztaEiCU
- AfU/kn907/T41NtP60WgVvJ3sLrRvblJI5Tas2/t379/DCovOg==
-X-Received: by 2002:a05:6000:1786:b0:3a0:b733:f262 with SMTP id
- ffacd0b85a97d-3a3499528eemr5855189f8f.51.1747316536039; 
- Thu, 15 May 2025 06:42:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFkjkOf/d3LtfKvn+IbKd+srJY9NHqHFGi9G7LjTQIQwtk9gb4ZbCjRIOCSOtxOfXUeBOHJxw==
-X-Received: by 2002:a05:6000:1786:b0:3a0:b733:f262 with SMTP id
- ffacd0b85a97d-3a3499528eemr5855164f8f.51.1747316535712; 
- Thu, 15 May 2025 06:42:15 -0700 (PDT)
+ AJvYcCXxMD1ASdN69wv5XONwbCPyO5kif51l72xf8MOnwdD35j5rjmpSp4buPOCG5riU+u7sKqFKFCsm3C+M@nongnu.org
+X-Gm-Message-State: AOJu0YwndG2qZj/hYCd23lyoWphwpBCuSUuZiH7b5R8dHnRTcRwPWHul
+ e/FRgdAvDPB74yU3iKmdhChIU6uvezY0b95z9N3EfIvrMT1sXB0GfB5KVGtR4GH2/DC8ISP4s3K
+ QYSw90rV2yb0+83ac6qUNrwLa7RS4E+o+0JIK+wOS1ZklNOZtuQsy
+X-Gm-Gg: ASbGnculIUQu/f/CuAJI/UzfhzL3/AfvdsC3aa9w8HRGsXitmDG3SUZ9aJH3w/eTFYS
+ FdedjeNM/Jr6kemtfVifChYMZTkKznGiNl06JIqLjIw3dXLumPxkPpD4XQGgqbiBj+R4TIEq16E
+ IyYnh3gywkVBA3Qe+P9DE0DU/tVilwM2bqvqd+e+WlogtOhREOEmtS23JgporuAXfUavA1RsiQ2
+ Tl/0MLjVO6bcuMV0bAgTcgRi5htTi+wQfYdjlmGX6PVjtC9a+Jb4wEWJSw/mOBEjWUDM8IB43bn
+ 27YhZpB8DwU0es8xxfOqzLqxdH4HuNaZlLAylVfxEQ5AXwFYhg==
+X-Received: by 2002:a05:6000:2283:b0:3a2:3c53:947b with SMTP id
+ ffacd0b85a97d-3a3493db918mr6761677f8f.0.1747316579423; 
+ Thu, 15 May 2025 06:42:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGf+Mk94G8YLJt+9//nrZ9+qM7BTnnk9kePOItdtROwe5QObAKOyrKW3ZYQwMBkTF+vVrzNGA==
+X-Received: by 2002:a05:6000:2283:b0:3a2:3c53:947b with SMTP id
+ ffacd0b85a97d-3a3493db918mr6761649f8f.0.1747316578936; 
+ Thu, 15 May 2025 06:42:58 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35a51f816sm1082993f8f.36.2025.05.15.06.42.14
+ ffacd0b85a97d-3a1f58eb91bsm23285429f8f.33.2025.05.15.06.42.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 06:42:15 -0700 (PDT)
-Message-ID: <45f4a597-f25c-4386-a410-e8892fd584ce@redhat.com>
-Date: Thu, 15 May 2025 15:42:14 +0200
+ Thu, 15 May 2025 06:42:58 -0700 (PDT)
+Message-ID: <0501dd8f-7cae-456e-b4d7-e80b8aaaa5b2@redhat.com>
+Date: Thu, 15 May 2025 15:42:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 08/42] vfio/container: export vfio_legacy_dma_map
+Subject: Re: [PATCH V3 10/42] vfio/container: restore DMA vaddr
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -86,7 +86,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-9-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-11-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1747063973-124548-9-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1747063973-124548-11-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -161,49 +161,173 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/25 17:32, Steve Sistare wrote:
-> Export vfio_legacy_dma_map so it may be referenced outside the file
-> in a subsequent patch.
+> In new QEMU, do not register the memory listener at device creation time.
+> Register it later, in the container post_load handler, after all vmstate
+> that may affect regions and mapping boundaries has been loaded.  The
+> post_load registration will cause the listener to invoke its callback on
+> each flat section, and the calls will match the mappings remembered by the
+> kernel.
+> 
+> The listener calls a special dma_map handler that passes the new VA of each
+> section to the kernel using VFIO_DMA_MAP_FLAG_VADDR.  Restore the normal
+> handler at the end.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->   hw/vfio/container.c                   | 4 ++--
->   include/hw/vfio/vfio-container-base.h | 3 +++
->   2 files changed, 5 insertions(+), 2 deletions(-)
+>   hw/vfio/container.c  | 15 +++++++++++++--
+>   hw/vfio/cpr-legacy.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 61 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 278a220..a554683 100644
+> index a554683..0e02726 100644
 > --- a/hw/vfio/container.c
 > +++ b/hw/vfio/container.c
-> @@ -208,8 +208,8 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
->       return ret;
+> @@ -137,6 +137,8 @@ static int vfio_legacy_dma_unmap_one(const VFIOContainerBase *bcontainer,
+>       int ret;
+>       Error *local_err = NULL;
+>   
+> +    assert(!container->cpr.reused);
+> +
+>       if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+>           if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+>               bcontainer->dirty_pages_supported) {
+> @@ -691,8 +693,17 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+>       }
+>       group_was_added = true;
+>   
+> -    if (!vfio_listener_register(bcontainer, errp)) {
+> -        goto fail;
+> +    /*
+> +     * If reused, register the listener later, after all state that may
+> +     * affect regions and mapping boundaries has been cpr load'ed.  Later,
+> +     * the listener will invoke its callback on each flat section and call
+> +     * dma_map to supply the new vaddr, and the calls will match the mappings
+> +     * remembered by the kernel.
+> +     */
+> +    if (!cpr_reused) {
+> +        if (!vfio_listener_register(bcontainer, errp)) {
+> +            goto fail;
+> +        }
+
+hmm, I am starting to think we should have a vfio_cpr_container_connect
+routine too.
+
+
+>       }
+>   
+>       bcontainer->initialized = true;
+> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+> index 519d772..bbcf71e 100644
+> --- a/hw/vfio/cpr-legacy.c
+> +++ b/hw/vfio/cpr-legacy.c
+> @@ -11,11 +11,13 @@
+>   #include "hw/vfio/vfio-container.h"
+>   #include "hw/vfio/vfio-cpr.h"
+>   #include "hw/vfio/vfio-device.h"
+> +#include "hw/vfio/vfio-listener.h"
+>   #include "migration/blocker.h"
+>   #include "migration/cpr.h"
+>   #include "migration/migration.h"
+>   #include "migration/vmstate.h"
+>   #include "qapi/error.h"
+> +#include "qemu/error-report.h"
+>   
+>   static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
+>   {
+> @@ -32,6 +34,34 @@ static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
+>       return true;
 >   }
 >   
-> -static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-> -                               ram_addr_t size, void *vaddr, bool readonly)
-> +int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-> +                        ram_addr_t size, void *vaddr, bool readonly)
->   {
->       const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
->                                                     bcontainer);
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-> index 1dc760f..a2f6c3a 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -186,4 +186,7 @@ struct VFIOIOMMUClass {
->   VFIORamDiscardListener *vfio_find_ram_discard_listener(
->       VFIOContainerBase *bcontainer, MemoryRegionSection *section);
->   
-> +int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-> +                        ram_addr_t size, void *vaddr, bool readonly);
+> +/*
+> + * Set the new @vaddr for any mappings registered during cpr load.
+> + * Reused is cleared thereafter.
+> + */
+> +static int vfio_legacy_cpr_dma_map(const VFIOContainerBase *bcontainer,
+> +                                   hwaddr iova, ram_addr_t size, void *vaddr,
+> +                                   bool readonly)
+> +{
+> +    const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+> +                                                  bcontainer);
+> +    struct vfio_iommu_type1_dma_map map = {
+> +        .argsz = sizeof(map),
+> +        .flags = VFIO_DMA_MAP_FLAG_VADDR,
+> +        .vaddr = (__u64)(uintptr_t)vaddr,
+> +        .iova = iova,
+> +        .size = size,
+> +    };
 > +
->   #endif /* HW_VFIO_VFIO_CONTAINER_BASE_H */
+> +    assert(container->cpr.reused);
+> +
+> +    if (ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map)) {
+> +        error_report("vfio_legacy_cpr_dma_map (iova %lu, size %ld, va %p): %s",
+> +                     iova, size, vaddr, strerror(errno));
 
-I don't think this export is necessary. See comment on patch 10.
+Callers should also report the error. No need to do it here.
+
+> +        return -errno;
+> +    }
+> +
+> +    return 0;
+> +}
+>   
+>   static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
+>   {
+> @@ -63,12 +93,24 @@ static int vfio_container_pre_save(void *opaque)
+>   static int vfio_container_post_load(void *opaque, int version_id)
+>   {
+>       VFIOContainer *container = opaque;
+> +    VFIOContainerBase *bcontainer = &container->bcontainer;
+>       VFIOGroup *group;
+>       VFIODevice *vbasedev;
+> +    Error *err = NULL;
+> +
+> +    if (!vfio_listener_register(bcontainer, &err)) {
+> +        error_report_err(err);
+> +        return -1;
+> +    }
+>   
+>       container->cpr.reused = false;
+>   
+>       QLIST_FOREACH(group, &container->group_list, container_next) {
+> +        VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +
+> +        /* Restore original dma_map function */
+> +        vioc->dma_map = vfio_legacy_dma_map;
+> +
+>           QLIST_FOREACH(vbasedev, &group->device_list, next) {
+>               vbasedev->cpr.reused = false;
+>           }
+> @@ -80,6 +122,7 @@ static const VMStateDescription vfio_container_vmstate = {
+>       .name = "vfio-container",
+>       .version_id = 0,
+>       .minimum_version_id = 0,
+> +    .priority = MIG_PRI_LOW,  /* Must happen after devices and groups */
+>       .pre_save = vfio_container_pre_save,
+>       .post_load = vfio_container_post_load,
+>       .needed = cpr_needed_for_reuse,
+> @@ -104,6 +147,11 @@ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
+>   
+>       vmstate_register(NULL, -1, &vfio_container_vmstate, container);
+>   
+> +    /* During incoming CPR, divert calls to dma_map. */
+> +    if (container->cpr.reused) {
+> +        VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +        vioc->dma_map = vfio_legacy_cpr_dma_map;
+
+You could backup the previous dma_map() handler in a static variable or,
+better, under container->cpr.
 
 
 Thanks,
 
 C.
 
+
+
+
+> +    }
+>       return true;
+>   }
+>   
 
 
