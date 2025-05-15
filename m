@@ -4,75 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8598AC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 13:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62B8C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 13:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFYpG-0004RL-5o; Thu, 15 May 2025 09:40:42 -0400
+	id 1uFYqS-0004ZU-CD; Thu, 15 May 2025 09:41:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uFYpE-0004Qt-6G; Thu, 15 May 2025 09:40:40 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uFYqI-0004YO-ME; Thu, 15 May 2025 09:41:48 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uFYp9-00060F-A7; Thu, 15 May 2025 09:40:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747316435; x=1778852435;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=t/dBJRztTq4O8xEEobmmrrFdz5C0wJIG2Qexj3Seeto=;
- b=Lo12hO7LtbzvJj0fTTjXDk1YrZ6Qh6Xpq6IMnGjS+sf4z4L0FlRJatea
- maUoPxfUyfRAPysu043vX+fykEHHH85rZkCImOnB77PkJ10BY0EaBs6+h
- upCgcuDVg8THUzoKnMQpS+hyaKVdF2BNWGnH69ebCpBT2zNOea9lLmSVZ
- xlyjj9cH0Tbt7zogYggPkDTPQ55h/2pRJ2RmFCFSHZfRLKWLn/uzX4f4X
- i8hdQMIFBs/QHtbwMV17A3s1umHx1iYAXrwpP+akIDy5L2l58jqldbWF8
- e7jb3fTQnfX11UUJRY+mS+ufEQ9hCVbcFesZra+qGtEsNKFYEq72/Tzzu Q==;
-X-CSE-ConnectionGUID: jujWPTz9TI6Ygo9gHl18vw==
-X-CSE-MsgGUID: WRYjJYACRpayTnMIzp53Fg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11434"; a="48370717"
-X-IronPort-AV: E=Sophos;i="6.15,291,1739865600"; d="scan'208";a="48370717"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2025 06:40:31 -0700
-X-CSE-ConnectionGUID: +gU1JbZYQd6M8WXm8bGWsQ==
-X-CSE-MsgGUID: DaNzT0bDTauGgbxs3/bZxg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,291,1739865600"; d="scan'208";a="169309570"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 15 May 2025 06:40:29 -0700
-Date: Thu, 15 May 2025 22:01:34 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH 1/9] qom/object: Improve the doc of macros related with
- simple type
-Message-ID: <aCXzvi3C0PRwWiF6@intel.com>
-References: <20250514084957.2221975-1-zhao1.liu@intel.com>
- <20250514084957.2221975-2-zhao1.liu@intel.com>
- <e213c4bf-1b26-f1c3-c3ed-10c2adff4a5d@eik.bme.hu>
- <aCS3gS3+qdxZof75@intel.com>
- <e034853a-beaf-f5d8-4eb3-069538b012c6@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uFYqB-000664-JN; Thu, 15 May 2025 09:41:44 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 6EB8F42AC7;
+ Thu, 15 May 2025 15:41:33 +0200 (CEST)
+Message-ID: <19ad4476-d56e-4f7c-9d45-067649d325ef@proxmox.com>
+Date: Thu, 15 May 2025 15:41:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e034853a-beaf-f5d8-4eb3-069538b012c6@eik.bme.hu>
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -60
-X-Spam_score: -6.1
-X-Spam_bar: ------
-X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/11] block: move drain outside of read-locked
+ bdrv_reopen_queue_child()
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, hreitz@redhat.com, stefanha@redhat.com,
+ eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
+ pbonzini@redhat.com
+References: <20250508140936.3344485-1-f.ebner@proxmox.com>
+ <20250508140936.3344485-3-f.ebner@proxmox.com> <aCTGceRCQ4bywHx5@redhat.com>
+ <d1d0c8c3-9cba-4916-877b-95ccd718a817@proxmox.com>
+ <aCXd8MvDPnmKWiRI@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <aCXd8MvDPnmKWiRI@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,109 +64,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 06:13:33PM +0200, BALATON Zoltan wrote:
-> Date: Wed, 14 May 2025 18:13:33 +0200
-> From: BALATON Zoltan <balaton@eik.bme.hu>
-> Subject: Re: [PATCH 1/9] qom/object: Improve the doc of macros related with
->  simple type
+Am 15.05.25 um 14:28 schrieb Kevin Wolf:
+> Am 15.05.2025 um 13:48 hat Fiona Ebner geschrieben:
+>> Am 14.05.25 um 18:36 schrieb Kevin Wolf:
+>>> Am 08.05.2025 um 16:09 hat Fiona Ebner geschrieben:
+>>>> @@ -4368,6 +4368,7 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+>>>>                          bool keep_old_opts)
+>>>>  {
+>>>>      assert(bs != NULL);
+>>>> +    assert(qatomic_read(&bs->quiesce_counter) > 0);
+>>>
+>>> BlockDriverState.quiesce_counter isn't accessed with atomics elsewhere.
+>>> Did you confuse it with BlockBackend.quiesce_counter?
+>>
+>> No, but I saw that it is modified via qatomic_fetch_inc/dec(). And those
+>> modifications are in bdrv_do_drained_begin/end() which are
+>> IO_OR_GS_CODE(). So isn't it more correct to read via atomics here?
 > 
-> On Wed, 14 May 2025, Zhao Liu wrote:
-> > Hi BALATON,
+> Aha, I missed these two places. Looks like Paolo's commit 414c2ec wasn't
+> very thorough with converting.
 > 
-> In case you did not know:
-> https://en.wikipedia.org/wiki/Name_order#Hungary
+> The commit message is also empty, so I don't know why we made this
+> change. Both places are GLOBAL_STATE_CODE(), so I don't think we
+> actually need atomics to synchronise these two places. Maybe there are
+> other accesses in iothreads, but then those should have been using
+> atomics, too.
+
+AFAICT, all accesses are either in a function with GLOBAL_STATE_CODE()
+directly or in a function with GRAPH_WRLOCK (in the cases of
+bdrv_replace_child_tran() and bdrv_replace_child_noperm()).
+
+This does not change for the new accesses added by the series here.
+
+Back then, there was no GLOBAL_STATE_CODE() macro yet, so I suppose this
+wasn't easy to verify.
+
+>> The documentation in include/block/block_int-common.h for struct
+>> BlockDriverState also states:
+>>>     /* Accessed with atomic ops.  */
+>>>     int quiesce_counter;
+>>
+>> Should I rather add a patch to have the other readers use atomics too?
 > 
-> > On Wed, May 14, 2025 at 02:02:48PM +0200, BALATON Zoltan wrote:
-> > > Date: Wed, 14 May 2025 14:02:48 +0200
-> > > From: BALATON Zoltan <balaton@eik.bme.hu>
-> > > Subject: Re: [PATCH 1/9] qom/object: Improve the doc of macros related with
-> > >  simple type
-> > > 
-> > > On Wed, 14 May 2025, Zhao Liu wrote:
-> > > > There're 2 changes:
-> > > > - For OBJECT_DECLARE_SIMPLE_TYPE:
-> > > > 
-> > > >   Since a clase may not only has virtual method, but also field, thus
-> > > 
-> > > class may not only have virtual methods but also fields, clarify when class
-> > > is not needed
-> > 
-> > Thanks for the polish! It sounds better.
-> 
-> It's also grammatically more correct. But I'm not a native English speaker
-> so may still be wrong.
+> Either all accesses should use atomics or none of them. I'm not
+> completely sure which way is the right one. Using atomics everywhere is
+> the safe option, but I'm not sure if we ever access quiesce_counter
+> outside of the main thread.
 
-Neither am I. But I like this advice.
+I'd add a patch dropping the atomic accesses and document that
+quiesce_counter can only be accessed in the main thread.
 
-> > > >   mention when class is not needed for either, then there is no need
-> > > >   to have the class.
-> > > > 
-> > > > - For OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES:
-> > > > 
-> > > >   And the words like OBJECT_DEFINE_SIMPLE_TYPE about when the type is
-> > > >   declared by OBJECT_DECLARE_SIMPLE_TYPE, then user should consider
-> > > >   to define the type via OBJECT_DEFINE_SIMPLE_TYPE or
-> > > >   OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES.
-> > > > 
-> > > > Cc: Paolo Bonzini <pbonzini@redhat.com>
-> > > > Cc: "Daniel P. Berrang?" <berrange@redhat.com>
-> > > > Cc: Eduardo Habkost <eduardo@habkost.net>
-> > > > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > > > ---
-> > > > include/qom/object.h | 5 +++--
-> > > > 1 file changed, 3 insertions(+), 2 deletions(-)
-> > > > 
-> > > > diff --git a/include/qom/object.h b/include/qom/object.h
-> > > > index 1d5b03372429..14f84ae454d3 100644
-> > > > --- a/include/qom/object.h
-> > > > +++ b/include/qom/object.h
-> > > > @@ -249,7 +249,7 @@ struct Object
-> > > >  * declared.
-> > > >  *
-> > > >  * This macro should be used unless the class struct needs to have
-> > > > - * virtual methods declared.
-> > > > + * virtual methods or fields declared.
-> > > >  */
-> > > > #define OBJECT_DECLARE_SIMPLE_TYPE(InstanceType, MODULE_OBJ_NAME) \
-> > > >     typedef struct InstanceType InstanceType; \
-> > > > @@ -402,7 +402,8 @@ struct Object
-> > > >  *
-> > > >  * This is a variant of OBJECT_DEFINE_TYPE_EXTENDED, which is suitable for
-> > > >  * the case of a non-abstract type, with interfaces, and with no requirement
-> > > > - * for a class struct.
-> > > > + * for a class struct. If you declared your type with OBJECT_DECLARE_SIMPLE_TYPE
-> > > > + * then this is probably the right choice for defining it.
-> > > 
-> > > Is "probably" correct here? Is it a must or can still use other defining
-> > > macros?
-> > 
-> > Yes, because there's another choice: OBJECT_DEFINE_SIMPLE_TYPE.
-> > 
-> > > If correct maybe saying "this might be the right choice" is simpler.
-> > 
-> > :-) I copied this sentence from the documentation of
-> > OBJECT_DEFINE_SIMPLE_TYPE. The difference between these 2 macros is
-> > OBJECT_DEFINE_SIMPLE_TYPE doesn't support interface.
-> > 
-> > So I'd like to keep this sentence, consistent with the description of
-> > OBJECT_DEFINE_SIMPLE_TYPE.
-> 
-> OK in that case no problem to keep consistency. It still sounds a bit
-> unspecific for documentation to me because it leaves the question open of
-> what is it when it's not the right choice but if this is already there then
-> that's another unrelated question.
-
-I get your point.
-
-Before this sentance, the doc said "This is a variant of
-OBJECT_DEFINE_TYPE_EXTENDED, which is suitable for the common case of a
-non-abstract type, without any interfaces, and with no requirement for a
-class struct."
-
-IMO it's the pretty accurate description about in which case this macro
-is used. This description could clarify your question :-).
-
-Thanks,
-Zhao
+Best Regards,
+Fiona
 
 
