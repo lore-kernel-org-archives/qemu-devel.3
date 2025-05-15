@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A89D5C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 09:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C0D8C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 09:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFVAo-0002fv-CG; Thu, 15 May 2025 05:46:42 -0400
+	id 1uFVMZ-0002q6-Bf; Thu, 15 May 2025 05:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFVAl-0002fO-Vb
- for qemu-devel@nongnu.org; Thu, 15 May 2025 05:46:40 -0400
+ id 1uFVMS-0002gB-0c
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 05:58:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFVAk-0003Ud-7u
- for qemu-devel@nongnu.org; Thu, 15 May 2025 05:46:39 -0400
+ id 1uFVMN-0004xa-E3
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 05:58:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747302394;
+ s=mimecast20190719; t=1747303117;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=UOjYx8O5r0tpPBhguPSMXTZE1MqlrdqONIbluGDK/qc=;
- b=AfujniHqwpytcqKScIigVV1PPhdX9esAs0oKchOLNyULkbBiQKru+902i5rB1UC+GhPN3m
- 424rlyA5Fsg2Xr9etUldHAE3q2r7C1yrepy2BeDwTNKTQ1p8KM8NgxiuR84RIURB+RHyBA
- ZjOROxVxfa7ePxBENB3BIrwGblz8sB0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7fuvIfSs0wpeW6VpGUcw4N2K/Lqf6CBCixbfbuBFeWQ=;
+ b=YyRxwnj2aDTIv2a2kj5rajiLos2WUH1L4nI46Xo7RIY+FH0M0mbPjlSym0AhphTnZ2Wej1
+ 84PNEbdipTczmsUiRYQFeUKv8+OP/vcPZyTWpVyefxhHRqoTuxz4xfRsyL+UwnsKuEjBW1
+ QO+tcbflXKxa9ttpmT7Mc6g+IaFpP7k=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-q8FP1xCMMm2z0HyYZKJeYA-1; Thu,
- 15 May 2025 05:46:33 -0400
-X-MC-Unique: q8FP1xCMMm2z0HyYZKJeYA-1
-X-Mimecast-MFC-AGG-ID: q8FP1xCMMm2z0HyYZKJeYA_1747302392
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-qOe6w0LgNhuPT-ZFTqLDvA-1; Thu,
+ 15 May 2025 05:58:34 -0400
+X-MC-Unique: qOe6w0LgNhuPT-ZFTqLDvA-1
+X-Mimecast-MFC-AGG-ID: qOe6w0LgNhuPT-ZFTqLDvA_1747303113
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5829D1956050; Thu, 15 May 2025 09:46:31 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CE4D19560AA; Thu, 15 May 2025 09:58:33 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.135])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED27818008F4; Thu, 15 May 2025 09:46:28 +0000 (UTC)
-Date: Thu, 15 May 2025 10:46:24 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 20734195608D; Thu, 15 May 2025 09:58:26 +0000 (UTC)
+Date: Thu, 15 May 2025 10:58:21 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org,
  armbru@redhat.com, christian.boenig@lauterbach.com
-Subject: Re: [PATCH v2 03/20] mcd: Introduce MCD server
-Message-ID: <aCW38DA6ujM2ACO8@redhat.com>
+Subject: Re: [PATCH v2 08/20] mcd: Implement server connection API
+Message-ID: <aCW6vZivY9-Yt8-H@redhat.com>
 References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
- <20250430052741.21145-4-mario.fleischmann@lauterbach.com>
+ <20250430052741.21145-9-mario.fleischmann@lauterbach.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250430052741.21145-4-mario.fleischmann@lauterbach.com>
+In-Reply-To: <20250430052741.21145-9-mario.fleischmann@lauterbach.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
@@ -87,47 +87,73 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 30, 2025 at 07:27:24AM +0200, Mario Fleischmann wrote:
-> The MCD implementation follows a remote procedure call approach
-> and will use a client JSON protocol for communication.
+On Wed, Apr 30, 2025 at 07:27:29AM +0200, Mario Fleischmann wrote:
+> This commit implements the necessary operations required to establish
+> a connection with the MCD server:
 > 
-> While the MCD server implements the MCD API, the server stub will be
-> responsible for handling the JSON connection and for dispatching the
-> corresponding server functions.
+> * query information about the server
+> * connect to "
+> * disconnect from "
 > 
 > Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 > ---
->  mcd/mcd_server.c | 431 +++++++++++++++++++++++++++++++++++++++++++++++
->  mcd/meson.build  |  14 ++
->  meson.build      |   4 +
->  3 files changed, 449 insertions(+)
->  create mode 100644 mcd/mcd_server.c
->  create mode 100644 mcd/meson.build
+>  mcd/mcd_qapi.c         |  13 +++
+>  mcd/mcd_qapi.h         |   2 +
+>  mcd/mcd_server.c       | 110 +++++++++++++++++++++-
+>  mcd/mcd_stub.c         |  98 ++++++++++++++++++++
+>  qapi/mcd.json          | 205 +++++++++++++++++++++++++++++++++++++++++
+>  tests/qtest/mcd-test.c |  96 +++++++++++++++++++
+>  tests/qtest/mcd-util.c |  60 ++++++++++++
+>  tests/qtest/mcd-util.h |   9 ++
+>  8 files changed, 588 insertions(+), 5 deletions(-)
 > 
-> diff --git a/mcd/mcd_server.c b/mcd/mcd_server.c
-> new file mode 100644
-> index 0000000..a20708d
-> --- /dev/null
-> +++ b/mcd/mcd_server.c
-> @@ -0,0 +1,431 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * mcdserver - Multi-Core Debug (MCD) API implementation
+> diff --git a/mcd/mcd_qapi.c b/mcd/mcd_qapi.c
+> index 9a99866..d2a2926 100644
+> --- a/mcd/mcd_qapi.c
+> +++ b/mcd/mcd_qapi.c
 
-Nitpick - you don't need to open & close a comment just for the
-SPDX tag, just let the whole header flow as one comment
 
-> + *
-> + * Copyright (c) 2025 Lauterbach GmbH
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
+> +MCDQryServersResult *qmp_mcd_qry_servers(const char *host, bool running,
+> +                                         uint32_t start_index,
+> +                                         uint32_t num_servers, Error **errp)
+> +{
+> +    MCDServerInfoList **tailp;
+> +    MCDServerInfo *info;
+> +    mcd_server_info_st *server_info = NULL;
+> +    bool query_num_only = num_servers == 0;
+> +    MCDQryServersResult *result = g_malloc0(sizeof(*result));
+> +
+> +    if (!query_num_only) {
+> +        server_info = g_malloc0(num_servers * sizeof(*server_info));
 
-This text should be omitted in any new files - only the SPDX
-tag is expected/required.
+This multiplication is (theoretically) subject to overflow. To eliminate
+this risk, this should use
 
-I won't repeat them on later patches, but these comments apply
-to all new files through this whole series.
+    g_new0(mcd_server_info_st, num_servers)
+
+which will validate overflow & abort if hit.
+
+There are many more instances of this code pattern in the series
+
+$ git diff -r master | grep g_malloc | grep ' \* '
++        .tx = g_malloc(txlist->num_tx * sizeof(mcd_tx_st)),
++        server_info = g_malloc0(num_servers * sizeof(*server_info));
++        system_con_info = g_malloc0(num_systems * sizeof(*system_con_info));
++        device_con_info = g_malloc0(num_devices * sizeof(*device_con_info));
++        core_con_info = g_malloc0(num_cores * sizeof(*core_con_info));
++        memspaces = g_malloc0(num_mem_spaces * sizeof(*memspaces));
++        reg_groups = g_malloc0(num_reg_groups * sizeof(*reg_groups));
++        regs = g_malloc0(num_regs * sizeof(*regs));
++        ctrig_info = g_malloc0(num_ctrigs * sizeof(*ctrig_info));
++        trig_ids = g_malloc0(num_trigs * sizeof(*trig_ids));
+
+
+QEMU is a bit inconsistent, but we have a slight bias in favour
+of using g_new0, even for single struct allocations.
+
+IMHO being in the habit of always using g_new0 instead of g_malloc
+makes it less likely for people to inadvertantly introduce the
+multiplication overflow code pattern with g_malloc.
 
 
 With regards,
