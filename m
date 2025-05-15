@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76EF0C54754
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 07:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BEFCC54754
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 07:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFT8q-0007zo-JC; Thu, 15 May 2025 03:36:32 -0400
+	id 1uFTFw-00047C-6f; Thu, 15 May 2025 03:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFT8o-0007zf-Ry
- for qemu-devel@nongnu.org; Thu, 15 May 2025 03:36:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFTFu-00046x-8i
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 03:43:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFT8m-0005M2-B9
- for qemu-devel@nongnu.org; Thu, 15 May 2025 03:36:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFTFs-0006EU-6q
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 03:43:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747294585;
+ s=mimecast20190719; t=1747295026;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QTff/lNpSkK4YBe7NK+nN1jY4NvLldH2owcY8su8puA=;
- b=ako3Hvrku9YKVKOC0AVzJFhY+MhJmHsfW+zKdaGfxGJ+yRIbS4M+2TdBbNxVYN0CDoFM8q
- 1tWhbGYdbXDkjLdIyuhR4T3GjUTaUw0Hhu0t6ONCDEfCMApx8ulOnvYbFMc9IKz+dDUN1k
- 4/U4WNgjrjl43GgnOp6ddGrl7c7skI4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jFvKSla7qsixIHJoDhEQwNf4SKIuq/LcXxhEbevh+Cw=;
+ b=M+mmRMXr+Ko1OGsqpgsAfp0lTse94+6rdGlHPNk0ukA8dvMsMfIjK5oN7VB9oZi+iEpfoN
+ TRl7Xh1Wg99antGL70jom9UQHKTwOWsMZWGXpUeqXPTom2bcY1B4fz10zhKm78EsM/zfZ6
+ chMFzERX4RjcDJSIjlnMjNCVtwnW7UE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-26-qf-Q6TGUM4K4_qitF5_54Q-1; Thu, 15 May 2025 03:36:24 -0400
-X-MC-Unique: qf-Q6TGUM4K4_qitF5_54Q-1
-X-Mimecast-MFC-AGG-ID: qf-Q6TGUM4K4_qitF5_54Q_1747294583
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-441c122fa56so2553345e9.2
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 00:36:24 -0700 (PDT)
+ us-mta-639-kEfq8GPYMOmlBEsj3x_5Bg-1; Thu, 15 May 2025 03:43:45 -0400
+X-MC-Unique: kEfq8GPYMOmlBEsj3x_5Bg-1
+X-Mimecast-MFC-AGG-ID: kEfq8GPYMOmlBEsj3x_5Bg_1747295024
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a3591847a5so88121f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 00:43:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747294583; x=1747899383;
+ d=1e100.net; s=20230601; t=1747295024; x=1747899824;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QTff/lNpSkK4YBe7NK+nN1jY4NvLldH2owcY8su8puA=;
- b=ruPjyqU2fReKJXFfPL04jv8h543H3FIwg5glRfMZ27NiANOc8q+lE5UQ6iYv+5QZcv
- y8ZLwPb+QV1QqAiDY7RF9ZrI+GidHlE4GoGm9b/sJFJ+otbjiVr2o1IOr9CgzjJll0mp
- OQjkCPZhG1RQf2tHqbd60VGBwQtUfWJLFzH8mt3djIYtxG2R7KM7tvDzwU6mbZpEorGk
- 1qWXGmfzeMgUmyJ2AUyupCiJx8u0Oztlilwfr/WoB1wnCbD8fCXI3WR52kcPuxWeLTiW
- 2MY95/pzpfhAE9PoFcyR+xHBP4Qe0qRujiulUhEZZwl5wYQvDTilBxMqbYg4Kr/ywHZc
- UGUw==
+ bh=jFvKSla7qsixIHJoDhEQwNf4SKIuq/LcXxhEbevh+Cw=;
+ b=p7dBwedgSCTPMd42CL0eQ2WKRbNm4iMEHm1ykryJj9QmJfgDC2aBcJRL7pQCUXW5gE
+ DVCuA5ZTYIJ9BZYw8n4KXibpj2G6jFDzz3JyFo2QTFnEG1UoM157qDTbWlCvyKQVSIf7
+ 9sb0wRaHz4R2nLqB4sqNld09ss7LUwnxe0xltRI7OXkAeAaeMeSDA+k3+Er/rSu9akgZ
+ AkrqtywqVSM17UMAKNn72UNyuEvcUwjn4Po3ARIDL39bxxfpXaxD5gIQLIMVK3nPeTSd
+ ZaEKyKxy+An+dzpQayjA6j0/bLX9Af7ilmmdm1ty4+1Nfg/WQlPy4yzReCd8/UKN7iVi
+ xfxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrQSLDsa1DV1x+go3lClHS3jX1QLW6MtYFZx8/VTHwn2rYZN6MFFNIEqtwvGF0JuLx1hA4bVLxPChd@nongnu.org
-X-Gm-Message-State: AOJu0YwP/0dWoweZ2cN5gm+q48nv7kLS6jTUyolmOiUD5vnND95cNudo
- Y3szrlZ4vF3/8deVAomOKbrzKlUEw/8R9i3AQz97BbX/Fbe9b5ParwRpeSsx5eGgI74ofyhlCz7
- aFqRVV18dzhW/vKIQ7NRiua47JL+HMf5LGHekJQudm9AQP0lV1W1T
-X-Gm-Gg: ASbGnctd5YiiJPTFjtkn7uaknrDZQT6qfRxtodnRUuODh7RL1YxpQ10eYq5O25HmQCm
- szjRpEuD0+0Z7J31dHqAXCpMxcUfinqBr0fzO+g34fQwCg0wsTabGTwTPrOoePpcX/BpPf76kJr
- fF2sl24qPw3CKdw57R12Qs9tf2BzZ2gXmWnOMipGhoVnF7CDptp57Zu/oG/veWsZNLLtW62K0HF
- 384psjpq+bTj7dOAHdV7NZlz+MkL9Z+hOE7iRZWg0Qmkff9ymOcHfUE7ZRXGXsewmGQGfpU4PGB
- +rneqLQgc1tu3Zrg0msOGmstij/o2KSMVxycB726xdGiBPkSew==
-X-Received: by 2002:a05:6000:22c5:b0:3a1:fc91:f784 with SMTP id
- ffacd0b85a97d-3a34994ef51mr4845486f8f.53.1747294583009; 
- Thu, 15 May 2025 00:36:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXojvA7hkWU3MQ6H+FA+IR6GPArq24jrsELIyexv/CVX1FPLIFokEBs8eaW6yYJLU5lOjS7Q==
-X-Received: by 2002:a05:6000:22c5:b0:3a1:fc91:f784 with SMTP id
- ffacd0b85a97d-3a34994ef51mr4845464f8f.53.1747294582671; 
- Thu, 15 May 2025 00:36:22 -0700 (PDT)
+ AJvYcCXsK9/FiAnZn4xm/EP7qVYoikt1iRnZy3DHsqBQvxF4kV92rxjpHHq9sVrbsjVkRqhQFY8TU48AtgD/@nongnu.org
+X-Gm-Message-State: AOJu0YzM91uXpLAGG6j8Ih/isYM837z1zzsWyHLHMGutSY4I7zW6Aitr
+ De4PcwiVqALtJ6jY/oE0aDedSL4svotzATXuEgvS5drsgmho85nOP6sGZGIl6RO32ql5M90jPG/
+ sFpquEkJZXCQ/vZ+EDPuDzqqwWGJ+jM9j8vbPijC1iVzjDyllUsMP
+X-Gm-Gg: ASbGncsdOLN8JXoIoz6bPwXZbt1Vguw9kQqaTUXOlkWsSfDOu4rvxSBQno0IfKsKFn6
+ bXjnhlrftVF/YaQ+TzQnzqC2bSHDBI4/UPPHrkhUQQZ9Lo1BD8cMZiRizt7mpx4zSIQXPpaLmiy
+ eHAP5FLrakh2vQHIFPd9MPSjskBxyj85RXf4B0QpMVxxckV2kraPkk+iJ2B6hFBnfncPdFCRsKa
+ jpbD4v3oAVXdr/1hFFtszFiBjC1R5UQ5pCq0gx+2kfT/MXVkIkjXUZbTtl4QpGMoqAqzcM0ZJOO
+ wqeRypylMqbHWnlFL9afssIRd/8DXCoYY8e7T+Fq98T2HGvyBQ==
+X-Received: by 2002:a05:6000:2408:b0:39c:30f9:339c with SMTP id
+ ffacd0b85a97d-3a3496c1fa7mr5158795f8f.28.1747295023895; 
+ Thu, 15 May 2025 00:43:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkDrlHo9epuW4F0GUKa4eAXBAhDEzbn5g8lxCf2Trz8RuPR765/7KFqli87ilJgLHbOsyNyw==
+X-Received: by 2002:a05:6000:2408:b0:39c:30f9:339c with SMTP id
+ ffacd0b85a97d-3a3496c1fa7mr5158771f8f.28.1747295023529; 
+ Thu, 15 May 2025 00:43:43 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f3368f2bsm60841945e9.4.2025.05.15.00.36.21
+ ffacd0b85a97d-3a1f5a2ca47sm22001602f8f.73.2025.05.15.00.43.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 00:36:21 -0700 (PDT)
-Message-ID: <58bdbe4c-3d8b-4b6c-9bbc-d453a104d07b@redhat.com>
-Date: Thu, 15 May 2025 09:36:20 +0200
+ Thu, 15 May 2025 00:43:42 -0700 (PDT)
+Message-ID: <f5008a93-7479-4dba-a51b-b1d0d8fe50d2@redhat.com>
+Date: Thu, 15 May 2025 09:43:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 01/42] MAINTAINERS: Add reviewer for CPR
+Subject: Re: [PATCH V3 02/42] migration: cpr helpers
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -86,7 +86,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-2-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-3-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,10 +132,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1747063973-124548-2-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1747063973-124548-3-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -161,45 +161,83 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/25 17:32, Steve Sistare wrote:
-> CPR is integrated with live migration, and has the same maintainers.
-> But, add a CPR section to add a reviewer.
+> Add the cpr_needed_for_reuse and cpr_open_fd, for use when adding cpr
+> support for vfio and iommufd.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->   MAINTAINERS | 9 +++++++++
->   1 file changed, 9 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 6dacd6d..d54a532 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3019,6 +3019,15 @@ F: include/qemu/co-shared-resource.h
->   T: git https://gitlab.com/jsnow/qemu.git jobs
->   T: git https://gitlab.com/vsementsov/qemu.git block
->   
-> +CheckPoint and Restart (CPR)
-> +R: Steve Sistare <steven.sistare@oracle.com>
-> +S: Supported
-> +F: hw/vfio/cpr*
-> +F: include/migration/cpr.h
-> +F: migration/cpr*
-> +F: tests/qtest/migration/cpr*
-> +F: docs/devel/migration/CPR.rst
-> +
->   Compute Express Link
->   M: Jonathan Cameron <jonathan.cameron@huawei.com>
->   R: Fan Ni <fan.ni@samsung.com>
 
-Please add :
-
-   include/hw/vfio/vfio-cpr.h
-
-with that,
-  
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
+
+> ---
+>   include/migration/cpr.h |  4 ++++
+>   migration/cpr.c         | 24 ++++++++++++++++++++++++
+>   2 files changed, 28 insertions(+)
+> 
+> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> index 7561fc7..fc6aa33 100644
+> --- a/include/migration/cpr.h
+> +++ b/include/migration/cpr.h
+> @@ -18,6 +18,8 @@
+>   void cpr_save_fd(const char *name, int id, int fd);
+>   void cpr_delete_fd(const char *name, int id);
+>   int cpr_find_fd(const char *name, int id);
+> +int cpr_open_fd(const char *path, int flags, const char *name, int id,
+> +                bool *reused, Error **errp);
+>   
+>   MigMode cpr_get_incoming_mode(void);
+>   void cpr_set_incoming_mode(MigMode mode);
+> @@ -28,6 +30,8 @@ int cpr_state_load(MigrationChannel *channel, Error **errp);
+>   void cpr_state_close(void);
+>   struct QIOChannel *cpr_state_ioc(void);
+>   
+> +bool cpr_needed_for_reuse(void *opaque);
+> +
+>   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+>   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+>   
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index 42c4656..0b01e25 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -95,6 +95,24 @@ int cpr_find_fd(const char *name, int id)
+>       trace_cpr_find_fd(name, id, fd);
+>       return fd;
+>   }
+> +
+> +int cpr_open_fd(const char *path, int flags, const char *name, int id,
+> +                bool *reused, Error **errp)
+> +{
+> +    int fd = cpr_find_fd(name, id);
+> +
+> +    if (reused) {
+> +        *reused = (fd >= 0);
+> +    }
+> +    if (fd < 0) {
+> +        fd = qemu_open(path, flags, errp);
+> +        if (fd >= 0) {
+> +            cpr_save_fd(name, id, fd);
+> +        }
+> +    }
+> +    return fd;
+> +}
+> +
+>   /*************************************************************************/
+>   #define CPR_STATE "CprState"
+>   
+> @@ -228,3 +246,9 @@ void cpr_state_close(void)
+>           cpr_state_file = NULL;
+>       }
+>   }
+> +
+> +bool cpr_needed_for_reuse(void *opaque)
+> +{
+> +    MigMode mode = migrate_mode();
+> +    return mode == MIG_MODE_CPR_TRANSFER;
+> +}
 
 
