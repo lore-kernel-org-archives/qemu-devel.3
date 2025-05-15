@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 885C6C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 04:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ADADC54755
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 04:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFQOC-0000lc-LH; Thu, 15 May 2025 00:40:12 -0400
+	id 1uFQZK-0001u1-PV; Thu, 15 May 2025 00:51:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFQOB-0000l0-Ho
- for qemu-devel@nongnu.org; Thu, 15 May 2025 00:40:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFQO9-0000l4-Q1
- for qemu-devel@nongnu.org; Thu, 15 May 2025 00:40:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747284007;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J8ZYlYkFbuaokyWFJRrnBH5LXTMBQvBXgQz+MqdS4gI=;
- b=E+fP42c6e2Mto5Zr3ew4/Eea/r81sYMEWwmK16hrgOf1a8Fp0nCAR1I0+0ihd2UIE7AAmn
- 32FCicbKWN3bEq7sHklJ7i33CmwY50hh5Fppa9OSCTM53TjR7kIBgErY81pCcKMlVwZwXL
- PYJBdM+3sosacH2oUHNeqUt1Rn4llAI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-167-S-zcTIC5P96X8ZmF80EWmg-1; Thu,
- 15 May 2025 00:40:03 -0400
-X-MC-Unique: S-zcTIC5P96X8ZmF80EWmg-1
-X-Mimecast-MFC-AGG-ID: S-zcTIC5P96X8ZmF80EWmg_1747284002
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B31A1800871; Thu, 15 May 2025 04:40:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8FA31955F24; Thu, 15 May 2025 04:40:01 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 312DA21E6768; Thu, 15 May 2025 06:39:59 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  alex.bennee@linaro.org,  stefanha@redhat.com,
- peter.maydell@linaro.org,  richard.henderson@linaro.org,
- pbonzini@redhat.com,  jsnow@redhat.com,  philmd@linaro.org,
- berrange@redhat.com,  thuth@redhat.com,  Michael Roth
- <michael.roth@amd.com>
-Subject: Re: [PATCH 01/13] qapi: introduce 'runtime_if' for QAPI json
-In-Reply-To: <20250507231442.879619-2-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Wed, 7 May 2025 16:14:31 -0700")
-References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
- <20250507231442.879619-2-pierrick.bouvier@linaro.org>
-Date: Thu, 15 May 2025 06:39:59 +0200
-Message-ID: <878qmy5vxc.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uFQZF-0001to-OT
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 00:51:37 -0400
+Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uFQZD-0002BL-Sb
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 00:51:37 -0400
+Received: by mail-vs1-xe36.google.com with SMTP id
+ ada2fe7eead31-4def2870995so396464137.1
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 21:51:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747284694; x=1747889494; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mOpfz8ZpCVXDrfyRpWknxxtujZJaQ/zd5KCOOOQn2kY=;
+ b=aiLh1FAXqpwRjOuIpqEgDYDifrMPAhak8g7TqBuRO2Zbj9AL0XNy1FvWvKcqJS86yE
+ cPqwX3sq0qhc6n2L51wYqwq19df5WqsaPZVVTgB1Eqm0Y6l+BADobm2cuNa/P/7q+LCV
+ aPWOjpcAAoPidZgvDjwTKYJQ4CJp8HYiPJt9loyjmN4iFHgZ+AsYLApo+Az4CuXGsZgD
+ cE82p3hTkzF1UODMfSroOrPGDbHy9sM1Uq704j3BhoXxXFXbGU9u+2A/fmGx9hxU66CE
+ rlt5fDEE6nk+AUuNMyvpTLNXBDGrqj7BiSf+fwsEqaeUgPzyuk+1gc8dkruW2v2yPy5d
+ WbhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747284694; x=1747889494;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mOpfz8ZpCVXDrfyRpWknxxtujZJaQ/zd5KCOOOQn2kY=;
+ b=M7zeb5femoUSNAIOQV34ByvQQBM/E7jaeCD0/KmlJNNduGzyYn3/au0D60ulgaVaKU
+ 3XUEFq14YouLDkY5qTdWaAc62I9uZcNu+UfTuc5kebOl/iuSJdcao4RqVQ1Y5cZN14Yk
+ z/EVeqRE/Hwxssco3qBmMXhQAyg1DO1dceY1MLX8LCuscSoc2Se/4zXGNwygJEX/1Jol
+ AY/wkcldROyDxgtnikxLjWRYJtiesf5pROY8qmF1sOkDjCLIlpHW9oAP5/3EvnO4sh9d
+ HJplC1UeVYlQDAuEwAgSlSorKFH/ahFv8DS9neFbuJ/B0N0xgNgSH9vxarYyBvwwowzm
+ LkRA==
+X-Gm-Message-State: AOJu0Yw3IVfBWWWngIg60sK4XotKZYPDIIkLTV3XlHX7Fy1jo+MyqjdY
+ wbyBDOZ3mUyqAaAO6Bc769dE1MS3wIGgRM1KAnP25U30yFxQ4ruC0+b5mNeg///ymq47MCOVI8+
+ 5ceIC8t3SKB/bHhmePrX05eUirvc4woH/RQ==
+X-Gm-Gg: ASbGncv2FTpjukC8Oy8px8OTws9zd8zLFm2mtru0alHqn1tk55VFVd6HfZumciTqPsY
+ ZITMT9PF+rUoHQ+IO8Auw4HnovFiSN/YOSMsUShc8RmI93nBnnwlQEYDWtOMYBA3A2hCSx/lLvD
+ UGDQAtnmqod/VqLs4ZZgzLPa4v15x5M3Y1tuwS80KkKHokzt1iwLJMO8Lum8dfxCo=
+X-Google-Smtp-Source: AGHT+IH1vCVc9aiD3LgUCuH3q5XJB+brKAeIkoReqlCgJ8wlJKCIvIJ/hb21a5daNmfpQAhkk9F6tZMRnMAWNRf78A8=
+X-Received: by 2002:a67:f497:0:b0:4c3:69f:5be with SMTP id
+ ada2fe7eead31-4df900d4734mr1658336137.7.1747284694183; 
+ Wed, 14 May 2025 21:51:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250512095226.93621-1-pbonzini@redhat.com>
+ <20250512095226.93621-7-pbonzini@redhat.com>
+In-Reply-To: <20250512095226.93621-7-pbonzini@redhat.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 15 May 2025 14:51:08 +1000
+X-Gm-Features: AX0GCFv9z-Vqsi_JnXDuRYvtPjEJJwEZ1nGnllXExJ2fNnj8ntunpxIYEnsFc1w
+Message-ID: <CAKmqyKN+wK7DL7-t=5O60XcGLX24iHDsx=M8NwWo8QWphtQOcQ@mail.gmail.com>
+Subject: Re: [PATCH 06/26] target/riscv: introduce RISCVCPUDef
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, dbarboza@ventanamicro.com, 
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,70 +96,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consensus is to shelve this series, and eliminate target-specific
-conditionals instead.  But let me scribble down a few notes for
-posterity just in case we ever take it off the shelf again.
-
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-
-> This new entry can be used in QAPI json to specify a runtime conditional
-> to expose any entry, similar to existing 'if', that applies at compile
-> time, thanks to ifdef. The element is always defined in C, but not
-> exposed through the schema and visit functions, thus being hidden for a
-> QMP consumer.
+On Mon, May 12, 2025 at 7:53=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
 >
-> QAPISchemaIfCond is extended to parse this information. A first version
-> was tried duplicating this, but this proved to be much more boilerplate
-> than needed to pass information through all function calls.
+> Start putting all the CPU definitions in a struct.  Later this will repla=
+ce
+> instance_init functions with declarative code, for now just remove the
+> ugly cast of class_data.
 >
-> 'if' and 'runtime_if' can be combined elegantly on a single item,
-> allowing to restrict an element to be present based on compile time
-> defines, and runtime checks at the same time.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-I understand the combination is "and", i.e. both conditions need to be
-satisfied.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-The syntax change I'd consider elegant (it's subjective!) is *none*.
-Instead of
+Alistair
 
-    'if': 'CONFIG_DINGS',
-    'runtime_if': 'target_bums()'
-
-use
-
-    'if': ['all': ['CONFIG_DINGS', 'target_bums()']]
-
-Might need semantic restrictions to simplify the implementation.
-
-> Note: This commit only adds parsing of runtime_if, and does not hide
-> anything yet.
+> ---
+>  target/riscv/cpu.h |  4 ++++
+>  target/riscv/cpu.c | 27 ++++++++++++++++++---------
+>  2 files changed, 22 insertions(+), 9 deletions(-)
 >
-> For review:
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 8b23aa27740..511fc25adc0 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -537,6 +537,10 @@ struct ArchCPU {
+>      const GPtrArray *decoders;
+>  };
 >
-> - I don't really like "runtime_if" name.
->   What would make sense, IMHO, is to rename existing 'if' to 'ifdef',
->   and reuse 'if' for 'runtime_if'. Since it requires invasive changes, I
->   would prefer to get agreement before wasting time in case you prefer
->   any other naming convention. Let me know what you'd like.
+> +typedef struct RISCVCPUDef {
+> +    RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
+> +} RISCVCPUDef;
+> +
+>  /**
+>   * RISCVCPUClass:
+>   * @parent_realize: The parent class' realize handler.
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 54a996c2927..c163b2b24a2 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3073,8 +3073,9 @@ static void riscv_cpu_common_class_init(ObjectClass=
+ *c, const void *data)
+>  static void riscv_cpu_class_init(ObjectClass *c, const void *data)
+>  {
+>      RISCVCPUClass *mcc =3D RISCV_CPU_CLASS(c);
+> +    const RISCVCPUDef *def =3D data;
 >
-> - As mentioned in second paragraph, I think our best implementation
->   would be to extend existing QAPISchemaIfCond, as it's really
->   complicated to extend all call sites if we have another new object.
-
-I figure the alternative is an abstract type with two concrete subtypes,
-one for each kind of conditional.
-
-> - No tests/doc added at this time, as I prefer to wait that we decide
->   about naming and proposed approach first.
-
-We'd need
-
-* Positive test(s) in tests/qapi-schema/qapi-schema-test.json
-
-* Negative tests similar to the ones with have for 'if'
-
-* Documentation update docs/devel/qapi-code-gen.rst
-
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
+> -    mcc->misa_mxl_max =3D (RISCVMXL)GPOINTER_TO_UINT(data);
+> +    mcc->misa_mxl_max =3D def->misa_mxl_max;
+>      riscv_cpu_validate_misa_mxl(mcc);
+>  }
+>
+> @@ -3170,40 +3171,48 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt=
+, char *nodename)
+>  }
+>  #endif
+>
+> -#define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max, initfn) \
+> +#define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max_, initfn) \
+>      {                                                       \
+>          .name =3D (type_name),                                \
+>          .parent =3D TYPE_RISCV_DYNAMIC_CPU,                   \
+>          .instance_init =3D (initfn),                          \
+>          .class_init =3D riscv_cpu_class_init,                 \
+> -        .class_data =3D GUINT_TO_POINTER(misa_mxl_max)        \
+> +        .class_data =3D &(const RISCVCPUDef) {                \
+> +             .misa_mxl_max =3D (misa_mxl_max_),               \
+> +        },                                                  \
+>      }
+>
+> -#define DEFINE_VENDOR_CPU(type_name, misa_mxl_max, initfn)  \
+> +#define DEFINE_VENDOR_CPU(type_name, misa_mxl_max_, initfn) \
+>      {                                                       \
+>          .name =3D (type_name),                                \
+>          .parent =3D TYPE_RISCV_VENDOR_CPU,                    \
+>          .instance_init =3D (initfn),                          \
+>          .class_init =3D riscv_cpu_class_init,                 \
+> -        .class_data =3D GUINT_TO_POINTER(misa_mxl_max)        \
+> +        .class_data =3D &(const RISCVCPUDef) {                \
+> +             .misa_mxl_max =3D (misa_mxl_max_),               \
+> +        },                                                  \
+>      }
+>
+> -#define DEFINE_BARE_CPU(type_name, misa_mxl_max, initfn)    \
+> +#define DEFINE_BARE_CPU(type_name, misa_mxl_max_, initfn)   \
+>      {                                                       \
+>          .name =3D (type_name),                                \
+>          .parent =3D TYPE_RISCV_BARE_CPU,                      \
+>          .instance_init =3D (initfn),                          \
+>          .class_init =3D riscv_cpu_class_init,                 \
+> -        .class_data =3D GUINT_TO_POINTER(misa_mxl_max)        \
+> +        .class_data =3D &(const RISCVCPUDef) {                \
+> +             .misa_mxl_max =3D (misa_mxl_max_),               \
+> +        },                                                  \
+>      }
+>
+> -#define DEFINE_PROFILE_CPU(type_name, misa_mxl_max, initfn) \
+> +#define DEFINE_PROFILE_CPU(type_name, misa_mxl_max_, initfn) \
+>      {                                                       \
+>          .name =3D (type_name),                                \
+>          .parent =3D TYPE_RISCV_BARE_CPU,                      \
+>          .instance_init =3D (initfn),                          \
+>          .class_init =3D riscv_cpu_class_init,                 \
+> -        .class_data =3D GUINT_TO_POINTER(misa_mxl_max)        \
+> +        .class_data =3D &(const RISCVCPUDef) {                \
+> +             .misa_mxl_max =3D (misa_mxl_max_),               \
+> +        },                                                  \
+>      }
+>
+>  static const TypeInfo riscv_cpu_type_infos[] =3D {
+> --
+> 2.49.0
+>
 
