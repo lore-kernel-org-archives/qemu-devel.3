@@ -4,54 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F69C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 04:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 885C6C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 04:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFPsm-0001gN-3E; Thu, 15 May 2025 00:07:45 -0400
+	id 1uFQOC-0000lc-LH; Thu, 15 May 2025 00:40:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1uFPsb-0001g5-Da
- for qemu-devel@nongnu.org; Thu, 15 May 2025 00:07:34 -0400
-Received: from mail-a.sr.ht ([46.23.81.152])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFQOB-0000l0-Ho
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 00:40:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1uFPsY-0005Vh-Ci
- for qemu-devel@nongnu.org; Thu, 15 May 2025 00:07:33 -0400
-DKIM-Signature: a=rsa-sha256; bh=H1lUd77hm6BQTIVWEgu6DZ/aSnbC0yshlp3sQJ9ADIw=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1747282045; v=1;
- b=fJ+DR0ZPVYBIcJzewFmXyeMTbFbK5+Y9IJHl0Q5cc8JVKQFjvG8KTdT0vvqEI1c2FSOBCM0c
- n6y2uUOKTFPuSCR3ZlM84IAu5npgHmVASjK/6MHUWOgJTws54T8ryCdKadYSZc1o+CqmmcJLB8P
- l+N6/XkhzyM004ny6w6n6ZbASvKDogCsWb6j52n+8Cta6n4JwffQDeZEydzXhn61wkxZGrjXcP2
- uQKAgCLdph+4GLM9Fzk2js76bHYQt/l7EjrRG76m7oXwPdwL/8oq8KUX0eKu/Zyxjsv1Ls9gQMP
- Ui1ufUsKA2KoK2JPRpiejgl3eIUSbVaNq+f1iRCnhRjEg==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 7829F21595;
- Thu, 15 May 2025 04:07:25 +0000 (UTC)
-From: ~liuxu <liuxu@git.sr.ht>
-Date: Tue, 08 Oct 2024 11:17:43 +0800
-Subject: [PATCH qemu v7 1/1] target/riscv: Add Zilsd and Zclsd extension
- support
-Message-ID: <174728204531.21306.2652888415201006563-1@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <174728204531.21306.2652888415201006563-0@git.sr.ht>
-To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair23@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFQO9-0000l4-Q1
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 00:40:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747284007;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J8ZYlYkFbuaokyWFJRrnBH5LXTMBQvBXgQz+MqdS4gI=;
+ b=E+fP42c6e2Mto5Zr3ew4/Eea/r81sYMEWwmK16hrgOf1a8Fp0nCAR1I0+0ihd2UIE7AAmn
+ 32FCicbKWN3bEq7sHklJ7i33CmwY50hh5Fppa9OSCTM53TjR7kIBgErY81pCcKMlVwZwXL
+ PYJBdM+3sosacH2oUHNeqUt1Rn4llAI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-167-S-zcTIC5P96X8ZmF80EWmg-1; Thu,
+ 15 May 2025 00:40:03 -0400
+X-MC-Unique: S-zcTIC5P96X8ZmF80EWmg-1
+X-Mimecast-MFC-AGG-ID: S-zcTIC5P96X8ZmF80EWmg_1747284002
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B31A1800871; Thu, 15 May 2025 04:40:02 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D8FA31955F24; Thu, 15 May 2025 04:40:01 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 312DA21E6768; Thu, 15 May 2025 06:39:59 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  alex.bennee@linaro.org,  stefanha@redhat.com,
+ peter.maydell@linaro.org,  richard.henderson@linaro.org,
+ pbonzini@redhat.com,  jsnow@redhat.com,  philmd@linaro.org,
+ berrange@redhat.com,  thuth@redhat.com,  Michael Roth
+ <michael.roth@amd.com>
+Subject: Re: [PATCH 01/13] qapi: introduce 'runtime_if' for QAPI json
+In-Reply-To: <20250507231442.879619-2-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Wed, 7 May 2025 16:14:31 -0700")
+References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
+ <20250507231442.879619-2-pierrick.bouvier@linaro.org>
+Date: Thu, 15 May 2025 06:39:59 +0200
+Message-ID: <878qmy5vxc.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: 17
-X-Spam_score: 1.7
-X-Spam_bar: +
-X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
- DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,310 +86,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~liuxu <liuxu@nucleisys.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: lxx <1733205434@qq.com>
+Consensus is to shelve this series, and eliminate target-specific
+conditionals instead.  But let me scribble down a few notes for
+posterity just in case we ever take it off the shelf again.
 
-This patch adds support for the Zilsd and Zclsd extension,
-which is documented at https://github.com/riscv/riscv-zilsd/releases/tag/v1.0
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-Co-developed-by: SUN Dongya <sundongya@nucleisys.com>
-Co-developed-by: LIU Xu <liuxu@nucleisys.com>
-Co-developed-by: ZHAO Fujin <zhaofujin@nucleisys.com>
----
- target/riscv/cpu.c                        |   4 +
- target/riscv/cpu_cfg.h                    |   2 +
- target/riscv/insn16.decode                |   8 ++
- target/riscv/insn32.decode                |  12 ++-
- target/riscv/insn_trans/trans_zilsd.c.inc | 112 ++++++++++++++++++++++
- target/riscv/tcg/tcg-cpu.c                |  20 ++++
- target/riscv/translate.c                  |   1 +
- 7 files changed, 157 insertions(+), 2 deletions(-)
- create mode 100644 target/riscv/insn_trans/trans_zilsd.c.inc
+> This new entry can be used in QAPI json to specify a runtime conditional
+> to expose any entry, similar to existing 'if', that applies at compile
+> time, thanks to ifdef. The element is always defined in C, but not
+> exposed through the schema and visit functions, thus being hidden for a
+> QMP consumer.
+>
+> QAPISchemaIfCond is extended to parse this information. A first version
+> was tried duplicating this, but this proved to be much more boilerplate
+> than needed to pass information through all function calls.
+>
+> 'if' and 'runtime_if' can be combined elegantly on a single item,
+> allowing to restrict an element to be present based on compile time
+> defines, and runtime checks at the same time.
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 09ded6829a..54072e284d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -115,6 +115,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
-     ISA_EXT_DATA_ENTRY(zihintntl, PRIV_VERSION_1_10_0, ext_zihintntl),
-     ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
-     ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
-+    ISA_EXT_DATA_ENTRY(zilsd, PRIV_VERSION_1_12_0, ext_zilsd),
-     ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
-     ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
-     ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
-@@ -138,6 +139,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
-     ISA_EXT_DATA_ENTRY(zcmop, PRIV_VERSION_1_13_0, ext_zcmop),
-     ISA_EXT_DATA_ENTRY(zcmp, PRIV_VERSION_1_12_0, ext_zcmp),
-     ISA_EXT_DATA_ENTRY(zcmt, PRIV_VERSION_1_12_0, ext_zcmt),
-+    ISA_EXT_DATA_ENTRY(zclsd, PRIV_VERSION_1_12_0, ext_zclsd),
-     ISA_EXT_DATA_ENTRY(zba, PRIV_VERSION_1_12_0, ext_zba),
-     ISA_EXT_DATA_ENTRY(zbb, PRIV_VERSION_1_12_0, ext_zbb),
-     ISA_EXT_DATA_ENTRY(zbc, PRIV_VERSION_1_12_0, ext_zbc),
-@@ -1653,6 +1655,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] =3D=
- {
-=20
-     MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
-     MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
-+    MULTI_EXT_CFG_BOOL("zilsd", ext_zilsd, false),
-=20
-     MULTI_EXT_CFG_BOOL("zba", ext_zba, true),
-     MULTI_EXT_CFG_BOOL("zbb", ext_zbb, true),
-@@ -1692,6 +1695,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] =3D=
- {
-     MULTI_EXT_CFG_BOOL("zcmp", ext_zcmp, false),
-     MULTI_EXT_CFG_BOOL("zcmt", ext_zcmt, false),
-     MULTI_EXT_CFG_BOOL("zicond", ext_zicond, false),
-+    MULTI_EXT_CFG_BOOL("zclsd", ext_zclsd, false),
-=20
-     /* Vector cryptography extensions */
-     MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 8a843482cc..1ca11f99f1 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -51,6 +51,7 @@ struct RISCVCPUConfig {
-     bool ext_zcf;
-     bool ext_zcmp;
-     bool ext_zcmt;
-+    bool ext_zclsd;
-     bool ext_zk;
-     bool ext_zkn;
-     bool ext_zknd;
-@@ -73,6 +74,7 @@ struct RISCVCPUConfig {
-     bool ext_zihintntl;
-     bool ext_zihintpause;
-     bool ext_zihpm;
-+    bool ext_zilsd;
-     bool ext_zimop;
-     bool ext_zcmop;
-     bool ext_ztso;
-diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
-index bf893d1c2e..c34020e4dc 100644
---- a/target/riscv/insn16.decode
-+++ b/target/riscv/insn16.decode
-@@ -130,10 +130,14 @@ sw                110  ... ... .. ... 00 @cs_w
- {
-   ld              011  ... ... .. ... 00 @cl_d
-   c_flw           011  ... ... .. ... 00 @cl_w
-+  # *** Zclsd Extension ***
-+  zclsd_ld        011  ... ... .. ... 00 @cl_d
- }
- {
-   sd              111  ... ... .. ... 00 @cs_d
-   c_fsw           111  ... ... .. ... 00 @cs_w
-+  # *** Zclsd Extension ***
-+  zclsd_sd        111  ... ... .. ... 00 @cs_d
- }
-=20
- # *** RV32/64C Standard Extension (Quadrant 1) ***
-@@ -212,10 +216,14 @@ sw                110 .  .....  ..... 10 @c_swsp
-   c64_illegal     011 -  00000  ----- 10 # c.ldsp, RES rd=3D0
-   ld              011 .  .....  ..... 10 @c_ldsp
-   c_flw           011 .  .....  ..... 10 @c_lwsp
-+  # *** Zclsd Extension ***
-+  zclsd_ldsp      011 .  .....  ..... 10 @c_ldsp
- }
- {
-   sd              111 .  .....  ..... 10 @c_sdsp
-   c_fsw           111 .  .....  ..... 10 @c_swsp
-+  # *** Zclsd Extension ***
-+  zclsd_sd        111 .  .....  ..... 10 @c_sdsp
- }
-=20
- # *** RV64 and RV32 Zcb Extension ***
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 6d1a13c826..57c242c3bb 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -182,8 +182,16 @@ csrrci   ............     ..... 111 ..... 1110011 @csr
-=20
- # *** RV64I Base Instruction Set (in addition to RV32I) ***
- lwu      ............   ..... 110 ..... 0000011 @i
--ld       ............   ..... 011 ..... 0000011 @i
--sd       ....... .....  ..... 011 ..... 0100011 @s
-+{
-+  ld       ............   ..... 011 ..... 0000011 @i
-+  # *** Zilsd instructions ***
-+  zilsd_ld ............   ..... 011 ..... 0000011 @i
-+}
-+{
-+  sd       ....... .....  ..... 011 ..... 0100011 @s
-+  # *** Zilsd instructions ***
-+  zilsd_sd ....... .....  ..... 011 ..... 0100011 @s
-+}
- addiw    ............   ..... 000 ..... 0011011 @i
- slliw    0000000 .....  ..... 001 ..... 0011011 @sh5
- srliw    0000000 .....  ..... 101 ..... 0011011 @sh5
-diff --git a/target/riscv/insn_trans/trans_zilsd.c.inc b/target/riscv/insn_tr=
-ans/trans_zilsd.c.inc
-new file mode 100644
-index 0000000000..1e3ab362de
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_zilsd.c.inc
-@@ -0,0 +1,112 @@
-+/*
-+ * RISC-V translation routines for the Zilsd & Zclsd Extension.
-+ *
-+ * Copyright (c) 2024 Nucleisys, Inc.
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along w=
-ith
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#define REQUIRE_ZILSD(ctx) do {    \
-+    if (!ctx->cfg_ptr->ext_zilsd)  \
-+        return false;              \
-+} while (0)
-+
-+#define REQUIRE_ZCLSD(ctx) do {    \
-+    if (!ctx->cfg_ptr->ext_zclsd)  \
-+        return false;              \
-+} while (0)
-+
-+static bool gen_load_i64(DisasContext *ctx, arg_ld *a)
-+{
-+    if ((a->rd) % 2) {
-+        return false;
-+    }
-+
-+    TCGv dest_low =3D dest_gpr(ctx, a->rd);
-+    TCGv dest_high =3D dest_gpr(ctx, a->rd + 1);
-+    TCGv addr =3D get_address(ctx, a->rs1, a->imm);
-+    TCGv_i64 tmp =3D tcg_temp_new_i64();
-+
-+    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
-+
-+    if (a->rd =3D=3D 0) {
-+        return true;
-+    }
-+
-+    tcg_gen_extr_i64_tl(dest_low, dest_high, tmp);
-+
-+    gen_set_gpr(ctx, a->rd, dest_low);
-+    gen_set_gpr(ctx, a->rd + 1, dest_high);
-+
-+    return true;
-+}
-+
-+static bool trans_zilsd_ld(DisasContext *ctx, arg_zilsd_ld *a)
-+{
-+    REQUIRE_32BIT(ctx);
-+    REQUIRE_ZILSD(ctx);
-+    return gen_load_i64(ctx, a);
-+}
-+
-+static bool trans_zclsd_ld(DisasContext *ctx, arg_zclsd_ld *a)
-+{
-+    REQUIRE_32BIT(ctx);
-+    REQUIRE_ZCLSD(ctx);
-+    return gen_load_i64(ctx, a);
-+}
-+
-+static bool trans_zclsd_ldsp(DisasContext *ctx, arg_zclsd_ldsp *a)
-+{
-+    REQUIRE_32BIT(ctx);
-+    REQUIRE_ZCLSD(ctx);
-+
-+    if (a->rd =3D=3D 0) {
-+        return false;
-+    }
-+    return gen_load_i64(ctx, a);
-+}
-+
-+static bool gen_store_i64(DisasContext *ctx, arg_sd *a)
-+{
-+    if ((a->rs2) % 2) {
-+        return false;
-+    }
-+
-+    TCGv data_low =3D get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv data_high =3D get_gpr(ctx, a->rs2 + 1, EXT_NONE);
-+    TCGv addr =3D get_address(ctx, a->rs1, a->imm);
-+    TCGv_i64 tmp =3D tcg_temp_new_i64();
-+
-+    if (a->rs2 =3D=3D 0) {
-+        tmp =3D tcg_constant_i64(0);
-+    } else {
-+        tcg_gen_concat_tl_i64(tmp, data_low, data_high);
-+    }
-+    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
-+
-+    return true;
-+}
-+
-+static bool trans_zilsd_sd(DisasContext *ctx, arg_zilsd_sd *a)
-+{
-+    REQUIRE_32BIT(ctx);
-+    REQUIRE_ZILSD(ctx);
-+    return gen_store_i64(ctx, a);
-+}
-+
-+static bool trans_zclsd_sd(DisasContext *ctx, arg_zclsd_sd *a)
-+{
-+    REQUIRE_32BIT(ctx);
-+    REQUIRE_ZCLSD(ctx);
-+    return gen_store_i64(ctx, a);
-+}
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 5aef9eef36..ea25817ffc 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -673,6 +673,26 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Er=
-ror **errp)
-         cpu->pmu_avail_ctrs =3D 0;
-     }
-=20
-+    if (cpu->cfg.ext_zilsd && riscv_has_ext(env, RVC)) {
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zclsd), true);
-+    }
-+
-+    if (cpu->cfg.ext_zclsd) {
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zilsd), true);
-+
-+        if (riscv_has_ext(env, RVC) && riscv_has_ext(env, RVF)) {
-+            error_setg(errp,
-+                    "Zclsd cannot be supported together with C and F extensi=
-on");
-+            return;
-+        }
-+        if (cpu->cfg.ext_zcf) {
-+            error_setg(errp,
-+                    "Zclsd cannot be supported together with Zcf extension");
-+            return;
-+        }
-+    }
-+
-     if (cpu->cfg.ext_zicfilp && !cpu->cfg.ext_zicsr) {
-         error_setg(errp, "zicfilp extension requires zicsr extension");
-         return;
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index d6651f244f..2cf1378dfd 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1201,6 +1201,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, tar=
-get_ulong pc)
- /* Include the auto-generated decoder for 16 bit insn */
- #include "decode-insn16.c.inc"
- #include "insn_trans/trans_rvzce.c.inc"
-+#include "insn_trans/trans_zilsd.c.inc"
- #include "insn_trans/trans_rvzcmop.c.inc"
- #include "insn_trans/trans_rvzicfiss.c.inc"
-=20
---=20
-2.45.3
+I understand the combination is "and", i.e. both conditions need to be
+satisfied.
+
+The syntax change I'd consider elegant (it's subjective!) is *none*.
+Instead of
+
+    'if': 'CONFIG_DINGS',
+    'runtime_if': 'target_bums()'
+
+use
+
+    'if': ['all': ['CONFIG_DINGS', 'target_bums()']]
+
+Might need semantic restrictions to simplify the implementation.
+
+> Note: This commit only adds parsing of runtime_if, and does not hide
+> anything yet.
+>
+> For review:
+>
+> - I don't really like "runtime_if" name.
+>   What would make sense, IMHO, is to rename existing 'if' to 'ifdef',
+>   and reuse 'if' for 'runtime_if'. Since it requires invasive changes, I
+>   would prefer to get agreement before wasting time in case you prefer
+>   any other naming convention. Let me know what you'd like.
+>
+> - As mentioned in second paragraph, I think our best implementation
+>   would be to extend existing QAPISchemaIfCond, as it's really
+>   complicated to extend all call sites if we have another new object.
+
+I figure the alternative is an abstract type with two concrete subtypes,
+one for each kind of conditional.
+
+> - No tests/doc added at this time, as I prefer to wait that we decide
+>   about naming and proposed approach first.
+
+We'd need
+
+* Positive test(s) in tests/qapi-schema/qapi-schema-test.json
+
+* Negative tests similar to the ones with have for 'if'
+
+* Documentation update docs/devel/qapi-code-gen.rst
+
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
