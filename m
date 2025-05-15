@@ -4,142 +4,221 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C3AC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 16:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B4D8C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 17:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFbsG-0007gR-5N; Thu, 15 May 2025 12:56:00 -0400
+	id 1uFcJl-0004xS-6J; Thu, 15 May 2025 13:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFbsB-0007fS-2F
- for qemu-devel@nongnu.org; Thu, 15 May 2025 12:55:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uFcJj-0004x0-30
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 13:24:23 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFbs7-0006Vn-N1
- for qemu-devel@nongnu.org; Thu, 15 May 2025 12:55:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747328150;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=oXAarV1hk9Z7XOptlcJ8+fA/Pp024yNWTurRxxLQZLU=;
- b=LXR81y38FD/UVbpaI+CDzLWuHT0z52H7AWoOvIfGEkmU3n++nOhhYIJSvRARx0nBKN7nsY
- U3pB2JTuhQAEzEPsdKGNrNpCxaXLqqH1sEw2YM+zziu1dMJoQQQqbIOnRX95Tt3JN7AjkR
- Fy/suMUrobwauXi/NUb0velERbSTyec=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-oS6zFt8xNu67UvO40zE6WQ-1; Thu, 15 May 2025 12:55:48 -0400
-X-MC-Unique: oS6zFt8xNu67UvO40zE6WQ-1
-X-Mimecast-MFC-AGG-ID: oS6zFt8xNu67UvO40zE6WQ_1747328147
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a0b5d18cb7so631598f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 09:55:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747328147; x=1747932947;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oXAarV1hk9Z7XOptlcJ8+fA/Pp024yNWTurRxxLQZLU=;
- b=Xt1BwwZr40QdqhCtS2DTmDfUXpMDOdi8EuFLoy6Nxl97FWvrTY7bEIP+C/22Qx7va2
- 7qVlmuu+u7D6tiWyUxSFWzJfRo2ReMaxA5SU6oHGF2Ki8qAGhu+HcYM4FDmjL1vU89lo
- th6LKM6Zy9rc+/Xec5qeSrDniH9ujhR8r1mQXt/JQ6UCfnmNr9G9PlYO5TmNcvOPxk5R
- eTrJrpu5J0xi+NPXbiwQDz3oYxeQJABaL7Wc5a7vXXiEiAdu2xdPLLJlE1+aSIyFiidq
- QL7LbpcCNFYZYzYDQ8f0zEiEsaHVEQK7R/muivDsmPdrNlc9I4CoKkKt9xmIbjwaEUCI
- jqAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUELpqpw2XLA7Pd/+8uFhb6mbKuJjAbxHC5Chzj2a6BCySrJ7koRMi7X3fGX7NG8/5dTI76WY90mRku@nongnu.org
-X-Gm-Message-State: AOJu0YyyUFNWQEzDMkT2sFWy9LrpPF8Uy4yFKlVs7K6bNrXitdrpVlSh
- LE0AyTZRLKUNkkjKTOgVkDCySCJ29mhiwnDTAkavVcXOFYtL1uepbDmKei+IQNm//aWwu22V/jB
- TKBxvuqocDje0YMX9lO568a1cRoujgczL0cVrxsgRaQGRXu5HSvB5GXzQ
-X-Gm-Gg: ASbGncsreXjdlwD2+SIOvScPY4fc7MBLgwiyvhk7I2wrx/bx1nz57au89ibTSG/HBos
- JqYabsKmQcoX1j4PaKe9O+VxqrGMcSfyBc7KuIw4swffqoLFcUiCT5I4fqyext8vd7l2cbU064G
- ZZCDKWf7R57KpV2bHtMboi40H19zpxvH91jH8yiTroYXll9xXw8iXSfVgQcqtLe7caXLQ6jUhcD
- NoksFNZuJYXTztbBN93/S3NSe2/junGxxFUxQW1nfd7BQNx9w9IIHzAPMafdo3p8ANujJYGOKAJ
- BTIXehKqTI2TONHgFxxcBmbgpRvXNeiXBdawrg00glen0a7ikw==
-X-Received: by 2002:a05:6000:40d9:b0:3a0:ad55:c9f1 with SMTP id
- ffacd0b85a97d-3a35c807172mr554003f8f.12.1747328147124; 
- Thu, 15 May 2025 09:55:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHIjUlfTkjapenPkuzm1vPva8hknQJCBOMURWhRI6MEBe8PkA947sA+L70i9OlVbEIJ4F7G/g==
-X-Received: by 2002:a05:6000:40d9:b0:3a0:ad55:c9f1 with SMTP id
- ffacd0b85a97d-3a35c807172mr553985f8f.12.1747328146753; 
- Thu, 15 May 2025 09:55:46 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca5a8c4sm60106f8f.27.2025.05.15.09.55.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 09:55:46 -0700 (PDT)
-Message-ID: <9e60b3a8-e7ac-48f4-96d9-e0d40a4b25ad@redhat.com>
-Date: Thu, 15 May 2025 18:55:45 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uFcJh-0001gM-5S
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 13:24:22 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FF1n4b023207;
+ Thu, 15 May 2025 17:24:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=a0OsHHGBPX9IrXU1Nzeoy+t06ajgTXbUp+Fu5751atI=; b=
+ gadoFr6VDZXGaw+0JOcrrWOMlDO7CRNG55iUg2qp5lWY3asRBkD+DGJbbv9Xn6KL
+ +ocI6EsGXryznWGWPvJNemXHeRIjZbbq82HLY7yydSTPN8RHi50FiWS0trFmxKhl
+ T//1DO1ChqkovQQx6Jnh3J6Lht9ql/R+fHCjnplJers48Es/CUU1OFoDYbu+xfRq
+ GC8DJAr3tw1bB7l9VXk3MkyldGqr23UDHZu8WH2DRnaXtLomK9Te3TqFkL6TBxfF
+ KiJO+a9uyK2QXfkca6d11Y8w4k6//idQdW6fDbgd2FazQMcVP56Lk19G3BT9k874
+ QepqJL3jj4wYhI39fn2P3Q==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46mbccvw02-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 May 2025 17:24:14 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54FH8jYR016293; Thu, 15 May 2025 17:24:13 GMT
+Received: from nam10-bn7-obe.outbound.protection.outlook.com
+ (mail-bn7nam10lp2041.outbound.protection.outlook.com [104.47.70.41])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46mc35409p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 May 2025 17:24:13 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nMJu+8ndncqFRUYeSRpPkr3ffqTqaSkuT9yRgawwLbahOplyeB3zFv177jDW+N+IFb7VjCzLtcyfPjd6L0P4u+O3fIF4oX1doABmlX1fOK/dQb27Pp044YLR20nV8jWrMOCqdiubtT7/31bHTE/GFlBGUnPC5F2GBgnCWE2sndQS0LmH91nBWEnhLjWzegUc/Fj23Li6wRZlP8H2iqxazlQdhdqe1ArhxuszMNuoKaJaBBGNuLrc24aKlv1DVZUUPGl7+hR7jucjXabKnk8Cu/7htk27T5KuWGkGgg/gFtRhhbfj3dxlc3jPpm44QSmZrQEJunXPsGpQfKKRvv1qeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=a0OsHHGBPX9IrXU1Nzeoy+t06ajgTXbUp+Fu5751atI=;
+ b=w8SUZPWczYvvNVqWrG0gKyKZifVuA/nknkJ/YjtcuyJGT194fgVoSJNXk14Q25Cd/J05p1rH/MYf5oxfGZeRT9eaWBXawvtmk4lNgwu/2I2+3EHsZfXq7O3xcANRGNFFzkFYLqCgT66HsblcuZzwRuVzV0PpGUUlPrs6zKoSx9ru0hF+J4wgKGNT0iL73ONutr8uU/LSm9iBNH/SQ6xabebOQY0IzZR8YBmiQ3S/tMhPUkfvTGiU9M1CKuGVw0gdKsPbqJqyIv8hSKvHQEAX91mAF+EuTrhls8P3mOua4pOmHPmB8WPTmjFG4NoIiHouTKqyxgO48lQ9QbXyudLhfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=a0OsHHGBPX9IrXU1Nzeoy+t06ajgTXbUp+Fu5751atI=;
+ b=y+wZtqNqSnonA35t1wUljGT4UCUoVpYmEtBW7Eugn84r68YutA6zhVUPkDUciJcxOi2xktg8cMmpf0db4weJU56m2CqhXRxc50uhHVy3KWhFAosoYcja0fjJbOGcIvRgv6X/p8EgTQOojzA+f14HQEJ4RBazOLT95kCYKbNcqrI=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by PH0PR10MB4584.namprd10.prod.outlook.com (2603:10b6:510:37::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Thu, 15 May
+ 2025 17:24:11 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.8722.027; Thu, 15 May 2025
+ 17:24:11 +0000
+Message-ID: <73c898a4-46bc-4f09-9b2f-41d1744d024e@oracle.com>
+Date: Thu, 15 May 2025 13:24:07 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/9] scripts/checkpatch: use new hook for ACPI test
- data check
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20250515135936.86760-1-berrange@redhat.com>
- <20250515135936.86760-5-berrange@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250515135936.86760-5-berrange@redhat.com>
+Subject: Re: [PATCH V3 26/42] vfio: return mr from vfio_get_xlat_addr
+To: John Levon <levon@movementarian.org>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-27-git-send-email-steven.sistare@oracle.com>
+ <aCJfQ2jJ-B5q8hRW@movementarian.org>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <aCJfQ2jJ-B5q8hRW@movementarian.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BL0PR0102CA0048.prod.exchangelabs.com
+ (2603:10b6:208:25::25) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|PH0PR10MB4584:EE_
+X-MS-Office365-Filtering-Correlation-Id: 246ac021-6773-442a-ae22-08dd93d54e8c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Z09ZYm1mOS9QNDZTQWVzUXJHQUNsbmRTV3RhTFhuK0pCVklPTVBnM2NNU0h4?=
+ =?utf-8?B?T1Q1YTBlNC9zd0Fpb1JWaTVJOWF0TU5heDFBWDlsZy9FQ0dQd1liTklBOUQ1?=
+ =?utf-8?B?MHJVbTBmSklYaHd5eVdvMVcraWdBQ2cxT1lsOW1ydU03VWJGK0xFcWVtd3ZX?=
+ =?utf-8?B?TDRzOWdhOE5ZeUZnUmp4V2pzYkNDRFpLVDJ4d0ZKWXhHSjVpM3FYYS95VUNN?=
+ =?utf-8?B?VzNRNDQyNkoxVHBkNmNkSGZ2enZaYWd1VGxUNnFKSVFacjRTUW8ySVI2R3lE?=
+ =?utf-8?B?QzMyTi9WbloxRElOaDFDM0hTKzM3S0J6OHczYnl5WjRNQ1BLNy93NzlGdUJT?=
+ =?utf-8?B?V2hCZWh3Wkl4VXFSSW0zc3U0K2NUSzhWN1d5aisrak41Mk12V0Z3VFYrd0gx?=
+ =?utf-8?B?N3VSWjZ1Vm5xd1FTRm1yRVUzMG5kcnA2ZkxacmtiL0l0a2tlRXJPcjRveEdG?=
+ =?utf-8?B?d1lJU0R0VlFsMGlFbjNVeUdRcGtwRWs1bGNIeWlheWEvc3JVUU5sN00zaG1D?=
+ =?utf-8?B?K1RFRGtJaWhtZ1ZaTUxRQ0krc0pVOUJtV2pOVHZoSHUwSzZXMUYvQ0NtOFFw?=
+ =?utf-8?B?LzFxcHovWVJsOG96M2VESGRYczZ2VjArZHJTemNYemtnczI0elhKaUZmdzEx?=
+ =?utf-8?B?STZodnU1R3h5UmRyK2NxTUY1NElJNVBpNW4vdklpSTQrSlNCUUw1bzVBVkFR?=
+ =?utf-8?B?L2Q1d2ovZFdrT1F3T0lxcUFyM01MY1Q0aE5oWXhiME5VZ0lKbGR0WHJ6S2tL?=
+ =?utf-8?B?RXJCZXlpSG9PUmJNSWxnQmdsNnhoMTV0N1FEYVlkR0lneFliZkxwU3ZyZm1V?=
+ =?utf-8?B?RU1YdEU4djBOeTN5M1BkelFqTnBIcko2QW9SYmtoMStEWHp0eENrRlE3WmZv?=
+ =?utf-8?B?RlczUVVDd2IyeHdWb1pBOWxldFhZUWRZdzRMMjkycDc4TzM3dFA4NkR6S29I?=
+ =?utf-8?B?WWN1RkEzOVhzZm9PdUlsQURLMzYzaHorZWNES3ZGSzZhR2x2M3dvaHlXNUNX?=
+ =?utf-8?B?RDI2dC92OEFXU2hRb3VCMGNIeGUxc2Q0anpUZ0xqR1hjK25hMGJycHF3SnJP?=
+ =?utf-8?B?YTk3aFAvMHlNWGZoYkRMT3krVDdaN21CbmZkNDcrdGl2cTBDNGV2WFBseS96?=
+ =?utf-8?B?NzFESm9qMWJZY045UlV5S0lQQXdvWVBvaG8xQUJUQU9aeEUxenYwTVpZRjJo?=
+ =?utf-8?B?RGhGc29UKzUvYXVSYlpEbnE1bWlHRmdlMHpUMktVUWQ5amJsWHo5cExzUndM?=
+ =?utf-8?B?KzN1NlZEejlUNEliWWNxd0cwWUJ5Q1hqNDNLbG52TkM0WlFqTUFYa2ZZY2xh?=
+ =?utf-8?B?cHpoMkJtVndqeUdpZFZIckRZeFVKZ1BGNmlvUjB4TVNzSC9aTU1LQ0V5cG5D?=
+ =?utf-8?B?dWI3THJRRVFCRG9uaUJReURzdnc0cFNsWXRaM1puWDZ6OU5TcXh2VllCU3RR?=
+ =?utf-8?B?K0laKzlHQ0pabVpzd1lhcHQvaUVSSXBZMEFTT2dCcFF2c0xwM0JhcXE0eGEx?=
+ =?utf-8?B?eXliMFB6aWdJMmR5Zlg5bm1mT0s1MnMxR0orbmJpRks0dlpXMU4vZ3FLSTZT?=
+ =?utf-8?B?dWtSNFRLQmo2dkNCR0hHampVN240RDFIN3Fhd1NETEo3SU5kS05PRzVZdGJK?=
+ =?utf-8?B?RHVPeGdFNWlCbVg2QXk1S3BIZy9FWTRKS0tOSUxrRTlDQVJvNWFDa05UdjFr?=
+ =?utf-8?B?TTJLRUg1TGhabGFCR3NJZlRJYkljZnhzUWJrbjk1aS9IT3pqa0Ywd0xxTVZI?=
+ =?utf-8?B?dEsxM1RKZ3ZsQ3FXZDZvQmFBek9WM1ZFdFI4Vlp6VVU5RVlmQzVQRkpHUVB0?=
+ =?utf-8?B?ZlFUOXNuQXlPMDUrRndiblNJZTgxOXpNMTJLd29hSVFXTlFtdFB0L29xekwz?=
+ =?utf-8?B?VWlHVVNsL1hIUWZSWnZINXdDeU1XR0ZueDF1Rko3U3VuUU8wbUQ5SUFkNWVn?=
+ =?utf-8?Q?9E5RB5TTtlo=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZFZldVQvaTVvWHh5TkxTdE55Y0ZRREZMMENMNFdPak1aaXBwNzNzUWNkMDN5?=
+ =?utf-8?B?MmcxWXJ2Y2NLYjErWWV1VmZMNzRzeU1IdlJoVGVQQXlENU9USk0wTnhobmdN?=
+ =?utf-8?B?VE1mVnBTaEUyRk1QMXJQNjBhZ2ZkVHBuVnFWc1ZrTXBiSWNDYUZFaC9OYU5C?=
+ =?utf-8?B?U083ZzB5TTNzZTlsZTBnNElRN0NUUHNWVUNCSFM3My91Tm5vQ2M2dGQyYTVS?=
+ =?utf-8?B?aWJ0K3B6K3lrM3NKNzZmN3VVamh0U3R3RmNhdi92WEl3czc3V3Fvei9JM0Iy?=
+ =?utf-8?B?RC8yVWhkRHdweThudlk0RXlKVUFnbWNDd0wvWlZWRGVlbm1OaXVCMldRWTNX?=
+ =?utf-8?B?RFN6Uktrckp0WTA5UFRjanZ2b1BBR1ZocGlBYTdTQ2N4dnZKL0ZxR2hVekR6?=
+ =?utf-8?B?NFh5dGt3eDBIQjlFdXpKQnZqRWhRSlkxRHRkMFJiME5ja0FpWGp1enlFaEZL?=
+ =?utf-8?B?UDNPMW5DaXV5N08vYzlIOEJKb0x5UkdzUU8rUUJ6YVpYNTY3Sml1Q0RFNkFT?=
+ =?utf-8?B?Rnl5K1duckxmejc0Njl5aURRdEFFbHRuVjlRRmVFV1JNU2grN0RqRWt6N0xt?=
+ =?utf-8?B?UFI5V3JJZDdLeU93bnZDV1grN0V6K1dnRnJGOXcycmljdmxqRjUwdjgrK2Z0?=
+ =?utf-8?B?ODZyWG9pM1M5MllWcWFIMVBqRHZjQWFWd2IzdEQrRVJJcWt2UmRGTjhReko1?=
+ =?utf-8?B?R25wdmIrcnYxSTRFUHIrM1ROekt6SFB5R3l1SDVnVFk3Y0UwL0FsdTlqZ1Vy?=
+ =?utf-8?B?WXRHcDVrQnZCK3QwK2NPMUY0RW9yVW93TC9yd3hZVGdVMkpIZEdVVmZRb0JJ?=
+ =?utf-8?B?Z2dvYnlhUVdQSUY2QlViV2JxSkVESllpeGN0dytOSTlZeGNKVzVHTW9FenFx?=
+ =?utf-8?B?Nk96OFF5bldSNVhpd3psNC9neWJkdVJmcFBmV2dDcitSVDlrM05Nci9RSGhN?=
+ =?utf-8?B?ZVp4Z1lUVU9nSWh1NnBQeDBLeC90TkpnWVhnRlFQZEQvT0h0K2NzNm9nYW5N?=
+ =?utf-8?B?N3FVN1JoQml4T1FMeGhtalIyUEZ1ZEh6MWhsRlZGN1RYNWVETHJEK1NXRSt5?=
+ =?utf-8?B?azViUFJGbnBRczFJMDRXOHBVMkx6TzhVZzhUNkFHTGFrWUhTOHAyN3F0Mi9I?=
+ =?utf-8?B?bnVsaS8yYlFna2ZyNVJmUGFuMDROUzUzTGZkVkErSm1jQVp6STlxWnd2TW90?=
+ =?utf-8?B?c0pYTHFMalR2c0RnMVJHOVpWMy9Jc2Z3RG9xQXhNVTFHNEd4ZllEcE1COGMx?=
+ =?utf-8?B?d29ra1pMMU9YWlBRcXh3am1kOUxUVHN4ckx1S1JieEJiVFBwbGxwZlBnV1Vl?=
+ =?utf-8?B?S3Buek1FSHZJZnJJWUdyK3VNVjhpcy9qOXoyWXd6YXA5ZW5LdlNVd29TVW9y?=
+ =?utf-8?B?SU5UM01KUUdUaVV5YVo4NDhhcm0xRWRVWFQ1WG9TQUM0UHlMZHA0bGZxd3Nm?=
+ =?utf-8?B?T3pDT1ltZDdDanV0eTU3ZUZZdzl1N0o1cDh6VEM4ZzkyS2NPME9KUU9wUWtv?=
+ =?utf-8?B?NkluellLREhhWUJxZ3lxZWI2Q1YyZmZSWjUrYjIwZ2dHT011bU5XZEx3Y0kv?=
+ =?utf-8?B?RzJLMkM0MFVzS3lJZUtSUzJJUHNPcEtBbkRGc2xyVCsxMW5pT2h5TVRVMGFr?=
+ =?utf-8?B?bnB4clZhRlhYTVhkWkV2bThhbm9tejVoREpwaGxuU1kza2Jwa2FkUE9RaWR1?=
+ =?utf-8?B?ZUw0dVlkUjliOFdxTVVGcERONkNtMys2cm1XejFCRHlzZDUvQWIzbnRpdVBj?=
+ =?utf-8?B?Uk5iYW82M0xqblQ0ZklJYW5EUXhFLzluOTlQdkRiTEZsSzJ0Ri9iRWhSWmU5?=
+ =?utf-8?B?RTFCSlFmNEFPQ1Z4dXRhZFQrbDdJSXU3M0JrU0FKeHBpM09RdE1XUFZwSGpJ?=
+ =?utf-8?B?RmEza1VLYUtrOStFVVBqN2hBc0FNUWlJRGtaWEFzRUsxWDVYZ3Rpd0V6Qjdq?=
+ =?utf-8?B?eURRb2ZkNGE3cTZiR2V2NlY5N3BkZk9LOHY5Rnc5cEs3em1sWDNKeEFtY1RB?=
+ =?utf-8?B?emNMa1NYOXhQZk1IOCt5d2d6a0xObFFlREwzcExWVitTZmJ4R3Rxby9MNlE4?=
+ =?utf-8?B?ZlFIY1VDNVdJdWI3OG1TRWVrYnhvb1daUkEzYjNTL2RTR0Exb1ByVmo0VXZl?=
+ =?utf-8?B?SWs0TC9QZkNyTVI2YWNRVXVTSTZ1QnA5aysrTWxZMXAxcTQ5MTBGek5LYlJC?=
+ =?utf-8?B?akE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: glwl8SMEClZgJS+oBXB24TFnFf+uTzpgbTTSR2y6FdwoP2CrGB/Y7yi6H4/EhrDC2Gb6gU1xy0WHC+zlVqFvXjRc2l3A7rUwB2o2diohLQ0L+ltmh2NKOzvfl2R7bdRHTMupawXYxn5zYXr5zr1CG/3yCffUC/UXbdrhYXipiFmjeuogfn7eJKskU8sRujEzC9158SzQfMyMmY5EycIqh0/Y4rCFPsYj5uYWjnFu7mxUjJIH5B7C9hwkd+2yXm8ll3JRrGks02r/8zudNRlUyb3q3LDyiQ6/6rOElSeeXzaRZKU1aqNGBULpFKk/X6KT4wfqrWPQqd0Bq3ki2lieV20cSHc6XP08Y+YeVU590VTzujXqdBfHOOM+lthAbvSlw0y+w9ua6umL4r1dgIe04MRTwAmLOnYVztGblEtQvb3rvxhm47Nipcz1VYaLd2TN3lMgfHmeKrjY8WfWPbk0XWjf7SXL/GFdomk4GSOGgTm5RTswAd6dw6AdY40T6H1dycW2jm5MmRyPEUFQS5V041CUXO9fzj+jKQCA8K1y11XZVdKs4q1x71by4rTiDg8+z15H6govZ7mk+M0y23YXZeIuGnT/EmFFBlhCpsKCzSY=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 246ac021-6773-442a-ae22-08dd93d54e8c
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2025 17:24:11.3495 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2uqLIWd2hXT/9VhOlg0w5u/b2PfQtaB+sXz0IllIw71U1L6b7F70s/SHxmbbN6/6oNx75S2Zk0AhG24fKp6rt+pQcYoVDrbrEHTaRyfqCLw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB4584
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-15_07,2025-05-15_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ bulkscore=0 spamscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 mlxscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505070000
+ definitions=main-2505150172
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE3MSBTYWx0ZWRfX8L6gk0i5NOHa
+ h+tZ+WGI2nya+dindKQT8k0krs63ZEQA4xv+C5BnZS7YyosfrxQyecJIOQb4zf7rMb2ekwqvUl4
+ t0hVfEghbypq2VLKXyDzYjj9SpaNfqNIlYJwflknfmuNuuis5h5dDa53v0Wk7SRFN0MQjKsHW1l
+ dOB3jmAmc4+GJBG/HJtPwcktsLc28UBYKyCb9cpIUz8FHX5jh/6EGdD69TyMjZKr7IBhyDskNOO
+ AFUI0oIjbSWQfhUJYCp8L3DqPTihf+NIvFYNuAwwetTXFm3Hp1ZXyo67ZI1taIuyV1LvDgRva1d
+ ej+efbJuPOhk4a68uq5NDjRpy2IQEeOcLJODJ2dI2qvdqr+PQtVyYiZ686rvNwTnh7K2F2jYQiE
+ qOzPb/vHOEhBbcognRh83H4yB54FVVpjN8Np/EaXpIl7L7IN4HT6pjrd1mLpRo/bH24SX5sN
+X-Authority-Analysis: v=2.4 cv=Y+b4sgeN c=1 sm=1 tr=0 ts=6826233e b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10
+ a=yPCof4ZbAAAA:8 a=4UG5aWVIlXOsvKnA4G8A:9 a=QEXdDO2ut3YA:10 cc=ntf
+ awl=host:13186
+X-Proofpoint-GUID: rKF8Y6-xTujSY_v-Tt2ckIiASxvQk3qH
+X-Proofpoint-ORIG-GUID: rKF8Y6-xTujSY_v-Tt2ckIiASxvQk3qH
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -157,148 +236,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 15:59, Daniel P. Berrangé wrote:
-> The ACPI test data check needs to analyse a list of all files in a
-> commit, so can use the new hook for processing the file list.
+On 5/12/2025 4:51 PM, John Levon wrote:
+> On Mon, May 12, 2025 at 08:32:37AM -0700, Steve Sistare wrote:
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>> ---
->   scripts/checkpatch.pl | 61 ++++++++++++++++++++-----------------------
->   1 file changed, 29 insertions(+), 32 deletions(-)
+>> Modify memory_get_xlat_addr and vfio_get_xlat_addr to return the memory
+>> region that the translated address is found in.  This will be needed by
+>> CPR in a subsequent patch to map blocks using IOMMU_IOAS_MAP_FILE.
+>>
+>> Also return the xlat offset, so we can simplify the interface by removing
+>> the out parameters that can be trivially derived from mr and xlat.
+>>
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > 
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index b74391e63a..6a7b543ddf 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -1330,29 +1330,6 @@ sub WARN {
->   	}
->   }
->   
-> -# According to tests/qtest/bios-tables-test.c: do not
-> -# change expected file in the same commit with adding test
-> -sub checkfilename {
-> -	my ($name, $acpi_testexpected, $acpi_nontestexpected) = @_;
-> -
-> -        # Note: shell script that rebuilds the expected files is in the same
-> -        # directory as files themselves.
-> -        # Note: allowed diff list can be changed both when changing expected
-> -        # files and when changing tests.
-> -	if ($name =~ m#^tests/data/acpi/# and not $name =~ m#^\.sh$#) {
-> -		$$acpi_testexpected = $name;
-> -	} elsif ($name !~ m#^tests/qtest/bios-tables-test-allowed-diff.h$#) {
-> -		$$acpi_nontestexpected = $name;
-> -	}
-> -	if (defined $$acpi_testexpected and defined $$acpi_nontestexpected) {
-> -		ERROR("Do not add expected files together with tests, " .
-> -		      "follow instructions in " .
-> -		      "tests/qtest/bios-tables-test.c: both " .
-> -		      $$acpi_testexpected . " and " .
-> -		      $$acpi_nontestexpected . " found\n");
-> -	}
-> -}
-> -
->   sub checkspdx {
->       my ($file, $expr) = @_;
->   
-> @@ -1437,6 +1414,34 @@ sub checkspdx {
->   # real filenames that were seen in the patch
->   sub process_file_list {
->   	my @fileinfos = @_;
-> +
-> +	# According to tests/qtest/bios-tables-test.c: do not
-> +	# change expected file in the same commit with adding test
-> +	my @acpi_testexpected;
-> +	my @acpi_nontestexpected;
-> +
-> +	foreach my $fileinfo (@fileinfos) {
-> +		# Note: shell script that rebuilds the expected files is in
-> +		# the same directory as files themselves.
-> +		# Note: allowed diff list can be changed both when changing
-> +		#  expected files and when changing tests.
-> +		if ($fileinfo->{filenew} =~ m#^tests/data/acpi/# &&
-> +		    $fileinfo->{filenew} !~ m#^\.sh$#) {
-> +			push @acpi_testexpected, $fileinfo->{filenew};
-> +		} elsif ($fileinfo->{filenew} !~
-> +			 m#^tests/qtest/bios-tables-test-allowed-diff.h$#) {
-> +			push @acpi_nontestexpected, $fileinfo->{filenew};
-> +		}
-> +	}
-> +	if (int(@acpi_testexpected) > 0 and int(@acpi_nontestexpected) > 0) {
-> +		ERROR("Do not add expected files together with tests, " .
-> +		      "follow instructions in " .
-> +		      "tests/qtest/bios-tables-test.c. Files\n\n  " .
-> +		      join("\n  ", @acpi_testexpected) .
-> +		      "\n\nand\n\n  " .
-> +		      join("\n  ", @acpi_nontestexpected) .
-> +		      "\n\nfound in the same patch\n");
-> +	}
->   }
->   
->   # Called at the start of processing a diff hunk for a file
-> @@ -1501,9 +1506,6 @@ sub process {
->   	my %suppress_whiletrailers;
->   	my %suppress_export;
->   
-> -        my $acpi_testexpected;
-> -        my $acpi_nontestexpected;
-> -
->   	# Pre-scan the patch sanitizing the lines.
->   
->   	sanitise_line_reset();
-> @@ -1642,7 +1644,6 @@ sub process {
->   			$fileold =~ s@^([^/]*)/@@ if (!$file);
->   			$filenew =~ s@^([^/]*)/@@ if (!$file);
->   			$realfile = $filenew;
-> -	                checkfilename($realfile, \$acpi_testexpected, \$acpi_nontestexpected);
->   
->   			$fileinfo = {
->   				"isgit" => 1,
-> @@ -1676,8 +1677,6 @@ sub process {
->   			$realfile = $1;
->   			$realfile =~ s@^([^/]*)/@@ if (!$file);
->   
-> -	                checkfilename($realfile, \$acpi_testexpected, \$acpi_nontestexpected);
-> -
->   			$p1_prefix = $1;
->   			if (!$file && $tree && $p1_prefix ne '' &&
->   			    -e "$root/$p1_prefix") {
-> @@ -1770,9 +1769,7 @@ sub process {
->   		     $line =~ /^rename (?:from|to) [\w\/\.\-]+\s*$/ ||
->   		     ($line =~ /\{\s*([\w\/\.\-]*)\s*\=\>\s*([\w\/\.\-]*)\s*\}/ &&
->   		      (defined($1) || defined($2)))) &&
-> -                      !(($realfile ne '') &&
-> -                        defined($acpi_testexpected) &&
-> -                        ($realfile eq $acpi_testexpected))) {
-> +		    $realfile !~ m#^tests/data/acpi/#) {
->   			$reported_maintainer_file = 1;
->   			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
->   		}
+> Steve, would you consider splitting this out from the full CPR series and
+> submitting as a standalone, as we both have a dependency on doing this, and your
+> patch seems much nicer than the current one in vfio-user series?
 
+Sure.  I just returned from vacation, and I see you submitted it.
 
-* https://lore.kernel.org/qemu-devel/20250403151829.44858-12-philmd@linaro.org/
-   WARNING: Does new file 'tests/data/acpi/aarch64/virt/APIC.its_off' need 'SPDX-License-Identifier'?
-   WARNING: Does new file 'tests/data/acpi/aarch64/virt/FACP.its_off' need 'SPDX-License-Identifier'?
-   WARNING: Does new file 'tests/data/acpi/aarch64/virt/IORT.its_off' need 'SPDX-License-Identifier'?
-   ERROR: Do not add expected files together with tests, follow instructions in tests/qtest/bios-tables-test.c. Files
-   
-     tests/data/acpi/aarch64/virt/APIC.its_off
-     tests/data/acpi/aarch64/virt/FACP.its_off
-     tests/data/acpi/aarch64/virt/IORT.its_off
-   
-   and
-   
-     tests/qtest/bios-tables-test.c
-   
-   found in the same patch
-   
-   total: 1 errors, 3 warnings, 11 lines checked
-   
-
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+- Steve
 
