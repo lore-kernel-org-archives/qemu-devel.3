@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C825C3DA6D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6ADC2D0CD
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFahw-00045t-JB; Thu, 15 May 2025 11:41:20 -0400
+	id 1uFajd-0008Ct-95; Thu, 15 May 2025 11:43:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uFahj-0003bk-BL
- for qemu-devel@nongnu.org; Thu, 15 May 2025 11:41:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uFahh-0005x8-8J
- for qemu-devel@nongnu.org; Thu, 15 May 2025 11:41:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747323659;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=plSAewDgQSL23UnTCL/HSs7WUtFViES+dDu1i/h4tt4=;
- b=QMXe+meoTFEFFLGzW7jEJQXviEhODZHoNOUoUHHayGo5Up8/d6iXO0vgdjD1BXhB7JWdOh
- IYEoTn8h62R01iJnerFnakJEAZP7NTOj6sINFAtPCExjhqUHDhhdDz6nY0hkbOK4tTM5lX
- U0pbqbyQdedNxApDN8zODlDWPG5VXw8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-bO4MeJupMDG6zDvD2hMSHg-1; Thu,
- 15 May 2025 11:40:55 -0400
-X-MC-Unique: bO4MeJupMDG6zDvD2hMSHg-1
-X-Mimecast-MFC-AGG-ID: bO4MeJupMDG6zDvD2hMSHg_1747323653
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C424195608E; Thu, 15 May 2025 15:40:53 +0000 (UTC)
-Received: from gondolin.redhat.com (unknown [10.45.225.145])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5E3081956066; Thu, 15 May 2025 15:40:47 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH v7 13/14] arm/cpu: switch to a generated cpu-sysregs.h.inc
-Date: Thu, 15 May 2025 17:39:06 +0200
-Message-ID: <20250515153907.151174-14-cohuck@redhat.com>
-In-Reply-To: <20250515153907.151174-1-cohuck@redhat.com>
-References: <20250515153907.151174-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uFaja-00088A-MK
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 11:42:58 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uFajY-00065a-8f
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 11:42:58 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-30df7c98462so1162061a91.3
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 08:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747323770; x=1747928570; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1ed5OpV8LcoXGv4f+CEtHJEcEJDwnymAn/7MyejJClM=;
+ b=pkfXo3lOPcotMg5/1OfJkzpnXatnDihq2dZmcjfyXIVmQxssv1gOij4t25M/YxWzgI
+ lmRmgfeN+lUWEJUpOaaLx5/S536LPF0gSwYV9+tHc98M2HZNzXxLY0n24KNs+V0DwMlK
+ jR0WOaTscoGQuW0OA+hJKhuhRldsHLIlAMeHWXPOOPUf1lgYQhEzrmRaeo1iak7NIjFK
+ msjvQ7gcRv/2mnErC0mQjckDu+61WDTjRLshPd4bcTcKUBZ0iFeRFxu5nA99QplfrdO3
+ jAuHo8JS4qfmQVM8kYpUPb+MoGFEhMSryiXwjzrMQcSmgTXu6L5FKRAUh7KdAUDrQmZR
+ b08w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747323770; x=1747928570;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1ed5OpV8LcoXGv4f+CEtHJEcEJDwnymAn/7MyejJClM=;
+ b=mcMhrvWn8k56Jeg7G2+d0oU5sW2nrXsdyEd8HB6i6wQyOsMi6PI99LHvkixfSJRJ1E
+ vp10g3rlTIWrZLGM5Nlmqgv9FxLg9sc7EM3rnaNy7FR4cRrIcEYK6nNhOcJst9UMVWGt
+ sTN6oWGCAD2qo4DUEwDVMgDTvI/EnILLrtNyCUTnf1jils2VZKUnOjMDXgxzaY6kucAP
+ CnuHTAWVqTTBthE/lEUsMmCjDQWvLIScS8ptnuK4dYaZGuPeCk4z3jQGXAxZL3iNEt71
+ 1qQbUyCyNE8lpC6wGRZKH00nLL55Us+uw9R5arEgMBLXrxN9ZSFjLxC6hfC0Hzq50ji7
+ RJIw==
+X-Gm-Message-State: AOJu0YzYs6plAd/+ZPZo4bucvi6M7vfavqjx7/PNXWRwXqv+f8HBvyHR
+ UQkdjdYg72t28SJXlmyFuEInMSf72goe5DDuTe7T1lL7JINLy9s5QL5sRDxdcuzdb45IVIiCizu
+ n
+X-Gm-Gg: ASbGnctAw9TnuJnDrvb7CtJazbA7YCtK67O592Kz5+pl4/8eGxfdEVRlwdjckxxrtZV
+ t9Zfa5GsGoY2B1kxLojPxTqq4DiLC1G+vjadpgJeIjKSLF08a3sTqlCuN+FCyXJNlFmG1RXOHs2
+ oTawo0JgY6WUXqeMQrfSdkK1x176B8UmdzArKksC1a8y9rv2jF78qvKJoDMaVyUuOkckLt8G/Aa
+ 9jQB2CmzmEl5BAh7WjSBPnMIYWgLXOWPV7Th3Dw/PsjUPyhNFjUGPIlp5+YWhDfi/NhXD1ng6xW
+ ghvdIPPmlTujRYTWIyQm+FZRuomfhh6jcAAKdJgaxcCTKga+qew8w201eR5RH2Nm
+X-Google-Smtp-Source: AGHT+IGz4HCU94VubISGCgyhUxhcPGeLN0Z2du+nCRyv5Gh3o8z8b406lAFmkNYwXsDAKo8IV0U7Ow==
+X-Received: by 2002:a17:90b:3c0f:b0:30c:4b1d:330 with SMTP id
+ 98e67ed59e1d1-30e2e65e705mr12792667a91.27.1747323770372; 
+ Thu, 15 May 2025 08:42:50 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30e3345fe6csm3639443a91.26.2025.05.15.08.42.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 May 2025 08:42:49 -0700 (PDT)
+Message-ID: <b1497baf-323b-431c-a6bc-2758db3cc428@linaro.org>
+Date: Thu, 15 May 2025 08:42:48 -0700
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] qapi: introduce 'runtime_if' for QAPI json
+Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, stefanha@redhat.com,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com,
+ jsnow@redhat.com, philmd@linaro.org, berrange@redhat.com, thuth@redhat.com,
+ Michael Roth <michael.roth@amd.com>
+References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
+ <20250507231442.879619-2-pierrick.bouvier@linaro.org>
+ <878qmy5vxc.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <878qmy5vxc.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,83 +106,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generated against Linux 6.14-rc1.
+On 5/14/25 9:39 PM, Markus Armbruster wrote:
+> Consensus is to shelve this series, and eliminate target-specific
+> conditionals instead.  But let me scribble down a few notes for
+> posterity just in case we ever take it off the shelf again.
+> 
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+> 
+>> This new entry can be used in QAPI json to specify a runtime conditional
+>> to expose any entry, similar to existing 'if', that applies at compile
+>> time, thanks to ifdef. The element is always defined in C, but not
+>> exposed through the schema and visit functions, thus being hidden for a
+>> QMP consumer.
+>>
+>> QAPISchemaIfCond is extended to parse this information. A first version
+>> was tried duplicating this, but this proved to be much more boilerplate
+>> than needed to pass information through all function calls.
+>>
+>> 'if' and 'runtime_if' can be combined elegantly on a single item,
+>> allowing to restrict an element to be present based on compile time
+>> defines, and runtime checks at the same time.
+> 
+> I understand the combination is "and", i.e. both conditions need to be
+> satisfied.
+> 
 
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- target/arm/cpu-sysregs.h.inc | 43 +++++++++++++++++++++++++-----------
- 1 file changed, 30 insertions(+), 13 deletions(-)
+Yes, if results in introduction of an ifdef, and runtime_if, an if.
 
-diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index 6c9f9981cc5d..02aae133eb67 100644
---- a/target/arm/cpu-sysregs.h.inc
-+++ b/target/arm/cpu-sysregs.h.inc
-@@ -1,18 +1,8 @@
--DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
--DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
--DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
--DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
--DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
--DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
--DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
--DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
--DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
--DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
--DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
--DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
-+
- DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
- DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
- DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
- DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
- DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
- DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
-@@ -23,13 +13,40 @@ DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
- DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
- DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
- DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
--DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
- DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
-+DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
- DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
- DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
- DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
- DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
- DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
- DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
-+DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
-+DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
-+DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
- DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
-+DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-+DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
-+DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
-+DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
-+DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
-+DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
-+DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
-+DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
-+DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
-+DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
-+DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
-+DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
-+DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
-+DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
-+DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
-+DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
-+DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
-+DEF(CCSIDR2_EL1, 3, 1, 0, 0, 2)
-+DEF(GMID_EL1, 3, 1, 0, 0, 4)
-+DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
-+DEF(CSSELR_EL1, 3, 2, 0, 0, 0)
- DEF(CTR_EL0, 3, 3, 0, 0, 1)
-+DEF(DCZID_EL0, 3, 3, 0, 0, 7)
-+
--- 
-2.49.0
+#ifdef IF_CONDITION
+if (runtime_if_condition()) {
+...
+}
+#endif
 
+> The syntax change I'd consider elegant (it's subjective!) is *none*.
+> Instead of
+> 
+>      'if': 'CONFIG_DINGS',
+>      'runtime_if': 'target_bums()'
+> 
+> use
+> 
+>      'if': ['all': ['CONFIG_DINGS', 'target_bums()']]
+>
+
+Why not, but I don't see how to identify what would be an ifdef, vs what 
+is an if, and I don't think that using something like 
+"is_capital_letters" or "has_parentheses" is a good thing.
+
+> Might need semantic restrictions to simplify the implementation.
+> 
+>> Note: This commit only adds parsing of runtime_if, and does not hide
+>> anything yet.
+>>
+>> For review:
+>>
+>> - I don't really like "runtime_if" name.
+>>    What would make sense, IMHO, is to rename existing 'if' to 'ifdef',
+>>    and reuse 'if' for 'runtime_if'. Since it requires invasive changes, I
+>>    would prefer to get agreement before wasting time in case you prefer
+>>    any other naming convention. Let me know what you'd like.
+>>
+>> - As mentioned in second paragraph, I think our best implementation
+>>    would be to extend existing QAPISchemaIfCond, as it's really
+>>    complicated to extend all call sites if we have another new object.
+> 
+> I figure the alternative is an abstract type with two concrete subtypes,
+> one for each kind of conditional.
+> 
+>> - No tests/doc added at this time, as I prefer to wait that we decide
+>>    about naming and proposed approach first.
+> 
+> We'd need
+> 
+> * Positive test(s) in tests/qapi-schema/qapi-schema-test.json
+> 
+> * Negative tests similar to the ones with have for 'if'
+> 
+> * Documentation update docs/devel/qapi-code-gen.rst
+>
+
+As we decided to follow the approach (1) "Drop target-specific 
+conditionals", I will focus on the other series, and drop this one.
+
+Thanks,
+Pierrick
 
