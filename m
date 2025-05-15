@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C58C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 23:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12280C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 23:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFiI7-0005Iq-PO; Thu, 15 May 2025 19:47:07 -0400
+	id 1uFiLb-0007yH-K3; Thu, 15 May 2025 19:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uFiI3-0005IO-Fc; Thu, 15 May 2025 19:47:03 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1uFiLW-0007vw-Hb; Thu, 15 May 2025 19:50:38 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uFiI1-0000kt-OP; Thu, 15 May 2025 19:47:03 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2317d94c9cdso14906865ad.2; 
- Thu, 15 May 2025 16:47:00 -0700 (PDT)
+ id 1uFiLV-00014G-4t; Thu, 15 May 2025 19:50:38 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-30a9718de94so1536870a91.0; 
+ Thu, 15 May 2025 16:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747352820; x=1747957620; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747353035; x=1747957835; darn=nongnu.org;
  h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EaShiHWwczVAXhFoBV2tbXFJ5Zc7AWXe3Ia/mkw6e/Q=;
- b=C2RRc1oNDrxats3aWzYQGhs0Gf5Du2MPYEIoGti2pAHZQhQedrgHKOX058EumaVg6Q
- O/hm6Mi+vtLTfo35vS+z47TaV451g7PWdQEXgjzcSszPvQuCgSktfLhmUhvEjgObFF0I
- iruSizygUyqj+c9XCM0Mnj+e5jFyAnVW7BSp0X6OLeplQ8NWreEhWhGrgBKdJ7wC4Be/
- gQ61xrfAqM4XWmDC+IwBu/fcxptkydz5Np/ULIoEi/cozMgzh0XAoxwQjFhtYh6HNCai
- Gf8gIlqIr4qxHCcvSFBbvSPUeO64bMqMloz7htUKUzsHyMD6QAsENLoGAtX50pX65vJH
- Iw+w==
+ bh=PCyogcm6/3jB34lunXm6V7paSEmRjPYi1QNCs0wYBUg=;
+ b=Rcf6jMhxPVal+UfxFnV2lYgGnft2il0UMX2ZWKlWWi5lcQV/rQxAVvYHhQeNZv74Aw
+ oCrb5AEpPTo35hzRz4nyBJaL11ge69u+0RpDvrUree1emd1ypfk6iJoMJrEO5+9lWTTc
+ wgDJgrVobEBo7EIkR3MSrqmTUK6LdV+SrbNmtRXIJpk1KPhd+/J2VvmJkuCLc4b1hWSV
+ khkgTMfyqM9e+WiJonlT523eS2oaEbAZEj2ce7cdtLcXtehmXgSLHkiRsNjGN0iSJF1k
+ N8QWrfybxAvMh7oN5HjAtadagjZUO+dZEAm8TkPFoNBvFEyeAzaJtLSVZSctFUTNxHS2
+ evfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747352820; x=1747957620;
+ d=1e100.net; s=20230601; t=1747353035; x=1747957835;
  h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=EaShiHWwczVAXhFoBV2tbXFJ5Zc7AWXe3Ia/mkw6e/Q=;
- b=DOAOXJwdkyPZHgwMOZij13b0P8aXN+xlZF3YxCQs6bBJe0JFEqay2TWD1zGUhZa+gm
- Cq7/MMpHF7xPoQYcRCt3soccepaObDAFu3KsqNI/nrfHj9mN3gLmFHFj+h2NRRyFfHiC
- JdQbfZl3UkGtDSXh5/5YeZyT1G48vN+jAQU1MNRVawKDVyZowJ3+4t9gZHCdc8H+C8Fc
- Gs1YSChnpwHCzwQ5HZcB6I+DM5nJ3S0EoMosaZXR7obefi5MT1AmiSGBJjPTvIG6+rFh
- OMyw9RkLkse57ZC0If1/bz65DE3J6c94bnSYxogZcvIqxGWP60B2JlbIRgmIgh4OfsDN
- urbg==
+ bh=PCyogcm6/3jB34lunXm6V7paSEmRjPYi1QNCs0wYBUg=;
+ b=ksADczx39FB2c9iZG/XPUDeLDk1F9CqtzVg76LCbewnnsQCrk+/8gkMy/bDQ7Hu8cN
+ s5EsXm1jS5v9D2DGKfUc4ZXzBgBwbq5qN+LJf03JhzKz28IZSY35jUrxEEiCqu/eTDq8
+ +neZS9gj4RyA9+tCLtUG+hZkiYfl5kzbzEtg7Qhbwb3Hzfk2nXjv1F2iAOv8f7+tmIyS
+ V775gBO/Ct5tSZQIt8z3mbofvHmpKMu2h/tudiUTFDvZgWSBhvQNhQo4Io6HBQwdHePc
+ vozybQfyOFndoTZtfssgHafVqcNdsk86iMXvw2arE2Y/Rni9q8bYOsWPYLNDp0si7mTI
+ 96Ow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgDaZQU6eXSQaPUDtKNJfCAJkw1Kj5Pgz6uTXJX9/DV5mFkKgeplxZIMWocaFLNeGb0vUxcgdz8A==@nongnu.org
-X-Gm-Message-State: AOJu0YwLgVNzFcCnVEateHNHbLrAFlREcLG+Z2WSpwCvX1BepxppyxLa
- 6LZCSBOdhTrDrftLUM3vcGE0Y5gAH+bN8XVwGZnnQOxOGarFmFtRv+LcsFvmhw==
-X-Gm-Gg: ASbGnctEYmfYzAtDT+65aTZ3hdCLFpT3L8LSysNvHl9Xpx6t9q16aoo1S1UE5vFWVxV
- N9YX/4pNx6TvcrGLR3oCw/sndHxjjsO42woRZpeY2XvRY1BofFl3gJdFFIwbZWhhXeYmnMuhefJ
- G2i960KgxvnmujLSd/n7/WXOFMwFxsxvwCxAQK3Dr3jP0wWnNuGYIG8GuDXJo5712eEPW6HNQdh
- saYLMRA3PXouj781dSDqxjh51cZUe03jSrLey6wR2NHJKis+qCIXK/uLJPDOCN6oVmU/5bUuVSY
- MtjVf7Zcui4dZZgL+IMKUP3F4hM5AmVLDr4+06Qsd6X53gQ=
-X-Google-Smtp-Source: AGHT+IFWJ43OEQVSvjHPVqd8HAEtnpnh1pOxu+/lcntY1qKDUom47SNn8dNbERKv0VHiMDVZTvn8Bw==
-X-Received: by 2002:a17:902:c951:b0:223:42ca:10ef with SMTP id
- d9443c01a7336-231d45af423mr15660955ad.43.1747352819795; 
- Thu, 15 May 2025 16:46:59 -0700 (PDT)
+ AJvYcCVgkYdmqrOSmwv8nCfX452/94oz29JlA9/LH6OhjM+6O7LPZNcxEJ5uwxEzuXsclfRNKUUGQl/zWw==@nongnu.org
+X-Gm-Message-State: AOJu0YxxEYlY+g8nJA2Gzma/Q7/sHKRxdrhA+UWg25t+dWVQsVOesGOU
+ nCCbeDttjmJfUhgSFr4w+ZbA/LbI5cg8sbWa9RF1Pnwlfa6iZzYJX+VL
+X-Gm-Gg: ASbGncuMafHrZrtSxOy2gF5sK+h47rQ+ZBlcJRkVyPYvhJpg4cyqPjb1KIh6lfsEUHo
+ HYydTNtcDz/B82K+TdgZnVDqr2nAi9rfCqVigTaezYO3E8WySPlLmBSx90DWXTm9dCSLrxm0c/t
+ Y6uM+jNivqib2dd73U53R8y7tAIBr1rWkUMVjdGce2Lw5BE9D3K+X0vxZ8JhiZWBkK7X5g5U3ZY
+ lmYHIWw+Dc2r9JS0r+FCxG/C3j89GIn+mX7Lcx/E8ggiK/aKj3CHbXutV4EZxVcrky1iZ/qjSjO
+ RG9o6BBb5hHeIK0e7PhWNYlmSzdJ1MJz+g+AzvkuCC4VM8A=
+X-Google-Smtp-Source: AGHT+IGfWzkTH8GfjqmPPKks3jrRDOD8jXTnwyGOksi6K6Yw8CIG5yb6DV+TQFuzpvnapAk+xa9j7A==
+X-Received: by 2002:a17:90a:c2cd:b0:2fe:861b:1ae3 with SMTP id
+ 98e67ed59e1d1-30e7d5212aemr1605810a91.8.1747353035251; 
+ Thu, 15 May 2025 16:50:35 -0700 (PDT)
 Received: from localhost ([118.209.229.237]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ed540dsm3176265ad.218.2025.05.15.16.46.56
+ 98e67ed59e1d1-30e6af9d586sm1251325a91.11.2025.05.15.16.50.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 16:46:59 -0700 (PDT)
+ Thu, 15 May 2025 16:50:34 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 16 May 2025 09:46:54 +1000
-Message-Id: <D9X4VL9LW0VY.2Y9M6ID9YK205@gmail.com>
+Date: Fri, 16 May 2025 09:50:29 +1000
+Message-Id: <D9X4YBZZN8MI.YT9P5G4O4G1M@gmail.com>
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "Mike Kowal" <kowal@linux.ibm.com>, <qemu-ppc@nongnu.org>
 Cc: <qemu-devel@nongnu.org>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
  <fbarrat@linux.ibm.com>, "Glenn Miles" <milesg@linux.ibm.com>, "Caleb
  Schlossin" <calebs@linux.vnet.ibm.com>
-Subject: Re: [PATCH 32/50] ppc/xive: Split xive recompute from IPB function
+Subject: Re: [PATCH 34/50] ppc/xive: tctx_accept only lower irq line if an
+ interrupt was presented
 X-Mailer: aerc 0.19.0
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-33-npiggin@gmail.com>
- <015a40ec-5685-4572-a981-29fc40fefcda@linux.ibm.com>
-In-Reply-To: <015a40ec-5685-4572-a981-29fc40fefcda@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+ <20250512031100.439842-35-npiggin@gmail.com>
+ <e361e136-ec17-4b0e-a036-23aa3242d9d5@linux.ibm.com>
+In-Reply-To: <e361e136-ec17-4b0e-a036-23aa3242d9d5@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,107 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 15, 2025 at 6:42 AM AEST, Mike Kowal wrote:
+On Fri May 16, 2025 at 1:16 AM AEST, Mike Kowal wrote:
 >
 > On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
->> Further split xive_tctx_pipr_update() by splitting out a new function
->> that is used to re-compute the PIPR from IPB. This is generally only
->> used with XIVE1, because group interrputs require more logic.
+>> The relationship between an interrupt signaled in the TIMA and the QEMU
+>> irq line to the processor to be 1:1, so they should be raised and
+>
+> ...needs to be...
 >
 >
-> Previous upstreaming was focused only on XIVE2 as not to impact users of=
-=20
-> XIVE1.
+>> lowered together and "just in case" lowering should be avoided (it could
+>> mask
+>
+> I think you missed the rest of the line...
 
-Yeah it's a balancing act. I didn't want xive1 to diverge too much in
-basic APIs like the PIPR updating.
+Thanks, good catch. I think it's supposed to be "could mask a bug in
+the logic elsewhere".
 
-So long as powernv9 gets some basic OPAL testing, hopefully it should be
-okay.
-
->
-> But I assume this does not hurt anything.
->
-> Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
+I'll fix.
 
 Thanks,
 Nick
-
->
-> Thanks,=C2=A0 MAK
->
->
->>
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>   hw/intc/xive.c | 25 ++++++++++++++++++++++---
->>   1 file changed, 22 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
->> index 25f6c69c44..5ff1b8f024 100644
->> --- a/hw/intc/xive.c
->> +++ b/hw/intc/xive.c
->> @@ -225,6 +225,20 @@ void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t =
-ring, uint8_t priority,
->>       xive_tctx_notify(tctx, ring, group_level);
->>    }
->>  =20
->> +static void xive_tctx_pipr_recompute_from_ipb(XiveTCTX *tctx, uint8_t r=
-ing)
->> +{
->> +    /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
->> +    uint8_t alt_ring =3D (ring =3D=3D TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS =
-: ring;
->> +    uint8_t *aregs =3D &tctx->regs[alt_ring];
->> +    uint8_t *regs =3D &tctx->regs[ring];
->> +
->> +    /* Does not support a presented group interrupt */
->> +    g_assert(!xive_nsr_indicates_group_exception(alt_ring, aregs[TM_NSR=
-]));
->> +
->> +    aregs[TM_PIPR] =3D xive_ipb_to_pipr(regs[TM_IPB]);
->> +    xive_tctx_notify(tctx, ring, 0);
->> +}
->> +
->>   void xive_tctx_pipr_present(XiveTCTX *tctx, uint8_t ring, uint8_t prio=
-rity,
->>                               uint8_t group_level)
->>   {
->> @@ -517,7 +531,12 @@ static void xive_tm_set_os_lgs(XivePresenter *xptr,=
- XiveTCTX *tctx,
->>   static void xive_tm_set_os_pending(XivePresenter *xptr, XiveTCTX *tctx=
-,
->>                                      hwaddr offset, uint64_t value, unsi=
-gned size)
->>   {
->> -    xive_tctx_pipr_update(tctx, TM_QW1_OS, value & 0xff, 0);
->> +    uint8_t ring =3D TM_QW1_OS;
->> +    uint8_t *regs =3D &tctx->regs[ring];
->> +
->> +    /* XXX: how should this work exactly? */
->> +    regs[TM_IPB] |=3D xive_priority_to_ipb(value & 0xff);
->> +    xive_tctx_pipr_recompute_from_ipb(tctx, ring);
->>   }
->>  =20
->>   static void xive_os_cam_decode(uint32_t cam, uint8_t *nvt_blk,
->> @@ -601,14 +620,14 @@ static void xive_tctx_need_resend(XiveRouter *xrtr=
-, XiveTCTX *tctx,
->>       }
->>  =20
->>       /*
->> -     * Always call xive_tctx_pipr_update(). Even if there were no
->> +     * Always call xive_tctx_recompute_from_ipb(). Even if there were n=
-o
->>        * escalation triggered, there could be a pending interrupt which
->>        * was saved when the context was pulled and that we need to take
->>        * into account by recalculating the PIPR (which is not
->>        * saved/restored).
->>        * It will also raise the External interrupt signal if needed.
->>        */
->> -    xive_tctx_pipr_update(tctx, TM_QW1_OS, 0xFF, 0); /* fxb */
->> +    xive_tctx_pipr_recompute_from_ipb(tctx, TM_QW1_OS); /* fxb */
->>   }
->>  =20
->>   /*
-
 
