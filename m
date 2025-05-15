@@ -4,190 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC608C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A576FC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFam8-0007Kf-6v; Thu, 15 May 2025 11:45:36 -0400
+	id 1uFam7-0007G5-6u; Thu, 15 May 2025 11:45:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uFalP-0006BL-RR
- for qemu-devel@nongnu.org; Thu, 15 May 2025 11:44:56 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1uFalR-0006BT-DY; Thu, 15 May 2025 11:44:57 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uFalK-0006CV-EP
- for qemu-devel@nongnu.org; Thu, 15 May 2025 11:44:50 -0400
-Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54F8GHeb021276;
- Thu, 15 May 2025 08:44:42 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=z2VXFeduDIUIMUtFpLP9ErTdTd4WNkw5pDScHzJjS
- mw=; b=yCxPhqWB60V2CXv9rSRU7H9qddR8pcjSsdhs2+DB7t/HsuiayqKtTonuv
- Kr+70wixXXECmBnqnhS7ub61T5WN88CYo0meSVHDYLWFV4XQcgfEY3kxdniVbyCy
- BVkcqcqn0D+wz783Ae5+dffxB2HmGn4PV0U8Q00EP48HQl1j74GN4DPq6OIg3fVH
- EXURpBgf627gqd/JqVfvAiEsEdH/VYhu1Rj/sq4e6La+ELzDSDCNRN1pFLpnq0LB
- 9pqcrRvnB1wmqpkOHCR6uLjeUwqpV2GV87IHS6QiaLQvzMQnXBVN3X0J2S6NFs0W
- vUei6FsjFVxFfZeQRsRyi1Dz5zUGQ==
-Received: from sj2pr03cu002.outbound.protection.outlook.com
- (mail-westusazlp17013076.outbound.protection.outlook.com [40.93.1.76])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 46mbctngvk-3
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1uFalK-0006C1-53; Thu, 15 May 2025 11:44:53 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg41c004682;
+ Thu, 15 May 2025 15:44:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=MEU99Q
+ AjbQse3kgRUIgZzRB4eadWgNdwn2GelvLmdnQ=; b=Ob1IWj1mQTA7TDNs0508Rm
+ 027XTCyZsUu8PeI98yUg0ZXKm1U68gmKJJlx2tNJDIpxRswFnHNdTxuRcOty+7aM
+ pntOP3R5aZMesLd9/bY11BJ+Gr1TKjmUr4eSbN0R9qNRiLGtgTd4IdELxBzOFNNV
+ fAXDEWaWs3+q6Rr95WzX7mHYcYsBsgkcco3qJkUp3W4sRM0f3YVAUW6TU9nYZt51
+ 5WIvgR8eddL7pjpIeExEbW2enoehLE4idpAcZoNRze61H+MaDnV3FG+HOh7GtLxN
+ mSz6aY7tNjEc3S3Vw+x9jTHWQKeqPSzOQZjFvsyxnetS5EL4Q6FTLfqFSV8Ec7pQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2vuv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 08:44:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RMCjx9Ap8Pkic9ZnW4jg4hvkq5LwQGhVRsxG0bBkjmTf9ylfZwPaAb8eFDYgDfTqOTM5ipvnNJ28dP9cSN0qKls+HSmG9uY7eWvNszSeAUxTo3yuIUmL8JbRhNBRSUGHw8UGuf/YQYMQira9U8vj2ARV32qqVR3YzRHycF/TAhCSZSVuEWWkLTP2d8QsYm+ESQmhq1vsauEhq0VfGdw76ABUq7wqirYykTNw6aDQ8ytuhV6ZAMhZBDoXPaoRWTwW8qY9yLzo3H+kA8xPAzqSk40GVz3FpFnlMqvSY3Rt5xpUJsSYwCWKm2uD4yPixk58Fjz3QgtBSkaTCeRtx6ru4w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=z2VXFeduDIUIMUtFpLP9ErTdTd4WNkw5pDScHzJjSmw=;
- b=lTRbzVoFGVMLExFxwGMJHlCKYki/6emJ1eYiOsp+8sSN9IoDYhlScN5vL66ILYySKVgSCGE3SsOrJuB1Y0vD9b3b4Aalq3jAgapaTbe04G8je5YmjoCLBsgn2xeNZr6kOrk4G98B3kC7U3qgS/hJLR9D4hE15MrJzijvmeI48IGwb4VLXV66lPJdXUcDI9ZwL4aTzdaFE604c8jZ16+bJMloIsKo0C5WFhtvoqqsy6nrlSPEYfJPOc8cQgxm5SzzaYXZzwQaRf4OeQHps4/+NmJS4s4ezE3nyBShkCsYCatT3HUupt1DSUyjgRdOsp/Q/tAWjYzS41BfqN2JSbvjRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=z2VXFeduDIUIMUtFpLP9ErTdTd4WNkw5pDScHzJjSmw=;
- b=PB22JzMgpL8NqsI2ylwMkvMiRpaa9xA/LrHJX+e1cteHi72n3TUO7WMswNEa5ri3JjwrU5V1a7NBH4KLK4CKz5sQbkqU865jpgIDFu+invy9LTeB+SPgeffy6KbzcFSEWUwJ7DyEcUrQiijd5oNDVWXhyKYFGxwP+Y7+sBiR/gQeLBgNppj69qTlzWzSiiamR/1/n+QrUdey7qXD6R0urSrGIOZm1/F0j4F4M9xf7goELY87nBCZm5WcTUHXONKyK1fXmxHm3q39noKLPX4hfoWbpNVIDlNQgADJEv+laQOWeGV2x77oKvf38+Qgi72KNNDPwTfUAG3mqC6Q7SG7MA==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by PH0PR02MB8470.namprd02.prod.outlook.com (2603:10b6:510:10e::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.17; Thu, 15 May
- 2025 15:44:36 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8722.024; Thu, 15 May 2025
- 15:44:36 +0000
-From: John Levon <john.levon@nutanix.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Levon <john.levon@nutanix.com>
-Subject: [PATCH 07/27] vfio: add per-region fd support
-Date: Thu, 15 May 2025 16:43:52 +0100
-Message-ID: <20250515154413.210315-8-john.levon@nutanix.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250515154413.210315-1-john.levon@nutanix.com>
-References: <20250515154413.210315-1-john.levon@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AM8P190CA0010.EURP190.PROD.OUTLOOK.COM
- (2603:10a6:20b:219::15) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
+ Thu, 15 May 2025 15:44:34 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFXjAP029496;
+ Thu, 15 May 2025 15:44:33 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2vut-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 May 2025 15:44:33 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE3XpF021793;
+ Thu, 15 May 2025 15:44:32 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfpu1ck-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 May 2025 15:44:32 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54FFiVHZ27525762
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 May 2025 15:44:31 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6FBB858059;
+ Thu, 15 May 2025 15:44:31 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 23ACE58058;
+ Thu, 15 May 2025 15:44:31 +0000 (GMT)
+Received: from [9.10.80.143] (unknown [9.10.80.143])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 15:44:31 +0000 (GMT)
+Message-ID: <4fd5d6f8-beee-4e5d-adf7-baa6288a9e83@linux.ibm.com>
+Date: Thu, 15 May 2025 10:44:30 -0500
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB8470:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5d65b1f3-43a8-4c4c-8386-08dd93c7654d
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?f5V50R+zmQCHd1JcpQ6yXGrohG+ArFY4Uwd/YLZprt1NdIaLGDwIqWCyP4Ko?=
- =?us-ascii?Q?Lz2siHKMoWkAw831P6L0oFtdC5HOamgHREEFTlL8kT71pK6d+afDJsv6kBLN?=
- =?us-ascii?Q?IwWxTZ/xeltXf0cb8duUsPzWEsRRV96GaUMQP3z4pz/EAxtu6q7b4GUYWrrg?=
- =?us-ascii?Q?GvO7iLMFe9MZdMRBRzPcCxv4Yt9it2p6pYjmWgRzUfnneLBXXGO5lLRGCYNe?=
- =?us-ascii?Q?HGTXqaMVQDb4dXLAIPcbBDnHt0svPFGNFDK6jNCsXIlySDo9uxMtX/KCpDYE?=
- =?us-ascii?Q?+wVL0YNGG/4K438oreRHRir9d9JXmEgkkdwcugyWVTmeZz6mCZIvacKKgcyE?=
- =?us-ascii?Q?OcBqGUwpwxuOvqFt6qD3KyohGVpY/hp6uiI9Rr2LHl/0Ndv+qxfOK2hzE1wX?=
- =?us-ascii?Q?1DjcwKD6HYiHbSOM8k/2zfNZi117M5NfiRgBuvhWKuf41ebEkd3JSULdn6j7?=
- =?us-ascii?Q?CitLXAg4T0BJEg+B9y3Eyo4luqgZgNRYRhIYA4PzdXofqZqKbUyFUERDfe66?=
- =?us-ascii?Q?Yol+XvLesx1wdoRxMl4n3NCVxERofLia0FWfiehIEao80i53rHt5+H97cWCd?=
- =?us-ascii?Q?k6e7et5eHJxeXEfMrxylPN+nN1XbX6JEFVZ8c8yIkZX6/ckDozFxbfI6GXKR?=
- =?us-ascii?Q?p85R+uec1eQRxi61tQKKM8vfmUlmalybSUVAmsXh2q3HV7gbVber4RKK+whb?=
- =?us-ascii?Q?6K0kb4ootTwo2bW8+sELE68sKybdsaTNfEIqV2fMwJV04CmkKPRMKumfBetf?=
- =?us-ascii?Q?/BW2brqGru986L0Vdr//UU2wlBFYC4WQDvHNvJJ3kKKPlH0vrF24LxaLW5ld?=
- =?us-ascii?Q?Hokqyorz+UAmw2qdUGppjno8ozOMIUiv3Iv8XjJdhbV2/iXdqO/L8OGtr39l?=
- =?us-ascii?Q?KBLn9YsL2BCtPwnOwMRzenrFNQHLm2Ab3eL3eJI2WQ1C1/gNITlBJWk4/TY7?=
- =?us-ascii?Q?uzylIBfHUB9cJivEN7vxbDLbQb8rtz+mq/ER0zXFoRJtAafRHhJhVh4gfaS+?=
- =?us-ascii?Q?Vbj4RgcwOtUEtbJ8A4JLnM+BBVYO9iGdUaZ2mGkOB40BLKMIXh3meOJynzGy?=
- =?us-ascii?Q?pGTsC3HiIOWJjWujTYytwHwWu6dKWhsYfVSiDe4wxCy7NCBQBJLmTznxfMG4?=
- =?us-ascii?Q?ghxUEGuZh3WTi3mkVZsdsqoLQTXU86AiLeq8d/so0x4whV+d5L1yJu4KQ+H4?=
- =?us-ascii?Q?W+PqCOivgiEIxpv2vWAN5zZIs88m4hj5T5yl2e/wLIuHCMXBnTRYZoYcvjTX?=
- =?us-ascii?Q?P0JsFkz7OP7uRbfWcPuBZI6ohE59g+E5VhJOIAmjStBjOmeZ9WpsE46j+gJN?=
- =?us-ascii?Q?ShPU4GZp1o+op3ywieI7MCwWOFEeSSngHjLTJkC6O1AGPeCbB5HAYioUi6N/?=
- =?us-ascii?Q?aZLbxPpvXic1xGJiUW6GGH0MWHVLGWJWHrjV0RTQmmL8yvhxL2ejAaGUWY8s?=
- =?us-ascii?Q?t9gz/v90yWE=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?cCLFP+pRLbrdy+DjfWa34MMQjZ8OwkPC2EXJgIzyr9iVKHQXg+Ek4ggtI64t?=
- =?us-ascii?Q?jBVWiu6MAYDi368J5GNi32zFpEpfO0oT61LNWJ5AuH2LIQnWElylEjGPcYKl?=
- =?us-ascii?Q?Vyi845i+HoFIXRJ/fZU/1fYilPDCOrLxUfkxqjBK0397ql9AYGimOMgq9IIl?=
- =?us-ascii?Q?xQekFHNCGo5n9+Vcqfg36Rw92tvCwk3fm2r9eHM58pu8UBYnFylRe+F1zIkT?=
- =?us-ascii?Q?hx9q7A6sp8EaBc6cLN62NvdgMQdBJyoCkhRSDDnXju9dMc7T8nihAsthpk05?=
- =?us-ascii?Q?J7kPsL63nsyLmk6joMMlYQoexuTEUN91/eIQF2zWgjozCpHm1DlxkvTJkKy5?=
- =?us-ascii?Q?TXKPLiXuAECUdJ3KUJCFIAELmQhJXzQXrSD7VNHG06fytuwS1K5/5tvHCim9?=
- =?us-ascii?Q?40U6rFvjHwj+t+omj2Pe9AJ2JxEzcuEuo58Bmt+bV3Y11pJ+nNOURDptv++1?=
- =?us-ascii?Q?bzsbQM2PZEM4Mm5lO0wS7oSirravxXejIBedlh70DiyvstTGKrTKccSSa6w0?=
- =?us-ascii?Q?0ZI64P8zOUPzIHgcmbfpQ335DXtscM1fjyz6a6i9MtRshWs+EMI6sgf8tkf9?=
- =?us-ascii?Q?2pKWvYQLhsnMWaRAXiVQUtbvQFindbi1FRwO8BX5ITnLwzvyi9ZRpt7+TfMh?=
- =?us-ascii?Q?GAZI84ZKeaA3bOrDq5H8X6A5L/NzW29VFCZAG+cktHtAl1e7tTMr1puyk9IM?=
- =?us-ascii?Q?9Xl53GLoHt1Xr8Fv4bHlb83ihB4kpFNqsivBeIGR7qEGMaxcbZ1YzGaO5aFv?=
- =?us-ascii?Q?xnU4nV769lpBxhn5uHwU7IxEI/Q0o0Q0+egS+xFudpsZGk1rfSgDgEekqrwh?=
- =?us-ascii?Q?Dazdbjcjlsx9pqcOZ/PE4Bhs9RGriz4xq2geBXkdGTptOgRdMEZLzp3t1lJa?=
- =?us-ascii?Q?VRLt4w1RvxmHcHueQqAm+rJ8xBX0X9xqaS4ya+aYHTIPJ3aIMNirQT7IHSAx?=
- =?us-ascii?Q?/vss+N7AAECFcOFdkrECsESP8OgQjvUUxD/fwIkxI4GXwb4g7fAi9UNOLP63?=
- =?us-ascii?Q?ERftM6NK0facNcEfR4e7p4hAuZ0UaNV7ibLqLgCRNEUa858+YEDoWhjeD/Qu?=
- =?us-ascii?Q?2lviB7H9kWfypbAvHOqeHHI3ABo1m8wBrQ5LI2KZ+a8Co26saSpEhVlYrqJX?=
- =?us-ascii?Q?oULPpXYepz23oV6+EGF5sDt4kyVMcRJyohA0QU5yftWTviFNTeu8OrYzFFpz?=
- =?us-ascii?Q?V7dp9V16t88xItH6X6O0NsqDQdTtKeKpdrzedlNtAw3uzZg3wRGC8Gip+HQe?=
- =?us-ascii?Q?hW+qYEgaaHQjLqmq3AIszrM1X7Z/HqxJb5fyCBlj+uvTjcpyGYi6gQW1ZXs9?=
- =?us-ascii?Q?b9w3rIfjxgWrV4BWdk8ki5fRzuYzyAPJUQSrS06QAfuWIKsMZ1c0bAMNGS0t?=
- =?us-ascii?Q?fOAjDV5LYBTinf4kLQ6qcEv07X1SeJPD6pRYs+SV3LkYwe3zQSt6FScvc8El?=
- =?us-ascii?Q?Xu4ANr2UbUcKNqp/YWvJyA+IRcg8asGsSpzNbcvmu/GMrJTH7dayjOfd9KKX?=
- =?us-ascii?Q?TsUmqisRQK7QZ/ySaW7NsH6tD9HIyBtJMN2clrKD503usGJGmovp1meJDZqn?=
- =?us-ascii?Q?WpX6SOSU8yDt1+/0kYmu4c4Pkv9cPISvC6xHqS5Q?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5d65b1f3-43a8-4c4c-8386-08dd93c7654d
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2025 15:44:36.5064 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: W+fXWH/CUSx3lOsblH5qn+D/9U0tDrnwfC2LIINeD4ONOgNIOTcYfT+xsKpHdMNV9o+X7iVu+jJ9AaEA4c/Agw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB8470
-X-Authority-Analysis: v=2.4 cv=euLfzppX c=1 sm=1 tr=0 ts=68260be9 cx=c_pps
- a=OVSnam+0waiSP26xbJD4Ig==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=dt9VzEwgFbYA:10
- a=0kUYKlekyDsA:10 a=64Cc0HZtAAAA:8 a=5dvBy8a1CCwUYuo3VioA:9
-X-Proofpoint-ORIG-GUID: nPdZ18jnQGtCZ3isxXi4OItWv7yOGgES
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NiBTYWx0ZWRfX2bjVrAA3Fmub
- cLlbvtMcXZezsSwH0YXExXL4P32lhOunYql9LhYLFpuTE3iVwZNKIGdYucmxj+9CohzdxBKYJbM
- o77+m0tBG1vYUtKZSTjBmHvzYMiLUDzGFF+QO1TPyLfcSJPeoBLatm1H5rDwrh0i0WLKfcq5dDE
- c4suvWGaTvFW+GwZYM9l65PgYBjplqYwknzdRuKQaRUb5pEDoZ0gjD7GXtThzDUc8+Vqx/+hOyf
- qG0mGZ6ns/CJ9+liXycpHJ6dgMJD07IazuYjBlujZGNj6yNQLwoRhs4TlDz4UqOubEU6yAfbsFx
- MpssfsuGP/kSpus56lRG7XSvmzfzOfq8ECLeq6+9WhWHkixwmN6BeiiDoSPBwKjrBsRmcfw8iGR
- I8nWhR8rh1yvlcHwYDPiIfVFIlrBl70wz1kE8xUHB2p09sIUg/Xg27IS4g9JEzm+mPvSVrVE
-X-Proofpoint-GUID: nPdZ18jnQGtCZ3isxXi4OItWv7yOGgES
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 45/50] ppc/xive2: redistribute group interrupts on context
+ push
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.vnet.ibm.com>
+References: <20250512031100.439842-1-npiggin@gmail.com>
+ <20250512031100.439842-46-npiggin@gmail.com>
+Content-Language: en-US
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <20250512031100.439842-46-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: N2nt5qAv8b0oSmWfcey5hLm0TKE3r-MJ
+X-Authority-Analysis: v=2.4 cv=XK4wSRhE c=1 sm=1 tr=0 ts=68260be2 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
+ a=89eXdJJYgY74zT-coKsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: VQBXvFZLX93NgHoRFVch7GwCPbhjkA8x
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX3WqftHDbhRnV
+ yKthhlj6o0IrI5afmXBijhOWH1FqbQs9kBHy9Ja/2z6UgOare2l0wGRrAaPJT6iS0WDJgGw3vSR
+ lr8yrY8EzQ6XJIH7zNZQ8SjLtB7rG91CRl3KcE6ckP66qVJfgXF90iUMwPMJmkBMIZoSP30X+MF
+ rJJb6cBuJvX75M1pOYqw3sh2AqS6Laper0rZiy4ieiG2IzRopMIe6EBUoQ0DM7cFNkZaIHfPbNe
+ lbN5bt4reaBRsIGOpFZPqq4n099NiKJMXKeSZvb7gu+VUYFkMMZjqPQ2IF2oNNuFdfZJC8rBHe5
+ 3eE7hnjk8nxNKMTAU8j4hqyD9qPhpw7aDa0G6fHDRm9PW4XzR2eeyk+5N9g14Sdpnm2fp9kJ4Jy
+ by0DyAce3sfosvYATo9jDfqtGlhyb4C6Jb9E0ihX1vJlX9MdOUNlRaqS/qKg3aJOvQ/m2Q0p
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=910 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505150155
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -203,182 +132,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For vfio-user, each region has its own fd rather than sharing
-vbasedev's. Add the necessary plumbing to support this. For vfio
-backends with a shared fd, initialize region->fd to the shared one.
 
-Signed-off-by: John Levon <john.levon@nutanix.com>
----
- include/hw/vfio/vfio-device.h |  7 +++++--
- include/hw/vfio/vfio-region.h |  1 +
- hw/vfio/device.c              | 28 ++++++++++++++++++++++++++--
- hw/vfio/region.c              |  7 ++++++-
- 4 files changed, 38 insertions(+), 5 deletions(-)
+On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
+> When pushing a context, any presented group interrupt should be
+> redistributed before processing pending interrupts to present
+> highest priority.
+>
+> This can occur when pushing the POOL ring when the valid PHYS
+> ring has a group interrupt presented, because they share signal
+> registers.
 
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 923f9cd116..5cb817fd6a 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -66,6 +66,7 @@ typedef struct VFIODevice {
-     OnOffAuto enable_migration;
-     OnOffAuto migration_multifd_transfer;
-     bool migration_events;
-+    bool use_region_fds;
-     VFIODeviceOps *ops;
-     VFIODeviceIOOps *io_ops;
-     unsigned int num_irqs;
-@@ -84,6 +85,7 @@ typedef struct VFIODevice {
-     VFIOIOASHwpt *hwpt;
-     QLIST_ENTRY(VFIODevice) hwpt_next;
-     struct vfio_region_info **reginfo;
-+    int *region_fds;
- } VFIODevice;
- 
- struct VFIODeviceOps {
-@@ -172,10 +174,11 @@ struct VFIODeviceIOOps {
-     /**
-      * @get_region_info
-      *
--     * Fill in @info with information on the region given by @info->index.
-+     * Fill in @info (and optionally @fd) with information on the region given
-+     * by @info->index.
-      */
-     int (*get_region_info)(VFIODevice *vdev,
--                           struct vfio_region_info *info);
-+                           struct vfio_region_info *info, int *fd);
- 
-     /**
-      * @get_irq_info
-diff --git a/include/hw/vfio/vfio-region.h b/include/hw/vfio/vfio-region.h
-index cbffb26962..80e83b23fd 100644
---- a/include/hw/vfio/vfio-region.h
-+++ b/include/hw/vfio/vfio-region.h
-@@ -29,6 +29,7 @@ typedef struct VFIORegion {
-     uint32_t nr_mmaps;
-     VFIOMmap *mmaps;
-     uint8_t nr; /* cache the region number for debug */
-+    int fd; /* fd to mmap() region */
- } VFIORegion;
- 
- 
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index d0068086ae..41db403992 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -226,6 +226,7 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_region_info **info)
- {
-     size_t argsz = sizeof(struct vfio_region_info);
-+    int fd = -1;
-     int ret;
- 
-     /* check cache */
-@@ -240,7 +241,7 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
- retry:
-     (*info)->argsz = argsz;
- 
--    ret = vbasedev->io_ops->get_region_info(vbasedev, *info);
-+    ret = vbasedev->io_ops->get_region_info(vbasedev, *info, &fd);
-     if (ret != 0) {
-         g_free(*info);
-         *info = NULL;
-@@ -251,11 +252,19 @@ retry:
-         argsz = (*info)->argsz;
-         *info = g_realloc(*info, argsz);
- 
-+        if (fd != -1) {
-+            close(fd);
-+            fd = -1;
-+        }
-+
-         goto retry;
-     }
- 
-     /* fill cache */
-     vbasedev->reginfo[index] = *info;
-+    if (vbasedev->region_fds != NULL) {
-+        vbasedev->region_fds[index] = fd;
-+    }
- 
-     return 0;
- }
-@@ -360,6 +369,7 @@ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
-     vbasedev->io_ops = &vfio_device_io_ops_ioctl;
-     vbasedev->dev = dev;
-     vbasedev->fd = -1;
-+    vbasedev->use_region_fds = false;
- 
-     vbasedev->ram_block_discard_allowed = ram_discard;
- }
-@@ -470,6 +480,9 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
- 
-     vbasedev->reginfo = g_new0(struct vfio_region_info *,
-                                vbasedev->num_regions);
-+    if (vbasedev->use_region_fds) {
-+        vbasedev->region_fds = g_new0(int, vbasedev->num_regions);
-+    }
- }
- 
- void vfio_device_unprepare(VFIODevice *vbasedev)
-@@ -478,9 +491,17 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
- 
-     for (i = 0; i < vbasedev->num_regions; i++) {
-         g_free(vbasedev->reginfo[i]);
-+        if (vbasedev->region_fds != NULL && vbasedev->region_fds[i] != -1) {
-+            close(vbasedev->region_fds[i]);
-+        }
-+
-     }
-     g_free(vbasedev->reginfo);
-     vbasedev->reginfo = NULL;
-+    if (vbasedev->region_fds != NULL) {
-+        g_free(vbasedev->region_fds);
-+        vbasedev->region_fds = NULL;
-+    }
- 
-     QLIST_REMOVE(vbasedev, container_next);
-     QLIST_REMOVE(vbasedev, global_next);
-@@ -502,10 +523,13 @@ static int vfio_device_io_device_feature(VFIODevice *vbasedev,
- }
- 
- static int vfio_device_io_get_region_info(VFIODevice *vbasedev,
--                                          struct vfio_region_info *info)
-+                                          struct vfio_region_info *info,
-+                                          int *fd)
- {
-     int ret;
- 
-+    *fd = -1;
-+
-     ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_REGION_INFO, info);
- 
-     return ret < 0 ? -errno : ret;
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index 34752c3f65..3c93da91d8 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -200,6 +200,11 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
-     region->size = info->size;
-     region->fd_offset = info->offset;
-     region->nr = index;
-+    if (vbasedev->region_fds != NULL) {
-+        region->fd = vbasedev->region_fds[index];
-+    } else {
-+        region->fd = vbasedev->fd;
-+    }
- 
-     if (region->size) {
-         region->mem = g_new0(MemoryRegion, 1);
-@@ -278,7 +283,7 @@ int vfio_region_mmap(VFIORegion *region)
- 
-         region->mmaps[i].mmap = mmap(map_align, region->mmaps[i].size, prot,
-                                      MAP_SHARED | MAP_FIXED,
--                                     region->vbasedev->fd,
-+                                     region->fd,
-                                      region->fd_offset +
-                                      region->mmaps[i].offset);
-         if (region->mmaps[i].mmap == MAP_FAILED) {
--- 
-2.43.0
+Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
 
+Thanks,  MAK
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   hw/intc/xive2.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index 21cd07df68..392ac6077e 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -945,8 +945,9 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+>                                      uint8_t nvp_blk, uint32_t nvp_idx,
+>                                      bool do_restore)
+>   {
+> +    uint8_t *sig_regs = xive_tctx_signal_regs(tctx, ring);
+>       uint8_t *regs = &tctx->regs[ring];
+> -    uint8_t ipb;
+> +    uint8_t ipb, nsr = sig_regs[TM_NSR];
+>       Xive2Nvp nvp;
+>   
+>       /*
+> @@ -978,6 +979,11 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+>       /* IPB bits in the backlog are merged with the TIMA IPB bits */
+>       regs[TM_IPB] |= ipb;
+>   
+> +    if (xive_nsr_indicates_group_exception(ring, nsr)) {
+> +        /* redistribute precluded active grp interrupt */
+> +        g_assert(ring == TM_QW2_HV_POOL); /* PHYS ring has the grp interrupt */
+> +        xive2_redistribute(xrtr, tctx, xive_nsr_exception_ring(ring, nsr));
+> +    }
+>       xive2_tctx_process_pending(tctx, ring == TM_QW2_HV_POOL ?
+>                                            TM_QW3_HV_PHYS : ring);
+>   }
 
