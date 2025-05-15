@@ -4,119 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EA4C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E245C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFaPs-0008C3-6e; Thu, 15 May 2025 11:22:36 -0400
+	id 1uFaPx-0008LW-Ge; Thu, 15 May 2025 11:22:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFaPe-0007zQ-SG; Thu, 15 May 2025 11:22:24 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1uFaPQ-0002mn-3y; Thu, 15 May 2025 11:22:14 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg442004731;
- Thu, 15 May 2025 15:22:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UXL3bY
- 23UQ8+2bTnEyF/O88S+7a0qBsAMhO5YmlLEtI=; b=WOopNyNaisx4rrlTnIhtDw
- /JehQSQbrWrfHmPOmfS0jUvcCw5rqqrrnjNsXgFNwOOpAxDzsWa8x7LZkIz6IbzY
- uoDN7fP49AOFa12LOr4ZYaF5bWVb/kws4JgjZpD9wD9YiiA3T3789v+ywGdNMiWj
- PGUXlelugJsZrM/hyEdZCsphTXFIMZj4QHN838RyYQtWmrHBiW5GmAp7kMjUseoC
- fc89+wqyu+eqOApaE7PbRPWnIMcfITDmDG+PmQaIs4ZQtdVwfHw2emtQFDqdmItz
- bGexh7FijielVDY8DHRZWlNY8f6pkMZDgKw0rUNXdpYawbjLyFrgF4Adrc2NzC5A
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2qt9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:21:59 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFLxRa029768;
- Thu, 15 May 2025 15:21:59 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2qt5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:21:59 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEGgQj019443;
- Thu, 15 May 2025 15:21:58 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfrtwqw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:21:58 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFLuq415270408
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:21:56 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 85AAA58059;
- Thu, 15 May 2025 15:21:56 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2FD2658057;
- Thu, 15 May 2025 15:21:56 +0000 (GMT)
-Received: from [9.10.80.143] (unknown [9.10.80.143])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:21:56 +0000 (GMT)
-Message-ID: <2b0df92c-6f5b-4dcb-a1ef-bc9c169fa0d0@linux.ibm.com>
-Date: Thu, 15 May 2025 10:21:55 -0500
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uFaPe-0007zC-Oe
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 11:22:24 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uFaPR-0002nV-DP
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 11:22:14 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-74294fa4bb5so1637305b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 08:22:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747322525; x=1747927325; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8Wwaufpr8Z6a4ck6g2EdvI8iMo2hfWASSYRcby6tdEc=;
+ b=vS1oM5lWXnHL2bD1+v4TSycF4FvM1anQYbsvCkTkjnimPrJI5kvxPXOFEHv4lmPFpN
+ jcl+3N+M6qV/hiLvbXGrrBOqw4a6LqLHf8wXHI2eoP0TdIXMiT3Tw6XRzAGb66eCWvTk
+ IraaP5dawZOe4mtWT2oG/voCHoAcbumLjjB2T2M4+wepHpGDxHjST7KLHzRrksKkw0M3
+ O868vjY7rE1viofD6YmtDYnQzL5qNw8Pq/27ftlTQlnVnkLk38e1dHmbdZRJX72KNYmy
+ slTN9FxvZRrzIE8BpBkQgRHjp+O+Y9aX38vF2MujtN+feJd1eUbwD+4YXhLZmYvGnSk+
+ 1XrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747322525; x=1747927325;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8Wwaufpr8Z6a4ck6g2EdvI8iMo2hfWASSYRcby6tdEc=;
+ b=RPWy7h1BbMLkhrvUSv3j7/2c+0Xpd7gDFwrobU5FEVIBxDUF8y4kX5kKuSBKJiDwfk
+ NTNCLHY+8vQigra0dgb7SSPBlqJ5VcBOKBmxXUVlDKrQr0fRCKlPlZoNEaiHgcXuTI4w
+ tM2WD4Z0AH5Yfa97LIIuF4UEK10xuWaTqye6wHYssfXCgk1HlLzp1+cbxqBHqrWjrSSn
+ lQgHsGikjLmSL778G/0MynjbJv69HdJ+PFMnvqZHxQDKBHsUFzlX8xLVQsXrTr0x6vRF
+ KMVAjYTmHbNk+sb/2jeVGOW3sLD/nTZUMfwVcRye7rR2DiCuapuhumLDYQ323AjsZCIh
+ HOwQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVX5LNdoxJBCU3vUMSZuj+hRjVVtqcQlCpzTNWDT8EImJsytjEvzme9nQJDJau88DYLwMtcpw4rUS4p@nongnu.org
+X-Gm-Message-State: AOJu0YwPJpaxumGmZYoX8LPav/yLUZ8sWBkCeRBPJzet2Xc+/QlL0nKX
+ 6nXzr9PnwROK7YSDihYhqyFG87aAyUYj0dCEgJwwWa9zhw1/LwcJxzM/Gcu1zSg=
+X-Gm-Gg: ASbGncvxgs61yjw8cuxPXXZyH+AhEIiTSGhDEL1jh6aHhBpheMOiwmd9RdRxTPX4x6A
+ g4SgaTALMocQ4450mubaJ0IisZeAFUcLyq/xI2BQY6RvGHM4IKXj7dzu1xNC99r9ICIfUs1541T
+ KVhXlAHMbYZ3zRXyvdeDBf/uF8l7TZEPWI2l5R/maAGN8IL/6K/6oBu7Bi+hnyPD4P0oJUpzbHX
+ qvRUlEq/0P/tbh9POKTveQnjeUw8Hxn3GI88E40qK/CKEDq1xdtVUuqyIdokwKlwMD2ySH+yj6r
+ 9kX/lLmYYCpU4L8RMw9LRcHT78o1Ltsrc4uBtyLxwi2iWWp6/cKNz8XTTEcHdyA2
+X-Google-Smtp-Source: AGHT+IF2bdLwMCewSDom80krFb/JiiplIY2U9HhI2uxSnuJm8k7jzh3n3of2CTMytg54xzEj1qa79w==
+X-Received: by 2002:a05:6a21:4cc7:b0:1f5:7c6f:6c96 with SMTP id
+ adf61e73a8af0-215ff11a577mr11182366637.22.1747322524885; 
+ Thu, 15 May 2025 08:22:04 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b26eb084980sm34145a12.58.2025.05.15.08.22.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 May 2025 08:22:04 -0700 (PDT)
+Message-ID: <b5c07354-fbe8-4910-a019-fa9fd7e813a5@linaro.org>
+Date: Thu, 15 May 2025 08:22:03 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 31/50] ppc/xive: Fix high prio group interrupt being
- preempted by low prio VP
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Caleb Schlossin <calebs@linux.vnet.ibm.com>
-References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-32-npiggin@gmail.com>
+Subject: Re: [PATCH 16/19] target/arm: Add arm_cpu_has_feature() helper
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250513173928.77376-1-philmd@linaro.org>
+ <20250513173928.77376-17-philmd@linaro.org>
+ <b6c81748-091b-4d61-8d34-beaa0442aab3@linaro.org>
+ <f7bcd8b2-2c0c-4907-8a0e-af172c235d56@linaro.org>
+ <59b1ccbe-9ddb-43f0-98c4-8000a08d27b0@linaro.org>
+ <eff0b1a9-5267-4290-a9d4-da95179289b9@linaro.org>
 Content-Language: en-US
-From: Mike Kowal <kowal@linux.ibm.com>
-In-Reply-To: <20250512031100.439842-32-npiggin@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <eff0b1a9-5267-4290-a9d4-da95179289b9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: owtLgYWb4y_JCBvXXLj5NbDVryaDycND
-X-Authority-Analysis: v=2.4 cv=XK4wSRhE c=1 sm=1 tr=0 ts=68260697 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=k6hdcXhxsaq_Xb-7T0YA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 5M-Ee_X9Wb0CHg_4kQCAeM6AyFoLMuUS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1MCBTYWx0ZWRfX+Jty97Ln0mQj
- YRUDAg9k5Mmo3hvoy9ETOoam8FYIXuLo1azwSM3wFlQkjL33xa7TdXZYF2f6UP6Mgzfr8HKE9Rp
- IVPTIppzOQn3Iee5cWJewoCmc3KgXEhV2FeH0+Rn4Cq0Yj/URr9V0HvJ6qGj7QOqhewTKoeXi6q
- v9NuEk0/RitjfLwxQY0i5njLQlA8Bxj9lXYrlrfR8/iOO8fypJlt0NzN0NHeqteSsy55+WOzXGP
- gAYqxnVBcw8tPMLPvCLRtJgGm29a6JbySPKEU6iauowsm1R0z7ugGXsSxlTIDooIksOzTvQ8/Wg
- IrQ2S+JlAGJ3srTnYWMQaIQU+4cb9vrq6YoDsgDGKIOkOIsdhDbeeUbPkYlJ3uYrGRhS3qmTCuj
- e5Hc6yQGBrzHYmfy5okzqch7sCCTsuutJGQ/vUNM6eFKboU0u0WIGFtYHBs1Ak+Okn28Vn+J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0
- mlxscore=0 bulkscore=0 mlxlogscore=634 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505150150
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,55 +109,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
-> xive_tctx_pipr_present() as implemented with xive_tctx_pipr_update()
-> causes VP-directed (group==0) interrupt to be presented in PIPR and NSR
-> despite being a lower priority than the currently presented group
-> interrupt.
+On 5/15/25 4:05 AM, Philippe Mathieu-Daudé wrote:
+> On 14/5/25 18:59, Pierrick Bouvier wrote:
+>> On 5/14/25 9:53 AM, Philippe Mathieu-Daudé wrote:
+>>> On 14/5/25 10:24, Richard Henderson wrote:
+>>>> On 5/13/25 18:39, Philippe Mathieu-Daudé wrote:
+>>>>> arm_cpu_has_feature() is equivalent of arm_feature(), however
+>>>>> while the latter uses CPUARMState so is target-specific, the
+>>>>> former doesn't and can be called by target-agnostic code in hw/.
+>>>>
+>>>> CPUARMState is no more target-specific than ARMCPU.
+>>>
+>>> ARMCPU is forward-declared as opaque pointer in target/arm/cpu-qom.h,
+>>> so we can expose prototypes using it to non-ARM units.
+>>> CPUARMState is only declared in "cpu.h", itself only accessible by
+>>> ARM-related units.
+>>>
+>>
+>> Maybe we can simply postpone introduction of arm_cpu_has_feature() when
+>> it will be really needed.
+>>
+>> Patches 17 and 18 are not strictly needed, as cpu.h (which resolves to
+>> target/arm/cpu.h implicitely) is perfectly accessible to code in hw/arm
+>> without any problem.
+> 
+> OK.
+> 
+> Peter, would you be OK to take reviewed patches #1 up to #15 (the
+> previous one) or do you rather I respin them?
 >
-> This must not happen. The IPB bit should record the low priority VP
-> interrupt, but PIPR and NSR must not present the lower priority
-> interrupt.
 
+In case you respin, feel free to include the base series, so we can 
+combine both.
 
-Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
+> Regards,
+> 
+> Phil.
 
-Thanks,  MAK
-
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   hw/intc/xive.c | 18 +++++++++++++++++-
->   1 file changed, 17 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-> index bf4c0634ca..25f6c69c44 100644
-> --- a/hw/intc/xive.c
-> +++ b/hw/intc/xive.c
-> @@ -228,7 +228,23 @@ void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
->   void xive_tctx_pipr_present(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
->                               uint8_t group_level)
->   {
-> -    xive_tctx_pipr_update(tctx, ring, priority, group_level);
-> +    /* HV_POOL ring uses HV_PHYS NSR, CPPR and PIPR registers */
-> +    uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
-> +    uint8_t *aregs = &tctx->regs[alt_ring];
-> +    uint8_t *regs = &tctx->regs[ring];
-> +    uint8_t pipr = xive_priority_to_pipr(priority);
-> +
-> +    if (group_level == 0) {
-> +        regs[TM_IPB] |= xive_priority_to_ipb(priority);
-> +        if (pipr >= aregs[TM_PIPR]) {
-> +            /* VP interrupts can come here with lower priority than PIPR */
-> +            return;
-> +        }
-> +    }
-> +    g_assert(pipr <= xive_ipb_to_pipr(regs[TM_IPB]));
-> +    g_assert(pipr < aregs[TM_PIPR]);
-> +    aregs[TM_PIPR] = pipr;
-> +    xive_tctx_notify(tctx, ring, group_level);
->   }
->   
->   /*
 
