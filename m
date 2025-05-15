@@ -4,110 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3049C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5280C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFabk-0003hN-VO; Thu, 15 May 2025 11:34:54 -0400
+	id 1uFad8-00053Z-0M; Thu, 15 May 2025 11:36:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFabf-0003fr-6o; Thu, 15 May 2025 11:34:48 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1uFad6-00052X-C0; Thu, 15 May 2025 11:36:16 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFabY-0004mN-7w; Thu, 15 May 2025 11:34:45 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCgAWK004678;
- Thu, 15 May 2025 15:34:36 GMT
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1uFad3-00055U-3E; Thu, 15 May 2025 11:36:16 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg4Ti004723;
+ Thu, 15 May 2025 15:36:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=Q5fLeUg4etjdDQMELD7kAMIW9veuP+/bw6LHav8eWwQ=; b=FoJpN96AxBOf
- JgG5uBBf54F4t8sXIhXPs+LnnpRuuDVNMK2p9Qn60bPB871vn9Q72l80velDA3Rz
- PDILG2fNiQF+Mda6PAWft1rBvyf7qSHrHOOTDFTfmNjdvrIYXNhmuU3M/vLeof0Z
- OZx99aYzTukplWciwlDQKSBl5YMWt4UcClMXwUo7dN+NTRrVu7Z5OSsCiu0czdka
- mKFdGFWITSeSnQ2RV06jIijrJ8s+wSXdLMlWictjG9IHUiUd+UH1aIMXB0HqPwAB
- XwopahGN7vmQxURgSwkXDaEDMzS5XgOyyHAQ8xm002DKiHVbQyazVstI3NdwC+Cy
- dgRjpHDLOw==
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6nlfhN
+ 2OMCuAmRqea8AVec9ZG4NcyiIQsyvbwp/KjUg=; b=sBhZMY/c137CgheSY8HyKA
+ kmwJhkhZr0aUTIMJT0lrvpKU/SvmGMTDvnO/aRUoubknDTs3gEwzmAmV50hdzrYm
+ qkacdexVX5XIcqerh9OUBZgEy7wX1umaRsVofR8h5rnvuZVlJV+cI2djnnH6FxFt
+ dz86Mcn2fQwKHHxMkMQhMsn8Mc9gEK98mSXWJXCXVf2w4aG9iA6EPMu29BifF4BQ
+ UNFvWTKfnEW7WnisOLAHf+sCmUmASDrOSCj7EkO933e2r54oL+8AebQZagAOEisa
+ eccc4eMT+2GSMDzEDehTYNt54SanQ8D8SV8PYgvsbuzcuKo+Clh/72KcM+cijnIg
+ ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjt0mm-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2uap-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:34:36 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFYZ53030966;
- Thu, 15 May 2025 15:34:35 GMT
+ Thu, 15 May 2025 15:36:09 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFa8Xg002218;
+ Thu, 15 May 2025 15:36:08 GMT
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjt0mg-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2ua9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:34:35 +0000 (GMT)
+ Thu, 15 May 2025 15:36:08 +0000 (GMT)
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE7alx026947;
- Thu, 15 May 2025 15:34:35 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfpjydd-1
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE7amN026947;
+ Thu, 15 May 2025 15:36:04 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfpjykt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:34:35 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFYXHb31261226
+ Thu, 15 May 2025 15:36:04 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54FFa3GE29950572
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:34:33 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7B8F45803F;
- Thu, 15 May 2025 15:34:33 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D8F3358054;
- Thu, 15 May 2025 15:34:32 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:34:32 +0000 (GMT)
-Message-ID: <197e590c8f77c8c1f0f47a19ca2ef322b0784fdf.camel@linux.ibm.com>
-Subject: Re: [PATCH 04/50] ppc/xive2: Remote VSDs need to match on
- forwarding address
-From: Miles Glenn <milesg@linux.ibm.com>
+ Thu, 15 May 2025 15:36:03 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C2E9458061;
+ Thu, 15 May 2025 15:36:03 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 73ECA58059;
+ Thu, 15 May 2025 15:36:03 +0000 (GMT)
+Received: from [9.10.80.143] (unknown [9.10.80.143])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 15:36:03 +0000 (GMT)
+Message-ID: <87922ddb-3504-4b9b-bd6a-5b4e9744395b@linux.ibm.com>
+Date: Thu, 15 May 2025 10:36:02 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 40/50] ppc/xive2: implement NVP context save restore for
+ POOL ring
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
- <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
- Schlossin <calebs@linux.vnet.ibm.com>
-Date: Thu, 15 May 2025 10:34:32 -0500
-In-Reply-To: <20250512031100.439842-5-npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.vnet.ibm.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-5-npiggin@gmail.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+ <20250512031100.439842-41-npiggin@gmail.com>
+Content-Language: en-US
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <20250512031100.439842-41-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Mq6o6O3yuacXPcsgX7SkZW8-JOXitD2f
-X-Authority-Analysis: v=2.4 cv=ecg9f6EH c=1 sm=1 tr=0 ts=6826098c cx=c_pps
+X-Proofpoint-ORIG-GUID: uvVGZQaFl7DKYvwYc-EiJk0A1AQ75owE
+X-Authority-Analysis: v=2.4 cv=XK4wSRhE c=1 sm=1 tr=0 ts=682609e9 cx=c_pps
  a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=BZqlLmCw9VANlYX6ozUA:9
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
+ a=PQitADfLxHH4esMn5eYA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 4ZMxFHtmBiUUgrWNhw1H1V9wsHKXBfYM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1MCBTYWx0ZWRfX0cL08sDYnqPA
- iOf5BZy+sqU2g1fmRVA14lA0BGOtun91QcygGdhS3Z0Co2uv0mPtiVIjJdoQKTS/W9GhOt5eMe3
- f597W9codbNKBAZ3IJpLLtq7CvPDv5iNfU2+EMr0M9j71CRyXeNmSDvNM+vtKSXbjEcpY3guvVW
- kl1FI+z6/mc6PQaIMRbNup7rwyveyOdF9UgvxyK/FQ9vkXTl88vRkQrr8IfLe0jxYb6Vk9i+bTY
- dz6I9Rjus0IZ0Vmx/y6RMit/LPLLgZvGN84JaBov9ISEpFZEv+em/zcGQBUvZi6b5JzdasPhlzr
- aZHR4pbJcddWwe9PX+SOtTZx+9eePwh8mPcJ0hbnaSOhqx5PaZ0a45zFoGtcNC7T+gCEoJ+3k/X
- G2+NyxGEdgmnSUP4QmXHW28OOAWzKXsGLV/o+YUV3e3UataRe1JTAxVHV5Sn2XUID3Kt0UQG
+X-Proofpoint-GUID: phNXFkvlKx4sGO3tMqSbvEuRTMUfD9q3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX4pdQtgE7XX1A
+ PBJqEjkMU4jqf1P43dckKzE3HCSrN4rowh/ULfC3GzGR7gEQRM5VN9vsKPRgGNxj/1XJ1CY2JlY
+ CsYP/oDZll7XB85Feep4cQIyWhJKdieis0SZTu5hVu9cYuKKw+kqefm6Ag1fw7CLOcxx3DakYPp
+ G3NxvahbkdARondC6CsRcABd8lcS1U9ttDWybLPGVoclpsVXzSEKiQu4lFdQ6y1OgdyPD+r9fDf
+ lDDverrNUhDlp7vDRveQEAgqgdtcfHzbTs0k/4qX/7SuF6eKr9dX9rAhYhzenwYzn7CcTQoU6eq
+ AQRn+oCqwUdZ25r7OK4ye0o0dOyBiazUhSViDS2mZIINhBR2rLlKR9xsGkSh4v4YYPvGVgoA01N
+ HezeELEWIJRQ9eSueUmwmz8nKEkAj+Y/kBFKZhoERVUFz2Xed/3x9yxB53bbek85I8r+DLoW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999
- impostorscore=0 spamscore=0 clxscore=1015 malwarescore=0 mlxscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ spamscore=0 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505150150
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ definitions=main-2505150155
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -128,79 +129,155 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-On Mon, 2025-05-12 at 13:10 +1000, Nicholas Piggin wrote:
-> From: Michael Kowal <kowal@linux.ibm.com>
-> 
-> In a multi chip environment there will be remote/forwarded VSDs.  The check
-> to find a matching INT controller (XIVE) of the remote block number was
-> checking the INTs chip number.  Block numbers are not tied to a chip number.
-> The matching remote INT is the one that matches the forwarded VSD address
-> with VSD types associated MMIO BAR.
-> 
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
+> In preparation to implement POOL context push, add support for POOL
+> NVP context save/restore.
+>
+> The NVP p bit is defined in the spec as follows:
+>
+>      If TRUE, the CPPR of a Pool VP in the NVP is updated during store of
+>      the context with the CPPR of the Hard context it was running under.
+>
+> It's not clear whether non-pool VPs always or never get CPPR updated.
+> Before this patch, OS contexts always save CPPR, so we will assume that
+> is the behaviour.
+
+Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
+
+Thanks,  MAK
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  hw/intc/pnv_xive2.c | 25 +++++++++++++++++--------
->  1 file changed, 17 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index d1713b406c..30b4ab2efe 100644
-> --- a/hw/intc/pnv_xive2.c
-> +++ b/hw/intc/pnv_xive2.c
-> @@ -102,12 +102,10 @@ static uint32_t pnv_xive2_block_id(PnvXive2 *xive)
->  }
->  
->  /*
-> - * Remote access to controllers. HW uses MMIOs. For now, a simple scan
-> - * of the chips is good enough.
-> - *
-> - * TODO: Block scope support
-> + * Remote access to INT controllers. HW uses MMIOs(?). For now, a simple
-> + * scan of all the chips INT controller is good enough.
->   */
-> -static PnvXive2 *pnv_xive2_get_remote(uint8_t blk)
-> +static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
->  {
->      PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->      int i;
-> @@ -116,10 +114,22 @@ static PnvXive2 *pnv_xive2_get_remote(uint8_t blk)
->          Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
->          PnvXive2 *xive = &chip10->xive;
->  
-> -        if (pnv_xive2_block_id(xive) == blk) {
-> +        /*
-> +         * Is this the XIVE matching the forwarded VSD address is for this
-> +         * VSD type
-> +         */
-> +        if ((vsd_type == VST_ESB   && fwd_addr == xive->esb_base) ||
-> +            (vsd_type == VST_END   && fwd_addr == xive->end_base)  ||
-> +            ((vsd_type == VST_NVP ||
-> +              vsd_type == VST_NVG) && fwd_addr == xive->nvpg_base) ||
-> +            (vsd_type == VST_NVC   && fwd_addr == xive->nvc_base)) {
->              return xive;
->          }
->      }
+>   hw/intc/xive2.c             | 51 +++++++++++++++++++++++++------------
+>   include/hw/ppc/xive2_regs.h |  1 +
+>   2 files changed, 36 insertions(+), 16 deletions(-)
+>
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index e3060810d3..d899c1fb14 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -512,12 +512,13 @@ static void xive2_presenter_backlog_decr(XivePresenter *xptr,
+>    */
+>   
+>   static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+> -                                uint8_t nvp_blk, uint32_t nvp_idx,
+> -                                uint8_t ring)
+> +                                uint8_t ring,
+> +                                uint8_t nvp_blk, uint32_t nvp_idx)
+>   {
+>       CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
+>       uint32_t pir = env->spr_cb[SPR_PIR].default_value;
+>       Xive2Nvp nvp;
+> +    uint8_t *sig_regs = xive_tctx_signal_regs(tctx, ring);
+>       uint8_t *regs = &tctx->regs[ring];
+>   
+>       if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
+> @@ -553,7 +554,14 @@ static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+>       }
+>   
+>       nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, regs[TM_IPB]);
+> -    nvp.w2 = xive_set_field32(NVP2_W2_CPPR, nvp.w2, regs[TM_CPPR]);
 > +
-> +    qemu_log_mask(LOG_GUEST_ERROR,
-> +                 "XIVE: >>>>> pnv_xive2_get_remote() vsd_type %u  fwd_addr 0x%lX NOT FOUND\n",
-> +                 vsd_type, fwd_addr);
->      return NULL;
->  }
->  
-> @@ -252,8 +262,7 @@ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
->  
->      /* Remote VST access */
->      if (GETFIELD(VSD_MODE, vsd) == VSD_MODE_FORWARD) {
-> -        xive = pnv_xive2_get_remote(blk);
-> -
-> +        xive = pnv_xive2_get_remote(type, (vsd & VSD_ADDRESS_MASK));
->          return xive ? pnv_xive2_vst_addr(xive, type, blk, idx) : 0;
->      }
->  
-
+> +    if ((nvp.w0 & NVP2_W0_P) || ring != TM_QW2_HV_POOL) {
+> +        /*
+> +         * Non-pool contexts always save CPPR (ignore p bit). XXX: Clarify
+> +         * whether that is the correct behaviour.
+> +         */
+> +        nvp.w2 = xive_set_field32(NVP2_W2_CPPR, nvp.w2, sig_regs[TM_CPPR]);
+> +    }
+>       if (nvp.w0 & NVP2_W0_L) {
+>           /*
+>            * Typically not used. If LSMFB is restored with 0, it will
+> @@ -722,7 +730,7 @@ static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>       }
+>   
+>       if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_save) {
+> -        xive2_tctx_save_ctx(xrtr, tctx, nvp_blk, nvp_idx, ring);
+> +        xive2_tctx_save_ctx(xrtr, tctx, ring, nvp_blk, nvp_idx);
+>       }
+>   
+>       /*
+> @@ -863,12 +871,15 @@ void xive2_tm_pull_phys_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+>       xive2_tm_pull_ctx_ol(xptr, tctx, offset, value, size, TM_QW3_HV_PHYS);
+>   }
+>   
+> -static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+> -                                        uint8_t nvp_blk, uint32_t nvp_idx,
+> -                                        Xive2Nvp *nvp)
+> +static uint8_t xive2_tctx_restore_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+> +                                      uint8_t ring,
+> +                                      uint8_t nvp_blk, uint32_t nvp_idx,
+> +                                      Xive2Nvp *nvp)
+>   {
+>       CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
+>       uint32_t pir = env->spr_cb[SPR_PIR].default_value;
+> +    uint8_t *sig_regs = xive_tctx_signal_regs(tctx, ring);
+> +    uint8_t *regs = &tctx->regs[ring];
+>       uint8_t cppr;
+>   
+>       if (!xive2_nvp_is_hw(nvp)) {
+> @@ -881,10 +892,10 @@ static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+>       nvp->w2 = xive_set_field32(NVP2_W2_CPPR, nvp->w2, 0);
+>       xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, nvp, 2);
+>   
+> -    tctx->regs[TM_QW1_OS + TM_CPPR] = cppr;
+> -    tctx->regs[TM_QW1_OS + TM_LSMFB] = xive_get_field32(NVP2_W2_LSMFB, nvp->w2);
+> -    tctx->regs[TM_QW1_OS + TM_LGS] = xive_get_field32(NVP2_W2_LGS, nvp->w2);
+> -    tctx->regs[TM_QW1_OS + TM_T] = xive_get_field32(NVP2_W2_T, nvp->w2);
+> +    sig_regs[TM_CPPR] = cppr;
+> +    regs[TM_LSMFB] = xive_get_field32(NVP2_W2_LSMFB, nvp->w2);
+> +    regs[TM_LGS] = xive_get_field32(NVP2_W2_LGS, nvp->w2);
+> +    regs[TM_T] = xive_get_field32(NVP2_W2_T, nvp->w2);
+>   
+>       nvp->w1 = xive_set_field32(NVP2_W1_CO, nvp->w1, 1);
+>       nvp->w1 = xive_set_field32(NVP2_W1_CO_THRID_VALID, nvp->w1, 1);
+> @@ -893,9 +904,18 @@ static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+>       /*
+>        * Checkout privilege: 0:OS, 1:Pool, 2:Hard
+>        *
+> -     * TODO: we only support OS push/pull
+> +     * TODO: we don't support hard push/pull
+>        */
+> -    nvp->w1 = xive_set_field32(NVP2_W1_CO_PRIV, nvp->w1, 0);
+> +    switch (ring) {
+> +    case TM_QW1_OS:
+> +        nvp->w1 = xive_set_field32(NVP2_W1_CO_PRIV, nvp->w1, 0);
+> +        break;
+> +    case TM_QW2_HV_POOL:
+> +        nvp->w1 = xive_set_field32(NVP2_W1_CO_PRIV, nvp->w1, 1);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+>   
+>       xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, nvp, 1);
+>   
+> @@ -930,9 +950,8 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+>       }
+>   
+>       /* Automatically restore thread context registers */
+> -    if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE &&
+> -        do_restore) {
+> -        xive2_tctx_restore_os_ctx(xrtr, tctx, nvp_blk, nvp_idx, &nvp);
+> +    if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_restore) {
+> +        xive2_tctx_restore_ctx(xrtr, tctx, TM_QW1_OS, nvp_blk, nvp_idx, &nvp);
+>       }
+>   
+>       ipb = xive_get_field32(NVP2_W2_IPB, nvp.w2);
+> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
+> index f82054661b..2a3e60abad 100644
+> --- a/include/hw/ppc/xive2_regs.h
+> +++ b/include/hw/ppc/xive2_regs.h
+> @@ -158,6 +158,7 @@ typedef struct Xive2Nvp {
+>   #define NVP2_W0_L                  PPC_BIT32(8)
+>   #define NVP2_W0_G                  PPC_BIT32(9)
+>   #define NVP2_W0_T                  PPC_BIT32(10)
+> +#define NVP2_W0_P                  PPC_BIT32(11)
+>   #define NVP2_W0_ESC_END            PPC_BIT32(25) /* 'N' bit 0:ESB  1:END */
+>   #define NVP2_W0_PGOFIRST           PPC_BITMASK32(26, 31)
+>           uint32_t       w1;
 
