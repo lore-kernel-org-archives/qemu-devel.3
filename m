@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3390FC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 17:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ADF2C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 17:29:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFcNV-0000aC-12; Thu, 15 May 2025 13:28:17 -0400
+	id 1uFcN7-0008WV-LG; Thu, 15 May 2025 13:27:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFcN4-0008Hy-C8
- for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:50 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1uFcN1-000864-Dv
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:47 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFcN1-00026r-UY
- for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:49 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-74068f95d9fso1188152b3a.0
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 10:27:47 -0700 (PDT)
+ id 1uFcMy-00024v-L0
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:46 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7399838db7fso1299728b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 10:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747330066; x=1747934866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747330063; x=1747934863; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E+mqRJjW/uNU+WmqEgMnh4Q0J4iLqGLa+X8vg8xz6/U=;
- b=KKZDqRVu6WJmMaeHaTX83lcSOtJUuZKjThnNMj/deUZWxrAnBQW80FT07tCIZlEGPJ
- VVdpZRy46sFzW85KzVmy9H2ir+z8kko3ld+7zATi01uw5G2oQv5UArAkfzbOLCD0KeXG
- r2jzonIyjF+sfqUC+aYAvzH3a6lEjZM8NYvnEnINlWwTy7Mjosx+F1IZlO2x6LQWoE9B
- lIjdZ/AwK74cmQUlbRDtx6I+vUmAWsf4JBeQvZZv8aFSF3dUG8wwqin81z2QteLVIL9W
- n2n13+H8O5cUHeHZrcTWBAL/29745fmF7f+jMYkzdIScGkVli681ZG+8FvRNkr7WUWvp
- yvCQ==
+ bh=otN1ZYxqLIukz5ceFORIX+3/pUpnYfvslClWMIlE2/E=;
+ b=mIFk2dlY3M5Fga8pDPqGHQNos8XVmfQIwpv5zFyemVf1WryUWasBySwygi5vww1X9x
+ exfRberrgAudnTcAg0wxRrFGWB2m0xvx0FYaEk/ZuFrk2PiUSxqDEKZVmFNBYwQ35PG4
+ I34ty7UQRdP4xh4uH2oOpBkT6eRhdSX/hRFLFzbQ0brMUjVK/eiehGBF4Ep/srhRzlNk
+ hUSperD/DtYLyuokszStlUC9NvwmhjtN1YaDcHhopbBJPlthmR/r9oZUaaXmVE9yxNC9
+ wJJcah6mPVs9v5pZfQp/6PQr3/wlXyxzphmSOs+CpXQxL1eMllb42THlJVD1ld6vy5x0
+ lU1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747330066; x=1747934866;
+ d=1e100.net; s=20230601; t=1747330063; x=1747934863;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E+mqRJjW/uNU+WmqEgMnh4Q0J4iLqGLa+X8vg8xz6/U=;
- b=Pop9JEGvS/bXxempm7bzgV6g+8WMmHx3hOT9v9WzL97ZYTdzHH6zZHithP41P+Vh+i
- VXumNeTLn7CIfsYr/tqXjgi0YkbnRm+zquIbCqt/9rZbgw3a70TPREm017ObQMQAwqO5
- A0fpyUhlQHn9gr4iANc0amnIV/XoFAP/9LMIgJUONw8ilM9Hg9DfDL+mto7AlVi/ce0s
- a9BoHlC0yh+ryqxvaxMqxeSE5UyD76p1M9z40C/V9H9RA7re0l+ejX6ompYckhjSxjjJ
- sIH7CUkCUZuUXeps/n0ax/d8eIW42PRN3/XiFoWrU71bz/P/RnpK+u1tyY1KXP/AvFi+
- KoMw==
-X-Gm-Message-State: AOJu0Yyqy6qnaeI0CQcTE3KpUtyeeVo71drjpLS/6qZ7FevgkZOqXjPV
- Ta1u0Bdnuz3VlIccALbrtvi9vcVK+Et2SS8lkD/APO75NvYAHT/v64yawvUdJU8kVHKqPla1Bh1
- fsmE3
-X-Gm-Gg: ASbGnctOvFsNyxekU/1Rexov32hgbERkW2yz9+r+VPv6JJ/DLYp+iLCHbkIayv5tVAC
- 4RNVuKOlkztdTNT/Cok2910CLc/bPVwD15VbxUJr7ufhAiKJxzhbPIYo1sHdkCKe3jkFkW6rRzd
- lXze4iOR+3GhYonaVBhfu1TjjMf+rMHFSgmiOZUEQyJLe1jAbyR5ybR7kwnFTpB6aXMKCZrzI9P
- DyiR+ENybIrcyZAgYGpvnD+2HVesQsey5mpKwJ8mysd0dKJ33dWxjygaIHB4KJkD9x7UPwf/mob
- i7pRyH14U6yAz4YHuy2WqAUS7mAYWUIi0wLfF047M6AOsGEkPTI=
-X-Google-Smtp-Source: AGHT+IET3uA0fgR+OFgadqtmZBY6JMhbspU77fCKtzmBvgOpskWYCt8zJI2gt2ECUQ4+gIz/Lm3asA==
-X-Received: by 2002:a05:6a00:a8a:b0:736:b402:533a with SMTP id
- d2e1a72fcca58-742a976ae04mr257987b3a.1.1747330066575; 
- Thu, 15 May 2025 10:27:46 -0700 (PDT)
+ bh=otN1ZYxqLIukz5ceFORIX+3/pUpnYfvslClWMIlE2/E=;
+ b=kCXng6hQW+v8jxJ3JA+MddRsKxHmlNUzH5AXO5K/6LNq3JPdGnPDFFBp7ysQDSKnOs
+ bRQhFhU1RQB5Ao2VaE8Siu7JTlpoc930OC4k0cG12KGmRCpx79FnbatfcsmPIbIBOT4L
+ SFdGiLetrskvmDF6Cn70KFg3iCnyU3C9hQU47zUeIvklxqvWZigbW00XCTLUDyZvkZrP
+ OUBvw0OwGXGfEkQiTjH9te6uZrfmH3u9Wt5Tkf2ialOCiLL1tlueIQDshdCqpUVW8nGx
+ 0LktayGRBei3vTUj3RXcrVmIZGL07eUaz1xYxbSeEUmBOulA0DY8cBUUi6XiPBLQKLi4
+ Js4Q==
+X-Gm-Message-State: AOJu0Ywen188F7f0kQV0VgsZBn74yE6VH9qWUUWXcnYZ4YgCcya5+87v
+ FBGgtRtLBmuYuT7a5N17DyTtK53GIE4hS8K3Q0LydDpURhQHDokKef8kmH2WJfB/4LcjCo8fjfM
+ 7ixwP
+X-Gm-Gg: ASbGnct1Z+dt4zW3K339obIH//SilvJer0pZaSupC7hDiDghleTfZvD7UaTRWmlvdaY
+ sQqRVdUbbg03BVWqIedTSd1QrtHdAb8TkROWkFk0UM22dHgb/1gSLvanXtjqVV5ZWrnKEnQVmfz
+ YJUzv+WbTQYuPaz/qR4Gga6LJlgvHrCwFPRHRxpQ1XQhUbpKpa6sx0sVwzoh4jItuDWSN5c1ZCf
+ jpUJSpraEooMuOs+coCoj9S73LfP7/7ybr9/e/RYB7i0rIFzu2rqKm2S8pDwqPMmVkXsh9VKTeh
+ UhHS28BODla4vZRjLgKzDijmj+Hv69GzZ4jwqyQxTY2mfAM8hQg=
+X-Google-Smtp-Source: AGHT+IGLjKV2ag6SkxFNEdJpoilfMlrj+hKA/N9o9Xfq2hepc/vMkbVrBwYxd6d5S39xxBnlL2XXlw==
+X-Received: by 2002:aa7:9a8c:0:b0:73b:ac3d:9d6b with SMTP id
+ d2e1a72fcca58-742a9a282demr219937b3a.4.1747330063010; 
+ Thu, 15 May 2025 10:27:43 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a96dfa9dsm79730b3a.10.2025.05.15.10.27.45
+ d2e1a72fcca58-742a96dfa9dsm79730b3a.10.2025.05.15.10.27.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 10:27:46 -0700 (PDT)
+ Thu, 15 May 2025 10:27:42 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -72,18 +72,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  berrange@redhat.com, Markus Armbruster <armbru@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 08/12] qapi: Make CpuModelExpansionInfo::deprecated-props
- optional and generic
-Date: Thu, 15 May 2025 10:27:28 -0700
-Message-ID: <20250515172732.3992504-9-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 04/12] qapi: expose query-gic-capability command
+ unconditionally
+Date: Thu, 15 May 2025 10:27:24 -0700
+Message-ID: <20250515172732.3992504-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
 References: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,52 +106,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-We'd like to have some unified QAPI schema. Having a structure field
-conditional to a target being built in is not very practical.
+This removes the TARGET_ARM condition from the query-gic-capability
+command. This requires providing a QMP command stub for non-ARM targets.
+This in turn requires moving the command out of misc-target.json, since
+that will trigger symbol poisoning errors when built from target
+independent code.
 
-While @deprecated-props is only used by s390x target, it is generic
-enough and could be used by other targets (assuming we expand
-CpuModelExpansionType enum values).
-
-Let's always include this field, regardless of the target, but
-make it optional.
+Following the earlier precedent, this creates a misc-arm.json file to
+hold this ARM specific command.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qapi/machine-target.json | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ qapi/misc-arm.json        | 49 +++++++++++++++++++++++++++++++++++++++
+ qapi/misc-target.json     | 44 -----------------------------------
+ qapi/qapi-schema.json     |  1 +
+ stubs/monitor-arm-gic.c   | 12 ++++++++++
+ target/arm/arm-qmp-cmds.c |  2 +-
+ qapi/meson.build          |  1 +
+ stubs/meson.build         |  1 +
+ 7 files changed, 65 insertions(+), 45 deletions(-)
+ create mode 100644 qapi/misc-arm.json
+ create mode 100644 stubs/monitor-arm-gic.c
 
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index 426ce4ee82d..e153291a7fc 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -244,19 +244,18 @@
+diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+new file mode 100644
+index 00000000000..f5341372f5a
+--- /dev/null
++++ b/qapi/misc-arm.json
+@@ -0,0 +1,49 @@
++# -*- Mode: Python -*-
++# vim: filetype=python
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++##
++# @GICCapability:
++#
++# The struct describes capability for a specific GIC (Generic
++# Interrupt Controller) version.  These bits are not only decided by
++# QEMU/KVM software version, but also decided by the hardware that the
++# program is running upon.
++#
++# @version: version of GIC to be described.  Currently, only 2 and 3
++#     are supported.
++#
++# @emulated: whether current QEMU/hardware supports emulated GIC
++#     device in user space.
++#
++# @kernel: whether current QEMU/hardware supports hardware accelerated
++#     GIC device in kernel.
++#
++# Since: 2.6
++##
++{ 'struct': 'GICCapability',
++  'data': { 'version': 'int',
++            'emulated': 'bool',
++            'kernel': 'bool' } }
++
++##
++# @query-gic-capabilities:
++#
++# It will return a list of GICCapability objects that describe its
++# capability bits.
++#
++# On non-ARM targets this command will report an error as the GIC
++# technology is not applicable.
++#
++# Returns: a list of GICCapability objects.
++#
++# Since: 2.6
++#
++# .. qmp-example::
++#
++#     -> { "execute": "query-gic-capabilities" }
++#     <- { "return": [{ "version": 2, "emulated": true, "kernel": false },
++#                     { "version": 3, "emulated": false, "kernel": true } ] }
++##
++{ 'command': 'query-gic-capabilities', 'returns': ['GICCapability'] }
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index ba4403a9241..d36292b3321 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -2,50 +2,6 @@
+ # vim: filetype=python
  #
- # @model: the expanded CpuModelInfo.
- #
--# @deprecated-props: a list of properties that are flagged as
-+# @deprecated-props: an optional list of properties that are flagged as
- #     deprecated by the CPU vendor.  The list depends on the
- #     CpuModelExpansionType: "static" properties are a subset of the
- #     enabled-properties for the expanded model; "full" properties are
- #     a set of properties that are deprecated across all models for
--#     the architecture.  (since: 9.1).
-+#     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
- #
- # Since: 2.8
+ 
+-##
+-# @GICCapability:
+-#
+-# The struct describes capability for a specific GIC (Generic
+-# Interrupt Controller) version.  These bits are not only decided by
+-# QEMU/KVM software version, but also decided by the hardware that the
+-# program is running upon.
+-#
+-# @version: version of GIC to be described.  Currently, only 2 and 3
+-#     are supported.
+-#
+-# @emulated: whether current QEMU/hardware supports emulated GIC
+-#     device in user space.
+-#
+-# @kernel: whether current QEMU/hardware supports hardware accelerated
+-#     GIC device in kernel.
+-#
+-# Since: 2.6
+-##
+-{ 'struct': 'GICCapability',
+-  'data': { 'version': 'int',
+-            'emulated': 'bool',
+-            'kernel': 'bool' },
+-  'if': 'TARGET_ARM' }
+-
+-##
+-# @query-gic-capabilities:
+-#
+-# This command is ARM-only.  It will return a list of GICCapability
+-# objects that describe its capability bits.
+-#
+-# Returns: a list of GICCapability objects.
+-#
+-# Since: 2.6
+-#
+-# .. qmp-example::
+-#
+-#     -> { "execute": "query-gic-capabilities" }
+-#     <- { "return": [{ "version": 2, "emulated": true, "kernel": false },
+-#                     { "version": 3, "emulated": false, "kernel": true } ] }
+-##
+-{ 'command': 'query-gic-capabilities', 'returns': ['GICCapability'],
+-  'if': 'TARGET_ARM' }
+-
  ##
- { 'struct': 'CpuModelExpansionInfo',
-   'data': { 'model': 'CpuModelInfo',
--            'deprecated-props' : { 'type': ['str'],
--                                   'if': 'TARGET_S390X' } },
-+            '*deprecated-props' : { 'type': ['str'] } },
-   'if': { 'any': [ 'TARGET_S390X',
-                    'TARGET_I386',
-                    'TARGET_ARM',
+ # @SGXEPCSection:
+ #
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index 96f6aa44133..e96bff8d38c 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -61,6 +61,7 @@
+ { 'include': 'replay.json' }
+ { 'include': 'yank.json' }
+ { 'include': 'misc.json' }
++{ 'include': 'misc-arm.json' }
+ { 'include': 'misc-i386.json' }
+ { 'include': 'misc-target.json' }
+ { 'include': 'audio.json' }
+diff --git a/stubs/monitor-arm-gic.c b/stubs/monitor-arm-gic.c
+new file mode 100644
+index 00000000000..b3429243ef8
+--- /dev/null
++++ b/stubs/monitor-arm-gic.c
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qapi/qapi-commands-misc-arm.h"
++
++
++GICCapabilityList *qmp_query_gic_capabilities(Error **errp)
++{
++    error_setg(errp, "GIC hardware is not available on this target");
++    return NULL;
++}
+diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
+index a1a944adb43..ef18c867ca4 100644
+--- a/target/arm/arm-qmp-cmds.c
++++ b/target/arm/arm-qmp-cmds.c
+@@ -27,7 +27,7 @@
+ #include "qapi/visitor.h"
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/qapi-commands-machine-target.h"
+-#include "qapi/qapi-commands-misc-target.h"
++#include "qapi/qapi-commands-misc-arm.h"
+ #include "qobject/qdict.h"
+ #include "qom/qom-qobject.h"
+ 
+diff --git a/qapi/meson.build b/qapi/meson.build
+index 3a9bd061047..5e93e6b8cfd 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -64,6 +64,7 @@ if have_system
+     'qdev',
+     'pci',
+     'rocker',
++    'misc-arm',
+     'misc-i386',
+     'tpm',
+     'uefi',
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 9922ec7b88e..07e9d3799a5 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -77,6 +77,7 @@ if have_system
+   stub_ss.add(files('target-monitor-defs.c'))
+   stub_ss.add(files('win32-kbd-hook.c'))
+   stub_ss.add(files('xen-hw-stub.c'))
++  stub_ss.add(files('monitor-arm-gic.c'))
+   stub_ss.add(files('monitor-i386-rtc.c'))
+   stub_ss.add(files('monitor-i386-sev.c'))
+ endif
 -- 
 2.47.2
 
