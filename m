@@ -4,60 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F162C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 09:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96331C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 09:34:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFUWa-0004LG-10; Thu, 15 May 2025 05:05:08 -0400
+	id 1uFUy7-0004R5-L3; Thu, 15 May 2025 05:33:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1uFUWX-0004Kl-Ur
- for qemu-devel@nongnu.org; Thu, 15 May 2025 05:05:06 -0400
-Received: from out-179.mta0.migadu.com ([2001:41d0:1004:224b::b3])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFUy5-0004Q6-HD
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 05:33:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1uFUWV-0007aO-Lm
- for qemu-devel@nongnu.org; Thu, 15 May 2025 05:05:05 -0400
-Content-Type: text/plain;
-	charset=us-ascii
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1747299878;
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFUy2-00028q-3p
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 05:33:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747301608;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Q0FpDkDu196gW3mLiVY46fZckSWYEfx7gzTD8ZMla68=;
- b=gSnRvNUyE5j8LXaMFvVWtpEWokvfP7HtORyp2xG5w/wZXO6cV6DPoL9rxkSaSdpgf5P5zy
- is5aAXRZY6BvJxWANtsmPsSGuu1Iwr1Xyciy3pGsS+hsUuFeV0KZ051z2RyPR8RoVAY0Eg
- 5153FDDgd1X7lHzP+jxZD4SC/oC/gqk=
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH v13 5/5] qtest/cxl: Add aarch64 virt test for CXL
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Itaru Kitayama <itaru.kitayama@linux.dev>
-In-Reply-To: <20250513111455.128266-6-Jonathan.Cameron@huawei.com>
-Date: Thu, 15 May 2025 18:04:18 +0900
-Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
- Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
- linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-arm@nongnu.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D9E503CC-1271-4008-9975-9BAEC7A33376@linux.dev>
-References: <20250513111455.128266-1-Jonathan.Cameron@huawei.com>
- <20250513111455.128266-6-Jonathan.Cameron@huawei.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::b3;
- envelope-from=itaru.kitayama@linux.dev; helo=out-179.mta0.migadu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ bh=O0B32UzCU9A9XAmpzZbboFKUM38urDHu4/PvK6aKy2I=;
+ b=Gk06hNlBUiEm7nbUtowhCY9F7fBMJGpzSVoITk+nclA8e1VBenLPiLcmjfD/f2WcNRJcTR
+ vFoiANief9D38UxcdhOlWJ98LkIPelvOd6OkOEbzJatT4xwAf6FARzl+UP8vuZGQC+b57k
+ G3ZyON1nCpGVoBpK9WEAIRhjMIKzVrc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-IkeR0dFQMPS9XNjeK_TX8A-1; Thu,
+ 15 May 2025 05:33:24 -0400
+X-MC-Unique: IkeR0dFQMPS9XNjeK_TX8A-1
+X-Mimecast-MFC-AGG-ID: IkeR0dFQMPS9XNjeK_TX8A_1747301603
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7ABE8195608D; Thu, 15 May 2025 09:33:22 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4EBB51956066; Thu, 15 May 2025 09:33:20 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4BE5D21E66C2; Thu, 15 May 2025 11:33:18 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,
+ alex.bennee@linaro.org,  philmd@linaro.org, christian.boenig@lauterbach.com
+Subject: Re: [PATCH v2 07/20] mcd: Implement target initialization API
+In-Reply-To: <2699a98b-ca71-4cda-acfc-e334d765c9cb@lauterbach.com> (Mario
+ Fleischmann's message of "Wed, 14 May 2025 15:59:32 +0200")
+References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
+ <20250430052741.21145-8-mario.fleischmann@lauterbach.com>
+ <87jz6re2ch.fsf@pond.sub.org>
+ <2699a98b-ca71-4cda-acfc-e334d765c9cb@lauterbach.com>
+Date: Thu, 15 May 2025 11:33:18 +0200
+Message-ID: <871psq2p7l.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,157 +88,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
 
+> Thank you very much for the review!
+>
+> On 08.05.2025 14:04, Markus Armbruster wrote:
+>
+>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>> 
+>>> The target initialization API ensures that the requested and provided
+>>> MCD versions are compatible.
+>>>
+>>> * implement mcd_initialize_f and mcd_qry_error_info_f in mcdserver
+>>> * implement QMP stub functionality
+>>> * add QTest
+>>>
+>>> Thanks to the QMP integration in QTest, function arguments and results
+>>> can be (de)serialized automatically.
+>>>
+>>> Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 
-> On May 13, 2025, at 20:14, Jonathan Cameron =
-<Jonathan.Cameron@huawei.com> wrote:
->=20
-> Add a single complex case for aarch64 virt machine.
-> Given existing much more comprehensive tests for x86 cover the
-> common functionality, a single test should be enough to verify
-> that the aarch64 part continue to work.
->=20
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
-> tests/qtest/cxl-test.c  | 59 ++++++++++++++++++++++++++++++++---------
-> tests/qtest/meson.build |  1 +
-> 2 files changed, 47 insertions(+), 13 deletions(-)
->=20
-> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
-> index a600331843..c7189d6222 100644
-> --- a/tests/qtest/cxl-test.c
-> +++ b/tests/qtest/cxl-test.c
-> @@ -19,6 +19,12 @@
->     "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
->     "-M =
-cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
-G "
->=20
-> +#define QEMU_VIRT_2PXB_CMD \
-> +    "-machine virt,cxl=3Don -cpu max " \
-> +    "-device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52 " \
-> +    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
-> +    "-M =
-cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
-G "
-> +
-> #define QEMU_RP \
->     "-device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 "
->=20
-> @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
->     qtest_end();
->     rmdir(tmpfs);
-> }
-> +
-> +static void cxl_virt_2pxb_4rp_4t3d(void)
-> +{
-> +    g_autoptr(GString) cmdline =3D g_string_new(NULL);
-> +    char template[] =3D "/tmp/cxl-test-XXXXXX";
-> +    const char *tmpfs;
-> +
-> +    tmpfs =3D mkdtemp(template);
-> +
-> +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
-> +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
-> +                    tmpfs, tmpfs);
-> +
-> +    qtest_start(cmdline->str);
-> +    qtest_end();
-> +    rmdir(tmpfs);
-> +}
-> #endif /* CONFIG_POSIX */
->=20
-> int main(int argc, char **argv)
-> {
-> -    g_test_init(&argc, &argv, NULL);
-> +    const char *arch =3D qtest_get_arch();
->=20
-> -    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
-> -    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
-> -    qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window);
-> -    qtest_add_func("/pci/cxl/pxb_x2_with_window", =
-cxl_2pxb_with_window);
-> -    qtest_add_func("/pci/cxl/rp", cxl_root_port);
-> -    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
-> +    g_test_init(&argc, &argv, NULL);
-> +    if (strcmp(arch, "i386") =3D=3D 0 || strcmp(arch, "x86_64") =3D=3D =
-0) {
-> +        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
-> +        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
-> +        qtest_add_func("/pci/cxl/pxb_with_window", =
-cxl_pxb_with_window);
-> +        qtest_add_func("/pci/cxl/pxb_x2_with_window", =
-cxl_2pxb_with_window);
-> +        qtest_add_func("/pci/cxl/rp", cxl_root_port);
-> +        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
-> #ifdef CONFIG_POSIX
-> -    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
-> -    qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
-> -    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
-> -    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
-cxl_t3d_volatile_lsa);
-> -    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
-> -    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", =
-cxl_2pxb_4rp_4t3d);
-> +        qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
-> +        qtest_add_func("/pci/cxl/type3_device_pmem", =
-cxl_t3d_persistent);
-> +        qtest_add_func("/pci/cxl/type3_device_vmem", =
-cxl_t3d_volatile);
-> +        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
-cxl_t3d_volatile_lsa);
-> +        qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
-> +        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
-> +                       cxl_2pxb_4rp_4t3d);
-> #endif
-> +    } else if (strcmp(arch, "aarch64") =3D=3D 0) {
-> +#ifdef CONFIG_POSIX
-> +        qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
-> +                       cxl_virt_2pxb_4rp_4t3d);
-> +#endif
-> +    }
-> +
->     return g_test_run();
-> }
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 7daf619845..361000267a 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -258,6 +258,7 @@ qtests_aarch64 =3D \
->   (config_all_accel.has_key('CONFIG_TCG') and                          =
-                  \
->    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? =
-['tpm-tis-i2c-test'] : []) + \
->   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : =
-[]) + \
-> +  qtests_cxl +                                                        =
-                          \
->   ['arm-cpu-features',
->    'numa-test',
->    'boot-serial-test',
-> --=20
-> 2.43.0
->=20
+[...]
 
-~/projects/qemu/build$ meson test qtest-aarch64/cxl-test
-ninja: Entering directory `/home/realm/projects/qemu/build'
-[1/8] Generating qemu-version.h with a custom command (wrapped by meson =
-to capture output)
-1/1 qemu:qtest+qtest-aarch64 / qtest-aarch64/cxl-test        OK          =
-    0.17s   1 subtests passed
+>>> diff --git a/mcd/meson.build b/mcd/meson.build
+>>> index 191f0cc..2adaa1b 100644
+>>> --- a/mcd/meson.build
+>>> +++ b/mcd/meson.build
+>>> @@ -1,14 +1,10 @@
+>>>  mcd_qapi_outputs = [
+>>> -  'mcd-qapi-commands.c',
+>>> -  'mcd-qapi-commands.h',
+>>>    'mcd-qapi-emit-events.c',
+>>>    'mcd-qapi-emit-events.h',
+>>>    'mcd-qapi-events.c',
+>>>    'mcd-qapi-events.h',
+>>>    'mcd-qapi-features.c',
+>>>    'mcd-qapi-features.h',
+>>> -  'mcd-qapi-init-commands.c',
+>>> -  'mcd-qapi-init-commands.h',
+>>>    'mcd-qapi-introspect.c',
+>>>    'mcd-qapi-introspect.h',
+>>>    'mcd-qapi-types.c',
+>>> @@ -17,27 +13,48 @@ mcd_qapi_outputs = [
+>>>    'mcd-qapi-visit.h',
+>>>  ]
+>>>  
+>>> +# QAPI outputs that will only be used by the MCD server
+>>> +mcd_qapi_server_outputs = [
+>>> +  'mcd-qapi-commands.c',
+>>> +  'mcd-qapi-commands.h',
+>>> +  'mcd-qapi-init-commands.c',
+>>> +  'mcd-qapi-init-commands.h'
+>>> +]
+>>> +
+>>>  mcd_qapi_files = custom_target('MCD QAPI files',
+>>> -                               output: mcd_qapi_outputs,
+>>> +                               output: mcd_qapi_outputs + mcd_qapi_server_outputs,
+>>>                                 input: '../qapi/mcd.json',
+>>>                                 command: [ qapi_gen, '-p', 'mcd-', '-o', 'mcd',
+>>>                                            '--suppress-tracing','@INPUT0@'],
+>>>                                 depend_files: qapi_gen_depends)
+>>>  
+>>> -mcd_ss = ss.source_set()
+>>> +mcd_qapi_ss = ss.source_set()
+>>>  
+>>> -mcd_ss.add(mcd_qapi_files.to_list())
+>>> -mcd_ss.add(files(
+>>> -  'mcd_server.c',
+>>> -  'mcd_stub.c',
+>>> -  'mcd_monitor.c'))
+>>> +foreach f : mcd_qapi_files.to_list()
+>>> +  if mcd_qapi_outputs.contains(fs.name(f))
+>>> +    mcd_qapi_ss.add([f])
+>>> +  endif
+>>> +endforeach
+>>>  
+>>> -mcd_ss = mcd_ss.apply({})
+>>> +mcd_qapi_ss.add(files('mcd_qapi.c'))
+>>> +mcd_qapi_ss = mcd_qapi_ss.apply({})
+>>>  
+>>> -libmcd = static_library('mcd_system',
+>>> -                        mcd_ss.sources() + genh,
+>>> +libmcd_qapi = static_library('mcd_qapi',
+>>> +                        mcd_qapi_ss.sources() + genh,
+>>>                          build_by_default: false)
+>>>  
+>>> -mcd = declare_dependency(objects: libmcd.extract_all_objects(recursive: false))
+>>> +mcd_qapi = declare_dependency(
+>>> +    objects: libmcd_qapi.extract_all_objects(recursive: false))
+>>> +
+>>> +foreach f : mcd_qapi_files.to_list()
+>>> +  if mcd_qapi_server_outputs.contains(fs.name(f))
+>>> +    libsystem_ss.add([f])
+>>> +  endif
+>>> +endforeach
+>>> +
+>>> +libsystem_ss.add(files(
+>>> +  'mcd_server.c',
+>>> +  'mcd_stub.c',
+>>> +  'mcd_monitor.c'))
+>>>  
+>>> -system_ss.add(mcd)
+>>> +libsystem_ss.add(mcd_qapi)
+>> 
+>> The commit message did not prepare me for such changes to meson.build.
+>> What are you doing here?
+>
+> I understand that this requires further comments...
+> The goal is to provide the marshal helpers from mcd_qapi to mcd-test. We
+> cannot use meson's mcd dependency for that since that would result in
+> linker errors for functions that are not needed anyway:
+>
+>   cc -m64  -o tests/qtest/mcd-test [...]
+>   build/../mcd/mcd_monitor.c:53: undefined reference to `monitor_puts'
+>
+> So we split meson's mcd dependency into two parts, one of them being
+> mcd_qapi which will be used by mcd-test:
+>
+>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>> index 3dc9508..11a9270 100644
+>> --- a/tests/qtest/meson.build
+>> +++ b/tests/qtest/meson.build
+>> @@ -398,7 +398,7 @@ if dbus_display
+>>  endif
+>>  
+>>  if get_option('mcd').enabled()
+>> -  qtests += { 'mcd-test': files('mcd-test.c') }
+>> +  qtests += { 'mcd-test': files('mcd-test.c', 'mcd-util.c') + mcd_qapi }
+>>    qtests_generic += [ 'mcd-test' ]
+>>  endif
+>
+> I should've probably included this already in
+>   [PATCH v2 06/20] qtest: Introduce MCD test suite
+> instead of keeping that version's meson files as simple as possible.
 
-Ok:                 1
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            0
-Timeout:            0
+Might be less surprising there.
 
-Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com =
-<mailto:itaru.kitayama@fujitsu.com>>
+> Provided the explanation above makes sense, I will add a variant of it
+> in the commit message for more context.
 
-Jonathan, would you push your branch this series applied? I manually =
-applied your series no issues though.=20
+Yes, please!
 
+> Thanks for pointing that out. After a working a longer stretch on a
+> larger patch set, it's quite difficult to see which parts of the
+> submission might be unclear.
+
+True!
+
+>>> diff --git a/qapi/mcd.json b/qapi/mcd.json
+>>> index 701fd03..7b42a74 100644
+>>> --- a/qapi/mcd.json
+>>> +++ b/qapi/mcd.json
+>>> @@ -4,3 +4,186 @@
+>>>  ##
+>>>  # = Multi-Core Debug (MCD) API
+>>>  ##
+>>> +
+>>> +
+>>> +##
+>>> +# == Definition of Structures
+>>> +##
+>>> +
+>>> +
+>>> +##
+>>> +# @MCDAPIVersion:
+>>> +#
+>>> +# Structure type containing the MCD API version information of the tool.
+>>> +#
+>>> +# @v-api-major: API major version.
+>>> +# @v-api-minor: API minor version.
+>>> +# @author:      API name of the author of this MCD API version.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MCDAPIVersion',
+>>> +  'data': {
+>>> +    'v-api-major': 'uint16',
+>>> +    'v-api-minor': 'uint16',
+>>> +    'author':      'str' } }
+>>> +
+>>> +
+>>> +##
+>>> +# @MCDImplVersionInfo:
+>>> +#
+>>> +# Structure type containing the MCD API implementation information.
+>>> +#
+>>> +# @v-api:       Implemented API version.
+>>> +# @v-imp-major: Major version number of this implementation.
+>>> +# @v-imp-minor: Minor version number of this implementation.
+>>> +# @v-imp-build: Build number of this implementation.
+>>> +# @vendor:      Name of vendor of the implementation.
+>>> +# @date:        String from __DATE__ macro at compile time.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MCDImplVersionInfo',
+>>> +  'data': {
+>>> +    'v-api'      : 'MCDAPIVersion',
+>>> +    'v-imp-major': 'uint16',
+>>> +    'v-imp-minor': 'uint16',
+>>> +    'v-imp-build': 'uint16',
+>>> +    'vendor'     : 'str',
+>>> +    'date'       : 'str' } }
+>>> +
+>>> +
+>>> +##
+>>> +# @MCDErrorInfo:
+>>> +#
+>>> +# Structure type containing the error status and error event notification.
+>>> +#
+>>> +# @return-status: Return status from the last API call.
+>>> +# @error-code:    Detailed error code from the last API call.
+>>> +# @error-events:  Detailed event code from the last API call.
+>>> +# @error-str:     Detailed error text string from the last API call.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MCDErrorInfo',
+>>> +  'data': {
+>>> +    'return-status': 'uint32',
+>>> +    'error-code'   : 'uint32',
+>>> +    'error-events' : 'uint32',
+>>> +    'error-str'    : 'str' }}
+>>> +
+>>> +
+>>> +##
+>>> +# == Target Initialization API
+>>> +##
+>>> +
+>>> +
+>>> +##
+>>> +# @MCDInitializeResult:
+>>> +#
+>>> +# Return value of @mcd-initialize.
+>>> +#
+>>> +# @return-status: Return code.
+>>> +#
+>>> +# @impl-info: Information about the QEMU build, its version and the version of
+>>> +#             the implemented MCD API.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MCDInitializeResult',
+>>> +  'data': {
+>>> +    'return-status': 'uint32',
+>>> +    '*impl-info'   : 'MCDImplVersionInfo' } }
+>>> +
+>>> +
+>>> +##
+>>> +# @mcd-initialize:
+>>> +#
+>>> +# Function initializing the interaction between a tool-side implementation and
+>>> +# target-side implementation.
+>>> +#
+>>> +# @version-req: MCD API version as requested by an upper layer.
+>>> +#
+>>> +# Returns: @MCDInitializeResult
+>>> +#
+>>> +# Since: 9.1
+>>> +#
+>>> +# .. qmp-example::
+>>> +#    :title: Check compatibility with MCD server
+>>> +#
+>>> +#     -> { "execute": "mcd-initialize",
+>>> +#          "arguments": { "version-req": { "v-api-major": 1,
+>>> +#                                          "v-api-minor": 1,
+>>> +#                                          "author": "" } } }
+>>> +#     <- {
+>>> +#            "return": {
+>>> +#                "impl-info": {
+>>> +#                    "v-api": {
+>>> +#                        "v-api-minor": 1,
+>>> +#                        "v-api-major": 1,
+>>> +#                        "author": "QEMU Release"
+>>> +#                    },
+>>> +#                    "vendor": "QEMU",
+>>> +#                    "v-imp-minor": 2,
+>>> +#                    "v-imp-major": 9,
+>>> +#                    "v-imp-build": 0,
+>>> +#                    "date": "Dec 18 2024"
+>>> +#                },
+>>> +#                "return-status": 0
+>>> +#            }
+>>> +#        }
+>>> +##
+>>> +{ 'command': 'mcd-initialize',
+>>> +  'data': { 'version-req': 'MCDAPIVersion' },
+>>> +  'returns': 'MCDInitializeResult' }
+>>> +
+>>> +
+>>> +##
+>>> +# @mcd-exit:
+>>> +#
+>>> +# Function cleaning up all core and server connections from a tool.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'command': 'mcd-exit' }
+>>> +
+>>> +
+>>> +##
+>>> +# == Core Connection API
+>>> +##
+>>> +
+>>> +
+>>> +##
+>>> +# @mcd-qry-error-info:
+>>> +#
+>>> +# Function allowing the access to detailed error and/or event information after
+>>> +# an API call.
+>>> +#
+>>> +# Returns: @MCDErrorInfo
+>>> +#
+>>> +# Since: 9.1
+>>> +#
+>>> +# .. qmp-example::
+>>> +#    :title: Incompatible MCD versions
+>>> +#
+>>> +#     -> { "execute": "mcd-initialize",
+>>> +#          "arguments": { "version-req": { "v-api-major": 2,
+>>> +#                                          "v-api-minor": 0,
+>>> +#                                          "author": "" } } }
+>>> +#     <- {
+>>> +#            "return": {
+>>> +#                "return-status": 3
+>>> +#            }
+>>> +#        }
+>>> +#     -> { "execute": "mcd-qry-error-info" }
+>>> +#     <- {
+>>> +#            "return": {
+>>> +#                "error-str": "incompatible versions",
+>>> +#                "error-code": 3840,
+>>> +#                "error-events": 0,
+>>> +#                "return-status": 3
+>>> +#            }
+>>> +#        }
+>>> +##
+>>> +{ 'command': 'mcd-qry-error-info',
+>>> +  'returns': 'MCDErrorInfo' }
+>> 
+>> You need "Since: 10.0" now.
+>> 
+>> From docs/devel/qapi-code-gen.rst:
+>> 
+>>     For legibility, wrap text paragraphs so every line is at most 70
+>>     characters long.
+>> 
+>> and
+>> 
+>>     Descriptions start with '\@name:'.  The description text must be
+>>     indented like this::
+>> 
+>>      # @name: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+>>      #     do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+>> 
+>> [...]
+>
+> Will be changed in v3!
+
+Correction: "Since: 10.1".
 
 
