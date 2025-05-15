@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB32C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3049C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFaZF-0001Av-5q; Thu, 15 May 2025 11:32:24 -0400
+	id 1uFabk-0003hN-VO; Thu, 15 May 2025 11:34:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFaZ0-000123-3Y; Thu, 15 May 2025 11:32:08 -0400
+ id 1uFabf-0003fr-6o; Thu, 15 May 2025 11:34:48 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFaYx-0004Z6-Q0; Thu, 15 May 2025 11:32:01 -0400
+ id 1uFabY-0004mN-7w; Thu, 15 May 2025 11:34:45 -0400
 Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCgBeV004803;
- Thu, 15 May 2025 15:31:57 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCgAWK004678;
+ Thu, 15 May 2025 15:34:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=i8sf6xtI36nb8PWSRUheRFFZ0Tck7QNDTdPL92A2CQU=; b=RZX7A2idHRgV
- LRKsY9YkHdJ4aAhtQXv8zPDuIpDMq5VwX5kRAib3Qqwc7enBmnX21A1rXf38KTl7
- bWGHI1KJ7giDcsKoOh0mWeNHd2XQOtBtwKzk6Y42SVawML0WN8Hzaq9PlU30p3V+
- /dxihMx4Vadv+mSx2+hpSeUDmjlsVjOGI2eK0GZNAgnQAO6vB47NxB/KEZzBaAWy
- JjYpa0jkjzVI7DH2Xp44K0hgUr5Kn0Wf1tKxaywjpgrNEkVhaHAla2Aq79OiGguD
- ax7Utxj5LaTA0DIMw0yLyzbQ0N7iAUn2v5dha7o5L9ew+Sv9ZRCv9klO1SSwb38N
- AwNjKr8yOA==
+ bh=Q5fLeUg4etjdDQMELD7kAMIW9veuP+/bw6LHav8eWwQ=; b=FoJpN96AxBOf
+ JgG5uBBf54F4t8sXIhXPs+LnnpRuuDVNMK2p9Qn60bPB871vn9Q72l80velDA3Rz
+ PDILG2fNiQF+Mda6PAWft1rBvyf7qSHrHOOTDFTfmNjdvrIYXNhmuU3M/vLeof0Z
+ OZx99aYzTukplWciwlDQKSBl5YMWt4UcClMXwUo7dN+NTRrVu7Z5OSsCiu0czdka
+ mKFdGFWITSeSnQ2RV06jIijrJ8s+wSXdLMlWictjG9IHUiUd+UH1aIMXB0HqPwAB
+ XwopahGN7vmQxURgSwkXDaEDMzS5XgOyyHAQ8xm002DKiHVbQyazVstI3NdwC+Cy
+ dgRjpHDLOw==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjsymx-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjt0mm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:31:57 +0000 (GMT)
+ Thu, 15 May 2025 15:34:36 +0000 (GMT)
 Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFKIIU026431;
- Thu, 15 May 2025 15:31:56 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjsymu-1
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFYZ53030966;
+ Thu, 15 May 2025 15:34:35 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjt0mg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:31:56 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE58i6021459;
- Thu, 15 May 2025 15:31:56 GMT
+ Thu, 15 May 2025 15:34:35 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE7alx026947;
+ Thu, 15 May 2025 15:34:35 GMT
 Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfrtxk1-1
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfpjydd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:31:56 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
+ Thu, 15 May 2025 15:34:35 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
  by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFVsQi24117780
+ 54FFYXHb31261226
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:31:54 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 775F658056;
- Thu, 15 May 2025 15:31:54 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 226C458052;
- Thu, 15 May 2025 15:31:54 +0000 (GMT)
+ Thu, 15 May 2025 15:34:33 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7B8F45803F;
+ Thu, 15 May 2025 15:34:33 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D8F3358054;
+ Thu, 15 May 2025 15:34:32 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:31:54 +0000 (GMT)
-Message-ID: <46d134ff7332cb6b79d2e5ad6b4404d8ec2f4b10.camel@linux.ibm.com>
-Subject: Re: [PATCH 02/50] ppc/xive: Report access size in XIVE TM operation
- error logs
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 15:34:32 +0000 (GMT)
+Message-ID: <197e590c8f77c8c1f0f47a19ca2ef322b0784fdf.camel@linux.ibm.com>
+Subject: Re: [PATCH 04/50] ppc/xive2: Remote VSDs need to match on
+ forwarding address
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
  <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
  Schlossin <calebs@linux.vnet.ibm.com>
-Date: Thu, 15 May 2025 10:31:53 -0500
-In-Reply-To: <20250512031100.439842-3-npiggin@gmail.com>
+Date: Thu, 15 May 2025 10:34:32 -0500
+In-Reply-To: <20250512031100.439842-5-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-3-npiggin@gmail.com>
+ <20250512031100.439842-5-npiggin@gmail.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: iut2U-IKJsgfsYdAKD3j7j8vVFx8xNdR
-X-Authority-Analysis: v=2.4 cv=ecg9f6EH c=1 sm=1 tr=0 ts=682608ed cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=Zpbkz3vmn3wpaXutFjwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: iqRQfDXRvDiImYaDrhTn-s_E_X6tDBa8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1MCBTYWx0ZWRfXwB0PAoTyHyjB
- KuGCAQHQilLx3G9Tg4CjXbcxl0V4p8UYSVkuXM2qBkGRfPIyyCV3HNEZie/eHa8EKnp2U48usVr
- ujNfgzJ2z5q9kZny+CrxrtHkYqce6dzuAF/NjMLRKtioSLqTa5NubevEkANGrevevwbOx82Es75
- mNKtSVQJn+AGyQixC8ECPekmtoMFhBZGJ4q26p8P97nIL+nPAFyLPhk0UHdi1Gcy9UVtrJqy6yC
- G7BLqkUyhns7VgAnHczg0nrkdVOYSv6HZHOYEo+InRvqTT6WaTHlVsEQsvHSp3hSpeXAYmO9KMP
- RyBA8zIEriYQuMO0/iU9/uR5eLKAOSkLOFR9GH5cF9m1LtGAJu1KfwYNMv2deoT0765DU774SRI
- BWiqzYoCACPtaLRdUMs5NvBSpbKdIti8yx6DDPUag0MMmjOSdnJc26ZNAEWOGbQWW8h0D7k8
+X-Proofpoint-GUID: Mq6o6O3yuacXPcsgX7SkZW8-JOXitD2f
+X-Authority-Analysis: v=2.4 cv=ecg9f6EH c=1 sm=1 tr=0 ts=6826098c cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=BZqlLmCw9VANlYX6ozUA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 4ZMxFHtmBiUUgrWNhw1H1V9wsHKXBfYM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1MCBTYWx0ZWRfX0cL08sDYnqPA
+ iOf5BZy+sqU2g1fmRVA14lA0BGOtun91QcygGdhS3Z0Co2uv0mPtiVIjJdoQKTS/W9GhOt5eMe3
+ f597W9codbNKBAZ3IJpLLtq7CvPDv5iNfU2+EMr0M9j71CRyXeNmSDvNM+vtKSXbjEcpY3guvVW
+ kl1FI+z6/mc6PQaIMRbNup7rwyveyOdF9UgvxyK/FQ9vkXTl88vRkQrr8IfLe0jxYb6Vk9i+bTY
+ dz6I9Rjus0IZ0Vmx/y6RMit/LPLLgZvGN84JaBov9ISEpFZEv+em/zcGQBUvZi6b5JzdasPhlzr
+ aZHR4pbJcddWwe9PX+SOtTZx+9eePwh8mPcJ0hbnaSOhqx5PaZ0a45zFoGtcNC7T+gCEoJ+3k/X
+ G2+NyxGEdgmnSUP4QmXHW28OOAWzKXsGLV/o+YUV3e3UataRe1JTAxVHV5Sn2XUID3Kt0UQG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  mlxlogscore=999
- impostorscore=0 spamscore=0 clxscore=1011 malwarescore=0 mlxscore=0
+ impostorscore=0 spamscore=0 clxscore=1015 malwarescore=0 mlxscore=0
  lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0
  suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
@@ -135,52 +135,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 On Mon, 2025-05-12 at 13:10 +1000, Nicholas Piggin wrote:
-> Report access size in XIVE TM operation error logs.
+> From: Michael Kowal <kowal@linux.ibm.com>
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> In a multi chip environment there will be remote/forwarded VSDs.  The check
+> to find a matching INT controller (XIVE) of the remote block number was
+> checking the INTs chip number.  Block numbers are not tied to a chip number.
+> The matching remote INT is the one that matches the forwarded VSD address
+> with VSD types associated MMIO BAR.
+> 
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
->  hw/intc/xive.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  hw/intc/pnv_xive2.c | 25 +++++++++++++++++--------
+>  1 file changed, 17 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-> index 3eb28c2265..80b07a0afe 100644
-> --- a/hw/intc/xive.c
-> +++ b/hw/intc/xive.c
-> @@ -326,7 +326,7 @@ static void xive_tm_raw_write(XiveTCTX *tctx, hwaddr offset, uint64_t value,
->       */
->      if (size < 4 || !mask || ring_offset == TM_QW0_USER) {
->          qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid write access at TIMA @%"
-> -                      HWADDR_PRIx"\n", offset);
-> +                      HWADDR_PRIx" size %d\n", offset, size);
->          return;
+> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> index d1713b406c..30b4ab2efe 100644
+> --- a/hw/intc/pnv_xive2.c
+> +++ b/hw/intc/pnv_xive2.c
+> @@ -102,12 +102,10 @@ static uint32_t pnv_xive2_block_id(PnvXive2 *xive)
+>  }
+>  
+>  /*
+> - * Remote access to controllers. HW uses MMIOs. For now, a simple scan
+> - * of the chips is good enough.
+> - *
+> - * TODO: Block scope support
+> + * Remote access to INT controllers. HW uses MMIOs(?). For now, a simple
+> + * scan of all the chips INT controller is good enough.
+>   */
+> -static PnvXive2 *pnv_xive2_get_remote(uint8_t blk)
+> +static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
+>  {
+>      PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+>      int i;
+> @@ -116,10 +114,22 @@ static PnvXive2 *pnv_xive2_get_remote(uint8_t blk)
+>          Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
+>          PnvXive2 *xive = &chip10->xive;
+>  
+> -        if (pnv_xive2_block_id(xive) == blk) {
+> +        /*
+> +         * Is this the XIVE matching the forwarded VSD address is for this
+> +         * VSD type
+> +         */
+> +        if ((vsd_type == VST_ESB   && fwd_addr == xive->esb_base) ||
+> +            (vsd_type == VST_END   && fwd_addr == xive->end_base)  ||
+> +            ((vsd_type == VST_NVP ||
+> +              vsd_type == VST_NVG) && fwd_addr == xive->nvpg_base) ||
+> +            (vsd_type == VST_NVC   && fwd_addr == xive->nvc_base)) {
+>              return xive;
+>          }
+>      }
+> +
+> +    qemu_log_mask(LOG_GUEST_ERROR,
+> +                 "XIVE: >>>>> pnv_xive2_get_remote() vsd_type %u  fwd_addr 0x%lX NOT FOUND\n",
+> +                 vsd_type, fwd_addr);
+>      return NULL;
+>  }
+>  
+> @@ -252,8 +262,7 @@ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
+>  
+>      /* Remote VST access */
+>      if (GETFIELD(VSD_MODE, vsd) == VSD_MODE_FORWARD) {
+> -        xive = pnv_xive2_get_remote(blk);
+> -
+> +        xive = pnv_xive2_get_remote(type, (vsd & VSD_ADDRESS_MASK));
+>          return xive ? pnv_xive2_vst_addr(xive, type, blk, idx) : 0;
 >      }
 >  
-> @@ -357,7 +357,7 @@ static uint64_t xive_tm_raw_read(XiveTCTX *tctx, hwaddr offset, unsigned size)
->       */
->      if (size < 4 || !mask || ring_offset == TM_QW0_USER) {
->          qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid read access at TIMA @%"
-> -                      HWADDR_PRIx"\n", offset);
-> +                      HWADDR_PRIx" size %d\n", offset, size);
->          return -1;
->      }
->  
-> @@ -688,7 +688,7 @@ void xive_tctx_tm_write(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
->          xto = xive_tm_find_op(tctx->xptr, offset, size, true);
->          if (!xto) {
->              qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid write access at TIMA "
-> -                          "@%"HWADDR_PRIx"\n", offset);
-> +                          "@%"HWADDR_PRIx" size %d\n", offset, size);
->          } else {
->              xto->write_handler(xptr, tctx, offset, value, size);
->          }
-> @@ -727,7 +727,7 @@ uint64_t xive_tctx_tm_read(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
->          xto = xive_tm_find_op(tctx->xptr, offset, size, false);
->          if (!xto) {
->              qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid read access to TIMA"
-> -                          "@%"HWADDR_PRIx"\n", offset);
-> +                          "@%"HWADDR_PRIx" size %d\n", offset, size);
->              return -1;
->          }
->          ret = xto->read_handler(xptr, tctx, offset, size);
 
 
