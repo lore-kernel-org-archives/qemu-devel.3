@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77599C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 05:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0769C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 05:32:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFRB1-00014T-NP; Thu, 15 May 2025 01:30:39 -0400
+	id 1uFRCH-0001iA-JB; Thu, 15 May 2025 01:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uFRAz-00010Z-JZ
- for qemu-devel@nongnu.org; Thu, 15 May 2025 01:30:37 -0400
+ id 1uFRCE-0001hz-PB
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 01:31:55 -0400
 Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uFRAx-0006fq-Mf
- for qemu-devel@nongnu.org; Thu, 15 May 2025 01:30:37 -0400
+ id 1uFRCC-0006lk-Tu
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 01:31:54 -0400
 Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-4def06b6f87so181013137.0
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 22:30:35 -0700 (PDT)
+ ada2fe7eead31-4def2473a58so141945137.2
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 22:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747287034; x=1747891834; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747287111; x=1747891911; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K5hA8LkXQ28EQdII89lAsVru4Yjh8W2w9Qm2GmoNVlI=;
- b=Xe7vYg6G0mpnoYZ/EHzj2Up5YRfylW8Ari9Nyw6yi3uIIvekfWRisDFt2vj4erfDko
- P6Y+cnJu1xusouULWNLG01wh7xXXmTyCTZmXtUJ+jQ8uaB4iCYxpvU0nn0+rlUseA6Gi
- U1F/bQl7tqKqe27ARPYM3hou+PGonuGNQy2nw1Let/zrHN7UgjmMuDJz2SiaqJ+NoafD
- AYL2WcJ9xVUq2ql5f/CfKe5KLimsO4JC9GmeL89uv7/+MqzJoFPA5cR+2WW1ocirKGga
- PBowTcMXFbSx2ed0d/FJ4mbCz/yKrkjmMew8c3f+PMCQPvfK0VFJukz62jSZlYvIiSpu
- PMmw==
+ bh=CCCZFJW5pOuUG2XuA7UP44j8o4vDbsnGHimml3Wnl1w=;
+ b=Nl3tJ5GD0YpT9KMGqPh6hCwWrRRmUYNfucyvu112GqxY2n/9bM8PZcb6fWpMWj3QFU
+ zCfLCfsOPHuLNfq9dfMySxykZnPGdeaB/D5XnEptbM2YzUAAZt0ZFoovGcC0wLsU4lXk
+ j7HaiTEVnimtuIGxrgn+F5lNko3eqS86FRlssmZYzaDULzrY+PPgWUyoGsODY7F5Jv9P
+ szHR+uUcdqws/1YkT1yEKl7n9njUsx8igOFX4wmOZqlZ2Q3kBOgeACfMADPjSy3bnWOi
+ r+ASy2g+MFbATB0L6msBr7sNBGZZXACgF+rdDQdMCM9bX+Z4fojWsuH/5AWXgtFayJnk
+ Bz4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747287034; x=1747891834;
+ d=1e100.net; s=20230601; t=1747287111; x=1747891911;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K5hA8LkXQ28EQdII89lAsVru4Yjh8W2w9Qm2GmoNVlI=;
- b=D8A9HjSO+OrUoSseVULgoCtZNxyvTxXX7NEmgzsPG1wJYlveJSPa2y6nCgVtj0dm3z
- aJ2d3scIaK6tyOfucmAb/QhdM5RSbWY8aiP7T2y9+M1FHxmmqQuwTCd/7TzSG40sMYtX
- rZjCWQjkiUHl04DU8HrK2PyjEcQ7jVl/Cwt3LGwRbifNdvCNZxcZCj7KmwQ7tAuBA0RH
- ehSxk0foF8C3wiv0ZRQaGoZX8QdRUNMJE6eL4W299f6RiqF4TxMxKfUFkfhaH7YiTiyS
- PYcmIoUfFBynwwuXxLIXT873S2qwc8yXjUNEx5Ql9ioyItS/CoYtVxSLK8fkmta0m0RX
- ejpw==
-X-Gm-Message-State: AOJu0Yy3EybM8sS3KD591z4v0Kks56qHw6+a7/O2OkjWzcVziarCNdWd
- pvOCTtjTjzKcZZSCTGnuBiYBm9dYowOTmblnIun2/XCSl49xNJ0IdkXf9qosQJxU/yct3WTJ2Ur
- gF2By8jc7PeudAbd4Yrd+IE+mj0E=
-X-Gm-Gg: ASbGncteR3i8RH710K4N26mqGK6D4AILtMeC6bKOJJN0lnkHEu8FlDfThyqNFdtWuPZ
- B97Vy7ioPTTBP2Ypcoa1YybO2L+Z2+Himohed7sAdcFfvS9WaDyHWHkHwHRPkHAwPkRLk/3T9ab
- fXWW/yVVyiglulxiixaQD8CEu2atp098/I7RFMNAGL3F/xtqXk3aZt7D8GwEYrN8c=
-X-Google-Smtp-Source: AGHT+IExC9NFtyXK6CuWKg4MgN+4qPTCP/LGZpUiCuOC2w9r2VnKoXQyj7HUYRNnhV0hPFuzE8h4CdZNK/J6qBGmmkY=
-X-Received: by 2002:a05:6102:4b8c:b0:4ba:971a:41fd with SMTP id
- ada2fe7eead31-4df95676493mr892787137.19.1747287034245; Wed, 14 May 2025
- 22:30:34 -0700 (PDT)
+ bh=CCCZFJW5pOuUG2XuA7UP44j8o4vDbsnGHimml3Wnl1w=;
+ b=TEw5NMOjpPlZtsFXopt8vIy9zZKqode6xKAXyNGQ05bOsxgLzNrzR0A7nd5GN0BDZN
+ 2/f807JdTWZ3gpVJkOb6hq/Pjl30/gzWkKxsDLFeka+HkwPmqGZpbae65Sh0ROGrn2vf
+ gGn45LN8xF5DPgEvW89WeUMp/x1Or+JaULwpwwgXB7BLzzA1c7hNqPfCEgI6t2AiKJGW
+ eVSzcwEdiHMBFrpQWuh6lmwnlbd9WCXE7HPHXHOgNgykUQwRNaWhHWr9OmIjwcdd1FGr
+ /DblEhiyBmSVB3oqIIPmxyn6iujGFyt6NOdWwttpd5ZRbLriwaS6CM2CsHaD9GlBd6fq
+ XpWA==
+X-Gm-Message-State: AOJu0Yx/Qv9tqm/11obVCuNbgFrZ7mQuxqTEK0lyG5FkVkh2r6uxDFKk
+ B0VNn2xSYXl0D9AR6xNjjKzxZv58LTi5TETum5sUCxxkjLBfZ9/z/vHObYl0BHNX9OJJPP/Ys1p
+ PkiPP+Xsp4y8IfJmEcuIqf2L2QY3dRw==
+X-Gm-Gg: ASbGnctIknQvbyNbP8QyosXZPEy+8D8xxaPYbQgVjNmBMKCkJ6c+8KDmu3aO5OkM6sh
+ 7Eevnmpdi6iSlGuneeNJFcQP78DeJ9cTQ2RvN8UaZlzbC2FyP9O2TJ5tu7KNecuLw4EeAeDAGxw
+ lfW9/jgK4RXtAxrV1ISbAjrB00ed1yJecIXOSzT8+xCBWP5CSfurRrky0ZVQadrRhQs3YrvEe2L
+ A==
+X-Google-Smtp-Source: AGHT+IHQSZkPLLT9oDP8ODKvvpzz5yLc2guTT0WIUyAn8GHp0ZKUJ8etw5FE5WEL0P5bPoLqoEF1OmuF3MndlYLsNXI=
+X-Received: by 2002:a05:6102:3ca0:b0:4c4:fdb9:2ea with SMTP id
+ ada2fe7eead31-4df9541b0eemr810085137.7.1747287111384; Wed, 14 May 2025
+ 22:31:51 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250512095226.93621-1-pbonzini@redhat.com>
- <20250512095226.93621-15-pbonzini@redhat.com>
-In-Reply-To: <20250512095226.93621-15-pbonzini@redhat.com>
+ <20250512095226.93621-16-pbonzini@redhat.com>
+In-Reply-To: <20250512095226.93621-16-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 May 2025 15:30:08 +1000
-X-Gm-Features: AX0GCFsHmX1wetSmWbzRfB9CxBSuzhgoEliLpfey7n1-0_bxpXXLIGWlworwXSk
-Message-ID: <CAKmqyKMyeVCETOC7j5R5F=3sZVLeAAg5vpsHfAwCR6g7QbvqWA@mail.gmail.com>
-Subject: Re: [PATCH 14/26] target/riscv: convert bare CPU models to RISCVCPUDef
+Date: Thu, 15 May 2025 15:31:25 +1000
+X-Gm-Features: AX0GCFss5QH0J30_uifGD8wDkaFWYFXFQgsT__h8XTw8OXfAKZzBpDigGzh8dw4
+Message-ID: <CAKmqyKNkfSFS409e0hBP17obT=ohkrG7U2bNgAYSa=zxujN4mA@mail.gmail.com>
+Subject: Re: [PATCH 15/26] target/riscv: convert dynamic CPU models to
+ RISCVCPUDef
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, dbarboza@ventanamicro.com, 
  richard.henderson@linaro.org
@@ -106,60 +108,104 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c | 58 ++++++++++++++--------------------------------
->  1 file changed, 17 insertions(+), 41 deletions(-)
+>  target/riscv/cpu.c | 113 +++++++++++++--------------------------------
+>  1 file changed, 31 insertions(+), 82 deletions(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 06c612afba7..af5b4af4814 100644
+> index af5b4af4814..b4f6e34eac7 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -732,18 +732,6 @@ static void rv128_base_cpu_init(Object *obj)
+> @@ -485,38 +485,7 @@ static void set_satp_mode_default_map(RISCVCPU *cpu)
 >  }
->  #endif /* CONFIG_TCG && !CONFIG_USER_ONLY */
+>  #endif
 >
-> -static void rv64i_bare_cpu_init(Object *obj)
+> -static void riscv_max_cpu_init(Object *obj)
 > -{
-> -    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> -    riscv_cpu_set_misa_ext(env, RVI);
+> -    RISCVCPU *cpu =3D RISCV_CPU(obj);
+> -    CPURISCVState *env =3D &cpu->env;
+> -
+> -    cpu->cfg.mmu =3D true;
+> -    cpu->cfg.pmp =3D true;
+> -
+> -    env->priv_ver =3D PRIV_VERSION_LATEST;
+> -#ifndef CONFIG_USER_ONLY
+> -    set_satp_mode_max_supported(RISCV_CPU(obj),
+> -        riscv_cpu_mxl(&RISCV_CPU(obj)->env) =3D=3D MXL_RV32 ?
+> -        VM_1_10_SV32 : VM_1_10_SV57);
+> -#endif
 > -}
 > -
-> -static void rv64e_bare_cpu_init(Object *obj)
+>  #if defined(TARGET_RISCV64)
+> -static void rv64_base_cpu_init(Object *obj)
 > -{
-> -    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> -    riscv_cpu_set_misa_ext(env, RVE);
+> -    RISCVCPU *cpu =3D RISCV_CPU(obj);
+> -    CPURISCVState *env =3D &cpu->env;
+> -
+> -    cpu->cfg.mmu =3D true;
+> -    cpu->cfg.pmp =3D true;
+> -
+> -    /* Set latest version of privileged specification */
+> -    env->priv_ver =3D PRIV_VERSION_LATEST;
+> -#ifndef CONFIG_USER_ONLY
+> -    set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
+> -#endif
 > -}
+> -
+>  static void rv64_sifive_u_cpu_init(Object *obj)
+>  {
+>      RISCVCPU *cpu =3D RISCV_CPU(obj);
+> @@ -717,41 +686,11 @@ static void rv64_xiangshan_nanhu_cpu_init(Object *o=
+bj)
+>  #endif
+>  }
+>
+> -#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+> -static void rv128_base_cpu_init(Object *obj)
+> -{
+> -    RISCVCPU *cpu =3D RISCV_CPU(obj);
+> -    CPURISCVState *env =3D &cpu->env;
+> -
+> -    cpu->cfg.mmu =3D true;
+> -    cpu->cfg.pmp =3D true;
+> -
+> -    /* Set latest version of privileged specification */
+> -    env->priv_ver =3D PRIV_VERSION_LATEST;
+> -    set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
+> -}
+> -#endif /* CONFIG_TCG && !CONFIG_USER_ONLY */
 > -
 >  #endif /* !TARGET_RISCV64 */
 >
 >  #if defined(TARGET_RISCV32) || \
-> @@ -836,18 +824,6 @@ static void rv32_imafcu_nommu_cpu_init(Object *obj)
->      cpu->cfg.ext_zicsr =3D true;
->      cpu->cfg.pmp =3D true;
+>      (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
+>
+> -static void rv32_base_cpu_init(Object *obj)
+> -{
+> -    RISCVCPU *cpu =3D RISCV_CPU(obj);
+> -    CPURISCVState *env =3D &cpu->env;
+> -
+> -    cpu->cfg.mmu =3D true;
+> -    cpu->cfg.pmp =3D true;
+> -
+> -    /* Set latest version of privileged specification */
+> -    env->priv_ver =3D PRIV_VERSION_LATEST;
+> -#ifndef CONFIG_USER_ONLY
+> -    set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV32);
+> -#endif
+> -}
+> -
+>  static void rv32_sifive_u_cpu_init(Object *obj)
+>  {
+>      RISCVCPU *cpu =3D RISCV_CPU(obj);
+> @@ -3166,19 +3105,6 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt,=
+ char *nodename)
 >  }
-> -
-> -static void rv32i_bare_cpu_init(Object *obj)
-> -{
-> -    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> -    riscv_cpu_set_misa_ext(env, RVI);
-> -}
-> -
-> -static void rv32e_bare_cpu_init(Object *obj)
-> -{
-> -    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> -    riscv_cpu_set_misa_ext(env, RVE);
-> -}
 >  #endif
 >
->  static ObjectClass *riscv_cpu_class_by_name(const char *cpu_model)
-> @@ -3216,19 +3192,6 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt,=
- char *nodename)
->          }),                                                 \
->      }
->
-> -#define DEFINE_BARE_CPU(type_name, misa_mxl_max_, initfn)   \
+> -#define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max_, initfn) \
 > -    {                                                       \
 > -        .name =3D (type_name),                                \
-> -        .parent =3D TYPE_RISCV_BARE_CPU,                      \
+> -        .parent =3D TYPE_RISCV_DYNAMIC_CPU,                   \
 > -        .instance_init =3D (initfn),                          \
 > -        .class_data =3D &(const RISCVCPUDef) {                \
 > -             .misa_mxl_max =3D (misa_mxl_max_),               \
@@ -169,54 +215,100 @@ Alistair
 > -        },                                                  \
 > -    }
 > -
->  #define DEFINE_ABSTRACT_RISCV_CPU(type_name, parent_type_name, ...) \
+>  #define DEFINE_VENDOR_CPU(type_name, misa_mxl_max_, initfn) \
 >      {                                                       \
 >          .name =3D (type_name),                                \
-> @@ -3313,8 +3276,15 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+> @@ -3235,7 +3161,12 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>          .class_base_init =3D riscv_cpu_class_base_init,
+>      },
+>
+> -    DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_DYNAMIC_CPU, TYPE_RISCV_CPU),
+> +    DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_DYNAMIC_CPU, TYPE_RISCV_CPU,
+> +        .cfg.mmu =3D true,
+> +        .cfg.pmp =3D true,
+> +        .priv_spec =3D PRIV_VERSION_LATEST,
+> +    ),
+> +
+>      DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_VENDOR_CPU, TYPE_RISCV_CPU),
+>      DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_BARE_CPU, TYPE_RISCV_CPU,
+>          /*
+> @@ -3263,15 +3194,23 @@ static const TypeInfo riscv_cpu_type_infos[] =3D =
+{
+>  #endif
+>      ),
+>
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX, TYPE_RISCV_DYNAMIC_CPU,
+>  #if defined(TARGET_RISCV32)
+> -    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV32,  riscv_max_cp=
+u_init),
+> +        .misa_mxl_max =3D MXL_RV32,
+> +        .cfg.max_satp_mode =3D VM_1_10_SV32,
+>  #elif defined(TARGET_RISCV64)
+> -    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV64,  riscv_max_cp=
+u_init),
+> +        .misa_mxl_max =3D MXL_RV64,
+> +        .cfg.max_satp_mode =3D VM_1_10_SV57,
+>  #endif
+> +    ),
+>
+>  #if defined(TARGET_RISCV32) || \
+>      (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
+> -    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE32,    MXL_RV32,  rv32_base_cp=
+u_init),
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE32, TYPE_RISCV_DYNAMIC_CPU,
+> +        .cfg.max_satp_mode =3D VM_1_10_SV32,
+> +        .misa_mxl_max =3D MXL_RV32,
+> +    ),
+> +
+>      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_IBEX,       MXL_RV32,  rv32_ibex_cp=
+u_init),
 >      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E31, MXL_RV32,  rv32_sifive_=
 e_cpu_init),
 >      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E34, MXL_RV32,  rv32_imafcu_=
 nommu_cpu_init),
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_U34, MXL_RV32,  rv32_sifive_=
-u_cpu_init),
-> -    DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32I,        MXL_RV32,  rv32i_bare_c=
-pu_init),
-> -    DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32E,        MXL_RV32,  rv32e_bare_c=
-pu_init),
-> +
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV32I, TYPE_RISCV_BARE_CPU,
-> +        .misa_mxl_max =3D MXL_RV32,
-> +        .misa_ext =3D RVI
-> +    ),
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV32E, TYPE_RISCV_BARE_CPU,
-> +        .misa_mxl_max =3D MXL_RV32,
-> +        .misa_ext =3D RVE
-> +    ),
+> @@ -3288,11 +3227,18 @@ static const TypeInfo riscv_cpu_type_infos[] =3D =
+{
 >  #endif
 >
 >  #if (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
-> @@ -3334,8 +3304,14 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->  #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
->      DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_c=
-pu_init),
->  #endif /* CONFIG_TCG && !CONFIG_USER_ONLY */
-> -    DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV64I,        MXL_RV64,  rv64i_bare_c=
-pu_init),
-> -    DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV64E,        MXL_RV64,  rv64e_bare_c=
-pu_init),
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV64I, TYPE_RISCV_BARE_CPU,
-> +        .misa_mxl_max =3D MXL_RV64,
-> +        .misa_ext =3D RVI
+> -    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX32,     MXL_RV32,  riscv_max_cp=
+u_init),
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX32, TYPE_RISCV_DYNAMIC_CPU,
+> +        .cfg.max_satp_mode =3D VM_1_10_SV32,
+> +        .misa_mxl_max =3D MXL_RV32,
 > +    ),
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV64E, TYPE_RISCV_BARE_CPU,
-> +        .misa_mxl_max =3D MXL_RV64,
-> +        .misa_ext =3D RVE
-> +    ),
+>  #endif
 >
->      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22U64,  TYPE_RISCV_CPU_RV64I,  =
-RVA22U64),
->      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22S64,  TYPE_RISCV_CPU_RV64I,  =
-RVA22S64),
+>  #if defined(TARGET_RISCV64)
+> -    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE64,    MXL_RV64,  rv64_base_cp=
+u_init),
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE64, TYPE_RISCV_DYNAMIC_CPU,
+> +        .cfg.max_satp_mode =3D VM_1_10_SV57,
+> +        .misa_mxl_max =3D MXL_RV64,
+> +    ),
+> +
+>      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E51, MXL_RV64,  rv64_sifive_=
+e_cpu_init),
+>      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_U54, MXL_RV64,  rv64_sifive_=
+u_cpu_init),
+>      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SHAKTI_C,   MXL_RV64,  rv64_sifive_=
+u_cpu_init),
+> @@ -3302,8 +3248,11 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
+>                                                   MXL_RV64, rv64_xiangsha=
+n_nanhu_cpu_init),
+>  #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+> -    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_c=
+pu_init),
+> -#endif /* CONFIG_TCG && !CONFIG_USER_ONLY */
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+> +        .cfg.max_satp_mode =3D VM_1_10_SV57,
+> +        .misa_mxl_max =3D MXL_RV128,
+> +    ),
+> +#endif /* CONFIG_TCG */
+>      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV64I, TYPE_RISCV_BARE_CPU,
+>          .misa_mxl_max =3D MXL_RV64,
+>          .misa_ext =3D RVI
 > --
 > 2.49.0
 >
