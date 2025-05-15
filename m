@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DEFC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 10:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE3B8C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 10:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFVn2-0004Qj-RL; Thu, 15 May 2025 06:26:12 -0400
+	id 1uFVnJ-0004yb-KD; Thu, 15 May 2025 06:26:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uFVn1-0004QM-3a
- for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:11 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1uFVn8-0004cO-VA
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:19 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uFVmy-00089E-Os
- for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:10 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cfba466b2so8369085e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 03:26:08 -0700 (PDT)
+ id 1uFVn7-0008Af-5n
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 06:26:18 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3a1d8c0966fso530966f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 03:26:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747304767; x=1747909567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747304775; x=1747909575; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+fk+E1hNI4ene4uIKK/hnLRnqA1uMFK4Q9d7SpDJgfs=;
- b=QT/4dH0CRGnOn4Q/ecROuTXpvzynOWf3ZOX2+2VcvU3XVEwbEq3N4wuzHD0FxK33j3
- zIIrI4908idSjkWCmxPzBECyOl9afRuG1/usXFZpTy/kRztyK2BGPg0UKSNHFYppqeu+
- pj+TEez1XcDLuSP4RzrWq1CFjJKMo6PEK1ngXNbBGPV7h8V5Hb6J9uxKsk8zqQk2fGWr
- 9uVgeyaeUiX/Vmz6kw7i8t8UbD5RWMSrgdxi5iDOqCGgZ19tXzxxCTvZ2yFmORlLLijJ
- twvArvSbkNmvW1uODP0ZMgLSIVD42lxYIxcnREz5rdetLj9qdgy4tvOJqD/34hRkDMHb
- hisg==
+ :reply-to; bh=RG8Ka89WGECPxEN9oHVhNLbmDepbN7rDBbuob6DhDg4=;
+ b=se4HmPfr6ryKxfn9E7+km11kM5AJ3U/zw3vAN2k4jgWKyML1X0reLjrGWGsYrSaFhG
+ uSAbc8VS99WGAxyYn39KFZWfHbJFDuLKXnPj7j2M40aa6q3cT+KW1J0whKvkf5ghpbSc
+ hzUH51YiKJJctFK1/c9YTnzKcu4TD3O+jwYAozbVuc6boUIbHxpwlTrb+L7fXN+gZwew
+ 4P821+9vgEgFpd8+nLBtGu1WOsp2Q9sme2Vb6OXaxTuZ9hEv7DrzPwIzIUmgPClt09Yp
+ y6S4EaGMJ5GtqluJvdJx/siEQSCCebQ8A2Z6i0/ipqhObgavEWS4hs+ted0v/gIBwPM9
+ zJoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747304767; x=1747909567;
+ d=1e100.net; s=20230601; t=1747304775; x=1747909575;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+fk+E1hNI4ene4uIKK/hnLRnqA1uMFK4Q9d7SpDJgfs=;
- b=jlDt5r2HauqByIKyL8VaiNQ2Gvm8QTN81+TQhdz9Tft6kSh1L64tHBw+46Iongyida
- SjNUbu3gisIbZy0jGvNB7B8AXhLkUC9buKzBAF20W1PVNMSikrI5C2t3SHlzPwv3Ns7I
- nBa8bauFLpYPZZMoq/d+Qq1tHFG1SWsz+IISu6BfkhdDJ9FfWL2ijiieBkFyf7ltIxxV
- u3fG3Ft97OhFzgoY9LPf/PCqjirtzcTbYsOck3W16n3XmszS5BAl+hv8wk0/D2Aa6klk
- /gacRxgJHnDrvbNJozCAfMSeny956ySLt3EVYnx0Maa6QGO4585q/N05NzaN3KHvITc2
- 7g7Q==
-X-Gm-Message-State: AOJu0YzeZpqz3P9kLrbji0ZoUD7r8x55ZPhi6htz/3KpLD7KMMqcdHVb
- hFQaLpXdOVZfSuVjyOMyRoIu3He9Yn/e2lL2QdO8UuWad38nh7l8lqv24zkiBAv8h2z9mFmFG05
- KKKI=
-X-Gm-Gg: ASbGncuky1d3y77bCo8YUAkFc9kGVpHD3gcnRQGTM77l0qm6VTnY0QwAbLo9jPVjVd+
- kzSpZ5EhPEBgPmnWMIONaVNRhNtlWB4A8mpN9LfR6U/5sm7/wVbllPKayZjcyKAQKVjoCasUdw+
- 2Mt5EhT6+eKGufb3uIB6rsML0vclcwbeVgwINrdpi9MVZaQx79vQpm/Boxf4ttqSARYoZp4i2of
- THTtLDWTEACBTRuKOklFyvu0frQEPLCNWgCf3TrFn2w5y28NvxEq8POoCZFQMm9+qPXpmnmUGmQ
- syy1AQVeTaj5n4p35u0woY+M6637ulZnD3cws4Y5L+mjmi6fHHQG0V3W5g==
-X-Google-Smtp-Source: AGHT+IEsuMGWFeteTRMxWin+qCIrvuJsFDXBDxpvDyQlCn7UxaW4XolV1XVv+46ItEB9YipHHaYL8w==
-X-Received: by 2002:a05:600c:4e09:b0:43d:1b74:e89a with SMTP id
- 5b1f17b1804b1-442f96e8949mr19588185e9.9.1747304767095; 
- Thu, 15 May 2025 03:26:07 -0700 (PDT)
+ bh=RG8Ka89WGECPxEN9oHVhNLbmDepbN7rDBbuob6DhDg4=;
+ b=MInsAtC8Uf8ueunT0d8aXkQIzyx+aHHK/2OjqeZkz2fu8cYHLldjC0B2ao08mLcTFg
+ ycyoFu8GXJaftSkzO6hWqAQ6QQ76Z2EbCiWMwfTvox7H/qG0yaBmv8LUcJ5K4HoY7+jf
+ e6hLCdDazgYuolKlD6i202/MI7+BK8nxv4YLh0Ucq2W2mjezM3tGE1b/x1UDmdhdVB8V
+ WvHiWIXrloFh5l1bBmDbeVdlv93ths4c4WAqbHD6zi7T17/cIoZtBy1qAmMTSUhRTb+E
+ t5fUPRbDyFoAgKe6gMKJc+qBxXjjhav1TcdAPzH/QsYsjpWSXYQN1ysSmrAl3FK7mQsz
+ vYYQ==
+X-Gm-Message-State: AOJu0YxOK0q4SOMq4BojN/tEp9pOw20kL9BLx2vk49XEVjFXnwwSVDB9
+ SpYp7MBA8g447X5Qh79hAiVx/92JgcoQXl2Q9kbqhS3naumjkj8B1P5ZlZ4GfJIIhogNp7t+XZG
+ jv6xqjIE=
+X-Gm-Gg: ASbGnctifTtY6rMflW24IjQ71by0mhf8VqEXYzUFUSOc207jPBs82u+u37NRPPT5AB2
+ 5wU7QhLv+oo/AwGdtZdSBRDQ/A/evAIldlxW65MvUvnpm9BDImkSG1jRlhk7BlADz8mUAS2n7LS
+ pqSVfvDK6yM2oPTvfNMl+qrAQKwhSE/Ou25W9VptHb6RFilTeezhJzXwC8aqOGK46AaLLCwHlge
+ 5nZKnrfUpQHe9P85DVOxOtbmokq7HihqLdd6XLWYBbjXi30AcI5B+Gsbri6D/WDxPKnfL5qTlsQ
+ bi6JKchtqHF7AGeLMU+9/jM3g0cTjietO4WwDddZrJ11LjN30J05mhf6pg==
+X-Google-Smtp-Source: AGHT+IE1BLszunUFW8kOr6VdkRYO7w48uBOhjgUsErGAKRDeUrrlxU77B2+lqzKpRLb38/LWTA/sSg==
+X-Received: by 2002:a05:6000:2a5:b0:3a0:b817:2d7a with SMTP id
+ ffacd0b85a97d-3a351222edemr2489026f8f.29.1747304775317; 
+ Thu, 15 May 2025 03:26:15 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f396c3a4sm65657855e9.26.2025.05.15.03.26.06
+ 5b1f17b1804b1-442f396c3a4sm65657855e9.26.2025.05.15.03.26.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 03:26:06 -0700 (PDT)
+ Thu, 15 May 2025 03:26:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/58] meson: add common libs for target and target_system
-Date: Thu, 15 May 2025 11:25:01 +0100
-Message-ID: <20250515102546.2149601-14-peter.maydell@linaro.org>
+Subject: [PULL 19/58] target/arm/cpu: remove TARGET_AARCH64 in
+ arm_cpu_finalize_features
+Date: Thu, 15 May 2025 11:25:07 +0100
+Message-ID: <20250515102546.2149601-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250515102546.2149601-1-peter.maydell@linaro.org>
 References: <20250515102546.2149601-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,136 +102,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Following what we did for hw/, we need target specific common libraries
-for target. We need 2 different libraries:
-- code common to a base architecture
-- system code common to a base architecture
-
-For user code, it can stay compiled per target for now.
+Need to stub cpu64 finalize functions.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20250512180502.2395029-4-pierrick.bouvier@linaro.org
+Message-id: 20250512180502.2395029-10-pierrick.bouvier@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- meson.build | 78 +++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 61 insertions(+), 17 deletions(-)
+ target/arm/cpu.c         |  2 --
+ target/arm/cpu32-stubs.c | 26 ++++++++++++++++++++++++++
+ target/arm/meson.build   | 11 +++++++----
+ 3 files changed, 33 insertions(+), 6 deletions(-)
+ create mode 100644 target/arm/cpu32-stubs.c
 
-diff --git a/meson.build b/meson.build
-index 7f91500bb73..ad2053f968b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3709,6 +3709,8 @@ target_arch = {}
- target_system_arch = {}
- target_user_arch = {}
- hw_common_arch = {}
-+target_common_arch = {}
-+target_common_system_arch = {}
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index ec9bc72c3d6..ca5ed7892e4 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1913,7 +1913,6 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
+ {
+     Error *local_err = NULL;
  
- # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
- # that is filled in by qapi/.
-@@ -4107,29 +4109,59 @@ common_all = static_library('common',
+-#ifdef TARGET_AARCH64
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+         arm_cpu_sve_finalize(cpu, &local_err);
+         if (local_err != NULL) {
+@@ -1949,7 +1948,6 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
+             return;
+         }
+     }
+-#endif
  
- # construct common libraries per base architecture
- hw_common_arch_libs = {}
-+target_common_arch_libs = {}
-+target_common_system_arch_libs = {}
- foreach target : target_dirs
-   config_target = config_target_mak[target]
-   target_base_arch = config_target['TARGET_BASE_ARCH']
-+  target_inc = [include_directories('target' / target_base_arch)]
-+  inc = [common_user_inc + target_inc]
- 
--  # check if already generated
--  if target_base_arch in hw_common_arch_libs
--    continue
--  endif
-+  # prevent common code to access cpu compile time definition,
-+  # but still allow access to cpu.h
-+  target_c_args = ['-DCPU_DEFS_H']
-+  target_system_c_args = target_c_args + ['-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
- 
-   if target_base_arch in hw_common_arch
--    target_inc = [include_directories('target' / target_base_arch)]
--    src = hw_common_arch[target_base_arch]
--    lib = static_library(
--      'hw_' + target_base_arch,
--      build_by_default: false,
--      sources: src.all_sources() + genh,
--      include_directories: common_user_inc + target_inc,
--      implicit_include_directories: false,
--      # prevent common code to access cpu compile time
--      # definition, but still allow access to cpu.h
--      c_args: ['-DCPU_DEFS_H', '-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU'],
--      dependencies: src.all_dependencies())
--    hw_common_arch_libs += {target_base_arch: lib}
-+    if target_base_arch not in hw_common_arch_libs
-+      src = hw_common_arch[target_base_arch]
-+      lib = static_library(
-+        'hw_' + target_base_arch,
-+        build_by_default: false,
-+        sources: src.all_sources() + genh,
-+        include_directories: inc,
-+        c_args: target_system_c_args,
-+        dependencies: src.all_dependencies())
-+      hw_common_arch_libs += {target_base_arch: lib}
-+    endif
-+  endif
+     if (kvm_enabled()) {
+         kvm_arm_steal_time_finalize(cpu, &local_err);
+diff --git a/target/arm/cpu32-stubs.c b/target/arm/cpu32-stubs.c
+new file mode 100644
+index 00000000000..81be44d8462
+--- /dev/null
++++ b/target/arm/cpu32-stubs.c
+@@ -0,0 +1,26 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
-+  if target_base_arch in target_common_arch
-+    if target_base_arch not in target_common_arch_libs
-+      src = target_common_arch[target_base_arch]
-+      lib = static_library(
-+        'target_' + target_base_arch,
-+        build_by_default: false,
-+        sources: src.all_sources() + genh,
-+        include_directories: inc,
-+        c_args: target_c_args,
-+        dependencies: src.all_dependencies())
-+      target_common_arch_libs += {target_base_arch: lib}
-+    endif
-+  endif
++#include "qemu/osdep.h"
++#include "target/arm/cpu.h"
++#include "target/arm/internals.h"
++#include <glib.h>
 +
-+  if target_base_arch in target_common_system_arch
-+    if target_base_arch not in target_common_system_arch_libs
-+      src = target_common_system_arch[target_base_arch]
-+      lib = static_library(
-+        'target_system_' + target_base_arch,
-+        build_by_default: false,
-+        sources: src.all_sources() + genh,
-+        include_directories: inc,
-+        c_args: target_system_c_args,
-+        dependencies: src.all_dependencies())
-+      target_common_system_arch_libs += {target_base_arch: lib}
-+    endif
-   endif
- endforeach
++void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++void arm_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
++{
++    g_assert_not_reached();
++}
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 3065081d241..c39ddc4427b 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -11,10 +11,13 @@ arm_ss.add(zlib)
+ arm_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'), if_false: files('kvm-stub.c'))
+ arm_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
  
-@@ -4300,12 +4332,24 @@ foreach target : target_dirs
-   target_common = common_ss.apply(config_target, strict: false)
-   objects = [common_all.extract_objects(target_common.sources())]
-   arch_deps += target_common.dependencies()
-+  if target_base_arch in target_common_arch_libs
-+    src = target_common_arch[target_base_arch].apply(config_target, strict: false)
-+    lib = target_common_arch_libs[target_base_arch]
-+    objects += lib.extract_objects(src.sources())
-+    arch_deps += src.dependencies()
-+  endif
-   if target_type == 'system' and target_base_arch in hw_common_arch_libs
-     src = hw_common_arch[target_base_arch].apply(config_target, strict: false)
-     lib = hw_common_arch_libs[target_base_arch]
-     objects += lib.extract_objects(src.sources())
-     arch_deps += src.dependencies()
-   endif
-+  if target_type == 'system' and target_base_arch in target_common_system_arch_libs
-+    src = target_common_system_arch[target_base_arch].apply(config_target, strict: false)
-+    lib = target_common_system_arch_libs[target_base_arch]
-+    objects += lib.extract_objects(src.sources())
-+    arch_deps += src.dependencies()
-+  endif
+-arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+-  'cpu64.c',
+-  'gdbstub64.c',
+-))
++arm_ss.add(when: 'TARGET_AARCH64',
++  if_true: files(
++    'cpu64.c',
++    'gdbstub64.c'),
++  if_false: files(
++    'cpu32-stubs.c'),
++)
  
-   target_specific = specific_ss.apply(config_target, strict: false)
-   arch_srcs += target_specific.sources()
+ arm_system_ss = ss.source_set()
+ arm_system_ss.add(files(
 -- 
 2.43.0
 
