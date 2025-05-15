@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F20AC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 13:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBBDC54754
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 13:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFYW5-0008M2-QO; Thu, 15 May 2025 09:20:53 -0400
+	id 1uFYVx-0008Kh-KX; Thu, 15 May 2025 09:20:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFYW3-0008LX-FU
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:20:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFYVu-0008Jv-2P
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 09:20:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFYW1-0003cf-IG
- for qemu-devel@nongnu.org; Thu, 15 May 2025 09:20:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFYVr-0003be-Vn
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 09:20:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747315248;
+ s=mimecast20190719; t=1747315239;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bsPvKqQeupdE8tFJ1vrETwxErtldfRrw89xt2bmiH/w=;
- b=ihKcgBWpwAw8eZcGQvgXidnTzf7PytWHHlH+AtxNBUzAFoyQhxXJ39d3zz9ew2LZ2ilxCK
- H4rBqveloq0TgmP3c1Z/gS50+bwR7kvT5kjakXJ4NNXYFBTTmtfS45dO3zHh0SEYVBXPsI
- DX2k0CHpIATKuM+EXsi4Ej15BSxNdTQ=
+ bh=EaeNKiOOemve9IbW+AchKk2dKkD+8+vWm8PKCOXYIAo=;
+ b=B7xc8MttW9yXEhca+qZCAIQ+tlQSbbWpQWxOU3N+S8rly0a5z08WecimT++ZKAdHirM8kV
+ 5QazqSzoT0TKmtTfoXGvdebO3z1acHXHqy8huWLyETEB2ufrOVxEk0+VYIy7Sur8PXVBDM
+ N9JKkVGnBZImBWyJ8dHdPj1tfrCY2aY=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-363-b5YLguFcPFOxCqgLeUIUOw-1; Thu,
- 15 May 2025 09:20:45 -0400
-X-MC-Unique: b5YLguFcPFOxCqgLeUIUOw-1
-X-Mimecast-MFC-AGG-ID: b5YLguFcPFOxCqgLeUIUOw_1747315244
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-Y-r30376PCysHXRiaqjnSA-1; Thu,
+ 15 May 2025 09:20:38 -0400
+X-MC-Unique: Y-r30376PCysHXRiaqjnSA-1
+X-Mimecast-MFC-AGG-ID: Y-r30376PCysHXRiaqjnSA_1747315236
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1BA05180045B; Thu, 15 May 2025 13:20:44 +0000 (UTC)
+ id 383A218011D3; Thu, 15 May 2025 13:20:36 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.27])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7B5581956094; Thu, 15 May 2025 13:20:40 +0000 (UTC)
+ id CE6BB1956094; Thu, 15 May 2025 13:20:32 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
 	qemu-devel@nongnu.org
@@ -52,10 +52,10 @@ Cc: Alistair Francis <alistair@alistair23.me>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 3/4] hw/microblaze: Remove the big-endian variants of ml605
- and xlnx-zynqmp-pmu
-Date: Thu, 15 May 2025 15:20:18 +0200
-Message-ID: <20250515132019.569365-4-thuth@redhat.com>
+Subject: [PATCH 1/4] hw/microblaze: Add endianness property to the
+ petalogix_s3adsp1800 machine
+Date: Thu, 15 May 2025 15:20:16 +0200
+Message-ID: <20250515132019.569365-2-thuth@redhat.com>
 In-Reply-To: <20250515132019.569365-1-thuth@redhat.com>
 References: <20250515132019.569365-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,131 +88,100 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Both machines were added with little-endian in mind only (the
-"endianness" CPU property was hard-wired to "true", see commits
-133d23b3ad1 and a88bbb006a52), so the variants that showed up
-on the big endian target likely never worked. We deprecated these
-non-working machine variants two releases ago, and so far nobody
-complained, so it should be fine now to disable them. Hard-wire
-the machines to little endian now.
+Since the microblaze target can now handle both endianness, big and
+little, we should provide a config knob for the user to select the
+desired endianness.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/about/deprecated.rst           |  6 ------
- docs/about/removed-features.rst     |  9 +++++++++
- hw/microblaze/petalogix_ml605_mmu.c | 15 ++++-----------
- hw/microblaze/xlnx-zynqmp-pmu.c     |  7 +------
- 4 files changed, 14 insertions(+), 23 deletions(-)
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 41 +++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 5 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 1a1b423030c..8c5fe6fb274 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -293,12 +293,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
- better reflects the way this property affects all random data within
- the device tree blob, not just the ``kaslr-seed`` node.
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index 032f6f70eac..edc5d0dcfd0 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -58,9 +58,20 @@
+ #define TYPE_PETALOGIX_S3ADSP1800_MACHINE \
+             MACHINE_TYPE_NAME("petalogix-s3adsp1800")
  
--Big-Endian variants of MicroBlaze ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` machines (since 9.2)
--''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
--
--Both ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` were added for little endian
--CPUs. Big endian support is not tested.
--
- Mips ``mipssim`` machine (since 10.0)
- '''''''''''''''''''''''''''''''''''''
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 063284d4f8a..9df5aba0bb6 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1082,6 +1082,15 @@ This machine was removed because PPC 405 CPU have no known users,
- firmware images are not available, OpenWRT dropped support in 2019,
- U-Boot in 2017, and Linux in 2024.
- 
-+Big-Endian variants of ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` machines (removed in 10.1)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++struct S3Adsp1800MachineState {
++    MachineState parent_class;
 +
-+Both the MicroBlaze ``petalogix-ml605`` and ``xlnx-zynqmp-pmu`` machines
-+were added for little endian CPUs. Big endian support was never tested
-+and likely never worked. Starting with QEMU v10.1, the machines are now
-+only available as little-endian machines.
++    EndianMode endianness;
++};
++
++OBJECT_DECLARE_TYPE(S3Adsp1800MachineState, MachineClass,
++                    PETALOGIX_S3ADSP1800_MACHINE)
 +
 +
- linux-user mode CPUs
- --------------------
- 
-diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
-index bea6b689fd1..6e923c49cfc 100644
---- a/hw/microblaze/petalogix_ml605_mmu.c
-+++ b/hw/microblaze/petalogix_ml605_mmu.c
-@@ -80,8 +80,6 @@ petalogix_ml605_init(MachineState *machine)
-     MemoryRegion *phys_lmb_bram = g_new(MemoryRegion, 1);
+ static void
+ petalogix_s3adsp1800_init(MachineState *machine)
+ {
++    S3Adsp1800MachineState *psms = PETALOGIX_S3ADSP1800_MACHINE(machine);
+     ram_addr_t ram_size = machine->ram_size;
+     DeviceState *dev;
+     MicroBlazeCPU *cpu;
+@@ -71,13 +82,12 @@ petalogix_s3adsp1800_init(MachineState *machine)
      MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
      qemu_irq irq[32];
+     MemoryRegion *sysmem = get_system_memory();
 -    EndianMode endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG
 -                                              : ENDIAN_MODE_LITTLE;
++    EndianMode endianness = psms->endianness;
  
-     /* init CPUs */
      cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
-@@ -113,7 +111,7 @@ petalogix_ml605_init(MachineState *machine)
+     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
+     object_property_set_bool(OBJECT(cpu), "little-endian",
+-                             !TARGET_BIG_ENDIAN, &error_abort);
++                             endianness == ENDIAN_MODE_LITTLE, &error_abort);
+     qdev_realize(DEVICE(cpu), NULL, &error_abort);
  
+     /* Attach emulated BRAM through the LMB.  */
+@@ -135,20 +145,41 @@ petalogix_s3adsp1800_init(MachineState *machine)
  
-     dev = qdev_new("xlnx.xps-intc");
--    qdev_prop_set_enum(dev, "endianness", endianness);
-+    qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
-     qdev_prop_set_uint32(dev, "kind-of-intr", 1 << TIMER_IRQ);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
-@@ -129,7 +127,7 @@ petalogix_ml605_init(MachineState *machine)
+     create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
  
-     /* 2 timers at irq 2 @ 100 Mhz.  */
-     dev = qdev_new("xlnx.xps-timer");
--    qdev_prop_set_enum(dev, "endianness", endianness);
-+    qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
-     qdev_prop_set_uint32(dev, "one-timer-only", 0);
-     qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-@@ -177,7 +175,7 @@ petalogix_ml605_init(MachineState *machine)
-         SSIBus *spi;
- 
-         dev = qdev_new("xlnx.xps-spi");
--        qdev_prop_set_enum(dev, "endianness", endianness);
-+        qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
-         qdev_prop_set_uint8(dev, "num-ss-bits", NUM_SPI_FLASHES);
-         busdev = SYS_BUS_DEVICE(dev);
-         sysbus_realize_and_unref(busdev, &error_fatal);
-@@ -218,12 +216,7 @@ petalogix_ml605_init(MachineState *machine)
- 
- static void petalogix_ml605_machine_init(MachineClass *mc)
- {
--    if (TARGET_BIG_ENDIAN) {
--        mc->desc = "PetaLogix linux refdesign for xilinx ml605 (big endian)";
--        mc->deprecation_reason = "big endian support is not tested";
--    } else {
--        mc->desc = "PetaLogix linux refdesign for xilinx ml605 (little endian)";
--    }
-+    mc->desc = "PetaLogix linux refdesign for xilinx ml605 (little endian)";
-     mc->init = petalogix_ml605_init;
+-    microblaze_load_kernel(cpu, !TARGET_BIG_ENDIAN, ddr_base, ram_size,
+-                           machine->initrd_filename,
++    microblaze_load_kernel(cpu, endianness == ENDIAN_MODE_LITTLE, ddr_base,
++                           ram_size, machine->initrd_filename,
+                            BINARY_DEVICE_TREE_FILE,
+                            NULL);
  }
  
-diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
-index ed40b5f2e05..e909802bb74 100644
---- a/hw/microblaze/xlnx-zynqmp-pmu.c
-+++ b/hw/microblaze/xlnx-zynqmp-pmu.c
-@@ -181,12 +181,7 @@ static void xlnx_zynqmp_pmu_init(MachineState *machine)
- 
- static void xlnx_zynqmp_pmu_machine_init(MachineClass *mc)
++static int machine_get_endianness(Object *obj, Error **errp G_GNUC_UNUSED)
++{
++    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
++    return ms->endianness;
++}
++
++static void machine_set_endianness(Object *obj, int endianness, Error **errp)
++{
++    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
++    ms->endianness = endianness;
++}
++
+ static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
+                                                     const void *data)
  {
--    if (TARGET_BIG_ENDIAN) {
--        mc->desc = "Xilinx ZynqMP PMU machine (big endian)";
--        mc->deprecation_reason = "big endian support is not tested";
--    } else {
--        mc->desc = "Xilinx ZynqMP PMU machine (little endian)";
--    }
-+    mc->desc = "Xilinx ZynqMP PMU machine (little endian)";
-     mc->init = xlnx_zynqmp_pmu_init;
+     MachineClass *mc = MACHINE_CLASS(oc);
++    ObjectProperty *prop;
+ 
+     mc->desc = "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800";
+     mc->init = petalogix_s3adsp1800_init;
+     mc->is_default = true;
++
++    prop = object_class_property_add_enum(oc, "endianness", "EndianMode",
++                                          &EndianMode_lookup,
++                                          machine_get_endianness,
++                                          machine_set_endianness);
++    object_property_set_default_str(prop, TARGET_BIG_ENDIAN ? "big" : "little");
++    object_class_property_set_description(oc, "endianness",
++            "Defines whether the machine runs in big or little endian mode");
  }
  
+ static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
 -- 
 2.49.0
 
