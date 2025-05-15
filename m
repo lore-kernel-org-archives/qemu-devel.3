@@ -4,105 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71D52C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FE6C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:56:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFavB-00030H-5w; Thu, 15 May 2025 11:54:57 -0400
+	id 1uFaw7-00040x-PA; Thu, 15 May 2025 11:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFauw-0002nY-F4; Thu, 15 May 2025 11:54:49 -0400
+ id 1uFavT-0003PV-2m; Thu, 15 May 2025 11:55:18 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFaup-0007HN-FN; Thu, 15 May 2025 11:54:42 -0400
+ id 1uFavP-0007VA-7M; Thu, 15 May 2025 11:55:13 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCgNtG002849;
- Thu, 15 May 2025 15:54:32 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg4q0002206;
+ Thu, 15 May 2025 15:55:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=k/VClevrbm+/QPF16ft1sLo7x4DLK9WnwsG/dJDyAfY=; b=CtPr71zZJQIn
- Un1kfStntmxYmOo2olHpIttwoFdhr+5Xupu8lovVPk+i+0JiTxz59KTLQiSS7Fww
- wLyr46tMtllITWz5ZCtVcj9HouVOXuvZkDKSscWDc6vKXYXezPiM516aKFbIi40N
- rSkaNRwi9i2vhHrOrPfs+i7l4qSnnrbHQLpnb/wwQk/Ont72Dmkuw/LWPxBEatyy
- PbXAWpcZqpuNcWBAxoOr7T4Es3pCj/Ky1SABNkBqkPmvt+VfdJUlWpViFQyuoxKI
- p/hiBv+7M9PIMIsBCYFZ9Yl3CeGDE+e3kFu0I4YChW+xSxyXANJqcvTE85P7CVey
- chNTrSsHBw==
+ bh=QwMOv+uFWdOgLZJ74lPnSVHDBpS1xTm0xX6o36CoWhY=; b=TZU7kAvIZ6V1
+ 1PIFRmuFGhJj1pIO3qpT8JPlPBOZCEzMJkYbmum/oJFfkCPV9GFbjkxsjRsx6prR
+ ChbFFlpBpruOr6BOTkYGe4IG+NfPhPdg1urRqafjBQo6mYLQ9UR7l85WFAilM3dt
+ HGSklsoHfJihTBjCVZQ85R/KHu4R46QcelqTN0HMUjLIFO8AeyzEE3tlL05JkZl3
+ gcH/v8B38Pgoq4Ya16HkefEXrh97qzliOhkWTL2IbodoJbOJlWchM7Jc490tnoMQ
+ BksYaMM2i7R4E940VF+/VhlzN1pBSUvOd8jPdgr/altRmQEGosZg8lA+1gOW3klo
+ R4BtKrIxoQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0v6nf7p-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0v6nfau-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:54:32 +0000 (GMT)
+ Thu, 15 May 2025 15:55:08 +0000 (GMT)
 Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFkI2W020784;
- Thu, 15 May 2025 15:54:31 GMT
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFplBf031581;
+ Thu, 15 May 2025 15:55:08 GMT
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0v6nf7m-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0v6nfar-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:54:31 +0000 (GMT)
+ Thu, 15 May 2025 15:55:08 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FDtFLt021786;
- Thu, 15 May 2025 15:54:31 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfpu2sr-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEDhDV021797;
+ Thu, 15 May 2025 15:55:07 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfpu2uw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:54:31 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFsTAl23855422
+ Thu, 15 May 2025 15:55:07 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54FFt6cN26018468
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:54:30 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A46285805D;
- Thu, 15 May 2025 15:54:29 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4CF9A58056;
- Thu, 15 May 2025 15:54:29 +0000 (GMT)
+ Thu, 15 May 2025 15:55:06 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0EDD55804B;
+ Thu, 15 May 2025 15:55:06 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8116D58067;
+ Thu, 15 May 2025 15:55:05 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:54:29 +0000 (GMT)
-Message-ID: <69beab9afd943d91b602c758a1bd24ec4e728e8e.camel@linux.ibm.com>
-Subject: Re: [PATCH 29/50] ppc/xive2: Redistribute group interrupt preempted
- by higher priority interrupt
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 15:55:05 +0000 (GMT)
+Message-ID: <fe6a147f21b64736a4ff99f239b1c11cae440c8f.camel@linux.ibm.com>
+Subject: Re: [PATCH 30/50] ppc/xive: Add xive_tctx_pipr_present() to present
+ new interrupt
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
  <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
  Schlossin <calebs@linux.vnet.ibm.com>
-Date: Thu, 15 May 2025 10:54:28 -0500
-In-Reply-To: <20250512031100.439842-30-npiggin@gmail.com>
+Date: Thu, 15 May 2025 10:55:05 -0500
+In-Reply-To: <20250512031100.439842-31-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-30-npiggin@gmail.com>
+ <20250512031100.439842-31-npiggin@gmail.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=IqAecK/g c=1 sm=1 tr=0 ts=68260e38 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=IqAecK/g c=1 sm=1 tr=0 ts=68260e5c cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=h6Ax321QG256VOZq6v8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: AUTC5O_6TFJYy2Oeb_0HuM_MUH_Z_sMD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX5PGM1/Q9iR8z
- KyyiUYEXFvwlPOkAqphfjSQ8ykz6yyUva33PukmaCJzyFbsxRhIt61OnAMTrH1RcAHxCYCMSDPQ
- oypXQRIdg0nLfU0PDjmEC+d4of9aHlNGhtEvbaCw6EQepGVc+zJcO6Pci4TO9zM+yKgbTuooF15
- 5PACuXtTAa8B5+DKxdBsoSC/QOAgSPKtX4JTnscC8zqjzPdY8pESMWjdWYwEJbqMoMGz2e34iSA
- 6mwZWE62fjRXFvTx9++DIKbikHYaZsx0UDHg1FUn0wmumBbpqhEqaYfw5YzrDnI0EPNBTPd1Zyt
- 4BhGwDK0cbEK1oWRYtGxClbH2jqP/Y9yE7MU9X6bj/Y0f1PfCHPvIzb0ln7O7wgN5+d0/UlP2OZ
- tLo3tq15xrCnMsNR6XSr4UJS6+vbb89VcAmuIbhzQsdoxDyPzZSGDWlNeACw3kUxgljxltaf
-X-Proofpoint-GUID: XC_88A09velTmSOLqzUPLGYwqBwaLvYo
+ a=MpkC5fjVok2ZSxuvMYAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: SpYhKmFY7MlTz0Uv46b8whzO3DHFvKS4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX7ON1DfYY1Amb
+ STFB7kVMahRZKoorttzzxu9TSIXFHO8O0c695xflfNYeAWAVF+wCXVyU+eR38A8ZgNpnOA/XQnF
+ A7H5siqaB43enuYOvGwTxY64Wb3U99H+Z/zC/4DqX6CqAXMm+nJxnTpkWB34EM92V5ObiWOyTvr
+ MtvT5icK+MDP2iQ3xi1VudLVQiLLkE6yGiOInPou1ZX7w7cgisg7SNDzoRl3CZF/NepgvPvSHm3
+ 60cTnm+Y3kKh0pYUN+XDy7umUqqiLNHRNjFxqQaoFzamQpTU38EbsOuctmL+KezXd2HyVyahPxk
+ gK/hOd9r9AWOEsF8WOQt6Hb37Y59iUQP3mqS99zWJCBjgWzzr4eSni3dIbfBqMNT8N5pMkca+PE
+ vKEjxEYQubkh3r+yjXyZAHJR5n30IgNyl6lDosZFO49Ty/7AD8YTSLs89abB2GUl4AjTxPyz
+X-Proofpoint-GUID: qIXQt6aKphtlXnqQd0-ibY43Qh2Jh5Mf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  mlxscore=0 malwarescore=0
  adultscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 clxscore=1015 spamscore=0 mlxlogscore=999 bulkscore=0
+ priorityscore=1501 clxscore=1015 spamscore=0 mlxlogscore=860 bulkscore=0
  suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505150155
@@ -135,41 +135,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 On Mon, 2025-05-12 at 13:10 +1000, Nicholas Piggin wrote:
-> A group interrupt that gets preempted by a higher priority interrupt
-> delivery must be redistributed otherwise it would get lost.
+> xive_tctx_pipr_update() is used for multiple things. In an effort
+> to make things simpler and less overloaded, split out the function
+> that is used to present a new interrupt to the tctx.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  hw/intc/xive2.c | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
+>  hw/intc/xive.c        | 8 +++++++-
+>  hw/intc/xive2.c       | 2 +-
+>  include/hw/ppc/xive.h | 2 ++
+>  3 files changed, 10 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 6e136ad2e2..cae4092198 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -1638,11 +1638,21 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
->                               crowd, cam_ignore, priority,
->                               xive_get_field32(END2_W7_F1_LOG_SERVER_ID, end.w7),
->                               &match)) {
-> +        XiveTCTX *tctx = match.tctx;
-> +        uint8_t ring = match.ring;
-> +        uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
-> +        uint8_t *aregs = &tctx->regs[alt_ring];
-> +        uint8_t nsr = aregs[TM_NSR];
->          uint8_t group_level;
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index 27b5a21371..bf4c0634ca 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -225,6 +225,12 @@ void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
+>      xive_tctx_notify(tctx, ring, group_level);
+>   }
 >  
-> +        if (priority < aregs[TM_PIPR] &&
-> +            xive_nsr_indicates_group_exception(alt_ring, nsr)) {
-> +            xive2_redistribute(xrtr, tctx, alt_ring);
-> +        }
+> +void xive_tctx_pipr_present(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
+> +                            uint8_t group_level)
+> +{
+> +    xive_tctx_pipr_update(tctx, ring, priority, group_level);
+> +}
 > +
->          group_level = xive_get_group_level(crowd, cam_ignore, nvx_blk, nvx_idx);
-> -        trace_xive_presenter_notify(nvx_blk, nvx_idx, match.ring, group_level);
-> -        xive_tctx_pipr_update(match.tctx, match.ring, priority, group_level);
-> +        trace_xive_presenter_notify(nvx_blk, nvx_idx, ring, group_level);
-> +        xive_tctx_pipr_update(tctx, ring, priority, group_level);
+>  /*
+>   * XIVE Thread Interrupt Management Area (TIMA)
+>   */
+> @@ -2040,7 +2046,7 @@ void xive_router_end_notify(XiveRouter *xrtr, XiveEAS *eas)
+>                               xive_get_field32(END_W7_F1_LOG_SERVER_ID, end.w7),
+>                               &match)) {
+>          trace_xive_presenter_notify(nvt_blk, nvt_idx, match.ring, 0);
+> -        xive_tctx_pipr_update(match.tctx, match.ring, priority, 0);
+> +        xive_tctx_pipr_present(match.tctx, match.ring, priority, 0);
 >          return;
 >      }
 >  
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index cae4092198..f91109b84a 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -1652,7 +1652,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+>  
+>          group_level = xive_get_group_level(crowd, cam_ignore, nvx_blk, nvx_idx);
+>          trace_xive_presenter_notify(nvx_blk, nvx_idx, ring, group_level);
+> -        xive_tctx_pipr_update(tctx, ring, priority, group_level);
+> +        xive_tctx_pipr_present(tctx, ring, priority, group_level);
+>          return;
+>      }
+>  
+> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+> index 8152a9df3d..0d6b11e818 100644
+> --- a/include/hw/ppc/xive.h
+> +++ b/include/hw/ppc/xive.h
+> @@ -562,6 +562,8 @@ void xive_tctx_reset(XiveTCTX *tctx);
+>  void xive_tctx_destroy(XiveTCTX *tctx);
+>  void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
+>                             uint8_t group_level);
+> +void xive_tctx_pipr_present(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
+> +                            uint8_t group_level);
+>  void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring);
+>  void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring, uint8_t group_level);
+>  uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring);
 
 
