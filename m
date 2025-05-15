@@ -4,92 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B4AC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C99C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFTdo-0003vJ-0L; Thu, 15 May 2025 04:08:32 -0400
+	id 1uFTg3-0003VS-4D; Thu, 15 May 2025 04:10:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uFTdc-0003lx-OX; Thu, 15 May 2025 04:08:20 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uFTfm-000336-MA; Thu, 15 May 2025 04:10:36 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uFTda-0000ey-SJ; Thu, 15 May 2025 04:08:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747296499; x=1778832499;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=1AnATLoCvpWdtTCkDZsBgKnp3pMIZcVXqd27NhUqOtA=;
- b=LvGWjzSHv3VY7pncxdXCP8KWMdo9g6nJHGgRmc3X4xGg4tsfDhfyys6W
- HOoQGg1f/wdJvGBaLD9fnQmpVTF7rUCsCvQdEVorHbpYOQcKW9mo8uJKe
- Vohft0V6OhRHZzZhSljWoTTyfd4pizoFYicyOu8GDNlDplhVPtA2Kni9I
- 6+N9jmkFdAyG0yfseU9qtG1Haw75svuCWDH8eet0OFmcME36Mu5bJe6cd
- tS3mXbm1/p/Ila/Zusdf/Xd0nOxoC9Nf8Upw7uUjmO6KgdSg9M4gT3tlF
- g51FMhZmab02dj3fw4sqC/r6fmlXkBC5r4strLyL5tkbhK+VrDrzmX3M4 w==;
-X-CSE-ConnectionGUID: O2BqWi/6Rxmtb7QmRS1RpQ==
-X-CSE-MsgGUID: VBZp4VhWTOWao409x2y8qQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="49088626"
-X-IronPort-AV: E=Sophos;i="6.15,290,1739865600"; d="scan'208";a="49088626"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2025 01:08:13 -0700
-X-CSE-ConnectionGUID: zUkxVkykSFCEb485bRZwWw==
-X-CSE-MsgGUID: AE6yTCKbQjS55KgTgA+1xg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,290,1739865600"; d="scan'208";a="138792583"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 May 2025 01:08:02 -0700
-Message-ID: <c6ece176-ac65-40ea-aca2-285c2fd9a9a7@intel.com>
-Date: Thu, 15 May 2025 16:08:00 +0800
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uFTfj-00010V-Sw; Thu, 15 May 2025 04:10:33 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 15 May
+ 2025 16:10:09 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Thu, 15 May 2025 16:10:09 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v3 04/28] hw/misc/aspeed_hace: Extract direct mode hash buffer
+ setup into helper function
+Date: Thu, 15 May 2025 16:09:36 +0800
+Message-ID: <20250515081008.583578-5-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
+References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/27] hw/nvram/fw_cfg: Factor
- fw_cfg_init_mem_internal() out
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
- Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
- <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- Helge Deller <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>,
- Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Jason Wang <jasowang@redhat.com>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-6-philmd@linaro.org>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250508133550.81391-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,59 +63,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/2025 9:35 PM, Philippe Mathieu-Daudé wrote:
-> Factor fw_cfg_init_mem_internal() out of fw_cfg_init_mem_wide().
-> In fw_cfg_init_mem_wide(), assert DMA arguments are provided.
-> Callers without DMA have to use the fw_cfg_init_mem() helper.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+To improve code readability and maintainability of do_hash_operation(), this
+commit introduces a new helper function: hash_prepare_direct_iov().
+This function encapsulates the logic for setting up the I/O vector (iov)
+in direct mode (non-scatter-gather).
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+No functional changes are introduced.
 
-> ---
->   hw/nvram/fw_cfg.c | 17 +++++++++++++----
->   1 file changed, 13 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-> index 10f8f8db86f..4067324fb09 100644
-> --- a/hw/nvram/fw_cfg.c
-> +++ b/hw/nvram/fw_cfg.c
-> @@ -1053,9 +1053,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
->       return s;
->   }
->   
-> -FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-> -                                 hwaddr data_addr, uint32_t data_width,
-> -                                 hwaddr dma_addr, AddressSpace *dma_as)
-> +static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
-> +                                            hwaddr data_addr, uint32_t data_width,
-> +                                            hwaddr dma_addr, AddressSpace *dma_as)
->   {
->       DeviceState *dev;
->       SysBusDevice *sbd;
-> @@ -1087,10 +1087,19 @@ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
->       return s;
->   }
->   
-> +FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-> +                                 hwaddr data_addr, uint32_t data_width,
-> +                                 hwaddr dma_addr, AddressSpace *dma_as)
-> +{
-> +    assert(dma_addr && dma_as);
-> +    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_addr,
-> +                                    dma_addr, dma_as);
-> +}
-> +
->   FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
->                                     unsigned data_width)
->   {
-> -    return fw_cfg_init_mem_wide(ctl_addr, data_addr, data_width, 0, NULL);
-> +    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width, 0, NULL);
->   }
->   
->   
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/misc/aspeed_hace.c | 42 ++++++++++++++++++++++++++++++++----------
+ 1 file changed, 32 insertions(+), 10 deletions(-)
+
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index 1256926d22..42c6f29f82 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -142,6 +142,31 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+     return false;
+ }
+ 
++static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov)
++{
++    uint32_t src;
++    void *haddr;
++    hwaddr plen;
++    int iov_idx;
++
++    plen = s->regs[R_HASH_SRC_LEN];
++    src = s->regs[R_HASH_SRC];
++    haddr = address_space_map(&s->dram_as, src, &plen, false,
++                              MEMTXATTRS_UNSPECIFIED);
++    if (haddr == NULL) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unable to map address, addr=0x%x, "
++                      "plen=0x%" HWADDR_PRIx "\n",
++                      __func__, src, plen);
++        return -1;
++    }
++
++    iov[0].iov_base = haddr;
++    iov[0].iov_len = plen;
++    iov_idx = 1;
++
++    return iov_idx;
++}
+ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+                               bool acc_mode)
+ {
+@@ -169,6 +194,7 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+         }
+     }
+ 
++    /* Prepares the iov for hashing operations based on the selected mode */
+     if (sg_mode) {
+         for (iov_idx = 0; !(len & SG_LIST_LEN_LAST); iov_idx++) {
+             if (iov_idx == ASPEED_HACE_MAX_SG) {
+@@ -211,17 +237,13 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+             }
+         }
+     } else {
+-        plen = s->regs[R_HASH_SRC_LEN];
++        iov_idx = hash_prepare_direct_iov(s, iov);
++    }
+ 
+-        haddr = address_space_map(&s->dram_as, s->regs[R_HASH_SRC],
+-                                  &plen, false, MEMTXATTRS_UNSPECIFIED);
+-        if (haddr == NULL) {
+-            qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto failed\n", __func__);
+-            return;
+-        }
+-        iov[0].iov_base = haddr;
+-        iov[0].iov_len = plen;
+-        iov_idx = 1;
++    if (iov_idx <= 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to prepare iov\n", __func__);
++         return;
+     }
+ 
+     if (acc_mode) {
+-- 
+2.43.0
 
 
