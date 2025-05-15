@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 546A2C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 05:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EAEDC2D0CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 05:33:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFRCy-0002I4-Bk; Thu, 15 May 2025 01:32:40 -0400
+	id 1uFRDi-0002s5-Es; Thu, 15 May 2025 01:33:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uFRCv-0002Hb-HB
- for qemu-devel@nongnu.org; Thu, 15 May 2025 01:32:38 -0400
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
+ id 1uFRDg-0002ru-Us
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 01:33:25 -0400
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uFRCt-0006oL-LC
- for qemu-devel@nongnu.org; Thu, 15 May 2025 01:32:37 -0400
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-4ddb9d80bffso419783137.0
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 22:32:29 -0700 (PDT)
+ id 1uFRDf-0006pu-5B
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 01:33:24 -0400
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-86715793b1fso159109241.0
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 22:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747287148; x=1747891948; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747287202; x=1747892002; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fVVmyUjkyge8c5rikKdn5k4ZcGLDDgfDbc7uMGGVFyc=;
- b=Lshs2MddGHKPou7pz+O/PF1PdMZREXYfObKluIvV4vILOfVONHvpnkBKoh6hgim6Tg
- QDGVe/6JTCW7aXQ4tAVE02KazVEKnltvLlTcWwAFXAxHBqvbFjHCUhvqObmJG34qGmWK
- VAG5GzLWO3xRKycbly2ESOk59Xsc9EezSwMrFJw4k4BZ3Ca/POda0fyRuZzwrax3M6RF
- SJ7Oi+MKWA8tug6g3XLdtseKR+DfsjgC+Gff+1Vv6w/CoIFkpUkO7Uprv2M8JhJCHxz1
- /4DDI8QwfMDZtIrhkIaPw5S7vexSC8dyFVupyPWoFNUr+BVEe+PS6olBLuecfDXwOojj
- tA9A==
+ bh=gkMUJ1gdRTZxGVceyX4JhxKXh4aHHL9iiy3HxlflB/E=;
+ b=gv1yyqq/B6GHitdrbgEJETPDHCAbX/inySe3sqC2wtkKwogvQVnToKcpoAAFfRLG2G
+ 5GekeniviVA5JQBrbemCNe+Ar+8B4CN3Fp3jqHcwhe0TwPGa0C9JDBps31gDBbXtAGuR
+ u+Zuoe6xE7kmr7KiWxowXUkh47JENEZ9mtlyspfCzeU76cE5TaCnUt8i/lGUnO+Asi4d
+ WPXd7/bbzdDB8FeyoqRxXO/PAWEiJ90HpQ7S93LATv/8xQl7PF1EEEus7TwN/sSMWAtC
+ uYSTx5cNxAA8qn5OaWBW+6zlghP5P+lZ3IeDJw71+BdYJvmhU5m2+J7HpXWwVj+ojSbh
+ zKrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747287148; x=1747891948;
+ d=1e100.net; s=20230601; t=1747287202; x=1747892002;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fVVmyUjkyge8c5rikKdn5k4ZcGLDDgfDbc7uMGGVFyc=;
- b=wCnJ6zOqpyAnSxrpezQxY1XEVgh+vbcM+eXMFd/Nn+q7fznAwQSMUodJWNa1gSU5z1
- Q+2vgKQVzEXEaqwmsZxk0m/kJ5SPxxWTxmflVsTvr9u4QMVIzHSde7Byzena4zKaR5QD
- Pic9oqxLHa2TAKIPtGxFqMhLXnWeDXdw/CvGiojBKg/PuzQsBuz1WFORXwCLXQUFJAhZ
- vCtqh6TqgCjV4MgwMRLasv2gTRq5/2KCQEkPQ5t0v55l/PrDubNyqqUSdAPJHfYyrQu2
- fLtV+NMlUk1PwBXe0JR7w2HLwlTqAEOajPRSVOnW6AJeRYt8Onzqr78exs5TOvqmMRS5
- MFdg==
-X-Gm-Message-State: AOJu0YwOFVKXgPYOKhgjqmNfPBl/vnfItJs+uoHWynu1YYftWcETVBkR
- bHVY0e8l3xjhRi0JfrzX4tCZAxjTjo6v1vXtSGnTe5kAzc8AsEYQJX7hWKwBbeqsCVecK+26YYd
- 0wKkYcW9fIQ7FD7IrOhGjptO49no=
-X-Gm-Gg: ASbGncuY9xCUjpsOGzvSEJibGodgnmYRQaSg+mKnQvVo0H2p8b+M3Z2+EGnGQ5CdzLq
- GjqzzKXm4vVwWt5CzyFdl4NSsBzMSOP+yAhEGhnAG1Zvai1+ibe6Dhwe1fYx9Qz10HmNT92j+IU
- kZqDZGPnvrIhe5fX1N2KttD6Lu3fAC5WIDBm5n5Nj8VIWrt4shNib30Lwo8M/hJX8=
-X-Google-Smtp-Source: AGHT+IGQd9aeb0N7TbuMVNIo0+5kaiGQ8LpVR8xiFbNtWhs0UJkQeGtXuw/IaJb87d+49sdnaEa3IhzkccrOX5jkqIA=
-X-Received: by 2002:a05:6102:2acd:b0:4df:48a4:776b with SMTP id
- ada2fe7eead31-4df8fda1e12mr1704992137.0.1747287147967; Wed, 14 May 2025
- 22:32:27 -0700 (PDT)
+ bh=gkMUJ1gdRTZxGVceyX4JhxKXh4aHHL9iiy3HxlflB/E=;
+ b=SqGrpTnnQg8Ke8k1sHz6kkFxVvJU04ZubNLlGp0GchPqZ7gk3AxOtdHCsDlws/1628
+ GKwCSezJWDa8D282EhYDWXDewsJUMPZOYULKTZGr8nnZ7s8Rv24ndyNylb84CCV3jmlX
+ oDrQSsCs3FAC+5txlZBUdOPnuKbnXom1OHE/sZCRmmDlu9eycF41ORaNjsb6bsfg6RK4
+ yG4omZWFEsxqGoxBqfsr8LWOVjnBSD5d8dRrjDAxQx5ewN1CJu0Viv4c615K+uQn1z2B
+ ohkFoSDTPO3bIz99t7I81iV2c/0gIXOz38W9disYlT4qTjMceLbk8KC/PL8CJF8iL+Eq
+ sITg==
+X-Gm-Message-State: AOJu0Yw61DlgLdOiyjPvQ2A20GF0bkabZ+MUVMCN2L/0KZrWBkS/g8CI
+ RicQbdsl2K/yoZCRh5I0s9cmG+/j0ERL1vjZ7z8bqS54Pa28sSNGu8WgurXdIfv2OESGMdiQOA4
+ QRaAKMVy265aYyq0LWnF5swHHKdo=
+X-Gm-Gg: ASbGncs+B4QxihZ+pRKOLsjsh+pckMgKZvjtK/niq1sl16Djwtjy5fYm72YpBK8KAUy
+ BtyWtlvy9L+lwxzoC2OddZJ5WIzsoXPpzYIDcqSaZGHveeN0HikOPpsJ89coehJ7aXxP5Z3/rnG
+ 3kjB1cOb1wdr/MgkB58NPrIjhjkpvllAHAJRHGvYzFIArGQXmLDFUEecpiAWs9ztM=
+X-Google-Smtp-Source: AGHT+IE81RV2bFjT9zKK4oZ2UmEfpV4naHEpaUH+cYhgK5fQGlbodfnV+1ABPSZ3UXyTrPRPEldzOUjvOdxzCw9LyCA=
+X-Received: by 2002:a05:6102:3e0c:b0:4df:84d5:543e with SMTP id
+ ada2fe7eead31-4df9541ae27mr837195137.7.1747287201892; Wed, 14 May 2025
+ 22:33:21 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250512095226.93621-1-pbonzini@redhat.com>
- <20250512095226.93621-17-pbonzini@redhat.com>
-In-Reply-To: <20250512095226.93621-17-pbonzini@redhat.com>
+ <20250512095226.93621-18-pbonzini@redhat.com>
+In-Reply-To: <20250512095226.93621-18-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 May 2025 15:32:01 +1000
-X-Gm-Features: AX0GCFvlfSQkW7jKvKq-mhhHfrL1hdst3fr5lqgxqRqvwNXznshKueXFGmBrxpg
-Message-ID: <CAKmqyKNG0ihjjX02BzoyZxqPBxwotM0nwk24i3_BdxHY=MK+rQ@mail.gmail.com>
-Subject: Re: [PATCH 16/26] target/riscv: convert SiFive E CPU models to
- RISCVCPUDef
+Date: Thu, 15 May 2025 15:32:53 +1000
+X-Gm-Features: AX0GCFuG_LO2FUGJ3XJ73F70pihbVW1dCKp6EKR0H0JTsTr1ZQuUJn3kslN-ddo
+Message-ID: <CAKmqyKPw-2zBs3gtutM2dVVv+P12bRn9iaXUF9VPx4=_X3K2cA@mail.gmail.com>
+Subject: Re: [PATCH 17/26] target/riscv: convert ibex CPU models to RISCVCPUDef
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, dbarboza@ventanamicro.com, 
  richard.henderson@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,155 +106,67 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu-qom.h |  1 +
->  target/riscv/cpu.c     | 74 ++++++++++++------------------------------
->  2 files changed, 21 insertions(+), 54 deletions(-)
+>  target/riscv/cpu.c | 39 ++++++++++++++++-----------------------
+>  1 file changed, 16 insertions(+), 23 deletions(-)
 >
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 4cfdb74891e..0f9be15e47b 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -44,6 +44,7 @@
->  #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
->  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibe=
-x")
->  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
-> +#define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
->  #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31"=
-)
->  #define TYPE_RISCV_CPU_SIFIVE_E34       RISCV_CPU_TYPE_NAME("sifive-e34"=
-)
->  #define TYPE_RISCV_CPU_SIFIVE_E51       RISCV_CPU_TYPE_NAME("sifive-e51"=
-)
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index b4f6e34eac7..aea5d7d197e 100644
+> index aea5d7d197e..661b2384d82 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -503,23 +503,6 @@ static void rv64_sifive_u_cpu_init(Object *obj)
+> @@ -690,28 +690,6 @@ static void rv32_sifive_u_cpu_init(Object *obj)
+>      cpu->cfg.mmu =3D true;
 >      cpu->cfg.pmp =3D true;
 >  }
->
-> -static void rv64_sifive_e_cpu_init(Object *obj)
+> -
+> -static void rv32_ibex_cpu_init(Object *obj)
 > -{
 > -    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
 > -    RISCVCPU *cpu =3D RISCV_CPU(obj);
 > -
-> -    riscv_cpu_set_misa_ext(env, RVI | RVM | RVA | RVC | RVU);
-> -    env->priv_ver =3D PRIV_VERSION_1_10_0;
+> -    riscv_cpu_set_misa_ext(env, RVI | RVM | RVC | RVU);
+> -    env->priv_ver =3D PRIV_VERSION_1_12_0;
 > -#ifndef CONFIG_USER_ONLY
 > -    set_satp_mode_max_supported(cpu, VM_1_10_MBARE);
 > -#endif
-> -
 > -    /* inherited from parent obj via riscv_cpu_init() */
 > -    cpu->cfg.ext_zifencei =3D true;
 > -    cpu->cfg.ext_zicsr =3D true;
 > -    cpu->cfg.pmp =3D true;
-> -}
+> -    cpu->cfg.ext_smepmp =3D true;
 > -
->  static void rv64_thead_c906_cpu_init(Object *obj)
->  {
->      CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> @@ -708,23 +691,6 @@ static void rv32_sifive_u_cpu_init(Object *obj)
->      cpu->cfg.pmp =3D true;
->  }
->
-> -static void rv32_sifive_e_cpu_init(Object *obj)
-> -{
-> -    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> -    RISCVCPU *cpu =3D RISCV_CPU(obj);
-> -
-> -    riscv_cpu_set_misa_ext(env, RVI | RVM | RVA | RVC | RVU);
-> -    env->priv_ver =3D PRIV_VERSION_1_10_0;
-> -#ifndef CONFIG_USER_ONLY
-> -    set_satp_mode_max_supported(cpu, VM_1_10_MBARE);
-> -#endif
-> -
-> -    /* inherited from parent obj via riscv_cpu_init() */
-> -    cpu->cfg.ext_zifencei =3D true;
-> -    cpu->cfg.ext_zicsr =3D true;
-> -    cpu->cfg.pmp =3D true;
-> -}
-> -
->  static void rv32_ibex_cpu_init(Object *obj)
->  {
->      CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> @@ -746,23 +712,6 @@ static void rv32_ibex_cpu_init(Object *obj)
->      cpu->cfg.ext_zbc =3D true;
->      cpu->cfg.ext_zbs =3D true;
->  }
-> -
-> -static void rv32_imafcu_nommu_cpu_init(Object *obj)
-> -{
-> -    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> -    RISCVCPU *cpu =3D RISCV_CPU(obj);
-> -
-> -    riscv_cpu_set_misa_ext(env, RVI | RVM | RVA | RVF | RVC | RVU);
-> -    env->priv_ver =3D PRIV_VERSION_1_10_0;
-> -#ifndef CONFIG_USER_ONLY
-> -    set_satp_mode_max_supported(cpu, VM_1_10_MBARE);
-> -#endif
-> -
-> -    /* inherited from parent obj via riscv_cpu_init() */
-> -    cpu->cfg.ext_zifencei =3D true;
-> -    cpu->cfg.ext_zicsr =3D true;
-> -    cpu->cfg.pmp =3D true;
+> -    cpu->cfg.ext_zba =3D true;
+> -    cpu->cfg.ext_zbb =3D true;
+> -    cpu->cfg.ext_zbc =3D true;
+> -    cpu->cfg.ext_zbs =3D true;
 > -}
 >  #endif
 >
 >  static ObjectClass *riscv_cpu_class_by_name(const char *cpu_model)
-> @@ -3204,6 +3153,15 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->  #endif
+> @@ -3169,7 +3147,22 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>          .misa_mxl_max =3D MXL_RV32,
 >      ),
 >
-> +    DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E, TYPE_RISCV_VENDOR=
-_CPU,
-> +        .misa_ext =3D RVI | RVM | RVA | RVC | RVU,
-> +        .priv_spec =3D PRIV_VERSION_1_10_0,
+> -    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_IBEX,       MXL_RV32,  rv32_ibex_cp=
+u_init),
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_IBEX, TYPE_RISCV_VENDOR_CPU,
+> +        .misa_mxl_max =3D MXL_RV32,
+> +        .misa_ext =3D RVI | RVM | RVC | RVU,
+> +        .priv_spec =3D PRIV_VERSION_1_12_0,
 > +        .cfg.max_satp_mode =3D VM_1_10_MBARE,
 > +        .cfg.ext_zifencei =3D true,
 > +        .cfg.ext_zicsr =3D true,
-> +        .cfg.pmp =3D true
+> +        .cfg.pmp =3D true,
+> +        .cfg.ext_smepmp =3D true,
+> +
+> +        .cfg.ext_zba =3D true,
+> +        .cfg.ext_zbb =3D true,
+> +        .cfg.ext_zbc =3D true,
+> +        .cfg.ext_zbs =3D true
 > +    ),
 > +
->  #if defined(TARGET_RISCV32) || \
->      (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
->      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE32, TYPE_RISCV_DYNAMIC_CPU,
-> @@ -3212,8 +3170,14 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
+>          .misa_mxl_max =3D MXL_RV32
 >      ),
->
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_IBEX,       MXL_RV32,  rv32_ibex_cp=
-u_init),
-> -    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E31, MXL_RV32,  rv32_sifive_=
-e_cpu_init),
-> -    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E34, MXL_RV32,  rv32_imafcu_=
-nommu_cpu_init),
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
-> +        .misa_mxl_max =3D MXL_RV32
-> +    ),
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E34, TYPE_RISCV_CPU_SIFIVE_E,
-> +        .misa_mxl_max =3D MXL_RV32,
-> +        .misa_ext =3D RVF,  /* IMAFCU */
-> +    ),
-> +
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_U34, MXL_RV32,  rv32_sifive_=
-u_cpu_init),
->
->      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV32I, TYPE_RISCV_BARE_CPU,
-> @@ -3239,7 +3203,9 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .misa_mxl_max =3D MXL_RV64,
->      ),
->
-> -    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E51, MXL_RV64,  rv64_sifive_=
-e_cpu_init),
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E51, TYPE_RISCV_CPU_SIFIVE_E,
-> +        .misa_mxl_max =3D MXL_RV64
-> +    ),
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_U54, MXL_RV64,  rv64_sifive_=
-u_cpu_init),
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SHAKTI_C,   MXL_RV64,  rv64_sifive_=
-u_cpu_init),
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c=
-906_cpu_init),
 > --
 > 2.49.0
 >
