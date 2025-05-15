@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ADADC54755
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 04:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F75C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 04:52:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFQZK-0001u1-PV; Thu, 15 May 2025 00:51:42 -0400
+	id 1uFQZz-00025f-41; Thu, 15 May 2025 00:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uFQZF-0001to-OT
- for qemu-devel@nongnu.org; Thu, 15 May 2025 00:51:37 -0400
-Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
+ id 1uFQZx-00023y-Sf
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 00:52:21 -0400
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uFQZD-0002BL-Sb
- for qemu-devel@nongnu.org; Thu, 15 May 2025 00:51:37 -0400
-Received: by mail-vs1-xe36.google.com with SMTP id
- ada2fe7eead31-4def2870995so396464137.1
- for <qemu-devel@nongnu.org>; Wed, 14 May 2025 21:51:35 -0700 (PDT)
+ id 1uFQZw-0002RO-5s
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 00:52:21 -0400
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-525b44b7720so166794e0c.0
+ for <qemu-devel@nongnu.org>; Wed, 14 May 2025 21:52:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747284694; x=1747889494; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747284739; x=1747889539; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mOpfz8ZpCVXDrfyRpWknxxtujZJaQ/zd5KCOOOQn2kY=;
- b=aiLh1FAXqpwRjOuIpqEgDYDifrMPAhak8g7TqBuRO2Zbj9AL0XNy1FvWvKcqJS86yE
- cPqwX3sq0qhc6n2L51wYqwq19df5WqsaPZVVTgB1Eqm0Y6l+BADobm2cuNa/P/7q+LCV
- aPWOjpcAAoPidZgvDjwTKYJQ4CJp8HYiPJt9loyjmN4iFHgZ+AsYLApo+Az4CuXGsZgD
- cE82p3hTkzF1UODMfSroOrPGDbHy9sM1Uq704j3BhoXxXFXbGU9u+2A/fmGx9hxU66CE
- rlt5fDEE6nk+AUuNMyvpTLNXBDGrqj7BiSf+fwsEqaeUgPzyuk+1gc8dkruW2v2yPy5d
- WbhQ==
+ bh=MBQuF8Tc5wzOQv5t+abVND2//mmOWlRf+pyDgCrE/eQ=;
+ b=OKTyWt6ZGHT0pFmxsvY2/g2wWPudFkkvwOVhYYpegPlikNUAhQKFihIb9eUIjfWFq2
+ DrPE7DvAFjz21PJyI5SIEWoRiKPHwy1ZKcN2kgAU2OHkLVF3vfZUVaqgB67LRmfxTFYA
+ bYJtRBN4QekYJ40jN3XDypH0ESY1NqUoIAmE4dwsyiks3Dljb73LCfnvofN2swUMEFfs
+ N7UxRPEZxcJPmXbe98+o0GlafBlSXFp7/8uz10k/0Itc7o0zeJCPJahwRuBoOQYnSFLw
+ l02FcO/FBjffcb+UG1aRlW6eGAtAz0Y0W1/XLD+imliTSLtc/9MmlSsEUlAHzeEIpIlB
+ xfsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747284694; x=1747889494;
+ d=1e100.net; s=20230601; t=1747284739; x=1747889539;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mOpfz8ZpCVXDrfyRpWknxxtujZJaQ/zd5KCOOOQn2kY=;
- b=M7zeb5femoUSNAIOQV34ByvQQBM/E7jaeCD0/KmlJNNduGzyYn3/au0D60ulgaVaKU
- 3XUEFq14YouLDkY5qTdWaAc62I9uZcNu+UfTuc5kebOl/iuSJdcao4RqVQ1Y5cZN14Yk
- z/EVeqRE/Hwxssco3qBmMXhQAyg1DO1dceY1MLX8LCuscSoc2Se/4zXGNwygJEX/1Jol
- AY/wkcldROyDxgtnikxLjWRYJtiesf5pROY8qmF1sOkDjCLIlpHW9oAP5/3EvnO4sh9d
- HJplC1UeVYlQDAuEwAgSlSorKFH/ahFv8DS9neFbuJ/B0N0xgNgSH9vxarYyBvwwowzm
- LkRA==
-X-Gm-Message-State: AOJu0Yw3IVfBWWWngIg60sK4XotKZYPDIIkLTV3XlHX7Fy1jo+MyqjdY
- wbyBDOZ3mUyqAaAO6Bc769dE1MS3wIGgRM1KAnP25U30yFxQ4ruC0+b5mNeg///ymq47MCOVI8+
- 5ceIC8t3SKB/bHhmePrX05eUirvc4woH/RQ==
-X-Gm-Gg: ASbGncv2FTpjukC8Oy8px8OTws9zd8zLFm2mtru0alHqn1tk55VFVd6HfZumciTqPsY
- ZITMT9PF+rUoHQ+IO8Auw4HnovFiSN/YOSMsUShc8RmI93nBnnwlQEYDWtOMYBA3A2hCSx/lLvD
- UGDQAtnmqod/VqLs4ZZgzLPa4v15x5M3Y1tuwS80KkKHokzt1iwLJMO8Lum8dfxCo=
-X-Google-Smtp-Source: AGHT+IH1vCVc9aiD3LgUCuH3q5XJB+brKAeIkoReqlCgJ8wlJKCIvIJ/hb21a5daNmfpQAhkk9F6tZMRnMAWNRf78A8=
-X-Received: by 2002:a67:f497:0:b0:4c3:69f:5be with SMTP id
- ada2fe7eead31-4df900d4734mr1658336137.7.1747284694183; 
- Wed, 14 May 2025 21:51:34 -0700 (PDT)
+ bh=MBQuF8Tc5wzOQv5t+abVND2//mmOWlRf+pyDgCrE/eQ=;
+ b=HD8eJLLaaoZPG338hwI+QjFV0GI4wbEIDxCrmhOo7jrITlrRVucaO9X0GRulPBVFOj
+ HT0G4Dr4/3ZPpHGV6vnozVlVQUjyZebRaN/RGrm8A9mfYwFLYJ8Wf2WkhDSEZOxSWu0s
+ SH/ZYxihJo/dHfkZl1skKzUWo3pBAMhaWxzPeVd2ByYYt5A1QyOvsflqG5m2yl2h6RkX
+ CzUXA6LAlMFgKxj+0+0U5NnAWRvWh8pp2trFu8cNyDi7x5JSsvvpWhtRtfre6SxKXXfT
+ RU+gHHnochc9hbeCjWQayyhrJzE/fTTKoGmJ8yJgQoJh2T7bCJ5LW1G8ZSCBCJxdYeAp
+ 5d0w==
+X-Gm-Message-State: AOJu0YwgWsSrfCoCbv9+qpvi91cGHl/P8KxW60pEaTJmhbFUP3LLJeif
+ pCS9G2vGXQKqshEW7WfJb94gqj3Y3NCizp/BTqLIRHCJh1PKI6ZRCNHinZ0chN/HJS0KW4jCTYU
+ 7ZY8dWTyMGpt6D/GIzQpLjmvBZ0w=
+X-Gm-Gg: ASbGncv9TdfH647VotKdHbKh2jmz7l1MXiVk0gPFySShhHL3ckTkEx7jqMxuOCXghdh
+ T8dAuQVyJx1NyY7/1HEmmWsAbjwxWWshxiGSXDxMt1wSy+kifcWFrSVU327vBB0nRC6IM7/rRyO
+ sWD3JNAvXguHieUAQy++OxXyq47EyopKQ18BwQyicqj0hyqDW4qWY8GggEQT0yXbQ9HIa+5Rwcs
+ Q==
+X-Google-Smtp-Source: AGHT+IE3QS86BGv2Y4uxRGopBKwu1zBaXLX8SKSO44MDHSn98Ulp9fXlmrkyFjsZB/M0TWlnkY4Ht3V2VSiU+ZGGZPw=
+X-Received: by 2002:a05:6122:8298:b0:528:f40f:347f with SMTP id
+ 71dfb90a1353d-52dabcbd04emr794624e0c.2.1747284738858; Wed, 14 May 2025
+ 21:52:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250512095226.93621-1-pbonzini@redhat.com>
- <20250512095226.93621-7-pbonzini@redhat.com>
-In-Reply-To: <20250512095226.93621-7-pbonzini@redhat.com>
+ <20250512095226.93621-11-pbonzini@redhat.com>
+In-Reply-To: <20250512095226.93621-11-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 May 2025 14:51:08 +1000
-X-Gm-Features: AX0GCFv9z-Vqsi_JnXDuRYvtPjEJJwEZ1nGnllXExJ2fNnj8ntunpxIYEnsFc1w
-Message-ID: <CAKmqyKN+wK7DL7-t=5O60XcGLX24iHDsx=M8NwWo8QWphtQOcQ@mail.gmail.com>
-Subject: Re: [PATCH 06/26] target/riscv: introduce RISCVCPUDef
+Date: Thu, 15 May 2025 14:51:52 +1000
+X-Gm-Features: AX0GCFsUTQhpvPcRt_7FfTMe9M_wvhZAXPFmqK6DlyfemzJfy4roP-GSGKovlyw
+Message-ID: <CAKmqyKNerB8pxFEMJHpFVfAuSY_VMi=OCJT_wyMvH_=UDF9-hA@mail.gmail.com>
+Subject: Re: [PATCH 10/26] target/riscv: include default value in
+ cpu_cfg_fields.h.inc
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, dbarboza@ventanamicro.com, 
  richard.henderson@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,10 +101,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, May 12, 2025 at 7:53=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
  wrote:
 >
-> Start putting all the CPU definitions in a struct.  Later this will repla=
-ce
-> instance_init functions with declarative code, for now just remove the
-> ugly cast of class_data.
+> In preparation for adding a function to merge two RISCVCPUConfigs
+> (pulling values from the parent if they are not overridden) annotate
+> cpu_cfg_fields.h.inc with the default value of the fields.
 >
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
@@ -111,99 +112,66 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.h |  4 ++++
->  target/riscv/cpu.c | 27 ++++++++++++++++++---------
->  2 files changed, 22 insertions(+), 9 deletions(-)
+>  target/riscv/cpu_cfg.h            |  2 +-
+>  target/riscv/cpu_cfg_fields.h.inc | 22 +++++++++++-----------
+>  2 files changed, 12 insertions(+), 12 deletions(-)
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 8b23aa27740..511fc25adc0 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -537,6 +537,10 @@ struct ArchCPU {
->      const GPtrArray *decoders;
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index e9bf75730a6..aa28dc8d7e6 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -23,7 +23,7 @@
+>
+>  struct RISCVCPUConfig {
+>  #define BOOL_FIELD(x) bool x;
+> -#define TYPED_FIELD(type, x) type x;
+> +#define TYPED_FIELD(type, x, default) type x;
+>  #include "cpu_cfg_fields.h.inc"
 >  };
 >
-> +typedef struct RISCVCPUDef {
-> +    RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
-> +} RISCVCPUDef;
-> +
->  /**
->   * RISCVCPUClass:
->   * @parent_realize: The parent class' realize handler.
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 54a996c2927..c163b2b24a2 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -3073,8 +3073,9 @@ static void riscv_cpu_common_class_init(ObjectClass=
- *c, const void *data)
->  static void riscv_cpu_class_init(ObjectClass *c, const void *data)
->  {
->      RISCVCPUClass *mcc =3D RISCV_CPU_CLASS(c);
-> +    const RISCVCPUDef *def =3D data;
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
+lds.h.inc
+> index cb86bfc5dc3..59f134a4192 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -2,7 +2,7 @@
+>   * Required definitions before including this file:
+>   *
+>   * #define BOOL_FIELD(x)
+> - * #define TYPED_FIELD(type, x)
+> + * #define TYPED_FIELD(type, x, default)
+>   */
 >
-> -    mcc->misa_mxl_max =3D (RISCVMXL)GPOINTER_TO_UINT(data);
-> +    mcc->misa_mxl_max =3D def->misa_mxl_max;
->      riscv_cpu_validate_misa_mxl(mcc);
->  }
+>  BOOL_FIELD(ext_zba)
+> @@ -153,18 +153,18 @@ BOOL_FIELD(misa_w)
 >
-> @@ -3170,40 +3171,48 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt=
-, char *nodename)
->  }
->  #endif
+>  BOOL_FIELD(short_isa_string)
 >
-> -#define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max, initfn) \
-> +#define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max_, initfn) \
->      {                                                       \
->          .name =3D (type_name),                                \
->          .parent =3D TYPE_RISCV_DYNAMIC_CPU,                   \
->          .instance_init =3D (initfn),                          \
->          .class_init =3D riscv_cpu_class_init,                 \
-> -        .class_data =3D GUINT_TO_POINTER(misa_mxl_max)        \
-> +        .class_data =3D &(const RISCVCPUDef) {                \
-> +             .misa_mxl_max =3D (misa_mxl_max_),               \
-> +        },                                                  \
->      }
+> -TYPED_FIELD(uint32_t, mvendorid)
+> -TYPED_FIELD(uint64_t, marchid)
+> -TYPED_FIELD(uint64_t, mimpid)
+> +TYPED_FIELD(uint32_t, mvendorid, 0)
+> +TYPED_FIELD(uint64_t, marchid, 0)
+> +TYPED_FIELD(uint64_t, mimpid, 0)
 >
-> -#define DEFINE_VENDOR_CPU(type_name, misa_mxl_max, initfn)  \
-> +#define DEFINE_VENDOR_CPU(type_name, misa_mxl_max_, initfn) \
->      {                                                       \
->          .name =3D (type_name),                                \
->          .parent =3D TYPE_RISCV_VENDOR_CPU,                    \
->          .instance_init =3D (initfn),                          \
->          .class_init =3D riscv_cpu_class_init,                 \
-> -        .class_data =3D GUINT_TO_POINTER(misa_mxl_max)        \
-> +        .class_data =3D &(const RISCVCPUDef) {                \
-> +             .misa_mxl_max =3D (misa_mxl_max_),               \
-> +        },                                                  \
->      }
+> -TYPED_FIELD(uint32_t, pmu_mask)
+> -TYPED_FIELD(uint16_t, vlenb)
+> -TYPED_FIELD(uint16_t, elen)
+> -TYPED_FIELD(uint16_t, cbom_blocksize)
+> -TYPED_FIELD(uint16_t, cbop_blocksize)
+> -TYPED_FIELD(uint16_t, cboz_blocksize)
+> +TYPED_FIELD(uint32_t, pmu_mask, 0)
+> +TYPED_FIELD(uint16_t, vlenb, 0)
+> +TYPED_FIELD(uint16_t, elen, 0)
+> +TYPED_FIELD(uint16_t, cbom_blocksize, 0)
+> +TYPED_FIELD(uint16_t, cbop_blocksize, 0)
+> +TYPED_FIELD(uint16_t, cboz_blocksize, 0)
 >
-> -#define DEFINE_BARE_CPU(type_name, misa_mxl_max, initfn)    \
-> +#define DEFINE_BARE_CPU(type_name, misa_mxl_max_, initfn)   \
->      {                                                       \
->          .name =3D (type_name),                                \
->          .parent =3D TYPE_RISCV_BARE_CPU,                      \
->          .instance_init =3D (initfn),                          \
->          .class_init =3D riscv_cpu_class_init,                 \
-> -        .class_data =3D GUINT_TO_POINTER(misa_mxl_max)        \
-> +        .class_data =3D &(const RISCVCPUDef) {                \
-> +             .misa_mxl_max =3D (misa_mxl_max_),               \
-> +        },                                                  \
->      }
+> -TYPED_FIELD(int8_t, max_satp_mode)
+> +TYPED_FIELD(int8_t, max_satp_mode, -1)
 >
-> -#define DEFINE_PROFILE_CPU(type_name, misa_mxl_max, initfn) \
-> +#define DEFINE_PROFILE_CPU(type_name, misa_mxl_max_, initfn) \
->      {                                                       \
->          .name =3D (type_name),                                \
->          .parent =3D TYPE_RISCV_BARE_CPU,                      \
->          .instance_init =3D (initfn),                          \
->          .class_init =3D riscv_cpu_class_init,                 \
-> -        .class_data =3D GUINT_TO_POINTER(misa_mxl_max)        \
-> +        .class_data =3D &(const RISCVCPUDef) {                \
-> +             .misa_mxl_max =3D (misa_mxl_max_),               \
-> +        },                                                  \
->      }
->
->  static const TypeInfo riscv_cpu_type_infos[] =3D {
+>  #undef BOOL_FIELD
+>  #undef TYPED_FIELD
 > --
 > 2.49.0
 >
