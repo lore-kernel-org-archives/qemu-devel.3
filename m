@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF09C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 17:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24241C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 17:28:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFcN6-0008QY-5l; Thu, 15 May 2025 13:27:52 -0400
+	id 1uFcN4-0008ER-1p; Thu, 15 May 2025 13:27:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFcN1-00085U-0Y
+ id 1uFcN1-000882-P8
  for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:47 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFcMx-00024j-T3
- for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:46 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-74294fa4bb5so1832457b3a.1
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 10:27:43 -0700 (PDT)
+ id 1uFcMz-00025M-BL
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:47 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-72d3b48d2ffso1352520b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 10:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747330062; x=1747934862; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747330064; x=1747934864; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yvd8n19NfSUOYmCBRX4rmXxOjlvdNI6yAIKrMUvuEIk=;
- b=QK+cBDzQT2Wke5EPsUJWCP5VdqtdDCarflGezdnKcZWd2Y3IunfS/U0U39aypboa91
- UwQwgcC+ZMamzSHDlwfeFlH3ZRvZsa9os27HkXeNxts+ogqFoP6Ghu6IgMFfDOrKl3ZB
- BGVY3hWzhUep4BVxJuE+G25jjpmZvl5t44nn0DNx4OXEYBV6+QEKuAD2kfHvNOX1nlMu
- 3WJ8uuy6ybag7LHdPEOHB7EJRnNu8gTNZ181LHrOnQlfse9ay4y5OPR/gn6/64gkgqIz
- mUleWnh/gz4/Wzm3AG/nDpQITOe775fSaJs6v5eMj4BNsa1mBovv9OC9ZAjGt4H2kp9B
- LwUQ==
+ bh=IpZQezDLNs1bWZgYz4PCs4KujcbY96LROEFvSXsm75M=;
+ b=f4Ock17rceju6YugXqKCnuwNujFg/y2l/3TIdYiqo79DwIjJpPeRkOhwtHtVKWE4jJ
+ oQjrV2xM2GxTDQ94rGjZeP1x9IhjVRldGnxBWFzClckF9dV9vzvbe3ti1THEntD551Ts
+ 7ovzwNxpKKPkNQ6fs11fcnQIu6nT+Z9fpPruAy3cXhKenDfJOd3aaMMwi02fiukqhiU4
+ WaMSrHbCLmh3UmrakMFXYkE5SLbG7w9dTW4MAAgMGxrYq7X10moato9cGsjY+2sm43fN
+ Siz82uaoSiT0DkcTEzEvlI39M+ZFU3Qem6/1gy7vn0xRSep/xixDcfq5kuZ+guOtum5/
+ tZVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747330062; x=1747934862;
+ d=1e100.net; s=20230601; t=1747330064; x=1747934864;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yvd8n19NfSUOYmCBRX4rmXxOjlvdNI6yAIKrMUvuEIk=;
- b=EyCLJ/1EkIDShb8t4XsRqjJgcSKm85TH7ja+pyGSdhkcNEUYGfVEl/Ti1iR5Ce0n5h
- 3E2gHHCSTtZ/jd727czIFGTEzIp6vWbC9rOsU2lvo/88FBRsbdbnq+Rl/8LssRWBbkTA
- H1KRjjh18+jGI7+wXjWblWnxRDwlqqOUHIJCX9bvdCPkwsVQ5Xpql/51tX5B3x02gcK7
- GGbaZbW1w5TKUBOhChQeu5WWUHci+r0jgEhxx/dofveHbcXjUK7Hzu2zbr0WC8OdYe01
- YPe8DZdTszfw0eVrfPiJq+SG20C3zahfept1/9T1ynI9030tLgiimHbVlHFGGd+mZDH5
- Tz0g==
-X-Gm-Message-State: AOJu0Yy0ZPScNl6QrJEj/NMsNTZZJAuRB1d2EM949BhPjibLjxvK4/1Q
- 37g6/fsb0Ef0MtcGGusJs9NSYMwwlfspwV9o9AVKLW4lXk6JtyGlSsal7yRl5j+wcyUn8MO9Wn7
- D416t
-X-Gm-Gg: ASbGncsFcrCVcKUDKcx/Vbj+MIc2yUMgKmWU0fUsrXf+wfqe5qqITOwUE+seW0k2lXU
- 5dpjzYzH1HKt9Y4HNsCOWk+orTe/hZM+NnHCePOj8Z5++/6QpXzpiycdpGOCa+d8m5VfRHCjZNr
- Syxl0ScttD86Xlb3RBvFKqe2JECnZmUu8oyXj+q8hpYrhWPpCqX9+yQLotltOGLr9N4PT59sCFC
- pcicxXU+oGlSCuswaxBxx6SLFKGhDgnRRzlaWInnow2Z0QQRC2DomBZNQkjl9ZkQd+FXvwqX7oH
- 7x9Qtj3ceXKy3CgtLioDLXygQz84eDiyGwSgwtL4yn7Yc4/cJAY=
-X-Google-Smtp-Source: AGHT+IFgRs4Y7p6L0VAY7/Jv0Z0PwpwDHIn0kCzEAkaHFgnqTPynlz8lflimMEFJksvO/KC8kcZ34w==
-X-Received: by 2002:a05:6a00:1994:b0:740:67aa:94ab with SMTP id
- d2e1a72fcca58-742a96369f4mr294078b3a.0.1747330062126; 
- Thu, 15 May 2025 10:27:42 -0700 (PDT)
+ bh=IpZQezDLNs1bWZgYz4PCs4KujcbY96LROEFvSXsm75M=;
+ b=F/X9Akzfft0rDsWTNENxOKaJ9CQ3TulWrlJ9SGR2j3oPXmoJ/h4TzU9zoR2qjDD+22
+ 8WpQ3HYctVAjjYpgYuF6TeayQY9K1DOdasNw9pjVPtJdMT9DUvommC0aH0x7hF4/wWOn
+ 9ag9dVMpKvTahwKk4O+RY/nZ4cqt4VkVLdZjEj2mPMzs51k3x864UtRtdJ+WVMbm85JQ
+ ncRP4gwQnQj0t21TvvmUgEH/faxYCs7xWcVOLqz+oezkN6lKpo/iWLSzDQRjQPj/S8YZ
+ 3uc6RE1uxwvZvwzaCLPNNBWSjuzNjqGE0pPV13tu6LSLyyRLIZ3a5CFXmKmHvWCw5A5O
+ vb8w==
+X-Gm-Message-State: AOJu0Yyvca+ve/el9C6H7JwSaUv+aASe6SdLuClkh4ZRbEk0kSsoLAPo
+ 4QAh5MM3EUUv2gdWAyR9pe31HxWcEUH6wkOcWETTEGDGW8OAPsHRqthT4NIoWqZisTqkeDQTrj2
+ 2CIuN
+X-Gm-Gg: ASbGncvX7PxANkKkLLGYsDqyPOx+eWdupdCbPOEsn7lpZqVYXKw1pKcBUDPGn+FLZ1d
+ 5hx3E0Ri/8OqESDZ5WlPqRNb6FgYeRyMIzzRYXIpPvOFPeorWUEbpjkuxCHRQMpp883Z8KZRqUU
+ GnpzV7CfeHHf7j8ug/LupxhUUDZ/SrM6knkq9L2oymXU2Vc/EdV5p9rdvrx1MzH1fIhHN4szrF/
+ BkYq0oVtrqnyxD2gsM7gt0liMjAbg5/zdyKD2dMgYyAsv85i77kaqTnf/h4MY+MWKq7Hi6l7fQq
+ 9Q3CCP/aCO6TKPfFYBqIiZmFS0z/zG+RtcWcdpxtGLtMAVYCEOo=
+X-Google-Smtp-Source: AGHT+IF0OpRlwApAAUVpKDND7D0TbvAwQAM0lU5fYGfGzM3aljT21C44LI2PgiApVXwd297NDv8P7Q==
+X-Received: by 2002:a05:6a21:502:b0:1f5:7280:1cf2 with SMTP id
+ adf61e73a8af0-2162189f48emr529454637.12.1747330063870; 
+ Thu, 15 May 2025 10:27:43 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a96dfa9dsm79730b3a.10.2025.05.15.10.27.41
+ d2e1a72fcca58-742a96dfa9dsm79730b3a.10.2025.05.15.10.27.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 10:27:41 -0700 (PDT)
+ Thu, 15 May 2025 10:27:43 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -72,17 +72,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  berrange@redhat.com, Markus Armbruster <armbru@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 03/12] qapi: make SEV commands unconditionally available
-Date: Thu, 15 May 2025 10:27:23 -0700
-Message-ID: <20250515172732.3992504-4-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 05/12] qapi: make SGX commands unconditionally available
+Date: Thu, 15 May 2025 10:27:25 -0700
+Message-ID: <20250515172732.3992504-6-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
 References: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,715 +107,276 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This removes the TARGET_I386 condition from the SEV confidential
+This removes the TARGET_I386 condition from the SGX confidential
 virtualization commands, moving them to the recently introduced
 misc-i386.json QAPI file, given they are inherantly i386 specific
 commands.
+
+Observe a pre-existing bug that the "SGXEPCSection" struct lacked
+a TARGET_I386 condition, despite its only usage being behind a
+TARGET_I386 condition.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qapi/misc-i386.json           | 271 ++++++++++++++++++++++++++++++++
- qapi/misc-target.json         | 284 ----------------------------------
- stubs/monitor-i386-sev.c      |  36 +++++
- target/i386/sev-system-stub.c |  32 ----
- target/i386/sev.c             |   2 +-
- stubs/meson.build             |   1 +
- 6 files changed, 309 insertions(+), 317 deletions(-)
- create mode 100644 stubs/monitor-i386-sev.c
+ qapi/misc-i386.json      | 77 +++++++++++++++++++++++++++++++++++++++
+ qapi/misc-target.json    | 78 ----------------------------------------
+ hw/i386/sgx-stub.c       | 13 -------
+ hw/i386/sgx.c            |  2 +-
+ stubs/monitor-i386-sgx.c | 17 +++++++++
+ stubs/meson.build        |  1 +
+ 6 files changed, 96 insertions(+), 92 deletions(-)
+ create mode 100644 stubs/monitor-i386-sgx.c
 
 diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-index d5bfd91405e..de0e4ab67ff 100644
+index de0e4ab67ff..0ddc297ccbf 100644
 --- a/qapi/misc-i386.json
 +++ b/qapi/misc-i386.json
-@@ -22,3 +22,274 @@
- #     <- { "return": {} }
- ##
- { 'command': 'rtc-reset-reinjection' }
+@@ -293,3 +293,80 @@
+ { 'command': 'query-sev-attestation-report',
+   'data': { 'mnonce': 'str' },
+   'returns': 'SevAttestationReport' }
 +
 +##
-+# @SevState:
++# @SGXEPCSection:
 +#
-+# An enumeration of SEV state information used during @query-sev.
++# Information about intel SGX EPC section info
 +#
-+# @uninit: The guest is uninitialized.
++# @node: the numa node
 +#
-+# @launch-update: The guest is currently being launched; plaintext
-+#     data and register state is being imported.
++# @size: the size of EPC section
 +#
-+# @launch-secret: The guest is currently being launched; ciphertext
-+#     data is being imported.
-+#
-+# @running: The guest is fully launched or migrated in.
-+#
-+# @send-update: The guest is currently being migrated out to another
-+#     machine.
-+#
-+# @receive-update: The guest is currently being migrated from another
-+#     machine.
-+#
-+# Since: 2.12
++# Since: 7.0
 +##
-+{ 'enum': 'SevState',
-+  'data': ['uninit', 'launch-update', 'launch-secret', 'running',
-+           'send-update', 'receive-update' ] }
++{ 'struct': 'SGXEPCSection',
++  'data': { 'node': 'int',
++            'size': 'uint64'}}
 +
 +##
-+# @SevGuestType:
++# @SGXInfo:
 +#
-+# An enumeration indicating the type of SEV guest being run.
++# Information about intel Safe Guard eXtension (SGX) support
 +#
-+# @sev: The guest is a legacy SEV or SEV-ES guest.
++# @sgx: true if SGX is supported
 +#
-+# @sev-snp: The guest is an SEV-SNP guest.
++# @sgx1: true if SGX1 is supported
++#
++# @sgx2: true if SGX2 is supported
++#
++# @flc: true if FLC is supported
++#
++# @sections: The EPC sections info for guest (Since: 7.0)
 +#
 +# Since: 6.2
 +##
-+{ 'enum': 'SevGuestType',
-+  'data': [ 'sev', 'sev-snp' ] }
++{ 'struct': 'SGXInfo',
++  'data': { 'sgx': 'bool',
++            'sgx1': 'bool',
++            'sgx2': 'bool',
++            'flc': 'bool',
++            'sections': ['SGXEPCSection']} }
 +
 +##
-+# @SevGuestInfo:
++# @query-sgx:
 +#
-+# Information specific to legacy SEV/SEV-ES guests.
++# Returns information about SGX
 +#
-+# @policy: SEV policy value
++# Returns: @SGXInfo
 +#
-+# @handle: SEV firmware handle
-+#
-+# Since: 2.12
-+##
-+{ 'struct': 'SevGuestInfo',
-+  'data': { 'policy': 'uint32',
-+            'handle': 'uint32' } }
-+
-+##
-+# @SevSnpGuestInfo:
-+#
-+# Information specific to SEV-SNP guests.
-+#
-+# @snp-policy: SEV-SNP policy value
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'SevSnpGuestInfo',
-+  'data': { 'snp-policy': 'uint64' } }
-+
-+##
-+# @SevInfo:
-+#
-+# Information about Secure Encrypted Virtualization (SEV) support
-+#
-+# @enabled: true if SEV is active
-+#
-+# @api-major: SEV API major version
-+#
-+# @api-minor: SEV API minor version
-+#
-+# @build-id: SEV FW build id
-+#
-+# @state: SEV guest state
-+#
-+# @sev-type: Type of SEV guest being run
-+#
-+# Since: 2.12
-+##
-+{ 'union': 'SevInfo',
-+  'base': { 'enabled': 'bool',
-+            'api-major': 'uint8',
-+            'api-minor' : 'uint8',
-+            'build-id' : 'uint8',
-+            'state' : 'SevState',
-+            'sev-type' : 'SevGuestType' },
-+  'discriminator': 'sev-type',
-+  'data': {
-+      'sev': 'SevGuestInfo',
-+      'sev-snp': 'SevSnpGuestInfo' } }
-+
-+
-+##
-+# @query-sev:
-+#
-+# Returns information about SEV/SEV-ES/SEV-SNP.
-+#
-+# If unavailable due to an incompatible configuration the
-+# returned @enabled field will be set to 'false' and the
-+# state of all other fields is undefined.
-+#
-+# Returns: @SevInfo
-+#
-+# Since: 2.12
++# Since: 6.2
 +#
 +# .. qmp-example::
 +#
-+#     -> { "execute": "query-sev" }
-+#     <- { "return": { "enabled": true, "api-major" : 0, "api-minor" : 0,
-+#                      "build-id" : 0, "policy" : 0, "state" : "running",
-+#                      "handle" : 1 } }
++#     -> { "execute": "query-sgx" }
++#     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
++#                      "flc": true,
++#                      "sections": [{"node": 0, "size": 67108864},
++#                      {"node": 1, "size": 29360128}]} }
 +##
-+{ 'command': 'query-sev', 'returns': 'SevInfo' }
++{ 'command': 'query-sgx', 'returns': 'SGXInfo' }
 +
 +##
-+# @SevLaunchMeasureInfo:
++# @query-sgx-capabilities:
 +#
-+# SEV Guest Launch measurement information
++# Returns information from host SGX capabilities
 +#
-+# @data: the measurement value encoded in base64
++# Returns: @SGXInfo
 +#
-+# Since: 2.12
-+##
-+{ 'struct': 'SevLaunchMeasureInfo', 'data': {'data': 'str'} }
-+
-+##
-+# @query-sev-launch-measure:
-+#
-+# Query the SEV/SEV-ES guest launch information.
-+#
-+# This is only valid on x86 machines configured with KVM and the
-+# 'sev-guest' confidential virtualization object. The launch
-+# measurement for SEV-SNP guests is only available within
-+# the guest.
-+#
-+# This will return an error if the launch measurement is
-+# unavailable, either due to an invalid guest configuration
-+# or if the guest has not reached the required SEV state.
-+#
-+# Returns: The @SevLaunchMeasureInfo for the guest
-+#
-+# Since: 2.12
++# Since: 6.2
 +#
 +# .. qmp-example::
 +#
-+#     -> { "execute": "query-sev-launch-measure" }
-+#     <- { "return": { "data": "4l8LXeNlSPUDlXPJG5966/8%YZ" } }
++#     -> { "execute": "query-sgx-capabilities" }
++#     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
++#                      "flc": true,
++#                      "section" : [{"node": 0, "size": 67108864},
++#                      {"node": 1, "size": 29360128}]} }
 +##
-+{ 'command': 'query-sev-launch-measure', 'returns': 'SevLaunchMeasureInfo' }
-+
-+##
-+# @SevCapability:
-+#
-+# The struct describes capability for a Secure Encrypted
-+# Virtualization feature.
-+#
-+# @pdh: Platform Diffie-Hellman key (base64 encoded)
-+#
-+# @cert-chain: PDH certificate chain (base64 encoded)
-+#
-+# @cpu0-id: Unique ID of CPU0 (base64 encoded) (since 7.1)
-+#
-+# @cbitpos: C-bit location in page table entry
-+#
-+# @reduced-phys-bits: Number of physical Address bit reduction when
-+#     SEV is enabled
-+#
-+# Since: 2.12
-+##
-+{ 'struct': 'SevCapability',
-+  'data': { 'pdh': 'str',
-+            'cert-chain': 'str',
-+            'cpu0-id': 'str',
-+            'cbitpos': 'int',
-+            'reduced-phys-bits': 'int'} }
-+
-+##
-+# @query-sev-capabilities:
-+#
-+# This command is used to get the SEV capabilities, and is only
-+# supported on AMD X86 platforms with KVM enabled. If SEV is not
-+# available on the platform an error will be returned.
-+#
-+# Returns: SevCapability objects.
-+#
-+# Since: 2.12
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-sev-capabilities" }
-+#     <- { "return": { "pdh": "8CCDD8DDD", "cert-chain": "888CCCDDDEE",
-+#                      "cpu0-id": "2lvmGwo+...61iEinw==",
-+#                      "cbitpos": 47, "reduced-phys-bits": 1}}
-+##
-+{ 'command': 'query-sev-capabilities', 'returns': 'SevCapability' }
-+
-+##
-+# @sev-inject-launch-secret:
-+#
-+# This command injects a secret blob into memory of a SEV/SEV-ES guest.
-+#
-+# This is only valid on x86 machines configured with KVM and the
-+# 'sev-guest' confidential virtualization object. SEV-SNP guests
-+# do not support launch secret injection
-+#
-+# This will return an error if launch secret injection is not possible,
-+# either due to an invalid guest configuration, or if the guest has not
-+# reached the required SEV state.
-+#
-+# @packet-header: the launch secret packet header encoded in base64
-+#
-+# @secret: the launch secret data to be injected encoded in base64
-+#
-+# @gpa: the guest physical address where secret will be injected.
-+#
-+# Since: 6.0
-+##
-+{ 'command': 'sev-inject-launch-secret',
-+  'data': { 'packet-header': 'str', 'secret': 'str', '*gpa': 'uint64' } }
-+
-+##
-+# @SevAttestationReport:
-+#
-+# The struct describes attestation report for a Secure Encrypted
-+# Virtualization feature.
-+#
-+# @data: guest attestation report (base64 encoded)
-+#
-+# Since: 6.1
-+##
-+{ 'struct': 'SevAttestationReport',
-+  'data': { 'data': 'str'} }
-+
-+##
-+# @query-sev-attestation-report:
-+#
-+# This command is used to get the SEV attestation report.
-+#
-+# This is only valid on x86 machines configured with KVM and the
-+# 'sev-guest' confidential virtualization object. The attestation
-+# report for SEV-SNP guests is only available within the guest.
-+#
-+# This will return an error if the attestation report is
-+# unavailable, either due to an invalid guest configuration
-+# or if the guest has not reached the required SEV state.
-+#
-+# @mnonce: a random 16 bytes value encoded in base64 (it will be
-+#     included in report)
-+#
-+# Returns: SevAttestationReport objects.
-+#
-+# Since: 6.1
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute" : "query-sev-attestation-report",
-+#                      "arguments": { "mnonce": "aaaaaaa" } }
-+#     <- { "return" : { "data": "aaaaaaaabbbddddd"} }
-+##
-+{ 'command': 'query-sev-attestation-report',
-+  'data': { 'mnonce': 'str' },
-+  'returns': 'SevAttestationReport' }
++{ 'command': 'query-sgx-capabilities', 'returns': 'SGXInfo' }
 diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index ae55e437a5f..ba4403a9241 100644
+index d36292b3321..d9368a1f21f 100644
 --- a/qapi/misc-target.json
 +++ b/qapi/misc-target.json
-@@ -2,290 +2,6 @@
+@@ -2,84 +2,6 @@
  # vim: filetype=python
  #
  
 -##
--# @SevState:
+-# @SGXEPCSection:
 -#
--# An enumeration of SEV state information used during @query-sev.
+-# Information about intel SGX EPC section info
 -#
--# @uninit: The guest is uninitialized.
+-# @node: the numa node
 -#
--# @launch-update: The guest is currently being launched; plaintext
--#     data and register state is being imported.
+-# @size: the size of EPC section
 -#
--# @launch-secret: The guest is currently being launched; ciphertext
--#     data is being imported.
--#
--# @running: The guest is fully launched or migrated in.
--#
--# @send-update: The guest is currently being migrated out to another
--#     machine.
--#
--# @receive-update: The guest is currently being migrated from another
--#     machine.
--#
--# Since: 2.12
+-# Since: 7.0
 -##
--{ 'enum': 'SevState',
--  'data': ['uninit', 'launch-update', 'launch-secret', 'running',
--           'send-update', 'receive-update' ],
--  'if': 'TARGET_I386' }
+-{ 'struct': 'SGXEPCSection',
+-  'data': { 'node': 'int',
+-            'size': 'uint64'}}
 -
 -##
--# @SevGuestType:
+-# @SGXInfo:
 -#
--# An enumeration indicating the type of SEV guest being run.
+-# Information about intel Safe Guard eXtension (SGX) support
 -#
--# @sev: The guest is a legacy SEV or SEV-ES guest.
+-# @sgx: true if SGX is supported
 -#
--# @sev-snp: The guest is an SEV-SNP guest.
+-# @sgx1: true if SGX1 is supported
+-#
+-# @sgx2: true if SGX2 is supported
+-#
+-# @flc: true if FLC is supported
+-#
+-# @sections: The EPC sections info for guest (Since: 7.0)
 -#
 -# Since: 6.2
 -##
--{ 'enum': 'SevGuestType',
--  'data': [ 'sev', 'sev-snp' ],
--  'if': 'TARGET_I386' }
+-{ 'struct': 'SGXInfo',
+-  'data': { 'sgx': 'bool',
+-            'sgx1': 'bool',
+-            'sgx2': 'bool',
+-            'flc': 'bool',
+-            'sections': ['SGXEPCSection']},
+-   'if': 'TARGET_I386' }
 -
 -##
--# @SevGuestInfo:
+-# @query-sgx:
 -#
--# Information specific to legacy SEV/SEV-ES guests.
+-# Returns information about SGX
 -#
--# @policy: SEV policy value
+-# Returns: @SGXInfo
 -#
--# @handle: SEV firmware handle
--#
--# Since: 2.12
--##
--{ 'struct': 'SevGuestInfo',
--  'data': { 'policy': 'uint32',
--            'handle': 'uint32' },
--  'if': 'TARGET_I386' }
--
--##
--# @SevSnpGuestInfo:
--#
--# Information specific to SEV-SNP guests.
--#
--# @snp-policy: SEV-SNP policy value
--#
--# Since: 9.1
--##
--{ 'struct': 'SevSnpGuestInfo',
--  'data': { 'snp-policy': 'uint64' },
--  'if': 'TARGET_I386' }
--
--##
--# @SevInfo:
--#
--# Information about Secure Encrypted Virtualization (SEV) support
--#
--# @enabled: true if SEV is active
--#
--# @api-major: SEV API major version
--#
--# @api-minor: SEV API minor version
--#
--# @build-id: SEV FW build id
--#
--# @state: SEV guest state
--#
--# @sev-type: Type of SEV guest being run
--#
--# Since: 2.12
--##
--{ 'union': 'SevInfo',
--  'base': { 'enabled': 'bool',
--            'api-major': 'uint8',
--            'api-minor' : 'uint8',
--            'build-id' : 'uint8',
--            'state' : 'SevState',
--            'sev-type' : 'SevGuestType' },
--  'discriminator': 'sev-type',
--  'data': {
--      'sev': 'SevGuestInfo',
--      'sev-snp': 'SevSnpGuestInfo' },
--  'if': 'TARGET_I386' }
--
--
--##
--# @query-sev:
--#
--# Returns information about SEV/SEV-ES/SEV-SNP.
--#
--# If unavailable due to an incompatible configuration the
--# returned @enabled field will be set to 'false' and the
--# state of all other fields is undefined.
--#
--# Returns: @SevInfo
--#
--# Since: 2.12
+-# Since: 6.2
 -#
 -# .. qmp-example::
 -#
--#     -> { "execute": "query-sev" }
--#     <- { "return": { "enabled": true, "api-major" : 0, "api-minor" : 0,
--#                      "build-id" : 0, "policy" : 0, "state" : "running",
--#                      "handle" : 1 } }
+-#     -> { "execute": "query-sgx" }
+-#     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
+-#                      "flc": true,
+-#                      "sections": [{"node": 0, "size": 67108864},
+-#                      {"node": 1, "size": 29360128}]} }
 -##
--{ 'command': 'query-sev', 'returns': 'SevInfo',
--  'if': 'TARGET_I386' }
+-{ 'command': 'query-sgx', 'returns': 'SGXInfo', 'if': 'TARGET_I386' }
 -
 -##
--# @SevLaunchMeasureInfo:
+-# @query-sgx-capabilities:
 -#
--# SEV Guest Launch measurement information
+-# Returns information from host SGX capabilities
 -#
--# @data: the measurement value encoded in base64
+-# Returns: @SGXInfo
 -#
--# Since: 2.12
--##
--{ 'struct': 'SevLaunchMeasureInfo', 'data': {'data': 'str'},
--  'if': 'TARGET_I386' }
--
--##
--# @query-sev-launch-measure:
--#
--# Query the SEV/SEV-ES guest launch information.
--#
--# This is only valid on x86 machines configured with KVM and the
--# 'sev-guest' confidential virtualization object. The launch
--# measurement for SEV-SNP guests is only available within
--# the guest.
--#
--# This will return an error if the launch measurement is
--# unavailable, either due to an invalid guest configuration
--# or if the guest has not reached the required SEV state.
--#
--# Returns: The @SevLaunchMeasureInfo for the guest
--#
--# Since: 2.12
+-# Since: 6.2
 -#
 -# .. qmp-example::
 -#
--#     -> { "execute": "query-sev-launch-measure" }
--#     <- { "return": { "data": "4l8LXeNlSPUDlXPJG5966/8%YZ" } }
+-#     -> { "execute": "query-sgx-capabilities" }
+-#     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
+-#                      "flc": true,
+-#                      "section" : [{"node": 0, "size": 67108864},
+-#                      {"node": 1, "size": 29360128}]} }
 -##
--{ 'command': 'query-sev-launch-measure', 'returns': 'SevLaunchMeasureInfo',
--  'if': 'TARGET_I386' }
+-{ 'command': 'query-sgx-capabilities', 'returns': 'SGXInfo', 'if': 'TARGET_I386' }
 -
--##
--# @SevCapability:
--#
--# The struct describes capability for a Secure Encrypted
--# Virtualization feature.
--#
--# @pdh: Platform Diffie-Hellman key (base64 encoded)
--#
--# @cert-chain: PDH certificate chain (base64 encoded)
--#
--# @cpu0-id: Unique ID of CPU0 (base64 encoded) (since 7.1)
--#
--# @cbitpos: C-bit location in page table entry
--#
--# @reduced-phys-bits: Number of physical Address bit reduction when
--#     SEV is enabled
--#
--# Since: 2.12
--##
--{ 'struct': 'SevCapability',
--  'data': { 'pdh': 'str',
--            'cert-chain': 'str',
--            'cpu0-id': 'str',
--            'cbitpos': 'int',
--            'reduced-phys-bits': 'int'},
--  'if': 'TARGET_I386' }
--
--##
--# @query-sev-capabilities:
--#
--# This command is used to get the SEV capabilities, and is only
--# supported on AMD X86 platforms with KVM enabled. If SEV is not
--# available on the platform an error will be returned.
--#
--# Returns: SevCapability objects.
--#
--# Since: 2.12
--#
--# .. qmp-example::
--#
--#     -> { "execute": "query-sev-capabilities" }
--#     <- { "return": { "pdh": "8CCDD8DDD", "cert-chain": "888CCCDDDEE",
--#                      "cpu0-id": "2lvmGwo+...61iEinw==",
--#                      "cbitpos": 47, "reduced-phys-bits": 1}}
--##
--{ 'command': 'query-sev-capabilities', 'returns': 'SevCapability',
--  'if': 'TARGET_I386' }
--
--##
--# @sev-inject-launch-secret:
--#
--# This command injects a secret blob into memory of a SEV/SEV-ES guest.
--#
--# This is only valid on x86 machines configured with KVM and the
--# 'sev-guest' confidential virtualization object. SEV-SNP guests
--# do not support launch secret injection
--#
--# This will return an error if launch secret injection is not possible,
--# either due to an invalid guest configuration, or if the guest has not
--# reached the required SEV state.
--#
--# @packet-header: the launch secret packet header encoded in base64
--#
--# @secret: the launch secret data to be injected encoded in base64
--#
--# @gpa: the guest physical address where secret will be injected.
--#
--# Since: 6.0
--##
--{ 'command': 'sev-inject-launch-secret',
--  'data': { 'packet-header': 'str', 'secret': 'str', '*gpa': 'uint64' },
--  'if': 'TARGET_I386' }
--
--##
--# @SevAttestationReport:
--#
--# The struct describes attestation report for a Secure Encrypted
--# Virtualization feature.
--#
--# @data: guest attestation report (base64 encoded)
--#
--# Since: 6.1
--##
--{ 'struct': 'SevAttestationReport',
--  'data': { 'data': 'str'},
--  'if': 'TARGET_I386' }
--
--##
--# @query-sev-attestation-report:
--#
--# This command is used to get the SEV attestation report.
--#
--# This is only valid on x86 machines configured with KVM and the
--# 'sev-guest' confidential virtualization object. The attestation
--# report for SEV-SNP guests is only available within the guest.
--#
--# This will return an error if the attestation report is
--# unavailable, either due to an invalid guest configuration
--# or if the guest has not reached the required SEV state.
--#
--# @mnonce: a random 16 bytes value encoded in base64 (it will be
--#     included in report)
--#
--# Returns: SevAttestationReport objects.
--#
--# Since: 6.1
--#
--# .. qmp-example::
--#
--#     -> { "execute" : "query-sev-attestation-report",
--#                      "arguments": { "mnonce": "aaaaaaa" } }
--#     <- { "return" : { "data": "aaaaaaaabbbddddd"} }
--##
--{ 'command': 'query-sev-attestation-report',
--  'data': { 'mnonce': 'str' },
--  'returns': 'SevAttestationReport',
--  'if': 'TARGET_I386' }
--
+ 
  ##
- # @GICCapability:
- #
-diff --git a/stubs/monitor-i386-sev.c b/stubs/monitor-i386-sev.c
+ # @EvtchnPortType:
+diff --git a/hw/i386/sgx-stub.c b/hw/i386/sgx-stub.c
+index 38ff75e9f37..10ffcdd154d 100644
+--- a/hw/i386/sgx-stub.c
++++ b/hw/i386/sgx-stub.c
+@@ -4,24 +4,11 @@
+ #include "hw/i386/pc.h"
+ #include "hw/i386/sgx-epc.h"
+ #include "qapi/error.h"
+-#include "qapi/qapi-commands-misc-target.h"
+ 
+ void sgx_epc_build_srat(GArray *table_data)
+ {
+ }
+ 
+-SGXInfo *qmp_query_sgx(Error **errp)
+-{
+-    error_setg(errp, "SGX support is not compiled in");
+-    return NULL;
+-}
+-
+-SGXInfo *qmp_query_sgx_capabilities(Error **errp)
+-{
+-    error_setg(errp, "SGX support is not compiled in");
+-    return NULL;
+-}
+-
+ void hmp_info_sgx(Monitor *mon, const QDict *qdict)
+ {
+     monitor_printf(mon, "SGX is not available in this QEMU\n");
+diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
+index 5685c4fb802..2b10a8d144e 100644
+--- a/hw/i386/sgx.c
++++ b/hw/i386/sgx.c
+@@ -19,7 +19,7 @@
+ #include "monitor/hmp-target.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+-#include "qapi/qapi-commands-misc-target.h"
++#include "qapi/qapi-commands-misc-i386.h"
+ #include "system/address-spaces.h"
+ #include "system/hw_accel.h"
+ #include "system/reset.h"
+diff --git a/stubs/monitor-i386-sgx.c b/stubs/monitor-i386-sgx.c
 new file mode 100644
-index 00000000000..d4f024128ca
+index 00000000000..55a4f194f3f
 --- /dev/null
-+++ b/stubs/monitor-i386-sev.c
-@@ -0,0 +1,36 @@
++++ b/stubs/monitor-i386-sgx.c
+@@ -0,0 +1,17 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
 +#include "qemu/osdep.h"
 +#include "qapi/error.h"
 +#include "qapi/qapi-commands-misc-i386.h"
 +
-+SevInfo *qmp_query_sev(Error **errp)
++SGXInfo *qmp_query_sgx(Error **errp)
 +{
-+    error_setg(errp, "SEV is not available in this QEMU");
++    error_setg(errp, "SGX support is not compiled in");
 +    return NULL;
 +}
 +
-+SevLaunchMeasureInfo *qmp_query_sev_launch_measure(Error **errp)
++SGXInfo *qmp_query_sgx_capabilities(Error **errp)
 +{
-+    error_setg(errp, "SEV is not available in this QEMU");
++    error_setg(errp, "SGX support is not compiled in");
 +    return NULL;
 +}
-+
-+SevCapability *qmp_query_sev_capabilities(Error **errp)
-+{
-+    error_setg(errp, "SEV is not available in this QEMU");
-+    return NULL;
-+}
-+
-+void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
-+                                  bool has_gpa, uint64_t gpa, Error **errp)
-+{
-+    error_setg(errp, "SEV is not available in this QEMU");
-+}
-+
-+SevAttestationReport *qmp_query_sev_attestation_report(const char *mnonce,
-+                                                       Error **errp)
-+{
-+    error_setg(errp, "SEV is not available in this QEMU");
-+    return NULL;
-+}
-diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
-index d5bf886e799..7c5c02a5657 100644
---- a/target/i386/sev-system-stub.c
-+++ b/target/i386/sev-system-stub.c
-@@ -14,34 +14,9 @@
- #include "qemu/osdep.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp-target.h"
--#include "qapi/qapi-commands-misc-target.h"
- #include "qapi/error.h"
- #include "sev.h"
- 
--SevInfo *qmp_query_sev(Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--    return NULL;
--}
--
--SevLaunchMeasureInfo *qmp_query_sev_launch_measure(Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--    return NULL;
--}
--
--SevCapability *qmp_query_sev_capabilities(Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--    return NULL;
--}
--
--void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
--                                  bool has_gpa, uint64_t gpa, Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--}
--
- int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
- {
-     g_assert_not_reached();
-@@ -56,13 +31,6 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
-     g_assert_not_reached();
- }
- 
--SevAttestationReport *qmp_query_sev_attestation_report(const char *mnonce,
--                                                       Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--    return NULL;
--}
--
- void hmp_info_sev(Monitor *mon, const QDict *qdict)
- {
-     monitor_printf(mon, "SEV is not available in this QEMU\n");
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 7ee700d6a35..56dd64e659a 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -37,7 +37,7 @@
- #include "qom/object.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp-target.h"
--#include "qapi/qapi-commands-misc-target.h"
-+#include "qapi/qapi-commands-misc-i386.h"
- #include "confidential-guest.h"
- #include "hw/i386/pc.h"
- #include "system/address-spaces.h"
 diff --git a/stubs/meson.build b/stubs/meson.build
-index 9907b54c1e6..9922ec7b88e 100644
+index 07e9d3799a5..f2eb4880181 100644
 --- a/stubs/meson.build
 +++ b/stubs/meson.build
-@@ -78,6 +78,7 @@ if have_system
-   stub_ss.add(files('win32-kbd-hook.c'))
-   stub_ss.add(files('xen-hw-stub.c'))
+@@ -80,6 +80,7 @@ if have_system
+   stub_ss.add(files('monitor-arm-gic.c'))
    stub_ss.add(files('monitor-i386-rtc.c'))
-+  stub_ss.add(files('monitor-i386-sev.c'))
+   stub_ss.add(files('monitor-i386-sev.c'))
++  stub_ss.add(files('monitor-i386-sgx.c'))
  endif
  
  if have_system or have_user
