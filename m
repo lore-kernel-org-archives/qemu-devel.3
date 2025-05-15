@@ -4,53 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D2F0C3ABD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF5AC3DA4A
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 02:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFOLg-0007CB-3z; Wed, 14 May 2025 22:29:28 -0400
+	id 1uFOLl-0007E5-Ez; Wed, 14 May 2025 22:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFOLU-0007Bm-JZ
- for qemu-devel@nongnu.org; Wed, 14 May 2025 22:29:17 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFOLf-0007CE-87
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 22:29:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFOLS-00044B-M3
- for qemu-devel@nongnu.org; Wed, 14 May 2025 22:29:16 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFOLd-00044e-7p
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 22:29:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747276152;
+ s=mimecast20190719; t=1747276164;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=CSjtLjdmg2pljM7Z0norGwciOvLC/a5/5WDbKA1Qjoo=;
- b=JD4I7xKXgLG/57iz6tjLbwUd5l1jdwUJVV9nV8M7nM94c6WDuRHgqG1SOHz9T6syjLIcAm
- JB0IFspJ3CFKP41oaSW8iPTWoEAb5Yy9w7OuuiOpYVPPIqsLuJso2vVsCn0FGlXUbrNAK3
- ZHVoups9tG0iCmzAt+Wc/MbfnDw3C8U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xNLYJWoJ6S/RYIwRzYooaBG4KsWpJGC5W9XpjFzOLm8=;
+ b=WQeyLg9VJJIKmSwini1UsgCy6Z+Vu/cQF+SJnH4imc2N1b8nuQbbZhkXXLTzEAPfmFqazc
+ aJzoC7SZia7K9f3oEYIxLsLVtpF6Tevulp8cSCeWxD31geeVW+DJwSxWzxRJsoZ9Ex33HN
+ m0QiDjlHtIsEIGvOZ13mvaxz5Qk1JgQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-GrfV4xYjMP-1hfXcHnMmIg-1; Wed,
- 14 May 2025 22:29:10 -0400
-X-MC-Unique: GrfV4xYjMP-1hfXcHnMmIg-1
-X-Mimecast-MFC-AGG-ID: GrfV4xYjMP-1hfXcHnMmIg_1747276150
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-pFY7ln35Pya06T9qSgFTeg-1; Wed,
+ 14 May 2025 22:29:19 -0400
+X-MC-Unique: pFY7ln35Pya06T9qSgFTeg-1
+X-Mimecast-MFC-AGG-ID: pFY7ln35Pya06T9qSgFTeg_1747276158
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4F6B1800360
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 02:29:09 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F5011800ECB; Thu, 15 May 2025 02:29:18 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.66])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3AA2A1955F24
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 02:29:08 +0000 (UTC)
+ id 033C41953B80; Thu, 15 May 2025 02:29:16 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/14] NBD patches for 2025-05-14
-Date: Wed, 14 May 2025 21:28:43 -0500
-Message-ID: <20250515022904.575509-16-eblake@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org (open list:raw),
+ integration@gluster.org (open list:GLUSTER)
+Subject: [PULL 02/14] file-posix, gluster: Handle zero block status hint better
+Date: Wed, 14 May 2025 21:28:45 -0500
+Message-ID: <20250515022904.575509-18-eblake@redhat.com>
+In-Reply-To: <20250515022904.575509-16-eblake@redhat.com>
+References: <20250515022904.575509-16-eblake@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -80,84 +84,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 864813878951b44e964eb4c012d832fd21f8cc0c:
+Although the previous patch to change 'bool want_zero' into a bitmask
+made no semantic change, it is now time to differentiate.  When the
+caller specifically wants to know what parts of the file read as zero,
+we need to use lseek and actually reporting holes, rather than
+short-circuiting and advertising full allocation.
 
-  Merge tag 'pull-loongarch-20250514' of https://github.com/gaosong715/qemu into staging (2025-05-14 07:16:57 -0400)
+This change will be utilized in later patches to let mirroring
+optimize for the case when the destination already reads as zeroes.
 
-are available in the Git repository at:
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20250509204341.3553601-17-eblake@redhat.com>
+---
+ block/file-posix.c | 3 ++-
+ block/gluster.c    | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-  https://repo.or.cz/qemu/ericb.git tags/pull-nbd-2025-05-14
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 805a1a2949b..ec95b748696 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -3289,7 +3289,8 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
+         return ret;
+     }
 
-for you to fetch changes up to aff46b4bf556430dd3c12fa39a457f0487bb0053:
+-    if (mode != BDRV_WANT_PRECISE) {
++    if (!(mode & BDRV_WANT_ZERO)) {
++        /* There is no backing file - all bytes are allocated in this file.  */
+         *pnum = bytes;
+         *map = offset;
+         *file = bs;
+diff --git a/block/gluster.c b/block/gluster.c
+index 1a2ef53e9b0..89abd40f313 100644
+--- a/block/gluster.c
++++ b/block/gluster.c
+@@ -1478,7 +1478,7 @@ static int coroutine_fn qemu_gluster_co_block_status(BlockDriverState *bs,
+         return ret;
+     }
 
-  mirror: Reduce I/O when destination is detect-zeroes:unmap (2025-05-14 21:27:04 -0500)
-
-----------------------------------------------------------------
-NBD patches for 2025-05-14
-
-- Eric Blake: fix blockdev-mirror to no longer inflate sparse destination
-  that already reads as zero
-
-----------------------------------------------------------------
-Andrey Drobyshev (1):
-      iotests/common.rc: add disk_usage function
-
-Eric Blake (13):
-      block: Expand block status mode from bool to flags
-      file-posix, gluster: Handle zero block status hint better
-      block: Let bdrv_co_is_zero_fast consolidate adjacent extents
-      block: Add new bdrv_co_is_all_zeroes() function
-      iotests: Improve iotest 194 to mirror data
-      mirror: Minor refactoring
-      mirror: Pass full sync mode rather than bool to internals
-      mirror: Allow QMP override to declare target already zero
-      mirror: Drop redundant zero_target parameter
-      mirror: Skip pre-zeroing destination if it is already zero
-      mirror: Skip writing zeroes when target is already zero
-      tests: Add iotest mirror-sparse for recent patches
-      mirror: Reduce I/O when destination is detect-zeroes:unmap
-
- qapi/block-core.json                       |   8 +-
- block/coroutines.h                         |   4 +-
- include/block/block-common.h               |  11 +
- include/block/block-io.h                   |   2 +
- include/block/block_int-common.h           |  27 ++-
- include/block/block_int-global-state.h     |   4 +-
- include/block/block_int-io.h               |   4 +-
- block/io.c                                 | 126 +++++++---
- block/blkdebug.c                           |   6 +-
- block/copy-before-write.c                  |   4 +-
- block/file-posix.c                         |   5 +-
- block/gluster.c                            |   4 +-
- block/iscsi.c                              |   6 +-
- block/mirror.c                             | 190 +++++++++++----
- block/nbd.c                                |   4 +-
- block/null.c                               |   6 +-
- block/parallels.c                          |   6 +-
- block/qcow.c                               |   2 +-
- block/qcow2.c                              |   6 +-
- block/qed.c                                |   6 +-
- block/quorum.c                             |   4 +-
- block/raw-format.c                         |   4 +-
- block/rbd.c                                |   6 +-
- block/snapshot-access.c                    |   4 +-
- block/vdi.c                                |   4 +-
- block/vmdk.c                               |   2 +-
- block/vpc.c                                |   2 +-
- block/vvfat.c                              |   6 +-
- blockdev.c                                 |  31 +--
- tests/unit/test-block-iothread.c           |   2 +-
- tests/qemu-iotests/common.rc               |   6 +
- tests/qemu-iotests/194                     |   7 +-
- tests/qemu-iotests/194.out                 |   4 +-
- tests/qemu-iotests/250                     |   5 -
- tests/qemu-iotests/iotests.py              |  12 +-
- tests/qemu-iotests/tests/mirror-sparse     | 125 ++++++++++
- tests/qemu-iotests/tests/mirror-sparse.out | 365 +++++++++++++++++++++++++++++
- 37 files changed, 856 insertions(+), 164 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/mirror-sparse
- create mode 100644 tests/qemu-iotests/tests/mirror-sparse.out
-
+-    if (mode != BDRV_WANT_PRECISE) {
++    if (!(mode & BDRV_WANT_ZERO)) {
+         *pnum = bytes;
+         *map = offset;
+         *file = bs;
 -- 
 2.49.0
 
