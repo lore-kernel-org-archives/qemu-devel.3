@@ -4,96 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E245C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B853C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:25:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFaPx-0008LW-Ge; Thu, 15 May 2025 11:22:42 -0400
+	id 1uFaS8-0002mE-MC; Thu, 15 May 2025 11:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFaPe-0007zC-Oe
- for qemu-devel@nongnu.org; Thu, 15 May 2025 11:22:24 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFaPR-0002nV-DP
- for qemu-devel@nongnu.org; Thu, 15 May 2025 11:22:14 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-74294fa4bb5so1637305b3a.1
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 08:22:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747322525; x=1747927325; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8Wwaufpr8Z6a4ck6g2EdvI8iMo2hfWASSYRcby6tdEc=;
- b=vS1oM5lWXnHL2bD1+v4TSycF4FvM1anQYbsvCkTkjnimPrJI5kvxPXOFEHv4lmPFpN
- jcl+3N+M6qV/hiLvbXGrrBOqw4a6LqLHf8wXHI2eoP0TdIXMiT3Tw6XRzAGb66eCWvTk
- IraaP5dawZOe4mtWT2oG/voCHoAcbumLjjB2T2M4+wepHpGDxHjST7KLHzRrksKkw0M3
- O868vjY7rE1viofD6YmtDYnQzL5qNw8Pq/27ftlTQlnVnkLk38e1dHmbdZRJX72KNYmy
- slTN9FxvZRrzIE8BpBkQgRHjp+O+Y9aX38vF2MujtN+feJd1eUbwD+4YXhLZmYvGnSk+
- 1XrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747322525; x=1747927325;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8Wwaufpr8Z6a4ck6g2EdvI8iMo2hfWASSYRcby6tdEc=;
- b=RPWy7h1BbMLkhrvUSv3j7/2c+0Xpd7gDFwrobU5FEVIBxDUF8y4kX5kKuSBKJiDwfk
- NTNCLHY+8vQigra0dgb7SSPBlqJ5VcBOKBmxXUVlDKrQr0fRCKlPlZoNEaiHgcXuTI4w
- tM2WD4Z0AH5Yfa97LIIuF4UEK10xuWaTqye6wHYssfXCgk1HlLzp1+cbxqBHqrWjrSSn
- lQgHsGikjLmSL778G/0MynjbJv69HdJ+PFMnvqZHxQDKBHsUFzlX8xLVQsXrTr0x6vRF
- KMVAjYTmHbNk+sb/2jeVGOW3sLD/nTZUMfwVcRye7rR2DiCuapuhumLDYQ323AjsZCIh
- HOwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVX5LNdoxJBCU3vUMSZuj+hRjVVtqcQlCpzTNWDT8EImJsytjEvzme9nQJDJau88DYLwMtcpw4rUS4p@nongnu.org
-X-Gm-Message-State: AOJu0YwPJpaxumGmZYoX8LPav/yLUZ8sWBkCeRBPJzet2Xc+/QlL0nKX
- 6nXzr9PnwROK7YSDihYhqyFG87aAyUYj0dCEgJwwWa9zhw1/LwcJxzM/Gcu1zSg=
-X-Gm-Gg: ASbGncvxgs61yjw8cuxPXXZyH+AhEIiTSGhDEL1jh6aHhBpheMOiwmd9RdRxTPX4x6A
- g4SgaTALMocQ4450mubaJ0IisZeAFUcLyq/xI2BQY6RvGHM4IKXj7dzu1xNC99r9ICIfUs1541T
- KVhXlAHMbYZ3zRXyvdeDBf/uF8l7TZEPWI2l5R/maAGN8IL/6K/6oBu7Bi+hnyPD4P0oJUpzbHX
- qvRUlEq/0P/tbh9POKTveQnjeUw8Hxn3GI88E40qK/CKEDq1xdtVUuqyIdokwKlwMD2ySH+yj6r
- 9kX/lLmYYCpU4L8RMw9LRcHT78o1Ltsrc4uBtyLxwi2iWWp6/cKNz8XTTEcHdyA2
-X-Google-Smtp-Source: AGHT+IF2bdLwMCewSDom80krFb/JiiplIY2U9HhI2uxSnuJm8k7jzh3n3of2CTMytg54xzEj1qa79w==
-X-Received: by 2002:a05:6a21:4cc7:b0:1f5:7c6f:6c96 with SMTP id
- adf61e73a8af0-215ff11a577mr11182366637.22.1747322524885; 
- Thu, 15 May 2025 08:22:04 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b26eb084980sm34145a12.58.2025.05.15.08.22.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 08:22:04 -0700 (PDT)
-Message-ID: <b5c07354-fbe8-4910-a019-fa9fd7e813a5@linaro.org>
-Date: Thu, 15 May 2025 08:22:03 -0700
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1uFaS4-0002l5-Sc; Thu, 15 May 2025 11:24:55 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1uFaRz-00035z-7X; Thu, 15 May 2025 11:24:51 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg410004680;
+ Thu, 15 May 2025 15:24:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=nGXvJY
+ 0p/AD19rnpik12ZuJzAJ7ejBSnGRlknytz68g=; b=J+qPsqmoDkqQpbXANEMFqo
+ peWaUrQPg5iXr5wFTLVxHwEq2U++LeSiBgBV4z2wxI8HnAD3dglUXcfPnqn3T4es
+ OFoFwRxRfz7xAseGp8UNDRJNxIlqrOoM8Kh5kyM9WyheHJm4yAWD6YvSO0XXOAN9
+ qo/GsOd4FutQgzkRzqFJew/JUb05yBeEpA5n6H/szXlnMLA+IZFo/1CThBq4B6Lh
+ 0cpD2IuaYuUzH9UmjE7UDyiU946dJrib767cKefKa+RWCx8ijAFPUp79HmDi/Lko
+ fXTnTVx2NecfvKgUYKLbywwfZEfrwiAWo/GqVh+Z37x/69gxN1Ff2H2snCkWjzqw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2rdp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 May 2025 15:24:43 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFKNHB025866;
+ Thu, 15 May 2025 15:24:42 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2rde-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 May 2025 15:24:42 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE7mtN021414;
+ Thu, 15 May 2025 15:24:41 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfrtw8c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 May 2025 15:24:41 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54FFOe5132768726
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 May 2025 15:24:40 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 751C158058;
+ Thu, 15 May 2025 15:24:40 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1EDF358057;
+ Thu, 15 May 2025 15:24:40 +0000 (GMT)
+Received: from [9.10.80.143] (unknown [9.10.80.143])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 15:24:40 +0000 (GMT)
+Message-ID: <60bf787f-63bf-4428-a5c7-27a66308d71d@linux.ibm.com>
+Date: Thu, 15 May 2025 10:24:39 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/19] target/arm: Add arm_cpu_has_feature() helper
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250513173928.77376-1-philmd@linaro.org>
- <20250513173928.77376-17-philmd@linaro.org>
- <b6c81748-091b-4d61-8d34-beaa0442aab3@linaro.org>
- <f7bcd8b2-2c0c-4907-8a0e-af172c235d56@linaro.org>
- <59b1ccbe-9ddb-43f0-98c4-8000a08d27b0@linaro.org>
- <eff0b1a9-5267-4290-a9d4-da95179289b9@linaro.org>
+Subject: Re: [PATCH 36/50] ppc/xive2: split tctx presentation processing from
+ set CPPR
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.vnet.ibm.com>
+References: <20250512031100.439842-1-npiggin@gmail.com>
+ <20250512031100.439842-37-npiggin@gmail.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <eff0b1a9-5267-4290-a9d4-da95179289b9@linaro.org>
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <20250512031100.439842-37-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: RB7_4G_qke9AbkZvEWtGVkdoXHpfpbbQ
+X-Authority-Analysis: v=2.4 cv=XK4wSRhE c=1 sm=1 tr=0 ts=6826073b cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
+ a=0-WaI2_ozc3jpBna6GUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: ToRS_k93nKcaH_5O5_IcyolS1xNnETK2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1MCBTYWx0ZWRfX+AlaBLZcKKti
+ EIiLQBplHbTnx+FbGT+JUfoSHbSOq7k5BipGBaKlQbVkyyn9scbp1wSGMhUzLgx2VHe8iubkmmd
+ XADIjNPiF8WlH4qXYr5wvxBqDBkRtndIdZNvpRevhXNhXSCxzR25dsAx9Vx6aVlFs7OB0KyYq4a
+ p2TPr34qhA0+AD9kvX+EXCDDbDW7RntnGGFnGv2SyDUgZ+oCJf+eBrpNVWJgIRzgaVNMI0UjF8D
+ gjSEXzKNi9MgiU2Gdp+hHfTuVECMRbNVQx0RMHUelfb7TXq1HNe5WdGmPNBTuFqSCE5MwxpLzIv
+ NVAgC/XERTDN7R9PqZgzalfo0gnCJ4gJ0Sh5US8ebahVfrguN8/ryl5ePAnefF9nE+Vf1bP+9bA
+ Wr5SgoaUGnGncUI7zhR16UDjD/97irivLjviZ4Dxp71i+Ld3lkEubQ9OXx66dO/y5jwKSsQZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505150150
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,41 +132,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 4:05 AM, Philippe Mathieu-Daudé wrote:
-> On 14/5/25 18:59, Pierrick Bouvier wrote:
->> On 5/14/25 9:53 AM, Philippe Mathieu-Daudé wrote:
->>> On 14/5/25 10:24, Richard Henderson wrote:
->>>> On 5/13/25 18:39, Philippe Mathieu-Daudé wrote:
->>>>> arm_cpu_has_feature() is equivalent of arm_feature(), however
->>>>> while the latter uses CPUARMState so is target-specific, the
->>>>> former doesn't and can be called by target-agnostic code in hw/.
->>>>
->>>> CPUARMState is no more target-specific than ARMCPU.
->>>
->>> ARMCPU is forward-declared as opaque pointer in target/arm/cpu-qom.h,
->>> so we can expose prototypes using it to non-ARM units.
->>> CPUARMState is only declared in "cpu.h", itself only accessible by
->>> ARM-related units.
->>>
->>
->> Maybe we can simply postpone introduction of arm_cpu_has_feature() when
->> it will be really needed.
->>
->> Patches 17 and 18 are not strictly needed, as cpu.h (which resolves to
->> target/arm/cpu.h implicitely) is perfectly accessible to code in hw/arm
->> without any problem.
-> 
-> OK.
-> 
-> Peter, would you be OK to take reviewed patches #1 up to #15 (the
-> previous one) or do you rather I respin them?
+
+On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
+> The second part of the set CPPR operation is to process (or re-present)
+> any pending interrupts after CPPR is adjusted.
 >
+> Split this presentation processing out into a standalone function that
+> can be used in other places.
 
-In case you respin, feel free to include the base series, so we can 
-combine both.
+Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
 
-> Regards,
-> 
-> Phil.
-
+Thanks,  MAK
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   hw/intc/xive2.c | 137 +++++++++++++++++++++++++++---------------------
+>   1 file changed, 76 insertions(+), 61 deletions(-)
+>
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index 8c8dab3aa2..aa06bfda77 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -1098,66 +1098,19 @@ void xive2_tm_ack_os_el(XivePresenter *xptr, XiveTCTX *tctx,
+>       xive2_tctx_accept_el(xptr, tctx, TM_QW1_OS, TM_QW1_OS);
+>   }
+>   
+> -/* NOTE: CPPR only exists for TM_QW1_OS and TM_QW3_HV_PHYS */
+> -static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+> +/* Re-calculate and present pending interrupts */
+> +static void xive2_tctx_process_pending(XiveTCTX *tctx, uint8_t sig_ring)
+>   {
+> -    uint8_t *sig_regs = &tctx->regs[ring];
+> +    uint8_t *sig_regs = &tctx->regs[sig_ring];
+>       Xive2Router *xrtr = XIVE2_ROUTER(tctx->xptr);
+> -    uint8_t old_cppr, backlog_prio, first_group, group_level;
+> +    uint8_t backlog_prio, first_group, group_level;
+>       uint8_t pipr_min, lsmfb_min, ring_min;
+> +    uint8_t cppr = sig_regs[TM_CPPR];
+>       bool group_enabled;
+> -    uint8_t nvp_blk;
+> -    uint32_t nvp_idx;
+>       Xive2Nvp nvp;
+>       int rc;
+> -    uint8_t nsr = sig_regs[TM_NSR];
+> -
+> -    g_assert(ring == TM_QW1_OS || ring == TM_QW3_HV_PHYS);
+> -
+> -    g_assert(tctx->regs[TM_QW2_HV_POOL + TM_NSR] == 0);
+> -    g_assert(tctx->regs[TM_QW2_HV_POOL + TM_PIPR] == 0);
+> -    g_assert(tctx->regs[TM_QW2_HV_POOL + TM_CPPR] == 0);
+> -
+> -    /* XXX: should show pool IPB for PHYS ring */
+> -    trace_xive_tctx_set_cppr(tctx->cs->cpu_index, ring,
+> -                             sig_regs[TM_IPB], sig_regs[TM_PIPR],
+> -                             cppr, nsr);
+> -
+> -    if (cppr > XIVE_PRIORITY_MAX) {
+> -        cppr = 0xff;
+> -    }
+> -
+> -    old_cppr = sig_regs[TM_CPPR];
+> -    sig_regs[TM_CPPR] = cppr;
+> -
+> -    /* Handle increased CPPR priority (lower value) */
+> -    if (cppr < old_cppr) {
+> -        if (cppr <= sig_regs[TM_PIPR]) {
+> -            /* CPPR lowered below PIPR, must un-present interrupt */
+> -            if (xive_nsr_indicates_exception(ring, nsr)) {
+> -                if (xive_nsr_indicates_group_exception(ring, nsr)) {
+> -                    /* redistribute precluded active grp interrupt */
+> -                    xive2_redistribute(xrtr, tctx,
+> -                                       xive_nsr_exception_ring(ring, nsr));
+> -                    return;
+> -                }
+> -            }
+>   
+> -            /* interrupt is VP directed, pending in IPB */
+> -            xive_tctx_pipr_set(tctx, ring, cppr, 0);
+> -            return;
+> -        } else {
+> -            /* CPPR was lowered, but still above PIPR. No action needed. */
+> -            return;
+> -        }
+> -    }
+> -
+> -    /* CPPR didn't change, nothing needs to be done */
+> -    if (cppr == old_cppr) {
+> -        return;
+> -    }
+> -
+> -    /* CPPR priority decreased (higher value) */
+> +    g_assert(sig_ring == TM_QW3_HV_PHYS || sig_ring == TM_QW1_OS);
+>   
+>       /*
+>        * Recompute the PIPR based on local pending interrupts. It will
+> @@ -1167,11 +1120,11 @@ again:
+>       pipr_min = xive_ipb_to_pipr(sig_regs[TM_IPB]);
+>       group_enabled = !!sig_regs[TM_LGS];
+>       lsmfb_min = group_enabled ? sig_regs[TM_LSMFB] : 0xff;
+> -    ring_min = ring;
+> +    ring_min = sig_ring;
+>       group_level = 0;
+>   
+>       /* PHYS updates also depend on POOL values */
+> -    if (ring == TM_QW3_HV_PHYS) {
+> +    if (sig_ring == TM_QW3_HV_PHYS) {
+>           uint8_t *pool_regs = &tctx->regs[TM_QW2_HV_POOL];
+>   
+>           /* POOL values only matter if POOL ctx is valid */
+> @@ -1201,20 +1154,25 @@ again:
+>           }
+>       }
+>   
+> -    rc = xive2_tctx_get_nvp_indexes(tctx, ring_min, &nvp_blk, &nvp_idx);
+> -    if (rc) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: set CPPR on invalid context\n");
+> -        return;
+> -    }
+> -
+>       if (group_enabled &&
+>           lsmfb_min < cppr &&
+>           lsmfb_min < pipr_min) {
+> +
+> +        uint8_t nvp_blk;
+> +        uint32_t nvp_idx;
+> +
+>           /*
+>            * Thread has seen a group interrupt with a higher priority
+>            * than the new cppr or pending local interrupt. Check the
+>            * backlog
+>            */
+> +        rc = xive2_tctx_get_nvp_indexes(tctx, ring_min, &nvp_blk, &nvp_idx);
+> +        if (rc) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: set CPPR on invalid "
+> +                                           "context\n");
+> +            return;
+> +        }
+> +
+>           if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
+>               qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
+>                             nvp_blk, nvp_idx);
+> @@ -1260,6 +1218,63 @@ again:
+>       xive_tctx_pipr_set(tctx, ring_min, pipr_min, group_level);
+>   }
+>   
+> +/* NOTE: CPPR only exists for TM_QW1_OS and TM_QW3_HV_PHYS */
+> +static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t sig_ring, uint8_t cppr)
+> +{
+> +    uint8_t *sig_regs = &tctx->regs[sig_ring];
+> +    Xive2Router *xrtr = XIVE2_ROUTER(tctx->xptr);
+> +    uint8_t old_cppr;
+> +    uint8_t nsr = sig_regs[TM_NSR];
+> +
+> +    g_assert(sig_ring == TM_QW1_OS || sig_ring == TM_QW3_HV_PHYS);
+> +
+> +    g_assert(tctx->regs[TM_QW2_HV_POOL + TM_NSR] == 0);
+> +    g_assert(tctx->regs[TM_QW2_HV_POOL + TM_PIPR] == 0);
+> +    g_assert(tctx->regs[TM_QW2_HV_POOL + TM_CPPR] == 0);
+> +
+> +    /* XXX: should show pool IPB for PHYS ring */
+> +    trace_xive_tctx_set_cppr(tctx->cs->cpu_index, sig_ring,
+> +                             sig_regs[TM_IPB], sig_regs[TM_PIPR],
+> +                             cppr, nsr);
+> +
+> +    if (cppr > XIVE_PRIORITY_MAX) {
+> +        cppr = 0xff;
+> +    }
+> +
+> +    old_cppr = sig_regs[TM_CPPR];
+> +    sig_regs[TM_CPPR] = cppr;
+> +
+> +    /* Handle increased CPPR priority (lower value) */
+> +    if (cppr < old_cppr) {
+> +        if (cppr <= sig_regs[TM_PIPR]) {
+> +            /* CPPR lowered below PIPR, must un-present interrupt */
+> +            if (xive_nsr_indicates_exception(sig_ring, nsr)) {
+> +                if (xive_nsr_indicates_group_exception(sig_ring, nsr)) {
+> +                    /* redistribute precluded active grp interrupt */
+> +                    xive2_redistribute(xrtr, tctx,
+> +                                       xive_nsr_exception_ring(sig_ring, nsr));
+> +                    return;
+> +                }
+> +            }
+> +
+> +            /* interrupt is VP directed, pending in IPB */
+> +            xive_tctx_pipr_set(tctx, sig_ring, cppr, 0);
+> +            return;
+> +        } else {
+> +            /* CPPR was lowered, but still above PIPR. No action needed. */
+> +            return;
+> +        }
+> +    }
+> +
+> +    /* CPPR didn't change, nothing needs to be done */
+> +    if (cppr == old_cppr) {
+> +        return;
+> +    }
+> +
+> +    /* CPPR priority decreased (higher value) */
+> +    xive2_tctx_process_pending(tctx, sig_ring);
+> +}
+> +
+>   void xive2_tm_set_hv_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+>                             hwaddr offset, uint64_t value, unsigned size)
+>   {
 
