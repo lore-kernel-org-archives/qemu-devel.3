@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28CDC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 02:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C24C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 02:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFOf5-0006jT-Bk; Wed, 14 May 2025 22:49:31 -0400
+	id 1uFOf2-0006Y0-Aj; Wed, 14 May 2025 22:49:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uFOf3-0006c6-9I
- for qemu-devel@nongnu.org; Wed, 14 May 2025 22:49:29 -0400
+ id 1uFOf0-0006Rg-4b
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 22:49:26 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uFOf1-0005i5-88
- for qemu-devel@nongnu.org; Wed, 14 May 2025 22:49:29 -0400
+ id 1uFOex-0005hp-F9
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 22:49:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747277367; x=1778813367;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=jAHEAbHiFLq8MUhdgOcsKXsxkzqIG2Nd8xcTMQXTV5k=;
- b=VzaI019lMqwwdEG/XdLiwnr+78U25IkKOk4rEZ4FAFbtByjwCnLbYPCZ
- FoVXDbkKY/YCeLdxRRDcH3/AdNKHBEsFtUmQWqmNrpk8oV00vbusLctf5
- bYk9kL+Udkh0yEsZvM5p1dVL/0vR4UszDCdn/Et1/XUpzZrzkoREj9Qa4
- aVvgOMbcZMiwpWnMC7OOeP1Li2Of4VBCOQ0MSYgY/s9b/iDuVIJo16scA
- /hOiVBy2nqwh3ULc3oO5+UP4vQIdjueJCrj95EzBaJZpuNLinI3hkOaum
- UtYEXfrfHWynGJ32JAVmi0HHIS49VRZh7enluP9y//7mJeT94o3B7N49P g==;
-X-CSE-ConnectionGUID: qOkAl+w/SVmHmD57vnT9uA==
-X-CSE-MsgGUID: 7hH+PGM5To+0pOgp/z2n9w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="36819305"
-X-IronPort-AV: E=Sophos;i="6.15,289,1739865600"; d="scan'208";a="36819305"
+ t=1747277363; x=1778813363;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=nQL7AbhEDORsemmTADCDOWS7p035Qry/aV1L5jbzG90=;
+ b=KMHRSGmk9lSTCkA8jiYJQCh6r9fl1TBn4AXJBruy7f+NGSKZOEYaFpO8
+ KKFlAtHkDQ4e5Xl8Tv6Bz6NElCaTr7/rZQZO1euRo+VlE0rMeO5s5k9PJ
+ LeJpHq/cCma383iLsFwSAquZz1h8cYM5VaACnWBIvo8IDtjxXVQhV2G7s
+ 7I2BBP9NNNbYpuNWlAt4sQRzopbDagAb9VxTZKeU/ZQvp83I7kDj+qk2e
+ +GNxU6xoz0VfFTCQHUjpzJkpzHu7ZlpGAveRCka6pHugqoiZglXSFV7aC
+ IqYYPR36hA3mUwRifrlJ37Ii+03tgODl8o3GV1qsTlWNbRgxCwFVD9bWd A==;
+X-CSE-ConnectionGUID: LZJVWwKlQSeRTJU0XX46eA==
+X-CSE-MsgGUID: giWR+3rjQPKn5p8DgAdGoQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="36819288"
+X-IronPort-AV: E=Sophos;i="6.15,289,1739865600"; d="scan'208";a="36819288"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  14 May 2025 19:49:19 -0700
-X-CSE-ConnectionGUID: BepeKjNgQCqhVeNNULp++A==
-X-CSE-MsgGUID: uRm7qeGnQJGojuLfQAD4NQ==
+X-CSE-ConnectionGUID: bMubVbUBTfy9uNPWh0+sFA==
+X-CSE-MsgGUID: RdB/ZhijQGSFwzCBZfDi7w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,289,1739865600"; d="scan'208";a="142246654"
+X-IronPort-AV: E=Sophos;i="6.15,289,1739865600"; d="scan'208";a="142246642"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  14 May 2025 19:49:19 -0700
@@ -52,14 +52,15 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-Subject: [PATCH v4 4/7] ui/spice: Add an option to submit gl_draw requests at
- fixed rate
-Date: Wed, 14 May 2025 19:45:42 -0700
-Message-ID: <20250515024734.758335-5-vivek.kasireddy@intel.com>
+ Frediano Ziglio <freddy77@gmail.com>,
+ Michael Scherle <michael.scherle@rz.uni-freiburg.de>,
+ Dongwon Kim <dongwon.kim@intel.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v4 0/7] ui/spice: Enable gl=on option for non-local or remote
+ clients
+Date: Wed, 14 May 2025 19:45:38 -0700
+Message-ID: <20250515024734.758335-1-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250515024734.758335-1-vivek.kasireddy@intel.com>
-References: <20250515024734.758335-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,202 +89,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the specific case where the display layer (virtio-gpu) is using
-dmabuf, and if remote clients are enabled (-spice gl=on,port=xxxx),
-it makes sense to limit the maximum (streaming) rate (refresh rate)
-to a fixed value using the GUI refresh timer. Otherwise, the updates
-or gl_draw requests would be sent as soon as the Guest submits a new
-frame which is not optimal as it would lead to increased network
-traffic and wastage of GPU cycles if the frames get dropped.
+To address the limitation that this option is incompatible with
+remote clients, this patch series adds an option to select a
+preferred codec and also enable gl=on option for clients that
+are connected via the network. In other words, with this option
+enabled (and the below linked Spice series merged), it would be
+possible to have Qemu share a dmabuf fd with Spice, which would
+then forward it to a hardware or software based encoder and
+eventually send the data associated with the fd to a client that
+could be located on a different machine.
 
+Essentially, this patch series provides a hardware accelerated,
+opensource VDI option for users using Qemu and Spice by leveraging
+the iGPU/dGPU on the host machine to encode the Guest FB via the
+Gstreamer framework.
+
+v3 -> v4 (suggestions from Marc-André):
+- Add a new parameter to make max_refresh_rate configurable
+- Have surface_gl_create_texture_from_fd() return bool after checking
+  for errors
+- Remove the check for PIXMAN_r5g6b5() in spice_gl_replace_fd_texture()
+- Report errors in spice_gl_replace_fd_texture() when someting fails
+- Use glGetError() correctly by adding an additional (dummy) call
+  before checking for actual errors (Dmitry)
+- Add a new patch to check fd values in egl_dmabuf_export_texture()
+- Rebase on Qemu master
+
+v2 -> v3:
+- Check for errors after invoking glImportMemoryFdEXT() using
+  glGetError() and report the error to user (Dmitry)
+
+v1 -> v2:
+- Replace the option name preferred-codec with video-codecs (Marc-André)
+- Add a warning when an fd cannot be created from texture (Marc-André)
+- Add a new patch to blit the scanout texture into a linear one to
+  make it work with virgl
+- Rebased and tested against the latest Spice master
+
+Tested with the following Qemu parameters:
+-device virtio-vga,max_outputs=1,xres=1920,yres=1080,blob=true
+-spice port=3001,gl=on,disable-ticketing=on,video-codecs=gstreamer:h264
+
+and remote-viewer --spice-debug spice://x.x.x.x:3001 on the client side.
+
+Associated Spice server MR (merged):
+https://gitlab.freedesktop.org/spice/spice/-/merge_requests/229
+
+---
 Cc: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Frediano Ziglio <freddy77@gmail.com>
+Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
 Cc: Dongwon Kim <dongwon.kim@intel.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
----
- include/ui/spice-display.h |  1 +
- qemu-options.hx            |  5 ++++
- ui/spice-core.c            | 11 ++++++++
- ui/spice-display.c         | 54 +++++++++++++++++++++++++++++++-------
- 4 files changed, 61 insertions(+), 10 deletions(-)
+Cc: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/include/ui/spice-display.h b/include/ui/spice-display.h
-index f4922dd74b..2fe524b59c 100644
---- a/include/ui/spice-display.h
-+++ b/include/ui/spice-display.h
-@@ -152,6 +152,7 @@ struct SimpleSpiceCursor {
- 
- extern bool spice_opengl;
- extern bool remote_client;
-+extern int max_refresh_rate;
- 
- int qemu_spice_rect_is_empty(const QXLRect* r);
- void qemu_spice_rect_union(QXLRect *dest, const QXLRect *r);
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 97c63d9b31..4e9f4edfdc 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2282,6 +2282,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
-     "       [,disable-agent-file-xfer=on|off][,agent-mouse=[on|off]]\n"
-     "       [,playback-compression=[on|off]][,seamless-migration=[on|off]]\n"
-     "       [,video-codecs=<encoder>:<codec>\n"
-+    "       [,max-refresh-rate=rate\n"
-     "       [,gl=[on|off]][,rendernode=<file>]\n"
-     "                enable spice\n"
-     "                at least one of {port, tls-port} is mandatory\n",
-@@ -2374,6 +2375,10 @@ SRST
-         Provide the preferred codec the Spice server should use.
-         Default would be spice:mjpeg.
- 
-+    ``max-refresh-rate=rate``
-+        Provide the maximum refresh rate (or FPS) at which the encoding
-+        requests should be sent to the Spice server. Default would be 30.
-+
-     ``gl=[on|off]``
-         Enable/disable OpenGL context. Default is off.
- 
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 6c3bfe1d0f..d8925207b1 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -56,6 +56,8 @@ struct SpiceTimer {
-     QEMUTimer *timer;
- };
- 
-+#define MAX_REFRESH_RATE 30
-+
- static SpiceTimer *timer_add(SpiceTimerFunc func, void *opaque)
- {
-     SpiceTimer *timer;
-@@ -491,6 +493,9 @@ static QemuOptsList qemu_spice_opts = {
-         },{
-             .name = "video-codecs",
-             .type = QEMU_OPT_STRING,
-+        },{
-+            .name = "max-refresh-rate",
-+            .type = QEMU_OPT_NUMBER,
-         },{
-             .name = "agent-mouse",
-             .type = QEMU_OPT_BOOL,
-@@ -813,6 +818,12 @@ static void qemu_spice_init(void)
-         }
-     }
- 
-+    max_refresh_rate = qemu_opt_get_number(opts, "max-refresh-rate", MAX_REFRESH_RATE);
-+    if (max_refresh_rate < 0) {
-+        error_report("max refresh rate/fps is invalid");
-+        exit(1);
-+    }
-+
-     spice_server_set_agent_mouse
-         (spice_server, qemu_opt_get_bool(opts, "agent-mouse", 1));
-     spice_server_set_playback_compression
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 9140169015..ed91521ac2 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -32,6 +32,7 @@
- 
- bool spice_opengl;
- bool remote_client;
-+int max_refresh_rate;
- 
- int qemu_spice_rect_is_empty(const QXLRect* r)
- {
-@@ -844,12 +845,32 @@ static void qemu_spice_gl_block_timer(void *opaque)
-     warn_report("spice: no gl-draw-done within one second");
- }
- 
-+static void spice_gl_draw(SimpleSpiceDisplay *ssd,
-+                           uint32_t x, uint32_t y, uint32_t w, uint32_t h)
-+{
-+    uint64_t cookie;
-+
-+    cookie = (uintptr_t)qxl_cookie_new(QXL_COOKIE_TYPE_GL_DRAW_DONE, 0);
-+    spice_qxl_gl_draw_async(&ssd->qxl, x, y, w, h, cookie);
-+}
-+
- static void spice_gl_refresh(DisplayChangeListener *dcl)
- {
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
--    uint64_t cookie;
- 
--    if (!ssd->ds || qemu_console_is_gl_blocked(ssd->dcl.con)) {
-+    if (!ssd->ds) {
-+        return;
-+    }
-+
-+    if (qemu_console_is_gl_blocked(ssd->dcl.con)) {
-+        if (remote_client && ssd->gl_updates && ssd->have_scanout) {
-+            glFlush();
-+            spice_gl_draw(ssd, 0, 0,
-+                          surface_width(ssd->ds), surface_height(ssd->ds));
-+            ssd->gl_updates = 0;
-+            /* To update at 60 FPS, update_interval needs to be ~16.66 ms */
-+            dcl->update_interval = 1000 / max_refresh_rate;
-+        }
-         return;
-     }
- 
-@@ -857,11 +878,8 @@ static void spice_gl_refresh(DisplayChangeListener *dcl)
-     if (ssd->gl_updates && ssd->have_surface) {
-         qemu_spice_gl_block(ssd, true);
-         glFlush();
--        cookie = (uintptr_t)qxl_cookie_new(QXL_COOKIE_TYPE_GL_DRAW_DONE, 0);
--        spice_qxl_gl_draw_async(&ssd->qxl, 0, 0,
--                                surface_width(ssd->ds),
--                                surface_height(ssd->ds),
--                                cookie);
-+        spice_gl_draw(ssd, 0, 0,
-+                      surface_width(ssd->ds), surface_height(ssd->ds));
-         ssd->gl_updates = 0;
-     }
- }
-@@ -954,6 +972,20 @@ static void qemu_spice_gl_scanout_disable(DisplayChangeListener *dcl)
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
- 
-     trace_qemu_spice_gl_scanout_disable(ssd->qxl.id);
-+
-+    /*
-+     * We need to check for the case of "lost" updates, where a gl_draw
-+     * was not submitted because the timer did not get a chance to run.
-+     * One case where this happens is when the Guest VM is getting
-+     * rebooted. If the console is blocked in this situation, we need
-+     * to unblock it. Otherwise, newer updates would not take effect.
-+     */
-+    if (qemu_console_is_gl_blocked(ssd->dcl.con)) {
-+        if (remote_client && ssd->gl_updates && ssd->have_scanout) {
-+            ssd->gl_updates = 0;
-+            qemu_spice_gl_block(ssd, false);
-+        }
-+    }
-     spice_server_gl_scanout(&ssd->qxl, NULL, 0, 0, NULL, NULL, 0, DRM_FORMAT_INVALID,
-                             DRM_FORMAT_MOD_INVALID, false);
-     qemu_spice_gl_monitor_config(ssd, 0, 0, 0, 0);
-@@ -1061,7 +1093,6 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     EGLint fourcc = 0;
-     bool render_cursor = false;
-     bool y_0_top = false; /* FIXME */
--    uint64_t cookie;
-     uint32_t width, height, texture;
- 
-     if (!ssd->have_scanout) {
-@@ -1159,8 +1190,11 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     trace_qemu_spice_gl_update(ssd->qxl.id, w, h, x, y);
-     qemu_spice_gl_block(ssd, true);
-     glFlush();
--    cookie = (uintptr_t)qxl_cookie_new(QXL_COOKIE_TYPE_GL_DRAW_DONE, 0);
--    spice_qxl_gl_draw_async(&ssd->qxl, x, y, w, h, cookie);
-+    if (remote_client) {
-+        ssd->gl_updates++;
-+    } else {
-+        spice_gl_draw(ssd, x, y, w, h);
-+    }
- }
- 
- static const DisplayChangeListenerOps display_listener_gl_ops = {
+Vivek Kasireddy (7):
+  ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
+  ui/spice: Add an option for users to provide a preferred codec
+  ui/spice: Enable gl=on option for non-local or remote clients
+  ui/spice: Add an option to submit gl_draw requests at fixed rate
+  ui/console-gl: Add a helper to create a texture with linear memory
+    layout
+  ui/spice: Create a new texture with linear layout when gl=on is
+    enabled
+  ui/spice: Blit the scanout texture if its memory layout is not linear
+
+ include/ui/console.h       |   2 +
+ include/ui/spice-display.h |   5 +
+ qemu-options.hx            |  10 ++
+ ui/console-gl.c            |  32 ++++++
+ ui/egl-helpers.c           |   6 ++
+ ui/spice-core.c            |  27 +++++
+ ui/spice-display.c         | 212 ++++++++++++++++++++++++++++++++++---
+ 7 files changed, 278 insertions(+), 16 deletions(-)
+
 -- 
 2.49.0
 
