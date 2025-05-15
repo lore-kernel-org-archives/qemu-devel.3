@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B40D9C3ABC9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD08C2D0CD
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 14:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFZ8D-0002ax-KU; Thu, 15 May 2025 10:00:18 -0400
+	id 1uFZ86-0002Yo-6S; Thu, 15 May 2025 10:00:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFZ89-0002a5-J4
- for qemu-devel@nongnu.org; Thu, 15 May 2025 10:00:13 -0400
+ id 1uFZ82-0002X1-No
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 10:00:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFZ86-000857-Bx
- for qemu-devel@nongnu.org; Thu, 15 May 2025 10:00:12 -0400
+ id 1uFZ80-0007ut-P1
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 10:00:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747317609;
+ s=mimecast20190719; t=1747317603;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mflY1Lwpkm9HezKk09xW5TZteq3I7eD4udb269k+Byg=;
- b=UGKtDaRvs86gM6W4f/T/tNJPW0ropTmpGOM5Ox2F2kcoB2IFSPWPnjacFNb4S5MGfCrfjy
- GZrIKtiIS2fQ7rvV0k4eLzemu2lkxbW+A2yghEVrK8QmDxlZqyOfha5BZmM6fbOudJ6+Nl
- CJ+HvNqLqltvX6NBGOu62eTon7INxck=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=+zbRNdtCWZRg83pRjQBqQeZDJg0RPooG0kmoLxqn4P4=;
+ b=LS5qGjqsrMFGh0aWUz2w50msoL705FSr93z9B41HBsd3jsKyX8w1bhIGHt5iUJ5YIp5gMb
+ EjNZ4o+A2Jqw6BJ9YdnxIVizLXS2Zw3xOj9hg47a8KMgpZR3nvd6Ou2AN/8/dgihBDuIFM
+ ZP8AIgmFRew4VW/ALBbokVz9P/Bcm1s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-nUNDiZuPObq37r0F8H7myQ-1; Thu,
- 15 May 2025 10:00:06 -0400
-X-MC-Unique: nUNDiZuPObq37r0F8H7myQ-1
-X-Mimecast-MFC-AGG-ID: nUNDiZuPObq37r0F8H7myQ_1747317605
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-a77012nCMYuPKVAtTGr53w-1; Thu,
+ 15 May 2025 10:00:00 -0400
+X-MC-Unique: a77012nCMYuPKVAtTGr53w-1
+X-Mimecast-MFC-AGG-ID: a77012nCMYuPKVAtTGr53w_1747317597
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15DB318001CC; Thu, 15 May 2025 14:00:05 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A467B1956089; Thu, 15 May 2025 13:59:57 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.135])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6D13230075D4; Thu, 15 May 2025 14:00:03 +0000 (UTC)
+ id 3DEDF30075D4; Thu, 15 May 2025 13:59:54 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 9/9] scripts/checkpatch: reject license boilerplate on new
- files
-Date: Thu, 15 May 2025 14:59:36 +0100
-Message-ID: <20250515135936.86760-10-berrange@redhat.com>
+Subject: [PATCH v3 6/9] scripts/checkpatch: expand pattern for matching
+ makefiles
+Date: Thu, 15 May 2025 14:59:33 +0100
+Message-ID: <20250515135936.86760-7-berrange@redhat.com>
 In-Reply-To: <20250515135936.86760-1-berrange@redhat.com>
 References: <20250515135936.86760-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -87,55 +87,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous commit mandates use of SPDX-License-Identifier on common
-source files, and encourages it on all other files.
-
-Some contributors are none the less still also including the license
-boilerplate text. This is redundant and will potentially cause
-trouble if inconsistent with the SPDX declaration.
-
-Match common boilerplate text blurbs and report them as invalid,
-for newly added files.
+The current regex matches Makefile & Makefile.objs, but the latter is
+no longer used, and we're missing coverage of Makefile.include and
+Makefile.target. Expand the pattern to match any suffix.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/checkpatch.pl | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ scripts/checkpatch.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 87050e6677..cb1942c021 100755
+index 4a18daa384..00d7d72e53 100755
 --- a/scripts/checkpatch.pl
 +++ b/scripts/checkpatch.pl
-@@ -1496,6 +1496,13 @@ sub process_end_of_file {
- 			     "' need 'SPDX-License-Identifier'?");
+@@ -1453,7 +1453,7 @@ sub process_start_of_file {
+ 		my $permhere = $fileinfo->{linestart} . "FILE: " .
+ 			$fileinfo->{filenew} . "\n";
+ 		if ($fileinfo->{filenew} =~
+-		    /(\bMakefile(?:\.objs)?|\.(c|cc|cpp|h|mak|s|S))$/) {
++		    /(\bMakefile.*|\.(c|cc|cpp|h|mak|s|S))$/) {
+ 			ERROR("do not set execute permissions for source " .
+ 			      "files\n" . $permhere);
  		}
- 	}
-+	if ($fileinfo->{action} eq "new" &&
-+	    !exists $fileinfo->{facts}->{sawboilerplate}) {
-+		ERROR("New file '" . $fileinfo->{filenew} . "' must " .
-+		      "not have license boilerplate header text unless " .
-+		      "this file is copied from existing code with such " .
-+		      "text already present.");
-+	}
- }
- 
- sub process {
-@@ -1798,6 +1805,15 @@ sub process {
- 			&checkspdx($realfile, $1);
- 		}
- 
-+		if ($rawline =~ /licensed under the terms of the GNU GPL/ ||
-+		    $rawline =~ /under the terms of the GNU General Public License/ ||
-+		    $rawline =~ /under the terms of the GNU Lesser General Public/ ||
-+		    $rawline =~ /Permission is hereby granted, free of charge/ ||
-+		    $rawline =~ /GNU GPL, version 2 or later/ ||
-+		    $rawline =~ /See the COPYING file/) {
-+			$fileinfo->{facts}->{sawboilerplate} = 1;
-+		}
-+
- 		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
- 			my $tag = $1;
- 			my @permitted = qw(
 -- 
 2.49.0
 
