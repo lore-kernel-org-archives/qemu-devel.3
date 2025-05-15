@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3872C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC123C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:12:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFThn-0001sz-1Y; Thu, 15 May 2025 04:12:40 -0400
+	id 1uFTh8-0006zd-G4; Thu, 15 May 2025 04:11:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFTgW-0005Fc-Lc; Thu, 15 May 2025 04:11:22 -0400
+ id 1uFTfz-0003Uj-28; Thu, 15 May 2025 04:10:47 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFTgU-00018W-HT; Thu, 15 May 2025 04:11:20 -0400
+ id 1uFTfx-00010V-2K; Thu, 15 May 2025 04:10:46 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 15 May
- 2025 16:10:13 +0800
+ 2025 16:10:11 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 15 May 2025 16:10:12 +0800
+ Transport; Thu, 15 May 2025 16:10:11 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,9 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 14/28] hw/misc/aspeed_hace: Support DMA 64 bits dram address
-Date: Thu, 15 May 2025 16:09:46 +0800
-Message-ID: <20250515081008.583578-15-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 11/28] hw/misc/aspeed_hace: Support accumulative mode for
+ direct access mode
+Date: Thu, 15 May 2025 16:09:43 +0800
+Message-ID: <20250515081008.583578-12-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
 References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
@@ -67,93 +68,69 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the AST2700 design, the data source address is 64-bit, with
-R_HASH_SRC_HI storing bits [63:32] and R_HASH_SRC storing bits [31:0].
-
-Similarly, the digest address is 64-bit, with R_HASH_DEST_HI storing bits
-[63:32] and R_HASH_DEST storing bits [31:0].
-
-To maintain compatibility with older SoCs such as the AST2600, the AST2700 HW
-automatically set bit 34 of the 64-bit sg_addr. As a result, the firmware
-only needs to provide a 32-bit sg_addr containing bits [31:0]. This is
-sufficient for the AST2700, as it uses a DRAM offset rather than a DRAM
-address.
-
-Introduce a has_dma64 class attribute and set it to true for the AST2700.
+Enable accumulative mode for direct access mode operations. In direct access
+mode, only a single source buffer is used, so the "iovec" count is set to 1.
+If "acc_mode" is enabled:
+1. Accumulate "total_req_len" with the current request length ("plen").
+2. Check for padding and determine whether this is the final request.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/misc/aspeed_hace.h |  1 +
- hw/misc/aspeed_hace.c         | 17 ++++++++++++++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ hw/misc/aspeed_hace.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
-index 9945b61863..d5d07c6c02 100644
---- a/include/hw/misc/aspeed_hace.h
-+++ b/include/hw/misc/aspeed_hace.h
-@@ -53,6 +53,7 @@ struct AspeedHACEClass {
-     uint32_t src_hi_mask;
-     uint32_t dest_hi_mask;
-     uint32_t key_hi_mask;
-+    bool has_dma64;
- };
- 
- #endif /* ASPEED_HACE_H */
 diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index d58645cabd..764408716e 100644
+index 62649b5b27..049f732f99 100644
 --- a/hw/misc/aspeed_hace.c
 +++ b/hw/misc/aspeed_hace.c
-@@ -147,9 +147,13 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
- 
- static uint64_t hash_get_source_addr(AspeedHACEState *s)
- {
-+    AspeedHACEClass *ahc = ASPEED_HACE_GET_CLASS(s);
-     uint64_t src_addr = 0;
- 
-     src_addr = deposit64(src_addr, 0, 32, s->regs[R_HASH_SRC]);
-+    if (ahc->has_dma64) {
-+        src_addr = deposit64(src_addr, 32, 32, s->regs[R_HASH_SRC_HI]);
-+    }
- 
+@@ -151,8 +151,11 @@ static uint64_t hash_get_source_addr(AspeedHACEState *s)
      return src_addr;
  }
-@@ -223,7 +227,13 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
-         sg_addr = address_space_ldl_le(&s->dram_as, src + SG_LIST_LEN_SIZE,
-                                        MEMTXATTRS_UNSPECIFIED, NULL);
-         sg_addr &= SG_LIST_ADDR_MASK;
--
-+        /*
-+         * To maintain compatibility with older SoCs such as the AST2600,
-+         * the AST2700 HW automatically set bit 34 of the 64-bit sg_addr.
-+         * As a result, the firmware only needs to provide a 32-bit sg_addr
-+         * containing bits [31:0]. This is sufficient for the AST2700, as
-+         * it uses a DRAM offset rather than a DRAM address.
-+         */
-         plen = len & SG_LIST_LEN_MASK;
-         haddr = address_space_map(&s->dram_as, sg_addr, &plen, false,
-                                   MEMTXATTRS_UNSPECIFIED);
-@@ -260,9 +270,13 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
  
- static uint64_t hash_get_digest_addr(AspeedHACEState *s)
+-static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov)
++static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov,
++                                   bool acc_mode, bool *acc_final_request)
  {
-+    AspeedHACEClass *ahc = ASPEED_HACE_GET_CLASS(s);
-     uint64_t digest_addr = 0;
++    uint32_t total_msg_len;
++    uint32_t pad_offset;
+     uint64_t src;
+     void *haddr;
+     hwaddr plen;
+@@ -171,9 +174,23 @@ static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov)
+     }
  
-     digest_addr = deposit64(digest_addr, 0, 32, s->regs[R_HASH_DIGEST]);
-+    if (ahc->has_dma64) {
-+        digest_addr = deposit64(digest_addr, 32, 32, s->regs[R_HASH_DIGEST_HI]);
+     iov[0].iov_base = haddr;
+-    iov[0].iov_len = plen;
+     iov_idx = 1;
+ 
++    if (acc_mode) {
++        s->total_req_len += plen;
++
++        if (has_padding(s, &iov[0], plen, &total_msg_len,
++                        &pad_offset)) {
++            /* Padding being present indicates the final request */
++            *acc_final_request = true;
++            iov[0].iov_len = pad_offset;
++        } else {
++            iov[0].iov_len = plen;
++        }
++    } else {
++        iov[0].iov_len = plen;
 +    }
- 
-     return digest_addr;
- }
-@@ -697,6 +711,7 @@ static void aspeed_ast2700_hace_class_init(ObjectClass *klass, const void *data)
-      * has completed. It is a temporary workaround.
-      */
-     ahc->raise_crypt_interrupt_workaround = true;
-+    ahc->has_dma64 = true;
++
+     return iov_idx;
  }
  
- static const TypeInfo aspeed_ast2700_hace_info = {
+@@ -345,7 +362,8 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+     if (sg_mode) {
+         iov_idx = hash_prepare_sg_iov(s, iov, acc_mode, &acc_final_request);
+     } else {
+-        iov_idx = hash_prepare_direct_iov(s, iov);
++        iov_idx = hash_prepare_direct_iov(s, iov, acc_mode,
++                                          &acc_final_request);
+     }
+ 
+     if (iov_idx <= 0) {
 -- 
 2.43.0
 
