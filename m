@@ -4,113 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7D0C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 22:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08849C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 23:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFgwL-0006aC-GM; Thu, 15 May 2025 18:20:33 -0400
+	id 1uFi3P-00027f-EW; Thu, 15 May 2025 19:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uFgwJ-0006YB-PL
- for qemu-devel@nongnu.org; Thu, 15 May 2025 18:20:31 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1uFi3N-000278-AU; Thu, 15 May 2025 19:31:53 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uFgwD-0000Y2-RZ
- for qemu-devel@nongnu.org; Thu, 15 May 2025 18:20:31 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 98228218E0;
- Thu, 15 May 2025 22:20:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747347621; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=De0gjRa3T5YCe7yJyKnDVayes1vb36P+Z2zMRdyCnAA=;
- b=ykqL7LuWaSALMuZrIT+6GZIo/epzIP8eI81JVpXCLWKVYGnUxf+e9xRq7Lh9F/68vNoypj
- Fj5RsirI2ylbvB5XhABVUBOfz7K3pRCki8TOb5xu7VTP79p3zdnwEaXejXENkqUjX8dAMY
- kmnUwFtBDEDWDz5gtl3h0AuLfBDyPSI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747347621;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=De0gjRa3T5YCe7yJyKnDVayes1vb36P+Z2zMRdyCnAA=;
- b=AmAJr0ZxyZ2QU6ZOhCQ85g+1I3TCEgFZMf1mgP1HPQw7v5RgRzhj5ZWru6xjdu3JLfhDSs
- BPOJKAcH9KeyiDBg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ykqL7LuW;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=AmAJr0Zx
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747347621; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=De0gjRa3T5YCe7yJyKnDVayes1vb36P+Z2zMRdyCnAA=;
- b=ykqL7LuWaSALMuZrIT+6GZIo/epzIP8eI81JVpXCLWKVYGnUxf+e9xRq7Lh9F/68vNoypj
- Fj5RsirI2ylbvB5XhABVUBOfz7K3pRCki8TOb5xu7VTP79p3zdnwEaXejXENkqUjX8dAMY
- kmnUwFtBDEDWDz5gtl3h0AuLfBDyPSI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747347621;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=De0gjRa3T5YCe7yJyKnDVayes1vb36P+Z2zMRdyCnAA=;
- b=AmAJr0ZxyZ2QU6ZOhCQ85g+1I3TCEgFZMf1mgP1HPQw7v5RgRzhj5ZWru6xjdu3JLfhDSs
- BPOJKAcH9KeyiDBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F11FA137E8;
- Thu, 15 May 2025 22:20:19 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WAA7K6NoJmhUNgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 15 May 2025 22:20:19 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	berrange@redhat.com,
-	pbonzini@redhat.com
-Subject: [PATCH 1/4] chardev: Fix QIOChannel refcount
-Date: Thu, 15 May 2025 19:20:11 -0300
-Message-Id: <20250515222014.4161-2-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20250515222014.4161-1-farosas@suse.de>
-References: <20250515222014.4161-1-farosas@suse.de>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 98228218E0
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_NONE(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1uFi3L-0007eG-Ma; Thu, 15 May 2025 19:31:53 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2302d90c7f7so19262255ad.3; 
+ Thu, 15 May 2025 16:31:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747351909; x=1747956709; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mO6n1f7npP3Q49ument1x55qRm7Ys7n+Zx34VME88y4=;
+ b=MHrbWWETjd7iuX0Xx9kOoRO+cxZlPf4hKcEPAJhZYTdKgTefpb8QPqwbH5p//w0gzx
+ DRafHj4ZMUOaWMMPH+rYNMzJ3hiY3ysFkyXUr7H8h3eyhP02/fXpbWHm6EEYg8ebklnH
+ UkCS3rZaKZ1C5TPJGbdqee7LkElfXAGj4UCgwOtjzoRElmXemGUhSqP0IeZibq6L1uPf
+ nmiBpizgy4U8AkhuykrQLn0V9bh10Ga89ikwo+vlQXRPTFxTi4fC0BfKL/xi7p57VZtO
+ CCyyxGR9f+BvX1cLQ8YP8rw8dGHqlMhfCA107cT4F6gCTwAh10LoejCKJGA+ikZQyunw
+ pkEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747351909; x=1747956709;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=mO6n1f7npP3Q49ument1x55qRm7Ys7n+Zx34VME88y4=;
+ b=O1B2/mwhkQ6RdS17Oa3sHueJyGk7NrIDHglCwf93unyMJ7/N07/90/hE35jzVtC0r0
+ 56ZN6mxiwjtKqxUD48r068R0VLIxOVlsWsGrnh7DZO2vV+G7nHxf8n8aSamcEcYaa0lz
+ HTlps5CBuorvR/oTpPkaW5UY94hUrF03C4Klbr8E70jSj3qi2JnrAN20WqgzvrE5oFvg
+ FHYrpPmFbxMpUwVwhVcWs3gWophiG8dscGAyZqLMICZ+cXHv/nr1molPmQ2hjzJTu9qS
+ huJGPUXUXNV7N/tnX9JdTVj20rmC6fply5dqgRi2RnGoToS8BH7xkwrMS1QAP87PmhGm
+ 8uVQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlAqGGw9qNCurHrhXu76lmaJyl3HxH2W3qHccvst7mLTrBDqd3BRIOTI1HFCWNqDcWncS/3VpHdg==@nongnu.org
+X-Gm-Message-State: AOJu0Yx4psdOhrXz7dYO6FqqRSraEVex7lKlYTM0jIpFz8oQ1hIHPJH8
+ bgUHl82cPHSAABUb31uuev+gWsd18da1csVJt3dWj4Ff3AomOC+5KJBU
+X-Gm-Gg: ASbGncsQ/Clwn030T1wTttv8I191pRWYYvIghxdRl1qV0Zf0Crz+vcZOEg/z6OWQ1Bx
+ AIFZhs6UogAfJGJ3/qZbnV+sGaFM/LqhfMQFemC2rHGtO1PHuJtJOQHOxd6Ym8bR/GSjrSsQKj1
+ u19B9MiSFVlgWSe71u68NCH9Uxr/il32FbCDRRBbhx2nylOgGfktjpknRRaYvuYqMh8ayfFrZfO
+ glWJ1DUZSZicYWkYz832RWfXMcUTV7M4Fjwl+FuBKv3XV2dEBlQ/ROFMG1JjK7MWlzQK8ux+BoB
+ aKf5yjBCzlNpLFQodPDnzW+/0JNtYEj8UAzodYD5Po2aMdY=
+X-Google-Smtp-Source: AGHT+IG3QCm1b4Z7zLrdGj50rIWA9KY4RYQs1FyaibCGil3NzxHt4c2Yn9Vap0LnP7i+40ziy0mS7g==
+X-Received: by 2002:a17:902:ccc1:b0:220:e5be:29c7 with SMTP id
+ d9443c01a7336-231d452cda4mr14567165ad.39.1747351908841; 
+ Thu, 15 May 2025 16:31:48 -0700 (PDT)
+Received: from localhost ([118.209.229.237]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4e97de4sm3110235ad.144.2025.05.15.16.31.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 May 2025 16:31:48 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 16 May 2025 09:31:41 +1000
+Message-Id: <D9X4JY22CYJ9.H7KKICGBL65P@gmail.com>
+Cc: <qemu-devel@nongnu.org>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
+ <fbarrat@linux.ibm.com>, "Glenn Miles" <milesg@linux.ibm.com>, "Caleb
+ Schlossin" <calebs@linux.vnet.ibm.com>
+Subject: Re: [PATCH 14/50] ppc/xive: Explicitly zero NSR after accepting
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Mike Kowal" <kowal@linux.ibm.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.19.0
+References: <20250512031100.439842-1-npiggin@gmail.com>
+ <20250512031100.439842-15-npiggin@gmail.com>
+ <ecf642af-4531-40ad-988c-27e55350f745@linux.ibm.com>
+In-Reply-To: <ecf642af-4531-40ad-988c-27e55350f745@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,75 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IOWatchPoll holds a reference to the iochannel while the "child"
-source (iwp->src) is removed from the context and freed. Freeing the
-source leads to the iochannel being also freed at
-qio_channel_fd_source_finalize().
+On Thu May 15, 2025 at 5:07 AM AEST, Mike Kowal wrote:
+>
+> On 5/11/2025 10:10 PM, Nicholas Piggin wrote:
+>> Have xive_tctx_accept clear NSR in one shot rather than masking out bits
+>> as they are tested, which makes it clear it's reset to 0, and does not
+>> have a partial NSR value in the register.
+>>
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>   hw/intc/xive.c | 6 ++----
+>>   1 file changed, 2 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+>> index 6293ea4361..bb40a69c5b 100644
+>> --- a/hw/intc/xive.c
+>> +++ b/hw/intc/xive.c
+>> @@ -68,13 +68,11 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uin=
+t8_t ring)
+>>            * If the interrupt was for a specific VP, reset the pending
+>>            * buffer bit, otherwise clear the logical server indicator
+>>            */
+>> -        if (regs[TM_NSR] & TM_NSR_GRP_LVL) {
+>> -            regs[TM_NSR] &=3D ~TM_NSR_GRP_LVL;
+>> -        } else {
+>> +        if (!(regs[TM_NSR] & TM_NSR_GRP_LVL)) {
+>
+>
+> Any reason why you didn't just use the else?=C2=A0 Regardless I am fine=
+=20
+> either way.
 
-Later, io_watch_poll_prepare() tries to create another source with the
-same iochannel and hits an use after free:
+IIRC it was because the 'if' side goes away entirely, ends up
+working better this way I think.
 
-==8241==ERROR: AddressSanitizer: heap-use-after-free on address 0x514000000040
-READ of size 8 at 0x514000000040 thread T2
-    #0 0x561c2d272fcd in object_get_class  ../qom/object.c:1043:17
-    #1 0x561c2d338f84 in QIO_CHANNEL_GET_CLASS  include/io/channel.h:29:1
-    #2 0x561c2d33b26f in qio_channel_create_watch  ../io/channel.c:388:30
-    #3 0x561c2d2f0993 in io_watch_poll_prepare  ../chardev/char-io.c:65:20
-    ...
 
-0x514000000040 is located 0 bytes inside of 392-byte region [0x514000000040,0x5140000001c8)
-freed by thread T2 here:
-    #0 0x561c2d2319a5 in free
-    #1 0x7fb2c0926638 in g_free
-    #2 0x561c2d276507 in object_finalize  ../qom/object.c:734:9
-    #3 0x561c2d271d0d in object_unref  ../qom/object.c:1231:9
-    #4 0x561c2d32ef1d in qio_channel_fd_source_finalize  ../io/channel-watch.c:95:5
-    #5 0x7fb2c091d124 in g_source_unref_internal ../glib/gmain.c:2298
-    #6 0x561c2d2f0b6c in io_watch_poll_prepare  ../chardev/char-io.c:71:9
-    ...
+>
+> Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+>
+> Thanks MAK
 
-previously allocated by thread T3 (connect) here:
-    #0 0x561c2d231c69 in malloc
-    #1 0x7fb2c0926518 in g_malloc
-    #2 0x561c2d27246e in object_new_with_type  ../qom/object.c:767:15
-    #3 0x561c2d272530 in object_new  ../qom/object.c:789:12
-    #4 0x561c2d320193 in qio_channel_socket_new  ../io/channel-socket.c:64:31
-    #5 0x561c2d308013 in tcp_chr_connect_client_async  ../chardev/char-socket.c:1181:12
-    #6 0x561c2d3002e7 in qmp_chardev_open_socket_client  ../chardev/char-socket.c:1281:9
-    ...
-
-Fix the issue by incrementing the iochannel reference count when the
-IOWatchPoll takes a reference and decrementing when it is finalized.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- chardev/char-io.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/chardev/char-io.c b/chardev/char-io.c
-index 3be17b51ca..d9b11f335f 100644
---- a/chardev/char-io.c
-+++ b/chardev/char-io.c
-@@ -88,6 +88,9 @@ static gboolean io_watch_poll_dispatch(GSource *source, GSourceFunc callback,
- static void io_watch_poll_finalize(GSource *source)
- {
-     IOWatchPoll *iwp = io_watch_poll_from_source(source);
-+
-+    object_unref(OBJECT(iwp->ioc));
-+
-     if (iwp->src) {
-         g_source_destroy(iwp->src);
-         g_source_unref(iwp->src);
-@@ -117,6 +120,8 @@ GSource *io_add_watch_poll(Chardev *chr,
-     iwp->fd_can_read = fd_can_read;
-     iwp->opaque = user_data;
-     iwp->ioc = ioc;
-+    object_ref(OBJECT(iwp->ioc));
-+
-     iwp->fd_read = (GSourceFunc) fd_read;
-     iwp->src = NULL;
-     iwp->context = context;
--- 
-2.35.3
-
+Thanks,
+Nick
 
