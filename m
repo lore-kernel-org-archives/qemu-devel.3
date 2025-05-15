@@ -4,118 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A7CC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90068C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:45:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFaiN-00058u-Fl; Thu, 15 May 2025 11:41:45 -0400
+	id 1uFaip-0005uI-DG; Thu, 15 May 2025 11:42:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFai8-0004uu-0y; Thu, 15 May 2025 11:41:29 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uFaib-0005hM-M9; Thu, 15 May 2025 11:41:59 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFai0-0005zB-Na; Thu, 15 May 2025 11:41:27 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg4Zg004735;
- Thu, 15 May 2025 15:41:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=8G6dQGfbJS6mL5ZWHNtGFdVyH+8WuRRIFuT2tiGvUtw=; b=AFDlcukVq+1+
- Cd+4QwKGYb8PC4CCieMAMYh7+7q7zAEy8cbRaq/bnMsp8o1wfKLVhtiGEIp979wo
- sj28WusBM/PSbI7vxKMVBEAzkjezH7/I/KfYD5S9axG2Pip9oNKZBs46RmaebqGe
- chygtnmy3qGeNf8+K0Q0C+kLXGvn6fg5gKLZBSEarPwLITQ5w/YeOWOr7FGM0vcM
- vX5HoFUlPW59zRNJokTxx4HiDbhtqFuTphCaWwstRphyvOntFzikG/IjzvzQTsux
- 3rulqI741i11VHEEU/82liekPxwmsqUFS7iu/pYRD/NuLXOaCuyPkn2MUJCSnPvy
- h9tsQaNLmA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2v57-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:41:12 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFfCwr013853;
- Thu, 15 May 2025 15:41:12 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2v55-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:41:12 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE8T4O024281;
- Thu, 15 May 2025 15:41:11 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfsb0rj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:41:10 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFf9kr31982286
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:41:09 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B8C4758043;
- Thu, 15 May 2025 15:41:09 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 606C158055;
- Thu, 15 May 2025 15:41:09 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:41:09 +0000 (GMT)
-Message-ID: <a8d2f0c6392d4b7918e8eb87a5b0ec4f65f84326.camel@linux.ibm.com>
-Subject: Re: [PATCH 07/50] ppc/xive2: Reset Generation Flipped bit on END
- Cache Watch
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
- <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
- Schlossin <calebs@linux.vnet.ibm.com>
-Date: Thu, 15 May 2025 10:41:09 -0500
-In-Reply-To: <20250512031100.439842-8-npiggin@gmail.com>
-References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-8-npiggin@gmail.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -2qw1m5wWPGJomI4zsSJiv6IUBaaU6CI
-X-Authority-Analysis: v=2.4 cv=XK4wSRhE c=1 sm=1 tr=0 ts=68260b18 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=u5XRYQ9GfIdERzJa8uoA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: DfvAENBixb9VOz-SzfNE6Ea9XGnU98nu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX0kmkRYufV1Hg
- s2cJ2s5VxWlbnA79hQXfYidgItaVr24Qsc+q/XEeKMVJf9X3w7VdaZteHDbFB0L+Ej1nyNH70lg
- 0m7K662ET8RyzSqfJBCxEIfQfdQbGd79/QFtQUxDMfQ4czouwvp+hj7nPd418TQLNPEytPqQK9g
- 2gQn8DJ/jQ29A1GGcyNrPXCiZsgsaQPm84Fp8qGrtJ2seDQHrlV7CzNWYEyhP8IPZkp5dHlM6Nr
- dRIaB8/FmfsSnsQbnUAzJ4AvZLsoPxKYVmw1hmC0GmCMUhK7fiNrnqk79FNpB4gEBixpqPaxc8C
- 4j58E9mOuRHQCjoUfJ9j3m/GMlF5hNCei01RXcQkzyaDaSk2zfz8EDCTwlvMZAeOEbqNGJzkAHp
- Up/sh0N7DTfgNN0NnC+ZruVGmCZZWvVYOIyw1psG4cTTXuSlcNd71P5XhUYClJzabKIJCdlp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0
- mlxscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505150155
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uFaiS-000611-KI; Thu, 15 May 2025 11:41:57 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 992BD55C0D0;
+ Thu, 15 May 2025 17:41:42 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id PduU3-ndk5SU; Thu, 15 May 2025 17:41:40 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id B04F655BC02; Thu, 15 May 2025 17:41:40 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id ADEA0745683;
+ Thu, 15 May 2025 17:41:40 +0200 (CEST)
+Date: Thu, 15 May 2025 17:41:40 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Zhao Liu <zhao1.liu@intel.com>
+cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=EF=BF=BD?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org, 
+ qemu-trivial@nongnu.org, Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Thomas Huth <thuth@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org
+Subject: Re: [PATCH 8/9] target/s390x/kvm/pv: Consolidate
+ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
+In-Reply-To: <aCXxHEVZb8+ZCW/m@intel.com>
+Message-ID: <c2466a27-8f8a-780d-ff78-491921bb41e5@eik.bme.hu>
+References: <20250514084957.2221975-1-zhao1.liu@intel.com>
+ <20250514084957.2221975-9-zhao1.liu@intel.com>
+ <e0146386-ccf4-44ba-b58f-0bb4d3317f89@redhat.com>
+ <aCS8aHsF+VAuj01D@intel.com>
+ <7dec9c8e-93d6-81f0-b075-e29b8ede44a2@eik.bme.hu>
+ <aCXxHEVZb8+ZCW/m@intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,59 +72,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On Thu, 15 May 2025, Zhao Liu wrote:
+> On Wed, May 14, 2025 at 06:24:03PM +0200, BALATON Zoltan wrote:
+>> Date: Wed, 14 May 2025 18:24:03 +0200
+>> From: BALATON Zoltan <balaton@eik.bme.hu>
+>> Subject: Re: [PATCH 8/9] target/s390x/kvm/pv: Consolidate
+>>  OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
+>>
+>> On Wed, 14 May 2025, Zhao Liu wrote:
+>>>>> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(S390PVGuest,
+>>>>> +                                          s390_pv_guest,
+>>>>> +                                          S390_PV_GUEST,
+>>>>> +                                          CONFIDENTIAL_GUEST_SUPPORT,
+>>>>> +                                          { TYPE_USER_CREATABLE },
+>>>>> +                                          { NULL })
+>>>>
+>>>> I'll note that existing callers of OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
+>>>> happily ignore the line limit and put it into a single line.
+>>>>
+>>>> (which ends up looking better IMHO)
+>>>
+>>> Ok, I'll onor the existing conventions (which I'll apply to other
+>>> patches as well).
+>>
+>> There are two line limits. If something is clearer on one line you could
+>> exceed the normal 80 chars and put up to 90 chars on one line for which
+>> checkpatch will issue a warning that can be ignored for these cases. Over 90
+>> lines checkpatch will give an error and I think you should not ignore that.
+>
+> Thank you. This makes sense!
+>
+>> Maybe try to put as much on one line as possible instead of new line after
+>> each argument but without exceeding the 80 chars or if the whole line fits
+>> in 90 chars then use that. Or maybe do not indent second line under ( but
+>> with 4 spaces then you can fit it in two lines but lines over 90 chars are
+>> undesirable.
+>
+> HMM, I understand you mean:
+>
+> OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(S390PVGuest, s390_pv_guest,
+>    S390_PV_GUEST, CONFIDENTIAL_GUEST_SUPPORT, { TYPE_USER_CREATABLE }, { NULL })
+>
+> The second line is 82 chars and now I think this version is better.
 
-On Mon, 2025-05-12 at 13:10 +1000, Nicholas Piggin wrote:
-> From: Michael Kowal <kowal@linux.ibm.com>
-> 
-> When the END Event Queue wraps the END EQ Generation bit is flipped and the
-> Generation Flipped bit is set to one.  On a END cache Watch read operation,
-> the Generation Flipped bit needs to be reset.
-> 
-> While debugging an error modified END not valid error messages to include
-> the method since all were the same.
-> 
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-> ---
->  hw/intc/pnv_xive2.c | 3 ++-
->  hw/intc/xive2.c     | 4 ++--
->  2 files changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index 30b4ab2efe..72cdf0f20c 100644
-> --- a/hw/intc/pnv_xive2.c
-> +++ b/hw/intc/pnv_xive2.c
-> @@ -1325,10 +1325,11 @@ static uint64_t pnv_xive2_ic_vc_read(void *opaque, hwaddr offset,
->      case VC_ENDC_WATCH3_DATA0:
->          /*
->           * Load DATA registers from cache with data requested by the
-> -         * SPEC register
-> +         * SPEC register.  Clear gen_flipped bit in word 1.
->           */
->          watch_engine = (offset - VC_ENDC_WATCH0_DATA0) >> 6;
->          pnv_xive2_end_cache_load(xive, watch_engine);
-> +        xive->vc_regs[reg] &= ~(uint64_t)END2_W1_GEN_FLIPPED;
->          val = xive->vc_regs[reg];
->          break;
->  
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 4dd04a0398..453fe37f18 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -374,8 +374,8 @@ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
->          qgen ^= 1;
->          end->w1 = xive_set_field32(END2_W1_GENERATION, end->w1, qgen);
->  
-> -        /* TODO(PowerNV): reset GF bit on a cache watch operation */
-> -        end->w1 = xive_set_field32(END2_W1_GEN_FLIPPED, end->w1, qgen);
-> +        /* Set gen flipped to 1, it gets reset on a cache watch operation */
-> +        end->w1 = xive_set_field32(END2_W1_GEN_FLIPPED, end->w1, 1);
->      }
->      end->w1 = xive_set_field32(END2_W1_PAGE_OFF, end->w1, qindex);
->  }
+Yes and maybe can even fit in 80 chars if using { } instead of { NULL }.
 
+Regards,
+BALATON Zoltan
 
