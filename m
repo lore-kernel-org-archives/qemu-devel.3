@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FCB4C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 17:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF02FC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 17:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFcNZ-0000iH-8o; Thu, 15 May 2025 13:28:21 -0400
+	id 1uFcN2-00089g-Hd; Thu, 15 May 2025 13:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFcN4-0008Hx-BI
- for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:50 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1uFcMz-0007wr-1s
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:45 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFcN1-00026e-99
- for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:49 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-74264d1832eso1674330b3a.0
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 10:27:46 -0700 (PDT)
+ id 1uFcMw-00024F-O2
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 13:27:44 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7418e182864so1404633b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 10:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747330066; x=1747934866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747330061; x=1747934861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CNI2BFFgTeljdJ/HtYFFxLLCliw0wPHFB2HapKUt6b4=;
- b=c2Ib+CYyfD3gs345IJ1hW4Chv1HTMXFmSCzoY+JX9iqbvHaKuw4W80wMtOvO3F3sds
- EQmelCyrGYgoaeCzu7So2kEry9r5I1BDsHMcKO8wGwq1ef0BgOC1bDZv4AIf7AwK6udN
- DijLEJ71zosGcaKeAWIah9iRI0rPsNZ2pnRxQ8y7629niIZ9YpU6gvpBsl0uPHzwtp+8
- +lQ/8UbZUwgU9H3BnbvNgo0cc99mpz+vqcfJaLoelnV+3szSYKayMgZzeQT79Gu3TbnJ
- KyWJtkKw62ou4Odv8dBi5ovcOBq12IOFjTfUfqsgjPuBa2C7j+WquBRm/qmIsG6OvG5I
- 72JQ==
+ bh=JBmZUu2xz9zNrRIusKpD96krKv5u2Eoq/yUy1aZuXB0=;
+ b=mCox1a6WmeFsI3MyYOBtgyjSf8tgNAPytWjS0DlLQZeSpUHhOaZtf/ET2ksl8iB9ie
+ +jUGkGE+IqB/xYy6ZxR42BHbmEafULzLa7CTFEBuKE+pMXqkaYKEXdhmmV+UtqmdWqYx
+ C2xejM3ojOE9aV6xehvwY5sISUy+phjOADUP2jIqY3ZbYey7uH9Beg/EDNgodTUswx9M
+ T1sS9k4L2Q6Dz/mDSMUyfUv1jfDLRwp9QOUV8NHybaVh5kHZrrfY8OjOeNrIIYlXv8Rk
+ 8lBdPolDqYww1R9n4T6+e6ykESPGgE/eX1hCnzYsi89zR+9ErNqlLgyk+l8o3hVFMn/5
+ qtDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747330066; x=1747934866;
+ d=1e100.net; s=20230601; t=1747330061; x=1747934861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CNI2BFFgTeljdJ/HtYFFxLLCliw0wPHFB2HapKUt6b4=;
- b=m8Z2qQDJ+EQxBaD2X9mP4cKqDkFRvg0wXbWPi7Bpt6Kwj3+lr6s7bvyUQIjKEqgVmF
- 5VOHmoWb91vpjqhCCGXLNOm8joUgE5V+vu1J9fret8skrs3Ud7kUjSE7yrRgEbjUe6Xe
- UpuowZ972xxUvzd4OPE7+HJ0vHcxFHnzc5b2zfMrNbTuygaIP6HLHuMDKptOUgm0HPTE
- m7EwhotCfXgN2DKCk0ES9rHnMZNm+rPD5+T1NyI8xbuyv+nnyK0A7QKRmi9JgJasQUNr
- tqnYKRtLRN8pyol+abJ/1GTDIblmtvDvW4sWRvfuLnKx98/YSSDfLiBUlrplYuVR3gPh
- Eksg==
-X-Gm-Message-State: AOJu0YyVTcfswMjn/Ec37Byove4Y3J6hy5Ns3Zq+nJfxsxaaPBMkzSbS
- 2MeqRmZaBbhJQOMK7VGHkBg/MnhPcb5NRSuJ3jcaxBdxBLWpsfD3hs/PeG7aKMB/PDqZUSVBGlw
- nqYhF
-X-Gm-Gg: ASbGncsst6Mo4amH+Y/mncq6IiI/FCYcI8UzJSzfYqeildpB9yEnR3r7nGrT4Ryabpc
- wx2xb0YwmDmgBlqesKaupt/g/LDM6u21tQojuvzKVn6IhqbCoLUY9QbzyZeh8M5GE4HwqWNGL2s
- 7uMMJ7vphsJd4MFQyQ68HhgDE1wntEMei1v8bSQo+bZuAVM9ZWZZZGVEQO+w5XCtlLQyUty5iWR
- KWjZzwI2ODUyMl4IcjdnXklwoQzCdJddEAcrOi5lqvoSE/cF0Y4hLNe1HFWawW+q/kqaIy25Q4N
- FrEP/C5oIBB66hOy7P7FXK4Lo7AFbgjsFTvwTEDjoFet+QSUija5afCU2e8chQ==
-X-Google-Smtp-Source: AGHT+IFOtBX+PK4J5MAkSLQdI3ff/BySXyYknToFkSB10/i1EHm/I9TdHIitFPmpbIYFUhNyChvP4Q==
-X-Received: by 2002:a05:6a20:7287:b0:1f5:a3e8:64d3 with SMTP id
- adf61e73a8af0-2162192a995mr497853637.21.1747330065758; 
- Thu, 15 May 2025 10:27:45 -0700 (PDT)
+ bh=JBmZUu2xz9zNrRIusKpD96krKv5u2Eoq/yUy1aZuXB0=;
+ b=TEod77NubFkeI4wPEPdE2r9W5xQpo0fYkcXIMYev/W3fK1EhBdt16D5QKGU9/p6i69
+ OC0uNrMjvuAx2E45dfggCNyOfy9uHnAW8uD7AtrM3YTzUW5oBDVOZuH3zIcrFrVag86C
+ /gvK/qOMpxn5aWEcKMLA1wk4BabXfnNYh5pSbZh8FeWOH0c1W9OIatUTo5af3uIK/MqX
+ tZTme3CZm9iNsx9H0CWVYrxp+SBezfBGW1ntAb0Qm9uSAewhUq+R1XGhP/3gjIwYZVDP
+ rxJSey/4lCT2xjJi3ZkkfVrU1IuKscYoqXyr98e/mrDngk1IwjR3U/pENCeCNlAH5nWK
+ CvZQ==
+X-Gm-Message-State: AOJu0YyuTwUlEn/8OlUe6NQO40te1hMAc+VToeZZxTikFo2o894RsrHs
+ N9xyTsciqT7vxNRGMy27hADiOxO1Zx5fRY3tlIZ8PMAGJxjaM5AzqFKbf2Wl5vlyYxXtuXLpmhd
+ mGBtS
+X-Gm-Gg: ASbGncvQWzvYKIRgyQDO3wPwIBpxQEdUH6PN3huVnR1kZQLVNGx+mYm9aiYmMCf7zqr
+ M5+Q8M4mg44D1bOCm1i5tYIuM80i086kl9kRdI7RR7Q7fgbeY+G+9rkOvM/ktV815ep2xlP98Z7
+ nTIijPBmiyVpxhohfdDb0CHqSiIFRkuYDHdb6eU+kXTUXduTDK5CslPu5zrSMZlUI5Zw/jVlvTk
+ xpg0eF1m/Jh7DFI3kHaQBYhSLUGb+nj9PQfZ87gsLx1zk4ivX/trh0vaijDUJmaSBifxS+L7VJn
+ rnos8GawANUumFXeaM1PHvnn400Cf96aHsDmp7c9NrHT3K117U8=
+X-Google-Smtp-Source: AGHT+IELq9SA7KQR1g2Ym5f7G2VlBDX2XkV0Y47kkMWupvP298ItKC6fKg9NahH1UFoGTQBgVVm8xA==
+X-Received: by 2002:a05:6a20:d493:b0:1f5:a3e8:64c1 with SMTP id
+ adf61e73a8af0-2162166e6bemr566109637.0.1747330061221; 
+ Thu, 15 May 2025 10:27:41 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a96dfa9dsm79730b3a.10.2025.05.15.10.27.44
+ d2e1a72fcca58-742a96dfa9dsm79730b3a.10.2025.05.15.10.27.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 10:27:45 -0700 (PDT)
+ Thu, 15 May 2025 10:27:40 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -72,17 +72,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  berrange@redhat.com, Markus Armbruster <armbru@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 07/12] qapi: remove the misc-target.json file
-Date: Thu, 15 May 2025 10:27:27 -0700
-Message-ID: <20250515172732.3992504-8-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 02/12] qapi: expand docs for SEV commands
+Date: Thu, 15 May 2025 10:27:22 -0700
+Message-ID: <20250515172732.3992504-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
 References: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,80 +107,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This file is now empty and can thus be removed.
-
-Observe the pre-existing bug with s390-skeys.c and target/i386/monitor.c
-both including qapi-commands-misc-target.h despite not requiring it.
+This gives some more context about the behaviour of the commands in
+unsupported guest configuration or platform scenarios.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qapi/misc-target.json | 3 ---
- qapi/qapi-schema.json | 1 -
- hw/s390x/s390-skeys.c | 1 -
- target/i386/monitor.c | 1 -
- qapi/meson.build      | 1 -
- 5 files changed, 7 deletions(-)
- delete mode 100644 qapi/misc-target.json
+ qapi/misc-target.json | 43 ++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
 diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-deleted file mode 100644
-index c9ea1ab23e7..00000000000
+index 5d0ffb0164f..ae55e437a5f 100644
 --- a/qapi/misc-target.json
-+++ /dev/null
-@@ -1,3 +0,0 @@
--# -*- Mode: Python -*-
--# vim: filetype=python
--#
-diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-index e96bff8d38c..d8eb79cfda6 100644
---- a/qapi/qapi-schema.json
-+++ b/qapi/qapi-schema.json
-@@ -63,7 +63,6 @@
- { 'include': 'misc.json' }
- { 'include': 'misc-arm.json' }
- { 'include': 'misc-i386.json' }
--{ 'include': 'misc-target.json' }
- { 'include': 'audio.json' }
- { 'include': 'acpi.json' }
- { 'include': 'pci.json' }
-diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
-index aedb62b2d31..8eeecfd58fc 100644
---- a/hw/s390x/s390-skeys.c
-+++ b/hw/s390x/s390-skeys.c
-@@ -17,7 +17,6 @@
- #include "hw/s390x/storage-keys.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-machine.h"
--#include "qapi/qapi-commands-misc-target.h"
- #include "qobject/qdict.h"
- #include "qemu/error-report.h"
- #include "system/memory_mapping.h"
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index 3ea92b066e1..3c9b6ca62f2 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -29,7 +29,6 @@
- #include "monitor/hmp.h"
- #include "qobject/qdict.h"
- #include "qapi/error.h"
--#include "qapi/qapi-commands-misc-target.h"
- #include "qapi/qapi-commands-misc.h"
- 
- /* Perform linear address sign extension */
-diff --git a/qapi/meson.build b/qapi/meson.build
-index 5e93e6b8cfd..ffe44f9e0b8 100644
---- a/qapi/meson.build
-+++ b/qapi/meson.build
-@@ -42,7 +42,6 @@ qapi_all_modules = [
-   'machine-target',
-   'migration',
-   'misc',
--  'misc-target',
-   'net',
-   'pragma',
-   'qom',
++++ b/qapi/misc-target.json
+@@ -110,7 +110,11 @@
+ ##
+ # @query-sev:
+ #
+-# Returns information about SEV
++# Returns information about SEV/SEV-ES/SEV-SNP.
++#
++# If unavailable due to an incompatible configuration the
++# returned @enabled field will be set to 'false' and the
++# state of all other fields is undefined.
+ #
+ # Returns: @SevInfo
+ #
+@@ -141,7 +145,16 @@
+ ##
+ # @query-sev-launch-measure:
+ #
+-# Query the SEV guest launch information.
++# Query the SEV/SEV-ES guest launch information.
++#
++# This is only valid on x86 machines configured with KVM and the
++# 'sev-guest' confidential virtualization object. The launch
++# measurement for SEV-SNP guests is only available within
++# the guest.
++#
++# This will return an error if the launch measurement is
++# unavailable, either due to an invalid guest configuration
++# or if the guest has not reached the required SEV state.
+ #
+ # Returns: The @SevLaunchMeasureInfo for the guest
+ #
+@@ -185,8 +198,9 @@
+ ##
+ # @query-sev-capabilities:
+ #
+-# This command is used to get the SEV capabilities, and is supported
+-# on AMD X86 platforms only.
++# This command is used to get the SEV capabilities, and is only
++# supported on AMD X86 platforms with KVM enabled. If SEV is not
++# available on the platform an error will be returned.
+ #
+ # Returns: SevCapability objects.
+ #
+@@ -205,7 +219,15 @@
+ ##
+ # @sev-inject-launch-secret:
+ #
+-# This command injects a secret blob into memory of SEV guest.
++# This command injects a secret blob into memory of a SEV/SEV-ES guest.
++#
++# This is only valid on x86 machines configured with KVM and the
++# 'sev-guest' confidential virtualization object. SEV-SNP guests
++# do not support launch secret injection
++#
++# This will return an error if launch secret injection is not possible,
++# either due to an invalid guest configuration, or if the guest has not
++# reached the required SEV state.
+ #
+ # @packet-header: the launch secret packet header encoded in base64
+ #
+@@ -236,8 +258,15 @@
+ ##
+ # @query-sev-attestation-report:
+ #
+-# This command is used to get the SEV attestation report, and is
+-# supported on AMD X86 platforms only.
++# This command is used to get the SEV attestation report.
++#
++# This is only valid on x86 machines configured with KVM and the
++# 'sev-guest' confidential virtualization object. The attestation
++# report for SEV-SNP guests is only available within the guest.
++#
++# This will return an error if the attestation report is
++# unavailable, either due to an invalid guest configuration
++# or if the guest has not reached the required SEV state.
+ #
+ # @mnonce: a random 16 bytes value encoded in base64 (it will be
+ #     included in report)
 -- 
 2.47.2
 
