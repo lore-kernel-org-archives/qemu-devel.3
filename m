@@ -4,130 +4,223 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13945C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 19:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8933CC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 19:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFeLz-0000O2-0d; Thu, 15 May 2025 15:34:51 -0400
+	id 1uFeS8-0005AM-Ev; Thu, 15 May 2025 15:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uFeLx-0000KF-4a
- for qemu-devel@nongnu.org; Thu, 15 May 2025 15:34:49 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uFeLt-0007xS-BF
- for qemu-devel@nongnu.org; Thu, 15 May 2025 15:34:47 -0400
-Received: by mail-wm1-f67.google.com with SMTP id
- 5b1f17b1804b1-442fda876a6so977305e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 12:34:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747337683; x=1747942483;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:cc:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w9egfM1qUtcaEjOASgI2RDlxqBMcyAWfZOu22yiBPG0=;
- b=PfqW0iVhpz9DTq3mjhbBv9vly4O1iqyo8S+EpD+5FtBfHqf/iBvfNPXJfszqE36dDh
- 1dfAxPWfcoJv/yFgaLMR8mGB7t/lWMcp7kOF7Hm1Rb7chr2cmnTdclkulNanGnhVi7o/
- XuM9qh0CkovRlaQqwUtucBfUCc34hFHtpNCJFGg7vtkoc0ovh56NRpxE1WKk4L+3UKYP
- kxfj4woCkp1iRS7e2Y8jGAhBWqDok3wLM8RD7kpHKF/ZAZX/cZixGEVpeZQser7eIQWy
- PxcmenCeYmA0+EBfJoRR/Q84WUDrf1i9SHz6ZT7KKB/opZ4FcFp1xIqpTpDuNEIgKyGx
- J9WQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIXJYw4Ku5pjvl/xFmUeAH2T3jathoznvPI8uAOBQUytkbizKLCbxqYV1536sSMBmW6MbY2UT1bovq@nongnu.org
-X-Gm-Message-State: AOJu0YzZjrrAFqvLVwW7n8Wsgx1sIlZ8rIRLQnFxq8IijpeWq6NG+TB7
- XCGC6hP/EYO24gXaS6r5xqUfdr4v4z4T90aM8JbhaTx980M9PhbZy7Gq
-X-Gm-Gg: ASbGncsK3VDb2CmTxOtDa8nyXCjVc1szVjTupjkmUdiliipSjfYzSBJBJ4OOX2tp9zX
- +tIzZHC6UGoyWqN2WFTEPXOvBa3WmuA/1Wyy0J6hwKHL7Pg6wojN04R5wqtOiLdlpWp4uXDtrJG
- NPG5iUVD478mh2fNfavs5TwLoCDBlpj9RbyZ1KfoR8LVBk4l1R92D/8ToAjh3MjeeL+LBuU93Jt
- NcsWIABzBUGZRSF9keTBOqNvJkKK+/uZPFm1jTgx7FLTp4GgL5zf6Aaqd00nUaaIut1oG3sD2V8
- nVfYXP/AQi2BJkeS/6lsoPEmelltHeylEfMyncl/IV+lbQApx+xf/lE=
-X-Google-Smtp-Source: AGHT+IF4HXq+wyWvfId/uEsXpyiED0KV7AojoN6DmpvuZrguxExLH4dDqt+CbRU49NWWlK7pQRScBQ==
-X-Received: by 2002:a05:600c:a012:b0:43c:e70d:44f0 with SMTP id
- 5b1f17b1804b1-442fd63bfa4mr7472015e9.19.1747337682718; 
- Thu, 15 May 2025 12:34:42 -0700 (PDT)
-Received: from [192.168.88.252] ([78.80.121.182])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f337db8asm83452305e9.9.2025.05.15.12.34.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 12:34:42 -0700 (PDT)
-Message-ID: <ac717d25-f5e1-4227-ad35-4ebfc2af7317@ovn.org>
-Date: Thu, 15 May 2025 21:34:39 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uFeS6-00056e-L7
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 15:41:10 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uFeRz-0000Yh-5G
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 15:41:10 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FF1nwo028457;
+ Thu, 15 May 2025 19:40:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=pdAXJ91bb5BNsJhF+uBJHyPonsDSvQu+YvmSUyVn3RE=; b=
+ RtX906CYRtKFC8iV18wqn6BYwGiEVS2+d3WtSvPKaCRZmtznP9dIvQIsryEf8Adj
+ 0EoCD0D/gcOoEa8RoerxTrUkdnbB1k4eDKkC8GqnsfdJn2tgXfXplb/sub7pUCtt
+ Bc/je+LqMnThjeYA+GsGiprg9tKdVLZqfTKLNt3qzXaiGVtlkbkajQKAkKBbO8Fw
+ S8CjLSoQ7bjjVy/YKIY1ApMryEcvX0aDgaVyw0huKczDoKQ58mSHSfb8HJrnfOkT
+ jeqssRUTMyiLLbeh4EfmElYfQq8ecpFrP4a3aYUbgINhK6NifClimCzvhBBitypD
+ f24HQmjSeuT/eN40NMw6xA==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46mbcmn3tv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 May 2025 19:40:57 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54FIVC8u026847; Thu, 15 May 2025 19:40:55 GMT
+Received: from byapr05cu005.outbound.protection.outlook.com
+ (mail-westusazlp17010003.outbound.protection.outlook.com [40.93.1.3])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46mbt9sks2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 May 2025 19:40:55 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HbnhrMsdgTLDPxoJW/mswUBjnuO0qCnKsE1XaeLPYunaL0QjxtoRP62+yTrSqlRga8cUpSM2XfpFIRbx4qiP/0+eP7LPUzhirnChX2bacKhNCYIVDyEjXLzY2dDsHgbij3hAXGpyBx2j07BXRXfsDr1x1aR8P4/NdSWr/K3rbkfor8KZAOGNAX7Z1j2qQ5L/RsLvrc5DJnNkIAifw3d+/MLXb/Y0eCJ8GkoIhFgB7US8JE9E6W42mTViPZqGkXCt+evWiSXJRzvywGHeaYilMnRmsrswfijN7YrBPP4//aL5eLcI7Pc+HuDyEAdpycqsRE3WbGpIrOtgdaTSTMWHqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pdAXJ91bb5BNsJhF+uBJHyPonsDSvQu+YvmSUyVn3RE=;
+ b=PVrO4v/cb+wmarkytU92PG0c8dyjqZBRuPkOUFZ/T0iMEshRVVWNXgEnqfje5TC+8LAtzFVUBSgMJzp0/JBrImU3FJx0v6SyEb3U5koFTbCFVPcq+IBI1DbG6pZ0p2ChlpQo+tumJF8eYR8AGl541c2wiEUgMzzDL2IOL4gLG/KvOOsS4SnwGneYM2yvIeOvx/qi6QEuI/VjMIuWd9oPAjEcFd77jprdmxBqwfsOgLOlbGdASpjSnza9TcazGCH+X0YQzGJdJTXL/UifME2R2NtjCserK+EKS8YbXJwz56DE2Qf3zujM6xfYrqXv81aiMVmah1o15cG2U9hJbyL+GA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pdAXJ91bb5BNsJhF+uBJHyPonsDSvQu+YvmSUyVn3RE=;
+ b=PW899IyWcv8AwEDTflL1tHpOUIPXR7XWeBOUG3Lb/JoitQthjRXwrLKyOzjwC2SgPiWLqeHnwNPM1uo1Iibq0bhZzicDZHLyCikRBqrycqhusHXAC7KKP5jarPudXtkTLsJ8+jZUfIoR7A85QYHqVPnYzC+79/0PJAhGVkdoTX0=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by MN2PR10MB4159.namprd10.prod.outlook.com (2603:10b6:208:1d7::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.33; Thu, 15 May
+ 2025 19:40:52 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.8722.027; Thu, 15 May 2025
+ 19:40:52 +0000
+Message-ID: <6d269740-b274-4046-bb15-7ce7f2784ca5@oracle.com>
+Date: Thu, 15 May 2025 15:40:46 -0400
 User-Agent: Mozilla Thunderbird
-Cc: i.maximets@ovn.org, Jason Wang <jasowang@redhat.com>,
- Anton Protopopov <aspsk@isovalent.com>
-Subject: Re: [PATCH] net/af-xdp: Support pinned map path for AF_XDP sockets
-To: Daniel Borkmann <daniel@iogearbox.net>, qemu-devel@nongnu.org
-References: <20250508123436.461030-1-daniel@iogearbox.net>
- <f044b02b-3b7a-4a64-ab38-3298f96955a9@ovn.org>
- <0d7285c0-15dc-4dcd-9436-b9134f07242d@iogearbox.net>
- <18f6aae8-2fa2-4fb6-a518-67e982623a5e@ovn.org>
- <e61edfd9-8979-4ef4-b1a5-28dfd802cba6@iogearbox.net>
- <03180a8b-bd9e-40c1-8711-bddf04d84aa3@ovn.org>
- <5b624484-dae9-4ff1-9c84-5b13b46abd2d@iogearbox.net>
+Subject: Re: [PATCH V3 26/42] vfio: return mr from vfio_get_xlat_addr
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-27-git-send-email-steven.sistare@oracle.com>
+ <49dad632-fd30-45fd-8dac-80c8bb446809@nutanix.com>
 Content-Language: en-US
-From: Ilya Maximets <i.maximets@ovn.org>
-Autocrypt: addr=i.maximets@ovn.org; keydata=
- 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
-In-Reply-To: <5b624484-dae9-4ff1-9c84-5b13b46abd2d@iogearbox.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.128.67;
- envelope-from=i.maximets.ovn@gmail.com; helo=mail-wm1-f67.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <49dad632-fd30-45fd-8dac-80c8bb446809@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BY3PR04CA0005.namprd04.prod.outlook.com
+ (2603:10b6:a03:217::10) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|MN2PR10MB4159:EE_
+X-MS-Office365-Filtering-Correlation-Id: 570ec5b6-fd1f-4c26-4540-08dd93e866f5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QWVUZ0hvaDA3WTNtWjJIMUg5RkY5TGhkVThZeFBFTHM2Qm14TG5BcytkSU12?=
+ =?utf-8?B?ejRjOURtVys2TGVBcEMycWg3SlM0aHFmZVBIcXpOSitBQVZQSm9sNmZ5a2F4?=
+ =?utf-8?B?UGR6a0Y2OTdaUkdYNUNheFppdHlCM0lHK3BtdVVZcUNZVEY3UEJtTUwxbzFn?=
+ =?utf-8?B?TWJqT2tybnpPTWtUdVdPUDlweXhYMXlJZ0treTBWb2Q4N3k3VWRBRGdNNXdt?=
+ =?utf-8?B?elJZUjhNbE16QzdMckI5SEM3UTAzZ29VMWNJdmg2RmdBOWZzV01FdzVSSjVl?=
+ =?utf-8?B?ZjUrS1NlU3RSakhsN21DREdkdU1KK0tPckwvK3M0a2hWWE5XYnBIaHdGWjlE?=
+ =?utf-8?B?UDZ2S24raXdtZjN1ZkRTc2g2M0FHTTJ0cHU4T01jV0pVWDN2K2hnQkR3cWxP?=
+ =?utf-8?B?YWppemNyaG5qeWUxWTRQRHM2TEpVT3NWbTFWWFJ6Ym1oQXA5RXBKVVFqU0ZQ?=
+ =?utf-8?B?Tk5YSXlTc1h1RloxRFZNUy82bnhLWXNsckxaZVBpS2EyYXVyVkdFcVl5a1Rz?=
+ =?utf-8?B?amRSRWwvMENPM29kcDlqbElRSUtmRnNzb3A5K01hVHY5M2RseUdvdFAxM2l4?=
+ =?utf-8?B?azZrQm94aEJscWdEd3BsMkJ0VTBtNERiZEdHT2hwS3h0KzhwTENsb3p2cE5h?=
+ =?utf-8?B?Si9BQlRJL05tOVdaay9oR0JxdEF6c1hObFZFbVp0cENlYnEvT0xWNW1SUmsx?=
+ =?utf-8?B?ZU55dk5JMkxMVHU0Z01MNXl3bHljK3dScDA2alVyWCtiQjVKbWJrRjBveUJS?=
+ =?utf-8?B?MmNvOTdYaG5yRENGY2RIaUNBS1NLSmIzZU01TXNJTGFmeE1mWkNWVTRZUTJw?=
+ =?utf-8?B?Q0E2ZUhMOFBBNlJZV1dqMTBoWXc2UklOekJ5UzhxTktaU2NOUjBZdmRaQXZ1?=
+ =?utf-8?B?VkFaZk81NnRoNjR3WTAvaWlXODBNVHZFc0NpcGZ6dnlzcnZQUXR4blJJbldt?=
+ =?utf-8?B?UGVoVjdBWVMra1pOOFNxTDN6aFBVWllVQkIzV2hTVURMcWIxMzNjejZvNkFE?=
+ =?utf-8?B?VUxsTjczZFZTSXlTR3lsKzBQYWxLMTU3ckxQVHBpQUQvYWVCY1BLMjN3NUQr?=
+ =?utf-8?B?SGk2UDVGVVc2dlQwREpBK3pGdTh2aXV1b2JLcTJQZlg0bzBSRlNHVjBVcHhM?=
+ =?utf-8?B?akJpaHNxMkw4akVxQTRDMVZUSnlJbGpyOVVaQ3dDY2VIQkg4R0hIZlhKVlZR?=
+ =?utf-8?B?SkdJNVdSZ2dpWGZVNDBXbkFMWjlVc3NhMFc0dm5wZzE3d1FPUW9mYnhGNkxJ?=
+ =?utf-8?B?aW5BOHd4c2hFdmQ3ckFKaWxOcWlaTFQwUkZjMUNZdmdBSWJvcVNpNUkvR0FV?=
+ =?utf-8?B?TTBLOTVhL0NjOC95TU5KaFNFZ1NaamJMRW5KMnhLWGpHQjJPYUE1anFlejM1?=
+ =?utf-8?B?emE2aDFSamZxRlpxemJuZysydDdKZ2hxR0k2RkNTTzdEYlduZXF2R050SVQ0?=
+ =?utf-8?B?VlREREVLYnZLMU9oQ25KdmhnYk5FQ0xUVHBZR1NtWkdremR4RnRQUmxLTWlh?=
+ =?utf-8?B?ZFQ5TG1xNUdEbUNrS1dJZUZ1VWxUS0trbGtEK0xjNmJDRnBUQkhESWh1Z0lm?=
+ =?utf-8?B?Rmw3SncvS0I5MEpUTW5GazN5OUR5NW5ic0cwWi91UXVYdmM4MUNQT0QzZ0dN?=
+ =?utf-8?B?S0JGWlYxM1RoYWdDa3ltYVhqZVhWbkxhYlNhYk9Hd09pbkVRTUZYcEVQbml0?=
+ =?utf-8?B?MFpIWUk4OHpwRy94S3VxVDFjYkJZWjdDNXNXbGxQVHkySCtkK2hhOWk5bEJ3?=
+ =?utf-8?B?dTViNERrWkJzbkVRN1ZHZy9mbjQ1aUtQYlFZOE96YWZzY2M3aDJqSk1Ebk10?=
+ =?utf-8?B?QUZYSHZxZy8wTCsyMmpDL1ovMkhwSG9NRzBKS2thdFYxS2RxaC9tUFRsaU5k?=
+ =?utf-8?B?a1dTRWN1SXJwQWhJSjM0R2ptOTNoenBBRzlJdklLRVJ3L1MrL0Jxa0NZSWJT?=
+ =?utf-8?Q?myWwl+c+Msg=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OW9YMEVZei9tNzV4MEEvZFRTdGVoZ2Q1dkVnSjAxZTAwbFpibGcwV3FOZ2xK?=
+ =?utf-8?B?RWtxMEVZaG9pMUtKaGlOMkVjZ3NzbUEzOXlvT2ZiVE5uU0FOMDJKMVhmSlY3?=
+ =?utf-8?B?bDUwdUFyS0tCcnNmV2NLajFQT2hvTHFadjQyTmdxaHdmVGhwTDFsV3ZQWGNy?=
+ =?utf-8?B?VUVSMDA2b0lML0xFVG52UjBPdEtycVAvQklsWnFGa0VVaEpGS1hYSmZNRDE4?=
+ =?utf-8?B?M2FDSzJJMFRsTVhKZE1xYnp6a2ZiVHdqVkxJMjBXbUxwbmVEd1hPK083TFlT?=
+ =?utf-8?B?NkEwdVR2alp1eEFHYjRlcW1yQVoxN3JpR3JQRDFWOE00SkFTNXpnc0NKUTlo?=
+ =?utf-8?B?cVU5NWtSSVFpeTN1VTdxTklJVTJ1TEg1YVQvckF4a0w4bS9YWVFCaTdSSGVq?=
+ =?utf-8?B?V2VMTFpSaEtpamRyRjJZUGFuZEprQ3dsdFRlNUFpNXE4dlFNZlBLRXphN1VL?=
+ =?utf-8?B?aFoyK21uejlidmRvUHpMVDkrVDErNkQxT2Jwc1ZRNFRMZjJydnFkY1lSMnRB?=
+ =?utf-8?B?TjR1ZWJnbnpqN1doV09MYlBxQm5kMnZPUHhvN0JDeVhNejY0Rml3c0lWRUJY?=
+ =?utf-8?B?a0tVcnFxaGlubzNlWnhQRUU5MEc5aGNxblM2QTlxeUU2UGtGYW9nK3Q1RU9H?=
+ =?utf-8?B?Tldjd1YwUkFaM1lCcU9RZ3lkQzVLYTFyNklFWkRra2VNSzhuVmQ3NkVTTGdB?=
+ =?utf-8?B?bGF0OTQ4WVVJMzFpZ015dk5IYWUyUTZOYlBDa2t5Q0diVEN4RjJudGN3THov?=
+ =?utf-8?B?dUpmQzB2SEJCVE9ZUysyd21Xc2ZnbUIrK090eG9lbS9Wc3F4WkRoK0lGaUFn?=
+ =?utf-8?B?dXJRVGhhSjFlN21XOHFmODNLT2doRmdkdGdjeGFuQkU5b2FUdkY5MnkxMDYw?=
+ =?utf-8?B?R3Q2SEttTjlWN1Y1dDRzQVMwWkJ2aGQ1MlRpRisrYktKKzlhL3JRT2lRNmph?=
+ =?utf-8?B?c0dmczBQdlpwMTYrUTVkRmx6eVlHaUV2MEJBTktvbStERWJOZnh5eVl1Rjg5?=
+ =?utf-8?B?azkzbTBVMzRSKyt3SEo5eW4yNkNRNW1oQXd4dVpVd0lKRTQ3MHhPZEd6YzU2?=
+ =?utf-8?B?bzk5UzdENU1vcitFOS9PTGtkYTFJeEh3NytWbUhmTXhQV09OM0dENmliQjBy?=
+ =?utf-8?B?WVJwaXBkQjZ3dWVTQlNRcEhmRGlIdVYxNnNmRmg5Ry96dDh4QzlESG9LY0cv?=
+ =?utf-8?B?L2o3aFhhbVpJZXV6S2w3ZUYrWmVmWEFRNm8vcVNwYUhTSEVSZDF6OTdIc0Np?=
+ =?utf-8?B?eTRvbDFrVnVrQkhaNCtYYnJUeHV5U3NNMk5PWkNKelRRbjdBSUxmTS9SSDNM?=
+ =?utf-8?B?cWpQVnRYekxPN3B4UllNbGY1MjR1c3pRMFF4Q0ZTMmZTSEQraHR3bGZWWGVV?=
+ =?utf-8?B?eXpiOVNCYTFIczV1ckVSVC9NTHhIMVRGeUZKYWVjMWIwMFdOS0hLdlVEWWk4?=
+ =?utf-8?B?S3dybkZZNWdBTlphcmttWWVYSGUxRktJbTFvekJaUkttaXNGRnVYZHZVMHk4?=
+ =?utf-8?B?WmxmTDVGN05oTlNUZUxzSUV2VFBkNFM5aG5oR01yYlFwa21GSnV6UjBUZHdh?=
+ =?utf-8?B?MzQzeGVVcXdCRkdwdU5iYTBLVHkvNHk0TnJ4QUVnOEhaeElwd3U4c3psMVoy?=
+ =?utf-8?B?Wno4aHdVODZEVG4ya2NrL1F3YlFLdlRHUWFYS1pRbUdWb1FtTGlDSkE3N2lZ?=
+ =?utf-8?B?dU5tUFpPdnRMSi9nZjNoSGo1c29MZE5rRzEzeE5jR0VxSXp2NlBjak1YVnJP?=
+ =?utf-8?B?eStSbnVGY3dyZDUrc3JibXNqeWRNdEpaMEdCR0UrN1pMYXNDMXBUZWhZQXhD?=
+ =?utf-8?B?NWx6N3NGSk9VeTZtQ3ZhSUVKZXI0MHBWdVVmeTUwdGhaK2VzQjFHa0g0Unhr?=
+ =?utf-8?B?UzZIejYremxDRHRQMnR6VVNUQUUvVEV6QzFyNHFnRnpaT0NFR1dWcytCeTRD?=
+ =?utf-8?B?VmYxRG5VWEZZeVJzRGRtd0k4N2Z2N21xcjdJbTJ3T2YyeEVuZTdPcXdLUktP?=
+ =?utf-8?B?SjRyS1NPYk9EK1p1a1VWcEJsak9QK3JvU2libTFacmFWbHdEKzFNOU9lS0oy?=
+ =?utf-8?B?YXo2ck4zQkNzUWhqWXN5cTE0Tks4NDNlczhTYit4ZmNWR2Z1T0tvWGgrL2VD?=
+ =?utf-8?B?WWVPVjB1Yy8rWW0vWGlEeUJnZXJJbzBnNStKeEN4WWY4QklHSUVqNUhDdldy?=
+ =?utf-8?B?WlE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 7+DETk9B8O+fSeZIh5Zlm9doDo5sEyZnfU2ti7mZwh+Owsb8+E3xdqBID3Ns4n/YL3h+rqz5jT44P3hQHKpWXcPXDrFRGzaUCF3BRQFyH924iFV3pgddL7UKXqI279aRfrIpAnmDe8RhLMmdvwC2yhzNFXRqLwOVPTYsE9C4wfY2ibTKjsgQLPdwly7MH6s3E4kN/8eFTkKyv/3zGahYa7QfxzUjJ5Eo6LGrVJElol9QEoHOCdl5mucubjdDyo2vtDumns6314fOOpfJw00d3Ilr5z04T1bCbCJ/BysSlCrReKhdxmyWkwqBixO3N98sUCSIIWHcxOw9hREaAsNQ4NxukqYHZ8v8F3pJchbBPBwSwabaU/XpxniBjcRvNSab63Zv5rwcg8tlwmTYBsGQ6NnGCw5/Hz9juudxg7I+siec/0DaICLc3D4r85Ld4zbmHT5n6rm8Dhn8uI9kRmf7nKklWeNcX3sUXCBu2X2IPvpK3BVYRC9tuVJKx2QNDmJis6of7kMAe3x7Be/3vRYuqGfHJje0Ls95r+Rl+23roFpaIcO2xRlxOeKW/AHdOcIl8HqsB9IEDgN0n499mqgtcD7gFbSHiOb3g40D8rbVxsc=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 570ec5b6-fd1f-4c26-4540-08dd93e866f5
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2025 19:40:52.7204 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ckCjqwoIXxu0UTvTlkLf2fEGg0RYhqM3ZDlc1F/VEDZQNsZuCzPwSf+j32j9Z3isaxBQP1W2tsLb+aGL5v7tcOXxek+39onGTQkMYZbV1iQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR10MB4159
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-15_09,2025-05-15_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ malwarescore=0
+ mlxlogscore=999 phishscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505070000 definitions=main-2505150194
+X-Proofpoint-ORIG-GUID: G3D4OZr5JXHOWg8low3OWfmlsCJi8HKx
+X-Authority-Analysis: v=2.4 cv=f+RIBPyM c=1 sm=1 tr=0 ts=68264349 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10
+ a=yPCof4ZbAAAA:8 a=Xmw0dQW0L04pwpxZ2r4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ cc=ntf awl=host:14694
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE5NCBTYWx0ZWRfX+gudVOzzWfUz
+ 5XhmGfSy0fum6+NvLHwtumnORUahke6Rnvf3pZUIAgULC7sPZs+5KQaBrhhFRa5v60W2cfP5gm/
+ RR46p9s+Daal4QYZTgHHsuGLFt63rKSGPh3koszNJq33K4X93MxReoCBRgECsaWUXX5SR/xn7Rs
+ +Mnx7ry0ClOjXYCxmgBureqehYm5OvfAhMyv3mrNKBGbfs5PeEuyAid+Q6G9SIw6QiK8i1qSHDW
+ SF6+/sp+363sQbf9eFMGMkDPEJjiOEfXFLZMcuty+RllLPF3SBM1PNVF6OvIMQGt6qXrjuUtKEC
+ lRVmzsLH7ceQTPyCHaxrokXOWSKVdJO8EJ64fWMZP226YkYdyxJkV0dMBWG0VxLfEil+BEF/s3E
+ ES3u6P0SjBNc7AtAi0Xy+7p6177wyuWGu2pHLTZGR1NN6SBuCG5pJEeuqFe0cFRF9LgcNr6H
+X-Proofpoint-GUID: G3D4OZr5JXHOWg8low3OWfmlsCJi8HKx
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,117 +236,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 10:00 AM, Daniel Borkmann wrote:
-> On 5/14/25 9:02 PM, Ilya Maximets wrote:
->> On 5/12/25 4:23 PM, Daniel Borkmann wrote:
->>> On 5/12/25 2:03 PM, Ilya Maximets wrote:
->>>> On 5/9/25 4:05 PM, Daniel Borkmann wrote:
->>>>> On 5/9/25 12:53 AM, Ilya Maximets wrote:
->>>>>> On 5/8/25 2:34 PM, Daniel Borkmann wrote:
->>>>>>> Extend inhibit=on setting with the option to specify a pinned XSK map
->>>>>>> path along with a starting index (default 0) to push the created XSK
->>>>>>> sockets into. Example usage:
->>>>>>>
->>>>>>>      # ./build/qemu-system-x86_64 [...] \
->>>>>>>        -netdev af-xdp,ifname=eth0,id=net0,mode=native,queues=2,inhibit=on,map-path=/sys/fs/bpf/foo,map-start-index=2
->>>>>>>        -device virtio-net-pci,netdev=net0 [...]
->>>>>>>
->>>>>>> This is useful for the case where an existing XDP program with XSK map
->>>>>>> is present on the AF_XDP supported phys device and the XSK map not yet
->>>>>>> populated. Qemu will then push the XSK sockets into the specified map.
->>>>>>
->>>>>> Thanks for the patch!
->>>>>>
->>>>>> Could you, please, explain the use case a little more?  Is this patch
->>>>>> aiming to improve usability?  Do you have a specific use case in mind?
->>>>>
->>>>> The use case we have is basically that the phys NIC has an XDP program
->>>>> already attached which redirects into xsk map (e.g. installed from separate
->>>>> control plane), the xsk map got pinned during that process into bpf fs,
->>>>> and now qemu is launched, it creates the xsk sockets and then places them
->>>>> into the map by gathering the map fd from the pinned bpf fs file.
->>>>
->>>> OK.  That's what I thought.  Would be good to expand the commit message
->>>> a bit explaining the use case.
->>>
->>> Ack, I already adjusted locally. Planning to send v2 ~today with your feedback
->>> incorporated. Much appreciated!
->>>
->>>>>> The main idea behind 'inhibit' is that the qemu doesn't need to have a lot
->>>>>> of privileges to use the pre-loaded program and the pre-created sockets.
->>>>>> But creating the sockets and setting them into a map doesn't allow us to
->>>>>> run without privileges, IIUC.  May be worth mentioning at least in the
->>>>>> commit message.
->>>>>
->>>>> Yes, privileges for above use case are still needed. Will clarify in the
->>>>> description.
->>>>
->>>> OK.
->>>>
->>>>>> Also, isn't map-start-index the same thing as start-queue ?  Do we need
->>>>>> both of them?
->>>>>
->>>>> I'd say yes given it does not have to be an exact mapping wrt queue index
->>>>> to map slot. The default is 0 though and I expect this to be the most used
->>>>> scenario.
->>>>
->>>> I'm still not sure about this.  For example, libxdp treats queue id as a map
->>>> index.  And this value is actually not being used much in libxdp when the
->>>> program load is inhibited.  I see that with a custom XDP program the indexes
->>>> inside the map may not directly correspond to queues in the device, and, in
->>>> fact, may have no relation to the actual queues in the device at all.
->>>
->>> Right, that's correct.
->>>
->>>> However, we're still calling them "queues" from the QEMU interface (as in the
->>>> "queues" parameter of the net/af-xdp device), and QEMU will just treat every
->>>> slot in the BPF map as separate queues, as this BPF map is essentially the
->>>> network device that QEMU is working with, it doesn't actually know what's
->>>> behind it.
->>>>
->>>> So, I think, it should be appropriate to simplify the interface and
->>>> just use existing start-queue configuration knob for this.
->>>>
->>>> What do you think?
->>>
->>> I was thinking of an example like the below (plainly taken from the XDP example
->>> programs at github.com/xdp-project/bpf-examples).
->>>
->>>     struct {
->>> 	__uint(type, BPF_MAP_TYPE_XSKMAP);
->>> 	__uint(max_entries, MAX_SOCKS);
->>> 	__uint(key_size, sizeof(int));
->>> 	__uint(value_size, sizeof(int));
->>>     } xsks_map SEC(".maps");
->>>
->>>     int num_socks = 0;
->>>     static unsigned int rr;
->>>
->>>     SEC("xdp_sock") int xdp_sock_prog(struct xdp_md *ctx)
->>>     {
->>> 	rr = (rr + 1) & (num_socks - 1);
->>> 	return bpf_redirect_map(&xsks_map, rr, XDP_DROP);
->>>     }
->>>
->>> If we'd just reuse the start-queue configuration knob for this, then it wouldn't
->>> work. So I think having the flexibility of where to place the sockets in the map
->>> would make sense. But I can also drop that part of you think it does not warrant
->>> the extra knob and align to start-queue then the map always needs to be of the
->>> same size as the combined NIC queues.
->>
->> I'm a little confused here.  The 'start-queue' is not used for anything important,
->> AFAICT, in case of inhibit=on.  So, why re-using it instead of adding a new
->> config option reduces the number of available use cases?
+On 5/13/2025 7:12 AM, Mark Cave-Ayland wrote:
+> On 12/05/2025 16:32, Steve Sistare wrote:
 > 
-> Hm, maybe I'm missing something, but we use inhibit=on and do /not/ pass sock-fds as
-> a parameter and instead fully rely on qemu to create all related af_xdp sockets. So
-> the start-queue /is/ relevant for the underlying NIC queue selection as we pass the
-> queue_id to xsk_socket__create().
+>> Modify memory_get_xlat_addr and vfio_get_xlat_addr to return the memory
+>> region that the translated address is found in.  This will be needed by
+>> CPR in a subsequent patch to map blocks using IOMMU_IOAS_MAP_FILE.
+>>
+>> Also return the xlat offset, so we can simplify the interface by removing
+>> the out parameters that can be trivially derived from mr and xlat.
+>>
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> ---
+>>   hw/vfio/listener.c      | 29 +++++++++++++++++++----------
+>>   hw/virtio/vhost-vdpa.c  |  8 ++++++--
+>>   include/system/memory.h | 16 +++++++---------
+>>   system/memory.c         | 25 ++++---------------------
+>>   4 files changed, 36 insertions(+), 42 deletions(-)
+>>
+>> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+>> index e86ffcf..87b7a3c 100644
+>> --- a/hw/vfio/listener.c
+>> +++ b/hw/vfio/listener.c
+>> @@ -90,16 +90,17 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+>>              section->offset_within_address_space & (1ULL << 63);
+>>   }
+>> -/* Called with rcu_read_lock held.  */
+>> -static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>> -                               ram_addr_t *ram_addr, bool *read_only,
+>> -                               Error **errp)
+>> +/*
+>> + * Called with rcu_read_lock held.
+>> + * The returned MemoryRegion must not be accessed after calling rcu_read_unlock.
+>> + */
+>> +static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, MemoryRegion **mr_p,
+>> +                               hwaddr *xlat_p, Error **errp)
+>>   {
+>> -    bool ret, mr_has_discard_manager;
+>> +    bool ret;
+>> -    ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+>> -                               &mr_has_discard_manager, errp);
+>> -    if (ret && mr_has_discard_manager) {
+>> +    ret = memory_get_xlat_addr(iotlb, mr_p, xlat_p, errp);
+>> +    if (ret && memory_region_has_ram_discard_manager(*mr_p)) {
+> 
+> I'm trying to understand the underlying intention of this patch: is it just so that you can access the corresponding RAMBlock in vfio_container_dma_map() in patch 31 "vfio/iommufd: use IOMMU_IOAS_MAP_FILE"?
 
-Hrm, you're right.  I always forget that rx and tx paths in AF_XDP have almost
-nothing in common and we do indeed bind to actual NIC queues for tx path.
+Yes.
 
-I'll take a closer look at v2.
+> Given that the flatview can theoretically change at any point, it feels as if the current API whereby the vaddr is passed around is the correct approach, and that the final MemoryRegion lookup should be done at the point where it is required.
 
-Best regards, Ilya Maximets.
+The existing code already guarantees a stable address space when vfio_container_dma_map()
+is called ...
+
+     vfio_iommu_map_notify()
+         rcu_read_lock();
+         vfio_get_xlat_addr()
+         vfio_container_dma_map()
+
+
+> If this is the case, is it not simpler to add a call to address_space_translate() in patch 31 to obtain the MemoryRegion pointer there instead?
+
+... so it is simpler and more efficient (saving a translation) if we simply
+expose mr->ram_block in that range of code.
+
+- Steve
+
+>>           /*
+>>            * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+>>            * pages will remain pinned inside vfio until unmapped, resulting in a
+>> @@ -126,6 +127,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>>       VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
+>>       VFIOContainerBase *bcontainer = giommu->bcontainer;
+>>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
+>> +    MemoryRegion *mr;
+>> +    hwaddr xlat;
+>>       void *vaddr;
+>>       int ret;
+>>       Error *local_err = NULL;
+>> @@ -150,10 +153,13 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>>           bool read_only;
+>> -        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
+>> +        if (!vfio_get_xlat_addr(iotlb, &mr, &xlat, &local_err)) {
+>>               error_report_err(local_err);
+>>               goto out;
+>>           }
+>> +        vaddr = memory_region_get_ram_ptr(mr) + xlat;
+>> +        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
+>> +
+>>           /*
+>>            * vaddr is only valid until rcu_read_unlock(). But after
+>>            * vfio_dma_map has set up the mapping the pages will be
+>> @@ -1047,6 +1053,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>>       ram_addr_t translated_addr;
+>>       Error *local_err = NULL;
+>>       int ret = -EINVAL;
+>> +    MemoryRegion *mr;
+>> +    ram_addr_t xlat;
+>>       trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
+>> @@ -1058,9 +1066,10 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>>       }
+>>       rcu_read_lock();
+>> -    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
+>> +    if (!vfio_get_xlat_addr(iotlb, &mr, &xlat, &local_err)) {
+>>           goto out_unlock;
+>>       }
+>> +    translated_addr = memory_region_get_ram_addr(mr) + xlat;
+>>       ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+>>                                   translated_addr, &local_err);
+>> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+>> index 1ab2c11..f191360 100644
+>> --- a/hw/virtio/vhost-vdpa.c
+>> +++ b/hw/virtio/vhost-vdpa.c
+>> @@ -209,6 +209,8 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>>       int ret;
+>>       Int128 llend;
+>>       Error *local_err = NULL;
+>> +    MemoryRegion *mr;
+>> +    hwaddr xlat;
+>>       if (iotlb->target_as != &address_space_memory) {
+>>           error_report("Wrong target AS \"%s\", only system memory is allowed",
+>> @@ -228,11 +230,13 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>>           bool read_only;
+>> -        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
+>> -                                  &local_err)) {
+>> +        if (!memory_get_xlat_addr(iotlb, &mr, &xlat, &local_err)) {
+>>               error_report_err(local_err);
+>>               return;
+>>           }
+>> +        vaddr = memory_region_get_ram_ptr(mr) + xlat;
+>> +        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
+>> +
+>>           ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
+>>                                    iotlb->addr_mask + 1, vaddr, read_only);
+>>           if (ret) {
+>> diff --git a/include/system/memory.h b/include/system/memory.h
+>> index fbbf4cf..d743214 100644
+>> --- a/include/system/memory.h
+>> +++ b/include/system/memory.h
+>> @@ -738,21 +738,19 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+>>                                                RamDiscardListener *rdl);
+>>   /**
+>> - * memory_get_xlat_addr: Extract addresses from a TLB entry
+>> + * memory_get_xlat_addr: Extract addresses from a TLB entry.
+>> + *                       Called with rcu_read_lock held.
+>>    *
+>>    * @iotlb: pointer to an #IOMMUTLBEntry
+>> - * @vaddr: virtual address
+>> - * @ram_addr: RAM address
+>> - * @read_only: indicates if writes are allowed
+>> - * @mr_has_discard_manager: indicates memory is controlled by a
+>> - *                          RamDiscardManager
+>> + * @mr_p: return the MemoryRegion containing the @iotlb translated addr.
+>> + *        The MemoryRegion must not be accessed after rcu_read_unlock.
+>> + * @xlat_p: return the offset of the entry from the start of @mr_p
+>>    * @errp: pointer to Error*, to store an error if it happens.
+>>    *
+>>    * Return: true on success, else false setting @errp with error.
+>>    */
+>> -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>> -                          ram_addr_t *ram_addr, bool *read_only,
+>> -                          bool *mr_has_discard_manager, Error **errp);
+>> +bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, MemoryRegion **mr_p,
+>> +                          hwaddr *xlat_p, Error **errp);
+>>   typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+>>   typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+>> diff --git a/system/memory.c b/system/memory.c
+>> index 63b983e..4894c0d 100644
+>> --- a/system/memory.c
+>> +++ b/system/memory.c
+>> @@ -2174,18 +2174,14 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+>>   }
+>>   /* Called with rcu_read_lock held.  */
+>> -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>> -                          ram_addr_t *ram_addr, bool *read_only,
+>> -                          bool *mr_has_discard_manager, Error **errp)
+>> +bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, MemoryRegion **mr_p,
+>> +                          hwaddr *xlat_p, Error **errp)
+>>   {
+>>       MemoryRegion *mr;
+>>       hwaddr xlat;
+>>       hwaddr len = iotlb->addr_mask + 1;
+>>       bool writable = iotlb->perm & IOMMU_WO;
+>> -    if (mr_has_discard_manager) {
+>> -        *mr_has_discard_manager = false;
+>> -    }
+>>       /*
+>>        * The IOMMU TLB entry we have just covers translation through
+>>        * this IOMMU to its immediate target.  We need to translate
+>> @@ -2203,9 +2199,6 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>>               .offset_within_region = xlat,
+>>               .size = int128_make64(len),
+>>           };
+>> -        if (mr_has_discard_manager) {
+>> -            *mr_has_discard_manager = true;
+>> -        }
+>>           /*
+>>            * Malicious VMs can map memory into the IOMMU, which is expected
+>>            * to remain discarded. vfio will pin all pages, populating memory.
+>> @@ -2229,18 +2222,8 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>>           return false;
+>>       }
+>> -    if (vaddr) {
+>> -        *vaddr = memory_region_get_ram_ptr(mr) + xlat;
+>> -    }
+>> -
+>> -    if (ram_addr) {
+>> -        *ram_addr = memory_region_get_ram_addr(mr) + xlat;
+>> -    }
+>> -
+>> -    if (read_only) {
+>> -        *read_only = !writable || mr->readonly;
+>> -    }
+>> -
+>> +    *xlat_p = xlat;
+>> +    *mr_p = mr;
+>>       return true;
+>>   }
+> 
+> 
+> ATB,
+> 
+> Mark.
+> 
+
 
