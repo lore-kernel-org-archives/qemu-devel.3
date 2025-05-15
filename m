@@ -4,72 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36645C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 11:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E743C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 12:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFX9r-0001RA-03; Thu, 15 May 2025 07:53:51 -0400
+	id 1uFXHk-0000At-3s; Thu, 15 May 2025 08:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFX9o-0001Qw-La
- for qemu-devel@nongnu.org; Thu, 15 May 2025 07:53:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1uFXHi-000056-3T
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 08:01:58 -0400
+Received: from fout-a5-smtp.messagingengine.com ([103.168.172.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uFX9n-0001mX-0L
- for qemu-devel@nongnu.org; Thu, 15 May 2025 07:53:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747310022;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v5NqMkAIcIAL6YPzapGWpEHO26UQ67eH2SjqS1drOwo=;
- b=OivkUAjweARFJ8mJmJZRSc2zdulR4HwU8P6O+fW0VvicSy2/BJih0Y0WoENNzyksdNyT6N
- KSEkTHH8B0RAk7I1nh8ltPFnmxchLgIiwiHWQCukmcOgXwefbzjgcZ6/27oAl3s+K0LCD7
- ZMOzR8B3/XtYjsQ58/YchJky07gPQDk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-CA7Ay90TNqmQ5jAOvkYZIg-1; Thu,
- 15 May 2025 07:53:39 -0400
-X-MC-Unique: CA7Ay90TNqmQ5jAOvkYZIg-1
-X-Mimecast-MFC-AGG-ID: CA7Ay90TNqmQ5jAOvkYZIg_1747310018
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A60719560A1; Thu, 15 May 2025 11:53:38 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0D6619560AD; Thu, 15 May 2025 11:53:37 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1CE9921E66E3; Thu, 15 May 2025 13:53:35 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,
- devel@daynix.com,  John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 0/3] docs: Bump sphinx to 6.2.1
-In-Reply-To: <20250510-sphinx72-v1-0-2358e0c68bbe@daynix.com> (Akihiko Odaki's
- message of "Sat, 10 May 2025 15:16:53 +0900")
-References: <20250510-sphinx72-v1-0-2358e0c68bbe@daynix.com>
-Date: Thu, 15 May 2025 13:53:35 +0200
-Message-ID: <87plga2ips.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1uFXHf-0002u3-HT
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 08:01:57 -0400
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id 447621380235;
+ Thu, 15 May 2025 08:01:52 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-06.internal (MEProxy); Thu, 15 May 2025 08:01:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm2; t=1747310512; x=
+ 1747396912; bh=ocs5ik+EPqJn6REb+q/SsVBWYLMpmEYrvWW+MaCpq/U=; b=H
+ +EjnHRT8pCZYUL27kLckmjUb+miaqtYQXS2u7ro0FTqGo8mh+tH0Fduprt+DBoio
+ 3Ozgfgc6u1rbGP7zTc0w+EWl+qRIUO4iBr8N7YnhRHx63KSacujAUDwrTs4qW16F
+ xUoMxmY07TYIU1+nz6obmfANPopOlwJF5B1Sgs0N23DV34uVueMNApqn4jeS/zkH
+ QpYI9VYnmb82aU6ZpnNGgkDXCnXbnAKdKsTORz/da4xXaOrBdMs76/d+Cx+G7JpS
+ Mbn0OnOOQ0RoW+7HS+3tzMOXNa8CTCZMnhpPXSy91Mdf3qiUju+UXHo/HSSPlpsd
+ Qdn7J2jX27QVA0WiS3IRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1747310512; x=1747396912; bh=ocs5ik+EPqJn6REb+q/SsVBWYLMp
+ mEYrvWW+MaCpq/U=; b=PwGB+YDCaiUhYDi4o53Wu/tN6Wo/+J3+69HoF4hQD9+n
+ 4MJ/lSWRf+bgjba4CaASG+K3XTyoE0ZDkUym59tQ3m8v7LCHoyGRmE/5oDZfn70i
+ 5dc7oB0nREW1AW/d9dpQ8IdjNoBq/LEeZlw5hDPHEYyrg2sQQb674D+yLzAwIdOu
+ 0cfQJkMIiqEr0qJuYAZgM+NcSJYheqIrAuwUjliglG1mg7mZHqL6EPQj0YdBNoO4
+ iJWCQrBUvzVA+EyE9ahA+yeg/jt6Zn+I4rWOR+KneRPYOPpTC9wpijfhq7kkMlia
+ VPDFgJRwwSNRTA8MkKfWhsE6Tl3kNzmRt/tmvXcW3A==
+X-ME-Sender: <xms:r9claEx-hSzbNz4JAOK-40cgfRoBsG30GvI2xk8Qxo0UmS2ClIRafg>
+ <xme:r9claIQqVYIgzK4oKif14dIhHoHM8055G9Kopvq5uRdwP4fCajCdZN9AKgx41w393
+ p2pVtrMytUMr96bKr8>
+X-ME-Received: <xmr:r9claGUKhqMFJIkw5PScGiDy4E-q-Rgn8UpmmdKmUeelZRoyuZ3OTV6plqlmtWEak5PiN4tR_JQN_Q3WoZI7eak>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdelkeduucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+ pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+ gvnhhtshculddquddttddmnecujfgurhephffvvefufffkofggtgfgsehtkeertdertdej
+ necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
+ drughkqeenucggtffrrghtthgvrhhnpeffkeelkedtudeujeehjefghfeivdehteevtdei
+ keejkedvheeigeefleetfeehieenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhgih
+ htlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+ fhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeefpd
+ hmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhg
+ nhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhord
+ horhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhm
+X-ME-Proxy: <xmx:r9claCiXaH3WLlJt9nu6XJqaJcfFE7UjgQhTXkvnsRr8ftzwbvO3wQ>
+ <xmx:r9claGAQeqKH7Dtc7lBC_KCVVZl6tIDcIsu3t4l9hOEQtnKEgvm_3w>
+ <xmx:r9claDLVFbKhIqUfPevxaLgoWX4C7tzU94Skr6sEsgas99g7sxrmCA>
+ <xmx:r9claNBDjMl9pW89wNqoLjeOU5Ymk1ho5G7ANVjbZv8tHEe1FobZwg>
+ <xmx:sNclaJmFuEgTo2zlkbr2d-0jatwAIR-7q2Y_ObUlI4ZqQS8jSS3LPi1x>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 May 2025 08:01:50 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 0/1] nvme queue
+Date: Thu, 15 May 2025 14:01:46 +0200
+Message-ID: <20250515120148.11804-1-its@irrelevant.dk>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=103.168.172.148; envelope-from=its@irrelevant.dk;
+ helo=fout-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,26 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+From: Klaus Jensen <k.jensen@samsung.com>
 
-> Supersedes: <20250505-sphinx82-v1-0-85f2418b33b1@daynix.com>
-> ("[PATCH 0/2] docs: Bump sphinx to 8.2.3")
->
-> sphinx 5.3.0 fails with Python 3.13.1:
->
-> ../docs/meson.build:37: WARNING: /home/me/qemu/build/pyvenv/bin/sphinx-build:
-> Extension error:
-> Could not import extension sphinx.builders.epub3 (exception: No module named 'imghdr')
->
-> ../docs/meson.build:39:6: ERROR: Problem encountered: Install a Python 3 version of python-sphinx and the readthedoc theme
->
-> Bump sphinx to 6.2.1 and also sphinx_rtd_theme as required for the new
-> sphinx version.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Hi,
 
-Works fine for me on a Fedora 41 box (Sphinx 7.3.8)
+The following changes since commit 864813878951b44e964eb4c012d832fd21f8cc0c:
 
-Tested-by: Markus Armbruster <armbru@redhat.com>
+  Merge tag 'pull-loongarch-20250514' of https://github.com/gaosong715/qemu into staging (2025-05-14 07:16:57 -0400)
 
+are available in the Git repository at:
+
+  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20250515
+
+for you to fetch changes up to 0b1c23a582f7bc721a9b858c289a8d165152a6a0:
+
+  hw/nvme: fix nvme hotplugging (2025-05-15 12:18:06 +0200)
+
+----------------------------------------------------------------
+nvme queue
+* fix nvme hotplugging
+
+----------------------------------------------------------------
+Klaus Jensen (1):
+      hw/nvme: fix nvme hotplugging
+
+ hw/nvme/subsys.c | 1 -
+ 1 file changed, 1 deletion(-)
 
