@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6749C54754
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:19:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB1CC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:19:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFTiB-0004Mr-4n; Thu, 15 May 2025 04:13:03 -0400
+	id 1uFTie-0006Yw-Q3; Thu, 15 May 2025 04:13:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFTgQ-0004dU-0R; Thu, 15 May 2025 04:11:14 -0400
+ id 1uFTgR-0004nP-Pw; Thu, 15 May 2025 04:11:16 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFTgM-00011Y-Ln; Thu, 15 May 2025 04:11:13 -0400
+ id 1uFTgP-00010V-0j; Thu, 15 May 2025 04:11:15 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 15 May
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 12/28] hw/misc/aspeed_hace: Move register size to instance
- class and dynamically allocate regs
-Date: Thu, 15 May 2025 16:09:44 +0800
-Message-ID: <20250515081008.583578-13-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 13/28] hw/misc/aspeed_hace: Add support for source, digest,
+ key buffer 64 bit addresses
+Date: Thu, 15 May 2025 16:09:45 +0800
+Message-ID: <20250515081008.583578-14-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
 References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
@@ -68,193 +68,120 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dynamically allocate the register array by removing the hardcoded
-ASPEED_HACE_NR_REGS macro.
+According to the AST2700 design, the data source address is 64-bit, with
+R_HASH_SRC_HI storing bits [63:32] and R_HASH_SRC storing bits [31:0].
+Similarly, the digest address is 64-bit, with R_HASH_DIGEST_HI storing bits
+[63:32] and R_HASH_DIGEST storing bits [31:0]. The HMAC key buffer address is also
+64-bit, with R_HASH_KEY_BUFF_HI storing bits [63:32] and R_HASH_KEY_BUFF storing
+bits [31:0].
 
-To support different register sizes across SoC variants, introduce a new
-"nr_regs" class attribute and replace the static "regs" array with dynamically
-allocated memory.
+The AST2700 supports a maximum DRAM size of 8 GB, with a DRAM addressable range
+from 0x0_0000_0000 to 0x1_FFFF_FFFF. Since this range fits within 34 bits, only
+bits [33:0] are needed to store the DRAM offset. To optimize address storage,
+the high physical address bits [1:0] of the source, digest and key buffer
+addresses are stored as dram_offset bits [33:32].
 
-Add a new "aspeed_hace_unrealize" function to properly free the allocated "regs"
-memory during device cleanup.
+To achieve this, a src_hi_mask with a mask value of 0x3 is introduced, ensuring
+that src_addr_hi consists of bits [1:0]. The final src_addr is computed as
+(src_addr_hi[1:0] << 32) | src_addr[31:0], representing the DRAM offset within
+bits [33:0].
 
-Remove the bounds checking in the MMIO read/write handlers since the
-MemoryRegion size now matches the (register array size << 2).
+Similarly, a dest_hi_mask with a mask value of 0x3 is introduced to ensure that
+dest_addr_hi consists of bits [1:0]. The final dest_addr is calculated as
+(dest_addr_hi[1:0] << 32) | dest_addr[31:0], representing the DRAM offset within
+bits [33:0].
 
-This commit updates the VMState fields accordingly. The VMState version was
-already bumped in a previous patch of this series, so no further version change
-is needed.
+Additionally, a key_hi_mask with a mask value of 0x3 is introduced to ensure
+that key_buf_addr_hi consists of bits [1:0]. The final key_buf_addr is
+determined as (key_buf_addr_hi[1:0] << 32) | key_buf_addr[31:0], representing
+the DRAM offset within bits [33:0].
+
+This approach eliminates the need to reduce the high part of the DRAM physical
+address for DMA operations. Previously, this was calculated as
+(high physical address bits [7:0] - 4), since the DRAM start address is
+0x4_00000000, making the high part address [7:0] - 4.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/misc/aspeed_hace.h |  5 +++--
- hw/misc/aspeed_hace.c         | 36 ++++++++++++++++++-----------------
- 2 files changed, 22 insertions(+), 19 deletions(-)
+ include/hw/misc/aspeed_hace.h |  3 +++
+ hw/misc/aspeed_hace.c         | 31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 1 deletion(-)
 
 diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
-index b69a038d35..f30d606559 100644
+index f30d606559..9945b61863 100644
 --- a/include/hw/misc/aspeed_hace.h
 +++ b/include/hw/misc/aspeed_hace.h
-@@ -22,7 +22,6 @@
- 
- OBJECT_DECLARE_TYPE(AspeedHACEState, AspeedHACEClass, ASPEED_HACE)
- 
--#define ASPEED_HACE_NR_REGS (0x64 >> 2)
- #define ASPEED_HACE_MAX_SG  256 /* max number of entries */
- 
- struct AspeedHACEState {
-@@ -31,7 +30,7 @@ struct AspeedHACEState {
-     MemoryRegion iomem;
-     qemu_irq irq;
- 
--    uint32_t regs[ASPEED_HACE_NR_REGS];
-+    uint32_t *regs;
-     uint32_t total_req_len;
- 
-     MemoryRegion *dram_mr;
-@@ -44,10 +43,12 @@ struct AspeedHACEState {
- struct AspeedHACEClass {
-     SysBusDeviceClass parent_class;
- 
-+    const MemoryRegionOps *reg_ops;
-     uint32_t src_mask;
-     uint32_t dest_mask;
-     uint32_t key_mask;
+@@ -50,6 +50,9 @@ struct AspeedHACEClass {
      uint32_t hash_mask;
-+    uint64_t nr_regs;
+     uint64_t nr_regs;
      bool raise_crypt_interrupt_workaround;
++    uint32_t src_hi_mask;
++    uint32_t dest_hi_mask;
++    uint32_t key_hi_mask;
  };
  
+ #endif /* ASPEED_HACE_H */
 diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 049f732f99..fef63eb488 100644
+index fef63eb488..d58645cabd 100644
 --- a/hw/misc/aspeed_hace.c
 +++ b/hw/misc/aspeed_hace.c
-@@ -386,13 +386,6 @@ static uint64_t aspeed_hace_read(void *opaque, hwaddr addr, unsigned int size)
+@@ -30,6 +30,9 @@
+ #define R_HASH_DIGEST   (0x24 / 4)
+ #define R_HASH_KEY_BUFF (0x28 / 4)
+ #define R_HASH_SRC_LEN  (0x2c / 4)
++#define R_HASH_SRC_HI       (0x90 / 4)
++#define R_HASH_DIGEST_HI    (0x94 / 4)
++#define R_HASH_KEY_BUFF_HI  (0x98 / 4)
  
-     addr >>= 2;
- 
--    if (addr >= ASPEED_HACE_NR_REGS) {
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
--                      __func__, addr << 2);
--        return 0;
--    }
--
-     return s->regs[addr];
- }
- 
-@@ -404,13 +397,6 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
- 
-     addr >>= 2;
- 
--    if (addr >= ASPEED_HACE_NR_REGS) {
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
--                      __func__, addr << 2);
--        return;
--    }
--
-     switch (addr) {
-     case R_STATUS:
-         if (data & HASH_IRQ) {
-@@ -507,13 +493,14 @@ static const MemoryRegionOps aspeed_hace_ops = {
- static void aspeed_hace_reset(DeviceState *dev)
- {
-     struct AspeedHACEState *s = ASPEED_HACE(dev);
-+    AspeedHACEClass *ahc = ASPEED_HACE_GET_CLASS(s);
- 
-     if (s->hash_ctx != NULL) {
-         qcrypto_hash_free(s->hash_ctx);
-         s->hash_ctx = NULL;
+ #define R_HASH_CMD      (0x30 / 4)
+ /* Hash algorithm selection */
+@@ -473,6 +476,15 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+             }
+         }
+         break;
++    case R_HASH_SRC_HI:
++        data &= ahc->src_hi_mask;
++        break;
++    case R_HASH_DIGEST_HI:
++        data &= ahc->dest_hi_mask;
++        break;
++    case R_HASH_KEY_BUFF_HI:
++        data &= ahc->key_hi_mask;
++        break;
+     default:
+         break;
      }
- 
--    memset(s->regs, 0, sizeof(s->regs));
-+    memset(s->regs, 0, ahc->nr_regs << 2);
-     s->total_req_len = 0;
- }
- 
-@@ -521,11 +508,13 @@ static void aspeed_hace_realize(DeviceState *dev, Error **errp)
- {
-     AspeedHACEState *s = ASPEED_HACE(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    AspeedHACEClass *ahc = ASPEED_HACE_GET_CLASS(s);
- 
-     sysbus_init_irq(sbd, &s->irq);
- 
-+    s->regs = g_new(uint32_t, ahc->nr_regs);
-     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_hace_ops, s,
--            TYPE_ASPEED_HACE, 0x1000);
-+                          TYPE_ASPEED_HACE, ahc->nr_regs << 2);
- 
-     if (!s->dram_mr) {
-         error_setg(errp, TYPE_ASPEED_HACE ": 'dram' link not set");
-@@ -548,17 +537,25 @@ static const VMStateDescription vmstate_aspeed_hace = {
-     .version_id = 2,
-     .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINT32_ARRAY(regs, AspeedHACEState, ASPEED_HACE_NR_REGS),
-         VMSTATE_UINT32(total_req_len, AspeedHACEState),
-         VMSTATE_END_OF_LIST(),
-     }
- };
- 
-+static void aspeed_hace_unrealize(DeviceState *dev)
-+{
-+    AspeedHACEState *s = ASPEED_HACE(dev);
-+
-+    g_free(s->regs);
-+    s->regs = NULL;
-+}
-+
- static void aspeed_hace_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = aspeed_hace_realize;
-+    dc->unrealize = aspeed_hace_unrealize;
-     device_class_set_legacy_reset(dc, aspeed_hace_reset);
-     device_class_set_props(dc, aspeed_hace_properties);
-     dc->vmsd = &vmstate_aspeed_hace;
-@@ -579,6 +576,7 @@ static void aspeed_ast2400_hace_class_init(ObjectClass *klass, const void *data)
- 
-     dc->desc = "AST2400 Hash and Crypto Engine";
- 
-+    ahc->nr_regs = 0x64 >> 2;
-     ahc->src_mask = 0x0FFFFFFF;
-     ahc->dest_mask = 0x0FFFFFF8;
-     ahc->key_mask = 0x0FFFFFC0;
-@@ -598,6 +596,7 @@ static void aspeed_ast2500_hace_class_init(ObjectClass *klass, const void *data)
- 
-     dc->desc = "AST2500 Hash and Crypto Engine";
- 
-+    ahc->nr_regs = 0x64 >> 2;
-     ahc->src_mask = 0x3fffffff;
-     ahc->dest_mask = 0x3ffffff8;
-     ahc->key_mask = 0x3FFFFFC0;
-@@ -617,6 +616,7 @@ static void aspeed_ast2600_hace_class_init(ObjectClass *klass, const void *data)
- 
-     dc->desc = "AST2600 Hash and Crypto Engine";
- 
-+    ahc->nr_regs = 0x64 >> 2;
-     ahc->src_mask = 0x7FFFFFFF;
-     ahc->dest_mask = 0x7FFFFFF8;
-     ahc->key_mask = 0x7FFFFFF8;
-@@ -636,6 +636,7 @@ static void aspeed_ast1030_hace_class_init(ObjectClass *klass, const void *data)
- 
-     dc->desc = "AST1030 Hash and Crypto Engine";
- 
-+    ahc->nr_regs = 0x64 >> 2;
-     ahc->src_mask = 0x7FFFFFFF;
-     ahc->dest_mask = 0x7FFFFFF8;
-     ahc->key_mask = 0x7FFFFFF8;
-@@ -655,6 +656,7 @@ static void aspeed_ast2700_hace_class_init(ObjectClass *klass, const void *data)
+@@ -656,12 +668,29 @@ static void aspeed_ast2700_hace_class_init(ObjectClass *klass, const void *data)
  
      dc->desc = "AST2700 Hash and Crypto Engine";
  
-+    ahc->nr_regs = 0x64 >> 2;
+-    ahc->nr_regs = 0x64 >> 2;
++    ahc->nr_regs = 0x9C >> 2;
      ahc->src_mask = 0x7FFFFFFF;
      ahc->dest_mask = 0x7FFFFFF8;
      ahc->key_mask = 0x7FFFFFF8;
+     ahc->hash_mask = 0x00147FFF;
+ 
++    /*
++     * The AST2700 supports a maximum DRAM size of 8 GB, with a DRAM
++     * addressable range from 0x0_0000_0000 to 0x1_FFFF_FFFF. Since this range
++     * fits within 34 bits, only bits [33:0] are needed to store the DRAM
++     * offset. To optimize address storage, the high physical address bits
++     * [1:0] of the source, digest and key buffer addresses are stored as
++     * dram_offset bits [33:32].
++     *
++     * This approach eliminates the need to reduce the high part of the DRAM
++     * physical address for DMA operations. Previously, this was calculated as
++     * (high physical address bits [7:0] - 4), since the DRAM start address is
++     * 0x4_00000000, making the high part address [7:0] - 4.
++     */
++    ahc->src_hi_mask = 0x00000003;
++    ahc->dest_hi_mask = 0x00000003;
++    ahc->key_hi_mask = 0x00000003;
++
+     /*
+      * Currently, it does not support the CRYPT command. Instead, it only
+      * sends an interrupt to notify the firmware that the crypt command
 -- 
 2.43.0
 
