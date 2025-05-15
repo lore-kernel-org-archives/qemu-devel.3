@@ -4,61 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E3C6C3ABDA
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 02:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EEEBC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 02:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFOLp-0007F8-18; Wed, 14 May 2025 22:29:37 -0400
+	id 1uFOMq-0008Ox-HK; Wed, 14 May 2025 22:30:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFOLh-0007D5-Ro
- for qemu-devel@nongnu.org; Wed, 14 May 2025 22:29:30 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFOLx-0007HO-4Z
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 22:29:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFOLc-00044T-IL
- for qemu-devel@nongnu.org; Wed, 14 May 2025 22:29:29 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uFOLu-00047d-Mp
+ for qemu-devel@nongnu.org; Wed, 14 May 2025 22:29:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747276163;
+ s=mimecast20190719; t=1747276181;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MeXQE2FRJZtia6HCeAw2QEBuNFkAtvieRC3rANMWfL8=;
- b=PolcgO3UzDT0x5DAzu9Qx/NPI7gol/UU8+Nk32jg7ayPQ7Vztb4nWs3LbjTqaKDS92b12I
- V3hsVMavyPO8CKvZDN5Oog8v8oBXQo7BeBqwiqiJ050ebHDtvzlgeaG5fHFksru5MmxQdV
- ffHJd3weD/XIYPhBDn6YQNKrXZc+1jo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Y3vatBM3k4Q4cfrr2oOAVZm9uRE5ZoV8TFX+7rKIrgc=;
+ b=Jf+z8imhJckJF0DGZtn5igZ5HiQviLLx6xvqJxMqW35CVvgBbwlWkkjisKqUiBKPeAGBCi
+ lho/O1v7fnobRFFq7ZWQ1ECobnEu48d98brfcAzJEKzEeeJGwjAyZwB82yrmXPBo66EAkW
+ gQvg8CK+KBsUKNuviyy2EUP/cUkrFRc=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-lTM5U7pLOp-4iFBhL0EyOQ-1; Wed,
- 14 May 2025 22:29:19 -0400
-X-MC-Unique: lTM5U7pLOp-4iFBhL0EyOQ-1
-X-Mimecast-MFC-AGG-ID: lTM5U7pLOp-4iFBhL0EyOQ_1747276157
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-_OZx8CsOOamQ10c2OOiGoQ-1; Wed,
+ 14 May 2025 22:29:39 -0400
+X-MC-Unique: _OZx8CsOOamQ10c2OOiGoQ-1
+X-Mimecast-MFC-AGG-ID: _OZx8CsOOamQ10c2OOiGoQ_1747276179
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60C71180035E; Thu, 15 May 2025 02:29:16 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D540E1955DC5; Thu, 15 May 2025 02:29:38 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.66])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BEA321955F24; Thu, 15 May 2025 02:29:10 +0000 (UTC)
+ id 0ED101955F24; Thu, 15 May 2025 02:29:36 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>,
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, John Snow <jsnow@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Lieven <pl@dlhnet.de>,
- "Denis V. Lunev" <den@openvz.org>, Alberto Garcia <berto@igalia.com>,
- Ilya Dryomov <idryomov@gmail.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-block@nongnu.org (open list:blkdebug),
- integration@gluster.org (open list:GLUSTER)
-Subject: [PULL 01/14] block: Expand block status mode from bool to flags
-Date: Wed, 14 May 2025 21:28:44 -0500
-Message-ID: <20250515022904.575509-17-eblake@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org (open list:Block Jobs)
+Subject: [PULL 11/14] mirror: Skip writing zeroes when target is already zero
+Date: Wed, 14 May 2025 21:28:54 -0500
+Message-ID: <20250515022904.575509-27-eblake@redhat.com>
 In-Reply-To: <20250515022904.575509-16-eblake@redhat.com>
 References: <20250515022904.575509-16-eblake@redhat.com>
 MIME-Version: 1.0
@@ -74,7 +69,7 @@ X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,676 +85,342 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch is purely mechanical, changing bool want_zero into an
-unsigned int for bitwise-or of flags.  As of this patch, all
-implementations are unchanged (the old want_zero==true is now
-mode==BDRV_WANT_PRECISE which is a superset of BDRV_WANT_ZERO); but
-the callers in io.c that used to pass want_zero==false are now
-prepared for future driver changes that can now distinguish bewteen
-BDRV_WANT_ZERO vs. BDRV_WANT_ALLOCATED.  The next patch will actually
-change the file-posix driver along those lines, now that we have
-more-specific hints.
+When mirroring, the goal is to ensure that the destination reads the
+same as the source; this goal is met whether the destination is sparse
+or fully-allocated (except when explicitly punching holes, then merely
+reading zero is not enough to know if it is sparse, so we still want
+to punch the hole).  Avoiding a redundant write to zero (whether in
+the background because the zero cluster was marked in the dirty
+bitmap, or in the foreground because the guest is writing zeroes) when
+the destination already reads as zero makes mirroring faster, and
+avoids allocating the destination merely because the source reports as
+allocated.
 
-As for the background why this patch is useful: right now, the
-file-posix driver recognizes that if allocation is being queried, the
-entire image can be reported as allocated (there is no backing file to
-refer to) - but this throws away information on whether the entire
-image reads as zero (trivially true if lseek(SEEK_HOLE) at offset 0
-returns -ENXIO, a bit more complicated to prove if the raw file was
-created with 'qemu-img create' since we intentionally allocate a small
-chunk of all-zero data to help with alignment probing).  Later patches
-will add a generic algorithm for seeing if an entire file reads as
-zeroes.
+The effect is especially pronounced when the source is a raw file.
+That's because when the source is a qcow2 file, the dirty bitmap only
+visits the portions of the source that are allocated, which tend to be
+non-zero.  But when the source is a raw file,
+bdrv_co_is_allocated_above() reports the entire file as allocated so
+mirror_dirty_init sets the entire dirty bitmap, and it is only later
+during mirror_iteration that we change to consulting the more precise
+bdrv_co_block_status_above() to learn where the source reads as zero.
+
+Remember that since a mirror operation can write a cluster more than
+once (every time the guest changes the source, the destination is also
+changed to keep up), and the guest can change whether a given cluster
+reads as zero, is discarded, or has non-zero data over the course of
+the mirror operation, we can't take the shortcut of relying on
+s->target_is_zero (which is static for the life of the job) in
+mirror_co_zero() to see if the destination is already zero, because
+that information may be stale.  Any solution we use must be dynamic in
+the face of the guest writing or discarding a cluster while the mirror
+has been ongoing.
+
+We could just teach mirror_co_zero() to do a block_status() probe of
+the destination, and skip the zeroes if the destination already reads
+as zero, but we know from past experience that extra block_status()
+calls are not always cheap (tmpfs, anyone?), especially when they are
+random access rather than linear.  Use of block_status() of the source
+by the background task in a linear fashion is not our bottleneck (it's
+a background task, after all); but since mirroring can be done while
+the source is actively being changed, we don't want a slow
+block_status() of the destination to occur on the hot path of the
+guest trying to do random-access writes to the source.
+
+So this patch takes a slightly different approach: any time we have to
+track dirty clusters, we can also track which clusters are known to
+read as zero.  For sync=TOP or when we are punching holes from
+"detect-zeroes":"unmap", the zero bitmap starts out empty, but
+prevents a second write zero to a cluster that was already zero by an
+earlier pass; for sync=FULL when we are not punching holes, the zero
+bitmap starts out full if the destination reads as zero during
+initialization.  Either way, I/O to the destination can now avoid
+redundant write zero to a cluster that already reads as zero, all
+without having to do a block_status() per write on the destination.
+
+With this patch, if I create a raw sparse destination file, connect it
+with QMP 'blockdev-add' while leaving it at the default "discard":
+"ignore", then run QMP 'blockdev-mirror' with "sync": "full", the
+destination remains sparse rather than fully allocated.  Meanwhile, a
+destination image that is already fully allocated remains so unless it
+was opened with "detect-zeroes": "unmap".  And any time writing zeroes
+is skipped, the job counters are not incremented.
 
 Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20250509204341.3553601-26-eblake@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20250509204341.3553601-16-eblake@redhat.com>
 ---
- block/coroutines.h               |  4 +--
- include/block/block-common.h     | 11 +++++++
- include/block/block_int-common.h | 27 +++++++++--------
- include/block/block_int-io.h     |  4 +--
- block/io.c                       | 51 ++++++++++++++++----------------
- block/blkdebug.c                 |  6 ++--
- block/copy-before-write.c        |  4 +--
- block/file-posix.c               |  4 +--
- block/gluster.c                  |  4 +--
- block/iscsi.c                    |  6 ++--
- block/nbd.c                      |  4 +--
- block/null.c                     |  6 ++--
- block/parallels.c                |  6 ++--
- block/qcow.c                     |  2 +-
- block/qcow2.c                    |  6 ++--
- block/qed.c                      |  6 ++--
- block/quorum.c                   |  4 +--
- block/raw-format.c               |  4 +--
- block/rbd.c                      |  6 ++--
- block/snapshot-access.c          |  4 +--
- block/vdi.c                      |  4 +--
- block/vmdk.c                     |  2 +-
- block/vpc.c                      |  2 +-
- block/vvfat.c                    |  6 ++--
- tests/unit/test-block-iothread.c |  2 +-
- 25 files changed, 99 insertions(+), 86 deletions(-)
+ block/mirror.c | 107 ++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 93 insertions(+), 14 deletions(-)
 
-diff --git a/block/coroutines.h b/block/coroutines.h
-index 79e5efbf752..892646bb7aa 100644
---- a/block/coroutines.h
-+++ b/block/coroutines.h
-@@ -47,7 +47,7 @@ int coroutine_fn GRAPH_RDLOCK
- bdrv_co_common_block_status_above(BlockDriverState *bs,
-                                   BlockDriverState *base,
-                                   bool include_base,
--                                  bool want_zero,
-+                                  unsigned int mode,
-                                   int64_t offset,
-                                   int64_t bytes,
-                                   int64_t *pnum,
-@@ -78,7 +78,7 @@ int co_wrapper_mixed_bdrv_rdlock
- bdrv_common_block_status_above(BlockDriverState *bs,
-                                BlockDriverState *base,
-                                bool include_base,
--                               bool want_zero,
-+                               unsigned int mode,
-                                int64_t offset,
-                                int64_t bytes,
-                                int64_t *pnum,
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index 0b831ef87b1..c8c626daeaa 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -333,6 +333,17 @@ typedef enum {
- #define BDRV_BLOCK_RECURSE      0x40
- #define BDRV_BLOCK_COMPRESSED   0x80
+diff --git a/block/mirror.c b/block/mirror.c
+index bca99ec206b..724318f0371 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -73,6 +73,7 @@ typedef struct MirrorBlockJob {
+     size_t buf_size;
+     int64_t bdev_length;
+     unsigned long *cow_bitmap;
++    unsigned long *zero_bitmap;
+     BdrvDirtyBitmap *dirty_bitmap;
+     BdrvDirtyBitmapIter *dbi;
+     uint8_t *buf;
+@@ -108,9 +109,12 @@ struct MirrorOp {
+     int64_t offset;
+     uint64_t bytes;
 
-+/*
-+ * Block status hints: the bitwise-or of these flags emphasize what
-+ * the caller hopes to learn, and some drivers may be able to give
-+ * faster answers by doing less work when the hint permits.
-+ */
-+#define BDRV_WANT_ZERO          BDRV_BLOCK_ZERO
-+#define BDRV_WANT_OFFSET_VALID  BDRV_BLOCK_OFFSET_VALID
-+#define BDRV_WANT_ALLOCATED     BDRV_BLOCK_ALLOCATED
-+#define BDRV_WANT_PRECISE       (BDRV_WANT_ZERO | BDRV_WANT_OFFSET_VALID | \
-+                                 BDRV_WANT_OFFSET_VALID)
-+
- typedef QTAILQ_HEAD(BlockReopenQueue, BlockReopenQueueEntry) BlockReopenQueue;
+-    /* The pointee is set by mirror_co_read(), mirror_co_zero(), and
+-     * mirror_co_discard() before yielding for the first time */
++    /*
++     * These pointers are set by mirror_co_read(), mirror_co_zero(), and
++     * mirror_co_discard() before yielding for the first time
++     */
+     int64_t *bytes_handled;
++    bool *io_skipped;
 
- typedef struct BDRVReopenState {
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 0d8187f6567..2982dd31180 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -604,15 +604,16 @@ struct BlockDriver {
-      * according to the current layer, and should only need to set
-      * BDRV_BLOCK_DATA, BDRV_BLOCK_ZERO, BDRV_BLOCK_OFFSET_VALID,
-      * and/or BDRV_BLOCK_RAW; if the current layer defers to a backing
--     * layer, the result should be 0 (and not BDRV_BLOCK_ZERO).  See
--     * block.h for the overall meaning of the bits.  As a hint, the
--     * flag want_zero is true if the caller cares more about precise
--     * mappings (favor accurate _OFFSET_VALID/_ZERO) or false for
--     * overall allocation (favor larger *pnum, perhaps by reporting
--     * _DATA instead of _ZERO).  The block layer guarantees input
--     * clamped to bdrv_getlength() and aligned to request_alignment,
--     * as well as non-NULL pnum, map, and file; in turn, the driver
--     * must return an error or set pnum to an aligned non-zero value.
-+     * layer, the result should be 0 (and not BDRV_BLOCK_ZERO).  The
-+     * caller will synthesize BDRV_BLOCK_ALLOCATED based on the
-+     * non-zero results.  See block.h for the overall meaning of the
-+     * bits.  As a hint, the flags in @mode may include a bitwise-or
-+     * of BDRV_WANT_ALLOCATED, BDRV_WANT_OFFSET_VALID, or
-+     * BDRV_WANT_ZERO based on what the caller is looking for in the
-+     * results.  The block layer guarantees input clamped to
-+     * bdrv_getlength() and aligned to request_alignment, as well as
-+     * non-NULL pnum, map, and file; in turn, the driver must return
-+     * an error or set pnum to an aligned non-zero value.
-      *
-      * Note that @bytes is just a hint on how big of a region the
-      * caller wants to inspect.  It is not a limit on *pnum.
-@@ -624,8 +625,8 @@ struct BlockDriver {
-      * to clamping *pnum for return to its caller.
-      */
-     int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_block_status)(
--        BlockDriverState *bs,
--        bool want_zero, int64_t offset, int64_t bytes, int64_t *pnum,
-+        BlockDriverState *bs, unsigned int mode,
-+        int64_t offset, int64_t bytes, int64_t *pnum,
-         int64_t *map, BlockDriverState **file);
+     bool is_pseudo_op;
+     bool is_active_write;
+@@ -408,15 +412,34 @@ static void coroutine_fn mirror_co_read(void *opaque)
+ static void coroutine_fn mirror_co_zero(void *opaque)
+ {
+     MirrorOp *op = opaque;
+-    int ret;
++    bool write_needed = true;
++    int ret = 0;
+
+     op->s->in_flight++;
+     op->s->bytes_in_flight += op->bytes;
+     *op->bytes_handled = op->bytes;
+     op->is_in_flight = true;
+
+-    ret = blk_co_pwrite_zeroes(op->s->target, op->offset, op->bytes,
+-                               op->s->unmap ? BDRV_REQ_MAY_UNMAP : 0);
++    if (op->s->zero_bitmap) {
++        unsigned long end = DIV_ROUND_UP(op->offset + op->bytes,
++                                         op->s->granularity);
++        assert(QEMU_IS_ALIGNED(op->offset, op->s->granularity));
++        assert(QEMU_IS_ALIGNED(op->bytes, op->s->granularity) ||
++               op->offset + op->bytes == op->s->bdev_length);
++        if (find_next_zero_bit(op->s->zero_bitmap, end,
++                               op->offset / op->s->granularity) == end) {
++            write_needed = false;
++            *op->io_skipped = true;
++        }
++    }
++    if (write_needed) {
++        ret = blk_co_pwrite_zeroes(op->s->target, op->offset, op->bytes,
++                                   op->s->unmap ? BDRV_REQ_MAY_UNMAP : 0);
++    }
++    if (ret >= 0 && op->s->zero_bitmap) {
++        bitmap_set(op->s->zero_bitmap, op->offset / op->s->granularity,
++                   DIV_ROUND_UP(op->bytes, op->s->granularity));
++    }
+     mirror_write_complete(op, ret);
+ }
+
+@@ -435,29 +458,43 @@ static void coroutine_fn mirror_co_discard(void *opaque)
+ }
+
+ static unsigned mirror_perform(MirrorBlockJob *s, int64_t offset,
+-                               unsigned bytes, MirrorMethod mirror_method)
++                               unsigned bytes, MirrorMethod mirror_method,
++                               bool *io_skipped)
+ {
+     MirrorOp *op;
+     Coroutine *co;
+     int64_t bytes_handled = -1;
+
++    assert(QEMU_IS_ALIGNED(offset, s->granularity));
++    assert(QEMU_IS_ALIGNED(bytes, s->granularity) ||
++           offset + bytes == s->bdev_length);
+     op = g_new(MirrorOp, 1);
+     *op = (MirrorOp){
+         .s              = s,
+         .offset         = offset,
+         .bytes          = bytes,
+         .bytes_handled  = &bytes_handled,
++        .io_skipped     = io_skipped,
+     };
+     qemu_co_queue_init(&op->waiting_requests);
+
+     switch (mirror_method) {
+     case MIRROR_METHOD_COPY:
++        if (s->zero_bitmap) {
++            bitmap_clear(s->zero_bitmap, offset / s->granularity,
++                         DIV_ROUND_UP(bytes, s->granularity));
++        }
+         co = qemu_coroutine_create(mirror_co_read, op);
+         break;
+     case MIRROR_METHOD_ZERO:
++        /* s->zero_bitmap handled in mirror_co_zero */
+         co = qemu_coroutine_create(mirror_co_zero, op);
+         break;
+     case MIRROR_METHOD_DISCARD:
++        if (s->zero_bitmap) {
++            bitmap_clear(s->zero_bitmap, offset / s->granularity,
++                         DIV_ROUND_UP(bytes, s->granularity));
++        }
+         co = qemu_coroutine_create(mirror_co_discard, op);
+         break;
+     default:
+@@ -568,6 +605,7 @@ static void coroutine_fn GRAPH_UNLOCKED mirror_iteration(MirrorBlockJob *s)
+         int ret = -1;
+         int64_t io_bytes;
+         int64_t io_bytes_acct;
++        bool io_skipped = false;
+         MirrorMethod mirror_method = MIRROR_METHOD_COPY;
+
+         assert(!(offset % s->granularity));
+@@ -611,8 +649,10 @@ static void coroutine_fn GRAPH_UNLOCKED mirror_iteration(MirrorBlockJob *s)
+         }
+
+         io_bytes = mirror_clip_bytes(s, offset, io_bytes);
+-        io_bytes = mirror_perform(s, offset, io_bytes, mirror_method);
+-        if (mirror_method != MIRROR_METHOD_COPY && write_zeroes_ok) {
++        io_bytes = mirror_perform(s, offset, io_bytes, mirror_method,
++                                  &io_skipped);
++        if (io_skipped ||
++            (mirror_method != MIRROR_METHOD_COPY && write_zeroes_ok)) {
+             io_bytes_acct = 0;
+         } else {
+             io_bytes_acct = io_bytes;
+@@ -847,8 +887,10 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+     bool punch_holes =
+         target_bs->detect_zeroes == BLOCKDEV_DETECT_ZEROES_OPTIONS_UNMAP &&
+         bdrv_can_write_zeroes_with_unmap(target_bs);
++    int64_t bitmap_length = DIV_ROUND_UP(s->bdev_length, s->granularity);
+
+     /* Determine if the image is already zero, regardless of sync mode.  */
++    s->zero_bitmap = bitmap_new(bitmap_length);
+     bdrv_graph_co_rdlock();
+     bs = s->mirror_top_bs->backing->bs;
+     if (s->target_is_zero) {
+@@ -862,7 +904,14 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+     if (ret < 0) {
+         return ret;
+     } else if (s->sync_mode == MIRROR_SYNC_MODE_TOP) {
+-        /* In TOP mode, there is no benefit to a pre-zeroing pass.  */
++        /*
++         * In TOP mode, there is no benefit to a pre-zeroing pass, but
++         * the zero bitmap can be set if the destination already reads
++         * as zero and we are not punching holes.
++         */
++        if (ret > 0 && !punch_holes) {
++            bitmap_set(s->zero_bitmap, 0, bitmap_length);
++        }
+     } else if (ret == 0 || punch_holes) {
+         /*
+          * Here, we are in FULL mode; our goal is to avoid writing
+@@ -871,8 +920,9 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+          * zeroing happened externally (ret > 0) or if we have a fast
+          * way to pre-zero the image (the dirty bitmap will be
+          * populated later by the non-zero portions, the same as for
+-         * TOP mode).  If pre-zeroing is not fast, or we need to punch
+-         * holes, then our only recourse is to write the entire image.
++         * TOP mode).  If pre-zeroing is not fast, then our only
++         * recourse is to mark the entire image dirty.  The act of
++         * pre-zeroing will populate the zero bitmap.
+          */
+         if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
+             bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
+@@ -883,6 +933,7 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+         for (offset = 0; offset < s->bdev_length; ) {
+             int bytes = MIN(s->bdev_length - offset,
+                             QEMU_ALIGN_DOWN(INT_MAX, s->granularity));
++            bool ignored;
+
+             mirror_throttle(s);
+
+@@ -898,12 +949,15 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+                 continue;
+             }
+
+-            mirror_perform(s, offset, bytes, MIRROR_METHOD_ZERO);
++            mirror_perform(s, offset, bytes, MIRROR_METHOD_ZERO, &ignored);
+             offset += bytes;
+         }
+
+         mirror_wait_for_all_io(s);
+         s->initial_zeroing_ongoing = false;
++    } else {
++        /* In FULL mode, and image already reads as zero.  */
++        bitmap_set(s->zero_bitmap, 0, bitmap_length);
+     }
+
+     /* First part, loop on the sectors and initialize the dirty bitmap.  */
+@@ -1188,6 +1242,7 @@ immediate_exit:
+     assert(s->in_flight == 0);
+     qemu_vfree(s->buf);
+     g_free(s->cow_bitmap);
++    g_free(s->zero_bitmap);
+     g_free(s->in_flight_bitmap);
+     bdrv_dirty_iter_free(s->dbi);
+
+@@ -1367,6 +1422,7 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+     int ret;
+     size_t qiov_offset = 0;
+     int64_t dirty_bitmap_offset, dirty_bitmap_end;
++    int64_t zero_bitmap_offset, zero_bitmap_end;
+
+     if (!QEMU_IS_ALIGNED(offset, job->granularity) &&
+         bdrv_dirty_bitmap_get(job->dirty_bitmap, offset))
+@@ -1410,8 +1466,9 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+     }
 
      /*
-@@ -649,8 +650,8 @@ struct BlockDriver {
-         QEMUIOVector *qiov, size_t qiov_offset);
-
-     int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_snapshot_block_status)(
--        BlockDriverState *bs, bool want_zero, int64_t offset, int64_t bytes,
--        int64_t *pnum, int64_t *map, BlockDriverState **file);
-+        BlockDriverState *bs, unsigned int mode, int64_t offset,
-+        int64_t bytes, int64_t *pnum, int64_t *map, BlockDriverState **file);
-
-     int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_pdiscard_snapshot)(
-         BlockDriverState *bs, int64_t offset, int64_t bytes);
-diff --git a/include/block/block_int-io.h b/include/block/block_int-io.h
-index 4a7cf2b4fdc..4f94eb3c5a2 100644
---- a/include/block/block_int-io.h
-+++ b/include/block/block_int-io.h
-@@ -38,8 +38,8 @@
- int coroutine_fn GRAPH_RDLOCK bdrv_co_preadv_snapshot(BdrvChild *child,
-     int64_t offset, int64_t bytes, QEMUIOVector *qiov, size_t qiov_offset);
- int coroutine_fn GRAPH_RDLOCK bdrv_co_snapshot_block_status(
--    BlockDriverState *bs, bool want_zero, int64_t offset, int64_t bytes,
--    int64_t *pnum, int64_t *map, BlockDriverState **file);
-+    BlockDriverState *bs, unsigned int mode, int64_t offset,
-+    int64_t bytes, int64_t *pnum, int64_t *map, BlockDriverState **file);
- int coroutine_fn GRAPH_RDLOCK bdrv_co_pdiscard_snapshot(BlockDriverState *bs,
-     int64_t offset, int64_t bytes);
-
-diff --git a/block/io.c b/block/io.c
-index 6d98b0abb98..b5b143cd1b0 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -2364,10 +2364,8 @@ int bdrv_flush_all(void)
-  * Drivers not implementing the functionality are assumed to not support
-  * backing files, hence all their sectors are reported as allocated.
-  *
-- * If 'want_zero' is true, the caller is querying for mapping
-- * purposes, with a focus on valid BDRV_BLOCK_OFFSET_VALID, _DATA, and
-- * _ZERO where possible; otherwise, the result favors larger 'pnum',
-- * with a focus on accurate BDRV_BLOCK_ALLOCATED.
-+ * 'mode' serves as a hint as to which results are favored; see the
-+ * BDRV_WANT_* macros for details.
-  *
-  * If 'offset' is beyond the end of the disk image the return value is
-  * BDRV_BLOCK_EOF and 'pnum' is set to 0.
-@@ -2387,7 +2385,7 @@ int bdrv_flush_all(void)
-  * set to the host mapping and BDS corresponding to the guest offset.
-  */
- static int coroutine_fn GRAPH_RDLOCK
--bdrv_co_do_block_status(BlockDriverState *bs, bool want_zero,
-+bdrv_co_do_block_status(BlockDriverState *bs, unsigned int mode,
-                         int64_t offset, int64_t bytes,
-                         int64_t *pnum, int64_t *map, BlockDriverState **file)
- {
-@@ -2476,7 +2474,7 @@ bdrv_co_do_block_status(BlockDriverState *bs, bool want_zero,
-             local_file = bs;
-             local_map = aligned_offset;
-         } else {
--            ret = bs->drv->bdrv_co_block_status(bs, want_zero, aligned_offset,
-+            ret = bs->drv->bdrv_co_block_status(bs, mode, aligned_offset,
-                                                 aligned_bytes, pnum, &local_map,
-                                                 &local_file);
-
-@@ -2488,10 +2486,10 @@ bdrv_co_do_block_status(BlockDriverState *bs, bool want_zero,
-              * the cache requires an RCU update, so double check here to avoid
-              * such an update if possible.
-              *
--             * Check want_zero, because we only want to update the cache when we
-+             * Check mode, because we only want to update the cache when we
-              * have accurate information about what is zero and what is data.
-              */
--            if (want_zero &&
-+            if (mode == BDRV_WANT_PRECISE &&
-                 ret == (BDRV_BLOCK_DATA | BDRV_BLOCK_OFFSET_VALID) &&
-                 QLIST_EMPTY(&bs->children))
-             {
-@@ -2548,7 +2546,7 @@ bdrv_co_do_block_status(BlockDriverState *bs, bool want_zero,
-
-     if (ret & BDRV_BLOCK_RAW) {
-         assert(ret & BDRV_BLOCK_OFFSET_VALID && local_file);
--        ret = bdrv_co_do_block_status(local_file, want_zero, local_map,
-+        ret = bdrv_co_do_block_status(local_file, mode, local_map,
-                                       *pnum, pnum, &local_map, &local_file);
-         goto out;
+-     * Tails are either clean or shrunk, so for bitmap resetting
+-     * we safely align the range down.
++     * Tails are either clean or shrunk, so for dirty bitmap resetting
++     * we safely align the range narrower.  But for zero bitmap, round
++     * range wider for checking or clearing, and narrower for setting.
+      */
+     dirty_bitmap_offset = QEMU_ALIGN_UP(offset, job->granularity);
+     dirty_bitmap_end = QEMU_ALIGN_DOWN(offset + bytes, job->granularity);
+@@ -1419,22 +1476,44 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+         bdrv_reset_dirty_bitmap(job->dirty_bitmap, dirty_bitmap_offset,
+                                 dirty_bitmap_end - dirty_bitmap_offset);
      }
-@@ -2560,7 +2558,7 @@ bdrv_co_do_block_status(BlockDriverState *bs, bool want_zero,
++    zero_bitmap_offset = offset / job->granularity;
++    zero_bitmap_end = DIV_ROUND_UP(offset + bytes, job->granularity);
 
-         if (!cow_bs) {
-             ret |= BDRV_BLOCK_ZERO;
--        } else if (want_zero) {
-+        } else if (mode == BDRV_WANT_PRECISE) {
-             int64_t size2 = bdrv_co_getlength(cow_bs);
+     job_progress_increase_remaining(&job->common.job, bytes);
+     job->active_write_bytes_in_flight += bytes;
 
-             if (size2 >= 0 && offset >= size2) {
-@@ -2569,14 +2567,14 @@ bdrv_co_do_block_status(BlockDriverState *bs, bool want_zero,
-         }
-     }
+     switch (method) {
+     case MIRROR_METHOD_COPY:
++        if (job->zero_bitmap) {
++            bitmap_clear(job->zero_bitmap, zero_bitmap_offset,
++                         zero_bitmap_end - zero_bitmap_offset);
++        }
+         ret = blk_co_pwritev_part(job->target, offset, bytes,
+                                   qiov, qiov_offset, flags);
+         break;
 
--    if (want_zero && ret & BDRV_BLOCK_RECURSE &&
-+    if (mode == BDRV_WANT_PRECISE && ret & BDRV_BLOCK_RECURSE &&
-         local_file && local_file != bs &&
-         (ret & BDRV_BLOCK_DATA) && !(ret & BDRV_BLOCK_ZERO) &&
-         (ret & BDRV_BLOCK_OFFSET_VALID)) {
-         int64_t file_pnum;
-         int ret2;
+     case MIRROR_METHOD_ZERO:
++        if (job->zero_bitmap) {
++            if (find_next_zero_bit(job->zero_bitmap, zero_bitmap_end,
++                                   zero_bitmap_offset) == zero_bitmap_end) {
++                ret = 0;
++                break;
++            }
++        }
+         assert(!qiov);
+         ret = blk_co_pwrite_zeroes(job->target, offset, bytes, flags);
++        if (job->zero_bitmap && ret >= 0) {
++            bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->granularity,
++                       (dirty_bitmap_end - dirty_bitmap_offset) /
++                       job->granularity);
++        }
+         break;
 
--        ret2 = bdrv_co_do_block_status(local_file, want_zero, local_map,
-+        ret2 = bdrv_co_do_block_status(local_file, mode, local_map,
-                                        *pnum, &file_pnum, NULL, NULL);
-         if (ret2 >= 0) {
-             /* Ignore errors.  This is just providing extra information, it
-@@ -2627,7 +2625,7 @@ int coroutine_fn
- bdrv_co_common_block_status_above(BlockDriverState *bs,
-                                   BlockDriverState *base,
-                                   bool include_base,
--                                  bool want_zero,
-+                                  unsigned int mode,
-                                   int64_t offset,
-                                   int64_t bytes,
-                                   int64_t *pnum,
-@@ -2654,7 +2652,7 @@ bdrv_co_common_block_status_above(BlockDriverState *bs,
-         return 0;
-     }
-
--    ret = bdrv_co_do_block_status(bs, want_zero, offset, bytes, pnum,
-+    ret = bdrv_co_do_block_status(bs, mode, offset, bytes, pnum,
-                                   map, file);
-     ++*depth;
-     if (ret < 0 || *pnum == 0 || ret & BDRV_BLOCK_ALLOCATED || bs == base) {
-@@ -2671,7 +2669,7 @@ bdrv_co_common_block_status_above(BlockDriverState *bs,
-     for (p = bdrv_filter_or_cow_bs(bs); include_base || p != base;
-          p = bdrv_filter_or_cow_bs(p))
-     {
--        ret = bdrv_co_do_block_status(p, want_zero, offset, bytes, pnum,
-+        ret = bdrv_co_do_block_status(p, mode, offset, bytes, pnum,
-                                       map, file);
-         ++*depth;
-         if (ret < 0) {
-@@ -2734,7 +2732,8 @@ int coroutine_fn bdrv_co_block_status_above(BlockDriverState *bs,
-                                             BlockDriverState **file)
- {
-     IO_CODE();
--    return bdrv_co_common_block_status_above(bs, base, false, true, offset,
-+    return bdrv_co_common_block_status_above(bs, base, false,
-+                                             BDRV_WANT_PRECISE, offset,
-                                              bytes, pnum, map, file, NULL);
- }
-
-@@ -2765,8 +2764,9 @@ int coroutine_fn bdrv_co_is_zero_fast(BlockDriverState *bs, int64_t offset,
-         return 1;
-     }
-
--    ret = bdrv_co_common_block_status_above(bs, NULL, false, false, offset,
--                                            bytes, &pnum, NULL, NULL, NULL);
-+    ret = bdrv_co_common_block_status_above(bs, NULL, false, BDRV_WANT_ZERO,
-+                                            offset, bytes, &pnum, NULL, NULL,
-+                                            NULL);
-
-     if (ret < 0) {
-         return ret;
-@@ -2782,9 +2782,9 @@ int coroutine_fn bdrv_co_is_allocated(BlockDriverState *bs, int64_t offset,
-     int64_t dummy;
-     IO_CODE();
-
--    ret = bdrv_co_common_block_status_above(bs, bs, true, false, offset,
--                                            bytes, pnum ? pnum : &dummy, NULL,
--                                            NULL, NULL);
-+    ret = bdrv_co_common_block_status_above(bs, bs, true, BDRV_WANT_ALLOCATED,
-+                                            offset, bytes, pnum ? pnum : &dummy,
-+                                            NULL, NULL, NULL);
-     if (ret < 0) {
-         return ret;
-     }
-@@ -2817,7 +2817,8 @@ int coroutine_fn bdrv_co_is_allocated_above(BlockDriverState *bs,
-     int ret;
-     IO_CODE();
-
--    ret = bdrv_co_common_block_status_above(bs, base, include_base, false,
-+    ret = bdrv_co_common_block_status_above(bs, base, include_base,
-+                                            BDRV_WANT_ALLOCATED,
-                                             offset, bytes, pnum, NULL, NULL,
-                                             &depth);
-     if (ret < 0) {
-@@ -3698,8 +3699,8 @@ bdrv_co_preadv_snapshot(BdrvChild *child, int64_t offset, int64_t bytes,
- }
-
- int coroutine_fn
--bdrv_co_snapshot_block_status(BlockDriverState *bs,
--                              bool want_zero, int64_t offset, int64_t bytes,
-+bdrv_co_snapshot_block_status(BlockDriverState *bs, unsigned int mode,
-+                              int64_t offset, int64_t bytes,
-                               int64_t *pnum, int64_t *map,
-                               BlockDriverState **file)
- {
-@@ -3717,7 +3718,7 @@ bdrv_co_snapshot_block_status(BlockDriverState *bs,
-     }
-
-     bdrv_inc_in_flight(bs);
--    ret = drv->bdrv_co_snapshot_block_status(bs, want_zero, offset, bytes,
-+    ret = drv->bdrv_co_snapshot_block_status(bs, mode, offset, bytes,
-                                              pnum, map, file);
-     bdrv_dec_in_flight(bs);
-
-diff --git a/block/blkdebug.c b/block/blkdebug.c
-index 1c1967f8e0a..c54aee0c84b 100644
---- a/block/blkdebug.c
-+++ b/block/blkdebug.c
-@@ -751,9 +751,9 @@ blkdebug_co_pdiscard(BlockDriverState *bs, int64_t offset, int64_t bytes)
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--blkdebug_co_block_status(BlockDriverState *bs, bool want_zero, int64_t offset,
--                         int64_t bytes, int64_t *pnum, int64_t *map,
--                         BlockDriverState **file)
-+blkdebug_co_block_status(BlockDriverState *bs, unsigned int mode,
-+                         int64_t offset, int64_t bytes, int64_t *pnum,
-+                         int64_t *map, BlockDriverState **file)
- {
-     int err;
-
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index 00af0b18ac4..36d5d3ed9b0 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -291,8 +291,8 @@ cbw_co_preadv_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes,
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--cbw_co_snapshot_block_status(BlockDriverState *bs,
--                             bool want_zero, int64_t offset, int64_t bytes,
-+cbw_co_snapshot_block_status(BlockDriverState *bs, unsigned int mode,
-+                             int64_t offset, int64_t bytes,
-                              int64_t *pnum, int64_t *map,
-                              BlockDriverState **file)
- {
-diff --git a/block/file-posix.c b/block/file-posix.c
-index ef52ed9169e..805a1a2949b 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -3273,7 +3273,7 @@ static int find_allocation(BlockDriverState *bs, off_t start,
-  * well exceed it.
-  */
- static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
--                                            bool want_zero,
-+                                            unsigned int mode,
-                                             int64_t offset,
-                                             int64_t bytes, int64_t *pnum,
-                                             int64_t *map,
-@@ -3289,7 +3289,7 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
-         return ret;
-     }
-
--    if (!want_zero) {
-+    if (mode != BDRV_WANT_PRECISE) {
-         *pnum = bytes;
-         *map = offset;
-         *file = bs;
-diff --git a/block/gluster.c b/block/gluster.c
-index 8712aa606a4..1a2ef53e9b0 100644
---- a/block/gluster.c
-+++ b/block/gluster.c
-@@ -1461,7 +1461,7 @@ exit:
-  * (Based on raw_co_block_status() from file-posix.c.)
-  */
- static int coroutine_fn qemu_gluster_co_block_status(BlockDriverState *bs,
--                                                     bool want_zero,
-+                                                     unsigned int mode,
-                                                      int64_t offset,
-                                                      int64_t bytes,
-                                                      int64_t *pnum,
-@@ -1478,7 +1478,7 @@ static int coroutine_fn qemu_gluster_co_block_status(BlockDriverState *bs,
-         return ret;
-     }
-
--    if (!want_zero) {
-+    if (mode != BDRV_WANT_PRECISE) {
-         *pnum = bytes;
-         *map = offset;
-         *file = bs;
-diff --git a/block/iscsi.c b/block/iscsi.c
-index 2f0f4dac097..15b96ee8800 100644
---- a/block/iscsi.c
-+++ b/block/iscsi.c
-@@ -694,9 +694,9 @@ out_unlock:
-
-
- static int coroutine_fn iscsi_co_block_status(BlockDriverState *bs,
--                                              bool want_zero, int64_t offset,
--                                              int64_t bytes, int64_t *pnum,
--                                              int64_t *map,
-+                                              unsigned int mode,
-+                                              int64_t offset, int64_t bytes,
-+                                              int64_t *pnum, int64_t *map,
-                                               BlockDriverState **file)
- {
-     IscsiLun *iscsilun = bs->opaque;
-diff --git a/block/nbd.c b/block/nbd.c
-index 887841bc813..d5a2b21c6d1 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -1397,8 +1397,8 @@ nbd_client_co_pdiscard(BlockDriverState *bs, int64_t offset, int64_t bytes)
- }
-
- static int coroutine_fn GRAPH_RDLOCK nbd_client_co_block_status(
--        BlockDriverState *bs, bool want_zero, int64_t offset, int64_t bytes,
--        int64_t *pnum, int64_t *map, BlockDriverState **file)
-+        BlockDriverState *bs, unsigned int mode, int64_t offset,
-+        int64_t bytes, int64_t *pnum, int64_t *map, BlockDriverState **file)
- {
-     int ret, request_ret;
-     NBDExtent64 extent = { 0 };
-diff --git a/block/null.c b/block/null.c
-index dc0b1fdbd9b..4e448d593d7 100644
---- a/block/null.c
-+++ b/block/null.c
-@@ -227,9 +227,9 @@ static int null_reopen_prepare(BDRVReopenState *reopen_state,
- }
-
- static int coroutine_fn null_co_block_status(BlockDriverState *bs,
--                                             bool want_zero, int64_t offset,
--                                             int64_t bytes, int64_t *pnum,
--                                             int64_t *map,
-+                                             unsigned int mode,
-+                                             int64_t offset, int64_t bytes,
-+                                             int64_t *pnum, int64_t *map,
-                                              BlockDriverState **file)
- {
-     BDRVNullState *s = bs->opaque;
-diff --git a/block/parallels.c b/block/parallels.c
-index 347ca127f34..3a375e2a8ab 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -416,9 +416,9 @@ parallels_co_flush_to_os(BlockDriverState *bs)
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--parallels_co_block_status(BlockDriverState *bs, bool want_zero, int64_t offset,
--                          int64_t bytes, int64_t *pnum, int64_t *map,
--                          BlockDriverState **file)
-+parallels_co_block_status(BlockDriverState *bs, unsigned int mode,
-+                          int64_t offset, int64_t bytes, int64_t *pnum,
-+                          int64_t *map, BlockDriverState **file)
- {
-     BDRVParallelsState *s = bs->opaque;
-     int count;
-diff --git a/block/qcow.c b/block/qcow.c
-index da8ad4d2430..8a3e7591a92 100644
---- a/block/qcow.c
-+++ b/block/qcow.c
-@@ -530,7 +530,7 @@ get_cluster_offset(BlockDriverState *bs, uint64_t offset, int allocate,
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--qcow_co_block_status(BlockDriverState *bs, bool want_zero,
-+qcow_co_block_status(BlockDriverState *bs, unsigned int mode,
-                      int64_t offset, int64_t bytes, int64_t *pnum,
-                      int64_t *map, BlockDriverState **file)
- {
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 7774e7f0909..66fba89b414 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -2141,9 +2141,9 @@ static void qcow2_join_options(QDict *options, QDict *old_options)
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--qcow2_co_block_status(BlockDriverState *bs, bool want_zero, int64_t offset,
--                      int64_t count, int64_t *pnum, int64_t *map,
--                      BlockDriverState **file)
-+qcow2_co_block_status(BlockDriverState *bs, unsigned int mode,
-+                      int64_t offset, int64_t count, int64_t *pnum,
-+                      int64_t *map, BlockDriverState **file)
- {
-     BDRVQcow2State *s = bs->opaque;
-     uint64_t host_offset;
-diff --git a/block/qed.c b/block/qed.c
-index ac24449ffb3..4a36fb39294 100644
---- a/block/qed.c
-+++ b/block/qed.c
-@@ -833,9 +833,9 @@ fail:
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--bdrv_qed_co_block_status(BlockDriverState *bs, bool want_zero, int64_t pos,
--                         int64_t bytes, int64_t *pnum, int64_t *map,
--                         BlockDriverState **file)
-+bdrv_qed_co_block_status(BlockDriverState *bs, unsigned int mode,
-+                         int64_t pos, int64_t bytes, int64_t *pnum,
-+                         int64_t *map, BlockDriverState **file)
- {
-     BDRVQEDState *s = bs->opaque;
-     size_t len = MIN(bytes, SIZE_MAX);
-diff --git a/block/quorum.c b/block/quorum.c
-index 30747a6df93..ed8ce801ee3 100644
---- a/block/quorum.c
-+++ b/block/quorum.c
-@@ -1226,7 +1226,7 @@ static void quorum_child_perm(BlockDriverState *bs, BdrvChild *c,
-  * region contains zeroes, and BDRV_BLOCK_DATA otherwise.
-  */
- static int coroutine_fn GRAPH_RDLOCK
--quorum_co_block_status(BlockDriverState *bs, bool want_zero,
-+quorum_co_block_status(BlockDriverState *bs, unsigned int mode,
-                        int64_t offset, int64_t count,
-                        int64_t *pnum, int64_t *map, BlockDriverState **file)
- {
-@@ -1238,7 +1238,7 @@ quorum_co_block_status(BlockDriverState *bs, bool want_zero,
-     for (i = 0; i < s->num_children; i++) {
-         int64_t bytes;
-         ret = bdrv_co_common_block_status_above(s->children[i]->bs, NULL, false,
--                                                want_zero, offset, count,
-+                                                mode, offset, count,
-                                                 &bytes, NULL, NULL, NULL);
-         if (ret < 0) {
-             quorum_report_bad(QUORUM_OP_TYPE_READ, offset, count,
-diff --git a/block/raw-format.c b/block/raw-format.c
-index e08526e2eca..df16ac1ea25 100644
---- a/block/raw-format.c
-+++ b/block/raw-format.c
-@@ -283,8 +283,8 @@ fail:
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--raw_co_block_status(BlockDriverState *bs, bool want_zero, int64_t offset,
--                    int64_t bytes, int64_t *pnum, int64_t *map,
-+raw_co_block_status(BlockDriverState *bs, unsigned int mode,
-+                    int64_t offset, int64_t bytes, int64_t *pnum, int64_t *map,
-                     BlockDriverState **file)
- {
-     BDRVRawState *s = bs->opaque;
-diff --git a/block/rbd.c b/block/rbd.c
-index 7446e66659e..951cd63f9ae 100644
---- a/block/rbd.c
-+++ b/block/rbd.c
-@@ -1503,9 +1503,9 @@ static int qemu_rbd_diff_iterate_cb(uint64_t offs, size_t len,
- }
-
- static int coroutine_fn qemu_rbd_co_block_status(BlockDriverState *bs,
--                                                 bool want_zero, int64_t offset,
--                                                 int64_t bytes, int64_t *pnum,
--                                                 int64_t *map,
-+                                                 unsigned int mode,
-+                                                 int64_t offset, int64_t bytes,
-+                                                 int64_t *pnum, int64_t *map,
-                                                  BlockDriverState **file)
- {
-     BDRVRBDState *s = bs->opaque;
-diff --git a/block/snapshot-access.c b/block/snapshot-access.c
-index 71ac83c01f0..17ed2402db8 100644
---- a/block/snapshot-access.c
-+++ b/block/snapshot-access.c
-@@ -41,11 +41,11 @@ snapshot_access_co_preadv_part(BlockDriverState *bs,
-
- static int coroutine_fn GRAPH_RDLOCK
- snapshot_access_co_block_status(BlockDriverState *bs,
--                                bool want_zero, int64_t offset,
-+                                unsigned int mode, int64_t offset,
-                                 int64_t bytes, int64_t *pnum,
-                                 int64_t *map, BlockDriverState **file)
- {
--    return bdrv_co_snapshot_block_status(bs->file->bs, want_zero, offset,
-+    return bdrv_co_snapshot_block_status(bs->file->bs, mode, offset,
-                                          bytes, pnum, map, file);
- }
-
-diff --git a/block/vdi.c b/block/vdi.c
-index a2da6ecab01..3ddc62a5690 100644
---- a/block/vdi.c
-+++ b/block/vdi.c
-@@ -523,8 +523,8 @@ static int vdi_reopen_prepare(BDRVReopenState *state,
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--vdi_co_block_status(BlockDriverState *bs, bool want_zero, int64_t offset,
--                    int64_t bytes, int64_t *pnum, int64_t *map,
-+vdi_co_block_status(BlockDriverState *bs, unsigned int mode,
-+                    int64_t offset, int64_t bytes, int64_t *pnum, int64_t *map,
-                     BlockDriverState **file)
- {
-     BDRVVdiState *s = (BDRVVdiState *)bs->opaque;
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 2adec499122..9c7ab037e14 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -1777,7 +1777,7 @@ static inline uint64_t vmdk_find_offset_in_cluster(VmdkExtent *extent,
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--vmdk_co_block_status(BlockDriverState *bs, bool want_zero,
-+vmdk_co_block_status(BlockDriverState *bs, unsigned int mode,
-                      int64_t offset, int64_t bytes, int64_t *pnum,
-                      int64_t *map, BlockDriverState **file)
- {
-diff --git a/block/vpc.c b/block/vpc.c
-index 0309e319f60..801ff5793f8 100644
---- a/block/vpc.c
-+++ b/block/vpc.c
-@@ -726,7 +726,7 @@ fail:
- }
-
- static int coroutine_fn GRAPH_RDLOCK
--vpc_co_block_status(BlockDriverState *bs, bool want_zero,
-+vpc_co_block_status(BlockDriverState *bs, unsigned int mode,
-                     int64_t offset, int64_t bytes,
-                     int64_t *pnum, int64_t *map,
-                     BlockDriverState **file)
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 91d69b3cc83..814796d9185 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -3134,9 +3134,9 @@ vvfat_co_pwritev(BlockDriverState *bs, int64_t offset, int64_t bytes,
- }
-
- static int coroutine_fn vvfat_co_block_status(BlockDriverState *bs,
--                                              bool want_zero, int64_t offset,
--                                              int64_t bytes, int64_t *n,
--                                              int64_t *map,
-+                                              unsigned int mode,
-+                                              int64_t offset, int64_t bytes,
-+                                              int64_t *n, int64_t *map,
-                                               BlockDriverState **file)
- {
-     *n = bytes;
-diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
-index 2b358eaaa82..e26b3be5939 100644
---- a/tests/unit/test-block-iothread.c
-+++ b/tests/unit/test-block-iothread.c
-@@ -63,7 +63,7 @@ bdrv_test_co_truncate(BlockDriverState *bs, int64_t offset, bool exact,
- }
-
- static int coroutine_fn bdrv_test_co_block_status(BlockDriverState *bs,
--                                                  bool want_zero,
-+                                                  unsigned int mode,
-                                                   int64_t offset, int64_t count,
-                                                   int64_t *pnum, int64_t *map,
-                                                   BlockDriverState **file)
+     case MIRROR_METHOD_DISCARD:
++        if (job->zero_bitmap) {
++            bitmap_clear(job->zero_bitmap, zero_bitmap_offset,
++                         zero_bitmap_end - zero_bitmap_offset);
++        }
+         assert(!qiov);
+         ret = blk_co_pdiscard(job->target, offset, bytes);
+         break;
 -- 
 2.49.0
 
