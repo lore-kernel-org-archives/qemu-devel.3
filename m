@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6488C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F09BC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:46:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFajM-0007QH-TO; Thu, 15 May 2025 11:42:45 -0400
+	id 1uFakQ-0002RU-Om; Thu, 15 May 2025 11:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFajH-0007Eo-OE; Thu, 15 May 2025 11:42:39 -0400
+ id 1uFakO-00025Y-2m; Thu, 15 May 2025 11:43:48 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFajF-000651-Em; Thu, 15 May 2025 11:42:39 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCgPjB013188;
- Thu, 15 May 2025 15:42:35 GMT
+ id 1uFakJ-00068Z-JL; Thu, 15 May 2025 11:43:47 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCg4vM004704;
+ Thu, 15 May 2025 15:43:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=rZstIUsAIvIMAd7WAvkbFMYgKQRpIiVao2F4kvHU4dM=; b=Dl4OpxmlD2JC
- yAdBvh0qYnOmdmWeZ2KeKO3TxEUqZdm2u6JZ9zzM5nrgS4S0GNADnSuA5w6DgAiJ
- gnwUln2WZ2dhBsf9FFIEEgFG5W0GhDOMIrQrtbSWMjzQ9+VBElevZYAhIvUbK7g+
- tvRcH/ndHykXzAUangPfa48GGWgt7LmdCTyuqOMS0Q+hCyJYGVRnUTx44G7iS5rI
- hQ0n3IG9S+5ZQxUA3rSNuAVjyJmcnY10yrvaHk0mNdYanC7oaH84aNko3AmEtLdq
- 5m6giTbPGQcFXQ0n8ZIhq9QriiVSaVs05eVtAGfODyoMJmBfEbc5i5xJMh5N7uv3
- udf0ADnECQ==
+ bh=WAnX61TDjbgPwI86kKiPqpTqgeyuNigE8634PNDVx58=; b=XfK1eehPcuq3
+ NvZV6o8AF1gPTq39rs6BtBYMkOWPKWgi7iS7s4Grz10LbWVI3970saIw2BBVqz+l
+ 4hAT1VGcHCw0WdUOvwq7RS59z7FpxUyY5uvRpIGyDHrZJyubs4uJrK7fP9u2QCaX
+ 7KViUhbuwlFwTBs1qOKpM/bsCiw3FJtgT7VmD60hBtWkZmB1mLdT4k3ZIzMaJGOF
+ 0RffddyQdxEU27iFSRefZ4B2Hi6rvg8dRVY9Gi85FNoBLYlsBf12u2LnDs9WFTrs
+ kRhEZN0Vnrc4LAutcuymiawrN2G3c0Px98X3eJAVqxQKYVVTHlrafNmRW1qefFNo
+ 7L0AJDMbMw==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0t9dhdr-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2vnh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:42:35 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFgFMO026068;
- Thu, 15 May 2025 15:42:34 GMT
+ Thu, 15 May 2025 15:43:41 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFV0ZI021368;
+ Thu, 15 May 2025 15:43:40 GMT
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46n0t9dhdn-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46navu2vnb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:42:34 +0000 (GMT)
+ Thu, 15 May 2025 15:43:40 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEKa9j015498;
- Thu, 15 May 2025 15:42:33 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfq303k-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEKa9x015498;
+ Thu, 15 May 2025 15:43:39 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 46mbfq307g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:42:33 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFgVi814353028
+ Thu, 15 May 2025 15:43:39 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54FFhcwq28770946
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:42:32 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B9BA35805D;
- Thu, 15 May 2025 15:42:31 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 65C1C58059;
- Thu, 15 May 2025 15:42:31 +0000 (GMT)
+ Thu, 15 May 2025 15:43:38 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A040E58055;
+ Thu, 15 May 2025 15:43:38 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4BBB758043;
+ Thu, 15 May 2025 15:43:38 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:42:31 +0000 (GMT)
-Message-ID: <6bb381ea2a0a164636bb24566e1616e3ae922638.camel@linux.ibm.com>
-Subject: Re: [PATCH 08/50] ppc/xive2: Use fair irq target search algorithm
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 15:43:38 +0000 (GMT)
+Message-ID: <bda7c34ed141002b362724f89e98b90a6a90c7fb.camel@linux.ibm.com>
+Subject: Re: [PATCH 11/50] ppc/xive2: Do not present group interrupt on
+ OS-push if precluded by CPPR
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
  <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
  Schlossin <calebs@linux.vnet.ibm.com>
-Date: Thu, 15 May 2025 10:42:31 -0500
-In-Reply-To: <20250512031100.439842-9-npiggin@gmail.com>
+Date: Thu, 15 May 2025 10:43:37 -0500
+In-Reply-To: <20250512031100.439842-12-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-9-npiggin@gmail.com>
+ <20250512031100.439842-12-npiggin@gmail.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=etzfzppX c=1 sm=1 tr=0 ts=68260b6b cx=c_pps
+X-Proofpoint-ORIG-GUID: BESIkaKwTdowJ_2EgXgeEe2Ds1Zvqlcg
+X-Authority-Analysis: v=2.4 cv=XK4wSRhE c=1 sm=1 tr=0 ts=68260bad cx=c_pps
  a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=jthM4rBR-rtT7kyaBgcA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX76HlZStN95xX
- FgLFWbKTenmee8mjo4OdLo1f6s7/EXFfqELub0NiNJ9+uhw/fIb+l/wYpJGYvVB7BqTR2EVVZ09
- PqEhI8lY2wxwFj2e7IQy71MdziOMMz/BeftCSMoGa0KpoNYkVh3OCSsl+NoAfRzc9SoWj78DvKt
- Bd/S4wkhP6TdJMcIIgFpMKIpl7rJGk6jicE0HdrCCI+4bdb8G3EnARoZ9qPlaYMlorGBQzO15M4
- uB8WV1TblmVSRUJu8fVUvFSVkjMOqwhkvj8Wr1J4S+AqYcSHLia1ngt+k6lm3K4fug9agabwx8b
- 9XIbIzW8QXrSesRdmvpORanaEDkMq6eMgl2Pn/IfvbzGwQDqBorjDSmXBIFZzLrup+8C0w9KquS
- /9nReBULxL+pQ+F3wlSXcpF/j0NtDUJY2rgHR1KGTB+FeRBhYPy98n8vAdnGefzOQ81t9Dk+
-X-Proofpoint-ORIG-GUID: Y0_IZf3Qk-kZ98JFeXeA3CiBOcb4vMdQ
-X-Proofpoint-GUID: dttDyTchMBjqitaScKg5J2zL8TUZRsjh
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
+ a=6PrcOua1sW-wYeWJZ4UA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 8r8J04x2Q9bodXukhV0nyad0PY5JV_jT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfXw6TZcryxSb7F
+ 5hvBG0kUlnToiWnYQK7b8hoT6OY3upfA+3BZ3J+FwricqLch2YVbBjUhUsvdf5PbzYeGmja3V+f
+ MIFM6VZxo5LsSm35SO1g5fy2rOCtlrHy9XlrZExAkpzuZpahbFn4ttDS1IQcBqrSQPTV0TxpiAK
+ 00DDmUJXlqixBwO8j3k3/mE97LnCfyILNQmpfO1d/541lq2rrvJtBSrUcghHVwx/GPCXvagK37u
+ twxjW01v2L4hNCrx3+npKkyaks/6rJsTjShdCJvxRum34uZ+V9KeIo1VOUMDpbDPSJIVYCaMLhe
+ 1b0uru3z/lGFe/LJ9X9otzwBMT0StL7mU6SyNIOwfNOmfYJyI1SNJCFOyFFeMwrEycIjLKCorRj
+ 3WM18HFYqcSPV5RURbrh0BTRkDXh/ntECANp8LNwVc7iylqnJgW+cNDtq4DL7Nj1cp4sPhwd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- lowpriorityscore=0 phishscore=0 mlxscore=0 mlxlogscore=982 bulkscore=0
- suspectscore=0 spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ spamscore=0 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=690 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505150155
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
@@ -134,65 +135,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 On Mon, 2025-05-12 at 13:10 +1000, Nicholas Piggin wrote:
-> From: Glenn Miles <milesg@linux.ibm.com>
+> Group interrupts should not be taken from the backlog and presented
+> if they are precluded by CPPR.
 > 
-> The current xive algorithm for finding a matching group vCPU
-> target always uses the first vCPU found.  And, since it always
-> starts the search with thread 0 of a core, thread 0 is almost
-> always used to handle group interrupts.  This can lead to additional
-> interrupt latency and poor performance for interrupt intensive
-> work loads.
-> 
-> Changing this to use a simple round-robin algorithm for deciding which
-> thread number to use when starting a search, which leads to a more
-> distributed use of threads for handling group interrupts.
-> 
-> [npiggin: Also round-robin among threads, not just cores]
-> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> Fixes: 855434b3b8 ("ppc/xive2: Process group backlog when pushing an OS context")
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  hw/intc/pnv_xive2.c | 18 ++++++++++++++++--
->  1 file changed, 16 insertions(+), 2 deletions(-)
+>  hw/intc/xive2.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index 72cdf0f20c..d7ca97ecbb 100644
-> --- a/hw/intc/pnv_xive2.c
-> +++ b/hw/intc/pnv_xive2.c
-> @@ -643,13 +643,18 @@ static int pnv_xive2_match_nvt(XivePresenter *xptr, uint8_t format,
->      int i, j;
->      bool gen1_tima_os =
->          xive->cq_regs[CQ_XIVE_CFG >> 3] & CQ_XIVE_CFG_GEN1_TIMA_OS;
-> +    static int next_start_core;
-> +    static int next_start_thread;
-> +    int start_core = next_start_core;
-> +    int start_thread = next_start_thread;
->  
->      for (i = 0; i < chip->nr_cores; i++) {
-> -        PnvCore *pc = chip->cores[i];
-> +        PnvCore *pc = chip->cores[(i + start_core) % chip->nr_cores];
->          CPUCore *cc = CPU_CORE(pc);
->  
->          for (j = 0; j < cc->nr_threads; j++) {
-> -            PowerPCCPU *cpu = pc->threads[j];
-> +            /* Start search for match with different thread each call */
-> +            PowerPCCPU *cpu = pc->threads[(j + start_thread) % cc->nr_threads];
->              XiveTCTX *tctx;
->              int ring;
->  
-> @@ -694,6 +699,15 @@ static int pnv_xive2_match_nvt(XivePresenter *xptr, uint8_t format,
->                      if (!match->tctx) {
->                          match->ring = ring;
->                          match->tctx = tctx;
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index 1971c05fa1..8ede95b671 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -845,7 +845,9 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+>          group_prio = xive2_presenter_backlog_scan(xptr, nvp_blk, nvp_idx,
+>                                                    first_group, &group_level);
+>          regs[TM_LSMFB] = group_prio;
+> -        if (regs[TM_LGS] && group_prio < backlog_prio) {
+> +        if (regs[TM_LGS] && group_prio < backlog_prio &&
+> +            group_prio < regs[TM_CPPR]) {
 > +
-> +                        next_start_thread = j + start_thread + 1;
-> +                        if (next_start_thread >= cc->nr_threads) {
-> +                            next_start_thread = 0;
-> +                            next_start_core = i + start_core + 1;
-> +                            if (next_start_core >= chip->nr_cores) {
-> +                                next_start_core = 0;
-> +                            }
-> +                        }
->                      }
->                      count++;
->                  }
+>              /* VP can take a group interrupt */
+>              xive2_presenter_backlog_decr(xptr, nvp_blk, nvp_idx,
+>                                           group_prio, group_level);
 
 
