@@ -4,95 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD03C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 16:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B88C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 16:06:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFb1C-0005gk-N7; Thu, 15 May 2025 12:01:10 -0400
+	id 1uFb5U-0001bn-8D; Thu, 15 May 2025 12:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFb18-0005cI-RY
- for qemu-devel@nongnu.org; Thu, 15 May 2025 12:01:06 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFb14-00089E-81
- for qemu-devel@nongnu.org; Thu, 15 May 2025 12:01:06 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-74251cb4a05so1651100b3a.3
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 09:01:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747324859; x=1747929659; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cLm3qYpvrI0kV/DQ8TrnXD57aWGKyWY23QfFxV00H9k=;
- b=g0QKcSR5V2aMBpO/xanUfKfHmh6tOavVTNedHSJ7S6bGe4QUpST2lXruimn0wye8HM
- lzOGlRytRbz9zlnrOjPFc15CYezGKybxUe54X8B0LgtkZDHIgkeVtr2gCMMvN+RaePq1
- zhw5WBF2U7CgTb0ZwksnrlZE5CyEal8zLEmLCnemLhCqQwDaxBFQ+LM2Ie3zvfQJfnSF
- Aw4/GB6UEB9kaSxJ3iLJZFUSGiRnnpvJba/xAXsbxPjlnLrRIgMbs3lLKpa6vLhP9/dX
- 8tMJPuadEnm1mx1T/ipX1eCDthyAdhvp2sTmnfRCISYnbAddKtM1NLiQxRZQi2pLmuxp
- hB/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747324859; x=1747929659;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cLm3qYpvrI0kV/DQ8TrnXD57aWGKyWY23QfFxV00H9k=;
- b=CVDJFPzG2n+FDpWo2EQRUjcv297+NuoZ4I95Vpy1WrvcYYhm7YNPx5jZmdZrPqiHum
- pqni8lfLL9JMS6eS+AIYKXlw2Jzo/MBko222bu6ZHhSBaxepLV2h/9jSfHnvmXY63u/n
- xgpxsjLNffDysC1xeRtOdFTYbFNccrKbZUymbcMIU8+YoCXO/0EjUa7BxZ4Bki3eQvIP
- AFI7zYkKRisExOKkdTHOYsjhGpuw22PtO1Ad+eZYulcSHIt0Vc4J4qLRKFdrsjRj/EO3
- +slbOR31gJkPFmenQNJ9n3SvkXX4yKdO3TE7drLcdD8ai6MoD0bPE9pN+4zotil4S35I
- /Xuw==
-X-Gm-Message-State: AOJu0YyajhUToiZtdtkAHKHlPSBROOMP/v9rl08LcdPiHParpHkOjCMg
- +k+gIBb7M3S6AxUc9WDwHw/ywVeYaBbOrlc0gm+HmYfNqw21MI8EFgJvLqhVN34=
-X-Gm-Gg: ASbGncsOqRw49SuL2vXRc9vdF2tZPTkTZNdaKtP6dQgnRcKW9WsN0D00ifFf/1V7h0+
- fyDvy7KSfswqr52UAj1z26WBftzgOiiC/sB3knI+fFpjX8rKKzTq/L721r3qGqqh+eTyB/87Vat
- 8fOkN9CrZV/qlCadGHeL3HUK6KYgY0pQuNEqg/A831KiPRNxS6vPzq6Tc/4KE2VKdKcceh570jd
- MQEmRP/wlVJh8eaPbLtyuj19jyb2gAEzV2ufJO8pssy59mZqRHMXlZ8cUlF4nxDim2UvH+W73xU
- 5haeuZnCfv9qNcBr0m8mEPdQrqAHlgT72YM3sw5sASsd3ZoBc8t1QX61/IBQVUba
-X-Google-Smtp-Source: AGHT+IEU2t1FTWk5WKxpBF7TCxxSvm/oUX77m/2wK0GYSUSFPbxrMRHkBAwlwzXXCbVonAP+Uqk6CA==
-X-Received: by 2002:a05:6a00:6f02:b0:742:a91d:b2f5 with SMTP id
- d2e1a72fcca58-742a91db382mr58825b3a.13.1747324859152; 
- Thu, 15 May 2025 09:00:59 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74237a8ef50sm11797726b3a.171.2025.05.15.09.00.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 09:00:58 -0700 (PDT)
-Message-ID: <b7dfa7b2-b35c-4f56-bf98-43468d90f488@linaro.org>
-Date: Thu, 15 May 2025 09:00:57 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uFb5I-0001SW-Hn
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 12:05:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uFb5F-0000Ji-Eu
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 12:05:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747325118;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lOlTAH3rMVGYJqAnA/l5nzZvyw5olRnQFswqfFBqIoo=;
+ b=PJlLhZ6mPK12uUuwQjrkAVzk7/lNKUxB4InkfOfnH1lbIKhr97BJrs1AlCb+pMEec9ToCs
+ BaWTLWLlBrDWaLjot94J5296F7rlNwKXE0euEZ8sTy8/qfQzCU4WsIcZuWBQmk6JlxvaFU
+ Inl9awKE1ePE7zUMh3EgpyGxhlPZTCE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-4Tgj0C5nPTqiOWBybBI0Iw-1; Thu,
+ 15 May 2025 12:05:14 -0400
+X-MC-Unique: 4Tgj0C5nPTqiOWBybBI0Iw-1
+X-Mimecast-MFC-AGG-ID: 4Tgj0C5nPTqiOWBybBI0Iw_1747325113
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 859A51800360; Thu, 15 May 2025 16:05:13 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.135])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC87D1956066; Thu, 15 May 2025 16:05:11 +0000 (UTC)
+Date: Thu, 15 May 2025 17:05:08 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Subject: Re: [PATCH v3 9/9] scripts/checkpatch: reject license boilerplate on
+ new files
+Message-ID: <aCYQtA4cU2xPyvPo@redhat.com>
+References: <20250515135936.86760-1-berrange@redhat.com>
+ <20250515135936.86760-10-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/12] qapi: expose rtc-reset-reinjection command
- unconditionally
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, peter.maydell@linaro.org,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250514234108.3746675-1-pierrick.bouvier@linaro.org>
- <20250514234108.3746675-2-pierrick.bouvier@linaro.org>
- <aCWpn-ZzyygxT-2F@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <aCWpn-ZzyygxT-2F@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250515135936.86760-10-berrange@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,45 +87,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 1:45 AM, Daniel P. Berrangé wrote:
->> diff --git a/stubs/monitor-i386-rtc.c b/stubs/monitor-i386-rtc.c
->> new file mode 100644
->> index 00000000000..e78757b24f2
->> --- /dev/null
->> +++ b/stubs/monitor-i386-rtc.c
->> @@ -0,0 +1,14 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "qemu/osdep.h"
->> +#include "qapi/error.h"
->> +#include "qapi/qapi-commands-misc-i386.h"
->> +
->> +void qmp_rtc_reset_reinjection(Error **errp)
->> +{
->> +    /*
->> +     * Use of this command is only applicable for x86 machines with an RTC,
->> +     * and on other machines will silently return without performing any
->> +     * action.
->> +     */
->> +}
+On Thu, May 15, 2025 at 02:59:36PM +0100, Daniel P. Berrangé wrote:
+> The previous commit mandates use of SPDX-License-Identifier on common
+> source files, and encourages it on all other files.
 > 
-> Based on Markus' feedback, I think we need to report an error here
-> rather than silently ignore the code.
->
+> Some contributors are none the less still also including the license
+> boilerplate text. This is redundant and will potentially cause
+> trouble if inconsistent with the SPDX declaration.
+> 
+> Match common boilerplate text blurbs and report them as invalid,
+> for newly added files.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  scripts/checkpatch.pl | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 87050e6677..cb1942c021 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -1496,6 +1496,13 @@ sub process_end_of_file {
+>  			     "' need 'SPDX-License-Identifier'?");
+>  		}
+>  	}
+> +	if ($fileinfo->{action} eq "new" &&
+> +	    !exists $fileinfo->{facts}->{sawboilerplate}) {
 
-Sorry, I missed that part.
-I changed the patch and updated the commit message:
+/face-palm  - I forgot to remove the '!' here so the check is
+inverted and my test patch had two very similarly named files
+so didn't notice it :-(
 
-+void qmp_rtc_reset_reinjection(Error **errp)
-+{
-+    error_setg(errp,
-+               "rtc-reset-injection is only available for x86 machines 
-with RTC");
-+}
+> +		ERROR("New file '" . $fileinfo->{filenew} . "' must " .
+> +		      "not have license boilerplate header text unless " .
+> +		      "this file is copied from existing code with such " .
+> +		      "text already present.");
+> +	}
+>  }
+>  
+>  sub process {
+> @@ -1798,6 +1805,15 @@ sub process {
+>  			&checkspdx($realfile, $1);
+>  		}
+>  
+> +		if ($rawline =~ /licensed under the terms of the GNU GPL/ ||
+> +		    $rawline =~ /under the terms of the GNU General Public License/ ||
+> +		    $rawline =~ /under the terms of the GNU Lesser General Public/ ||
+> +		    $rawline =~ /Permission is hereby granted, free of charge/ ||
+> +		    $rawline =~ /GNU GPL, version 2 or later/ ||
+> +		    $rawline =~ /See the COPYING file/) {
+> +			$fileinfo->{facts}->{sawboilerplate} = 1;
+> +		}
+> +
+>  		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
+>  			my $tag = $1;
+>  			my @permitted = qw(
+> -- 
+> 2.49.0
+> 
 
-Thanks,
-Pierrick
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
