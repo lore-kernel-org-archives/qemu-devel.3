@@ -4,145 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B6DC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 16:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFFB2C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 16:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFbJK-0001PC-8g; Thu, 15 May 2025 12:19:54 -0400
+	id 1uFbKW-00034Q-M5; Thu, 15 May 2025 12:21:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFbJJ-0001NS-Cw
- for qemu-devel@nongnu.org; Thu, 15 May 2025 12:19:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFbJH-0002FR-EA
- for qemu-devel@nongnu.org; Thu, 15 May 2025 12:19:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747325989;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fW+uwFZx4GAqc+qSehW3Z6Tk2UjNZd4eZklaTR9QwNY=;
- b=eHW6fYBg/ivBGDdPx/rO8KYdFaHBoAW4SYaocVrchsukEgTFKvWd7FQXrNYYL2uVcxM/l9
- yznEFIXuasUnvGbLyl+wmf8EgHimi8dvJBbNPupN7evvpUA8OtqqJV5tJnPkQ/bm+je6M1
- uyzkwfcBI4KOLAnBfXIt2eB4f7uSSnI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-370-LmXk47-GOm-s-GNDaNEVaA-1; Thu, 15 May 2025 12:19:48 -0400
-X-MC-Unique: LmXk47-GOm-s-GNDaNEVaA-1
-X-Mimecast-MFC-AGG-ID: LmXk47-GOm-s-GNDaNEVaA_1747325987
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a1f6c5f4f2so470140f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 09:19:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uFbKR-0002xE-SW
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 12:21:05 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uFbKO-0002a4-5V
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 12:21:03 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-74251cb4a05so1681070b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 09:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747326058; x=1747930858; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BfC0feAdksDI2FeDE71xlN2LP+Nd0nOu6tGyCoe9NVU=;
+ b=BT3J/oujLcAOMdDSiGiCURARBkKwQAVJKHNbhxaor6r7M5BTxG8UC5CkGhKKvTJWmL
+ I5MuHSXDpQTWqhiX4P4F7bX0eAXwSZwd1p+DTJ/CxPCbW6e/FJXsaSLK6v0VmtsjpA/W
+ nCoZsYc7QFR5kmmcjFxbomaaUENi9BufTP7IH+u8e9a5/PpmluCRlQTcoO3A2hM6ZwC/
+ uPcVFx4J9C9Mjz3mns2FIEQmw26RC62tFYv4XH7LQw56grwwbD9yVDG0V2siNsjcL8Ke
+ rMtbuhPR43xmHb1ceETRlICVMCPiWW4qEHYNZTj2jK7MbAGgKdbwC3KxEhjiOGMTMr2a
+ v0HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747325987; x=1747930787;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fW+uwFZx4GAqc+qSehW3Z6Tk2UjNZd4eZklaTR9QwNY=;
- b=WZwIcgU4jfrryoTf64figcDUKBM6JD7raI8c/qF7bRmxEFEQRqOxo0+KiwSUALeXVT
- xo+U7i8QrpRuoXYeYfrFl7PlVDpbsHTUhVr9DhGqEJOOvKuGL0Gaaw2u3JzJLoB4dMWm
- Ur/JSUC6EUHRrF675n5rAikfxKtX4iLRm61NzKma79LeItstQtiBB1FaS2t2/t2hpqR2
- EX7BBvX8Lz6q8LGD7KpuwLJ/qPjLMZcyiOnfZNBSvGNn0cTaSgHTc1WyMOyTzssb+Y3P
- 6TPIeunVxVxt57mj53IJcGEEl64hxMmljuBM/KOszuscBGvIsHxgDVxd18F0mluSoKwj
- kwkA==
+ d=1e100.net; s=20230601; t=1747326058; x=1747930858;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BfC0feAdksDI2FeDE71xlN2LP+Nd0nOu6tGyCoe9NVU=;
+ b=ArRer5MNcAsymkcIEVh22NYdGyBHDwLZN8If5qb6FV0sW/bA/5bbtkaIpkBWwAwmUU
+ SO68cTGhZIAAwL/YuyRF6qpIJ2Fj6+GP8+kp50TybXyWknO9EOHBrCQhVANuk9iW2Cxs
+ Mao4i5OWvsUZRycdC2ZEjs9N64Qi2JOSoJyOh7fYJ/cjhAydXBwCgWNIfnSGvwRN7WHi
+ f1ejnx8PAQh0oVLcwx1Nfrbx4xiWUa5Oky0FO7Ft091bdV9yC82pjhvZ6bmvNaLlBr17
+ 8yJkUAA1UbCKD/zmEYH5gSIXeEsdRQ3JrAys3nNGTHpmSQcTx+bKsFOilGtQWRx1t2bE
+ GHqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuxjUXbLRgfbsbYXpmY7hhOWNkcIY+cMwH1CS0YpSrzA36oYjxeWBQNtRwjLonxI04Q/LcyAXZ771H@nongnu.org
-X-Gm-Message-State: AOJu0YxlSMsWqjH2l/ISzIJ/t1yPnPhkuQkP7zr1ZDs6AoVkOKtdNY07
- 4023qe7okMN3+hysYLBb+vGbTVoPAOwj39Sp93KAXP/n2NwJP/jy0PyxJACxVHqh8FiL2C1VE4B
- fxHuGnN/zcsuoX91Oy9dLTKiptiWvxVT7yrVtz7pIJzD8cPcqIMv2yLXi
-X-Gm-Gg: ASbGnctMOkjS1SPWQUHxyEwt7HyWlNWpQf94X4+WyLaJ6uq2fLze+OekHc2x2SE5kHE
- SCHvSH/zySFYXugd0ifxnkuiWquMG3RxlA3ckp73k87svNn4C0Tp0cxh/tsRV+MZ5lhT6xVhiaG
- aMT8f475RY5VdTGTXNmGWr2/jqw0Y8ue5vMwHHRkdd2UNdD1JBRLn9CLJ/EilLQgU0GO0osEzEi
- Mv9bPyMYvvu+9AkR2WI2GpNbammjbtBy/2yUUuvI+GniUGWq4L4l4AeUYIOnQoDYqrarKuhfuDe
- EmhJxlStz/43sRG+MBw/LzNAdsM+CDDNe4d2BgjzLOeLSp5KzQ==
-X-Received: by 2002:a05:6000:401f:b0:3a0:aed9:e34 with SMTP id
- ffacd0b85a97d-3a35c85fc74mr384532f8f.48.1747325986844; 
- Thu, 15 May 2025 09:19:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGd1KY8G7ktllEtPRQsLSJ/1Oe67Nh3yh4eYwiddIE/F8eWpPMZ/4DF72dp/AYmxyaggKN0gw==
-X-Received: by 2002:a05:6000:401f:b0:3a0:aed9:e34 with SMTP id
- ffacd0b85a97d-3a35c85fc74mr384512f8f.48.1747325986419; 
- Thu, 15 May 2025 09:19:46 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCVM07C4TzmqXW8kxQODjLZ8uadDUEtINKdc9N9imb9GjlTSkpVDAc4IAWPdo01Gn8pbum1HwbiclziG@nongnu.org
+X-Gm-Message-State: AOJu0YwSV26VIL96gnlbMQQ8nWYUfq1dJUxtDc1EUYW5trr/waqeCYrI
+ 3lIEdrZ/u5ODYwz/BMXpT5JLIU04jT7gp9VbSuBBJFxzyHWTh10LFl8oHtYfPJw=
+X-Gm-Gg: ASbGncsTs1b5nI3ubkJcRko+6vMsZKja9z1u0dS5453MOo/5xyoscwk6EuFzUc7nwvW
+ ppOnz6qJmh99N7IMQLqNGtFJYLqiatm51CA64kYy5BGOw1iQzoCqGhDLW11/ITD4udHCmRbEMnp
+ iTL+dPdKcoH5OMgEHxGH7Y6XZ/S9K30796jPSo4sM/NG90rL4OubjfxZNA1+phV5Rn111lOw+vz
+ fTZD4YqwRuddN6i6jgUge+E7lqitNSnxD1wpKRWxOH5idg69AEUzI9Pj1+87mTwPBFLu00mGkjY
+ RPVEKAHfNymJj83AlVsrApWWmjXnv2q5aRFI0UIhEVKF6fknDYsT9u0ZgApN4r2J
+X-Google-Smtp-Source: AGHT+IEnrxcUFyQN/3hAIBI2IWNcd7IDbMG90q/qve/RMgXslnGcxdskIU0eSkfC3UWE+15tLusGKA==
+X-Received: by 2002:a05:6a00:32c9:b0:736:5822:74b4 with SMTP id
+ d2e1a72fcca58-74289369005mr11086576b3a.21.1747326057939; 
+ Thu, 15 May 2025 09:20:57 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a2ca47sm23314910f8f.73.2025.05.15.09.19.45
+ d2e1a72fcca58-742a96dfa2fsm11647b3a.2.2025.05.15.09.20.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 09:19:45 -0700 (PDT)
-Message-ID: <74571c3c-2a0e-465f-ac19-d9ca5504bee1@redhat.com>
-Date: Thu, 15 May 2025 18:19:45 +0200
+ Thu, 15 May 2025 09:20:57 -0700 (PDT)
+Message-ID: <d12e619d-1013-4a9f-be5d-7177ec09c8d2@linaro.org>
+Date: Thu, 15 May 2025 09:20:56 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] scripts/checkpatch: reject license boilerplate on
- new files
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Subject: Re: [PATCH 16/19] target/arm: Add arm_cpu_has_feature() helper
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20250515135936.86760-1-berrange@redhat.com>
- <20250515135936.86760-10-berrange@redhat.com> <aCYQtA4cU2xPyvPo@redhat.com>
- <353e8a52-b03c-438c-8236-8f5b6968acf4@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <353e8a52-b03c-438c-8236-8f5b6968acf4@redhat.com>
+References: <20250513173928.77376-1-philmd@linaro.org>
+ <20250513173928.77376-17-philmd@linaro.org>
+ <b6c81748-091b-4d61-8d34-beaa0442aab3@linaro.org>
+ <f7bcd8b2-2c0c-4907-8a0e-af172c235d56@linaro.org>
+ <59b1ccbe-9ddb-43f0-98c4-8000a08d27b0@linaro.org>
+ <eff0b1a9-5267-4290-a9d4-da95179289b9@linaro.org>
+ <b5c07354-fbe8-4910-a019-fa9fd7e813a5@linaro.org>
+ <ac352dd1-a46d-4247-b022-6ce5252b472e@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <ac352dd1-a46d-4247-b022-6ce5252b472e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,80 +111,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 18:06, Cédric Le Goater wrote:
-> On 5/15/25 18:05, Daniel P. Berrangé wrote:
->> On Thu, May 15, 2025 at 02:59:36PM +0100, Daniel P. Berrangé wrote:
->>> The previous commit mandates use of SPDX-License-Identifier on common
->>> source files, and encourages it on all other files.
+On 5/15/25 9:14 AM, Philippe Mathieu-Daudé wrote:
+> On 15/5/25 17:22, Pierrick Bouvier wrote:
+>> On 5/15/25 4:05 AM, Philippe Mathieu-Daudé wrote:
+>>> On 14/5/25 18:59, Pierrick Bouvier wrote:
+>>>> On 5/14/25 9:53 AM, Philippe Mathieu-Daudé wrote:
+>>>>> On 14/5/25 10:24, Richard Henderson wrote:
+>>>>>> On 5/13/25 18:39, Philippe Mathieu-Daudé wrote:
+>>>>>>> arm_cpu_has_feature() is equivalent of arm_feature(), however
+>>>>>>> while the latter uses CPUARMState so is target-specific, the
+>>>>>>> former doesn't and can be called by target-agnostic code in hw/.
+>>>>>>
+>>>>>> CPUARMState is no more target-specific than ARMCPU.
+>>>>>
+>>>>> ARMCPU is forward-declared as opaque pointer in target/arm/cpu-qom.h,
+>>>>> so we can expose prototypes using it to non-ARM units.
+>>>>> CPUARMState is only declared in "cpu.h", itself only accessible by
+>>>>> ARM-related units.
+>>>>>
+>>>>
+>>>> Maybe we can simply postpone introduction of arm_cpu_has_feature() when
+>>>> it will be really needed.
+>>>>
+>>>> Patches 17 and 18 are not strictly needed, as cpu.h (which resolves to
+>>>> target/arm/cpu.h implicitely) is perfectly accessible to code in hw/arm
+>>>> without any problem.
 >>>
->>> Some contributors are none the less still also including the license
->>> boilerplate text. This is redundant and will potentially cause
->>> trouble if inconsistent with the SPDX declaration.
+>>> OK.
 >>>
->>> Match common boilerplate text blurbs and report them as invalid,
->>> for newly added files.
+>>> Peter, would you be OK to take reviewed patches #1 up to #15 (the
+>>> previous one) or do you rather I respin them?
 >>>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>   scripts/checkpatch.pl | 16 ++++++++++++++++
->>>   1 file changed, 16 insertions(+)
->>>
->>> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
->>> index 87050e6677..cb1942c021 100755
->>> --- a/scripts/checkpatch.pl
->>> +++ b/scripts/checkpatch.pl
->>> @@ -1496,6 +1496,13 @@ sub process_end_of_file {
->>>                    "' need 'SPDX-License-Identifier'?");
->>>           }
->>>       }
->>> +    if ($fileinfo->{action} eq "new" &&
->>> +        !exists $fileinfo->{facts}->{sawboilerplate}) {
 >>
->> /face-palm  - I forgot to remove the '!' here so the check is
->> inverted and my test patch had two very similarly named files
->> so didn't notice it :-(
+>> In case you respin, feel free to include the base series, so we can
+>> combine both.
 > 
-> Oh. I didn't see. No need to resend. I will fix in my tree.
+> Isn't the base already pulled in by Peter? I thought it was:
+>
 
-It is now catching valid errors on :
+Oh, I missed it, thanks.
 
-
-* https://lore.kernel.org/qemu-devel/20250512180230.50129-5-rreyes@linux.ibm.com/
-   ERROR: New file 'hw/s390x/ap-stub.c' must not have license boilerplate header text unless this file is copied from existing code with such text already present.
-   total: 1 errors, 0 warnings, 67 lines checked
-
-* https://lore.kernel.org/qemu-devel/1747063973-124548-7-git-send-email-steven.sistare@oracle.com/
-   ERROR: New file 'hw/vfio/cpr-legacy.c' requires 'SPDX-License-Identifier'
-   ERROR: New file 'hw/vfio/cpr-legacy.c' must not have license boilerplate header text unless this file is copied from existing code with such text already present.
-   WARNING: added, moved or deleted file(s):
-
-* https://lore.kernel.org/qemu-devel/1747063973-124548-36-git-send-email-steven.sistare@oracle.com/
-   ERROR: New file 'hw/vfio/cpr-iommufd.c' requires 'SPDX-License-Identifier'
-   ERROR: New file 'hw/vfio/cpr-iommufd.c' must not have license boilerplate header text unless this file is copied from existing code with such text already present.
-   WARNING: added, moved or deleted file(s):
-   
-     hw/vfio/cpr-iommufd.c
-   
-   Does MAINTAINERS need updating?
-   
-   total: 2 errors, 1 warnings, 161 lines checked
-
-* https://lore.kernel.org/qemu-devel/20250515154413.210315-1-john.levon@nutanix.com
-   ERROR: New file 'hw/vfio-user/container.h' must not have license boilerplate header text unless this file is copied from existing code with such text already present.
-   ERROR: New file 'hw/vfio-user/container.c' must not have license boilerplate header text unless this file is copied from existing code with such text already present.
-   ERROR: New file 'hw/vfio-user/pci.c' must not have license boilerplate header text unless this file is copied from existing code with such text already present.
-   WARNING: Does new file 'hw/vfio-user/meson.build' need 'SPDX-License-Identifier'?
-   total: 3 errors, 1 warnings, 490 lines checked
-
-
-and more.
-
-
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
+> https://lore.kernel.org/qemu-devel/20250515102546.2149601-1-peter.maydell@linaro.org/
 
 
