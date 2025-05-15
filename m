@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E407C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 06:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044DEC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 06:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFSJl-0008Q0-5M; Thu, 15 May 2025 02:43:45 -0400
+	id 1uFSQ7-0005Jz-Lz; Thu, 15 May 2025 02:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uFSJi-0008OC-UD
- for qemu-devel@nongnu.org; Thu, 15 May 2025 02:43:43 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uFSQ1-0005J4-2B; Thu, 15 May 2025 02:50:14 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uFSJg-0007Zy-Tm
- for qemu-devel@nongnu.org; Thu, 15 May 2025 02:43:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747291421; x=1778827421;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=I09ea2kKf9RnKIED493f/5AWWrQRUzEO3KzDsvyoMOY=;
- b=TcgkhbcPqF36O7WWVTvEGUyh3SZ0Pb0fdeRYFs51NFJ/NTKn2iwRVAld
- xr9D8ytOUCX0RbygrMIgZgWK3viwA8rX1YlTQlAekjdk84sio1ho6o/Vo
- CETJ/Y6Laq7iGkuCoxzKvbtcWmWgqDdw7xR8zfjesqTGxjNpTIUXWGcWK
- VAF6E0NRpuJY7fpl+yGQMT2DJYZLHvm0OA7ledkBzsY35nCOxSMmiuJOT
- 1cjVCVW2bDy0BtgtabDylS3U35Mx9J8YOXUeDSiLL2LjixJUrnDCiG3oi
- cNBBNS8YOjldA+ihzF1YU/cCOoGBeLmn0Cegg54+zrP5riPa9k0NU86H+ Q==;
-X-CSE-ConnectionGUID: 7QJflad3Q6msUil1FjCKhQ==
-X-CSE-MsgGUID: upVF/OplQMWbsFI2jEwKMA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="60222688"
-X-IronPort-AV: E=Sophos;i="6.15,290,1739865600"; d="scan'208";a="60222688"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2025 23:43:34 -0700
-X-CSE-ConnectionGUID: OyFXNiyCS+KrRiFuXOWz3w==
-X-CSE-MsgGUID: kg+8aFfdQHadJbEhcLz3nw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,290,1739865600"; d="scan'208";a="143153675"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2025 23:43:30 -0700
-Message-ID: <f825c105-9a19-4b17-9798-57d6cff76f95@intel.com>
-Date: Thu, 15 May 2025 14:43:27 +0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uFSPw-0008Hq-SU; Thu, 15 May 2025 02:50:11 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2555F121FB3;
+ Thu, 15 May 2025 09:49:55 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E3E4D20BE7F;
+ Thu, 15 May 2025 09:50:05 +0300 (MSK)
+Message-ID: <a5867bf2-fdbc-41ba-802a-e2f9a45c1b1c@tls.msk.ru>
+Date: Thu, 15 May 2025 09:50:05 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 06/10] i386/cpu: Introduce enable_cpuid_0x1f to force
- exposing CPUID 0x1f
-To: Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Babu Moger <babu.moger@amd.com>,
- Ewan Hai <ewanhai-oc@zhaoxin.com>, Tejus GK <tejus.gk@nutanix.com>,
- Jason Zeng <jason.zeng@intel.com>, Manish Mishra
- <manish.mishra@nutanix.com>, Tao Su <tao1.su@intel.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20250423114702.1529340-1-zhao1.liu@intel.com>
- <20250423114702.1529340-7-zhao1.liu@intel.com>
- <20250513144515.37615651@imammedo.users.ipa.redhat.com>
- <aCS1XVotdnLw+kqX@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aCS1XVotdnLw+kqX@intel.com>
+Subject: Re: [PATCH 07/27] qemu-img: check: refresh options/--help
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240927061121.573271-1-mjt@tls.msk.ru>
+ <20240927061121.573271-8-mjt@tls.msk.ru> <aCNrThMpezno1o1Z@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <aCNrThMpezno1o1Z@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,82 +104,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/14/2025 11:23 PM, Zhao Liu wrote:
-> Hi Igor, thanks for your review!
-> 
-> On Tue, May 13, 2025 at 02:45:15PM +0200, Igor Mammedov wrote:
->> Date: Tue, 13 May 2025 14:45:15 +0200
->> From: Igor Mammedov <imammedo@redhat.com>
->> Subject: Re: [RFC 06/10] i386/cpu: Introduce enable_cpuid_0x1f to force
->>   exposing CPUID 0x1f
->> X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
->>
->> On Wed, 23 Apr 2025 19:46:58 +0800
->> Zhao Liu <zhao1.liu@intel.com> wrote:
->>
->>> From: Xiaoyao Li <xiaoyao.li@intel.com>
->>>
->>> Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
->>> when topology level that cannot be enumerated by leaf 0xB, e.g., die or
->>> module level, are configured for the guest, e.g., -smp xx,dies=2.
->>>
->>> However, TDX architecture forces to require CPUID 0x1f to configure CPU
->>> topology.
->>>
->>> Introduce a bool flag, enable_cpuid_0x1f, in CPU for the case that
->>> requires CPUID leaf 0x1f to be exposed to guest.
->>>
->>> Introduce a new function x86_has_cpuid_0x1f(), which is the warpper of
->>> cpu->enable_cpuid_0x1f and x86_has_extended_topo() to check if it needs
->>> to enable cpuid leaf 0x1f for the guest.
->>
->> that reminds me about recent attempt to remove enable_cpuid_0xb,
->>
->> So is enable_cpuid_0x1f inteded to be used by external users or
->> it's internal only knob for TDX sake?
-> 
-> TDX needs this and I also try to apply this to named CPU models. For
-> max/host CPUs, there are no explicit use cases. I think it's enough to
-> make named CPU models have 0x1f.
-> 
-> Then this should be only used internally.
-> 
->> I'd push for it being marked as internal|unstable with the means
->> we currently have (i.e. adding 'x-' prefix)
-> 
-> Sure, 'x-' is good. (If there is the internal property in the future,
-> I can also convert this unsatble property into internal one.)
-> 
-> This patch is picked from the TDX series, and in this patch Xiaoyao
-> doesn't make 0x1f enabling as property. In the next patch (RFC patch 7),
-> I add the "cpuid-0x1f" property. I'll rename that property as
-> "x-cpuid-0x1f".
-> 
->> and also enable_ is not right here, the leaf is enabled when
->> topology requires it.
->> perhaps s/enable_/force_/
-> 
-> Thanks, I agree force_cpuid_0x1f is a better name.
-> 
-> @Xiaoyao, do you agree with this idea?
-> 
-> But probably TDX won't have v10 though, I can rename the field in my v2
-> after TDX.
+On 13.05.2025 18:54, Kevin Wolf wrote:
+> Am 27.09.2024 um 08:11 hat Michael Tokarev geschrieben:
 
-I'm OK with it.
-
-The TDX series won't be merged by Paolo soon. It has to be after the KVM 
-part being in linux v6.16-rc1, i.e., about one month later.
-
-And there are rebase conflicts when I rebase the TDX-QEMU series against 
-upstream QEMU master daily. It seems to have a newer version of TDX-QEMU 
-when it's going to be picked up by Paolo for Paolo's convenience. If a 
-v10 needed, I can rename in it.
-
-Let's see how it goes.
-
-> Regards,
-> Zhao
+>> +            cmd_help(ccmd,
+>> +"[-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]\n"
+>> +"        [--output human|json] [--object OBJDEF] FILENAME\n"
+>> +,
+>> +"  -q, --quiet\n"
+>> +"     quiet operations\n"
 > 
+> Let's keep the help text more in line with the terminology used in the
+> man page, even if shorter at times.
 
+I haven't touched the man page for a reason, - I wasn't sure I
+understood all the options correctly.  And the man pages were the
+next planning step.  Unfortunately it's been quite some time ago
+and I don't remember details anymore.  It can be done either way,
+and I tried to make the whole thing as short as possible in the
+--help output.
+
+> I would use the first sentence from it here: "Quiet mode - do not print
+> any output (except errors)"
+
+Ok.
+
+>> +"  -f, --format FMT\n"
+>> +"     specifies format of the image explicitly\n"
+> 
+> Maybe "format of the image (default: probing is used)"?
+
+Yeah, makes sense.
+
+Not wanting to risk going into an endless wording discussion,
+let's do it this way here and elsewhere.
+
+Thank you for the review!
+
+/mjt
 
