@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3CF6C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7CE2C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFTgQ-0004Wq-5e; Thu, 15 May 2025 04:11:15 -0400
+	id 1uFTgo-00066H-Nr; Thu, 15 May 2025 04:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFTfs-0003I4-Pg; Thu, 15 May 2025 04:10:40 -0400
+ id 1uFTfw-0003PZ-C4; Thu, 15 May 2025 04:10:45 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uFTfq-00010V-S8; Thu, 15 May 2025 04:10:40 -0400
+ id 1uFTfu-00011Y-2m; Thu, 15 May 2025 04:10:43 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 15 May
- 2025 16:10:10 +0800
+ 2025 16:10:11 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 15 May 2025 16:10:10 +0800
+ Transport; Thu, 15 May 2025 16:10:11 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 07/28] hw/misc/aspeed_hace: Extract non-accumulation hash
- execution into helper function
-Date: Thu, 15 May 2025 16:09:39 +0800
-Message-ID: <20250515081008.583578-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 10/28] hw/misc/aspeed_hace: Rename R_HASH_DEST to
+ R_HASH_DIGEST and introduce 64-bit hash digest address helper
+Date: Thu, 15 May 2025 16:09:42 +0800
+Message-ID: <20250515081008.583578-11-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
 References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
@@ -68,69 +68,75 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To improve code readability and maintainability of do_hash_operation(), this
-commit introduces a new helper function: hash_execute_non_acc_mode().
+Renaming R_HASH_DEST to R_HASH_DIGEST for better semantic clarity.
 
-The helper encapsulate the hashing logic for non-accumulation mode.
-
-No functional changes are introduced.
+The AST2700 CPU, based on the Cortex-A35, features a 64-bit DRAM address space.
+To prepare for future AST2700 support, this change introduces a new helper
+function hash_get_digest_addr() to encapsulate digest address extraction logic
+and improve code readability.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_hace.c | 32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ hw/misc/aspeed_hace.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
 diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 7da781f864..c50e228cdf 100644
+index b3c3af51fa..62649b5b27 100644
 --- a/hw/misc/aspeed_hace.c
 +++ b/hw/misc/aspeed_hace.c
-@@ -248,6 +248,25 @@ static void hash_write_digest_and_unmap_iov(AspeedHACEState *s,
-     }
+@@ -27,7 +27,7 @@
+ #define TAG_IRQ         BIT(15)
+ 
+ #define R_HASH_SRC      (0x20 / 4)
+-#define R_HASH_DEST     (0x24 / 4)
++#define R_HASH_DIGEST   (0x24 / 4)
+ #define R_HASH_KEY_BUFF (0x28 / 4)
+ #define R_HASH_SRC_LEN  (0x2c / 4)
+ 
+@@ -238,17 +238,30 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+     return iov_idx;
  }
  
-+static void hash_execute_non_acc_mode(AspeedHACEState *s, int algo,
-+                                      struct iovec *iov, int iov_idx)
++static uint64_t hash_get_digest_addr(AspeedHACEState *s)
 +{
-+    g_autofree uint8_t *digest_buf = NULL;
-+    Error *local_err = NULL;
-+    size_t digest_len = 0;
++    uint64_t digest_addr = 0;
 +
-+    if (qcrypto_hash_bytesv(algo, iov, iov_idx, &digest_buf,
-+                            &digest_len, &local_err) < 0) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: qcrypto hash bytesv failed : %s",
-+                      __func__, error_get_pretty(local_err));
-+        error_free(local_err);
-+        return;
-+    }
++    digest_addr = deposit64(digest_addr, 0, 32, s->regs[R_HASH_DIGEST]);
 +
-+    hash_write_digest_and_unmap_iov(s, iov, iov_idx, digest_buf, digest_len);
++    return digest_addr;
 +}
 +
- static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-                               bool acc_mode)
+ static void hash_write_digest_and_unmap_iov(AspeedHACEState *s,
+                                             struct iovec *iov,
+                                             int iov_idx,
+                                             uint8_t *digest_buf,
+                                             size_t digest_len)
  {
-@@ -304,15 +323,12 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-             s->hash_ctx = NULL;
-             s->total_req_len = 0;
-         }
--    } else if (qcrypto_hash_bytesv(algo, iov, iov_idx, &digest_buf,
--                                   &digest_len, &local_err) < 0) {
--        qemu_log_mask(LOG_GUEST_ERROR, "qcrypto hash bytesv failed : %s",
--                      error_get_pretty(local_err));
--        error_free(local_err);
--        return;
--    }
+-    if (address_space_write(&s->dram_as, s->regs[R_HASH_DEST],
+-                            MEMTXATTRS_UNSPECIFIED, digest_buf, digest_len)) {
++    uint64_t digest_addr = 0;
++
++    digest_addr = hash_get_digest_addr(s);
++    if (address_space_write(&s->dram_as, digest_addr,
++                            MEMTXATTRS_UNSPECIFIED,
++                            digest_buf, digest_len)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: Failed to write digest to 0x%x\n",
+-                      __func__, s->regs[R_HASH_DEST]);
++                      "%s: Failed to write digest to 0x%" HWADDR_PRIx "\n",
++                      __func__, digest_addr);
+     }
  
--    hash_write_digest_and_unmap_iov(s, iov, iov_idx, digest_buf, digest_len);
-+        hash_write_digest_and_unmap_iov(s, iov, iov_idx, digest_buf,
-+                                        digest_len);
-+    } else {
-+        hash_execute_non_acc_mode(s, algo, iov, iov_idx);
-+    }
- }
- 
- static uint64_t aspeed_hace_read(void *opaque, hwaddr addr, unsigned int size)
+     for (; iov_idx > 0; iov_idx--) {
+@@ -402,7 +415,7 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+     case R_HASH_SRC:
+         data &= ahc->src_mask;
+         break;
+-    case R_HASH_DEST:
++    case R_HASH_DIGEST:
+         data &= ahc->dest_mask;
+         break;
+     case R_HASH_KEY_BUFF:
 -- 
 2.43.0
 
