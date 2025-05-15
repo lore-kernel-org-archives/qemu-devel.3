@@ -4,80 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944F4C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 08:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F162C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 09:05:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFUOT-0003Ym-Eh; Thu, 15 May 2025 04:56:45 -0400
+	id 1uFUWa-0004LG-10; Thu, 15 May 2025 05:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFUOP-0003QC-H6
- for qemu-devel@nongnu.org; Thu, 15 May 2025 04:56:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uFUWX-0004Kl-Ur
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 05:05:06 -0400
+Received: from out-179.mta0.migadu.com ([2001:41d0:1004:224b::b3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFUOM-0006kW-N1
- for qemu-devel@nongnu.org; Thu, 15 May 2025 04:56:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747299397;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uFUWV-0007aO-Lm
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 05:05:05 -0400
+Content-Type: text/plain;
+	charset=us-ascii
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1747299878;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ACaUX1W1QpMEXQ2tAcQ4wjEi0ltp7tqKO7sDZ5E7rJQ=;
- b=fxOBcq88vOEALcgUa/BRaT/U/hIZABNeLnr2l4mdhsmy5su8K5DboBmIFnZDrN6nBZw104
- 2b8CWvtSDnUq9McBZhmurBgYuOPVDESMZyqExX9FJ0HC/9Scy7Rp35wQnlAbEqBHrDc4pu
- Pc8qNCaB6EBpO1LZ7LHoFXpdlWiCCZ8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-ooyV1yTuOCaAmJmMKxjnQQ-1; Thu,
- 15 May 2025 04:56:32 -0400
-X-MC-Unique: ooyV1yTuOCaAmJmMKxjnQQ-1
-X-Mimecast-MFC-AGG-ID: ooyV1yTuOCaAmJmMKxjnQQ_1747299391
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 57E11195608B; Thu, 15 May 2025 08:56:31 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.135])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9F1E1956066; Thu, 15 May 2025 08:56:27 +0000 (UTC)
-Date: Thu, 15 May 2025 09:56:23 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- peter.maydell@linaro.org, Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 12/12] qapi: make all generated files common
-Message-ID: <aCWsN06DV1MdJP8t@redhat.com>
-References: <20250514234108.3746675-1-pierrick.bouvier@linaro.org>
- <20250514234108.3746675-13-pierrick.bouvier@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250514234108.3746675-13-pierrick.bouvier@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ bh=Q0FpDkDu196gW3mLiVY46fZckSWYEfx7gzTD8ZMla68=;
+ b=gSnRvNUyE5j8LXaMFvVWtpEWokvfP7HtORyp2xG5w/wZXO6cV6DPoL9rxkSaSdpgf5P5zy
+ is5aAXRZY6BvJxWANtsmPsSGuu1Iwr1Xyciy3pGsS+hsUuFeV0KZ051z2RyPR8RoVAY0Eg
+ 5153FDDgd1X7lHzP+jxZD4SC/oC/gqk=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [PATCH v13 5/5] qtest/cxl: Add aarch64 virt test for CXL
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+In-Reply-To: <20250513111455.128266-6-Jonathan.Cameron@huawei.com>
+Date: Thu, 15 May 2025 18:04:18 +0900
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-arm@nongnu.org,
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D9E503CC-1271-4008-9975-9BAEC7A33376@linux.dev>
+References: <20250513111455.128266-1-Jonathan.Cameron@huawei.com>
+ <20250513111455.128266-6-Jonathan.Cameron@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:1004:224b::b3;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-179.mta0.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,24 +70,160 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 04:41:08PM -0700, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+
+> On May 13, 2025, at 20:14, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> Add a single complex case for aarch64 virt machine.
+> Given existing much more comprehensive tests for x86 cover the
+> common functionality, a single test should be enough to verify
+> that the aarch64 part continue to work.
+>=20
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > ---
->  qapi/meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> tests/qtest/cxl-test.c  | 59 ++++++++++++++++++++++++++++++++---------
+> tests/qtest/meson.build |  1 +
+> 2 files changed, 47 insertions(+), 13 deletions(-)
+>=20
+> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+> index a600331843..c7189d6222 100644
+> --- a/tests/qtest/cxl-test.c
+> +++ b/tests/qtest/cxl-test.c
+> @@ -19,6 +19,12 @@
+>     "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+>     "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+>=20
+> +#define QEMU_VIRT_2PXB_CMD \
+> +    "-machine virt,cxl=3Don -cpu max " \
+> +    "-device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52 " \
+> +    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+> +    "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+> +
+> #define QEMU_RP \
+>     "-device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 "
+>=20
+> @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
+>     qtest_end();
+>     rmdir(tmpfs);
+> }
+> +
+> +static void cxl_virt_2pxb_4rp_4t3d(void)
+> +{
+> +    g_autoptr(GString) cmdline =3D g_string_new(NULL);
+> +    char template[] =3D "/tmp/cxl-test-XXXXXX";
+> +    const char *tmpfs;
+> +
+> +    tmpfs =3D mkdtemp(template);
+> +
+> +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
+> +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
+> +                    tmpfs, tmpfs);
+> +
+> +    qtest_start(cmdline->str);
+> +    qtest_end();
+> +    rmdir(tmpfs);
+> +}
+> #endif /* CONFIG_POSIX */
+>=20
+> int main(int argc, char **argv)
+> {
+> -    g_test_init(&argc, &argv, NULL);
+> +    const char *arch =3D qtest_get_arch();
+>=20
+> -    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+> -    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+> -    qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window);
+> -    qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+> -    qtest_add_func("/pci/cxl/rp", cxl_root_port);
+> -    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+> +    g_test_init(&argc, &argv, NULL);
+> +    if (strcmp(arch, "i386") =3D=3D 0 || strcmp(arch, "x86_64") =3D=3D =
+0) {
+> +        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+> +        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+> +        qtest_add_func("/pci/cxl/pxb_with_window", =
+cxl_pxb_with_window);
+> +        qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+> +        qtest_add_func("/pci/cxl/rp", cxl_root_port);
+> +        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+> #ifdef CONFIG_POSIX
+> -    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+> -    qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
+> -    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
+> -    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+> -    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+> -    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", =
+cxl_2pxb_4rp_4t3d);
+> +        qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+> +        qtest_add_func("/pci/cxl/type3_device_pmem", =
+cxl_t3d_persistent);
+> +        qtest_add_func("/pci/cxl/type3_device_vmem", =
+cxl_t3d_volatile);
+> +        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+> +        qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+> +        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
+> +                       cxl_2pxb_4rp_4t3d);
+> #endif
+> +    } else if (strcmp(arch, "aarch64") =3D=3D 0) {
+> +#ifdef CONFIG_POSIX
+> +        qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
+> +                       cxl_virt_2pxb_4rp_4t3d);
+> +#endif
+> +    }
+> +
+>     return g_test_run();
+> }
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 7daf619845..361000267a 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -258,6 +258,7 @@ qtests_aarch64 =3D \
+>   (config_all_accel.has_key('CONFIG_TCG') and                          =
+                  \
+>    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? =
+['tpm-tis-i2c-test'] : []) + \
+>   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : =
+[]) + \
+> +  qtests_cxl +                                                        =
+                          \
+>   ['arm-cpu-features',
+>    'numa-test',
+>    'boot-serial-test',
+> --=20
+> 2.43.0
+>=20
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+~/projects/qemu/build$ meson test qtest-aarch64/cxl-test
+ninja: Entering directory `/home/realm/projects/qemu/build'
+[1/8] Generating qemu-version.h with a custom command (wrapped by meson =
+to capture output)
+1/1 qemu:qtest+qtest-aarch64 / qtest-aarch64/cxl-test        OK          =
+    0.17s   1 subtests passed
 
+Ok:                 1
+Expected Fail:      0
+Fail:               0
+Unexpected Pass:    0
+Skipped:            0
+Timeout:            0
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com =
+<mailto:itaru.kitayama@fujitsu.com>>
+
+Jonathan, would you push your branch this series applied? I manually =
+applied your series no issues though.=20
+
 
 
