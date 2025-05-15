@@ -4,102 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 268F0C54755
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:52:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 760F8C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 15:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFapw-0004W6-0X; Thu, 15 May 2025 11:49:32 -0400
+	id 1uFarV-00075R-3h; Thu, 15 May 2025 11:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFapt-0004Bq-CF; Thu, 15 May 2025 11:49:29 -0400
+ id 1uFaqw-0006qo-2d; Thu, 15 May 2025 11:50:38 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFapk-0006kE-C0; Thu, 15 May 2025 11:49:29 -0400
+ id 1uFaqt-00072G-PM; Thu, 15 May 2025 11:50:33 -0400
 Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCgAFs004769;
- Thu, 15 May 2025 15:49:17 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FCgDgn004946;
+ Thu, 15 May 2025 15:50:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=d9hIti7ftVCs19pCWU6Ho24lLc1XQVOfwlG+W/SzdjI=; b=cUB4Bh1mutRy
- w3WSgAdmzz3cn39Z7nFfkerhbQhzckjaymUQzmtK3uj5qxwVjRc5FqCwCTJuO+aw
- c/RR/6i4VgPLUMViECHosJceJdOw7doXkZQ2XBRg2eBpUur7lL/9IKda0EEOF7RS
- 7oA6pQtb98gOugaDIdmswRuSRrOK0NjQc3zjjFKW6bM3yYcw6q3qwznjUfNwswTn
- uzediWgJSHFPu9ZkoX7FN1AwECUVpDsA8kzndU1CV2FCg6YNWVb1zIoPWwz+bdHb
- yr5rXrXYACGysQB+qNvlKaA5LDA/jd6W/T5E34KjLKJLCh9+L+nNWl+ggiu9IN5q
- I8CnYT29/w==
+ bh=k9nKrOkxp7ZTlujMhHAne0iJ9Bn80doduWHVec5I3Mo=; b=bT/tzVoWR3Ag
+ gws/BWX5qDU9nwn0q8aDoo9f+ZCuYypPDL26AZv9dZ8X3U7m6AjSlPUhRf+xlCP1
+ LjsDNJRMb1xqO5Ipf6gjKKfNAEhkMvotYTtLsaT+mdiRdHJk8exzPyrfm0fsBjJZ
+ TZ4ymhCu64ArEDfEnnFjrGAqKtec8UPSvHhKoBlBJut7Hr0z8TnljbQs34DRYtik
+ Xtx1VVRqQ45M9/5Lm43aEZPZAA2qAol3fOG/NZfX5EbtrrOdn3W+w9urEKRjqfDE
+ wvvkVAL/RaZU5T4omKiikjF2TNnQaRnjgbs1OZGGoVopqOxa/F7GoCF0WdU0ix13
+ oWpNxMqJMQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjt31x-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjt37m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:49:17 +0000 (GMT)
+ Thu, 15 May 2025 15:50:29 +0000 (GMT)
 Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFigYe024463;
- Thu, 15 May 2025 15:49:16 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjt31w-1
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54FFS8NR014645;
+ Thu, 15 May 2025 15:50:29 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ndfjt37k-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:49:16 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE89FC021439;
- Thu, 15 May 2025 15:49:16 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfru16e-1
+ Thu, 15 May 2025 15:50:29 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FE042f024309;
+ Thu, 15 May 2025 15:50:28 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfsb223-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 May 2025 15:49:16 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54FFnEQo27394658
+ Thu, 15 May 2025 15:50:28 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54FFoOoK26608238
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 May 2025 15:49:14 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6860158053;
- Thu, 15 May 2025 15:49:14 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C776C58043;
- Thu, 15 May 2025 15:49:13 +0000 (GMT)
+ Thu, 15 May 2025 15:50:24 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8BBA658055;
+ Thu, 15 May 2025 15:50:27 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 002875804B;
+ Thu, 15 May 2025 15:50:27 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 May 2025 15:49:13 +0000 (GMT)
-Message-ID: <4260e56a877e459cc9c3a2d4a8912c5622b46675.camel@linux.ibm.com>
-Subject: Re: [PATCH 16/50] ppc/xive: Fix pulling pool and phys contexts
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 May 2025 15:50:26 +0000 (GMT)
+Message-ID: <176d45210713399adb4a41909eaf93653fd603c0.camel@linux.ibm.com>
+Subject: Re: [PATCH 18/50] pnv/xive2: Print value in invalid register write
+ logging
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
  <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
  Schlossin <calebs@linux.vnet.ibm.com>
-Date: Thu, 15 May 2025 10:49:13 -0500
-In-Reply-To: <20250512031100.439842-17-npiggin@gmail.com>
+Date: Thu, 15 May 2025 10:50:26 -0500
+In-Reply-To: <20250512031100.439842-19-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-17-npiggin@gmail.com>
+ <20250512031100.439842-19-npiggin@gmail.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: pomMtLsNleiqCzvQwYX_btm77NvFYoVX
-X-Authority-Analysis: v=2.4 cv=ecg9f6EH c=1 sm=1 tr=0 ts=68260cfd cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=Z2M4xorl1dFmOFgaFRYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: hlZRdlRP4p1hh4oPLdudyW2ThGV1bXKU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX1pROPESydOBK
- BnCl5mZ9EYfJhnKbZWolTUBfAnqikDJsP5KWHC0jUgaoMJK8MI5Dre1dVPb8pDMLkG+JPrl+cpw
- Q/MZjVqNbDK0ycwyUB6r4ebMSVVDbXGlZqCb9aLCKBcdG3KObzInIemHmerwc24EbmO0GuPDIJB
- PXPkoD3YbKO2Lm2okLK3ZXA/guyYWsT0t/RP+BRvLboK7x/L2I3vpRab763sVL3EaFJnz0g87PF
- NXTqrqqeDERtxS6gf3I+vvv1I/fluTeyE/+61JeLzOp5bfo85YP3dzX3mIEIMrNeotScBiwmrq6
- ZvH/DA9Hpq0nWUBfGuRrC+WXYshnUpzhrrBoARDMxv95IBBLb8VItL61TtwR6NnnlzP3z2QQPqv
- /WgOhfPY2zrEhhyP4ORAP9UjIoTPsGCeIhviB1Iu5OCIlPOeCSmT187txJgsApOn8DqNqg0Y
+X-Proofpoint-GUID: OL7ZfVB-6XGxJ-hdkr9QE_-4aJXjdERC
+X-Authority-Analysis: v=2.4 cv=ecg9f6EH c=1 sm=1 tr=0 ts=68260d45 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=xSvcgLTIzuQBs9w0egYA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: DLsaSeiz0NWdeZGAwV2iiA0qn3mVH_Kv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1NSBTYWx0ZWRfX2hMqIUEJSgvI
+ km3266vjff4R+Q4CzmGeHcPek35J8kvoo2twJws4FLGtDi4K7JtzFo3NRF7/nz7zBG7fWYCLIYi
+ n0bLzm+rlBgMKxXWNLEq2RVwlz/AR5WBnGpXut9OIhfFjdwxMLCULKmxn2eEMzO3B/p7tM26NPp
+ iIQf9yxkNPOdaLkbJlrNn4l6NQeUcEZopImMYiE+oIfsFB4HXiFrBkMZDGiL++uLsXlm3fw1Nv2
+ hZ94Zs8gAZBe/PTioQvBLQQqN3FJH/KWsR8kQbpUhI/glLIjxsFssw6S5JxXmA3STrtj+UaQxHx
+ xzORF815kPUAIa4WNn2OtXaNMLbH9z261PK21gWf82WSpokKErneSsJl+eZK1VeAAvfpVbupTlH
+ Dtfy2uuhtFbu2BAiywAx+L5h0QA6190HMkhBnqtT6XA1NoLEMJTzJDu0uCOe7e6anWbFLqA8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_06,2025-05-15_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=950
+ mlxlogscore=999
  impostorscore=0 spamscore=0 clxscore=1015 malwarescore=0 mlxscore=0
  lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0
  suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
@@ -134,111 +135,99 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 On Mon, 2025-05-12 at 13:10 +1000, Nicholas Piggin wrote:
-> This improves the implementation of pulling pool and phys contexts in
-> XIVE1, by following closer the OS pulling code.
+> From: Michael Kowal <kowal@linux.ibm.com>
 > 
-> In particular, the old ring data is returned rather than the modified,
-> and irq signals are reset on pull.
+> This can make it easier to see what the target system is trying to
+> do.
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> [npiggin: split from larger patch]
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
->  hw/intc/xive.c | 66 ++++++++++++++++++++++++++++++++++++++++++++------
->  1 file changed, 58 insertions(+), 8 deletions(-)
+>  hw/intc/pnv_xive2.c | 24 ++++++++++++++++--------
+>  1 file changed, 16 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-> index c2da23f9ea..1a94642c62 100644
-> --- a/hw/intc/xive.c
-> +++ b/hw/intc/xive.c
-> @@ -241,25 +241,75 @@ static uint64_t xive_tm_ack_hv_reg(XivePresenter *xptr, XiveTCTX *tctx,
->      return xive_tctx_accept(tctx, TM_QW3_HV_PHYS);
+> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> index d7ca97ecbb..fcf5b2e75c 100644
+> --- a/hw/intc/pnv_xive2.c
+> +++ b/hw/intc/pnv_xive2.c
+> @@ -1197,7 +1197,8 @@ static void pnv_xive2_ic_cq_write(void *opaque, hwaddr offset,
+>      case CQ_FIRMASK_OR: /* FIR error reporting */
+>          break;
+>      default:
+> -        xive2_error(xive, "CQ: invalid write 0x%"HWADDR_PRIx, offset);
+> +        xive2_error(xive, "CQ: invalid write 0x%"HWADDR_PRIx" value 0x%"PRIx64,
+> +                    offset, val);
+>          return;
+>      }
+>  
+> @@ -1495,7 +1496,8 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
+>          break;
+>  
+>      default:
+> -        xive2_error(xive, "VC: invalid write @%"HWADDR_PRIx, offset);
+> +        xive2_error(xive, "VC: invalid write @0x%"HWADDR_PRIx" value 0x%"PRIx64,
+> +                    offset, val);
+>          return;
+>      }
+>  
+> @@ -1703,7 +1705,8 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
+>          break;
+>  
+>      default:
+> -        xive2_error(xive, "PC: invalid write @%"HWADDR_PRIx, offset);
+> +        xive2_error(xive, "PC: invalid write @0x%"HWADDR_PRIx" value 0x%"PRIx64,
+> +                    offset, val);
+>          return;
+>      }
+>  
+> @@ -1790,7 +1793,8 @@ static void pnv_xive2_ic_tctxt_write(void *opaque, hwaddr offset,
+>          xive->tctxt_regs[reg] = val;
+>          break;
+>      default:
+> -        xive2_error(xive, "TCTXT: invalid write @%"HWADDR_PRIx, offset);
+> +        xive2_error(xive, "TCTXT: invalid write @0x%"HWADDR_PRIx
+> +                    " data 0x%"PRIx64, offset, val);
+>          return;
+>      }
+>  }
+> @@ -1861,7 +1865,8 @@ static void pnv_xive2_xscom_write(void *opaque, hwaddr offset,
+>          pnv_xive2_ic_tctxt_write(opaque, mmio_offset, val, size);
+>          break;
+>      default:
+> -        xive2_error(xive, "XSCOM: invalid write @%"HWADDR_PRIx, offset);
+> +        xive2_error(xive, "XSCOM: invalid write @%"HWADDR_PRIx
+> +                    " value 0x%"PRIx64, offset, val);
+>      }
 >  }
 >  
-> +static void xive_pool_cam_decode(uint32_t cam, uint8_t *nvt_blk,
-> +                                 uint32_t *nvt_idx, bool *vp)
-> +{
-> +    if (nvt_blk) {
-> +        *nvt_blk = xive_nvt_blk(cam);
-> +    }
-> +    if (nvt_idx) {
-> +        *nvt_idx = xive_nvt_idx(cam);
-> +    }
-> +    if (vp) {
-> +        *vp = !!(cam & TM_QW2W2_VP);
-> +    }
-> +}
-> +
-> +static uint32_t xive_tctx_get_pool_cam(XiveTCTX *tctx, uint8_t *nvt_blk,
-> +                                       uint32_t *nvt_idx, bool *vp)
-> +{
-> +    uint32_t qw2w2 = xive_tctx_word2(&tctx->regs[TM_QW2_HV_POOL]);
-> +    uint32_t cam = be32_to_cpu(qw2w2);
-> +
-> +    xive_pool_cam_decode(cam, nvt_blk, nvt_idx, vp);
-> +    return qw2w2;
-> +}
-> +
-> +static void xive_tctx_set_pool_cam(XiveTCTX *tctx, uint32_t qw2w2)
-> +{
-> +    memcpy(&tctx->regs[TM_QW2_HV_POOL + TM_WORD2], &qw2w2, 4);
-> +}
-> +
->  static uint64_t xive_tm_pull_pool_ctx(XivePresenter *xptr, XiveTCTX *tctx,
->                                        hwaddr offset, unsigned size)
+> @@ -1929,7 +1934,8 @@ static void pnv_xive2_ic_notify_write(void *opaque, hwaddr offset,
+>          break;
+>  
+>      default:
+> -        xive2_error(xive, "NOTIFY: invalid write @%"HWADDR_PRIx, offset);
+> +        xive2_error(xive, "NOTIFY: invalid write @%"HWADDR_PRIx
+> +                    " value 0x%"PRIx64, offset, val);
+>      }
+>  }
+>  
+> @@ -1971,7 +1977,8 @@ static void pnv_xive2_ic_lsi_write(void *opaque, hwaddr offset,
 >  {
-> -    uint32_t qw2w2_prev = xive_tctx_word2(&tctx->regs[TM_QW2_HV_POOL]);
->      uint32_t qw2w2;
-> +    uint32_t qw2w2_new;
-> +    uint8_t nvt_blk;
-> +    uint32_t nvt_idx;
-> +    bool vp;
+>      PnvXive2 *xive = PNV_XIVE2(opaque);
 >  
-> -    qw2w2 = xive_set_field32(TM_QW2W2_VP, qw2w2_prev, 0);
-> -    memcpy(&tctx->regs[TM_QW2_HV_POOL + TM_WORD2], &qw2w2, 4);
-> +    qw2w2 = xive_tctx_get_pool_cam(tctx, &nvt_blk, &nvt_idx, &vp);
-> +
-> +    if (!vp) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pull invalid POOL NVT %x/%x !?\n",
-> +                      nvt_blk, nvt_idx);
-> +    }
-> +
-> +    /* Invalidate CAM line */
-> +    qw2w2_new = xive_set_field32(TM_QW2W2_VP, qw2w2, 0);
-> +    xive_tctx_set_pool_cam(tctx, qw2w2_new);
-> +
-> +    xive_tctx_reset_signal(tctx, TM_QW1_OS);
-> +    xive_tctx_reset_signal(tctx, TM_QW2_HV_POOL);
->      return qw2w2;
+> -    xive2_error(xive, "LSI: invalid write @%"HWADDR_PRIx, offset);
+> +    xive2_error(xive, "LSI: invalid write @%"HWADDR_PRIx" value 0x%"PRIx64,
+> +                offset, val);
 >  }
 >  
->  static uint64_t xive_tm_pull_phys_ctx(XivePresenter *xptr, XiveTCTX *tctx,
->                                        hwaddr offset, unsigned size)
->  {
-> -    uint8_t qw3b8_prev = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
-> -    uint8_t qw3b8;
-> +    uint8_t qw3b8 = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
-> +    uint8_t qw3b8_new;
-> +
-> +    qw3b8 = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
-> +    if (!(qw3b8 & TM_QW3B8_VT)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid PHYS thread!?\n");
-> +    }
-> +    qw3b8_new = qw3b8 & ~TM_QW3B8_VT;
-> +    tctx->regs[TM_QW3_HV_PHYS + TM_WORD2] = qw3b8_new;
->  
-> -    qw3b8 = qw3b8_prev & ~TM_QW3B8_VT;
-> -    tctx->regs[TM_QW3_HV_PHYS + TM_WORD2] = qw3b8;
-> +    xive_tctx_reset_signal(tctx, TM_QW1_OS);
-> +    xive_tctx_reset_signal(tctx, TM_QW3_HV_PHYS);
->      return qw3b8;
->  }
->  
-> @@ -489,7 +539,7 @@ static uint64_t xive_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
->      qw1w2 = xive_tctx_get_os_cam(tctx, &nvt_blk, &nvt_idx, &vo);
->  
->      if (!vo) {
-> -        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid NVT %x/%x !?\n",
-> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pull invalid OS NVT %x/%x !?\n",
->                        nvt_blk, nvt_idx);
+>  static const MemoryRegionOps pnv_xive2_ic_lsi_ops = {
+> @@ -2074,7 +2081,8 @@ static void pnv_xive2_ic_sync_write(void *opaque, hwaddr offset,
+>          inject_type = PNV_XIVE2_QUEUE_NXC_ST_RMT_CI;
+>          break;
+>      default:
+> -        xive2_error(xive, "SYNC: invalid write @%"HWADDR_PRIx, offset);
+> +        xive2_error(xive, "SYNC: invalid write @%"HWADDR_PRIx" value 0x%"PRIx64,
+> +                    offset, val);
+>          return;
 >      }
 >  
 
