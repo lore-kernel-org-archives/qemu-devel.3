@@ -4,142 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4539C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 12:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC1F3C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 May 2025 12:42:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFXs6-0007Dx-2K; Thu, 15 May 2025 08:39:34 -0400
+	id 1uFXuU-0002iC-FD; Thu, 15 May 2025 08:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFXry-0006wg-D1
- for qemu-devel@nongnu.org; Thu, 15 May 2025 08:39:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1uFXuH-0002Mv-7H; Thu, 15 May 2025 08:41:49 -0400
+Received: from sender4-op-o15.zoho.com ([136.143.188.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFXrs-00076o-5R
- for qemu-devel@nongnu.org; Thu, 15 May 2025 08:39:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747312757;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gkygtFPvgUmfb0WJIqlgbjR/SHhkw6Po/wcCRO/H0Uk=;
- b=J9N52RM2GHZBKdolji1n7YWaEdef1BtsLZ+iXSx7OppQJcaY7r//M2j5y77XnGVaAXzwA0
- 96k83HAOO5aBX0yndsDB7jEtI4PJ3Px7Bf8GOmcvuf2KP2eZhRFb8jlgBAWKQa4PpGgb5b
- fOSWRY1jIhTG8ArvUtLYwL4L68Yz+hc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-N5ht1OIINCKys-jYYXyZhA-1; Thu, 15 May 2025 08:39:16 -0400
-X-MC-Unique: N5ht1OIINCKys-jYYXyZhA-1
-X-Mimecast-MFC-AGG-ID: N5ht1OIINCKys-jYYXyZhA_1747312755
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a0b5c28f05so498949f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 05:39:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747312754; x=1747917554;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gkygtFPvgUmfb0WJIqlgbjR/SHhkw6Po/wcCRO/H0Uk=;
- b=DKcgFAmpCnNZ7qXRK+sJkpON7//JIMSIfyQfV/Wk0HggzxChGzRGc824eWjLlKsZYh
- eZs7ZXryp9zyLpULfH1VdXmwXLvVy3LReUa6GvcDPOUya30do70S9Xf4miaKDtE83y6A
- qXcjdWykIVGYgIXVAenAxaEzDJy1OtAyN8dHZG0UqFf5R8aIqVF+sLaaJqGEwLhC9edr
- nm4YBuLscLvjZquXHB+ITqdVFdhx3rEw9iqCQlzO2RGCiYJ3hquGZkkuoUs9PajSorC7
- jRbQgg7updSvjqqasp5NbuL38R0dR/CnxS1mmDoqIpfcC+AdNUzaaCmnC2gI8ggMD2cF
- JZBQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW5+fbNmhvmpmdAytxR59Xo1YCecWtJnaoiZu7hxx79DXweZr4GSJAXe5+Q124jqApO/r8PiC8qQ7sH@nongnu.org
-X-Gm-Message-State: AOJu0YxuhSnwxf67GJBWrXoIAn4yJcQJ2bBS3uVTg6eseysTGhbZo4uc
- szSAwJ9U2GUtInP0vfF2UTKwnCc29CHSW1K63Yirvebc8PR2lW859iLs3jKd9dDIHj6H2C9hBMq
- F0z+6awLYzz1R/UYiYAFRjVnsK5o/3UTpn24MbExXbRpBmkpbjKy2NSzwat2ygBo=
-X-Gm-Gg: ASbGncvobOl59nvRa98VaMhAj2MgcsaZDhFJWb/9xWgNQh5r8udtulV/qbxd4pF6X5l
- EFKx4814qTkRN/EDBct34w64EMyXFtzKd39wehuLWN6+yrp3rZkPDvE/we+jDYLJfZdvJk+aZ3P
- 6ZwGGl6PqmthrjZqlmDkBSrWl2yIwEO27mNgCpg03xzOYKkDVipUtI5IwSWQdcn08gaHDISi9N/
- n0vq8QR5epe36goRuHHo2T4W10KBOZX99cqdX/cPyjjNlhLlfHuVilhWMdpwCdWmcqcmo6qb5CA
- jQF0gVJHTOBo2N4E56N8LfmQu/us/eMUA1cW24qIt4rGbAeB6Q==
-X-Received: by 2002:a05:6000:1a8c:b0:3a1:6e2b:85fa with SMTP id
- ffacd0b85a97d-3a3496d015dmr6413687f8f.31.1747312754642; 
- Thu, 15 May 2025 05:39:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHI+OZ6rOWKCOHu04sq8KVrT1KNMe5XmMbtXWThI/TUssPXXq6YE1ECrHuQ0/f89i7zKbvdQA==
-X-Received: by 2002:a05:6000:1a8c:b0:3a1:6e2b:85fa with SMTP id
- ffacd0b85a97d-3a3496d015dmr6413666f8f.31.1747312754253; 
- Thu, 15 May 2025 05:39:14 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f57de0ddsm22277002f8f.7.2025.05.15.05.39.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 05:39:13 -0700 (PDT)
-Message-ID: <81355136-fddb-4134-bc75-5f8baddcefc3@redhat.com>
-Date: Thu, 15 May 2025 14:39:12 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 45/46] tests/functional/aspeed: Add test case for AST2700 A1
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20250309135130.545764-1-clg@redhat.com>
- <20250309135130.545764-46-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250309135130.545764-46-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1uFXuF-0007dz-3o; Thu, 15 May 2025 08:41:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1747312870; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=lXKazK33GIGXnAh4qcXAAOgVa2y7N8MRhVEroh39T4RhKCVSUd2rft64OWjSX5J4RI81esF+UAJAvCwx9sOa9qA/hW1gHEYCXT7VUEosrPmL0KRKvVxugXyZb6qxOzO9cvASd6ZPqhDdTo/HzGpZ9dxukNMRiVmE14qLqBiom7o=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1747312870;
+ h=Content-Type:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc;
+ bh=sOoa7OazfG9PBNcg4uZXxjwpzZMA8hhvpy2CeeEbcoo=; 
+ b=EKSqX9eM/5nkSS/Y2CczNHWQEgVYNjqvyZygn+WREWKU/TvYep7xgNVOjt/Pi8IcAe8nklqKC6eYnAGfMxcdcaX18lze/67X5ONzTcrC79AFdu+Rc3526eiE+mRvZ2VlRk+6dRwdowPWnumtEwgo4g6y7HupeMp9hBwQb7qquok=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747312870; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:Message-ID:From:From:To:To:Subject:Subject:In-Reply-To:References:MIME-Version:Content-Type:Message-Id:Reply-To:Cc;
+ bh=sOoa7OazfG9PBNcg4uZXxjwpzZMA8hhvpy2CeeEbcoo=;
+ b=FgL8bvG+7c7151dVUic9YBN5jWbU9PafdkDYyxVR4CvohRVGpjBADjTt4MRc4h5O
+ mEnwQv1zxdKX7oyN5riv+fx7PsmShGVRVDGWVoOqRB6Ov/i2prlo8v+zO5rq1ufC0HC
+ pAr01KQR5QamsztbcDjjr2a3OFHGHbxBPGal/lZM=
+Received: by mx.zohomail.com with SMTPS id 1747312868309660.3907576829178;
+ Thu, 15 May 2025 05:41:08 -0700 (PDT)
+Date: Thu, 15 May 2025 20:41:03 +0800
+Message-ID: <87ldqyrqqo.wl-me@linux.beauty>
+From: Li Chen <me@linux.beauty>
+To: "Peter Maydell" <peter.maydell@linaro.org>,	"Shannon Zhao"
+ <shannon.zhaosl@gmail.com>,	"Michael S. Tsirkin" <mst@redhat.com>,
+ "Igor Mammedov" <imammedo@redhat.com>,	"Ani Sinha" <anisinha@redhat.com>,
+ "Eduardo Habkost" <eduardo@habkost.net>,	"Marcel Apfelbaum"
+ <marcel.apfelbaum@gmail.com>,	=?ISO-8859-1?Q?=22Philippe_Mathieu-Daud=E9?=
+ =?ISO-8859-1?Q?=22?= <philmd@linaro.org>,	"Yanan Wang"
+ <wangyanan55@huawei.com>,	"Zhao Liu" <zhao1.liu@intel.com>,	"Song Gao"
+ <gaosong@loongson.cn>,	"Jiaxun Yang" <jiaxun.yang@flygoat.com>,	"Sunil V L"
+ <sunilvl@ventanamicro.com>,	"Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Alistair Francis" <alistair.francis@wdc.com>,	"Weiwei Li"
+ <liwei1518@gmail.com>,	"qemu-arm" <qemu-arm@nongnu.org>,	"qemu-devel"
+ <qemu-devel@nongnu.org>,	"qemu-riscv" <qemu-riscv@nongnu.org>
+Subject: [PATCH V3 1/4] acpi: Add machine option to disable SPCR table
+In-Reply-To: <87msberqzi.wl-me@linux.beauty>
+References: <87msberqzi.wl-me@linux.beauty>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@linux.beauty;
+ helo=sender4-op-o15.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,107 +88,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
+From: Li Chen <chenl311@chinatelecom.cn>
 
-On 3/9/25 14:51, Cédric Le Goater wrote:
-> From: Jamin Lin <jamin_lin@aspeedtech.com>
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> Link: https://lore.kernel.org/qemu-devel/20250307035945.3698802-29-jamin_lin@aspeedtech.com
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   tests/functional/test_aarch64_aspeed.py | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-> index 8df6a97a2852..c25c96627823 100755
-> --- a/tests/functional/test_aarch64_aspeed.py
-> +++ b/tests/functional/test_aarch64_aspeed.py
-> @@ -31,6 +31,10 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
->               'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
->               'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
->   
-> +    ASSET_SDK_V905_AST2700A1 = Asset(
-> +            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
-> +            'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
-> +
->       def start_ast2700_test(self, name):
->           num_cpu = 4
->           uboot_size = os.path.getsize(self.scratch_file(name,
-> @@ -95,6 +99,12 @@ def test_aarch64_ast2700_evb_sdk_v09_05(self):
->           self.archive_extract(self.ASSET_SDK_V905_AST2700)
->           self.start_ast2700_test('ast2700-a0-default')
->   
-> +    def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
-> +        self.set_machine('ast2700a1-evb')
-> +
-> +        self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
-> +        self.start_ast2700_test('ast2700-default')
-> +
->   
->   if __name__ == '__main__':
->       QemuSystemTest.main()
+The ACPI SPCR (Serial Port Console Redirection) table allows firmware
+to specify a preferred serial console device to the operating system.
+On ARM64 systems, Linux by default respects this table: even if the
+kernel command line does not include a hardware serial console (e.g.,
+"console=ttyAMA0"), the kernel still register the serial device
+referenced by SPCR as a printk console.
 
-On a BE host, if I run an ast2700a0-evb machine :
+While this behavior is standard-compliant, it can lead to situations
+where guest console behavior is influenced by platform firmware rather
+than user-specified configuration. To make guest console behavior more
+predictable and under user control, this patch introduces a machine
+option to explicitly disable SPCR table exposure:
 
-    $ qemu-system-aarch64 -machine ast2700a0-evb  ...
-    ...
-    U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
+    -machine spcr=off
 
-    SOC: AST2700-A0
-    Model: AST2700 EVB
-    DRAM:  8 GiB (effective 0 Bytes)
+By default, the option is enabled (spcr=on), preserving existing
+behavior. When disabled, QEMU will omit the SPCR table from the guest's
+ACPI namespace, ensuring that only consoles explicitly declared in the
+kernel command line are registered.
 
-QEMU hangs.
+Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+---
 
-If the RAM size is defined to 8g
-    
-    $ qemu-system-aarch64 -machine ast2700a0-evb -m 8g  ...
-    ...
-    U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
+Changes since V2: Add Reviewed-by from Gavin Shan <gshan@redhat.com>
+                  for the first patch and fix style issue.
+Changes since V1: add Reviewed-by and Acked-by
 
-    SOC: AST2700-A0
-    Model: AST2700 EVB
-    DRAM:  8 GiB
-    aspeed_dp dp@12c0a000: aspeed_dp_probe(): Failed to access dp. version(0)
-    Core:  125 devices, 27 uclasses, devicetree: separate
+ hw/arm/virt-acpi-build.c       |  5 ++++-
+ hw/core/machine.c              | 22 ++++++++++++++++++++++
+ hw/loongarch/virt-acpi-build.c |  4 +++-
+ hw/riscv/virt-acpi-build.c     |  5 ++++-
+ include/hw/boards.h            |  1 +
+ qemu-options.hx                |  5 +++++
+ 6 files changed, 39 insertions(+), 3 deletions(-)
 
-machine boots.
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 3ac8f8e178..f25c3b26ce 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -940,7 +940,10 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+     }
 
-Whereas, with an ast2700a1-evb machine :
+     acpi_add_table(table_offsets, tables_blob);
+-    spcr_setup(tables_blob, tables->linker, vms);
++
++    if (ms->enable_spcr) {
++        spcr_setup(tables_blob, tables->linker, vms);
++    }
 
-    $ qemu-system-aarch64 -machine ast2700a1-evb  ...
-    ...
-    U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
+     acpi_add_table(table_offsets, tables_blob);
+     build_dbg2(tables_blob, tables->linker, vms);
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index ed01798d37..71a935512e 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -593,6 +593,20 @@ static void machine_set_nvdimm(Object *obj, bool value, Error **errp)
+     ms->nvdimms_state->is_enabled = value;
+ }
 
-    SOC: AST2700-A1
-    Model: AST2700 EVB
-    DRAM:  1 GiB
-    aspeed_dp dp@12c0a000: aspeed_dp_probe(): Failed to access dp. version(0)
-    Core:  125 devices, 27 uclasses, devicetree: separate
++static bool machine_get_spcr(Object *obj, Error **errp)
++{
++    MachineState *ms = MACHINE(obj);
++
++    return ms->enable_spcr;
++}
++
++static void machine_set_spcr(Object *obj, bool value, Error **errp)
++{
++    MachineState *ms = MACHINE(obj);
++
++    ms->enable_spcr = value;
++}
++
+ static bool machine_get_hmat(Object *obj, Error **errp)
+ {
+     MachineState *ms = MACHINE(obj);
+@@ -1297,6 +1311,14 @@ static void machine_initfn(Object *obj)
+                                         "Table (HMAT)");
+     }
 
-machine boots.
-    
-    $ qemu-system-aarch64 -machine ast2700a1-evb -m 8g  ...
-    ...
-    U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
++    /* SPCR */
++    ms->enable_spcr = true;
++    object_property_add_bool(obj, "spcr", machine_get_spcr, machine_set_spcr);
++    object_property_set_description(obj, "spcr",
++                                   "Set on/off to enable/disable "
++                                   "ACPI Serial Port Console Redirection "
++                                   "Table (spcr)");
++
+     /* default to mc->default_cpus */
+     ms->smp.cpus = mc->default_cpus;
+     ms->smp.max_cpus = mc->default_cpus;
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index fced6c445a..0e437bcf25 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -557,7 +557,9 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+     acpi_add_table(table_offsets, tables_blob);
+     build_srat(tables_blob, tables->linker, machine);
+     acpi_add_table(table_offsets, tables_blob);
+-    spcr_setup(tables_blob, tables->linker, machine);
++
++    if (machine->enable_spcr)
++        spcr_setup(tables_blob, tables->linker, machine);
 
-    SOC: AST2700-A1
-    Model: AST2700 EVB
-    DRAM:  8 GiB
-    aspeed_dp dp@12c0a000: aspeed_dp_probe(): Failed to access dp. version(0)
-    Core:  125 devices, 27 uclasses, devicetree: separate
+     if (machine->numa_state->num_nodes) {
+         if (machine->numa_state->have_numa_distance) {
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 1ad6800508..7f6d221c63 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -680,7 +680,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+     build_rhct(tables_blob, tables->linker, s);
 
-machine boots.
+     acpi_add_table(table_offsets, tables_blob);
+-    spcr_setup(tables_blob, tables->linker, s);
++
++    if (ms->enable_spcr) {
++        spcr_setup(tables_blob, tables->linker, s);
++    }
 
+     acpi_add_table(table_offsets, tables_blob);
+     {
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 765dc8dd35..089104d54b 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -444,6 +444,7 @@ struct MachineState {
+     SmpCache smp_cache;
+     struct NVDIMMState *nvdimms_state;
+     struct NumaState *numa_state;
++    bool enable_spcr;
+ };
 
-I Wonder if you could analyze this issue to check if it is related
-to one of our QEMU model.
+ /*
+diff --git a/qemu-options.hx b/qemu-options.hx
+index dc694a99a3..953680595f 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
+     "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
+     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
++    "                spcr=on|off controls ACPI SPCR support (default=on)\n"
+ #ifdef CONFIG_POSIX
+     "                aux-ram-share=on|off allocate auxiliary guest RAM as shared (default: off)\n"
+ #endif
+@@ -105,6 +106,10 @@ SRST
+         Enables or disables ACPI Heterogeneous Memory Attribute Table
+         (HMAT) support. The default is off.
 
-
-Thanks,
-
-C.
-
++    ``spcr=on|off``
++        Enables or disables ACPI Serial Port Console Redirection Table
++        (SPCR) support. The default is on.
++
+     ``aux-ram-share=on|off``
+         Allocate auxiliary guest RAM as an anonymous file that is
+         shareable with an external process.  This option applies to
+--
+2.49.0
 
