@@ -4,147 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE01C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96015C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFwy5-00035F-QV; Fri, 16 May 2025 11:27:25 -0400
+	id 1uFxET-0002my-6w; Fri, 16 May 2025 11:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFwy2-0002s3-Jr
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:27:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uFxEP-0002k5-MM; Fri, 16 May 2025 11:44:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFwxz-00079g-OV
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:27:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747409239;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mcYrF6oHh4HHPCeklc+93BMzo7/8MknrgNFM8uUGfRg=;
- b=VZGGvRpwTxM4JCD/Luz1wStU6BvPWrtmMPb8qIGrHM0pCF54JwPm6xZmv+b7C9IuHlR50b
- xSrO/bWyp5+ovjyUHVh+uHM3teb0m6Wj39p2zAHYQHs6FWoIzVBbnrNKa71iueEyhJl0bJ
- ea09rMfYe1CL5k2bW80SOjVH4nDnWLQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462--UM0y-xaPvqyvmtd6fpx4w-1; Fri, 16 May 2025 11:27:15 -0400
-X-MC-Unique: -UM0y-xaPvqyvmtd6fpx4w-1
-X-Mimecast-MFC-AGG-ID: -UM0y-xaPvqyvmtd6fpx4w_1747409234
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43e9a3d2977so16795465e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 08:27:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747409234; x=1748014034;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mcYrF6oHh4HHPCeklc+93BMzo7/8MknrgNFM8uUGfRg=;
- b=tPnUI4qRCJJxKfHnBGaaeahFkD1M2TH8myLHIsIk34elcWWTRU/d/Bm/5LdCS0nOll
- qRwkDZCMaRgUB6InpSrKlnudT1jyMmZVV/6IIwR0ssaUg3Ges86cuGtdjBMGORRQIMID
- iC9Gl03RW8FZwN2Ovu/MZAY1Ye33fJ9h8vE9j/A2Uq71BS5HOfQ1oClVEOaz8bGotJCM
- Z3ZHHihWprQgy8uz1oBJfBdcNe5CXFqWlMb2Cs2DFGTTcSW8az/EShNaBzojYJhBGGBq
- 1d9MjbGtcApycw05kUprkn9f0MuLBa2LMQVaQY1MX14zxUc+HCH/wCPPH5kbQlGLpqTC
- HjSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjhRVy6FlSx5n/2u0qX5cRRJ8y2snhLjk9zud+j15k6MunHCDBpGTCNzjBNxTfmwSPfyyd8p71RszO@nongnu.org
-X-Gm-Message-State: AOJu0YxtS4rmWi0pTdpdcIaqk0+oDitjGy8uS5Fm0EYROeYFulq4Ayth
- rF7smix2S24L//iPe6u0WJPZHssxLGGqgKCN1pmhtApOLhwpTTnRtMFoaO4OiM5XIwtTizq0k8e
- qYVab1hW4m2O7Gwti6SeZwG8Y3PUEB6L/wIrrOZJQvhHAjSOCnVWvzlSh
-X-Gm-Gg: ASbGncsC8ID9w6SdZpTS3yYX4SKC6HoF3QPoexKUtnsjZJ877PN4BepWWOJYkG6JBZx
- RaTEhUnt2w/hHYFZeDN2rM6s/odQxYF+TaGXByHILP3vv3m2OH/7c7AunVWga1hsNxymOktSWt1
- RkAn7rKTNdkByzW/USQ/cU0tG1pQtqdoQdpPqUhwI+ahUGxy9B46Nj8ct/njpfTj/f6YpXXbodc
- pfnVAFMuGRbXs55PaFhr5gM4fmmaohynzsME9vYDZJMzz/W2lvNF9kQBPpKUFVYRIW3NzAXXf4K
- ZzQZVtjrazWPqX8XxGswJPlEA4R8amMuGDnjtZAFAe5aaaQ=
-X-Received: by 2002:a05:600c:5305:b0:441:b19c:96fe with SMTP id
- 5b1f17b1804b1-442fd622eb4mr49057335e9.10.1747409234488; 
- Fri, 16 May 2025 08:27:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVRLJorTjpA6iU4Fd4bC403ABplh8VIH0S6duInoNN76CcHBs3UPLDc5qMm2VqkNZSIcKdmg==
-X-Received: by 2002:a05:600c:5305:b0:441:b19c:96fe with SMTP id
- 5b1f17b1804b1-442fd622eb4mr49057055e9.10.1747409234022; 
- Fri, 16 May 2025 08:27:14 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
- ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f39ef8bbsm112495485e9.37.2025.05.16.08.27.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 08:27:13 -0700 (PDT)
-Message-ID: <6f9f081e-f251-49b5-a7d2-484cd8e03b48@redhat.com>
-Date: Fri, 16 May 2025 17:27:12 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/27] vfio: refactor out IRQ signalling setup
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250515154413.210315-1-john.levon@nutanix.com>
- <20250515154413.210315-6-john.levon@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250515154413.210315-6-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uFxEN-0000pV-Ej; Fri, 16 May 2025 11:44:17 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GE40dQ009624;
+ Fri, 16 May 2025 15:44:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=a+CKyfyir1r9EXN+wGH01d6OgduDNizIWOTUoJDEaYk=; b=jK9ibJ0jxZkK
+ IokFypx3HEekB73fV/o1HyiPkXngAXK/oaMgpVtGzcE3l8wDrFUWYa3v7YDFTZ4s
+ OM50giYS3QXAFoOc/ksSceUjjj5LSL3exN36ShAWsOhX7KavWddRmRJJtVmJrQhT
+ nYqGqHaK1FWeAkfCeH10dJL5ImrAvM5/3m3luKwGG5/hnvkb04tkCPPxfR8ohj1T
+ Wj3TaAVjlVn1aVD2Ow/mzFX7aBhLnc/ZNd680cTYx4Z0LtR2AxOvSkol2MJFrWw5
+ fgJLrCKDS0lUP/IgAu8MIXlO99sFDL3l+IL60cfvE7q45ie7vJYf9EHSMtNgmRac
+ pOAj/qeHEQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46nny7cw6h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 16 May 2025 15:44:10 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54GFaTwM020580;
+ Fri, 16 May 2025 15:44:10 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46nny7cw6e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 16 May 2025 15:44:10 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54GEdQI5021861;
+ Fri, 16 May 2025 15:44:09 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfq0896-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 16 May 2025 15:44:09 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54GFi4Kc25756190
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 16 May 2025 15:44:04 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 23C015805B;
+ Fri, 16 May 2025 15:44:08 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 836B458058;
+ Fri, 16 May 2025 15:44:07 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 16 May 2025 15:44:07 +0000 (GMT)
+Message-ID: <5b2ea8edf2f437b78e90fe3bcd9a78083fd652c0.camel@linux.ibm.com>
+Subject: Re: [PATCH 17/50] pnv/xive2: Support ESB Escalation
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
+ <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
+ Schlossin <calebs@linux.vnet.ibm.com>, Glenn Miles
+ <milesg@linux.vnet.ibm.com>
+Date: Fri, 16 May 2025 10:44:07 -0500
+In-Reply-To: <D9X5A3I88C2Q.29RV6YVBVYJ27@gmail.com>
+References: <20250512031100.439842-1-npiggin@gmail.com>
+ <20250512031100.439842-18-npiggin@gmail.com>
+ <D9X5A3I88C2Q.29RV6YVBVYJ27@gmail.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -I0UXD-_vHbq8XJHayfA4xyCMzdiEgEs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE1MiBTYWx0ZWRfXxQ8rdJn34du9
+ S8eAixs2HxcE/NF/QPVCIv5XqJyv0lO053nRPY4XSxkgYmmyEUFtG+oKlwDGSMnAL6UpLiK6DD5
+ U0GpDBrci+Z1wGdBcC+dSIxKF4ueei5RdKeVJJgU1bh/71SipGQphJu6PvLYzlkmlkQy0Hz4FDP
+ O334UCJaJGCTFM3ZSGij68PMye2pYGDeCJ4iTlmsD3hOeHgHXlQvC9XgT7qIIu+9WDnVg4lo3if
+ 1cX2VdE+NURVMERXaI0GNtKzHe07IE990Cd2XVmnbZwaGCkTkBtSk9fpt6DdVqny9p5QFlJs18H
+ 3SlZln5fwMNAErtXUrJB2pBSaz76wdEWNUSaMHeNj62I0MvQB1gBDmX0u+wCT1A1mKRL/bYy5Xk
+ XTbfVcbYe6xB+pznSapEvEZM1rtS7wbuXFh+RkjnvBNu6NnJTu+7644Eu4NLlHHRxHmOflmS
+X-Proofpoint-GUID: kyevCz5mbEyNfgxyHDsJcEaBhZ92K62t
+X-Authority-Analysis: v=2.4 cv=CfwI5Krl c=1 sm=1 tr=0 ts=68275d4a cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8
+ a=VnNF1IyMAAAA:8 a=_1rhKVqMUZJ76mWlyvYA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-16_05,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505160152
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -159,79 +130,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 17:43, John Levon wrote:
-> This makes for a slightly more readable vfio_msix_vector_do_use()
-> implementation, and we will rely on this shortly.
+On Fri, 2025-05-16 at 10:05 +1000, Nicholas Piggin wrote:
+> On Mon May 12, 2025 at 1:10 PM AEST, Nicholas Piggin wrote:
+> > From: Glenn Miles <milesg@linux.vnet.ibm.com>
+> > 
+> > Add support for XIVE ESB Interrupt Escalation.
+> > 
+> > Suggested-by: Michael Kowal <kowal@linux.ibm.com>
+> > [This change was taken from a patch provided by Michael Kowal.]
+> > Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+> > ---
+> >  hw/intc/xive2.c             | 62 ++++++++++++++++++++++++++++++-------
+> >  include/hw/ppc/xive2.h      |  1 +
+> >  include/hw/ppc/xive2_regs.h | 13 +++++---
+> >  3 files changed, 59 insertions(+), 17 deletions(-)
+> > 
+> > diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> > index de139dcfbf..0993e792cc 100644
+> > --- a/hw/intc/xive2.c
+> > +++ b/hw/intc/xive2.c
+> > @@ -1552,18 +1552,39 @@ do_escalation:
+> >          }
+> >      }
+> >  
+> > -    /*
+> > -     * The END trigger becomes an Escalation trigger
+> > -     */
+> > -    xive2_router_end_notify(xrtr,
+> > -                           xive_get_field32(END2_W4_END_BLOCK,     end.w4),
+> > -                           xive_get_field32(END2_W4_ESC_END_INDEX, end.w4),
+> > -                           xive_get_field32(END2_W5_ESC_END_DATA,  end.w5));
+> > +    if (xive2_end_is_escalate_end(&end)) {
+> > +        /*
+> > +         * Perform END Adaptive escalation processing
+> > +         * The END trigger becomes an Escalation trigger
+> > +         */
+> > +        xive2_router_end_notify(xrtr,
+> > +                               xive_get_field32(END2_W4_END_BLOCK,     end.w4),
+> > +                               xive_get_field32(END2_W4_ESC_END_INDEX, end.w4),
+> > +                               xive_get_field32(END2_W5_ESC_END_DATA,  end.w5));
+> > +    } /* end END adaptive escalation */
+> > +
+> > +    else {
+> > +        uint32_t lisn;              /* Logical Interrupt Source Number */
+> > +
+> > +        /*
+> > +         *  Perform ESB escalation processing
+> > +         *      E[N] == 1 --> N
+> > +         *      Req[Block] <- E[ESB_Block]
+> > +         *      Req[Index] <- E[ESB_Index]
+> > +         *      Req[Offset] <- 0x000
+> > +         *      Execute <ESB Store> Req command
+> > +         */
+> > +        lisn = XIVE_EAS(xive_get_field32(END2_W4_END_BLOCK,     end.w4),
+> > +                        xive_get_field32(END2_W4_ESC_END_INDEX, end.w4));
+> > +
+> > +        xive2_notify(xrtr, lisn, true /* pq_checked */);
 > 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   hw/vfio/pci.c | 35 ++++++++++++++++++++---------------
->   1 file changed, 20 insertions(+), 15 deletions(-)
+> Sorry I forgot to squash in a fix for the issues here. These should be
+> _ESB_ constants not _END_, and we believe pq_checked should be false
+> here so the ESB state machine is run.
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 7912c17dd2..9dd0bd4068 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -511,6 +511,25 @@ static void vfio_update_kvm_msi_virq(VFIOMSIVector *vector, MSIMessage msg,
->       kvm_irqchip_commit_routes(kvm_state);
->   }
->   
-> +static void set_irq_signalling(VFIODevice *vbasedev, VFIOMSIVector *vector,
-> +                               unsigned int nr)
-> +{
-> +    Error *err = NULL;
-> +    int32_t fd;
-> +
-> +    if (vector->virq >= 0) {
-> +        fd = event_notifier_get_fd(&vector->kvm_interrupt);
-> +    } else {
-> +        fd = event_notifier_get_fd(&vector->interrupt);
-> +    }
-> +
-> +    if (!vfio_device_irq_set_signaling(vbasedev, VFIO_PCI_MSIX_IRQ_INDEX, nr,
-> +                                       VFIO_IRQ_SET_ACTION_TRIGGER,
-> +                                       fd, &err)) {
-> +        error_reportf_err(err, VFIO_MSG_PREFIX, vbasedev->name);
-> +    }
-> +}
-> +
->   static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->                                      MSIMessage *msg, IOHandler *handler)
->   {
-> @@ -583,21 +602,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->                                strerror(-ret));
->               }
->           } else {
-> -            Error *err = NULL;
-> -            int32_t fd;
-> -
-> -            if (vector->virq >= 0) {
-> -                fd = event_notifier_get_fd(&vector->kvm_interrupt);
-> -            } else {
-> -                fd = event_notifier_get_fd(&vector->interrupt);
-> -            }
-> -
-> -            if (!vfio_device_irq_set_signaling(&vdev->vbasedev,
-> -                                        VFIO_PCI_MSIX_IRQ_INDEX, nr,
-> -                                        VFIO_IRQ_SET_ACTION_TRIGGER, fd,
-> -                                        &err)) {
-> -                error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-> -            }
-> +            set_irq_signalling(&vdev->vbasedev, vector, nr);
->           }
->       }
->   
+> https://lore.kernel.org/qemu-devel/D8CFK7Z5AJF8.ALT8MMH6EYYT@gmail.com/
+> 
+> I think we took discussion offline after that but that was the
+> conclusion. I will sqash that fix in here. With that,
+> 
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> 
+> I also wonder if Mike should be author of this patch since
+> that's what the note indicates? Or co-author? Better give your
+> Signed-off-by too, if so.
+> 
+> Thanks,
+> Nick
+
+Yes, this commit was taken verbatim from a diff that Mike Kowal
+provided me.  I think he certainly deserves the credit.  I wasn't sure
+how to do that.
+
+Glenn
 
 
