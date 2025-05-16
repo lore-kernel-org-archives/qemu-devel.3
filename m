@@ -4,186 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E9AC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 09:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC781C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 09:56:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFrNy-0007ym-7o; Fri, 16 May 2025 05:29:46 -0400
+	id 1uFrma-00011x-2g; Fri, 16 May 2025 05:55:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uFrNv-0007yd-Kj
- for qemu-devel@nongnu.org; Fri, 16 May 2025 05:29:44 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uFrNs-0002wB-Ty
- for qemu-devel@nongnu.org; Fri, 16 May 2025 05:29:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747387781; x=1778923781;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=7drIM43fJRFyVaMv8FjLcUaV3PcJYk8xeoxPIsVpfrY=;
- b=V/X6vth75OEAo+Tkmbx9quD5yIxVTL4bDsaqkq4SXcqznGFry7sDjtBA
- x0Gbb9GItjqxIg9v+M7K2VppQ3shLqaIelspFgWUmlhAxYGuwpoUmERSN
- PVrKwdlKHRjYHWU/6jqsEyNklEC1uMltr2QSWqApVLtlpdtGsKeVay51Y
- QpoMUcCqerpiU4ZYdPzXVdFrb63xiSiP6zvVzonuyPoHsmiBz0YIwtc0I
- sXpCUw8KcWCgGoaUlBLJs/lhra+4Oy8ycVzxRNhYz9IEFSSYMftJnUjUX
- juRhE3/ySbf3IKE516NOQxBJPz8DNvs1WjSe9c9Vkmrj1zC5cb9gYdJZ+ Q==;
-X-CSE-ConnectionGUID: dk+tEYVISZODy51yo/qCsQ==
-X-CSE-MsgGUID: Inz0UyfwQayAF54aTgEfCw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11434"; a="49491849"
-X-IronPort-AV: E=Sophos;i="6.15,293,1739865600"; d="scan'208";a="49491849"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 May 2025 02:29:36 -0700
-X-CSE-ConnectionGUID: NRDXC1YgRxypPTYcFSsFqQ==
-X-CSE-MsgGUID: sJuyttGvSZ+VYfESysn82g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,293,1739865600"; d="scan'208";a="139124135"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 May 2025 02:29:36 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Fri, 16 May 2025 02:29:36 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Fri, 16 May 2025 02:29:36 -0700
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.41) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Fri, 16 May 2025 02:29:36 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yoKUI3KrJqAhMiYGShvzNV2OQ4sI3ks/OqyS5RQqMk0oYTF6lWd0zLIasV0ATZ54/XdZR00bgS1vTM/hL4Di3xpoCIWQ4hXsm6sacOXe8GXf9Xcb4vkp96g1Q/jWaPvL4yySr3mrfkOpPsLaMDJ12DJfRPLU/NngiOC+eoIkjVZ4e27I32ZDL9tpfQlSD9X35e7zX/r8ZLbntZaveHSLYNW5v/NJvZJGt4RJJCqEA6xLtBpCtPrPDgft2antQRXGNB7hCVQ6ATsn7oimNx16S5Iq2mxY6lJsKoWXPNx9jcZSVoYpMpsVrLZg8PZo6jwyhF2X9KMegrgspEYx/bVJZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WY9SBLBKqjmn1g++FW6DllAPwAvGkIzpFp6+/JyGhRw=;
- b=wTglx4f5WnS8/I9ht2CyE/1qu06KE6i+wfddyLK1FPDOHu7vJDFMki9CZ4is0BhJHTwZPW73i0YikDhTsx90dn52uC1VcZiocSXLhdY+uwiUeJYJagnsvuFqR5a0iO8X6p7IO+IhH/LYaWFx0QPAz1rvgXBeTOwZXNYKqjYSyu7t7NjhtSGiI6fhxVYFYdf62T77dC/dkUQtK6ARhMNmE1pV509jpgxXZrkigcSuCeY47Y402+y3+/djW+NlkoHEo/c6fmQh9G/SX9iymnRg+CJF+d+xiZxko/4zkI6FT9swmkQkuNWMBxzMVbQGDIgUolzjdGnyFx3gkpj1J/BSRA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by SA1PR11MB7014.namprd11.prod.outlook.com (2603:10b6:806:2b9::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Fri, 16 May
- 2025 09:29:33 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%4]) with mapi id 15.20.8722.027; Fri, 16 May 2025
- 09:29:33 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Steve Sistare <steven.sistare@oracle.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
- <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger
- <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: RE: [PATCH V3 34/42] vfio/iommufd: invariant device name
-Thread-Topic: [PATCH V3 34/42] vfio/iommufd: invariant device name
-Thread-Index: AQHbw1Nh4I+IFptXNEuExdNUR7bUWrPVAylg
-Date: Fri, 16 May 2025 09:29:33 +0000
-Message-ID: <SJ0PR11MB6744ED7B4B490D35C50A75DD9293A@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-35-git-send-email-steven.sistare@oracle.com>
-In-Reply-To: <1747063973-124548-35-git-send-email-steven.sistare@oracle.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SA1PR11MB7014:EE_
-x-ms-office365-filtering-correlation-id: 3e2df223-ed08-4312-491a-08dd945c2b0a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?4jL6i8u8GfE9Vl9bB/TREFPCcMjx9AApvneRihytr2MPnq5AGJBskDOp3u44?=
- =?us-ascii?Q?Y1dlR6Ja9G0yLeh9JBVzSdOqSI3uvyxZBj74R+t1/A9bk/nvHiYb05xPJaDI?=
- =?us-ascii?Q?hjaG2WoAq3bKe84/5/U9SsArX+GxOlsHkI1kPvovXMrvZSlAwG4PSp8mdV8v?=
- =?us-ascii?Q?CwEluK7eA/0KgRXB4licjs+CjFniygAT6PXnUelufhj+yZIaH7GvaYsON1Q3?=
- =?us-ascii?Q?AxIRSmJFP5ZjhnZ0wY+QgXOS3URQ/VXoG7Bc/3R6BMblmJvbsPSBYtPv5ljU?=
- =?us-ascii?Q?luryPMJuVFQ7o9Y1CBMb9msDEnZd5LVX1qW//CtGWRfKA4vt0gbEoGz5ezlS?=
- =?us-ascii?Q?M5ik9h9q5tqgD9FMUxHiB4fQymFK3yy+//z4krO4KNE4t5K+iAjoOHkiHa+L?=
- =?us-ascii?Q?w8n+C0TTepR+vt2XdlUqMweZ6L0l6M1jAB2K4qMI+qIz4yw/PNUgXUY7y8xq?=
- =?us-ascii?Q?IQEvN3aldb5Xe1xk2QzuQhuV9X9d2XHf5aUdrvmA7whUiFwiuYt7zm6bCdgD?=
- =?us-ascii?Q?Dueoa6ebekMyWYmy+4vUig3DjV3xQZDhuLlNG3JlSGpr0mXaJS/2tAJSO32n?=
- =?us-ascii?Q?DeSuZzT8gdYGbhd3WWnBz9sCzgcCjxcXZkvCg+zxb66lbK6MVf7yCkKwIuUw?=
- =?us-ascii?Q?hVDu/miCLLFyJwHW5PWk/Q69ryA1Kf2HfLD4rdkO8Pc6az7uUfUf2fOrcdL+?=
- =?us-ascii?Q?ORb7kBExkg7PE+DacxySF5Zhiiw6J65dPlbX175J1zReyaVDrF7oy34J7+Zu?=
- =?us-ascii?Q?a5/mj2Jeol8OBahFSdBmbsBEhqk2nGUPW3YDuKEFsni23Cwx0QtDI2eJHcVf?=
- =?us-ascii?Q?kw1PIZ4YHamSqJkvebAQH3iUeI7KhUtDomOzkeSSBII68gjAhkQGm8kaTZn+?=
- =?us-ascii?Q?YmbuNS/gWSs4y86MSMzF3K6SiM9yZjFchVzxSrUoBx+fDdczmDi0QibDJ/HX?=
- =?us-ascii?Q?8QUg381cTbn+98u74oon2WbJlyHR4d3+QsdYCYsMUkUUGj8a7f4M58IHPMZB?=
- =?us-ascii?Q?BZYw6QIc7YRQbNrZOGVY8zoGiy12vhA62tfep/urUZh8bcOV6taP1mQN4iNN?=
- =?us-ascii?Q?3tPxgDG5vwSYYQqiRELlNY5XomFM1rAKqTjlR0Dgo4gnpv4BwFTfN4MQukhP?=
- =?us-ascii?Q?Jmi84v9o/AcPaHH6opWB4xS8Wl2hZ7lkIGtNADlvkG+4DHmkF1pnUluF0dQ2?=
- =?us-ascii?Q?lopQ3wZRVCi9BHEmHqLS0aDZODlgRWoTqTsE+ADmP2tnkV8Hqd8oP+QfNY58?=
- =?us-ascii?Q?KJ6viCbU3SHevVNgmJDkrqXZKC7LCZnPxoX+8si46j7/D4MxabYR2WiEzGZv?=
- =?us-ascii?Q?UbHWYYzHuoy+/aAAEQtuPlz3j6wRwGrdKFOGkvCKVZbQUUK2h6fqTbw9ywty?=
- =?us-ascii?Q?ScDD7IKYuBLbqv6g80yrIFjWLmx0DoQT4LUJDMgmSTbqB8O9kdG10m0ihJEy?=
- =?us-ascii?Q?2bpEshp+5f1LNQgeU2c+EiF15rxLgOwxGWDtvLSZPq70eXNBa06cWw=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?2vdv298tf3/lyLRbsX1638axukWI+KzC2ykbeutUdIWH6BVz/wfd9k+idWx4?=
- =?us-ascii?Q?L2K50a9vf5JycWEJsTYn6YQC6KPYnLaEQa0EiXTTC6vJeIxAjeh9A/+tNAhC?=
- =?us-ascii?Q?RnibjsmbXg7w80QDpx88GbhN4Dcd+UNTQPoDTKJLrqusyxf4uRgy1LoUO8mS?=
- =?us-ascii?Q?HrmlI0cWOP/wC5OhzOZ8N2Sq8WY2NLIfjxUpJcHXZEHRARUPznzavH+1Xuie?=
- =?us-ascii?Q?aW/NBIcZ8EIEaMuAJgBi6UnX8eeQUnEmEq2SJuur6LgeNJpvSV0lrBkz0fED?=
- =?us-ascii?Q?2bpaH5hgqWfxpN3S3s1zhNzIsz+wirMgZt1I4cjVbcXvWvELl0Xsf3Eu1nyC?=
- =?us-ascii?Q?mQ39h7lZuS87guFW4wIBc5TnB8DJog4Zx7VAMl4cdKBclXCZUIs1KmdokjIf?=
- =?us-ascii?Q?lZY5x44z0XybUQx2wwm6rSiJB9hFaTEOpYOxFqCIm6pIlxkS8GyxOE6F1PHb?=
- =?us-ascii?Q?eISMdaJU6mvRp1OMd6o/8o+cdcCcfEYR6XMCoeePWzmCgIMju98beht+00nh?=
- =?us-ascii?Q?MeOLqL5+R3bM41YF/bT0ZPnPQ1xq9G7BxWxAAgJBNkdKzXKBxVG2FMgR3btw?=
- =?us-ascii?Q?mAbSxjZCdn30zCYwRBUVCEx/SMJmovjyFLlrOzG/Qa/sKXNROf5x/E3g/2pu?=
- =?us-ascii?Q?MNt5vj491EVNkZowBAYHVVkp54YDwBvmiEWTljNV/CU3uSYTeL3r92XROatI?=
- =?us-ascii?Q?cPxk6QeUxuC1b7z6xUa2u6+tJyptKi/+6CLHCYnLIeSZN+X1Cxsw0M/tntjT?=
- =?us-ascii?Q?/4BYaHFP0fCUiMCGYkdDzzC7yrLRyKWivQ64lewUnxVY2fdInLU8JX9AOGjA?=
- =?us-ascii?Q?BHg+h+rSogOWQhFQ/oWU6nQH03s3JruL+gLE8viZeG6Da5CU4iSD44MmFFXC?=
- =?us-ascii?Q?8ttWWzIkV88PH8izdIH1kG8YQQHMdaJ0MBPXnjr0+StccpYZL3iMZeAK0mU8?=
- =?us-ascii?Q?HREj3qnXKquo/W50HucWHwbuxeLS1RUZG01JxcTQLknxyt2X9QzITlHBBckZ?=
- =?us-ascii?Q?cqqimUuIVpyET1vkiS2dMdutCy9Zjuu7SQv+Djh1XinnEGthGjIcpFkW5n1V?=
- =?us-ascii?Q?nJ7a4R84kHO645/csqDo73hG9lGwMDx1VPjs8JHJAfSZGYrt9RKkeM2WjAqg?=
- =?us-ascii?Q?lpxJrkeeyUdSKMWW1A6shwc4Dn0FaEdWKhhUBgrl1FWPmL2+6YHIZDwP3s+d?=
- =?us-ascii?Q?AlGHep6sM/scYfuY3MLeZoqrLjsBH0tMm1xTdOJU7rkJgZz/0yY2xCJ3fIEs?=
- =?us-ascii?Q?FZIbtydsZN+TI53g5eL2L2Lo8X7jMi+K5WlwMXz1r0I0NhU6czfFXgm5U5GO?=
- =?us-ascii?Q?e3tcvxYyhUW3yIVXaDUU0M8SwDQFsjWWFr/oGn6oqWd5rtQC7+GVCkJbkpgi?=
- =?us-ascii?Q?2nWS/53LhLZzX/ML5f4KquIh8avCwrJxYvg+KHbZjy2UVQb19DSUNVwM17mT?=
- =?us-ascii?Q?ZnhIAxRSxwC9aPxcqfCWfAaS5VGbWnmtAdnWg7kYKBQXGCsCUqSE0QV4d+Z/?=
- =?us-ascii?Q?0JmKYGmKQSfgCOr9TtuaKMHnjmoekVhoWG/LIGc9HsBw6RcZYfSlGZcQmdsz?=
- =?us-ascii?Q?giKUg+b206y5qJXUyjdB0mu1+AREr5WUkPEUhIu3?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uFrmW-0000zq-TD
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 05:55:09 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uFrmU-0005iG-Bo
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 05:55:08 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-442ea341570so12181925e9.1
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 02:55:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747389303; x=1747994103; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CSgqKzvi7C1rLa9QXmxg/eY5WB2iA6wXC36TIRo8uYE=;
+ b=u0QYAu7xYff4GGPW9oQGOrI7j1j5zMSXJ0UNkfpWBIlI1+oPm71wN1REY0tQExTzDq
+ C+HyW1Zac25AX2p0FMWrHLBDKwpdh1/BLrZSGTFsfDkRMhuMZ6gsuqfTgzY022c7XBPc
+ 0iF8AxvsZEmsZZ5+xeHhkeFg7sfjgkMw+Q0+0OD1uOTVLoGtN04INrLvjUgx7yHgWEsg
+ ZhckxPfPp1J6a01We1qBwDCw5PMiMSzNB6bFZmD4GAGrL9UBAq8G2H4gJLPQxPJj/uI4
+ 0497D3TlcdSSOnGm9w61rGwCSFbmE8L0CUpqgeQsS3+X+M5XVZlu++A51GCaqmxV/qiB
+ J/ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747389303; x=1747994103;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=CSgqKzvi7C1rLa9QXmxg/eY5WB2iA6wXC36TIRo8uYE=;
+ b=NXRzYK7IhZqCT+WHHxT34yqdYjS3TQHJ2k9igreShm5YvSy4PEsKqep66E/TSiu53m
+ IdW5y5Kzlv92PH5bp+Nc0dq3kI3NGZXjxDrU3E9unSp6dhSXTk7du3p3YTJchsQ4PdKd
+ /gN+zqzDcB0UN5Ru0jRP97Bk+4IH9FWK4qfFJ9DK8i9jmqGk/6vH1GdgPFYS0gI5+RZu
+ l1LLI2/wzLFt3J5c2QZNQJTrZq2FmuxxUVtsZaCR/9NhUbxue8gh4CNgryzTnjvZRVO1
+ rKY2FoG9PbJ8MHFFvebaZdINrSNdFB+DgNlo+6PHBrRNj5i4V6nI247VAqkkJ0NFDsO4
+ 6ukg==
+X-Gm-Message-State: AOJu0YxAaFxHyXOpRt4K3B226a2VTvD1yFCBbdYg53qwJSGSHM3jIlab
+ HkpaF4sX0gqd4cAGEknN9OcXYaNuoMoJPMd7YU1fW6E77QHnmWX5UZmlKsP0elhKqug=
+X-Gm-Gg: ASbGncu5mnCI+0OSpH25H3Uf0F8I/rDAXS8RvmcmGEFGDARUh+l4pBw4mZPGCJ8Wm+m
+ l5HvQnbF7MFFCNGhQkZ2zWPRCuKGY2IUrkH0v0JWo5oJVgioCRKLU9rZceBYFokqaoxCJ16ALYG
+ 4R3PKpRlBtsU2TBEnkzw6ddW1spCrHV4bb3LfHlMdAB81vvMoo20a+w4c870nM7DXS7BgHbI6Id
+ jc+4ghmasmctnZbil4yZbDwtQNRrzXafvRMEsO4k69ik/k1gX60Ur5tvbxqnA7aoK58pBpb5u93
+ 3QR45bbDWOXMIVUBY9KGj0GQ547I6nJ3Y6Ykhus0+jdHxDJYcFcddA==
+X-Google-Smtp-Source: AGHT+IGkUChnq9paTdqeucrzsXFWkH8ybDz4b0hQ7NKqmOe87/cfZFQv212iMD4euRYHumZNA9CFlw==
+X-Received: by 2002:a05:600c:3b86:b0:43b:ce36:7574 with SMTP id
+ 5b1f17b1804b1-442fefefcfcmr13356785e9.11.1747389303594; 
+ Fri, 16 May 2025 02:55:03 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442fd59700asm28828285e9.34.2025.05.16.02.55.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 May 2025 02:55:03 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 33BA55F904;
+ Fri, 16 May 2025 10:55:02 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  thuth@redhat.com,  berrange@redhat.com,
+ eric.auger@redhat.com,  philmd@linaro.org,  peter.maydell@linaro.org,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH v4] tests/functional: Add PCI hotplug test for aarch64
+In-Reply-To: <20250512144629.182340-1-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Mon, 12 May 2025 15:45:45 +0100")
+References: <20250512144629.182340-1-gustavo.romero@linaro.org>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Fri, 16 May 2025 10:55:02 +0100
+Message-ID: <87frh4yj61.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3e2df223-ed08-4312-491a-08dd945c2b0a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 May 2025 09:29:33.6002 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: k2NZgPO1ji/gwXEkbDH9JeGt/BdS42F1VI3Efnt+Dk/+esRJ5ut5fYMUFWhniwS3Z52Y+qO6GUQCjIlAQjQ7JCOnGy9hHQ5c6iYyvlkDOCY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB7014
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.15;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -60
-X-Spam_score: -6.1
-X-Spam_bar: ------
-X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -199,165 +104,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Gustavo Romero <gustavo.romero@linaro.org> writes:
 
+> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
+> hot-unplug on arm64.
 
->-----Original Message-----
->From: Steve Sistare <steven.sistare@oracle.com>
->Subject: [PATCH V3 34/42] vfio/iommufd: invariant device name
->
->cpr-transfer will use the device name as a key to find the value
->of the device descriptor in new QEMU.  However, if the descriptor
->number is specified by a command-line fd parameter, then
->vfio_device_get_name creates a name that includes the fd number.
->This causes a chicken-and-egg problem: new QEMU must know the fd
->number to construct a name to find the fd number.
->
->To fix, create an invariant name based on the id command-line
->parameter.  If id is not defined, add a CPR blocker.
->
->Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->---
-> hw/vfio/cpr.c              | 21 +++++++++++++++++++++
-> hw/vfio/device.c           | 10 ++++------
-> hw/vfio/iommufd.c          |  2 ++
-> include/hw/vfio/vfio-cpr.h |  4 ++++
-> 4 files changed, 31 insertions(+), 6 deletions(-)
->
->diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
->index 6081a89..7609c62 100644
->--- a/hw/vfio/cpr.c
->+++ b/hw/vfio/cpr.c
->@@ -11,6 +11,7 @@
-> #include "hw/vfio/pci.h"
-> #include "hw/pci/msix.h"
-> #include "hw/pci/msi.h"
->+#include "migration/blocker.h"
-> #include "migration/cpr.h"
-> #include "qapi/error.h"
-> #include "system/runstate.h"
->@@ -184,3 +185,23 @@ const VMStateDescription vfio_cpr_pci_vmstate =3D {
->         VMSTATE_END_OF_LIST()
->     }
-> };
->+
->+bool vfio_cpr_set_device_name(VFIODevice *vbasedev, Error **errp)
->+{
->+    if (vbasedev->dev->id) {
->+        vbasedev->name =3D g_strdup(vbasedev->dev->id);
->+        return true;
->+    } else {
->+        /*
->+         * Assign a name so any function printing it will not break, but =
-the
->+         * fd number changes across processes, so this cannot be used as =
-an
->+         * invariant name for CPR.
->+         */
->+        vbasedev->name =3D g_strdup_printf("VFIO_FD%d", vbasedev->fd);
->+        error_setg(&vbasedev->cpr.id_blocker,
->+                   "vfio device with fd=3D%d needs an id property",
->+                   vbasedev->fd);
->+        return migrate_add_blocker_modes(&vbasedev->cpr.id_blocker, errp,
->+                                         MIG_MODE_CPR_TRANSFER, -1) =3D=
-=3D 0;
->+    }
->+}
->diff --git a/hw/vfio/device.c b/hw/vfio/device.c
->index 9fba2c7..8e9de68 100644
->--- a/hw/vfio/device.c
->+++ b/hw/vfio/device.c
->@@ -28,6 +28,7 @@
-> #include "qapi/error.h"
-> #include "qemu/error-report.h"
-> #include "qemu/units.h"
->+#include "migration/cpr.h"
-> #include "monitor/monitor.h"
-> #include "vfio-helpers.h"
->
->@@ -284,6 +285,7 @@ bool vfio_device_get_name(VFIODevice *vbasedev,
->Error **errp)
-> {
->     ERRP_GUARD();
->     struct stat st;
->+    bool ret =3D true;
->
->     if (vbasedev->fd < 0) {
->         if (stat(vbasedev->sysfsdev, &st) < 0) {
->@@ -300,16 +302,12 @@ bool vfio_device_get_name(VFIODevice *vbasedev,
->Error **errp)
->             error_setg(errp, "Use FD passing only with iommufd backend");
->             return false;
->         }
->-        /*
->-         * Give a name with fd so any function printing out vbasedev->nam=
-e
->-         * will not break.
->-         */
->         if (!vbasedev->name) {
->-            vbasedev->name =3D g_strdup_printf("VFIO_FD%d", vbasedev->fd)=
-;
->+            ret =3D vfio_cpr_set_device_name(vbasedev, errp);
->         }
->     }
->
->-    return true;
->+    return ret;
-> }
->
-> void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **er=
-rp)
->diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->index 8661947..ea99b8d 100644
->--- a/hw/vfio/iommufd.c
->+++ b/hw/vfio/iommufd.c
->@@ -25,6 +25,7 @@
-> #include "system/reset.h"
-> #include "qemu/cutils.h"
-> #include "qemu/chardev_open.h"
->+#include "migration/blocker.h"
-> #include "pci.h"
-> #include "vfio-iommufd.h"
-> #include "vfio-helpers.h"
->@@ -669,6 +670,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
->     iommufd_cdev_container_destroy(container);
->     vfio_address_space_put(space);
->
->+    migrate_del_blocker(&vbasedev->cpr.id_blocker);
+Queued to maintainer/may-2025, thanks.
 
-We also need to del blocker in error path, e.g., when attach fails.
+>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  MAINTAINERS                                  |  5 ++
+>  tests/functional/meson.build                 |  1 +
+>  tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
+>  3 files changed, 80 insertions(+)
+>  create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 23174b4ca7..9ebb768214 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2065,6 +2065,11 @@ S: Supported
+>  F: include/hw/pci/pcie_doe.h
+>  F: hw/pci/pcie_doe.c
+>=20=20
+> +ARM PCI Hotplug
+> +M: Gustavo Romero <gustavo.romero@linaro.org>
+> +S: Supported
+> +F: tests/functional/test_aarch64_hotplug_pci.py
+> +
+>  ACPI/SMBIOS
+>  M: Michael S. Tsirkin <mst@redhat.com>
+>  M: Igor Mammedov <imammedo@redhat.com>
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 52b4706cfe..2d68840fa2 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -83,6 +83,7 @@ tests_aarch64_system_quick =3D [
+>  tests_aarch64_system_thorough =3D [
+>    'aarch64_aspeed_ast2700',
+>    'aarch64_aspeed_ast2700fc',
+> +  'aarch64_hotplug_pci',
+>    'aarch64_imx8mp_evk',
+>    'aarch64_raspi3',
+>    'aarch64_raspi4',
+> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functio=
+nal/test_aarch64_hotplug_pci.py
+> new file mode 100755
+> index 0000000000..fa1bb62c8f
+> --- /dev/null
+> +++ b/tests/functional/test_aarch64_hotplug_pci.py
+> @@ -0,0 +1,74 @@
+> +#!/usr/bin/env python3
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +# The test hotplugs a PCI device and checks it on a Linux guest.
+> +#
+> +# Copyright (c) 2025 Linaro Ltd.
+> +#
+> +# Author:
+> +#  Gustavo Romero <gustavo.romero@linaro.org>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_=
+pattern
+> +from qemu_test import BUILD_DIR
+> +
+> +class HotplugPCI(LinuxKernelTest):
+> +
+> +    ASSET_KERNEL =3D Asset(
+> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
+4/'
+> +         'current/images/netboot/debian-installer/arm64/linux'),
+> +        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b=
+2')
+> +
+> +    ASSET_INITRD =3D Asset(
+> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
+4/'
+> +         'current/images/netboot/debian-installer/arm64/initrd.gz'),
+> +        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b=
+4')
+> +
+> +    def test_hotplug_pci(self):
+> +
+> +        self.set_machine('virt')
+> +        self.vm.add_args('-m', '512M')
+> +        self.vm.add_args('-cpu', 'cortex-a57')
+> +        self.vm.add_args('-append',
+> +                         'console=3DttyAMA0,115200 init=3D/bin/sh')
+> +        self.vm.add_args('-device',
+> +                         'pcie-root-port,bus=3Dpcie.0,chassis=3D1,slot=
+=3D1,id=3Dpcie.1')
+> +        self.vm.add_args('-bios', self.build_file('pc-bios',
+> +                                                  'edk2-aarch64-code.fd'=
+))
+> +
+> +        # BusyBox prompt
+> +        prompt =3D "~ #"
+> +        self.launch_kernel(self.ASSET_KERNEL.fetch(),
+> +                           self.ASSET_INITRD.fetch(),
+> +                           wait_for=3Dprompt)
+> +
+> +        # Check for initial state: 2 network adapters, lo and enp0s1.
+> +        exec_command_and_wait_for_pattern(self,
+> +                                          'ls -l /sys/class/net | wc -l',
+> +                                          '2')
+> +
+> +        # Hotplug one network adapter to the root port, i.e. pcie.1 bus.
+> +        self.vm.cmd('device_add',
+> +                    driver=3D'virtio-net-pci',
+> +                    bus=3D'pcie.1',
+> +                    addr=3D0,
+> +                    id=3D'na')
+> +        # Wait for the kernel to recognize the new device.
+> +        self.wait_for_console_pattern('virtio-pci')
+> +        self.wait_for_console_pattern('virtio_net')
+> +
+> +        # Check if there is a new network adapter.
+> +        exec_command_and_wait_for_pattern(self,
+> +                                          'ls -l /sys/class/net | wc -l',
+> +                                          '3')
+> +
+> +        self.vm.cmd('device_del', id=3D'na')
+> +        exec_command_and_wait_for_pattern(self,
+> +                                          'ls -l /sys/class/net | wc -l',
+> +                                          '2')
+> +
+> +if __name__ =3D=3D '__main__':
+> +    LinuxKernelTest.main()
 
->     iommufd_cdev_unbind_and_disconnect(vbasedev);
->     close(vbasedev->fd);
-> }
->diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
->index 765e334..d06d117 100644
->--- a/include/hw/vfio/vfio-cpr.h
->+++ b/include/hw/vfio/vfio-cpr.h
->@@ -23,12 +23,14 @@ typedef struct VFIOContainerCPR {
-> typedef struct VFIODeviceCPR {
->     bool reused;
->     Error *mdev_blocker;
->+    Error *id_blocker;
-> } VFIODeviceCPR;
->
-> struct VFIOContainer;
-> struct VFIOContainerBase;
-> struct VFIOGroup;
-> struct VFIOPCIDevice;
->+struct VFIODevice;
->
-> bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
->                                         Error **errp);
->@@ -59,4 +61,6 @@ void vfio_cpr_delete_vector_fd(struct VFIOPCIDevice *vde=
-v,
->const char *name,
->
-> extern const VMStateDescription vfio_cpr_pci_vmstate;
->
->+bool vfio_cpr_set_device_name(struct VFIODevice *vbasedev, Error **errp);
->+
-> #endif /* HW_VFIO_VFIO_CPR_H */
->--
->1.8.3.1
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
