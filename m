@@ -4,59 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54C86C3ABD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C227C54754
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFxRG-0008PS-1K; Fri, 16 May 2025 11:57:34 -0400
+	id 1uFxRu-0008TQ-I7; Fri, 16 May 2025 11:58:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uFxRF-0008PE-1W
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:57:33 -0400
+ id 1uFxRt-0008T5-8u
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:58:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uFxRD-0002c5-5M
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:57:32 -0400
+ id 1uFxRr-0002eN-Lv
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:58:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747411046;
+ s=mimecast20190719; t=1747411091;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=G6DqREFKwwgteXyKP7TZSmDj4NshSV+PmyQk9X+XziE=;
- b=gUlwZsWZuQLhHnijDks+LYla2hxAartsiTwNTXLAoY1hm24D1vJGR1+OXRp5iBMO5x64Ho
- Nh8cKm/rIj7PpdiHe0IP/Jh7injd31ysFJF58rYcyQLN4ERaRDDh5qci/RUkv7A4/qB+zk
- OSoXETLz3v7hKG61hOo5SJbc1IHY14k=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x6WuEoBBxDetQlDtLp0lnM1Dtbhxi8WuhpnDOYhag6M=;
+ b=hziFCar5lWjSdjE9poW1zjVii4/3+8jHIkkgqD0rV+PoVziOAKL2iMG/0vyPa+/bmTwWKO
+ rwyM40hrBB11YIWadlEiBll7BxeVANwq5Y2dVOZ3DviLWJPd6HIirrroVSAV07VbSJabyI
+ /vrhcB54akVTfFF4aynP66jP7vY0iNE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-KIyHrEhgNLSyKhXrMgATZA-1; Fri,
- 16 May 2025 11:57:25 -0400
-X-MC-Unique: KIyHrEhgNLSyKhXrMgATZA-1
-X-Mimecast-MFC-AGG-ID: KIyHrEhgNLSyKhXrMgATZA_1747411044
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-2n8xUhnuOqeoFGeSlqQqrw-1; Fri,
+ 16 May 2025 11:58:00 -0400
+X-MC-Unique: 2n8xUhnuOqeoFGeSlqQqrw-1
+X-Mimecast-MFC-AGG-ID: 2n8xUhnuOqeoFGeSlqQqrw_1747411079
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A70819560BC; Fri, 16 May 2025 15:57:24 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6FFC18004AD; Fri, 16 May 2025 15:57:59 +0000 (UTC)
 Received: from fedora.brq.redhat.com (unknown [10.43.2.64])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 777B318003FC; Fri, 16 May 2025 15:57:22 +0000 (UTC)
+ id F1FB818003FC; Fri, 16 May 2025 15:57:57 +0000 (UTC)
 From: Juraj Marcin <jmarcin@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 0/7] util/qemu-sockets: Introduce inet socket options
- controlling TCP keep-alive
-Date: Fri, 16 May 2025 17:56:52 +0200
-Message-ID: <20250516155710.2246148-1-jmarcin@redhat.com>
+Subject: [PATCH v4 5/7] tests/unit/test-util-sockets: Add tests for
+ inet_parse()
+Date: Fri, 16 May 2025 17:56:57 +0200
+Message-ID: <20250516155710.2246148-6-jmarcin@redhat.com>
+In-Reply-To: <20250516155710.2246148-1-jmarcin@redhat.com>
+References: <20250516155710.2246148-1-jmarcin@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
@@ -84,81 +86,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series extends the work introduced by commit aec21d3175 ("qapi: Add
-InetSocketAddress member keep-alive"). [1]
+From: Juraj Marcin <jmarcin@redhat.com>
 
-First, the series fixes an issue in qio_dns_resolver_lookup_sync_inet(),
-where the InetSocketAddress structure is only partially copied. Next, it
-refactors setting client socket options into a separate function and the
-success and failure paths in inet_listen_saddr() in preparation for
-keep-alive support on server sockets and the addition of new TCP
-keep-alive options.
+Before refactoring the inet_parse() function, this patch adds tests
+verifying the inet address parsing works correctly.
 
-Then, the series extends the support for keep-alive on server sockets.
-
-Before adding new inet address options, there are a couple of issues
-with the inet address options parsing this series resolves:
-- the parser contains a bug where it does not allow options with names that
-  start with the name of another flag,
-- the parser lacks some common function for parsing numeric values,
-- the parser supports only a subset of the inet address options, namely
-  the 'numeric' flag is missing.
-This is resolved by the sixth patch by reworking with parser using the
-QemuOpts parser. The series also includes unit tests to verify, there is
-no regression in the refactored parser.
-
-Finally, the series introduces three new InetSocketAddress options for
-the control of TCP keep-alive settings. By default, the value of all new
-settings is 0, which means no custom socket option value is set.
-
-This is useful, for example, for live migration. In case there is no
-traffic from the destination to the source machine during postcopy, the
-destination cannot detect a failed connection due to a lack of
-non-acknowledged packets and stays in the postcopy-active state until
-paused by the management of the QEMU instance.
-
-[1]: https://lore.kernel.org/all/20190725094937.32454-1-vsementsov@virtuozzo.com/
-
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
 ---
-V4:
-- refactored inet_parse() to use QemuOpts, this resolves a bug and
-  allows more option types, with tests
-- fixed HAVE_TCP_* macros on Windows and macOS and other suggestions by
-  Daniel
+ tests/unit/test-util-sockets.c | 161 +++++++++++++++++++++++++++++++++
+ 1 file changed, 161 insertions(+)
 
-V3:
-https://lore.kernel.org/all/20250408112508.1638722-1-jmarcin@redhat.com/
-- moved the InetSocketAddress struct copy fix and the common function
-  setting socket options into a separate commit
-- refactored inet_listen_saddr()
-
-V2:
-https://lore.kernel.org/all/20250319163638.456417-1-jmarcin@redhat.com/
-- moved socket options setting into a common function for both server
-  and client sockets (suggested by Vladimir)
-
-V1:
-https://lore.kernel.org/all/20250303143312.640909-1-jmarcin@redhat.com/
-
-Juraj Marcin (7):
-  io: Fix partial struct copy in qio_dns_resolver_lookup_sync_inet()
-  util/qemu-sockets: Refactor setting client sockopts into a separate
-    function
-  util/qemu-sockets: Refactor success and failure paths in
-    inet_listen_saddr()
-  util/qemu-sockets: Add support for keep-alive flag to passive sockets
-  tests/unit/test-util-sockets: Add tests for inet_parse()
-  util/qemu-sockets: Refactor inet_parse() to use QemuOpts
-  util/qemu-sockets: Introduce inet socket options controlling TCP
-    keep-alive
-
- io/dns-resolver.c              |  21 +--
- meson.build                    |  30 +++
- qapi/sockets.json              |  23 ++-
- tests/unit/test-util-sockets.c | 196 ++++++++++++++++++++
- util/qemu-sockets.c            | 330 ++++++++++++++++++++-------------
- 5 files changed, 458 insertions(+), 142 deletions(-)
-
+diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
+index 4c9dd0b271..60f15a4ddf 100644
+--- a/tests/unit/test-util-sockets.c
++++ b/tests/unit/test-util-sockets.c
+@@ -332,6 +332,144 @@ static void test_socket_unix_abstract(void)
+ 
+ #endif  /* CONFIG_LINUX */
+ 
++static void inet_parse_test_helper(const char *str, InetSocketAddress *exp_addr, bool success)
++{
++    InetSocketAddress addr;
++    Error *error = NULL;
++
++    int rc = inet_parse(&addr, str, &error);
++
++    if (success) {
++        g_assert_cmpint(rc, ==, 0);
++    } else {
++        g_assert_cmpint(rc, <, 0);
++    }
++    if (exp_addr != NULL) {
++        g_assert_cmpstr(addr.host, ==, exp_addr->host);
++        g_assert_cmpstr(addr.port, ==, exp_addr->port);
++        /* Own members: */
++        g_assert_cmpint(addr.has_numeric, ==, exp_addr->has_numeric);
++        g_assert_cmpint(addr.numeric, ==, exp_addr->numeric);
++        g_assert_cmpint(addr.has_to, ==, exp_addr->has_to);
++        g_assert_cmpint(addr.to, ==, exp_addr->to);
++        g_assert_cmpint(addr.has_ipv4, ==, exp_addr->has_ipv4);
++        g_assert_cmpint(addr.ipv4, ==, exp_addr->ipv4);
++        g_assert_cmpint(addr.has_ipv6, ==, exp_addr->has_ipv6);
++        g_assert_cmpint(addr.ipv6, ==, exp_addr->ipv6);
++        g_assert_cmpint(addr.has_keep_alive, ==, exp_addr->has_keep_alive);
++        g_assert_cmpint(addr.keep_alive, ==, exp_addr->keep_alive);
++#ifdef HAVE_IPPROTO_MPTCP
++        g_assert_cmpint(addr.has_mptcp, ==, exp_addr->has_mptcp);
++        g_assert_cmpint(addr.mptcp, ==, exp_addr->mptcp);
++#endif
++    }
++
++    g_free(addr.host);
++    g_free(addr.port);
++}
++
++static void test_inet_parse_nohost_good(void)
++{
++    char host[] = "";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++    };
++    inet_parse_test_helper(":5000", &exp_addr, true);
++}
++
++static void test_inet_parse_empty_bad(void)
++{
++    inet_parse_test_helper("", NULL, false);
++}
++
++static void test_inet_parse_only_colon_bad(void)
++{
++    inet_parse_test_helper(":", NULL, false);
++}
++
++static void test_inet_parse_ipv4_good(void)
++{
++    char host[] = "127.0.0.1";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++    };
++    inet_parse_test_helper("127.0.0.1:5000", &exp_addr, true);
++}
++
++static void test_inet_parse_ipv4_noport_bad(void)
++{
++    inet_parse_test_helper("127.0.0.1", NULL, false);
++}
++
++static void test_inet_parse_ipv6_good(void)
++{
++    char host[] = "::1";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++    };
++    inet_parse_test_helper("[::1]:5000", &exp_addr, true);
++}
++
++static void test_inet_parse_ipv6_noend_bad(void)
++{
++    inet_parse_test_helper("[::1", NULL, false);
++}
++
++static void test_inet_parse_ipv6_noport_bad(void)
++{
++    inet_parse_test_helper("[::1]:", NULL, false);
++}
++
++static void test_inet_parse_ipv6_empty_bad(void)
++{
++    inet_parse_test_helper("[]:5000", NULL, false);
++}
++
++static void test_inet_parse_hostname_good(void)
++{
++    char host[] = "localhost";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++    };
++    inet_parse_test_helper("localhost:5000", &exp_addr, true);
++}
++
++static void test_inet_parse_all_options_good(void)
++{
++    char host[] = "::1";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++        .has_to = true,
++        .to = 5006,
++        .has_ipv4 = true,
++        .ipv4 = false,
++        .has_ipv6 = true,
++        .ipv6 = true,
++        .has_keep_alive = true,
++        .keep_alive = true,
++#ifdef HAVE_IPPROTO_MPTCP
++        .has_mptcp = true,
++        .mptcp = true,
++#endif
++    };
++    inet_parse_test_helper(
++        "[::1]:5000,to=5006,ipv4=off,ipv6=on,keep-alive"
++#ifdef HAVE_IPPROTO_MPTCP
++        ",mptcp"
++#endif
++        , &exp_addr, true);
++}
++
+ int main(int argc, char **argv)
+ {
+     bool has_ipv4, has_ipv6;
+@@ -377,6 +515,29 @@ int main(int argc, char **argv)
+                     test_socket_unix_abstract);
+ #endif
+ 
++    g_test_add_func("/util/socket/inet-parse/nohost-good",
++                    test_inet_parse_nohost_good);
++    g_test_add_func("/util/socket/inet-parse/empty-bad",
++                    test_inet_parse_empty_bad);
++    g_test_add_func("/util/socket/inet-parse/only-colon-bad",
++                    test_inet_parse_only_colon_bad);
++    g_test_add_func("/util/socket/inet-parse/ipv4-good",
++                    test_inet_parse_ipv4_good);
++    g_test_add_func("/util/socket/inet-parse/ipv4-noport-bad",
++                    test_inet_parse_ipv4_noport_bad);
++    g_test_add_func("/util/socket/inet-parse/ipv6-good",
++                    test_inet_parse_ipv6_good);
++    g_test_add_func("/util/socket/inet-parse/ipv6-noend-bad",
++                    test_inet_parse_ipv6_noend_bad);
++    g_test_add_func("/util/socket/inet-parse/ipv6-noport-bad",
++                    test_inet_parse_ipv6_noport_bad);
++    g_test_add_func("/util/socket/inet-parse/ipv6-empty-bad",
++                    test_inet_parse_ipv6_empty_bad);
++    g_test_add_func("/util/socket/inet-parse/hostname-good",
++                    test_inet_parse_hostname_good);
++    g_test_add_func("/util/socket/inet-parse/all-options-good",
++                    test_inet_parse_all_options_good);
++
+ end:
+     return g_test_run();
+ }
 -- 
 2.49.0
 
