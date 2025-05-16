@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9A8C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A33C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFwEG-0005Fm-7J; Fri, 16 May 2025 10:40:04 -0400
+	id 1uFwGW-0006ar-3X; Fri, 16 May 2025 10:42:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
- id 1uFwE8-0005AD-Q7
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:39:56 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
- id 1uFwE6-0001Gr-G5
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:39:56 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-70b51b9de1fso22625057b3.1
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 07:39:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747406393; x=1748011193; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1xcBQVLJ9XDsGG6g4Ybniir5oS/MOg1nwm2vP5dR4KU=;
- b=BHI4Y9ffYj5NhOfEiA/bVpU5aveJvYFvHI1i46ncfRxnjwO8Ew9YY7Dk8Ci/1gIvZO
- c6pbzyl+dcJ600SUy26vQVZJf6F/031M2DBwa99bU/wEV4zYjWm8FJJ2J+IFFsHe2HOF
- JRnBZerhiRWKrGUvghaJA5Ojhp90v4J8/+X0Ub/UNluWqkoGgbpkh0+5siekPjfrdB00
- 4t9R9Ap+R4GajW79rZ78l0tneFeklOqs901wqdtbIK6nOmj3xvf+z18nnKralxh8nlAx
- gxbYrEqFEvicVnQF2MQBQRiwyynIopR8/VW4x1XujtqIDtWP/yQxG+NHwIKgG53kNhg9
- LTTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747406393; x=1748011193;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1xcBQVLJ9XDsGG6g4Ybniir5oS/MOg1nwm2vP5dR4KU=;
- b=YERDUVrU7zaROf1yE6kMp4Ln4yDiU/ZOA8HRl0L3dNPqhoGNgJml/Mf0c1hfIEfIgZ
- nYr2R0Qsgmk4r4h/lShT2XGiN7wDSokHm62KxyiNHnamJPyMKnnbjKJHCqwzYjh7BOwc
- NcU5kWuKEBeidxxhVeuzLHYwlWTI1/s1V3dHeBCuRJQdeOxFi6GhX64XVtOZnN1yaJfZ
- ZR8N+pHjXr0FF9E9GkGLe3iBtN3LC3LB3qII/hV8i3/ZJWq5mC1wXU07N0F27HM4tbVA
- 1+AL2v5y4yUvLK4yhLzX+e575NeghmOHoOeWjS9XkCKzuCvNbr8W+McnTbDxbB8mFarf
- Ovnw==
-X-Gm-Message-State: AOJu0YzQCTsMX1qKJ0bIGmL8R+FjdOCGVRpK7kD+ub2JI5CUpkH8xXpZ
- 0q/utwHJJlOlR8MMdyArCUjrx/ahs3pllwZ4/iAK3Q3NjRM7Pvl+OfnzL6n3oWDGPuywmixCeq+
- VgDDJqi8t2D2sNatiTRD8ijvRZxNG84s=
-X-Gm-Gg: ASbGnctm3Hs7yOxisngtaSRw6ww7X9KtGeYWIWHUDv6HAb2hLXVTWsz/NMp/prj+LkE
- SsSwOO77+Ybxl2NXhim6AXD7EB1XrYJi7rWHjwW545inx0b6sKWcZ4fh0RzjbU4JrzYAJT9FP0L
- 3cSyqRGWxobNPm9wUUE/PKRNUu6rNJ8LIfkqy3woh3ylIzFsksAd8fOzI+ZPlgcQ0ckw==
-X-Google-Smtp-Source: AGHT+IHcLdXIz1bcGyH/4aBz2nR95GMEg40oZHil3COAf9+c8UPzEzekOMLTPkayB1pphTVwDddfojV6b6vRvJBYoGM=
-X-Received: by 2002:a05:690c:2789:b0:6fb:9b8c:4b50 with SMTP id
- 00721157ae682-70caaf7470amr42210557b3.13.1747406392659; Fri, 16 May 2025
- 07:39:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uFwGT-0006a4-MF
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:42:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uFwGR-0001g1-6w
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:42:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747406536;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sD306+wR2Yr1QYUWd0Nza6XnFdZAYxmZP8qIvKeNGlI=;
+ b=X+R2E+sLClwfvN7IDTdNzWDSc1aV8sG0jt1VB1NLFEj3EmxjDKP+lmlQ9nRJUnZsZrtnbn
+ npK9ZY3noTkKGy91nRuRYvANqiAOcy4+C8SF3QdlMo364saRjVvrvLArtEb84YoYc8wKsd
+ cTnbcm3NoHaQfxGz9rIzySt82XOhfS8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-0LuNbzh8McSoZzd5gePpdA-1; Fri,
+ 16 May 2025 10:42:11 -0400
+X-MC-Unique: 0LuNbzh8McSoZzd5gePpdA-1
+X-Mimecast-MFC-AGG-ID: 0LuNbzh8McSoZzd5gePpdA_1747406529
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C6811956094; Fri, 16 May 2025 14:42:08 +0000 (UTC)
+Received: from localhost (dhcp-192-216.str.redhat.com [10.33.192.216])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 389DB30075D5; Fri, 16 May 2025 14:42:06 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, agraf@csgraf.de,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [PATCH v3 08/10] arm/cpu: more customization for the kvm host
+ cpu model
+In-Reply-To: <aCNrtM2U7OBKsnjQ@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20250414163849.321857-1-cohuck@redhat.com>
+ <20250414163849.321857-9-cohuck@redhat.com> <aCNrtM2U7OBKsnjQ@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Fri, 16 May 2025 16:42:03 +0200
+Message-ID: <87y0uwbosk.fsf@redhat.com>
 MIME-Version: 1.0
-References: <20250515102400.36151-1-conte.souleymane@gmail.com>
- <zox7vj235b67jxv6fklzre6ebeqbft3sujqjuh5it2cng2culj@a63jddoleon5>
-In-Reply-To: <zox7vj235b67jxv6fklzre6ebeqbft3sujqjuh5it2cng2culj@a63jddoleon5>
-From: =?UTF-8?Q?souleymane_cont=C3=A9?= <conte.souleymane@gmail.com>
-Date: Fri, 16 May 2025 16:39:41 +0200
-X-Gm-Features: AX0GCFsdiIZKgpfLU-IPvKP7Vp5uJPTQ8qfjvkiyuv04FhPLgQknLcmZKUvyF34
-Message-ID: <CAOw3OrGCtG3a-hLbb6b2LYqKo9uwPmaR0gQZ-RYBqF9sTk2MBw@mail.gmail.com>
-Subject: Re: [PATCH] docs/interop: convert text files to restructuredText
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, jsnow@redhat.com, peter.maydell@linaro.org
-Content-Type: multipart/alternative; boundary="000000000000501f3f063541c126"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=conte.souleymane@gmail.com; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,267 +97,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000501f3f063541c126
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, May 13 2025, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
 
-Hi,
-Thanks a lot for your review and helpful suggestions.
+> On Mon, Apr 14, 2025 at 06:38:47PM +0200, Cornelia Huck wrote:
+>> From: Eric Auger <eric.auger@redhat.com>
+>>=20
+>> If the interface for writable ID registers is available, expose uint64
+>> SYSREG properties for writable ID reg fields exposed by the host
+>> kernel. Properties are named  SYSREG_<REG>_<FIELD> with REG and FIELD
+>> being those used  in linux arch/arm64/tools/sysreg. This done by
+>> matching the writable fields retrieved from the host kernel against the
+>> generated description of sysregs.
+>>=20
+>> An example of invocation is:
+>> -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=3D0x0
+>> which sets DP field of ID_AA64ISAR0_EL1 to 0.
+>
+> Functionally this works, but stylewise it is rather too verbose
+> IMHO. I understand this aims to mtch the arm feature names, but
+> we can at least drop the SYSREG_ prefix here which IMHO doesn't
+> add much value. The <REG> component only has a small number of
+> possible prefixes, so it seems pretty unlikely we would get a
+> name clash between these and some other QOM property.
 
-I will address the following points in v2:
-- Fix the typo: "Each entry look" =E2=86=92 "Each entry looks"
-- Improve the layout for the LUKS section in the visual diagram
-- Check whether nested tables are possible in reStructuredText
-- Update "qemu" to "QEMU" for consistency, where appropriate
+The main reason for the SYSREG_ prefix was to make implementation of the
+query interface easier; I'll see if we can implement it differently. (We
+might want to think about how we handle it differently anyway.)
 
-I'll prepare and send a v2 shortly.
+>
+> Also could we stick with lowercase, rather than uppercase. I
+> appreciate the spec uses uppercase, but that doesn't concern
+> itself with end user usage. If we just plain transform everything
+> to lowercase, there's still a clear mapping to the spec that
+> people will understand [1].
 
-Souleymane Conte
+Did you forget to include [1]? :)
 
-Le jeu. 15 mai 2025 =C3=A0 21:54, Eric Blake <eblake@redhat.com> a =C3=A9cr=
-it :
+I agree that a lowercase conversion wouldn't make things too hard to
+find in the docuementation.
 
-> On Thu, May 15, 2025 at 10:24:00AM +0000, conte.souleymane@gmail.com
-> wrote:
-> > From: Souleymane Conte <conte.souleymane@gmail.com>
-> >
-> > buglink: https://gitlab.com/qemu-project/qemu/-/issues/527
-> >
-> > Signed-off-by: Souleymane Conte <conte.souleymane@gmail.com>
-> > ---
-> >  docs/interop/index.rst                |   1 +
-> >  docs/interop/{qcow2.txt =3D> qcow2.rst} | 210 +++++++++++++++---------=
---
-> >  2 files changed, 123 insertions(+), 88 deletions(-)
-> >  rename docs/interop/{qcow2.txt =3D> qcow2.rst} (89%)
-> >
 >
-> As long as we're touching this file,...
+> This example uses '-cpu host', but does this also work
+> with '-cpu max'  ?
 >
-> > +Feature name table
-> > +------------------
-> >
-> >  The feature name table is an optional header extension that contains
-> the name
-> >  for features used by the image. It can be used by applications that
-> don't know
-> > @@ -288,7 +300,7 @@ the respective feature (e.g. because the feature wa=
-s
-> introduced only later) to
-> >  display a useful error message.
-> >
-> >  The number of entries in the feature name table is determined by the
-> length of
-> > -the header extension data. Each entry look like this:
-> > +the header extension data. Each entry look like this::
->
-> s/look/looks/
->
-> > @@ -377,35 +392,40 @@ Logically the layout looks like
-> >
-> >    +-----------------------------+
-> >    | QCow2 header                |
-> > +  +-----------------------------+
-> >    | QCow2 header extension X    |
-> > +  +-----------------------------+
-> >    | QCow2 header extension FDE  |
-> > +  +-----------------------------+
-> >    | QCow2 header extension ...  |
-> > +  +-----------------------------+
-> >    | QCow2 header extension Z    |
-> >    +-----------------------------+
-> > +  | ...                         |
-> > +  +-----------------------------+
-> > +  | ...                         |
-> > +  +-----------------------------+
-> >    | ....other QCow2 tables....  |
-> > -  .                             .
-> > -  .                             .
-> >    +-----------------------------+
-> > -  | +-------------------------+ |
-> > -  | | LUKS partition header   | |
-> > -  | +-------------------------+ |
-> > -  | | LUKS key material 1     | |
-> > -  | +-------------------------+ |
-> > -  | | LUKS key material 2     | |
-> > -  | +-------------------------+ |
-> > -  | | LUKS key material ...   | |
-> > -  | +-------------------------+ |
-> > -  | | LUKS key material 8     | |
-> > -  | +-------------------------+ |
-> > +  | LUKS partition header       |
-> > +  +-----------------------------+
-> > +  | LUKS key material 1         |
-> > +  +-----------------------------+
->
-> Is there no way to nest a table in .rst?
->
-> > +Host cluster management
-> > +-----------------------
-> >
-> >  qcow2 manages the allocation of host clusters by maintaining a
-> reference count
-> >  for each host cluster. A refcount of 0 means that the cluster is free,
-> 1 means
-> > @@ -453,14 +474,15 @@ Although a large enough refcount table can reserv=
-e
-> clusters past 64 PB
-> >  large), note that some qcow2 metadata such as L1/L2 tables must point
-> >  to clusters prior to that point.
-> >
-> > -Note: qemu has an implementation limit of 8 MB as the maximum refcount
-> > -table size.  With a 2 MB cluster size and a default refcount_order of
-> > -4, it is unable to reference host resources beyond 2 EB (61 bits); in
-> > -the worst case, with a 512 cluster size and refcount_order of 6, it is
-> > -unable to access beyond 32 GB (35 bits).
-> > +.. note::
-> > +    qemu has an implementation limit of 8 MB as the maximum refcount
->
-> Should we be changing s/qemu/QEMU/ while editing this file?
->
-> --
-> Eric Blake, Principal Software Engineer
-> Red Hat, Inc.
-> Virtualization:  qemu.org | libguestfs.org
->
->
+> Conceptually '-cpu max' is supposed to be functionally identical
+> to '-cpu host' when KVM is enabled. Obviously you'd ned to
+> exclude it from '-cpu max' with TCG or other non-KVM accels.
 
---000000000000501f3f063541c126
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+For KVM, this works with -cpu max as well, as it falls through to -cpu
+host implicitly. aarch64_host_initfn() is basically split into KVM and
+HVF parts, so HVF will already do the right thing (i.e. not support it),
+as will tcg (which uses a separate init function.)
 
-<div dir=3D"ltr">Hi,<br>Thanks a lot for your review and helpful suggestion=
-s.<br><br>I will address the following points in v2:<br>- Fix the typo: &qu=
-ot;Each entry look&quot; =E2=86=92 &quot;Each entry looks&quot;<br>- Improv=
-e the layout for the LUKS section in the visual diagram<br>- Check whether =
-nested tables are possible in reStructuredText<br>- Update &quot;qemu&quot;=
- to &quot;QEMU&quot; for consistency, where appropriate<br><br>I&#39;ll pre=
-pare and send a v2 shortly.<br><br>Souleymane Conte<br></div><br><div class=
-=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr=
-">Le=C2=A0jeu. 15 mai 2025 =C3=A0=C2=A021:54, Eric Blake &lt;<a href=3D"mai=
-lto:eblake@redhat.com">eblake@redhat.com</a>&gt; a =C3=A9crit=C2=A0:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, May 15, 2025 a=
-t 10:24:00AM +0000, <a href=3D"mailto:conte.souleymane@gmail.com" target=3D=
-"_blank">conte.souleymane@gmail.com</a> wrote:<br>
-&gt; From: Souleymane Conte &lt;<a href=3D"mailto:conte.souleymane@gmail.co=
-m" target=3D"_blank">conte.souleymane@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; buglink: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/527"=
- rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/=
--/issues/527</a><br>
-&gt; <br>
-&gt; Signed-off-by: Souleymane Conte &lt;<a href=3D"mailto:conte.souleymane=
-@gmail.com" target=3D"_blank">conte.souleymane@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 docs/interop/index.rst=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 =C2=A01 +<br>
-&gt;=C2=A0 docs/interop/{qcow2.txt =3D&gt; qcow2.rst} | 210 +++++++++++++++=
------------<br>
-&gt;=C2=A0 2 files changed, 123 insertions(+), 88 deletions(-)<br>
-&gt;=C2=A0 rename docs/interop/{qcow2.txt =3D&gt; qcow2.rst} (89%)<br>
-&gt;<br>
-<br>
-As long as we&#39;re touching this file,...<br>
-<br>
-&gt; +Feature name table<br>
-&gt; +------------------<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 The feature name table is an optional header extension that cont=
-ains the name<br>
-&gt;=C2=A0 for features used by the image. It can be used by applications t=
-hat don&#39;t know<br>
-&gt; @@ -288,7 +300,7 @@ the respective feature (e.g. because the feature w=
-as introduced only later) to<br>
-&gt;=C2=A0 display a useful error message.<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 The number of entries in the feature name table is determined by=
- the length of<br>
-&gt; -the header extension data. Each entry look like this:<br>
-&gt; +the header extension data. Each entry look like this::<br>
-<br>
-s/look/looks/<br>
-<br>
-&gt; @@ -377,35 +392,40 @@ Logically the layout looks like<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 +-----------------------------+<br>
-&gt;=C2=A0 =C2=A0 | QCow2 header=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |<br>
-&gt; +=C2=A0 +-----------------------------+<br>
-&gt;=C2=A0 =C2=A0 | QCow2 header extension X=C2=A0 =C2=A0 |<br>
-&gt; +=C2=A0 +-----------------------------+<br>
-&gt;=C2=A0 =C2=A0 | QCow2 header extension FDE=C2=A0 |<br>
-&gt; +=C2=A0 +-----------------------------+<br>
-&gt;=C2=A0 =C2=A0 | QCow2 header extension ...=C2=A0 |<br>
-&gt; +=C2=A0 +-----------------------------+<br>
-&gt;=C2=A0 =C2=A0 | QCow2 header extension Z=C2=A0 =C2=A0 |<br>
-&gt;=C2=A0 =C2=A0 +-----------------------------+<br>
-&gt; +=C2=A0 | ...=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
-&gt; +=C2=A0 +-----------------------------+<br>
-&gt; +=C2=A0 | ...=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
-&gt; +=C2=A0 +-----------------------------+<br>
-&gt;=C2=A0 =C2=A0 | ....other QCow2 tables....=C2=A0 |<br>
-&gt; -=C2=A0 .=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.<br>
-&gt; -=C2=A0 .=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.<br>
-&gt;=C2=A0 =C2=A0 +-----------------------------+<br>
-&gt; -=C2=A0 | +-------------------------+ |<br>
-&gt; -=C2=A0 | | LUKS partition header=C2=A0 =C2=A0| |<br>
-&gt; -=C2=A0 | +-------------------------+ |<br>
-&gt; -=C2=A0 | | LUKS key material 1=C2=A0 =C2=A0 =C2=A0| |<br>
-&gt; -=C2=A0 | +-------------------------+ |<br>
-&gt; -=C2=A0 | | LUKS key material 2=C2=A0 =C2=A0 =C2=A0| |<br>
-&gt; -=C2=A0 | +-------------------------+ |<br>
-&gt; -=C2=A0 | | LUKS key material ...=C2=A0 =C2=A0| |<br>
-&gt; -=C2=A0 | +-------------------------+ |<br>
-&gt; -=C2=A0 | | LUKS key material 8=C2=A0 =C2=A0 =C2=A0| |<br>
-&gt; -=C2=A0 | +-------------------------+ |<br>
-&gt; +=C2=A0 | LUKS partition header=C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
-&gt; +=C2=A0 +-----------------------------+<br>
-&gt; +=C2=A0 | LUKS key material 1=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
-&gt; +=C2=A0 +-----------------------------+<br>
-<br>
-Is there no way to nest a table in .rst?<br>
-<br>
-&gt; +Host cluster management<br>
-&gt; +-----------------------<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 qcow2 manages the allocation of host clusters by maintaining a r=
-eference count<br>
-&gt;=C2=A0 for each host cluster. A refcount of 0 means that the cluster is=
- free, 1 means<br>
-&gt; @@ -453,14 +474,15 @@ Although a large enough refcount table can reser=
-ve clusters past 64 PB<br>
-&gt;=C2=A0 large), note that some qcow2 metadata such as L1/L2 tables must =
-point<br>
-&gt;=C2=A0 to clusters prior to that point.<br>
-&gt;=C2=A0 <br>
-&gt; -Note: qemu has an implementation limit of 8 MB as the maximum refcoun=
-t<br>
-&gt; -table size.=C2=A0 With a 2 MB cluster size and a default refcount_ord=
-er of<br>
-&gt; -4, it is unable to reference host resources beyond 2 EB (61 bits); in=
-<br>
-&gt; -the worst case, with a 512 cluster size and refcount_order of 6, it i=
-s<br>
-&gt; -unable to access beyond 32 GB (35 bits).<br>
-&gt; +.. note::<br>
-&gt; +=C2=A0 =C2=A0 qemu has an implementation limit of 8 MB as the maximum=
- refcount<br>
-<br>
-Should we be changing s/qemu/QEMU/ while editing this file?<br>
-<br>
--- <br>
-Eric Blake, Principal Software Engineer<br>
-Red Hat, Inc.<br>
-Virtualization:=C2=A0 <a href=3D"http://qemu.org" rel=3D"noreferrer" target=
-=3D"_blank">qemu.org</a> | <a href=3D"http://libguestfs.org" rel=3D"norefer=
-rer" target=3D"_blank">libguestfs.org</a><br>
-<br>
-</blockquote></div>
+>
+>
+>> +/*
+>> + * decode_idreg_writemap: Generate props for writable fields
+>> + *
+>> + * @obj: CPU object
+>> + * @index: index of the sysreg
+>> + * @map: writable map for the sysreg
+>> + * @reg: description of the sysreg
+>> + */
+>> +static int
+>> +decode_idreg_writemap(Object *obj, int index, uint64_t map, ARM64SysReg=
+ *reg)
+>> +{
+>> +    int i =3D ctz64(map);
+>> +    int nb_sysreg_props =3D 0;
+>> +
+>> +    while (map) {
+>> +
+>> +        ARM64SysRegField *field =3D get_field(i, reg);
+>> +        int lower, upper;
+>> +        uint64_t mask;
+>> +        char *prop_name;
+>> +
+>> +        if (!field) {
+>> +            /* the field cannot be matched to any know id named field */
+>> +            warn_report("%s bit %d of %s is writable but cannot be matc=
+hed",
+>> +                        __func__, i, reg->name);
+>> +            warn_report("%s is cpu-sysreg-properties.c up to date?", __=
+func__);
+>
+> What scenario triggers this warning ? Is this in relation to QEMU
+> auto-detecting host CPU features, as opposed to user -cpu input ?
 
---000000000000501f3f063541c126--
+The kernel making something writable, but we haven't updated
+cpu-sysreg-properties.c via the script. As I'd expect regs/fields to be
+added to sysreg much earlier than KVM making them writable, we'll
+probably not see much of this warning in practice (only if you run a
+really old QEMU version with a cutting-edge kernel.) This has mostly
+triggered for me when I had messed up something while writing the code
+:)
+
+This is not user-input triggered, so maybe we should log it differently,
+as the user can't really fix this themself?
+
 
