@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C5FC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 08:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87BC8C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 08:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFqQj-0000il-8t; Fri, 16 May 2025 04:28:33 -0400
+	id 1uFqS9-0001MR-C0; Fri, 16 May 2025 04:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFqQg-0000iO-Kb
- for qemu-devel@nongnu.org; Fri, 16 May 2025 04:28:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFqS7-0001K8-O5
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 04:29:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFqQd-0004pC-SF
- for qemu-devel@nongnu.org; Fri, 16 May 2025 04:28:29 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFqS5-0004xR-Tf
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 04:29:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747384104;
+ s=mimecast20190719; t=1747384196;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=n03Ot+YyGh/JfCSyhUpx7y8CMunSbbW9OxZf5Z9jT4E=;
- b=NQS8JXYpOnJEXpzyzAGa6txuMa9wvXFTbrp+8U5MwlMJEvpojrqWSuAGf32RVTJRKPMS4E
- Mc2y5se5U8SM2Z6ocK8Gan4vrEiRUxVBNk0O4vIN+OguM2zBo2L9YvV9yEUi/f/lVu8LIP
- LSoOfym2FGajAySkCa1929cREELH0CA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1zsV7X5vfLbA8KH9Vf5CelTVs7cPZgN9EyYCgBXXraM=;
+ b=CGsjTlojAO0R8apZPSAm2xNOpE+nkNXapk3nxtcjINor9Ask0jBl/7X7nNNMRrRonAuduy
+ XSoHjEIAiysC+kuk3MSZCnyBSRuRgVBFV8azWWTuSMgmGsxxKixyhpwtk2febmuoQfFaSH
+ bqSJfi4lu1f6Ipg2Jy7j6NcEh8Y0tI4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-183--5pQ8nH9PAuvYa_pQH7V0g-1; Fri, 16 May 2025 04:28:22 -0400
-X-MC-Unique: -5pQ8nH9PAuvYa_pQH7V0g-1
-X-Mimecast-MFC-AGG-ID: -5pQ8nH9PAuvYa_pQH7V0g_1747384101
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43d5ca7c86aso10421905e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 01:28:22 -0700 (PDT)
+ us-mta-610-jgsJsdwhPN2AxoAhx74vMA-1; Fri, 16 May 2025 04:29:54 -0400
+X-MC-Unique: jgsJsdwhPN2AxoAhx74vMA-1
+X-Mimecast-MFC-AGG-ID: jgsJsdwhPN2AxoAhx74vMA_1747384193
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a0bcaf5f45so907330f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 01:29:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747384101; x=1747988901;
+ d=1e100.net; s=20230601; t=1747384193; x=1747988993;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n03Ot+YyGh/JfCSyhUpx7y8CMunSbbW9OxZf5Z9jT4E=;
- b=MGoQ/iTHZ2yM4IHFXBGyO7cu1xZSI34ay5yvbJoKONzCKwXQ9ttUM0XIwPowckiuJP
- dyfLMCdH3sDglKfkJf5hjv5fWwOutfSs+xJci4q5j6ApDOHO4eaGmxbHsnXLnW8EVZzx
- DjJaij3vKi7weSl6DmK1FYn+QsU2P5a5WByIqscqvE/u+9/gTmDys0Oyfd9RP4zG19Hs
- o0lwDaccUwG8rqx074OaPbd9H/EopsWDyGctYuF3TyQ1zVd/0teiFViryuB29JxDY3uu
- RUx9QGeq+w7Ipt5t4R4FARPIDm5C/d6u/nga3pFBrUPpT6Uzqv7f1yHWaDPM5h5nD5yx
- prNQ==
+ bh=1zsV7X5vfLbA8KH9Vf5CelTVs7cPZgN9EyYCgBXXraM=;
+ b=JS9ElEVG/ErkSENCeTaLmx8LRQ9k1p6Ax6R/qvaPBWvlRxUDA8Ha+AQg3iQNBEghnJ
+ xKq+Om16pfN1Nxd00AIDEFCCeLlwHoAk1JJf1+tC7J7r6fTX7A2n1ZzzLBvbu90dLphs
+ BwFgmSqi5EmPx2QlFZlQcFDztqkuLuS0zNFpNNxqkfxZAJ7V67tSxcB2n5FnhtNDXftX
+ 0yy0/gpK/STqq1POMxMJfRtIRNzdm+mAHZ4mfFoEq9POlod/W5zEuk/gapLnahn6cov7
+ n+uAvgiGMTkyAdgXd3johlgtM/nL7ZHbnLWp+i3hCC5a7Y/YtkbClMbgUBXWVJGTXvCq
+ BYOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8dngoR/EQLe98grXx9up5jRuOmilV28vXOw/dlQht8s/hn7CSw1HTrEGv6+Xuo9aRQ2yPdVkeZWEF@nongnu.org
-X-Gm-Message-State: AOJu0YxWpN8FiYs1fi+yotowHIUoFpbNgzW8Lee3yAFYhxjo2kGCWIDd
- vKp8RargV3Ycnhq4bo/V3JSjhEhz2khuqf7x/gPJjAMiJWU1hXwdWFkNuz3nTqqyN4zVYE3yrSX
- uxAE838zKi7eujVzqLu3S7vXHdALjFghE1Y8qHNc56nc7avDCSylx6cgb
-X-Gm-Gg: ASbGncshOX9F5HrdaRk/SVm5b16YTOCC2Dd7styueinXyLmoKTFMKx8fv4jkYG8ePSE
- n93T1g/Fj9d/rXynaOvUjBfk6cDbijJg6gZTgCk6bPnUOAf1x0qXoGJBriSWmPKIxXRYcOo1lbF
- 7AyDOyt2pbf8eZOfOoRIrUxybJ7rc/CUGAhXYqN6/NWjBwlvpvnCNjqSRyUAhCrnria7B3jPy5L
- ggiiG686rtAZ8tfBv9uRrNuApLozWtY6uJ0yh6nuONo2u0J+BGhzLzwWCb2XsIuG2tgP8M2L5UF
- Eac4sSeT6XM1LIRw6RPI7+w1MqZ2brpP+Sn62vBpwAAuT0IE9g==
-X-Received: by 2002:a05:600c:6292:b0:441:d228:1fe5 with SMTP id
- 5b1f17b1804b1-442fd679172mr21046885e9.33.1747384101390; 
- Fri, 16 May 2025 01:28:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtEGiOYVs9MuJuUiq/KNyKIuPRO6/hWvaJJhYgtlaHpRGtW0MBcQPuDCKEJwdTMJp6cAH7qA==
-X-Received: by 2002:a05:600c:6292:b0:441:d228:1fe5 with SMTP id
- 5b1f17b1804b1-442fd679172mr21046585e9.33.1747384100901; 
- Fri, 16 May 2025 01:28:20 -0700 (PDT)
+ AJvYcCWLpgp7+4H3WQsH0rzZdAUlXTM4ptXMbs6i7YdIeHCvMt2by+47Q+nm6caZ2qPIfXjyYfop/ZZgQUQn@nongnu.org
+X-Gm-Message-State: AOJu0YydqBTZ0NyHGjar1IOK8MD7Fn/L8ZRRueCOnxLVBvEW1XvzjG52
+ pTOpdmalXzSIXA8/e11di3L7TJFDFf+1crtm8CoJdBqVAhWUTTcT0OqlTmOh2ey/JgabVnkI3sT
+ cyD5yGaHIb/8WCVUUDFSuKPvfMe9bHgVZMv+qLNCH6xuxJMfIZ/wEx1Y5
+X-Gm-Gg: ASbGncul4P/381JQ4BXcSmbujKFb8cEa92MYQiP0agy73qghQh9dm+3W7zp3RmWuoBK
+ l7gW5rd2G5oYD3wOTFZUTysgtLO6VEPpmM0r+qBAyRWr5I3wH2+WmlZ954urUpvcA1fN5mFihX5
+ YgVmcJgOu2abuAHHAjIqJBEdd2QQo1+QbXLq/O8EHYC0xatWPkxVIZQA9+hUz8C2wESNrQRtN3k
+ sUfQPFopO6rJwnDMDhlLshR4/11CUlBgjbmMmbPs5dScknR52GkNq6G04WavRpH6rdgftM8+L/j
+ 2solOT+mcw8q7Sc5kIzc/m9xisM2uv4O9fW4ipChtzKFkfwlAA==
+X-Received: by 2002:a05:6000:2285:b0:3a3:5b59:cb24 with SMTP id
+ ffacd0b85a97d-3a3601dc06emr1346050f8f.57.1747384193369; 
+ Fri, 16 May 2025 01:29:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHbcSrT4hRr0vMhc2s/OeitweiWko+x0g8WOUO1ECMr0yE5LH6217G6kbIMI/UK7ugLfcvaCg==
+X-Received: by 2002:a05:6000:2285:b0:3a3:5b59:cb24 with SMTP id
+ ffacd0b85a97d-3a3601dc06emr1346027f8f.57.1747384192973; 
+ Fri, 16 May 2025 01:29:52 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f3951b62sm101336885e9.22.2025.05.16.01.28.18
+ 5b1f17b1804b1-442fd50eda6sm24542785e9.13.2025.05.16.01.29.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 01:28:19 -0700 (PDT)
-Message-ID: <075a987b-0312-4175-88b4-2042dea4efeb@redhat.com>
-Date: Fri, 16 May 2025 10:28:18 +0200
+ Fri, 16 May 2025 01:29:51 -0700 (PDT)
+Message-ID: <948387ff-3caf-4cd0-adeb-a71f98ce73b6@redhat.com>
+Date: Fri, 16 May 2025 10:29:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 18/42] vfio/pci: pass vector to virq functions
+Subject: Re: [PATCH V3 19/42] vfio/pci: vfio_notifier_init cpr parameters
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -86,7 +86,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-19-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-20-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,10 +132,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1747063973-124548-19-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1747063973-124548-20-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -161,9 +161,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/25 17:32, Steve Sistare wrote:
-> Pass the vector number to vfio_connect_kvm_msi_virq and
-> vfio_remove_kvm_msi_virq, so it can be passed to their subroutines in
-> a subsequent patch.  No functional change.
+> Pass vdev and nr to vfio_notifier_init, for use by CPR in a subsequent
+> patch.  No functional change.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
@@ -176,67 +175,90 @@ C.
 
 
 > ---
->   hw/vfio/pci.c | 13 +++++++------
->   1 file changed, 7 insertions(+), 6 deletions(-)
+>   hw/vfio/pci.c | 22 ++++++++++++++--------
+>   1 file changed, 14 insertions(+), 8 deletions(-)
 > 
 > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 4159deb..dad6209 100644
+> index dad6209..bfeaafa 100644
 > --- a/hw/vfio/pci.c
 > +++ b/hw/vfio/pci.c
-> @@ -477,7 +477,7 @@ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
->                                                vector_n, &vdev->pdev);
->   }
+> @@ -56,7 +56,8 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev);
+>   static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled);
+>   static void vfio_msi_disable_common(VFIOPCIDevice *vdev);
 >   
-> -static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector)
-> +static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
+> -static bool vfio_notifier_init(EventNotifier *e, const char *name, Error **errp)
+> +static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
+> +                               const char *name, int nr, Error **errp)
 >   {
->       const char *name = "kvm_interrupt";
+>       int ret = event_notifier_init(e, 0);
 >   
-> @@ -503,7 +503,8 @@ fail_notifier:
+> @@ -146,7 +147,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+>       pci_irq_deassert(&vdev->pdev);
+>   
+>       /* Get an eventfd for resample/unmask */
+> -    if (!vfio_notifier_init(&vdev->intx.unmask, "intx-unmask", errp)) {
+> +    if (!vfio_notifier_init(vdev, &vdev->intx.unmask, "intx-unmask", 0, errp)) {
+>           goto fail;
+>       }
+>   
+> @@ -299,7 +300,8 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>       }
+>   #endif
+>   
+> -    if (!vfio_notifier_init(&vdev->intx.interrupt, "intx-interrupt", errp)) {
+> +    if (!vfio_notifier_init(vdev, &vdev->intx.interrupt, "intx-interrupt", 0,
+> +                            errp)) {
+>           return false;
+>       }
+>       fd = event_notifier_get_fd(&vdev->intx.interrupt);
+> @@ -485,7 +487,8 @@ static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
+>           return;
+>       }
+>   
+> -    if (!vfio_notifier_init(&vector->kvm_interrupt, name, NULL)) {
+> +    if (!vfio_notifier_init(vector->vdev, &vector->kvm_interrupt, name, nr,
+> +                            NULL)) {
+>           goto fail_notifier;
+>       }
+>   
+> @@ -528,7 +531,7 @@ static void vfio_vector_init(VFIOPCIDevice *vdev, int nr)
+>   
+>       vector->vdev = vdev;
 >       vector->virq = -1;
->   }
->   
-> -static void vfio_remove_kvm_msi_virq(VFIOMSIVector *vector)
-> +static void vfio_remove_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
-> +                                     int nr)
->   {
->       kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, &vector->kvm_interrupt,
->                                             vector->virq);
-> @@ -561,7 +562,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->        */
->       if (vector->virq >= 0) {
->           if (!msg) {
-> -            vfio_remove_kvm_msi_virq(vector);
-> +            vfio_remove_kvm_msi_virq(vdev, vector, nr);
->           } else {
->               vfio_update_kvm_msi_virq(vector, *msg, pdev);
->           }
-> @@ -573,7 +574,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->                   vfio_route_change = kvm_irqchip_begin_route_changes(kvm_state);
->                   vfio_add_kvm_msi_virq(vdev, vector, nr, true);
->                   kvm_irqchip_commit_route_changes(&vfio_route_change);
-> -                vfio_connect_kvm_msi_virq(vector);
-> +                vfio_connect_kvm_msi_virq(vector, nr);
->               }
->           }
+> -    if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
+> +    if (!vfio_notifier_init(vdev, &vector->interrupt, "interrupt", nr, &err)) {
+>           error_report_err(err);
 >       }
-> @@ -681,7 +682,7 @@ static void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
->       kvm_irqchip_commit_route_changes(&vfio_route_change);
+>       vector->use = true;
+> @@ -765,7 +768,8 @@ retry:
+>           vector->virq = -1;
+>           vector->use = true;
 >   
->       for (i = 0; i < vdev->nr_vectors; i++) {
-> -        vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i]);
-> +        vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i], i);
+> -        if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
+> +        if (!vfio_notifier_init(vdev, &vector->interrupt, "interrupt", i,
+> +                                &err)) {
+>               error_report_err(err);
+>           }
+>   
+> @@ -2918,7 +2922,8 @@ static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
+>           return;
 >       }
->   }
 >   
-> @@ -821,7 +822,7 @@ static void vfio_msi_disable_common(VFIOPCIDevice *vdev)
->           VFIOMSIVector *vector = &vdev->msi_vectors[i];
->           if (vdev->msi_vectors[i].use) {
->               if (vector->virq >= 0) {
-> -                vfio_remove_kvm_msi_virq(vector);
-> +                vfio_remove_kvm_msi_virq(vdev, vector, i);
->               }
->               qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
->                                   NULL, NULL, NULL);
+> -    if (!vfio_notifier_init(&vdev->err_notifier, "err_notifier", &err)) {
+> +    if (!vfio_notifier_init(vdev, &vdev->err_notifier, "err_notifier", 0,
+> +                            &err)) {
+>           error_report_err(err);
+>           vdev->pci_aer = false;
+>           return;
+> @@ -2985,7 +2990,8 @@ static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
+>           return;
+>       }
+>   
+> -    if (!vfio_notifier_init(&vdev->req_notifier, "req_notifier", &err)) {
+> +    if (!vfio_notifier_init(vdev, &vdev->req_notifier, "req_notifier", 0,
+> +                            &err)) {
+>           error_report_err(err);
+>           return;
+>       }
 
 
