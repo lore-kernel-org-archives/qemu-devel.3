@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93984C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 05:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1BC0C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 05:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFnbT-0006Ji-MY; Fri, 16 May 2025 01:27:27 -0400
+	id 1uFncy-0002A0-0Y; Fri, 16 May 2025 01:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFnbS-0006I1-Dd
- for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:26 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1uFncv-00025i-T5
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 01:28:58 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFnbQ-0001NX-HN
- for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:26 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2317d94c9cdso16327785ad.2
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 22:27:24 -0700 (PDT)
+ id 1uFnct-0001Rg-V5
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 01:28:57 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b24f986674fso1674226a12.0
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 22:28:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747373243; x=1747978043; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bqGoY+CilUPAjO+dXO+6qxpClMsZaBn+YNo/aP57Mxk=;
- b=NYo/HDAtRxweDrkzLG7bg/UxrwrXIo1yZGfzHBffiIUHQDhEr8IetP0iF+SWorwuI7
- QL76fRy4069miCmjtmyrganlE0T8cuS6SKCirOAxq0Os5QcGTedH+v5dO8R1zWjBNKcC
- PQ7DFn1FV0obcIu7VsBICpAUp+xcPxms9iKMq4hpAMvZPGsM+nDDKd9aM3t/7fSjFSpQ
- RAZLr3XPK+//CiO0HumkWt05MjtuxRyJehligkKJEoAUUgZyrtsH+5qY2kvFlO6PjZx4
- 65Ij+q95ptdIitnBMGuU+qngA6DC5Zni8lV64tBIQvkWFgzuBXot0c2PuvvWLX6D9Oiq
- cB/w==
+ d=linaro.org; s=google; t=1747373334; x=1747978134; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0vZXAWGTdmcCiYm91a24aahiWHhOHG8aHh1fzG/CfWI=;
+ b=Qlg/2HGXgd6InG9ueoGd1ZUW1GVJa3KzDxAAJwl8qmT1nsriv0qPUV3xyVfXlc797m
+ 4aaULw+Ymc139IvhUlkzQFddMxGz3qlSlJpTzFjM5O4mf9vUCJb7N0qhE7uXxZXFtkCT
+ UxUXrS0iDWG8ycBvJv4cRGfTpSZ4zvMkcNi7oUdAGvOr8JVOeYwhLUe1RRduH7dJeYu4
+ 4USYZ3jUH0FXlQQ4JW3aR4X3qATA10ov/A64div0ikcUBzz7EHczrTBzeUl2IBNo+aah
+ 3YsDCkvpG7C5HAjPBLKAJ/+Q33KicC7AZqY0sIk0gPSP/wCBdk/xY9hpwLA7VF1gg6/K
+ 553g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747373243; x=1747978043;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bqGoY+CilUPAjO+dXO+6qxpClMsZaBn+YNo/aP57Mxk=;
- b=qQDxWO5QX/JULw78AJtp0MMHd7xLX4Ah/Ei1Xqy4ii4XmOQyWcwh3V6ATLVHYVmbpT
- 5VH4UQlmaIAO2VoGlqBC00DNl9uShjBqzxSsJAGB0cyUBSLGm7a49yjf/0zTe/xe2bAN
- m2SEpFcFsbfXJuIO6N6U+ue+4g5EO4LEC4iYLUjzP8OeBh3gYp0o9NzG2SsSedSPv3oQ
- CA1RSBoPBU2Ad+0M6fnR7YlnUQ/1BvOTkZydm+lorg/4S+fQwZ8PH8ir/MkwrBFYdjST
- +6bAIyxR/8bLl842nKgYHDKZM40nYQA9YTzuO/C6nUS/cdNlahzVZ7QRFK1AZ8LXCP3V
- MnRQ==
-X-Gm-Message-State: AOJu0Yy7CGTB4mUQFgQnozDfttoOYW3lUBB97BK32vCLdtb7gC75Iv7c
- d117+c8UfO7YskMc6nHagIhcS6uJYAuiluQedAo23sVRdPYs24yVKZOYO1HTH6XI3XwAvGALc7U
- MD+BR
-X-Gm-Gg: ASbGnctL/eGAd2R29jrdp/QFRT1ola9Sd5wCJPr+GT3P2vGrxSbLDI+HkFsDG4nryce
- yWCfFAOsvPgW/p4pnqTt4LnDfxGDbOQ5MVJ9o+vmLhPGSAS3WG9tZlG6FPX+9LmHRHJU/n3mtOz
- hIe9kGplc5cy0CynaopmFch/UJVOI+Xkjipc30BQh09i1mta+yN8Ytecoxwdq8MumGG/AfA47DA
- gu2KIyyp+3TMU3Dgt+mThcqtsWiSwX78kXn0vGp3NlheQ8ci4JUNTz4vfi43E4BrdAfMUhpnn7Q
- u+++XhP9t2+VSZQOehmBtCOTlqvwRmrE8VvTE84104IrvF92upA=
-X-Google-Smtp-Source: AGHT+IHdGcYnD7etgGjPSQyyFm3Ma+Ccyjo/gTj3QPh+peprcRePm5WJ3NdSJENJuHpiHdQ3OcU2Pw==
-X-Received: by 2002:a17:903:94f:b0:220:ea90:191e with SMTP id
- d9443c01a7336-231d43d9ca1mr25398015ad.4.1747373243077; 
- Thu, 15 May 2025 22:27:23 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ebabfesm6539135ad.174.2025.05.15.22.27.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 22:27:22 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, berrange@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- thuth@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 6/6] meson: remove lib{system, user}_ss aliases
-Date: Thu, 15 May 2025 22:27:08 -0700
-Message-ID: <20250516052708.930928-7-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
-References: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1747373334; x=1747978134;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0vZXAWGTdmcCiYm91a24aahiWHhOHG8aHh1fzG/CfWI=;
+ b=hPeu6mquX485t5WdQI7Z/TFIiLbCKsYUh0n/Kgb0wtY0Fxk7rnLyzz4P3hWMixASfg
+ +nL2vk6UVrtAQBeJiDf3PXPs+Uqhsvf2Vqe7e94L71csnc6EPYcd5aeAzHlnxtXhq+Vs
+ mK6MJnF1M1lEksAix3u09ubxw6HG47n68L50SUFzSNZxNwgPYhT9kd38BWnwN94Ve/XW
+ 9OIjCzKL5smgIU/utva4WTB48mVqkYpdueUjcKGGVuKMbIFpoG+WN3vypRfBBQfl1+74
+ XjNVT++AqY3ZGVS+7XPdtL9yJNPaizA3CWrdZep0drjBm4HxixiW7F894mzSjNwy5rHh
+ mzxQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3NEsKhfNS9Z9q+Wc5akgQQljUGfqNmU5lLrYkY/kfECMbEUlTIdRqP7TxTRoZwV1ycQ/1YAH6gAP3@nongnu.org
+X-Gm-Message-State: AOJu0Yw6UlpqL9GdcleCQSL80eYhCCDlNC0RScRAryScLbGbQvG7PjmN
+ NHFd1gZWbcJtq95bqWfcdAy5w2EVcwyOToL+fBG1K6jykqdZ8zAvxp03MQeMSEM/U7w=
+X-Gm-Gg: ASbGncuWGFgTXjnlsojP0HXwsGFCJ1rEtNVezfUJY14kwEJUF43vBdFBaVsbdQpa8M1
+ 6MqQrxyULCqafS6Cxt1pBdvBYEPEWnJxP9AELrtYDqOc/Th99bxNUQok6LH93ALCRpAHdlvillC
+ zBz0iy3KQIJ6VP8QuzmEzynZa4EO7xzX3Wx4ISWSDJOcc/lAQY3FMOg3K9nqXVYQlx0nWElSeRv
+ S8rDXEg0FKIfzhTxcXIOXyn8radbU9XBK2m+2TKgpS0Pf5j/QstjmzdSgICjBuzNRTKmHLvge5Z
+ yiOoh78fh4GM/p1NWgVIhRxfm58mYqqyg0W39Prliyned/398rMHj8/XFg7CMmgK
+X-Google-Smtp-Source: AGHT+IEAv+IPGN2Fstb4M6N9fpkRzyteuJ3Ouy3J4AIsBfzfbhGSsIf2sra8vHxFkHX5uvFp6RYKhQ==
+X-Received: by 2002:a17:902:f68f:b0:224:3994:8a8c with SMTP id
+ d9443c01a7336-231b3959febmr87205085ad.8.1747373334309; 
+ Thu, 15 May 2025 22:28:54 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4edb0d0sm6511775ad.254.2025.05.15.22.28.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 May 2025 22:28:53 -0700 (PDT)
+Message-ID: <63e18089-44df-411e-b413-be0cacebb74d@linaro.org>
+Date: Thu, 15 May 2025 22:28:53 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] meson.build: Compile hw_common_arch_libs files with
+ right header include paths
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Brad Smith <brad@comstyle.com>
+References: <20250513115637.184940-1-thuth@redhat.com>
+ <d1bf2e99-7320-4a20-a5cb-2e7ce70036b8@linaro.org>
+ <1a89a793-1db7-4b3e-926f-fbd390d2f714@linaro.org>
+In-Reply-To: <1a89a793-1db7-4b3e-926f-fbd390d2f714@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,143 +109,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- meson.build           | 2 --
- accel/tcg/meson.build | 8 ++++----
- gdbstub/meson.build   | 4 ++--
- hw/core/meson.build   | 4 ++--
- plugins/meson.build   | 4 ++--
- system/meson.build    | 2 +-
- tcg/meson.build       | 4 ++--
- 7 files changed, 13 insertions(+), 15 deletions(-)
+On 5/15/25 5:35 PM, Pierrick Bouvier wrote:
+> On 5/13/25 4:20 PM, Pierrick Bouvier wrote:
+>> Hi Thomas,
+>>
+>> On 5/13/25 4:56 AM, Thomas Huth wrote:
+>>> From: Thomas Huth <thuth@redhat.com>
+>>>
+>>> Since commit 6f4e8a92bbd ("hw/arm: make most of the compilation units
+>>> common"), compilation of some arm machines (like musicpal) fails on
+>>> certain host systems like OpenBSD 7.6/7.7 since headers like <epoxy/gl.h>
+>>> don't reside in /usr/include and we currently don't add the right
+>>> CFLAGS for the common files to include the additional header search
+>>> paths. Add a loop similar to what we already did in commit 727bb5b477e6
+>>> to fix it.
+>>>
+>>> With this fix applied, we can now also drop the explicit dependency
+>>> on pixman for the arm musicpal machine.
+>>>
+>>> Fixes: 6f4e8a92bbd ("hw/arm: make most of the compilation units common")
+>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>>> [thuth: Add commit message + changes in hw/arm/meson.build]
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>     v2: Change the subject of the patch according to Paolo's suggestion
+>>>
+>>>     meson.build        | 27 ++++++++++++++++-----------
+>>>     hw/arm/meson.build |  2 +-
+>>>     2 files changed, 17 insertions(+), 12 deletions(-)
+>>
+>>
+>> Thanks for the patch.
+>> I didn't run into any issue when building for {linux, macos, windows,
+>> freebsd}, so I assumed it was safe to do things this way and specific
+>> dependencies could just be listed with associated sources.
+>> It seems like there are cracks in this approach, so adding all the
+>> dependencies per base arch is a good idea.
+>>
+>> Any chance you could base it on this commit [1] (and add it for new
+>> libraries as well)?
+>>
+>> This is going to be pulled very shortly (as part of a wider series), and
+>> the same fix will be needed.
+>   > [1] 20250512180502.2395029-4-pierrick.bouvier@linaro.org
+>>
+> 
+> [1] was merged.
+> I'm working on a series integrating your work, and doing further
+> cleanups on meson side, so you can leave it for now.
+> 
 
-diff --git a/meson.build b/meson.build
-index 98b97fd7ba3..7aca61a1e8f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3712,14 +3712,12 @@ io_ss = ss.source_set()
- qmp_ss = ss.source_set()
- qom_ss = ss.source_set()
- system_ss = ss.source_set()
--libsystem_ss = system_ss
- specific_fuzz_ss = ss.source_set()
- specific_ss = ss.source_set()
- rust_devices_ss = ss.source_set()
- stub_ss = ss.source_set()
- trace_ss = ss.source_set()
- user_ss = ss.source_set()
--libuser_ss = user_ss
- util_ss = ss.source_set()
- 
- # accel modules
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 97d5e5a7112..575e92bb9e8 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -18,15 +18,15 @@ if get_option('plugins')
-   tcg_ss.add(files('plugin-gen.c'))
- endif
- 
--libuser_ss.add_all(tcg_ss)
--libsystem_ss.add_all(tcg_ss)
-+user_ss.add_all(tcg_ss)
-+system_ss.add_all(tcg_ss)
- 
--libuser_ss.add(files(
-+user_ss.add(files(
-   'user-exec.c',
-   'user-exec-stub.c',
- ))
- 
--libsystem_ss.add(files(
-+system_ss.add(files(
-   'cputlb.c',
-   'icount-common.c',
-   'monitor.c',
-diff --git a/gdbstub/meson.build b/gdbstub/meson.build
-index b25db86767e..15c666f5752 100644
---- a/gdbstub/meson.build
-+++ b/gdbstub/meson.build
-@@ -5,13 +5,13 @@
- #
- 
- # We build two versions of gdbstub, one for each mode
--libuser_ss.add(files(
-+user_ss.add(files(
-   'gdbstub.c',
-   'syscalls.c',
-   'user.c'
- ))
- 
--libsystem_ss.add(files(
-+system_ss.add(files(
-   'gdbstub.c',
-   'syscalls.c',
-   'system.c'
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 547de6527cf..b5a545a0edd 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -26,7 +26,7 @@ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
- system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
- system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutls])
- 
--libsystem_ss.add(files(
-+system_ss.add(files(
-   'cpu-system.c',
-   'fw-path-provider.c',
-   'gpio.c',
-@@ -46,7 +46,7 @@ libsystem_ss.add(files(
-   'vm-change-state-handler.c',
-   'clock-vmstate.c',
- ))
--libuser_ss.add(files(
-+user_ss.add(files(
-   'cpu-user.c',
-   'qdev-user.c',
- ))
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 5383c7b88bf..b20edfbabc1 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -61,8 +61,8 @@ endif
- user_ss.add(files('user.c', 'api-user.c'))
- system_ss.add(files('system.c', 'api-system.c'))
- 
--libuser_ss.add(files('api.c', 'core.c'))
--libsystem_ss.add(files('api.c', 'core.c'))
-+user_ss.add(files('api.c', 'core.c'))
-+system_ss.add(files('api.c', 'core.c'))
- 
- common_ss.add(files('loader.c'))
- 
-diff --git a/system/meson.build b/system/meson.build
-index c2f00827669..7514bf3455d 100644
---- a/system/meson.build
-+++ b/system/meson.build
-@@ -7,7 +7,7 @@ system_ss.add(files(
-   'vl.c',
- ), sdl, libpmem, libdaxctl)
- 
--libsystem_ss.add(files(
-+system_ss.add(files(
-   'balloon.c',
-   'bootdevice.c',
-   'cpus.c',
-diff --git a/tcg/meson.build b/tcg/meson.build
-index bd2821e4b54..706a6eb260e 100644
---- a/tcg/meson.build
-+++ b/tcg/meson.build
-@@ -27,5 +27,5 @@ if host_os == 'linux'
-   tcg_ss.add(files('perf.c'))
- endif
- 
--libuser_ss.add_all(tcg_ss)
--libsystem_ss.add_all(tcg_ss)
-+user_ss.add_all(tcg_ss)
-+system_ss.add_all(tcg_ss)
--- 
-2.47.2
+Posted here:
+https://lore.kernel.org/qemu-devel/20250516052708.930928-1-pierrick.bouvier@linaro.org
 
+Regards,
+Pierrick
 
