@@ -4,64 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42ADC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAE46C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 16:21:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFxRt-0008TK-EJ; Fri, 16 May 2025 11:58:13 -0400
+	id 1uFxnn-0006Xa-Iz; Fri, 16 May 2025 12:20:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uFxRr-0008Sr-Tl
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:58:11 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFxnl-0006XJ-Rb
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 12:20:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uFxRq-0002eJ-21
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:58:11 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFxnj-0005y0-5O
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 12:20:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747411089;
+ s=mimecast20190719; t=1747412445;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=63fxX36W1DeMEqkQnncf19Px4ERiPQlpA84N7Wfc39A=;
- b=FGG+saCEhSc3GUnSk5q4PeA9FXTN0UIEXwsDQxL/CBYa+P7/X9NzeED7ymljRcsAhfKFbm
- SqeTLZa5oz6N1SLJOKNtq72+vCebq9Gsg8UqdYpbWDkk/teaM/ZGGBlTRhI7ptZPxytFgD
- igftn67rkYWbY+I0KSz77Ug8HE7kwBA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-zGmYJnFHP8ygtXyzssrZtw-1; Fri,
- 16 May 2025 11:58:08 -0400
-X-MC-Unique: zGmYJnFHP8ygtXyzssrZtw-1
-X-Mimecast-MFC-AGG-ID: zGmYJnFHP8ygtXyzssrZtw_1747411087
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 367B71800EC8; Fri, 16 May 2025 15:58:07 +0000 (UTC)
-Received: from fedora.brq.redhat.com (unknown [10.43.2.64])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9A68218003FC; Fri, 16 May 2025 15:58:05 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 6/7] util/qemu-sockets: Refactor inet_parse() to use
- QemuOpts
-Date: Fri, 16 May 2025 17:56:58 +0200
-Message-ID: <20250516155710.2246148-7-jmarcin@redhat.com>
-In-Reply-To: <20250516155710.2246148-1-jmarcin@redhat.com>
-References: <20250516155710.2246148-1-jmarcin@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AR7M4CKyTPjakltG21LIrzf+nlTHtXjECNp9S2vw0Jg=;
+ b=E/7DDz4+eHYT5InZTk81uai/2IjYTQBn/5Miq6yNx9//bPTjt3QHvtfr4q/WpjHgU/XHu0
+ +dnnCZTYvA7fKBEVPuymtizFc8qUkBVBzOdmwS0OthEVrPUJ1z7eQZxNIo0ByghyKax1Em
+ 2kcDJw1dSbZvUorROoiMxGTIOtCnzUM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-300-8NrOsz9-MbKYRP-XbKkeUg-1; Fri, 16 May 2025 12:20:43 -0400
+X-MC-Unique: 8NrOsz9-MbKYRP-XbKkeUg-1
+X-Mimecast-MFC-AGG-ID: 8NrOsz9-MbKYRP-XbKkeUg_1747412443
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a0af6219a5so1368349f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 09:20:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747412442; x=1748017242;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AR7M4CKyTPjakltG21LIrzf+nlTHtXjECNp9S2vw0Jg=;
+ b=YJHlsjxpMvEo4jrmjM/FSaMclLVhezJtbcRyZ4Co2fv3f3khmq7Ti5Fo2mwImwqou8
+ FDHFEj5qeKsAXW9+zBBW4YFVWmP+WQxGWK91zJm94sHzBcnUTZ48xt8nJ/dPaY3qJ4Sv
+ dEJy48K9Tb3aalbi2IU7tcO5omNmA29ATA95sI6iMpvhZu12TpWCrruatXp5gOftbRuU
+ WiV46ahr2oPZZKuKgFJ2mTWEOadKQ+5GP0fkrSvWnQoybOkdCcYP/Snw05AF/yIoIET+
+ FN9QtPsS1p6aly7EJOk+/s/Tyj7lqi2p33BlEF5zeW6QAC7Lhfp8/yEjAtavRl68WMrg
+ 9JKA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFtH2QfVtQNApPiHsWcRZ56VRjtyszxYKKaeLHnIPQq1Sic3m57E3IfSqvab7VikCjKXy6imeAxRYl@nongnu.org
+X-Gm-Message-State: AOJu0YwKJoPjboBCC0IoLFWcsj1kTJkjGVVBHCP4tBQkclxCv7pAOu3+
+ IZPUJjnJYLA4HxVs9B333LobSFDhGix0ai3leRwu+4l1ynPlVW5B1W3A/GFhJLwD0V21lwpgHmA
+ y6bO5X8fHSKkI0MRYo0hnDOAYgE7ndOHTO+90JP71MbEtjVzRJzVdEk0F
+X-Gm-Gg: ASbGncvR5VTI/F6JxtMnWEAWU0ouCqZx2eovYF3AzgpTETVK61JeC8rEMqEiOk15w5w
+ YVEe3WqWFrxS9JKdqDnyyrMwkTuXA0f2PwK/6rBTH7fCsOs7kA8D/Y7qWKn8VeTxVu1QerHwOyb
+ R+UXKYvvsAJlr/68qxSr/JFu7E1oA7xDly28MD0OSKNxEiO1YIBRZZzgVGwbcOVh7q1+VW0AaFd
+ fX5UbKpLhPJbWJc92QI9sri2DYtLR0bAtnweOCyZGDhIWKaticMlJXaF47LayNrebYH0ut7thXp
+ V2Iji56FP8fWnUoqEBIezF9eTFPq+vXd1bClFiwoZhcqexk=
+X-Received: by 2002:a5d:64e6:0:b0:3a3:4ba9:73b2 with SMTP id
+ ffacd0b85a97d-3a3511998b6mr7492930f8f.3.1747412442564; 
+ Fri, 16 May 2025 09:20:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQrgIazV2BmuB7a1R1SmVIl6um6P5dnnDg5oWhq0riGWIA1p4XzKW5ox8fmcyJ4YAhUg99Ag==
+X-Received: by 2002:a5d:64e6:0:b0:3a3:4ba9:73b2 with SMTP id
+ ffacd0b85a97d-3a3511998b6mr7492901f8f.3.1747412442128; 
+ Fri, 16 May 2025 09:20:42 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
+ ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a361a81fd8sm2373535f8f.81.2025.05.16.09.20.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 May 2025 09:20:41 -0700 (PDT)
+Message-ID: <d989b8a9-16cb-4b5f-b6cb-299ce93883f5@redhat.com>
+Date: Fri, 16 May 2025 18:20:40 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 06/42] vfio/container: register container for cpr
+To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
+ <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-7-git-send-email-steven.sistare@oracle.com>
+ <161947a0-f3fb-4ddb-b6c1-6e1a1e4d6849@redhat.com>
+ <2f36f035-6704-4a73-a9e7-953c27fb32d2@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <2f36f035-6704-4a73-a9e7-953c27fb32d2@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -86,251 +162,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+On 5/15/25 21:06, Steven Sistare wrote:
+> On 5/15/2025 3:54 AM, Cédric Le Goater wrote:
+>> On 5/12/25 17:32, Steve Sistare wrote:
+>>> Register a legacy container for cpr-transfer, replacing the generic CPR
+>>> register call with a more specific legacy container register call.  Add a
+>>> blocker if the kernel does not support VFIO_UPDATE_VADDR or VFIO_UNMAP_ALL.
+>>>
+>>> This is mostly boiler plate.  The fields to to saved and restored are added
+>>> in subsequent patches.
+>>>
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>> ---
+>>>   hw/vfio/container.c              |  6 ++--
+>>>   hw/vfio/cpr-legacy.c             | 70 ++++++++++++++++++++++++++++++++++++++++
+>>>   hw/vfio/cpr.c                    |  5 ++-
+>>>   hw/vfio/meson.build              |  1 +
+>>>   include/hw/vfio/vfio-container.h |  2 ++
+>>>   include/hw/vfio/vfio-cpr.h       | 14 ++++++++
+>>>   6 files changed, 92 insertions(+), 6 deletions(-)
+>>>   create mode 100644 hw/vfio/cpr-legacy.c
+>>>
+>>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+>>> index eb56f00..85c76da 100644
+>>> --- a/hw/vfio/container.c
+>>> +++ b/hw/vfio/container.c
+>>> @@ -642,7 +642,7 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+>>>       new_container = true;
+>>>       bcontainer = &container->bcontainer;
+>>> -    if (!vfio_cpr_register_container(bcontainer, errp)) {
+>>> +    if (!vfio_legacy_cpr_register_container(container, errp)) {
+>>>           goto fail;
+>>>       }
+>>> @@ -678,7 +678,7 @@ fail:
+>>>           vioc->release(bcontainer);
+>>>       }
+>>>       if (new_container) {
+>>> -        vfio_cpr_unregister_container(bcontainer);
+>>> +        vfio_legacy_cpr_unregister_container(container);
+>>>           object_unref(container);
+>>>       }
+>>>       if (fd >= 0) {
+>>> @@ -719,7 +719,7 @@ static void vfio_container_disconnect(VFIOGroup *group)
+>>>           VFIOAddressSpace *space = bcontainer->space;
+>>>           trace_vfio_container_disconnect(container->fd);
+>>> -        vfio_cpr_unregister_container(bcontainer);
+>>> +        vfio_legacy_cpr_unregister_container(container);
+>>>           close(container->fd);
+>>>           object_unref(container);
+>>> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+>>> new file mode 100644
+>>> index 0000000..fac323c
+>>> --- /dev/null
+>>> +++ b/hw/vfio/cpr-legacy.c
+>>> @@ -0,0 +1,70 @@
+>>> +/*
+>>> + * Copyright (c) 2021-2025 Oracle and/or its affiliates.
+>>> + *
+>>> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+>>> + * See the COPYING file in the top-level directory.
+>>
+>> Please add a SPDX-License-Identifier tag.
+> 
+> Sure.  I'll do the same for my other new files.
 
-Currently, the inet address parser cannot handle multiple options where
-one is prefixed with the name of the other. For example, with the
-'keep-alive-idle' option added, the current parser cannot parse
-'127.0.0.1:5000,keep-alive-idle=60,keep-alive' correctly. Instead, it
-fails with "error parsing 'keep-alive' flag '-idle=60,keep-alive'".
+and remove the License boiler plate too please.
 
-To resolve these issues, this patch rewrites the inet address parsing
-using the QemuOpts parser, which the inet_parse_flag() function tries to
-mimic. This new parser supports all previously supported options and on
-top of that the 'numeric' flag is now also supported. The only
-difference is, the new parser produces an error if an unknown option is
-passed, instead of silently ignoring it.
+A newer version of checkpatch will complain with :
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
----
- tests/unit/test-util-sockets.c |   4 +-
- util/qemu-sockets.c            | 158 +++++++++++++++------------------
- 2 files changed, 77 insertions(+), 85 deletions(-)
+   ERROR: New file 'hw/vfio/cpr-legacy.c' requires 'SPDX-License-Identifier'
+   ERROR: New file 'hw/vfio/cpr-legacy.c' must not have license boilerplate header text unless this file is copied from existing code with such  text already present.
+   WARNING: added, moved or deleted file(s):
 
-diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
-index 60f15a4ddf..77d0767b9b 100644
---- a/tests/unit/test-util-sockets.c
-+++ b/tests/unit/test-util-sockets.c
-@@ -449,6 +449,8 @@ static void test_inet_parse_all_options_good(void)
-     InetSocketAddress exp_addr = {
-         .host = host,
-         .port = port,
-+        .has_numeric = true,
-+        .numeric =  true,
-         .has_to = true,
-         .to = 5006,
-         .has_ipv4 = true,
-@@ -463,7 +465,7 @@ static void test_inet_parse_all_options_good(void)
- #endif
-     };
-     inet_parse_test_helper(
--        "[::1]:5000,to=5006,ipv4=off,ipv6=on,keep-alive"
-+        "[::1]:5000,numeric,to=5006,ipv4=off,ipv6=on,keep-alive"
- #ifdef HAVE_IPPROTO_MPTCP
-         ",mptcp"
- #endif
-diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-index 4fbf1ed5bf..403dc26b36 100644
---- a/util/qemu-sockets.c
-+++ b/util/qemu-sockets.c
-@@ -30,6 +30,7 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/qobject-output-visitor.h"
- #include "qemu/cutils.h"
-+#include "qemu/option.h"
- #include "trace.h"
- 
- #ifndef AI_ADDRCONFIG
-@@ -600,115 +601,104 @@ err:
-     return -1;
- }
- 
--/* compatibility wrapper */
--static int inet_parse_flag(const char *flagname, const char *optstr, bool *val,
--                           Error **errp)
--{
--    char *end;
--    size_t len;
--
--    end = strstr(optstr, ",");
--    if (end) {
--        if (end[1] == ',') { /* Reject 'ipv6=on,,foo' */
--            error_setg(errp, "error parsing '%s' flag '%s'", flagname, optstr);
--            return -1;
--        }
--        len = end - optstr;
--    } else {
--        len = strlen(optstr);
--    }
--    if (len == 0 || (len == 3 && strncmp(optstr, "=on", len) == 0)) {
--        *val = true;
--    } else if (len == 4 && strncmp(optstr, "=off", len) == 0) {
--        *val = false;
--    } else {
--        error_setg(errp, "error parsing '%s' flag '%s'", flagname, optstr);
--        return -1;
--    }
--    return 0;
--}
-+static QemuOptsList inet_opts = {
-+    .name = "InetSocketAddress",
-+    .head = QTAILQ_HEAD_INITIALIZER(inet_opts.head),
-+    .implied_opt_name = "addr",
-+    .desc = {
-+        {
-+            .name = "addr",
-+            .type = QEMU_OPT_STRING,
-+        },
-+        {
-+            .name = "numeric",
-+            .type = QEMU_OPT_BOOL,
-+        },
-+        {
-+            .name = "to",
-+            .type = QEMU_OPT_NUMBER,
-+        },
-+        {
-+            .name = "ipv4",
-+            .type = QEMU_OPT_BOOL,
-+        },
-+        {
-+            .name = "ipv6",
-+            .type = QEMU_OPT_BOOL,
-+        },
-+        {
-+            .name = "keep-alive",
-+            .type = QEMU_OPT_BOOL,
-+        },
-+#ifdef HAVE_IPPROTO_MPTCP
-+        {
-+            .name = "mptcp",
-+            .type = QEMU_OPT_BOOL,
-+        },
-+#endif
-+        { /* end of list */ }
-+    },
-+};
- 
- int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
- {
--    const char *optstr, *h;
--    char host[65];
--    char port[33];
--    int to;
--    int pos;
--    char *begin;
--
-+    QemuOpts *opts = qemu_opts_parse(&inet_opts, str, true, errp);
-+    if (!opts) {
-+        return -1;
-+    }
-     memset(addr, 0, sizeof(*addr));
- 
-     /* parse address */
--    if (str[0] == ':') {
--        /* no host given */
--        host[0] = '\0';
--        if (sscanf(str, ":%32[^,]%n", port, &pos) != 1) {
--            error_setg(errp, "error parsing port in address '%s'", str);
--            return -1;
--        }
--    } else if (str[0] == '[') {
-+    const char *addr_str = qemu_opt_get(opts, "addr");
-+    if (!addr_str) {
-+        error_setg(errp, "error parsing address ''");
-+        return -1;
-+    }
-+    if (str[0] == '[') {
-         /* IPv6 addr */
--        if (sscanf(str, "[%64[^]]]:%32[^,]%n", host, port, &pos) != 2) {
--            error_setg(errp, "error parsing IPv6 address '%s'", str);
-+        const char *ip_end = strstr(addr_str, "]:");
-+        if (!ip_end || ip_end - addr_str < 2 || strlen(ip_end) < 3) {
-+            error_setg(errp, "error parsing IPv6 address '%s'", addr_str);
-             return -1;
-         }
-+        addr->host = g_strndup(addr_str + 1, ip_end - addr_str - 1);
-+        addr->port = g_strdup(ip_end + 2);
-     } else {
--        /* hostname or IPv4 addr */
--        if (sscanf(str, "%64[^:]:%32[^,]%n", host, port, &pos) != 2) {
--            error_setg(errp, "error parsing address '%s'", str);
-+        /* no host, hostname or IPv4 addr */
-+        const char *port = strchr(addr_str, ':');
-+        if (!port || strlen(port) < 2) {
-+            error_setg(errp, "error parsing address '%s'", addr_str);
-             return -1;
-         }
-+        addr->host = g_strndup(addr_str, port - addr_str);
-+        addr->port = g_strdup(port + 1);
-     }
- 
--    addr->host = g_strdup(host);
--    addr->port = g_strdup(port);
--
-     /* parse options */
--    optstr = str + pos;
--    h = strstr(optstr, ",to=");
--    if (h) {
--        h += 4;
--        if (sscanf(h, "%d%n", &to, &pos) != 1 ||
--            (h[pos] != '\0' && h[pos] != ',')) {
--            error_setg(errp, "error parsing to= argument");
--            return -1;
--        }
-+    if (qemu_opt_find(opts, "numeric")) {
-+        addr->has_numeric = true,
-+        addr->numeric = qemu_opt_get_bool(opts, "numeric", false);
-+    }
-+    if (qemu_opt_find(opts, "to")) {
-         addr->has_to = true;
--        addr->to = to;
-+        addr->to = qemu_opt_get_number(opts, "to", 0);
-     }
--    begin = strstr(optstr, ",ipv4");
--    if (begin) {
--        if (inet_parse_flag("ipv4", begin + 5, &addr->ipv4, errp) < 0) {
--            return -1;
--        }
-+    if (qemu_opt_find(opts, "ipv4")) {
-         addr->has_ipv4 = true;
-+        addr->ipv4 = qemu_opt_get_bool(opts, "ipv4", false);
-     }
--    begin = strstr(optstr, ",ipv6");
--    if (begin) {
--        if (inet_parse_flag("ipv6", begin + 5, &addr->ipv6, errp) < 0) {
--            return -1;
--        }
-+    if (qemu_opt_find(opts, "ipv6")) {
-         addr->has_ipv6 = true;
-+        addr->ipv6 = qemu_opt_get_bool(opts, "ipv6", false);
-     }
--    begin = strstr(optstr, ",keep-alive");
--    if (begin) {
--        if (inet_parse_flag("keep-alive", begin + strlen(",keep-alive"),
--                            &addr->keep_alive, errp) < 0)
--        {
--            return -1;
--        }
-+    if (qemu_opt_find(opts, "keep-alive")) {
-         addr->has_keep_alive = true;
-+        addr->keep_alive = qemu_opt_get_bool(opts, "keep-alive", false);
-     }
- #ifdef HAVE_IPPROTO_MPTCP
--    begin = strstr(optstr, ",mptcp");
--    if (begin) {
--        if (inet_parse_flag("mptcp", begin + strlen(",mptcp"),
--                            &addr->mptcp, errp) < 0)
--        {
--            return -1;
--        }
-+    if (qemu_opt_find(opts, "mptcp")) {
-         addr->has_mptcp = true;
-+        addr->mptcp = qemu_opt_get_bool(opts, "mptcp", 0);
-     }
- #endif
-     return 0;
--- 
-2.49.0
+     hw/vfio/cpr-legacy.c
+
+   Does MAINTAINERS need updating?
+
+   total: 2 errors, 1 warnings, 152 lines checked
+
+
+Thanks,
+
+C.
+
+
+> 
+>>> + */
+>>> +
+>>> +#include <sys/ioctl.h>
+>>> +#include <linux/vfio.h>
+>>> +#include "qemu/osdep.h"
+>>> +#include "hw/vfio/vfio-container.h"
+>>> +#include "hw/vfio/vfio-cpr.h"
+>>> +#include "migration/blocker.h"
+>>> +#include "migration/cpr.h"
+>>> +#include "migration/migration.h"
+>>> +#include "migration/vmstate.h"
+>>> +#include "qapi/error.h"
+>>> +
+>>> +static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
+>>> +{
+>>> +    if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UPDATE_VADDR)) {
+>>> +        error_setg(errp, "VFIO container does not support VFIO_UPDATE_VADDR");
+>>> +        return false;
+>>> +
+>>> +    } else if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL)) {
+>>> +        error_setg(errp, "VFIO container does not support VFIO_UNMAP_ALL");
+>>> +        return false;
+>>> +
+>>> +    } else {
+>>> +        return true;
+>>> +    }
+>>> +}
+>>> +
+>>> +static const VMStateDescription vfio_container_vmstate = {
+>>> +    .name = "vfio-container",
+>>> +    .version_id = 0,
+>>> +    .minimum_version_id = 0,
+>>> +    .needed = cpr_needed_for_reuse,
+>>> +    .fields = (VMStateField[]) {
+>>> +        VMSTATE_END_OF_LIST()
+>>> +    }
+>>> +};
+>>> +
+>>> +bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
+>>> +{
+>>> +    VFIOContainerBase *bcontainer = &container->bcontainer;
+>>> +    Error **cpr_blocker = &container->cpr.blocker;
+>>> +
+>>> +    migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
+>>> +                                vfio_cpr_reboot_notifier,
+>>> +                                MIG_MODE_CPR_REBOOT);
+>>> +
+>>> +    if (!vfio_cpr_supported(container, cpr_blocker)) {
+>>> +        return migrate_add_blocker_modes(cpr_blocker, errp,
+>>> +                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
+>>> +    }
+>>> +
+>>> +    vmstate_register(NULL, -1, &vfio_container_vmstate, container);
+>>> +
+>>> +    return true;
+>>> +}
+>>> +
+>>> +void vfio_legacy_cpr_unregister_container(VFIOContainer *container)
+>>> +{
+>>> +    VFIOContainerBase *bcontainer = &container->bcontainer;
+>>> +
+>>> +    migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
+>>> +    migrate_del_blocker(&container->cpr.blocker);
+>>> +    vmstate_unregister(NULL, &vfio_container_vmstate, container);
+>>> +}
+>>> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+>>> index 0210e76..0e59612 100644
+>>> --- a/hw/vfio/cpr.c
+>>> +++ b/hw/vfio/cpr.c
+>>> @@ -7,13 +7,12 @@
+>>>   #include "qemu/osdep.h"
+>>>   #include "hw/vfio/vfio-device.h"
+>>> -#include "migration/misc.h"
+>>>   #include "hw/vfio/vfio-cpr.h"
+>>>   #include "qapi/error.h"
+>>>   #include "system/runstate.h"
+>>> -static int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+>>> -                                    MigrationEvent *e, Error **errp)
+>>> +int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+>>> +                             MigrationEvent *e, Error **errp)
+>>>   {
+>>>       if (e->type == MIG_EVENT_PRECOPY_SETUP &&
+>>>           !runstate_check(RUN_STATE_SUSPENDED) && !vm_get_suspended()) {
+>>> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+>>> index bccb050..73d29f9 100644
+>>> --- a/hw/vfio/meson.build
+>>> +++ b/hw/vfio/meson.build
+>>> @@ -21,6 +21,7 @@ system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
+>>>   system_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
+>>>   system_ss.add(when: 'CONFIG_VFIO', if_true: files(
+>>>     'cpr.c',
+>>> +  'cpr-legacy.c',
+>>>     'device.c',
+>>>     'migration.c',
+>>>     'migration-multifd.c',
+>>> diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
+>>> index afc498d..21e5807 100644
+>>> --- a/include/hw/vfio/vfio-container.h
+>>> +++ b/include/hw/vfio/vfio-container.h
+>>> @@ -10,6 +10,7 @@
+>>>   #define HW_VFIO_CONTAINER_H
+>>>   #include "hw/vfio/vfio-container-base.h"
+>>> +#include "hw/vfio/vfio-cpr.h"
+>>>   typedef struct VFIOContainer VFIOContainer;
+>>>   typedef struct VFIODevice VFIODevice;
+>>> @@ -29,6 +30,7 @@ typedef struct VFIOContainer {
+>>>       int fd; /* /dev/vfio/vfio, empowered by the attached groups */
+>>>       unsigned iommu_type;
+>>>       QLIST_HEAD(, VFIOGroup) group_list;
+>>> +    VFIOContainerCPR cpr;
+>>>   } VFIOContainer;
+>>>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY);
+>>> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+>>> index 750ea5b..f864547 100644
+>>> --- a/include/hw/vfio/vfio-cpr.h
+>>> +++ b/include/hw/vfio/vfio-cpr.h
+>>> @@ -9,8 +9,22 @@
+>>>   #ifndef HW_VFIO_VFIO_CPR_H
+>>>   #define HW_VFIO_VFIO_CPR_H
+>>> +#include "migration/misc.h"
+>>> +
+>>> +typedef struct VFIOContainerCPR {
+>>> +    Error *blocker;
+>>> +} VFIOContainerCPR;
+>>> +
+>>> +struct VFIOContainer;
+>>>   struct VFIOContainerBase;
+>>> +bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
+>>> +                                        Error **errp);
+>>> +void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
+>>> +
+>>> +int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
+>>> +                             Error **errp);
+>>> +
+>>>   bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
+>>>                                    Error **errp);
+>>>   void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
+>>
+>> what about vfio_cpr_un/register_container ? Shouldn't we remove them ?
+> 
+> At this patch in the series, those are still used by iommufd containers.
+> Those uses are removed in "vfio/iommufd: register container for cpr", and
+> vfio_cpr_un/register_container are deleted by the last patch in the series.
+> 
+> - Steve
+> 
 
 
