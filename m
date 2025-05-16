@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA5A7C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83699C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:48:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFwHr-0007IM-Jv; Fri, 16 May 2025 10:43:47 -0400
+	id 1uFwM2-0001e7-5l; Fri, 16 May 2025 10:48:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwHo-0007IA-U4
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:43:44 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwLy-0001dR-5E
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:48:04 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwHm-0001kj-Qt
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:43:44 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43d0618746bso17775685e9.2
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 07:43:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwLv-0002Nt-Dx
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:48:01 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3a1b8e8b2b2so1456598f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 07:47:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747406621; x=1748011421; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747406877; x=1748011677; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jsYifqg2W3nQQyHmc9MVahFWG6m100Fl3H22xhmDURQ=;
- b=eSd7wO8A8MfJ5tYhzllu8o9hgEiZ1Cqj4MT63FzA0nzmuHn3T3gvl+WY7GG6fg7eUH
- yqTD9v8SNYNNKbD6j0p1Q14VlUyTmBSEUKR5SjBrr2Y+k6vgoydh0tRLNnCRPk0faJ2P
- v7OJKQczpQuQ9K+zWUq7RZOECHZTrovTQm+ubipSEQBcp1V7khI+puZFaxrDxop4m5So
- xrBPHmaim8O5vzSRcu2ZP6YRAlPtbAf3tP6hHolvTQfS0p+5VyxekDasLb8vIQLGmAVs
- LoAjmFWQv0+7Y7BGuPoTuwGptN5v7NeDXl0cjapTFWCLIeUoIwY3aCLOTLLa570NovUh
- GoFw==
+ bh=4Hz9R3lbGIV+V7GuRIm48x4ah4B5SS/VSn+imgLSZbM=;
+ b=USGhcD5s9VMHzC9xW5Gc6oMpWZcX5UN5YzA2ovARnkgCFO/qZs+wEvBiRprpwELdkO
+ SqqBUjepB4lClqojXYN4JHc8PUJ9pYYgSQbdJQm+VlZwdwx8ulJd4ibVdWm4sOEhcVbi
+ CyaXZOtSjtNC26Ll1RWohw2OoJ2Ci7o3MoBjYUtycOELaiSVNj20C88J7ZbxEhrl+Hn8
+ zUSxkcbN0EBJrOfxD8IKPh1Jfs5alw5nyBryrgUdswO+RxucWcO51U2BpUfj9wdq7ene
+ pV3hnlcVz3cKWtQAteyvXQ0WVKfMtC8T9HWczBldBLexMRwnUH2bHYB+Ke/966pon8ln
+ bANw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747406621; x=1748011421;
+ d=1e100.net; s=20230601; t=1747406877; x=1748011677;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jsYifqg2W3nQQyHmc9MVahFWG6m100Fl3H22xhmDURQ=;
- b=sQFtTchZUOb7UOEcfr5/xo2EK1iBzavZQWwI6Z0NdKHjt4o003Y9EarEypQ6LjjJhW
- dpA/ANxmo5DjKpaR3gbZM9fcvtW0wv0CkdV7yM59+7oH+cVzoDANURMqiiDpFONRenvn
- KcTjkdykcxS/aO8/ktTY+ZWzLj2C1ARTKp0ve513CbfVBSD7jlTO4botEXtclfH1ryaQ
- dHR2g+NKf9RIf7++WqoaCtBLejeOjff2I66r6o7jdmJxxyFTCdbtsE4pTD/MSOcNvozN
- Ozm3w8UjgdblSEK1/SQTfJOQyEGWQO3CQs04t/It/OH/vP4XMCcU2xxt2WCiw+Hyaci/
- Yxwg==
+ bh=4Hz9R3lbGIV+V7GuRIm48x4ah4B5SS/VSn+imgLSZbM=;
+ b=s1M2x6vhdXmtpYDoS5VTvKuCyILmjLO6nHdbF2296sqbm5DYswCC/iJ0qWVZ+4OP2u
+ aV960GpXDHWy3DmFnpFrDZ3IIJ8eM5cofFZJq/cLsweeAK00nC4K4GBDR4dXf28KP2bq
+ cEMRU9aiJHghK2SggrLtLiCF2aUszZkM3k7V4WYfv0sILMmbDdqLpknnVNi3adooyVAK
+ J6vIbk4g9NQ9ZVWclW7Dz6uzFSjn6azM7Px8GDDadMsonYfEhZ6Grr4N8Vbmb1sj5JFb
+ r60l1m/x/Bn/b4Mf7sBB4/GG2+bZ1R1obaxzmRHhJNs/VpELVORgw8OQipxqcfo+SCh3
+ mgsw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhtzhUgWMuxc8D/eEt1JvLwcoALiNOFsHJeGT9pU4fbwgWwr0dzodnLkutdjJjkvBJ0kMYwoFeQbiW@nongnu.org
-X-Gm-Message-State: AOJu0Yz40fXY146RvqP4vgFnq/PBnjcTjXKLt4I57YzhNlxF0Yomepz0
- G6fWMl2dN8S17csZthDvMJrPBTQxSQ3lpOYNVocl/cxRxtXjkoEKy8WLN8nJxoY+AL0=
-X-Gm-Gg: ASbGnct+5FrDBBWorlTiwyophnIgRHjIfbhj0R0J9XrvC/TUZQYX8Nf/783SCCN3mDp
- DtQEukmHyhKyE5dhraKF9UXup4hLTYlPhcZCIPONKufW0S2pXgR1mNrzdL3KQDeYJvuIsuQgY3t
- powFspfRnPAMy/gOyml3bL6o5BBO2aI7aGSc5f+7hbgrzSKWOzgTjsfoxkF77Kgh1IsykH8DOYS
- BxhyjqzVNjFBcEiEjrOe6AtBoeNgCuB2xwBmu9a4vm9RaBkgdZYvawNU9TIaHsBA6SVyVTdlzwQ
- MP5j9SC5MnYv1JLpHmiA8L0HquHGhcLz+7tdcsau5JzPHXJyFDshVOGelEOHDy/+6F19/XS2wns
- G/7O3EJj4+r7n
-X-Google-Smtp-Source: AGHT+IHY5rcoxHG7SjsSH6wGO9MP3+gMc2vqaKSB6TFkWrSE0JT47AzpLl+5IIKhaoikSdgYeP0P8Q==
-X-Received: by 2002:a05:600c:468a:b0:43d:47e:3205 with SMTP id
- 5b1f17b1804b1-442fefee29dmr24645665e9.11.1747406620612; 
- Fri, 16 May 2025 07:43:40 -0700 (PDT)
+ AJvYcCUMCuyPXRAPr3lsUyps9WGVczSn5qSG8hBf2A7DjtUR5qIuKURs6VCSBNpncTbRdRyiCk5VJPpeGfrZ@nongnu.org
+X-Gm-Message-State: AOJu0Yy8XtDeF0SwT4JQw3cWBMxNEBV0zEB+CtUHt5ylMDE139CmCeJW
+ H1sXV/ES9GeDhX7BTCCcMmy6TDJBkxk1Mgmyol6RFuoTB2veszQCnfBDJQ9Idi7aLbE=
+X-Gm-Gg: ASbGncsky9aJ7nK/yS5gLuJ9+0bJyM50VRSlko0TU58qpkN7JZCzX6edpKyCWUW5giN
+ M9ZKOpWfWBXWBSDr6mwCiGcJLitTgx5rBwP9IzLhNNcPSvcb4IDuwXv4rIVPRbFwNUOXub2FZi+
+ q3yH6knbjpmu7b4PjnJDSIGBrpaivuOJXJBMXaTsY8n6tvrOxr6KkBM06tYB39GDt+1wcsT7oU4
+ Iwr2BEJTJg8aEiLb8rQtAwJrmeskqh8+PBC6eoenEWVX0hRWzzZg65adSQVDfwIzgfqOnfwILJT
+ ILmWK0utcpSi0zfvWPWn+vg88Ogf3xu6GfkEU7BW71VIL0gcFSZkQAbG6yThFookIO+vfonkbyU
+ POXQyPHmtz+/k
+X-Google-Smtp-Source: AGHT+IF0eU5h38psqMO73iwCcgaikINZxZeJcvoOVEPB3Ux1ZqP2RZfnykIjp9/yr1rIYKQC/TmJrA==
+X-Received: by 2002:a5d:5848:0:b0:3a1:f5c4:b81b with SMTP id
+ ffacd0b85a97d-3a35c83915fmr3580179f8f.23.1747406877576; 
+ Fri, 16 May 2025 07:47:57 -0700 (PDT)
 Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-443000ee99csm21776755e9.31.2025.05.16.07.43.39
+ ffacd0b85a97d-3a35ca4d1c6sm3080519f8f.2.2025.05.16.07.47.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 07:43:40 -0700 (PDT)
-Message-ID: <68cedad7-3f97-4040-9262-1039ddc6bb07@linaro.org>
-Date: Fri, 16 May 2025 15:43:39 +0100
+ Fri, 16 May 2025 07:47:57 -0700 (PDT)
+Message-ID: <002caade-699e-4128-ac08-7797b83b3cc8@linaro.org>
+Date: Fri, 16 May 2025 15:47:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] hw/i386/amd_iommu: Fix device setup failure when
- PT is on.
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- suravee.suthikulpanit@amd.com, alejandro.j.jimenez@oracle.com,
- joao.m.martins@oracle.com, Vasant Hegde <vasant.hegde@amd.com>
-References: <20250516100535.4980-1-sarunkod@amd.com>
- <20250516100535.4980-2-sarunkod@amd.com>
+Subject: Re: [PATCH v4] tests/functional: Add PCI hotplug test for aarch64
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ thuth@redhat.com, berrange@redhat.com
+Cc: eric.auger@redhat.com, alex.bennee@linaro.org, peter.maydell@linaro.org,
+ qemu-arm@nongnu.org
+References: <20250512144629.182340-1-gustavo.romero@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250516100535.4980-2-sarunkod@amd.com>
+In-Reply-To: <20250512144629.182340-1-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,61 +103,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/5/25 12:05, Sairaj Kodilkar wrote:
-> Commit c1f46999ef506 ("amd_iommu: Add support for pass though mode")
-> introduces the support for "pt" flag by enabling nodma memory when
-> "pt=off". This allowed VFIO devices to successfully register notifiers
-> by using nodma region.
+On 12/5/25 16:45, Gustavo Romero wrote:
+> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
+> hot-unplug on arm64.
 > 
-> But, This also broke things when guest is booted with the iommu=nopt
-> because, devices bypass the IOMMU and use untranslated addresses (IOVA) to
-> perform DMA reads/writes to the nodma memory region, ultimately resulting in
-> a failure to setup the devices in the guest.
-> 
-> Fix the above issue by always enabling the amdvi_dev_as->iommu memory region.
-> But this will once again cause VFIO devices to fail while registering the
-> notifiers with AMD IOMMU memory region.
-> 
-> Fixes: c1f46999ef506 ("amd_iommu: Add support for pass though mode")
-> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/i386/amd_iommu.c | 12 ++----------
->   1 file changed, 2 insertions(+), 10 deletions(-)
+>   MAINTAINERS                                  |  5 ++
+>   tests/functional/meson.build                 |  1 +
+>   tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
+>   3 files changed, 80 insertions(+)
+>   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
 > 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index 5f9b95279997..df8ba5d39ada 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -1426,7 +1426,6 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
->       AMDVIState *s = opaque;
->       AMDVIAddressSpace **iommu_as, *amdvi_dev_as;
->       int bus_num = pci_bus_num(bus);
-> -    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 23174b4ca7..9ebb768214 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2065,6 +2065,11 @@ S: Supported
+>   F: include/hw/pci/pcie_doe.h
+>   F: hw/pci/pcie_doe.c
 >   
->       iommu_as = s->address_spaces[bus_num];
->   
-> @@ -1486,15 +1485,8 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
->                                               AMDVI_INT_ADDR_FIRST,
->                                               &amdvi_dev_as->iommu_ir, 1);
->   
-> -        if (!x86_iommu->pt_supported) {
-> -            memory_region_set_enabled(&amdvi_dev_as->iommu_nodma, false);
-> -            memory_region_set_enabled(MEMORY_REGION(&amdvi_dev_as->iommu),
-> -                                      true);
-> -        } else {
-> -            memory_region_set_enabled(MEMORY_REGION(&amdvi_dev_as->iommu),
-> -                                      false);
-> -            memory_region_set_enabled(&amdvi_dev_as->iommu_nodma, true);
-> -        }
-> +        memory_region_set_enabled(&amdvi_dev_as->iommu_nodma, false);
+> +ARM PCI Hotplug
+> +M: Gustavo Romero <gustavo.romero@linaro.org>
 
-I have no clue about this device but wonder what is the usefulness of
-iommu_nodma now, isn't it dead code?
+As mentioned in v2, since this might interest ARM contributors:
 
-> +        memory_region_set_enabled(MEMORY_REGION(&amdvi_dev_as->iommu), true);
->       }
->       return &iommu_as[devfn]->as;
->   }
+    L: qemu-arm@nongnu.org
+
+> +S: Supported
+> +F: tests/functional/test_aarch64_hotplug_pci.py
 
 
