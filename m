@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D804FC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 21:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A440C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 21:32:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uG2MP-00077a-E1; Fri, 16 May 2025 17:12:53 -0400
+	id 1uG2eW-0005mm-2o; Fri, 16 May 2025 17:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nirsof@gmail.com>)
- id 1uG2ML-00073V-Oq; Fri, 16 May 2025 17:12:49 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1uG2eU-0005j3-0f; Fri, 16 May 2025 17:31:34 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nirsof@gmail.com>)
- id 1uG2MJ-0007O3-GC; Fri, 16 May 2025 17:12:49 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a0bd7f4cd5so2389003f8f.0; 
- Fri, 16 May 2025 14:12:46 -0700 (PDT)
+ id 1uG2eS-0001CS-3I; Fri, 16 May 2025 17:31:33 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3a0ba0b6b76so2248711f8f.1; 
+ Fri, 16 May 2025 14:31:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747429965; x=1748034765; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747431090; x=1748035890; darn=nongnu.org;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s5jPWh1YIMmeVXXNiH9wYf7MeOD1v5MQwdjNu/o3RXM=;
- b=GZMRtjQZMa8XP9Pyt4Gd/wDUB3OyIHYthTESnnsaEE7VUn8PPLz1CMu+z597lH6rzW
- rit27llPnh060HgGxWLOMNCGEnj/6paq3tyNqXN/189DY/9LEcK/t/jYncn+JJJxYPgb
- yGFKZWLECnmhcckswsxp/pIDKbXJ7xG9pYNe3Y6QGtOVvuVZpm2UJjQkrAtcaVlw+qSH
- a4iN72gQnmSQtF5148ECmAp8dDAHhVvzI4DFSLtryo5TESoy1DaWllvRX6jUsmGR1FMI
- LGELMSfnU0Yu6deCXbr5uCZ5o7uxtpsdnS3uKvzQTtKj488LHAbzq89hYXZnh1BQOhQA
- IijQ==
+ bh=Muwy0TJbEcYqhtMqmlugADkDHOQPzZbOzU91kRTRzS4=;
+ b=IzLn2AuoqS47nWjfI0GoeRd5a6CccGeD5meO17/HYrxnjiOab0IxMU8PcOOyTdaEMA
+ 87OQyBhciMdCwsH6+1bXq6+/t9pRF05V/CrWJW5Bv7HzBw2QcSJM6VXtKNcNNJ2ztKnL
+ tVeH9EVv7HwLJKPFbtOR5pACREkpuMMfApfyCz3UhlZRwcmgteT/mnDAmJsqmAfxWide
+ itKNqzLpt78O26jzLkWwlagpLsGhsA3+YkF4uqoCeohMU/lP06HMp387p+kjd8B0QHno
+ uafJiSmnieujc8iROg+yIe3lz3qJwoxO4USD/0ym+5JiKuuBu+moY410tmpPMTzmxNxE
+ xCNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747429965; x=1748034765;
+ d=1e100.net; s=20230601; t=1747431090; x=1748035890;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s5jPWh1YIMmeVXXNiH9wYf7MeOD1v5MQwdjNu/o3RXM=;
- b=ljq8NTe2nB1wxfOkUA+zLA2tCMsYJPMTW/vzBHF0L2+lMT0MGc+Em0H3exGIeAKBor
- vwlquhZV6Dtj8moTKPwFSzZ9gTo0wE+gP3x/LbOym+qOAw/FXz9K+TlO8vDPjIqP2o4J
- qmR5QvRs5bcIlwGMqIekNqXHgiZcM/LZBwGgdSOKw90hr+0Ivkw2Zs0z0IHtqgeEOLWQ
- o8je9Xq4ynuf4svaQiVJfBuYL6/y2l/GO9qOdnY/F1kjK9I3sPYoLSTEJDK+7SrjyYm7
- 4GqJny+0SEtkNhypdWHmqPNtBQhVS5DlU59JkDwRDthZFKnMZVLzfGagWu4muqppavuo
- J2/w==
+ bh=Muwy0TJbEcYqhtMqmlugADkDHOQPzZbOzU91kRTRzS4=;
+ b=kJ0c3uhYlXPSP4QlA3xtPVdg5blaaEW4s3K0vhTIamNxqAw7XoifaGJHvTGenYOSUK
+ q93zLDNzOwfRZ6oMCWM3bJK6HqQ4BxVsSPbkj7Snro0r1oDAmmvqwhVnC96hvXNK80lz
+ iDRI1kVI+wIYdkRo6esdQUu5v8E4KRHrS4/myUUxP42VV1g5NBvvYJ+4d58WPPpNoucN
+ nSrirFNyriNkJXnQJW5aXIHZup2QvPS1v2O4nram50tRASahXgXIG17Q5NHxFLxnBg9A
+ bXh/qxJDdeeTFgXj7Ww+GA6UslS9ExUZtC8e6xRnyEK5MRYzFlS8zZszBT7a6tqx69He
+ EWiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIFKnLU3306NMDGIa/OSZW3DuA0cjH+IoTqlKICPYl+mgYSGDl4TN+PgkPnltM6cyAPNpdCaHIr8oT@nongnu.org
-X-Gm-Message-State: AOJu0YwE/ZDwnMXSD3tDo529AfttbHCdRjvXP6ZTooemk95PDohF0J0W
- pBf66GEB7Z86PLMIQR5F9Msx7oUoZ9ZA8x52DtzIbn65LiNVDip5teMeXV863OMFJRk=
-X-Gm-Gg: ASbGnctrEkSbgGnA6n6hzUzsTahmCQkpF0EnpqVjKz/3u7/GzjrS81QQxDWr3ylCzje
- j+tSSOpZPawoVRHXaCXZETjLx0Gm4t5i3bCkWFGol/94NlxkRTCyEriXumXy+HwA6Hfc7wtlcVw
- sRnKS3M1Z+cCTO2El20znLE/uA77Pb/Qtu/3yLJ7ACOTsjCKHqIBpx/CGsgotMiKqvlZv+FWm8R
- 9DjO6paIt7sXeoykfjA8caSnD9sFFsXht/y2CRpKbYW5SXrWqDzSGl+j2x9WfbxsEwT1QtGPNpm
- FqQfSB5wteeX+PSZFaMk6+GuTAUG8IQtPFRtc+9kIl5ikoKFpYzENZ5SO8n+aLrZlvHXzDsIzvV
- +HCqgw/gaGT/gjG8ncJ18VRhw81yBa/oO
-X-Google-Smtp-Source: AGHT+IFHbZCUfPSRFA4YsW9/CJ6usvqu84DhVl87SMIzb+FTCrzcWWccrodY8TEIZcdNS+VPjExFOw==
-X-Received: by 2002:a05:6000:2387:b0:3a1:fd60:88d with SMTP id
- ffacd0b85a97d-3a35c8255femr4753369f8f.23.1747429964474; 
- Fri, 16 May 2025 14:12:44 -0700 (PDT)
+ AJvYcCWglGf9wvoTwF/OmwO71o752jiX4kmW8KURMhedkf1R7xSNlLJJN75y2NG+L+9ClMj9nGomA76ucATy@nongnu.org
+X-Gm-Message-State: AOJu0YwjAv+NSXl5M55iyJX1d6CqfTp5Q5zLE6uxKdimYPWuLRDVsMVW
+ 1UnMjyFU9GFPGefeIyZofaXTHCDVkpbDh1vmfx8YBuj3z96i5aEl7MqC
+X-Gm-Gg: ASbGncvd99wqid/M1bne4/0jGlrPczM6wLtCMRzHfdE9pElAKzaLomxs46VJEdusjm2
+ RFIMz68rO1dI0woTa9nGtI/1xA8C8tXoaGPZ91uTXGwDdH9G3QF30zbbFRXOpTWyuqHLBQNPdmc
+ 9mQ4uGEG+LHX5TMxmf/Ek0o/JIXc2Lz4MkBkOPxVoOlIYoFAF6xJTXSLFm14F6Djw+OBwM8jowf
+ NLAp+5Kzu/Z1Gg8KDrJyLR9oFIgQQwpPtQ0o/xF3FTDUt5e2+WYcOtpjkrtFoMpvgFtvtDjAffq
+ 7R1qfTB3jfmcvwqFOCZtl7+kNe06XVskaQpf0SyEw1NAVXYBiZ2t5wLdNidMCA0EEbUC02EqWMM
+ hBOdgb4PXRWWgO0NBRfpGEt6zllfMPpi+
+X-Google-Smtp-Source: AGHT+IHiqDcH636thDaHECYZ26ZfD8hJzX+vElpbuXgAhqJsTlvFhCvRFjPPsYeNcONmBF/ecLYYcw==
+X-Received: by 2002:a05:6000:2407:b0:3a3:4baa:3ea3 with SMTP id
+ ffacd0b85a97d-3a35ffd2ae4mr3434695f8f.41.1747431089821; 
+ Fri, 16 May 2025 14:31:29 -0700 (PDT)
 Received: from smtpclient.apple (46-116-102-127.bb.netvision.net.il.
  [46.116.102.127]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca62910sm4089297f8f.50.2025.05.16.14.12.43
+ ffacd0b85a97d-3a35ca8d258sm3974246f8f.100.2025.05.16.14.31.28
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 16 May 2025 14:12:43 -0700 (PDT)
+ Fri, 16 May 2025 14:31:29 -0700 (PDT)
 Content-Type: text/plain;
-	charset=utf-8
+	charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH v2 2/2] block/null: Add read-pattern option
+Subject: Re: [PATCH v2 1/2] block/null: Report DATA if not reading zeroes
 From: Nir Soffer <nirsof@gmail.com>
-In-Reply-To: <87h61vekn9.fsf@pond.sub.org>
-Date: Sat, 17 May 2025 00:12:32 +0300
+In-Reply-To: <87plgjg1kh.fsf@pond.sub.org>
+Date: Sat, 17 May 2025 00:31:17 +0300
 Cc: QEMU Developers <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D4B1B6B9-C361-4D49-AD28-A87AE7FD42CB@gmail.com>
+Message-Id: <5F6E3D44-70D6-4F6E-B4D5-42238E13D759@gmail.com>
 References: <20250430203717.16359-1-nirsof@gmail.com>
- <20250430203717.16359-3-nirsof@gmail.com> <87h61vekn9.fsf@pond.sub.org>
+ <20250430203717.16359-2-nirsof@gmail.com> <87plgjg1kh.fsf@pond.sub.org>
 To: Markus Armbruster <armbru@redhat.com>
 X-Mailer: Apple Mail (2.3826.600.51.1.1)
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=nirsof@gmail.com; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=nirsof@gmail.com; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,270 +106,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 8 May 2025, at 8:28, Markus Armbruster <armbru@redhat.com> wrote:
+> On 8 May 2025, at 7:37, Markus Armbruster <armbru@redhat.com> wrote:
 >=20
 > Nir Soffer <nirsof@gmail.com> writes:
 >=20
->> When the `read-zeroes` is set, reads produce zeroes, and block status
->> return BDRV_BLOCK_ZERO, emulating a sparse image.
+>> If read-zeroes is not set, we did not report BDRV_BLOCK_DATA or
+>> BDRV_BLOCK_ZERO. This is not consistent with other drivers and can
+>> confuse users or other programs:
 >>=20
->> If we don't set `read-zeros` we report BDRV_BLOCK_DATA, but image =
-data
->> is undefined; posix_memalign, _aligned_malloc, valloc, or memalign do
->> not promise to zero allocated memory.
+>>    % qemu-img map --output json "json:{'driver': 'raw', 'file': =
+{'driver': 'null-co', 'size': '1g'}}"
+>>    [{ "start": 0, "length": 1073741824, "depth": 0, "present": false, =
+"zero": false, "data": false, "compressed": false}]
 >>=20
->> When computing a blkhash of an image via qemu-nbd, we want to test 3
->> cases:
+>>    % qemu-nbd "json:{'driver': 'raw', 'file': {'driver': 'null-co', =
+'size': '1g'}}" &
 >>=20
->> 1. Sparse image: skip reading the entire image based on block status
->>   result, and use a pre-computed zero block hash.
->> 2. Image full of zeroes: read the entire image, detect block full of
->>   zeroes and skip block hash computation.
->> 3. Image full of data: read the entire image and compute a hash of =
-all
->>   blocks.
+>>    % nbdinfo --map nbd://127.0.0.1
+>>             0  1073741824    1  hole
 >>=20
->> This change adds `read-pattern` option. If the option is set, reads
->> produce the specified pattern. With this option we can emulate an =
-image
->> full of zeroes or full of non-zeroes.
+>> With this change we report DATA in this case:
 >>=20
->> The following examples shows how the new option can be used with =
-blksum
->> (or nbdcopy --blkhash) to compute a blkhash of an image using the
->> null-co driver.
+>>    % ./qemu-img map --output json "json:{'driver': 'raw', 'file': =
+{'driver': 'null-co', 'size': '1g'}}"
+>>    [{ "start": 0, "length": 1073741824, "depth": 0, "present": true, =
+"zero": false, "data": true, "compressed": false, "offset": 0}]
 >>=20
->> Sparse image - the very fast path:
+>>    % ./qemu-nbd "json:{'driver': 'raw', 'file': {'driver': 'null-co', =
+'size': '1g'}}" &
 >>=20
->>    % ./qemu-nbd -r -t -e 0 -f raw -k /tmp/sparse.sock \
->>        "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': =
-'100g', 'read-zeroes': true}}" &
->>=20
->>    % time blksum 'nbd+unix:///?socket=3D/tmp/sparse.sock'
->>    300ad1efddb063822fea65ae3174cd35320939d4d0b050613628c6e1e876f8f6  =
-nbd+unix:///?socket=3D/tmp/sparse.sock
->>    blksum 'nbd+unix:///?socket=3D/tmp/sparse.sock'  0.05s user 0.01s =
-system 92% cpu 0.061 total
->>=20
->> Image full of zeros - same hash, 268 times slower:
->>=20
->>    % ./qemu-nbd -r -t -e 0 -f raw -k /tmp/zero.sock \
->>        "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': =
-'100g', 'read-pattern': 0}}" &
->>=20
->>    % time blksum 'nbd+unix:///?socket=3D/tmp/zero.sock'
->>    300ad1efddb063822fea65ae3174cd35320939d4d0b050613628c6e1e876f8f6  =
-nbd+unix:///?socket=3D/tmp/zero.sock
->>    blksum 'nbd+unix:///?socket=3D/tmp/zero.sock'  7.45s user 22.57s =
-system 183% cpu 16.347 total
->>=20
->> Image full of data - difference hash, heavy cpu usage:
->>=20
->>    % ./qemu-nbd -r -t -e 0 -f raw -k /tmp/data.sock \
->>        "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': =
-'100g', 'read-pattern': 255}}" &
->>=20
->>    % time blksum 'nbd+unix:///?socket=3D/tmp/data.sock'
->>    2c122b3ed28c83ede3c08485659fa9b56ee54ba1751db74d8ba9aa13d9866432  =
-nbd+unix:///?socket=3D/tmp/data.sock
->>    blksum 'nbd+unix:///?socket=3D/tmp/data.sock'  46.05s user 14.15s =
-system 448% cpu 13.414 total
->>=20
->> Specifying both `read-zeroes` and `read-pattern` is an error since
->> `read-zeroes` implies a sparse image. Example errors:
->>=20
->>    % ./qemu-img map --output json \
->>        "json:{'driver': 'raw', 'file': {'driver': 'null-co', =
-'read-pattern': -1}}"
->>    qemu-img: Could not open 'json:{...}': read_pattern is out of =
-range (0-255)
->>=20
->>    % ./qemu-img map --output json \
->>        "json:{'driver': 'raw', 'file': {'driver': 'null-co', =
-'read-pattern': 0, 'read-zeroes': true}}"
->>    qemu-img: Could not open 'json:{...}': The parameters read-zeroes =
-and read-pattern are in conflict
->>=20
->> Tested on top of
->> https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg05096.html.
+>>    % nbdinfo --map nbd://127.0.0.1
+>>             0  1073741824    0  data
 >>=20
 >> Signed-off-by: Nir Soffer <nirsof@gmail.com>
->=20
-> [...]
->=20
->> diff --git a/docs/devel/secure-coding-practices.rst =
-b/docs/devel/secure-coding-practices.rst
->> index 0454cc527e..73830684ea 100644
->> --- a/docs/devel/secure-coding-practices.rst
->> +++ b/docs/devel/secure-coding-practices.rst
->> @@ -111,5 +111,6 @@ Use of null-co block drivers
->> The ``null-co`` block driver is designed for performance: its read =
-accesses are
->> not initialized by default. In case this driver has to be used for =
-security
->> research, it must be used with the ``read-zeroes=3Don`` option which =
-fills read
->> -buffers with zeroes. Security issues reported with the default
->> +buffers with zeroes, or with the ``read-pattern=3DN`` option which =
-fills read
->> +buffers with pattern. Security issues reported with the default
->> (``read-zeroes=3Doff``) will be discarded.
+>> ---
+>> block/null.c         | 4 +---
+>> qapi/block-core.json | 5 +++--
+>> 2 files changed, 4 insertions(+), 5 deletions(-)
+>>=20
+>> diff --git a/block/null.c b/block/null.c
+>> index dc0b1fdbd9..7ba87bd9a9 100644
+>> --- a/block/null.c
+>> +++ b/block/null.c
+>> @@ -239,9 +239,7 @@ static int coroutine_fn =
+null_co_block_status(BlockDriverState *bs,
+>>     *map =3D offset;
+>>     *file =3D bs;
+>>=20
+>> -    if (s->read_zeroes) {
+>> -        ret |=3D BDRV_BLOCK_ZERO;
+>> -    }
+>> +    ret |=3D s->read_zeroes ? BDRV_BLOCK_ZERO : BDRV_BLOCK_DATA;
+>>     return ret;
+>> }
+>>=20
 >> diff --git a/qapi/block-core.json b/qapi/block-core.json
->> index 7c95c9e36a..2205ac9758 100644
+>> index b1937780e1..7c95c9e36a 100644
 >> --- a/qapi/block-core.json
 >> +++ b/qapi/block-core.json
->> @@ -3295,13 +3295,23 @@
+>> @@ -3293,8 +3293,9 @@
+>> #     requests.  Default to zero which completes requests =
+immediately.
+>> #     (Since 2.4)
 >> #
->> # @read-zeroes: if true, emulate a sparse image, and reads from the
->> #     device produce zeroes; if false, emulate an allocated image but
->> -#     reads from the device leave the buffer unchanged.
->> +#     reads from the device leave the buffer unchanged. Mutually
->> +#     exclusive with @read-pattern.
+>> -# @read-zeroes: if true, reads from the device produce zeroes; if
+>> -#     false, the buffer is left unchanged.
+>> +# @read-zeroes: if true, emulate a sparse image, and reads from the
+>> +#     device produce zeroes; if false, emulate an allocated image =
+but
+>> +#     reads from the device leave the buffer unchanged.
 >> #     (default: false; since: 4.1)
->=20
-> Correct before the patch: absent behaves just like present and false.
->=20
-> That's no longer the case afterwards.  Hmm.
-
-I don=E2=80=99t get the issue
-
->=20
 >> #
->> +# @read-pattern: if set, emulate an allocated image, and reads from =
-the
->> +#     device produce the specified byte value; if unset, reads from =
-the
->> +#     device leave the buffer unchanged. Mutually exclusive with
->> +#     @read-zeroes.
->> +#     (since: 10.1)
->=20
-> Default?  The usual way to document it would be something like =
-(default:
-> false), but that's again problematic.
-
-This is optional, so we cannot have a default. Maybe (default absent)?
-
->=20
->> +#
 >> # Since: 2.9
->> ##
->> { 'struct': 'BlockdevOptionsNull',
->> -  'data': { '*size': 'int', '*latency-ns': 'uint64', '*read-zeroes': =
-'bool' } }
->> +  'data': { '*size': 'int',
->> +            '*latency-ns': 'uint64',
->> +            '*read-zeroes': 'bool',
->> +            '*read-pattern': 'uint8' } }
->>=20
->> ##
->> # @BlockdevOptionsNVMe:
 >=20
-> Let's take a step back from the concrete interface and ponder what =
-we're
-> trying to do.  We want three cases:
->=20
-> * Allocated, reads return unspecified crap (security hazard)
->=20
-> * Allocated, reads return specified data
->=20
-> * Sparse, reads return zeroes
->=20
-> How would we do this if we started on a green field?
->=20
-> Here's my try:
->=20
->    bool sparse
->    uint8 contents
+> Possibly dumb question: how is this doc change related to the code =
+fix?
 
-The names are short and nice, but we need to consider the entire API. =
-"read-zeroes" works well with "detect-zeroes". "read-pattern" works well =
-with "read-zeroes=E2=80=9D and the term =E2=80=9Cpattern=E2=80=9D works =
-well with qemu-io -c:
+Before this change we returned BDRV_BLOCK_ZERO if read-zeroes is true, =
+and no flags when it was false.
+Now we return BDRV_BLOCK_ZERO when read-zeroes is true, and =
+BDRV_BLOCK_DATA when false.
 
-    read [-abCqrv] [-P pattern [-s off] [-l len]] off len -- reads a =
-number of bytes at a specified offset
-    write [-bcCfnqruz] [-P pattern | -s source_file] off len -- writes a =
-number of bytes at a specified offset
-
-There is also nbdkit pattern plugin in this space:
-https://libguestfs.org/nbdkit-pattern-plugin.1.html
+In other words, we read-zeroes: true emulate a spare image, and =
+read-zeros: false an allocated image.
 
 >=20
-> so that
+> Suggest to split the sentence for easier reading:
 >=20
-> * Allocated, reads return unspecified crap (security hazard)
+>   # @read-zeroes: If true, emulate a sparse image, and reads from the
+>   #     device produce zeroes.  If false, emulate an allocated image,
+>   #     but reads from the device leave the buffer unchanged.
 >=20
->  @sparse is false, and @contents is absent
->=20
-> * Allocated, reads return specified data
->=20
->  @sparse is false, and @contents is present
->=20
-> * Sparse, reads return zeroes
->=20
->  @sparse is true, and @contents must absent or zero
 
-=E2=80=9Csparse" conflicts with =E2=80=9Ccontents=E2=80=9D. I would not =
-make both possible even if contents is 0.=20
-
->=20
-> I'd make @sparse either mandatory
-
-Do you mean must be always specified? Why?
-
-> or default to true, so that we don't
-> default to security hazard.
-
-Default sparse sounds good, but it means that we must use:
-
-    =E2=80=9Csparse": false, =E2=80=9Ccontents=E2=80=9D: 42
-
-So we must use the conflicting options together.
-
-=E2=80=9Csparse=E2=80=9D: false is a better default, expect the =
-unspecified bytes, but it should not depend on spareness.
-
->=20
-> Unless we want to break compatibility, we're stuck with the name
-> @read-zeroes for the bool, and its trap-for-the-unwary default value,
-> but cleaner semantics seem possible.
->=20
-> Thoughts?
-
-Having "sparse": true default is little better than returning =
-unspecified data by default, but sing =E2=80=9Csparse=E2=80=9D: false =
-will return unspecified bytes and is not expected - spareness should not =
-be related to security.
-
-If we want to make this secure by default, maybe:
-
-   bool sparse: emulate sparse image (default false)
-   uint8 contents: read return specified bytes (default 0)
-   bool insecure: read return unspecified bytes, for performance testing =
-(default false)
-
-Another way is to accept invalid value for unspecified content:
-
-   bool sparse: emulate sparse image (default false)
-   uint8 contents: read return specified bytes. -1 to return unspecified =
-bytes (default 0)
-
-This may be confusing, users may assume that -1 and 255 will give the =
-same result.
-
-Another way is to use lower level terms:
-
-    uint8 block-status: flags to return in block_status: (default 0x0, =
-zero 0x1, data 0x2)
-    uint8 read-pattern: return specified bytes. -1 to return unspecified =
-bytes (default 0)
-
-This is harder to use but allows more combinations that can be useful or =
-testing NBD. And the default is secure.
-
-But the important questions are:
-- Do we want to keep read-zeros?
-- Do we want to keep the insecure default or make insecure behavior =
-explicit?
+Sure, it looks better.
 
 
