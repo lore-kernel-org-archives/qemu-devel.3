@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 623CBC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D01AC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFwYi-0008Dd-80; Fri, 16 May 2025 11:01:12 -0400
+	id 1uFwZ7-0000J6-TL; Fri, 16 May 2025 11:01:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
- id 1uFwYg-0008A4-2X
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:01:10 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1uFwZ4-0008VO-ED
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:01:34 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
- id 1uFwYc-0003yD-K3
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:01:09 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3a0b933f214so1463075f8f.0
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 08:01:06 -0700 (PDT)
+ id 1uFwYy-0003zN-Nb
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:01:33 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43ea40a6e98so22054685e9.1
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 08:01:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747407665; x=1748012465; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nRuSZq5E8vPWWwh4b1i28f8cMVTnPETOBOaQNukzPbQ=;
- b=bZ8SweTpwqPXFEtWDKcoXqdoTJ6bCOzodpi3xeAXzjtxTIbWd/sOEF7ey3TSwvNojt
- DidvTvz+fVTeAYDsu4wBw5yTZRyxR/7UWNBhZWwj8WK3wVPbpEDOd3n3BjVG/c5dy817
- jQPb/46C/NKGmhngHmKNGoIW9bv6PM2+x16oHkdsTO7D3S/ywR1lWMP2nAessq/XCylR
- ek1OeWb73iqKPQn63eBINOej5InBlQ15ocrIK39K9ixxKv/3gyaT3myWY6Gh4HHrA3dB
- TMeHPuM+mf7yrO9BA/wpvyTvTpKWdpobUovqtXEcLA8i60mmPE1M2pgv4bwvsyypLg/a
- qThQ==
+ d=gmail.com; s=20230601; t=1747407687; x=1748012487; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RIx1p4dcWnB1aHzIAfv4UaoGOMDrztSsaMYdA+5phgg=;
+ b=MOrCpjc6Tpi3fCaZIzLuCG9V348Lui3JnVYOkaSqj/t9cYKj7wLf3UuQjvBTx7nLEi
+ 7GbvJ+WfWBjdDB3FwV1M+3rcABCJ0AVohVMHwX0ceeZWTapCrJbRZqGFr0PyzWktamXk
+ lI/f73KUvicvDYcOnyYs5tsBsOL3fcs0MwkUGJOZUbzLRLcp/3LLdWyTONRqw7MMgLbl
+ PEJePK0oken9jvwl3/uqsFSrEtuuk7NLrLR9UjzlxpRXBsfJG8UVBWqUvyhl2SXlMjyw
+ 7oSVU4D9+TLFpn5sAJvBRluB02XEnTTdhlk+hfcva/lusmifakDGe1y/HK8LuO9qnjyq
+ A3+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747407665; x=1748012465;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nRuSZq5E8vPWWwh4b1i28f8cMVTnPETOBOaQNukzPbQ=;
- b=dwEScCVisEwmT4H+sloIQSTS9VD6jLN8KolaNCLCOHTPfhvF022mNg+CsO4UfXNT+Q
- qp+dlA+/hTJKzdicTQT6JrayuHEVo7KIWKQYfdbtzfHB8i3YjOhh/eY1G/gFycrm/qzj
- cP2zZtsID2fi1UP8AdQpGvzq5rSTpG8qGW90qflRa7qys9O7f3xMCA2P81JveZPIVTmg
- otKiE5jTuPKDcv2+BH6DUagngQEbTJNNGFzQe9vmnSP+ksW2ujr4HB0Q7GuBrRi3nomL
- 6eJMnGIKGQwLF/2/RtR/UYF1Q2TNG45dWa7S0+jvn5MiCV2XFSYj8oggNeKhK9KILCnd
- CzEA==
-X-Gm-Message-State: AOJu0YyjKbtteG2+oJTN61eR+aw/NZE7vDG27YN2BBR1xAFQTwqVCckm
- PcwS8EJIoG2nKSLIfmrkqHuukIcofoiFSC52s5i11mQMGf+sGW/HzzDHNrJAWVmF
-X-Gm-Gg: ASbGncvEedsov6lRjux2WXhutoq1OsPpSyyuLzBsRkiaPz95aDV98WBlfli4pqfSBz7
- 9YFShLXuQTozq6575SpIjpGucr1yPsR+oNcVXFxBtGgLUyC8byaNzm/i1KXjrNCibDBAuLW39Av
- 4SzFZeDnMh1fRdWESw3kniMinHkcyNxyj40TiTkS9W0pCO6/WtBwI1v+bBfe67AyZxEUdg1zChU
- L3ffPi1L/tnpHNvWqsjnir0QnlboaQNwMSagOTYJoMCBeYqMuPVJ83itCPSlsPca71Yl20JJv52
- tWfXO2bG+WhyHxoXY6OkiDq6iLvzTK4fS/ssMg+o//xuk+BTUJMDhNAnaZHYqids9no=
-X-Google-Smtp-Source: AGHT+IHFk95thUr8L2aejgYmf2kDN7kZAEIwIFvuywHFhalXvr1uNo6c/xqDEDj87m20ZMBMF015zQ==
-X-Received: by 2002:a05:6000:438a:b0:3a0:ad15:4422 with SMTP id
- ffacd0b85a97d-3a35c8356bfmr3825191f8f.21.1747407663798; 
- Fri, 16 May 2025 08:01:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1747407687; x=1748012487;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RIx1p4dcWnB1aHzIAfv4UaoGOMDrztSsaMYdA+5phgg=;
+ b=Ciy+ktxQbV/R9QviaZ86z70t/IuF963sxpwQExGtOftWIY7SpmCsS233oCjlak++lh
+ WQ8vrb1LJJSVkhd2rvo0sEg+k1zWblj2NFxtMe77y+73ROll1hONh6hJEcCHKzgvULhi
+ A06SivsZzmKj67Y5jAMbhwz8Qr3f+3+LpPm7TXprQJf5biCOhNxAIX8jJ+e7wU6EvLsu
+ TRYeydccD5ilbNMMpwBRJlWF+0gNT1tIX7YUhWJY6fwBqhXEvgo4bJBSjY/d2MKyjwaf
+ xGGizT4kEgS2DlYyNxsSiDMzakL+J8r4bN/fSPFSN/6sUkosdxToOXNVtSYiBXaEI7eW
+ 9vAA==
+X-Gm-Message-State: AOJu0YzwwL7xYuHJed0u7hCAgVp31ffRhVSTeU8V7MB6AJ0NDEekM/Ew
+ nAR2iRcmxtvFFnEbZHsoF+5x4oPhCLCgStsBMPlX26+scPF1KhhL34kgocWWI5Gc
+X-Gm-Gg: ASbGncvr3cL44gO0wM2nFUO2z/gE9QK+v33dbntj0K6W5LwCicnGjrSGKRjkm+i5fF0
+ AbgBPrCAhaVkkyppsqI6W1P6F+WOZx5RzJX/RW9ArB7DMPl4B+Jn+6lgzYbj6LcwF0guJIjmbHv
+ N8Rgou59FM+kpHsFIdRf0VF+pQzG3Hj5WcuJecKv6iYiY7yZjoE8+5nAUXIS7rdoxkRAV9Ktg5Y
+ rW0HVZeL6Xhpw1FDC83SDS4luvW//aH9tpCu8ZC33cpLE/1tfyxONBoP+5V6a2rKtNN5CvJsqqQ
+ 8GvJcYRFqkaEDOr3hnOctjTA57cAF+YwqiJ2WeaSmtDnm/NY+am2iEuEgmHVPU+pCEbhpX6llG9
+ NkQ==
+X-Google-Smtp-Source: AGHT+IG8qFmIyjuSnwD7udxRvG5jdfIQRM1jBTYNGbvj34ekrvmSFiIXaJIrnPKivHUYKG51OhkoZQ==
+X-Received: by 2002:a05:600c:3e88:b0:43d:fa59:af98 with SMTP id
+ 5b1f17b1804b1-442fd671c82mr36347725e9.33.1747407685898; 
+ Fri, 16 May 2025 08:01:25 -0700 (PDT)
 Received: from localhost ([94.239.154.20]) by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-3a362347aa5sm1899998f8f.89.2025.05.16.08.01.02
+ 5b1f17b1804b1-442f39ef8bbsm111682575e9.37.2025.05.16.08.01.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 08:01:03 -0700 (PDT)
+ Fri, 16 May 2025 08:01:25 -0700 (PDT)
 From: conte.souleymane@gmail.com
 To: qemu-devel@nongnu.org
 Cc: eblake@redhat.com, jsnow@redhat.com, peter.maydell@linaro.org,
  Souleymane Conte <conte.souleymane@gmail.com>
-Subject: [PATCH v2] docs/interop: convert text files to restructuredText
-Date: Fri, 16 May 2025 15:00:50 +0000
-Message-ID: <20250516150052.30818-1-conte.souleymane@gmail.com>
+Subject: [PATCH v2 1/1] docs/interop: convert text files to restructuredText
+Date: Fri, 16 May 2025 15:00:52 +0000
+Message-ID: <20250516150052.30818-3-conte.souleymane@gmail.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250516150052.30818-1-conte.souleymane@gmail.com>
+References: <20250516150052.30818-1-conte.souleymane@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=conte.souleymane@gmail.com; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=conte.souleymane@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,9 +106,9 @@ buglink: https://gitlab.com/qemu-project/qemu/-/issues/527
 Signed-off-by: Souleymane Conte <conte.souleymane@gmail.com>
 ---
  docs/interop/index.rst                |   1 +
- docs/interop/{qcow2.txt => qcow2.rst} | 210 +++++++++++++++-----------
- 2 files changed, 123 insertions(+), 88 deletions(-)
- rename docs/interop/{qcow2.txt => qcow2.rst} (89%)
+ docs/interop/{qcow2.txt => qcow2.rst} | 218 +++++++++++++++-----------
+ 2 files changed, 128 insertions(+), 91 deletions(-)
+ rename docs/interop/{qcow2.txt => qcow2.rst} (88%)
 
 diff --git a/docs/interop/index.rst b/docs/interop/index.rst
 index 999e44eae1..bfe3cf0beb 100644
@@ -119,10 +123,10 @@ index 999e44eae1..bfe3cf0beb 100644
     vhost-user-gpu
     vhost-vdpa
 diff --git a/docs/interop/qcow2.txt b/docs/interop/qcow2.rst
-similarity index 89%
+similarity index 88%
 rename from docs/interop/qcow2.txt
 rename to docs/interop/qcow2.rst
-index 2c4618375a..82162dcc1e 100644
+index 2c4618375a..2295dd4ae6 100644
 --- a/docs/interop/qcow2.txt
 +++ b/docs/interop/qcow2.rst
 @@ -1,6 +1,8 @@
@@ -150,6 +154,24 @@ index 2c4618375a..82162dcc1e 100644
  
      Byte  0 -  3:   magic
                      QCOW magic string ("QFI\xfb")
+@@ -38,7 +40,7 @@ The first cluster of a qcow2 image contains the file header:
+                     within a cluster (1 << cluster_bits is the cluster size).
+                     Must not be less than 9 (i.e. 512 byte clusters).
+ 
+-                    Note: qemu as of today has an implementation limit of 2 MB
++                    Note: Qemu as of today has an implementation limit of 2 MB
+                     as the maximum cluster size and won't be able to open images
+                     with larger cluster sizes.
+ 
+@@ -48,7 +50,7 @@ The first cluster of a qcow2 image contains the file header:
+          24 - 31:   size
+                     Virtual disk size in bytes.
+ 
+-                    Note: qemu has an implementation limit of 32 MB as
++                    Note: Qemu has an implementation limit of 32 MB as
+                     the maximum L1 table size.  With a 2 MB cluster
+                     size, it is unable to populate a virtual cluster
+                     beyond 2 EB (61 bits); with a 512 byte cluster
 @@ -88,6 +90,7 @@ The first cluster of a qcow2 image contains the file header:
  For version 2, the header is exactly 72 bytes in length, and finishes here.
  For version 3 or higher, the header length is at least 104 bytes, including
@@ -240,7 +262,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Byte  0 -  3:   Header extension type:
                          0x00000000 - End of the header extension area
-@@ -270,7 +280,8 @@ data of compatible features that it doesn't support. Compatible features that
+@@ -270,17 +280,19 @@ data of compatible features that it doesn't support. Compatible features that
  need space for additional data can use a header extension.
  
  
@@ -250,7 +272,10 @@ index 2c4618375a..82162dcc1e 100644
  
  Some header extensions (such as the backing file format name and the external
  data file name) are just a single string. In this case, the header extension
-@@ -280,7 +291,8 @@ neither is padding always necessary nor is there a guarantee that zero bytes
+ length is the string length and the string is not '\0' terminated. (The header
+-extension padding can make it look like a string is '\0' terminated, but
++extension padding can make it looks like a string is '\0' terminated, but
+ neither is padding always necessary nor is there a guarantee that zero bytes
  are used for padding.)
  
  
@@ -265,7 +290,7 @@ index 2c4618375a..82162dcc1e 100644
  
  The number of entries in the feature name table is determined by the length of
 -the header extension data. Each entry look like this:
-+the header extension data. Each entry look like this::
++the header extension data. Each entry looks like this::
  
      Byte       0:   Type of feature (select feature bitmap)
                          0: Incompatible feature
@@ -331,7 +356,7 @@ index 2c4618375a..82162dcc1e 100644
  to the start of the LUKS header clusters in the qcow2 container,
  not the start of the qcow2 file.
  
-@@ -377,35 +392,40 @@ Logically the layout looks like
+@@ -377,35 +392,42 @@ Logically the layout looks like
  
    +-----------------------------+
    | QCow2 header                |
@@ -363,15 +388,17 @@ index 2c4618375a..82162dcc1e 100644
 -  | +-------------------------+ |
 -  | | LUKS key material 8     | |
 -  | +-------------------------+ |
-+  | LUKS partition header       |
-+  +-----------------------------+
-+  | LUKS key material 1         |
-+  +-----------------------------+
-+  | LUKS key material 2         |
-+  +-----------------------------+
-+  | LUKS key material ...       |
-+  +-----------------------------+
-+  | LUKS key material 8         |
++  | +------------------------+  |
++  | | LUKS partition header  |  |
++  | +------------------------+  |
++  | | LUKS key material 1    |  |
++  | +------------------------+  |
++  | | LUKS key material 2    |  |
++  | +------------------------+  |
++  | | LUKS key material ...  |  |
++  | +------------------------+  |
++  | | LUKS key material 8    |  |
++  | +------------------------+  |
 +  +-----------------------------+
 +  |   QCow2 cluster payload     |
 +  +-----------------------------+
@@ -390,7 +417,7 @@ index 2c4618375a..82162dcc1e 100644
  
  When an encryption method is requested in the header, the image payload
  data must be encrypted/decrypted on every write/read. The image headers
-@@ -413,7 +433,7 @@ and metadata are never encrypted.
+@@ -413,7 +435,7 @@ and metadata are never encrypted.
  
  The algorithms used for encryption vary depending on the method
  
@@ -399,7 +426,7 @@ index 2c4618375a..82162dcc1e 100644
  
     The AES cipher, in CBC mode, with 256 bit keys.
  
-@@ -425,7 +445,7 @@ The algorithms used for encryption vary depending on the method
+@@ -425,7 +447,7 @@ The algorithms used for encryption vary depending on the method
     supported in the command line tools for the sake of back compatibility
     and data liberation.
  
@@ -408,7 +435,7 @@ index 2c4618375a..82162dcc1e 100644
  
     The algorithms are specified in the LUKS header.
  
-@@ -433,7 +453,8 @@ The algorithms used for encryption vary depending on the method
+@@ -433,7 +455,8 @@ The algorithms used for encryption vary depending on the method
     in the LUKS header, with the physical disk sector as the
     input tweak.
  
@@ -418,7 +445,7 @@ index 2c4618375a..82162dcc1e 100644
  
  qcow2 manages the allocation of host clusters by maintaining a reference count
  for each host cluster. A refcount of 0 means that the cluster is free, 1 means
-@@ -453,14 +474,15 @@ Although a large enough refcount table can reserve clusters past 64 PB
+@@ -453,14 +476,15 @@ Although a large enough refcount table can reserve clusters past 64 PB
  large), note that some qcow2 metadata such as L1/L2 tables must point
  to clusters prior to that point.
  
@@ -428,7 +455,7 @@ index 2c4618375a..82162dcc1e 100644
 -the worst case, with a 512 cluster size and refcount_order of 6, it is
 -unable to access beyond 32 GB (35 bits).
 +.. note::
-+    qemu has an implementation limit of 8 MB as the maximum refcount
++    Qemu has an implementation limit of 8 MB as the maximum refcount
 +    table size.  With a 2 MB cluster size and a default refcount_order of
 +    4, it is unable to reference host resources beyond 2 EB (61 bits); in
 +    the worst case, with a 512 cluster size and refcount_order of 6, it is
@@ -440,7 +467,7 @@ index 2c4618375a..82162dcc1e 100644
  
      refcount_block_entries = (cluster_size * 8 / refcount_bits)
  
-@@ -470,7 +492,7 @@ obtained as follows:
+@@ -470,7 +494,7 @@ obtained as follows:
      refcount_block = load_cluster(refcount_table[refcount_table_index]);
      return refcount_block[refcount_block_index];
  
@@ -449,7 +476,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Bit  0 -  8:    Reserved (set to 0)
  
-@@ -482,14 +504,15 @@ Refcount table entry:
+@@ -482,14 +506,15 @@ Refcount table entry:
                      been allocated. All refcounts managed by this refcount block
                      are 0.
  
@@ -467,7 +494,7 @@ index 2c4618375a..82162dcc1e 100644
  
  Just as for refcounts, qcow2 uses a two-level structure for the mapping of
  guest clusters to host clusters. They are called L1 and L2 table.
-@@ -509,7 +532,7 @@ compressed clusters to reside below 512 TB (49 bits), and this limit
+@@ -509,7 +534,7 @@ compressed clusters to reside below 512 TB (49 bits), and this limit
  cannot be relaxed without an incompatible layout change).
  
  Given an offset into the virtual disk, the offset into the image file can be
@@ -476,7 +503,7 @@ index 2c4618375a..82162dcc1e 100644
  
      l2_entries = (cluster_size / sizeof(uint64_t))        [*]
  
-@@ -523,7 +546,7 @@ obtained as follows:
+@@ -523,7 +548,7 @@ obtained as follows:
  
      [*] this changes if Extended L2 Entries are enabled, see next section
  
@@ -485,7 +512,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Bit  0 -  8:    Reserved (set to 0)
  
-@@ -538,7 +561,7 @@ L1 table entry:
+@@ -538,7 +563,7 @@ L1 table entry:
                      refcount is exactly one. This information is only accurate
                      in the active L1 table.
  
@@ -494,7 +521,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Bit  0 -  61:   Cluster descriptor
  
-@@ -555,7 +578,7 @@ L2 table entry:
+@@ -555,7 +580,7 @@ L2 table entry:
                      mapping for guest cluster offsets), so this bit should be 1
                      for all allocated clusters.
  
@@ -503,7 +530,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Bit       0:    If set to 1, the cluster reads as all zeros. The host
                      cluster offset can be used to describe a preallocation,
-@@ -577,7 +600,7 @@ Standard Cluster Descriptor:
+@@ -577,7 +602,7 @@ Standard Cluster Descriptor:
          56 - 61:    Reserved (set to 0)
  
  
@@ -512,7 +539,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Bit  0 - x-1:   Host cluster offset. This is usually _not_ aligned to a
                      cluster or sector boundary!  If cluster_bits is
-@@ -601,7 +624,8 @@ file (except if bit 0 in the Standard Cluster Descriptor is set). If there is
+@@ -601,7 +626,8 @@ file (except if bit 0 in the Standard Cluster Descriptor is set). If there is
  no backing file or the backing file is smaller than the image, they shall read
  zeros for all parts that are not covered by the backing file.
  
@@ -522,7 +549,7 @@ index 2c4618375a..82162dcc1e 100644
  
  An image uses Extended L2 Entries if bit 4 is set on the incompatible_features
  field of the header.
-@@ -615,6 +639,8 @@ subclusters so they are treated the same as in images without this feature.
+@@ -615,6 +641,8 @@ subclusters so they are treated the same as in images without this feature.
  The size of an extended L2 entry is 128 bits so the number of entries per table
  is calculated using this formula:
  
@@ -531,7 +558,7 @@ index 2c4618375a..82162dcc1e 100644
      l2_entries = (cluster_size / (2 * sizeof(uint64_t)))
  
  The first 64 bits have the same format as the standard L2 table entry described
-@@ -623,7 +649,7 @@ descriptor.
+@@ -623,7 +651,7 @@ descriptor.
  
  The last 64 bits contain a subcluster allocation bitmap with this format:
  
@@ -540,7 +567,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Bit  0 - 31:    Allocation status (one bit per subcluster)
  
-@@ -647,13 +673,14 @@ Subcluster Allocation Bitmap (for standard clusters):
+@@ -647,13 +675,14 @@ Subcluster Allocation Bitmap (for standard clusters):
                      Bits are assigned starting from the least significant
                      one (i.e. bit x is used for subcluster x - 32).
  
@@ -557,7 +584,7 @@ index 2c4618375a..82162dcc1e 100644
  
  qcow2 supports internal snapshots. Their basic principle of operation is to
  switch the active L1 table, so that a different set of host clusters are
-@@ -672,7 +699,7 @@ in the image file, whose starting offset and length are given by the header
+@@ -672,7 +701,7 @@ in the image file, whose starting offset and length are given by the header
  fields snapshots_offset and nb_snapshots. The entries of the snapshot table
  have variable length, depending on the length of ID, name and extra data.
  
@@ -566,7 +593,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Byte 0 -  7:    Offset into the image file at which the L1 table for the
                      snapshot starts. Must be aligned to a cluster boundary.
-@@ -728,7 +755,8 @@ Snapshot table entry:
+@@ -728,7 +757,8 @@ Snapshot table entry:
                      next multiple of 8.
  
  
@@ -576,7 +603,7 @@ index 2c4618375a..82162dcc1e 100644
  
  As mentioned above, the bitmaps extension provides the ability to store bitmaps
  related to a virtual disk. This section describes how these bitmaps are stored.
-@@ -739,12 +767,15 @@ each bitmap size is equal to the virtual disk size.
+@@ -739,12 +769,15 @@ each bitmap size is equal to the virtual disk size.
  Each bit of the bitmap is responsible for strictly defined range of the virtual
  disk. For bit number bit_nr the corresponding range (in bytes) will be:
  
@@ -593,7 +620,7 @@ index 2c4618375a..82162dcc1e 100644
  
  Each bitmap saved in the image is described in a bitmap directory entry. The
  bitmap directory is a contiguous area in the image file, whose starting offset
-@@ -752,7 +783,7 @@ and length are given by the header extension fields bitmap_directory_offset and
+@@ -752,7 +785,7 @@ and length are given by the header extension fields bitmap_directory_offset and
  bitmap_directory_size. The entries of the bitmap directory have variable
  length, depending on the lengths of the bitmap name and extra data.
  
@@ -602,7 +629,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Byte 0 -  7:    bitmap_table_offset
                      Offset into the image file at which the bitmap table
-@@ -833,7 +864,8 @@ Structure of a bitmap directory entry:
+@@ -833,7 +866,8 @@ Structure of a bitmap directory entry:
                      next multiple of 8. All bytes of the padding must be zero.
  
  
@@ -612,7 +639,7 @@ index 2c4618375a..82162dcc1e 100644
  
  Each bitmap is stored using a one-level structure (as opposed to two-level
  structures like for refcounts and guest clusters mapping) for the mapping of
-@@ -843,7 +875,7 @@ Each bitmap table has a variable size (stored in the bitmap directory entry)
+@@ -843,7 +877,7 @@ Each bitmap table has a variable size (stored in the bitmap directory entry)
  and may use multiple clusters, however, it must be contiguous in the image
  file.
  
@@ -621,7 +648,7 @@ index 2c4618375a..82162dcc1e 100644
  
      Bit       0:    Reserved and must be zero if bits 9 - 55 are non-zero.
                      If bits 9 - 55 are zero:
-@@ -860,11 +892,12 @@ Structure of a bitmap table entry:
+@@ -860,11 +894,12 @@ Structure of a bitmap table entry:
          56 - 63:    Reserved and must be zero.
  
  
@@ -636,7 +663,7 @@ index 2c4618375a..82162dcc1e 100644
  
      image_offset(bitmap_data_offset) =
          bitmap_table[bitmap_data_offset / cluster_size] +
-@@ -875,7 +908,7 @@ above).
+@@ -875,7 +910,7 @@ above).
  
  Given an offset byte_nr into the virtual disk and the bitmap's granularity, the
  bit offset into the image file to the corresponding bit of the bitmap can be
@@ -645,7 +672,7 @@ index 2c4618375a..82162dcc1e 100644
  
      bit_offset(byte_nr) =
          image_offset(byte_nr / granularity / 8) * 8 +
-@@ -886,21 +919,22 @@ last cluster of the bitmap data contains some unused tail bits. These bits must
+@@ -886,21 +921,22 @@ last cluster of the bitmap data contains some unused tail bits. These bits must
  be zero.
  
  
