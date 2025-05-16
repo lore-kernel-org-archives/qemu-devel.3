@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C1E7C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 11:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F3AC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 11:51:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFtSs-0003HO-JY; Fri, 16 May 2025 07:42:58 -0400
+	id 1uFtZw-0004r7-S9; Fri, 16 May 2025 07:50:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFtSk-0003FC-8j
- for qemu-devel@nongnu.org; Fri, 16 May 2025 07:42:52 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFtZr-0004oF-0Z
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 07:50:11 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFtSf-0001X9-1V
- for qemu-devel@nongnu.org; Fri, 16 May 2025 07:42:47 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3a36463b9cbso33263f8f.2
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 04:42:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFtZo-0002G1-Qz
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 07:50:10 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-442ec3ce724so16000045e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 04:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747395760; x=1748000560; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747396206; x=1748001006; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oHgtgWwRsR5xgsu0fuFKQp4h9kkDSHIsf/e1rlAxcs0=;
- b=o+gBshDk8PoZLOfDa6h1xGEofbJYENJqAcmZsRq3RfEOHYPG1n9cQcgoxxynjEpyuc
- kniK9uBnnV65r5q9J9oeVS9Ox6DCmeXN7hEiX3pQ1yyUvH/j9C4Y7R0KHmQrXMcfnFyp
- KO39NgKf0xo1VlTx/WdutC3qzM1UaNGeYefwhlYAe8zPkH2dJAjXRlBKiiMdcmsTTt6O
- DLrkSjyPD/j1HIeEhLWMhQJvSS2gk20VpIW67vxKlNttQicIqJjpSQciRFHijdY9Sm++
- Pt9VTVV35W6/nA27KnqzO16rm9bGW0MKkNsJC8Bdpk0Hn35gJJqaWOqNW5AVU8PHQ2S6
- iC1g==
+ bh=0A9MS1vmxv0EzmUdbLkMsjsRwI+NwrQUgv8MqvSU02k=;
+ b=Tj2Q6+UT+t/fopg864QNXZWYMbbWwoBecqzZfbrwC+xiNwTxs2+2xxPwZpfYPmYX49
+ DuofY5XK2ZCaGfUc0RiZNBmPo+XcNPI3qq/Qe6B6ISmRFxEAcmcfPLEPBaC7DeT4AkoI
+ jLKGf+Y100ykrYY+yT/3Qbkht55onYrJ451aJawsaDnQPtsloQwD6rFtL/kM/0owhCIc
+ DT+3bfII9z50v3BLKcB2P1c2MXYqb87DeLl5tt9RIjZkPINg+1lXjtagR1FbkcVCI3Fj
+ 4oW8uzrVLOsHHhh7LjWbmA55TIg4OFDxLJnZu6Wt14XTIfrgyA9t4oPetgchzvWOEhxA
+ ZyKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747395760; x=1748000560;
+ d=1e100.net; s=20230601; t=1747396206; x=1748001006;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oHgtgWwRsR5xgsu0fuFKQp4h9kkDSHIsf/e1rlAxcs0=;
- b=a+YDjjLG/cy2hFZgyjqK5Zu3WKkpTVxbsyIQNiVbxMBgzT6HNQHALMwcQ32xgV9/7l
- ZWAP0KDXJYJkX/eB+kB2PvopJU0yaLbb8acfkFV4t04g/gnDMxcH/Ml8L2YkaCiM8Ci3
- 8RcIh/eSHAkPp+pVWv+m+KuLV1SX87LD0ymU7tlLRyksUr9dbtCCXn7MlwNHj6aJlcbl
- vLi4i4mjlg12Dkk89Gvosc+kfBs/McPxQ9tszPNKJJBY4CL+2TVYIU69XDWWu8oxBlZu
- FHXODF1mLmD7qvl9W8xeuZtRAuqYe9PZDpvfk1EVhAizOxsoBx9R/nz9dSRI5pCzRIZI
- +LRw==
+ bh=0A9MS1vmxv0EzmUdbLkMsjsRwI+NwrQUgv8MqvSU02k=;
+ b=eHyUyPs/+S+fl03tekvgo9JxHXZLYqyg0NPflbzo97hEzoWkags3AfHI8HwZRao2VT
+ tcGISdtXX6Wo4zXc6QgAXbqGGOQTu8I7KclaSs2mBWCFKI4R6WOf0EeE5szUfv+Ay49S
+ U0S2DWVGVDqSnSy3t8/iczygRTZCMfv84Y4WGYZG8mvJs32zLK1v5jl8PxWt0wdAR7yn
+ JnhYvqFkRAd5EkHSNfWweuVphHUGHdDzCRXFjHtH6smm8FJBlPVnDp4BYWtuDnO0buvu
+ mPYyanF9Qip5+Bb+fSU1QtgiCxzqHmp5sgGT1gXmqkEfJ3EKuRY7pcIMwg3P3eoUFszS
+ gZAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3+a69U6HLNWbjzWoecpXnoK538xzikvtQgOcCvb2v02dyrbJnvTr4CDG6Jt3cMY7cd+dFxi/SZCfE@nongnu.org
-X-Gm-Message-State: AOJu0YyfyeDAFXgBsFtgpBVvFbDMr8mNPBdb1+eHhXahjSX2HC+MWig0
- htsxwJ4JI+W/wNg957qmi9zg3G0ydm63LeSrxS8FaXIyENi9zdc6Ii6PzF+IrE1onDE=
-X-Gm-Gg: ASbGncvBC3q+l+I2SkC+0jk7M7EZWwW2CQxJjUYQARSU80EYJIAoDe7fLQFs1ygsyBw
- u1jUznbjEugARGd4H3YmCgw04iUnxQfbnUxEVBKB6MGQrKR+IK2xfJhaivNYSKgvQXRgHW349C4
- wwzrxAhHG40NBRrqOYFmfjyr+KEzk5pncDTfyVc695xm+BRhSK0cxNNMUl7cCwGKVoiM5s0bE+N
- ysEgvNkAq4HUZ7kdawngCIUQXQwcxQ4W7NfZi5BK4lDg396tVnL741Itr4e+zgELSNDI7wI0DRE
- NjBOPs/QX40FZP1TPteqNs9WnvoSzZaEr+pxA19MS/wFXqwBs4pghyx7YMirNtUbJ7FCotLUdAw
- vuVANjBrYaN1g
-X-Google-Smtp-Source: AGHT+IEx/y+Ws6moW6Tw0zr7OkYfNQAGZAFW4VoGZDhnhUZ//8Wr72A4Igz4LO2TJ9ULhMZPkE1Mzw==
-X-Received: by 2002:adf:e80e:0:b0:3a3:5cca:a53b with SMTP id
- ffacd0b85a97d-3a35ccaa776mr2525538f8f.48.1747395759625; 
- Fri, 16 May 2025 04:42:39 -0700 (PDT)
+ AJvYcCXTa+Krc4M/Hg7yY6ARuSrs6vW3ekK4mqI0vXSYin7Fz7aP5eAtZTaYllT343phBEv/1xldokHWkvo/@nongnu.org
+X-Gm-Message-State: AOJu0YzePXaHTsRAl+3kwkC4x+n5KzAIcUEJoEJehG9WmhRIzmRvm2rj
+ t33FzncsVoM5uoq32qqs3mLlELAPAAKFOdtJmuiOLSbvQTBzM5j6akKfGO05Q4PIEZA=
+X-Gm-Gg: ASbGncso/bQ8t+8yVtEUfhtGWwuHddp8LevGJTjN2OGvxlWq/7pNVfVHXF7wC6ytGmV
+ cZBrUccYGarr6CKdliUHj+8NIYc7RxaNUhonUZGdAzMtt1blQyZOMyTNqOjkFRNHFNJEpPwhQ4F
+ 7MumpoESmZ1jhSnVCX5bcEw6x+U5VwcEXdXT7GZk8tqrk49cVHMBVEOYlcsHmEhdAmR9Z55iZov
+ 9mNEZagVUgSvUy5jxhKo1iAFtdbcitxyRvbAViMEb3uthXL/v48i+hKDRRvOPrZfo5Xq0rSXuPC
+ 9gMZ6ZY1qKlyCb5g43tFxjuBjJBhP1m1/OQAeJ7755P7/KWS8vDWAaogD67gQWPWr1E1N+uftUQ
+ u5beTkzwdQxPszR4kXYoRDgc=
+X-Google-Smtp-Source: AGHT+IHZTq2CB/oyylLd/8hEV4HoeQhGxmwHd+7HjI+ZB3CiLIJ+fAfI5x22s6Xe36BtYqa8f6GFxw==
+X-Received: by 2002:a05:600c:1c28:b0:43c:fe15:41e1 with SMTP id
+ 5b1f17b1804b1-442fd60b66emr30395985e9.4.1747396206121; 
+ Fri, 16 May 2025 04:50:06 -0700 (PDT)
 Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca888fcsm2661900f8f.78.2025.05.16.04.42.38
+ 5b1f17b1804b1-442f3368fbasm103084755e9.2.2025.05.16.04.50.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 04:42:39 -0700 (PDT)
-Message-ID: <8e6cdcb9-24f8-4762-831b-ce57f6e81b20@linaro.org>
-Date: Fri, 16 May 2025 12:42:38 +0100
+ Fri, 16 May 2025 04:50:05 -0700 (PDT)
+Message-ID: <4feacbca-76fe-42cd-a8f6-9daf70f2b437@linaro.org>
+Date: Fri, 16 May 2025 12:50:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] meson: build target libraries with common dependencies
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, berrange@redhat.com, thuth@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
- <20250516052708.930928-2-pierrick.bouvier@linaro.org>
+Subject: Re: [PULL 34/46] hw/intc/aspeed: Add Support for AST2700 INTCIO
+ Controller
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>
+References: <20250309135130.545764-1-clg@redhat.com>
+ <20250309135130.545764-35-clg@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250516052708.930928-2-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250309135130.545764-35-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,29 +104,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/5/25 07:27, Pierrick Bouvier wrote:
-> As mentioned in 20250513115637.184940-1-thuth@redhat.com, dependencies
-
-Use LORE link instead?
-https://lore.kernel.org/qemu-devel/20250513115637.184940-1-thuth@redhat.com/
-
-> were missing when compiling per target libraries, thus breaking
-> compilation on certain host systems.
+On 9/3/25 14:51, Cédric Le Goater wrote:
+> From: Jamin Lin <jamin_lin@aspeedtech.com>
 > 
-> We now explicitely add common dependencies to those libraries, so it
+> Introduce a new ast2700 INTCIO class to support AST2700 INTCIO.
+> Added new register definitions for INTCIO, including enable and status
+> registers for IRQs GICINT192 through GICINT197.
+> Created a dedicated IRQ array for INTCIO, supporting six input pins and six
+> output pins, aligning with the newly defined registers.
+> Implemented "aspeed_intcio_read" and "aspeed_intcio_write" to handle
+> INTCIO-specific register access.
 
-"explicitly"?
 
-> solves the problem.
-> 
-
-Should we use the following tag?
-
-Fixes: 6f4e8a92bbd ("hw/arm: make most of the compilation units common")
-
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Link: https://lore.kernel.org/qemu-devel/20250307035945.3698802-18-jamin_lin@aspeedtech.com
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   meson.build | 21 ++++++++++++++++-----
->   1 file changed, 16 insertions(+), 5 deletions(-)
+>   include/hw/intc/aspeed_intc.h |   1 +
+>   hw/intc/aspeed_intc.c         | 112 ++++++++++++++++++++++++++++++++++
+>   2 files changed, 113 insertions(+)
 
+
+> +static uint64_t aspeed_intcio_read(void *opaque, hwaddr offset,
+> +                                   unsigned int size)
+> +{
+> +    AspeedINTCState *s = ASPEED_INTC(opaque);
+> +    const char *name = object_get_typename(OBJECT(s));
+> +    uint32_t reg = offset >> 2;
+> +    uint32_t value = 0;
+> +
+> +    value = s->regs[reg];
+> +    trace_aspeed_intc_read(name, offset, size, value);
+> +
+> +    return value;
+> +}
+
+> +static const MemoryRegionOps aspeed_intcio_ops = {
+> +    .read = aspeed_intcio_read,
+> +    .write = aspeed_intcio_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+> +    }
+
+Could be safer to also add .impl.min_access_size = 4.
+
+> +};
 
