@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C7FC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 02:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A00C3C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 02:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFkO1-0001k2-P7; Thu, 15 May 2025 22:01:21 -0400
+	id 1uFkUc-0001yR-Uh; Thu, 15 May 2025 22:08:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1uFkNy-0001cc-VV
- for qemu-devel@nongnu.org; Thu, 15 May 2025 22:01:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uFkUb-0001yG-UR
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 22:08:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1uFkNx-0005Ah-87
- for qemu-devel@nongnu.org; Thu, 15 May 2025 22:01:18 -0400
+ id 1uFkUa-0005lm-DX
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 22:08:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747360876;
+ s=mimecast20190719; t=1747361286;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BJxIvLSp24Zd5NKEleBk7HZt6jzTJ8NEoMpKkxofqTE=;
- b=UZbLBG8wnxntbug13iu/heTtVxeOYcMD4XneVPWZEgAtEvu+40JOEhNVECQuXtAKx2S5GW
- thMC+5vKN8XvJ3gkHfqZU3h8dDYbKSYBxqnP3FObYcV5yMVVETWXhyK1xKrwFC6oVaw8Tc
- 8ck3ebhgS/Vz0vdKf/PaNtE6011a7ak=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/QCEWXo21fjBp1rZos98KJbzaZ6vykSmvS6GGLSCH+E=;
+ b=dFSMoWcyvVCRddquT3PwVbFAv/VkrdqNEhk3d6gnAXmwleMk1Y9gAkHM1CGh6JrInfXZfl
+ DCjMFfsq9uPgCgKv9tPCq2aUWXPrgQNL/XfOGK860Hu+lEl1eOllooqYlkGukj7Tc2SRz2
+ 99cjlsbPM+nd+HszYgA9Pmpc9+xxDSg=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-8lsSbZm9P0ycygCl-Et-7w-1; Thu, 15 May 2025 22:01:15 -0400
-X-MC-Unique: 8lsSbZm9P0ycygCl-Et-7w-1
-X-Mimecast-MFC-AGG-ID: 8lsSbZm9P0ycygCl-Et-7w_1747360874
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-30c06465976so1688011a91.0
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 19:01:14 -0700 (PDT)
+ us-mta-516-DHocdTXhPZCASXdLd_v5zA-1; Thu, 15 May 2025 22:08:05 -0400
+X-MC-Unique: DHocdTXhPZCASXdLd_v5zA-1
+X-Mimecast-MFC-AGG-ID: DHocdTXhPZCASXdLd_v5zA_1747361284
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-30c1a269a12so2582182a91.0
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 19:08:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747360874; x=1747965674;
+ d=1e100.net; s=20230601; t=1747361284; x=1747966084;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BJxIvLSp24Zd5NKEleBk7HZt6jzTJ8NEoMpKkxofqTE=;
- b=B6z+zEPDrB7lYWj9ckbUsdQhtJP6Px/eJ0DrHCNaa/RapH+thimcvSwsSNzjoTT112
- ukadj4ovPiOMr6juQQBZSfOnFZFmNceBl3ADiL/6eZQ3EN85NdpAJ15nRZivoWuX+Cz8
- izRM4KUAVwdXfyR+sffghBB1Rs5QAURFBiAOySi0Wu+7QbhJHWOBFVsiESUh5vJSxIWp
- MarJz75w0gbx2Yqa3Lb4kX77LtSeKkkCbIsg0N8WFdXHYeGTw79W6pZlvjoDDYDgSjEn
- 1xb2S7Xq6XHX2M9akz8eOW8Dce7vxuX+vZmGDkPipia3gOP8xBxpE7ZllcV/HalKp5H5
- apRA==
-X-Gm-Message-State: AOJu0Yzn7ZZk2DbDyUE1NqIdlkvp+0cIGVPD+4bfoB6tmIxNgdCZjZyp
- Cogcc7Qe3t4WDFXorXuj0thDVSVm66ueoHyjAARV4v98Lcb3kIwO9GNQk7EmftGLp+hPJ3RCzCC
- CmJvY02YIlosdYHUlgli5qrwppAbhCtPulsxjq7BCMDz7Q7sMqIVIkbFIaUSsfy3RfJ8qdCPicN
- eSl4gb08e6TGC1QMcISdHb/fAru2jDfm4=
-X-Gm-Gg: ASbGncuViBEf8KU3U9SkS8xyjI4Y1cGrWC4hd9crvWTNWOYrCH1len7J89HVyr8f5iN
- DxPJGb8RZKnXbgz9coj/1228ax5W+yvN1HV+kwPnAmYv8NVL5RQycaptGEY9HfvRkqnLWpw==
-X-Received: by 2002:a17:90b:3905:b0:2fe:9783:afd3 with SMTP id
- 98e67ed59e1d1-30e7d507ddcmr2226919a91.2.1747360873864; 
- Thu, 15 May 2025 19:01:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQ0j0hTPnGs/WrmYWdfCtsxqudyCnS2sy3LUhKYx/unQDOK3WEi7KRO6lWa6MPd3dXlR867ndAPejia+lwm4M=
-X-Received: by 2002:a17:90b:3905:b0:2fe:9783:afd3 with SMTP id
- 98e67ed59e1d1-30e7d507ddcmr2226886a91.2.1747360873446; Thu, 15 May 2025
- 19:01:13 -0700 (PDT)
+ bh=/QCEWXo21fjBp1rZos98KJbzaZ6vykSmvS6GGLSCH+E=;
+ b=qTjZjW58LFyOCw/KxF1C1PXwM/C//8RMVT+OoMcnbj/PB9WROIDEen656wioAa33Yn
+ Ft9W3/sT3+vUnfgnefeifPaGm4KQmjMfGKYlb8kKeVXs88aXbHOtn3JPhYAMPmBzs+SD
+ v6AMeoeAyaWWebbkiP9MsEP7okSX/Fe0sYtmxauPhngSwyKhuUvZsqFm0S231R1+knig
+ ELy/FMYkOm9GSoDaU73HT7tx4joKQ5QgFFQIFadmTZhxJQDw7NKNgjTM20wCm7Ys5FdX
+ DYm4gmeio1kfq/nx29Htd9c90kgnKQyvKyI+LCIDQJNw/xYkDG8drZv5b5KifuSTLFuA
+ HSGQ==
+X-Gm-Message-State: AOJu0YzgTB0r/eupFgxm+z/PuY0mH3OX3jDIdQgCHlWXBLP6pWMPaLFI
+ sOgIoT7IaoHyxHhHukr6pWs8Edvk+qKG/4eu55lUjlRMyVRFXXpGVAvKS1P3fas3VvrvnJVvdIv
+ qA9dKhJtmOjMjW5uIz8v4u/Dt0vFl9slolL2BNwF7/JAkNbHxt3RhshVtjpEV0KRcZ+Rs8OyUs1
+ 5zt7c2+yy4yX5vrsG6a4d1TSVCIcEoj7g=
+X-Gm-Gg: ASbGncsIi2VVhYfcPD4utsIQqG2awfewn9DLx8Mh6Yl+0oC6raoBut/j4LHkWS3JJum
+ hsV5d0Xkw4c2CzsiSqObjfBAsAgDR856/kTDVly21B6rAhLh0uM8+AsnswN57T47i8ZAi/w==
+X-Received: by 2002:a17:90a:c88e:b0:30e:823f:ef27 with SMTP id
+ 98e67ed59e1d1-30e823ff07cmr1400080a91.33.1747361284027; 
+ Thu, 15 May 2025 19:08:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGe5rrttrpcBHqW/YX8Gcx+6eEQc0XsO6rmWZ7JUa2ana0rAfD9bvR6TgIL69AN2Ip70palSyU7nZMAAvmuQ3o=
+X-Received: by 2002:a17:90a:c88e:b0:30e:823f:ef27 with SMTP id
+ 98e67ed59e1d1-30e823ff07cmr1400036a91.33.1747361283635; Thu, 15 May 2025
+ 19:08:03 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250507184647.15580-1-jonah.palmer@oracle.com>
- <20250507184647.15580-6-jonah.palmer@oracle.com>
-In-Reply-To: <20250507184647.15580-6-jonah.palmer@oracle.com>
+ <20250507184647.15580-7-jonah.palmer@oracle.com>
+In-Reply-To: <20250507184647.15580-7-jonah.palmer@oracle.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 16 May 2025 10:01:02 +0800
-X-Gm-Features: AX0GCFsPToxW7IB5-YWUNSYM93fnhvxb8Iofvbg9595Wv3w-Hynm_woVwCdUS4k
-Message-ID: <CACGkMEuZzErLv9Q0s=KoxdN8WJu9kfsxVqdYaEgbnG6ZJcQHpg@mail.gmail.com>
-Subject: Re: [PATCH v4 5/7] vdpa: reorder listener assignment
+Date: Fri, 16 May 2025 10:07:51 +0800
+X-Gm-Features: AX0GCFvHIY_DBRVhVB0hS8j3B9SvKSPDYtNF1sLAivGgOf0MWSQ5hdxmCF7lfD8
+Message-ID: <CACGkMEvpRCF5=y+LPaYXqETaNq67aPdJbjyhBjJFaPiBrgJRDw@mail.gmail.com>
+Subject: Re: [PATCH v4 6/7] vdpa: move iova_tree allocation to
+ net_vhost_vdpa_init
 To: Jonah Palmer <jonah.palmer@oracle.com>
 Cc: qemu-devel@nongnu.org, eperezma@redhat.com, peterx@redhat.com, 
  mst@redhat.com, lvivier@redhat.com, dtatulea@nvidia.com, leiyang@redhat.com, 
@@ -80,7 +81,7 @@ Cc: qemu-devel@nongnu.org, eperezma@redhat.com, peterx@redhat.com,
  lingshan.zhu@intel.com, boris.ostrovsky@oracle.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -110,20 +111,18 @@ m> wrote:
 >
 > From: Eugenio P=C3=A9rez <eperezma@redhat.com>
 >
-> Since commit f6fe3e333f ("vdpa: move memory listener to
-> vhost_vdpa_shared") this piece of code repeatedly assign
-> shared->listener members.  This was not a problem as it was not used
-> until device start.
+> As we are moving to keep the mapping through all the vdpa device life
+> instead of resetting it at VirtIO reset, we need to move all its
+> dependencies to the initialization too.  In particular devices with
+> x-svq=3Don need a valid iova_tree from the beginning.
 >
-> However next patches move the listener registration to this
-> vhost_vdpa_init function.  When the listener is registered it is added
-> to an embedded linked list, so setting its members again will cause
-> memory corruption to the linked list node.
+> Simplify the code also consolidating the two creation points: the first
+> data vq in case of SVQ active and CVQ start in case only CVQ uses it.
 >
-> Do the right thing and only set it in the first vdpa device.
->
+> Suggested-by: Si-Wei Liu <si-wei.liu@oracle.com>
 > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
 > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
 
 Acked-by: Jason Wang <jasowang@redhat.com>
 
