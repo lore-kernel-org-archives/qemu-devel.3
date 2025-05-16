@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83699C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:48:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46602C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFwM2-0001e7-5l; Fri, 16 May 2025 10:48:06 -0400
+	id 1uFwPn-00048w-E1; Fri, 16 May 2025 10:52:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwLy-0001dR-5E
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:48:04 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwLv-0002Nt-Dx
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:48:01 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3a1b8e8b2b2so1456598f8f.2
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 07:47:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747406877; x=1748011677; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4Hz9R3lbGIV+V7GuRIm48x4ah4B5SS/VSn+imgLSZbM=;
- b=USGhcD5s9VMHzC9xW5Gc6oMpWZcX5UN5YzA2ovARnkgCFO/qZs+wEvBiRprpwELdkO
- SqqBUjepB4lClqojXYN4JHc8PUJ9pYYgSQbdJQm+VlZwdwx8ulJd4ibVdWm4sOEhcVbi
- CyaXZOtSjtNC26Ll1RWohw2OoJ2Ci7o3MoBjYUtycOELaiSVNj20C88J7ZbxEhrl+Hn8
- zUSxkcbN0EBJrOfxD8IKPh1Jfs5alw5nyBryrgUdswO+RxucWcO51U2BpUfj9wdq7ene
- pV3hnlcVz3cKWtQAteyvXQ0WVKfMtC8T9HWczBldBLexMRwnUH2bHYB+Ke/966pon8ln
- bANw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747406877; x=1748011677;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4Hz9R3lbGIV+V7GuRIm48x4ah4B5SS/VSn+imgLSZbM=;
- b=s1M2x6vhdXmtpYDoS5VTvKuCyILmjLO6nHdbF2296sqbm5DYswCC/iJ0qWVZ+4OP2u
- aV960GpXDHWy3DmFnpFrDZ3IIJ8eM5cofFZJq/cLsweeAK00nC4K4GBDR4dXf28KP2bq
- cEMRU9aiJHghK2SggrLtLiCF2aUszZkM3k7V4WYfv0sILMmbDdqLpknnVNi3adooyVAK
- J6vIbk4g9NQ9ZVWclW7Dz6uzFSjn6azM7Px8GDDadMsonYfEhZ6Grr4N8Vbmb1sj5JFb
- r60l1m/x/Bn/b4Mf7sBB4/GG2+bZ1R1obaxzmRHhJNs/VpELVORgw8OQipxqcfo+SCh3
- mgsw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMCuyPXRAPr3lsUyps9WGVczSn5qSG8hBf2A7DjtUR5qIuKURs6VCSBNpncTbRdRyiCk5VJPpeGfrZ@nongnu.org
-X-Gm-Message-State: AOJu0Yy8XtDeF0SwT4JQw3cWBMxNEBV0zEB+CtUHt5ylMDE139CmCeJW
- H1sXV/ES9GeDhX7BTCCcMmy6TDJBkxk1Mgmyol6RFuoTB2veszQCnfBDJQ9Idi7aLbE=
-X-Gm-Gg: ASbGncsky9aJ7nK/yS5gLuJ9+0bJyM50VRSlko0TU58qpkN7JZCzX6edpKyCWUW5giN
- M9ZKOpWfWBXWBSDr6mwCiGcJLitTgx5rBwP9IzLhNNcPSvcb4IDuwXv4rIVPRbFwNUOXub2FZi+
- q3yH6knbjpmu7b4PjnJDSIGBrpaivuOJXJBMXaTsY8n6tvrOxr6KkBM06tYB39GDt+1wcsT7oU4
- Iwr2BEJTJg8aEiLb8rQtAwJrmeskqh8+PBC6eoenEWVX0hRWzzZg65adSQVDfwIzgfqOnfwILJT
- ILmWK0utcpSi0zfvWPWn+vg88Ogf3xu6GfkEU7BW71VIL0gcFSZkQAbG6yThFookIO+vfonkbyU
- POXQyPHmtz+/k
-X-Google-Smtp-Source: AGHT+IF0eU5h38psqMO73iwCcgaikINZxZeJcvoOVEPB3Ux1ZqP2RZfnykIjp9/yr1rIYKQC/TmJrA==
-X-Received: by 2002:a5d:5848:0:b0:3a1:f5c4:b81b with SMTP id
- ffacd0b85a97d-3a35c83915fmr3580179f8f.23.1747406877576; 
- Fri, 16 May 2025 07:47:57 -0700 (PDT)
-Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca4d1c6sm3080519f8f.2.2025.05.16.07.47.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 07:47:57 -0700 (PDT)
-Message-ID: <002caade-699e-4128-ac08-7797b83b3cc8@linaro.org>
-Date: Fri, 16 May 2025 15:47:56 +0100
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uFwPf-00047n-UX
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:51:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uFwPd-0002uL-GO
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:51:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747407107;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AWLc64ftfi9awzJ/f+axMzzlW6B2oAcDqHjxbKPcvQA=;
+ b=RT0QVKRS9mPQkYsg+1jbuEoeI8v8ndKcmE01F2he08zCXgboIMqFWhMIPWCGwumPHH/TKE
+ SKEnSACnA9/miKHPPFTAWeHzxIiZoZDaETcsyPul2tVHw2TvUoris/ACi2bgKjaDJMMBb0
+ Q5wSBwElV+u2prEEIxCSAjShwukxKr8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-NPVtR_kuM4Gzp11Hkg5PPg-1; Fri,
+ 16 May 2025 10:51:42 -0400
+X-MC-Unique: NPVtR_kuM4Gzp11Hkg5PPg-1
+X-Mimecast-MFC-AGG-ID: NPVtR_kuM4Gzp11Hkg5PPg_1747407100
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 809B119560BA; Fri, 16 May 2025 14:51:39 +0000 (UTC)
+Received: from localhost (dhcp-192-216.str.redhat.com [10.33.192.216])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1076E1956094; Fri, 16 May 2025 14:51:36 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, agraf@csgraf.de,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [PATCH v3 08/10] arm/cpu: more customization for the kvm host
+ cpu model
+In-Reply-To: <aCTe5kEN1WdgZ74T@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20250414163849.321857-1-cohuck@redhat.com>
+ <20250414163849.321857-9-cohuck@redhat.com> <aCNsSbDoi5oKWYul@redhat.com>
+ <875xi3cig5.fsf@redhat.com> <aCTe5kEN1WdgZ74T@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Fri, 16 May 2025 16:51:34 +0200
+Message-ID: <87v7q0bocp.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] tests/functional: Add PCI hotplug test for aarch64
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- thuth@redhat.com, berrange@redhat.com
-Cc: eric.auger@redhat.com, alex.bennee@linaro.org, peter.maydell@linaro.org,
- qemu-arm@nongnu.org
-References: <20250512144629.182340-1-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250512144629.182340-1-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,35 +98,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 16:45, Gustavo Romero wrote:
-> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
-> hot-unplug on arm64.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   MAINTAINERS                                  |  5 ++
->   tests/functional/meson.build                 |  1 +
->   tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
->   3 files changed, 80 insertions(+)
->   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 23174b4ca7..9ebb768214 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2065,6 +2065,11 @@ S: Supported
->   F: include/hw/pci/pcie_doe.h
->   F: hw/pci/pcie_doe.c
->   
-> +ARM PCI Hotplug
-> +M: Gustavo Romero <gustavo.romero@linaro.org>
+On Wed, May 14 2025, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
 
-As mentioned in v2, since this might interest ARM contributors:
+> On Wed, May 14, 2025 at 05:36:58PM +0200, Cornelia Huck wrote:
+>> On Tue, May 13 2025, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+>>=20
+>> > On Mon, Apr 14, 2025 at 06:38:47PM +0200, Cornelia Huck wrote:
+>> >> From: Eric Auger <eric.auger@redhat.com>
+>> >>=20
+>> >> If the interface for writable ID registers is available, expose uint64
+>> >> SYSREG properties for writable ID reg fields exposed by the host
+>> >> kernel. Properties are named  SYSREG_<REG>_<FIELD> with REG and FIELD
+>> >> being those used  in linux arch/arm64/tools/sysreg. This done by
+>> >> matching the writable fields retrieved from the host kernel against t=
+he
+>> >> generated description of sysregs.
+>> >>=20
+>> >> An example of invocation is:
+>> >> -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=3D0x0
+>> >> which sets DP field of ID_AA64ISAR0_EL1 to 0.
+>> >
+>> > For the value you are illustrating 0x0 - is this implying that
+>> > all the flags take an arbitrary integer hex value ?
+>> >
+>> > This would be different from x86, where CPU feature flags are
+>> > a boolean on/off state.
+>>=20
+>> Most of the fields are 4 bits, the allowed values vary (there are also
+>> some fields that are single bits, or wider.) The FEAT_xxx values (which
+>> can be expressed via ID register fields, or a combination thereof) are
+>> mostly boolean, but there are also some of them that can take values.
+>>=20
+>> We could cook up pseudo-features that are always on/off, but I don't
+>> like that approach: they would be QEMU only, whereas the ID register
+>> fields and FEAT_xxx features are all defined in the Arm documentation.
+>
+> Fortunately from a libvirt POV we can likely expand our config
+> to cope with hex values for arm features without too much
+> trouble.
+>
+>>=20
+>> An additional difference from x86 would be that FEAT_xxx featues are not
+>> neccessarily configurable (only if the host kernel supports changing the
+>> ID register field(s) backing the feature.)
+>
+> Is the kernel able to tell us which ones are configurable and which
+> are not ? If so, it'd be helpful to expose this info in QAPI some
+> place.
 
-    L: qemu-arm@nongnu.org
+The kernel can tell us which ID register fields are writable (we won't
+generate properties if we don't.) For FEAT_xxx, this depends on how
+we'll end up handling them (maybe we should only expose them if all ID
+register bits backing them are actually writable.)
 
-> +S: Supported
-> +F: tests/functional/test_aarch64_hotplug_pci.py
+What worries me a bit is that QEMU exposing a certain set of FEAT_xxx
+values could be interpreted as "those features are present, any other
+features aren't", while it is only the list of configurable features.
+
+Another issue: If libvirt is trying to baseline two cpus, it might end
+up creating a model that looks sane on paper, but migrations will fail
+because there are differences in non-writable bits. It would be much
+better if libvirt could detect beforehand that there was no common
+determinator. Not yet sure how to handle this.
 
 
