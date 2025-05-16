@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9129AC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 00:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F18C3C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 00:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFikO-0005xy-4f; Thu, 15 May 2025 20:16:20 -0400
+	id 1uFimQ-0007LR-4l; Thu, 15 May 2025 20:18:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uFikF-0005rV-4F; Thu, 15 May 2025 20:16:11 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1uFimH-0007KG-VZ; Thu, 15 May 2025 20:18:18 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uFikD-0003UJ-73; Thu, 15 May 2025 20:16:10 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-30e80f03760so236181a91.0; 
- Thu, 15 May 2025 17:16:08 -0700 (PDT)
+ id 1uFimG-0003bF-AK; Thu, 15 May 2025 20:18:17 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b20d46fcc86so1461116a12.3; 
+ Thu, 15 May 2025 17:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747354567; x=1747959367; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=gmail.com; s=20230601; t=1747354694; x=1747959494; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3b9I3cAShdsCHKqRoizkJ1rBrmCqhcVFQsEwjB+GgUE=;
- b=fxAJPxYVQIQAQl4WTOcGOKrpJeuUoflGBqIuf+JHR3jlPLu/0nUeMyEcBJqChLlQ//
- nefsDT5fQo7//5QIQYk5IoG+VRGuRZiVnPH8o8alAAQH6jr1G7vtSHMAuDcfTCL1KXHl
- SxePJdjXsWVuX+WAk2aQFfKUYZHT2m/tiUecESs67ys/2UKpNi4EA9uQ1leDlDQifJtM
- R8bA//VyhnV9qZqFhJLQNpKydZ8TIfdz26Y3Tafsp9UKoY2TeNbdSQN8tnf3bHhaqi78
- W23z6uOAtOKeekLzx10X2TkwehJ6VFOhe5Y4vRNY9CxleYCkSE+QSqNowXUxN4X8kTwF
- wTZA==
+ bh=1YnwbJIXiheczhpAKIPkv4Tr2AEcA1yrkjxMvY/TsPM=;
+ b=RN9DELT8GdX0TX+8H7MT5uUfRO8WO3P7SNbCkgNyWMvBjsB7e2FVN4F3oN248W2oB8
+ DxcAZtMes+yxBav5arUIGSSbohsyA1JsgNZ+hAlJdNUyExkWDeXrFxuU1qRvwfZID4V9
+ ML7xjaOZLr0eyshrkMIW+8n2qTSefYiuvRWBtGBV5L3tbzYCbBa4BJEAMT0R5G2agzrv
+ Md2+eUj5f6Vbs6hmH1zKa+OX+hwZ4YRW5lvIM4Od6dsbFryQ4g8xmMNw4CJ2QKcCGjzY
+ +dfo6tpJf4nAtsTAE7UQSfnP/NNqWrY91DYSgU2suq2uqqkLBO1u0001aSV23PbG/+Nc
+ FaOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747354567; x=1747959367;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=1e100.net; s=20230601; t=1747354694; x=1747959494;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=3b9I3cAShdsCHKqRoizkJ1rBrmCqhcVFQsEwjB+GgUE=;
- b=kvtVV+VgB9Xc1w7vrarBUXXGDK4oe0YjDdwnizz7v1NKhiibC5L1s+opKFn+muRWqh
- pDO9kUMtDPBDUflxOxd11GCSsW8LUJrs6J+OylvgfjBaYilhzgh5eBFs3t/JA8zMwKci
- wAezPrxZELlxvUozJWL3pxTuKjM4KQvGhflWnOGFYFw9JggCnuECsndk2w2J4Emn9OYT
- 864UZdN5fjkCcwzyH15kB7C2R2gJiMvWq6VoSqcWr5YqXbIMfYcX2yTpw/c2X6PBTNiU
- Ou7b1GvKXu6CTFL39vOi/UKkROZ7gE9vD2+J96gajitHGOz0Mb7BNTKIBvu5B0GSF1Jf
- Dy/A==
+ bh=1YnwbJIXiheczhpAKIPkv4Tr2AEcA1yrkjxMvY/TsPM=;
+ b=fOmTrtqIn0iXKpGrPqh6zMvnZb5yXOzyeB2nB+jSFaQa0suXqGgru91hflmBjS55hx
+ BMC2qJfyMMnQQWOwwCXIddf1PZH0x3EvZlbupPjyKpJtleFxCQU340meM5vT1K1Sxrlf
+ U7Un4C3vFwEjRLAj9HDx/IwvdjUW77v+wSkunFIorpTf9u1ERdFL+qXGNgRKuY5wdA6Y
+ z60PWu2h24ocNcG2GS7GkCkEhpsxI5aPw4VDkACDL9TXOzPPK5d9kNwsP0CuBIUXOrfH
+ bgKZySXdltuMnUCsC0F/t2O2CbLSpXFdA099J9i0qq5/oITKSFMcq6LOn1FtB820cYiS
+ SYGg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhrxf/bpdmZ6D4uB54UAGP+3bJTRCovFXibLO0V9CJNA/rE5VCzQoE0CswcHQX8DoScpcxoOv+vA==@nongnu.org
-X-Gm-Message-State: AOJu0YwFAKcJb9vO6KtA8gjRJEhZGWGBwCGeuDm9nhQ/AEWbZsbYMO7R
- zCFsMC1t6/+FqBrgXWubdV/zoyhxBSRkor5qE4nsMFSPgMuofuVohu9FLUhe2A==
-X-Gm-Gg: ASbGnct58247pfc/KyCS/WFWqhIvMoI3EICkN7AeQIid1cGh4fELVraUzS5RdFa7lSM
- NwlIywvhHEpEGYVOFwcPS6pyX5htYG8uugWQz9Q7SKlJ0Ul4BLY0qtPoX+g0MS8jucV/LVQ3yh/
- YbLHR9wBEXlLS4I9LzR46vk/MoO+eKPu/qBB8BAvzNLqf0yhd0gLO3gOze7DDDmG2dDv32hvZ+f
- bIIBYyJ5vrisLYD6iuzMZXx3f3LT1kqXJYfYVgN6O3kR7Df5zMAEinmyZMnoOX5ls52XWQkqC5j
- u7nwSEtECPhW/8DBPhFmYzCse9mfAhJ0sDj6PLnsl63ATvQ=
-X-Google-Smtp-Source: AGHT+IHBUeURoEyCTS4KhiD1YOVV0WkkePTTo5eE6O+cJAQZGqNp/QxnXAilx3TOddycwSqgCVGUcQ==
-X-Received: by 2002:a17:90b:4b82:b0:2ff:6f88:b04a with SMTP id
- 98e67ed59e1d1-30e8314d95bmr672214a91.15.1747354566775; 
- Thu, 15 May 2025 17:16:06 -0700 (PDT)
+ AJvYcCXWKmt+n35SK6Ln1WTjIfbtYqCByiWhlwKdXdraL/8r5CXkuYU8ek7WGT4GG3PnxkblAPAUK83FIA==@nongnu.org
+X-Gm-Message-State: AOJu0Yz/fzKbZJ0F+T0KcvtzJkeCxSEda6WC2lOjPPvGpgnXR34mkrfa
+ G+qKA3kbIlCUNg8tct0nAHhd03gqMuigOZxzZ3y4tSoqZv/j30h7aEap
+X-Gm-Gg: ASbGnctHyOAv+1i7wuC9dM2Y68kc7wLUFYBbvWNnH2sV9RVgzgNkMCivh6wgtYU0rX7
+ fPZwOYgs4SbhgVAzK55OerKnoI13eZfZxuEFBE8sEQjSQ8Sm6K0DIS6xyroIT0dKYkC2x4xuxUh
+ 4X5ElByzy9QNrsF68iP6+F5cGkPVTgkoa76LWeCjYLEQ90k8lOZbD6oB249TQuXWzYy+qxYatMp
+ YDIUmo7j/yItMt0DWLmz80q8Bc4H1O7keNWGgSf3NnJQIatcjekoO9CmTdnlBuZ+aBVHYJTq3H/
+ i/gqZTo0d1RouYKc6l3IqaJ4o7/AnTh6b0bMxHPOSWw3FP7RQOSR6i+1Zw==
+X-Google-Smtp-Source: AGHT+IFXLga/ggiz0gY2kTrxmwgwtv9lbd+aCehHXCWHppeZEoMuOjizuilOjy7Lv/Zp8jFgEFQffQ==
+X-Received: by 2002:a17:903:41d0:b0:22e:3aaa:8bc5 with SMTP id
+ d9443c01a7336-231d43bdb61mr18240045ad.24.1747354694146; 
+ Thu, 15 May 2025 17:18:14 -0700 (PDT)
 Received: from localhost ([118.209.229.237]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30e334254f5sm4108111a91.13.2025.05.15.17.16.03
+ d9443c01a7336-231d4edb0d0sm3353135ad.254.2025.05.15.17.18.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 17:16:06 -0700 (PDT)
+ Thu, 15 May 2025 17:18:13 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 16 May 2025 10:15:59 +1000
-Message-Id: <D9X5HV4ELQMG.2A172BOYBHB1F@gmail.com>
-To: "Nicholas Piggin" <npiggin@gmail.com>, <qemu-ppc@nongnu.org>
+Date: Fri, 16 May 2025 10:18:08 +1000
+Message-Id: <D9X5JI8HKJV7.ICYWP0CEHHKC@gmail.com>
 Cc: <qemu-devel@nongnu.org>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
  <fbarrat@linux.ibm.com>, "Glenn Miles" <milesg@linux.ibm.com>, "Michael
  Kowal" <kowal@linux.ibm.com>, "Caleb Schlossin" <calebs@linux.vnet.ibm.com>
-Subject: Re: [PATCH 18/50] pnv/xive2: Print value in invalid register write
- logging
+Subject: Re: [PATCH 20/50] pnv/xive2: Permit valid writes to VC/PC Flush
+ Control registers
 From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Nicholas Piggin" <npiggin@gmail.com>, <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.19.0
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-19-npiggin@gmail.com>
-In-Reply-To: <20250512031100.439842-19-npiggin@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102e.google.com
+ <20250512031100.439842-21-npiggin@gmail.com>
+In-Reply-To: <20250512031100.439842-21-npiggin@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,115 +105,100 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon May 12, 2025 at 1:10 PM AEST, Nicholas Piggin wrote:
 > From: Michael Kowal <kowal@linux.ibm.com>
 >
-> This can make it easier to see what the target system is trying to
-> do.
->
+> Writes to the Flush Control registers were logged as invalid
+> when they are allowed. Clearing the unsupported want_cache_disable
+> feature is supported, so don't log an error in that case.
+
+I guess there are no other fields in here that should be warned about
+attempting to set.
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-> [npiggin: split from larger patch]
+>
 > Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 > ---
->  hw/intc/pnv_xive2.c | 24 ++++++++++++++++--------
->  1 file changed, 16 insertions(+), 8 deletions(-)
+>  hw/intc/pnv_xive2.c | 36 ++++++++++++++++++++++++++++++++----
+>  1 file changed, 32 insertions(+), 4 deletions(-)
 >
 > diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index d7ca97ecbb..fcf5b2e75c 100644
+> index 3c26cd6b77..c9374f0eee 100644
 > --- a/hw/intc/pnv_xive2.c
 > +++ b/hw/intc/pnv_xive2.c
-> @@ -1197,7 +1197,8 @@ static void pnv_xive2_ic_cq_write(void *opaque, hwa=
-ddr offset,
->      case CQ_FIRMASK_OR: /* FIR error reporting */
->          break;
->      default:
-> -        xive2_error(xive, "CQ: invalid write 0x%"HWADDR_PRIx, offset);
-> +        xive2_error(xive, "CQ: invalid write 0x%"HWADDR_PRIx" value 0x%"=
-PRIx64,
-> +                    offset, val);
->          return;
->      }
-> =20
-> @@ -1495,7 +1496,8 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwa=
-ddr offset,
->          break;
-> =20
->      default:
-> -        xive2_error(xive, "VC: invalid write @%"HWADDR_PRIx, offset);
-> +        xive2_error(xive, "VC: invalid write @0x%"HWADDR_PRIx" value 0x%=
-"PRIx64,
-> +                    offset, val);
->          return;
->      }
-> =20
-> @@ -1703,7 +1705,8 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwa=
-ddr offset,
->          break;
-> =20
->      default:
-> -        xive2_error(xive, "PC: invalid write @%"HWADDR_PRIx, offset);
-> +        xive2_error(xive, "PC: invalid write @0x%"HWADDR_PRIx" value 0x%=
-"PRIx64,
-> +                    offset, val);
->          return;
->      }
-> =20
-> @@ -1790,7 +1793,8 @@ static void pnv_xive2_ic_tctxt_write(void *opaque, =
-hwaddr offset,
->          xive->tctxt_regs[reg] =3D val;
->          break;
->      default:
-> -        xive2_error(xive, "TCTXT: invalid write @%"HWADDR_PRIx, offset);
-> +        xive2_error(xive, "TCTXT: invalid write @0x%"HWADDR_PRIx
-> +                    " data 0x%"PRIx64, offset, val);
->          return;
->      }
->  }
-> @@ -1861,7 +1865,8 @@ static void pnv_xive2_xscom_write(void *opaque, hwa=
-ddr offset,
->          pnv_xive2_ic_tctxt_write(opaque, mmio_offset, val, size);
->          break;
->      default:
-> -        xive2_error(xive, "XSCOM: invalid write @%"HWADDR_PRIx, offset);
-> +        xive2_error(xive, "XSCOM: invalid write @%"HWADDR_PRIx
-> +                    " value 0x%"PRIx64, offset, val);
->      }
->  }
-> =20
-> @@ -1929,7 +1934,8 @@ static void pnv_xive2_ic_notify_write(void *opaque,=
- hwaddr offset,
->          break;
-> =20
->      default:
-> -        xive2_error(xive, "NOTIFY: invalid write @%"HWADDR_PRIx, offset)=
-;
-> +        xive2_error(xive, "NOTIFY: invalid write @%"HWADDR_PRIx
-> +                    " value 0x%"PRIx64, offset, val);
->      }
->  }
-> =20
-> @@ -1971,7 +1977,8 @@ static void pnv_xive2_ic_lsi_write(void *opaque, hw=
+> @@ -1411,7 +1411,14 @@ static void pnv_xive2_ic_vc_write(void *opaque, hw=
 addr offset,
->  {
->      PnvXive2 *xive =3D PNV_XIVE2(opaque);
-> =20
-> -    xive2_error(xive, "LSI: invalid write @%"HWADDR_PRIx, offset);
-> +    xive2_error(xive, "LSI: invalid write @%"HWADDR_PRIx" value 0x%"PRIx=
-64,
-> +                offset, val);
->  }
-> =20
->  static const MemoryRegionOps pnv_xive2_ic_lsi_ops =3D {
-> @@ -2074,7 +2081,8 @@ static void pnv_xive2_ic_sync_write(void *opaque, h=
-waddr offset,
->          inject_type =3D PNV_XIVE2_QUEUE_NXC_ST_RMT_CI;
+>      /*
+>       * ESB cache updates (not modeled)
+>       */
+> -    /* case VC_ESBC_FLUSH_CTRL: */
+> +    case VC_ESBC_FLUSH_CTRL:
+> +        if (val & VC_ESBC_FLUSH_CTRL_WANT_CACHE_DISABLE) {
+> +            xive2_error(xive, "VC: unsupported write @0x%"HWADDR_PRIx
+> +                        " value 0x%"PRIx64" bit[2] poll_want_cache_disab=
+le",
+> +                        offset, val);
+> +            return;
+> +        }
+> +        break;
+>      case VC_ESBC_FLUSH_POLL:
+>          xive->vc_regs[VC_ESBC_FLUSH_CTRL >> 3] |=3D VC_ESBC_FLUSH_CTRL_P=
+OLL_VALID;
+>          /* ESB update */
+> @@ -1427,7 +1434,14 @@ static void pnv_xive2_ic_vc_write(void *opaque, hw=
+addr offset,
+>      /*
+>       * EAS cache updates (not modeled)
+>       */
+> -    /* case VC_EASC_FLUSH_CTRL: */
+> +    case VC_EASC_FLUSH_CTRL:
+> +        if (val & VC_EASC_FLUSH_CTRL_WANT_CACHE_DISABLE) {
+> +            xive2_error(xive, "VC: unsupported write @0x%"HWADDR_PRIx
+> +                        " value 0x%"PRIx64" bit[2] poll_want_cache_disab=
+le",
+> +                        offset, val);
+> +            return;
+> +        }
+> +        break;
+>      case VC_EASC_FLUSH_POLL:
+>          xive->vc_regs[VC_EASC_FLUSH_CTRL >> 3] |=3D VC_EASC_FLUSH_CTRL_P=
+OLL_VALID;
+>          /* EAS update */
+> @@ -1466,7 +1480,14 @@ static void pnv_xive2_ic_vc_write(void *opaque, hw=
+addr offset,
 >          break;
->      default:
-> -        xive2_error(xive, "SYNC: invalid write @%"HWADDR_PRIx, offset);
-> +        xive2_error(xive, "SYNC: invalid write @%"HWADDR_PRIx" value 0x%=
-"PRIx64,
-> +                    offset, val);
->          return;
->      }
 > =20
+> =20
+> -    /* case VC_ENDC_FLUSH_CTRL: */
+> +    case VC_ENDC_FLUSH_CTRL:
+> +        if (val & VC_ENDC_FLUSH_CTRL_WANT_CACHE_DISABLE) {
+> +            xive2_error(xive, "VC: unsupported write @0x%"HWADDR_PRIx
+> +                        " value 0x%"PRIx64" bit[2] poll_want_cache_disab=
+le",
+> +                        offset, val);
+> +            return;
+> +        }
+> +        break;
+>      case VC_ENDC_FLUSH_POLL:
+>          xive->vc_regs[VC_ENDC_FLUSH_CTRL >> 3] |=3D VC_ENDC_FLUSH_CTRL_P=
+OLL_VALID;
+>          break;
+> @@ -1687,7 +1708,14 @@ static void pnv_xive2_ic_pc_write(void *opaque, hw=
+addr offset,
+>          pnv_xive2_nxc_update(xive, watch_engine);
+>          break;
+> =20
+> -   /* case PC_NXC_FLUSH_CTRL: */
+> +    case PC_NXC_FLUSH_CTRL:
+> +        if (val & PC_NXC_FLUSH_CTRL_WANT_CACHE_DISABLE) {
+> +            xive2_error(xive, "VC: unsupported write @0x%"HWADDR_PRIx
+> +                        " value 0x%"PRIx64" bit[2] poll_want_cache_disab=
+le",
+> +                        offset, val);
+> +            return;
+> +        }
+> +        break;
+>      case PC_NXC_FLUSH_POLL:
+>          xive->pc_regs[PC_NXC_FLUSH_CTRL >> 3] |=3D PC_NXC_FLUSH_CTRL_POL=
+L_VALID;
+>          break;
 
 
