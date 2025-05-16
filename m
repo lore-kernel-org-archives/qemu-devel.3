@@ -4,145 +4,186 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C27C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 09:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E9AC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 09:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFrFI-0005qG-A7; Fri, 16 May 2025 05:20:48 -0400
+	id 1uFrNy-0007ym-7o; Fri, 16 May 2025 05:29:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFrFG-0005pt-Tq
- for qemu-devel@nongnu.org; Fri, 16 May 2025 05:20:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uFrNv-0007yd-Kj
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 05:29:44 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFrFE-00028f-Jl
- for qemu-devel@nongnu.org; Fri, 16 May 2025 05:20:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747387242;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DkLm3mrLxHLtiDMdAFSz1LHJ6ctC6mkNOp1brxo3Xtk=;
- b=VDIhvlXNduHdtT9oV2yUhnk27ODtOXZDaw/GIx1ucsxkMq/VzfXUGvtQEQasEufUBK03hR
- E8oTdRxpQZctu6zRrsO3AvbEfkobp0YDzlzrxzsyeRSjxfFFWN4rS4wy4eNCYkZR+bmcND
- vTeyo2Wd08RAHp5yyfRWb3fBvYf6AaI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-cvqKj0u0O0KAHFajblBBIg-1; Fri, 16 May 2025 05:20:41 -0400
-X-MC-Unique: cvqKj0u0O0KAHFajblBBIg-1
-X-Mimecast-MFC-AGG-ID: cvqKj0u0O0KAHFajblBBIg_1747387240
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43e9b0fd00cso9993575e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 02:20:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747387240; x=1747992040;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DkLm3mrLxHLtiDMdAFSz1LHJ6ctC6mkNOp1brxo3Xtk=;
- b=wws9BzFcDtWZme5ZbsplCj4CB3hU60oT5LDAuW4ec2PZHEw+KsUzhTvllKcX8/fuq1
- jQUXWa10/VQUZfBM9KgmxG0PYD7M8mKvrQZvimue8hIE4EjHwsa0b/AhSOPTq7Q9CAMd
- 2kb3GFGbSEc+rsgatYByV/KLS+CbXmM/tF2JcihQBH2m9FAvIpjHPSLflLPt0LArGLb7
- I1Nn0XZlhLlQucIeEm47LuGUy8PuWN27Mf69Im4mHT59fspiE0SP1RrAYY0OFhuw3Lpe
- URAQrRsqSkDNX5Cfpgzj9v8BZQQPlU362GvSVJxhTIA1k/iARWrRcDB6vddfr2CKnEx5
- JWwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAMXSA7TvAjZQ8+ZAEKSrx/GG57qwfu72RzTUZ2tUJPTcErMktfImeagby/eeTAGdrkTjArep1v1pC@nongnu.org
-X-Gm-Message-State: AOJu0YyiFmnKws3v06gXP0QY0XDTwanx73IVLDu8PKOmNJDiqbwlyTGC
- NX7yoZgLa6P3Hrv32IzCKdM6CMjj+CIbZjPVK014IrEoxmj9ev1fg5dxCcLxEvRlpIbQEEO21vJ
- n6ib8rbOWIgd77ja6b/rvJwRzgbP0WhyCtseMtYgW9SCK1Xns5dhu8UOzBDumq/55y5c=
-X-Gm-Gg: ASbGncuhcS2rmT7Pln1sN9pbXObAj/8RB1VOKIboF7QV4NU9ZqWblhjIl7SmRUtwSPQ
- qXFilfv2BedEndkoXcE9+kMFCvsdYfMHrwf7nyNlwWVoYcZdRB5xglejjcRb8Ye8yOzPK6mWjml
- dNReHlYyeSeUMm6MX97mmU/HTJ595REcoR613Wq/Sr2HlGwLTLnE2EiJTDoiae5nyP8RxsDJIbX
- QDybYKZduwwp+tZ692awo29sUi3PKf5ar/6f6AuuQ/E4IGjy9Rp3ThUeJZTGZ1Bb0zuJR6cBLEW
- uvcZF76ghni2ZQWfhBohxBXNMwKAvHLGNL193t+zhaEl99Xidw==
-X-Received: by 2002:a05:600c:4f4f:b0:439:8878:5029 with SMTP id
- 5b1f17b1804b1-442fd935cd2mr19645135e9.2.1747387239728; 
- Fri, 16 May 2025 02:20:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyget+BwCXWtn8WSLjdO8VydOBL1V6BimRA6A1owoM8xlwKpzgIdPVkDpFOERWitoAONU9eA==
-X-Received: by 2002:a05:600c:4f4f:b0:439:8878:5029 with SMTP id
- 5b1f17b1804b1-442fd935cd2mr19644945e9.2.1747387239253; 
- Fri, 16 May 2025 02:20:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442fd4fdbaesm28731095e9.7.2025.05.16.02.20.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 02:20:38 -0700 (PDT)
-Message-ID: <ea31ccc8-15c8-4539-9596-f6993b2fa9d9@redhat.com>
-Date: Fri, 16 May 2025 11:20:37 +0200
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uFrNs-0002wB-Ty
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 05:29:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747387781; x=1778923781;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=7drIM43fJRFyVaMv8FjLcUaV3PcJYk8xeoxPIsVpfrY=;
+ b=V/X6vth75OEAo+Tkmbx9quD5yIxVTL4bDsaqkq4SXcqznGFry7sDjtBA
+ x0Gbb9GItjqxIg9v+M7K2VppQ3shLqaIelspFgWUmlhAxYGuwpoUmERSN
+ PVrKwdlKHRjYHWU/6jqsEyNklEC1uMltr2QSWqApVLtlpdtGsKeVay51Y
+ QpoMUcCqerpiU4ZYdPzXVdFrb63xiSiP6zvVzonuyPoHsmiBz0YIwtc0I
+ sXpCUw8KcWCgGoaUlBLJs/lhra+4Oy8ycVzxRNhYz9IEFSSYMftJnUjUX
+ juRhE3/ySbf3IKE516NOQxBJPz8DNvs1WjSe9c9Vkmrj1zC5cb9gYdJZ+ Q==;
+X-CSE-ConnectionGUID: dk+tEYVISZODy51yo/qCsQ==
+X-CSE-MsgGUID: Inz0UyfwQayAF54aTgEfCw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11434"; a="49491849"
+X-IronPort-AV: E=Sophos;i="6.15,293,1739865600"; d="scan'208";a="49491849"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 May 2025 02:29:36 -0700
+X-CSE-ConnectionGUID: NRDXC1YgRxypPTYcFSsFqQ==
+X-CSE-MsgGUID: sJuyttGvSZ+VYfESysn82g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,293,1739865600"; d="scan'208";a="139124135"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 May 2025 02:29:36 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Fri, 16 May 2025 02:29:36 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Fri, 16 May 2025 02:29:36 -0700
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.41) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Fri, 16 May 2025 02:29:36 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yoKUI3KrJqAhMiYGShvzNV2OQ4sI3ks/OqyS5RQqMk0oYTF6lWd0zLIasV0ATZ54/XdZR00bgS1vTM/hL4Di3xpoCIWQ4hXsm6sacOXe8GXf9Xcb4vkp96g1Q/jWaPvL4yySr3mrfkOpPsLaMDJ12DJfRPLU/NngiOC+eoIkjVZ4e27I32ZDL9tpfQlSD9X35e7zX/r8ZLbntZaveHSLYNW5v/NJvZJGt4RJJCqEA6xLtBpCtPrPDgft2antQRXGNB7hCVQ6ATsn7oimNx16S5Iq2mxY6lJsKoWXPNx9jcZSVoYpMpsVrLZg8PZo6jwyhF2X9KMegrgspEYx/bVJZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WY9SBLBKqjmn1g++FW6DllAPwAvGkIzpFp6+/JyGhRw=;
+ b=wTglx4f5WnS8/I9ht2CyE/1qu06KE6i+wfddyLK1FPDOHu7vJDFMki9CZ4is0BhJHTwZPW73i0YikDhTsx90dn52uC1VcZiocSXLhdY+uwiUeJYJagnsvuFqR5a0iO8X6p7IO+IhH/LYaWFx0QPAz1rvgXBeTOwZXNYKqjYSyu7t7NjhtSGiI6fhxVYFYdf62T77dC/dkUQtK6ARhMNmE1pV509jpgxXZrkigcSuCeY47Y402+y3+/djW+NlkoHEo/c6fmQh9G/SX9iymnRg+CJF+d+xiZxko/4zkI6FT9swmkQkuNWMBxzMVbQGDIgUolzjdGnyFx3gkpj1J/BSRA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by SA1PR11MB7014.namprd11.prod.outlook.com (2603:10b6:806:2b9::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Fri, 16 May
+ 2025 09:29:33 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%4]) with mapi id 15.20.8722.027; Fri, 16 May 2025
+ 09:29:33 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Steve Sistare <steven.sistare@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
+ <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: RE: [PATCH V3 34/42] vfio/iommufd: invariant device name
+Thread-Topic: [PATCH V3 34/42] vfio/iommufd: invariant device name
+Thread-Index: AQHbw1Nh4I+IFptXNEuExdNUR7bUWrPVAylg
+Date: Fri, 16 May 2025 09:29:33 +0000
+Message-ID: <SJ0PR11MB6744ED7B4B490D35C50A75DD9293A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-35-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1747063973-124548-35-git-send-email-steven.sistare@oracle.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SA1PR11MB7014:EE_
+x-ms-office365-filtering-correlation-id: 3e2df223-ed08-4312-491a-08dd945c2b0a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?4jL6i8u8GfE9Vl9bB/TREFPCcMjx9AApvneRihytr2MPnq5AGJBskDOp3u44?=
+ =?us-ascii?Q?Y1dlR6Ja9G0yLeh9JBVzSdOqSI3uvyxZBj74R+t1/A9bk/nvHiYb05xPJaDI?=
+ =?us-ascii?Q?hjaG2WoAq3bKe84/5/U9SsArX+GxOlsHkI1kPvovXMrvZSlAwG4PSp8mdV8v?=
+ =?us-ascii?Q?CwEluK7eA/0KgRXB4licjs+CjFniygAT6PXnUelufhj+yZIaH7GvaYsON1Q3?=
+ =?us-ascii?Q?AxIRSmJFP5ZjhnZ0wY+QgXOS3URQ/VXoG7Bc/3R6BMblmJvbsPSBYtPv5ljU?=
+ =?us-ascii?Q?luryPMJuVFQ7o9Y1CBMb9msDEnZd5LVX1qW//CtGWRfKA4vt0gbEoGz5ezlS?=
+ =?us-ascii?Q?M5ik9h9q5tqgD9FMUxHiB4fQymFK3yy+//z4krO4KNE4t5K+iAjoOHkiHa+L?=
+ =?us-ascii?Q?w8n+C0TTepR+vt2XdlUqMweZ6L0l6M1jAB2K4qMI+qIz4yw/PNUgXUY7y8xq?=
+ =?us-ascii?Q?IQEvN3aldb5Xe1xk2QzuQhuV9X9d2XHf5aUdrvmA7whUiFwiuYt7zm6bCdgD?=
+ =?us-ascii?Q?Dueoa6ebekMyWYmy+4vUig3DjV3xQZDhuLlNG3JlSGpr0mXaJS/2tAJSO32n?=
+ =?us-ascii?Q?DeSuZzT8gdYGbhd3WWnBz9sCzgcCjxcXZkvCg+zxb66lbK6MVf7yCkKwIuUw?=
+ =?us-ascii?Q?hVDu/miCLLFyJwHW5PWk/Q69ryA1Kf2HfLD4rdkO8Pc6az7uUfUf2fOrcdL+?=
+ =?us-ascii?Q?ORb7kBExkg7PE+DacxySF5Zhiiw6J65dPlbX175J1zReyaVDrF7oy34J7+Zu?=
+ =?us-ascii?Q?a5/mj2Jeol8OBahFSdBmbsBEhqk2nGUPW3YDuKEFsni23Cwx0QtDI2eJHcVf?=
+ =?us-ascii?Q?kw1PIZ4YHamSqJkvebAQH3iUeI7KhUtDomOzkeSSBII68gjAhkQGm8kaTZn+?=
+ =?us-ascii?Q?YmbuNS/gWSs4y86MSMzF3K6SiM9yZjFchVzxSrUoBx+fDdczmDi0QibDJ/HX?=
+ =?us-ascii?Q?8QUg381cTbn+98u74oon2WbJlyHR4d3+QsdYCYsMUkUUGj8a7f4M58IHPMZB?=
+ =?us-ascii?Q?BZYw6QIc7YRQbNrZOGVY8zoGiy12vhA62tfep/urUZh8bcOV6taP1mQN4iNN?=
+ =?us-ascii?Q?3tPxgDG5vwSYYQqiRELlNY5XomFM1rAKqTjlR0Dgo4gnpv4BwFTfN4MQukhP?=
+ =?us-ascii?Q?Jmi84v9o/AcPaHH6opWB4xS8Wl2hZ7lkIGtNADlvkG+4DHmkF1pnUluF0dQ2?=
+ =?us-ascii?Q?lopQ3wZRVCi9BHEmHqLS0aDZODlgRWoTqTsE+ADmP2tnkV8Hqd8oP+QfNY58?=
+ =?us-ascii?Q?KJ6viCbU3SHevVNgmJDkrqXZKC7LCZnPxoX+8si46j7/D4MxabYR2WiEzGZv?=
+ =?us-ascii?Q?UbHWYYzHuoy+/aAAEQtuPlz3j6wRwGrdKFOGkvCKVZbQUUK2h6fqTbw9ywty?=
+ =?us-ascii?Q?ScDD7IKYuBLbqv6g80yrIFjWLmx0DoQT4LUJDMgmSTbqB8O9kdG10m0ihJEy?=
+ =?us-ascii?Q?2bpEshp+5f1LNQgeU2c+EiF15rxLgOwxGWDtvLSZPq70eXNBa06cWw=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?2vdv298tf3/lyLRbsX1638axukWI+KzC2ykbeutUdIWH6BVz/wfd9k+idWx4?=
+ =?us-ascii?Q?L2K50a9vf5JycWEJsTYn6YQC6KPYnLaEQa0EiXTTC6vJeIxAjeh9A/+tNAhC?=
+ =?us-ascii?Q?RnibjsmbXg7w80QDpx88GbhN4Dcd+UNTQPoDTKJLrqusyxf4uRgy1LoUO8mS?=
+ =?us-ascii?Q?HrmlI0cWOP/wC5OhzOZ8N2Sq8WY2NLIfjxUpJcHXZEHRARUPznzavH+1Xuie?=
+ =?us-ascii?Q?aW/NBIcZ8EIEaMuAJgBi6UnX8eeQUnEmEq2SJuur6LgeNJpvSV0lrBkz0fED?=
+ =?us-ascii?Q?2bpaH5hgqWfxpN3S3s1zhNzIsz+wirMgZt1I4cjVbcXvWvELl0Xsf3Eu1nyC?=
+ =?us-ascii?Q?mQ39h7lZuS87guFW4wIBc5TnB8DJog4Zx7VAMl4cdKBclXCZUIs1KmdokjIf?=
+ =?us-ascii?Q?lZY5x44z0XybUQx2wwm6rSiJB9hFaTEOpYOxFqCIm6pIlxkS8GyxOE6F1PHb?=
+ =?us-ascii?Q?eISMdaJU6mvRp1OMd6o/8o+cdcCcfEYR6XMCoeePWzmCgIMju98beht+00nh?=
+ =?us-ascii?Q?MeOLqL5+R3bM41YF/bT0ZPnPQ1xq9G7BxWxAAgJBNkdKzXKBxVG2FMgR3btw?=
+ =?us-ascii?Q?mAbSxjZCdn30zCYwRBUVCEx/SMJmovjyFLlrOzG/Qa/sKXNROf5x/E3g/2pu?=
+ =?us-ascii?Q?MNt5vj491EVNkZowBAYHVVkp54YDwBvmiEWTljNV/CU3uSYTeL3r92XROatI?=
+ =?us-ascii?Q?cPxk6QeUxuC1b7z6xUa2u6+tJyptKi/+6CLHCYnLIeSZN+X1Cxsw0M/tntjT?=
+ =?us-ascii?Q?/4BYaHFP0fCUiMCGYkdDzzC7yrLRyKWivQ64lewUnxVY2fdInLU8JX9AOGjA?=
+ =?us-ascii?Q?BHg+h+rSogOWQhFQ/oWU6nQH03s3JruL+gLE8viZeG6Da5CU4iSD44MmFFXC?=
+ =?us-ascii?Q?8ttWWzIkV88PH8izdIH1kG8YQQHMdaJ0MBPXnjr0+StccpYZL3iMZeAK0mU8?=
+ =?us-ascii?Q?HREj3qnXKquo/W50HucWHwbuxeLS1RUZG01JxcTQLknxyt2X9QzITlHBBckZ?=
+ =?us-ascii?Q?cqqimUuIVpyET1vkiS2dMdutCy9Zjuu7SQv+Djh1XinnEGthGjIcpFkW5n1V?=
+ =?us-ascii?Q?nJ7a4R84kHO645/csqDo73hG9lGwMDx1VPjs8JHJAfSZGYrt9RKkeM2WjAqg?=
+ =?us-ascii?Q?lpxJrkeeyUdSKMWW1A6shwc4Dn0FaEdWKhhUBgrl1FWPmL2+6YHIZDwP3s+d?=
+ =?us-ascii?Q?AlGHep6sM/scYfuY3MLeZoqrLjsBH0tMm1xTdOJU7rkJgZz/0yY2xCJ3fIEs?=
+ =?us-ascii?Q?FZIbtydsZN+TI53g5eL2L2Lo8X7jMi+K5WlwMXz1r0I0NhU6czfFXgm5U5GO?=
+ =?us-ascii?Q?e3tcvxYyhUW3yIVXaDUU0M8SwDQFsjWWFr/oGn6oqWd5rtQC7+GVCkJbkpgi?=
+ =?us-ascii?Q?2nWS/53LhLZzX/ML5f4KquIh8avCwrJxYvg+KHbZjy2UVQb19DSUNVwM17mT?=
+ =?us-ascii?Q?ZnhIAxRSxwC9aPxcqfCWfAaS5VGbWnmtAdnWg7kYKBQXGCsCUqSE0QV4d+Z/?=
+ =?us-ascii?Q?0JmKYGmKQSfgCOr9TtuaKMHnjmoekVhoWG/LIGc9HsBw6RcZYfSlGZcQmdsz?=
+ =?us-ascii?Q?giKUg+b206y5qJXUyjdB0mu1+AREr5WUkPEUhIu3?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 45/46] tests/functional/aspeed: Add test case for AST2700 A1
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <20250309135130.545764-1-clg@redhat.com>
- <20250309135130.545764-46-clg@redhat.com>
- <81355136-fddb-4134-bc75-5f8baddcefc3@redhat.com>
- <SI2PR06MB5041918337B1F93AEF8AE4F2FC93A@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI2PR06MB5041918337B1F93AEF8AE4F2FC93A@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e2df223-ed08-4312-491a-08dd945c2b0a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 May 2025 09:29:33.6002 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: k2NZgPO1ji/gwXEkbDH9JeGt/BdS42F1VI3Efnt+Dk/+esRJ5ut5fYMUFWhniwS3Z52Y+qO6GUQCjIlAQjQ7JCOnGy9hHQ5c6iYyvlkDOCY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB7014
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.15;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,214 +199,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/16/25 04:59, Jamin Lin wrote:
-> Hi Cédric
-> 
->>
->> On a BE host, if I run an ast2700a0-evb machine :
->>
->>      $ qemu-system-aarch64 -machine ast2700a0-evb  ...
->>      ...
->>      U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
->>
->>      SOC: AST2700-A0
->>      Model: AST2700 EVB
->>      DRAM:  8 GiB (effective 0 Bytes)
->>
->> QEMU hangs.
->>
->> If the RAM size is defined to 8g
->>
->>      $ qemu-system-aarch64 -machine ast2700a0-evb -m 8g  ...
->>      ...
->>      U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
->>
->>      SOC: AST2700-A0
->>      Model: AST2700 EVB
->>      DRAM:  8 GiB
->>      aspeed_dp dp@12c0a000: aspeed_dp_probe(): Failed to access dp.
->> version(0)
->>      Core:  125 devices, 27 uclasses, devicetree: separate
->>
->> machine boots.
->>
->> Whereas, with an ast2700a1-evb machine :
->>
->>      $ qemu-system-aarch64 -machine ast2700a1-evb  ...
->>      ...
->>      U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
->>
->>      SOC: AST2700-A1
->>      Model: AST2700 EVB
->>      DRAM:  1 GiB
->>      aspeed_dp dp@12c0a000: aspeed_dp_probe(): Failed to access dp.
->> version(0)
->>      Core:  125 devices, 27 uclasses, devicetree: separate
->>
->> machine boots.
->>
->>      $ qemu-system-aarch64 -machine ast2700a1-evb -m 8g  ...
->>      ...
->>      U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
->>
->>      SOC: AST2700-A1
->>      Model: AST2700 EVB
->>      DRAM:  8 GiB
->>      aspeed_dp dp@12c0a000: aspeed_dp_probe(): Failed to access dp.
->> version(0)
->>      Core:  125 devices, 27 uclasses, devicetree: separate
->>
->> machine boots.
->>
->>
->> I Wonder if you could analyze this issue to check if it is related to one of our
->> QEMU model.
->>
->>
-> 
-> Sorry, I only have a little-endian host machine (x86_64).
-> Is it possible to run a big-endian(POWER PC) QEMU host environment on this machine, so that I can then run the AST2700 QEMU target inside it to analyze this issue?
 
-You can but unless you have access to a POWER hypervisor, this will be
-very slow because of the 2 levels of emulations.
 
-> If you agree, could you please help me insert the following lines into the function that detects the DRAM size on the AST2700?
-> https://github.com/qemu/qemu/blob/master/hw/arm/aspeed_ast27x0.c#L332
-> https://github.com/qemu/qemu/commit/7436db1063bbfecc2e498a7d795613b33312d665
-> ````
-> static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
->                                                  unsigned int size)
+>-----Original Message-----
+>From: Steve Sistare <steven.sistare@oracle.com>
+>Subject: [PATCH V3 34/42] vfio/iommufd: invariant device name
+>
+>cpr-transfer will use the device name as a key to find the value
+>of the device descriptor in new QEMU.  However, if the descriptor
+>number is specified by a command-line fd parameter, then
+>vfio_device_get_name creates a name that includes the fd number.
+>This causes a chicken-and-egg problem: new QEMU must know the fd
+>number to construct a name to find the fd number.
+>
+>To fix, create an invariant name based on the id command-line
+>parameter.  If id is not defined, add a CPR blocker.
+>
+>Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>---
+> hw/vfio/cpr.c              | 21 +++++++++++++++++++++
+> hw/vfio/device.c           | 10 ++++------
+> hw/vfio/iommufd.c          |  2 ++
+> include/hw/vfio/vfio-cpr.h |  4 ++++
+> 4 files changed, 31 insertions(+), 6 deletions(-)
+>
+>diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+>index 6081a89..7609c62 100644
+>--- a/hw/vfio/cpr.c
+>+++ b/hw/vfio/cpr.c
+>@@ -11,6 +11,7 @@
+> #include "hw/vfio/pci.h"
+> #include "hw/pci/msix.h"
+> #include "hw/pci/msi.h"
+>+#include "migration/blocker.h"
+> #include "migration/cpr.h"
+> #include "qapi/error.h"
+> #include "system/runstate.h"
+>@@ -184,3 +185,23 @@ const VMStateDescription vfio_cpr_pci_vmstate =3D {
+>         VMSTATE_END_OF_LIST()
+>     }
+> };
+>+
+>+bool vfio_cpr_set_device_name(VFIODevice *vbasedev, Error **errp)
+>+{
+>+    if (vbasedev->dev->id) {
+>+        vbasedev->name =3D g_strdup(vbasedev->dev->id);
+>+        return true;
+>+    } else {
+>+        /*
+>+         * Assign a name so any function printing it will not break, but =
+the
+>+         * fd number changes across processes, so this cannot be used as =
+an
+>+         * invariant name for CPR.
+>+         */
+>+        vbasedev->name =3D g_strdup_printf("VFIO_FD%d", vbasedev->fd);
+>+        error_setg(&vbasedev->cpr.id_blocker,
+>+                   "vfio device with fd=3D%d needs an id property",
+>+                   vbasedev->fd);
+>+        return migrate_add_blocker_modes(&vbasedev->cpr.id_blocker, errp,
+>+                                         MIG_MODE_CPR_TRANSFER, -1) =3D=
+=3D 0;
+>+    }
+>+}
+>diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+>index 9fba2c7..8e9de68 100644
+>--- a/hw/vfio/device.c
+>+++ b/hw/vfio/device.c
+>@@ -28,6 +28,7 @@
+> #include "qapi/error.h"
+> #include "qemu/error-report.h"
+> #include "qemu/units.h"
+>+#include "migration/cpr.h"
+> #include "monitor/monitor.h"
+> #include "vfio-helpers.h"
+>
+>@@ -284,6 +285,7 @@ bool vfio_device_get_name(VFIODevice *vbasedev,
+>Error **errp)
 > {
->      AspeedSoCState *s = ASPEED_SOC(opaque);
->      ram_addr_t ram_size;
->      MemTxResult result;
->      uint32_t read_back[4] = {0};
->      ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
->                                          &error_abort);
-> 
->      assert(ram_size > 0);
->      printf("jamin size %d\n", size);
->      printf("addr=%" PRIx64 " (addr ram_size)=%" PRIx64 "\n", addr, (addr % ram_size));
->      /*
->       * Emulate ddr capacity hardware behavior.
->       * If writes the data to the address which is beyond the ram size,
->       * it would write the data to the "address % ram_size".
->       */
->      result = address_space_write(&s->dram_as, addr % ram_size,
->                                   MEMTXATTRS_UNSPECIFIED, &data, size);
->      if (result != MEMTX_OK) {
->          qemu_log_mask(LOG_GUEST_ERROR,
->                        "%s: DRAM write failed, addr:0x%" HWADDR_PRIx
->                        ", data :0x%" PRIx64  "\n",
->                        __func__, addr % ram_size, data);
->      }
-> 
->      address_space_read(&s->dram_as, addr % ram_size,
->                         MEMTXATTRS_UNSPECIFIED, read_back,
->                         size);
-> 
->      for(int i=0; i<4; i++) {
->          printf("jamin read_back[%d]=%x\n", i, read_back[i]);
->      }
+>     ERRP_GUARD();
+>     struct stat st;
+>+    bool ret =3D true;
+>
+>     if (vbasedev->fd < 0) {
+>         if (stat(vbasedev->sysfsdev, &st) < 0) {
+>@@ -300,16 +302,12 @@ bool vfio_device_get_name(VFIODevice *vbasedev,
+>Error **errp)
+>             error_setg(errp, "Use FD passing only with iommufd backend");
+>             return false;
+>         }
+>-        /*
+>-         * Give a name with fd so any function printing out vbasedev->nam=
+e
+>-         * will not break.
+>-         */
+>         if (!vbasedev->name) {
+>-            vbasedev->name =3D g_strdup_printf("VFIO_FD%d", vbasedev->fd)=
+;
+>+            ret =3D vfio_cpr_set_device_name(vbasedev, errp);
+>         }
+>     }
+>
+>-    return true;
+>+    return ret;
 > }
-> ````
-> Also, could you please provide me with the following log?
-> 
-> U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
-> 
-> SOC: AST2700-A0
-> Model: AST2700 EVB
-> DRAM:  jamin size 4
-> addr=c0000000 (addr ram_size)=0
-> jamin read_back[0]=eadbeef4
-> jamin read_back[1]=0
-> jamin read_back[2]=0
-> jamin read_back[3]=0
-> jamin size 4
-> addr=40000000 (addr ram_size)=0
-> jamin read_back[0]=adbeef43
-> jamin read_back[1]=0
-> jamin read_back[2]=0
-> jamin read_back[3]=0
-> jamin size 4
-> addr=0 (addr ram_size)=0
-> jamin read_back[0]=dbeef432
-> jamin read_back[1]=0
-> jamin read_back[2]=0
-> jamin read_back[3]=0
-> 1 GiB
+>
+> void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **er=
+rp)
+>diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>index 8661947..ea99b8d 100644
+>--- a/hw/vfio/iommufd.c
+>+++ b/hw/vfio/iommufd.c
+>@@ -25,6 +25,7 @@
+> #include "system/reset.h"
+> #include "qemu/cutils.h"
+> #include "qemu/chardev_open.h"
+>+#include "migration/blocker.h"
+> #include "pci.h"
+> #include "vfio-iommufd.h"
+> #include "vfio-helpers.h"
+>@@ -669,6 +670,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
+>     iommufd_cdev_container_destroy(container);
+>     vfio_address_space_put(space);
+>
+>+    migrate_del_blocker(&vbasedev->cpr.id_blocker);
 
+We also need to del blocker in error path, e.g., when attach fails.
 
-
-U-Boot 2023.10-v00.05.06 (Mar 26 2025 - 05:59:26 +0000)
-
-SOC: AST2700-A0
-Model: AST2700 EVB
-DRAM:  aspeed_sdmc_read reg @0x4 data: 0x28
-aspeed_sdmc_read reg @0x4 data: 0x28
-aspeed_sdmc_write reg @0x4 data: 0x34
-jamin size 4
-addr=c0000000 (addr ram_size)=0
-jamin read_back[0]=0                    <-- this is wrong
-jamin read_back[1]=0
-jamin read_back[2]=0
-jamin read_back[3]=0
-aspeed_sdmc_read reg @0x4 data: 0x3c
-aspeed_sdmc_write reg @0x4 data: 0x34
-aspeed_sdmc_read reg @0xc data: 0x0
-aspeed_sdmc_write reg @0xc data: 0x1b8
-aspeed_sdmc_read reg @0x40 data: 0x0
-jamin size 4
-addr=1bdea1f70 (addr ram_size)=3dea1f70
-jamin read_back[0]=0
-jamin read_back[1]=0
-jamin read_back[2]=0
-jamin read_back[3]=0
-jamin size 4
-addr=1bdea1f74 (addr ram_size)=3dea1f74
-jamin read_back[0]=0
-jamin read_back[1]=0
-jamin read_back[2]=0
-jamin read_back[3]=0
-jamin size 4
-
-
-> 
-> It's quite strange, because you mentioned that the A1 version works, but the A0 version doesn't.
-> It seems detect the DRAM size failed in this loop,
-> https://github.com/AspeedTech-BMC/u-boot/blob/aspeed-master-v2023.10/drivers/ram/aspeed/sdram_ast2700.c#L1173
-> struct ddr_capacity ram_size[] = {
-> 		{0x10000000,	{208, 256}}, // 256MB
-> 		{0x20000000,	{208, 416}}, // 512MB
-> 		{0x40000000,	{208, 560}}, // 1GB
-> 		{0x80000000,	{472, 880}}, // 2GB
-> 		{0x100000000,	{656, 880}}, // 4GB
-> 		{0x200000000,	{880, 880}}, // 8GB
-> 		};
-> u32 test_pattern = 0xdeadbeef
-> 
-> for (sz = SDRAM_SIZE_8GB - 1; sz > SDRAM_SIZE_256MB; sz--) {
-> 		test_pattern = (test_pattern << 4) + sz;
-> 		writel(test_pattern, (void *)CFG_SYS_SDRAM_BASE + ram_size[sz].size);
-> 
-> 		if (readl((void *)CFG_SYS_SDRAM_BASE) != test_pattern)
-> 			break;
+>     iommufd_cdev_unbind_and_disconnect(vbasedev);
+>     close(vbasedev->fd);
 > }
-> 
-> Please help to dump this register.
-> => md 12c00010
-> 12c00010: 00000028 00000000 00000000 00000000  (...............
-
-I can't do that because the u-boot prompt is never reached. From QEMU:
-
-(qemu) x/10x 0x12c00010
-0000000012c00010: 0x0000003c 0x00000000 0x00000000 0x00000000
-0000000012c00020: 0x00000000 0x00000000 0x00000000 0x00000000
-0000000012c00030: 0x000001b8 0x00000000
-
-Hope it helps
-
-C.
-
+>diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+>index 765e334..d06d117 100644
+>--- a/include/hw/vfio/vfio-cpr.h
+>+++ b/include/hw/vfio/vfio-cpr.h
+>@@ -23,12 +23,14 @@ typedef struct VFIOContainerCPR {
+> typedef struct VFIODeviceCPR {
+>     bool reused;
+>     Error *mdev_blocker;
+>+    Error *id_blocker;
+> } VFIODeviceCPR;
+>
+> struct VFIOContainer;
+> struct VFIOContainerBase;
+> struct VFIOGroup;
+> struct VFIOPCIDevice;
+>+struct VFIODevice;
+>
+> bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
+>                                         Error **errp);
+>@@ -59,4 +61,6 @@ void vfio_cpr_delete_vector_fd(struct VFIOPCIDevice *vde=
+v,
+>const char *name,
+>
+> extern const VMStateDescription vfio_cpr_pci_vmstate;
+>
+>+bool vfio_cpr_set_device_name(struct VFIODevice *vbasedev, Error **errp);
+>+
+> #endif /* HW_VFIO_VFIO_CPR_H */
+>--
+>1.8.3.1
 
 
