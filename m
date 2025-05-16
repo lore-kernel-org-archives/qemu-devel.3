@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D495C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 01:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5479C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 01:48:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFk81-0005zj-PD; Thu, 15 May 2025 21:44:51 -0400
+	id 1uFkBD-0005Xb-PI; Thu, 15 May 2025 21:48:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1uFk7w-0005oO-Bv
- for qemu-devel@nongnu.org; Thu, 15 May 2025 21:44:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uFkBB-0005Pn-FO
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 21:48:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1uFk7u-0003YD-GM
- for qemu-devel@nongnu.org; Thu, 15 May 2025 21:44:44 -0400
+ id 1uFkB9-0003wi-K7
+ for qemu-devel@nongnu.org; Thu, 15 May 2025 21:48:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747359878;
+ s=mimecast20190719; t=1747360082;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UfJhjE1tDyAxNNCYTErsFmWI2derrob/VNlfQEb6xoA=;
- b=EhykDS2Aa69aRuy9eqaXIZbDmKI6AEELbhsjvtYDu5Jz99oPy3beizgAczLgERfw9ug7BB
- gBhLaTholF74f9h0G8qrAA90o/l/UCRhYPb8gb7qm3mGYnV3p5Ny/154pYzTv2QOCWN4l6
- szOCwATMlo4U9yv11mtrl/KOzcEKcyQ=
-Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
- [209.85.221.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=maGencK9p/bE/xlNWR56lEVlldVg/2y+eLAHcmQrJTs=;
+ b=ghmk/Pz0Wq+GV9m9fZBmAL5DSB5cr44Wz8Gzwga497P5d/Bhx5TpzGvd20WiT6bhkzfTiv
+ irkTL2VfjM33ZO0tYLh6bvkK3KgK+F/o+BrLmbApY2c14IQKdy0Tw8Dk/UolU0CcSpR1se
+ UKe4902FzEmmik4tJs0UIxJQaT6My4Y=
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
+ [209.85.221.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-88-rk8zpKPOM-e2JtZ7y7TXiQ-1; Thu, 15 May 2025 21:44:36 -0400
-X-MC-Unique: rk8zpKPOM-e2JtZ7y7TXiQ-1
-X-Mimecast-MFC-AGG-ID: rk8zpKPOM-e2JtZ7y7TXiQ_1747359876
-Received: by mail-vk1-f198.google.com with SMTP id
- 71dfb90a1353d-52af93cb7daso1401928e0c.1
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 18:44:36 -0700 (PDT)
+ us-mta-389-m9GNG523NV6geoyIxDjabQ-1; Thu, 15 May 2025 21:48:00 -0400
+X-MC-Unique: m9GNG523NV6geoyIxDjabQ-1
+X-Mimecast-MFC-AGG-ID: m9GNG523NV6geoyIxDjabQ_1747360080
+Received: by mail-vk1-f200.google.com with SMTP id
+ 71dfb90a1353d-52dbdd316f8so21320e0c.2
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 18:48:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747359876; x=1747964676;
+ d=1e100.net; s=20230601; t=1747360080; x=1747964880;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UfJhjE1tDyAxNNCYTErsFmWI2derrob/VNlfQEb6xoA=;
- b=Vw+OZtgO3WurtUzqxT1YMKfIptdA4nucV240SY3zef7mA8xmdwRbeRs6Fjz8JdlNJ8
- DZJJj/1irVtLq6PNnH4GZFCFClZpgnIYfDfMFO+lDq69wpBd/XV1gtTFDTSrQ1EM8ZWH
- z+Adyv3gAgyUdn8toGTjEIeLDUUtQlKrLpqQBN8iDnCxLuly67rMCAWjd2NVjn+e+Fk+
- ZlduZHf8k2iDpnZv44Et2acu0PwraMWALhugawk4dKhuOBZu0VQNpOHiw7aHnlBT9Rpq
- gc32FASMT2Pmlj165b6OlvuDqte7mBcIonByjDt2sPTZPhipbqsi8nR4KPW7cx7iPjos
- wJFQ==
-X-Gm-Message-State: AOJu0YxDYrxf+Dz7S86/frjJyUjnPIDT5kEQhaTbvosZeo3s7rOBrjcS
- C593xBuvgYaOeu3BZAJUBay5CTcM9wHlI9k13pc5V4P2cg+pFve7m64yOsb/AjUbI6gaW13T0c7
- 7Pd0QDk8rGa9MI0pgWKzbfpsW9j4X8v93sTx53dNgKdrmShZ7nZLsvqLweOdNbtvYCJbB+i6Qzl
- Yc6X2jzZl3BC0qykD5WCEzmQYaXbwr3Dc=
-X-Gm-Gg: ASbGncsVf/B9SyAEuTEB9uRD7HAdMRh+ns0fARFK/7+/07Hp4zUNU8FgGr1i/30Y92I
- 2/cVuvJD/Nevy2VqtQt5VYaxVb+gv2LBYDLAImWjC1wmWon9/vny34xR60eYCScWDmgbIUw==
-X-Received: by 2002:a05:6102:370a:b0:4da:d874:d30d with SMTP id
- ada2fe7eead31-4dfa6bf6221mr2820775137.17.1747359876166; 
- Thu, 15 May 2025 18:44:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHiHyaJfVlOZmFRmjguvyinhrzv2Zejiz9+nk5cd+KMvlPyxG0T/TNgsxP3p8A+iy1fe2BXTvwqmERe2XBYlCo=
-X-Received: by 2002:a05:6102:370a:b0:4da:d874:d30d with SMTP id
- ada2fe7eead31-4dfa6bf6221mr2820768137.17.1747359875736; Thu, 15 May 2025
- 18:44:35 -0700 (PDT)
+ bh=maGencK9p/bE/xlNWR56lEVlldVg/2y+eLAHcmQrJTs=;
+ b=HC1EIdfsKMgY/ATHNwulDVOg1/wacCEbzv62wioykSdWkpn2nSlXvqluiEUdw2HJt5
+ 5DoaYi2J67ra3oYe14N11vsFnEZMqILoPPuFmDWHCCXubKfGsAXf6iCo7oO3e+6QgMqZ
+ vv+JSL1Qe17jslP2nVK7Is34w6AJfREQKuEZqE/Yd9m9nbFmlhV7AWK6pWI3s6rO2KJA
+ s7p7rFB4peq9dUBK2mDb+QiAuXdfHt3OsISqFq9JN0RDoC+uwvpsNAr2uR0KZqtYzFfv
+ RI4WXkMP+Wlukf6NLdL/d4hSYsaLnJ6iE7VfJO+3dnG+u1Z/8a4ogUDzomspdrUs7PCf
+ 6v5g==
+X-Gm-Message-State: AOJu0Yzed0JMuyFjqAJdC5tfrpc4PNkJyr+7SGv2EJp5Vp2DhpMr8JgZ
+ hfHuUwYQCAjkXxDPguf6muauelk74W+B8QA/l54i7BAd0+xS9fCZ2aTh26iwHnHuhcyAUWZFfpT
+ UVhg25q08DMv2sbJT1FJaWI1XDsl4OAdSxo7oTSSCQyrSL1w0mnnvCQOld2KMU8ygdeMDmQPJcW
+ yzbxEU0Hd32Lc5ZffaKRnhP1jXcSyYhlE=
+X-Gm-Gg: ASbGncvBa0+gTNYnEQiWtI7+mplUEGD0lKVwuyM5ueDWdBMRn9u7kgS/VPmC/O+q45R
+ 0i1Jd4M+H1puFBxPUvvTZ2VRvASa1K0wcwI3LZRsi1UECjrDP24qYTR1wpR9Hg5lecPs1RA==
+X-Received: by 2002:a05:6102:14a5:b0:4c1:86bc:f959 with SMTP id
+ ada2fe7eead31-4e049d56f96mr1635127137.8.1747360080235; 
+ Thu, 15 May 2025 18:48:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGG3QjZcdKE09yMblmLyilKFUIaKhnDel7wnoxaGd7fFyebO6J0zzogOauVCQY0jRs16QZ5IwtPut5jStmybeU=
+X-Received: by 2002:a05:6102:14a5:b0:4c1:86bc:f959 with SMTP id
+ ada2fe7eead31-4e049d56f96mr1635115137.8.1747360079857; Thu, 15 May 2025
+ 18:47:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250510-n-v1-1-19ee26ac3ca6@daynix.com>
- <CACGkMEt7xoX-HvV1mOo=zqpyV0se2ELBMvNV-uGpKUZPQ-PB2A@mail.gmail.com>
- <f3d10b18-9755-46af-9623-fb0ed7d99c51@daynix.com>
-In-Reply-To: <f3d10b18-9755-46af-9623-fb0ed7d99c51@daynix.com>
+References: <20250507184647.15580-1-jonah.palmer@oracle.com>
+In-Reply-To: <20250507184647.15580-1-jonah.palmer@oracle.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 16 May 2025 09:44:23 +0800
-X-Gm-Features: AX0GCFs_DZHOPJ4mHsDvoisTHR6YJ4hkV6WRI_dbI6tZ2iIo45ycTUSa7lhKlaI
-Message-ID: <CACGkMEu_hyc-mP4zk9kJprCpFQbVzO0D2SEMy9eid5TmUH7Uaw@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: Add queues for RSS during migration
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- devel@daynix.com
+Date: Fri, 16 May 2025 09:47:47 +0800
+X-Gm-Features: AX0GCFuTzU_mqztvcVL7PYRVdw_fHAtUbHwOwRYO2c2nPUHk2yZKJgKJ5BKc7vM
+Message-ID: <CACGkMEt7XAJLteC4KEu4GY6Gc+T6SNRJHU4ocVfzaM9xSnt_Zg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] Move memory listener register to vhost_vdpa_init
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, eperezma@redhat.com, peterx@redhat.com, 
+ mst@redhat.com, lvivier@redhat.com, dtatulea@nvidia.com, leiyang@redhat.com, 
+ parav@mellanox.com, sgarzare@redhat.com, si-wei.liu@oracle.com, 
+ lingshan.zhu@intel.com, boris.ostrovsky@oracle.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -104,93 +104,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 2:58=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
+On Thu, May 8, 2025 at 2:47=E2=80=AFAM Jonah Palmer <jonah.palmer@oracle.co=
+m> wrote:
 >
-> On 2025/05/14 14:05, 'Jason Wang' via devel wrote:
-> > On Sat, May 10, 2025 at 3:24=E2=80=AFPM Akihiko Odaki <akihiko.odaki@da=
-ynix.com> wrote:
-> >>
-> >> virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
-> >> VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
-> >> number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
-> >> VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_featur=
-es
-> >> is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
-> >> VIRTIO_NET_F_MQ uses bit 22.
-> >>
-> >> Instead of inferring the required number of queues from
-> >> vdev->guest_features, use the number loaded from the vm state.
-> >>
-> >> Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizi=
-ng")
-> >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >> ---
-> >>   include/hw/virtio/virtio.h |  2 +-
-> >>   hw/net/virtio-net.c        | 11 ++++-------
-> >>   hw/virtio/virtio.c         | 14 +++++++-------
-> >>   3 files changed, 12 insertions(+), 15 deletions(-)
-> >>
-> >> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> >> index 638691028050..af52580c1e63 100644
-> >> --- a/include/hw/virtio/virtio.h
-> >> +++ b/include/hw/virtio/virtio.h
-> >> @@ -211,7 +211,7 @@ struct VirtioDeviceClass {
-> >>       int (*start_ioeventfd)(VirtIODevice *vdev);
-> >>       void (*stop_ioeventfd)(VirtIODevice *vdev);
-> >>       /* Called before loading queues. Useful to add queues before loa=
-ding. */
-> >> -    int (*pre_load_queues)(VirtIODevice *vdev);
-> >> +    int (*pre_load_queues)(VirtIODevice *vdev, uint32_t n);
-> >
-> > This turns out to be tricky as it has a lot of assumptions as
-> > described in the changelog (e.g only lower 32bit of guest_features is
-> > correct etc when calling this function).
+> Current memory operations like pinning may take a lot of time at the
+> destination.  Currently they are done after the source of the migration i=
+s
+> stopped, and before the workload is resumed at the destination.  This is =
+a
+> period where neigher traffic can flow, nor the VM workload can continue
+> (downtime).
 >
-> The problem is that I missed the following comment in
-> hw/virtio/virtio.c:
->      /*
->       * Temporarily set guest_features low bits - needed by
->       * virtio net load code testing for VIRTIO_NET_F_CTRL_GUEST_OFFLOADS
->       * VIRTIO_NET_F_GUEST_ANNOUNCE and VIRTIO_NET_F_CTRL_VQ.
->       *
->       * Note: devices should always test host features in future - don't
-> create
->       * new dependencies like this.
->       */
->      vdev->guest_features =3D features;
+> We can do better as we know the memory layout of the guest RAM at the
+> destination from the moment that all devices are initializaed.  So
+> moving that operation allows QEMU to communicate the kernel the maps
+> while the workload is still running in the source, so Linux can start
+> mapping them.
 >
-> This problem is specific to guest_features so avoiding it should give us
-> a reliable solution.
+> As a small drawback, there is a time in the initialization where QEMU
+> cannot respond to QMP etc.  By some testing, this time is about
+> 0.2seconds.  This may be further reduced (or increased) depending on the
+> vdpa driver and the platform hardware, and it is dominated by the cost
+> of memory pinning.
+>
+> This matches the time that we move out of the called downtime window.
+> The downtime is measured as checking the trace timestamp from the moment
+> the source suspend the device to the moment the destination starts the
+> eight and last virtqueue pair.  For a 39G guest, it goes from ~2.2526
+> secs to 2.0949.
+>
+> Future directions on top of this series may include to move more things a=
+head
+> of the migration time, like set DRIVER_OK or perform actual iterative mig=
+ration
+> of virtio-net devices.
+>
+> Comments are welcome.
+>
+> This series is a different approach of series [1]. As the title does not
+> reflect the changes anymore, please refer to the previous one to know the
+> series history.
+>
+> This series is based on [2], it must be applied after it.
 
-I meant not all the states were fully loaded for pre_load_queues(),
-this seems another trick besides the above one. We should seek a way
-to do it in post_load() or at least document the assumptions.
-
->
-> >
-> > Looking at the commit that introduces this which is 9379ea9db3c that sa=
-ys:
-> >
-> > """
-> > Otherwise the loaded queues will not have handlers and elements
-> > in them will not be processed.
-> > """
-> >
-> > I fail to remember what it means or what happens if we don't do 9379ea9=
-db3c.
->
-> The packets and control commands in the queues except the first queue
-> will not be processed because they do not have handle_output set.
-
-I don't understand here, the VM is not resumed in this case. Or what
-issue did you see here?
+Not that this has been merged.
 
 Thanks
 
 >
-> Regards,
-> Akihiko Odaki
+> [Jonah Palmer]
+> This series was rebased after [3] was pulled in, as [3] was a prerequisit=
+e
+> fix for this series.
+>
+> v4:
+> ---
+> * Add memory listener unregistration to vhost_vdpa_reset_device.
+> * Remove memory listener unregistration from vhost_vdpa_reset_status.
+>
+> v3:
+> ---
+> * Rebase
+>
+> v2:
+> ---
+> * Move the memory listener registration to vhost_vdpa_set_owner function.
+> * Move the iova_tree allocation to net_vhost_vdpa_init.
+>
+> v1 at https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02136.html=
+.
+>
+> [1] https://patchwork.kernel.org/project/qemu-devel/cover/20231215172830.=
+2540987-1-eperezma@redhat.com/
+> [2] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg05910.html
+> [3] https://lore.kernel.org/qemu-devel/20250217144936.3589907-1-jonah.pal=
+mer@oracle.com/
+>
+> Jonah - note: I'll be on vacation from May 10-19. Will respond to
+>               comments when I return.
+>
+> Eugenio P=C3=A9rez (7):
+>   vdpa: check for iova tree initialized at net_client_start
+>   vdpa: reorder vhost_vdpa_set_backend_cap
+>   vdpa: set backend capabilities at vhost_vdpa_init
+>   vdpa: add listener_registered
+>   vdpa: reorder listener assignment
+>   vdpa: move iova_tree allocation to net_vhost_vdpa_init
+>   vdpa: move memory listener register to vhost_vdpa_init
+>
+>  hw/virtio/vhost-vdpa.c         | 107 +++++++++++++++++++++------------
+>  include/hw/virtio/vhost-vdpa.h |  22 ++++++-
+>  net/vhost-vdpa.c               |  34 +----------
+>  3 files changed, 93 insertions(+), 70 deletions(-)
+>
+> --
+> 2.43.5
 >
 
 
