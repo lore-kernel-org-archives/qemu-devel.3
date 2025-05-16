@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EBE9C3ABD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93984C3DA6D
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 05:28:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFnbP-0006Gc-CR; Fri, 16 May 2025 01:27:24 -0400
+	id 1uFnbT-0006Ji-MY; Fri, 16 May 2025 01:27:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFnbN-0006EM-Gx
- for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:21 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1uFnbS-0006I1-Dd
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:26 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFnbM-0001Mf-22
- for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:21 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22fbbf9c01bso14480655ad.3
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 22:27:19 -0700 (PDT)
+ id 1uFnbQ-0001NX-HN
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:26 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2317d94c9cdso16327785ad.2
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 22:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747373239; x=1747978039; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747373243; x=1747978043; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IEdpnrBOTPtpx4cupcWYpTpp82dk3nMUunAlRdaZgS0=;
- b=KgeZZyRtsTn1pbfWbPf7OmFekLJstXb4va4oM6wYmwW6nVDY9AYlN2jHAIhG9c2KtA
- ZFW9f8Fg5AWrKUHYSM1p45C33wykYEtBzFfCy/dglCm63OvSlUh7whYGwqJ65NgRqQaQ
- ERcuC/roUxOgaNKRY4xueCVwiMci66ipuA1piGp34VyGcwPM1XduGWsyIDbjzVGRnWGL
- IR6YuZtsZDmdziGo/2/6TX/DyWKagql8zOtGn/QityS4kqSjn61akrvq4uCA9jFHsPdE
- W9gMcQFQdJ8EFoxISj/sO5KAE5PnZVzxCB/3h7zu4gGhoFHrchpAfrcCuLlwJ2Xbc4JT
- KcrA==
+ bh=bqGoY+CilUPAjO+dXO+6qxpClMsZaBn+YNo/aP57Mxk=;
+ b=NYo/HDAtRxweDrkzLG7bg/UxrwrXIo1yZGfzHBffiIUHQDhEr8IetP0iF+SWorwuI7
+ QL76fRy4069miCmjtmyrganlE0T8cuS6SKCirOAxq0Os5QcGTedH+v5dO8R1zWjBNKcC
+ PQ7DFn1FV0obcIu7VsBICpAUp+xcPxms9iKMq4hpAMvZPGsM+nDDKd9aM3t/7fSjFSpQ
+ RAZLr3XPK+//CiO0HumkWt05MjtuxRyJehligkKJEoAUUgZyrtsH+5qY2kvFlO6PjZx4
+ 65Ij+q95ptdIitnBMGuU+qngA6DC5Zni8lV64tBIQvkWFgzuBXot0c2PuvvWLX6D9Oiq
+ cB/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747373239; x=1747978039;
+ d=1e100.net; s=20230601; t=1747373243; x=1747978043;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IEdpnrBOTPtpx4cupcWYpTpp82dk3nMUunAlRdaZgS0=;
- b=P3u7U3p4jXQl7Ti8xNlfIrv2nVH8USCfE8lYQM9ikMfjfl5+ZfBK1i21unnw0EzDXx
- 4Rmml8bJFy4dvhhLNVitaTgHwdiwJSC6mRZAMpfwWuj7jtZ4m0VSV7RlwznXAmn5ALOz
- xFl4BOI3QqQyIM8Q0NQJgle1PQYz57jojz2WuCZBkgl9XNwMEHr3mCBneDjuu9dAao8F
- nQ+TWE8jF71ZP2u7nny7Eq4LyNTv4RC8yArrSeWx3zO5ZFBaCUMLb0N832T1tnX7CVqe
- gZ3kYp5MCmbdWa2RQfoRqoxG7eXABjEYzLZ4aIJGB9b1Emfdzb90c0SeIuOG/pOSEvwC
- prUw==
-X-Gm-Message-State: AOJu0Yx4zLUhPK4vvfISPACrqnlxmN++wl69iLlwlGUoEH33DmWBdgyb
- rmatzOVT2yFQAQ6wQgN9dX4R+3X9uzpGq1nRg2Ia4Y27owfxo2Mbt8ojqgSXYEd6lsXztjr43nW
- lCL6T
-X-Gm-Gg: ASbGnctVBP1WCoD4Fudhg/d3VoQiVAqwnfJcuIQnvsnZk+B0nPgNHQCADz1FFpMp3B/
- zQu5568bMJ/nOJDJu1aPfs+PQnP7EC0QmavAPzeHdkKPlFgUT62/dw1+2oZBny8W1PA/latB71L
- wd9XSH/RXg75yZ7rLg1WBjTxoFbxONnkPLJRZwsIiLcaQjwGv6w7gM+rcu5kspVHyOoMsixTcFv
- zKevK5nUMeukxyYzxw2zV2mi9wo92vemZOQ2/yLEo8wYObzmUn96z+LJ025OJ8v4pdfWLmifX+Q
- b3Yx0jaa2jINsFlLbs7V2SvtHZwBne/IvqxQox6+6twiPRdeBsw=
-X-Google-Smtp-Source: AGHT+IG8yS0gLwkyDwSNXlvD7vuYuDr4qKJFC6ujr89xAT2mP/Rd0/mItn05JVXm/LkiYq+VmVjFdg==
-X-Received: by 2002:a17:903:1ace:b0:231:c90e:292d with SMTP id
- d9443c01a7336-231d45af19fmr28322365ad.44.1747373238737; 
- Thu, 15 May 2025 22:27:18 -0700 (PDT)
+ bh=bqGoY+CilUPAjO+dXO+6qxpClMsZaBn+YNo/aP57Mxk=;
+ b=qQDxWO5QX/JULw78AJtp0MMHd7xLX4Ah/Ei1Xqy4ii4XmOQyWcwh3V6ATLVHYVmbpT
+ 5VH4UQlmaIAO2VoGlqBC00DNl9uShjBqzxSsJAGB0cyUBSLGm7a49yjf/0zTe/xe2bAN
+ m2SEpFcFsbfXJuIO6N6U+ue+4g5EO4LEC4iYLUjzP8OeBh3gYp0o9NzG2SsSedSPv3oQ
+ CA1RSBoPBU2Ad+0M6fnR7YlnUQ/1BvOTkZydm+lorg/4S+fQwZ8PH8ir/MkwrBFYdjST
+ +6bAIyxR/8bLl842nKgYHDKZM40nYQA9YTzuO/C6nUS/cdNlahzVZ7QRFK1AZ8LXCP3V
+ MnRQ==
+X-Gm-Message-State: AOJu0Yy7CGTB4mUQFgQnozDfttoOYW3lUBB97BK32vCLdtb7gC75Iv7c
+ d117+c8UfO7YskMc6nHagIhcS6uJYAuiluQedAo23sVRdPYs24yVKZOYO1HTH6XI3XwAvGALc7U
+ MD+BR
+X-Gm-Gg: ASbGnctL/eGAd2R29jrdp/QFRT1ola9Sd5wCJPr+GT3P2vGrxSbLDI+HkFsDG4nryce
+ yWCfFAOsvPgW/p4pnqTt4LnDfxGDbOQ5MVJ9o+vmLhPGSAS3WG9tZlG6FPX+9LmHRHJU/n3mtOz
+ hIe9kGplc5cy0CynaopmFch/UJVOI+Xkjipc30BQh09i1mta+yN8Ytecoxwdq8MumGG/AfA47DA
+ gu2KIyyp+3TMU3Dgt+mThcqtsWiSwX78kXn0vGp3NlheQ8ci4JUNTz4vfi43E4BrdAfMUhpnn7Q
+ u+++XhP9t2+VSZQOehmBtCOTlqvwRmrE8VvTE84104IrvF92upA=
+X-Google-Smtp-Source: AGHT+IHdGcYnD7etgGjPSQyyFm3Ma+Ccyjo/gTj3QPh+peprcRePm5WJ3NdSJENJuHpiHdQ3OcU2Pw==
+X-Received: by 2002:a17:903:94f:b0:220:ea90:191e with SMTP id
+ d9443c01a7336-231d43d9ca1mr25398015ad.4.1747373243077; 
+ Thu, 15 May 2025 22:27:23 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ebabfesm6539135ad.174.2025.05.15.22.27.17
+ d9443c01a7336-231d4ebabfesm6539135ad.174.2025.05.15.22.27.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 22:27:18 -0700 (PDT)
+ Thu, 15 May 2025 22:27:22 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -72,16 +72,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/6] hw/arm: remove explicit dependencies listed
-Date: Thu, 15 May 2025 22:27:04 -0700
-Message-ID: <20250516052708.930928-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH 6/6] meson: remove lib{system, user}_ss aliases
+Date: Thu, 15 May 2025 22:27:08 -0700
+Message-ID: <20250516052708.930928-7-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
 References: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -106,31 +106,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/meson.build | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ meson.build           | 2 --
+ accel/tcg/meson.build | 8 ++++----
+ gdbstub/meson.build   | 4 ++--
+ hw/core/meson.build   | 4 ++--
+ plugins/meson.build   | 4 ++--
+ system/meson.build    | 2 +-
+ tcg/meson.build       | 4 ++--
+ 7 files changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 5098795f61d..d90be8f4c94 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -8,7 +8,7 @@ arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
- arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
- arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
- arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
--arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
-+arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [files('musicpal.c')])
- arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
- arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
- arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
-@@ -79,7 +79,7 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
- arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
- arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+diff --git a/meson.build b/meson.build
+index 98b97fd7ba3..7aca61a1e8f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3712,14 +3712,12 @@ io_ss = ss.source_set()
+ qmp_ss = ss.source_set()
+ qom_ss = ss.source_set()
+ system_ss = ss.source_set()
+-libsystem_ss = system_ss
+ specific_fuzz_ss = ss.source_set()
+ specific_ss = ss.source_set()
+ rust_devices_ss = ss.source_set()
+ stub_ss = ss.source_set()
+ trace_ss = ss.source_set()
+ user_ss = ss.source_set()
+-libuser_ss = user_ss
+ util_ss = ss.source_set()
  
--arm_common_ss.add(fdt, files('boot.c'))
-+arm_common_ss.add(files('boot.c'))
+ # accel modules
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index 97d5e5a7112..575e92bb9e8 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -18,15 +18,15 @@ if get_option('plugins')
+   tcg_ss.add(files('plugin-gen.c'))
+ endif
  
- hw_arch += {'arm': arm_ss}
- hw_common_arch += {'arm': arm_common_ss}
+-libuser_ss.add_all(tcg_ss)
+-libsystem_ss.add_all(tcg_ss)
++user_ss.add_all(tcg_ss)
++system_ss.add_all(tcg_ss)
+ 
+-libuser_ss.add(files(
++user_ss.add(files(
+   'user-exec.c',
+   'user-exec-stub.c',
+ ))
+ 
+-libsystem_ss.add(files(
++system_ss.add(files(
+   'cputlb.c',
+   'icount-common.c',
+   'monitor.c',
+diff --git a/gdbstub/meson.build b/gdbstub/meson.build
+index b25db86767e..15c666f5752 100644
+--- a/gdbstub/meson.build
++++ b/gdbstub/meson.build
+@@ -5,13 +5,13 @@
+ #
+ 
+ # We build two versions of gdbstub, one for each mode
+-libuser_ss.add(files(
++user_ss.add(files(
+   'gdbstub.c',
+   'syscalls.c',
+   'user.c'
+ ))
+ 
+-libsystem_ss.add(files(
++system_ss.add(files(
+   'gdbstub.c',
+   'syscalls.c',
+   'system.c'
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 547de6527cf..b5a545a0edd 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -26,7 +26,7 @@ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
+ system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutls])
+ 
+-libsystem_ss.add(files(
++system_ss.add(files(
+   'cpu-system.c',
+   'fw-path-provider.c',
+   'gpio.c',
+@@ -46,7 +46,7 @@ libsystem_ss.add(files(
+   'vm-change-state-handler.c',
+   'clock-vmstate.c',
+ ))
+-libuser_ss.add(files(
++user_ss.add(files(
+   'cpu-user.c',
+   'qdev-user.c',
+ ))
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 5383c7b88bf..b20edfbabc1 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -61,8 +61,8 @@ endif
+ user_ss.add(files('user.c', 'api-user.c'))
+ system_ss.add(files('system.c', 'api-system.c'))
+ 
+-libuser_ss.add(files('api.c', 'core.c'))
+-libsystem_ss.add(files('api.c', 'core.c'))
++user_ss.add(files('api.c', 'core.c'))
++system_ss.add(files('api.c', 'core.c'))
+ 
+ common_ss.add(files('loader.c'))
+ 
+diff --git a/system/meson.build b/system/meson.build
+index c2f00827669..7514bf3455d 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -7,7 +7,7 @@ system_ss.add(files(
+   'vl.c',
+ ), sdl, libpmem, libdaxctl)
+ 
+-libsystem_ss.add(files(
++system_ss.add(files(
+   'balloon.c',
+   'bootdevice.c',
+   'cpus.c',
+diff --git a/tcg/meson.build b/tcg/meson.build
+index bd2821e4b54..706a6eb260e 100644
+--- a/tcg/meson.build
++++ b/tcg/meson.build
+@@ -27,5 +27,5 @@ if host_os == 'linux'
+   tcg_ss.add(files('perf.c'))
+ endif
+ 
+-libuser_ss.add_all(tcg_ss)
+-libsystem_ss.add_all(tcg_ss)
++user_ss.add_all(tcg_ss)
++system_ss.add_all(tcg_ss)
 -- 
 2.47.2
 
