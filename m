@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524BAC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 17:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF636C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 17:59:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFyl3-0005Lc-Dh; Fri, 16 May 2025 13:22:05 -0400
+	id 1uFzKn-0002RR-BA; Fri, 16 May 2025 13:59:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uFyl1-0005LG-Hp
- for qemu-devel@nongnu.org; Fri, 16 May 2025 13:22:03 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uFzKl-0002JN-2E
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 13:58:59 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uFyky-0004oG-Tx
- for qemu-devel@nongnu.org; Fri, 16 May 2025 13:22:03 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GGfs8h000992;
- Fri, 16 May 2025 17:21:58 GMT
+ id 1uFzKj-0000T9-51
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 13:58:58 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GGgXN9024572;
+ Fri, 16 May 2025 17:58:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=dcDobH2u9VqtgSZVi4c/UgmAiPeBo37l5PA+tEG8rEQ=; b=
- c/UD6sGUy423QRZlihlVVhlJQEn+yajJ/9AW+/9UNXy6Chr2vtma/Qhx2gP2JQEc
- WATMPTqB7lM6sGGUp9OyplOB6NygPHwK9bw5nJviEaBEf0LlnXA0VC0C/AF45/p7
- uG0itjlQoC9SOhMeyHe5bRWHP0cbw5r+9Iuq8KJIJO8zPR9a0sp3HklQTo993AyW
- +RpDhsLn6KQQweN0Z5MUyb93EFa4+ScPNboZJ5Jd6rXwmnhtI+rKPopBPgQGXcdR
- qllii4ai5CrzmByI+vzc5xQSdHHJpO5Tu7Xeh4Teg947lm2qo/nXNMGb/SF5Uxg9
- SPe6KqLRX6YPec57bgUPDg==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46nre01v2g-1
+ corp-2025-04-25; bh=jlGHqzlbL3JGqb/4hXWaUytfPWql1hFSxkhILqa7Peo=; b=
+ VK1PKgReha3Npou8n8AmkYp7eRLmfRSdXDqJGgzn8Cerm83dAPernWFY5kEQVQ3C
+ Hi7nrL4PljtD2XlO9poRwNEGTCv5lHVicrWuJboLJuxBEYWo/y/upKsA6BlGlTaJ
+ Cwwt62BLlWzYt/SEI/H+orPaM06+sT7m0ugjIgLRkupZMXS5ougZaHI7wLMvw7SZ
+ Ssjvg7HzWuMLVwT2Fy0aRvEMTlBh76b9vz/GCuryJSsddczbarKpiLdzdiU6fjN8
+ pxsS5syO3C20VEufamkgBBqyQK842dqENb9nzzUbkdlPTAzb3NBw1eA9awImvtFh
+ ZD+zwdDZhzK6xYLy6VjWqQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46nrbf1vvn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 16 May 2025 17:21:57 +0000 (GMT)
+ Fri, 16 May 2025 17:58:42 +0000 (GMT)
 Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54GFYGaf033385; Fri, 16 May 2025 17:21:56 GMT
-Received: from nam12-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam12lp2041.outbound.protection.outlook.com [104.47.66.41])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46mbsc3cbg-1
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54GGBVtd026169; Fri, 16 May 2025 17:58:41 GMT
+Received: from sa9pr02cu001.outbound.protection.outlook.com
+ (mail-southcentralusazlp17011024.outbound.protection.outlook.com
+ [40.93.14.24])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46mbtavmn1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 16 May 2025 17:21:56 +0000
+ Fri, 16 May 2025 17:58:41 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gAutMUV1Qp9XeK3RnXJfsynasUYXyKptVLB15kHXE/iaQ/jIBkHKdBcUqHdf37m6e8PuaHcV0QcLJGivG877Gbd3/2W1VYf9apTCr0tutuftHOkrIuj85btK43tZlN9U1lh6WUxj+PYb8sf4zIP5M0vvCErBZm25yjVArJa1Fxv1LfQK8Td3lQ96mu6V4d6HsonDeNFpFSy4n5EYrlgNJyTKVHEhBNSG/yAJwCY+tDcHiXR6wmoCGKC6R0SDrF8Xd6oSRmOcTeC8SBjnkJYtCRXEt5UmhB8qruITOt4hfw1jo2kFc9o6zPdPo8oqGtfRxjNH+sXDMUzrSN7FXMU2CA==
+ b=tdLSq/xmeaVAhOkUT4CY9kyCkg4f3eWe+CcCWY/vMAFuHGw3EeBiKso8pz+6T9K0GaA6jCE5nm5XlUG/jRvYOl2LrTP+CQzySBQ7b0OAgoJp94sk7nh86Wr9jh3+5/UnVdUUNfFedlPTp6AMmBuk1vDg+tRUB4Wvh/ZWnTTkT1u+j6T7wYfcAheuWKbMHzvoigNYf7DqJqh5Z6zaen2oCrcIwNJYwkiGTTN0jxqRiwBPpwo7IGkPK2I29CdbLBTvLFEaWatlqedfeZ9RK54wvOTSpbKXOnSsHbB8zupF+BAw9p16vB3ZR2t/7dIxa2W8wyJ2KXvteWxw8C7TC3CJrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dcDobH2u9VqtgSZVi4c/UgmAiPeBo37l5PA+tEG8rEQ=;
- b=AoLuNFboe9wRjPzcw300IJPCy15iSrk/FZUwM1UTZiRp78qLz/WI9wBhaCvnhQee6wH2+2hjgQp9d9TVKLoceyC2H0mW2Z5KW6lqHYZdnslJ6gJsBzFXy8mKDjUYJdo+teeFoG6A/7fk7OYZ+nFeE0m36sLzDM+7K0z3mGnX2fIcHLCbjqb6yvI6Eig25GJAovPWJMKRgN2Fb2BBBwk5teIxULqQBusL95vC9xvGCcj0lsma/1G5QA+fpNl/fiGBmo4+hSrpcmNEBdP0AIuhuOkyeCSygz0GdkDKelSLzoTKklM4NzIs1pzM1sB88sKXhaM6Mj0wyY1tyFusmDvvVg==
+ bh=jlGHqzlbL3JGqb/4hXWaUytfPWql1hFSxkhILqa7Peo=;
+ b=toycZdzk56XLi6BXNKmYdG5pft7DqnpRL9CFw0f2ESNKxuiyVv9mpGZfVkw3w+7odwwXVBbQCKcH+EV4Uf4DfQ1kvmHtwSKceZd6CgdTY+9+OSg5R6yia/4Sjh6nT28l234884Qh55fBrJ7G4fvmgBm7NK0rm3YiG8HEK+lUrqSt1X/OUTDDlUtD0nY/sCx8eh0erLdFXGjYry4xmKkStzDdgFvdZF5/jpR0Z15wGNaH56U6X34lk4R9fsQa1+yrkUUWvs/+mwJ9UWltONUIGUk7lSgxh1jlng0PCt/QKJJbDw6B3JHyETHiY1FsS/aA1DaOPlkRKfXPIRfzqgcWvg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dcDobH2u9VqtgSZVi4c/UgmAiPeBo37l5PA+tEG8rEQ=;
- b=zTb9yAgUhpU3qUbGZqNh/ufUtzStB13fDSdPmmka9ahOQpHP/X6PuzEtvPgiwS/y+6rNO0PC02JuFjH8Ycw6uUs+eIr5paFA/4sH3K4Qz0BLCj5RO0SB5m4VReZb8yLspLBMiczkS50BMUPjQJjpBl6+lQbTn04BTSQ7d8vw2rM=
+ bh=jlGHqzlbL3JGqb/4hXWaUytfPWql1hFSxkhILqa7Peo=;
+ b=o64lgtqussSOH1enJ+Xiqtfg/xuo874UEHYRi4t9kn090e2n9im0Ap0Q0lHYG92Fb5Y/IsUFK58YUSTUxG7ZHRKxnERK0440mI9VfEl/pFhhTq9CXLO7gTNB4qsEYtJpXW5xtYAbJM4G2aeItB9JR4pTdwqCEH0UqqOmVyt+Wto=
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by DM4PR10MB6863.namprd10.prod.outlook.com (2603:10b6:8:104::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.29; Fri, 16 May
- 2025 17:21:53 +0000
+ by IA0PR10MB7253.namprd10.prod.outlook.com (2603:10b6:208:3de::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.31; Fri, 16 May
+ 2025 17:58:37 +0000
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.8722.027; Fri, 16 May 2025
- 17:21:51 +0000
-Message-ID: <dfbc8c7c-9f35-42c4-8fa0-0bae8a789f6f@oracle.com>
-Date: Fri, 16 May 2025 13:21:49 -0400
+ 17:58:37 +0000
+Message-ID: <25435e62-50e1-4bf3-8227-e2ed93b959e2@oracle.com>
+Date: Fri, 16 May 2025 13:58:32 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 06/42] vfio/container: register container for cpr
+Subject: Re: [PATCH V3 21/42] vfio/pci: export MSI functions
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
  Eric Auger <eric.auger@redhat.com>,
@@ -84,136 +85,135 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-7-git-send-email-steven.sistare@oracle.com>
- <161947a0-f3fb-4ddb-b6c1-6e1a1e4d6849@redhat.com>
- <2f36f035-6704-4a73-a9e7-953c27fb32d2@oracle.com>
- <d989b8a9-16cb-4b5f-b6cb-299ce93883f5@redhat.com>
+ <1747063973-124548-22-git-send-email-steven.sistare@oracle.com>
+ <c5696d3e-cd21-4d90-9e30-676434c1020c@redhat.com>
 Content-Language: en-US
 From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <d989b8a9-16cb-4b5f-b6cb-299ce93883f5@redhat.com>
+In-Reply-To: <c5696d3e-cd21-4d90-9e30-676434c1020c@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BN0PR02CA0041.namprd02.prod.outlook.com
- (2603:10b6:408:e5::16) To IA1PR10MB7447.namprd10.prod.outlook.com
+X-ClientProxiedBy: LO4P123CA0357.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:18d::20) To IA1PR10MB7447.namprd10.prod.outlook.com
  (2603:10b6:208:44c::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|DM4PR10MB6863:EE_
-X-MS-Office365-Filtering-Correlation-Id: 12c7e9d1-f674-4844-16c3-08dd949e258f
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|IA0PR10MB7253:EE_
+X-MS-Office365-Filtering-Correlation-Id: cec9a84b-7957-4c62-32ac-08dd94a348a6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?d2xrd2VaSGFrNCtxOEJNR2VzMU01SXBMTlh4NUhZUGJScUJrdVBnZFo1K2Fk?=
- =?utf-8?B?dnBCS01LNEZQUnJIY3NJVkV5Y0wxTnFpNldub1NVTW9peU9pc1FmbDAyL0F0?=
- =?utf-8?B?bnorWmdzYnRHNkt0TmtsaWswYnZpSkM5bDZsK083Z3U0dmVLdkN4VzJZMjdD?=
- =?utf-8?B?LzQ0cVA3K2Mxa1h5dzNTbmhPdjlTZ1d4Y2h2dEpHU09DL29kcVhCS0kxQVRZ?=
- =?utf-8?B?clo1MHQ0UmNiSWpMRTJua0EyWVZRM1BINXcwbGV5SVpkZHhMOElwL3pPNGdP?=
- =?utf-8?B?Uy9pUWlpOThmcmlvN0phdVpoZFZDNWowdDRXKzhEU3ZIRVNSTFJySDBDTDNV?=
- =?utf-8?B?c1JxZkYyeHRLd2NMc0VUVmFlcmVSVGp4OEhFdEltSHNUMmMvUkpLNEJOL3FR?=
- =?utf-8?B?LytWeDQ5U2RFcFNQRHFZK0RycEpLS0hCNE1YVTRPeHUzMksraU9XYWlQTXJp?=
- =?utf-8?B?alRpdmJKL0FjWXZyditaZFgxMUd1aWpTdnlQK2NxcnFnZlJIcysxWG5MNmZW?=
- =?utf-8?B?TkNGRnN1NUZKZ05vZ1YyRS9OcUQ4NFFhNDU1VXBBMk9nbDU5K3E1QXl4dEt3?=
- =?utf-8?B?VFJ1d3NhSlY2RHRaVWw4SklicXVWMEhXdzhMN3RoTzRyRkxHTjVBU1JUOWph?=
- =?utf-8?B?YjllMHArL0RXYzF6MEwxUVBFTkpJYmF3RFVST2lSYWJoejZXU0pCbm9Hckxw?=
- =?utf-8?B?YTR1WjN6eksycVg0cHJucU5mbXhwMmZaTGFwQ0UrUVRKbHNIaG5BVGdPNDZa?=
- =?utf-8?B?Z1gyN2dpSnJud1A0c25PRE1QSjlRUFJyWDVRb1drdVc1dzdFYWVNKzlQTjJH?=
- =?utf-8?B?UmNnYzVSWlEzVjk4UHF2UFJocDlON3J0YzdUVjFna29taksvUjlTbVU4Y2hM?=
- =?utf-8?B?Z0l3QjBvSGV0TTNZR3d3bVZoMVNzM3ZsR0pjcVlpNVUvelZpU3RVbnVkbktF?=
- =?utf-8?B?dTREb1Z2MlVpWkZJYzhJMi9VaFVqZ3JGTUp2Q0dlUHhad1c4UEhYWE5zdUJk?=
- =?utf-8?B?dDdKV01saktGUDhrTUs3UC9iRXkxZE9qaHJIZDlySXVsTzJ5SkFuVzJtQTJU?=
- =?utf-8?B?bEkvbDJNaGdGSnRoRzRNdHBOdjR5RHB2OXB3cmcySUJ2bzArMnc0cE9INkdQ?=
- =?utf-8?B?bWRESTFVeFFQQTFCUDlnWXpKWDZLVHhDeCt4Z1ZhTzRaU0VUOWd4RXp6ODhn?=
- =?utf-8?B?dGloa1VURVJ5SEZJTktJZzExN3VTUVhxRUFXWHpWaEk5N3p0OHN4M3g3VEJ5?=
- =?utf-8?B?WEw1dnpNN3V3bVk2WGNJelFIMysrTkpDc0dmemdlekVYWHRnSXFuNlVlOTh4?=
- =?utf-8?B?d3o5UjUyaEhvUHB2c1JOYUVIU0FVR2hrYWZqN2lsaUN0cmFWdjVKL3p4eWFE?=
- =?utf-8?B?Z0xySzNkWGN1Q0lHVXVHbWJXME5JK0FVczJFQnJxVFdxQ0c5WWZ0Y2F3WVJJ?=
- =?utf-8?B?NndYMERwcVZFTHBnNWpqOTYzK2YvcWtlWTAxMEFwWjEra2pBZkxNczFLQ2Vl?=
- =?utf-8?B?Ry9wNWNPb1h3UnZQbEd3WXdWNWlJZkhOWCtBVWlhakxmc0l3Z2FwK0lBZE5U?=
- =?utf-8?B?VFJZSFlEY3ZlUG4rZnVDdHhkRGhydC9zNk9qdkNianZycGx5d3llL2p5Vlly?=
- =?utf-8?B?bnRzWkZCTklhYlNLSWlxemdvcDlyb1QvWU16VG83K2dFTVRZNG1sVzQ4c2dI?=
- =?utf-8?B?c0N2bEIyWCs3bTh5OFNIUjIyK29LVjgzNnVabXpIeVV1MmN6ZStFbWNsUXZk?=
- =?utf-8?B?NE1IcGdOMnpoOTI5UEhHeDRZT3dnVDBuN1NjNE9oNlJIQjdhTUU3M1cwcnQ0?=
- =?utf-8?B?N051alhxRUtzQXNydWo1ek1XcVhKRnMvRHlFNUdqY3RqZVFZOVY2b3B4VURT?=
- =?utf-8?B?NzJKNXNnOWpYVndkSnVKcmRFMXpJc0JPY1hzSERCdlVUaHc9PQ==?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Tmx4TURuVkZsVzZuRW5uSFM1Vkd6NWhveFhkekZta003TExKd01ZaW5sOWp0?=
+ =?utf-8?B?cHBoRXZid1ZjVzF0WWFaQzhTNGE4M3p6TE5oenQwVVp0YlZtK1FJNGhQRG5W?=
+ =?utf-8?B?cDZaZ2Y2MXhlOTBhVDBIK3Qxd0dEZ0xkVlN2TFUxckorNHkyM1FRTW00SHRU?=
+ =?utf-8?B?bUtWS3JtTFMyWUtRN0xDWVd6YlFiSUxVUjYzWGw5RkdXbjQvR2dGOFhaMyt1?=
+ =?utf-8?B?WXNBSnUwZzBSOHluU1FpdERqd25iODRQZGo5UlgxZnFLcnhUZ3o3VXJReWxv?=
+ =?utf-8?B?WUhlQkJVc01yWEFUb3JRRzBPT2FrWjdxWlFydzNLTG9RMnRVRkNPLzRKNEdS?=
+ =?utf-8?B?VUt4Yy9lQ2VFR29ERzA2MzdrV2NGT0liTU01Q09Xb3BqK1hHL1p3T2lyQnlD?=
+ =?utf-8?B?QVB6dEUxZS91aEhLaVRCd0w5L1NnQk9OeUFnSEk2YlhVT1RINFA1QVpudWJn?=
+ =?utf-8?B?NDlyMEg1Z3VvOGJYdTczdDVUU0kvNFNiM0cxeDZNYi90dm5mTEZRSWxJaUpk?=
+ =?utf-8?B?ajdETWkvNnFCdnJ1UW9KRzlDT1BKSDBoMzg2VEl6NDZYOHhDeGQzZ0dQUit2?=
+ =?utf-8?B?OHZ4enRzQmZ4cysrMk1kMGswUG02cnhuOTluVDhsdTdtK2FNMm92QWhuZlZR?=
+ =?utf-8?B?TmRxQThRaVQ2ODUzcVFIaEQzaG5lTWtLTkhvc0M3T09PREZ5b2FxY2FHQWF4?=
+ =?utf-8?B?cVROTDY1V0p3WFp0RVlOWU9WUEdLeUxjNnQxUmZIV3ExS2dRYW9tL05OVUJB?=
+ =?utf-8?B?YlB2NGNOeU5ZUjlldDlWTXF4WmgwaW9IYmduVWlNdzlkcHIyK1REbDlmVDhm?=
+ =?utf-8?B?Vlh6Nk44Wm1zVC9pU1c1bGNKazg3VUoyUlZpZlc1Z3gveHFWTkVoY1ZZNnJa?=
+ =?utf-8?B?MjRlek9CbXY4U1JPZSt4MlhJd2lXOGJyYlFuRmNUaHpxQWZZTTZpeldkdTA1?=
+ =?utf-8?B?MUFrWWQ2Qk1WQnJwUDQ4cThaZDZSSHdzNWl1UVFuNUsraWRsR2doMUkvZG1S?=
+ =?utf-8?B?YmEvSW5TekJodi9NV09MazIxYnNpWGxKU3REaEV0VW9idVZVZHhUV0lIeUFn?=
+ =?utf-8?B?dldMenJ0b0htRElJbWcwMTVPR1k5NlVpZFFZeWNwdUE2R1AxV1YrVWJLN2N1?=
+ =?utf-8?B?U2RwbjVVY1lnYnJIQUkyZ2U0V0V4aUtUY0J4YWpUK2ZwZWlGMTBZVlVwcCtF?=
+ =?utf-8?B?TUFtVW45WE9HNHZSVnlWcmo0VFY1S0xwU1FFK0xEa2lyRDd2MlFHS2FZTkdC?=
+ =?utf-8?B?Y2V5ZENUUnVmUVJXM2xmNWhsTk5hNnZDNm55NFNJUEIrZ3FmenhKQTlZUlV3?=
+ =?utf-8?B?SG5kYmxiYnJHU3hFeXBVZEdJbEdOYVlHcDJPbTVHQWdxQUV4N2NXWVN5ZjZ3?=
+ =?utf-8?B?REhHa3NPNnZkTTc3a29DMHFITy9rQ0VRTGxvRDN0Tkt4bXZ5OWlUSGIwT3Zi?=
+ =?utf-8?B?a0N3SE8wbThPSnBxaDNlaDRiYzhyRGxVa29xRStCL01kcVNMUlppU0hIaStJ?=
+ =?utf-8?B?MHdvOG9yWTBGa3FacFpOZFVRY1FTdE5HTU9WZHp3OWJuRjl2SEQyZVl5dFlI?=
+ =?utf-8?B?Vy8xRFVlSmhYMTBlOGpRTU1aeWx4NnpOTFhPdVVabzNrL0o2NHc4WEFHQWND?=
+ =?utf-8?B?T280T1V1VENFNE10Y1gvUHZCSGV4VW8rZGp2WEZjS0lRL3JjbGJMNjVMaGVH?=
+ =?utf-8?B?ZzZHZHR3VjFRVmMzVFZsamtydjE5a0dGeDAxTVMrNHJUd3NqS1BhUU16emFr?=
+ =?utf-8?B?ci85dDN2WkRaRFNzRnU3NDIyZ010WVpvUjdrbHJjclNqUVp2Uk9SaEZvRVJU?=
+ =?utf-8?B?OEFLeGdaZGphUFp6QXEvMk9NU1Fxa3pPSkUwUUkxOEo2amFJZUpUdzRuU3dW?=
+ =?utf-8?B?T2plbGQ5ZHJweUIyTmdkNlNjektMVFhsekdwSXExei9MeCtWWkpNaG5vdXhm?=
+ =?utf-8?Q?vF+Qj5V59C4=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NGRKV2hqeEI3MWVucTZxb0M3ZjcrdlpSRFV2QXB1Tk1LdlYxNjl6Y01yL1BD?=
- =?utf-8?B?S1ZaQ2J5KzFOMGJXUnFPUVZub2UvaDBuZnRLeUpQcTZGOThWWFYyS1JoSlJK?=
- =?utf-8?B?cDdNVkNPcGw3MVh3RUI2WGpNVzBreXluWTFKZm85cFp4elRaMW9QMEp4dUU1?=
- =?utf-8?B?b3B0dGR3SURZQUlEdmdBNjRnMFg0WHp4WmJRa3hkOEdmS01EWHFYSVlHTVVo?=
- =?utf-8?B?bmlCQjYvNGdVSW51dXdzTllHTTBJYk02dWIvS3RtOUcwU1JKQ2FiWWFYVEU4?=
- =?utf-8?B?R1R0K2xCTmhKUHp1L2VmcmFZdWNkdXRrZzZkSUFzVWFIbU9ySWdnZG90bEdt?=
- =?utf-8?B?WEFIUDJRdXlGdEtGcTRGcTVwNG1FUGxuZUdtMWVHQ1hoWnpHejVVVGpwOENU?=
- =?utf-8?B?V2RoVEQ1eTQwNXFzOUZtak03dW9hc2tOVTFIYS82dVhuOU5aeDNKWWFQU3pF?=
- =?utf-8?B?bXpMQk9yMEZtWG1RcHAzYUVQdlNhcjhBdjgrd044NkRUUytKbWZvTy9Fb2V0?=
- =?utf-8?B?QVhjZm1udlJhaGUyL2NNcU1ZQ09iRDZTcTlnWFE4UEtsa2UwSU4zMkRLT1N0?=
- =?utf-8?B?M2Q3MWhLdjZzZHhEaWZ3QkVsaVNnbDEzT3dJK0gvenFmaFVKdGNNRVZ6Vmhx?=
- =?utf-8?B?RDdCa2YxZ0I5aWh3cjNWRzhCRFhBV24wZXc1L0QxTGlhVnJVbS9XRkVLQmMr?=
- =?utf-8?B?cXhCZ1ZpK1NFeHRKT3VjMFRLY2FubVJwQk1IQXYyT0VNYjBKTnl6TXZ4cE02?=
- =?utf-8?B?aEphVzZCV3RPOGREdGxSZGFEMmtUWkk3N2tScEFmWS8xSEtCUGFiQmdLbDlX?=
- =?utf-8?B?RGZMTjRUYXBEL2FkS1dxSVhlTThzdGZ1dnNTUVBlT01hSWh2TzhZOTFJalJE?=
- =?utf-8?B?c2o3VmFBUXdKa0hjUVhPL0RKcVh1UWRiMnlWODZ0aHhKQnBYNkhuUDNMMWht?=
- =?utf-8?B?R3JBSks1NlJ3MW9YYWxpcHhvZCtLUXlESVlvTCtjT3lLOXpkMFFQSWRuQnlZ?=
- =?utf-8?B?V0RtdVJmYzFzUmtBWXcyYkJpUW9kNXd4Sll1c1BpamJEVHQrWlFiZ1B3YnJh?=
- =?utf-8?B?MlRYQUFxRmUzSTk3R0FRN2c1ZEpKcXJJV0ZzR3ZyMEZCNXVpdGpDWmxlcHV4?=
- =?utf-8?B?MUJzVXhQYWg1a3RMMEJZM0ZDZ0cxT1JVTXJoblNXclRNTW05K050SzhOYVBQ?=
- =?utf-8?B?RW1nVW5TZTJYSnRmWnBPSmNseHBqOXVudE0xdndiZXF2QzZORk1hSTVncnNS?=
- =?utf-8?B?R0hVNVZPZVA4NWwzQkxhZGZ0d25WRW9TNUFFQ1h3bEFXVkNIbTlVYUFGTnFF?=
- =?utf-8?B?bzhwZ0FXRTVvSmxhZEFQd3RFM3FhYXo2dHozS2EybmwwT2FreTVPUi9oS3FM?=
- =?utf-8?B?TkVFWnRUL0UxTnMxNU9Cc05iM1lpMmplTFQ0S3NXR3JXTEg5TUtYSUtQV3M1?=
- =?utf-8?B?eVp3dCs1UjZTN3hZY2s5ZVNFdmwrSWwwWFlWUWxHd2tPZnV0TjA2VTB1Vy84?=
- =?utf-8?B?QlNpM05pbndLZFRtdDZnR0RDcWF0WkVVWEU0d3BaRk9qbkVMSlRTNEV1Y2FE?=
- =?utf-8?B?MUdwSkRINkZYRkdRaWc1QmxjeTVqYmdKSncrcFEwMm1GQVJIWlJwRVg0WmMw?=
- =?utf-8?B?YlZoZVlabVBSUGxGbGt5d2tmeW1PNXEvOEZLWHZ1ZnJnUWlLcTdjbEZYajFY?=
- =?utf-8?B?VHZMTmNzS05NS3FIWWZnR3JkQm9ZcmJsMHpEVkJXUlZQWjFYc09KNXRreVVh?=
- =?utf-8?B?NmkyUFoyYXZweGVqSHBtb2xhZVE0Um5XVVdab3hidlcvRktmMkZ0a3hHOVo4?=
- =?utf-8?B?cTJxamRzZXNaNzZRZlpVZThtaVlxcHhaZmYxN1l2TEJrcjFlR25wTWpZWERP?=
- =?utf-8?B?ZUJIUkNrWW9pMmJqd0tOTkRXL2lPNHRNUG9hSHJIallJbHVybXVlNmVwdzF2?=
- =?utf-8?B?KytlU2lZQjJQeFhwUHczem92SFRKU2MxQlJNWlBySm5wV091WGR4UkNnNjBC?=
- =?utf-8?B?TmcxZGZKWmh0M1FYOFRlU0lkSjI1SktQSFoyT1B3Y0Z1UUZrZWNkZlNpTWsx?=
- =?utf-8?B?RXQ1eWlqQVpadGdFZno0NG1vTUkxcU5NT1dQRGdWS0V0UXBEbnhQQ0VZRWZV?=
- =?utf-8?B?UE4vNGtoVTRqUi9KYkFkci9sMjB3cmVnbTdEMmZmN0FoMm53OEJzK0RWN3g3?=
- =?utf-8?B?cXc9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bExzUWJzWUx2UlpJR2lnaDh3aHp3R0RqTk8rNDVYR1hWRTJDK0NLMW9pV1J6?=
+ =?utf-8?B?aCtOQm1mWUxCU3lpQUhLaXdhdm9mdU1SMHBsNGtGVXdNdFdxdStURk5NRWpQ?=
+ =?utf-8?B?alRrV01TR3o0alg2Y3dUMHdpYzE5dmtsVDhRRnlHenNVcXUzRGJHckF3RmFh?=
+ =?utf-8?B?ZEtxb0s0bXJYQjcwWEZHTmx0bFp6bFg2YkhKdzFVenhHVXZSUjAxQTdRanZ2?=
+ =?utf-8?B?RW1qaE9NSkpkdHFTZzVYM0RDMXVxeCs1cmx5WjBGcWZRcDNNanFqdHM2ckJS?=
+ =?utf-8?B?OEVNa3R1cGRZa2tYTk93RVViWURrWUtDQTYvcGJwclkxS3dEUURQWkNBUmNU?=
+ =?utf-8?B?T1FhRXpLNStocVcxYy9xNVRIZWhsajFSelJQUEpPN3UxV0h3cHYvUTZDZkhB?=
+ =?utf-8?B?bEZVL1JDUXMxUEtQaWhyaTVIZ1NBSHRiT2RqeklSeHNiRDdXUWFGb3E4Umpz?=
+ =?utf-8?B?UG9UWUx6dTZrMDFSMkxNaEMxWXpFTEs1bnpta3BRd1RxMk1MMVpqbFl5elo4?=
+ =?utf-8?B?VTA0QW9tUG4xaUUyaUpSYkJmRHMyYUhqMDlibVBwM3VjbCs4NEI0UHVncHlo?=
+ =?utf-8?B?bmpWZVlDTGlpRktNaVY3d1JGVHUrL0pQM2E0YUVmUDdQTUd3dzROMFljbnJm?=
+ =?utf-8?B?OE1IL01SbUd1bGUwaE1SUnhpdUN4M0hCczBjQnhZVmQyMFN1VEtZNytDTkcr?=
+ =?utf-8?B?MFNZRE1lMnJUa0crbTBKeUZpKzNUeE95RzNKazd3MHczSW45akF4VlZrQXZk?=
+ =?utf-8?B?VHlqOFNzUnlucmQ2aXNzc1lGODJDSmtvYlorRDVkSkI4VTN0M2FqNzdBR1lZ?=
+ =?utf-8?B?NkJ4WU5JYS9jYURZNDgyb1hJQk1Ob25BNE4rTnlLcE1wUHJOMUppcUx0dndE?=
+ =?utf-8?B?OVRidGpZNFNDckJWTkpHOW9JMWQ5bmtoS1ZGUWlEN0RDQlNpYmpnc2JocnRj?=
+ =?utf-8?B?cGdoL3VHWXR1TDBxTGNibDd4bkE2WGUyZU1ISjNxZ2hsWnhqVmlrOXBkN3dX?=
+ =?utf-8?B?UCt5WXpOd095a2tmOHNudXZLZldkTEx1SFdnV2dPSkdVeUpINzVtOWJkaDlr?=
+ =?utf-8?B?NFRXek1GM3BGNXl4WGxzQ3RrZW1pQVJHVmVweXdrcVhlZ1d4UnczRHVBam9T?=
+ =?utf-8?B?WVpJN1pObW8wWEZxaDI4L2l0d1k4Nk9Ob3ZHdm9pZTVGRkg5NXdIelJYRzkz?=
+ =?utf-8?B?STFOQVMwc1UyMW5iUTZXTWZoOGMzNTdxNkUyZ0k3aTJxb0VKcWlCV3pXMW1u?=
+ =?utf-8?B?Si9ESy9NZXZrSlBHUThjY0crclhWUWJwM1RYRmszSDZzeUZVNElHNWZSdjcz?=
+ =?utf-8?B?b3dXYlFLQVhDdFRRa3k0ZDVIdEF4S2xMYkdhYU5nS1FGcmtsK3gvZWVYS2p0?=
+ =?utf-8?B?ZTVIV2dSVDgrYmxaL29PamlvdXBocXVLdmVTRjF0c3R2VUdweXZSWi9LREJI?=
+ =?utf-8?B?S1FFaXlsYkpqVkN3RVY2clJLTXJrVW9OV29LQ1JZWnljQ1dmUm9XT1pVai82?=
+ =?utf-8?B?MkdjZUZyZ25RTHpIYW1FV0dpSElOcjFJb28zT0x4TlA3WGhsazY1NXVUd3lo?=
+ =?utf-8?B?c2xnWFVLTUtwaXVESGY3VzRkVVZZZ0g5YlB3K0h0bEtVS3lBMS9nbTUxL25Z?=
+ =?utf-8?B?RTZrMklxWmtKZlBlaVo4eHhyWXJjVUFMMmVxdXpWS2lzTTJUMHpCeUxaRVlO?=
+ =?utf-8?B?R1FBVjBzYTNvNWhCcENpZkZ2NHhLNFBkUTE3SmRMV2lJTThudGdvdGRBTjhZ?=
+ =?utf-8?B?RDJjZElpWXdRKzNVRkFsdFd0aUtvV2Rad0xHc01RbHpRaGhNTGxrSjJERUkr?=
+ =?utf-8?B?SzF2T1VWci9xbm5pUGVEc21lcmdhd0t5MjdBNnd1eDljWXlZd3BqZ3N2L0xN?=
+ =?utf-8?B?OW51T0NHbURjbm1GaUo1SS8zVXN0VDZxTXVwbjNEdFR0b2NLWDk3U1NNcjIy?=
+ =?utf-8?B?MW9PM1RLVjhGbUNKbzFCUHlNQXMzR2dDUmRUZGNUb3VqOVpwcGdhMFBnbyta?=
+ =?utf-8?B?enVkSHdseittQStJTFVFNXVjNmkwTEo5aXY4UHdIdTFwdkNuRGs3SjVCQ0pE?=
+ =?utf-8?B?ZlBhNDg1b0VmM2dGbi91R1BFeUlQSVBKelBoNTFtY20xT2gyT2wzK29hbjdx?=
+ =?utf-8?B?R3hNMVNYNlcrVVJ0YlpKaGpLOFlpRm1kYjVIYVMyVWhXVFJNTjk4cWJqOFNC?=
+ =?utf-8?B?enc9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: NbiryYVJnhAdMQ4Tpvlgp+yJDb0u0gISPpEksGyD3vLcgxWB322dlVAv+mmD/g78ZQ0d64jZ3irtYppziIO6hqVGSiXtMvCIUF0Pv1/LCQfe9bP9DsX+u3u7IywXQbxZZUIOGwtPfaNcT1qhR28DtwYCXNLfi8lmD4YAfybksVoTEuFMhr5vPtuqejwmagj7TnMhDYp0N0rFjz6FjrjK5wYUYA8qehf5XFphNze/jRAzbD0fZZ4gwAwE+QEdusqdN5Ws3SAcxQhP+wZAK4ifV6o2kkc7ostjRjSevHSSzyIY3QcUf8Z5dvoF5PdifZGFmqhp4OwXnRLGJrvir57g0v/0qmPI5S72JLrXuCnUd+M9A1tcUkulRts0kv3XIWfIA+V0Nvqh24v1J2mc2pPePYxIo//ic1l8FJQZY4SOBEgtb7Xm9QtGSOFueEjeLg4/09/x5vcuvGYYtguiphyN4eTIRJSf5Xs3g81PfnjabDY331rkITSCTO77wmfiVTS7b2mF+E7BU+k058mkcvWsw6OG/6nIq7F9YGp3uIPJuu3ZnZQWF9MguWc1liNHWyDgGdB4qrS+Vjz0oi8W9O1NgmH70fvLz55WvAEpq+7UnpQ=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: zySQElmBTqFDPJRpnvITHCdrSY2qaS3xKBqlXC+fawIhob/AlNCxV0ww1hjOt53x1Rrf+SkpLstnJUl0+Mid3jCCEH+ZF2W2AvsHqi/vCfNKOE7FmWs62YZrCL7GFkXkXqoGj2c8knJtEXLngEQNk6iycJEQy/nlzo/HMGk7ri1XS1cPlteSsctIAn7IIbjBXjdyiMV6Qh+6ZbYItoD5P1aWxxjue2LHBQQm/zSJqB4IQCeNDrhVuN7PNBtg1jT8IE+8HfACgOhbjI9PakP0DgYH21MOevrvTxDjv02y/0A9QgklZRDsFVNPqKhyppF3i0936gBJAeo2I9cBIboRDZJn+ukx+BI/iMgtGOoU4YzZV9vdHTw+M2PTxGjN2jIO/gIo9Mm976aoyuPhvU6p3guLfnOOCjwY5/sx+TPJFzreguqZKI7b3IdUNJavRK1Pijr4G1spq0AGDPdYuZolgW1DaYODQ3HJNTBZCpBPzOZ7QTJ5bhQuaQr6dRPNeZhuNaurJ1w5QkQIwZ2NYPtcDts4zv8U4NH44vzLf3h6eL4NgtKLnVr3Qp6lWZc7robqmTMwDc/uPkWguZ7kDCihxbSEVPWl/4O117fJkdV289E=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 12c7e9d1-f674-4844-16c3-08dd949e258f
+X-MS-Exchange-CrossTenant-Network-Message-Id: cec9a84b-7957-4c62-32ac-08dd94a348a6
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2025 17:21:51.6234 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2025 17:58:37.7699 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lj8WFIytfqXJGP1vKy+VYNgr+cak0qyiNQ9bHCgmNCISJNgoaGn+Psl0VIMqri69yJ5o2mkmkIUW/16MDY+frOq2j8N6UqgchZrVLxQV/vs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR10MB6863
+X-MS-Exchange-CrossTenant-UserPrincipalName: c4XQuZckrTIAoOrdb8Ur3M5O4GbU8/hTJuWavS+q+bDyhBpuLgZMFQSKtPbWOj9Ii3zWHT+xeMwRbT0w/e9RPKsN0NX2OeABK2lphYc2GsU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB7253
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-16_05,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- malwarescore=0 phishscore=0
- suspectscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505070000
- definitions=main-2505160169
-X-Proofpoint-GUID: WBqyWQEz82Pn2s6zjrRAEKPg0PQUCtfz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE3MCBTYWx0ZWRfX0srRlQvfN80C
- 98S+BW+CPWvmhKqVHIyejD/aHAB71306KwrjGueAA05sdtRRB9e+NkgunTID+AkeI1+8tiHxZkh
- gHoobVlFB0ixw+v8zaNvNSbBaN08yWKqHwSVUCfDPojBZvhZR5jiAEe5e/TD3lslaIA/Ry34OVF
- kVrYIOqi6Y+QwjvXT/OcONMpg/wcXse6jW4DZ6a8K9o1w92n01c54rAG4kttxB/dh8SPxOo2TrW
- LQ9t8pDYF+0wKmyjMb1mU6JWxgtiUuYwdP2/QU7Ln8s7inpwSTpbCdL96BQG17rRAQqF7NHet0l
- DgJ2KNDE8A+5dHjqcvMUjUoIvFvG2FvoER5ImuwM+t8X2giTDeKyBKhTwo50xGDGFyCTUJunBNa
- 23RDjIN811jLAzQKLz2F16QKCmmwfSsZdbUPCkGrJPPka6MOSkRXPLjObMv8TSR1dbFaFLzs
-X-Proofpoint-ORIG-GUID: WBqyWQEz82Pn2s6zjrRAEKPg0PQUCtfz
-X-Authority-Analysis: v=2.4 cv=O9s5vA9W c=1 sm=1 tr=0 ts=68277435 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ malwarescore=0
+ mlxlogscore=999 phishscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505070000 definitions=main-2505160175
+X-Authority-Analysis: v=2.4 cv=Xc2JzJ55 c=1 sm=1 tr=0 ts=68277cd2 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
  a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
  a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10
- a=yPCof4ZbAAAA:8 a=t5MAlOEddGjKwt0j8K8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- cc=ntf awl=host:13185
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=yPCof4ZbAAAA:8 a=SOup1YpzuKxHnXuNfKEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ cc=ntf awl=host:14694
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE3NSBTYWx0ZWRfX7ugSEqgfMdZH
+ mTl6eUwSobGMiO+T9QTzPqcLpmUhYoL2v2DDBjWphccZ2ZxK6Gjtk+ecgNVe3O/kov3TlNpVl8+
+ PTb88iR5/ohg+0K8Y9sN+nCa8mrSff1Q1anh36y0J89aKs1nLxPqAYcIAKlE3lxaYZIRpPLg0yF
+ yC1K7pA3ygVtVjv0i6LO1sbI4CdCE0Ko8We6PxwEcJswRyx3hzWIwjdpqVBMXwqoWB74Itel0n9
+ XNYrThtf+QZtoq+e8MrQGxpDCI2vCQGokEUQ41BZtYBN1kAPL5Lz81q1gscygPv7Z0OuxAalfpq
+ kLAnoNE+8oF2ONv0jKKBnRPmlxMaw4cTEUSdry/0vcHblKZRdxoMS20mDNAkbfPPdorTLeSeDfB
+ HDJGBKwUSnH2Zg5r3SVeeT92dCglbnn8PW2EDDlYbbRn2OiOlS1QQVOIvoitW93mrmUwZen7
+X-Proofpoint-GUID: I579vdh0T2TrgYjjMNdPd7fT9wetauEW
+X-Proofpoint-ORIG-GUID: I579vdh0T2TrgYjjMNdPd7fT9wetauEW
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -237,243 +237,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/16/2025 12:20 PM, Cédric Le Goater wrote:
-> On 5/15/25 21:06, Steven Sistare wrote:
->> On 5/15/2025 3:54 AM, Cédric Le Goater wrote:
->>> On 5/12/25 17:32, Steve Sistare wrote:
->>>> Register a legacy container for cpr-transfer, replacing the generic CPR
->>>> register call with a more specific legacy container register call.  Add a
->>>> blocker if the kernel does not support VFIO_UPDATE_VADDR or VFIO_UNMAP_ALL.
->>>>
->>>> This is mostly boiler plate.  The fields to to saved and restored are added
->>>> in subsequent patches.
->>>>
->>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>> ---
->>>>   hw/vfio/container.c              |  6 ++--
->>>>   hw/vfio/cpr-legacy.c             | 70 ++++++++++++++++++++++++++++++++++++++++
->>>>   hw/vfio/cpr.c                    |  5 ++-
->>>>   hw/vfio/meson.build              |  1 +
->>>>   include/hw/vfio/vfio-container.h |  2 ++
->>>>   include/hw/vfio/vfio-cpr.h       | 14 ++++++++
->>>>   6 files changed, 92 insertions(+), 6 deletions(-)
->>>>   create mode 100644 hw/vfio/cpr-legacy.c
->>>>
->>>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
->>>> index eb56f00..85c76da 100644
->>>> --- a/hw/vfio/container.c
->>>> +++ b/hw/vfio/container.c
->>>> @@ -642,7 +642,7 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
->>>>       new_container = true;
->>>>       bcontainer = &container->bcontainer;
->>>> -    if (!vfio_cpr_register_container(bcontainer, errp)) {
->>>> +    if (!vfio_legacy_cpr_register_container(container, errp)) {
->>>>           goto fail;
->>>>       }
->>>> @@ -678,7 +678,7 @@ fail:
->>>>           vioc->release(bcontainer);
->>>>       }
->>>>       if (new_container) {
->>>> -        vfio_cpr_unregister_container(bcontainer);
->>>> +        vfio_legacy_cpr_unregister_container(container);
->>>>           object_unref(container);
->>>>       }
->>>>       if (fd >= 0) {
->>>> @@ -719,7 +719,7 @@ static void vfio_container_disconnect(VFIOGroup *group)
->>>>           VFIOAddressSpace *space = bcontainer->space;
->>>>           trace_vfio_container_disconnect(container->fd);
->>>> -        vfio_cpr_unregister_container(bcontainer);
->>>> +        vfio_legacy_cpr_unregister_container(container);
->>>>           close(container->fd);
->>>>           object_unref(container);
->>>> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
->>>> new file mode 100644
->>>> index 0000000..fac323c
->>>> --- /dev/null
->>>> +++ b/hw/vfio/cpr-legacy.c
->>>> @@ -0,0 +1,70 @@
->>>> +/*
->>>> + * Copyright (c) 2021-2025 Oracle and/or its affiliates.
->>>> + *
->>>> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
->>>> + * See the COPYING file in the top-level directory.
->>>
->>> Please add a SPDX-License-Identifier tag.
+On 5/16/2025 4:31 AM, Cédric Le Goater wrote:
+> On 5/12/25 17:32, Steve Sistare wrote:
+>> Export various MSI functions, for use by CPR in subsequent patches.
+>> No functional change.
 >>
->> Sure.  I'll do the same for my other new files.
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > 
-> and remove the License boiler plate too please.
+> Please rename this routines with a 'vfio_pci' prefix.
 
-Yes.  I understood you wanted me to replace one with the other.
+Are you sure?  That makes sense for:
+   vfio_vector_init -> vfio_pci_vector_init
+
+but the rest already have msi or intx in the name which unambiguously
+means pci.  Adding pci_ seems unecessarily verbose:
+
++void vfio_msi_interrupt(void *opaque);
++void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
++                           int vector_n, bool msix);
++int vfio_msix_vector_use(PCIDevice *pdev, unsigned int nr, MSIMessage msg);
++void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr);
++bool vfio_msix_present(void *opaque, int version_id);
++void vfio_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
++void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
++bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp);
 
 - Steve
 
-> 
-> A newer version of checkpatch will complain with :
-> 
->    ERROR: New file 'hw/vfio/cpr-legacy.c' requires 'SPDX-License-Identifier'
->    ERROR: New file 'hw/vfio/cpr-legacy.c' must not have license boilerplate header text unless this file is copied from existing code with such  text already present.
->    WARNING: added, moved or deleted file(s):
-> 
->      hw/vfio/cpr-legacy.c
-> 
->    Does MAINTAINERS need updating?
-> 
->    total: 2 errors, 1 warnings, 152 lines checked
-> 
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
+>> ---
+>>   hw/vfio/pci.c | 21 ++++++++++-----------
+>>   hw/vfio/pci.h | 12 ++++++++++++
+>>   2 files changed, 22 insertions(+), 11 deletions(-)
 >>
->>>> + */
->>>> +
->>>> +#include <sys/ioctl.h>
->>>> +#include <linux/vfio.h>
->>>> +#include "qemu/osdep.h"
->>>> +#include "hw/vfio/vfio-container.h"
->>>> +#include "hw/vfio/vfio-cpr.h"
->>>> +#include "migration/blocker.h"
->>>> +#include "migration/cpr.h"
->>>> +#include "migration/migration.h"
->>>> +#include "migration/vmstate.h"
->>>> +#include "qapi/error.h"
->>>> +
->>>> +static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
->>>> +{
->>>> +    if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UPDATE_VADDR)) {
->>>> +        error_setg(errp, "VFIO container does not support VFIO_UPDATE_VADDR");
->>>> +        return false;
->>>> +
->>>> +    } else if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL)) {
->>>> +        error_setg(errp, "VFIO container does not support VFIO_UNMAP_ALL");
->>>> +        return false;
->>>> +
->>>> +    } else {
->>>> +        return true;
->>>> +    }
->>>> +}
->>>> +
->>>> +static const VMStateDescription vfio_container_vmstate = {
->>>> +    .name = "vfio-container",
->>>> +    .version_id = 0,
->>>> +    .minimum_version_id = 0,
->>>> +    .needed = cpr_needed_for_reuse,
->>>> +    .fields = (VMStateField[]) {
->>>> +        VMSTATE_END_OF_LIST()
->>>> +    }
->>>> +};
->>>> +
->>>> +bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
->>>> +{
->>>> +    VFIOContainerBase *bcontainer = &container->bcontainer;
->>>> +    Error **cpr_blocker = &container->cpr.blocker;
->>>> +
->>>> +    migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
->>>> +                                vfio_cpr_reboot_notifier,
->>>> +                                MIG_MODE_CPR_REBOOT);
->>>> +
->>>> +    if (!vfio_cpr_supported(container, cpr_blocker)) {
->>>> +        return migrate_add_blocker_modes(cpr_blocker, errp,
->>>> +                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
->>>> +    }
->>>> +
->>>> +    vmstate_register(NULL, -1, &vfio_container_vmstate, container);
->>>> +
->>>> +    return true;
->>>> +}
->>>> +
->>>> +void vfio_legacy_cpr_unregister_container(VFIOContainer *container)
->>>> +{
->>>> +    VFIOContainerBase *bcontainer = &container->bcontainer;
->>>> +
->>>> +    migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
->>>> +    migrate_del_blocker(&container->cpr.blocker);
->>>> +    vmstate_unregister(NULL, &vfio_container_vmstate, container);
->>>> +}
->>>> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
->>>> index 0210e76..0e59612 100644
->>>> --- a/hw/vfio/cpr.c
->>>> +++ b/hw/vfio/cpr.c
->>>> @@ -7,13 +7,12 @@
->>>>   #include "qemu/osdep.h"
->>>>   #include "hw/vfio/vfio-device.h"
->>>> -#include "migration/misc.h"
->>>>   #include "hw/vfio/vfio-cpr.h"
->>>>   #include "qapi/error.h"
->>>>   #include "system/runstate.h"
->>>> -static int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
->>>> -                                    MigrationEvent *e, Error **errp)
->>>> +int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
->>>> +                             MigrationEvent *e, Error **errp)
->>>>   {
->>>>       if (e->type == MIG_EVENT_PRECOPY_SETUP &&
->>>>           !runstate_check(RUN_STATE_SUSPENDED) && !vm_get_suspended()) {
->>>> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
->>>> index bccb050..73d29f9 100644
->>>> --- a/hw/vfio/meson.build
->>>> +++ b/hw/vfio/meson.build
->>>> @@ -21,6 +21,7 @@ system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
->>>>   system_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
->>>>   system_ss.add(when: 'CONFIG_VFIO', if_true: files(
->>>>     'cpr.c',
->>>> +  'cpr-legacy.c',
->>>>     'device.c',
->>>>     'migration.c',
->>>>     'migration-multifd.c',
->>>> diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
->>>> index afc498d..21e5807 100644
->>>> --- a/include/hw/vfio/vfio-container.h
->>>> +++ b/include/hw/vfio/vfio-container.h
->>>> @@ -10,6 +10,7 @@
->>>>   #define HW_VFIO_CONTAINER_H
->>>>   #include "hw/vfio/vfio-container-base.h"
->>>> +#include "hw/vfio/vfio-cpr.h"
->>>>   typedef struct VFIOContainer VFIOContainer;
->>>>   typedef struct VFIODevice VFIODevice;
->>>> @@ -29,6 +30,7 @@ typedef struct VFIOContainer {
->>>>       int fd; /* /dev/vfio/vfio, empowered by the attached groups */
->>>>       unsigned iommu_type;
->>>>       QLIST_HEAD(, VFIOGroup) group_list;
->>>> +    VFIOContainerCPR cpr;
->>>>   } VFIOContainer;
->>>>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY);
->>>> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
->>>> index 750ea5b..f864547 100644
->>>> --- a/include/hw/vfio/vfio-cpr.h
->>>> +++ b/include/hw/vfio/vfio-cpr.h
->>>> @@ -9,8 +9,22 @@
->>>>   #ifndef HW_VFIO_VFIO_CPR_H
->>>>   #define HW_VFIO_VFIO_CPR_H
->>>> +#include "migration/misc.h"
->>>> +
->>>> +typedef struct VFIOContainerCPR {
->>>> +    Error *blocker;
->>>> +} VFIOContainerCPR;
->>>> +
->>>> +struct VFIOContainer;
->>>>   struct VFIOContainerBase;
->>>> +bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
->>>> +                                        Error **errp);
->>>> +void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
->>>> +
->>>> +int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
->>>> +                             Error **errp);
->>>> +
->>>>   bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
->>>>                                    Error **errp);
->>>>   void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
->>>
->>> what about vfio_cpr_un/register_container ? Shouldn't we remove them ?
->>
->> At this patch in the series, those are still used by iommufd containers.
->> Those uses are removed in "vfio/iommufd: register container for cpr", and
->> vfio_cpr_un/register_container are deleted by the last patch in the series.
->>
->> - Steve
->>
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index d2b08a3..1bca415 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -279,7 +279,7 @@ static void vfio_irqchip_change(Notifier *notify, void *data)
+>>       vfio_intx_update(vdev, &vdev->intx.route);
+>>   }
+>> -static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>> +bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>>   {
+>>       uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
+>>       Error *err = NULL;
+>> @@ -353,7 +353,7 @@ static void vfio_intx_disable(VFIOPCIDevice *vdev)
+>>   /*
+>>    * MSI/X
+>>    */
+>> -static void vfio_msi_interrupt(void *opaque)
+>> +void vfio_msi_interrupt(void *opaque)
+>>   {
+>>       VFIOMSIVector *vector = opaque;
+>>       VFIOPCIDevice *vdev = vector->vdev;
+>> @@ -474,8 +474,8 @@ static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
+>>       return ret;
+>>   }
+>> -static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+>> -                                  int vector_n, bool msix)
+>> +void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+>> +                           int vector_n, bool msix)
+>>   {
+>>       if ((msix && vdev->no_kvm_msix) || (!msix && vdev->no_kvm_msi)) {
+>>           return;
+>> @@ -529,7 +529,7 @@ static void vfio_update_kvm_msi_virq(VFIOMSIVector *vector, MSIMessage msg,
+>>       kvm_irqchip_commit_routes(kvm_state);
+>>   }
+>> -static void vfio_vector_init(VFIOPCIDevice *vdev, int nr)
+>> +void vfio_vector_init(VFIOPCIDevice *vdev, int nr)
+>>   {
+>>       VFIOMSIVector *vector = &vdev->msi_vectors[nr];
+>>       PCIDevice *pdev = &vdev->pdev;
+>> @@ -641,13 +641,12 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+>>       return 0;
+>>   }
+>> -static int vfio_msix_vector_use(PCIDevice *pdev,
+>> -                                unsigned int nr, MSIMessage msg)
+>> +int vfio_msix_vector_use(PCIDevice *pdev, unsigned int nr, MSIMessage msg)
+>>   {
+>>       return vfio_msix_vector_do_use(pdev, nr, &msg, vfio_msi_interrupt);
+>>   }
+>> -static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
+>> +void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
+>>   {
+>>       VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
+>>       VFIOMSIVector *vector = &vdev->msi_vectors[nr];
+>> @@ -674,14 +673,14 @@ static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
+>>       }
+>>   }
+>> -static void vfio_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
+>> +void vfio_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
+>>   {
+>>       assert(!vdev->defer_kvm_irq_routing);
+>>       vdev->defer_kvm_irq_routing = true;
+>>       vfio_route_change = kvm_irqchip_begin_route_changes(kvm_state);
+>>   }
+>> -static void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
+>> +void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
+>>   {
+>>       int i;
+>> @@ -2632,7 +2631,7 @@ static Object *vfio_pci_get_object(VFIODevice *vbasedev)
+>>       return OBJECT(vdev);
+>>   }
+>> -static bool vfio_msix_present(void *opaque, int version_id)
+>> +bool vfio_msix_present(void *opaque, int version_id)
+>>   {
+>>       PCIDevice *pdev = opaque;
+>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+>> index 5ce0fb9..c892054 100644
+>> --- a/hw/vfio/pci.h
+>> +++ b/hw/vfio/pci.h
+>> @@ -210,6 +210,18 @@ static inline bool vfio_is_vga(VFIOPCIDevice *vdev)
+>>       return class == PCI_CLASS_DISPLAY_VGA;
+>>   }
+>> +/* MSI/MSI-X/INTx */
+>> +void vfio_vector_init(VFIOPCIDevice *vdev, int nr);
+>> +void vfio_msi_interrupt(void *opaque);
+>> +void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+>> +                           int vector_n, bool msix);
+>> +int vfio_msix_vector_use(PCIDevice *pdev, unsigned int nr, MSIMessage msg);
+>> +void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr);
+>> +bool vfio_msix_present(void *opaque, int version_id);
+>> +void vfio_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
+>> +void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
+>> +bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp);
+>> +
+>>   uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len);
+>>   void vfio_pci_write_config(PCIDevice *pdev,
+>>                              uint32_t addr, uint32_t val, int len);
 > 
 
 
