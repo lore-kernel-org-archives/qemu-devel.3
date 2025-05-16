@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D26FC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5219CC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFwVn-0006dz-Nd; Fri, 16 May 2025 10:58:11 -0400
+	id 1uFwXk-0007Ou-5v; Fri, 16 May 2025 11:00:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFwVj-0006cw-Dl
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:58:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uFwVb-0003bj-AD
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:58:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747407477;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=paUwJkwQHzBMcBv8RskLb1Dl+OLJ1nXy6PmUjXt/7Ys=;
- b=RttHWHZud/WSW28LLZwt7wOVg428fJ9WMXzJe89qneUrBPKQNG/lGE0gNTlLuBwdrGLUYi
- FQ1eMc8iKvAhSF+1nYVPXg1UJ8vmZB5YibBby14YAWBjqqCZ794Fw4Astcu2sjV+Rt7w//
- vu3YcQx3+vxkSn287iyIfCqQnWguvkE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-JLqCEF1EMaKnFUoXyb3IKQ-1; Fri,
- 16 May 2025 10:57:54 -0400
-X-MC-Unique: JLqCEF1EMaKnFUoXyb3IKQ-1
-X-Mimecast-MFC-AGG-ID: JLqCEF1EMaKnFUoXyb3IKQ_1747407472
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 186791800261; Fri, 16 May 2025 14:57:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.109])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EC11195608D; Fri, 16 May 2025 14:57:44 +0000 (UTC)
-Date: Fri, 16 May 2025 15:57:40 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
- armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
- philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [PATCH v3 08/10] arm/cpu: more customization for the kvm host
- cpu model
-Message-ID: <aCdSZD5n2GCRXjVQ@redhat.com>
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <20250414163849.321857-9-cohuck@redhat.com>
- <aCNsSbDoi5oKWYul@redhat.com> <875xi3cig5.fsf@redhat.com>
- <aCTe5kEN1WdgZ74T@redhat.com> <87v7q0bocp.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwXd-0007Mf-Lg
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:00:07 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwXb-0003hS-Rb
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:00:05 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43ea40a6e98so22036345e9.1
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 08:00:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747407601; x=1748012401; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=D0ReuWMRTooe/KylawT5wRMRAb6jXVbm6SfmBZkC4tM=;
+ b=iMAmlKEbPFUtW7M0xKlwKcYIE3Q8aH6gZaEVjwS8xXICGPZYQeh3u0B1vin7lQyYiL
+ cRiftdgrdK60wn56OWLe7dTnBPzLadOPPELcLVE5kYt8PaBtgX8TYhOFNCDK1joKkyJQ
+ r1FQfrU8VzrECVVRkC02evZD3NZTahlktxpE/dQYOd/Gm/BAm0529zhuv6d3nRnRL50E
+ AabRlmGxA82BeDrFdpk/9cyyCLnGWx7AoVthR5jOdQZ0skQrqWg8YhV5P2FLU3MbWzP/
+ MiuGSka900lP7nYSiqqrR2w4vMRinvTW+LOh+kJWURMfoc0efQojYAJDL+ypNVAbj1o4
+ IR4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747407601; x=1748012401;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=D0ReuWMRTooe/KylawT5wRMRAb6jXVbm6SfmBZkC4tM=;
+ b=xUxVn2zg/bKB+T459OzCzYdPkAATjkQzkktS27lPWteGP0HeFRF8Ob1j7iC4agWsuI
+ vB2nbXJxx/P0x4bqOhLnIDBrpSN82hEXWT6vyNEeHWs6vudzL8iV7ZP6aIvbOw7xsEiM
+ q0OeqvjU2XhZI+zZH3uhs41Nxn9IWWb8npI8Gwbaw0rKE+aWLqeU+5vbC/RSEHj9Ujse
+ CHjh3fNTb9lcIy/DLtSL6oTsFIADNd63/I+6YWDPt2Fqq3Yiu08SByYOM7c98epMMW6O
+ QVvmNgoE5+88XsaM5wYO/KLIqzcCi6fabPRGlqG4A0uuV/XXP7Hhb5jjqfbTyS0j6HKf
+ pfQg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBob/9dsCDzFZ6HNmlxrJ9rgm3SLGF7gc/qyoRPvOdNp3WvUBzvntirPFjRh0D6vDViaaGUMPrYlvT@nongnu.org
+X-Gm-Message-State: AOJu0YzolguCKEcMFoiQOfHlKBrK/AB6jYEGlFlu6UW2HDIXuGsEIgFc
+ vUnaYB1LOkVipU6/HKtxGo8wdb26z52ScVclZLC8gIfCu82CpDdXC0Fv0itKjAgEmZI=
+X-Gm-Gg: ASbGnct9uZOczpLHLyJgNQXjuzUrgc1LJSilVAOtCis3e30MncnYCXe2vCmjSZZ5U9e
+ ZlxrNAGD3FwjeEAHntod/COoVstkCiis6TCf5OxqTX5iC6eVospl10Y/AYU6n5WdHsGytBYOMCv
+ mVCebUFXpDKksyl10RaXUZMccTG3abzix9eapZyObeaxErs7mYEntvQSPnSNlTJwHnGLnJ0bB5M
+ 0kqPl0wp8g4TlpNidJOMPj3LthTPiO/ISHpdZnaHKSWsV6ImPBmNIb84sRqAUI+owc0KR/sOhfX
+ MXVf/Wp64+VxmxdQLNuVT/OzsQpl1ufAJjaWcIG4x1H9iuZlkVI8DM7uui5BGlY1aplKfiamE2C
+ 7PjvC49H0qIGtG/Zk01y8vKmIbyjj
+X-Google-Smtp-Source: AGHT+IGw6p11153tnDLuGERn2nTAmlDbO9rlSwGmt5UqE7ZeoeFHoXPbCHjexU3BtIB0HgBE46aMBQ==
+X-Received: by 2002:a05:600c:34d4:b0:43d:412e:8a81 with SMTP id
+ 5b1f17b1804b1-442fd67180bmr33321985e9.28.1747407601364; 
+ Fri, 16 May 2025 08:00:01 -0700 (PDT)
+Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a35ca88899sm3042526f8f.80.2025.05.16.08.00.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 May 2025 08:00:00 -0700 (PDT)
+Message-ID: <d5dbb421-83bc-4ac9-9a88-953ec0f97735@linaro.org>
+Date: Fri, 16 May 2025 16:00:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] hw/microblaze: Remove the big-endian variants of
+ ml605 and xlnx-zynqmp-pmu
+To: Thomas Huth <thuth@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250515132019.569365-1-thuth@redhat.com>
+ <20250515132019.569365-4-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250515132019.569365-4-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v7q0bocp.fsf@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,92 +102,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 16, 2025 at 04:51:34PM +0200, Cornelia Huck wrote:
-> On Wed, May 14 2025, Daniel P. Berrangé <berrange@redhat.com> wrote:
+On 15/5/25 15:20, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> > On Wed, May 14, 2025 at 05:36:58PM +0200, Cornelia Huck wrote:
-> >> On Tue, May 13 2025, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >> 
-> >> > On Mon, Apr 14, 2025 at 06:38:47PM +0200, Cornelia Huck wrote:
-> >> >> From: Eric Auger <eric.auger@redhat.com>
-> >> >> 
-> >> >> If the interface for writable ID registers is available, expose uint64
-> >> >> SYSREG properties for writable ID reg fields exposed by the host
-> >> >> kernel. Properties are named  SYSREG_<REG>_<FIELD> with REG and FIELD
-> >> >> being those used  in linux arch/arm64/tools/sysreg. This done by
-> >> >> matching the writable fields retrieved from the host kernel against the
-> >> >> generated description of sysregs.
-> >> >> 
-> >> >> An example of invocation is:
-> >> >> -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
-> >> >> which sets DP field of ID_AA64ISAR0_EL1 to 0.
-> >> >
-> >> > For the value you are illustrating 0x0 - is this implying that
-> >> > all the flags take an arbitrary integer hex value ?
-> >> >
-> >> > This would be different from x86, where CPU feature flags are
-> >> > a boolean on/off state.
-> >> 
-> >> Most of the fields are 4 bits, the allowed values vary (there are also
-> >> some fields that are single bits, or wider.) The FEAT_xxx values (which
-> >> can be expressed via ID register fields, or a combination thereof) are
-> >> mostly boolean, but there are also some of them that can take values.
-> >> 
-> >> We could cook up pseudo-features that are always on/off, but I don't
-> >> like that approach: they would be QEMU only, whereas the ID register
-> >> fields and FEAT_xxx features are all defined in the Arm documentation.
-> >
-> > Fortunately from a libvirt POV we can likely expand our config
-> > to cope with hex values for arm features without too much
-> > trouble.
-> >
-> >> 
-> >> An additional difference from x86 would be that FEAT_xxx featues are not
-> >> neccessarily configurable (only if the host kernel supports changing the
-> >> ID register field(s) backing the feature.)
-> >
-> > Is the kernel able to tell us which ones are configurable and which
-> > are not ? If so, it'd be helpful to expose this info in QAPI some
-> > place.
+> Both machines were added with little-endian in mind only (the
+> "endianness" CPU property was hard-wired to "true", see commits
+> 133d23b3ad1 and a88bbb006a52), so the variants that showed up
+> on the big endian target likely never worked. We deprecated these
+> non-working machine variants two releases ago, and so far nobody
+> complained, so it should be fine now to disable them. Hard-wire
+> the machines to little endian now.
 > 
-> The kernel can tell us which ID register fields are writable (we won't
-> generate properties if we don't.) For FEAT_xxx, this depends on how
-> we'll end up handling them (maybe we should only expose them if all ID
-> register bits backing them are actually writable.)
-> 
-> What worries me a bit is that QEMU exposing a certain set of FEAT_xxx
-> values could be interpreted as "those features are present, any other
-> features aren't", while it is only the list of configurable features.
-> 
-> Another issue: If libvirt is trying to baseline two cpus, it might end
-> up creating a model that looks sane on paper, but migrations will fail
-> because there are differences in non-writable bits. It would be much
-> better if libvirt could detect beforehand that there was no common
-> determinator. Not yet sure how to handle this.
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   docs/about/deprecated.rst           |  6 ------
+>   docs/about/removed-features.rst     |  9 +++++++++
+>   hw/microblaze/petalogix_ml605_mmu.c | 15 ++++-----------
+>   hw/microblaze/xlnx-zynqmp-pmu.c     |  7 +------
+>   4 files changed, 14 insertions(+), 23 deletions(-)
 
-For "host" model that's probably not the end of the world. Apps have
-already given up strong guarantee of migration compat by using 'host'
-CPU and so in that context libvirt's feature comparison can assume
-the underlying silicon is a match and just compare features.
+\o/
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-In that sense the ability to list features and baseline two cpus
-lets you guarantee that whatever CPU you boot the guest on, will
-have at least those requested features. That's useful, even if it
-does not give you a strong migration compat guarantee.
+I won't be able to look at the rest of this series until in 10 days,
+feel free to merge if necessary.
 
-Doing better would require info on non-writable features, and
-possibly even that might not be sufficient to guarantee compat
+Thanks!
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Phil.
 
