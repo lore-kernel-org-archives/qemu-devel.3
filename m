@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E611C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 141C9C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFw9C-0002TS-3t; Fri, 16 May 2025 10:34:50 -0400
+	id 1uFwCw-0003qu-2t; Fri, 16 May 2025 10:38:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFw9A-0002TF-Ur
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:34:49 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwCs-0003qI-1c
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:38:38 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFw98-0000TW-VS
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:34:48 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-22e09f57ed4so35873665ad.0
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 07:34:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwCp-000197-JG
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:38:37 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-441d1ed82faso16459215e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 07:38:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747406085; x=1748010885; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1747406314; x=1748011114; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TEnEGcFi6VPQs60U9lEm0a9bREKnRuuGtjuuvtkqe7E=;
- b=VjdAdl1CeH4r7TY95RQTwQU0Y4hP14Bs6bRaMsOdnZcalgZaGKV36WOoScn23R5s0P
- z3F7aQvBOkhE2s+4jraDWtW5C+Fpurpt28WGRq/4S/XWfVdIyrmKYIo4Y/WLO/sr3D2F
- CGoFclvtVhoocQ2SFFwlJRZHRTH+uTgdrd04kwpqZvU6RfxIuHUHr1BWRZ7CsHHhtDJh
- hNNtJ7NvGQ4+aUfwS9ZtKNch7bLp57tnWECk14EwlhZLkYXORlWBYSDqxkJ3AB9WTA0h
- m+YKECbPoFqxv1ImA5jfGJ5hZGJM6Rub7/hTamVf+08Z9z8luC/ZlDVxTOHy6yYXNXad
- +ZGA==
+ bh=F0CjMs1XSYy24otmuCyLRNbjIt9s0zQtbEQl74Ak5Wc=;
+ b=aMa1+ym2jttEY0N32hXXvJXmBKwNQbUKh3Il7UZ1Btqoy/2xLoEQDyOmsgFPTmuhH1
+ GE73ycuzbtXtz5+pkN7g5kucF/nj6NNCsuBxpdNsYo5iQTRXXrcH3dzNetbdMGq0IPlA
+ CM8a/b1rqfaxxpogRjmAHB+6lBhdWubDNxpDdE/cIRvIm+XrSUKXTdV72ZK5jJpNhYdB
+ uDj8pO6lbaC1dXUAkMZKKvVpse5Owr3UCTw2+KylJUAEvLGmo/vNMh2Mil+rZlpeHgy0
+ 3PbobXH3NkzoreeIYcP08l5nASD1EY2sw2XWJhJlDmyGu9utgy08V3jDo5LhnXvzobxN
+ 2cpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747406085; x=1748010885;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1747406314; x=1748011114;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TEnEGcFi6VPQs60U9lEm0a9bREKnRuuGtjuuvtkqe7E=;
- b=JXSqF4thiJuePIUnKZyPa/Pgte29CmaohNvBjxpx5LenegHhUrlhm2PvB2H8Y4E7xF
- nea7OISIWqmFRvi4ukvlKAIA+HagBDGFIdFQb0yGyQx5kA/mQzKjvfQkeNHbs7QFU2Yr
- 1dYGhTgXeZ4GhlH+N6wluwou9msvXo6bL+H3aQcAjPWvmhF3+ARVGCTo4GosDysy2fkC
- IBc/jHTWP1eDtfyIGJuHcPsPLorcZRQiai0bTMGlx1OzHNTDCJ8uXiMp84sdxq3X2PhT
- zRTeF7Bz7vHs/0v8ubMxl/kF+qQooY5YbZOuV/PQxFq9rQAwDhnk9ybTt2VWtFEEVH4Q
- xKLA==
+ bh=F0CjMs1XSYy24otmuCyLRNbjIt9s0zQtbEQl74Ak5Wc=;
+ b=CFkaZ+D/wSRoqMAUKm5CY8PDebUTiJ3x2NAAtwHkRIwVURmPggGyAge3b9erjNzU8/
+ rtEvN0279qjABkUJyHvAlhEx0kQlduBDdDpve64uNkvUB8dCGlwr7mqClxThSXqFE6fK
+ /4IPjCMORsVkmdG00F75bgTSzguu9MvCNs82pLPsPdbTBLi72icFvhb8B7MBP9Ki5TXs
+ 6sYvN2D5R3K48pmmVa0GDSvIQ/cGkGKTi3hZf9zRzGtZQHSmmQ5KUgSo+rMn2w+wsmmw
+ kuk/g9zmKLhhRTUtLY1bZCZzpUYK2jlrIeGlmA0EgwTZF/oLwCNuveART13721R+FWHq
+ c0BQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWddsAAH1+wOHu3khD8gykwSYok7VbteqFsDOb659cbmKkb7HjDmCecPAcfZUhMtcfC1WdQf6IYUrY2@nongnu.org
-X-Gm-Message-State: AOJu0Yym5z/4vPgBeZN+lKCY8yTKXXTkKldis1yq0OwuJO7GmmpYgAbU
- bHIx3OkZNJ8useGlFLpcXrFpiLYUep/m5mbXS35se8CCSo9a07DKX13RKGf1eaVXBOo=
-X-Gm-Gg: ASbGncviGP7Zaijlqmxs76sE5TVQ6Siz/E+jDjN/ncuO23pNoma/5QKl5obU6dPR1ML
- kc6fsZum89z7xPpZJ9gD/Az0wVAioepwvD8yEMxMy2XxTnxHt7w/QT0o23mvo0OV13lPN/9oCx4
- APzsWYYcb9IBNLg+YfqckmQM+R7oqqHrB/28cZ2cwgZKBfZAjJV8eNuuVHoj9C3ay5VN/A2TcuF
- BBOQA6hevewhcXqsmM9ceZtJKKYAyzltF7DICzwds9jXJWbHt79l89MVHM6swcS1+VJoeaAJMSn
- CwOG0ktOAfXZV7AJf9fm+idXLaS3OgVdR4pOeD5swjlrssdQpI27OT9pudZielQC
-X-Google-Smtp-Source: AGHT+IG7aWRCeI66acbu/I0HNU7HUWA+PW3yfNIN+4y6fno/TCBNw+kZYhiVOSwkWgNl4UAai1NMgA==
-X-Received: by 2002:a17:902:bb86:b0:231:b7e1:c96f with SMTP id
- d9443c01a7336-231b7e1e718mr57195745ad.18.1747406085303; 
- Fri, 16 May 2025 07:34:45 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCWDpwu5RVa9Q/69X3epREbd1SUQNRNr+jZrTSnW17hyt5IikA7IAipPnhWq3O9yxNjxSIeStw3qF21Y@nongnu.org
+X-Gm-Message-State: AOJu0YyVa6XSUDUtBOQ8Ym6/4BSUoPoO6lpzkENTg/pDcA6LapOUOcu1
+ 8i+xzJpCw7weggQDw5prLg+x1/W5vPjiX7Msp94kGtZuor9Vc6Kkb9iF0wqkI45lmHM=
+X-Gm-Gg: ASbGncuPp1K0XEriXR4EllnHF7eBvVsXxtDaOrQw6Q1sMSX7fwrADSlK9r/iV/KLVFl
+ O+hZGA0t5YPe1AzQnVaucK4nC45TED4JnbpqCaIceAUk2OsZ0PqxwlhcMkS7ehUq2iuS1/4JN1P
+ qiOwdrkZxntzFbRiknA6qc7jzB5gK7Z+QexV/5AN/uhQvB26qV2sPqTAcTDe9aAvTu+w8iCUT1r
+ MfGwKfvcwJAFIyRIWqmkpGJdwADa1X0h5peeBVzn+u7W/of8WCnADFTmjcRB2KUmjwqHEjCyZDQ
+ TaJNpGxrIsvp3A/yP0Lv6pDi1pOPPyQCCta5mP1z0Tppi5iXtYHJGND4WWJ8H2MN3/bggun8RZI
+ GjcERztq3Kvlw
+X-Google-Smtp-Source: AGHT+IHYgidxJSgEmTkTik7MSSRLzRG8LbaiQR/hDnoSUsnF6WcD60Q5Fs2DiwoJmeBqUgAR6NGYoQ==
+X-Received: by 2002:a05:600c:548e:b0:442:dc6f:7a21 with SMTP id
+ 5b1f17b1804b1-442fefd5f18mr34247895e9.3.1747406313669; 
+ Fri, 16 May 2025 07:38:33 -0700 (PDT)
+Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4eba4b1sm14978365ad.168.2025.05.16.07.34.44
+ 5b1f17b1804b1-442fd516a51sm36118515e9.24.2025.05.16.07.38.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 07:34:44 -0700 (PDT)
-Message-ID: <287ce150-750f-4b04-99fc-a3cb3ca5c3de@linaro.org>
-Date: Fri, 16 May 2025 07:34:44 -0700
+ Fri, 16 May 2025 07:38:33 -0700 (PDT)
+Message-ID: <e10a625b-31d2-4759-b775-9b7d8409de53@linaro.org>
+Date: Fri, 16 May 2025 15:38:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] meson: build target libraries with common dependencies
+Subject: Re: [PATCH v3 2/2] hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ suravee.suthikulpanit@amd.com, alejandro.j.jimenez@oracle.com,
+ joao.m.martins@oracle.com, Vasant Hegde <vasant.hegde@amd.com>
+References: <20250516100535.4980-1-sarunkod@amd.com>
+ <20250516100535.4980-3-sarunkod@amd.com>
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, berrange@redhat.com, thuth@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
- <20250516052708.930928-2-pierrick.bouvier@linaro.org>
- <8e6cdcb9-24f8-4762-831b-ce57f6e81b20@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <8e6cdcb9-24f8-4762-831b-ce57f6e81b20@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250516100535.4980-3-sarunkod@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,33 +105,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/16/25 4:42 AM, Philippe Mathieu-Daudé wrote:
-> On 16/5/25 07:27, Pierrick Bouvier wrote:
->> As mentioned in 20250513115637.184940-1-thuth@redhat.com, dependencies
+Hi,
+
+On 16/5/25 12:05, Sairaj Kodilkar wrote:
+> From: Vasant Hegde <vasant.hegde@amd.com>
 > 
-> Use LORE link instead?
-> https://lore.kernel.org/qemu-devel/20250513115637.184940-1-thuth@redhat.com/
->
-
-Yes, thanks.
-
->> were missing when compiling per target libraries, thus breaking
->> compilation on certain host systems.
->>
->> We now explicitely add common dependencies to those libraries, so it
+> If vCPUs > 255 then x86 common code (x86_cpus_init()) call kvm_enable_x2apic().
+> But if vCPUs <= 255 then the common code won't calls kvm_enable_x2apic().
 > 
-> "explicitly"?
->
-
-I'll fix it, thanks.
-
->> solves the problem.
->>
+> This is because commit 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM
+> checks on XTSup feature") removed the call to kvm_enable_x2apic when xtsup
+> is "on", which break things when guest is booted with x2apic mode and
+> there are <= 255 vCPUs.
 > 
-> Should we use the following tag?
+> Fix this by adding back kvm_enable_x2apic() call when xtsup=on.
 > 
-> Fixes: 6f4e8a92bbd ("hw/arm: make most of the compilation units common")
->
+> Fixes: 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM checks on XTSup feature")
+> Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> Tested-by: Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: Joao Martins <joao.m.martins@oracle.com>
+> Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+> ---
+>   hw/i386/amd_iommu.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index df8ba5d39ada..af85706b8a0d 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -1649,6 +1649,14 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+>           exit(EXIT_FAILURE);
+>       }
+>   
+> +    if (s->xtsup) {
 
-Yes, it makes sense. I'll add it!
+I suppose we need:
+
+        if (s->xtsup && kvm_enabled()) {
+
+otherwise that will trigger back the problem I tried to fix.
+Did you try building QEMU with KVM disabled?
+
+> +        if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
+> +            error_report("AMD IOMMU xtsup=on requires x2APIC support on "
+> +                          "the KVM side");
+> +            exit(EXIT_FAILURE);
+> +        }
+> +    }
+> +
+>       pci_setup_iommu(bus, &amdvi_iommu_ops, s);
+>       amdvi_init(s);
+>   }
+
 
