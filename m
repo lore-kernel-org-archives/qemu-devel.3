@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AE81C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 00:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D0C2C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 00:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFihC-0003fx-GX; Thu, 15 May 2025 20:13:02 -0400
+	id 1uFijl-0005S4-Vy; Thu, 15 May 2025 20:15:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uFihA-0003fO-7u; Thu, 15 May 2025 20:13:00 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1uFije-0005Qa-P0; Thu, 15 May 2025 20:15:34 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uFih4-00036u-5u; Thu, 15 May 2025 20:12:59 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-22e4d235811so19864095ad.2; 
- Thu, 15 May 2025 17:12:53 -0700 (PDT)
+ id 1uFijc-0003P6-RG; Thu, 15 May 2025 20:15:34 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-74264d1832eso2120499b3a.0; 
+ Thu, 15 May 2025 17:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747354372; x=1747959172; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=gmail.com; s=20230601; t=1747354531; x=1747959331; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UtAYeWwMzpy6VBiwNE8IVzaiDEUE3QtioC9gTZqKReQ=;
- b=ID16oo+Bml5psw40V3JaCZcLOG4nnBxp5uI6umkRSItwOv6waX84VQdAd0+u7m/Jwr
- wYvJOg95aeQPIVl2NFqJ3M1KzC9dAgKHSTrkJSDPwib8OhdahuxWfNdAgzkB0xn4t/kV
- EMn1xoTUdwEhE+Z4072qQmwrF4yr15c+U0iwElpC3bgVTI6F7I2kcKw6UFaifBWMpQwE
- h8Q+5x0Zf4Cvyz0Kr4xpy9i8TzD1AlBkOF8O+8FsSnZtDWoh7sjZCyPI4w/QuqlV3CA/
- f4+x/xhp6ISVIDmx4ulAcg7U12wPnSlcwZqzmdmA1wYY6E6bFhTeZ9Qe4DfFBbm2MmPt
- d3MA==
+ bh=2tXq37WJ2NYbiXeqNu8LviZUJ1fe9pNWi2RNotunKkA=;
+ b=EB0SXup8GKzEqBgaSqQSEjaY2v3/hsOX3Bot3y/kyEEXHz+YKZvdwxNam5ynD8/q12
+ mUUv5o0vS0jxx6tUqJ2ZaxY9Rbf+V2g3zylSSvpQkOnDScXtdWbw1KCck7Wu/MJ2SAA/
+ Y4RlYQ9XxjgXcVEc7DsfcIPse+u0UNuvxgIT5fgsEdE8+htTqw0TMrFOqShOGFhX6rUO
+ x8xUpuPXoV1psxUoA7xPVZXx3XaIJqWrhM52UygQziC2ZyeJ8IJhvlLZpi4zLPX7pSxV
+ Af82mdBId4yRNaG3GrAy9d/9EC2+1XB6mOjyP5aR4cXnBY5VjqfvzxSEwc1E5pVN+Taj
+ 2Awg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747354372; x=1747959172;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=1e100.net; s=20230601; t=1747354531; x=1747959331;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=UtAYeWwMzpy6VBiwNE8IVzaiDEUE3QtioC9gTZqKReQ=;
- b=Qn1FaBDSiV6OetYLOArvynSWAiQ3B0mcDi39NBMVE230UwK6ev6W3DwDwUcNsEMsFY
- oNH8jaCr57MsvS18DQdJ1iSTn3tAG0xI5GoUdthKXDIczgwljN2E1K62vjGyBBFM7nrm
- lgGAM/g1/Onk69vlI9ANDYTKciLokU4s9fJiT9M1UC+44X0DDA1Ai9AwTU59duAn/xox
- PBnUTsHal/Swgs5/sWAT2mUvysf/6O+nx68BGFDyqvPqV2doUDyMc2ffkH1OfnXTFEYD
- eFWxU4DvZcH0tmvmHVeLI0cz1xcuwwcKeedULXQ9ckjD3RrGk98KgFzpxKdxBKz9/NHH
- BmgQ==
+ bh=2tXq37WJ2NYbiXeqNu8LviZUJ1fe9pNWi2RNotunKkA=;
+ b=LHgiD7DZk0/YtCvb8I8ymqulFxD23d0OOPa0kYwQXLkpxECtkJpRFFVGduoNKDWNCV
+ QfEzPY2KF0XrYbCdVcbBoJvT8ZawtAxYID9MhPQoRdjyz6tfcreFxHyZtTOpAMp8JVwU
+ KX8M4PIGmh4gjN2jpFk/oJYo4LltOwx4+SWIAOR5di6yA7CtM67LPnYCPphviO+uibXL
+ 5qkaeGg1Z78MUvKBCqv1RorkrJENVGiQB/5N63plXjuuLCSX9IPYPlkMEVnFjvA6ME1J
+ mG/Oa5LopItATpSsIa8ht7hoOK0NkH46NtRyhwyKVRjHrchOvA96q7YWD9tt4q+2R3HZ
+ AHkw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWPtfrUAveubENKXIWPkW/WFzOwnqiRZs82muiWNMXU+OBgMk99Q5QQjdWECEvfm7BVsjmtAnH9Nw==@nongnu.org
-X-Gm-Message-State: AOJu0Ywx74mgO/ecSFtrV342JICw6kwBX20nrQSBW4NcRMWiHldRYwX/
- VrmEgvCOim54QtZwxY5pebKxEBwQsmTSofop/MV9TRvn9YQu40nK8miA
-X-Gm-Gg: ASbGncvHvI8LCaBoITWNA0g4ZH4SrY5iYJ9qxA7AQFQSy8Vh+zPxLUAcuv0heJGbX4Q
- 20+8q+CGVGQGaz19FwUtLQhTQd61omxMWsZXTS8LuI1eoCSYWpb2Hc3yaeOIeXjKTViYqjpINCL
- i9hK9TY2COJzSqXjlZlfQEbQ+sebUGAtFs2wuQzzs4Dj3U5dyQbWsOy+hek0ZtRXnx0f2uuvNRt
- Kfb222XjZozh451UdKTOQhpvWAeqTC2yRgW4xlIEFpzjJhMqzItbxRUEGgVJhebtVEFvYKt8N5j
- High+8id8PcoIbbQEHvBWrYPj8Riz3fn73WzWLClB3q/rSA=
-X-Google-Smtp-Source: AGHT+IESOQz/6mEhUiUW+4ka3xhr3WApHW/SAH6IDiF+dCV+eYPFVoS+0EJ5IV4qkTBffqyO1J7sEw==
-X-Received: by 2002:a17:903:28c:b0:22e:4cab:f786 with SMTP id
- d9443c01a7336-231d43a7f8fmr15383375ad.18.1747354371675; 
- Thu, 15 May 2025 17:12:51 -0700 (PDT)
+ AJvYcCXQTGynTUBn+nWJ5m7LZYfGeGXnKE+byUdy8qfJtevp8ImYN+Btss5IOsBK6S9WPiXUPxTMTfy8Cg==@nongnu.org
+X-Gm-Message-State: AOJu0Yz8orDpKqIwMe2BRFZeCvWIa3AjbIS0SJdvPQtjaw7ai1BfTA32
+ y/y2YW+AoUt+S2+fwhdBQb8GW53Xx07GbW1s+szwfBjE8OcSF7SqCCso
+X-Gm-Gg: ASbGncs8rZ8qC9c6iX4veAKixMpvQJrEI5vklfUlYVPGU9/0jDInYNqcoJmBqE6Hokc
+ HXJ0vOWZpak3E4zwcRxs7tUJx5UTvgLANicpfERmzMNkr1chKEP4PJZ7nUhJZZIzMNe9uY+fjtW
+ 310EfbPlPpmSt1C3/d9O5VpOHnohkNjedaHQslvvJhsqXSWmfzT2oB/OX78yccNMcRzWBmQjiDD
+ SjJMeAp0S9XVUuYvURKH7DALRaNMPhVVH65kBnXsFB4vJMYfEFc9PJOS7HBVW9ipFwJqNR1ZDFW
+ WiepH0EmhgmLmuX2X/5wSrs4NbYsW+WD2xUY57InnuCUwsU=
+X-Google-Smtp-Source: AGHT+IECj2OWt1Suk3ssre6Vvs1+tT2GPu8m+9Kh5n0wThhRvPLFaNqrCIxOX9WUKSDBGsQd3JsraQ==
+X-Received: by 2002:a05:6a21:6d82:b0:215:dbb0:2a85 with SMTP id
+ adf61e73a8af0-2162166420cmr1611673637.0.1747354530834; 
+ Thu, 15 May 2025 17:15:30 -0700 (PDT)
 Received: from localhost ([118.209.229.237]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4e97db8sm3458455ad.110.2025.05.15.17.12.48
+ 41be03b00d2f7-b26eb0a9893sm473842a12.72.2025.05.15.17.15.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 May 2025 17:12:51 -0700 (PDT)
+ Thu, 15 May 2025 17:15:30 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 16 May 2025 10:12:45 +1000
-Message-Id: <D9X5FDZ917LB.1HYODTEUEB7LH@gmail.com>
-Subject: Re: [PATCH 08/50] ppc/xive2: Use fair irq target search algorithm
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Nicholas Piggin" <npiggin@gmail.com>, <qemu-ppc@nongnu.org>
+Date: Fri, 16 May 2025 10:15:25 +1000
+Message-Id: <D9X5HF9BNKZC.1AETY0CDNWTAF@gmail.com>
 Cc: <qemu-devel@nongnu.org>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
  <fbarrat@linux.ibm.com>, "Glenn Miles" <milesg@linux.ibm.com>, "Michael
  Kowal" <kowal@linux.ibm.com>, "Caleb Schlossin" <calebs@linux.vnet.ibm.com>
+Subject: Re: [PATCH 10/50] ppc/xive2: Fix treatment of PIPR in CPPR update
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Nicholas Piggin" <npiggin@gmail.com>, <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.19.0
 References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-9-npiggin@gmail.com>
-In-Reply-To: <20250512031100.439842-9-npiggin@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
+ <20250512031100.439842-11-npiggin@gmail.com>
+In-Reply-To: <20250512031100.439842-11-npiggin@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,77 +104,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon May 12, 2025 at 1:10 PM AEST, Nicholas Piggin wrote:
 > From: Glenn Miles <milesg@linux.ibm.com>
 >
-> The current xive algorithm for finding a matching group vCPU
-> target always uses the first vCPU found.  And, since it always
-> starts the search with thread 0 of a core, thread 0 is almost
-> always used to handle group interrupts.  This can lead to additional
-> interrupt latency and poor performance for interrupt intensive
-> work loads.
+> According to the XIVE spec, updating the CPPR should also update the
+> PIPR. The final value of the PIPR depends on other factors, but it
+> should never be set to a value that is above the CPPR.
 >
-> Changing this to use a simple round-robin algorithm for deciding which
-> thread number to use when starting a search, which leads to a more
-> distributed use of threads for handling group interrupts.
+> Also added support for redistributing an active group interrupt when it
+> is precluded as a result of changing the CPPR value.
 >
+> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
 
-Does hardware always do the "histogram" distribution? I wonder if
-there would be any performance benefit to do something like send
-to an idle thread/core with preference. I guess the xive controller
-might have a difficult time querying the state of a bunch of cores
-before sending so it's probably not practical for real hardware.
-
-In any case this is a nice improvement for group delivery.
+The second paragraph in there I believe was my fault when splitting
+the patch into this one and the previous. I will remove the second
+paragraph from this changelog and with that,
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-> [npiggin: Also round-robin among threads, not just cores]
-> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
 > ---
->  hw/intc/pnv_xive2.c | 18 ++++++++++++++++--
->  1 file changed, 16 insertions(+), 2 deletions(-)
+>  hw/intc/xive2.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index 72cdf0f20c..d7ca97ecbb 100644
-> --- a/hw/intc/pnv_xive2.c
-> +++ b/hw/intc/pnv_xive2.c
-> @@ -643,13 +643,18 @@ static int pnv_xive2_match_nvt(XivePresenter *xptr,=
- uint8_t format,
->      int i, j;
->      bool gen1_tima_os =3D
->          xive->cq_regs[CQ_XIVE_CFG >> 3] & CQ_XIVE_CFG_GEN1_TIMA_OS;
-> +    static int next_start_core;
-> +    static int next_start_thread;
-> +    int start_core =3D next_start_core;
-> +    int start_thread =3D next_start_thread;
-> =20
->      for (i =3D 0; i < chip->nr_cores; i++) {
-> -        PnvCore *pc =3D chip->cores[i];
-> +        PnvCore *pc =3D chip->cores[(i + start_core) % chip->nr_cores];
->          CPUCore *cc =3D CPU_CORE(pc);
-> =20
->          for (j =3D 0; j < cc->nr_threads; j++) {
-> -            PowerPCCPU *cpu =3D pc->threads[j];
-> +            /* Start search for match with different thread each call */
-> +            PowerPCCPU *cpu =3D pc->threads[(j + start_thread) % cc->nr_=
-threads];
->              XiveTCTX *tctx;
->              int ring;
-> =20
-> @@ -694,6 +699,15 @@ static int pnv_xive2_match_nvt(XivePresenter *xptr, =
-uint8_t format,
->                      if (!match->tctx) {
->                          match->ring =3D ring;
->                          match->tctx =3D tctx;
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index 2b4d0f51be..1971c05fa1 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -995,7 +995,9 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8=
+_t ring, uint8_t cppr)
+>              }
+>          }
+>      }
+> -    regs[TM_PIPR] =3D pipr_min;
 > +
-> +                        next_start_thread =3D j + start_thread + 1;
-> +                        if (next_start_thread >=3D cc->nr_threads) {
-> +                            next_start_thread =3D 0;
-> +                            next_start_core =3D i + start_core + 1;
-> +                            if (next_start_core >=3D chip->nr_cores) {
-> +                                next_start_core =3D 0;
-> +                            }
-> +                        }
->                      }
->                      count++;
->                  }
+> +    /* PIPR should not be set to a value greater than CPPR */
+> +    regs[TM_PIPR] =3D (pipr_min > cppr) ? cppr : pipr_min;
+> =20
+>      rc =3D xive2_tctx_get_nvp_indexes(tctx, ring_min, &nvp_blk, &nvp_idx=
+);
+>      if (rc) {
 
 
