@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F64C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 05:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDA78C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 05:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFnbO-0006Fw-J3; Fri, 16 May 2025 01:27:22 -0400
+	id 1uFnbR-0006HX-EL; Fri, 16 May 2025 01:27:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFnbM-0006D5-OI
- for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:20 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1uFnbO-0006GF-Qs
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:22 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uFnbL-0001Mb-4a
- for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:20 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-af51596da56so1281229a12.0
- for <qemu-devel@nongnu.org>; Thu, 15 May 2025 22:27:18 -0700 (PDT)
+ id 1uFnbN-0001Mn-E5
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 01:27:22 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-23198fcdeb0so16710435ad.2
+ for <qemu-devel@nongnu.org>; Thu, 15 May 2025 22:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747373238; x=1747978038; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747373239; x=1747978039; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kEF4F6w/QQ4yK0T92qmZBuHANuJnFGe0fNZ2771Yy/Q=;
- b=rVa5Mla92LYkP8LjojtiTtRaSW0X/c6swHheVMT456CGqntskJvoWTj659jPQR3RZS
- vy5XgqD1XnrswYhAO8OVmGEoyJLFBFdVHywREcMNCpBmuuyjwGFXQYib2N7Pv4Ehe5qq
- Sa3mf4A55DjJMjE+7FUVTaoldpKxkYqUC8/W9yP+ikL5yzHAgfS2rZWBg4BdT5TKS+tG
- HHJd1OCxqobSKzFlkBPrstjzPIec2l0zIFyQrwq/o3rV2Hg626EbsAA9A+2rdffh0ng5
- uNqAOG+E4J15CneeLO85XKG0WUlWrs3EHe+DpixTbNdGffDp0f6v20kMZc0fO1fNHKDz
- PJcw==
+ bh=dU3iAcSQrpRQtiTX04EuYFPrLnsx+BhMT5SxU3B5tJI=;
+ b=P3DH1mixMNf1IpGmQEV6E5ztBn3TKr61GoD3e4IEVmKeQLnyGpc0vpPPiOR8TX5JIB
+ uErv0FiANSpvBJpk/wLq6+uIvGtR/XaimM8yussrzNWpouxrVNtlKazBes0i0jDoIfTj
+ G78DI7DGaR1Jf3ao1Xfq0ZWc/udOz7etZ2K3fKssGk1INVt8HO5mh2ie0i/7KPQQfPR6
+ rxiOXzLEBIftsCTQdCsp2HC5QkXJMUPHZKV2JPm2+hKVpRzwHn5TT1roi0IJ24urkdg0
+ lORYwOKDTc56eYp0u3TByyE0EAD6scesrGYG9KxeNGeJhHgomyq9+Ymddkd1lschowW2
+ Wzog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747373238; x=1747978038;
+ d=1e100.net; s=20230601; t=1747373240; x=1747978040;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kEF4F6w/QQ4yK0T92qmZBuHANuJnFGe0fNZ2771Yy/Q=;
- b=fASfMrgWDURzVRQn+s02t3JjVa0U5aZC1RrKpnlJz7/g4ofcnYY9e1KICs8vQjR1BU
- FjFILRA+EH7jKwIwQDY/ICkrortXrmPOICM08fICZMJ7kh+ZFnLeOrLj4uke7+08k7PA
- EWRZoo/55tHsUr02F9wuw/Ui0pK+rBufJNxvSScl25/oMmW31GYPL7wvCODqeOGSMOb/
- VOUVMPdd2J//eAIhjs6VWFxcRdlHaNsuNqZfoyi2Futq9PUt3HWmzb9xRxwaeuYO8Jhl
- ed8HK7clKzA/vUkUGZvJ5IBthDG2T/kQqj0RgjeYCLfVX5A21z7n6bs44/PcB6EzyUN6
- RFhg==
-X-Gm-Message-State: AOJu0YzRzw6dcwu5YdrrrqgRngaf4NWRD0O+B+0l7ngeCavCBSwZVV54
- 8PFHftqQH/dfo0HBixrHfeiPSWK5o9oW4zyKgiHzcJ6mMVuYCRNjFwI1ffJbQG0wV4Cp54lOPSj
- R+tCT
-X-Gm-Gg: ASbGncsG6w0LwYKXO2tmGrNMfILxSukEGuJRMcnDIEivEUEZvMXW4FkVppnrYNYRW9R
- nQ1RcaY7LWmZHIwlWYjcVTXOZg2/YSp4drqsTilhZRpMJ9OxRZsHW3HyULkxyVvbztJuo3/mb2u
- GE+k+OQB0JLQXhMQkodChspdq9k7FJqcXXAzR/CRZpqDzUxKbm/5J3iN6lddBAKE/QyNDzOAzmf
- Ts87TXWkS9AE0DXNmXS8XXcIifQY2pz8WH5U+yTnxMVdZApIuL8P7CPf4nS0l1mVdIjO7n/L20N
- st+fmmsUM6ih9mKEiwgLGFTegtskVOelVFV9Xcz7/IyhG0enyAQ=
-X-Google-Smtp-Source: AGHT+IGPEveysat8bzRiYMukNhUVqpew1Z/2O4CApz/R//sdjAbc7lwW4sgret2LPc/WaP0OW/Xr2A==
-X-Received: by 2002:a17:902:d4d1:b0:224:721:ed9 with SMTP id
- d9443c01a7336-231d45ab656mr29851825ad.44.1747373237831; 
- Thu, 15 May 2025 22:27:17 -0700 (PDT)
+ bh=dU3iAcSQrpRQtiTX04EuYFPrLnsx+BhMT5SxU3B5tJI=;
+ b=sVmPqR5lFy6eQ2ux0/xpqcWSO30Wex96p066h30BlTI6SO3iE3YttyC7smwFUJFzOG
+ Yk8ihJhpaK+lPuRG8GuIrsAUvpUsVmtxZRlX6++RrDYBmADdF/CYE32m8neq72UK5VP5
+ gZ3rx6+0p03Z4yeTiG1o5RTLXYCwEsTPeM5IYbsX1Hf/Rdt9VQn8peg6g7H1wOULJlL/
+ XF838SrsQ0k3I3JCzIBHw2lGsykoIx2/gogeO9fOG2e0P2UIAlky+8lYZIxQCwFQ3SsZ
+ taLMfvuHE2Bys1YlImLATG1AY3V82B5oYv/VrM1h2ddFenRBY6aSnUSnn/KfPVAb+RHF
+ hlgQ==
+X-Gm-Message-State: AOJu0YwbY1M1kfJWop887Gotn3QxOUNNKuo7237OJy8ohFwaCNbIZpP2
+ Sw9QUQoqE444D4QU4/pTAxYcYzPFd0KoiMxI8fik5MPNYh+PUKuLgWO6xTQ4g0JcUhzTJyXq+0a
+ +uVi0
+X-Gm-Gg: ASbGncspRrE40+SRdeZUjsFFm4n164PQdRZ9GqEE7JR1mISZB9C3f3CFDSCUOOC+Mx9
+ txL2n808YULV2HhGXkUmflNPClRxvWExrG3gdp5XvcQrXIIwikJN5D7gvyuKPbKJqldK1jaBmb4
+ iYLodFeYx7onh9wq+2ka8/pEp0Bi4gtZJFnyITD3N1/ou/o3OKlTw6n3NDyZ5GP1uLdXKmC1TeA
+ 99ntpG2rO0e002lGKte377R8B04v831GCNuGONL9Nu5+x+mLeL/hpfwI0SazvCPPoiD5IBnrFtb
+ FE3O/yonQkNcfThZt7yUB/s0j0/Up3tS3zqrLUyPGxV+RfVMjBa8aT/usbL63Q==
+X-Google-Smtp-Source: AGHT+IHlsntQRTzA6tNyetMsEEPrx3HoRDbc/aJ2UJGnQ6Br4wobIo8ayTB1XmOqMa5qL8Ouear3PQ==
+X-Received: by 2002:a17:902:e80c:b0:224:78e:4eb4 with SMTP id
+ d9443c01a7336-231d45a9c3cmr24389565ad.39.1747373239691; 
+ Thu, 15 May 2025 22:27:19 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ebabfesm6539135ad.174.2025.05.15.22.27.16
+ d9443c01a7336-231d4ebabfesm6539135ad.174.2025.05.15.22.27.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 May 2025 22:27:17 -0700 (PDT)
+ Thu, 15 May 2025 22:27:19 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -72,16 +72,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 1/6] meson: build target libraries with common dependencies
-Date: Thu, 15 May 2025 22:27:03 -0700
-Message-ID: <20250516052708.930928-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH 3/6] target/arm: remove explicit dependencies listed
+Date: Thu, 15 May 2025 22:27:05 -0700
+Message-ID: <20250516052708.930928-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
 References: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,89 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As mentioned in 20250513115637.184940-1-thuth@redhat.com, dependencies
-were missing when compiling per target libraries, thus breaking
-compilation on certain host systems.
-
-We now explicitely add common dependencies to those libraries, so it
-solves the problem.
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ target/arm/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 49c8b0e5f6a..197fdc1c210 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3259,6 +3259,7 @@ config_devices_mak_list = []
- config_devices_h = {}
- config_target_h = {}
- config_target_mak = {}
-+config_base_arch_mak = {}
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index b404fa54863..2ff7ed6e98f 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -28,7 +28,7 @@ arm_user_ss.add(files(
+   'vfp_fpscr.c',
+ ))
  
- disassemblers = {
-   'alpha' : ['CONFIG_ALPHA_DIS'],
-@@ -3451,6 +3452,11 @@ foreach target : target_dirs
-     config_all_devices += config_devices
-   endif
-   config_target_mak += {target: config_target}
-+
-+  # build a merged config for all targets with the same TARGET_BASE_ARCH
-+  target_base_arch = config_target['TARGET_BASE_ARCH']
-+  config_base_arch = config_base_arch_mak.get(target_base_arch, {}) + config_target
-+  config_base_arch_mak += {target_base_arch: config_base_arch}
- endforeach
- target_dirs = actual_target_dirs
- 
-@@ -4131,12 +4137,17 @@ common_all = static_library('common',
- hw_common_arch_libs = {}
- target_common_arch_libs = {}
- target_common_system_arch_libs = {}
--foreach target : target_dirs
-+foreach target_base_arch, config_base_arch : config_base_arch_mak
-   config_target = config_target_mak[target]
--  target_base_arch = config_target['TARGET_BASE_ARCH']
-   target_inc = [include_directories('target' / target_base_arch)]
-   inc = [common_user_inc + target_inc]
- 
-+  target_common = common_ss.apply(config_target, strict: false)
-+  common_deps = []
-+  foreach dep: target_common.dependencies()
-+    common_deps += dep.partial_dependency(compile_args: true, includes: true)
-+  endforeach
-+
-   # prevent common code to access cpu compile time definition,
-   # but still allow access to cpu.h
-   target_c_args = ['-DCPU_DEFS_H']
-@@ -4151,7 +4162,7 @@ foreach target : target_dirs
-         sources: src.all_sources() + genh,
-         include_directories: inc,
-         c_args: target_system_c_args,
--        dependencies: src.all_dependencies())
-+        dependencies: src.all_dependencies() + common_deps)
-       hw_common_arch_libs += {target_base_arch: lib}
-     endif
-   endif
-@@ -4165,7 +4176,7 @@ foreach target : target_dirs
-         sources: src.all_sources() + genh,
-         include_directories: inc,
-         c_args: target_c_args,
--        dependencies: src.all_dependencies())
-+        dependencies: src.all_dependencies() + common_deps)
-       target_common_arch_libs += {target_base_arch: lib}
-     endif
-   endif
-@@ -4179,7 +4190,7 @@ foreach target : target_dirs
-         sources: src.all_sources() + genh,
-         include_directories: inc,
-         c_args: target_system_c_args,
--        dependencies: src.all_dependencies())
-+        dependencies: src.all_dependencies() + common_deps)
-       target_common_system_arch_libs += {target_base_arch: lib}
-     endif
-   endif
+-arm_common_system_ss.add(files('cpu.c'), capstone)
++arm_common_system_ss.add(files('cpu.c'))
+ arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
+   'cpu32-stubs.c'))
+ arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
 -- 
 2.47.2
 
