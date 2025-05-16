@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27CEDC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 11:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C1E7C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 11:43:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFtOD-0007Kt-CQ; Fri, 16 May 2025 07:38:09 -0400
+	id 1uFtSs-0003HO-JY; Fri, 16 May 2025 07:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFtOA-0007K6-OV
- for qemu-devel@nongnu.org; Fri, 16 May 2025 07:38:07 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFtSk-0003FC-8j
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 07:42:52 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFtO8-00015P-8e
- for qemu-devel@nongnu.org; Fri, 16 May 2025 07:38:06 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-441d437cfaaso11829405e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 04:38:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFtSf-0001X9-1V
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 07:42:47 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3a36463b9cbso33263f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 04:42:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747395481; x=1748000281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747395760; x=1748000560; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xZiL7C8ZZIe5yuMZECibEb9dEBxmu+cL20UcsLUd9p8=;
- b=xd6bnWnxbn7i8N0WbrT0fG29BpjHFLyJrEHYHPY/S+vSMcwI+ucn3usb6XcNt4DWBZ
- HlOf2Z5ShlgKZ95q1i9weHK1u5lJ3hP/dRZMh8ccMOdlciRBwXkwHTEU7Nf1r0FprtMO
- z/d0z3AgwK0lrwIT+jZngK+R/blWFzeD9kG2/lnfMEtWoYzfaubaklA83lGQSyyZ8L/k
- 2QxyjVN+RnFsXHVaNB9isMgKyCCpuBT4SY8Sbwli8glz/UzmFlWu7H/1WGvf0nS0hpYX
- PEbATF/WyCFZbUIOAliLbO5dXJ0S0pT+8d7W41BzRKDqz+kjBaBeN3626wLK2c3S/El4
- pcvQ==
+ bh=oHgtgWwRsR5xgsu0fuFKQp4h9kkDSHIsf/e1rlAxcs0=;
+ b=o+gBshDk8PoZLOfDa6h1xGEofbJYENJqAcmZsRq3RfEOHYPG1n9cQcgoxxynjEpyuc
+ kniK9uBnnV65r5q9J9oeVS9Ox6DCmeXN7hEiX3pQ1yyUvH/j9C4Y7R0KHmQrXMcfnFyp
+ KO39NgKf0xo1VlTx/WdutC3qzM1UaNGeYefwhlYAe8zPkH2dJAjXRlBKiiMdcmsTTt6O
+ DLrkSjyPD/j1HIeEhLWMhQJvSS2gk20VpIW67vxKlNttQicIqJjpSQciRFHijdY9Sm++
+ Pt9VTVV35W6/nA27KnqzO16rm9bGW0MKkNsJC8Bdpk0Hn35gJJqaWOqNW5AVU8PHQ2S6
+ iC1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747395481; x=1748000281;
+ d=1e100.net; s=20230601; t=1747395760; x=1748000560;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xZiL7C8ZZIe5yuMZECibEb9dEBxmu+cL20UcsLUd9p8=;
- b=uI+kHw0hk/aEAifxYoerbnrtYVv8uyV3NmY/aPIKJR2/MtHUhX1DCPJpjojLdgiVY1
- vO0xnVWbm0wLF32GVO/m5bW2d2yvKwSdXXMXHtNJoeT6fAAK9g9jS1Ij9OK0pO7QoAjl
- 5ovT676If6PW69bc/vqaMHywIYKY/TbBntmKtbJ+oLMhCyiTlc9PZt0t8Z0J3UsIU5Pi
- OJvBmDt9axueiui07h0rLCvH43tmn6tdkc22KNbWS3CvsGxGswNXyHLveHRpm2fCWrvM
- GwqXD3WAewF7b/YjUssFba1W/Flmfmwa4R0VvDaNIFKJgeHAI83E/SUJvYDR7ozMNNN+
- 8GFg==
-X-Gm-Message-State: AOJu0YyFMV2F/w5zw+qXu/WfA2gimhTPBos74US8ZHLuuYXYcGOF1bg9
- LocIoq0VVU8qq34VcbwVUfFNyOEq/vQOZW5QyYw95AFC1p831y6m4fV6i7y3DImugg4=
-X-Gm-Gg: ASbGncun8FhnNhum5aK9/JLl9Bt49bM1UzC+0+K99DTAVhh88XSB00rl/jj8V75wb8o
- YGyDXa1nFuAc283fq5x4BAfj52m4hKSqkjxLXehxFK6tNTcsNBAT1JE6jhSK9hVfqRt93lNQ3Em
- 7KUUaO/27eKSgAnf3qdT7m0x9MsjMoiJPFQUfP33I+bDK7XRPpMVRfnZSKSCsI7EPxLEpIrL69N
- lAo2sJWUd7uyyxURqzOh+KpG9wTEcOFGpTtrBQ7o2jtlHKKsPfEaZu1fuDV8KgNT293U1mzHVNP
- zam0xMk/lSVUiuGwFMCDrjfFbh9oTXOAMxIWB9orB1ObkO1581accI617VxFuSWFFjlRFA9OFHZ
- 6BYZirDm1hN8I
-X-Google-Smtp-Source: AGHT+IEt++IYfAwAgy/p0mGCIpiGVu6ZbdEkhIRUNlQI7QE7w9hTaADhSZmeDAsJShw4CODCsY8X3g==
-X-Received: by 2002:a05:600c:1c86:b0:440:6a37:be0d with SMTP id
- 5b1f17b1804b1-442feff8596mr23249605e9.15.1747395481000; 
- Fri, 16 May 2025 04:38:01 -0700 (PDT)
+ bh=oHgtgWwRsR5xgsu0fuFKQp4h9kkDSHIsf/e1rlAxcs0=;
+ b=a+YDjjLG/cy2hFZgyjqK5Zu3WKkpTVxbsyIQNiVbxMBgzT6HNQHALMwcQ32xgV9/7l
+ ZWAP0KDXJYJkX/eB+kB2PvopJU0yaLbb8acfkFV4t04g/gnDMxcH/Ml8L2YkaCiM8Ci3
+ 8RcIh/eSHAkPp+pVWv+m+KuLV1SX87LD0ymU7tlLRyksUr9dbtCCXn7MlwNHj6aJlcbl
+ vLi4i4mjlg12Dkk89Gvosc+kfBs/McPxQ9tszPNKJJBY4CL+2TVYIU69XDWWu8oxBlZu
+ FHXODF1mLmD7qvl9W8xeuZtRAuqYe9PZDpvfk1EVhAizOxsoBx9R/nz9dSRI5pCzRIZI
+ +LRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3+a69U6HLNWbjzWoecpXnoK538xzikvtQgOcCvb2v02dyrbJnvTr4CDG6Jt3cMY7cd+dFxi/SZCfE@nongnu.org
+X-Gm-Message-State: AOJu0YyfyeDAFXgBsFtgpBVvFbDMr8mNPBdb1+eHhXahjSX2HC+MWig0
+ htsxwJ4JI+W/wNg957qmi9zg3G0ydm63LeSrxS8FaXIyENi9zdc6Ii6PzF+IrE1onDE=
+X-Gm-Gg: ASbGncvBC3q+l+I2SkC+0jk7M7EZWwW2CQxJjUYQARSU80EYJIAoDe7fLQFs1ygsyBw
+ u1jUznbjEugARGd4H3YmCgw04iUnxQfbnUxEVBKB6MGQrKR+IK2xfJhaivNYSKgvQXRgHW349C4
+ wwzrxAhHG40NBRrqOYFmfjyr+KEzk5pncDTfyVc695xm+BRhSK0cxNNMUl7cCwGKVoiM5s0bE+N
+ ysEgvNkAq4HUZ7kdawngCIUQXQwcxQ4W7NfZi5BK4lDg396tVnL741Itr4e+zgELSNDI7wI0DRE
+ NjBOPs/QX40FZP1TPteqNs9WnvoSzZaEr+pxA19MS/wFXqwBs4pghyx7YMirNtUbJ7FCotLUdAw
+ vuVANjBrYaN1g
+X-Google-Smtp-Source: AGHT+IEx/y+Ws6moW6Tw0zr7OkYfNQAGZAFW4VoGZDhnhUZ//8Wr72A4Igz4LO2TJ9ULhMZPkE1Mzw==
+X-Received: by 2002:adf:e80e:0:b0:3a3:5cca:a53b with SMTP id
+ ffacd0b85a97d-3a35ccaa776mr2525538f8f.48.1747395759625; 
+ Fri, 16 May 2025 04:42:39 -0700 (PDT)
 Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f33690f0sm102074085e9.1.2025.05.16.04.38.00
+ ffacd0b85a97d-3a35ca888fcsm2661900f8f.78.2025.05.16.04.42.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 04:38:00 -0700 (PDT)
-Message-ID: <ecde12de-3e81-4d81-839c-7e97b6a2f668@linaro.org>
-Date: Fri, 16 May 2025 12:37:59 +0100
+ Fri, 16 May 2025 04:42:39 -0700 (PDT)
+Message-ID: <8e6cdcb9-24f8-4762-831b-ce57f6e81b20@linaro.org>
+Date: Fri, 16 May 2025 12:42:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/intc/arm_gic: introduce a first-cpu-index property
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, edgar.iglesias@gmail.com,
- alistair@alistair23.me, Frederic Konrad <konrad.frederic@yahoo.fr>
-References: <20250513141448.297946-1-chigot@adacore.com>
- <20250513141448.297946-3-chigot@adacore.com>
- <3314f721-9c5e-479b-9fcc-3b8a021efde9@linaro.org>
- <CAJ307EjyFBDLMe6EaeNUTWSwNTkSxSYJq5VxAD5u0BwZVu4Fqw@mail.gmail.com>
+Subject: Re: [PATCH 1/6] meson: build target libraries with common dependencies
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, berrange@redhat.com, thuth@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
+ <20250516052708.930928-2-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJ307EjyFBDLMe6EaeNUTWSwNTkSxSYJq5VxAD5u0BwZVu4Fqw@mail.gmail.com>
+In-Reply-To: <20250516052708.930928-2-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,83 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Clément,
+On 16/5/25 07:27, Pierrick Bouvier wrote:
+> As mentioned in 20250513115637.184940-1-thuth@redhat.com, dependencies
 
-On 14/5/25 14:41, Clément Chigot wrote:
-> On Tue, May 13, 2025 at 5:39 PM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> On 13/5/25 16:14, Clément Chigot wrote:
->>> From: Frederic Konrad <konrad.frederic@yahoo.fr>
->>>
->>> This introduces a first-cpu-index property to the arm-gic, as some SOCs
->>> could have two separate GIC (ie: the zynqmp).
->>>
->>> Signed-off-by: Clément Chigot <chigot@adacore.com>
->>> ---
->>>    hw/intc/arm_gic.c                | 2 +-
->>>    hw/intc/arm_gic_common.c         | 1 +
->>>    include/hw/intc/arm_gic_common.h | 2 ++
->>>    3 files changed, 4 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
->>> index d18bef40fc..899f133363 100644
->>> --- a/hw/intc/arm_gic.c
->>> +++ b/hw/intc/arm_gic.c
->>> @@ -59,7 +59,7 @@ static const uint8_t gic_id_gicv2[] = {
->>>    static inline int gic_get_current_cpu(GICState *s)
->>>    {
->>>        if (!qtest_enabled() && s->num_cpu > 1) {
->>> -        return current_cpu->cpu_index;
->>> +        return current_cpu->cpu_index - s->first_cpu_index;
->>
->> Note, CPUState::cpu_index is meant for accelerators code and shouldn't
->> be used in hw/ (in particular because it vary when using hotplug).
+Use LORE link instead?
+https://lore.kernel.org/qemu-devel/20250513115637.184940-1-thuth@redhat.com/
+
+> were missing when compiling per target libraries, thus breaking
+> compilation on certain host systems.
 > 
-> Is there another way to perform that then ? As you can see `cpu_index`
-> is already present prior to my patch. I don't mind improving it as a
-> prerequisite for that series though.
+> We now explicitely add common dependencies to those libraries, so it
 
-Yeah it is a pre-existing design issue, I was just thinking loudly,
-no need to worry for your use: if we ever clean it, we'll also
-clean here.
+"explicitly"?
 
+> solves the problem.
 > 
->>>        }
->>>        return 0;
->>>    }
->>> diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
->>> index 0f0c48d89a..ed5be05645 100644
->>> --- a/hw/intc/arm_gic_common.c
->>> +++ b/hw/intc/arm_gic_common.c
->>> @@ -350,6 +350,7 @@ static void arm_gic_common_linux_init(ARMLinuxBootIf *obj,
->>>
->>>    static const Property arm_gic_common_properties[] = {
->>>        DEFINE_PROP_UINT32("num-cpu", GICState, num_cpu, 1),
->>> +    DEFINE_PROP_UINT32("first-cpu-index", GICState, first_cpu_index, 0),
->>>        DEFINE_PROP_UINT32("num-irq", GICState, num_irq, 32),
->>>        /* Revision can be 1 or 2 for GIC architecture specification
->>>         * versions 1 or 2, or 0 to indicate the legacy 11MPCore GIC.
->>> diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
->>> index 97fea4102d..93a3cc2bf8 100644
->>> --- a/include/hw/intc/arm_gic_common.h
->>> +++ b/include/hw/intc/arm_gic_common.h
->>> @@ -129,6 +129,8 @@ struct GICState {
->>>        uint32_t num_lrs;
->>>
->>>        uint32_t num_cpu;
->>> +    /* cpu_index of the first CPU, attached to this GIC.  */
->>> +    uint32_t first_cpu_index;
->>>
->>>        MemoryRegion iomem; /* Distributor */
->>>        /* This is just so we can have an opaque pointer which identifies
->>
->> Alternative series motivated to remove &first_cpu / qemu_get_cpu():
->> https://lore.kernel.org/qemu-devel/20231212162935.42910-1-philmd@linaro.org/
 
-(Just an observation, not an objection to this simple work-around).
+Should we use the following tag?
 
-Regards,
+Fixes: 6f4e8a92bbd ("hw/arm: make most of the compilation units common")
 
-Phil.
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   meson.build | 21 ++++++++++++++++-----
+>   1 file changed, 16 insertions(+), 5 deletions(-)
+
 
