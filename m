@@ -4,91 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC781C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 09:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1DAC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 10:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFrma-00011x-2g; Fri, 16 May 2025 05:55:12 -0400
+	id 1uFrxN-0007lU-1R; Fri, 16 May 2025 06:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uFrmW-0000zq-TD
- for qemu-devel@nongnu.org; Fri, 16 May 2025 05:55:09 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uFrmU-0005iG-Bo
- for qemu-devel@nongnu.org; Fri, 16 May 2025 05:55:08 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-442ea341570so12181925e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 02:55:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747389303; x=1747994103; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CSgqKzvi7C1rLa9QXmxg/eY5WB2iA6wXC36TIRo8uYE=;
- b=u0QYAu7xYff4GGPW9oQGOrI7j1j5zMSXJ0UNkfpWBIlI1+oPm71wN1REY0tQExTzDq
- C+HyW1Zac25AX2p0FMWrHLBDKwpdh1/BLrZSGTFsfDkRMhuMZ6gsuqfTgzY022c7XBPc
- 0iF8AxvsZEmsZZ5+xeHhkeFg7sfjgkMw+Q0+0OD1uOTVLoGtN04INrLvjUgx7yHgWEsg
- ZhckxPfPp1J6a01We1qBwDCw5PMiMSzNB6bFZmD4GAGrL9UBAq8G2H4gJLPQxPJj/uI4
- 0497D3TlcdSSOnGm9w61rGwCSFbmE8L0CUpqgeQsS3+X+M5XVZlu++A51GCaqmxV/qiB
- J/ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747389303; x=1747994103;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CSgqKzvi7C1rLa9QXmxg/eY5WB2iA6wXC36TIRo8uYE=;
- b=NXRzYK7IhZqCT+WHHxT34yqdYjS3TQHJ2k9igreShm5YvSy4PEsKqep66E/TSiu53m
- IdW5y5Kzlv92PH5bp+Nc0dq3kI3NGZXjxDrU3E9unSp6dhSXTk7du3p3YTJchsQ4PdKd
- /gN+zqzDcB0UN5Ru0jRP97Bk+4IH9FWK4qfFJ9DK8i9jmqGk/6vH1GdgPFYS0gI5+RZu
- l1LLI2/wzLFt3J5c2QZNQJTrZq2FmuxxUVtsZaCR/9NhUbxue8gh4CNgryzTnjvZRVO1
- rKY2FoG9PbJ8MHFFvebaZdINrSNdFB+DgNlo+6PHBrRNj5i4V6nI247VAqkkJ0NFDsO4
- 6ukg==
-X-Gm-Message-State: AOJu0YxAaFxHyXOpRt4K3B226a2VTvD1yFCBbdYg53qwJSGSHM3jIlab
- HkpaF4sX0gqd4cAGEknN9OcXYaNuoMoJPMd7YU1fW6E77QHnmWX5UZmlKsP0elhKqug=
-X-Gm-Gg: ASbGncu5mnCI+0OSpH25H3Uf0F8I/rDAXS8RvmcmGEFGDARUh+l4pBw4mZPGCJ8Wm+m
- l5HvQnbF7MFFCNGhQkZ2zWPRCuKGY2IUrkH0v0JWo5oJVgioCRKLU9rZceBYFokqaoxCJ16ALYG
- 4R3PKpRlBtsU2TBEnkzw6ddW1spCrHV4bb3LfHlMdAB81vvMoo20a+w4c870nM7DXS7BgHbI6Id
- jc+4ghmasmctnZbil4yZbDwtQNRrzXafvRMEsO4k69ik/k1gX60Ur5tvbxqnA7aoK58pBpb5u93
- 3QR45bbDWOXMIVUBY9KGj0GQ547I6nJ3Y6Ykhus0+jdHxDJYcFcddA==
-X-Google-Smtp-Source: AGHT+IGkUChnq9paTdqeucrzsXFWkH8ybDz4b0hQ7NKqmOe87/cfZFQv212iMD4euRYHumZNA9CFlw==
-X-Received: by 2002:a05:600c:3b86:b0:43b:ce36:7574 with SMTP id
- 5b1f17b1804b1-442fefefcfcmr13356785e9.11.1747389303594; 
- Fri, 16 May 2025 02:55:03 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442fd59700asm28828285e9.34.2025.05.16.02.55.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 May 2025 02:55:03 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 33BA55F904;
- Fri, 16 May 2025 10:55:02 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org,  thuth@redhat.com,  berrange@redhat.com,
- eric.auger@redhat.com,  philmd@linaro.org,  peter.maydell@linaro.org,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH v4] tests/functional: Add PCI hotplug test for aarch64
-In-Reply-To: <20250512144629.182340-1-gustavo.romero@linaro.org> (Gustavo
- Romero's message of "Mon, 12 May 2025 15:45:45 +0100")
-References: <20250512144629.182340-1-gustavo.romero@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Fri, 16 May 2025 10:55:02 +0100
-Message-ID: <87frh4yj61.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1uFrxA-0007l4-Rk
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 06:06:09 -0400
+Received: from mail-dm6nam11on20604.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::604]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1uFrx5-0006sF-V5
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 06:06:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xPwG5G5+SaBCD2A5IQhC4Wm48a5MKEpCb8XU3LBm44i2lOK0Aqgz3EwF6Ekc4rls4UQQDO8aRJhwWzFd9LSYr6KIBf3txoE+KHeStzaI4VqQH9OvtAqvTkW5z2zPBJEtWywXn13aM0ODMMiK2Q2VoUmQ3EG7jdB2XIy9/Ug9C8NWdeByKO/gL9rqYTvgr/zvT0KNecjC8fk7ZNgwK01TsWusCxZQ/hk58SOlrR4XgJLs86RPsJBMnz6wglDL789Dshr3E5CfPsgzd/KRo5Q/IrNGTmCHmxjK/0DQ6EdRsRHIge0Mcd6TGvrJmHQT/CJKhGB40YGOJibBnB9fmpujzg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DlZSp5WBVPfAc5mXHgsIDBui1zYGPfeL4bRztPR1jDU=;
+ b=KpwIufy+NZrgsx90cQt2uQygNfMsGAYqE9JuU2Q7IpLI4Q3sD7gjm4hxTWuLesLKC7S/6z/wTyNrwq5pa3XGyjvZh1rhABqMy9mcIpLFgPBG7ASpYRdTLhiTE9sozliQBF2mYSoh1cUX+YO/2Z37jM0KIZ/eBwDONoRatvFsdBoJx3nRrAZBtPkxp2qiWZMmbpDQzFFqqUXOM1L+8WmkSRy1+SJLdFSyJ8lluhNsarKO0EYqz8IahUzJ6n3gLmo3tO7HvYN5kCME0tPQS2ChmlNvBpBHNlc9P37JpAi17bbXsnGBUIEcx+JMheh18CcmI9DMF3x4DKEA9di7l1FuEw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DlZSp5WBVPfAc5mXHgsIDBui1zYGPfeL4bRztPR1jDU=;
+ b=k93NrrVJj60aA8QoT+aAecqKPmK0yNwfyuJiirJ8Ey+UKvb77ymVRgUvDZngrZ/OwHw9E2dGTiNNZCVGjwhtZvDl+S3aNMVhoj6X9R25C8IWkesyo6Z7G7YXxHAuDzCpcc7+b44KG9m2DtHdywvLvnjpWnn+ik9iix6ZR5OemRE=
+Received: from BY5PR17CA0027.namprd17.prod.outlook.com (2603:10b6:a03:1b8::40)
+ by CY8PR12MB7361.namprd12.prod.outlook.com (2603:10b6:930:53::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Fri, 16 May
+ 2025 10:05:57 +0000
+Received: from BY1PEPF0001AE19.namprd04.prod.outlook.com
+ (2603:10b6:a03:1b8:cafe::f7) by BY5PR17CA0027.outlook.office365.com
+ (2603:10b6:a03:1b8::40) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8699.33 via Frontend Transport; Fri,
+ 16 May 2025 10:05:57 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BY1PEPF0001AE19.mail.protection.outlook.com (10.167.242.101) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8722.18 via Frontend Transport; Fri, 16 May 2025 10:05:57 +0000
+Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 16 May
+ 2025 05:05:52 -0500
+From: Sairaj Kodilkar <sarunkod@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
+ <richard.henderson@linaro.org>, <eduardo@habkost.net>,
+ <suravee.suthikulpanit@amd.com>, <alejandro.j.jimenez@oracle.com>,
+ <joao.m.martins@oracle.com>, <sarunkod@amd.com>
+Subject: [PATCH v3 0/2] amd_iommu: Fixes
+Date: Fri, 16 May 2025 15:35:33 +0530
+Message-ID: <20250516100535.4980-1-sarunkod@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE19:EE_|CY8PR12MB7361:EE_
+X-MS-Office365-Filtering-Correlation-Id: 775c26c0-27ab-4132-0d3a-08dd946140ca
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|82310400026|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?cGFIQkZqNkRMOFlaVVpZSUx3d2hNZnJUNFZPclFKSGd3WlpycWpPa0dJa3RC?=
+ =?utf-8?B?WUVJbDRiRHhsa3ZTaXJDL3k5bVpkZ2JrUis5Mk5kNWtxMHlYMVl5OXNZc0NH?=
+ =?utf-8?B?anQ0WStxbHpMdDA3cTdHZENXT3RiZVVxRzhnUVhFV0ltYlhwcFZ5WElFYlNJ?=
+ =?utf-8?B?TWltbzJLTlBnSDlPblRjWlc0eU8wc3RPT1hIVU5WVEJGemYraUxDZG1CRHFk?=
+ =?utf-8?B?ZHp2RDh1TVdkWDRBdkxQeCtGVnZ2c2RiNmlFdExUK01uSEZuZm1ZR1ZzczdS?=
+ =?utf-8?B?LytLRkMxaGg0MWQ5VmtyNEJLZnBweGNyam5tZVdvREVOZmZVeUYzcFlFMFE1?=
+ =?utf-8?B?cndBN2lvZDcwRWM0QmRJeTk5ZDF5VzNOSTVzc05nNWI3NGNmNk16MFZHaFFF?=
+ =?utf-8?B?U3V6enlHK0NxalQyVEdwL0UycFBnVURBeDFYb0xDUCs2TzlzdHBEeDg5MWRV?=
+ =?utf-8?B?WHVDanZvdXR6WXdNM3RKVVo4V2N1aTVmUy9WckdBMXZmdFRzcWp1dHZwOGtR?=
+ =?utf-8?B?Q2xjVTRWRFBWRXJKLysxK084M3FTSjlMeVVjK3hKKzQ3RjJpa0FVait5cG5x?=
+ =?utf-8?B?Q1IvZTYwTktYMDRVOEFZdFoxRkxIa3Bvb0F1TlFlcDJVVnozbXI1cktYN1BG?=
+ =?utf-8?B?OE41ZklCSWN1eWF0cDVBQjRMcGpwV1V4RzNyWmhKR1lYdWlidjRUTk9JL0Mz?=
+ =?utf-8?B?VEhUYjhvSTFJbS9BelRUeUphRVdwMmhabTNIc0Y1NU9OQzM5WEtiTUxMeWhJ?=
+ =?utf-8?B?UGNJUklNY3VQSUJiQ29BWDRvSktpa3lDZGY0c1lSUzRRM1RINGxrN0xhL1My?=
+ =?utf-8?B?NkgvVnlhZnNpcTR3MzBtY2JhVjkrb2RxUjFOZStFVmQ2c2dxUFcyL0N3Q1Jt?=
+ =?utf-8?B?UGt3YmxzTUF2Yi9wWjdlZVR0V1JHRUNPclhlYmlJbXdsbFE0dEV1K2l1RENK?=
+ =?utf-8?B?YUdOazloak5WdUNqUHpOR2xMNG9rdVlzbnFyL0tIeDJGVTRlc2ZsNVA1L2hu?=
+ =?utf-8?B?V1dQYTRYbEJ6M0ZJU0J1cThLOVJzZHd3bFVYbDNNYy9lUHdZalg0MWVFTHdM?=
+ =?utf-8?B?d2RMRW1XUkwzZjZ3RThGYmhpdjV2bzlxT3dxQVlBa00wNmIvbk93ZENmaS9S?=
+ =?utf-8?B?bFFmZWFPRitDMzNKbFNlUkFRWmMwUUFNOVRhS0NCQU5QdUFodDF3SVFxQTZk?=
+ =?utf-8?B?V2ZWSlUrc29LUE1keGlUUmlpMy9RWWdsRm1xTjlIbVpicS92U1puYmx5YzZS?=
+ =?utf-8?B?RTB2NHpYUzFlb0RmUFlNRTkyaVgzdEJZVmNvS3FyQXlsb0VuV2YvVkNSTHV6?=
+ =?utf-8?B?SDdrT08rZjd2R3IzTVVZQkMzSGppK3AwaHN2WGxISXcyYTdjNmhLa3RIOEo3?=
+ =?utf-8?B?MW9rcE05ZWRrSDIra3Jsc2MxUFRtY1I1UjZJU2YrL0tWTTFUM1NqdG5Cc2lZ?=
+ =?utf-8?B?Z29lS3JVS3lIUytEcnZGQ1pCY2ZMMGNDYTNjSHdRN3Y5VDJhWUkyQ0lOaFJ3?=
+ =?utf-8?B?OGxPbkN0Rk5KdStVakEyQUFNalJZNnpJbjBPRWJpYlhnLzljc01GRmNuZFpO?=
+ =?utf-8?B?Q1hRSXFrN3pranl3cDNlRnNNc3I3dmpDWHFZbDNSa2EvVFpQTmFkb1Rjejdo?=
+ =?utf-8?B?TCtDZW9YTW81Qk1KK0NnTEZJTkkvVDhTZVc2SjVFMWJFSnlKb3JkRmR0Tkdi?=
+ =?utf-8?B?MmJxSitKRTBqeVVSalEwVGRoNXZLL0c1SWhmdmNsTWkwMm0yTFRtdW1rRUhW?=
+ =?utf-8?B?dVVjZ3Evak03UmFrTlRqUUFjV2ZlVU5VbHpoYmVpRDY5Z0hwWHcyemF0Z3Mv?=
+ =?utf-8?B?LythZndtcmVCZnlMcWZyeUtVMHNzbTFucnNZVCtTbEdXcG9wVXVhRjhSWFJz?=
+ =?utf-8?B?eU9SNGVGMGFjclpsQVdnRVBFdzU0U3NsaEtpVm5aNmpQcEs0TFZldjJhZ0hL?=
+ =?utf-8?B?alRXdlZYQ2xjMDEvVUdTVjVtTldWSlBjV1gzK0QwbVRlYlo1bnlvWHh4d2Jy?=
+ =?utf-8?B?UTN1YVlDVXU3dHp3ajd5dG1YWDE4WlhRRjNWQVlWV0c0aC9rRGZMbzlVZGxR?=
+ =?utf-8?Q?A3Zivv?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2025 10:05:57.4934 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 775c26c0-27ab-4132-0d3a-08dd946140ca
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF0001AE19.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7361
+Received-SPF: permerror client-ip=2a01:111:f403:2415::604;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,141 +158,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
+Fix following two issues in the amd viommu
+1. The guest fails to setup the passthrough device when for following setup
+   because amd iommu enables the no DMA memory region even when guest is 
+   using DMA remapping mode.
 
-> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
-> hot-unplug on arm64.
+    -device amd-iommu,intremap=on,xtsup=on,pt=on \
+    -device vfio-pci,host=<DEVID> \
 
-Queued to maintainer/may-2025, thanks.
+    and guest forcing DMA remap mode e.g. 'iommu.passthrough=0'
 
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  MAINTAINERS                                  |  5 ++
->  tests/functional/meson.build                 |  1 +
->  tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
->  3 files changed, 80 insertions(+)
->  create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 23174b4ca7..9ebb768214 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2065,6 +2065,11 @@ S: Supported
->  F: include/hw/pci/pcie_doe.h
->  F: hw/pci/pcie_doe.c
->=20=20
-> +ARM PCI Hotplug
-> +M: Gustavo Romero <gustavo.romero@linaro.org>
-> +S: Supported
-> +F: tests/functional/test_aarch64_hotplug_pci.py
-> +
->  ACPI/SMBIOS
->  M: Michael S. Tsirkin <mst@redhat.com>
->  M: Igor Mammedov <imammedo@redhat.com>
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 52b4706cfe..2d68840fa2 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -83,6 +83,7 @@ tests_aarch64_system_quick =3D [
->  tests_aarch64_system_thorough =3D [
->    'aarch64_aspeed_ast2700',
->    'aarch64_aspeed_ast2700fc',
-> +  'aarch64_hotplug_pci',
->    'aarch64_imx8mp_evk',
->    'aarch64_raspi3',
->    'aarch64_raspi4',
-> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functio=
-nal/test_aarch64_hotplug_pci.py
-> new file mode 100755
-> index 0000000000..fa1bb62c8f
-> --- /dev/null
-> +++ b/tests/functional/test_aarch64_hotplug_pci.py
-> @@ -0,0 +1,74 @@
-> +#!/usr/bin/env python3
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +#
-> +# The test hotplugs a PCI device and checks it on a Linux guest.
-> +#
-> +# Copyright (c) 2025 Linaro Ltd.
-> +#
-> +# Author:
-> +#  Gustavo Romero <gustavo.romero@linaro.org>
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2 or
-> +# later.  See the COPYING file in the top-level directory.
-> +
-> +from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_=
-pattern
-> +from qemu_test import BUILD_DIR
-> +
-> +class HotplugPCI(LinuxKernelTest):
-> +
-> +    ASSET_KERNEL =3D Asset(
-> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
-4/'
-> +         'current/images/netboot/debian-installer/arm64/linux'),
-> +        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b=
-2')
-> +
-> +    ASSET_INITRD =3D Asset(
-> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
-4/'
-> +         'current/images/netboot/debian-installer/arm64/initrd.gz'),
-> +        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b=
-4')
-> +
-> +    def test_hotplug_pci(self):
-> +
-> +        self.set_machine('virt')
-> +        self.vm.add_args('-m', '512M')
-> +        self.vm.add_args('-cpu', 'cortex-a57')
-> +        self.vm.add_args('-append',
-> +                         'console=3DttyAMA0,115200 init=3D/bin/sh')
-> +        self.vm.add_args('-device',
-> +                         'pcie-root-port,bus=3Dpcie.0,chassis=3D1,slot=
-=3D1,id=3Dpcie.1')
-> +        self.vm.add_args('-bios', self.build_file('pc-bios',
-> +                                                  'edk2-aarch64-code.fd'=
-))
-> +
-> +        # BusyBox prompt
-> +        prompt =3D "~ #"
-> +        self.launch_kernel(self.ASSET_KERNEL.fetch(),
-> +                           self.ASSET_INITRD.fetch(),
-> +                           wait_for=3Dprompt)
-> +
-> +        # Check for initial state: 2 network adapters, lo and enp0s1.
-> +        exec_command_and_wait_for_pattern(self,
-> +                                          'ls -l /sys/class/net | wc -l',
-> +                                          '2')
-> +
-> +        # Hotplug one network adapter to the root port, i.e. pcie.1 bus.
-> +        self.vm.cmd('device_add',
-> +                    driver=3D'virtio-net-pci',
-> +                    bus=3D'pcie.1',
-> +                    addr=3D0,
-> +                    id=3D'na')
-> +        # Wait for the kernel to recognize the new device.
-> +        self.wait_for_console_pattern('virtio-pci')
-> +        self.wait_for_console_pattern('virtio_net')
-> +
-> +        # Check if there is a new network adapter.
-> +        exec_command_and_wait_for_pattern(self,
-> +                                          'ls -l /sys/class/net | wc -l',
-> +                                          '3')
-> +
-> +        self.vm.cmd('device_del', id=3D'na')
-> +        exec_command_and_wait_for_pattern(self,
-> +                                          'ls -l /sys/class/net | wc -l',
-> +                                          '2')
-> +
-> +if __name__ =3D=3D '__main__':
-> +    LinuxKernelTest.main()
+    which will cause failures from QEMU:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+    qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
+    qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
+    qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
+    qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
+    qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
+
+
+2. The guest fails to boot with xtsup=on and <= 255 vCPUs, because amd_iommu
+   does not enable x2apic mode.
+
+base commit 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365 (v10.0.0-rc3)
+
+Sairaj Kodilkar (1):
+  hw/i386/amd_iommu: Fix device setup failure when PT is on.
+
+Vasant Hegde (1):
+  hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+
+ hw/i386/amd_iommu.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+-- 
+2.34.1
+
 
