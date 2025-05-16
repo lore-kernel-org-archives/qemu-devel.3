@@ -4,99 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F184C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 12:59:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3202DC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 13:04:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFueF-000613-K2; Fri, 16 May 2025 08:58:47 -0400
+	id 1uFujF-0007Zu-JP; Fri, 16 May 2025 09:03:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uFue5-0005zz-11
- for qemu-devel@nongnu.org; Fri, 16 May 2025 08:58:37 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <oenhan@gmail.com>)
+ id 1uFujD-0007ZN-LM; Fri, 16 May 2025 09:03:55 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uFue1-0001CS-Gr
- for qemu-devel@nongnu.org; Fri, 16 May 2025 08:58:36 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-742af84818cso355959b3a.1
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 05:58:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <oenhan@gmail.com>)
+ id 1uFujB-0001lf-LJ; Fri, 16 May 2025 09:03:55 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3081f72c271so1817310a91.0; 
+ Fri, 16 May 2025 06:03:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747400311; x=1748005111;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=b8s+JtZ932CtugIN22jXC5Ai3CgCrddx5V3y9bkGGic=;
- b=r6hWFSSeY08L5wPe6B6mD4mnXUqDtJlROsjFYA2MqclbiTgg8CFyNNsQxl16Zycad8
- Y0KrNlxC3sYUl8p7vNhf6U1yDEu48vl5bf7Wj4Db57Xp6LlRsOTi446u+YNWATLdp/4g
- tYbx73BPIIjHw6BPzAcSBUQpv4dnkQhfEQRNO51gcTQ/CbL8CA3kU5jlyAOWO3W8MzZA
- wDxVy1vVERdPTgB4J0ZwJusxGVBJzbDgBilVZBWNc7hia4cyk/knzg9AA5DaHCpxaV05
- iWbrvwJw/ROkl2S6DpOeJg5lN59rK/ibilKHOxNH6DAgP5N0kzAeufTCfxHYWOsIybgE
- eMjw==
+ d=gmail.com; s=20230601; t=1747400627; x=1748005427; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e9JiVE9wkHLpF1Lze+QudCejDrSPPWHofW11XWnSNc4=;
+ b=Jv5U/zzgz9K/hnO30rwsobGEorlVL4J0qGutT0SzUYWwD4FJ2JFBYGNoAqJ661Wvu/
+ HUAYtQjjnAKA7iNvmPA3pNWfuapQ5vXJ92eMk9+hURbaJ2uP4701xUOpkO9zaNC+hlGm
+ M+2cmcqXA81169c61NKgx+q5Q7R+8UpH3rcd1viJ3BKIpcAHQ9PjTeshRRBR6UNurnKA
+ QcgHvhRCUjC0fs6DjWZHqNfkIP+Bp8aOMp7ow6jHGMAU2W/o9iUgEk8XW+tmb6Rkbnim
+ FxQfA6ATmLEmpPhI8zJv0WhXklOYpV1vQLh6xS3xuqhpuDrBh9kCZ3OG/UhGxOoUluau
+ 7aaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747400311; x=1748005111;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b8s+JtZ932CtugIN22jXC5Ai3CgCrddx5V3y9bkGGic=;
- b=aHI7l5dWcReBo6Ipe3v57uWj0aVc5mrDZBtRLoB17sqJ7qfknKDkBWwQBA3Vym0K1f
- h9BqgTpwj3e33IUV+SoIX0+N95JXjjDUyTDb9FJSO/8PSs09Debgco8wHbeyqs8GpQWS
- EH6peUXbCglD2zt6eAJ3iENAoPDKU1346h6mH0OUviOgxSQA/dXazIX8I0Kw2DxCiAsM
- +C6q/5NFUJDHJ8y+5YQQ8eK8ureZ4oEfvsDi+0qkAd3rUKDyLroAVum7pIQEs/X0mV1o
- fX9eH7GKcUWJdFq1jQsAl5JUoAxq5FoHPIgmKnAsyKOAXiSQPXZ7S4P6cRxUfK+Jccj/
- ILpA==
+ d=1e100.net; s=20230601; t=1747400627; x=1748005427;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=e9JiVE9wkHLpF1Lze+QudCejDrSPPWHofW11XWnSNc4=;
+ b=ZgVRd1qpFP3wg2bqK4vFVl33XOnvgrKvn+/KgZRcJhT9eLIRTs0lviqo2/o8HAvSuc
+ FkG+eMIdKT+y/c60DZcGuHVVAR+u+m7QhiSKElUTQc61uECjTNdL8/ZBpq8Jn3kJj8yy
+ GxAzjU5GveWBAvAZ29kSggIvVy/TweanRrLcEC97suFmvB9aO/vCGVh2qzoapo4KuWHE
+ fNx4YlSWB1f9nj+dZWOpdME207TFhDokK5eb1RkOZGjxFmK/zm5lsx5xwU07+Cj4eLtE
+ AksA6dVshxQHVE0LvkB7Mnhb6o3hgdlN7iHiwxY/dASzqmpc82y8VWvjijI88o+f2pub
+ sScA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXon5Nb7RcEREp/IKjInJQsakEoo/Zz9fZzSybUOAx9j+naTopnYYVSh5FQvXbngfeA3qa1ryBBp3fs@nongnu.org
-X-Gm-Message-State: AOJu0YwzlgUIxqm7hguFWCLnPctI8PVvo9lnAwgQ8FLiiJBo5vqxKXQc
- /xo3TLBPxI3g/tODiK5oFvBDbtUODvpFuhILF1Aa9OOrRMH5T2vwjtoh4GhpIYw1nzA=
-X-Gm-Gg: ASbGncuta/kg7hQyokM3KixQUGraQJucAp9s4gv7F77RRZsoTtdPZnx08fGTeay2waj
- vzioHfddqJ7jAUzkj4o/VGgloB0YF6vSQ0/TW1wZTspQayv3EjL+j18B2ZRokWrxdovZiicwNDh
- HwGTui54qF+9WVUR4IlP3MDIA1101gNX/ZyLD7chlQWPm5mTAGBuCkk8jzBqoEzLioVBqPxF8Eo
- RkiOTj0H3eIagGDuSuheZhEUvJ9OWb6+DABpG0QpQQVXp46xwCi0M4nHzimHsAzdBMsEOtAgunH
- fo7n2x9H6veW7LSonrrnCeiZVtZcnBMy+nQZw3T3tByajqbmjNRV/33IGkesdm54
-X-Google-Smtp-Source: AGHT+IF7VPkI5V79QrwuGu9qU8zJoCW3ihuUiYgWDKwmpRDDX+3Zu7u3ty/eM4Bi8Diqu90Cs/B9JA==
-X-Received: by 2002:a05:6a21:3987:b0:203:c29b:eb6c with SMTP id
- adf61e73a8af0-21621882824mr5108630637.4.1747400310824; 
- Fri, 16 May 2025 05:58:30 -0700 (PDT)
-Received: from [157.82.203.223] ([157.82.203.223])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b26eb081b06sm1503652a12.52.2025.05.16.05.58.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 05:58:30 -0700 (PDT)
-Message-ID: <12b1dba8-ecb5-4167-841f-0a32256285d5@daynix.com>
-Date: Fri, 16 May 2025 21:58:27 +0900
+ AJvYcCWBhHFnQsS7OQbgT+7+MCrDcKY2LLNqDJ0RncgeUh5GGU0XLXnGo/rX9Ly7vsIV37z5Gphlg3IUYZ1D@nongnu.org,
+ AJvYcCWPM3SnoB3Ub08uL0hVcOT9JmpFmYJFPJSTA388JsZww4x/lJnq79htzCBgd4U04jS0yXn9Ha8o1zGqBvs=@nongnu.org
+X-Gm-Message-State: AOJu0YxCmY+3UUE2CI80LJL4BVRAJL2txMyr8CSs3Dymx7bj3KgsIA78
+ xM4/UuxIa2oA0MYRy5Ngf+MG7o4skFga01wkK5qUKDMwnd/3q5IzbzZt9pN368BhUH4A81XYHWr
+ 1OoHwZ+yZFRW7Fl41hZAJ6h05SzCAkkM=
+X-Gm-Gg: ASbGnctoRtbIZ15WFVVu/ctEGbhGn9cWatitQFQ3wGjJeZYUwfH/o5Dd8qtA779qzNk
+ 4n9vgguwV40M4N5abmBz65z6lOxDJaCk9n9V4L7GV8wIt70N1q4dfCGi6tIRNk3ZmIq2hTH4gDG
+ 7te1bzK+z7oxj6chXGO4y+Dw8fI8sCWJgR
+X-Google-Smtp-Source: AGHT+IHFfY1QYOheYHxb1gwuR/iWnp7JRj43AO6dgGp9lmzoC6w6GDU0t3omPn43bNudyEB+sY1rManQTSL8B31B3Mk=
+X-Received: by 2002:a17:90b:4f4c:b0:309:ebe3:1ef9 with SMTP id
+ 98e67ed59e1d1-30e830ebf54mr4393761a91.12.1747400627144; Fri, 16 May 2025
+ 06:03:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/10] qemu-thread: Avoid futex abstraction for
- non-Linux
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stefan Weil <sw@weilnetz.de>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Hailiang Zhang <zhanghailiang@xfusion.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel <qemu-devel@nongnu.org>,
- devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250511-event-v3-0-f7f69247d303@daynix.com>
- <20250511-event-v3-4-f7f69247d303@daynix.com>
- <e86aeab6-ef67-4f5a-9110-93309a77acf6@redhat.com>
- <a40b0b1d-b1f8-478d-bde4-cac386323691@daynix.com>
- <CABgObfa+sBbA3OURGm=6WGzs1TQKyaHjRj+QS3n9dUvSjEPkZw@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CABgObfa+sBbA3OURGm=6WGzs1TQKyaHjRj+QS3n9dUvSjEPkZw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20250513112825.1731347-1-hanht2@chinatelecom.cn>
+ <5cstdapha4xzmgkuja5ydxxvfgr4ux5iytex3qp65vm5hedp7s@h2mjfv72npyw>
+In-Reply-To: <5cstdapha4xzmgkuja5ydxxvfgr4ux5iytex3qp65vm5hedp7s@h2mjfv72npyw>
+From: Huaitong Han <oenhan@gmail.com>
+Date: Fri, 16 May 2025 21:03:33 +0800
+X-Gm-Features: AX0GCFul_QcBAuRnYsa7GIrThL1CPQejvhfP2PRo9wp0llHKRFlUMp5Cttz75Bs
+Message-ID: <CAAuJbeKtVjDzxBLkX86tHFnmXNBzTRpunAQ7WmBQXpYrSs-kig@mail.gmail.com>
+Subject: Re: [PATCH V2] vhost: Don't set vring call if guest notifier is unused
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, cohuck@redhat.com, 
+ pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com, 
+ leiyang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Huaitong Han <hanht2@chinatelecom.cn>,
+ Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>, 
+ Jidong Xia <xiajd@chinatelecom.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=oenhan@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,95 +100,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/16 20:09, 'Paolo Bonzini' via devel wrote:
-> 
-> 
-> Il mer 14 mag 2025, 08:57 Akihiko Odaki <akihiko.odaki@daynix.com 
-> <mailto:akihiko.odaki@daynix.com>> ha scritto:
-> 
->     Honestly, I do not understand why smp_mb() is placed here even in the
->     futex case. The comment says:
->       > qemu_event_set has release semantics, but because it *loads*
->       > ev->value we need a full memory barrier here.
-> 
->     The barrier is indeed followed by a load: qatomic_read(&ev->value) !
->     = EV_SET
->     However, the caller of qemu_event_set() should not care whether the
->     event is already set or not
-> 
->     so I'm not sure if smp_mb() is needed in
->     the first place.
-> 
-> 
-> The barrier is needed to ensure correct ordering in all cases. You have 
-> on one side
-> 
-> done=true
-> Set
->    Read ev->value
->    If not EV_SET, set the event+ wake up waiters
-> 
-> 
-> And on the other
-> 
-> Write EV_FREE
->    Write
-> If not done
->    Wait
-> 
-> If one that calls qemu_event_set and the other calls qemu_event_reset, 
-> you need to avoid that set reads a previous EV_SET for the value *and* 
-> the other side reads done equal to false. The only way to avoid this is 
-> for both sides to use a memory barrier before the read.
-> 
->     qemu_event_set(): release *if the event is not already set*; otherwise
->     it has no effect on synchronization so we don't need a barrier either.
-> 
-> 
-> It needs to be release always. This ensures that, whenever the setter 
-> declares the event to be set, the other side sees whatever the setter 
-> did before the call.
+Stefano Garzarella <sgarzare@redhat.com> =E4=BA=8E2025=E5=B9=B45=E6=9C=8816=
+=E6=97=A5=E5=91=A8=E4=BA=94 16:19=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Tue, May 13, 2025 at 07:28:25PM +0800, oenhan@gmail.com wrote:
+> >From: Huaitong Han <hanht2@chinatelecom.cn>
+> >
+> >The vring call fd is set even when the guest does not use MSI-X (e.g., i=
+n the
+> >case of virtio PMD), leading to unnecessary CPU overhead for processing
+> >interrupts.
+> >
+> >The commit 96a3d98d2c("vhost: don't set vring call if no vector") optimi=
+zed the
+> >case where MSI-X is enabled but the queue vector is unset. However, ther=
+e's an
+> >additional case where the guest uses INTx and the INTx_DISABLED bit in t=
+he PCI
+> >config is set, meaning that no interrupt notifier will actually be used.
+> >
+> >In such cases, the vring call fd should also be cleared to avoid redunda=
+nt
+> >interrupt handling.
+> >
+> >Fixes: 96a3d98d2c("vhost: don't set vring call if no vector")
+> >Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
+> >Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
+> >Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
+> >---
+> >V2:
+> >- Retain the name `query_guest_notifiers`
+> >- All qtest/unit test cases pass
+> >- Fix V1 patch style problems
+> >
+> > hw/pci/pci.c                   |  2 +-
+> > hw/s390x/virtio-ccw.c          |  7 +++++--
+> > hw/virtio/vhost.c              |  3 +--
+> > hw/virtio/virtio-pci.c         | 10 ++++++++--
+> > include/hw/pci/pci.h           |  1 +
+> > include/hw/virtio/virtio-bus.h |  2 +-
+> > 6 files changed, 17 insertions(+), 8 deletions(-)
+> >
+> >diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> >index 352b3d12c8..45b491412a 100644
+> >--- a/hw/pci/pci.c
+> >+++ b/hw/pci/pci.c
+> >@@ -1712,7 +1712,7 @@ static void pci_update_mappings(PCIDevice *d)
+> >     pci_update_vga(d);
+> > }
+> >
+> >-static inline int pci_irq_disabled(PCIDevice *d)
+> >+int pci_irq_disabled(PCIDevice *d)
+>
+> Since it was inline, will it be better to move the whole function to
+> include/hw/pci/pci.h and keep it inline?
+>
+I did try moving the function to include/hw/pci/pci.h and marking it
+inline, but ran into compilation issues due to the use of the incomplete
+PCIDevice type.
+Specifically, accessing d->config triggers the following error:
+include/hw/pci/pci.h:674:26: error: invalid use of incomplete typedef
+=E2=80=98PCIDevice=E2=80=99
+return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
+Including hw/pci/pci_device.h in pci.h to resolve this introduces
+further issues, so I suggest to keep the function as a non-inline
+helper in the .c file.
 
-That is what I misunderstood, and now I can also imagine why it should 
-always release. Thinking of the scenario with the "done" flag we have 
-discussed, if we have two setters, the resetter should acquire the state 
-from both of the two setters.
-
-If the event is already set, we need to ensure all stores specified 
-before qatomic_read(&ev->value) != EV_SET should happen before 
-qatomic_read(&ev->value), which requires us to put a full barrier.
-
-But I have a new question: do we really need "if 
-(qatomic_read(&ev->value) != EV_SET)"?
-
-With git blame, I found it didn't have the full barrier until commit 
-374293ca6fb0 ("qemu-thread: use acquire/release to clarify semantics of 
-QemuEvent"), which added it.
-
-atomic_mb_read() was used until the commit instead. 
-include/qemu/atomic.h at that time had the following comment:
- > /* atomic_mb_read/set semantics map Java volatile variables. They are
- >  * less expensive on some platforms (notably POWER & ARMv7) than fully
- >  * sequentially consistent operations.
-
-We place a full barrier anyway, so we no longer have a reason to have 
-qatomic_read() before performing qatomic_xchg().
-
-I also found smp_mb__after_rmw() before qemu_futex_wake_all() is no 
-longer necessary. Summing up, I think the code should look like as follows:
-
-#ifdef HAVE_FUTEX
-     if (qatomic_xchg(&ev->value, EV_SET) == EV_BUSY) {
-         /* There were waiters, wake them up.  */
-         qemu_futex_wake_all(ev);
-     }
-#else
-     pthread_mutex_lock(&ev->lock);
-     qatomic_store_release(&ev->value, EV_SET);
-     pthread_cond_broadcast(&ev->cond);
-     pthread_mutex_unlock(&ev->lock);
-#endif
-
-Regards,
-Akihiko Odaki
+> Thanks,
+> Stefano
+>
+> > {
+> >     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DIS=
+ABLE;
+> > }
+> >diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+> >index d2f85b39f3..632708ba4d 100644
+> >--- a/hw/s390x/virtio-ccw.c
+> >+++ b/hw/s390x/virtio-ccw.c
+> >@@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState =
+*d, bool running)
+> >     }
+> > }
+> >
+> >-static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
+> >+static bool virtio_ccw_query_guest_notifiers(DeviceState *d, int n)
+> > {
+> >     CcwDevice *dev =3D CCW_DEVICE(d);
+> >+    VirtioCcwDevice *vdev =3D VIRTIO_CCW_DEVICE(d);
+> >+    VirtIODevice *virtio_dev =3D virtio_bus_get_device(&vdev->bus);
+> >
+> >-    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
+> >+    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
+> >+            && virtio_queue_vector(virtio_dev, n) !=3D VIRTIO_NO_VECTOR=
+;
+> > }
+> >
+> > static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
+> >diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> >index 4cae7c1664..2a9a839763 100644
+> >--- a/hw/virtio/vhost.c
+> >+++ b/hw/virtio/vhost.c
+> >@@ -1341,8 +1341,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+> >     }
+> >
+> >     if (k->query_guest_notifiers &&
+> >-        k->query_guest_notifiers(qbus->parent) &&
+> >-        virtio_queue_vector(vdev, idx) =3D=3D VIRTIO_NO_VECTOR) {
+> >+        !k->query_guest_notifiers(qbus->parent, idx)) {
+> >         file.fd =3D -1;
+> >         r =3D dev->vhost_ops->vhost_set_vring_call(dev, &file);
+> >         if (r) {
+> >diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> >index 0fa8fe4955..d62e199489 100644
+> >--- a/hw/virtio/virtio-pci.c
+> >+++ b/hw/virtio/virtio-pci.c
+> >@@ -1212,10 +1212,16 @@ static int virtio_pci_set_guest_notifier(DeviceS=
+tate *d, int n, bool assign,
+> >     return 0;
+> > }
+> >
+> >-static bool virtio_pci_query_guest_notifiers(DeviceState *d)
+> >+static bool virtio_pci_query_guest_notifiers(DeviceState *d, int n)
+> > {
+> >     VirtIOPCIProxy *proxy =3D to_virtio_pci_proxy(d);
+> >-    return msix_enabled(&proxy->pci_dev);
+> >+    VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
+> >+
+> >+    if (msix_enabled(&proxy->pci_dev)) {
+> >+        return virtio_queue_vector(vdev, n) !=3D VIRTIO_NO_VECTOR;
+> >+    } else {
+> >+        return !pci_irq_disabled(&proxy->pci_dev);
+> >+    }
+> > }
+> >
+> > static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, boo=
+l assign)
+> >diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> >index c2fe6caa2c..8c24bd97db 100644
+> >--- a/include/hw/pci/pci.h
+> >+++ b/include/hw/pci/pci.h
+> >@@ -668,6 +668,7 @@ void lsi53c8xx_handle_legacy_cmdline(DeviceState *ls=
+i_dev);
+> >
+> > qemu_irq pci_allocate_irq(PCIDevice *pci_dev);
+> > void pci_set_irq(PCIDevice *pci_dev, int level);
+> >+int pci_irq_disabled(PCIDevice *d);
+> >
+> > static inline void pci_irq_assert(PCIDevice *pci_dev)
+> > {
+> >diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-b=
+us.h
+> >index 7ab8c9dab0..75d43b508a 100644
+> >--- a/include/hw/virtio/virtio-bus.h
+> >+++ b/include/hw/virtio/virtio-bus.h
+> >@@ -48,7 +48,7 @@ struct VirtioBusClass {
+> >     int (*load_done)(DeviceState *d, QEMUFile *f);
+> >     int (*load_extra_state)(DeviceState *d, QEMUFile *f);
+> >     bool (*has_extra_state)(DeviceState *d);
+> >-    bool (*query_guest_notifiers)(DeviceState *d);
+> >+    bool (*query_guest_notifiers)(DeviceState *d, int n);
+> >     int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
+> >     int (*set_host_notifier_mr)(DeviceState *d, int n,
+> >                                 MemoryRegion *mr, bool assign);
+> >--
+> >2.43.5
+> >
+>
 
