@@ -4,147 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B74EC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 08:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB19C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 08:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFqXw-0000tn-5p; Fri, 16 May 2025 04:36:00 -0400
+	id 1uFqc3-0001wU-7v; Fri, 16 May 2025 04:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFqXq-0000tA-1k
- for qemu-devel@nongnu.org; Fri, 16 May 2025 04:35:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uFqc1-0001v9-8k
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 04:40:13 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFqXm-0005t3-MB
- for qemu-devel@nongnu.org; Fri, 16 May 2025 04:35:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747384549;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jTsSCVLhKC03pOAfrKPidNvsFD/3pNvVG+Z+mJTtnrI=;
- b=JLeXKRY3wSOzb+AtJYe1Lx+zg3QEe/NEirJWw2u7ZLPbmPE/ujvy9SR+EsQR/aPsTZgtpD
- REp3V2lhEPVRy/kMSb+N579VUjR0kKpkzT4/OXwmNHMZiq8i9eYlfeZGSMkmwkiNLIjtrq
- tV0ro/pWcwd043fQm/QoICsi9jZ4ggQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-MlR33hLSN7mGav-7ueiyfw-1; Fri, 16 May 2025 04:35:47 -0400
-X-MC-Unique: MlR33hLSN7mGav-7ueiyfw-1
-X-Mimecast-MFC-AGG-ID: MlR33hLSN7mGav-7ueiyfw_1747384546
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a35bf8377fso904991f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 01:35:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747384546; x=1747989346;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jTsSCVLhKC03pOAfrKPidNvsFD/3pNvVG+Z+mJTtnrI=;
- b=dX6G+tO/C2dQ+Q6me/0q04087SziyTRDPddXSUt9G8iPpTEs1vE3LeyFdrqw5NUNf6
- h9oYrMZ52siDw/0AGwWNIlFeDXSxjxp+d9VZYFnzQzMror6lSH3Q2CaCmVKeA563EI3H
- zSwMCH73geL29tHgbCjZxRsBJtljGsJQ7nDA6I/8/At8488WLlt85fHhJaOPdbwwlOHA
- 1PDh0Aj1ZeuFGKVlvFzfPfrwgrzJpyDNa+wxvE3vFQaPfcuS+BtsfswezQw25nBs+7lu
- uYuycsVaDCSWPeIGp7308aLHsbvIeW061t6DsBII120KGVrBnf+S08NW0BmUTR3r5ecg
- MTyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViCcaODfbNYCA/QqDsMheIXmfBSRdhP3dtrbev12zw9IFL+eiEi7Se3vyoX3FKM46lVTxGMUE2x0nB@nongnu.org
-X-Gm-Message-State: AOJu0Yx0qxJGTm8DO3Y8ZwxBaoSXEHhaoFRLER+sJ1CYbN1DHKgQTP1W
- MOaosjk7x+v02jNrfhexpx3wYKD1lgjgwiDZQ2uoqG+1LOE5WLEphhh3ykQf9Wv56rNRpFfUaEB
- x1u2ZWZfT6qEqgabKUL2911RaqScBFw/iwP9ucIWPCLqhWxhuG38yTXF+
-X-Gm-Gg: ASbGncvHlPoK7sBs86pV+QzTV/+s4AwSYIvLGKmdZXrpI9NCZHqHbTZnHMD1gwosYk5
- VVAoeR6UV84pWQMgOAkpvUZz+yMF18LQJsSE34HjzehHYrrzucFstMb10VuroipLJYqJ2SRI4Ei
- vOCsezgfWx03wTIY/H8n4fn1cKJo7+o2F/KH3AJdhYbPFwtM2znh1mg3xS5/kMe+F3pQpZEw47D
- J29h29UVMawovRaIEngkfoR3QWD5zXoAkXA106elQAgMRlOZRz9O4PmQYLU2WbHmdPlJ9djSBHi
- GJqpYWegbb1LrULhVWhExMtYgg5aXUxLnX6IfzLC+6uosk/HSA==
-X-Received: by 2002:a5d:64ef:0:b0:39a:c9b3:e1d7 with SMTP id
- ffacd0b85a97d-3a35fe9623fmr1472413f8f.29.1747384546163; 
- Fri, 16 May 2025 01:35:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGGqsT7uVpL0XIBpQy/QlhSZEh+/PA2l7OjcWci9NvGOoUrN69ress8oxrkpZxGg8elQXAv6w==
-X-Received: by 2002:a5d:64ef:0:b0:39a:c9b3:e1d7 with SMTP id
- ffacd0b85a97d-3a35fe9623fmr1472382f8f.29.1747384545745; 
- Fri, 16 May 2025 01:35:45 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca8d005sm2113237f8f.90.2025.05.16.01.35.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 01:35:45 -0700 (PDT)
-Message-ID: <9a664228-9a00-4387-b2d0-f7a428b52c75@redhat.com>
-Date: Fri, 16 May 2025 10:35:44 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 24/42] migration: close kvm after cpr
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
- <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uFqbz-0006IK-IL
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 04:40:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747384812; x=1778920812;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=WbveKIqMPmZUapg28t9Vlj0AEQJItOD0Is9Pgcskk1U=;
+ b=FaDP5ROr2sNdlju64KvBu0FvHdHTRrCjqMBj9nFYttPizK56Oj2PXF0H
+ xjNOEx9RdzbEVMHXzwHTxejjch40T8QYj10O4Q/Y8d1PQdAelXRy5S9qh
+ 5kTTku1BZBfYK0Pme5xWuX5R4l5U8Hg9yYhktdzrQRB+tEFmGY1xB5Xlx
+ 8yaNjNC90UXUQqpGra5mCXzd+wdEVh+laamWWpI1fyZrQo8xEhAZrexaG
+ 8ftPXK+F4I4gWl8u2wj+IsmpOgWaHTbPvmSwQwA+FVNV8maBacEDQe8zC
+ MYy7Q2L3AA98CpM26wjZnFV5w9ewMHmEK7TBdLarXJp1bajfp5pnooUHH Q==;
+X-CSE-ConnectionGUID: GCfh+RxkREGESdy4nVFM6w==
+X-CSE-MsgGUID: c7Y70vegSS+0eEWNVI3LLw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11434"; a="48601289"
+X-IronPort-AV: E=Sophos;i="6.15,293,1739865600"; d="scan'208";a="48601289"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 May 2025 01:40:09 -0700
+X-CSE-ConnectionGUID: g9edv07qQ06Ftf+dk9vbOA==
+X-CSE-MsgGUID: 4RVvizfZQ9GunKBgBMe2Sw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,293,1739865600"; d="scan'208";a="169562313"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 May 2025 01:40:08 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Fri, 16 May 2025 01:40:08 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Fri, 16 May 2025 01:40:08 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.176)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Fri, 16 May 2025 01:40:07 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PxljLA5ccipEHAXnk0dJ25/lSAemMuMDB6Vh1e6P8IT3srESNhTUUoDxtNp9YIzT++6+op0Nnc69SLLBnvZM6EAVcl2LzFYtiTi68IT+IZLKGmsxiq5QasBJT6jHbOwibfmJ5/cQx+BH87YWwg800ifY+muuYENEmyIZRWAPkTLQJVc3inIk1cINXPKonytlS1dWQLbrlUCw3HJGWb5HLEK7sm0AxoLLaScaZ46eg/jP0pKNbiYZES1tuQTOALgV4/9cuIcTyu5DiugW6+tYhB2eFtz1JIWmgblfzff6Bg/VS79iIEHb12nncQo3k8hKLYKay3M9PiZLWnMsJPrTcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WbveKIqMPmZUapg28t9Vlj0AEQJItOD0Is9Pgcskk1U=;
+ b=SDAXEvijwiaJsupGZe/1qJf+rLcvtCpGVYzaHqT0If6fd3q9YU7emZC2w0odDQxFyyXryazLTy3QQ/ZKbLToL2K+4pJoytihP3yFF7i30O6/xjhizoBjKh0ivgHEnT5aGY7fcr5GsfngCtj9HJlgl8SY+Bb75EBriMj1rsaB1Ft04UR6StgV0T5dHKX1/4sK180xqLCitUuyGPrf+1GKV4PyOfuARJhKOCzhd5iHn2mAEBQ4BEG9FYbreTk0wK8FUz2RdF79qjMaohYr2JWvu9tYhploRBmy/rU65paTa6vUXpbuW89UB1+Lgh4xZkwCYh1xMD1yVrjdGwab/9yeMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by SJ0PR11MB5769.namprd11.prod.outlook.com (2603:10b6:a03:420::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.25; Fri, 16 May
+ 2025 08:40:04 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%4]) with mapi id 15.20.8722.027; Fri, 16 May 2025
+ 08:40:04 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Steve Sistare <steven.sistare@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
+ <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
+Subject: RE: [PATCH V3 30/42] physmem: qemu_ram_get_fd_offset
+Thread-Topic: [PATCH V3 30/42] physmem: qemu_ram_get_fd_offset
+Thread-Index: AQHbw1wv+ARtaJFeCkWu7kh7J2Z+Z7PU9XIw
+Date: Fri, 16 May 2025 08:40:04 +0000
+Message-ID: <SJ0PR11MB674419ED5F2D0A076BFB499B9293A@SJ0PR11MB6744.namprd11.prod.outlook.com>
 References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-25-git-send-email-steven.sistare@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1747063973-124548-25-git-send-email-steven.sistare@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ <1747063973-124548-31-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1747063973-124548-31-git-send-email-steven.sistare@oracle.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SJ0PR11MB5769:EE_
+x-ms-office365-filtering-correlation-id: c32862c0-c121-4161-2a10-08dd94554116
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?j+USirvlllejw1fc+VAOW52qo3F4n/b5wdLBUSIi+HXt0DS0t6vuX4K9Veti?=
+ =?us-ascii?Q?aaV5rSJH2I/qmz+dDmwBxyTOivMVXhxR/tQmYoUURgWNvgfyXuqMR0wywif2?=
+ =?us-ascii?Q?HTUkLJglKn6uBtRs5WeN28cZk9dDIHUzZltfeM/imEPSreo0UExB3b2K4igp?=
+ =?us-ascii?Q?xFaJvP6Qs0BHpXYWahzDNzb+nPnnS3v1KmuATprNiZzuIQ6GtGSOynMv8ceH?=
+ =?us-ascii?Q?SYEESrowCV+B60RPOx7duGuYoimLbzZuZB95yWf/saVU04FINEqZM3ytRf+r?=
+ =?us-ascii?Q?YoPv/zIeZ8BOP+hhN+b5HlMX0JtCOncFP1Yaj02SYsaLuPJghgtHNGnZCGyi?=
+ =?us-ascii?Q?tazNHE0hgJX9MUdSDUQbDkjbl6dCgPHA4Y9ceYVhrcxgyesVf+B0nJJLsqop?=
+ =?us-ascii?Q?azXZiI9RYr+JeGepPdrYz55Wlh8xrbJxlVgF4lp69hiH4HMwYKCZNyCHGtnc?=
+ =?us-ascii?Q?IjhryobHndO+MDAa0wq7ng8BHSoQ+OnPY6NbFicPLQW5bSqUT3ID1SdiXnFM?=
+ =?us-ascii?Q?AKZw/4tdt0r3yth9/L0ix5prOIi9jgpNv2uH6Ad5fHXuMJFAKwmD4qGIMwwP?=
+ =?us-ascii?Q?hfbuIz6ntOPwcEzr8ZgTmWm0uGLfTIWa+ilwQlfhA9oxOgWOxxF/xcc5Cpdi?=
+ =?us-ascii?Q?9B4rcI2cYFxL/zXboimwK4v1bsoq6oAKJYInXFFq7JMsDcz7lxSUUxu9Y7R0?=
+ =?us-ascii?Q?74C/DjHKN0qsH04NsVOphXTtNZ/BpySUNaQRkuuPDjcgqiS/JoPgGxBZ0p+O?=
+ =?us-ascii?Q?LxO4M4JbqO4MzDwNbpqR9pswtLvkpTWKRjjhjVbw2NVcMBWCxr32t9tZiOdE?=
+ =?us-ascii?Q?VkOyBfvup6Exl+0bavkR+b5Exsgs1+nSHP731hj5+x9WpomIY6pjbiK5zC7A?=
+ =?us-ascii?Q?JubSBRIeBuXc2v6L94HhTeNTwxxlvdFO3XunKkY0VJ+m2aoq8SldDuXbBsNE?=
+ =?us-ascii?Q?+UE+ibY8CYcrPm5GgaRVSulolJbQm02Xx9nel+fHpIh5yzPho2dFC3m/OcXf?=
+ =?us-ascii?Q?ZOKxeaZXzEMt/P2Ib5VYAaQNO7hSzre12jhUK8cuYLV09ArabPZz1nvyE3RT?=
+ =?us-ascii?Q?eLJAziYNRIqEWUfpxfnhfEFbRkHa2d7B3+UPNc6xGG3zhQ68Aul2fIH8OamF?=
+ =?us-ascii?Q?Qb6YGyoB1C6cYThk/qgjQf3DRDB/sKX+pMs1s7n4s+83+TmLWuJyxaktbQCv?=
+ =?us-ascii?Q?5AoB/WveU+Vyw+HqiAkRmennPzBHcDhS/3zfrofnZqNr43eYou2mUTD8kFrU?=
+ =?us-ascii?Q?QYtyGZa6+ax4sAqu0/Q92gjfwKd1WxCy5TEoJseVRcwWp6T7VzSF1ZKWFnBq?=
+ =?us-ascii?Q?PvYJTQWZSNZvLXfFpKzrU6YgV87UbSbdOgTiQauHsG0KDwMra50FAW6jnIm5?=
+ =?us-ascii?Q?SI5cXBEmOHDj9RKDYujSoYTPx5vavkg+0fMFGWq6nCFWTz/3oi7q71/OygIS?=
+ =?us-ascii?Q?wiWETieFwCKIvwSHWwkFDnPHM1B4gOiNiAMGKJWYjpeel3uBr25ebndkFcvF?=
+ =?us-ascii?Q?RSa44AV18siWZQ4=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?iO5QKMpz6+iYq3MHLg6sV3NJI6umVElNGXgEJgI3dl8D1tMW2W6oIvlbrL+c?=
+ =?us-ascii?Q?BgytvrIWyKVIZH/cDGmX0sFW7D6UYAUJtQoxKA6TVdu75t79XI8MBpuXvE7s?=
+ =?us-ascii?Q?mmT95JfmJhRTtevF+UfLbJJDNSmC9e4oEiOQAqUNzYk27/3Zqy/MRzwqUWsL?=
+ =?us-ascii?Q?VG/pP/u2G+lWcbvf28sXcZNaK4/eUxnoFSNHFVAwM6Q44tyCnSkJMnWgsMZJ?=
+ =?us-ascii?Q?Q1G9ahmANyfmTOO58+M7Yn9K0s/or8J7Dt3uTTLC59hOySwYDGIjT1xmU04s?=
+ =?us-ascii?Q?HgTwESw8LBa2oFeWUb7BpGOh8uilkJdfhr/lrmFwfAcdVTBynsvZX640XrMz?=
+ =?us-ascii?Q?8OLblR77NkH5DUPcsBCWPcvUIdiLndFwJJ4p5JJ7AWtFTfnoKy1bkxedrS1E?=
+ =?us-ascii?Q?21XOjs1Mgq1k4mpSJSj/cKjcHjn7ME8WpjGF1cxd8CO3zvq+3SuxjVCAjE8k?=
+ =?us-ascii?Q?jWrZKDEpfdJApmi/aYYb8pvdPTVTtUgy10nDfjwmn1EQxLLF6OdmfZgx3ro0?=
+ =?us-ascii?Q?UjnJ4n1cIJCO0nCSMEy494tY9KnRtbgs4r+hGs0j1883lxlYIaYGWBNtKpNc?=
+ =?us-ascii?Q?F0RobzNTh6zd4iO94suaRs04eR0761EnHlb59rNFXYMgKFM0lXdpapsyFOcT?=
+ =?us-ascii?Q?gwhZZpdSJuZGEmYe9XmZLwWnbXTqq0VGsXi+6Bs9Xj8h8xFIoOd0ptO3IcQZ?=
+ =?us-ascii?Q?h/O5jR5wHSRSY0daKIPt/UTXMq1b/RjmnU8l8j1TwoLnOxmcDOiVcJ84LNHQ?=
+ =?us-ascii?Q?SwHlRUTnGgBlLoT2uE/8o5CKco3nC093AvBIULNmHveU9pyb0Mc62tucZWku?=
+ =?us-ascii?Q?hOo+uXP4fWEFsgdvxtnove/xpFff9j5jyyKRbErB4B7fJ4uFJSkLxXduCn1I?=
+ =?us-ascii?Q?k6EtUIShK77cEyKMZWmX31kxdb/AuZGUvtyC4qySJuXei123+CPauluyDJWd?=
+ =?us-ascii?Q?PH1D3V9bm2bJSuQjzWqRhXGxv0JG6e7CRSC9Sm1NB8VWKomxuWDf63aQQ0cO?=
+ =?us-ascii?Q?bSDI3/PEacqYZLtatassXRDwkQjOc9Dxg5oYflY2UkIjfSfqdbGJlx+7NJRT?=
+ =?us-ascii?Q?iL2P4EPfyAvbjfatC6KD3T4hyCBIwk8JZH1HO343urG4eIuCrycNT+4m2L+Z?=
+ =?us-ascii?Q?w0q42SzkRKXxuzKPcqK/lcjHOyEngLa2VY5yVubYE8gL6bnrwGx65QXBCu1/?=
+ =?us-ascii?Q?6Iin8LUqtJhzzLEmHQ4T5y3/k5Xk/JWdqwGS0YrZwREKyrei3nKFlwDXSWpU?=
+ =?us-ascii?Q?PSmTguWZ+LhI6OJxDaHVMypoibWd2VKRiNCY3OLczvmhYHHvt0bAY3JNG+1w?=
+ =?us-ascii?Q?/zUuQ1VIxeZMoatrT/+iBgkXfEgOyAlE97jU/8hLGFWOmC9GKOoSjucYZpX1?=
+ =?us-ascii?Q?4qM0FNW1mL+aGfknkAlMAvkqFRJDWk5vac+IDQAcbaaBv71JsDFV423H6GJI?=
+ =?us-ascii?Q?w3KI12izBCFKwsi+TyArdN0S7fwFoWvI+fDTM2FC5pFjbsEVvbLmJ/Z1/D/k?=
+ =?us-ascii?Q?er4DzHaXjak1GXMyT/XWHQlfXu2kkX9mJs1Mec1QTMj+NWmN/u2abP6rxr8+?=
+ =?us-ascii?Q?WqvDjPZ8GihEACuK1Z1FjHb0RFYoimEGzxPssrgC?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c32862c0-c121-4161-2a10-08dd94554116
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 May 2025 08:40:04.1546 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0aDLJH86hL5eAwXDONiUD0oQ+Q1Rmr9CPErY4abRqFJDh9vTXR2U8FOiH/uOa8MMoswFKnESAaMRlhgRRJTiSp+aE1JPnUlz/N22ZID/7eE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5769
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.18;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,233 +200,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/25 17:32, Steve Sistare wrote:
-> cpr-transfer breaks vfio network connectivity to and from the guest, and
-> the host system log shows:
->    irq bypass consumer (token 00000000a03c32e5) registration fails: -16
-> which is EBUSY.  This occurs because KVM descriptors are still open in
-> the old QEMU process.  Close them.
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-
-This patch doesn't build.
-
-/usr/bin/ld: libcommon.a.p/migration_cpr.c.o: in function `cpr_kvm_close':
-./build/../migration/cpr.c:260: undefined reference to `kvm_close'
 
 
+>-----Original Message-----
+>From: Steve Sistare <steven.sistare@oracle.com>
+>Subject: [PATCH V3 30/42] physmem: qemu_ram_get_fd_offset
+>
+>Define qemu_ram_get_fd_offset, so CPR can map a memory region using
+>IOMMU_IOAS_MAP_FILE in a subsequent patch.
+>
+>Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Thanks,
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-C.
-
-
-
-> ---
->   accel/kvm/kvm-all.c           | 28 ++++++++++++++++++++++++++++
->   hw/vfio/helpers.c             | 10 ++++++++++
->   include/hw/vfio/vfio-device.h |  2 ++
->   include/migration/cpr.h       |  2 ++
->   include/qemu/vfio-helpers.h   |  1 -
->   include/system/kvm.h          |  1 +
->   migration/cpr-transfer.c      | 18 ++++++++++++++++++
->   migration/cpr.c               |  8 ++++++++
->   migration/migration.c         |  1 +
->   9 files changed, 70 insertions(+), 1 deletion(-)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 278a506..d619448 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -512,16 +512,23 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
->           goto err;
->       }
->   
-> +    /* If I am the CPU that created coalesced_mmio_ring, then discard it */
-> +    if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
-> +        s->coalesced_mmio_ring = NULL;
-> +    }
-> +
->       ret = munmap(cpu->kvm_run, mmap_size);
->       if (ret < 0) {
->           goto err;
->       }
-> +    cpu->kvm_run = NULL;
->   
->       if (cpu->kvm_dirty_gfns) {
->           ret = munmap(cpu->kvm_dirty_gfns, s->kvm_dirty_ring_bytes);
->           if (ret < 0) {
->               goto err;
->           }
-> +        cpu->kvm_dirty_gfns = NULL;
->       }
->   
->       kvm_park_vcpu(cpu);
-> @@ -600,6 +607,27 @@ err:
->       return ret;
->   }
->   
-> +void kvm_close(void)
-> +{
-> +    CPUState *cpu;
-> +
-> +    CPU_FOREACH(cpu) {
-> +        cpu_remove_sync(cpu);
-> +        close(cpu->kvm_fd);
-> +        cpu->kvm_fd = -1;
-> +        close(cpu->kvm_vcpu_stats_fd);
-> +        cpu->kvm_vcpu_stats_fd = -1;
-> +    }
-> +
-> +    if (kvm_state && kvm_state->fd != -1) {
-> +        close(kvm_state->vmfd);
-> +        kvm_state->vmfd = -1;
-> +        close(kvm_state->fd);
-> +        kvm_state->fd = -1;
-> +    }
-> +    kvm_state = NULL;
-> +}
-> +
->   /*
->    * dirty pages logging control
->    */
-> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-> index d0dbab1..af1db2f 100644
-> --- a/hw/vfio/helpers.c
-> +++ b/hw/vfio/helpers.c
-> @@ -117,6 +117,16 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
->   int vfio_kvm_device_fd = -1;
->   #endif
->   
-> +void vfio_kvm_device_close(void)
-> +{
-> +#ifdef CONFIG_KVM
-> +    if (vfio_kvm_device_fd != -1) {
-> +        close(vfio_kvm_device_fd);
-> +        vfio_kvm_device_fd = -1;
-> +    }
-> +#endif
-> +}
-> +
->   int vfio_kvm_device_add_fd(int fd, Error **errp)
->   {
->   #ifdef CONFIG_KVM
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 4e4d0b6..6eb6f21 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -231,4 +231,6 @@ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
->   void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
->                         DeviceState *dev, bool ram_discard);
->   int vfio_device_get_aw_bits(VFIODevice *vdev);
-> +
-> +void vfio_kvm_device_close(void);
->   #endif /* HW_VFIO_VFIO_COMMON_H */
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index fc6aa33..5f1ff10 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -31,7 +31,9 @@ void cpr_state_close(void);
->   struct QIOChannel *cpr_state_ioc(void);
->   
->   bool cpr_needed_for_reuse(void *opaque);
-> +void cpr_kvm_close(void);
->   
-> +void cpr_transfer_init(void);
->   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
->   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
->   
-> diff --git a/include/qemu/vfio-helpers.h b/include/qemu/vfio-helpers.h
-> index bde9495..a029036 100644
-> --- a/include/qemu/vfio-helpers.h
-> +++ b/include/qemu/vfio-helpers.h
-> @@ -28,5 +28,4 @@ void qemu_vfio_pci_unmap_bar(QEMUVFIOState *s, int index, void *bar,
->                                uint64_t offset, uint64_t size);
->   int qemu_vfio_pci_init_irq(QEMUVFIOState *s, EventNotifier *e,
->                              int irq_type, Error **errp);
-> -
->   #endif
-> diff --git a/include/system/kvm.h b/include/system/kvm.h
-> index b690dda..cfaa94c 100644
-> --- a/include/system/kvm.h
-> +++ b/include/system/kvm.h
-> @@ -194,6 +194,7 @@ bool kvm_has_sync_mmu(void);
->   int kvm_has_vcpu_events(void);
->   int kvm_max_nested_state_length(void);
->   int kvm_has_gsi_routing(void);
-> +void kvm_close(void);
->   
->   /**
->    * kvm_arm_supports_user_irq
-> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
-> index e1f1403..396558f 100644
-> --- a/migration/cpr-transfer.c
-> +++ b/migration/cpr-transfer.c
-> @@ -17,6 +17,24 @@
->   #include "migration/vmstate.h"
->   #include "trace.h"
->   
-> +static int cpr_transfer_notifier(NotifierWithReturn *notifier,
-> +                                 MigrationEvent *e,
-> +                                 Error **errp)
-> +{
-> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
-> +        cpr_kvm_close();
-> +    }
-> +    return 0;
-> +}
-> +
-> +void cpr_transfer_init(void)
-> +{
-> +    static NotifierWithReturn notifier;
-> +
-> +    migration_add_notifier_mode(&notifier, cpr_transfer_notifier,
-> +                                MIG_MODE_CPR_TRANSFER);
-> +}
-> +
->   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
->   {
->       MigrationAddress *addr = channel->addr;
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> index 0b01e25..6102d04 100644
-> --- a/migration/cpr.c
-> +++ b/migration/cpr.c
-> @@ -7,12 +7,14 @@
->   
->   #include "qemu/osdep.h"
->   #include "qapi/error.h"
-> +#include "hw/vfio/vfio-device.h"
->   #include "migration/cpr.h"
->   #include "migration/misc.h"
->   #include "migration/options.h"
->   #include "migration/qemu-file.h"
->   #include "migration/savevm.h"
->   #include "migration/vmstate.h"
-> +#include "system/kvm.h"
->   #include "system/runstate.h"
->   #include "trace.h"
->   
-> @@ -252,3 +254,9 @@ bool cpr_needed_for_reuse(void *opaque)
->       MigMode mode = migrate_mode();
->       return mode == MIG_MODE_CPR_TRANSFER;
->   }
-> +
-> +void cpr_kvm_close(void)
-> +{
-> +    kvm_close();
-> +    vfio_kvm_device_close();
-> +}
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 4697732..89e2026 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -337,6 +337,7 @@ void migration_object_init(void)
->   
->       ram_mig_init();
->       dirty_bitmap_mig_init();
-> +    cpr_transfer_init();
->   
->       /* Initialize cpu throttle timers */
->       cpu_throttle_init();
-
+Zhenzhong
 
