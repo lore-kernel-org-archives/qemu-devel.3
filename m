@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58306C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 17:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDD7C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 17:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFyco-0002BT-3q; Fri, 16 May 2025 13:13:34 -0400
+	id 1uFydz-0003AI-Mi; Fri, 16 May 2025 13:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uFycj-0002Ay-B2
- for qemu-devel@nongnu.org; Fri, 16 May 2025 13:13:30 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFydx-00038E-Oo
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 13:14:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uFyce-0003cn-LB
- for qemu-devel@nongnu.org; Fri, 16 May 2025 13:13:29 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GGfu1n021982;
- Fri, 16 May 2025 17:13:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2025-04-25; bh=F9EWuz2e
- OXfCnH8Etx2r5WfzfC+3jodB9QW6zseGQ/I=; b=cpPs1wL0QcB57Igu2TS9ewT0
- DFfNaA9w4Uy5ybu0Shj57dROrjs1C8EMkJb1LmtbeYl8aetqzpcuFhYFixPJ2OFj
- Ze60NUnJblEvlNGi2cmaQRFWDCBcXj1rHuZyNgrWr1v8JpPoAq4Iki7PATb+UeCc
- c/6rl5Dhyj6PsgxvqJa7eGjyU0aXQ37MCS6jw0d2DKeFGptNmATlMaBCNd46vdqK
- DD7dHP4j+429L9AVkvTRGgHIJ6+mzVxCHPxFXEimKK9exPCH8LSs+w8968d5Davk
- vNyEBqYIHRVZ1VSaWWu2+zLGNabU/nMQ/AEviog4KMK1bPXFMMiXapglRIc0MQ==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46nrbj1ud1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 16 May 2025 17:13:21 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54GGECT1004251; Fri, 16 May 2025 17:13:20 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46mrmfkqbj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 16 May 2025 17:13:20 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54GHAvO7022758;
- Fri, 16 May 2025 17:13:20 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46mrmfkqb7-1; Fri, 16 May 2025 17:13:20 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Marc-Andre Lureau <marcandre.lureau@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Cedric Le Goater <clg@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uFydv-0003kr-NF
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 13:14:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747415681;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sezJhODZLP35ExpgkpK4iZizeZx9ObSTBgjMb9AaMbY=;
+ b=I2nngnhH5qJBhshQSkF7xuOEuUZlOZ2TEyR7wB01R/3ATIj6OrgiogxvDMIIz4lk2eWSze
+ p0NWxoYeVlEsV2jFwB/qgy22kwrKN3tA/2j3Gkf/0K3ksuuAWGVUNqbbLFA4p34vrxbENU
+ qm8V+kyMO0OuB2/fFYEEPiTprksuyjk=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-647-PqVPXqUyOlShJLxcIlcMNg-1; Fri, 16 May 2025 13:14:40 -0400
+X-MC-Unique: PqVPXqUyOlShJLxcIlcMNg-1
+X-Mimecast-MFC-AGG-ID: PqVPXqUyOlShJLxcIlcMNg_1747415679
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-22e544a4c83so28520565ad.1
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 10:14:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747415679; x=1748020479;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sezJhODZLP35ExpgkpK4iZizeZx9ObSTBgjMb9AaMbY=;
+ b=oWSMkkapMRivHCH9hNTgd7TnRoTVEHOeRQIpbSQGbB23MeqX0LoyjyWwyoGph4UasG
+ PyQWpa6E7DRS3RBTiekm4a5uuLILxy7mulAWCy6pM8OhJ6omRqq3Kq+kPqyVPV9P46/X
+ XQMGHUdKTvvbS4cwt7Wm1vJ2B2pldKxMLNX6JtS0Kv7TUOv2j8dzHhgdO6Lrpcpxd8+j
+ o8gLpYw7lplVFSNFVO5d95whocq0EtDFq0rprd7a1ufHBSKu4Brt2/Ojj8Jn4BrgRUPF
+ F9Kp+txredcv1H3Ft4A/ASsxLpsQ3GEBObqwJolwWwCQIgtoX9J2Q0Wk2Ik/qfCdYgdm
+ sHTw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmtctYFYxr7TdF+SA+Gk9rM3mrIfDn4mgC7V8CrbnOtsjhnn0NnLu2/FriOSZAsnl64IfJ/SFN5RrC@nongnu.org
+X-Gm-Message-State: AOJu0YzTK1IQjcb3Z6Eo3xyHFFx728ZOsrWG8JXHC29OzA0NC0UEMiJ8
+ pV9gh+Q1QT7GomiQ7Sd57f6GbL7P1nuPuOoJmwx4wh81VOvBnd/3P/KfGB7c+P9F8IvarhsIJd4
+ 4JbL39HtroCsqno+uWnKWozbUR49Iha28MoCRnaGUBp49S4qZk2TCSaXE
+X-Gm-Gg: ASbGnctZ2vSYq1JvIEt3Wkv3OAkwWgR4tbM9gkNWaOGR0bdKFQd9XdmswNlIeAtRBs4
+ V0AhBoFVKGnLig9VrOHsYwHsmU/jk9NQcVuVwXmXs/hm6+8MM81lrtXwRZsGjsKnOJkKVPC4R4n
+ m0lV4pa/3XpdfkVg2uMdHrQc2zJPLOmPSaeaSVe3P0m4cP+L+MhqK+vaDoU9IZ5cqcGBFO9xkJ1
+ kYq0eL2t+NYDEEGBmVFtixrqjRPjnn93VtqkaLCbmQ79T5/4Ok5GcSLfvD1wZpiml0niYQZYm6O
+ ego=
+X-Received: by 2002:a17:902:ccca:b0:221:751f:cfbe with SMTP id
+ d9443c01a7336-231d4e64450mr60747085ad.19.1747415679104; 
+ Fri, 16 May 2025 10:14:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGAJLwrBRwTmls6fpGl1V4dEm29+Sia2INJZp+/CBdWMhnV2+06yzacfliZhqHC++wAnTjeLg==
+X-Received: by 2002:a17:902:ccca:b0:221:751f:cfbe with SMTP id
+ d9443c01a7336-231d4e64450mr60746545ad.19.1747415678677; 
+ Fri, 16 May 2025 10:14:38 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4adbfd6sm16914205ad.67.2025.05.16.10.14.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 May 2025 10:14:38 -0700 (PDT)
+Date: Fri, 16 May 2025 13:14:32 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
  Alex Williamson <alex.williamson@redhat.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- John Levon <john.levon@nutanix.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4] vfio: return mr from vfio_get_xlat_addr
-Date: Fri, 16 May 2025 10:13:19 -0700
-Message-Id: <1747415599-131553-1-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-16_05,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0
- suspectscore=0 mlxscore=0 phishscore=0 mlxlogscore=999 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2505070000 definitions=main-2505160168
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE2OCBTYWx0ZWRfX22MfLSaR5OzS
- jlb2g2pQOmwh32nvea0A8+TOknRJfmr/ar3E68YxAvPzILigXAP9G+/tCIRZyxkiDgSm/zGt6Zy
- IxWHCYXCp3GtbHh8vNEw1aoVpwI7R8pB0YYOJMCO8VYY3I7UyhfYWd3ZOtf45yzAiiRypnbk+aA
- EbOcf87rKQBeGRcoi2OpXW3NMEIOTebOTjJf8tFWDCA2YRort1DbsWFDTqLZwSLnJr5RX2IMUTE
- ewS2A3p3yFHyoxx4VBjYYXjCqU+PF7GwIIvls7VZJ9xWt+hFrUz1dDLuQui1+C7ZA04X8Ckv7f9
- YZBS1xWZKEPlQnLUIp0Mt6dincF/a87KYdcDF5nUipoQay9QAWHmScaKO2XMhlbXULA/3lMvHKQ
- 477Q6qS0VnW937zV33qCHwkAW4MdbKc+3YWvU/zmcFaQ9gHWYEgTeDQcOlFDECVONiVD0Los
-X-Proofpoint-GUID: cwh2aia3AiWMofcSvkK31meE-gfuujZT
-X-Proofpoint-ORIG-GUID: cwh2aia3AiWMofcSvkK31meE-gfuujZT
-X-Authority-Analysis: v=2.4 cv=YqwPR5YX c=1 sm=1 tr=0 ts=68277231 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=QNV_3Zso053vk46vt-IA:9
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH V3 24/42] migration: close kvm after cpr
+Message-ID: <aCdyeKdIZaTqaEzY@x1.local>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-25-git-send-email-steven.sistare@oracle.com>
+ <9a664228-9a00-4387-b2d0-f7a428b52c75@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9a664228-9a00-4387-b2d0-f7a428b52c75@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
 X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,255 +115,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modify memory_get_xlat_addr and vfio_get_xlat_addr to return the memory
-region that the translated address is found in.  This will be needed by
-CPR in a subsequent patch to map blocks using IOMMU_IOAS_MAP_FILE.
+On Fri, May 16, 2025 at 10:35:44AM +0200, Cédric Le Goater wrote:
+> On 5/12/25 17:32, Steve Sistare wrote:
+> > cpr-transfer breaks vfio network connectivity to and from the guest, and
+> > the host system log shows:
+> >    irq bypass consumer (token 00000000a03c32e5) registration fails: -16
+> > which is EBUSY.  This occurs because KVM descriptors are still open in
+> > the old QEMU process.  Close them.
+> > 
 
-Also return the xlat offset, so we can simplify the interface by removing
-the out parameters that can be trivially derived from mr and xlat.
+[1]
 
-Lastly, rename the functions to  to memory_translate_iotlb() and
-vfio_translate_iotlb().
+> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> 
+> This patch doesn't build.
+> 
+> /usr/bin/ld: libcommon.a.p/migration_cpr.c.o: in function `cpr_kvm_close':
+> ./build/../migration/cpr.c:260: undefined reference to `kvm_close'
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- hw/vfio/listener.c      | 33 ++++++++++++++++++++++-----------
- hw/virtio/vhost-vdpa.c  |  9 +++++++--
- include/system/memory.h | 19 +++++++++----------
- system/memory.c         | 32 +++++++-------------------------
- 4 files changed, 45 insertions(+), 48 deletions(-)
+And it'll be also good if this patch can keep copying the kvm maintainer
+(Paolo)..  I have Paolo copied.  So this patch is more of a kvm change not
+migration, afaict.  Maybe we should split this into two patches.
 
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index bfacb3d..a4931f1 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -90,16 +90,17 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
-            section->offset_within_address_space & (1ULL << 63);
- }
- 
--/* Called with rcu_read_lock held.  */
--static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
--                               ram_addr_t *ram_addr, bool *read_only,
--                               Error **errp)
-+/*
-+ * Called with rcu_read_lock held.
-+ * The returned MemoryRegion must not be accessed after calling rcu_read_unlock.
-+ */
-+static MemoryRegion *vfio_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
-+                                          Error **errp)
- {
--    bool ret, mr_has_discard_manager;
-+    MemoryRegion *mr;
- 
--    ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
--                               &mr_has_discard_manager, errp);
--    if (ret && mr_has_discard_manager) {
-+    mr = memory_translate_iotlb(iotlb, xlat_p, errp);
-+    if (!mr && memory_region_has_ram_discard_manager(mr)) {
-         /*
-          * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
-          * pages will remain pinned inside vfio until unmapped, resulting in a
-@@ -118,7 +119,7 @@ static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-                          " intended via an IOMMU. It's possible to mitigate "
-                          " by setting/adjusting RLIMIT_MEMLOCK.");
-     }
--    return ret;
-+    return mr;
- }
- 
- static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-@@ -126,6 +127,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
-     VFIOContainerBase *bcontainer = giommu->bcontainer;
-     hwaddr iova = iotlb->iova + giommu->iommu_offset;
-+    MemoryRegion *mr;
-+    hwaddr xlat;
-     void *vaddr;
-     int ret;
-     Error *local_err = NULL;
-@@ -150,10 +153,14 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
-         bool read_only;
- 
--        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
-+        mr = vfio_translate_iotlb(iotlb, &xlat, &local_err);
-+        if (!mr) {
-             error_report_err(local_err);
-             goto out;
-         }
-+        vaddr = memory_region_get_ram_ptr(mr) + xlat;
-+        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
-+
-         /*
-          * vaddr is only valid until rcu_read_unlock(). But after
-          * vfio_dma_map has set up the mapping the pages will be
-@@ -1010,6 +1017,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     ram_addr_t translated_addr;
-     Error *local_err = NULL;
-     int ret = -EINVAL;
-+    MemoryRegion *mr;
-+    ram_addr_t xlat;
- 
-     trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
- 
-@@ -1021,9 +1030,11 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     }
- 
-     rcu_read_lock();
--    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
-+    mr = vfio_translate_iotlb(iotlb, &xlat, &local_err);
-+    if (!mr) {
-         goto out_unlock;
-     }
-+    translated_addr = memory_region_get_ram_addr(mr) + xlat;
- 
-     ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
-                                 translated_addr, &local_err);
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 1ab2c11..a1dd9e1 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -209,6 +209,8 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     int ret;
-     Int128 llend;
-     Error *local_err = NULL;
-+    MemoryRegion *mr;
-+    hwaddr xlat;
- 
-     if (iotlb->target_as != &address_space_memory) {
-         error_report("Wrong target AS \"%s\", only system memory is allowed",
-@@ -228,11 +230,14 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
-         bool read_only;
- 
--        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
--                                  &local_err)) {
-+        mr = memory_translate_iotlb(iotlb, &xlat, &local_err);
-+        if (!mr) {
-             error_report_err(local_err);
-             return;
-         }
-+        vaddr = memory_region_get_ram_ptr(mr) + xlat;
-+        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
-+
-         ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
-                                  iotlb->addr_mask + 1, vaddr, read_only);
-         if (ret) {
-diff --git a/include/system/memory.h b/include/system/memory.h
-index fbbf4cf..13416d7 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -738,21 +738,20 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
-                                              RamDiscardListener *rdl);
- 
- /**
-- * memory_get_xlat_addr: Extract addresses from a TLB entry
-+ * memory_translate_iotlb: Extract addresses from a TLB entry.
-+ *                         Called with rcu_read_lock held.
-  *
-  * @iotlb: pointer to an #IOMMUTLBEntry
-- * @vaddr: virtual address
-- * @ram_addr: RAM address
-- * @read_only: indicates if writes are allowed
-- * @mr_has_discard_manager: indicates memory is controlled by a
-- *                          RamDiscardManager
-+ * @xlat_p: return the offset of the entry from the start of the returned
-+ *          MemoryRegion.
-  * @errp: pointer to Error*, to store an error if it happens.
-  *
-- * Return: true on success, else false setting @errp with error.
-+ * Return: On success, return the MemoryRegion containing the @iotlb translated
-+ *         addr.  The MemoryRegion must not be accessed after rcu_read_unlock.
-+ *         On failure, return NULL, setting @errp with error.
-  */
--bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
--                          ram_addr_t *ram_addr, bool *read_only,
--                          bool *mr_has_discard_manager, Error **errp);
-+MemoryRegion *memory_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
-+                                     Error **errp);
- 
- typedef struct CoalescedMemoryRange CoalescedMemoryRange;
- typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
-diff --git a/system/memory.c b/system/memory.c
-index 63b983e..306e9ff 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2174,18 +2174,14 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
- }
- 
- /* Called with rcu_read_lock held.  */
--bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
--                          ram_addr_t *ram_addr, bool *read_only,
--                          bool *mr_has_discard_manager, Error **errp)
-+MemoryRegion *memory_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
-+                                     Error **errp)
- {
-     MemoryRegion *mr;
-     hwaddr xlat;
-     hwaddr len = iotlb->addr_mask + 1;
-     bool writable = iotlb->perm & IOMMU_WO;
- 
--    if (mr_has_discard_manager) {
--        *mr_has_discard_manager = false;
--    }
-     /*
-      * The IOMMU TLB entry we have just covers translation through
-      * this IOMMU to its immediate target.  We need to translate
-@@ -2195,7 +2191,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-                                  &xlat, &len, writable, MEMTXATTRS_UNSPECIFIED);
-     if (!memory_region_is_ram(mr)) {
-         error_setg(errp, "iommu map to non memory area %" HWADDR_PRIx "", xlat);
--        return false;
-+        return NULL;
-     } else if (memory_region_has_ram_discard_manager(mr)) {
-         RamDiscardManager *rdm = memory_region_get_ram_discard_manager(mr);
-         MemoryRegionSection tmp = {
-@@ -2203,9 +2199,6 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-             .offset_within_region = xlat,
-             .size = int128_make64(len),
-         };
--        if (mr_has_discard_manager) {
--            *mr_has_discard_manager = true;
--        }
-         /*
-          * Malicious VMs can map memory into the IOMMU, which is expected
-          * to remain discarded. vfio will pin all pages, populating memory.
-@@ -2216,7 +2209,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-             error_setg(errp, "iommu map to discarded memory (e.g., unplugged"
-                          " via virtio-mem): %" HWADDR_PRIx "",
-                          iotlb->translated_addr);
--            return false;
-+            return NULL;
-         }
-     }
- 
-@@ -2226,22 +2219,11 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-      */
-     if (len & iotlb->addr_mask) {
-         error_setg(errp, "iommu has granularity incompatible with target AS");
--        return false;
-+        return NULL;
-     }
- 
--    if (vaddr) {
--        *vaddr = memory_region_get_ram_ptr(mr) + xlat;
--    }
--
--    if (ram_addr) {
--        *ram_addr = memory_region_get_ram_addr(mr) + xlat;
--    }
--
--    if (read_only) {
--        *read_only = !writable || mr->readonly;
--    }
--
--    return true;
-+    *xlat_p = xlat;
-+    return mr;
- }
- 
- void memory_region_set_log(MemoryRegion *mr, bool log, unsigned client)
+Steve, you could attach a cc line in this patch to make sure it won't be
+forgotten when you repost (at [1] above, I think git-send-email would
+remember that then):
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+
+Some other questions below.
+
+> 
+> 
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
+> > ---
+> >   accel/kvm/kvm-all.c           | 28 ++++++++++++++++++++++++++++
+> >   hw/vfio/helpers.c             | 10 ++++++++++
+> >   include/hw/vfio/vfio-device.h |  2 ++
+> >   include/migration/cpr.h       |  2 ++
+> >   include/qemu/vfio-helpers.h   |  1 -
+> >   include/system/kvm.h          |  1 +
+> >   migration/cpr-transfer.c      | 18 ++++++++++++++++++
+> >   migration/cpr.c               |  8 ++++++++
+> >   migration/migration.c         |  1 +
+> >   9 files changed, 70 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> > index 278a506..d619448 100644
+> > --- a/accel/kvm/kvm-all.c
+> > +++ b/accel/kvm/kvm-all.c
+> > @@ -512,16 +512,23 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
+> >           goto err;
+> >       }
+> > +    /* If I am the CPU that created coalesced_mmio_ring, then discard it */
+
+Are these "reset to NULL" below required or cleanup?  It's not yet clear to
+me when coalesced_mmio_ring isn't owned by the current CPU state.  Maybe
+also better to split this chunk with some commit message?
+
+> > +    if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
+> > +        s->coalesced_mmio_ring = NULL;
+> > +    }
+> > +
+> >       ret = munmap(cpu->kvm_run, mmap_size);
+> >       if (ret < 0) {
+> >           goto err;
+> >       }
+> > +    cpu->kvm_run = NULL;
+> >       if (cpu->kvm_dirty_gfns) {
+> >           ret = munmap(cpu->kvm_dirty_gfns, s->kvm_dirty_ring_bytes);
+> >           if (ret < 0) {
+> >               goto err;
+> >           }
+> > +        cpu->kvm_dirty_gfns = NULL;
+> >       }
+> >       kvm_park_vcpu(cpu);
+> > @@ -600,6 +607,27 @@ err:
+> >       return ret;
+> >   }
+> > +void kvm_close(void)
+> > +{
+> > +    CPUState *cpu;
+> > +
+> > +    CPU_FOREACH(cpu) {
+> > +        cpu_remove_sync(cpu);
+> > +        close(cpu->kvm_fd);
+> > +        cpu->kvm_fd = -1;
+> > +        close(cpu->kvm_vcpu_stats_fd);
+> > +        cpu->kvm_vcpu_stats_fd = -1;
+> > +    }
+> > +
+> > +    if (kvm_state && kvm_state->fd != -1) {
+> > +        close(kvm_state->vmfd);
+> > +        kvm_state->vmfd = -1;
+> > +        close(kvm_state->fd);
+> > +        kvm_state->fd = -1;
+> > +    }
+> > +    kvm_state = NULL;
+> > +}
+> > +
+> >   /*
+> >    * dirty pages logging control
+> >    */
+> > diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+> > index d0dbab1..af1db2f 100644
+> > --- a/hw/vfio/helpers.c
+> > +++ b/hw/vfio/helpers.c
+> > @@ -117,6 +117,16 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
+> >   int vfio_kvm_device_fd = -1;
+> >   #endif
+> > +void vfio_kvm_device_close(void)
+> > +{
+> > +#ifdef CONFIG_KVM
+> > +    if (vfio_kvm_device_fd != -1) {
+> > +        close(vfio_kvm_device_fd);
+> > +        vfio_kvm_device_fd = -1;
+> > +    }
+> > +#endif
+> > +}
+> > +
+> >   int vfio_kvm_device_add_fd(int fd, Error **errp)
+> >   {
+> >   #ifdef CONFIG_KVM
+> > diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> > index 4e4d0b6..6eb6f21 100644
+> > --- a/include/hw/vfio/vfio-device.h
+> > +++ b/include/hw/vfio/vfio-device.h
+> > @@ -231,4 +231,6 @@ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
+> >   void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
+> >                         DeviceState *dev, bool ram_discard);
+> >   int vfio_device_get_aw_bits(VFIODevice *vdev);
+> > +
+> > +void vfio_kvm_device_close(void);
+> >   #endif /* HW_VFIO_VFIO_COMMON_H */
+> > diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> > index fc6aa33..5f1ff10 100644
+> > --- a/include/migration/cpr.h
+> > +++ b/include/migration/cpr.h
+> > @@ -31,7 +31,9 @@ void cpr_state_close(void);
+> >   struct QIOChannel *cpr_state_ioc(void);
+> >   bool cpr_needed_for_reuse(void *opaque);
+> > +void cpr_kvm_close(void);
+> > +void cpr_transfer_init(void);
+> >   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+> >   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+> > diff --git a/include/qemu/vfio-helpers.h b/include/qemu/vfio-helpers.h
+> > index bde9495..a029036 100644
+> > --- a/include/qemu/vfio-helpers.h
+> > +++ b/include/qemu/vfio-helpers.h
+> > @@ -28,5 +28,4 @@ void qemu_vfio_pci_unmap_bar(QEMUVFIOState *s, int index, void *bar,
+> >                                uint64_t offset, uint64_t size);
+> >   int qemu_vfio_pci_init_irq(QEMUVFIOState *s, EventNotifier *e,
+> >                              int irq_type, Error **errp);
+> > -
+> >   #endif
+> > diff --git a/include/system/kvm.h b/include/system/kvm.h
+> > index b690dda..cfaa94c 100644
+> > --- a/include/system/kvm.h
+> > +++ b/include/system/kvm.h
+> > @@ -194,6 +194,7 @@ bool kvm_has_sync_mmu(void);
+> >   int kvm_has_vcpu_events(void);
+> >   int kvm_max_nested_state_length(void);
+> >   int kvm_has_gsi_routing(void);
+> > +void kvm_close(void);
+> >   /**
+> >    * kvm_arm_supports_user_irq
+> > diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
+> > index e1f1403..396558f 100644
+> > --- a/migration/cpr-transfer.c
+> > +++ b/migration/cpr-transfer.c
+> > @@ -17,6 +17,24 @@
+> >   #include "migration/vmstate.h"
+> >   #include "trace.h"
+> > +static int cpr_transfer_notifier(NotifierWithReturn *notifier,
+> > +                                 MigrationEvent *e,
+> > +                                 Error **errp)
+> > +{
+> > +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
+> > +        cpr_kvm_close();
+> > +    }
+> > +    return 0;
+> > +}
+> > +
+> > +void cpr_transfer_init(void)
+> > +{
+> > +    static NotifierWithReturn notifier;
+> > +
+> > +    migration_add_notifier_mode(&notifier, cpr_transfer_notifier,
+> > +                                MIG_MODE_CPR_TRANSFER);
+> > +}
+> > +
+> >   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
+> >   {
+> >       MigrationAddress *addr = channel->addr;
+> > diff --git a/migration/cpr.c b/migration/cpr.c
+> > index 0b01e25..6102d04 100644
+> > --- a/migration/cpr.c
+> > +++ b/migration/cpr.c
+> > @@ -7,12 +7,14 @@
+> >   #include "qemu/osdep.h"
+> >   #include "qapi/error.h"
+> > +#include "hw/vfio/vfio-device.h"
+> >   #include "migration/cpr.h"
+> >   #include "migration/misc.h"
+> >   #include "migration/options.h"
+> >   #include "migration/qemu-file.h"
+> >   #include "migration/savevm.h"
+> >   #include "migration/vmstate.h"
+> > +#include "system/kvm.h"
+> >   #include "system/runstate.h"
+> >   #include "trace.h"
+> > @@ -252,3 +254,9 @@ bool cpr_needed_for_reuse(void *opaque)
+> >       MigMode mode = migrate_mode();
+> >       return mode == MIG_MODE_CPR_TRANSFER;
+> >   }
+> > +
+> > +void cpr_kvm_close(void)
+> > +{
+> > +    kvm_close();
+> > +    vfio_kvm_device_close();
+> > +}
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 4697732..89e2026 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -337,6 +337,7 @@ void migration_object_init(void)
+> >       ram_mig_init();
+> >       dirty_bitmap_mig_init();
+> > +    cpr_transfer_init();
+> >       /* Initialize cpu throttle timers */
+> >       cpu_throttle_init();
+> 
+
 -- 
-1.8.3.1
+Peter Xu
 
 
