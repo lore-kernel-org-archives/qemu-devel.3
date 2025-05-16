@@ -4,118 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96015C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54C86C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFxET-0002my-6w; Fri, 16 May 2025 11:44:21 -0400
+	id 1uFxRG-0008PS-1K; Fri, 16 May 2025 11:57:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFxEP-0002k5-MM; Fri, 16 May 2025 11:44:17 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1uFxRF-0008PE-1W
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:57:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uFxEN-0000pV-Ej; Fri, 16 May 2025 11:44:17 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GE40dQ009624;
- Fri, 16 May 2025 15:44:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=a+CKyfyir1r9EXN+wGH01d6OgduDNizIWOTUoJDEaYk=; b=jK9ibJ0jxZkK
- IokFypx3HEekB73fV/o1HyiPkXngAXK/oaMgpVtGzcE3l8wDrFUWYa3v7YDFTZ4s
- OM50giYS3QXAFoOc/ksSceUjjj5LSL3exN36ShAWsOhX7KavWddRmRJJtVmJrQhT
- nYqGqHaK1FWeAkfCeH10dJL5ImrAvM5/3m3luKwGG5/hnvkb04tkCPPxfR8ohj1T
- Wj3TaAVjlVn1aVD2Ow/mzFX7aBhLnc/ZNd680cTYx4Z0LtR2AxOvSkol2MJFrWw5
- fgJLrCKDS0lUP/IgAu8MIXlO99sFDL3l+IL60cfvE7q45ie7vJYf9EHSMtNgmRac
- pOAj/qeHEQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46nny7cw6h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 16 May 2025 15:44:10 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54GFaTwM020580;
- Fri, 16 May 2025 15:44:10 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46nny7cw6e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 16 May 2025 15:44:10 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54GEdQI5021861;
- Fri, 16 May 2025 15:44:09 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46mbfq0896-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 16 May 2025 15:44:09 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54GFi4Kc25756190
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 16 May 2025 15:44:04 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 23C015805B;
- Fri, 16 May 2025 15:44:08 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 836B458058;
- Fri, 16 May 2025 15:44:07 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 16 May 2025 15:44:07 +0000 (GMT)
-Message-ID: <5b2ea8edf2f437b78e90fe3bcd9a78083fd652c0.camel@linux.ibm.com>
-Subject: Re: [PATCH 17/50] pnv/xive2: Support ESB Escalation
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
- <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
- Schlossin <calebs@linux.vnet.ibm.com>, Glenn Miles
- <milesg@linux.vnet.ibm.com>
-Date: Fri, 16 May 2025 10:44:07 -0500
-In-Reply-To: <D9X5A3I88C2Q.29RV6YVBVYJ27@gmail.com>
-References: <20250512031100.439842-1-npiggin@gmail.com>
- <20250512031100.439842-18-npiggin@gmail.com>
- <D9X5A3I88C2Q.29RV6YVBVYJ27@gmail.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -I0UXD-_vHbq8XJHayfA4xyCMzdiEgEs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE1MiBTYWx0ZWRfXxQ8rdJn34du9
- S8eAixs2HxcE/NF/QPVCIv5XqJyv0lO053nRPY4XSxkgYmmyEUFtG+oKlwDGSMnAL6UpLiK6DD5
- U0GpDBrci+Z1wGdBcC+dSIxKF4ueei5RdKeVJJgU1bh/71SipGQphJu6PvLYzlkmlkQy0Hz4FDP
- O334UCJaJGCTFM3ZSGij68PMye2pYGDeCJ4iTlmsD3hOeHgHXlQvC9XgT7qIIu+9WDnVg4lo3if
- 1cX2VdE+NURVMERXaI0GNtKzHe07IE990Cd2XVmnbZwaGCkTkBtSk9fpt6DdVqny9p5QFlJs18H
- 3SlZln5fwMNAErtXUrJB2pBSaz76wdEWNUSaMHeNj62I0MvQB1gBDmX0u+wCT1A1mKRL/bYy5Xk
- XTbfVcbYe6xB+pznSapEvEZM1rtS7wbuXFh+RkjnvBNu6NnJTu+7644Eu4NLlHHRxHmOflmS
-X-Proofpoint-GUID: kyevCz5mbEyNfgxyHDsJcEaBhZ92K62t
-X-Authority-Analysis: v=2.4 cv=CfwI5Krl c=1 sm=1 tr=0 ts=68275d4a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8
- a=VnNF1IyMAAAA:8 a=_1rhKVqMUZJ76mWlyvYA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-16_05,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- spamscore=0 adultscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505160152
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1uFxRD-0002c5-5M
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:57:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747411046;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=G6DqREFKwwgteXyKP7TZSmDj4NshSV+PmyQk9X+XziE=;
+ b=gUlwZsWZuQLhHnijDks+LYla2hxAartsiTwNTXLAoY1hm24D1vJGR1+OXRp5iBMO5x64Ho
+ Nh8cKm/rIj7PpdiHe0IP/Jh7injd31ysFJF58rYcyQLN4ERaRDDh5qci/RUkv7A4/qB+zk
+ OSoXETLz3v7hKG61hOo5SJbc1IHY14k=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-KIyHrEhgNLSyKhXrMgATZA-1; Fri,
+ 16 May 2025 11:57:25 -0400
+X-MC-Unique: KIyHrEhgNLSyKhXrMgATZA-1
+X-Mimecast-MFC-AGG-ID: KIyHrEhgNLSyKhXrMgATZA_1747411044
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A70819560BC; Fri, 16 May 2025 15:57:24 +0000 (UTC)
+Received: from fedora.brq.redhat.com (unknown [10.43.2.64])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 777B318003FC; Fri, 16 May 2025 15:57:22 +0000 (UTC)
+From: Juraj Marcin <jmarcin@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 0/7] util/qemu-sockets: Introduce inet socket options
+ controlling TCP keep-alive
+Date: Fri, 16 May 2025 17:56:52 +0200
+Message-ID: <20250516155710.2246148-1-jmarcin@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -130,89 +81,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-05-16 at 10:05 +1000, Nicholas Piggin wrote:
-> On Mon May 12, 2025 at 1:10 PM AEST, Nicholas Piggin wrote:
-> > From: Glenn Miles <milesg@linux.vnet.ibm.com>
-> > 
-> > Add support for XIVE ESB Interrupt Escalation.
-> > 
-> > Suggested-by: Michael Kowal <kowal@linux.ibm.com>
-> > [This change was taken from a patch provided by Michael Kowal.]
-> > Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
-> > ---
-> >  hw/intc/xive2.c             | 62 ++++++++++++++++++++++++++++++-------
-> >  include/hw/ppc/xive2.h      |  1 +
-> >  include/hw/ppc/xive2_regs.h | 13 +++++---
-> >  3 files changed, 59 insertions(+), 17 deletions(-)
-> > 
-> > diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> > index de139dcfbf..0993e792cc 100644
-> > --- a/hw/intc/xive2.c
-> > +++ b/hw/intc/xive2.c
-> > @@ -1552,18 +1552,39 @@ do_escalation:
-> >          }
-> >      }
-> >  
-> > -    /*
-> > -     * The END trigger becomes an Escalation trigger
-> > -     */
-> > -    xive2_router_end_notify(xrtr,
-> > -                           xive_get_field32(END2_W4_END_BLOCK,     end.w4),
-> > -                           xive_get_field32(END2_W4_ESC_END_INDEX, end.w4),
-> > -                           xive_get_field32(END2_W5_ESC_END_DATA,  end.w5));
-> > +    if (xive2_end_is_escalate_end(&end)) {
-> > +        /*
-> > +         * Perform END Adaptive escalation processing
-> > +         * The END trigger becomes an Escalation trigger
-> > +         */
-> > +        xive2_router_end_notify(xrtr,
-> > +                               xive_get_field32(END2_W4_END_BLOCK,     end.w4),
-> > +                               xive_get_field32(END2_W4_ESC_END_INDEX, end.w4),
-> > +                               xive_get_field32(END2_W5_ESC_END_DATA,  end.w5));
-> > +    } /* end END adaptive escalation */
-> > +
-> > +    else {
-> > +        uint32_t lisn;              /* Logical Interrupt Source Number */
-> > +
-> > +        /*
-> > +         *  Perform ESB escalation processing
-> > +         *      E[N] == 1 --> N
-> > +         *      Req[Block] <- E[ESB_Block]
-> > +         *      Req[Index] <- E[ESB_Index]
-> > +         *      Req[Offset] <- 0x000
-> > +         *      Execute <ESB Store> Req command
-> > +         */
-> > +        lisn = XIVE_EAS(xive_get_field32(END2_W4_END_BLOCK,     end.w4),
-> > +                        xive_get_field32(END2_W4_ESC_END_INDEX, end.w4));
-> > +
-> > +        xive2_notify(xrtr, lisn, true /* pq_checked */);
-> 
-> Sorry I forgot to squash in a fix for the issues here. These should be
-> _ESB_ constants not _END_, and we believe pq_checked should be false
-> here so the ESB state machine is run.
-> 
-> https://lore.kernel.org/qemu-devel/D8CFK7Z5AJF8.ALT8MMH6EYYT@gmail.com/
-> 
-> I think we took discussion offline after that but that was the
-> conclusion. I will sqash that fix in here. With that,
-> 
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-> 
-> I also wonder if Mike should be author of this patch since
-> that's what the note indicates? Or co-author? Better give your
-> Signed-off-by too, if so.
-> 
-> Thanks,
-> Nick
+This series extends the work introduced by commit aec21d3175 ("qapi: Add
+InetSocketAddress member keep-alive"). [1]
 
-Yes, this commit was taken verbatim from a diff that Mike Kowal
-provided me.  I think he certainly deserves the credit.  I wasn't sure
-how to do that.
+First, the series fixes an issue in qio_dns_resolver_lookup_sync_inet(),
+where the InetSocketAddress structure is only partially copied. Next, it
+refactors setting client socket options into a separate function and the
+success and failure paths in inet_listen_saddr() in preparation for
+keep-alive support on server sockets and the addition of new TCP
+keep-alive options.
 
-Glenn
+Then, the series extends the support for keep-alive on server sockets.
+
+Before adding new inet address options, there are a couple of issues
+with the inet address options parsing this series resolves:
+- the parser contains a bug where it does not allow options with names that
+  start with the name of another flag,
+- the parser lacks some common function for parsing numeric values,
+- the parser supports only a subset of the inet address options, namely
+  the 'numeric' flag is missing.
+This is resolved by the sixth patch by reworking with parser using the
+QemuOpts parser. The series also includes unit tests to verify, there is
+no regression in the refactored parser.
+
+Finally, the series introduces three new InetSocketAddress options for
+the control of TCP keep-alive settings. By default, the value of all new
+settings is 0, which means no custom socket option value is set.
+
+This is useful, for example, for live migration. In case there is no
+traffic from the destination to the source machine during postcopy, the
+destination cannot detect a failed connection due to a lack of
+non-acknowledged packets and stays in the postcopy-active state until
+paused by the management of the QEMU instance.
+
+[1]: https://lore.kernel.org/all/20190725094937.32454-1-vsementsov@virtuozzo.com/
+
+---
+V4:
+- refactored inet_parse() to use QemuOpts, this resolves a bug and
+  allows more option types, with tests
+- fixed HAVE_TCP_* macros on Windows and macOS and other suggestions by
+  Daniel
+
+V3:
+https://lore.kernel.org/all/20250408112508.1638722-1-jmarcin@redhat.com/
+- moved the InetSocketAddress struct copy fix and the common function
+  setting socket options into a separate commit
+- refactored inet_listen_saddr()
+
+V2:
+https://lore.kernel.org/all/20250319163638.456417-1-jmarcin@redhat.com/
+- moved socket options setting into a common function for both server
+  and client sockets (suggested by Vladimir)
+
+V1:
+https://lore.kernel.org/all/20250303143312.640909-1-jmarcin@redhat.com/
+
+Juraj Marcin (7):
+  io: Fix partial struct copy in qio_dns_resolver_lookup_sync_inet()
+  util/qemu-sockets: Refactor setting client sockopts into a separate
+    function
+  util/qemu-sockets: Refactor success and failure paths in
+    inet_listen_saddr()
+  util/qemu-sockets: Add support for keep-alive flag to passive sockets
+  tests/unit/test-util-sockets: Add tests for inet_parse()
+  util/qemu-sockets: Refactor inet_parse() to use QemuOpts
+  util/qemu-sockets: Introduce inet socket options controlling TCP
+    keep-alive
+
+ io/dns-resolver.c              |  21 +--
+ meson.build                    |  30 +++
+ qapi/sockets.json              |  23 ++-
+ tests/unit/test-util-sockets.c | 196 ++++++++++++++++++++
+ util/qemu-sockets.c            | 330 ++++++++++++++++++++-------------
+ 5 files changed, 458 insertions(+), 142 deletions(-)
+
+-- 
+2.49.0
 
 
