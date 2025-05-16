@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A76C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 07:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 468BAC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 07:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFpO7-0003bH-Kt; Fri, 16 May 2025 03:21:48 -0400
+	id 1uFpRT-0004XJ-Dd; Fri, 16 May 2025 03:25:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFpO3-0003aO-1D
- for qemu-devel@nongnu.org; Fri, 16 May 2025 03:21:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFpRL-0004Ts-Ox
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 03:25:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFpO0-00066t-Io
- for qemu-devel@nongnu.org; Fri, 16 May 2025 03:21:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uFpRK-0006UA-5k
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 03:25:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747380097;
+ s=mimecast20190719; t=1747380305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=U/C21OTWciIvl2Rb2L+gEytf1UagDO81HkPYQ7SQwzg=;
- b=USyo+buUUY7F59XuQFAVU6FWTpqpzO8ZrZBb2590Qy74CZrqNh2oLYQYkHrB7ANgrhhH7d
- NwC4LhNLFA0Q/5XqYfG/vYKk+yl6uC8JFs9/Ji1q5p3cDOxWJWQB/h5Okr12CfpGIXnUJl
- lhnJQ5pUHPAbg41fX/N22A3JXLqBre0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eSAnGQhYKpKgFL66orC7+rsOCkKK/O7bRDjGT4hqM8I=;
+ b=c+e6to0QQe7BTkGa+xIyHRhAcytC78163P+KJysgXAq8gu6Kqmsk29NK/a7+L0emzfKYgZ
+ h7HFrdDLVyDYwLwEsDJudZn5MuXmPtQLtGk+ebEPllS3DxNNt7XowTZSCQpHNIuLphbNlw
+ 2d9nvewGIDt/+tk8TQaYDL5dyARbgSU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-JjZ4wZabNs6Uex5Y7BKgdQ-1; Fri, 16 May 2025 03:21:35 -0400
-X-MC-Unique: JjZ4wZabNs6Uex5Y7BKgdQ-1
-X-Mimecast-MFC-AGG-ID: JjZ4wZabNs6Uex5Y7BKgdQ_1747380094
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d209dc2d3so10552495e9.3
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 00:21:35 -0700 (PDT)
+ us-mta-384-qk5XFT1nPVac1yPxR9v0wg-1; Fri, 16 May 2025 03:25:02 -0400
+X-MC-Unique: qk5XFT1nPVac1yPxR9v0wg-1
+X-Mimecast-MFC-AGG-ID: qk5XFT1nPVac1yPxR9v0wg_1747380301
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a34f19c977so854290f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 00:25:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747380094; x=1747984894;
+ d=1e100.net; s=20230601; t=1747380301; x=1747985101;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=U/C21OTWciIvl2Rb2L+gEytf1UagDO81HkPYQ7SQwzg=;
- b=Yin9wUh66ggXJrceaqpVQmwxVEf9/GuhtpuqkNBRqgFuPVYuTtQIzN6DYQ0GXu+jGd
- JwJ5tdaZ8MjDyWpEAsoj1XoytBwz3I06lI73uVPQbz047os1FoJuAIacxqoL7xQFu467
- Onysd0WNfinuJ2+qjg+X3tqCZXISrcCoZ3hHZ8q0T03RFPUgiK6dWKUbfSJ8MINLKHSD
- 1BQOTR/v2rFoHBbWRRV8Mu0HeNw4K77h0yJ2EBq0LlLC6BOGiS/ZKmGu3aHeLuTKQ+/Q
- WSQJti6KIxLKDX40QUEcIInHrkcUTKhe7oxNl8tcRktfgaOFo4VblZ8xpUQwvzZJuv22
- 6FmQ==
-X-Gm-Message-State: AOJu0YyJMDA5rSTdcSAm0j+ql2NKDq5RZTGh8WHMf2jWHUNMhWjHnAch
- shFb6nRaucYuDYvGx487O4mOHXDEGDajlXYYH27ThuVj/TxSP+ipgxMPqNF+VUh+jSG22YGattC
- ORjR4iMAJgtiy3YjqQwDq3aau29E9DUGoduypGK/QhtxmpajasdX2Du20
-X-Gm-Gg: ASbGnctF+C7JWWrLDhTlK6OspwP11zii9U/Fyct6ap/CK01TitxXs426DCXXDdhB+mX
- jiX4WwNen05aQ3jw7GFMVkzu7QkcSMjO52ldyvS8PrqYcCvnUY3qxi1o1W2FSk8lPkiMkTIhbGz
- Jn3RRM39BmfrZberRKl3x4p0PNWWvPZQcLwWZnaua3nh4ANBGDVpJ46wClLC0j2UWLZXBXHTiaS
- +UMFCOVrhnQId7MjAn999LvV/oMlsrO2Hw5sB8B591ZrGeR07TsHLRhDdzbckenkhZmlZvtKjSg
- /bLMlPyZoa3gz8Worx0e/UA+Dn8Ioy2uoxMK0Yfg1jk=
-X-Received: by 2002:a05:600c:4e42:b0:43c:e70d:4504 with SMTP id
- 5b1f17b1804b1-442fd64dfccmr20950905e9.19.1747380094374; 
- Fri, 16 May 2025 00:21:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHlg+zlEZz+UqvcHOpJrj5NtADRjGE92C88PCrlAeLRmlvZu6HXOOSEbCZ8eea58DhVPtBOhw==
-X-Received: by 2002:a05:600c:4e42:b0:43c:e70d:4504 with SMTP id
- 5b1f17b1804b1-442fd64dfccmr20950635e9.19.1747380093951; 
- Fri, 16 May 2025 00:21:33 -0700 (PDT)
+ bh=eSAnGQhYKpKgFL66orC7+rsOCkKK/O7bRDjGT4hqM8I=;
+ b=Pbdg1AduBdAQ9D2jJsDbuOjCBnuLRwEWaeSxJNftVTuNt7DNS37d2AiYYNxH7DPQwq
+ d8PCV8T6SjND5ckduBMEwsAUFqxF5KdzCeksWMIgLm2Sb009XfhKYS4/69ZvDklMB9sv
+ P31QafGl5AS0T4eXtoRqWo4OVtjFrSB/mOQL1c8m0G23XxP3dpT/2igAifGRrUWVdLlV
+ pP+gHa/tzC3xMbeqD/Ra7gQlyC41S4lXAsoAYQUbvjt6XoVMLYwkeQmVmdLRaVivOKOD
+ Ly+FBezVdNFxanDaN7kOYne37Z0GHBjePQDul5tQI+EuG4s3+22dxN8J+FXP4Qyd+160
+ RgGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUc0mVED1x2XhOwTE3kIyJSRXcm14N+CadJCCUWuM917ugXx+bIi6DJACIYR7IQjLX60E63SZADj0Qh@nongnu.org
+X-Gm-Message-State: AOJu0YxqbqjPX/9TmqF9PMShcAt+bYavwH3ERBjKWju/v/0BEfN7ZDs8
+ 3CNcWtl0owWAVgqQIuFYiO43nYlaGuHHV4gf4t9evVIt4Iu2ZeMMskV2ZTCxl8wmVFX2aNLxM83
+ GzfUIEnr0wMhTiEJqaUgzgbSelSFI6cGfcaUpGFg5L9Q2+i8ebxHs1X7e
+X-Gm-Gg: ASbGncuZuMXMqjRAou5B2/yF0uNGc00PQdZYjkm3LB5883b0OLIbsB5kBU4b/0EEVzJ
+ 7rLtpWQqGdG4e8FS+jT32b3iNyLR9mm2w2dDh53D0NHaZRofTyGscKEEqlekiptcM8KLqaPBxN9
+ PoNTzkVKeHhqNnFsXj5MWVTs9/p+iHXh+JYBaXP/a5MWklkt2g9Ho/BgTFqa5owuCFcCGvEdcBY
+ 52/BK9G68P2OXVyQSfC4FWE8/z461hoKUwR1URbpBKZd5TqMxduWsz0DTWZ7SDpRfnCn38neIYR
+ 9JksWhWHbcMt498FdIm5qACfqn6KqJWQ9ZVHKAUg6YU=
+X-Received: by 2002:a05:6000:1acc:b0:3a0:8524:b480 with SMTP id
+ ffacd0b85a97d-3a35119b98fmr5694046f8f.2.1747380301285; 
+ Fri, 16 May 2025 00:25:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJTcHvywGXDKmB92HMsF2oA+4YtKBmrPVQtYWQK106mroBAtc4pzvZEBxDQtf/IfCwkZ3EvQ==
+X-Received: by 2002:a05:6000:1acc:b0:3a0:8524:b480 with SMTP id
+ ffacd0b85a97d-3a35119b98fmr5694034f8f.2.1747380300955; 
+ Fri, 16 May 2025 00:25:00 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-48-129.web.vodafone.de.
  [109.42.48.129]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442f33691fdsm99826425e9.5.2025.05.16.00.21.32
+ 5b1f17b1804b1-442fd4fdc73sm24064585e9.2.2025.05.16.00.24.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 00:21:33 -0700 (PDT)
-Message-ID: <a0d4dd1b-19e8-4b18-85c3-57f867993d69@redhat.com>
-Date: Fri, 16 May 2025 09:21:32 +0200
+ Fri, 16 May 2025 00:25:00 -0700 (PDT)
+Message-ID: <09e3b668-3956-4e77-b189-e86fcbb2da7f@redhat.com>
+Date: Fri, 16 May 2025 09:24:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: iotest 240 is failing
+Subject: Re: [PATCH 0/6] single-binary: build target common libraries with
+ dependencies
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, berrange@redhat.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
-To: qemu-block@nongnu.org, stefanha@redhat.com, Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>
-References: <20250311160021.349761-1-kwolf@redhat.com>
- <20250311160021.349761-21-kwolf@redhat.com>
- <a6b01ce7-e1a0-46bc-8c12-f3e439486f82@redhat.com>
- <8cb149ee-57fe-4e67-8ab9-f95244ebcb33@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -125,9 +130,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <8cb149ee-57fe-4e67-8ab9-f95244ebcb33@redhat.com>
+In-Reply-To: <20250516052708.930928-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
@@ -137,7 +142,7 @@ X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.686,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,60 +158,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/04/2025 11.39, Thomas Huth wrote:
-> On 26/03/2025 11.43, Thomas Huth wrote:
->> On 11/03/2025 17.00, Kevin Wolf wrote:
->>> From: Stefan Hajnoczi <stefanha@redhat.com>
->>>
->>> Allow virtio-scsi virtqueues to be assigned to different IOThreads. This
->>> makes it possible to take advantage of host multi-queue block layer
->>> scalability by assigning virtqueues that have affinity with vCPUs to
->>> different IOThreads that have affinity with host CPUs. The same feature
->>> was introduced for virtio-blk in the past:
->>> https://developers.redhat.com/articles/2024/09/05/scaling-virtio-blk- 
->>> disk- io-iothread-virtqueue-mapping
->>
->>   Hi Stefan!
->>
->> This patch seems to cause some troubles with iotest 240 in raw (and some 
->> other) mode:
->>
->> 240   fail       [11:41:33] [11:41:34]   0.8s   (last: 0.8s)  output 
->> mismatch (see tests/qemu-iotests/scratch/raw-file-240/240.out.bad)
->> --- tests/qemu-iotests/240.out
->> +++ tests/qemu-iotests/scratch/raw-file-240/240.out.bad
->> @@ -46,11 +46,11 @@
->>   {"execute": "device_add", "arguments": {"bus": "scsi0.0", "drive": 
->> "hd0", "driver": "scsi-hd", "id": "scsi-hd0"}}
->>   {"return": {}}
->>   {"execute": "device_add", "arguments": {"bus": "scsi1.0", "drive": 
->> "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
->> -{"error": {"class": "GenericError", "desc": "Cannot change iothread of 
->> active block backend"}}
->> +{"return": {}}
->>   {"execute": "device_del", "arguments": {"id": "scsi-hd0"}}
->>   {"return": {}}
->>   {"execute": "device_add", "arguments": {"bus": "scsi1.0", "drive": 
->> "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
->> -{"return": {}}
->> +{"error": {"class": "GenericError", "desc": "Duplicate device ID 'scsi- 
->> hd1'"}}
->>   {"execute": "device_del", "arguments": {"id": "scsi-hd1"}}
->>   {"return": {}}
->>   {"execute": "blockdev-del", "arguments": {"node-name": "hd0"}}
->> Failures: 240
->> Failed 1 of 1 iotests
->>
->> Could you please have a look?
+On 16/05/2025 07.27, Pierrick Bouvier wrote:
+> Recently, common libraries per target base architecture were introduced in order
+> to compile those files only once. However, it was missing common dependencies
+> (which include external libraries), so it failed to build on some hosts.
 > 
-> Ping!
+> This series fixes this, inspired by Thomas fix [1],
+
+Actually, credits should go to Paolo who came up with the meson magic :-)
+
+> and applied to other
+> libraries introduced very recently with [2].
 > 
-> The problem still persists in QEMU 10.0 :-(
+> As well, we do further cleanup by removing lib{system, user} source sets that
+> were recently introduced, by merging them in system/user libraries, thus
+> simplifying the work on single-binary.
+> 
+> This series was built on {linux, macos, windows} x {x86_64, aarch64} and
+> freebsd on x86_64. Fully tested on linux x {x86_64, aarch64}.
+> In addition to that, it was checked that compilation units compiled per binary
+> stayed the same, and that their size was identical.
 
-Ping^2 !
+Thanks, works for me, on both, Linux and OpenBSD:
 
-It's still failing. Could anybody please have a look?
-
-  Thomas
+Tested-by: Thomas Huth <thuth@redhat.com>
 
 
