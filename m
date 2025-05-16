@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8F8C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5828BC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 15:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFwsJ-0004yg-4q; Fri, 16 May 2025 11:21:27 -0400
+	id 1uFwxK-0001d2-C5; Fri, 16 May 2025 11:26:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFwsH-0004yM-N3
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:21:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFwxF-0001Wo-Fp
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:26:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFwsD-0006OJ-MN
- for qemu-devel@nongnu.org; Fri, 16 May 2025 11:21:24 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uFwxC-00072T-Gn
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 11:26:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747408879;
+ s=mimecast20190719; t=1747409189;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wFggqDWzMVFII9BooOwcYa/wOnzTJLJ6eiZQgD132/Y=;
- b=gCh/GuZecNysnSDHnBNZShwRyAgCVe/OVYVj0AhGfnLS+ER5Pg+bNx+ZocZ95a2pa8GK9t
- eQSlqbMYw6cgCgVT3v/NtA7xpEaGQ2WRfWrPiv855wFb68ktxuxKqjfgwe9eXWFORLLtfb
- hfK/otFm/LljwTaD/njNIt2o939Ly6A=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kW3dM5gJwsQlhYtS1huj3HNc1vWq0s4r62/aB5W/PCo=;
+ b=OQOkzXh/asPG0WVaFZ5TnZ/iApaWytsjUCkIwlJy0Z8T5A4dVD6hbwD+EiyHKUgEuz85fw
+ msK3IwleFa+mTFoToKXZB/Xo54xxusgX44xExbphmzfHANlhUu7VzmLmCd9xlwEXQ0/5nd
+ DLExU8+FLkAJDR5QjuT1Rf3XiwClp9A=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-P_LdyJwOOjm79I9pVROSXw-1; Fri, 16 May 2025 11:21:17 -0400
-X-MC-Unique: P_LdyJwOOjm79I9pVROSXw-1
-X-Mimecast-MFC-AGG-ID: P_LdyJwOOjm79I9pVROSXw_1747408877
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-442e0e6eb84so15477135e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 08:21:17 -0700 (PDT)
+ us-mta-223-RaS9M-kfNzufC79zbyuk7g-1; Fri, 16 May 2025 11:26:25 -0400
+X-MC-Unique: RaS9M-kfNzufC79zbyuk7g-1
+X-Mimecast-MFC-AGG-ID: RaS9M-kfNzufC79zbyuk7g_1747409185
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-44059976a1fso10080865e9.1
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 08:26:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747408876; x=1748013676;
+ d=1e100.net; s=20230601; t=1747409184; x=1748013984;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wFggqDWzMVFII9BooOwcYa/wOnzTJLJ6eiZQgD132/Y=;
- b=awZePL07wKoKi8W2XHi4oYniUno+B9yjcIwdcZ1jghsSLxu4pFog1tOSIQATN4oBiq
- +roBuHV5FIOTVseIasViq0EvQHP+4aeC13vqdqhiZOCrc/99oTKOUxgIAJ6sZyRaDvkY
- sCI9nvOeGR70msDwFTd7XEhpuCkz634AuZ974YIQEwHzAFm7/YklxuQoVi6x/NNUJP93
- WlLiCwW+XdJ6IQUquq6YGelUZNcnV/P0wpaMuHbMcUCwyjxiKss0/aOhhs0ANO/gcFNk
- JR2PKq2+TEUcY7LjUkrLBRFcVtdWWAbi6935CYGTLAIpZnZzAhssthYfONBrdNMKyxV9
- q5og==
+ bh=kW3dM5gJwsQlhYtS1huj3HNc1vWq0s4r62/aB5W/PCo=;
+ b=M+6tmwuR40bQfxkr6qOvDyVyeK+m4iX3yZbYPQwHnSUKYL20XLbSyJGVUvMayNKh0P
+ 7x2m/WXORG2vcpohAHawffzIylCtC1Eq0seyvCwEENGyUBh4nzze5vlkipS5Q9ppgzrg
+ dpw+YYV2id+VMlIZWjk2pEdIRtV2DEV1ZbrKf5hYRbU0en3ccM5DFmWr6CnmW5oq1YNp
+ DR+lcu3As9xg1rBkFQbnCrrPAmXHBEkN2D5gxcwqAea/UHqEnm9/1Fldpr6OHZFEYZv8
+ Db2yhSkQXmZZoYO5ZgPZ8o/oj+6D+9jONNjAOy/PY5OhO4Kes2n6M40G+xaVVa54ZzfZ
+ 4X5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVAXlzCFpvloECmJtdJZIwqbp43y4bpi6EbVFRBbuqjipRGZ77FkUGluy2Sg3vr/QmaxfNnaWiCNrQN@nongnu.org
-X-Gm-Message-State: AOJu0YzoXxF1ZUt9XaNp1wOZmVEp61HX9hMV1Favm7SGvoI2AVYqNGhY
- fc6kJgwkeoNWZPlt9WCQKnAM38X9vKJfiib9/ss6aLZk3iTWfGpNucgpbgXWRUKpZGRCNDu59fq
- 6ZKOm4M4UbcPcdqwFKFJbMKf0VTsPzinmiU4Ejx9elV/IWWfSM22XawqGttOHkvi+7bY=
-X-Gm-Gg: ASbGncsprNNTIbGbjwfncqnd15N7z1oIb2rvxi3sFoo7MdVGAOeRzBZz7jT2fVWgo5R
- AX1lSzHgL8c4U27jv7ujkFuZOfhd5fVG9UyOZfMshqAQp5DVsIFuhTi7Cyih+Wz7Lqnyen8B60k
- trbqjYv4IBoW6lhlK146D4n4KIo/ziPp5sXvq2dgRU9Sx2rQRzLgYCPd77ydX9nv2KO0sGw5uJP
- AjKzqIlp7frQojrl6O2YL6fovZPk682qyaZDhgh/Fj4bS9nYfWWLLpsy9+IRO5rqLHyCNlbDbBe
- jfEzZMIJzY3qwmXeQ4Qm9gSGU/M1pHqt/JD8kXBSd9AmuJw=
-X-Received: by 2002:a05:600c:3554:b0:442:cd13:f15d with SMTP id
- 5b1f17b1804b1-442fd67197dmr38960375e9.29.1747408876236; 
- Fri, 16 May 2025 08:21:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+NBLu/UuIOripSZmxtv5RZiGBc/cKpSYqTKlvev46Na/6/0jMmo6OdzVG/0wYkAnh71BHEw==
-X-Received: by 2002:a05:600c:3554:b0:442:cd13:f15d with SMTP id
- 5b1f17b1804b1-442fd67197dmr38960065e9.29.1747408875882; 
- Fri, 16 May 2025 08:21:15 -0700 (PDT)
+ AJvYcCUWBKM50cquMg5257D8zyLAchn0dDUTZTEYz1I4rsSCXDzsI3F0jK5giQk2holTsauEOstQPvdPckgg@nongnu.org
+X-Gm-Message-State: AOJu0YwbM1IHgzrwEBvgQ/4qu4eRgiuBLaop65jftvP0peglbUIogLmc
+ +IzBajs2DgTAx/TFfouKDcEj2Mr5W2aoWsbESgIt3tng/QxLSADZLmFVqvR4kBoYxY3XBgvBGqw
+ awev486z7AMLRjxYk0lhyqHD3CC2fBWAC+p4C5wDl/O4dl8eRQzlQDtRe
+X-Gm-Gg: ASbGncut2lUP6Wb1WvqvP8fz1A7aw2mUGg+gzYczTfy2XGlUIOv6WGUnI7asqPbPnps
+ 9goKMA462WhH/Amax8dXtmrzbaMyaHz9o2soJje7FOXy++lI3mEOJCn1Zfrxq/jwVbtv0YsWNdL
+ ONCluOoqKXtoWyvn574+5olQglZjrIdC86dlzSsh3wk7S2hqnMAloVoKuAadhfrf1/hv7Q82QCa
+ sMUvZ2Dd5PitQakyXHP9kcA9O3SP2fwRKKUVIb4WHRp8gzSKYFEMGS8jn9UCyZSvVmtjM4jqMKS
+ /yc93C4y5/xytrUc0byYvf/hYybKLREiWNor6Sw3wS0gYRM=
+X-Received: by 2002:a05:6000:2586:b0:3a1:f6a3:4d01 with SMTP id
+ ffacd0b85a97d-3a35c845500mr3562188f8f.47.1747409184643; 
+ Fri, 16 May 2025 08:26:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMfscJ8G+bWn6x+VDIK7c84WDDbgj3K9IJaXRq6rs765NQ1X0tuabf1KGNfSdGELFIJHFaew==
+X-Received: by 2002:a05:6000:2586:b0:3a1:f6a3:4d01 with SMTP id
+ ffacd0b85a97d-3a35c845500mr3562156f8f.47.1747409184186; 
+ Fri, 16 May 2025 08:26:24 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
  ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442eb85a3b1sm87938605e9.0.2025.05.16.08.21.15
+ ffacd0b85a97d-3a35ca8cf66sm3095500f8f.87.2025.05.16.08.26.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 08:21:15 -0700 (PDT)
-Message-ID: <cf581a09-6d6c-48f8-8b9d-3142b7a1e8a0@redhat.com>
-Date: Fri, 16 May 2025 17:21:14 +0200
+ Fri, 16 May 2025 08:26:23 -0700 (PDT)
+Message-ID: <18c45ce4-fbfc-4383-a4f6-22c82ef7cb0e@redhat.com>
+Date: Fri, 16 May 2025 17:26:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/27] vfio: move more cleanup into vfio_pci_put_device()
+Subject: Re: [PATCH 04/27] vfio: move config space read into
+ vfio_pci_config_setup()
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
@@ -88,7 +89,7 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  <mst@redhat.com>, Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250515154413.210315-1-john.levon@nutanix.com>
- <20250515154413.210315-4-john.levon@nutanix.com>
+ <20250515154413.210315-5-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -134,10 +135,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250515154413.210315-4-john.levon@nutanix.com>
+In-Reply-To: <20250515154413.210315-5-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -163,11 +164,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/15/25 17:43, John Levon wrote:
-> All of the cleanup can be done in the same place, and vfio-user will
-> want to do the same.
-> 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
+> Small cleanup that reduces duplicate code for vfio-user.
 
+It also reduces vfio_realize(). It's time to rename it to
+vfio_pci_realize() too.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -176,50 +176,64 @@ Thanks,
 C.
 
 
+> Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   hw/vfio/pci.c | 23 ++++++++++++-----------
->   1 file changed, 12 insertions(+), 11 deletions(-)
+>   hw/vfio/pci.c | 27 ++++++++++++++-------------
+>   1 file changed, 14 insertions(+), 13 deletions(-)
 > 
 > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index a1bfdfe375..d96b55f80c 100644
+> index d96b55f80c..7912c17dd2 100644
 > --- a/hw/vfio/pci.c
 > +++ b/hw/vfio/pci.c
-> @@ -2854,6 +2854,18 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->   
->   static void vfio_pci_put_device(VFIOPCIDevice *vdev)
+> @@ -3017,6 +3017,19 @@ static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
 >   {
-> +    vfio_display_finalize(vdev);
-> +    vfio_bars_finalize(vdev);
-> +    g_free(vdev->emulated_config_bits);
-> +    g_free(vdev->rom);
-> +    /*
-> +     * XXX Leaking igd_opregion is not an oversight, we can't remove the
-> +     * fw_cfg entry therefore leaking this allocation seems like the safest
-> +     * option.
-> +     *
-> +     * g_free(vdev->igd_opregion);
-> +     */
+>       PCIDevice *pdev = &vdev->pdev;
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> +    uint32_t config_space_size;
+> +    int ret;
 > +
->       vfio_device_detach(&vdev->vbasedev);
+> +    config_space_size = MIN(pci_config_size(&vdev->pdev), vdev->config_size);
+> +
+> +    /* Get a copy of config space */
+> +    ret = vfio_pci_config_space_read(vdev, 0, config_space_size,
+> +                                     vdev->pdev.config);
+> +    if (ret < (int)config_space_size) {
+> +        ret = ret < 0 ? -ret : EFAULT;
+> +        error_setg_errno(errp, ret, "failed to read device config space");
+> +        return false;
+> +    }
 >   
->       g_free(vdev->vbasedev.name);
-> @@ -3302,17 +3314,6 @@ static void vfio_instance_finalize(Object *obj)
->   {
->       VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
+>       /* vfio emulates a lot for us, but some bits need extra love */
+>       vdev->emulated_config_bits = g_malloc0(vdev->config_size);
+> @@ -3143,10 +3156,9 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+>       ERRP_GUARD();
+>       VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> -    int i, ret;
+> +    int i;
+>       char uuid[UUID_STR_LEN];
+>       g_autofree char *name = NULL;
+> -    uint32_t config_space_size;
 >   
-> -    vfio_display_finalize(vdev);
-> -    vfio_bars_finalize(vdev);
-> -    g_free(vdev->emulated_config_bits);
-> -    g_free(vdev->rom);
-> -    /*
-> -     * XXX Leaking igd_opregion is not an oversight, we can't remove the
-> -     * fw_cfg entry therefore leaking this allocation seems like the safest
-> -     * option.
-> -     *
-> -     * g_free(vdev->igd_opregion);
-> -     */
->       vfio_pci_put_device(vdev);
->   }
+>       if (vbasedev->fd < 0 && !vbasedev->sysfsdev) {
+>           if (!(~vdev->host.domain || ~vdev->host.bus ||
+> @@ -3201,17 +3213,6 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+>           goto error;
+>       }
 >   
+> -    config_space_size = MIN(pci_config_size(&vdev->pdev), vdev->config_size);
+> -
+> -    /* Get a copy of config space */
+> -    ret = vfio_pci_config_space_read(vdev, 0, config_space_size,
+> -                                     vdev->pdev.config);
+> -    if (ret < (int)config_space_size) {
+> -        ret = ret < 0 ? -ret : EFAULT;
+> -        error_setg_errno(errp, ret, "failed to read device config space");
+> -        goto error;
+> -    }
+> -
+>       if (!vfio_pci_config_setup(vdev, errp)) {
+>           goto error;
+>       }
 
 
