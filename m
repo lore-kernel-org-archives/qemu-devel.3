@@ -4,91 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 141C9C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B96C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 May 2025 14:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uFwCw-0003qu-2t; Fri, 16 May 2025 10:38:42 -0400
+	id 1uFwE9-0005AS-7V; Fri, 16 May 2025 10:39:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwCs-0003qI-1c
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:38:38 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uFwE7-000589-Dn
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:39:55 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uFwCp-000197-JG
- for qemu-devel@nongnu.org; Fri, 16 May 2025 10:38:37 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-441d1ed82faso16459215e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 07:38:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747406314; x=1748011114; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=F0CjMs1XSYy24otmuCyLRNbjIt9s0zQtbEQl74Ak5Wc=;
- b=aMa1+ym2jttEY0N32hXXvJXmBKwNQbUKh3Il7UZ1Btqoy/2xLoEQDyOmsgFPTmuhH1
- GE73ycuzbtXtz5+pkN7g5kucF/nj6NNCsuBxpdNsYo5iQTRXXrcH3dzNetbdMGq0IPlA
- CM8a/b1rqfaxxpogRjmAHB+6lBhdWubDNxpDdE/cIRvIm+XrSUKXTdV72ZK5jJpNhYdB
- uDj8pO6lbaC1dXUAkMZKKvVpse5Owr3UCTw2+KylJUAEvLGmo/vNMh2Mil+rZlpeHgy0
- 3PbobXH3NkzoreeIYcP08l5nASD1EY2sw2XWJhJlDmyGu9utgy08V3jDo5LhnXvzobxN
- 2cpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747406314; x=1748011114;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F0CjMs1XSYy24otmuCyLRNbjIt9s0zQtbEQl74Ak5Wc=;
- b=CFkaZ+D/wSRoqMAUKm5CY8PDebUTiJ3x2NAAtwHkRIwVURmPggGyAge3b9erjNzU8/
- rtEvN0279qjABkUJyHvAlhEx0kQlduBDdDpve64uNkvUB8dCGlwr7mqClxThSXqFE6fK
- /4IPjCMORsVkmdG00F75bgTSzguu9MvCNs82pLPsPdbTBLi72icFvhb8B7MBP9Ki5TXs
- 6sYvN2D5R3K48pmmVa0GDSvIQ/cGkGKTi3hZf9zRzGtZQHSmmQ5KUgSo+rMn2w+wsmmw
- kuk/g9zmKLhhRTUtLY1bZCZzpUYK2jlrIeGlmA0EgwTZF/oLwCNuveART13721R+FWHq
- c0BQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDpwu5RVa9Q/69X3epREbd1SUQNRNr+jZrTSnW17hyt5IikA7IAipPnhWq3O9yxNjxSIeStw3qF21Y@nongnu.org
-X-Gm-Message-State: AOJu0YyVa6XSUDUtBOQ8Ym6/4BSUoPoO6lpzkENTg/pDcA6LapOUOcu1
- 8i+xzJpCw7weggQDw5prLg+x1/W5vPjiX7Msp94kGtZuor9Vc6Kkb9iF0wqkI45lmHM=
-X-Gm-Gg: ASbGncuPp1K0XEriXR4EllnHF7eBvVsXxtDaOrQw6Q1sMSX7fwrADSlK9r/iV/KLVFl
- O+hZGA0t5YPe1AzQnVaucK4nC45TED4JnbpqCaIceAUk2OsZ0PqxwlhcMkS7ehUq2iuS1/4JN1P
- qiOwdrkZxntzFbRiknA6qc7jzB5gK7Z+QexV/5AN/uhQvB26qV2sPqTAcTDe9aAvTu+w8iCUT1r
- MfGwKfvcwJAFIyRIWqmkpGJdwADa1X0h5peeBVzn+u7W/of8WCnADFTmjcRB2KUmjwqHEjCyZDQ
- TaJNpGxrIsvp3A/yP0Lv6pDi1pOPPyQCCta5mP1z0Tppi5iXtYHJGND4WWJ8H2MN3/bggun8RZI
- GjcERztq3Kvlw
-X-Google-Smtp-Source: AGHT+IHYgidxJSgEmTkTik7MSSRLzRG8LbaiQR/hDnoSUsnF6WcD60Q5Fs2DiwoJmeBqUgAR6NGYoQ==
-X-Received: by 2002:a05:600c:548e:b0:442:dc6f:7a21 with SMTP id
- 5b1f17b1804b1-442fefd5f18mr34247895e9.3.1747406313669; 
- Fri, 16 May 2025 07:38:33 -0700 (PDT)
-Received: from [10.61.1.248] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442fd516a51sm36118515e9.24.2025.05.16.07.38.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 07:38:33 -0700 (PDT)
-Message-ID: <e10a625b-31d2-4759-b775-9b7d8409de53@linaro.org>
-Date: Fri, 16 May 2025 15:38:32 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uFwE4-0001Fp-Kr
+ for qemu-devel@nongnu.org; Fri, 16 May 2025 10:39:55 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9B1BB1FB7F;
+ Fri, 16 May 2025 14:39:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747406388; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1X0sHp2+4TkOzMF3Rr25JqVD/S5j8klCZDCruABgCk=;
+ b=fx86EvgdmRRxoDzFhIKMj9DtnEFpb4T0GYa40W2JlhQSdwFCouQXcX+XEuEMTxWZIq7ZqS
+ 2oeq0qQEUcs67RcVMyWyVmURXmb1ajmlC+0ERr26IpBk4MsrndWxSbapt+RyY7vcu9/2rv
+ esbXDrj2abe4LBYTWkGsdsSDe6q8UYQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747406388;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1X0sHp2+4TkOzMF3Rr25JqVD/S5j8klCZDCruABgCk=;
+ b=vhtzTmqZx3y4f7PLWjpxc6Z3r2Ix8+lJHgLtyENHf3sKPvY/B0cJHi33R9UylX75eSpKQt
+ TMFUOeCulVjiDFBw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747406388; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1X0sHp2+4TkOzMF3Rr25JqVD/S5j8klCZDCruABgCk=;
+ b=fx86EvgdmRRxoDzFhIKMj9DtnEFpb4T0GYa40W2JlhQSdwFCouQXcX+XEuEMTxWZIq7ZqS
+ 2oeq0qQEUcs67RcVMyWyVmURXmb1ajmlC+0ERr26IpBk4MsrndWxSbapt+RyY7vcu9/2rv
+ esbXDrj2abe4LBYTWkGsdsSDe6q8UYQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747406388;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1X0sHp2+4TkOzMF3Rr25JqVD/S5j8klCZDCruABgCk=;
+ b=vhtzTmqZx3y4f7PLWjpxc6Z3r2Ix8+lJHgLtyENHf3sKPvY/B0cJHi33R9UylX75eSpKQt
+ TMFUOeCulVjiDFBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0F50F13411;
+ Fri, 16 May 2025 14:39:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EY2uLzNOJ2h7UQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 16 May 2025 14:39:47 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Peter Xu
+ <peterx@redhat.com>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] migration/multifd: Don't send device state packets with
+ zerocopy flag
+In-Reply-To: <3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com>
+References: <3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com>
+Date: Fri, 16 May 2025 11:39:45 -0300
+Message-ID: <87a57c8vri.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] hw/i386/amd_iommu: Fix xtsup when vcpus < 255
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- suravee.suthikulpanit@amd.com, alejandro.j.jimenez@oracle.com,
- joao.m.martins@oracle.com, Vasant Hegde <vasant.hegde@amd.com>
-References: <20250516100535.4980-1-sarunkod@amd.com>
- <20250516100535.4980-3-sarunkod@amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250516100535.4980-3-sarunkod@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.27 / 50.00]; BAYES_HAM(-2.97)[99.88%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:mid,suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,58 +117,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 
-On 16/5/25 12:05, Sairaj Kodilkar wrote:
-> From: Vasant Hegde <vasant.hegde@amd.com>
-> 
-> If vCPUs > 255 then x86 common code (x86_cpus_init()) call kvm_enable_x2apic().
-> But if vCPUs <= 255 then the common code won't calls kvm_enable_x2apic().
-> 
-> This is because commit 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM
-> checks on XTSup feature") removed the call to kvm_enable_x2apic when xtsup
-> is "on", which break things when guest is booted with x2apic mode and
-> there are <= 255 vCPUs.
-> 
-> Fix this by adding back kvm_enable_x2apic() call when xtsup=on.
-> 
-> Fixes: 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM checks on XTSup feature")
-> Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> Tested-by: Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Cc: Joao Martins <joao.m.martins@oracle.com>
-> Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-> ---
->   hw/i386/amd_iommu.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index df8ba5d39ada..af85706b8a0d 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -1649,6 +1649,14 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
->           exit(EXIT_FAILURE);
->       }
->   
-> +    if (s->xtsup) {
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>
+> If zerocopy is enabled for multifd then QIO_CHANNEL_WRITE_FLAG_ZERO_COPY
+> flag is forced into all multifd channel write calls via p->write_flags
+> that was setup in multifd_nocomp_send_setup().
+>
+> However, device state packets aren't compatible with zerocopy - the data
+> buffer isn't getting kept pinned until multifd channel flush.
+>
+> Make sure to mask that QIO_CHANNEL_WRITE_FLAG_ZERO_COPY flag in a multifd
+> send thread if the data being sent is device state.
+>
+> Fixes: 0525b91a0b99 ("migration/multifd: Device state transfer support - send side")
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-I suppose we need:
-
-        if (s->xtsup && kvm_enabled()) {
-
-otherwise that will trigger back the problem I tried to fix.
-Did you try building QEMU with KVM disabled?
-
-> +        if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-> +            error_report("AMD IOMMU xtsup=on requires x2APIC support on "
-> +                          "the KVM side");
-> +            exit(EXIT_FAILURE);
-> +        }
-> +    }
-> +
->       pci_setup_iommu(bus, &amdvi_iommu_ops, s);
->       amdvi_init(s);
->   }
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
