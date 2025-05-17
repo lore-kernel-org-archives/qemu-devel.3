@@ -4,98 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BAC0C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 May 2025 05:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41B5C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 May 2025 05:26:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uG9gV-0003HR-QO; Sat, 17 May 2025 01:02:07 -0400
+	id 1uGA3M-0006xV-OR; Sat, 17 May 2025 01:25:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uG9gS-0003DB-BC
- for qemu-devel@nongnu.org; Sat, 17 May 2025 01:02:04 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <rakeshjb010@gmail.com>)
+ id 1uGA3J-0006xL-TD
+ for qemu-devel@nongnu.org; Sat, 17 May 2025 01:25:42 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uG9gO-00058y-E3
- for qemu-devel@nongnu.org; Sat, 17 May 2025 01:02:03 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-30ac55f595fso2686901a91.2
- for <qemu-devel@nongnu.org>; Fri, 16 May 2025 22:01:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rakeshjb010@gmail.com>)
+ id 1uGA3G-0007R4-CK
+ for qemu-devel@nongnu.org; Sat, 17 May 2025 01:25:40 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-ad24b7e0331so422993466b.0
+ for <qemu-devel@nongnu.org>; Fri, 16 May 2025 22:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747458117; x=1748062917;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Pfzx3JLNCWnHmmtv6kl+Rhpn6NeMWTWrqSOg1DUcJPc=;
- b=ja8UOkoXq20ElnG78Ph2f9U9pLZ/3LfweojoqtoOChI5tHj+tgNfrgH2dIqZWTBoWk
- wpIE0J75EcqGikd2LsAMKp5wmx1qZRPF5RjEDgYMpVyLwpR+8M6JHEhThZlcf2BH3f83
- drNoZAKe2riD4gzpVmo9qSW+5uySRcM9AnlKpYgbca2D/edmKeAn3qb260HlhzPvJiLp
- JJ+7r2+OKWSihHiFfyi1bbFGJ0ST7L3u5vKABlAjaGH0cC7YFF2bA3Vd69oakruwdXIO
- I/Yaz7AklBbFUFL13FEpng1WyZMib+C+CowwcUjogCqA/b4fhuuhh7a4fYyNk3GVWVUb
- 0ucA==
+ d=gmail.com; s=20230601; t=1747459534; x=1748064334; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=4uPPSB3wj9sExnl6Hm0LXZzlnNv2D8YvmEHQqG4JORc=;
+ b=iCqC/3HJGDjpgYsE3jill/U2YI4unA7KQPlBAblGq+xZiOoGy1NP/WKaKdkwNAcQ5J
+ ZQTHsp0HqKlPJZ67czfAUfJwdtJ/XLf2DjjHmIv+lqn+W4hTE5xTii8mPAAdzr/5WbNR
+ 49a/D9gX5czzvIy/D7Fe+wZiajbYmg1E4MheohY57pgxmgcVZzzgGKoHc5F+v+9jm+R3
+ tc+ABfntEz0DJqbLeEX1Nm7PBQISHhAsTBJfuGFXjUejkWLWbYKaAiIMpm8sSoghm4iy
+ X6GU63EeYKiH0VgTVwvGLqaVtURxQV1Itc2jyeuK/rpK62RN9Tg8c4MN0AIjs3OFJnEY
+ ifDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747458117; x=1748062917;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Pfzx3JLNCWnHmmtv6kl+Rhpn6NeMWTWrqSOg1DUcJPc=;
- b=ICPKY8/EMjtLm8UNgb1Zvmv/QMtbVIofImdV3elDkfWHiJgboOnANvY7Pc1FCxTsR+
- sEfeCoDTZK36iqKiOmuAlYTvZDh5cOZU/QvwE2gxi5jp6RAH7S/PnnCx3uy9aUxxxEto
- o7VKiCWRzwPZGOYlqgtVybDJp+MjNL2aKJV4JPziLcOWqFRpJSR98k0IuAG0xMgGWS7x
- ptgQo1u3kxGp/UJe6C8fsY3aKfGM1ca1yYfAsxjbZ7HZDgJsxLFczEysavBSThhQk/vV
- vdxX9d3YV88FZp6BabAdaJxvJ75het/+ZKp4WwHPrrv3DeoNilKl8oWXQFJUON0oaNiz
- jfPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjsl8Yvi0Hwvs71Z0TF+EtRvnTfV09cjmbhFedibEX5PG2w7E6MigRBQgMnyOICLku24zgeIt1hULd@nongnu.org
-X-Gm-Message-State: AOJu0Yw0tSlzLH10Hew0J8ZgKaf026Ub27QSoU7JeN5aiWIwoOlOkx+M
- u9YVe5nG93QPkGTniXazOuCspnFljrnBcvZwqO9O8+eWk4zyN5EQbLCPf4FFSNewCuU=
-X-Gm-Gg: ASbGnctb70yp/OYgiw8P42xuafQ3Y4aqiN6qt+ulw3xDPl4LWQ5GlefcE5MEoZmd8yA
- L87K0E+OloDsDpqx+xS+FuVAwWK9GwJDiEh7LuJC0TKzIrdpCRi3SW5A6iT5XGNfAoe4FGQGqc3
- v7BpGdDvo0g6GdZXemgP3SPnFHBDucnp1tY7LfrX1NixYwC1+iN+8VAKQM00CiPZ40Zzzm6x+F8
- S7avnPgoofEWADX6fEdR6Dft1Lck9yt/tYtjERpFV6LH4InhRDgXbZPqQde+8YnBnE1pIwACTfM
- llIK8/pMYMgQ517GNr1z3S1ickzNktKIKSH3RMZSY+rblGDyZiQW6TFYJJT+J0JOGkrwlEv+UYy
- /SrSOo2I=
-X-Google-Smtp-Source: AGHT+IGFM23iMDpJKHMMujukhgNboL5+XwkOlX58aPB8QXKLCSxaAgOnEajR8Z01HvxmfeX+35k/CA==
-X-Received: by 2002:a17:90b:4f4c:b0:30e:ee6:6747 with SMTP id
- 98e67ed59e1d1-30e7d520bf3mr8034544a91.13.1747458117411; 
- Fri, 16 May 2025 22:01:57 -0700 (PDT)
-Received: from [10.100.116.185] ([157.82.128.1])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30e334147acsm6102019a91.1.2025.05.16.22.01.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 May 2025 22:01:56 -0700 (PDT)
-Message-ID: <0e242dff-b312-48fd-ac85-b24377e0fad1@daynix.com>
-Date: Sat, 17 May 2025 14:01:53 +0900
+ d=1e100.net; s=20230601; t=1747459534; x=1748064334;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4uPPSB3wj9sExnl6Hm0LXZzlnNv2D8YvmEHQqG4JORc=;
+ b=Gv6f5jq2N8cSVevP4X/WJJtps007VkOfmxmH6yKbMzMrF7FVkSHWDS1LKN15GXi4i8
+ cjDfUSNU/JzjOqM/iUCt/XUDpfuBqcH079yIzJY30h8Gb7NRazgk1PO6ohy+du1ggsDP
+ Ntimp92VJgl3hBXNCHQg8WUxDkkn2VvgDQrWPn39Luf2xP7gtVn8QIXfBvoaQdEp85/c
+ unYDm5dpnuxj+tV2qa6FQ2U2DMcxZPCnqOoWReEGkswr+fiCDBMYLXGizRmHWD/wopmu
+ 3N9tud7z1lhmViFxdk0Wso1mExdG2/C+Mo9vfpijHDB2gl1598a9CMGc83IoK9z6GTzu
+ yjLg==
+X-Gm-Message-State: AOJu0Yxmdsw3sZfG9sjwE/xhYfXHzE2x2VZ0JwucfpD/BnV3P+hKoWZE
+ 4vpPbS04zstYCgSa7U/LxtKaDYjGOnVvoCM+WUxcV8yT4wLYHfEQFtj6A0gp6ydGfaoOHdsQ7nP
+ qKX5Ah/6Tc/XonW9a2QKbF4Y+UEL7g8PUqFh1
+X-Gm-Gg: ASbGncusRezNCiCZA56d6NAGV56NV1M+JUPRycuxqqIZC35Mgs2qf2LHNv8p4QXKxDt
+ PaaKb7cVQ9u5Hjy1MLlkWhUBk9bPH37uoLkmsAaAuYU62kPREVbvx1OEBnQZh7bUhbyR7fcBIxD
+ 5SshD5tzTEfbwlKy1IXoBNrDAE4yMrkiGDZi6jWRGYW7SCx3zQ6y3jLPk+OgkKrgrdYB4=
+X-Google-Smtp-Source: AGHT+IHQkxM92yK+y32kqXlmWnyvj8XOrQBDeX+V3TzWbETif9SGqOiMInaPEWa6UrXEl192Ay7MMliR5SKJi3lf96g=
+X-Received: by 2002:a17:907:d716:b0:ad4:f5ed:42db with SMTP id
+ a640c23a62f3a-ad52d4b3699mr608415866b.17.1747459534229; Fri, 16 May 2025
+ 22:25:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/10] futex: Check value after qemu_futex_wait()
-To: Peter Xu <peterx@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Fabiano Rosas <farosas@suse.de>, Hailiang Zhang <zhanghailiang@xfusion.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
- devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250511-event-v3-0-f7f69247d303@daynix.com>
- <20250511-event-v3-1-f7f69247d303@daynix.com> <aCNZk73GuEaU-gcK@x1.local>
- <b1b6574c-1ddb-4129-8a68-fe88f93caecd@daynix.com> <aCTNkxN9HMJ5FvR-@x1.local>
- <271a1379-0347-4858-9602-c561bbc8aeaf@daynix.com> <aCdRho2SCZHOlsn_@x1.local>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <aCdRho2SCZHOlsn_@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20250429170354.150581-1-rakeshjb010@gmail.com>
+ <20250429170354.150581-2-rakeshjb010@gmail.com>
+In-Reply-To: <20250429170354.150581-2-rakeshjb010@gmail.com>
+From: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+Date: Sat, 17 May 2025 10:55:22 +0530
+X-Gm-Features: AX0GCFvQy7DGVhgl9Okurx9HbHZtrLQGPgl49pjHC5HxAcehoVHHsgkZCdS9XCk
+Message-ID: <CAD8nu1jtypmu+EyCY_kCdN3+Vo+Di64t9aBTfKSjArGZ+L3vYw@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] hw/pci-host/gt64120: Fix endianness handling
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ thuth@redhat.com, BALATON Zoltan <balaton@eik.bme.hu>
+Content-Type: multipart/alternative; boundary="000000000000cc14f906354e20b1"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=rakeshjb010@gmail.com; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,155 +95,392 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/16 23:53, Peter Xu wrote:
-> On Fri, May 16, 2025 at 02:34:33PM +0900, Akihiko Odaki wrote:
->> On 2025/05/15 2:06, Peter Xu wrote:
->>> On Wed, May 14, 2025 at 04:34:33PM +0900, Akihiko Odaki wrote:
->>>> On 2025/05/13 23:39, 'Peter Xu' via devel wrote:
->>>>> On Sun, May 11, 2025 at 03:08:18PM +0900, Akihiko Odaki wrote:
->>>>>> futex(2) - Linux manual page
->>>>>> https://man7.org/linux/man-pages/man2/futex.2.html
->>>>>>> Note that a wake-up can also be caused by common futex usage patterns
->>>>>>> in unrelated code that happened to have previously used the futex
->>>>>>> word's memory location (e.g., typical futex-based implementations of
->>>>>>> Pthreads mutexes can cause this under some conditions).  Therefore,
->>>>>>> callers should always conservatively assume that a return value of 0
->>>>>>> can mean a spurious wake-up, and use the futex word's value (i.e.,
->>>>>>> the user-space synchronization scheme) to decide whether to continue
->>>>>>> to block or not.
->>>>>
->>>>> I'm just curious - do you know when this will happen?
->>>>>
->>>>> AFAIU, QEMU uses futex always on private mappings, internally futex does
->>>>> use (mm, HVA) tuple to index a futex, afaict.  Hence, I don't see how it
->>>>> can get spurious wakeups..  And _if_ it happens, since mm pointer can't
->>>>> change it must mean the HVA of the futex word is reused, it sounds like an
->>>>> UAF user bug to me instead.
->>>
->>> [1]
->>>
->>>>>
->>>>> I checked the man-pages git repo, this line was introduced in:
->>>>>
->>>>> https://github.com/mkerrisk/man-pages/commit/4b35dc5dabcf356ce6dcb1f949f7b00e76c7587d
->>>>>
->>>>> I also didn't see details yet in commit message on why that paragraph was
->>>>> added.
->>>>>
->>>>> And..
->>>>>
->>>>>>
->>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>> ---
->>>>>>     include/qemu/futex.h              |  9 +++++++++
->>>>>>     tests/unit/test-aio-multithread.c |  4 +++-
->>>>>>     util/qemu-thread-posix.c          | 28 ++++++++++++++++------------
->>>>>>     3 files changed, 28 insertions(+), 13 deletions(-)
->>>>>>
->>>>>> diff --git a/include/qemu/futex.h b/include/qemu/futex.h
->>>>>> index 91ae88966e12..f57774005330 100644
->>>>>> --- a/include/qemu/futex.h
->>>>>> +++ b/include/qemu/futex.h
->>>>>> @@ -24,6 +24,15 @@ static inline void qemu_futex_wake(void *f, int n)
->>>>>>         qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
->>>>>>     }
->>>>>> +/*
->>>>>> + * Note that a wake-up can also be caused by common futex usage patterns in
->>>>>> + * unrelated code that happened to have previously used the futex word's
->>>>>> + * memory location (e.g., typical futex-based implementations of Pthreads
->>>>>> + * mutexes can cause this under some conditions).  Therefore, callers should
->>>>>
->>>>> .. another thing that was unclear to me is, here it's mentioning "typical
->>>>> futex-based implementations of pthreads mutexes..", but here
->>>>> qemu_futex_wait() is using raw futex without any pthread impl.  Does it
->>>>> also mean that this may not be applicable to whatever might cause a
->>>>> spurious wakeup?
->>>>
->>>> No. The man-page mentions "unrelated code that happened to have previously
->>>> used the futex word's memory location", so it doesn't matter whether we use
->>>> pthread here.
->>>>
->>>> libpthread and even this QemuEvent follows the "common futex usage" so we
->>>> should do what is written in the man page.
->>>>
->>>> Unfortunately the man page does not describe the "common futex usage
->>>> pattern". It looks like as follows:
->>>>
->>>> Assume there are two threads, one atomic variable, and one futex.
->>>>
->>>> Thread A does the following:
->>>> A1. Read the atomic variable.
->>>> A2. Go A5 if the atomic variable is zero.
->>>> A3. Wait using the futex.
->>>> A4. Go A1.
->>>> A5. Free the atomic variable and the futex.
->>>>
->>>> Thread B does the following:
->>>> B1. Set the atomic variable to zero.
->>>> B2. Wake up using the futex.
->>>>
->>>> In this example, the execution may happen in the following order:
->>>> B1 -> A1 -> A2 -> A5 -> B2
->>>>
->>>> Here, B2 will cause a spurious wake up of QemuEvent if the freed memory gets
->>>> reused for QemuEvent.
->>>
->>> This is true.
->>>
->>> Said that, if to follow my previous statement at [1] above, here I think A5
->>> is the UAF bug I mentioned, trying to free the lock object with existing
->>> user (Thread B) accessing the object.
->>>
->>> IMHO, the userapp should make sure the object will never be freed if
->>> there's any possible user of it, and that includes a waker like Thread B.
->>>
->>> For futex, the futex word (which is the important bit here relevant to
->>> possible spurious wakeups) is part of the lock object, hence if the lock
->>> object isn't freed too early it won't ever get reused, and then there
->>> should have no chance of spurious wakeups in the futex context.
->>
->> It is a UAF, but it is by design and not a bug.
->>
->> The principle of the futex design is to use atomic memory operations to
->> manage the state instead of using a system call, which is more expensive.
->>
->> This principle motivates tolerating spurious wakeups. If wakeup system calls
->> after free are forbidden, a thread will need to use a (expensive) system
->> call to ensure the wake up actually happened before freeing. Instead, we can
->> tolerate spurious wakeups without causing a buggy behavior by making the
->> waiting thread perform (cheaper) atomic memory reads to verify the expected
->> state.
-> 
-> Right, that's also my understanding that it's by design for futex from
-> kernel POV.
+--000000000000cc14f906354e20b1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I think it also makes sense from the userspace POV; it is a common truth 
-that atomic memory operations are cheaper than system calls.
+On Tue, Apr 29, 2025 at 10:34=E2=80=AFPM Rakesh Jeyasingh <rakeshjb010@gmai=
+l.com>
+wrote:
 
-> 
-> Which I am not yet sure is whether it's by design to be used in userapp so
-> that a spurious wakeup could happen.  From which regard, I still think
-> maybe we shouldn't have that paragraph in the man page at all, at least it
-> can be clearer when put into man pages.
+> The GT-64120 PCI controller requires special handling where:
+> 1. Host bridge(bus 0 ,device 0) must never be byte-swapped
+> 2. Other devices follow MByteSwap bit in GT_PCI0_CMD
+>
+> The previous implementation incorrectly  swapped all accesses, breaking
+> host bridge detection (lspci -d 11ab:4620).
+>
+> Changes made:
+> 1. Removed gt64120_update_pci_cfgdata_mapping() and moved data_mem
+> initialization
+>   to gt64120_realize() for cleaner setup
+> 2. Implemented custom read/write handlers that:
+>    - Preserve host bridge accesses (extract32(config_reg,11,13)=3D=3D0)
+>    - apply swapping only for non-bridge devices in big-endian mode
+>
+> Fixes: 145e2198 ("hw/mips/gt64xxx_pci: Endian-swap using PCI_HOST_BRIDGE
+> MemoryRegionOps")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2826
+>
+> Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+> ---
+>  hw/pci-host/gt64120.c | 82 +++++++++++++++++++++++++------------------
+>  1 file changed, 48 insertions(+), 34 deletions(-)
+>
+> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
+> index 56a6ef93b7..ecb203a3d0 100644
+> --- a/hw/pci-host/gt64120.c
+> +++ b/hw/pci-host/gt64120.c
+> @@ -320,38 +320,6 @@ static void gt64120_isd_mapping(GT64120State *s)
+>      memory_region_transaction_commit();
+>  }
+>
+> -static void gt64120_update_pci_cfgdata_mapping(GT64120State *s)
+> -{
+> -    /* Indexed on MByteSwap bit, see Table 158: PCI_0 Command, Offset:
+> 0xc00 */
+> -    static const MemoryRegionOps *pci_host_data_ops[] =3D {
+> -        &pci_host_data_be_ops, &pci_host_data_le_ops
+> -    };
+> -    PCIHostState *phb =3D PCI_HOST_BRIDGE(s);
+> -
+> -    memory_region_transaction_begin();
+> -
+> -    /*
+> -     * The setting of the MByteSwap bit and MWordSwap bit in the PCI
+> Internal
+> -     * Command Register determines how data transactions from the CPU
+> to/from
+> -     * PCI are handled along with the setting of the Endianness bit in
+> the CPU
+> -     * Configuration Register. See:
+> -     * - Table 16: 32-bit PCI Transaction Endianness
+> -     * - Table 158: PCI_0 Command, Offset: 0xc00
+> -     */
+> -
+> -    if (memory_region_is_mapped(&phb->data_mem)) {
+> -        memory_region_del_subregion(&s->ISD_mem, &phb->data_mem);
+> -        object_unparent(OBJECT(&phb->data_mem));
+> -    }
+> -    memory_region_init_io(&phb->data_mem, OBJECT(phb),
+> -                          pci_host_data_ops[s->regs[GT_PCI0_CMD] & 1],
+> -                          s, "pci-conf-data", 4);
+> -    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << =
+2,
+> -                                        &phb->data_mem, 1);
+> -
+> -    memory_region_transaction_commit();
+> -}
+> -
+>  static void gt64120_pci_mapping(GT64120State *s)
+>  {
+>      memory_region_transaction_begin();
+> @@ -645,7 +613,6 @@ static void gt64120_writel(void *opaque, hwaddr addr,
+>      case GT_PCI0_CMD:
+>      case GT_PCI1_CMD:
+>          s->regs[saddr] =3D val & 0x0401fc0f;
+> -        gt64120_update_pci_cfgdata_mapping(s);
+>          break;
+>      case GT_PCI0_TOR:
+>      case GT_PCI0_BS_SCS10:
+> @@ -1024,6 +991,48 @@ static const MemoryRegionOps isd_mem_ops =3D {
+>      },
+>  };
+>
+> +static bool bswap(const GT64120State *s)
+> +{
+> +    PCIHostState *phb =3D PCI_HOST_BRIDGE(s);
+> +    /*check for bus =3D=3D 0 && device =3D=3D 0, Bits 11:15 =3D Device ,=
+ Bits 16:23
+> =3D Bus*/
+> +    bool is_phb_dev0 =3D extract32(phb->config_reg, 11, 13) =3D=3D 0;
+> +    bool le_mode =3D FIELD_EX32(s->regs[GT_PCI0_CMD], GT_PCI0_CMD,
+> MByteSwap);
+> +    /* Only swap for non-bridge devices in big-endian mode */
+> +    return !le_mode && !is_phb_dev0;
+> +}
+> +
+> +static uint64_t gt64120_pci_data_read(void *opaque, hwaddr addr, unsigne=
+d
+> size)
+> +{
+> +    GT64120State *s =3D opaque;
+> +    uint64_t val =3D pci_host_data_le_ops.read(opaque, addr, size);
+>
+Hi , I just noticed that I made a mistake in the declaring data length of
+read val. In previous commits declared as uint32_t (as I think the PCI
+controller handles 32-bit values, while MemoryRegionOps uses uint64_t
+returns)
+Should i consider:
+1.sending corrected patch(hoping it not yet merged)
+2.or any suggestion on fixing it?
 
-Eliminating spurious wakeups requires removing the paragraph from the 
-man page and updating all libraries (including libpthread) not to make 
-spurious wakeups, which takes a long time. We need to prepare for 
-spurious wakeups for now.
+> +
+> +    if (bswap(s)) {
+> +        val =3D bswap32(val);
+> +    }
+> +    return val;
+> +}
+> +
+> +static void gt64120_pci_data_write(void *opaque, hwaddr addr,
+> +    uint64_t val, unsigned size)
+> +{
+> +    GT64120State *s =3D opaque;
+> +
+> +    if (bswap(s)) {
+> +        val =3D bswap32(val);
+> +    }
+> +    pci_host_data_le_ops.write(opaque, addr, val, size);
+> +}
+> +
+> +static const MemoryRegionOps gt64120_pci_data_ops =3D {
+> +    .read =3D gt64120_pci_data_read,
+> +    .write =3D gt64120_pci_data_write,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+> +    .valid =3D {
+> +        .min_access_size =3D 4,
+> +        .max_access_size =3D 4,
+> +    },
+> +};
+> +
+>  static void gt64120_reset(DeviceState *dev)
+>  {
+>      GT64120State *s =3D GT64120_PCI_HOST_BRIDGE(dev);
+> @@ -1178,7 +1187,6 @@ static void gt64120_reset(DeviceState *dev)
+>
+>      gt64120_isd_mapping(s);
+>      gt64120_pci_mapping(s);
+> -    gt64120_update_pci_cfgdata_mapping(s);
+>  }
+>
+>  static void gt64120_realize(DeviceState *dev, Error **errp)
+> @@ -1202,6 +1210,12 @@ static void gt64120_realize(DeviceState *dev, Erro=
+r
+> **errp)
+>      memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGADDR << =
+2,
+>                                          &phb->conf_mem, 1);
+>
+> +    memory_region_init_io(&phb->data_mem, OBJECT(phb),
+> +                          &gt64120_pci_data_ops,
+> +                          s, "pci-conf-data", 4);
+> +    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << =
+2,
+> +                                        &phb->data_mem, 1);
+> +
+>
+>      /*
+>       * The whole address space decoded by the GT-64120A doesn't generate
+> --
+> 2.43.0
+>
+>
 
-I agree the man page can be clearer; the paragraph assumes readers 
-naively follow what it says, but you need more insights; I also had to 
-spend some time to understand the QemuEvent code and the libpthread 
-code, which was unnecessary if the man page describes "the common futex 
-usage pattern".
+--000000000000cc14f906354e20b1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> So now the question is, do we have such use case so that QEMU needs to free
-> a qemu_futex_*() API based lock _before_ any wakeups?
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Apr 29,=
+ 2025 at 10:34=E2=80=AFPM Rakesh Jeyasingh &lt;<a href=3D"mailto:rakeshjb01=
+0@gmail.com">rakeshjb010@gmail.com</a>&gt; wrote:<br></div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">The GT-64120 PCI controller requires spec=
+ial handling where:<br>
+1. Host bridge(bus 0 ,device 0) must never be byte-swapped<br>
+2. Other devices follow MByteSwap bit in GT_PCI0_CMD<br>
+<br>
+The previous implementation incorrectly=C2=A0 swapped all accesses, breakin=
+g<br>
+host bridge detection (lspci -d 11ab:4620).<br>
+<br>
+Changes made:<br>
+1. Removed gt64120_update_pci_cfgdata_mapping() and moved data_mem initiali=
+zation<br>
+=C2=A0 to gt64120_realize() for cleaner setup<br>
+2. Implemented custom read/write handlers that:<br>
+=C2=A0 =C2=A0- Preserve host bridge accesses (extract32(config_reg,11,13)=
+=3D=3D0)<br>
+=C2=A0 =C2=A0- apply swapping only for non-bridge devices in big-endian mod=
+e<br>
+<br>
+Fixes: 145e2198 (&quot;hw/mips/gt64xxx_pci: Endian-swap using PCI_HOST_BRID=
+GE MemoryRegionOps&quot;)<br>
+Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2826" re=
+l=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/i=
+ssues/2826</a><br>
+<br>
+Signed-off-by: Rakesh Jeyasingh &lt;<a href=3D"mailto:rakeshjb010@gmail.com=
+" target=3D"_blank">rakeshjb010@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0hw/pci-host/gt64120.c | 82 +++++++++++++++++++++++++-----------------=
+-<br>
+=C2=A01 file changed, 48 insertions(+), 34 deletions(-)<br>
+<br>
+diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c<br>
+index 56a6ef93b7..ecb203a3d0 100644<br>
+--- a/hw/pci-host/gt64120.c<br>
++++ b/hw/pci-host/gt64120.c<br>
+@@ -320,38 +320,6 @@ static void gt64120_isd_mapping(GT64120State *s)<br>
+=C2=A0 =C2=A0 =C2=A0memory_region_transaction_commit();<br>
+=C2=A0}<br>
+<br>
+-static void gt64120_update_pci_cfgdata_mapping(GT64120State *s)<br>
+-{<br>
+-=C2=A0 =C2=A0 /* Indexed on MByteSwap bit, see Table 158: PCI_0 Command, O=
+ffset: 0xc00 */<br>
+-=C2=A0 =C2=A0 static const MemoryRegionOps *pci_host_data_ops[] =3D {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;pci_host_data_be_ops, &amp;pci_host_data_=
+le_ops<br>
+-=C2=A0 =C2=A0 };<br>
+-=C2=A0 =C2=A0 PCIHostState *phb =3D PCI_HOST_BRIDGE(s);<br>
+-<br>
+-=C2=A0 =C2=A0 memory_region_transaction_begin();<br>
+-<br>
+-=C2=A0 =C2=A0 /*<br>
+-=C2=A0 =C2=A0 =C2=A0* The setting of the MByteSwap bit and MWordSwap bit i=
+n the PCI Internal<br>
+-=C2=A0 =C2=A0 =C2=A0* Command Register determines how data transactions fr=
+om the CPU to/from<br>
+-=C2=A0 =C2=A0 =C2=A0* PCI are handled along with the setting of the Endian=
+ness bit in the CPU<br>
+-=C2=A0 =C2=A0 =C2=A0* Configuration Register. See:<br>
+-=C2=A0 =C2=A0 =C2=A0* - Table 16: 32-bit PCI Transaction Endianness<br>
+-=C2=A0 =C2=A0 =C2=A0* - Table 158: PCI_0 Command, Offset: 0xc00<br>
+-=C2=A0 =C2=A0 =C2=A0*/<br>
+-<br>
+-=C2=A0 =C2=A0 if (memory_region_is_mapped(&amp;phb-&gt;data_mem)) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_region_del_subregion(&amp;s-&gt;ISD_mem=
+, &amp;phb-&gt;data_mem);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 object_unparent(OBJECT(&amp;phb-&gt;data_mem))=
+;<br>
+-=C2=A0 =C2=A0 }<br>
+-=C2=A0 =C2=A0 memory_region_init_io(&amp;phb-&gt;data_mem, OBJECT(phb),<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 pci_host_data_ops[s-&gt;regs[GT_PCI0_CMD] &amp; 1],<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 s, &quot;pci-conf-data&quot;, 4);<br>
+-=C2=A0 =C2=A0 memory_region_add_subregion_overlap(&amp;s-&gt;ISD_mem, GT_P=
+CI0_CFGDATA &lt;&lt; 2,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;phb=
+-&gt;data_mem, 1);<br>
+-<br>
+-=C2=A0 =C2=A0 memory_region_transaction_commit();<br>
+-}<br>
+-<br>
+=C2=A0static void gt64120_pci_mapping(GT64120State *s)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0memory_region_transaction_begin();<br>
+@@ -645,7 +613,6 @@ static void gt64120_writel(void *opaque, hwaddr addr,<b=
+r>
+=C2=A0 =C2=A0 =C2=A0case GT_PCI0_CMD:<br>
+=C2=A0 =C2=A0 =C2=A0case GT_PCI1_CMD:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;regs[saddr] =3D val &amp; 0x0401fc0=
+f;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 gt64120_update_pci_cfgdata_mapping(s);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+=C2=A0 =C2=A0 =C2=A0case GT_PCI0_TOR:<br>
+=C2=A0 =C2=A0 =C2=A0case GT_PCI0_BS_SCS10:<br>
+@@ -1024,6 +991,48 @@ static const MemoryRegionOps isd_mem_ops =3D {<br>
+=C2=A0 =C2=A0 =C2=A0},<br>
+=C2=A0};<br>
+<br>
++static bool bswap(const GT64120State *s) <br>
++{<br>
++=C2=A0 =C2=A0 PCIHostState *phb =3D PCI_HOST_BRIDGE(s);<br>
++=C2=A0 =C2=A0 /*check for bus =3D=3D 0 &amp;&amp; device =3D=3D 0, Bits 11=
+:15 =3D Device , Bits 16:23 =3D Bus*/<br>
++=C2=A0 =C2=A0 bool is_phb_dev0 =3D extract32(phb-&gt;config_reg, 11, 13) =
+=3D=3D 0;<br>
++=C2=A0 =C2=A0 bool le_mode =3D FIELD_EX32(s-&gt;regs[GT_PCI0_CMD], GT_PCI0=
+_CMD, MByteSwap);<br>
++=C2=A0 =C2=A0 /* Only swap for non-bridge devices in big-endian mode */<br=
+>
++=C2=A0 =C2=A0 return !le_mode &amp;&amp; !is_phb_dev0;<br>
++}<br>
++<br>
++static uint64_t gt64120_pci_data_read(void *opaque, hwaddr addr, unsigned =
+size)<br>
++{<br>
++=C2=A0 =C2=A0 GT64120State *s =3D opaque;<br>
++=C2=A0 =C2=A0 uint64_t val =3D pci_host_data_le_ops.read(opaque, addr, siz=
+e);<br></blockquote><div>Hi , I just noticed that I made a mistake in the d=
+eclaring data length of read val. In previous commits declared as uint32_t =
+(as I think the PCI controller=C2=A0handles 32-bit values, while MemoryRegi=
+onOps uses uint64_t returns)<br>Should i consider:</div><div>1.sending corr=
+ected patch(hoping it not yet merged)</div><div>2.or any suggestion on fixi=
+ng it?</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++<br>
++=C2=A0 =C2=A0 if (bswap(s)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D bswap32(val);<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 return val;<br>
++}<br>
++<br>
++static void gt64120_pci_data_write(void *opaque, hwaddr addr, <br>
++=C2=A0 =C2=A0 uint64_t val, unsigned size)<br>
++{<br>
++=C2=A0 =C2=A0 GT64120State *s =3D opaque;<br>
++<br>
++=C2=A0 =C2=A0 if (bswap(s)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D bswap32(val); <br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 pci_host_data_le_ops.write(opaque, addr, val, size);=C2=A0 <=
+br>
++}<br>
++<br>
++static const MemoryRegionOps gt64120_pci_data_ops =3D {<br>
++=C2=A0 =C2=A0 .read =3D gt64120_pci_data_read,<br>
++=C2=A0 =C2=A0 .write =3D gt64120_pci_data_write,<br>
++=C2=A0 =C2=A0 .endianness =3D DEVICE_LITTLE_ENDIAN,<br>
++=C2=A0 =C2=A0 .valid =3D {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 .min_access_size =3D 4,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 .max_access_size =3D 4,<br>
++=C2=A0 =C2=A0 },<br>
++};<br>
++<br>
+=C2=A0static void gt64120_reset(DeviceState *dev)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0GT64120State *s =3D GT64120_PCI_HOST_BRIDGE(dev);<br>
+@@ -1178,7 +1187,6 @@ static void gt64120_reset(DeviceState *dev)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0gt64120_isd_mapping(s);<br>
+=C2=A0 =C2=A0 =C2=A0gt64120_pci_mapping(s);<br>
+-=C2=A0 =C2=A0 gt64120_update_pci_cfgdata_mapping(s);<br>
+=C2=A0}<br>
+<br>
+=C2=A0static void gt64120_realize(DeviceState *dev, Error **errp)<br>
+@@ -1202,6 +1210,12 @@ static void gt64120_realize(DeviceState *dev, Error =
+**errp)<br>
+=C2=A0 =C2=A0 =C2=A0memory_region_add_subregion_overlap(&amp;s-&gt;ISD_mem,=
+ GT_PCI0_CFGADDR &lt;&lt; 2,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&a=
+mp;phb-&gt;conf_mem, 1);<br>
+<br>
++=C2=A0 =C2=A0 memory_region_init_io(&amp;phb-&gt;data_mem, OBJECT(phb),<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &amp;gt64120_pci_data_ops,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 s, &quot;pci-conf-data&quot;, 4);<br>
++=C2=A0 =C2=A0 memory_region_add_subregion_overlap(&amp;s-&gt;ISD_mem, GT_P=
+CI0_CFGDATA &lt;&lt; 2,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;phb=
+-&gt;data_mem, 1);<br>
++<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0/*<br>
+=C2=A0 =C2=A0 =C2=A0 * The whole address space decoded by the GT-64120A doe=
+sn&#39;t generate<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div></div>
 
-We need to care external libraries that may use futex and at least I 
-know libpthread can cause spurious wakeups.
-
-Regards,
-Akihiko Odaki
+--000000000000cc14f906354e20b1--
 
