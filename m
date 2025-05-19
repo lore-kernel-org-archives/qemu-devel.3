@@ -4,62 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F190C2D0CD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDCC0C3ABD8
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH2I7-0006re-GD; Mon, 19 May 2025 11:20:35 -0400
+	id 1uH2IF-0006uc-RD; Mon, 19 May 2025 11:20:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uH2I5-0006r7-QU
- for qemu-devel@nongnu.org; Mon, 19 May 2025 11:20:33 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uH2IB-0006t0-Bm
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 11:20:39 -0400
 Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uH2I3-0005S7-Lb
- for qemu-devel@nongnu.org; Mon, 19 May 2025 11:20:33 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uH2I8-0005Tk-Th
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 11:20:38 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 989AB180E87
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 17:20:22 +0200 (CEST)
-Received: (qmail 1359 invoked by uid 990); 19 May 2025 15:20:22 -0000
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id F1838180E9D
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 17:20:24 +0200 (CEST)
+Received: (qmail 1468 invoked by uid 990); 19 May 2025 15:20:24 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 19 May 2025 17:20:22 +0200
+ Mon, 19 May 2025 17:20:24 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v5 02/25] plugins: add API for registering discontinuity
- callbacks
-Date: Mon, 19 May 2025 17:19:42 +0200
-Message-ID: <3b5ee8f787cf2ebf17962b172eaf2bd46343235f.1747666625.git.neither@nut.email>
+Cc: Julian Ganz <neither@nut.email>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v5 09/25] target/i386: call plugin trap callbacks
+Date: Mon, 19 May 2025 17:19:49 +0200
+Message-ID: <67873385ae5ca07542184ba2d5b21bf3fed34825.1747666625.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1747666625.git.neither@nut.email>
 References: <cover.1747666625.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: ----
-X-Rspamd-Report: REPLY(-4) SUSPICIOUS_RECIPS(1.5) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) BAYES_HAM(-3) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -4.1
+X-Rspamd-Bar: -----
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.999679) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -5.599679
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=tqOkdn7H0/+7oThE54seK3nN0I07qvxmlZ9TGuAmoAc=;
- b=LLoHtiVB4UxDvxJeB6wkVg7BMJQtnaRzP1eFZVSFUX7krbYJHYiwA0eTJgXPHvdUyVcM3AxYMY
- 3EYmS6SbyEIJ47fVm/kHPDETtMx6Gdshn3XJTS/A9vmocA5v0H7pc+Ia+HvroMMTpWx+OKDqBR5n
- MX7/tGM/fEFB9Jv23FrCv5D0NqUhQtqTwE/gxwXFi48mRix7P8fC34CkTi8GLCXsFkrk69sdRPLn
- YvETSDKCFSH8LdrnX3dIA0N/V8Xq7mtHhUUrpt2nmDoiUaPZe5DXja1PeJTuLUJzIXTfJXLdDeiz
- eJ13ZGmQu7UXl5BYnMq7WtFnXgIutmxwsSYHIypphK4Si52DH+bOE1UvS8MK/Rg4edORTqHeniTL
- FMLHZX97e6jAjrr8XkW+IS/eW7FeZWJAlLsS/Czw7Vy1gA+4jufoLKKaNWoMMdwGM0vJ5WHkoL//
- +qBYHneCindKDwt8XP/1W5vUe6xGBlvXTjwVFMSpVcVhuXzbGZ5xmrjt2Igy6lHRZOI/fll4gLTd
- Cy2qsnFwAZFVz/iP2xYoWgTtwxoe3k6ZQYJNL8p6R947fGYFYItAdmX5Jwac86wZBJG7dus8gQJ7
- zbqJXMLY7Dve3NxZUxrnYcBXu8BuMzfxI8ADKIzw/ZMeX8O8VGG5uXRMEDKTChsOO7ub9MuLJjbw
- M=
+ bh=BDtEUGOiJ460yQyTgMpYkGu26mgEgDHjVtdwN+y0NTs=;
+ b=rmal3Pd5UHv9qEF9cfZY99scVSD6zB4K6xHQmtgFGUAzJp9fU0sD5xV1wCq5S7Od5fJ4q2gmMr
+ Kd+RAwTfjwVFTd2JVwilVBVGQ4HUagMi2oDl0MaW0PUZBqErdT17KzhIWDQjJHqpU1GYrTcTYf0k
+ xqzzaLnTLgjg1dEyzCrGmcT7WYTfdRkNjHvWOK31U5iVc+pH55Qqec3JxKYcbt809GDtdYgS7Afh
+ OBIE5f0065RxVNJslmB8+EBZvyA9rd4rdsKQBU/iUO3FIENRiEQn5M5tJMnSaeInoFTzo1n9QGOc
+ nfhpFZtQhjWQfWxDBcVm/UYUiW02ajRBT2rl/Z4s/CNNKk5bJ6ZiHqHPidsGPQ48q4Qd9buhq8sG
+ 5LyuAE/WY0cofEy2zxY7isgzj5jqCy1VEEBYWwHiqriltrkBIuJnUrObe2r4KhrC/jI/WfPRRxW8
+ hJUBkrLdZCO7fU6wRMmxuKz1+X7kiQGSmy3WiGYVJ9UJT1LPgyiCPB7nP3+4jkozAKPR77cUl/NI
+ TwYcgoIDGQlRkik4K2pV6+yefi2y5GvxCwtqKHLlXxpGI71EwVQ4XkF5kB2uok6yoNWRHqnFkYQR
+ HDJ1acLx6x62hSkqj68LH7s3JetDmFv3nnA7TGGUw+y0a1cJRkPzMmn2S5cTFClBnc1bhR0PWO/v
+ k=
 Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
  helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
@@ -84,91 +81,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The plugin API allows registration of callbacks for a variety of VCPU
-related events, such as VCPU reset, idle and resume. In addition to
-those events, we recently defined discontinuity events, which include
-traps.
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
 
-This change introduces a function to register callbacks for these
-events. We define one distinct plugin event type for each type of
-discontinuity, granting fine control to plugins in term of which events
-they receive.
+This change places the hook for x86 targets.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- include/qemu/plugin-event.h |  3 +++
- include/qemu/qemu-plugin.h  | 16 ++++++++++++++++
- plugins/core.c              | 15 +++++++++++++++
- 3 files changed, 34 insertions(+)
+ target/i386/tcg/excp_helper.c | 3 +++
+ target/i386/tcg/seg_helper.c  | 4 ++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/include/qemu/plugin-event.h b/include/qemu/plugin-event.h
-index 7056d8427b..1100dae212 100644
---- a/include/qemu/plugin-event.h
-+++ b/include/qemu/plugin-event.h
-@@ -20,6 +20,9 @@ enum qemu_plugin_event {
-     QEMU_PLUGIN_EV_VCPU_SYSCALL_RET,
-     QEMU_PLUGIN_EV_FLUSH,
-     QEMU_PLUGIN_EV_ATEXIT,
-+    QEMU_PLUGIN_EV_VCPU_INTERRUPT,
-+    QEMU_PLUGIN_EV_VCPU_EXCEPTION,
-+    QEMU_PLUGIN_EV_VCPU_HOSTCALL,
-     QEMU_PLUGIN_EV_MAX, /* total number of plugin events we support */
- };
+diff --git a/target/i386/tcg/excp_helper.c b/target/i386/tcg/excp_helper.c
+index 6fb8036d98..32f2784e92 100644
+--- a/target/i386/tcg/excp_helper.c
++++ b/target/i386/tcg/excp_helper.c
+@@ -23,6 +23,7 @@
+ #include "system/runstate.h"
+ #include "exec/helper-proto.h"
+ #include "helper-tcg.h"
++#include "qemu/plugin.h"
  
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 2e849bff0b..6d46d15e27 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -274,6 +274,22 @@ QEMU_PLUGIN_API
- void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
-                                          qemu_plugin_vcpu_simple_cb_t cb);
+ G_NORETURN void helper_raise_interrupt(CPUX86State *env, int intno,
+                                           int next_eip_addend)
+@@ -93,6 +94,7 @@ void raise_interrupt2(CPUX86State *env, int intno,
+                       uintptr_t retaddr)
+ {
+     CPUState *cs = env_cpu(env);
++    uint64_t last_pc = env->eip + env->segs[R_CS].base;
  
-+/**
-+ * qemu_plugin_register_vcpu_discon_cb() - register a discontinuity callback
-+ * @id: plugin ID
-+ * @type: types of discontinuities for which to call the callback
-+ * @cb: callback function
-+ *
-+ * The @cb function is called every time a vCPU receives a discontinuity event
-+ * of the specified type(s), after the vCPU was prepared to handle the event.
-+ * Preparation entails updating the PC, usually to some interrupt handler or
-+ * trap vector entry.
-+ */
-+QEMU_PLUGIN_API
-+void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
-+                                         enum qemu_plugin_discon_type type,
-+                                         qemu_plugin_vcpu_discon_cb_t cb);
-+
- /** struct qemu_plugin_tb - Opaque handle for a translation block */
- struct qemu_plugin_tb;
- /** struct qemu_plugin_insn - Opaque handle for a translated instruction */
-diff --git a/plugins/core.c b/plugins/core.c
-index eb9281fe54..dc1f5cb4d8 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -551,6 +551,21 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
-     plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_RESUME, cb);
+     if (!is_int) {
+         cpu_svm_check_intercept_param(env, SVM_EXIT_EXCP_BASE + intno,
+@@ -106,6 +108,7 @@ void raise_interrupt2(CPUX86State *env, int intno,
+     env->error_code = error_code;
+     env->exception_is_int = is_int;
+     env->exception_next_eip = env->eip + next_eip_addend;
++    qemu_plugin_vcpu_exception_cb(cs, last_pc);
+     cpu_loop_exit_restore(cs, retaddr);
  }
  
-+void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
-+                                         enum qemu_plugin_discon_type type,
-+                                         qemu_plugin_vcpu_discon_cb_t cb)
-+{
-+    if (type & QEMU_PLUGIN_DISCON_INTERRUPT) {
-+        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_INTERRUPT, cb);
-+    }
-+    if (type & QEMU_PLUGIN_DISCON_EXCEPTION) {
-+        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_EXCEPTION, cb);
-+    }
-+    if (type & QEMU_PLUGIN_DISCON_HOSTCALL) {
-+        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_HOSTCALL, cb);
-+    }
-+}
-+
- void qemu_plugin_register_flush_cb(qemu_plugin_id_t id,
-                                    qemu_plugin_simple_cb_t cb)
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 071f3fbd83..db635aceee 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -29,6 +29,7 @@
+ #include "seg_helper.h"
+ #include "access.h"
+ #include "tcg-cpu.h"
++#include "qemu/plugin.h"
+ 
+ #ifdef TARGET_X86_64
+ #define SET_ESP(val, sp_mask)                                   \
+@@ -1192,6 +1193,7 @@ void do_interrupt_all(X86CPU *cpu, int intno, int is_int,
+                       int error_code, target_ulong next_eip, int is_hw)
  {
+     CPUX86State *env = &cpu->env;
++    uint64_t last_pc = env->eip + env->segs[R_CS].base;
+ 
+     if (qemu_loglevel_mask(CPU_LOG_INT)) {
+         if ((env->cr[0] & CR0_PE_MASK)) {
+@@ -1263,6 +1265,8 @@ void do_interrupt_all(X86CPU *cpu, int intno, int is_int,
+                  event_inj & ~SVM_EVTINJ_VALID);
+     }
+ #endif
++
++    qemu_plugin_vcpu_interrupt_cb(CPU(cpu), last_pc);
+ }
+ 
+ void do_interrupt_x86_hardirq(CPUX86State *env, int intno, int is_hw)
 -- 
 2.49.0
 
