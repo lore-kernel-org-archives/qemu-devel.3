@@ -4,78 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3894EC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 09:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF2DC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 09:17:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGwaP-0008Ar-9I; Mon, 19 May 2025 05:15:05 -0400
+	id 1uGwbx-0000Ol-Dh; Mon, 19 May 2025 05:16:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uGwaM-00088s-15
- for qemu-devel@nongnu.org; Mon, 19 May 2025 05:15:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1uGwbs-0000ON-DE
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 05:16:36 -0400
+Received: from fhigh-b3-smtp.messagingengine.com ([202.12.124.154])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uGwaH-00057I-TJ
- for qemu-devel@nongnu.org; Mon, 19 May 2025 05:14:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747646095;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=v2C4KdJi1QF3Niatz+kL4tJmLMrQDtvaT3SUuilt7ds=;
- b=a4++8kFCDMe0X5UtPNQsOH3cTIved2Jooo5l07Xq0r485QkIf4zkR0iKTiQhLquX+M41nZ
- hsvZHpQczFpssWpHdxncm8aeXG5dsXT+Qc6sHI0jO/v7IeclTRby+TtwZ4CQ6obCltX4iO
- ebaChDWh3NI9K8jw8bN7atFS66SMBjA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-rYjiZHHGPaGRTfMeyEU9_A-1; Mon,
- 19 May 2025 05:14:50 -0400
-X-MC-Unique: rYjiZHHGPaGRTfMeyEU9_A-1
-X-Mimecast-MFC-AGG-ID: rYjiZHHGPaGRTfMeyEU9_A_1747646089
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2912B1800373; Mon, 19 May 2025 09:14:49 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B28EC1956096; Mon, 19 May 2025 09:14:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4815921E66C3; Mon, 19 May 2025 11:14:46 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Michael Roth
- <michael.roth@amd.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  berrange@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 12/12] qapi: make all generated files common
-In-Reply-To: <20250515172732.3992504-13-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Thu, 15 May 2025 10:27:32 -0700")
-References: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
- <20250515172732.3992504-13-pierrick.bouvier@linaro.org>
-Date: Mon, 19 May 2025 11:14:46 +0200
-Message-ID: <8734d1hshl.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1uGwbn-0005fL-FP
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 05:16:36 -0400
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 443AB254009D;
+ Mon, 19 May 2025 05:16:29 -0400 (EDT)
+Received: from phl-imap-12 ([10.202.2.86])
+ by phl-compute-06.internal (MEProxy); Mon, 19 May 2025 05:16:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1747646189;
+ x=1747732589; bh=bQkSnZLtUEm+h6Nq2L9PHOhLC2WqGhy5j86Q6IGwDVM=; b=
+ D/S0MoBpmW/iBAlSqsxSQDy+DWh1/1DvDYEUb82nrM2wmEgnfB8IkQmEFiMTLLdL
+ p2OrdoPrbHP22Cs+4LY18VudosX3lVREHXsFUi9mzZVn/MVyGfnVvdHb58L4FRqb
+ zvYPfyBLl5N0xLQxbebWZKlVS9N6pIDUSFEc7QNm5tDJodsJHwG3F85rJr66y0Ve
+ lPB3F4RT6vB2ox46y75liwIj2ajnbpIH5oSTjSP6oaFJfav3ydGVs4uG7lKHaq3s
+ nyKPdJ9dYVNjMTFwkYOU5KMR4F0KNc3c9e6O+Gjx7ZuVDBRdbTG3/nstAr1SpixF
+ f4Qm9i9DZfDHEd4542Ya8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747646189; x=
+ 1747732589; bh=bQkSnZLtUEm+h6Nq2L9PHOhLC2WqGhy5j86Q6IGwDVM=; b=v
+ U9K4MuZAhKicwkb6yr4kwQsR2q9btZ/rU9OA2SSvGqilYFPIF3uk/ucR6kHANNzT
+ p7rYwlFnmnPHNPHaVnaWKrNvnlA5HDfqgoiUb/LSBny91M19LT+ZM+Cf2MnES4kD
+ oWto5KPumO9LoeAejV+qqKjvZkfxn/xb5JYlWf7lNS0lQ5dnhH3+aAMHT1Y/d+k9
+ 48+q6s7AjXWNapcUZxtvMRycAIIldwpsm0N2CkArBHNk7Sm0f4fr6dQjM/euEyNT
+ n8XAkaRoynCxx9vnUSParf10tnHFRWuP0Sh0bUshg5bBPzb55IypePSnBovZMIcX
+ oT9/yxHc9wGHGWiKy6sxg==
+X-ME-Sender: <xms:7PYqaN8U_nWTWOasgW1zwvDKXeLO747norCgk5iR-_Q7qlaDrU2Jkw>
+ <xme:7PYqaBtZeWs7-p_5XsRVfrC1RvJMTle7uskF2HE7BhAvLn7yc3vKdRWeYM41dGWO3
+ AZB0IIu37MgLCwy3UY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddtleelucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+ pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+ gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
+ tdejnecuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghngh
+ esfhhlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdff
+ keethefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivg
+ eptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihg
+ ohgrthdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtg
+ hpthhtoheptghhvghnhhhurggtrghisehkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+ rghoshhonhhgsehlohhonhhgshhonhdrtghnpdhrtghpthhtoheplhhigihirghnghhlrg
+ hisehlohhonhhgshhonhdrtghnpdhrtghpthhtohepmhgrohgsihgsoheslhhoohhnghhs
+ ohhnrdgtnhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:7PYqaLCK_U5aicX2I-JLEWBCkqdeo1601QrenMrPrYJKwjiwrsuLtg>
+ <xmx:7PYqaBeZsSvsOKa9czkD40vfvViAm-JqFvcnti3HAFY2Gh61-m_Pig>
+ <xmx:7PYqaCOdoHmL-k1unjqjZ9RshrOIN6N5qsPtpdrIH9wAYtx41Ff1iw>
+ <xmx:7PYqaDn2us1CMN3fCHHaL5wBf6Sz5QBtlC5m2uFfDvZZ3tEsHu9KLQ>
+ <xmx:7fYqaDAdwB6syT9ia3YMPQZ7kgNfTskF0TeN_SiY5ILNMh4bIOH2o3E9>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 62DA71060060; Mon, 19 May 2025 05:16:28 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
+X-ThreadId: T61eab45fb9657032
+Date: Mon, 19 May 2025 10:15:37 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "Bibo Mao" <maobibo@loongson.cn>, "Song Gao" <gaosong@loongson.cn>
+Cc: "Huacai Chen" <chenhuacai@kernel.org>,
+ "QEMU devel" <qemu-devel@nongnu.org>, "Xianglai Li" <lixianglai@loongson.cn>
+Message-Id: <73bd3e6c-78b0-4378-b391-8f20beac2079@app.fastmail.com>
+In-Reply-To: <1422bdc1-9251-b88e-44fd-e953ee88d0bd@loongson.cn>
+References: <20250509100747.1070094-1-maobibo@loongson.cn>
+ <20250509100747.1070094-4-maobibo@loongson.cn>
+ <5fa02121-43f6-4335-883e-efe07a2f3711@app.fastmail.com>
+ <391ab7d0-9e61-1b9d-fbd3-98dd23f2d2a7@loongson.cn>
+ <671157ca-de54-4053-93a9-8ea7f3fa1f1f@app.fastmail.com>
+ <0e4690a6-1f28-f97c-a7dc-3b7888d23f38@loongson.cn>
+ <930362d4-695a-44e6-a220-898e265a944c@app.fastmail.com>
+ <1422bdc1-9251-b88e-44fd-e953ee88d0bd@loongson.cn>
+Subject: Re: [PATCH 03/15] hw/intc/loongarch_extioi: Add irqchip-in-kernel
+ save/restore function
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=202.12.124.154;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,83 +121,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  qapi/meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/qapi/meson.build b/qapi/meson.build
-> index 7582c2b5bcf..6cc3afce721 100644
-> --- a/qapi/meson.build
-> +++ b/qapi/meson.build
-> @@ -140,6 +140,6 @@ foreach output : qapi_nonmodule_outputs
->    if output.endswith('.trace-events')
->      qapi_trace_events +=3D qapi_files[i]
->    endif
-> -  specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: qapi_files[i])
-> +  system_ss.add(if_true: qapi_files[i])
->    i =3D i + 1
->  endforeach
 
-I think this can be simplified further:
+=E5=9C=A82025=E5=B9=B45=E6=9C=8819=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=
+=8D=889:55=EF=BC=8CBibo Mao=E5=86=99=E9=81=93=EF=BC=9A
+[...]
+>> It's actually different machine as kernel irqchip is never on par wit=
+h usermode
+>> emulation. This approach is taken by i386 (TYPE_KVM_IOAPIC vs TYPE_IO=
+APIC),
+>> Arm (TYPE_KVM_ARM_ITS vs TYPE_ARM_GICV3_ITS), PowerPC (TYPE_KVM_OPENP=
+IC vs
+>> TYPE_OPENPIC) and I see no reason that LoongArch should not follow.
+> So what is the advantage and disadvantage from yourself understanding =
+here?
 
-diff --git a/qapi/meson.build b/qapi/meson.build
-index 6cc3afce72..3b035aea33 100644
---- a/qapi/meson.build
-+++ b/qapi/meson.build
-@@ -85,8 +85,7 @@ qapi_nonmodule_outputs =3D [
-   'qapi-emit-events.c', 'qapi-emit-events.h',
- ]
-=20
--# First build all sources
--qapi_util_outputs =3D [
-+qapi_outputs =3D qapi_nonmodule_outputs + [
-   'qapi-builtin-types.c', 'qapi-builtin-visit.c',
-   'qapi-builtin-types.h', 'qapi-builtin-visit.h',
- ]
-@@ -109,20 +108,17 @@ foreach module : qapi_all_modules
-       'qapi-commands-@0@.trace-events'.format(module),
-     ]
-   endif
--  qapi_util_outputs +=3D qapi_module_outputs
-+  qapi_outputs +=3D qapi_module_outputs
- endforeach
-=20
- qapi_files =3D custom_target('shared QAPI source files',
--  output: qapi_util_outputs + qapi_nonmodule_outputs,
-+  output: qapi_outputs,
-   input: [ files('qapi-schema.json') ],
-   command: [ qapi_gen, '-o', 'qapi', '-b', '@INPUT0@' ],
-   depend_files: [ qapi_inputs, qapi_gen_depends ])
-=20
--# Now go through all the outputs and add them to the right sourceset.
--# These loops must be synchronized with the output of the above custom tar=
-get.
--
- i =3D 0
--foreach output : qapi_util_outputs
-+foreach output : qapi_outputs
-   if output.endswith('.h')
-     genh +=3D qapi_files[i]
-   endif
-@@ -132,14 +128,3 @@ foreach output : qapi_util_outputs
-   util_ss.add(qapi_files[i])
-   i =3D i + 1
- endforeach
--
--foreach output : qapi_nonmodule_outputs
--  if output.endswith('.h')
--    genh +=3D qapi_files[i]
--  endif
--  if output.endswith('.trace-events')
--    qapi_trace_events +=3D qapi_files[i]
--  endif
--  system_ss.add(if_true: qapi_files[i])
--  i =3D i + 1
--endforeach
+I think I made myself pretty clear in previous replies, in case you miss=
+ed that.=20
 
+The advantage is clean design, clean interface, clean vmstates (user spa=
+ce emulation
+tends to have more states vs in-kernel irqchip), proper signalling to us=
+er that
+migration between user-space/in-kernel irqchip is not feasible, perhaps =
+some performance
+advantage on reducing number of user space IOCSR ranges, reducing attack=
+ surface
+exposed by userspace emulation, reducing the chance of hypervisor error =
+being covered
+up by userspace fallback....
+
+I don't think there is any disadvantage. I don't really buy the "differe=
+nt machine"
+justification you made. Paravirt solution tends to have its own behaviou=
+r and I don't
+think it's a bad thing to expose it to users.
+
+Thanks
+--=20
+- Jiaxun
 
