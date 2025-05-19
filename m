@@ -4,132 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2DDEC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD0DC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH4Hc-0008DJ-Tt; Mon, 19 May 2025 13:28:13 -0400
+	id 1uH4Vy-0002wQ-Nd; Mon, 19 May 2025 13:43:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uH4Ha-0008Cc-Qo
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:28:10 -0400
-Received: from mail-pj1-x1041.google.com ([2607:f8b0:4864:20::1041])
+ (Exim 4.90_1) (envelope-from <qwinci222@gmail.com>)
+ id 1uH4Vv-0002wC-P2
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:43:00 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uH4HY-0003Uc-Mm
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:28:10 -0400
-Received: by mail-pj1-x1041.google.com with SMTP id
- 98e67ed59e1d1-3081fe5987eso3992661a91.3
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 10:28:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <qwinci222@gmail.com>)
+ id 1uH4Vt-0004nN-PE
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:42:59 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-601afe51106so2684496a12.1
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 10:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747675687; x=1748280487; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=p5m79CSNlAwWcMLcQdoYqDsBKuXSD0HuLxlUAQ/OYLc=;
- b=Z/pJXFt6elf3YxYV7k2k0PkXGKHBtVFneCfj8qpX4e0OUghAnsJAv32WOuO+9xXNEp
- wOO6LDtQ9P6AsChmNMi57xI5ySDYPfDmBhCNRl0Iw8Q5jv8+ftpauFL9/Dam+NXmQbBR
- 8Q9FtEBNE9aKnIOUOMCX914CKU5y61CA6uRfx6ekLBnlFlrRPip/dfllnU+yUhQwa6N5
- q3IKCiBazMaZTIeTkrHLjTQlwOj75WyRPBrmEuK8ATKMjBnHS4EXUIwoH8YPJwGvKkwb
- c7TiPq80SYlQvHtmJVGy+PK5QWnS1+TRVs/3jLK6N8Roy1p5pbyCLuCZWOyMYiacLOho
- N9AQ==
+ d=gmail.com; s=20230601; t=1747676576; x=1748281376; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=UTjJNJAi7LgxFZ6sSDSuyhLGOCaZn2s+lPKGIBLNrGY=;
+ b=UkrtvnNkuxINFXH3+6Yn1UW3DXGI6cQwo9M4/FQQxjFSsxSRwosvwoVFHh38XSEFV6
+ mrxwh/GzzmRWrTQw4vknCdAN3VCvVFl/cbD5lhP913Dp2TydpJT6om5grV+bN/yZbwyt
+ cuKKEMHLoPUd4Nmg89IkWSjvKoH87C/fYi1sfbM3E2llf9sv7RgMZHd4EcUrTu2yyFyZ
+ USJ1HMldpx5znGVDUAE7XbrfTyj7oYUtsStvLkgQDKMfRPI85b4nG540ioClmutuqap0
+ TDHxkGuc2PJtSWyOxsRQ9o02yypXNlITUnHlJDKnZduq6jSS7lnTQHCdW/N81nbQ1/gD
+ GVHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747675687; x=1748280487;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=p5m79CSNlAwWcMLcQdoYqDsBKuXSD0HuLxlUAQ/OYLc=;
- b=rm1ERZy07EK2CfgMzLJLsztfEDBUEs+yQSuw7lluJzUAdgbx6+HalXBv2+cmaeLPeu
- eFpZxEMaGkWA1ItzHTyFvBzBFlDHyOct4oOYYJLsjf5kV1JT3HzHa8rjU3ld9Xm7P1Pq
- Uc8QBKAbxLJIoh9cjCWlj5XFbopOae1kunenqLzrkB0Nix7i1lpTSc2kxT3HeMxqYZSD
- t47nw667b6r73z2HjwAq+l+NHiNmEL8PwoATTIyw/AcHzyQ6oSZWAyWs+IZzXmZWfr9g
- Gvo4o2Bo8aggpDfJEUHvmh+SZIRrQdYYvK9CA/qrfKYc7/npiX4vsjj/NjXxrEKDFT66
- QzCw==
-X-Gm-Message-State: AOJu0Yys5Z0KDkPuEK0cNj8/Dbu8xa9b6y/G1L8ndtEHmw8mSGB2rOWl
- Abhqkrv/aiwU8MON4juMykn9O1fzz5GE3gCB0t8hg0gOe1HglvsFy0AF5nyYbZBdTwAr
-X-Gm-Gg: ASbGncvkDe83lLAoT/SnMbUCEdzGSUU5iqOMqvaLH1gmwYOq01C7euB8JBtX9vl1z7u
- Lmnl440nJMcbPLB1L7krDTPmIVoOHgtyFG+D+SY3BTl0hCO8iF7xTkvhcFH2ZOjVhkL/utC/up6
- 1KqZnK3qUjaS5NVRulvsE7udskljdvYWxhAPz4ermzUkfOVJeGbdOS9R96bCNJmomi6MGR+3bVx
- tnj0MQc1l0EVbB7vbb4UOXjPsxMMOSmAA9J0KQoEBYu4FPOLscKPGFdSwiIhQP0Nc255i7AZBZT
- g6SebHjHdz7N5xnsRM8l45UCGtZ5uDa7tcQeNi0sVXFznw1d4biSqjV8aD8=
-X-Google-Smtp-Source: AGHT+IENiEa7s70yRCJmRTamHjbgL5XMh2zjoHyK+Sfjas4g0bcnTf8crige/m6Rm9NsrhK18yVwYg==
-X-Received: by 2002:a17:90b:4b82:b0:2ff:7b28:a51a with SMTP id
- 98e67ed59e1d1-30e8314db35mr23939904a91.17.1747675686633; 
- Mon, 19 May 2025 10:28:06 -0700 (PDT)
-Received: from [192.168.0.113] ([139.227.182.131])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30e7b4dda42sm7047916a91.35.2025.05.19.10.28.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 May 2025 10:28:06 -0700 (PDT)
-Message-ID: <5de0e6b8-7c05-4e20-b828-93442c670eca@gmail.com>
-Date: Tue, 20 May 2025 01:28:01 +0800
+ d=1e100.net; s=20230601; t=1747676576; x=1748281376;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UTjJNJAi7LgxFZ6sSDSuyhLGOCaZn2s+lPKGIBLNrGY=;
+ b=syPQD/I3E4sXM3zZUId8g7B6Y8HV145mXMLnOaTYCDMdpkzRz0tFuMQaakSBwa+wC9
+ g+BTmGj4UnX/t32Le3Y9BlFQmufZgrUoJ6xIJHNRMfcv7IPQ5s94Acah0QWDGd/etgJ0
+ KAdBk6No8Wi1fy0fjaZEMVL+qnsLiY/LggvRqOWOyW+crcnahQevGgrK1bGLlt2sZi6L
+ KurulhDbvHW8ssdF+Vjdg2o34Elk5mqYimCShS949gGKgXdW+2unTAwrSx+pENN4mHLL
+ mR6X6DCiXSVVePH2zt7QmFZmKHCPy7UVtY6DrmeZ3Qv178ItqOApGH1RHnjmXvzlHVfP
+ nfdw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEZ6eK2VwIbeM8eeIqvX0HCfzNKSJIXFcDdStiB0gsrwsmz3Ok5W8gFR+8mtGJYoNrIKkubLgQDb7w@nongnu.org
+X-Gm-Message-State: AOJu0YxnL8Zf2ZbGq7oM08jiUnYfXnkazxTMvXKGeX9IqySTesU1fQd9
+ YWKe6esJIvH1lAqR4gD4ylFlkx+54LDhpdw7FZMdC3p3B0jbY5SOVc3MGpJ5RFXcagPMM7WRZto
+ FCLO/N2MB5fypYdv9mC0HLkkkFxFgenU=
+X-Gm-Gg: ASbGncsuYDulcU9kTfWLm2XDhlYP2eGqc+Os6H0Otc5s6X9e0hkjHIx+/AwGzaJWgEG
+ tLCoIiu7zg7MUAv3jjq+4bv99i3yci8JO7hJ/g7AbYZBMAUNdzjKZOLv8/p0iF8bJ6JrrFxhmuN
+ f9P6xPLNoi1rtr8G4LoybEQoIZg474wxY=
+X-Google-Smtp-Source: AGHT+IEHg4Rvgn+AKL/awW+9V5834OjlWfqNt+lmN/8CKdZ3PVSs1joGP0nVOrLFUrHHITGa2ycasErTFgzXoSD+8tU=
+X-Received: by 2002:a17:907:2d2a:b0:ad5:1e70:7145 with SMTP id
+ a640c23a62f3a-ad52d4e746dmr1322679066b.22.1747676575401; Mon, 19 May 2025
+ 10:42:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/igd: Support non-boot gpus
-To: Alex Williamson <alex.williamson@redhat.com>, Qwinci <qwinci222@gmail.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20250519150837.23146-3-qwinci222@gmail.com>
  <20250519111527.6cafd01a.alex.williamson@redhat.com>
-Content-Language: en-US
-From: Tomita Moeko <tomitamoeko@gmail.com>
-Autocrypt: addr=tomitamoeko@gmail.com; keydata=
- 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
-In-Reply-To: <20250519111527.6cafd01a.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1041;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1041.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <5de0e6b8-7c05-4e20-b828-93442c670eca@gmail.com>
+In-Reply-To: <5de0e6b8-7c05-4e20-b828-93442c670eca@gmail.com>
+From: Visa <qwinci222@gmail.com>
+Date: Mon, 19 May 2025 20:42:43 +0300
+X-Gm-Features: AX0GCFsJXN2JOLf9nh54aD0KjD548krJuW44LNelvXtRvO-hpKUFnZ6yb7Cj4pM
+Message-ID: <CANHiinFQkHkS1XY0FfkJnByiAY9aNhjA+HBKBaGCpHS7eJ6Z7w@mail.gmail.com>
+Subject: Re: [PATCH] vfio/igd: Support non-boot gpus
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000758c9e063580a95b"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=qwinci222@gmail.com; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FREEMAIL_REPLY=1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,95 +97,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 01:15, Alex Williamson wrote:
-> [Please Cc maintainers - added here]
-> 
-> On Mon, 19 May 2025 18:08:39 +0300
-> Qwinci <qwinci222@gmail.com> wrote:
-> 
->> Change the IGD detection logic to also accept gpus with
->> PCI_CLASS_DISPLAY_OTHER class which is used if the igpu is not
->> set as the primary boot gpu.
->>
->> Signed-off-by: Qwinci <qwinci222@gmail.com>
->> ---
->>  hw/vfio/igd.c | 16 +++++++++++++---
->>  1 file changed, 13 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
->> index e7952d15a0..1ddfcc2c17 100644
->> --- a/hw/vfio/igd.c
->> +++ b/hw/vfio/igd.c
->> @@ -454,6 +454,16 @@ static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
->>  #define IGD_GGC_MMIO_OFFSET     0x108040
->>  #define IGD_BDSM_MMIO_OFFSET    0x1080C0
->>  
->> +static bool is_igd(VFIOPCIDevice *vdev) {
->> +    if (vfio_is_vga(vdev)) {
->> +        return true;
->> +    }
->> +
->> +    PCIDevice *pdev = &vdev->pdev;
->> +    uint16_t class = pci_get_word(pdev->config + PCI_CLASS_DEVICE);
->> +    return class == PCI_CLASS_DISPLAY_OTHER;
->> +}
-> 
-> But the function isn't detecting IGD, it's detecting VGA or DISPLAY
-> class devices.  So it's misnamed and we might want a new
-> vfio_is_display() and if necessary a wrapper for both that tests
-> vfio_is_vga_or_display(), or maybe a vfio_is_base_display() if we want
-> to test only the base class.
+--000000000000758c9e063580a95b
+Content-Type: text/plain; charset="UTF-8"
 
-+1, matching the base class is enough here I think.
+Thanks for the comments, Ill make a new patch with a `vfio_is_display`
+function`,
+should I still change all uses of the `vfio_is_vga` function to use that one
+even if the other quirks aren't needed in that configuration?
 
-> More importantly maybe, sure there might be IGD as non-primary
-> configurations, but are the quirks still relevant to those devices?
-> Which ones?  Thanks,
-> 
-> Alex
 
-Actually this is what I've worked on for a while. Only the OpRegion
-quirk is needed in this configuration, Windows driver requires it.
-Additionally, legacy mode should be disabled when IGD is non-primary as
-VGA ranges are not routed to IGD.
+ma 19.5.2025 klo 20.28 Tomita Moeko (tomitamoeko@gmail.com) kirjoitti:
 
-It also requires a more recent version kernel (6.15+) [1] for OpRegion
-support on IGD as non-primary graphics.
+> On 5/20/25 01:15, Alex Williamson wrote:
+> > [Please Cc maintainers - added here]
+> >
+> > On Mon, 19 May 2025 18:08:39 +0300
+> > Qwinci <qwinci222@gmail.com> wrote:
+> >
+> >> Change the IGD detection logic to also accept gpus with
+> >> PCI_CLASS_DISPLAY_OTHER class which is used if the igpu is not
+> >> set as the primary boot gpu.
+> >>
+> >> Signed-off-by: Qwinci <qwinci222@gmail.com>
+> >> ---
+> >>  hw/vfio/igd.c | 16 +++++++++++++---
+> >>  1 file changed, 13 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> >> index e7952d15a0..1ddfcc2c17 100644
+> >> --- a/hw/vfio/igd.c
+> >> +++ b/hw/vfio/igd.c
+> >> @@ -454,6 +454,16 @@ static bool vfio_pci_igd_override_gms(int gen,
+> uint32_t gms, uint32_t *gmch)
+> >>  #define IGD_GGC_MMIO_OFFSET     0x108040
+> >>  #define IGD_BDSM_MMIO_OFFSET    0x1080C0
+> >>
+> >> +static bool is_igd(VFIOPCIDevice *vdev) {
+> >> +    if (vfio_is_vga(vdev)) {
+> >> +        return true;
+> >> +    }
+> >> +
+> >> +    PCIDevice *pdev = &vdev->pdev;
+> >> +    uint16_t class = pci_get_word(pdev->config + PCI_CLASS_DEVICE);
+> >> +    return class == PCI_CLASS_DISPLAY_OTHER;
+> >> +}
+> >
+> > But the function isn't detecting IGD, it's detecting VGA or DISPLAY
+> > class devices.  So it's misnamed and we might want a new
+> > vfio_is_display() and if necessary a wrapper for both that tests
+> > vfio_is_vga_or_display(), or maybe a vfio_is_base_display() if we want
+> > to test only the base class.
+>
+> +1, matching the base class is enough here I think.
+>
+> > More importantly maybe, sure there might be IGD as non-primary
+> > configurations, but are the quirks still relevant to those devices?
+> > Which ones?  Thanks,
+> >
+> > Alex
+>
+> Actually this is what I've worked on for a while. Only the OpRegion
+> quirk is needed in this configuration, Windows driver requires it.
+> Additionally, legacy mode should be disabled when IGD is non-primary as
+> VGA ranges are not routed to IGD.
+>
+> It also requires a more recent version kernel (6.15+) [1] for OpRegion
+> support on IGD as non-primary graphics.
+>
+> [1]
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=41112160ca87d6b5280813ef61f1c35bb9ee2f82
+>
+> Thanks,
+> Moeko
+>
+> >>  void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+> >>  {
+> >>      VFIOQuirk *ggc_quirk, *bdsm_quirk;
+> >> @@ -461,7 +471,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev,
+> int nr)
+> >>      int gen;
+> >>
+> >>      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> >> -        !vfio_is_vga(vdev) || nr != 0) {
+> >> +        !is_igd(vdev) || nr != 0) {
+> >>          return;
+> >>      }
+> >>
+> >> @@ -519,7 +529,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice
+> *vdev, Error **errp)
+> >>      Error *err = NULL;
+> >>
+> >>      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> >> -        !vfio_is_vga(vdev)) {
+> >> +        !is_igd(vdev)) {
+> >>          return true;
+> >>      }
+> >>
+> >> @@ -685,7 +695,7 @@ static bool
+> vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+> >>      int gen;
+> >>
+> >>      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> >> -        !vfio_is_vga(vdev)) {
+> >> +        !is_igd(vdev)) {
+> >>          return true;
+> >>      }
+> >>
+> >
+>
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=41112160ca87d6b5280813ef61f1c35bb9ee2f82
+--000000000000758c9e063580a95b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Moeko
+<div dir=3D"ltr"><div dir=3D"ltr">Thanks for the comments, Ill make a new p=
+atch with a `vfio_is_display` function`,<br>should I still change all uses =
+of the `vfio_is_vga` function to use that one</div><div dir=3D"ltr">even if=
+ the other quirks aren&#39;t needed in that configuration?</div><br></div><=
+br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
+=3D"gmail_attr">ma 19.5.2025 klo 20.28 Tomita Moeko (<a href=3D"mailto:tomi=
+tamoeko@gmail.com">tomitamoeko@gmail.com</a>) kirjoitti:<br></div><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">On 5/20/25 01:15, Alex Williamson =
+wrote:<br>
+&gt; [Please Cc maintainers - added here]<br>
+&gt; <br>
+&gt; On Mon, 19 May 2025 18:08:39 +0300<br>
+&gt; Qwinci &lt;<a href=3D"mailto:qwinci222@gmail.com" target=3D"_blank">qw=
+inci222@gmail.com</a>&gt; wrote:<br>
+&gt; <br>
+&gt;&gt; Change the IGD detection logic to also accept gpus with<br>
+&gt;&gt; PCI_CLASS_DISPLAY_OTHER class which is used if the igpu is not<br>
+&gt;&gt; set as the primary boot gpu.<br>
+&gt;&gt;<br>
+&gt;&gt; Signed-off-by: Qwinci &lt;<a href=3D"mailto:qwinci222@gmail.com" t=
+arget=3D"_blank">qwinci222@gmail.com</a>&gt;<br>
+&gt;&gt; ---<br>
+&gt;&gt;=C2=A0 hw/vfio/igd.c | 16 +++++++++++++---<br>
+&gt;&gt;=C2=A0 1 file changed, 13 insertions(+), 3 deletions(-)<br>
+&gt;&gt;<br>
+&gt;&gt; diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c<br>
+&gt;&gt; index e7952d15a0..1ddfcc2c17 100644<br>
+&gt;&gt; --- a/hw/vfio/igd.c<br>
+&gt;&gt; +++ b/hw/vfio/igd.c<br>
+&gt;&gt; @@ -454,6 +454,16 @@ static bool vfio_pci_igd_override_gms(int gen=
+, uint32_t gms, uint32_t *gmch)<br>
+&gt;&gt;=C2=A0 #define IGD_GGC_MMIO_OFFSET=C2=A0 =C2=A0 =C2=A00x108040<br>
+&gt;&gt;=C2=A0 #define IGD_BDSM_MMIO_OFFSET=C2=A0 =C2=A0 0x1080C0<br>
+&gt;&gt;=C2=A0 <br>
+&gt;&gt; +static bool is_igd(VFIOPCIDevice *vdev) {<br>
+&gt;&gt; +=C2=A0 =C2=A0 if (vfio_is_vga(vdev)) {<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
+&gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; +<br>
+&gt;&gt; +=C2=A0 =C2=A0 PCIDevice *pdev =3D &amp;vdev-&gt;pdev;<br>
+&gt;&gt; +=C2=A0 =C2=A0 uint16_t class =3D pci_get_word(pdev-&gt;config + P=
+CI_CLASS_DEVICE);<br>
+&gt;&gt; +=C2=A0 =C2=A0 return class =3D=3D PCI_CLASS_DISPLAY_OTHER;<br>
+&gt;&gt; +}<br>
+&gt; <br>
+&gt; But the function isn&#39;t detecting IGD, it&#39;s detecting VGA or DI=
+SPLAY<br>
+&gt; class devices.=C2=A0 So it&#39;s misnamed and we might want a new<br>
+&gt; vfio_is_display() and if necessary a wrapper for both that tests<br>
+&gt; vfio_is_vga_or_display(), or maybe a vfio_is_base_display() if we want=
+<br>
+&gt; to test only the base class.<br>
+<br>
++1, matching the base class is enough here I think.<br>
+<br>
+&gt; More importantly maybe, sure there might be IGD as non-primary<br>
+&gt; configurations, but are the quirks still relevant to those devices?<br=
+>
+&gt; Which ones?=C2=A0 Thanks,<br>
+&gt; <br>
+&gt; Alex<br>
+<br>
+Actually this is what I&#39;ve worked on for a while. Only the OpRegion<br>
+quirk is needed in this configuration, Windows driver requires it.<br>
+Additionally, legacy mode should be disabled when IGD is non-primary as<br>
+VGA ranges are not routed to IGD.<br>
+<br>
+It also requires a more recent version kernel (6.15+) [1] for OpRegion<br>
+support on IGD as non-primary graphics.<br>
+<br>
+[1] <a href=3D"https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/lin=
+ux.git/commit/?id=3D41112160ca87d6b5280813ef61f1c35bb9ee2f82" rel=3D"norefe=
+rrer" target=3D"_blank">https://git.kernel.org/pub/scm/linux/kernel/git/tor=
+valds/linux.git/commit/?id=3D41112160ca87d6b5280813ef61f1c35bb9ee2f82</a><b=
+r>
+<br>
+Thanks,<br>
+Moeko<br>
+<br>
+&gt;&gt;=C2=A0 void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)<=
+br>
+&gt;&gt;=C2=A0 {<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 VFIOQuirk *ggc_quirk, *bdsm_quirk;<br>
+&gt;&gt; @@ -461,7 +471,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *=
+vdev, int nr)<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 int gen;<br>
+&gt;&gt;=C2=A0 <br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PC=
+I_ANY_ID) ||<br>
+&gt;&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 !vfio_is_vga(vdev) || nr !=3D 0) {<br=
+>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 !is_igd(vdev) || nr !=3D 0) {<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt;=C2=A0 <br>
+&gt;&gt; @@ -519,7 +529,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCID=
+evice *vdev, Error **errp)<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 Error *err =3D NULL;<br>
+&gt;&gt;=C2=A0 <br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PC=
+I_ANY_ID) ||<br>
+&gt;&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 !vfio_is_vga(vdev)) {<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 !is_igd(vdev)) {<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt;=C2=A0 <br>
+&gt;&gt; @@ -685,7 +695,7 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPC=
+IDevice *vdev, Error **errp)<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 int gen;<br>
+&gt;&gt;=C2=A0 <br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PC=
+I_ANY_ID) ||<br>
+&gt;&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 !vfio_is_vga(vdev)) {<br>
+&gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 !is_igd(vdev)) {<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt;=C2=A0 <br>
+&gt; <br>
+</blockquote></div>
 
->>  void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->>  {
->>      VFIOQuirk *ggc_quirk, *bdsm_quirk;
->> @@ -461,7 +471,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->>      int gen;
->>  
->>      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
->> -        !vfio_is_vga(vdev) || nr != 0) {
->> +        !is_igd(vdev) || nr != 0) {
->>          return;
->>      }
->>  
->> @@ -519,7 +529,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->>      Error *err = NULL;
->>  
->>      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
->> -        !vfio_is_vga(vdev)) {
->> +        !is_igd(vdev)) {
->>          return true;
->>      }
->>  
->> @@ -685,7 +695,7 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->>      int gen;
->>  
->>      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
->> -        !vfio_is_vga(vdev)) {
->> +        !is_igd(vdev)) {
->>          return true;
->>      }
->>  
-> 
+--000000000000758c9e063580a95b--
 
