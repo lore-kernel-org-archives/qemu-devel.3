@@ -4,86 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219D8C54756
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 03:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8EFCC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGr86-0007CR-8j; Sun, 18 May 2025 23:25:30 -0400
+	id 1uGrjU-0003M9-DZ; Mon, 19 May 2025 00:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGr84-0007CF-Pb; Sun, 18 May 2025 23:25:28 -0400
-Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1uGrjO-0003Lg-UU
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 00:04:03 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGr83-0007XS-9x; Sun, 18 May 2025 23:25:28 -0400
-Received: by mail-vs1-xe2d.google.com with SMTP id
- ada2fe7eead31-4e2881202f0so313094137.0; 
- Sun, 18 May 2025 20:25:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1uGrjL-0003fb-PP
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 00:04:02 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-b1396171fb1so2234101a12.2
+ for <qemu-devel@nongnu.org>; Sun, 18 May 2025 21:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747625126; x=1748229926; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L9wg+Kox9TIDdtB4fL1r/gilyrEEOLXQjnByBP5Jono=;
- b=FydXW84DJRjcvX1s+Yg6Pls5b19Al2NyPcClbkf3IOh2wIjWUNjyOFhvYtS0hoNLNY
- XiC5L5v/9ak1YuzWqd9LSVNcQq0+oHtPPqSUs//fx6in/f36HDa+Gf44LSpArupYWipo
- zr+Q01Vc0gVF0G8t7ZvPxQpyalEUlU3W/oGlDc0q8V4pJC85zcC5jJ0pWrpcbvdLJHjX
- Iv9zxR5yqgHkN1j/EEzWl8toBHkeF28EJsJXRaoIGpN07y5RctLom8BCwp4GuGLZ6EgO
- dnwn+gzsVlfYXLuLQNsIw+q1qEgHjEWY57YBvyB1VeAHlxogm+y/R1Penr+JfvG1OXzT
- /tJw==
+ d=ventanamicro.com; s=google; t=1747627437; x=1748232237; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=02NqxBW3qQdmYXTr1KkhoGNaQoa1PsgXXqCCGD+KoUg=;
+ b=eK+6yZUZ88ISyGlLp9PiEypTnO0AGoyABY+ol9jN9SBbCeCL0/4Um3NdyMeeuHHcce
+ HR8dWQxQgauaf2On8flUediWmxez4qIMPscB7UenEvhC9MJkVxnAxCIlZYvEzOu2rGMX
+ MN85Fq18PsuG9S6AGkf98MNUCX4tlDy1sEQWVJjbZQuR6+QMLfH/a56N3scqAUEXi2jr
+ aM+4WrzSboGP9RxRYRhOvo/u6k80yQ/C1mqIVR6/X9RSfOeKnmM1hp0tFq+hT3fqScfS
+ 9mj/SrgEmcHGMMkoZKH+p9mgs+Nrs+RJ2JBTLFb15JG3ko5UZqlfRG3BOichXCv7ITAI
+ Bk/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747625126; x=1748229926;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L9wg+Kox9TIDdtB4fL1r/gilyrEEOLXQjnByBP5Jono=;
- b=LPZUO6/ncOwoohcrWF+ywlj3dSXN3hE1OBEL1kH+95geVwca6kR3yywQPJ7ubRolpp
- grU5eYWv7RIJTkPw4EZ12xm5l04bDYwYolXv+o+jN0DGGuy0ScG7Ij2x/TDOqF74uiog
- MJOCf3KwPnDNYvpfp/7hy8che14ntE+Qd0YmOOnqEphDb88Lnl9WapHp7xrVKNG5BT20
- ywTuMbj/qcG/82vgt4CeWyNmNzacdOdkUsu3n6nocls2suHzDzx3RbE8gKlGFpNWWnRg
- AuTrpOAeZQ4Ak0bk1/69MhuYklgE9gWXEpW+x7YBpjAuH3/+tnYbiZfWQDfkpDJ0ridp
- wwkg==
+ d=1e100.net; s=20230601; t=1747627437; x=1748232237;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=02NqxBW3qQdmYXTr1KkhoGNaQoa1PsgXXqCCGD+KoUg=;
+ b=sSvNndU0zrF2kR3D41wsscGtfiqs1p8T93AYiqfajg6ZAzUXMavj53NfCG/94/TsgU
+ DqY8YgZ+QCmPOAN58ovMBZa/DiJhm4+b236TS73W+y3qnC0Tk1o8NPRFCQN2sxrjO4Bl
+ V1r6QtNcj7+LhZCZQMkcTbjcB1loQa0ZMmwiexoVfTUpIFfWnc14owY6G+/HIh0YLBDn
+ x4/cwqFMsbduk7uDUB1KZFRUk9m4jddJQqfunS/XcVCk7YQBAuLlUNY6YDML2lAzsfox
+ FcaT6K8wdH2NmtYoxgpyyzYGhCwSehjdXTYgyPhFGuI+DIm68M00iqWtqx3sktBfT1VN
+ D9LQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuV1ar7MP42JMuDmNyPw535rE7+lWsaMFJ3UQ3tKaV0Ol6oW88rsggTujTRabaRYBVyvruuVe/Vqvp@nongnu.org
-X-Gm-Message-State: AOJu0Yx+6AvrIabPV4d0R0Rkc8HaXBf0TuSOZHh1Rbk27Zi+JCKk1UNo
- vinPEU/54O9+TuFdPSPsWBXhCGfzGiPG9h2RQAqLmnmKwOCaQkbQJiYS0rDtmQbbopgTAFiH7JD
- i+whTEt363IrZpYWR2kQvYhR6b/nhNPk=
-X-Gm-Gg: ASbGncsUNtxBnU/K3R9/XXhBxh+KYk2nRFLPzicFocbO23naHR4HdefNXo4Ca5KyBXh
- utts/hq2NmFNsMREPf4OJ6PlhLlNz0nXbG0T6L+HYshfhkhnzSl4QPOCOSc8Inz1HlmsegO5duU
- ZtYsvlSZV+vz34MdP40fEKETewReZK9L3YyqdqUQ7FbdCXoyZz1LR78zJTMpgW9jE=
-X-Google-Smtp-Source: AGHT+IGBd8Q8aOevw7/x5Zd+TFrVOwtthu0Pe+Nhew3YiVUJSa4yJWpkIRihEkChW5JMZXjQgdKaR0fKLQ3ndlaFxkA=
-X-Received: by 2002:a05:6102:3ca1:b0:4de:81a:7d42 with SMTP id
- ada2fe7eead31-4dfa6af4f05mr12728927137.1.1747625125970; Sun, 18 May 2025
- 20:25:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250409025131.3670-1-jim.shu@sifive.com>
-In-Reply-To: <20250409025131.3670-1-jim.shu@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 19 May 2025 13:24:59 +1000
-X-Gm-Features: AX0GCFv3F7DMDWfwzaRIrcik1wRm1SeIliFbjuKCxzRzcU4RLIFEkLzOw6hYpoo
-Message-ID: <CAKmqyKOPOJku+102LtcgYQrt-AhawnWm2QgDQk0tx=iDGnG9_g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] Several sstc extension fixes
-To: Jim Shu <jim.shu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ AJvYcCU1eVGDZPCYrBc800xWf5Kkf/lUbMNt73b0zzgAQ6CKO2baNqGKSsegr/lusuvXeY2fqcSKQ5AsA/5X@nongnu.org
+X-Gm-Message-State: AOJu0YxFrovLyutWxdrNcHoda2N4sN2dYQEg/nf5NAuPY3xm5ZFqcfnB
+ R+D1YohAaWBiAyAgJXvdftVmEmciKweaeC2qAkc/LBM/OoCS578vRhO6xt9ch+etSOY=
+X-Gm-Gg: ASbGncsimDiTvqXNQnftM7JR8sBhhCZfEzmztou4vwjWAjEQRxfy1lbQfdfyLVQG+w+
+ 5WO8augE6aIrzYsk7N2MBj3u89yz+p72b7SjTiIuTY2TdVZW+nD58lfHmvUYSKCSaaHHxrpPgeG
+ aQj9F/t9iPd3hC2ZHGe5oHA3pQ6ta9Q1RyZ7f1ryYxH/ksDjB6+cWbaOPBhGmOGi2LtGisWsyq3
+ mZmxTjSMhov/kmxQ87ZM8OapujkKbePmsc7DbipMMs4SyFdgNMLHi3Pyp5TYpxe9CtA9r72D775
+ 3ysBqVPUcgt67w+rlWZjBjPpXJ+IkB4dDME0AHrv28b7ccz4jTIqyAYwCYE=
+X-Google-Smtp-Source: AGHT+IFtzBUirzOOsBz7D+ouMbSTc/hyVnclkhndAVDkubanaRBQPwqJF0zLVFRd/AhHbO5UMmjnrA==
+X-Received: by 2002:a17:903:24e:b0:22e:4a6c:fef2 with SMTP id
+ d9443c01a7336-231d45ae355mr183382195ad.53.1747627437632; 
+ Sun, 18 May 2025 21:03:57 -0700 (PDT)
+Received: from sunil-laptop ([103.97.166.196])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4ed546fsm50138045ad.231.2025.05.18.21.03.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 18 May 2025 21:03:55 -0700 (PDT)
+Date: Mon, 19 May 2025 09:33:45 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Li Chen <me@linux.beauty>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?utf-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
+ qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>
+Subject: Re: [PATCH V3 3/4] tests/qtest/bios-tables-test: Add test for
+ disabling SPCR on RISC-V
+Message-ID: <aCqtob_S5FKsG-1r@sunil-laptop>
+References: <87msberqzi.wl-me@linux.beauty>
+ <87ikm2rqn8.wl-me@linux.beauty>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87ikm2rqn8.wl-me@linux.beauty>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,37 +112,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 9, 2025 at 12:53=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
->
-> This patch series contains several sstc fixes:
->
-> (1) Writing to ACLINT mtime should also update the period of S/VS-mode
->     timer, just like M-mode timer.
-> (2) VSTIP bit of $mip CSR should check both M-mode and H-mode STCE.
-> (3) Writing to STCE bit may enable/disable sstc extension in S/VS-mode,
->     which should update the timer and IRQ pending bits.
->
->
-> Jim Shu (4):
->   target/riscv: Add the checking into stimecmp write function.
->   hw/intc: riscv_aclint: Fix mtime write for sstc extension
->   target/riscv: Fix VSTIP bit in sstc extension.
->   target/riscv: Enable/Disable S/VS-mode Timer when STCE bit is changed
-
-Can you please rebase this on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next
-
-Alistair
-
->
->  hw/intc/riscv_aclint.c     |  5 +++
->  target/riscv/csr.c         | 53 ++++++++++++++++++++++++++++++-
->  target/riscv/time_helper.c | 65 ++++++++++++++++++++++++++++++++++++--
->  target/riscv/time_helper.h |  1 +
->  4 files changed, 121 insertions(+), 3 deletions(-)
->
-> --
-> 2.17.1
->
->
+On Thu, May 15, 2025 at 08:43:07PM +0800, Li Chen wrote:
+> From: Li Chen <chenl311@chinatelecom.cn>
+>  
+> Add ACPI SPCR table test case for RISC-V when SPCR was off.
+> 
+> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+> ---
+>  tests/qtest/bios-tables-test.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+> index d2a1aa7fb3..44de152a36 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -1807,6 +1807,26 @@ static void test_acpi_aarch64_virt_tcg_acpi_spcr(void)
+>                    " -machine spcr=off", &data);
+>      free_test_data(&data);
+>  }
+> +
+> +static void test_acpi_riscv_virt_tcg_acpi_spcr(void)
+> +{
+> +    test_data data = {
+> +        .machine = "virt",
+> +        .arch = "riscv64",
+> +        .tcg_only = true,
+> +        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
+> +        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
+> +        .cd = "tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2",
+> +        .ram_start = 0x80000000ULL,
+> +        .scan_len = 128ULL * 1024 * 1024,
+> +        .variant = ".acpispcr",
+> +    };
+> +
+> +    test_acpi_one("-cpu rva22s64 "
+> +                  "-machine spcr=off", &data);
+> +    free_test_data(&data);
+> +}
+> +
+>  static void test_acpi_tcg_acpi_hmat(const char *machine, const char *arch)
+>  {
+>      test_data data = {};
+> @@ -2612,6 +2632,8 @@ int main(int argc, char *argv[])
+>              qtest_add_func("acpi/virt", test_acpi_riscv64_virt_tcg);
+>              qtest_add_func("acpi/virt/numamem",
+>                             test_acpi_riscv64_virt_tcg_numamem);
+> +            qtest_add_func("acpi/virt/acpispcr",
+> +                           test_acpi_riscv_virt_tcg_acpi_spcr);
+>          }
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
 
