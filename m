@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0048C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB4ACC3ABC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:34:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGoG9-00020x-6e; Sun, 18 May 2025 20:21:37 -0400
+	id 1uGoRa-0004K6-PW; Sun, 18 May 2025 20:33:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGoG7-00020k-E3; Sun, 18 May 2025 20:21:35 -0400
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ id 1uGoRX-0004JW-AD; Sun, 18 May 2025 20:33:23 -0400
+Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGoG5-00088c-OJ; Sun, 18 May 2025 20:21:35 -0400
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-86d6fd581f4so3127485241.1; 
- Sun, 18 May 2025 17:21:32 -0700 (PDT)
+ id 1uGoRV-0001Vn-PZ; Sun, 18 May 2025 20:33:23 -0400
+Received: by mail-vs1-xe2f.google.com with SMTP id
+ ada2fe7eead31-4e14b17c181so1301685137.0; 
+ Sun, 18 May 2025 17:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747614092; x=1748218892; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747614800; x=1748219600; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HXRmqZaU8swm+EjBIXCvtfh6ZLXIGrqhYvCrfJyIEyk=;
- b=XEk0xcroa0yPUldSBSDCCbmwi+kq0eIz3MBzRJ5L55UWn8lb64ZKzIqSqrSyR+NPyM
- dIKj4wtEEghWO9taUZph2rjag54E12Drz7g0WImLDmkNRXEzSa3eczKXa+jck8EDR/yG
- El2izPExANvcNXRnWZJX6xr1P6tdmDxsGvWoBGPkIad+PvpcUP4WALJ8dtGeNPLMWXbe
- nAy7Yc/SLoPZnwu7zSsheVYMbUO87weFCVFpB7z7dhZYlftKPm20WvhW8qmFNTm6GHLl
- DURkP4Btwk44wU+shsVpIbV5gANk220k688v61O4HvdzrVYixpKB7OrEYH3cRwRkwSgL
- 349Q==
+ bh=uvcYTPRSmDPFyWjKYDuSmeoWclyZCkd6OqvsK/rGyJQ=;
+ b=cZ4NqLKEB4RxqbIyK6dhcIhZ+hFFAmWl0mbYAbo10jtuTxs+3JjrWZdoXR50YV2/J1
+ aXkXaIkIjPMXCOepwccJHxQ/9sSG2NGgezfsJtGLLXH6FJpdzsulRGdhzgurMoSi/1cX
+ 9nJhEnoIFTwLcHNAJnax0DunBl6pVGTzfVf4QCIIAkKWC4mlpIXvz7YACHiq0zSVva71
+ krHEzR7AA9Mvbx7YEzgCKGawK8QJj3PnOhwzpe5XgkBiC75JvOyRrqMYcpTZMV1LwpCL
+ 02bcolQCjrn+xKi/nswC9KcPHHcn3Pz1xVMpQMBQ36Im4SmtLw6borW/dux1dPnuWegy
+ RImw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747614092; x=1748218892;
+ d=1e100.net; s=20230601; t=1747614800; x=1748219600;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HXRmqZaU8swm+EjBIXCvtfh6ZLXIGrqhYvCrfJyIEyk=;
- b=bsJEtg4q5T+sA9Ls0gqk+v3wMuP/LTt8kWIx87IkKMnnyoLvec5AicrI/Jgslc+VaO
- 9cPak3iZgrgdclaZU8taQp5C7lZ3Pwcv7SRShHyXlaErKeafGeDJQ3kbWOu0496pwfHA
- a3GjIQgCsnJwsrVTP7iQ3DjtQMYhHZ1/Q9ohuEpahLwjninTydNpoXhtCJ1NuOqLOkuP
- AiC4bZordFT9x3p+cKTzjjg2dBzud+fr/bsDeNE7ytbDdLPsiC1cOZAAPJf+cvsJMEBR
- UMUYwP5FDc3w50LOI6X8nTiAm1jt4td7GtJGZSiGMgdbWOqF5cFuJzVqxEGddO4jBqyM
- ozeg==
+ bh=uvcYTPRSmDPFyWjKYDuSmeoWclyZCkd6OqvsK/rGyJQ=;
+ b=Ad1Bd0AX7RB6Vsw0pDkslE74+KbAESlOOpLHGBRk77cdR73WYqfspUTfiJ5zzLs3Qn
+ XsFS3uBAZhbqXNPddT2NwAC4qz7ydOchhUef7LassMT0YZ1yx5KM6gWh4draEVYVFDBo
+ DCPkENCYLGfXVTR1PsqchChDrLbDrJVYuch4r7D4Sa21tjN5zH+gSEzOFa2AhUZYHyBb
+ VYxzH7++5akgpVzrMVgftjmijEMZp6yyuVfUJmIoBQw6HGDw8G2/EBfjBmZDdq0L6Zku
+ T5sL8BIK1ccSG/z+XnmB4OfZkOrd4V6DIqJPYBbw+Ign45wOilnbOZ2t5vqH70w+3icV
+ Jl0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVeWMfGeJ5poR+GQjKcvH9LFyO08HgffEy7OFbDG/iGtiTmd+wZRT7HLLzPCCz7EO4EsRacREiaD6wh@nongnu.org
-X-Gm-Message-State: AOJu0YwbcOtYQPEFk7bw7CJsJ1HgDO04RxcaBisCeyjG5SsiqJ+jh8IV
- Rs/FvKPZAWx1n9Tzz8n/xhyb+SFPD6NLj7UCGVN3TptM5nUq7s+1CpkdFpj81J+zKSaTECToA1n
- kIjcF1DP2xvqN2AnXt4h5CEBSIGVc3tg=
-X-Gm-Gg: ASbGncv0sACRRD+kIH9kUSlvN/qNOCwUuGlxaHovRshdZJ+xf9r7uUWjCmwYlIF4ZgA
- 36Eb4D4JAy3j6xjTrnpXNoFGwIVKG1WQxQ7LksPYrhnxaVH8qK/jy0dJ+41a00uHcwt64HqeQZN
- /dFSw7eTvsPj7Sv3Lt8gd7blWQwDnm1STkxP/S2av9AV5q1Gs2O/dPWJ4iyy0RCTRWWNysA6SLW
- Q==
-X-Google-Smtp-Source: AGHT+IE2ASJkx6zx+1USOLMmAEacs5FFYvMum8ZaM3i3bTQdMquWPuvkewam8QuyytbFOhCg9i2uy+bMpneezuKI1fI=
-X-Received: by 2002:a05:6102:6c4:b0:4e2:8b49:9fa6 with SMTP id
- ada2fe7eead31-4e28b49a2admr1604503137.4.1747614092197; Sun, 18 May 2025
- 17:21:32 -0700 (PDT)
+ AJvYcCVMIk5NXn0WFwA/VbSgzX9ThJNt8Uzz5lZc3SdTd29OBEwa3US35q9nsnvtkqLHflYq125LYaocRFR6@nongnu.org,
+ AJvYcCWuNL2QI3ET2bK59w6G3kar15BT3MLauCeIUTsYsFj9v5sU878SxBxoITz6C2jd4JR//EPSpmM8Y6gS+Q==@nongnu.org
+X-Gm-Message-State: AOJu0Yy3DIbBA2VvsdxP/1Wj4eLR1XjHU/9mVVvRnRVrdI5vJqTTI+Qz
+ OkSdE+c472bVnQ+wMCHqu2kObO7aFmUgplL48em5vDhltKGzej4eTjofOGHOJUIcXdwLNuUsh4H
+ +2b0EENfFL72FuuoQaldkXLBAd9vVv0g=
+X-Gm-Gg: ASbGncsnr6wJl6cySQxYIugLZu/CszDORLE6fZBy6mJWL9cpzMwwX6GJa9pKytejSVs
+ YWoAp2KwsXl9j8Ye2pieEnuvG9QyC9aLhLw/RYViOVKiROQj2CxOQyyn1NnAmqP/kLXo1eJ56Uu
+ iD5kTXgX5uUhG9LpVAKjd2Rmmg7pQ/mTnC77XmzF0LmHcSsu23EmOaG7tHvvTMVg4=
+X-Google-Smtp-Source: AGHT+IH2sWPDudNZUefYUiNLrcH9DRXeSSO0LYlDL7Rof52tKkevNMIe7oKhhIuILTAz3aJZ4F3Yj/zQRTIPUOEGuRU=
+X-Received: by 2002:a05:6102:1508:b0:4c3:346:29ef with SMTP id
+ ada2fe7eead31-4dfc30f4313mr11136634137.11.1747614800216; Sun, 18 May 2025
+ 17:33:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250514041118.1614-1-frank.chang@sifive.com>
- <20250514041118.1614-2-frank.chang@sifive.com>
-In-Reply-To: <20250514041118.1614-2-frank.chang@sifive.com>
+References: <202505122007170451_WeaVnOMOCnJghLHZ5zH@zte.com.cn>
+In-Reply-To: <202505122007170451_WeaVnOMOCnJghLHZ5zH@zte.com.cn>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 19 May 2025 10:21:06 +1000
-X-Gm-Features: AX0GCFukxkL7H8mPXm6gxiH_8dZa9YaDB1Y6u1gB8GNS4koJOjtyxr29dAclKEg
-Message-ID: <CAKmqyKOJeU_qg2qk5ak+f6xDAdVBho9B7sjyKGSa+j_Ep_B5bA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] target/riscv: Add standard B extension implied rule
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
- Jerry Zhang Jian <jerry.zhangjian@sifive.com>, 
- Jim Shu <jim.shu@sifive.com>
+Date: Mon, 19 May 2025 10:32:54 +1000
+X-Gm-Features: AX0GCFtBrcs6_Pi5sgcNBsJY6GTb6TygnWQsDs9l6Vzc8lMXHjmrnD8luERehWA
+Message-ID: <CAKmqyKNX1bnO9ptoj5AHY+XwWcrwAD+nwV5pJPArBURf1PCmSA@mail.gmail.com>
+Subject: Re: [PATCH v2] migration: Fix migration failure when aia is
+ configured as 'aplic-imsic'
+To: liu.xuemei1@zte.com.cn
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, peterx@redhat.com, 
+ farosas@suse.de, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,61 +98,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 14, 2025 at 2:12=E2=80=AFPM <frank.chang@sifive.com> wrote:
+On Tue, May 13, 2025 at 2:33=E2=80=AFAM <liu.xuemei1@zte.com.cn> wrote:
 >
-> From: Frank Chang <frank.chang@sifive.com>
+> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 >
-> Add the missing implied rule for standard B extension.
-> Standard B extension implies Zba, Zbb, Zbs extensions.
+> Address an error in migration when aia is configured as 'aplic-imsic' in
+> riscv kvm vm by adding riscv_aplic_state_needed() and
+> riscv_imsic_state_needed() to determine whether the corresponding sates a=
+re
+> needed.
 >
-> RISC-V B spec: https://github.com/riscv/riscv-b
+> Previously, the fields in the vmsds of 'riscv_aplic' and 'riscv_imsic' ca=
+n
+> only be initialized under certain special conditions in commit 95a97b3fd2=
+.
+> However, the corresponding ses of these vmsds are inserted into the
+> savevm_state.handlers unconditionally. This led to migration failure
+> characterized by uninitialized fields when save vm state:
+> qemu-system-riscv64: ../migration/vmstate.c:433: vmstate_save_state_v:
+> Assertion 'first_elem || !n_elems || !size' failed.
 >
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-> Reviewed-by: Jim Shu <jim.shu@sifive.com>
+> Fixes: 95a97b3fd2 ("target/riscv: update APLIC and IMSIC to support KVM A=
+IA")
+>
+> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+> ---
+>
+>  Changes in v2:
+>
+>  - Dropped the modifications in vmstate_register_with_alias_id()
+>  - Added riscv_aplic_state_needed() and riscv_imsic_state_needed()
+>
+>  hw/intc/riscv_aplic.c | 8 ++++++++
+>  hw/intc/riscv_imsic.c | 6 ++++++
+>  2 files changed, 14 insertions(+)
+>
+> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+> index 8bcd9f4697..c9abef2e0f 100644
+> --- a/hw/intc/riscv_aplic.c
+> +++ b/hw/intc/riscv_aplic.c
+> @@ -962,10 +962,18 @@ static const Property riscv_aplic_properties[] =3D =
+{
+>      DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
+>  };
+>
+> +static bool riscv_aplic_state_needed(void *opaque)
+> +{
+> +    RISCVAPLICState *aplic =3D opaque;
+> +
+> +    return riscv_use_emulated_aplic(aplic->msimode);
+> +}
+> +
+>  static const VMStateDescription vmstate_riscv_aplic =3D {
+>      .name =3D "riscv_aplic",
+>      .version_id =3D 2,
+>      .minimum_version_id =3D 2,
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+I think these should also be incremented
 
 Alistair
 
-> ---
->  target/riscv/cpu.c | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 27edd5af62..f737b703da 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2532,6 +2532,17 @@ static RISCVCPUImpliedExtsRule RVG_IMPLIED =3D {
->      },
+> +    .needed =3D riscv_aplic_state_needed,
+>      .fields =3D (const VMStateField[]) {
+>              VMSTATE_UINT32(domaincfg, RISCVAPLICState),
+>              VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
+> diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+> index 2169988167..92a7254076 100644
+> --- a/hw/intc/riscv_imsic.c
+> +++ b/hw/intc/riscv_imsic.c
+> @@ -398,10 +398,16 @@ static const Property riscv_imsic_properties[] =3D =
+{
+>      DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
 >  };
 >
-> +static RISCVCPUImpliedExtsRule RVB_IMPLIED =3D {
-> +    .is_misa =3D true,
-> +    .ext =3D RVB,
-> +    .implied_multi_exts =3D {
-> +        CPU_CFG_OFFSET(ext_zba), CPU_CFG_OFFSET(ext_zbb),
-> +        CPU_CFG_OFFSET(ext_zbs),
+> +static bool riscv_imsic_state_needed(void *opaque)
+> +{
+> +    return !kvm_irqchip_in_kernel();
+> +}
 > +
-> +        RISCV_IMPLIED_EXTS_RULE_END
-> +    },
-> +};
-> +
->  static RISCVCPUImpliedExtsRule ZCB_IMPLIED =3D {
->      .ext =3D CPU_CFG_OFFSET(ext_zcb),
->      .implied_multi_exts =3D {
-> @@ -2910,7 +2921,8 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED =3D {
->
->  RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] =3D {
->      &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
-> -    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED, NULL
-> +    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED,
-> +    &RVB_IMPLIED, NULL
->  };
->
->  RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] =3D {
+>  static const VMStateDescription vmstate_riscv_imsic =3D {
+>      .name =3D "riscv_imsic",
+>      .version_id =3D 1,
+>      .minimum_version_id =3D 1,
+> +    .needed =3D riscv_imsic_state_needed,
+>      .fields =3D (const VMStateField[]) {
+>              VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
+>                                    num_pages, 0,
 > --
-> 2.49.0
->
+> 2.27.0
 >
 
