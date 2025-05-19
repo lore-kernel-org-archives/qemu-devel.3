@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22F14C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95CF8C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGrsk-0002gk-JA; Mon, 19 May 2025 00:13:43 -0400
+	id 1uGrtF-000310-5K; Mon, 19 May 2025 00:14:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGrmk-0004kC-Fe
- for qemu-devel@nongnu.org; Mon, 19 May 2025 00:07:33 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1uGrmc-0004jC-S6; Mon, 19 May 2025 00:07:23 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGrmg-00045c-Pa
- for qemu-devel@nongnu.org; Mon, 19 May 2025 00:07:28 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-30ed99132abso752409a91.3
- for <qemu-devel@nongnu.org>; Sun, 18 May 2025 21:07:26 -0700 (PDT)
+ id 1uGrmb-000457-4N; Mon, 19 May 2025 00:07:22 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2322f8afe02so4399185ad.2; 
+ Sun, 18 May 2025 21:07:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747627645; x=1748232445; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747627638; x=1748232438; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eQ8oK567cL4InAUCLjpcMcBvYiQLXRFYVbtoODZATfI=;
- b=ZFOJwxFRF7tDSEo90iCHdp8ixY9FcBGrj2sJs1XAtDDOhXcWiT1RR8S8WCFyZWzvby
- wJW3ZEch4U6xnwhg7GCxRE0nd1gaVmw5IqOnv6Sa+/XCGaYQFBEeQ6MFX4QHe+kctFYs
- BEHDwgJIi/Jov/fnyrDg0UryjLQ86oUnW/T6rM/uHknle8X9PdZeakJHKhKh3WFfkkwc
- uV/cgPCfMJIm96JFZomOOuBXezDyvSt9DfWd9le06MF4gsMnIe6KffEQLBoH6H7GVPs7
- C4gQM5Izscqc/LzULa8/vRDzhJXJCFIKnc+Sd5wbqNUl6bjKpOaUqrd5ZNiSBqrJ0TRE
- Go7A==
+ bh=tXBhzTWpJ1Fn/A81GjUvhAo2o2EtkxBbSGZOC7qOGx4=;
+ b=KAHlNkjHjX+yVigfjQ0wbVOM9bvVQkMpR6VZQUV8htB9Aptio1kauq5wYtKfhkvCoi
+ DbKc5Er2ekthDE9LntrYhmlUYJk4ROjrFzvtDUrKrjxrVHfuRJlk2cD5sXp12EiIXn6/
+ zHUZgTp+roP9UUJMqBtEJ7hHteFtAMStt5uiB2EEGjBC8NHLYZLwJtsAHEQUmGDmtqrh
+ j9Q0abzjiA+8S4qYNT9Z2Mdn1hRHZ7Z8n8WRoS4H0S0ppiHz+anw06aIMFJ59qCImWyE
+ d2emPcSEhpGx1J5hAvynABuxIUCPv/OzgFRF3CwCgf6me2HIbNMQm26G6bHamD5KXgNr
+ mf7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747627645; x=1748232445;
+ d=1e100.net; s=20230601; t=1747627638; x=1748232438;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eQ8oK567cL4InAUCLjpcMcBvYiQLXRFYVbtoODZATfI=;
- b=e6fGHvPBrvzPhmVk9ZDi+j9Cen/X9Qti2aa/VL9+b9VwwdK37w7PVEMRdS2kslqClx
- IrQ526QEvUGXIFp838tesf/Tf2GUk2RIy2hKPdYSbZX4kJ0fn9AnwsRzfN3k6nsw/LhU
- NEogj8vAfhdC63WrRbE+MkLij3vFO0MtCj2Sl+tmmckimH3O/rWgEQRNYHKMxrbPVTSB
- rRjSOyKH3kBdnEJhnjwDsVe4BVX/eHQtGYspehttBN5xd4r7LvaLQagnTSyvPW13p3GW
- niRM61Z+FHhduo9YMVuRpUVhU+YjvR1J51NtRM1+rYjjdBfv1VFy0JYDw5JqhyJPkufq
- 3vrA==
-X-Gm-Message-State: AOJu0YylSvQsrg9qKLnMifahOniYebwc6y5YHHG2BFOEtftfOLJTOYYu
- nM58VwhbtDuEKCAanFxUQd23q26Jqz4fkYQKrxvjF7nvC4VrxGkK59NwJB/NQA==
-X-Gm-Gg: ASbGncvWYlQLPfJFZ9TUR/eAubhhEv+zLg6IX8M8MukuNnpVjbesEJePp0Vs4rS3nI+
- 1vuI5B6L+PvGxs88kRDcHOS3onqt3iWSIcuE1HXQ9mBdwGa+RriGt6TH27c23MnMkExJ0qlJlNV
- 8/Uwc5iO4XXKjPM46z9FaWbvy5T2TZNrzIUcdU4bWN39Fb1T56qxPVEo320l4Mf5dvuQZBOcqF2
- h1Ek5JK+zZ4cj+LXCylDpA/Vp48NAongHIE1WMCczJoqk6b9Ud15PwBQSUy/kQ4B1RKotMvuG8p
- SNuyaow68gOjmtV9qoF2XiFy1goDI8DITkmcSi7Zjb7naoNiPkqdFwuHRI4LI+XT5ilvg/CD6q/
- 7gaZXkb8qY+3klYfUXIpVk8tKVCI4bkMpkuAVM+I7lf5V4nMDnJw3UH8s
-X-Google-Smtp-Source: AGHT+IGVOZWfhn2SIfXo1tf+oMj5+2825n7mGdgRmxejbaGH5S2f9xhJsJLeE7BHwf/6TbBYUkc3+A==
-X-Received: by 2002:a17:902:c948:b0:22f:c91f:d05f with SMTP id
- d9443c01a7336-231d45c99c7mr173264435ad.46.1747627644713; 
- Sun, 18 May 2025 21:07:24 -0700 (PDT)
+ bh=tXBhzTWpJ1Fn/A81GjUvhAo2o2EtkxBbSGZOC7qOGx4=;
+ b=gk1xNH+o+5+KVPZq1/1O26/HWqGWaAHkDCQX10IEGanEjVQ2yos59+TtwX5Y1J8kzp
+ NgBnFWM6a4/bFLU1acEDmu6FK42jgkrUdAb7OjHI9KahPwQiLBcy//FWbEB4ZvasiXxF
+ WIEOzYww6vMdVcN+Nb3zAueiCHO8NGWUCCBvjK7G636ad/i4aKpCDxSBWNZzRufRW6s0
+ kuWEwhBFX1r7HsgCho/f8dQ2gOVZhemi6fQKUXoyaDovoWHkG5rvo8G7OGE1YJWZ5Fx9
+ EnbS2j/OwEaXr80iseZyADa9qkZm5ApSMpgVet9J11UKaxlTMt5Ngy7bMtJWy9y9DalO
+ I6ww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCBFnKgR+UQre0zv8GLG8OEm9y6icmfutXnWiwLfIIH2d6bP/TZ+YPR9wrgadBGtQh+lmgk/xgqzmEjA==@nongnu.org
+X-Gm-Message-State: AOJu0YwtNGjoEySSFJzpFU8QClo0SOItEfeGfO9v3jRin1sx83FcI8DV
+ 4USEQ/furxk9s+ZvBgAB4vkm+OAlufFTwrR1do0qszVwfcDVME4a7d3SN7w/bQ==
+X-Gm-Gg: ASbGnctn2c9TOR6IJ0XO9fjedBB1pQqj9/FtCXILkfY6ed1sQNFj1E7dhb7zFwb0jHH
+ LB4mxqJOW815ALu0yD2Q0kK7zBqAOfCi035SQckwqyL36lDXW1WmB4+pRF1Wfp8TEQyQU7nLpLK
+ DZxhZgksH9sV8n/alpHEMud3/CBtNlHnrj63ifKAfgH9ZiCrzuKRBeV7oEEVuQe0DFVY6AluMfQ
+ LhDowFVGuQPbFmlcOCOuIPqj35r9l5iByjjJ/5njLswu8/hKDErUSttWzWnTfhVAveQELmWCRau
+ yrPhnNAd25JYly8+tOrReaefz5gQ/YySP+u9m5iGJzOGB3WlJUaU4TCGV0Ina5XzaxOm96FyvRq
+ 2pLEdo6tMiH/XK7TpbsRk1w3i/qhztmVOAftHFsBB/14EWEQ+57hd7h99
+X-Google-Smtp-Source: AGHT+IGhtYIuPLK8xgeav4tk0tmYHmUIFbC9BG1XLSnM4Pp8PF3Db4vVIfASQfGR1Yf0I2TF6LVOIA==
+X-Received: by 2002:a17:903:41cc:b0:22e:1791:2e5a with SMTP id
+ d9443c01a7336-231d459a551mr195418735ad.35.1747627637939; 
+ Sun, 18 May 2025 21:07:17 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.07.21
+ d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.07.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 May 2025 21:07:24 -0700 (PDT)
+ Sun, 18 May 2025 21:07:17 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, =?UTF-8?q?Lo=C3=AFc=20Lefort?= <loic@rivosinc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PULL 06/56] target/riscv: pmp: exit csr writes early if value was
- not changed
-Date: Mon, 19 May 2025 14:05:03 +1000
-Message-ID: <20250519040555.3797167-7-alistair.francis@wdc.com>
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-stable@nongnu.org
+Subject: [PULL 04/56] target/riscv: pmp: move Smepmp operation conversion into
+ a function
+Date: Mon, 19 May 2025 14:05:01 +1000
+Message-ID: <20250519040555.3797167-5-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250519040555.3797167-1-alistair.francis@wdc.com>
 References: <20250519040555.3797167-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -114,60 +114,60 @@ Signed-off-by: Loïc Lefort <loic@rivosinc.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Message-ID: <20250313193011.720075-5-loic@rivosinc.com>
+Message-ID: <20250313193011.720075-3-loic@rivosinc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Cc: qemu-stable@nongnu.org
 ---
- target/riscv/pmp.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ target/riscv/pmp.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 8fc313990a..4070e21ea3 100644
+index d8e2949aaf..3afa16917e 100644
 --- a/target/riscv/pmp.c
 +++ b/target/riscv/pmp.c
-@@ -142,6 +142,11 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_index)
- static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
- {
-     if (pmp_index < MAX_RISCV_PMPS) {
-+        if (env->pmp_state.pmp[pmp_index].cfg_reg == val) {
-+            /* no change */
-+            return false;
-+        }
-+
-         if (pmp_is_readonly(env, pmp_index)) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "ignoring pmpcfg write - read only\n");
-@@ -529,6 +534,11 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-     bool is_next_cfg_tor = false;
+@@ -32,6 +32,15 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t addr_index,
+                           uint8_t val);
+ static uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t addr_index);
  
-     if (addr_index < MAX_RISCV_PMPS) {
-+        if (env->pmp_state.pmp[addr_index].addr_reg == val) {
-+            /* no change */
-+            return;
-+        }
++/*
++ * Convert the PMP permissions to match the truth table in the Smepmp spec.
++ */
++static inline uint8_t pmp_get_smepmp_operation(uint8_t cfg)
++{
++    return ((cfg & PMP_LOCK) >> 4) | ((cfg & PMP_READ) << 2) |
++           (cfg & PMP_WRITE) | ((cfg & PMP_EXEC) >> 2);
++}
 +
-         /*
-          * In TOR mode, need to check the lock bit of the next pmp
-          * (if there is a next).
-@@ -545,14 +555,12 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-         }
+ /*
+  * Accessor method to extract address matching type 'a field' from cfg reg
+  */
+@@ -356,16 +365,6 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+         const uint8_t a_field =
+             pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg);
  
-         if (!pmp_is_readonly(env, addr_index)) {
--            if (env->pmp_state.pmp[addr_index].addr_reg != val) {
--                env->pmp_state.pmp[addr_index].addr_reg = val;
--                pmp_update_rule_addr(env, addr_index);
--                if (is_next_cfg_tor) {
--                    pmp_update_rule_addr(env, addr_index + 1);
--                }
--                tlb_flush(env_cpu(env));
-+            env->pmp_state.pmp[addr_index].addr_reg = val;
-+            pmp_update_rule_addr(env, addr_index);
-+            if (is_next_cfg_tor) {
-+                pmp_update_rule_addr(env, addr_index + 1);
-             }
-+            tlb_flush(env_cpu(env));
-         } else {
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "ignoring pmpaddr write - read only\n");
+-        /*
+-         * Convert the PMP permissions to match the truth table in the
+-         * Smepmp spec.
+-         */
+-        const uint8_t smepmp_operation =
+-            ((env->pmp_state.pmp[i].cfg_reg & PMP_LOCK) >> 4) |
+-            ((env->pmp_state.pmp[i].cfg_reg & PMP_READ) << 2) |
+-            (env->pmp_state.pmp[i].cfg_reg & PMP_WRITE) |
+-            ((env->pmp_state.pmp[i].cfg_reg & PMP_EXEC) >> 2);
+-
+         if (((s + e) == 2) && (PMP_AMATCH_OFF != a_field)) {
+             /*
+              * If the PMP entry is not off and the address is in range,
+@@ -384,6 +383,9 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+                 /*
+                  * If mseccfg.MML Bit set, do the enhanced pmp priv check
+                  */
++                const uint8_t smepmp_operation =
++                    pmp_get_smepmp_operation(env->pmp_state.pmp[i].cfg_reg);
++
+                 if (mode == PRV_M) {
+                     switch (smepmp_operation) {
+                     case 0:
 -- 
 2.49.0
 
