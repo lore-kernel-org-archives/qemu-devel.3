@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48502C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 12:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B20C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 12:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH01c-0006tk-N7; Mon, 19 May 2025 08:55:28 -0400
+	id 1uH01j-0006vc-8Q; Mon, 19 May 2025 08:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uH01a-0006sp-Lg
- for qemu-devel@nongnu.org; Mon, 19 May 2025 08:55:22 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uH01c-0006tn-ER
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 08:55:24 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uH01V-0000un-Tv
- for qemu-devel@nongnu.org; Mon, 19 May 2025 08:55:21 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a3681aedf8so1654941f8f.1
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 05:55:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uH01Y-0000vE-TL
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 08:55:23 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a3681aedf8so1655032f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 05:55:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747659313; x=1748264113; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1747659318; x=1748264118; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:cc:to:subject:from
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cuPGGM3xklU+nOYz0hUiWBY1E2jdTVg1HnyCs01vxLk=;
- b=sDmiXJuehnpJ1hfIOYKWptjWJ+3beEbLB+qPk8+27MbaIHFfhqCjJqwCRuFHp+qumd
- pgWkR5uSNs+iYa0Fv+/3mR0CEovV1LnndgmsQbQNwyIqeIe836HWnukQk1PgHKTrDO7v
- qg59hQe6YrLVRVb+fxujlcuevvJiGe9Uib5t7cG1BwFHnCOKIN05KXBM2D1JcTx6c9De
- fOVIw2jPiZ4eZf4KLCBSTgIGM56UR1IXMCL79WbbLIX1C89JkynEN/cGVQHXvVHjuBPs
- zMsDzB/7sUjMJBUw8642Ym0RXwAGW9FEbNJH2TFpUeS17a8CyFM6LzriCouQCXixY4w5
- nNwQ==
+ bh=uZQ+kqJHnCyn6CHYFHa7sINUJUudzELm10mspg5m5gU=;
+ b=zcwytVU+eXD02EMS0/Ltoc19iI+Krf43dXjVQ+buYhZGMu1UE0zTGXRwFDvKFSN8tG
+ CDLMOftadxPxhLMJrlaSwaXgv5s15Qlrf6aO8Qg8YC62uDuigxPKLKGl91YN5Es+o6kr
+ OvowJQYH+KXmZ3F6g7Wl0wVaheoZZL7ltYR+cZptlsnZKNpTjWRR92Ii/13A3nOjvlhO
+ FW4VR+00xhlxmGExFrAK3kxN6P4sp5QPDMYdvXOnOV0pw/xHP4/iY9xG8dDZb6cMAWPG
+ iBry9FoWwzsOukYhcSgUzd/j5uOrHUzZhxjvbTuSrGfAUmsIXPT5A2lNb6obk31F2VxF
+ 7rpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747659313; x=1748264113;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cuPGGM3xklU+nOYz0hUiWBY1E2jdTVg1HnyCs01vxLk=;
- b=azOhyQCy/frN3/77BsqUk4hO7IuH/3RDXWgf2JQa3qqIGhiqqFmX2IV+RN+mCU2Z9W
- iDS+fRKlmanvquhRbKi2Gunv5oU1hTYoO8ei51ah4IXqRZA2pHIc9l5UFlMv8uFSSg6H
- o3GqklgqTYamYybzFmBv5r0+xeV+0ySNxH4A7SaeA3sGli8NTqFeG1G78X8w0xwLSii7
- 0w+9KDSzv2hL0dVqAYy77k1e2JjLEWZ1l7SdKmf51uuvuhQR6TQ9BwJaXUC71mtL1HXS
- lliUtLDCwbZnD5zY4su59Ou0vrQgvNuIr/+rb+kOTMH6gOVfBHY3B5tfv13/TMCpickJ
- WsoA==
-X-Gm-Message-State: AOJu0YzbmwWkt/ImUXvqHwKmgDM2i7QQycy8Kef0P0TqoG5i8COlEc1E
- ESz6uAnDsWypKXSFpy6wkFJk+EGww7OJs8DI2tUK8cmQEsojzw3ZmunMuP40ICirF1o=
-X-Gm-Gg: ASbGncsAtTdyfLnojPJN0nfdEjq6zGUTAUxlXLNVl91r5KC9ldkG3It1BDgtR6Q9mXb
- 6yk8MLBO1b535LBAK97XbpH71k3eU2FXemERCIzWkqWw3wg7y0TifuLI54b/aWN9Xr7w3Fps/lK
- wBki3QNb0sagu0CTw9Qhg0YPqnuHe4S5q3xrTnVrWSnaMHlVk/qzDnSiFndmysbFlxV4PyXLfOT
- ODxJywrMNYKP9LlK+ZwpCaA+yrhAHa3hG3iXlnoQ6rnyCG9zqTZvS6UGOMqq25ejT0F5SBbHteK
- Z8bH0shIuMwTWYHKVBz5LsVq+YFtvdOUQUtJaZ6EJgm2RYagmZW+
-X-Google-Smtp-Source: AGHT+IHwhSHB9V9GlkjskLAInSN4ALgA45oKZsQqN9ZmROqMGJSMBhwZevy9p2NxFb2/EOshDM0UNg==
-X-Received: by 2002:a05:6000:2281:b0:3a3:64b9:2ba7 with SMTP id
- ffacd0b85a97d-3a364b92cedmr7598511f8f.56.1747659313019; 
- Mon, 19 May 2025 05:55:13 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442fd515130sm135699655e9.18.2025.05.19.05.55.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 May 2025 05:55:12 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 97E6A5F87C;
- Mon, 19 May 2025 13:55:11 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH] gdbstub: update aarch64-core.xml
-In-Reply-To: <20250519-gdbstub-aarch64-pstate-xml-v1-1-b4dbe87fe7c6@linaro.org>
- (Manos Pitsidianakis's message of "Mon, 19 May 2025 14:01:47 +0300")
-References: <20250519-gdbstub-aarch64-pstate-xml-v1-1-b4dbe87fe7c6@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Mon, 19 May 2025 13:55:11 +0100
-Message-ID: <87msb8sqts.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1747659318; x=1748264118;
+ h=content-transfer-encoding:content-language:cc:to:subject:from
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=uZQ+kqJHnCyn6CHYFHa7sINUJUudzELm10mspg5m5gU=;
+ b=QaYQlHSZdyiuQFKnR3jLE+WsqNSo0P4ikA2tTpHV74gVR/MCgB8JczBvUQnuKH1yRa
+ V77+Vj/bziNPy61AOFbtX/P3OUfSz4IIpI3DgSzC/9b9rO3rOz0cBpcuifnAhqCSvrUq
+ tbCQSlrzTkb5J98AyA53QEfJGmpyzJ7N+dTNdVI+1LUFymXZMmV2VzmPKi9v2hkSnNUF
+ 8HCyG3QhG3ZwQE1cYq/wuS05SmaAhC8oyIBNxE/R1gZ7E1YWeCjVqO7AfirSI+HtQl7d
+ rfypB2CENJK2mv1mW+eNFyeISxXrOStchTNf4JZIg1Zr1D4icC9XmoH9TOoOtruphqLE
+ ISKA==
+X-Gm-Message-State: AOJu0YyZgqOH4KdW2/DT603VRYGEelrr7Hz45GRM0ZPHFh8Zk2hDls4e
+ T+2zlmfbNogoLUsolkUXIbiUxGYTWVZR64Q2gW9BpceDpCPY9W4tLOLVuySmHTPacss=
+X-Gm-Gg: ASbGncvfqQIibYpNyp+n9b3Vt84Dyf82dzsDAbrDGfje0UhmDk6ieJk2MB/NRFKVYDE
+ KvA/Cw9qJfx59n+Tm74wt+M8lrZSLmMZlTvQYk3wGIUBBDbOnEK/yLm/fyRHPi8dv9Vtrm717ZW
+ yxeEbrNMriGB0DJKGu1n/Qbe9XGOCNoytd6EpqLvI/DLGysg8SLNF2p63GVB5yG7yf5aw/mlzYz
+ 3PgWQLlwOyFRY55vyZuHTjwHONjdPAsoZ83xi6+U89u17j4YvO8wHGO+OMxvk18rhgU8KSSw4SW
+ 6O4LWpVz7TKW4eFIlVEH0ySOaagDfhgj9YII0fLt9ADQqxx0ljwgrjXJKRgBlc0kJ2/HZ6qFRK/
+ YoOdmIBHADy6GPYHdbSeu8w==
+X-Google-Smtp-Source: AGHT+IEtjok7RrJKBFwIPsSkIpEI+gx/+Y+6GjhIfP7PI71LVNJJB5JMEHv8kZnpQRQUxxowzk9Obg==
+X-Received: by 2002:a05:6000:420c:b0:3a3:7709:3038 with SMTP id
+ ffacd0b85a97d-3a3770931fdmr561675f8f.38.1747659317745; 
+ Mon, 19 May 2025 05:55:17 -0700 (PDT)
+Received: from [172.19.170.213] (168.160.185.81.rev.sfr.net. [81.185.160.168])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a35ca4d1f9sm12586809f8f.1.2025.05.19.05.55.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 May 2025 05:55:17 -0700 (PDT)
+Message-ID: <a96c5eb8-4ac1-4f61-9642-cc9102f76e1f@linaro.org>
+Date: Mon, 19 May 2025 13:55:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Notes on PFlash C model
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,40 +103,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+Hi Manos,
 
-> Update aarch64-core.xml to include field definitions for PSTATE, which
-> in gdb is modelled in the cpsr (current program status register)
-> pseudo-register, named after the actual cpsr register in armv7.
->
-> Defining the fields layout of the register allows easy inspection of for
-> example, the current exception level (EL):
->
-> For example. Before booting a Linux guest, EL=3D2, but after booting and
-> Ctrl-C'ing in gdb, we get EL=3D0:
->
->   (gdb) info registers $cpsr
->   cpsr           0x20402009          [ SP EL=3D2 BTYPE=3D0 PAN C ]
->   (gdb) cont
->   Continuing.
->   ^C
->   Thread 2 received signal SIGINT, Interrupt.
->   0x0000ffffaaff286c in ?? ()
->   (gdb) info registers $cpsr
->   cpsr           0x20001000          [ EL=3D0 BTYPE=3D0 SSBS C ]
->
-> The aarch64-core.xml has been updated to match exactly the version
-> retrieved from upstream gdb, retrieved in 2025-05-19 from HEAD commit
-> 9f4dc0b137c86f6ff2098cb1ab69442c69d6023d.
->
-> https://sourceware.org/git/?p=3Dbinutils-gdb.git;a=3Dtree;h=3D9f4dc0b137c=
-86f6ff2098cb1ab69442c69d6023d
->
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+You mentioned you are looking at a Rust implementation of our PFlash
+model. IMHO better would be to implement from scratch without looking
+at the C code. In case you need to, here are few notes about some
+oddities I unfortunately inherited as maintainer.
 
-Queued to gdbstub/next, thanks.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+[*] Interface to write sector to underlying Block Layer is common
+
+W.r.t. accessing underlying Block Layer, AMD/Intel models duplicate
+a lot of identical code logic. Except for eventually writing the
+current block (which can be cancelled by the guest). For Intel this
+was fixed in commit 284a7ee2e29 ("hw/pflash: implement update buffer
+for block writes"), for AMD -- which is considered less important
+because not used by cloud VMs -- it is still incorrect.
+
+
+[*] Sector size isn't uniform.
+
+"recent" devices do support more than 1 single block size. Blocks of
+different size can't be mixed, they are grouped in "regions". A region
+contains blocks of same sector size.
+QEMU started only exposing the "num-blocks" and "sector-length"
+properties, so we couldn't model regions of different sector size.
+At some point the AMD model was extended to use up to 4 groups of
+different sizes, via the "num-blocks[0..3]" and "sector-length[0..3]"
+properties. This isn't specific to AMD, but we only implemented there.
+The "old-multiple-chip-handling" is likely a related kludge for Intel.
+
+Possibly correctly implementing regions might allow to emulate non
+power-of-2 virtual parallel NOR flashes, if proven useful to (such
+config has been requested for SD cards).
+
+
+[*] Bus wiring doesn't belong to PFlash models
+
+All the "width", "device-width", "max-device-width", "mappings" and
+"big-endian" properties are related to how the DATA and ADDRess lines
+are wired on a bus. Models can come with 8bit or 16bit DATA lines, and
+there are many possible combinations to wire such devices [1]. Since
+PFlash are considered "slow", hardware engineers noticed they could
+speed accesses by "interleaving" devices [2], so the following configs
+are common:
+   - 4x 8-bit flashes
+   - 2x 8-bit flashes (emulated word mode, host endianness matters)
+   - 2x 16-bit flashes (host endianness matters)
+The "mappings" property is related to the ADDRess lines w.r.t. the
+host, and is usually described as "aliasing" [3]. I.e. if the host
+is configured to see a flash I/O region 2-bit wider than the flash
+addressing range, the host will see 2^2 = 4 consecutive times the
+same flash I/O region.
+
+Note, it might not be practical (as in, get fast emulation) to use
+interleaved memory when the region is executed in place, as these
+ROMD devices. Although I believe we could figure something out in
+software, reducing the code complexity and simplifying maintenance.
+
+
+[*] "unlock-addr[0,1]" are not necessary
+
+The unlock sequence is always 0x555 (0b010101010101) then 0xaaa (opposite
+0b101010101010) but depending how the address bits are wired and if
+the access is byte or word, less address bits will be compared.
+
+
+[*] "secure" property is a QEMU kludge
+
+PFlashes support region / bank (write) protection, but this wasn't
+modelled in QEMU when it was needed. OVMF was developed for virtual
+x86 machines and was not interested in doing firmware upgrade, it only
+needed a read-only executable storage. Unfortunately instead of using
+a plain ROM, it used a PFlash device. "secure" property is enabled to
+put a flash in write-protected equivalent, or even fuse-protected,
+because the guest could try to unlock banks but will never be able to.
+I suppose it is too late to rectify because OVMF uses CFI query to get
+the pflash size, although it is fixed.
+
+
+If re-implementing this today, I'd use the S29GL512T (or S29GL01GT)
+datasheet as reference, being the biggest parallel NOR flash produced
+(then the industry switched to SPI NOR flashes). It is big enough to
+be used by all our boards except the SBSA-Ref (justification in [4]).
+
+
+[1] "adapt bus wiring in device" in QEMU model is common, for example
+     we also use it as "regshift" / "endianness" properties when
+     MMIO-mapping the 8250 UART (TYPE_SERIAL_MM) or IDE (TYPE_MMIO_IDE).
+
+[2] For interleaved I/O regions, see discussion
+     https://lists.gnu.org/archive/html/qemu-devel/2019-06/msg05395.html
+     and implementation:
+  
+https://lore.kernel.org/qemu-devel/20200817161853.593247-1-f4bug@amsat.org/
+
+[3] For MMIO aliasing, see
+  
+https://lore.kernel.org/qemu-devel/20210419094329.1402767-2-f4bug@amsat.org/
+     in particular for AMD flash:
+  
+https://lore.kernel.org/qemu-devel/20210419094329.1402767-7-f4bug@amsat.org/
+     or q800:
+  
+https://lore.kernel.org/qemu-devel/20210326002728.1069834-11-f4bug@amsat.org/
+
+[4] CFI-compliant virtual parallel NOR flash on QEMU:
+  
+https://lore.kernel.org/qemu-devel/CAFEAcA9qVBdLZMO4e+oSaL6kwpF9WS+RdeL3DxBNKVMPwnQ=TQ@mail.gmail.com/
+
+Yes I know, I should respin all of these series...
+
+
+Hope that helps.
+
+Regards,
+
+Phil.
 
