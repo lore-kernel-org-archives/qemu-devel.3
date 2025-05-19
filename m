@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D66FCC54756
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 10:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2596C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 10:52:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGy4O-0004ex-RF; Mon, 19 May 2025 06:50:08 -0400
+	id 1uGy6b-0005T6-Sj; Mon, 19 May 2025 06:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uGy4M-0004el-3Q
- for qemu-devel@nongnu.org; Mon, 19 May 2025 06:50:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uGy6Z-0005Sp-SA
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 06:52:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uGy4I-0001G9-NS
- for qemu-devel@nongnu.org; Mon, 19 May 2025 06:50:05 -0400
+ id 1uGy6Y-0001cu-0Y
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 06:52:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747651797;
+ s=mimecast20190719; t=1747651940;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xTn6bni0o1Yo/KduYnhokf80jbZXIW+ZD1FyX+562fc=;
- b=TwTcnNA98D1iYzmPgQJUAzTVdJYv01o+rpbg+mPd5Gy/IgmzF/zivmZAk9R/ZJGKXU+H8I
- 5goB0pXkmWmivFdk1p87gpvF1N3F90/Aehjn3xNwRbXQG6Z4SLNhF/1TqxFEHMVhHNY0aS
- VqS6sDwEiqWUj/LuZlk7EEymdQWQneY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YF2vWK9Q4r4bHptI7XUcNCW5CxVm7CrKm2zfJGYBN7w=;
+ b=J+S1N+ciVlK3pjD6YMYzyzTuJvn6a5Y4UAlDcWpqSw5+eWQoFMgybhUGE/CUKBJy6Gznx4
+ fb72w4a1jpY7uUPlCI2cXM+jkP+cNVnWghQXWevYDLdoB2uQXILzFUuhwbrJUD26dmZLku
+ Hd2ntYUZy3uui2ylu6LohMmWc1eu4LQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-PGopqNDnPnuk0YL2SYeKPg-1; Mon,
- 19 May 2025 06:49:54 -0400
-X-MC-Unique: PGopqNDnPnuk0YL2SYeKPg-1
-X-Mimecast-MFC-AGG-ID: PGopqNDnPnuk0YL2SYeKPg_1747651793
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-br6rnCesPkyIbL9kXw6O3w-1; Mon,
+ 19 May 2025 06:52:18 -0400
+X-MC-Unique: br6rnCesPkyIbL9kXw6O3w-1
+X-Mimecast-MFC-AGG-ID: br6rnCesPkyIbL9kXw6O3w_1747651938
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 642171956086; Mon, 19 May 2025 10:49:53 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D68871955DAB; Mon, 19 May 2025 10:52:17 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.50])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4CBC018001D8; Mon, 19 May 2025 10:49:50 +0000 (UTC)
-Date: Mon, 19 May 2025 11:49:47 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 682671800268; Mon, 19 May 2025 10:52:16 +0000 (UTC)
+Date: Mon, 19 May 2025 11:52:12 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, pbonzini@redhat.com
-Subject: Re: [PATCH 1/4] chardev: Fix QIOChannel refcount
-Message-ID: <aCsMy-OnmUPC-sB7@redhat.com>
+Subject: Re: [PATCH 2/4] chardev: Don't attempt to unregister yank function
+ more than once
+Message-ID: <aCsNXIpN5CVCG70S@redhat.com>
 References: <20250515222014.4161-1-farosas@suse.de>
- <20250515222014.4161-2-farosas@suse.de>
+ <20250515222014.4161-3-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250515222014.4161-2-farosas@suse.de>
+In-Reply-To: <20250515222014.4161-3-farosas@suse.de>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -89,51 +90,57 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 15, 2025 at 07:20:11PM -0300, Fabiano Rosas wrote:
-> The IOWatchPoll holds a reference to the iochannel while the "child"
-> source (iwp->src) is removed from the context and freed. Freeing the
-> source leads to the iochannel being also freed at
-> qio_channel_fd_source_finalize().
+On Thu, May 15, 2025 at 07:20:12PM -0300, Fabiano Rosas wrote:
+> tcp_chr_free_connection() can be called multiple times in succession,
+> in which case the yank function will get as argument a NULL s->sioc
+> that has been cleared by the previous tcp_chr_free_connection() call.
 > 
-> Later, io_watch_poll_prepare() tries to create another source with the
-> same iochannel and hits an use after free:
+> This leads to an abort() at yank_unregister_function().
 > 
-> ==8241==ERROR: AddressSanitizer: heap-use-after-free on address 0x514000000040
-> READ of size 8 at 0x514000000040 thread T2
->     #0 0x561c2d272fcd in object_get_class  ../qom/object.c:1043:17
->     #1 0x561c2d338f84 in QIO_CHANNEL_GET_CLASS  include/io/channel.h:29:1
->     #2 0x561c2d33b26f in qio_channel_create_watch  ../io/channel.c:388:30
->     #3 0x561c2d2f0993 in io_watch_poll_prepare  ../chardev/char-io.c:65:20
->     ...
+>  #0  __GI_raise (sig=6) at ../sysdeps/unix/sysv/linux/raise.c:51
+>  #1  __GI_abort () at abort.c:79
+>  #2  qtest_check_status (s=0x513000005600) at ../tests/qtest/libqtest.c:209
+>  #3  qtest_wait_qemu (s=0x513000005600) at ../tests/qtest/libqtest.c:273
+>  #4  qtest_kill_qemu (s=0x513000005600) at ../tests/qtest/libqtest.c:285
+>  #5  kill_qemu_hook_func (s=0x513000005600) at ../tests/qtest/libqtest.c:294
+>  #6  g_hook_list_invoke (hook_list=0x55ea9cc750c0 <abrt_hooks>, may_recurse=0) at ../glib/ghook.c:534
+>  #7  sigabrt_handler (signo=6) at ../tests/qtest/libqtest.c:299
+>  #8  <signal handler called>
+>  #9  __GI_raise (sig=6) at ../sysdeps/unix/sysv/linux/raise.c:51
+>  #10 __GI_abort () at abort.c:79
+>  #11 yank_unregister_function (instance=0x7fb26f2ea9a0,
+>      func=0x55ea9bcc0a10 <char_socket_yank_iochannel>, opaque=0x0) at
+>      ../util/yank.c:151
+>  #12 tcp_chr_free_connection (chr=0x51300000ffc0) at ../chardev/char-socket.c:385
+>  #13 tcp_chr_disconnect_locked (chr=0x51300000ffc0) at ../chardev/char-socket.c:477
+>  #14 tcp_chr_disconnect (chr=0x51300000ffc0) at ../chardev/char-socket.c:495
+>  #15 tcp_chr_hup (channel=0x514000000040, cond=G_IO_HUP, opaque=0x51300000ffc0) at ../chardev/char-socket.c:536
+>  #16 qio_channel_fd_source_dispatch (source=0x50c0000b5fc0, callback=0x55ea9bcd6770 <tcp_chr_hup>,
+>      user_data=0x51300000ffc0) at ../io/channel-watch.c:84
+>  #17 g_main_dispatch (context=0x50f000000040) at ../glib/gmain.c:3381
+>  #18 g_main_context_dispatch (context=context@entry=0x50f000000040) at ../glib/gmain.c:4099
+>  #19 g_main_context_iterate (context=0x50f000000040, block=block@entry=1, dispatch=dispatch@entry=1,
+>      self=<optimized out>) at ../glib/gmain.c:4175
+>  #20 g_main_loop_run (loop=0x502000055690) at ../glib/gmain.c:4373
 > 
-> 0x514000000040 is located 0 bytes inside of 392-byte region [0x514000000040,0x5140000001c8)
-> freed by thread T2 here:
->     #0 0x561c2d2319a5 in free
->     #1 0x7fb2c0926638 in g_free
->     #2 0x561c2d276507 in object_finalize  ../qom/object.c:734:9
->     #3 0x561c2d271d0d in object_unref  ../qom/object.c:1231:9
->     #4 0x561c2d32ef1d in qio_channel_fd_source_finalize  ../io/channel-watch.c:95:5
->     #5 0x7fb2c091d124 in g_source_unref_internal ../glib/gmain.c:2298
->     #6 0x561c2d2f0b6c in io_watch_poll_prepare  ../chardev/char-io.c:71:9
->     ...
+> Commit ebae6477dc ("chardev: check if the chardev is registered for
+> yanking") seems to have encountered a similar issue, but checking
+> s->registered_yank is not a complete solution because that flag
+> pertains to the yank instance, not to each individual function.
 > 
-> previously allocated by thread T3 (connect) here:
->     #0 0x561c2d231c69 in malloc
->     #1 0x7fb2c0926518 in g_malloc
->     #2 0x561c2d27246e in object_new_with_type  ../qom/object.c:767:15
->     #3 0x561c2d272530 in object_new  ../qom/object.c:789:12
->     #4 0x561c2d320193 in qio_channel_socket_new  ../io/channel-socket.c:64:31
->     #5 0x561c2d308013 in tcp_chr_connect_client_async  ../chardev/char-socket.c:1181:12
->     #6 0x561c2d3002e7 in qmp_chardev_open_socket_client  ../chardev/char-socket.c:1281:9
->     ...
-> 
-> Fix the issue by incrementing the iochannel reference count when the
-> IOWatchPoll takes a reference and decrementing when it is finalized.
+> Skip the yank_unregister_function() in case s->sioc is already NULL,
+> which indicates the last yank function was already removed.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  chardev/char-io.c | 5 +++++
->  1 file changed, 5 insertions(+)
+> Can tcp_chr_free_connection() race with itself? I'm assuming no.
+> 
+> Could we just make yank_unregister_instance() remove all yank
+> functions at once? Those asserts/abort in the yank code are a bit
+> masochistic.
+> ---
+>  chardev/char-socket.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
