@@ -4,71 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4C6C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D51C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH2MB-0008HM-OH; Mon, 19 May 2025 11:24:49 -0400
+	id 1uH2Xo-00069x-Ia; Mon, 19 May 2025 11:36:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uH2Lm-0007xJ-PU
- for qemu-devel@nongnu.org; Mon, 19 May 2025 11:24:25 -0400
-Received: from mailgate02.uberspace.is ([185.26.156.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uH2Lj-0005ob-8B
- for qemu-devel@nongnu.org; Mon, 19 May 2025 11:24:22 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id E87A9180EAB
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 17:24:17 +0200 (CEST)
-Received: (qmail 5968 invoked by uid 990); 19 May 2025 15:24:17 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 19 May 2025 17:24:17 +0200
-From: Julian Ganz <neither@nut.email>
-To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PATCH v5 24/25] tests: add test for double-traps on rv64
-Date: Mon, 19 May 2025 17:24:08 +0200
-Message-ID: <83fc9462a895d5c0d9edb9e8bcce980c27d8fc81.1747666625.git.neither@nut.email>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1747666625.git.neither@nut.email>
-References: <cover.1747666625.git.neither@nut.email>
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uH2Xm-00069k-7b; Mon, 19 May 2025 11:36:46 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uH2Xi-0007Nw-Tt; Mon, 19 May 2025 11:36:45 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b1MCW4XJDz67LSk;
+ Mon, 19 May 2025 23:33:27 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id DAAF214010C;
+ Mon, 19 May 2025 23:36:32 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.203.177.99) by
+ frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 19 May 2025 17:36:31 +0200
+To: <mst@redhat.com>, <imammedo@redhat.com>
+CC: <qemu-devel@nongnu.org>, <anisinha@redhat.com>, <armbru@redhat.com>,
+ <berrange@redhat.com>, <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>, 
+ <farman@linux.ibm.com>, <gustavo.romero@linaro.org>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <linuxarm@huawei.com>, <mtosatti@redhat.com>, <peter.maydell@linaro.org>,
+ <philmd@linaro.org>, <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
+ <shameerali.kolothum.thodi@huawei.com>, <shannon.zhaosl@gmail.com>,
+ <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
+Subject: [PATCH v11 0/6] Specifying cache topology on ARM
+Date: Mon, 19 May 2025 16:36:26 +0100
+Message-ID: <20250519153632.537-1-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.951293) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.551293
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=oVnnQOlaHDcgULY7mP8Q+DwiS6v0Cp7ANlJ4mQwWq6E=;
- b=BZ0+ABjWajvIgKu6PBcdFdjhGksEzA1PUheRsyIz4rcgCkX/vqZ4lmuPEdW1qathmqDKHT5IPr
- gRZ3rKwC5UOoGxUw6gDWDbY7RzvXaDR/e5H51LjITYemhlZt2vYBNcxJqFgfMS5pLNlt+IXigZtS
- W56UqMWCnYCUqzkVrG1pwjWJEKe0QZTsafONbQlGhxNqLCoweIqmybyGja0f8RK6+1NkX7tNu0jg
- drtRx9jEcjf4qQqNPMAgg82TudbtwaiT3sCtZh9UIJvHjW8GEbaACqLipx1WsOnR1ikS6MXjIX0H
- jMcSK6AjxQUP7ICxbDycZKdJVbRaYKllQ6uUvx3oejkLGX94lUD0i0KXfkP5GSoj+ycjpX9vdsdf
- 23L76IddwiDBU9yYw/mjNMJ5Tsc+ljjFdgfwxFCE1dpIGapN5tZY2vn4Yp8Jl16M3YLMcS8MAqMc
- VGslOmiv//n0WiuwbBjuhpXdWuU4Sai2O6Nk+EkdHGuVU5TYycJdKIInW9u5s6a3x415WcIYovBz
- yEW2ssxckRWKp7eWqlFhjlFmPDXChOcA7/LBItz342fz82VgthJj39kiTOugLZcviWuBiXghk6uX
- ZYUnbfEeGRDFYMllyAvy93/G71HwqQ+OmqITROneDr9uWmkBFsftEqK1UYVsVJ22NHnlJ3Vygngv
- A=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain
+X-Originating-IP: [10.203.177.99]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,118 +70,151 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We do have a number of test-case for various architectures exercising
-their interrupt/exception logic. However, for the recently introduced
-trap API we also want to exercise the logic for double traps on at least
-one architecture.
+Specifying the cache layout in virtual machines is useful for
+applications and operating systems to fetch accurate information about
+the cache structure and make appropriate adjustments. Enforcing correct
+sharing information can lead to better optimizations. Patches that allow
+for an interface to express caches was landed in the prior cycles. This
+patchset uses the interface as a foundation.  Thus, the device tree and
+ACPI/PPTT table, and device tree are populated based on
+user-provided information and CPU topology.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Julian Ganz <neither@nut.email>
----
- tests/tcg/riscv64/Makefile.softmmu-target |  6 ++
- tests/tcg/riscv64/doubletrap.S            | 73 +++++++++++++++++++++++
- 2 files changed, 79 insertions(+)
- create mode 100644 tests/tcg/riscv64/doubletrap.S
+Example:
 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 7c1d44d3f4..5fba973e18 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -20,5 +20,11 @@ EXTRA_RUNS += run-issue1060
- run-issue1060: issue1060
- 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-plugin-doubletrap
-+run-plugin-doubletrap: doubletrap
-+	$(call run-test, $<, \
-+	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
-+	  $(QEMU_OPTS)$<)
-+
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/doubletrap.S b/tests/tcg/riscv64/doubletrap.S
-new file mode 100644
-index 0000000000..b61089c9c1
---- /dev/null
-+++ b/tests/tcg/riscv64/doubletrap.S
-@@ -0,0 +1,73 @@
-+	.option norvc
-+
-+	.text
-+	.global _start
-+_start:
-+	# Set up vectored interrupts
-+	lla	t0, trap
-+	add	t0, t0, 1
-+	csrw	mtvec, t0
-+
-+	# Enable sw interrupts
-+	csrrsi	zero, mie, 0x8
-+	csrrsi	zero, mstatus, 0x8
-+
-+	# Engage the double trap: we trigger an machine-level software
-+	# interrupt, which will trap to an illegal instruction
-+	lui	t1, 0x02000
-+	li	t0, 1
-+	sw	t0, 0(t1)
-+
-+	# If we still not went out via the software interrupt route after a
-+	# short while, we failed the test.
-+	lui	t0, 0x1
-+0:
-+	addi	t0, t0, -1
-+	bnez	t0, 0b
-+	j	fail
-+
-+trap:
-+	j	illegal_insn # Exceptions
-+	j	fail # Supervisor software interrupt
-+	j	fail
-+	.insn	i CUSTOM_0, 0, x0, x0, 0 # Machine software interrupt
-+	j	fail
-+	j	fail # Supervisor timer interrupt
-+	j	fail
-+	j	fail # Machine timer interrupt
-+	j	fail
-+	j	fail # Supervisor external interrupt
-+	j	fail
-+	j	fail # Machine external interrupt
-+	j	fail
-+	j	fail # Counter overflow interrupt
-+	j	fail
-+	j	fail
-+
-+illegal_insn:
-+	# Check whether we really got an illegal instruction
-+	csrr	t0, mcause
-+	li	t1, 2
-+	bne	t0, t1, fail
-+	li	a0, 0
-+	j	_exit
-+fail:
-+	li	a0, 1
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
-+
-+	# Semihosting call sequence
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
+
++----------------+                            +----------------+
+|    Socket 0    |                            |    Socket 1    |
+|    (L3 Cache)  |                            |    (L3 Cache)  |
++--------+-------+                            +--------+-------+
+         |                                             |
++--------+--------+                            +--------+--------+
+|   Cluster 0     |                            |   Cluster 0     |
+|   (L2 Cache)    |                            |   (L2 Cache)    |
++--------+--------+                            +--------+--------+
+         |                                             |
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
+|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+         |                   |                       |                   |
++--------+              +--------+              +--------+          +--------+
+|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
++--------+              +--------+              +--------+          +--------+
+|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
++--------+              +--------+              +--------+          +--------+
+
+
+The following command will represent the system relying on **ACPI PPTT tables**.
+
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
+ -initrd rootfs.cpio.gz \
+ -bios ./edk2-aarch64-code.fd \
+ -nographic
+
+The following command will represent the system relying on **the device tree**.
+
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=off" \
+ -initrd rootfs.cpio.gz \
+ -nographic
+
+Failure cases:
+    1) There are scenarios where caches exist in systems' registers but
+    left unspecified by users. In this case qemu returns failure.
+
+    2) SMT threads cannot share caches which is not very common. More
+    discussions here [1].
+
+Currently only three levels of caches are supported to be specified from
+the command line. However, increasing the value does not require
+significant changes. Further, this patch assumes l2 and l3 unified
+caches and does not allow l(2/3)(i/d). The level terminology is
+thread/core/cluster/socket right now. Hierarchy assumed in this patch:
+Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
+
+TODO:
+  1) Making the code to work with arbitrary levels
+  2) Separated data and instruction cache at L2 and L3.
+  3) Additional cache controls.  e.g. size of L3 may not want to just
+  match the underlying system, because only some of the associated host
+  CPUs may be bound to this VM.
+
+[1] https://lore.kernel.org/devicetree-spec/20250203120527.3534-1-alireza.sanaee@huawei.com/
+
+Change Log:
+  v10->v11:
+   * Fix some coding style issues.
+   * Rename some variables.
+
+  v9->v10:
+   * PPTT rev down to 2.
+
+  v8->v9:
+   * rebase to 10
+   * Fixed a bug in device-tree generation related to a scenario when
+        caches are shared at core in higher levels than 1.
+  v7->v8:
+   * rebase: Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging
+   * I mis-included a file in patch #4 and I removed it in this one.
+
+  v6->v7:
+   * Intel stuff got pulled up, so rebase.
+   * added some discussions on device tree.
+
+  v5->v6:
+   * Minor bug fix.
+   * rebase based on new Intel patchset.
+     - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
+
+  v4->v5:
+    * Added Reviewed-by tags.
+    * Applied some comments.
+
+  v3->v4:
+    * Device tree added.
+
+Depends-on: Building PPTT with root node and identical implementation flag
+Depends-on: Msg-id: 20250423114130.902-1-alireza.sanaee@huawei.com
+
+Alireza Sanaee (6):
+  target/arm/tcg: increase cache level for cpu=max
+  arm/virt.c: add cache hierarchy to device tree
+  bios-tables-test: prepare to change ARM ACPI virt PPTT
+  hw/acpi/aml-build.c: add cache hierarchy to pptt table
+  tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
+  Update the ACPI tables according to the acpi aml_build change, also
+    empty bios-tables-test-allowed-diff.h.
+
+ hw/acpi/aml-build.c                        | 220 ++++++++++++-
+ hw/arm/virt-acpi-build.c                   |   8 +-
+ hw/arm/virt.c                              | 359 +++++++++++++++++++++
+ hw/cpu/core.c                              |  92 ++++++
+ hw/loongarch/virt-acpi-build.c             |   2 +-
+ include/hw/acpi/aml-build.h                |   4 +-
+ include/hw/arm/virt.h                      |   5 +
+ include/hw/cpu/core.h                      |  27 ++
+ target/arm/tcg/cpu64.c                     |  13 +
+ tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 540 bytes
+ tests/qtest/bios-tables-test.c             |   4 +
+ 11 files changed, 724 insertions(+), 10 deletions(-)
+
 -- 
-2.49.0
+2.43.0
 
 
