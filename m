@@ -4,76 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33BFAC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0048C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGoEp-0001OM-6V; Sun, 18 May 2025 20:20:15 -0400
+	id 1uGoG9-00020x-6e; Sun, 18 May 2025 20:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGoEn-0001Nm-Md; Sun, 18 May 2025 20:20:13 -0400
-Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
+ id 1uGoG7-00020k-E3; Sun, 18 May 2025 20:21:35 -0400
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGoEm-00080G-7q; Sun, 18 May 2025 20:20:13 -0400
-Received: by mail-vs1-xe30.google.com with SMTP id
- ada2fe7eead31-4dfa0f38fcdso1282108137.3; 
- Sun, 18 May 2025 17:20:11 -0700 (PDT)
+ id 1uGoG5-00088c-OJ; Sun, 18 May 2025 20:21:35 -0400
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-86d6fd581f4so3127485241.1; 
+ Sun, 18 May 2025 17:21:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747614009; x=1748218809; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747614092; x=1748218892; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7vAy0hIWb4ZH8MSEhStHpo6dwYutcN6I7/pyOHklXGI=;
- b=hkmn6vQIgt3tnhXO48iR5mq0No8L/wcML7txgXAZW4UeQeWWAFyTk6ZioPgAacXDAA
- 8mzu9LjLXikf7MHiGC39iwQp6DGHr1Dr2HtoNftiTafgInxKKd/cmVl1P7cPc9fcgSat
- zB5W7ItWQPl+q4eMgndAxrX/GORqqf/6rUXAHcssZ4j8GUnRmDwnUGINkiRCscT1Cpr2
- XqT7yM9FMzPMeNJHbW3nNEjPtAO8Sgct4jWn+Lp89KylVk8374lUw9CQbY06YJi74wT3
- 63YvLZVY3z6r7rnXZEqk1epCGpqRO7can2jYr0xbMd35P6aXZ4lNGGXFNgPD1/yLKuhE
- cOlA==
+ bh=HXRmqZaU8swm+EjBIXCvtfh6ZLXIGrqhYvCrfJyIEyk=;
+ b=XEk0xcroa0yPUldSBSDCCbmwi+kq0eIz3MBzRJ5L55UWn8lb64ZKzIqSqrSyR+NPyM
+ dIKj4wtEEghWO9taUZph2rjag54E12Drz7g0WImLDmkNRXEzSa3eczKXa+jck8EDR/yG
+ El2izPExANvcNXRnWZJX6xr1P6tdmDxsGvWoBGPkIad+PvpcUP4WALJ8dtGeNPLMWXbe
+ nAy7Yc/SLoPZnwu7zSsheVYMbUO87weFCVFpB7z7dhZYlftKPm20WvhW8qmFNTm6GHLl
+ DURkP4Btwk44wU+shsVpIbV5gANk220k688v61O4HvdzrVYixpKB7OrEYH3cRwRkwSgL
+ 349Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747614009; x=1748218809;
+ d=1e100.net; s=20230601; t=1747614092; x=1748218892;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7vAy0hIWb4ZH8MSEhStHpo6dwYutcN6I7/pyOHklXGI=;
- b=rxQuN2VBThH7ypHTHWMVDaLsJfvzkiFTAmZ2VLAC+f0R1XaeP3+0oYRL5iGSDVG1Fk
- PodEVBJvpOO9Do7JzHbVjMju3s1r+TCQAikjoFgZZC+fpBhVrzDtB5uM6z07r6DFLqP3
- pM9x7vKg2OIRepao4RSg4khhJW8HMw6+V6HtbtRqNSXbHYSBNFwy+0zeg8A9lwSFsf8M
- c8Ru6H9VRRUIRsI/HCfek2MAI/SBga/i0a2gnyrxz/fJXQwS6R5xVWuibjAtn9WUNjwa
- lmJ5+tx/KXD3coZU1x1QZxrmpodP2joDFNW8SxLRCdVFfU+24dycTgMbmG4SC/hEihgs
- Qr8w==
+ bh=HXRmqZaU8swm+EjBIXCvtfh6ZLXIGrqhYvCrfJyIEyk=;
+ b=bsJEtg4q5T+sA9Ls0gqk+v3wMuP/LTt8kWIx87IkKMnnyoLvec5AicrI/Jgslc+VaO
+ 9cPak3iZgrgdclaZU8taQp5C7lZ3Pwcv7SRShHyXlaErKeafGeDJQ3kbWOu0496pwfHA
+ a3GjIQgCsnJwsrVTP7iQ3DjtQMYhHZ1/Q9ohuEpahLwjninTydNpoXhtCJ1NuOqLOkuP
+ AiC4bZordFT9x3p+cKTzjjg2dBzud+fr/bsDeNE7ytbDdLPsiC1cOZAAPJf+cvsJMEBR
+ UMUYwP5FDc3w50LOI6X8nTiAm1jt4td7GtJGZSiGMgdbWOqF5cFuJzVqxEGddO4jBqyM
+ ozeg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2WAt0leQILK3gmV/PA8VGPZAfKE6bT8vQP7ZexYErNI2IGSxOlV3f6g/1kShQYMfvoKGBWUk5Yhxv@nongnu.org
-X-Gm-Message-State: AOJu0YzpQHbHl+Y7Obo8uMzRf2tDwRQPfxIAGsLhWuzqa3eSe6PiaA92
- AR9rDcoLBipeedAWYaeSy6zMkeNtwC8+The2Uft4fMBCVriJDWrDk7dlmSfOLhUMJg36rXpxarG
- LAzZDZfewzeZKZ3RQUbPhSrSb6RN8qdE=
-X-Gm-Gg: ASbGncv7jE5nJMm4wY0u+wKczJQ/7jJFOFQdL8aKTMs/AO8UpZwokmSlIJsNHZ8n9zz
- VhAOTWmttd2vnR+aplPn+zNX5uPGtzwpoVsAV55wDCDncEHyKodqJpx/iJ7aHGiz+BWb+dFKEM+
- 38q5h09uwP7N7YIl5q1TjZ20cAlB75xcHt/ULdTTVqwM08/inAND2+ZfGGSzWHZuo=
-X-Google-Smtp-Source: AGHT+IFcuyCaywi/QoCQHHVwtsaofgUnBbCRTCtHU5pSZRc/vzsGdQR23lWzV0LuEP7v+9AYE41PTkST+URiy0qVthc=
-X-Received: by 2002:a05:6102:54a2:b0:4dd:b75f:2e82 with SMTP id
- ada2fe7eead31-4e049ea35b3mr8700770137.15.1747614009632; Sun, 18 May 2025
- 17:20:09 -0700 (PDT)
+ AJvYcCVeWMfGeJ5poR+GQjKcvH9LFyO08HgffEy7OFbDG/iGtiTmd+wZRT7HLLzPCCz7EO4EsRacREiaD6wh@nongnu.org
+X-Gm-Message-State: AOJu0YwbcOtYQPEFk7bw7CJsJ1HgDO04RxcaBisCeyjG5SsiqJ+jh8IV
+ Rs/FvKPZAWx1n9Tzz8n/xhyb+SFPD6NLj7UCGVN3TptM5nUq7s+1CpkdFpj81J+zKSaTECToA1n
+ kIjcF1DP2xvqN2AnXt4h5CEBSIGVc3tg=
+X-Gm-Gg: ASbGncv0sACRRD+kIH9kUSlvN/qNOCwUuGlxaHovRshdZJ+xf9r7uUWjCmwYlIF4ZgA
+ 36Eb4D4JAy3j6xjTrnpXNoFGwIVKG1WQxQ7LksPYrhnxaVH8qK/jy0dJ+41a00uHcwt64HqeQZN
+ /dFSw7eTvsPj7Sv3Lt8gd7blWQwDnm1STkxP/S2av9AV5q1Gs2O/dPWJ4iyy0RCTRWWNysA6SLW
+ Q==
+X-Google-Smtp-Source: AGHT+IE2ASJkx6zx+1USOLMmAEacs5FFYvMum8ZaM3i3bTQdMquWPuvkewam8QuyytbFOhCg9i2uy+bMpneezuKI1fI=
+X-Received: by 2002:a05:6102:6c4:b0:4e2:8b49:9fa6 with SMTP id
+ ada2fe7eead31-4e28b49a2admr1604503137.4.1747614092197; Sun, 18 May 2025
+ 17:21:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250404152750.332791-1-dbarboza@ventanamicro.com>
- <c969d9ce-626a-4928-b050-7b7fbd8f7981@ventanamicro.com>
-In-Reply-To: <c969d9ce-626a-4928-b050-7b7fbd8f7981@ventanamicro.com>
+References: <20250514041118.1614-1-frank.chang@sifive.com>
+ <20250514041118.1614-2-frank.chang@sifive.com>
+In-Reply-To: <20250514041118.1614-2-frank.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 19 May 2025 10:19:43 +1000
-X-Gm-Features: AX0GCFtIgL5mQkvemgEFu3NV10M9QEyi9ydvGbSpiB_hJkbOSuK0PYQdvYOB1Do
-Message-ID: <CAKmqyKPXoA3Lwq+zxP=v=YutxXXWyMz2rk6LDiW2_bMyhRmgfQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] hw/riscv/virt.c: change default CPU to 'max'
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
- ajones@ventanamicro.com
+Date: Mon, 19 May 2025 10:21:06 +1000
+X-Gm-Features: AX0GCFukxkL7H8mPXm6gxiH_8dZa9YaDB1Y6u1gB8GNS4koJOjtyxr29dAclKEg
+Message-ID: <CAKmqyKOJeU_qg2qk5ak+f6xDAdVBho9B7sjyKGSa+j_Ep_B5bA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] target/riscv: Add standard B extension implied rule
+To: frank.chang@sifive.com
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
+ Jerry Zhang Jian <jerry.zhangjian@sifive.com>, 
+ Jim Shu <jim.shu@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,68 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 6, 2025 at 8:47=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Wed, May 14, 2025 at 2:12=E2=80=AFPM <frank.chang@sifive.com> wrote:
 >
-> Hi Alistair,
+> From: Frank Chang <frank.chang@sifive.com>
 >
+> Add the missing implied rule for standard B extension.
+> Standard B extension implies Zba, Zbb, Zbs extensions.
 >
-> I think we should push this upstream and see what happens. We'll have a
-> full release cycle to undo the change in case we find unintended side
-> effects. I'm fairly optimistic that this change will be a no-op for most
-> users and will benefit us when we'll have to deal with RVA23 specific
-> software.
+> RISC-V B spec: https://github.com/riscv/riscv-b
+>
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
+> Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
+> Reviewed-by: Jim Shu <jim.shu@sifive.com>
 
-I worry it will cause us grief in the future. I think if we are
-changing it we should just drop any default.
-
-With profiles now becoming popular it's easy for users to just pick a
-profile CPU when starting the machine.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  target/riscv/cpu.c | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
 >
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 27edd5af62..f737b703da 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2532,6 +2532,17 @@ static RISCVCPUImpliedExtsRule RVG_IMPLIED =3D {
+>      },
+>  };
 >
-> Thanks,
+> +static RISCVCPUImpliedExtsRule RVB_IMPLIED =3D {
+> +    .is_misa =3D true,
+> +    .ext =3D RVB,
+> +    .implied_multi_exts =3D {
+> +        CPU_CFG_OFFSET(ext_zba), CPU_CFG_OFFSET(ext_zbb),
+> +        CPU_CFG_OFFSET(ext_zbs),
+> +
+> +        RISCV_IMPLIED_EXTS_RULE_END
+> +    },
+> +};
+> +
+>  static RISCVCPUImpliedExtsRule ZCB_IMPLIED =3D {
+>      .ext =3D CPU_CFG_OFFSET(ext_zcb),
+>      .implied_multi_exts =3D {
+> @@ -2910,7 +2921,8 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED =3D {
 >
-> Daniel
+>  RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] =3D {
+>      &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
+> -    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED, NULL
+> +    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED,
+> +    &RVB_IMPLIED, NULL
+>  };
 >
-> On 4/4/25 12:27 PM, Daniel Henrique Barboza wrote:
-> > Hi,
-> >
-> > The 'rv64' CPU, the default CPU for the 'virt' machine, is a strange
-> > CPU. It is a collection of extensions that were enabled/disabled as
-> > extensions were being added in TCG, and in the end we ended up with a
-> > CPU that we can't say exactly what it does.
-> >
-> > This is further aggravated by the distros move to support the RVA23
-> > profile. Patch 2 has more details, but long story short: distros uses
-> > the 'virt' machine, and they'll start building on top of RVA23, and rv6=
-4
-> > does not have RVA23 support. In short, distros will start to break in
-> > the default 'virt' CPU.
-> >
-> > Changing the default CPU to 'max' will not cause (intentional) user
-> > regressions: if the software runs in rv64 it will run in 'max' too give=
-n
-> > that we're adding more extensions as default instead of removing them.
-> > In my opinion this might be enough to avoid a deprecation cycle and we
-> > can do the change for 10.1.
-> >
-> > And yeah, patch 2 mentions the already old trope "and ARM does the
-> > same". This is intentional: I want RISC-V code and usability to be as
-> > close as possible to ARM and other archs to promote a more homogeneous
-> > experience when developing and using QEMU.
-> >
-> >
-> > Daniel Henrique Barboza (2):
-> >    target/riscv/tcg: make 'max' cpu rva23s64 compliant
-> >    hw/riscv/virt.c: change default CPU to 'max'
-> >
-> >   hw/riscv/virt.c            | 2 +-
-> >   target/riscv/tcg/tcg-cpu.c | 2 ++
-> >   2 files changed, 3 insertions(+), 1 deletion(-)
-> >
+>  RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] =3D {
+> --
+> 2.49.0
 >
 >
 
