@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D0DC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBBD6C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGs3r-0001F0-IG; Mon, 19 May 2025 00:25:11 -0400
+	id 1uGs3Y-0000vf-Do; Mon, 19 May 2025 00:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGrni-0006Gh-Eg; Mon, 19 May 2025 00:08:30 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1uGroJ-0007Q2-7x
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 00:09:07 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGrnd-0004DB-K7; Mon, 19 May 2025 00:08:27 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-231e21d3b63so30950045ad.3; 
- Sun, 18 May 2025 21:08:24 -0700 (PDT)
+ id 1uGroG-0004JI-Q1
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 00:09:06 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2302d90c7f7so50605145ad.3
+ for <qemu-devel@nongnu.org>; Sun, 18 May 2025 21:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747627703; x=1748232503; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747627743; x=1748232543; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9koq1jI9PnAy2EBT0cXlCZka3dT6wobo2uoSTfd5KCo=;
- b=nfaZntbmyZOkTlrKRmk8BDTwYDARe1ZPTpJ/Qsgz3bRgDA+eZ7APbur8AYZYWpyYFP
- oIE3gQPsbCPs+9yEUu/xWjAwDpmggo7DtrfkwkQD+dhCVGQ/VRgIf/z/3LDMvTuRMoIy
- QcfuJaBQu0Z43zMDbAlJfnOGbGPIaiE16vD6H898QQrdQvDZ88K/mjOEE59DmfbBbZbC
- 4bNr6gdziywjulAdAWENL+jIejwZS4HOWBpXEtNkHW09XcuGu25DHrpSUeKRISr1wC1o
- oeAdlN3vDtQPi788J+9ZHJPLDw0ZO6rSvh+QTJ+IjmfMfr6ca3Yq7fzZje/zNlfVbP8y
- qB+w==
+ bh=6B8XcozBhKUSaO2IzZDRk0dCZYzeMARm9IqAu7+vN/0=;
+ b=iWNjZ50OF373nsxgsmByysBHjAtDCeMHjvgOGBRMSeIRiWcMvjTLp4LG269fowXQCB
+ UWx7EO+5IotsZ9gNc1Ftyfw/jcOL67CLPj8Cjh8FeYRCAZ/+4KS+uQoeKXwd5vPmMxvJ
+ QY9hwgRRpFOGepCu5y8o2ziUw5xlo2KGPk4wCOaPlY+nCW2rnO5QKsx8lZkjo8RqBCl6
+ nGfyyQ9aAYUV+R8WM0/6AD3K/J3ynBxRd232124AkRDY0W0KZUY3TCKyVex16lXNpUwH
+ q14gfLXkpuxu1trJ6Z6GlHjUg9c6qyWn8UEf7480KKLvZr0KW89uXCPjR+8MA8n9RYQb
+ bgBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747627703; x=1748232503;
+ d=1e100.net; s=20230601; t=1747627743; x=1748232543;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9koq1jI9PnAy2EBT0cXlCZka3dT6wobo2uoSTfd5KCo=;
- b=tVjMWVE9kayYKwhnswtmJQ8iwB64r8VR3fmfjf7Xj/4Oq2a11Q0GX2JipDJATP/lLo
- i8TY50HJ+W4fdenPwlIAhA43HjkAr9wA4cUOCwOap3LLLdrlpTgsfkJjktVqxJg6SBNc
- OxvUkvmPcScnRaowqPgKycgmiH4FvDNQpvhu9FJPy/Tud9jgPfmMEMFu1q1pYmXWHDi7
- 6+BUoIX09VFgH0KVWQHQJxD1u73QxI/aHWxQs9Z6G0HqQO3XzTa594KttF35jgSUxpxm
- EjXUYAGMOnDOvQlw2q2DMhtk9XRQFqJKQ+TmQmHzRaBs+aPYk9Jz8lzyh7v4l1lG62Wp
- /S0w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVagHVXUAq1kWwe/Jtwtp+dFyajzg8lg1M4Rh42pn+mLlMQd65pvVKLHaKHJY5XpT681hB1pEm2RC5X6g==@nongnu.org
-X-Gm-Message-State: AOJu0Yx1djY0yhVBfw24jx05q1K4la0DSGZSwemSFZVw2I6njinwzbmO
- 9T6M6KayXSVZqZ7w+V1vFDfplejGjXHeOzc69IQ+vAaHqIUBO/msxazia3yo3w==
-X-Gm-Gg: ASbGnctpN61E5UdXxI1DukB/JR4ZAMq9BJ0pu5h7VhGRtSFLLfUbodcNxooWyHCmJsb
- b8fXk/YkKv0ZkjLlODLYots9ZR6SMSZxehdFepKe5ewxG4XyppjiesbtyKkv421q4y1eutH3DBp
- xJCUzz/NcX6yTmzNlsylbQMRVuuCC7aaaIhYVoD1fLoxEMXVf7BEOKmW4VamwtmKLZHCDc4WtJa
- TLs+iGD7e6QPxcItrqzGumiJcU8xbtoHZuC5QOd9S5msxbso+4lVxd9zCkpUBgvBgir0k5qY20o
- 4hUJFnTqJt0fCgYerZ0fMQWB7IvHYkakeLS72Y6GD11CPgZOFzZsf9H7HJzhkBzAwhuciitTrdI
- JR8LZebiScQonMlDFermMr9c4jFDstfszv+lTEBvRPHaCC8BH+GKTEfm+
-X-Google-Smtp-Source: AGHT+IGQzDuqoYoqziXn+uoLqLMvemwGRerpgCGtxtUxNV9ibEMMTtC83+1CeVK8T9+nwwDyY1VkeQ==
-X-Received: by 2002:a17:902:d486:b0:224:1609:a74a with SMTP id
- d9443c01a7336-231de3ae59amr154737275ad.34.1747627703298; 
- Sun, 18 May 2025 21:08:23 -0700 (PDT)
+ bh=6B8XcozBhKUSaO2IzZDRk0dCZYzeMARm9IqAu7+vN/0=;
+ b=aZDAZ/lBc047JQa57Pp2x+1Lh3S0qnOCsaVy/VqJQqdDM2YNdXtKwGDHmi/uDK2GfD
+ oaNGnhaeTEJcgRoJOq1U29iiPav3u44JbpvmYEG6Gs8OAJvh2KaGKwBdvHJYrA7YpBXI
+ EQJ640Axz7MppULqa5u8c+760f+/qNtYlQNoG3d+kCIGkOf61LID5YkanQWbP6qzzHLE
+ Gqk3moiD/rYf0dZNU3zParbgPZUcJCFQ3/aYhVMlM1qCDanrWg1kd4YkbAxj6Jm45cWO
+ tm8hsokIMi6zl7S/x4M0yTYDhIvSsB9Kul4pVDxpLXnzolPFK1zRlKGM+J/YPdfAMLt3
+ JNgg==
+X-Gm-Message-State: AOJu0YxfwZiGfYm9zJ5JfU8zAkHwQlq0Ez0G3qVEfnxqm0PtbIyAmfue
+ GB9D9ufsUOxa6LJ8iCevq0nmzx9aVZ2DjpOXynk6xEyXe8Mva1890lle9/el2Q==
+X-Gm-Gg: ASbGncueUlgPyxn/UoQ9FmHGKUdWz/oSuzZJnU2whWxN6SfRY40hKHD0S0gkf6ubfKx
+ C1klK9YCJKhyRhno/w380ssqB49HUDIbn4VG6ogUCxc63bn8OQeftF74uI/QK8BIzol7NoUjNj7
+ xV7F8bNk+LOSsyVszeEM86qQ3wchXVb5GQbwgVsHl3Pe3vau4Wepp87rDO/qZZX048xWtI2uCjt
+ V9mJI7TiHW3wOiKb3OEFFTI2j+ke4LcqIrguOqwzpquLjs4kcCbOYC/SuKrfzThumXmjI9BJLZ1
+ a+BH8+BPjRBvfvosuYupdETcqQhJ4kihKVrPwUk2M+2Om9hN6XRfigHr4P6otMrkMBiMbyaKAIj
+ p6v08IFEa5ccSDLP+4qgfx+8mULvUwjDZR/ZhW5xsLlzYqUPnQCo+oHH8
+X-Google-Smtp-Source: AGHT+IEOF9UlfMdOnWuMQ5Lk8Wti3VsuHKn9jSCVAswey0P7E3m0HFx33yi7n+Xwn7gw86S8gi6+Ww==
+X-Received: by 2002:a17:903:1ce:b0:223:5a6e:b16 with SMTP id
+ d9443c01a7336-231d438b45emr182939015ad.5.1747627743202; 
+ Sun, 18 May 2025 21:09:03 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.08.19
+ d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.09.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 May 2025 21:08:22 -0700 (PDT)
+ Sun, 18 May 2025 21:09:02 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
- Anton Blanchard <antonb@tenstorrent.com>,
+Cc: alistair23@gmail.com, Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-stable@nongnu.org
-Subject: [PULL 24/56] target/riscv: rvv: Apply vext_check_input_eew to
- OPIVV/OPFVV(vext_check_sss) instructions
-Date: Mon, 19 May 2025 14:05:21 +1000
-Message-ID: <20250519040555.3797167-25-alistair.francis@wdc.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 36/56] target/riscv: Pass ra to riscv_csrrw_i128
+Date: Mon, 19 May 2025 14:05:33 +1000
+Message-ID: <20250519040555.3797167-37-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250519040555.3797167-1-alistair.francis@wdc.com>
 References: <20250519040555.3797167-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,32 +107,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Handle the overlap of source registers with different EEWs.
-
-Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20250408103938.3623486-6-max.chou@sifive.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250425152311.804338-6-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Cc: qemu-stable@nongnu.org
 ---
- target/riscv/insn_trans/trans_rvv.c.inc | 1 +
- 1 file changed, 1 insertion(+)
+ target/riscv/cpu.h       | 4 ++--
+ target/riscv/csr.c       | 8 ++++----
+ target/riscv/op_helper.c | 9 +++++----
+ 3 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index b1e1db04a0..5de50422c9 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -432,6 +432,7 @@ static bool vext_check_ss(DisasContext *s, int vd, int vs, int vm)
- static bool vext_check_sss(DisasContext *s, int vd, int vs1, int vs2, int vm)
- {
-     return vext_check_ss(s, vd, vs2, vm) &&
-+           vext_check_input_eew(s, vs1, s->sew, vs2, s->sew, vm) &&
-            require_align(vs1, s->lmul);
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index f674e93a4f..ff7ba2a0a1 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -848,8 +848,8 @@ typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
+ RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
+                                Int128 *ret_value);
+ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+-                                Int128 *ret_value,
+-                                Int128 new_value, Int128 write_mask);
++                                Int128 *ret_value, Int128 new_value,
++                                Int128 write_mask, uintptr_t ra);
+ 
+ typedef RISCVException (*riscv_csr_read128_fn)(CPURISCVState *env, int csrno,
+                                                Int128 *ret_value);
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 807a891e7d..53458491da 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5656,8 +5656,8 @@ RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
  }
  
+ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+-                                Int128 *ret_value,
+-                                Int128 new_value, Int128 write_mask)
++                                Int128 *ret_value, Int128 new_value,
++                                Int128 write_mask, uintptr_t ra)
+ {
+     RISCVException ret;
+ 
+@@ -5668,7 +5668,7 @@ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+ 
+     if (csr_ops[csrno].read128) {
+         return riscv_csrrw_do128(env, csrno, ret_value,
+-                                 new_value, write_mask, 0);
++                                 new_value, write_mask, ra);
+     }
+ 
+     /*
+@@ -5681,7 +5681,7 @@ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+     target_ulong old_value;
+     ret = riscv_csrrw_do64(env, csrno, &old_value,
+                            int128_getlo(new_value),
+-                           int128_getlo(write_mask), 0);
++                           int128_getlo(write_mask), ra);
+     if (ret == RISCV_EXCP_NONE && ret_value) {
+         *ret_value = int128_make64(old_value);
+     }
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 0672101637..557807ba4b 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -108,7 +108,7 @@ void helper_csrw_i128(CPURISCVState *env, int csr,
+ {
+     RISCVException ret = riscv_csrrw_i128(env, csr, NULL,
+                                           int128_make128(srcl, srch),
+-                                          UINT128_MAX);
++                                          UINT128_MAX, GETPC());
+ 
+     if (ret != RISCV_EXCP_NONE) {
+         riscv_raise_exception(env, ret, GETPC());
+@@ -116,13 +116,14 @@ void helper_csrw_i128(CPURISCVState *env, int csr,
+ }
+ 
+ target_ulong helper_csrrw_i128(CPURISCVState *env, int csr,
+-                       target_ulong srcl, target_ulong srch,
+-                       target_ulong maskl, target_ulong maskh)
++                               target_ulong srcl, target_ulong srch,
++                               target_ulong maskl, target_ulong maskh)
+ {
+     Int128 rv = int128_zero();
+     RISCVException ret = riscv_csrrw_i128(env, csr, &rv,
+                                           int128_make128(srcl, srch),
+-                                          int128_make128(maskl, maskh));
++                                          int128_make128(maskl, maskh),
++                                          GETPC());
+ 
+     if (ret != RISCV_EXCP_NONE) {
+         riscv_raise_exception(env, ret, GETPC());
 -- 
 2.49.0
 
