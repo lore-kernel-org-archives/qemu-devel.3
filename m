@@ -4,114 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA122C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC815C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH2aW-0001nm-7U; Mon, 19 May 2025 11:39:37 -0400
+	id 1uH2aj-0002YU-V1; Mon, 19 May 2025 11:39:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uH2aL-0001d5-2x
- for qemu-devel@nongnu.org; Mon, 19 May 2025 11:39:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uH2ah-0002RA-J0; Mon, 19 May 2025 11:39:47 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uH2aH-0007Xf-QT
- for qemu-devel@nongnu.org; Mon, 19 May 2025 11:39:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747669159;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qgdz5/biVwy88AmaaFo/X9Og1EQ/ZXG7G4/5NsPPTzQ=;
- b=HRN35gb2U56Zr7gvQrNqWAKT/fC1iamnkfOMJLVLW4ZXZSNQE12VNAA+x8Z8QBoSePqy2s
- DFyzo4lHZOJEEnVGRSpfH8dYRD/3oDOOq+aNJ4icfDfcJLEgd6uEAF9ywd5oFKrxZ+ePV4
- aLA5XNgYyGhcNiyLSeelU+1xlVudCVw=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-1ZKHaHimNBekin94Awl76A-1; Mon, 19 May 2025 11:39:18 -0400
-X-MC-Unique: 1ZKHaHimNBekin94Awl76A-1
-X-Mimecast-MFC-AGG-ID: 1ZKHaHimNBekin94Awl76A_1747669157
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7c579d37eeeso739378485a.0
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 08:39:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747669157; x=1748273957;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qgdz5/biVwy88AmaaFo/X9Og1EQ/ZXG7G4/5NsPPTzQ=;
- b=g654De4h7PFY6lvyGaGU7FGqnls6gZR6h+//Z2vmE3JU8rWAzl8+4nXvfjQFnWihRY
- 3OLsnkslnMUdEW47RUGwx3lPRIMi24u+R/9SJBH0mYXJfXzFregYN5kQdpVKEJgoXem0
- L1eZ3N/E1IkmrRkzlx5gfwSc2Kt74jwBEd/EprJJPgrjxZv5YUFi1yRnIohxUnB3GiI6
- ajAZgK/rO4/HUvsI/hpi7euCHmUUuHWZMlFSDA0YN9UnW0D4VN08xb56spplodvMEQLz
- s2nDQue/6SO6HZIHibXkml76s109ix2GLaNDVJJyGJ6bd6JlLRBtifv40JNIryYB/hUK
- gcUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXiiaZSzvaIsDfZAsyklyV87Ip19AijNSXvDF6lYdiVE1bZq8ey2HRs9Ugh6u3KloTdilQnr0qaQgZT@nongnu.org
-X-Gm-Message-State: AOJu0Yx1aI2Jx8149LrFnMuvUQBmcdHw13jwUF51rlINUdkXYLrP7NI1
- XbMma+1XqA6hveZR5Pyo4zBN3BM8eMWyxMADeSz3BEtinc98aT+zv2izuuUTxxNWi7tlDmi0uld
- RtWJrtdjWvBuYDj1iVm5m8SUMA66dl5E7hIMu0lUAfpBFbeL8vAKE+RRx
-X-Gm-Gg: ASbGncvc6PiYXsH2P1mIcTd3k5AqhF5juAPb6VeB69Wr+Vp2/tbaRYP3EaLd2VpnabJ
- ALZJRyoLdngKDh+eOOUhVpnOCbvGvUSLKIsOBVGwxWzeEy4wqaIoa8YH8dYQf6SOAZS0pPCkDdR
- P4RsV0ZshUt8KLdx5xVqm1plK30xUxIL3NZBeu+KY3feM8VCklrA0NLKAJOPrk88nN5KM+4TrCI
- vcVl+KfYkqlSpNI5tdzfsdoKM+dm9apIx3PA6GV4gptuDDMDGJfYfmR/qAgrkvNu0koi4urQWm/
- 1/xpUq7MtJaw
-X-Received: by 2002:a05:622a:59c3:b0:476:9474:9b73 with SMTP id
- d75a77b69052e-494b0939a78mr206321101cf.42.1747669157269; 
- Mon, 19 May 2025 08:39:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IESM6u6LLPagnqfHk1UshqqQkxiJRdO+93HLzAU+XaQv+J/q+DXseYGWtfl1sL3Y4t6B+ejRA==
-X-Received: by 2002:a05:622a:59c3:b0:476:9474:9b73 with SMTP id
- d75a77b69052e-494b0939a78mr206320491cf.42.1747669156672; 
- Mon, 19 May 2025 08:39:16 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-494ae4fd718sm56344811cf.53.2025.05.19.08.39.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 May 2025 08:39:16 -0700 (PDT)
-Message-ID: <6b9c1f0a-be56-451e-bb8d-833b402b78d8@redhat.com>
-Date: Mon, 19 May 2025 11:39:12 -0400
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uH2ae-0007ZZ-CC; Mon, 19 May 2025 11:39:47 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b1MKp2w8Wz6K9qg;
+ Mon, 19 May 2025 23:38:54 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id 13D8D1404F5;
+ Mon, 19 May 2025 23:39:42 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.203.177.99) by
+ frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 19 May 2025 17:39:41 +0200
+To: <mst@redhat.com>, <imammedo@redhat.com>
+CC: <qemu-devel@nongnu.org>, <anisinha@redhat.com>, <armbru@redhat.com>,
+ <berrange@redhat.com>, <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>, 
+ <farman@linux.ibm.com>, <gustavo.romero@linaro.org>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <linuxarm@huawei.com>, <mtosatti@redhat.com>, <peter.maydell@linaro.org>,
+ <philmd@linaro.org>, <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
+ <shameerali.kolothum.thodi@huawei.com>, <shannon.zhaosl@gmail.com>,
+ <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
+Subject: [PATCH v11 6/6] Update the ACPI tables according to the acpi
+ aml_build change, also empty bios-tables-test-allowed-diff.h.
+Date: Mon, 19 May 2025 16:36:32 +0100
+Message-ID: <20250519153632.537-7-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250519153632.537-1-alireza.sanaee@huawei.com>
+References: <20250519153632.537-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv2 00/20] intel_iommu: Enable stage-1 translation for
- passthrough device
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>
-References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
- <eacfc52a-2dee-49a8-8994-67b738ece68d@redhat.com>
- <SJ0PR11MB6744472953C10F7858FF406F929CA@SJ0PR11MB6744.namprd11.prod.outlook.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <SJ0PR11MB6744472953C10F7858FF406F929CA@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.203.177.99]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URI_DOTEDU=0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,408 +73,445 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Zhenzhong,
-Thanks for feedback. replies below.
-- Don
+The disassembled differences between actual and expected PPTT based on
+the following cache topology representation:
 
-On 5/19/25 4:37 AM, Duan, Zhenzhong wrote:
-> Hi Donald,
-> 
->> -----Original Message-----
->> From: Donald Dutile <ddutile@redhat.com>
->> Subject: Re: [PATCH rfcv2 00/20] intel_iommu: Enable stage-1 translation for
->> passthrough device
->>
->> Zhenzhong,
->>
->> Hi!
->> Eric asked me to review this series.
->> Since it's rather late since you posted will summarize review feedback
->> below/bottom.
->>
->> - Don
->>
->> On 2/19/25 3:22 AM, Zhenzhong Duan wrote:
->>> Hi,
->>>
->>> Per Jason Wang's suggestion, iommufd nesting series[1] is split into
->>> "Enable stage-1 translation for emulated device" series and
->>> "Enable stage-1 translation for passthrough device" series.
->>>
->>> This series is 2nd part focusing on passthrough device. We don't do
->>> shadowing of guest page table for passthrough device but pass stage-1
->>> page table to host side to construct a nested domain. There was some
->>> effort to enable this feature in old days, see [2] for details.
->>>
->>> The key design is to utilize the dual-stage IOMMU translation
->>> (also known as IOMMU nested translation) capability in host IOMMU.
->>> As the below diagram shows, guest I/O page table pointer in GPA
->>> (guest physical address) is passed to host and be used to perform
->>> the stage-1 address translation. Along with it, modifications to
->>> present mappings in the guest I/O page table should be followed
->>> with an IOTLB invalidation.
->>>
->>>           .-------------.  .---------------------------.
->>>           |   vIOMMU    |  | Guest I/O page table      |
->>>           |             |  '---------------------------'
->>>           .----------------/
->>>           | PASID Entry |--- PASID cache flush --+
->>>           '-------------'                        |
->>>           |             |                        V
->>>           |             |           I/O page table pointer in GPA
->>>           '-------------'
->>>       Guest
->>>       ------| Shadow |---------------------------|--------
->>>             v        v                           v
->>>       Host
->>>           .-------------.  .------------------------.
->>>           |   pIOMMU    |  |  FS for GIOVA->GPA     |
->>>           |             |  '------------------------'
->>>           .----------------/  |
->>>           | PASID Entry |     V (Nested xlate)
->>>           '----------------\.----------------------------------.
->>>           |             |   | SS for GPA->HPA, unmanaged domain|
->>>           |             |   '----------------------------------'
->>>           '-------------'
->>> Where:
->>>    - FS = First stage page tables
->>>    - SS = Second stage page tables
->>> <Intel VT-d Nested translation>
->>>
->> I'd prefer the use of 's1' for stage1/First stage, and 's2' for stage2/second stage.
->> We don't need different terms for the same technology in the iommu/iommufd
->> space(s).
-> 
-> OK, then I'd like to use stage1 and stage2 everywhere which is more verbose.
-> 
-your choice; in other kernel & qemu code I've seen, 's1' and 's2' are used quite frequently,
-that's why I recommended it -- call it plagerizing! ;-)
+- l1d and l1i shared at cluster level
+- l2 shared at cluster level
+- l3 shared at cluster level
 
->>
->>> There are some interactions between VFIO and vIOMMU
->>> * vIOMMU registers PCIIOMMUOps [set|unset]_iommu_device to PCI
->>>     subsystem. VFIO calls them to register/unregister HostIOMMUDevice
->>>     instance to vIOMMU at vfio device realize stage.
->>> * vIOMMU calls HostIOMMUDeviceIOMMUFD interface [at|de]tach_hwpt
->>>     to bind/unbind device to IOMMUFD backed domains, either nested
->>>     domain or not.
->>>
->>> See below diagram:
->>>
->>>           VFIO Device                                 Intel IOMMU
->>>       .-----------------.                         .-------------------.
->>>       |                 |                         |                   |
->>>       |       .---------|PCIIOMMUOps              |.-------------.    |
->>>       |       | IOMMUFD |(set_iommu_device)       || Host IOMMU  |    |
->>>       |       | Device  |------------------------>|| Device list |    |
->>>       |       .---------|(unset_iommu_device)     |.-------------.    |
->>>       |                 |                         |       |           |
->>>       |                 |                         |       V           |
->>>       |       .---------|  HostIOMMUDeviceIOMMUFD |  .-------------.  |
->>>       |       | IOMMUFD |            (attach_hwpt)|  | Host IOMMU  |  |
->>>       |       | link    |<------------------------|  |   Device    |  |
->>>       |       .---------|            (detach_hwpt)|  .-------------.  |
->>>       |                 |                         |       |           |
->>>       |                 |                         |       ...         |
->>>       .-----------------.                         .-------------------.
->>>
->>> Based on Yi's suggestion, this design is optimal in sharing ioas/hwpt
->>> whenever possible and create new one on demand, also supports multiple
->>> iommufd objects and ERRATA_772415.
->>>
->>> E.g., Stage-2 page table could be shared by different devices if there
->>> is no conflict and devices link to same iommufd object, i.e. devices
->>> under same host IOMMU can share same stage-2 page table. If there is
->> and 'devices under the same guest'.
->> Different guests cant be sharing the same stage-2 page tables.
-> 
-> Yes, will update.
-> 
-Thanks.
+/*
+ * Intel ACPI Component Architecture
+ * AML/ASL+ Disassembler version 20200925 (64-bit version)
+ * Copyright (c) 2000 - 2020 Intel Corporation
+ *
+ * Disassembly of ../../../tests/data/acpi/aarch64/virt/PPTT.topology, Mon Oct  7 16:57:29 2024
+ *
+ * ACPI Data Table [PPTT]
+ *
+ * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
+ */
 
->>
->>> conflict, i.e. there is one device under non cache coherency mode
->>> which is different from others, it requires a separate stage-2 page
->>> table in non-CC mode.
->>>
->>> SPR platform has ERRATA_772415 which requires no readonly mappings
->>> in stage-2 page table. This series supports creating VTDIOASContainer
->>> with no readonly mappings. If there is a rare case that some IOMMUs
->>> on a multiple IOMMU host have ERRATA_772415 and others not, this
->>> design can still survive.
->>>
->>> See below example diagram for a full view:
->>>
->>>         IntelIOMMUState
->>>                |
->>>                V
->>>       .------------------.    .------------------.    .-------------------.
->>>       | VTDIOASContainer |--->| VTDIOASContainer |--->| VTDIOASContainer  |--
->>> ...
->>>       | (iommufd0,RW&RO) |    | (iommufd1,RW&RO) |    | (iommufd0,RW only)|
->>>       .------------------.    .------------------.    .-------------------.
->>>                |                       |                              |
->>>                |                       .-->...                        |
->>>                V                                                      V
->>>         .-------------------.    .-------------------.          .---------------.
->>>         |   VTDS2Hwpt(CC)   |--->| VTDS2Hwpt(non-CC) |-->...    | VTDS2Hwpt(CC) |-
->> ->...
->>>         .-------------------.    .-------------------.          .---------------.
->>>             |            |               |                            |
->>>             |            |               |                            |
->>>       .-----------.  .-----------.  .------------.              .------------.
->>>       | IOMMUFD   |  | IOMMUFD   |  | IOMMUFD    |              | IOMMUFD    |
->>>       | Device(CC)|  | Device(CC)|  | Device     |              | Device(CC) |
->>>       | (iommufd0)|  | (iommufd0)|  | (non-CC)   |              | (errata)   |
->>>       |           |  |           |  | (iommufd0) |              | (iommufd0) |
->>>       .-----------.  .-----------.  .------------.              .------------.
->>>
->>> This series is also a prerequisite work for vSVA, i.e. Sharing
->>> guest application address space with passthrough devices.
->>>
->>> To enable stage-1 translation, only need to add "x-scalable-mode=on,x-flts=on".
->>> i.e. -device intel-iommu,x-scalable-mode=on,x-flts=on...
->>>
->>> Passthrough device should use iommufd backend to work with stage-1
->> translation.
->>> i.e. -object iommufd,id=iommufd0 -device vfio-pci,iommufd=iommufd0,...
->>>
->>> If host doesn't support nested translation, qemu will fail with an unsupported
->>> report.
->>>
->>> Test done:
->>> - VFIO devices hotplug/unplug
->>> - different VFIO devices linked to different iommufds
->>> - vhost net device ping test
->>>
->>> PATCH1-8:  Add HWPT-based nesting infrastructure support
->>> PATCH9-10: Some cleanup work
->>> PATCH11:   cap/ecap related compatibility check between vIOMMU and Host
->> IOMMU
->>> PATCH12-19:Implement stage-1 page table for passthrough device
->>> PATCH20:   Enable stage-1 translation for passthrough device
->>>
->>> Qemu code can be found at [3]
->>>
->>> TODO:
->>> - RAM discard
->>> - dirty tracking on stage-2 page table
->>>
->>> [1] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02740.html
->>> [2] https://patchwork.kernel.org/project/kvm/cover/20210302203827.437645-
->> 1-yi.l.liu@intel.com/
->>> [3]
->> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
->>>
->>> Thanks
->>> Zhenzhong
->>>
->>> Changelog:
->>> rfcv2:
->>> - Drop VTDPASIDAddressSpace and use VTDAddressSpace (Eric, Liuyi)
->>> - Move HWPT uAPI patches ahead(patch1-8) so arm nesting could easily rebase
->>> - add two cleanup patches(patch9-10)
->>> - VFIO passes iommufd/devid/hwpt_id to vIOMMU instead of
->> iommufd/devid/ioas_id
->>> - add vtd_as_[from|to]_iommu_pasid() helper to translate between vtd_as and
->>>     iommu pasid, this is important for dropping VTDPASIDAddressSpace
->>>
->>> Yi Liu (3):
->>>     intel_iommu: Replay pasid binds after context cache invalidation
->>>     intel_iommu: Propagate PASID-based iotlb invalidation to host
->>>     intel_iommu: Refresh pasid bind when either SRTP or TE bit is changed
->>>
->>> Zhenzhong Duan (17):
->>>     backends/iommufd: Add helpers for invalidating user-managed HWPT
->>>     vfio/iommufd: Add properties and handlers to
->>>       TYPE_HOST_IOMMU_DEVICE_IOMMUFD
->>>     HostIOMMUDevice: Introduce realize_late callback
->>>     vfio/iommufd: Implement HostIOMMUDeviceClass::realize_late() handler
->>>     vfio/iommufd: Implement [at|de]tach_hwpt handlers
->>>     host_iommu_device: Define two new capabilities
->>>       HOST_IOMMU_DEVICE_CAP_[NESTING|FS1GP]
->>>     iommufd: Implement query of HOST_IOMMU_DEVICE_CAP_[NESTING|FS1GP]
->>>     iommufd: Implement query of HOST_IOMMU_DEVICE_CAP_ERRATA
->>>     intel_iommu: Rename vtd_ce_get_rid2pasid_entry to
->>>       vtd_ce_get_pasid_entry
->>>     intel_iommu: Optimize context entry cache utilization
->>>     intel_iommu: Check for compatibility with IOMMUFD backed device when
->>>       x-flts=on
->>>     intel_iommu: Introduce a new structure VTDHostIOMMUDevice
->>>     intel_iommu: Add PASID cache management infrastructure
->>>     intel_iommu: Bind/unbind guest page table to host
->>>     intel_iommu: ERRATA_772415 workaround
->>>     intel_iommu: Bypass replay in stage-1 page table mode
->>>     intel_iommu: Enable host device when x-flts=on in scalable mode
->>>
->>>    hw/i386/intel_iommu_internal.h     |   56 +
->>>    include/hw/i386/intel_iommu.h      |   33 +-
->>>    include/system/host_iommu_device.h |   40 +
->>>    include/system/iommufd.h           |   53 +
->>>    backends/iommufd.c                 |   58 +
->>>    hw/i386/intel_iommu.c              | 1660 ++++++++++++++++++++++++----
->>>    hw/vfio/common.c                   |   17 +-
->>>    hw/vfio/iommufd.c                  |   48 +
->>>    backends/trace-events              |    1 +
->>>    hw/i386/trace-events               |   13 +
->>>    10 files changed, 1776 insertions(+), 203 deletions(-)
->>>
->> Relative to the patches:
->> Patch 1: As Eric eluded to, a proper description for the patch should be written,
->> and the title should change 'helpers' to 'helper'
-> 
-> This is addressed in [1]
-> 
-> [1] https://github.com/yiliu1765/qemu/commits/zhenzhong/iommufd_nesting_rfcv3.wip/
-> 
-ok.
->>
->> Patch 2:
->> (1) Introduce 'realize_late()' interface, but leave the reader wondering 'ah, why?
->> what?' ... after reading farther down the series, I learn more about realize_late(),
->> but more on that later...
-> 
-> realize_late() has been removed in [1]
-> 
-Yes, I saw. :)
+[000h 0000   4]                    Signature : "PPTT"    [Processor Properties Topology Table]
+[004h 0004   4]                 Table Length : 0000021C
+[008h 0008   1]                     Revision : 03
+[009h 0009   1]                     Checksum : 4D
+[00Ah 0010   6]                       Oem ID : "BOCHS "
+[010h 0016   8]                 Oem Table ID : "BXPC    "
+[018h 0024   4]                 Oem Revision : 00000001
+[01Ch 0028   4]              Asl Compiler ID : "BXPC"
+[020h 0032   4]        Asl Compiler Revision : 00000001
 
->> (2) For my education, can you provide ptrs to VFIO & VPDA code paths that
->> demonstrate the need for different [at|de]tach_<>_hwpt()
-> 
-> Google help me find this link https://lkml.iu.edu/2309.2/08079.html
-> specially https://gitlab.com/lulu6/gitlabqemutmp/-/commit/354870ff6bd9bac80c9fc5c7f944331cb24b0331
-> 
-thanks for vdpa ptrs; I have my diff work cut out for me, but heh, I asked for it! :)
+[024h 0036   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[025h 0037   1]                       Length : 14
+[026h 0038   2]                     Reserved : 0000
+[028h 0040   4]        Flags (decoded below) : 00000011
+                            Physical package : 1
+                     ACPI Processor ID valid : 0
+                       Processor is a thread : 0
+                              Node is a leaf : 0
+                    Identical Implementation : 1
+[02Ch 0044   4]                       Parent : 00000000
+[030h 0048   4]            ACPI Processor ID : 00000000
+[034h 0052   4]      Private Resource Number : 00000000
 
->>
->> Patch 3: Why can't the realize() be moved to after attach?  isn't realize() suppose
->> to indicate 'all is setup and object can now be used' -- apologies for what could
->> be a dumb question, as that's my understanding of realize().  If the argument is
->> such that there needs to be two steps, how does the first realize() that put the
->> object into a used state <somehow> wait until realize_late()?
->>
->> Patch 4: Shouldn't the current/existing realize callback just be overwritten with
->> the later one, when this is needed?
-> 
-> realize_late() has been removed in [1]
-> 
-+1
+[038h 0056   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[039h 0057   1]                       Length : 14
+[03Ah 0058   2]                     Reserved : 0000
+[03Ch 0060   4]        Flags (decoded below) : 00000011
+                            Physical package : 1
+                     ACPI Processor ID valid : 0
+                       Processor is a thread : 0
+                              Node is a leaf : 0
+                    Identical Implementation : 1
+[040h 0064   4]                       Parent : 00000024
+[044h 0068   4]            ACPI Processor ID : 00000000
+[048h 0072   4]      Private Resource Number : 00000000
 
->>
->> Patch 5: no issues.
->>
->> Patch 6: ewww -- fs1gp ... we use underlines all over the place for multi-word
->> elements; so how about 's1_1g_pg'
->>            -- how many places is that really used that multiple underlines is an issue?
-> 
-> This is vtd specific, so to follow VTD spec's naming so that we can easily find its definition by searching fs1gp.
-> 
->>
-ok.  You had mentioned earlier that you used VTD nomenclature, so I should have concluded the same here. /my bad.
+[04Ch 0076   1]                Subtable Type : 01 [Cache Type]
+[04Dh 0077   1]                       Length : 1C
+[04Eh 0078   2]                     Reserved : 0000
+[050h 0080   4]        Flags (decoded below) : 000000FF
+                                  Size valid : 1
+                        Number of Sets valid : 1
+                         Associativity valid : 1
+                       Allocation Type valid : 1
+                            Cache Type valid : 1
+                          Write Policy valid : 1
+                             Line Size valid : 1
+[054h 0084   4]          Next Level of Cache : 00000000
+[058h 0088   4]                         Size : 00200000
+[05Ch 0092   4]               Number of Sets : 00000800
+[060h 0096   1]                Associativity : 10
+[061h 0097   1]                   Attributes : 0F
+                             Allocation Type : 3
+                                  Cache Type : 3
+                                Write Policy : 0
+[062h 0098   2]                    Line Size : 0040
 
->> Patch 7: intel-iommu-specific callbacks in the common vfio & iommufd-backend
->> code; nack. This won't compile w/intel-iommu included with iommufd... I think
->> backend, intel-iommu hw-caps should provide the generic 'caps' boolean-type
->> values/states; ... and maybe they should be extracted via vfio? .... like
->>       case HOST_IOMMU_DEVICE_CAP_AW_BITS:
->>           return vfio_device_get_aw_bits(hiod->agent);
->>
->> Patch 8: Again, VTD-specific code in IOMMUFD is a nack; again, maybe via vfio,
->> or a direct call into an iommu-device-cap api.
-> 
-> Patch 7&8 addressed in [1]
-> 
-+1
->>
->> Patch 9: no issues.
->>
->> Patch 10: "except it's stale"  likely "except when it's entry is stale" ?
-> 
-> addressed in [1]
-> 
-+1
->>            Did you ever put some tracing in to capture avg hits in cache? ... if so, add
->> as a comment.
->>            Otherwise, looks good.
->>
->> Patch 11: Apologies, I don't know what 'flts' stands for, and why it is relative to 2-
->> stage mapping, or SIOV.  Could you add verbage to explain the use of it, as the
->> rest of this patch doesn't make any sense to me without the background.
->> The patch introduces hw-info-type (none or intel), and then goes on to add a
->> large set of checks; seems like the caps & this checking should go together (split
->> for each cap; put all caps together & the check...).
-> 
-> OK, will do. There are some explanations in cover-letter.
-> For history reason, old vtd spec define stage-1 as first level then switch to first stage.
-> 
-So 'flts' is 'first level then switch' .
+[068h 0104   1]                Subtable Type : 01 [Cache Type]
+[069h 0105   1]                       Length : 1C
+[06Ah 0106   2]                     Reserved : 0000
+[06Ch 0108   4]        Flags (decoded below) : 000000FF
+                                  Size valid : 1
+                        Number of Sets valid : 1
+                         Associativity valid : 1
+                       Allocation Type valid : 1
+                            Cache Type valid : 1
+                          Write Policy valid : 1
+                             Line Size valid : 1
+[070h 0112   4]          Next Level of Cache : 0000004C
+[074h 0116   4]                         Size : 00008000
+[078h 0120   4]               Number of Sets : 00000080
+[07Ch 0124   1]                Associativity : 04
+[07Dh 0125   1]                   Attributes : 03
+                             Allocation Type : 3
+                                  Cache Type : 0
+                                Write Policy : 0
+[07Eh 0126   2]                    Line Size : 0040
 
->>
->> Patch 12: Why isn't HostIOMMUDevice extended to have another iommu-specif
->> element, opaque in HostIOMMUDevice, but set to specific IOMMU in use?   e.g.
->> void *hostiommustate;
-> 
-> Yes, that's possible, but we want to make a generic interface between VFIO/VDPA and vIOMMU.
-> 
-ok. I don't understand how VFIO & VPDA complicate that add.
+[084h 0132   1]                Subtable Type : 01 [Cache Type]
+[085h 0133   1]                       Length : 1C
+[086h 0134   2]                     Reserved : 0000
+[088h 0136   4]        Flags (decoded below) : 000000FF
+                                  Size valid : 1
+                        Number of Sets valid : 1
+                         Associativity valid : 1
+                       Allocation Type valid : 1
+                            Cache Type valid : 1
+                          Write Policy valid : 1
+                             Line Size valid : 1
+[08Ch 0140   4]          Next Level of Cache : 0000004C
+[090h 0144   4]                         Size : 0000C000
+[094h 0148   4]               Number of Sets : 00000100
+[098h 0152   1]                Associativity : 03
+[099h 0153   1]                   Attributes : 07
+                             Allocation Type : 3
+                                  Cache Type : 1
+                                Write Policy : 0
+[09Ah 0154   2]                    Line Size : 0040
 
->>
->> Patch 13: Isn't PASID just an extension/addition of BDF id? and doesn't each
->> PASID have its own address space?
-> 
-> Yes, it is.
-> 
->> So, why isn't it handle via a uniqe AS cache like 'any other device'?  Maybe I'm
->> thinking too SMMU-StreamID, which can be varying length, depending on
->> subsystem support.  I see what appears to be sid+pasid calls to do the AS lookups;
->> hmm, so maybe this is the generalized BDF+pasid AS lookup?  if so, maybe a
->> better description stating this transition to a wider stream-id would set the code
->> context better.
-> 
-> Not quite get..
-> 
-I'm looking for a better description that states the AS cache lookup is broadened from bdf
-to bdf+pasid.
+[0A0h 0160   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[0A1h 0161   1]                       Length : 1C
+[0A2h 0162   2]                     Reserved : 0000
+[0A4h 0164   4]        Flags (decoded below) : 00000010
+                            Physical package : 0
+                     ACPI Processor ID valid : 0
+                       Processor is a thread : 0
+                              Node is a leaf : 0
+                    Identical Implementation : 1
+[0A8h 0168   4]                       Parent : 00000038
+[0ACh 0172   4]            ACPI Processor ID : 00000000
+[0B0h 0176   4]      Private Resource Number : 00000002
+[0B4h 0180   4]             Private Resource : 00000084
+[0B8h 0184   4]             Private Resource : 00000068
 
->> As for the rest of the (400 intel-iommu) code, I'm not that in-depth in intel-iommu
->> to determine if its all correct or not.
->>
->> Patch 14: Define PGTT; the second paragraph seem self-contradicting -- it says it
->> uses a 2-stage page table in each case, but it implies it should be different.  At 580
->> lines of code changes, you win! ;-)
-> 
-> The host side's using nested or only stage-2 page table depends on PGTT's setting in guest.
-> 
-Thanks for clarification.
+[0BCh 0188   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[0BDh 0189   1]                       Length : 14
+[0BEh 0190   2]                     Reserved : 0000
+[0C0h 0192   4]        Flags (decoded below) : 00000010
+                            Physical package : 0
+                     ACPI Processor ID valid : 0
+                       Processor is a thread : 0
+                              Node is a leaf : 0
+                    Identical Implementation : 1
+[0C4h 0196   4]                       Parent : 000000A0
+[0C8h 0200   4]            ACPI Processor ID : 00000000
+[0CCh 0204   4]      Private Resource Number : 00000000
 
->>
->> Patch 15: Read-only and Read/write areas have different IOMMUFDs?  is that an
->> intel-iommu requriement?
->>            At least this intel-iommu-errata code is only in hw/i386/<> modules.
-> 
-> No, if ERRATA_772415, read-only areas should not be mapped, so we allocate a new VTDIOASContainer to hold only read/write areas mapping.
-> We can use same IOMMUFDs for different VTDIOASContainer.
-> 
-ah yes; I got hung-up on different mappings, and didn't back up to AS-container split & same IOMMUFD.
+[0D0h 0208   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[0D1h 0209   1]                       Length : 14
+[0D2h 0210   2]                     Reserved : 0000
+[0D4h 0212   4]        Flags (decoded below) : 0000000E
+                            Physical package : 0
+                     ACPI Processor ID valid : 1
+                       Processor is a thread : 1
+                              Node is a leaf : 1
+                    Identical Implementation : 0
+[0D8h 0216   4]                       Parent : 000000BC
+[0DCh 0220   4]            ACPI Processor ID : 00000000
+[0E0h 0224   4]      Private Resource Number : 00000000
 
->>
->> Patch 16: Looks reasonable.  What does the 'SI' mean after "CACHE_DEV",
->> "CACHE_DOM" & "CACHE_PASID" ? -- stream-invalidation?
-> 
-> VTD_PASID_CACHE_DEVSI stands for 'pasid cache device selective invalidation',
-> VTD_PASID_CACHE_DOMSI means 'pasid cache domain selective invalidation'.
-> 
-That explanation helps. :)  maybe put a short blurb in the commit log, or code,
-so one doesn't have to be a ninja-VTD spec consumer to comprehend those (important) diffs.
+[0E4h 0228   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[0E5h 0229   1]                       Length : 14
+[0E6h 0230   2]                     Reserved : 0000
+[0E8h 0232   4]        Flags (decoded below) : 0000000E
+                            Physical package : 0
+                     ACPI Processor ID valid : 1
+                       Processor is a thread : 1
+                              Node is a leaf : 1
+                    Identical Implementation : 0
+[0ECh 0236   4]                       Parent : 000000BC
+[0F0h 0240   4]            ACPI Processor ID : 00000001
+[0F4h 0244   4]      Private Resource Number : 00000000
 
-> Thanks
-> Zhenzhong
-> 
-Again, thanks for the reply.
-Looking fwd to the rfcv3 (on list) or move to v1-POST.
-- Don
+[0F8h 0248   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[0F9h 0249   1]                       Length : 14
+[0FAh 0250   2]                     Reserved : 0000
+[0FCh 0252   4]        Flags (decoded below) : 00000010
+                            Physical package : 0
+                     ACPI Processor ID valid : 0
+                       Processor is a thread : 0
+                              Node is a leaf : 0
+                    Identical Implementation : 1
+[100h 0256   4]                       Parent : 000000A0
+[104h 0260   4]            ACPI Processor ID : 00000001
+[108h 0264   4]      Private Resource Number : 00000000
+
+[10Ch 0268   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[10Dh 0269   1]                       Length : 14
+[10Eh 0270   2]                     Reserved : 0000
+[110h 0272   4]        Flags (decoded below) : 0000000E
+                            Physical package : 0
+                     ACPI Processor ID valid : 1
+                       Processor is a thread : 1
+                              Node is a leaf : 1
+                    Identical Implementation : 0
+[114h 0276   4]                       Parent : 000000F8
+[118h 0280   4]            ACPI Processor ID : 00000002
+[11Ch 0284   4]      Private Resource Number : 00000000
+
+[120h 0288   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[121h 0289   1]                       Length : 14
+[122h 0290   2]                     Reserved : 0000
+[124h 0292   4]        Flags (decoded below) : 0000000E
+                            Physical package : 0
+                     ACPI Processor ID valid : 1
+                       Processor is a thread : 1
+                              Node is a leaf : 1
+                    Identical Implementation : 0
+[128h 0296   4]                       Parent : 000000F8
+[12Ch 0300   4]            ACPI Processor ID : 00000003
+[130h 0304   4]      Private Resource Number : 00000000
+
+[134h 0308   1]                Subtable Type : 01 [Cache Type]
+[135h 0309   1]                       Length : 1C
+[136h 0310   2]                     Reserved : 0000
+[138h 0312   4]        Flags (decoded below) : 000000FF
+                                  Size valid : 1
+                        Number of Sets valid : 1
+                         Associativity valid : 1
+                       Allocation Type valid : 1
+                            Cache Type valid : 1
+                          Write Policy valid : 1
+                             Line Size valid : 1
+[13Ch 0316   4]          Next Level of Cache : 00000000
+[140h 0320   4]                         Size : 00200000
+[144h 0324   4]               Number of Sets : 00000800
+[148h 0328   1]                Associativity : 10
+[149h 0329   1]                   Attributes : 0F
+                             Allocation Type : 3
+                                  Cache Type : 3
+                                Write Policy : 0
+[14Ah 0330   2]                    Line Size : 0040
+
+[150h 0336   1]                Subtable Type : 01 [Cache Type]
+[151h 0337   1]                       Length : 1C
+[152h 0338   2]                     Reserved : 0000
+[154h 0340   4]        Flags (decoded below) : 000000FF
+                                  Size valid : 1
+                        Number of Sets valid : 1
+                         Associativity valid : 1
+                       Allocation Type valid : 1
+                            Cache Type valid : 1
+                          Write Policy valid : 1
+                             Line Size valid : 1
+[158h 0344   4]          Next Level of Cache : 00000134
+[15Ch 0348   4]                         Size : 00008000
+[160h 0352   4]               Number of Sets : 00000080
+[164h 0356   1]                Associativity : 04
+[165h 0357   1]                   Attributes : 03
+                             Allocation Type : 3
+                                  Cache Type : 0
+                                Write Policy : 0
+[166h 0358   2]                    Line Size : 0040
+
+[16Ch 0364   1]                Subtable Type : 01 [Cache Type]
+[16Dh 0365   1]                       Length : 1C
+[16Eh 0366   2]                     Reserved : 0000
+[170h 0368   4]        Flags (decoded below) : 000000FF
+                                  Size valid : 1
+                        Number of Sets valid : 1
+                         Associativity valid : 1
+                       Allocation Type valid : 1
+                            Cache Type valid : 1
+                          Write Policy valid : 1
+                             Line Size valid : 1
+[174h 0372   4]          Next Level of Cache : 00000134
+[178h 0376   4]                         Size : 0000C000
+[17Ch 0380   4]               Number of Sets : 00000100
+[180h 0384   1]                Associativity : 03
+[181h 0385   1]                   Attributes : 07
+                             Allocation Type : 3
+                                  Cache Type : 1
+                                Write Policy : 0
+[182h 0386   2]                    Line Size : 0040
+
+[188h 0392   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[189h 0393   1]                       Length : 1C
+[18Ah 0394   2]                     Reserved : 0000
+[18Ch 0396   4]        Flags (decoded below) : 00000010
+                            Physical package : 0
+                     ACPI Processor ID valid : 0
+                       Processor is a thread : 0
+                              Node is a leaf : 0
+                    Identical Implementation : 1
+[190h 0400   4]                       Parent : 00000038
+[194h 0404   4]            ACPI Processor ID : 00000001
+[198h 0408   4]      Private Resource Number : 00000002
+[19Ch 0412   4]             Private Resource : 0000016C
+[1A0h 0416   4]             Private Resource : 00000150
+
+[1A4h 0420   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[1A5h 0421   1]                       Length : 14
+[1A6h 0422   2]                     Reserved : 0000
+[1A8h 0424   4]        Flags (decoded below) : 00000010
+                            Physical package : 0
+                     ACPI Processor ID valid : 0
+                       Processor is a thread : 0
+                              Node is a leaf : 0
+                    Identical Implementation : 1
+[1ACh 0428   4]                       Parent : 00000188
+[1B0h 0432   4]            ACPI Processor ID : 00000000
+[1B4h 0436   4]      Private Resource Number : 00000000
+
+[1B8h 0440   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[1B9h 0441   1]                       Length : 14
+[1BAh 0442   2]                     Reserved : 0000
+[1BCh 0444   4]        Flags (decoded below) : 0000000E
+                            Physical package : 0
+                     ACPI Processor ID valid : 1
+                       Processor is a thread : 1
+                              Node is a leaf : 1
+                    Identical Implementation : 0
+[1C0h 0448   4]                       Parent : 000001A4
+[1C4h 0452   4]            ACPI Processor ID : 00000004
+[1C8h 0456   4]      Private Resource Number : 00000000
+
+[1CCh 0460   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[1CDh 0461   1]                       Length : 14
+[1CEh 0462   2]                     Reserved : 0000
+[1D0h 0464   4]        Flags (decoded below) : 0000000E
+                            Physical package : 0
+                     ACPI Processor ID valid : 1
+                       Processor is a thread : 1
+                              Node is a leaf : 1
+                    Identical Implementation : 0
+[1D4h 0468   4]                       Parent : 000001A4
+[1D8h 0472   4]            ACPI Processor ID : 00000005
+[1DCh 0476   4]      Private Resource Number : 00000000
+
+[1E0h 0480   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[1E1h 0481   1]                       Length : 14
+[1E2h 0482   2]                     Reserved : 0000
+[1E4h 0484   4]        Flags (decoded below) : 00000010
+                            Physical package : 0
+                     ACPI Processor ID valid : 0
+                       Processor is a thread : 0
+                              Node is a leaf : 0
+                    Identical Implementation : 1
+[1E8h 0488   4]                       Parent : 00000188
+[1ECh 0492   4]            ACPI Processor ID : 00000001
+[1F0h 0496   4]      Private Resource Number : 00000000
+
+[1F4h 0500   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[1F5h 0501   1]                       Length : 14
+[1F6h 0502   2]                     Reserved : 0000
+[1F8h 0504   4]        Flags (decoded below) : 0000000E
+                            Physical package : 0
+                     ACPI Processor ID valid : 1
+                       Processor is a thread : 1
+                              Node is a leaf : 1
+                    Identical Implementation : 0
+[1FCh 0508   4]                       Parent : 000001E0
+[200h 0512   4]            ACPI Processor ID : 00000006
+[204h 0516   4]      Private Resource Number : 00000000
+
+[208h 0520   1]                Subtable Type : 00 [Processor Hierarchy Node]
+[209h 0521   1]                       Length : 14
+[20Ah 0522   2]                     Reserved : 0000
+[20Ch 0524   4]        Flags (decoded below) : 0000000E
+                            Physical package : 0
+                     ACPI Processor ID valid : 1
+                       Processor is a thread : 1
+                              Node is a leaf : 1
+                    Identical Implementation : 0
+[210h 0528   4]                       Parent : 000001E0
+[214h 0532   4]            ACPI Processor ID : 00000007
+[218h 0536   4]      Private Resource Number : 00000000
+
+Raw Table Data: Length 540 (0x21C)
+
+    0000: 50 50 54 54 1C 02 00 00 03 4D 42 4F 43 48 53 20  // PPTT.....MBOCHS
+    0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
+    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
+    0040: 24 00 00 00 00 00 00 00 00 00 00 00 01 1C 00 00  // $...............
+    0050: FF 00 00 00 00 00 00 00 00 00 20 00 00 08 00 00  // .......... .....
+    0060: 10 0F 40 00 00 00 02 02 01 1C 00 00 FF 00 00 00  // ..@.............
+    0070: 4C 00 00 00 00 80 00 00 80 00 00 00 04 03 40 00  // L.............@.
+    0080: 00 00 01 00 01 1C 00 00 FF 00 00 00 4C 00 00 00  // ............L...
+    0090: 00 C0 00 00 00 01 00 00 03 07 40 00 00 00 01 01  // ..........@.....
+    00A0: 00 1C 00 00 10 00 00 00 38 00 00 00 00 00 00 00  // ........8.......
+    00B0: 02 00 00 00 84 00 00 00 68 00 00 00 00 14 00 00  // ........h.......
+    00C0: 10 00 00 00 A0 00 00 00 00 00 00 00 00 00 00 00  // ................
+    00D0: 00 14 00 00 0E 00 00 00 BC 00 00 00 00 00 00 00  // ................
+    00E0: 00 00 00 00 00 14 00 00 0E 00 00 00 BC 00 00 00  // ................
+    00F0: 01 00 00 00 00 00 00 00 00 14 00 00 10 00 00 00  // ................
+    0100: A0 00 00 00 01 00 00 00 00 00 00 00 00 14 00 00  // ................
+    0110: 0E 00 00 00 F8 00 00 00 02 00 00 00 00 00 00 00  // ................
+    0120: 00 14 00 00 0E 00 00 00 F8 00 00 00 03 00 00 00  // ................
+    0130: 00 00 00 00 01 1C 00 00 FF 00 00 00 00 00 00 00  // ................
+    0140: 00 00 20 00 00 08 00 00 10 0F 40 00 04 00 02 02  // .. .......@.....
+    0150: 01 1C 00 00 FF 00 00 00 34 01 00 00 00 80 00 00  // ........4.......
+    0160: 80 00 00 00 04 03 40 00 04 00 01 00 01 1C 00 00  // ......@.........
+    0170: FF 00 00 00 34 01 00 00 00 C0 00 00 00 01 00 00  // ....4...........
+    0180: 03 07 40 00 04 00 01 01 00 1C 00 00 10 00 00 00  // ..@.............
+    0190: 38 00 00 00 01 00 00 00 02 00 00 00 6C 01 00 00  // 8...........l...
+    01A0: 50 01 00 00 00 14 00 00 10 00 00 00 88 01 00 00  // P...............
+    01B0: 00 00 00 00 00 00 00 00 00 14 00 00 0E 00 00 00  // ................
+    01C0: A4 01 00 00 04 00 00 00 00 00 00 00 00 14 00 00  // ................
+    01D0: 0E 00 00 00 A4 01 00 00 05 00 00 00 00 00 00 00  // ................
+    01E0: 00 14 00 00 10 00 00 00 88 01 00 00 01 00 00 00  // ................
+    01F0: 00 00 00 00 00 14 00 00 0E 00 00 00 E0 01 00 00  // ................
+    0200: 06 00 00 00 00 00 00 00 00 14 00 00 0E 00 00 00  // ................
+    0210: E0 01 00 00 07 00 00 00 00 00 00 00              // ............
+
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+ tests/data/acpi/aarch64/virt/PPTT.topology  | Bin 356 -> 540 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ 2 files changed, 1 deletion(-)
+
+diff --git a/tests/data/acpi/aarch64/virt/PPTT.topology b/tests/data/acpi/aarch64/virt/PPTT.topology
+index d0e5e11e90f33cbbbc231f9ad0bd48419e0fea65..f5f07b87c3777106e74f380de7941e1c01fc3447 100644
+GIT binary patch
+literal 540
+zcmZvXI}XAy5JV>*2o(g0GDQlGKtUNL4F!luq~Hh?93lk;$DrUC6gdjVpo1A>2S;LM
+z%e!y9_D)?lO%?*tuH09fLtY;1DrW=$l<UL-nCtYzvZcp@40!i-4orY_R*;0D)3(xE
+zvk*rGivR<yGYC;)v;cfFC0cVUI4UmOCl#DQ+D*9&vMKY2t95$J__56O`b@nqZvA7z
+z_KHOoxp}{3-usL_pDR7u{(Q!sPos6zc}G5}4ScFq|DT!EDy+||au;^4J6ZgPjXWlw
+S>h0TY?~`Ec-II5*#Ig@|86g1x
+
+literal 356
+zcmWFt2nk7HWME*P=H&0}5v<@85#X!<1VAAM5F11@h%hh+f@ov_6;nYI69Dopu!#Af
+ziSYsX2{^>Sc7o)9c7V(S=|vU;>74__Oh60<Ky@%NW+X9~TafjF#BRXUfM}@RH$Wx}
+cOdLs!6-f-H7uh_Jy&6CPHY9a0F?OgJ00?*x0RR91
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index ba2a8180e9..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/PPTT.topology",
+-- 
+2.43.0
 
 
