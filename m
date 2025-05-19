@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E253C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 14:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44908C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 14:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH1R6-0007ay-Eu; Mon, 19 May 2025 10:25:48 -0400
+	id 1uH1Wg-0000GV-Bu; Mon, 19 May 2025 10:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1uH1R3-0007Zv-Jh
- for qemu-devel@nongnu.org; Mon, 19 May 2025 10:25:45 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ id 1uH1Wc-0000G7-Q4
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 10:31:31 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1uH1R0-00062d-DM
- for qemu-devel@nongnu.org; Mon, 19 May 2025 10:25:45 -0400
+ id 1uH1WZ-0006yF-2m
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 10:31:30 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 9057241402
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 14:25:39 +0000 (UTC)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 3CA48435BC
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 14:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1747664739;
- bh=AVfmhqbcrW1Byxrx9sLAzV2o6yXABbtc6DfszZjTyWQ=;
+ s=20210803; t=1747665085;
+ bh=kZxUE6MRjDIRxeZ0f5PWc0XexCADKfVF0lrh9iJUHzM=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=qePSIK6qfb39LkM1zdIVqrG3JBMhJrnMxQS2OF6Kp85Zs7Ig1MDf4Jg98O9fyjIrL
- TP3FwiPIn7RaZB8xi5NAP7oCW5hwdwDj9P1ITO2tof7b9HY5FNmGZm2AnRoieMmJyV
- 4ENSv7zhJSdJvHvJU50Wdc8ttKk5TddKGPHQoadNrfRbB5we/7eX/CuHUQlySLVNSf
- dalThoGYC4Z3kzR/gTYUQIbOHlXWnIsyNjhbZMUfaOPb1q1neTBAKsmKtxZIPG/mdN
- XgzzC1Ze0Fn1RPAxiAmVta0atHRdOFw9hx3aGIRQWtdUCjhBAaTewBhE+RVi2FEkrJ
- O5/mx4p2urq8Q==
+ b=JmLPEh4DtQqlJVQBTbfncIgYrw4SvFBSw2j8v6oav3xkxbl+/cxOD8DBnUWpZhRTA
+ ssU6uWdr55utr3TAXWTXFF0PxN+u3P+2RvpiRRluRSPzd0f/SgRfkS7dRhZnJaKVxR
+ CtQmKiRVYlpBr93kBzjKLohPmtiREsedB8RK9Nwdy/jnfWAgRrJjAqgLqbm8s8zWSd
+ fX7E+JzpJTKUvwk0YbtExoHZPh6udW6hwbgbKe9ATvF7gx02Htg/mVlUeSjZXeaDrP
+ P2jtBKQpvmFRqJmkttqZJTrX3fx57jG9LDWWMg62t07aNFTL4RbFw73ca96VXBVLCf
+ MZlJYK85k85dA==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 810877E241
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 14:25:39 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id DD50C7E28E
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 14:31:24 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 19 May 2025 14:15:34 -0000
-From: Dimitry Andric <2072564@bugs.launchpad.net>
+Date: Mon, 19 May 2025 14:25:11 -0000
+From: Launchpad Bug Tracker <2072564@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
@@ -66,9 +66,9 @@ X-Launchpad-Bug-Security-Vulnerability: no
 X-Launchpad-Bug-Commenters: ahasenack crichton dimitry.unified-streaming.com
  janitor michal.fita paelzer sergiodj slyon thir820 tjaalton ubuntu-sru-bot
 X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
-X-Launchpad-Bug-Modifier: Dimitry Andric (dimitry.unified-streaming.com)
+X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
 References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
-Message-Id: <174766413432.295743.13397737118478157169.malone@juju-98d295-prod-launchpad-7>
+Message-Id: <174766471669.472187.4642804410264962600.malone@scripts.lp.internal>
 Subject: [Bug 2072564] Re: qemu-aarch64-static segfaults running ldconfig.real
  (amd64 host)
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -77,9 +77,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="fb7816c0224c8da2b221957e8afc3706cb6505f5";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: f34d237987fe5c53367ebbb301c9a0c91ba12a10
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Launchpad-Hash: 8620a767f7acd803682f71383f2fc5d559145d21
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -102,7 +102,39 @@ Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Great, I hope the fix lands in noble too, soon.
+This bug was fixed in the package qemu - 1:8.2.2+ds-0ubuntu1.7
+
+---------------
+qemu (1:8.2.2+ds-0ubuntu1.7) noble; urgency=3Dmedium
+
+  * d/p/u/lp2049698/*: Add full boot order support on s390x (LP: #2049698)
+  * Cherry-pick prerequisite for above backport (to avoid FTBFS):
+    - d/p/u/lp2049698/0-hw-s390x-sclp.c-include-s390-virtio-ccw.h-to-make.p=
+atch
+  * d/qemu-system-data.links: symlink s390-netboot.img -> s390-ccw.img for
+    backwards compatibility, as the code is now combined.
+
+  [ Michael Tokarev ]
+  * d/rules: run ./configure in arch-indep build and build some roms from t=
+here.
+    After adding just a few more build-deps to common Build-Depends,
+    it is now possible to run ./configure in arch-indep step too.
+    Run ./configure, and switch s390-ccw and vof.bin builds from
+    ad-hoc instructions to using the regular qemu makefiles.
+    Move python3-venv dependency from Build-Depend-Arch to Build-Depend
+    so that ./configure can be run.
+    [cherry-pick https://salsa.debian.org/qemu-team/qemu/-/commit/5b5a97b]
+
+  * Fix qemu-aarch64-static segfaults running ldconfig.real (LP: #2072564)
+    - lp-2072564-01-linux-user-Honor-elf-alignment-when-placing-images.patch
+    - lp-2072564-02-elfload-Fix-alignment-when-unmapping-excess-reservat.pa=
+tch
+    Thanks to Dimitry Andric for identifying the fix.
+
+ -- Lukas M=C3=A4rdian <slyon@ubuntu.com>  Thu, 13 Mar 2025 17:15:00 +0100
+
+** Changed in: qemu (Ubuntu Noble)
+       Status: Fix Committed =3D> Fix Released
 
 --=20
 You received this bug notification because you are a member of qemu-
