@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03FC8C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B2A4C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH4aL-0004Op-RO; Mon, 19 May 2025 13:47:34 -0400
+	id 1uH4bJ-0004wy-5J; Mon, 19 May 2025 13:48:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH4aD-0004Oe-K8
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:47:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH4bG-0004wQ-2D
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:48:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH4aB-0005Fs-MG
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:47:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH4bD-0005HZ-9A
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:48:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747676841;
+ s=mimecast20190719; t=1747676906;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WPFAL57b34iCL42pakmdZlH9mVJL3DM235Fj+Jk7MA4=;
- b=Z5j9HAJ9PhKRgrUDyOPlBanNSGdGJn6cPGv8UDh9UugBPcP2YyFog93Xq5VRGQAtJfVU6k
- 2PVJch3oKxBUdKvVaYlzqaPhFbnOZM1O/YFEKQRRDFqktYUTIPCi/FszsGZRp30JOjVH29
- u+BVMZwerY0iOdW6LjAWlEZjVfEXr3g=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=t+NDp0ur7A+6GA6KD0ioYu3I/AZm9L4v5VKH+B0fBHk=;
+ b=FJYXmq1N0gLMs9DAmMdEwWvWJ1RCiBAzyEMe1woWs5K7dT7WIh+xMk71v/Z9T+ihxA3pA8
+ SwjkPcOp1iCRiM7IpagYvE2j+M8iKy+IduLdGSf7Z1BcocALnAWGrocdHFH1OZW/94pt6Y
+ cFHZICYBzkRYeBfyUSum1GnWAjyg8+o=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-qigfCddnOWKLNmG17NimmA-1; Mon, 19 May 2025 13:47:19 -0400
-X-MC-Unique: qigfCddnOWKLNmG17NimmA-1
-X-Mimecast-MFC-AGG-ID: qigfCddnOWKLNmG17NimmA_1747676839
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-232054aa634so17983375ad.3
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 10:47:19 -0700 (PDT)
+ us-mta-500-Csz1-4hXPLq71yp_KOy9HQ-1; Mon, 19 May 2025 13:48:24 -0400
+X-MC-Unique: Csz1-4hXPLq71yp_KOy9HQ-1
+X-Mimecast-MFC-AGG-ID: Csz1-4hXPLq71yp_KOy9HQ_1747676903
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-231d7a20b31so32358595ad.0
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 10:48:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747676839; x=1748281639;
+ d=1e100.net; s=20230601; t=1747676903; x=1748281703;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WPFAL57b34iCL42pakmdZlH9mVJL3DM235Fj+Jk7MA4=;
- b=xTfkXxXisH33GuCxVOBvdzavDNE2Io5IbeMfhmd5YKvSTRdYb+nWLPQrKwuTW3lSpo
- uwRxNVxicEyCDL0vGrdvWdIxYPSmOI2HYV+V9yI9sR+VR2U+dCbF1Wtwzssy+Vqa0TZc
- w+Av4inwkvcdXcPm4nTYCsS4uk36Sx89y+L36rhTv2FCKZH5k16gILOfkDIc2Pmcj+Hr
- DzEtI/DiUGySeidL4nD90VDCMx+ihQxDdOnotbsHnVhvdoN3YDGwpzRp4m+g/mXwc9Lm
- uMniXsDEXKYGBBXLvn8V5n9Y48kzZlzxE/130Tl7JbCLBJocg+OBEvTw6/CfLg03tTkR
- QynQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYA1nfDxGSHvACrDlfWOtxsVBDZJ+yqMI8Bbwz5PeFekdxJIuXw17uLIyzxB0VVG4vhP+yw+gqhl3i@nongnu.org
-X-Gm-Message-State: AOJu0YwVwi5DVO+HV2cWwbFbsg576d7Ni9v5a+AYInTRmdN74EiXtJP+
- vyTldlR9egKqi2DPvum6XIUgfTzg0QCoZdCyGeCRv7+aH/CBInOYzBhKEVpsg3bRaEdQ+urwGp4
- CTRfig+Tfc04njxVUW+VyW/70xtGY5lge78QMReVxrYAao/8uKpcxk1hLBc5r/VxmX1QKLtvm9E
- +UgNL8n4jg84cRXc6YSsFPEKw9j/RPKh4=
-X-Gm-Gg: ASbGnctmaILlc98DSXEgf4uc9tF/hClelXZZeybZ4u6M1+HKbhVqBH7I6PzG8IR9wJE
- Gd5r2bAZi6Xv4dIu7z88Sptr9syAP9K/uoy+p/tPUFwdhqdyvPNXLJQOEe81A7CTiBrwsvVgL8v
- LCjY/bKaUyZlrpRP78cCslgAsg
-X-Received: by 2002:a17:903:11c6:b0:21f:7880:8472 with SMTP id
- d9443c01a7336-231de370156mr200466115ad.35.1747676838891; 
- Mon, 19 May 2025 10:47:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPVH7WKUWvy/J+wj9tTEpF23SMhCh7jrPrGkIQ3L4StD8j0TIQ+GRuQy1Zh23V7pgM5OnGVnUvauuGccljp7k=
-X-Received: by 2002:a17:903:11c6:b0:21f:7880:8472 with SMTP id
- d9443c01a7336-231de370156mr200465875ad.35.1747676838595; Mon, 19 May 2025
- 10:47:18 -0700 (PDT)
+ bh=t+NDp0ur7A+6GA6KD0ioYu3I/AZm9L4v5VKH+B0fBHk=;
+ b=aMRQD90jPATTVnwhRxFq58+7Qf7tScqHjG4KpiVng385G5FcEj2j3ijE8KRfq5EOsQ
+ IVLPQAO/rTMTKG5sFeQPG4+Wvm2iR2n6JLjTcGQKCvE0I1Z4oNwU5yoOkYGuP+mRiUwK
+ P6s7Eb/uWRWgG+YyTODT7ckZYWHXrZtYzE3ejhwGqLv/3JfSL2qee/PUd+3BeZCp1s9V
+ zEV4gCIkz3MNxoW9JImFqXzntt0QuEOOJcmKGJfGkVzDoO07Jw2hkgwNTqGE3Qiofagn
+ V0YVxOF3IozGLuG48d9Juxh+kkl66qJLfuA5xnQLhFzMnvQ7FM4RoIDRFtkgfFwGnM0J
+ UkkQ==
+X-Gm-Message-State: AOJu0YzOu6oUiFpzRggT7jxInrbJop5UCHScU89L0/JY5qOQ295ceKE6
+ 8qjqn3ZB+fvSUNMPhS0HjZInnuaEniesFEi1gdLnRWcJ6qAEqB1nCLRZw56HrfT7TGt/nLGS/XR
+ Ap2zG+OYW1Bz7E8JVyS4EpcKPQCgg7kDTWb8/ySUiBYbCkMLP8gwfjdaIx5brwZ5eOUdAD7ghFz
+ bL3dE83E8XqK220ElR8QhNORPJfQD5vi8=
+X-Gm-Gg: ASbGncuFqVoGaXLTihtCT3bZBVenvn5HQwQvAtgHRtbRIW5bao5MII+VE8mnySSBcUm
+ lcMBL5XJ7YdxeEJRweI6hCXB1fQPWvIHLSSO9aEX1UbRIZhsgilM5ER5eeizPh/VlUTqeJtix23
+ tURGCoTUro7NA22nXP2VKZFdfn
+X-Received: by 2002:a17:902:db08:b0:223:66bb:8993 with SMTP id
+ d9443c01a7336-231d45c4e39mr216008945ad.43.1747676903354; 
+ Mon, 19 May 2025 10:48:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxueigNJiQzI7rH1EHoN5ubB8N0j3ueMbhb3poPpy/JMwHlYe0B0QtNTSgdDPjB8tsPzVImMTMNxlPeHKrJVk=
+X-Received: by 2002:a17:902:db08:b0:223:66bb:8993 with SMTP id
+ d9443c01a7336-231d45c4e39mr216008675ad.43.1747676903045; Mon, 19 May 2025
+ 10:48:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250510-sphinx72-v1-0-2358e0c68bbe@daynix.com>
-In-Reply-To: <20250510-sphinx72-v1-0-2358e0c68bbe@daynix.com>
+References: <20250512193357.3388514-1-jsnow@redhat.com>
+ <87o6vu2rqd.fsf@pond.sub.org>
+In-Reply-To: <87o6vu2rqd.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Mon, 19 May 2025 13:47:06 -0400
-X-Gm-Features: AX0GCFs84wgR-c-nL0F45Mo3EINgmlIj2qEaFtDvrvimp74N9Rf9XT7MR4pLkUk
-Message-ID: <CAFn=p-aL6OQKqq4nLp+LV2QxpRSo8yp3c0veT+DMG-Tt7aSYxg@mail.gmail.com>
-Subject: Re: [PATCH 0/3] docs: Bump sphinx to 6.2.1
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- devel@daynix.com
-Content-Type: multipart/alternative; boundary="00000000000025b9e8063580b993"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Date: Mon, 19 May 2025 13:48:11 -0400
+X-Gm-Features: AX0GCFtVcQpWNKJRYOgVPFilBj_orR9FR8G1D0vEZpdXBmmNtsor9zkcEXLXmTM
+Message-ID: <CAFn=p-bbk4cN3sJ7m6ZLgV3i+c+ZjYKz=wR1=e5jWGnRVYbUWQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] python: add QAPI and qapidoc et al to python tests
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000fd1fc0063580bc5a"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -102,139 +101,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000025b9e8063580b993
+--000000000000fd1fc0063580bc5a
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 10, 2025 at 2:17=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix=
-.com>
-wrote:
+On Thu, May 15, 2025 at 4:38=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-> Supersedes: <20250505-sphinx82-v1-0-85f2418b33b1@daynix.com>
-> ("[PATCH 0/2] docs: Bump sphinx to 8.2.3")
+> John Snow <jsnow@redhat.com> writes:
 >
-> sphinx 5.3.0 fails with Python 3.13.1:
+> > Hiya, this series turns on automated linting for scripts/qapi,
+> > docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.
+> >
+> > This includes flake8/isort/pylint/mypy for scripts/qapi, but omits mypy
+> > from the Sphinx plugins owing to my inability to strictly type the
+> > extensions given the wide versions of Sphinx we actually support.
+> >
+> > [Maybe this will change soon, but it's not true just yet.]
+> >
+> > Though I have been using black in my own development, I have not yet
+> > enabled it anywhere automatically. Maybe soon.
 >
-> ../docs/meson.build:37: WARNING:
-> /home/me/qemu/build/pyvenv/bin/sphinx-build:
-> Extension error:
-> Could not import extension sphinx.builders.epub3 (exception: No module
-> named 'imghdr')
+> You lost my series
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
 >
-> ../docs/meson.build:39:6: ERROR: Problem encountered: Install a Python 3
-> version of python-sphinx and the readthedoc theme
->
-> Bump sphinx to 6.2.1 and also sphinx_rtd_theme as required for the new
-> sphinx version.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->
-
-Reviewed-by: John Snow <jsnow@redhat.com>
-
-I figure if this causes issues, this early in the development cycle we can
-roll it back or pursue alternate solutions if necessary. I figure because
-this touches so much stuff I wrote, it probably ought to go through my
-tree, so I'll stage this tentatively.
-
-(Paolo, Peter: But if you want to stage it instead, be my guest.)
-
----
-> Akihiko Odaki (3):
->       docs: Bump sphinx to 6.2.1
->       docs: Require sphinx>=3D6.2
->       MAINTAINERS: Add docs/requirements.txt
->
->  MAINTAINERS                |   1 +
->  docs/requirements.txt      |   4 +-
->  docs/sphinx/compat.py      | 230
-> ---------------------------------------------
->
-
-Oh, thank you so much O:-) how beautiful...
+> :)
 
 
->  docs/sphinx/qapi_domain.py |  33 +++----
->  pythondeps.toml            |   4 +-
->  5 files changed, 20 insertions(+), 252 deletions(-)
-> ---
-> base-commit: 1da8f3a3c53b604edfe0d55e475102640490549e
-> change-id: 20250508-sphinx72-400c521af710
->
-> Best regards,
-> --
-> Akihiko Odaki <akihiko.odaki@daynix.com>
->
->
+My patches tool broke and I was doing things manually for a bit! I've got
+it squared away thanks to Stefan Hajnoczi, and sent a PR out with the
+proper message IDs and SOBs.
 
---00000000000025b9e8063580b993
+Thanks!
+
+--000000000000fd1fc0063580bc5a
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, May 10,=
- 2025 at 2:17=E2=80=AFAM Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@=
-daynix.com">akihiko.odaki@daynix.com</a>&gt; wrote:<br></div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">Supersedes: &lt;<a href=3D"mailto:20250=
-505-sphinx82-v1-0-85f2418b33b1@daynix.com" target=3D"_blank">20250505-sphin=
-x82-v1-0-85f2418b33b1@daynix.com</a>&gt;<br>
-(&quot;[PATCH 0/2] docs: Bump sphinx to 8.2.3&quot;)<br>
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 15,=
+ 2025 at 4:38=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
+hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
+ target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
 <br>
-sphinx 5.3.0 fails with Python 3.13.1:<br>
+&gt; Hiya, this series turns on automated linting for scripts/qapi,<br>
+&gt; docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.<br>
+&gt;<br>
+&gt; This includes flake8/isort/pylint/mypy for scripts/qapi, but omits myp=
+y<br>
+&gt; from the Sphinx plugins owing to my inability to strictly type the<br>
+&gt; extensions given the wide versions of Sphinx we actually support.<br>
+&gt;<br>
+&gt; [Maybe this will change soon, but it&#39;s not true just yet.]<br>
+&gt;<br>
+&gt; Though I have been using black in my own development, I have not yet<b=
+r>
+&gt; enabled it anywhere automatically. Maybe soon.<br>
 <br>
-../docs/meson.build:37: WARNING: /home/me/qemu/build/pyvenv/bin/sphinx-buil=
-d:<br>
-Extension error:<br>
-Could not import extension sphinx.builders.epub3 (exception: No module name=
-d &#39;imghdr&#39;)<br>
+You lost my series<br>
+Reviewed-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" tar=
+get=3D"_blank">armbru@redhat.com</a>&gt;<br>
 <br>
-../docs/meson.build:39:6: ERROR: Problem encountered: Install a Python 3 ve=
-rsion of python-sphinx and the readthedoc theme<br>
-<br>
-Bump sphinx to 6.2.1 and also sphinx_rtd_theme as required for the new<br>
-sphinx version.<br>
-<br>
-Signed-off-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com=
-" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;<br></blockquote><div><=
-br></div><div>Reviewed-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com=
-">jsnow@redhat.com</a>&gt;</div><div><br></div><div>I figure if this causes=
- issues, this early in the development cycle we can roll it back or pursue =
-alternate solutions if necessary. I figure because this touches so much stu=
-ff I wrote, it probably ought to go through my tree, so I&#39;ll stage this=
- tentatively.</div><div><br></div><div>(Paolo, Peter: But if you want to st=
-age it instead, be my guest.)</div><div><br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">
----<br>
-Akihiko Odaki (3):<br>
-=C2=A0 =C2=A0 =C2=A0 docs: Bump sphinx to 6.2.1<br>
-=C2=A0 =C2=A0 =C2=A0 docs: Require sphinx&gt;=3D6.2<br>
-=C2=A0 =C2=A0 =C2=A0 MAINTAINERS: Add docs/requirements.txt<br>
-<br>
-=C2=A0MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=
-=C2=A0 =C2=A01 +<br>
-=C2=A0docs/requirements.txt=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A04 +-<br>
-=C2=A0docs/sphinx/compat.py=C2=A0 =C2=A0 =C2=A0 | 230 ---------------------=
-------------------------<br></blockquote><div><br></div><div>Oh, thank you =
-so much O:-) how beautiful...</div><div>=C2=A0</div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-=C2=A0docs/sphinx/qapi_domain.py |=C2=A0 33 +++----<br>
-=C2=A0pythondeps.toml=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=
-=A04 +-<br>
-=C2=A05 files changed, 20 insertions(+), 252 deletions(-)<br>
----<br>
-base-commit: 1da8f3a3c53b604edfe0d55e475102640490549e<br>
-change-id: 20250508-sphinx72-400c521af710<br>
-<br>
-Best regards,<br>
--- <br>
-Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com" target=3D"_bl=
-ank">akihiko.odaki@daynix.com</a>&gt;<br>
-<br>
-</blockquote></div></div>
+:)</blockquote><div><br></div><div>My patches tool broke and I was doing th=
+ings manually for a bit! I&#39;ve got it squared away thanks to Stefan Hajn=
+oczi, and sent a PR out with the proper message IDs and SOBs.</div><div><br=
+></div><div>Thanks! <br></div></div></div>
 
---00000000000025b9e8063580b993--
+--000000000000fd1fc0063580bc5a--
 
 
