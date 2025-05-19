@@ -4,98 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A82BC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97634C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH3ca-00023z-Q8; Mon, 19 May 2025 12:45:48 -0400
+	id 1uH3j6-0003sV-Bz; Mon, 19 May 2025 12:52:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=wHlh=YD=kaod.org=clg@ozlabs.org>)
- id 1uH3cY-00021l-Ks
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:45:46 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1uH3j2-0003s7-F5
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:52:28 -0400
+Received: from bm.lauterbach.com ([62.154.241.218])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=wHlh=YD=kaod.org=clg@ozlabs.org>)
- id 1uH3cV-000790-1W
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:45:46 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4b1Npn3r5kz4xN6;
- Tue, 20 May 2025 02:45:37 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4b1Npm2VXlz4xN4;
- Tue, 20 May 2025 02:45:36 +1000 (AEST)
-Message-ID: <36245f7e-11d3-4539-9ea9-58720c636221@kaod.org>
-Date: Mon, 19 May 2025 18:45:32 +0200
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1uH3j0-0007nV-4G
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:52:28 -0400
+Received: from [10.2.13.100] (unknown [10.2.13.100])
+ (Authenticated sender: mario.fleischmann@lauterbach.com)
+ by bm.lauterbach.com (Postfix) with ESMTPSA id 36C5A4FAAA67;
+ Mon, 19 May 2025 18:52:05 +0200 (CEST)
+Message-ID: <a71a747f-d8c3-40ac-ab61-0628dffbb2f6@lauterbach.com>
+Date: Mon, 19 May 2025 18:52:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 9/9] scripts/checkpatch: reject license boilerplate on
- new files
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20250519163721.347322-1-berrange@redhat.com>
- <20250519163721.347322-10-berrange@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250519163721.347322-10-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=wHlh=YD=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Subject: Re: [PATCH v2 07/20] mcd: Implement target initialization API
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org,
+ christian.boenig@lauterbach.com
+References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
+ <20250430052741.21145-8-mario.fleischmann@lauterbach.com>
+ <875xi2yqlh.fsf@pond.sub.org>
+Content-Language: en-US
+From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+In-Reply-To: <875xi2yqlh.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 166a2dfb-2e12-4590-8fa5-72e30323519f
+X-Bm-Transport-Timestamp: 1747673525230
+Received-SPF: pass client-ip=62.154.241.218;
+ envelope-from=mario.fleischmann@lauterbach.com; helo=bm.lauterbach.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,75 +65,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/25 18:37, Daniel P. Berrangé wrote:
-> The previous commit mandates use of SPDX-License-Identifier on common
-> source files, and encourages it on all other files.
-> 
-> Some contributors are none the less still also including the license
-> boilerplate text. This is redundant and will potentially cause
-> trouble if inconsistent with the SPDX declaration.
-> 
-> Match common boilerplate text blurbs and report them as invalid,
-> for newly added files.
-> 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   scripts/checkpatch.pl | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
-> 
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index dc2c3e6aa1..691c267a8c 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -365,6 +365,17 @@ our @typeList = (
->   	qr{guintptr},
->   );
->   
-> +# Match text found in common license boilerplate comments:
-> +# for new files the SPDX-License-Identifier line is sufficient.
-> +our $LICENSE_BOILERPLATE = qr{
-> +    licensed under the terms of the GNU GPL|
-> +    under the terms of the GNU General Public License|
-> +    under the terms of the GNU Lesser General Public|
-> +    Permission is hereby granted, free of charge|
-> +    GNU GPL, version 2 or later|
-> +    See the COPYING file
-> +}x;
-> +
->   # Load common spelling mistakes and build regular expression list.
->   my $misspellings;
->   my %spelling_fix;
-> @@ -1497,6 +1508,13 @@ sub process_end_of_file {
->   			     "' need 'SPDX-License-Identifier'?");
->   		}
->   	}
-> +	if ($fileinfo->{action} eq "new" &&
-> +	    !exists $fileinfo->{facts}->{sawboilerplate}) {
+On 15.05.2025 15:02, Markus Armbruster wrote:
 
-oops
+> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+> 
+>> The target initialization API ensures that the requested and provided
+>> MCD versions are compatible.
+>>
+>> * implement mcd_initialize_f and mcd_qry_error_info_f in mcdserver
+>> * implement QMP stub functionality
+>> * add QTest
+>>
+>> Thanks to the QMP integration in QTest, function arguments and results
+>> can be (de)serialized automatically.
+>>
+>> Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+> 
+> [...]
+> 
+>> diff --git a/qapi/mcd.json b/qapi/mcd.json
+>> index 701fd03..7b42a74 100644
+>> --- a/qapi/mcd.json
+>> +++ b/qapi/mcd.json
+>> @@ -4,3 +4,186 @@
+>>  ##
+>>  # = Multi-Core Debug (MCD) API
+>>  ##
+>> +
+>> +
+>> +##
+>> +# == Definition of Structures
+>> +##
+>> +
+>> +
+>> +##
+>> +# @MCDAPIVersion:
+>> +#
+>> +# Structure type containing the MCD API version information of the tool.
+>> +#
+>> +# @v-api-major: API major version.
+>> +# @v-api-minor: API minor version.
+>> +# @author:      API name of the author of this MCD API version.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'struct': 'MCDAPIVersion',
+>> +  'data': {
+>> +    'v-api-major': 'uint16',
+>> +    'v-api-minor': 'uint16',
+>> +    'author':      'str' } }
+>> +
+>> +
+>> +##
+>> +# @MCDImplVersionInfo:
+>> +#
+>> +# Structure type containing the MCD API implementation information.
+>> +#
+>> +# @v-api:       Implemented API version.
+>> +# @v-imp-major: Major version number of this implementation.
+>> +# @v-imp-minor: Minor version number of this implementation.
+>> +# @v-imp-build: Build number of this implementation.
+>> +# @vendor:      Name of vendor of the implementation.
+>> +# @date:        String from __DATE__ macro at compile time.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'struct': 'MCDImplVersionInfo',
+>> +  'data': {
+>> +    'v-api'      : 'MCDAPIVersion',
+>> +    'v-imp-major': 'uint16',
+>> +    'v-imp-minor': 'uint16',
+>> +    'v-imp-build': 'uint16',
+>> +    'vendor'     : 'str',
+>> +    'date'       : 'str' } }
+>> +
+>> +
+>> +##
+>> +# @MCDErrorInfo:
+>> +#
+>> +# Structure type containing the error status and error event notification.
+>> +#
+>> +# @return-status: Return status from the last API call.
+>> +# @error-code:    Detailed error code from the last API call.
+>> +# @error-events:  Detailed event code from the last API call.
+>> +# @error-str:     Detailed error text string from the last API call.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'struct': 'MCDErrorInfo',
+>> +  'data': {
+>> +    'return-status': 'uint32',
+>> +    'error-code'   : 'uint32',
+>> +    'error-events' : 'uint32',
+>> +    'error-str'    : 'str' }}
+>> +
+>> +
+>> +##
+>> +# == Target Initialization API
+>> +##
+>> +
+>> +
+>> +##
+>> +# @MCDInitializeResult:
+>> +#
+>> +# Return value of @mcd-initialize.
+>> +#
+>> +# @return-status: Return code.
+>> +#
+>> +# @impl-info: Information about the QEMU build, its version and the version of
+>> +#             the implemented MCD API.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'struct': 'MCDInitializeResult',
+>> +  'data': {
+>> +    'return-status': 'uint32',
+>> +    '*impl-info'   : 'MCDImplVersionInfo' } }
+>> +
+>> +
+>> +##
+>> +# @mcd-initialize:
+>> +#
+>> +# Function initializing the interaction between a tool-side implementation and
+>> +# target-side implementation.
+>> +#
+>> +# @version-req: MCD API version as requested by an upper layer.
+>> +#
+>> +# Returns: @MCDInitializeResult
+>> +#
+>> +# Since: 9.1
+>> +#
+>> +# .. qmp-example::
+>> +#    :title: Check compatibility with MCD server
+>> +#
+>> +#     -> { "execute": "mcd-initialize",
+>> +#          "arguments": { "version-req": { "v-api-major": 1,
+>> +#                                          "v-api-minor": 1,
+>> +#                                          "author": "" } } }
+>> +#     <- {
+>> +#            "return": {
+>> +#                "impl-info": {
+>> +#                    "v-api": {
+>> +#                        "v-api-minor": 1,
+>> +#                        "v-api-major": 1,
+>> +#                        "author": "QEMU Release"
+>> +#                    },
+>> +#                    "vendor": "QEMU",
+>> +#                    "v-imp-minor": 2,
+>> +#                    "v-imp-major": 9,
+>> +#                    "v-imp-build": 0,
+>> +#                    "date": "Dec 18 2024"
+>> +#                },
+>> +#                "return-status": 0
+>> +#            }
+>> +#        }
+>> +##
+>> +{ 'command': 'mcd-initialize',
+>> +  'data': { 'version-req': 'MCDAPIVersion' },
+>> +  'returns': 'MCDInitializeResult' }
+>> +
+>> +
+>> +##
+>> +# @mcd-exit:
+>> +#
+>> +# Function cleaning up all core and server connections from a tool.
+>> +#
+>> +# Since: 9.1
+>> +##
+>> +{ 'command': 'mcd-exit' }
+>> +
+>> +
+>> +##
+>> +# == Core Connection API
+>> +##
+>> +
+>> +
+>> +##
+>> +# @mcd-qry-error-info:
+>> +#
+>> +# Function allowing the access to detailed error and/or event information after
+>> +# an API call.
+>> +#
+>> +# Returns: @MCDErrorInfo
+>> +#
+>> +# Since: 9.1
+>> +#
+>> +# .. qmp-example::
+>> +#    :title: Incompatible MCD versions
+>> +#
+>> +#     -> { "execute": "mcd-initialize",
+>> +#          "arguments": { "version-req": { "v-api-major": 2,
+>> +#                                          "v-api-minor": 0,
+>> +#                                          "author": "" } } }
+>> +#     <- {
+>> +#            "return": {
+>> +#                "return-status": 3
+>> +#            }
+>> +#        }
+>> +#     -> { "execute": "mcd-qry-error-info" }
+>> +#     <- {
+>> +#            "return": {
+>> +#                "error-str": "incompatible versions",
+>> +#                "error-code": 3840,
+>> +#                "error-events": 0,
+>> +#                "return-status": 3
+>> +#            }
+>> +#        }
+>> +##
+>> +{ 'command': 'mcd-qry-error-info',
+>> +  'returns': 'MCDErrorInfo' }
+> 
+> You define some types under "Definition of Structures", and some
+> elsewhere.  How do you decide what goes where?  Hmm, looks like you
+> mirror mcd/mcd_api.h.  Correct?
 
-C.
+Generally, mcd/qapi-schema.json is intended to stay as close as possible
+to mcd_api.h. However, there are a few exceptions.
 
+If a function "MCDFunction" from the MCD API has multiple return values,
+an additional QAPI struct with the naming scheme "MCDFunctionResult" is
+introduced which will be returned by "MCDFunction".
+Since this struct is intended to be used by only one function, it is
+defined directly before that function.
 
-> +		ERROR("New file '" . $fileinfo->{filenew} . "' must " .
-> +		      "not have license boilerplate header text, only " .
-> +		      "the SPDX-License-Identifier, unless this file was " .
-> +		      "copied from existing code already having such text.");
-> +	}
->   }
->   
->   sub process {
-> @@ -1799,6 +1817,10 @@ sub process {
->   			&checkspdx($realfile, $1);
->   		}
->   
-> +		if ($rawline =~ /$LICENSE_BOILERPLATE/) {
-> +			$fileinfo->{facts}->{sawboilerplate} = 1;
-> +		}
-> +
->   		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
->   			my $tag = $1;
->   			my @permitted = qw(
+If the type of an argument or return value cannot be serialized, most
+often because it is a pointer, it is changed to a type which is able to
+carry the same information. In most cases, an int carrying a unique
+identifier suffices. Sometimes, an additional struct is required.
+This struct can possibly be used by multiple functions, so I would
+expect it in the "Definition of Structures" section.
 
 
