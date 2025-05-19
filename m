@@ -4,101 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2EEC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A2CC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:32:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGs4b-0002p1-9m; Mon, 19 May 2025 00:25:57 -0400
+	id 1uGs4h-0003Lc-0K; Mon, 19 May 2025 00:26:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1uGrmu-0004lI-3f
- for qemu-devel@nongnu.org; Mon, 19 May 2025 00:07:41 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uGrpH-0000K6-2v
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 00:10:08 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1uGrmq-00048w-3I
- for qemu-devel@nongnu.org; Mon, 19 May 2025 00:07:39 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-30ecc762cb7so811999a91.1
- for <qemu-devel@nongnu.org>; Sun, 18 May 2025 21:07:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uGrpE-0004Qy-My
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 00:10:06 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-af548cb1f83so3628827a12.3
+ for <qemu-devel@nongnu.org>; Sun, 18 May 2025 21:10:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1747627654; x=1748232454; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=+3ZuYq+x9kFtr1OyrTJo9g69tzuSK4CN4Scb9G+xpT4=;
- b=ecWvLcz9yJU73dQUKak6cGbG9PzVHO7b/onV529vjqAGYTVrOTIEdi4P2tz994ppHy
- TkNb8YyFBkqkFy+ysxvp+vV2W0OmDmpVcaRTNj2wRglA30gP1y3sMJ/7qTjjwpr2Y9Q1
- NUBMvAG0o3y/AJF3rrUnjdxWXjUEwkMRYXGYm5bOuDfspXk2+UhVsZ2SR1GMGTLwGuHK
- nowTnATcVqMQSR26osWFC+4lw6kASmf9FcrS3vXMRByNmWuUk75/+aMmWUalcMfXmHUx
- hEFax46KSeg/PMfUhstOTwIYk53Uy1KnVA/oYjxWKPjYfU2mizSyX/bD/TkSGwj0RIFf
- +rdw==
+ d=gmail.com; s=20230601; t=1747627801; x=1748232601; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PyLdyYCHN0qVxiYhTJKCmDnIpQOjoM3r03Xr3doFWjY=;
+ b=IHe2+w9lk6eKOT9kk7mkrlX/bpgHfqIqiI17PB+50RO29SJC6RB6nHe3i361FN5Yct
+ UXPRLXD6htd1uw3J/6NMXVaqUxZ8tN13gFND2kdad2pAarW0iofEca6tdv5voLSjqiW+
+ pZVGQVgewirkT3YCWyVwSnUpg+31S02vaUfHfBzmYHMssbKm0DYyCbAJWNltvFNn2w0J
+ QLh1j0UMHGFi9BemWGntzpk5nJbz2IxckTBoaU2j10LlK7keVCovhkX+51PR9PtJBn47
+ 7uTqu2JzOstx/lpaAPfkYL8uDB32QrHMyXLYw7lnC9903xQ7jUV/8i9yboKhObBVXj46
+ 8Pvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747627654; x=1748232454;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+3ZuYq+x9kFtr1OyrTJo9g69tzuSK4CN4Scb9G+xpT4=;
- b=EYfXxSjEY2pwUDs0gO3sUuMj8ezFjaMXYUlU6PbyPFg8bgGwirDz3521pGy5WK96zW
- aqBxN4G8jaHaJoRlB17adri3KDl3DPyvtfR54ME7QYmhXhi6jdUWOYN96/lEh1NFwyGg
- WUbVfAZWljUn4VgBCaD8lNuC6RF1Xyai0Ho1F0rRkIYkfzw5v39owFInyRVYhH8rWtav
- w8J5HxnZLXuu0a7cgzpHnSWSqSEgUFgG+eyNUsz4tFZVrvTD7/q+Yamlaboh+Mm56MET
- jVwdhOpFw8Oqzee21csU+3M3B3ZS+IOQCujwDtEqK1vpO5+Xv40PaTZBOZVCZEG+jAZa
- iPEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGFi12rQvAZOGH9B3T3TNn8EOAl0ZNqmvI0Qzc5Lu0jcwJqfos8K+x4UyD9e8Z68JCGV5tjaDjBQyn@nongnu.org
-X-Gm-Message-State: AOJu0YxXU/xs82CC73ajl2VUVd1dBy0l+BGOeDjZZTUcHiTdM8oEsbVR
- cIgGklkUz6DCkWisnh1ab+ONzD0XFAmNJVe4rgR4twmxQIP13gY+2BBsbVfQ6S8dNKs=
-X-Gm-Gg: ASbGncvyUAhvytpqjWgULnGEJQSKTSZTpQdG0wLdODI994YCbAeGJdZFK/7VdM8iWUF
- BpZOSD3gZRjCy1LtgjhPUDP4/O+FmE/yGVwI5crKdi4y3B4zPUuP/91c+VMguPNtw0h0oP2IkYu
- Cs2kcgs4cfXGdq/7n3J+ADMy5mFNcJSwP0HnF3WNskLleP0WyAHv6yrZcDJO+Of5A1RNHuHScPv
- 2uN6gwZX/jofjBwsHyTE0581i4eAMSd4UJfGYniPUaq3tzXym8V786iM6UpcG6B4SanYeZhnjsH
- wVD4jrI0t/FKc8UdZfeXhgEyJcpVowZlM6B9K/pTUvA5WpOJ3SuerUAMOLM=
-X-Google-Smtp-Source: AGHT+IHUx0vbqdxGAcB2VDXygAGOHP7VwURn9nh/+eiscdMXWc1t6XJc3MYLezARPdRzs/vWsHAVKQ==
-X-Received: by 2002:a17:90b:3bce:b0:2fe:b907:5e5a with SMTP id
- 98e67ed59e1d1-30e4db3d8c5mr22296901a91.10.1747627654078; 
- Sun, 18 May 2025 21:07:34 -0700 (PDT)
-Received: from sunil-laptop ([103.97.166.196])
+ d=1e100.net; s=20230601; t=1747627801; x=1748232601;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PyLdyYCHN0qVxiYhTJKCmDnIpQOjoM3r03Xr3doFWjY=;
+ b=Qa17dTaDnqRdkILV+XWTlnt/s33DMOl5dei+MpREoZSLcnC9GcTPejeFZL82fmiTCG
+ 9DckJhKYn/DySpaLf1Pa/Df8qkE0Lb+Pm7u1958sIMinYmdka+vhJVzRfIfWl/Qg719f
+ GVLFSYwg63GOtVThOQo+PfRaEYQlMYDXUIBzcSlPeCe31ffrgfCSCZtE30NCQ9w4s3ec
+ vd54dFlB5c9wUY6WpZzXcx//SRvEVITcTjMfRA8y5flMqtvpOxPdID6tXPeZs6K3RlUL
+ 2PE5qaSdaaC3DORHpdNTbCP8vLsPi5OQJmqw7l6SjTk3dBNitTg4M9Sc8oN0y3bZdzND
+ Cybw==
+X-Gm-Message-State: AOJu0YwQyMAwmevNnc7xI9Jel4FeSn0EwKgajtUSV4t8j/3CDUHADcM0
+ 7VxlcAulH3lhX7gUC93stXQTNbJln2TRCUvWHhpWGVdBX/fglJYXHcUl8zjXVg==
+X-Gm-Gg: ASbGnctqHipcr/wTwzbxI1KXj6Pnz2C2zl8wI/lGajnjbNlmcATAsO5z0Jr5ODy1X3w
+ 3ZvT/VAgCOoCalLXlCjab9oAy/gVVPvjovYKleI49aIHo52VWDxqGXk9SYq0LGcj9Byf+UBIsSM
+ IqCgo5jusWN6oogNSFdU1DXSqCelipgOxNir+1/g6xKVkPelzgAVHa6V4ZBC+4Gaz26ih4PwVQL
+ VT8KW/bIT6JI1AlkPfEeIRl13cRxlhkzidiEtpivPdIThHaR4Y85cJSgcmJv+Xpqn1dLHIvApju
+ tV2WKicOS/bTPzakWMC5nDtGRFtJ8dkH2O/deTdqK1F9kDrLF8+5f/lNTogu0JCZ8qJDv6NUE8m
+ nPjagnB4E86CWReCbtP7Dwx9b4upp9oGIFQ4AzxGdY57fayuZnXzz2U2f6gukndTYmso=
+X-Google-Smtp-Source: AGHT+IFWcWO3eLqf9814E9bYuVkcvKRxop+3cuSPpH39ttcBjNNY5SaNbyRE9rymtQXr30iNJHFugg==
+X-Received: by 2002:a17:902:db07:b0:223:f9a4:3fb6 with SMTP id
+ d9443c01a7336-231de3515c1mr156101895ad.11.1747627801232; 
+ Sun, 18 May 2025 21:10:01 -0700 (PDT)
+Received: from toolbx.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30e7d591862sm5590679a91.47.2025.05.18.21.07.27
+ d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.09.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 May 2025 21:07:33 -0700 (PDT)
-Date: Mon, 19 May 2025 09:37:23 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: Li Chen <me@linux.beauty>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>
-Subject: Re: [PATCH V3 4/4] acpi/virt: suppress UART device & SPCR when guest
- has no serial hardware
-Message-ID: <aCque4iAzEc8VWAx@sunil-laptop>
-References: <87msberqzi.wl-me@linux.beauty>
- <87h61mrqko.wl-me@linux.beauty>
+ Sun, 18 May 2025 21:10:00 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 55/56] hw/riscv/virt.c: use s->memmap in finalize_fdt()
+ functions
+Date: Mon, 19 May 2025 14:05:52 +1000
+Message-ID: <20250519040555.3797167-56-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250519040555.3797167-1-alistair.francis@wdc.com>
+References: <20250519040555.3797167-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h61mrqko.wl-me@linux.beauty>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,123 +105,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 15, 2025 at 08:44:39PM +0800, Li Chen wrote:
-> From: Li Chen <chenl311@chinatelecom.cn>
-> 
-> The virt machines always instantiate a PL011/16550 at UART0 and
-> describe it in ACPI (DSDT device node plus optional SPCR table).  When
-> the command line contains “-serial none” there is no backend attached to
-> that UART, yet the guest still discovers it via ACPI and may try to use
-> it as a console, causing unexpected results.
-> 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-> ---
-> 
->  hw/arm/virt-acpi-build.c   | 15 +++++++++------
->  hw/riscv/virt-acpi-build.c |  6 ++++--
->  include/system/system.h    |  2 ++
->  system/vl.c                |  5 +++++
->  4 files changed, 20 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index f25c3b26ce..8a1cde4b44 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -59,6 +59,7 @@
->  #include "hw/acpi/viot.h"
->  #include "hw/virtio/virtio-acpi.h"
->  #include "target/arm/multiprocessing.h"
-> +#include "system/system.h"
->  
->  #define ARM_SPI_BASE 32
->  
-> @@ -825,11 +826,13 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->       */
->      scope = aml_scope("\\_SB");
->      acpi_dsdt_add_cpus(scope, vms);
-> -    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
-> -                       (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
-> -    if (vms->second_ns_uart_present) {
-> -        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
-> -                           (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
-> +    if (serial_exist()) {
-> +        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
-> +                           (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
-> +        if (vms->second_ns_uart_present) {
-> +            acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
-> +                               (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
-> +        }
->      }
->      if (vmc->acpi_expose_flash) {
->          acpi_dsdt_add_flash(scope, &memmap[VIRT_FLASH]);
-> @@ -941,7 +944,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->  
->      acpi_add_table(table_offsets, tables_blob);
->  
-> -    if (ms->enable_spcr) {
-> +    if (ms->enable_spcr && serial_exist()) {
->          spcr_setup(tables_blob, tables->linker, vms);
->      }
->  
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 7f6d221c63..4e0f695a16 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -39,6 +39,7 @@
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
->  #include "system/reset.h"
-> +#include "system/system.h"
->  
->  #define ACPI_BUILD_TABLE_SIZE             0x20000
->  #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
-> @@ -449,7 +450,8 @@ static void build_dsdt(GArray *table_data,
->                                   memmap[VIRT_APLIC_S].size, "RSCV0002");
->      }
->  
-> -    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-> +    if (serial_exist())
-> +        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
->  
->      if (socket_count == 1) {
->          virtio_acpi_dsdt_add(scope, memmap[VIRT_VIRTIO].base,
-> @@ -681,7 +683,7 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
->  
->      acpi_add_table(table_offsets, tables_blob);
->  
-> -    if (ms->enable_spcr) {
-> +    if (ms->enable_spcr && serial_exist()) {
->          spcr_setup(tables_blob, tables->linker, s);
->      }
->  
-> diff --git a/include/system/system.h b/include/system/system.h
-> index a7effe7dfd..ca1af38432 100644
-> --- a/include/system/system.h
-> +++ b/include/system/system.h
-> @@ -75,6 +75,8 @@ extern unsigned int nb_prom_envs;
->  /* Return the Chardev for serial port i, or NULL if none */
->  Chardev *serial_hd(int i);
->  
-> +bool serial_exist(void);
-> +
->  /* parallel ports */
->  
->  #define MAX_PARALLEL_PORTS 3
-> diff --git a/system/vl.c b/system/vl.c
-> index 520956f4a1..7e219df7bf 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -1484,6 +1484,11 @@ Chardev *serial_hd(int i)
->      return NULL;
->  }
->  
-> +bool serial_exist(void)
-> +{
-> +    return serial_hd(0) ? true : false;
-> +}
-> +
-LGTM.
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Change create_fdt_pcie(), create_fdt_reset(), create_fdt_uart() and
+create_fdt_rtc() to use s->memmap in their logic.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250429125811.224803-9-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/riscv/virt.c | 44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 37bd720068..edb6973100 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -872,7 +872,7 @@ static void create_fdt_virtio(RISCVVirtState *s, uint32_t irq_virtio_phandle)
+     }
+ }
+ 
+-static void create_fdt_pcie(RISCVVirtState *s, const MemMapEntry *memmap,
++static void create_fdt_pcie(RISCVVirtState *s,
+                             uint32_t irq_pcie_phandle,
+                             uint32_t msi_pcie_phandle,
+                             uint32_t iommu_sys_phandle)
+@@ -881,7 +881,7 @@ static void create_fdt_pcie(RISCVVirtState *s, const MemMapEntry *memmap,
+     MachineState *ms = MACHINE(s);
+ 
+     name = g_strdup_printf("/soc/pci@%lx",
+-        (long) memmap[VIRT_PCIE_ECAM].base);
++        (long) s->memmap[VIRT_PCIE_ECAM].base);
+     qemu_fdt_setprop_cell(ms->fdt, name, "#address-cells",
+         FDT_PCI_ADDR_CELLS);
+     qemu_fdt_setprop_cell(ms->fdt, name, "#interrupt-cells",
+@@ -892,19 +892,19 @@ static void create_fdt_pcie(RISCVVirtState *s, const MemMapEntry *memmap,
+     qemu_fdt_setprop_string(ms->fdt, name, "device_type", "pci");
+     qemu_fdt_setprop_cell(ms->fdt, name, "linux,pci-domain", 0);
+     qemu_fdt_setprop_cells(ms->fdt, name, "bus-range", 0,
+-        memmap[VIRT_PCIE_ECAM].size / PCIE_MMCFG_SIZE_MIN - 1);
++        s->memmap[VIRT_PCIE_ECAM].size / PCIE_MMCFG_SIZE_MIN - 1);
+     qemu_fdt_setprop(ms->fdt, name, "dma-coherent", NULL, 0);
+     if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
+         qemu_fdt_setprop_cell(ms->fdt, name, "msi-parent", msi_pcie_phandle);
+     }
+     qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0,
+-        memmap[VIRT_PCIE_ECAM].base, 0, memmap[VIRT_PCIE_ECAM].size);
++        s->memmap[VIRT_PCIE_ECAM].base, 0, s->memmap[VIRT_PCIE_ECAM].size);
+     qemu_fdt_setprop_sized_cells(ms->fdt, name, "ranges",
+         1, FDT_PCI_RANGE_IOPORT, 2, 0,
+-        2, memmap[VIRT_PCIE_PIO].base, 2, memmap[VIRT_PCIE_PIO].size,
++        2, s->memmap[VIRT_PCIE_PIO].base, 2, s->memmap[VIRT_PCIE_PIO].size,
+         1, FDT_PCI_RANGE_MMIO,
+-        2, memmap[VIRT_PCIE_MMIO].base,
+-        2, memmap[VIRT_PCIE_MMIO].base, 2, memmap[VIRT_PCIE_MMIO].size,
++        2, s->memmap[VIRT_PCIE_MMIO].base,
++        2, s->memmap[VIRT_PCIE_MMIO].base, 2, s->memmap[VIRT_PCIE_MMIO].size,
+         1, FDT_PCI_RANGE_MMIO_64BIT,
+         2, virt_high_pcie_memmap.base,
+         2, virt_high_pcie_memmap.base, 2, virt_high_pcie_memmap.size);
+@@ -918,8 +918,7 @@ static void create_fdt_pcie(RISCVVirtState *s, const MemMapEntry *memmap,
+     create_pcie_irq_map(s, ms->fdt, name, irq_pcie_phandle);
+ }
+ 
+-static void create_fdt_reset(RISCVVirtState *s, const MemMapEntry *memmap,
+-                             uint32_t *phandle)
++static void create_fdt_reset(RISCVVirtState *s, uint32_t *phandle)
+ {
+     char *name;
+     uint32_t test_phandle;
+@@ -927,7 +926,7 @@ static void create_fdt_reset(RISCVVirtState *s, const MemMapEntry *memmap,
+ 
+     test_phandle = (*phandle)++;
+     name = g_strdup_printf("/soc/test@%lx",
+-        (long)memmap[VIRT_TEST].base);
++        (long)s->memmap[VIRT_TEST].base);
+     qemu_fdt_add_subnode(ms->fdt, name);
+     {
+         static const char * const compat[3] = {
+@@ -937,7 +936,7 @@ static void create_fdt_reset(RISCVVirtState *s, const MemMapEntry *memmap,
+                                       (char **)&compat, ARRAY_SIZE(compat));
+     }
+     qemu_fdt_setprop_cells(ms->fdt, name, "reg",
+-        0x0, memmap[VIRT_TEST].base, 0x0, memmap[VIRT_TEST].size);
++        0x0, s->memmap[VIRT_TEST].base, 0x0, s->memmap[VIRT_TEST].size);
+     qemu_fdt_setprop_cell(ms->fdt, name, "phandle", test_phandle);
+     test_phandle = qemu_fdt_get_phandle(ms->fdt, name);
+     g_free(name);
+@@ -959,18 +958,19 @@ static void create_fdt_reset(RISCVVirtState *s, const MemMapEntry *memmap,
+     g_free(name);
+ }
+ 
+-static void create_fdt_uart(RISCVVirtState *s, const MemMapEntry *memmap,
++static void create_fdt_uart(RISCVVirtState *s,
+                             uint32_t irq_mmio_phandle)
+ {
+     g_autofree char *name = NULL;
+     MachineState *ms = MACHINE(s);
+ 
+-    name = g_strdup_printf("/soc/serial@%lx", (long)memmap[VIRT_UART0].base);
++    name = g_strdup_printf("/soc/serial@%lx",
++                           (long)s->memmap[VIRT_UART0].base);
+     qemu_fdt_add_subnode(ms->fdt, name);
+     qemu_fdt_setprop_string(ms->fdt, name, "compatible", "ns16550a");
+     qemu_fdt_setprop_cells(ms->fdt, name, "reg",
+-        0x0, memmap[VIRT_UART0].base,
+-        0x0, memmap[VIRT_UART0].size);
++        0x0, s->memmap[VIRT_UART0].base,
++        0x0, s->memmap[VIRT_UART0].size);
+     qemu_fdt_setprop_cell(ms->fdt, name, "clock-frequency", 3686400);
+     qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq_mmio_phandle);
+     if (s->aia_type == VIRT_AIA_TYPE_NONE) {
+@@ -983,18 +983,18 @@ static void create_fdt_uart(RISCVVirtState *s, const MemMapEntry *memmap,
+     qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
+ }
+ 
+-static void create_fdt_rtc(RISCVVirtState *s, const MemMapEntry *memmap,
++static void create_fdt_rtc(RISCVVirtState *s,
+                            uint32_t irq_mmio_phandle)
+ {
+     g_autofree char *name = NULL;
+     MachineState *ms = MACHINE(s);
+ 
+-    name = g_strdup_printf("/soc/rtc@%lx", (long)memmap[VIRT_RTC].base);
++    name = g_strdup_printf("/soc/rtc@%lx", (long)s->memmap[VIRT_RTC].base);
+     qemu_fdt_add_subnode(ms->fdt, name);
+     qemu_fdt_setprop_string(ms->fdt, name, "compatible",
+         "google,goldfish-rtc");
+     qemu_fdt_setprop_cells(ms->fdt, name, "reg",
+-        0x0, memmap[VIRT_RTC].base, 0x0, memmap[VIRT_RTC].size);
++        0x0, s->memmap[VIRT_RTC].base, 0x0, s->memmap[VIRT_RTC].size);
+     qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent",
+         irq_mmio_phandle);
+     if (s->aia_type == VIRT_AIA_TYPE_NONE) {
+@@ -1144,14 +1144,14 @@ static void finalize_fdt(RISCVVirtState *s)
+         create_fdt_iommu_sys(s, irq_mmio_phandle, msi_pcie_phandle,
+                              &iommu_sys_phandle);
+     }
+-    create_fdt_pcie(s, s->memmap, irq_pcie_phandle, msi_pcie_phandle,
++    create_fdt_pcie(s, irq_pcie_phandle, msi_pcie_phandle,
+                     iommu_sys_phandle);
+ 
+-    create_fdt_reset(s, s->memmap, &phandle);
++    create_fdt_reset(s, &phandle);
+ 
+-    create_fdt_uart(s, s->memmap, irq_mmio_phandle);
++    create_fdt_uart(s, irq_mmio_phandle);
+ 
+-    create_fdt_rtc(s, s->memmap, irq_mmio_phandle);
++    create_fdt_rtc(s, irq_mmio_phandle);
+ }
+ 
+ static void create_fdt(RISCVVirtState *s)
+-- 
+2.49.0
+
 
