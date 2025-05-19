@@ -4,50 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11255C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C160C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH3kv-0004zj-Qw; Mon, 19 May 2025 12:54:25 -0400
+	id 1uH3ro-00079w-Ds; Mon, 19 May 2025 13:01:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1uH3kt-0004zZ-FD
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:54:23 -0400
-Received: from bm.lauterbach.com ([62.154.241.218])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH3rS-00078D-Hm
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:01:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1uH3kr-0007rt-My
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:54:23 -0400
-Received: from [10.2.13.100] (unknown [10.2.13.100])
- (Authenticated sender: mario.fleischmann@lauterbach.com)
- by bm.lauterbach.com (Postfix) with ESMTPSA id 445F5219C22AE;
- Mon, 19 May 2025 18:54:20 +0200 (CEST)
-Message-ID: <62906762-3d8e-4455-a1a2-e66396ec7dd1@lauterbach.com>
-Date: Mon, 19 May 2025 18:54:20 +0200
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH3rN-0000DP-Vr
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:01:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747674065;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jPRU8El0TvAdjD+sXu4gHgBVG1p6BhnFnrUSgwwyZ9o=;
+ b=jBfj0PcDt13FqOY6acJRqFVOhzSaXzButNzkd4f8epHp0yha9CoVuYVx6CjTG7x5tdVwJm
+ O2+Lkqk5kxnsNoY+EMwIaWpBEdRmg8+HQ0DYvPqqAU3KZ9SiC1/Vllp6rVfHQkgLjHQUFR
+ cJAje/oFsaiOWgJK398mT0bnNxPOucM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-kh0EbRw7OYygYkXF9Lk4aQ-1; Mon,
+ 19 May 2025 13:01:02 -0400
+X-MC-Unique: kh0EbRw7OYygYkXF9Lk4aQ-1
+X-Mimecast-MFC-AGG-ID: kh0EbRw7OYygYkXF9Lk4aQ_1747674061
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0940A180045B; Mon, 19 May 2025 17:01:01 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.235])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B86FC1956095; Mon, 19 May 2025 17:00:59 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 1/6] qapi: Add some pylint ignores
+Date: Mon, 19 May 2025 13:00:50 -0400
+Message-ID: <20250519170055.3693275-2-jsnow@redhat.com>
+In-Reply-To: <20250519170055.3693275-1-jsnow@redhat.com>
+References: <20250519170055.3693275-1-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/20] mcd: Implement server connection API
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org,
- armbru@redhat.com, christian.boenig@lauterbach.com
-References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
- <20250430052741.21145-9-mario.fleischmann@lauterbach.com>
- <aCW6vZivY9-Yt8-H@redhat.com>
-Content-Language: en-US
-From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
-In-Reply-To: <aCW6vZivY9-Yt8-H@redhat.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 166a2dfb-2e12-4590-8fa5-72e30323519f
-X-Bm-Transport-Timestamp: 1747673660286
-Received-SPF: pass client-ip=62.154.241.218;
- envelope-from=mario.fleischmann@lauterbach.com; helo=bm.lauterbach.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -65,76 +83,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.05.2025 11:58, Daniel P. Berrangé wrote:
+This restores the linting baseline in QAPI.
 
-> On Wed, Apr 30, 2025 at 07:27:29AM +0200, Mario Fleischmann wrote:
->> This commit implements the necessary operations required to establish
->> a connection with the MCD server:
->>
->> * query information about the server
->> * connect to "
->> * disconnect from "
->>
->> Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
->> ---
->>  mcd/mcd_qapi.c         |  13 +++
->>  mcd/mcd_qapi.h         |   2 +
->>  mcd/mcd_server.c       | 110 +++++++++++++++++++++-
->>  mcd/mcd_stub.c         |  98 ++++++++++++++++++++
->>  qapi/mcd.json          | 205 +++++++++++++++++++++++++++++++++++++++++
->>  tests/qtest/mcd-test.c |  96 +++++++++++++++++++
->>  tests/qtest/mcd-util.c |  60 ++++++++++++
->>  tests/qtest/mcd-util.h |   9 ++
->>  8 files changed, 588 insertions(+), 5 deletions(-)
->>
->> diff --git a/mcd/mcd_qapi.c b/mcd/mcd_qapi.c
->> index 9a99866..d2a2926 100644
->> --- a/mcd/mcd_qapi.c
->> +++ b/mcd/mcd_qapi.c
-> 
-> 
->> +MCDQryServersResult *qmp_mcd_qry_servers(const char *host, bool running,
->> +                                         uint32_t start_index,
->> +                                         uint32_t num_servers, Error **errp)
->> +{
->> +    MCDServerInfoList **tailp;
->> +    MCDServerInfo *info;
->> +    mcd_server_info_st *server_info = NULL;
->> +    bool query_num_only = num_servers == 0;
->> +    MCDQryServersResult *result = g_malloc0(sizeof(*result));
->> +
->> +    if (!query_num_only) {
->> +        server_info = g_malloc0(num_servers * sizeof(*server_info));
-> 
-> This multiplication is (theoretically) subject to overflow. To eliminate
-> this risk, this should use
-> 
->     g_new0(mcd_server_info_st, num_servers)
-> 
-> which will validate overflow & abort if hit.
-> 
-> There are many more instances of this code pattern in the series
-> 
-> $ git diff -r master | grep g_malloc | grep ' \* '
-> +        .tx = g_malloc(txlist->num_tx * sizeof(mcd_tx_st)),
-> +        server_info = g_malloc0(num_servers * sizeof(*server_info));
-> +        system_con_info = g_malloc0(num_systems * sizeof(*system_con_info));
-> +        device_con_info = g_malloc0(num_devices * sizeof(*device_con_info));
-> +        core_con_info = g_malloc0(num_cores * sizeof(*core_con_info));
-> +        memspaces = g_malloc0(num_mem_spaces * sizeof(*memspaces));
-> +        reg_groups = g_malloc0(num_reg_groups * sizeof(*reg_groups));
-> +        regs = g_malloc0(num_regs * sizeof(*regs));
-> +        ctrig_info = g_malloc0(num_ctrigs * sizeof(*ctrig_info));
-> +        trig_ids = g_malloc0(num_trigs * sizeof(*trig_ids));
-> 
-> 
-> QEMU is a bit inconsistent, but we have a slight bias in favour
-> of using g_new0, even for single struct allocations.
-> 
-> IMHO being in the habit of always using g_new0 instead of g_malloc
-> makes it less likely for people to inadvertantly introduce the
-> multiplication overflow code pattern with g_malloc.
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Message-id: 20250512193357.3388514-2-jsnow@redhat.com
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ scripts/qapi/backend.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Oh, I didn't know that function, thanks for pointing it out! I agree,
-it's the more elegant option.
+diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
+index 14e60aa67af..49ae6ecdd33 100644
+--- a/scripts/qapi/backend.py
++++ b/scripts/qapi/backend.py
+@@ -13,6 +13,7 @@
+ 
+ 
+ class QAPIBackend(ABC):
++    # pylint: disable=too-few-public-methods
+ 
+     @abstractmethod
+     def generate(self,
+@@ -36,6 +37,7 @@ def generate(self,
+ 
+ 
+ class QAPICBackend(QAPIBackend):
++    # pylint: disable=too-few-public-methods
+ 
+     def generate(self,
+                  schema: QAPISchema,
+-- 
+2.48.1
+
 
