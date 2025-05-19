@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A303C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 08:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3894EC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 09:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGwJE-0004lN-4O; Mon, 19 May 2025 04:57:20 -0400
+	id 1uGwaP-0008Ar-9I; Mon, 19 May 2025 05:15:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uGwJ4-0004jN-Tp
- for qemu-devel@nongnu.org; Mon, 19 May 2025 04:57:11 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uGwIw-0001nD-OK
- for qemu-devel@nongnu.org; Mon, 19 May 2025 04:57:09 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxHHJP8ipo2OPxAA--.63492S3;
- Mon, 19 May 2025 16:56:47 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMCxPsdN8ipomuXgAA--.53769S3;
- Mon, 19 May 2025 16:56:47 +0800 (CST)
-Subject: Re: [PATCH 03/15] hw/intc/loongarch_extioi: Add irqchip-in-kernel
- save/restore function
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
-Cc: Huacai Chen <chenhuacai@kernel.org>, QEMU devel <qemu-devel@nongnu.org>,
- Xianglai Li <lixianglai@loongson.cn>
-References: <20250509100747.1070094-1-maobibo@loongson.cn>
- <20250509100747.1070094-4-maobibo@loongson.cn>
- <5fa02121-43f6-4335-883e-efe07a2f3711@app.fastmail.com>
- <391ab7d0-9e61-1b9d-fbd3-98dd23f2d2a7@loongson.cn>
- <671157ca-de54-4053-93a9-8ea7f3fa1f1f@app.fastmail.com>
- <0e4690a6-1f28-f97c-a7dc-3b7888d23f38@loongson.cn>
- <930362d4-695a-44e6-a220-898e265a944c@app.fastmail.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <1422bdc1-9251-b88e-44fd-e953ee88d0bd@loongson.cn>
-Date: Mon, 19 May 2025 16:55:34 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uGwaM-00088s-15
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 05:15:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uGwaH-00057I-TJ
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 05:14:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747646095;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v2C4KdJi1QF3Niatz+kL4tJmLMrQDtvaT3SUuilt7ds=;
+ b=a4++8kFCDMe0X5UtPNQsOH3cTIved2Jooo5l07Xq0r485QkIf4zkR0iKTiQhLquX+M41nZ
+ hsvZHpQczFpssWpHdxncm8aeXG5dsXT+Qc6sHI0jO/v7IeclTRby+TtwZ4CQ6obCltX4iO
+ ebaChDWh3NI9K8jw8bN7atFS66SMBjA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-rYjiZHHGPaGRTfMeyEU9_A-1; Mon,
+ 19 May 2025 05:14:50 -0400
+X-MC-Unique: rYjiZHHGPaGRTfMeyEU9_A-1
+X-Mimecast-MFC-AGG-ID: rYjiZHHGPaGRTfMeyEU9_A_1747646089
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2912B1800373; Mon, 19 May 2025 09:14:49 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B28EC1956096; Mon, 19 May 2025 09:14:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4815921E66C3; Mon, 19 May 2025 11:14:46 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Michael Roth
+ <michael.roth@amd.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  berrange@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 12/12] qapi: make all generated files common
+In-Reply-To: <20250515172732.3992504-13-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Thu, 15 May 2025 10:27:32 -0700")
+References: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
+ <20250515172732.3992504-13-pierrick.bouvier@linaro.org>
+Date: Mon, 19 May 2025 11:14:46 +0200
+Message-ID: <8734d1hshl.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-In-Reply-To: <930362d4-695a-44e6-a220-898e265a944c@app.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxPsdN8ipomuXgAA--.53769S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WryDZr4ktFyfKFW7uFWfWFX_yoW8AF18p3
- y7WFWDGa1DGrWrKa40g3ZI9r1rt3yxtr45uFn5GrykAFZ09FWaka4vkr4akFsIq3WxJ3W0
- 934ru3WxZr90k3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AK
- xVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E
- 14v26r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
- CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1x
- MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
- 4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU8HSoJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -37
-X-Spam_score: -3.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
 X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.872,
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,53 +91,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  qapi/meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/qapi/meson.build b/qapi/meson.build
+> index 7582c2b5bcf..6cc3afce721 100644
+> --- a/qapi/meson.build
+> +++ b/qapi/meson.build
+> @@ -140,6 +140,6 @@ foreach output : qapi_nonmodule_outputs
+>    if output.endswith('.trace-events')
+>      qapi_trace_events +=3D qapi_files[i]
+>    endif
+> -  specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: qapi_files[i])
+> +  system_ss.add(if_true: qapi_files[i])
+>    i =3D i + 1
+>  endforeach
 
-On 2025/5/19 下午4:49, Jiaxun Yang wrote:
-> 
-> 
-> 在2025年5月19日周一 上午8:09，Bibo Mao写道：
->> On 2025/5/19 下午2:50, Jiaxun Yang wrote:
->>>
->>>
->>> 在2025年5月19日周一 上午3:56，Bibo Mao写道：
->>> [...]
->>>>>
->>>>> Hi Bibo,
->>>>>
->>>>> I believe hijacking loongarch_extioi.c is not the proper way to do it.
->>>>> The sensible solution is to create a TYPE_LOONGARCH_EXTIOI_KVM, which
->>>>> inherits TYPE_LOONGARCH_EXTIOI_COMMON, and let machine create
->>>>> TYPE_LOONGARCH_EXTIOI_KVM vs TYPE_LOONGARCH_EXTIOI as necessary.
->>>> what is advantage about creating TYPE_LOONGARCH_EXTIOI_KVM device in KVM
->>>> node and TYPE_LOONGARCH_EXTIOI device in TCG mode?
->>>
->>> Cleaner, less error-prone, isolate unnecessary emulation functions to
->>> reduce attack surface...
->> yes, there is a beautiful code logic internal, however from user the
->> device tree will be different because of irqchip-in-kernel feature, such
->> as different output of *info qom-tree*. It will bring out illusions of
->> different virt machine type for users.
-> 
-> It's actually different machine as kernel irqchip is never on par with usermode
-> emulation. This approach is taken by i386 (TYPE_KVM_IOAPIC vs TYPE_IOAPIC),
-> Arm (TYPE_KVM_ARM_ITS vs TYPE_ARM_GICV3_ITS), PowerPC (TYPE_KVM_OPENPIC vs
-> TYPE_OPENPIC) and I see no reason that LoongArch should not follow.
-So what is the advantage and disadvantage from yourself understanding here?
+I think this can be simplified further:
 
-Regards
-Bibo Mao
-> 
-> I'm actually planning to bring user space EXTIOI emulation closer to actual
-> hardware behaviour and I wound not expect such change to be accepted by
-> in-kernel irqchip.
-> 
-> Thanks
-> 
->>
->> Regards
->> Bibo Mao
->>>
-> 
+diff --git a/qapi/meson.build b/qapi/meson.build
+index 6cc3afce72..3b035aea33 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -85,8 +85,7 @@ qapi_nonmodule_outputs =3D [
+   'qapi-emit-events.c', 'qapi-emit-events.h',
+ ]
+=20
+-# First build all sources
+-qapi_util_outputs =3D [
++qapi_outputs =3D qapi_nonmodule_outputs + [
+   'qapi-builtin-types.c', 'qapi-builtin-visit.c',
+   'qapi-builtin-types.h', 'qapi-builtin-visit.h',
+ ]
+@@ -109,20 +108,17 @@ foreach module : qapi_all_modules
+       'qapi-commands-@0@.trace-events'.format(module),
+     ]
+   endif
+-  qapi_util_outputs +=3D qapi_module_outputs
++  qapi_outputs +=3D qapi_module_outputs
+ endforeach
+=20
+ qapi_files =3D custom_target('shared QAPI source files',
+-  output: qapi_util_outputs + qapi_nonmodule_outputs,
++  output: qapi_outputs,
+   input: [ files('qapi-schema.json') ],
+   command: [ qapi_gen, '-o', 'qapi', '-b', '@INPUT0@' ],
+   depend_files: [ qapi_inputs, qapi_gen_depends ])
+=20
+-# Now go through all the outputs and add them to the right sourceset.
+-# These loops must be synchronized with the output of the above custom tar=
+get.
+-
+ i =3D 0
+-foreach output : qapi_util_outputs
++foreach output : qapi_outputs
+   if output.endswith('.h')
+     genh +=3D qapi_files[i]
+   endif
+@@ -132,14 +128,3 @@ foreach output : qapi_util_outputs
+   util_ss.add(qapi_files[i])
+   i =3D i + 1
+ endforeach
+-
+-foreach output : qapi_nonmodule_outputs
+-  if output.endswith('.h')
+-    genh +=3D qapi_files[i]
+-  endif
+-  if output.endswith('.trace-events')
+-    qapi_trace_events +=3D qapi_files[i]
+-  endif
+-  system_ss.add(if_true: qapi_files[i])
+-  i =3D i + 1
+-endforeach
 
 
