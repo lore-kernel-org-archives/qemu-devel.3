@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB4ACC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89114C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGoRa-0004K6-PW; Sun, 18 May 2025 20:33:26 -0400
+	id 1uGoXB-0005C7-TD; Sun, 18 May 2025 20:39:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGoRX-0004JW-AD; Sun, 18 May 2025 20:33:23 -0400
-Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
+ id 1uGoX5-0005Bk-AI; Sun, 18 May 2025 20:39:08 -0400
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGoRV-0001Vn-PZ; Sun, 18 May 2025 20:33:23 -0400
-Received: by mail-vs1-xe2f.google.com with SMTP id
- ada2fe7eead31-4e14b17c181so1301685137.0; 
- Sun, 18 May 2025 17:33:21 -0700 (PDT)
+ id 1uGoX3-0002Wf-Ed; Sun, 18 May 2025 20:39:07 -0400
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-52410fb2afeso2630585e0c.3; 
+ Sun, 18 May 2025 17:39:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747614800; x=1748219600; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747615143; x=1748219943; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uvcYTPRSmDPFyWjKYDuSmeoWclyZCkd6OqvsK/rGyJQ=;
- b=cZ4NqLKEB4RxqbIyK6dhcIhZ+hFFAmWl0mbYAbo10jtuTxs+3JjrWZdoXR50YV2/J1
- aXkXaIkIjPMXCOepwccJHxQ/9sSG2NGgezfsJtGLLXH6FJpdzsulRGdhzgurMoSi/1cX
- 9nJhEnoIFTwLcHNAJnax0DunBl6pVGTzfVf4QCIIAkKWC4mlpIXvz7YACHiq0zSVva71
- krHEzR7AA9Mvbx7YEzgCKGawK8QJj3PnOhwzpe5XgkBiC75JvOyRrqMYcpTZMV1LwpCL
- 02bcolQCjrn+xKi/nswC9KcPHHcn3Pz1xVMpQMBQ36Im4SmtLw6borW/dux1dPnuWegy
- RImw==
+ bh=Vh1Cavi6wiUbzWMPFYbDdJIeqwpWgOusQ+B/B7D4w1c=;
+ b=FeaqCM8pxH6xO/j8Omcze918kOmOY+Z6SMkV7sqzr/Tio64+JFhLaxI6TukKV9jhoo
+ oKC9kUGanuMHvq8Utb8/djwegHoYr/JwymR//6g8kneJKs7iBVD6yn1Ie6fjYNmufiFK
+ sfp6Y9FJUcxRiu+aaLxCGuFiIGs8x/VeMM5f8GhtQWBNRC0uII/0fn52fs9KL2y2hd3L
+ P+vsyZQmDIxQ2mXQmjoU9rTvSf8v+DQAmgLs0iGOOhjxmD4kJAil8YvLOB9F1LPvpxpC
+ vIgZmyzAYXjZUfCBM5nktM+JDc+4ELG3w6DokXZBap68/qiU+BvBHUtPqT/6ANAgR5nj
+ g/og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747614800; x=1748219600;
+ d=1e100.net; s=20230601; t=1747615143; x=1748219943;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uvcYTPRSmDPFyWjKYDuSmeoWclyZCkd6OqvsK/rGyJQ=;
- b=Ad1Bd0AX7RB6Vsw0pDkslE74+KbAESlOOpLHGBRk77cdR73WYqfspUTfiJ5zzLs3Qn
- XsFS3uBAZhbqXNPddT2NwAC4qz7ydOchhUef7LassMT0YZ1yx5KM6gWh4draEVYVFDBo
- DCPkENCYLGfXVTR1PsqchChDrLbDrJVYuch4r7D4Sa21tjN5zH+gSEzOFa2AhUZYHyBb
- VYxzH7++5akgpVzrMVgftjmijEMZp6yyuVfUJmIoBQw6HGDw8G2/EBfjBmZDdq0L6Zku
- T5sL8BIK1ccSG/z+XnmB4OfZkOrd4V6DIqJPYBbw+Ign45wOilnbOZ2t5vqH70w+3icV
- Jl0w==
+ bh=Vh1Cavi6wiUbzWMPFYbDdJIeqwpWgOusQ+B/B7D4w1c=;
+ b=M6EYBc7jpYDWUe1VGt+FEBigcbuM0V+eCh+rQ1iOL9gY5l4hhzWMdIXz1rTIZkao+u
+ IvPyxzOnjiwgUjJR3MWb5TiED9IVzOp2298uPnj07bWnP4nVsVg4YNGXruvYm7ZzPHok
+ mmq2dMJ77gI0tZMWCiwdgZdmSjZGpWTq3+CcJUutPBxV+AaoeUhjxuPkzLBZ0Jhr0xD2
+ uRdGTddoWcG0d4JAcf2dNmiUBHKAUKuNiZyJsgZPXntTvQJ80FaF0jAwtBV7fxped6UQ
+ 58LQxZuv/gHUkF7zNDBPBTOHDD31TrHiVpWcjTWL0GBxbeaEmdBGG3HxbXOgbQK9sTIM
+ /Hng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMIk5NXn0WFwA/VbSgzX9ThJNt8Uzz5lZc3SdTd29OBEwa3US35q9nsnvtkqLHflYq125LYaocRFR6@nongnu.org,
- AJvYcCWuNL2QI3ET2bK59w6G3kar15BT3MLauCeIUTsYsFj9v5sU878SxBxoITz6C2jd4JR//EPSpmM8Y6gS+Q==@nongnu.org
-X-Gm-Message-State: AOJu0Yy3DIbBA2VvsdxP/1Wj4eLR1XjHU/9mVVvRnRVrdI5vJqTTI+Qz
- OkSdE+c472bVnQ+wMCHqu2kObO7aFmUgplL48em5vDhltKGzej4eTjofOGHOJUIcXdwLNuUsh4H
- +2b0EENfFL72FuuoQaldkXLBAd9vVv0g=
-X-Gm-Gg: ASbGncsnr6wJl6cySQxYIugLZu/CszDORLE6fZBy6mJWL9cpzMwwX6GJa9pKytejSVs
- YWoAp2KwsXl9j8Ye2pieEnuvG9QyC9aLhLw/RYViOVKiROQj2CxOQyyn1NnAmqP/kLXo1eJ56Uu
- iD5kTXgX5uUhG9LpVAKjd2Rmmg7pQ/mTnC77XmzF0LmHcSsu23EmOaG7tHvvTMVg4=
-X-Google-Smtp-Source: AGHT+IH2sWPDudNZUefYUiNLrcH9DRXeSSO0LYlDL7Rof52tKkevNMIe7oKhhIuILTAz3aJZ4F3Yj/zQRTIPUOEGuRU=
-X-Received: by 2002:a05:6102:1508:b0:4c3:346:29ef with SMTP id
- ada2fe7eead31-4dfc30f4313mr11136634137.11.1747614800216; Sun, 18 May 2025
- 17:33:20 -0700 (PDT)
+ AJvYcCUuxpSgY6bflS62cZKt9uvpEA3KieRVxWi258NeT0LSc4NMmfrK78z45bLrXDgP8WqLD0rfaz90hz8z@nongnu.org
+X-Gm-Message-State: AOJu0Yz61mOLSONk11MMS290c5DBpH4PND9k4PrQpFB+WHKM9I2ZiXoP
+ xeW2xfjANgWD9kQHbi7SI3nF9OzsC5JmMFR/nvSBy+y6mSJgWgIXcCo44kXELVr5h0uEKfzEZP5
+ YMzTtikVYtjHEYWMs/Pnil3UfoGQRPEc=
+X-Gm-Gg: ASbGncsekTh1pOCCsppNO6H9b7M3OlW2fgbBv4f5otbg0uoDZvw0t3YA1Do19RabYPI
+ aTkikJF9EDJqSGZxqAR5Nc2kh6RBN967EsRWfWPeUg/Zzbslme0Aut6Rq8pDAN0geTs7Vfs9O65
+ KdqqmUtScV+pT2ilVCPpzaT+S28DoRnNoUl+NR5wdi7idu4RmqJyP0PXOjrmv7+mX6TvZvkbVhN
+ A==
+X-Google-Smtp-Source: AGHT+IEWFx6UqXaZVykPnP5nvKj4ucAeWrF/oD6GTMTqPePbFzdPEE438G51ozSoCxxLRDYDwQbLi5pfScrndV1w3r0=
+X-Received: by 2002:a05:6122:3bd5:b0:523:a88b:9ac5 with SMTP id
+ 71dfb90a1353d-52dba9513d2mr10544621e0c.9.1747615143509; Sun, 18 May 2025
+ 17:39:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <202505122007170451_WeaVnOMOCnJghLHZ5zH@zte.com.cn>
-In-Reply-To: <202505122007170451_WeaVnOMOCnJghLHZ5zH@zte.com.cn>
+References: <20250409025131.3670-1-jim.shu@sifive.com>
+ <20250409025131.3670-3-jim.shu@sifive.com>
+In-Reply-To: <20250409025131.3670-3-jim.shu@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 19 May 2025 10:32:54 +1000
-X-Gm-Features: AX0GCFtBrcs6_Pi5sgcNBsJY6GTb6TygnWQsDs9l6Vzc8lMXHjmrnD8luERehWA
-Message-ID: <CAKmqyKNX1bnO9ptoj5AHY+XwWcrwAD+nwV5pJPArBURf1PCmSA@mail.gmail.com>
-Subject: Re: [PATCH v2] migration: Fix migration failure when aia is
- configured as 'aplic-imsic'
-To: liu.xuemei1@zte.com.cn
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, peterx@redhat.com, 
- farosas@suse.de, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Date: Mon, 19 May 2025 10:38:36 +1000
+X-Gm-Features: AX0GCFtO3kXj1aMhC64-UgpDvfU2MpG6YBhHiWgSKP2M-L49JINgffTQR_7zc4o
+Message-ID: <CAKmqyKPT+_a5JwK+tHokJWBeEdjj1HEXoQTgrYJN9fC=tJa8-A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] hw/intc: riscv_aclint: Fix mtime write for sstc
+ extension
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,93 +102,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 13, 2025 at 2:33=E2=80=AFAM <liu.xuemei1@zte.com.cn> wrote:
+On Wed, Apr 9, 2025 at 12:52=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
 >
-> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+> When changing the mtime value, the period of [s|vs]timecmp timers
+> should also be updated, similar to the period of mtimecmp timer.
 >
-> Address an error in migration when aia is configured as 'aplic-imsic' in
-> riscv kvm vm by adding riscv_aplic_state_needed() and
-> riscv_imsic_state_needed() to determine whether the corresponding sates a=
-re
-> needed.
+> The period of the stimecmp timer is the time until the next S-mode
+> timer IRQ. The value is calculated as "stimecmp - time". [1]
+> It is equal to "stimecmp - mtime" since the time CSR is a read-only
+> shadow of the memory-mapped mtime register.
+> Thus, changing mtime value will update the period of stimecmp timer.
 >
-> Previously, the fields in the vmsds of 'riscv_aplic' and 'riscv_imsic' ca=
-n
-> only be initialized under certain special conditions in commit 95a97b3fd2=
-.
-> However, the corresponding ses of these vmsds are inserted into the
-> savevm_state.handlers unconditionally. This led to migration failure
-> characterized by uninitialized fields when save vm state:
-> qemu-system-riscv64: ../migration/vmstate.c:433: vmstate_save_state_v:
-> Assertion 'first_elem || !n_elems || !size' failed.
+> Similarly, the period of vstimecmp timer is calculated as "vstimecmp -
+> (mtime + htimedelta)" [2], so changing mtime value will update the
+> period of vstimecmp timer.
 >
-> Fixes: 95a97b3fd2 ("target/riscv: update APLIC and IMSIC to support KVM A=
-IA")
+> [1] RISC-V Priv spec ch 9.1.1. Supervisor Timer (stimecmp) Register
+> A supervisor timer interrupt becomes pending, as reflected in the STIP
+> bit in the mip and sip registers whenever time contains a value
+> greater than or equal to stimecmp.
+> [2] RISC-V Priv spec ch19.2.1. Virtual Supervisor Timer (vstimecmp) Regis=
+ter
+> A virtual supervisor timer interrupt becomes pending, as reflected in
+> the VSTIP bit in the hip register, whenever (time + htimedelta),
+> truncated to 64 bits, contains a value greater than or equal to
+> vstimecmp
 >
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
-> ---
->
->  Changes in v2:
->
->  - Dropped the modifications in vmstate_register_with_alias_id()
->  - Added riscv_aplic_state_needed() and riscv_imsic_state_needed()
->
->  hw/intc/riscv_aplic.c | 8 ++++++++
->  hw/intc/riscv_imsic.c | 6 ++++++
->  2 files changed, 14 insertions(+)
->
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 8bcd9f4697..c9abef2e0f 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -962,10 +962,18 @@ static const Property riscv_aplic_properties[] =3D =
-{
->      DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
->  };
->
-> +static bool riscv_aplic_state_needed(void *opaque)
-> +{
-> +    RISCVAPLICState *aplic =3D opaque;
-> +
-> +    return riscv_use_emulated_aplic(aplic->msimode);
-> +}
-> +
->  static const VMStateDescription vmstate_riscv_aplic =3D {
->      .name =3D "riscv_aplic",
->      .version_id =3D 2,
->      .minimum_version_id =3D 2,
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
 
-I think these should also be incremented
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
-> +    .needed =3D riscv_aplic_state_needed,
->      .fields =3D (const VMStateField[]) {
->              VMSTATE_UINT32(domaincfg, RISCVAPLICState),
->              VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-> diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-> index 2169988167..92a7254076 100644
-> --- a/hw/intc/riscv_imsic.c
-> +++ b/hw/intc/riscv_imsic.c
-> @@ -398,10 +398,16 @@ static const Property riscv_imsic_properties[] =3D =
-{
->      DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
->  };
+> ---
+>  hw/intc/riscv_aclint.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> +static bool riscv_imsic_state_needed(void *opaque)
-> +{
-> +    return !kvm_irqchip_in_kernel();
-> +}
+> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+> index db374a7c2d..5f4a17e177 100644
+> --- a/hw/intc/riscv_aclint.c
+> +++ b/hw/intc/riscv_aclint.c
+> @@ -28,6 +28,7 @@
+>  #include "qemu/module.h"
+>  #include "hw/sysbus.h"
+>  #include "target/riscv/cpu.h"
+> +#include "target/riscv/time_helper.h"
+>  #include "hw/qdev-properties.h"
+>  #include "hw/intc/riscv_aclint.h"
+>  #include "qemu/timer.h"
+> @@ -240,6 +241,10 @@ static void riscv_aclint_mtimer_write(void *opaque, =
+hwaddr addr,
+>              riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu),
+>                                                mtimer->hartid_base + i,
+>                                                mtimer->timecmp[i]);
+> +            riscv_timer_write_timecmp(env, env->stimer, env->stimecmp, 0=
+, MIP_STIP);
+> +            riscv_timer_write_timecmp(env, env->vstimer, env->vstimecmp,
+> +                                      env->htimedelta, MIP_VSTIP);
 > +
->  static const VMStateDescription vmstate_riscv_imsic =3D {
->      .name =3D "riscv_imsic",
->      .version_id =3D 1,
->      .minimum_version_id =3D 1,
-> +    .needed =3D riscv_imsic_state_needed,
->      .fields =3D (const VMStateField[]) {
->              VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
->                                    num_pages, 0,
+>          }
+>          return;
+>      }
 > --
-> 2.27.0
+> 2.17.1
+>
 >
 
