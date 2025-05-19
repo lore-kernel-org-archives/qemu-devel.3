@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8716DC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 02:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117DEC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 02:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGqaK-000304-OU; Sun, 18 May 2025 22:50:36 -0400
+	id 1uGqhz-0004oK-Ro; Sun, 18 May 2025 22:58:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uGqaJ-0002zr-Jk
- for qemu-devel@nongnu.org; Sun, 18 May 2025 22:50:35 -0400
+ id 1uGqhp-0004nE-Mt
+ for qemu-devel@nongnu.org; Sun, 18 May 2025 22:58:22 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uGqaH-0003fJ-P4
- for qemu-devel@nongnu.org; Sun, 18 May 2025 22:50:35 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1uGqhn-0004LC-2s
+ for qemu-devel@nongnu.org; Sun, 18 May 2025 22:58:21 -0400
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bx3651nCpoeZHxAA--.45099S3;
- Mon, 19 May 2025 10:50:29 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxOGpFnipoIZPxAA--.65413S3;
+ Mon, 19 May 2025 10:58:13 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxn8VxnCpoX0fgAA--.49917S3;
- Mon, 19 May 2025 10:50:29 +0800 (CST)
-Subject: Re: [PATCH 14/15] target/loongarch: Report error with split
- kernel_irqchip option
+ by front1 (Coremail) with SMTP id qMiowMCxbsVCnipoE0rgAA--.52680S3;
+ Mon, 19 May 2025 10:58:12 +0800 (CST)
+Subject: Re: [PATCH 03/15] hw/intc/loongarch_extioi: Add irqchip-in-kernel
+ save/restore function
 To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
 Cc: Huacai Chen <chenhuacai@kernel.org>, QEMU devel <qemu-devel@nongnu.org>,
  Xianglai Li <lixianglai@loongson.cn>
 References: <20250509100747.1070094-1-maobibo@loongson.cn>
- <20250509101245.1070255-1-maobibo@loongson.cn>
- <20250509101245.1070255-4-maobibo@loongson.cn>
- <977bcff5-d3bf-47b5-8958-d279ca22a4d4@app.fastmail.com>
+ <20250509100747.1070094-4-maobibo@loongson.cn>
+ <5fa02121-43f6-4335-883e-efe07a2f3711@app.fastmail.com>
 From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <c8487b55-ff53-6086-afc1-d15b9bce5590@loongson.cn>
-Date: Mon, 19 May 2025 10:49:15 +0800
+Message-ID: <391ab7d0-9e61-1b9d-fbd3-98dd23f2d2a7@loongson.cn>
+Date: Mon, 19 May 2025 10:56:59 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <977bcff5-d3bf-47b5-8958-d279ca22a4d4@app.fastmail.com>
+In-Reply-To: <5fa02121-43f6-4335-883e-efe07a2f3711@app.fastmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8VxnCpoX0fgAA--.49917S3
+X-CM-TRANSID: qMiowMCxbsVCnipoE0rgAA--.52680S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7Gr47Jw4fur4DtF4DuFyDArc_yoWDJwc_uF
- 17Aws5urW8Wa1qy3Z8t395Aw17tr4rGa1FvFWDXr4UK34DJ3WkZrs8K3Z5C34akr4kJws8
- A3s8XrnYyF13KosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbIxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
- 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8w0
- eJUUUUU==
+X-Coremail-Antispam: 1Uk129KBj93XoW7Aw1fCFW8ZryxWFyxtr17CFX_yoW8KFW8pr
+ 1UCFW5Ww4kW34xG3sak3WDur95Xws3WrW7uFy3trWIkrn8uryY9a4ktr9xWFZxGw1kWw1q
+ v34ru3WUuFyDCrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jo
+ sjUUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -37
@@ -88,35 +87,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2025/5/9 下午8:14, Jiaxun Yang wrote:
+On 2025/5/9 下午8:36, Jiaxun Yang wrote:
 > 
 > 
-> 在2025年5月9日周五 上午11:12，Bibo Mao写道：
->> Option kernel_irqchip=split is not supported on LoongArch virt machine,
->> report error and exit if detect split kernel_irqchip option.
+> 在2025年5月9日周五 上午11:07，Bibo Mao写道：
+>> Add save and store funtction if irqchip-in-kernel property is enabled,
+>> it is to get/set ExtIOI irqchip state from KVM kernel.
 >>
 >> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 >> ---
->>   target/loongarch/kvm/kvm.c | 7 ++++++-
->>   1 file changed, 6 insertions(+), 1 deletion(-)
+>>   hw/intc/loongarch_extioi.c         |  17 +++++
+>>   hw/intc/loongarch_extioi_kvm.c     | 100 +++++++++++++++++++++++++++++
+>>   include/hw/intc/loongarch_extioi.h |   2 +
+>>   3 files changed, 119 insertions(+)
 >>
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index 1bda570482..a8e5724b21 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -1249,7 +1249,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>> diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
+>> index 854f54684b..e81caf430c 100644
+>> --- a/hw/intc/loongarch_extioi.c
+>> +++ b/hw/intc/loongarch_extioi.c
+>> @@ -398,9 +398,21 @@ static void loongarch_extioi_reset_hold(Object
+>> *obj, ResetType type)
+>>       }
+>>   }
 >>
->>   int kvm_arch_irqchip_create(KVMState *s)
->>   {
->> -    return 0;
->> +    if (kvm_kernel_irqchip_split()) {
->> +        error_report("-machine kernel_irqchip=split is not supported on ARM.");
->                                                                             ^ ARM :)
-oops, silly copy and past here :)
-will do.
+>> +static int vmstate_extioi_pre_save(void *opaque)
+>> +{
+>> +    LoongArchExtIOIState *les = LOONGARCH_EXTIOI(opaque);
+>> +
+>> +    if (kvm_enabled() && les->irqchip_in_kernel) {
+>> +        return kvm_loongarch_extioi_pre_save(opaque);
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+> 
+> Hi Bibo,
+> 
+> I believe hijacking loongarch_extioi.c is not the proper way to do it.
+> The sensible solution is to create a TYPE_LOONGARCH_EXTIOI_KVM, which
+> inherits TYPE_LOONGARCH_EXTIOI_COMMON, and let machine create
+> TYPE_LOONGARCH_EXTIOI_KVM vs TYPE_LOONGARCH_EXTIOI as necessary.
+what is advantage about creating TYPE_LOONGARCH_EXTIOI_KVM device in KVM 
+node and TYPE_LOONGARCH_EXTIOI device in TCG mode?
+
+That means there will be two virt machine types since device name is 
+different in different accel mode.
+> 
+> In this way you can avoid ugly "irqchip-in-kernel" property.
+> Also you don't really want all those emulation functions in
+> loongarch_extioi.c to kick in when irqchip is in kernel. If
+> IOCSR VMEXIT happens on extioi range, it's a hypervisor error
+> rather than something needs to be emulated.
+> 
+> Also I think EXTIOI_VIRT_CONFIG range MMIO needs to be handled
+> differently on KVM vs userspace irqchip. EXTIOI_VIRT_CONFIG needs
+> to be relayed to kernel, as virt_iocsr_misc_write will perform
+> IOCSR read/write in userspace, this needs to be translated to
+> KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_STATE.
+Will handle it, misc iocsr should be emulated in kernel also.
 
 Regards
 Bibo Mao
+> 
+> Hope it makes sense.
 > 
 > Thanks
 > 
