@@ -4,74 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF96C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A52C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH3Um-0002kJ-5u; Mon, 19 May 2025 12:37:44 -0400
+	id 1uH3Wc-0006wU-QF; Mon, 19 May 2025 12:39:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uH3Uj-0002h0-Tz
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uH3Ui-0005j7-3R
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747672659;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AcM26vXczQLNBJGv0uqc1uZ7aik0JS+BDC4m3OHXOGM=;
- b=MEa8yNVNeS+MALiYTKAW7+exoBBFT4KNlmdp5D6vJC2AmIZ7XbBC9lsUJGmA4W5OCSOWG0
- hKOcM0rNXJZD8ddmB0C3PJrkivHKqNBNiJIkkkjz2ngJDhtCUOpMs2zuRm/hDPGzkJaE2F
- mmI1hfskVjGBIJ8x//MEW+XqynmMzW4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-8FNOnEwCPIeN4CIuQBplVw-1; Mon,
- 19 May 2025 12:37:38 -0400
-X-MC-Unique: 8FNOnEwCPIeN4CIuQBplVw-1
-X-Mimecast-MFC-AGG-ID: 8FNOnEwCPIeN4CIuQBplVw_1747672657
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B19C1956086; Mon, 19 May 2025 16:37:37 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.50])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1456219560A3; Mon, 19 May 2025 16:37:34 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 4/9] scripts/checkpatch: use new hook for ACPI test data
- check
-Date: Mon, 19 May 2025 17:37:16 +0100
-Message-ID: <20250519163721.347322-5-berrange@redhat.com>
-In-Reply-To: <20250519163721.347322-1-berrange@redhat.com>
-References: <20250519163721.347322-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uH3WY-0006Yl-E6
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:39:34 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uH3WW-00064p-0f
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:39:34 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-70cca430085so14837557b3.3
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 09:39:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747672770; x=1748277570; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cw99MtUfdTaJBGWZodRP45DuFy8O+qjyWzGZDSH7gRM=;
+ b=BOXKQwq1mrDlerLHFtRHoPOfvK8R4GkdohSP6q1uuO9O7XAV2NP+jpO4V2btY+X9uR
+ Nm4oslEy+cwzgEBUd1O36C/uj5M7lnLlPJgXt4w25fI3rypY0ZmURdPffyCjJSOq5vTg
+ QvQd095AszmjQ1oPPC+NHwW91VXc5P2QQg7o+SAE/DqKAEgd+Cy9MP9KMo6th74FL8FY
+ 9k7zEZmrVDbkZLuW7QAFX601U8Yq+84RFihJLuHUEc1V7VSI2k2hznDhgmDMSAJRGcpp
+ wm6aGwKBE0le4TEP6+hLZ14QBxbshx2fc6OZ/nFBIViVnCRq+tr9fONL6sxkVTpdExFN
+ bXOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747672770; x=1748277570;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cw99MtUfdTaJBGWZodRP45DuFy8O+qjyWzGZDSH7gRM=;
+ b=FCCUGU8X5mi65sy08v5yyScZThC31AisPOgIQ91SItd01OAdKs4K0xDHED1WX5ngIS
+ qgmRp+wO6gLGcigknAFb/AGWjoCluJrb3dT2TciW5MKyXwGuFJnrgE3YckN3RMJzorNL
+ N8BB65L6r7WrqNOmXvD+O9OcLrnv5bXBdn4ANz2Evi7buMS828zu6mQArIVBsHT74K6i
+ J1L6ET5+4TFFnliEASIF1dpgTYZB4QmtZglnAjiX+WcQ5QjaDre4ZBwM0DCiW01f3ISh
+ gTVxuhs0Iin1TSTvaaZTYHcIq4g/MsuBhsbxZfvecIEJEDOWaqqHgfPGwrc1pjHIZ1o+
+ 9J5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWD2hPjHKCeSj7Nxf2wVF2pr/QUl3GRXbbt8SZL9MD3+BiNyCbLjhCYJKwodiKoSL1Iw3nsHyh47DTU@nongnu.org
+X-Gm-Message-State: AOJu0Yxok8qTd+RRpj6gA/6JpzOUZiWIJjBvlKK28eRatuw782I/y7Ld
+ 2T/ikS7ZIWB8r4uTUYFOEBgUKoTXdeF7TEbDaxNffwwUvt3RbM/30sj3bceFlzr3e+1Dqx/iTvh
+ I1OPOC1duF/+dgf3VRyMQbrgjxQLrTSl8c71zgkemwQ==
+X-Gm-Gg: ASbGncuNgplZjspxTJfzHJfxT+rnld+dwRaEx5t4e/zB8IRg0vtPFvWojZCbobVAX4J
+ ExPqQKpqoaQOIAAXQrqMxzGu85bN0ucf5PKNE6YJZgMTFvhk1URBYZKyDCzJ+leTfhBKpGteH7F
+ 8HAyGrJjPBc+pWndAHlqDOpkoIofjAt84GPQ==
+X-Google-Smtp-Source: AGHT+IHfNgR0uMU7kdx6aencHuFMtxxi25g3gKyF2NXrgXF4FNxL6X5crzwTNOqjXhQIElTK5rs7rGAgPa0yRrd4Pxs=
+X-Received: by 2002:a05:690c:5086:b0:708:c37e:6269 with SMTP id
+ 00721157ae682-70cab10984cmr158490467b3.37.1747672770051; Mon, 19 May 2025
+ 09:39:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250515135936.86760-1-berrange@redhat.com>
+ <20250515135936.86760-3-berrange@redhat.com>
+ <87ldqsr2fq.fsf@draig.linaro.org>
+In-Reply-To: <87ldqsr2fq.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 May 2025 17:39:18 +0100
+X-Gm-Features: AX0GCFtgRl4IgZtW6M3F0QjC17ZXt8YoyRz-Gyk5_uIddmupptk6pWBBmd1jGn4
+Message-ID: <CAFEAcA_t_Hm+ijLpQrabZ2YeoHjk0Sea0daotWr-DFQegz-QtA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/9] scripts/checkpatch.pl: fix various indentation
+ mistakes
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,123 +100,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ACPI test data check needs to analyse a list of all files in a
-commit, so can use the new hook for processing the file list.
+On Mon, 19 May 2025 at 17:27, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>
+> > Various checks in the code were under-indented relative to other
+> > surrounding code.
+>
+> Are we accepting that we have hard forked from the Linux checkpatch now?
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/checkpatch.pl | 61 ++++++++++++++++++++-----------------------
- 1 file changed, 29 insertions(+), 32 deletions(-)
+Yes, I think that ship sailed some years ago: we've never
+done more than try to port some specific kernel commits
+across to our version; we've not tried to do a sync
+to the kernel's version of the script ever since we
+first imported the script in 2011.
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 82056dcd24..60c26dca06 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1330,29 +1330,6 @@ sub WARN {
- 	}
- }
- 
--# According to tests/qtest/bios-tables-test.c: do not
--# change expected file in the same commit with adding test
--sub checkfilename {
--	my ($name, $acpi_testexpected, $acpi_nontestexpected) = @_;
--
--        # Note: shell script that rebuilds the expected files is in the same
--        # directory as files themselves.
--        # Note: allowed diff list can be changed both when changing expected
--        # files and when changing tests.
--	if ($name =~ m#^tests/data/acpi/# and not $name =~ m#^\.sh$#) {
--		$$acpi_testexpected = $name;
--	} elsif ($name !~ m#^tests/qtest/bios-tables-test-allowed-diff.h$#) {
--		$$acpi_nontestexpected = $name;
--	}
--	if (defined $$acpi_testexpected and defined $$acpi_nontestexpected) {
--		ERROR("Do not add expected files together with tests, " .
--		      "follow instructions in " .
--		      "tests/qtest/bios-tables-test.c: both " .
--		      $$acpi_testexpected . " and " .
--		      $$acpi_nontestexpected . " found\n");
--	}
--}
--
- sub checkspdx {
-     my ($file, $expr) = @_;
- 
-@@ -1438,6 +1415,34 @@ sub checkspdx {
- # real filenames that were seen in the patch
- sub process_file_list {
- 	my @fileinfos = @_;
-+
-+	# According to tests/qtest/bios-tables-test.c: do not
-+	# change expected file in the same commit with adding test
-+	my @acpi_testexpected;
-+	my @acpi_nontestexpected;
-+
-+	foreach my $fileinfo (@fileinfos) {
-+		# Note: shell script that rebuilds the expected files is in
-+		# the same directory as files themselves.
-+		# Note: allowed diff list can be changed both when changing
-+		#  expected files and when changing tests.
-+		if ($fileinfo->{filenew} =~ m#^tests/data/acpi/# &&
-+		    $fileinfo->{filenew} !~ m#^\.sh$#) {
-+			push @acpi_testexpected, $fileinfo->{filenew};
-+		} elsif ($fileinfo->{filenew} !~
-+			 m#^tests/qtest/bios-tables-test-allowed-diff.h$#) {
-+			push @acpi_nontestexpected, $fileinfo->{filenew};
-+		}
-+	}
-+	if (int(@acpi_testexpected) > 0 and int(@acpi_nontestexpected) > 0) {
-+		ERROR("Do not add expected files together with tests, " .
-+		      "follow instructions in " .
-+		      "tests/qtest/bios-tables-test.c. Files\n\n  " .
-+		      join("\n  ", @acpi_testexpected) .
-+		      "\n\nand\n\n  " .
-+		      join("\n  ", @acpi_nontestexpected) .
-+		      "\n\nfound in the same patch\n");
-+	}
- }
- 
- # Called at the start of processing a diff hunk for a file
-@@ -1502,9 +1507,6 @@ sub process {
- 	my %suppress_whiletrailers;
- 	my %suppress_export;
- 
--        my $acpi_testexpected;
--        my $acpi_nontestexpected;
--
- 	# Pre-scan the patch sanitizing the lines.
- 
- 	sanitise_line_reset();
-@@ -1643,7 +1645,6 @@ sub process {
- 			$fileold =~ s@^([^/]*)/@@ if (!$file);
- 			$filenew =~ s@^([^/]*)/@@ if (!$file);
- 			$realfile = $filenew;
--	                checkfilename($realfile, \$acpi_testexpected, \$acpi_nontestexpected);
- 
- 			$fileinfo = {
- 				"isgit" => 1,
-@@ -1677,8 +1678,6 @@ sub process {
- 			$realfile = $1;
- 			$realfile =~ s@^([^/]*)/@@ if (!$file);
- 
--	                checkfilename($realfile, \$acpi_testexpected, \$acpi_nontestexpected);
--
- 			$p1_prefix = $1;
- 			if (!$file && $tree && $p1_prefix ne '' &&
- 			    -e "$root/$p1_prefix") {
-@@ -1771,9 +1770,7 @@ sub process {
- 		     $line =~ /^rename (?:from|to) [\w\/\.\-]+\s*$/ ||
- 		     ($line =~ /\{\s*([\w\/\.\-]*)\s*\=\>\s*([\w\/\.\-]*)\s*\}/ &&
- 		      (defined($1) || defined($2)))) &&
--                      !(($realfile ne '') &&
--                        defined($acpi_testexpected) &&
--                        ($realfile eq $acpi_testexpected))) {
-+		    $realfile !~ m#^tests/data/acpi/#) {
- 			$reported_maintainer_file = 1;
- 			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
- 		}
--- 
-2.49.0
-
+thanks
+-- PMM
 
