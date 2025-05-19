@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46877C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33602C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:09:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGrnE-0004xK-R7; Mon, 19 May 2025 00:08:00 -0400
+	id 1uGro4-0006n4-Dn; Mon, 19 May 2025 00:08:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGrmv-0004lt-As
- for qemu-devel@nongnu.org; Mon, 19 May 2025 00:07:41 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1uGrno-0006XZ-Bn; Mon, 19 May 2025 00:08:38 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGrmt-00049Q-J0
- for qemu-devel@nongnu.org; Mon, 19 May 2025 00:07:41 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7fd35b301bdso4433542a12.2
- for <qemu-devel@nongnu.org>; Sun, 18 May 2025 21:07:37 -0700 (PDT)
+ id 1uGrnk-0004Di-Kr; Mon, 19 May 2025 00:08:35 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-23229fdaff4so9192865ad.1; 
+ Sun, 18 May 2025 21:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747627656; x=1748232456; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747627710; x=1748232510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zsKoSChLOgf9IXWkPW+gBtADC5q1GRWfNKybDJ3aAWQ=;
- b=D5r7RZsMp0SMf3mb2lyMr8krJs/ABzkAVB+GSIzpJpXREq+pcfPqk3LSW+jVBqO3Rb
- sgeqcUzumn4PtIIyh5hp5RAIHsKM2hYCYbJsCIcq7AwiRZW5zwQ51fwqwxSPa9D0kb28
- ZCYZAdhfbefgrsoXpyyG2iQhYa/d65hj5txitWQ1PRbOAyzvsuMKAQTuqWIYEFtAbnQM
- k/8HxFxhv24UYcrZvuel5rk6Qn9CT88yt09GKtJ2CwYsQxExNGK8aFhj6j1SrhP38VDv
- jHDOsPWCl+5FgE7yPFNcejinXwQ9WlYgIF78ksYiPkd7TBS6ZSNt6ODZHeUF/dhHvpa5
- YY/A==
+ bh=JL2MXrdEU5pO23tKkJ3XXY0EA0OwjP7eX65K3PT8UNc=;
+ b=fmBJ8oqpELYLdjSCdYsY7PgWUyxjOcNhDurQ/aB+x7daMf8AoUqjBlOzpnQVTKd6qK
+ 0iBEfbZ2gHZ4gf26h64wP23sxD/P2TlUcClu8+FL18bqL47Ix2gLtyVhxDv8uNJAomI8
+ z4AT6Xu93U8ny8JrR14j1DuN0h59JO3kVjipdo6LWFneFHhqoGEBxnQZ7XVPKT043x7s
+ ZAo0KbxVfZFzGGgplW8Q8PXDVfytUgQrzQkvtFJGI4inDTs73ySZWeNG1VA9QXNwgBCU
+ 5WCOr7LyrZ0mYpvA0D/xKJSHOGt0MNPUxBY9qtY8okmByldpsUEsWcvT2Z6rydvV/CNM
+ aPXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747627656; x=1748232456;
+ d=1e100.net; s=20230601; t=1747627710; x=1748232510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zsKoSChLOgf9IXWkPW+gBtADC5q1GRWfNKybDJ3aAWQ=;
- b=Z7JyvCfe9leNBx5tV0GjTcgwggQq1+gQcRZLbCWzu/6t+woogxgGtfIUA5z/h3PSgH
- zkErb6vnIK8O5lbtBeyL2OBRkrXByy8GW3COi/UjSFxLPwAmZRFkcnoTfUwHVKckO273
- 1eQQ4odAUg8h+h2P8SHPUo8kzmWSCOWMwLE/BYqUsjNqEHPU43Z4ao4WU0eOPFRUYnM5
- d6t3Pa3uUGTLO/9uIS0+6NDn6k9ow/4QXcLcGdmMu+/iirQBEJtVNnpcWTuAYEl91bgF
- okUMV6fv/5EPeOq4rye/ZgJ9Wr1MEVtrDNwugIeqDi8P+6MBqM5tq9LiCq9W54UF3VAm
- PMfw==
-X-Gm-Message-State: AOJu0YxINooMFl8dEAxk9rm4r/LSXNvMbxilgN1ZSfNOABQn4T+8T70P
- oK6c0sBgDal8E0ftlsYivgow3D389gC6ZvzmIjtHOHhnJhcm5RA8j2TT8lRfTQ==
-X-Gm-Gg: ASbGncuUW9iNepnkquTqSNRZaoRyVPJqR0hYeVe4kWkcA7aFH4OzunX2cR5lW4Nb+5X
- h4mElhRseTsSodOgsI6cj/P2B6sDWN0+Trw8nfeBRdTs8hWW2R+No562/Dy55IsQ9ijCaVcci43
- XFCGYL1Ip3KZZVsFGgRpRSf6AjfbL1c9DFfYeWlGPa1p5hoRQSqmNlt7K5IJRtRVRBKtX1NeiA0
- kYDvhwkr74mxUj3ZMHmljts2mEO2FNWj9f7jmb6EqKJvzfHsH6anDkPn40vTw74lTbIjPLnhW/0
- pJMWCpd4KbeB4dFXrWiKRAUWLZ6cmsDAKS+6jDPSeH8IH3gCyPVFYwnsUHzAC8Jftqdnckn3Mx0
- 1FiJTTdGEiGnRrZ34yvLra7MfdVqeZqfVT8Ie6n0syZbaqUUG30kZry81
-X-Google-Smtp-Source: AGHT+IEb2u61/bsK4ij3F3u0eIjtE+N/nrQ1XXcYgyC1b7vol+gRE7yExMvg3Tbit2bWwK8y50Gb8w==
-X-Received: by 2002:a17:902:f78c:b0:215:7421:262 with SMTP id
- d9443c01a7336-231de35f13fmr188046155ad.12.1747627656601; 
- Sun, 18 May 2025 21:07:36 -0700 (PDT)
+ bh=JL2MXrdEU5pO23tKkJ3XXY0EA0OwjP7eX65K3PT8UNc=;
+ b=KMekI/kHhHeZYOnLchd1yMG1addq5VYH21bqgbVNz+nunQSaLrNljlHvse4W9ET1rf
+ QM7iFfLWsTpX0PB01o/MwEwboJ9qBl+/OzSWv4H9viK8qzwzW619xGyh+WBYlW6wUarj
+ 5qq6KccWq/zFdyBv14urRtIeYjIAg4g63kXDWGy/YudGWmC+cIghXECp/ySoo/eZOHzf
+ uGTDTaFnUihcE1Wj1LTyWUv8/82Y3Bd0TifwssEddW889y/bFJxNkhmPuDIH2DCbnhwl
+ Yh+2y1u1bfoc/reQkulfCYzEIVpn7ETFO58zOHRbHGiES+A0QWU5MbGDoBPEC7DNeDBk
+ UFpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8zm4vXvqNue8yGthAkovT1b7il6BNqCAbOtXm3WSaWJ2jxw5fbQV3P/QWjITJ4dtKAq1O0HdPQKg03Q==@nongnu.org
+X-Gm-Message-State: AOJu0YxvooqqncnCgPCKeb2m2515d2IapCMf1HqldV7gZ3Qu0044G3Gh
+ forz6SKl/KMDO7Yj4hDBrR8afnfxsTi2BRnzkdBZHkMMzJFumztePeBbQKECFQ==
+X-Gm-Gg: ASbGnculAJtBaZ3D+BpCzwknOMIWVqLcsUYY+4SI0igFmPX9VlD3IwTh8hnASva9tGr
+ 1KUKFu25izXKUwvIttj5Q8yxSj9My6SXjl0Qde+4VeF4VXhiedyc9iLbkujkvtCT4gSnWB1V0ZA
+ k7UHOW+Pm6WiivPlctUpsy5Kim1TuNIOA/6s2TBtx6PsDI6z/d9t/FWdJ6bF6oDmgCtsNtWMn8z
+ 9ZOC2f1UtSH2EwdjqkRevUd4T+g61+sNbt2zyrRJOuxrMk/LcnekrH6YTGC4/8CbpO6HG0JypkB
+ bMSy/njMy/TXsfyQcSAdkRw4HveBgBNynsiHBw2U7AqUrBa28+VpprUQbS8BgKS+3GH5MsMQg27
+ zRc7vLkyzRVU5SuMlB5tAxi246wcb38FXY9nhhjZCbbZFh0dozZJAfxVH
+X-Google-Smtp-Source: AGHT+IEBvI77LRt/jqG8YZwghMoi7PG1qTEYSxp3vWaKw7ZqTgXF0hgZlW6jpKP4eLb8DVr7bpu34w==
+X-Received: by 2002:a17:903:2345:b0:22e:1a41:a6de with SMTP id
+ d9443c01a7336-231d452d109mr176238835ad.32.1747627710514; 
+ Sun, 18 May 2025 21:08:30 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.07.34
+ d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.08.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 May 2025 21:07:35 -0700 (PDT)
+ Sun, 18 May 2025 21:08:29 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 10/56] hw/riscv: More flexible FDT placement for MPFS
-Date: Mon, 19 May 2025 14:05:07 +1000
-Message-ID: <20250519040555.3797167-11-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
+ Anton Blanchard <antonb@tenstorrent.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, qemu-stable@nongnu.org
+Subject: [PULL 26/56] target/riscv: rvv: Apply vext_check_input_eew to vector
+ integer extension instructions(OPMVV)
+Date: Mon, 19 May 2025 14:05:23 +1000
+Message-ID: <20250519040555.3797167-27-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250519040555.3797167-1-alistair.francis@wdc.com>
 References: <20250519040555.3797167-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,40 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+From: Max Chou <max.chou@sifive.com>
 
-If the kernel entry is in the high DRAM area, place the FDT into this
-area.
+Handle the overlap of source registers with different EEWs.
 
-Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250319061342.26435-3-sebastian.huber@embedded-brains.de>
+Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-8-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Cc: qemu-stable@nongnu.org
 ---
- hw/riscv/microchip_pfsoc.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ target/riscv/insn_trans/trans_rvv.c.inc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index e39ee657cd..6bb44e3ac5 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -626,8 +626,15 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
-         kernel_entry = boot_info.image_low_addr;
- 
-         /* Compute the fdt load address in dram */
--        fdt_load_addr = riscv_compute_fdt_addr(memmap[MICROCHIP_PFSOC_DRAM_LO].base,
--                                               memmap[MICROCHIP_PFSOC_DRAM_LO].size,
-+        hwaddr kernel_ram_base = memmap[MICROCHIP_PFSOC_DRAM_LO].base;
-+        hwaddr kernel_ram_size = memmap[MICROCHIP_PFSOC_DRAM_LO].size;
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 841692701c..954f03291b 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3943,7 +3943,9 @@ static bool int_ext_check(DisasContext *s, arg_rmr *a, uint8_t div)
+         require_align(a->rd, s->lmul) &&
+         require_align(a->rs2, s->lmul - div) &&
+         require_vm(a->vm, a->rd) &&
+-        require_noover(a->rd, s->lmul, a->rs2, s->lmul - div);
++        require_noover(a->rd, s->lmul, a->rs2, s->lmul - div) &&
++        vext_check_input_eew(s, -1, 0, a->rs2, s->sew, a->vm);
 +
-+        if (kernel_entry - kernel_ram_base >= kernel_ram_size) {
-+            kernel_ram_base = memmap[MICROCHIP_PFSOC_DRAM_HI].base;
-+            kernel_ram_size = mem_high_size;
-+        }
-+
-+        fdt_load_addr = riscv_compute_fdt_addr(kernel_ram_base, kernel_ram_size,
-                                                machine, &boot_info);
-         riscv_load_fdt(fdt_load_addr, machine->fdt);
+     return ret;
+ }
  
 -- 
 2.49.0
