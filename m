@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B2A4C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50DF1C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 18:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH4bJ-0004wy-5J; Mon, 19 May 2025 13:48:33 -0400
+	id 1uH583-0002ff-Gi; Mon, 19 May 2025 14:22:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH4bG-0004wQ-2D
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:48:31 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH57t-0002cy-16
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 14:22:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH4bD-0005HZ-9A
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:48:29 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH57q-0000by-KU
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 14:22:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747676906;
+ s=mimecast20190719; t=1747678929;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t+NDp0ur7A+6GA6KD0ioYu3I/AZm9L4v5VKH+B0fBHk=;
- b=FJYXmq1N0gLMs9DAmMdEwWvWJ1RCiBAzyEMe1woWs5K7dT7WIh+xMk71v/Z9T+ihxA3pA8
- SwjkPcOp1iCRiM7IpagYvE2j+M8iKy+IduLdGSf7Z1BcocALnAWGrocdHFH1OZW/94pt6Y
- cFHZICYBzkRYeBfyUSum1GnWAjyg8+o=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-Csz1-4hXPLq71yp_KOy9HQ-1; Mon, 19 May 2025 13:48:24 -0400
-X-MC-Unique: Csz1-4hXPLq71yp_KOy9HQ-1
-X-Mimecast-MFC-AGG-ID: Csz1-4hXPLq71yp_KOy9HQ_1747676903
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-231d7a20b31so32358595ad.0
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 10:48:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747676903; x=1748281703;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=t+NDp0ur7A+6GA6KD0ioYu3I/AZm9L4v5VKH+B0fBHk=;
- b=aMRQD90jPATTVnwhRxFq58+7Qf7tScqHjG4KpiVng385G5FcEj2j3ijE8KRfq5EOsQ
- IVLPQAO/rTMTKG5sFeQPG4+Wvm2iR2n6JLjTcGQKCvE0I1Z4oNwU5yoOkYGuP+mRiUwK
- P6s7Eb/uWRWgG+YyTODT7ckZYWHXrZtYzE3ejhwGqLv/3JfSL2qee/PUd+3BeZCp1s9V
- zEV4gCIkz3MNxoW9JImFqXzntt0QuEOOJcmKGJfGkVzDoO07Jw2hkgwNTqGE3Qiofagn
- V0YVxOF3IozGLuG48d9Juxh+kkl66qJLfuA5xnQLhFzMnvQ7FM4RoIDRFtkgfFwGnM0J
- UkkQ==
-X-Gm-Message-State: AOJu0YzOu6oUiFpzRggT7jxInrbJop5UCHScU89L0/JY5qOQ295ceKE6
- 8qjqn3ZB+fvSUNMPhS0HjZInnuaEniesFEi1gdLnRWcJ6qAEqB1nCLRZw56HrfT7TGt/nLGS/XR
- Ap2zG+OYW1Bz7E8JVyS4EpcKPQCgg7kDTWb8/ySUiBYbCkMLP8gwfjdaIx5brwZ5eOUdAD7ghFz
- bL3dE83E8XqK220ElR8QhNORPJfQD5vi8=
-X-Gm-Gg: ASbGncuFqVoGaXLTihtCT3bZBVenvn5HQwQvAtgHRtbRIW5bao5MII+VE8mnySSBcUm
- lcMBL5XJ7YdxeEJRweI6hCXB1fQPWvIHLSSO9aEX1UbRIZhsgilM5ER5eeizPh/VlUTqeJtix23
- tURGCoTUro7NA22nXP2VKZFdfn
-X-Received: by 2002:a17:902:db08:b0:223:66bb:8993 with SMTP id
- d9443c01a7336-231d45c4e39mr216008945ad.43.1747676903354; 
- Mon, 19 May 2025 10:48:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxueigNJiQzI7rH1EHoN5ubB8N0j3ueMbhb3poPpy/JMwHlYe0B0QtNTSgdDPjB8tsPzVImMTMNxlPeHKrJVk=
-X-Received: by 2002:a17:902:db08:b0:223:66bb:8993 with SMTP id
- d9443c01a7336-231d45c4e39mr216008675ad.43.1747676903045; Mon, 19 May 2025
- 10:48:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250512193357.3388514-1-jsnow@redhat.com>
- <87o6vu2rqd.fsf@pond.sub.org>
-In-Reply-To: <87o6vu2rqd.fsf@pond.sub.org>
+ bh=m2iR8HmasrCFaEgqZX0MEMY7c6lB0t/HWqm2yXF4vAA=;
+ b=TVzEcARSXdLeto+C2ubKGev58DhQLFHO1tToAYgl4Vq0//GZEvFsCL9fpN02LMokzjisc5
+ 0XL7ymlARpjTuIbZnT4n2J4Hyh1f3hhK885SjGVnGn2iSmaP4tIGDCDUtPChXZbC1nMZOp
+ 0V9yR+ED7NvIGDXr/6c247oQXpL8UO4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-6XTOROiXOe-sCPjAOEciCQ-1; Mon,
+ 19 May 2025 14:22:06 -0400
+X-MC-Unique: 6XTOROiXOe-sCPjAOEciCQ-1
+X-Mimecast-MFC-AGG-ID: 6XTOROiXOe-sCPjAOEciCQ_1747678924
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94B4D18003FC; Mon, 19 May 2025 18:22:04 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.235])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0674A19560B0; Mon, 19 May 2025 18:22:00 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
-Date: Mon, 19 May 2025 13:48:11 -0400
-X-Gm-Features: AX0GCFtVcQpWNKJRYOgVPFilBj_orR9FR8G1D0vEZpdXBmmNtsor9zkcEXLXmTM
-Message-ID: <CAFn=p-bbk4cN3sJ7m6ZLgV3i+c+ZjYKz=wR1=e5jWGnRVYbUWQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/6] python: add QAPI and qapidoc et al to python tests
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000fd1fc0063580bc5a"
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-block@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org,
+ John Snow <jsnow@redhat.com>, Maksim Davydov <davydov-max@yandex-team.ru>,
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: [PATCH 1/8] python: convert packages to PEP517/pyproject.toml
+Date: Mon, 19 May 2025 14:21:45 -0400
+Message-ID: <20250519182153.3835722-2-jsnow@redhat.com>
+In-Reply-To: <20250519182153.3835722-1-jsnow@redhat.com>
+References: <20250519182153.3835722-1-jsnow@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
@@ -82,10 +75,9 @@ X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,74 +93,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fd1fc0063580bc5a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Newer versions of setuptools increasingly expect that packages are
+defined using the pyproject.toml/PEP517 packaging layout format. With
+3.9 as our minimum, I believe it's finally appropriate to make the shift
+away from the legacy packaging format.
 
-On Thu, May 15, 2025 at 4:38=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+Update documentation and dependencies that change as a result of the
+different build/packaging/installation pathways.
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > Hiya, this series turns on automated linting for scripts/qapi,
-> > docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.
-> >
-> > This includes flake8/isort/pylint/mypy for scripts/qapi, but omits mypy
-> > from the Sphinx plugins owing to my inability to strictly type the
-> > extensions given the wide versions of Sphinx we actually support.
-> >
-> > [Maybe this will change soon, but it's not true just yet.]
-> >
-> > Though I have been using black in my own development, I have not yet
-> > enabled it anywhere automatically. Maybe soon.
->
-> You lost my series
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
->
-> :)
+This change has the effect of fixing "make check-dev", which has been
+broken on newer versions of Fedora for a while, now.
 
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ python/README.rst        | 33 ++++++++++++++++-----------------
+ python/Makefile          | 18 +++++++++---------
+ python/pyproject.toml    |  8 ++++++++
+ python/setup.py          | 40 ----------------------------------------
+ python/tests/minreqs.txt |  4 +++-
+ 5 files changed, 36 insertions(+), 67 deletions(-)
+ create mode 100644 python/pyproject.toml
+ delete mode 100755 python/setup.py
 
-My patches tool broke and I was doing things manually for a bit! I've got
-it squared away thanks to Stefan Hajnoczi, and sent a PR out with the
-proper message IDs and SOBs.
-
-Thanks!
-
---000000000000fd1fc0063580bc5a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 15,=
- 2025 at 4:38=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Hiya, this series turns on automated linting for scripts/qapi,<br>
-&gt; docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.<br>
-&gt;<br>
-&gt; This includes flake8/isort/pylint/mypy for scripts/qapi, but omits myp=
-y<br>
-&gt; from the Sphinx plugins owing to my inability to strictly type the<br>
-&gt; extensions given the wide versions of Sphinx we actually support.<br>
-&gt;<br>
-&gt; [Maybe this will change soon, but it&#39;s not true just yet.]<br>
-&gt;<br>
-&gt; Though I have been using black in my own development, I have not yet<b=
-r>
-&gt; enabled it anywhere automatically. Maybe soon.<br>
-<br>
-You lost my series<br>
-Reviewed-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" tar=
-get=3D"_blank">armbru@redhat.com</a>&gt;<br>
-<br>
-:)</blockquote><div><br></div><div>My patches tool broke and I was doing th=
-ings manually for a bit! I&#39;ve got it squared away thanks to Stefan Hajn=
-oczi, and sent a PR out with the proper message IDs and SOBs.</div><div><br=
-></div><div>Thanks! <br></div></div></div>
-
---000000000000fd1fc0063580bc5a--
+diff --git a/python/README.rst b/python/README.rst
+index d62e71528d2..befa84e3261 100644
+--- a/python/README.rst
++++ b/python/README.rst
+@@ -5,24 +5,23 @@ This directory houses Python tooling used by the QEMU project to build,
+ configure, and test QEMU. It is organized by namespace (``qemu``), and
+ then by package (e.g. ``qemu/machine``, ``qemu/qmp``, etc).
+ 
+-``setup.py`` is used by ``pip`` to install this tooling to the current
+-environment. ``setup.cfg`` provides the packaging configuration used by
+-``setup.py``. You will generally invoke it by doing one of the following:
++``pyproject.toml`` and ``setup.cfg`` are used by ``pip`` to install this
++tooling to the current environment. ``setup.cfg`` provides the packaging
++configuration, while ``pyproject.toml`` describes the package build
++system requirements.
+ 
+-1. ``pip3 install .`` will install these packages to your current
+-   environment. If you are inside a virtual environment, they will
+-   install there. If you are not, it will attempt to install to the
+-   global environment, which is **not recommended**.
++You will generally install these packages by invoking ``pip3 install
++.``; which will install these packages to your current environment. If
++you are inside a virtual environment, they will install there. If you
++are not, modern versions of pip will attempt instead to install to your
++local user environment. Older versions of pip will attempt to install to
++the global environment, which is **not recommended**.
+ 
+-2. ``pip3 install --user .`` will install these packages to your user's
+-   local python packages. If you are inside of a virtual environment,
+-   this will fail; you want the first invocation above.
+-
+-If you append the ``--editable`` or ``-e`` argument to either invocation
+-above, pip will install in "editable" mode. This installs the package as
+-a forwarder ("qemu.egg-link") that points to the source tree. In so
+-doing, the installed package always reflects the latest version in your
+-source tree.
++If you append the ``--editable`` or ``-e`` argument to the above
++invocation, pip will install in "editable" mode. This installs the
++package as a "forwarder" that points to the source tree, so that the
++installed package always reflects the latest version in your source
++tree.
+ 
+ Installing ".[devel]" instead of "." will additionally pull in required
+ packages for testing this package. They are not runtime requirements,
+@@ -81,4 +80,4 @@ Files in this directory
+ - ``VERSION`` contains the PEP-440 compliant version used to describe
+   this package; it is referenced by ``setup.cfg``.
+ - ``setup.cfg`` houses setuptools package configuration.
+-- ``setup.py`` is the setuptools installer used by pip; See above.
++- ``pyproject.toml`` lists build system requirements for the Python packages.
+diff --git a/python/Makefile b/python/Makefile
+index 764b79ccb23..845fbb66cf4 100644
+--- a/python/Makefile
++++ b/python/Makefile
+@@ -15,8 +15,8 @@ help:
+ 	@echo "make check-tox:"
+ 	@echo "    Run tests against multiple python versions."
+ 	@echo "    These tests use the newest dependencies."
+-	@echo "    Requires: Python 3.9 - 3.11, and tox."
+-	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.11'"
++	@echo "    Requires: Python 3.9 - 3.13, and tox."
++	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.13'"
+ 	@echo "    The variable QEMU_TOX_EXTRA_ARGS can be use to pass extra"
+ 	@echo "    arguments to tox".
+ 	@echo ""
+@@ -63,12 +63,12 @@ $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate: setup.cfg tests/minreqs.tx
+ 	@(								\
+ 		echo "ACTIVATE $(QEMU_MINVENV_DIR)";			\
+ 		. $(QEMU_MINVENV_DIR)/bin/activate;			\
+-		echo "INSTALL wheel $(QEMU_MINVENV_DIR)";               \
+-		$(PIP_INSTALL) wheel 1>/dev/null;		               \
++		echo "INSTALL wheel $(QEMU_MINVENV_DIR)";		\
++		$(PIP_INSTALL) wheel 1>/dev/null;			\
+ 		echo "INSTALL -r tests/minreqs.txt $(QEMU_MINVENV_DIR)";\
+ 		$(PIP_INSTALL) -r tests/minreqs.txt 1>/dev/null;	\
+ 		echo "INSTALL -e qemu $(QEMU_MINVENV_DIR)";		\
+-		$(PIP_INSTALL) -e . 1>/dev/null;			\
++		$(PIP_INSTALL) -e . --config-settings=editable_mode=compat 1>/dev/null;			\
+ 	)
+ 	@touch $(QEMU_MINVENV_DIR)
+ 
+@@ -103,7 +103,7 @@ check-dev: dev-venv
+ 
+ .PHONY: develop
+ develop:
+-	$(PIP_INSTALL) -e .[devel]
++	$(PIP_INSTALL) -e .[devel] --config-settings=editable_mode=compat
+ 
+ .PHONY: check
+ check:
+@@ -122,12 +122,12 @@ check-coverage:
+ 
+ .PHONY: clean
+ clean:
+-	python3 setup.py clean --all
+-	rm -f pyproject.toml
++	rm -rf build/
+ 
+ .PHONY: distclean
+ distclean: clean
+-	rm -rf qemu.egg-info/ .eggs/ dist/
++	rm -rf qemu.egg-info/
+ 	rm -rf $(QEMU_VENV_DIR) $(QEMU_MINVENV_DIR) .tox/
++	rm -rf .mypy_cache/
+ 	rm -f .coverage .coverage.*
+ 	rm -rf htmlcov/
+diff --git a/python/pyproject.toml b/python/pyproject.toml
+new file mode 100644
+index 00000000000..a9eebdcc319
+--- /dev/null
++++ b/python/pyproject.toml
+@@ -0,0 +1,8 @@
++[build-system]
++requires = [
++    "setuptools>=39.2",
++    "wheel",
++]
++build-backend = "setuptools.build_meta"
++
++[tool.setuptools_scm]
+diff --git a/python/setup.py b/python/setup.py
+deleted file mode 100755
+index c5bc45919a4..00000000000
+--- a/python/setup.py
++++ /dev/null
+@@ -1,40 +0,0 @@
+-#!/usr/bin/env python3
+-"""
+-QEMU tooling installer script
+-Copyright (c) 2020-2021 John Snow for Red Hat, Inc.
+-"""
+-
+-import setuptools
+-from setuptools.command import bdist_egg
+-import sys
+-import pkg_resources
+-
+-
+-class bdist_egg_guard(bdist_egg.bdist_egg):
+-    """
+-    Protect against bdist_egg from being executed
+-
+-    This prevents calling 'setup.py install' directly, as the 'install'
+-    CLI option will invoke the deprecated bdist_egg hook. "pip install"
+-    calls the more modern bdist_wheel hook, which is what we want.
+-    """
+-    def run(self):
+-        sys.exit(
+-            'Installation directly via setup.py is not supported.\n'
+-            'Please use `pip install .` instead.'
+-        )
+-
+-
+-def main():
+-    """
+-    QEMU tooling installer
+-    """
+-
+-    # https://medium.com/@daveshawley/safely-using-setup-cfg-for-metadata-1babbe54c108
+-    pkg_resources.require('setuptools>=39.2')
+-
+-    setuptools.setup(cmdclass={'bdist_egg': bdist_egg_guard})
+-
+-
+-if __name__ == '__main__':
+-    main()
+diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+index 3cc6f7bf4e3..a97d8fc9b2d 100644
+--- a/python/tests/minreqs.txt
++++ b/python/tests/minreqs.txt
+@@ -11,6 +11,9 @@
+ # When adding new dependencies, pin the very oldest non-yanked version
+ # on PyPI that allows the test suite to pass.
+ 
++# Avocado requires setuptools at runtime, and it requires an older one.
++setuptools<71
++
+ # Dependencies for qapidoc/qapi_domain et al
+ sphinx==3.4.3
+ 
+@@ -49,7 +52,6 @@ astroid==2.15.4
+ dill==0.2
+ lazy-object-proxy==1.4.0
+ platformdirs==2.2.0
+-toml==0.10.0
+ tomlkit==0.10.1
+ wrapt==1.14.0
+ 
+-- 
+2.48.1
 
 
