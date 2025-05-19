@@ -4,111 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79954C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED7E3C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH3ZB-00012q-Qq; Mon, 19 May 2025 12:42:17 -0400
+	id 1uH3c6-0001rI-Ko; Mon, 19 May 2025 12:45:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1uH3Z8-00012U-Ev
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:42:14 -0400
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1uH3Z6-0006m4-3a
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:42:14 -0400
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id E7A6C25400DC;
- Mon, 19 May 2025 12:42:09 -0400 (EDT)
-Received: from phl-imap-12 ([10.202.2.86])
- by phl-compute-06.internal (MEProxy); Mon, 19 May 2025 12:42:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1747672929;
- x=1747759329; bh=+W45c2kdfwAFEomb2WVmfvUdLH5DSPDfGqGAOQKWafk=; b=
- jxmonzrzkSZDwQrrzaDFrrDEzOzQ2JsZucwr6EylYdgK1Ain2eYkpWoiFkskfUv0
- cI1jGPPEgqrsHiQCnjRcdrU25q0hpIaNnFRPkt4pkxmXlxjmZsm8aisGN68zBlDp
- gqJNfbELDLfiA2UQhSbYlV+/TwrVXRo9nTmBby7hiTkLZMPB7LVMQjqtdYEwmZ7p
- p3CVYuLFGyktvW4ayLUn3StDIgQxEfHL13X0yxETro/LXqVSugdARcp0cNHLGLX/
- TFsIr/Gl1mpxKQBnUZpl9NJxheLkStNlNFDktx/p4iRteEBNWoBFXGwyBaSUOIgl
- OwFWA7mPfWyz1/fmbwaqCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747672929; x=
- 1747759329; bh=+W45c2kdfwAFEomb2WVmfvUdLH5DSPDfGqGAOQKWafk=; b=n
- Dmj9YYw2hwB0foKUEBVtGXe0dPcqv4YiUeLRM4t/UCP0bEgvpFOhFYl5l6xTarC1
- debz9IcHaNnl5y6ZcNewbch573BapPCkpvUvFPjrD1uh51Wkwhm7fF+f68JKGxfk
- nF67WAIWW8hBnzsip1/9wbrdf66jhHdid8K/N2F96R5Q3oV04V393dCTgJ9QNOwe
- iNY/P2iy0yCk4s9kgWG87WyDewwD9xtlLVDPMY0fIVn7w65PJ2dNx3c4gHkOKu6n
- DOvra3NsAn+n8Re59VVMXeQT5skZxm2r0tps4RDT5Z+jag0cijTkXs2Pma6wOouZ
- bD9O+zGsFoazhN/u9UMrg==
-X-ME-Sender: <xms:YV8raKjdLmvqol7k-ZTcJPE8_7mgS47DnJUqBPjO_TWZFoD5SxbX3Q>
- <xme:YV8raLBs7wzGYWrzie1qSBBZTaMERSy8IdUAwA6F3IopNsoAR8QEIVQxSspCJ3vK8
- X7xDsmCyt5fq_MWMr0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddukeekucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
- pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
- gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
- tdejnecuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghngh
- esfhhlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdff
- keethefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihg
- ohgrthdrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtg
- hpthhtohepsghisghordhmrghosehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhvghn
- hhhurggtrghisehkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrghoshhonhhgsehloh
- honhhgshhonhdrtghnpdhrtghpthhtoheplhhigihirghnghhlrghisehlohhonhhgshho
- nhdrtghnpdhrtghpthhtohepmhgrohgsihgsoheslhhoohhnghhsohhnrdgtnhdprhgtph
- htthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:YV8raCG_N2cwEr2y_dmxHEbMHi87nHXUnqOlHeXZjyZSx7tHZFzscA>
- <xmx:YV8raDRzwx2omRnCYcaPhoZxnwUKdQluVBGbkl-y-v-w8u0jbG4zgQ>
- <xmx:YV8raHyJ7M1QVjHke6eD4wN4Nh5l0IvXZpVN6-fQxTazyar_lDax1g>
- <xmx:YV8raB6OcvjmhqwTdbPOinYZEFt3QrtqKSKQIPK-nKyvGES-ZBxnGQ>
- <xmx:YV8raGuVt8bJJlllopuT9DQYbQJ7Lf-kb5jZgNcCKk3WOz56NaeCWVGJ>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id 38E461060060; Mon, 19 May 2025 12:42:09 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uH3bx-0001mn-F2
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:45:10 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uH3bu-00076E-Su
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:45:09 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-70c7b8794faso45740087b3.1
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 09:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747673104; x=1748277904; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AZguee6gdCJHN0fT5yf2J2t+zxmmT+8wVcZySPpLw6U=;
+ b=oxBAQFFKhPdTQOZ21hZgogm0FlUNWlorqJ631MI+6CtPSYTHTAW/UrSrtPN9wSn5Te
+ SkVr6kTFh7qeAzYCCj9DEojdSopqK11peBPgqVOCTGPy1qd3ByZPs2Tw7b9uxY5VbKfU
+ +c/JlAjOKfaJTim5wQNhLDG2C4P0LUVhE89eO/fiKkA5OUKFP96hoqO1RKAbASPLb2/Q
+ 3WsL73RaUGOsncyPSaiCTUY3awd8h8lFjfaMbzzG7Rb4g1n7TIikpzi41P77KTrx2aec
+ 7bo3xrswBZCZE/irwJBDKJYPh5eb+pwillFvHqmqLfjfGPWZlHkPL8EaYxWYuiDmv+Fl
+ C+TA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747673104; x=1748277904;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AZguee6gdCJHN0fT5yf2J2t+zxmmT+8wVcZySPpLw6U=;
+ b=BwmaQwz313NqFoFaujNiCSWNXoYO8A44HpePRnRpBP/F/FgJSwBzhrVmN0PwqDnxhO
+ mKxgOR2qfIiYTMYJGkf6tLoyTTNVdIHe6dHIyrGWBuZiHmMwp4LA8ABvosFvhdMorx6/
+ v8M9I2yXzdV5Pa1/rHeMKGHYRkRpN4kQiQb+AxvO3nAjBmRCLPR54kjPfw/UIruFxUPi
+ YoHvxcjd6kizMaQbNu25tqjgW2m3DgF9gY9j9BxNzb2hMKUeUqajHItebF9tykqyDPxa
+ eksRTPypDcf/jdz//6AOpz+Po/9A7qjR/LkE8WZvvEocTMfJjEBavu8zOvI9VQ7dJIBX
+ nYxw==
+X-Gm-Message-State: AOJu0YypQt5L2t6GzYxqZF03fkyOWtZqPeQXZIdqxmm9ca15FhMScZCV
+ yQdVquujPms27HIoVzLy5Grd1pQ50P1BkFnaBY4hzjHDNo7x3Du77qcCeaABJBdiCHhwvKHbVBn
+ 857AoFxkqV60Fj8Z55dhMx9hsM+mmfy1N99oCtcPqOw==
+X-Gm-Gg: ASbGncuV7z2/42LuiDs7x8VofWLcfhj5N5lvQxqLgUzr2Nv9jS3As1ydCmDzGiNFT4E
+ cXWx0Hp7YSamnGnD0cWlXFtH7+oqnaPOvSGRNEZ3iiPT7a07aJrCH78jiVUWy5XIOpFKx18ypWn
+ PZ4ZfvYAdOMF1AlqyEtVr7c1Bkgu0XUB0jjQ==
+X-Google-Smtp-Source: AGHT+IEvDyqnDlOAl4vuLHF0xf72+/HxxdD0v8d1WZhWcdHNBQd5Yj0CQP3O843Ivs1PLjHRVdCLFkdVPLLfMfeofOc=
+X-Received: by 2002:a05:690c:350f:b0:6fe:b7ed:9715 with SMTP id
+ 00721157ae682-70ca79bf9c6mr182321247b3.11.1747673103876; Mon, 19 May 2025
+ 09:45:03 -0700 (PDT)
 MIME-Version: 1.0
-X-ThreadId: T61eab45fb9657032
-Date: Mon, 19 May 2025 17:41:19 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "bibo mao" <bibo.mao@gmail.com>
-Cc: "Bibo Mao" <maobibo@loongson.cn>, "Song Gao" <gaosong@loongson.cn>,
- "Huacai Chen" <chenhuacai@kernel.org>, "QEMU devel" <qemu-devel@nongnu.org>,
- "Xianglai Li" <lixianglai@loongson.cn>
-Message-Id: <1426cff7-28d2-4c40-b41f-194267d1717c@app.fastmail.com>
-In-Reply-To: <CAPpFdZ0NMe56bZMj=akJNaFJEjBpx4W_3Uyzr=6j-3moDWOaDw@mail.gmail.com>
-References: <20250509100747.1070094-1-maobibo@loongson.cn>
- <20250509100747.1070094-4-maobibo@loongson.cn>
- <5fa02121-43f6-4335-883e-efe07a2f3711@app.fastmail.com>
- <391ab7d0-9e61-1b9d-fbd3-98dd23f2d2a7@loongson.cn>
- <671157ca-de54-4053-93a9-8ea7f3fa1f1f@app.fastmail.com>
- <0e4690a6-1f28-f97c-a7dc-3b7888d23f38@loongson.cn>
- <930362d4-695a-44e6-a220-898e265a944c@app.fastmail.com>
- <1422bdc1-9251-b88e-44fd-e953ee88d0bd@loongson.cn>
- <73bd3e6c-78b0-4378-b391-8f20beac2079@app.fastmail.com>
- <CAPpFdZ0NMe56bZMj=akJNaFJEjBpx4W_3Uyzr=6j-3moDWOaDw@mail.gmail.com>
-Subject: Re: [PATCH 03/15] hw/intc/loongarch_extioi: Add irqchip-in-kernel
- save/restore function
-Content-Type: text/plain; charset=utf-8
+References: <20250519163721.347322-1-berrange@redhat.com>
+ <20250519163721.347322-10-berrange@redhat.com>
+In-Reply-To: <20250519163721.347322-10-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 May 2025 17:44:51 +0100
+X-Gm-Features: AX0GCFssSeLjGeNgyPleijoDjh5oJZMkWzuyEp_FV-L9eGh1bEQZm1MRPpehpPk
+Message-ID: <CAFEAcA8e4YN03Z7H5bCoWuk5vGXpxEstRqbjjiUSuVx8XZkzcQ@mail.gmail.com>
+Subject: Re: [PATCH v4 9/9] scripts/checkpatch: reject license boilerplate on
+ new files
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=202.12.124.159;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,52 +95,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-=E5=9C=A82025=E5=B9=B45=E6=9C=8819=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=
-=8D=882:24=EF=BC=8Cbibo mao=E5=86=99=E9=81=93=EF=BC=9A
-[...]
->> I don't think there is any disadvantage. I don't really buy the "diff=
-erent machine"
->> justification you made. Paravirt solution tends to have its own behav=
-iour and I don't
->> think it's a bad thing to expose it to users.
-> irqchip-in-kernel is some kind of optimization, register layout and
-> function is the same whatever it is
-> emulated in kernel or user mode.
-
-I can already observe some differences, for example with in-kernel irqch=
-ip
-PCH MSI can be delivered to any EXTIOI vector while in user space it's o=
-nly
-possible to do so for 64+ vector.
-
-I'm also planning to bring user space EXTIOI emulation closer to hardwar=
-e,
-as I found many issues when I was trying to bring up SylixOS BSP in QEMU,
-and it's unlikely in-kernel one will follow due to performance considera=
-tions.
-
+On Mon, 19 May 2025 at 17:37, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> The same for cpu type, do you think that cpu type la464 should be
-> named as la464-kvm in
-> KVM mode? Or you do not care about name at all=EF=BC=9F
-            ^=20
+> The previous commit mandates use of SPDX-License-Identifier on common
+> source files, and encourages it on all other files.
+>
+> Some contributors are none the less still also including the license
+> boilerplate text. This is redundant and will potentially cause
+> trouble if inconsistent with the SPDX declaration.
+>
+> Match common boilerplate text blurbs and report them as invalid,
+> for newly added files.
+>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  scripts/checkpatch.pl | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+>
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index dc2c3e6aa1..691c267a8c 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -365,6 +365,17 @@ our @typeList =3D (
+>         qr{guintptr},
+>  );
+>
+> +# Match text found in common license boilerplate comments:
+> +# for new files the SPDX-License-Identifier line is sufficient.
+> +our $LICENSE_BOILERPLATE =3D qr{
+> +    licensed under the terms of the GNU GPL|
+> +    under the terms of the GNU General Public License|
+> +    under the terms of the GNU Lesser General Public|
+> +    Permission is hereby granted, free of charge|
+> +    GNU GPL, version 2 or later|
+> +    See the COPYING file
+> +}x;
+> +
+>  # Load common spelling mistakes and build regular expression list.
+>  my $misspellings;
+>  my %spelling_fix;
+> @@ -1497,6 +1508,13 @@ sub process_end_of_file {
+>                              "' need 'SPDX-License-Identifier'?");
+>                 }
+>         }
+> +       if ($fileinfo->{action} eq "new" &&
+> +           !exists $fileinfo->{facts}->{sawboilerplate}) {
 
-I do think it for user interface it should be "host" or "max" whenever
-possible in KVM mode. From QOM perspective, TCG vs KVM is handled by
-TYPE_ACCEL_OPS, this makes clear distinctions at higher level.
+Looks like you still forgot to remove the "!" ?
 
-Also, EXTIOI device is not user creatable, QOM tree information is a deep
-internal detail. I searched mailing list and gitlab issues and I was una=
-ble to
-find any user reports about "qom tree information confused users", given=
- that
-other architectures had taken this approach for a while.
+> +               ERROR("New file '" . $fileinfo->{filenew} . "' must " .
+> +                     "not have license boilerplate header text, only " .
+> +                     "the SPDX-License-Identifier, unless this file was =
+" .
+> +                     "copied from existing code already having such text=
+.");
+> +       }
+>  }
 
-QOM is severing QEMU's internal design, not vice versa.
-
-Thanks
---=20
-- Jiaxun
+thanks
+-- PMM
 
