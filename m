@@ -4,93 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E0D9C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 13:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A3CAC3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 13:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH0U0-0007a3-Lm; Mon, 19 May 2025 09:24:44 -0400
+	id 1uH0W8-0008N6-Lh; Mon, 19 May 2025 09:26:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bibo.mao@gmail.com>)
- id 1uH0Tz-0007Zq-Eg
- for qemu-devel@nongnu.org; Mon, 19 May 2025 09:24:43 -0400
-Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bibo.mao@gmail.com>)
- id 1uH0Tx-0005an-RP
- for qemu-devel@nongnu.org; Mon, 19 May 2025 09:24:43 -0400
-Received: by mail-ua1-x92d.google.com with SMTP id
- a1e0cc1a2514c-86d5e3ddb66so1048503241.2
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 06:24:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747661079; x=1748265879; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=94wdVv2DdU4Ltt4xoqCKmh8KKDnd6QUL8D/s8mEqdwA=;
- b=mGpFkuHk2WGHDepLZiZ5s2RBlffMOhoLUHkANKsVuklLcsn31ZHVlRNpI2hK+I+MrP
- UEpRf4Mq5/T3qDHSYiRhCzOlblRZeyD4+ju+Hh6wUxacyd9zz4dP1f3vGB5qxUb9+oLg
- YA6r6PMMXUD+3oevjkV6zIKdxE/UJF+2/ux52ymJqwnYM/K6PfyfbgKgAQ0lsdEdTUIG
- V1iOsde71zSvZPLp0n50v9fjn8gFDOUHodFYtdcTV4BZxa7jNKIau5Vg5n4kIezevmfX
- QR2V/stu6ZwAIJo8FzA35b69pd5E5VDvz7omWSVFSMNRGVmGRRy/+90OnCKA8XfMj1BA
- 6IDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747661079; x=1748265879;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=94wdVv2DdU4Ltt4xoqCKmh8KKDnd6QUL8D/s8mEqdwA=;
- b=dlYICYpR2pSRF1RBBsQWZIOoakmDyaCSU7r0G1zgP/SFxUJQWyWpL+c7JCSdmNNAbZ
- YkTZavSy08UU5sYXpTOoQIm8TX2+PoVToBhUVmYL/vEliZ6Seblv/ojSzcKp1tRsV4wR
- 0GcozRWEBNBV7lnLAwYG9+2nAvAW6K8tShddVkKikcbSVgKyHUAbpy5TFaYrdZ0f91K8
- bbn8H7AFAP+z2JTI/VsxwQLCcK6CvaEH74IQHg9WsHVh3smm38a+nSI7gDncamD/nEdf
- DXgfKYaZBj80tAv7cweH89VDGraGpZsxsPp/mSgI8Vv5gRqQXIYuzrZ60X8wI3mC0i5X
- D0tw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQdu3SKfLrHketsowIRgBEppcwpVGXZGknlFrrMTBu790fG43V1hgVTmLtfTBgn84Skfz2NhTnnaCL@nongnu.org
-X-Gm-Message-State: AOJu0YypBsSrQIGorrKlVqnEHkzEdi3flbn3c7sZCPvpxA35e7L2qbeU
- PkUp7PxIBGy63JukrjT0tJK3xYDWF5r3uGsqiuil2w7FaekGnuRf1x6ewaVWBUSCxzEUfrNQx2+
- EQJWlQXyLFQTM+tieCyuZJtEa6GUvB6Y=
-X-Gm-Gg: ASbGncsl8/PmBcvhjiDqRkVgbbRsfBZpAl5r/TrU+siCwnCL5KQ+qcI7cCna8X31v7l
- egK9svGZRlfzXyxokOiCU+Kt6hCuGn5MMp7s/vGANSPHL7E7tNdWJ0cU0wDNzNO1D11mtoT+QUz
- bNeJrk3rTbVsoYFMTgZHqy3vO9SaiES5Nb2w==
-X-Google-Smtp-Source: AGHT+IEtslOsGNtgTKi2WiLQVcnFbnvdkn7njYiEIy+Bi8MRS7VWCOzLSZD+wiv7X9zLGyqV27mt4o4jpdJaIQtq6gI=
-X-Received: by 2002:a05:6102:3e1d:b0:4c5:1c2e:79f5 with SMTP id
- ada2fe7eead31-4dfa6bfcc7amr11405184137.16.1747661078868; Mon, 19 May 2025
- 06:24:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250509100747.1070094-1-maobibo@loongson.cn>
- <20250509100747.1070094-4-maobibo@loongson.cn>
- <5fa02121-43f6-4335-883e-efe07a2f3711@app.fastmail.com>
- <391ab7d0-9e61-1b9d-fbd3-98dd23f2d2a7@loongson.cn>
- <671157ca-de54-4053-93a9-8ea7f3fa1f1f@app.fastmail.com>
- <0e4690a6-1f28-f97c-a7dc-3b7888d23f38@loongson.cn>
- <930362d4-695a-44e6-a220-898e265a944c@app.fastmail.com>
- <1422bdc1-9251-b88e-44fd-e953ee88d0bd@loongson.cn>
- <73bd3e6c-78b0-4378-b391-8f20beac2079@app.fastmail.com>
-In-Reply-To: <73bd3e6c-78b0-4378-b391-8f20beac2079@app.fastmail.com>
-From: bibo mao <bibo.mao@gmail.com>
-Date: Mon, 19 May 2025 21:24:28 +0800
-X-Gm-Features: AX0GCFsTI1MheZXSRQcaNu0YMmmT9zHLViNrnUgObu3W0ZYVt8Qbd2jPJDgKA9k
-Message-ID: <CAPpFdZ0NMe56bZMj=akJNaFJEjBpx4W_3Uyzr=6j-3moDWOaDw@mail.gmail.com>
-Subject: Re: [PATCH 03/15] hw/intc/loongarch_extioi: Add irqchip-in-kernel
- save/restore function
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>, 
- Huacai Chen <chenhuacai@kernel.org>, QEMU devel <qemu-devel@nongnu.org>, 
- Xianglai Li <lixianglai@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
- envelope-from=bibo.mao@gmail.com; helo=mail-ua1-x92d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uH0W6-0008MZ-C9
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 09:26:54 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uH0W2-0005wY-3A
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 09:26:54 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J6ih0k024919;
+ Mon, 19 May 2025 13:26:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2025-04-25; bh=rZWZLKEq
+ Tec4UuJoGnIArQ09C23J5GFqgafLa0wX+v8=; b=a15kItsF0QiJnvY53DM9CqTa
+ ytEh6dGJg16kCUMFVN2mg2EITt1Ce2s5brQHrLYMbZvfUNe0+H7v29FcWn/y/REw
+ tcEH/zPTz7vUi/apw0voFQgkdB9bySF/pOv/DKOcaZXJA56x2A/iuH+73gSqlJDw
+ VYbhPmqtqhlJGgfMbT7jhCgbYIVpNsfazMaX8f5XLb6J7WgIDFEWg68GmFiE2+WP
+ bahmY5lddmdsE3OO4/N37EFqZpFLI/r4BC3sxlOWCTTktbVDvHyJP6v6tUil5ZQn
+ Rwea8iNNQnBkOMsXIoPIqRrK0/L4FJL3YqFBDhV9MQEKm/xfoeDIXQLlAI3Gqg==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46pgvejysx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 May 2025 13:26:46 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54JBk9lX000818; Mon, 19 May 2025 13:26:46 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46pgw6pyac-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 May 2025 13:26:46 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54JDQjOJ008846;
+ Mon, 19 May 2025 13:26:45 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 46pgw6py9b-1; Mon, 19 May 2025 13:26:45 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Cedric Le Goater <clg@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ John Levon <john.levon@nutanix.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5] vfio: return mr from vfio_get_xlat_addr
+Date: Mon, 19 May 2025 06:26:43 -0700
+Message-Id: <1747661203-136490-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-19_05,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ malwarescore=0 phishscore=0
+ bulkscore=0 adultscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505070000
+ definitions=main-2505190124
+X-Proofpoint-GUID: qmhD9-cJYRtwKD-WodeciNc7IzhTQpzo
+X-Authority-Analysis: v=2.4 cv=JJk7s9Kb c=1 sm=1 tr=0 ts=682b3197 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=QNV_3Zso053vk46vt-IA:9
+ cc=ntf awl=host:14694
+X-Proofpoint-ORIG-GUID: qmhD9-cJYRtwKD-WodeciNc7IzhTQpzo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDEyNSBTYWx0ZWRfX27gcg0+IYvgF
+ PEaFqvtbSJ8EAFvVrG4HpixGcmSMU0qA/xwhq6LNd6RI5MDDx3KcMavAh1XlpDumQKfhnWpqtdt
+ PmMy87QiJFso0MOUTX2Fi2UZH9q085UrCIuG3V9L0inTbIvsYLT3MiGUvnhRZIXl+kRT+I/UHjY
+ WHu4EE6ELhuRPITcxReQdnody9mU0on1nwmcZkk/Urdw40V0QNB+T/BjL+rxGxHconSCv3j8gWS
+ m7t6oX/J6qWCutyAcwshP9dvlV1qTxPAScXFjryZfaiv2R9cB46d0GtFmIdX2Oc6ttU5N54rwqx
+ 1hGWFtMIDUAvWHmyJUk3SDnquj5JMgHao8WSwUFAz9RNgdVtLijnBVsqf8KVImJPMGBdTElyRfE
+ f0szb3DTTMl0tfaHNbrVYyWKI0SpIZ4MeSJuapL2WVwN5Wyqoi6XujrDXQWvdIFYduyKGTLv
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.498,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,58 +115,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jiaxun Yang <jiaxun.yang@flygoat.com> =E4=BA=8E2025=E5=B9=B45=E6=9C=8819=E6=
-=97=A5=E5=91=A8=E4=B8=80 17:17=E5=86=99=E9=81=93=EF=BC=9A
->
->
->
-> =E5=9C=A82025=E5=B9=B45=E6=9C=8819=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=
-=E5=8D=889:55=EF=BC=8CBibo Mao=E5=86=99=E9=81=93=EF=BC=9A
-> [...]
-> >> It's actually different machine as kernel irqchip is never on par with=
- usermode
-> >> emulation. This approach is taken by i386 (TYPE_KVM_IOAPIC vs TYPE_IOA=
-PIC),
-> >> Arm (TYPE_KVM_ARM_ITS vs TYPE_ARM_GICV3_ITS), PowerPC (TYPE_KVM_OPENPI=
-C vs
-> >> TYPE_OPENPIC) and I see no reason that LoongArch should not follow.
-> > So what is the advantage and disadvantage from yourself understanding h=
-ere?
->
-> I think I made myself pretty clear in previous replies, in case you misse=
-d that.
->
-> The advantage is clean design, clean interface, clean vmstates (user spac=
-e emulation
-> tends to have more states vs in-kernel irqchip), proper signalling to use=
-r that
-> migration between user-space/in-kernel irqchip is not feasible, perhaps s=
-ome performance
-> advantage on reducing number of user space IOCSR ranges, reducing attack =
-surface
-> exposed by userspace emulation, reducing the chance of hypervisor error b=
-eing covered
-> up by userspace fallback....
->
-> I don't think there is any disadvantage. I don't really buy the "differen=
-t machine"
-> justification you made. Paravirt solution tends to have its own behaviour=
- and I don't
-> think it's a bad thing to expose it to users.
-irqchip-in-kernel is some kind of optimization, register layout and
-function is the same whatever it is
-emulated in kernel or user mode.
+Modify memory_get_xlat_addr and vfio_get_xlat_addr to return the memory
+region that the translated address is found in.  This will be needed by
+CPR in a subsequent patch to map blocks using IOMMU_IOAS_MAP_FILE.
 
-The same for cpu type, do you think that cpu type la464 should be
-named as la464-kvm in
-KVM mode? Or you do not care about name at all=EF=BC=9F
+Also return the xlat offset, so we can simplify the interface by removing
+the out parameters that can be trivially derived from mr and xlat.
 
-Regards
-Bibo Mao
+Lastly, rename the functions to  to memory_translate_iotlb() and
+vfio_translate_iotlb().
 
->
-> Thanks
-> --
-> - Jiaxun
->
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+---
+ hw/vfio/listener.c      | 33 ++++++++++++++++++++++-----------
+ hw/virtio/vhost-vdpa.c  |  9 +++++++--
+ include/system/memory.h | 19 +++++++++----------
+ system/memory.c         | 32 +++++++-------------------------
+ 4 files changed, 45 insertions(+), 48 deletions(-)
+
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index bfacb3d..0afafe3 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -90,16 +90,17 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+            section->offset_within_address_space & (1ULL << 63);
+ }
+ 
+-/* Called with rcu_read_lock held.  */
+-static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+-                               ram_addr_t *ram_addr, bool *read_only,
+-                               Error **errp)
++/*
++ * Called with rcu_read_lock held.
++ * The returned MemoryRegion must not be accessed after calling rcu_read_unlock.
++ */
++static MemoryRegion *vfio_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
++                                          Error **errp)
+ {
+-    bool ret, mr_has_discard_manager;
++    MemoryRegion *mr;
+ 
+-    ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+-                               &mr_has_discard_manager, errp);
+-    if (ret && mr_has_discard_manager) {
++    mr = memory_translate_iotlb(iotlb, xlat_p, errp);
++    if (mr && memory_region_has_ram_discard_manager(mr)) {
+         /*
+          * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+          * pages will remain pinned inside vfio until unmapped, resulting in a
+@@ -118,7 +119,7 @@ static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                          " intended via an IOMMU. It's possible to mitigate "
+                          " by setting/adjusting RLIMIT_MEMLOCK.");
+     }
+-    return ret;
++    return mr;
+ }
+ 
+ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+@@ -126,6 +127,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
+     VFIOContainerBase *bcontainer = giommu->bcontainer;
+     hwaddr iova = iotlb->iova + giommu->iommu_offset;
++    MemoryRegion *mr;
++    hwaddr xlat;
+     void *vaddr;
+     int ret;
+     Error *local_err = NULL;
+@@ -150,10 +153,14 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
+ 
+-        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
++        mr = vfio_translate_iotlb(iotlb, &xlat, &local_err);
++        if (!mr) {
+             error_report_err(local_err);
+             goto out;
+         }
++        vaddr = memory_region_get_ram_ptr(mr) + xlat;
++        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
++
+         /*
+          * vaddr is only valid until rcu_read_unlock(). But after
+          * vfio_dma_map has set up the mapping the pages will be
+@@ -1010,6 +1017,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     ram_addr_t translated_addr;
+     Error *local_err = NULL;
+     int ret = -EINVAL;
++    MemoryRegion *mr;
++    ram_addr_t xlat;
+ 
+     trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
+ 
+@@ -1021,9 +1030,11 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     }
+ 
+     rcu_read_lock();
+-    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
++    mr = vfio_translate_iotlb(iotlb, &xlat, &local_err);
++    if (!mr) {
+         goto out_unlock;
+     }
++    translated_addr = memory_region_get_ram_addr(mr) + xlat;
+ 
+     ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+                                 translated_addr, &local_err);
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 1ab2c11..a1dd9e1 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -209,6 +209,8 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     int ret;
+     Int128 llend;
+     Error *local_err = NULL;
++    MemoryRegion *mr;
++    hwaddr xlat;
+ 
+     if (iotlb->target_as != &address_space_memory) {
+         error_report("Wrong target AS \"%s\", only system memory is allowed",
+@@ -228,11 +230,14 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
+ 
+-        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
+-                                  &local_err)) {
++        mr = memory_translate_iotlb(iotlb, &xlat, &local_err);
++        if (!mr) {
+             error_report_err(local_err);
+             return;
+         }
++        vaddr = memory_region_get_ram_ptr(mr) + xlat;
++        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
++
+         ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
+                                  iotlb->addr_mask + 1, vaddr, read_only);
+         if (ret) {
+diff --git a/include/system/memory.h b/include/system/memory.h
+index fbbf4cf..13416d7 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -738,21 +738,20 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+                                              RamDiscardListener *rdl);
+ 
+ /**
+- * memory_get_xlat_addr: Extract addresses from a TLB entry
++ * memory_translate_iotlb: Extract addresses from a TLB entry.
++ *                         Called with rcu_read_lock held.
+  *
+  * @iotlb: pointer to an #IOMMUTLBEntry
+- * @vaddr: virtual address
+- * @ram_addr: RAM address
+- * @read_only: indicates if writes are allowed
+- * @mr_has_discard_manager: indicates memory is controlled by a
+- *                          RamDiscardManager
++ * @xlat_p: return the offset of the entry from the start of the returned
++ *          MemoryRegion.
+  * @errp: pointer to Error*, to store an error if it happens.
+  *
+- * Return: true on success, else false setting @errp with error.
++ * Return: On success, return the MemoryRegion containing the @iotlb translated
++ *         addr.  The MemoryRegion must not be accessed after rcu_read_unlock.
++ *         On failure, return NULL, setting @errp with error.
+  */
+-bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+-                          ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager, Error **errp);
++MemoryRegion *memory_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
++                                     Error **errp);
+ 
+ typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+ typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+diff --git a/system/memory.c b/system/memory.c
+index 63b983e..306e9ff 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2174,18 +2174,14 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+ }
+ 
+ /* Called with rcu_read_lock held.  */
+-bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+-                          ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager, Error **errp)
++MemoryRegion *memory_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
++                                     Error **errp)
+ {
+     MemoryRegion *mr;
+     hwaddr xlat;
+     hwaddr len = iotlb->addr_mask + 1;
+     bool writable = iotlb->perm & IOMMU_WO;
+ 
+-    if (mr_has_discard_manager) {
+-        *mr_has_discard_manager = false;
+-    }
+     /*
+      * The IOMMU TLB entry we have just covers translation through
+      * this IOMMU to its immediate target.  We need to translate
+@@ -2195,7 +2191,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                                  &xlat, &len, writable, MEMTXATTRS_UNSPECIFIED);
+     if (!memory_region_is_ram(mr)) {
+         error_setg(errp, "iommu map to non memory area %" HWADDR_PRIx "", xlat);
+-        return false;
++        return NULL;
+     } else if (memory_region_has_ram_discard_manager(mr)) {
+         RamDiscardManager *rdm = memory_region_get_ram_discard_manager(mr);
+         MemoryRegionSection tmp = {
+@@ -2203,9 +2199,6 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+             .offset_within_region = xlat,
+             .size = int128_make64(len),
+         };
+-        if (mr_has_discard_manager) {
+-            *mr_has_discard_manager = true;
+-        }
+         /*
+          * Malicious VMs can map memory into the IOMMU, which is expected
+          * to remain discarded. vfio will pin all pages, populating memory.
+@@ -2216,7 +2209,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+             error_setg(errp, "iommu map to discarded memory (e.g., unplugged"
+                          " via virtio-mem): %" HWADDR_PRIx "",
+                          iotlb->translated_addr);
+-            return false;
++            return NULL;
+         }
+     }
+ 
+@@ -2226,22 +2219,11 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+      */
+     if (len & iotlb->addr_mask) {
+         error_setg(errp, "iommu has granularity incompatible with target AS");
+-        return false;
++        return NULL;
+     }
+ 
+-    if (vaddr) {
+-        *vaddr = memory_region_get_ram_ptr(mr) + xlat;
+-    }
+-
+-    if (ram_addr) {
+-        *ram_addr = memory_region_get_ram_addr(mr) + xlat;
+-    }
+-
+-    if (read_only) {
+-        *read_only = !writable || mr->readonly;
+-    }
+-
+-    return true;
++    *xlat_p = xlat;
++    return mr;
+ }
+ 
+ void memory_region_set_log(MemoryRegion *mr, bool log, unsigned client)
+-- 
+1.8.3.1
+
 
