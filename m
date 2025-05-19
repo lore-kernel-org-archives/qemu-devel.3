@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C56C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:39:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52651C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:39:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH3V0-0002ss-3n; Mon, 19 May 2025 12:37:58 -0400
+	id 1uH3Uv-0002md-KX; Mon, 19 May 2025 12:37:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uH3Uy-0002p9-IQ
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uH3Ut-0002mH-RC
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uH3Uw-0005ke-U5
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:56 -0400
+ id 1uH3Us-0005k7-6A
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747672674;
+ s=mimecast20190719; t=1747672669;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3v48TWij8rjIJBWVr32ofNj1KQbwMmnbi8Jfg7B65Q4=;
- b=DnnSwCB5+UUmG+pzC8WybEyQ04Sh3yMSF5MareXadRhD9LZSYij6KmsxgkMoWSz1BMjTB/
- XVdCQyn90Gs/KIdpeodOcahk3IQdvfVsD1lvIOP066q81gpOVZqUziCVoTQDYr2H15iKUz
- GlrPgTQ8MXKnUpiuVpZW12wIv1yh9qA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=nf8LkFWMBn9+9mPkCxsByAQm9qHcIlr5yFs/l+ijCoI=;
+ b=Yneh2VUezOHvXYcI10NPtYMIIMwIYrz0wXJ5jfWght1hpVDeUBntlk7dWZY0nlrI2lQqNv
+ UyP8JPZn0NXqrg031DD74jbHB6y6qPo5UuQoSpVQCa8shdpmMo5jlu/n/ZalHNQ7IuEwyH
+ e1LTYqcPN3OEFfn4FOVBXlN2fcsRRqA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-bjJLirAaMsKFUaOPYEyiMA-1; Mon,
- 19 May 2025 12:37:51 -0400
-X-MC-Unique: bjJLirAaMsKFUaOPYEyiMA-1
-X-Mimecast-MFC-AGG-ID: bjJLirAaMsKFUaOPYEyiMA_1747672670
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-EQGbdcl3Oj-caUtcwQ-zlw-1; Mon,
+ 19 May 2025 12:37:46 -0400
+X-MC-Unique: EQGbdcl3Oj-caUtcwQ-zlw-1
+X-Mimecast-MFC-AGG-ID: EQGbdcl3Oj-caUtcwQ-zlw_1747672665
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6EB8195608C; Mon, 19 May 2025 16:37:50 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 870FC1800446; Mon, 19 May 2025 16:37:45 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.50])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E03AC19560A3; Mon, 19 May 2025 16:37:48 +0000 (UTC)
+ id 2848E19560AB; Mon, 19 May 2025 16:37:42 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 9/9] scripts/checkpatch: reject license boilerplate on new
- files
-Date: Mon, 19 May 2025 17:37:21 +0100
-Message-ID: <20250519163721.347322-10-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 7/9] scripts/checkpatch: use new hook for MAINTAINERS
+ update check
+Date: Mon, 19 May 2025 17:37:19 +0100
+Message-ID: <20250519163721.347322-8-berrange@redhat.com>
 In-Reply-To: <20250519163721.347322-1-berrange@redhat.com>
 References: <20250519163721.347322-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -87,69 +88,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous commit mandates use of SPDX-License-Identifier on common
-source files, and encourages it on all other files.
+When seeing a new/deleted/renamed file we check to see if MAINTAINERS
+is updated, but we don't give the user a list of files affected, as
+we don't want to repeat the same warning many times over.
 
-Some contributors are none the less still also including the license
-boilerplate text. This is redundant and will potentially cause
-trouble if inconsistent with the SPDX declaration.
+Using the new file list hook, we can give a single warning at the
+end with a list of filenames included.
 
-Match common boilerplate text blurbs and report them as invalid,
-for newly added files.
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/checkpatch.pl | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ scripts/checkpatch.pl | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
 diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index dc2c3e6aa1..691c267a8c 100755
+index 2c8e8135b6..de6ea2fc14 100755
 --- a/scripts/checkpatch.pl
 +++ b/scripts/checkpatch.pl
-@@ -365,6 +365,17 @@ our @typeList = (
- 	qr{guintptr},
- );
- 
-+# Match text found in common license boilerplate comments:
-+# for new files the SPDX-License-Identifier line is sufficient.
-+our $LICENSE_BOILERPLATE = qr{
-+    licensed under the terms of the GNU GPL|
-+    under the terms of the GNU General Public License|
-+    under the terms of the GNU Lesser General Public|
-+    Permission is hereby granted, free of charge|
-+    GNU GPL, version 2 or later|
-+    See the COPYING file
-+}x;
-+
- # Load common spelling mistakes and build regular expression list.
- my $misspellings;
- my %spelling_fix;
-@@ -1497,6 +1508,13 @@ sub process_end_of_file {
- 			     "' need 'SPDX-License-Identifier'?");
- 		}
+@@ -1443,6 +1443,25 @@ sub process_file_list {
+ 		      join("\n  ", @acpi_nontestexpected) .
+ 		      "\n\nfound in the same patch\n");
  	}
-+	if ($fileinfo->{action} eq "new" &&
-+	    !exists $fileinfo->{facts}->{sawboilerplate}) {
-+		ERROR("New file '" . $fileinfo->{filenew} . "' must " .
-+		      "not have license boilerplate header text, only " .
-+		      "the SPDX-License-Identifier, unless this file was " .
-+		      "copied from existing code already having such text.");
++
++	my $sawmaintainers = 0;
++	my @maybemaintainers;
++	foreach my $fileinfo (@fileinfos) {
++		if ($fileinfo->{action} ne "modified" &&
++		    $fileinfo->{filenew} !~ m#^tests/data/acpi/#) {
++			push @maybemaintainers, $fileinfo->{filenew};
++		}
++		if ($fileinfo->{filenew} eq "MAINTAINERS") {
++			$sawmaintainers = 1;
++		}
++	}
++
++	# If we don't see a MAINTAINERS update, prod the user to check
++	if (int(@maybemaintainers) > 0 && !$sawmaintainers) {
++		WARN("added, moved or deleted file(s):\n\n  " .
++		     join("\n  ", @maybemaintainers) .
++		     "\n\nDoes MAINTAINERS need updating?\n");
 +	}
  }
  
- sub process {
-@@ -1799,6 +1817,10 @@ sub process {
- 			&checkspdx($realfile, $1);
+ # Called at the start of processing a diff hunk for a file
+@@ -1486,7 +1505,6 @@ sub process {
+ 
+ 	my $in_header_lines = $file ? 0 : 1;
+ 	my $in_commit_log = 0;		#Scanning lines before patch
+-	my $reported_maintainer_file = 0;
+ 	my $reported_mixing_imported_file = 0;
+ 	my $in_imported_file = 0;
+ 	my $in_no_imported_file = 0;
+@@ -1761,23 +1779,6 @@ sub process {
+ 			}
  		}
  
-+		if ($rawline =~ /$LICENSE_BOILERPLATE/) {
-+			$fileinfo->{facts}->{sawboilerplate} = 1;
-+		}
-+
- 		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
- 			my $tag = $1;
- 			my @permitted = qw(
+-# Check if MAINTAINERS is being updated.  If so, there's probably no need to
+-# emit the "does MAINTAINERS need updating?" message on file add/move/delete
+-		if ($line =~ /^\s*MAINTAINERS\s*\|/) {
+-			$reported_maintainer_file = 1;
+-		}
+-
+-# Check for added, moved or deleted files
+-		if (!$reported_maintainer_file && !$in_commit_log &&
+-		    ($line =~ /^(?:new|deleted) file mode\s*\d+\s*$/ ||
+-		     $line =~ /^rename (?:from|to) [\w\/\.\-]+\s*$/ ||
+-		     ($line =~ /\{\s*([\w\/\.\-]*)\s*\=\>\s*([\w\/\.\-]*)\s*\}/ &&
+-		      (defined($1) || defined($2)))) &&
+-		    $realfile !~ m#^tests/data/acpi/#) {
+-			$reported_maintainer_file = 1;
+-			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
+-		}
+-
+ # Check SPDX-License-Identifier references a permitted license
+ 		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
+ 			&checkspdx($realfile, $1);
 -- 
 2.49.0
 
