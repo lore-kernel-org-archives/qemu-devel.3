@@ -4,63 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE1DC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1580FC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 16:38:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH3Uw-0002n6-NA; Mon, 19 May 2025 12:37:54 -0400
+	id 1uH3Uh-0002a5-1b; Mon, 19 May 2025 12:37:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uH3Uv-0002mR-8B
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:53 -0400
+ id 1uH3Uc-0002O9-9Q
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uH3Uo-0005jo-I6
- for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:52 -0400
+ id 1uH3UX-0005i9-Qt
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 12:37:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747672666;
+ s=mimecast20190719; t=1747672648;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c4E8rgHsQb3gq0oCSF5CNcRbOTsrBL7NcaTAez1HiMI=;
- b=iZJA/ap2SQf4WhjcXtD3du63ClypyoltdYnwdNVz/fKxT5G4Lcf/l4PbiKqU1MaW7pH49g
- J0LoAy2xHIvBrJW47UBDKrgAAU3HND1aqN359K3zFr13EdsJNA5Nsj2XSagorfAJX8uiRZ
- Dj7cDh0P5JyeGMBFGsySLViq/gF4XDs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7FeZnuB33iyx3EDgN8piZNmkL+0fhRU411IdfUaVdbM=;
+ b=Tmy6mXiObdz/44J+/K+mnkAghAMIpLHQhX8ac5KeUaww3V8ADBOLUpuVLWfoe4nUq7ZV+T
+ CvXwMYxqjuFVNf8sRfRukiuefL0px9xonaNgr9p9Lr6kW2PDLsDhMg3w2nOrweMXpbSPha
+ cufD/qaFFrG90JiofUuPqbpagOpUyaQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-lQRbvO_lPYGuPwLrZNztIQ-1; Mon,
- 19 May 2025 12:37:43 -0400
-X-MC-Unique: lQRbvO_lPYGuPwLrZNztIQ-1
-X-Mimecast-MFC-AGG-ID: lQRbvO_lPYGuPwLrZNztIQ_1747672662
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-d2Dmj32dOOipducKQ8WxvA-1; Mon,
+ 19 May 2025 12:37:27 -0400
+X-MC-Unique: d2Dmj32dOOipducKQ8WxvA-1
+X-Mimecast-MFC-AGG-ID: d2Dmj32dOOipducKQ8WxvA_1747672646
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 90E3C1800368; Mon, 19 May 2025 16:37:42 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2259119560AE; Mon, 19 May 2025 16:37:26 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.50])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 786CE19560AB; Mon, 19 May 2025 16:37:40 +0000 (UTC)
+ id 11D7B19560A3; Mon, 19 May 2025 16:37:22 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 6/9] scripts/checkpatch: expand pattern for matching
- makefiles
-Date: Mon, 19 May 2025 17:37:18 +0100
-Message-ID: <20250519163721.347322-7-berrange@redhat.com>
-In-Reply-To: <20250519163721.347322-1-berrange@redhat.com>
-References: <20250519163721.347322-1-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 0/9] scripts/checkpatch: fix SPDX-License-Identifier
+ detection
+Date: Mon, 19 May 2025 17:37:12 +0100
+Message-ID: <20250519163721.347322-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -88,30 +84,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current regex matches Makefile & Makefile.objs, but the latter is
-no longer used, anjd we're missing coverage of Makefile.include and
-Makefile.target. Expand the pattern to match any suffix.
+This is hugely expanded an update of
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/checkpatch.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg02040.html
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index e208222e75..2c8e8135b6 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1454,7 +1454,7 @@ sub process_start_of_file {
- 		my $permhere = $fileinfo->{linestart} . "FILE: " .
- 			$fileinfo->{filenew} . "\n";
- 		if ($fileinfo->{filenew} =~
--		    /(\bMakefile(?:\.objs)?|\.(c|cc|cpp|h|mak|s|S))$/) {
-+		    /(\bMakefile.*|\.(c|cc|cpp|h|mak|s|S))$/) {
- 			ERROR("do not set execute permissions for source " .
- 			      "files\n" . $permhere);
- 		}
+In that series, Peter suggested creating standalone methods to act
+as hooks to call when detecting the start/end of a file in a diff.
+
+This implements that idea and adapts a number of existing checks
+to use the new hooks.
+
+Changed in v4:
+
+ - Pull our boilerplate match regex to separate variable
+ - Mention that SPDX is sufficient when reporting redundant
+   boilerplate
+ - Tweak commit message to explain indent changes better
+
+Changed in v3:
+
+ - Add check for redundent license boilerplate text
+ - Fix check for Makefile names
+
+Daniel P. Berrangé (9):
+  Revert "scripts: mandate that new files have SPDX-License-Identifier"
+  scripts/checkpatch.pl: fix various indentation mistakes
+  scripts/checkpatch: introduce tracking of file start/end
+  scripts/checkpatch: use new hook for ACPI test data check
+  scripts/checkpatch: use new hook for file permissions check
+  scripts/checkpatch: expand pattern for matching makefiles
+  scripts/checkpatch: use new hook for MAINTAINERS update check
+  scripts/checkpatch: reimplement mandate for SPDX-License-Identifier
+  scripts/checkpatch: reject license boilerplate on new files
+
+ scripts/checkpatch.pl | 388 +++++++++++++++++++++++++++---------------
+ 1 file changed, 250 insertions(+), 138 deletions(-)
+
 -- 
 2.49.0
 
