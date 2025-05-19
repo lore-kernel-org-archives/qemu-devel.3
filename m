@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E6AC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 116ABC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH3rr-0007Bb-7G; Mon, 19 May 2025 13:01:35 -0400
+	id 1uH3rs-0007CL-85; Mon, 19 May 2025 13:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH3rZ-00078v-MC
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH3rY-00078g-RQ
  for qemu-devel@nongnu.org; Mon, 19 May 2025 13:01:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH3rY-0000Hq-6q
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:01:17 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uH3rW-0000H4-3t
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:01:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747674075;
+ s=mimecast20190719; t=1747674073;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iYcUQ6WuU3gAxqcUjkwsmQLK288Uzr5IRoqnUeDlqWQ=;
- b=P3VZVBukHXrea/viTnTSM0Ejg6teSwv7YTP/CRi6gR1Nb6PuKUWAlg6EhC7nQ03gKar2pn
- oHtpoN3QT+voQTMXU0CvrAygE6A7FuYbW/qQItAJ8M+VIvnBQ/fW2YVxzS/xrKebqVN33e
- zprMLMc2ayRWDgUy+4wq64P5O2MaY7A=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=r/AVeVI8CEy7pp93TAfOGvrG+MLYlclUmyqZ549525s=;
+ b=i0CLbdaxJxN2Zhp6QtPWyzWp3FIKNQH8IpH2tgVfodK7DsLNummXCZCyFD8b5Iuu1gsRBn
+ EfHNS8aUqTjrE5VF0A2WuCuY4G1kXsXv1VWAi2pVxPfEwkISiXGvdJFwrZHLiCDB/bUDES
+ SbaGyZmPmcRyO36aj/5kdIyirCz2vMs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-GFSh4BHrM_u_4g6JhbEx6w-1; Mon,
- 19 May 2025 13:01:12 -0400
-X-MC-Unique: GFSh4BHrM_u_4g6JhbEx6w-1
-X-Mimecast-MFC-AGG-ID: GFSh4BHrM_u_4g6JhbEx6w_1747674071
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-_S8JjaroNkqGwXB7AIWbXw-1; Mon,
+ 19 May 2025 13:01:10 -0400
+X-MC-Unique: _S8JjaroNkqGwXB7AIWbXw-1
+X-Mimecast-MFC-AGG-ID: _S8JjaroNkqGwXB7AIWbXw_1747674069
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 179C51955D99; Mon, 19 May 2025 17:01:11 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 269E51800877; Mon, 19 May 2025 17:01:09 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.235])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6AB361956095; Mon, 19 May 2025 17:01:09 +0000 (UTC)
+ id C593C1956095; Mon, 19 May 2025 17:01:07 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, Michael Roth <michael.roth@amd.com>,
  John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 6/6] qapi: delete un-needed python static analysis configs
-Date: Mon, 19 May 2025 13:00:55 -0400
-Message-ID: <20250519170055.3693275-7-jsnow@redhat.com>
+Subject: [PULL 5/6] python: Drop redundant warn_unused_configs = True
+Date: Mon, 19 May 2025 13:00:54 -0400
+Message-ID: <20250519170055.3693275-6-jsnow@redhat.com>
 In-Reply-To: <20250519170055.3693275-1-jsnow@redhat.com>
 References: <20250519170055.3693275-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,72 +83,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the previous commit, python/setup.cfg applies to scripts/qapi/ as
-well.  Configuration files in scripts/qapi/ override python/setup.cfg.
+From: Markus Armbruster <armbru@redhat.com>
 
-scripts/qapi/.flake8 and scripts/qapi/.isort.cfg actually match
-python/setup.cfg exactly, and can go.
+strict = True implies warn_unused_configs = True.
 
-The differences between scripts/qapi/mypy.ini and python/setup.cfg are
-harmless: namespace_packages being set to True is a requirement for the
-PEP420 nested package structure of QEMU but not for scripts/qapi, but
-has no effect on type checking the QAPI code. warn_unused_ignores is
-used in python/ to be able to target a wide variety of mypy versions;
-some of which that have added new ignore categories that are not present
-in older versions.
-
-Ultimately, scripts/qapi/mypy.ini can be removed without any real change
-in behavior to how mypy enforces type safety there.
-
-The pylint config is being left in place because the settings differ
-enough from the python/ directory settings that we need a chit-chat on
-how to merge them O:-)
-
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-id: 20250512193357.3388514-7-jsnow@redhat.com
+Message-id: 20250512193357.3388514-6-jsnow@redhat.com
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/.flake8    | 3 ---
- scripts/qapi/.isort.cfg | 7 -------
- scripts/qapi/mypy.ini   | 4 ----
- 3 files changed, 14 deletions(-)
- delete mode 100644 scripts/qapi/.flake8
- delete mode 100644 scripts/qapi/.isort.cfg
- delete mode 100644 scripts/qapi/mypy.ini
+ python/setup.cfg | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/scripts/qapi/.flake8 b/scripts/qapi/.flake8
-deleted file mode 100644
-index a873ff67309..00000000000
---- a/scripts/qapi/.flake8
-+++ /dev/null
-@@ -1,3 +0,0 @@
--[flake8]
--# Prefer pylint's bare-except checks to flake8's
--extend-ignore = E722
-diff --git a/scripts/qapi/.isort.cfg b/scripts/qapi/.isort.cfg
-deleted file mode 100644
-index 643caa1fbd6..00000000000
---- a/scripts/qapi/.isort.cfg
-+++ /dev/null
-@@ -1,7 +0,0 @@
--[settings]
--force_grid_wrap=4
--force_sort_within_sections=True
--include_trailing_comma=True
--line_length=72
--lines_after_imports=2
--multi_line_output=3
-diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
-deleted file mode 100644
-index c9dbcec2db0..00000000000
---- a/scripts/qapi/mypy.ini
-+++ /dev/null
-@@ -1,4 +0,0 @@
--[mypy]
--strict = True
--disallow_untyped_calls = False
--python_version = 3.9
+diff --git a/python/setup.cfg b/python/setup.cfg
+index d21304cadd1..d7f5dc7bafe 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -79,7 +79,6 @@ exclude = __pycache__,
+ [mypy]
+ strict = True
+ python_version = 3.9
+-warn_unused_configs = True
+ namespace_packages = True
+ warn_unused_ignores = False
+ 
 -- 
 2.48.1
 
