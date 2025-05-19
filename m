@@ -4,82 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A831C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFA9C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:08:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH25o-0000dh-0X; Mon, 19 May 2025 11:07:52 -0400
+	id 1uH25n-0000d2-Gr; Mon, 19 May 2025 11:07:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uH25m-0000YY-BG
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uH25m-0000ZR-Fi
  for qemu-devel@nongnu.org; Mon, 19 May 2025 11:07:50 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uH25k-0002q6-8J
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uH25k-0002qF-N1
  for qemu-devel@nongnu.org; Mon, 19 May 2025 11:07:50 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-708ac7dfc19so41820947b3.3
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 08:07:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747667266; x=1748272066; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+gXOesR3SEtU8F0M84hJr3NYCDfVUGyS9aJHZrCKHhc=;
- b=UNz4pOR+zHr9x+g5pijbgJvd64adNrOzRyED+b4lT0wegPXwKBnAn98d7LzXdaylk1
- Ta7AkFodTw+TFQbCuAxlbOxCeqqZy2wYKUqhAhHtDvkN9fISlcTUk2DuXCnlt3UdGml8
- cnFug8GDyrKV9rBIPGBx5UhH9eCHUrPAhZep7l9foQCm0iHso4fn3irWUZzRXgcbk/IC
- wSg5UGT6WQPR53o0N3FQ+4niF4Z89Jxzke8rOY457SwHFylWjG2YFEZCEFslEXbmcC8j
- bVT7XnHicwp1S9PO4Fdkle+3ErDr57yhjDU/KlMmQaarUSQ79ReoNZyhSEnBPui3ZM1H
- Tz3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747667266; x=1748272066;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+gXOesR3SEtU8F0M84hJr3NYCDfVUGyS9aJHZrCKHhc=;
- b=Cyb6G4fWCGn31l2AfZl8e8Od5tOvo8KIgRv86GF2JGWRUTR5t9b7YB4+GI/NdJiXlz
- N61OBiQXLNKKiMo6jvUUb6s7dhYL7DMBrtjlxD/9tCIdX5+kdLHQe4/poJLoBK/wsznp
- 7Y5VVp3ak4/dDLnlFSdKfkPYupcRXaX/mO8r/s0U/3bnEWswroC5ypXy74+yMKvs3KyH
- tip8NRjmzXZex1xuJ9qVKZLUcy2Qh9jjXZO8sexh47PKZBNpkpDKYZ1vjaYMdIe5VseC
- TE6wItVL6lz/DrpJ++31glSyEq3J5RBQdxa4nLjKiH1A5GmXighJ34+lacwy044iPuGJ
- mjIA==
-X-Gm-Message-State: AOJu0Yznmh0jwuuvgv3u/J7aQJT4gMNdkqPcHUr0yexTwzB1tNlFbz5o
- YRQhkPH+9SW3r3CtdJJQB3EImIV3t/lZCg9UxSKQ7QOt5iyDTbjPTcFkPr1LXrkNxLSgyMuDdEX
- CkLvAJ9V8ffPcLfqwkn05oDRAugZcvZW6up+97b0B7w==
-X-Gm-Gg: ASbGncvsNvjPqUQTnlMZ7erSSYyyIBLxnXY9Q+EYPEEuamSL3OTAdqXE0voo8N6WB8N
- N2y6K6Lwc1FTwKtgaHN98I2rvd3YE2Z9iBWjhkS/brQ3R1PBYyRNsUwHJgbplab5L21WBdJ9yu1
- hKUIz9xtrCslkPPwKwxErcQ2PdQWkVrHtaMA==
-X-Google-Smtp-Source: AGHT+IF4UsKvwriPiBsIgFIaM7sRVvlNfHXsvSmaqMDQgndCoaVydVQEN1J4Xf0rjK4Zc3XviBD1Kc4pu5rXpjKSUcw=
-X-Received: by 2002:a05:690c:650e:b0:709:191c:d7ee with SMTP id
- 00721157ae682-70ca79efe46mr181951707b3.17.1747667266087; Mon, 19 May 2025
- 08:07:46 -0700 (PDT)
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id EADDC2297F;
+ Mon, 19 May 2025 15:07:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747667267; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5xqG7jonvsZJsDyNZ1MA0ZdkHJzAZuSHm+PT+Q5Ruho=;
+ b=NkHR9ClGooyqFSfbPZZv2Vs2oytg+KuH9+88azKPvVkZLQkLNePRcH7Vvst35V0Rj+YKj1
+ kW5kg8IWgFlgiaz/WLfJ3ZrX7TJKJLSq90HUXM2TVSn1dP/brQn/afMcwIgTzB8u9xBIJA
+ n0bAl1vfFEBptB7j1ETisMNtzv+MMDY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747667267;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5xqG7jonvsZJsDyNZ1MA0ZdkHJzAZuSHm+PT+Q5Ruho=;
+ b=9KBszf79EARc9EhpbSNLW/zUeCkd0roPcOTFTgKCuGKxiLT3CK+/HG99Hbh5OaRYB0qxlC
+ YKnLrFwG4MQ25WBA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=QpPfSHUX;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=m6sfyNmN
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747667266; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5xqG7jonvsZJsDyNZ1MA0ZdkHJzAZuSHm+PT+Q5Ruho=;
+ b=QpPfSHUXVM5A9ay00lwKLNPRssVAMTcVQLfu1h/63Vj/Huoyh30lVWioMJHtGyT+28vzQI
+ yNnmLcCqPNqyjzG7S7jrsiTcSjMh1jciHp4BQV4WQHHtRxCYsK0MMg/topFom/iIMgDcIX
+ EbjuH7jk6NvEG+LBewcJQwPmQ2891YQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747667266;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5xqG7jonvsZJsDyNZ1MA0ZdkHJzAZuSHm+PT+Q5Ruho=;
+ b=m6sfyNmNuB3CqizrVb3I1WQVHUz71q63+QuwAg3Yk8nY8xBLTg71t9WrnYZpFGg0rnwdfT
+ pCiKTzfiZinDMdCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 644551372E;
+ Mon, 19 May 2025 15:07:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id u+3YCEJJK2g3QwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 19 May 2025 15:07:46 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Nicholas Piggin <npiggin@gmail.com>, Akihiko Odaki
+ <akihiko.odaki@daynix.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org, Dmitry
+ Fleytman <dmitry.fleytman@gmail.com>, Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v3 04/12] qtest/e1000e|igb: assert irqs are clear before
+ triggering an irq
+In-Reply-To: <20250502031705.100768-5-npiggin@gmail.com>
+References: <20250502031705.100768-1-npiggin@gmail.com>
+ <20250502031705.100768-5-npiggin@gmail.com>
+Date: Mon, 19 May 2025 12:07:43 -0300
+Message-ID: <87ecwk7i68.fsf@suse.de>
 MIME-Version: 1.0
-References: <20230116223637.3512814-1-richard.henderson@linaro.org>
- <20230116223637.3512814-4-richard.henderson@linaro.org>
-In-Reply-To: <20230116223637.3512814-4-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 May 2025 16:07:34 +0100
-X-Gm-Features: AX0GCFuK1V0kvDMuXtEgJwzazuOzM28zbz6xL_xMq_eUtpdRcS2NoD5K8trUqpU
-Message-ID: <CAFEAcA905fCuyqLR9UK5Tz5tNkFAS07epcKzVOgbNXpbd75F0Q@mail.gmail.com>
-Subject: Re: [PULL 3/5] tcg: add perfmap and jitdump
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>, 
- "Vanderson M . do Rosario" <vandersonmr2@gmail.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Content-Type: text/plain
+X-Spamd-Bar: /
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: EADDC2297F
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-0.01 / 50.00]; SUSPICIOUS_RECIPS(1.50)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FREEMAIL_TO(0.00)[gmail.com,daynix.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[gmail.com,nongnu.org,redhat.com,ericsson.com];
+ DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_SEVEN(0.00)[11];
+ TAGGED_RCPT(0.00)[]; MISSING_XM_UA(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid, suse.de:dkim,
+ ericsson.com:email, daynix.com:email, imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,77 +138,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Jan 2023 at 22:36, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Nicholas Piggin <npiggin@gmail.com> writes:
+
+> Assert there is no existing irq raised that would lead to a false
+> positive interrupt test.
 >
-> From: Ilya Leoshkevich <iii@linux.ibm.com>
+> e1000e has to disable interrupt throttling for this test, because
+> it can cause delayed superfluous interrupts which trip the assertions.
 >
-> Add ability to dump /tmp/perf-<pid>.map and jit-<pid>.dump.
-> The first one allows the perf tool to map samples to each individual
-> translation block. The second one adds the ability to resolve symbol
-> names, line numbers and inspect JITed code.
->
-> Example of use:
->
->     perf record qemu-x86_64 -perfmap ./a.out
->     perf report
->
-> or
->
->     perf record -k 1 qemu-x86_64 -jitdump ./a.out
->     DEBUGINFOD_URLS=3D perf inject -j -i perf.data -o perf.data.jitted
->     perf report -i perf.data.jitted
->
-> Co-developed-by: Vanderson M. do Rosario <vandersonmr2@gmail.com>
-> Co-developed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> Message-Id: <20230112152013.125680-4-iii@linux.ibm.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-Apparently this doesn't build with current head-of-trunk clang:
-https://gitlab.com/qemu-project/qemu/-/issues/2970
-
-> +struct debug_entry {
-> +    uint64_t addr;
-> +    int lineno;
-> +    int discrim;
-> +    const char name[];
-> +};
-
-> +struct jr_code_debug_info {
-> +    struct jr_prefix p;
-> +
-> +    uint64_t code_addr;
-> +    uint64_t nr_entry;
-> +    struct debug_entry entries[];
-> +};
-
-> +/* Write a JIT_CODE_DEBUG_INFO jitdump entry. */
-> +static void write_jr_code_debug_info(const void *start,
-> +                                     const struct debuginfo_query *q,
-> +                                     size_t icount)
-> +{
-> +    struct jr_code_debug_info rec;
-> +    struct debug_entry ent;
-
-
-../tcg/perf.c:250:24: error: default initialization of an object of
-type 'struct debug_entry' with const member leaves the object
-uninitialized [-Werror,-Wdefault-const-init-field-unsafe]
-  250 |     struct debug_entry ent;
-      |                        ^
-../tcg/perf.c:157:16: note: member 'name' declared 'const' here
-  157 |     const char name[];
-      |                ^
-
-I don't understand what's going on with this flexible-array
-name[] field: we never access it, and I don't see how we
-can sensibly have an array of debug_entry structs in
-jr_code_debug_info if the size of a debug_entry is variable.
-I also don't see why we've declared it 'const'.
-
-Anybody want to take a look at this?
-
-thanks
--- PMM
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
