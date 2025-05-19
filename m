@@ -4,82 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8D3C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 13:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F3A0C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 13:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH0G3-0003MQ-RS; Mon, 19 May 2025 09:10:19 -0400
+	id 1uH0I7-0004TB-BU; Mon, 19 May 2025 09:12:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
- id 1uH0Fz-0003La-3Y
- for qemu-devel@nongnu.org; Mon, 19 May 2025 09:10:16 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
- id 1uH0Fw-0003EL-Mm
- for qemu-devel@nongnu.org; Mon, 19 May 2025 09:10:14 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-601dfef6a8dso1849506a12.1
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 06:10:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747660210; x=1748265010; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XW3GfoL3iMZTNM1WIcYcWGmXmNmE0cY5T93QYwSMzcc=;
- b=ZkWSQKF1cTi3Lk5y3ngv2Nt7gdid1wQ8SBBmFe/n9DINWt0L1F1pJne/UjrmI/cxz/
- 9OKUyxVDqIuQ3a5AoPMmAXs1r4lC1GUp976y94iScBCrXydV2clf66IUFn6utV1IJ+dB
- UAR24W8sKvOT7+7MXKS6PIaHct5ZNQFag34z2m25tZH+Mpvwh/WSlGd8PvICvdjdJpPa
- MBfOZqniWhxXdYnDH5cBH2gPzSSdGFbU856LyQmR57nXfnwPcI6eAYCiFpcpQLSCL30z
- xg4mjvEn6+rGzyzIY/2m+WLr+VT/tyjlCO13KhUalwYpeLQeMw8uDWOwh68dTiu5HZtn
- HbhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747660210; x=1748265010;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XW3GfoL3iMZTNM1WIcYcWGmXmNmE0cY5T93QYwSMzcc=;
- b=XoRsCu6WQzJreObEV+3/wuIaz6DTvFQiN2zLG04gQjI2UuzmXUvHhncRtC7YIKHP/H
- 8jpdCfkjZVG/H4Ir+C3tL++k0xQ2raFW1mcl3IktFvs4oN0MDVkgkYd29Kc996jerL9u
- 5haHQyhLIUACziTXgG8nF4fvc4MjlTZd/kC+IdLtkrgY928bYvdhpLAaErv7ebkZ/VQa
- 0nNlGFOGE5X1NeD8eiwjuJ86A1IijnnG+hH+Vvl06hDDfmkwryGdlofeUfjuPFAi9F6p
- YLYpGK2iYCMICmiZNbCtoo3CTLnZD1zgh/9ZRzz4SZS9hs/9XnHy5IbJEmD4lAJd/mxb
- jcmw==
-X-Gm-Message-State: AOJu0YwtM7qTlk0LTbgr5/irO8OV0YXFjWo1dmtgSJgUgREW0/3n9LoH
- lmKNv5xjHtlPfY5WXs6amaXP6vr8If6rDhMD/Np9vre2xJmpcs6e30YdbSfWnIo0Pwb/omzvulw
- J2cp6U1O7xWqkVruRlLJx0veL0TgDF24=
-X-Gm-Gg: ASbGncs2xc2qCoNU+s32OBMmtoARCWPKY9IN06uSfLLGwX7SN3/QRIq+b8AlyGrH6Ot
- C7JSwF0K1c16LsASEChW2Sg1k5lddOVJMCbrFs7btnFrnAZphdXn4B4SK34x+sXKPQxZXF1Swol
- i6ASKhsxmqhf6FiD4KC2/ES6dCLOf+Y/md
-X-Google-Smtp-Source: AGHT+IGPiulYLSHlgtmFObtmCLBWabbIC1leosk6fzzzNHBGXeXVQ794czA/XqCIVExSDzN5V0At7SmYYPJngJAquK4=
-X-Received: by 2002:a05:6402:35cc:b0:601:fd36:6f12 with SMTP id
- 4fb4d7f45d1cf-601fd367669mr1104018a12.1.1747660209393; Mon, 19 May 2025
- 06:10:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1uH0Hx-0004Ru-Jt; Mon, 19 May 2025 09:12:18 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1uH0Hu-0003fw-Bg; Mon, 19 May 2025 09:12:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1747660322; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=CaMPDzocZ4jR38fqRDuaH9rYeyX1UGRNE/M12l/b7YolpUF3AzLLjyyPUKVYhxOJa61IuiZfHy71QdpKb7zylTPf9pqshMZcEBdSwk7GPOAUXAUun0RBkwv6C1ZvzS/pyRFEeVNngck96sTgFrnQGQjVfT7RwObMcgYXXnk2N4Q=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1747660322;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=i0I35tKFK1j1epsZjqFjcmHhc85sid0Fh8aL6lxUjj8=; 
+ b=N+LSGOK1oJaPUrSh+LT/QDt7vEIcLa9dq+MjhuvIobn49shHnx+NV5JBa668xX6gZwq3j93bKhJ5Mi5XNX3/vzYuqw5R6oOZaV8iz0axb/9RGz4VOnwBWHgkRNJt28FBlqzlxgwVaj23Kjjk/w0Lyu78w413B1WlWbECW6Vk7+8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747660322; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=i0I35tKFK1j1epsZjqFjcmHhc85sid0Fh8aL6lxUjj8=;
+ b=JRsYUFc+b1tg4ROsFa7BgbWHbmCbeFrwmPfvzxHIARPviqalpdksJzxe2ZAah8fO
+ TVnqn8fti87CzX2uDy0t28DTEEls5WbQeKCCgaRbSOx1AvQS43Yodkh3lvLIzncGVGy
+ 5WKf9CEgpK4QA+mpg3KG82NysymPbF6wo0yJtsxA=
+Received: by mx.zohomail.com with SMTPS id 1747660319796409.9969457384624;
+ Mon, 19 May 2025 06:11:59 -0700 (PDT)
+Message-ID: <6420d58e-ab55-448b-a860-889d3fed04a2@collabora.com>
+Date: Mon, 19 May 2025 16:11:56 +0300
 MIME-Version: 1.0
-References: <20250403191340.53343-1-dominik.b.czarnota@gmail.com>
- <87jz6zw4vx.fsf@draig.linaro.org> <87ecwksqnc.fsf@draig.linaro.org>
-In-Reply-To: <87ecwksqnc.fsf@draig.linaro.org>
-From: Dominik Czarnota <dominik.b.czarnota@gmail.com>
-Date: Mon, 19 May 2025 15:09:33 +0200
-X-Gm-Features: AX0GCFuPncuijFQ6ktQCM3uR6sDbWxNLR5kzMgJ4rbj_OjEX0k-5fKSqcKn3UPY
-Message-ID: <CABEVAa3HLntehkW0+jHLajbfhagiXg+8d5SG_MR0uzeC8OnEsQ@mail.gmail.com>
-Subject: Re: [PATCH] gdbstub: Implement qGDBServerVersion packet
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, gustavo.romero@linaro.org, 
- richard.henderson@linaro.org, philmd@linaro.org, 
- manos.pitsidianakis@linaro.org, 
- "Patryk 'patryk4815' Sondej" <patryk.sondej@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000f8211906357cd94d"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=dominik.b.czarnota@gmail.com; helo=mail-ed1-x52f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] virtio-gpu: support context init multiple timeline
+To: Yiwei Zhang <zzyiwei@gmail.com>, qemu-devel@nongnu.org
+Cc: balaton@eik.bme.hu, qemu-stable@nongnu.org
+References: <20250518152651.334115-1-zzyiwei@gmail.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20250518152651.334115-1-zzyiwei@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,217 +78,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f8211906357cd94d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 5/18/25 18:26, Yiwei Zhang wrote:
+> Venus and later native contexts have their own fence context along with
+> multiple timelines within. Fences wtih VIRTIO_GPU_FLAG_INFO_RING_IDX in
+> the flags must be dispatched to be created on the target context. Fence
+> signaling also has to be handled on the specific timeline within that
+> target context.
+> 
+> Before this change, venus fencing is completely broken if the host
+> driver doesn't support implicit fencing with external memory objects.
+> Frames can go backwards along with random artifacts on screen if the
+> host driver doesn't attach an implicit fence to the render target. The
+> symptom could be hidden by certain guest wsi backend that waits on a
+> venus native VkFence object for the actual payload with limited present
+> modes or under special configs. e.g. x11 mailbox or xwayland.
+> 
+> After this change, everything related to venus fencing starts making
+> sense. Confirmed this via guest and host side perfetto tracing.
+> 
+> Changes since v1:
+> - Minor commit msg updates based on feedbacks from BALATON
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 94d0ea1c1928 ("virtio-gpu: Support Venus context")
+> Signed-off-by: Yiwei Zhang <zzyiwei@gmail.com>
+> ---
+>  hw/display/virtio-gpu-virgl.c | 44 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 145a0b3879..94ddc01f91 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -970,6 +970,15 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>      }
+>  
+>      trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +    if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+> +        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
+> +                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
+> +                                            cmd->cmd_hdr.ring_idx,
+> +                                            cmd->cmd_hdr.fence_id);
+> +        return;
+> +    }
+> +#endif
+>      virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+>  }
+>  
+> @@ -983,6 +992,11 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
+>           * the guest can end up emitting fences out of order
+>           * so we should check all fenced cmds not just the first one.
+>           */
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +        if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+> +            continue;
+> +        }
+> +#endif
 
-Thanks!
+Is it possible that virglrenderer will ever write a context fence in
+virgl_renderer_create_fence()? Do we really need this check?
 
-On Mon, 19 May 2025 at 14:59, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
-
-> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
->
-> > Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com> writes:
-> >
-> >> This commit adds support for the `qGDBServerVersion` packet to the qem=
-u
-> >> gdbstub  which could be used by clients to detect the QEMU version
-> >> (and, e.g., use a workaround for known bugs).
-> >>
-> >> This packet is not documented/standarized by GDB but it was implemente=
-d
-> >> by LLDB gdbstub [0] and is helpful for projects like Pwndbg [1].
-> >>
-> >> This has been implemented by Patryk, who I included in Co-authored-by
-> >> and who asked me to send the patch.
-> >>
-> >> [0]
-> https://lldb.llvm.org/resources/lldbgdbremote.html#qgdbserverversion
-> >> [1] https://github.com/pwndbg/pwndbg/issues/2648
-> >>
-> >> Co-authored-by: Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>
-> >> Signed-off-by: Dominik 'Disconnect3d' Czarnota
-> >> <dominik.b.czarnota@gmail.com>
-> >
-> > Hmm:
-> >
-> > cc -m64 -Ilibuser.a.p -I. -I../.. -Iqapi -Itrace -Iui -Iui/shader
-> > -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
-> > -fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2=
- -g
-> > -fstack-protector-strong -Wempty-body -Wendif-labels
-> > -Wexpansion-to-defined -Wformat-security -Wformat-y2k
-> > -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self
-> > -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
-> > -Wold-style-declaration -Wold-style-definition -Wredundant-decls
-> > -Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
-> > -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
-> > -Wno-shift-negative-value -isystem
-> > /home/alex/lsrc/qemu.git/linux-headers -isystem linux-headers -iquote
-> > . -iquote /home/alex/lsrc/qemu.git -iquote
-> > /home/alex/lsrc/qemu.git/include -iquote
-> > /home/alex/lsrc/qemu.git/host/include/x86_64 -iquote
-> > /home/alex/lsrc/qemu.git/host/include/generic -iquote
-> > /home/alex/lsrc/qemu.git/tcg/i386 -pthread -mcx16 -msse2 -D_GNU_SOURCE
-> > -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing
-> > -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero
-> > -fzero-call-used-regs=3Dused-gpr -fPIE -DCONFIG_USER_ONLY
-> > -DCOMPILING_SYSTEM_VS_USER -MD -MQ libuser.a.p/gdbstub_gdbstub.c.o -MF
-> > libuser.a.p/gdbstub_gdbstub.c.o.d -o libuser.a.p/gdbstub_gdbstub.c.o
-> > -c ../../gdbstub/gdbstub.c
-> > ../../gdbstub/gdbstub.c: In function =E2=80=98handle_query_gdb_server_v=
-ersion=E2=80=99:
-> > ../../gdbstub/gdbstub.c:1603:74: error: implicit declaration of functio=
-n
-> =E2=80=98target_name=E2=80=99 [-Werror=3Dimplicit-function-declaration]
-> >  1603 |     g_string_printf(gdbserver_state.str_buf,
-> "name:qemu-%s;version:%s;", target_name(), QEMU_VERSION);
-> >       |
->         ^~~~~~~~~~~
-> > ../../gdbstub/gdbstub.c:1603:74: error: nested extern declaration of
-> =E2=80=98target_name=E2=80=99 [-Werror=3Dnested-externs]
-> > ../../gdbstub/gdbstub.c:1603:46: error: format =E2=80=98%s=E2=80=99 exp=
-ects argument of
-> type =E2=80=98char *=E2=80=99, but argument 3 has type =E2=80=98int=E2=80=
-=99 [-Werror=3Dformat=3D]
-> >  1603 |     g_string_printf(gdbserver_state.str_buf,
-> "name:qemu-%s;version:%s;", target_name(), QEMU_VERSION);
-> >       |
-> ^~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~
-> >       |
->         |
-> >       |
->         int
-> > cc1: all warnings being treated as errors
-> >
-> > where did target_name() come from and/or go to?
->
-> I fixed the include so queued to gdbstub/next, thanks.
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
-
---000000000000f8211906357cd94d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thanks!</div><br><div class=3D"gmail_quote gmail_quote_con=
-tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 19 May 2025 at 14:59,=
- Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee=
-@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org" t=
-arget=3D"_blank">alex.bennee@linaro.org</a>&gt; writes:<br>
-<br>
-&gt; Dominik &#39;Disconnect3d&#39; Czarnota &lt;<a href=3D"mailto:dominik.=
-b.czarnota@gmail.com" target=3D"_blank">dominik.b.czarnota@gmail.com</a>&gt=
-; writes:<br>
-&gt;<br>
-&gt;&gt; This commit adds support for the `qGDBServerVersion` packet to the=
- qemu<br>
-&gt;&gt; gdbstub=C2=A0 which could be used by clients to detect the QEMU ve=
-rsion<br>
-&gt;&gt; (and, e.g., use a workaround for known bugs).<br>
-&gt;&gt;<br>
-&gt;&gt; This packet is not documented/standarized by GDB but it was implem=
-ented<br>
-&gt;&gt; by LLDB gdbstub [0] and is helpful for projects like Pwndbg [1].<b=
-r>
-&gt;&gt;<br>
-&gt;&gt; This has been implemented by Patryk, who I included in Co-authored=
--by<br>
-&gt;&gt; and who asked me to send the patch.<br>
-&gt;&gt;<br>
-&gt;&gt; [0] <a href=3D"https://lldb.llvm.org/resources/lldbgdbremote.html#=
-qgdbserverversion" rel=3D"noreferrer" target=3D"_blank">https://lldb.llvm.o=
-rg/resources/lldbgdbremote.html#qgdbserverversion</a><br>
-&gt;&gt; [1] <a href=3D"https://github.com/pwndbg/pwndbg/issues/2648" rel=
-=3D"noreferrer" target=3D"_blank">https://github.com/pwndbg/pwndbg/issues/2=
-648</a><br>
-&gt;&gt;<br>
-&gt;&gt; Co-authored-by: Patryk &#39;patryk4815&#39; Sondej &lt;<a href=3D"=
-mailto:patryk.sondej@gmail.com" target=3D"_blank">patryk.sondej@gmail.com</=
-a>&gt;<br>
-&gt;&gt; Signed-off-by: Dominik &#39;Disconnect3d&#39; Czarnota<br>
-&gt;&gt; &lt;<a href=3D"mailto:dominik.b.czarnota@gmail.com" target=3D"_bla=
-nk">dominik.b.czarnota@gmail.com</a>&gt;<br>
-&gt;<br>
-&gt; Hmm:<br>
-&gt;<br>
-&gt; cc -m64 -Ilibuser.a.p -I. -I../.. -Iqapi -Itrace -Iui -Iui/shader<br>
-&gt; -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include<b=
-r>
-&gt; -fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O=
-2 -g<br>
-&gt; -fstack-protector-strong -Wempty-body -Wendif-labels<br>
-&gt; -Wexpansion-to-defined -Wformat-security -Wformat-y2k<br>
-&gt; -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self<br>
-&gt; -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs<br>
-&gt; -Wold-style-declaration -Wold-style-definition -Wredundant-decls<br>
-&gt; -Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla<br>
-&gt; -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi<br>
-&gt; -Wno-shift-negative-value -isystem<br>
-&gt; /home/alex/lsrc/qemu.git/linux-headers -isystem linux-headers -iquote<=
-br>
-&gt; . -iquote /home/alex/lsrc/qemu.git -iquote<br>
-&gt; /home/alex/lsrc/qemu.git/include -iquote<br>
-&gt; /home/alex/lsrc/qemu.git/host/include/x86_64 -iquote<br>
-&gt; /home/alex/lsrc/qemu.git/host/include/generic -iquote<br>
-&gt; /home/alex/lsrc/qemu.git/tcg/i386 -pthread -mcx16 -msse2 -D_GNU_SOURCE=
-<br>
-&gt; -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing<br>
-&gt; -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero<br>
-&gt; -fzero-call-used-regs=3Dused-gpr -fPIE -DCONFIG_USER_ONLY<br>
-&gt; -DCOMPILING_SYSTEM_VS_USER -MD -MQ libuser.a.p/gdbstub_gdbstub.c.o -MF=
-<br>
-&gt; libuser.a.p/gdbstub_gdbstub.c.o.d -o libuser.a.p/gdbstub_gdbstub.c.o<b=
-r>
-&gt; -c ../../gdbstub/gdbstub.c<br>
-&gt; ../../gdbstub/gdbstub.c: In function =E2=80=98handle_query_gdb_server_=
-version=E2=80=99:<br>
-&gt; ../../gdbstub/gdbstub.c:1603:74: error: implicit declaration of functi=
-on =E2=80=98target_name=E2=80=99 [-Werror=3Dimplicit-function-declaration]<=
-br>
-&gt;=C2=A0 1603 |=C2=A0 =C2=A0 =C2=A0g_string_printf(gdbserver_state.str_bu=
-f, &quot;name:qemu-%s;version:%s;&quot;, target_name(), QEMU_VERSION);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~=
-~~~~~~<br>
-&gt; ../../gdbstub/gdbstub.c:1603:74: error: nested extern declaration of =
-=E2=80=98target_name=E2=80=99 [-Werror=3Dnested-externs]<br>
-&gt; ../../gdbstub/gdbstub.c:1603:46: error: format =E2=80=98%s=E2=80=99 ex=
-pects argument of type =E2=80=98char *=E2=80=99, but argument 3 has type =
-=E2=80=98int=E2=80=99 [-Werror=3Dformat=3D]<br>
-&gt;=C2=A0 1603 |=C2=A0 =C2=A0 =C2=A0g_string_printf(gdbserver_state.str_bu=
-f, &quot;name:qemu-%s;version:%s;&quot;, target_name(), QEMU_VERSION);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~~~~~~~~~~~~~~~~~~=C2=
-=A0 ~~~~~~~~~~~~~<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int<b=
-r>
-&gt; cc1: all warnings being treated as errors<br>
-&gt;<br>
-&gt; where did target_name() come from and/or go to?<br>
-<br>
-I fixed the include so queued to gdbstub/next, thanks.<br>
-<br>
--- <br>
-Alex Benn=C3=A9e<br>
-Virtualisation Tech Lead @ Linaro<br>
-</blockquote></div>
-
---000000000000f8211906357cd94d--
+-- 
+Best regards,
+Dmitry
 
