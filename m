@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5380C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 11:28:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BB5C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 12:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGyez-0004s0-53; Mon, 19 May 2025 07:27:57 -0400
+	id 1uGzGv-0001Cq-Nt; Mon, 19 May 2025 08:07:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1uGyex-0004rn-ON
- for qemu-devel@nongnu.org; Mon, 19 May 2025 07:27:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1uGyet-0007ET-PI
- for qemu-devel@nongnu.org; Mon, 19 May 2025 07:27:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747654070;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ruh72etsSmTHBHL8yVKTOdb7DWKCz5J1IkvkJxVqURQ=;
- b=NCqaPku96wighRhPQjiqqlCwENO48zYoz9qyayZz1XCPXKmM37LXfHifzTXLVaCwcZkG0a
- vHi/1lUeQAnh9PrltfH/aq/o/EW8WkVJTLTuaYVnGURc2iZ86/Qi150J9/+PR5fCeuTYAK
- eGe33wDya8UB6iBfmrnC5oI1pTWDhAM=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-18-u2NJrQxYOd6afuMKi2A_8A-1; Mon, 19 May 2025 07:27:48 -0400
-X-MC-Unique: u2NJrQxYOd6afuMKi2A_8A-1
-X-Mimecast-MFC-AGG-ID: u2NJrQxYOd6afuMKi2A_8A_1747654067
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-550ecc7b237so1587082e87.0
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 04:27:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uGzGm-0001CS-Sh
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 08:07:02 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uGzGi-0003U3-88
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 08:07:00 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-70cb6744e1eso20201017b3.3
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 05:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747656411; x=1748261211; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bJQfQnJi9SNNUKNZMnL/0czXpf8dq6h3SsezMcM0DkE=;
+ b=wxdlfRpOOPJ+XYhtefgoZ0LhyEg2KFmGy0fmCsKX6rp2t46kieZexPPnf0x25RK564
+ K9R43TP24jf+obXwUumn8eqUFBnXs9wb+ZXNTmwgfrSeVzvXWuJ1iBgFxnV4121Z5409
+ dkN/3woLXFCfd5B+s7OwlTUWwUHf3yLEZgKHqKgGswryKD/BzMPfy6eFavPamG5/7b7k
+ LWPxLLDFe6mLH4BekMgVCvnZ8iibA1OuVY7Ru8DYTyztJAAWNB025Crt2FrqVtgnNBmt
+ A+60qFPhJ7rnJfeSQ92pCiC0dvJUlIq+4jBEMx7PF+pnnTUeVbi7HvQSZlCey7RWr7Ri
+ 9MAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747654067; x=1748258867;
+ d=1e100.net; s=20230601; t=1747656411; x=1748261211;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ruh72etsSmTHBHL8yVKTOdb7DWKCz5J1IkvkJxVqURQ=;
- b=vinPpIWJx6BW+FhBKzAWys+fwmZlHqR4aqFP6Ste248umJ3K9961mUa5YYEabIyEka
- RZDjS5JV40/Gy4c42AWoPD3lDoVVTENibOYCNN/U3lTXwJiCiCgzYMfmt78roFd546eF
- kMe/TRnC9Tssr6jtTv6h9rqu4MBgf/4Ct5eZD646wgIPAgDAnXVMV8VY9DmlkHBcBORO
- E9S5XMqbAzth+Wn7ljlhRGpbTaRUK014d8lV0snIrsujW9AGDFlxAJomQ5lqMcKdlbBP
- PW8S1aG0UF0dQxu3PdijCyHQqXXsA6Z7H/HIlD3OYGecxVbewW0JYruUJEw103eES/NN
- HHRw==
-X-Gm-Message-State: AOJu0Yy2MDlOvOIOQOXxyhv2TakhdQeWuRzoG4Gk+0750PT4Rg/MMJRX
- LzrRKtpMpGrfJF3rEyWBDXIHfem3vcfYSKqkwTMjeeSZ8XxS5fqYikFsqzXKhHi6S8eMkxwQms+
- /b/gr7gwC8ctw+Gx7DpmFGWGWIvdwjScC/72QcmWyKzF9U62J5pzr3fmWeXWWPwzCP6Paw9V8Zj
- 3NU/gZRSXjZezMPqfKt8IZJhxFy6OtzOE=
-X-Gm-Gg: ASbGnct8UC1/g9EmAWuRoQMy2lHJ8QJRV7JfQ8FXKATnnNmtOtXiZEOf1bd2q4HVNGY
- 1sL4GU3YiXlxmxjN7FF4dRYcmBP9FaGdOikXQBgTqMEsumC54Hs+cgZ1e15hVWkrmF1wz
-X-Received: by 2002:a05:6512:461b:b0:54e:93cf:338d with SMTP id
- 2adb3069b0e04-550e7197991mr3518850e87.12.1747654066876; 
- Mon, 19 May 2025 04:27:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzXSB761Y5IthFM4tw7qYgdrTIM5ysc6QSYeelm8ZGL98+xWTj3nrxotGsILEWfHDQB9EcEYy6eyGAtHUiIiI=
-X-Received: by 2002:a05:6512:461b:b0:54e:93cf:338d with SMTP id
- 2adb3069b0e04-550e7197991mr3518844e87.12.1747654066474; Mon, 19 May 2025
- 04:27:46 -0700 (PDT)
+ bh=bJQfQnJi9SNNUKNZMnL/0czXpf8dq6h3SsezMcM0DkE=;
+ b=UQPU+9Falt3rBf3yJZCSvj0uAxXTt6xYnvXTWR8Sf40oZMyWBxmsEeW8vyXP+e2uM9
+ zhP98WDUxjaIrweTyYtKA4KWjPb1DDbOqAmVFi986ArjTP/qQbQ3Fdh0fUptPnXfITaP
+ ZwBGxNX7TXEoQdTyPUcBY0W77YxHRu4rlBgHVKJBp+p5ML6y0QD/CK8pCtcJiu5+mb85
+ DBkQQhi9oDEKKXCYK9iDdSMgahYvnAAOpRF3MDlE/dpUfvJ3MOuzVQnlkIPoRC+FI0Co
+ f7+JfCmPMsYeiN/z6DHVU8t/v37PSeHYPYFtYnCEydGh1W5ZQNWfBSBKGCg5YDa1YlBv
+ bNqg==
+X-Gm-Message-State: AOJu0YzKuFyUXwKy4gdhax1EMabbMpsWNmmt/J5w48YZkB0i9eLdASVc
+ gF/+q0KvOeANMCq4mtdZu8sARMkIXyWnQXGxAljD1dGNOgUsMZNNAvIbZvPbVT6Mu0J54q4U9VB
+ 9+S7ToOvSB2hXCz9aw+sO7yIZKrzhb1SEPLpJNeBPfw==
+X-Gm-Gg: ASbGncvaJvM+HQ946ZV5K5fmlyCx/c8pMkjw2wN8LEx5RXkfcLeRl/m6O6awrMIKyuE
+ XYsITNmtTktzcBYFdk81Rn7E2VGx17tS2/cHQsSRJK57ycKumvcnU+P2QZ3RfOHQhQQN4XkAaoo
+ gUKlUDXQ3gT7yNb7knv2ADoNxMYVd/A3IPbMuo8ApHIoKx
+X-Google-Smtp-Source: AGHT+IEyiPq/6beY2uMCo5U+Rg3iGNrA/peFt3hmqDZ8YorxziqFmYSZBS+9pE+E3QqBNxHCD/UFI24aUlAY60G0ji4=
+X-Received: by 2002:a05:690c:4b8f:b0:709:171e:1321 with SMTP id
+ 00721157ae682-70ca7b8e205mr163442807b3.25.1747656411566; Mon, 19 May 2025
+ 05:06:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250514200137.581935-1-peterx@redhat.com>
-In-Reply-To: <20250514200137.581935-1-peterx@redhat.com>
-From: Mario Casquero <mcasquer@redhat.com>
-Date: Mon, 19 May 2025 13:27:35 +0200
-X-Gm-Features: AX0GCFsovBoV3vgId1o3NuAS5MnEVgoYJXGysjqQyWBI5BbTTiLTZZwe9MpNtIM
-Message-ID: <CAMXpfWvhQCXa_tYGnf+e=vrt7XtrJE4Bxz6BnO6fnS_OU+8s6w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] migration: Some fix and enhancements to HMP "info
- migrate"
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Prasad Pandit <ppandit@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Juraj Marcin <jmarcin@redhat.com>
+References: <20250515135936.86760-1-berrange@redhat.com>
+ <20250515135936.86760-2-berrange@redhat.com>
+In-Reply-To: <20250515135936.86760-2-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 May 2025 13:06:40 +0100
+X-Gm-Features: AX0GCFu1UYRBSL0yQrkJhetKqc9WVSLENwqcPwkXbdMH_O79TcOJg8rbnK-pyjA
+Message-ID: <CAFEAcA9SNu2C5a0uYtem5RFY0T47BgCrOxG0UXWnfhbdD-CYzg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/9] Revert "scripts: mandate that new files have
+ SPDX-License-Identifier"
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcasquer@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,55 +96,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series has been successfully tested. Now the HMP info migrate
-command is more compact and readable. With the -a option the values of
-the globals are displayed as well.
+On Thu, 15 May 2025 at 14:59, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> This reverts commit fa4d79c64dae03ffa269e42e21822453856618b7.
+>
+> The logic in this commit was flawed in two critical ways
+>
+>  * It always failed to report SPDX validation on the last newly
+>    added file. IOW, it only worked if at least 2 new files were
+>    added in a commit
+>
+>  * If an existing file change, followed a new file change, in
+>    the commit and the existing file context/changed lines
+>    included SPDX-License-Identifier, it would incorrectly
+>    associate this with the previous newly added file.
+>
+> Simply reverting this commit will make it significantly easier to
+> understand the improved logic in the following commit.
+>
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
 
-(qemu) info migrate
-Status: active
-Time (ms): total=3D4029, setup=3D36, exp_down=3D300
-RAM info:
-  Throughput (mbps): 938.03
-  Sizes (KB): psize=3D4, total=3D16798280
-    transferred=3D426629, remain=3D6121884,
-    precopy=3D426752, multifd=3D0, postcopy=3D0
-  Pages: normal=3D105457, zero=3D466489, rate_per_sec=3D28728
-  Others: dirty_syncs=3D1
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-
-
-On Wed, May 14, 2025 at 10:03=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote=
-:
->
-> v2:
-> - Dropped patch 2, dump globals only if "-a" in the last patch [Dave]
-> - Keep using "Throughput" for dumping ->mbps [Juraj]
-> - Rearranged some more, e.g. put xbzrle/globals under -a too, added inden=
-ts
->   for the global dump, etc.
->
-> Patch 1 was a bug I found set capabilities, so it's pretty separate issue=
-.
->
-> Patch 2 was an attempt that I made the HMP "info migrate" looks slightly
-> easier to read.  A new option "-a" is added to request a full dump,
-> otherwise only the important info will be dumped.
->
-> Comments welcomed, thanks.
->
-> Peter Xu (2):
->   migration: Allow caps to be set when preempt or multifd cap enabled
->   migration/hmp: Add "info migrate -a", reorg the dump
->
->  migration/migration-hmp-cmds.c | 186 +++++++++++++++++----------------
->  migration/options.c            |   4 +-
->  hmp-commands-info.hx           |   6 +-
->  3 files changed, 101 insertions(+), 95 deletions(-)
->
-> --
-> 2.49.0
->
->
-
+thanks
+-- PMM
 
