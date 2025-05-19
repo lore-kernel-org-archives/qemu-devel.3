@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0B2C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08705C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH40M-0005tn-Kh; Mon, 19 May 2025 13:10:22 -0400
+	id 1uH40V-0005yO-Cy; Mon, 19 May 2025 13:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uH40H-0005rN-Ld
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:10:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uH40S-0005xr-SG
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:10:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uH40F-0001XY-Md
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:10:17 -0400
+ id 1uH40R-0001Z6-AO
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:10:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747674614;
+ s=mimecast20190719; t=1747674626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QlUv3WXzN1tjBcwFhwjIM/PQQRTgeOpjkK85tto1bTY=;
- b=BYsXrOGx+XiFDqoMNtv9xCaZ8RtDiqhNpgavK8WbqHVspC/wCIv2s5qkcPgRi+UDMl/rva
- XemsevTk8nbX2/JynPNx3lsutg0SzhzgmZyL6j8W2afGQd3nlWO3hmi8mPI22s3Yotcn1X
- qoSTsHDlJaAUBdaGkxcxJJ5davdvE2A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=h+dWRobRDbXf8iBk4tZlIYJHZdaGNMwO4PK4On7eRJ8=;
+ b=B1nCmwJ8HTvPei6rvG98OiPzP7a/w5pnwDkQSZNCppYGLzieZg1SUzH6t85mgsOkSgbjiF
+ h+T6HylqNih9ju3fd9phnmsTK8+sLWUy1oSoyuD+YedLCt+c4Pu+X5jJYu8V1yMo0YVXuH
+ I04vn6gtCMQ49vHvOSA7KlcgRc0y/Y0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-yy3-RrAFOUGFeL2JY56mcg-1; Mon,
- 19 May 2025 13:10:11 -0400
-X-MC-Unique: yy3-RrAFOUGFeL2JY56mcg-1
-X-Mimecast-MFC-AGG-ID: yy3-RrAFOUGFeL2JY56mcg_1747674610
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-a_vdsorfMC-nZ1Yg15S06Q-1; Mon,
+ 19 May 2025 13:10:22 -0400
+X-MC-Unique: a_vdsorfMC-nZ1Yg15S06Q-1
+X-Mimecast-MFC-AGG-ID: a_vdsorfMC-nZ1Yg15S06Q_1747674621
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A21A31956080; Mon, 19 May 2025 17:10:10 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3DA7C195609F; Mon, 19 May 2025 17:10:20 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.50])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B900C19560AA; Mon, 19 May 2025 17:10:08 +0000 (UTC)
+ id 47CFF19560AA; Mon, 19 May 2025 17:10:18 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 1/9] Revert "scripts: mandate that new files have
- SPDX-License-Identifier"
-Date: Mon, 19 May 2025 18:09:56 +0100
-Message-ID: <20250519171004.352636-2-berrange@redhat.com>
+Subject: [PATCH v5 5/9] scripts/checkpatch: use new hook for file permissions
+ check
+Date: Mon, 19 May 2025 18:10:00 +0100
+Message-ID: <20250519171004.352636-6-berrange@redhat.com>
 In-Reply-To: <20250519171004.352636-1-berrange@redhat.com>
 References: <20250519171004.352636-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -88,78 +88,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit fa4d79c64dae03ffa269e42e21822453856618b7.
+The file permissions check is the kind of check intended to be performed
+in the new start of file hook.
 
-The logic in this commit was flawed in two critical ways
-
- * It always failed to report SPDX validation on the last newly
-   added file. IOW, it only worked if at least 2 new files were
-   added in a commit
-
- * If an existing file change, followed a new file change, in
-   the commit and the existing file context/changed lines
-   included SPDX-License-Identifier, it would incorrectly
-   associate this with the previous newly added file.
-
-Simply reverting this commit will make it significantly easier to
-understand the improved logic in the following commit.
-
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/checkpatch.pl | 30 ------------------------------
- 1 file changed, 30 deletions(-)
+ scripts/checkpatch.pl | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 365892de04..d355c0dad5 100755
+index 60c26dca06..e208222e75 100755
 --- a/scripts/checkpatch.pl
 +++ b/scripts/checkpatch.pl
-@@ -1442,8 +1442,6 @@ sub process {
- 	my $in_imported_file = 0;
- 	my $in_no_imported_file = 0;
- 	my $non_utf8_charset = 0;
--	my $expect_spdx = 0;
--	my $expect_spdx_file;
+@@ -1448,6 +1448,17 @@ sub process_file_list {
+ # Called at the start of processing a diff hunk for a file
+ sub process_start_of_file {
+ 	my $fileinfo = shift;
++
++	# Check for incorrect file permissions
++	if ($fileinfo->{action} eq "new" && ($fileinfo->{mode} & 0111)) {
++		my $permhere = $fileinfo->{linestart} . "FILE: " .
++			$fileinfo->{filenew} . "\n";
++		if ($fileinfo->{filenew} =~
++		    /(\bMakefile(?:\.objs)?|\.(c|cc|cpp|h|mak|s|S))$/) {
++			ERROR("do not set execute permissions for source " .
++			      "files\n" . $permhere);
++		}
++	}
+ }
  
- 	our @report = ();
- 	our $cnt_lines = 0;
-@@ -1681,34 +1679,6 @@ sub process {
- 			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
- 		}
+ # Called at the end of processing a diff hunk for a file
+@@ -1719,14 +1730,6 @@ sub process {
  
--# All new files should have a SPDX-License-Identifier tag
--		if ($line =~ /^new file mode\s*\d+\s*$/) {
--		    if ($expect_spdx) {
--			if ($expect_spdx_file =~
--			    /\.(c|h|py|pl|sh|json|inc|Makefile)$/) {
--			    # source code files MUST have SPDX license declared
--			    ERROR("New file '$expect_spdx_file' requires " .
--				  "'SPDX-License-Identifier'");
--			} else {
--			    # Other files MAY have SPDX license if appropriate
--			    WARN("Does new file '$expect_spdx_file' need " .
--				 "'SPDX-License-Identifier'?");
+ 		$cnt_lines++ if ($realcnt != 0);
+ 
+-# Check for incorrect file permissions
+-		if ($line =~ /^new (file )?mode.*[7531]\d{0,2}$/) {
+-			my $permhere = $here . "FILE: $realfile\n";
+-			if ($realfile =~ /(\bMakefile(?:\.objs)?|\.c|\.cc|\.cpp|\.h|\.mak|\.[sS])$/) {
+-				ERROR("do not set execute permissions for source files\n" . $permhere);
 -			}
--		    }
--		    $expect_spdx = 1;
--		    $expect_spdx_file = undef;
--		} elsif ($expect_spdx) {
--		    $expect_spdx_file = $realfile unless
--			defined $expect_spdx_file;
--
--		    # SPDX tags may occurr in comments which were
--		    # stripped from '$line', so use '$rawline'
--		    if ($rawline =~ /SPDX-License-Identifier/) {
--			$expect_spdx = 0;
--			$expect_spdx_file = undef;
--		    }
 -		}
 -
- # Check SPDX-License-Identifier references a permitted license
- 		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
- 		    &checkspdx($realfile, $1);
+ # Only allow Python 3 interpreter
+ 		if ($realline == 1 &&
+ 			$line =~ /^\+#!\ *\/usr\/bin\/(?:env )?python$/) {
 -- 
 2.49.0
 
