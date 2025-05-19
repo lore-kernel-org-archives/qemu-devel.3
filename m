@@ -4,58 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE948C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFF6C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:18:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGnxT-0007N8-FI; Sun, 18 May 2025 20:02:19 -0400
+	id 1uGoCK-0000Xz-CF; Sun, 18 May 2025 20:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edmund.raile@proton.me>)
- id 1uGnxQ-0007Md-BV
- for qemu-devel@nongnu.org; Sun, 18 May 2025 20:02:16 -0400
-Received: from mail-0301.mail-europe.com ([188.165.51.139])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edmund.raile@proton.me>)
- id 1uGnxM-0004u8-1D
- for qemu-devel@nongnu.org; Sun, 18 May 2025 20:02:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=uldaevi6wbd3beelndtqzflpna.protonmail; t=1747612917; x=1747872117;
- bh=jY9zke4yDMAIPMefXw7rItwJ28YWUP0hz3H8he6S45s=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
- b=OUHX40oHhw+FHhSmfa/zE3MJ43G+z45/BsvM/hUN0EPqFcwDMOGA7kJCl4Z6uN7TW
- 24GXnbJHdzqUnDJ9TbOoJI+NOWCani3BHJPeEbgTxT3Cd1iED6jWeJr9XLU/OFX/FX
- bSUPZWV/9NEAsEqAK1IEXVDM74vQUph4+gRpAOUp84ZKn3s6uiQruzQLPT1bnzl9x6
- gQs25307EmsCiV+U4e2zAuLEfsEzv+kseU0DHd4yFDbBEubWzXEUum93iVhB/Bw8YG
- cNGXEnjLpcsuwSjxi725wN45Jw0yK9DXX9pftBXtx9UuvZ4lWYbyNMsrfxoqZ8raaX
- 7q50+3II6vtaw==
-Date: Mon, 19 May 2025 00:01:52 +0000
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: "clg@kaod.org" <clg@kaod.org>, "stefanha@redhat.com" <stefanha@redhat.com>,
- "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: [PATCH] vfio/igd: Respect x-igd-opregion=off in IGD quirk handling
-Message-ID: <6TP1d19UA0waLH71Mea1s2U0yFtyKMpqqf6miU7O44BYZm04F4vOJ5c565O09PliXCbSNJJxuIm0zh2Re-gWa6jo08YraLuPOdebgp30n5M=@proton.me>
-In-Reply-To: <20250518171730.1ba5bc31.alex.williamson@redhat.com>
-References: <nlfoN7cj2SVJ6LQahdnb_xWG6orCIn4hxHq8JTND4cH2gXCVy9X0KKJkVZdNiG6YmFX-1Qkc_fW2tUwk5LkQcZaJz4Lwy5OpMtaVCK7Tq-E=@protonmail.com>
- <20250518171730.1ba5bc31.alex.williamson@redhat.com>
-Feedback-ID: 45198251:user:proton
-X-Pm-Message-ID: 6f21b4abfd9cac7ada3732787a1da64162a018b8
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uGoCF-0000XO-9q; Sun, 18 May 2025 20:17:37 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uGoCD-0007Nq-2q; Sun, 18 May 2025 20:17:34 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-52410fb2afeso2622328e0c.3; 
+ Sun, 18 May 2025 17:17:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747613849; x=1748218649; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JZVKVF/qTw65cv51/4KNi53uu2B84G9DNrG+BqCQr4Q=;
+ b=docpBOrFFMbo8H4hIHv6JZBpfGOwHHFSp0MintkY4VNUSZbdFHm15RjVUWLBvKkhK6
+ 1+edEfrQimvS98wfH/q3WUEsQgG6o5EwobiHPTK/gfRXeGtOPNJPcau6vq2cX95ndPJM
+ 2gVteR6jgZbw/9yeY5p4luf6Y4TBe1R61NNnKDtvREULQPkSzVZN0jfobFdqfZjl2CSC
+ 6fJ/JxxDjy0A5GpI3WMU1oljecPo8B60+AmMggPMUkI05htsjOBb90pIWnME0qD2TVUA
+ YfP8pYeXNTBMQCiAB5c9YyJ7gMNGqsoQ4XvPSABKjEX0+rEJgJOep6MndheLNi2fl6gA
+ okrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747613849; x=1748218649;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JZVKVF/qTw65cv51/4KNi53uu2B84G9DNrG+BqCQr4Q=;
+ b=IYkXWffBwScu2I583PgQeV095xdk0aEfmXZ80bjlbdGDXY+yGJG8fcwOk0qyJ6LOTa
+ xvySPPGmBwILbuKk2P5sFHvO/znzD9OKGe908oamYWWWCI9OMaEDLrfJNq5rofomRqV0
+ 7oQ3+qtciT3hYiNzgHqNW6AeyFubwegFq3gzjFQPpvOagFy1dtgqJYWg30+42xlRsanI
+ NZ3H1pVD1uWxGxUpjtnpmlkaLr+fYSx53QLDfPLgeWVchkt1UWAoZv8r4jTlnS1FicWO
+ V0G8mfuEl55/QIi9/vqGnBZOgxfjZO6Yztv5u3XdErh7XxoyScq4iEeG1hD885/9/sII
+ zbuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMVbO5ozgZJifQ3tMMGnPc6xbOZHcI7yREi8zHyUaubYB/DuYkwDR6eTkXwxAcqYOzaYBlbnlFDweW@nongnu.org
+X-Gm-Message-State: AOJu0Yw0Qy66JRQ6LFLi3CJdpnH1t55xaPHNeFmJTZl+o7RpNgj3/fpT
+ eWxc2cvJR42dP+w2oTKfHtJg7xOkDG3pRdTG9rGMO74fv1KdCZ42NcLL2Y1LNTqAQRps77DIAcW
+ CGfV2CUjMH5M58iD2+/s3IxLSRTbRsPs=
+X-Gm-Gg: ASbGncvLQAvqntR8AFsWcwfUbYpaaDI4NUGouOFeN6ptzZsmFfJKgW/1oC61dTde7fv
+ pBvR65855nJQNJPv4vxYIBDj6mO0ZkmhPPjUUhhTpnTnTI5tp8HmMDrdlDLbsZw+rqxH1/P9ohF
+ /c4Oclf1pwSi5TQUa1/mCOMi32tUhn7AjOspHFvlhzWctkStUTOn6F9pF1Q+zi2ZY=
+X-Google-Smtp-Source: AGHT+IGTdNxbfcFImbKZe/u7StOJxwCzMM4GGQo+jLyBu4wCKszoRW+kWkchIqtkhJopZfpL1pUCDXXerB3kn3U0U88=
+X-Received: by 2002:a05:6122:46a7:b0:52a:863f:78dd with SMTP id
+ 71dfb90a1353d-52dba91e5a2mr10982973e0c.6.1747613849494; Sun, 18 May 2025
+ 17:17:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250504205714.3432096-1-richard.henderson@linaro.org>
+ <20250504205714.3432096-10-richard.henderson@linaro.org>
+In-Reply-To: <20250504205714.3432096-10-richard.henderson@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 19 May 2025 10:17:03 +1000
+X-Gm-Features: AX0GCFtF1g0SDv8pO09Rs__WSuaJ71bU_x8OFQiafOQ5Yhea4xLeDPv6w8zFGbA
+Message-ID: <CAKmqyKOw5_b=_GrTd6exz4JnPFQMmFBFUdKTi4-LvFP9=gKvUw@mail.gmail.com>
+Subject: Re: [PATCH 09/12] target/riscv: Fill in TCGCPUOps.pointer_wrap
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, foss@percivaleng.com, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=188.165.51.139;
- envelope-from=edmund.raile@proton.me; helo=mail-0301.mail-europe.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,91 +92,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "edmund.raile" <edmund.raile@proton.me>
-From:  "edmund.raile" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > Restore SR-IOV Intel iGPU VF passthrough capability:
-> > Check x-igd-opregion=3Doff parameter in vfio_pci_igd_config_quirk and
-> > vfio_pci_kvmgt_config_quirk to ensure x-igd-opregion=3Doff is
-> > respected despite subsequent attempt of automatic
-> > IGD opregion detection.
-> >
-> > Fixes: 7be29f2f1a3f ("Merge tag 'pull-vfio-20250509' of https://github.=
-com/legoater/qemu into staging")
->=20
-> Can you bisect to a specific commit from the merge?  The merge may be
-> where the issue was introduced to mainline, but the merge commit itself
-> is more than likely not the source of the issue.  Thanks,
->=20
-> Alex
+On Mon, May 5, 2025 at 6:59=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Check 32 vs 64-bit and pointer masking state.
+>
+> Cc: qemu-riscv@nongnu.org
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-I have to admit, I have no idea how to pluck apart
-that merge pull using git.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-But from browsing the repo:
-https://github.com/qemu/qemu/compare/master...legoater:qemu:vfio-10.1
+Alistair
 
-If I'd have to guess it would be
-b16785f1185d ("vfio/igd: Detect IGD device by OpRegion")
-https://github.com/qemu/qemu/commit/b16785f1185d4f35a0313d9a472d75bdbafce22=
-1
-where it is assumed that "IGD device always comes with OpRegion"
-which is not true in the case of SR-IOV virtual function devices,
-and the user's choice of `x-igd-opregion=3Doff` should still be
-respected, for the parameter to not be redundant.
-The default was already changed to x-igd-opregion=3Don in
-4574a4490a86 ("vfio/igd: Enable OpRegion by default").
-https://github.com/qemu/qemu/commit/4574a4490a865587fd24587bd99067615ea1e9b=
-d
-
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2968
-> > Signed-off-by: Edmund Raile <edmund.raile@protonmail.com>
-> > ---
-> > This patch fixes a regression in QEMU=E2=80=99s VFIO IGD quirk handling=
- that
-> > established automatic IGD opregion detection which ignores
-> > x-igd-opregion=3Doff necessary for SR-IOV VF passthrough of
-> > Intel iGPUs using i915-sriov-dkms.
-> >
-> > Please review and provide feedback.
-> > Let me know if additional testing or changes are needed.
-> >
-> > Kind regards,
-> > Edmund Raile.
-> >
-> >  hw/vfio/igd.c | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> >
-> > diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> > index e7952d15a0..e54a2a2f00 100644
-> > --- a/hw/vfio/igd.c
-> > +++ b/hw/vfio/igd.c
-> > @@ -523,6 +523,11 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevic=
-e *vdev, Error **errp)
-> >          return true;
-> >      }
-> >
-> > +    /* Respect x-igd-opregion=3Doff by skipping OpRegion handling */
-> > +    if (!vdev->igd_opregion) {
-> > +        return true;
-> > +    }
-> > +
-> >      /* IGD device always comes with OpRegion */
-> >      if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
-> >          return true;
-> > @@ -689,6 +694,11 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDev=
-ice *vdev, Error **errp)
-> >          return true;
-> >      }
-> >
-> > +    /* Respect x-igd-opregion=3Doff by skipping OpRegion handling */
-> > +    if (!vdev->igd_opregion) {
-> > +        return true;
-> > +    }
-> > +
-> >      /* FIXME: Cherryview is Gen8, but don't support GVT-g */
-> >      gen =3D igd_gen(vdev);
-> >      if (gen !=3D 8 && gen !=3D 9) {
+> ---
+>  target/riscv/tcg/tcg-cpu.c | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 55e00972b7..267186e5e3 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -237,6 +237,31 @@ static void riscv_restore_state_to_opc(CPUState *cs,
+>      env->excp_uw2 =3D data[2];
+>  }
+>
+> +#ifndef CONFIG_USER_ONLY
+> +static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
+> +                                vaddr result, vaddr base)
+> +{
+> +    CPURISCVState *env =3D cpu_env(cs);
+> +    uint32_t pm_len;
+> +    bool pm_signext;
+> +
+> +    if (cpu_address_xl(env) =3D=3D MXL_RV32) {
+> +        return (uint32_t)result;
+> +    }
+> +
+> +    pm_len =3D riscv_pm_get_pmlen(riscv_pm_get_pmm(env));
+> +    if (pm_len =3D=3D 0) {
+> +        return result;
+> +    }
+> +
+> +    pm_signext =3D riscv_cpu_virt_mem_enabled(env);
+> +    if (pm_signext) {
+> +        return sextract64(result, 0, 64 - pm_len);
+> +    }
+> +    return extract64(result, 0, 64 - pm_len);
+> +}
+> +#endif
+> +
+>  const TCGCPUOps riscv_tcg_ops =3D {
+>      .mttcg_supported =3D true,
+>      .guest_default_memory_order =3D 0,
+> @@ -250,6 +275,7 @@ const TCGCPUOps riscv_tcg_ops =3D {
+>
+>  #ifndef CONFIG_USER_ONLY
+>      .tlb_fill =3D riscv_cpu_tlb_fill,
+> +    .pointer_wrap =3D riscv_pointer_wrap,
+>      .cpu_exec_interrupt =3D riscv_cpu_exec_interrupt,
+>      .cpu_exec_halt =3D riscv_cpu_has_work,
+>      .cpu_exec_reset =3D cpu_reset,
+> --
+> 2.43.0
+>
+>
 
