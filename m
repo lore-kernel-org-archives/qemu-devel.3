@@ -4,96 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED75C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF050C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 17:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH45U-00045G-9y; Mon, 19 May 2025 13:15:40 -0400
+	id 1uH4ES-0006UR-D3; Mon, 19 May 2025 13:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1uH45S-00043m-Ak
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:15:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1uH45P-00024O-Sj
- for qemu-devel@nongnu.org; Mon, 19 May 2025 13:15:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747674933;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zFctatdD7Z/cK/Bv/QAKAvpW1j1nWjBmTp5u1mv0a+A=;
- b=QBARIqaCAzg4BMbxwMyCsEuvmv14RCi8DKEDS3SMsiqA4xyVB8t/4/lkNGc4NGxwe3mN8r
- 18CKguWuOSmsU7ZVMnjvyjJg6EIv9bmnY89OXPv/3EuMsf+K0pFRBOzi2QTHxB8aRNMX6o
- lKfm6mqOx0eU9ASbNI5cMsuULoz58mA=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-54-SLko6tm_N5eI8UBUCRrYcA-1; Mon, 19 May 2025 13:15:32 -0400
-X-MC-Unique: SLko6tm_N5eI8UBUCRrYcA-1
-X-Mimecast-MFC-AGG-ID: SLko6tm_N5eI8UBUCRrYcA_1747674931
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-8614a8474f6so69527339f.3
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 10:15:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uH4EO-0006UC-T3
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:24:52 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uH4EM-0002jw-RT
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 13:24:52 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-702628e34f2so42290297b3.0
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 10:24:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747675489; x=1748280289; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9uZYBTPFdmX+3Jg5KHox8LcaL34tqmyaROWmmL/1FqM=;
+ b=EmbfmGPEbkj/ECpATrHzAUyh9rEmG1/kmwxykD23kuYual81tbFUscvAe10yppYGDM
+ 9v/rufNQ+rg77vBa1NvR5VL54gSs829ueeK44DjOczoR7o71WBOsiRqpe7r6h4bY0Inv
+ BuBE2+JZvyAtPuh5sCq7tTrDHTqlcIgky4j2Oxxe1JV2CNDMyLG0Vh5kNaYqYHXMKutt
+ y6tvoM5RoGy5+92V1SwIOD2yBcpPM+Qv+1/scvh92DvNZ+rxuf/TIRBsemzcA+Qv37wS
+ v6fk8qM+CBbnOZpDIlX+PVVooJgE9uiMVgPVBLmgfZ/CHfXWzH9BoqJGfwLjx56M6kas
+ xJFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747674931; x=1748279731;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1747675489; x=1748280289;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zFctatdD7Z/cK/Bv/QAKAvpW1j1nWjBmTp5u1mv0a+A=;
- b=I93m7YJV7B8PirHJLpPL2rVUuV6xo3aCAfwadYglHPpor8eJoXtF5RMEK8e5yg3GUW
- OzsAorpQkN/e1YUiU3upL5015rL2xoKUg7dDKrgYH/xCwra8FN4+QngcXl3L+KMOHGMm
- PQptBSiadcbHs9Vsg0R9nciwYipvp7PAG7RNaOiLSwVmSIZ8XCBLZmYbcuctsDGF2kuf
- D8mzX75bAiSaTH2IvrWSuRmlO9zFwZB7Zod02BVv10Cx2ZEqQTgC55dC1gP955qYokhy
- MpxcNZDdfNxqMWlc5fdRUME5tcH/n7yySbgtUMQCgm1Wu90Gbzdap8Urz1Q5yMkOF42v
- m+sQ==
-X-Gm-Message-State: AOJu0YzYOaFuEFGnwXMYcZwiqcy6Hms+VN96DhoS4kFXccJR1Tbw6538
- NmmyC8SePLRpe5VdzX8FJFUTqj+COqLwxLKgD4BXyKrC5xPFI/zDwVZrVUmF/oqVvPtZbvjgapw
- VJshg6CriQwAdQCw1dyFPBYt6xgzT9/7kgY4Whz+uVQZxIftenvA790ZE
-X-Gm-Gg: ASbGncs2bWlVu/NbkuHbAYtREhrBO8csCYLxouC+GbyfXfuPrIqxRX0ftyngwZ+Li8/
- OXPNpspjCqQZR4IOlPePji0f+BAe9/FsPzW79dTWaMJMPVWxmULFDjsFjl6zVVKLYU1Ugf891zt
- ZEdcox4WtDqbgxYROk+FNJ2p3RG8QPKrQVV7NkRpDKtFpoJEQTaduwZapN+eTyTxP2hB76AcV7U
- NkdofapPEYhmlX1wkx7zAYLMhZ5+ENcryFobpt8GALry9GSHieyq9WdfgCa/X9IZOiCmPy0QcdC
- SjvYPB3ewW9okcc=
-X-Received: by 2002:a05:6602:3416:b0:856:2a52:ea02 with SMTP id
- ca18e2360f4ac-86a233b0544mr376294639f.5.1747674931116; 
- Mon, 19 May 2025 10:15:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQtkyRSlb+jab5Nitu4r9h3Xm+Bqf6nmhewjPKhjEmGXvZBaM71dDcUCzGLgPCrShy4Gwm+A==
-X-Received: by 2002:a05:6602:3416:b0:856:2a52:ea02 with SMTP id
- ca18e2360f4ac-86a233b0544mr376292539f.5.1747674930619; 
- Mon, 19 May 2025 10:15:30 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-86a2372cc53sm177861439f.44.2025.05.19.10.15.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 May 2025 10:15:29 -0700 (PDT)
-Date: Mon, 19 May 2025 11:15:27 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Qwinci <qwinci222@gmail.com>
-Cc: qemu-devel@nongnu.org, Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH] vfio/igd: Support non-boot gpus
-Message-ID: <20250519111527.6cafd01a.alex.williamson@redhat.com>
-In-Reply-To: <20250519150837.23146-3-qwinci222@gmail.com>
-References: <20250519150837.23146-3-qwinci222@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=9uZYBTPFdmX+3Jg5KHox8LcaL34tqmyaROWmmL/1FqM=;
+ b=iRwglypHXctiz5v4U022kPSYHLm3zbsD1VUhonHlhxU+c9bIflpvRIMaSge8iXRtES
+ 0HfhWfuG96VcCnWtGwBKBMNkOQMhGNSDDdoc9mrOrXb7qKPuJtU+8DT1iGdrOn3MaKHZ
+ kZyht0592evhcUgGtlpcxtb/HSx/2QjlremHLtL6S27pIluR7ZTkmTso32uiC7MRINBp
+ 0o0ISswB9H5UJUUg2+MxBThOk7K20n8w0D1wVEpQPkkSXRkvjbOOQ618biU68s8fuVFQ
+ 7XwApzQ1mpJRqmS/NVsKJZ1R0Ts2Vm/ySCcO/ma7wSOzsAEiivtAqrWbrEPIYG2wNtje
+ KLHQ==
+X-Gm-Message-State: AOJu0Ywd4YTW7ehlZ/lBY/Pxy9jenNARGL5ghC2Ca6e+vP63k5PtcCK1
+ UhBIgzfCk61D11GopDMDnsTE9bmZcZUefaAWnxZPTqap6D57HdW+UbnuJA7CZSflJWy88YnPzas
+ FUC4PNfLjQGyU7K/0oJYaQiImdar/37nXABOF3Zdp5w==
+X-Gm-Gg: ASbGncvIH1ssO2dd9kDrrI/bIg8xIxZrsXm1B4iwMZc4NOP2Lz6dKeBAUqo5Fv+PySZ
+ 4Cwl3Enmvza6MvQ5Rg7QsDk4UwdqpnI/sd8D3QHnyx/IOGoipAwaKLkwxbdosQlIbW5PsW8N5uk
+ OgjgQNamF4hdZvq1mmmFb52AUVTD1uq3srtg==
+X-Google-Smtp-Source: AGHT+IFMu+rB/Qg8RSPcIRouFO5kHTXP/gDoFOYhJ6WnfkkX2T7CgRX5KTpBGqA4befO841xcyovUZ62871Hhdyx5Pk=
+X-Received: by 2002:a81:fe16:0:b0:70c:9a57:699e with SMTP id
+ 00721157ae682-70c9a576c68mr166029087b3.7.1747675488859; Mon, 19 May 2025
+ 10:24:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250519171004.352636-1-berrange@redhat.com>
+ <20250519171004.352636-10-berrange@redhat.com>
+In-Reply-To: <20250519171004.352636-10-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 May 2025 18:24:37 +0100
+X-Gm-Features: AX0GCFsv-eRFVe2afn8CDzMaYyoMeFPX52g1_14godSmmBiVO7TVeHlYdIUua1M
+Message-ID: <CAFEAcA8UbDZk-4NXUaCn=rKgkNa9aAuxG5qePtvsUPbnfVS4Gw@mail.gmail.com>
+Subject: Re: [PATCH v5 9/9] scripts/checkpatch: reject license boilerplate on
+ new files
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,79 +95,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[Please Cc maintainers - added here]
-
-On Mon, 19 May 2025 18:08:39 +0300
-Qwinci <qwinci222@gmail.com> wrote:
-
-> Change the IGD detection logic to also accept gpus with
-> PCI_CLASS_DISPLAY_OTHER class which is used if the igpu is not
-> set as the primary boot gpu.
-> 
-> Signed-off-by: Qwinci <qwinci222@gmail.com>
+On Mon, 19 May 2025 at 18:10, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> The previous commit mandates use of SPDX-License-Identifier on common
+> source files, and encourages it on all other files.
+>
+> Some contributors are none the less still also including the license
+> boilerplate text. This is redundant and will potentially cause
+> trouble if inconsistent with the SPDX declaration.
+>
+> Match common boilerplate text blurbs and report them as invalid,
+> for newly added files.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
->  hw/vfio/igd.c | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index e7952d15a0..1ddfcc2c17 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -454,6 +454,16 @@ static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
->  #define IGD_GGC_MMIO_OFFSET     0x108040
->  #define IGD_BDSM_MMIO_OFFSET    0x1080C0
->  
-> +static bool is_igd(VFIOPCIDevice *vdev) {
-> +    if (vfio_is_vga(vdev)) {
-> +        return true;
-> +    }
-> +
-> +    PCIDevice *pdev = &vdev->pdev;
-> +    uint16_t class = pci_get_word(pdev->config + PCI_CLASS_DEVICE);
-> +    return class == PCI_CLASS_DISPLAY_OTHER;
-> +}
 
-But the function isn't detecting IGD, it's detecting VGA or DISPLAY
-class devices.  So it's misnamed and we might want a new
-vfio_is_display() and if necessary a wrapper for both that tests
-vfio_is_vga_or_display(), or maybe a vfio_is_base_display() if we want
-to test only the base class.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-More importantly maybe, sure there might be IGD as non-primary
-configurations, but are the quirks still relevant to those devices?
-Which ones?  Thanks,
-
-Alex
-
->  void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->  {
->      VFIOQuirk *ggc_quirk, *bdsm_quirk;
-> @@ -461,7 +471,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->      int gen;
->  
->      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-> -        !vfio_is_vga(vdev) || nr != 0) {
-> +        !is_igd(vdev) || nr != 0) {
->          return;
->      }
->  
-> @@ -519,7 +529,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->      Error *err = NULL;
->  
->      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-> -        !vfio_is_vga(vdev)) {
-> +        !is_igd(vdev)) {
->          return true;
->      }
->  
-> @@ -685,7 +695,7 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->      int gen;
->  
->      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-> -        !vfio_is_vga(vdev)) {
-> +        !is_igd(vdev)) {
->          return true;
->      }
->  
-
+thanks
+-- PMM
 
