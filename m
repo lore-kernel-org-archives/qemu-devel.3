@@ -4,75 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 491CFC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 11:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCB2EC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 11:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGyYG-0003KC-UY; Mon, 19 May 2025 07:21:00 -0400
+	id 1uGybm-00049z-R5; Mon, 19 May 2025 07:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1uGyYF-0003Jh-J7
- for qemu-devel@nongnu.org; Mon, 19 May 2025 07:20:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <edmund.raile@protonmail.com>)
+ id 1uGybi-00049l-J2
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 07:24:34 -0400
+Received: from mail-0301.mail-europe.com ([188.165.51.139])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1uGyYD-0006Sv-J9
- for qemu-devel@nongnu.org; Mon, 19 May 2025 07:20:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747653654;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9IYMU89Sr+inoxF/CJ/81bKd9KJFKXke4Kgfd12psII=;
- b=V7mMQBWewfrRp9dYxD8q5ZE0pDAQc+vxhG9/jeeRJ1Mv1YsitD7PuLfexjUDzFNl1eeGM0
- OLjakn/4BtHNsIuZ3E/QXMlfqO28DmAguf2j7MU6puF7V9JrJI55L6OsShfH3KqMdYdPvP
- ZE7eNQS5KAMokgJycw5gMBV5cYr4tro=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-tdn-QbnQOpW2kw2txYxqbg-1; Mon,
- 19 May 2025 07:20:51 -0400
-X-MC-Unique: tdn-QbnQOpW2kw2txYxqbg-1
-X-Mimecast-MFC-AGG-ID: tdn-QbnQOpW2kw2txYxqbg_1747653650
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FFD51956094; Mon, 19 May 2025 11:20:50 +0000 (UTC)
-Received: from localhost (unknown [10.42.28.3])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 47A2118003FD; Mon, 19 May 2025 11:20:49 +0000 (UTC)
-Date: Mon, 19 May 2025 12:20:48 +0100
-From: "Richard W.M. Jones" <rjones@redhat.com>
-To: Nir Soffer <nirsof@gmail.com>
-Cc: qemu-devel@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v4 1/3] io: Add helper for setting socket send buffer size
-Message-ID: <20250519112048.GU1450@redhat.com>
-References: <20250517201154.88456-1-nirsof@gmail.com>
- <20250517201154.88456-2-nirsof@gmail.com>
+ (Exim 4.90_1) (envelope-from <edmund.raile@protonmail.com>)
+ id 1uGybg-0006o8-LE
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 07:24:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=protonmail3; t=1747653867; x=1747913067;
+ bh=5Vtlouxk7O4b23u6qfPQP3w/ezeYuTu/3JijUt8MW5U=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+ List-Unsubscribe:List-Unsubscribe-Post;
+ b=YrmmYksx1kJDqftPu0g+sUVVEnPjpv9kwIapcKw6x8NgqzUZSccYtniuZw27WI+8S
+ xs/en9RgYQHo9iNtUvXivNd/iSAQ4WGk8CtzbqW2hkWZvBHncxVRf6PFfH60mdOvPh
+ jcPTp9TnfK6L6uafbBDTfyLUsdmSftpLwAAq7osdyGHFx3dBkayUWYOTqstwkyCINg
+ JFmRfYEom7PsZtqUr7u1090h9x4fgBWPlF1u7V5afGtsL2lqIzeJIHgVQFVwOHIuFK
+ x4+Ytf39M0qsK+MaNAErIMqu2YZPLeamPwXcDrOcY/wp0ZijuENxdU6rBRNHPCOGvs
+ 1BDrRw+6CF02Q==
+Date: Mon, 19 May 2025 11:24:23 +0000
+To: "clg@redhat.com" <clg@redhat.com>,
+ "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "edmund.raile@proton.me" <edmund.raile@proton.me>
+Subject: [PATCH] vfio/igd: OpRegion not found fix error typo
+Message-ID: <MFFbQoTpea_CK5ELq8oJ-a3Q57wo7ywQlrIqDvdIDKhUuCm59VUz2QzvdojO5r_wb_7SHifU0Kym3loj4eASPhdzYpjtiMCTePzyg1zrroo=@protonmail.com>
+Feedback-ID: 43016623:user:proton
+X-Pm-Message-ID: 257f01cb9ed146fbc40b341b99cb4ab1aeea886a
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250517201154.88456-2-nirsof@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=rjones@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=188.165.51.139;
+ envelope-from=edmund.raile@protonmail.com; helo=mail-0301.mail-europe.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,22 +67,30 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "edmund.raile" <edmund.raile@protonmail.com>
+From:  "edmund.raile" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 17, 2025 at 11:11:52PM +0300, Nir Soffer wrote:
-> Testings reading and writing from qemu-nbd using a unix domain socket
+Signed-off-by: Edmund Raile <edmund.raile@protonmail.com>
+---
+ hw/vfio/igd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Nit pick that this should be "Testing", not "Testings".  (Or
-"Experiments" if you really wanted a plural noun.)
-
-Rich.
-
--- 
-Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
-Read my programming and virtualization blog: http://rwmj.wordpress.com
-virt-p2v converts physical machines to virtual machines.  Boot with a
-live CD or over the network (PXE) and turn machines into KVM guests.
-http://libguestfs.org/virt-v2v
-
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index e54a2a2f00..36ceb85212 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -203,7 +203,7 @@ static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice =
+*vdev,
+                     VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, opregion);
+     if (ret) {
+         error_setg_errno(errp, -ret,
+-                         "Device does not supports IGD OpRegion feature");
++                         "Device does not support IGD OpRegion feature");
+         return false;
+     }
+=20
+--=20
+2.49.0
 
