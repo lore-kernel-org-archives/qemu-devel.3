@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16367C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91589C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGs3W-0000ri-F8; Mon, 19 May 2025 00:24:50 -0400
+	id 1uGs3P-0000cs-3v; Mon, 19 May 2025 00:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGroX-0007xb-2P; Mon, 19 May 2025 00:09:25 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1uGrnU-0005X4-Cg; Mon, 19 May 2025 00:08:16 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGroU-0004Kb-A8; Mon, 19 May 2025 00:09:19 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b1a1930a922so2633673a12.3; 
- Sun, 18 May 2025 21:09:17 -0700 (PDT)
+ id 1uGrnS-0004CS-Mp; Mon, 19 May 2025 00:08:16 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b1fde81de05so2407529a12.1; 
+ Sun, 18 May 2025 21:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747627756; x=1748232556; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747627692; x=1748232492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Nw6AXVPueGRjb2BbB22TeSRK74hAQ7nSEki4/SFL6oU=;
- b=cI1h3KbrffPZC9AFT6jnjq6aEnd//WhvVkRLNWh4kvslVNDrS9oWIbBfAaj68/tDYG
- bi5nVI18mQgWw7SMGAmvQX4hyvonMb/YaEbn3syQ5VTkC3e5mfFpuOG1C01gPVj2YIu7
- wzL3VQqhy23opVsUeGMsurUalr4lOOKCmBDizeUnEgcjAPRG92gBAt6YZ+GOkmR7Ogaf
- A5fU2sbeLbp4Ni+D11YLBnP6HUOp4NBGv55kd9s8suyctcTEDwkj1B5oMbaNl3AfU8Gk
- p1us8mGTisjgwC/5uqrYg4kqEyWDu8LAu5yk2N72+zy8SfkjmQGPeJcrsgOSppUrBTUF
- bZLg==
+ bh=UdCffJ+XNsE2W4eMa2COlJLe6Kq0hb7x+qX3poViG4U=;
+ b=TF5PIKrWeYFQqmOQjoD7gdFYulzkluFP7iILyISlwK06xpeghX/HpU87skjrcM++4Q
+ bszihkpsEq3AguAHViUnlPbAIWOPCCH3yqipWFQS005DZ8TsNcLX9rUWxOg7A+RXazv3
+ FWp5IGe/SrPFu7Yj6zBc54urVqzFgVTCELZ+Ci9e+3P5lERw3yQZjn5o5wnHys+4ZiyY
+ xolYzt34gG+ELPXD67xQq8sjQR4rcBlF4H4ZgjYyHBxTg5S4yFXb4s4YYaJU/1qK+5kt
+ QkyzHPdmNB+zzShEMBNSSu4O/n3YaNHeOOMQi0wsK8C09iAzQ1MGAyaJPplb28CqX6CR
+ o1bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747627756; x=1748232556;
+ d=1e100.net; s=20230601; t=1747627692; x=1748232492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Nw6AXVPueGRjb2BbB22TeSRK74hAQ7nSEki4/SFL6oU=;
- b=X/kfmL/uCW8q0rabCRCMCAsUJiJLCGMENihe/mZmZwcLuzlVL/KQe7mEHb0Q1i5wrF
- bwz2QUhYRotDcZka+hOWo+QXxo4s3zA+xE2sFKuVsCrTmh2Sp41Hc1RVPIlqljzEJjUE
- WdeFgMrTqVsU1L/yZX/aBMTUQVZAEP/lqct5OiaKtUtk1mmCw4a8+Yc4g8TSymzu2Zqe
- s6ivIYUg2qBmihTwQ8mMWYasMY0ZEFX7E0Y4ELl1k1l016rY6kam24hdtzPGvwAlFUkI
- 0ITz2BPQk3/b1gXlmeUEOvAR2lllqa9tP99mku29qhauVIa92UT/aYNtv7FqPiZzZYGc
- aM6g==
+ bh=UdCffJ+XNsE2W4eMa2COlJLe6Kq0hb7x+qX3poViG4U=;
+ b=HSCbRr9i1l0JWWEnXMk7GkV1nj7OyjVc81LXWV9rRMYzyecVhgnIPNSWJywDMQwPsd
+ sh0pAZntecCn6EHQJVN/zntf7f9/dn36ozfYUessXwGLEEKFf4Nlu55V7oTKuPEzWCeu
+ ghfMVONdz1qJrHXO6Pfx3VP+PEsLXaHgnsxfOP/7ApneiIKRQhE7lTP/RruW+7abuNPp
+ JE8q6CskfjbqLfdfhwnSCqnKcGts3yWB/J0L2zpJ44v2bBnGKmTBtzBRjpQbENB6EHh1
+ gRUx/SgGNXrdzW/MBX09uNnJl2gWsyK/ANwCIsjrKk/6X7s/b99vhN3QHJH4ocrbSgqa
+ ofiQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWkQgHivraeW0xgAJfOMLDiKjW2S7Lrw0XevRwPGMiDBVaov+d7cRivnprQQMYeSY3/zuy0frkUCGHc6w==@nongnu.org
-X-Gm-Message-State: AOJu0Yy7Kclyc5FkGGNTtC+e0fpk4M2WTmBBZlajTufp0E9KWi46WiC3
- wghCtlVkmIPbf3Shs6DnBAVyV54hK1T0xK3qvSvYtdF0l+JOMphxZKtBuBdoNw==
-X-Gm-Gg: ASbGnct9aXuhIJ9OBh/RHQcgQmfgawW4c9V15SoAdKL5sKbYAnXzxNmGu2cXwjG+ews
- c1b8aIkvg8bq4poErjVIxyBzI/EWDuu3vPpAzzIVZkNe4JzeLxYDDssSr60yYHAjX1whjvXZb5v
- MZlPKcd6rC8FY8+ts4iv8adzJLT9EGJCm+YH5DoJUTM6YYzEa0Hpkag7GX3WFmM7n9Ds6QPIbu/
- Vja/D9tzW5glhfkjbXgnPuQsKBbFkcYp/s3wYhTXlCjEOzqMq4dwR/T7wy1TCsaAcGS7JgzfVXW
- ++qjBJ/IzTrlhNS+Qc9EeXIrPLC9y5qUkvlNBdQ/2b0nDshpMOtxtre0LuQqMTcapdrBn9zFLux
- ygCUqi8yvPOL6SQOOw0EVpA3fUaiMIh/liLNSBj6Cw2yy+/84Pb1gJ+6A
-X-Google-Smtp-Source: AGHT+IFEH8biJ8t/vxLfxoK62E2b3oZiWcbEH4gxiVnFkUO7YR72cxzUbSsT4YtcHweZpT/v0QrVbA==
-X-Received: by 2002:a17:902:da86:b0:22e:50f2:1451 with SMTP id
- d9443c01a7336-231d459a6f7mr154117735ad.37.1747627756218; 
- Sun, 18 May 2025 21:09:16 -0700 (PDT)
+ AJvYcCVM7Gao6iB2rFU42ZfReM5hwxrfhb9TdMCkkkqp+MEOhaM72hVQKq0gYRuamjen/VIB/qfNpyxTderR8Q==@nongnu.org
+X-Gm-Message-State: AOJu0YwnHrz3ZVmKJk2I9TkMjCl0hBcnLA1dz9XPAvVo2otxElD4Jsi8
+ GoEGzwbxUJMWotj/m5YiPBeqUIOOI88QBhpu2Q2O2JNP9SDnDLzfB5IrltK1IQ==
+X-Gm-Gg: ASbGncvZIWOy5LZeOFKrSgxW9XD6WbJWnyKDsNnjmX7Sn/SvmB65p37LqjftMAQDEEp
+ RI+1nhsuoA/M1l4EX0kq/v64lIujPShBxZi6HtRZdGka66VxCzTQHHlI/V5eBxT/ceKk0Tgyeeu
+ Tptr6lGwLNuXta4GCFlJv6b9nCGUcWjJnuAh5A/Wd+sSokStZdcuZN+xjjdoTnVXjWxcTRvAkXk
+ /H/yQdEcXmmDu+OwVNdw0s3HKR37nqUlczvNZ0qmdJ0cb1QA4t9btmCtREitQy1Tpu6qrtjkQ8v
+ C3ldhx+Haylwa5QAzl43ZIi8WkYyi0uNiJrud+Y5H8yQ4A6xi/T+a15uZ3c6wIKFOZ1781YFBv0
+ WBvcf6aEWIZKOqCn5aVHIltQTU3fSBche3eNUwS8nSZ/wV1E+RIyAMftB
+X-Google-Smtp-Source: AGHT+IEhKnvIaSPuM6czV7eN03ZR3wBAfCPA/L4ttEtGU58y2sc3XRtbVgUs6Qow89/bTdQHCJgxEg==
+X-Received: by 2002:a17:903:1b6d:b0:231:cec7:34fe with SMTP id
+ d9443c01a7336-231d454ebb5mr172968135ad.46.1747627692486; 
+ Sun, 18 May 2025 21:08:12 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.09.13
+ d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.08.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 May 2025 21:09:15 -0700 (PDT)
+ Sun, 18 May 2025 21:08:11 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
+Cc: alistair23@gmail.com, Anton Blanchard <antonb@tenstorrent.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>, qemu-stable@nongnu.org
-Subject: [PULL 40/56] target/riscv/kvm: fix leak in
- kvm_riscv_init_multiext_cfg()
-Date: Mon, 19 May 2025 14:05:37 +1000
-Message-ID: <20250519040555.3797167-41-alistair.francis@wdc.com>
+Subject: [PULL 21/56] target/riscv: rvv: Add CHECK arg to GEN_OPFVF_WIDEN_TRANS
+Date: Mon, 19 May 2025 14:05:18 +1000
+Message-ID: <20250519040555.3797167-22-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250519040555.3797167-1-alistair.francis@wdc.com>
 References: <20250519040555.3797167-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,36 +106,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-'reglist' is being g-malloc'ed but never freed.
-
-Reported-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250429124421.223883-3-dbarboza@ventanamicro.com>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-3-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
 ---
- target/riscv/kvm/kvm-cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/insn_trans/trans_rvv.c.inc | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index cad54b720a..86eb3c2e3b 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1119,10 +1119,10 @@ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, KVMScratchCPU *kvmcpu,
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 2110392d1c..d8333d8311 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -2687,10 +2687,10 @@ static bool opfvf_widen_check(DisasContext *s, arg_rmrr *a)
+ }
  
- static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
+ /* OPFVF with WIDEN */
+-#define GEN_OPFVF_WIDEN_TRANS(NAME)                              \
++#define GEN_OPFVF_WIDEN_TRANS(NAME, CHECK)                       \
+ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+ {                                                                \
+-    if (opfvf_widen_check(s, a)) {                               \
++    if (CHECK(s, a)) {                                           \
+         uint32_t data = 0;                                       \
+         static gen_helper_opfvf *const fns[2] = {                \
+             gen_helper_##NAME##_h, gen_helper_##NAME##_w,        \
+@@ -2706,8 +2706,8 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+     return false;                                                \
+ }
+ 
+-GEN_OPFVF_WIDEN_TRANS(vfwadd_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwsub_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwadd_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwsub_vf, opfvf_widen_check)
+ 
+ static bool opfwv_widen_check(DisasContext *s, arg_rmrr *a)
  {
-+    g_autofree struct kvm_reg_list *reglist = NULL;
-     KVMCPUConfig *multi_ext_cfg;
-     struct kvm_one_reg reg;
-     struct kvm_reg_list rl_struct;
--    struct kvm_reg_list *reglist;
-     uint64_t val, reg_id, *reg_search;
-     int i, ret;
+@@ -2789,7 +2789,7 @@ GEN_OPFVF_TRANS(vfrdiv_vf,  opfvf_check)
+ 
+ /* Vector Widening Floating-Point Multiply */
+ GEN_OPFVV_WIDEN_TRANS(vfwmul_vv, opfvv_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwmul_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwmul_vf, opfvf_widen_check)
+ 
+ /* Vector Single-Width Floating-Point Fused Multiply-Add Instructions */
+ GEN_OPFVV_TRANS(vfmacc_vv, opfvv_check)
+@@ -2814,10 +2814,10 @@ GEN_OPFVV_WIDEN_TRANS(vfwmacc_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwnmacc_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwmsac_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwnmsac_vv, opfvv_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf, opfvf_widen_check)
+ 
+ /* Vector Floating-Point Square-Root Instruction */
  
 -- 
 2.49.0
