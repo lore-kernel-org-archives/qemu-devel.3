@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51467C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC93AC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 04:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGrv5-0004fs-EO; Mon, 19 May 2025 00:16:07 -0400
+	id 1uGrvM-0004zV-0h; Mon, 19 May 2025 00:16:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGrob-0007zj-1V; Mon, 19 May 2025 00:09:27 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1uGrp6-00006A-H2
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 00:10:00 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGroX-0004Kp-L4; Mon, 19 May 2025 00:09:23 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7426c44e014so3965280b3a.3; 
- Sun, 18 May 2025 21:09:20 -0700 (PDT)
+ id 1uGrp4-0004Pr-OF
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 00:09:56 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-231e011edfaso27288075ad.0
+ for <qemu-devel@nongnu.org>; Sun, 18 May 2025 21:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747627759; x=1748232559; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747627793; x=1748232593; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SwEOicLBArpbP54gxHI3sjHHqXAz8WjPPZUAxbfz9kM=;
- b=FoB2R746JSZhMUZrE5YFxF/un4jZnsPJ26g6pIqCPVryAHLP3h445ePASB7DvYm4JA
- 12p7XMiDdRQhxdFfkNArwTc884u/kVJMOIX40FU+X9tEGa+S6v7BC2MPd8AP2xf0Lrjo
- 7kfAxm6EtJTITV3EiGOedqgFiUIkgmZdklryIxNJfusLFdvbc3iqSy6TrD5QsvFZH+tk
- uZ0fxVZswmYe2qfTHfi2wiXGtyOHpztOcGbBwuBCM83hTepOGuuqQX82B1Fr8CYpaAS7
- 2o9YeCvXG1Bs8wRimAOm8kcl39axpknmIbB4j+2qiBRjXtUsM61d5VnpOKVuNyOZwbW0
- jIrg==
+ bh=bUel07T2/HTvJ6gY1GwCmjy3NTY5KoJHQtLnCUJUAEU=;
+ b=SM3PalkiXrCxgzQLxniBirgUMFuogBybo4XQ+0+snlXtwd8Mv72Veba85nqOReijgb
+ FD7bNhzKwWQYRU/+9+sRV2vvy4p7BwJeZHauAz42TS6yUI0iAkwyRdyIBst99CsuMW6d
+ FAmXfP2vXdMx8IErLXXEXRWjecZOl6FliL2uGTmbWeV5uzXYi6Wu8AFSc4m5e2XcHcfT
+ az/+pffx9tzYthou0okS2+41pR0cBPjNIaGEZ/Bx7YyBRJKcwGG5PyRTln1N2QiAmrhy
+ NF/GhDKH5Uf7F9JQvKlB2P0lB6TgRG9nytcv4rFvh6Q9uT3bHENfIxsA5hqdNSyjHLCO
+ HVtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747627759; x=1748232559;
+ d=1e100.net; s=20230601; t=1747627793; x=1748232593;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SwEOicLBArpbP54gxHI3sjHHqXAz8WjPPZUAxbfz9kM=;
- b=fHUyLz0Y+uifo40/77A6K+oEcNbOJ5PmPQM9aBqhiUubJM3X20at1YHGKVPr9i0ahx
- RlXN73KDNA837j4ZdUYrO/FHPau5Fos2y6Hh9zvdmY2lV+SSEdkjDpIYiQkjExTTF6ti
- vkg0+hAIa1vVw0cZdocXurM5U6eXLS8Hi018JaA+PC5zdXS9NiM7VwO91EHFGoJQBkR4
- odM6DlCWXneoTLuYxok/PAYYlAbIki/idIYtLuc449tzBahryWc3MWuVvZz9J5RDMZm+
- SNuZrwQgv7w7tdDV7AljWnGLigJOJBbYqpprILH4jdqWQoLGjcVJOr8bQeOV8nWPMG29
- GiRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVtcJ2q1d1qa+4AeQ6mgQyZIf11kUcHus79iKIq0SEVzHjTl200wXYAwI74mJeyzwIJKX4h5cPCxsYpMQ==@nongnu.org
-X-Gm-Message-State: AOJu0YwdIJPa+ml5gwNsE1t4mAHYFTqXzMgHnP1SmdH38/R5aVmqMg+u
- wWBG+X/kMvuGkvWkVuXtuBX/AnsHeWl0oSeD7yQKG4oqPOqGQj545fw8F2x/cA==
-X-Gm-Gg: ASbGncsPKQZe1vxHxlesXhNMMDYFl1yBmA4sjek4wBY0d6wOpa1eq8KDgXK5R7mfAcY
- C6rgwW94Ddek/kez4PEmDhp4+7Q27ZK0qxfDGHu+FAD7hYRbXwLHvX0ktzVqXqqzgh+nsS+JVAO
- ddQp4GaHXzDZvudytoXjiDP8Vzgy6x0xzAGpdewNikiK5h/Cac47YXDQ2Dd9KOU/uh0dvQbHuwY
- AuzdaSY24O4UA5x4lpsji+dX5Agz1GDB8NH/D2pDAO+9vEV5XQrMIRw9Mxn9823sEJEXy/KYdLG
- vT6FOYG1vtbSLVT7dghCctwSPK63LDj8B+3NM1Fa64iCob7NaprG06xFlPkh8r3Qfo/FFD45EKF
- /bbXBkxHIFH+MWPNvefmWMcrkGsWrl51UNknsk9fRkpzUiCTWbMbu3blf
-X-Google-Smtp-Source: AGHT+IEdz+5jzmEVyeJ/pawFACwegxzNkEdAywn6AZ7hv1wHLpW1V9Ukf4Q8A3a0/veVQJy6EGQrAw==
-X-Received: by 2002:a05:6a20:9f43:b0:1f3:40a9:2c36 with SMTP id
- adf61e73a8af0-216218c3e5amr15944486637.10.1747627759453; 
- Sun, 18 May 2025 21:09:19 -0700 (PDT)
+ bh=bUel07T2/HTvJ6gY1GwCmjy3NTY5KoJHQtLnCUJUAEU=;
+ b=msvt4GfGjkaVxRMtDNHvy6byrnZJvN8bKZ1U7ZPosPxqooz7j0550Bfai4OSHW++Pn
+ Az+vudmtM2Ak+SK6e/krYoHqGumXHZb7TYOUXUl8X2Kil94skSIwEXCHzbRkHY8UYuL0
+ v+YEVVfR/rs8Ixk1GH2ASTXYeePwdXjRy+KSOe6ecWm8l7XKxn9W/TiCVnuQ/Oo1/7h5
+ I3GoZLfdqMBzGYCS2sTAsSMNcjKBCiOUyldu4HZvpDm9npxjDbwJjkkPGn+QLL2q6Det
+ FE4M/9G7D1t1+xu7HgOJxMn4HnR6fqDw3NSoxn4HlJPYK4HnVe8rnCTJr9HmFpTRj6e7
+ sUxQ==
+X-Gm-Message-State: AOJu0YyMhtnUiTQAbC6FctgR/ZZjhwpCGAic5EOGKXNldWV6VdxgZdaH
+ 5XljnDsoFWeLtmfa2Fn3+2MpwwWcomnbb40TI9kj9U3TxKxb9B6Yq0jWXlnKhg==
+X-Gm-Gg: ASbGncv9OeuDkNq9FhBNn+pMynLmAevXzIP2jmoxGQWnMNNjWvtxyMdT5pZ2OREnNlM
+ uEb89hkhpuahl9n1Qm8OYz67hozCFzPIoD4IJVaB6i8lVc4edHGV88zvI5ZVOb2Orf5HK/53VbO
+ 27evAJEwl5Ce9DTHGfjnFncldyd2F5CfeIr6myVnwJxKP3b2U09h+U666gEJcC0qCw6N5qmEh3S
+ GjF6hyi0m0OwD7WmcJf61jzUZU8muMnJ0suj/b37jGgGFDkbPtMtmFfd91qP6qMheQhFdRynLv0
+ KjKBEi7ghXzE4BzSyno8Ya8KpySSnBzwkxLNdnlbmpamkEc9yt5XISPvCVQziz10861uKvKJqg2
+ 5M3qyG9U+bOf279HPIMwHva0kuwwLkf6FACdneGb33YMeVMU6uHAL0eXw
+X-Google-Smtp-Source: AGHT+IH9fqUZrtkC5hWQMTn99H9X7r9jPEkKrrO5YVoc9icGHi5nEsHaQrirIjyUTif4qZO6QDCEBg==
+X-Received: by 2002:a17:903:324c:b0:231:e331:b7c8 with SMTP id
+ d9443c01a7336-231e331bbedmr113702865ad.17.1747627792935; 
+ Sun, 18 May 2025 21:09:52 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.09.16
+ d9443c01a7336-231ecd5ea41sm41750035ad.228.2025.05.18.21.09.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 May 2025 21:09:18 -0700 (PDT)
+ Sun, 18 May 2025 21:09:52 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-stable@nongnu.org
-Subject: [PULL 41/56] target/riscv/kvm: turn u32/u64 reg functions into macros
-Date: Mon, 19 May 2025 14:05:38 +1000
-Message-ID: <20250519040555.3797167-42-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 52/56] hw/riscv/virt.c: use s->memmap in create_fdt() path
+Date: Mon, 19 May 2025 14:05:49 +1000
+Message-ID: <20250519040555.3797167-53-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250519040555.3797167-1-alistair.francis@wdc.com>
 References: <20250519040555.3797167-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,82 +106,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-This change is motivated by a future change w.r.t CSRs management. We
-want to handle them the same way as KVM extensions, i.e. a static array
-with KVMCPUConfig objs that will be read/write during init and so on.
-But to do that properly we must be able to declare a static array that
-hold KVM regs.
-
-C does not allow to init static arrays and use functions as
-initializers, e.g. we can't do:
-
-.kvm_reg_id = kvm_riscv_reg_id_ulong(...)
-
-When instantiating the array. We can do that with macros though, so our
-goal is turn kvm_riscv_reg_ulong() in a macro. It is cleaner to turn
-every other reg_id_*() function in macros, and ulong will end up using
-the macros for u32 and u64, so we'll start with them.
+create_fdt(), create_fdt_flash() and create_fdt_fw_cfg() can access the
+memmap via their RISCVVirtState pointers.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250429124421.223883-4-dbarboza@ventanamicro.com>
+Message-ID: <20250429125811.224803-6-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Cc: qemu-stable@nongnu.org
 ---
- target/riscv/kvm/kvm-cpu.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ hw/riscv/virt.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 86eb3c2e3b..b037cb2781 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -58,6 +58,12 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level)
- 
- static bool cap_has_mp_state;
- 
-+#define KVM_RISCV_REG_ID_U32(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U32 | \
-+                                         type | idx)
-+
-+#define KVM_RISCV_REG_ID_U64(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U64 | \
-+                                         type | idx)
-+
- static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type,
-                                  uint64_t idx)
- {
-@@ -76,16 +82,6 @@ static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type,
-     return id;
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 3d547f7c2b..8a703a0233 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -996,7 +996,7 @@ static void create_fdt_rtc(RISCVVirtState *s, const MemMapEntry *memmap,
+     }
  }
  
--static uint64_t kvm_riscv_reg_id_u32(uint64_t type, uint64_t idx)
--{
--    return KVM_REG_RISCV | KVM_REG_SIZE_U32 | type | idx;
--}
--
--static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
--{
--    return KVM_REG_RISCV | KVM_REG_SIZE_U64 | type | idx;
--}
--
- static uint64_t kvm_encode_reg_size_id(uint64_t id, size_t size_b)
+-static void create_fdt_flash(RISCVVirtState *s, const MemMapEntry *memmap)
++static void create_fdt_flash(RISCVVirtState *s)
  {
-     uint64_t size_ctz = __builtin_ctz(size_b);
-@@ -119,12 +115,12 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
-     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG, \
-                            KVM_REG_RISCV_CONFIG_REG(name))
+     MachineState *ms = MACHINE(s);
+     hwaddr flashsize = s->memmap[VIRT_FLASH].size / 2;
+@@ -1011,11 +1011,11 @@ static void create_fdt_flash(RISCVVirtState *s, const MemMapEntry *memmap)
+     qemu_fdt_setprop_cell(ms->fdt, name, "bank-width", 4);
+ }
  
--#define RISCV_TIMER_REG(name)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_TIMER, \
-+#define RISCV_TIMER_REG(name)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_TIMER, \
-                  KVM_REG_RISCV_TIMER_REG(name))
+-static void create_fdt_fw_cfg(RISCVVirtState *s, const MemMapEntry *memmap)
++static void create_fdt_fw_cfg(RISCVVirtState *s)
+ {
+     MachineState *ms = MACHINE(s);
+-    hwaddr base = memmap[VIRT_FW_CFG].base;
+-    hwaddr size = memmap[VIRT_FW_CFG].size;
++    hwaddr base = s->memmap[VIRT_FW_CFG].base;
++    hwaddr size = s->memmap[VIRT_FW_CFG].size;
+     g_autofree char *nodename = g_strdup_printf("/fw-cfg@%" PRIx64, base);
  
--#define RISCV_FP_F_REG(idx)  kvm_riscv_reg_id_u32(KVM_REG_RISCV_FP_F, idx)
-+#define RISCV_FP_F_REG(idx)  KVM_RISCV_REG_ID_U32(KVM_REG_RISCV_FP_F, idx)
+     qemu_fdt_add_subnode(ms->fdt, nodename);
+@@ -1146,7 +1146,7 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_rtc(s, s->memmap, irq_mmio_phandle);
+ }
  
--#define RISCV_FP_D_REG(idx)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_FP_D, idx)
-+#define RISCV_FP_D_REG(idx)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_FP_D, idx)
+-static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
++static void create_fdt(RISCVVirtState *s)
+ {
+     MachineState *ms = MACHINE(s);
+     uint8_t rng_seed[32];
+@@ -1173,7 +1173,8 @@ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+      * The "/soc/pci@..." node is needed for PCIE hotplugs
+      * that might happen before finalize_fdt().
+      */
+-    name = g_strdup_printf("/soc/pci@%lx", (long) memmap[VIRT_PCIE_ECAM].base);
++    name = g_strdup_printf("/soc/pci@%lx",
++                           (long) s->memmap[VIRT_PCIE_ECAM].base);
+     qemu_fdt_add_subnode(ms->fdt, name);
  
- #define RISCV_VECTOR_CSR_REG(env, name) \
-     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_VECTOR, \
+     qemu_fdt_add_subnode(ms->fdt, "/chosen");
+@@ -1185,8 +1186,8 @@ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+ 
+     qemu_fdt_add_subnode(ms->fdt, "/aliases");
+ 
+-    create_fdt_flash(s, memmap);
+-    create_fdt_fw_cfg(s, memmap);
++    create_fdt_flash(s);
++    create_fdt_fw_cfg(s);
+     create_fdt_pmu(s);
+ }
+ 
+@@ -1715,7 +1716,7 @@ static void virt_machine_init(MachineState *machine)
+             exit(1);
+         }
+     } else {
+-        create_fdt(s, s->memmap);
++        create_fdt(s);
+     }
+ 
+     if (virt_is_iommu_sys_enabled(s)) {
 -- 
 2.49.0
 
