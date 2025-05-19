@@ -4,88 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53EAC3ABD8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 00:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE42C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 01:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGocP-00062V-4s; Sun, 18 May 2025 20:44:37 -0400
+	id 1uGovW-0007tO-8X; Sun, 18 May 2025 21:04:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGocN-00062J-RH; Sun, 18 May 2025 20:44:35 -0400
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uGocJ-0003H9-S5; Sun, 18 May 2025 20:44:34 -0400
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-52c55db3743so1019472e0c.1; 
- Sun, 18 May 2025 17:44:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747615469; x=1748220269; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WSvgOcAFtyo4Ec9z1HrvW7eGeNRrclUGECs5adckWzk=;
- b=jRiI2vDKJe0t32KlyjMNMGfs9mEzv7MDht3hVXEoYA5S5BtlfEn7v15t48SxDGTCXS
- uFx7bYZQ6+YgEzmUxt1S8oa/oAxRQ4O6XHGQwy8vodCKpBNrpfq2p5L+A7IPsYXL1YEy
- ABBBi9BKY5b8b8wcbzEOTsPMdTchXoRMgSmS5MpE9Zt5HAZddkKM2H7vNM18oJBFRiRv
- Ylx6MLWNZtejG7JWrx6noUkpFfTo+5d3zcPRsdF19DnXVjzYmGr15OouUZfY1VtTDLjS
- rDxVbvFlx/Sra5lI+yGD00pg5e9lgg6plI9FJpI9bTRkTN7fCb+UU+pMHuZHnXOt/vzb
- TPgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747615469; x=1748220269;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WSvgOcAFtyo4Ec9z1HrvW7eGeNRrclUGECs5adckWzk=;
- b=IQiVRyyCwqvY2Q6XBpHm719E8s3po7nASjf3ZicgjEW0wWW+LjXUpenGPOFSAjXW8k
- 8hSUZf0NvdXM5VAri/uNnNs/U8rVHxAl0HLm0h01QDzFCF8hxFm2NqdHkX+dBq4xM2+9
- 4cDQ+HRTJhrcLIgf8AJLONjx+knO5LdhJVZdtR/UIwMShnHApMUQhLqDSj8JDKl52Yn5
- HAyoDXwzTQOEDyl9wgQk4QnCwXwWAE2B/qsxr00zcQGGZ3U0tjwieC9W/cbB5QVyLAvB
- xhWLIq19crSJtl8UJ1dxJefWtWzrIagsBMxz6STRvEv7isv6qSfAexyoCWpVMEd8kqLe
- zAEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdc6C5abjW7O/j3LdU+fBdV2gyb7gB9/yY3jMoNXuTmkDjXlxd6ajMCbc1tGQOSZ3Ykfumrabi9DVd@nongnu.org
-X-Gm-Message-State: AOJu0YxF1YaRt4d2VblHbQYokHqtNQdes7QZGaDNKMd4YpZDsRoDkxNC
- Ku8uDw2K6JaQ9uTs6hTpkXFYlc2vZgtLdYOabp+6mGa4wbO+LJR2DkreIyfUhAEUC+I/xDX/ZPp
- aGrQveggHbmOyIWcGx5byR6utQr2A8lA2CA==
-X-Gm-Gg: ASbGncsIJk65jke2rx4f2J+WqraOpam/w8YiA7db5a2YT21Emn3J9pS9y7B02DYH6zq
- 5RyCH5mtk8IMPN0nQX03bF5bSzC1xFNEU/x4AM5qOE5zatfskC5m5uHnEoeK9qG8AIdD78RYhDB
- fK90r+iJHlprhIGvPzqIfaVpbWpMfCHYDiSo+vKkA1WennsrZZ9OCoKVVU/g/Xap7cDwRy12OrE
- g==
-X-Google-Smtp-Source: AGHT+IFeK/4oxFs17PebeM54kahX8I3vftS221vnDg2L0Y3MKGo6C6M51letrnFP6Sc14TkjAAgYROny9JpoYvSYDo4=
-X-Received: by 2002:a05:6122:d16:b0:529:be0:8353 with SMTP id
- 71dfb90a1353d-52dbcc563e6mr9877943e0c.2.1747615469481; Sun, 18 May 2025
- 17:44:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uGovT-0007t1-E0
+ for qemu-devel@nongnu.org; Sun, 18 May 2025 21:04:19 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uGovO-000611-J7
+ for qemu-devel@nongnu.org; Sun, 18 May 2025 21:04:19 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxeXGBgypoHHnxAA--.62193S3;
+ Mon, 19 May 2025 09:04:02 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMDx_MR8gypo9iDgAA--.45878S3;
+ Mon, 19 May 2025 09:03:58 +0800 (CST)
+Subject: Re: [PATCH 0/6] Add bios-tables-test for LoongArch64 system
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+References: <20250228092729.543097-1-maobibo@loongson.cn>
+ <20250511091725-mutt-send-email-mst@kernel.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <11868d5a-64ab-8d37-7980-a2f2959ed1e2@loongson.cn>
+Date: Mon, 19 May 2025 09:02:46 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20250409025131.3670-1-jim.shu@sifive.com>
- <20250409025131.3670-5-jim.shu@sifive.com>
-In-Reply-To: <20250409025131.3670-5-jim.shu@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 19 May 2025 10:44:02 +1000
-X-Gm-Features: AX0GCFvANRXDQdoJ_Z-cUGfj8lmtr63VQbnPLA32srtY3cYaeu41z5ZzCtsDBkI
-Message-ID: <CAKmqyKOb-eALzqMK+Hq9Bt=Te2AE04y_ZBzOpEhrpvr5_8MNiw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] target/riscv: Enable/Disable S/VS-mode Timer when
- STCE bit is changed
-To: Jim Shu <jim.shu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <20250511091725-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMDx_MR8gypo9iDgAA--.45878S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXrW5ZrW5Ar18JrWktry7Arc_yoWrGr13p3
+ yY934Skr4IyF9rG3WDXa98Wr1kJrs29FsxuF1agr1xCF1akr1qvw1agF9aga43Aw1jgw10
+ 9w1kGF1rA3Z8XFcCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUPIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
+ AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
+ XVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI4
+ 8JMxk0xIA0c2IEe2xFo4CEbIxvr21lc7CjxVAaw2AFwI0_JF0_Jw1l42xK82IYc2Ij64vI
+ r41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAqx4xG67
+ AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIY
+ rxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8
+ JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1tC7UUU
+ UU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.872,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,234 +87,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 9, 2025 at 12:52=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
->
-> Updating STCE will enable/disable SSTC in S-mode or/and VS-mode, so we
-> also need to update S/VS-mode Timer and S/VSTIP bits in $mip CSR.
->
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Alistair
+On 2025/5/11 下午9:17, Michael S. Tsirkin wrote:
+> On Fri, Feb 28, 2025 at 05:27:23PM +0800, Bibo Mao wrote:
+>> This patchset add bios-tables-test for LoongArch64 virt machine
+>> system. It works with UEFI bios, with uefi-test-tools LoongArch64
+>> support is added to build bios-tables-test.loongarch64.iso.
+>>
+>> Also with test case bios-tables-test, LoongArch64 support is added
+>> and some basic ACPI tables is added here. It passes with command
+>> make check-qtest-loongarch64 with the result:
+>>   qtest-loongarch64/bios-tables-test OK 29.52s 4 subtests passed
+> 
+> Still waiting for Igor's comment on this to be addressed.
+Sorry for the late reply because there is on vacation leave last week.
 
-> ---
->  target/riscv/csr.c         | 44 ++++++++++++++++++++++++++++++++++++
->  target/riscv/time_helper.c | 46 ++++++++++++++++++++++++++++++++++++++
->  target/riscv/time_helper.h |  1 +
->  3 files changed, 91 insertions(+)
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index e86808fd98..548daf6a7a 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -3161,6 +3161,7 @@ static RISCVException write_menvcfg(CPURISCVState *=
-env, int csrno,
->      const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
->      uint64_t mask =3D MENVCFG_FIOM | MENVCFG_CBIE | MENVCFG_CBCFE |
->                      MENVCFG_CBZE | MENVCFG_CDE;
-> +    bool stce_changed =3D false;
->
->      if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
->          mask |=3D (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
-> @@ -3186,10 +3187,19 @@ static RISCVException write_menvcfg(CPURISCVState=
- *env, int csrno,
->          if ((val & MENVCFG_DTE) =3D=3D 0) {
->              env->mstatus &=3D ~MSTATUS_SDT;
->          }
-> +
-> +        if (cfg->ext_sstc &&
-> +            ((env->menvcfg & MENVCFG_STCE) !=3D (val & MENVCFG_STCE))) {
-> +            stce_changed =3D true;
-> +        }
->      }
->      env->menvcfg =3D (env->menvcfg & ~mask) | (val & mask);
->      write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
->
-> +    if (stce_changed) {
-> +        riscv_timer_stce_changed(env, true, !!(val & MENVCFG_STCE));
-> +    }
-> +
->      return RISCV_EXCP_NONE;
->  }
->
-> @@ -3212,6 +3222,12 @@ static RISCVException write_menvcfgh(CPURISCVState=
- *env, int csrno,
->                      (cfg->ext_smcdeleg ? MENVCFG_CDE : 0) |
->                      (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
->      uint64_t valh =3D (uint64_t)val << 32;
-> +    bool stce_changed =3D false;
-> +
-> +    if (cfg->ext_sstc &&
-> +        ((env->menvcfg & MENVCFG_STCE) !=3D (valh & MENVCFG_STCE))) {
-> +        stce_changed =3D true;
-> +    }
->
->      if ((valh & MENVCFG_DTE) =3D=3D 0) {
->          env->mstatus &=3D ~MSTATUS_SDT;
-> @@ -3220,6 +3236,10 @@ static RISCVException write_menvcfgh(CPURISCVState=
- *env, int csrno,
->      env->menvcfg =3D (env->menvcfg & ~mask) | (valh & mask);
->      write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
->
-> +    if (stce_changed) {
-> +        riscv_timer_stce_changed(env, true, !!(valh & MENVCFG_STCE));
-> +    }
-> +
->      return RISCV_EXCP_NONE;
->  }
->
-> @@ -3297,8 +3317,10 @@ static RISCVException read_henvcfg(CPURISCVState *=
-env, int csrno,
->  static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
->                                      target_ulong val)
->  {
-> +    const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
->      uint64_t mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENV=
-CFG_CBZE;
->      RISCVException ret;
-> +    bool stce_changed =3D false;
->
->      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
->      if (ret !=3D RISCV_EXCP_NONE) {
-> @@ -3324,6 +3346,11 @@ static RISCVException write_henvcfg(CPURISCVState =
-*env, int csrno,
->              get_field(val, HENVCFG_PMM) !=3D PMM_FIELD_RESERVED) {
->              mask |=3D HENVCFG_PMM;
->          }
-> +
-> +        if (cfg->ext_sstc &&
-> +            ((env->henvcfg & HENVCFG_STCE) !=3D (val & HENVCFG_STCE))) {
-> +            stce_changed =3D true;
-> +        }
->      }
->
->      env->henvcfg =3D val & mask;
-> @@ -3331,6 +3358,10 @@ static RISCVException write_henvcfg(CPURISCVState =
-*env, int csrno,
->          env->vsstatus &=3D ~MSTATUS_SDT;
->      }
->
-> +    if (stce_changed) {
-> +        riscv_timer_stce_changed(env, false, !!(val & HENVCFG_STCE));
-> +    }
-> +
->      return RISCV_EXCP_NONE;
->  }
->
-> @@ -3352,19 +3383,32 @@ static RISCVException read_henvcfgh(CPURISCVState=
- *env, int csrno,
->  static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
->                                       target_ulong val)
->  {
-> +    const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
->      uint64_t mask =3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
->                                      HENVCFG_ADUE | HENVCFG_DTE);
->      uint64_t valh =3D (uint64_t)val << 32;
->      RISCVException ret;
-> +    bool stce_changed =3D false;
->
->      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
->      if (ret !=3D RISCV_EXCP_NONE) {
->          return ret;
->      }
-> +
-> +    if (cfg->ext_sstc &&
-> +        ((env->henvcfg & HENVCFG_STCE) !=3D (valh & HENVCFG_STCE))) {
-> +        stce_changed =3D true;
-> +    }
-> +
->      env->henvcfg =3D (env->henvcfg & 0xFFFFFFFF) | (valh & mask);
->      if ((env->henvcfg & HENVCFG_DTE) =3D=3D 0) {
->          env->vsstatus &=3D ~MSTATUS_SDT;
->      }
-> +
-> +    if (stce_changed) {
-> +        riscv_timer_stce_changed(env, false, !!(val & HENVCFG_STCE));
-> +    }
-> +
->      return RISCV_EXCP_NONE;
->  }
->
-> diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-> index aebf0798d0..400e917354 100644
-> --- a/target/riscv/time_helper.c
-> +++ b/target/riscv/time_helper.c
-> @@ -140,6 +140,52 @@ void riscv_timer_write_timecmp(CPURISCVState *env, Q=
-EMUTimer *timer,
->      timer_mod(timer, next);
->  }
->
-> +/*
-> + * When disabling xenvcfg.STCE, the S/VS Timer may be disabled at the sa=
-me time.
-> + * It is safe to call this function regardless of whether the timer has =
-been
-> + * deleted or not. timer_del() will do nothing if the timer has already
-> + * been deleted.
-> + */
-> +static void riscv_timer_disable_timecmp(CPURISCVState *env, QEMUTimer *t=
-imer,
-> +                                 uint32_t timer_irq)
-> +{
-> +    /* Disable S-mode Timer IRQ and HW-based STIP */
-> +    if ((timer_irq =3D=3D MIP_STIP) && !get_field(env->menvcfg, MENVCFG_=
-STCE)) {
-> +        riscv_cpu_update_mip(env, timer_irq, BOOL_TO_MASK(0));
-> +        timer_del(timer);
-> +        return;
-> +    }
-> +
-> +    /* Disable VS-mode Timer IRQ and HW-based VSTIP */
-> +    if ((timer_irq =3D=3D MIP_VSTIP) &&
-> +        (!get_field(env->menvcfg, MENVCFG_STCE) ||
-> +         !get_field(env->henvcfg, HENVCFG_STCE))) {
-> +        env->vstime_irq =3D 0;
-> +        riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(0));
-> +        timer_del(timer);
-> +        return;
-> +    }
-> +}
-> +
-> +/* Enable or disable S/VS-mode Timer when xenvcfg.STCE is changed */
-> +void riscv_timer_stce_changed(CPURISCVState *env, bool is_m_mode, bool e=
-nable)
-> +{
-> +    if (enable) {
-> +        riscv_timer_write_timecmp(env, env->vstimer, env->vstimecmp,
-> +                                  env->htimedelta, MIP_VSTIP);
-> +    } else {
-> +        riscv_timer_disable_timecmp(env, env->vstimer, MIP_VSTIP);
-> +    }
-> +
-> +    if (is_m_mode) {
-> +        if (enable) {
-> +            riscv_timer_write_timecmp(env, env->stimer, env->stimecmp, 0=
-, MIP_STIP);
-> +        } else {
-> +            riscv_timer_disable_timecmp(env, env->stimer, MIP_STIP);
-> +        }
-> +    }
-> +}
-> +
->  void riscv_timer_init(RISCVCPU *cpu)
->  {
->      CPURISCVState *env;
-> diff --git a/target/riscv/time_helper.h b/target/riscv/time_helper.h
-> index cacd79b80c..af1f634f89 100644
-> --- a/target/riscv/time_helper.h
-> +++ b/target/riscv/time_helper.h
-> @@ -25,6 +25,7 @@
->  void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
->                                 uint64_t timecmp, uint64_t delta,
->                                 uint32_t timer_irq);
-> +void riscv_timer_stce_changed(CPURISCVState *env, bool is_m_mode, bool e=
-nable);
->  void riscv_timer_init(RISCVCPU *cpu);
->
->  #endif
-> --
-> 2.17.1
->
->
+Thanks for your reminder and I do not notice Igor's comments until this 
+email. And I will reply and try hard to address it ASAP.
+
+Regards
+Bibo Mao
+> 
+> 
+>> Bibo Mao (6):
+>>    uefi-test-tools:: Add LoongArch64 support
+>>    tests/data/uefi-boot-images: Add ISO image for LoongArch system
+>>    tests/qtest/bios-tables-test: Add basic testing for LoongArch64
+>>    tests/acpi: Add empty ACPI data files for LoongArch64
+>>    tests/acpi: Fill acpi table data for LoongArch
+>>    tests/qtest: Enable bios-tables-test for LoongArch
+>>
+>>   tests/data/acpi/loongarch64/virt/APIC         | Bin 0 -> 108 bytes
+>>   .../data/acpi/loongarch64/virt/APIC.topology  | Bin 0 -> 213 bytes
+>>   tests/data/acpi/loongarch64/virt/DSDT         | Bin 0 -> 3614 bytes
+>>   tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 0 -> 4951 bytes
+>>   tests/data/acpi/loongarch64/virt/FACP         | Bin 0 -> 268 bytes
+>>   tests/data/acpi/loongarch64/virt/MCFG         | Bin 0 -> 60 bytes
+>>   tests/data/acpi/loongarch64/virt/PPTT         | Bin 0 -> 76 bytes
+>>   .../data/acpi/loongarch64/virt/PPTT.topology  | Bin 0 -> 296 bytes
+>>   tests/data/acpi/loongarch64/virt/SLIT         |   0
+>>   tests/data/acpi/loongarch64/virt/SLIT.memhp   | Bin 0 -> 48 bytes
+>>   tests/data/acpi/loongarch64/virt/SPCR         | Bin 0 -> 80 bytes
+>>   tests/data/acpi/loongarch64/virt/SRAT         | Bin 0 -> 104 bytes
+>>   tests/data/acpi/loongarch64/virt/SRAT.memhp   | Bin 0 -> 184 bytes
+>>   .../data/acpi/loongarch64/virt/SRAT.topology  | Bin 0 -> 216 bytes
+>>   .../bios-tables-test.loongarch64.iso.qcow2    | Bin 0 -> 12800 bytes
+>>   tests/qtest/bios-tables-test.c                |  62 ++++++++++++++++++
+>>   tests/qtest/meson.build                       |   3 +-
+>>   tests/uefi-test-tools/Makefile                |   5 +-
+>>   .../UefiTestToolsPkg/UefiTestToolsPkg.dsc     |   6 +-
+>>   tests/uefi-test-tools/uefi-test-build.config  |  10 +++
+>>   20 files changed, 82 insertions(+), 4 deletions(-)
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/APIC
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/APIC.topology
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.memhp
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/FACP
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/PPTT.topology
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SLIT.memhp
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.memhp
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.topology
+>>   create mode 100644 tests/data/uefi-boot-images/bios-tables-test.loongarch64.iso.qcow2
+>>
+>>
+>> base-commit: b69801dd6b1eb4d107f7c2f643adf0a4e3ec9124
+>> -- 
+>> 2.39.3
+
 
