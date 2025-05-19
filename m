@@ -4,88 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042CDC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 08:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE5CC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 08:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uGw4t-0000mh-5C; Mon, 19 May 2025 04:42:31 -0400
+	id 1uGwBz-0001mq-19; Mon, 19 May 2025 04:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uGw4s-0000mZ-3o
- for qemu-devel@nongnu.org; Mon, 19 May 2025 04:42:30 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uGw4q-0005Te-7B
- for qemu-devel@nongnu.org; Mon, 19 May 2025 04:42:29 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43edb40f357so32891525e9.0
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 01:42:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747644146; x=1748248946; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=0JZTkeP0hqFjz+ItViE1OoH01EezIpmomC2zK/9NxvU=;
- b=xISLxXV7c8oMKdOB5DhIxfV7e/uq42BdANs+3QFn3T4AI4oLIK7AVBjO7qnrtuQqNZ
- cW21KywuydfVoKmpb1F/brUUEH4hB6idY4SOM5NcqaqtWiT0+qAypZ+cSdfXrQnr/fmW
- 0uQoaBXS7rxv8ZiAe8AKXhXrCHKGvrwXZWQINNWcfjRSBt8/kjbUOz0WehM23v7JlMEG
- HE5t4Vm4SlLgfSbQqTBdgCndtrCwbqPW8g2NvEDf9mZXuZ0mBgDY/f9mcFCGD8sgyvpZ
- L/u7f8GOoxSDNKkbKKRJXGAGdwkczF3UYu387CYjVfKSwYLdrTTN7Y3Ht1QUHpqEku3s
- BB7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747644146; x=1748248946;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0JZTkeP0hqFjz+ItViE1OoH01EezIpmomC2zK/9NxvU=;
- b=raCKsLftTIysneHdCronIXSP8lKd9iZCcEcF6upASMsW96HsBv9JJTq7Isc/ZclpDf
- LQTJWzDj73B+czBzxIoCEWPXSO0ZagTSxHtqdSyhVhRLQ06/7g4pJ7hMnF4h03PpqofT
- 9hE/CYUlx1SQZoK9mVh7OyvOTunhjh+btgn0RwBZhDVFP+QYLU1CdMNaloP3qBm6jfyr
- b1aGjgX0etQUnzz0Rbe6BC9qkx5LwqtC4Fgo8Q+DQRT9cFiOA3BTGlYIDmzA4DZUHX2D
- P9I6G5zjkf+aLkUZvOv6RTzsbtHokrY1xTn8MUwxYHZBG6ffUUPMgBWXVtxZ6HOtlFlZ
- DGwA==
-X-Gm-Message-State: AOJu0YxOJm/yZe60te0ZYPre0ptqrniottHWg00Lme6xhNkg5K7wEkRV
- lRQmsIx3XpbxDHHlrzkIDMuvl3U5SEtOmHxKCZNaYjeLWRcz+jRArJ8j6enVucKir/cf98p58OA
- ly1uhff8=
-X-Gm-Gg: ASbGncsGfZEWcp4CHo4LkqUsu+b6cYppaFNMTUO6wtXyZanh0Jk8Er9foNINjcLafE8
- BTvwjobj247PcYCKSkOLhNhHk139t4bhIH3wmw3CuG0LipJwn/4rhBsFsPQs06Y59mNlGhs5oUe
- SFkCS2HCjPx+9nbxUjshedj86lRSBrOC4Le1lbx4sbpbpOEZ0jA3S6+UGLfFk225SkXXqV9r5Vp
- 2Z5Lb6wLU7RtyF8WQRSvFnQHe4dGQg1+JEi24BH+g65HanxH+hoyOkRKhSLwjmA8eVfelTQgbjF
- JhEB5Jlu86ivVwwjgyQzPri05kigAuc58ItNGi9QDqZfzOuOw642ypXnwlQNxhgLqAWH8mVIxEe
- IcFgv9MGU34JAsA==
-X-Google-Smtp-Source: AGHT+IGaC9u7qslNsPb2QWrK74+FCKU8TJfFSgai4pKGHAfHkk3/wr+e1raJr7Ksu/0F6nbqHKi43w==
-X-Received: by 2002:a05:600c:4fc9:b0:43d:5ec:b2f4 with SMTP id
- 5b1f17b1804b1-442fd6271b6mr146784155e9.10.1747644146454; 
- Mon, 19 May 2025 01:42:26 -0700 (PDT)
-Received: from meli-email.org (adsl-1.37.6.162.tellas.gr. [37.6.162.1])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442ebdc362fsm158473975e9.1.2025.05.19.01.42.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 May 2025 01:42:26 -0700 (PDT)
-Date: Mon, 19 May 2025 11:41:04 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Mario Fleischmann <mario.fleischmann@lauterbach.com>
-Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
- christian.boenig@lauterbach.com,
- Mario Fleischmann <mario.fleischmann@lauterbach.com>
-Subject: Re: [PATCH v2 12/20] gdbstub: Expose GDBRegisterState
-User-Agent: meli/0.8.12
-References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
- <20250430052741.21145-13-mario.fleischmann@lauterbach.com>
-In-Reply-To: <20250430052741.21145-13-mario.fleischmann@lauterbach.com>
-Message-ID: <swi2up.1p55n77aa7new@linaro.org>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1uGwBx-0001mV-6t
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 04:49:49 -0400
+Received: from fhigh-b3-smtp.messagingengine.com ([202.12.124.154])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1uGwBu-0006x5-VH
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 04:49:48 -0400
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 8C3EE254011E;
+ Mon, 19 May 2025 04:49:45 -0400 (EDT)
+Received: from phl-imap-12 ([10.202.2.86])
+ by phl-compute-06.internal (MEProxy); Mon, 19 May 2025 04:49:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1747644585;
+ x=1747730985; bh=WCJFo3zkioz4+fOSjAiueXuYC9oR82lasSAZuHZWXFw=; b=
+ dkdN+/mp8bBwHcEHJSkXmhQK+fzOLNQhoxau3uPQsT4TNmM9N1qJxTuafw7AZOhN
+ TBr9ciORu3yTty7ufm4vAsHJF0+2NiSzv+7k0JOCdKBqVSe5GdXztTSP0iD4gevZ
+ TRtsJP/xKd1j/KGXCIh8cl4J1gpbh+McV69EG3QM0bb9D8fmQX9kWhbkq6FVrDfu
+ srN+rCsqmhAKB/8cGwDqr7oRMYkp7epE7uNF/wVAB2qpVWQbHSyiowq/EB6bIFyE
+ G7m4p1yFLQpzjRwPJ2hkCyvUUUhqtDDldF1o2xu3eBwm7F4fTLaIV48d5woQ3+7i
+ 1AJY2Voz97rKxnzR5u680Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747644585; x=
+ 1747730985; bh=WCJFo3zkioz4+fOSjAiueXuYC9oR82lasSAZuHZWXFw=; b=k
+ 7paSEXDOcfyM+y/AO6UpAIxUTP4ssdGfQN3sreXs1wa/+fGWghZLRoU1ic0rhiV8
+ SQSGrEt8+4TLLE2Zuwp+WuRnB+HJuKkkXIjhMDkk6Ze6EqMZ9AwNNRMm2bdnct9L
+ q3SI9T6JbglHx5wF1mkTX0ky4y8LY1UVqlEHhi6PyjqHC8lWBM++dKAK8mVDE/Vi
+ glfAdI0hgPc1yop7FFHz8cHYErPdXap3hM9o7VGrOWbq2pii8aBexsTn/t0AECvl
+ zfdAd//ZnGFnWTDefDWTObwjO6/dPrDJANzoSG2pAJcjW3bd3OMx0qha/hMBuKFn
+ Sh2mxtSpXW5MH8v0t6ePw==
+X-ME-Sender: <xms:qPAqaMr0U-AmkNXl4L7jp7xlbs0nWeYeFl5YNWJhM7iCVQFqgxWucw>
+ <xme:qPAqaCrS2g_4NEfn-Jg5EfnSx5op3brwLgEW_fdhw0udNW4-ACVCh1EW8CkNSg3fJ
+ TCCkcPM-5FN_oIIZJM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddtleegucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+ pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+ gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
+ tdejnecuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghngh
+ esfhhlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdff
+ keethefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivg
+ eptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihg
+ ohgrthdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtg
+ hpthhtoheptghhvghnhhhurggtrghisehkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+ rghoshhonhhgsehlohhonhhgshhonhdrtghnpdhrtghpthhtoheplhhigihirghnghhlrg
+ hisehlohhonhhgshhonhdrtghnpdhrtghpthhtohepmhgrohgsihgsoheslhhoohhnghhs
+ ohhnrdgtnhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:qPAqaBOQFXsaIfYhhWZBGUYhtpefhyB_PvrnjIiuD19mQCyfQsttzw>
+ <xmx:qPAqaD7WBlioeR-8YgbREFNAo0-aBJpkbOb5wU_vmgKM_UxjIPy6UA>
+ <xmx:qPAqaL6w0CBCwoQZHPH64ldV5W6i0yewIJJoyRZeOEThLoUOpCemIA>
+ <xmx:qPAqaDiRtKv6IaSBHZr030AorabKtJ1hR0EPurAdm2E2pP8LpQiHIA>
+ <xmx:qfAqaAaanMLJ2_XoxZagwCswsH--kHXO7dMBa8IiRoM3wAgWXEGFeNVO>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 8E4091060061; Mon, 19 May 2025 04:49:44 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ThreadId: T61eab45fb9657032
+Date: Mon, 19 May 2025 09:49:24 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "Bibo Mao" <maobibo@loongson.cn>, "Song Gao" <gaosong@loongson.cn>
+Cc: "Huacai Chen" <chenhuacai@kernel.org>,
+ "QEMU devel" <qemu-devel@nongnu.org>, "Xianglai Li" <lixianglai@loongson.cn>
+Message-Id: <930362d4-695a-44e6-a220-898e265a944c@app.fastmail.com>
+In-Reply-To: <0e4690a6-1f28-f97c-a7dc-3b7888d23f38@loongson.cn>
+References: <20250509100747.1070094-1-maobibo@loongson.cn>
+ <20250509100747.1070094-4-maobibo@loongson.cn>
+ <5fa02121-43f6-4335-883e-efe07a2f3711@app.fastmail.com>
+ <391ab7d0-9e61-1b9d-fbd3-98dd23f2d2a7@loongson.cn>
+ <671157ca-de54-4053-93a9-8ea7f3fa1f1f@app.fastmail.com>
+ <0e4690a6-1f28-f97c-a7dc-3b7888d23f38@loongson.cn>
+Subject: Re: [PATCH 03/15] hw/intc/loongarch_extioi: Add irqchip-in-kernel
+ save/restore function
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=202.12.124.154;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,65 +119,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Apr 2025 08:27, Mario Fleischmann <mario.fleischmann@lauterbach.com> wrote:
->Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
->---
-> gdbstub/gdbstub.c      | 7 -------
-> include/exec/gdbstub.h | 8 +++++++-
-> 2 files changed, 7 insertions(+), 8 deletions(-)
+
+
+=E5=9C=A82025=E5=B9=B45=E6=9C=8819=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=
+=8D=888:09=EF=BC=8CBibo Mao=E5=86=99=E9=81=93=EF=BC=9A
+> On 2025/5/19 =E4=B8=8B=E5=8D=882:50, Jiaxun Yang wrote:
+>>=20
+>>=20
+>> =E5=9C=A82025=E5=B9=B45=E6=9C=8819=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=
+=E5=8D=883:56=EF=BC=8CBibo Mao=E5=86=99=E9=81=93=EF=BC=9A
+>> [...]
+>>>>
+>>>> Hi Bibo,
+>>>>
+>>>> I believe hijacking loongarch_extioi.c is not the proper way to do =
+it.
+>>>> The sensible solution is to create a TYPE_LOONGARCH_EXTIOI_KVM, whi=
+ch
+>>>> inherits TYPE_LOONGARCH_EXTIOI_COMMON, and let machine create
+>>>> TYPE_LOONGARCH_EXTIOI_KVM vs TYPE_LOONGARCH_EXTIOI as necessary.
+>>> what is advantage about creating TYPE_LOONGARCH_EXTIOI_KVM device in=
+ KVM
+>>> node and TYPE_LOONGARCH_EXTIOI device in TCG mode?
+>>=20
+>> Cleaner, less error-prone, isolate unnecessary emulation functions to
+>> reduce attack surface...
+> yes, there is a beautiful code logic internal, however from user the=20
+> device tree will be different because of irqchip-in-kernel feature, su=
+ch=20
+> as different output of *info qom-tree*. It will bring out illusions of=20
+> different virt machine type for users.
+
+It's actually different machine as kernel irqchip is never on par with u=
+sermode
+emulation. This approach is taken by i386 (TYPE_KVM_IOAPIC vs TYPE_IOAPI=
+C),
+Arm (TYPE_KVM_ARM_ITS vs TYPE_ARM_GICV3_ITS), PowerPC (TYPE_KVM_OPENPIC =
+vs
+TYPE_OPENPIC) and I see no reason that LoongArch should not follow.
+
+I'm actually planning to bring user space EXTIOI emulation closer to act=
+ual
+hardware behaviour and I wound not expect such change to be accepted by
+in-kernel irqchip.
+
+Thanks
+
 >
->diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
->index 565f6b3..291ac55 100644
->--- a/gdbstub/gdbstub.c
->+++ b/gdbstub/gdbstub.c
->@@ -48,13 +48,6 @@
-> 
-> #include "internals.h"
-> 
->-typedef struct GDBRegisterState {
->-    int base_reg;
->-    gdb_get_reg_cb get_reg;
->-    gdb_set_reg_cb set_reg;
->-    const GDBFeature *feature;
->-} GDBRegisterState;
->-
-> GDBState gdbserver_state;
-> 
-> void gdb_init_gdbserver_state(void)
->diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
->index 0675b0b..c2941e5 100644
->--- a/include/exec/gdbstub.h
->+++ b/include/exec/gdbstub.h
->@@ -16,11 +16,17 @@ typedef struct GDBFeatureBuilder {
->     int base_reg;
-> } GDBFeatureBuilder;
-> 
->-
+> Regards
+> Bibo Mao
+>>=20
 
-Accidental line deletion here?
-
-With that fixed,
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
-
-
-> /* Get or set a register.  Returns the size of the register.  */
-> typedef int (*gdb_get_reg_cb)(CPUState *cpu, GByteArray *buf, int reg);
-> typedef int (*gdb_set_reg_cb)(CPUState *cpu, uint8_t *buf, int reg);
-> 
->+typedef struct GDBRegisterState {
->+    int base_reg;
->+    gdb_get_reg_cb get_reg;
->+    gdb_set_reg_cb set_reg;
->+    const GDBFeature *feature;
->+} GDBRegisterState;
->+
-> /**
->  * gdb_init_cpu(): Initialize the CPU for gdbstub.
->  * @cpu: The CPU to be initialized.
->-- 
->2.34.1
->
->
+--=20
+- Jiaxun
 
