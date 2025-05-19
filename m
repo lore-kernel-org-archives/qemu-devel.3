@@ -4,63 +4,223 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC815C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC2DC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 May 2025 15:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uH2aj-0002YU-V1; Mon, 19 May 2025 11:39:50 -0400
+	id 1uH2mh-00061B-AW; Mon, 19 May 2025 11:52:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uH2ah-0002RA-J0; Mon, 19 May 2025 11:39:47 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uH2md-00060z-FZ
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 11:52:07 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uH2ae-0007ZZ-CC; Mon, 19 May 2025 11:39:47 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b1MKp2w8Wz6K9qg;
- Mon, 19 May 2025 23:38:54 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 13D8D1404F5;
- Mon, 19 May 2025 23:39:42 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.203.177.99) by
- frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 19 May 2025 17:39:41 +0200
-To: <mst@redhat.com>, <imammedo@redhat.com>
-CC: <qemu-devel@nongnu.org>, <anisinha@redhat.com>, <armbru@redhat.com>,
- <berrange@redhat.com>, <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>, 
- <farman@linux.ibm.com>, <gustavo.romero@linaro.org>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <mtosatti@redhat.com>, <peter.maydell@linaro.org>,
- <philmd@linaro.org>, <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
- <shameerali.kolothum.thodi@huawei.com>, <shannon.zhaosl@gmail.com>,
- <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
-Subject: [PATCH v11 6/6] Update the ACPI tables according to the acpi
- aml_build change, also empty bios-tables-test-allowed-diff.h.
-Date: Mon, 19 May 2025 16:36:32 +0100
-Message-ID: <20250519153632.537-7-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250519153632.537-1-alireza.sanaee@huawei.com>
-References: <20250519153632.537-1-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uH2ma-0000UT-Ey
+ for qemu-devel@nongnu.org; Mon, 19 May 2025 11:52:06 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54JEgxtD002138;
+ Mon, 19 May 2025 15:51:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=6R8DCYwW9Y2khruHjSqq4OHjQoytl7Lb9Z9GJgKXBxg=; b=
+ kx79vAkfV68u32XQ6XEsr2PlBCDYvXMx74v9lhaHrzI/IuHlrn4FB/hifC0mDFNZ
+ DRvgl6PHUDW+I5MFLTA/pX6B7xC0N4LhE/X/ddU43ZiWLV/rP2dLmQWQJT4cHY+N
+ xqIsoJQHCKwVNSq1AL9ka/aMzK7l5HKDj+JE9FR/MHhjEp4HJH3NrlU0RAKlJAX4
+ 8HU7yrGfMqsRAVe4wYSk82RUaNrWYil1yFtTxFdWk/VJqLyrCqbMB3yfJwGWynn5
+ 6YX0hKDuF2jt6QEVtrKd4f0UcRZQVEDsimZXyht0QzjcmjGK18P8O21NB/kJmClg
+ 80UEoJNgDv6AEMdfXLRscg==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46pjbcuapf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 May 2025 15:51:59 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54JFBRsp000817; Mon, 19 May 2025 15:51:58 GMT
+Received: from nam12-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam12lp2172.outbound.protection.outlook.com [104.47.55.172])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46pgw6vv1x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 May 2025 15:51:58 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=u6uFsV/tcd0vJM3imqoTU/+qYL0H+8+oBiWYLdkHEd/STsB3STXnxu+5676GiQwccmX9kFfhS2hKpwRPbZ4gSYWBThg260ME2lFLUeKDQp5Bw7vksvFWOgGLUy/km8HMSmHRxRnsWbufQ8yjM4R/10K9BmAzNFQHuYPY4GP/iBUaic94SRwm/o5kI7/JiVODH/9V6KauwkI/TLX4mhhwnjV8UNr67/pK0VLTV3RyB3ZQPySvfQnqwRq4SwH8R1pFg2PpdjJchUYpeUhF63k7Coa2XGjfy2GQGWz96eHIm6gyDq/zMjpVcIG4JDw2MmrT7xJ7rzj4TV/W1qs9YgGAvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6R8DCYwW9Y2khruHjSqq4OHjQoytl7Lb9Z9GJgKXBxg=;
+ b=vlOtC6SODq5l8xebiQkEoN9DdsfiVJEciUY8Wa5L4voTZACHK3UwWJT7CONaKDGrw/Db4PoaSNTUefbN8fjuJ6XHLUoPUZkGmRXNCC9Vho8kiLsUfFQkwhXlakHPvK+WvkyVQGbjWsM0X/c9xQrFblxtgjQkbR5uVvQ1hf3lIVBTrwfBRn9dzLiQQ2jKTQ0fkGi7QsWvU1c1J+1wO1BbUD6IvmCCOVUhNWxpkpsupajkmQbyZ+eaqiqycGlUSc9uAVSgQK7y9Nx5LwVzeYrr9vt+NNNUr2HB5/7v5ym1vJE3tUwF1Otdu5N+Aakdf7U1/B4RnRkV5+Nb6WTH9utYbw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6R8DCYwW9Y2khruHjSqq4OHjQoytl7Lb9Z9GJgKXBxg=;
+ b=N7WlSEwuNgPoj2sjIi48/CbOY2+tjOnNdS7/thlRG5JG5SkkG2GOczcW+ikdd46eQCoS7L8h1TTxrlbpsJkBP04QiOSbDJXoiU3rryrQXobXWB0HeNdQc0DrPfby5jkK8St7SRPpsHaUfisiyvILAv9S/oJy0LNKXlJQP/DHlP0=
+Received: from CH3PR10MB7436.namprd10.prod.outlook.com (2603:10b6:610:158::7)
+ by PH7PR10MB5816.namprd10.prod.outlook.com (2603:10b6:510:127::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Mon, 19 May
+ 2025 15:51:56 +0000
+Received: from CH3PR10MB7436.namprd10.prod.outlook.com
+ ([fe80::dfba:d89:d13d:cd54]) by CH3PR10MB7436.namprd10.prod.outlook.com
+ ([fe80::dfba:d89:d13d:cd54%5]) with mapi id 15.20.8746.030; Mon, 19 May 2025
+ 15:51:56 +0000
+Message-ID: <7aa3c76f-a171-47b1-a56b-5fa16e38f4a5@oracle.com>
+Date: Mon, 19 May 2025 11:51:53 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 29/42] backends/iommufd: change process ioctl
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-30-git-send-email-steven.sistare@oracle.com>
+ <SJ0PR11MB6744C9B04AE39DE76904CAEE9293A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <SJ0PR11MB6744C9B04AE39DE76904CAEE9293A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MN0P222CA0007.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:208:531::15) To CH3PR10MB7436.namprd10.prod.outlook.com
+ (2603:10b6:610:158::7)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.203.177.99]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- frapeml500003.china.huawei.com (7.182.85.28)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR10MB7436:EE_|PH7PR10MB5816:EE_
+X-MS-Office365-Filtering-Correlation-Id: bf2ddaae-5f14-4583-ed5e-08dd96ed14f2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info: 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
+ =?utf-8?Q?cVEMCtgKLvk=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR10MB7436.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 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
+ =?utf-8?B?aHc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: krzLJpMBWXc6EH2MH1TTZui/DUKgDA6LFpo0ihsitQ6/nDtnGJqCA5KsOLUjk4yxIuT+jeNk5ADP444Pv97U6NoltsRP9GmpJDw8jspK4e7k9gJ+QAJPXrOGLlJ7/8Nv3aHKQDOHtiE/aS0PCcVPjCUppktHudR6snwy5KxPmNxNMypeyYOnY1WmwzwYANlzhYNAgPXAVvrHjjYQb54RbpD1HpIuLNoOXDJ9MLsiXhP3kz0XNUSJijCi7JYCBFiW+VTLYtHoUBkdFEzaFgcK5JIIlzC/s3yMyBhtfWPPJCw8LDfe3cpCMu0a1zFTkA2RyGT2yFR1p1KLENlhbBW7c9q3sulokjadjKF9wuFz2zpkhnAX0i5k9+rC0KTeUbMQCCooVxddCeQXk+D1b5gHk8XeXQ6p6v+Je/Xn57nROCKgWl16BD4hFShN9UYZuB1VVlPBf/bWHR9Wk9Q8ZTWggulOeQfG3NHnFT3ThXp/ZtllvEqyrCTxX+gKg0QnUWU9xQtcbpVDbVX9cDXFrX+adAWg72ipRtLJkCp5yRNNYhw5bZovnbvmiv/cfTq92re/J0kaCbfLc2auc7UsocHt6XiHhvE6g5EYnaUhSft0goE=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf2ddaae-5f14-4583-ed5e-08dd96ed14f2
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB7436.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2025 15:51:56.0923 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pSrBus025kJzBj+jfm5odqFZeT0/T5QSU8s5uv603s5k7sq0GMLQZM+8HXAL1vdF2rrhdeI9TMbq/YjG4WzvNix7PMN+Zq6V9dWdxQGYtrE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB5816
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-19_06,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ malwarescore=0 phishscore=0
+ bulkscore=0 adultscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505070000
+ definitions=main-2505190147
+X-Authority-Analysis: v=2.4 cv=ec09f6EH c=1 sm=1 tr=0 ts=682b539f b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10
+ a=yPCof4ZbAAAA:8 a=5jn8VuT6XzJ4X7xnUvoA:9 a=QEXdDO2ut3YA:10 cc=ntf
+ awl=host:14694
+X-Proofpoint-GUID: jTCUyBC_mY5E3ibDt6DpC401C4r9endD
+X-Proofpoint-ORIG-GUID: jTCUyBC_mY5E3ibDt6DpC401C4r9endD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDE0OCBTYWx0ZWRfX1jbEtUtKmAO9
+ SNs0rbfty6DgqO27XMPbp3ki9E0VbIF5ezx10Tok3w5yimAszf9qVEIZIVLx5X5cnMh41cuDhhp
+ CvKhBjzVoISZ6fr77Qg1jaia+qmRmZC4Tt8+LFGlPAkibUrAlqTBBK7STgNniWFAjBj37w6QY+N
+ QpeIsMJtEtksXHwxZewYTYLEvQdhuqHs2APIR+QG6atN653o7QfVoEZO6rsyjp+W/Mzxxv+xeGX
+ 4YI1T/jst78Tx8PAU6OcAuLd//ktVww6mxjhEKKkP49mccFnKXV6qO7S0trGegqyel+lHj9gNlM
+ ZVVHYXd6yztK8ubc9qAD/2KkE4smnUMbHZnLc/TeBel0VMIrMgoPfwGPnprKzebzB0oaFZmJeWj
+ y/rTDCHDDPWYwbMk7WS/aDrFbjtwS9EQ6bAmQpqz82xHjepe260IpB29G1pDIA2W3RW7jEFY
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,445 +233,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The disassembled differences between actual and expected PPTT based on
-the following cache topology representation:
+On 5/16/2025 4:42 AM, Duan, Zhenzhong wrote:
+>> -----Original Message-----
+>> From: Steve Sistare <steven.sistare@oracle.com>
+>> Subject: [PATCH V3 29/42] backends/iommufd: change process ioctl
+>>
+>> Define the change process ioctl
+>>
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> ---
+>> backends/iommufd.c       | 20 ++++++++++++++++++++
+>> backends/trace-events    |  1 +
+>> include/system/iommufd.h |  2 ++
+>> 3 files changed, 23 insertions(+)
+>>
+>> diff --git a/backends/iommufd.c b/backends/iommufd.c
+>> index 5c1958f..6fed1c1 100644
+>> --- a/backends/iommufd.c
+>> +++ b/backends/iommufd.c
+>> @@ -73,6 +73,26 @@ static void iommufd_backend_class_init(ObjectClass *oc,
+>> const void *data)
+>>      object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
+>> }
+>>
+>> +bool iommufd_change_process_capable(IOMMUFDBackend *be)
+>> +{
+>> +    struct iommu_ioas_change_process args = {.size = sizeof(args)};
+>> +
+>> +    return !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
+>> +}
+>> +
+>> +bool iommufd_change_process(IOMMUFDBackend *be, Error **errp)
+>> +{
+>> +    struct iommu_ioas_change_process args = {.size = sizeof(args)};
+>> +    bool ret = !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
+> 
+> This is same ioctl as above check, could it be called more than once for same process?
 
-- l1d and l1i shared at cluster level
-- l2 shared at cluster level
-- l3 shared at cluster level
+Yes, and it is a no-op if the process has not changed since the last time DMA
+was mapped.
 
-/*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20200925 (64-bit version)
- * Copyright (c) 2000 - 2020 Intel Corporation
- *
- * Disassembly of ../../../tests/data/acpi/aarch64/virt/PPTT.topology, Mon Oct  7 16:57:29 2024
- *
- * ACPI Data Table [PPTT]
- *
- * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
- */
+- Steve
 
-[000h 0000   4]                    Signature : "PPTT"    [Processor Properties Topology Table]
-[004h 0004   4]                 Table Length : 0000021C
-[008h 0008   1]                     Revision : 03
-[009h 0009   1]                     Checksum : 4D
-[00Ah 0010   6]                       Oem ID : "BOCHS "
-[010h 0016   8]                 Oem Table ID : "BXPC    "
-[018h 0024   4]                 Oem Revision : 00000001
-[01Ch 0028   4]              Asl Compiler ID : "BXPC"
-[020h 0032   4]        Asl Compiler Revision : 00000001
-
-[024h 0036   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[025h 0037   1]                       Length : 14
-[026h 0038   2]                     Reserved : 0000
-[028h 0040   4]        Flags (decoded below) : 00000011
-                            Physical package : 1
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[02Ch 0044   4]                       Parent : 00000000
-[030h 0048   4]            ACPI Processor ID : 00000000
-[034h 0052   4]      Private Resource Number : 00000000
-
-[038h 0056   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[039h 0057   1]                       Length : 14
-[03Ah 0058   2]                     Reserved : 0000
-[03Ch 0060   4]        Flags (decoded below) : 00000011
-                            Physical package : 1
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[040h 0064   4]                       Parent : 00000024
-[044h 0068   4]            ACPI Processor ID : 00000000
-[048h 0072   4]      Private Resource Number : 00000000
-
-[04Ch 0076   1]                Subtable Type : 01 [Cache Type]
-[04Dh 0077   1]                       Length : 1C
-[04Eh 0078   2]                     Reserved : 0000
-[050h 0080   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[054h 0084   4]          Next Level of Cache : 00000000
-[058h 0088   4]                         Size : 00200000
-[05Ch 0092   4]               Number of Sets : 00000800
-[060h 0096   1]                Associativity : 10
-[061h 0097   1]                   Attributes : 0F
-                             Allocation Type : 3
-                                  Cache Type : 3
-                                Write Policy : 0
-[062h 0098   2]                    Line Size : 0040
-
-[068h 0104   1]                Subtable Type : 01 [Cache Type]
-[069h 0105   1]                       Length : 1C
-[06Ah 0106   2]                     Reserved : 0000
-[06Ch 0108   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[070h 0112   4]          Next Level of Cache : 0000004C
-[074h 0116   4]                         Size : 00008000
-[078h 0120   4]               Number of Sets : 00000080
-[07Ch 0124   1]                Associativity : 04
-[07Dh 0125   1]                   Attributes : 03
-                             Allocation Type : 3
-                                  Cache Type : 0
-                                Write Policy : 0
-[07Eh 0126   2]                    Line Size : 0040
-
-[084h 0132   1]                Subtable Type : 01 [Cache Type]
-[085h 0133   1]                       Length : 1C
-[086h 0134   2]                     Reserved : 0000
-[088h 0136   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[08Ch 0140   4]          Next Level of Cache : 0000004C
-[090h 0144   4]                         Size : 0000C000
-[094h 0148   4]               Number of Sets : 00000100
-[098h 0152   1]                Associativity : 03
-[099h 0153   1]                   Attributes : 07
-                             Allocation Type : 3
-                                  Cache Type : 1
-                                Write Policy : 0
-[09Ah 0154   2]                    Line Size : 0040
-
-[0A0h 0160   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0A1h 0161   1]                       Length : 1C
-[0A2h 0162   2]                     Reserved : 0000
-[0A4h 0164   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[0A8h 0168   4]                       Parent : 00000038
-[0ACh 0172   4]            ACPI Processor ID : 00000000
-[0B0h 0176   4]      Private Resource Number : 00000002
-[0B4h 0180   4]             Private Resource : 00000084
-[0B8h 0184   4]             Private Resource : 00000068
-
-[0BCh 0188   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0BDh 0189   1]                       Length : 14
-[0BEh 0190   2]                     Reserved : 0000
-[0C0h 0192   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[0C4h 0196   4]                       Parent : 000000A0
-[0C8h 0200   4]            ACPI Processor ID : 00000000
-[0CCh 0204   4]      Private Resource Number : 00000000
-
-[0D0h 0208   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0D1h 0209   1]                       Length : 14
-[0D2h 0210   2]                     Reserved : 0000
-[0D4h 0212   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[0D8h 0216   4]                       Parent : 000000BC
-[0DCh 0220   4]            ACPI Processor ID : 00000000
-[0E0h 0224   4]      Private Resource Number : 00000000
-
-[0E4h 0228   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0E5h 0229   1]                       Length : 14
-[0E6h 0230   2]                     Reserved : 0000
-[0E8h 0232   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[0ECh 0236   4]                       Parent : 000000BC
-[0F0h 0240   4]            ACPI Processor ID : 00000001
-[0F4h 0244   4]      Private Resource Number : 00000000
-
-[0F8h 0248   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0F9h 0249   1]                       Length : 14
-[0FAh 0250   2]                     Reserved : 0000
-[0FCh 0252   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[100h 0256   4]                       Parent : 000000A0
-[104h 0260   4]            ACPI Processor ID : 00000001
-[108h 0264   4]      Private Resource Number : 00000000
-
-[10Ch 0268   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[10Dh 0269   1]                       Length : 14
-[10Eh 0270   2]                     Reserved : 0000
-[110h 0272   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[114h 0276   4]                       Parent : 000000F8
-[118h 0280   4]            ACPI Processor ID : 00000002
-[11Ch 0284   4]      Private Resource Number : 00000000
-
-[120h 0288   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[121h 0289   1]                       Length : 14
-[122h 0290   2]                     Reserved : 0000
-[124h 0292   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[128h 0296   4]                       Parent : 000000F8
-[12Ch 0300   4]            ACPI Processor ID : 00000003
-[130h 0304   4]      Private Resource Number : 00000000
-
-[134h 0308   1]                Subtable Type : 01 [Cache Type]
-[135h 0309   1]                       Length : 1C
-[136h 0310   2]                     Reserved : 0000
-[138h 0312   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[13Ch 0316   4]          Next Level of Cache : 00000000
-[140h 0320   4]                         Size : 00200000
-[144h 0324   4]               Number of Sets : 00000800
-[148h 0328   1]                Associativity : 10
-[149h 0329   1]                   Attributes : 0F
-                             Allocation Type : 3
-                                  Cache Type : 3
-                                Write Policy : 0
-[14Ah 0330   2]                    Line Size : 0040
-
-[150h 0336   1]                Subtable Type : 01 [Cache Type]
-[151h 0337   1]                       Length : 1C
-[152h 0338   2]                     Reserved : 0000
-[154h 0340   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[158h 0344   4]          Next Level of Cache : 00000134
-[15Ch 0348   4]                         Size : 00008000
-[160h 0352   4]               Number of Sets : 00000080
-[164h 0356   1]                Associativity : 04
-[165h 0357   1]                   Attributes : 03
-                             Allocation Type : 3
-                                  Cache Type : 0
-                                Write Policy : 0
-[166h 0358   2]                    Line Size : 0040
-
-[16Ch 0364   1]                Subtable Type : 01 [Cache Type]
-[16Dh 0365   1]                       Length : 1C
-[16Eh 0366   2]                     Reserved : 0000
-[170h 0368   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[174h 0372   4]          Next Level of Cache : 00000134
-[178h 0376   4]                         Size : 0000C000
-[17Ch 0380   4]               Number of Sets : 00000100
-[180h 0384   1]                Associativity : 03
-[181h 0385   1]                   Attributes : 07
-                             Allocation Type : 3
-                                  Cache Type : 1
-                                Write Policy : 0
-[182h 0386   2]                    Line Size : 0040
-
-[188h 0392   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[189h 0393   1]                       Length : 1C
-[18Ah 0394   2]                     Reserved : 0000
-[18Ch 0396   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[190h 0400   4]                       Parent : 00000038
-[194h 0404   4]            ACPI Processor ID : 00000001
-[198h 0408   4]      Private Resource Number : 00000002
-[19Ch 0412   4]             Private Resource : 0000016C
-[1A0h 0416   4]             Private Resource : 00000150
-
-[1A4h 0420   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1A5h 0421   1]                       Length : 14
-[1A6h 0422   2]                     Reserved : 0000
-[1A8h 0424   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[1ACh 0428   4]                       Parent : 00000188
-[1B0h 0432   4]            ACPI Processor ID : 00000000
-[1B4h 0436   4]      Private Resource Number : 00000000
-
-[1B8h 0440   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1B9h 0441   1]                       Length : 14
-[1BAh 0442   2]                     Reserved : 0000
-[1BCh 0444   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[1C0h 0448   4]                       Parent : 000001A4
-[1C4h 0452   4]            ACPI Processor ID : 00000004
-[1C8h 0456   4]      Private Resource Number : 00000000
-
-[1CCh 0460   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1CDh 0461   1]                       Length : 14
-[1CEh 0462   2]                     Reserved : 0000
-[1D0h 0464   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[1D4h 0468   4]                       Parent : 000001A4
-[1D8h 0472   4]            ACPI Processor ID : 00000005
-[1DCh 0476   4]      Private Resource Number : 00000000
-
-[1E0h 0480   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1E1h 0481   1]                       Length : 14
-[1E2h 0482   2]                     Reserved : 0000
-[1E4h 0484   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[1E8h 0488   4]                       Parent : 00000188
-[1ECh 0492   4]            ACPI Processor ID : 00000001
-[1F0h 0496   4]      Private Resource Number : 00000000
-
-[1F4h 0500   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1F5h 0501   1]                       Length : 14
-[1F6h 0502   2]                     Reserved : 0000
-[1F8h 0504   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[1FCh 0508   4]                       Parent : 000001E0
-[200h 0512   4]            ACPI Processor ID : 00000006
-[204h 0516   4]      Private Resource Number : 00000000
-
-[208h 0520   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[209h 0521   1]                       Length : 14
-[20Ah 0522   2]                     Reserved : 0000
-[20Ch 0524   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[210h 0528   4]                       Parent : 000001E0
-[214h 0532   4]            ACPI Processor ID : 00000007
-[218h 0536   4]      Private Resource Number : 00000000
-
-Raw Table Data: Length 540 (0x21C)
-
-    0000: 50 50 54 54 1C 02 00 00 03 4D 42 4F 43 48 53 20  // PPTT.....MBOCHS
-    0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
-    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
-    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
-    0040: 24 00 00 00 00 00 00 00 00 00 00 00 01 1C 00 00  // $...............
-    0050: FF 00 00 00 00 00 00 00 00 00 20 00 00 08 00 00  // .......... .....
-    0060: 10 0F 40 00 00 00 02 02 01 1C 00 00 FF 00 00 00  // ..@.............
-    0070: 4C 00 00 00 00 80 00 00 80 00 00 00 04 03 40 00  // L.............@.
-    0080: 00 00 01 00 01 1C 00 00 FF 00 00 00 4C 00 00 00  // ............L...
-    0090: 00 C0 00 00 00 01 00 00 03 07 40 00 00 00 01 01  // ..........@.....
-    00A0: 00 1C 00 00 10 00 00 00 38 00 00 00 00 00 00 00  // ........8.......
-    00B0: 02 00 00 00 84 00 00 00 68 00 00 00 00 14 00 00  // ........h.......
-    00C0: 10 00 00 00 A0 00 00 00 00 00 00 00 00 00 00 00  // ................
-    00D0: 00 14 00 00 0E 00 00 00 BC 00 00 00 00 00 00 00  // ................
-    00E0: 00 00 00 00 00 14 00 00 0E 00 00 00 BC 00 00 00  // ................
-    00F0: 01 00 00 00 00 00 00 00 00 14 00 00 10 00 00 00  // ................
-    0100: A0 00 00 00 01 00 00 00 00 00 00 00 00 14 00 00  // ................
-    0110: 0E 00 00 00 F8 00 00 00 02 00 00 00 00 00 00 00  // ................
-    0120: 00 14 00 00 0E 00 00 00 F8 00 00 00 03 00 00 00  // ................
-    0130: 00 00 00 00 01 1C 00 00 FF 00 00 00 00 00 00 00  // ................
-    0140: 00 00 20 00 00 08 00 00 10 0F 40 00 04 00 02 02  // .. .......@.....
-    0150: 01 1C 00 00 FF 00 00 00 34 01 00 00 00 80 00 00  // ........4.......
-    0160: 80 00 00 00 04 03 40 00 04 00 01 00 01 1C 00 00  // ......@.........
-    0170: FF 00 00 00 34 01 00 00 00 C0 00 00 00 01 00 00  // ....4...........
-    0180: 03 07 40 00 04 00 01 01 00 1C 00 00 10 00 00 00  // ..@.............
-    0190: 38 00 00 00 01 00 00 00 02 00 00 00 6C 01 00 00  // 8...........l...
-    01A0: 50 01 00 00 00 14 00 00 10 00 00 00 88 01 00 00  // P...............
-    01B0: 00 00 00 00 00 00 00 00 00 14 00 00 0E 00 00 00  // ................
-    01C0: A4 01 00 00 04 00 00 00 00 00 00 00 00 14 00 00  // ................
-    01D0: 0E 00 00 00 A4 01 00 00 05 00 00 00 00 00 00 00  // ................
-    01E0: 00 14 00 00 10 00 00 00 88 01 00 00 01 00 00 00  // ................
-    01F0: 00 00 00 00 00 14 00 00 0E 00 00 00 E0 01 00 00  // ................
-    0200: 06 00 00 00 00 00 00 00 00 14 00 00 0E 00 00 00  // ................
-    0210: E0 01 00 00 07 00 00 00 00 00 00 00              // ............
-
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- tests/data/acpi/aarch64/virt/PPTT.topology  | Bin 356 -> 540 bytes
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- 2 files changed, 1 deletion(-)
-
-diff --git a/tests/data/acpi/aarch64/virt/PPTT.topology b/tests/data/acpi/aarch64/virt/PPTT.topology
-index d0e5e11e90f33cbbbc231f9ad0bd48419e0fea65..f5f07b87c3777106e74f380de7941e1c01fc3447 100644
-GIT binary patch
-literal 540
-zcmZvXI}XAy5JV>*2o(g0GDQlGKtUNL4F!luq~Hh?93lk;$DrUC6gdjVpo1A>2S;LM
-z%e!y9_D)?lO%?*tuH09fLtY;1DrW=$l<UL-nCtYzvZcp@40!i-4orY_R*;0D)3(xE
-zvk*rGivR<yGYC;)v;cfFC0cVUI4UmOCl#DQ+D*9&vMKY2t95$J__56O`b@nqZvA7z
-z_KHOoxp}{3-usL_pDR7u{(Q!sPos6zc}G5}4ScFq|DT!EDy+||au;^4J6ZgPjXWlw
-S>h0TY?~`Ec-II5*#Ig@|86g1x
-
-literal 356
-zcmWFt2nk7HWME*P=H&0}5v<@85#X!<1VAAM5F11@h%hh+f@ov_6;nYI69Dopu!#Af
-ziSYsX2{^>Sc7o)9c7V(S=|vU;>74__Oh60<Ky@%NW+X9~TafjF#BRXUfM}@RH$Wx}
-cOdLs!6-f-H7uh_Jy&6CPHY9a0F?OgJ00?*x0RR91
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index ba2a8180e9..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/PPTT.topology",
--- 
-2.43.0
+>> +
+>> +    if (!ret) {
+>> +        error_setg_errno(errp, errno, "IOMMU_IOAS_CHANGE_PROCESS fd %d
+>> failed",
+>> +                         be->fd);
+>> +    }
+>> +    trace_iommufd_change_process(be->fd, ret);
+>> +    return ret;
+>> +}
+>> +
+>> bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
+>> {
+>>      int fd;
+>> diff --git a/backends/trace-events b/backends/trace-events
+>> index f478e18..5ccdf90 100644
+>> --- a/backends/trace-events
+>> +++ b/backends/trace-events
+>> @@ -7,6 +7,7 @@ dbus_vmstate_loading(const char *id) "id: %s"
+>> dbus_vmstate_saving(const char *id) "id: %s"
+>>
+>> # iommufd.c
+>> +iommufd_change_process(int fd, bool ret) "fd=%d (%d)"
+>> iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d
+>> owned=%d users=%d"
+>> iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
+>> iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
+>> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+>> index ac700b8..db9ed53 100644
+>> --- a/include/system/iommufd.h
+>> +++ b/include/system/iommufd.h
+>> @@ -64,6 +64,8 @@ bool
+>> iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+>>                                        uint64_t iova, ram_addr_t size,
+>>                                        uint64_t page_size, uint64_t *data,
+>>                                        Error **errp);
+>> +bool iommufd_change_process_capable(IOMMUFDBackend *be);
+>> +bool iommufd_change_process(IOMMUFDBackend *be, Error **errp);
+>>
+>> #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE
+>> "-iommufd"
+>> #endif
+>> --
+>> 1.8.3.1
+> 
 
 
