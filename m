@@ -4,72 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05EA4C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A791C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHPqy-0008EF-6p; Tue, 20 May 2025 12:30:08 -0400
+	id 1uHPsM-0000cz-Od; Tue, 20 May 2025 12:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uHPqv-0008B7-O7
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:30:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1uHPsL-0000cD-CI; Tue, 20 May 2025 12:31:33 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uHPqu-0002kL-21
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:30:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747758603;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pnZ8FRp1+0E6UQT8TRYrzenTjD06EfK4pK0ZOJ79scY=;
- b=MH/JdGMl8z6iBI55hbSszyZyNjW55dQ1cGV5Xn4tSj4BwpQ8+aBfBfMDOVt4oOicZ+WjT1
- pvhtiO3IX3SkFzKZ1IbqP3VaMoN6hKsixKJ/0g4s32o+pNyvZYPbGSjYvzOsM6r2qBQoyh
- T0EZK2nRZvk1fEYPf+8eIyUzZuOFuDc=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-OdU5MTYKPx-ms79reRwBwA-1; Tue,
- 20 May 2025 12:29:59 -0400
-X-MC-Unique: OdU5MTYKPx-ms79reRwBwA-1
-X-Mimecast-MFC-AGG-ID: OdU5MTYKPx-ms79reRwBwA_1747758598
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26A2519560B1; Tue, 20 May 2025 16:29:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.201])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D16930001AA; Tue, 20 May 2025 16:29:55 +0000 (UTC)
-Date: Tue, 20 May 2025 11:29:52 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
-Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru, jsnow@redhat.com, 
- kwolf@redhat.com, hreitz@redhat.com, qemu-devel@nongnu.org, 
- andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: Re: [PATCH 2/4] hbitmap: introduce hbitmap_reverse()
-Message-ID: <x6elam26xqiepon2bvrhpejczvia6ksqn4xviov5vhh7e7vfrc@yucgtxyeabe7>
-References: <20250513013238.1213539-1-andrey.zhadchenko@virtuozzo.com>
- <20250513013238.1213539-3-andrey.zhadchenko@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1uHPsJ-000333-6E; Tue, 20 May 2025 12:31:33 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1747758681; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=ighi0GrDBUAqt0AFr1LsP/GaNHhLtrfDTULP4aFCHeKc0CB30b16DkI/B02Gv7/th50DA/+HB6v0zwh3AIjtaVJFbRIQp9T8bfXeu5NZs3iTj4GMpx1edbWzyNqkbkq8llIYUF4CfCH8pKW5qrYIL7tp4ByrovvfIe0EyZeMwL8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1747758681;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=Glzj8BwTcTzwAZG+ZPJqBHa8spXR7XpenQ3SSMmVMPM=; 
+ b=ZRckS2jg83SJdSQIIfzuN5M88pA8Xv9ewJ+9aBUQmzskwA/ZCYkM+bNPcrPR8ZHIjGCsd9zmpUxRLKUBtkkeoRESwczVG3Z1QlYJv0xpKh4ynrQ1JNd9qglRLT6ZA5+zzESYkYx/gQIHQM94Jzx9NcF9o8EWhcBhE2wMjBjQXFQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747758681; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=Glzj8BwTcTzwAZG+ZPJqBHa8spXR7XpenQ3SSMmVMPM=;
+ b=KktX0a1M0h8l0Df7PGsW8ln3O0OUQ2aBVQ3P7pLVPXneg1UaCZdjVXPDbtjUvDPR
+ /13O4Bk7X4jNNP78T90ojSnTiL5Up36EOmAHZ1Ihu8DZQTc5bwQ0lJAeYYx6wss5cKP
+ rwUeg03Eb4XUKjncA9HITPI3qeI17QRoYDWPjf8w=
+Received: by mx.zohomail.com with SMTPS id 1747758678185822.6309855049358;
+ Tue, 20 May 2025 09:31:18 -0700 (PDT)
+Message-ID: <89adb298-602f-43c5-bc55-a3edb96fb2ac@collabora.com>
+Date: Tue, 20 May 2025 19:31:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250513013238.1213539-3-andrey.zhadchenko@virtuozzo.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] virtio-gpu: support context init multiple timeline
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yiwei Zhang <zzyiwei@gmail.com>
+Cc: qemu-devel@nongnu.org, balaton@eik.bme.hu, qemu-stable@nongnu.org
+References: <20250518152651.334115-1-zzyiwei@gmail.com>
+ <87iklv9tir.fsf@draig.linaro.org>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <87iklv9tir.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,41 +80,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 13, 2025 at 03:32:36AM +0200, Andrey Zhadchenko wrote:
-> and bdrv_dirty_bitmap_reverse() helper
-
-Is 'inverse' a better name than 'reverse'?
-
+On 5/20/25 18:44, Alex Bennée wrote:
+> Yiwei Zhang <zzyiwei@gmail.com> writes:
 > 
-> Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
-> ---
-> +++ b/util/hbitmap.c
-> @@ -940,3 +940,18 @@ char *hbitmap_sha256(const HBitmap *bitmap, Error **errp)
->  
->      return hash;
->  }
-> +
-> +void hbitmap_reverse(HBitmap *bitmap)
-> +{
-> +    int64_t pnum, pos = 0;
-> +    int64_t size = bitmap->orig_size;
-> +
-> +    while (pos < size) {
-> +        if (hbitmap_status(bitmap, pos, size - pos, &pnum)) {
-> +            hbitmap_reset(bitmap, pos, pnum);
-> +        } else {
-> +            hbitmap_set(bitmap, pos, pnum);
-> +        }
+>> Venus and later native contexts have their own fence context along with
+>> multiple timelines within. Fences wtih VIRTIO_GPU_FLAG_INFO_RING_IDX in
+>> the flags must be dispatched to be created on the target context. Fence
+>> signaling also has to be handled on the specific timeline within that
+>> target context.
+>>
+>> Before this change, venus fencing is completely broken if the host
+>> driver doesn't support implicit fencing with external memory objects.
+>> Frames can go backwards along with random artifacts on screen if the
+>> host driver doesn't attach an implicit fence to the render target. The
+>> symptom could be hidden by certain guest wsi backend that waits on a
+>> venus native VkFence object for the actual payload with limited present
+>> modes or under special configs. e.g. x11 mailbox or xwayland.
+>>
+>> After this change, everything related to venus fencing starts making
+>> sense. Confirmed this via guest and host side perfetto tracing.
+>>
+>> Changes since v1:
+>> - Minor commit msg updates based on feedbacks from BALATON
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 94d0ea1c1928 ("virtio-gpu: Support Venus context")
+>> Signed-off-by: Yiwei Zhang <zzyiwei@gmail.com>
+> 
+> Queued to virtio-gpu/next (in maintainer/may-2025), thanks.
+> <snip>
+> 
 
-To me, reverse on 1110000 would be 0000111 (swapping the order); while
-inverse would be 0001111 (swapping the bits but preserving the order).
+Wanted to notify you about the patch after giving it a test, but you
+beat me to it. Thanks for taking the care. Tested now, Steam games work.
 
-The naming change will require respinning the series, but the concept
-makes sense.
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+Best regards,
+Dmitry
 
