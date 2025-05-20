@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D729CC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE6AC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHQ5y-0005ct-3L; Tue, 20 May 2025 12:45:38 -0400
+	id 1uHQGT-000281-01; Tue, 20 May 2025 12:56:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uHQ5Y-0005T7-Kh
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:45:12 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1uHQGP-00026j-Dz
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:56:25 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uHQ5W-0005U1-F6
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:45:12 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7fd35b301bdso6552677a12.2
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:45:09 -0700 (PDT)
+ id 1uHQGN-0007jc-Lv
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:56:25 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-30ecc762cb7so2574609a91.1
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:56:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747759509; x=1748364309; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747760182; x=1748364982; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=m+7SV2xh38BX70rkK3rxPOunQ+UQDLRyf1uVTWn74ko=;
- b=Qb4m2w6xaseEI7c/5Yd4334wTdeWZ8I8UVO9gUnVU6OEroD0J50xr48XjhMAB0BsJD
- eCoLVh45ibQ7JgrGpxEahCsnzjOgmbLrXehus7UFUWNm1dnIDKoXBLqVH6a1F0O1XaSf
- 79cD5eWOp6qku7PpvYJZRKUWunj6mXvXaZaKOVYHnryAlzpqU70q8WSUkiwqhVlklxFs
- WNtQogVzN6fAroRam4Ew7ztA1tppxTqBoG1vhKJK9yhhdwz9F7F6zM3stDZa+idEVsW7
- Ll6FkrTnMxhy7HeI4dM3hTZ7sn1JT14DMvrMQ7NhkUj6GjIB8SEiZ4evtQFi5mbFQx5e
- HPmw==
+ bh=/vRLMitreON+vFW++48y7TglTchdWWbvnyq6iT67lMY=;
+ b=hFjSgQ0+9tnY8pOZDuMGuD6ag56t4DFqa1ZFOH5XFTMWiSWZvDpyaWzUWwtYeS4fCf
+ s5Zktaj3bDPdRr+69OrmyHNM5D4olIJPQG5oj9uN/kw9FjS4d5h9//un8pT5bjHBmqNX
+ zAkODrGF8fmUeiy2NjwaB/m62+69OJW990vQNyIp1O6VRy38Tx4SvqCSW0QREjwctGS4
+ FkPZ7llpIZTg5YzdmNuCXpwH4uq9IpI44FqTZSbxSqglTrbqRMZ//6t8f8q0URe8wNHS
+ kJ7d1N7KJbOh9XDRQETWkPBAT75PbdfJhciS8wRt3tsOUiFV1iz9QSyx2ZDiMFPVn4w4
+ A4wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747759509; x=1748364309;
+ d=1e100.net; s=20230601; t=1747760182; x=1748364982;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m+7SV2xh38BX70rkK3rxPOunQ+UQDLRyf1uVTWn74ko=;
- b=Rrwz/6Z0/JcAKuzNmMX9rGZ4jwpEEwAHS0tbke6lb0L0Ed62ctyshJrWqnnLY9l4QV
- gESKG1iEL9+NDdEVetGmoc7JnvjxvpZAyzQdy3Q0HKxw0sGQ5fkAuDx2NJMf9juktLbu
- VHjz+2sTNIDZg5YV3ddudRSxtTNJDRPuHqxrKuKH9TOZrEjy0UGvP9L0qjNKUn9+taKD
- FeUzmqOYK/NdbPDA6FNe7oT5I5LyzF8VaVViLuSUPhFMo2N+fE3MZlqh//h0xA0TkjE+
- ZTwYkyKmYRFCPJH3+BWrtAPpIv0d9sI4Hwv2d4Pp8eXpUVnhL78fGVk1v0U8pP7dLSSr
- z8gw==
-X-Gm-Message-State: AOJu0Yw8Lo7SgXE5lnmq/Q0NfIcAAozNzAzU1N/IuDO72X34VgycmM85
- DfKGTDUtHkpLIibHCUCRSuanTXFU91EbrM1ezQ0C5bUrt9U5mtpt4TfSuNDN5Q==
-X-Gm-Gg: ASbGnctQR7bzdn1T18vXEMB0NRvsGudLF5IAfp3KPDQwZTeOdFndK9thBq/Cpw4r/SE
- XVND27HcxHqNgHG5vRaZMifkXgxzJXNMQrVRvrmoH4kbn7Xt1jrYm74bIqYTL1OysfwAHW2gRtT
- TTJOSX+IpvhE3dY3YJ1VKBB+HBot7eA5rdCStAMxJf8U+Ku8XnbvVLGHD0/UHIY2UGmzAJrrMXc
- gwj7aCGDvc4Iob0uLbowIUgHU6ijBWI5mn1BiZfiVfyFUYJBt8j60PR3eO9f7Ip9+SPggWc6Sxg
- mzcyW+VG/uWY66Yvo0FxejwY1cPeYSvjjG/NhzHcug==
-X-Google-Smtp-Source: AGHT+IFYCgM3TXmWDKu3+6RnTMM49ylrOwg9WGXbHuSOn26XlFcn63AoApwUU7jmZQgDlbaxxsvmTw==
-X-Received: by 2002:a05:6a00:a81:b0:742:9f58:ccce with SMTP id
- d2e1a72fcca58-742acce364cmr22946284b3a.12.1747759498132; 
- Tue, 20 May 2025 09:44:58 -0700 (PDT)
+ bh=/vRLMitreON+vFW++48y7TglTchdWWbvnyq6iT67lMY=;
+ b=JdqyRtwd9SSVHOibw21TSp3vUBBgqHYay/XPEn9T9dZXGaYhvZuoIh4LcewEbQKYvY
+ Bmp8WXBq11nM6UZaUJH+xrvwW1x6bAs+Zf6uhEULH3r8Y0NvpNd9Rih8iFe7fNxhMfdL
+ gsLdhXGDYsAO27TNBcZHe8XHm6i9m9fvCa1CIc8heFVPlBQOk3oGm2ceUAWd2qSJ56Nu
+ 9D2hB04DFldOYClS8293wm2ALpfPNOvwckRql87lA/Q4xL+l3O2jMn2kwdbYXzdSklYe
+ EzgbovhyQ+D4fbcYPvK8oDacE69W0vEh7wItBaotWs4h6WV9fE09+ev8HiNXGyoPZ427
+ hsBw==
+X-Gm-Message-State: AOJu0YziLOCkfZtCx2dG+b7pkBIP3hws2oMEwr8x2G3NjMVvOPdzN14L
+ UqnSnSVvcXtqAI32cRe73g1T/G49eljWL77sB8Z72JHd9nvbDP7UeKO5
+X-Gm-Gg: ASbGncsWJWWA7nA8VVJl7YiDISm79BPqYfvYYIZ/8iTrtczunHGm6SjupUxmgplUW2M
+ bf3CNOH5cY0/+WM8PpeeMK2F7bGUaRt7Vgd0zINkvte+L2IuTOzzLi7F6byyw8f41MuJUFNsT9E
+ CgWp4WJxs1wOS7sEJxxFUTtWl2nRB8UbXHxMbFKYrcXv0J0lp946lop7ddPB1wYbRqTTzZ0ei1n
+ R1ve/nGl/OIgztZ8suF9AUroDPtFaQ4Th8/NqP5VzhQZ7W7o/zsUKMBdUkyu2JbC4MDKCsB0tq+
+ KAayzldizeJiexwVjAeNOo/QPURGOm8VeshvI78nXQ==
+X-Google-Smtp-Source: AGHT+IEldrYyfqRchNLhtdk3Ea5E8njSYxDDAnkx44QFrecfD06Y3xlMc2io0rTCgfTnWFsUuD9VUg==
+X-Received: by 2002:a17:90b:3e8e:b0:2fa:1e56:5d82 with SMTP id
+ 98e67ed59e1d1-30e7e87f02amr25553357a91.17.1747760181771; 
+ Tue, 20 May 2025 09:56:21 -0700 (PDT)
 Received: from lg ([2601:646:8f03:9fee:2c89:c0cf:1cbd:96d3])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a96deaf4sm8144837b3a.23.2025.05.20.09.44.56
+ 98e67ed59e1d1-30f365d460fsm1928556a91.23.2025.05.20.09.56.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 09:44:57 -0700 (PDT)
+ Tue, 20 May 2025 09:56:21 -0700 (PDT)
 From: Fan Ni <nifan.cxl@gmail.com>
 X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Tue, 20 May 2025 09:44:55 -0700
+Date: Tue, 20 May 2025 09:56:18 -0700
 To: anisa.su887@gmail.com
 Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
  dave@stgolabs.net, linux-cxl@vger.kernel.org,
  Anisa Su <anisa.su@samsung.com>
-Subject: Re: [PATCH v2 05/10] cxl_events.h: Move definition for
- dynamic_capacity_uuid and enum for DC event types
-Message-ID: <aCyxh8oN-NtI7eXo@lg>
+Subject: Re: [PATCH v2 06/10] hw/cxl_type3: Add DC Region bitmap lock
+Message-ID: <aCy0MoOUEwFj8HQ4@lg>
 References: <20250508001754.122180-1-anisa.su887@gmail.com>
- <20250508001754.122180-6-anisa.su887@gmail.com>
+ <20250508001754.122180-7-anisa.su887@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250508001754.122180-6-anisa.su887@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pg1-x532.google.com
+In-Reply-To: <20250508001754.122180-7-anisa.su887@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,70 +101,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 08, 2025 at 12:01:01AM +0000, anisa.su887@gmail.com wrote:
+On Thu, May 08, 2025 at 12:01:02AM +0000, anisa.su887@gmail.com wrote:
 > From: Anisa Su <anisa.su@samsung.com>
 > 
-> Move definition/enum to cxl_events.h for shared use in next patch
+> Add a lock on the bitmap of each CXLDCRegion in preparation for the next
+> patch which implements FMAPI Set DC Region Configuration. This command
+> can modify the block size, which means the region's bitmap must be updated
+> accordingly.
 > 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> ---
+> The lock becomes necessary when commands that add/release extents
+> (meaning they update the bitmap too) are enabled on a different CCI than
+> the CCI on which the FMAPI commands are enabled. 
+
+read/write access also need to touch the blk_bitmap to ensure the range
+to access is backed by DC blocks through ct3_test_region_block_backed().
+
+Otherwise,
+
 
 Reviewed-by: Fan Ni <fan.ni@samsung.com>
 
->  hw/mem/cxl_type3.c          | 15 ---------------
->  include/hw/cxl/cxl_events.h | 15 +++++++++++++++
->  2 files changed, 15 insertions(+), 15 deletions(-)
+
+
+
+> 
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> ---
+>  hw/mem/cxl_type3.c          | 4 ++++
+>  include/hw/cxl/cxl_device.h | 1 +
+>  2 files changed, 5 insertions(+)
 > 
 > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 05d4c861f1..6ad48f55ce 100644
+> index 6ad48f55ce..b5b3df5edf 100644
 > --- a/hw/mem/cxl_type3.c
 > +++ b/hw/mem/cxl_type3.c
-> @@ -1982,21 +1982,6 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+> @@ -824,6 +824,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+>          };
+>          ct3d->dc.total_capacity += region->len;
+>          region->blk_bitmap = bitmap_new(region->len / region->block_size);
+> +        qemu_mutex_init(&region->bitmap_lock);
 >      }
+>      QTAILQ_INIT(&ct3d->dc.extents);
+>      QTAILQ_INIT(&ct3d->dc.extents_pending);
+> @@ -1176,6 +1177,7 @@ void ct3_set_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+>          return;
+>      }
+>  
+> +    QEMU_LOCK_GUARD(&region->bitmap_lock);
+>      bitmap_set(region->blk_bitmap, (dpa - region->base) / region->block_size,
+>                 len / region->block_size);
+>  }
+> @@ -1202,6 +1204,7 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+>       * if bits between [dpa, dpa + len) are all 1s, meaning the DPA range is
+>       * backed with DC extents, return true; else return false.
+>       */
+> +    QEMU_LOCK_GUARD(&region->bitmap_lock);
+>      return find_next_zero_bit(region->blk_bitmap, nr + nbits, nr) == nr + nbits;
 >  }
 >  
-> -/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
-> -static const QemuUUID dynamic_capacity_uuid = {
-> -    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
-> -                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
-> -};
-> -
-> -typedef enum CXLDCEventType {
-> -    DC_EVENT_ADD_CAPACITY = 0x0,
-> -    DC_EVENT_RELEASE_CAPACITY = 0x1,
-> -    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
-> -    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
-> -    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
-> -    DC_EVENT_CAPACITY_RELEASED = 0x5,
-> -} CXLDCEventType;
-> -
->  /*
->   * Check whether the range [dpa, dpa + len - 1] has overlaps with extents in
->   * the list.
-> diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-> index 38cadaa0f3..758b075a64 100644
-> --- a/include/hw/cxl/cxl_events.h
-> +++ b/include/hw/cxl/cxl_events.h
-> @@ -184,4 +184,19 @@ typedef struct CXLEventDynamicCapacity {
->      uint32_t tags_avail;
->  } QEMU_PACKED CXLEventDynamicCapacity;
+> @@ -1223,6 +1226,7 @@ void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
 >  
-> +/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
-> +static const QemuUUID dynamic_capacity_uuid = {
-> +    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
-> +                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
-> +};
-> +
-> +typedef enum CXLDCEventType {
-> +    DC_EVENT_ADD_CAPACITY = 0x0,
-> +    DC_EVENT_RELEASE_CAPACITY = 0x1,
-> +    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
-> +    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
-> +    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
-> +    DC_EVENT_CAPACITY_RELEASED = 0x5,
-> +} CXLDCEventType;
-> +
->  #endif /* CXL_EVENTS_H */
+>      nr = (dpa - region->base) / region->block_size;
+>      nbits = len / region->block_size;
+> +    QEMU_LOCK_GUARD(&region->bitmap_lock);
+>      bitmap_clear(region->blk_bitmap, nr, nbits);
+>  }
+>  
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index cbcc1bc9f5..9cfd9c5a9f 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -618,6 +618,7 @@ typedef struct CXLDCRegion {
+>      uint8_t flags;
+>      unsigned long *blk_bitmap;
+>      uint64_t supported_blk_size_bitmask;
+> +    QemuMutex bitmap_lock;
+>      /* Following bools make up dsmas flags, as defined in the CDAT */
+>      bool nonvolatile;
+>      bool sharable;
 > -- 
 > 2.47.2
 > 
