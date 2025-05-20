@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A056C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 17:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E54C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 17:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHQRu-0000FI-Rf; Tue, 20 May 2025 13:08:18 -0400
+	id 1uHQRv-0000Fx-Jf; Tue, 20 May 2025 13:08:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRl-0008V0-ED
- for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:12 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRs-0000A3-67
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRj-00017g-Pv
- for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRq-0001AQ-GR
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747760886;
+ s=mimecast20190719; t=1747760893;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9r2K5IRydGAKK2ZqGpput8QmW6uoc48LgjM6fFzTJZY=;
- b=aJrusxoV2aUUBysLxOtH8Z0ffeI5lSm1mbT7JqXSIdgQ4pxYSafpyK6EYUPZsNAB4zOE5N
- JFbGZdyPh1lnn3Bwftcr9a3WOq5HOGrJqkaugcrYbhyzJVxDgZ7qfLIOOySRrc2lWyfSLR
- k3A+pOGURrmqd21Sadw5MXZKBczdLLk=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OtWneoMVo461co8B0dUaF2ECam+CQefc0LeGbVUreg4=;
+ b=g64QvOYTMZ21c510417rLTTQ977MJ+VwFdOH111OC4QJWOMppjFpiIzUdvQfl/FQJp76dP
+ N3C3aBuwXQ2sjaj0bIeLL7rNFnLRqakWuZMwV4jJF/AEsOTSzaDW/euPhRMatYTYwGqHDh
+ J7eSuVisMOYAfAFsTrFo3CFnA8aCVZM=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-81-kKkKisOYMzC9HlvFLfP1Sw-1; Tue, 20 May 2025 13:08:05 -0400
-X-MC-Unique: kKkKisOYMzC9HlvFLfP1Sw-1
-X-Mimecast-MFC-AGG-ID: kKkKisOYMzC9HlvFLfP1Sw_1747760885
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c760637fe5so1056809385a.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 10:08:05 -0700 (PDT)
+ us-mta-341-jCmF3QHFMSyVffvg0z7j0g-1; Tue, 20 May 2025 13:08:11 -0400
+X-MC-Unique: jCmF3QHFMSyVffvg0z7j0g-1
+X-Mimecast-MFC-AGG-ID: jCmF3QHFMSyVffvg0z7j0g_1747760891
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7c7c30d8986so1805474785a.2
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 10:08:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747760884; x=1748365684;
+ d=1e100.net; s=20230601; t=1747760890; x=1748365690;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9r2K5IRydGAKK2ZqGpput8QmW6uoc48LgjM6fFzTJZY=;
- b=VxuTxIUacxNQx+/0zKp3gFbU7tYnHi2nZW6qkfqGCGK4rVLl9sTOcvrS+jakSFiolI
- xo6TEDrjz9LqCLEo/1468tCv0TMSpZcoUr/Y6YvU5mxfy99h9MxdDknOUycEulpXfIHw
- xw+rtNGvxAhU1psBy3Jn6UsFW9l5U8/npB3/l3OVTHQVM7HyqrLstrX50YMZPzjlTOl2
- 73B9aKXpRg6n++Pp7YHuPtWmeQkWuYF0NE2DYv931j8tzmurap58O9hzBZOFqbncGfN1
- QLspyCj3mFKd0QYKhtRMhZNw3Zx0QMo6yByFNP/Nc3CQeY1p36AOr58TTbOeNbtV0OKo
- a9FA==
-X-Gm-Message-State: AOJu0Yy88SLl9brKEZ0WjKWN+zUN7xmkjPyOCptMON1RQBcDoBFFBP42
- M3RMrnOfzDpUAGu6qVZ9P1ybzz9axH+wkKIYdS8rjwcdXJnaXBRE8JSsF8h+OEYlX24e5IAflcO
- C3cpTZsV5XVeeifxn8cOqqHtY6G4E/oXME3W4h8dwXmg7FNOnPHQk5zTTMxM0Q0OUDRm4tPGovb
- y0k0aA0eI+MadYv/iiD4AIYA5AwISFjoqr0QBOyA==
-X-Gm-Gg: ASbGncu2rNmAdXZyUKaObLsP8l0bzzHAmPUaOMlcKyWd91j0Na+YBS+ER6kjL7yTvmr
- yDgYcbopPr5hBq/Ovk7hz52jJn8qsoXU87Ujx2v1ZeHKWKKZBbTWZvNpyUuxnRRtyH/G2uicCc9
- 7IjN/wSsDsBq6qVYIIyIBupXlNXQUEWbbwxfSh8x8NC8qG6SHQPfqEXS2YdplTCaGpKGu3vvEHK
- dE1pyuItHowaEeR8ZdDyqm+tqSr0vFvIN0C/aNjAfe2qj1ltfV7quhb6rvVG9a2Z8vwaEkRrA87
-X-Received: by 2002:a05:620a:2948:b0:7c7:747f:89d0 with SMTP id
- af79cd13be357-7cd46721bc7mr2410086685a.18.1747760884213; 
- Tue, 20 May 2025 10:08:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IECkjycnqg3O/94xSsEw97NNHZPc+JWixdlIYcpLvqI9zHoIeTO/6/SDpOZx0lSmzfU4dYEUg==
-X-Received: by 2002:a05:620a:2948:b0:7c7:747f:89d0 with SMTP id
- af79cd13be357-7cd46721bc7mr2410080585a.18.1747760883570; 
- Tue, 20 May 2025 10:08:03 -0700 (PDT)
+ bh=OtWneoMVo461co8B0dUaF2ECam+CQefc0LeGbVUreg4=;
+ b=W8T3G9KHznT9eyGj43TtZOb8Jlv+byeDRultm73FqB3WHRU0Z3T/yAeph57lD05u4T
+ 0UzPjshylkmsznPuenDBtXNGloQbiSv+eCJCUwU3tqaq4DYsAjewUy2S/5rhFGbVkZcZ
+ N2S1gPWuvehA0wbmR/aDTZYF6/tPhg/L5qIO4fjPuj8IuiGFFDDOgiIaaH1wJ1QeO3/c
+ m8B0H9Vid/0c9KJLZsfUalseEWNAybTM9HkQttF/b3XC13tErVvJ2hC6FKPvgOxUQ6YH
+ UNhlIeGlEY3pFwAk6oxAzbz70+/9kYjto92fmL+QwhidepEMIsvQCVmMKgCTQG+3z/Yj
+ GwNg==
+X-Gm-Message-State: AOJu0Yxm5cPjKbwRWmLslfChLoMagY1CZlB8+NPaJ1i6pm0XObKKob+6
+ jcOrcWRb5fQxVyum1cM6CK0YAdOXwU90Ja3dQbNnbQrwXEqcEPbDNC8XYCLSX3Wa/3drE8dKoU/
+ kg67KCrWdZ1oAZ4wasfSbDatJQybd2D6rkaXy6fJSPgOtGnhsPqZFRDe+iZKrOcqATcOtJ7mYXx
+ qmDdtGkxt72oyxy+86YNoytbH2JAj+rVtXRd7I0A==
+X-Gm-Gg: ASbGncudKVb80Z2JPS6FlOu3ngRWWLkjsbSYuPtc8dxnJ3vcMmX0aoj+xbfOki94TQQ
+ QLh3UP0eCdTdulxt5mGLLZ1hTGawpiHLE3kaswi0KjVpdjmFm3W2ytkzCGyhtGrOJejqHg8hs0A
+ vIthA9T1ufuNU24LQ/FP72y2UJKNvvf2Gthf74G5sHVVdQV2Vd8CR+qDMxHej1Yo6f/M5O8osId
+ dPYhQl1jNEJIJ8qh1EPSOTjIHMTuHe9CX5nn8pbYZGAiyanlVzW4DmiSqlgeg4jkjVURDw9KFVk
+X-Received: by 2002:a05:620a:410c:b0:7ce:cb67:1ddf with SMTP id
+ af79cd13be357-7cecb671ecemr347093285a.49.1747760890206; 
+ Tue, 20 May 2025 10:08:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGgfUsBPquxPzooxF4OwspK2hQUz3R0HiZg6gkOR9RCg5zyHzDu0/+aFcyYWY6oyk6C3fzuEw==
+X-Received: by 2002:a05:620a:410c:b0:7ce:cb67:1ddf with SMTP id
+ af79cd13be357-7cecb671ecemr347087885a.49.1747760889629; 
+ Tue, 20 May 2025 10:08:09 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd467be47bsm763846585a.16.2025.05.20.10.08.02
+ af79cd13be357-7cd467be47bsm763846585a.16.2025.05.20.10.08.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 10:08:02 -0700 (PDT)
+ Tue, 20 May 2025 10:08:09 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- peterx@redhat.com
-Subject: [PULL 06/12] ci: Reduce the size of artifacts for build-previous-qemu
-Date: Tue, 20 May 2025 13:07:45 -0400
-Message-ID: <20250520170751.786787-7-peterx@redhat.com>
+ peterx@redhat.com, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+Subject: [PULL 10/12] migration/multifd: Don't send device state packets with
+ zerocopy flag
+Date: Tue, 20 May 2025 13:07:49 -0400
+Message-ID: <20250520170751.786787-11-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520170751.786787-1-peterx@redhat.com>
 References: <20250520170751.786787-1-peterx@redhat.com>
@@ -105,42 +106,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-The build-previous-qemu job is intented to produce a build of the
-previous QEMU release for consumption by the migration-compat-*
-jobs. Keep only the pieces of the build that are necessary.
+If zerocopy is enabled for multifd then QIO_CHANNEL_WRITE_FLAG_ZERO_COPY
+flag is forced into all multifd channel write calls via p->write_flags
+that was setup in multifd_nocomp_send_setup().
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20250513133353.23022-4-farosas@suse.de
+However, device state packets aren't compatible with zerocopy - the data
+buffer isn't getting kept pinned until multifd channel flush.
+
+Make sure to mask that QIO_CHANNEL_WRITE_FLAG_ZERO_COPY flag in a multifd
+send thread if the data being sent is device state.
+
+Fixes: 0525b91a0b99 ("migration/multifd: Device state transfer support - send side")
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ migration/multifd.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index b4e39fd7c1..ca1a9c6f70 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -188,12 +188,11 @@ build-previous-qemu:
-     when: on_success
-     expire_in: 2 days
-     paths:
--      - build-previous
--    exclude:
--      - build-previous/**/*.p
--      - build-previous/**/*.a.p
--      - build-previous/**/*.c.o
--      - build-previous/**/*.c.o.d
-+      - build-previous/qemu-bundle
-+      - build-previous/qemu-system-aarch64
-+      - build-previous/qemu-system-x86_64
-+      - build-previous/tests/qtest/migration-test
-+      - build-previous/scripts
-   needs:
-     job: amd64-opensuse-leap-container
-   variables:
+diff --git a/migration/multifd.c b/migration/multifd.c
+index f18b166bcf..b255778855 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -690,6 +690,7 @@ static void *multifd_send_thread(void *opaque)
+         if (qatomic_load_acquire(&p->pending_job)) {
+             bool is_device_state = multifd_payload_device_state(p->data);
+             size_t total_size;
++            int write_flags_masked = 0;
+ 
+             p->flags = 0;
+             p->iovs_num = 0;
+@@ -697,6 +698,9 @@ static void *multifd_send_thread(void *opaque)
+ 
+             if (is_device_state) {
+                 multifd_device_state_send_prepare(p);
++
++                /* Device state packets cannot be sent via zerocopy */
++                write_flags_masked |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
+             } else {
+                 ret = multifd_send_state->ops->send_prepare(p, &local_err);
+                 if (ret != 0) {
+@@ -718,7 +722,8 @@ static void *multifd_send_thread(void *opaque)
+                                               &p->data->u.ram, &local_err);
+             } else {
+                 ret = qio_channel_writev_full_all(p->c, p->iov, p->iovs_num,
+-                                                  NULL, 0, p->write_flags,
++                                                  NULL, 0,
++                                                  p->write_flags & ~write_flags_masked,
+                                                   &local_err);
+             }
+ 
 -- 
 2.49.0
 
