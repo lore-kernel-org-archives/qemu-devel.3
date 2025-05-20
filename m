@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6B6C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 07:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E650C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 07:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHHWC-0002g3-08; Tue, 20 May 2025 03:36:08 -0400
+	id 1uHHWA-0002cH-J5; Tue, 20 May 2025 03:36:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uHHW3-0002NU-U7; Tue, 20 May 2025 03:36:01 -0400
+ id 1uHHVw-0002H9-QI; Tue, 20 May 2025 03:35:56 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uHHW2-0003tR-4q; Tue, 20 May 2025 03:35:59 -0400
+ id 1uHHVu-0003tR-HF; Tue, 20 May 2025 03:35:52 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 May
@@ -31,12 +31,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 2/3] hw/intc/aspeed Fix coding style
-Date: Tue, 20 May 2025 15:35:38 +0800
-Message-ID: <20250520073540.2014240-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 0/3] Fix RAM size detection failure on BE hosts
+Date: Tue, 20 May 2025 15:35:36 +0800
+Message-ID: <20250520073540.2014240-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250520073540.2014240-1-jamin_lin@aspeedtech.com>
-References: <20250520073540.2014240-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -65,37 +63,20 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix coding style issues from checkpatch.pl.
+v1:
+ 1. Fix RAM size detection failure on BE hosts
+ 2. INTC: Set impl.min_access_size to 4
+          Fix coding style
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/intc/aspeed_intc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Jamin Lin (3):
+  hw/intc/aspeed: Set impl.min_access_size to 4
+  hw/intc/aspeed Fix coding style
+  hw/arm/aspeed_ast27x0: Fix RAM size detection failure on BE hosts
 
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 19f88853d8..5cd786dee6 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -1001,7 +1001,8 @@ static AspeedINTCIRQ aspeed_2700ssp_intcio_irqs[ASPEED_INTC_MAX_INPINS] = {
-     {5, 5, 1, R_SSPINT165_EN, R_SSPINT165_STATUS},
- };
- 
--static void aspeed_2700ssp_intcio_class_init(ObjectClass *klass, const void *data)
-+static void aspeed_2700ssp_intcio_class_init(ObjectClass *klass,
-+                                             const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
-@@ -1069,7 +1070,8 @@ static AspeedINTCIRQ aspeed_2700tsp_intcio_irqs[ASPEED_INTC_MAX_INPINS] = {
-     {5, 5, 1, R_TSPINT165_EN, R_TSPINT165_STATUS},
- };
- 
--static void aspeed_2700tsp_intcio_class_init(ObjectClass *klass, const void *data)
-+static void aspeed_2700tsp_intcio_class_init(ObjectClass *klass,
-+                                             const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
+ hw/arm/aspeed_ast27x0.c | 21 ++++++++++++++++-----
+ hw/intc/aspeed_intc.c   | 12 ++++++++++--
+ 2 files changed, 26 insertions(+), 7 deletions(-)
+
 -- 
 2.43.0
 
