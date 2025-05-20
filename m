@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C65E3C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 07:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C274C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 07:14:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHH85-0007zY-Lv; Tue, 20 May 2025 03:11:13 -0400
+	id 1uHHAp-0000Bw-8G; Tue, 20 May 2025 03:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uHH82-0007z5-Mb
- for qemu-devel@nongnu.org; Tue, 20 May 2025 03:11:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uHHAn-0000Ba-D1
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 03:14:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uHH80-0001Hl-Mu
- for qemu-devel@nongnu.org; Tue, 20 May 2025 03:11:10 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uHHAl-0001PS-FK
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 03:14:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747725066;
+ s=mimecast20190719; t=1747725238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Z55vX8bASXN2Yrv/x7z0lzsPH8dfoLgsfXACYZZuEKg=;
- b=BlZ9zkA0JsjwvBwHUePGvqzZJzKRIUyWspuoTN6grgdfDLbMEtSUdAxSGYzbfMDTSGYvAb
- 6AkiQTckPxlRo48+6wWxE7tRLrRyj/wsZKM1g9rR76GIZOGXmOYPgXVxhdFY1G9A6FZK8S
- t49ScN8VLpIGmzzmogXgd1UpPQW4+vo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=+rdamO7z+MVVFagep15J+sTzCFhI1hAxdcbsWDd80eI=;
+ b=Dy6w+nA6ZO1H4vjgTlGG+A2m3VukIjSZUmcBoFO4xVolzhuN8Izunc3L4LGqZ/Kd8Ow7Js
+ P6VVKU3lmYS0qrxNTaxv4OO/IZf9i5ZPkgbkYpqcCi/x0jFFs2X3vA9JR/iPekd0X1W+66
+ mSHP4OEuBhZ6gj7Csq4540VDI4v+dso=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-440-FsXCJcrSMUqnkbpDo0NXXw-1; Tue,
- 20 May 2025 03:11:02 -0400
-X-MC-Unique: FsXCJcrSMUqnkbpDo0NXXw-1
-X-Mimecast-MFC-AGG-ID: FsXCJcrSMUqnkbpDo0NXXw_1747725061
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-vgqASAZUNE6R0NAFVcE47A-1; Tue,
+ 20 May 2025 03:13:53 -0400
+X-MC-Unique: vgqASAZUNE6R0NAFVcE47A-1
+X-Mimecast-MFC-AGG-ID: vgqASAZUNE6R0NAFVcE47A_1747725232
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02781180045C; Tue, 20 May 2025 07:11:01 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D2991955DAD; Tue, 20 May 2025 07:13:52 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D648C18004A7; Tue, 20 May 2025 07:10:59 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4BB1A1956096; Tue, 20 May 2025 07:13:50 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 49EAF21E66C3; Tue, 20 May 2025 09:10:57 +0200 (CEST)
+ id 8018621E66C3; Tue, 20 May 2025 09:13:48 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 Cc: qemu-devel@nongnu.org,  alex.bennee@linaro.org,  philmd@linaro.org,
- christian.boenig@lauterbach.com,  John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v2 04/20] qapi: Introduce MCD schema
-In-Reply-To: <87msbnfjj0.fsf@pond.sub.org> (Markus Armbruster's message of
- "Thu, 08 May 2025 13:07:15 +0200")
+ christian.boenig@lauterbach.com
+Subject: Re: [PATCH v2 07/20] mcd: Implement target initialization API
+In-Reply-To: <a71a747f-d8c3-40ac-ab61-0628dffbb2f6@lauterbach.com> (Mario
+ Fleischmann's message of "Mon, 19 May 2025 18:52:05 +0200")
 References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
- <20250430052741.21145-5-mario.fleischmann@lauterbach.com>
- <87msbnfjj0.fsf@pond.sub.org>
-Date: Tue, 20 May 2025 09:10:57 +0200
-Message-ID: <87sekzdaf2.fsf@pond.sub.org>
+ <20250430052741.21145-8-mario.fleischmann@lauterbach.com>
+ <875xi2yqlh.fsf@pond.sub.org>
+ <a71a747f-d8c3-40ac-ab61-0628dffbb2f6@lauterbach.com>
+Date: Tue, 20 May 2025 09:13:48 +0200
+Message-ID: <87o6vndaab.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -87,168 +88,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
 
-> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+> On 15.05.2025 15:02, Markus Armbruster wrote:
 >
->> The MCD implementation follows a remote procedure call approach:
->> Each function from mcd_api.h will correspond to one command in mcd.json.
->>
->> Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
->> ---
->>  MAINTAINERS          |  1 +
->>  docs/interop/mcd.rst | 13 +++++++++++++
->>  mcd/meson.build      | 27 +++++++++++++++++++++++++++
->>  qapi/mcd.json        |  6 ++++++
->>  4 files changed, 47 insertions(+)
->>  create mode 100644 qapi/mcd.json
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 327d3c5..7c085dc 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -3125,6 +3125,7 @@ M: Mario Fleischmann <mario.fleischmann@lauterbach.com>
->>  S: Maintained
->>  F: mcd/*
->>  F: docs/interop/mcd.rst
->> +F: qapi/mcd.json
->>  
->>  Memory API
->>  M: Paolo Bonzini <pbonzini@redhat.com>
->> diff --git a/docs/interop/mcd.rst b/docs/interop/mcd.rst
->> index 2b21303..13e81df 100644
->> --- a/docs/interop/mcd.rst
->> +++ b/docs/interop/mcd.rst
->> @@ -44,6 +44,19 @@ To configure the build for MCD support:
->>  
->>    ./configure --enable-mcd
->>  
->> +Debugging via QAPI
->> +------------------
->> +
->> +Since the MCD API does not define a communication protocol, a QAPI schema
->> +has been added to implement a remote procedure call mechanism.
->> +Each function within the API corresponds to one QAPI command, ensuring a
->> +one-to-one mapping between the API's functions and the QAPI commands.
->> +
->> +QAPI Reference
->> +--------------
->> +
->> +.. qapi-doc:: qapi/mcd.json
+>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>> 
+>>> The target initialization API ensures that the requested and provided
+>>> MCD versions are compatible.
+>>>
+>>> * implement mcd_initialize_f and mcd_qry_error_info_f in mcdserver
+>>> * implement QMP stub functionality
+>>> * add QTest
+>>>
+>>> Thanks to the QMP integration in QTest, function arguments and results
+>>> can be (de)serialized automatically.
+>>>
+>>> Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+>> 
+>> [...]
+>> 
+>>> diff --git a/qapi/mcd.json b/qapi/mcd.json
+>>> index 701fd03..7b42a74 100644
+>>> --- a/qapi/mcd.json
+>>> +++ b/qapi/mcd.json
+>>> @@ -4,3 +4,186 @@
+>>>  ##
+>>>  # = Multi-Core Debug (MCD) API
+>>>  ##
+>>> +
+>>> +
+>>> +##
+>>> +# == Definition of Structures
+>>> +##
+>>> +
+>>> +
+>>> +##
+>>> +# @MCDAPIVersion:
+>>> +#
+>>> +# Structure type containing the MCD API version information of the tool.
+>>> +#
+>>> +# @v-api-major: API major version.
+>>> +# @v-api-minor: API minor version.
+>>> +# @author:      API name of the author of this MCD API version.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MCDAPIVersion',
+>>> +  'data': {
+>>> +    'v-api-major': 'uint16',
+>>> +    'v-api-minor': 'uint16',
+>>> +    'author':      'str' } }
+>>> +
+>>> +
+>>> +##
+>>> +# @MCDImplVersionInfo:
+>>> +#
+>>> +# Structure type containing the MCD API implementation information.
+>>> +#
+>>> +# @v-api:       Implemented API version.
+>>> +# @v-imp-major: Major version number of this implementation.
+>>> +# @v-imp-minor: Minor version number of this implementation.
+>>> +# @v-imp-build: Build number of this implementation.
+>>> +# @vendor:      Name of vendor of the implementation.
+>>> +# @date:        String from __DATE__ macro at compile time.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MCDImplVersionInfo',
+>>> +  'data': {
+>>> +    'v-api'      : 'MCDAPIVersion',
+>>> +    'v-imp-major': 'uint16',
+>>> +    'v-imp-minor': 'uint16',
+>>> +    'v-imp-build': 'uint16',
+>>> +    'vendor'     : 'str',
+>>> +    'date'       : 'str' } }
+>>> +
+>>> +
+>>> +##
+>>> +# @MCDErrorInfo:
+>>> +#
+>>> +# Structure type containing the error status and error event notification.
+>>> +#
+>>> +# @return-status: Return status from the last API call.
+>>> +# @error-code:    Detailed error code from the last API call.
+>>> +# @error-events:  Detailed event code from the last API call.
+>>> +# @error-str:     Detailed error text string from the last API call.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MCDErrorInfo',
+>>> +  'data': {
+>>> +    'return-status': 'uint32',
+>>> +    'error-code'   : 'uint32',
+>>> +    'error-events' : 'uint32',
+>>> +    'error-str'    : 'str' }}
+>>> +
+>>> +
+>>> +##
+>>> +# == Target Initialization API
+>>> +##
+>>> +
+>>> +
+>>> +##
+>>> +# @MCDInitializeResult:
+>>> +#
+>>> +# Return value of @mcd-initialize.
+>>> +#
+>>> +# @return-status: Return code.
+>>> +#
+>>> +# @impl-info: Information about the QEMU build, its version and the version of
+>>> +#             the implemented MCD API.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MCDInitializeResult',
+>>> +  'data': {
+>>> +    'return-status': 'uint32',
+>>> +    '*impl-info'   : 'MCDImplVersionInfo' } }
+>>> +
+>>> +
+>>> +##
+>>> +# @mcd-initialize:
+>>> +#
+>>> +# Function initializing the interaction between a tool-side implementation and
+>>> +# target-side implementation.
+>>> +#
+>>> +# @version-req: MCD API version as requested by an upper layer.
+>>> +#
+>>> +# Returns: @MCDInitializeResult
+>>> +#
+>>> +# Since: 9.1
+>>> +#
+>>> +# .. qmp-example::
+>>> +#    :title: Check compatibility with MCD server
+>>> +#
+>>> +#     -> { "execute": "mcd-initialize",
+>>> +#          "arguments": { "version-req": { "v-api-major": 1,
+>>> +#                                          "v-api-minor": 1,
+>>> +#                                          "author": "" } } }
+>>> +#     <- {
+>>> +#            "return": {
+>>> +#                "impl-info": {
+>>> +#                    "v-api": {
+>>> +#                        "v-api-minor": 1,
+>>> +#                        "v-api-major": 1,
+>>> +#                        "author": "QEMU Release"
+>>> +#                    },
+>>> +#                    "vendor": "QEMU",
+>>> +#                    "v-imp-minor": 2,
+>>> +#                    "v-imp-major": 9,
+>>> +#                    "v-imp-build": 0,
+>>> +#                    "date": "Dec 18 2024"
+>>> +#                },
+>>> +#                "return-status": 0
+>>> +#            }
+>>> +#        }
+>>> +##
+>>> +{ 'command': 'mcd-initialize',
+>>> +  'data': { 'version-req': 'MCDAPIVersion' },
+>>> +  'returns': 'MCDInitializeResult' }
+>>> +
+>>> +
+>>> +##
+>>> +# @mcd-exit:
+>>> +#
+>>> +# Function cleaning up all core and server connections from a tool.
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'command': 'mcd-exit' }
+>>> +
+>>> +
+>>> +##
+>>> +# == Core Connection API
+>>> +##
+>>> +
+>>> +
+>>> +##
+>>> +# @mcd-qry-error-info:
+>>> +#
+>>> +# Function allowing the access to detailed error and/or event information after
+>>> +# an API call.
+>>> +#
+>>> +# Returns: @MCDErrorInfo
+>>> +#
+>>> +# Since: 9.1
+>>> +#
+>>> +# .. qmp-example::
+>>> +#    :title: Incompatible MCD versions
+>>> +#
+>>> +#     -> { "execute": "mcd-initialize",
+>>> +#          "arguments": { "version-req": { "v-api-major": 2,
+>>> +#                                          "v-api-minor": 0,
+>>> +#                                          "author": "" } } }
+>>> +#     <- {
+>>> +#            "return": {
+>>> +#                "return-status": 3
+>>> +#            }
+>>> +#        }
+>>> +#     -> { "execute": "mcd-qry-error-info" }
+>>> +#     <- {
+>>> +#            "return": {
+>>> +#                "error-str": "incompatible versions",
+>>> +#                "error-code": 3840,
+>>> +#                "error-events": 0,
+>>> +#                "return-status": 3
+>>> +#            }
+>>> +#        }
+>>> +##
+>>> +{ 'command': 'mcd-qry-error-info',
+>>> +  'returns': 'MCDErrorInfo' }
+>> 
+>> You define some types under "Definition of Structures", and some
+>> elsewhere.  How do you decide what goes where?  Hmm, looks like you
+>> mirror mcd/mcd_api.h.  Correct?
 >
-> You also need
+> Generally, mcd/qapi-schema.json is intended to stay as close as possible
+> to mcd_api.h. However, there are a few exceptions.
 >
->       :transmogrify:
+> If a function "MCDFunction" from the MCD API has multiple return values,
+> an additional QAPI struct with the naming scheme "MCDFunctionResult" is
+> introduced which will be returned by "MCDFunction".
+> Since this struct is intended to be used by only one function, it is
+> defined directly before that function.
 >
-> because we haven't completed the transition to John Snow's new doc
-> generator ("transmogrifier"), and
->
->       :namespace: MCD
->
-> for a properly separate namespace (see docs/devel/qapi-domain.rst).
->
-> I'd expect this to generate its own index, but it doesn't.  John, can
-> you have a look?
+> If the type of an argument or return value cannot be serialized, most
+> often because it is a pointer, it is changed to a type which is able to
+> carry the same information. In most cases, an int carrying a unique
+> identifier suffices. Sometimes, an additional struct is required.
+> This struct can possibly be used by multiple functions, so I would
+> expect it in the "Definition of Structures" section.
 
-John has since reminded me of the need to add it to docs/conf.py.
-Together, this generates docs/manual/qapi-mcd-index.html.  You need to
-link to it manually.  Sketch appended for you convenience.
+Makes sense.
 
->> +
->>  API Reference
->>  -------------
->>  
->> diff --git a/mcd/meson.build b/mcd/meson.build
->> index 3e4e67a..d62a625 100644
->> --- a/mcd/meson.build
->> +++ b/mcd/meson.build
->> @@ -1,5 +1,32 @@
->> +mcd_qapi_outputs = [
->> +  'mcd-qapi-commands.c',
->> +  'mcd-qapi-commands.h',
->> +  'mcd-qapi-emit-events.c',
->> +  'mcd-qapi-emit-events.h',
->> +  'mcd-qapi-events.c',
->> +  'mcd-qapi-events.h',
->> +  'mcd-qapi-features.c',
->> +  'mcd-qapi-features.h',
->> +  'mcd-qapi-init-commands.c',
->> +  'mcd-qapi-init-commands.h',
->> +  'mcd-qapi-introspect.c',
->> +  'mcd-qapi-introspect.h',
->> +  'mcd-qapi-types.c',
->> +  'mcd-qapi-types.h',
->> +  'mcd-qapi-visit.c',
->> +  'mcd-qapi-visit.h',
->> +]
->> +
->> +mcd_qapi_files = custom_target('MCD QAPI files',
->> +                               output: mcd_qapi_outputs,
->> +                               input: '../qapi/mcd.json',
->> +                               command: [ qapi_gen, '-p', 'mcd-', '-o', 'mcd',
->> +                                          '--suppress-tracing','@INPUT0@'],
->> +                               depend_files: qapi_gen_depends)
->> +
->>  mcd_ss = ss.source_set()
->>  
->> +mcd_ss.add(mcd_qapi_files.to_list())
->>  mcd_ss.add(files(
->>    'mcd_server.c'))
->>  
->> diff --git a/qapi/mcd.json b/qapi/mcd.json
->> new file mode 100644
->> index 0000000..701fd03
->> --- /dev/null
->> +++ b/qapi/mcd.json
->
-> Let's use mcd/qapi-schema.json, similar to the other independent QAPI
-> schemas, such as qga/qapi-schema.json.
->
->> @@ -0,0 +1,6 @@
->> +# -*- Mode: Python -*-
->> +# vim: filetype=python
->> +
->> +##
->> +# = Multi-Core Debug (MCD) API
->> +##
+Suggest to add a suitable varation of this explanation to the .json as a
+non-doc comment.  Reminder:
 
-diff --git a/docs/conf.py b/docs/conf.py
-index f892a6e1da..9b57fb2ee6 100644
---- a/docs/conf.py
-+++ b/docs/conf.py
-@@ -201,6 +201,7 @@
- # Due to a limitation in Sphinx, we need to know which indices to
- # generate in advance. Adding a namespace here allows that generation.
- qapi_namespaces = {
-+    "MCD",
-     "QGA",
-     "QMP",
-     "QSD",
-diff --git a/docs/interop/mcd.rst b/docs/interop/mcd.rst
-index 860fa8d20f..eb02839e19 100644
---- a/docs/interop/mcd.rst
-+++ b/docs/interop/mcd.rst
-@@ -58,6 +58,8 @@ QAPI Reference
- --------------
- 
- .. qapi-doc:: qapi/mcd.json
-+   :transmogrify:
-+   :namespace: MCD
- 
- API Reference
- -------------
-diff --git a/qapi/mcd.json b/qapi/mcd.json
-index b90cdfab03..4f0d36c8f1 100644
---- a/qapi/mcd.json
-+++ b/qapi/mcd.json
-@@ -3,6 +3,8 @@
- 
- ##
- # = Multi-Core Debug (MCD) API
-+#
-+# For locating a particular item, please see the `qapi-mcd-index`.
- ##
- 
- 
+##
+# Doc comment
+##
+
+#
+# Not a doc comment
+#
 
 
