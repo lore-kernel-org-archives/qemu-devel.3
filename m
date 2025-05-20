@@ -4,22 +4,22 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F51C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 501E8C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKFA-0007ZG-V8; Tue, 20 May 2025 06:30:45 -0400
+	id 1uHKFG-00082G-79; Tue, 20 May 2025 06:30:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uHKEu-0006un-Py; Tue, 20 May 2025 06:30:29 -0400
+ id 1uHKEv-0006zU-QW; Tue, 20 May 2025 06:30:30 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uHKEr-00051o-Ou; Tue, 20 May 2025 06:30:28 -0400
+ id 1uHKEt-00052F-3Q; Tue, 20 May 2025 06:30:29 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0F16543B73;
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id B817E43BB1;
  Tue, 20 May 2025 12:30:20 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
@@ -28,10 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v2 11/24] block: move drain outside of
- bdrv_set_backing_hd_drained()
-Date: Tue, 20 May 2025 12:29:59 +0200
-Message-Id: <20250520103012.424311-12-f.ebner@proxmox.com>
+Subject: [PATCH v2 18/24] blockdev: drain while unlocked in
+ external_snapshot_action()
+Date: Tue, 20 May 2025 12:30:06 +0200
+Message-Id: <20250520103012.424311-19-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250520103012.424311-1-f.ebner@proxmox.com>
 References: <20250520103012.424311-1-f.ebner@proxmox.com>
@@ -60,90 +60,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is part of resolving the deadlock mentioned in commit "block:
-move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
-
-The function bdrv_set_backing_hd_drained() holds the graph lock, so it
-is not allowed to drain. It is called by:
-1. bdrv_set_backing_hd(), where a drained section is introduced,
-   replacing the previously present bs-specific drains.
-2. stream_prepare(), where a drained section is introduced replacing
-   the previously present bs-specific drains.
+This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
 
 Changes in v2:
-* Split up into smaller pieces, flesh out commit messages.
+* Check that associated bs did not change with the drain.
 
- block.c        | 6 ++----
- block/stream.c | 6 ++----
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ blockdev.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/block.c b/block.c
-index 702a51ff4b..f323588d15 100644
---- a/block.c
-+++ b/block.c
-@@ -3569,7 +3569,6 @@ int bdrv_set_backing_hd_drained(BlockDriverState *bs,
-         assert(bs->backing->bs->quiesce_counter > 0);
+diff --git a/blockdev.c b/blockdev.c
+index 506755bef1..2e7fda6780 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -1377,9 +1377,10 @@ static void external_snapshot_action(TransactionAction *action,
+     const char *new_image_file;
+     ExternalSnapshotState *state = g_new0(ExternalSnapshotState, 1);
+     uint64_t perm, shared;
++    BlockDriverState *check_bs;
+ 
+     /* TODO We'll eventually have to take a writer lock in this function */
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
++    bdrv_graph_rdlock_main_loop();
+ 
+     tran_add(tran, &external_snapshot_drv, state);
+ 
+@@ -1412,11 +1413,25 @@ static void external_snapshot_action(TransactionAction *action,
+ 
+     state->old_bs = bdrv_lookup_bs(device, node_name, errp);
+     if (!state->old_bs) {
++        bdrv_graph_rdunlock_main_loop();
+         return;
      }
  
--    bdrv_drain_all_begin();
-     ret = bdrv_set_file_or_backing_noperm(bs, backing_hd, true, tran, errp);
-     if (ret < 0) {
-         goto out;
-@@ -3578,7 +3577,6 @@ int bdrv_set_backing_hd_drained(BlockDriverState *bs,
-     ret = bdrv_refresh_perms(bs, tran, errp);
- out:
-     tran_finalize(tran, ret);
--    bdrv_drain_all_end();
-     return ret;
- }
++    /* Need to drain while unlocked. */
++    bdrv_graph_rdunlock_main_loop();
+     /* Paired with .clean() */
+     bdrv_drained_begin(state->old_bs);
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    /* Make sure the associated bs did not change with the drain. */
++    check_bs = bdrv_lookup_bs(device, node_name, errp);
++    if (state->old_bs != check_bs) {
++        if (check_bs) {
++            error_setg(errp, "Block node of device '%s' unexpectedly changed",
++                       device);
++        } /* else errp is already set */
++        return;
++    }
  
-@@ -3594,11 +3592,11 @@ int bdrv_set_backing_hd(BlockDriverState *bs, BlockDriverState *backing_hd,
-     bdrv_graph_rdunlock_main_loop();
- 
-     bdrv_ref(drain_bs);
--    bdrv_drained_begin(drain_bs);
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     ret = bdrv_set_backing_hd_drained(bs, backing_hd, errp);
-     bdrv_graph_wrunlock();
--    bdrv_drained_end(drain_bs);
-+    bdrv_drain_all_end();
-     bdrv_unref(drain_bs);
- 
-     return ret;
-diff --git a/block/stream.c b/block/stream.c
-index 999d9e56d4..6ba49cffd3 100644
---- a/block/stream.c
-+++ b/block/stream.c
-@@ -80,11 +80,10 @@ static int stream_prepare(Job *job)
-      * may end up working with the wrong base node (or it might even have gone
-      * away by the time we want to use it).
-      */
--    bdrv_drained_begin(unfiltered_bs);
-     if (unfiltered_bs_cow) {
-         bdrv_ref(unfiltered_bs_cow);
--        bdrv_drained_begin(unfiltered_bs_cow);
-     }
-+    bdrv_drain_all_begin();
- 
-     bdrv_graph_rdlock_main_loop();
-     base = bdrv_filter_or_cow_bs(s->above_base);
-@@ -123,11 +122,10 @@ static int stream_prepare(Job *job)
-     }
- 
- out:
-+    bdrv_drain_all_end();
-     if (unfiltered_bs_cow) {
--        bdrv_drained_end(unfiltered_bs_cow);
-         bdrv_unref(unfiltered_bs_cow);
-     }
--    bdrv_drained_end(unfiltered_bs);
-     return ret;
- }
- 
+     if (!bdrv_is_inserted(state->old_bs)) {
+         error_setg(errp, "Device '%s' has no medium",
 -- 
 2.39.5
 
