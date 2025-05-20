@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 428A6C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFAFCC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHOWv-0003Po-N7; Tue, 20 May 2025 11:05:21 -0400
+	id 1uHOWP-00039v-4F; Tue, 20 May 2025 11:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uHOWt-0003PH-Vt
- for qemu-devel@nongnu.org; Tue, 20 May 2025 11:05:20 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ id 1uHOWN-00038f-Ls
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 11:04:47 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uHOWs-0002ic-9E
- for qemu-devel@nongnu.org; Tue, 20 May 2025 11:05:19 -0400
-Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54K7HZOD032326;
- Tue, 20 May 2025 08:05:16 -0700
+ id 1uHOWL-0002Nv-1R
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 11:04:47 -0400
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KC9YJr030516;
+ Tue, 20 May 2025 08:04:42 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=D2KfDXoz36GvTozb9uD8eLJAsTvhv+Uhiu8xE+c6D
- QY=; b=go2ZSbJXB66Ysaesh7WnmbLLxGn+WZ3EOk9GhRRlgoT45qKuxxBeRexK/
- d+QbkDsehxy52gUZjnR2cMmzbFt8uUrEwGV3T0m7NlxvbLbR8P0hgifD2b8d0jXm
- dZUzDSZzFJCrKfiq3PrBRv1V0Ay9u2514J1ImZWAeEHXK+MpPWGJQkjuUWgoF6GN
- Y5x4jLyDLLtTImhZRBYDCTTH9ghQ9QsYrOw/ac2z6Fkjbml+5DRuGL1x3iKF4zIF
- T7Hj+gQs0sxzBfj4Fb1TPUFKPbuCW67XSu1m0QEZhAotCZvOo2lQZS1iYjsSP/TX
- qyktYOKpp4qk0dbv0qgBqrzyWJ9YQ==
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11lp2177.outbound.protection.outlook.com [104.47.56.177])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 46prjheae9-1
+ proofpoint20171006; bh=NPawAWoNC+uXrHhvCEVORa5TwP5yxncau6nPhBYV/
+ 2c=; b=a0IHxPlnRGf6r+H129oSV95Igh5cPmus7gbJKH0l2YzjN2z2ciYUW+k+s
+ d4l+lsV+bQyuDABmfwGZd2V3NnmCyBlo+q0cBSWsYGVLCpfS7Q2ESbTCrLDdarAv
+ U3w9e4lzr4x/RBrqz7M/xq5EGHKXQQIQb2QlT47/Wh0lauiJPxi6si4LpTUl52xR
+ jWAc7cVcCKUDcfjnP21v0zDeEzqVbneHjn/zMfQPlIJG0NJXwEY8+L9pK4YwJsuI
+ 8x7mEDkaV2RRdPC9aR/qjeBzbiZSpXxvf2SvQHNLnjF5bVuUFfPWkHOEhftVDFus
+ Ua3AuoUhuzD2CRF5sLLUtKelk+QfQ==
+Received: from nam11-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam11lp2177.outbound.protection.outlook.com [104.47.57.177])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 46pshhebvf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 May 2025 08:05:16 -0700 (PDT)
+ Tue, 20 May 2025 08:04:42 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=B5mXx13EjeagT7NiLpT1SyOKviLZX2FMGhv5jtHd+9daRqoimU0edz8F5xZzZyszLL8lH6kgGlCLgqh/Sr9BoJHgSaLQbXZ6zodil7NYs9Rki/xHEa0rzw+aj3BnUz3xCpuw8lurl30vg4hIfZAGqTSyFTIq1Cau8rZvPKwsFQ/mcHIyQ+88CqBpUIOWtKsgSKJNKdW0pGcjIGAjZTFp4QziEZ4IJujLeD9tsjF96B/cUYhX2DKlpZRNv2D36A0cEeZ/ddlf69mGKyt6T4SHWh4tghBvFOwnUeiE/UEdHiZqyzvUF4qFiP3jXY4Ag3ZK/QcatTulboL7i4FGLRiT0g==
+ b=mjbKtMQSeZJWbQjdDPBJiTwkfXPXvbLhJGBWQek58af5IZtjtVKzu6F+37KFfmZzATTUCAgNE16j1p16wFjit3aORpmdF2Zvqe+B5h6RcGRSJaW5CfLN0mkXx9ZKbsVG4iSxOwu7TM7/wb4y/OqHWyVoyo8im2mBrpTl8LyzvzZffYisqNGoTopgk+mBQUgoBzD3u3/YCVO/V5g6FLc6ZH1heevTNwz1/rVK/VlNgwSUG75LF0hwwg7gwoumL9VHL9cyp/mgpH3HgQhtFbFQn6/RLNtiZNuRbu3RLzm8NmFeYbTWD58DCwTv6qbDKG6TSIKuHygzK8Y3f9h00Ry6vg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=D2KfDXoz36GvTozb9uD8eLJAsTvhv+Uhiu8xE+c6DQY=;
- b=SdMLRxIWabSajgffl5KWCfT5lkY+UHi2vqP70xH2z+WroXPo7BXyyX+B9DtYcZ1gITGm7ucmCHh8yYe7qpnQlB5h69Icdpleab1oQTAIHgitGGqogEez7IzkjRK6Zw9DQval10YNx0B6nxBcWQGpdo7el3BR8wKHPqc2fR75Zw3+KbJdb4QYiWc+TIJW2ZVzgEfohwJ14kJ7ZIUfuEIH8KVMsVRZYEm8gfEB5dqjmVS8uSg8DxyMvBU7gj4BgQuPcxWjuu6P2d9iszZbS6fTQlAtSzmRyB5LPBrbBqnd1IYm2wsUjkLF03435fnGQ6ms/2sOXV+GOx9yeyMf3/HvfQ==
+ bh=NPawAWoNC+uXrHhvCEVORa5TwP5yxncau6nPhBYV/2c=;
+ b=bl3fa5pTlUsIjho4nJM2jP7NwYwciDzUjoK13jiAz/xePSmz78PUQV7lleeV9xifOwiRxmqP0gpQpeA/M/WFNGRZeA1re/eNL91AjX9PZFBpIeYD/67LsUGTNU3SSwGm77SUGzegkVMrgDHuNGgPSHX3bPC1gxtuqecTOXkKDLHWlQfefsvjEwyTS8EGE2ZfrvWW/ccX3JmeppIHZFc0vNRvRJZ/ajz+u1zB1CY6i6tNWzG4wdSVPgSUrDRq/LKV2TMP4RZHHzI0Ou+N8b2gM78xk714s2+LkSoVFMebaiOmdXyJzcu3BfzVI+WdM6YILTZPVyWJiEay4n0RUHpo2Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D2KfDXoz36GvTozb9uD8eLJAsTvhv+Uhiu8xE+c6DQY=;
- b=XOYJSI6C0y4Zll19m0KWIV2lKZwPTReumfShEe7jVzAYEdq39GRV9xp5znhSsRZACAznZPBHZFCwukWrXW7xxaB8z6ypFT3NIeaoDKVZf368lWvgdD6mS42YxmHSlzY1aGqd0ekxvZ3C7ZMOAbCm94y7uZXgzyn7ywQbXMszz25SVfjYKPMo485K/blphiotijSyIAnnduTTKqXBTqZ9pguJWrRZ4whxMmbAS1dGZPiUzSVFrtlynmmJonogbp1flcZksKullEmqI2WIMCtU8BKMnkshv/Sp2gmVl//kioGCOKPMzg/jE0IL2WP1rNxqGVrrMZ7Jdxtl5qIL9ssSPA==
+ bh=NPawAWoNC+uXrHhvCEVORa5TwP5yxncau6nPhBYV/2c=;
+ b=tl6RWhtsoyepJIn2nfc8/OciB0mmm3az5VxiUWQgGRIEeoVIOxO/n+NLcAm7Zz+vGjeSLVdRuSnQPw9hiWTvWwwGaOieIL9cOXm2JvuBEUbVIeLrtTsAppGPV80vTTtRSLM1PiYnSLATvFuMMg7aE6tT+g0ckK5Z+orXPW8XksVAMcXIyHwisueSbZnf+QB+LI8DN1h7fb9CQBWD6Vw4I1xsItTkpFg33i6I7qjGXKHifLCpXgbY2B89gy1rkLzu+d022P69JrLMk6dcvxb4aFwni431KPdWRXmM/5bFYJ3fsDhG06WqCSlYla0Q6EHWWrJJnsMpvTd7rsxg5cyH9g==
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
  by SA1PR02MB8462.namprd02.prod.outlook.com (2603:10b6:806:1f6::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.23; Tue, 20 May
- 2025 15:05:14 +0000
+ 2025 15:04:40 +0000
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8769.016; Tue, 20 May 2025
- 15:05:12 +0000
+ 15:04:40 +0000
 From: John Levon <john.levon@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -77,9 +77,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Jagannathan Raman <jag.raman@oracle.com>
-Subject: [PATCH v2 19/29] vfio-user: set up PCI in vfio_user_pci_realize()
-Date: Tue, 20 May 2025 16:04:08 +0100
-Message-ID: <20250520150419.2172078-20-john.levon@nutanix.com>
+Subject: [PATCH v2 06/29] vfio: enable per-IRQ MSI-X masking
+Date: Tue, 20 May 2025 16:03:55 +0100
+Message-ID: <20250520150419.2172078-7-john.levon@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250520150419.2172078-1-john.levon@nutanix.com>
 References: <20250520150419.2172078-1-john.levon@nutanix.com>
@@ -91,97 +91,97 @@ X-ClientProxiedBy: AM9P193CA0021.EURP193.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|SA1PR02MB8462:EE_
-X-MS-Office365-Filtering-Correlation-Id: 09e2dd07-821f-45f5-f948-08dd97afb86b
+X-MS-Office365-Filtering-Correlation-Id: b14d8ea1-1325-4aac-c974-08dd97afa4e7
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?J1abW10EYGjGw6f+hEGn8X/BGe3ho5yNAvI+USV6x2CIw/UqAOxuD8an8l77?=
- =?us-ascii?Q?A63um+IxPsExUdK6W9E0cvYJHLgXvA5aKFDhEWGiSxTA0tLBLS2VHYE7+sf+?=
- =?us-ascii?Q?U4BZUiUPMvhHFL0wlJwW73YhtI8b58PuxA/l4kCa8TPQowNPRrza8DqyT+ip?=
- =?us-ascii?Q?D46AnA7PbpQrJVIDCnL2xr6FRr4S55ejX7IrloZfO57hkaIhik+lFWsRXhE+?=
- =?us-ascii?Q?/faXp8KfrlzZz8WWW5y2jSsvaSZvXwFgejeMVJzjqsseiABBTlDom8ENKQz/?=
- =?us-ascii?Q?lyL4Qgk4woO3dtjZyUW3awYojYu/uX4023fIFZHLfsQnQqEiekR368HfgAMD?=
- =?us-ascii?Q?GAo5bgoza+a9TV4tOdkiWLxAP2etMYlvBqQSUnJfMBvI1Fq/6AiPSuNhmjKo?=
- =?us-ascii?Q?wXKuLwMd4OncuTMPK3JYD36oKqWuqaXofMA9/I1ApRscPspYMM8tNpqPXe04?=
- =?us-ascii?Q?2O8jI1pYQ5nOx3gKNqDvmiyac7tseDFoX4QjWbf5+F3cEMtexQTjUZBBCHM6?=
- =?us-ascii?Q?gXJeWMp8DnX4Wiah9DpxM7rlryPLPFpUEezNKKOvXt7Tyjffi5stabYIUC92?=
- =?us-ascii?Q?QXHps8da35BWE8OUJrpQT14jrl+5kT8OKK8v4eUaMItn10WnP7mA75atgKxb?=
- =?us-ascii?Q?41lJbfe+hUN2RLlOFi2Hy/oC78TZrOYU0MPhkWgU1eIk868nGnASV5H0oJMv?=
- =?us-ascii?Q?xGX+sGleefbRzyFWrG0R7eQF9A+B5/w3ILvs9AApmlw2WBO4FXSJLYOphO42?=
- =?us-ascii?Q?SeyPWWrzwQHoxuWWzgtxUPjqjsyHJISVkD37lkG9wjwTav5FOHtTMy8u2IzK?=
- =?us-ascii?Q?+/VjziU7Dxq2OosGET/qKSKKmHKbc4RKaNK7xL2kD4L016PdttTKnjgcW0GW?=
- =?us-ascii?Q?mQZqxNszLyzHE3/wZZUHMXL1Z6DaC2D85DPKdVQS4s3AbRssHvmXIwke+v7K?=
- =?us-ascii?Q?JHXRndLPxvKhEK7t1Ws3GU541kmtPSaEotv2UKDvXiFo2cB1UlGoYl61UYrh?=
- =?us-ascii?Q?SrMnyp0vA51iNlu5NFYfiUd6FJeeubcvNFQQXgw1POTLdDXWRG12z0ULEEVD?=
- =?us-ascii?Q?UsCrodMI8zpJW6B7Ay+g21JZ9IxJrRpNykG7bU//nD0b8FQ5Kjgs2XVvLXay?=
- =?us-ascii?Q?Xu8DHlXa/ktjAHaHfgk0qabZ0NSXM6HvcAhSMALWHheqaGK85yFTLTopD9/v?=
- =?us-ascii?Q?pc2pyX4tfAlpHEVp2fq1nlmo90uecpq50IrgWwj2Em2gKqEBOQqEId9jg2R3?=
- =?us-ascii?Q?hmIZSUHr0BVA7FI7tE/Yp+d7yiwrUVQFWuSVleqt7MY7R+PQRvsPHEO6ioJg?=
- =?us-ascii?Q?/ENP6vJLXiiSiMhzpk7T8N50sb4MaseXTPqhP+4AtKkPJ66Iqyf+utE/ck1d?=
- =?us-ascii?Q?EedviC9D2RuV5ByYWKetTv6h09ZpyGooYo/AuqVFrI7a8N/5ur+/NvYl+zgR?=
- =?us-ascii?Q?JD4+C1smvjU=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?FI8jcLDvKKtq7UMh6pSI0Gkb2ECk9FV2Ykrm51JGGKlbunVNHI56eoZNb0+T?=
+ =?us-ascii?Q?gGRaiIlaTzlv5Y3aBSz52DfamDFh+afszmKVb38wX0t6WgoXCIuqPXmF98NK?=
+ =?us-ascii?Q?L/nC4Wdy6mZPjn0QvfIllFtsIf7y5HkTta33OO4xyEOgM9hgxZQjhQgejO8I?=
+ =?us-ascii?Q?A1QMZQ8bnfTtBe6MxaN9UtBSrsJiu38+OHYDcsgwxah/eHv2Mv3FEZn8fBNi?=
+ =?us-ascii?Q?eHAasZgqg9Yy3TP2pAX3PfkJpBIfV9KeHqUUotkNXR4mUy52cqCeIfmeLDCf?=
+ =?us-ascii?Q?QG1xRW3Q0iqA0389IAPQ4X0S2pE5PZdC0RJPKBb3kQhj1em5becfev+okown?=
+ =?us-ascii?Q?OkaSgL8QNXT7/nVW1KElJPjxlaCOMQSY9Ue5EB+T9kCYwUH2uNE2VPC9OXzV?=
+ =?us-ascii?Q?Nfhse7VmuVzdXMxX9YQ8XGUbi9i0BWnlMbp6kRMmvzWrO+aAiDJbpCr3bIWY?=
+ =?us-ascii?Q?nX5lnZ0WQlgnpBlVXpDQnVuCHzpZiRRsgq7+Hzq6ED/IWAKpuuGmLKl1gw7R?=
+ =?us-ascii?Q?qKSG8rE2KCc/zehSAgEcCVLS2C+5+6+C8yXbv3GQbpmWMh0XOf1A0Qq5uJUS?=
+ =?us-ascii?Q?F+YultvByIf2tsCSVnxCFfsS+/FYkJPHKmS9GAH1GkcdclSc3ucnJYz+eMM8?=
+ =?us-ascii?Q?drEI3LjpOI14bFzhXLVi/wUJZ7OndxgxGEol+egiWd9J0IKPkAzZdKsBHHz2?=
+ =?us-ascii?Q?84X6OZ7h2UOE+nFZIh+uNcyYcusK8JRn3gVe8B4WMQWqIm++5qCoCgBbApGu?=
+ =?us-ascii?Q?0JarMnPsZIAbeaK4KHBZnrXnjamTjoN+KFEmYBGCx9Xrmf3e6DYDsKYT1fDZ?=
+ =?us-ascii?Q?Ry7idiekt53y31JeED+6jyXQg97hEpeM05veZ4ejutgwKuRygnVZgeW8IdM5?=
+ =?us-ascii?Q?zs1RrlV0UXTyjMRtEnAFXVCHlHLEg6d7zL+62BuM2PqZoOfL08P+ooKM5+aU?=
+ =?us-ascii?Q?luPNPoWlW8PUjscSXMXWEjLxMgCPc4bBtLa1BGE87yOJf6ZXJmXbu3MKx2cr?=
+ =?us-ascii?Q?Z3lwGaD+QxwFZQfMqsWryv9TscSTXn6zSRJ/U+7dMfoTSCrAS6OOXkKImK0K?=
+ =?us-ascii?Q?FqhZ622hDnOM6AiTOads0IMj57fQ1umgUWPTMN1P4rTHaC7Dln8x5C8+ykSn?=
+ =?us-ascii?Q?McxNiwlELvcToQzYSdfuo6+uYPPi7MYTNg6aI+KTlSe5t1MUTIAlGZS22j4m?=
+ =?us-ascii?Q?WW/e6wICbOJSDtAAVpvq1r8DUjWfYReulyJjVs8HiqoDC9GXEWIBY+/hWy+M?=
+ =?us-ascii?Q?nVtUVSfVhud2j3PBou9qtV9oXjOo5N8e/E2ukC9PUAofgmg/ELKh1wiI3WnH?=
+ =?us-ascii?Q?MYZRKs1BwYcxWOHgwg40Ai2TRqAP7zQ3g/+/pIC1l5MqoB++XjIL0bexGvjl?=
+ =?us-ascii?Q?dgomiGIoCYVRg9D6Dp9gBPyrJwtfdsv0l7XbZ7EIjV4CO9j7DfUlGUfb5ZRN?=
+ =?us-ascii?Q?695DOccPYjs=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(7416014); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?GQMR4kvyTLgfWSHAmZx0MCXJKf7EGMj0LIhclI31tDAjBTuqnX8GmJ6u/+rF?=
- =?us-ascii?Q?dOMrEf6LNdEFKoh7ACXCm2kolTMhUZirbkvqlmZ7hqK+syeFLyoRlHo7j9eH?=
- =?us-ascii?Q?NWeFXkglm0KzGm/wOsEL5y467kQQrolcRjmwaKnheQ25tg+gTh+aMKsaXOcJ?=
- =?us-ascii?Q?Zx2iF3ul3a6M/+uMyP7Db18kWUcwYrhEOAs9f2HkljtNagcFbyvKljd+Rgk9?=
- =?us-ascii?Q?6eJh/rTd6zKP43ctDSVVas9qTMRIBZDl17ijwfI2tWyIiTvHvP5FG9Q0cFnf?=
- =?us-ascii?Q?5fvT9d5g8bN9JbzxQ0xm9bnyPtgph9UvJ04GlpQiQ7HzqzCjX0ZQoJq59mO+?=
- =?us-ascii?Q?qyqpMKQzWhskuStGY9HdaCtAG14cB4NytWw/nkqzzPIzI1vUaAPqJU+NAV4J?=
- =?us-ascii?Q?xxiyjAxPP8Z4zi19Zw00PWtzStY2KxvV/LNMBhdyoAFKYh0n+jy5SjwKeReT?=
- =?us-ascii?Q?Hiw1mqoulOrF0oD7usdRIG2TCdjlP7imK1Q8v6NPaYRwOdeWrukPoPiGF+Ft?=
- =?us-ascii?Q?8nw+I5YF9gnDkUZqIoXxEUIZyzRt5MXAJEH7Zx/cydsA3BHmeO7SaVRzvT//?=
- =?us-ascii?Q?sscRu2GqT9tMwS5U4K0oqW/cqE1P9/qBtvcGXGuYwzZqHPq/iz9vFQ3MNdkE?=
- =?us-ascii?Q?RmOWRfNKwfXMLXhprYgihlmXtax6gUx8MchozX3+GK/5v7NaQ5vS23FYDTC1?=
- =?us-ascii?Q?ugWjLv6prUXNIi6/HVlVSoEmmPTuOpR8TNqpfADNNT+3IV7JQTaCBCaOF2h4?=
- =?us-ascii?Q?5Mcymf8THwlmxpeHaEa3joCFVFyq7OXJ69LVEQ+tP5blWoifb4T9Yyj8uQ7A?=
- =?us-ascii?Q?puAzeOCAhE0wZ6h1zo84pwUYOnCFAgfpzI8lwb0D1K2jRrvwG1xyMbmLRlcC?=
- =?us-ascii?Q?78s4uc5BtY0lgWp8TWqMhY6XoaZv2eKH5nv7dBeE6NLSRNhsXShMRSGBB8Lm?=
- =?us-ascii?Q?fh55iMexaTccnib84SWouUUEAjCUz3WZXDfqO5xlgFGPPfQY4Fr51fDEyk5U?=
- =?us-ascii?Q?xYtJg0/00vcZ2lrElgsYA7WjsX1nrE3GGDZkRrSftCSca/YQZ/vIC2Xnc4uk?=
- =?us-ascii?Q?mMiH0NkBl+VWp9rVjEwkcyMLy0bYd9HOomQwjGTzu8AZCbwN1/t0/VG7d7fR?=
- =?us-ascii?Q?vR+TCZBF08On8msoMWzUtOATPi3SE1XaydEeiLjmalNRdjR5HlPQR0hLepYn?=
- =?us-ascii?Q?8jg01TrWegoAYuJjxJVgvCMh86mPJs7Qeas0/v9C8jmiTTQAdFNGsCL3S9gn?=
- =?us-ascii?Q?3HuSBYyQloTJ1GFMBCCnu2QZL5x+bWoppdpv3XtnfAA0LQETCFjhzN3uAWaP?=
- =?us-ascii?Q?l6GhscxPORQbScqxxLJvY9WrOC2vFtWzfYgiMmJx4Zdari6o1uM0/rP01Oka?=
- =?us-ascii?Q?ofvfQwDDi/Vn5eAho6JI7yIqK2YCeOyNlixwUXb6YCt/Z81V+vRhOcOlxHFV?=
- =?us-ascii?Q?UrubNcklmjElY4x+sbeKh4Lw0zanFMlUqLUCBSuqlUNYz8tjPY0siNj52Ccb?=
- =?us-ascii?Q?k7oyuRcp+/C425v0yECXxpw3CRqL09i4yx0tnBAfRKkrbU4GamNpZzQ0aILI?=
- =?us-ascii?Q?E9G5j3MvmS9k360EWuIIjDmJ15en3XdBYdfq0jds?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Xx/lvPTiBxoDKlKTUx6uH2iPXTPrbrBFdp54VVjYbvNBupE1/4NAPyAgqCSO?=
+ =?us-ascii?Q?4p5qvnWVISPPmIq/WLJwV+y0xkV5ImJ8YYGkRmUQVeFVZJlLy1efmNSlnI/R?=
+ =?us-ascii?Q?ffmY8j2rDvM3KmiyHpEKDdM5z4f3zcK5cACi1NZ0PLyqHAvdkVfwqCJqbsNV?=
+ =?us-ascii?Q?e6ydRObCVNcTqpxgeEdEGbbxIJhoP9mbe+jpQZDxI35S1nedXo3yrffUe9wO?=
+ =?us-ascii?Q?eg7Ro9LkJX0BRjNvHOxs1zXGNmqVMHjSMBMKG5ZXSYWPd0uKND2Wn1iTv7K/?=
+ =?us-ascii?Q?u0Ma1o8AdeJrLD7A4eJT0llffPUwF3zLxMkqSrk8iN4tm7fxm3vfvxzpiCo6?=
+ =?us-ascii?Q?PqnJdKXaTg3qZ6WXPlbTuFe4TVN3bzVPLlQ+3gx+i0pvG710hXni37G2aO0u?=
+ =?us-ascii?Q?Zo9xaoMsTfHDInXRowV92MYbim30GDswLFdeULUmAzykmP+U5RueK0QPRjAr?=
+ =?us-ascii?Q?qdLjSNrmWzrUViU4P5K4mq1z5LYSwtCAKKyGEo1WMKtHPZvD07g68OR/ss3+?=
+ =?us-ascii?Q?/uZb7ibIAPv/dzTOcuPJhj4HWPsiHf86vUVe7XiF/WxZvzXWE+FvyjEWweVz?=
+ =?us-ascii?Q?mGqqxBeqw6t3B3LvZQiF3TNuW/e13sGouM2u3clYCG3CpKWFF6TVvoQJB1/V?=
+ =?us-ascii?Q?Nd16MEXN/7z2006PUCe/akd0rc6WP8OF4NwyK7lycxGCK5Qj5bBNhixIvVWF?=
+ =?us-ascii?Q?4/5nqfjZe5mSoVK0zZeV9Ag//X7ZiJCrpPdXwsAy8M2boZUrpwog8SCySjr5?=
+ =?us-ascii?Q?k3nAc4K48iQQ7JFgbSNwJwiB8Y21GEt3Yad3jCHf4RJCdpB14UfOYCO2732I?=
+ =?us-ascii?Q?BrpCF+A5x1gA3vuIQ5/DOjk3ME93Qyqet0/4y6EGc2Nxu3ER/KBf5b0dKgEL?=
+ =?us-ascii?Q?QztYtFMMTM5WIvVYijnjvo5igMViZLn2B4Bm9+xchBARoBx8tNmmstYdnVwH?=
+ =?us-ascii?Q?bOCD429RF7dvWT2Wwn+v5Sj1xjobHHEwlRsFyS7jim0zELlvmW7Ykgohx02m?=
+ =?us-ascii?Q?swQzf7lfSbPNzrR5RRK/eqHHfHB04/KBP7eK144VWRr+27F4mIBbF+3OF01o?=
+ =?us-ascii?Q?LTkTAIMRLEeNBmolbTYvh2HM1VVm3mlhjoEqb0rKMTUhdQcqWjdnjGAICDBi?=
+ =?us-ascii?Q?5LYkXQR4zcHKlbgjARAGBaQ8y8Sh22W++RZ7U1t+X1g8caDojyHhJPmyJBaj?=
+ =?us-ascii?Q?MhXqkokqN4yi0JOvXcKflmy+TTdQrXlLu2GfPJczYkPX1Qyjkb6UlCEloQ8i?=
+ =?us-ascii?Q?fP+yxNFkiD12GaMvbjyGZlWkbiUuFp82eBaIrzVTT6fWby3IuRZRTzkt4Iwv?=
+ =?us-ascii?Q?il/5XcE+TuB/pPHBymK4wmWBPyuEHsiEoVTJK6H0uzzDTtlaJxvUhT8DX26z?=
+ =?us-ascii?Q?lroD7rQaXBrP5pxc7rjB7pH2b1Lm9v9AI1azLm/Nir+gVJQYc+sOiz4viDQg?=
+ =?us-ascii?Q?ALqWvh1aRIZmAbFcueP4fqH4KJY1QBzbxoB9OJ46157SgoL2QU8wTVPyowXv?=
+ =?us-ascii?Q?TQQ3YklRwYYjA4X2/qG2doRqorwjEBXgT0PSTONOzE057I7YNn5qMlKc5zLI?=
+ =?us-ascii?Q?F/jSeMSqqp1I8zsRNcm3nd1OLA9chNQH7DBiuXs5?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 09e2dd07-821f-45f5-f948-08dd97afb86b
+X-MS-Exchange-CrossTenant-Network-Message-Id: b14d8ea1-1325-4aac-c974-08dd97afa4e7
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 15:05:12.6894 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 15:04:39.9591 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OkncICB7EfNFWRrXmjdzyohdSQxdY+BYkIrnncTqeYvzHEqqP1eSxyaL3VBO21ZCXDtojyj1sq2+ezuT16acQA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 51ee28L3tOHyrSVGJ8VHr1J3Od2PZJbM93Shz8vTaXeg/MSG4LZSvKKdLcQgS2Wjovva6MalnzEqyeIMSPEZMA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR02MB8462
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDEyMiBTYWx0ZWRfX/+E70JjwwciH
- hJlvsD+cS4Lss+gsNuF9NQQrJPqcaC9BIo+iQy0rumtMPUbyA5AYt6WIxCu1WB1AVA4VlR5exRi
- 8wJ7dl5HzEdHn+GtGAAt3ax9+C4sv5tPG76yiZkdb8na3Bq+qFv2zd3ckw7Qw5hrriELLlp70vk
- /BpBuWSnWm3I7RHTrecbWZHa/ewjChHk4BKeATDX29XmsUDd7Pw6wRGlq1nwY+3k/9C2k3eEsM8
- azG52eMIVrTNgAj+ATlHw/6hHKvFE6CMzoN2VXue0X0dwGCBAkQ2yqwWOpdLgSX1rbW+KH+9rWD
- 58GdzPf84gdMCMRd6vebQACmfpPTyrkxhD8GpotEgTGIquVcDJSitMvhOuLjIb9I5wExykXL9F8
- +4o8/i7sJwRtrcXUmLRbmSCRmF9JbDZjb6LXgY250Q8rXI1UC81wSko6EJfZSZ1oBGYZES2s
-X-Authority-Analysis: v=2.4 cv=T+SMT+KQ c=1 sm=1 tr=0 ts=682c9a2c cx=c_pps
- a=hHPfuxNGWHHq0fQgDGst2w==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+X-Proofpoint-GUID: yRPapSqIcVF35bCXkoZutB8GcBs-OhIg
+X-Authority-Analysis: v=2.4 cv=SoaQ6OO0 c=1 sm=1 tr=0 ts=682c9a0a cx=c_pps
+ a=XlWNgFwcAB8XWrBhwjv7Vg==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
  a=xqWC_Br6kY4A:10 a=dt9VzEwgFbYA:10
- a=0kUYKlekyDsA:10 a=yPCof4ZbAAAA:8 a=64Cc0HZtAAAA:8 a=uN1uQ0dK97G9gywtELIA:9
-X-Proofpoint-GUID: jC-gMajbju0LevC2RVRTRuVUBLhE7He4
-X-Proofpoint-ORIG-GUID: jC-gMajbju0LevC2RVRTRuVUBLhE7He4
+ a=0kUYKlekyDsA:10 a=yPCof4ZbAAAA:8 a=64Cc0HZtAAAA:8 a=_brLm_9mC3lTafiPIV8A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDEyMiBTYWx0ZWRfX4fCv7K2E6pHU
+ eiZR10fRgpVbiYTXmWu8ukw4gcIy9S87jobk+TsOLq7S5IJx4CKKYXSS0NhQyY/gbTqtqM9OIQ4
+ 9new8Q/lccPx36D5LRuHqRUt5tLalGt8TlNia3JgsuT59x/3bO5RQVUvkhcaXZ+SC1QLxCPM+Cs
+ TVHDea96En8GpgvUt+Iutf2Gy2PQwk0/XpEFa+mZkPLxUheDF1gBbjt+Omt54/5lcB106uEVkQY
+ eTZmdIREeY3D2nT6NlkcMj29HNdA4nDNRsXrhEvAOVDY5OFlUD9tl1nYxwODeb3Y4YsKv/wxJZq
+ hpQZ/vLO+HuV9UBWShh/M82mgLUub9kA7uWQq9UkEtsE5Ur5zRPnXjzPN0mo5amqMG9XlKb5qEX
+ qZ75i08ESgG9JoHsCkA1RjNp/XnfNMyyeXhEzXoQjEkrW42vbbuKq4nxv/tHIhpdGMMfEEIE
+X-Proofpoint-ORIG-GUID: yRPapSqIcVF35bCXkoZutB8GcBs-OhIg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-20_06,2025-05-20_01,2025-03-28_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
@@ -205,58 +205,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Re-use PCI setup functions from hw/vfio/pci.c to realize the vfio-user
-PCI device.
+If VFIO_IRQ_INFO_MASKABLE is set for VFIO_PCI_MSIX_IRQ_INDEX, record
+this in ->can_mask_msix, and use it to individually mask MSI-X
+interrupts as needed.
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio-user/pci.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ hw/vfio/pci.h                 |  1 +
+ include/hw/vfio/vfio-device.h |  2 ++
+ hw/vfio/device.c              | 26 +++++++++++++++++++
+ hw/vfio/pci.c                 | 47 ++++++++++++++++++++++++++++++-----
+ 4 files changed, 70 insertions(+), 6 deletions(-)
 
-diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index 3dfbc33c52..481c6cdef7 100644
---- a/hw/vfio-user/pci.c
-+++ b/hw/vfio-user/pci.c
-@@ -115,8 +115,36 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
-         goto error;
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 61fa385ddb..43c2d72b84 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -191,6 +191,7 @@ struct VFIOPCIDevice {
+     bool defer_kvm_irq_routing;
+     bool clear_parent_atomics_on_exit;
+     bool skip_vsc_check;
++    bool can_mask_msix;
+     VFIODisplay *dpy;
+     Notifier irqchip_change_notifier;
+ };
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 8bcb3c19f6..923f9cd116 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -133,7 +133,9 @@ struct VFIODeviceOps {
+     (ret < 0 ? strerror(-ret) : "short write")
+ 
+ void vfio_device_irq_disable(VFIODevice *vbasedev, int index);
++void vfio_device_irq_unmask_single(VFIODevice *vbasedev, int index, int irq);
+ void vfio_device_irq_unmask(VFIODevice *vbasedev, int index);
++void vfio_device_irq_mask_single(VFIODevice *vbasedev, int index, int irq);
+ void vfio_device_irq_mask(VFIODevice *vbasedev, int index);
+ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex,
+                                    int action, int fd, Error **errp);
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 9fba2c7272..d0068086ae 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -85,6 +85,19 @@ void vfio_device_irq_disable(VFIODevice *vbasedev, int index)
+     vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+ }
+ 
++void vfio_device_irq_unmask_single(VFIODevice *vbasedev, int index, int irq)
++{
++    struct vfio_irq_set irq_set = {
++        .argsz = sizeof(irq_set),
++        .flags = VFIO_IRQ_SET_DATA_NONE | VFIO_IRQ_SET_ACTION_UNMASK,
++        .index = index,
++        .start = irq,
++        .count = 1,
++    };
++
++    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
++}
++
+ void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
+ {
+     struct vfio_irq_set irq_set = {
+@@ -98,6 +111,19 @@ void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
+     vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+ }
+ 
++void vfio_device_irq_mask_single(VFIODevice *vbasedev, int index, int irq)
++{
++    struct vfio_irq_set irq_set = {
++        .argsz = sizeof(irq_set),
++        .flags = VFIO_IRQ_SET_DATA_NONE | VFIO_IRQ_SET_ACTION_MASK,
++        .index = index,
++        .start = irq,
++        .count = 1,
++    };
++
++    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
++}
++
+ void vfio_device_irq_mask(VFIODevice *vbasedev, int index)
+ {
+     struct vfio_irq_set irq_set = {
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 5159198bdb..ef38b4692a 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -535,6 +535,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+ {
+     VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
+     VFIOMSIVector *vector;
++    bool new_vec = false;
+     int ret;
+     bool resizing = !!(vdev->nr_vectors < nr + 1);
+ 
+@@ -549,6 +550,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+             error_report("vfio: Error: event_notifier_init failed");
+         }
+         vector->use = true;
++        new_vec = true;
+         msix_vector_use(pdev, nr);
      }
  
-+    if (!vfio_pci_populate_device(vdev, errp)) {
-+        goto error;
-+    }
-+
-+    if (!vfio_pci_config_setup(vdev, errp)) {
-+        goto error;
-+    }
-+
-+    /*
-+     * vfio_pci_config_setup will have registered the device's BARs
-+     * and setup any MSIX BARs, so errors after it succeeds must
-+     * use out_teardown
-+     */
-+
-+    if (!vfio_pci_add_capabilities(vdev, errp)) {
-+        goto out_teardown;
-+    }
-+
-+    if (!vfio_pci_interrupt_setup(vdev, errp)) {
-+        goto out_teardown;
-+    }
-+
-+    vfio_pci_register_err_notifier(vdev);
-+    vfio_pci_register_req_notifier(vdev);
-+
-     return;
+@@ -575,6 +577,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+                 kvm_irqchip_commit_route_changes(&vfio_route_change);
+                 vfio_connect_kvm_msi_virq(vector);
+             }
++            new_vec = true;
+         }
+     }
  
-+out_teardown:
-+    vfio_pci_teardown_msi(vdev);
-+    vfio_pci_bars_exit(vdev);
- error:
-     error_prepend(errp, VFIO_MSG_PREFIX, vdev->vbasedev.name);
- }
+@@ -584,6 +587,9 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+      * in use, so we shutdown and incrementally increase them as needed.
+      * nr_vectors represents the total number of vectors allocated.
+      *
++     * Otherwise, unmask the vector if the vector is already setup (and we can
++     * do so) or send the fd if not.
++     *
+      * When dynamic allocation is supported, let the host only allocate
+      * and enable a vector when it is in use in guest. nr_vectors represents
+      * the upper bound of vectors being enabled (but not all of the ranges
+@@ -594,13 +600,20 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+     }
+ 
+     if (!vdev->defer_kvm_irq_routing) {
+-        if (vdev->msix->noresize && resizing) {
+-            vfio_device_irq_disable(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX);
+-            ret = vfio_enable_vectors(vdev, true);
+-            if (ret) {
+-                error_report("vfio: failed to enable vectors, %s",
+-                             strerror(-ret));
++        if (resizing) {
++            if (vdev->msix->noresize) {
++                vfio_device_irq_disable(&vdev->vbasedev,
++                                        VFIO_PCI_MSIX_IRQ_INDEX);
++                ret = vfio_enable_vectors(vdev, true);
++                if (ret) {
++                    error_report("vfio: failed to enable vectors, %d", ret);
++                }
++            } else {
++                set_irq_signalling(&vdev->vbasedev, vector, nr);
+             }
++        } else if (vdev->can_mask_msix && !new_vec) {
++            vfio_device_irq_unmask_single(&vdev->vbasedev,
++                                          VFIO_PCI_MSIX_IRQ_INDEX, nr);
+         } else {
+             set_irq_signalling(&vdev->vbasedev, vector, nr);
+         }
+@@ -630,6 +643,13 @@ static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
+ 
+     trace_vfio_msix_vector_release(vdev->vbasedev.name, nr);
+ 
++    /* just mask vector if peer supports it */
++    if (vdev->can_mask_msix) {
++        vfio_device_irq_mask_single(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
++                                    nr);
++        return;
++    }
++
+     /*
+      * There are still old guests that mask and unmask vectors on every
+      * interrupt.  If we're using QEMU bypass with a KVM irqfd, leave all of
+@@ -702,6 +722,13 @@ static void vfio_msix_enable(VFIOPCIDevice *vdev)
+             error_report("vfio: failed to enable vectors, %s",
+                          strerror(-ret));
+         }
++    } else if (vdev->can_mask_msix) {
++        /*
++         * If we can use single irq masking, send an invalid fd on vector 0
++         * to enable MSI-X without any vectors enabled.
++         */
++        vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
++                                      0, VFIO_IRQ_SET_ACTION_TRIGGER, -1, NULL);
+     } else {
+         /*
+          * Some communication channels between VF & PF or PF & fw rely on the
+@@ -2842,6 +2869,14 @@ bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
+         }
+     }
+ 
++    ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
++                                   &irq_info);
++    if (ret == 0 && (irq_info.flags & VFIO_IRQ_INFO_MASKABLE)) {
++        vdev->can_mask_msix = true;
++    } else {
++        vdev->can_mask_msix = false;
++    }
++
+     ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_ERR_IRQ_INDEX, &irq_info);
+     if (ret) {
+         /* This can fail for an old kernel or legacy PCI dev */
 -- 
 2.43.0
 
