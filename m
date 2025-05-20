@@ -4,67 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8C0C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 22:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 760FDC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 22:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHVFH-0003nc-5X; Tue, 20 May 2025 18:15:35 -0400
+	id 1uHVLr-00059F-Iv; Tue, 20 May 2025 18:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uHVFB-0003n5-6U
- for qemu-devel@nongnu.org; Tue, 20 May 2025 18:15:31 -0400
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1uHVLk-00058E-SQ; Tue, 20 May 2025 18:22:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uHVF9-0002oR-9I
- for qemu-devel@nongnu.org; Tue, 20 May 2025 18:15:28 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 8F182A4EF30;
- Tue, 20 May 2025 22:15:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053FCC4CEE9;
- Tue, 20 May 2025 22:15:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1747779325;
- bh=OnLhcRcKcoGRHcnWVtpj15suTfJNLCJB8atjpoKvRtY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=ULZlo8TCg54cXgdIuYeQ39JB9VEWxX30P+VoqUVpV/T75W5glaed3xbq8hfN9kO9K
- KMK49HOiqE4OhYp2yYeCiAAza5O1ilNW4Nb6tGPyBlA+tKVkwA7Y286RIpTd37hFAk
- ziJW93YlzgDnQ2Gf6xg0qX2SsFkdNKCYryQmQxFU37SC0GkGK/OlbPwmbVN2XohmNG
- XqfPByfcsN0Z5cOQA2hE5+L8OWoZp9FMLgUTamFD7X7sffPtqbYfZ1SIVSyGpwslvH
- /CQwa1TUSTrKEB6PVexUNK3W1dgdpXPhbToATXE1uVJRVa+3nY+PBQTLs4nOW1IEyV
- M5hNgp2abajng==
-Date: Tue, 20 May 2025 22:15:23 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 17/25] target/i386/mshv: Implement
- mshv_get_special_regs()
-Message-ID: <aCz--ydgna-DkRuO@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-18-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1uHVLh-00042n-2C; Tue, 20 May 2025 18:22:16 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KIoiCc023106;
+ Tue, 20 May 2025 22:21:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=9p09lx
+ +xxbHsNO/bXtu8ToIhAFds31gXqfLJZrp+Zys=; b=clcib5BzFCwRIG9wOrbQ8d
+ TRGdg9JgaCPrXjOKZuI/CIVl1JTuitNpvGhd4suFFZW9F2/HJ4fgw8aH3mYY6BQB
+ ERk+jD5/btw91Tb/9q9cZndvO27ARrJwq5S5Xeije78Zmg+gf9QC3k5fA/3F2sLc
+ aG4jhx+Dv0w8E1Q3D6+4RMmTYU+a8yP9OUeqbrlaLmgWtV36LD3VJYXaE/46iFsW
+ ICLf4Q3TD/pPrimtQFtrxloweEeFtnutCsukHVaV1s+YKE55s/2btNKy/VYxsyIh
+ xfqifwAQtAD8ljriMgQEM8WGPLMzSV3txwaNnL3uiJtoyXO2WSe3UW1XmYntQ4uQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ryc88un0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 May 2025 22:21:43 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54KMLgQu007504;
+ Tue, 20 May 2025 22:21:42 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ryc88umv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 May 2025 22:21:42 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54KKOXi3031996;
+ Tue, 20 May 2025 22:21:41 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46rwmq192u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 May 2025 22:21:40 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54KMLepL29754034
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 May 2025 22:21:40 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DBC0B58058;
+ Tue, 20 May 2025 22:21:39 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E22B458059;
+ Tue, 20 May 2025 22:21:37 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 20 May 2025 22:21:37 +0000 (GMT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250520113018.49569-18-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=wei.liu@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Date: Tue, 20 May 2025 23:21:37 +0100
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>, Tyrone Ting
+ <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>, Kyle Evans
+ <kevans@freebsd.org>, Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Laurent Vivier
+ <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>, Harsh Prateek Bora
+ <harshpb@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>, Alexandre Iooss
+ <erdnaxe@crans.org>, Laurent Vivier <lvivier@redhat.com>, Daniel Henrique
+ Barboza <danielhb413@gmail.com>, Warner Losh <imp@bsdimp.com>, Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-ppc@nongnu.org, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-rust@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2 11/17] gdbstub: Try unlinking the unix socket before
+ binding
+In-Reply-To: <ee091002-a552-49fe-ae5e-8916937dba15@tls.msk.ru>
+References: <20250207153112.3939799-1-alex.bennee@linaro.org>
+ <20250207153112.3939799-12-alex.bennee@linaro.org>
+ <ee091002-a552-49fe-ae5e-8916937dba15@tls.msk.ru>
+Message-ID: <56e0a35b5c53b416db130c414cd0f3d6@linux.ibm.com>
+X-Sender: iii@linux.ibm.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=XaCJzJ55 c=1 sm=1 tr=0 ts=682d0077 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=dwixPFO5EDRWQakTH6kA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: QJsZVEz1xESpOME9ciwkwrUVa51ecEg8
+X-Proofpoint-ORIG-GUID: vjLgG9uT6KzjuiWAx3FmejLsrItBt8S7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDE3OSBTYWx0ZWRfX8YoPQ28a7zAS
+ CbItkAD0cvQsjLQmlffpmzla3j+JN2Vn2028nFIMAQT0COKRNgoAWu/ju0BZnDZFxWDqAfu8Iaj
+ cP3KlFb/TlArfEx2uVH93g8aS1g68STHinNeGAGvz3ky+3p78REG9tf6//EjMJVBwF1+N+FAJ07
+ 6DnkDviEHi7beZ9kVxfUv5OasyzWm3wg4+Fpi+6d8YQMPQJvBPgzuKwXtGefeFgmUUVmHP+pdp7
+ DMabT8ty6Xvbou658amxDMjxhKLDR05eKq1D4+xMexhQUXPOWiKaN8AfRLtwEVDmZmyfQYCnygC
+ /rZeZxpOndKHOJDhIT0D5lCos8KEhJwgD8CrZNhNbhIgNP8f2OwpXAnfTFRiua6etaVbQ7cw2Q8
+ 2HbLgjwbPhkjIQ1/1Jq7Whwqvj2+KNgZjxqYKBzClbAXBTsASQC/G05mZ2ar7EhnLSLl5GS2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-20_10,2025-05-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0
+ impostorscore=0 spamscore=0 clxscore=1011 mlxscore=0 lowpriorityscore=0
+ phishscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505200179
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,171 +144,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 01:30:10PM +0200, Magnus Kulke wrote:
-> Retrieve special registers (e.g. segment, control, and descriptor
-> table registers) from MSHV vCPUs.
+On 2025-05-20 15:50, Michael Tokarev wrote:
+> 07.02.2025 18:31, Alex Bennée wrote:
+>> From: Ilya Leoshkevich <iii@linux.ibm.com>
+>> 
+>> In case an emulated process execve()s another emulated process, bind()
+>> will fail, because the socket already exists. So try deleting it. Use
+>> the existing unix_listen() function which does this. Link qemu-user
+>> with qemu-sockets.c and add the monitor_get_fd() stub.
+>> 
+>> Note that it is not possible to handle this in do_execv(): deleting
+>> gdbserver_user_state.socket_path before safe_execve() is not correct,
+>> because the latter may fail, and afterwards we may lose control.
 > 
-> Various helper functions to map register state representations between
-> Qemu and MSHV are introduced.
+> Please note: this is linux-user stuff, which is usually linked 
+> statically.
+> By linking it with qemu-sockets, we basically broke static linking, 
+> because
+> qemu-sockets uses getaddrinfo() &Co.  The previous code, I think, was 
+> there
+> for a reason, - to avoid this linkage.
 > 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->  include/system/mshv.h       |   1 +
->  target/i386/mshv/mshv-cpu.c | 118 +++++++++++++++++++++++++++++++++++-
->  2 files changed, 117 insertions(+), 2 deletions(-)
+> How do you think about reverting this one and addressing the original
+> problem without using qemu-sockets?
 > 
-> diff --git a/include/system/mshv.h b/include/system/mshv.h
-> index 9b78b66a24..055489a6f3 100644
-> --- a/include/system/mshv.h
-> +++ b/include/system/mshv.h
-> @@ -109,6 +109,7 @@ void mshv_init_cpu_logic(void);
->  int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
->  void mshv_remove_vcpu(int vm_fd, int cpu_fd);
->  int mshv_get_standard_regs(CPUState *cpu);
-> +int mshv_get_special_regs(CPUState *cpu);
->  int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
->  int mshv_load_regs(CPUState *cpu);
->  int mshv_store_regs(CPUState *cpu);
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 41584c3f8e..979ee5b8c3 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -58,6 +58,27 @@ static enum hv_register_name STANDARD_REGISTER_NAMES[18] = {
->      HV_X64_REGISTER_RFLAGS,
->  };
->  
-> +static enum hv_register_name SPECIAL_REGISTER_NAMES[18] = {
-[...]
-> +    HV_REGISTER_PENDING_INTERRUPTION,
-
-Why do you think this is needed?
-
-> +};
-> +
->  static void add_cpu_guard(int cpu_fd)
->  {
->      QemuMutex *guard;
-> @@ -215,6 +236,94 @@ int mshv_get_standard_regs(CPUState *cpu)
->      return 0;
->  }
->  
-> +static void populate_segment_reg(const hv_x64_segment_register *hv_seg,
-> +                                 SegmentCache *seg)
-> +{
-> +    memset(seg, 0, sizeof(SegmentCache));
-> +
-> +    seg->base = hv_seg->base;
-> +    seg->limit = hv_seg->limit;
-> +    seg->selector = hv_seg->selector;
-> +
-> +    seg->flags = (hv_seg->segment_type << DESC_TYPE_SHIFT)
-> +                 | (hv_seg->present * DESC_P_MASK)
-> +                 | (hv_seg->descriptor_privilege_level << DESC_DPL_SHIFT)
-> +                 | (hv_seg->_default << DESC_B_SHIFT)
-> +                 | (hv_seg->non_system_segment * DESC_S_MASK)
-> +                 | (hv_seg->_long << DESC_L_SHIFT)
-> +                 | (hv_seg->granularity * DESC_G_MASK)
-> +                 | (hv_seg->available * DESC_AVL_MASK);
-> +
-> +}
-> +
-> +static void populate_table_reg(const hv_x64_table_register *hv_seg,
-> +                               SegmentCache *tbl)
-> +{
-> +    memset(tbl, 0, sizeof(SegmentCache));
-> +
-> +    tbl->base = hv_seg->base;
-> +    tbl->limit = hv_seg->limit;
-> +}
-> +
-> +static void populate_special_regs(const hv_register_assoc *assocs,
-> +                                  X86CPU *x86cpu)
-> +{
-> +    CPUX86State *env = &x86cpu->env;
-> +
-> +    populate_segment_reg(&assocs[0].value.segment, &env->segs[R_CS]);
-> +    populate_segment_reg(&assocs[1].value.segment, &env->segs[R_DS]);
-> +    populate_segment_reg(&assocs[2].value.segment, &env->segs[R_ES]);
-> +    populate_segment_reg(&assocs[3].value.segment, &env->segs[R_FS]);
-> +    populate_segment_reg(&assocs[4].value.segment, &env->segs[R_GS]);
-> +    populate_segment_reg(&assocs[5].value.segment, &env->segs[R_SS]);
-> +
-> +    /* TODO: should we set TR + LDT? */
-> +    /* populate_segment_reg(&assocs[6].value.segment, &regs->tr); */
-> +    /* populate_segment_reg(&assocs[7].value.segment, &regs->ldt); */
-> +
-> +    populate_table_reg(&assocs[8].value.table, &env->gdt);
-> +    populate_table_reg(&assocs[9].value.table, &env->idt);
-> +
-> +    env->cr[0] = assocs[10].value.reg64;
-> +    env->cr[2] = assocs[11].value.reg64;
-> +    env->cr[3] = assocs[12].value.reg64;
-> +    env->cr[4] = assocs[13].value.reg64;
-> +
-> +    cpu_set_apic_tpr(x86cpu->apic_state, assocs[14].value.reg64);
-> +    env->efer = assocs[15].value.reg64;
-> +    cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
-> +
-> +    /* TODO: should we set those? */
-> +    /* pending_reg = assocs[17].value.pending_interruption.as_uint64; */
-> +    /* populate_interrupt_bitmap(pending_reg, regs->interrupt_bitmap); */
-
-If QEMU never touches it, then there is no need to set it.
-
-> +}
-> +
-> +
-> +int mshv_get_special_regs(CPUState *cpu)
-> +{
-> +    size_t n_regs = sizeof(SPECIAL_REGISTER_NAMES) / sizeof(hv_register_name);
-> +    struct hv_register_assoc *assocs;
-> +    int ret;
-> +    X86CPU *x86cpu = X86_CPU(cpu);
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +
-> +    assocs = g_new0(hv_register_assoc, n_regs);
-> +    for (size_t i = 0; i < n_regs; i++) {
-> +        assocs[i].name = SPECIAL_REGISTER_NAMES[i];
-> +    }
-> +    ret = get_generic_regs(cpu_fd, assocs, n_regs);
-> +    if (ret < 0) {
-> +        error_report("failed to get special registers");
-> +        g_free(assocs);
-> +        return -errno;
-> +    }
-> +
-> +    populate_special_regs(assocs, x86cpu);
-> +
-> +    g_free(assocs);
-> +    return 0;
-> +}
-> +
->  int mshv_load_regs(CPUState *cpu)
->  {
->      int ret;
-> @@ -225,8 +334,13 @@ int mshv_load_regs(CPUState *cpu)
->          return -1;
->      }
->  
-> -	error_report("unimplemented");
-> -	abort();
-> +    ret = mshv_get_special_regs(cpu);
-> +    if (ret < 0) {
-> +        error_report("Failed to load special registers");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-
-Ah so you changed the code in this patch.
-
-Thanks,
-Wei.
-
->  }
->  
->  int mshv_arch_put_registers(const CPUState *cpu)
-> -- 
-> 2.34.1
+> Alternatively, it might be possible to split qemu-sockets.c into 
+> unix-related
+> stuff and generic stuff.
 > 
+> Thanks,
+> 
+> /mjt
+
+I can split it.
+
+However, wasn't it already broken in this regard?
+With fccb744f41c69fec6fd92225fe907c6e69de5d44^ I get:
+
+[2/2] Linking target qemu-s390x
+/usr/bin/ld: /usr/lib64/libglib-2.0.a(gutils.c.o): in function 
+`g_get_user_database_entry':
+(.text+0xeb): warning: Using 'getpwnam_r' in statically linked 
+applications requires at runtime the shared libraries from the glibc 
+version used for linking
+/usr/bin/ld: (.text+0x2be): warning: Using 'getpwuid' in statically 
+linked applications requires at runtime the shared libraries from the 
+glibc version used for linking
+/usr/bin/ld: (.text+0x134): warning: Using 'getpwuid_r' in statically 
+linked applications requires at runtime the shared libraries from the 
+glibc version used for linking
+
+This comes from glib, but the ultimate result is still the same.
+
+Also, what are the symptoms of the breakage? IIUC as long as execution
+does not reach getaddrinfo(), which it in this case should not, because
+it is used only on inet paths, there should not be any issues, right?
+
+In any case, the new warning is annoying and I better fix it for this
+reason alone.
 
