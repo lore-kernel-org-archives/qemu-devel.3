@@ -4,46 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0240CC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B85C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKGu-0003Xl-Od; Tue, 20 May 2025 06:32:33 -0400
+	id 1uHKDz-0004kw-0E; Tue, 20 May 2025 06:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uHKFK-0008N8-Uo; Tue, 20 May 2025 06:30:55 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uHKDv-0004hE-TS
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:29:28 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uHKFH-00054I-Bh; Tue, 20 May 2025 06:30:54 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 4937443B7B;
- Tue, 20 May 2025 12:30:24 +0200 (CEST)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, hreitz@redhat.com, stefanha@redhat.com,
- eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
- xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
- fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v2 15/24] block: move drain outside of bdrv_root_unref_child()
-Date: Tue, 20 May 2025 12:30:03 +0200
-Message-Id: <20250520103012.424311-16-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250520103012.424311-1-f.ebner@proxmox.com>
-References: <20250520103012.424311-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uHKDs-0004hJ-Il
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:29:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747736965; x=1779272965;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=xjsSyyH/vKZhnfoKeplftZcDafjUAYrMzMyTUKLznE8=;
+ b=lWmdQWxvxS+TbNqdDd11iSL0EkipB1RW9Yv7PAGFEbET1cgDaR1YL1uW
+ vdOqWowkihjlmj1o0fhbyT78CUMbrfYHMgcOGDEuiL6cMQn0jhHV1Sc3O
+ w8NV4q9gEWA8lgJpE7CXq2AF+NlIQHX0AstB2OnFV6BRZTTBVDXtfKPjD
+ Rlg8f2U2S+yjhyZifJAet0lRzyxoAkHHFacbJJb2tcvpFem0DisFh1A7L
+ 89Qf3KtMULRye6iQIQjd3H2O8VmYDpfRmeKtlpMGvNUFRTPA+glOVNm2l
+ fqg+Tp2Sofr3Zfu3MA9axJ20Mt7xfHN5DacnWLx0A9SwvE+wkyIOCLOdu A==;
+X-CSE-ConnectionGUID: pCEouSRHTJ6sup4l4SPq4Q==
+X-CSE-MsgGUID: qj+XW3upRUqc/LoZTa8C7A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11438"; a="49566661"
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="49566661"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2025 03:29:23 -0700
+X-CSE-ConnectionGUID: Lph/xiMcRAauSxFu6majOw==
+X-CSE-MsgGUID: gmuyuwicRxWHnua84DPXKA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="144905255"
+Received: from emr-bkc.sh.intel.com ([10.112.230.82])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2025 03:29:19 -0700
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Baolu Lu <baolu.lu@linux.intel.com>,
+ Gao Chao <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>,
+ Li Xiaoyao <xiaoyao.li@intel.com>
+Subject: [PATCH v5 05/10] ram-block-attribute: Introduce a helper to notify
+ shared/private state changes
+Date: Tue, 20 May 2025 18:28:45 +0800
+Message-ID: <20250520102856.132417-6-chenyi.qiang@intel.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250520102856.132417-1-chenyi.qiang@intel.com>
+References: <20250520102856.132417-1-chenyi.qiang@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.21;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,350 +91,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is part of resolving the deadlock mentioned in commit "block:
-move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
+A new state_change() helper is introduced for RamBlockAttribute
+to efficiently notify all registered RamDiscardListeners, including
+VFIO listeners, about memory conversion events in guest_memfd. The VFIO
+listener can dynamically DMA map/unmap shared pages based on conversion
+types:
+- For conversions from shared to private, the VFIO system ensures the
+  discarding of shared mapping from the IOMMU.
+- For conversions from private to shared, it triggers the population of
+  the shared mapping into the IOMMU.
 
-bdrv_root_unref_child() is called by:
-1. blk_remove_bs(), where a drained section is introduced.
-2. bdrv_unref_child(), which runs under the graph lock, so the drain
-   will be moved further up to its callers.
-3. block_job_remove_all_bdrv(), where a drained section is introduced.
+Currently, memory conversion failures cause QEMU to quit instead of
+resuming the guest or retrying the operation. It would be a future work
+to add more error handling or rollback mechanisms once conversion
+failures are allowed. For example, in-place conversion of guest_memfd
+could retry the unmap operation during the conversion from shared to
+private. However, for now, keep the complex error handling out of the
+picture as it is not required:
 
-For all callers of bdrv_unref_child() a drained section is introduced,
-they are not explicilty listed here. The caller quorum_del_child()
-holds the graph lock, so it is not actually allowed to drain. This
-will be addressed in the next commit.
+- If a conversion request is made for a page already in the desired
+  state, the helper simply returns success.
+- For requests involving a range partially in the desired state, there
+  is no such scenario in practice at present. Simply return error.
+- If a conversion request is declined by other systems, such as a
+  failure from VFIO during notify_to_populated(), the failure is
+  returned directly. As for notify_to_discard(), VFIO cannot fail
+  unmap/unpin, so no error is returned.
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Note that the bitmap status is updated before callbacks, allowing
+listeners to handle memory based on the latest status.
+
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
+Change in v5:
+    - Move the state_change() back to a helper instead of a callback of
+      the class since there's no child for the RamBlockAttributeClass.
+    - Remove the error handling and move them to an individual patch for
+      simple management.
+
+Changes in v4:
+    - Add the state_change() callback in PrivateSharedManagerClass
+      instead of the RamBlockAttribute.
+
+Changes in v3:
+    - Move the bitmap update before notifier callbacks.
+    - Call the notifier callbacks directly in notify_discard/populate()
+      with the expectation that the request memory range is in the
+      desired attribute.
+    - For the case that only partial range in the desire status, handle
+      the range with block_size granularity for ease of rollback
+      (https://lore.kernel.org/qemu-devel/812768d7-a02d-4b29-95f3-fb7a125cf54e@redhat.com/)
 
 Changes in v2:
-* Split up into smaller pieces, flesh out commit messages.
+    - Do the alignment changes due to the rename to MemoryAttributeManager
+    - Move the state_change() helper definition in this patch.
+---
+ include/system/ramblock.h    |   2 +
+ system/ram-block-attribute.c | 134 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 136 insertions(+)
 
- block.c                      |  6 ++++--
- block/blklogwrites.c         |  4 ++++
- block/blkverify.c            |  2 ++
- block/block-backend.c        |  2 ++
- block/qcow2.c                |  2 ++
- block/quorum.c               |  6 ++++++
- block/replication.c          |  2 ++
- block/snapshot.c             |  2 ++
- block/vmdk.c                 | 10 ++++++++++
- blockjob.c                   |  2 ++
- tests/unit/test-bdrv-drain.c |  2 ++
- 11 files changed, 38 insertions(+), 2 deletions(-)
-
-diff --git a/block.c b/block.c
-index b9de3a25cf..dfe665e457 100644
---- a/block.c
-+++ b/block.c
-@@ -1721,12 +1721,14 @@ bdrv_open_driver(BlockDriverState *bs, BlockDriver *drv, const char *node_name,
- open_failed:
-     bs->drv = NULL;
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index 09255e8495..270dffb2f3 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -108,6 +108,8 @@ struct RamBlockAttribute {
+     QLIST_HEAD(, RamDiscardListener) rdl_list;
+ };
  
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     if (bs->file != NULL) {
-         bdrv_unref_child(bs, bs->file);
-         assert(!bs->file);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
++int ram_block_attribute_state_change(RamBlockAttribute *attr, uint64_t offset,
++                                     uint64_t size, bool to_private);
+ RamBlockAttribute *ram_block_attribute_create(MemoryRegion *mr);
+ void ram_block_attribute_destroy(RamBlockAttribute *attr);
  
-     g_free(bs->opaque);
-     bs->opaque = NULL;
-@@ -3316,10 +3318,8 @@ void bdrv_root_unref_child(BdrvChild *child)
-          * When the parent requiring a non-default AioContext is removed, the
-          * node moves back to the main AioContext
-          */
--        bdrv_drain_all_begin();
-         bdrv_try_change_aio_context_locked(child_bs, qemu_get_aio_context(),
-                                            NULL, NULL);
--        bdrv_drain_all_end();
-     }
+diff --git a/system/ram-block-attribute.c b/system/ram-block-attribute.c
+index 8d4a24738c..f12dd4b881 100644
+--- a/system/ram-block-attribute.c
++++ b/system/ram-block-attribute.c
+@@ -253,6 +253,140 @@ ram_block_attribute_rdm_replay_discard(const RamDiscardManager *rdm,
+                                             ram_block_attribute_rdm_replay_cb);
+ }
  
-     bdrv_schedule_unref(child_bs);
-@@ -5163,6 +5163,7 @@ static void bdrv_close(BlockDriverState *bs)
-         bs->drv = NULL;
-     }
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     QLIST_FOREACH_SAFE(child, &bs->children, next, next) {
-         bdrv_unref_child(bs, child);
-@@ -5171,6 +5172,7 @@ static void bdrv_close(BlockDriverState *bs)
-     assert(!bs->backing);
-     assert(!bs->file);
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     g_free(bs->opaque);
-     bs->opaque = NULL;
-diff --git a/block/blklogwrites.c b/block/blklogwrites.c
-index b0f78c4bc7..70ac76f401 100644
---- a/block/blklogwrites.c
-+++ b/block/blklogwrites.c
-@@ -281,9 +281,11 @@ static int blk_log_writes_open(BlockDriverState *bs, QDict *options, int flags,
-     ret = 0;
- fail_log:
-     if (ret < 0) {
-+        bdrv_drain_all_begin();
-         bdrv_graph_wrlock();
-         bdrv_unref_child(bs, s->log_file);
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
-         s->log_file = NULL;
-         qemu_mutex_destroy(&s->mutex);
-     }
-@@ -296,10 +298,12 @@ static void blk_log_writes_close(BlockDriverState *bs)
++static bool ram_block_attribute_is_valid_range(RamBlockAttribute *attr,
++                                               uint64_t offset, uint64_t size)
++{
++    MemoryRegion *mr = attr->mr;
++
++    g_assert(mr);
++
++    uint64_t region_size = memory_region_size(mr);
++    int block_size = ram_block_attribute_get_block_size(attr);
++
++    if (!QEMU_IS_ALIGNED(offset, block_size)) {
++        return false;
++    }
++    if (offset + size < offset || !size) {
++        return false;
++    }
++    if (offset >= region_size || offset + size > region_size) {
++        return false;
++    }
++    return true;
++}
++
++static void ram_block_attribute_notify_to_discard(RamBlockAttribute *attr,
++                                                  uint64_t offset,
++                                                  uint64_t size)
++{
++    RamDiscardListener *rdl;
++
++    QLIST_FOREACH(rdl, &attr->rdl_list, next) {
++        MemoryRegionSection tmp = *rdl->section;
++
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
++            continue;
++        }
++        rdl->notify_discard(rdl, &tmp);
++    }
++}
++
++static int
++ram_block_attribute_notify_to_populated(RamBlockAttribute *attr,
++                                        uint64_t offset, uint64_t size)
++{
++    RamDiscardListener *rdl;
++    int ret = 0;
++
++    QLIST_FOREACH(rdl, &attr->rdl_list, next) {
++        MemoryRegionSection tmp = *rdl->section;
++
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
++            continue;
++        }
++        ret = rdl->notify_populate(rdl, &tmp);
++        if (ret) {
++            break;
++        }
++    }
++
++    return ret;
++}
++
++static bool ram_block_attribute_is_range_populated(RamBlockAttribute *attr,
++                                                   uint64_t offset,
++                                                   uint64_t size)
++{
++    const int block_size = ram_block_attribute_get_block_size(attr);
++    const unsigned long first_bit = offset / block_size;
++    const unsigned long last_bit = first_bit + (size / block_size) - 1;
++    unsigned long found_bit;
++
++    /* We fake a shorter bitmap to avoid searching too far. */
++    found_bit = find_next_zero_bit(attr->bitmap, last_bit + 1,
++                                   first_bit);
++    return found_bit > last_bit;
++}
++
++static bool
++ram_block_attribute_is_range_discard(RamBlockAttribute *attr,
++                                     uint64_t offset, uint64_t size)
++{
++    const int block_size = ram_block_attribute_get_block_size(attr);
++    const unsigned long first_bit = offset / block_size;
++    const unsigned long last_bit = first_bit + (size / block_size) - 1;
++    unsigned long found_bit;
++
++    /* We fake a shorter bitmap to avoid searching too far. */
++    found_bit = find_next_bit(attr->bitmap, last_bit + 1, first_bit);
++    return found_bit > last_bit;
++}
++
++int ram_block_attribute_state_change(RamBlockAttribute *attr, uint64_t offset,
++                                     uint64_t size, bool to_private)
++{
++    const int block_size = ram_block_attribute_get_block_size(attr);
++    const unsigned long first_bit = offset / block_size;
++    const unsigned long nbits = size / block_size;
++    int ret = 0;
++
++    if (!ram_block_attribute_is_valid_range(attr, offset, size)) {
++        error_report("%s, invalid range: offset 0x%lx, size 0x%lx",
++                     __func__, offset, size);
++        return -1;
++    }
++
++    /* Already discard/populated */
++    if ((ram_block_attribute_is_range_discard(attr, offset, size) &&
++         to_private) ||
++        (ram_block_attribute_is_range_populated(attr, offset, size) &&
++         !to_private)) {
++        return 0;
++    }
++
++    /* Unexpected mixture */
++    if ((!ram_block_attribute_is_range_populated(attr, offset, size) &&
++         to_private) ||
++        (!ram_block_attribute_is_range_discard(attr, offset, size) &&
++         !to_private)) {
++        error_report("%s, the range is not all in the desired state: "
++                     "(offset 0x%lx, size 0x%lx), %s",
++                     __func__, offset, size,
++                     to_private ? "private" : "shared");
++        return -1;
++    }
++
++    if (to_private) {
++        bitmap_clear(attr->bitmap, first_bit, nbits);
++        ram_block_attribute_notify_to_discard(attr, offset, size);
++    } else {
++        bitmap_set(attr->bitmap, first_bit, nbits);
++        ret = ram_block_attribute_notify_to_populated(attr, offset, size);
++    }
++
++    return ret;
++}
++
+ RamBlockAttribute *ram_block_attribute_create(MemoryRegion *mr)
  {
-     BDRVBlkLogWritesState *s = bs->opaque;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     bdrv_unref_child(bs, s->log_file);
-     s->log_file = NULL;
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
-     qemu_mutex_destroy(&s->mutex);
- }
- 
-diff --git a/block/blkverify.c b/block/blkverify.c
-index db79a36681..3a71f7498c 100644
---- a/block/blkverify.c
-+++ b/block/blkverify.c
-@@ -151,10 +151,12 @@ static void blkverify_close(BlockDriverState *bs)
- {
-     BDRVBlkverifyState *s = bs->opaque;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     bdrv_unref_child(bs, s->test_file);
-     s->test_file = NULL;
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- }
- 
- static int64_t coroutine_fn GRAPH_RDLOCK
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 24cae3cb55..68209bb2f7 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -889,9 +889,11 @@ void blk_remove_bs(BlockBackend *blk)
-     root = blk->root;
-     blk->root = NULL;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     bdrv_root_unref_child(root);
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- }
- 
- /*
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 66fba89b41..420918b3c3 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -2821,9 +2821,11 @@ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
-     if (close_data_file && has_data_file(bs)) {
-         GLOBAL_STATE_CODE();
-         bdrv_graph_rdunlock_main_loop();
-+        bdrv_drain_all_begin();
-         bdrv_graph_wrlock();
-         bdrv_unref_child(bs, s->data_file);
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
-         s->data_file = NULL;
-         bdrv_graph_rdlock_main_loop();
-     }
-diff --git a/block/quorum.c b/block/quorum.c
-index ed8ce801ee..81407a38ee 100644
---- a/block/quorum.c
-+++ b/block/quorum.c
-@@ -1037,6 +1037,7 @@ static int quorum_open(BlockDriverState *bs, QDict *options, int flags,
- 
- close_exit:
-     /* cleanup on error */
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     for (i = 0; i < s->num_children; i++) {
-         if (!opened[i]) {
-@@ -1045,6 +1046,7 @@ close_exit:
-         bdrv_unref_child(bs, s->children[i]);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
-     g_free(s->children);
-     g_free(opened);
- exit:
-@@ -1057,11 +1059,13 @@ static void quorum_close(BlockDriverState *bs)
-     BDRVQuorumState *s = bs->opaque;
-     int i;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     for (i = 0; i < s->num_children; i++) {
-         bdrv_unref_child(bs, s->children[i]);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     g_free(s->children);
- }
-@@ -1143,7 +1147,9 @@ quorum_del_child(BlockDriverState *bs, BdrvChild *child, Error **errp)
-             (s->num_children - i - 1) * sizeof(BdrvChild *));
-     s->children = g_renew(BdrvChild *, s->children, --s->num_children);
- 
-+    bdrv_drain_all_begin();
-     bdrv_unref_child(bs, child);
-+    bdrv_drain_all_end();
- 
-     quorum_refresh_flags(bs);
- }
-diff --git a/block/replication.c b/block/replication.c
-index 54cbd03e00..0879718854 100644
---- a/block/replication.c
-+++ b/block/replication.c
-@@ -656,12 +656,14 @@ static void replication_done(void *opaque, int ret)
-     if (ret == 0) {
-         s->stage = BLOCK_REPLICATION_DONE;
- 
-+        bdrv_drain_all_begin();
-         bdrv_graph_wrlock();
-         bdrv_unref_child(bs, s->secondary_disk);
-         s->secondary_disk = NULL;
-         bdrv_unref_child(bs, s->hidden_disk);
-         s->hidden_disk = NULL;
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
- 
-         s->error = 0;
-     } else {
-diff --git a/block/snapshot.c b/block/snapshot.c
-index 9f300a78bd..28c9c43621 100644
---- a/block/snapshot.c
-+++ b/block/snapshot.c
-@@ -291,9 +291,11 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
-         }
- 
-         /* .bdrv_open() will re-attach it */
-+        bdrv_drain_all_begin();
-         bdrv_graph_wrlock();
-         bdrv_unref_child(bs, fallback);
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
- 
-         ret = bdrv_snapshot_goto(fallback_bs, snapshot_id, errp);
-         memset(bs->opaque, 0, drv->instance_size);
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 9c7ab037e1..89a7250120 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -271,6 +271,7 @@ static void vmdk_free_extents(BlockDriverState *bs)
-     BDRVVmdkState *s = bs->opaque;
-     VmdkExtent *e;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     for (i = 0; i < s->num_extents; i++) {
-         e = &s->extents[i];
-@@ -283,6 +284,7 @@ static void vmdk_free_extents(BlockDriverState *bs)
-         }
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     g_free(s->extents);
- }
-@@ -1247,9 +1249,11 @@ vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-                             0, 0, 0, 0, 0, &extent, errp);
-             if (ret < 0) {
-                 bdrv_graph_rdunlock_main_loop();
-+                bdrv_drain_all_begin();
-                 bdrv_graph_wrlock();
-                 bdrv_unref_child(bs, extent_file);
-                 bdrv_graph_wrunlock();
-+                bdrv_drain_all_end();
-                 bdrv_graph_rdlock_main_loop();
-                 goto out;
-             }
-@@ -1266,9 +1270,11 @@ vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-             g_free(buf);
-             if (ret) {
-                 bdrv_graph_rdunlock_main_loop();
-+                bdrv_drain_all_begin();
-                 bdrv_graph_wrlock();
-                 bdrv_unref_child(bs, extent_file);
-                 bdrv_graph_wrunlock();
-+                bdrv_drain_all_end();
-                 bdrv_graph_rdlock_main_loop();
-                 goto out;
-             }
-@@ -1277,9 +1283,11 @@ vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-             ret = vmdk_open_se_sparse(bs, extent_file, bs->open_flags, errp);
-             if (ret) {
-                 bdrv_graph_rdunlock_main_loop();
-+                bdrv_drain_all_begin();
-                 bdrv_graph_wrlock();
-                 bdrv_unref_child(bs, extent_file);
-                 bdrv_graph_wrunlock();
-+                bdrv_drain_all_end();
-                 bdrv_graph_rdlock_main_loop();
-                 goto out;
-             }
-@@ -1287,9 +1295,11 @@ vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-         } else {
-             error_setg(errp, "Unsupported extent type '%s'", type);
-             bdrv_graph_rdunlock_main_loop();
-+            bdrv_drain_all_begin();
-             bdrv_graph_wrlock();
-             bdrv_unref_child(bs, extent_file);
-             bdrv_graph_wrunlock();
-+            bdrv_drain_all_end();
-             bdrv_graph_rdlock_main_loop();
-             ret = -ENOTSUP;
-             goto out;
-diff --git a/blockjob.c b/blockjob.c
-index 44991e3ff7..e68181a35b 100644
---- a/blockjob.c
-+++ b/blockjob.c
-@@ -198,6 +198,7 @@ void block_job_remove_all_bdrv(BlockJob *job)
-      * one to make sure that such a concurrent access does not attempt
-      * to process an already freed BdrvChild.
-      */
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     while (job->nodes) {
-         GSList *l = job->nodes;
-@@ -211,6 +212,7 @@ void block_job_remove_all_bdrv(BlockJob *job)
-         g_slist_free_1(l);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- }
- 
- bool block_job_has_bdrv(BlockJob *job, BlockDriverState *bs)
-diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index ac76525e5a..c33f7d31c2 100644
---- a/tests/unit/test-bdrv-drain.c
-+++ b/tests/unit/test-bdrv-drain.c
-@@ -955,11 +955,13 @@ static void bdrv_test_top_close(BlockDriverState *bs)
- {
-     BdrvChild *c, *next_c;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     QLIST_FOREACH_SAFE(c, &bs->children, next, next_c) {
-         bdrv_unref_child(bs, c);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- }
- 
- static int coroutine_fn GRAPH_RDLOCK
+     uint64_t bitmap_size;
 -- 
-2.39.5
-
+2.43.5
 
 
