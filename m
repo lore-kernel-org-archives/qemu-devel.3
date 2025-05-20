@@ -4,127 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F123C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 17:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A0BC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 18:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHR4f-0003Lk-7t; Tue, 20 May 2025 13:48:21 -0400
+	id 1uHRO3-0006aM-LN; Tue, 20 May 2025 14:08:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
- id 1uHR4d-0003LT-Ny; Tue, 20 May 2025 13:48:19 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uHRO0-0006a0-45
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 14:08:20 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
- id 1uHR4b-0001cd-Nm; Tue, 20 May 2025 13:48:19 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a376da332aso1453591f8f.3; 
- Tue, 20 May 2025 10:48:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uHRNx-0005bT-Qi
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 14:08:19 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7376dd56f8fso6768008b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 11:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747763293; x=1748368093; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=qW9c+b+OrOEpHvGGv9lhdKGDzpzGTiljEXgJF63Hta8=;
- b=CQZj8jSJFyn7nwRLd1j8J/WIdlsmCaWb9VqgXyo9DiwiRa33/l1FGgekoAsqea745S
- vpQfNidBxAZymRD4ifAvJi4ctjv908jR49Y+jacoAm7+9/hqbP7llYWGeQ5mWjkjI8XR
- tBS51HoEKOfSu+wHPD/JtIZsLz+uZQj6MuBXrcy9uQZyXzimeErabV6AIf6tsOetxF4U
- n/yGS10WdbEjqXX2Stv6cuZ7qP1e7d07dHefP107FxHVnzcPLgKeiET9Hj9VnIxqarY+
- iu3yiaIHGTzTlXA8rwoNZipiLKfSn9yeZ1gpK9YyvLWv0RAHQCA9k0abD5U8MHdWGAMl
- o9nQ==
+ d=gmail.com; s=20230601; t=1747764496; x=1748369296; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FGZOIKDHXfmlCpUXnw2zM5I9TqK9NU7ayWgoiqsfGqQ=;
+ b=YV1khhwUxREK7GYQ6NxeN4e9hCMXarMwTFApUutns4ErtNQUJdzSu3pzrpyGWEWJcf
+ 3xdblpkOCaS/xuEb7HPWoyuuvTFaEek0E7f6FlBj7hf0AeyMQm5Z62JStfrqcTZtODZj
+ ZBNYLE/MziEhxWFYIwKu0sE1oBDecqaAfuT3CeYEZPZCtb9x42w/hCjzFWIrIx/rlBKy
+ 2VFZ1ULeBl/cJ6f6Bh18k4/6RzwqRQXZpe34Ab7uKchRNizfPd0SOWNcvS8rNsVYTzoF
+ nU0WE1t6zQtOSjLpxJyvUYlh8aoL9x5krYjEN5vIwctzOCGlw6PIwQYWnm/RXBW7wUnn
+ 7DbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747763293; x=1748368093;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1747764496; x=1748369296;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qW9c+b+OrOEpHvGGv9lhdKGDzpzGTiljEXgJF63Hta8=;
- b=uO7Z28fxkvi5+2su2WzPTpn0gT41nH7HSx4CgmDt1mGK0IGVUCTDI41rKO5RNL3U3T
- XhmS5vTGaj3iNLHUxCAPUw2WS2L8wjDjGxoPBWgkqaeh1R4lBO9hqGx+1IBj3hHMEXsh
- k/vkrEX8r8IfMcIM6uEzH6Nb6OMmfRam1ITIR/zOp2jP/WdQO5GwC1PcYpB/uinjzfZL
- /sqK0Qm8+6m4pbyif0uFFhxdDiqhAxBSGzVBX0JV9Yc4qUERMtoxxp7qxwA/MzeDPy85
- jFNgxgJJ0CX/BDxOEL0LszTaSvmupl3PiUTLOA8+APoon+4bYi8VV5fgH9FSTokjB7T5
- txXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIORKLOPogRUkHoT1slIb6BGQ4BLIY8O1MdmalKgmsbQosxDdZSQhPgcKkW7frvQ9nqY9Ubo5U+Jw=@nongnu.org
-X-Gm-Message-State: AOJu0YyRsz14hLyW0ndrLjSHbVEVm2uR/U0JTubgGkW3EC7pdDSS5UXg
- jK/lMDc/3T30x2icsdVC5u+LH3DGosadIPAhCXcvjjO256yYxGEkxw0a
-X-Gm-Gg: ASbGncu67RFa6MV2uOMGyj/2Kvq0eMbFFhA3NdGdGpQXmm6u9WyXUJwTP2X+dvwms+D
- tn+dGReV8U/xfxB2jmt0EhIsyAKmaoajFExYr9gaco8d9J8xY5QB7Zd2qY1+gMvk/GrtZHXapv1
- wnBh5CV3rVoP0h/gbloasbTuH3LeJ3ZbNBzuXmYCH6ZS3QQk5bRQR/S9QxQM32D0hc6nGs0DpM1
- oGUxdy8mTHf6alYsqrOXMuC6iDtFJaArGLY2BNXtq8wEtcybordxMZpLdnRKoA6AEyoGDvIGZ5u
- NO/BpjpwUBN60/BghfYxgymi0zfb8AJH5njaeA8JwRfOiIUO
-X-Google-Smtp-Source: AGHT+IG0/X4Yg3WxaECijxJHiuWhchwbgduzC6f0Lf4V4/1UcEsDtlKc0RwCDrfzvZuvRV24dfBRvw==
-X-Received: by 2002:a5d:5848:0:b0:3a1:4343:f834 with SMTP id
- ffacd0b85a97d-3a35fe5c5e9mr16600800f8f.2.1747763293104; 
- Tue, 20 May 2025 10:48:13 -0700 (PDT)
-Received: from [192.168.10.81] ([151.95.46.79])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3a36835ef41sm12916814f8f.94.2025.05.20.10.48.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 10:48:12 -0700 (PDT)
-Message-ID: <abe683f2-e679-4579-b68a-38a11d41e00b@gnu.org>
-Date: Tue, 20 May 2025 19:48:11 +0200
+ bh=FGZOIKDHXfmlCpUXnw2zM5I9TqK9NU7ayWgoiqsfGqQ=;
+ b=jrr2ETH8BrfsgGUiWsJV0Rt/CdHUcQaBuJ8iZAyHQOQq75TKCxYOjORroFdyJy07I4
+ oRzoqsdUL54a/1TTyG/WXsM37o9GQ2aYzvHY7RrxPJ3FCqgTkGWvJcni73lYObV01qm1
+ V9Tbpy+eGjJWrebH0Gx8nPnz5uSVT05XwnzzDWBkoYmCVzxd6M6ulq5KOWl6CaHJhDIf
+ IFDbO02aSdJr8x9PkqsOScYwUtfIGbtHvwmKPtsA5aIYUA8fuVG1gSiyVkoSTpvkNm9E
+ 8/jOv1iC2KH3y2R7c7OQCovcIEJ5Peqx6oiOMcdV60mgdnGqMDzfiU4CMS4mnLEGA3KF
+ +hbA==
+X-Gm-Message-State: AOJu0YxUlMBr71MghLWx/M/gE94jSBojhF9tV055cdnpQJzcxFSae5lH
+ /cWEPbfpujGEhulXpntA1rZBldWzoS1JRECKclDuG5z6yTjPVqgcpWly
+X-Gm-Gg: ASbGnctBTGG8nl28Q0S3qHZsclMMpUyyLeP8YZLWUG0VeC26I2rXPInXGXfzUXV438V
+ dwE838I1KXRRrdV6CsLlNbj3YBDZel6qrmGaOtRhrWpEvkcZnHMKu+6nE32FX6a8Uzjul4Ngk2K
+ M8fPyw59PpGNbfgGj+wzpornjUPQ9wxSez8jyWld0LFZuleqdA5EZUpybk+p4QpGNrD4DKiHWQO
+ Oxh2lJRclJPeu5AbNhN5jL7FjavNOFSKNUo0uTGg9maqGpGa/Y+/yENDHiBONG7i6sHzE6lJqAz
+ YRAQihzW4Ex5ipQzVB/G2KgtXBrjdOGs+pcrHSIx2g==
+X-Google-Smtp-Source: AGHT+IEjlGtC8XDja5CbbL/XfYOy/ih8P9vPo+gLIc2jmZoqHOefGAxAqq0KsiPIy8MhoVCWrlSxjg==
+X-Received: by 2002:a05:6a20:3d12:b0:1f5:59e5:8ada with SMTP id
+ adf61e73a8af0-2162187a945mr24644341637.4.1747764496008; 
+ Tue, 20 May 2025 11:08:16 -0700 (PDT)
+Received: from lg ([2601:646:8f03:9fee:2c89:c0cf:1cbd:96d3])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b26eaf8ead7sm8292634a12.46.2025.05.20.11.08.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 11:08:15 -0700 (PDT)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Tue, 20 May 2025 11:08:13 -0700
+To: anisa.su887@gmail.com
+Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
+ dave@stgolabs.net, linux-cxl@vger.kernel.org,
+ Anisa Su <anisa.su@samsung.com>
+Subject: Re: [PATCH v2 09/10] cxl-mailbox-utils: 0x5604 - FMAPI Initiate DC Add
+Message-ID: <aCzFDaVWQoclyR0l@lg>
+References: <20250508001754.122180-1-anisa.su887@gmail.com>
+ <20250508001754.122180-10-anisa.su887@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Rust in QEMU update, April 2025
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Daniel Berrange <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
- <aCysct2L8Bosqy0N@intel.com>
-From: Paolo Bonzini <bonzini@gnu.org>
-Content-Language: en-US
-Autocrypt: addr=bonzini@gnu.org; keydata=
- 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
-In-Reply-To: <aCysct2L8Bosqy0N@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=paolo.bonzini@gmail.com; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250508001754.122180-10-anisa.su887@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -142,72 +101,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 18:23, Zhao Liu wrote:
->> HPET does some very simple memory accesses; a good safe solution
->> for this may be the ``vm-memory`` crate.  While I have not looked into
->> using it, ``vm-memory`` and ``vm-virtio`` were written with QEMU's
->> use cases in mind.
-> I'm working on this and trying to wrap simple memory access by
-> vm-memory.
+On Thu, May 08, 2025 at 12:01:05AM +0000, anisa.su887@gmail.com wrote:
+> From: Anisa Su <anisa.su@samsung.com>
+> 
+> FM DCD Management command 0x5604 implemented per CXL r3.2 Spec Section 7.6.7.6.5
+> 
 
-Ok.  Note that while the GuestAddressSpace corresponds QEMU's 
-AddressSpace (so far so good :)), QEMU's MemoryRegion is completely 
-unrelated to vm-memory's GuestMemoryRegion.  That's because vm-memory 
-only operates on an array of non-overlapping regions, like QEMU's 
-FlatRange or MemoryRegionSection structs.
+This patch needs to fix. See comments below.
+
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> ---
+>  hw/cxl/cxl-mailbox-utils.c   | 195 +++++++++++++++++++++++++++++++++++
+>  hw/mem/cxl_type3.c           |   8 +-
+>  include/hw/cxl/cxl_device.h  |   4 +
+>  include/hw/cxl/cxl_opcodes.h |   1 +
+>  4 files changed, 204 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index a897a34ef9..9b176dea08 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -3589,6 +3589,194 @@ static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> +static CXLRetCode cxl_mbox_dc_prescriptive_sanity_check(CXLType3Dev *dcd,
+> +                                                        uint16_t host_id,
+> +                                                        uint32_t ext_count,
+> +                                                        CXLDCExtentRaw extents[],
+> +                                                        CXLDCEventType type)
+> +{
+> +    CXLDCExtentRaw ext;
+> +    CXLDCRegion *reg = NULL;
+> +    int i, j;
+> +
+> +    if (host_id != 0) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    for (i = 0; i < ext_count; i++) {
+> +        ext = extents[i];
+> +
+> +        if (ext.len == 0) {
+> +            return CXL_MBOX_INVALID_EXTENT_LIST;
+> +        }
+> +
+> +        reg = cxl_find_dc_region(dcd, ext.start_dpa, ext.len);
+> +        if (!reg) {
+> +            return CXL_MBOX_INVALID_EXTENT_LIST;
+> +        }
+> +
+> +        if (ext.len % reg->block_size || ext.start_dpa % reg->block_size) {
+> +            return CXL_MBOX_INVALID_EXTENT_LIST;
+> +        }
+> +
+> +        /* Check requested extents do not overlap with each other. */
+> +        for (j = i + 1; j < ext_count; j++) {
+> +            if (ranges_overlap(ext.start_dpa, ext.len, extents[j].start_dpa,
+> +                               extents[j].len)) {
+> +                return CXL_MBOX_INVALID_EXTENT_LIST;
+> +            }
+> +        }
+> +
+> +        if (type == DC_EVENT_ADD_CAPACITY) {
+> +            /* Check requested extents do not overlap with pending extents. */
+> +            if (cxl_extent_groups_overlaps_dpa_range(&dcd->dc.extents_pending,
+> +                ext.start_dpa, ext.len)) {
+> +                return CXL_MBOX_INVALID_EXTENT_LIST;
+> +            }
+> +            /* Check requested extents do not overlap with existing extents. */
+> +            if (cxl_extents_overlaps_dpa_range(&dcd->dc.extents,
+> +                                               ext.start_dpa, ext.len)) {
+> +                return CXL_MBOX_INVALID_EXTENT_LIST;
+> +            }
+> +        }
+> +    }
+> +
+> +    return CXL_MBOX_SUCCESS;
+> +}
+
+Per the spec, we need to detect resource exhausted case.
+"The command shall fail with Resources Exhausted if the Extent List would cause the
+device to exceed its extent or tag tracking ability."
+
+We need to make sure the total number of extents does not exceed the max
+number of extents the device can maintain.
 
 
-The GuestMemory (GuestAddressSpace::M) corresponds to QEMU's FlatView. 
-Indeed the functions in the trait match with what you expect of a FlatView:
+> +
+> +static int cxl_mbox_get_pending_ext_count(CXLType3Dev *ct3d)
+> +{
+> +    CXLDCExtentGroup *group;
+> +    CXLDCExtentList *list;
+> +    CXLDCExtent *ent;
+> +    int count = 0;
+> +
+> +    QTAILQ_FOREACH(group, &ct3d->dc.extents_pending, node) {
+> +        list = &group->list;
+> +        QTAILQ_FOREACH(ent, list, node) {
+> +            count++;
+> +        }
+> +    }
+> +
+> +    return count;
+> +}
+> +
+> +static int cxl_mbox_get_accepted_ext_count(CXLType3Dev *ct3d)
+> +{
+> +    CXLDCExtent *ent;
+> +    int count = 0;
+> +
+> +    QTAILQ_FOREACH(ent, &ct3d->dc.extents, node) {
+> +        count++;
+> +    }
+> +
+> +    return count;
+> +}
+ct3d->total_extent_count is used to record number of accepted
+extents.
+So in below, the code logic is not correct.
+> +
+> +static void cxl_mbox_dc_add_to_pending(CXLType3Dev *ct3d,
+> +                                       uint32_t ext_count,
+> +                                       CXLDCExtentRaw extents[])
+> +{
+> +    CXLDCExtentGroup *group = NULL;
+> +    int i;
+> +
+> +    for (i = 0; i < ext_count; i++) {
+> +        group = cxl_insert_extent_to_extent_group(group,
+> +                                                  extents[i].start_dpa,
+> +                                                  extents[i].len,
+> +                                                  extents[i].tag,
+> +                                                  extents[i].shared_seq);
+> +    }
+> +
+> +    cxl_extent_group_list_insert_tail(&ct3d->dc.extents_pending, group);
+> +}
+> +
+> +static void cxl_mbox_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
+> +                                                         CXLDCEventType type,
+> +                                                         CXLDCExtentRaw extents[],
+> +                                                         uint32_t ext_count)
+> +{
+> +    CXLEventDynamicCapacity event_rec = {};
+> +    int i;
+> +
+> +    cxl_mbox_dc_event_create_record_hdr(ct3d, &event_rec.hdr);
+> +    event_rec.type = type;
+> +    event_rec.validity_flags = 1;
+> +    event_rec.host_id = 0;
+> +    event_rec.updated_region_id = 0;
+> +    event_rec.extents_avail = ct3d->dc.total_extent_count -
+> +                              cxl_mbox_get_accepted_ext_count(ct3d) -
+> +                              cxl_mbox_get_pending_ext_count(ct3d);
 
-     fn num_regions(&self) -> usize;
-     fn find_region(&self, addr: GuestAddress) -> Option<&Self::R>;
-     fn iter(&self) -> impl Iterator<Item = &Self::R>;
+This is not right.
 
-If the GuestMemory is a FlatView, the GuestAddressSpace::T, implements 
-Clone + Deref<Target = FlatView>.  It's not too hard to see that 
-GuestAddressSpace's memory() method must call 
-address_space_get_flatview() and the GuestAddressSpace::T's drop method 
-must call flatview_unref().  Let's call this (Rust-specific) struct 
-FlatViewRefGuard, or something like that.
+As I mentioned total_extent_count only accounts for accepted extents
+today.
+Also, max number of extents to track is hardcoded to
+CXL_NUM_EXTENTS_SUPPORTED.
+
+The value for the above shoud be consistent with what we return for
+command 5601h or 4800h.
+
+Based on the spec cxl r3.2 9.13.3.3 Extent list Tracking.
+We should take pending extents into account when considering the
+tracking ability. So after this series gets in, we need to fix
+"num_extents_available" field for 4800h.
+Or a easier way, take pending list counting into total_extent_count.
 
 
-Going back to the GuestMemoryRegion (<FlatView as GuestMemory>::R), it 
-could be either a QEMU FlatRange or a MemoryRegionSection.  Neither are 
-good options.  Without a MemoryRegionSection you can't support IOMMU 
-regions; but flatview_do_translate() returns the MemoryRegionSection by 
-value, and GuestMemory's
+Fan
+> +
+> +    for (i = 0; i < ext_count; i++) {
+> +        memcpy(&event_rec.dynamic_capacity_extent,
+> +               &extents[i],
+> +               sizeof(CXLDCExtentRaw));
+> +        event_rec.flags = 0;
+> +        if (i < ext_count - 1) {
+> +            /* Set "More" flag */
+> +            event_rec.flags |= BIT(0);
+> +        }
+> +
+> +        if (cxl_event_insert(&ct3d->cxl_dstate,
+> +                             CXL_EVENT_TYPE_DYNAMIC_CAP,
+> +                             (CXLEventRecordRaw *)&event_rec)) {
+> +            cxl_event_irq_assert(ct3d);
+> +        }
+> +    }
+> +}
+> +
+> +/* CXL r3.2 Section 7.6.7.6.5 Initiate Dynamic Capacity Add (Opcode 5604h) */
+> +static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
+> +                                         uint8_t *payload_in,
+> +                                         size_t len_in,
+> +                                         uint8_t *payload_out,
+> +                                         size_t *len_out,
+> +                                         CXLCCI *cci)
+> +{
+> +    struct {
+> +        uint16_t host_id;
+> +        uint8_t selection_policy;
+> +        uint8_t reg_num;
+> +        uint64_t length;
+> +        uint8_t tag[0x10];
+> +        uint32_t ext_count;
+> +        CXLDCExtentRaw extents[];
+> +    } QEMU_PACKED *in = (void *)payload_in;
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    int rc;
+> +
+> +    switch (in->selection_policy) {
+> +    case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE:
+> +        /* Adding extents exceeds device's extent tracking ability. */
+> +        if (in->ext_count + ct3d->dc.total_extent_count >
+> +            CXL_NUM_EXTENTS_SUPPORTED) {
+> +            return CXL_MBOX_RESOURCES_EXHAUSTED;
+> +        }
+> +        rc = cxl_mbox_dc_prescriptive_sanity_check(ct3d,
+> +                                                   in->host_id,
+> +                                                   in->ext_count,
+> +                                                   in->extents,
+> +                                                   DC_EVENT_ADD_CAPACITY);
+> +        if (rc) {
+> +            return rc;
+> +        }
+> +        cxl_mbox_dc_add_to_pending(ct3d, in->ext_count, in->extents);
+> +        cxl_mbox_create_dc_event_records_for_extents(ct3d,
+> +                                                     DC_EVENT_ADD_CAPACITY,
+> +                                                     in->extents,
+> +                                                     in->ext_count);
+> +
+> +        return CXL_MBOX_SUCCESS;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "CXL extent selection policy not supported.\n");
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+>  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+>          cmd_infostat_bg_op_abort, 0, 0 },
+> @@ -3724,6 +3912,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+>           CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+>      [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
+>          cmd_fm_get_dc_region_extent_list, 12, 0 },
+> +    [FMAPI_DCD_MGMT][INITIATE_DC_ADD] = { "INIT_DC_ADD",
+> +        cmd_fm_initiate_dc_add, ~0,
+> +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
+> +        CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
+> +        CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+> +        CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+> +        CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+>  };
+>  
+>  /*
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index edc29f1ccb..71fad3391c 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -1991,8 +1991,8 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+>   * the list.
+>   * Return value: return true if has overlaps; otherwise, return false
+>   */
+> -static bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> -                                           uint64_t dpa, uint64_t len)
+> +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> +                                    uint64_t dpa, uint64_t len)
+>  {
+>      CXLDCExtent *ent;
+>      Range range1, range2;
+> @@ -2037,8 +2037,8 @@ bool cxl_extents_contains_dpa_range(CXLDCExtentList *list,
+>      return false;
+>  }
+>  
+> -static bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> -                                                 uint64_t dpa, uint64_t len)
+> +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> +                                          uint64_t dpa, uint64_t len)
+>  {
+>      CXLDCExtentGroup *group;
+>  
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 22823e2054..93b6df0ccd 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -824,4 +824,8 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+>  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+>                               const QemuUUID *uuid, uint32_t flags,
+>                               uint8_t length, uint64_t timestamp);
+> +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> +                                    uint64_t dpa, uint64_t len);
+> +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> +                                          uint64_t dpa, uint64_t len);
+>  #endif
+> diff --git a/include/hw/cxl/cxl_opcodes.h b/include/hw/cxl/cxl_opcodes.h
+> index ad4e614daa..72ea0a7d44 100644
+> --- a/include/hw/cxl/cxl_opcodes.h
+> +++ b/include/hw/cxl/cxl_opcodes.h
+> @@ -66,5 +66,6 @@ enum {
+>          #define GET_HOST_DC_REGION_CONFIG 0x1
+>          #define SET_DC_REGION_CONFIG 0x2
+>          #define GET_DC_REGION_EXTENT_LIST 0x3
+> +        #define INITIATE_DC_ADD           0x4
+>      GLOBAL_MEMORY_ACCESS_EP_MGMT = 0X59
+>  };
+> -- 
+> 2.47.2
+> 
 
-     fn find_region(&self, addr: GuestAddress) -> Option<&Self::R>;
-
-wants a reference instead!
-
-Anyhow, all three types (AddressSpace, FlatView, FlatRange) are better 
-wrapped with Opaque.
-
-Looking more at FlatRange, these are easy:
-
-     // Required methods
-     fn len(&self) -> GuestUsize;
-     fn start_addr(&self) -> GuestAddress;
-
-But this one is another problem:
-
-     fn bitmap(&self) -> &Self::B;
-
-because it returns the "Bitmap" by reference.  QEMU's bitmap is a global 
-variable indexed by ram_addr_t.  It would be better if this was declared 
-like this:
-
-    fn bitmap(&'a self) ->
-       <Self::B as WithBitmapSlice<'a>>::S
-
-I have no idea if this can be changed in upstream vm-virtio.  For now 
-maybe you can leave it as ().  That's buggy but it's ok for a proof of 
-concept.
-
-So... not sure what to do there.  It seems like vm-memory is very close 
-to being usable by QEMU, but maybe not completely. :(
-
-Paolo
+-- 
+Fan Ni
 
