@@ -4,191 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97885C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F32FC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHK3t-0002cV-Oi; Tue, 20 May 2025 06:19:07 -0400
+	id 1uHKAH-0003h6-2F; Tue, 20 May 2025 06:25:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan.milon@eviden.com>)
- id 1uHK3g-0002bk-QU
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:18:56 -0400
-Received: from smarthost2.eviden.com ([80.78.11.83])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHKAE-0003gZ-1R
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:25:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan.milon@eviden.com>)
- id 1uHK3b-0002vs-2z
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:18:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1747736327; x=1779272327;
- h=from:to:subject:date:message-id:references:in-reply-to:
- content-id:content-transfer-encoding:mime-version;
- bh=PiDgrq4GP6eYtrwk8fbvDjL3pKjY9JhNmddJc4j2Wxc=;
- b=iHvKysZ8fD2lwpM+OKL/nlFwAqjmdTmbikamc//oQr/2uNh0sDi4Gw2v
- sAI7qTNd2V4iGoxt3Q/FbKqSCMomAyxFh2Xen7JS+1t+1DVKohh29J1se
- RDGNPSguaesJWBh1sNsa1irmRnQ6dOcJbrn1KMRSogy88EGPgRFQYP2ld
- NSA1z74jw7t0py57ybj5Yr0fJF9l+7TORFYl/929CCXiQSX/rIWomDIiv
- CjlJXPatxpnl/z2VDNhcjl2G1J6DoCkdreWc//MuPyAoY82mJlPnOwAxi
- p1DEEQbvYul/ZPjjwEhBDLhy8gt4iTS2qZ3fDYwdcmq6/cyyl/fdx3y2j g==;
-X-CSE-ConnectionGUID: qb2/aH35TJSoORTd/gU0/Q==
-X-CSE-MsgGUID: RCnoUJECSa6J8LQaKXJOYQ==
-X-IronPort-AV: E=Sophos;i="6.15,302,1739833200"; d="scan'208";a="37215759"
-X-MGA-submission: =?us-ascii?q?MDEXUsHUUvcnFryQaYSjV93aQVakbDye6Lk9zN?=
- =?us-ascii?q?kx+YqpsQhu727TbVQs5MaRCAfAdqCNf6AyAFrYGvh8BYGJGLtzuq1X9W?=
- =?us-ascii?q?QRGI/FpRKr/UP1iB1W2wMHhSDLGsanipGS7Es7txH8oc1vKqJegCag1b?=
- =?us-ascii?q?pY7LN6DDYrZjVXeHnk9ftpwQ=3D=3D?=
-Received: from mail-db5eur02on2077.outbound.protection.outlook.com (HELO
- EUR02-DB5-obe.outbound.protection.outlook.com) ([40.107.249.77])
- by smarthost2.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 20 May 2025 12:18:37 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CzZ/qWcp4U/j1SHou/XzTDNlKlHdiRyBiQhGmMUvNFiNkBF20XFkwY5gccTN6rIPU03oHXxKgHs2KPCc/IeyezdR+uYuESKOfmNfEdz3xZhJbSdkG0yQzOQUhrtr/IK4yNuxodMEoGZxr6vwiYeSMs9WPIHxCPnb1s7oqzC3ikhSAiLsCM1qG+h6Mze22ZXxsjeiMJ90oSxFhWoYNHFSDmELS02dBr/tvDOJzE5znKXVur2jsgWXRZr3lE+DS6z4PYUARALJOSZ/avjaOIEPtjav0B29SGJX90QI8R/Lw8MEKPS4pSVJ/Y/04bVXdg/ir5un1tAeqjGsLwtxqUOnpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PiDgrq4GP6eYtrwk8fbvDjL3pKjY9JhNmddJc4j2Wxc=;
- b=rAvl52xbtNju2Uj3G/sxeaLJ4gCVmhwkZcjov3W3FuWonljR3Izl8nt5R8TQVrqUAW5zd28TUAUrgQ42YcvCpazskIzgloL/mLSkiL1mul2bw4jobdmH4J9IVW6zs0lDwaQ68MVOB8ABIEdih29m/767ynSM19FQiJJVrDqok4shRQb6IxzX4oY2MmZ3Or8lxrrBWd5bgLMnqXSs4AClj09jyACYgbjwHiTP1dIubF9kyq2ffja9fof58mzDDUwKowv6rHbhShcMHgafAzRHO4hFKL31r2tIUERblYsOt5fhUvzbS82tMl+lJVBiIBikk7ROYHp+0hVWajDfTbEHYg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
- dkim=pass header.d=eviden.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PiDgrq4GP6eYtrwk8fbvDjL3pKjY9JhNmddJc4j2Wxc=;
- b=ME+ts/M15iXu9ZfejakR0tRURj5M3D2jGCvEm70YlyHiz+f62C5bHNNymwubQxVXWFLc/BaR2HB6UDnYrEpo+4e8E5bDScdxRISRVO2jnSgMTnXo27u3eFxx0/nVlwFNPppZXVE0AH+wJ8LGEZ2TdW2ZKBGOFkKBLl2AgGSPFf0tDwNeBeguPpdw2E+sz0dpsRpcQRBDxpXPaxsXKDM2qgPJMNVhtxr037R+GD7pB78FCkKytZYaIrTGtxFtK1jUe82paEeWzFDV3hI8Ry59GgOANzFTtdmfPneiQpgv8IkPpMTA3+/9srtVCjyvADH/jDeVn4eXKeOni1MR0t2zSQ==
-Received: from DU0PR07MB9114.eurprd07.prod.outlook.com (2603:10a6:10:406::7)
- by DB9PR07MB8958.eurprd07.prod.outlook.com (2603:10a6:10:3c6::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.31; Tue, 20 May
- 2025 10:18:34 +0000
-Received: from DU0PR07MB9114.eurprd07.prod.outlook.com
- ([fe80::cdae:718c:ad4a:7357]) by DU0PR07MB9114.eurprd07.prod.outlook.com
- ([fe80::cdae:718c:ad4a:7357%2]) with mapi id 15.20.8746.030; Tue, 20 May 2025
- 10:18:34 +0000
-From: Ethan MILON <ethan.milon@eviden.com>
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 05/20] amd_iommu: Add helper function to extract the DTE
-Thread-Topic: [PATCH v2 05/20] amd_iommu: Add helper function to extract the
- DTE
-Thread-Index: AQHbuwgx15evNiCIBkSORm+O8LSnhLPbaoYA
-Date: Tue, 20 May 2025 10:18:33 +0000
-Message-ID: <8e6cdfc0-2c6d-4785-ae49-d0b108e48923@eviden.com>
-References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
- <20250502021605.1795985-6-alejandro.j.jimenez@oracle.com>
-In-Reply-To: <20250502021605.1795985-6-alejandro.j.jimenez@oracle.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=eviden.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DU0PR07MB9114:EE_|DB9PR07MB8958:EE_
-x-ms-office365-filtering-correlation-id: e07afd9f-4e1a-40bb-9b92-08dd9787ad4c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?K3hXclZTOG5RZVVucklGVnhPZkU0bjFkTENVN2Y5UmRBRTN5TkFYRTZzcGt4?=
- =?utf-8?B?SkVvaWVXRGVLZWN5U3RKSXpnMzJ3alg1QU9ObkxYVGZINEFZY3pBcEd2RkFE?=
- =?utf-8?B?YlBsWjg5UXdpUFJlNkRPd2gwMGowMC9mY2crNHVaTWxVdWp1OHFrVmoranpw?=
- =?utf-8?B?aGxpYW5WWldTVTl5NlpOeHBod0ZZd3BMbll6NW5YU0NDV2VqRE1BUlJRL0Ux?=
- =?utf-8?B?UTJ4bWZxZU13S2pnQm9GTWdTaWlXQ0dUeGNkVlRML2cwcXhHOFp5WCtiRVFU?=
- =?utf-8?B?bVVsZEhtMGovbmpFa2FhUWlvYng4VVFsL1JYVWNZQmZwSm9iT0dOcENsZ3dD?=
- =?utf-8?B?ZXdrVVpjMmxtUmhIOUpBdVZXSjRTL0M0WStSMGpUNkhXcDByZk9KSDFST25z?=
- =?utf-8?B?TkNKOGQ1MVBkWU5iSHg5VDlpcFFxZ3Bzb3FPNlNzSHZVTXBLOFYrM3BvYVRV?=
- =?utf-8?B?VEdBdmlQRG52cjA1Z00rM3JqamZVelRiM2VEY0VVL29YM0JGL0VJOTI0TmpD?=
- =?utf-8?B?cTljQjlYNUd2Y3c0akpyR2FwbFRZZ3djY1Y0TmROREIzTVZMZ25KWWZlSVhr?=
- =?utf-8?B?TWJHa1V4SnVva3BSdGpsaGRLaEVmYktZeFdJQ2JUaGdsYTBrVlZMeHdGZjNq?=
- =?utf-8?B?WW05WFkzMkMvODI0T3o1dWEvMW03N3JYaDkwdXkwMFBCMTBxM1lra2dOSDdy?=
- =?utf-8?B?U2tiZlYwYWFuMTlHSzh5VVdESDdqYnZ3ZEhjTHh6RUNRSVVjZFgxL3U2cHU3?=
- =?utf-8?B?WXE2Nm4rZnljd2hKV3kvNVczZ3lhNGQ3OUQxbzN4NGMrNTRKZThMaVdDQnJX?=
- =?utf-8?B?ajV2M3dVZ0I3VUZjZXZsN3llKzFvdUFYT1UvRXBHdkJXSS9HWXpmOWk4NVUw?=
- =?utf-8?B?cWlmOUdJMzRiaVNEQ0trOGpoeWY3enRrWUVnLzRlMkVuQTVjcXUxN0tTREdN?=
- =?utf-8?B?QUJ3RThYVll4alp6QS9kSFNWdDhBOTNBWnRUK1d6ZGVpREZtYW91Yi9yaTFH?=
- =?utf-8?B?UGpHeVVHNEp6VkZjbDlJenV3YjQwcTU0Nk1zSmw3ekRvUm5aeUxCbGR3M05j?=
- =?utf-8?B?bS96ZDBOVzExMTFaUnpKaXdHMGdoZGR0SnhmWUFya3FOVzdDTlAyeG1Mc2dU?=
- =?utf-8?B?U2ZINThiWFYxU2VYZ3FlWmxXUmNLS3g1ZzNheWk4M2R5cWpHeHo5WUtvYWta?=
- =?utf-8?B?RXJqSXFMdVdlQ2VGVU9lZ2hoTWpNdHExcGxyVGhpbnRSV0N1NHBJallBNnV0?=
- =?utf-8?B?R29INjNvWTlTZ0lnTTd4cWJCeWQ5VWdXRyt0Q0p5dzlVN0FVQnJGYURnWEJ3?=
- =?utf-8?B?Um50OFBRZjZwYWdQU08vejJFeHVIOFpNdEorZzFqS1htUENLMjZQd0tLUTlE?=
- =?utf-8?B?N0p6SDFFQkg1dTB0M3ErZmhKN2psQkxwN0Y2OUpwVmYyek9ha09oUG5jbmVi?=
- =?utf-8?B?bFF4RHlSdlJ1eDFUWDN6VlpvTHFLZXJhelBacDFEUVVJN05QTGFYbE9idlJ4?=
- =?utf-8?B?Y2RpQS9sc0JQeDhtZFFjTUF3REx0QTZDTGo1Ym5JcDFmRzQxWld6S1ZYdlBB?=
- =?utf-8?B?czdDU0I0cjFDaTErTUMrYWR0ODltRXdOeGlwc2hrc2dndVIrV0N4cWtKSFZ0?=
- =?utf-8?B?SmhXZndocFkvTXpoYUtIYUdsQjd0aU9OS3hEQ1VCSUcwSnZFZ1dmWkYvTi96?=
- =?utf-8?B?dDBrcElDcDViMkFiNUIrbnRGN0N0Wkk3Kzd2NlpWbHNQdHNHc3lCZEZYSm5L?=
- =?utf-8?B?K3Q3ejh2U3QzZmc4TThYK0NMSlY1ZDFXNjZSL0d4Ym5EZHR5eSt5UzI0aHNn?=
- =?utf-8?B?aEVyNFpNUzVNQUFRbDNCN2NBVWpsTzRYWURHWDFCY1Y3SEhoclNuWG9WMS9O?=
- =?utf-8?B?L2ZHZFlQUEl4S1AvUUNLVHpkaldmbEFvS1Z0NEt4VjlRcnhPaWpMQXdrSnFr?=
- =?utf-8?B?L2pUMTF3Qjc0Wkg3ZzRGeUtPZXBYeVh3YUNzVWJEaDdRcmY2S0Q2QnZtcWdS?=
- =?utf-8?B?S1NOOUR0WU5nPT0=?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DU0PR07MB9114.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?am54WUdlMEFJWnNKN2h2dit2RWtPc2hOS2d4MVJHcjB6dkN1Sk9nNnNJbENK?=
- =?utf-8?B?bGdLWHdMWm41UFJ4L2VBMURScXhKM1JTcHkwdUx6WENzR2V3ekkvaC85aDda?=
- =?utf-8?B?UC8wa0IrdHpEbE92ZkRRb21UQW8vaEVydFA2YUQwQkM4YWE5cVYxYUsvNGN0?=
- =?utf-8?B?c2FGVHRsMDQwTGpNb3ZuYmlMdVdsRjJ0MDd0Zk5UT3I2SlI5WmdqazNUUmtP?=
- =?utf-8?B?cnpIMXJaR0I0dk9DcURIVWFOd1Vrem50ZXpwYTJtQjRzUldvRmJRZlRhZUp4?=
- =?utf-8?B?WGJoUWlhbm10UWcvK09mSVlncDB5dkNTT2RhYzVMeFIvejB1ajhLOWJpd3dm?=
- =?utf-8?B?U0tiSStEOGVUeUJacU4rYXBPY0FsU2ZqVDhCSktMeVFWRG4rVXF4V2p3UDVv?=
- =?utf-8?B?MzhGY0NpU0p0NmhUV2NDZ25HTHAyNG1Veld3dVh6RVRwYkpNOU1CcGxkSjk0?=
- =?utf-8?B?Q1k0bGpUejltU2YwUTZGSVhpWUFES1l0em5qVGFDdURYQWFvV2UwSWQ0dzFF?=
- =?utf-8?B?bDNJZzhXNkdvdXFlbDRuVnA0SVU3TnFTcVRROVlmc2M4WG43R2puU0NVc2tO?=
- =?utf-8?B?Yi9KdU1yMzJSRnU0N0J5enJqTzZCNTBsd2JUVkhJZGNZaDJEUDFkYTR1S2NG?=
- =?utf-8?B?amVNN24xUUI1cVFPditxbE5FYnk0b2xIRURBd2dqUUV6ZTRQMmVmWTNzRmhx?=
- =?utf-8?B?WFRQdUVxb1dRNTJzQ1RYamd6TjVxVlFnK29Kb3ZzWFNMQkh0cDkwUkh6d3ZC?=
- =?utf-8?B?c1NpLzZTZ1ovZGxtWGEzMFAyWXd1Z2s5cnpwODBVNTAvOGJQTXBSdFgrQS9X?=
- =?utf-8?B?ZThieXNVbXZOV2pJUG01V1hiT0VQUW1kQ2FMc3RXTEFLNU1yYnlRUGFIRldw?=
- =?utf-8?B?OVVuSUVhdzNaUHBzbCsvK1VxQ3RscEhtMkRrME1kSzdtbDJZcUNKbFRVZmlG?=
- =?utf-8?B?YjhybmI5TjIzd0NiTk4rZ1VSbVNwM1BxMmdDdDRmQmMvTi93Z09OcHN0QSsw?=
- =?utf-8?B?RklGdnd6SzhHSjR3OWtkVFMxeUhVRjNqbjEwWkd1V0xZUW83UVlKU05rNkg4?=
- =?utf-8?B?VTA2bjZJaWM2R1BPV1FkdWhBM1ZrR2ZlRmtwaE1KUElraDZpV2grTGI0bnVm?=
- =?utf-8?B?V0UvQ2c0c0NZc2pLTUxmVDNlM0FEWWhLRkxKVGszQk1TUVdBNzhMTlppbGxh?=
- =?utf-8?B?ZkhtdEpraFZka3BCZVFYd0Fma2ZpMW11UHN6OVo1a0J0Z3hQZHg5Rk5VSCsz?=
- =?utf-8?B?RjhNRTZESkw0ZzZPSmpGc01qbVFjRDc1Y0NJaGU3eHRwOVU4bFhBS3YzQmxS?=
- =?utf-8?B?V2Y4YkJ3NUJ3enpFZko0NFozSDdlemZuSytyR0tySUdicGZ1c3pCakliNGpl?=
- =?utf-8?B?dXRYb1NnR0xDdEk0REVSWjJtRzBVZEFDcVdJVWhPQTBLRkU1TE9PRlV2Y0t4?=
- =?utf-8?B?czhVYTMxM1NaeUtxUDdtMW5LWjRSdzRlYlp1N1lwWUlNQjJySUZ5Z0x3NTZk?=
- =?utf-8?B?TnVORk82NUQ0S1BYemJFWFpydFlOZTA4L1NFOHduTC9saWhmVWRMRUsxUmNL?=
- =?utf-8?B?b3NmOVF4UTZJaXkwSWdxV3J2ZUZCbXdVbDl4d1ZzQ1hJbFVHMzRvblMwalZj?=
- =?utf-8?B?dkFGWlR2L2pqZWM3WHFmSXMxZGNuSzNGRStyZ2t3bXRVOVkzU2tZd1pwNzZU?=
- =?utf-8?B?bzlPTjgxeWIrTWlJMit0RUJqNG5TSS9ONTIydlhOOUxWMEFsc0tKUlV1ZmZw?=
- =?utf-8?B?NHcxb205MFhscU9qazByc0xMdWZqYmc5Y0hGSEltSW5BdFZMTCtBWDlRWFUv?=
- =?utf-8?B?Q3pKWjJRQUE2NzBtZkcwS0VmUWJaUUJtcDFHQ2JnZ215bUt4aXJoZlQ5K2h6?=
- =?utf-8?B?Qm9WLzl1UmhUcFphc2xMUFJMMDdrSS9GWjhGL0ZKaVpWNnBoZVR5dmZZaTBJ?=
- =?utf-8?B?Q1VxMTZpTzZRNmFGUzNocHJBZHlrbmVRSjlSNEtlaUc3U3AxeDNyeDl1amN6?=
- =?utf-8?B?T3J1RlpVT2ZiT1RFY25vWVRUa1haV1dhdFFQQ3djN0pXeG5neit1amhBSGhG?=
- =?utf-8?B?ZWVMWXl5aXVITThxZTlyL1BnZUVOcytFYUlxcWg4QnI0bW83eE5QZGR0ZGRn?=
- =?utf-8?B?blNOdVk0bGdRZklZc3dmT1Y0dDFDcGZBWmZ1cEU1QlllZERjSTNkc3B4ZjlO?=
- =?utf-8?B?Wmc9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <7907DE94CBB0E6499FAB89946CDDB8CA@eurprd07.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHKA6-0004EZ-1V
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:25:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747736725;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Eanb8p9+Goxj8mt5y0Xn3fcuxtg4sDG3WvlGbqaREwU=;
+ b=RQAbtlz60Crk0qm9Fh2vvu2Cuqv8SNt7fPVZn+jKuSZqQfBnpWjckpqzP9C8UGc5zNR74h
+ Kw9rS6cUIu+seuxTvEUc7aG5Ft/1mbkDBrXDYzUtrJO34JF3W1jMjlJOt1J8MpYip6EdVB
+ DjYXk9JkE7FDJSd/vmXSwk2cojtK1J4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-121-lqOSs9nANP-WPUjDNHoQ7w-1; Tue, 20 May 2025 06:25:24 -0400
+X-MC-Unique: lqOSs9nANP-WPUjDNHoQ7w-1
+X-Mimecast-MFC-AGG-ID: lqOSs9nANP-WPUjDNHoQ7w_1747736723
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a364802ec5so905662f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 03:25:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747736723; x=1748341523;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Eanb8p9+Goxj8mt5y0Xn3fcuxtg4sDG3WvlGbqaREwU=;
+ b=glu53s8587DAtJWxz+m4UC2uXwuct/XYkLswP4hQgRWeXMT1Qg8t1Td/z/yFp+OkQs
+ gONKgZmQO02qckPSN2ZEEGwQh+c5nfDmiUVS9SIdwG8K5wjvASAJ+8tSozZKH6dwzvxf
+ ijTMQiEw2ew7oTDBhrzH7dVJpMfyZ/MHvMlg1QGcoox7xZeuigNV4GPiNtUK4hscGwuI
+ vwNHoJbmIUkr7uFCWfdRP9cGiWneSMciC5anvFPnmrXP+p79twvu5Trmkdzzks+PSPvN
+ +0IkErC9ohcvXLagT7uimBhCZRcf59TY9upYpAexvyQDkWGaGSDZQx0Qvq1cReuNqUeH
+ F7JA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUkkpwgLdUgnH/oI1Xg2VbBkbZ8RFWcyNy0a0/JAJAJFsE+XRaIG8zDSen6E9kvUxQmRFrTp67s4KbR@nongnu.org
+X-Gm-Message-State: AOJu0YxkiEE82G45CbBHm/Ivvj+w8zdFzUZIQa2SZCkhc4Vv7o5AHMcI
+ T0LKEI0Atj3W08KijnDNTvLaqs7sNdEUa4i+A4OkLeFBJl690ZpB3AmfQJ+IWjGNdZMx+XS2WBF
+ +FpwWLDXBAuMdC7Do2LZtjifGjLoQRwlJaUPMMUkDR2kD3f+b8MqFpfb1
+X-Gm-Gg: ASbGncslGVGDpS0/NInpS0GP7maZs3oVI9//u2R0CDUfKDL87u1/2F/uM4lhi6eOGoA
+ 0EKo3vScGBvL1LFujSR+k3bL/wzNEKmxBxGScUoABqL9lpVw1AS13BJwDmLDHndMiX8v9das38g
+ CuxMOpHWBUb99/qSFbhuINo6vNsBSjAElWCNO9hkS/xcPf9WVd38NmJZQYQ2EkxO7UjW1xLT+Jl
+ rixvGtgNBV0T67sQqs0+M5Hg7KC6vK0SvooJ+mwxuoTlDriH8t8NamwUHUYThHepygRNCUJmC15
+ OEsY1FkQsJdZ6zGTWrgrtrwGffXwk0QffShs8hTsJxk=
+X-Received: by 2002:a05:6000:40de:b0:3a3:7465:7e6d with SMTP id
+ ffacd0b85a97d-3a37474c253mr5137291f8f.27.1747736723005; 
+ Tue, 20 May 2025 03:25:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrFc/5tSuTIZt4pCxjkHluf49zAZNb7VJZFlQgKrEaYQ71sm6HJ2xTycMxVsf/VEjDsc/0kA==
+X-Received: by 2002:a05:6000:40de:b0:3a3:7465:7e6d with SMTP id
+ ffacd0b85a97d-3a37474c253mr5137261f8f.27.1747736722526; 
+ Tue, 20 May 2025 03:25:22 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-49-201.web.vodafone.de.
+ [109.42.49.201]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f78aeb7fsm24357795e9.26.2025.05.20.03.25.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 May 2025 03:25:22 -0700 (PDT)
+Message-ID: <53616ccd-3fb5-41e9-bd6a-0a0243b1a392@redhat.com>
+Date: Tue, 20 May 2025 12:25:20 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: eviden.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DU0PR07MB9114.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e07afd9f-4e1a-40bb-9b92-08dd9787ad4c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 May 2025 10:18:34.0128 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Yfm+buy5WmLGRRbj9jk1HkJcqgT48AMY66QmdiOcd3dEAKk0nsZGwKeynI/sr5A7FStxdtPWyEe6HPAdyXx/hQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR07MB8958
-Received-SPF: pass client-ip=80.78.11.83; envelope-from=ethan.milon@eviden.com;
- helo=smarthost2.eviden.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 17/25] pc-bios/s390-ccw: Add signature verification for
+ secure IPL in audit mode
+To: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
+ david@redhat.com, pbonzini@redhat.com
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
+ fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250508225042.313672-1-zycai@linux.ibm.com>
+ <20250508225042.313672-18-zycai@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250508225042.313672-18-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -204,71 +158,354 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGksDQoNCk9uIDUvMi8yNSA0OjE1IEFNLCBBbGVqYW5kcm8gSmltZW5leiB3cm90ZToNCj4gQ2F1
-dGlvbjogRXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRzIG9yIGNsaWNrIGxp
-bmtzLCB1bmxlc3MgdGhpcyBlbWFpbCBjb21lcyBmcm9tIGEga25vd24gc2VuZGVyIGFuZCB5b3Ug
-a25vdyB0aGUgY29udGVudCBpcyBzYWZlLg0KPiANCj4gDQo+IEV4dHJhY3RpbmcgdGhlIERURSBm
-cm9tIGEgZ2l2ZW4gQU1EVklBZGRyZXNzU3BhY2UgcG9pbnRlciBzdHJ1Y3R1cmUgaXMgYQ0KPiBj
-b21tb24gb3BlcmF0aW9uIHJlcXVpcmVkIGZvciBzeW5jaW5nIHRoZSBzaGFkb3cgcGFnZSB0YWJs
-ZXMuIEltcGxlbWVudCBhDQo+IGhlbHBlciB0byBkbyBpdCBhbmQgY2hlY2sgZm9yIGNvbW1vbiBl
-cnJvciBjb25kaXRpb25zLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogQWxlamFuZHJvIEppbWVuZXog
-PGFsZWphbmRyby5qLmppbWVuZXpAb3JhY2xlLmNvbT4NCj4gLS0tDQo+ICBody9pMzg2L2FtZF9p
-b21tdS5jIHwgNDUgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0t
-DQo+ICAxIGZpbGUgY2hhbmdlZCwgNDAgaW5zZXJ0aW9ucygrKSwgNSBkZWxldGlvbnMoLSkNCj4g
-DQo+IGRpZmYgLS1naXQgYS9ody9pMzg2L2FtZF9pb21tdS5jIGIvaHcvaTM4Ni9hbWRfaW9tbXUu
-Yw0KPiBpbmRleCBkZmY2ZjA0Yzg2NTEuLjUzMjJhNjE0ZjVkNiAxMDA2NDQNCj4gLS0tIGEvaHcv
-aTM4Ni9hbWRfaW9tbXUuYw0KPiArKysgYi9ody9pMzg2L2FtZF9pb21tdS5jDQo+IEBAIC03Nyw2
-ICs3NywxOCBAQCB0eXBlZGVmIHN0cnVjdCBBTURWSUlPVExCRW50cnkgew0KPiAgICAgIHVpbnQ2
-NF90IHBhZ2VfbWFzazsgICAgICAgICAvKiBwaHlzaWNhbCBwYWdlIHNpemUgICovDQo+ICB9IEFN
-RFZJSU9UTEJFbnRyeTsNCj4gDQo+ICsvKg0KPiArICogVGhlc2UgJ2ZhdWx0JyByZWFzb25zIGhh
-dmUgYW4gb3ZlcmxvYWRlZCBtZWFuaW5nIHNpbmNlIHRoZXkgYXJlIG5vdCBvbmx5DQo+ICsgKiBp
-bnRlbmRlZCBmb3IgZGVzY3JpYmluZyByZWFzb25zIHRoYXQgZ2VuZXJhdGUgYW4gSU9fUEFHRV9G
-QVVMVCBhcyBwZXIgdGhlIEFNRA0KPiArICogSU9NTVUgc3BlY2lmaWNhdGlvbiwgYnV0IGFyZSBh
-bHNvIHVzZWQgdG8gc2lnbmFsIGludGVybmFsIGVycm9ycyBpbiB0aGUNCj4gKyAqIGVtdWxhdGlv
-biBjb2RlLg0KPiArICovDQo+ICt0eXBlZGVmIGVudW0gQU1EVklGYXVsdFJlYXNvbiB7DQo+ICsg
-ICAgQU1EVklfRlJfRFRFX1JUUl9FUlIgPSAxLCAgIC8qIEZhaWx1cmUgdG8gcmV0cmlldmUgRFRF
-ICovDQo+ICsgICAgQU1EVklfRlJfRFRFX1YsICAgICAgICAgICAgIC8qIERURVtWXSA9IDAgKi8N
-Cj4gKyAgICBBTURWSV9GUl9EVEVfVFYsICAgICAgICAgICAgLyogRFRFW1RWXSA9IDAgKi8NCj4g
-K30gQU1EVklGYXVsdFJlYXNvbjsNCj4gKw0KPiAgdWludDY0X3QgYW1kdmlfZXh0ZW5kZWRfZmVh
-dHVyZV9yZWdpc3RlcihBTURWSVN0YXRlICpzKQ0KPiAgew0KPiAgICAgIHVpbnQ2NF90IGZlYXR1
-cmUgPSBBTURWSV9ERUZBVUxUX0VYVF9GRUFUVVJFUzsNCj4gQEAgLTQ5Miw2ICs1MDQsMjggQEAg
-c3RhdGljIGlubGluZSB1aW50NjRfdCBhbWR2aV9nZXRfcHRlX2VudHJ5KEFNRFZJU3RhdGUgKnMs
-IHVpbnQ2NF90IHB0ZV9hZGRyLA0KPiAgICAgIHJldHVybiBwdGU7DQo+ICB9DQo+IA0KPiArc3Rh
-dGljIGludCBhbWR2aV9hc190b19kdGUoQU1EVklBZGRyZXNzU3BhY2UgKmFzLCB1aW50NjRfdCAq
-ZHRlKQ0KPiArew0KPiArICAgIHVpbnQxNl90IGRldmlkID0gUENJX0JVSUxEX0JERihhcy0+YnVz
-X251bSwgYXMtPmRldmZuKTsNCj4gKyAgICBBTURWSVN0YXRlICpzID0gYXMtPmlvbW11X3N0YXRl
-Ow0KPiArDQo+ICsgICAgaWYgKCFhbWR2aV9nZXRfZHRlKHMsIGRldmlkLCBkdGUpKSB7DQo+ICsg
-ICAgICAgIC8qIFVuYWJsZSB0byByZXRyaWV2ZSBEVEUgZm9yIGRldmlkICovDQo+ICsgICAgICAg
-IHJldHVybiAtQU1EVklfRlJfRFRFX1JUUl9FUlI7DQo+ICsgICAgfQ0KPiArDQo+ICsgICAgaWYg
-KCEoZHRlWzBdICYgQU1EVklfREVWX1ZBTElEKSkgew0KPiArICAgICAgICAvKiBEVEVbVl0gbm90
-IHNldCwgYWRkcmVzcyBpcyBwYXNzZWQgdW50cmFuc2xhdGVkIGZvciBkZXZpZCAqLw0KPiArICAg
-ICAgICByZXR1cm4gLUFNRFZJX0ZSX0RURV9WOw0KPiArICAgIH0NCj4gKw0KPiArICAgIGlmICgh
-KGR0ZVswXSAmIEFNRFZJX0RFVl9UUkFOU0xBVElPTl9WQUxJRCkpIHsNCj4gKyAgICAgICAgLyog
-RFRFW1RWXSBub3Qgc2V0LCBob3N0IHBhZ2UgdGFibGUgbm90IHZhbGlkIGZvciBkZXZpZCAqLw0K
-PiArICAgICAgICByZXR1cm4gLUFNRFZJX0ZSX0RURV9UVjsNCj4gKyAgICB9DQo+ICsgICAgcmV0
-dXJuIDA7DQo+ICt9DQo+ICsNCg0KSSdtIG5vdCBzdXJlIHRoZSBuZXcgYW1kdmlfYXNfdG9fZHRl
-KCkgaGVscGVyIGFkZHMgbXVjaC4gSXQganVzdCB3cmFwcyBhDQpmZXcgY2hlY2tzIGFuZCBtYWtl
-cyBpdCBoYXJkZXIgdG8gcmVwb3J0IGZhdWx0cyBwcm9wZXJseSBpbiB0aGUgZnV0dXJlLg0KSXMg
-dGhlcmUgYSByZWFzb24gdGhpcyBjb3VsZG4ndCBiZSBoYW5kbGVkIGlubGluZT8NCg0KPiAgLyog
-bG9nIGVycm9yIHdpdGhvdXQgYWJvcnRpbmcgc2luY2UgbGludXggc2VlbXMgdG8gYmUgdXNpbmcg
-cmVzZXJ2ZWQgYml0cyAqLw0KPiAgc3RhdGljIHZvaWQgYW1kdmlfaW52YWxfZGV2dGFiX2VudHJ5
-KEFNRFZJU3RhdGUgKnMsIHVpbnQ2NF90ICpjbWQpDQo+ICB7DQo+IEBAIC0xMDI0LDYgKzEwNTgs
-NyBAQCBzdGF0aWMgdm9pZCBhbWR2aV9kb190cmFuc2xhdGUoQU1EVklBZGRyZXNzU3BhY2UgKmFz
-LCBod2FkZHIgYWRkciwNCj4gICAgICB1aW50MTZfdCBkZXZpZCA9IFBDSV9CVUlMRF9CREYoYXMt
-PmJ1c19udW0sIGFzLT5kZXZmbik7DQo+ICAgICAgQU1EVklJT1RMQkVudHJ5ICppb3RsYl9lbnRy
-eSA9IGFtZHZpX2lvdGxiX2xvb2t1cChzLCBhZGRyLCBkZXZpZCk7DQo+ICAgICAgdWludDY0X3Qg
-ZW50cnlbNF07DQo+ICsgICAgaW50IGR0ZV9yZXQ7DQo+IA0KPiAgICAgIGlmIChpb3RsYl9lbnRy
-eSkgew0KPiAgICAgICAgICB0cmFjZV9hbWR2aV9pb3RsYl9oaXQoUENJX0JVU19OVU0oZGV2aWQp
-LCBQQ0lfU0xPVChkZXZpZCksDQo+IEBAIC0xMDM1LDEzICsxMDcwLDEzIEBAIHN0YXRpYyB2b2lk
-IGFtZHZpX2RvX3RyYW5zbGF0ZShBTURWSUFkZHJlc3NTcGFjZSAqYXMsIGh3YWRkciBhZGRyLA0K
-PiAgICAgICAgICByZXR1cm47DQo+ICAgICAgfQ0KPiANCj4gLSAgICBpZiAoIWFtZHZpX2dldF9k
-dGUocywgZGV2aWQsIGVudHJ5KSkgew0KPiAtICAgICAgICByZXR1cm47DQo+IC0gICAgfQ0KPiAr
-ICAgIGR0ZV9yZXQgPSBhbWR2aV9hc190b19kdGUoYXMsIGVudHJ5KTsNCj4gDQo+IC0gICAgLyog
-ZGV2aWNlcyB3aXRoIFYgPSAwIGFyZSBub3QgdHJhbnNsYXRlZCAqLw0KPiAtICAgIGlmICghKGVu
-dHJ5WzBdICYgQU1EVklfREVWX1ZBTElEKSkgew0KPiArICAgIGlmIChkdGVfcmV0ID09IC1BTURW
-SV9GUl9EVEVfVikgew0KPiArICAgICAgICAvKiBEVEVbVl09MCwgYWRkcmVzcyBpcyBwYXNzZWQg
-dW50cmFuc2xhdGVkICovDQo+ICAgICAgICAgIGdvdG8gb3V0Ow0KPiArICAgIH0gZWxzZSBpZiAo
-ZHRlX3JldCA9PSAtQU1EVklfRlJfRFRFX1RWKSB7DQo+ICsgICAgICAgIHJldHVybjsNCj4gICAg
-ICB9DQo+IA0KPiAgICAgIGFtZHZpX3BhZ2Vfd2FsayhhcywgZW50cnksIHJldCwNCj4gLS0NCj4g
-Mi40My41DQo+IA0K
+On 09/05/2025 00.50, Zhuoying Cai wrote:
+> Enable secure IPL in audit mode, which performs signature verification,
+> but any error does not terminate the boot process. Only warnings will be
+> logged to the console instead.
+> 
+> Add a comp_len variable to store the length of a segment in
+> zipl_load_segment. comp_len variable is necessary to store the
+> calculated segment length and is used during signature verification.
+> Return the length on success, or a negative return code on failure.
+> 
+> Secure IPL in audit mode requires at least one certificate provided in
+> the key store along with necessary facilities (Secure IPL Facility,
+> Certificate Store Facility and secure IPL extension support).
+> 
+> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
+> virtio-blk/virtio-scsi devices.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/Makefile     |   3 +-
+>   pc-bios/s390-ccw/bootmap.c    | 192 +++++++++++++++++++++++++++++++++-
+>   pc-bios/s390-ccw/bootmap.h    |   9 ++
+>   pc-bios/s390-ccw/main.c       |   9 ++
+>   pc-bios/s390-ccw/s390-ccw.h   |  14 +++
+>   pc-bios/s390-ccw/sclp.c       |  44 ++++++++
+>   pc-bios/s390-ccw/sclp.h       |   6 ++
+>   pc-bios/s390-ccw/secure-ipl.c | 175 +++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/secure-ipl.h | 109 +++++++++++++++++++
+>   9 files changed, 558 insertions(+), 3 deletions(-)
+>   create mode 100644 pc-bios/s390-ccw/secure-ipl.c
+>   create mode 100644 pc-bios/s390-ccw/secure-ipl.h
+> 
+> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+> index dc69dd484f..fedb89a387 100644
+> --- a/pc-bios/s390-ccw/Makefile
+> +++ b/pc-bios/s390-ccw/Makefile
+> @@ -34,7 +34,8 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+>   .PHONY : all clean build-all distclean
+>   
+>   OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+> -	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o
+> +	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+> +	  secure-ipl.o
+>   
+>   SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+>   
+> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+> index 3dd09fda7e..06cea0929a 100644
+> --- a/pc-bios/s390-ccw/bootmap.c
+> +++ b/pc-bios/s390-ccw/bootmap.c
+> @@ -15,6 +15,7 @@
+>   #include "bootmap.h"
+>   #include "virtio.h"
+>   #include "bswap.h"
+> +#include "secure-ipl.h"
+>   
+>   #ifdef DEBUG
+>   /* #define DEBUG_FALLBACK */
+> @@ -34,6 +35,13 @@ static uint8_t sec[MAX_SECTOR_SIZE*4] __attribute__((__aligned__(PAGE_SIZE)));
+>   const uint8_t el_torito_magic[] = "EL TORITO SPECIFICATION"
+>                                     "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+>   
+> +/* sector for storing certificates */
+> +static uint8_t certs_sec[CERT_MAX_SIZE * MAX_CERTIFICATES];
+
+If I calculated correctly, that's a buffer of 512 kB... That's quite huge 
+already. Would it be possible to malloc() it only if we really need this 
+instead of statically allocating it?
+
+> +/* sector for storing signatures */
+> +static uint8_t sig_sec[MAX_SECTOR_SIZE] __attribute__((__aligned__(PAGE_SIZE)));
+> +
+> +ipl_print_func_t zipl_secure_print_func;
+> +
+>   /*
+>    * Match two CCWs located after PSW and eight filler bytes.
+>    * From libmagic and arch/s390/kernel/head.S.
+> @@ -676,6 +684,155 @@ static int zipl_load_segment(ComponentEntry *entry, uint64_t address)
+>       return comp_len;
+>   }
+>   
+> +static uint32_t zipl_handle_sig_entry(ComponentEntry *entry)
+> +{
+> +    uint32_t sig_len;
+> +
+> +    if (zipl_load_segment(entry, (uint64_t)sig_sec) < 0) {
+> +        return -1;
+> +    }
+> +
+> +    if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
+> +        puts("Signature is not in DER format");
+> +        return -1;
+> +    }
+> +    sig_len = entry->compdat.sig_info.sig_len;
+> +
+> +    return sig_len;
+> +}
+> +
+> +static int handle_certificate(int *cert_table, uint64_t **cert,
+> +                             uint64_t cert_len, uint8_t cert_idx,
+> +                             IplSignatureCertificateList *certs, int cert_index)
+> +{
+> +    bool unused;
+> +
+> +    unused = cert_table[cert_idx] == -1;
+> +    if (unused) {
+> +        if (zipl_secure_request_certificate(*cert, cert_idx)) {
+> +            zipl_secure_cert_list_add(certs, cert_index, *cert, cert_len);
+> +            cert_table[cert_idx] = cert_index;
+> +            *cert += cert_len;
+
+So zipl_secure_cert_list_add() checks for the index not going beyond 
+MAX_CERTIFICATES, but here you ignore that error and update cert_table and 
+*cert anyway? Sounds like a potential bug to me.
+
+> +        } else {
+> +            puts("Could not get certificate");
+> +            return -1;
+> +        }
+> +
+> +        /* increment cert_index for the next cert entry */
+> +        return ++cert_index;
+> +    }
+> +
+> +    return cert_index;
+> +}
+> +
+> +static int zipl_run_secure(ComponentEntry *entry, uint8_t *tmp_sec)
+> +{
+> +    bool found_signature = false;
+> +    IplDeviceComponentList comps;
+> +    IplSignatureCertificateList certs;
+> +    uint64_t *cert = (uint64_t *)certs_sec;
+> +    int cert_index = 0;
+> +    int comp_index = 0;
+> +    uint64_t comp_addr;
+> +    int comp_len;
+> +    bool have_sig;
+> +    uint32_t sig_len;
+> +    uint64_t cert_len = -1;
+> +    uint8_t cert_idx = -1;
+> +    bool verified;
+> +    /*
+> +     * Store indices of cert entry that have already used for signature verification
+> +     * to prevent allocating the same certificate multiple times.
+> +     * cert_table index: index of certificate from qemu cert store used for verification
+> +     * cert_table value: index of cert entry in cert list that contains the certificate
+> +     */
+> +    int cert_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1};
+> +    zipl_secure_print_func = zipl_secure_get_print_func(boot_mode);
+> +
+> +    if (!zipl_secure_ipl_supported()) {
+> +        return -1;
+> +    }
+> +
+> +    zipl_secure_init_lists(&comps, &certs);
+> +
+> +    have_sig = false;
+> +    while (entry->component_type == ZIPL_COMP_ENTRY_LOAD ||
+> +           entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
+> +
+> +        if (entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
+> +            /* There should never be two signatures in a row */
+> +            if (have_sig) {
+> +                return -1;
+> +            }
+> +
+> +            sig_len = zipl_handle_sig_entry(entry);
+> +            if (sig_len < 0) {
+> +                return -1;
+> +            }
+> +
+> +            have_sig = true;
+> +        } else {
+> +            comp_addr = entry->compdat.load_addr;
+> +            comp_len = zipl_load_segment(entry, comp_addr);
+> +            if (comp_len < 0) {
+> +                return -1;
+> +            }
+> +
+> +            if (have_sig) {
+> +                verified = verify_signature(comp_len, comp_addr,
+> +                                            sig_len, (uint64_t)sig_sec,
+> +                                            &cert_len, &cert_idx);
+> +
+> +                if (verified) {
+> +                    cert_index = handle_certificate(cert_table, &cert,
+> +                                                    cert_len, cert_idx,
+> +                                                    &certs, cert_index);
+> +
+> +                    puts("Verified component");
+> +                    zipl_secure_comp_list_add(&comps, comp_index, cert_table[cert_idx],
+> +                                              comp_addr, comp_len,
+> +                                              S390_IPL_COMPONENT_FLAG_SC |
+> +                                              S390_IPL_COMPONENT_FLAG_CSV);
+> +                } else {
+> +                    zipl_secure_comp_list_add(&comps, comp_index, -1,
+> +                                              comp_addr, comp_len,
+> +                                              S390_IPL_COMPONENT_FLAG_SC);
+> +                    zipl_secure_print_func(verified, "Could not verify component");
+> +                }
+> +
+> +                comp_index++;
+> +                found_signature = true;
+> +                /* After a signature is used another new one can be accepted */
+> +                have_sig = false;
+> +            }
+> +        }
+> +
+> +        entry++;
+> +
+> +        if ((uint8_t *)(&entry[1]) > (tmp_sec + MAX_SECTOR_SIZE)) {
+
+Less parentheses please:
+
+         if ((uint8_t *)&entry[1] > tmp_sec + MAX_SECTOR_SIZE) {
+
+> +            puts("Wrong entry value");
+> +            return -EINVAL;
+> +        }
+> +    }
+...
+> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
+> new file mode 100644
+> index 0000000000..4e2328840b
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/secure-ipl.h
+> @@ -0,0 +1,109 @@
+> +/*
+> + * S/390 Secure IPL
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef _PC_BIOS_S390_CCW_SECURE_IPL_H
+> +#define _PC_BIOS_S390_CCW_SECURE_IPL_H
+> +
+> +#include <diag320.h>
+> +#include <diag508.h>
+> +
+> +VCStorageSizeBlock *zipl_secure_get_vcssb(void);
+> +uint32_t zipl_secure_request_certificate(uint64_t *cert, uint8_t index);
+> +void zipl_secure_cert_list_add(IplSignatureCertificateList *certs, int cert_index,
+> +                               uint64_t *cert, uint64_t cert_len);
+> +void zipl_secure_comp_list_add(IplDeviceComponentList *comps, int comp_index,
+> +                               int cert_index, uint64_t comp_addr,
+> +                               uint64_t comp_len, uint8_t flags);
+> +int zipl_secure_update_iirb(IplDeviceComponentList *comps,
+> +                            IplSignatureCertificateList *certs);
+> +bool zipl_secure_ipl_supported(void);
+> +void zipl_secure_init_lists(IplDeviceComponentList *comps,
+> +                            IplSignatureCertificateList *certs);
+> +
+> +typedef void (*ipl_print_func_t)(bool, const char *);
+> +
+> +static inline ipl_print_func_t zipl_secure_get_print_func(ZiplBootMode boot_mode)
+> +{
+> +    if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
+> +        return &IPL_check;
+> +    }
+> +
+> +    return NULL;
+> +}
+
+What is this function really good for?? And why do we need the function 
+pointer below??? Aparently, the function pointer can also be NULL, but you 
+call it also without checking for NULL first in the various other functions 
+of this file ... looks very buggy to me, please rework this!
+
+> +extern ipl_print_func_t zipl_secure_print_func;
+> +
+> +static inline uint64_t diag320(void *data, unsigned long subcode)
+> +{
+> +    register unsigned long addr asm("0") = (unsigned long)data;
+> +    register unsigned long rc asm("1") = 0;
+> +
+> +    asm volatile ("diag %0,%2,0x320\n"
+> +                  : "+d" (addr), "+d" (rc)
+> +                  : "d" (subcode)
+> +                  : "memory", "cc");
+> +    return rc;
+> +}
+> +
+> +static inline uint64_t get_320_subcodes(uint64_t *ism)
+> +{
+> +    return diag320(ism, DIAG_320_SUBC_QUERY_ISM);
+> +}
+
+For such a simple call, it's likely not worth the effort to have a wrapper 
+function.
+
+> +static inline bool is_cert_store_facility_supported(void)
+> +{
+> +    uint64_t d320_ism;
+> +
+> +    get_320_subcodes(&d320_ism);
+> +    return (d320_ism & DIAG_320_ISM_QUERY_VCSI) &&
+> +           (d320_ism & DIAG_320_ISM_STORE_VC);
+> +}
+> +
+> +static inline uint64_t _diag508(void *data, unsigned long subcode)
+> +{
+> +    register unsigned long addr asm("0") = (unsigned long)data;
+> +    register unsigned long rc asm("1") = 0;
+> +
+> +    asm volatile ("diag %0,%2,0x508\n"
+> +                  : "+d" (addr), "+d" (rc)
+> +                  : "d" (subcode)
+> +                  : "memory", "cc");
+> +    return rc;
+> +}
+> +
+> +static inline uint64_t get_508_subcodes(void)
+> +{
+> +    return _diag508(NULL, DIAG_508_SUBC_QUERY_SUBC);
+> +}
+
+dito.
+
+> +static inline bool is_secure_ipl_extension_supported(void)
+> +{
+> +    uint64_t d508_subcodes;
+> +
+> +    d508_subcodes = get_508_subcodes();
+> +    return d508_subcodes & DIAG_508_SUBC_SIG_VERIF;
+> +}
+> +
+> +static inline bool verify_signature(uint64_t comp_len, uint64_t comp_addr,
+> +                                    uint64_t sig_len, uint64_t sig_addr,
+> +                                    uint64_t *cert_len, uint8_t *cert_idx)
+> +{
+> +    Diag508SignatureVerificationBlock svb = {{}, comp_len, comp_addr,
+> +                                             sig_len, sig_addr };
+> +
+> +    if (_diag508(&svb, DIAG_508_SUBC_SIG_VERIF) == DIAG_508_RC_OK) {
+> +        *cert_len = svb.csi.len;
+> +        *cert_idx = svb.csi.idx;
+> +        return true;
+> +    }
+> +
+> +    return false;
+> +}
+> +
+> +#endif /* _PC_BIOS_S390_CCW_SECURE_IPL_H */
+
+  Thomas
+
 
