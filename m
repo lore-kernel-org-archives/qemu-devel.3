@@ -4,64 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A37C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A95EC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKPZ-00013K-3a; Tue, 20 May 2025 06:41:29 -0400
+	id 1uHKVP-000267-L6; Tue, 20 May 2025 06:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
- id 1uHKPW-000133-Uv; Tue, 20 May 2025 06:41:26 -0400
-Received: from smtp84.cstnet.cn ([159.226.251.84] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
- id 1uHKPS-0007EB-6Z; Tue, 20 May 2025 06:41:26 -0400
-Received: from iscas.ac.cn (unknown [113.16.146.135])
- by APP-05 (Coremail) with SMTP id zQCowABHiStAXCxoPKzBAQ--.34580S2;
- Tue, 20 May 2025 18:41:06 +0800 (CST)
-From: Meng Zhuo <mengzhuo@iscas.ac.cn>
-To: qemu-devel@nongnu.org
-Cc: Meng Zhuo <mengzhuo@iscas.ac.cn>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PATCH v3] target/riscv/kvm: add satp mode for host cpu
-Date: Tue, 20 May 2025 18:41:03 +0800
-Message-Id: <20250520104103.89736-1-mengzhuo@iscas.ac.cn>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1uHKVO-00025x-I3
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:47:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1uHKVM-000859-G6
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:47:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747738046;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cOTMari4/6D2f8OgSEEBl3l5eaUxBWZL2VdfVMUyieI=;
+ b=PTDa73rIg3RlAHLGEk81WiYu0beqiQFXfgKcSGK4CMsUndzbWzCyLZCN2Dq4o83cynDarC
+ joDq5mI7GvKmK8CNp8bu8DTBSFQ5rd3WKr5oDu2U3pD1Xhk4bGFqGtSKV+HHAIGgvD3aZ1
+ OKBiIE+wwTfZ8wfg1vxOeQjCPmRImgQ=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-66-JRTkypSzMcyYkDZNoJiSGg-1; Tue, 20 May 2025 06:47:25 -0400
+X-MC-Unique: JRTkypSzMcyYkDZNoJiSGg-1
+X-Mimecast-MFC-AGG-ID: JRTkypSzMcyYkDZNoJiSGg_1747738044
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7c5f3b8b1a1so906846885a.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 03:47:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747738044; x=1748342844;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cOTMari4/6D2f8OgSEEBl3l5eaUxBWZL2VdfVMUyieI=;
+ b=WiA3CgfuepdBA7i2CKAJmZvvD6tBJKtnGvc2HlTlk/sek0f8aUBviPlNO2IF3LG7rw
+ XEQNi+Gv9Vg2D8jkK273VFgXyX2g97cch8VPCP3hCW+GT1GTRDmWAWsqwSsvJaQ6Xah/
+ IkgN1HGqu6NWpSTVz/JQxEq+4ajm02MGWnS/t7ZGucuSlf6JEvI7j7znAvwKB+OImzG1
+ qBgaoE0iEiuNl7/b5YvN5qrz4cc1PpcxSlPCpCtH+UJ1iomomKfXQjCyjTo5u73w5c7u
+ 3GQygZxQtKTUwzZdHVvOfVPPSrzELmlGUsbb495VJTTCgNaFed6V96LVtqa6wDA3NX58
+ KPDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqvGop9dVpnqhZz21rr/EmOM8lVozA3G1sy5wX+UPH+1IlNucDE8oiI0P0cH6dIzxM6Jn14T3PTgRH@nongnu.org
+X-Gm-Message-State: AOJu0Yw6vtKa05PfVmOWihMEawXrxxVf9d0xQZRev0dlsDq3a6Q02Dph
+ CRufyVYTZDr2YSLXNyVP77SGQHEJg35Pm7irgf2WOBqoq2OK7TVazoSsfa+7Sl/opMgX6nAjzHw
+ En5m3cq5JiGCvM4V+LmKupMU3B1iaS8xQG4DK7m3g3XRRIA9rZIqFMMTY
+X-Gm-Gg: ASbGnctjvKD3Hnl8AmoVr1v5oh70X1sOMwrF+b6Cdtcz1rnHxKDfo1Be70Q/S6z5kte
+ iJwwjOEMpkh5WwrxvgSzZVt3p84TC1tMazI3w0zNZIawXDCSkff0794K9C0NUoZsvvDsnpoL1En
+ 3CtzkIQ2scbiyxt84sNmRVQHxfZwSRQLCZy/VLZC5uKYGkBAWa6FUcfB6bYcZQIzSmNMr2zLAEf
+ YC1pmlG7GuxRzAQnGvoBbom7ZRm3CMOIGRbbfDyh64HrPRk6zr72CMm0cP7Se2SDt32yMk9y+LQ
+ fmLAQCSD4ZoK
+X-Received: by 2002:ad4:568f:0:b0:6f8:c284:45c5 with SMTP id
+ 6a1803df08f44-6f8c284460bmr150118626d6.4.1747738044429; 
+ Tue, 20 May 2025 03:47:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWgFp/qejqmQJybqEwNG0a2biVg16SQOWYXZC6Wfq6SLUTY4USJKsf35tRcqFbGkAaxaIMjg==
+X-Received: by 2002:ad4:568f:0:b0:6f8:c284:45c5 with SMTP id
+ 6a1803df08f44-6f8c284460bmr150118296d6.4.1747738043992; 
+ Tue, 20 May 2025 03:47:23 -0700 (PDT)
+Received: from [192.168.40.164] ([70.105.235.240])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6f8b097a782sm69410236d6.104.2025.05.20.03.47.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 May 2025 03:47:23 -0700 (PDT)
+Message-ID: <9eee8ee6-357c-4bd7-a1ce-c5785bf69fdb@redhat.com>
+Date: Tue, 20 May 2025 06:47:16 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowABHiStAXCxoPKzBAQ--.34580S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxZw4UXr18Kry8Kw15XFy3twb_yoW5WrW7pr
- W5G395CrW3tFZrJayfJr1kXF45twsYgr4aka17ur1fXan8trW5WF1vg3W7CF98GF48AF13
- u3WFkrW3Ca18tFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUvK14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
- 6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
- Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
- AVWUtwCY1x0264kExVAvwVAq07x20xyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7
- v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF
- 1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIx
- AIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI
- 42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxh
- VjvjDU0xZFpf9x0JUr5rcUUUUU=
-X-Originating-IP: [113.16.146.135]
-X-CM-SenderInfo: pphqw6xkxrqxpvfd2hldfou0/1tbiBwsIEmgsN0ym6gAAsl
-Received-SPF: pass client-ip=159.226.251.84; envelope-from=mengzhuo@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rfcv2 00/20] intel_iommu: Enable stage-1 translation for
+ passthrough device
+Content-Language: en-US
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
+References: <20250219082228.3303163-1-zhenzhong.duan@intel.com>
+ <eacfc52a-2dee-49a8-8994-67b738ece68d@redhat.com>
+ <SJ0PR11MB6744472953C10F7858FF406F929CA@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <6b9c1f0a-be56-451e-bb8d-833b402b78d8@redhat.com>
+ <SJ0PR11MB6744D7EC0B34ED5D5DC679C2929FA@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <SJ0PR11MB6744D7EC0B34ED5D5DC679C2929FA@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,89 +128,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds host satp mode while kvm/host cpu satp mode is not
-set.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2931
-Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
----
- target/riscv/cpu.c         |  3 +--
- target/riscv/cpu.h         |  1 +
- target/riscv/kvm/kvm-cpu.c | 20 +++++++++++++++++++-
- 3 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d92874baa0..a84edd3a3b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -433,8 +433,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit)
-     g_assert_not_reached();
- }
- 
--static void set_satp_mode_max_supported(RISCVCPU *cpu,
--                                        uint8_t satp_mode)
-+void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode)
- {
-     bool rv32 = riscv_cpu_mxl(&cpu->env) == MXL_RV32;
-     const bool *valid_vm = rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index b56d3afa69..d7136f1d72 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -915,6 +915,7 @@ char *riscv_cpu_get_name(RISCVCPU *cpu);
- 
- void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
- void riscv_add_satp_mode_properties(Object *obj);
-+void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode);
- bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
- 
- /* CSR function table */
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 82f9728636..18fbca1a08 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -999,6 +999,23 @@ static void kvm_riscv_destroy_scratch_vcpu(KVMScratchCPU *scratch)
-     close(scratch->kvmfd);
- }
- 
-+static void kvm_riscv_init_satp_mode(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
-+{
-+    CPURISCVState *env = &cpu->env;
-+    struct kvm_one_reg reg;
-+    int ret;
-+    uint64_t val;
-+
-+    reg.id = RISCV_CONFIG_REG(env, satp_mode);
-+    reg.addr = (uint64_t)&val;
-+    ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
-+    if (ret != 0) {
-+        error_report("Unable to retrieve satp from host, error %d", ret);
-+    }
-+
-+    set_satp_mode_max_supported(cpu, val);
-+}
-+
- static void kvm_riscv_init_machine_ids(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
- {
-     struct kvm_one_reg reg;
-@@ -1302,6 +1319,7 @@ static void riscv_init_kvm_registers(Object *cpu_obj)
-     kvm_riscv_init_machine_ids(cpu, &kvmcpu);
-     kvm_riscv_init_misa_ext_mask(cpu, &kvmcpu);
-     kvm_riscv_init_cfg(cpu, &kvmcpu);
-+    kvm_riscv_init_satp_mode(cpu, &kvmcpu);
- 
-     kvm_riscv_destroy_scratch_vcpu(&kvmcpu);
- }
-@@ -1980,7 +1998,7 @@ static bool kvm_cpu_realize(CPUState *cs, Error **errp)
-         }
-     }
- 
--   return true;
-+    return true;
- }
- 
- void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
--- 
-2.39.5
+On 5/20/25 5:13 AM, Duan, Zhenzhong wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: Donald Dutile <ddutile@redhat.com>
+>> Subject: Re: [PATCH rfcv2 00/20] intel_iommu: Enable stage-1 translation for
+>> passthrough device
+>>
+>> Hey Zhenzhong,
+>> Thanks for feedback. replies below.
+>> - Don
+>>
+>> On 5/19/25 4:37 AM, Duan, Zhenzhong wrote:
+>>> Hi Donald,
+>>>
+>>>> -----Original Message-----
+>>>> From: Donald Dutile <ddutile@redhat.com>
+>>>> Subject: Re: [PATCH rfcv2 00/20] intel_iommu: Enable stage-1 translation for
+>>>> passthrough device
+>>>>
+>>>> Zhenzhong,
+>>>>
+>>>> Hi!
+>>>> Eric asked me to review this series.
+>>>> Since it's rather late since you posted will summarize review feedback
+>>>> below/bottom.
+>>>>
+>>>> - Don
+>>>>
+>>>> On 2/19/25 3:22 AM, Zhenzhong Duan wrote:
+> ...
+> 
+>>>>             Did you ever put some tracing in to capture avg hits in cache? ... if so,
+>> add
+>>>> as a comment.
+>>>>             Otherwise, looks good.
+>>>>
+>>>> Patch 11: Apologies, I don't know what 'flts' stands for, and why it is relative
+>> to 2-
+>>>> stage mapping, or SIOV.  Could you add verbage to explain the use of it, as the
+>>>> rest of this patch doesn't make any sense to me without the background.
+>>>> The patch introduces hw-info-type (none or intel), and then goes on to add a
+>>>> large set of checks; seems like the caps & this checking should go together
+>> (split
+>>>> for each cap; put all caps together & the check...).
+>>>
+>>> OK, will do. There are some explanations in cover-letter.
+>>> For history reason, old vtd spec define stage-1 as first level then switch to first
+>> stage.
+>>>
+>> So 'flts' is 'first level then switch' .
+> 
+> Sorry for confusion, it stands for 'first level translation support'.
+> 
+Thanks.
+
+>>
+>>>>
+>>>> Patch 12: Why isn't HostIOMMUDevice extended to have another iommu-
+>> specif
+>>>> element, opaque in HostIOMMUDevice, but set to specific IOMMU in use?
+>> e.g.
+>>>> void *hostiommustate;
+>>>
+>>> Yes, that's possible, but we want to make a generic interface between
+>> VFIO/VDPA and vIOMMU.
+>>>
+>> ok. I don't understand how VFIO & VPDA complicate that add.
+> 
+> IIUC, the hostiommustate provided by VFIO and VDPA may be different format.
+> By using a general interface like .get_cap(), we hide the resolving under VFIO and
+> VDPA backend. This is like the KVM extension checking between QEMU and KVM.
+> 
+> FYI, there was some discuss on the interface before,
+> see https://lists.gnu.org/archive/html/qemu-devel/2024-04/msg02658.html
+> 
+Good analogy, thanks. I'll reach out to Cedric on the above discussion as well.
+
+>>
+>>>>
+>>>> Patch 13: Isn't PASID just an extension/addition of BDF id? and doesn't each
+>>>> PASID have its own address space?
+>>>
+>>> Yes, it is.
+>>>
+>>>> So, why isn't it handle via a uniqe AS cache like 'any other device'?  Maybe I'm
+>>>> thinking too SMMU-StreamID, which can be varying length, depending on
+>>>> subsystem support.  I see what appears to be sid+pasid calls to do the AS
+>> lookups;
+>>>> hmm, so maybe this is the generalized BDF+pasid AS lookup?  if so, maybe a
+>>>> better description stating this transition to a wider stream-id would set the
+>> code
+>>>> context better.
+>>>
+>>> Not quite get..
+>>>
+>> I'm looking for a better description that states the AS cache lookup is broadened
+>>from bdf
+>> to bdf+pasid.
+> 
+> Guess you mean vtd_as_from_iommu_pasid(), it's a variant of vtd_find_add_as().
+> We support AS cache lookup by bdf+pasid for a long time, see vtd_find_add_as().
+> 
+Thanks for clarification.
+
+>>
+>>>> As for the rest of the (400 intel-iommu) code, I'm not that in-depth in intel-
+>> iommu
+>>>> to determine if its all correct or not.
+>>>>
+>>>> Patch 14: Define PGTT; the second paragraph seem self-contradicting -- it says
+>> it
+>>>> uses a 2-stage page table in each case, but it implies it should be different.  At
+>> 580
+>>>> lines of code changes, you win! ;-)
+>>>
+>>> The host side's using nested or only stage-2 page table depends on PGTT's
+>> setting in guest.
+>>>
+>> Thanks for clarification.
+>>
+>>>>
+>>>> Patch 15: Read-only and Read/write areas have different IOMMUFDs?  is that
+>> an
+>>>> intel-iommu requriement?
+>>>>             At least this intel-iommu-errata code is only in hw/i386/<> modules.
+>>>
+>>> No, if ERRATA_772415, read-only areas should not be mapped, so we allocate a
+>> new VTDIOASContainer to hold only read/write areas mapping.
+>>> We can use same IOMMUFDs for different VTDIOASContainer.
+>>>
+>> ah yes; I got hung-up on different mappings, and didn't back up to AS-container
+>> split & same IOMMUFD.
+>>
+>>>>
+>>>> Patch 16: Looks reasonable.  What does the 'SI' mean after "CACHE_DEV",
+>>>> "CACHE_DOM" & "CACHE_PASID" ? -- stream-invalidation?
+>>>
+>>> VTD_PASID_CACHE_DEVSI stands for 'pasid cache device selective invalidation',
+>>> VTD_PASID_CACHE_DOMSI means 'pasid cache domain selective invalidation'.
+>>>
+>> That explanation helps. :)  maybe put a short blurb in the commit log, or code,
+>> so one doesn't have to be a ninja-VTD spec consumer to comprehend those
+>> (important) diffs.
+> 
+> Good idea, will do.
+> 
+>>
+>>> Thanks
+>>> Zhenzhong
+>>>
+>> Again, thanks for the reply.
+>> Looking fwd to the rfcv3 (on list) or move to v1-POST.
+> 
+> Thanks for your comments!
+> 
+> BRs,
+> Zhenzhong
+> 
+Thanks for the added clarifications.
+- Don
 
 
