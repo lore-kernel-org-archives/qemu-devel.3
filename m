@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A7BC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 12:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E70C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 12:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLfs-0004w0-6q; Tue, 20 May 2025 08:02:24 -0400
+	id 1uHLtc-0008C9-G0; Tue, 20 May 2025 08:16:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uHLfp-0004u9-TJ
- for qemu-devel@nongnu.org; Tue, 20 May 2025 08:02:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uHLfn-0006wT-G4
- for qemu-devel@nongnu.org; Tue, 20 May 2025 08:02:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747742537;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=exPkeRuTH0m/aTI9Vl7+XEFElqtVLulKLeIDwA5xPJ4=;
- b=AQKPwi9jMGyBM0FNVfSubF+sj/CtPI3R2DdqYLkZgkrQq9KgyIpdVCN97nM0yg+1gUmlPF
- OPkKwcePY1TjVzLzgyjtpKD+cZPVV3RgGeTHT5Iv8ATkny6CYQU6v+0nOL2bYp8+FDTNVd
- 7qZydl1N0h0wO20OsJYd+nuI4SGL3k4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-Q9yqDxalOpKi9I4raq9Hjg-1; Tue,
- 20 May 2025 08:02:12 -0400
-X-MC-Unique: Q9yqDxalOpKi9I4raq9Hjg-1
-X-Mimecast-MFC-AGG-ID: Q9yqDxalOpKi9I4raq9Hjg_1747742530
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDCF71800370; Tue, 20 May 2025 12:02:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.49])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B600130001AA; Tue, 20 May 2025 12:02:04 +0000 (UTC)
-Date: Tue, 20 May 2025 13:02:01 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [RFC PATCH 06/25] accel/mshv: Add accelerator skeleton
-Message-ID: <aCxvOfF3ytXYnhp1@redhat.com>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-7-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uHLta-0008Bm-Ps
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 08:16:34 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uHLtV-0001Z3-Bs
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 08:16:34 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43ce71582e9so44894015e9.1
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 05:16:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1747743386; x=1748348186; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=HO/OrTsRI4p9tXH5hOvU9I/gpjQf9bZBJeHuWpqaUKg=;
+ b=YjKKWv/hp97pwg/FusvnTehxt9Haq9NMxCP814ISaZvVqoeqlvKEk18bpFi5UbcZ1K
+ RNA2xSexXc3U5FjmI4GuvvF+6Nd/yJqLIK68gcWh57UkszHSu93cdSzZUBIc/in+lDTr
+ 5zXtLH6liX5hNrHH0POOEnHm8qick9ZNwKdK3dwl01eaDPyE6R83dKAwiBgC6Bs9y8Tj
+ wNvB1BRGzyXuTuFXJinW5KvEtN9zux5/5JLTgZa5tr9a667N5AOjB41OE85eTmyS9NoL
+ wtkAmA9VH/XVhpCVCfhGh58+bmG3N4OBhLSdgnt/5hw2OQe4yJXLlPz1w1ZpuH9Y+6Sn
+ 3NIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747743386; x=1748348186;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HO/OrTsRI4p9tXH5hOvU9I/gpjQf9bZBJeHuWpqaUKg=;
+ b=AGF7LFmyR7gCTGVWATMrP/q76VByoYrrpcWy/ilgWEGeF61uQSxZfxeBfYDevQ0Idc
+ LITuB+NXci6sLiEq6OpXNV2SC0sGqzUxorNkcgosGtHUKiZqgpt87uUJqvJpYKct59fj
+ fDdZQH2Ybt2eLJcKISrntSq4jRtTZMSegvvVR/RPlJHVScTDk0C44hRoFFYp8STTpDRo
+ FHKrUtCik5DuTIQVjxevSBi5MuF/vDdLyLYLk6KeOi3cWRm55y6PTMbkO4+A2CXhljGt
+ VLePgHELwXaT9DFgNJFi4J/D5dE0a3Euwh9PVfCeM6Gr/UWwzsbx5rsNf6U/vhuyFHF1
+ 8bMA==
+X-Gm-Message-State: AOJu0Yywjw1/G4J/+R9pm9okBaVALAX7Qn3lCLhUNdU57t2xB58IZC5v
+ BX3n/vgxDysvZeBrMeX+esWV2i5Q5D+1l6dh4FEwf/KMmRPhBZNu0U3l3pc6Can2xqg=
+X-Gm-Gg: ASbGncvYZt+JtlOurF2uqU1KT9udcC8ug1dIyR5pdEVNtWkn5AzPdkTWi0nqqnrP5pd
+ N7i9j4hPZswi7PE7AH/jWt4kZtyxgQVxK7l2tb5ogH8YvHp95ybpPtzL2gu+9xKFF2Ni9V0RXRP
+ zg+iIXzdbEwBHevasGTHJFHD+75LQgBhDWNe/UWeSpnaSR2t7kmB7da2uPk+H/YLm9La7cdohdS
+ 1njJMTpgAG2F8omoLdKx7mkJGovO3yZXzFwC92vUPiFvvTr2xqIdK3Ix4P0UeluS/dOmdHozhzX
+ Yd879IbUEUNElB8XGu/P9MGBSSUt3MydK0yExXg=
+X-Google-Smtp-Source: AGHT+IH+vbqiGv7IhAZbtEHpscm9CWbStdtuoVE2lDQPdAC8C7CGt+n+MVm9yBpSIxq0oWmjZZQfpQ==
+X-Received: by 2002:a05:600c:64cc:b0:43d:82c:2b11 with SMTP id
+ 5b1f17b1804b1-442fd664f7dmr135228345e9.23.1747743386544; 
+ Tue, 20 May 2025 05:16:26 -0700 (PDT)
+Received: from localhost ([2a02:8308:a00c:e200::ce80])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f6f0554fsm28650305e9.9.2025.05.20.05.16.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 05:16:25 -0700 (PDT)
+Date: Tue, 20 May 2025 14:16:25 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Meng Zhuo <mengzhuo@iscas.ac.cn>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+Subject: Re: [PATCH v3] target/riscv/kvm: add satp mode for host cpu
+Message-ID: <20250520-6662f98a85c2e458d732887b@orel>
+References: <20250520104103.89736-1-mengzhuo@iscas.ac.cn>
+ <20250520-317e19aeb55fa93e30941e63@orel>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250520113018.49569-7-magnuskulke@linux.microsoft.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+In-Reply-To: <20250520-317e19aeb55fa93e30941e63@orel>
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,109 +99,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 01:29:59PM +0200, Magnus Kulke wrote:
-> Introduce the initial scaffold for the MSHV (Microsoft Hypervisor)
-> accelerator backend. This includes the basic directory structure and
-> stub implementations needed to integrate with QEMU's accelerator
-> framework.
+On Tue, May 20, 2025 at 01:58:45PM +0200, Andrew Jones wrote:
+> On Tue, May 20, 2025 at 06:41:03PM +0800, Meng Zhuo wrote:
+> > This patch adds host satp mode while kvm/host cpu satp mode is not
+> > set.
+> > 
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2931
+> > Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
+> > ---
 > 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->  accel/meson.build      |   1 +
->  accel/mshv/meson.build |   6 ++
->  accel/mshv/mshv-all.c  | 143 +++++++++++++++++++++++++++++++++++++++++
->  include/system/mshv.h  |  34 ++++++++++
->  4 files changed, 184 insertions(+)
->  create mode 100644 accel/mshv/meson.build
->  create mode 100644 accel/mshv/mshv-all.c
+> Please provide a changelog here. I had to go reread the comments on v1 to
+> guess at what might have changed.
 > 
-
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> new file mode 100644
-> index 0000000000..44605adf94
-> --- /dev/null
-> +++ b/accel/mshv/mshv-all.c
-
-> +
-> +static int mshv_init(MachineState *ms)
-> +{
-> +	error_report("unimplemented");
-> +	abort();
-> +}
-
-Nit-picking - although you remove these lines in later patches,
-lets remove the tabs from these lines.
-
-> diff --git a/include/system/mshv.h b/include/system/mshv.h
-> index bc8f2c228a..0858e47def 100644
-> --- a/include/system/mshv.h
-> +++ b/include/system/mshv.h
-> @@ -16,6 +16,14 @@
->  #ifndef QEMU_MSHV_INT_H
->  #define QEMU_MSHV_INT_H
->  
-> +#include "qemu/osdep.h"
-> +#include "qemu/accel.h"
-> +#include "hw/hyperv/hyperv-proto.h"
-> +#include "hw/hyperv/linux-mshv.h"
-> +#include "hw/hyperv/hvhdk.h"
-> +#include "qapi/qapi-types-common.h"
-> +#include "system/memory.h"
-> +
->  #ifdef COMPILING_PER_TARGET
->  #ifdef CONFIG_MSHV
->  #define CONFIG_MSHV_IS_POSSIBLE
-> @@ -28,6 +36,32 @@
->  #ifdef CONFIG_MSHV_IS_POSSIBLE
->  extern bool mshv_allowed;
->  #define mshv_enabled() (mshv_allowed)
-> +
-> +typedef struct MshvMemoryListener {
-> +  MemoryListener listener;
-> +  int as_id;
-> +} MshvMemoryListener;
-> +
-> +typedef struct MshvAddressSpace {
-> +    MshvMemoryListener *ml;
-> +    AddressSpace *as;
-> +} MshvAddressSpace;
-
-Inconsistent mix of 2-space and 4-space
-indents - stick with 4-space throughout
-
-> +
-> +typedef struct MshvState {
-> +  AccelState parent_obj;
-> +  int vm;
-> +  MshvMemoryListener memory_listener;
-> +  /* number of listeners */
-> +  int nr_as;
-> +  MshvAddressSpace *as;
-> +} MshvState;
-> +extern MshvState *mshv_state;
-> +
-> +struct AccelCPUState {
-> +  int cpufd;
-> +  bool dirty;
-> +};
-> +
->  #else /* CONFIG_MSHV_IS_POSSIBLE */
->  #define mshv_enabled() false
->  #endif
-> -- 
-> 2.34.1
+> >  target/riscv/cpu.c         |  3 +--
+> >  target/riscv/cpu.h         |  1 +
+> >  target/riscv/kvm/kvm-cpu.c | 20 +++++++++++++++++++-
+> >  3 files changed, 21 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> > index d92874baa0..a84edd3a3b 100644
+> > --- a/target/riscv/cpu.c
+> > +++ b/target/riscv/cpu.c
+> > @@ -433,8 +433,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit)
+> >      g_assert_not_reached();
+> >  }
+> >  
+> > -static void set_satp_mode_max_supported(RISCVCPU *cpu,
+> > -                                        uint8_t satp_mode)
+> > +void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode)
 > 
+> In v1 I suggested we add some sanity checking to this function to ensure
+> we can never set an invalid mode (one that's higher than the max
+> supported).
+
+It appears [1], which I just learned exists (that series doesn't CC
+qemu-riscv) adds an assert for the check (among other changes).
+
+[1] https://lore.kernel.org/all/20250406070254.274797-3-pbonzini@redhat.com/
+
+Thanks,
+drew
+
 > 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+> >  {
+> >      bool rv32 = riscv_cpu_mxl(&cpu->env) == MXL_RV32;
+> >      const bool *valid_vm = rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
+> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> > index b56d3afa69..d7136f1d72 100644
+> > --- a/target/riscv/cpu.h
+> > +++ b/target/riscv/cpu.h
+> > @@ -915,6 +915,7 @@ char *riscv_cpu_get_name(RISCVCPU *cpu);
+> >  
+> >  void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+> >  void riscv_add_satp_mode_properties(Object *obj);
+> > +void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode);
+> >  bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+> >  
+> >  /* CSR function table */
+> > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> > index 82f9728636..18fbca1a08 100644
+> > --- a/target/riscv/kvm/kvm-cpu.c
+> > +++ b/target/riscv/kvm/kvm-cpu.c
+> > @@ -999,6 +999,23 @@ static void kvm_riscv_destroy_scratch_vcpu(KVMScratchCPU *scratch)
+> >      close(scratch->kvmfd);
+> >  }
+> >  
+> > +static void kvm_riscv_init_satp_mode(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
+> > +{
+> > +    CPURISCVState *env = &cpu->env;
+> > +    struct kvm_one_reg reg;
+> > +    int ret;
+> > +    uint64_t val;
+> > +
+> > +    reg.id = RISCV_CONFIG_REG(env, satp_mode);
+> > +    reg.addr = (uint64_t)&val;
+> > +    ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+> > +    if (ret != 0) {
+> > +        error_report("Unable to retrieve satp from host, error %d", ret);
+> 
+> This will output "Unable..., error -1" on error. We should output at least
+> the errno and preferably the errno string. I see that this is just a copy
+> of a pattern used throughout this file though, so we need a patch fixing
+> all of the ioctl call error_reports.
+> 
+> > +    }
+> > +
+> > +    set_satp_mode_max_supported(cpu, val);
+> > +}
+> > +
+> >  static void kvm_riscv_init_machine_ids(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
+> >  {
+> >      struct kvm_one_reg reg;
+> > @@ -1302,6 +1319,7 @@ static void riscv_init_kvm_registers(Object *cpu_obj)
+> >      kvm_riscv_init_machine_ids(cpu, &kvmcpu);
+> >      kvm_riscv_init_misa_ext_mask(cpu, &kvmcpu);
+> >      kvm_riscv_init_cfg(cpu, &kvmcpu);
+> > +    kvm_riscv_init_satp_mode(cpu, &kvmcpu);
+> >  
+> >      kvm_riscv_destroy_scratch_vcpu(&kvmcpu);
+> >  }
+> > @@ -1980,7 +1998,7 @@ static bool kvm_cpu_realize(CPUState *cs, Error **errp)
+> >          }
+> >      }
+> >  
+> > -   return true;
+> > +    return true;
+> >  }
+> >  
+> >  void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+> > -- 
+> > 2.39.5
+> > 
+> >
+> 
+> Otherwise,
+> 
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
