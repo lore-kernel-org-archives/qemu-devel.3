@@ -4,62 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1FAEC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E9DC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:42:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLBr-00082K-Lw; Tue, 20 May 2025 07:31:23 -0400
+	id 1uHLLo-0008O3-HX; Tue, 20 May 2025 07:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uHLBp-000827-Hp
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:21 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLBn-0001B7-0m
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:21 -0400
-Received: from DESKTOP-TUU1E5L.fritz.box (unknown [172.201.77.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9C621206788F;
- Tue, 20 May 2025 04:31:14 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9C621206788F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1747740677;
- bh=kiSwBxsrpREHcCNUamJV6d9nNzOZx4WMReNeya8ItkI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jl0tEYQuslvgpRIxrz8I2ULrZUEwlPpZNCfiDNfEByJZQL6yFT7dhaoBWaJZKxS6l
- 3J08AIE+zdYNqa+tuboywckpbBA32A7py1pjl3HKTPH0IBFSYCeLBu0CJBU0A+KMQ5
- pKgPr+DIYDIIAdhgiB0yZ1l+VnALOuwncPiB47ZI=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: magnuskulke@microsoft.com,
-	qemu-devel@nongnu.org,
-	liuwe@microsoft.com
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Wei Liu <wei.liu@kernel.org>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH 03/25] target/i386/mshv: Add x86 decoder/emu implementation
-Date: Tue, 20 May 2025 13:29:56 +0200
-Message-Id: <20250520113018.49569-4-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uHLLZ-0008MX-Ih
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:41:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uHLLT-00033q-44
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:41:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747741276;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5i4Y7k2uui7OdsUwBkGkkZIH49rdaSoxdr+eV+BNJY4=;
+ b=T2fO/+7FemUCT4D7/Us3ztgxX27yTENwkRG2Gnu3rEYbHqYMMJ7+j+r3rSc1yrbdLX88zH
+ HKbUlkMGfFuPRb0xxiKeoeUdATjKw07FcWK7xbzMERYKi2W8YZxzfeJj2YNeLo1HE0l19x
+ 4y0S0O8vwEkwCHIoXAQCTtOAUH/ftjM=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-682-gqXn_FHBNk2DQC4FCoG_DA-1; Tue, 20 May 2025 07:41:14 -0400
+X-MC-Unique: gqXn_FHBNk2DQC4FCoG_DA-1
+X-Mimecast-MFC-AGG-ID: gqXn_FHBNk2DQC4FCoG_DA_1747741274
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-601c0493731so1299294a12.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:41:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747741273; x=1748346073;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5i4Y7k2uui7OdsUwBkGkkZIH49rdaSoxdr+eV+BNJY4=;
+ b=poLKyGKvbRDLtlInaCwIPSAo65jdZLL/1NGU6r0fplPj3VOGViUpNWMv5fd+HfSUnT
+ qmAg9c6EASJE2zpC605f+YqVEKhbuYzkVrr6ekXj3QOmL1aIPvkUySM8S1emDYQFOhEK
+ STUgRi0uUr2k7qapwVLQGNOBkxiEixDAcM4OWlBgWV9Wzydgkm95X+9O+qmRsgvv8KBn
+ NNqZ1U6XuCcO2PpGekSe7ionVm1m7kULtI7NBED0TsvRRdSMKytaThvNaTFpPk3vt0Ij
+ GcoKlqHBUfG9GHV/H4U0tlKsTSgFgBv2AOcQ7dzVH630893nodiJyh28AgF/ZBmhap3s
+ oFIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbDVlGPuuOcBjCx3T5xpnpZNAgO5uoc5atL7MGcD2pteQ/iEeLDIwnLNgeivxsouTWTiLxay3Ar9zS@nongnu.org
+X-Gm-Message-State: AOJu0Yz8M32FPXJLUa/wUHSTjUEYP+TZTMwSJnI0bTpn7mKL93sFepLm
+ gXXd8g+qGlUuNRo3Q2Q786kttZc3bhPwFCq8i9mWSfIT7I5v6njRBhJ3FwtEebobQ4Zc+bLDhAj
+ QZY3FYEvm01j1pcyWeDEqa2/vBhaNjl6MGNvf8ZwyJDmxleSrsHZprreV
+X-Gm-Gg: ASbGncsJdzxul8fSglx7UEhXqkQG9lmxLizkAExw+iYdb1mkK7wGSbr050rPsZlu+eE
+ RDZq0fA76XdMPkSI2pQCLZxFKa0Dpgxi1xLK5hqVW1TkvyVe1Y1rmhgRS/VzRPbQ7zLx25turty
+ y4x7OamAqmu5LjEz8SxdpQ0IBRfDZuYJeOTqkl9NxxEydBbqiERg3X8GJeekQQgep5+GdCdBGVL
+ 9z/1R8rQ4cgbh6j0YxP0zECiIYMJiWP6IYIOL9wQb2XurdKr1dzu5JhA/UC1SHhPYzbA9zi1SaC
+ nRT7J+MRsPskNDx1+UXJuUpHEEiVAZq+tUHncicT8lGOeFzYkxmpewJutLJ7
+X-Received: by 2002:a05:6402:13cf:b0:601:fd36:6ee1 with SMTP id
+ 4fb4d7f45d1cf-601fd367865mr4721683a12.0.1747741273542; 
+ Tue, 20 May 2025 04:41:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnZwAioUqzoVdZhAjrcTnSCzlu7P7QmebOT2m8uY8E9zPW4ItyiNRKXpb7R8Ma/73iHDSWZA==
+X-Received: by 2002:a05:6402:13cf:b0:601:fd36:6ee1 with SMTP id
+ 4fb4d7f45d1cf-601fd367865mr4721641a12.0.1747741272919; 
+ Tue, 20 May 2025 04:41:12 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-53-134-35.retail.telecomitalia.it.
+ [82.53.134.35]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6005ac33757sm7035640a12.59.2025.05.20.04.41.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 04:41:12 -0700 (PDT)
+Date: Tue, 20 May 2025 13:41:08 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: oenhan@gmail.com
+Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, cohuck@redhat.com, 
+ pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com, 
+ leiyang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Huaitong Han <hanht2@chinatelecom.cn>,
+ Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>, 
+ Jidong Xia <xiajd@chinatelecom.cn>
+Subject: Re: [PATCH V2] vhost: Don't set vring call if guest notifier is unused
+Message-ID: <dmtvkhqkwdv7rzum6c4gs3uiekwckou3yp7w2ql6tijxshoiju@w4rplxvassk6>
+References: <20250513112825.1731347-1-hanht2@chinatelecom.cn>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20250513112825.1731347-1-hanht2@chinatelecom.cn>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,459 +113,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MSHV accelerator requires a x86 decoder/emulator in userland to
-emulate MMIO instructions. This change contains the implementations for
-the generalized i386 instruction decoder/emulator.
+On Tue, May 13, 2025 at 07:28:25PM +0800, oenhan@gmail.com wrote:
+>From: Huaitong Han <hanht2@chinatelecom.cn>
+>
+>The vring call fd is set even when the guest does not use MSI-X (e.g., in the
+>case of virtio PMD), leading to unnecessary CPU overhead for processing
+>interrupts.
+>
+>The commit 96a3d98d2c("vhost: don't set vring call if no vector") optimized the
+>case where MSI-X is enabled but the queue vector is unset. However, there's an
+>additional case where the guest uses INTx and the INTx_DISABLED bit in the PCI
+>config is set, meaning that no interrupt notifier will actually be used.
+>
+>In such cases, the vring call fd should also be cleared to avoid redundant
+>interrupt handling.
+>
+>Fixes: 96a3d98d2c("vhost: don't set vring call if no vector")
+                   ^
+nit: there should be a space here.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- include/system/mshv.h           |  32 ++++
- target/i386/cpu.h               |   2 +-
- target/i386/emulate/meson.build |   7 +-
- target/i386/meson.build         |   2 +
- target/i386/mshv/meson.build    |   7 +
- target/i386/mshv/x86.c          | 330 ++++++++++++++++++++++++++++++++
- 6 files changed, 377 insertions(+), 3 deletions(-)
- create mode 100644 include/system/mshv.h
- create mode 100644 target/i386/mshv/meson.build
- create mode 100644 target/i386/mshv/x86.c
+If you need to resend, I think you can fix also the one in the 
+description.
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-new file mode 100644
-index 0000000000..8380b92da2
---- /dev/null
-+++ b/include/system/mshv.h
-@@ -0,0 +1,32 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors:
-+ *  Ziqiao Zhou       <ziqiaozhou@microsoft.com>
-+ *  Magnus Kulke      <magnuskulke@microsoft.com>
-+ *  Jinank Jain       <jinankjain@microsoft.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#ifndef QEMU_MSHV_INT_H
-+#define QEMU_MSHV_INT_H
-+
-+#ifdef COMPILING_PER_TARGET
-+#ifdef CONFIG_MSHV
-+#define CONFIG_MSHV_IS_POSSIBLE
-+#endif
-+#else
-+#define CONFIG_MSHV_IS_POSSIBLE
-+#endif
-+
-+/* cpu */
-+/* EFER (technically not a register) bits */
-+#define EFER_LMA   ((uint64_t)0x400)
-+#define EFER_LME   ((uint64_t)0x100)
-+
-+#endif
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 4f8ed8868e..db6a37b271 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2101,7 +2101,7 @@ typedef struct CPUArchState {
-     QEMUTimer *xen_periodic_timer;
-     QemuMutex xen_timers_lock;
- #endif
--#if defined(CONFIG_HVF)
-+#if defined(CONFIG_HVF) || defined(CONFIG_MSHV)
-     X86LazyFlags lflags;
-     void *emu_mmio_buf;
- #endif
-diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
-index 4edd4f462f..b6dafb6a5b 100644
---- a/target/i386/emulate/meson.build
-+++ b/target/i386/emulate/meson.build
-@@ -1,5 +1,8 @@
--i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
-+emulator_files = files(
-   'x86_decode.c',
-   'x86_emu.c',
-   'x86_flags.c',
--))
-+)
-+
-+i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: emulator_files)
-+i386_system_ss.add(when: 'CONFIG_MSHV', if_true: emulator_files)
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index c1aacea613..6097e5c427 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -11,6 +11,7 @@ i386_ss.add(when: 'CONFIG_SEV', if_true: files('host-cpu.c', 'confidential-guest
- # x86 cpu type
- i386_ss.add(when: 'CONFIG_KVM', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_HVF', if_true: files('host-cpu.c'))
-+i386_ss.add(when: 'CONFIG_MSHV', if_true: files('host-cpu.c'))
- 
- i386_system_ss = ss.source_set()
- i386_system_ss.add(files(
-@@ -32,6 +33,7 @@ subdir('nvmm')
- subdir('hvf')
- subdir('tcg')
- subdir('emulate')
-+subdir('mshv')
- 
- target_arch += {'i386': i386_ss}
- target_system_arch += {'i386': i386_system_ss}
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-new file mode 100644
-index 0000000000..8ddaa7c11d
---- /dev/null
-+++ b/target/i386/mshv/meson.build
-@@ -0,0 +1,7 @@
-+i386_mshv_ss = ss.source_set()
-+
-+i386_mshv_ss.add(files(
-+  'x86.c',
-+))
-+
-+i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
-diff --git a/target/i386/mshv/x86.c b/target/i386/mshv/x86.c
-new file mode 100644
-index 0000000000..581710fd06
---- /dev/null
-+++ b/target/i386/mshv/x86.c
-@@ -0,0 +1,330 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors:
-+ *  Magnus Kulke      <magnuskulke@microsoft.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "cpu.h"
-+#include "emulate/x86_decode.h"
-+#include "emulate/x86_emu.h"
-+#include "qemu/typedefs.h"
-+#include "qemu/error-report.h"
-+#include "system/mshv.h"
-+
-+/* RW or Exec segment */
-+static const uint8_t RWRX_SEGMENT_TYPE        = 0x2;
-+static const uint8_t CODE_SEGMENT_TYPE        = 0x8;
-+static const uint8_t EXPAND_DOWN_SEGMENT_TYPE = 0x4;
-+
-+typedef enum CpuMode {
-+    REAL_MODE,
-+    PROTECTED_MODE,
-+    LONG_MODE,
-+} CpuMode;
-+
-+static CpuMode cpu_mode(CPUState *cpu)
-+{
-+    enum CpuMode m = REAL_MODE;
-+
-+    if (x86_is_protected(cpu)) {
-+        m = PROTECTED_MODE;
-+
-+        if (x86_is_long_mode(cpu)) {
-+            m = LONG_MODE;
-+        }
-+    }
-+
-+    return m;
-+}
-+
-+static bool segment_type_ro(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    return (type_ & (~RWRX_SEGMENT_TYPE)) == 0;
-+}
-+
-+static bool segment_type_code(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    return (type_ & CODE_SEGMENT_TYPE) != 0;
-+}
-+
-+static bool segment_expands_down(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+
-+    if (segment_type_code(seg)) {
-+        return false;
-+    }
-+
-+    return (type_ & EXPAND_DOWN_SEGMENT_TYPE) != 0;
-+}
-+
-+static uint32_t segment_limit(const SegmentCache *seg)
-+{
-+    uint32_t limit = seg->limit;
-+    uint32_t granularity = (seg->flags & DESC_G_MASK) != 0;
-+
-+    if (granularity != 0) {
-+        limit = (limit << 12) | 0xFFF;
-+    }
-+
-+    return limit;
-+}
-+
-+static uint8_t segment_db(const SegmentCache *seg)
-+{
-+    return (seg->flags >> DESC_B_SHIFT) & 1;
-+}
-+
-+static uint32_t segment_max_limit(const SegmentCache *seg)
-+{
-+    if (segment_db(seg) != 0) {
-+        return 0xFFFFFFFF;
-+    }
-+    return 0xFFFF;
-+}
-+
-+static int linearize(CPUState *cpu,
-+                     target_ulong logical_addr, target_ulong *linear_addr,
-+                     X86Seg seg_idx)
-+{
-+    enum CpuMode mode;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    SegmentCache *seg = &env->segs[seg_idx];
-+    target_ulong base = seg->base;
-+    target_ulong logical_addr_32b;
-+    uint32_t limit;
-+    /* TODO: the emulator will not pass us "write" indicator yet */
-+    bool write = false;
-+
-+    mode = cpu_mode(cpu);
-+
-+    switch (mode) {
-+    case LONG_MODE:
-+        if (__builtin_add_overflow(logical_addr, base, linear_addr)) {
-+            error_report("Address overflow");
-+            return -1;
-+        }
-+        break;
-+    case PROTECTED_MODE:
-+    case REAL_MODE:
-+        if (segment_type_ro(seg) && write) {
-+            error_report("Cannot write to read-only segment");
-+            return -1;
-+        }
-+
-+        logical_addr_32b = logical_addr & 0xFFFFFFFF;
-+        limit = segment_limit(seg);
-+
-+        if (segment_expands_down(seg)) {
-+            if (logical_addr_32b >= limit) {
-+                error_report("Address exceeds limit (expands down)");
-+                return -1;
-+            }
-+
-+            limit = segment_max_limit(seg);
-+        }
-+
-+        if (logical_addr_32b > limit) {
-+            error_report("Address exceeds limit %u", limit);
-+            return -1;
-+        }
-+        *linear_addr = logical_addr_32b + base;
-+        break;
-+    default:
-+        error_report("Unknown cpu mode: %d", mode);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+bool x86_read_segment_descriptor(CPUState *cpu,
-+                                 struct x86_segment_descriptor *desc,
-+                                 x86_segment_selector sel)
-+{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    target_ulong gva;
-+    /* int ret; */
-+
-+    memset(desc, 0, sizeof(*desc));
-+
-+    /* valid gdt descriptors start from index 1 */
-+    if (!sel.index && GDT_SEL == sel.ti) {
-+        return false;
-+    }
-+
-+    if (GDT_SEL == sel.ti) {
-+        base = env->gdt.base;
-+        limit = env->gdt.limit;
-+    } else {
-+        base = env->ldt.base;
-+        limit = env->ldt.limit;
-+    }
-+
-+    if (sel.index * 8 >= limit) {
-+        return false;
-+    }
-+
-+    gva = base + sel.index * 8;
-+    emul_ops->read_mem(cpu, desc, gva, sizeof(*desc));
-+
-+    return true;
-+}
-+
-+bool x86_write_segment_descriptor(CPUState *cpu,
-+                                  struct x86_segment_descriptor *desc,
-+                                  x86_segment_selector sel)
-+{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    /* int ret; */
-+    target_ulong gva;
-+
-+    if (GDT_SEL == sel.ti) {
-+        base = env->gdt.base;
-+        limit = env->gdt.limit;
-+    } else {
-+        base = env->ldt.base;
-+        limit = env->ldt.limit;
-+    }
-+
-+    if (sel.index * 8 >= limit) {
-+        return false;
-+    }
-+
-+    gva = base + sel.index * 8;
-+    emul_ops->write_mem(cpu, desc, gva, sizeof(*desc));
-+
-+    return true;
-+}
-+
-+bool x86_read_call_gate(CPUState *cpu, struct x86_call_gate *idt_desc,
-+                        int gate)
-+{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    target_ulong gva;
-+
-+    base = env->idt.base;
-+    limit = env->idt.limit;
-+
-+    memset(idt_desc, 0, sizeof(*idt_desc));
-+    if (gate * 8 >= limit) {
-+        perror("call gate exceeds idt limit");
-+        return false;
-+    }
-+
-+    gva = base + gate * 8;
-+    emul_ops->read_mem(cpu, idt_desc, gva, sizeof(*idt_desc));
-+
-+    return true;
-+}
-+
-+bool x86_is_protected(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr0 = env->cr[0];
-+
-+    return cr0 & CR0_PE_MASK;
-+}
-+
-+bool x86_is_real(CPUState *cpu)
-+{
-+    return !x86_is_protected(cpu);
-+}
-+
-+bool x86_is_v8086(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    return x86_is_protected(cpu) && (env->eflags & VM_MASK);
-+}
-+
-+bool x86_is_long_mode(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t efer = env->efer;
-+
-+    return ((efer & (EFER_LME | EFER_LMA)) == (EFER_LME | EFER_LMA));
-+}
-+
-+bool x86_is_long64_mode(CPUState *cpu)
-+{
-+    error_report("unimplemented: is_long64_mode()");
-+    abort();
-+}
-+
-+bool x86_is_paging_mode(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr0 = env->cr[0];
-+
-+    return cr0 & CR0_PG_MASK;
-+}
-+
-+bool x86_is_pae_enabled(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr4 = env->cr[4];
-+
-+    return cr4 & CR4_PAE_MASK;
-+}
-+
-+target_ulong linear_addr(CPUState *cpu, target_ulong addr, X86Seg seg)
-+{
-+    int ret;
-+    target_ulong linear_addr;
-+
-+    /* return vmx_read_segment_base(cpu, seg) + addr; */
-+    ret = linearize(cpu, addr, &linear_addr, seg);
-+    if (ret < 0) {
-+        error_report("failed to linearize address");
-+        abort();
-+    }
-+
-+    return linear_addr;
-+}
-+
-+target_ulong linear_addr_size(CPUState *cpu, target_ulong addr, int size,
-+                              X86Seg seg)
-+{
-+    switch (size) {
-+    case 2:
-+        addr = (uint16_t)addr;
-+        break;
-+    case 4:
-+        addr = (uint32_t)addr;
-+        break;
-+    default:
-+        break;
-+    }
-+    return linear_addr(cpu, addr, seg);
-+}
-+
-+target_ulong linear_rip(CPUState *cpu, target_ulong rip)
-+{
-+    return linear_addr(cpu, rip, R_CS);
-+}
--- 
-2.34.1
+>Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
+>Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
+>Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
+>---
+>V2:
+>- Retain the name `query_guest_notifiers`
+>- All qtest/unit test cases pass
+>- Fix V1 patch style problems
+>
+> hw/pci/pci.c                   |  2 +-
+> hw/s390x/virtio-ccw.c          |  7 +++++--
+> hw/virtio/vhost.c              |  3 +--
+> hw/virtio/virtio-pci.c         | 10 ++++++++--
+> include/hw/pci/pci.h           |  1 +
+> include/hw/virtio/virtio-bus.h |  2 +-
+> 6 files changed, 17 insertions(+), 8 deletions(-)
+>
+>diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>index 352b3d12c8..45b491412a 100644
+>--- a/hw/pci/pci.c
+>+++ b/hw/pci/pci.c
+>@@ -1712,7 +1712,7 @@ static void pci_update_mappings(PCIDevice *d)
+>     pci_update_vga(d);
+> }
+>
+>-static inline int pci_irq_disabled(PCIDevice *d)
+>+int pci_irq_disabled(PCIDevice *d)
+> {
+>     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
+> }
+>diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+>index d2f85b39f3..632708ba4d 100644
+>--- a/hw/s390x/virtio-ccw.c
+>+++ b/hw/s390x/virtio-ccw.c
+>@@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState *d, bool running)
+>     }
+> }
+>
+>-static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
+>+static bool virtio_ccw_query_guest_notifiers(DeviceState *d, int n)
+> {
+>     CcwDevice *dev = CCW_DEVICE(d);
+>+    VirtioCcwDevice *vdev = VIRTIO_CCW_DEVICE(d);
+>+    VirtIODevice *virtio_dev = virtio_bus_get_device(&vdev->bus);
+>
+>-    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
+>+    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
+>+            && virtio_queue_vector(virtio_dev, n) != VIRTIO_NO_VECTOR;
+> }
+>
+> static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
+>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>index 4cae7c1664..2a9a839763 100644
+>--- a/hw/virtio/vhost.c
+>+++ b/hw/virtio/vhost.c
+>@@ -1341,8 +1341,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>     }
+>
+>     if (k->query_guest_notifiers &&
+>-        k->query_guest_notifiers(qbus->parent) &&
+>-        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
+>+        !k->query_guest_notifiers(qbus->parent, idx)) {
+>         file.fd = -1;
+>         r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+>         if (r) {
+>diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>index 0fa8fe4955..d62e199489 100644
+>--- a/hw/virtio/virtio-pci.c
+>+++ b/hw/virtio/virtio-pci.c
+>@@ -1212,10 +1212,16 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
+>     return 0;
+> }
+>
+>-static bool virtio_pci_query_guest_notifiers(DeviceState *d)
+>+static bool virtio_pci_query_guest_notifiers(DeviceState *d, int n)
+> {
+>     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+>-    return msix_enabled(&proxy->pci_dev);
+>+    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+>+
+>+    if (msix_enabled(&proxy->pci_dev)) {
+>+        return virtio_queue_vector(vdev, n) != VIRTIO_NO_VECTOR;
+
+Why are we moving this check in every callback, can't we leave it as 
+before in vhost.c and here return true?
+
+I mean here:
+     if (msix_enabled(&proxy->pci_dev)) {
+         return true;
+     } else {
+         return !pci_irq_disabled(&proxy->pci_dev);
+     }
+
+and leave vhost.c untouched.
+
+Thanks,
+Stefano
+
+>+    } else {
+>+        return !pci_irq_disabled(&proxy->pci_dev);
+>+    }
+> }
+>
+> static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
+>diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+>index c2fe6caa2c..8c24bd97db 100644
+>--- a/include/hw/pci/pci.h
+>+++ b/include/hw/pci/pci.h
+>@@ -668,6 +668,7 @@ void lsi53c8xx_handle_legacy_cmdline(DeviceState *lsi_dev);
+>
+> qemu_irq pci_allocate_irq(PCIDevice *pci_dev);
+> void pci_set_irq(PCIDevice *pci_dev, int level);
+>+int pci_irq_disabled(PCIDevice *d);
+>
+> static inline void pci_irq_assert(PCIDevice *pci_dev)
+> {
+>diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
+>index 7ab8c9dab0..75d43b508a 100644
+>--- a/include/hw/virtio/virtio-bus.h
+>+++ b/include/hw/virtio/virtio-bus.h
+>@@ -48,7 +48,7 @@ struct VirtioBusClass {
+>     int (*load_done)(DeviceState *d, QEMUFile *f);
+>     int (*load_extra_state)(DeviceState *d, QEMUFile *f);
+>     bool (*has_extra_state)(DeviceState *d);
+>-    bool (*query_guest_notifiers)(DeviceState *d);
+>+    bool (*query_guest_notifiers)(DeviceState *d, int n);
+>     int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
+>     int (*set_host_notifier_mr)(DeviceState *d, int n,
+>                                 MemoryRegion *mr, bool assign);
+>-- 
+>2.43.5
+>
 
 
