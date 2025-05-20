@@ -4,89 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9365C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 09:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69AB6C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:02:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHJjl-0006Va-5F; Tue, 20 May 2025 05:58:17 -0400
+	id 1uHJn7-0007Se-IU; Tue, 20 May 2025 06:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHJji-0006VF-Mb
- for qemu-devel@nongnu.org; Tue, 20 May 2025 05:58:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uHJn1-0007SU-DE
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:01:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHJjg-0007ks-Rg
- for qemu-devel@nongnu.org; Tue, 20 May 2025 05:58:14 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uHJmz-0008LZ-6Y
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:01:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747735090;
+ s=mimecast20190719; t=1747735295;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ceUj7NohcwPuRcEJq3YphgLsVLmuYSeM5JaLNINpgUM=;
- b=cly62LqucEtXgd34OM/UeT5cLOSWFuAHwpLCqxGv9yZ2583sEF0X+ferUO8NZDAw51FIp+
- XaEFdmCvu39TCjtw/fSg/fJg6eQV+1jPw1UqbgftgPmRZ79O4kXYBLNwOJAvb4BxswWXdY
- o8I62ZDqkpPqmZQeUnaIXnexXmdZsVE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EBC6/ifpa1Hxu+6vgLiGQNEssho44v+AyDML+CQ4c/s=;
+ b=cshq41PedHhVF6BrKa0LcxM9f8G8CQpCjkgzFmp5MdO8JvRL3ltJBWhy+FEJUgHb6/V4za
+ CqAfj1lK4qL7d5Kwhy/xEnGjPLRLv3g64f98PSX47OIZ4dQO8hM5KUodftwqKC14e6I5o5
+ hGrjJ3Hmwnjicp5NleyHfWsJgZ6sCgY=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-9tvoagzsOheXqbGJpEfxig-1; Tue, 20 May 2025 05:58:09 -0400
-X-MC-Unique: 9tvoagzsOheXqbGJpEfxig-1
-X-Mimecast-MFC-AGG-ID: 9tvoagzsOheXqbGJpEfxig_1747735088
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a3696a0ce6so1102975f8f.3
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 02:58:08 -0700 (PDT)
+ us-mta-677-Z3YZhO_qP9mY7S2E4JpH9g-1; Tue, 20 May 2025 06:01:34 -0400
+X-MC-Unique: Z3YZhO_qP9mY7S2E4JpH9g-1
+X-Mimecast-MFC-AGG-ID: Z3YZhO_qP9mY7S2E4JpH9g_1747735293
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b1ffc678adfso3484853a12.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 03:01:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747735088; x=1748339888;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1747735293; x=1748340093;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ceUj7NohcwPuRcEJq3YphgLsVLmuYSeM5JaLNINpgUM=;
- b=t9A37IcdSsuLgV1Td70DmHhouEmU2JVX3SOw/bUnLG7DjauPmTYzh0ocjNXtgc2QeK
- /si8PyRl1mULbC2EhVchQSdkuPlpA56rvUSAQ/aOj3Fr7Lfh8/UhX1NDq+KK47C8J/Vt
- TJ7gLYqR5LmgLccMY9dTGe/4pH5d/GB2Tsg7g7ZYoRm+AKGmGO/ib1+hK8HCzFq6szVx
- TtDS7xCOIHiKVtTqJLccDuw5obDCnX85onOUoDFysuc+3BaqlaZVgvld6Lk09FBxFy7w
- wSGDcJRcDk0IjxtKRyPhWcIfDG4FOI7y954gpn0WfRnw0QQ5YIp2n9q223dOoNgHMDas
- qiYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgqAWfUiKMo4vfPervjjJb5CveTj92vCL51Fj/PoPuiFONHUETmyybfEcOLfJaFZFP9UUqr90r6t9v@nongnu.org
-X-Gm-Message-State: AOJu0YxFZR6LSFnjuwHvcTrWX/RT9xH0P+NBB+WT8Fn15uJU4cK9IzN0
- gl7RPs12sefnwZuUVmJDM/csYxJl5GFACpgGq71ZmgwH8pDXOfeoD6Ns3dpnGMehbkWigzH2IOP
- k9gk69nEzThVC4ky045DyJVases1+bo0ZFhD4tUjRLuxHXDc5FbvwohAZ3dMqdiHLpEcvEtpXnd
- PQR67OkB+bGEuMi8rYi28ZZxWMTizYg4k=
-X-Gm-Gg: ASbGnct4mFvbtPxeht+PEgw2eXlCQXIuRvr2qX7Fo0+1+SFJKZ5lZhFW1cqSsTNq4uR
- Q4Wf2JpClru2VPA/6YDO4ZCB+gGTHOnCfcqQqwfcrYjm25UN89aqBR3q1vUbX2AkvXag=
-X-Received: by 2002:a05:6000:2912:b0:3a3:7cbd:39b1 with SMTP id
- ffacd0b85a97d-3a37cbd3a4amr369905f8f.24.1747735087785; 
- Tue, 20 May 2025 02:58:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGO55mrXXsOfP0kIppOkKfntLa3RW7DgdoF+8rqOhOgpd8IbnIPqTWaU8BLWAF3TJRsFqDye2CHVwLB54j/WpA=
-X-Received: by 2002:a05:6000:2912:b0:3a3:7cbd:39b1 with SMTP id
- ffacd0b85a97d-3a37cbd3a4amr369878f8f.24.1747735087341; Tue, 20 May 2025
- 02:58:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250330205857.1615-1-shentey@gmail.com>
- <20250330205857.1615-2-shentey@gmail.com>
- <340649cf-9348-458d-97e7-aee73c02217c@redhat.com>
- <540905F9-7DF7-436F-905C-A7F225F5E156@gmail.com>
- <CABC6E67-C4C7-481F-BB96-BF60957D7A84@gmail.com>
- <CABgObfbD-yHee4TXKqQ2gw7N8dtuB1wKqPLD5jLKXtJ8hx2xSw@mail.gmail.com>
- <CAAjaMXadSaKKAk6Vo-AM8RfkH3kQey9LamjC=nEDkYF0d=v47w@mail.gmail.com>
-In-Reply-To: <CAAjaMXadSaKKAk6Vo-AM8RfkH3kQey9LamjC=nEDkYF0d=v47w@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 20 May 2025 11:57:55 +0200
-X-Gm-Features: AX0GCFvgEfSNrUc0UMVgSAvjorMVsU5D_ePX2ucQPo6cwhJWHsiWtqYdj00rbEI
-Message-ID: <CABgObfbbuPoQZPYxE+ZQYd=WpLX=zkXiWYOqoAN6MFaX1dx7wg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] rust/qemu-api: Add initial logging support based on C
- API
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ bh=EBC6/ifpa1Hxu+6vgLiGQNEssho44v+AyDML+CQ4c/s=;
+ b=gKEJ8O/yqqjHX3VhHqiogJBpfcb+RhR/3QHuXx2GNwRKY+drqmfwik3Q08Eb73podi
+ oAqjUa34+DbcrHR3+qT4FLsTjq7tAUgZQ7ht33g/AWwhdZM48W5SLrDabv06PObWykzJ
+ gA2hPg27/NCviabc+vLpryBW0xdUPLV4xesqqTgOoqwkIsWIGa36DzGn9C4VaQgiwuCe
+ XMZz1uoAAFlRFTWrPvW/rPHXs80AQMHgexzoCHlSvReFDLObsQkmtSOJIQvvomgOUd+/
+ gqnnGYY1KU8CsA7FR75dr516VyIZEYDIIeJHkfNwP+Sh3wNL3zVHZU5OJTzhcQsd4N/o
+ 8rKg==
+X-Gm-Message-State: AOJu0Yzs+oP+Y0DV7zutzfbSOMnpgnSfyQ5GGwqXTgpe2UOqKa0vGWmi
+ T9HLTGSskoEw5RCzknbVsODNbuzF4jPXqNEC9oV/rEf3FZyV8K1/sMuMk/A+XPAP3Y/YKKOXW8E
+ c2xmrVp8ZgzoGYlJwXPAIGt2kDlmSfOt/uhSj7gPpNZRrUCLTV6wharVZ
+X-Gm-Gg: ASbGnctpC9/Z/2lw/iixyUibhXTBxBmoRHmWfjAf/YMkmTLkp4X8MT0aex8uhkr+ct+
+ FCpizFXK9SCrGKmwFDwmrXaLs/d5D33/sNAjh6ZLaIjkVWn8XHmB1JZvRhPxGfTHoX6aD2kIiTf
+ fLmxiecWlvIHGXKSLLYmYCJ2km9npwuJhte0GqIrUXQpAF+J2s7ClUI/h/zw9GlTLNYCoEX7XwU
+ b7swSIrC6EjvyrE0qHG4PLYYL+Ho/QX53bYJQfSmDTYUykTOHnO62ex19TjhwZecKNA9viCXg5V
+ 1fMJm66p6M/izuwnhK/greeWrcb/
+X-Received: by 2002:a17:903:2449:b0:231:c2e8:89df with SMTP id
+ d9443c01a7336-231d4535a98mr250550275ad.28.1747735292957; 
+ Tue, 20 May 2025 03:01:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6ZP6sRj7q7xM28TBTTsVS1/Qkd6+NDkV0uROoQuiAwwO6BPBJDSev6tTqYXV1Wqg6e6rU5w==
+X-Received: by 2002:a17:903:2449:b0:231:c2e8:89df with SMTP id
+ d9443c01a7336-231d4535a98mr250549905ad.28.1747735292545; 
+ Tue, 20 May 2025 03:01:32 -0700 (PDT)
+Received: from smtpclient.apple ([203.163.235.39])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4e977f6sm73349505ad.131.2025.05.20.03.01.26
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 20 May 2025 03:01:31 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.2\))
+Subject: Re: [PATCH v7 00/16] Introduce support for IGVM files
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+Date: Tue, 20 May 2025 15:31:13 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Berrange <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Michael Tsirkin <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Joerg Roedel <jroedel@suse.com>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Message-Id: <EFD6A252-EF5D-453F-B4F0-2911DB693C9E@redhat.com>
+References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+To: Roy Hopkins <roy.hopkins@randomman.co.uk>
+X-Mailer: Apple Mail (2.3776.700.51.11.2)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -111,78 +119,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 19, 2025 at 10:14=E2=80=AFAM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> There's also the `tracing` framework
-> https://docs.rs/tracing/latest/tracing/ that is quite nice for
-> defining tracing events **and** spans for logs. I find it confusing
-> that it still ties tracing events with log level filters though
-> (info/warn/error/debug/trace).
 
-I like the overall look of the tracing crate API a lot. One thing that
-I don't like is that it's very string-heavy. In general it seems to
-have more overhead than tracetool if you use `Interest::Sometimes`; it
-uses Strings for event names and targets but not ids (the default
-event name is even "event FILE:LINE" which is not really usable except
-for development), making matches (especially "enabled()" checks) slow.
-Secondarily, built-in support for fmt::Debug/fmt::Display lets you get
-away with not thinking of *which* fields you want to record. But it's
-powerful, easy to use and it also has very few dependencies, which is
-nice.
 
-> Perhaps this is also a good opportunity to restructure QEMU's logging
-> in general. [...]
-> If we align QEMU's general logging to use log levels, we can convert
-> guest error logs to "Error" level logs of type: "guest", and unimp
-> logs to "Error" logs of type "unimplemented". Or, "Warn" instead of
-> "Error". Then, all trace_* items become straightforwardly Trace level
-> log items.
+> On 27 Feb 2025, at 7:08=E2=80=AFPM, Roy Hopkins =
+<roy.hopkins@randomman.co.uk> wrote:
+>=20
+> Here is v7 of the set of patches to add support for IGVM files to =
+QEMU. This is
+> based on commit 40efe733e10cc00e4fb4f9f5790a28e744e63c62 of qemu.
+>=20
+> Firstly, apologies for the amount of time between the last version and =
+this one.
+> I moved roles to a different company and, although I always planned to =
+see this
+> patch series to completion, it took a while before I found time to =
+setup a
+> development environment and be in a position to send a new version. I =
+will
+> continue this series using a personal email address for now, hence the =
+change
+> to the author and signed-off-by emails.
+>=20
+> The only changes in this version are to rebase on the current master =
+branch and
+> update commit metadata, including Signed-Off-By and Author emails for =
+my
+> replacement email address, and to include the final Reviewed-By that =
+were added
+> in the last review. There were no requested changes on the previous =
+version [1]
+> so I believe this series is ready to merge.
+>=20
+> As always, thanks to those that have been following along, reviewing =
+and testing
+> this series. This v7 patch series is also available on github: [2]
+>=20
+> For testing IGVM support in QEMU you need to generate an IGVM file =
+that is
+> configured for the platform you want to launch. You can use the =
+`buildigvm`
+> test tool [3] to allow generation of IGVM files for all currently =
+supported
+> platforms. Patch 11/17 contains information on how to generate an IGVM =
+file
+> using this tool.
+>=20
+> Changes in v7:
 
-Focusing for a second on guest and unimp items, do you think that
-there would be macros like `guest_error!` and `unimp!` (similar to how
-`tracing` has shortcuts `error!` or `warn!`)? If so, we could add them
-even now, so that any future changes to the implementation would be
-transparent.
+It seems no v8 was sent out?=20
+=
+https://patchew.org/search?q=3Dproject%3AQEMU+Introduce+support+for+IGVM+f=
+iles
 
-> Then, all we have to do in the Rust side is implement a `tracing`
-> subscriber that consumes these traces and pushes them into QEMU's C
-> implementation.
+What is the status of this patch set to support IGVM in QEMU? =20
 
-As I said above, I am a bit worried about performance implications of
-having Strings for event names and targets but yes, using the tracing
-crate is definitely something to think about! As you say, it provides
-an opportunity to add structure to QEMU's logging and maybe we can get
-the best of both worlds from both `tracing` and tracetool. Do you
-think util/log.c could become a wrapper around event!() and
-tracing_subscriber::FmtSubscriber (with log levels based on LOG_*
-constants, as you mentioned)? Then the `log` backend for tracetool
-could generate Rust code that calls trace!() instead of C code that
-calls qemu_log().
-
-Or you could do the same thing to the error_vprintf/error_printf
-implementations, and then Rust code could use error! and warn! where C
-code uses error_report() and warn_report(). It's a common complaint
-that error_report() and warn_report() get lost in logs for example,
-and `tracing` could add some structure there.
-
-It could also be a very good starting point for thinking about C->Rust
-FFI (i.e. implementing in Rust functionality that is used by C code).
-
-In the meanwhile, another thing that could be done is take inspiration
-from the `tracing` API, for example adding an #[instrument] macro to
-qemu_api_macros:
-
-impl PL011Registers {
-    #[instrument(target =3D "hw_char", name =3D "pl011_write",
-        fields(offset =3D offset as u32, value))
-    pub(self) fn write(...) { }
-}
-
-This way, even if tracetool and trace-events file remain part of the
-architecture, the API is more familiar to Rust developers. It'd be a
-nice addition to Tanish's work (he's my student that's working on Rust
-tracepoints.
-
-Paolo
+>=20
+> * Update version numbers for IGVM support to 10.0
+> * Add Reviewed-by to relevant commits.
+> * Update Author email and sign-offs to my new email address
+>=20
+> Patch summary:
+>=20
+> 1-11: Add support and documentation for processing IGVM files for SEV, =
+SEV-ES,
+> SEV-SNP and native platforms.=20
+>=20
+> 12-15: Processing of policy and SEV-SNP ID_BLOCK from IGVM file.=20
+>=20
+> 16: Add pre-processing of IGVM file to support synchronization of =
+'SEV_FEATURES'
+> from IGVM VMSA to KVM.
+>=20
+> [1] Link to v6:
+> =
+https://lore.kernel.org/qemu-devel/cover.1727341768.git.roy.hopkins@suse.c=
+om/
+>=20
+> [2] v7 patches also available here:
+> https://github.com/roy-hopkins/qemu/tree/igvm_master_v7
+>=20
+> [3] `buildigvm` tool v0.2.0
+> https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
+>=20
+> Roy Hopkins (16):
+>  meson: Add optional dependency on IGVM library
+>  backends/confidential-guest-support: Add functions to support IGVM
+>  backends/igvm: Add IGVM loader and configuration
+>  hw/i386: Add igvm-cfg object and processing for IGVM files
+>  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict =
+with
+>    IGVM
+>  sev: Update launch_update_data functions to use Error handling
+>  target/i386: Allow setting of R_LDTR and R_TR with
+>    cpu_x86_load_seg_cache()
+>  i386/sev: Refactor setting of reset vector and initial CPU state
+>  i386/sev: Implement ConfidentialGuestSupport functions for SEV
+>  docs/system: Add documentation on support for IGVM
+>  docs/interop/firmware.json: Add igvm to FirmwareDevice
+>  backends/confidential-guest-support: Add set_guest_policy() function
+>  backends/igvm: Process initialization sections in IGVM file
+>  backends/igvm: Handle policy for SEV guests
+>  i386/sev: Add implementation of CGS set_guest_policy()
+>  sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
+>=20
+> backends/confidential-guest-support.c       |  43 +
+> backends/igvm-cfg.c                         |  52 ++
+> backends/igvm.c                             | 967 ++++++++++++++++++++
+> backends/igvm.h                             |  23 +
+> backends/meson.build                        |   5 +
+> docs/interop/firmware.json                  |  30 +-
+> docs/system/i386/amd-memory-encryption.rst  |   2 +
+> docs/system/igvm.rst                        | 173 ++++
+> docs/system/index.rst                       |   1 +
+> hw/i386/pc.c                                |  12 +
+> hw/i386/pc_piix.c                           |  10 +
+> hw/i386/pc_q35.c                            |  10 +
+> hw/i386/pc_sysfw.c                          |  31 +-
+> include/hw/i386/x86.h                       |   3 +
+> include/system/confidential-guest-support.h |  88 ++
+> include/system/igvm-cfg.h                   |  47 +
+> meson.build                                 |   8 +
+> meson_options.txt                           |   2 +
+> qapi/qom.json                               |  17 +
+> qemu-options.hx                             |  28 +
+> scripts/meson-buildoptions.sh               |   3 +
+> target/i386/cpu.h                           |   9 +-
+> target/i386/sev.c                           | 850 +++++++++++++++--
+> target/i386/sev.h                           | 124 +++
+> 24 files changed, 2454 insertions(+), 84 deletions(-)
+> create mode 100644 backends/igvm-cfg.c
+> create mode 100644 backends/igvm.c
+> create mode 100644 backends/igvm.h
+> create mode 100644 docs/system/igvm.rst
+> create mode 100644 include/system/igvm-cfg.h
+>=20
+> --=20
+> 2.43.0
+>=20
 
 
