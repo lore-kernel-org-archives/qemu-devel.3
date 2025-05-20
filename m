@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9264EC54799
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62DC1C3DA6D
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:32:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLCG-0008AT-ES; Tue, 20 May 2025 07:31:48 -0400
+	id 1uHLBm-00081U-HW; Tue, 20 May 2025 07:31:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uHLCF-0008AE-0g
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:47 -0400
+ id 1uHLBh-00080d-Aq
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:15 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLCC-0001IA-Kk
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:46 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLBe-000178-0y
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:12 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (unknown [172.201.77.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 3F6A120277DE;
- Tue, 20 May 2025 04:31:39 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3F6A120277DE
+ by linux.microsoft.com (Postfix) with ESMTPSA id 2C7712067864;
+ Tue, 20 May 2025 04:31:03 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2C7712067864
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1747740702;
- bh=FY/9PE7gpu6Y+lOrFYEDXYlsu+sMvVNQC4SrgpOJyJw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=DELX3bUHjw+AEPUNDrOARzHSPzzaHrufdDLx+s7WEonDP4IBYfNp/lxWzVQDiWwEN
- d4Oes2QEF4GPsU/z7rnhr3mopY+0a9U3Spx8bVcGMyBKd7rbuLabld0LHMm6NyoI3h
- O9TavWwY46QcQHdy2o5R56RisaDcexZpUI7NUiF8=
+ s=default; t=1747740667;
+ bh=0eWhcyGT2SZdhe1ztMyfEKgEFMQEciLPDh0RAorlKR4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=OluYBvhHRAAvOxdtxnBYVM56IIH1hEA/m7swgfw4by+TccO82OYyLnVTEog3SRcnr
+ N8QYdqut5wa1apvYm0ZBTxFLuqMqzmelm0wS11p6kBGNoHcUufJWgqAhZlJTxNLDfX
+ BdTkVT7LpcE3l2ryCe6xcAjw7R7tc+n30YxAecls=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: magnuskulke@microsoft.com,
 	qemu-devel@nongnu.org,
@@ -43,12 +43,11 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cameron Esfahani <dirty@apple.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH 10/25] accel/mshv: Add ioeventfd support
-Date: Tue, 20 May 2025 13:30:03 +0200
-Message-Id: <20250520113018.49569-11-magnuskulke@linux.microsoft.com>
+Subject: [RFC PATCH 00/25] Implementing a MSHV (Microsoft Hypervisor)
+ accelerator
+Date: Tue, 20 May 2025 13:29:53 +0200
+Message-Id: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
@@ -75,179 +74,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement ioeventfd registration in the MSHV accelerator backend to
-handle guest-triggered events. This enables integration with QEMU's
-eventfd-based I/O mechanism.
+Hello all,
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- accel/mshv/mshv-all.c   | 115 ++++++++++++++++++++++++++++++++++++++++
- accel/mshv/trace-events |   3 ++
- include/system/mshv.h   |   8 +++
- 3 files changed, 126 insertions(+)
+as previously announced here, we are working on an integration that will
+expose the HyperV hypervisor to QEMU on Linux hosts. HyperV is a Type 1
+hypervisor with a layered architecture that features a "root partition"
+alongside VMs as "child partitions" that will interface with the
+hypervisor and has access to the hardware. (https://aka.ms/hypervarch)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 95f1008a48..e4085b216d 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -239,11 +239,126 @@ static void mem_region_del(MemoryListener *listener,
-     memory_region_unref(section->mr);
- }
- 
-+typedef enum {
-+    DATAMATCH_NONE,
-+    DATAMATCH_U32,
-+    DATAMATCH_U64,
-+} DatamatchTag;
-+
-+typedef struct {
-+    DatamatchTag tag;
-+    union {
-+        uint32_t u32;
-+        uint64_t u64;
-+    } value;
-+} Datamatch;
-+
-+/* flags: determine whether to de/assign */
-+static int ioeventfd(int vm_fd, int event_fd, uint64_t addr, Datamatch dm,
-+                     uint32_t flags)
-+{
-+    mshv_user_ioeventfd args = {0};
-+    args.fd = event_fd;
-+    args.addr = addr;
-+    args.flags = flags;
-+
-+    if (dm.tag == DATAMATCH_NONE) {
-+        args.datamatch = 0;
-+    } else {
-+        flags |= BIT(MSHV_IOEVENTFD_BIT_DATAMATCH);
-+        args.flags = flags;
-+        if (dm.tag == DATAMATCH_U64) {
-+            args.len = sizeof(uint64_t);
-+            args.datamatch = dm.value.u64;
-+        } else {
-+            args.len = sizeof(uint32_t);
-+            args.datamatch = dm.value.u32;
-+        }
-+    }
-+
-+    return ioctl(vm_fd, MSHV_IOEVENTFD, &args);
-+}
-+
-+static int unregister_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr)
-+{
-+    uint32_t flags = 0;
-+    Datamatch dm = {0};
-+
-+    flags |= BIT(MSHV_IOEVENTFD_BIT_DEASSIGN);
-+    dm.tag = DATAMATCH_NONE;
-+
-+    return ioeventfd(vm_fd, event_fd, mmio_addr, dm, flags);
-+}
-+
-+static int register_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr,
-+                            uint64_t val, bool is_64bit, bool is_datamatch)
-+{
-+    uint32_t flags = 0;
-+    Datamatch dm = {0};
-+
-+    if (!is_datamatch) {
-+        dm.tag = DATAMATCH_NONE;
-+    } else if (is_64bit) {
-+        dm.tag = DATAMATCH_U64;
-+        dm.value.u64 = val;
-+    } else {
-+        dm.tag = DATAMATCH_U32;
-+        dm.value.u32 = val;
-+    }
-+
-+    return ioeventfd(vm_fd, event_fd, mmio_addr, dm, flags);
-+}
-+
-+static void mem_ioeventfd_add(MemoryListener *listener,
-+                              MemoryRegionSection *section,
-+                              bool match_data, uint64_t data,
-+                              EventNotifier *e)
-+{
-+    int fd = event_notifier_get_fd(e);
-+    int ret;
-+    bool is_64 = int128_get64(section->size) == 8;
-+    uint64_t addr = section->offset_within_address_space & 0xffffffff;
-+
-+    trace_mshv_mem_ioeventfd_add(addr, int128_get64(section->size), data);
-+
-+    ret = register_ioevent(mshv_state->vm, fd, addr, data, is_64, match_data);
-+
-+    if (ret < 0) {
-+        error_report("Failed to register ioeventfd: %s (%d)", strerror(-ret),
-+                     -ret);
-+        abort();
-+    }
-+}
-+
-+static void mem_ioeventfd_del(MemoryListener *listener,
-+                              MemoryRegionSection *section,
-+                              bool match_data, uint64_t data,
-+                              EventNotifier *e)
-+{
-+    int fd = event_notifier_get_fd(e);
-+    int ret;
-+    uint64_t addr = section->offset_within_address_space & 0xffffffff;
-+
-+    trace_mshv_mem_ioeventfd_del(section->offset_within_address_space,
-+                                 int128_get64(section->size), data);
-+
-+    ret = unregister_ioevent(mshv_state->vm, fd, addr);
-+    if (ret < 0) {
-+        error_report("Failed to unregister ioeventfd: %s (%d)", strerror(-ret),
-+                     -ret);
-+        abort();
-+    }
-+}
-+
- static MemoryListener mshv_memory_listener = {
-     .name = "mshv",
-     .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
-     .region_add = mem_region_add,
-     .region_del = mem_region_del,
-+#ifdef MSHV_USE_IOEVENTFD
-+    .eventfd_add = mem_ioeventfd_add,
-+    .eventfd_del = mem_ioeventfd_del,
-+#endif
- };
- 
- static MemoryListener mshv_io_listener = {
-diff --git a/accel/mshv/trace-events b/accel/mshv/trace-events
-index 63625192ec..5929cb45a5 100644
---- a/accel/mshv/trace-events
-+++ b/accel/mshv/trace-events
-@@ -1,4 +1,7 @@
- # See docs/devel/tracing.rst for syntax documentation.
- 
- mshv_set_memory(bool add, uint64_t gpa, uint64_t size, uint64_t user_addr, bool readonly, int ret) "[add = %d] gpa = %lx size = %lx user = %lx readonly = %d result = %d"
-+mshv_mem_ioeventfd_add(uint64_t addr, uint32_t size, uint32_t data) "addr %lx size %d data %x"
-+mshv_mem_ioeventfd_del(uint64_t addr, uint32_t size, uint32_t data) "addr %lx size %d data %x"
-+
- mshv_hvcall_args(const char* hvcall, uint16_t code, uint16_t in_sz) "built args for '%s' code: %d in_sz: %d"
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index bed28b48a9..c7ee4f0cc1 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -32,6 +32,14 @@
- #define CONFIG_MSHV_IS_POSSIBLE
- #endif
- 
-+/*
-+ * Set to 0 if we do not want to use eventfd to optimize the MMIO events.
-+ * Set to 1 so that mshv kernel driver receives doorbell when the VM access
-+ * MMIO memory and then signal eventfd to notify the qemu device
-+ * without extra switching to qemu to emulate mmio access.
-+ */
-+#define MSHV_USE_IOEVENTFD 1
-+
- #define MSHV_PAGE_SHIFT 12
- 
- 
+The effort to run Linux on such a Root Partition and expose HyperV to
+such a management partition is called "MSHV". Sometimes we refer to the
+root partition as "Dom0 Linux". Today we are targetting nested
+virtualization, that is: the creation + management of L2 VMs on an L1
+VM (L0 would indicate bare metal).
+
++-------------+ +----------------+ +--------------+
+|             | |                | |              |
+| Azure Host  | | L1 Linux Dom0  | | L2 Guest VM  |
+|             | |                | |              |
+|     OS      | |                | |              |
+|             | | +------------+ | |              |
+|             | | |  Qemu VMM  | | |              |
+|             | | +------------+ | |              |
+|             | | +------------+ | |              |
+|             | | |   Kernel   | | |              |
+|             | | +-----+------+ | |              |
+|             | +-------|--------+ +--------------+
+|             | +-------v-------------------------+
+|             | |    Microsoft Hypervisor (L1)    |
++-------------+ +-------+-------------------------+
+                        |
++-----------------------v-------------------------+
+|            Microsoft Hypervisor (L0)            |
++-------------------------------------------------+
+
++-------------------------------------------------+
+|                                                 |
+|                    Hardware                     |
+|                                                 |
++-------------------------------------------------+
+
+This submission is a port of the existing MSHV integration that is
+shipped in Cloud-Hypervisor and MSHV-specific rust-crates in rust-vmm.
+There are various products like AKS Pod Sandboxing and AKS Confidential
+Pods built on MSHV and Cloud-Hypervisor. We hope to achieve a seamless
+integration into the QEMU accelerator framework, similar to existing
+integrations like KVM, HVF or WHPX.
+
+The patch set has been split into chunks that should be applicable and
+buildable individually, but only the full set of commits will allow
+launching MSHV-accelerated guests on supported kernels and environments.
+
+The toggle to enable the feature at build time would be: `./configure
+--enable-mshv`.
+
+When launching a VM, the accelerator `mshv` can be enabled via
+
+`-accel mshv` or `-machine q35,accel=mshv`.
+
+We concluded the porting, but we haven't performed any comprehensive
+testing yet. We opted to send our submission early to receive feedback
+about the general structure and potential problems of our integration.
+Most likely we will uncover problems during testing and address those in
+upcoming revisions of the patch set.
+
+The configuration we are using during development:
+
+machine q35 + OVMF + various recent linux distros as guests (fedora
+42, ubuntu 22.04)
+
+We would welcome any feedback around the structure and integration
+points that we chose, so we can incorporate them into upcoming
+revisions.
+
+Some notes/caveats about the initial submission:
+
+- The relevant MSHV kernel code has been accepted for inclusion in the
+  upcoming 6.15 release, which should be released shortly. To allow
+  building it on older kernel we vendored the kernel headers that define
+  the MSHV ABI into the patch set. We might remove it in later
+  revisions of the patch set, or put it behind a feature toggle. Once
+  the kernel is released we plan to published a preconfigured Azure
+  image, which can be used to test the MSHV accelerator.
+
+- QEMU is mapping regions into the guest that might partially overlap in
+  their userspace_addr range (e.g. for ROMs in early boot). Currently
+  MSHV will reject such overlaps. We are looking into whether we
+  can/want to relax that restriction. To work around this we maintain a
+  list of mapping references and swap in/out regions if there's a GPA
+  fault and we find a valid candidate region in our list. (see last
+  commit). Maybe there are alternative, less invasive, suggestions. We'd
+  be happy to hear those.
+
+- We noticed that when using SeaBIOS, in certain permutations of guest
+  configuration (> 2GB ram & >1 virtio-blk-pci devices), we run into
+  unmapped GPA errors. We suspect it has to do with SeaBIOS addressing
+  memory in the 4GB+ region in those cases. We are investigating, and
+  will hopefully be able to issue a fix soon. For the time being this
+  can be worked around by using OVMF as firmware:
+
+- Since the MHSV accelerator requires a HyperV hypervisor to be present,
+  it would make sense to provide testing infrastructure for integration
+  testing on Azure. We are looking into options how to implement that.
+
+best,
+
+magnus
+
+Magnus Kulke (25):
+  accel: Add Meson and config support for MSHV accelerator
+  target/i386/emulate: allow instruction decoding from stream
+  target/i386/mshv: Add x86 decoder/emu implementation
+  hw/intc: Generalize APIC helper names from kvm_* to accel_*
+  include/hw/hyperv: Add MSHV ABI header definitions
+  accel/mshv: Add accelerator skeleton
+  accel/mshv: Register memory region listeners
+  accel/mshv: Initialize VM partition
+  accel/mshv: Register guest memory regions with hypervisor
+  accel/mshv: Add ioeventfd support
+  accel/mshv: Add basic interrupt injection support
+  accel/mshv: Add vCPU creation and execution loop
+  accel/mshv: Add vCPU signal handling
+  target/i386/mshv: Add CPU create and remove logic
+  target/i386/mshv: Implement mshv_store_regs()
+  target/i386/mshv: Implement mshv_get_standard_regs()
+  target/i386/mshv: Implement mshv_get_special_regs()
+  target/i386/mshv: Implement mshv_arch_put_registers()
+  target/i386/mshv: Set local interrupt controller state
+  target/i386/mshv: Register CPUID entries with MSHV
+  target/i386/mshv: Register MSRs with MSHV
+  target/i386/mshv: Integrate x86 instruction decoder/emulator
+  target/i386/mshv: Write MSRs to the hypervisor
+  target/i386/mshv: Implement mshv_vcpu_run()
+  accel/mshv: Add memory remapping workaround
+
+ accel/Kconfig                    |    3 +
+ accel/accel-irq.c                |   95 ++
+ accel/meson.build                |    3 +-
+ accel/mshv/irq.c                 |  370 +++++++
+ accel/mshv/mem.c                 |  434 ++++++++
+ accel/mshv/meson.build           |    9 +
+ accel/mshv/mshv-all.c            |  731 ++++++++++++
+ accel/mshv/msr.c                 |  375 +++++++
+ accel/mshv/trace-events          |   20 +
+ accel/mshv/trace.h               |    1 +
+ hw/intc/apic.c                   |    9 +
+ hw/intc/ioapic.c                 |   20 +-
+ hw/virtio/virtio-pci.c           |   19 +-
+ include/hw/hyperv/hvgdk.h        |   20 +
+ include/hw/hyperv/hvhdk.h        |  165 +++
+ include/hw/hyperv/hvhdk_mini.h   |  106 ++
+ include/hw/hyperv/linux-mshv.h   | 1038 ++++++++++++++++++
+ include/system/accel-irq.h       |   26 +
+ include/system/mshv.h            |  237 ++++
+ meson.build                      |   17 +
+ meson_options.txt                |    2 +
+ scripts/meson-buildoptions.sh    |    3 +
+ target/i386/cpu.h                |    2 +-
+ target/i386/emulate/meson.build  |    7 +-
+ target/i386/emulate/x86_decode.c |   32 +-
+ target/i386/emulate/x86_decode.h |   11 +
+ target/i386/emulate/x86_emu.c    |    3 +-
+ target/i386/emulate/x86_emu.h    |    1 +
+ target/i386/meson.build          |    2 +
+ target/i386/mshv/meson.build     |    8 +
+ target/i386/mshv/mshv-cpu.c      | 1768 ++++++++++++++++++++++++++++++
+ target/i386/mshv/x86.c           |  330 ++++++
+ 32 files changed, 5841 insertions(+), 26 deletions(-)
+ create mode 100644 accel/accel-irq.c
+ create mode 100644 accel/mshv/irq.c
+ create mode 100644 accel/mshv/mem.c
+ create mode 100644 accel/mshv/meson.build
+ create mode 100644 accel/mshv/mshv-all.c
+ create mode 100644 accel/mshv/msr.c
+ create mode 100644 accel/mshv/trace-events
+ create mode 100644 accel/mshv/trace.h
+ create mode 100644 include/hw/hyperv/hvgdk.h
+ create mode 100644 include/hw/hyperv/hvhdk.h
+ create mode 100644 include/hw/hyperv/hvhdk_mini.h
+ create mode 100644 include/hw/hyperv/linux-mshv.h
+ create mode 100644 include/system/accel-irq.h
+ create mode 100644 include/system/mshv.h
+ create mode 100644 target/i386/mshv/meson.build
+ create mode 100644 target/i386/mshv/mshv-cpu.c
+ create mode 100644 target/i386/mshv/x86.c
+
 -- 
 2.34.1
 
