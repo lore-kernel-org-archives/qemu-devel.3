@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FBDFC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFD5C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHMUn-0003jH-3g; Tue, 20 May 2025 08:55:01 -0400
+	id 1uHMVo-0006g8-Af; Tue, 20 May 2025 08:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMUL-0002PE-Mw; Tue, 20 May 2025 08:54:38 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1uHMUu-0004B6-0k; Tue, 20 May 2025 08:55:10 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMUH-000109-Td; Tue, 20 May 2025 08:54:33 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-3081fe5987eso4693622a91.3; 
- Tue, 20 May 2025 05:54:26 -0700 (PDT)
+ id 1uHMUq-00016y-ES; Tue, 20 May 2025 08:55:07 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b26f5cd984cso3920614a12.3; 
+ Tue, 20 May 2025 05:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747745666; x=1748350466; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747745700; x=1748350500; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CvwVU9F6cQaGXnx8rRhBrrA5oqA9zp4XDJF1ywgSwYE=;
- b=MG/WRv+ucLbCFUp3eM3Z7kWJAQiXtR0g75vxSu0i0YuLzhnPNdLPk7WF/P+lZhiYTG
- 4Gq/ax0aNybz3lU21WXg4zcqzQrBUdO+WZsPKve2RQe+KD6lAKguT2oDlfibaWy+Qvk+
- 3zY+pL6+Zu44cqJktzsqr25OtT5hueRVpbkDFMSG52nV2ZxSLuqWo3EdNXC/7+9tuvzq
- Q6XGk548J2Nphi8WhS2SAAWSNUhAMYiso0Dl6pusbjIgXis3qWD8EW/68vIdhViMdr8d
- V0pbY8kaiMrfEXjXsd3qkdSAq2OgjL3N+kTOXfv5Nw0ehHLYz7VHpJy0jQ5ROgEnqQoa
- cilQ==
+ bh=ldWym2VLMHax4CE85S7n09RdQWchgzVNNktVRnfbMqs=;
+ b=BAhMoekwQS/pYCSpZhpaUVpWPuVMIywB9qxgYclvl8akkEvbXMiVG1OqEaUDqa3JM1
+ pmGp6/zbnncnSsjSBQb/HVJTfIaZfbGDedvpXUtrB9RkEF/Y+uZMYjrpsvXD+y3CM0B3
+ oZYNL3udS8hSGofdS6axIyMg2/UTPqmcHIjSTi09XdYCNdcJbfTmpPYXUn21zL93nnXT
+ otFKIdZ7xeuSgwCKR4AJSBbSz0fs7oAQL7obfXt7buj/jKtqSiOIN6AEdv6Kx+vi62dG
+ ApdJM+R2YqE1jbZP0TZT1gG7X0cRHF6SzfH7LDB9+/3vq0UEEF7YipBWgo061jq94R8t
+ 55wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747745666; x=1748350466;
+ d=1e100.net; s=20230601; t=1747745700; x=1748350500;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CvwVU9F6cQaGXnx8rRhBrrA5oqA9zp4XDJF1ywgSwYE=;
- b=DxQpsYQYvqqE6fcdgJjT4R/kEekfxnytQjquKAEjEtr8rGHRxqvH7zYgKrj/lcJv8a
- c9D2RWeXtL5tcJ8pVJWpM1PMCEQ1nX1LqwaWdL+MboT54wXliE2jbYInzLIyCqWxj9Cb
- JoVppFkeIatxeChNsm6hrWrOEmNsMfXyZdWHx11wpMoTZv0K5IVQ5YxyOgjeNK9pmUwR
- c2irMgNqu7h6ls+AoTNau3yF1UQwpgJ31/T3BtwqKR10L1J0vR59k2BdX87Kl2wntBGF
- 2/Cwpg2XJKpfpKTJRiMlSAuPe4AggRgkRmpTVgv/fDNGDxCT5vTjUtuCkM3LX3JazbDt
- qKKg==
+ bh=ldWym2VLMHax4CE85S7n09RdQWchgzVNNktVRnfbMqs=;
+ b=JP9MVLT60tKiX9DA6x6Uj5kNuwn7nr57lff/BtQemwrOcZb6w44HpUFk6GsyXahuQI
+ sZ9TZdYmuBlTex1dzZQQl6Y86UuEn+teqd4hvJnHArz2nXQgMXrSxGd3WuUmCg8fhUh4
+ xiyNP9MP6TKl7UsxzsJR1I6l1AlIAuKo2qEUsURDFq4C+CE+4V6Kv74LEYT6mUnRddQZ
+ G5pO8+pX0ka2e0ivNH1EWf9dZw6sXkrgWDOmobiepw9HDcSE851N4klg1HHnP2GDTxSe
+ LyONUk+4PLyYclIN71P0POnK24lHJFMuTqBcxTFMA6nd2ngtXAzqxN2RJFOzRAwzUBh9
+ U4QQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3e3z1djNt9T6kksi4e0GuQhomiOBMX6Za25GYeRGxbMoH+OoqvfVRFQv+zzAesmOKSoP+QmiCYVSleA==@nongnu.org,
- AJvYcCX4adKZYjyrCrZKVMpxbs06aK2i73ab0ay0NWSslnA0HOm9hd8tZ5ntLbFsNq69bJ7CfEce25EzhQ==@nongnu.org
-X-Gm-Message-State: AOJu0YzfU6L7DEZb85cwYgKfKvtXrWDDxDO8/DIQk8N39TzE0ug4saMY
- +1BotJBUy0ofEf6WVS998wTPDD02hm99ucyJ4pZkl8gcOn/zScrqwTwN3sEUbMtq
-X-Gm-Gg: ASbGncsRma2nghd6z2SLhBGTul46FnUlbg3Kzrpzu8Ic6Fd3VAnd4elzToHh4QO8xT8
- u19VgFSBIoT0NtqkCuU49Z/G53+Jz7NH6VRcHvEr+GXqFezo2BdCtdHoHGuZFVPtBYUP1b4rMJD
- gj6kWSt+suUGmeehQXkwRTLI7cAIAyhqyKMexBgH5mSTJwiIPdHQMhFrr08VBHfHSSBGv2lh7Hr
- fSe+qMaKP+S67pqf5DdfVKJZBJ2/nIBiIWpcPJ5tTScm+ryMIl5yetQKCgDGFgttptp1pOduEkL
- GG/mi/qHi86ZIos3x46d+GIRUK3UsVy32X2r8d2TT5B5DxSV3w8=
-X-Google-Smtp-Source: AGHT+IHUv1Ky3GKBjVeftojRctD7ekQgFkcQPAUZGG0rypCRZbOSLLaaaceS/2YOW575tisr9dvdyA==
-X-Received: by 2002:a17:90b:3c90:b0:30e:37be:6963 with SMTP id
- 98e67ed59e1d1-30e83228d1cmr24997945a91.29.1747745665822; 
- Tue, 20 May 2025 05:54:25 -0700 (PDT)
+ AJvYcCWvoYLOu+p1NodwMytM9U2lAWdOPapSKMbmT8P13jIs3lKGI6CpJWb4ybg61V3pQOZeEE3aPAskJ3G7HQ==@nongnu.org,
+ AJvYcCXD2BetYAy+dnIR1i4m4Ecr9ODauymQwHGdZblVF5+F25QV8nk4aoP2booKbAgk1/2NGwZcoqFMzA==@nongnu.org
+X-Gm-Message-State: AOJu0Yw9yodpszRoZYnz7NyqlFYXS8ks9p+sw+NeeKDbVIwZ8MhJRtTu
+ UCpX3feKIKu5mtlcDqr4GcS63rWfzv0+EWTGvFZCiNK7sEzdPPjScbGiJ006q+8M
+X-Gm-Gg: ASbGncsn7kx4zAnVgqPkyba1tT3/XuL8UtdApOvB3NqVEpTQoXZXNa++eI+WKD9FcAL
+ jKROZfTWseaHnzU03DsJrTSIDNhcPRgKUpU/TKz+ftIp4KR3uxHWu3Ulh/HMFCiQTtUpYytz/wH
+ QMFwpUyh5fuDj5EvtDXgocYF5BgM1egtfHf+id2OkEcCQCGls2/f2tGXeTkVW4CF/x7DGBtyjv2
+ QSF2Wr+orlzv6oj2o/PjdfRJ42L8FPfiNKGeuCCBLF8Cwp6YhXj1/SpU0I1wn0eYZjK7aBCmokG
+ f37vdaa+OYCxCxNicJe0wW5742cqJjlkMrRPY4EYIPbvZjZlb0U=
+X-Google-Smtp-Source: AGHT+IErjVtBwvRt2kikcLU8V+gM9yO/qzQGjvrVXya4JW8hWhPZkE2oRWPWRlCaDe3Zlo+61szrMA==
+X-Received: by 2002:a17:90b:4b0f:b0:2f6:be57:49d2 with SMTP id
+ 98e67ed59e1d1-30e7d545920mr29668717a91.17.1747745699558; 
+ Tue, 20 May 2025 05:54:59 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:1bde:8310:e993:5dcc])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.54.20
+ 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.54.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 05:54:25 -0700 (PDT)
+ Tue, 20 May 2025 05:54:59 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -81,17 +81,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH 23/33] include/exec: Allow using 64bit guest addresses on
- emscripten
-Date: Tue, 20 May 2025 21:51:25 +0900
-Message-ID: <d3e7e584cf61c76952f4c9d913ba80d905c80e76.1747744132.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 29/33] tcg/wasm32: Allow Asyncify unwinding from TB
+Date: Tue, 20 May 2025 21:51:31 +0900
+Message-ID: <39e1655832058b6c16fde756d96e90bb7eae1db0.1747744132.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1747744132.git.ktokunaga.mail@gmail.com>
 References: <cover.1747744132.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,206 +113,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To enable 64-bit guest support in Wasm 32bit memory model today, it was
-necessary to partially revert recent changes that removed support for
-different pointer widths between the host and guest (e.g. commits
-a70af12addd9060fdf8f3dbd42b42e3072c3914f and
-bf455ec50b6fea15b4d2493059365bf94c706273) when compiling with
-Emscripten. While this serves as a temporary workaround, a long-term
-solution could involve adopting Wasm's 64-bit memory model once it gains
-broader support, as it is currently not widely adopted (e.g. unsupported by
-Safari and libffi).
+Emscripten's Fiber coroutine implements coroutine switching using the stack
+unwinding and rewinding capabilities of Asyncify [1]. When a coroutine
+yields (i.e. switches out), Asyncify unwinds the stack, returning control to
+Emscripten's JS code (Fiber.trampoline()), which then performs stack
+rewinding to resume execution in the target coroutine. Stack unwinding is
+implemented by a sequence of immediate function returns, while rewinding
+works by re-entering the functions in the call stack, skipping any code
+between the top of the function and the original call position [2].
+
+This commit modifies the Wasm TB modules to support Fiber
+coroutines. Assuming the TCG CPU loop is executed by only one coroutine per
+thread, a TB module must allow helper functions to unwind and be resumed via
+rewinding.
+
+Specifically:
+
+- When a helper returns due to an unwind, the module must immediately return
+  to its caller, allowing unwinding to propagate.
+- When being called again for a rewind, the module must skip any code
+  between the top of the function and the call position that triggered the
+  unwind, and directly enter the helper.
+
+To support this:
+
+- TBs now check the Asyncify.state JS object after each helper call. If
+  unwinding is in progress, the TB immediately returns control to the
+  caller.
+- Each function call is preceded by a block boundary and an update of the
+  BLOCK_PTR_IDX variable. This enables the TB to re-enter execution at the
+  correct point during a rewind, skipping earlier blocks.
+
+Additionally, this commit introduces wasmContext.do_init which is a flag
+indicating whether the TB should reset the BLOCK_PTR_IDX variable to 0
+(i.e. start from the beginning). In call_wasm_tb, this is always set
+(ctx.do_init = 1) to ensure normal TB execution begins at the first
+block. Once the TB resets the BLOCK_PTR_IDX variable, it also clears
+do_init. During a rewind, the C code does not set ctx.do_init to 1, allowing
+the TB to preserve the BLOCK_PTR_IDX value from the previous unwind and
+correctly resume execution from the last unwound block.
+
+[1] https://emscripten.org/docs/api_reference/fiber.h.html
+[2] https://kripken.github.io/blog/wasm/2019/07/16/asyncify.html#new-asyncify
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- accel/tcg/cputlb.c             |  8 ++++----
- include/exec/helper-head.h.inc |  6 ++++++
- include/exec/tlb-common.h      | 14 ++++++++++----
- include/exec/vaddr.h           | 11 +++++++++++
- include/qemu/atomic.h          |  4 ++++
- include/tcg/tcg.h              |  4 ++++
- meson.build                    |  8 +++++---
- 7 files changed, 44 insertions(+), 11 deletions(-)
+ tcg/wasm32.c                |  3 ++
+ tcg/wasm32.h                | 11 ++++++++
+ tcg/wasm32/tcg-target.c.inc | 56 +++++++++++++++++++++++++++++++++++--
+ 3 files changed, 68 insertions(+), 2 deletions(-)
 
-V1:
-- Although I tried to use "#if HOST_LONG_BITS >= TARGET_LONG_BITS" based on
-  Paolo's suggestion from the previous patch series, TARGET_LONG_BITS is
-  marked as poisoned in include/exec/poison.h and cannot be used directly.
-
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 5f6d7c601c..b15e9e80ee 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -109,13 +109,13 @@ static inline uint64_t tlb_read_idx(const CPUTLBEntry *entry,
- {
-     /* Do not rearrange the CPUTLBEntry structure members. */
-     QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_read) !=
--                      MMU_DATA_LOAD * sizeof(uintptr_t));
-+                      MMU_DATA_LOAD * sizeof(tlb_addr));
-     QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_write) !=
--                      MMU_DATA_STORE * sizeof(uintptr_t));
-+                      MMU_DATA_STORE * sizeof(tlb_addr));
-     QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_code) !=
--                      MMU_INST_FETCH * sizeof(uintptr_t));
-+                      MMU_INST_FETCH * sizeof(tlb_addr));
- 
--    const uintptr_t *ptr = &entry->addr_idx[access_type];
-+    const tlb_addr *ptr = &entry->addr_idx[access_type];
-     /* ofs might correspond to .addr_write, so use qatomic_read */
-     return qatomic_read(ptr);
- }
-diff --git a/include/exec/helper-head.h.inc b/include/exec/helper-head.h.inc
-index 5b248fd713..7dfb4cfa46 100644
---- a/include/exec/helper-head.h.inc
-+++ b/include/exec/helper-head.h.inc
-@@ -58,6 +58,7 @@
- # define dh_ctype_tl target_ulong
- #endif /* COMPILING_PER_TARGET */
- 
-+#ifndef EMSCRIPTEN
- #if __SIZEOF_POINTER__ == 4
- # define dh_alias_vaddr i32
- # define dh_typecode_vaddr dh_typecode_i32
-@@ -68,6 +69,11 @@
- # error "sizeof pointer is different from {4,8}"
- #endif /* __SIZEOF_POINTER__ */
- # define dh_ctype_vaddr uintptr_t
-+#else
-+# define dh_alias_vaddr i64
-+# define dh_typecode_vaddr dh_typecode_i64
-+# define dh_ctype_vaddr uint64_t
-+#endif
- 
- /* We can't use glue() here because it falls foul of C preprocessor
-    recursive expansion rules.  */
-diff --git a/include/exec/tlb-common.h b/include/exec/tlb-common.h
-index 03b5a8ffc7..679054bb44 100644
---- a/include/exec/tlb-common.h
-+++ b/include/exec/tlb-common.h
-@@ -19,14 +19,20 @@
- #ifndef EXEC_TLB_COMMON_H
- #define EXEC_TLB_COMMON_H 1
- 
-+#ifndef EMSCRIPTEN
- #define CPU_TLB_ENTRY_BITS (HOST_LONG_BITS == 32 ? 4 : 5)
-+typedef uintptr_t tlb_addr;
-+#else
-+#define CPU_TLB_ENTRY_BITS 5
-+typedef uint64_t tlb_addr;
-+#endif
- 
- /* Minimalized TLB entry for use by TCG fast path. */
- typedef union CPUTLBEntry {
-     struct {
--        uintptr_t addr_read;
--        uintptr_t addr_write;
--        uintptr_t addr_code;
-+        tlb_addr addr_read;
-+        tlb_addr addr_write;
-+        tlb_addr addr_code;
-         /*
-          * Addend to virtual address to get host address.  IO accesses
-          * use the corresponding iotlb value.
-@@ -37,7 +43,7 @@ typedef union CPUTLBEntry {
-      * Padding to get a power of two size, as well as index
-      * access to addr_{read,write,code}.
+diff --git a/tcg/wasm32.c b/tcg/wasm32.c
+index f2269c0a22..e6a3dbf750 100644
+--- a/tcg/wasm32.c
++++ b/tcg/wasm32.c
+@@ -53,6 +53,9 @@ EM_JS(int, instantiate_wasm, (int wasm_begin,
+     const memory_v = new DataView(HEAP8.buffer);
+     const wasm = HEAP8.subarray(wasm_begin, wasm_begin + wasm_size);
+     var helper = {};
++    helper.u = () => {
++        return (Asyncify.state != Asyncify.State.Unwinding) ? 1 : 0;
++    };
+     for (var i = 0; i < import_vec_size / 4; i++) {
+         helper[i] = wasmTable.get(
+             memory_v.getInt32(import_vec_begin + i * 4, true));
+diff --git a/tcg/wasm32.h b/tcg/wasm32.h
+index f8651af4ee..f2749f1e0e 100644
+--- a/tcg/wasm32.h
++++ b/tcg/wasm32.h
+@@ -32,11 +32,22 @@ struct wasmContext {
+      * Pointer to a stack array.
       */
--    uintptr_t addr_idx[(1 << CPU_TLB_ENTRY_BITS) / sizeof(uintptr_t)];
-+    tlb_addr addr_idx[(1 << CPU_TLB_ENTRY_BITS) / sizeof(tlb_addr)];
- } CPUTLBEntry;
+     uint64_t *stack;
++
++    /*
++     * Flag indicates whether to initialize basic registers(1) or not(0).
++     */
++    uint32_t do_init;
+ };
  
- QEMU_BUILD_BUG_ON(sizeof(CPUTLBEntry) != (1 << CPU_TLB_ENTRY_BITS));
-diff --git a/include/exec/vaddr.h b/include/exec/vaddr.h
-index 28bec632fb..ff57f944dd 100644
---- a/include/exec/vaddr.h
-+++ b/include/exec/vaddr.h
-@@ -9,6 +9,7 @@
-  * We do not support 64-bit guest on 32-host and detect at configure time.
-  * Therefore, a host pointer width will always fit a guest pointer.
-  */
-+#ifndef EMSCRIPTEN
- typedef uintptr_t vaddr;
- #define VADDR_PRId PRIdPTR
- #define VADDR_PRIu PRIuPTR
-@@ -16,5 +17,15 @@ typedef uintptr_t vaddr;
- #define VADDR_PRIx PRIxPTR
- #define VADDR_PRIX PRIXPTR
- #define VADDR_MAX UINTPTR_MAX
-+#else
-+/* Explicitly define this as 64bit on emscripten */
-+typedef uint64_t vaddr;
-+#define VADDR_PRId PRId64
-+#define VADDR_PRIu PRIu64
-+#define VADDR_PRIo PRIo64
-+#define VADDR_PRIx PRIx64
-+#define VADDR_PRIX PRIX64
-+#define VADDR_MAX UINT64_MAX
-+#endif
+ /* Instantiated Wasm function of a TB */
+ typedef int32_t (*wasm_tb_func)(struct wasmContext *);
  
- #endif
-diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
-index f80cba24cf..76a8fbcd8c 100644
---- a/include/qemu/atomic.h
-+++ b/include/qemu/atomic.h
-@@ -56,6 +56,7 @@
-  */
- #define signal_barrier()    __atomic_signal_fence(__ATOMIC_SEQ_CST)
- 
-+#ifndef EMSCRIPTEN
++static inline int32_t call_wasm_tb(wasm_tb_func f, struct wasmContext *ctx)
++{
++    ctx->do_init = 1; /* reset block index (rewinding will skip this) */
++    return f(ctx);
++}
++
  /*
-  * Sanity check that the size of an atomic operation isn't "overly large".
-  * Despite the fact that e.g. i686 has 64-bit atomic operations, we do not
-@@ -63,6 +64,9 @@
-  * bit of sanity checking that other 32-bit hosts might build.
-  */
- #define ATOMIC_REG_SIZE  sizeof(void *)
-+#else
-+#define ATOMIC_REG_SIZE  8 /* wasm supports 64bit atomics */
-+#endif
+  * TB of wasm backend starts from a header which stores pointers for each data
+  * stored in the following region in the TB.
+diff --git a/tcg/wasm32/tcg-target.c.inc b/tcg/wasm32/tcg-target.c.inc
+index d9a3abae70..04cd9b6e4a 100644
+--- a/tcg/wasm32/tcg-target.c.inc
++++ b/tcg/wasm32/tcg-target.c.inc
+@@ -135,7 +135,8 @@ static const uint8_t tcg_target_reg_index[TCG_TARGET_NB_REGS] = {
+ #define TMP64_LOCAL_0_IDX 3
  
- /* Weak atomic operations prevent the compiler moving other
-  * loads/stores past the atomic operation load/store. However there is
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 041d8035bc..62bc2c4ea8 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -218,6 +218,7 @@ typedef struct TCGv_ptr_d *TCGv_ptr;
- typedef struct TCGv_vec_d *TCGv_vec;
- typedef TCGv_ptr TCGv_env;
+ /* function index */
+-#define HELPER_IDX_START 0 /* helper funcitons */
++#define CHECK_UNWINDING_IDX 0 /* a funtion of checking Asyncify status */
++#define HELPER_IDX_START 1 /* helper funcitons */
  
-+#ifndef EMSCRIPTEN
- #if __SIZEOF_POINTER__ == 4
- typedef TCGv_i32 TCGv_vaddr;
- #elif __SIZEOF_POINTER__ == 8
-@@ -225,6 +226,9 @@ typedef TCGv_i64 TCGv_vaddr;
- #else
- # error "sizeof pointer is different from {4,8}"
- #endif /* __SIZEOF_POINTER__ */
-+#else
-+typedef TCGv_i64 TCGv_vaddr;
-+#endif
+ #define BUF_SIZE 1024
+ typedef struct LinkedBuf {
+@@ -1895,6 +1896,17 @@ static int get_helper_idx(TCGContext *s, int helper_idx_on_qemu)
+     return -1;
+ }
  
- /* call flags */
- /* Helper does not read globals (either directly or through an exception). It
-diff --git a/meson.build b/meson.build
-index c533243157..f6ed867819 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3322,9 +3322,11 @@ foreach target : target_dirs
++static void tcg_wasm_out_handle_unwinding(TCGContext *s)
++{
++    tcg_wasm_out_op_call(s, CHECK_UNWINDING_IDX);
++    tcg_wasm_out_op_i32_eqz(s);
++    tcg_wasm_out_op_if_noret(s);
++    tcg_wasm_out_op_i32_const(s, 0);
++    /* returns if unwinding */
++    tcg_wasm_out_op_return(s);
++    tcg_wasm_out_op_end(s);
++}
++
+ static void tcg_wasm_out_call(TCGContext *s, int func,
+                               const TCGHelperInfo *info)
+ {
+@@ -1908,7 +1920,16 @@ static void tcg_wasm_out_call(TCGContext *s, int func,
+     tcg_wasm_out_op_i32_const(s, (int32_t)s->code_ptr);
+     tcg_wasm_out_op_i32_store(s, 0, 0);
  
-   target_kconfig = []
-   foreach sym: accelerators
--    # Disallow 64-bit on 32-bit emulation and virtualization
--    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
--      continue
-+    if host_arch != 'wasm32'
-+      # Disallow 64-bit on 32-bit emulation and virtualization
-+      if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-+        continue
-+      endif
-     endif
-     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
-       config_target += { sym: 'y' }
++    /*
++     * update the block index so that the possible rewinding will
++     * skip this block
++     */
++    tcg_wasm_out_op_i64_const(s, block_idx + 1);
++    tcg_wasm_out_op_global_set(s, BLOCK_PTR_IDX);
++    tcg_wasm_out_new_block(s);
++
+     gen_call(s, info, func_idx);
++    tcg_wasm_out_handle_unwinding(s);
+ }
+ 
+ static void gen_func_type_qemu_ld(TCGContext *s, uint32_t oi)
+@@ -1986,6 +2007,14 @@ static void tcg_wasm_out_qemu_ld(TCGContext *s, TCGReg data_reg,
+         addr_reg = TCG_REG_TMP;
+     }
+ 
++    /*
++     * update the block index so that the possible rewinding will
++     * skip this block
++     */
++    tcg_wasm_out_op_i64_const(s, block_idx + 1);
++    tcg_wasm_out_op_global_set(s, BLOCK_PTR_IDX);
++    tcg_wasm_out_new_block(s);
++
+     /* call helper */
+     tcg_wasm_out_op_global_get_r(s, TCG_AREG0);
+     tcg_wasm_out_op_i32_wrap_i64(s);
+@@ -1995,6 +2024,7 @@ static void tcg_wasm_out_qemu_ld(TCGContext *s, TCGReg data_reg,
+ 
+     tcg_wasm_out_op_call(s, func_idx);
+     tcg_wasm_out_op_global_set_r(s, data_reg);
++    tcg_wasm_out_handle_unwinding(s);
+ }
+ 
+ static void *qemu_st_helper_ptr(uint32_t oi)
+@@ -2034,6 +2064,14 @@ static void tcg_wasm_out_qemu_st(TCGContext *s, TCGReg data_reg,
+         addr_reg = TCG_REG_TMP;
+     }
+ 
++    /*
++     * update the block index so that the possible rewinding will
++     * skip this block
++     */
++    tcg_wasm_out_op_i64_const(s, block_idx + 1);
++    tcg_wasm_out_op_global_set(s, BLOCK_PTR_IDX);
++    tcg_wasm_out_new_block(s);
++
+     /* call helper */
+     tcg_wasm_out_op_global_get_r(s, TCG_AREG0);
+     tcg_wasm_out_op_i32_wrap_i64(s);
+@@ -2051,6 +2089,7 @@ static void tcg_wasm_out_qemu_st(TCGContext *s, TCGReg data_reg,
+     tcg_wasm_out_op_i32_const(s, (int32_t)s->code_ptr);
+ 
+     tcg_wasm_out_op_call(s, func_idx);
++    tcg_wasm_out_handle_unwinding(s);
+ }
+ 
+ static bool patch_reloc(tcg_insn_unit *code_ptr_i, int type,
+@@ -3420,6 +3459,9 @@ static const uint8_t mod_1[] = {
+     0x60,                         /* 0: Type of "start" function */
+     0x01, 0x7f,                   /* arg: ctx pointer (i32) */
+     0x01, 0x7f,                   /* return: res (i32) */
++    0x60,                         /* 1: Type of the asyncify helper */
++    0x0,                          /* no argument */
++    0x01, 0x7f,                   /* return: res (i32) */
+ };
+ 
+ static const uint8_t mod_2[] = {
+@@ -3430,6 +3472,9 @@ static const uint8_t mod_2[] = {
+     0x06, 0x62, 0x75, 0x66, 0x66, 0x65, 0x72, /* name: "buffer" */
+     0x02, 0x03,                               /* shared mem */
+     0x00, 0xff, 0xff, 0x03,                   /* min: 0, max: 0xffff pages */
++    0x06, 0x68, 0x65, 0x6c, 0x70, 0x65, 0x72, /* module: "helper" */
++    0x01, 0x75,                               /* name: "u" */
++    0x00, 0x01,                               /* func type 1 */
+ };
+ 
+ static const uint8_t mod_3[] = {
+@@ -3488,7 +3533,7 @@ static int write_mod_1(TCGContext *s)
+     linked_buf_write(types_buf_root, s->code_ptr);
+     s->code_ptr += types_buf_len();
+ 
+-    uint32_t type_section_size = types_buf_len() + 10;
++    uint32_t type_section_size = types_buf_len() + 14;
+     fill_uint32_leb128(base + 9, type_section_size);
+     fill_uint32_leb128(base + 14, HELPER_IDX_START + helpers_num + 1);
+ 
+@@ -3613,6 +3658,11 @@ static void tcg_out_tb_start(TCGContext *s)
+     h->tci_ptr = s->code_ptr;
+ 
+     /* generate wasm code to initialize fundamental registers */
++    tcg_wasm_out_ctx_i32_load(s, do_init);
++    tcg_wasm_out_op_i32_const(s, 0);
++    tcg_wasm_out_op_i32_ne(s);
++    tcg_wasm_out_op_if_noret(s);
++
+     tcg_wasm_out_op_global_get_r(s, TCG_AREG0);
+     tcg_wasm_out_op_i64_eqz(s);
+     tcg_wasm_out_op_if_noret(s);
+@@ -3626,8 +3676,10 @@ static void tcg_out_tb_start(TCGContext *s)
+     tcg_wasm_out_op_global_set_r(s, TCG_REG_CALL_STACK);
+     tcg_wasm_out_op_end(s);
+ 
++    tcg_wasm_out_ctx_i32_store_const(s, do_init, 0);
+     tcg_wasm_out_op_i64_const(s, 0);
+     tcg_wasm_out_op_global_set(s, BLOCK_PTR_IDX);
++    tcg_wasm_out_op_end(s);
+ 
+     tcg_wasm_out_op_loop_noret(s);
+     tcg_wasm_out_op_global_get(s, BLOCK_PTR_IDX);
 -- 
 2.43.0
 
