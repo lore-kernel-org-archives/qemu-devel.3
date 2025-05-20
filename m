@@ -4,99 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA6EC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF5EEC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKYE-0002pn-Vo; Tue, 20 May 2025 06:50:27 -0400
+	id 1uHKbm-0003b5-7R; Tue, 20 May 2025 06:54:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uHKYC-0002p2-Fg
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:50:24 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uHKYA-0000Ap-3n
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:50:24 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-30e7e46cb47so4269622a91.1
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 03:50:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1747738220; x=1748343020; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wh5ztZjsTLAqklcjndZszOzagDNvgqRidXbp2Abj+A0=;
- b=KAjTRBV3GI58F4GkO1pt6iPbk7qhH79Gx47230cnYV6DP9dv6jjnHp4lZplTmBJAO2
- hT3ncSV1TD7KYIGQcN9wljypbV9xlUz7Ui7gnkQZxgvTgmsTZvqf3GCBIil9sus+8xUW
- NrsXB3SLzcb8Z7ZuCF88oNMTikscbiMEDie2tK7bd/8nhjxnup+jKAC/XdtyqRV8BydP
- xfWiLU96+7U+V0Zud8uz2rGjGdZ2QSmMlLM5qJ40FtYRx+nQlrgCOl0ihcsUnClTHPEf
- pt5f9vyRn6aZOYbd6QbSstM1sMzwUZYfux3QYzUlkXM5FaUMJUqmE9BW2qEtjQJmGfvb
- GZCA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uHKbg-0003aY-Ay
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:54:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uHKbc-0000eK-EW
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:53:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747738434;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=p5ZKLbpvRKnZl4AMukJ/Mjjv8xoLVZmpaN9UeQIkVmw=;
+ b=WXbC6yztYBhTvCCUnIzRncbpb5/jrJl3RnMDMwdZmQuikYKMAsOJc1jD4m3nSDuAMqaefK
+ h9pdrdZcw1mq96kqXHk01jkL+jUaXG3sIecpTjB/Q12KsNlSMRZB8+5GZF2uI2P1IuNQkV
+ FklKsiSVLqHxEdC3fd4GzF9uM2B8N24=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-327-VYWvx1taM0mpsImARWkNfw-1; Tue, 20 May 2025 06:53:53 -0400
+X-MC-Unique: VYWvx1taM0mpsImARWkNfw-1
+X-Mimecast-MFC-AGG-ID: VYWvx1taM0mpsImARWkNfw_1747738432
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ad55aac4ec6so269680966b.1
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 03:53:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747738220; x=1748343020;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1747738432; x=1748343232;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wh5ztZjsTLAqklcjndZszOzagDNvgqRidXbp2Abj+A0=;
- b=InUIbF0uY6FODlgT3Nc701BpHiRgVgIc1mAQR/dNFl7dQ8MeHiYK4t/nlhERi1fuP6
- zplWSSr/K1/CJcUsT3GiIRKJuqb90HL72oFSCIeOOzNKXC75wk5Ntp+LLNWk67MGwu+3
- F+PdfanciTeP9hfg29ll6G7rB/VPKqUuXYNjgXBYbn2BUXTWrzQ2S1v0qi5OmhrTXk1u
- 5rGWSvxjG1mWHVNTNXVrm0nOzfrfLuhbaZ6/fyrJdZBVOPrIBmvQtBE7cupJ+ywrEzPD
- 0HCoS+VFHvHW05mxauTWkTNPQGs4JVV1upv8CJHekqx7u9quCfvm4JVOptg5SMmVDLGW
- NNjg==
+ bh=p5ZKLbpvRKnZl4AMukJ/Mjjv8xoLVZmpaN9UeQIkVmw=;
+ b=cYQ0y6DI0HFzE3mWqVUjjnh8gF6QVv/ssgG+3uLSQvddjCT/FHSC4jBb/sj7EZp19Q
+ zk+OzgY4fkXZaktb4lOjZo/e3uuUttffK3/D7Z2g+PW8LFSLdLHPG8EsIf347coIq5oL
+ KW8dKG6x1PlVS9/faK9QC8h1nB0LuJt9YVC5j5A5g8Bi2qd7FV6c/5E05b/jGQ0/ZL7s
+ e9B2gvAmk+mHW48e7PHYyya70EcYBLPFTTx6tJyp5VUjbR3BHEtaDva5BzflO9z/xd2J
+ QYOwvSns4CKtnYkd78Cbp/kv32ig0EEeXwefjp1rimsn0kB4Ol5lc2/65bSDXnywX50z
+ oySg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfqJTdsH86lqIpZdXGFx/pJuR2iClymzVXHyIw2YtQXTtfIUxkdr3HSs3cs3Fh1fv0KZOQ9j9NA3rK@nongnu.org
-X-Gm-Message-State: AOJu0YxmDATz3gmAgB4GDwIQvHlSIdnKsiLM6gJGivORrt/nPLNhrnin
- wBS4boX6u1HojCgUjcOfpF8km1EPOaLHb7mYslc4MR3K5ofAvv++qr3Yo0CxRT9jf7I=
-X-Gm-Gg: ASbGnctdineB2y+jUDmgPxgTlnB765Zgd2+iE9xjH4xECuEf0YTTHqeHEbQy6oZP3vx
- HURMiU/ja0s752G6K8iUT/2KMM7/E/4exkXizpq2Mbg1z7OdB7DQkGYykBdsWLw7Icz+pHSl8Qr
- FMHNv1icZoQT7dngjG4CZQGT0Y+eUClyt87k6MkXPLZz1F26Ua05j6hfkrSUYRPMCDh2d7ZQygF
- npvMmGWSvi6TZql2Eks2J8eJREaYjf+tf2LNgyCAnHQNPT6Re28H8Ynsf9qZbihWAuxxZW/xkge
- 43YsIHR7rxB3CNA0VYj/pvAVBGwggHd+NtUL+pd2+V3q+X9Ikh1p5073L4QHiYE2TBE=
-X-Google-Smtp-Source: AGHT+IHdwQC7Mcu3uBuvjepZiP8XDFNh7xhVRfm0HeuU871s8/x9dqar1wpnfu9I19KRLvXLBS09qA==
-X-Received: by 2002:a17:90b:52c5:b0:30c:5256:3 with SMTP id
- 98e67ed59e1d1-30e830c7a9fmr22012696a91.5.1747738219625; 
- Tue, 20 May 2025 03:50:19 -0700 (PDT)
-Received: from [192.168.68.110] ([152.250.131.100])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30f365102e7sm1498550a91.40.2025.05.20.03.50.16
+ AJvYcCVR7gbxFN9swfLYiPxSuYzev0SqR7tu0p/esPKXIKOK63V67gxB+nwaFhDo7nFU4CX9C2RRkbSgxRPg@nongnu.org
+X-Gm-Message-State: AOJu0YwqX11tQTYVTsCNTJa8dsrA/rNZJLQZD9F8IZvJB3Q5dQKSlRqi
+ szM0F4HV6TOtyxHMvmCKPnhJUj/SiHnbAw//Yo7LyOGH8LFdf+n/8ry1gML1JmscKjlzMuWzcPk
+ f/LuQiRcaZlY21F6I4ojZdR+97cAyGG44gaLD4IQ0QoNHPgYcGx1FPwAR
+X-Gm-Gg: ASbGncvjxcYZmLvwM2s8RMAEEPEGYmt9+n/8aqSkqyAkXLwdjUeQl5GyQzCDfK/7SR5
+ x0nwdsUXFZrj9fhMmyYYgOUKk/eqQc50yHsSGDZ9ZI0kDjWTOVFL9SB0TpX7QJD8XJA49ay6XUC
+ HgmrkYdsAZV4PlcpCWJYMm88VT+q3FtEeKLrOKjsKyfHrMBzIgEaFrFD46EVey8O/8PQ3lgF4ZE
+ tXIQFmBe21/re+XQPWEawJSE6E3ozlTD0pxjumHiXRTLBePJz2dL+PFjcC+rywy2wo3/cK5jx1t
+ uLQefwbVBaHhrQ==
+X-Received: by 2002:a17:907:60d2:b0:ad5:54ec:6b3c with SMTP id
+ a640c23a62f3a-ad554ec711bmr1008107766b.27.1747738432363; 
+ Tue, 20 May 2025 03:53:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3zk3dVc6fgxKHTRecMva/9tuNCX/BgIoAIy8x1G+L/UOn4Ym78+V1l4MG/EgqGWXgwkXcBA==
+X-Received: by 2002:a17:907:60d2:b0:ad5:54ec:6b3c with SMTP id
+ a640c23a62f3a-ad554ec711bmr1008105966b.27.1747738431907; 
+ Tue, 20 May 2025 03:53:51 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.46.79])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-ad52d4ca654sm704183066b.158.2025.05.20.03.53.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 03:50:19 -0700 (PDT)
-Message-ID: <39ce5a78-8789-4d32-9fff-aa82b7505529@ventanamicro.com>
-Date: Tue, 20 May 2025 07:50:15 -0300
+ Tue, 20 May 2025 03:53:51 -0700 (PDT)
+Message-ID: <51356014-b645-4e86-b338-0d097bf80260@redhat.com>
+Date: Tue, 20 May 2025 12:53:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RFC] target: riscv: Fix satp mode initialization based on
  profile
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: Alexandre Ghiti <alexghiti@rivosinc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+To: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>,
+ Alexandre Ghiti <alexghiti@rivosinc.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
  Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250516122319.4100121-1-alexghiti@rivosinc.com>
- <e86af5b2-7d8a-4503-8a5c-5ee2147aa850@ventanamicro.com>
- <20250519-a153c03e434d1bf31498eb01@orel>
- <c1368421-4441-4058-b78c-317d1d21d580@ventanamicro.com>
- <20250520-c62c9918435e564c09f1042a@orel>
+ <87y0usiz22.fsf@all.your.base.are.belong.to.us>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250520-c62c9918435e564c09f1042a@orel>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <87y0usiz22.fsf@all.your.base.are.belong.to.us>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,151 +153,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/19/25 14:07, Björn Töpel wrote:
+> When realizing the cpus, the first cpu calls riscv_cpu_add_profiles()
+> all profiles are disabled, whereas for the other cpu calls to
+> riscv_cpu_add_profiles() have some profiles enabled. Having some
+> profiles enabled, will issue a call to cpu_set_profile() that will
+> enforce the satp code that Alex removes in this patch.
+Ah so the problem is that *parent* profiles are not enabled until
+riscv_cpu_add_profiles().
 
+With my patches to introduce RISCVCPUDef, it's a pretty easy fix:
 
-On 5/20/25 4:50 AM, Andrew Jones wrote:
-> On Mon, May 19, 2025 at 02:15:05PM -0300, Daniel Henrique Barboza wrote:
->>
->>
->> On 5/19/25 1:35 PM, Andrew Jones wrote:
->>> On Mon, May 19, 2025 at 09:48:14AM -0300, Daniel Henrique Barboza wrote:
->>>>
->>>>
->>>> On 5/16/25 9:23 AM, Alexandre Ghiti wrote:
->>>>> The satp mode is set using the svXX properties, but that actually
->>>>> restricts the satp mode to the minimum required by the profile and
->>>>> prevents the use of higher satp modes.
->>>>
->>>> For rva23s64, in "Optional Extensions" we'll find:
->>>
->>> The keyword is "Optional". The profile should only set sv39 since that's
->>> what rva23 (and rv22) have for the mandatory support. sv48 and sv57 are
->>> both optional so, while the user should be allowed to turn them on, just
->>> like other optional extensions, they shouldn't be on by default since we
->>> don't set any optional extensions on by default.
->>
->> What about satp validation for a profile? For both rva22 and rva23 the mandatory
->> satp is sv39, but up to sv57 is also ok. Do we care if a sv64 CPU claims rva23
->> support?
-> 
-> Is sv64 defined yet? I thought it's just a placeholder. Anyway, I'd expect
-> it to be like sv57 and sv48 in that each narrower width must be supported,
-> which means sv39 would also still be supported, and that means the cpu
-> could be rva23. If, OTOH, an sv64 cpu cannot support sv39, then the cpu
-> cannot have both, so it cannot be rva23. IOW, as long as sv39 is _also_
-> supported, then sv64 is OK to select and still be rva23.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 629ac37501e..04b929af41c 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1083,6 +1083,19 @@ static bool riscv_cpu_is_dynamic(Object *cpu_obj)
+      return object_dynamic_cast(cpu_obj, TYPE_RISCV_DYNAMIC_CPU) != NULL;
+  }
+  
++static void riscv_cpu_enable_profile(RISCVCPU *cpu,
++                                     RISCVCPUProfile *profile)
++{
++    profile->enabled = true;
++
++    if (profile->u_parent) {
++        riscv_cpu_enable_profile(cpu, profile->u_parent);
++    }
++    if (profile->s_parent) {
++        riscv_cpu_enable_profile(cpu, profile->s_parent);
++    }
++}
++
+  static void riscv_cpu_init(Object *obj)
+  {
+      RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(obj);
+@@ -1121,7 +1134,7 @@ static void riscv_cpu_init(Object *obj)
+      cpu->cfg.max_satp_mode = -1;
+  
+      if (mcc->def->profile) {
+-        mcc->def->profile->enabled = true;
++        riscv_cpu_enable_profile(cpu, mcc->def->profile);
+      }
+  
+      env->misa_ext_mask = env->misa_ext = mcc->def->misa_ext;
 
-We have sv64 defined in QEMU. Not sure if it's already a thing or not ....
-it seems to me that ppl cares to sv57 mostly, so perhaps my sv64 worry
-unjustified.
+Since they're all reviewed and Alistair has flushed his queue, I'll
+send them in my next pull request.
 
-Just took a look in how we're validating satp for profiles and we're
-allowing a higher satp mode than the profile mandates, issuing warnings
-if the satp mode is set to a lower mode than the profile value.
+On top of them, probably profiles should also be converted to use
+RISCVCPUCfg and riscv_cpu_enable_profile() can then enable all the
+flags with riscv_cpu_cfg_merge().
 
+In general a lot (if not all) of the profile code should be moved out
+of tcg-cpu.c and into riscv_cpu_class_base_init().  I didn't do that
+because I didn't want to balloon an already-large series, but it's a
+pretty obvious extension of the RISCVCPUDef concept to include all
+profile features.
 
-So I guess the way we would like people to use rva23s64 with sv57 would be:
-
--cpu rva23s64,sv57=on
-
-
-> 
->>
->> I am aware that sv64 also means sv57 support but I'm worried about migration
->> compatibility. Let's say we migrate between two hosts A and B that claim
->> to be rva23 compliant. A is running sv64, B is running sv57. If the software
->> running in A is actually using satp sv64 we can't migrate A to B.
-> 
-> A and B are incompatible already if A is '-cpu rva23,sv64=on' and B is
-> '-cpu rva23,sv57=on', so the migration manager should already disallow
-> that.
-> 
->>
->>>
->>> So we don't want this change, but fixing any bugs with the first hart vs.
->>> the other harts is of course necessary.
->>
->> I'm working on it. I'll decouple the QMP bits (all the profile validation business
->> is a QMP problem in the end) from the core CPU finalize logic. I'll send patches
->> soon.
-> 
-> Great, thanks!
-> 
-> Another comment I thought of later that I should have put in my original
-> reply is that we of course want 'max' to default to the widest QEMU
-> supports. Then, users that want to ensure they get sv57 or sv64 without
-> having to explicitly add it to their command lines can use 'max'.
-> Specifying '-cpu rva23' means you just want the mandatory base of the
-> given profile and if you want more than that then you need to append each
-> optional extension explicitly. If we don't have that documented somewhere,
-> then maybe we should, in order to help clarify the intent.
-> 
-
-max CPU is using satp_mode = sv57. Since sv64 is mostly a placeholder then I
-believe it's all good. Perhaps we could add a satp_mode_latest value for these
-situations.
-
-
-Thanks,
-
-Daniel
-
-> Thanks,
-> drew
-> 
->>
->>
->> Thanks,
->>
->> Daniel
->>
->>>
->>> Thanks,
->>> drew
->>>
->>>>
->>>> https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
->>>>
->>>> - Sv48 Page-based 48-bit virtual-memory system.
->>>> - Sv57 Page-based 57-bit virtual-memory system.
->>>>
->>>> So in theory we could go up to sv57 for rva23s64 (and rva22s64, just checked).
->>>> Changing satp_mode to the maximum allowed seems sensible.
->>>>
->>>> But allowing all satp modes to go in a profile defeats the purpose, doesn't it?
->>>> None of the existing profiles in QEMU claims supports sv64. Granted, I'm not a
->>>> satp expert, but removing the satp restriction in profiles doesn't seem right.
->>>>
->>>>
->>>> Thanks,
->>>>
->>>> Daniel
->>>>
->>>>
->>>>>
->>>>> Fix this by not setting any svXX property and allow all satp mode to be
->>>>> supported.
->>>>>
->>>>> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
->>>>> ---
->>>>>     target/riscv/tcg/tcg-cpu.c | 3 ---
->>>>>     1 file changed, 3 deletions(-)
->>>>>
->>>>> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
->>>>> index 5aef9eef36..ca2d2950eb 100644
->>>>> --- a/target/riscv/tcg/tcg-cpu.c
->>>>> +++ b/target/riscv/tcg/tcg-cpu.c
->>>>> @@ -1232,9 +1232,6 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
->>>>>     #ifndef CONFIG_USER_ONLY
->>>>>         if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
->>>>>             object_property_set_bool(obj, "mmu", true, NULL);
->>>>> -        const char *satp_prop = satp_mode_str(profile->satp_mode,
->>>>> -                                              riscv_cpu_is_32bit(cpu));
->>>>> -        object_property_set_bool(obj, satp_prop, profile->enabled, NULL);
->>>>>         }
->>>>>     #endif
->>>>
->>>>
->>
+Paolo
 
 
