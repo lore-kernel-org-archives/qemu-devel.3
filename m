@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B52B5C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE1DC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:06:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHMV2-0004ZH-Qx; Tue, 20 May 2025 08:55:17 -0400
+	id 1uHMUj-0003WJ-GF; Tue, 20 May 2025 08:54:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMUf-0003AO-0k; Tue, 20 May 2025 08:54:53 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1uHMUc-0002wv-8M; Tue, 20 May 2025 08:54:50 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMUb-00013Q-LS; Tue, 20 May 2025 08:54:52 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-30ecc762cb7so2331624a91.1; 
- Tue, 20 May 2025 05:54:44 -0700 (PDT)
+ id 1uHMUX-00012I-ID; Tue, 20 May 2025 08:54:49 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-30572effb26so5234209a91.0; 
+ Tue, 20 May 2025 05:54:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747745682; x=1748350482; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747745677; x=1748350477; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VMl+BLj6shot1+8OfcaCTtS5NXf/RyeuCk4yd6sbvuo=;
- b=E2lYGbaXmWH+5v7FIpilWZjsivnVVMXQU+HGLbg8ihEmP3O3esilmjRsIK/SmQGmqq
- iLIQz7k3q0dDXohHBrMlG1wkeOwt7sSLo0o0V5ti//jZqap9OydZukifGW3sNjYPM3HP
- KouiMFKFZrQF8kEibsngmERxpQTfnMWXo1s5JDSWXXkUEtOffNheMqKd/ytbTMJ3ntaT
- o/tAr08GYLlhhsYMCr2egDxa/GnQ9gWjNTrGS9GYSxN3upXjffGtg3J042Pfv1R+URWj
- S+eP4/eiz26UwTFquxkPm3lawwKdTAI64W11SXj9+JsBtjPPhVjUdl9ALFLUd7HwtXVW
- XC+A==
+ bh=7eabZrzKs+cL55IaJg89VzpBHaEX4pjQLmBcxb/tbcE=;
+ b=PFJBH4kPO8TLd/9LqAMq9z01rA9Jn/YwOjBIujf+ZuYsqiPzIPZrpdyLa0b6VzQ7U1
+ 9qQ6pxl79yCqyGNjYFMaiJV4wJB2pD8hBWqDTzp642MzsQq90PNybIKflAUnUM2IMzCw
+ O3NMkRJyNHlHLSgv6Mc4geOMMoDU/4q4gzmqfsHoD5tc94lIAg+E5XSICH8MdanbORb+
+ W6LAjpgcVJaY06KyOQDidw50H79jpcgS8M23MGK1xdH2M3giVYpVN02Bs4GH5x88yADb
+ XYWNvb8VyNz8GsQxQgcf/6hylwETysa4F79ng/OHRZ46ZehDhiKHlfrc3Zkx6FamDS0H
+ xEFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747745682; x=1748350482;
+ d=1e100.net; s=20230601; t=1747745677; x=1748350477;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VMl+BLj6shot1+8OfcaCTtS5NXf/RyeuCk4yd6sbvuo=;
- b=q2nlCgMcZShpZCO7ksuBxnHECtBX21dvSBupcmyn6UGCixVIu5tG6gD71WqQM5wCep
- quhZOonh8M/tGjEjlorvgcIbl1Dzwm1AqPToHruGtrtRIZt6+Z4mQ609J5oadfjkPw17
- 9CumSUsSWpHt7TJqE7c8aqYrlZt1ry5yI/r6N1ggJc/DNp5uPeBE291I6En9R5qHMDlz
- Km5V8zcbN6kw/gTzbnJ7wB7FRxt70ubvjqAIgjnNPjqDirX7QzcRbmvNPhcahv7h53gI
- aZgff52cJbrLFsaWIOPWUQjMr+qZLl4fdN3LiS9vrSX5y+wso/ThVKHdJylaALnoN6z7
- pS8Q==
+ bh=7eabZrzKs+cL55IaJg89VzpBHaEX4pjQLmBcxb/tbcE=;
+ b=atFm3phTa2ptgtZAVJhinIkZnV5OT8fDZvGbyMZQ+JBBdlZt9hP645gCQKuU8LmIp9
+ rbBAFE+BSw0KSsBhvEkYt1h8Np5n4G+hHf9RDY7Rm5zUhexqMWXG/rLSCnYXeRipcAmz
+ ly0QyMfBOhBsyPUSAVN77czkEkVCcIriJQA3DJ7kK1P9HVaerKXlZQMDJ5M2gLPKUDL0
+ y42cAWPwClovbDFdC0DVEFEFXKjWKUGQmckJ1UGe0Lh5L/bk/TGLT8xLukW7KQ4k7icY
+ 6lNj/5EHPZ81219vEV82GNkXFaDtUg+aaepZH8mZnTiba8o7dB95P9JPEVsK0lvvhGeG
+ dWqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV64DX7NsI6uRs03+RqjzxliIOqc9xbTpjtkuD4fLlBh9mW9R4zddM/GMfYb+79XqGjCanyRKrGxQ==@nongnu.org,
- AJvYcCWLrZHKe2CiZGAaYxKeH5Q/CMmAvssumqQDMxDfoakSvAazj9/yXFeORKQQLk4GCNvqrHI+QH7vlFPXPA==@nongnu.org
-X-Gm-Message-State: AOJu0Ywlt3rMTk+QEi0nxj/C/X6/ZjL0cx9d9gZBvi0MH9g5OY3TIwSU
- LmXo8kkOk1MHO7GZtuDxmh+8T96NpZPdBtvVTCvXTLfxcZbOnW1hUuJKostMGLs2
-X-Gm-Gg: ASbGncukI6QTtlzkHdbuYwNba13yx6HtIUbspFDed9jkCjSBHaNtcRzVi7PBs1n4HF5
- s2pn43sdoMR+IRzmNNdd+zss0O/uNdNWXO/7+4LX3uiKkl45RFW6/fSLDup8D4mW7Eo+xP7moIm
- j0Nd8wk45f2u3iwPJ5jKEf4ihVw/Hl/nQ2gJupCSdtW3qeSAGaQURICTa5jyVA2/Vogz+uDPCjC
- 2aWqn0CyySHVLxK/WY5LIIwFye+QIcNHAj1o2anevxpjVv9AHA9RihY/7SI9iuD2Z8NONES4/OB
- FSHneA9gGXIG32HCQRHzeFvLIID9RdjdbzoybrZKuUdrHp4qnGIKIdXmAlSCkg==
-X-Google-Smtp-Source: AGHT+IFLR9WZD1ZfyejmhDg0dIA5O+JyaV0hB93IqpSi5hqodoOEgtN1hNTLUEDuyzBJRJYgqpPyVg==
-X-Received: by 2002:a17:90a:e7c2:b0:2ff:6e58:89f5 with SMTP id
- 98e67ed59e1d1-30e7dc4ed52mr24245041a91.6.1747745682506; 
- Tue, 20 May 2025 05:54:42 -0700 (PDT)
+ AJvYcCVDcctndDE1NUCRpfIehupCh0zTj21on2UJqUzKLt6ZMDN2jLpDSTmfnww9/s9Y1rykZT6jzWmneDWPDA==@nongnu.org,
+ AJvYcCW+Rg64lDcS+zynl8mU99kqcknp0820fBPeVyykXi/s6RKDuDm8dBOi9Yao32gkAvz6aQHRnTb/uA==@nongnu.org
+X-Gm-Message-State: AOJu0YxsrSwtsBD1iUti0G35nzgrRSfKtwLMT394N9TLDdg/bMRPtZAS
+ LfU0ZZrBXtBRc3T8jZFmSbYj/Yu1hyrlgHEO4DsCVlQ7RwP7yp3e2McGvXKNbyCD
+X-Gm-Gg: ASbGncvmnak87sXOT7NW0sVwFacF+T5qeGmEMGToO69UrGz2jXHhzoggmPTWiTG6xZZ
+ G3WyW5YrCAJn101Os/xhcjN9MF8y8ftzY11fwZMw/RDyShmut5itVsK0iPhBjIs7UZCnXq25GYF
+ gmvg5KWv4Ws1wAzIIDst8fafJ74YSMRQJgmzZFZyqKSO/jwKSMBWMnJp53SgFN66ntz/4zxPNAq
+ wPgIYCDSCmuxa+iXzDgf4rXfnCb/bAVq6EJ5v4Xn++X3y8NHJGpPwIjg/Ufg2bdpvUsZy89e3s+
+ KpzB8/v3Gn4uI6FZo5+1QDpSp3/Yy6xwVNDVvgjBy3TWWjA4uvQ=
+X-Google-Smtp-Source: AGHT+IEZCo8TLYMPhGsfPoyVD7cxyqqI5vVtGGele8JzfzU/R/+q5jO0KcIFs8Gd49flFHnnc/IHyQ==
+X-Received: by 2002:a17:90b:6c8:b0:30e:8f60:b4c with SMTP id
+ 98e67ed59e1d1-30e8f600d77mr26832066a91.16.1747745677188; 
+ Tue, 20 May 2025 05:54:37 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:1bde:8310:e993:5dcc])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.54.37
+ 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.54.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 05:54:42 -0700 (PDT)
+ Tue, 20 May 2025 05:54:36 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -81,16 +81,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH 26/33] tcg/wasm32: Add initialization of fundamental registers
-Date: Tue, 20 May 2025 21:51:28 +0900
-Message-ID: <0e9635f3bd25e31fd39eea32242101c2b847784d.1747744132.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 25/33] tcg/wasm32: Set mulu2/muls2 as unimplemented
+Date: Tue, 20 May 2025 21:51:27 +0900
+Message-ID: <0e228847d902b25d643bcbee028d67e3cb0f0464.1747744132.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1747744132.git.ktokunaga.mail@gmail.com>
 References: <cover.1747744132.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,66 +113,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds initialization of TCG_AREG0 and TCG_REG_CALL_STACK at the
-beginning of each TB. The CPUArchState struct and the stack array are passed
-from the caller via the wasmContext structure. Since TB execution begins at
-the first block, the BLOCK_PTR_IDX variable is initialized to 0.
+These operations have no direct equivalents in Wasm, so they are left
+unimplemented and delegated to helper functions.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- tcg/wasm32.h                | 10 ++++++++++
- tcg/wasm32/tcg-target.c.inc | 17 +++++++++++++++++
- 2 files changed, 27 insertions(+)
+ tcg/wasm32/tcg-target.c.inc | 38 ++-----------------------------------
+ 1 file changed, 2 insertions(+), 36 deletions(-)
 
-diff --git a/tcg/wasm32.h b/tcg/wasm32.h
-index 1944249891..ab23e26eca 100644
---- a/tcg/wasm32.h
-+++ b/tcg/wasm32.h
-@@ -22,6 +22,16 @@ struct wasmContext {
-      * Buffer to store 128bit return value on call.
-      */
-     void *buf128;
-+
-+    /*
-+     * Pointer to CPUArchState struct.
-+     */
-+    CPUArchState *env;
-+
-+    /*
-+     * Pointer to a stack array.
-+     */
-+    uint64_t *stack;
- };
- 
- #endif
 diff --git a/tcg/wasm32/tcg-target.c.inc b/tcg/wasm32/tcg-target.c.inc
-index df34097267..4b7cd784cb 100644
+index 9fad96d0fd..df34097267 100644
 --- a/tcg/wasm32/tcg-target.c.inc
 +++ b/tcg/wasm32/tcg-target.c.inc
-@@ -3258,6 +3258,23 @@ static void tcg_out_tb_start(TCGContext *s)
-     init_label_info();
-     init_helpers();
+@@ -2076,19 +2076,6 @@ static void tcg_out_op_rrrbb(TCGContext *s, TCGOpcode op, TCGReg r0,
+     tcg_out32(s, insn);
+ }
  
-+    /* generate wasm code to initialize fundamental registers */
-+    tcg_wasm_out_op_global_get_r(s, TCG_AREG0);
-+    tcg_wasm_out_op_i64_eqz(s);
-+    tcg_wasm_out_op_if_noret(s);
-+
-+    tcg_wasm_out_ctx_i32_load(s, env);
-+    tcg_wasm_out_op_i64_extend_i32_u(s);
-+    tcg_wasm_out_op_global_set_r(s, TCG_AREG0);
-+
-+    tcg_wasm_out_ctx_i32_load(s, stack);
-+    tcg_wasm_out_op_i64_extend_i32_u(s);
-+    tcg_wasm_out_op_global_set_r(s, TCG_REG_CALL_STACK);
-+    tcg_wasm_out_op_end(s);
-+
-+    tcg_wasm_out_op_i64_const(s, 0);
-+    tcg_wasm_out_op_global_set(s, BLOCK_PTR_IDX);
-+
-     tcg_wasm_out_op_loop_noret(s);
-     tcg_wasm_out_op_global_get(s, BLOCK_PTR_IDX);
-     tcg_wasm_out_op_i64_eqz(s);
+-static void tcg_out_op_rrrr(TCGContext *s, TCGOpcode op,
+-                            TCGReg r0, TCGReg r1, TCGReg r2, TCGReg r3)
+-{
+-    tcg_insn_unit_tci insn = 0;
+-
+-    insn = deposit32(insn, 0, 8, op);
+-    insn = deposit32(insn, 8, 4, r0);
+-    insn = deposit32(insn, 12, 4, r1);
+-    insn = deposit32(insn, 16, 4, r2);
+-    insn = deposit32(insn, 20, 4, r3);
+-    tcg_out32(s, insn);
+-}
+-
+ static void tcg_out_op_rrrrrc(TCGContext *s, TCGOpcode op,
+                               TCGReg r0, TCGReg r1, TCGReg r2,
+                               TCGReg r3, TCGReg r4, TCGCond c5)
+@@ -2610,37 +2597,16 @@ static const TCGOutOpBinary outop_mul = {
+     .out_rrr = tgen_mul,
+ };
+ 
+-static TCGConstraintSetIndex cset_mul2(TCGType type, unsigned flags)
+-{
+-    return type == TCG_TYPE_REG ? C_O2_I2(r, r, r, r) : C_NotImplemented;
+-}
+-
+-static void tgen_muls2(TCGContext *s, TCGType type,
+-                       TCGReg a0, TCGReg a1, TCGReg a2, TCGReg a3)
+-{
+-    tcg_out_op_rrrr(s, INDEX_op_muls2, a0, a1, a2, a3);
+-}
+-
+ static const TCGOutOpMul2 outop_muls2 = {
+-    .base.static_constraint = C_Dynamic,
+-    .base.dynamic_constraint = cset_mul2,
+-    .out_rrrr = tgen_muls2,
++    .base.static_constraint = C_NotImplemented,
+ };
+ 
+ static const TCGOutOpBinary outop_mulsh = {
+     .base.static_constraint = C_NotImplemented,
+ };
+ 
+-static void tgen_mulu2(TCGContext *s, TCGType type,
+-                       TCGReg a0, TCGReg a1, TCGReg a2, TCGReg a3)
+-{
+-    tcg_out_op_rrrr(s, INDEX_op_mulu2, a0, a1, a2, a3);
+-}
+-
+ static const TCGOutOpMul2 outop_mulu2 = {
+-    .base.static_constraint = C_Dynamic,
+-    .base.dynamic_constraint = cset_mul2,
+-    .out_rrrr = tgen_mulu2,
++    .base.static_constraint = C_NotImplemented,
+ };
+ 
+ static const TCGOutOpBinary outop_muluh = {
 -- 
 2.43.0
 
