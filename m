@@ -4,69 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFED5C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E07C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHJpl-0008Ab-Mw; Tue, 20 May 2025 06:04:29 -0400
+	id 1uHJtj-0001Lb-Dc; Tue, 20 May 2025 06:08:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uHJpk-0008AE-7Y
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:04:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uHJph-0000En-Ec
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:04:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747735455;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hEhSmeqcDlwZPpkP6jKz6Q4FGkALG/bs9LYCyyZqexo=;
- b=UbKAcXB4/hkxfEOfebwGErcC4qz4I0gag1dHvnxVtT/lR+AdJVPtDTyz/Yzjauu8SP/CLb
- vL9PL/YKn53Jhw1w1iKlD5jZJEb7+naIk8a/n4Yrk0Q09iX6ghN9gaBb/i4BKqDFimMN0I
- lX32eryCzrKORYL7njC8s5ZWM3j0f7k=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-ffSFySFwMWuXeJ1_tFIEsg-1; Tue,
- 20 May 2025 06:04:12 -0400
-X-MC-Unique: ffSFySFwMWuXeJ1_tFIEsg-1
-X-Mimecast-MFC-AGG-ID: ffSFySFwMWuXeJ1_tFIEsg_1747735451
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C91C81800447; Tue, 20 May 2025 10:04:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.86])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5851E30001AA; Tue, 20 May 2025 10:04:07 +0000 (UTC)
-Date: Tue, 20 May 2025 12:04:05 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: gerben@altlinux.org
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, qemu-devel@nongnu.org,
- sdl.qemu@linuxtesting.org
-Subject: Re: [PATCH v2] qemu-img: fix offset calculation in bench
-Message-ID: <aCxTlds6UuiTR6w3@redhat.com>
-References: <20250506141410.100119-1-gerben@altlinux.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uHJtg-0001Jj-KI
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:08:32 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uHJtd-000119-Ib
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:08:32 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxDeORVCxotETzAA--.30813S3;
+ Tue, 20 May 2025 18:08:18 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxXsWOVCxo4hfjAA--.57524S3;
+ Tue, 20 May 2025 18:08:16 +0800 (CST)
+Subject: Re: [PATCH 4/6] tests/acpi: Add empty ACPI data files for LoongArch64
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+References: <20250228092729.543097-1-maobibo@loongson.cn>
+ <20250228092729.543097-5-maobibo@loongson.cn>
+ <20250401154840.1d591aa8@imammedo.users.ipa.redhat.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <9fef9c68-f9be-f8f6-7d50-a43a12a904f7@loongson.cn>
+Date: Tue, 20 May 2025 18:07:03 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250506141410.100119-1-gerben@altlinux.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
+In-Reply-To: <20250401154840.1d591aa8@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxXsWOVCxo4hfjAA--.57524S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxGw1DZry7Ar1xGFWrKw18Xrc_yoW5uFW3p3
+ y5Awnakr4xtF9rGa4UW39xXF1kJrsI9FnruF17Wr1IkFyakr1qvw1ftFySkayayw1UXa10
+ vr1kGFy0qF15WagCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUP0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2
+ x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17
+ McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7
+ I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxGrwCF
+ x2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r
+ 1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij
+ 64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr
+ 0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF
+ 0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zyIUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -37
+X-Spam_score: -3.8
 X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.872,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,57 +87,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 06.05.2025 um 16:13 hat gerben@altlinux.org geschrieben:
-> From: Denis Rastyogin <gerben@altlinux.org>
-> 
-> This error was discovered by fuzzing qemu-img.
-> 
-> The current offset calculation leads to an EIO error
-> in block/block-backend.c: blk_check_byte_request():
-> 
->  if (offset > len || len - offset < bytes) {
->      return -EIO;
->  }
-> 
-> This triggers the error message:
-> "qemu-img: Failed request: Input/output error".
-> 
-> Example of the issue:
->  offset: 260076
->  len: 260096
->  bytes: 4096
-> 
-> This fix ensures that offset remains within a valid range.
-> 
-> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
-> ---
->  qemu-img.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/qemu-img.c b/qemu-img.c
-> index 76ac5d3028..e64acfafb3 100644
-> --- a/qemu-img.c
-> +++ b/qemu-img.c
-> @@ -4488,10 +4488,10 @@ static void bench_cb(void *opaque, int ret)
->           */
->          b->in_flight++;
->          b->offset += b->step;
-> -        if (b->image_size == 0) {
-> +        if (b->image_size - b->bufsize <= 0) {
 
-The result of b->image_size - b->bufsize is unsigned, so this doesn't do
-what it looks like. I'm replacing it with b->image_size <= b->bufsize.
 
->              b->offset = 0;
->          } else {
-> -            b->offset %= b->image_size;
-> +            b->offset %= b->image_size - b->bufsize;
->          }
->          if (b->write) {
->              acb = blk_aio_pwritev(b->blk, offset, b->qiov, 0, bench_cb, b);
+On 2025/4/1 下午9:48, Igor Mammedov wrote:
+> On Fri, 28 Feb 2025 17:27:27 +0800
+> Bibo Mao <maobibo@loongson.cn> wrote:
+> 
+>> Add empty acpi table for LoongArch64 virt machine, it is only empty
+>> file and there is no data in these files.
+> 
+> this patch after 3/6 doesn't make sense,
+> either drop.
+> 
+> Adding empty blobs, can be useful (as then you can get ACPI diff during test)
+> but only if you follow update acpi blos process as described in
+> bios-tables-test.c
+> 
+> 
+> as is, the next patch (5/6) should precede 3/6
+Hi Ignor,
 
-Thanks, applied to the block branch.
+With file tests/qtest/bios-tables-test.c, there is commit steps.
 
-Kevin
+  How to add or update the tests or commit changes that affect ACPI tables:
+  Contributor:
+  1. add empty files for new tables, if any, under tests/data/acpi
+  2. list any changed files in tests/qtest/bios-tables-test-allowed-diff.h
+  3. commit the above *before* making changes that affect the tables
+
+I will follow steps of above in next round, how do you think of it?
+
+Regards
+Bibo Mao
+> 
+> 
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   tests/data/acpi/loongarch64/virt/APIC | 0
+>>   tests/data/acpi/loongarch64/virt/DSDT | 0
+>>   tests/data/acpi/loongarch64/virt/FACP | 0
+>>   tests/data/acpi/loongarch64/virt/MCFG | 0
+>>   tests/data/acpi/loongarch64/virt/PPTT | 0
+>>   tests/data/acpi/loongarch64/virt/SLIT | 0
+>>   tests/data/acpi/loongarch64/virt/SPCR | 0
+>>   tests/data/acpi/loongarch64/virt/SRAT | 0
+>>   8 files changed, 0 insertions(+), 0 deletions(-)
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/APIC
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/FACP
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
+>>   create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
+>>
+>> diff --git a/tests/data/acpi/loongarch64/virt/APIC b/tests/data/acpi/loongarch64/virt/APIC
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/data/acpi/loongarch64/virt/DSDT b/tests/data/acpi/loongarch64/virt/DSDT
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/data/acpi/loongarch64/virt/FACP b/tests/data/acpi/loongarch64/virt/FACP
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/data/acpi/loongarch64/virt/MCFG b/tests/data/acpi/loongarch64/virt/MCFG
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/data/acpi/loongarch64/virt/PPTT b/tests/data/acpi/loongarch64/virt/PPTT
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/data/acpi/loongarch64/virt/SLIT b/tests/data/acpi/loongarch64/virt/SLIT
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/data/acpi/loongarch64/virt/SPCR b/tests/data/acpi/loongarch64/virt/SPCR
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/data/acpi/loongarch64/virt/SRAT b/tests/data/acpi/loongarch64/virt/SRAT
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
 
 
