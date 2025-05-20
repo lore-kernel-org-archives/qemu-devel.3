@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6A1C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D2EFC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKnB-00078s-8m; Tue, 20 May 2025 07:05:53 -0400
+	id 1uHKo2-0001On-Tg; Tue, 20 May 2025 07:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHKn8-0006wx-Em
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uHKnt-0000pA-7Q
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:06:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHKn6-00031N-Bt
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:50 -0400
+ id 1uHKnr-0003I0-BJ
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:06:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747739147;
+ s=mimecast20190719; t=1747739194;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/oubsQIn5BGzqrXUUzIWldpKT0QQbTDt/12TcMjXir4=;
- b=J7qMKrOUOfXDxWw+n6MS8YSyY9u/Bd3X86MbOsbpbyJMlQv/f/l7LCjMI4espF/dFbu9ZE
- UxJv6prnyzsutM3vMFM8usgtI9i5oeP6g8hgujLpegvils3gl3lwKYD7hXb9bbGoEOXL2p
- DWddVT9aQKrjLsGp2j5Ce8ZXjh7iQBA=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=O+ysdJnjVluo6jSebuS5er9F+Pln3PK7sOvJMqbaJlM=;
+ b=C4p0GgsTzw0G7Ya3Gqs0P8xw/X68XDkWOW3nIccdFQGzR1BvyiuPqeBiJTZLzTObsx7cuA
+ iWyXyhzZKOpHsfmhARbXAA/IMUjLDljmasdWQYWZqAuGNQrR0SLDN7X2GV9m3aM+Av4pt1
+ MumrLdNfUBfBAyLIMFALP0rvR2Wssm0=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-kNY5N8IYOwyb_mNlJORu3w-1; Tue, 20 May 2025 07:05:46 -0400
-X-MC-Unique: kNY5N8IYOwyb_mNlJORu3w-1
-X-Mimecast-MFC-AGG-ID: kNY5N8IYOwyb_mNlJORu3w_1747739145
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ad54ada24ffso382864266b.3
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:05:46 -0700 (PDT)
+ us-mta-287-gMn3RLEePbWTlp8F225_9Q-1; Tue, 20 May 2025 07:06:33 -0400
+X-MC-Unique: gMn3RLEePbWTlp8F225_9Q-1
+X-Mimecast-MFC-AGG-ID: gMn3RLEePbWTlp8F225_9Q_1747739192
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-601fb2b7859so1546461a12.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:06:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747739144; x=1748343944;
+ d=1e100.net; s=20230601; t=1747739191; x=1748343991;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/oubsQIn5BGzqrXUUzIWldpKT0QQbTDt/12TcMjXir4=;
- b=tNQ400p9z3d1qDHvt7zMNTaWyfUljuMvGqtPuNT7UXarq08iaVEn03suW8iryJN3Sc
- 8105UDfTqIvDrQ0cbq5Ri9wttlS+T6ViZeq1P7FGbR18BMki/0YEWAghYfcpZC/gjT60
- WVwXr7ytkqY4ig1w+cmRQsnuycIoIfA8YwSlvOtUUIvphJGbFSABidcfaE/DAn8m5coT
- SNFll3hp5vAxhFa8/bXG4XScyFocEg06TxoEuWG7r6+vV4oBk0fCj8AbUcPTmN9AIDOM
- 9ANFkPdpXWdp2z6TicTdWl5ZHehg+2nOla0Q21VCzuzknnVIOqK+31klKMk9YJiLn6FV
- PWgg==
-X-Gm-Message-State: AOJu0Ywxyt7R1tIJxSwM5QJm269WDnyyXLMXbbjeTlpkuvqG3d+TIPS/
- elEGbXc348ZdTx1TCQgRf8RR5/oKDeXRvReMwUWcNHWa7zA0/os0SYNiVUWtL241LsWDccLpJzc
- Y+pUknKnhAcrtV6CsaceR3u86Naagh61C3bKFvTdAkNLq+tpnUybqSQjv6dZLE4tIrqMBO9Y2DN
- xtkSdWaROv+yy2C3JQGehAdroTXLCeNsEaE/odVSxR
-X-Gm-Gg: ASbGnct0BuL+hLptEcCyzKgDjBNMCFDG5uytB4F08TA3wvd5QRj9mhjk5EZaMIiCMsh
- XZvGc1SJj3kPRANbOt8mJ7o/+qDShfjkAGXCDzC5ALshhFmmXaedZ0nhkkaJVysHw3GcwMhhRaV
- jPzyIDlO06NJl1Mna6ceueyk6WG2cyemNMRulvSi3KKKg1EqwD6i/Hf8uXvG+svpenWbm7b4ZzW
- KKQPLRxTozMzP4ox65MfwEi6JWMRkW8IYhZBqFBR55JECfhuybVUEY+vxdkQROMs3T/Zd6or1dc
- gp3LQyX//bZX5g==
-X-Received: by 2002:a17:906:c10b:b0:ad5:5e61:b091 with SMTP id
- a640c23a62f3a-ad55e61b421mr970269466b.54.1747739144340; 
- Tue, 20 May 2025 04:05:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8AX3ZbSwauJd4nXQfRXUCwpHLiuZs6ddJaaBik9vrqyeCNWo80ugUH5zUvAvAfFXRI2Kuxg==
-X-Received: by 2002:a17:906:c10b:b0:ad5:5e61:b091 with SMTP id
- a640c23a62f3a-ad55e61b421mr970266766b.54.1747739143820; 
- Tue, 20 May 2025 04:05:43 -0700 (PDT)
+ bh=O+ysdJnjVluo6jSebuS5er9F+Pln3PK7sOvJMqbaJlM=;
+ b=UaeFbtQDMQ2ifvRNTgbRbqfJq+StWU2Nx/J/5Ndgzl+0FhhN53hsppA5sLzbHpSkmS
+ EQTe/hWnQvUsUls3c/CsdxO8pE6/2qQ/AV3NmThCKHbaLbM9VYdhgIAyuWVTnQDhRpar
+ FMlwi1qC7+7d1mfbH0HDMSBtjK7yU1dF0Bxh1yxiGWoX5GOUMVw9agveX5UpMkQRshs0
+ XOUAtuHz2SjVIvwbtdJBLRvi7sIqR6AbRMUwRX0o8mjIP31tXkYy6qi30hXykBgal+70
+ w5Ak5a81smlrXiT5G/8PlohRGR8PJpgIRXvDHIT6ivYLhLKruANcXEyRg9Yexcdf+vQT
+ OZfQ==
+X-Gm-Message-State: AOJu0YyieOs4tdGDIEC3vsL+2dGlYAQC8CKc/MJTpbBzW4BZoatrQbUQ
+ M+R9dlt4OviqtvYgGxDAbZL4oXM6puzbRTlpkd+wyPhkDadSdCdJVea3sQDOqdEsCMSsBwdb0gj
+ mxy1yPdmgd+0wqX8/VKmC657epdnuQylOyKa81i82DergHrqhb6ioDTJLjk76VO5inl7rrfP5tc
+ REMt6id5pdKPVFBZi0gIquGA7ku9ckSe1MCw6ymHJz
+X-Gm-Gg: ASbGncurLV4ltpxf1s4eAAFBj0nkOzcVWSybDHyLeTqIpkad3hZM0azC+yc2kA6eB9A
+ bEW/d55d2Tz/lAbngEIWoJ7Wu9h+yHhxLIH4g6RPPRwlUBfElcNjgeI6lhj7lzqSpe2f3EDTNg3
+ X5Twwrcav1duRxKlJeS8Y0PYQtMwyhYArySI/mzc1Ywvf2H0MjGjAj+4II1tIX6w3xCjKGdEv2/
+ zAtQVUnOgxnO11HARRc4V7aUSwKeJS+Z3MaWACzlu0llqFErZYrIzxHuVXqrRwIoHuJaa4AyvAY
+ 2+5FZffUVPG1SQ==
+X-Received: by 2002:a17:907:1b02:b0:ad5:3504:a6d with SMTP id
+ a640c23a62f3a-ad536ddeb5bmr1335953566b.47.1747739191232; 
+ Tue, 20 May 2025 04:06:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE89vo4xSX4+K4YhVeAXV07upmmA17APg/BFZ8fw3rbsDMfq5N6SyLjljasnYNCeWGZosB7gw==
+X-Received: by 2002:a17:907:1b02:b0:ad5:3504:a6d with SMTP id
+ a640c23a62f3a-ad536ddeb5bmr1335949866b.47.1747739190663; 
+ Tue, 20 May 2025 04:06:30 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.46.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d4c516dsm711052066b.154.2025.05.20.04.05.41
+ a640c23a62f3a-ad52d4ca827sm707166166b.163.2025.05.20.04.06.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 04:05:41 -0700 (PDT)
+ Tue, 20 May 2025 04:06:29 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 06/35] qapi/misc-target: Rename SGXInfo to SgxInfo
-Date: Tue, 20 May 2025 13:05:01 +0200
-Message-ID: <20250520110530.366202-7-pbonzini@redhat.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 26/35] target/riscv: convert ibex CPU models to RISCVCPUDef
+Date: Tue, 20 May 2025 13:05:21 +0200
+Message-ID: <20250520110530.366202-27-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520110530.366202-1-pbonzini@redhat.com>
 References: <20250520110530.366202-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -108,155 +108,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
-
-QAPI requires strict PascalCase naming style, i.e., only the first
-letter of a single word is allowed to be uppercase, which could help
-with readability.
-
-Rename SGXInfo to SgxInfo.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250516091130.2374221-3-zhao1.liu@intel.com
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qapi/misc-target.json | 12 ++++++------
- hw/i386/sgx-stub.c    |  4 ++--
- hw/i386/sgx.c         | 14 +++++++-------
- 3 files changed, 15 insertions(+), 15 deletions(-)
+ target/riscv/cpu.c | 39 ++++++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 23 deletions(-)
 
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index a1275d3873a..6b3c9d8bd58 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -334,7 +334,7 @@
-             'size': 'uint64'}}
- 
- ##
--# @SGXInfo:
-+# @SgxInfo:
- #
- # Information about intel Safe Guard eXtension (SGX) support
- #
-@@ -350,7 +350,7 @@
- #
- # Since: 6.2
- ##
--{ 'struct': 'SGXInfo',
-+{ 'struct': 'SgxInfo',
-   'data': { 'sgx': 'bool',
-             'sgx1': 'bool',
-             'sgx2': 'bool',
-@@ -363,7 +363,7 @@
- #
- # Returns information about SGX
- #
--# Returns: @SGXInfo
-+# Returns: @SgxInfo
- #
- # Since: 6.2
- #
-@@ -375,14 +375,14 @@
- #                      "sections": [{"node": 0, "size": 67108864},
- #                      {"node": 1, "size": 29360128}]} }
- ##
--{ 'command': 'query-sgx', 'returns': 'SGXInfo', 'if': 'TARGET_I386' }
-+{ 'command': 'query-sgx', 'returns': 'SgxInfo', 'if': 'TARGET_I386' }
- 
- ##
- # @query-sgx-capabilities:
- #
- # Returns information from host SGX capabilities
- #
--# Returns: @SGXInfo
-+# Returns: @SgxInfo
- #
- # Since: 6.2
- #
-@@ -394,7 +394,7 @@
- #                      "section" : [{"node": 0, "size": 67108864},
- #                      {"node": 1, "size": 29360128}]} }
- ##
--{ 'command': 'query-sgx-capabilities', 'returns': 'SGXInfo', 'if': 'TARGET_I386' }
-+{ 'command': 'query-sgx-capabilities', 'returns': 'SgxInfo', 'if': 'TARGET_I386' }
- 
- 
- ##
-diff --git a/hw/i386/sgx-stub.c b/hw/i386/sgx-stub.c
-index 38ff75e9f37..ccb21a975d7 100644
---- a/hw/i386/sgx-stub.c
-+++ b/hw/i386/sgx-stub.c
-@@ -10,13 +10,13 @@ void sgx_epc_build_srat(GArray *table_data)
- {
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 17ad8b2ca1f..689c33916e0 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -690,28 +690,6 @@ static void rv32_sifive_u_cpu_init(Object *obj)
+     cpu->cfg.mmu = true;
+     cpu->cfg.pmp = true;
  }
+-
+-static void rv32_ibex_cpu_init(Object *obj)
+-{
+-    CPURISCVState *env = &RISCV_CPU(obj)->env;
+-    RISCVCPU *cpu = RISCV_CPU(obj);
+-
+-    riscv_cpu_set_misa_ext(env, RVI | RVM | RVC | RVU);
+-    env->priv_ver = PRIV_VERSION_1_12_0;
+-#ifndef CONFIG_USER_ONLY
+-    set_satp_mode_max_supported(cpu, VM_1_10_MBARE);
+-#endif
+-    /* inherited from parent obj via riscv_cpu_init() */
+-    cpu->cfg.ext_zifencei = true;
+-    cpu->cfg.ext_zicsr = true;
+-    cpu->cfg.pmp = true;
+-    cpu->cfg.ext_smepmp = true;
+-
+-    cpu->cfg.ext_zba = true;
+-    cpu->cfg.ext_zbb = true;
+-    cpu->cfg.ext_zbc = true;
+-    cpu->cfg.ext_zbs = true;
+-}
+ #endif
  
--SGXInfo *qmp_query_sgx(Error **errp)
-+SgxInfo *qmp_query_sgx(Error **errp)
- {
-     error_setg(errp, "SGX support is not compiled in");
-     return NULL;
- }
+ static ObjectClass *riscv_cpu_class_by_name(const char *cpu_model)
+@@ -3169,7 +3147,22 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .misa_mxl_max = MXL_RV32,
+     ),
  
--SGXInfo *qmp_query_sgx_capabilities(Error **errp)
-+SgxInfo *qmp_query_sgx_capabilities(Error **errp)
- {
-     error_setg(errp, "SGX support is not compiled in");
-     return NULL;
-diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
-index 3c601689eb7..c80203b438e 100644
---- a/hw/i386/sgx.c
-+++ b/hw/i386/sgx.c
-@@ -153,9 +153,9 @@ static void sgx_epc_reset(void *opaque)
-      }
- }
- 
--SGXInfo *qmp_query_sgx_capabilities(Error **errp)
-+SgxInfo *qmp_query_sgx_capabilities(Error **errp)
- {
--    SGXInfo *info = NULL;
-+    SgxInfo *info = NULL;
-     uint32_t eax, ebx, ecx, edx;
-     Error *local_err = NULL;
- 
-@@ -166,7 +166,7 @@ SGXInfo *qmp_query_sgx_capabilities(Error **errp)
-         return NULL;
-     }
- 
--    info = g_new0(SGXInfo, 1);
-+    info = g_new0(SgxInfo, 1);
-     host_cpuid(0x7, 0, &eax, &ebx, &ecx, &edx);
- 
-     info->sgx = ebx & (1U << 2) ? true : false;
-@@ -205,9 +205,9 @@ static SgxEpcSectionList *sgx_get_epc_sections_list(void)
-     return head;
- }
- 
--SGXInfo *qmp_query_sgx(Error **errp)
-+SgxInfo *qmp_query_sgx(Error **errp)
- {
--    SGXInfo *info = NULL;
-+    SgxInfo *info = NULL;
-     X86MachineState *x86ms;
-     PCMachineState *pcms =
-         (PCMachineState *)object_dynamic_cast(qdev_get_machine(),
-@@ -223,7 +223,7 @@ SGXInfo *qmp_query_sgx(Error **errp)
-         return NULL;
-     }
- 
--    info = g_new0(SGXInfo, 1);
-+    info = g_new0(SgxInfo, 1);
- 
-     info->sgx = true;
-     info->sgx1 = true;
-@@ -238,7 +238,7 @@ void hmp_info_sgx(Monitor *mon, const QDict *qdict)
- {
-     Error *err = NULL;
-     SgxEpcSectionList *section_list, *section;
--    g_autoptr(SGXInfo) info = qmp_query_sgx(&err);
-+    g_autoptr(SgxInfo) info = qmp_query_sgx(&err);
-     uint64_t size = 0;
- 
-     if (err) {
+-    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_IBEX,       MXL_RV32,  rv32_ibex_cpu_init),
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_IBEX, TYPE_RISCV_VENDOR_CPU,
++        .misa_mxl_max = MXL_RV32,
++        .misa_ext = RVI | RVM | RVC | RVU,
++        .priv_spec = PRIV_VERSION_1_12_0,
++        .cfg.max_satp_mode = VM_1_10_MBARE,
++        .cfg.ext_zifencei = true,
++        .cfg.ext_zicsr = true,
++        .cfg.pmp = true,
++        .cfg.ext_smepmp = true,
++
++        .cfg.ext_zba = true,
++        .cfg.ext_zbb = true,
++        .cfg.ext_zbc = true,
++        .cfg.ext_zbs = true
++    ),
++
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
+         .misa_mxl_max = MXL_RV32
+     ),
 -- 
 2.49.0
 
