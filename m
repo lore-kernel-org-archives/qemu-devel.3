@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60964C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 21:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8DD0C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 22:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHUrP-0007FZ-DL; Tue, 20 May 2025 17:50:55 -0400
+	id 1uHV76-00027P-As; Tue, 20 May 2025 18:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uHUrO-0007FR-DF
- for qemu-devel@nongnu.org; Tue, 20 May 2025 17:50:54 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1uHV74-00027E-PI
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 18:07:06 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uHUrM-0005ej-KC
- for qemu-devel@nongnu.org; Tue, 20 May 2025 17:50:54 -0400
+ id 1uHV72-0001ES-VR
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 18:07:06 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 1AA455C5ACF;
- Tue, 20 May 2025 21:48:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D69C4CEE9;
- Tue, 20 May 2025 21:50:49 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id B198AA4EC01;
+ Tue, 20 May 2025 22:07:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6EE9C4CEE9;
+ Tue, 20 May 2025 22:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1747777849;
- bh=DOosrfF8fIjhWIinlekVAsETDayOVvwoUM1wsqQFXTM=;
+ s=k20201202; t=1747778823;
+ bh=FEmzV1jwXMWsJIFBI9D9FCNju+m6SFqPEe3SeHd3VDc=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Hilc0BRz+DI/c3qX58wOcoi8CKqlY3VUzj0yX1XCrU16dwvX6X+E2gj36htQCrm/D
- xkVDrYC1W77uE5AmXpKcWTZOMdzfKEhdxdh2eYIrYeRVbVBtWbkrivQg6WrE6ekVuZ
- SRVc114GRNsmSoS7T+tfeZW8SdoIjUscvma66BLDddUI/Hk1evrpXdDTHo57pw3Hlz
- gBKxunttr8+7MW2IsBrFt+BkduyNEtwir59qQFLDjwx8igpKd3QAHXUIIjJ8hPGdzV
- Z9AgQnpZ8tE+RNSk0bNrTq0kK4GBA4jCRDf5I6jJspBuM4J1Huz83s/Gjn1C+wfNTL
- 72GYSM8K2ybzg==
-Date: Tue, 20 May 2025 21:50:48 +0000
+ b=eS2DYeoIM2eYu9U+1JNNkRen1tQw9NQUqkysfzREfJLJRqNlCqjQG/qXr52nJ3QwU
+ qYjKzP44ATE9Nl7rHDu3czw/E9xGi5ZuHnhFsXbPLI83dtV44tFQaOmq8TvKfMjpIi
+ c5dEzhCcHNJAPB6kndCyCZiPPoxEd5lu358FUk9ggP8gCAQLoc3tK8zCm7qYjc/BoB
+ c9CgQ2+9Cb5O6uG+0B1E2l2FFzea8YVmzbqvVKoJHx2tDvskcYP/mUSgyZ2bKzrxU0
+ 1vcoXtwi7Odr4+sKASVIZ+hHrbm5IUMs238PzJX9j9BdidBlb22Hp7zlX4A9CNN9Sn
+ jlmpbksGRMKYw==
+Date: Tue, 20 May 2025 22:07:01 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
@@ -49,23 +49,22 @@ Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
  Cameron Esfahani <dirty@apple.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 14/25] target/i386/mshv: Add CPU create and remove
- logic
-Message-ID: <aCz5OHYVRnYGcH6a@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+Subject: Re: [RFC PATCH 15/25] target/i386/mshv: Implement mshv_store_regs()
+Message-ID: <aCz9BXChINYOYAa3@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
 References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-15-magnuskulke@linux.microsoft.com>
+ <20250520113018.49569-16-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250520113018.49569-15-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=wei.liu@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -75
-X-Spam_score: -7.6
-X-Spam_bar: -------
-X-Spam_report: (-7.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+In-Reply-To: <20250520113018.49569-16-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=wei.liu@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,122 +82,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 01:30:07PM +0200, Magnus Kulke wrote:
-> Implement MSHV-specific hooks for vCPU creation and teardown in the
-> i386 target. A list of locks per vCPU is maintained to lock CPU state in
-> MMIO operations.
+On Tue, May 20, 2025 at 01:30:08PM +0200, Magnus Kulke wrote:
+> Add support for writing general-purpose registers to MSHV vCPUs
+> during initialization or migration using the MSHV register interface. A
+> generic set_register call is introduced to abstract the HV call over
+> the various register types.
 > 
 > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
->  target/i386/mshv/mshv-cpu.c | 61 +++++++++++++++++++++++++++++++++----
->  1 file changed, 55 insertions(+), 6 deletions(-)
-> 
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index c4b2c297e2..0ba1dacaed 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -14,6 +14,8 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "qemu/atomic.h"
-> +#include "qemu/lockable.h"
->  #include "qemu/error-report.h"
->  #include "qemu/typedefs.h"
->  
-> @@ -30,6 +32,36 @@
->  #include "trace-accel_mshv.h"
->  #include "trace.h"
->  
-> +#include <sys/ioctl.h>
-> +
-> +static QemuMutex *cpu_guards_lock;
-> +static GHashTable *cpu_guards;
-> +
-> +static void add_cpu_guard(int cpu_fd)
-> +{
-> +    QemuMutex *guard;
-> +
-> +    WITH_QEMU_LOCK_GUARD(cpu_guards_lock) {
-> +        guard = g_new0(QemuMutex, 1);
-> +        qemu_mutex_init(guard);
-> +        g_hash_table_insert(cpu_guards, GUINT_TO_POINTER(cpu_fd), guard);
-> +    }
-> +}
-> +
-> +static void remove_cpu_guard(int cpu_fd)
-> +{
-> +    QemuMutex *guard;
-> +
-> +    WITH_QEMU_LOCK_GUARD(cpu_guards_lock) {
-> +        guard = g_hash_table_lookup(cpu_guards, GUINT_TO_POINTER(cpu_fd));
-> +        if (guard) {
-> +            qemu_mutex_destroy(guard);
-> +            g_free(guard);
-> +            g_hash_table_remove(cpu_guards, GUINT_TO_POINTER(cpu_fd));
-> +        }
-> +    }
-> +}
-> +
+[...]
 >  int mshv_store_regs(CPUState *cpu)
->  {
->  	error_report("unimplemented");
-> @@ -62,20 +94,37 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
->  
->  void mshv_remove_vcpu(int vm_fd, int cpu_fd)
->  {
-> -	error_report("unimplemented");
-> -	abort();
-> +    /*
-> +     * TODO: don't we have to perform an ioctl to remove the vcpu?
-> +     * there is WHvDeleteVirtualProcessor in the WHV api
-> +     */
-> +    remove_cpu_guard(cpu_fd);
-
-Can you just park that CPU and never schedule it again?
-
-There is a DELETE_VP call but we may not have exposed that to user
-space.
-
-The code as-is seems to be leaking the cpu_fd. If it is handled
-elsewhere you can ignore this comment.
-
-Thanks,
-Wei.
-
->  }
->  
-> +
->  int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
 >  {
 > -	error_report("unimplemented");
 > -	abort();
 > +    int ret;
-> +    struct mshv_create_vp vp_arg = {
-> +        .vp_index = vp_index,
-> +    };
-> +    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
+> +
+> +    ret = set_standard_regs(cpu);
 > +    if (ret < 0) {
-> +        error_report("failed to create mshv vcpu: %s", strerror(errno));
+> +        error_report("Failed to store standard registers");
 > +        return -1;
 > +    }
 > +
-> +    add_cpu_guard(ret);
-> +    *cpu_fd = ret;
+> +    /* TODO: should store special registers? the equivalent hvf code doesn't */
+
+(I'm just using x86 KVM's special registers as a reference)
+
+We should not need to store them every time we refresh the CPU state,
+unless we know some of them are dirtied by QEMU.
+
+Thanks,
+Wei.
+
 > +
 > +    return 0;
 >  }
 >  
->  void mshv_init_cpu_logic(void)
+> +
+>  int mshv_load_regs(CPUState *cpu)
 >  {
-> -	error_report("unimplemented");
-> -	abort();
-> +    cpu_guards_lock = g_new0(QemuMutex, 1);
-> +    qemu_mutex_init(cpu_guards_lock);
-> +    cpu_guards = g_hash_table_new(g_direct_hash, g_direct_equal);
->  }
->  
->  void mshv_arch_init_vcpu(CPUState *cpu)
+>  	error_report("unimplemented");
 > -- 
 > 2.34.1
 > 
