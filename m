@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE6AC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 001ACC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHQGT-000281-01; Tue, 20 May 2025 12:56:29 -0400
+	id 1uHQHO-0002fF-6n; Tue, 20 May 2025 12:57:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uHQGP-00026j-Dz
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:56:25 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uHQHF-0002UM-8A
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:57:18 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uHQGN-0007jc-Lv
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:56:25 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-30ecc762cb7so2574609a91.1
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:56:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uHQHB-0007q8-8L
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:57:16 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-ad55d6aeb07so129437766b.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:57:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747760182; x=1748364982; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/vRLMitreON+vFW++48y7TglTchdWWbvnyq6iT67lMY=;
- b=hFjSgQ0+9tnY8pOZDuMGuD6ag56t4DFqa1ZFOH5XFTMWiSWZvDpyaWzUWwtYeS4fCf
- s5Zktaj3bDPdRr+69OrmyHNM5D4olIJPQG5oj9uN/kw9FjS4d5h9//un8pT5bjHBmqNX
- zAkODrGF8fmUeiy2NjwaB/m62+69OJW990vQNyIp1O6VRy38Tx4SvqCSW0QREjwctGS4
- FkPZ7llpIZTg5YzdmNuCXpwH4uq9IpI44FqTZSbxSqglTrbqRMZ//6t8f8q0URe8wNHS
- kJ7d1N7KJbOh9XDRQETWkPBAT75PbdfJhciS8wRt3tsOUiFV1iz9QSyx2ZDiMFPVn4w4
- A4wg==
+ d=linaro.org; s=google; t=1747760231; x=1748365031; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8GWiFjDTI1W+SwO61thYcMt6WHg8NWgc4ieUAXnmfvA=;
+ b=hACHpxpii5C4kXQ2JQDlmiyb3R6THY6JtbLm9ZFHfIjKDp4bZqlGX/yb+Dja3Cq3Uf
+ W3tc94HvqsPRThEae+buPNVjyhOuhdo90mLt7h8kFlzVIDH07n3tSQqt6S6SPgEXhhwq
+ bx/6uXeVqm6ODK5ZJv1SW8GllHAttO9/anLEEBoxeZVpui9HLbKll/C/MsbawVptlegW
+ YTHO2rPVZyMF0jrov/SUe+h+LJ6xE+lz0idVCXgds8QNK4jVSPzF8OpPFt4No4Nh8wwQ
+ Eig+dAA+YHbx2R4KTCOulaGKUmPm4WYf0MDVAbehjQEya8gKxmTP1olSrvT1Z4kBxd5D
+ XDuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747760182; x=1748364982;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/vRLMitreON+vFW++48y7TglTchdWWbvnyq6iT67lMY=;
- b=JdqyRtwd9SSVHOibw21TSp3vUBBgqHYay/XPEn9T9dZXGaYhvZuoIh4LcewEbQKYvY
- Bmp8WXBq11nM6UZaUJH+xrvwW1x6bAs+Zf6uhEULH3r8Y0NvpNd9Rih8iFe7fNxhMfdL
- gsLdhXGDYsAO27TNBcZHe8XHm6i9m9fvCa1CIc8heFVPlBQOk3oGm2ceUAWd2qSJ56Nu
- 9D2hB04DFldOYClS8293wm2ALpfPNOvwckRql87lA/Q4xL+l3O2jMn2kwdbYXzdSklYe
- EzgbovhyQ+D4fbcYPvK8oDacE69W0vEh7wItBaotWs4h6WV9fE09+ev8HiNXGyoPZ427
- hsBw==
-X-Gm-Message-State: AOJu0YziLOCkfZtCx2dG+b7pkBIP3hws2oMEwr8x2G3NjMVvOPdzN14L
- UqnSnSVvcXtqAI32cRe73g1T/G49eljWL77sB8Z72JHd9nvbDP7UeKO5
-X-Gm-Gg: ASbGncsWJWWA7nA8VVJl7YiDISm79BPqYfvYYIZ/8iTrtczunHGm6SjupUxmgplUW2M
- bf3CNOH5cY0/+WM8PpeeMK2F7bGUaRt7Vgd0zINkvte+L2IuTOzzLi7F6byyw8f41MuJUFNsT9E
- CgWp4WJxs1wOS7sEJxxFUTtWl2nRB8UbXHxMbFKYrcXv0J0lp946lop7ddPB1wYbRqTTzZ0ei1n
- R1ve/nGl/OIgztZ8suF9AUroDPtFaQ4Th8/NqP5VzhQZ7W7o/zsUKMBdUkyu2JbC4MDKCsB0tq+
- KAayzldizeJiexwVjAeNOo/QPURGOm8VeshvI78nXQ==
-X-Google-Smtp-Source: AGHT+IEldrYyfqRchNLhtdk3Ea5E8njSYxDDAnkx44QFrecfD06Y3xlMc2io0rTCgfTnWFsUuD9VUg==
-X-Received: by 2002:a17:90b:3e8e:b0:2fa:1e56:5d82 with SMTP id
- 98e67ed59e1d1-30e7e87f02amr25553357a91.17.1747760181771; 
- Tue, 20 May 2025 09:56:21 -0700 (PDT)
-Received: from lg ([2601:646:8f03:9fee:2c89:c0cf:1cbd:96d3])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30f365d460fsm1928556a91.23.2025.05.20.09.56.20
+ d=1e100.net; s=20230601; t=1747760231; x=1748365031;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8GWiFjDTI1W+SwO61thYcMt6WHg8NWgc4ieUAXnmfvA=;
+ b=eOxwUqClennEV+A7FQlt4muxBX4oesj5EcnKo0SnVX8AoGzamzzhahAQKbMgcnAlVL
+ cUHdUkDTXSBu95iyDNRb2H2iwqrHeOpclUQcjcca+Tt8YybrYwg1Nc2CAlnr/B5XpKes
+ oezORYVpw0l9B5poPbCspFGvwW5NUpidjyFJFNE9OMeDI3Kd/Ws7dMsSK5CbcJmRFgMS
+ W/19LtxyuGVTN6qR9OohGpiiuED6dp3lEUSsFXcHI360RWAHJl+wQ63Qbqdgs39QJ4bx
+ d0TmQizl00DOKX68+2mSxA1Feei00JDXiRm0a6dYMkggAzSOPsWxYmj3DrTf9VBMif8J
+ 6qoA==
+X-Gm-Message-State: AOJu0YxKIyxWIe4i53rWx5XXd8CBWSKAdLT9ClSzDzWPvpcZ81QgiZPr
+ oMI0Fih+cGfBsVbxD890rMfqBrPfmT42jm3+F/Nlg5xcaTFwihv7CK+/dP8q5JwHT5HX5AJSE+2
+ 9umyNz1I=
+X-Gm-Gg: ASbGncvZyU+DlCwqDfiVS9W04wwBOsX68go57w7hkosBD0BmpICsGtjTQB//9mbhsii
+ zundtzKewkz1/IH2+ZWoTUK/SNZTPH0uFQ5dsfdkAp/xTvS46E5OSyL4K+HcxzDA/c3dJRwEBV2
+ TUAdi/lmXgETug1cCcreHkW5mKQ4Xj5+DvMw3jFOwzt7rqfjvvUZBqjqmWlK6LSfu1BpxFNBEXL
+ DjTEEIE0SmhRIro7xS334YbfZcvdQa7h7gh09RGzfQIO5Q4PCAVWzqub907+WiTyZs2lu8SdZub
+ gF0Csh8U83Z9wHMVZBWtkFiqme8hpmSYicKxl7XpNvIMbQUaSKkl
+X-Google-Smtp-Source: AGHT+IHZqun16VdJQ0G1C7CMcrdF9wqtV6z+4AkH4MKsOnbUUmBPF24WGcoPOXYeeEdH2YnOc/UU7Q==
+X-Received: by 2002:a17:907:3ea4:b0:ad2:49b5:8e0d with SMTP id
+ a640c23a62f3a-ad536b7f1c3mr1528875566b.15.1747760230711; 
+ Tue, 20 May 2025 09:57:10 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad52d047738sm762285166b.19.2025.05.20.09.57.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 09:56:21 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Tue, 20 May 2025 09:56:18 -0700
-To: anisa.su887@gmail.com
-Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
- dave@stgolabs.net, linux-cxl@vger.kernel.org,
- Anisa Su <anisa.su@samsung.com>
-Subject: Re: [PATCH v2 06/10] hw/cxl_type3: Add DC Region bitmap lock
-Message-ID: <aCy0MoOUEwFj8HQ4@lg>
-References: <20250508001754.122180-1-anisa.su887@gmail.com>
- <20250508001754.122180-7-anisa.su887@gmail.com>
+ Tue, 20 May 2025 09:57:10 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 354E25F7A5;
+ Tue, 20 May 2025 17:57:09 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [RFC PATCH] util: split unix socket functions out of qemu-sockets
+Date: Tue, 20 May 2025 17:57:06 +0100
+Message-Id: <20250520165706.3976971-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250508001754.122180-7-anisa.su887@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,88 +101,512 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 08, 2025 at 12:01:02AM +0000, anisa.su887@gmail.com wrote:
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> Add a lock on the bitmap of each CXLDCRegion in preparation for the next
-> patch which implements FMAPI Set DC Region Configuration. This command
-> can modify the block size, which means the region's bitmap must be updated
-> accordingly.
-> 
-> The lock becomes necessary when commands that add/release extents
-> (meaning they update the bitmap too) are enabled on a different CCI than
-> the CCI on which the FMAPI commands are enabled. 
+Since fccb744f41 (gdbstub: Try unlinking the unix socket before
+binding) we use the unix_listen() function from linux-user which
+causes complications when trying to build statically.
 
-read/write access also need to touch the blk_bitmap to ensure the range
-to access is backed by DC blocks through ct3_test_region_block_backed().
+Fix this by splitting the unix functions into its own file and doing
+the appropriate tweaks to the headers.
 
-Otherwise,
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ include/qemu/sockets.h |   1 +
+ util/socket-helpers.h  |  17 ++++
+ util/qemu-sockets.c    | 199 +--------------------------------------
+ util/unix-sockets.c    | 207 +++++++++++++++++++++++++++++++++++++++++
+ util/meson.build       |   5 +-
+ 5 files changed, 231 insertions(+), 198 deletions(-)
+ create mode 100644 util/socket-helpers.h
+ create mode 100644 util/unix-sockets.c
 
-
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
-
-
-
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> ---
->  hw/mem/cxl_type3.c          | 4 ++++
->  include/hw/cxl/cxl_device.h | 1 +
->  2 files changed, 5 insertions(+)
-> 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 6ad48f55ce..b5b3df5edf 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -824,6 +824,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
->          };
->          ct3d->dc.total_capacity += region->len;
->          region->blk_bitmap = bitmap_new(region->len / region->block_size);
-> +        qemu_mutex_init(&region->bitmap_lock);
->      }
->      QTAILQ_INIT(&ct3d->dc.extents);
->      QTAILQ_INIT(&ct3d->dc.extents_pending);
-> @@ -1176,6 +1177,7 @@ void ct3_set_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
->          return;
->      }
->  
-> +    QEMU_LOCK_GUARD(&region->bitmap_lock);
->      bitmap_set(region->blk_bitmap, (dpa - region->base) / region->block_size,
->                 len / region->block_size);
->  }
-> @@ -1202,6 +1204,7 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
->       * if bits between [dpa, dpa + len) are all 1s, meaning the DPA range is
->       * backed with DC extents, return true; else return false.
->       */
-> +    QEMU_LOCK_GUARD(&region->bitmap_lock);
->      return find_next_zero_bit(region->blk_bitmap, nr + nbits, nr) == nr + nbits;
->  }
->  
-> @@ -1223,6 +1226,7 @@ void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
->  
->      nr = (dpa - region->base) / region->block_size;
->      nbits = len / region->block_size;
-> +    QEMU_LOCK_GUARD(&region->bitmap_lock);
->      bitmap_clear(region->blk_bitmap, nr, nbits);
->  }
->  
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index cbcc1bc9f5..9cfd9c5a9f 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -618,6 +618,7 @@ typedef struct CXLDCRegion {
->      uint8_t flags;
->      unsigned long *blk_bitmap;
->      uint64_t supported_blk_size_bitmask;
-> +    QemuMutex bitmap_lock;
->      /* Following bools make up dsmas flags, as defined in the CDAT */
->      bool nonvolatile;
->      bool sharable;
-> -- 
-> 2.47.2
-> 
-
+diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
+index c562690d89..578aef13cf 100644
+--- a/include/qemu/sockets.h
++++ b/include/qemu/sockets.h
+@@ -65,6 +65,7 @@ int inet_connect_saddr(InetSocketAddress *saddr, Error **errp);
+ 
+ NetworkAddressFamily inet_netfamily(int family);
+ 
++/* part of unix-sockets.c */
+ int unix_listen(const char *path, Error **errp);
+ int unix_connect(const char *path, Error **errp);
+ 
+diff --git a/util/socket-helpers.h b/util/socket-helpers.h
+new file mode 100644
+index 0000000000..f72925148a
+--- /dev/null
++++ b/util/socket-helpers.h
+@@ -0,0 +1,17 @@
++/*
++ * Common helper functions for unix and qemu sockets
++ *
++ * (c) 2008 Gerd Hoffmann <kraxel@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef _SOCKET_HELPERS_H_
++#define _SOCKET_HELPERS_H_
++
++#include "qapi/qapi-visit-sockets.h"
++
++int unix_connect_saddr(UnixSocketAddress *saddr, Error **errp);
++int unix_listen_saddr(UnixSocketAddress *saddr, int num, Error **errp);
++
++#endif /* _SOCKET_HELPERS_H_ */
+diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+index 77477c1cd5..a5c3515082 100644
+--- a/util/qemu-sockets.c
++++ b/util/qemu-sockets.c
+@@ -1,5 +1,5 @@
+ /*
+- *  inet and unix socket functions for qemu
++ *  inet socket functions for qemu
+  *
+  *  (c) 2008 Gerd Hoffmann <kraxel@redhat.com>
+  *
+@@ -30,6 +30,7 @@
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/qobject-output-visitor.h"
+ #include "qemu/cutils.h"
++#include "socket-helpers.h"
+ #include "trace.h"
+ 
+ #ifndef AI_ADDRCONFIG
+@@ -853,202 +854,6 @@ static int vsock_parse(VsockSocketAddress *addr, const char *str,
+ }
+ #endif /* CONFIG_AF_VSOCK */
+ 
+-static bool saddr_is_abstract(UnixSocketAddress *saddr)
+-{
+-#ifdef CONFIG_LINUX
+-    return saddr->abstract;
+-#else
+-    return false;
+-#endif
+-}
+-
+-static bool saddr_is_tight(UnixSocketAddress *saddr)
+-{
+-#ifdef CONFIG_LINUX
+-    return !saddr->has_tight || saddr->tight;
+-#else
+-    return false;
+-#endif
+-}
+-
+-static int unix_listen_saddr(UnixSocketAddress *saddr,
+-                             int num,
+-                             Error **errp)
+-{
+-    bool abstract = saddr_is_abstract(saddr);
+-    struct sockaddr_un un;
+-    int sock, fd;
+-    char *pathbuf = NULL;
+-    const char *path;
+-    size_t pathlen;
+-    size_t addrlen;
+-
+-    sock = qemu_socket(PF_UNIX, SOCK_STREAM, 0);
+-    if (sock < 0) {
+-        error_setg_errno(errp, errno, "Failed to create Unix socket");
+-        return -1;
+-    }
+-
+-    if (saddr->path[0] || abstract) {
+-        path = saddr->path;
+-    } else {
+-        path = pathbuf = g_strdup_printf("%s/qemu-socket-XXXXXX",
+-                                         g_get_tmp_dir());
+-    }
+-
+-    pathlen = strlen(path);
+-    if (pathlen > sizeof(un.sun_path) ||
+-        (abstract && pathlen > (sizeof(un.sun_path) - 1))) {
+-        error_setg(errp, "UNIX socket path '%s' is too long", path);
+-        error_append_hint(errp, "Path must be less than %zu bytes\n",
+-                          abstract ? sizeof(un.sun_path) - 1 :
+-                          sizeof(un.sun_path));
+-        goto err;
+-    }
+-
+-    if (pathbuf != NULL) {
+-        /*
+-         * This dummy fd usage silences the mktemp() insecure warning.
+-         * Using mkstemp() doesn't make things more secure here
+-         * though.  bind() complains about existing files, so we have
+-         * to unlink first and thus re-open the race window.  The
+-         * worst case possible is bind() failing, i.e. a DoS attack.
+-         */
+-        fd = mkstemp(pathbuf);
+-        if (fd < 0) {
+-            error_setg_errno(errp, errno,
+-                             "Failed to make a temporary socket %s", pathbuf);
+-            goto err;
+-        }
+-        close(fd);
+-    }
+-
+-    if (!abstract && unlink(path) < 0 && errno != ENOENT) {
+-        error_setg_errno(errp, errno,
+-                         "Failed to unlink socket %s", path);
+-        goto err;
+-    }
+-
+-    memset(&un, 0, sizeof(un));
+-    un.sun_family = AF_UNIX;
+-    addrlen = sizeof(un);
+-
+-    if (abstract) {
+-        un.sun_path[0] = '\0';
+-        memcpy(&un.sun_path[1], path, pathlen);
+-        if (saddr_is_tight(saddr)) {
+-            addrlen = offsetof(struct sockaddr_un, sun_path) + 1 + pathlen;
+-        }
+-    } else {
+-        memcpy(un.sun_path, path, pathlen);
+-    }
+-
+-    if (bind(sock, (struct sockaddr *) &un, addrlen) < 0) {
+-        error_setg_errno(errp, errno, "Failed to bind socket to %s", path);
+-        goto err;
+-    }
+-    if (listen(sock, num) < 0) {
+-        error_setg_errno(errp, errno, "Failed to listen on socket");
+-        goto err;
+-    }
+-
+-    g_free(pathbuf);
+-    return sock;
+-
+-err:
+-    g_free(pathbuf);
+-    close(sock);
+-    return -1;
+-}
+-
+-static int unix_connect_saddr(UnixSocketAddress *saddr, Error **errp)
+-{
+-    bool abstract = saddr_is_abstract(saddr);
+-    struct sockaddr_un un;
+-    int sock, rc;
+-    size_t pathlen;
+-    size_t addrlen;
+-
+-    if (saddr->path == NULL) {
+-        error_setg(errp, "unix connect: no path specified");
+-        return -1;
+-    }
+-
+-    sock = qemu_socket(PF_UNIX, SOCK_STREAM, 0);
+-    if (sock < 0) {
+-        error_setg_errno(errp, errno, "Failed to create socket");
+-        return -1;
+-    }
+-
+-    pathlen = strlen(saddr->path);
+-    if (pathlen > sizeof(un.sun_path) ||
+-        (abstract && pathlen > (sizeof(un.sun_path) - 1))) {
+-        error_setg(errp, "UNIX socket path '%s' is too long", saddr->path);
+-        error_append_hint(errp, "Path must be less than %zu bytes\n",
+-                          abstract ? sizeof(un.sun_path) - 1 :
+-                          sizeof(un.sun_path));
+-        goto err;
+-    }
+-
+-    memset(&un, 0, sizeof(un));
+-    un.sun_family = AF_UNIX;
+-    addrlen = sizeof(un);
+-
+-    if (abstract) {
+-        un.sun_path[0] = '\0';
+-        memcpy(&un.sun_path[1], saddr->path, pathlen);
+-        if (saddr_is_tight(saddr)) {
+-            addrlen = offsetof(struct sockaddr_un, sun_path) + 1 + pathlen;
+-        }
+-    } else {
+-        memcpy(un.sun_path, saddr->path, pathlen);
+-    }
+-    /* connect to peer */
+-    do {
+-        rc = 0;
+-        if (connect(sock, (struct sockaddr *) &un, addrlen) < 0) {
+-            rc = -errno;
+-        }
+-    } while (rc == -EINTR);
+-
+-    if (rc < 0) {
+-        error_setg_errno(errp, -rc, "Failed to connect to '%s'",
+-                         saddr->path);
+-        goto err;
+-    }
+-
+-    return sock;
+-
+- err:
+-    close(sock);
+-    return -1;
+-}
+-
+-/* compatibility wrapper */
+-int unix_listen(const char *str, Error **errp)
+-{
+-    UnixSocketAddress *saddr;
+-    int sock;
+-
+-    saddr = g_new0(UnixSocketAddress, 1);
+-    saddr->path = g_strdup(str);
+-    sock = unix_listen_saddr(saddr, 1, errp);
+-    qapi_free_UnixSocketAddress(saddr);
+-    return sock;
+-}
+-
+-int unix_connect(const char *path, Error **errp)
+-{
+-    UnixSocketAddress *saddr;
+-    int sock;
+-
+-    saddr = g_new0(UnixSocketAddress, 1);
+-    saddr->path = g_strdup(path);
+-    sock = unix_connect_saddr(saddr, errp);
+-    qapi_free_UnixSocketAddress(saddr);
+-    return sock;
+-}
+-
+ char *socket_uri(SocketAddress *addr)
+ {
+     switch (addr->type) {
+diff --git a/util/unix-sockets.c b/util/unix-sockets.c
+new file mode 100644
+index 0000000000..e271dd3e09
+--- /dev/null
++++ b/util/unix-sockets.c
+@@ -0,0 +1,207 @@
++/*
++ * unix socket functions for qemu
++ *
++ * (c) 2008 Gerd Hoffmann <kraxel@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/sockets.h"
++#include "qapi/error.h"
++
++#include "socket-helpers.h"
++
++static bool saddr_is_abstract(UnixSocketAddress *saddr)
++{
++#ifdef CONFIG_LINUX
++    return saddr->abstract;
++#else
++    return false;
++#endif
++}
++
++static bool saddr_is_tight(UnixSocketAddress *saddr)
++{
++#ifdef CONFIG_LINUX
++    return !saddr->has_tight || saddr->tight;
++#else
++    return false;
++#endif
++}
++
++int unix_listen_saddr(UnixSocketAddress *saddr, int num, Error **errp)
++{
++    bool abstract = saddr_is_abstract(saddr);
++    struct sockaddr_un un;
++    int sock, fd;
++    char *pathbuf = NULL;
++    const char *path;
++    size_t pathlen;
++    size_t addrlen;
++
++    sock = qemu_socket(PF_UNIX, SOCK_STREAM, 0);
++    if (sock < 0) {
++        error_setg_errno(errp, errno, "Failed to create Unix socket");
++        return -1;
++    }
++
++    if (saddr->path[0] || abstract) {
++        path = saddr->path;
++    } else {
++        path = pathbuf = g_strdup_printf("%s/qemu-socket-XXXXXX",
++                                         g_get_tmp_dir());
++    }
++
++    pathlen = strlen(path);
++    if (pathlen > sizeof(un.sun_path) ||
++        (abstract && pathlen > (sizeof(un.sun_path) - 1))) {
++        error_setg(errp, "UNIX socket path '%s' is too long", path);
++        error_append_hint(errp, "Path must be less than %zu bytes\n",
++                          abstract ? sizeof(un.sun_path) - 1 :
++                          sizeof(un.sun_path));
++        goto err;
++    }
++
++    if (pathbuf != NULL) {
++        /*
++         * This dummy fd usage silences the mktemp() insecure warning.
++         * Using mkstemp() doesn't make things more secure here
++         * though.  bind() complains about existing files, so we have
++         * to unlink first and thus re-open the race window.  The
++         * worst case possible is bind() failing, i.e. a DoS attack.
++         */
++        fd = mkstemp(pathbuf);
++        if (fd < 0) {
++            error_setg_errno(errp, errno,
++                             "Failed to make a temporary socket %s", pathbuf);
++            goto err;
++        }
++        close(fd);
++    }
++
++    if (!abstract && unlink(path) < 0 && errno != ENOENT) {
++        error_setg_errno(errp, errno,
++                         "Failed to unlink socket %s", path);
++        goto err;
++    }
++
++    memset(&un, 0, sizeof(un));
++    un.sun_family = AF_UNIX;
++    addrlen = sizeof(un);
++
++    if (abstract) {
++        un.sun_path[0] = '\0';
++        memcpy(&un.sun_path[1], path, pathlen);
++        if (saddr_is_tight(saddr)) {
++            addrlen = offsetof(struct sockaddr_un, sun_path) + 1 + pathlen;
++        }
++    } else {
++        memcpy(un.sun_path, path, pathlen);
++    }
++
++    if (bind(sock, (struct sockaddr *) &un, addrlen) < 0) {
++        error_setg_errno(errp, errno, "Failed to bind socket to %s", path);
++        goto err;
++    }
++    if (listen(sock, num) < 0) {
++        error_setg_errno(errp, errno, "Failed to listen on socket");
++        goto err;
++    }
++
++    g_free(pathbuf);
++    return sock;
++
++err:
++    g_free(pathbuf);
++    close(sock);
++    return -1;
++}
++
++int unix_connect_saddr(UnixSocketAddress *saddr, Error **errp)
++{
++    bool abstract = saddr_is_abstract(saddr);
++    struct sockaddr_un un;
++    int sock, rc;
++    size_t pathlen;
++    size_t addrlen;
++
++    if (saddr->path == NULL) {
++        error_setg(errp, "unix connect: no path specified");
++        return -1;
++    }
++
++    sock = qemu_socket(PF_UNIX, SOCK_STREAM, 0);
++    if (sock < 0) {
++        error_setg_errno(errp, errno, "Failed to create socket");
++        return -1;
++    }
++
++    pathlen = strlen(saddr->path);
++    if (pathlen > sizeof(un.sun_path) ||
++        (abstract && pathlen > (sizeof(un.sun_path) - 1))) {
++        error_setg(errp, "UNIX socket path '%s' is too long", saddr->path);
++        error_append_hint(errp, "Path must be less than %zu bytes\n",
++                          abstract ? sizeof(un.sun_path) - 1 :
++                          sizeof(un.sun_path));
++        goto err;
++    }
++
++    memset(&un, 0, sizeof(un));
++    un.sun_family = AF_UNIX;
++    addrlen = sizeof(un);
++
++    if (abstract) {
++        un.sun_path[0] = '\0';
++        memcpy(&un.sun_path[1], saddr->path, pathlen);
++        if (saddr_is_tight(saddr)) {
++            addrlen = offsetof(struct sockaddr_un, sun_path) + 1 + pathlen;
++        }
++    } else {
++        memcpy(un.sun_path, saddr->path, pathlen);
++    }
++    /* connect to peer */
++    do {
++        rc = 0;
++        if (connect(sock, (struct sockaddr *) &un, addrlen) < 0) {
++            rc = -errno;
++        }
++    } while (rc == -EINTR);
++
++    if (rc < 0) {
++        error_setg_errno(errp, -rc, "Failed to connect to '%s'",
++                         saddr->path);
++        goto err;
++    }
++
++    return sock;
++
++ err:
++    close(sock);
++    return -1;
++}
++
++/* compatibility wrapper */
++int unix_listen(const char *str, Error **errp)
++{
++    UnixSocketAddress *saddr;
++    int sock;
++
++    saddr = g_new0(UnixSocketAddress, 1);
++    saddr->path = g_strdup(str);
++    sock = unix_listen_saddr(saddr, 1, errp);
++    qapi_free_UnixSocketAddress(saddr);
++    return sock;
++}
++
++int unix_connect(const char *path, Error **errp)
++{
++    UnixSocketAddress *saddr;
++    int sock;
++
++    saddr = g_new0(UnixSocketAddress, 1);
++    saddr->path = g_strdup(path);
++    sock = unix_connect_saddr(saddr, errp);
++    qapi_free_UnixSocketAddress(saddr);
++    return sock;
++}
+diff --git a/util/meson.build b/util/meson.build
+index 1adff96ebd..dbcfbc6542 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -87,7 +87,10 @@ if have_block or have_ga
+   util_ss.add(files(f'coroutine-@coroutine_backend@.c'))
+   util_ss.add(files('thread-pool.c', 'qemu-timer.c'))
+ endif
+-if have_block or have_ga or have_user
++if have_user
++  util_ss.add(files('unix-sockets.c'))
++endif
++if have_block or have_ga
+   util_ss.add(files('qemu-sockets.c'))
+ endif
+ if have_block
 -- 
-Fan Ni
+2.39.5
+
 
