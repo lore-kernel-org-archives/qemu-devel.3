@@ -4,100 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FACC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F1AC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHMV2-0004ZQ-SI; Tue, 20 May 2025 08:55:17 -0400
+	id 1uHMU4-0001mP-1I; Tue, 20 May 2025 08:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMUP-0002Rj-Cs; Tue, 20 May 2025 08:54:40 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMUM-000117-RI; Tue, 20 May 2025 08:54:37 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-30e9397802eso2970361a91.1; 
- Tue, 20 May 2025 05:54:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747745672; x=1748350472; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1G0lGd9H5YB3nSr0o+UY98M1y1yG48dZRtLGwlQiSB0=;
- b=ZKc5xag9u76rxyy5Ow3RT9IYqEQR3Yt2KlboQd2REK9iwW2MoW2bb5G00j213vMbqx
- 0sAa48dprkoQJhi7/jhpUBNrK5UxiALvVBjAsOb0CLIzOHIMo5oAEXkZ0AvEp2wEoLWe
- X6HB+ZY5uk8IxzagOBpLgLzQRccDB2O3xZG3vU/llK04c7/HRuLrD9oUSuU6dDf6IWOi
- 9aM0gST6LaMiYQOAP0W2JM1t9hZ+v74n5sjDTdLkCSp7lJKPVsM5wn/6PTBSS7sa8Yj0
- srnjSlENfINlw6c5tLqpLBjAWJZyMqoGouJ8rLV5Wug7CForW8MqFjtdmNWZh/tAMvJl
- NFLQ==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uHMTt-0001Wm-09
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 08:54:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uHMTo-0000vt-43
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 08:54:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747745636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3XuVLvoiyJmbyMc3LDiHIkNXHnQsJF4Ai2mSBK0II7Q=;
+ b=chgOA1N25p7gWIelRaaqxW9XlhkWJsko7F96IWZRJZe3fZ4g7jy2lQfRRBhB6CJf7in30t
+ E0xRxl2wP7Jdav6uDj17HBZpI0YQrSzp0P6FCPVQePiZTJOt1Au8Ht2sGKNl5X5O0J5mKh
+ sWNZubm6YT1MEw9yy/9a4Vjfl+tZfng=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588-IJZIVxs2MlG1dR16mhuTiA-1; Tue, 20 May 2025 08:53:55 -0400
+X-MC-Unique: IJZIVxs2MlG1dR16mhuTiA-1
+X-Mimecast-MFC-AGG-ID: IJZIVxs2MlG1dR16mhuTiA_1747745634
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a35989e5b2so3418077f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 05:53:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747745672; x=1748350472;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1G0lGd9H5YB3nSr0o+UY98M1y1yG48dZRtLGwlQiSB0=;
- b=ZyNrIKqU0a3dJ0s02Gfktkrk9ddub93oNAwuSfPj0fuSaFX9euzYHfsqTMtfgZyAdV
- AxAuJKRs0rJdSPcTQkgZsCQRU6S28VuxgEdcpndlMVON3Q1uaKimW9FUDkKnoHbkl/iG
- 9tYrhrwnOSR71R8DNOLvb7mLJZpO0KVBsS0Xz9LgIw/ihZMLhF/c/nCnLVjPGZacfHeX
- 7E3GGDtRQoQ2RXmHbi/YbZnG1JOEggYBHh9d3bdRFcLeqWbcrs+vDyBzQmocEdi0qafT
- 8yaXADQd3r4CKHJkDa4hPyjpE7r3e5Epv1pTQdhY8Rn/sAv9WQ4kF3f77NYWW2d9kqwm
- 3Fmg==
+ d=1e100.net; s=20230601; t=1747745634; x=1748350434;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3XuVLvoiyJmbyMc3LDiHIkNXHnQsJF4Ai2mSBK0II7Q=;
+ b=uAg541uv9IBvgHraaaXjgxZIatASiS3bAMoYYjRIRKBhSenqGvXeJTxa2NMQFpCskG
+ YqbPUCZEfPXGLZ7O96ALbyos5PFpSjhYtpShd4FUfqvYi38Q+LnFpw8XDsq612plfmbq
+ n4eRGKAFEz91fJB6W5coarKlLXUQOJU4aV+N8zO4HpPLZWksU3MDeGRv/+WP8KdcEjcx
+ 7oRDwxHALuKNLhw748XlEP6LCoD0wFFs53+arI1E31inJsN0mrXVR55yauvlmBPn6Pko
+ Qe9HOwqSTDp3qUqELYdkxzxuSOhZTGDlPNjUYN+QLBlkHug3dM45U6ITUgJUsTWHvENt
+ b/8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFlG/rEqTyx6MHQWdx81NnrI6dnPoX75X1/1Y8YP56NHzStQvc80PcqxhZISrLPHFEU87142HorUM85A==@nongnu.org,
- AJvYcCXLV1Wk6uf7s3MFSFjIsIN1vNzKaVn9Fik2Fe2uuDNPna6EkxJMLrT5T2VT2Nhq9v6M1PFjRm0qpg==@nongnu.org
-X-Gm-Message-State: AOJu0YyTNShCvaUalQxADikbfeUr4jSXQnupOH6h3faorrlwnlHaFUaD
- 8P07HVxiHSFfOD73B/aGgb4H13Htcjur+tMmWNEuCQDpIzrqEgsHiZ/cQDb0aNS0
-X-Gm-Gg: ASbGncviqcGfD214hARw6E9Y9CFYCwNjZD7S5hH/XREi1bFlEkWf/vnmWT3aZW2Vuiz
- whWhSHUINqtVeEeQlgOP9q8bzk7EE1PLkCoIYXV2U3a1SJkHYDvYr2KL1XkVAVQU9/nqWp3dLv+
- uiLCKf9caDbr7Ys3y6OHqO2q/cVs3wm6Xyet9JWCx6ysYZSurcNxmydNfbaK+EB6AtMW7F7Ffxy
- 4rak5Q2LFuvU6fpADtWvZA2hH5uhlJI2EbIx3rMU5UaMlYNlWuPhk7YoRdIMaUQR536Vx51G97A
- GR167I5/uHvT9aNC5zDzpCj6u3IOTc3pMi1SO6eEgYnGa0yyau4bnbhrbNI3lA==
-X-Google-Smtp-Source: AGHT+IH5jPj4xy/PBDXM5vca25pM/qZpEeUcxUsvmm+yucQ5nKRbbIWJIY0zAt2Pcv7CYRhywuR8Uw==
-X-Received: by 2002:a17:90b:2d47:b0:2f8:b2c:5ef3 with SMTP id
- 98e67ed59e1d1-30e7d520bfemr28537283a91.14.1747745671552; 
- Tue, 20 May 2025 05:54:31 -0700 (PDT)
-Received: from ktock.. ([240d:1a:3b6:8b00:1bde:8310:e993:5dcc])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.54.26
+ AJvYcCUz9bX6fYO1icItxJw+Se0M1N3UyTbm0n0Px+M0EFeUrIqJrFDIVK2M/w6hdyTkIxfjCN9MfB8GwY9o@nongnu.org
+X-Gm-Message-State: AOJu0YwFGQTqMQVo5r2ldbDriihI1vNQIYp6K1YyRqjcPT0oAE6r/91e
+ Kz08qFtiXg3LicfVej0Tzf+x+KAwpkreH3TBpz6jzFM2k12GLyDYHdICd1KpF2JnubTJN56PmZA
+ lX9cAzvP6+bMusIjZMXKzHr7LKiRDa5OfQCfBHV1B68gFETHWlYU+HJmF
+X-Gm-Gg: ASbGncs1lfrL13SiZBJOqe+lfs/EOLdcQQ2UVH7nzRAgT9HpkTfaCPgAjFgJ/+49vRd
+ 7cZoGVZiRDrNf7zGB7p28vJectP/M4e1tDMLjUJ4c/O2JBkQEvsGnejKttaePXLOdGJO4t6XyRU
+ SajEPoUw3AL6Jc8uU8XmwAsW3e1nmXbsWJu8BnF+TwBN33/Y6zt1IVXbX8dt35IZa37qEqGmf9j
+ C371fD3PuG4UG3TQYbPmhwi/TWd0d3KRNshpxOrOS1JcQWwkY0QHI/lHvWBMyDCYiUwLvx0CSgO
+ vPCSuujB2fbsVBQJARDkz0DZc2x3c5hSaEV+tyek2qlufWlAe6vFFSZWjr+s
+X-Received: by 2002:a05:6000:420d:b0:3a3:7593:81a1 with SMTP id
+ ffacd0b85a97d-3a3759384b2mr5252135f8f.43.1747745634060; 
+ Tue, 20 May 2025 05:53:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFKttOhLBzn1gC2FqbkrBG+oTjVRv0eUjzRoycM34bj7OnWoqCBdC4NwDSSckYfkIwFp48f7A==
+X-Received: by 2002:a05:6000:420d:b0:3a3:7593:81a1 with SMTP id
+ ffacd0b85a97d-3a3759384b2mr5252103f8f.43.1747745633474; 
+ Tue, 20 May 2025 05:53:53 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-53-134-35.retail.telecomitalia.it.
+ [82.53.134.35]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a35ca5a8c4sm16161020f8f.27.2025.05.20.05.53.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 05:54:31 -0700 (PDT)
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org
-Subject: [PATCH 24/33] tcg/wasm32: Set TCG_TARGET_REG_BITS to 64
-Date: Tue, 20 May 2025 21:51:26 +0900
-Message-ID: <8e72ec7b0735c14a2359e95606373ac1ade5a33e.1747744132.git.ktokunaga.mail@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1747744132.git.ktokunaga.mail@gmail.com>
-References: <cover.1747744132.git.ktokunaga.mail@gmail.com>
+ Tue, 20 May 2025 05:53:52 -0700 (PDT)
+Date: Tue, 20 May 2025 14:53:42 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Huaitong Han <oenhan@gmail.com>
+Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, cohuck@redhat.com, 
+ pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com, 
+ leiyang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Huaitong Han <hanht2@chinatelecom.cn>,
+ Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>, 
+ Jidong Xia <xiajd@chinatelecom.cn>
+Subject: Re: [PATCH V2] vhost: Don't set vring call if guest notifier is unused
+Message-ID: <js757hz2wuwhjafk7z2gmfqxdb6d5hhjx3ul7bwqst5qdqa5b7@f2lhjb6itxo2>
+References: <20250513112825.1731347-1-hanht2@chinatelecom.cn>
+ <dmtvkhqkwdv7rzum6c4gs3uiekwckou3yp7w2ql6tijxshoiju@w4rplxvassk6>
+ <CAAuJbeJ4+cop8m_9sy6VJtafADhxxmkwaFMZvfo_mmpmFU0Vxw@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <CAAuJbeJ4+cop8m_9sy6VJtafADhxxmkwaFMZvfo_mmpmFU0Vxw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,154 +117,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit enables to Wasm backend to run as a 64bit backend with removing
-TCG_TARGET_REG_BITS = 32 macros.
+On Tue, May 20, 2025 at 08:30:39PM +0800, Huaitong Han wrote:
+>Stefano Garzarella <sgarzare@redhat.com> 于2025年5月20日周二 19:41写道：
+>>
+>> On Tue, May 13, 2025 at 07:28:25PM +0800, oenhan@gmail.com wrote:
+>> >From: Huaitong Han <hanht2@chinatelecom.cn>
+>> >
+>> >The vring call fd is set even when the guest does not use MSI-X (e.g., in the
+>> >case of virtio PMD), leading to unnecessary CPU overhead for processing
+>> >interrupts.
+>> >
+>> >The commit 96a3d98d2c("vhost: don't set vring call if no vector") optimized the
+>> >case where MSI-X is enabled but the queue vector is unset. However, there's an
+>> >additional case where the guest uses INTx and the INTx_DISABLED bit in the PCI
+>> >config is set, meaning that no interrupt notifier will actually be used.
+>> >
+>> >In such cases, the vring call fd should also be cleared to avoid redundant
+>> >interrupt handling.
+>> >
+>> >Fixes: 96a3d98d2c("vhost: don't set vring call if no vector")
+>>                    ^
+>> nit: there should be a space here.
+>>
+>> If you need to resend, I think you can fix also the one in the
+>> description.
+>>
+>> >Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
+>> >Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
+>> >Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
+>> >---
+>> >V2:
+>> >- Retain the name `query_guest_notifiers`
+>> >- All qtest/unit test cases pass
+>> >- Fix V1 patch style problems
+>> >
+>> > hw/pci/pci.c                   |  2 +-
+>> > hw/s390x/virtio-ccw.c          |  7 +++++--
+>> > hw/virtio/vhost.c              |  3 +--
+>> > hw/virtio/virtio-pci.c         | 10 ++++++++--
+>> > include/hw/pci/pci.h           |  1 +
+>> > include/hw/virtio/virtio-bus.h |  2 +-
+>> > 6 files changed, 17 insertions(+), 8 deletions(-)
+>> >
+>> >diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>> >index 352b3d12c8..45b491412a 100644
+>> >--- a/hw/pci/pci.c
+>> >+++ b/hw/pci/pci.c
+>> >@@ -1712,7 +1712,7 @@ static void pci_update_mappings(PCIDevice *d)
+>> >     pci_update_vga(d);
+>> > }
+>> >
+>> >-static inline int pci_irq_disabled(PCIDevice *d)
+>> >+int pci_irq_disabled(PCIDevice *d)
+>> > {
+>> >     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
+>> > }
+>> >diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+>> >index d2f85b39f3..632708ba4d 100644
+>> >--- a/hw/s390x/virtio-ccw.c
+>> >+++ b/hw/s390x/virtio-ccw.c
+>> >@@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState *d, bool running)
+>> >     }
+>> > }
+>> >
+>> >-static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
+>> >+static bool virtio_ccw_query_guest_notifiers(DeviceState *d, int n)
+>> > {
+>> >     CcwDevice *dev = CCW_DEVICE(d);
+>> >+    VirtioCcwDevice *vdev = VIRTIO_CCW_DEVICE(d);
+>> >+    VirtIODevice *virtio_dev = virtio_bus_get_device(&vdev->bus);
+>> >
+>> >-    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
+>> >+    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
+>> >+            && virtio_queue_vector(virtio_dev, n) != VIRTIO_NO_VECTOR;
+>> > }
+>> >
+>> > static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
+>> >diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>> >index 4cae7c1664..2a9a839763 100644
+>> >--- a/hw/virtio/vhost.c
+>> >+++ b/hw/virtio/vhost.c
+>> >@@ -1341,8 +1341,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>> >     }
+>> >
+>> >     if (k->query_guest_notifiers &&
+>> >-        k->query_guest_notifiers(qbus->parent) &&
+>> >-        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
+>> >+        !k->query_guest_notifiers(qbus->parent, idx)) {
+>> >         file.fd = -1;
+>> >         r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+>> >         if (r) {
+>> >diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>> >index 0fa8fe4955..d62e199489 100644
+>> >--- a/hw/virtio/virtio-pci.c
+>> >+++ b/hw/virtio/virtio-pci.c
+>> >@@ -1212,10 +1212,16 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
+>> >     return 0;
+>> > }
+>> >
+>> >-static bool virtio_pci_query_guest_notifiers(DeviceState *d)
+>> >+static bool virtio_pci_query_guest_notifiers(DeviceState *d, int n)
+>> > {
+>> >     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+>> >-    return msix_enabled(&proxy->pci_dev);
+>> >+    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+>> >+
+>> >+    if (msix_enabled(&proxy->pci_dev)) {
+>> >+        return virtio_queue_vector(vdev, n) != VIRTIO_NO_VECTOR;
+>>
+>> Why are we moving this check in every callback, can't we leave it as
+>> before in vhost.c and here return true?
+>>
+>> I mean here:
+>>      if (msix_enabled(&proxy->pci_dev)) {
+>>          return true;
+>>      } else {
+>>          return !pci_irq_disabled(&proxy->pci_dev);
+>>      }
+>>
+>> and leave vhost.c untouched.
+>>
+>
+>Thanks for the suggestion — your approach indeed achieves the same
+>effect while keeping the interface unchanged.
+>However, I feel it might lead to some misunderstanding of the intended
+>semantics of query_guest_notifiers. My original intent was for this
+>callback to represent whether interrupts are actually in use by the
+>guest, and in that sense, checking whether the queue uses a vector is
+>part of that definition.
 
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
----
- tcg/wasm32.c                     |  5 ++-
- tcg/wasm32/tcg-target-reg-bits.h |  8 +---
- tcg/wasm32/tcg-target.c.inc      | 69 +++-----------------------------
- 3 files changed, 9 insertions(+), 73 deletions(-)
+Okay, but IMHO these should be 2 patches, one that fixes the problem you 
+mentioned (to be backported to stable, so with the Fixes tag), 
+minimizing the changes. And another patch where you change the 
+semantics.
 
-diff --git a/tcg/wasm32.c b/tcg/wasm32.c
-index 4bc53d76d0..b238ccf6d6 100644
---- a/tcg/wasm32.c
-+++ b/tcg/wasm32.c
-@@ -370,8 +370,9 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-                 unsigned i, s, n;
- 
-                 tci_args_nl(insn, tb_ptr, &len, &ptr);
--                func = ((void **)ptr)[0];
--                cif = ((void **)ptr)[1];
-+                tcg_target_ulong *data = (tcg_target_ulong *)ptr;
-+                func = (void *)data[0];
-+                cif = (void *)data[1];
- 
-                 n = cif->nargs;
-                 for (i = s = 0; i < n; ++i) {
-diff --git a/tcg/wasm32/tcg-target-reg-bits.h b/tcg/wasm32/tcg-target-reg-bits.h
-index dcb1a203f8..375feccf91 100644
---- a/tcg/wasm32/tcg-target-reg-bits.h
-+++ b/tcg/wasm32/tcg-target-reg-bits.h
-@@ -7,12 +7,6 @@
- #ifndef TCG_TARGET_REG_BITS_H
- #define TCG_TARGET_REG_BITS_H
- 
--#if UINTPTR_MAX == UINT32_MAX
--# define TCG_TARGET_REG_BITS 32
--#elif UINTPTR_MAX == UINT64_MAX
--# define TCG_TARGET_REG_BITS 64
--#else
--# error Unknown pointer size for tci target
--#endif
-+#define TCG_TARGET_REG_BITS 64
- 
- #endif
-diff --git a/tcg/wasm32/tcg-target.c.inc b/tcg/wasm32/tcg-target.c.inc
-index ea9131e6fe..9fad96d0fd 100644
---- a/tcg/wasm32/tcg-target.c.inc
-+++ b/tcg/wasm32/tcg-target.c.inc
-@@ -30,15 +30,9 @@
- /* Used for function call generation. */
- #define TCG_TARGET_CALL_STACK_OFFSET    0
- #define TCG_TARGET_STACK_ALIGN          8
--#if TCG_TARGET_REG_BITS == 32
--# define TCG_TARGET_CALL_ARG_I32        TCG_CALL_ARG_EVEN
--# define TCG_TARGET_CALL_ARG_I64        TCG_CALL_ARG_EVEN
--# define TCG_TARGET_CALL_ARG_I128       TCG_CALL_ARG_EVEN
--#else
--# define TCG_TARGET_CALL_ARG_I32        TCG_CALL_ARG_NORMAL
--# define TCG_TARGET_CALL_ARG_I64        TCG_CALL_ARG_NORMAL
--# define TCG_TARGET_CALL_ARG_I128       TCG_CALL_ARG_NORMAL
--#endif
-+#define TCG_TARGET_CALL_ARG_I32         TCG_CALL_ARG_NORMAL
-+#define TCG_TARGET_CALL_ARG_I64         TCG_CALL_ARG_NORMAL
-+#define TCG_TARGET_CALL_ARG_I128        TCG_CALL_ARG_NORMAL
- #define TCG_TARGET_CALL_RET_I128        TCG_CALL_RET_NORMAL
- 
- typedef uint32_t tcg_insn_unit_tci;
-@@ -3083,39 +3077,6 @@ static const TCGOutOpMovcond outop_movcond = {
-     .out = tgen_movcond,
- };
- 
--static void tgen_brcond2(TCGContext *s, TCGCond cond, TCGReg al, TCGReg ah,
--                         TCGArg bl, bool const_bl,
--                         TCGArg bh, bool const_bh, TCGLabel *l)
--{
--    tcg_out_op_rrrrrc(s, INDEX_op_setcond2_i32, TCG_REG_TMP,
--                      al, ah, bl, bh, cond);
--    tcg_out_op_rl(s, INDEX_op_brcond, TCG_REG_TMP, l);
--}
--
--#if TCG_TARGET_REG_BITS != 32
--__attribute__((unused))
--#endif
--static const TCGOutOpBrcond2 outop_brcond2 = {
--    .base.static_constraint = C_O0_I4(r, r, r, r),
--    .out = tgen_brcond2,
--};
--
--static void tgen_setcond2(TCGContext *s, TCGCond cond, TCGReg ret,
--                          TCGReg al, TCGReg ah,
--                          TCGArg bl, bool const_bl,
--                          TCGArg bh, bool const_bh)
--{
--    tcg_out_op_rrrrrc(s, INDEX_op_setcond2_i32, ret, al, ah, bl, bh, cond);
--}
--
--#if TCG_TARGET_REG_BITS != 32
--__attribute__((unused))
--#endif
--static const TCGOutOpSetcond2 outop_setcond2 = {
--    .base.static_constraint = C_O1_I4(r, r, r, r, r),
--    .out = tgen_setcond2,
--};
--
- static void tcg_out_mb(TCGContext *s, unsigned a0)
- {
-     tcg_out_op_v(s, INDEX_op_mb);
-@@ -3242,18 +3203,8 @@ static const TCGOutOpQemuLdSt outop_qemu_ld = {
-     .out = tgen_qemu_ld,
- };
- 
--static void tgen_qemu_ld2(TCGContext *s, TCGType type, TCGReg datalo,
--                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
--{
--    tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP, oi);
--    tcg_out_op_rrrr(s, INDEX_op_qemu_ld2, datalo, datahi, addr, TCG_REG_TMP);
--}
--
- static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
--    .base.static_constraint =
--        TCG_TARGET_REG_BITS == 64 ? C_NotImplemented : C_O2_I1(r, r, r),
--    .out =
--        TCG_TARGET_REG_BITS == 64 ? NULL : tgen_qemu_ld2,
-+    .base.static_constraint = C_NotImplemented,
- };
- 
- static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
-@@ -3268,18 +3219,8 @@ static const TCGOutOpQemuLdSt outop_qemu_st = {
-     .out = tgen_qemu_st,
- };
- 
--static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
--                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
--{
--    tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP, oi);
--    tcg_out_op_rrrr(s, INDEX_op_qemu_st2, datalo, datahi, addr, TCG_REG_TMP);
--}
--
- static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
--    .base.static_constraint =
--        TCG_TARGET_REG_BITS == 64 ? C_NotImplemented : C_O0_I3(r, r, r),
--    .out =
--        TCG_TARGET_REG_BITS == 64 ? NULL : tgen_qemu_st2,
-+    .base.static_constraint = C_NotImplemented,
- };
- 
- static void tcg_out_st(TCGContext *s, TCGType type, TCGReg val, TCGReg base,
--- 
-2.43.0
+>By splitting the logic — checking msix_enabled and pci_irq_disabled
+>inside the bus callback, and virtio_queue_vector() separately in
+>vhost.c — the semantic boundary becomes less clear. While it works
+>logically, it can reduce readability — particularly because the
+>virtio_queue_vector() check semantically belongs under the
+>msix_enabled() branch, and combining it with the pci_irq_disabled()
+>case (INTx) could make the logic less clear to future readers.
+>Additionally, the set_host_notifier_mr interface already includes an
+>int n parameter, so adding it to query_guest_notifiers is accepted.
+
+I'm not sure that delegating the call to virtio_queue_vector() to each 
+bus is an improvement honestly. But we can discuss it on the patch.
+
+Thanks,
+Stefano
 
 
