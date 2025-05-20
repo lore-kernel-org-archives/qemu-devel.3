@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E534C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 22:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8C0C54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 22:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHV97-0002kx-LP; Tue, 20 May 2025 18:09:13 -0400
+	id 1uHVFH-0003nc-5X; Tue, 20 May 2025 18:15:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uHV96-0002kk-5Q
- for qemu-devel@nongnu.org; Tue, 20 May 2025 18:09:12 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ id 1uHVFB-0003n5-6U
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 18:15:31 -0400
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uHV94-0001WK-KB
- for qemu-devel@nongnu.org; Tue, 20 May 2025 18:09:11 -0400
+ id 1uHVF9-0002oR-9I
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 18:15:28 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id F38F05C5666;
- Tue, 20 May 2025 22:06:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F24DC4CEE9;
- Tue, 20 May 2025 22:09:08 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 8F182A4EF30;
+ Tue, 20 May 2025 22:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053FCC4CEE9;
+ Tue, 20 May 2025 22:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1747778948;
- bh=eho6lbl51/S9l73vqJHxLlu0GHXw8O/FfYyR1Z/fKAQ=;
+ s=k20201202; t=1747779325;
+ bh=OnLhcRcKcoGRHcnWVtpj15suTfJNLCJB8atjpoKvRtY=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=OTk4B35J0VBiGQDYKMbFKOQc2IzMl7Bx1rNqtCm9p+rw2xtabIKGh0iPCGhroEqvJ
- Ax49lTrM7nJGTUy5BhQXgcWAJ7Ng7jzYgLPZMrrhipoD3OXlhHbyUem3xASiDLI1d4
- jsUT2/w8tc8etrVgLSZtO8/VTnbsoJKl2tdP9sOmKwDWOSEnh84iuQ91vRjXBK1xDW
- 0BuK7DQ5juOp+VHSo1HbseQvsY3kG1yfsPUaFsl6tCBIDDL9wrQOLovqt/6sq6Yjhl
- CyEhnVJE7vCxJZyD+Mdm7vCIuoSBORXLV4o+4CS0ttDCElI0CPYCICgFtT9H2GH8kk
- AqbUOWrTQJR3A==
-Date: Tue, 20 May 2025 22:09:07 +0000
+ b=ULZlo8TCg54cXgdIuYeQ39JB9VEWxX30P+VoqUVpV/T75W5glaed3xbq8hfN9kO9K
+ KMK49HOiqE4OhYp2yYeCiAAza5O1ilNW4Nb6tGPyBlA+tKVkwA7Y286RIpTd37hFAk
+ ziJW93YlzgDnQ2Gf6xg0qX2SsFkdNKCYryQmQxFU37SC0GkGK/OlbPwmbVN2XohmNG
+ XqfPByfcsN0Z5cOQA2hE5+L8OWoZp9FMLgUTamFD7X7sffPtqbYfZ1SIVSyGpwslvH
+ /CQwa1TUSTrKEB6PVexUNK3W1dgdpXPhbToATXE1uVJRVa+3nY+PBQTLs4nOW1IEyV
+ M5hNgp2abajng==
+Date: Tue, 20 May 2025 22:15:23 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
@@ -49,17 +49,17 @@ Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
  Cameron Esfahani <dirty@apple.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 16/25] target/i386/mshv: Implement
- mshv_get_standard_regs()
-Message-ID: <aCz9gwYwUWx_BdrH@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+Subject: Re: [RFC PATCH 17/25] target/i386/mshv: Implement
+ mshv_get_special_regs()
+Message-ID: <aCz--ydgna-DkRuO@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
 References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-17-magnuskulke@linux.microsoft.com>
+ <20250520113018.49569-18-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250520113018.49569-17-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=wei.liu@kernel.org; helo=dfw.source.kernel.org
+In-Reply-To: <20250520113018.49569-18-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=wei.liu@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
@@ -81,37 +81,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 01:30:09PM +0200, Magnus Kulke wrote:
-> Fetch standard register state from MSHV vCPUs to support debugging,
-> migration, and other introspection features in QEMU.
+On Tue, May 20, 2025 at 01:30:10PM +0200, Magnus Kulke wrote:
+> Retrieve special registers (e.g. segment, control, and descriptor
+> table registers) from MSHV vCPUs.
 > 
-> Fetch standard register state from a MHSV vCPU's. A generic get_regs()
-> function and a mapper to map the different register representations are
-> introduced.
+> Various helper functions to map register state representations between
+> Qemu and MSHV are introduced.
 > 
 > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
+>  include/system/mshv.h       |   1 +
+>  target/i386/mshv/mshv-cpu.c | 118 +++++++++++++++++++++++++++++++++++-
+>  2 files changed, 117 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/system/mshv.h b/include/system/mshv.h
+> index 9b78b66a24..055489a6f3 100644
+> --- a/include/system/mshv.h
+> +++ b/include/system/mshv.h
+> @@ -109,6 +109,7 @@ void mshv_init_cpu_logic(void);
+>  int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
+>  void mshv_remove_vcpu(int vm_fd, int cpu_fd);
+>  int mshv_get_standard_regs(CPUState *cpu);
+> +int mshv_get_special_regs(CPUState *cpu);
+>  int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
+>  int mshv_load_regs(CPUState *cpu);
+>  int mshv_store_regs(CPUState *cpu);
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 41584c3f8e..979ee5b8c3 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -58,6 +58,27 @@ static enum hv_register_name STANDARD_REGISTER_NAMES[18] = {
+>      HV_X64_REGISTER_RFLAGS,
+>  };
+>  
+> +static enum hv_register_name SPECIAL_REGISTER_NAMES[18] = {
 [...]
+> +    HV_REGISTER_PENDING_INTERRUPTION,
+
+Why do you think this is needed?
+
+> +};
+> +
+>  static void add_cpu_guard(int cpu_fd)
+>  {
+>      QemuMutex *guard;
+> @@ -215,6 +236,94 @@ int mshv_get_standard_regs(CPUState *cpu)
+>      return 0;
+>  }
+>  
+> +static void populate_segment_reg(const hv_x64_segment_register *hv_seg,
+> +                                 SegmentCache *seg)
+> +{
+> +    memset(seg, 0, sizeof(SegmentCache));
+> +
+> +    seg->base = hv_seg->base;
+> +    seg->limit = hv_seg->limit;
+> +    seg->selector = hv_seg->selector;
+> +
+> +    seg->flags = (hv_seg->segment_type << DESC_TYPE_SHIFT)
+> +                 | (hv_seg->present * DESC_P_MASK)
+> +                 | (hv_seg->descriptor_privilege_level << DESC_DPL_SHIFT)
+> +                 | (hv_seg->_default << DESC_B_SHIFT)
+> +                 | (hv_seg->non_system_segment * DESC_S_MASK)
+> +                 | (hv_seg->_long << DESC_L_SHIFT)
+> +                 | (hv_seg->granularity * DESC_G_MASK)
+> +                 | (hv_seg->available * DESC_AVL_MASK);
+> +
+> +}
+> +
+> +static void populate_table_reg(const hv_x64_table_register *hv_seg,
+> +                               SegmentCache *tbl)
+> +{
+> +    memset(tbl, 0, sizeof(SegmentCache));
+> +
+> +    tbl->base = hv_seg->base;
+> +    tbl->limit = hv_seg->limit;
+> +}
+> +
+> +static void populate_special_regs(const hv_register_assoc *assocs,
+> +                                  X86CPU *x86cpu)
+> +{
+> +    CPUX86State *env = &x86cpu->env;
+> +
+> +    populate_segment_reg(&assocs[0].value.segment, &env->segs[R_CS]);
+> +    populate_segment_reg(&assocs[1].value.segment, &env->segs[R_DS]);
+> +    populate_segment_reg(&assocs[2].value.segment, &env->segs[R_ES]);
+> +    populate_segment_reg(&assocs[3].value.segment, &env->segs[R_FS]);
+> +    populate_segment_reg(&assocs[4].value.segment, &env->segs[R_GS]);
+> +    populate_segment_reg(&assocs[5].value.segment, &env->segs[R_SS]);
+> +
+> +    /* TODO: should we set TR + LDT? */
+> +    /* populate_segment_reg(&assocs[6].value.segment, &regs->tr); */
+> +    /* populate_segment_reg(&assocs[7].value.segment, &regs->ldt); */
+> +
+> +    populate_table_reg(&assocs[8].value.table, &env->gdt);
+> +    populate_table_reg(&assocs[9].value.table, &env->idt);
+> +
+> +    env->cr[0] = assocs[10].value.reg64;
+> +    env->cr[2] = assocs[11].value.reg64;
+> +    env->cr[3] = assocs[12].value.reg64;
+> +    env->cr[4] = assocs[13].value.reg64;
+> +
+> +    cpu_set_apic_tpr(x86cpu->apic_state, assocs[14].value.reg64);
+> +    env->efer = assocs[15].value.reg64;
+> +    cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
+> +
+> +    /* TODO: should we set those? */
+> +    /* pending_reg = assocs[17].value.pending_interruption.as_uint64; */
+> +    /* populate_interrupt_bitmap(pending_reg, regs->interrupt_bitmap); */
+
+If QEMU never touches it, then there is no need to set it.
+
+> +}
+> +
+> +
+> +int mshv_get_special_regs(CPUState *cpu)
+> +{
+> +    size_t n_regs = sizeof(SPECIAL_REGISTER_NAMES) / sizeof(hv_register_name);
+> +    struct hv_register_assoc *assocs;
+> +    int ret;
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    int cpu_fd = mshv_vcpufd(cpu);
+> +
+> +    assocs = g_new0(hv_register_assoc, n_regs);
+> +    for (size_t i = 0; i < n_regs; i++) {
+> +        assocs[i].name = SPECIAL_REGISTER_NAMES[i];
+> +    }
+> +    ret = get_generic_regs(cpu_fd, assocs, n_regs);
+> +    if (ret < 0) {
+> +        error_report("failed to get special registers");
+> +        g_free(assocs);
+> +        return -errno;
+> +    }
+> +
+> +    populate_special_regs(assocs, x86cpu);
+> +
+> +    g_free(assocs);
+> +    return 0;
+> +}
+> +
 >  int mshv_load_regs(CPUState *cpu)
 >  {
-> +    int ret;
-> +
-> +    ret = mshv_get_standard_regs(cpu);
+>      int ret;
+> @@ -225,8 +334,13 @@ int mshv_load_regs(CPUState *cpu)
+>          return -1;
+>      }
+>  
+> -	error_report("unimplemented");
+> -	abort();
+> +    ret = mshv_get_special_regs(cpu);
 > +    if (ret < 0) {
-> +        error_report("Failed to load standard registers");
+> +        error_report("Failed to load special registers");
 > +        return -1;
 > +    }
 > +
->  	error_report("unimplemented");
->  	abort();
+> +    return 0;
 
-This part looks wrong. It should be "return 0;" instead.
+Ah so you changed the code in this patch.
 
 Thanks,
 Wei.
 
 >  }
-
+>  
+>  int mshv_arch_put_registers(const CPUState *cpu)
 > -- 
 > 2.34.1
 > 
