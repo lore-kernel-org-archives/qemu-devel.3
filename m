@@ -4,61 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FC5C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 20:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F0CC54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 20:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHTjg-0003WH-TE; Tue, 20 May 2025 16:38:52 -0400
+	id 1uHTpT-0004hy-Nw; Tue, 20 May 2025 16:44:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1uHTje-0003Vk-1W
- for qemu-devel@nongnu.org; Tue, 20 May 2025 16:38:50 -0400
-Received: from out-173.mta1.migadu.com ([2001:41d0:203:375::ad])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1uHTjb-0006PL-GX
- for qemu-devel@nongnu.org; Tue, 20 May 2025 16:38:49 -0400
-Content-Type: text/plain;
-	charset=us-ascii
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1747773521;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LlC0TODa7KxYUpfpU68321KNCp6H6FT3J7MnALnUViM=;
- b=Q99WFAhUM4c9CvOUBZ9CEYtfHJgTzvdjDRM8TVre/iZalux4nGAiMJQXSEMr6/NeJLtSYy
- VNgLjCb7/Xp9aFDFLoaaAQRAosNW22/ChM2umYCctjTh8RPhMsHNYcgUJu9jQ1BThTu3Rn
- 5qvYmN7YE9Jgq1Pv4LkGF3zvpmJOO4o=
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH v13 5/5] qtest/cxl: Add aarch64 virt test for CXL
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Itaru Kitayama <itaru.kitayama@linux.dev>
-In-Reply-To: <20250519135413.000026b4@huawei.com>
-Date: Wed, 21 May 2025 05:38:21 +0900
-Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
- Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
- linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-arm@nongnu.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uHTpR-0004hX-MI
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 16:44:49 -0400
+Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uHTpQ-0007kZ-19
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 16:44:49 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id CBF6E180E64
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 22:44:36 +0200 (CEST)
+Received: (qmail 32157 invoked by uid 990); 20 May 2025 20:44:36 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Tue, 20 May 2025 22:44:36 +0200
+MIME-Version: 1.0
+Date: Tue, 20 May 2025 20:44:36 +0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <1BAB6FA9-F65A-41F4-ADC7-BE3F23E71AA0@linux.dev>
-References: <20250513111455.128266-1-Jonathan.Cameron@huawei.com>
- <20250513111455.128266-6-Jonathan.Cameron@huawei.com>
- <D9E503CC-1271-4008-9975-9BAEC7A33376@linux.dev>
- <20250519135413.000026b4@huawei.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::ad;
- envelope-from=itaru.kitayama@linux.dev; helo=out-173.mta1.migadu.com
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <4ea8edc376234e43230b09cb1b740616dee1652a@nut.email>
+TLS-Required: No
+Subject: Re: [PATCH v5 23/25] tests: add plugin asserting correctness of
+ discon event's to_pc
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
+ Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
+In-Reply-To: <dbf71afe-1ae2-4110-8f83-fe1b1823a774@linaro.org>
+References: <cover.1747666625.git.neither@nut.email>
+ <2a30a629012f39f8495415f87568fe9b3a0eb32b.1747666625.git.neither@nut.email>
+ <dbf71afe-1ae2-4110-8f83-fe1b1823a774@linaro.org>
+X-Rspamd-Bar: /
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-1.374938) MIME_GOOD(-0.1)
+X-Rspamd-Score: 0.025061
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=HOOU9sTY6ZpSjKlth04DzkW6tGmpifQY6dmBQt8Bl6E=;
+ b=EK/m+/LD2Td3agw5Mtk0bW8Gxmmv+oEL+RqnFyDNPAToc3pumGUmcSzTgWGM2CwJL1JNreQrf1
+ 5EwCnQeM3+hSdp0PRiQKEspwop4hG9zT4MLb5IEGFZ7Imbq3Qm04K+SnnYMSoh2B43LKy9TKDvPq
+ 7E8RnX4Y1ERO82KZARVBzjT1cFT6FVYfDvOKR9Us026SITvFxjKWvhSyo3BS8nvKKo4U+EXV6lDs
+ lCjBhPdF7o8YBy01Sq3Z14KGae4KHMLNP0cqq/SJgCHcOvLQ8EgwLWPgKe1LKc7Cp/eOldaL2U/S
+ wrPbMGdAFG0BTx1UTOLPt4Ro2CVZq4TJ0dBM+HQ4ASv1htPmyWKOgbX7h4uhPyW5EcArxM98Ex00
+ bRsELRdWlYq/2uOJA/wFPnFczI/JmbXv+kWVx1M3bOPKjryeB36/7cJpxEZJfsyId5mgEKolMul2
+ gTug6D0qpogTKQDwuWdjaYrfAuyxdff8wOKLzI24kLmLWPHtrz9TJrrsZZO0J2DE+TDqrGDOFcDn
+ ji7lJ13yOCPvEp2vs89VTZanaZj7Wha6GhR7kdmYAjENxgnZxNwhLqGisyBg7om1jI6YDGp2J7Qo
+ d3AS5uZy2tC4wLlxZv3Mz4I49qTdxF80UpmauCn0GI7yufJeOlSyhDLSfENW9EDBE7eAC6HncIYz
+ k=
+Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
+ envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,196 +82,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jonathan,
+Hi Pierrick,
 
-> On May 19, 2025, at 21:54, Jonathan Cameron =
-<Jonathan.Cameron@huawei.com> wrote:
+May 20, 2025 at 10:01 PM, Pierrick Bouvier wrote:
+> Regarding the issue with the same tb being mapped at different virtual =
+addresses, I'm ok with the current solution of comparing only page bits.
 >=20
-> On Thu, 15 May 2025 18:04:18 +0900
-> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
->=20
->>> On May 13, 2025, at 20:14, Jonathan Cameron =
-<Jonathan.Cameron@huawei.com> wrote:
->>>=20
->>> Add a single complex case for aarch64 virt machine.
->>> Given existing much more comprehensive tests for x86 cover the
->>> common functionality, a single test should be enough to verify
->>> that the aarch64 part continue to work.
->>>=20
->>> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->>> ---
->>> tests/qtest/cxl-test.c  | 59 =
-++++++++++++++++++++++++++++++++---------
->>> tests/qtest/meson.build |  1 +
->>> 2 files changed, 47 insertions(+), 13 deletions(-)
->>>=20
->>> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
->>> index a600331843..c7189d6222 100644
->>> --- a/tests/qtest/cxl-test.c
->>> +++ b/tests/qtest/cxl-test.c
->>> @@ -19,6 +19,12 @@
->>>    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
->>>    "-M =
-cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
-G "
->>>=20
->>> +#define QEMU_VIRT_2PXB_CMD \
->>> +    "-machine virt,cxl=3Don -cpu max " \
->>> +    "-device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52 " \
->>> +    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
->>> +    "-M =
-cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
-G "
->>> +
->>> #define QEMU_RP \
->>>    "-device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 "
->>>=20
->>> @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
->>>    qtest_end();
->>>    rmdir(tmpfs);
->>> }
->>> +
->>> +static void cxl_virt_2pxb_4rp_4t3d(void)
->>> +{
->>> +    g_autoptr(GString) cmdline =3D g_string_new(NULL);
->>> +    char template[] =3D "/tmp/cxl-test-XXXXXX";
->>> +    const char *tmpfs;
->>> +
->>> +    tmpfs =3D mkdtemp(template);
->>> +
->>> +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
->>> +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
->>> +                    tmpfs, tmpfs);
->>> +
->>> +    qtest_start(cmdline->str);
->>> +    qtest_end();
->>> +    rmdir(tmpfs);
->>> +}
->>> #endif /* CONFIG_POSIX */
->>>=20
->>> int main(int argc, char **argv)
->>> {
->>> -    g_test_init(&argc, &argv, NULL);
->>> +    const char *arch =3D qtest_get_arch();
->>>=20
->>> -    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
->>> -    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
->>> -    qtest_add_func("/pci/cxl/pxb_with_window", =
-cxl_pxb_with_window);
->>> -    qtest_add_func("/pci/cxl/pxb_x2_with_window", =
-cxl_2pxb_with_window);
->>> -    qtest_add_func("/pci/cxl/rp", cxl_root_port);
->>> -    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
->>> +    g_test_init(&argc, &argv, NULL);
->>> +    if (strcmp(arch, "i386") =3D=3D 0 || strcmp(arch, "x86_64") =3D=3D=
- 0) {
->>> +        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
->>> +        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
->>> +        qtest_add_func("/pci/cxl/pxb_with_window", =
-cxl_pxb_with_window);
->>> +        qtest_add_func("/pci/cxl/pxb_x2_with_window", =
-cxl_2pxb_with_window);
->>> +        qtest_add_func("/pci/cxl/rp", cxl_root_port);
->>> +        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
->>> #ifdef CONFIG_POSIX
->>> -    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
->>> -    qtest_add_func("/pci/cxl/type3_device_pmem", =
-cxl_t3d_persistent);
->>> -    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
->>> -    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
-cxl_t3d_volatile_lsa);
->>> -    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
->>> -    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", =
-cxl_2pxb_4rp_4t3d);
->>> +        qtest_add_func("/pci/cxl/type3_device", =
-cxl_t3d_deprecated);
->>> +        qtest_add_func("/pci/cxl/type3_device_pmem", =
-cxl_t3d_persistent);
->>> +        qtest_add_func("/pci/cxl/type3_device_vmem", =
-cxl_t3d_volatile);
->>> +        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
-cxl_t3d_volatile_lsa);
->>> +        qtest_add_func("/pci/cxl/rp_x2_type3_x2", =
-cxl_1pxb_2rp_2t3d);
->>> +        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
->>> +                       cxl_2pxb_4rp_4t3d);
->>> #endif
->>> +    } else if (strcmp(arch, "aarch64") =3D=3D 0) {
->>> +#ifdef CONFIG_POSIX
->>> +        =
-qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
->>> +                       cxl_virt_2pxb_4rp_4t3d);
->>> +#endif
->>> +    }
->>> +
->>>    return g_test_run();
->>> }
->>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->>> index 7daf619845..361000267a 100644
->>> --- a/tests/qtest/meson.build
->>> +++ b/tests/qtest/meson.build
->>> @@ -258,6 +258,7 @@ qtests_aarch64 =3D \
->>>  (config_all_accel.has_key('CONFIG_TCG') and                         =
-                   \
->>>   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? =
-['tpm-tis-i2c-test'] : []) + \
->>>  (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 =
-: []) + \
->>> +  qtests_cxl +                                                      =
-                            \
->>>  ['arm-cpu-features',
->>>   'numa-test',
->>>   'boot-serial-test',
->>> --=20
->>> 2.43.0
->>>=20
->>=20
->> ~/projects/qemu/build$ meson test qtest-aarch64/cxl-test
->> ninja: Entering directory `/home/realm/projects/qemu/build'
->> [1/8] Generating qemu-version.h with a custom command (wrapped by =
-meson to capture output)
->> 1/1 qemu:qtest+qtest-aarch64 / qtest-aarch64/cxl-test        OK       =
-       0.17s   1 subtests passed
->>=20
->> Ok:                 1
->> Expected Fail:      0
->> Fail:               0
->> Unexpected Pass:    0
->> Skipped:            0
->> Timeout:            0
->>=20
->> Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com =
-<mailto:itaru.kitayama@fujitsu.com>>
->>=20
->> Jonathan, would you push your branch this series applied? I manually =
-applied your series no issues though.
->=20
-> I'm reluctant to push a 'normal' staging CXL tree whilst we have the =
-TCG
-> issue outstanding (which is in mainline).
-> I can probably push one with a name that makes it clear we know it =
-will
-> crash under some circumstances though. I'll aim to get that done later =
-this week.
+>=20That said, a better solution could be to compare physical addresses w=
+hen a discon is detected (on plugin side), and confirm it's really a disc=
+ontinuity or just a different mapping. With this approach, it's not even =
+needed to have a dedicated option, and there would be no false positive i=
+n the plugin. It's just a suggestion though.
 
-Okay, and understood.
+I actually tried to do this before resorting to the current appraoch.
+However, there is only API for querying an instruction's or TB's
+hardware address and none that would let me translate the virtual
+addresses we receive in the discon callback, which we need to compare
+against.
 
->=20
-> After talking to Richard Henderson I'm going to spin some images etc =
-to
-> make it easier for him to replicate that TCG issue.
->=20
-> Thanks for reviews.
+I considered also passing the hardware address to the callback (do the
+translation in the `plugin_vcpu_cb__discon` hook), but that turned out
+to be not straight forward and not something we'd want to do in the
+hook, either.
 
-The comments are from Zhijian.
-
-Itaru.
-
->=20
-> Jonathan
->=20
->>=20
->>=20
->=20
-
+Regards,
+Julian
 
