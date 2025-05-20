@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE1EAC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A9FC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKFt-00018Z-5S; Tue, 20 May 2025 06:31:29 -0400
+	id 1uHKFu-0001EL-Nx; Tue, 20 May 2025 06:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uHKFG-00088D-Hj; Tue, 20 May 2025 06:30:50 -0400
+ id 1uHKFH-0008CF-CK; Tue, 20 May 2025 06:30:51 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uHKFE-00052N-48; Tue, 20 May 2025 06:30:49 -0400
+ id 1uHKFE-000537-UG; Tue, 20 May 2025 06:30:50 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 055EF43BBA;
- Tue, 20 May 2025 12:30:21 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 14A9D43BFD;
+ Tue, 20 May 2025 12:30:22 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v2 10/24] block: move drain outside of
- bdrv_attach_child_common(_abort)()
-Date: Tue, 20 May 2025 12:29:58 +0200
-Message-Id: <20250520103012.424311-11-f.ebner@proxmox.com>
+Subject: [PATCH v2 20/24] iotests/graph-changes-while-io: remove image file
+ after test
+Date: Tue, 20 May 2025 12:30:08 +0200
+Message-Id: <20250520103012.424311-21-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250520103012.424311-1-f.ebner@proxmox.com>
 References: <20250520103012.424311-1-f.ebner@proxmox.com>
@@ -60,208 +60,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is part of resolving the deadlock mentioned in commit "block:
-move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
-
-The function bdrv_attach_child_common_abort() is used only as the
-abort callback in bdrv_attach_child_common_drv transactions, so the
-tran_finalize() calls of such transactions need to be in drained
-sections too.
-
-All code paths are covered:
-The bdrv_attach_child_common_drv transactions are only used in
-bdrv_attach_child_common(), so it is enough to check callers of
-bdrv_attach_child_common() following the transactions.
-
-bdrv_attach_child_common() is called by:
-1. bdrv_attach_child_noperm(), which does not finalize the
-   transaction yet.
-2. bdrv_root_attach_child(), where a drained section is introduced.
-
-bdrv_attach_child_noperm() is called by:
-1. bdrv_attach_child(), where a drained section is introduced.
-2. bdrv_set_file_or_backing_noperm(), which does not finalize the
-   transaction yet.
-3. bdrv_append(), where a drained section is introduced.
-
-bdrv_set_file_or_backing_noperm() is called by:
-1. bdrv_set_backing_hd_drained(), where a drained section is
-   introduced.
-2. bdrv_reopen_parse_file_or_backing(), which does not finalize the
-   transaction yet. Draining the old child bs currently happens under
-   the graph lock there. This is replaced with an assertion, because
-   the drain will be moved further up to the caller.
-
-bdrv_reopen_parse_file_or_backing() is called by:
-1. bdrv_reopen_prepare(), which does not finalize the transaction yet.
-
-bdrv_reopen_prepare() is called by:
-1. bdrv_reopen_multiple(), which does finalize the transaction. It is
-   called after bdrv_reopen_queue(), which starts a drained section.
-   The drained section ends, when bdrv_reopen_queue_free() is called
-   at the end of bdrv_reopen_multiple().
-
-This resolves all code paths.
-
-The functions bdrv_set_backing_hd_drained(), bdrv_attach_child() and
-bdrv_root_attach_child() run under the graph lock, so they are not
-actually allowed to drain. This will be addressed in the following
-commits.
-
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
 
-Changes in v2:
-* Split up into smaller pieces, flesh out commit messages.
+New in v2.
 
- block.c | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ tests/qemu-iotests/tests/graph-changes-while-io | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block.c b/block.c
-index 5281ad1313..702a51ff4b 100644
---- a/block.c
-+++ b/block.c
-@@ -3028,10 +3028,8 @@ static void GRAPH_WRLOCK bdrv_attach_child_common_abort(void *opaque)
-     bdrv_replace_child_noperm(s->child, NULL);
+diff --git a/tests/qemu-iotests/tests/graph-changes-while-io b/tests/qemu-iotests/tests/graph-changes-while-io
+index 194fda500e..35489e3b5e 100755
+--- a/tests/qemu-iotests/tests/graph-changes-while-io
++++ b/tests/qemu-iotests/tests/graph-changes-while-io
+@@ -57,6 +57,7 @@ class TestGraphChangesWhileIO(QMPTestCase):
  
-     if (bdrv_get_aio_context(bs) != s->old_child_ctx) {
--        bdrv_drain_all_begin();
-         bdrv_try_change_aio_context_locked(bs, s->old_child_ctx, NULL,
-                                            &error_abort);
--        bdrv_drain_all_end();
-     }
+     def tearDown(self) -> None:
+         self.qsd.stop()
++        os.remove(top)
  
-     if (bdrv_child_get_parent_aio_context(s->child) != s->old_parent_ctx) {
-@@ -3043,10 +3041,8 @@ static void GRAPH_WRLOCK bdrv_attach_child_common_abort(void *opaque)
- 
-         /* No need to visit `child`, because it has been detached already */
-         visited = g_hash_table_new(NULL, NULL);
--        bdrv_drain_all_begin();
-         ret = s->child->klass->change_aio_ctx(s->child, s->old_parent_ctx,
-                                               visited, tran, &error_abort);
--        bdrv_drain_all_end();
-         g_hash_table_destroy(visited);
- 
-         /* transaction is supposed to always succeed */
-@@ -3118,10 +3114,8 @@ bdrv_attach_child_common(BlockDriverState *child_bs,
-     parent_ctx = bdrv_child_get_parent_aio_context(new_child);
-     if (child_ctx != parent_ctx) {
-         Error *local_err = NULL;
--        bdrv_drain_all_begin();
-         int ret = bdrv_try_change_aio_context_locked(child_bs, parent_ctx, NULL,
-                                                      &local_err);
--        bdrv_drain_all_end();
- 
-         if (ret < 0 && child_class->change_aio_ctx) {
-             Transaction *aio_ctx_tran = tran_new();
-@@ -3129,11 +3123,9 @@ bdrv_attach_child_common(BlockDriverState *child_bs,
-             bool ret_child;
- 
-             g_hash_table_add(visited, new_child);
--            bdrv_drain_all_begin();
-             ret_child = child_class->change_aio_ctx(new_child, child_ctx,
-                                                     visited, aio_ctx_tran,
-                                                     NULL);
--            bdrv_drain_all_end();
-             if (ret_child == true) {
-                 error_free(local_err);
-                 ret = 0;
-@@ -3244,6 +3236,7 @@ BdrvChild *bdrv_root_attach_child(BlockDriverState *child_bs,
- 
-     GLOBAL_STATE_CODE();
- 
-+    bdrv_drain_all_begin();
-     child = bdrv_attach_child_common(child_bs, child_name, child_class,
-                                    child_role, perm, shared_perm, opaque,
-                                    tran, errp);
-@@ -3256,6 +3249,7 @@ BdrvChild *bdrv_root_attach_child(BlockDriverState *child_bs,
- 
- out:
-     tran_finalize(tran, ret);
-+    bdrv_drain_all_end();
- 
-     bdrv_schedule_unref(child_bs);
- 
-@@ -3283,6 +3277,7 @@ BdrvChild *bdrv_attach_child(BlockDriverState *parent_bs,
- 
-     GLOBAL_STATE_CODE();
- 
-+    bdrv_drain_all_begin();
-     child = bdrv_attach_child_noperm(parent_bs, child_bs, child_name,
-                                      child_class, child_role, tran, errp);
-     if (!child) {
-@@ -3297,6 +3292,7 @@ BdrvChild *bdrv_attach_child(BlockDriverState *parent_bs,
- 
- out:
-     tran_finalize(tran, ret);
-+    bdrv_drain_all_end();
- 
-     bdrv_schedule_unref(child_bs);
- 
-@@ -3573,6 +3569,7 @@ int bdrv_set_backing_hd_drained(BlockDriverState *bs,
-         assert(bs->backing->bs->quiesce_counter > 0);
-     }
- 
-+    bdrv_drain_all_begin();
-     ret = bdrv_set_file_or_backing_noperm(bs, backing_hd, true, tran, errp);
-     if (ret < 0) {
-         goto out;
-@@ -3581,6 +3578,7 @@ int bdrv_set_backing_hd_drained(BlockDriverState *bs,
-     ret = bdrv_refresh_perms(bs, tran, errp);
- out:
-     tran_finalize(tran, ret);
-+    bdrv_drain_all_end();
-     return ret;
- }
- 
-@@ -4721,6 +4719,8 @@ int bdrv_reopen_set_read_only(BlockDriverState *bs, bool read_only,
-  * Return 0 on success, otherwise return < 0 and set @errp.
-  *
-  * @reopen_state->bs can move to a different AioContext in this function.
-+ *
-+ * The old child bs must be drained.
-  */
- static int GRAPH_UNLOCKED
- bdrv_reopen_parse_file_or_backing(BDRVReopenState *reopen_state,
-@@ -4814,7 +4814,7 @@ bdrv_reopen_parse_file_or_backing(BDRVReopenState *reopen_state,
- 
-     if (old_child_bs) {
-         bdrv_ref(old_child_bs);
--        bdrv_drained_begin(old_child_bs);
-+        assert(old_child_bs->quiesce_counter > 0);
-     }
- 
-     bdrv_graph_rdunlock_main_loop();
-@@ -4826,7 +4826,6 @@ bdrv_reopen_parse_file_or_backing(BDRVReopenState *reopen_state,
-     bdrv_graph_wrunlock();
- 
-     if (old_child_bs) {
--        bdrv_drained_end(old_child_bs);
-         bdrv_unref(old_child_bs);
-     }
- 
-@@ -5501,9 +5500,7 @@ int bdrv_append(BlockDriverState *bs_new, BlockDriverState *bs_top,
-     assert(!bs_new->backing);
-     bdrv_graph_rdunlock_main_loop();
- 
--    bdrv_drained_begin(bs_top);
--    bdrv_drained_begin(bs_new);
--
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
- 
-     child = bdrv_attach_child_noperm(bs_new, bs_top, "backing",
-@@ -5525,9 +5522,7 @@ out:
- 
-     bdrv_refresh_limits(bs_top, NULL, NULL);
-     bdrv_graph_wrunlock();
--
--    bdrv_drained_end(bs_top);
--    bdrv_drained_end(bs_new);
-+    bdrv_drain_all_end();
- 
-     return ret;
- }
+     def test_blockdev_add_while_io(self) -> None:
+         # Run qemu-img bench in the background
 -- 
 2.39.5
 
