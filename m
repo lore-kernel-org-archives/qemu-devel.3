@@ -4,134 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF916C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2843C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHOhl-0000c2-Cr; Tue, 20 May 2025 11:16:33 -0400
+	id 1uHP2K-00042E-Qd; Tue, 20 May 2025 11:37:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHOhj-0000bm-DM
- for qemu-devel@nongnu.org; Tue, 20 May 2025 11:16:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHOhh-0004uK-7e
- for qemu-devel@nongnu.org; Tue, 20 May 2025 11:16:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747754187;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pMbS6MXhAVfMMV0Lqo565rdqCrpEbuGU9c6h4Nte618=;
- b=LpP/xRBvpffYifdwuN5dht/Jw1sikK3Gdvx5Xzqz3hazGdnlbF6+pEdLe9k4wSr7aMCkri
- 4VlnUiT3zXdnuK8Nza6Hx+ukEkERjSx8CqMO4LwmsxjIdMKqr7zeARZ7qqXeM9DN4Xi+2z
- AmW2eCdJvCXqt4kUb6THG5hTqF0z2C0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-8O0mm9BmMoaOuHQ2K-mR4w-1; Tue, 20 May 2025 11:16:25 -0400
-X-MC-Unique: 8O0mm9BmMoaOuHQ2K-mR4w-1
-X-Mimecast-MFC-AGG-ID: 8O0mm9BmMoaOuHQ2K-mR4w_1747754184
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a3684a5655so1763444f8f.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 08:16:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uHP2I-00041c-GJ
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 11:37:46 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uHP2F-0000N2-VE
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 11:37:46 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-742c3d06de3so3292479b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 08:37:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747755461; x=1748360261; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QfUgbG7wlz+ybzD3R782KbS9QXsdGRcz+HFsWFmMcKY=;
+ b=QFzqFy7v5zGJXWSlQC411rN91ndUmpIFSITLx93+Ty6tiSi1TBlY9bqBEpW9AQqKkt
+ laEEXuNZITX7KdA846skgGyX7jB0wIvl9R5TgJKuogzbyIRDYhOv1j/Mj9EtjUsUjvmZ
+ vW2ZyOXcqzvb1y4HatvAAd99pb1PhD82ddTKBiA4D6U2UWYrmftoPsK6QP3sbcEoFXJH
+ VgLJACecQ0OQmIRpxNqRYIKpCeYyNdcUqTexrDXzdUW/CTOpv4WB9kF6+zP7yn2rR1d5
+ ObZFrpCwLxgeeEwqg7n8X2OCGgm+T+DA3JIf00yvvED5sA+nlu4Yem/DhakHZODX+yay
+ iLaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747754184; x=1748358984;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pMbS6MXhAVfMMV0Lqo565rdqCrpEbuGU9c6h4Nte618=;
- b=YBSICUXIYY80M5bk3d9L6HYaCrATW6IFsdTNUdlYCWvlAu+opwn50ANZh3zdXuTJxP
- JaR6edB+jsXEhpiCzEtdPAArDiyvE7x5H9lU6r23x8BnZUFsCE9ZFE4t44FnWqNNJnbo
- mDAKAUAvAr7M5qyJJcHfDWmZ9LeQVRILo7Xt16DMbTFeCDFOpunpF4eGT2gPgjJ6voss
- PbPcC6acFCy/Fv/vLhXHGvh8dm4u62eGEd9vNAfEQ1Hycazq9urAxfMtOGyJr4kYViyr
- KsLqMe9Ko0PuycJ88VVtif/7FOfGbthcJkiwZe3IG1p/W7nqxxFUTW2r4/FkqJGQR3do
- F4ag==
-X-Gm-Message-State: AOJu0YwkPenReqcqnlCtwP0UXCeJ9QCPyVCMeq6oPyXlB4LMM/gxZVe1
- 8E+YUoSOmKoDbpah67vo+YvldcVvh8hBi4LzcNZ+HO3BZPZMdx3G2W7JqG2Ms54FwzIzzX3opwb
- 8FofRyjRS30X7p391AC6P68uERimyO2LE7348rxfTROpHKHU7MjiVbylP
-X-Gm-Gg: ASbGnctPh09AJH2NkO1fTjmveL95IFTa+/aJtEVPgLgxjVbqY8FjexOa0/GmHJpKXXk
- 2Gj8zPeapG9GJsWJ8UrWc9+X6y24CkV9u9xExuoxE7bYnNFrGqBvg8YzbCWdkUhWPYftMds+asA
- DnvK4u/TgwcuO12tXSaB7ei85Fw0EWd7ZYEaI9jdHoEOlwsOVu5F4Rn77Va1ZPIjjYsMohzWMaj
- CvCWVdO4XGbEXzWgBCb1FCV8vSYvK9l8JOyrmOgQkr/ignu6Q4eEpN+lAI93pLHXGHKksXO4+iU
- YTNpDNWbl9cixw==
-X-Received: by 2002:a05:6000:184c:b0:3a3:6aa4:bf28 with SMTP id
- ffacd0b85a97d-3a36aa4bfe0mr9747150f8f.10.1747754184275; 
- Tue, 20 May 2025 08:16:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQ8V25wibgocO+xB92awbcwRJFOHdwAJ517gol3TbCIFo9DfBQsImXvhVghYptcP9WRzi/bA==
-X-Received: by 2002:a05:6000:184c:b0:3a3:6aa4:bf28 with SMTP id
- ffacd0b85a97d-3a36aa4bfe0mr9747116f8f.10.1747754183882; 
- Tue, 20 May 2025 08:16:23 -0700 (PDT)
-Received: from [192.168.10.81] ([151.95.46.79])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3a366e08747sm13425215f8f.95.2025.05.20.08.16.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 08:16:23 -0700 (PDT)
-Message-ID: <20486914-1752-4710-b000-52ee04d4106d@redhat.com>
-Date: Tue, 20 May 2025 17:16:22 +0200
+ d=1e100.net; s=20230601; t=1747755461; x=1748360261;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QfUgbG7wlz+ybzD3R782KbS9QXsdGRcz+HFsWFmMcKY=;
+ b=EaUcdoxpVVqPv1JEoCyBfvJEleG+uBhecKZppj37iNjZK4HMOx/K8h04wa9Fjf/oWE
+ DPWId/sfPs4ALgH2gZkIqywLiKnvRtY0JBWcEzeCjhWU9OkHVdlTvwa+cHXN8kqss22I
+ 5b/MwkE0JhqH0N00D34HVAqJ2CEdxdJgcpv+OtiH+Ow8Aa84GqnJ9rGnrCrAooUxhVwV
+ BSRM7yGMPcqNsrvCbeDQdEdzGmrsLhKWUjWre3KT+B0RL7io1xwM0acvSvgOqz+5NX6+
+ bJ1T0kGU98b3+yYuPWK+5omUB65VqAfh8tPVlGn9Ji11HmXE1T3u+qwhKHCE8iEYoe9G
+ wRzQ==
+X-Gm-Message-State: AOJu0Yy8A72Qc6SZeFGzi9s6R0bMOQKXYTf9k4ET64qR4DIGZFD08jA1
+ zYXGZvLgfhb+3EX9pPh/r6LI/FviH9TRlFw7f9bnou4DqLibleXZr5R5
+X-Gm-Gg: ASbGncvtaS/JrVwI1dNVz1O/oHV7nhXLTTbU50A493zD6UR19zH76XhImljeENDeST+
+ DRpd75QbiqfDlbcBmnQGenqYm7wou5lfC+cOBi7C43yYap2QhBSOoBAB0z44X+4IJCdfkcCe5yV
+ p9uBS+QCAAc5tpbhZ6xaNm5wAs0JSYdDLcekI8N/qMx9IyVWJqwmDLYQtHWMtTdHEgBdglsb2iR
+ 9QRXpTp1FJzOD1caYEEu033geEEoMEJss5aOebliQ/SM3PiaWD64bOMLSbViTI5ErHRW/pk5rYf
+ K2+a8J/CUyxsz9XJ/mw1Z1+UkFgqTFK1IlKz4bGblbvGl3MdDBkD
+X-Google-Smtp-Source: AGHT+IEwSkvU591UJhbKnDRmu73swl+LkaJvyIbpoNTzQIdAkiru/cpM8OObscQjElXrRH2kNDBEOQ==
+X-Received: by 2002:a05:6a00:3492:b0:742:9bd3:cd1f with SMTP id
+ d2e1a72fcca58-742acd728eamr21638969b3a.23.1747755461288; 
+ Tue, 20 May 2025 08:37:41 -0700 (PDT)
+Received: from lg ([2601:646:8f03:9fee:2c89:c0cf:1cbd:96d3])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-742a9739906sm8071440b3a.80.2025.05.20.08.37.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 08:37:40 -0700 (PDT)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Tue, 20 May 2025 08:37:35 -0700
+To: anisa.su887@gmail.com
+Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
+ dave@stgolabs.net, linux-cxl@vger.kernel.org,
+ Anisa Su <anisa.su@samsung.com>
+Subject: Re: [PATCH v2 01/10] cxl-mailbox-utils: Move opcodes enum to new
+ header file
+Message-ID: <aCyhv8Qz1LUpJKd3@lg>
+References: <20250508001754.122180-1-anisa.su887@gmail.com>
+ <20250508001754.122180-2-anisa.su887@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] hw/timer/hpet: Adjust num_timers in hpet_init()
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>
-References: <20250520152750.2542612-1-zhao1.liu@intel.com>
- <20250520152750.2542612-3-zhao1.liu@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250520152750.2542612-3-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250508001754.122180-2-anisa.su887@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,56 +102,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 17:27, Zhao Liu wrote:
-> Currently, HPET adjusts num_timers in hpet_realize(), and doesn't change
-> it in any other place. And this field is initialized as a property.
-
-Properties are initialized *after* hpet_init.  For hw/timer/hpet you can 
-check s->num_timers and return an error if it's out of bounds, but for 
-the Rust version we don't have Error** support yet. :(
-
-Queued 1-4-5 for now.
-
-Paolo
-
-> Therefore, it's possible to move such adjustments to hept_init(), so
-> that Rust side can synchronize this change.
+On Thu, May 08, 2025 at 12:00:57AM +0000, anisa.su887@gmail.com wrote:
+> From: Anisa Su <anisa.su@samsung.com>
 > 
-> Adjust num_timers in hpet_init().
+> In preparation for the next patch, move opcodes enum to new cxl_opcodes.h file
+> for visibility from mailbox-utils.c and i2c_mctp_cxl.c, which checks that
+> certain command sets are bound with the correct MCTP binding.
 > 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
 > ---
->   hw/timer/hpet.c | 11 ++++++-----
->   1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-> index 0fd1337a1564..48b1a9289f83 100644
-> --- a/hw/timer/hpet.c
-> +++ b/hw/timer/hpet.c
-> @@ -682,6 +682,12 @@ static void hpet_init(Object *obj)
->       /* HPET Area */
->       memory_region_init_io(&s->iomem, obj, &hpet_ram_ops, s, "hpet", HPET_LEN);
->       sysbus_init_mmio(sbd, &s->iomem);
-> +
-> +    if (s->num_timers < HPET_MIN_TIMERS) {
-> +        s->num_timers = HPET_MIN_TIMERS;
-> +    } else if (s->num_timers > HPET_MAX_TIMERS) {
-> +        s->num_timers = HPET_MAX_TIMERS;
-> +    }
->   }
->   
->   static void hpet_realize(DeviceState *dev, Error **errp)
-> @@ -710,11 +716,6 @@ static void hpet_realize(DeviceState *dev, Error **errp)
->           sysbus_init_irq(sbd, &s->irqs[i]);
->       }
->   
-> -    if (s->num_timers < HPET_MIN_TIMERS) {
-> -        s->num_timers = HPET_MIN_TIMERS;
-> -    } else if (s->num_timers > HPET_MAX_TIMERS) {
-> -        s->num_timers = HPET_MAX_TIMERS;
-> -    }
->       for (i = 0; i < HPET_MAX_TIMERS; i++) {
->           timer = &s->timer[i];
->           timer->qemu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, hpet_timer, timer);
+>  hw/cxl/cxl-mailbox-utils.c   | 68 ++----------------------------------
+>  include/hw/cxl/cxl_opcodes.h | 64 +++++++++++++++++++++++++++++++++
 
+Should we put the opcodes into include/hw/cxl/cxl_mailbox.h instead of
+creating a new file. cxl_mailbox.h only has some macros.
+
+Fan
+
+
+
+>  2 files changed, 66 insertions(+), 66 deletions(-)
+>  create mode 100644 include/hw/cxl/cxl_opcodes.h
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index a02d130926..ed3294530f 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -23,6 +23,7 @@
+>  #include "qemu/uuid.h"
+>  #include "system/hostmem.h"
+>  #include "qemu/range.h"
+> +#include "hw/cxl/cxl_opcodes.h"
+>  
+>  #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
+>  #define CXL_DC_EVENT_LOG_SIZE 8
+> @@ -36,7 +37,7 @@
+>  
+>  /*
+>   * How to add a new command, example. The command set FOO, with cmd BAR.
+> - *  1. Add the command set and cmd to the enum.
+> + *  1. Add the command set and cmd to the enum in cxl_opcodes.h.
+>   *     FOO    = 0x7f,
+>   *          #define BAR 0
+>   *  2. Implement the handler
+> @@ -59,71 +60,6 @@
+>   *  a register interface that already deals with it.
+>   */
+>  
+> -enum {
+> -    INFOSTAT    = 0x00,
+> -        #define IS_IDENTIFY   0x1
+> -        #define BACKGROUND_OPERATION_STATUS    0x2
+> -        #define GET_RESPONSE_MSG_LIMIT         0x3
+> -        #define SET_RESPONSE_MSG_LIMIT         0x4
+> -        #define BACKGROUND_OPERATION_ABORT     0x5
+> -    EVENTS      = 0x01,
+> -        #define GET_RECORDS   0x0
+> -        #define CLEAR_RECORDS   0x1
+> -        #define GET_INTERRUPT_POLICY   0x2
+> -        #define SET_INTERRUPT_POLICY   0x3
+> -    FIRMWARE_UPDATE = 0x02,
+> -        #define GET_INFO      0x0
+> -        #define TRANSFER      0x1
+> -        #define ACTIVATE      0x2
+> -    TIMESTAMP   = 0x03,
+> -        #define GET           0x0
+> -        #define SET           0x1
+> -    LOGS        = 0x04,
+> -        #define GET_SUPPORTED 0x0
+> -        #define GET_LOG       0x1
+> -        #define GET_LOG_CAPABILITIES   0x2
+> -        #define CLEAR_LOG     0x3
+> -        #define POPULATE_LOG  0x4
+> -    FEATURES    = 0x05,
+> -        #define GET_SUPPORTED 0x0
+> -        #define GET_FEATURE   0x1
+> -        #define SET_FEATURE   0x2
+> -    IDENTIFY    = 0x40,
+> -        #define MEMORY_DEVICE 0x0
+> -    CCLS        = 0x41,
+> -        #define GET_PARTITION_INFO     0x0
+> -        #define GET_LSA       0x2
+> -        #define SET_LSA       0x3
+> -    HEALTH_INFO_ALERTS = 0x42,
+> -        #define GET_ALERT_CONFIG 0x1
+> -        #define SET_ALERT_CONFIG 0x2
+> -    SANITIZE    = 0x44,
+> -        #define OVERWRITE     0x0
+> -        #define SECURE_ERASE  0x1
+> -        #define MEDIA_OPERATIONS 0x2
+> -    PERSISTENT_MEM = 0x45,
+> -        #define GET_SECURITY_STATE     0x0
+> -    MEDIA_AND_POISON = 0x43,
+> -        #define GET_POISON_LIST        0x0
+> -        #define INJECT_POISON          0x1
+> -        #define CLEAR_POISON           0x2
+> -        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
+> -        #define SCAN_MEDIA             0x4
+> -        #define GET_SCAN_MEDIA_RESULTS 0x5
+> -    DCD_CONFIG  = 0x48,
+> -        #define GET_DC_CONFIG          0x0
+> -        #define GET_DYN_CAP_EXT_LIST   0x1
+> -        #define ADD_DYN_CAP_RSP        0x2
+> -        #define RELEASE_DYN_CAP        0x3
+> -    PHYSICAL_SWITCH = 0x51,
+> -        #define IDENTIFY_SWITCH_DEVICE      0x0
+> -        #define GET_PHYSICAL_PORT_STATE     0x1
+> -    TUNNEL = 0x53,
+> -        #define MANAGEMENT_COMMAND     0x0
+> -    MHD = 0x55,
+> -        #define GET_MHD_INFO 0x0
+> -};
+> -
+>  /* CCI Message Format CXL r3.1 Figure 7-19 */
+>  typedef struct CXLCCIMessage {
+>      uint8_t category;
+> diff --git a/include/hw/cxl/cxl_opcodes.h b/include/hw/cxl/cxl_opcodes.h
+> new file mode 100644
+> index 0000000000..26d3a99e8a
+> --- /dev/null
+> +++ b/include/hw/cxl/cxl_opcodes.h
+> @@ -0,0 +1,64 @@
+> +enum {
+> +    INFOSTAT    = 0x00,
+> +        #define IS_IDENTIFY   0x1
+> +        #define BACKGROUND_OPERATION_STATUS    0x2
+> +        #define GET_RESPONSE_MSG_LIMIT         0x3
+> +        #define SET_RESPONSE_MSG_LIMIT         0x4
+> +        #define BACKGROUND_OPERATION_ABORT     0x5
+> +    EVENTS      = 0x01,
+> +        #define GET_RECORDS   0x0
+> +        #define CLEAR_RECORDS   0x1
+> +        #define GET_INTERRUPT_POLICY   0x2
+> +        #define SET_INTERRUPT_POLICY   0x3
+> +    FIRMWARE_UPDATE = 0x02,
+> +        #define GET_INFO      0x0
+> +        #define TRANSFER      0x1
+> +        #define ACTIVATE      0x2
+> +    TIMESTAMP   = 0x03,
+> +        #define GET           0x0
+> +        #define SET           0x1
+> +    LOGS        = 0x04,
+> +        #define GET_SUPPORTED 0x0
+> +        #define GET_LOG       0x1
+> +        #define GET_LOG_CAPABILITIES   0x2
+> +        #define CLEAR_LOG     0x3
+> +        #define POPULATE_LOG  0x4
+> +    FEATURES    = 0x05,
+> +        #define GET_SUPPORTED 0x0
+> +        #define GET_FEATURE   0x1
+> +        #define SET_FEATURE   0x2
+> +    IDENTIFY    = 0x40,
+> +        #define MEMORY_DEVICE 0x0
+> +    CCLS        = 0x41,
+> +        #define GET_PARTITION_INFO     0x0
+> +        #define GET_LSA       0x2
+> +        #define SET_LSA       0x3
+> +    HEALTH_INFO_ALERTS = 0x42,
+> +        #define GET_ALERT_CONFIG 0x1
+> +        #define SET_ALERT_CONFIG 0x2
+> +    SANITIZE    = 0x44,
+> +        #define OVERWRITE     0x0
+> +        #define SECURE_ERASE  0x1
+> +        #define MEDIA_OPERATIONS 0x2
+> +    PERSISTENT_MEM = 0x45,
+> +        #define GET_SECURITY_STATE     0x0
+> +    MEDIA_AND_POISON = 0x43,
+> +        #define GET_POISON_LIST        0x0
+> +        #define INJECT_POISON          0x1
+> +        #define CLEAR_POISON           0x2
+> +        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
+> +        #define SCAN_MEDIA             0x4
+> +        #define GET_SCAN_MEDIA_RESULTS 0x5
+> +    DCD_CONFIG  = 0x48,
+> +        #define GET_DC_CONFIG          0x0
+> +        #define GET_DYN_CAP_EXT_LIST   0x1
+> +        #define ADD_DYN_CAP_RSP        0x2
+> +        #define RELEASE_DYN_CAP        0x3
+> +    PHYSICAL_SWITCH = 0x51,
+> +        #define IDENTIFY_SWITCH_DEVICE      0x0
+> +        #define GET_PHYSICAL_PORT_STATE     0x1
+> +    TUNNEL = 0x53,
+> +        #define MANAGEMENT_COMMAND     0x0
+> +    MHD = 0x55,
+> +        #define GET_MHD_INFO 0x0
+> +};
+> -- 
+> 2.47.2
+> 
+
+-- 
+Fan Ni
 
