@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC26C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0905C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKnb-0007zv-1j; Tue, 20 May 2025 07:06:19 -0400
+	id 1uHKnN-0007RX-K0; Tue, 20 May 2025 07:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHKnJ-0007RP-UR
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:06:03 -0400
+ id 1uHKnD-0007JH-KY
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHKnI-00033K-8s
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:06:01 -0400
+ id 1uHKnB-00032Q-IW
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747739159;
+ s=mimecast20190719; t=1747739152;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2tMZM2SvIHbt7dyi/YnpmaamQemKlOM0b0XlIhcw77k=;
- b=E+ov/Vg4CIXUJDoHtuYGHqzsGQNUUV+yYACUCEhfkjV4ETwPunFIdvWzxLqZJCeiCWkkq5
- cPJRRfKvZ4na7llF0G7/inBvESpnQ/Hzec1XANM9FgkNyz94HRpJocV/MYPQqYWOUp4G6M
- joa22Uo8HEnvbwxsamdMS9oohyIV7Jc=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1mgYSHkWd+aIUzWuoObJiO8RMau0iMJObXQde7QL4iU=;
+ b=hzZC52NMisCOiiqbLfVCoc4WvdvlJca/rUDLu36MUqR9RrjDDBkrpXzwXu21ijKxLp3tlS
+ M4Jbs43I/fF7OSTABglCiEaZ1W2Am3nTB+1QBtkHduxztGsIr3RnHQuZhY/qxepTiMwZMI
+ q9rWon8Hts8iEoxf4maoqesJCeYH9TI=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-bDgVqFjfN6ifovwmAQq9YQ-1; Tue, 20 May 2025 07:05:56 -0400
-X-MC-Unique: bDgVqFjfN6ifovwmAQq9YQ-1
-X-Mimecast-MFC-AGG-ID: bDgVqFjfN6ifovwmAQq9YQ_1747739155
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ad51ceda1d9so447258566b.1
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:05:56 -0700 (PDT)
+ us-mta-258-cgbp4UobNWOKmtDlkXKfVw-1; Tue, 20 May 2025 07:05:50 -0400
+X-MC-Unique: cgbp4UobNWOKmtDlkXKfVw-1
+X-Mimecast-MFC-AGG-ID: cgbp4UobNWOKmtDlkXKfVw_1747739149
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-acb8f9f58ebso439027566b.2
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:05:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747739153; x=1748343953;
+ d=1e100.net; s=20230601; t=1747739149; x=1748343949;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2tMZM2SvIHbt7dyi/YnpmaamQemKlOM0b0XlIhcw77k=;
- b=MRJiD3yezxKa4meguCXN+75HJcGG2oYxJkVeCkCDSEmflmdvARnvfHzAwYS68AykGq
- Ca1+AR1g+p+08NfWbM2cVDViqxpIeGZh7y/Qzi2QteUVpE2nFr0eIAIqBm/5rR+EIUt3
- PWBKxa9SCDq/R7QFaeS7MWntba8qAFfjhqCCz0ecL+7CifMWzFAm8GDqod0UZ535ovGW
- loqJydEdrtxd4bMrZlGazu5rZ7hKg+S2FKU+goY1b1ll3J3qYSTfiQRFr77dWENqwEQJ
- WTliekM1AnWP0bJERmRuY5n6g9Dh6u4gbfT74hFZez4SPsN+1Lohrs2FlVPvzWkTgHPQ
- sx5w==
-X-Gm-Message-State: AOJu0YxYik5B+CGFzepoo6k8Nf7GYRWrFn5e99WAlFA83eZDyHd6UExX
- v4g4lQdRjx8+sLpjsABLpi3a0ZY0En/S9szzqRGpk4Ogh6ittzhSdCp97w9hQZe7ozXkPdYKiF5
- zVphSdV5tv3jOse2+rdcWQLQ02/6R6KNOVmYsDlvzXgiaakbVIECWC/OYfjXq2ABkgD1WN4YDls
- ksjSwfsHXLulEF8+0gdo7EyjEuqV73KHWDgJCaTKOn
-X-Gm-Gg: ASbGnctUjQiMGngvQnpI/kXkU6SDbNx7Ff2NxVCb2LkHaTQJlQGZEmS+nW1hpYdHZfs
- LFGh97JJk9Xp4L5aquBg2YPfILT6X3EkLlV8FkWvvk5ulXGpbhAnaxBtmP4A56x+CTlMZg1YO3+
- lFIMjSqc6xg0ut7fZ5IWs58l3Iwm4tvVylMigbYXJLm+0Gf5QhyIeyZAPnkG13zrZrgUEu9NcWa
- j7IRJtgFnXZL2UZUgD5zxkcXWGbtyeYpAMHLp3g47LU1d52cgpY6cWkjrbIZPWXpxdaMc9pzNz/
- dPhBToVZSDyM8Q==
-X-Received: by 2002:a17:907:960a:b0:ad3:e742:69ea with SMTP id
- a640c23a62f3a-ad52f86c635mr1283732466b.14.1747739153365; 
- Tue, 20 May 2025 04:05:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYpriw6KYQE9vflfI0tonrAr+6DNshdLi9pD7CiWJiuM/Lyi5AquqLNVkmP4Ar8Ek5xpRwbg==
-X-Received: by 2002:a17:907:960a:b0:ad3:e742:69ea with SMTP id
- a640c23a62f3a-ad52f86c635mr1283729666b.14.1747739152920; 
- Tue, 20 May 2025 04:05:52 -0700 (PDT)
+ bh=1mgYSHkWd+aIUzWuoObJiO8RMau0iMJObXQde7QL4iU=;
+ b=V/Czw8Rin2kgCKRmJKRqVhZthNfXxwar6Wzip4r+OnKXtjCQLQZIwaNPEbL+OulO+o
+ dMKO4c7NWxPZ9YziURVEb5Jdzf6WnOIJEyz9Y0eL1k5+qolv8HIVoteW+IUNK2nOhDP0
+ pGDcD6GBrni7Egyrujz00g1jsPAPw/N7xpxEKf2aD9Fy5vZOTEmLlEQ3Jf0vxd3OcXJa
+ NoglAguAhKwo5L1LaKgcDZgpGdhyHKWW1WWq7pomg8delGKNfMO+V2/5OsjjUAzPfiNi
+ mua66QL5Qyk9ciFfnbU+vi09XLY/I/lCyG2r4V5D5pa1oOFLMCgOVSEex1D1b1ogh+HI
+ eU4w==
+X-Gm-Message-State: AOJu0YwNarBwX2cs82HnPUCMV2yUXrD/83W49ucduZJfOCv9h/T8lz8/
+ YDXg/zGnrEfuqHgzBm1eBWw+emhGFKTjSUHmK984p/FseWYJUk5IQqbzL727kCt433AS31d4JUn
+ ja5AyDSDTqUJoKwrILFpOHTImPj9kJawFuLbVcTRcYWxmx7Y85KbzqaiGZQoXhz41QphrW8vflK
+ tloI0Lg2h3QKLO0Xx77aYlbKf7N8l2jlPDfHNrIhy8
+X-Gm-Gg: ASbGncufSY7qt1U3+beBAubSWBa/msR3hqt4I/MCLW6gfRNbzhBpxStpbLj2uha2onS
+ y6CaQf3OoSsNsP/YB3Fe1qALmf5WD5I+zTyRonNLSdYgUgq5TJHBIXq1wGWIP4oYBGN7mjlN6eH
+ s7yRo25fLcvyPk6XuEJDcl+oI/eKXTzFnQFr1+tq5/Gpu7DSuFMfXtsaDvy7oobg5UGy4Fg8L4H
+ /bIfOS+PNKybEz8actOLv6ALYFX870dXra55+1OVD9r/w0qYeTTwOjIT5gfaEE2yaQqDa/+EZKc
+ s+3N1zYUHUvHuQ==
+X-Received: by 2002:a17:907:970b:b0:ad5:2bb1:8c85 with SMTP id
+ a640c23a62f3a-ad52d511cd9mr1489706166b.29.1747739148728; 
+ Tue, 20 May 2025 04:05:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwXGUSHs2/AQdu/ppolwpUvhDLe9nNqzyOxCKgqmwQ0A8DP7eC2uUz92OaD3mJfnI7w4O+Lw==
+X-Received: by 2002:a17:907:970b:b0:ad5:2bb1:8c85 with SMTP id
+ a640c23a62f3a-ad52d511cd9mr1489702366b.29.1747739148218; 
+ Tue, 20 May 2025 04:05:48 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.46.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d276592sm712788766b.73.2025.05.20.04.05.52
+ a640c23a62f3a-ad52d277a2esm715706866b.83.2025.05.20.04.05.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 04:05:52 -0700 (PDT)
+ Tue, 20 May 2025 04:05:45 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 10/35] target/riscv: assert argument to
- set_satp_mode_max_supported is valid
-Date: Tue, 20 May 2025 13:05:05 +0200
-Message-ID: <20250520110530.366202-11-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+	Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 08/35] qapi/misc-target: Fix the doc to distinguish query-sgx
+ and query-sgx-capabilities
+Date: Tue, 20 May 2025 13:05:03 +0200
+Message-ID: <20250520110530.366202-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520110530.366202-1-pbonzini@redhat.com>
 References: <20250520110530.366202-1-pbonzini@redhat.com>
@@ -109,44 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check that the argument to set_satp_mode_max_supported is valid for
-the MXL value of the CPU.  It would be a bug in the CPU definition
-if it weren't.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-In fact, there is such a bug in riscv_bare_cpu_init(): not just
-SV64 is not a valid VM mode for 32-bit CPUs, SV64 is not a
-valid VM mode at all, not yet at least.
+There're 2 QMP commands: query-sgx and query-sgx-capabilities, but
+their outputs are very similar and the documentation lacks clear
+differentiation.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+From the codes, query-sgx is used to gather guest's SGX capabilities
+(including SGX related CPUIDs and EPC sections' size, in SGXInfo), and
+if guest doesn't have SGX, then QEMU will report the error message.
+
+On the other hand, query-sgx-capabilities is used to gather host's SGX
+capabilities (descripted by SGXInfo as well). And if host doesn't
+support SGX, then QEMU will also report the error message.
+
+Considering that SGXInfo is already documented and both these 2 commands
+have enough error messages (for the exception case in their codes).
+
+Therefore the QAPI documentation for these two commands only needs to
+emphasize that one of them applies to the guest and the other to the
+host.
+
+Fix their documentation to reflect this difference.
+
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/r/20250513143131.2008078-3-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/riscv/cpu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ qapi/misc-target.json | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d92874baa06..0f7ce5305be 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -444,6 +444,8 @@ static void set_satp_mode_max_supported(RISCVCPU *cpu,
-             cpu->cfg.satp_mode.supported |= (1 << i);
-         }
-     }
-+
-+    assert(cpu->cfg.satp_mode.supported & (1 << satp_mode));
- }
- 
- /* Set the satp mode to the max supported */
-@@ -1497,7 +1499,9 @@ static void riscv_bare_cpu_init(Object *obj)
-      * satp_mode manually (see set_satp_mode_default()).
-      */
- #ifndef CONFIG_USER_ONLY
--    set_satp_mode_max_supported(cpu, VM_1_10_SV64);
-+    set_satp_mode_max_supported(RISCV_CPU(obj),
-+        riscv_cpu_mxl(&RISCV_CPU(obj)->env) == MXL_RV32 ?
-+        VM_1_10_SV32 : VM_1_10_SV57);
- #endif
- }
- 
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 6814708972d..f7ec695caad 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -361,7 +361,7 @@
+ ##
+ # @query-sgx:
+ #
+-# Returns information about SGX
++# Returns information about configured SGX capabilities of guest
+ #
+ # Returns: @SgxInfo
+ #
+@@ -380,7 +380,7 @@
+ ##
+ # @query-sgx-capabilities:
+ #
+-# Returns information from host SGX capabilities
++# Returns information about SGX capabilities of host
+ #
+ # Returns: @SgxInfo
+ #
 -- 
 2.49.0
 
