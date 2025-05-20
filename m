@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02845C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF2F0C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:34:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLBu-00083g-UN; Tue, 20 May 2025 07:31:26 -0400
+	id 1uHLC5-00087A-Il; Tue, 20 May 2025 07:31:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uHLBs-00082a-SP
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:24 -0400
+ id 1uHLC2-00086J-LM
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:34 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLBq-0001Dh-9l
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:24 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLC0-0001GD-JH
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:34 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (unknown [172.201.77.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 554C0206789F;
- Tue, 20 May 2025 04:31:18 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 554C0206789F
+ by linux.microsoft.com (Postfix) with ESMTPSA id E04ED20277CF;
+ Tue, 20 May 2025 04:31:28 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E04ED20277CF
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1747740681;
- bh=x2NDlsyVpYyiEQ7vZDimSe6K/SLMEX/v+LHB7mAmT38=;
+ s=default; t=1747740691;
+ bh=IcSlCax5u8x7dqCCFvJUa4pzkKDwA5amLgr0eAaZVcw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=drH10LNWUnp0/sTxKSipQpUjfJfCEr46ytu2tFGJdq1mtSk5v5CWbutPSpLqBQDVs
- ToiPm8TXJ7re0AQ+8+JEeXNeb+3cFLb7HwirAQo7tj6fUhya8fZchxNixyImtGUK1T
- ZAphKoN3Ae16e+ylMljUvsJmjsloOZeJrGdc2oPI=
+ b=AusqkJ6VwdaPIk7KVKzKF4XbTpNmN61VHorijghdV/IX762RlYw+l7eAsAffmAwTx
+ 1M8AGUJHQ9M32FwSGacThAwSefmMhci1sqP8lgQkAu0+iIRy7BHt10b9ongqmAJFLj
+ AIu4hd6n6wFzwM3vvDW4O0jw/XfaP9m5HlOHgHW4=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: magnuskulke@microsoft.com,
 	qemu-devel@nongnu.org,
@@ -43,10 +43,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cameron Esfahani <dirty@apple.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH 04/25] hw/intc: Generalize APIC helper names from kvm_* to
- accel_*
-Date: Tue, 20 May 2025 13:29:57 +0200
-Message-Id: <20250520113018.49569-5-magnuskulke@linux.microsoft.com>
+Subject: [RFC PATCH 07/25] accel/mshv: Register memory region listeners
+Date: Tue, 20 May 2025 13:30:00 +0200
+Message-Id: <20250520113018.49569-8-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
 References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
@@ -76,354 +75,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename APIC helper functions to use an accel_* prefix instead of kvm_*
-to support use by accelerators other than KVM. This is a preparatory
-step for integrating MSHV support with common APIC logic.
+Add memory listener hooks for the MSHV accelerator to track guest
+memory regions. This enables the backend to respond to region
+additions, removals and will be used to manage guest memory mappings
+inside the hypervisor.
+
+Actually registering physical memory in the hypervisor is still stubbed
+out.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/accel-irq.c          | 95 ++++++++++++++++++++++++++++++++++++++
- accel/meson.build          |  2 +-
- hw/intc/ioapic.c           | 20 +++++---
- hw/virtio/virtio-pci.c     | 19 ++++----
- include/system/accel-irq.h | 26 +++++++++++
- include/system/mshv.h      | 22 +++++++++
- 6 files changed, 167 insertions(+), 17 deletions(-)
- create mode 100644 accel/accel-irq.c
- create mode 100644 include/system/accel-irq.h
+ accel/mshv/mem.c       | 25 ++++++++++++++++
+ accel/mshv/meson.build |  1 +
+ accel/mshv/mshv-all.c  | 68 ++++++++++++++++++++++++++++++++++++++++--
+ include/system/mshv.h  |  4 +++
+ 4 files changed, 96 insertions(+), 2 deletions(-)
+ create mode 100644 accel/mshv/mem.c
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
+diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
 new file mode 100644
-index 0000000000..63f8ed260a
+index 0000000000..eddd83ae83
 --- /dev/null
-+++ b/accel/accel-irq.c
-@@ -0,0 +1,95 @@
++++ b/accel/mshv/mem.c
+@@ -0,0 +1,25 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2025
++ *
++ * Authors:
++ *  Magnus Kulke      <magnuskulke@microsoft.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ */
++
 +#include "qemu/osdep.h"
-+#include "hw/pci/msi.h"
-+
-+#include "system/kvm.h"
-+#include "system/mshv.h"
-+#include "system/accel-irq.h"
-+
-+int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
-+{
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+    if (mshv_msi_via_irqfd_enabled()) {
-+        return mshv_irqchip_add_msi_route(vector, dev);
-+    }
-+#endif
-+    if (kvm_enabled()) {
-+        return kvm_irqchip_add_msi_route(c, vector, dev);
-+    }
-+    return -ENOSYS;
-+}
-+
-+int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
-+{
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+    if (mshv_msi_via_irqfd_enabled()) {
-+        return mshv_irqchip_update_msi_route(vector, msg, dev);
-+    }
-+#endif
-+    if (kvm_enabled()) {
-+        return kvm_irqchip_update_msi_route(kvm_state, vector, msg, dev);
-+    }
-+    return -ENOSYS;
-+}
-+
-+void accel_irqchip_commit_route_changes(KVMRouteChange *c)
-+{
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+    if (mshv_msi_via_irqfd_enabled()) {
-+        mshv_irqchip_commit_routes();
-+    }
-+#endif
-+    if (kvm_enabled()) {
-+        kvm_irqchip_commit_route_changes(c);
-+    }
-+}
-+
-+void accel_irqchip_commit_routes(void)
-+{
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+    if (mshv_msi_via_irqfd_enabled()) {
-+        mshv_irqchip_commit_routes();
-+    }
-+#endif
-+    if (kvm_enabled()) {
-+        kvm_irqchip_commit_routes(kvm_state);
-+    }
-+}
-+
-+void accel_irqchip_release_virq(int virq)
-+{
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+    if (mshv_msi_via_irqfd_enabled()) {
-+        mshv_irqchip_release_virq(virq);
-+    }
-+#endif
-+    if (kvm_enabled()) {
-+        kvm_irqchip_release_virq(kvm_state, virq);
-+    }
-+}
-+
-+int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
-+                                         int virq)
-+{
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+    if (mshv_msi_via_irqfd_enabled()) {
-+        return mshv_irqchip_add_irqfd_notifier_gsi(n, rn, virq);
-+    }
-+#endif
-+    if (kvm_enabled()) {
-+        return kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, rn, virq);
-+    }
-+    return -ENOSYS;
-+}
-+
-+int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq)
-+{
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+    if (mshv_msi_via_irqfd_enabled()) {
-+        return mshv_irqchip_remove_irqfd_notifier_gsi(n, virq);
-+    }
-+#endif
-+    if (kvm_enabled()) {
-+        return kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, n, virq);
-+    }
-+    return -ENOSYS;
-+}
-diff --git a/accel/meson.build b/accel/meson.build
-index 52909314bf..d5e982d152 100644
---- a/accel/meson.build
-+++ b/accel/meson.build
-@@ -1,6 +1,6 @@
- common_ss.add(files('accel-common.c'))
- specific_ss.add(files('accel-target.c'))
--system_ss.add(files('accel-system.c', 'accel-blocker.c'))
-+system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-irq.c'))
- user_ss.add(files('accel-user.c'))
- 
- subdir('tcg')
-diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
-index 133bef852d..e431d00311 100644
---- a/hw/intc/ioapic.c
-+++ b/hw/intc/ioapic.c
-@@ -30,12 +30,18 @@
- #include "hw/intc/ioapic_internal.h"
- #include "hw/pci/msi.h"
- #include "hw/qdev-properties.h"
-+#include "system/accel-irq.h"
- #include "system/kvm.h"
- #include "system/system.h"
- #include "hw/i386/apic-msidef.h"
- #include "hw/i386/x86-iommu.h"
- #include "trace.h"
- 
-+
-+#if defined(CONFIG_KVM) || defined(CONFIG_MSHV)
-+#define ACCEL_GSI_IRQFD_POSSIBLE
-+#endif
-+
- #define APIC_DELIVERY_MODE_SHIFT 8
- #define APIC_POLARITY_SHIFT 14
- #define APIC_TRIG_MODE_SHIFT 15
-@@ -191,10 +197,10 @@ static void ioapic_set_irq(void *opaque, int vector, int level)
- 
- static void ioapic_update_kvm_routes(IOAPICCommonState *s)
- {
--#ifdef CONFIG_KVM
-+#ifdef ACCEL_GSI_IRQFD_POSSIBLE
-     int i;
- 
--    if (kvm_irqchip_is_split()) {
-+    if (accel_irqchip_is_split()) {
-         for (i = 0; i < IOAPIC_NUM_PINS; i++) {
-             MSIMessage msg;
-             struct ioapic_entry_info info;
-@@ -202,15 +208,15 @@ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
-             if (!info.masked) {
-                 msg.address = info.addr;
-                 msg.data = info.data;
--                kvm_irqchip_update_msi_route(kvm_state, i, msg, NULL);
-+                accel_irqchip_update_msi_route(i, msg, NULL);
-             }
-         }
--        kvm_irqchip_commit_routes(kvm_state);
-+        accel_irqchip_commit_routes();
-     }
- #endif
- }
- 
--#ifdef CONFIG_KVM
-+#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
- static void ioapic_iec_notifier(void *private, bool global,
-                                 uint32_t index, uint32_t mask)
- {
-@@ -428,11 +434,11 @@ static const MemoryRegionOps ioapic_io_ops = {
- 
- static void ioapic_machine_done_notify(Notifier *notifier, void *data)
- {
--#ifdef CONFIG_KVM
-+#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
-     IOAPICCommonState *s = container_of(notifier, IOAPICCommonState,
-                                         machine_done);
- 
--    if (kvm_irqchip_is_split()) {
-+    if (accel_irqchip_is_split()) {
-         X86IOMMUState *iommu = x86_iommu_get_default();
-         if (iommu) {
-             /* Register this IOAPIC with IOMMU IEC notifier, so that
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 0fa8fe4955..fac54e793e 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -33,6 +33,7 @@
- #include "hw/pci/msi.h"
- #include "hw/pci/msix.h"
- #include "hw/loader.h"
-+#include "system/accel-irq.h"
- #include "system/kvm.h"
- #include "hw/virtio/virtio-pci.h"
- #include "qemu/range.h"
-@@ -826,7 +827,7 @@ static int kvm_virtio_pci_vq_vector_use(VirtIOPCIProxy *proxy,
- 
-     if (irqfd->users == 0) {
-         KVMRouteChange c = kvm_irqchip_begin_route_changes(kvm_state);
--        ret = kvm_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
-+        ret = accel_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
-         if (ret < 0) {
-             return ret;
-         }
-@@ -842,7 +843,7 @@ static void kvm_virtio_pci_vq_vector_release(VirtIOPCIProxy *proxy,
- {
-     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
-     if (--irqfd->users == 0) {
--        kvm_irqchip_release_virq(kvm_state, irqfd->virq);
-+        accel_irqchip_release_virq(irqfd->virq);
-     }
- }
- 
-@@ -851,7 +852,7 @@ static int kvm_virtio_pci_irqfd_use(VirtIOPCIProxy *proxy,
-                                  unsigned int vector)
- {
-     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
--    return kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NULL, irqfd->virq);
-+    return accel_irqchip_add_irqfd_notifier_gsi(n, NULL, irqfd->virq);
- }
- 
- static void kvm_virtio_pci_irqfd_release(VirtIOPCIProxy *proxy,
-@@ -861,7 +862,7 @@ static void kvm_virtio_pci_irqfd_release(VirtIOPCIProxy *proxy,
-     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
-     int ret;
- 
--    ret = kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, n, irqfd->virq);
-+    ret = accel_irqchip_remove_irqfd_notifier_gsi(n, irqfd->virq);
-     assert(ret == 0);
- }
- static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
-@@ -996,12 +997,12 @@ static int virtio_pci_one_vector_unmask(VirtIOPCIProxy *proxy,
-     if (proxy->vector_irqfd) {
-         irqfd = &proxy->vector_irqfd[vector];
-         if (irqfd->msg.data != msg.data || irqfd->msg.address != msg.address) {
--            ret = kvm_irqchip_update_msi_route(kvm_state, irqfd->virq, msg,
--                                               &proxy->pci_dev);
-+            ret = accel_irqchip_update_msi_route(irqfd->virq, msg,
-+                                                 &proxy->pci_dev);
-             if (ret < 0) {
-                 return ret;
-             }
--            kvm_irqchip_commit_routes(kvm_state);
-+            accel_irqchip_commit_routes();
-         }
-     }
- 
-@@ -1225,7 +1226,7 @@ static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
-     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
-     int r, n;
-     bool with_irqfd = msix_enabled(&proxy->pci_dev) &&
--        kvm_msi_via_irqfd_enabled();
-+        accel_msi_via_irqfd_enabled() ;
- 
-     nvqs = MIN(nvqs, VIRTIO_QUEUE_MAX);
- 
-@@ -1429,7 +1430,7 @@ static void virtio_pci_set_vector(VirtIODevice *vdev,
-                                   uint16_t new_vector)
- {
-     bool kvm_irqfd = (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
--        msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
-+        msix_enabled(&proxy->pci_dev) && accel_msi_via_irqfd_enabled();
- 
-     if (new_vector == old_vector) {
-         return;
-diff --git a/include/system/accel-irq.h b/include/system/accel-irq.h
-new file mode 100644
-index 0000000000..8d17fe45ea
---- /dev/null
-+++ b/include/system/accel-irq.h
-@@ -0,0 +1,26 @@
-+#ifndef SYSEMU_ACCEL_H
-+#define SYSEMU_ACCEL_H
-+#include "hw/pci/msi.h"
-+#include "qemu/osdep.h"
-+#include "system/kvm.h"
++#include "qemu/error-report.h"
++#include "system/address-spaces.h"
 +#include "system/mshv.h"
 +
-+static inline bool accel_msi_via_irqfd_enabled(void)
++void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
++                       bool add)
 +{
-+  return mshv_msi_via_irqfd_enabled() || kvm_msi_via_irqfd_enabled();
++	error_report("unimplemented");
++	abort();
 +}
 +
-+static inline bool accel_irqchip_is_split(void)
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
+index 4c03ac7921..8a6beb3fb1 100644
+--- a/accel/mshv/meson.build
++++ b/accel/mshv/meson.build
+@@ -1,5 +1,6 @@
+ mshv_ss = ss.source_set()
+ mshv_ss.add(if_true: files(
++  'mem.c',
+   'mshv-all.c'
+ ))
+ 
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 44605adf94..63b0eca1fc 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -49,10 +49,74 @@ bool mshv_allowed;
+ MshvState *mshv_state;
+ 
+ 
++static void mem_region_add(MemoryListener *listener,
++                           MemoryRegionSection *section)
 +{
-+  return mshv_msi_via_irqfd_enabled() || kvm_irqchip_is_split();
++    MshvMemoryListener *mml;
++    mml = container_of(listener, MshvMemoryListener, listener);
++    memory_region_ref(section->mr);
++    mshv_set_phys_mem(mml, section, true);
 +}
 +
-+int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev);
-+int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev);
-+void accel_irqchip_commit_route_changes(KVMRouteChange *c);
-+void accel_irqchip_commit_routes(void);
-+void accel_irqchip_release_virq(int virq);
-+int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
-+                                         int virq);
-+int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq);
-+#endif
++static void mem_region_del(MemoryListener *listener,
++                           MemoryRegionSection *section)
++{
++    MshvMemoryListener *mml;
++    mml = container_of(listener, MshvMemoryListener, listener);
++    mshv_set_phys_mem(mml, section, false);
++    memory_region_unref(section->mr);
++}
++
++static MemoryListener mshv_memory_listener = {
++    .name = "mshv",
++    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
++    .region_add = mem_region_add,
++    .region_del = mem_region_del,
++};
++
++static MemoryListener mshv_io_listener = {
++    .name = "mshv", .priority = MEMORY_LISTENER_PRIORITY_DEV_BACKEND,
++    /* MSHV does not support PIO eventfd */
++};
++
++static void register_mshv_memory_listener(MshvState *s, MshvMemoryListener *mml,
++                                          AddressSpace *as, int as_id,
++                                          const char *name)
++{
++    int i;
++
++    mml->listener = mshv_memory_listener;
++    mml->listener.name = name;
++    memory_listener_register(&mml->listener, as);
++    for (i = 0; i < s->nr_as; ++i) {
++        if (!s->as[i].as) {
++            s->as[i].as = as;
++            s->as[i].ml = mml;
++            break;
++        }
++    }
++}
++
++
+ static int mshv_init(MachineState *ms)
+ {
+-	error_report("unimplemented");
+-	abort();
++    MshvState *s;
++    s = MSHV_STATE(ms->accelerator);
++
++    accel_blocker_init();
++
++    s->vm = 0;
++
++    s->nr_as = 1;
++    s->as = g_new0(MshvAddressSpace, s->nr_as);
++
++    mshv_state = s;
++
++    register_mshv_memory_listener(s, &s->memory_listener, &address_space_memory,
++                                  0, "mshv-memory");
++    memory_listener_register(&mshv_io_listener, &address_space_io);
++
++    return 0;
+ }
+ 
+ static void mshv_start_vcpu_thread(CPUState *cpu)
 diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 8380b92da2..bc8f2c228a 100644
+index 0858e47def..b93cf027d8 100644
 --- a/include/system/mshv.h
 +++ b/include/system/mshv.h
-@@ -24,9 +24,31 @@
- #define CONFIG_MSHV_IS_POSSIBLE
- #endif
- 
-+
-+#ifdef CONFIG_MSHV_IS_POSSIBLE
-+extern bool mshv_allowed;
-+#define mshv_enabled() (mshv_allowed)
-+#else /* CONFIG_MSHV_IS_POSSIBLE */
-+#define mshv_enabled() false
-+#endif
-+#ifdef MSHV_USE_KERNEL_GSI_IRQFD
-+#define mshv_msi_via_irqfd_enabled() mshv_enabled()
-+#else
-+#define mshv_msi_via_irqfd_enabled() false
-+#endif
-+
- /* cpu */
- /* EFER (technically not a register) bits */
+@@ -76,6 +76,10 @@ struct AccelCPUState {
  #define EFER_LMA   ((uint64_t)0x400)
  #define EFER_LME   ((uint64_t)0x100)
  
-+/* interrupt */
-+int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
-+int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
-+void mshv_irqchip_commit_routes(void);
-+void mshv_irqchip_release_virq(int virq);
-+int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
-+                                        const EventNotifier *rn, int virq);
-+int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
 +
- #endif
++/* memory */
++void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
++                       bool add);
+ /* interrupt */
+ int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
 -- 
 2.34.1
 
