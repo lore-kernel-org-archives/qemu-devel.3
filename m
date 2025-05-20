@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE6DC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 17:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A447BC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 17:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHQRz-0000HH-2Y; Tue, 20 May 2025 13:08:23 -0400
+	id 1uHQRr-000093-DZ; Tue, 20 May 2025 13:08:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRv-0000Fs-G6
- for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRi-0008S2-EF
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRt-0001BT-5p
- for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:19 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRg-00016D-HY
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747760896;
+ s=mimecast20190719; t=1747760883;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I1t580PshyRViX4u6aQJtTxFf+hQIfkQ/JxQslXSAcE=;
- b=WdW/4RwrV+uojEcf8GGgDa0zN80iUjrVbb6c7LULU1E50sPMsFHCrWoTahu3h88f0NdYP7
- N+wHTtSd4650Nen2BNZ45G2XNaSNSVj8FPPnDydFgzOrcT8mSpWAwLhPCMWz9WGVUUnUEg
- TXbqf7ukmGzttTYqdwNnqL2carZ3ko0=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cK2Qrag8lsMimqo4w6ggG/jQzApxY9jejaQoEEkbUak=;
+ b=ehQ/Vybav/7YKrmVqcLpGoDojYWkoDsLidIBI4Ie3bXTkJmzmZ8aMMp9eBG84c9Vr85cmo
+ 6Ef6b0x7J0o1zEZYuzNPY/coW5JFnOz1e4902gZD1YQR2oLsc4abLHUldqRvm1a/02EX7D
+ C6iYM70Q9h3U8NZxySObKoQNo3l6jfI=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-h1UaXgdePluVSAgYa5scaQ-1; Tue, 20 May 2025 13:08:15 -0400
-X-MC-Unique: h1UaXgdePluVSAgYa5scaQ-1
-X-Mimecast-MFC-AGG-ID: h1UaXgdePluVSAgYa5scaQ_1747760895
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c543ab40d3so898923085a.2
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 10:08:15 -0700 (PDT)
+ us-mta-277-hq69AJzvOH2kWTlm1eGuAw-1; Tue, 20 May 2025 13:08:02 -0400
+X-MC-Unique: hq69AJzvOH2kWTlm1eGuAw-1
+X-Mimecast-MFC-AGG-ID: hq69AJzvOH2kWTlm1eGuAw_1747760882
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7c579d37eeeso916967385a.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 10:08:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747760894; x=1748365694;
+ d=1e100.net; s=20230601; t=1747760881; x=1748365681;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I1t580PshyRViX4u6aQJtTxFf+hQIfkQ/JxQslXSAcE=;
- b=McppNix/jOwFy8GSmN+AToJEBpNaoDSVj12sAXamXZT4rPNsJPNZZfyx3/8PyQiuaF
- Ukr6lAJHFUiyB+RShBPZtb3E4b/ZAEKbIJP0nRLdIra6JYJygIf7IBDGFPEgGoTImFac
- qamEZ96O4fKhsUZtB6/KljbqGQ8JYYJa0GqjG7wWFBIxKbbzINBikL4gCYkFCd43L0Ra
- epZCpgmV1CviX8zgVf/XHfM0lZ8BAS1GmvUTz6PdYyhaDvcSgvDpl0kUjKBRZMX8KGa3
- OpLoYusKauERkNFqS1NSeziHLpqF0fl0EJmPb8P39ncw1kiBxvEO1UCqLjdI+fVOCqJ+
- m9FA==
-X-Gm-Message-State: AOJu0Yx7XxZaTuzjuvcCSs82a4p6maGpbGYQ98u2Q+RNdLWCTqskyCa2
- ZoN9D2TvewbYdbwBBsF1bj7DZloptOe5uRPCmnVBL7QgmL86x25erIAbc7gnpMfa+3LCGi/ij22
- tRBFbZcueRxNlFOAqpqPAbnY96ySa6nLdwu4vxRYi+Ulzdlzui6TTL7DxvxD1eESgGqZGZj/DCo
- bwycpqpcfgwHweCfT3S7G4nUMkeufP1saCyDwdNQ==
-X-Gm-Gg: ASbGncuPblCudzgW8VeNamdmkSlgxXQmCTearn/lSOOeG1y/MiqWXrRMzuP3ft4AIou
- tBEaIpJ5tIPT4OkktM2taznRDnIQxyHE/Yw6ok0Sn2bCKIHULmGh6SuLquPCu4iYW89eCdyUOoR
- mTVYDuLF7baQsOkFnXpXHoX9hiMi5Awq76E2JFuJaduDM5kh+QGZ8pLdYB5ZWL3ASvREv3m2BIS
- Dp8/By6AhA1kQEZNs68zdLcCGqINx1E8jx3b1FXUmgK1X9Rn1PCNx0eRYpFX4sm24B796H5FSKd
-X-Received: by 2002:a05:620a:1786:b0:7c7:a543:dcfe with SMTP id
- af79cd13be357-7cd46733519mr2802472285a.32.1747760893833; 
- Tue, 20 May 2025 10:08:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEybWnckE09Bi4ELiXcAz9KYQWh6FzCZrdiAjiHDr6IqWh0pYqePAjANtrGMPX51lFwwYB1bA==
-X-Received: by 2002:a05:620a:1786:b0:7c7:a543:dcfe with SMTP id
- af79cd13be357-7cd46733519mr2802465985a.32.1747760893299; 
- Tue, 20 May 2025 10:08:13 -0700 (PDT)
+ bh=cK2Qrag8lsMimqo4w6ggG/jQzApxY9jejaQoEEkbUak=;
+ b=Pa2R1/oIXNSL+Qn3pdutHTIPLgYmFNfKs75CSFy5/Uf2DYPfRsBSTMVV0jCiWN62Gg
+ Pdiw9mm7JImTpcVIslhVP2Oq65SwvV3a1rGJRq9MawqpHGxUAKemTh8xlDpQHEU7BdJN
+ YWZsxtvuP5Vk0M/e8bMIwAgIOkP1xPjVSDDtotRfSEDHWFC77K6YJ6pBv2SVCs/Twej1
+ cFao3WZ7heY9s4wD/Kp3rOhXiVA4WiOk1UwfkIagXiDwpAQncs+wniNlJg28q6fVD3Rd
+ Mb5p0K+b8FFBfxVba4YEg/bqbbQSN7YKwJdPN1dgI8eb1cN0QRhmgJXa8sSX4smlzk7Z
+ lQ2Q==
+X-Gm-Message-State: AOJu0YzguC90OOJMNh809gGNG76Yy1zqGko2HgzBI+eGJhtQBY4PNECK
+ crGZS6OqdN9+OnDAC13yzIQ5viDsYiJMPazdsu5AIpYs+kc8rnlQCdxEXiPuv5x1IuJSzMupj4q
+ 2ImZ7k7yR6D9YgBGMKdPqZ7gpoD+1aFy3Ms2zjT4lAJBXNFQN7Dxs2wf2V0qMQ1gZtCcqo8i6zs
+ 7JJRc+fv4HmebHH3uiEqJpMxl66YdS5OG5P3CaLA==
+X-Gm-Gg: ASbGncuqOCNHCkM+iZPUcXTQVY+GEdFBVxtV5sDn+dhHLgpnWGDklTzMbfK0wurahWx
+ 0ZzuB/lCj1N+yfsm83LPqwZDM5VnMFOy/KGDeLe4xKPaif/KoQZEFddn2T7108LRznKKBEgtPcg
+ 9AvZIZx9kI8X/LhrjW6Kd1FetgfBdzPNZ+8Phxg/q+0wUw0x2AYCH5QfTGtzH+jFdDT7xgBBED2
+ DCSu6nzjK9lGz4k+CY+6Xe1hH7Y70holkEnMDLt+ipilKJqfgPJRhQxVxFFb8dz8B8tK8o4p5mz
+X-Received: by 2002:a05:620a:1793:b0:7c9:256d:f6b6 with SMTP id
+ af79cd13be357-7cd47f0f301mr2305922185a.2.1747760881176; 
+ Tue, 20 May 2025 10:08:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkKLwIkorKdzOcSpiP4fteKVOeDjGU5s9tyL22DM/26CHeQLU8oy8w/gxo2dhYyVPWRdSPoQ==
+X-Received: by 2002:a05:620a:1793:b0:7c9:256d:f6b6 with SMTP id
+ af79cd13be357-7cd47f0f301mr2305918085a.2.1747760880768; 
+ Tue, 20 May 2025 10:08:00 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd467be47bsm763846585a.16.2025.05.20.10.08.11
+ af79cd13be357-7cd467be47bsm763846585a.16.2025.05.20.10.07.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 10:08:12 -0700 (PDT)
+ Tue, 20 May 2025 10:07:59 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- peterx@redhat.com, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Mario Casquero <mcasquer@redhat.com>
-Subject: [PULL 12/12] migration/hmp: Add "info migrate -a", reorg the dump
-Date: Tue, 20 May 2025 13:07:51 -0400
-Message-ID: <20250520170751.786787-13-peterx@redhat.com>
+ peterx@redhat.com
+Subject: [PULL 04/12] ci: Re-enable python subtests in qtest migration suite
+Date: Tue, 20 May 2025 13:07:43 -0400
+Message-ID: <20250520170751.786787-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520170751.786787-1-peterx@redhat.com>
 References: <20250520170751.786787-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -106,387 +105,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A new parameter "-a" is added to "info migrate" to dump all info, while
-when not specified it only dumps the important ones.  When at it, reorg
-everything to make it easier to read for human.
+From: Fabiano Rosas <farosas@suse.de>
 
-The general rule is:
+The migration compatibility tests have been running with the PYTHON
+variable unset to avoid running a broken test. The faulty test has
+since been removed, so we can enable the python tests once again.
 
-  - Put important things at the top
-  - Reuse a single line when things are very relevant, hence reducing lines
-    needed to show the results
-  - Remove almost useless ones (e.g. "normal_bytes", while we also have
-    both "page size" and "normal" pages)
-  - Regroup things, so that related fields will show together
-  - etc.
+Aside from the broken test, only one other test uses python and I have
+been running it locally ever since, so this commit should not expose
+any new bug.
 
-Before this change, it looks like (one example of a completed case):
-
-  globals:
-  store-global-state: on
-  only-migratable: off
-  send-configuration: on
-  send-section-footer: on
-  send-switchover-start: on
-  clear-bitmap-shift: 18
-  Migration status: completed
-  total time: 122952 ms
-  downtime: 76 ms
-  setup: 15 ms
-  transferred ram: 130825923 kbytes
-  throughput: 8717.68 mbps
-  remaining ram: 0 kbytes
-  total ram: 16777992 kbytes
-  duplicate: 997263 pages
-  normal: 32622225 pages
-  normal bytes: 130488900 kbytes
-  dirty sync count: 10
-  page size: 4 kbytes
-  multifd bytes: 117134260 kbytes
-  pages-per-second: 169431
-  postcopy request count: 5835
-  precopy ram: 15 kbytes
-  postcopy ram: 13691151 kbytes
-
-After this change, sample output (default, no "-a" specified):
-
-  Status: postcopy-active
-  Time (ms): total=40504, setup=14, down=145
-  RAM info:
-    Bandwidth (mbps): 6102.65
-    Sizes (KB): psize=4, total=16777992,
-      transferred=37673019, remain=2136404,
-      precopy=3, multifd=26108780, postcopy=11563855
-    Pages: normal=9394288, zero=600672, rate_per_sec=185875
-    Others: dirty_syncs=3, dirty_pages_rate=278378, postcopy_req=4078
-
-Sample output when "-a" specified:
-
-  Status: active
-  Time (ms): total=3040, setup=4, exp_down=300
-  RAM info:
-    Throughput (mbps): 10.51
-    Sizes (KB): psize=4, total=4211528,
-      transferred=3979, remain=4206452,
-      precopy=3978, multifd=0, postcopy=0
-    Pages: normal=992, zero=277, rate_per_sec=320
-    Others: dirty_syncs=1
-  Globals:
-    store-global-state: on
-    only-migratable: off
-    send-configuration: on
-    send-section-footer: on
-    send-switchover-start: on
-    clear-bitmap-shift: 18
-  XBZRLE: size=67108864, transferred=0, pages=0, miss=188451
-    miss_rate=0.00, encode_rate=0.00, overflow=0
-  CPU Throttle (%): 0
-  Dirty-limit Throttle (us): 0
-  Dirty-limit Ring Full (us): 0
-  Postcopy Blocktime (ms): 0
-  Postcopy vCPU Blocktime: ...
-
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-[peterx: print "," too in 1st line of RAM info]
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20250513133353.23022-2-farosas@suse.de
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration-hmp-cmds.c | 186 +++++++++++++++++----------------
- hmp-commands-info.hx           |   6 +-
- 2 files changed, 99 insertions(+), 93 deletions(-)
+ .gitlab-ci.d/buildtest.yml | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 49c26daed3..e8a563c7d8 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -37,29 +37,28 @@ static void migration_global_dump(Monitor *mon)
- {
-     MigrationState *ms = migrate_get_current();
- 
--    monitor_printf(mon, "globals:\n");
--    monitor_printf(mon, "store-global-state: %s\n",
-+    monitor_printf(mon, "Globals:\n");
-+    monitor_printf(mon, "  store-global-state: %s\n",
-                    ms->store_global_state ? "on" : "off");
--    monitor_printf(mon, "only-migratable: %s\n",
-+    monitor_printf(mon, "  only-migratable: %s\n",
-                    only_migratable ? "on" : "off");
--    monitor_printf(mon, "send-configuration: %s\n",
-+    monitor_printf(mon, "  send-configuration: %s\n",
-                    ms->send_configuration ? "on" : "off");
--    monitor_printf(mon, "send-section-footer: %s\n",
-+    monitor_printf(mon, "  send-section-footer: %s\n",
-                    ms->send_section_footer ? "on" : "off");
--    monitor_printf(mon, "send-switchover-start: %s\n",
-+    monitor_printf(mon, "  send-switchover-start: %s\n",
-                    ms->send_switchover_start ? "on" : "off");
--    monitor_printf(mon, "clear-bitmap-shift: %u\n",
-+    monitor_printf(mon, "  clear-bitmap-shift: %u\n",
-                    ms->clear_bitmap_shift);
- }
- 
- void hmp_info_migrate(Monitor *mon, const QDict *qdict)
- {
-+    bool show_all = qdict_get_try_bool(qdict, "all", false);
-     MigrationInfo *info;
- 
-     info = qmp_query_migrate(NULL);
- 
--    migration_global_dump(mon);
--
-     if (info->blocked_reasons) {
-         strList *reasons = info->blocked_reasons;
-         monitor_printf(mon, "Outgoing migration blocked:\n");
-@@ -70,7 +69,7 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
-     }
- 
-     if (info->has_status) {
--        monitor_printf(mon, "Migration status: %s",
-+        monitor_printf(mon, "Status: %s",
-                        MigrationStatus_str(info->status));
-         if (info->status == MIGRATION_STATUS_FAILED && info->error_desc) {
-             monitor_printf(mon, " (%s)\n", info->error_desc);
-@@ -78,107 +77,130 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
-             monitor_printf(mon, "\n");
-         }
- 
--        monitor_printf(mon, "total time: %" PRIu64 " ms\n",
--                       info->total_time);
--        if (info->has_expected_downtime) {
--            monitor_printf(mon, "expected downtime: %" PRIu64 " ms\n",
--                           info->expected_downtime);
--        }
--        if (info->has_downtime) {
--            monitor_printf(mon, "downtime: %" PRIu64 " ms\n",
--                           info->downtime);
-+        if (info->total_time) {
-+            monitor_printf(mon, "Time (ms): total=%" PRIu64,
-+                           info->total_time);
-+            if (info->has_setup_time) {
-+                monitor_printf(mon, ", setup=%" PRIu64,
-+                               info->setup_time);
-+            }
-+            if (info->has_expected_downtime) {
-+                monitor_printf(mon, ", exp_down=%" PRIu64,
-+                               info->expected_downtime);
-+            }
-+            if (info->has_downtime) {
-+                monitor_printf(mon, ", down=%" PRIu64,
-+                               info->downtime);
-+            }
-+            monitor_printf(mon, "\n");
-         }
--        if (info->has_setup_time) {
--            monitor_printf(mon, "setup: %" PRIu64 " ms\n",
--                           info->setup_time);
-+    }
-+
-+    if (info->has_socket_address) {
-+        SocketAddressList *addr;
-+
-+        monitor_printf(mon, "Sockets: [\n");
-+
-+        for (addr = info->socket_address; addr; addr = addr->next) {
-+            char *s = socket_uri(addr->value);
-+            monitor_printf(mon, "\t%s\n", s);
-+            g_free(s);
-         }
-+        monitor_printf(mon, "]\n");
-     }
- 
-     if (info->ram) {
--        monitor_printf(mon, "transferred ram: %" PRIu64 " kbytes\n",
--                       info->ram->transferred >> 10);
--        monitor_printf(mon, "throughput: %0.2f mbps\n",
-+        monitor_printf(mon, "RAM info:\n");
-+        monitor_printf(mon, "  Throughput (Mbps): %0.2f\n",
-                        info->ram->mbps);
--        monitor_printf(mon, "remaining ram: %" PRIu64 " kbytes\n",
--                       info->ram->remaining >> 10);
--        monitor_printf(mon, "total ram: %" PRIu64 " kbytes\n",
-+        monitor_printf(mon, "  Sizes (KiB): pagesize=%" PRIu64
-+                       ", total=%" PRIu64 ",\n",
-+                       info->ram->page_size >> 10,
-                        info->ram->total >> 10);
--        monitor_printf(mon, "duplicate: %" PRIu64 " pages\n",
--                       info->ram->duplicate);
--        monitor_printf(mon, "normal: %" PRIu64 " pages\n",
--                       info->ram->normal);
--        monitor_printf(mon, "normal bytes: %" PRIu64 " kbytes\n",
--                       info->ram->normal_bytes >> 10);
--        monitor_printf(mon, "dirty sync count: %" PRIu64 "\n",
--                       info->ram->dirty_sync_count);
--        monitor_printf(mon, "page size: %" PRIu64 " kbytes\n",
--                       info->ram->page_size >> 10);
--        monitor_printf(mon, "multifd bytes: %" PRIu64 " kbytes\n",
--                       info->ram->multifd_bytes >> 10);
--        monitor_printf(mon, "pages-per-second: %" PRIu64 "\n",
-+        monitor_printf(mon, "    transferred=%" PRIu64
-+                       ", remain=%" PRIu64 ",\n",
-+                       info->ram->transferred >> 10,
-+                       info->ram->remaining >> 10);
-+        monitor_printf(mon, "    precopy=%" PRIu64
-+                       ", multifd=%" PRIu64
-+                       ", postcopy=%" PRIu64,
-+                       info->ram->precopy_bytes >> 10,
-+                       info->ram->multifd_bytes >> 10,
-+                       info->ram->postcopy_bytes >> 10);
-+
-+        if (info->vfio) {
-+            monitor_printf(mon, ", vfio=%" PRIu64,
-+                           info->vfio->transferred >> 10);
-+        }
-+        monitor_printf(mon, "\n");
-+
-+        monitor_printf(mon, "  Pages: normal=%" PRIu64 ", zero=%" PRIu64
-+                       ", rate_per_sec=%" PRIu64 "\n",
-+                       info->ram->normal,
-+                       info->ram->duplicate,
-                        info->ram->pages_per_second);
-+        monitor_printf(mon, "  Others: dirty_syncs=%" PRIu64,
-+                       info->ram->dirty_sync_count);
- 
-         if (info->ram->dirty_pages_rate) {
--            monitor_printf(mon, "dirty pages rate: %" PRIu64 " pages\n",
-+            monitor_printf(mon, ", dirty_pages_rate=%" PRIu64,
-                            info->ram->dirty_pages_rate);
-         }
-         if (info->ram->postcopy_requests) {
--            monitor_printf(mon, "postcopy request count: %" PRIu64 "\n",
-+            monitor_printf(mon, ", postcopy_req=%" PRIu64,
-                            info->ram->postcopy_requests);
-         }
--        if (info->ram->precopy_bytes) {
--            monitor_printf(mon, "precopy ram: %" PRIu64 " kbytes\n",
--                           info->ram->precopy_bytes >> 10);
--        }
-         if (info->ram->downtime_bytes) {
--            monitor_printf(mon, "downtime ram: %" PRIu64 " kbytes\n",
--                           info->ram->downtime_bytes >> 10);
--        }
--        if (info->ram->postcopy_bytes) {
--            monitor_printf(mon, "postcopy ram: %" PRIu64 " kbytes\n",
--                           info->ram->postcopy_bytes >> 10);
-+            monitor_printf(mon, ", downtime_ram=%" PRIu64,
-+                           info->ram->downtime_bytes);
-         }
-         if (info->ram->dirty_sync_missed_zero_copy) {
--            monitor_printf(mon,
--                           "Zero-copy-send fallbacks happened: %" PRIu64 " times\n",
-+            monitor_printf(mon, ", zerocopy_fallbacks=%" PRIu64,
-                            info->ram->dirty_sync_missed_zero_copy);
-         }
-+        monitor_printf(mon, "\n");
-+    }
-+
-+    if (!show_all) {
-+        goto out;
-     }
- 
-+    migration_global_dump(mon);
-+
-     if (info->xbzrle_cache) {
--        monitor_printf(mon, "cache size: %" PRIu64 " bytes\n",
--                       info->xbzrle_cache->cache_size);
--        monitor_printf(mon, "xbzrle transferred: %" PRIu64 " kbytes\n",
--                       info->xbzrle_cache->bytes >> 10);
--        monitor_printf(mon, "xbzrle pages: %" PRIu64 " pages\n",
--                       info->xbzrle_cache->pages);
--        monitor_printf(mon, "xbzrle cache miss: %" PRIu64 " pages\n",
--                       info->xbzrle_cache->cache_miss);
--        monitor_printf(mon, "xbzrle cache miss rate: %0.2f\n",
--                       info->xbzrle_cache->cache_miss_rate);
--        monitor_printf(mon, "xbzrle encoding rate: %0.2f\n",
--                       info->xbzrle_cache->encoding_rate);
--        monitor_printf(mon, "xbzrle overflow: %" PRIu64 "\n",
-+        monitor_printf(mon, "XBZRLE: size=%" PRIu64
-+                       ", transferred=%" PRIu64
-+                       ", pages=%" PRIu64
-+                       ", miss=%" PRIu64 "\n"
-+                       "  miss_rate=%0.2f"
-+                       ", encode_rate=%0.2f"
-+                       ", overflow=%" PRIu64 "\n",
-+                       info->xbzrle_cache->cache_size,
-+                       info->xbzrle_cache->bytes,
-+                       info->xbzrle_cache->pages,
-+                       info->xbzrle_cache->cache_miss,
-+                       info->xbzrle_cache->cache_miss_rate,
-+                       info->xbzrle_cache->encoding_rate,
-                        info->xbzrle_cache->overflow);
-     }
- 
-     if (info->has_cpu_throttle_percentage) {
--        monitor_printf(mon, "cpu throttle percentage: %" PRIu64 "\n",
-+        monitor_printf(mon, "CPU Throttle (%%): %" PRIu64 "\n",
-                        info->cpu_throttle_percentage);
-     }
- 
-     if (info->has_dirty_limit_throttle_time_per_round) {
--        monitor_printf(mon, "dirty-limit throttle time: %" PRIu64 " us\n",
-+        monitor_printf(mon, "Dirty-limit Throttle (us): %" PRIu64 "\n",
-                        info->dirty_limit_throttle_time_per_round);
-     }
- 
-     if (info->has_dirty_limit_ring_full_time) {
--        monitor_printf(mon, "dirty-limit ring full time: %" PRIu64 " us\n",
-+        monitor_printf(mon, "Dirty-limit Ring Full (us): %" PRIu64 "\n",
-                        info->dirty_limit_ring_full_time);
-     }
- 
-     if (info->has_postcopy_blocktime) {
--        monitor_printf(mon, "postcopy blocktime: %u\n",
-+        monitor_printf(mon, "Postcopy Blocktime (ms): %" PRIu32 "\n",
-                        info->postcopy_blocktime);
-     }
- 
-@@ -189,28 +211,12 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
-         visit_type_uint32List(v, NULL, &info->postcopy_vcpu_blocktime,
-                               &error_abort);
-         visit_complete(v, &str);
--        monitor_printf(mon, "postcopy vcpu blocktime: %s\n", str);
-+        monitor_printf(mon, "Postcopy vCPU Blocktime: %s\n", str);
-         g_free(str);
-         visit_free(v);
-     }
--    if (info->has_socket_address) {
--        SocketAddressList *addr;
--
--        monitor_printf(mon, "socket address: [\n");
--
--        for (addr = info->socket_address; addr; addr = addr->next) {
--            char *s = socket_uri(addr->value);
--            monitor_printf(mon, "\t%s\n", s);
--            g_free(s);
--        }
--        monitor_printf(mon, "]\n");
--    }
--
--    if (info->vfio) {
--        monitor_printf(mon, "vfio device transferred: %" PRIu64 " kbytes\n",
--                       info->vfio->transferred >> 10);
--    }
- 
-+out:
-     qapi_free_MigrationInfo(info);
- }
- 
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index c59cd6637b..639a450ee5 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -475,9 +475,9 @@ ERST
- 
-     {
-         .name       = "migrate",
--        .args_type  = "",
--        .params     = "",
--        .help       = "show migration status",
-+        .args_type  = "all:-a",
-+        .params     = "[-a]",
-+        .help       = "show migration status (-a: all, dump all status)",
-         .cmd        = hmp_info_migrate,
-     },
- 
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 248aaed137..fbad34138c 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -227,14 +227,6 @@ build-previous-qemu:
+     # testing an old QEMU against new features/tests that it is not
+     # compatible with.
+     - cd build-previous
+-    # Don't allow python-based tests to run. The
+-    # vmstate-checker-script test has a race that causes it to fail
+-    # sometimes. It cannot be fixed it because this job runs the test
+-    # from the old QEMU version. The test will be removed on master,
+-    # but this job will only see the change in the next release.
+-    #
+-    # TODO: remove this line after 9.2 release
+-    - unset PYTHON
+     # old to new
+     - QTEST_QEMU_BINARY_SRC=./qemu-system-${TARGET}
+           QTEST_QEMU_BINARY=../build/qemu-system-${TARGET} ./tests/qtest/migration-test
 -- 
 2.49.0
 
