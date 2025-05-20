@@ -4,151 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19760C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B20C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHOcD-0000mF-Al; Tue, 20 May 2025 11:10:49 -0400
+	id 1uHOYW-0007oZ-AF; Tue, 20 May 2025 11:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHOc2-0000Kf-Ie
- for qemu-devel@nongnu.org; Tue, 20 May 2025 11:10:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uHOYM-0007bc-RJ; Tue, 20 May 2025 11:06:53 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHOc0-0003fR-D7
- for qemu-devel@nongnu.org; Tue, 20 May 2025 11:10:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747753833;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5OnfnqIs/UVXLnC6LjmonlX6nK9lmgdbHV/Op83/SpM=;
- b=cw4ZSVu4d1KRaX9Sr4GwRSmZncJiVlqLfZlc9Vtj7f+EcFelOZualr4Hn3crupcvYWv5l4
- knwMb/iLbTjIL+/tYUff4Iwt5ckAWJ3/TYtXGnF5G+nQoZusZeJtZcWnqDmLqp4lk5kIbX
- 1Yo+q92rQEhKxEaCqdajFue6iY2VrHQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-284-sAFTm-KJNeeHjbWoa_GX8Q-1; Tue, 20 May 2025 11:10:32 -0400
-X-MC-Unique: sAFTm-KJNeeHjbWoa_GX8Q-1
-X-Mimecast-MFC-AGG-ID: sAFTm-KJNeeHjbWoa_GX8Q_1747753831
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a360d01518so3408967f8f.2
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 08:10:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747753831; x=1748358631;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5OnfnqIs/UVXLnC6LjmonlX6nK9lmgdbHV/Op83/SpM=;
- b=R3VUPOif3Xu/o90ukiU3v2ZcKlSBcDpXyLN0KDdQMgClMORlLQmV9tuc3NQsJk2Bc/
- J9Og6dpQt3d/2O0SaS/aK/qqWTR1dwkB/Adbp5b96r9ssazrubtfDZXoy2EzvLYZCe9J
- 21rMjj4YrDwxVj9r1FUO/9hdOn5/gTSX3zKD5eTOjAaduNFACFQj4yE5M50Pq01VP1AD
- 5coKK464aLUS/M9wyR6n/7Vta5G2LO4OdE+F/sytGUTLGpuyIGWjBOgWOaP22kZGHjLH
- /n9gb3YxjYSWYg7IX3X90h/Iw/fUewUugPtKgJAcLiIxntPKQLYtXaTah/rJ78LbDEuH
- icDA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNn24oBa4Fh81qOTNX2p2tm+wG7XVyJnW81rKa+s+dr6qh4B/qq/C0y8jMbbGnku2HPPnbX13/STiX@nongnu.org
-X-Gm-Message-State: AOJu0YwTB7wDyR0VI5iEjCIN0o45akE0XYUZjeKIPgi0FX2bd+HUNV/Z
- lfS0oDK/8QdpgICIFkrzEJ+fA79pSc3CTv9Jw2xL5SOli32Mak9oZxgyM7lZNAxIYhvR7H8hKGB
- Axzfi3xzbS31kYn9IQrSJC6UzFOi7MhL6rZIZ+OkvoFWF0eUIcGbmjc7E
-X-Gm-Gg: ASbGnctLqC2tK+Gh13PksdKs4udKJccDvheijpDj4HnU6KkduBw/fG5W2JjDySuSQfH
- Mnkvnkd1jD5nc44HmzB7lDIJKXImZv08BK7qpKWSxTulesoBiGlhLOQqMxqmEpvFw/g6p5wUEnb
- GlKjvtYengYNMbUJ8r4SPRiTjEcSWQn2u8My3SQwhATcHyE4irRm2DJbBScbV5N/Tfr61GbJ9Af
- 2mRgm1CShvAqchpbBSQ5vXqe09kIhISqVB+CUjj+L8/XI+dyr5zqAYhHPYul23+8R909MqcIqf8
- QPfcBN6xc5xrvYvDL/5c8+30Te9LJiZE0XJzHaLZoweU1E3Fqw==
-X-Received: by 2002:a05:6000:4284:b0:3a2:244:67a4 with SMTP id
- ffacd0b85a97d-3a35ffd2acbmr13738437f8f.43.1747753830930; 
- Tue, 20 May 2025 08:10:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLZ7LLtbh2u8ZdeLYnJoxUWYRXuhyNROL0kQLGPK/LSAeflngKNQiSgVY5Bmx+0R6SywC1tg==
-X-Received: by 2002:a05:6000:4284:b0:3a2:244:67a4 with SMTP id
- ffacd0b85a97d-3a35ffd2acbmr13738394f8f.43.1747753830475; 
- Tue, 20 May 2025 08:10:30 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca88735sm17094029f8f.69.2025.05.20.08.10.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 08:10:29 -0700 (PDT)
-Message-ID: <62edd00a-504b-4fab-89dd-68bb0582da2e@redhat.com>
-Date: Tue, 20 May 2025 17:10:28 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uHOYK-0002xW-LP; Tue, 20 May 2025 11:06:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747753609; x=1779289609;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=dQWJMRmIG8X88QoQzcqQefijJ/Xlp+Z5ZVgqvYLck4Y=;
+ b=iI6AG2SyIh/dbeT9Ua3ySJqXYjmG0E5NnI7WPgRNqgCoTe4K9hlSjXzJ
+ PnvUs6PWzaYCwJnnVy3yxAaG4OQq/j2wLIKuc6+F+xF8UPIVmQKrDn+A9
+ PxVPUwQaeeaJITJTdW7fozEl9XtvBA6g1Dh+ZscdheWdyuBIip9GEE98g
+ jGj6JHtO5BWCx12p++NmLw6dyJO66Nhki7t9d9ejENlLGvEyIuYtwIE60
+ YTPh+CNU4BhruDR214b0alRsqJ7QJ8Zx83dv7x/PxzUYTh/A1sb5DUDvF
+ hCTkpRFyF5814tkiTt8g5kh6FC8N6dTPUo9CQzxqX23Ws/yjUILf+o6LC g==;
+X-CSE-ConnectionGUID: v3YgelzpQmKSA2F4qg4tbw==
+X-CSE-MsgGUID: xLDRcngXQ7S9xdSMGJuITQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="59922458"
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="59922458"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2025 08:06:45 -0700
+X-CSE-ConnectionGUID: 9s3rAY29STKCYTduMviHJQ==
+X-CSE-MsgGUID: jZxxUdnHQxOSU4nSJr8FNQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="144461836"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 20 May 2025 08:06:43 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 0/5] hpet, rust: miscellaneous cleanup
+Date: Tue, 20 May 2025 23:27:45 +0800
+Message-Id: <20250520152750.2542612-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 21/42] vfio/pci: export MSI functions
-To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
- <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-22-git-send-email-steven.sistare@oracle.com>
- <c5696d3e-cd21-4d90-9e30-676434c1020c@redhat.com>
- <25435e62-50e1-4bf3-8227-e2ed93b959e2@oracle.com>
- <2e3e82f5-334c-4fac-aa5a-73e08967b431@redhat.com>
- <5b38eb98-58da-478a-badd-124a90e480a1@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <5b38eb98-58da-478a-badd-124a90e480a1@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,67 +78,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 16:56, Steven Sistare wrote:
-> On 5/20/2025 1:52 AM, Cédric Le Goater wrote:
->> On 5/16/25 19:58, Steven Sistare wrote:
->>> On 5/16/2025 4:31 AM, Cédric Le Goater wrote:
->>>> On 5/12/25 17:32, Steve Sistare wrote:
->>>>> Export various MSI functions, for use by CPR in subsequent patches.
->>>>> No functional change.
->>>>>
->>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>>
->>>> Please rename this routines with a 'vfio_pci' prefix.
->>>
->>> Are you sure?  That makes sense for:
->>>    vfio_vector_init -> vfio_pci_vector_init
->>>
->>> but the rest already have msi or intx in the name which unambiguously
->>> means pci.  Adding pci_ seems unecessarily verbose:
->>
->> We are slowly defining an API for an internal VFIO library. I prefer
->> to ensure the interface is clean by changing the names of external
->> services to reflect the namespace they belong to.
->>
->> All routines are implemented in hw/vfio/pci.c and most take a
->> VFIOPCIDevice as first argument.
-> 
-> OK.  So this:
-> 
-> void vfio_pci_vector_init(VFIOPCIDevice *vdev, int nr);
-> void vfio_pci_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
->                                 int vector_n, bool msix);
-> void vfio_pci_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
-> void vfio_pci_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
-> bool vfio_pci_intx_enable(VFIOPCIDevice *vdev, Error **errp);
-> 
->> vfio_msi_interrupt(), vfio_msix_vector_use() and
->> vfio_msix_vector_release() are rather low level routines.
->> I think we need a wrapper to avoid exposing them.
-> 
-> OK.  These will do the trick, defined in pci.c and exported to cpr.c:
-> 
-> void vfio_pci_msix_set_notifiers(VFIOPCIDevice *vdev)
-> {
->      msix_set_vector_notifiers(&vdev->pdev, vfio_msix_vector_use,
->                                vfio_msix_vector_release, NULL);
-> }
-> 
-> void vfio_pci_msi_set_handler(VFIOPCIDevice *vdev, int nr)
-> {
->      VFIOMSIVector *vector = &vdev->msi_vectors[nr];
->      int fd = event_notifier_get_fd(&vector->interrupt);
-> 
->      qemu_set_fd_handler(fd, vfio_msi_interrupt, NULL, vector);
-> }
+Hi,
 
+This series is very miscellaneous:
 
-LGTM,
+It contains both the follow-up cleanup for HPET and a collection of tiny
+patches that were previously missed.
 
-Thanks,
+Of this, I think Patch 3's commit message needs to be given a bit of
+attention, where I attached my understanding (based on [*]) in detail,
+in the hope that it can be confirmed or corrected. :-)
 
-C.
+[*]: https://lore.kernel.org/qemu-devel/aCb2bvoJQ2NxCkqz@intel.com/
 
+Thanks and Best Regards,
+Zhao
+--
+Zhao Liu (5):
+  hw/timer/hpet: Reorganize register decoding
+  hw/timer/hpet: Adjust num_timers in hpet_init()
+  rust/hpet: Drop BalCell wrapper for num_timers
+  rust: Fix Zhao's email address
+  rust: Fix the typos in doc
 
+ hw/timer/hpet.c                      | 177 ++++++++++++++-------------
+ rust/hw/char/pl011/src/device.rs     |   4 +-
+ rust/hw/timer/hpet/src/fw_cfg.rs     |   2 +-
+ rust/hw/timer/hpet/src/hpet.rs       |  39 +++---
+ rust/hw/timer/hpet/src/lib.rs        |   2 +-
+ rust/qemu-api/src/bitops.rs          |   2 +-
+ rust/qemu-api/src/qom.rs             |   4 +-
+ rust/qemu-api/src/timer.rs           |   2 +-
+ rust/qemu-api/src/vmstate.rs         |   2 +-
+ rust/qemu-api/tests/vmstate_tests.rs |   2 +-
+ 10 files changed, 117 insertions(+), 119 deletions(-)
+
+-- 
+2.34.1
 
 
