@@ -4,218 +4,214 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6E3C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A64C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHNFJ-0004tD-OY; Tue, 20 May 2025 09:43:05 -0400
+	id 1uHNGg-0005m5-G0; Tue, 20 May 2025 09:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uHNFH-0004sy-Cf
- for qemu-devel@nongnu.org; Tue, 20 May 2025 09:43:03 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uHNGf-0005lm-CY
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 09:44:29 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uHNFE-0002aE-Cm
- for qemu-devel@nongnu.org; Tue, 20 May 2025 09:43:02 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KCtv34014420;
- Tue, 20 May 2025 13:42:56 GMT
+ id 1uHNGd-0002s7-9O
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 09:44:29 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KDMn97013762;
+ Tue, 20 May 2025 13:44:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=0erExDrY4meV5blWCLuIDdq1LbmA4HwtTMiUfay4yzY=; b=
- GNE5yvFUpKE6/xb/AyaV2j/5BKcASJlm6FEgLTESMFSpAT1Gh7VYXE8GOB8OwU6Y
- 43Xjj9ufoRgsrTXTN+hZm9XDjXdybgl96VqCOCw44Z0cAX8MxNO5DjGQhRt7JQot
- E3QbnMtelKoz39zthnh0wNEPUTsN5HWUdvo9obmH0OPIAHlJGabvvq0w4Z1xrmou
- Cj7CwN0assOArdMFlzKJLceX5rskGj+ZTzHJVxARhyq6G2NfuA3eUAZtU9JU4uJK
- 3HdHtdX+f448t9L5JtC2iJNGM5+cBWx4ZCdexNYnRz3xX2jxl/NvxPmug3NXYgLV
- VgP8vJp22yYAW06d2MJp7w==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46rdny9bxh-1
+ corp-2025-04-25; bh=cKxVbJIRt9HD/iqvx2Fw6zLNNt0j64bzJVC94yp+Pss=; b=
+ ewrD/QgCjNFPkSTwOvys6jwb2QZn4mHG//H+LQpyaswznqzYnhc9wM1K0jZQLtBC
+ cZeDMieSJLyFEWZd1PD1lDUrMpvUadDrJqY1adlDN0GK94w0o4ozcmlcoRJoxXTl
+ YTZI/b8mQDoNQ8saZTvA0UxF2Fd+oAHMfJnJR2CTm6x2Gdv2gIFY8eV3Xv22beXo
+ UCITFAZo3naG6YblVpd03Y/r+JEzZhCSJX54AGbboRK6XJMjDVIBNEwBT7Z4811A
+ bv0ZvRDalQAoHv18qLDV3MrCb8M19Ld1WwypbLR5WKdEGmbRQMkLECaCLiNBbvuP
+ J/Bm/z6/IQwjYO/7Vo76Hw==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46rtjb81v0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 20 May 2025 13:42:55 +0000 (GMT)
+ Tue, 20 May 2025 13:44:23 +0000 (GMT)
 Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54KCOGDd017470; Tue, 20 May 2025 13:42:52 GMT
-Received: from ch1pr05cu001.outbound.protection.outlook.com
- (mail-northcentralusazlp17010003.outbound.protection.outlook.com
- [40.93.20.3])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46pgw8915v-1
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54KCYEjR037192; Tue, 20 May 2025 13:44:22 GMT
+Received: from byapr05cu005.outbound.protection.outlook.com
+ (mail-westusazlp17010003.outbound.protection.outlook.com [40.93.1.3])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46pgw8sajn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 20 May 2025 13:42:52 +0000
+ Tue, 20 May 2025 13:44:22 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PXEo6q3mhxtrbNpvJgbf6Ul6ViCDCvMoNhGM9sTPmxxfvtvDCgmPBY0b6XxG4VnAp0WgNhVVE4s3OnrtOIfESyMM/dXHoSEWD8WLI1WjSdBQ1lc5xJp36CN1nzm2DDutN+TxiizD+g6LjlPOjHdhnZrskXFWX/B6UKpcY9Brv4BtcD3iPE6ZpOtlvzptaTuRuTJ6fMctf2NYWf093mnAf5+RdSuuMhYVDdk4IRilBAyTfsmpwxm9znoJtXn1Y0r1xV90ZIbJQtGGFz1h3/RxECye7QkZbP87mmmJaqDYT+9FZFLS8HB/i9nIX0ggZ7WVCTpGAKNrHmeT+/JwQPNM+A==
+ b=gAThAs1k+t+I0DXYlF883ZWkJU8u5duDsIW+9BjuOzNHaiYV0RQKQE4meRuet3/WEKTjTF5UjWjKFiR2eH5LuoxVJuRpnhXIR3FPji9ujWMk9T3PGn/hVzVCi8k4umY6ndu6jmK8rle+dI8qhoON9ki9/+JwiZqgLTVOCkVJOJWduMESQuo9IcdY3wi0fIS/lmCfgNjJ4ZMeymKvv56irr20Mj0PyIAK4PaeemmUq61HXi8B0jiwfeJQOG0EkuieG7JUdK3T95Vvg+EMaBm8TvTCStog7Q5obfKFKWhuJGfO6qdWYU+x+jxyC2AS3FKFjn1aa1mNC9X+9ZUNuKxMCg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0erExDrY4meV5blWCLuIDdq1LbmA4HwtTMiUfay4yzY=;
- b=bPx4pA/5N/rURasy3ymSTxDnUCEBw9OLjmRz8VdB9s09dLw0z5Ydz7eSOhGUZfLxa24h9hc5llwP1obRD1gOfZ0VKXKe3lbDo6lMTy2V+vc/p3xklMpIkKGpPQzM3JK+HAZELXwtbcEMJJQY62uNRj4gwsu0JMAWoj3EZtDg/FyPEmFNlWwdXpb7hVTf54ImZXs86DL/6eOhstY6pgBpNTkiMcYHmmGvJAIVsWbH3Sbc3JNSfZD3k3B+436T1S2ff2Qn4ZjGGD//bNcvVIO8Gi8D9iIQfD0/beWhXgFg4amJnKe0YhZqk8womgBHhN68HTFlNxYEm5GXhqi7TNjfrg==
+ bh=cKxVbJIRt9HD/iqvx2Fw6zLNNt0j64bzJVC94yp+Pss=;
+ b=fwWH/+1WnULyef7u0QeAInXv6wu0UNSvlZAtr7VFQGVKszax020P7BrH/tuhjCANh6OV6IUUH5P4PJAm+T6UIPREftrfatS1KOkefr6+QKVxkx2Qi++50l62qcpI7g4ZqTivylzpYdJIHWDmsMptv/Pspg61jCeoTDt7aReLJ2CKctTkfcDgKp8RNC8JDRVToJlpUVCHcaL6PKhMZ0OFrzPP/hykuEbv11FngnkjKVRykWe95td6o+FixE4EfDSAX+WeU5ZOSNORroqO4dvOY5iYHiP+IUTLxAfQDEU5p+KctH45dINRT5LBI9DaJVvc2Ssx6p//vL6nAwpHmqtAqQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0erExDrY4meV5blWCLuIDdq1LbmA4HwtTMiUfay4yzY=;
- b=AYsqT7VGJnyr9DCqUbezJfdM2YKAyIytsXPJBgpbnRNOLxlJPMxLYOXROnJgnzSMA8qlIT1u6pJhFz/MaF11TzoDJ/tpRHfct87M00LsZs+UHj8Nia80wvLrvYHXzJ6g/+OVUNivGPa441hP6InbUNMLwo0OqWitDp4fyHfVPFc=
+ bh=cKxVbJIRt9HD/iqvx2Fw6zLNNt0j64bzJVC94yp+Pss=;
+ b=tvQnBMoY09PcmOYkmMdPeSGbsw8JYtSGftNYKxYLesVnk5CafV/brQ6tZKCu43wO+3GZ6FOGBJkhGLCGCXxOsR5m7ITHkFMknQHC+gKFYl4lbRsjDjntCIwelFkndK/4/Hrw6N6PSBZbxvocAWAeb5RgdSD9AEdzm5hMo7FkoTg=
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
  by SN7PR10MB6306.namprd10.prod.outlook.com (2603:10b6:806:272::15)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.21; Tue, 20 May
- 2025 13:42:49 +0000
+ 2025 13:44:20 +0000
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8746.030; Tue, 20 May 2025
- 13:42:49 +0000
-Message-ID: <ef48d347-b36e-4442-b97e-bea284eab1ac@oracle.com>
-Date: Tue, 20 May 2025 09:42:42 -0400
+ 13:44:20 +0000
+Message-ID: <29cf42ef-ce82-443e-becc-7c8f7e80627f@oracle.com>
+Date: Tue, 20 May 2025 09:44:14 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5] vfio: return mr from vfio_get_xlat_addr
+Subject: Re: [PATCH V3 15/42] vfio-pci: skip reset during cpr
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Marc-Andre Lureau <marcandre.lureau@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Alex Williamson <alex.williamson@redhat.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- John Levon <john.levon@nutanix.com>
-References: <1747661203-136490-1-git-send-email-steven.sistare@oracle.com>
- <bad3129a-8470-415e-8e85-0238b3ef1b26@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-16-git-send-email-steven.sistare@oracle.com>
+ <bf1d2c34-3995-49ad-a259-2c4f7380b2fc@redhat.com>
 Content-Language: en-US
 From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <bad3129a-8470-415e-8e85-0238b3ef1b26@redhat.com>
+In-Reply-To: <bf1d2c34-3995-49ad-a259-2c4f7380b2fc@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BYAPR21CA0001.namprd21.prod.outlook.com
- (2603:10b6:a03:114::11) To IA1PR10MB7447.namprd10.prod.outlook.com
+X-ClientProxiedBy: BYAPR21CA0024.namprd21.prod.outlook.com
+ (2603:10b6:a03:114::34) To IA1PR10MB7447.namprd10.prod.outlook.com
  (2603:10b6:208:44c::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SN7PR10MB6306:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6e018d1c-1aa3-48bb-521b-08dd97a43596
+X-MS-Office365-Filtering-Correlation-Id: 83d043a5-6233-4f40-7633-08dd97a46c08
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZDlicmFBL2RyRzgxd2o2ek1namZvdmhkZ0FUK0NLcm1wMWdGem44aURGOFN5?=
- =?utf-8?B?UG90TTBRNk1YOWZpSU12VitLWnBIdWR2QUtqZlN0WXhERWJ1UG5NQlQxOTRF?=
- =?utf-8?B?VXR1RXFLSmNqcWNtWGtLVWlLcnROb292dDF6djhhMVluSEgzd3hXRFBXRUNJ?=
- =?utf-8?B?YjM0SWNtRWVmWXQ0bFhrTndqaDZjdVo2UTVqLzNJZmdBTk5mV0ZObzBBMG83?=
- =?utf-8?B?bElwbnV2NUUxYzBianBZWmVwL2VlY1hWOFB3Y3czZitlek5kdXFIS2gxWjE4?=
- =?utf-8?B?QjEyNVNYbnV2WVZVNWpndy9JMURUV1B3MG0zSFpSRHUyYzJ0R0JQSmVRNDR6?=
- =?utf-8?B?TFIydU1SU2dqbUhaN0tuaHBtb2lodFNLb3JKZUUrUHJIaERDdnNzV1BIMWpm?=
- =?utf-8?B?WVdUUU9LSW9rNWp5MjFKakpkbFoyRmNBVmt4QzdQcXVJSW5YaE1GK1ZsRENX?=
- =?utf-8?B?WktrRWsyLzErb3RyWWRQR01sVkc1cWVENkc3VmhtbXdOelpCdzE4WFREK2hw?=
- =?utf-8?B?QXNFYTREUDFFTlhKa2FNOE90NGdaaDJDdnIyZ29XYmNBVUthMm1seEJNeVd6?=
- =?utf-8?B?Si8vcEJJNjdOY1NnQ2czK1JvdHB0bm9zZXo4dUpIbTE4dHo4eFN6a1d5NVRW?=
- =?utf-8?B?UFBuZkNRVUVtd2ZxUFFuWmU3ZlJHSU42SUJZdTV5ZnM5d1RKUzBSQmV4c25C?=
- =?utf-8?B?blQweXRPWURkOE1rMjg2SHRJa0hiYWdoVWFTdS84dUg0NjBKdnR1VDJKMnpG?=
- =?utf-8?B?dVNlWVd3U01TdWJRSUNxazg2NzlacjI5TllBZWpVOE9la2FmR2VQZ3ZjMFRC?=
- =?utf-8?B?T3hmYU0va2N5SUNINkVnY3loK09LMWsxZnVhVFRnMklQYmpqaEVTQzNTeGpQ?=
- =?utf-8?B?NWpUbithQ1U4MmJRYjhBU3h2cGpXMm04Nm5USVBnS0IydU9FVnc2dHVNa2Ra?=
- =?utf-8?B?M3RTOE1ZNS92MGI0WVN5eCtXM1UyL2xDV1dEOURMZHk4ZmZOYXgyYStEUFNE?=
- =?utf-8?B?RTJEYm0wZ1Y2NVBIdDljcmRPV3VtTnVNcnBHZDREeVNrT3VpK0RDMUZ1SGg2?=
- =?utf-8?B?MEwzZjFmZ0xIVk53YjVZVXY4dnAvdXcxVThQajdTRVpNaDh2dHdVWkZiSndC?=
- =?utf-8?B?dUtJV3dsMWs5d09JV1RsSWwzM1hvVC94akxNZnhZSDlVWjgxNW1WMkdBaHFQ?=
- =?utf-8?B?a0paZTBaZ25YcXg1R1Q3ejFvdXAreXVRNlFBTUV5SHVYWGhLZkpBQm16Kzh4?=
- =?utf-8?B?QlkxUytHZU9SY3NBYjN1eUVaVDRWejNETmR0cDYvRmR1aXFtTURHREZMWk9W?=
- =?utf-8?B?UkNrTTljZmw1eUtFTk5YTlBiMGJUelluMWZFSnBHOGRSZml5NUZhdFNMSGxT?=
- =?utf-8?B?WHJSZU51NzBFNkVzbUJzcVJndERZNlNDcVRpdEtKSlJlODljeWo5U1gyRTBL?=
- =?utf-8?B?UWd4OHVBbUMxdTVHdHovM1VTZDlqMm56TnNWNVNUdTJXZWVTUWZJaExubTVD?=
- =?utf-8?B?UVRFTUZjck1lUXk5djBKZHQwejI2ZmRTbGhOZGp4SXdrdU0wQW9QaG5YZktu?=
- =?utf-8?B?VXFwNTliM0hCNGIrQTZJenI1ei9CM085TW92MmhZOUlMeEc1TnpJV1ZQbGdZ?=
- =?utf-8?B?a0JiQ1lTVU9vV3dxNW9RUWtnVWZFUHdEcE5ycG4xNVNkOWl0Vnp1dTBlZEpo?=
- =?utf-8?B?WjhyR3NlRit3d1NGL2pTVWdiWk1Qakh1ZWk0V3oxRWxlVW9Nb0diYW4rMVRD?=
- =?utf-8?B?TDBsamNFK3JOT3Ard0Z1NFFaaEFFa1loSGE2YllGTjZhTmJrUlp0OC8zL1Y1?=
- =?utf-8?B?cyszcWNMYXp1TnBrNUFUVURDTDlRMnMyNW9GS0M5Q0hTM1QrR1EyZVVoYXV2?=
- =?utf-8?B?SWZSbldvVzdxdjRnbUM2YktPWkhFZ2llVGFGdmNuS3RMUWNGL094eG1OSkY2?=
- =?utf-8?Q?1Mx1B+p0F4A=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?T2NFNUc0NjlsZnB4NEg2MXBKVzR6Skpla0xsd214NVloMFB1S01zV0lnVUFo?=
+ =?utf-8?B?ZjUza3VaUTVqRWpNdEkzbEJWUmJJR2x2cXBoMi9pazdHMlJDeDBNNkt6ZXRv?=
+ =?utf-8?B?bjBubmFaMlhEZ0FyQUdsbHFGSG5VdENnZndOTFJyWkR5eVgyRjFQUFllZnlt?=
+ =?utf-8?B?dGFESlRaQmtnbXhKUjBIYk1nT1g1RENJL3VmM2o4WUIrQTI5bU80aFF1bFJW?=
+ =?utf-8?B?bldsU21uWGNSWGNRVkkxWjA5OGxVSDJWOGZjaGYxUDBWQ1BaTU5ubHdJTnFM?=
+ =?utf-8?B?UTcrZnd3VUVWOFF0bEh0YXlSM1IzZjVzTFdrblY1R2ZpNUZFemRza3pKcmcr?=
+ =?utf-8?B?Uzh0V2taWGpRMzdGZmlDUlJNR0Uwd2ladVFrdnZCL3JmVk50cGQycGUxZStZ?=
+ =?utf-8?B?Zk5rV055UDFHdDB2aTAzUHEweHFFaGgxYnVWd296ZWRhUlhTWGlPc3FYS2N6?=
+ =?utf-8?B?am9vcXpUZDdZZHlHUUZKTXI0L1ZTdzZuQktXcHluQS9LZ21TTEVPK01ubUdq?=
+ =?utf-8?B?SU85QnFSdnhMdGp0Smtpd0c5WVo1SStncmI1bFF2VVZ3KzkzUk92Ylh2dEZa?=
+ =?utf-8?B?SlJQVW9JNU9WejQvNU1qMjh0TWpsT1pUNXMxTVp3aHBVY3owcFgzWGg5UkRW?=
+ =?utf-8?B?UUxjblkxY3Y1MVNUY2NjRGhlWWRveDhyM1hteVlPUVdzWjh3bVNWSi8xczAy?=
+ =?utf-8?B?c3BwaldoUmNsVzUxM015S2ZZWWxnd1FVNFJMZGdqYkRqZTcwUUVmdi9JNzJa?=
+ =?utf-8?B?YW9TRXVZaUk0ZnlsSFEySkIrV000TFJMS1Rxc1F2WXl2N2FTdHVxdEs4bkFL?=
+ =?utf-8?B?SmY1L0l4dU4ramwxaGcvTjdxODA5MmZrUnVVSzliS0pWbXR2NDc1U2Q3Yzdz?=
+ =?utf-8?B?REVzbXlMeEpsYjZ0S1F4L2ViaEZWcXQ5SEh5R084ajhNbFhpa0EyNEVjU0Uy?=
+ =?utf-8?B?NSs3MzlGK1Vaam5wK3ptRFBkWTNodmJFd05WbUN3dk04WkliWlg2OHNyRHhM?=
+ =?utf-8?B?M3NUOFZFYUE2L3Q3R2cvTGUrSTkwdkRXdFNveGw4SVhJSXdWK0RJYnRKVHoy?=
+ =?utf-8?B?Q2FvTmdVNnR2SXI3cVc4YVVnWDhYeUFtZ05tV3VrWVVTTXluTEVvWk1Bc1hq?=
+ =?utf-8?B?ejBhZHlPdFd5dUQ3RUp5WWp5dkpyTkwweFJqRFRtcmlpM05mbG53YjdCN1RS?=
+ =?utf-8?B?M1l6VzZ6K1ZFWW9LUEc5WjE5a1hKQW1JK1BMcmF2b2hRekZwSjdZQmhNSVhK?=
+ =?utf-8?B?cU1PNi9BTGVrNW50WGFPb3J3SmFVZTdna25HNHJmSkJtcG1takV6UWljZTEv?=
+ =?utf-8?B?WE95Q2lSWkdYbGpJU2gyUTJHUGRUek5mVGtjUWpTOFByNGVFWWxHR1hONG1Y?=
+ =?utf-8?B?Q0p6d3lZMi9lVlpYREdMK085QWNIZWdTa2JtTE5ZSkM3VjVBNk5mREtEQ1FF?=
+ =?utf-8?B?d2o2bm1KSTRoa0NYNWhZTllPWDNBazNES3ZpdlBPNnNmZ0ZSd0FYb0Mva3V1?=
+ =?utf-8?B?RVEwZXEwYzcycVBuQzFCV0hsaXp4UklSeHV1bmJEcVpyYzY0TUVBR01Qc2x1?=
+ =?utf-8?B?K09SRDBzM0JkNWdySnhMOUFWMG0yYmJMeDZhTzBZU0dVMWNralVhQmpWcHl3?=
+ =?utf-8?B?R0xSTUdFRngzVXRIWTBwSnRyTmpJUDZxSmF3VTRlVnVwc0U0Z2dZTzQxU3Zz?=
+ =?utf-8?B?NkNoeEtTY1d0ZW1GaVZqazdPOEFZWjUwaVlkR1lGdGRJYkpaemY2clFVMEJY?=
+ =?utf-8?B?SlVEWkZyY3pNQzlNQ3VIeUp2cWJFV2NyS3lDY09ZdlpUM0hJczRraG8yZUZ6?=
+ =?utf-8?B?RkZtaFJ6c2V5UUNZOTZwa0p1VjA3bzhzcXVJQUU5UzNsWGp4NkZlK3lxanlH?=
+ =?utf-8?B?Yk1Od0JlWElqOGJzYWo3VnJnWlNMR3BWQndFcTh5bUNEWlE9PQ==?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(7416014)(1800799024)(376014); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TnZ3QlF5cllwdUYrYnByVmdXZXR0cmRLMitnVE5QWFlhS2wxdlN1VUhZNndF?=
- =?utf-8?B?aWYxTlRXTVZWVkVTUWM5c3VjVEdqR2RUZzJRc1VkUFJDUkk2RTd6ekMyYnpN?=
- =?utf-8?B?SEx4aW4xQW5UQU1WTkVKM2ZaOEtXdFUyaHdWN1lTNVc4QnZRYjJLQ1NCWTZO?=
- =?utf-8?B?bENZeFNWUFFhQlZlcFp5MlNmSW5PandvaDBKY2RudmpHdnNZaWxpVmxnZjZn?=
- =?utf-8?B?dk9FTGIwOTNGN093Z2xjRGViRXc5azhBa1NzMW9yQVZiQVVzd2I4QnE5M0Q1?=
- =?utf-8?B?QW1VZUdNRU1LbDZSUVBnamFqV0FveVRMbythZTdvWURUU1NDTk0rbjgvcldj?=
- =?utf-8?B?eVFJM1lXNjhSUmVyM0k3dTk2OWdsTE1jeWlLRDljbUx1dEVwV2R6MWREaVM3?=
- =?utf-8?B?ZnczZUMwbUhmMVQvRXlBSWU2eFZFNVdpTDlXMUlHNGVUc3lKWFBuWHZnNWJD?=
- =?utf-8?B?M1pMcE80VWxXSGVjekdZVXAvQkU5Y0NlQ0tXb3BPZkU1S0k1TkdEMFRmTFRu?=
- =?utf-8?B?MEtUU0tLL3BVTVI3dVhiM1pBSDRzV201eFlSVzZtRHcrOUx0OXhLN1VvNnVZ?=
- =?utf-8?B?c1BFZEFaNHByaS8rSEx4UVdJNk9qOFdDNGFscW96MmR2RWRNRVZEc0pjNCt5?=
- =?utf-8?B?MHBneTJUSVJJRWkwbG9DNGVVUkR3VTBMcGFFU1VYNElUckgvSy9hdlpIZTJq?=
- =?utf-8?B?Vnp5SjNGUnVZSnlybXUxTjlqNFVJV1drM1pKU1dFUkgrWDVSNFlmVnFhUVow?=
- =?utf-8?B?Y2ZMREFGSVlrK3NmS3pDN1d1aUJiM0lYU0t2TFdDM3VncjgwRllZUlRQcTEv?=
- =?utf-8?B?ODRkbzQ1R3ZGTHpNMFVuVlplaDM2N0xYODFIRGdQRlAwZXQzQkE5ZjZMOWRy?=
- =?utf-8?B?M0xCdTBxSWc4aDlYb3k2WUhLQzc4Qit1TENsRDE4M0ZIMS9FWC90SzNIRkM1?=
- =?utf-8?B?WXNvdWpQTnlEbm1rY1MzS0tQZnpPd0V1MGRRaVZEelFVRUVQVUF4Q29GWTRq?=
- =?utf-8?B?ejFiUjBLWUFxMmJIOG9NbTJ4RDZBd3FXZjdod3RUaTFJc2w0RFhCeTYwV0hE?=
- =?utf-8?B?dThYeU1FemZhZW51WUFhd2JjdTU5Yi9RTldXeUw1RzBVMGN2Q3g3emlJSzgw?=
- =?utf-8?B?RzFSTE1rQzRQaExTcnJCYjVKZ3pkeVU1RUUvMFRVaE03NmY5ZnJYcU95K2ta?=
- =?utf-8?B?RDVkUlowVHFIcldHWjdKdStFT1BFOGhjVGZrNUtIZjdYS3ExR3ZVVHhWZlJ1?=
- =?utf-8?B?ekhXc2ovRWpjQWlVZkhwMkRRcFFtMXJJVnU5N3hlazZ5SFZCaWV5aWlUOG5i?=
- =?utf-8?B?QzB0SmNlclNCOVFzWUVuV3V2VFBGM1VYTWhMVHZscE9JQ01haWdTQlVDa0x2?=
- =?utf-8?B?aXV2ME9kNnBIQktjbks3S2p4WC96ekpSOVc5SndqQjFFWnFXNHYycFg0YVFT?=
- =?utf-8?B?RzZMdXR6bzhsc0lBSm5LRmEvQ0Q3b2ZHZGJBcHRnRUsxaHpQaXVWWFczS05R?=
- =?utf-8?B?bS9uUEFES1BYUk11SGhaN3FBSncxVDFGV1YzY0RRMTZqS1BhZWFYbk4rZlla?=
- =?utf-8?B?NGp1NHYzWXNsdTVXZU11bkFxS2dFRDVCSGIxKzFGTG9WMHdPUU9zcWwwaHBv?=
- =?utf-8?B?Z3lOMitiamxKa1lORkFXeURlU083a3FvVEdZMmJRbFhLeU5kdkRUQjU0dVRI?=
- =?utf-8?B?eEMwNVo3bXdJZi9ueVZkbnR3VTlJc0tIVmJINTJEc1dpZmovRjY1YTcrZ2VU?=
- =?utf-8?B?RitmTlJ3Y1ZJRWhNRk9wRW83SDhYbytUR2YyTGNpRGJIY0ZDcFBkaE92d2ZW?=
- =?utf-8?B?Sk1HQ0E1M0p4c2V0Qi9mMjI2YTNHT3JLRXhmdkVsK3RlcWhGY3R0WlpMYzgz?=
- =?utf-8?B?cmgwMVJ0Sm5qNmRyUnI3UjlqUkE1WE83VHdxYUMwZlM0QWxybVlyQzB6cFI0?=
- =?utf-8?B?dHlnNndsbVlyelFSNWJUU3d3UlRLQ1Bwb1BkU2VmQUoxRmdPamJmcGdJV1p6?=
- =?utf-8?B?N3lKZ1pEaHpjcDFocnZvaUtjNG1aTE5scnYyQ1VyRS9WOHNGWG12MGs3TmNi?=
- =?utf-8?B?eGVPczJ5VUFDZUJsajRPWmk2aWU0ekNSMFlrTVd1c1FOak41TkVEY1lldTNO?=
- =?utf-8?B?YkUwVS9RenIydXhpWS9aNzNEZnBjK3RlZ2lTMGlXeUVXTHZNU0NXc2hSbEZF?=
- =?utf-8?B?cnc9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?R1BwTmRxNDg5L28rWjdsZmJGbGFCa2R6a3RMTFJUOHV4STgxL2pjU3YybDZw?=
+ =?utf-8?B?TWt2S3JDL0pWZFh6M29mNzNOeDRiR3M2MHNUeStFazExZFpoTHNRMGZlcDNq?=
+ =?utf-8?B?eVZJbzhWVkxLd0pqM05WbGc3enNBdXRFelBnTGhILzlNMDNMTzRmWjNwQW9G?=
+ =?utf-8?B?QUJ3dnlzaVlBN2lIaGFUbURoQWdmU2tTUTZId2IxOHNFQlYvSDd4b0VieURZ?=
+ =?utf-8?B?T2t5ZUMvUUlRNGxtSU1zdE9LakVKWlUxL2syb1J1ZkZvNjVqTi9HeldSMGVk?=
+ =?utf-8?B?T3hGNG1kWllWeThjYnIrM1ExOUUvQmhHRC9FS3c5V3loV1JHVUI1MUM0S0pC?=
+ =?utf-8?B?TFNQOEpYSDI4NGZkNWFPczhaMEpUd1dFcE1jVzJqRktScW1uYTN4eEZUQjRS?=
+ =?utf-8?B?R01GUnRZaEJXZUhyNklWdWRvNi81dUo2SzhaMFhqNHJ5UEpKVFNXSXBoTXN3?=
+ =?utf-8?B?NVQvc3BvcDIzcXMzZ0thSnI1SHpiSmRvdWZFSjNLMG0yNSs1V3hhOXN0VmQx?=
+ =?utf-8?B?Z0xsOGdPY1E5NnEzSEZ6dmNwdHIyd2lIbUlaRGxxUXUwRzhLYkgwbTYxbXR4?=
+ =?utf-8?B?K3hKano4NjFLdkdkd2ltb2wvUDlWYk9obXpqNVNpMUZ4aTJNWlhhbnJKQXV4?=
+ =?utf-8?B?MmtKYk9VclF6OTBRdFc1VW50djQxTmlwS0s4eFp4ZUU4Qk42RHZkRXBHc1E3?=
+ =?utf-8?B?M0lnK0lwL3BrR1IwR056UW5zWFJua1pNeWRpakx0SVdCczJESTA3aUpmSk8z?=
+ =?utf-8?B?WXc0cElOWktlc2VsVUpVM0dFMEZVSCtMMUlycnFVTlBIanZmUzJxNHpXc0RH?=
+ =?utf-8?B?MTV2a1UyS2ovWlNxWU1tQzlGUnNXenZRNWd0VlVNS2lwZEFqNHdEVzF4Y0F1?=
+ =?utf-8?B?S3dHdHNaaE42bmx3eXJwWHIrdmlXUHRpKzcvTFlOeGc2THlocDR5WGF2YkRa?=
+ =?utf-8?B?V3dRam9OK0JtaXNlWHR1REFxQTNpZ1h0VjJYeW4wMnJzOFNGbC9WYmdzZlVk?=
+ =?utf-8?B?UlJtbnhyR1NReE05M0ZSZngycW1NOE05eEk1UUN3Q0VuNUhpdVFZa2p2SzN0?=
+ =?utf-8?B?dHlNWGR5UW50Y1Z2R1AxdUIycVVHUGNLQ2NOYlR6Q3JuL1NJK2Z3SnhnWWhU?=
+ =?utf-8?B?OTZ2UkZzS3VBVlpWY3VyRHlxSTJWUWpIbHljRWg1Y1BkaFhXQjRHY0xHQ1NS?=
+ =?utf-8?B?d3JhSlRMSlFzNXNXS2JFZWZHamFuRlp3NTl4eWQxTWdkWlZ1cWxGdEk4OTJj?=
+ =?utf-8?B?Rm5POFBjQ3RHdUczdEZJMEZsdUhqTkE1aTF1dTZGaTZSNG9Za2FvV2J1VHBs?=
+ =?utf-8?B?blZGMDIwWExQbGVUVUgwU1RnN0QyY3JHZEFyeUpQOTRTQXpJc1J3QS9hVnZx?=
+ =?utf-8?B?ZnFINTEyTmpjNU1MSXRMTG1NUllpUjFvUk1NOXBhb1pOOHoyMXZLQ2hOVVVi?=
+ =?utf-8?B?dWlKT3ZFNVU2V213WEtHYXpPUVI2aTlEaGVqMkN4cW1UTFBPaUFDNDZsNGlL?=
+ =?utf-8?B?R1hIcDZ3NWJ5WkptTFhoYUQrdFVtdjRWUU5GVStLZGllcEtUNnlDclZUMDdF?=
+ =?utf-8?B?QjNISDJsVDBvdFlHczcxamN1bzk1V0FJSEUvcmVjbkJPZHR2THhCS1hZUjhU?=
+ =?utf-8?B?NDdtbWJyWDRGSUpRL1dwRmwzbnpiSW9QRklnNkRlM3NNUVh0YTJLTHB4Nzh4?=
+ =?utf-8?B?TEdSS1FKcXRvRmJ5LzdxSVBudDFtQkVkNjJGV21DWWYwWVFDT3gwUzFrRnhz?=
+ =?utf-8?B?S0RCdUVXczJkYVBIV1VORktUdUprYVEzM1dGQmtmU0V1QncreTlkeEdvK1pK?=
+ =?utf-8?B?Z3pnMStpMHN1ZWVRWk9sUVQ1c2ZVTlJyRzQ4SlRTVmpHRXNLaXJZb2xOV1RI?=
+ =?utf-8?B?SnJNZnFGT1kzMk0vV0FCTE1HeXc0d1cxMWI1UHM4aHZuMzVWUUF5K2FEcVcy?=
+ =?utf-8?B?aWJJMGdtaVNuMDZ6WFllRHM0K2NOQzcycmZ2UTFqOFNoYy9FV1dtR2VOTng3?=
+ =?utf-8?B?SUxQdHQxc3BNT21VVnV5eUp1WmlaVHdhZUlWZnkxb25zS3JmdGtEWWp2ak9U?=
+ =?utf-8?B?ZXVDbTFNK2dMeCtYR241Uk4zZ2FaYnJEVlZCMEtXUnlPS3AweWVydEFQRmdG?=
+ =?utf-8?B?dW1odlNwZVRmcUNtUExsOGFic0U0N1BvVlNNSytFSGRJai9Kd0NESmhkUm01?=
+ =?utf-8?B?RlE9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 5KcYvMiKr8vvxWceF/hl237oNrpUdM92xvN/xeZDaqG0Kzxc04Q1nYjLjaS5VtSN/NSVpCoPwR0wdRxkl1UPwDL5rr1uFpWLZkFkCe3qpW8TUFSLfrPxJJtaAEVTuFnjgyD9s9ICCOrc5G3JvPaguDP5LjbjzipWLB/g1py/Pr+XCE3xmyrlXXEnn0q/b2ySyVeFKzmBqmN+2Zbj/g0/BBdLXArrfmNZuMIOSqag4CnMP9nSxaLgJfWE3Zw57PJHZRNz+8AG1PzF1zyJ+3apsG3ao9kyXgLjv/jxLpSYk4dyCQcnO6P+wqXxm12YW+3dmkGweLG76PyKsNHTwUJ2vQqPTXSHCXIn8Uze1cPDoo4n9ga19yB298HEicf2QWlSTAY2RFZJZazdW8qOlg7AFYgRsU3sBGAeNZh2LliciEMksCYZgdsVUqdkN2MIIfZouPJH0Km3OSJNQj5QESLgqhjBOlgg5KVOvXB59EdNVoDzhi10iCoorzGR0nNyJ8E0zpCde/0XlJaYR+7mU/SbITH8iiqqHDd/P2ofJ2aEJQ6cioGmgqnIwYEQkzMQw4t8roBbYtDZuJ5QM08ucNUhx+OWdPvLXjDPaqhRLtDQWL4=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: kD0VexPPspxeBUI0vHXUm96yRK94c/0NF2KPshpZRydqwWl2DyHHqTrgrOK5XdisT5kbejePY9GZr6b/cM/+xcIkCzEHd+pvde+p2ksdXn3VDv3avGbHhgUo2nk12zXMD8zpuhYLIsmPBwyJmqaJGEikgZEyfpnDFfiz7qKSczVOgud4t/Taw/3X6JuPzGJQsgG2ZQfdoNnGQpFMFhgVvYDad00OhMdOte06A2xgzkutkpMJanmcSsBmeam4pGpPkbA8s6eIgd9Lqu/avE6+KMpw0djdBF5ZKQxDsA9kOl2SskMrJUTxvLmWm6mATaUINAZEaHVhj79HyUhEIaFQCpcyY9F6wBDfqK95M7naxLao9X8VZQ5GNwe8oK4r+tH7TED0/7gNSUKZfnL108/rFHZwTDRb+pj2mz1H9GAE0riuIZ5SPS1mRu2C6E87OJIgOeLi+vCdZQZgg2J+1a5s7H/avg58e5ptz6mPVrXxVnhwCQ1ob3cIVLtRLuKrIeYlkzusngKKz8Tfy/g4zGvrv8rAs1021pkly2NgFQjAbnptZtq+aG5RxXgXmjDrLqXEl0GjrBi8JcC/IxjE6vYHHzD8DEqSvl1pnhpaSmhcmqE=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e018d1c-1aa3-48bb-521b-08dd97a43596
+X-MS-Exchange-CrossTenant-Network-Message-Id: 83d043a5-6233-4f40-7633-08dd97a46c08
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 13:42:48.7589 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 13:44:20.1348 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cj70oJoEZWrHoWvHnTR453vDIbY+WeIZx8avnlQqHA/9zSxuYNHvXk/wLXZcpwSSwzOGfW/HRXnjH+6UAyuWfo/ItTWzGCdMsUwrPl89s+Q=
+X-MS-Exchange-CrossTenant-UserPrincipalName: cVJ/BiV+1F+vIHHx35HUM+2TP21fVOK7uskSZrbuD7+eXIIpiRhaZsrSoln3vJF8U3n/0tUTa6W3nytYnNp+BH1WngY8cTEwOm2iyM9v+WM=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR10MB6306
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-20_05,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- suspectscore=0 spamscore=0
- adultscore=0 phishscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505070000
- definitions=main-2505200109
-X-Authority-Analysis: v=2.4 cv=S93ZwJsP c=1 sm=1 tr=0 ts=682c86df b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ malwarescore=0
+ mlxscore=0 adultscore=0 spamscore=0 bulkscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505070000 definitions=main-2505200110
+X-Proofpoint-GUID: V6vQHoAxJovTDTXzM3jCN1q40n5YDAym
+X-Proofpoint-ORIG-GUID: V6vQHoAxJovTDTXzM3jCN1q40n5YDAym
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDExMCBTYWx0ZWRfX3bhkUEdiqf6w
+ j11XSbFtE2JPi4UVw4zen9VekOP5RRwBzcmPL8G7bV4SINj6iS1yAv8++pBZCwp6D2sd5oa/W6O
+ FuAgdqBWrrR1b9LNUomxQBkKTcG2QXFC2JVhbdPJOKOstrnaOgJ4Usd7WLraKVeN+3u4OqS4nMz
+ r+jtiCYO1zk5wL1At+3fEHCmrb7vcCkfsSBvwcetGd9FkrYP7EK70aRaoig+QM1FJ+OqiV0F7IC
+ WRgb3lH798ykn13bq/uRpGAGj0Iiqey/CeZwbVNsn9MUaZ59uO3vvVCy+M5nNc8Uq0w3Ld+k/sJ
+ 4+qLLtzGttA0+RqQg6mJfzeB/B5pt9gW9orc0v3HsDExTCFofFFd4jIPN8GDn7hZQSngQAW89Jq
+ YPL9V/EQ6nNLbY2PI6L7DY11yUMmaR1Dt+1mUfmLWJv+Y2DjzlrYj16kdYgVQwydCSnkSw9t
+X-Authority-Analysis: v=2.4 cv=SqeQ6OO0 c=1 sm=1 tr=0 ts=682c8738 b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
  a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
  a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10
- a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=0MWoUGTY9xpSrIvhqOoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 cc=ntf awl=host:13188
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDExMCBTYWx0ZWRfXxPoi47rytCjP
- AzlcvIOLVs2ec0ov0k8pDzp9QNEMOSao6tIxmhJ3H3xUGhHM2kDE4W+Waf0pv6ZvRLYz8n7GIas
- sTYyZjaEl0Fo+OODbhtb98zg4ORSToFm5flm0mKBoMMCZhIoS5rR7ZjBL2/jv0LZEZeawOEzgjW
- 4o72RN8tEM3adMJz4f1s7+iTNPl4Ks6MleYnoNenZ/EuZT8bFRa7hWmzqi5xp3AzbeVdb4XKhJZ
- SH8aV/qc/bD+aEQm1wQGyQmt2Xt9iivrBE9WB2bC2aKtVJ/1xNb1ecSpdhMgTMN6/tOX9gPqmHB
- ZtgVhAanJOOZzUfHnuqXdXwzhLBYtKRBTb29TTTRUXczdYgA5h+kTVIRw6YCT3gaysCHDteKUpY
- ZM1MKx3JlBgfRLceiFjCn4fs9m63TloZoAth0pnPcvRMquHCsLjSPtIzJ3h3I2S2PR+QpXc8
-X-Proofpoint-GUID: geoVb0NOeSfJcJz92jlj24ocXAr4A4Ti
-X-Proofpoint-ORIG-GUID: geoVb0NOeSfJcJz92jlj24ocXAr4A4Ti
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=yPCof4ZbAAAA:8 a=GB5ZVZ8ZrYlKT0li8YwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ cc=ntf awl=host:13189
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -239,249 +235,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/2025 3:32 AM, Cédric Le Goater wrote:
-> On 5/19/25 15:26, Steve Sistare wrote:
->> Modify memory_get_xlat_addr and vfio_get_xlat_addr to return the memory
->> region that the translated address is found in.  This will be needed by
->> CPR in a subsequent patch to map blocks using IOMMU_IOAS_MAP_FILE.
->>
->> Also return the xlat offset, so we can simplify the interface by removing
->> the out parameters that can be trivially derived from mr and xlat.
->>
->> Lastly, rename the functions to  to memory_translate_iotlb() and
->> vfio_translate_iotlb().
+On 5/20/2025 2:48 AM, Cédric Le Goater wrote:
+> On 5/12/25 17:32, Steve Sistare wrote:
+>> Do not reset a vfio-pci device during CPR, and do not complain if the
+>> kernel's PCI config space changes for non-emulated bits between the
+>> vmstate save and load, which can happen due to ongoing interrupt activity.
 >>
 >> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->> Acked-by: David Hildenbrand <david@redhat.com>
 >> ---
->>   hw/vfio/listener.c      | 33 ++++++++++++++++++++++-----------
->>   hw/virtio/vhost-vdpa.c  |  9 +++++++--
->>   include/system/memory.h | 19 +++++++++----------
->>   system/memory.c         | 32 +++++++-------------------------
->>   4 files changed, 45 insertions(+), 48 deletions(-)
+>>   hw/vfio/cpr.c              | 31 +++++++++++++++++++++++++++++++
+>>   hw/vfio/pci.c              |  6 ++++++
+>>   include/hw/vfio/vfio-cpr.h |  2 ++
+>>   3 files changed, 39 insertions(+)
 >>
->> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
->> index bfacb3d..0afafe3 100644
->> --- a/hw/vfio/listener.c
->> +++ b/hw/vfio/listener.c
->> @@ -90,16 +90,17 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
->>              section->offset_within_address_space & (1ULL << 63);
+>> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+>> index 0e59612..6ea8e9f 100644
+>> --- a/hw/vfio/cpr.c
+>> +++ b/hw/vfio/cpr.c
+>> @@ -8,6 +8,8 @@
+>>   #include "qemu/osdep.h"
+>>   #include "hw/vfio/vfio-device.h"
+>>   #include "hw/vfio/vfio-cpr.h"
+>> +#include "hw/vfio/pci.h"
+>> +#include "migration/cpr.h"
+>>   #include "qapi/error.h"
+>>   #include "system/runstate.h"
+>> @@ -37,3 +39,32 @@ void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
+>>   {
+>>       migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
 >>   }
->> -/* Called with rcu_read_lock held.  */
->> -static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->> -                               ram_addr_t *ram_addr, bool *read_only,
->> -                               Error **errp)
+>> +
 >> +/*
->> + * Called with rcu_read_lock held.
->> + * The returned MemoryRegion must not be accessed after calling rcu_read_unlock.
+>> + * The kernel may change non-emulated config bits.  Exclude them from the
+>> + * changed-bits check in get_pci_config_device.
 >> + */
->> +static MemoryRegion *vfio_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
->> +                                          Error **errp)
->>   {
->> -    bool ret, mr_has_discard_manager;
->> +    MemoryRegion *mr;
->> -    ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
->> -                               &mr_has_discard_manager, errp);
->> -    if (ret && mr_has_discard_manager) {
->> +    mr = memory_translate_iotlb(iotlb, xlat_p, errp);
->> +    if (mr && memory_region_has_ram_discard_manager(mr)) {
->>           /*
->>            * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
->>            * pages will remain pinned inside vfio until unmapped, resulting in a
->> @@ -118,7 +119,7 @@ static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>                            " intended via an IOMMU. It's possible to mitigate "
->>                            " by setting/adjusting RLIMIT_MEMLOCK.");
->>       }
->> -    return ret;
->> +    return mr;
->>   }
->>   static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->> @@ -126,6 +127,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
->>       VFIOContainerBase *bcontainer = giommu->bcontainer;
->>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
->> +    MemoryRegion *mr;
->> +    hwaddr xlat;
->>       void *vaddr;
->>       int ret;
->>       Error *local_err = NULL;
->> @@ -150,10 +153,14 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
->>           bool read_only;
->> -        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
->> +        mr = vfio_translate_iotlb(iotlb, &xlat, &local_err);
->> +        if (!mr) {
->>               error_report_err(local_err);
->>               goto out;
->>           }
->> +        vaddr = memory_region_get_ram_ptr(mr) + xlat;
->> +        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
+>> +static int vfio_cpr_pci_pre_load(void *opaque)
+>> +{
+>> +    VFIOPCIDevice *vdev = opaque;
+>> +    PCIDevice *pdev = &vdev->pdev;
+>> +    int size = MIN(pci_config_size(pdev), vdev->config_size);
+>> +    int i;
 >> +
->>           /*
->>            * vaddr is only valid until rcu_read_unlock(). But after
->>            * vfio_dma_map has set up the mapping the pages will be
->> @@ -1010,6 +1017,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       ram_addr_t translated_addr;
->>       Error *local_err = NULL;
->>       int ret = -EINVAL;
->> +    MemoryRegion *mr;
->> +    ram_addr_t xlat;
-> 
-> xlat should be :
-> 
->      hwaddr xlat;
-
-Will you make that change when you pull, or do you want me to submit a V6
-with this and the RB's?
-
-- Steve
-        trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
->> @@ -1021,9 +1030,11 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       }
->>       rcu_read_lock();
->> -    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
->> +    mr = vfio_translate_iotlb(iotlb, &xlat, &local_err);
->> +    if (!mr) {
->>           goto out_unlock;
->>       }
->> +    translated_addr = memory_region_get_ram_addr(mr) + xlat;
->>       ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
->>                                   translated_addr, &local_err);
->> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
->> index 1ab2c11..a1dd9e1 100644
->> --- a/hw/virtio/vhost-vdpa.c
->> +++ b/hw/virtio/vhost-vdpa.c
->> @@ -209,6 +209,8 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       int ret;
->>       Int128 llend;
->>       Error *local_err = NULL;
->> +    MemoryRegion *mr;
->> +    hwaddr xlat;
->>       if (iotlb->target_as != &address_space_memory) {
->>           error_report("Wrong target AS \"%s\", only system memory is allowed",
->> @@ -228,11 +230,14 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
->>           bool read_only;
->> -        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
->> -                                  &local_err)) {
->> +        mr = memory_translate_iotlb(iotlb, &xlat, &local_err);
->> +        if (!mr) {
->>               error_report_err(local_err);
->>               return;
->>           }
->> +        vaddr = memory_region_get_ram_ptr(mr) + xlat;
->> +        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
+>> +    for (i = 0; i < size; i++) {
+>> +        pdev->cmask[i] &= vdev->emulated_config_bits[i];
+>> +    }
 >> +
->>           ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
->>                                    iotlb->addr_mask + 1, vaddr, read_only);
->>           if (ret) {
->> diff --git a/include/system/memory.h b/include/system/memory.h
->> index fbbf4cf..13416d7 100644
->> --- a/include/system/memory.h
->> +++ b/include/system/memory.h
->> @@ -738,21 +738,20 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
->>                                                RamDiscardListener *rdl);
->>   /**
->> - * memory_get_xlat_addr: Extract addresses from a TLB entry
->> + * memory_translate_iotlb: Extract addresses from a TLB entry.
->> + *                         Called with rcu_read_lock held.
->>    *
->>    * @iotlb: pointer to an #IOMMUTLBEntry
->> - * @vaddr: virtual address
->> - * @ram_addr: RAM address
->> - * @read_only: indicates if writes are allowed
->> - * @mr_has_discard_manager: indicates memory is controlled by a
->> - *                          RamDiscardManager
->> + * @xlat_p: return the offset of the entry from the start of the returned
->> + *          MemoryRegion.
->>    * @errp: pointer to Error*, to store an error if it happens.
->>    *
->> - * Return: true on success, else false setting @errp with error.
->> + * Return: On success, return the MemoryRegion containing the @iotlb translated
->> + *         addr.  The MemoryRegion must not be accessed after rcu_read_unlock.
->> + *         On failure, return NULL, setting @errp with error.
->>    */
->> -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->> -                          ram_addr_t *ram_addr, bool *read_only,
->> -                          bool *mr_has_discard_manager, Error **errp);
->> +MemoryRegion *memory_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
->> +                                     Error **errp);
->>   typedef struct CoalescedMemoryRange CoalescedMemoryRange;
->>   typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
->> diff --git a/system/memory.c b/system/memory.c
->> index 63b983e..306e9ff 100644
->> --- a/system/memory.c
->> +++ b/system/memory.c
->> @@ -2174,18 +2174,14 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
->>   }
->>   /* Called with rcu_read_lock held.  */
->> -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->> -                          ram_addr_t *ram_addr, bool *read_only,
->> -                          bool *mr_has_discard_manager, Error **errp)
->> +MemoryRegion *memory_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
->> +                                     Error **errp)
+>> +    return 0;
+>> +}
+>> +
+>> +const VMStateDescription vfio_cpr_pci_vmstate = {
+>> +    .name = "vfio-cpr-pci",
+>> +    .version_id = 0,
+>> +    .minimum_version_id = 0,
+>> +    .pre_load = vfio_cpr_pci_pre_load,
+>> +    .needed = cpr_needed_for_reuse,
+>> +    .fields = (VMStateField[]) {
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index a1bfdfe..4aa83b1 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -3344,6 +3344,11 @@ static void vfio_pci_reset(DeviceState *dev)
 >>   {
->>       MemoryRegion *mr;
->>       hwaddr xlat;
->>       hwaddr len = iotlb->addr_mask + 1;
->>       bool writable = iotlb->perm & IOMMU_WO;
->> -    if (mr_has_discard_manager) {
->> -        *mr_has_discard_manager = false;
->> -    }
->>       /*
->>        * The IOMMU TLB entry we have just covers translation through
->>        * this IOMMU to its immediate target.  We need to translate
->> @@ -2195,7 +2191,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>                                    &xlat, &len, writable, MEMTXATTRS_UNSPECIFIED);
->>       if (!memory_region_is_ram(mr)) {
->>           error_setg(errp, "iommu map to non memory area %" HWADDR_PRIx "", xlat);
->> -        return false;
->> +        return NULL;
->>       } else if (memory_region_has_ram_discard_manager(mr)) {
->>           RamDiscardManager *rdm = memory_region_get_ram_discard_manager(mr);
->>           MemoryRegionSection tmp = {
->> @@ -2203,9 +2199,6 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>               .offset_within_region = xlat,
->>               .size = int128_make64(len),
->>           };
->> -        if (mr_has_discard_manager) {
->> -            *mr_has_discard_manager = true;
->> -        }
->>           /*
->>            * Malicious VMs can map memory into the IOMMU, which is expected
->>            * to remain discarded. vfio will pin all pages, populating memory.
->> @@ -2216,7 +2209,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>               error_setg(errp, "iommu map to discarded memory (e.g., unplugged"
->>                            " via virtio-mem): %" HWADDR_PRIx "",
->>                            iotlb->translated_addr);
->> -            return false;
->> +            return NULL;
->>           }
->>       }
->> @@ -2226,22 +2219,11 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->>        */
->>       if (len & iotlb->addr_mask) {
->>           error_setg(errp, "iommu has granularity incompatible with target AS");
->> -        return false;
->> +        return NULL;
->>       }
->> -    if (vaddr) {
->> -        *vaddr = memory_region_get_ram_ptr(mr) + xlat;
->> -    }
->> -
->> -    if (ram_addr) {
->> -        *ram_addr = memory_region_get_ram_addr(mr) + xlat;
->> -    }
->> -
->> -    if (read_only) {
->> -        *read_only = !writable || mr->readonly;
->> -    }
->> -
->> -    return true;
->> +    *xlat_p = xlat;
->> +    return mr;
->>   }
->>   void memory_region_set_log(MemoryRegion *mr, bool log, unsigned client)
+>>       VFIOPCIDevice *vdev = VFIO_PCI_BASE(dev);
+>> +    /* Do not reset the device during qemu_system_reset prior to cpr load */
+>> +    if (vdev->vbasedev.cpr.reused) {
+>> +        return;
+>> +    }
+>> +
+> 
+> hw/pci/pci.c does :
+> 
+>      if (cpr_is_incoming()) {
+>          return;
+>      }
+> 
+> So, to be consistent, I think VFIO should do the same.
+>  
+
+will do - steve
+
+>>       trace_vfio_pci_reset(vdev->vbasedev.name);
+>>       vfio_pci_pre_reset(vdev);
+>> @@ -3513,6 +3518,7 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
+>>   #ifdef CONFIG_IOMMUFD
+>>       object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
+>>   #endif
+>> +    dc->vmsd = &vfio_cpr_pci_vmstate;
+>>       dc->desc = "VFIO-based PCI device assignment";
+>>       pdc->realize = vfio_realize;
+>> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+>> index d6d22f2..e93600f 100644
+>> --- a/include/hw/vfio/vfio-cpr.h
+>> +++ b/include/hw/vfio/vfio-cpr.h
+>> @@ -49,4 +49,6 @@ void vfio_cpr_giommu_remap(struct VFIOContainerBase *bcontainer,
+>>   bool vfio_cpr_ram_discard_register_listener(
+>>       struct VFIOContainerBase *bcontainer, MemoryRegionSection *section);
+>> +extern const VMStateDescription vfio_cpr_pci_vmstate;
+>> +
+>>   #endif /* HW_VFIO_VFIO_CPR_H */
 > 
 
 
