@@ -4,88 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 001ACC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3DFC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 17:02:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHQHO-0002fF-6n; Tue, 20 May 2025 12:57:26 -0400
+	id 1uHQLw-00057m-Aa; Tue, 20 May 2025 13:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHQHF-0002UM-8A
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:57:18 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHQHB-0007q8-8L
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:57:16 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-ad55d6aeb07so129437766b.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747760231; x=1748365031; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8GWiFjDTI1W+SwO61thYcMt6WHg8NWgc4ieUAXnmfvA=;
- b=hACHpxpii5C4kXQ2JQDlmiyb3R6THY6JtbLm9ZFHfIjKDp4bZqlGX/yb+Dja3Cq3Uf
- W3tc94HvqsPRThEae+buPNVjyhOuhdo90mLt7h8kFlzVIDH07n3tSQqt6S6SPgEXhhwq
- bx/6uXeVqm6ODK5ZJv1SW8GllHAttO9/anLEEBoxeZVpui9HLbKll/C/MsbawVptlegW
- YTHO2rPVZyMF0jrov/SUe+h+LJ6xE+lz0idVCXgds8QNK4jVSPzF8OpPFt4No4Nh8wwQ
- Eig+dAA+YHbx2R4KTCOulaGKUmPm4WYf0MDVAbehjQEya8gKxmTP1olSrvT1Z4kBxd5D
- XDuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747760231; x=1748365031;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8GWiFjDTI1W+SwO61thYcMt6WHg8NWgc4ieUAXnmfvA=;
- b=eOxwUqClennEV+A7FQlt4muxBX4oesj5EcnKo0SnVX8AoGzamzzhahAQKbMgcnAlVL
- cUHdUkDTXSBu95iyDNRb2H2iwqrHeOpclUQcjcca+Tt8YybrYwg1Nc2CAlnr/B5XpKes
- oezORYVpw0l9B5poPbCspFGvwW5NUpidjyFJFNE9OMeDI3Kd/Ws7dMsSK5CbcJmRFgMS
- W/19LtxyuGVTN6qR9OohGpiiuED6dp3lEUSsFXcHI360RWAHJl+wQ63Qbqdgs39QJ4bx
- d0TmQizl00DOKX68+2mSxA1Feei00JDXiRm0a6dYMkggAzSOPsWxYmj3DrTf9VBMif8J
- 6qoA==
-X-Gm-Message-State: AOJu0YxKIyxWIe4i53rWx5XXd8CBWSKAdLT9ClSzDzWPvpcZ81QgiZPr
- oMI0Fih+cGfBsVbxD890rMfqBrPfmT42jm3+F/Nlg5xcaTFwihv7CK+/dP8q5JwHT5HX5AJSE+2
- 9umyNz1I=
-X-Gm-Gg: ASbGncvZyU+DlCwqDfiVS9W04wwBOsX68go57w7hkosBD0BmpICsGtjTQB//9mbhsii
- zundtzKewkz1/IH2+ZWoTUK/SNZTPH0uFQ5dsfdkAp/xTvS46E5OSyL4K+HcxzDA/c3dJRwEBV2
- TUAdi/lmXgETug1cCcreHkW5mKQ4Xj5+DvMw3jFOwzt7rqfjvvUZBqjqmWlK6LSfu1BpxFNBEXL
- DjTEEIE0SmhRIro7xS334YbfZcvdQa7h7gh09RGzfQIO5Q4PCAVWzqub907+WiTyZs2lu8SdZub
- gF0Csh8U83Z9wHMVZBWtkFiqme8hpmSYicKxl7XpNvIMbQUaSKkl
-X-Google-Smtp-Source: AGHT+IHZqun16VdJQ0G1C7CMcrdF9wqtV6z+4AkH4MKsOnbUUmBPF24WGcoPOXYeeEdH2YnOc/UU7Q==
-X-Received: by 2002:a17:907:3ea4:b0:ad2:49b5:8e0d with SMTP id
- a640c23a62f3a-ad536b7f1c3mr1528875566b.15.1747760230711; 
- Tue, 20 May 2025 09:57:10 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d047738sm762285166b.19.2025.05.20.09.57.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 09:57:10 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 354E25F7A5;
- Tue, 20 May 2025 17:57:09 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH] util: split unix socket functions out of qemu-sockets
-Date: Tue, 20 May 2025 17:57:06 +0100
-Message-Id: <20250520165706.3976971-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uHQLr-00057P-Df
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 13:02:05 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uHQLk-00006I-EI
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 13:02:03 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b21605ph5z6L4xD;
+ Wed, 21 May 2025 01:00:56 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 87774140373;
+ Wed, 21 May 2025 01:01:47 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 20 May
+ 2025 19:01:47 +0200
+Date: Tue, 20 May 2025 18:01:44 +0100
+To: Richard Henderson <richard.henderson@linaro.org>, <linuxarm@huawei.com>
+CC: Alistair Francis <alistair23@gmail.com>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH 066/147] include/exec: Move TLB_MMIO, TLB_DISCARD_WRITE
+ to slow flags
+Message-ID: <20250520180035.00004142@huawei.com>
+In-Reply-To: <20250508142918.0000248d@huawei.com>
+References: <20250422192819.302784-1-richard.henderson@linaro.org>
+ <20250422192819.302784-67-richard.henderson@linaro.org>
+ <20250425183524.00000b28@huawei.com>
+ <CAKmqyKMN5bo12Oh8hrwdiimqJSzHMZwB7JjAquBrEK3PTbtGyA@mail.gmail.com>
+ <04875ca2-781b-4000-b74c-fc338bc6ec4d@linaro.org>
+ <20250508142918.0000248d@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,515 +74,175 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since fccb744f41 (gdbstub: Try unlinking the unix socket before
-binding) we use the unix_listen() function from linux-user which
-causes complications when trying to build statically.
+On Thu, 8 May 2025 14:29:18 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
-Fix this by splitting the unix functions into its own file and doing
-the appropriate tweaks to the headers.
+> On Tue, 29 Apr 2025 19:43:05 -0700
+> Richard Henderson <richard.henderson@linaro.org> wrote:
+>=20
+> > On 4/29/25 14:35, Alistair Francis wrote: =20
+> > > On Sat, Apr 26, 2025 at 3:36=E2=80=AFAM Jonathan Cameron via
+> > > <qemu-devel@nongnu.org> wrote:   =20
+> > >>
+> > >> On Tue, 22 Apr 2025 12:26:55 -0700
+> > >> Richard Henderson <richard.henderson@linaro.org> wrote:
+> > >>   =20
+> > >>> Recover two bits from the inline flags.   =20
+> > >>
+> > >>
+> > >> Hi Richard,
+> > >>
+> > >> Early days but something (I'm fairly sure in this patch) is tripping=
+ up my favourite
+> > >> TCG corner case of running code out of MMIO memory (interleaved CXL =
+memory).
+> > >>
+> > >> Only seeing it on arm64 tests so far which isn't upstream yet..
+> > >> (guess what I was getting ready to post today)
+> > >>
+> > >> Back trace is:
+> > >>
+> > >> #0  0x0000555555fd4296 in cpu_atomic_fetch_andq_le_mmu (env=3D0x5555=
+57ee19b0, addr=3D18442241572520067072, val=3D18446744073701163007, oi=3D824=
+4, retaddr=3D<optimized out>) at ../../accel/tcg/atomic_template.h:140
+> > >> #1  0x00007fffb6894125 in code_gen_buffer ()
+> > >> #2  0x0000555555fc4c46 in cpu_tb_exec (cpu=3Dcpu@entry=3D0x555557ede=
+df0, itb=3Ditb@entry=3D0x7fffb6894000 <code_gen_buffer+200511443>, tb_exit=
+=3Dtb_exit@entry=3D0x7ffff4bfb744) at ../../accel/tcg/cpu-exec.c:455
+> > >> #3  0x0000555555fc51c2 in cpu_loop_exec_tb (tb_exit=3D0x7ffff4bfb744=
+, last_tb=3D<synthetic pointer>, pc=3D<optimized out>, tb=3D0x7fffb6894000 =
+<code_gen_buffer+200511443>, cpu=3D0x555557ededf0) at ../../accel/tcg/cpu-e=
+xec.c:904
+> > >> #4  cpu_exec_loop (cpu=3Dcpu@entry=3D0x555557ededf0, sc=3Dsc@entry=
+=3D0x7ffff4bfb7f0) at ../../accel/tcg/cpu-exec.c:1018
+> > >> #5  0x0000555555fc58f1 in cpu_exec_setjmp (cpu=3Dcpu@entry=3D0x55555=
+7ededf0, sc=3Dsc@entry=3D0x7ffff4bfb7f0) at ../../accel/tcg/cpu-exec.c:1035
+> > >> #6  0x0000555555fc5f6c in cpu_exec (cpu=3Dcpu@entry=3D0x555557ededf0=
+) at ../../accel/tcg/cpu-exec.c:1061
+> > >> #7  0x0000555556146ac3 in tcg_cpu_exec (cpu=3Dcpu@entry=3D0x555557ed=
+edf0) at ../../accel/tcg/tcg-accel-ops.c:81
+> > >> #8  0x0000555556146ee3 in mttcg_cpu_thread_fn (arg=3Darg@entry=3D0x5=
+55557ededf0) at ../../accel/tcg/tcg-accel-ops-mttcg.c:94
+> > >> #9  0x00005555561f6450 in qemu_thread_start (args=3D0x555557f8f430) =
+at ../../util/qemu-thread-posix.c:541
+> > >> #10 0x00007ffff7750aa4 in start_thread (arg=3D<optimized out>) at ./=
+nptl/pthread_create.c:447
+> > >> #11 0x00007ffff77ddc3c in clone3 () at ../sysdeps/unix/sysv/linux/x8=
+6_64/clone3.S:78
+> > >>
+> > >> I haven't pushed out the rebased tree yet making this a truly awful =
+bug report.
+> > >>
+> > >> The pull request you sent with this in wasn't bisectable so this was=
+ a bit of a guessing
+> > >> game. I see the seg fault only after this patch.   =20
+> > >=20
+> > > I see the same thing with some RISC-V tests. I can provide the test
+> > > images if you want as well   =20
+> >=20
+> >=20
+> > Yes please.
+> >=20
+> >=20
+> > r~ =20
+>=20
+> I'm guessing Alastair is busy.
+>=20
+> I got around to testing this on x86 and indeed blow up is the same.
+>=20
+> 0x0000555555e3dd77 in cpu_atomic_add_fetchl_le_mmu (env=3D0x55555736bef0,=
+ addr=3D140271756837240, val=3D1, oi=3D34, retaddr=3D<optimized out>) at ..=
+/../accel/tcg/atomic_template.h:143
+> 143     GEN_ATOMIC_HELPER(add_fetch)
+> (gdb) bt
+> #0  0x0000555555e3dd77 in cpu_atomic_add_fetchl_le_mmu (env=3D0x55555736b=
+ef0, addr=3D140271756837240, val=3D1, oi=3D34, retaddr=3D<optimized out>) a=
+t ../../accel/tcg/atomic_template.h:143
+> #1  0x00007fffbc31c6f0 in code_gen_buffer ()
+> #2  0x0000555555e23aa6 in cpu_tb_exec (cpu=3Dcpu@entry=3D0x555557369330, =
+itb=3Ditb@entry=3D0x7fffbc31c600 <code_gen_buffer+295441875>, tb_exit=3Dtb_=
+exit@entry=3D0x7ffff4bfd6ec) at ../../accel/tcg/cpu-exec.c:438
+> #3  0x0000555555e24025 in cpu_loop_exec_tb (tb_exit=3D0x7ffff4bfd6ec, las=
+t_tb=3D<synthetic pointer>, pc=3D<optimized out>, tb=3D0x7fffbc31c600 <code=
+_gen_buffer+295441875>, cpu=3D0x555557369330) at ../../accel/tcg/cpu-exec.c=
+:872
+> #4  cpu_exec_loop (cpu=3Dcpu@entry=3D0x555557369330, sc=3Dsc@entry=3D0x7f=
+fff4bfd7b0) at ../../accel/tcg/cpu-exec.c:982
+> #5  0x0000555555e247a1 in cpu_exec_setjmp (cpu=3Dcpu@entry=3D0x5555573693=
+30, sc=3Dsc@entry=3D0x7ffff4bfd7b0) at ../../accel/tcg/cpu-exec.c:999
+> #6  0x0000555555e24e2c in cpu_exec (cpu=3Dcpu@entry=3D0x555557369330) at =
+../../accel/tcg/cpu-exec.c:1025
+> #7  0x0000555555e42c73 in tcg_cpu_exec (cpu=3Dcpu@entry=3D0x555557369330)=
+ at ../../accel/tcg/tcg-accel-ops.c:81
+> #8  0x0000555555e43093 in mttcg_cpu_thread_fn (arg=3Darg@entry=3D0x555557=
+369330) at ../../accel/tcg/tcg-accel-ops-mttcg.c:94
+> #9  0x0000555555ef2250 in qemu_thread_start (args=3D0x5555573e6e20) at ..=
+/../util/qemu-thread-posix.c:541
+> #10 0x00007ffff7750aa4 in start_thread (arg=3D<optimized out>) at ./nptl/=
+pthread_create.c:447
+> #11 0x00007ffff77ddc3c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/=
+clone3.S:78
+>=20
+> Need one patch for my particular setup to work around some DMA buffer iss=
+ues in virtio (similar to
+> a patch for pci space last year).  I've been meaning to post an RFC to ge=
+t feedback on how
+> to handle this but not gotten to it yet!
+>=20
+> From 801e47897c5959a22ed050d7e7feebbbd3a12588 Mon Sep 17 00:00:00 2001
+> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Date: Mon, 22 Apr 2024 13:54:37 +0100
+> Subject: [PATCH] physmem: Increase bounce buffers for "memory" address sp=
+ace.
+>=20
+> Doesn't need to be this big and should be configurable.
+>=20
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+>  system/physmem.c | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 3f4fd69d9a..651b875827 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2798,6 +2798,7 @@ static void memory_map_init(void)
+>      memory_region_init(system_memory, NULL, "system", UINT64_MAX);
+>      address_space_init(&address_space_memory, system_memory, "memory");
+> =20
+> +    address_space_memory.max_bounce_buffer_size =3D 1024 * 1024 * 1024;
+>      system_io =3D g_malloc(sizeof(*system_io));
+>      memory_region_init_io(system_io, NULL, &unassigned_io_ops, NULL, "io=
+",
+>                            65536);
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reported-by: Michael Tokarev <mjt@tls.msk.ru>
----
- include/qemu/sockets.h |   1 +
- util/socket-helpers.h  |  17 ++++
- util/qemu-sockets.c    | 199 +--------------------------------------
- util/unix-sockets.c    | 207 +++++++++++++++++++++++++++++++++++++++++
- util/meson.build       |   5 +-
- 5 files changed, 231 insertions(+), 198 deletions(-)
- create mode 100644 util/socket-helpers.h
- create mode 100644 util/unix-sockets.c
+Hi Richard
 
-diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
-index c562690d89..578aef13cf 100644
---- a/include/qemu/sockets.h
-+++ b/include/qemu/sockets.h
-@@ -65,6 +65,7 @@ int inet_connect_saddr(InetSocketAddress *saddr, Error **errp);
- 
- NetworkAddressFamily inet_netfamily(int family);
- 
-+/* part of unix-sockets.c */
- int unix_listen(const char *path, Error **errp);
- int unix_connect(const char *path, Error **errp);
- 
-diff --git a/util/socket-helpers.h b/util/socket-helpers.h
-new file mode 100644
-index 0000000000..f72925148a
---- /dev/null
-+++ b/util/socket-helpers.h
-@@ -0,0 +1,17 @@
-+/*
-+ * Common helper functions for unix and qemu sockets
-+ *
-+ * (c) 2008 Gerd Hoffmann <kraxel@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef _SOCKET_HELPERS_H_
-+#define _SOCKET_HELPERS_H_
-+
-+#include "qapi/qapi-visit-sockets.h"
-+
-+int unix_connect_saddr(UnixSocketAddress *saddr, Error **errp);
-+int unix_listen_saddr(UnixSocketAddress *saddr, int num, Error **errp);
-+
-+#endif /* _SOCKET_HELPERS_H_ */
-diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-index 77477c1cd5..a5c3515082 100644
---- a/util/qemu-sockets.c
-+++ b/util/qemu-sockets.c
-@@ -1,5 +1,5 @@
- /*
-- *  inet and unix socket functions for qemu
-+ *  inet socket functions for qemu
-  *
-  *  (c) 2008 Gerd Hoffmann <kraxel@redhat.com>
-  *
-@@ -30,6 +30,7 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/qobject-output-visitor.h"
- #include "qemu/cutils.h"
-+#include "socket-helpers.h"
- #include "trace.h"
- 
- #ifndef AI_ADDRCONFIG
-@@ -853,202 +854,6 @@ static int vsock_parse(VsockSocketAddress *addr, const char *str,
- }
- #endif /* CONFIG_AF_VSOCK */
- 
--static bool saddr_is_abstract(UnixSocketAddress *saddr)
--{
--#ifdef CONFIG_LINUX
--    return saddr->abstract;
--#else
--    return false;
--#endif
--}
--
--static bool saddr_is_tight(UnixSocketAddress *saddr)
--{
--#ifdef CONFIG_LINUX
--    return !saddr->has_tight || saddr->tight;
--#else
--    return false;
--#endif
--}
--
--static int unix_listen_saddr(UnixSocketAddress *saddr,
--                             int num,
--                             Error **errp)
--{
--    bool abstract = saddr_is_abstract(saddr);
--    struct sockaddr_un un;
--    int sock, fd;
--    char *pathbuf = NULL;
--    const char *path;
--    size_t pathlen;
--    size_t addrlen;
--
--    sock = qemu_socket(PF_UNIX, SOCK_STREAM, 0);
--    if (sock < 0) {
--        error_setg_errno(errp, errno, "Failed to create Unix socket");
--        return -1;
--    }
--
--    if (saddr->path[0] || abstract) {
--        path = saddr->path;
--    } else {
--        path = pathbuf = g_strdup_printf("%s/qemu-socket-XXXXXX",
--                                         g_get_tmp_dir());
--    }
--
--    pathlen = strlen(path);
--    if (pathlen > sizeof(un.sun_path) ||
--        (abstract && pathlen > (sizeof(un.sun_path) - 1))) {
--        error_setg(errp, "UNIX socket path '%s' is too long", path);
--        error_append_hint(errp, "Path must be less than %zu bytes\n",
--                          abstract ? sizeof(un.sun_path) - 1 :
--                          sizeof(un.sun_path));
--        goto err;
--    }
--
--    if (pathbuf != NULL) {
--        /*
--         * This dummy fd usage silences the mktemp() insecure warning.
--         * Using mkstemp() doesn't make things more secure here
--         * though.  bind() complains about existing files, so we have
--         * to unlink first and thus re-open the race window.  The
--         * worst case possible is bind() failing, i.e. a DoS attack.
--         */
--        fd = mkstemp(pathbuf);
--        if (fd < 0) {
--            error_setg_errno(errp, errno,
--                             "Failed to make a temporary socket %s", pathbuf);
--            goto err;
--        }
--        close(fd);
--    }
--
--    if (!abstract && unlink(path) < 0 && errno != ENOENT) {
--        error_setg_errno(errp, errno,
--                         "Failed to unlink socket %s", path);
--        goto err;
--    }
--
--    memset(&un, 0, sizeof(un));
--    un.sun_family = AF_UNIX;
--    addrlen = sizeof(un);
--
--    if (abstract) {
--        un.sun_path[0] = '\0';
--        memcpy(&un.sun_path[1], path, pathlen);
--        if (saddr_is_tight(saddr)) {
--            addrlen = offsetof(struct sockaddr_un, sun_path) + 1 + pathlen;
--        }
--    } else {
--        memcpy(un.sun_path, path, pathlen);
--    }
--
--    if (bind(sock, (struct sockaddr *) &un, addrlen) < 0) {
--        error_setg_errno(errp, errno, "Failed to bind socket to %s", path);
--        goto err;
--    }
--    if (listen(sock, num) < 0) {
--        error_setg_errno(errp, errno, "Failed to listen on socket");
--        goto err;
--    }
--
--    g_free(pathbuf);
--    return sock;
--
--err:
--    g_free(pathbuf);
--    close(sock);
--    return -1;
--}
--
--static int unix_connect_saddr(UnixSocketAddress *saddr, Error **errp)
--{
--    bool abstract = saddr_is_abstract(saddr);
--    struct sockaddr_un un;
--    int sock, rc;
--    size_t pathlen;
--    size_t addrlen;
--
--    if (saddr->path == NULL) {
--        error_setg(errp, "unix connect: no path specified");
--        return -1;
--    }
--
--    sock = qemu_socket(PF_UNIX, SOCK_STREAM, 0);
--    if (sock < 0) {
--        error_setg_errno(errp, errno, "Failed to create socket");
--        return -1;
--    }
--
--    pathlen = strlen(saddr->path);
--    if (pathlen > sizeof(un.sun_path) ||
--        (abstract && pathlen > (sizeof(un.sun_path) - 1))) {
--        error_setg(errp, "UNIX socket path '%s' is too long", saddr->path);
--        error_append_hint(errp, "Path must be less than %zu bytes\n",
--                          abstract ? sizeof(un.sun_path) - 1 :
--                          sizeof(un.sun_path));
--        goto err;
--    }
--
--    memset(&un, 0, sizeof(un));
--    un.sun_family = AF_UNIX;
--    addrlen = sizeof(un);
--
--    if (abstract) {
--        un.sun_path[0] = '\0';
--        memcpy(&un.sun_path[1], saddr->path, pathlen);
--        if (saddr_is_tight(saddr)) {
--            addrlen = offsetof(struct sockaddr_un, sun_path) + 1 + pathlen;
--        }
--    } else {
--        memcpy(un.sun_path, saddr->path, pathlen);
--    }
--    /* connect to peer */
--    do {
--        rc = 0;
--        if (connect(sock, (struct sockaddr *) &un, addrlen) < 0) {
--            rc = -errno;
--        }
--    } while (rc == -EINTR);
--
--    if (rc < 0) {
--        error_setg_errno(errp, -rc, "Failed to connect to '%s'",
--                         saddr->path);
--        goto err;
--    }
--
--    return sock;
--
-- err:
--    close(sock);
--    return -1;
--}
--
--/* compatibility wrapper */
--int unix_listen(const char *str, Error **errp)
--{
--    UnixSocketAddress *saddr;
--    int sock;
--
--    saddr = g_new0(UnixSocketAddress, 1);
--    saddr->path = g_strdup(str);
--    sock = unix_listen_saddr(saddr, 1, errp);
--    qapi_free_UnixSocketAddress(saddr);
--    return sock;
--}
--
--int unix_connect(const char *path, Error **errp)
--{
--    UnixSocketAddress *saddr;
--    int sock;
--
--    saddr = g_new0(UnixSocketAddress, 1);
--    saddr->path = g_strdup(path);
--    sock = unix_connect_saddr(saddr, errp);
--    qapi_free_UnixSocketAddress(saddr);
--    return sock;
--}
--
- char *socket_uri(SocketAddress *addr)
- {
-     switch (addr->type) {
-diff --git a/util/unix-sockets.c b/util/unix-sockets.c
-new file mode 100644
-index 0000000000..e271dd3e09
---- /dev/null
-+++ b/util/unix-sockets.c
-@@ -0,0 +1,207 @@
-+/*
-+ * unix socket functions for qemu
-+ *
-+ * (c) 2008 Gerd Hoffmann <kraxel@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/sockets.h"
-+#include "qapi/error.h"
-+
-+#include "socket-helpers.h"
-+
-+static bool saddr_is_abstract(UnixSocketAddress *saddr)
-+{
-+#ifdef CONFIG_LINUX
-+    return saddr->abstract;
-+#else
-+    return false;
-+#endif
-+}
-+
-+static bool saddr_is_tight(UnixSocketAddress *saddr)
-+{
-+#ifdef CONFIG_LINUX
-+    return !saddr->has_tight || saddr->tight;
-+#else
-+    return false;
-+#endif
-+}
-+
-+int unix_listen_saddr(UnixSocketAddress *saddr, int num, Error **errp)
-+{
-+    bool abstract = saddr_is_abstract(saddr);
-+    struct sockaddr_un un;
-+    int sock, fd;
-+    char *pathbuf = NULL;
-+    const char *path;
-+    size_t pathlen;
-+    size_t addrlen;
-+
-+    sock = qemu_socket(PF_UNIX, SOCK_STREAM, 0);
-+    if (sock < 0) {
-+        error_setg_errno(errp, errno, "Failed to create Unix socket");
-+        return -1;
-+    }
-+
-+    if (saddr->path[0] || abstract) {
-+        path = saddr->path;
-+    } else {
-+        path = pathbuf = g_strdup_printf("%s/qemu-socket-XXXXXX",
-+                                         g_get_tmp_dir());
-+    }
-+
-+    pathlen = strlen(path);
-+    if (pathlen > sizeof(un.sun_path) ||
-+        (abstract && pathlen > (sizeof(un.sun_path) - 1))) {
-+        error_setg(errp, "UNIX socket path '%s' is too long", path);
-+        error_append_hint(errp, "Path must be less than %zu bytes\n",
-+                          abstract ? sizeof(un.sun_path) - 1 :
-+                          sizeof(un.sun_path));
-+        goto err;
-+    }
-+
-+    if (pathbuf != NULL) {
-+        /*
-+         * This dummy fd usage silences the mktemp() insecure warning.
-+         * Using mkstemp() doesn't make things more secure here
-+         * though.  bind() complains about existing files, so we have
-+         * to unlink first and thus re-open the race window.  The
-+         * worst case possible is bind() failing, i.e. a DoS attack.
-+         */
-+        fd = mkstemp(pathbuf);
-+        if (fd < 0) {
-+            error_setg_errno(errp, errno,
-+                             "Failed to make a temporary socket %s", pathbuf);
-+            goto err;
-+        }
-+        close(fd);
-+    }
-+
-+    if (!abstract && unlink(path) < 0 && errno != ENOENT) {
-+        error_setg_errno(errp, errno,
-+                         "Failed to unlink socket %s", path);
-+        goto err;
-+    }
-+
-+    memset(&un, 0, sizeof(un));
-+    un.sun_family = AF_UNIX;
-+    addrlen = sizeof(un);
-+
-+    if (abstract) {
-+        un.sun_path[0] = '\0';
-+        memcpy(&un.sun_path[1], path, pathlen);
-+        if (saddr_is_tight(saddr)) {
-+            addrlen = offsetof(struct sockaddr_un, sun_path) + 1 + pathlen;
-+        }
-+    } else {
-+        memcpy(un.sun_path, path, pathlen);
-+    }
-+
-+    if (bind(sock, (struct sockaddr *) &un, addrlen) < 0) {
-+        error_setg_errno(errp, errno, "Failed to bind socket to %s", path);
-+        goto err;
-+    }
-+    if (listen(sock, num) < 0) {
-+        error_setg_errno(errp, errno, "Failed to listen on socket");
-+        goto err;
-+    }
-+
-+    g_free(pathbuf);
-+    return sock;
-+
-+err:
-+    g_free(pathbuf);
-+    close(sock);
-+    return -1;
-+}
-+
-+int unix_connect_saddr(UnixSocketAddress *saddr, Error **errp)
-+{
-+    bool abstract = saddr_is_abstract(saddr);
-+    struct sockaddr_un un;
-+    int sock, rc;
-+    size_t pathlen;
-+    size_t addrlen;
-+
-+    if (saddr->path == NULL) {
-+        error_setg(errp, "unix connect: no path specified");
-+        return -1;
-+    }
-+
-+    sock = qemu_socket(PF_UNIX, SOCK_STREAM, 0);
-+    if (sock < 0) {
-+        error_setg_errno(errp, errno, "Failed to create socket");
-+        return -1;
-+    }
-+
-+    pathlen = strlen(saddr->path);
-+    if (pathlen > sizeof(un.sun_path) ||
-+        (abstract && pathlen > (sizeof(un.sun_path) - 1))) {
-+        error_setg(errp, "UNIX socket path '%s' is too long", saddr->path);
-+        error_append_hint(errp, "Path must be less than %zu bytes\n",
-+                          abstract ? sizeof(un.sun_path) - 1 :
-+                          sizeof(un.sun_path));
-+        goto err;
-+    }
-+
-+    memset(&un, 0, sizeof(un));
-+    un.sun_family = AF_UNIX;
-+    addrlen = sizeof(un);
-+
-+    if (abstract) {
-+        un.sun_path[0] = '\0';
-+        memcpy(&un.sun_path[1], saddr->path, pathlen);
-+        if (saddr_is_tight(saddr)) {
-+            addrlen = offsetof(struct sockaddr_un, sun_path) + 1 + pathlen;
-+        }
-+    } else {
-+        memcpy(un.sun_path, saddr->path, pathlen);
-+    }
-+    /* connect to peer */
-+    do {
-+        rc = 0;
-+        if (connect(sock, (struct sockaddr *) &un, addrlen) < 0) {
-+            rc = -errno;
-+        }
-+    } while (rc == -EINTR);
-+
-+    if (rc < 0) {
-+        error_setg_errno(errp, -rc, "Failed to connect to '%s'",
-+                         saddr->path);
-+        goto err;
-+    }
-+
-+    return sock;
-+
-+ err:
-+    close(sock);
-+    return -1;
-+}
-+
-+/* compatibility wrapper */
-+int unix_listen(const char *str, Error **errp)
-+{
-+    UnixSocketAddress *saddr;
-+    int sock;
-+
-+    saddr = g_new0(UnixSocketAddress, 1);
-+    saddr->path = g_strdup(str);
-+    sock = unix_listen_saddr(saddr, 1, errp);
-+    qapi_free_UnixSocketAddress(saddr);
-+    return sock;
-+}
-+
-+int unix_connect(const char *path, Error **errp)
-+{
-+    UnixSocketAddress *saddr;
-+    int sock;
-+
-+    saddr = g_new0(UnixSocketAddress, 1);
-+    saddr->path = g_strdup(path);
-+    sock = unix_connect_saddr(saddr, errp);
-+    qapi_free_UnixSocketAddress(saddr);
-+    return sock;
-+}
-diff --git a/util/meson.build b/util/meson.build
-index 1adff96ebd..dbcfbc6542 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -87,7 +87,10 @@ if have_block or have_ga
-   util_ss.add(files(f'coroutine-@coroutine_backend@.c'))
-   util_ss.add(files('thread-pool.c', 'qemu-timer.c'))
- endif
--if have_block or have_ga or have_user
-+if have_user
-+  util_ss.add(files('unix-sockets.c'))
-+endif
-+if have_block or have_ga
-   util_ss.add(files('qemu-sockets.c'))
- endif
- if have_block
--- 
-2.39.5
+As discussed on Friday, I've put test kernel up at https://gitlab.com/jic23=
+/qemu-debug
+It's just a build of mainline as checked out today. I'll commit the kernel =
+config as well
+for information.  Nothing particularly special just a lot of stuff built in=
+ so=20
+you don't need to fuss around with modules in the root fs / initrd etc.
+
+The readme.md file in that repo has instructions to replicate with a typica=
+l setup +
+shell scripts.  Only thing you'll need to install on the mentioned standard=
+ debian nocloud
+image is numactl. Otherwise all cut and paste scripts.
+
+Let me know if this either doesn't work for you (should segfault) on numctl=
+ -m 2 ls
+or there is anything else I can do to help debug this one.
+
+Thanks,
+
+Jonathan
 
 
