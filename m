@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E32AC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 09:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65806C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 09:16:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHJ4J-00069V-Mv; Tue, 20 May 2025 05:15:27 -0400
+	id 1uHJ5I-0007QE-CO; Tue, 20 May 2025 05:16:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uHJ4D-00064v-Oh
- for qemu-devel@nongnu.org; Tue, 20 May 2025 05:15:21 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ id 1uHJ5G-0007Po-DL
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 05:16:26 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uHJ4B-00015T-Bc
- for qemu-devel@nongnu.org; Tue, 20 May 2025 05:15:21 -0400
+ id 1uHJ5D-0001LN-AF
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 05:16:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747732519; x=1779268519;
+ t=1747732583; x=1779268583;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=SuCXeDVanmOZxwbAZxieFAIcVnd5P/ar51uyDNuxbh4=;
- b=MouZnHrKq9LyYIV+uzSiJzbYwvSCCyoVyeLkKYkGOhz/WvdJ3fCoRhBD
- DhNNEvhSw5jJw7siWgavxvWw2SKb80hJdKTZPm7pGB/TjftWQxvTqUDGg
- WhDUSfUI6XdH/8uvJyi4s6zXwY6HIMcHntwQpwyrYQe4IR+2TAdbh2eNX
- WFbOGOXLJQbYxHdFsp0a1iEjPXCHnm5brfaYXKj5bzLIdongmbPzXPNgL
- 4zWASX3+CkT2o/BnLNfNvuVPb7tzFa9vjVO4hGyvnS4YY2mSe9rqmP+h6
- DVsE4dO3MNHPISgU0qK+lXeglpt7Nlfh5SLK2hDFPPYeGu7AmaAP0YuhE g==;
-X-CSE-ConnectionGUID: 3MGXmUG4TPWByq4Tx/VOow==
-X-CSE-MsgGUID: /BqvHFkARcCLALj8F8tjyQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11438"; a="60694835"
-X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="60694835"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2025 02:15:16 -0700
-X-CSE-ConnectionGUID: 92D+BJRcRdKTzBZi7dZDmg==
-X-CSE-MsgGUID: iVqT5wP2QBu+M2Sc20Ycgg==
+ bh=nYEXPMBVl7/L7izbcIJkrd7FavnN9JKEE6sINUw0roI=;
+ b=DBIJgnlAkzaXM2EzE9y4iPcbrYsXKk1dhk/L1lAJ8/x+iVnoBvDN1mK7
+ mhcsB0JcrNhCfNqDuJCSeIcPh1fhC1CHqAwegemX7KSZdkqjNYnX8CbkC
+ FzdZ/ega30e1h0znpowa5LwOC+F8tCd6+dYWRcxVqeuVmp2NZhSxAeLrX
+ yPLZIL4KM0ong8PpdFn1lWH0ZnaO4jUYc2udRgtgNMCn/7Ro4uZHLfM7I
+ d8YkFtVgCDaQFqt7JmggPJQSkh5sKhKDaBNzGp2OnKTsdugV5VzS9nCTP
+ lnKZXP875pBz/by/J8DPG8y39dTzIr1/aeqvQd8SFclc08z98/foBFEqy w==;
+X-CSE-ConnectionGUID: uZt0E8MGRW+TCQ8uXguVZQ==
+X-CSE-MsgGUID: UQPF3D7gS+upkuQjWBIOsg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11438"; a="49585135"
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="49585135"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2025 02:16:21 -0700
+X-CSE-ConnectionGUID: 8t7XY+TySVO524dUyjXVeA==
+X-CSE-MsgGUID: exFb4SQCRXu9dxm/6Z1Ddg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="144758817"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2025 02:15:16 -0700
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="139668011"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2025 02:16:21 -0700
 Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 20 May 2025 02:15:15 -0700
+ 15.2.1544.25; Tue, 20 May 2025 02:16:20 -0700
 Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
  ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Tue, 20 May 2025 02:15:15 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.44) by
+ 15.2.1544.25 via Frontend Transport; Tue, 20 May 2025 02:16:20 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.43) by
  edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.55; Tue, 20 May 2025 02:15:15 -0700
+ 15.1.2507.55; Tue, 20 May 2025 02:16:18 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NeKbgEu3zeg26p3odku4Y48dkId8tJ5bIYF+BZ+itckYS4QdcU+6baEz93aodqK7IikTZfs8gKbrB18uEfaIBhh9yR4VTptrnV4DkNu4kSoH3HKu1Rnl8hAWnfKN+Pkjwdy3fXQwZjXRAqKw12jXlYUirPklHMyENg1ChSfkhuEReChYToUhAX6VAtcHjdOiuJgCc4GLdtWI/MPophM1Ter0K6432JxHp0AEbp4c49EpDiStqRiIbR+ECaFmBCNngETBvP5d5KuR5cQTDBuNEOyAX1VnSf9CnQm2IkSEUj5/+PhdadzE92as3x02P/RGoeJcJKLOG/4Gp/ee8jMqTw==
+ b=sWd8pOgGz+PN0EsRnrCrfc23s0CvgklIrjyYU+q9q9kBZbb0Qv6oYLEDetitU20QVxCpVg5VbSzEWMwlRVrMuE1Hy4NhpZCZiV/U+D0MYwPqowDBgT4SQYJHpPYLrwPAq3Q/ao87M/DDjTiQ4/p5hJQFJ97ElnjSCvVcUnLpG475yiYdOIY2Az+5MT0glO96CqzNGSreL7+qzXZ2jsRneXgpPAvNeKUecqhrTZjAHB6Bt+aOOxsnADf9q3ivBjgIfqSvZkFle2GmY10k2JEhLQeHxQGKc+7CPnc/3w8p0tqpUgQo1FxSYdc7Evo/t9huE1jfF+QOkP2yPwJ50RZ5gg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iAM1HkOteiFj7NVoNgDi32KWoqN+BcoCLFW7rdoS1kM=;
- b=Oo9O8nscXBUeZb7gBQYHWgxjZ4GG+peTwYtcv+r2nHKeZAmjuTuxCLAbkYZesOkK85pkEwOBWZCzuT/xHsXeGQLQOa0byYUrrum4DUHy6sl1PfZ7BCVAe56jl0hcWcFOLqUyJAEdeIQZEMrJplOC1O5leZVil1kxDWHvp8C2jS4Xe2j0RB/80Ri/O1G+A9umVhsQ2JaHnzxsvOKUzznOX27FM3aGB9rIm63KOd6klnhHPNrD+jT0zzy7WLxy8DHzT5YqoZnNTJ8zmIWqXIi+ybwI4HkWO4PN/5UPuehe6mjeriaNpOd8EfEN8Tv9IbUJnrbNSlOG2XzMnZJYMAaUeQ==
+ bh=1PFuSoPmZ5Uck7D8dzr19MneiyDkI1DIBER9M0cQnk8=;
+ b=NCaFuQDCniG5kMguYgkbWn21EpAGTYNLO5yR4fnnA1rOKM9LDTvbYUB6QLBxngg9Zc5jEx5T8Hc5f1MSwpQh8Wci1SXdoeOGcA1xXXjrFLT8XdkWw6Ml6XtMaAKSSlvuibSG1PrJo2AVEdTTd5AVaDKlKcRkAckYM94uuoagOHCO1VFdhgoMmRy3jxbpBXa2TR/ktc7S74CEdgb5Z1B6+SG4wFo9cJH/TBhImJbroMuRXZQrzyB0aCVSvyX2O6CBwVFezVhzmigxjsWVYP8VcjBJdtj5XuxLKLl3BqIpXjp2NWGzvMPw2V5OzG8i/0RR8wWICRtiA4fppYPDyUahpg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by MN0PR11MB6034.namprd11.prod.outlook.com (2603:10b6:208:375::17)
+ by SJ0PR11MB6720.namprd11.prod.outlook.com (2603:10b6:a03:479::20)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.30; Tue, 20 May
- 2025 09:15:12 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.33; Tue, 20 May
+ 2025 09:16:15 +0000
 Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
  ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
  ([fe80::fe49:d628:48b1:6091%4]) with mapi id 15.20.8746.030; Tue, 20 May 2025
- 09:15:12 +0000
+ 09:16:15 +0000
 From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
 To: Steven Sistare <steven.sistare@oracle.com>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
@@ -85,16 +85,16 @@ CC: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
  <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
  Apfelbaum" <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
-Subject: RE: [PATCH V3 36/42] vfio/iommufd: preserve descriptors
-Thread-Topic: [PATCH V3 36/42] vfio/iommufd: preserve descriptors
-Thread-Index: AQHbw1NdfsZ61LQreUmnGCD8bDk2g7PVDE2ggAUZQgCAARLjEA==
-Date: Tue, 20 May 2025 09:15:12 +0000
-Message-ID: <SJ0PR11MB6744E4CA30E811112D7DC9E6929FA@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Subject: RE: [PATCH V3 39/42] vfio/iommufd: reconstruct hwpt
+Thread-Topic: [PATCH V3 39/42] vfio/iommufd: reconstruct hwpt
+Thread-Index: AQHbw1Ng1KGgC3Lc40iButBHzdW5oLPZU1HQgADSZACAARO7UA==
+Date: Tue, 20 May 2025 09:16:15 +0000
+Message-ID: <SJ0PR11MB6744681C4F80BCED61ECACED929FA@SJ0PR11MB6744.namprd11.prod.outlook.com>
 References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-37-git-send-email-steven.sistare@oracle.com>
- <SJ0PR11MB67441B4BA69BF42F30261EB19293A@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <fee4df02-876e-420b-8afa-ca8745c81c1f@oracle.com>
-In-Reply-To: <fee4df02-876e-420b-8afa-ca8745c81c1f@oracle.com>
+ <1747063973-124548-40-git-send-email-steven.sistare@oracle.com>
+ <SJ0PR11MB6744EFD14811E4BAC0C05BE6929CA@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <050ec82e-3cf9-4058-8db5-04f5263c516d@oracle.com>
+In-Reply-To: <050ec82e-3cf9-4058-8db5-04f5263c516d@oracle.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -102,81 +102,82 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|MN0PR11MB6034:EE_
-x-ms-office365-filtering-correlation-id: 9c4a762f-591d-401a-7721-08dd977ed387
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SJ0PR11MB6720:EE_
+x-ms-office365-filtering-correlation-id: dec32922-0371-4f39-a489-08dd977ef901
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?t8qNpa9rOPfYFzDdvdnETmH/myx8ufUizvS2LNYMDfykMMqTY8ZiU26TlBR5?=
- =?us-ascii?Q?K+cj9JLu3Cccf7ZGtwpYYdJnQVN+GL0oGg2Z5jerjlA3nF8xn7p1rYKL0/+z?=
- =?us-ascii?Q?buCzSvSXE0Itf+bqKHarlUCgO157mZKSF509pawUDXGPqdQEtBdKUpmzyO7r?=
- =?us-ascii?Q?CbqMmkAsjXUeN9gIKPEF3Nxa2DkF84/KAQFX19qTPtP9U1wVpF0umxAvz64a?=
- =?us-ascii?Q?v7kCVV733gYf4LWyMXn62nf3azBbIVXTHD/KYZM8zAd7zY2fJ/fHMnUIx2cn?=
- =?us-ascii?Q?6zgs8gQbU1Zxi5lYxQjtvrL6ANVIb/Iqbk6yUAZbW2wIqvHlCPtQBEdNBc4v?=
- =?us-ascii?Q?nwZdLcLJrB8/TpXMh0Q8GtXl3uxVkngzG2rgBvIie35Pk8L+DJXxiA42jxfq?=
- =?us-ascii?Q?rWDUNhvUg8R38QqPPwiakHJlcHGN4isHiwWXx/oPckk2KQb0tz+q2fYKxqLA?=
- =?us-ascii?Q?PFio9HCIMuwt0LsS9glZU+5OBD+5e8ew3hMubLBKf9ewAVSubQVsyGQTNl1Q?=
- =?us-ascii?Q?tDzAh9tKLj+LkdjwKJojNAlfo2RTLXr4YRZQx7xHY0YXsCtmV7W1zNG41p7E?=
- =?us-ascii?Q?Ij0b4bNwuPydq+Hb9iHXsF1jxKb50c3GTufGm3XD3xo/5lrsTp3yr3EGSrwP?=
- =?us-ascii?Q?jK5fYRaZSlQ5I7tSoytV302cQA1lrbRuf9DBXYBy+dq+kQHbCurknd41QaWy?=
- =?us-ascii?Q?56/LMIM/o7MGB5s6TYgP2imlMYE5S3gX5th2gGUCWE1M+v5afqX/jxsh3dYK?=
- =?us-ascii?Q?C4Wuo/N9aaiSGVwQINVKTgkSPp11A2oh2jeNShhZJkSye9zn5cVvEOC+kb9L?=
- =?us-ascii?Q?3YFpFdlgQoh5/io8jsir5+V+407ez729Ktzc9zQEYRQlPDpjE5DxjbIXs0UM?=
- =?us-ascii?Q?eOmmea2KedDvLeQoVucgqw2T+MmdpaU7UFTeuSALPJom/lrdZdOooWwCyd4u?=
- =?us-ascii?Q?YxAsiUJ4fxhjd2nifXBTyBuCF2m0OZh8DXtlv3lR0oWgW5hXnyntjV0c3UIh?=
- =?us-ascii?Q?lxu2D5cMpZ4QtSrvsqdWOHMuL7B4pJhv9Kg5RvdZWrdVpjRtfLXZrbb3J2TB?=
- =?us-ascii?Q?U7MXUqFNiBjJ+FpGKBk+/VrMa65N00gzOZvOFACm93B4XxL7sY/uUZ04K59k?=
- =?us-ascii?Q?jzn6P5FCxGZnibWhS5rRwUHccwpV7gJjOImdV4L+uOaGfEBy5aWiP5MXhs9P?=
- =?us-ascii?Q?EWGjUpB5i8qgyXnZedUZD+NLU5q1Hd3nUudS6SUqNMBhhCd9y82uErtbV431?=
- =?us-ascii?Q?B78CHbW3bJnLkKMhn6B9qIggHt4TtPVirppRVTghkbH0Zt5XaXj5oM1v4oHo?=
- =?us-ascii?Q?+mAzwRBnT0Fb+z1nWECS+1H6Uo8jmEM+HXExKAVAgr4FktUzgpJHeFxfWmuj?=
- =?us-ascii?Q?M2B/WVDR8OapQ5hx+eo428Xe4vucQ7/SGx1TgBwSuCNtB8BVjw98Ag8gNbOH?=
- =?us-ascii?Q?o2L99Q9pQgs5MCpf/KRkpGD39IVJe2CIgwJ95s27Qm3XXdW5XwBU/g=3D=3D?=
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?TFJ2YvDIsHLLobr/2TzW2LIErTQhdRkmclce75061MFaQxAcKoimLlLppCv5?=
+ =?us-ascii?Q?/7VJfVfH6RkZ7X6D/5MTBkXo7VJA9Zt1w9xcTWMcP3zDzqsuETtwHe9s+45C?=
+ =?us-ascii?Q?AVo24EJgR/Nna1jHPub/bgPu8mu+OpuzSJeglAENX8VmZM7Q+oXsSPoEBLbU?=
+ =?us-ascii?Q?Pj3me9dYDh6sOjgQaKfv5SMldtlq13YRUKR+VTpWAMWKjNibyg0bY28r7+x9?=
+ =?us-ascii?Q?+l+/ecCTdCVTd41KB+xyQpDGP7POhBcHN5GxDnVX4/cbadrRpaoJAnLR+7CN?=
+ =?us-ascii?Q?IDKGvVLMr3lUc2+WHq4cmNYo2Va87LHlh8nVZcB21swQ0vnupyLOYLT+4OWP?=
+ =?us-ascii?Q?XRaXTOILI8ar68HWxaCTIMFjbiqte/r3CBM6+QcMUd5u29Wjd5GmGZAwI8NI?=
+ =?us-ascii?Q?bpVzjdp83VDo2cRjvEjmyBnx+TH0RZUxXHfpwUWjBahpDIXglnC9dw8XGp2L?=
+ =?us-ascii?Q?koupvPejd4m2kt++J8PkJhLUCoIvfw8hB85xngjJp5hVOp6aP40A+xasGF8h?=
+ =?us-ascii?Q?fEWKKo6ZTyWt8WahBemYlbFBUNfV/2PBOLMRKImVjcfqYyLUcypLDuAhszXC?=
+ =?us-ascii?Q?j1+z5OjaHQz0PqzxS41RvIT6be95HPuLAMce4akB1fi7X3XdTPtPxZdcKaxX?=
+ =?us-ascii?Q?0YyC7mAQ+DKkaxQsj76xNfhnyx5+tUtUJFYcCsDL1sTAA5oRyixarT84ZbmG?=
+ =?us-ascii?Q?IQGgPHlvKBNEVtxm1f8SxPJQ6kaf/0wSOutqTwQNitkrmE8DvTN79MNVwFMl?=
+ =?us-ascii?Q?R1fV5hDOaCJGbG/1+ZPsOrokAiS4TLmwV1Fv7u0w4YLgYKvKw4OAbalZQoHb?=
+ =?us-ascii?Q?7a3+SybSy//X7enGGJVgaW1HF+u3LiTRq4j9XU0I1M/rgPhjqUxYRtXJ5/1O?=
+ =?us-ascii?Q?JbhgKkjfWsKx+rl9j+pLDySE1jWCw9CvmD/nvFXkRXQwuPR8Zpo/XljF+Dc2?=
+ =?us-ascii?Q?O7FBF6z2fsgS/yOtEJ5Ac11cFC5GY1RglZae7wD8OCEryfWkP3Vrd6FWvIO0?=
+ =?us-ascii?Q?g0V8EXBzOuwEbBTLeGgZlPEkXGrk/IRcD0VgnGPZVpLxHl96tPCkHFAWa6Os?=
+ =?us-ascii?Q?Mv4uCTGiwCBDuZeAvdiwxUjutbKDWcM/R/eWp2xAEsJ0YtxYrdQGc2AtZo95?=
+ =?us-ascii?Q?WUqp+ax5R3p8vdBmW5KIndo7NuboILVbIN0OB+vlabpq/yzPr4Oc1IDOdtlg?=
+ =?us-ascii?Q?Ah6x8ceb78zYlmayLhRRjvw/hHogmvPoyE+Gsb9MUxyaUUPFNWI90JPThdUj?=
+ =?us-ascii?Q?F6HrSBlC6hPVN0k1jTU2QfTvsz00TZX7qgmPGR8fboDRUWD9CrODRCBwV5po?=
+ =?us-ascii?Q?EZpL16XEg9E93XjC02CejQeT60SqtfCxLsSq6R+vlnHBok2jbvxV+kS4xtED?=
+ =?us-ascii?Q?NycQNfwlSr5WSVATHNU86ywKhQlDXJSnt/FdWD8+Xjbzhb/bbpBXTSb79QWz?=
+ =?us-ascii?Q?OOROIpFFg34Czic82NQ0AgPMPck410OFLJ2kqn+XIR60nw3rlQ59JMXva36Z?=
+ =?us-ascii?Q?Z69jnWPtnIrpLBc=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?AxQEEG20AHZK26zn9J6eHzrk2A54mkuABBAOvwdl894OsgvIGjFb8uO5308g?=
- =?us-ascii?Q?duwtALu3FxAndI4EJzKAhDphKBUiiXvQgk2hig2fCtEfue9s48zJi4ke2d+5?=
- =?us-ascii?Q?F4wqRAnhrhkGoPubckRm3gzJVVm1aNd2NkYFr/0zRVhwuGuFNvB4r/AdqMP7?=
- =?us-ascii?Q?1HtspQIJnXwZNWZ82sIP5OmGbfhH96h3+5JxxLaDS6x1opOwzZnPuIeUx7Za?=
- =?us-ascii?Q?O2GEUgMgC/jJUprkDWeYtjcOBVmLHNJ5Y/yBDESot1Ev/lrWWlPdayWuj30E?=
- =?us-ascii?Q?84S7ppc6auPMGp/lV+zSHmbKyVWz2exfOpGV7mb/V4FJk3kcSmCOWHutjDRV?=
- =?us-ascii?Q?FbdfFOXBmViXJMoNJKr0eoHtjTlD+JrI6qKFIgUg1nIUCBu+hmRqUZgGpSA9?=
- =?us-ascii?Q?m3HuUmO7qKlOdq4pSwpDIml0DSCU6FjDbJpRZFwgGCPY3zDvluQqA09RCtFi?=
- =?us-ascii?Q?gMKLG/bcyG0L1xTOD5IQnh0IH6vNX5Ml7FNP1m4XqxY8w20Toxh4vUAXKqK/?=
- =?us-ascii?Q?BtIQN+B+lNy/+4vHDRIXgqadRKGrDgRJmphHPlu1By+1awgalhKRK4xV44ic?=
- =?us-ascii?Q?4U1uwi4FriZpO6iiHuNLBmTvjGu2WRBL/99yg6+wulDsVvzDbbunYFv30+5c?=
- =?us-ascii?Q?gI0VJYrnWR9799tDZWHdLMCAqA8H6n3Iy1fCcgQamaXZw6Cp+bgODQoJyuE1?=
- =?us-ascii?Q?DqLRtX6X1WuPRQZ1nPfufJxA+oeoTdSy5ePDrh2dQbNcD377oZ6MdKbR5e3f?=
- =?us-ascii?Q?7OxNWqSERxNMi7J+m3uyfXEtEQOBoTZTwHq+V7BH2z9Dm0ynWPb0mOnBtNY0?=
- =?us-ascii?Q?paZpIhQu/XFryZES2578dmT2iD1yavZGJx1B1FgpjIZL/Rc5pnxg/3kg6DLv?=
- =?us-ascii?Q?w3l07vf0LPhVxWs6VnS0720N9+lHplLrOudN8bG2OrhupHAaBDxVr8613h01?=
- =?us-ascii?Q?Ln3xFlD9Ycn9p/joFUeunDLIBYlWgE4ic5TbP9/EJyiMWUGQYJYcEd6z4k94?=
- =?us-ascii?Q?sH0qXfCmQXlNNpqrsLsPzjb2ySorDGOuivWrOSiHYRex3ejcyVc1qQMpl2MX?=
- =?us-ascii?Q?lD1yMIuQiBhuaixpLd9k8k9AEw7K1/O8o5ELxxJJ7r2IhWB/aUrWgLb49Xi3?=
- =?us-ascii?Q?m1VYO4Orw/Uv9EozCoX5YZjZimSilxVfiZPTuadA4Qd8PfC1k9HHYZEJWf0j?=
- =?us-ascii?Q?tSM1SwWVmcHDUkzmREGc+byfQvBfkB9TntLdR4mmoTxZff7sm8XrQpIsLiIf?=
- =?us-ascii?Q?D6gC1uaqbjP4SRGr6f3XTxauawEajAXn5snYRzeOz2ym/BTsyBHplIPmI6v5?=
- =?us-ascii?Q?C15NFn/6F3pGQKea3mRST+uK+KjJEQmuzeAEAwmhfHOvBl3sD7mLuwKQoqhe?=
- =?us-ascii?Q?T65b0fSiFWn3K6BaK5TYO20mX/tA3rzT7GzDeeKCnQGuEMxrh0Rd+Gm1xMwU?=
- =?us-ascii?Q?2SLqeIczL5HxZsQrNGaqxACwcLTSrj9cg2S/0GPyH887EMunxCbcyh6skWqo?=
- =?us-ascii?Q?/R6AwMHaxa2Q6Fb+R+C7++3zAhNQXB2XNx7WIp59y+iGq992KIWPVNhSd1Or?=
- =?us-ascii?Q?bSY0oOTn0AkbWcJMVbYJFOXsjJJ3epnJKxFWTqKI?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?IQdshX3vamNSn+BKGG/E6FqtuneY78ybLz+XTUrUZRyQdfr3rRBNKkLyDqcP?=
+ =?us-ascii?Q?5HN0WhPXk1TJMV+5jaQSSQ84WSYhjv0urJXPBetB2yU3UsAFSU7PTCEXTp8I?=
+ =?us-ascii?Q?tE+H4dBu20bIfLb8Od92YiO9MPKoW/GT+3GhHKkh7/1aykwuGEOk+rZmlCL6?=
+ =?us-ascii?Q?87M0vjML3L2eghXlQZ2mHq/9LDZT8NlqlgX5tF89DH1LLC6m/KH0c/19vW7D?=
+ =?us-ascii?Q?exby3ncmcCHinrMDJBwvLnYW3s9srLXEhNemCzj3XhIL3MhbnMtg9UQpO9Cp?=
+ =?us-ascii?Q?h9knv0aiSKXXVbscRTq1FHQR5SBGTMBHzW8sydODZeoGRh67Dlr8cFKN7Bnr?=
+ =?us-ascii?Q?ON1YUmDNjT/gzHT+JsRO9tRzRsKq5a4TrHyMNOqQgy/n7kzdndaNr9Cn5vzb?=
+ =?us-ascii?Q?zMzdp0GAgSHTq1XdAIxGkZzdjdN8mTYm43PTKYtee3n7HjRMx2VFbVwh7Emg?=
+ =?us-ascii?Q?nvTyyea1put1BS3MnTmsDOH62eVXhHAMjYY0+mAqVHhpCNo8qubBcnpKKTEY?=
+ =?us-ascii?Q?E1Y+I7oDBPBD/fNkk/42W7d5BvS3Old2EI5rCjMeDLuZ12EhDLJNd2eUtV4m?=
+ =?us-ascii?Q?9H+kWKM1iYRBlEmoeSV89yGjD31cYLAyNDAdSJ47U3b5f26JL42dBTBBcBjg?=
+ =?us-ascii?Q?qhnf8Iwv4anck1XzmTjlYt+cpF+uk2oVJxaU0Icpx8BS5MV+a+K4nQeyInyq?=
+ =?us-ascii?Q?wfz4C6sU9HVzfI6dcjZP/ol7x6eAIMx1aC6tV23lvhMFVB2MM+uafk0fKYqA?=
+ =?us-ascii?Q?GqoRoNvSq4zZ6Vkdk/fQ5LJi6EIwDcJC088yLu4m5I8n8CMBgqLvmO6C8vR8?=
+ =?us-ascii?Q?Y8hdMCWHeUwNMNZ41a4QQosDShP1XRxWgfEPjH7wDDI7bkDP/tN1MllxPkcf?=
+ =?us-ascii?Q?W/HDFCV7rUfMwSOzNno9Ui7S8ET/yYVC7upjukq9Q+HAgz3AfBlPoeu7LsXf?=
+ =?us-ascii?Q?j+Ejomkq2DhlTeYdEiX4IFRlDcPuTT5ayi4KWCKG2gGEetdAeUcswZcFFctI?=
+ =?us-ascii?Q?JbvMtDjyLbYvl8uf5nq0C/KerjvFE+7cH8Dt+jJXYs7aXyO3pN1ZEIlapW/g?=
+ =?us-ascii?Q?drnwYAAaj1tB9tfcVHEXFSTxS54eLv1DjVKkTFFaxN6uXMEtK4RUCZnanKU7?=
+ =?us-ascii?Q?ePADKv1p0T2Seg89BesePzHPEcmB7SQmnXdnG0SDXBb550TTRma0zE9Qxyoz?=
+ =?us-ascii?Q?p2WprLQIFMp9tHyG+i5gTHRFk62QVZoqkkw2Z+VehaxtseixP55gnY1FJLCd?=
+ =?us-ascii?Q?hjWLcOvG3mmnLbiruVJ/x+9govAy8LedkjaGPPqWSNvZiNODkYp/gnVMCKV9?=
+ =?us-ascii?Q?TmktXVyBvebIVCA459ZXP0YPh4I2VijaolHFMIA3900TeFl6U/6/EOZx81yN?=
+ =?us-ascii?Q?iTZucWeHIrsSDrtlSUN8zoWilgu+bbHr3ZgJ8Td1Fpu/4j4dQwRN7FCUrFvo?=
+ =?us-ascii?Q?+tvStwzTiHlWXSp4ppBYGwqurAEmjUVvluAhlfZw/70oO78ZFTmySWGL+OxU?=
+ =?us-ascii?Q?FJIV7VuCBEBVy6hEjP5jN0dwulEk0YQs99P2BeTr1/UUHF7s0GbAnsTFb+Aa?=
+ =?us-ascii?Q?aw6ARDmVQ0b06Lhac2d/7UpgCPNwUQ863vC1CX3W?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c4a762f-591d-401a-7721-08dd977ed387
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 May 2025 09:15:12.6676 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dec32922-0371-4f39-a489-08dd977ef901
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 May 2025 09:16:15.5584 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ubazBt6550mBHo9cCke19VE098mNhpWdeEwW8tFwk1cFVEq/4UwMOZQrM4raiVWEA03g9wykscqxgeQDrUNBsk9MpR6ZfcqXcL57PDl8W4Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB6034
+X-MS-Exchange-CrossTenant-userprincipalname: 1Aj1Jv1NIZkNnrP4U6apcdOexIXFjVm94YcMSqaPUvnMDiIpZS6HjqUUfGAS4A9lK47yEI/I0XDzNGPipt5bDcFY7SjMsG3rdv0FY0Uhi60=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB6720
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.13;
+Received-SPF: pass client-ip=192.198.163.17;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -205,202 +206,146 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 >-----Original Message-----
 >From: Steven Sistare <steven.sistare@oracle.com>
->Subject: Re: [PATCH V3 36/42] vfio/iommufd: preserve descriptors
+>Subject: Re: [PATCH V3 39/42] vfio/iommufd: reconstruct hwpt
 >
->On 5/16/2025 6:06 AM, Duan, Zhenzhong wrote:
+>On 5/18/2025 11:25 PM, Duan, Zhenzhong wrote:
 >>> -----Original Message-----
 >>> From: Steve Sistare <steven.sistare@oracle.com>
->>> Subject: [PATCH V3 36/42] vfio/iommufd: preserve descriptors
+>>> Subject: [PATCH V3 39/42] vfio/iommufd: reconstruct hwpt
 >>>
->>> Save the iommu and vfio device fd in CPR state when it is created.
->>> After CPR, the fd number is found in CPR state and reused.  Remember
->>> the reused status for subsequent patches.  The reused status is cleared
->>> when vmstate load finishes.
+>>> Save the hwpt_id in vmstate.  In realize, skip its allocation from
+>>> iommufd_cdev_attach -> iommufd_cdev_attach_container ->
+>>> iommufd_cdev_autodomains_get.
+>>>
+>>> Rebuild userland structures to hold hwpt_id by calling
+>>> iommufd_cdev_rebuild_hwpt at post load time.  This depends on hw_caps,
+>which
+>>> was restored by the post_load call to vfio_device_hiod_create_and_reali=
+ze.
 >>>
 >>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 >>> ---
->>> backends/iommufd.c       | 19 ++++++++++---------
->>> hw/vfio/cpr-iommufd.c    | 16 ++++++++++++++++
->>> hw/vfio/device.c         | 10 ++--------
->>> hw/vfio/iommufd.c        | 13 +++++++++++--
->>> include/system/iommufd.h |  1 +
->>> 5 files changed, 40 insertions(+), 19 deletions(-)
->>>
->>> diff --git a/backends/iommufd.c b/backends/iommufd.c
->>> index 6fed1c1..492747c 100644
->>> --- a/backends/iommufd.c
->>> +++ b/backends/iommufd.c
->>> @@ -16,12 +16,18 @@
->>> #include "qemu/module.h"
->>> #include "qom/object_interfaces.h"
->>> #include "qemu/error-report.h"
->>> +#include "migration/cpr.h"
->>> #include "monitor/monitor.h"
->>> #include "trace.h"
->>> #include "hw/vfio/vfio-device.h"
->>> #include <sys/ioctl.h>
->>> #include <linux/iommufd.h>
->>>
->>> +static const char *iommufd_fd_name(IOMMUFDBackend *be)
->>> +{
->>> +    return object_get_canonical_path_component(OBJECT(be));
->>> +}
->>> +
->>> static void iommufd_backend_init(Object *obj)
->>> {
->>>      IOMMUFDBackend *be =3D IOMMUFD_BACKEND(obj);
->>> @@ -47,9 +53,8 @@ static void iommufd_backend_set_fd(Object *obj, const
->>> char *str, Error **errp)
->>>      IOMMUFDBackend *be =3D IOMMUFD_BACKEND(obj);
->>>      int fd =3D -1;
->>>
->>> -    fd =3D monitor_fd_param(monitor_cur(), str, errp);
->>> +    fd =3D cpr_get_fd_param(iommufd_fd_name(be), str, 0, &be->cpr_reus=
-ed,
->errp);
->>>      if (fd =3D=3D -1) {
->>> -        error_prepend(errp, "Could not parse remote object fd %s:", st=
-r);
->>>          return;
->>>      }
->>>      be->fd =3D fd;
->>> @@ -95,14 +100,9 @@ bool iommufd_change_process(IOMMUFDBackend
->*be,
->>> Error **errp)
->>>
->>> bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
->>> {
->>> -    int fd;
->>> -
->>>      if (be->owned && !be->users) {
->>> -        fd =3D qemu_open("/dev/iommu", O_RDWR, errp);
->>> -        if (fd < 0) {
->>> -            return false;
->>> -        }
->>> -        be->fd =3D fd;
->>> +        be->fd =3D cpr_open_fd("/dev/iommu", O_RDWR, iommufd_fd_name(b=
-e),
->0,
->>> +                             &be->cpr_reused, errp);
->>
->> Need to check error before assign to be->fd.
->
->will do.
->
->>>      }
->>>      be->users++;
->>>
->>> @@ -121,6 +121,7 @@ void
->iommufd_backend_disconnect(IOMMUFDBackend
->>> *be)
->>>          be->fd =3D -1;
->>>      }
->>> out:
->>> +    cpr_delete_fd(iommufd_fd_name(be), 0);
->>>      trace_iommufd_backend_disconnect(be->fd, be->users);
->>> }
+>>> hw/vfio/cpr-iommufd.c      |  7 +++++++
+>>> hw/vfio/iommufd.c          | 24 ++++++++++++++++++++++--
+>>> hw/vfio/trace-events       |  1 +
+>>> hw/vfio/vfio-iommufd.h     |  3 +++
+>>> include/hw/vfio/vfio-cpr.h |  1 +
+>>> 5 files changed, 34 insertions(+), 2 deletions(-)
 >>>
 >>> diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
->>> index 46f2006..b760bd3 100644
+>>> index 24cdf10..6d3f4e0 100644
 >>> --- a/hw/vfio/cpr-iommufd.c
 >>> +++ b/hw/vfio/cpr-iommufd.c
->>> @@ -8,6 +8,7 @@
->>> #include "qemu/osdep.h"
->>> #include "qapi/error.h"
->>> #include "hw/vfio/vfio-cpr.h"
->>> +#include "hw/vfio/vfio-device.h"
->>> #include "migration/blocker.h"
->>> #include "migration/cpr.h"
->>> #include "migration/migration.h"
->>> @@ -25,10 +26,25 @@ static bool
->vfio_cpr_supported(VFIOIOMMUFDContainer
->>> *container, Error **errp)
+>>> @@ -110,6 +110,12 @@ static int vfio_device_post_load(void *opaque, int
+>>> version_id)
+>>>          error_report_err(err);
+>>>          return false;
+>>>      }
+>>> +    if (!vbasedev->mdev) {
+>>> +        VFIOIOMMUFDContainer *container =3D container_of(vbasedev-
+>>bcontainer,
+>>> +                                                       VFIOIOMMUFDCont=
+ainer,
+>>> +                                                       bcontainer);
+>>> +        iommufd_cdev_rebuild_hwpt(vbasedev, container);
+>>> +    }
 >>>      return true;
 >>> }
 >>>
->>> +static int vfio_container_post_load(void *opaque, int version_id)
->>> +{
->>> +    VFIOIOMMUFDContainer *container =3D opaque;
->>> +    VFIOContainerBase *bcontainer =3D &container->bcontainer;
->>> +    VFIODevice *vbasedev;
->>> +
->>> +    QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) =
-{
->>> +        vbasedev->cpr.reused =3D false;
->>> +    }
->>> +    container->be->cpr_reused =3D false;
->>
->> It's strange to set iommufd and vfio device's reused in container's post=
- load,
->> Maybe better to do it in their own post load handler?
->
->vfio_container_post_load has MIG_PRI_LOW so it is called last, which guara=
-ntees
->that be->cpr_reused remains true while all devices are loaded.  This is re=
-quired
->so that we supress dma_map calls during device load processing:
->
->   iommufd_backend_map_file_dma()
->     if (be->cpr_reused)
->       return 0;
->
->"vbasedev->cpr.reused =3D false" could be moved to vfio_device_post_load.
->I put it here to be future proof -- al reused flags are cleared together,
->at the end of post_load, and to be consistent with cpr-
->legacy.c:vfio_container_post_load
-
-OK
-
->
->>> +
->>> +    return 0;
->>> +}
->>> +
->>> static const VMStateDescription vfio_container_vmstate =3D {
->>>      .name =3D "vfio-iommufd-container",
->>>      .version_id =3D 0,
->>>      .minimum_version_id =3D 0,
->>> +    .post_load =3D vfio_container_post_load,
+>>> @@ -121,6 +127,7 @@ static const VMStateDescription vfio_device_vmstate
+>=3D {
 >>>      .needed =3D cpr_needed_for_reuse,
 >>>      .fields =3D (VMStateField[]) {
+>>>          VMSTATE_INT32(devid, VFIODevice),
+>>> +        VMSTATE_UINT32(cpr.hwpt_id, VFIODevice),
 >>>          VMSTATE_END_OF_LIST()
->>> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
->>> index 8e9de68..02f384e 100644
->>> --- a/hw/vfio/device.c
->>> +++ b/hw/vfio/device.c
->>> @@ -312,14 +312,8 @@ bool vfio_device_get_name(VFIODevice *vbasedev,
->>> Error **errp)
->>>
->>> void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **=
-errp)
+>>>      }
+>>> };
+>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>> index d980684..ec79c83 100644
+>>> --- a/hw/vfio/iommufd.c
+>>> +++ b/hw/vfio/iommufd.c
+>>> @@ -318,6 +318,7 @@ static bool
+>>> iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
+>>> static void iommufd_cdev_use_hwpt(VFIODevice *vbasedev, VFIOIOASHwpt
+>>> *hwpt)
 >>> {
->>> -    ERRP_GUARD();
->>> -    int fd =3D monitor_fd_param(monitor_cur(), str, errp);
->>> -
->>> -    if (fd < 0) {
->>> -        error_prepend(errp, "Could not parse remote object fd %s:", st=
-r);
->>> -        return;
->>> -    }
->>> -    vbasedev->fd =3D fd;
->>> +    vbasedev->fd =3D cpr_get_fd_param(vbasedev->dev->id, str, 0,
->>> +                                    &vbasedev->cpr.reused, errp);
+>>>      vbasedev->hwpt =3D hwpt;
+>>> +    vbasedev->cpr.hwpt_id =3D hwpt->hwpt_id;
+>>>      vbasedev->iommu_dirty_tracking =3D iommufd_hwpt_dirty_tracking(hwp=
+t);
+>>>      QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
+>>> }
+>>> @@ -373,6 +374,23 @@ static bool iommufd_cdev_make_hwpt(VFIODevice
+>>> *vbasedev,
+>>>      return true;
+>>> }
+>>>
+>>> +void iommufd_cdev_rebuild_hwpt(VFIODevice *vbasedev,
+>>> +                               VFIOIOMMUFDContainer *container)
+>>> +{
+>>> +    VFIOIOASHwpt *hwpt;
+>>> +    int hwpt_id =3D vbasedev->cpr.hwpt_id;
+>>> +
+>>> +    trace_iommufd_cdev_rebuild_hwpt(container->be->fd, hwpt_id);
+>>> +
+>>> +    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
+>>> +        if (hwpt->hwpt_id =3D=3D hwpt_id) {
+>>> +            iommufd_cdev_use_hwpt(vbasedev, hwpt);
+>>> +            return;
+>>> +        }
+>>> +    }
+>>> +    iommufd_cdev_make_hwpt(vbasedev, container, hwpt_id, false, NULL);
+>>> +}
+>>> +
+>>> static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>>>                                           VFIOIOMMUFDContainer *contain=
+er,
+>>>                                           Error **errp)
+>>> @@ -567,7 +585,8 @@ static bool iommufd_cdev_attach(const char *name,
+>>> VFIODevice *vbasedev,
+>>>              vbasedev->iommufd !=3D container->be) {
+>>>              continue;
+>>>          }
+>>> -        if (!iommufd_cdev_attach_container(vbasedev, container, &err))=
+ {
+>>> +        if (!vbasedev->cpr.reused &&
+>>> +            !iommufd_cdev_attach_container(vbasedev, container, &err))=
+ {
+>>>              const char *msg =3D error_get_pretty(err);
+>>>
+>>>              trace_iommufd_cdev_fail_attach_existing_container(msg);
+>>> @@ -605,7 +624,8 @@ skip_ioas_alloc:
+>>>      bcontainer =3D &container->bcontainer;
+>>>      vfio_address_space_insert(space, bcontainer);
+>>>
+>>> -    if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
+>>> +    if (!vbasedev->cpr.reused &&
+>>> +        !iommufd_cdev_attach_container(vbasedev, container, errp)) {
 >>
->> Same here.
+>> All container attaching is bypassed in new qemu. I have a concern that n=
+ew
+>qemu doesn't generate same containers as old qemu if there are more than o=
+ne
+>container in old qemu.
+>> Then there can be devices attached to wrong container or attaching fail =
+in post
+>load.
 >
->Do you mean, "need to check error"?
->If so, no need.  The new function definition is:
->
->void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **err=
-p)
->{
->     vbasedev->fd =3D cpr_get_fd_param(vbasedev->dev->id, str, 0,
->                                     &vbasedev->cpr.reused, errp);
->}
->
->cpr_get_fd_param() returns -1 on error and sets errp.
+>Yes, this relates to our discussion in patch 35.  Please explain, how can =
+a single
+>iommufd backend have multiple containers?
 
-OK.
+Similar as legacy container, there can be multiple containers in one addres=
+s space.
+If existing mapping in one container conflicts with new device's reserved r=
+egion,
+Attaching to that container will fail and a new container need to be create=
+d to accept new device's reserved region.
+
+Maybe you need to do same thing just like you do for legacy container, e.g.=
+, saving  ioas_id just like you saving container->fd, then checking existin=
+g ioas_id and restore iommufd container based on that.
 
 Zhenzhong
 
