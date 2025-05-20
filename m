@@ -4,67 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297CDC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 14:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E10C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 14:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHNWo-0005oI-Ce; Tue, 20 May 2025 10:01:10 -0400
+	id 1uHNYr-0006kr-GA; Tue, 20 May 2025 10:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uHNWm-0005nn-9O
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:01:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uHNYo-0006ke-MV
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 10:03:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uHNWh-0006RY-CK
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:01:07 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uHNYn-0006j9-2P
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 10:03:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747749660;
+ s=mimecast20190719; t=1747749790;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M6qAKxXdncRTcXYVwtyYa9UW/kyXYPPYjM085agxNVg=;
- b=Hipkv7MQvK1xH/3zK4YgO1NrGP3yKsu54OCQUaqVJ9t2WgRy6cshurIrqp1iumP17GhilF
- eTEuT66iulPCcNqU/daME1YUacgoApgT8XA59Byve2md0jvrnJWPZgfiyqzKrPs44hEt7Y
- A/TGEerYMnOf9FDeLQ8zKSk6yqV2DB4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-502-eIRM1W55O0KgfVKvvbDe9w-1; Tue,
- 20 May 2025 10:00:58 -0400
-X-MC-Unique: eIRM1W55O0KgfVKvvbDe9w-1
-X-Mimecast-MFC-AGG-ID: eIRM1W55O0KgfVKvvbDe9w_1747749657
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A0D01800995; Tue, 20 May 2025 14:00:57 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.246])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2166D19560AB; Tue, 20 May 2025 14:00:56 +0000 (UTC)
-Date: Tue, 20 May 2025 10:00:55 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>
-Subject: Re: iotest 240 is failing
-Message-ID: <20250520140055.GB82528@fedora>
-References: <20250311160021.349761-1-kwolf@redhat.com>
- <20250311160021.349761-21-kwolf@redhat.com>
- <a6b01ce7-e1a0-46bc-8c12-f3e439486f82@redhat.com>
- <8cb149ee-57fe-4e67-8ab9-f95244ebcb33@redhat.com>
- <a0d4dd1b-19e8-4b18-85c3-57f867993d69@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=kfJ1CUNE+y3P1pd1MzJ/hBSfO0c+3nAa4wj5doSQMSc=;
+ b=LDsoVXmQxWRTeSaxXXa8stiYvukOoMhV4T7G1u+anZYirK8NvO19R93FUtdSUMx+5DUwAx
+ 8xGKTqEw3tpjdoeOeMqPZP9U1nua29FAJPziWAFctfkr3b+H2YgZegemQBMjjWN6EnQ3U2
+ YAxYr6hZU9UtT43ypZRwgpJSNJZjG1c=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-413-4aSdhzwdObmduVxVHv7tJw-1; Tue, 20 May 2025 10:03:09 -0400
+X-MC-Unique: 4aSdhzwdObmduVxVHv7tJw-1
+X-Mimecast-MFC-AGG-ID: 4aSdhzwdObmduVxVHv7tJw_1747749788
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-601a1d9406aso1148590a12.1
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 07:03:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747749788; x=1748354588;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kfJ1CUNE+y3P1pd1MzJ/hBSfO0c+3nAa4wj5doSQMSc=;
+ b=WYJZtu1M82M+Dp11EmGJEA1JUVGwUXbBYJHG7gpZ5TZsBFEB9RvXcNwKUkzWSlI4Mt
+ tms2Fp9MCx4ef/D1slO79pyYOBDUmM3vro4wEFPxOLarNSPOQPrnIdbzmro7eNM93jqq
+ XXZY/8sBeHs96q+lpTc/gqwWZF5P5q7PDqGHAtIARNlgS/UuHddge7lWlQpsyebihCdn
+ w26AywS7jU6y494PJ86GOSemhuK9rRK3bqQYTb5AhuYmhj1okISe1CBQqyRoy9zq4ap4
+ jDgFY1yjA93btCEcKazmmS8PJv5ZFAOxVxdnVVlTzT5VSObiErikakr9CwFJTSzvszTd
+ Jikw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWA+1RAxlPWkyOZNIgH5+i6A5/dfhyGuef2cRI7QkyLfWLMkE28havla/K1YJK5okOXlzEzuN3b6rGD@nongnu.org
+X-Gm-Message-State: AOJu0Yy5HageQ5DATeodVyvo2JuAumTaKCT0qAwwXGjWoWARXWfg6NKi
+ X0lXWALL36FMNLByYixbp8A6IbccvAUf5oyd9HP8p/4/iRxtbB2sRAIEbgFG8RfCjUhSEjUJiCv
+ dl//xAz6YNGARK0Y5hZAwicSzs2B3MOSfVnCxqgo4v6lKENojAWjKG85X
+X-Gm-Gg: ASbGnctTeilQAFd2EqmUGRYQmO5bBUKUIjqcyb2PTeq5E9J/K6BJOXAqf4tret2WSjH
+ PwXC3G+YgEWDbik2Mwqh6oHcttbKLkYFKyNDeFeUZAlzliFLBYSOYmqQLrAFpkehn90K+0vjaw2
+ 9WoucI7mhJA19a1/fM1eQ68WajOzV5xRD9QoNRhYdaLngVOxzFO8wpWzRh/zwep6cWZaKp+XVVL
+ C3kFQ5q3ZwI/37dqXG/0HsiN3i0VhY+LXko9k399C+MiJyfFdLuNFoUtLQA6qRYi6/v5kcE/7PT
+ t32CN+9v2vdm+Q==
+X-Received: by 2002:a05:6402:27d2:b0:601:b0a6:f08c with SMTP id
+ 4fb4d7f45d1cf-601b0a6f3fcmr9868242a12.33.1747749788111; 
+ Tue, 20 May 2025 07:03:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWXxlomN126QmdpoCUoKe2NsIbeM88QMF70EWPvvrnCcu5ornMSDfHowcLHpD0+3bLL52E3A==
+X-Received: by 2002:a05:6402:27d2:b0:601:b0a6:f08c with SMTP id
+ 4fb4d7f45d1cf-601b0a6f3fcmr9868157a12.33.1747749787225; 
+ Tue, 20 May 2025 07:03:07 -0700 (PDT)
+Received: from [192.168.10.81] ([151.95.46.79])
+ by smtp.googlemail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6004d501f7asm7204189a12.19.2025.05.20.07.03.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 May 2025 07:03:06 -0700 (PDT)
+Message-ID: <4378830e-7bd9-4b88-bf4a-e061399f1f0b@redhat.com>
+Date: Tue, 20 May 2025 16:03:04 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="dkzpZjQjVb/GMvBL"
-Content-Disposition: inline
-In-Reply-To: <a0d4dd1b-19e8-4b18-85c3-57f867993d69@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 19/25] target/i386/mshv: Set local interrupt
+ controller state
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
+ <rbolshakov@ddn.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+ <20250520113018.49569-20-magnuskulke@linux.microsoft.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250520113018.49569-20-magnuskulke@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -73,7 +141,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,94 +157,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+These:
 
---dkzpZjQjVb/GMvBL
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +/* Defines poached from apicdef.h kernel header. */
+> +static u_int32_t APIC_MODE_NMI = 0x4;
+> +static u_int32_t APIC_MODE_EXTINT = 0x7;
 
-On Fri, May 16, 2025 at 09:21:32AM +0200, Thomas Huth wrote:
-> On 24/04/2025 11.39, Thomas Huth wrote:
-> > On 26/03/2025 11.43, Thomas Huth wrote:
-> > > On 11/03/2025 17.00, Kevin Wolf wrote:
-> > > > From: Stefan Hajnoczi <stefanha@redhat.com>
-> > > >=20
-> > > > Allow virtio-scsi virtqueues to be assigned to different IOThreads.=
- This
-> > > > makes it possible to take advantage of host multi-queue block layer
-> > > > scalability by assigning virtqueues that have affinity with vCPUs to
-> > > > different IOThreads that have affinity with host CPUs. The same fea=
-ture
-> > > > was introduced for virtio-blk in the past:
-> > > > https://developers.redhat.com/articles/2024/09/05/scaling-virtio-bl=
-k-
-> > > > disk- io-iothread-virtqueue-mapping
-> > >=20
-> > > =A0=A0Hi Stefan!
-> > >=20
-> > > This patch seems to cause some troubles with iotest 240 in raw (and
-> > > some other) mode:
-> > >=20
-> > > 240=A0=A0 fail=A0=A0=A0=A0=A0=A0 [11:41:33] [11:41:34]=A0=A0 0.8s=A0=
-=A0 (last: 0.8s)=A0 output
-> > > mismatch (see tests/qemu-iotests/scratch/raw-file-240/240.out.bad)
-> > > --- tests/qemu-iotests/240.out
-> > > +++ tests/qemu-iotests/scratch/raw-file-240/240.out.bad
-> > > @@ -46,11 +46,11 @@
-> > > =A0=A0{"execute": "device_add", "arguments": {"bus": "scsi0.0", "driv=
-e":
-> > > "hd0", "driver": "scsi-hd", "id": "scsi-hd0"}}
-> > > =A0=A0{"return": {}}
-> > > =A0=A0{"execute": "device_add", "arguments": {"bus": "scsi1.0", "driv=
-e":
-> > > "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
-> > > -{"error": {"class": "GenericError", "desc": "Cannot change iothread
-> > > of active block backend"}}
-> > > +{"return": {}}
-> > > =A0=A0{"execute": "device_del", "arguments": {"id": "scsi-hd0"}}
-> > > =A0=A0{"return": {}}
-> > > =A0=A0{"execute": "device_add", "arguments": {"bus": "scsi1.0", "driv=
-e":
-> > > "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
-> > > -{"return": {}}
-> > > +{"error": {"class": "GenericError", "desc": "Duplicate device ID
-> > > 'scsi- hd1'"}}
-> > > =A0=A0{"execute": "device_del", "arguments": {"id": "scsi-hd1"}}
-> > > =A0=A0{"return": {}}
-> > > =A0=A0{"execute": "blockdev-del", "arguments": {"node-name": "hd0"}}
-> > > Failures: 240
-> > > Failed 1 of 1 iotests
-> > >=20
-> > > Could you please have a look?
-> >=20
-> > Ping!
-> >=20
-> > The problem still persists in QEMU 10.0 :-(
->=20
-> Ping^2 !
->=20
-> It's still failing. Could anybody please have a look?
+are available in other QEMU headers (search for APIC_DM_NMI, 
+APIC_DM_EXTINT).
 
-Hi Thomas,
-I will take a look on Thursday.
+Also they should have been #defines rather than statics; and also these 
+nearby ones from patch 21 should be #defines in cpu.h instead of being here:
 
-Stefan
+> +/* IA32_MTRR_DEF_TYPE MSR: E (MTRRs enabled) flag, bit 11 */
+> +static u_int64_t MTRR_ENABLE = 0x800;
+> +static u_int64_t MTRR_MEM_TYPE_WB = 0x6;
+> +
 
---dkzpZjQjVb/GMvBL
-Content-Type: application/pgp-signature; name=signature.asc
 
------BEGIN PGP SIGNATURE-----
+Thanks,
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgsixcACgkQnKSrs4Gr
-c8hVnQgAk32ie8eW3Pddo78xhbi4UB8AxOV94iE90SujMuCPOlcd2kPt2EMR60TF
-d1vtnfhOQiWdIYMZ/TUo0KDIgrWsdfuKZXgzykpp01AoYWelizgO+xA8AyWcE2P1
-HFpCXeJgpoDRJ328l3eRFbCGgxMuwXBBgePq1CWvr9vmbAELNl+8e8qfYDUgAnH5
-M7mQj/Rdi2d4TSs05JC5zViRYhGYPnkD+KNzXwhaRLDsarOmuiLsS1vAqBsYwooc
-nOf5Z2q0CtKKfnmT3w0ei5m0U/nU6sbazPn25lziKOHtb1GY9p6sk6VecFhJRSTg
-cKlZKrCZAbuToeX9uXtH3CkaLZR4xg==
-=eaJO
------END PGP SIGNATURE-----
-
---dkzpZjQjVb/GMvBL--
+Paolo
 
 
