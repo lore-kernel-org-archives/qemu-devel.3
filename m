@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE54C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 12:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB40FC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 12:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHMSh-0000mQ-Ho; Tue, 20 May 2025 08:52:51 -0400
+	id 1uHMSS-0000hL-An; Tue, 20 May 2025 08:52:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMSf-0000lj-HM; Tue, 20 May 2025 08:52:49 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1uHMSQ-0000fz-Og; Tue, 20 May 2025 08:52:34 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMSd-0000jj-40; Tue, 20 May 2025 08:52:49 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-306b6ae4fb2so4489590a91.3; 
- Tue, 20 May 2025 05:52:45 -0700 (PDT)
+ id 1uHMSN-0000g8-Vp; Tue, 20 May 2025 08:52:34 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-30820167b47so4510967a91.0; 
+ Tue, 20 May 2025 05:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747745564; x=1748350364; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747745547; x=1748350347; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p6Z5PLd1E/Owph8lAEt4RDxXTFlaySbmORvNcNjfV1I=;
- b=Q1tT0WNUwH+JTbdmAESN1DVQEuZ9kVJMKfCWJfOL4AwIvBmxjNMedMtm2IvKkdER0c
- OqKfiyfeowoIoxcvDgQVqDjW1ZR4VNJwZLXjFA5+GfMxqVxLYBZV3VMOnFhXmTa6tQBj
- 2s0CZIv0JYGL8qfixq/ZN7FVHVGTN2GWHW0KbzyvXdrw6VOtleVUyn5rS/slL5pAgRj7
- Ebqc3UBreBbu3vaxkkohoBp5wqFv5cFmWIg2szcd8X83+3y4SDkN8Ii26DAKgGzKYxR8
- vrRedEGn2sKg21dawM0nneWCyFdMOM/fCS6n8vGzNcvJZWh58WWdWyxBvCgmx/SGYiHa
- +J7g==
+ bh=YCCbP2uzO+MJ8NbcqqepaB7q1+AuafpCtigscHDquGQ=;
+ b=IQGi1tifn3QhPTv/JIGKD0pYM3ppL4DvQDHPaLqlK0jq8VNwfQDq/s0BU+plW+IQVA
+ t7fyc82jjZKUNWe+Juz1nhr+37CiJhTjeia1D7rtBrxTjcIY/BKZcC+76lsUO0dN5PPe
+ uvwzwFvvj5XyHu5/vx896JNVC1Fr4zVLA20Wv4GByJEqT7FHFYljHHO2dBROc2rIBbGX
+ /qSjh19Gs5/4cFAPYfTG17iL4fY99UILST93Fey8yADI0TIxX5cjR6zPH3/UstD+wQsx
+ gjzblLpsSAkPDaHWF8BC7xtn5eN0o6eBL9WOZibHFDxh/b1eteV1dhhvMRQb/OCLHyX1
+ oWaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747745564; x=1748350364;
+ d=1e100.net; s=20230601; t=1747745547; x=1748350347;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=p6Z5PLd1E/Owph8lAEt4RDxXTFlaySbmORvNcNjfV1I=;
- b=W6B0ofh30IyEt1ejo53hSEiOmQ4FjYcicnY/pmoYz7ETE9gWMhESHIj7re+P3Op22c
- jkB9loR1/B86e7A+5uSrRLLdMrjpJxtd8QujYYf5meckQBn8/7UPkWPray1zhM712VTG
- BqeZb7WwpbWhUTryv8RsBR5eUUuCfi4TyUbqwLNNIGXCUZvm89+6e1HSHBhEwwb5RqOZ
- gdkdRRkOb49ZqEd/QlFtGSy7QGF3WMDXOleYXMhXI2i1jri1yIG6Cc9wsuQwNqBuJU1i
- 0BJ62/deDnd5wXUJIIlKctgdJ6EZFUEsdtK2Jkzjsgey3tMd23jRM5j5tV/mBEcVwaAY
- uPTQ==
+ bh=YCCbP2uzO+MJ8NbcqqepaB7q1+AuafpCtigscHDquGQ=;
+ b=v6c2bXLgVX1t0zm35HFkS1ncD3Fhowh0+MbbL6I86pSYKjmjkhV5CUXaCxW54OH/zi
+ 6tpi/KEy8Kr53k7ujwTtD1RU30iZrHVAl/z5IdWpgl/GCFGBS0UX/ADv8s/wJ3DVA3/r
+ v+swvm+x0MX7dTaveKvR5Ed8H32uAvMyj2ExNeefT4ceXIhUxhvsO0GlkClYFPPBgbfT
+ IVmnhTzID8BZoIjKdB5XqdYHr+b1snxyitlz0zS839kMsxuyqe4ZMUb4+PFL9kOh5Vwu
+ aezfYAvjOqiawDtrxcYVWzk170K1kFpU7Npt2DqoMfFdrLbqnaKVTXex8JETk0d0qXsl
+ yQEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSoVGFtUKP34nT9xGNlUKau+6LtoJ6iBH70I+EwmbldoinIF0aOX9d90xo3UJSNyXgAFs+ddYkYnd0Og==@nongnu.org,
- AJvYcCWuNIJiaJ68+RofakNlBcA668bEmtcXeBDT1Y7YLz7KeTYQA7zBNpQ1rTrE4Oy0AQj3r2ylbuSvFg==@nongnu.org
-X-Gm-Message-State: AOJu0Yw3sO7bpIbbFcxyHhdAeUs+PoVIAMfSJ5FnrfRKOCJVQJyHt1NM
- xcLL5b+dSNEhnlPgbYptvXpr3RZ4Z/BYL12cMeSXop9I8/9W/f1GKCpAvR7qcVek
-X-Gm-Gg: ASbGncsj+Q00nPmdUcfawA7nMzoizUrh3RbDB1LcAHxun2Bm9qs9V1yAsrTSNscGYNH
- flu9IYqpi5YpSTEfyqduSPxjk4R/bceAUsMpHDlb1Zwh4ZZDE8DFUyXUcYlG3OsrbkYdMSVYDPy
- t1LWAZ/Yw5eCSujUb3jWikjE2oL7OyiSwYPNvXk7yNIPnduyu+siphWCoyJmYL4MVzd8jI0kneM
- lcyq1U8GjMqMFa5kDGr1LQFHfzoVvVvPh6zjLvVoG2IO28G9n5gaDIki62ycyYqfyhSL+YiOqG+
- ZzNgEq5u8g+a7oJM/E6sN1jfpriwfOAjGoz8DlPdMu5Uuv+44ug=
-X-Google-Smtp-Source: AGHT+IGav8G7VTphYSuRGrIc749qNZXTTFQq2XCpKhtKKY5hmmw6L/nazwAm2gCLphSuQxNyXadgJA==
-X-Received: by 2002:a17:90a:e7cf:b0:30a:9025:84d1 with SMTP id
- 98e67ed59e1d1-30e7d558d59mr29217944a91.16.1747745564197; 
- Tue, 20 May 2025 05:52:44 -0700 (PDT)
+ AJvYcCVw4xUqM2kFwUbheN6e/TPBC1qthK8UB2XjhQBcLjp8KF790+i5HGmpnT3qiOe0Bg7w6hB3dLuNMTgVgg==@nongnu.org,
+ AJvYcCW9Q3Nn2u5apX2EKeV5zaxEspGLCaKvOx6hM8PtSrU2yUCVAdOxwHZKbN70KgGa3T8WpMdhMXSWBA==@nongnu.org
+X-Gm-Message-State: AOJu0Yy1U2waPBo/EbRKsGmT0GfgOuEMD/P8LEjRq18dAvhRZaJ7z1a4
+ oyLJ826bVhQG/OZJ9fgUMNjYrge0NZFDjLmY7ZYkFdrYrHsLl5M5YwEwroxY20Eo
+X-Gm-Gg: ASbGncvI34Ipbn0fisJZnW7gncMcxUdFFMX5IeQPK0AUBWTWiVGVX3i3u7X5mHr/l0C
+ blGyYchwzqwhQa/IgjKTezM8W0bCcOEWBhUVFxQ8QE1Ysy3kqV2ijZ8sM85WlFV2PBz/iVecHM+
+ EncnzWlGwKZtKPYjp5rFjk8NkCZkODjibmO9Jl8lPU0Guj4a9WLa7Jz+N6JQVLpwWeWdClzlS3+
+ r9/ggBgWVjZwBDdfVS0RYdI8l5n9XB7Kh7K9y0zv0UPI1hxHVQgCEmCoUvvTa3qS5N0kB9eMKEx
+ nqEEviulfFwP8eTBYmt+p4+Z+GsH84u0nC0/RGI+YZBVoH4Gd7c=
+X-Google-Smtp-Source: AGHT+IEjBag9dXZJu+xHTsTGS7j8HoI7T587dh1AvKbVfugRzu2h05FUzil69GsAslX9TWOh2Ke26Q==
+X-Received: by 2002:a17:90a:e7c2:b0:30e:8e0f:9bfc with SMTP id
+ 98e67ed59e1d1-30e8e0f9f15mr21819390a91.13.1747745547437; 
+ Tue, 20 May 2025 05:52:27 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:1bde:8310:e993:5dcc])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.52.38
+ 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.52.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 05:52:43 -0700 (PDT)
+ Tue, 20 May 2025 05:52:26 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -81,16 +81,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH 05/33] tcg/wasm32: Add and/or/xor instructions
-Date: Tue, 20 May 2025 21:51:07 +0900
-Message-ID: <582f109d49c5ef294ce7ad55ac75466f3128431a.1747744132.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 02/33] tcg/wasm32: Do not use TCI disassembler in Wasm backend
+Date: Tue, 20 May 2025 21:51:04 +0900
+Message-ID: <ab67d558ed437ae7bbeb00721aca1e1aa1260c61.1747744132.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1747744132.git.ktokunaga.mail@gmail.com>
 References: <cover.1747744132.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,201 +113,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit implements and, or and xor operations using Wasm
-instructions. Each TCG variable is mapped to a 64bit Wasm variable. In Wasm,
-and/or/xor instructions operate on values by first pushing the operands into
-the Wasm's stack using get instructions. The result is left on the stack and
-this can be assigned to a variable by popping it using a set instruction.
-
-The Wasm binary format is documented at [1]. In this backend, TCI
-instructions are emitted to s->code_ptr, while the corresponding Wasm
-instructions are generated into a separated buffer allocated via
-tcg_malloc(). These two code buffers must be merged into the final code
-buffer before tcg_gen_code returns.
-
-[1] https://webassembly.github.io/spec/core/binary/index.html
+Wasm backend should implement its own disassember for Wasm
+instructions.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- tcg/wasm32/tcg-target.c.inc | 137 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 136 insertions(+), 1 deletion(-)
+ tcg/wasm32.c | 243 +--------------------------------------------------
+ 1 file changed, 1 insertion(+), 242 deletions(-)
 
-diff --git a/tcg/wasm32/tcg-target.c.inc b/tcg/wasm32/tcg-target.c.inc
-index 126f9c0de7..e3a35c8415 100644
---- a/tcg/wasm32/tcg-target.c.inc
-+++ b/tcg/wasm32/tcg-target.c.inc
-@@ -98,6 +98,138 @@ static const char *const tcg_target_reg_names[TCG_TARGET_NB_REGS] = {
- };
- #endif
- 
-+/* converts a TCG register to a wasm variable index */
-+static const uint8_t tcg_target_reg_index[TCG_TARGET_NB_REGS] = {
-+    0,  /* TCG_REG_R0 */
-+    1,  /* TCG_REG_R1 */
-+    2,  /* TCG_REG_R2 */
-+    3,  /* TCG_REG_R3 */
-+    4,  /* TCG_REG_R4 */
-+    5,  /* TCG_REG_R5 */
-+    6,  /* TCG_REG_R6 */
-+    7,  /* TCG_REG_R7 */
-+    8,  /* TCG_REG_R8 */
-+    9,  /* TCG_REG_R9 */
-+    10, /* TCG_REG_R10 */
-+    11, /* TCG_REG_R11 */
-+    12, /* TCG_REG_R12 */
-+    13, /* TCG_REG_R13 */
-+    14, /* TCG_REG_R14 */
-+    15, /* TCG_REG_R15 */
-+};
-+
-+#define BUF_SIZE 1024
-+typedef struct LinkedBuf {
-+    struct LinkedBuf *next;
-+    uint8_t data[BUF_SIZE];
-+    uint32_t size;
-+} LinkedBuf;
-+
-+static LinkedBuf *new_linked_buf(void)
-+{
-+    LinkedBuf *p = tcg_malloc(sizeof(LinkedBuf));
-+    p->size = 0;
-+    p->next = NULL;
-+    return p;
-+}
-+
-+static inline LinkedBuf *linked_buf_out8(LinkedBuf *buf, uint8_t v)
-+{
-+    if (buf->size == BUF_SIZE) {
-+        buf->next = new_linked_buf();
-+        buf = buf->next;
-+    }
-+    buf->data[buf->size++] = v;
-+    return buf;
-+}
-+
-+static inline int linked_buf_len(LinkedBuf *buf)
-+{
-+    int total = 0;
-+    for (LinkedBuf *p = buf; p; p = p->next) {
-+        total += p->size;
-+    }
-+    return total;
-+}
-+
-+static inline void linked_buf_write(LinkedBuf *buf, void *dst)
-+{
-+    for (LinkedBuf *p = buf; p; p = p->next) {
-+        memcpy(dst, p->data, p->size);
-+        dst += p->size;
-+    }
-+}
-+
-+/*
-+ * wasm code is generataed in the dynamically allocated buffer which
-+ * are managed as a linked list.
-+ */
-+__thread LinkedBuf *sub_buf_root;
-+__thread LinkedBuf *sub_buf_cur;
-+
-+static void init_sub_buf(void)
-+{
-+    sub_buf_root = new_linked_buf();
-+    sub_buf_cur = sub_buf_root;
-+}
-+
-+static inline int sub_buf_len(void)
-+{
-+    return linked_buf_len(sub_buf_root);
-+}
-+
-+static inline void tcg_wasm_out8(TCGContext *s, uint32_t v)
-+{
-+    sub_buf_cur = linked_buf_out8(sub_buf_cur, v);
-+}
-+
-+static void tcg_wasm_out_op_i64_and(TCGContext *s)
-+{
-+    tcg_wasm_out8(s, 0x83);
-+}
-+static void tcg_wasm_out_op_i64_or(TCGContext *s)
-+{
-+    tcg_wasm_out8(s, 0x84);
-+}
-+static void tcg_wasm_out_op_i64_xor(TCGContext *s)
-+{
-+    tcg_wasm_out8(s, 0x85);
-+}
-+static void tcg_wasm_out_op_var(TCGContext *s, uint8_t instr, uint8_t i)
-+{
-+    tcg_wasm_out8(s, instr);
-+    tcg_wasm_out8(s, i);
-+}
-+static void tcg_wasm_out_op_global_get(TCGContext *s, uint8_t i)
-+{
-+    tcg_wasm_out_op_var(s, 0x23, i);
-+}
-+static void tcg_wasm_out_op_global_set(TCGContext *s, uint8_t i)
-+{
-+    tcg_wasm_out_op_var(s, 0x24, i);
-+}
-+static void tcg_wasm_out_op_global_get_r(TCGContext *s, TCGReg r0)
-+{
-+    tcg_wasm_out_op_global_get(s, tcg_target_reg_index[r0]);
-+}
-+static void tcg_wasm_out_op_global_set_r(TCGContext *s, TCGReg r0)
-+{
-+    tcg_wasm_out_op_global_set(s, tcg_target_reg_index[r0]);
-+}
-+
-+#define tcg_wasm_out_i64_calc(op)                                       \
-+    static void tcg_wasm_out_i64_calc_##op(                             \
-+        TCGContext *s, TCGReg ret, TCGReg arg1, TCGReg arg2)            \
-+    {                                                                   \
-+        tcg_wasm_out_op_global_get_r(s, arg1);                          \
-+        tcg_wasm_out_op_global_get_r(s, arg2);                          \
-+        tcg_wasm_out_op_i64_##op(s);                                    \
-+        tcg_wasm_out_op_global_set_r(s, ret);                           \
-+    }
-+tcg_wasm_out_i64_calc(and);
-+tcg_wasm_out_i64_calc(or);
-+tcg_wasm_out_i64_calc(xor);
-+
- static bool patch_reloc(tcg_insn_unit *code_ptr_i, int type,
-                         intptr_t value, intptr_t addend)
- {
-@@ -557,6 +689,7 @@ static void tgen_and(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-     tcg_out_op_rrr(s, INDEX_op_and, a0, a1, a2);
-+    tcg_wasm_out_i64_calc_and(s, a0, a1, a2);
+diff --git a/tcg/wasm32.c b/tcg/wasm32.c
+index 6de9b26b76..4bc53d76d0 100644
+--- a/tcg/wasm32.c
++++ b/tcg/wasm32.c
+@@ -831,246 +831,5 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
  }
  
- static const TCGOutOpBinary outop_and = {
-@@ -747,6 +880,7 @@ static void tgen_or(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-     tcg_out_op_rrr(s, INDEX_op_or, a0, a1, a2);
-+    tcg_wasm_out_i64_calc_or(s, a0, a1, a2);
- }
- 
- static const TCGOutOpBinary outop_or = {
-@@ -918,6 +1052,7 @@ static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-     tcg_out_op_rrr(s, INDEX_op_xor, a0, a1, a2);
-+    tcg_wasm_out_i64_calc_xor(s, a0, a1, a2);
- }
- 
- static const TCGOutOpBinary outop_xor = {
-@@ -1305,7 +1440,7 @@ static inline void tcg_target_qemu_prologue(TCGContext *s)
- 
- static void tcg_out_tb_start(TCGContext *s)
- {
--    /* nothing to do */
-+    init_sub_buf();
- }
- 
- bool tcg_target_has_memory_bswap(MemOp memop)
+ /*
+- * Disassembler that matches the interpreter
++ * TODO: Disassembler is not implemented
+  */
+-
+-static const char *str_r(TCGReg r)
+-{
+-    static const char regs[TCG_TARGET_NB_REGS][4] = {
+-        "r0", "r1", "r2",  "r3",  "r4",  "r5",  "r6",  "r7",
+-        "r8", "r9", "r10", "r11", "r12", "r13", "env", "sp"
+-    };
+-
+-    QEMU_BUILD_BUG_ON(TCG_AREG0 != TCG_REG_R14);
+-    QEMU_BUILD_BUG_ON(TCG_REG_CALL_STACK != TCG_REG_R15);
+-
+-    assert((unsigned)r < TCG_TARGET_NB_REGS);
+-    return regs[r];
+-}
+-
+-static const char *str_c(TCGCond c)
+-{
+-    static const char cond[16][8] = {
+-        [TCG_COND_NEVER] = "never",
+-        [TCG_COND_ALWAYS] = "always",
+-        [TCG_COND_EQ] = "eq",
+-        [TCG_COND_NE] = "ne",
+-        [TCG_COND_LT] = "lt",
+-        [TCG_COND_GE] = "ge",
+-        [TCG_COND_LE] = "le",
+-        [TCG_COND_GT] = "gt",
+-        [TCG_COND_LTU] = "ltu",
+-        [TCG_COND_GEU] = "geu",
+-        [TCG_COND_LEU] = "leu",
+-        [TCG_COND_GTU] = "gtu",
+-        [TCG_COND_TSTEQ] = "tsteq",
+-        [TCG_COND_TSTNE] = "tstne",
+-    };
+-
+-    assert((unsigned)c < ARRAY_SIZE(cond));
+-    assert(cond[c][0] != 0);
+-    return cond[c];
+-}
+-
+-/* Disassemble TCI bytecode. */
+-int print_insn_tci(bfd_vma addr, disassemble_info *info)
+-{
+-    const uint32_t *tb_ptr = (const void *)(uintptr_t)addr;
+-    const TCGOpDef *def;
+-    const char *op_name;
+-    uint32_t insn;
+-    TCGOpcode op;
+-    TCGReg r0, r1, r2, r3, r4;
+-    tcg_target_ulong i1;
+-    int32_t s2;
+-    TCGCond c;
+-    MemOpIdx oi;
+-    uint8_t pos, len;
+-    void *ptr;
+-
+-    /* TCI is always the host, so we don't need to load indirect. */
+-    insn = *tb_ptr++;
+-
+-    info->fprintf_func(info->stream, "%08x  ", insn);
+-
+-    op = extract32(insn, 0, 8);
+-    def = &tcg_op_defs[op];
+-    op_name = def->name;
+-
+-    switch (op) {
+-    case INDEX_op_br:
+-    case INDEX_op_exit_tb:
+-    case INDEX_op_goto_tb:
+-        tci_args_l(insn, tb_ptr, &ptr);
+-        info->fprintf_func(info->stream, "%-12s  %p", op_name, ptr);
+-        break;
+-
+-    case INDEX_op_goto_ptr:
+-        tci_args_r(insn, &r0);
+-        info->fprintf_func(info->stream, "%-12s  %s", op_name, str_r(r0));
+-        break;
+-
+-    case INDEX_op_call:
+-        tci_args_nl(insn, tb_ptr, &len, &ptr);
+-        info->fprintf_func(info->stream, "%-12s  %d, %p", op_name, len, ptr);
+-        break;
+-
+-    case INDEX_op_brcond:
+-        tci_args_rl(insn, tb_ptr, &r0, &ptr);
+-        info->fprintf_func(info->stream, "%-12s  %s, 0, ne, %p",
+-                           op_name, str_r(r0), ptr);
+-        break;
+-
+-    case INDEX_op_setcond:
+-    case INDEX_op_tci_setcond32:
+-        tci_args_rrrc(insn, &r0, &r1, &r2, &c);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s",
+-                           op_name, str_r(r0), str_r(r1), str_r(r2), str_c(c));
+-        break;
+-
+-    case INDEX_op_tci_movi:
+-        tci_args_ri(insn, &r0, &i1);
+-        info->fprintf_func(info->stream, "%-12s  %s, 0x%" TCG_PRIlx,
+-                           op_name, str_r(r0), i1);
+-        break;
+-
+-    case INDEX_op_tci_movl:
+-        tci_args_rl(insn, tb_ptr, &r0, &ptr);
+-        info->fprintf_func(info->stream, "%-12s  %s, %p",
+-                           op_name, str_r(r0), ptr);
+-        break;
+-
+-    case INDEX_op_tci_setcarry:
+-        info->fprintf_func(info->stream, "%-12s", op_name);
+-        break;
+-
+-    case INDEX_op_ld8u:
+-    case INDEX_op_ld8s:
+-    case INDEX_op_ld16u:
+-    case INDEX_op_ld16s:
+-    case INDEX_op_ld32u:
+-    case INDEX_op_ld:
+-    case INDEX_op_st8:
+-    case INDEX_op_st16:
+-    case INDEX_op_st32:
+-    case INDEX_op_st:
+-        tci_args_rrs(insn, &r0, &r1, &s2);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s, %d",
+-                           op_name, str_r(r0), str_r(r1), s2);
+-        break;
+-
+-    case INDEX_op_bswap16:
+-    case INDEX_op_bswap32:
+-    case INDEX_op_ctpop:
+-    case INDEX_op_mov:
+-    case INDEX_op_neg:
+-    case INDEX_op_not:
+-    case INDEX_op_ext_i32_i64:
+-    case INDEX_op_extu_i32_i64:
+-    case INDEX_op_bswap64:
+-        tci_args_rr(insn, &r0, &r1);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s",
+-                           op_name, str_r(r0), str_r(r1));
+-        break;
+-
+-    case INDEX_op_add:
+-    case INDEX_op_addci:
+-    case INDEX_op_addcio:
+-    case INDEX_op_addco:
+-    case INDEX_op_and:
+-    case INDEX_op_andc:
+-    case INDEX_op_clz:
+-    case INDEX_op_ctz:
+-    case INDEX_op_divs:
+-    case INDEX_op_divu:
+-    case INDEX_op_eqv:
+-    case INDEX_op_mul:
+-    case INDEX_op_nand:
+-    case INDEX_op_nor:
+-    case INDEX_op_or:
+-    case INDEX_op_orc:
+-    case INDEX_op_rems:
+-    case INDEX_op_remu:
+-    case INDEX_op_rotl:
+-    case INDEX_op_rotr:
+-    case INDEX_op_sar:
+-    case INDEX_op_shl:
+-    case INDEX_op_shr:
+-    case INDEX_op_sub:
+-    case INDEX_op_subbi:
+-    case INDEX_op_subbio:
+-    case INDEX_op_subbo:
+-    case INDEX_op_xor:
+-    case INDEX_op_tci_ctz32:
+-    case INDEX_op_tci_clz32:
+-    case INDEX_op_tci_divs32:
+-    case INDEX_op_tci_divu32:
+-    case INDEX_op_tci_rems32:
+-    case INDEX_op_tci_remu32:
+-    case INDEX_op_tci_rotl32:
+-    case INDEX_op_tci_rotr32:
+-        tci_args_rrr(insn, &r0, &r1, &r2);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s, %s",
+-                           op_name, str_r(r0), str_r(r1), str_r(r2));
+-        break;
+-
+-    case INDEX_op_deposit:
+-        tci_args_rrrbb(insn, &r0, &r1, &r2, &pos, &len);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %d, %d",
+-                           op_name, str_r(r0), str_r(r1), str_r(r2), pos, len);
+-        break;
+-
+-    case INDEX_op_extract:
+-    case INDEX_op_sextract:
+-        tci_args_rrbb(insn, &r0, &r1, &pos, &len);
+-        info->fprintf_func(info->stream, "%-12s  %s,%s,%d,%d",
+-                           op_name, str_r(r0), str_r(r1), pos, len);
+-        break;
+-
+-    case INDEX_op_tci_movcond32:
+-    case INDEX_op_movcond:
+-    case INDEX_op_setcond2_i32:
+-        tci_args_rrrrrc(insn, &r0, &r1, &r2, &r3, &r4, &c);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s, %s, %s",
+-                           op_name, str_r(r0), str_r(r1), str_r(r2),
+-                           str_r(r3), str_r(r4), str_c(c));
+-        break;
+-
+-    case INDEX_op_muls2:
+-    case INDEX_op_mulu2:
+-        tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s",
+-                           op_name, str_r(r0), str_r(r1),
+-                           str_r(r2), str_r(r3));
+-        break;
+-
+-    case INDEX_op_qemu_ld:
+-    case INDEX_op_qemu_st:
+-        tci_args_rrm(insn, &r0, &r1, &oi);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s, %x",
+-                           op_name, str_r(r0), str_r(r1), oi);
+-        break;
+-
+-    case INDEX_op_qemu_ld2:
+-    case INDEX_op_qemu_st2:
+-        tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+-        info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s",
+-                           op_name, str_r(r0), str_r(r1),
+-                           str_r(r2), str_r(r3));
+-        break;
+-
+-    case 0:
+-        /* tcg_out_nop_fill uses zeros */
+-        if (insn == 0) {
+-            info->fprintf_func(info->stream, "align");
+-            break;
+-        }
+-        /* fall through */
+-
+-    default:
+-        info->fprintf_func(info->stream, "illegal opcode %d", op);
+-        break;
+-    }
+-
+-    return sizeof(insn);
+-}
 -- 
 2.43.0
 
