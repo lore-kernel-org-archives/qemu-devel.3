@@ -4,141 +4,219 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDAA0C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E017C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHMv5-00037D-Ie; Tue, 20 May 2025 09:22:11 -0400
+	id 1uHMwm-0003mP-4z; Tue, 20 May 2025 09:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHMv4-00036z-7w
- for qemu-devel@nongnu.org; Tue, 20 May 2025 09:22:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1uHMwi-0003ha-Aq
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 09:23:54 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHMv0-00077E-IZ
- for qemu-devel@nongnu.org; Tue, 20 May 2025 09:22:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747747325;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8uFtiOfYuwlDzvIMgcR0sbYOTbvly9Qyq0vccyjqmoI=;
- b=WDnEhfykwPqlSYa1m9WCqTudWje47n6tKgJU8D8XSQm/lSu14oayn0S3gnYKaExeehxz+t
- 1hriUGKe1NaCxSu9Usa3eRq1Rlr6RUa6ukAexrmyPRYU1e5qCWXpV2Lb4HPCtdn7HTAczC
- V4vnNK0fR9EjPJUiYHHICDDLxvSGQUY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-504-Yt6RnF4QMzS6lPk1xghSYQ-1; Tue, 20 May 2025 09:22:03 -0400
-X-MC-Unique: Yt6RnF4QMzS6lPk1xghSYQ-1
-X-Mimecast-MFC-AGG-ID: Yt6RnF4QMzS6lPk1xghSYQ_1747747322
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-acb61452b27so473732566b.2
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 06:22:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747747322; x=1748352122;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8uFtiOfYuwlDzvIMgcR0sbYOTbvly9Qyq0vccyjqmoI=;
- b=Br5xqksrBdfVv0Y8SJbQMkjZS2oLu6qbPd8B//ZbWMZBE6zVxaAYt0dTf3LccrPQ22
- KZcsqjFpVMzKdCmEJWEviwUhcq0phvCwuvSPMmfSdYpF7plPqqe3tyJ17Fg2a4D1PV1/
- JVeoDsMmjp4qkEqY1xt5n6e1mlh/l4mHkQRND2DY+5JPoFqDGFIeacnnQH8r9BUsfstx
- 3U4asPblJF2IzUxrCjCE2KBaWUtH0WU/JzS4m8cp8eDwrpR7U+VVu38Y5bn0pdCOF/gA
- ppbT9NT/tNDOjhLrbPgkDRmfwBPFLbJ+j/3tRw09LHn/UuQVRsgEhQTyULNtfCp+fK9D
- 5DDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJKUn/dOJzDj7N9aD9eTn3YmVKl/NBe8QPTccdbQOJ4+XGXgUbgUWBnD715Un5TeTB1sYNuzC7LZa3@nongnu.org
-X-Gm-Message-State: AOJu0YyASCHeOSG5WesZYwnyuQYzren6ndLkAAOUgJpiwvdSrUopKs3h
- rJG+d2ttR9W0SYntQhLJjf7SOCGraHPfMSNQUyuCfVAHPtfhv8xX61AHgwjdqH/zjfiKD7FkTr1
- tGN/piapYwdytpGxe5MmUYHfqduvnsDOstKjHBcxl1drDNJyK1Ytc39rJ
-X-Gm-Gg: ASbGncvcdZwUcOg3GKNHpoS2ctTbmgsid8QH+YZcBdZEsO6+JLcGJI5tK1Tqs2DKvMW
- Gu/cUs3/0k2YctkPUJ/cHnZ7N7d13aDIbYZlJb0E8BEFJp8y8Fn0WiVLBoQIetXXbSbPH08/yB6
- w1zxDOaoYalR4mH6kgBLJCDDLImpL2GhiSuo5lq1YZ5shBGerh9AZLrFcjpNMHM6KDqAPpqo9EU
- 5v8HXw5xVxQj7H08UFkG4+9bau8AwwZ/g8e5s+dVfiq8wutdXnfzPXH+6CE1YfUIFvaIAPGvk7g
- TIbjdh7rPYKAow==
-X-Received: by 2002:a17:907:c807:b0:ace:cdfc:40aa with SMTP id
- a640c23a62f3a-ad52d4b2782mr1228495966b.19.1747747321669; 
- Tue, 20 May 2025 06:22:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEylemFOvNl4zEsblIgOK1gJnA3rozL+eVgmnpIiZzFt5+kaj6QT2L4sQTM+MVJ4fekBJAR0w==
-X-Received: by 2002:a17:907:c807:b0:ace:cdfc:40aa with SMTP id
- a640c23a62f3a-ad52d4b2782mr1228491666b.19.1747747321164; 
- Tue, 20 May 2025 06:22:01 -0700 (PDT)
-Received: from [192.168.10.81] ([151.95.46.79])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ad52d047c30sm726039866b.6.2025.05.20.06.22.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 06:22:00 -0700 (PDT)
-Message-ID: <aa48e55d-2267-42a0-a564-664eaf5e5b7f@redhat.com>
-Date: Tue, 20 May 2025 15:21:59 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1uHMwf-0007QM-3v
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 09:23:51 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KCuUMd022665;
+ Tue, 20 May 2025 13:23:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=4EGsv0NAswpM4BcqgNWjozTN0FIdHtg9qJyzc6DDf8k=; b=
+ Bys/nyM45BWxylPdP1gRG7ZPaiTSm7xb5pAx/HvaFBbgzLY5N8JRtfntaSEKKZ4U
+ Tzy3/rA/588RuEhnPF1Ah5uTvsJq5NSUr7wpSXvnhpBUlV3y9tTXrgKab0MXS1fl
+ 69kejHGdvnHknwTtmxSxQA7EmMm7CCSecQquWoKYCfWb+s9Pht66DmKcJBn+a59j
+ /BzkF1qHcxXq3WzKDYEe7g0iv6xruK/0JZKAZqM25xIYBEEumdobIBAAvzf3SDcT
+ zIQsI42tmMMUX5KzYvBM+VncZ1u8vlu6hvbpp0MV9AAKkAcCN8IoWv0WUpr8mOMe
+ kN9M4djjDYdDo0BHT7t7HA==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46rdcdsab6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 May 2025 13:23:41 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54KCbRpX002535; Tue, 20 May 2025 13:23:41 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam10lp2049.outbound.protection.outlook.com [104.47.55.49])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46pgw7rmwr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 May 2025 13:23:40 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=seDWRB88vPK3dLIFbkwRhxe/oEVFPRyPYC9NdK94UyoIAMZ1WaAhvi5/svHfaeSR5qIdTdDUCn+29rtyeNnOFjPkOvmomPXnUJ57h0zaDwcOq5wZNINXwqDzR1fL/jQgwJvw6lKQzNU+Sz2Gw03L3BTWjJp02UlYoexp4yeoKaKvIiWBOz703i/lUfkpQ3uflTJ84X+q4P5D9zY+C4ReecGepK814T1ghDj5T3mJ9NJTIAnKZopCiiSM4dXJRJ6Fk71qJuxRmby1IDfAZYLNwLAT19fgtmrwA6ogHUPGhU4iDUXQwDhpEpVPqXECkvPjSIemOc53w08ExIlNqV9VVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4EGsv0NAswpM4BcqgNWjozTN0FIdHtg9qJyzc6DDf8k=;
+ b=gpVnzJvXzegcL1udhiaOe80owR5Tlrmpqau5Y3onr0of9iDvn7tK9xBvjp3Q6EQlnh9o4F0UYsD6tfTlHWqpS1x74ybsJWZR0VpYF0jgHCy559zPTkSMKZl0zDfyM0j1asG1HXSqBf6d5qbu2Llublf4x3xPr3y6xdXKcbScqj7rqsxO8sq2Kn7t7pEzjjp6fhdpIbOlyUMwAj4JpCezh5Cj5ULvdFfnlJoGNZKxqt8UInlIb4j4XV+AQpUAPYV2YSDP/QN+gzWPveT2kBVCd3smNX4H/ULivRq+iT1zHk+nmKDdM8EOltKCj0B5DWGNAOuhDTVWZJ/7iwRPYvIAZg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4EGsv0NAswpM4BcqgNWjozTN0FIdHtg9qJyzc6DDf8k=;
+ b=yRDBlk4No7lzC+/BPxnNInXqzqHfK7Sgum5ajkMLy6oh27TLeTAWjlw5s+CCZVG3q2TU3Deu48q0hN7bfnkAx2A3Txp7H5TPyfyZ+um/INSTTTUrhFWmMGrs75fpmAnGKUDQS0CwYnNqKE5Gkj+Cg5svyglGSPcwpkFhi931ohg=
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
+ by IA4PR10MB8610.namprd10.prod.outlook.com (2603:10b6:208:55f::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.33; Tue, 20 May
+ 2025 13:23:38 +0000
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::7635:ba00:5d5:c935]) by PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::7635:ba00:5d5:c935%5]) with mapi id 15.20.8746.030; Tue, 20 May 2025
+ 13:23:38 +0000
+Message-ID: <b59cfe6f-5ce2-4ded-9e6d-b189988152da@oracle.com>
+Date: Tue, 20 May 2025 09:23:35 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 24/25] target/i386/mshv: Implement mshv_vcpu_run()
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-25-magnuskulke@linux.microsoft.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v4 7/7] vdpa: move memory listener register to
+ vhost_vdpa_init
+To: Si-Wei Liu <si-wei.liu@oracle.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, eperezma@redhat.com, peterx@redhat.com,
+ jasowang@redhat.com, lvivier@redhat.com, dtatulea@nvidia.com,
+ leiyang@redhat.com, parav@mellanox.com, sgarzare@redhat.com,
+ lingshan.zhu@intel.com, boris.ostrovsky@oracle.com
+References: <20250507184647.15580-1-jonah.palmer@oracle.com>
+ <20250507184647.15580-8-jonah.palmer@oracle.com>
+ <20250515014103-mutt-send-email-mst@kernel.org>
+ <a05df34b-bacd-46b6-b958-ec94076d7649@oracle.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250520113018.49569-25-magnuskulke@linux.microsoft.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
+In-Reply-To: <a05df34b-bacd-46b6-b958-ec94076d7649@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MN2PR08CA0023.namprd08.prod.outlook.com
+ (2603:10b6:208:239::28) To PH0PR10MB4664.namprd10.prod.outlook.com
+ (2603:10b6:510:41::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|IA4PR10MB8610:EE_
+X-MS-Office365-Filtering-Correlation-Id: c1812598-4708-49ba-e442-08dd97a187d9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?amRZZldXSisvT1ovOVdNbzFIN00vNVoyV2tlVC84OUVSS0JVOU9qU3VkVHRw?=
+ =?utf-8?B?OG0wdkNpaHExS3phb3JvSDI5NkVaTW10UTNrYVhGL2RnN0hQMzA3L2JmcjFY?=
+ =?utf-8?B?YW9oc0JIQnhOZFcwREZUSjZjM2NaOWZSaHZpM2FMY25BbFgvWU1NUzI5MGpo?=
+ =?utf-8?B?M1BVTXFWNzRRQU8xTEpVWUhhS3lYeFYrK21VNjFLc29uRWVaN0pkRjc4cklz?=
+ =?utf-8?B?d2lMV3gzQU0ySzV5R0EwU2ZQdG13eEl4VGhkZVVvdkRxaTUxMjBadHJBdnp3?=
+ =?utf-8?B?RXRMTTU4NkJBM0xTVVRMcmRvWjBVN1dWQVk4TkJ6bWN5MGVTQU00d0Y1QTBs?=
+ =?utf-8?B?Z3YvTmpnZS9peUUxZklDZFZWYlJXNEdCaVlISTBhWlZYelRUWm5WQkVIcjlU?=
+ =?utf-8?B?bzdJNks0RFNINC9CUzA1b1N5SEovclUzd3BWQ0xZREpYVzNTcGtuSWMzYW5u?=
+ =?utf-8?B?NHZVRmsxYVFtN1RkUTRqYk0xMUZvRmQ0elNlVVk5RFFWeTZISmpJeEhYZG5v?=
+ =?utf-8?B?aVVqcW1hZ093NTUvcTVtNm5ZcVBTelRScncyS2JJejhEaFBIUk40ZkJEM080?=
+ =?utf-8?B?SzJ3c05ici8rbGkvTlVGTDRFa1NmRUU3Uy9kQXZuVzF0NXI2b1BNN3ViOHQr?=
+ =?utf-8?B?Ni85ZGVkMk5CZWxYdktkUEg4UDliR0Z5RU4vR2g0NnB4ZmF0QkFscXFUUHha?=
+ =?utf-8?B?RUROcGdVTUFQN0FTZ1lCS1ZNZWtwcjNYMUhBWDF6djR1VGlsbUN0dlFDWC93?=
+ =?utf-8?B?MWhSK3l3b1dpMCs3M243WFdpZHJzTHVTWityRzJyS1pNaG81TDJCb2g1bC9G?=
+ =?utf-8?B?LzhmN01xQ0xOdHBOL0JJSk5mWk15ZXZEQXF4UkI1b2x0QmpFRHIzYXg0Z1N0?=
+ =?utf-8?B?ZTVLWk14dkZONlFiMmNXYlAwQ2RESktERmptWUtJYlZnbnkrcGJNSHU2RDZS?=
+ =?utf-8?B?bXg4dmlwQzRtd1BsSDhLczZCUkZCak5UZlFuaUpGU2dJVFBGTmxEVVJzQ0JH?=
+ =?utf-8?B?L2tIck1pZW5POWhFNFRwbkdUMy9QbkJqVnMxVWlOUmpEaG1WbUYzclk0dXlK?=
+ =?utf-8?B?TEg3U0kyaTZqVThXb0hrSllIdUdkOTFlWms3Ujg3QjFkbHBGejEyWjBLK0Yr?=
+ =?utf-8?B?UVE4dmZsMm1iZ09iUFUwd0IyeTFBdGpSMnpvczdRWjZiRG42bFIvMEVZV2Jh?=
+ =?utf-8?B?VFJyNldmVHcvalFmQ0w2OEJ2Q0JWYlB5R3g4MXMwY0RkcGlOSXkvbTN3NGo5?=
+ =?utf-8?B?RWhMK21SYVI2N3IyV0FBSnUwcWQ2TnpSemJwanpHa2JYNS9DakRld2krZ2hz?=
+ =?utf-8?B?WUEzcTkwNDVDY0pQd1RiSWw0RnI4NFhzeXBUb0E5RzVPdnlyRU1YU3c5RjMz?=
+ =?utf-8?B?R003TWJ0VThVeXRSd1Z0NEhhWitUd1hBV1BnNzF6QXpZWUV5c2l2ZkNsc2Zn?=
+ =?utf-8?B?alhzdkI0eGllM1kweHZBUVZXbzlJYW8zaHlXeWl1OHNJRTZhcXE4ZlJWM1Jh?=
+ =?utf-8?B?S1ZuVHY2WFAxRnpiWVRJRzR2ODNvbGQvQUdYM042NThQK0NsVE83TGEzc3Zt?=
+ =?utf-8?B?bHYwN1puYm4xaUVDbWN2STFzV2xUNlZmVXE5ZlcyYmVJaVhteUlha2EvdUJz?=
+ =?utf-8?B?cngrZk9MaE5jc3BVV2hoSmpuMFVteUY4UENXTG5FMXk0VjlodzdmajdPQXc3?=
+ =?utf-8?B?ZkJSQXNnMHdDYjlvUk9DT1JoNjR6c0lER2FtSU83WS9iYzYvdUtCTnJaMkZS?=
+ =?utf-8?B?VlozMHRiaHVBOG9TT1cxdmY0b0psQWNQUVFNdVBWNHdpYjJTV1MrYU9teHdn?=
+ =?utf-8?B?Rkt4VXVZN05QRS9sdndpUzhVbG1kV0YyQ29ITnF3SU0vSWJBb0tVa1ZGdlAy?=
+ =?utf-8?B?bzVhRllVdUFWeTNjS0lGRktmSWJsT2RxRUs0dWRzaUp0eG13TmtTbnFveWFS?=
+ =?utf-8?Q?C+9zX8YcjbE=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dXc1T0tUUDQ5ZU9TM3liTXBPYUhJUVpGZU1vSThTTjFlVU04Lzd4SUlpc0VH?=
+ =?utf-8?B?OXhEQVA0UnVvZnhsVjVyRHR5bWNLd2FyMDF5YVNlRUVHekJkVFQwa21yWjM0?=
+ =?utf-8?B?QXZESEpuMUVsNi9KejJaM2hwUXU3eG1yT2FLNDdFSkRLYjc5L1ZTQ2xDV2dF?=
+ =?utf-8?B?NHFPTWJrbGxGMW12amhvS2FKZ3diVzdqSC9mTnJudlllR1ZHeWoyM2VVR0Yy?=
+ =?utf-8?B?T1VhWklmajFWTnNNcmZ1UDRCbkc2YUZtV2N5dGlxc2FEeUFJNXg4V2lZS2dK?=
+ =?utf-8?B?MHo2a240M2tUR0c5YTZtMXFSek0xVVNVUDNrZ1dCTFpnS2NndTNxWWFhY1lh?=
+ =?utf-8?B?YllkNXQva1h3b25tNjYrV21iQzJXbnAzZXpUN0dSM2N6eVRlNXRFaE1ndXRT?=
+ =?utf-8?B?aUIxWEFTSWFrWmRqdFM3L1g5SEl4ZFNPWDZKWUt1aUlhS3pFd24rNGk1NUpN?=
+ =?utf-8?B?dVlGck9TMDlrMGQzWU4vc0xlaWVJM3JVK2pOSDdCK1JtRlQzcmZTdHJEb3l6?=
+ =?utf-8?B?MnF6YitPbzkxZkM3WjlMVk9FUzJWUWZjbkwvcVJrVVJwY05aOGdMLzByRlJI?=
+ =?utf-8?B?cEpDQmZVV3BaS0I4cng3TUR5cFVHRW1YS1ZUWloyR1NuOGNBQjMvb2NBdVcr?=
+ =?utf-8?B?ZXpuSE5TbEFXYlpmclNZSVErcFJaMHFDRzZwbjg2N012Z1ZqZmxMY3V6UVlx?=
+ =?utf-8?B?SnBNTVc1RW1BV25HWUhXOWhFY0JyL3FEeExaQ1NraU4vY2tpWDJzZ3pRanFF?=
+ =?utf-8?B?RXhCV2FBeTlTUzJ6UEhDWTVUekEyb1FXYzF5OWN3K21FckM1cEpFcllLQVQw?=
+ =?utf-8?B?SDJNcVRaSkRiSzc4RVAzS2d3dkhQMTNYUkxENklxa3RlbVdnaGw3N3I0SXFT?=
+ =?utf-8?B?NmF3YkNlN3ZpeVJiblNvbGNQVkdtTWJVREQvSlczcWVIb0VHdnRkN1hYeGY0?=
+ =?utf-8?B?RHh1NFdrSmNZalNGaXBZQVI2TURyODMxb05CVHJlSzZ5Y21CSVA0TnJrYlpH?=
+ =?utf-8?B?aU14cXJmeDRRQjhjSEVuNWRvdk9sL2FnM0pHcEF5czVnQjkxc2cxeWZyVXVZ?=
+ =?utf-8?B?dkF0S1VLTzU3TUJDREpJYnF5eGhFZlRUczdjTG1vT204cUtjNjlwcVlUTXlK?=
+ =?utf-8?B?OEtVNThWdGR1STJDekMvRVUyNCtzUEMvRlFIcW9NcUQvNGtGR21zWlljVkMr?=
+ =?utf-8?B?ZFFFWlNjMjdKQXZlbnVXUUhVRjVISWRMWW5IZFI1eHRRZm9ya0JySnpQaVFW?=
+ =?utf-8?B?aXhkMnBEOXVCYm9nRVFseUJsOElOekFseEJFb2VaMUpBRUtuTHA0REl5dVls?=
+ =?utf-8?B?M1k2R0orVndndnprK0N5WWZEM2JBQmFIS1cwNHNIeGRLUklGMEppWW1QRmZr?=
+ =?utf-8?B?KzA3NXlDVEQyR0F4dFovVTZnVXFxMENhbEJYSFI4MTJtVlFaWnFKZzNKTHZK?=
+ =?utf-8?B?VmY2aGN6S3dzZGZvZzd1azhxcTg1WWVmSlprU0o0OWZacytoYjlNcDJqMWpn?=
+ =?utf-8?B?cUVYb0NIcTVCcWQ1L2RmS2tENFUvNUlOVnorKzV1c3lIZ2V5eXovNm5MWUNU?=
+ =?utf-8?B?WmJRZFkzZjRQbHlzTENGNkhka3ZFZGhmbmdjK21LcHlSUnJKWURDM01HQ1V0?=
+ =?utf-8?B?R1VXb1BPZmEzT3ZRY28rVHBONlJjNXd1aGcybTNkNFJkc2Faek0veEtwUkps?=
+ =?utf-8?B?RTV2Q2tjdUJNekplU2tBc1Zad2w4MGNaUXZpdGpGd3IrTHJDcm81S1RKVmV6?=
+ =?utf-8?B?aXpIL0tpekZuZUtGSDdITEdDc0ZiVitZYkZFVFRJTXFzOGFMZHlUYVBnN1Av?=
+ =?utf-8?B?bW5jbnJBU0o3cWJMZk9vWmZqYnNsUU9BOUQ2MmJBRUdKbStkSklrMDIzZkZ2?=
+ =?utf-8?B?dzM3aTN4Y1BlRHNuL3ZhRVFVNzIrVXlvL3JWdzd4VFhtU2xENmFJV3JrcHFR?=
+ =?utf-8?B?Zkt3eHVzT3FadGpBM1RwTE5USnRXcDBGR2Z0clgwRktSdm5HbFQxcU1iOGhp?=
+ =?utf-8?B?dnZlbUU2dUEvODZ6VUNieEJQWUxPeGVURHhQaXhJdWhKZWJmVmg4WTlGV1d6?=
+ =?utf-8?B?UWU0UnY3Y2pXYVI0Z0J6eGhLMGhGdlJuay9LQ2NRK0JSUU9kMFZPakU1TGVI?=
+ =?utf-8?Q?zskzwDWGf+Wib7swpIbleu1iP?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: m7sy380fuwZbHPSTQzj9gvuGLCdyenfioN0MspbE1h9C4mLXWMtVrHhcnd/W1ZV/j4AUOpLOWIYJ9b8gX0Mx7ZfYOY6s3XmLNCiZtcSBhVaaaDrySB7DLXcaqMqggWdJQohJUai+/IiiLgIDUDZYpeLtutGHGZ6Jb0SNjlGTa+RrRIOOB5P0+Q1HFCJLuS48yteYqtrN1gOXLh+Gx7jro3YacxHTKAbsjxeJf45czmAcZOlf+PLWxsKqqhWxTiY8xcJtgZUPSapUKv+bZIeB5pl3wgJM/gM2JmVGxTsBSvW4kvpWBm/Tiu7zh1j10gJN69cVK4RNHvuxz6vw3xy/zlKtIoCqbPJsCUaDRJeDdTEnz+pXr39L9ilWsy6ONNPhQ74LiivtZMQ3Dg9gy8VXQEw7Hn8M/k4rCWWIhUyR1cM+kb9DEcj0wueQ9yI8KUjQL/0eomkSinw46+8+ubDEI+H1PiGXLkdcd7SSMkQ7oS/5n59T88dEbIyI2FqU5dNTU3j4KL0MvM4mTWfmZSd27067HGlII7W+rCYE9r7KTxMECufCXbFCY5w8XpU3TSfHe6/qeoppwsvY08eUX64SfNfi2wwkxRW/Vs4MRWu7bdo=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c1812598-4708-49ba-e442-08dd97a187d9
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 13:23:38.3454 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4YCaPnzuW2IL/aKSjpHOocN8KdNI3iUGrBS0QmYMeTcEBB9tSB0i4BiQHkKoNYzRPWFBfiH1SfHAWL8HYGRuww==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR10MB8610
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-20_05,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0
+ mlxlogscore=999 phishscore=0 adultscore=0 suspectscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505070000 definitions=main-2505200107
+X-Proofpoint-GUID: -I7qPyIsniJGFvBneLJfuJN3hIK_CcUK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDEwNyBTYWx0ZWRfXwUq2A/lApJYZ
+ GKlTF87BBgxv7yeC1jNvWv8eMPLZ8sUdOIIUHghtGo+OOofxqvIzwwBeTGQTp10ABFSE1fwxCI1
+ L/Nfmp/2PK4ONVIS8edpBpgpjHD21lsRJOlvtFULfr0TN9l6cB+ZYhdSADNiYgDBfkq0iDeDmyS
+ P3ddpo/pf4AHKkuZ+Cl2DO93WMbblyn4qJS86lwC8JdwofigAZ+F3LSSlMgYWgwfl6+9MFKFt0w
+ xmnrX1J+V89XnDVW6hq4E5VOXPD2Aiq3xKxxXtuXHG4GKyrNAmClDibxBsKBmSsTFi+8yx9HQNk
+ 6J27NPV4NGZqzwMMp+8ehX/E9DVDIyezz4vRZPslhpjs2SgcZ3JRamq6DFk3vdhHdvbw+2C5QO4
+ nL/ZsC8wkgYuBis0uZG5B9no/SkcTAM9zbxKmt8H2PTPpz84Dvif1MbZVqtw6+nEYBRrhVYB
+X-Proofpoint-ORIG-GUID: -I7qPyIsniJGFvBneLJfuJN3hIK_CcUK
+X-Authority-Analysis: v=2.4 cv=Ldw86ifi c=1 sm=1 tr=0 ts=682c825e cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10 a=20KFwNOVAAAA:8
+ a=yPCof4ZbAAAA:8 a=LKsMInJ2frbbEzHd4wQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -156,535 +234,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 13:30, Magnus Kulke wrote:
-> +static int emulate_instruction(CPUState *cpu,
-> +                               const uint8_t *insn_bytes, size_t insn_len,
-> +                               uint64_t gva, uint64_t gpa)
-> +{
-> +    X86CPU *x86_cpu = X86_CPU(cpu);
-> +    CPUX86State *env = &x86_cpu->env;
-> +    struct x86_decode decode = { 0 };
-> +    int ret;
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +    QemuMutex *guard;
-> +    x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
-> +
-> +    guard = g_hash_table_lookup(cpu_guards, GUINT_TO_POINTER(cpu_fd));
 
-mshv_cpu_exec() will always run in the vCPU thread, so you don't need a 
-mutex.  All of patch 14 can go, in fact.
-
-Paolo
-
-> +    if (!guard) {
-> +        error_report("failed to get cpu guard");
-> +        return -1;
-> +    }
-> +
-> +    WITH_QEMU_LOCK_GUARD(guard) {
-> +        ret = mshv_load_regs(cpu);
-> +        if (ret < 0) {
-> +            error_report("failed to load registers");
-> +            return -1;
-> +        }
-> +
-> +        decode_instruction_stream(env, &decode, &stream);
-> +        exec_instruction(env, &decode);
-> +
-> +        ret = mshv_store_regs(cpu);
-> +        if (ret < 0) {
-> +            error_report("failed to store registers");
-> +            return -1;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
-> +                       MshvVmExit *exit_reason)
-> +{
-> +    struct hv_x64_memory_intercept_message info = { 0 };
-> +    size_t insn_len;
-> +    uint8_t access_type;
-> +    uint8_t *instruction_bytes;
-> +    int ret;
-> +
-> +    ret = set_memory_info(msg, &info);
-> +    if (ret < 0) {
-> +        error_report("failed to convert message to memory info");
-> +        return -1;
-> +    }
-> +    insn_len = info.instruction_byte_count;
-> +    access_type = info.header.intercept_access_type;
-> +
-> +    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_EXECUTE) {
-> +        error_report("invalid intercept access type: execute");
-> +        return -1;
-> +    }
-> +
-> +    if (insn_len > 16) {
-> +        error_report("invalid mmio instruction length: %zu", insn_len);
-> +        return -1;
-> +    }
-> +
-> +    if (insn_len == 0) {
-> +        warn_report("mmio instruction buffer empty");
-> +    }
-> +
-> +    instruction_bytes = info.instruction_bytes;
-> +
-> +    ret = emulate_instruction(cpu, instruction_bytes, insn_len,
-> +                              info.guest_virtual_address,
-> +                              info.guest_physical_address);
-> +    if (ret < 0) {
-> +        error_report("failed to emulate mmio");
-> +        return -1;
-> +    }
-> +
-> +    *exit_reason = MshvVmExitIgnore;
-> +
-> +    return 0;
-> +}
-> +
-> +static int handle_unmapped_mem(int vm_fd, CPUState *cpu,
-> +                               const struct hyperv_message *msg,
-> +                               MshvVmExit *exit_reason)
-> +{
-> +    struct hv_x64_memory_intercept_message info = { 0 };
-> +    int ret;
-> +
-> +    ret = set_memory_info(msg, &info);
-> +    if (ret < 0) {
-> +        error_report("failed to convert message to memory info");
-> +        return -1;
-> +    }
-> +
-> +    return handle_mmio(cpu, msg, exit_reason);
-> +}
-> +
-> +static int set_ioport_info(const struct hyperv_message *msg,
-> +                           hv_x64_io_port_intercept_message *info)
-> +{
-> +    if (msg->header.message_type != HVMSG_X64_IO_PORT_INTERCEPT) {
-> +        error_report("Invalid message type");
-> +        return -1;
-> +    }
-> +    memcpy(info, msg->payload, sizeof(*info));
-> +
-> +    return 0;
-> +}
-> +
-> +typedef struct X64Registers {
-> +  const uint32_t *names;
-> +  const uint64_t *values;
-> +  uintptr_t count;
-> +} X64Registers;
-> +
-> +static int set_x64_registers(int cpu_fd, const X64Registers *regs)
-> +{
-> +    size_t n_regs = regs->count;
-> +    struct hv_register_assoc *assocs;
-> +
-> +    assocs = g_new0(hv_register_assoc, n_regs);
-> +    for (size_t i = 0; i < n_regs; i++) {
-> +        assocs[i].name = regs->names[i];
-> +        assocs[i].value.reg64 = regs->values[i];
-> +    }
-> +    int ret;
-> +
-> +    ret = mshv_set_generic_regs(cpu_fd, assocs, n_regs);
-> +    g_free(assocs);
-> +    if (ret < 0) {
-> +        error_report("failed to set x64 registers");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static inline MemTxAttrs get_mem_attrs(bool is_secure_mode)
-> +{
-> +    MemTxAttrs memattr = {0};
-> +    memattr.secure = is_secure_mode;
-> +    return memattr;
-> +}
-> +
-> +static void pio_read(uint64_t port, uint8_t *data, uintptr_t size,
-> +                     bool is_secure_mode)
-> +{
-> +    int ret = 0;
-> +    MemTxAttrs memattr = get_mem_attrs(is_secure_mode);
-> +    ret = address_space_rw(&address_space_io, port, memattr, (void *)data, size,
-> +                           false);
-> +    if (ret != MEMTX_OK) {
-> +        error_report("Failed to read from port %lx: %d", port, ret);
-> +        abort();
-> +    }
-> +}
-> +
-> +static int pio_write(uint64_t port, const uint8_t *data, uintptr_t size,
-> +                     bool is_secure_mode)
-> +{
-> +    int ret = 0;
-> +    MemTxAttrs memattr = get_mem_attrs(is_secure_mode);
-> +    ret = address_space_rw(&address_space_io, port, memattr, (void *)data, size,
-> +                           true);
-> +    return ret;
-> +}
-> +
-> +static int handle_pio_non_str(const CPUState *cpu,
-> +                              hv_x64_io_port_intercept_message *info) {
-> +    size_t len = info->access_info.access_size;
-> +    uint8_t access_type = info->header.intercept_access_type;
-> +    int ret;
-> +    uint32_t val, eax;
-> +    const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
-> +    size_t insn_len;
-> +    uint64_t rip, rax;
-> +    uint32_t reg_names[2];
-> +    uint64_t reg_values[2];
-> +    struct X64Registers x64_regs = { 0 };
-> +    uint16_t port = info->port_number;
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +
-> +    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-> +        union {
-> +            uint32_t u32;
-> +            uint8_t bytes[4];
-> +        } conv;
-> +
-> +        /* convert the first 4 bytes of rax to bytes */
-> +        conv.u32 = (uint32_t)info->rax;
-> +        /* secure mode is set to false */
-> +        ret = pio_write(port, conv.bytes, len, false);
-> +        if (ret < 0) {
-> +            error_report("Failed to write to io port");
-> +            return -1;
-> +        }
-> +    } else {
-> +        uint8_t data[4] = { 0 };
-> +        /* secure mode is set to false */
-> +        pio_read(info->port_number, data, len, false);
-> +
-> +        /* Preserve high bits in EAX, but clear out high bits in RAX */
-> +        val = *(uint32_t *)data;
-> +        eax = (((uint32_t)info->rax) & ~eax_mask) | (val & eax_mask);
-> +        info->rax = (uint64_t)eax;
-> +    }
-> +
-> +    insn_len = info->header.instruction_length;
-> +
-> +    /* Advance RIP and update RAX */
-> +    rip = info->header.rip + insn_len;
-> +    rax = info->rax;
-> +
-> +    reg_names[0] = HV_X64_REGISTER_RIP;
-> +    reg_values[0] = rip;
-> +    reg_names[1] = HV_X64_REGISTER_RAX;
-> +    reg_values[1] = rax;
-> +
-> +    x64_regs.names = reg_names;
-> +    x64_regs.values = reg_values;
-> +    x64_regs.count = 2;
-> +
-> +    ret = set_x64_registers(cpu_fd, &x64_regs);
-> +    if (ret < 0) {
-> +        error_report("Failed to set x64 registers");
-> +        return -1;
-> +    }
-> +
-> +    cpu->accel->dirty = false;
-> +
-> +    return 0;
-> +}
-> +
-> +static int fetch_guest_state(CPUState *cpu)
-> +{
-> +    int ret;
-> +
-> +    ret = mshv_get_standard_regs(cpu);
-> +    if (ret < 0) {
-> +        error_report("Failed to get standard registers");
-> +        return -1;
-> +    }
-> +
-> +    ret = mshv_get_special_regs(cpu);
-> +    if (ret < 0) {
-> +        error_report("Failed to get special registers");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int read_memory(int cpu_fd, uint64_t initial_gva, uint64_t initial_gpa,
-> +                       uint64_t gva, uint8_t *data, size_t len)
-> +{
-> +    int ret;
-> +    uint64_t gpa, flags;
-> +
-> +    if (gva == initial_gva) {
-> +        gpa = initial_gpa;
-> +    } else {
-> +        flags = HV_TRANSLATE_GVA_VALIDATE_READ;
-> +        ret = translate_gva(cpu_fd, gva, &gpa, flags);
-> +        if (ret < 0) {
-> +            return -1;
-> +        }
-> +
-> +        ret = mshv_guest_mem_read(gpa, data, len, false, false);
-> +        if (ret < 0) {
-> +            error_report("failed to read guest mem");
-> +            return -1;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int write_memory(int cpu_fd, uint64_t initial_gva, uint64_t initial_gpa,
-> +                        uint64_t gva, const uint8_t *data, size_t len)
-> +{
-> +    int ret;
-> +    uint64_t gpa, flags;
-> +
-> +    if (gva == initial_gva) {
-> +        gpa = initial_gpa;
-> +    } else {
-> +        flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
-> +        ret = translate_gva(cpu_fd, gva, &gpa, flags);
-> +        if (ret < 0) {
-> +            error_report("failed to translate gva to gpa");
-> +            return -1;
-> +        }
-> +    }
-> +    ret = mshv_guest_mem_write(gpa, data, len, false);
-> +    if (ret != MEMTX_OK) {
-> +        error_report("failed to write to mmio");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int handle_pio_str_write(CPUState *cpu,
-> +                                hv_x64_io_port_intercept_message *info,
-> +                                size_t repeat, uint16_t port,
-> +                                bool direction_flag)
-> +{
-> +    int ret;
-> +    uint64_t src;
-> +    uint8_t data[4] = { 0 };
-> +    size_t len = info->access_info.access_size;
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +
-> +    src = linear_addr(cpu, info->rsi, R_DS);
-> +
-> +    for (size_t i = 0; i < repeat; i++) {
-> +        ret = read_memory(cpu_fd, 0, 0, src, data, len);
-> +        if (ret < 0) {
-> +            error_report("Failed to read memory");
-> +            return -1;
-> +        }
-> +        ret = pio_write(port, data, len, false);
-> +        if (ret < 0) {
-> +            error_report("Failed to write to io port");
-> +            return -1;
-> +        }
-> +        src += direction_flag ? -len : len;
-> +        info->rsi += direction_flag ? -len : len;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int handle_pio_str_read(CPUState *cpu,
-> +                                hv_x64_io_port_intercept_message *info,
-> +                                size_t repeat, uint16_t port,
-> +                                bool direction_flag)
-> +{
-> +    int ret;
-> +    uint64_t dst;
-> +    size_t len = info->access_info.access_size;
-> +    uint8_t data[4] = { 0 };
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +
-> +    dst = linear_addr(cpu, info->rdi, R_ES);
-> +
-> +    for (size_t i = 0; i < repeat; i++) {
-> +        pio_read(port, data, len, false);
-> +
-> +        ret = write_memory(cpu_fd, 0, 0, dst, data, len);
-> +        if (ret < 0) {
-> +            error_report("Failed to write memory");
-> +            return -1;
-> +        }
-> +        dst += direction_flag ? -len : len;
-> +        info->rdi += direction_flag ? -len : len;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int handle_pio_str(CPUState *cpu,
-> +                          hv_x64_io_port_intercept_message *info)
-> +{
-> +    uint8_t access_type = info->header.intercept_access_type;
-> +    uint16_t port = info->port_number;
-> +    bool repop = info->access_info.rep_prefix == 1;
-> +    size_t repeat = repop ? info->rcx : 1;
-> +    size_t insn_len = info->header.instruction_length;
-> +    bool direction_flag;
-> +    uint32_t reg_names[3];
-> +    uint64_t reg_values[3];
-> +    int ret;
-> +    struct X64Registers x64_regs = { 0 };
-> +    X86CPU *x86_cpu = X86_CPU(cpu);
-> +    CPUX86State *env = &x86_cpu->env;
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +
-> +    ret = fetch_guest_state(cpu);
-> +    if (ret < 0) {
-> +        error_report("Failed to fetch guest state");
-> +        return -1;
-> +    }
-> +
-> +    direction_flag = (env->eflags & DF) != 0;
-> +
-> +    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-> +        ret = handle_pio_str_write(cpu, info, repeat, port, direction_flag);
-> +        if (ret < 0) {
-> +            error_report("Failed to handle pio str write");
-> +            return -1;
-> +        }
-> +        reg_names[0] = HV_X64_REGISTER_RSI;
-> +        reg_values[0] = info->rsi;
-> +    } else {
-> +        ret = handle_pio_str_read(cpu, info, repeat, port, direction_flag);
-> +        reg_names[0] = HV_X64_REGISTER_RDI;
-> +        reg_values[0] = info->rdi;
-> +    }
-> +
-> +    reg_names[1] = HV_X64_REGISTER_RIP;
-> +    reg_values[1] = info->header.rip + insn_len;
-> +    reg_names[2] = HV_X64_REGISTER_RAX;
-> +    reg_values[2] = info->rax;
-> +
-> +    x64_regs.names = reg_names;
-> +    x64_regs.values = reg_values;
-> +    x64_regs.count = 2;
-> +
-> +    ret = set_x64_registers(cpu_fd, &x64_regs);
-> +    if (ret < 0) {
-> +        error_report("Failed to set x64 registers");
-> +        return -1;
-> +    }
-> +
-> +    cpu->accel->dirty = false;
-> +
-> +    return 0;
-> +}
-> +
-> +static int handle_pio(CPUState *cpu, const struct hyperv_message *msg)
-> +{
-> +    struct hv_x64_io_port_intercept_message info = { 0 };
-> +    int ret;
-> +
-> +    ret = set_ioport_info(msg, &info);
-> +    if (ret < 0) {
-> +        error_report("Failed to convert message to ioport info");
-> +        return -1;
-> +    }
-> +
-> +    if (info.access_info.string_op) {
-> +        return handle_pio_str(cpu, &info);
-> +    }
-> +
-> +    return handle_pio_non_str(cpu, &info);
-> +}
-> +
->   int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
->   {
-> -	error_report("unimplemented");
-> -	abort();
-> +    int ret;
-> +    hv_message exit_msg = { 0 };
-> +    enum MshvVmExit exit_reason;
-> +    int cpu_fd = mshv_vcpufd(cpu);
-> +
-> +    ret = ioctl(cpu_fd, MSHV_RUN_VP, &exit_msg);
-> +    if (ret < 0) {
-> +        return MshvVmExitShutdown;
-> +    }
-> +
-> +    switch (exit_msg.header.message_type) {
-> +    case HVMSG_UNRECOVERABLE_EXCEPTION:
-> +        *msg = exit_msg;
-> +        return MshvVmExitShutdown;
-> +    case HVMSG_UNMAPPED_GPA:
-> +        ret = handle_unmapped_mem(vm_fd, cpu, &exit_msg, &exit_reason);
-> +        if (ret < 0) {
-> +            error_report("failed to handle unmapped memory");
-> +            return -1;
-> +        }
-> +        return exit_reason;
-> +    case HVMSG_GPA_INTERCEPT:
-> +        ret = handle_mmio(cpu, &exit_msg, &exit_reason);
-> +        if (ret < 0) {
-> +            error_report("failed to handle mmio");
-> +            return -1;
-> +        }
-> +        return exit_reason;
-> +    case HVMSG_X64_IO_PORT_INTERCEPT:
-> +        ret = handle_pio(cpu, &exit_msg);
-> +        if (ret < 0) {
-> +            return MshvVmExitSpecial;
-> +        }
-> +        return MshvVmExitIgnore;
-> +    default:
-> +        msg = &exit_msg;
-> +    }
-> +
-> +    *exit = MshvVmExitIgnore;
-> +    return 0;
->   }
->   
->   void mshv_remove_vcpu(int vm_fd, int cpu_fd)
-> @@ -1061,34 +1583,6 @@ int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
->       return 0;
->   }
->   
-> -static int translate_gva(int cpu_fd, uint64_t gva, uint64_t *gpa,
-> -                         uint64_t flags)
-> -{
-> -    int ret;
-> -    union hv_translate_gva_result result = { 0 };
-> -
-> -    *gpa = 0;
-> -    mshv_translate_gva args = {
-> -        .gva = gva,
-> -        .flags = flags,
-> -        .gpa = (__u64 *)gpa,
-> -        .result = &result,
-> -    };
-> -
-> -    ret = ioctl(cpu_fd, MSHV_TRANSLATE_GVA, &args);
-> -    if (ret < 0) {
-> -        error_report("failed to invoke gpa->gva translation");
-> -        return -errno;
-> -    }
-> -    if (result.result_code != HV_TRANSLATE_GVA_SUCCESS) {
-> -        error_report("failed to translate gva (" TARGET_FMT_lx ") to gpa", gva);
-> -        return -1;
-> -
-> -    }
-> -
-> -    return 0;
-> -}
-> -
->   static int guest_mem_read_with_gva(const CPUState *cpu, uint64_t gva,
->                                      uint8_t *data, uintptr_t size,
->                                      bool fetch_instruction)
-
+On 5/15/25 1:36 PM, Si-Wei Liu wrote:
+>
+>
+> On 5/14/2025 10:42 PM, Michael S. Tsirkin wrote:
+>> On Wed, May 07, 2025 at 02:46:47PM -0400, Jonah Palmer wrote:
+>>> From: Eugenio Pérez <eperezma@redhat.com>
+>>>
+>>> Current memory operations like pinning may take a lot of time at the
+>>> destination.  Currently they are done after the source of the 
+>>> migration is
+>>> stopped, and before the workload is resumed at the destination.  
+>>> This is a
+>>> period where neigher traffic can flow, nor the VM workload can continue
+>>> (downtime).
+>>>
+>>> We can do better as we know the memory layout of the guest RAM at the
+>>> destination from the moment that all devices are initializaed.  So
+>>> moving that operation allows QEMU to communicate the kernel the maps
+>>> while the workload is still running in the source, so Linux can start
+>>> mapping them.
+>>>
+>>> As a small drawback, there is a time in the initialization where QEMU
+>>> cannot respond to QMP etc.  By some testing, this time is about
+>>> 0.2seconds.  This may be further reduced (or increased) depending on 
+>>> the
+>>> vdpa driver and the platform hardware, and it is dominated by the cost
+>>> of memory pinning.
+>>>
+>>> This matches the time that we move out of the called downtime window.
+>>> The downtime is measured as checking the trace timestamp from the 
+>>> moment
+>>> the source suspend the device to the moment the destination starts the
+>>> eight and last virtqueue pair.  For a 39G guest, it goes from ~2.2526
+>>> secs to 2.0949.
+>>>
+>>> Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+>>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+>>>
+>>> v3:
+>>> ---
+>> just know that everything beyond this line is not going into
+>> git commit log.
+> I guess that was the intent? Should be fine without them in the commit 
+> log I think. These are interim to capture what change was made to fix 
+> specific bug *in previous posted versions*.
+>
+> (having said, please help edit the log and remove the "v3:" line which 
+> should be after the --- separator line, thx!)
+>
+> -Siwei
+Woops, will fix this. Sorry about that.
+>
+>>
+>>
+>>> Move memory listener unregistration from vhost_vdpa_reset_status to
+>>> vhost_vdpa_reset_device. By unregistering the listener here, we can
+>>> guarantee that every reset leaves the device in an expected state.
+>>> Also remove the duplicate call in vhost_vdpa_reset_status.
+>>>
+>>> Reported-by: Lei Yang <leiyang@redhat.com>
+>>> Suggested-by: Si-Wei Liu <si-wei.liu@oracle.com>
+>>>
+>>> -- 
+>>> v2:
+>>> Move the memory listener registration to vhost_vdpa_set_owner function.
+>>> In case of hotplug the vdpa device, the memory is already set up, and
+>>> leaving memory listener register call in the init function made maps
+>>> occur before set owner call.
+>>>
+>>> To be 100% safe, let's put it right after set_owner call.
+>>>
+>>> Reported-by: Lei Yang <leiyang@redhat.com>
+>>> ---
+>>>   hw/virtio/vhost-vdpa.c | 35 ++++++++++++++++++++++++++++-------
+>>>   1 file changed, 28 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+>>> index de834f2ebd..e20da95f30 100644
+>>> --- a/hw/virtio/vhost-vdpa.c
+>>> +++ b/hw/virtio/vhost-vdpa.c
+>>> @@ -894,8 +894,14 @@ static int vhost_vdpa_reset_device(struct 
+>>> vhost_dev *dev)
+>>>         ret = vhost_vdpa_call(dev, VHOST_VDPA_SET_STATUS, &status);
+>>>       trace_vhost_vdpa_reset_device(dev);
+>>> +    if (ret) {
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> + memory_listener_unregister(&v->shared->listener);
+>>> +    v->shared->listener_registered = false;
+>>>       v->suspended = false;
+>>> -    return ret;
+>>> +    return 0;
+>>>   }
+>>>     static int vhost_vdpa_get_vq_index(struct vhost_dev *dev, int idx)
+>>> @@ -1379,6 +1385,11 @@ static int vhost_vdpa_dev_start(struct 
+>>> vhost_dev *dev, bool started)
+>>>                            "IOMMU and try again");
+>>>               return -1;
+>>>           }
+>>> +        if (v->shared->listener_registered &&
+>>> +            dev->vdev->dma_as != v->shared->listener.address_space) {
+>>> + memory_listener_unregister(&v->shared->listener);
+>>> +            v->shared->listener_registered = false;
+>>> +        }
+>>>           if (!v->shared->listener_registered) {
+>>> memory_listener_register(&v->shared->listener, dev->vdev->dma_as);
+>>>               v->shared->listener_registered = true;
+>>> @@ -1392,8 +1403,6 @@ static int vhost_vdpa_dev_start(struct 
+>>> vhost_dev *dev, bool started)
+>>>     static void vhost_vdpa_reset_status(struct vhost_dev *dev)
+>>>   {
+>>> -    struct vhost_vdpa *v = dev->opaque;
+>>> -
+>>>       if (!vhost_vdpa_last_dev(dev)) {
+>>>           return;
+>>>       }
+>>> @@ -1401,9 +1410,6 @@ static void vhost_vdpa_reset_status(struct 
+>>> vhost_dev *dev)
+>>>       vhost_vdpa_reset_device(dev);
+>>>       vhost_vdpa_add_status(dev, VIRTIO_CONFIG_S_ACKNOWLEDGE |
+>>>                                  VIRTIO_CONFIG_S_DRIVER);
+>>> - memory_listener_unregister(&v->shared->listener);
+>>> -    v->shared->listener_registered = false;
+>>> -
+>>>   }
+>>>     static int vhost_vdpa_set_log_base(struct vhost_dev *dev, 
+>>> uint64_t base,
+>>> @@ -1537,12 +1543,27 @@ static int vhost_vdpa_get_features(struct 
+>>> vhost_dev *dev,
+>>>     static int vhost_vdpa_set_owner(struct vhost_dev *dev)
+>>>   {
+>>> +    int r;
+>>> +    struct vhost_vdpa *v;
+>>> +
+>>>       if (!vhost_vdpa_first_dev(dev)) {
+>>>           return 0;
+>>>       }
+>>>         trace_vhost_vdpa_set_owner(dev);
+>>> -    return vhost_vdpa_call(dev, VHOST_SET_OWNER, NULL);
+>>> +    r = vhost_vdpa_call(dev, VHOST_SET_OWNER, NULL);
+>>> +    if (unlikely(r < 0)) {
+>>> +        return r;
+>>> +    }
+>>> +
+>>> +    /*
+>>> +     * Being optimistic and listening address space memory. If the 
+>>> device
+>>> +     * uses vIOMMU, it is changed at vhost_vdpa_dev_start.
+>>> +     */
+>>> +    v = dev->opaque;
+>>> +    memory_listener_register(&v->shared->listener, 
+>>> &address_space_memory);
+>>> +    v->shared->listener_registered = true;
+>>> +    return 0;
+>>>   }
+>>>     static int vhost_vdpa_vq_get_addr(struct vhost_dev *dev,
+>>> -- 
+>>> 2.43.5
+>
 
