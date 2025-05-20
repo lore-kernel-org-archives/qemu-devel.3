@@ -4,144 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15602C3ABDD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820F9C54E71
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 14:26:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHNuU-0007My-53; Tue, 20 May 2025 10:25:38 -0400
+	id 1uHNuI-0007MO-T4; Tue, 20 May 2025 10:25:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHNuM-0007MZ-7K
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:25:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHNuH-0002wD-7M
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:25:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747751123;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0F1RLQx1wpJNy373HzOcgz7CQ7Ie/dR5ZDtzCamxPZ4=;
- b=DHjaXrGNkGAaqOSvk38wFKOgTCMf8JLUP+RxtprzX0EuEwXHopWBsTRPEXSXMvQV7e11sn
- NKqtxOfpuhFuzT5Q/Fyv9+CNr1kRiEifwCfgaQqS+e4PW10UHwu/CGIjdjFtdXohx5mCQv
- F5HA7aG8sxl9ghfwuqYwnd//mhK8k7k=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-5sRUIhQdNjWbatd7QCUurQ-1; Tue, 20 May 2025 10:25:03 -0400
-X-MC-Unique: 5sRUIhQdNjWbatd7QCUurQ-1
-X-Mimecast-MFC-AGG-ID: 5sRUIhQdNjWbatd7QCUurQ_1747751102
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ac6ef2d1b7dso445937366b.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 07:25:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uHNuG-0007Lx-Ka
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 10:25:24 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uHNuE-0002vo-6j
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 10:25:24 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a0ac853894so5014687f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 07:25:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747751120; x=1748355920; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3S9b9WHqsNuka2NVPLNeaqXuQyKRzBvYMAZPp1x9eug=;
+ b=aY92C8ijxZGo28eM0nFzNCvN5xXe7d2+1We0YpF5/oB4f7Us5FLWTqZUP4a5sXeSC3
+ 9UEGOQ1OcfM390+G6+vW+KSaaDoHz9uPS3Edpha0LX8FpqEp0gktCLzrqazteVQ/MO9B
+ CYchSaRUPaLp0h/KHAvr+kdlEhfolnsQMxdop4LnWc3vG53MGa8NGlATf/ynGoJCX31h
+ IFGFK7EKAaH+Dt+BmcXvHF8uevBUMbp34OBljRNRTP01W3Bb6wFpVrsT+2H+mFd45edm
+ jdSaVmaJjvHi7QR2I1zLtFHvOUa/XDqE8yFJWmquj15Mp673YzS4v8xhrJilYurk0cq6
+ uPHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747751100; x=1748355900;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0F1RLQx1wpJNy373HzOcgz7CQ7Ie/dR5ZDtzCamxPZ4=;
- b=k+L2nnLRaecyM8pbDDXptiI38CjKLpaaq8ikSoiOC1zizPUyu4vPi9Q5kYEI/B72N0
- CrmN6kVt4+3+J4HiaaYO8ZzCS4+fpR2ZLoLWblXn7YN3CWzVjHCN68C0KHBkPyZ/cmjk
- V1zUnMTKH4LnCCzbJRtPvOAm1z+TL706T6qJPIzfzBWio4/bIr5yL2f1WAxXKfDrfNcC
- fqQLkRmjoxL+X0cX3nixIXNcEuJF7doShtqtCMvbv0wktVsVTkiz1VBuqq14/ho0sB1k
- dobordQq/I+JnDGZY5cfRj6xYm2YQfDtAamh7hOJkBVWvQwcKDiK0b70aPbyeo7IlvPO
- CGYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyarOJRumj14mVU2lf7OTAGvny2/zsk1LXP3TwafepCV5x1QoOYxfYvfS1v4w9/U154EvT0EcDG4BA@nongnu.org
-X-Gm-Message-State: AOJu0YwoRYnWzjr6zsXELXZXFc/lC72rRFNNMevh5wQ/p6kMOJR9PQ/Y
- Cb92/ipToHc6EOKJP8fZfbNdhUGxJWtwT4FiLEPBkAKjA5Sx3MMXZulK1OBbE3oJ+/aMFeC+ngH
- hNrD+SfCZC6ZenSRCi3NvPOrt/o/3X2ddXAMtyo7BmrcDV+kROeervGBIJNEaKT/Q
-X-Gm-Gg: ASbGncsst/fepBmZPh7WzKTInssrjsmz84N/EXKFr5fXhPwd/QTHzbRZg1T7SNRlSoj
- 9Gog5DmdeQrMT9wPKxDPe9hm+TC8nfJNXXyQsH1EYkMTcPpGxPnUA9r0Xah0XtM3hapvhX+lgAF
- OsMc8BLb9/XBvhDnFIVRj8JUfbWOAw8a3rMFwZjarTVfW/VyxM0hf7BYSyv6K3VEtaL5nOq9uYt
- 1PxYrfdYE6b4t00F6ktlnTAVMfVDFTMdQb+aCYWHSxm4Tq6kg9MlWlpf45lyJ/pJTVZxVEG30hH
- jOW2wtpmkJcgWQ==
-X-Received: by 2002:a17:907:1c29:b0:ad5:7499:2644 with SMTP id
- a640c23a62f3a-ad574992f9amr603619166b.54.1747751100162; 
- Tue, 20 May 2025 07:25:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEa5ogUPLlFK2/NGuZtXJRrXnU7HKpJn4V5kOgMysIyQThNrcBUcWR5vxj47xUmxcD/35Mxhw==
-X-Received: by 2002:a17:907:2d2a:b0:ad5:1e70:7145 with SMTP id
- a640c23a62f3a-ad52d4e746dmr1622126366b.22.1747751089325; 
- Tue, 20 May 2025 07:24:49 -0700 (PDT)
-Received: from [192.168.10.81] ([151.95.46.79])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ad52d4383d6sm744041566b.102.2025.05.20.07.24.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 07:24:48 -0700 (PDT)
-Message-ID: <90efb003-6cf3-4555-ac4b-1aeae141e79c@redhat.com>
-Date: Tue, 20 May 2025 16:24:47 +0200
+ d=1e100.net; s=20230601; t=1747751120; x=1748355920;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3S9b9WHqsNuka2NVPLNeaqXuQyKRzBvYMAZPp1x9eug=;
+ b=SkTVxISuA9bN0m2A7EBrpl4HYNF9YeXy8BBl6/OvfqDpODMThZI7fsM5c0eGHC4pdj
+ G2Gi9uJK3kKzWykJgBhynoK+2PMc+fNURj9rg+9fDbYIXgHfNnnr9bx24TWjRptQCF7m
+ CuD5aGAJ3glYn9rQ7ehix8Ee3dpCastZ83aPedVAlzZrT6I3O+2Xe/wgtiDDEGM1d/40
+ jFV6dhVn0pYBXi6ogZ8Ez8tlkF0nMsttszLm3ugXaHIIEN57vLB8duUmWzyWsekXhTxX
+ uC7C76q1gs6OU+D02SwmHNRyO3fenEkbOpWLX9tayWVSKWPFHtwCw2J512mssk15lv9v
+ TmJA==
+X-Gm-Message-State: AOJu0Yx2YF5MzhQBAw6c94pGWa7kHILOPpj66zkId59nMAFI3TYUubQ1
+ a+UHfctBqqx0jnvUtYsXtEcmW3Iz8S/bHgrNv3A+L7k4abKhHGvalaPlJDGE+rsM8vs=
+X-Gm-Gg: ASbGnct2tS1eg3NSQX6vZjBkHnp0y6h2ZWEb5J6b71sVDhD+sjY30MBcyBXhj08iUwD
+ s+ICKGeFRo5PGvb3NFCTsk7zLKjkO3fX55XaTy1msuR/kYFsRAU/d83z7Uah6WHsbXonyjTB8Gh
+ NOYr/X6rA/Va5GXE09ABb802BygxTnydL9i3H72b8+E6gGUMPSU/yGFzIO+sfR+2gnBVVL+otsl
+ PR/Gv5P7CV2fPEFF/5vg9obbSKTVu/BHz+be+yrZ2P3XuhHNAbN5yRWfydYkLPr6Ma01OCHuhOw
+ sVUnPE6AUVNt5nSGiyQ8l8/9c3vruz027PdSOlMe1TvYPbYocS9K2HG67+ShBq8=
+X-Google-Smtp-Source: AGHT+IHwfahr6+7rmqqX1F816oBFLMD4lKGouf1mYrgGAe+I6eO0i5tOgQAkm2ynvj5fTDN4vKoqxw==
+X-Received: by 2002:a05:6000:430d:b0:3a0:ad5e:2ee1 with SMTP id
+ ffacd0b85a97d-3a35c84f3c9mr14843350f8f.50.1747751119664; 
+ Tue, 20 May 2025 07:25:19 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a36c6eeaf8sm9113626f8f.48.2025.05.20.07.25.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 07:25:19 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1B49D5F7A5;
+ Tue, 20 May 2025 15:25:18 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nabih Estefan <nabihestefan@google.com>
+Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
+ pbonzini@redhat.com,  philmd@linaro.org
+Subject: Re: [PATCH 0/2] Fix for multi-process gdbstub breakpoints
+In-Reply-To: <20250508224514.805456-1-nabihestefan@google.com> (Nabih
+ Estefan's message of "Thu, 8 May 2025 22:45:12 +0000")
+References: <20250508224514.805456-1-nabihestefan@google.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Tue, 20 May 2025 15:25:18 +0100
+Message-ID: <87tt5f9x69.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 05/25] include/hw/hyperv: Add MSHV ABI header
- definitions
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-6-magnuskulke@linux.microsoft.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250520113018.49569-6-magnuskulke@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,42 +103,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 13:29, Magnus Kulke wrote:
-> Introduce headers for the Microsoft Hypervisor (MSHV) userspace ABI,
-> including IOCTLs and structures used to interface with the hypervisor.
-> 
-> These definitions are based on the upstream Linux MSHV interface and
-> will be used by the MSHV accelerator backend in later patches.
-> 
-> Note that for the time being the header `linux-mshv.h` is also being
-> included to allow building on machines that do not ship the header yet.
-> The header will be available in kernel 6.15 (at the time of writing
-> we're at -rc6) we will probably drop it in later revisions of the
-> patch set.
+Nabih Estefan <nabihestefan@google.com> writes:
 
-We do ship headers copied from Linux in QEMU; please modify 
-scripts/update-linux-headers.sh to include linux/mshv.h as 
-linux-headers/linux/mshv.h.
+> This patch series modifies the gdbstub to address a bug running a
+> multi cluster machine in QEMU using TCG.
 
-The other three can remain in include/hw/hyperv, since the Linux 
-versions are not intended for consumption outside the kernel (they're 
-not in include/uapi/).  But when you copy them...
+Was this a downstream multi-cluster machine? Do we have any examples for
+upstream? It would be nice to add a gdbstub test case to cover the
+multi-inferior behaviour.
 
-> +#ifndef HW_HYPERV_HVHDK_H
-> +#define HW_HYPERV_HVHDK_H
-> +
-> +#define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
-> +
-> +struct hv_input_set_partition_property {
-> +    __u64 partition_id;
-> +    __u32 property_code; /* enum hv_partition_property_code */
-> +    __u32 padding;
-> +    __u64 property_value;
+> The machine where the
+> problem was seen had several clusters of CPUs with similar
+> architectures and similar memory layout all working with physical
+> addresses. It was discovered under gdb debugging that a breakpoint
+> targeting one cluster misfired on the wrong cluster quite frequently
+> with no possible workaround since gdb was also unaware of any
+> breakpoint in that cluster and simply reported SIGTRAP.
+>
+> The sequence that discovered the bug adds N inferiors and adds a
+> breakpoint on inferior N. Then after continuing an unrelated thread
+> stops the execution when its PC hits the same address of the break
+> targeting a different inferior.
+>
+> target extended-remote :1234
+> add-inferior
+> inferior 2
+> attach 2
+> ...
+> add-inferior
+> inferior N
+> attach N
+> add-symbol-file /path/to/foo.elf
+> break foo
+>> Breakpoint 1 at 0xf00add
+> info break
+>> Num     Type           Disp Enb Address    What
+>> 1       breakpoint     keep y   0x00f00add in foo
+>>                                            at foo.c:1234 inf N
+> continue
+>> Continuing.
+>>
+>> Thread 2.1 received signal SIGTRAP, Trace/breakpoint trap.
+>> [Switching to Thread 2.2]
+>> 0xf00add in ?? ()
+>
+> The main problem is the current implementation of
+> 'tcg_insert_breakpoint' and 'tcg_remove_breakpoint' insert and remove
+> breakpoints to all the CPUs in the system regardless of what the
+> remote gdb protocol implements.
+>
+> If we look at the current source code of GDB we can see that the
+> function 'remote_target::insert_breakpoint' in file gdb/remote.c has
+> the intention to select the process ID of the inferior where the
+> break was inserted.
+>
+> int
+> remote_target::insert_breakpoint (struct gdbarch *gdbarch,
+>                                   struct bp_target_info *bp_tgt)
+> {
+> ...
+>   /* Make sure the remote is pointing at the right process, if
+>      necessary.  */
+>   if (!gdbarch_has_global_breakpoints (current_inferior ()->arch ()))
+>     set_general_process ();
+> ...
+> }
+>
+> https:sourceware.org/git/?p=3Dbinutils-gdb.git;a=3Dblob;f=3Dgdb/remote.c;=
+h=3D2c3988cb5075655e8a799d1cc5d4760ad8ed426e;hb=3DHEAD#l11023
+>
+> This would not happen when we input the 'break' in gdb but it is
+> deferred until the time we execute the 'continue' command. Because we
+> might be currently selecting an inferior that is not the one where we
+> previously set the breakpoint, the remote gdb has to make sure we
+> move the focus to the process ID of the inferior where we inserted
+> the break.
+>
+> In the previous example this will translate to something like:
+>
+> HgpN.M
+> Z0,00f00add,4
+>
+> Another thing that is wrong with the current implementation (and it
+> affects both TCG and KVM mode) is that the remote gdb protocol uses
+> 'Hg' and not 'Hc' to select the process. Functions
+> 'gdb_breakpoint_insert' and 'gdb_breakpoint_remove' receive wrongly
+> 'gdbserver_state.c_cpu' instead of 'gdbserver_state.g_cpu'.
+>
+> This is supported by the documentation of 'H op thread-id' where op =3D
+> 'c' is reserved to the step and continue:
+>
+> https:sourceware.org/gdb/current/onlinedocs/gdb.html/Packets.html
+>
+> And it can be verified that the function 'set_general_process' in the
+> previous code snippet will eventually call
+> 'remote_target::set_general_thread' and not
+> 'remote_target::set_continue_thread' if it needs to change focus.
+>
+> A third scenario that has to be taken into account is the case of a
+> break on a specific thread, for instance the sequence:
+>
+> inferior 1
+> break bar thread 1.3
+> break bar thread 1.4
+>
+> The remote protocol expects the gdbstub to apply the break to the
+> process ID of inferior 1 and considers the specific thread-id as a
+> breakpoint condition (not too different from a 'break if').
+>
+> In this case the packet exchange may look like:
+>
+> Hgp1.1
+> Z0,00ba2add,4
+>
+> There wouldn't be an independent set of packets for 'Hgp1.3' and
+> 'Hgp1.4'.
+>
+> In the gdb source code, the handling of the specific thread-id
+> happens during breakpoint evaluation in function
+> 'bpstat_check_breakpoint_conditions' of file gdb/breakpoint.c
+>
+> https:sourceware.org/git/?p=3Dbinutils-gdb.git;a=3Dblob;f=3Dgdb/breakpoin=
+t.c;h=3D17bd627f867cf3d4dc81322ed1919ba40cbb237d;hb=3DHEAD#l5550
+>
+> The proposed fix inserts or removes a breakpoint to all the cpus
+> sharing the same process ID as the one selected with the latest
+> received 'Hg' packet.
+>
+> Roque Arcudia Hernandez (2):
+>   gdbstub: Fix wrong CPUState pointer in breakpoint functions
+>   gdbstub: Apply breakpoints only to the selected PID
+>
+>  accel/tcg/tcg-accel-ops.c | 37 +++++++++++++++++++++++--------------
+>  gdbstub/gdbstub.c         | 10 ++++++++--
+>  gdbstub/internals.h       | 13 +++++++++++--
+>  include/exec/gdbstub.h    | 12 ++++++++++++
+>  4 files changed, 54 insertions(+), 18 deletions(-)
 
-... please change the types to uintNN_t and drop <linux/types.h>.
-
-Thanks,
-
-Paolo
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
