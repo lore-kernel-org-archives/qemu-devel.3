@@ -4,90 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B39C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2164EC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKdg-0004N6-Uz; Tue, 20 May 2025 06:56:04 -0400
+	id 1uHKlv-0005pf-VQ; Tue, 20 May 2025 07:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uHKde-0004MI-Ht
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:56:02 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uHKdc-000193-QX
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:56:02 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-70cb334de0cso29236617b3.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 03:56:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747738559; x=1748343359; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=d56XuPPi1HP2EPqByeAtI9ZEpb23Z+LV9ArzkamKZHM=;
- b=wKdc5sFFC0UsmBKAUpDcYCslHnNIacGdJRtgLZ8mz3iOg3QBHFmRDSWR1UU2GFKsMy
- 7JZkYFWIM8lINSXUhdxxh98q18SHJrRwPjwaW3c9BrXP9qErckLwPKpTRgO3Ibitvrlf
- J4vSBHDI7XR9VtPA0TGG2tzXv15OSELCmS/3ZHfNdx/XhWe1Mx6jd0rJKgUeNtDYUc0O
- 2evZWZR6vPoUwsCe5ajmROyXttuckGGhcn/ufKrXUCpc8RLHQ+fdIpwUcalfdVf7Cevw
- 5zuqs+ZV+IAQWAbPuzaPQL4g42dNpvG6LEa+0tt52nvHwge4xXaivgCGkcIvb67WF5/A
- oDWA==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uHKln-0005oy-T4
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:04:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uHKlj-0002ef-De
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:04:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747739059;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yOIZxwKbx/nM4dr/0oTTSQzM9/oZm8GOD1BZZFq4vME=;
+ b=KNoDZEzd2MpwwHlC3nEcqTPlM6BKYs1sXjkuj6y0IlamoisA8QKkhhBeXOIOOZYHTa3VV5
+ OMn2qAcWHuoIaUfRd57rbw96wTBvsNA87aGasWADs3GfzDmABlrycZqppvsgzFNDPFoCWT
+ m4iaWA0tIDByxB8Ux2M8RDwpg3E8pfw=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-455-cEzPkzY-POWnIsoF20dDCw-1; Tue, 20 May 2025 07:04:17 -0400
+X-MC-Unique: cEzPkzY-POWnIsoF20dDCw-1
+X-Mimecast-MFC-AGG-ID: cEzPkzY-POWnIsoF20dDCw_1747739057
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ad53aaae592so422315266b.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:04:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747738559; x=1748343359;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=d56XuPPi1HP2EPqByeAtI9ZEpb23Z+LV9ArzkamKZHM=;
- b=rtcl2bGp4Q0+ShmmwQq9Rlb/HhAspzXX2ZXbwXQyeVMLFgjGsH+LAPmFEPnkAS/a7c
- 7Q9EB2Tgw1BG+3HIj3FHywRu5P6XC+UKM5KfScuB/U/x2eAxTItC+jk/I1eCloXzxYqu
- 6MnLF5j0W7Bauq0E2S28rJ+MkY7PTeUChaxMc+Gn2gwns4dEv0kWEYh1aBEG5ad7h7EZ
- L1q5jCcUQODwIdzomgRLqVXUC3TbjESIXgATvdlib11gG02YGMHOzzGVQzt7njQoxyBM
- dkXcgUZylftQNJouQcM4rzBSlJZ5OlEINEWevsuh/AZq/hdlQhc8tcwgBhD4dmUGNteM
- 9+IA==
+ d=1e100.net; s=20230601; t=1747739056; x=1748343856;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yOIZxwKbx/nM4dr/0oTTSQzM9/oZm8GOD1BZZFq4vME=;
+ b=jrrV7clXxV0o2TIpgS5wYvkkd0bHCKcxWJQYajMCbgvBtCh7jzgGUEb69QeqeVruXT
+ t1cesPxK2e2Ccp5QLTa3aPdjoSOymk5UISafwvm5RUU75Cxhmc/H8oM3NJ/fHgb4RfTX
+ VIltMrscCChKCMpJBLfmcNcjBC/lkUWg06cKSwPl2l1MUnit/sHws51I5Ch73FbXB6im
+ meWRZbtbYQKpElxrF2rTs2v/GlxOa7Q3nbmvmFauIaMHCtA+HDj+ZTK07J9dV/DEFExw
+ D7F96J8CwWQKGqbTZqptLvBmicazkPU36PcQ0+54PLZh4JmibGi8/CQ2zZK3I7FLh6hj
+ QsNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLlX9hzkPtDy1V5KDGE/XAt2CfwCTt4mPX4DujKl7jP9C2R+hnvXDproSAwwl35HspLezrVr3usGQH@nongnu.org
-X-Gm-Message-State: AOJu0YxjHh5cYnE3p2d8qNs3JKrexiSCaPaCl+jKZ0ljWeBeuJvcRpxz
- z3G9jzS9+cti4By9tHpb9vdfhtUyEVXMgnWfWAq6Yk2tz4/qyVs3qkwZ7/AW8hkJ66f/f98aze+
- 83I46M/SI9Zw+8/ce97IwMXDmbq+4KE3BqN+aN2M83g==
-X-Gm-Gg: ASbGncuBh5i/5Zdu3kAk96Xap7F+okpo2kSEJu6e9Ax/AK12njmGZ30LShsyohiQKp2
- LTTjvxOhjzV+3joEqTc8WDEKOjdFv6GW2TNJXfOMgwLVBFNE5W0kGpYXRUdC5zRfPGsq5jteJsI
- 7ESnCZEoa5fnA+jUK85/zKXe3OFtk0AIHdQ99HOfzo2Fiq
-X-Google-Smtp-Source: AGHT+IHbX85FjHQ1ryzOqIq8Vw1anY/OmP5dmTpu5cKIx6nJNiDF+XWk6sLVirv+EI4x0bJog2nND/UAk4aJGNeWs/c=
-X-Received: by 2002:a05:690c:74c8:b0:702:5134:aab0 with SMTP id
- 00721157ae682-70ca7baf406mr259144617b3.32.1747738559451; Tue, 20 May 2025
- 03:55:59 -0700 (PDT)
+ AJvYcCUyj2dg4TXI7oCUU3pd7EwDYq/ECuUQJw6IEB64L2F7nnmdcw057niyMh469JI8ddI3U4C0qu3/r/JJ@nongnu.org
+X-Gm-Message-State: AOJu0YwfaFuB5HGbsrwWZttFc81oXvfJIG7Gw/jbZAabWu0QCi4nYoNx
+ tf3RWZNNdgEqybkyLYN6qcG2ZeCgellK/5MM12N6IbGKul/97Y8bkTVUdP+o3B8FYWElwGBvz+4
+ +U3viOwRYr4m+kLbjAkc8AwQhYm1lpEXuTg+lDd2UnAUZm++yAfDcpUgI
+X-Gm-Gg: ASbGncsddoTKsI2HPqb+XTdeQQPO4lZLj4sC37YCwDI4TELji+33IPM/X9eelbRf7/5
+ DFt+qepNBEWjBG7R+pJelL5PmAe0PgFnFI+1uuo76YFkU7o2WAwe1DZGztHGAxsQ3k3O5swdTAg
+ jaUKTDxRfo/nEd3Ga62sxgrw6E4w/IK1Tgi6PmwIdEmxUlztBDcwAt8rwfxQs5R8caG7YT0aSMx
+ SqBmRew9l5QGOL5jRwXsz/iUJ3/0a79QCjDQFJ2+GUo/2cUIrPPJbBwG5HtujZQoei9t8VdgIu1
+ Mr9WlpVmv/+GtBN5cui9tez3afWMHJsYlDE16lXFWJkKnhpnQvyRQRWFMTrH
+X-Received: by 2002:a17:906:c147:b0:ad5:75da:540d with SMTP id
+ a640c23a62f3a-ad575da5630mr614782666b.32.1747739056490; 
+ Tue, 20 May 2025 04:04:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/JvXlRCW8ocdtcuV9ggEx7O8WIDXDYJ6/WpaOkKi+YElcKMLZ/V1vNTjX2fn/m5O753wleQ==
+X-Received: by 2002:a17:906:c147:b0:ad5:75da:540d with SMTP id
+ a640c23a62f3a-ad575da5630mr614776666b.32.1747739055828; 
+ Tue, 20 May 2025 04:04:15 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-53-134-35.retail.telecomitalia.it.
+ [82.53.134.35]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad52d498737sm712100566b.138.2025.05.20.04.04.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 04:04:15 -0700 (PDT)
+Date: Tue, 20 May 2025 13:04:10 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Huaitong Han <oenhan@gmail.com>
+Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, cohuck@redhat.com, 
+ pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com, 
+ leiyang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Huaitong Han <hanht2@chinatelecom.cn>,
+ Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>, 
+ Jidong Xia <xiajd@chinatelecom.cn>
+Subject: Re: [PATCH V2] vhost: Don't set vring call if guest notifier is unused
+Message-ID: <ypbprsw5lngenryzn7txs3gpoljgxr4yso4zjqfr5467nl5bkn@k5zgrfhqagq4>
+References: <20250513112825.1731347-1-hanht2@chinatelecom.cn>
+ <5cstdapha4xzmgkuja5ydxxvfgr4ux5iytex3qp65vm5hedp7s@h2mjfv72npyw>
+ <CAAuJbeKtVjDzxBLkX86tHFnmXNBzTRpunAQ7WmBQXpYrSs-kig@mail.gmail.com>
 MIME-Version: 1.0
-References: <20250315142050.3642741-1-linux@roeck-us.net>
- <CAFEAcA-zPwJrq3oQk3MRp9ZCyTzDOg2-Je00v20pVzrKe8he6w@mail.gmail.com>
- <5d350a95-886e-420c-8b0d-a3be57b9490d@roeck-us.net>
- <CAFEAcA-9MCRfHb+O-qdMHAOgSVEUY26h7dUzF-yaF81oFZHs4w@mail.gmail.com>
- <TYZPR03MB689654CB39D47E3ACCC24A29DB96A@TYZPR03MB6896.apcprd03.prod.outlook.com>
-In-Reply-To: <TYZPR03MB689654CB39D47E3ACCC24A29DB96A@TYZPR03MB6896.apcprd03.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 20 May 2025 11:55:48 +0100
-X-Gm-Features: AX0GCFuER6MgQpEK2WT8SOEamRDgQgQTgmcL8dbc6efsCslvLIqKHkwlMIosPto
-Message-ID: <CAFEAcA9fvhoxABfY1kgDg2Xa7ZVpYfA0_9wwi3MkDfUJZ6U18A@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: Add missing psci_conduit to NPCM8XX SoC boot info
-To: "KFTING@nuvoton.com" <KFTING@nuvoton.com>
-Cc: Guenter Roeck <linux@roeck-us.net>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Hao Wu <wuhaotsh@google.com>, 
- "Avi.Fishman@nuvoton.com" <Avi.Fishman@nuvoton.com>, 
- "tomer.maimon@nuvoton.com" <tomer.maimon@nuvoton.com>, 
- "tali.perry@nuvoton.com" <tali.perry@nuvoton.com>,
- "CHLI30@nuvoton.com" <CHLI30@nuvoton.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAAuJbeKtVjDzxBLkX86tHFnmXNBzTRpunAQ7WmBQXpYrSs-kig@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,63 +117,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 May 2025 at 02:04, KFTING@nuvoton.com <KFTING@nuvoton.com> wrote:
->
-> Hi PMM:
->
-> From: Peter Maydell <peter.maydell@linaro.org>
-> Sent: Sunday, May 11, 2025 9:42 PM
-> To: Guenter Roeck <linux@roeck-us.net>
-> Cc: CS20 KFTing <KFTING@nuvoton.com>; qemu-arm@nongnu.org; qemu-devel@nongnu.org; Hao Wu <wuhaotsh@google.com>
-> Subject: Re: [PATCH] hw/arm: Add missing psci_conduit to NPCM8XX SoC boot info
->
->
-> On Tue, 18 Mar 2025 at 19:54, Guenter Roeck <linux@roeck-us.net> wrote:
-> >
-> > On 3/18/25 09:59, Peter Maydell wrote:
-> > > On Sat, 15 Mar 2025 at 14:20, Guenter Roeck <linux@roeck-us.net> wrote:
-> > >>
-> > >> Without psci_conduit, the Linux kernel crashes almost immediately.
-> > >>
-> > >>      psci: probing for conduit method from DT.
-> > >>      Internal error: Oops - Undefined instruction: 0000000002000000
-> > >> [#1] PREEMPT SMP
-> > >>
-> > >> Fixes: ae0c4d1a1290 ("hw/arm: Add NPCM8XX SoC")
-> > >> Cc: Hao Wu <wuhaotsh@google.com>
-> > >> Cc: Peter Maydell <peter.maydell@linaro.org>
-> > >> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-> > >> ---
-> > >>   hw/arm/npcm8xx.c | 1 +
-> > >>   1 file changed, 1 insertion(+)
-> > >>
-> > >> diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c index
-> > >> f182accc47..e5a1929ed7 100644
-> > >> --- a/hw/arm/npcm8xx.c
-> > >> +++ b/hw/arm/npcm8xx.c
-> > >> @@ -346,6 +346,7 @@ static struct arm_boot_info npcm8xx_binfo = {
-> > >>       .secure_boot            = false,
-> > >>       .board_id               = -1,
-> > >>       .board_setup_addr       = NPCM8XX_BOARD_SETUP_ADDR,
-> > >> +    .psci_conduit           = QEMU_PSCI_CONDUIT_SMC,
-> > >>   };
-> > >
-> > > Why do we need this for npcm8xx when we don't need it for npcm7xx?
-> > > Or is it also broken on 7xx?
-> > >
-> >
-> > I don't see a reference to psci in npcm7xx devicetree files in the
-> > upstream Linux kernel.
+On Fri, May 16, 2025 at 09:03:33PM +0800, Huaitong Han wrote:
+>Stefano Garzarella <sgarzare@redhat.com> 于2025年5月16日周五 16:19写道：
+>>
+>> On Tue, May 13, 2025 at 07:28:25PM +0800, oenhan@gmail.com wrote:
+>> >From: Huaitong Han <hanht2@chinatelecom.cn>
+>> >
+>> >The vring call fd is set even when the guest does not use MSI-X (e.g., in the
+>> >case of virtio PMD), leading to unnecessary CPU overhead for processing
+>> >interrupts.
+>> >
+>> >The commit 96a3d98d2c("vhost: don't set vring call if no vector") optimized the
+>> >case where MSI-X is enabled but the queue vector is unset. However, there's an
+>> >additional case where the guest uses INTx and the INTx_DISABLED bit in the PCI
+>> >config is set, meaning that no interrupt notifier will actually be used.
+>> >
+>> >In such cases, the vring call fd should also be cleared to avoid redundant
+>> >interrupt handling.
+>> >
+>> >Fixes: 96a3d98d2c("vhost: don't set vring call if no vector")
+>> >Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
+>> >Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
+>> >Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
+>> >---
+>> >V2:
+>> >- Retain the name `query_guest_notifiers`
+>> >- All qtest/unit test cases pass
+>> >- Fix V1 patch style problems
+>> >
+>> > hw/pci/pci.c                   |  2 +-
+>> > hw/s390x/virtio-ccw.c          |  7 +++++--
+>> > hw/virtio/vhost.c              |  3 +--
+>> > hw/virtio/virtio-pci.c         | 10 ++++++++--
+>> > include/hw/pci/pci.h           |  1 +
+>> > include/hw/virtio/virtio-bus.h |  2 +-
+>> > 6 files changed, 17 insertions(+), 8 deletions(-)
+>> >
+>> >diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>> >index 352b3d12c8..45b491412a 100644
+>> >--- a/hw/pci/pci.c
+>> >+++ b/hw/pci/pci.c
+>> >@@ -1712,7 +1712,7 @@ static void pci_update_mappings(PCIDevice *d)
+>> >     pci_update_vga(d);
+>> > }
+>> >
+>> >-static inline int pci_irq_disabled(PCIDevice *d)
+>> >+int pci_irq_disabled(PCIDevice *d)
+>>
+>> Since it was inline, will it be better to move the whole function to
+>> include/hw/pci/pci.h and keep it inline?
+>>
+>I did try moving the function to include/hw/pci/pci.h and marking it
+>inline, but ran into compilation issues due to the use of the incomplete
+>PCIDevice type.
+>Specifically, accessing d->config triggers the following error:
+>include/hw/pci/pci.h:674:26: error: invalid use of incomplete typedef
+>‘PCIDevice’
+>return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
+>Including hw/pci/pci_device.h in pci.h to resolve this introduces
+>further issues, so I suggest to keep the function as a non-inline
+>helper in the .c file.
 
-> > I guess the aarch32 versions of the board don't use psci and the aarch64 one does.
+I see. If Michael is happy with that, it's fine by me!
+
+Thanks,
+Stefano
+
 >
-> > Would any of the Nuvoton folks like to comment on this patch?
-> > It looks like a correct fix to me.
+>> Thanks,
+>> Stefano
+>>
+>> > {
+>> >     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
+>> > }
+>> >diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+>> >index d2f85b39f3..632708ba4d 100644
+>> >--- a/hw/s390x/virtio-ccw.c
+>> >+++ b/hw/s390x/virtio-ccw.c
+>> >@@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState *d, bool running)
+>> >     }
+>> > }
+>> >
+>> >-static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
+>> >+static bool virtio_ccw_query_guest_notifiers(DeviceState *d, int n)
+>> > {
+>> >     CcwDevice *dev = CCW_DEVICE(d);
+>> >+    VirtioCcwDevice *vdev = VIRTIO_CCW_DEVICE(d);
+>> >+    VirtIODevice *virtio_dev = virtio_bus_get_device(&vdev->bus);
+>> >
+>> >-    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
+>> >+    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
+>> >+            && virtio_queue_vector(virtio_dev, n) != VIRTIO_NO_VECTOR;
+>> > }
+>> >
+>> > static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
+>> >diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>> >index 4cae7c1664..2a9a839763 100644
+>> >--- a/hw/virtio/vhost.c
+>> >+++ b/hw/virtio/vhost.c
+>> >@@ -1341,8 +1341,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>> >     }
+>> >
+>> >     if (k->query_guest_notifiers &&
+>> >-        k->query_guest_notifiers(qbus->parent) &&
+>> >-        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
+>> >+        !k->query_guest_notifiers(qbus->parent, idx)) {
+>> >         file.fd = -1;
+>> >         r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+>> >         if (r) {
+>> >diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>> >index 0fa8fe4955..d62e199489 100644
+>> >--- a/hw/virtio/virtio-pci.c
+>> >+++ b/hw/virtio/virtio-pci.c
+>> >@@ -1212,10 +1212,16 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
+>> >     return 0;
+>> > }
+>> >
+>> >-static bool virtio_pci_query_guest_notifiers(DeviceState *d)
+>> >+static bool virtio_pci_query_guest_notifiers(DeviceState *d, int n)
+>> > {
+>> >     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+>> >-    return msix_enabled(&proxy->pci_dev);
+>> >+    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+>> >+
+>> >+    if (msix_enabled(&proxy->pci_dev)) {
+>> >+        return virtio_queue_vector(vdev, n) != VIRTIO_NO_VECTOR;
+>> >+    } else {
+>> >+        return !pci_irq_disabled(&proxy->pci_dev);
+>> >+    }
+>> > }
+>> >
+>> > static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
+>> >diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+>> >index c2fe6caa2c..8c24bd97db 100644
+>> >--- a/include/hw/pci/pci.h
+>> >+++ b/include/hw/pci/pci.h
+>> >@@ -668,6 +668,7 @@ void lsi53c8xx_handle_legacy_cmdline(DeviceState *lsi_dev);
+>> >
+>> > qemu_irq pci_allocate_irq(PCIDevice *pci_dev);
+>> > void pci_set_irq(PCIDevice *pci_dev, int level);
+>> >+int pci_irq_disabled(PCIDevice *d);
+>> >
+>> > static inline void pci_irq_assert(PCIDevice *pci_dev)
+>> > {
+>> >diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
+>> >index 7ab8c9dab0..75d43b508a 100644
+>> >--- a/include/hw/virtio/virtio-bus.h
+>> >+++ b/include/hw/virtio/virtio-bus.h
+>> >@@ -48,7 +48,7 @@ struct VirtioBusClass {
+>> >     int (*load_done)(DeviceState *d, QEMUFile *f);
+>> >     int (*load_extra_state)(DeviceState *d, QEMUFile *f);
+>> >     bool (*has_extra_state)(DeviceState *d);
+>> >-    bool (*query_guest_notifiers)(DeviceState *d);
+>> >+    bool (*query_guest_notifiers)(DeviceState *d, int n);
+>> >     int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
+>> >     int (*set_host_notifier_mr)(DeviceState *d, int n,
+>> >                                 MemoryRegion *mr, bool assign);
+>> >--
+>> >2.43.5
+>> >
+>>
+>
 
-
-> Yes, the aarch64 uses psci.
-
-Thanks for confirming; I've applied this to target-arm.next.
-
--- PMM
 
