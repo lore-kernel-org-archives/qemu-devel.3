@@ -4,88 +4,178 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F3E9C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA20C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:26:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHPki-0005JX-GW; Tue, 20 May 2025 12:23:40 -0400
+	id 1uHPmt-0006Xi-PT; Tue, 20 May 2025 12:25:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uHPkf-0005JI-TE
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:23:38 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uHPkc-00018B-Lo
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:23:37 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-231c86bffc1so59030115ad.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:23:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747758211; x=1748363011; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vlIS5XkEiQcfpB33GU5iY3RFpQbWgrVE/LiB3jjgNCk=;
- b=WA6d5wHXD8B099Mv/kJFvJoQAu+WK8/PLgQZZvmN7T/BtZKpmstOHp0JMrHJ3uARfn
- 1/LOxRln7poZQmQIjN5NgZBS8b4vZe2ODkGH7sxnFHnMQufoOTimJRtWYj9u4tPJxRrg
- yEN17I9kTYMzqqsPp3r2gb9KuPnyoD+pSF124dpMRaKOW5DGpHmCDcrZhhJDzyHbDh9Q
- mI4FfcSvXFA/LXznDMRPWKBZ140c8RQKThpcqeAcADBKeigplMhWlLQPNQ1EtPt2SPf8
- pTtsP71Jj5fTTan208wrALRmX33CLy5TsdZ5vLhnTc1sKO1pZkbioElFe2CiHW6V714t
- D+3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747758211; x=1748363011;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vlIS5XkEiQcfpB33GU5iY3RFpQbWgrVE/LiB3jjgNCk=;
- b=T0mdF8MUHDYdvbyrIdLoB2u956+5ZQfznUYvYqjRsVn/n9MrJJ6v/i1pCcMSgn3DwY
- Qix9jXG11f8N0nK/3kYd9bNCPH9Ftv8LgrBVIIqTO4P63ST0ZIDVrGE7z0R79flHx2ym
- cIsR1mm929AAhaXy89bqLkmUsr0wP7yxp+Zr8x4/oz5YOBnBujAEaGY3oTp++Q8P+l1V
- SfXFYqnbKGeoJnd9+VD16e3bKiLnPzKmfde7ftdGKHoRKcPEk1u8VQjIrJ7kxJ3NMrvw
- cdu9Ld1q3k2JfPqnGuI6SIpCyoQRQuO4X9ydpgDl2dH18CgV5U1VfRrc02BTquokxQJ1
- bqeg==
-X-Gm-Message-State: AOJu0YwwKVP7iNNG6q/ffk7CracSCqCW4E6PrQJ1gjazQGWYdtKGfoeC
- 4fl/bvVP/aUP23FPc38hWTwbCzr6Yc+CY4AMG9MrfcKytKhgygwlFLlL
-X-Gm-Gg: ASbGncsOSLIq9NUUMIRBVpMfhrB6HIOhyLrm00DvfN8pG0vpBgnBOw4fdcBFvF6lC/t
- 3ZhX/zPQ56mGWJYhFXE/q1f3wXAVRRH+/SmFgujRFK90DRiGH+pYwNNcPmxZ42EgvmsRdtjTW3O
- GvPyDZyzxLvgBypSnaAKB/7CLzZVrjJoVnY9Dmq1q0YMzFNEzTQ04bNCZzD554wOK2hsIIORhjq
- nHAMHsrEFyWLFK8IYK1ll8HYxqdyxYXJHbxxlr4LsTX+p1A62S5vhOHF5FaK0qLzWVEJ+qv7MvJ
- 5jI0qlQU1Aw8i/V54Gwn5+hsD2+EUN/UKFwKdenq0g==
-X-Google-Smtp-Source: AGHT+IFVODoKkrtzlHVLin29APQi6H8q8atRsS0CZxOLTYpE/uHpUCwmNttZM212tup3D2nEt5OI/Q==
-X-Received: by 2002:a17:902:dac5:b0:231:d16c:7f55 with SMTP id
- d9443c01a7336-231de21d5f5mr230631165ad.0.1747758209687; 
- Tue, 20 May 2025 09:23:29 -0700 (PDT)
-Received: from lg ([2601:646:8f03:9fee:2c89:c0cf:1cbd:96d3])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4e97161sm78487625ad.153.2025.05.20.09.23.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 09:23:29 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Tue, 20 May 2025 09:23:25 -0700
-To: anisa.su887@gmail.com
-Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
- dave@stgolabs.net, linux-cxl@vger.kernel.org,
- Anisa Su <anisa.su@samsung.com>
-Subject: Re: [PATCH v2 04/10] cxl-mailbox-utils: 0x5601 - FMAPI Get Host
- Region Config
-Message-ID: <aCysfUNYZ4K-kNpA@lg>
-References: <20250508001754.122180-1-anisa.su887@gmail.com>
- <20250508001754.122180-5-anisa.su887@gmail.com>
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1uHPmk-0006Ww-Hl
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:25:48 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1uHPmg-0001pX-U7
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:25:45 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KEgMOU028047;
+ Tue, 20 May 2025 09:25:37 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=O/zFtQswGhx4y
+ a5wMZyoHQ1FjNc+VukPQAmr8UNbEEA=; b=2Z1eKx2IeJEVL/ETNAtXpkX2MdB5S
+ Cw8g2lV09oELtoq3G5J4JK0Tqbn8wKJddGgcIVh/9JKv5OxQtGOXe5gHGKanB0An
+ GTB5fA6mbai1HmnqPkQ655+G0koi2sRGCOT496wf/W98wBiAC8GwLWNSOCGFjyVJ
+ qrpBMHVsK6+1uuSrU+dlzZ1/oviNDTQiY8SM3otw1WzMBIfa5DRQTFZHzx6/A72P
+ h+XoJlNF1g3qoAQZGkXHEkq95cJ5WVx3hibSlyxYlamqQCLFM4XGZvd2eK/WLvn7
+ pibnLvQ3uLjfWvq7xuV8I5+oR24dr08dcanXMxdw4crkdMAZiBfGmIPOQ==
+Received: from nam02-dm3-obe.outbound.protection.outlook.com
+ (mail-dm3nam02lp2047.outbound.protection.outlook.com [104.47.56.47])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 46pssbpjpp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 May 2025 09:25:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AQOF0/MWQ6RNwdHnjWJeYsOV8nkUU2huTs+5vc97B+UQ9LS+Xxj5UK1YrPEG8E/ZAVZmdrmqAYlQmx9tkINxx4GgUWNY+BcJ10q092TuSVvg5F1DNpf8yn0e2B59vG8SI1PJozKlTwLhJ1fV/8tP9J86yTLBnE5/edO4MAdho8Rt/LOp9Du07aliaaXUwPz9X5MtrLRKU2AU6IIzzsy0fINiJFKvVZQscVZXZHY2vgDEmA7LMqyoX+DjwW6//wzK14yy52P1ZdJSLTY4GGm6f2A4AIulMW06Gj9Xn6zuW8ZkGx6qleHhTAAxqBZTjJ2yzt8rJMQSlZlIkO3vr5WlGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=O/zFtQswGhx4ya5wMZyoHQ1FjNc+VukPQAmr8UNbEEA=;
+ b=x1xxRIHcCO/zPxTCj6Qmh6RzfeRhgiZfKpGngn7jKbW20E+ijH1FOCiVcblJHGnfnLGzPr6jTZnEXNxq6g3fpnr5xUnzQS3nepXxWGILvMOdVkpQ/2/7M6V0oosWBPjgcx60hcF0/AOa9tO5+HeopjrVrnETQtDw0IistmRWNhzRclCkayZN2g21CwoFy7V+1cFCfEKp9BPBEYRLkdfp9UJQPflRlWwLeBAgM0kQ1OBrmWnNc/4IgKBm1FNUMa0KI8a9AFg2+APdhumJue4J415SAMFRJLCAIOSkm34wz+FTCy0H+hYifQnoVzhTWbe51bNSWlmwImAOQHoK6Jt/5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O/zFtQswGhx4ya5wMZyoHQ1FjNc+VukPQAmr8UNbEEA=;
+ b=ljcBzeY8nSZJ+ljPo/NqN6cT3kR0LemEP+tw+VHismbYU4d+F12yUf5pZ2MKJVyQgi3PqmuD/iajM+H0e0NuQqH0to5oRd5EW8RLhunUoF0DLCauy7CO90BIVImtM7QNSeX76QpC5PwA8MdGZBfJt6s7AlhA0qG/922a9BdMQvwOAjE5uSxP5OOm9/ZiWCTQRwh7MSAfmCM7tYUo1Lzcxf/yk1IRKrWDJ7y4K2E1l5qijFrwZOB8YAmTl1apIetZhBjRmNa48VDJ8RFCQKxTxIWTm0jeEZNcQBCVAZKgbm5HmN8/QJ4DXJsWwzbKy7/titVeAxEryO6BfDMR80lu3Q==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by CYYPR02MB9804.namprd02.prod.outlook.com (2603:10b6:930:be::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.19; Tue, 20 May
+ 2025 16:25:35 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8769.016; Tue, 20 May 2025
+ 16:25:35 +0000
+From: John Levon <john.levon@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ John Levon <john.levon@nutanix.com>
+Subject: [PATCH] vfio: add more VFIOIOMMUClass docs
+Date: Tue, 20 May 2025 17:25:30 +0100
+Message-ID: <20250520162530.2194548-1-john.levon@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: AM8P191CA0003.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:20b:21a::8) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250508001754.122180-5-anisa.su887@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|CYYPR02MB9804:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3b9a1fba-abcf-4c95-3e0d-08dd97baf2e7
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?jLDNoOpzk9xBjspEFCDKfmCWcsNnw4itLBQs+FIbt5lwueMQf/0z6xbvWwMS?=
+ =?us-ascii?Q?8u5fFPsaMtQRW4MLpJs45H7/DLamUPHr08RE80q/tlGhiEotG49ZqYPa+qpl?=
+ =?us-ascii?Q?vPnRa6q8sf/a78pjvCPGvahYMnWO3T6ph3motU6BDV56EGE1Tg8P0xsNAldd?=
+ =?us-ascii?Q?Kak3qonM+rmh5Txo0reQfpqkX1gw7pgmAtAnAcpo2eVXNHRVRMVg8uO9QFIY?=
+ =?us-ascii?Q?XattQhdJhuD9HJAcVGIKiFRfHoZOiixZP5RaffSvzIr723gunqMpEucGeDnx?=
+ =?us-ascii?Q?5QlpOZGI/ubBHIMsCnMhUQGkVdTO5w+ohVM1e9AEdd8iVNCxzG+dp58Kvxyi?=
+ =?us-ascii?Q?pnkMe20CjM4NsgGKiZ5GRkm+Vd0PEphZL/UxbA18gVfSPp6tjiWok/fsd3i1?=
+ =?us-ascii?Q?icKUvkLLO9ess3nZCIt8n4FqVfUQa763DozflPw9nWNcgAFr5Fv5sFhjZiQP?=
+ =?us-ascii?Q?+J72rUvVCLH4+P1VwTwfu7PdF7mK3lRg1jvZ82NQ0l+NV2vMUF3pYrS+BvL0?=
+ =?us-ascii?Q?nyuyvtTW/U8nOq0ZgI34hJFENhJRyNt0KDupm5oNUsxZHcqAIgOZRpjDImjF?=
+ =?us-ascii?Q?6ZuSkYmcduZyQUcXG7/KQ88qztn/iiZBXywUc36NMPoT3VXvtBBVvYBzSdNt?=
+ =?us-ascii?Q?Ssu9II5tgf/YUpkYxHYXSZaFx/aNM8PwomH9OGlQl+VzOeiNP9qFF2U+vUz0?=
+ =?us-ascii?Q?321AjAVWbpZrKGRSohRJYqhr8EJZMtd57/UhYimMvur2CF1qj/62UYSdhCx2?=
+ =?us-ascii?Q?7kyrg2AV4IX4UXW+l6TwurnhEDgUCCI3foIX+bxsnOLSGNQHZVnEgkQDfm/i?=
+ =?us-ascii?Q?hmvzmHsgoLx7gdibLKGJCzurAJ5sros3+i15GzBgcl4ZkYygdju2qJWN/wGc?=
+ =?us-ascii?Q?rBwIMJhkcVZc5q/nzNz+1EafIIeAJ+QVlh9PxkW/UJmcrhPmDNWUtStsQhYU?=
+ =?us-ascii?Q?CRCEu9uAi8I+3w03ASWXsKDD94ceunQ0X2aTZikYedVp74B7Ezx2BJuP6JMd?=
+ =?us-ascii?Q?3P+8WnlqGNjBerTn3homtPSiRvbPhGL0JOEOUoZWBscMlu+hyahLMOhDf0Ks?=
+ =?us-ascii?Q?YbmZXuOkpMHtXvKQSyC01/wvJpCLOA3LDnqS28HpGexb2cTQhwwzxq3kBDEv?=
+ =?us-ascii?Q?QGYUAYvKQeCnMtB/egRIiImbbsU//buFyhpN7k8CW5W561mOtT4pybb72VDT?=
+ =?us-ascii?Q?OzIdHJh73+katUVe0trEWOluTtFUPSQPddefOcywu62X5uqz/SkdpXQ6A5+5?=
+ =?us-ascii?Q?rdwmaa/y8Kd8/C/OEpMs4eDyGNrXrPVkNiNZXAQKusF4jOf6q9BX/8ZJHgyu?=
+ =?us-ascii?Q?hE+XE9vcJ1KfusE5pG7FleJm6pV/vgDqQ5t6H1l8n87xeLhv4q6OjpuKA8aw?=
+ =?us-ascii?Q?TNVWPrf4GfvkFiaSbfbt3/BFWBrsxoXUu7kfhKUXakxvUy8Ippi6Z7GeAvWg?=
+ =?us-ascii?Q?h8dqtFRNmc4=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?82W5wfK9Yc5DrCIG8xujKqNs21pmAVShRwHuGdfH21awJ+QTDTBFc7f1HAfd?=
+ =?us-ascii?Q?vcoMx5FL3SLwJs3xwpOlVpOo3F/w2k4liotkr/eWYIK4YlkJu6dUfp2rhwgs?=
+ =?us-ascii?Q?/DR9EDmP4vg86jlN0oqwjw5CnUaeIeIhO5tJXXUnjrQh6mxQ1KUmL494syf4?=
+ =?us-ascii?Q?9IZj5hp/NVdyaE/ZMd7OjupVSdb54Sg02QHPayhXqgeEp7kOzkSlB4lmpn64?=
+ =?us-ascii?Q?vXVFEXj65zpCRRE78OIY7dZ03GZewWLCaGL9oX4JB6rWJ7cw804iv5jfxLBI?=
+ =?us-ascii?Q?4WnlGHEhDNEfOdLiZiRa1doF9K/gqohYzdoxTHU/M5suos27NFuR0rjFUhU+?=
+ =?us-ascii?Q?KArKUjJ0vvP9liPVVHyI2IIR5WWGDYiQcdXf41Ot0TGYYxRV9WjtU0FaCEjo?=
+ =?us-ascii?Q?qfZ/k+jHVvAObSk2rjXvZt59PWwvaUgWmBxGPrK6zDUNA5OPHewq42NUflD3?=
+ =?us-ascii?Q?FbAMM7G60nStfPYF5eyG5kf9h6sSWvxtONVRNrqzlIx7ShLHsHYedry+xOQT?=
+ =?us-ascii?Q?OfqIgg9dMJSAOZskopobQOdE5IMnv17cFX4RHThxciecp15PNrBoQIqOa1mx?=
+ =?us-ascii?Q?fB9gAf/HMtzbESq3u+FunAaC8x5VKQU/RLZV9B0xleJfL3avJSSLJUzEZi8U?=
+ =?us-ascii?Q?p9kK/cqyw1xLxgGcu0GRrHXzBJUY/96cap2m5u4T+UI4JNxyYl3IuaIraRL+?=
+ =?us-ascii?Q?vdEwNNtzDm5wCRzWNx1N5wfi+qOPUeZ1kjUcPKBxwHQZvzLzlhbPiYexnMze?=
+ =?us-ascii?Q?SghnKXlFu1j+o+NvSx+YEDpgvV7KMxCmig0CGJAxFfmP3TFcJeOP6AwELYXx?=
+ =?us-ascii?Q?HOftUg5pT4Al8HKhTNj7RKt6vB4OZtBVzVbGfDkzCo5Sr8ZihO9ENcN6mE/b?=
+ =?us-ascii?Q?uzcST9rEkz9Ow1TlXDyxoWAWApozPgU9lSIDsQBIp5T/vRJse9urzcH22GKS?=
+ =?us-ascii?Q?GCCeQczU12WOv6ZgX85EZt2aLv1ByWHGq/JkjqKKCF/csoI1ay/Ty4ZGmlBw?=
+ =?us-ascii?Q?rf0Tvs57k+VVj2s/tENeUG2fDGG5FqNZEyU9CYizg7K7z/8Q0d9J2WFfsUUy?=
+ =?us-ascii?Q?jf4ARZpQSd0KQp0O+MIairuvTsSkc3xs5pT9XN4rO1m7TDYJj75UVID995aZ?=
+ =?us-ascii?Q?jBE9V7orjAki8iZSSZDlKJhZ7yDvb/0h7VIEfccrDzIHj2yOMoMX1f7LghxM?=
+ =?us-ascii?Q?J6g+z63yr1ReCqzzvZAOa2k7zxQvH4ExU+6PptKKlE+1fnF9leApFmGCzPM0?=
+ =?us-ascii?Q?hcPfJ9gPhtc8XDMzPSJi59dPPriB7VSZu4C1bljz7piHqPIkTmL9+QvhO491?=
+ =?us-ascii?Q?orvchASme0K0ndavskVvw8eBVKdUBYyxjEQvfH9zkBk9i3ncXnQeIQ9zvhy5?=
+ =?us-ascii?Q?0D6+VllWskYPxpfSn3aztg3ivEQdlP0EL7fqzUn4ePnWFxhRSbDcHd3VSa8x?=
+ =?us-ascii?Q?NDk8DUDNqOJEQ0qzxCgv9KRl0q1oU5QDNnNhcSIaFJefZoJjZaPpx34Y4FT/?=
+ =?us-ascii?Q?kMzBZMrxs5qDM3UDOIUiyrysUl2Fh8ar+bDPzsw2CySMWWGoav0d3oCKHaSn?=
+ =?us-ascii?Q?nzILHvg3w0QLes4rUDDHFYhOge0ibPhoLM0ABjpl?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3b9a1fba-abcf-4c95-3e0d-08dd97baf2e7
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 16:25:35.3136 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +xAGDwKmnm4p2BN+xd6BvYyyF565dRGQQoP2UJb0PeFYrN7uX2F0vJOg2eNj1qjsfGTjVB22y8KMyyQNdOwT2w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR02MB9804
+X-Proofpoint-ORIG-GUID: YzbSBmG3pSVEU6v2vDNjbjoaK2kCqVYC
+X-Proofpoint-GUID: YzbSBmG3pSVEU6v2vDNjbjoaK2kCqVYC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDEzNSBTYWx0ZWRfXxn43wzVwmjVy
+ ZXCNg1XjuQh7KOlTRidbLBBA1rxixN/B9Gi2VXt1BD+/eE/NNegLZ8LpTB+Pq28XulNcdOhcORf
+ xOXznFuHQglSGkuvS7Uwa2EkqjgCmxOTxr/rY+TBI9LdQnJkgQSzpZx1Vh/dzRdloNLX2+VgZt0
+ tGngtROAS9aYddbGwW5MNVqsI3xFMm3DnOICuNuT/tisUA9VmPdsEIRv9tVRHdbhGv8/1+hHh5b
+ 6r3pzV5mo1z28bUMK93e2vwm7lJkDsF0gUpuqj3OsIMP/eRf2kl3gLj/q2zWkvfo5pI+XyHkETK
+ 3s8Dlg3qheNkBgfi5fchWxsQjCg1apK8bRplxdEzby17chA2IAZs2oTaSjkI+vdehU1BMiWrA03
+ nFzxejq1WIaTlE2CL4frUs/7HW2OMlF/7MSiCsTnRz0uw7mnU5Vez2mcG+BmCtlYr9VEwplj
+X-Authority-Analysis: v=2.4 cv=YvAPR5YX c=1 sm=1 tr=0 ts=682cad01 cx=c_pps
+ a=e6lK8rWizvdfspXvJDLByw==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=dt9VzEwgFbYA:10
+ a=0kUYKlekyDsA:10 a=64Cc0HZtAAAA:8 a=UrW5fgWPM3IBa3_2MYQA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-20_06,2025-05-20_03,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,162 +192,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 08, 2025 at 12:01:00AM +0000, anisa.su887@gmail.com wrote:
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> FM DCD Management command 0x5601 implemented per CXL r3.2 Spec Section 7.6.7.6.2
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+Add some additional doc comments for these class methods.
 
-One minor comment inline. Otherwise,
+Signed-off-by: John Levon <john.levon@nutanix.com>
+---
+ include/hw/vfio/vfio-container-base.h | 75 +++++++++++++++++++++++++--
+ 1 file changed, 72 insertions(+), 3 deletions(-)
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
-> ---
->  hw/cxl/cxl-mailbox-utils.c   | 102 +++++++++++++++++++++++++++++++++++
->  include/hw/cxl/cxl_opcodes.h |   1 +
->  2 files changed, 103 insertions(+)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index d3c69233b8..6afc45833d 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -3326,6 +3326,106 @@ static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +static void build_dsmas_flags(uint8_t *flags, CXLDCRegion *region)
-> +{
-> +    *flags = 0;
-> +
-> +    if (region->nonvolatile) {
-> +        *flags |= BIT(CXL_DSMAS_FLAGS_NONVOLATILE);
-> +    }
-> +    if (region->sharable) {
-> +        *flags |= BIT(CXL_DSMAS_FLAGS_SHARABLE);
-> +    }
-> +    if (region->hw_managed_coherency) {
-> +        *flags |= BIT(CXL_DSMAS_FLAGS_HW_MANAGED_COHERENCY);
-> +    }
-> +    if (region->ic_specific_dc_management) {
-> +        *flags |= BIT(CXL_DSMAS_FLAGS_IC_SPECIFIC_DC_MANAGEMENT);
-> +    }
-> +    if (region->rdonly) {
-> +        *flags |= BIT(CXL_DSMAS_FLAGS_RDONLY);
-> +    }
-> +}
-> +
-> +/* CXL r3.2 section 7.6.7.6.2: Get Host DC Region Configuration (Opcode 5601h) */
-> +static CXLRetCode cmd_fm_get_host_dc_region_config(const struct cxl_cmd *cmd,
-> +                                                   uint8_t *payload_in,
-> +                                                   size_t len_in,
-> +                                                   uint8_t *payload_out,
-> +                                                   size_t *len_out,
-> +                                                   CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint16_t host_id;
-> +        uint8_t region_cnt;
-> +        uint8_t start_rid;
-> +    } QEMU_PACKED *in = (void *)payload_in;
-> +    struct {
-> +        uint16_t host_id;
-> +        uint8_t num_regions;
-> +        uint8_t regions_returned;
-> +        struct {
-> +            uint64_t base;
-> +            uint64_t decode_len;
-> +            uint64_t region_len;
-> +            uint64_t block_size;
-> +            uint8_t dsmas_flags;
-> +            uint8_t rsvd1[3];
-> +            uint8_t sanitize;
-
-We may have other flags in the future, maybe we want to generalize the
-name of the field.  Maybe "flags"?
-
-Fan
-> +            uint8_t rsvd2[3];
-> +        } QEMU_PACKED records[];
-> +    } QEMU_PACKED *out = (void *)payload_out;
-> +    struct {
-> +        uint32_t num_extents_supported;
-> +        uint32_t num_extents_available;
-> +        uint32_t num_tags_supported;
-> +        uint32_t num_tags_available;
-> +    } QEMU_PACKED *extra_out;
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    uint16_t record_count, out_pl_len, i;
-> +
-> +    if (in->start_rid >= ct3d->dc.num_regions) {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +    record_count = MIN(ct3d->dc.num_regions - in->start_rid, in->region_cnt);
-> +
-> +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
-> +    extra_out = (void *)out + out_pl_len;
-> +    out_pl_len += sizeof(*extra_out);
-> +
-> +    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
-> +
-> +    stw_le_p(&out->host_id, 0);
-> +    out->num_regions = ct3d->dc.num_regions;
-> +    out->regions_returned = record_count;
-> +
-> +    for (i = 0; i < record_count; i++) {
-> +        stq_le_p(&out->records[i].base,
-> +                 ct3d->dc.regions[in->start_rid + i].base);
-> +        stq_le_p(&out->records[i].decode_len,
-> +                 ct3d->dc.regions[in->start_rid + i].decode_len /
-> +                 CXL_CAPACITY_MULTIPLIER);
-> +        stq_le_p(&out->records[i].region_len,
-> +                 ct3d->dc.regions[in->start_rid + i].len);
-> +        stq_le_p(&out->records[i].block_size,
-> +                 ct3d->dc.regions[in->start_rid + i].block_size);
-> +        build_dsmas_flags(&out->records[i].dsmas_flags,
-> +                          &ct3d->dc.regions[in->start_rid + i]);
-> +        /* Sanitize is bit 0 of flags. */
-> +        out->records[i].sanitize =
-> +            ct3d->dc.regions[in->start_rid + i].flags & BIT(0);
-> +    }
-> +
-> +    stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
-> +    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED -
-> +             ct3d->dc.total_extent_count);
-> +    stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
-> +    stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
-> +
-> +    *len_out = out_pl_len;
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
->  static const struct cxl_cmd cxl_cmd_set[256][256] = {
->      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
->          cmd_infostat_bg_op_abort, 0, 0 },
-> @@ -3450,6 +3550,8 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
->  static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
->      [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
->          cmd_fm_get_dcd_info, 0, 0 },
-> +    [FMAPI_DCD_MGMT][GET_HOST_DC_REGION_CONFIG] = { "GET_HOST_DC_REGION_CONFIG",
-> +        cmd_fm_get_host_dc_region_config, 4, 0 },
->  };
->  
->  /*
-> diff --git a/include/hw/cxl/cxl_opcodes.h b/include/hw/cxl/cxl_opcodes.h
-> index c4c233665e..68ad68291c 100644
-> --- a/include/hw/cxl/cxl_opcodes.h
-> +++ b/include/hw/cxl/cxl_opcodes.h
-> @@ -63,5 +63,6 @@ enum {
->          #define GET_MHD_INFO 0x0
->      FMAPI_DCD_MGMT = 0x56,
->          #define GET_DCD_INFO 0x0
-> +        #define GET_HOST_DC_REGION_CONFIG 0x1
->      GLOBAL_MEMORY_ACCESS_EP_MGMT = 0X59
->  };
-> -- 
-> 2.47.2
-> 
-
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 3d392b0fd8..f9e561cb08 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -115,13 +115,56 @@ OBJECT_DECLARE_TYPE(VFIOContainerBase, VFIOIOMMUClass, VFIO_IOMMU)
+ struct VFIOIOMMUClass {
+     ObjectClass parent_class;
+ 
+-    /* basic feature */
++    /**
++     * @setup
++     *
++     * Perform basic setup of the container, including configuring IOMMU
++     * capabilities, IOVA ranges, supported page sizes, etc.
++     *
++     * @bcontainer: #VFIOContainerBase
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Returns true to indicate success and false for error.
++     */
+     bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
++
++    /**
++     * @listener_begin
++     *
++     * Called at the beginning of an address space update transaction.
++     * See #MemoryListener.
++     *
++     * @bcontainer: #VFIOContainerBase
++     */
+     void (*listener_begin)(VFIOContainerBase *bcontainer);
++
++    /**
++     * @listener_commit
++     *
++     * Called at the end of an address space update transaction,
++     * See #MemoryListener.
++     *
++     * @bcontainer: #VFIOContainerBase
++     */
+     void (*listener_commit)(VFIOContainerBase *bcontainer);
++
++    /**
++     * @dma_map
++     *
++     * Map an address range into the container.
++     *
++     * @bcontainer: #VFIOContainerBase to use
++     * @iova: start address to map
++     * @size: size of the range to map
++     * @vaddr: process virtual address of mapping
++     * @readonly: true if mapping should be readonly
++     *
++     * Returns 0 to indicate success and -errno otherwise.
++     */
+     int (*dma_map)(const VFIOContainerBase *bcontainer,
+                    hwaddr iova, ram_addr_t size,
+                    void *vaddr, bool readonly);
++
+     /**
+      * @dma_unmap
+      *
+@@ -132,12 +175,38 @@ struct VFIOIOMMUClass {
+      * @size: size of the range to unmap
+      * @iotlb: The IOMMU TLB mapping entry (or NULL)
+      * @unmap_all: if set, unmap the entire address space
++     *
++     * Returns 0 to indicate success and -errno otherwise.
+      */
+     int (*dma_unmap)(const VFIOContainerBase *bcontainer,
+                      hwaddr iova, ram_addr_t size,
+                      IOMMUTLBEntry *iotlb, bool unmap_all);
++
++
++    /**
++     * @attach_device
++     *
++     * Associate the given device with a container and do some related
++     * initialization of the device context.
++     *
++     * @name: name of the device
++     * @vbasedev: the device
++     * @as: address space to use
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Returns true to indicate success and false for error.
++     */
+     bool (*attach_device)(const char *name, VFIODevice *vbasedev,
+                           AddressSpace *as, Error **errp);
++
++    /*
++     * @detach_device
++     *
++     * Detach the given device from its container and clean up any necessary
++     * state.
++     *
++     * @vbasedev: the device to disassociate
++     */
+     void (*detach_device)(VFIODevice *vbasedev);
+ 
+     /* migration feature */
+@@ -152,7 +221,7 @@ struct VFIOIOMMUClass {
+      * @start: indicates whether to start or stop dirty pages tracking
+      * @errp: pointer to Error*, to store an error if it happens.
+      *
+-     * Returns zero to indicate success and negative for error
++     * Returns zero to indicate success and negative for error.
+      */
+     int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+                                    bool start, Error **errp);
+@@ -167,7 +236,7 @@ struct VFIOIOMMUClass {
+      * @size: size of iova range
+      * @errp: pointer to Error*, to store an error if it happens.
+      *
+-     * Returns zero to indicate success and negative for error
++     * Returns zero to indicate success and negative for error.
+      */
+     int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
+                 VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
 -- 
-Fan Ni
+2.43.0
+
 
