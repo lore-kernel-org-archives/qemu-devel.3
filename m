@@ -4,93 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7091AC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 12:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A7BC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 12:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLeY-00040k-Ht; Tue, 20 May 2025 08:01:02 -0400
+	id 1uHLfs-0004w0-6q; Tue, 20 May 2025 08:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uHLeQ-0003y6-CN
- for qemu-devel@nongnu.org; Tue, 20 May 2025 08:00:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uHLfp-0004u9-TJ
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 08:02:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uHLeM-0006cF-Gi
- for qemu-devel@nongnu.org; Tue, 20 May 2025 08:00:54 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uHLfn-0006wT-G4
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 08:02:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747742446;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AdoCpCiFy1o+UeljfCtf+O+yxuzvwJ4gqryxhNXyh+E=;
- b=Dt0I9wmi33KwakDVT6adiRh6HqlV/BDuFG7/Mu+CvuIxj0w/8raDmrjb83/gBgu1Uyie0N
- rJqQEJjUwuRXbF4WmRv0kda2MFIKwy97RrqiQfICbW/5EnG5vUeh6IAMjHO8oh2vSGCDGU
- hm+s21OotgOPZ2Nc/N4m77nv7oKurcg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-98-bSoQamAYO0yFGmIAEbcC7Q-1; Tue, 20 May 2025 08:00:45 -0400
-X-MC-Unique: bSoQamAYO0yFGmIAEbcC7Q-1
-X-Mimecast-MFC-AGG-ID: bSoQamAYO0yFGmIAEbcC7Q_1747742444
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a1f6c5f4f2so2126479f8f.2
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 05:00:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747742443; x=1748347243;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AdoCpCiFy1o+UeljfCtf+O+yxuzvwJ4gqryxhNXyh+E=;
- b=CG8JaYZtYuqefQAJ+CBq27XuwrdV1Wsxf00YBLxWy5mvIxdhXIUN9MAv5bxKfV1h1b
- 1gNLAuYpfbVzpZCInLy14sHq280GYYF2GgamBxkjuaUbrMoKlz4Z9bdUo4nmDcADFOvb
- 0Pl/SBP4/6qHqKDKL2+F8KkFnv3EH7nthtsDAtYkKxhoJoGY3TZwGWi4HiR8cSmeZMTf
- eyt/PZDHzheoA+wSImagOHME16axMsDSxqFyc38ibVy6aj4VzZtlUHhMitqxUm1U7pXY
- Hw3i2ivWcJYjTQz5Ku9rTo5NKSU/5zj4Uyj+3lFIHa9NemwKCY84YOLNhHGQYqaz7JGc
- s8FQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7GMfOXf6rOJH3B9+XfaRpJs/cOkgnBjvilOylbEMKezzorFGy8NzffpqxgTeMH5BIexmwoWTpEmnd@nongnu.org
-X-Gm-Message-State: AOJu0YwJiI1vqtdCaiydhlpqDKaJzufgIwbHarmzvsqW+cLuvSr+fhS8
- JsyFQHxvwAs/2BLyx9lGv8Eo4w6moS8xaVt7tS8a3ESf4E5G88m49GV77zYyVc4Rf00WRMaQY1j
- O/vzCf4/0+sZvuh1JQtkhCJKNnqQnlARwnY+YjQyXSXz/2URbUFMXTLc4UO8TI00J
-X-Gm-Gg: ASbGncuQN8gm6zI+1WiFTrKBk9YyjldNJBNuS9io7Wz1zTpxLsdTqm6RFB5fhOut8mA
- ZVTfVC+2qbELBbsqzFyd3zC79iA7C4f/yU4IK+iDPioL43nMlIw0O+KLwUopkupJaL7BkAIC68w
- 4Qbfls0j4UyY7Ef9XkVL5iQFKHYjWBGdl5ESL+a86oj1ABSFRy3LHTsNHhr300GUzKtM6IuLdCt
- NRf5ciIPuwCmJFqJ4cuWSkUO+ZgdytK7HsCFbR4fbpTkJlYf5425hiP2DZB8GlIljTMx1qjfN8v
-X-Received: by 2002:a05:6000:40e1:b0:3a3:71fb:791a with SMTP id
- ffacd0b85a97d-3a371fb835dmr6009547f8f.55.1747742442577; 
- Tue, 20 May 2025 05:00:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQxAFcyWrkPzTkUqdj4l7a6o4QOANpkCf8eQPqExEhTe0+kKswr9UG4DKWIVcVDE7dPxjkQA==
-X-Received: by 2002:a05:6000:40e1:b0:3a3:71fb:791a with SMTP id
- ffacd0b85a97d-3a371fb835dmr6009483f8f.55.1747742442066; 
- Tue, 20 May 2025 05:00:42 -0700 (PDT)
-Received: from redhat.com ([31.187.78.34]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca4d1c6sm16008526f8f.2.2025.05.20.05.00.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 05:00:41 -0700 (PDT)
-Date: Tue, 20 May 2025 08:00:38 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Huaitong Han <oenhan@gmail.com>, marcel.apfelbaum@gmail.com,
- cohuck@redhat.com, pasic@linux.ibm.com, farman@linux.ibm.com,
- borntraeger@linux.ibm.com, leiyang@redhat.com,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Huaitong Han <hanht2@chinatelecom.cn>,
- Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>,
- Jidong Xia <xiajd@chinatelecom.cn>
-Subject: Re: [PATCH V2] vhost: Don't set vring call if guest notifier is unused
-Message-ID: <20250520080030-mutt-send-email-mst@kernel.org>
-References: <20250513112825.1731347-1-hanht2@chinatelecom.cn>
- <5cstdapha4xzmgkuja5ydxxvfgr4ux5iytex3qp65vm5hedp7s@h2mjfv72npyw>
- <CAAuJbeKtVjDzxBLkX86tHFnmXNBzTRpunAQ7WmBQXpYrSs-kig@mail.gmail.com>
- <ypbprsw5lngenryzn7txs3gpoljgxr4yso4zjqfr5467nl5bkn@k5zgrfhqagq4>
+ s=mimecast20190719; t=1747742537;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=exPkeRuTH0m/aTI9Vl7+XEFElqtVLulKLeIDwA5xPJ4=;
+ b=AQKPwi9jMGyBM0FNVfSubF+sj/CtPI3R2DdqYLkZgkrQq9KgyIpdVCN97nM0yg+1gUmlPF
+ OPkKwcePY1TjVzLzgyjtpKD+cZPVV3RgGeTHT5Iv8ATkny6CYQU6v+0nOL2bYp8+FDTNVd
+ 7qZydl1N0h0wO20OsJYd+nuI4SGL3k4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-Q9yqDxalOpKi9I4raq9Hjg-1; Tue,
+ 20 May 2025 08:02:12 -0400
+X-MC-Unique: Q9yqDxalOpKi9I4raq9Hjg-1
+X-Mimecast-MFC-AGG-ID: Q9yqDxalOpKi9I4raq9Hjg_1747742530
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BDCF71800370; Tue, 20 May 2025 12:02:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.49])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B600130001AA; Tue, 20 May 2025 12:02:04 +0000 (UTC)
+Date: Tue, 20 May 2025 13:02:01 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [RFC PATCH 06/25] accel/mshv: Add accelerator skeleton
+Message-ID: <aCxvOfF3ytXYnhp1@redhat.com>
+References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+ <20250520113018.49569-7-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ypbprsw5lngenryzn7txs3gpoljgxr4yso4zjqfr5467nl5bkn@k5zgrfhqagq4>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20250520113018.49569-7-magnuskulke@linux.microsoft.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -112,172 +91,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 01:04:10PM +0200, Stefano Garzarella wrote:
-> On Fri, May 16, 2025 at 09:03:33PM +0800, Huaitong Han wrote:
-> > Stefano Garzarella <sgarzare@redhat.com> 于2025年5月16日周五 16:19写道：
-> > > 
-> > > On Tue, May 13, 2025 at 07:28:25PM +0800, oenhan@gmail.com wrote:
-> > > >From: Huaitong Han <hanht2@chinatelecom.cn>
-> > > >
-> > > >The vring call fd is set even when the guest does not use MSI-X (e.g., in the
-> > > >case of virtio PMD), leading to unnecessary CPU overhead for processing
-> > > >interrupts.
-> > > >
-> > > >The commit 96a3d98d2c("vhost: don't set vring call if no vector") optimized the
-> > > >case where MSI-X is enabled but the queue vector is unset. However, there's an
-> > > >additional case where the guest uses INTx and the INTx_DISABLED bit in the PCI
-> > > >config is set, meaning that no interrupt notifier will actually be used.
-> > > >
-> > > >In such cases, the vring call fd should also be cleared to avoid redundant
-> > > >interrupt handling.
-> > > >
-> > > >Fixes: 96a3d98d2c("vhost: don't set vring call if no vector")
-> > > >Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
-> > > >Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
-> > > >Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
-> > > >---
-> > > >V2:
-> > > >- Retain the name `query_guest_notifiers`
-> > > >- All qtest/unit test cases pass
-> > > >- Fix V1 patch style problems
-> > > >
-> > > > hw/pci/pci.c                   |  2 +-
-> > > > hw/s390x/virtio-ccw.c          |  7 +++++--
-> > > > hw/virtio/vhost.c              |  3 +--
-> > > > hw/virtio/virtio-pci.c         | 10 ++++++++--
-> > > > include/hw/pci/pci.h           |  1 +
-> > > > include/hw/virtio/virtio-bus.h |  2 +-
-> > > > 6 files changed, 17 insertions(+), 8 deletions(-)
-> > > >
-> > > >diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> > > >index 352b3d12c8..45b491412a 100644
-> > > >--- a/hw/pci/pci.c
-> > > >+++ b/hw/pci/pci.c
-> > > >@@ -1712,7 +1712,7 @@ static void pci_update_mappings(PCIDevice *d)
-> > > >     pci_update_vga(d);
-> > > > }
-> > > >
-> > > >-static inline int pci_irq_disabled(PCIDevice *d)
-> > > >+int pci_irq_disabled(PCIDevice *d)
-> > > 
-> > > Since it was inline, will it be better to move the whole function to
-> > > include/hw/pci/pci.h and keep it inline?
-> > > 
-> > I did try moving the function to include/hw/pci/pci.h and marking it
-> > inline, but ran into compilation issues due to the use of the incomplete
-> > PCIDevice type.
-> > Specifically, accessing d->config triggers the following error:
-> > include/hw/pci/pci.h:674:26: error: invalid use of incomplete typedef
-> > ‘PCIDevice’
-> > return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
-> > Including hw/pci/pci_device.h in pci.h to resolve this introduces
-> > further issues, so I suggest to keep the function as a non-inline
-> > helper in the .c file.
+On Tue, May 20, 2025 at 01:29:59PM +0200, Magnus Kulke wrote:
+> Introduce the initial scaffold for the MSHV (Microsoft Hypervisor)
+> accelerator backend. This includes the basic directory structure and
+> stub implementations needed to integrate with QEMU's accelerator
+> framework.
 > 
-> I see. If Michael is happy with that, it's fine by me!
-> 
-> Thanks,
-> Stefano
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>  accel/meson.build      |   1 +
+>  accel/mshv/meson.build |   6 ++
+>  accel/mshv/mshv-all.c  | 143 +++++++++++++++++++++++++++++++++++++++++
+>  include/system/mshv.h  |  34 ++++++++++
+>  4 files changed, 184 insertions(+)
+>  create mode 100644 accel/mshv/meson.build
+>  create mode 100644 accel/mshv/mshv-all.c
 > 
 
-I think it's fine.
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> new file mode 100644
+> index 0000000000..44605adf94
+> --- /dev/null
+> +++ b/accel/mshv/mshv-all.c
 
-> > > Thanks,
-> > > Stefano
-> > > 
-> > > > {
-> > > >     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
-> > > > }
-> > > >diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-> > > >index d2f85b39f3..632708ba4d 100644
-> > > >--- a/hw/s390x/virtio-ccw.c
-> > > >+++ b/hw/s390x/virtio-ccw.c
-> > > >@@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState *d, bool running)
-> > > >     }
-> > > > }
-> > > >
-> > > >-static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
-> > > >+static bool virtio_ccw_query_guest_notifiers(DeviceState *d, int n)
-> > > > {
-> > > >     CcwDevice *dev = CCW_DEVICE(d);
-> > > >+    VirtioCcwDevice *vdev = VIRTIO_CCW_DEVICE(d);
-> > > >+    VirtIODevice *virtio_dev = virtio_bus_get_device(&vdev->bus);
-> > > >
-> > > >-    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
-> > > >+    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
-> > > >+            && virtio_queue_vector(virtio_dev, n) != VIRTIO_NO_VECTOR;
-> > > > }
-> > > >
-> > > > static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
-> > > >diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> > > >index 4cae7c1664..2a9a839763 100644
-> > > >--- a/hw/virtio/vhost.c
-> > > >+++ b/hw/virtio/vhost.c
-> > > >@@ -1341,8 +1341,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-> > > >     }
-> > > >
-> > > >     if (k->query_guest_notifiers &&
-> > > >-        k->query_guest_notifiers(qbus->parent) &&
-> > > >-        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
-> > > >+        !k->query_guest_notifiers(qbus->parent, idx)) {
-> > > >         file.fd = -1;
-> > > >         r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
-> > > >         if (r) {
-> > > >diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > > >index 0fa8fe4955..d62e199489 100644
-> > > >--- a/hw/virtio/virtio-pci.c
-> > > >+++ b/hw/virtio/virtio-pci.c
-> > > >@@ -1212,10 +1212,16 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
-> > > >     return 0;
-> > > > }
-> > > >
-> > > >-static bool virtio_pci_query_guest_notifiers(DeviceState *d)
-> > > >+static bool virtio_pci_query_guest_notifiers(DeviceState *d, int n)
-> > > > {
-> > > >     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
-> > > >-    return msix_enabled(&proxy->pci_dev);
-> > > >+    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-> > > >+
-> > > >+    if (msix_enabled(&proxy->pci_dev)) {
-> > > >+        return virtio_queue_vector(vdev, n) != VIRTIO_NO_VECTOR;
-> > > >+    } else {
-> > > >+        return !pci_irq_disabled(&proxy->pci_dev);
-> > > >+    }
-> > > > }
-> > > >
-> > > > static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
-> > > >diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> > > >index c2fe6caa2c..8c24bd97db 100644
-> > > >--- a/include/hw/pci/pci.h
-> > > >+++ b/include/hw/pci/pci.h
-> > > >@@ -668,6 +668,7 @@ void lsi53c8xx_handle_legacy_cmdline(DeviceState *lsi_dev);
-> > > >
-> > > > qemu_irq pci_allocate_irq(PCIDevice *pci_dev);
-> > > > void pci_set_irq(PCIDevice *pci_dev, int level);
-> > > >+int pci_irq_disabled(PCIDevice *d);
-> > > >
-> > > > static inline void pci_irq_assert(PCIDevice *pci_dev)
-> > > > {
-> > > >diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
-> > > >index 7ab8c9dab0..75d43b508a 100644
-> > > >--- a/include/hw/virtio/virtio-bus.h
-> > > >+++ b/include/hw/virtio/virtio-bus.h
-> > > >@@ -48,7 +48,7 @@ struct VirtioBusClass {
-> > > >     int (*load_done)(DeviceState *d, QEMUFile *f);
-> > > >     int (*load_extra_state)(DeviceState *d, QEMUFile *f);
-> > > >     bool (*has_extra_state)(DeviceState *d);
-> > > >-    bool (*query_guest_notifiers)(DeviceState *d);
-> > > >+    bool (*query_guest_notifiers)(DeviceState *d, int n);
-> > > >     int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
-> > > >     int (*set_host_notifier_mr)(DeviceState *d, int n,
-> > > >                                 MemoryRegion *mr, bool assign);
-> > > >--
-> > > >2.43.5
-> > > >
-> > > 
-> > 
+> +
+> +static int mshv_init(MachineState *ms)
+> +{
+> +	error_report("unimplemented");
+> +	abort();
+> +}
+
+Nit-picking - although you remove these lines in later patches,
+lets remove the tabs from these lines.
+
+> diff --git a/include/system/mshv.h b/include/system/mshv.h
+> index bc8f2c228a..0858e47def 100644
+> --- a/include/system/mshv.h
+> +++ b/include/system/mshv.h
+> @@ -16,6 +16,14 @@
+>  #ifndef QEMU_MSHV_INT_H
+>  #define QEMU_MSHV_INT_H
+>  
+> +#include "qemu/osdep.h"
+> +#include "qemu/accel.h"
+> +#include "hw/hyperv/hyperv-proto.h"
+> +#include "hw/hyperv/linux-mshv.h"
+> +#include "hw/hyperv/hvhdk.h"
+> +#include "qapi/qapi-types-common.h"
+> +#include "system/memory.h"
+> +
+>  #ifdef COMPILING_PER_TARGET
+>  #ifdef CONFIG_MSHV
+>  #define CONFIG_MSHV_IS_POSSIBLE
+> @@ -28,6 +36,32 @@
+>  #ifdef CONFIG_MSHV_IS_POSSIBLE
+>  extern bool mshv_allowed;
+>  #define mshv_enabled() (mshv_allowed)
+> +
+> +typedef struct MshvMemoryListener {
+> +  MemoryListener listener;
+> +  int as_id;
+> +} MshvMemoryListener;
+> +
+> +typedef struct MshvAddressSpace {
+> +    MshvMemoryListener *ml;
+> +    AddressSpace *as;
+> +} MshvAddressSpace;
+
+Inconsistent mix of 2-space and 4-space
+indents - stick with 4-space throughout
+
+> +
+> +typedef struct MshvState {
+> +  AccelState parent_obj;
+> +  int vm;
+> +  MshvMemoryListener memory_listener;
+> +  /* number of listeners */
+> +  int nr_as;
+> +  MshvAddressSpace *as;
+> +} MshvState;
+> +extern MshvState *mshv_state;
+> +
+> +struct AccelCPUState {
+> +  int cpufd;
+> +  bool dirty;
+> +};
+> +
+>  #else /* CONFIG_MSHV_IS_POSSIBLE */
+>  #define mshv_enabled() false
+>  #endif
+> -- 
+> 2.34.1
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
