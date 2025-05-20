@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8F0BC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9264EC54799
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:32:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLCT-0008Cs-DQ; Tue, 20 May 2025 07:32:01 -0400
+	id 1uHLCG-0008AT-ES; Tue, 20 May 2025 07:31:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uHLCP-0008CR-1Z
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:57 -0400
+ id 1uHLCF-0008AE-0g
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:47 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLCJ-0001JU-92
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:56 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLCC-0001IA-Kk
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:46 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (unknown [172.201.77.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9027220277E3;
- Tue, 20 May 2025 04:31:46 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9027220277E3
+ by linux.microsoft.com (Postfix) with ESMTPSA id 3F6A120277DE;
+ Tue, 20 May 2025 04:31:39 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3F6A120277DE
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1747740709;
- bh=9usahXuJcEiHvDYYnqfLfS1rIaB5xtPmxHW8z+zLHFQ=;
+ s=default; t=1747740702;
+ bh=FY/9PE7gpu6Y+lOrFYEDXYlsu+sMvVNQC4SrgpOJyJw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Ex+lPq4szS8Rd4J4ct2/VaXRld8pGJVEvJ1DgthM1FCR1Kr89HQ8FgYK9iaCrozl8
- ire1JcAWY4CmmdKvqUuDz/SIeIDHAtrSSXzlu927EelY2A/Fz+JzYKwtbqDf2sk9hg
- seoOvV40cw+ILE4wwmYfQbYp4UCMUKzN9Lzqp+is=
+ b=DELX3bUHjw+AEPUNDrOARzHSPzzaHrufdDLx+s7WEonDP4IBYfNp/lxWzVQDiWwEN
+ d4Oes2QEF4GPsU/z7rnhr3mopY+0a9U3Spx8bVcGMyBKd7rbuLabld0LHMm6NyoI3h
+ O9TavWwY46QcQHdy2o5R56RisaDcexZpUI7NUiF8=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: magnuskulke@microsoft.com,
 	qemu-devel@nongnu.org,
@@ -43,9 +43,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cameron Esfahani <dirty@apple.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH 12/25] accel/mshv: Add vCPU creation and execution loop
-Date: Tue, 20 May 2025 13:30:05 +0200
-Message-Id: <20250520113018.49569-13-magnuskulke@linux.microsoft.com>
+Subject: [RFC PATCH 10/25] accel/mshv: Add ioeventfd support
+Date: Tue, 20 May 2025 13:30:03 +0200
+Message-Id: <20250520113018.49569-11-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
 References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
@@ -75,404 +75,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create MSHV vCPUs using MSHV_CREATE_VP and initialize their state.
-Register the MSHV CPU execution loop loop with the QEMU accelerator
-framework to enable guest code execution.
-
-The target/i386 functionality is still mostly stubbed out and will be
-populated in a later commit in this series.
+Implement ioeventfd registration in the MSHV accelerator backend to
+handle guest-triggered events. This enables integration with QEMU's
+eventfd-based I/O mechanism.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c       | 197 +++++++++++++++++++++++++++++++++---
- accel/mshv/trace-events     |   1 +
- include/system/mshv.h       |  19 ++++
- target/i386/mshv/mshv-cpu.c |  63 ++++++++++++
- 4 files changed, 268 insertions(+), 12 deletions(-)
+ accel/mshv/mshv-all.c   | 115 ++++++++++++++++++++++++++++++++++++++++
+ accel/mshv/trace-events |   3 ++
+ include/system/mshv.h   |   8 +++
+ 3 files changed, 126 insertions(+)
 
 diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index a29e356ba0..71fedc9137 100644
+index 95f1008a48..e4085b216d 100644
 --- a/accel/mshv/mshv-all.c
 +++ b/accel/mshv/mshv-all.c
-@@ -400,6 +400,24 @@ int mshv_hvcall(int mshv_fd, const struct mshv_root_hvcall *args)
-     return ret;
+@@ -239,11 +239,126 @@ static void mem_region_del(MemoryListener *listener,
+     memory_region_unref(section->mr);
  }
  
-+static int mshv_init_vcpu(CPUState *cpu)
++typedef enum {
++    DATAMATCH_NONE,
++    DATAMATCH_U32,
++    DATAMATCH_U64,
++} DatamatchTag;
++
++typedef struct {
++    DatamatchTag tag;
++    union {
++        uint32_t u32;
++        uint64_t u64;
++    } value;
++} Datamatch;
++
++/* flags: determine whether to de/assign */
++static int ioeventfd(int vm_fd, int event_fd, uint64_t addr, Datamatch dm,
++                     uint32_t flags)
 +{
-+    int vm_fd = mshv_state->vm;
-+    uint8_t vp_index = cpu->cpu_index;
++    mshv_user_ioeventfd args = {0};
++    args.fd = event_fd;
++    args.addr = addr;
++    args.flags = flags;
++
++    if (dm.tag == DATAMATCH_NONE) {
++        args.datamatch = 0;
++    } else {
++        flags |= BIT(MSHV_IOEVENTFD_BIT_DATAMATCH);
++        args.flags = flags;
++        if (dm.tag == DATAMATCH_U64) {
++            args.len = sizeof(uint64_t);
++            args.datamatch = dm.value.u64;
++        } else {
++            args.len = sizeof(uint32_t);
++            args.datamatch = dm.value.u32;
++        }
++    }
++
++    return ioctl(vm_fd, MSHV_IOEVENTFD, &args);
++}
++
++static int unregister_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr)
++{
++    uint32_t flags = 0;
++    Datamatch dm = {0};
++
++    flags |= BIT(MSHV_IOEVENTFD_BIT_DEASSIGN);
++    dm.tag = DATAMATCH_NONE;
++
++    return ioeventfd(vm_fd, event_fd, mmio_addr, dm, flags);
++}
++
++static int register_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr,
++                            uint64_t val, bool is_64bit, bool is_datamatch)
++{
++    uint32_t flags = 0;
++    Datamatch dm = {0};
++
++    if (!is_datamatch) {
++        dm.tag = DATAMATCH_NONE;
++    } else if (is_64bit) {
++        dm.tag = DATAMATCH_U64;
++        dm.value.u64 = val;
++    } else {
++        dm.tag = DATAMATCH_U32;
++        dm.value.u32 = val;
++    }
++
++    return ioeventfd(vm_fd, event_fd, mmio_addr, dm, flags);
++}
++
++static void mem_ioeventfd_add(MemoryListener *listener,
++                              MemoryRegionSection *section,
++                              bool match_data, uint64_t data,
++                              EventNotifier *e)
++{
++    int fd = event_notifier_get_fd(e);
 +    int ret;
++    bool is_64 = int128_get64(section->size) == 8;
++    uint64_t addr = section->offset_within_address_space & 0xffffffff;
 +
-+    mshv_arch_init_vcpu(cpu);
-+    cpu->accel = g_new0(AccelCPUState, 1);
++    trace_mshv_mem_ioeventfd_add(addr, int128_get64(section->size), data);
 +
-+    ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
-+    if (ret < 0) {
-+        return -1;
-+    }
-+
-+    cpu->accel->dirty = true;
-+
-+    return 0;
-+}
- 
- static int mshv_init(MachineState *ms)
- {
-@@ -417,6 +435,8 @@ static int mshv_init(MachineState *ms)
-         return -1;
-     }
- 
-+    mshv_init_cpu_logic();
-+
-     mshv_init_msicontrol();
- 
-     do {
-@@ -440,40 +460,193 @@ static int mshv_init(MachineState *ms)
-     return 0;
- }
- 
-+static int mshv_destroy_vcpu(CPUState *cpu)
-+{
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int vm_fd = mshv_state->vm;
-+
-+    mshv_remove_vcpu(vm_fd, cpu_fd);
-+    mshv_vcpufd(cpu) = 0;
-+
-+    mshv_arch_destroy_vcpu(cpu);
-+    g_free(cpu->accel);
-+    return 0;
-+}
-+
-+static int mshv_cpu_exec(CPUState *cpu)
-+{
-+    hv_message mshv_msg;
-+    enum MshvVmExit exit_reason;
-+    int ret = 0;
-+
-+    bql_unlock();
-+    cpu_exec_start(cpu);
-+
-+    do {
-+        if (cpu->accel->dirty) {
-+            ret = mshv_arch_put_registers(cpu);
-+            if (ret) {
-+                error_report("Failed to put registers after init: %s",
-+                              strerror(-ret));
-+                ret = -1;
-+                break;
-+            }
-+            cpu->accel->dirty = false;
-+        }
-+
-+        if (qatomic_read(&cpu->exit_request)) {
-+            qemu_cpu_kick_self();
-+        }
-+
-+        /*
-+         * Read cpu->exit_request before KVM_RUN reads run->immediate_exit.
-+         * Matching barrier in kvm_eat_signals.
-+         */
-+        smp_rmb();
-+
-+        ret = mshv_run_vcpu(mshv_state->vm, cpu, &mshv_msg, &exit_reason);
-+        if (ret < 0) {
-+            error_report("Failed to run on vcpu %d", cpu->cpu_index);
-+            abort();
-+        }
-+
-+        switch (exit_reason) {
-+        case MshvVmExitIgnore:
-+            break;
-+        default:
-+            ret = EXCP_INTERRUPT;
-+            break;
-+        }
-+    } while (ret == 0);
-+
-+    cpu_exec_end(cpu);
-+    bql_lock();
++    ret = register_ioevent(mshv_state->vm, fd, addr, data, is_64, match_data);
 +
 +    if (ret < 0) {
-+        cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
-+        vm_stop(RUN_STATE_INTERNAL_ERROR);
-+    }
-+
-+    qatomic_set(&cpu->exit_request, 0);
-+    return ret;
-+}
-+
-+static void *mshv_vcpu_thread(void *arg)
-+{
-+    CPUState *cpu = arg;
-+    int ret;
-+
-+    rcu_register_thread();
-+
-+    bql_lock();
-+    qemu_thread_get_self(cpu->thread);
-+    cpu->thread_id = qemu_get_thread_id();
-+    current_cpu = cpu;
-+    ret = mshv_init_vcpu(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to init vcpu %d", cpu->cpu_index);
-+        goto cleanup;
-+    }
-+
-+    /* signal CPU creation */
-+    cpu_thread_signal_created(cpu);
-+    qemu_guest_random_seed_thread_part2(cpu->random_seed);
-+
-+    do {
-+        if (cpu_can_run(cpu)) {
-+            mshv_cpu_exec(cpu);
-+        }
-+        qemu_wait_io_event(cpu);
-+    } while (!cpu->unplug || cpu_can_run(cpu));
-+
-+    mshv_destroy_vcpu(cpu);
-+cleanup:
-+    cpu_thread_signal_destroyed(cpu);
-+    bql_unlock();
-+    rcu_unregister_thread();
-+    return NULL;
-+}
-+
- static void mshv_start_vcpu_thread(CPUState *cpu)
- {
--	error_report("unimplemented");
--	abort();
-+    char thread_name[VCPU_THREAD_NAME_SIZE];
-+
-+    cpu->thread = g_malloc0(sizeof(QemuThread));
-+    cpu->halt_cond = g_malloc0(sizeof(QemuCond));
-+
-+    qemu_cond_init(cpu->halt_cond);
-+
-+    trace_mshv_start_vcpu_thread(thread_name, cpu->cpu_index);
-+    qemu_thread_create(cpu->thread, thread_name, mshv_vcpu_thread, cpu,
-+                       QEMU_THREAD_JOINABLE);
-+}
-+
-+static void do_mshv_cpu_synchronize_post_init(CPUState *cpu,
-+                                              run_on_cpu_data arg)
-+{
-+    int ret = mshv_arch_put_registers(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to put registers after init: %s", strerror(-ret));
++        error_report("Failed to register ioeventfd: %s (%d)", strerror(-ret),
++                     -ret);
 +        abort();
 +    }
-+
-+    cpu->accel->dirty = false;
- }
- 
- static void mshv_cpu_synchronize_post_init(CPUState *cpu)
- {
--	error_report("unimplemented");
--	abort();
-+    run_on_cpu(cpu, do_mshv_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
- }
- 
- static void mshv_cpu_synchronize_post_reset(CPUState *cpu)
- {
--	error_report("unimplemented");
--	abort();
-+    int ret = mshv_arch_put_registers(cpu);
-+    if (ret) {
-+        error_report("Failed to put registers after reset: %s",
-+                     strerror(-ret));
-+        cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
-+        vm_stop(RUN_STATE_INTERNAL_ERROR);
-+    }
-+    cpu->accel->dirty = false;
 +}
 +
-+static void do_mshv_cpu_synchronize_pre_loadvm(CPUState *cpu,
-+                                               run_on_cpu_data arg)
++static void mem_ioeventfd_del(MemoryListener *listener,
++                              MemoryRegionSection *section,
++                              bool match_data, uint64_t data,
++                              EventNotifier *e)
 +{
-+    cpu->accel->dirty = true;
- }
- 
- static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
- {
--	error_report("unimplemented");
--	abort();
-+    run_on_cpu(cpu, do_mshv_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
++    int fd = event_notifier_get_fd(e);
++    int ret;
++    uint64_t addr = section->offset_within_address_space & 0xffffffff;
++
++    trace_mshv_mem_ioeventfd_del(section->offset_within_address_space,
++                                 int128_get64(section->size), data);
++
++    ret = unregister_ioevent(mshv_state->vm, fd, addr);
++    if (ret < 0) {
++        error_report("Failed to unregister ioeventfd: %s (%d)", strerror(-ret),
++                     -ret);
++        abort();
++    }
 +}
 +
-+static void do_mshv_cpu_synchronize(CPUState *cpu, run_on_cpu_data arg)
-+{
-+    if (!cpu->accel->dirty) {
-+        int ret = mshv_load_regs(cpu);
-+        if (ret < 0) {
-+            error_report("Failed to load registers for vcpu %d",
-+                         cpu->cpu_index);
-+
-+            cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
-+            vm_stop(RUN_STATE_INTERNAL_ERROR);
-+        }
-+
-+        cpu->accel->dirty = true;
-+    }
- }
+ static MemoryListener mshv_memory_listener = {
+     .name = "mshv",
+     .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
+     .region_add = mem_region_add,
+     .region_del = mem_region_del,
++#ifdef MSHV_USE_IOEVENTFD
++    .eventfd_add = mem_ioeventfd_add,
++    .eventfd_del = mem_ioeventfd_del,
++#endif
+ };
  
- static void mshv_cpu_synchronize(CPUState *cpu)
- {
--	error_report("unimplemented");
--	abort();
-+    if (!cpu->accel->dirty) {
-+        run_on_cpu(cpu, do_mshv_cpu_synchronize, RUN_ON_CPU_NULL);
-+    }
- }
- 
- static bool mshv_cpus_are_resettable(void)
- {
--	error_report("unimplemented");
--	abort();
-+    return false;
- }
- 
- static void mshv_accel_class_init(ObjectClass *oc, const void *data)
+ static MemoryListener mshv_io_listener = {
 diff --git a/accel/mshv/trace-events b/accel/mshv/trace-events
-index beb5be7b73..06aa27ef67 100644
+index 63625192ec..5929cb45a5 100644
 --- a/accel/mshv/trace-events
 +++ b/accel/mshv/trace-events
-@@ -1,5 +1,6 @@
+@@ -1,4 +1,7 @@
  # See docs/devel/tracing.rst for syntax documentation.
  
-+mshv_start_vcpu_thread(const char* thread, uint32_t cpu) "thread %s cpu_index %d"
- mshv_handle_interrupt(uint32_t cpu, int mask) "cpu_index %d mask %x"
  mshv_set_memory(bool add, uint64_t gpa, uint64_t size, uint64_t user_addr, bool readonly, int ret) "[add = %d] gpa = %lx size = %lx user = %lx readonly = %d result = %d"
- mshv_mem_ioeventfd_add(uint64_t addr, uint32_t size, uint32_t data) "addr %lx size %d data %x"
++mshv_mem_ioeventfd_add(uint64_t addr, uint32_t size, uint32_t data) "addr %lx size %d data %x"
++mshv_mem_ioeventfd_del(uint64_t addr, uint32_t size, uint32_t data) "addr %lx size %d data %x"
++
+ mshv_hvcall_args(const char* hvcall, uint16_t code, uint16_t in_sz) "built args for '%s' code: %d in_sz: %d"
 diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 4c1e901835..458b182077 100644
+index bed28b48a9..c7ee4f0cc1 100644
 --- a/include/system/mshv.h
 +++ b/include/system/mshv.h
-@@ -32,6 +32,8 @@
+@@ -32,6 +32,14 @@
  #define CONFIG_MSHV_IS_POSSIBLE
  #endif
  
-+typedef struct hyperv_message hv_message;
++/*
++ * Set to 0 if we do not want to use eventfd to optimize the MMIO events.
++ * Set to 1 so that mshv kernel driver receives doorbell when the VM access
++ * MMIO memory and then signal eventfd to notify the qemu device
++ * without extra switching to qemu to emulate mmio access.
++ */
++#define MSHV_USE_IOEVENTFD 1
 +
- /*
-  * Set to 0 if we do not want to use eventfd to optimize the MMIO events.
-  * Set to 1 so that mshv kernel driver receives doorbell when the VM access
-@@ -81,6 +83,8 @@ typedef struct MshvMsiControl {
-     GHashTable *gsi_routes;
- } MshvMsiControl;
+ #define MSHV_PAGE_SHIFT 12
  
-+#define mshv_vcpufd(cpu) (cpu->accel->cpufd)
-+
- #else /* CONFIG_MSHV_IS_POSSIBLE */
- #define mshv_enabled() false
- #endif
-@@ -95,6 +99,21 @@ typedef struct MshvMsiControl {
- #define EFER_LMA   ((uint64_t)0x400)
- #define EFER_LME   ((uint64_t)0x100)
  
-+typedef enum MshvVmExit {
-+    MshvVmExitIgnore   = 0,
-+    MshvVmExitShutdown = 1,
-+    MshvVmExitSpecial  = 2,
-+} MshvVmExit;
-+
-+void mshv_init_cpu_logic(void);
-+int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
-+void mshv_remove_vcpu(int vm_fd, int cpu_fd);
-+int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
-+int mshv_load_regs(CPUState *cpu);
-+int mshv_store_regs(CPUState *cpu);
-+int mshv_arch_put_registers(const CPUState *cpu);
-+void mshv_arch_init_vcpu(CPUState *cpu);
-+void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
- int mshv_arch_post_init_vm(int vm_fd);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index b36f8904fb..c4b2c297e2 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -22,16 +22,79 @@
- #include "hw/hyperv/hvhdk_mini.h"
- #include "hw/hyperv/hvgdk.h"
- 
-+#include "cpu.h"
-+#include "emulate/x86_decode.h"
-+#include "emulate/x86_emu.h"
-+#include "emulate/x86_flags.h"
- 
- #include "trace-accel_mshv.h"
- #include "trace.h"
- 
-+int mshv_store_regs(CPUState *cpu)
-+{
-+	error_report("unimplemented");
-+	abort();
-+}
-+
-+int mshv_load_regs(CPUState *cpu)
-+{
-+	error_report("unimplemented");
-+	abort();
-+}
-+
-+int mshv_arch_put_registers(const CPUState *cpu)
-+{
-+	error_report("unimplemented");
-+	abort();
-+}
-+
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features)
- {
-     features->access_guest_idle_reg = 1;
- }
- 
-+int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-+{
-+	error_report("unimplemented");
-+	abort();
-+}
-+
-+void mshv_remove_vcpu(int vm_fd, int cpu_fd)
-+{
-+	error_report("unimplemented");
-+	abort();
-+}
-+
-+int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
-+{
-+	error_report("unimplemented");
-+	abort();
-+}
-+
-+void mshv_init_cpu_logic(void)
-+{
-+	error_report("unimplemented");
-+	abort();
-+}
-+
-+void mshv_arch_init_vcpu(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+
-+    env->emu_mmio_buf = g_new(char, 4096);
-+}
-+
-+void mshv_arch_destroy_vcpu(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+
-+    g_free(env->emu_mmio_buf);
-+    env->emu_mmio_buf = NULL;
-+}
-+
- /*
-  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
-  * fault to the guest if it tries to access it. It is possible to override
 -- 
 2.34.1
 
