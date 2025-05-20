@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A447BC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 17:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534BFC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 17:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHQRr-000093-DZ; Tue, 20 May 2025 13:08:15 -0400
+	id 1uHQRs-0000A2-6W; Tue, 20 May 2025 13:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRi-0008S2-EF
- for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:07 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRp-000056-KF
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRg-00016D-HY
- for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHQRn-00019F-V0
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 13:08:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747760883;
+ s=mimecast20190719; t=1747760890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cK2Qrag8lsMimqo4w6ggG/jQzApxY9jejaQoEEkbUak=;
- b=ehQ/Vybav/7YKrmVqcLpGoDojYWkoDsLidIBI4Ie3bXTkJmzmZ8aMMp9eBG84c9Vr85cmo
- 6Ef6b0x7J0o1zEZYuzNPY/coW5JFnOz1e4902gZD1YQR2oLsc4abLHUldqRvm1a/02EX7D
- C6iYM70Q9h3U8NZxySObKoQNo3l6jfI=
+ bh=ArTcPfynfAjB7vrW9cw5ePgpA4S+h7XZwLMfRpl8hTg=;
+ b=FCADfa9k8v68WM5uiO69LFB1TQbUEgOzTP2EvsNvPokltQHD42UDyyuLO6Cea/xamg6fR7
+ kBYhyV3tiFGsDosFr8RGvYfG386Uz7VhwcAYmrfJCdGuNvPBxl7ehRYq4LBuZB73dU0kuR
+ +tnNpGYvnBupJ9aQUFLiajMLJeFKi/o=
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-hq69AJzvOH2kWTlm1eGuAw-1; Tue, 20 May 2025 13:08:02 -0400
-X-MC-Unique: hq69AJzvOH2kWTlm1eGuAw-1
-X-Mimecast-MFC-AGG-ID: hq69AJzvOH2kWTlm1eGuAw_1747760882
+ us-mta-623-w6UeSLp_NZWr9ykf54oXjw-1; Tue, 20 May 2025 13:08:08 -0400
+X-MC-Unique: w6UeSLp_NZWr9ykf54oXjw-1
+X-Mimecast-MFC-AGG-ID: w6UeSLp_NZWr9ykf54oXjw_1747760888
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7c579d37eeeso916967385a.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 10:08:02 -0700 (PDT)
+ af79cd13be357-7c5f3b8b1a1so964843185a.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 10:08:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747760881; x=1748365681;
+ d=1e100.net; s=20230601; t=1747760887; x=1748365687;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cK2Qrag8lsMimqo4w6ggG/jQzApxY9jejaQoEEkbUak=;
- b=Pa2R1/oIXNSL+Qn3pdutHTIPLgYmFNfKs75CSFy5/Uf2DYPfRsBSTMVV0jCiWN62Gg
- Pdiw9mm7JImTpcVIslhVP2Oq65SwvV3a1rGJRq9MawqpHGxUAKemTh8xlDpQHEU7BdJN
- YWZsxtvuP5Vk0M/e8bMIwAgIOkP1xPjVSDDtotRfSEDHWFC77K6YJ6pBv2SVCs/Twej1
- cFao3WZ7heY9s4wD/Kp3rOhXiVA4WiOk1UwfkIagXiDwpAQncs+wniNlJg28q6fVD3Rd
- Mb5p0K+b8FFBfxVba4YEg/bqbbQSN7YKwJdPN1dgI8eb1cN0QRhmgJXa8sSX4smlzk7Z
- lQ2Q==
-X-Gm-Message-State: AOJu0YzguC90OOJMNh809gGNG76Yy1zqGko2HgzBI+eGJhtQBY4PNECK
- crGZS6OqdN9+OnDAC13yzIQ5viDsYiJMPazdsu5AIpYs+kc8rnlQCdxEXiPuv5x1IuJSzMupj4q
- 2ImZ7k7yR6D9YgBGMKdPqZ7gpoD+1aFy3Ms2zjT4lAJBXNFQN7Dxs2wf2V0qMQ1gZtCcqo8i6zs
- 7JJRc+fv4HmebHH3uiEqJpMxl66YdS5OG5P3CaLA==
-X-Gm-Gg: ASbGncuqOCNHCkM+iZPUcXTQVY+GEdFBVxtV5sDn+dhHLgpnWGDklTzMbfK0wurahWx
- 0ZzuB/lCj1N+yfsm83LPqwZDM5VnMFOy/KGDeLe4xKPaif/KoQZEFddn2T7108LRznKKBEgtPcg
- 9AvZIZx9kI8X/LhrjW6Kd1FetgfBdzPNZ+8Phxg/q+0wUw0x2AYCH5QfTGtzH+jFdDT7xgBBED2
- DCSu6nzjK9lGz4k+CY+6Xe1hH7Y70holkEnMDLt+ipilKJqfgPJRhQxVxFFb8dz8B8tK8o4p5mz
-X-Received: by 2002:a05:620a:1793:b0:7c9:256d:f6b6 with SMTP id
- af79cd13be357-7cd47f0f301mr2305922185a.2.1747760881176; 
- Tue, 20 May 2025 10:08:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkKLwIkorKdzOcSpiP4fteKVOeDjGU5s9tyL22DM/26CHeQLU8oy8w/gxo2dhYyVPWRdSPoQ==
-X-Received: by 2002:a05:620a:1793:b0:7c9:256d:f6b6 with SMTP id
- af79cd13be357-7cd47f0f301mr2305918085a.2.1747760880768; 
- Tue, 20 May 2025 10:08:00 -0700 (PDT)
+ bh=ArTcPfynfAjB7vrW9cw5ePgpA4S+h7XZwLMfRpl8hTg=;
+ b=tfCPUmxt/AMM1rA9ptpgHrYS3qrODNXee99ayp8law/+sX7cETQCexCu5lcw2Xmtkh
+ z2a87+6x1e3G4LAis+0x8dQtc1UhbxfCHwk2t8hTS46spB0v1Qm4HLx+1fvlW3qV4qYc
+ 39iKXjl9orhT0iTAWqp8WZvGYN9rVteuyz4vkGxg8VXxSBUCXg9pOy7tk1lI+Q/PfYRJ
+ vyqOBdx2pWkCPhbP8NnqAtbfymA1Ci0XTLJgza8br8q4Cuf4QioZLd8yBkJTDZ0J8ujx
+ wAXWuac9I9c3AXC2rvMjhnp6h0Z06IpX3OmVNOezBE0fIDX23y/CvWl9FVGTIgwNJOV/
+ PXPQ==
+X-Gm-Message-State: AOJu0YxBP2zcFvJfjOiPTPy8NCG4d3y+SRvA7ZRk+6twLDX4HvUnfnFE
+ UIW1moz8AF7MtCtr5M8INjptEuHqMoxIt88Z6WgGU8lqYxJYVOqXvLBDG5ZebiwkVQbctsd8pyQ
+ GhOr6OUl85Kot0l7ogvsbhHkuZvV0JY+p1ARhJmVKGUWTBUUBT0SFsNZt1AdUHEfvlO1NEWHhzU
+ 5Tcf48F/+4W9a/r345+t5IcN0zgLdy+hnahYgw4Q==
+X-Gm-Gg: ASbGnctXEgwTTSzBkmKDiBrgVrhVQpHc58ZwngZpi3vIVN5Be+f08EFZ49qWIMwfymA
+ 1Z9x9ki+VLbtvoCj8YksHyeA7ln6lD0Kmi+wALDYsetEGE4tArA1LX2RErn7ekcd8izsVyyn51a
+ pHJv7OGhqGVWcbuq+HrWvPjK/bPOoh+HgvVWrH09aCmuzzBbkXVPn/FwaQNisrxv4CyTGWXzxHp
+ PqXMqALGupZQqVq9daZ9rAtiXWJMs+ZqEPmpok/IFPHgxTv0sf/oofx38tfUdGg7Uv2Fzb9h01T
+X-Received: by 2002:a05:620a:29d1:b0:7cc:ffaf:60a5 with SMTP id
+ af79cd13be357-7cd46718b5bmr2289434185a.3.1747760887224; 
+ Tue, 20 May 2025 10:08:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEJHx9IKg71n1PTl3Wpw2I+skrld75ToKulHk++mMPOAqopLxllM0SWD9Z3KIz7ph4ynLuK9A==
+X-Received: by 2002:a05:620a:29d1:b0:7cc:ffaf:60a5 with SMTP id
+ af79cd13be357-7cd46718b5bmr2289427985a.3.1747760886587; 
+ Tue, 20 May 2025 10:08:06 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd467be47bsm763846585a.16.2025.05.20.10.07.58
+ af79cd13be357-7cd467be47bsm763846585a.16.2025.05.20.10.08.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 10:07:59 -0700 (PDT)
+ Tue, 20 May 2025 10:08:05 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- peterx@redhat.com
-Subject: [PULL 04/12] ci: Re-enable python subtests in qtest migration suite
-Date: Tue, 20 May 2025 13:07:43 -0400
-Message-ID: <20250520170751.786787-5-peterx@redhat.com>
+ peterx@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PULL 08/12] migration: enable multifd and postcopy together
+Date: Tue, 20 May 2025 13:07:47 -0400
+Message-ID: <20250520170751.786787-9-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520170751.786787-1-peterx@redhat.com>
 References: <20250520170751.786787-1-peterx@redhat.com>
@@ -105,43 +105,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-The migration compatibility tests have been running with the PYTHON
-variable unset to avoid running a broken test. The faulty test has
-since been removed, so we can enable the python tests once again.
+Enable Multifd and Postcopy migration together.
+The migration_ioc_process_incoming() routine checks
+magic value sent on each channel and helps to properly
+setup multifd and postcopy channels.
 
-Aside from the broken test, only one other test uses python and I have
-been running it locally ever since, so this commit should not expose
-any new bug.
+The Precopy and Multifd threads work during the initial
+guest RAM transfer. When migration moves to the Postcopy
+phase, the multifd threads cease to send data on multifd
+channels and Postcopy threads on the destination
+request/pull data from the source side.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20250513133353.23022-2-farosas@suse.de
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+Link: https://lore.kernel.org/r/20250512125124.147064-3-ppandit@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 8 --------
- 1 file changed, 8 deletions(-)
+ migration/multifd-nocomp.c | 3 ++-
+ migration/multifd.c        | 7 +++++++
+ migration/options.c        | 5 -----
+ migration/ram.c            | 5 ++---
+ 4 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 248aaed137..fbad34138c 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -227,14 +227,6 @@ build-previous-qemu:
-     # testing an old QEMU against new features/tests that it is not
-     # compatible with.
-     - cd build-previous
--    # Don't allow python-based tests to run. The
--    # vmstate-checker-script test has a race that causes it to fail
--    # sometimes. It cannot be fixed it because this job runs the test
--    # from the old QEMU version. The test will be removed on master,
--    # but this job will only see the change in the next release.
--    #
--    # TODO: remove this line after 9.2 release
--    - unset PYTHON
-     # old to new
-     - QTEST_QEMU_BINARY_SRC=./qemu-system-${TARGET}
-           QTEST_QEMU_BINARY=../build/qemu-system-${TARGET} ./tests/qtest/migration-test
+diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+index 88fe0f99f2..b48eae3d86 100644
+--- a/migration/multifd-nocomp.c
++++ b/migration/multifd-nocomp.c
+@@ -17,6 +17,7 @@
+ #include "migration-stats.h"
+ #include "multifd.h"
+ #include "options.h"
++#include "migration.h"
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+@@ -398,7 +399,7 @@ int multifd_ram_flush_and_sync(QEMUFile *f)
+     MultiFDSyncReq req;
+     int ret;
+ 
+-    if (!migrate_multifd()) {
++    if (!migrate_multifd() || migration_in_postcopy()) {
+         return 0;
+     }
+ 
+diff --git a/migration/multifd.c b/migration/multifd.c
+index ec108af624..f18b166bcf 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1379,6 +1379,13 @@ static void *multifd_recv_thread(void *opaque)
+         }
+ 
+         if (has_data) {
++            /*
++             * multifd thread should not be active and receive data
++             * when migration is in the Postcopy phase. Two threads
++             * writing the same memory area could easily corrupt
++             * the guest state.
++             */
++            assert(!migration_in_postcopy());
+             if (is_device_state) {
+                 assert(use_packets);
+                 ret = multifd_device_state_recv(p, &local_err);
+diff --git a/migration/options.c b/migration/options.c
+index b6ae95358d..3fcd577cd7 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -509,11 +509,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+             error_setg(errp, "Postcopy is not compatible with ignore-shared");
+             return false;
+         }
+-
+-        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
+-            error_setg(errp, "Postcopy is not yet compatible with multifd");
+-            return false;
+-        }
+     }
+ 
+     if (new_caps[MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT]) {
+diff --git a/migration/ram.c b/migration/ram.c
+index e12913b43e..d26dbd37c4 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1993,9 +1993,8 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+         }
+     }
+ 
+-    if (migrate_multifd()) {
+-        RAMBlock *block = pss->block;
+-        return ram_save_multifd_page(block, offset);
++    if (migrate_multifd() && !migration_in_postcopy()) {
++        return ram_save_multifd_page(pss->block, offset);
+     }
+ 
+     return ram_save_page(rs, pss);
 -- 
 2.49.0
 
