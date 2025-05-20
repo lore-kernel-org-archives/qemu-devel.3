@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3535C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 06:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE56C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 06:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHGfx-0004ha-10; Tue, 20 May 2025 02:42:09 -0400
+	id 1uHGlZ-0001LT-6B; Tue, 20 May 2025 02:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uHGft-0004ej-D5; Tue, 20 May 2025 02:42:05 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1uHGlP-000172-Rh; Tue, 20 May 2025 02:47:49 -0400
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uHGfp-0006Nq-ES; Tue, 20 May 2025 02:42:04 -0400
+ id 1uHGlN-0006yy-TD; Tue, 20 May 2025 02:47:47 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 669A65C493B;
- Tue, 20 May 2025 06:39:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5976C4CEF3;
- Tue, 20 May 2025 06:41:55 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 6FDE8A4D97B;
+ Tue, 20 May 2025 06:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E6EC4CEE9;
+ Tue, 20 May 2025 06:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1747723316;
- bh=kaCIzeErmY4eufPDExw2g8MBUSN3U8gwnatWi++NEFE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=KFyFFbkDJQRcMiip46dlR088j0P8ADPyEM5yFp91mpxrC6LZ0lXx8Z6o7t+RCNId2
- 7P/SxDSP7bs23+LIrNPub2fIkUrCc++BCWfI+xq85nhK7FeNEo0YaZMKLx7ffBkZ8m
- oCHRDd2MAel5E0As6BXlohuSQ73/LdTSuf45sWdsHczPxef4BJFiQ4/qOobW7Xj/Uk
- M2oL/CD7n76z5mctJ8+gWmkWVenDoTKpkI5eqbHdplfi1IEMj+rgt60aR2uOeSc5wn
- X3wk1ANPI5MuliDlyshgewgFFtn7HOA4/uJ7ww1sZwy0yZM+U7Nvud982H82yuDusd
- 60UZknyIo4xWw==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1uHGfi-00000005qto-014i; Tue, 20 May 2025 08:41:54 +0200
+ s=k20201202; t=1747723664;
+ bh=n9eHYTR2G0ZOX2X+WcAxPwfwrHUt6xhEfBxV5W3ZGaU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=AjeJfcboWc3Cvf46j/fHBWI9ENPs+NBSfbR6HNmDS5dFYzUnT2ZnHVGJVr5yrCiRr
+ lQD+RsXw/oYji5pHQynUafr2DOa1N8jMJrrYYKWfLBOu39KHgAS3OUZz6cdLFOtcLA
+ 0vYAXJSGWIRZky7beBCJIYtSOzpOt2jXYS9EO8VwP/ajKlbpHQhH5Abm/CmwBwft+W
+ /UOYWwYY+XCSWzdhAlQITCCNqWptjyVClfhqkzkWwL/y+CgDuD0cUJRL6Mh7L9EuSa
+ /vclnZFd++vgbY3E9dsydVrqU5kFg9cMN2l0SlVoQC10Nfzue53p7+ggLAD/rjL0dB
+ de1OqFMDKAjuQ==
+Date: Tue, 20 May 2025 08:47:38 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Ani Sinha <anisinha@redhat.com>, linux-kernel@vger.kernel.org
-Subject: [PATCH v9 13/20] acpi/generic_event_device: add an APEI error device
-Date: Tue, 20 May 2025 08:41:32 +0200
-Message-ID: <690ce6c9eed99913bd7d7dad829f209caba10665.1747722973.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1747722973.git.mchehab+huawei@kernel.org>
-References: <cover.1747722973.git.mchehab+huawei@kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 09/20] acpi/ghes: don't hard-code the number of
+ sources for HEST table
+Message-ID: <20250520084738.4dcf9cef@foz.lan>
+In-Reply-To: <20250512154053-mutt-send-email-mst@kernel.org>
+References: <cover.1741374594.git.mchehab+huawei@kernel.org>
+ <1c024a700815fa4a100fc3bada477481fd266a83.1741374594.git.mchehab+huawei@kernel.org>
+ <20250512154053-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,128 +77,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a generic error device to handle generic hardware error
-events as specified at ACPI 6.5 specification at 18.3.2.7.2:
-https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
-using HID PNP0C33.
+Em Mon, 12 May 2025 15:42:27 -0400
+"Michael S. Tsirkin" <mst@redhat.com> escreveu:
 
-The PNP0C33 device is used to report hardware errors to
-the guest via ACPI APEI Generic Hardware Error Source (GHES).
+> On Fri, Mar 07, 2025 at 08:14:38PM +0100, Mauro Carvalho Chehab wrote:
+> > The current code is actually dependent on having just one error
+> > structure with a single source, as any change there would cause
+> > migration issues.
+> > 
+> > As the number of sources should be arch-dependent, as it will depend on
+> > what kind of notifications will exist, and how many errors can be
+> > reported at the same time, change the logic to be more flexible,
+> > allowing the number of sources to be defined when building the
+> > HEST table by the caller.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > Reviewed-by: Igor Mammedov <imammedo@redhat.com>  
+> 
+> Breaks CI:
+> 
+> https://gitlab.com/mstredhat/qemu/-/jobs/10007863974
+> 
+> I dropped the patchset for now, pls rebase and repost.
 
-Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
----
- hw/acpi/aml-build.c                    | 10 ++++++++++
- hw/acpi/generic_event_device.c         | 13 +++++++++++++
- include/hw/acpi/acpi_dev_interface.h   |  1 +
- include/hw/acpi/aml-build.h            |  2 ++
- include/hw/acpi/generic_event_device.h |  1 +
- 5 files changed, 27 insertions(+)
+Compilation was happening fine for me. I suspect that some rebase
+dropped a change here:
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index f8f93a9f66c8..e4bd7b611372 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2614,3 +2614,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
- 
-     return var;
- }
-+
-+/* ACPI 5.0b: 18.3.2.6.2 Event Notification For Generic Error Sources */
-+Aml *aml_error_device(void)
-+{
-+    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
-+    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+
-+    return dev;
-+}
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 3cf9dab0d01a..620a1e0d6b01 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -26,6 +26,7 @@ static const uint32_t ged_supported_events[] = {
-     ACPI_GED_PWR_DOWN_EVT,
-     ACPI_GED_NVDIMM_HOTPLUG_EVT,
-     ACPI_GED_CPU_HOTPLUG_EVT,
-+    ACPI_GED_ERROR_EVT,
- };
- 
- /*
-@@ -116,6 +117,16 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
-                            aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
-                                       aml_int(0x80)));
-                 break;
-+            case ACPI_GED_ERROR_EVT:
-+                /*
-+                 * ACPI 5.0b: 5.6.6 Device Object Notifications
-+                 * Table 5-135 Error Device Notification Values
-+                 * Defines 0x80 as the value to be used on notifications
-+                 */
-+                aml_append(if_ctx,
-+                           aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
-+                                      aml_int(0x80)));
-+                break;
-             case ACPI_GED_NVDIMM_HOTPLUG_EVT:
-                 aml_append(if_ctx,
-                            aml_notify(aml_name("\\_SB.NVDR"),
-@@ -295,6 +306,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-         sel = ACPI_GED_MEM_HOTPLUG_EVT;
-     } else if (ev & ACPI_POWER_DOWN_STATUS) {
-         sel = ACPI_GED_PWR_DOWN_EVT;
-+    } else if (ev & ACPI_GENERIC_ERROR) {
-+        sel = ACPI_GED_ERROR_EVT;
-     } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
-         sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
-     } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
-diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
-index 68d9d15f50aa..8294f8f0ccca 100644
---- a/include/hw/acpi/acpi_dev_interface.h
-+++ b/include/hw/acpi/acpi_dev_interface.h
-@@ -13,6 +13,7 @@ typedef enum {
-     ACPI_NVDIMM_HOTPLUG_STATUS = 16,
-     ACPI_VMGENID_CHANGE_STATUS = 32,
-     ACPI_POWER_DOWN_STATUS = 64,
-+    ACPI_GENERIC_ERROR = 128,
- } AcpiEventStatusBits;
- 
- #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
-diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-index c18f68134246..f38e12971932 100644
---- a/include/hw/acpi/aml-build.h
-+++ b/include/hw/acpi/aml-build.h
-@@ -252,6 +252,7 @@ struct CrsRangeSet {
- /* Consumer/Producer */
- #define AML_SERIAL_BUS_FLAG_CONSUME_ONLY        (1 << 1)
- 
-+#define ACPI_APEI_ERROR_DEVICE   "GEDD"
- /**
-  * init_aml_allocator:
-  *
-@@ -382,6 +383,7 @@ Aml *aml_dma(AmlDmaType typ, AmlDmaBusMaster bm, AmlTransferSize sz,
-              uint8_t channel);
- Aml *aml_sleep(uint64_t msec);
- Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source);
-+Aml *aml_error_device(void);
- 
- /* Block AML object primitives */
- Aml *aml_scope(const char *name_format, ...) G_GNUC_PRINTF(1, 2);
-diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-index d2dac87b4a9f..1c18ac296fcb 100644
---- a/include/hw/acpi/generic_event_device.h
-+++ b/include/hw/acpi/generic_event_device.h
-@@ -101,6 +101,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
- #define ACPI_GED_PWR_DOWN_EVT      0x2
- #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
- #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
-+#define ACPI_GED_ERROR_EVT          0x10
- 
- typedef struct GEDState {
-     MemoryRegion evt;
--- 
-2.49.0
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index a256f9d817cd..a1492bcaeb8d 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2360,7 +2360,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+              */
+             if (code == BUS_MCEERR_AR) {
+                 kvm_cpu_synchronize_state(c);
+-                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SEA,
++                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
+                                              paddr)) {
+                     kvm_inject_arm_sea(c);
+                 } else {
 
+but somehow, ninja didn't detect and was keep using an already
+compiled kvm.o object. Anyway, fixed at the new series:
+
+	https://lore.kernel.org/qemu-devel/9404b305e0fefdb14dce4839c3d96ccedf0533e0.1747722973.git.mchehab+huawei@kernel.org/T/#u
+
+And, just in case, I removed ./build directory and recompiled it
+again.
+
+Thanks,
+Mauro
 
