@@ -4,93 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4946AC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 20:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FC5C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 20:39:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHTf5-0002eK-Ta; Tue, 20 May 2025 16:34:07 -0400
+	id 1uHTjg-0003WH-TE; Tue, 20 May 2025 16:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHTf2-0002e3-B0
- for qemu-devel@nongnu.org; Tue, 20 May 2025 16:34:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uHTje-0003Vk-1W
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 16:38:50 -0400
+Received: from out-173.mta1.migadu.com ([2001:41d0:203:375::ad])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHTf0-0005bX-3N
- for qemu-devel@nongnu.org; Tue, 20 May 2025 16:34:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747773237;
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uHTjb-0006PL-GX
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 16:38:49 -0400
+Content-Type: text/plain;
+	charset=us-ascii
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1747773521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QFRzvJ3FwmahiR8fyQbnE2qTYZr0LxhndZf/YviN9OY=;
- b=RQeSpYLlSNrbibmNQe961vqZvUD7mT2i44QQlKsJKXT+QygP+6EnEWInIZBvj2glBAlToZ
- 7UckUByDUzlqSVee8wNBOTzQ0JQzA0fb8Tp6ZXdb61dOAV4Fhowi0xcpjVmO1ADQEnhrI/
- FjgndHfGyMQs0wEV1TiVQ18Zhi7w2QM=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-3tYAJ3cPPyeRs020NZW2MQ-1; Tue, 20 May 2025 16:33:56 -0400
-X-MC-Unique: 3tYAJ3cPPyeRs020NZW2MQ-1
-X-Mimecast-MFC-AGG-ID: 3tYAJ3cPPyeRs020NZW2MQ_1747773235
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c5e2a31f75so1937375485a.1
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 13:33:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747773235; x=1748378035;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QFRzvJ3FwmahiR8fyQbnE2qTYZr0LxhndZf/YviN9OY=;
- b=Bxr0zfUF5pQSU4sBLlw+wvdEHxwggQnepkbYSPEDlCBeQhcpEw6LjuO4V80CdXTbZi
- cRH4kCKLu+oK3YndtH5aNMcSgR8bPP1W7bcgsOX5DCa9I3jMPMqKXPeVxTHtGJrilrPg
- 05gkSfD/9TFnxNy7dftW+8neXn8uQ1+InODNwOrf+Sbn63Rtf0iIzwNYLShK0B4VFBM6
- r+1cX7UUeJbf6CBe7diEU26feGCz0IOFCAOHwC9TevyWwMUnqadYO1GseLVXrgaD66rW
- FdjeSseD1caprUVxQuDD1DHYThfrSpC2gcaXbWSuu70mAxeJk3OeBpEoqUxaajRgiSxB
- c67w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkPlHMcfwW2uIfC4x0Wx3swxzioIyp2ShWdiNNnijWVwupHBE8LZ2ZHUpjFtZ51jkCbB9heqBr6e+G@nongnu.org
-X-Gm-Message-State: AOJu0YyJ/A2nEgDJpwEUvZEqJk/5GTycdHUM6NUKrRqXONl1GyJGoIPr
- xbfx7QZRRjhmF3Izkuj8HUjtujy6QCx8A9R+79qQjD9TuHXyJzml9mXHnQPqAKfePa96Z7YeoTx
- icltW48hCmnVHnHhVed6gCALL2+CSxKzEYcQr9RRvskpXlqwXh0jNj/MY
-X-Gm-Gg: ASbGncvZsT3nU0P7fsWuWk9Qiz4k+pK0BBeEBCu5LefAIAI31LmNHjaPXEQ40QxZLgF
- bvBhraspmOst4A5k9CrbtdFYK2mbQoNi5WwSJhBw+cwmjWTq1Wb6dYwUW68ftu6FjIJjC0abOE6
- 7V81/Sukg7JeJTkGGpMZbCkOQmFCZDzQ9hVOCmm6L176xJ1tRzBEXrETRRgWBWW2fFT9KuroWLe
- aIRtHm1CNedsHM/uBaMrHKvojaVzAlcRf4wjY/JJZDVYGeAAqZ4EMOicbWpKZtQhNj6MKfXX9pk
- cJw=
-X-Received: by 2002:a05:620a:17a3:b0:7ca:f37a:2b4e with SMTP id
- af79cd13be357-7cd47f1de86mr2593857385a.23.1747773235362; 
- Tue, 20 May 2025 13:33:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERyMggfnIwNHok95soC8Iu+GgimG7NAJRKMYIwXaX9j1GVlurfcL+FKHyUHl3dhWEYfB2rhg==
-X-Received: by 2002:a05:620a:17a3:b0:7ca:f37a:2b4e with SMTP id
- af79cd13be357-7cd47f1de86mr2593853485a.23.1747773234815; 
- Tue, 20 May 2025 13:33:54 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd468d8e68sm778501885a.112.2025.05.20.13.33.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 13:33:54 -0700 (PDT)
-Date: Tue, 20 May 2025 16:33:50 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Yanfei Xu <yanfei.xu@bytedance.com>, qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH] migration/ram: avoid to do log clear in the last round
-Message-ID: <aCznLilrKAn5jkWg@x1.local>
-References: <20250514115827.3216082-1-yanfei.xu@bytedance.com>
- <87zff75ch6.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87zff75ch6.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+ bh=LlC0TODa7KxYUpfpU68321KNCp6H6FT3J7MnALnUViM=;
+ b=Q99WFAhUM4c9CvOUBZ9CEYtfHJgTzvdjDRM8TVre/iZalux4nGAiMJQXSEMr6/NeJLtSYy
+ VNgLjCb7/Xp9aFDFLoaaAQRAosNW22/ChM2umYCctjTh8RPhMsHNYcgUJu9jQ1BThTu3Rn
+ 5qvYmN7YE9Jgq1Pv4LkGF3zvpmJOO4o=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v13 5/5] qtest/cxl: Add aarch64 virt test for CXL
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+In-Reply-To: <20250519135413.000026b4@huawei.com>
+Date: Wed, 21 May 2025 05:38:21 +0900
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-arm@nongnu.org,
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1BAB6FA9-F65A-41F4-ADC7-BE3F23E71AA0@linux.dev>
+References: <20250513111455.128266-1-Jonathan.Cameron@huawei.com>
+ <20250513111455.128266-6-Jonathan.Cameron@huawei.com>
+ <D9E503CC-1271-4008-9975-9BAEC7A33376@linux.dev>
+ <20250519135413.000026b4@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:203:375::ad;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-173.mta1.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,87 +75,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 04:05:57PM -0300, Fabiano Rosas wrote:
-> Yanfei Xu <yanfei.xu@bytedance.com> writes:
-> 
-> > There won't be any ram sync after the stage of save_complete, therefore
-> > it's unnecessary to do manually protect for dirty pages being sent. Skip
-> > to do this in last round can reduce noticeable downtime.
-> >
-> > Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
-> > ---
-> > As I don't have proper machine to test this patch in qemu and verify if it has
-> > risks like in postcopy, colo and so on.(But I tested this idea on my rust VMM,
-> > it works and can reduce ~50ms for a 128GB guest). So I raise the patch with RFC
-> > for suggestions.
-> >
-> >  migration/ram.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index e12913b43e..2b169cdd18 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -838,7 +838,9 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
-> >       * the page in the chunk we clear the remote dirty bitmap for all.
-> >       * Clearing it earlier won't be a problem, but too late will.
-> >       */
-> > -    migration_clear_memory_region_dirty_bitmap(rb, page);
-> > +    if (!rs->last_stage) {
-> > +        migration_clear_memory_region_dirty_bitmap(rb, page);
-> > +    }
-> >  
-> >      ret = test_and_clear_bit(page, rb->bmap);
-> >      if (ret) {
-> 
-> Well, it looks ok to me and passes all my tests.
-> 
-> Tested-by: Fabiano Rosas <farosas@suse.de>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Jonathan,
 
-Thanks both!
+> On May 19, 2025, at 21:54, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> On Thu, 15 May 2025 18:04:18 +0900
+> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>=20
+>>> On May 13, 2025, at 20:14, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>=20
+>>> Add a single complex case for aarch64 virt machine.
+>>> Given existing much more comprehensive tests for x86 cover the
+>>> common functionality, a single test should be enough to verify
+>>> that the aarch64 part continue to work.
+>>>=20
+>>> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>>> ---
+>>> tests/qtest/cxl-test.c  | 59 =
+++++++++++++++++++++++++++++++++---------
+>>> tests/qtest/meson.build |  1 +
+>>> 2 files changed, 47 insertions(+), 13 deletions(-)
+>>>=20
+>>> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+>>> index a600331843..c7189d6222 100644
+>>> --- a/tests/qtest/cxl-test.c
+>>> +++ b/tests/qtest/cxl-test.c
+>>> @@ -19,6 +19,12 @@
+>>>    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+>>>    "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+>>>=20
+>>> +#define QEMU_VIRT_2PXB_CMD \
+>>> +    "-machine virt,cxl=3Don -cpu max " \
+>>> +    "-device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52 " \
+>>> +    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+>>> +    "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+>>> +
+>>> #define QEMU_RP \
+>>>    "-device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 "
+>>>=20
+>>> @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
+>>>    qtest_end();
+>>>    rmdir(tmpfs);
+>>> }
+>>> +
+>>> +static void cxl_virt_2pxb_4rp_4t3d(void)
+>>> +{
+>>> +    g_autoptr(GString) cmdline =3D g_string_new(NULL);
+>>> +    char template[] =3D "/tmp/cxl-test-XXXXXX";
+>>> +    const char *tmpfs;
+>>> +
+>>> +    tmpfs =3D mkdtemp(template);
+>>> +
+>>> +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
+>>> +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
+>>> +                    tmpfs, tmpfs);
+>>> +
+>>> +    qtest_start(cmdline->str);
+>>> +    qtest_end();
+>>> +    rmdir(tmpfs);
+>>> +}
+>>> #endif /* CONFIG_POSIX */
+>>>=20
+>>> int main(int argc, char **argv)
+>>> {
+>>> -    g_test_init(&argc, &argv, NULL);
+>>> +    const char *arch =3D qtest_get_arch();
+>>>=20
+>>> -    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+>>> -    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+>>> -    qtest_add_func("/pci/cxl/pxb_with_window", =
+cxl_pxb_with_window);
+>>> -    qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+>>> -    qtest_add_func("/pci/cxl/rp", cxl_root_port);
+>>> -    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+>>> +    g_test_init(&argc, &argv, NULL);
+>>> +    if (strcmp(arch, "i386") =3D=3D 0 || strcmp(arch, "x86_64") =3D=3D=
+ 0) {
+>>> +        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+>>> +        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+>>> +        qtest_add_func("/pci/cxl/pxb_with_window", =
+cxl_pxb_with_window);
+>>> +        qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+>>> +        qtest_add_func("/pci/cxl/rp", cxl_root_port);
+>>> +        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+>>> #ifdef CONFIG_POSIX
+>>> -    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+>>> -    qtest_add_func("/pci/cxl/type3_device_pmem", =
+cxl_t3d_persistent);
+>>> -    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
+>>> -    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+>>> -    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+>>> -    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", =
+cxl_2pxb_4rp_4t3d);
+>>> +        qtest_add_func("/pci/cxl/type3_device", =
+cxl_t3d_deprecated);
+>>> +        qtest_add_func("/pci/cxl/type3_device_pmem", =
+cxl_t3d_persistent);
+>>> +        qtest_add_func("/pci/cxl/type3_device_vmem", =
+cxl_t3d_volatile);
+>>> +        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+>>> +        qtest_add_func("/pci/cxl/rp_x2_type3_x2", =
+cxl_1pxb_2rp_2t3d);
+>>> +        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
+>>> +                       cxl_2pxb_4rp_4t3d);
+>>> #endif
+>>> +    } else if (strcmp(arch, "aarch64") =3D=3D 0) {
+>>> +#ifdef CONFIG_POSIX
+>>> +        =
+qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
+>>> +                       cxl_virt_2pxb_4rp_4t3d);
+>>> +#endif
+>>> +    }
+>>> +
+>>>    return g_test_run();
+>>> }
+>>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>>> index 7daf619845..361000267a 100644
+>>> --- a/tests/qtest/meson.build
+>>> +++ b/tests/qtest/meson.build
+>>> @@ -258,6 +258,7 @@ qtests_aarch64 =3D \
+>>>  (config_all_accel.has_key('CONFIG_TCG') and                         =
+                   \
+>>>   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? =
+['tpm-tis-i2c-test'] : []) + \
+>>>  (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 =
+: []) + \
+>>> +  qtests_cxl +                                                      =
+                            \
+>>>  ['arm-cpu-features',
+>>>   'numa-test',
+>>>   'boot-serial-test',
+>>> --=20
+>>> 2.43.0
+>>>=20
+>>=20
+>> ~/projects/qemu/build$ meson test qtest-aarch64/cxl-test
+>> ninja: Entering directory `/home/realm/projects/qemu/build'
+>> [1/8] Generating qemu-version.h with a custom command (wrapped by =
+meson to capture output)
+>> 1/1 qemu:qtest+qtest-aarch64 / qtest-aarch64/cxl-test        OK       =
+       0.17s   1 subtests passed
+>>=20
+>> Ok:                 1
+>> Expected Fail:      0
+>> Fail:               0
+>> Unexpected Pass:    0
+>> Skipped:            0
+>> Timeout:            0
+>>=20
+>> Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com =
+<mailto:itaru.kitayama@fujitsu.com>>
+>>=20
+>> Jonathan, would you push your branch this series applied? I manually =
+applied your series no issues though.
+>=20
+> I'm reluctant to push a 'normal' staging CXL tree whilst we have the =
+TCG
+> issue outstanding (which is in mainline).
+> I can probably push one with a name that makes it clear we know it =
+will
+> crash under some circumstances though. I'll aim to get that done later =
+this week.
 
-I plan to test a bit on this patch later to see how much perf we can get in
-QEMU.  Since it makes perfect sense on its own, queued it for now, and the
-plan is with below comments squashed in.  Let me know if there's comments.
+Okay, and understood.
 
-Postcopy unfortunately still cannot benefit much from this change, but I'll
-prepare some patches soon so that this should ideally also work for the
-whole lifecycle of postcopy.  After that done, I am expecting some further
-page fault latency reduction with this change.
+>=20
+> After talking to Richard Henderson I'm going to spin some images etc =
+to
+> make it easier for him to replicate that TCG issue.
+>=20
+> Thanks for reviews.
 
-diff --git a/migration/ram.c b/migration/ram.c
-index db70699f95..fd8d83b63c 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -831,14 +831,20 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
-     bool ret;
- 
-     /*
--     * Clear dirty bitmap if needed.  This _must_ be called before we
--     * send any of the page in the chunk because we need to make sure
--     * we can capture further page content changes when we sync dirty
--     * log the next time.  So as long as we are going to send any of
--     * the page in the chunk we clear the remote dirty bitmap for all.
--     * Clearing it earlier won't be a problem, but too late will.
-+     * During the last stage (after source VM stopped), resetting the write
-+     * protections isn't needed as we know there will be either (1) no
-+     * further writes if migration will complete, or (2) migration fails
-+     * at last then tracking isn't needed either.
-      */
-     if (!rs->last_stage) {
-+        /*
-+         * Clear dirty bitmap if needed.  This _must_ be called before we
-+         * send any of the page in the chunk because we need to make sure
-+         * we can capture further page content changes when we sync dirty
-+         * log the next time.  So as long as we are going to send any of
-+         * the page in the chunk we clear the remote dirty bitmap for all.
-+         * Clearing it earlier won't be a problem, but too late will.
-+         */
-         migration_clear_memory_region_dirty_bitmap(rb, page);
-     }
+The comments are from Zhijian.
 
--- 
-Peter Xu
+Itaru.
+
+>=20
+> Jonathan
+>=20
+>>=20
+>>=20
+>=20
 
 
