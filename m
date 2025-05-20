@@ -4,134 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498D8C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 14:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8AAC3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 14:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHO1p-0002HG-99; Tue, 20 May 2025 10:33:13 -0400
+	id 1uHO99-0005CG-5x; Tue, 20 May 2025 10:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHO1m-0002H7-Le
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:33:11 -0400
+ id 1uHO95-0005BM-A9
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 10:40:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHO1k-0004V9-CX
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:33:09 -0400
+ id 1uHO92-0005zg-IB
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 10:40:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747751587;
+ s=mimecast20190719; t=1747752039;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7tFvhY4kOLUkmNyk55vH1TkbyZlK7bdQvR0R383uuuI=;
- b=VkoLWxw6PcHLtlQvShpEDGaWf0HGUbD7e5BfmuwQTWkCuDrWURIr+NvzDycLG+x/nW5Ze6
- T8Zw8jswe+4JT2NY9JkHerjtMECG54YiZsKA7VLZKo4/gZbqx+ASMA4dFPkbOtqCZjuqsV
- af6JAr9skTlrvu/noj5pGjNonqfdV+Q=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=olzendEO1KVkWoJH7CUvhbzVaHfoPsboH03R7MrNBoE=;
+ b=LWsXIK0UX/Y36s621FJbzM2YD+/1aYdyY0ElpA9CGLIDrg3jvmyw8B7MVHh+BlItEEin+X
+ BfsQmvCzICgRXWmar+C7abZ8IeuJFOmKFggdrxDkL6ruHtn0Ho7l87J6Ufr4R2jTtZ9lCA
+ NIpq6g1CjS8OLEzO/chW/h+g007SpfM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-408-oHdQzhqCPum7H90OY-EXeA-1; Tue, 20 May 2025 10:33:06 -0400
-X-MC-Unique: oHdQzhqCPum7H90OY-EXeA-1
-X-Mimecast-MFC-AGG-ID: oHdQzhqCPum7H90OY-EXeA_1747751585
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-601f87bb9c8so1495072a12.2
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 07:33:06 -0700 (PDT)
+ us-mta-362-SC1zdslYMiqouVRug1S0Ww-1; Tue, 20 May 2025 10:40:37 -0400
+X-MC-Unique: SC1zdslYMiqouVRug1S0Ww-1
+X-Mimecast-MFC-AGG-ID: SC1zdslYMiqouVRug1S0Ww_1747752036
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a362dcc86fso1625499f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 07:40:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747751585; x=1748356385;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7tFvhY4kOLUkmNyk55vH1TkbyZlK7bdQvR0R383uuuI=;
- b=sjnyFdLwYOM7X5vWo0UCkWa9FNTM/7hxAnek9URp4xDmHQdioIbud89HWFXPUzx+uH
- BGTR2b/xso9ajV6TYFzUL19jW1NVegYmIQ0l86t7Jbkek6jz6tjZOXytSb2ym0FC9/dI
- grsP/RYy+cV9G/rsXc9I3xTtCa5qeqk2GKSGlP8MNbNNDIBx3qy9sQH7GswDKtZpYSOC
- 6J188E7VulwgG9pyYmYVBPVZbKMUi2GxVOznYWckOiF5yu9Bi0igG6+nIBix7QqHKDSm
- QV3LXUT+rF9Y/z4wgT4qtDhiR7h7Lor8hiU8RK0KD1GKMW/HKYcrfeJV0oGsxQFuhJhr
- iqLw==
+ d=1e100.net; s=20230601; t=1747752036; x=1748356836;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=olzendEO1KVkWoJH7CUvhbzVaHfoPsboH03R7MrNBoE=;
+ b=KELIaJLXtm8kSMUox2PiAVXEOdr4pRLM0Jhrn79dpxhUXo0uoMjULR8WbPmE81zNv8
+ YFdFHp6YM29JIWNo6mjOQy1rwr7M5nexA0FQHT40pnjTbjTAJwkVqwpVAD+/cGsuIR5O
+ bS6yHHz4gXRV7xVFe5gpl8IM1z2sLYfKlQ2OUt71dN91UMJhtHZOY4WGJdwatwiBuFXl
+ nxU2ep9IdxgM7VF6dnybk6w0DC5O9/HO2LYxGWi8l3jcsk1Ln4UTJOEAsI57hgsBiQF2
+ 4Tc8SigNirrAAxroDzhxfS5yIjtT9/89NW+HPa1iHrUCVOU5I6GPVY268fhPwk3Gp8vm
+ onEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKI8VGeToobXy+8ePInKhiG1HCt3Y8WeokqYtIeM/iwxsz/n/qN+SkEv4I5FDK0iQjEl4x8/ZfCVS7@nongnu.org
-X-Gm-Message-State: AOJu0YziIm8YtdpTsq3rXbi4GSxwH0lgav5wzB5nq0238f7YcfR0qP0G
- rT7cZYT+oJYIx82e4mupvo3pWef9vO7pMc0xwkL1uNeEweuBkmADhxtwNmz28qvpvigrJYNlPAy
- Ou3WmBuM6NmrX2OLOBPtJjpQ15oV2Z317Tscec1uTB18HJ2nw2BNSKmDa
-X-Gm-Gg: ASbGncun43Cva961q9NgCmrIjIp7lUazND6JPTZYu2JGtLlHEUjGadmaMhecSaHSkCT
- 3Cj8kBc28OkqOY+fjaQhR4awFyuEtQB+/R+vqhtYgZVpBGyectP/CWlsuB9ElApb3GkN7tSSuhg
- syfNAFcpYp5h0LFLzm760wyxjuWU0EQmvBXn5Yks96JbE0CJ1Oy82U6Y5PbRpnLiZ20XwN0B223
- U0Bv3aECHfqsGS6lbvug1/GxXZCe7KCCI3QAL3GGIbt6BRdBnd3Aci8fB+vGMWf/fS3fMwaklWQ
- epqlPi/Y2mb+IA==
-X-Received: by 2002:a05:6402:4307:b0:602:a0:1f0f with SMTP id
- 4fb4d7f45d1cf-60200a02d9dmr4451513a12.18.1747751585047; 
- Tue, 20 May 2025 07:33:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3/ihK7rOR4bGhf50pjc8+NRO8Wu7G2hDHTCo3K0LBjSBjHQQqT+77QIocmOPvX/y1JirpMw==
-X-Received: by 2002:a05:6402:4307:b0:602:a0:1f0f with SMTP id
- 4fb4d7f45d1cf-60200a02d9dmr4451474a12.18.1747751584612; 
- Tue, 20 May 2025 07:33:04 -0700 (PDT)
-Received: from [192.168.10.81] ([151.95.46.79])
- by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-6004d502ec0sm7292443a12.31.2025.05.20.07.33.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 07:33:04 -0700 (PDT)
-Message-ID: <a4be2749-ef7e-467a-a775-822222a06b99@redhat.com>
-Date: Tue, 20 May 2025 16:33:02 +0200
+ AJvYcCV8gntA3KKeQFgrJv49V72JORUcRTDV/Fq2L5V9LvbxJ78LARI4J1hf5QITeKeJuxBt7dsUQWtxAMke@nongnu.org
+X-Gm-Message-State: AOJu0YxdL2t3WD0pGdIAWOHQUKoYhNy3y6g4c9F6Lefxls3JXBqn1xmN
+ GYH66tgGytn9njvZCiIyrxdqtoR5pTGkhzOozndTBSKghvB3IkhA9i4gKfQNag9Rbd90/EGENtf
+ 8Qv2ImmlBLnAFyvqLucziB8VHXpmiYdZddE6con9fdYQ+P1FD67BhYK1+2gq7xMLr2ayrwG09iK
+ mYi0zlHD1QwNklarT/IYquMK+5Ps1d6+Q=
+X-Gm-Gg: ASbGncvmIXL+DLw2hylAbnyURNcdENfkylRGzm+WzOR/tYuuja+vL+sJmsbPndo68XW
+ xfZ9023ipcqcBoWYhuIu2mvdQyIBRPolyhMfp15u7SrxYXN6CSYnBjaO+SspT5Xxbcgk=
+X-Received: by 2002:a05:6000:2903:b0:3a3:6e62:d8e8 with SMTP id
+ ffacd0b85a97d-3a36e62db92mr8106049f8f.55.1747752036510; 
+ Tue, 20 May 2025 07:40:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrkn8HHCOglcv/wyO4kl0v0OKRkMVQ3N70QJQhen+oVYudjXrCMkQ7kjcpx/qXRlPotT++4PfMTA+Xmx0DiQk=
+X-Received: by 2002:a05:6000:2903:b0:3a3:6e62:d8e8 with SMTP id
+ ffacd0b85a97d-3a36e62db92mr8106023f8f.55.1747752036139; Tue, 20 May 2025
+ 07:40:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 18/25] target/i386/mshv: Implement
- mshv_arch_put_registers()
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-19-magnuskulke@linux.microsoft.com>
+References: <20250516122319.4100121-1-alexghiti@rivosinc.com>
+ <87y0usiz22.fsf@all.your.base.are.belong.to.us>
+ <51356014-b645-4e86-b338-0d097bf80260@redhat.com>
+ <1e170923-9bb3-4327-a6ff-75c53bb2830f@ventanamicro.com>
+In-Reply-To: <1e170923-9bb3-4327-a6ff-75c53bb2830f@ventanamicro.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250520113018.49569-19-magnuskulke@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Tue, 20 May 2025 16:40:24 +0200
+X-Gm-Features: AX0GCFsZmhMan_ntxExw6BkawFET-7UyCaIwPot1bxeIn0YAX5GjinuRCryd8QU
+Message-ID: <CABgObfZR8NgEiFm9xuehhm4JU7y2W5HNbmdbQ5VOSGRifSdExw@mail.gmail.com>
+Subject: Re: [PATCH RFC] target: riscv: Fix satp mode initialization based on
+ profile
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>, 
+ Alexandre Ghiti <alexghiti@rivosinc.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -157,51 +111,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 13:30, Magnus Kulke wrote:
-> Write CPU register state to MSHV vCPUs. Various mapping functions to
-> prepare the payload for the HV call have been implemented.
-> 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->   include/system/mshv.h       |  41 ++++++
->   target/i386/mshv/mshv-cpu.c | 249 ++++++++++++++++++++++++++++++++++++
->   2 files changed, 290 insertions(+)
-> 
-> diff --git a/include/system/mshv.h b/include/system/mshv.h
-> index 055489a6f3..76a3b0010e 100644
-> --- a/include/system/mshv.h
-> +++ b/include/system/mshv.h
-> @@ -99,6 +99,46 @@ typedef struct MshvMsiControl {
->   #define EFER_LMA   ((uint64_t)0x400)
->   #define EFER_LME   ((uint64_t)0x100)
->   
-> +/* CR0 bits */
-> +#define CR0_PE     ((uint64_t)0x1)
-> +#define CR0_PG     ((uint64_t)0x80000000)
-> +
-> +/* CR4 bits */
-> +#define CR4_PAE    ((uint64_t)0x20)
-> +#define CR4_LA57   ((uint64_t)0x1000)
-> +
-> +/* rflags bits (shift values) */
-> +#define CF_SHIFT   0
-> +#define PF_SHIFT   2
-> +#define AF_SHIFT   4
-> +#define ZF_SHIFT   6
-> +#define SF_SHIFT   7
-> +#define DF_SHIFT   10
-> +#define OF_SHIFT   11
-> +
-> +/* rflags bits (bit masks) */
-> +#define CF         ((uint64_t)1 << CF_SHIFT)
-> +#define PF         ((uint64_t)1 << PF_SHIFT)
-> +#define AF         ((uint64_t)1 << AF_SHIFT)
-> +#define ZF         ((uint64_t)1 << ZF_SHIFT)
-> +#define SF         ((uint64_t)1 << SF_SHIFT)
-> +#define DF         ((uint64_t)1 << DF_SHIFT)
-> +#define OF         ((uint64_t)1 << OF_SHIFT)
+On Tue, May 20, 2025 at 1:33=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+> > In general a lot (if not all) of the profile code should be moved out
+> > of tcg-cpu.c and into riscv_cpu_class_base_init().  I didn't do that
+> > because I didn't want to balloon an already-large series, but it's a
+> > pretty obvious extension of the RISCVCPUDef concept to include all
+> > profile features.
+>
+> Note that KVM RISC-V does not have the same profile support as TCG - I'm =
+not
+> sure if KVM RISC-V has RVA22 support, let alone RVA23. If we move the pro=
+file
+> logic to cpu.c we need to be careful with TCG assumptions affecting KVM C=
+PUs.
 
-All of these are either duplicate or unused.
+Yes, but then that's even more of a reason to move code to cpu.c. It
+means that "-cpu rva22s64 --enable-kvm" will print the appropriate
+warning or errors.
 
 Paolo
 
