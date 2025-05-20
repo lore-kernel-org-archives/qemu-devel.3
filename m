@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF243C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61B12C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 10:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKE5-0004mx-G3; Tue, 20 May 2025 06:29:37 -0400
+	id 1uHKED-0004sG-A1; Tue, 20 May 2025 06:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1uHKE3-0004mk-Sm
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:29:35 -0400
+ id 1uHKEB-0004ri-Gi
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:29:43 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1uHKE1-0004gB-US
- for qemu-devel@nongnu.org; Tue, 20 May 2025 06:29:35 -0400
+ id 1uHKE9-0004gB-EL
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 06:29:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747736974; x=1779272974;
+ t=1747736982; x=1779272982;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=OTa0g2q+m0xONAZ985oRQ8DaRJiUFsfwCwbWIOiPDSE=;
- b=io881stpj2+Cy1W8gnutmmBl3XYWq4Ato45kSPl68AtVEzeJCFv2zEh5
- kZQHmWcv0idcOOsQ4DOCydbeEr+QrCgPv0YuW5P1xPMmyKzJd+7PESw76
- 1OGItSc34l1Lp2lpjBIs8zNhBSTgdKmDNh+KEf9oZ2TQE+96SONknRSoR
- uM23QwVbEWhWhWwNLmLJ5GRIqg5E0WM0wsOB0UZWFboFS/ikcvdzciYUc
- Jko15nRP9GQvuIEXft5y8AHH0WiKOk1nb6+XHlLBaMfR3+u82GTYupKaP
- dVyDY24nccKqa6FQSLy1xrYubvPMV6f+Lo9COrTlOiO4jvRtTR9kdfydo A==;
-X-CSE-ConnectionGUID: lcx5nT/+RoOlCK93G0AcxA==
-X-CSE-MsgGUID: nwDYdWHrQiOIUK+BmlQjPA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11438"; a="49566681"
-X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="49566681"
+ bh=QVe4ZfDlF+KN1Ku+/Uhd92OOHuL5O75EpmRDC6Ka9Vw=;
+ b=BeJw6H15kfjwYQ/pZ2EbLDv2BQUpF4Cj6xyqzFy+berkTGk8BFkw7hhd
+ A/7tn+YaII0g4OZf90NqYpTsqQMJz4iCHq+p6uRfGOMGqP5fxYaN+gprC
+ uvDB1+eCZvYn4VTj4nP+an36ZpTxWDLp+1nX9LXKlzxp7y5lnXqlmu/ZN
+ GnBLOab5wkd4uyt4YDrXmx51BI8Xky3X+iotScLGrXT5nZdiJj3299F7I
+ v2X4fuCDkqpxX0+TWjducKRV0OzHJmXt3i51pbe1LCGVv8aJXZJ1V1T1J
+ TmrycVpFqI1TeYYKYai41Y16Nwzhxoa8jggMT9Y9iImYVFHALt3ibrI3v g==;
+X-CSE-ConnectionGUID: OdftwBB7Svq2Gc+Dr9TL2Q==
+X-CSE-MsgGUID: SHvZauM3Qqy9PBum6iA4ZQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11438"; a="49566697"
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="49566697"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2025 03:29:34 -0700
-X-CSE-ConnectionGUID: j9eFD9hUQnubW4cm6fpS2Q==
-X-CSE-MsgGUID: Vyb9SCSARHefsgMJnbyKSg==
+ 20 May 2025 03:29:41 -0700
+X-CSE-ConnectionGUID: HXt5MnjgSyC7CFljN6GtVg==
+X-CSE-MsgGUID: SuPLIgPaTYODvzo/5Z8fdQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="144905299"
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="144905325"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2025 03:29:30 -0700
+ 20 May 2025 03:29:37 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
  Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
@@ -57,10 +57,10 @@ Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>, Baolu Lu <baolu.lu@linux.intel.com>,
  Gao Chao <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>,
  Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: [PATCH v5 08/10] memory: Change NotifyRamDiscard() definition to
- return the result
-Date: Tue, 20 May 2025 18:28:48 +0800
-Message-ID: <20250520102856.132417-9-chenyi.qiang@intel.com>
+Subject: [PATCH v5 10/10] ram-block-attribute: Add more error handling during
+ state changes
+Date: Tue, 20 May 2025 18:28:50 +0800
+Message-ID: <20250520102856.132417-11-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250520102856.132417-1-chenyi.qiang@intel.com>
 References: <20250520102856.132417-1-chenyi.qiang@intel.com>
@@ -91,75 +91,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So that the caller can check the result of NotifyRamDiscard() handler if
-the operation fails.
+The current error handling is simple with the following assumption:
+- QEMU will quit instead of resuming the guest if kvm_convert_memory()
+  fails, thus no need to do rollback.
+- The convert range is required to be in the desired state. It is not
+  allowed to handle the mixture case.
+- The conversion from shared to private is a non-failure operation.
+
+This is sufficient for now as complext error handling is not required.
+For future extension, add some potential error handling.
+- For private to shared conversion, do the rollback operation if
+  ram_block_attribute_notify_to_populated() fails.
+- For shared to private conversion, still assert it as a non-failure
+  operation for now. It could be an easy fail path with in-place
+  conversion, which will likely have to retry the conversion until it
+  works in the future.
+- For mixture case, process individual blocks for ease of rollback.
 
 Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
-Changes in v5:
-    - Revert to use of NotifyRamDiscard()
+ system/ram-block-attribute.c | 116 +++++++++++++++++++++++++++--------
+ 1 file changed, 90 insertions(+), 26 deletions(-)
 
-Changes in v4:
-    - Newly added.
----
- hw/vfio/listener.c           | 6 ++++--
- include/system/memory.h      | 4 ++--
- system/ram-block-attribute.c | 3 +--
- 3 files changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index bfacb3d8d9..06454e0584 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -190,8 +190,8 @@ out:
-     rcu_read_unlock();
- }
- 
--static void vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
--                                            MemoryRegionSection *section)
-+static int vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
-+                                           MemoryRegionSection *section)
- {
-     VFIORamDiscardListener *vrdl = container_of(rdl, VFIORamDiscardListener,
-                                                 listener);
-@@ -206,6 +206,8 @@ static void vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
-         error_report("%s: vfio_container_dma_unmap() failed: %s", __func__,
-                      strerror(-ret));
-     }
-+
-+    return ret;
- }
- 
- static int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 83b28551c4..e5155120d9 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -518,8 +518,8 @@ struct IOMMUMemoryRegionClass {
- typedef struct RamDiscardListener RamDiscardListener;
- typedef int (*NotifyRamPopulate)(RamDiscardListener *rdl,
-                                  MemoryRegionSection *section);
--typedef void (*NotifyRamDiscard)(RamDiscardListener *rdl,
--                                 MemoryRegionSection *section);
-+typedef int (*NotifyRamDiscard)(RamDiscardListener *rdl,
-+                                MemoryRegionSection *section);
- 
- struct RamDiscardListener {
-     /*
 diff --git a/system/ram-block-attribute.c b/system/ram-block-attribute.c
-index f12dd4b881..896c3d7543 100644
+index 387501b569..0af3396aa4 100644
 --- a/system/ram-block-attribute.c
 +++ b/system/ram-block-attribute.c
-@@ -66,8 +66,7 @@ static int ram_block_attribute_notify_discard_cb(MemoryRegionSection *section,
- {
-     RamDiscardListener *rdl = arg;
+@@ -289,7 +289,12 @@ static int ram_block_attribute_notify_to_discard(RamBlockAttribute *attr,
+         }
+         ret = rdl->notify_discard(rdl, &tmp);
+         if (ret) {
+-            break;
++            /*
++             * The current to_private listeners (VFIO dma_unmap and
++             * KVM set_attribute_private) are non-failing operations.
++             * TODO: add rollback operations if it is allowed to fail.
++             */
++            g_assert(ret);
+         }
+     }
  
--    rdl->notify_discard(rdl, section);
--    return 0;
-+    return rdl->notify_discard(rdl, section);
+@@ -300,7 +305,7 @@ static int
+ ram_block_attribute_notify_to_populated(RamBlockAttribute *attr,
+                                         uint64_t offset, uint64_t size)
+ {
+-    RamDiscardListener *rdl;
++    RamDiscardListener *rdl, *rdl2;
+     int ret = 0;
+ 
+     QLIST_FOREACH(rdl, &attr->rdl_list, next) {
+@@ -315,6 +320,20 @@ ram_block_attribute_notify_to_populated(RamBlockAttribute *attr,
+         }
+     }
+ 
++    if (ret) {
++        /* Notify all already-notified listeners. */
++        QLIST_FOREACH(rdl2, &attr->rdl_list, next) {
++            MemoryRegionSection tmp = *rdl2->section;
++
++            if (rdl == rdl2) {
++                break;
++            }
++            if (!memory_region_section_intersect_range(&tmp, offset, size)) {
++                continue;
++            }
++            rdl2->notify_discard(rdl2, &tmp);
++        }
++    }
+     return ret;
  }
  
- static int
+@@ -353,6 +372,9 @@ int ram_block_attribute_state_change(RamBlockAttribute *attr, uint64_t offset,
+     const int block_size = ram_block_attribute_get_block_size(attr);
+     const unsigned long first_bit = offset / block_size;
+     const unsigned long nbits = size / block_size;
++    const uint64_t end = offset + size;
++    unsigned long bit;
++    uint64_t cur;
+     int ret = 0;
+ 
+     if (!ram_block_attribute_is_valid_range(attr, offset, size)) {
+@@ -361,32 +383,74 @@ int ram_block_attribute_state_change(RamBlockAttribute *attr, uint64_t offset,
+         return -1;
+     }
+ 
+-    /* Already discard/populated */
+-    if ((ram_block_attribute_is_range_discard(attr, offset, size) &&
+-         to_private) ||
+-        (ram_block_attribute_is_range_populated(attr, offset, size) &&
+-         !to_private)) {
+-        return 0;
+-    }
+-
+-    /* Unexpected mixture */
+-    if ((!ram_block_attribute_is_range_populated(attr, offset, size) &&
+-         to_private) ||
+-        (!ram_block_attribute_is_range_discard(attr, offset, size) &&
+-         !to_private)) {
+-        error_report("%s, the range is not all in the desired state: "
+-                     "(offset 0x%lx, size 0x%lx), %s",
+-                     __func__, offset, size,
+-                     to_private ? "private" : "shared");
+-        return -1;
+-    }
+-
+     if (to_private) {
+-        bitmap_clear(attr->bitmap, first_bit, nbits);
+-        ret = ram_block_attribute_notify_to_discard(attr, offset, size);
++        if (ram_block_attribute_is_range_discard(attr, offset, size)) {
++            /* Already private */
++        } else if (!ram_block_attribute_is_range_populated(attr, offset,
++                                                           size)) {
++            /* Unexpected mixture: process individual blocks */
++            for (cur = offset; cur < end; cur += block_size) {
++                bit = cur / block_size;
++                if (!test_bit(bit, attr->bitmap)) {
++                    continue;
++                }
++                clear_bit(bit, attr->bitmap);
++                ram_block_attribute_notify_to_discard(attr, cur, block_size);
++            }
++        } else {
++            /* Completely shared */
++            bitmap_clear(attr->bitmap, first_bit, nbits);
++            ram_block_attribute_notify_to_discard(attr, offset, size);
++        }
+     } else {
+-        bitmap_set(attr->bitmap, first_bit, nbits);
+-        ret = ram_block_attribute_notify_to_populated(attr, offset, size);
++        if (ram_block_attribute_is_range_populated(attr, offset, size)) {
++            /* Already shared */
++        } else if (!ram_block_attribute_is_range_discard(attr, offset, size)) {
++            /* Unexpected mixture: process individual blocks */
++            unsigned long *modified_bitmap = bitmap_new(nbits);
++
++            for (cur = offset; cur < end; cur += block_size) {
++                bit = cur / block_size;
++                if (test_bit(bit, attr->bitmap)) {
++                    continue;
++                }
++                set_bit(bit, attr->bitmap);
++                ret = ram_block_attribute_notify_to_populated(attr, cur,
++                                                           block_size);
++                if (!ret) {
++                    set_bit(bit - first_bit, modified_bitmap);
++                    continue;
++                }
++                clear_bit(bit, attr->bitmap);
++                break;
++            }
++
++            if (ret) {
++                /*
++                 * Very unexpected: something went wrong. Revert to the old
++                 * state, marking only the blocks as private that we converted
++                 * to shared.
++                 */
++                for (cur = offset; cur < end; cur += block_size) {
++                    bit = cur / block_size;
++                    if (!test_bit(bit - first_bit, modified_bitmap)) {
++                        continue;
++                    }
++                    assert(test_bit(bit, attr->bitmap));
++                    clear_bit(bit, attr->bitmap);
++                    ram_block_attribute_notify_to_discard(attr, cur,
++                                                          block_size);
++                }
++            }
++            g_free(modified_bitmap);
++        } else {
++            /* Complete private */
++            bitmap_set(attr->bitmap, first_bit, nbits);
++            ret = ram_block_attribute_notify_to_populated(attr, offset, size);
++            if (ret) {
++                bitmap_clear(attr->bitmap, first_bit, nbits);
++            }
++        }
+     }
+ 
+     return ret;
 -- 
 2.43.5
 
