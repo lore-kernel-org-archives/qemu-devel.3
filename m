@@ -4,70 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B73C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFCA4C54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHPQ4-0007XW-Aq; Tue, 20 May 2025 12:02:20 -0400
+	id 1uHPTH-0002F2-G9; Tue, 20 May 2025 12:05:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uHPQ1-0007Vf-2Z; Tue, 20 May 2025 12:02:17 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uHPPx-0005JI-9h; Tue, 20 May 2025 12:02:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747756933; x=1779292933;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=rXyivNAP7GuLXxMV2DCwcIAVUgLC5pLZeZ/iwDqxFl8=;
- b=C0esmcE13wm6ESt25hU4xVA7ulFNLFUtGnqfyA66QSAL654IiPrd3bzf
- /LDGYF/jeZg6AJoah8/1ZcZcSiSv0G+nLu8KT5yUsTdeBenJZReP+pvNp
- G7TWW0Erml+Ns+MUhhN9lLq6bCkYjQXnW/x1uPAld2jsViQWTkWL8F3HM
- 2tDJcMuJwPrSAG2gxIv+Ld3bt/hccSiIIF+tYDmWP/al1KA6NsE7zrWPW
- s1Uxp3Trv4wkJoaxFCemF0f1c6VuTOK8voQQwjbqbYEugr7cE9LXkZDxG
- GqgvFcSuZLnfp6zOFbrS0oFBTJMIwZDgbwuEaagP4WlsCHj9BqUM8ImZ+ A==;
-X-CSE-ConnectionGUID: XelY7rLySmW5TpjrPGRniw==
-X-CSE-MsgGUID: qkx2ctIlRpyzdOb9+VDTNg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="52325502"
-X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="52325502"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2025 09:02:09 -0700
-X-CSE-ConnectionGUID: oiWHrhykQyKyeuBwDjMolA==
-X-CSE-MsgGUID: 0xwU7rueQN2x/53GFlg3VQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; d="scan'208";a="140261931"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 20 May 2025 09:02:08 -0700
-Date: Wed, 21 May 2025 00:23:14 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <bonzini@gnu.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel Berrange <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: Rust in QEMU update, April 2025
-Message-ID: <aCysct2L8Bosqy0N@intel.com>
-References: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uHPTC-0002De-O9
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:05:35 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uHPTB-00067O-1I
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:05:34 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-22c336fcdaaso46093935ad.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:05:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747757130; x=1748361930; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/6sMJeL+6+CmWHLAjXbC2hLM8VOcfQ7nl6fo+PeHtvQ=;
+ b=XOIcdUp2SpzS0qkF2M0Ys8JPI+3YWur3fLNGmk760mryqwvPNz/OFHMGewuUeqh/sd
+ FHbtwxrumu6znQf7Iurx1nmpKhtPRyiumBsjSglUYFIRD0x48H3keUXdusVyK8VOrabI
+ wTr4Qlstd41sQjqVaagcrlq5iAvXNBzJHs+ExQw/zdnveAyOw3iZMRnoIr1ky6FKsPi3
+ QseOjEet/ZzOn4E/+qolQLkw6/OSK6ibTtqk1buoXQBBTyNNvfRvXXuvhmKDKkrgMlw1
+ eBKQlFAfVBvI5sS2wXKqSI8EVENGMIkXNI/8Oo0H/Om87f4WgqUB89nbW+hsQa3//EIL
+ zvyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747757130; x=1748361930;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/6sMJeL+6+CmWHLAjXbC2hLM8VOcfQ7nl6fo+PeHtvQ=;
+ b=XK3QTioMVTd+gJCxwDvUSksZo4nsZoFXbaCJPT5Eg+YeKeb1TxgRpA1rJXPlMMe/rA
+ mCkVNysQlcmn1YeLqaJDAuQCQhHhh8xjxlRbgBl7VOcyMiD2kAWiCFlyqZRp0OKF82qi
+ Oi2BXwmsT6tFgj90SEPIjgsrEEQJoBTkQEyILaa3doUoNLY6fT8ZEu9Y5t3S2MrVrlBD
+ XUBQu09pFxv7umxk5qtcMvcmopdloHaN2qHqJfMCA4EIa6gXoZ/1l9fYoi7hGQhGhjPC
+ lpzlvgCx4giC9E/YUr/UU/YnwacPS8/g/R/xYXMFEcEbuk//m81yai7NTk5YA4cvpxTS
+ oYEw==
+X-Gm-Message-State: AOJu0YzX8DAz3qzv5peZYVH+wXcFTax5PPhK2bmX/LTyajtXn2RRyYx1
+ arPqu0EDXlAp7mhg704kbArATWpljMuUm/aPdEuEtUnWUaJCBrWbtjYq
+X-Gm-Gg: ASbGnct6cQi68qw/xMjSvhBoYvSHNlEQpCHhJcslITD6cPfl7Tc6NlvGgJ8s7AH0L4v
+ AeISovtC7m8c6m1oxk1sv/93SgO/jOjRU6eQBmldEH7lxSzC5dDB1U7JsCcNqBPystJ6whRUgGF
+ 1TaFWJQKbhmwdxVQY8vu0K/xGxdHwTllFBMOD6tBbzjgoQJJ3oRRgWvIPrhp7efXkohgzzbGEMt
+ R+VpyxSgcMV+EPC3GVFv4I24em2F+BI29Ict0AIt1AYLLRsp9oa5obb2iXM2bGBK+iOVjV15h60
+ nXbby6XtsHsZ2UzyC/ITfQr4n35FLMPqVKrxVucavA==
+X-Google-Smtp-Source: AGHT+IHHmn5fYi+4RFwBN/1ksj4IBFBleWBF5S9SwFaREwh2uZNh4psYALQqkfpFPqcA3yxmklAAcQ==
+X-Received: by 2002:a17:903:11c3:b0:223:47b4:aaf8 with SMTP id
+ d9443c01a7336-231d45eeeb0mr217773035ad.52.1747757125779; 
+ Tue, 20 May 2025 09:05:25 -0700 (PDT)
+Received: from lg ([2601:646:8f03:9fee:2c89:c0cf:1cbd:96d3])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4e98018sm78925215ad.155.2025.05.20.09.05.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 09:05:25 -0700 (PDT)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Tue, 20 May 2025 09:05:15 -0700
+To: anisa.su887@gmail.com
+Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
+ dave@stgolabs.net, linux-cxl@vger.kernel.org,
+ Anisa Su <anisa.su@samsung.com>
+Subject: Re: [PATCH v2 03/10] cxl/type3: Add dsmas_flags to CXLDCRegion struct
+Message-ID: <aCyoO3FuMb-Hqe8i@lg>
+References: <20250508001754.122180-1-anisa.su887@gmail.com>
+ <20250508001754.122180-4-anisa.su887@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+In-Reply-To: <20250508001754.122180-4-anisa.su887@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,106 +101,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Resend as the previous email may have failed.)
-
-> Remaining unsafe code
-> '''''''''''''''''''''
+On Thu, May 08, 2025 at 12:00:59AM +0000, anisa.su887@gmail.com wrote:
+> From: Anisa Su <anisa.su@samsung.com>
 > 
-> qdev bindings cover basic classes and interfaces, including
-> GPIO pins, timers, clocks and MemoryRegionOps.  VMState
-> still needs unsafe callbacks for pre_save/post_load, with
-> the final version waiting for a bump of the minimum supported
-> Rust version to 1.83.0.
+> Add booleans to DC Region struct to represent dsmas flags (defined in CDAT)
+> in preparation for the next command, which returns the flags in the
+
+s/next command/mailbox command 0x5601h/, otherwise
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+
+> response.
 > 
-> Apart from VMState, the remaining instances of `unsafe` blocks in the
-> pl011 and HPET code can all be removed without bumping the language
-> version.
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+
+
+> ---
+>  hw/mem/cxl_type3.c          |  8 +++++++-
+>  include/hw/cxl/cxl_device.h | 15 +++++++++++++++
+>  2 files changed, 22 insertions(+), 1 deletion(-)
 > 
-> HPET does some very simple memory accesses; a good safe solution
-> for this may be the ``vm-memory`` crate.  While I have not looked into
-> using it, ``vm-memory`` and ``vm-virtio`` were written with QEMU's
-> use cases in mind.
-
-I'm working on this and trying to wrap simple memory access by
-vm-memory.
- 
-> A coding style for devices
-> ''''''''''''''''''''''''''
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 7129da0940..05d4c861f1 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -232,10 +232,16 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+>           * future.
+>           */
+>          for (i = 0; i < ct3d->dc.num_regions; i++) {
+> +            ct3d->dc.regions[i].nonvolatile = false;
+> +            ct3d->dc.regions[i].sharable = false;
+> +            ct3d->dc.regions[i].hw_managed_coherency = false;
+> +            ct3d->dc.regions[i].ic_specific_dc_management = false;
+> +            ct3d->dc.regions[i].rdonly = false;
+>              ct3_build_cdat_entries_for_mr(&(table[cur_ent]),
+>                                            dsmad_handle++,
+>                                            ct3d->dc.regions[i].len,
+> -                                          false, true, region_base);
+> +                                          ct3d->dc.regions[i].nonvolatile,
+> +                                          true, region_base);
+>              ct3d->dc.regions[i].dsmadhandle = dsmad_handle - 1;
+>  
+>              cur_ent += CT3_CDAT_NUM_ENTRIES;
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index bebed04085..cbcc1bc9f5 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -177,6 +177,15 @@ typedef enum {
+>      MAX_LOG_TYPE
+>  } CXLLogType;
+>  
+> +/* DSMAS Flags Bits */
+> +typedef enum {
+> +    CXL_DSMAS_FLAGS_NONVOLATILE = 2,
+> +    CXL_DSMAS_FLAGS_SHARABLE = 3,
+> +    CXL_DSMAS_FLAGS_HW_MANAGED_COHERENCY = 4,
+> +    CXL_DSMAS_FLAGS_IC_SPECIFIC_DC_MANAGEMENT = 5,
+> +    CXL_DSMAS_FLAGS_RDONLY = 6,
+> +} CXLDSMASFlags;
+> +
+>  typedef struct CXLCCI CXLCCI;
+>  typedef struct cxl_device_state CXLDeviceState;
+>  struct cxl_cmd;
+> @@ -609,6 +618,12 @@ typedef struct CXLDCRegion {
+>      uint8_t flags;
+>      unsigned long *blk_bitmap;
+>      uint64_t supported_blk_size_bitmask;
+> +    /* Following bools make up dsmas flags, as defined in the CDAT */
+> +    bool nonvolatile;
+> +    bool sharable;
+> +    bool hw_managed_coherency;
+> +    bool ic_specific_dc_management;
+> +    bool rdonly;
+>  } CXLDCRegion;
+>  
+>  typedef struct CXLSetFeatureInfo {
+> -- 
+> 2.47.2
 > 
-> pl011 and HPET were developed independently and sometimes have different
-> idioms that could be unified.  Peter Maydell made several observations:
-> 
->   Something I do notice is that there's some inconsistency in
->   how we've structured things between the two devices, e.g.:
 
-...
- 
->   * pl011 has defined named fields for its registers, but hpet does
->     things like::
-> 
->        self.config.get() & (1 << HPET_CFG_LEG_RT_SHIFT) != 0
-
-On the one hand, this way is more friendly and easy to review for C
-developers (comparing with the C version), and on the other hand,
-there are similar writeups in other projects (crosvm/firecracker). So,
-HPET also shows a clumsy and conservative approach :-).
-
->   * pl011 has a split between PL011State and PL011Registers,
->     but HPET does not. As I mentioned in an email thread a
->     little while back, I feel like the State/Registers split
->     is something we should either make a more clear deliberate
->     formalised separation that's part of how we recommend
->     device models should be designed
-
-Sorry, I just noticed this point.
-
-I tried to abstract a HPETRegisters but found out it didn't work well in
-HPET case...So I didn't insist.
-
-The following is the lesson I learned when I wrote HPET in Rust in the
-first time (copied from my HPET v2 cover letter [*]):
-
-Additional Experience
-=====================
-
-PL011 provides a pattern to group all registers in one BqlRefCell
-instead of multiple BqlCells.
-
-I also tried to leverage this design to HPET, but it didn't fit very
-well with this issue:
- * HPETState abstracts many helpers to check register bit and tell
-   caller about the state, e.g., is_legacy_mode(),
-   is_timer_int_active(), etc.
-   
-   But this also means these helpers can't be used in BqlRefCell::
-   borrow_mut() context again, otherwise, they would cause the runtime
-   bql check panic.
-
- - Some cases are easy to fix, i.e, use borrow_mut to modify the
-   registers after the helpers' call.
-
- - Some cases would by tricky, like memory write callback, since it has
-   complex logic and it's hard to decouple register changes from the
-   reset logic as clearly as PL011 does. 
-
-   The fix for this case is either to avoid using register helpers
-   again in the borrow_mut context of write(), or to use BqlCell
-   instead of BqlRefCell to get finer-grained access control to avoid
-   refactoring code logic.
-
-   I chose the latter.
-
-
-So I think this might be a practical lesson that the choice of BqlCell
-and BqlRefCell is also indeed related to code logic: If the code logic
-is too complex to decouple borrow() and borrow_mut() (and the compiler
-doesn't check this, only the runtime's panic_already_borrowed() will
-complains!) , then BqlCell should be chosen. Because fine-grained access
-is easier to control and avoid errors. :-)
-
-[*]: https://lore.kernel.org/qemu-devel/20250125125137.1223277-1-zhao1.liu@intel.com/
-
-Thanks,
-Zhao
-
+-- 
+Fan Ni
 
