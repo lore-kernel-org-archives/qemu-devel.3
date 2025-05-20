@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ECFAC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB141C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKn8-0006tz-4k; Tue, 20 May 2025 07:05:50 -0400
+	id 1uHKn2-0006iz-Np; Tue, 20 May 2025 07:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHKn5-0006q3-Ua
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:47 -0400
+ id 1uHKmz-0006Zw-PO
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHKn3-00030f-Ly
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:47 -0400
+ id 1uHKmy-0002zK-1y
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747739145;
+ s=mimecast20190719; t=1747739138;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8qOlExwNMcagvx/lGsDp7j3+eP/poXrPNaeClAqyXqw=;
- b=YkKXqCWqtrdSxyMu7ixNl6kOUKhYMoJrExSY+bOfdLZlLkHmQlkRCd2QJi2q++i+zZ9nGs
- f3v5iNOv406dk9kyZYl7E+g/rd9A1t8uHkPlOGaSYjYMrvY46zue/rt8COBOKWtymQUb94
- nHa45w8e0iURW03fTBJyV8o9+hDVwfs=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=s+j85f5BC5kk8p8XZ+YdfTGU6qWtK2LXVcZTdVTr8ts=;
+ b=f+HFFpE2HnlKqZCl3EtG5g0eDVdDL6kQG/oFfiyhPsWX+VU8aBkIcEiG6hpfHlwLoskVbc
+ UQh/59LX+QsXxKObCR4BqSmNOMkjnguWz/i+JNeNehVA6HVLNaAXd/87oKxr3ly2X1/cOw
+ JIwIcZtSDYm+szgEafo1hADaUur2wOE=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-380-Ckl99zI5PgipzVlfyE5jzQ-1; Tue, 20 May 2025 07:05:43 -0400
-X-MC-Unique: Ckl99zI5PgipzVlfyE5jzQ-1
-X-Mimecast-MFC-AGG-ID: Ckl99zI5PgipzVlfyE5jzQ_1747739143
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-601803587fcso3630649a12.1
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:05:43 -0700 (PDT)
+ us-mta-90-uR8oSz8xPmmo8pWnsb-7cg-1; Tue, 20 May 2025 07:05:37 -0400
+X-MC-Unique: uR8oSz8xPmmo8pWnsb-7cg-1
+X-Mimecast-MFC-AGG-ID: uR8oSz8xPmmo8pWnsb-7cg_1747739136
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ad55e9a80acso178299066b.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:05:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747739141; x=1748343941;
+ d=1e100.net; s=20230601; t=1747739136; x=1748343936;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8qOlExwNMcagvx/lGsDp7j3+eP/poXrPNaeClAqyXqw=;
- b=Oqp6/SUgP8jjtflWBGyBQKlKRaD0ib4noVsbU7m3mARNZHk911nR74MV0SApR8Xqo3
- wcjPQrY0A4GRcz1mqPjLJnznvmmHCMM1EM3r/YaqZHT23xMwV7qmt/lUkZ61XvGDRw/T
- EZ3SniL6bYkVxAslgCsOXuH9MN5+5VVnyqtnOfDkhefSFMHS6+xAlJtjQtpb7dOnNcRh
- OjWjE/XlTkMLEgQJkPtt8ej3ZklL8j3J33j6bsLRVtwf5jMnSjdN3w/mb/dNPxhVuFSk
- ve4iyTwX48p+098Qk7FcXLqYIK2YjJ3M+0g3M52j0ecIOf0jamyIbBPt0CH6NlxAd2k3
- 9Z4A==
-X-Gm-Message-State: AOJu0Yyp3ulerd9/7x/KAAZ063QJVCWOagjsMXBFZdSS8dQR9VsxbDs+
- yPgH0H8zkbGPTc1bvDKWSvuSr4hRW4lHDBZeQljaflLGR9tMnzPjhsbVxKkIkrQm3kxr/IQ5Odm
- 1XIEeNJOX30RyTbDttIjw2IPybKthyBTZ2LISBgoZyDhV2PvvnA+HvtUybyujXJhb4vI/RxyAbh
- /i9Rw9aufeObaFRuxTVlvMlZ5iWP0LXaMuCslwaDt3
-X-Gm-Gg: ASbGncuRpHv4fO2v4n/a1m8pB5y4kD3ZEb5OM8IbSIsUD5g/rcc9zDTr4FNe3BX2Yyn
- OsvZzBjbaQ+X8L4sobyo5xE5BWC19TNAc++R8YT3tMf2bpr5Eu0izpfkIQaVpcsmO5dT3o14sft
- 8HcgWsfKCcObFlnPVm2bSAblk02YCIe5bWFJSFi1H8eeZ4V0vSdg/BWben8mLSYlmgcQivL+scx
- YC7ojCEjh1ic8EQ5AEDH8iGCdagSR0lq0KrUzoa0Xa+Wiaq+HN2qYg6SgvDBQel4itZfcANuyy8
- YRfLt4P4rpSsFg==
-X-Received: by 2002:a05:6402:4415:b0:5fb:f347:88cb with SMTP id
- 4fb4d7f45d1cf-6008a5a9085mr14796342a12.13.1747739141250; 
- Tue, 20 May 2025 04:05:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuYoCGRyO1J76SqiC3YI84pvxvXe2U8rLu2JYe4ub2XokJgptkyCgiaaUv/lNDku5QleGRsA==
-X-Received: by 2002:a05:6402:4415:b0:5fb:f347:88cb with SMTP id
- 4fb4d7f45d1cf-6008a5a9085mr14796312a12.13.1747739140693; 
- Tue, 20 May 2025 04:05:40 -0700 (PDT)
+ bh=s+j85f5BC5kk8p8XZ+YdfTGU6qWtK2LXVcZTdVTr8ts=;
+ b=uFCS2TStURCesNftypTvd1BntmtlxDb1wpeI2mOLGQ4ZQffQy9D3Fahiy7SZDOyU9w
+ H72X3H0fRs7nBE1LvuME52XB2rX3WKflafKrV2k1NjfbLYZ7ovh/rkQczowQezYZRtv/
+ 3KgTA3nOnGzJKWfk331JB7DAff36lTCSE2WNwJBnrU+Wbu9XP0BOD2k55Xmy4gp2D3tB
+ GPGoKV7JueoVl4DFJKDFC6u1ESzRKShj3dSK1daZaNEViOFCLMiYhMOEUNmxSNqRLeEe
+ Dhqx3QXN67buLCqynNbIz55D4H4ute2MKQulIt9KjvKqnxGzLldpfc42pXVB0Dgi9Ux9
+ sxzA==
+X-Gm-Message-State: AOJu0YwNeGlaee4kVCUflGr7/rdaJxZ4eB84WzsW89m+tTYxqUMmto7d
+ LRsRMxuFgGt3d68qeD2HIQk5aCToQw5iIgS+EmFDCShViQTrP9i2axOExb8jFd3jyevl3NOmP/7
+ gK9DJtYcb7QWwJ6kUwm4fG0FE577vIGbMvGlLA9F+Rj/K/x6bOctmTHVDnuh742i9eNXqPB6xPU
+ wXMyQY9/+2VQeUZV09fKODD8W3m8UHkUFipu3qzG9+
+X-Gm-Gg: ASbGncsWrqkvnJUVVaVgRffK9iMytpY3CW8ds7Kpfe5hPD8v9/CLCEIsQCdSZIR+yVk
+ KqkZ8WNY2rbmWNRnchFqVzw1AbOakYqXEnEvyA80JvJpWbe3qFbEGLw2RodBPKEz1jZPgapObxn
+ SEfhAMUKlA4W4/5r3qnXVNfV/oFlS4wquTUhwj1zbxM+TKiOy8mnz+SbQdOC+13VZ2uoTFmEEhk
+ XCgVRetcthcMwm8/stnQMnix5uaIWvAMabhko0oqsNtUraTLEmtBNKh1YyE6Le1HZMVtnYPk5h9
+ ZoCxrjGZ0+MQuQ==
+X-Received: by 2002:a17:907:1c0a:b0:ad2:2146:3b7d with SMTP id
+ a640c23a62f3a-ad52d583b9cmr1351128566b.46.1747739136003; 
+ Tue, 20 May 2025 04:05:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9JF5Ct4fe7EDmcELF+i3c/NBGGMXCpwFa2iLan6DP2imU7KE9jSdr7AjWwXSpWmDvPqYPpw==
+X-Received: by 2002:a17:907:1c0a:b0:ad2:2146:3b7d with SMTP id
+ a640c23a62f3a-ad52d583b9cmr1351124966b.46.1747739135548; 
+ Tue, 20 May 2025 04:05:35 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.46.79])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6004d502719sm7065536a12.26.2025.05.20.04.05.40
+ a640c23a62f3a-ad5572f6436sm464394466b.182.2025.05.20.04.05.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 04:05:40 -0700 (PDT)
+ Tue, 20 May 2025 04:05:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 05/35] qapi/misc-target: Rename SGXEPCSection to SgxEpcSection
-Date: Tue, 20 May 2025 13:05:00 +0200
-Message-ID: <20250520110530.366202-6-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 02/35] i386/hvf: Make CPUID_HT supported
+Date: Tue, 20 May 2025 13:04:57 +0200
+Message-ID: <20250520110530.366202-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520110530.366202-1-pbonzini@redhat.com>
 References: <20250520110530.366202-1-pbonzini@redhat.com>
@@ -108,111 +108,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-QAPI requires strict PascalCase naming style, i.e., only the first
-letter of a single word is allowed to be uppercase, which could help
-with readability.
+Since Commit c6bd2dd63420 ("i386/cpu: Set up CPUID_HT in
+x86_cpu_expand_features() instead of cpu_x86_cpuid()"), CPUID_HT will be
+set in env->features[] in x86_cpu_expand_features() when vcpus >= 2.
 
-Rename SGXEPCSection to SgxEpcSection.
+Later in x86_cpu_filter_features() it will check against the HVF
+supported bits. It will trigger the warning like
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250516091130.2374221-2-zhao1.liu@intel.com
+    qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.01H:EDX.ht [bit 28]
+
+Add CPUID_HT to HVF supported CPUID bits to fix it.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20250514031652.838763-3-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qapi/misc-target.json |  6 +++---
- hw/i386/sgx.c         | 18 +++++++++---------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ target/i386/hvf/x86_cpuid.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index 42e4a7417dc..a1275d3873a 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -319,7 +319,7 @@
-   'if': 'TARGET_ARM' }
- 
- ##
--# @SGXEPCSection:
-+# @SgxEpcSection:
- #
- # Information about intel SGX EPC section info
- #
-@@ -329,7 +329,7 @@
- #
- # Since: 7.0
- ##
--{ 'struct': 'SGXEPCSection',
-+{ 'struct': 'SgxEpcSection',
-   'data': { 'node': 'int',
-             'size': 'uint64'}}
- 
-@@ -355,7 +355,7 @@
-             'sgx1': 'bool',
-             'sgx2': 'bool',
-             'flc': 'bool',
--            'sections': ['SGXEPCSection']},
-+            'sections': ['SgxEpcSection']},
-    'if': 'TARGET_I386' }
- 
- ##
-diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
-index 5685c4fb802..3c601689eb7 100644
---- a/hw/i386/sgx.c
-+++ b/hw/i386/sgx.c
-@@ -84,10 +84,10 @@ static uint64_t sgx_calc_section_metric(uint64_t low, uint64_t high)
-            ((high & MAKE_64BIT_MASK(0, 20)) << 32);
- }
- 
--static SGXEPCSectionList *sgx_calc_host_epc_sections(void)
-+static SgxEpcSectionList *sgx_calc_host_epc_sections(void)
- {
--    SGXEPCSectionList *head = NULL, **tail = &head;
--    SGXEPCSection *section;
-+    SgxEpcSectionList *head = NULL, **tail = &head;
-+    SgxEpcSection *section;
-     uint32_t i, type;
-     uint32_t eax, ebx, ecx, edx;
-     uint32_t j = 0;
-@@ -104,7 +104,7 @@ static SGXEPCSectionList *sgx_calc_host_epc_sections(void)
-             break;
-         }
- 
--        section = g_new0(SGXEPCSection, 1);
-+        section = g_new0(SgxEpcSection, 1);
-         section->node = j++;
-         section->size = sgx_calc_section_metric(ecx, edx);
-         QAPI_LIST_APPEND(tail, section);
-@@ -183,17 +183,17 @@ SGXInfo *qmp_query_sgx_capabilities(Error **errp)
-     return info;
- }
- 
--static SGXEPCSectionList *sgx_get_epc_sections_list(void)
-+static SgxEpcSectionList *sgx_get_epc_sections_list(void)
- {
-     GSList *device_list = sgx_epc_get_device_list();
--    SGXEPCSectionList *head = NULL, **tail = &head;
--    SGXEPCSection *section;
-+    SgxEpcSectionList *head = NULL, **tail = &head;
-+    SgxEpcSection *section;
- 
-     for (; device_list; device_list = device_list->next) {
-         DeviceState *dev = device_list->data;
-         Object *obj = OBJECT(dev);
- 
--        section = g_new0(SGXEPCSection, 1);
-+        section = g_new0(SgxEpcSection, 1);
-         section->node = object_property_get_uint(obj, SGX_EPC_NUMA_NODE_PROP,
-                                                  &error_abort);
-         section->size = object_property_get_uint(obj, SGX_EPC_SIZE_PROP,
-@@ -237,7 +237,7 @@ SGXInfo *qmp_query_sgx(Error **errp)
- void hmp_info_sgx(Monitor *mon, const QDict *qdict)
- {
-     Error *err = NULL;
--    SGXEPCSectionList *section_list, *section;
-+    SgxEpcSectionList *section_list, *section;
-     g_autoptr(SGXInfo) info = qmp_query_sgx(&err);
-     uint64_t size = 0;
- 
+diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c
+index fa131b18c6d..0798a0cbafb 100644
+--- a/target/i386/hvf/x86_cpuid.c
++++ b/target/i386/hvf/x86_cpuid.c
+@@ -73,7 +73,7 @@ uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_t idx,
+              CPUID_MSR | CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC |
+              CPUID_SEP | CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV |
+              CPUID_PAT | CPUID_PSE36 | CPUID_CLFLUSH | CPUID_MMX |
+-             CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS;
++             CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_HT;
+         ecx &= CPUID_EXT_SSE3 | CPUID_EXT_PCLMULQDQ | CPUID_EXT_SSSE3 |
+              CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID |
+              CPUID_EXT_SSE41 | CPUID_EXT_SSE42 | CPUID_EXT_MOVBE |
 -- 
 2.49.0
 
