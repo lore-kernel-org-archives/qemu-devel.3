@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82489C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B52B5C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHMSX-0000iv-9a; Tue, 20 May 2025 08:52:41 -0400
+	id 1uHMV2-0004ZH-Qx; Tue, 20 May 2025 08:55:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMSV-0000iF-28; Tue, 20 May 2025 08:52:39 -0400
+ id 1uHMUf-0003AO-0k; Tue, 20 May 2025 08:54:53 -0400
 Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHMSS-0000hH-LN; Tue, 20 May 2025 08:52:38 -0400
+ id 1uHMUb-00013Q-LS; Tue, 20 May 2025 08:54:52 -0400
 Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-30e7bfef27dso3610205a91.0; 
- Tue, 20 May 2025 05:52:34 -0700 (PDT)
+ 98e67ed59e1d1-30ecc762cb7so2331624a91.1; 
+ Tue, 20 May 2025 05:54:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747745553; x=1748350353; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747745682; x=1748350482; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NZx+To6+GeRUeSP4cgenq374zNADHJo0hk3kjG6JK1E=;
- b=iAv5IEFflmrPbvwGwVAqgT8ABtdeJv0LbiTZLHto7MNQxBpG9Ohc89JwEN+8txV6Qv
- SQ7Hihg5Johd51J6smQpvatvle6Qn9q1oX/pkqQZ4pthHDL1m/x7DK/TzBA3UanDLCkF
- yevbcd3gKH6VYISnK5fxdUnKjQnzl/gfkwbb3BvARNbF4rwABuEEhh104MtN45eyNn2I
- sYZXX4rW6REPF0Doe3EMCTwsz6c61U5R886tF5atoYBJRGtNxFyNqRZ+K4FgMgd2+Ay9
- +BYc10h3uvamJTZ0buaMY7yMjuIuio7YtmXZ6VM4ics049E4FkGhVOdGfwVeUvgydHfY
- KoKg==
+ bh=VMl+BLj6shot1+8OfcaCTtS5NXf/RyeuCk4yd6sbvuo=;
+ b=E2lYGbaXmWH+5v7FIpilWZjsivnVVMXQU+HGLbg8ihEmP3O3esilmjRsIK/SmQGmqq
+ iLIQz7k3q0dDXohHBrMlG1wkeOwt7sSLo0o0V5ti//jZqap9OydZukifGW3sNjYPM3HP
+ KouiMFKFZrQF8kEibsngmERxpQTfnMWXo1s5JDSWXXkUEtOffNheMqKd/ytbTMJ3ntaT
+ o/tAr08GYLlhhsYMCr2egDxa/GnQ9gWjNTrGS9GYSxN3upXjffGtg3J042Pfv1R+URWj
+ S+eP4/eiz26UwTFquxkPm3lawwKdTAI64W11SXj9+JsBtjPPhVjUdl9ALFLUd7HwtXVW
+ XC+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747745553; x=1748350353;
+ d=1e100.net; s=20230601; t=1747745682; x=1748350482;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NZx+To6+GeRUeSP4cgenq374zNADHJo0hk3kjG6JK1E=;
- b=MUhbZg4ubdrw7ve3tXGRkNc4qIXPTVfboORUCFmDMYuLIA7q+64o2jKP1awfePb+An
- fEx3s2wm02XIyaD0782RLKvgSIVSKjkYAnMn0MblYcAWHk9o548EboqCSlN9V4unJ6WD
- wGs8P3CCElFSNPLetwAReZupgsMF9Gp90uw6p1QX0T67Tc/JZTQFNxregaiowmfiYegF
- KweP3wZ5HtwrV1QzYf955zfe9erur9UYJ/Gz10hpBovqI4Z8txrdCjlucCdqPRmqAXb5
- pYF0n6VKtwqGB5+i3z4XyXOjsBq3ozD0aUajvzYCLDNvFd6oR+Ytt+4nvUtDTzP2TmJ9
- adWA==
+ bh=VMl+BLj6shot1+8OfcaCTtS5NXf/RyeuCk4yd6sbvuo=;
+ b=q2nlCgMcZShpZCO7ksuBxnHECtBX21dvSBupcmyn6UGCixVIu5tG6gD71WqQM5wCep
+ quhZOonh8M/tGjEjlorvgcIbl1Dzwm1AqPToHruGtrtRIZt6+Z4mQ609J5oadfjkPw17
+ 9CumSUsSWpHt7TJqE7c8aqYrlZt1ry5yI/r6N1ggJc/DNp5uPeBE291I6En9R5qHMDlz
+ Km5V8zcbN6kw/gTzbnJ7wB7FRxt70ubvjqAIgjnNPjqDirX7QzcRbmvNPhcahv7h53gI
+ aZgff52cJbrLFsaWIOPWUQjMr+qZLl4fdN3LiS9vrSX5y+wso/ThVKHdJylaALnoN6z7
+ pS8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1KtyVjyauGZ1S6RUi5LUZ7w4BMFV8tWDDYp88cT8Uyrf93VeJ9Vfr0j8mxuGCU9qQLYJ23knJiVEmVA==@nongnu.org,
- AJvYcCWfIwqEXwbxk8ff+8Uu6gzSklC+v7CaKsgSKNyDaPdRbVlGNjM0RbPKpBaX3ZcC5qHoNTrPsbB81A==@nongnu.org
-X-Gm-Message-State: AOJu0YxSNAYMlcDXGxhszIwtZ1/23rY/bCa2E93F5jK3F5gnuFjc9BY/
- YerKyo8Iny2Y6P+15eO6DQn+Xcsz9pIhpkJWJojYZ5m/WhhI0jVILE55rs8gdVAJ
-X-Gm-Gg: ASbGncvFPa1x8hLy57Y4o/fTiG79dCWK59mboPLb/w4ITlVYnCIkjbxWIB+HFgOeidL
- vl+JD2mEtTLDKyuviGrEPyvoFgScKxro/a9qk5vel0IHxCG7DsXUx+w5B2NQQJCFwrRFWlnc993
- p+lAlfaJUECmRPVq5G6RFGHYv52jGb4HlHLhKNyFZqXu6RYFiF0w46XRKamvnMIrTa1RUfyRGCe
- 0r/3uxCjPpk1OdHHQsKn8cl6ToG6/W3PbtmrRrsIfeMzukwefVwD59Td9Bz4JzQFvQDmtJSJLaC
- kd7Nfbpccr/oUA0dKcYIPXbO2zZ7BtXeb23tNw6ThHvJj6XdZLKonUXSD3EeHw==
-X-Google-Smtp-Source: AGHT+IHBlXaJvgNi8ZmIupZbQwe/gK71oK9VqvVg9wYGIpSs4wakRV4DDk3Cz065hGwWCWDovzWzVA==
-X-Received: by 2002:a17:90b:574b:b0:30a:5a9a:9fec with SMTP id
- 98e67ed59e1d1-30e830c4f3emr25133773a91.7.1747745553046; 
- Tue, 20 May 2025 05:52:33 -0700 (PDT)
+ AJvYcCV64DX7NsI6uRs03+RqjzxliIOqc9xbTpjtkuD4fLlBh9mW9R4zddM/GMfYb+79XqGjCanyRKrGxQ==@nongnu.org,
+ AJvYcCWLrZHKe2CiZGAaYxKeH5Q/CMmAvssumqQDMxDfoakSvAazj9/yXFeORKQQLk4GCNvqrHI+QH7vlFPXPA==@nongnu.org
+X-Gm-Message-State: AOJu0Ywlt3rMTk+QEi0nxj/C/X6/ZjL0cx9d9gZBvi0MH9g5OY3TIwSU
+ LmXo8kkOk1MHO7GZtuDxmh+8T96NpZPdBtvVTCvXTLfxcZbOnW1hUuJKostMGLs2
+X-Gm-Gg: ASbGncukI6QTtlzkHdbuYwNba13yx6HtIUbspFDed9jkCjSBHaNtcRzVi7PBs1n4HF5
+ s2pn43sdoMR+IRzmNNdd+zss0O/uNdNWXO/7+4LX3uiKkl45RFW6/fSLDup8D4mW7Eo+xP7moIm
+ j0Nd8wk45f2u3iwPJ5jKEf4ihVw/Hl/nQ2gJupCSdtW3qeSAGaQURICTa5jyVA2/Vogz+uDPCjC
+ 2aWqn0CyySHVLxK/WY5LIIwFye+QIcNHAj1o2anevxpjVv9AHA9RihY/7SI9iuD2Z8NONES4/OB
+ FSHneA9gGXIG32HCQRHzeFvLIID9RdjdbzoybrZKuUdrHp4qnGIKIdXmAlSCkg==
+X-Google-Smtp-Source: AGHT+IFLR9WZD1ZfyejmhDg0dIA5O+JyaV0hB93IqpSi5hqodoOEgtN1hNTLUEDuyzBJRJYgqpPyVg==
+X-Received: by 2002:a17:90a:e7c2:b0:2ff:6e58:89f5 with SMTP id
+ 98e67ed59e1d1-30e7dc4ed52mr24245041a91.6.1747745682506; 
+ Tue, 20 May 2025 05:54:42 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:1bde:8310:e993:5dcc])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.52.27
+ 98e67ed59e1d1-30f36364f9asm1625916a91.4.2025.05.20.05.54.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 05:52:32 -0700 (PDT)
+ Tue, 20 May 2025 05:54:42 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -81,9 +81,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH 03/33] meson: Enable to build wasm backend
-Date: Tue, 20 May 2025 21:51:05 +0900
-Message-ID: <cb60bb4543170eaf2f22ff7cdf206e84f1c80bc5.1747744132.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 26/33] tcg/wasm32: Add initialization of fundamental registers
+Date: Tue, 20 May 2025 21:51:28 +0900
+Message-ID: <0e9635f3bd25e31fd39eea32242101c2b847784d.1747744132.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1747744132.git.ktokunaga.mail@gmail.com>
 References: <cover.1747744132.git.ktokunaga.mail@gmail.com>
@@ -113,29 +113,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that there is a backend for WebAssembly build (/tcg/wasm32/), the
-requirement of --enable-tcg-interpreter in meson.build can be removed.
+This commit adds initialization of TCG_AREG0 and TCG_REG_CALL_STACK at the
+beginning of each TB. The CPUArchState struct and the stack array are passed
+from the caller via the wasmContext structure. Since TB execution begins at
+the first block, the BLOCK_PTR_IDX variable is initialized to 0.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- meson.build | 4 ----
- 1 file changed, 4 deletions(-)
+ tcg/wasm32.h                | 10 ++++++++++
+ tcg/wasm32/tcg-target.c.inc | 17 +++++++++++++++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index ad2053f968..c533243157 100644
---- a/meson.build
-+++ b/meson.build
-@@ -911,10 +911,6 @@ if have_tcg
-     if not get_option('tcg_interpreter')
-       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
-     endif
--  elif host_arch == 'wasm32'
--    if not get_option('tcg_interpreter')
--      error('WebAssembly host requires --enable-tcg-interpreter')
--    endif
-   elif get_option('tcg_interpreter')
-     warning('Use of the TCG interpreter is not recommended on this host')
-     warning('architecture. There is a native TCG execution backend available')
+diff --git a/tcg/wasm32.h b/tcg/wasm32.h
+index 1944249891..ab23e26eca 100644
+--- a/tcg/wasm32.h
++++ b/tcg/wasm32.h
+@@ -22,6 +22,16 @@ struct wasmContext {
+      * Buffer to store 128bit return value on call.
+      */
+     void *buf128;
++
++    /*
++     * Pointer to CPUArchState struct.
++     */
++    CPUArchState *env;
++
++    /*
++     * Pointer to a stack array.
++     */
++    uint64_t *stack;
+ };
+ 
+ #endif
+diff --git a/tcg/wasm32/tcg-target.c.inc b/tcg/wasm32/tcg-target.c.inc
+index df34097267..4b7cd784cb 100644
+--- a/tcg/wasm32/tcg-target.c.inc
++++ b/tcg/wasm32/tcg-target.c.inc
+@@ -3258,6 +3258,23 @@ static void tcg_out_tb_start(TCGContext *s)
+     init_label_info();
+     init_helpers();
+ 
++    /* generate wasm code to initialize fundamental registers */
++    tcg_wasm_out_op_global_get_r(s, TCG_AREG0);
++    tcg_wasm_out_op_i64_eqz(s);
++    tcg_wasm_out_op_if_noret(s);
++
++    tcg_wasm_out_ctx_i32_load(s, env);
++    tcg_wasm_out_op_i64_extend_i32_u(s);
++    tcg_wasm_out_op_global_set_r(s, TCG_AREG0);
++
++    tcg_wasm_out_ctx_i32_load(s, stack);
++    tcg_wasm_out_op_i64_extend_i32_u(s);
++    tcg_wasm_out_op_global_set_r(s, TCG_REG_CALL_STACK);
++    tcg_wasm_out_op_end(s);
++
++    tcg_wasm_out_op_i64_const(s, 0);
++    tcg_wasm_out_op_global_set(s, BLOCK_PTR_IDX);
++
+     tcg_wasm_out_op_loop_noret(s);
+     tcg_wasm_out_op_global_get(s, BLOCK_PTR_IDX);
+     tcg_wasm_out_op_i64_eqz(s);
 -- 
 2.43.0
 
