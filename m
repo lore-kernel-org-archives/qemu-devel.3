@@ -4,89 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E70C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 12:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5284C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 12:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLtc-0008C9-G0; Tue, 20 May 2025 08:16:36 -0400
+	id 1uHM4O-0001oP-40; Tue, 20 May 2025 08:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uHLta-0008Bm-Ps
- for qemu-devel@nongnu.org; Tue, 20 May 2025 08:16:34 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uHLtV-0001Z3-Bs
- for qemu-devel@nongnu.org; Tue, 20 May 2025 08:16:34 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43ce71582e9so44894015e9.1
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 05:16:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1747743386; x=1748348186; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=HO/OrTsRI4p9tXH5hOvU9I/gpjQf9bZBJeHuWpqaUKg=;
- b=YjKKWv/hp97pwg/FusvnTehxt9Haq9NMxCP814ISaZvVqoeqlvKEk18bpFi5UbcZ1K
- RNA2xSexXc3U5FjmI4GuvvF+6Nd/yJqLIK68gcWh57UkszHSu93cdSzZUBIc/in+lDTr
- 5zXtLH6liX5hNrHH0POOEnHm8qick9ZNwKdK3dwl01eaDPyE6R83dKAwiBgC6Bs9y8Tj
- wNvB1BRGzyXuTuFXJinW5KvEtN9zux5/5JLTgZa5tr9a667N5AOjB41OE85eTmyS9NoL
- wtkAmA9VH/XVhpCVCfhGh58+bmG3N4OBhLSdgnt/5hw2OQe4yJXLlPz1w1ZpuH9Y+6Sn
- 3NIQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHM4L-0001nf-Qy
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 08:27:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHM4H-0003qs-5O
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 08:27:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747744052;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Q0uBJKtqFG9aeHfU7/cQsmz2LcB1zU9PRX24VkaEuyU=;
+ b=Y+M/fY/l+1RvlzSR6vVwXauaNl0ljS7ZLng+XNjInqqT1GcH9HFqORs+HQyUErKKMJyx+6
+ hDOksjAWsoxzWah0mvP+28R9hVwWOIBeg1oYjfeZi9ou0to39BgzqB0G7WuyvhXJTunC4M
+ NUW9TMITUxssAtPTW+oYwFOk20wPql4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-114-9Lw8lASsMWOwLH27p39L4g-1; Tue, 20 May 2025 08:27:31 -0400
+X-MC-Unique: 9Lw8lASsMWOwLH27p39L4g-1
+X-Mimecast-MFC-AGG-ID: 9Lw8lASsMWOwLH27p39L4g_1747744050
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43d4d15058dso12016845e9.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 05:27:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747743386; x=1748348186;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1747744049; x=1748348849;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HO/OrTsRI4p9tXH5hOvU9I/gpjQf9bZBJeHuWpqaUKg=;
- b=AGF7LFmyR7gCTGVWATMrP/q76VByoYrrpcWy/ilgWEGeF61uQSxZfxeBfYDevQ0Idc
- LITuB+NXci6sLiEq6OpXNV2SC0sGqzUxorNkcgosGtHUKiZqgpt87uUJqvJpYKct59fj
- fDdZQH2Ybt2eLJcKISrntSq4jRtTZMSegvvVR/RPlJHVScTDk0C44hRoFFYp8STTpDRo
- FHKrUtCik5DuTIQVjxevSBi5MuF/vDdLyLYLk6KeOi3cWRm55y6PTMbkO4+A2CXhljGt
- VLePgHELwXaT9DFgNJFi4J/D5dE0a3Euwh9PVfCeM6Gr/UWwzsbx5rsNf6U/vhuyFHF1
- 8bMA==
-X-Gm-Message-State: AOJu0Yywjw1/G4J/+R9pm9okBaVALAX7Qn3lCLhUNdU57t2xB58IZC5v
- BX3n/vgxDysvZeBrMeX+esWV2i5Q5D+1l6dh4FEwf/KMmRPhBZNu0U3l3pc6Can2xqg=
-X-Gm-Gg: ASbGncvYZt+JtlOurF2uqU1KT9udcC8ug1dIyR5pdEVNtWkn5AzPdkTWi0nqqnrP5pd
- N7i9j4hPZswi7PE7AH/jWt4kZtyxgQVxK7l2tb5ogH8YvHp95ybpPtzL2gu+9xKFF2Ni9V0RXRP
- zg+iIXzdbEwBHevasGTHJFHD+75LQgBhDWNe/UWeSpnaSR2t7kmB7da2uPk+H/YLm9La7cdohdS
- 1njJMTpgAG2F8omoLdKx7mkJGovO3yZXzFwC92vUPiFvvTr2xqIdK3Ix4P0UeluS/dOmdHozhzX
- Yd879IbUEUNElB8XGu/P9MGBSSUt3MydK0yExXg=
-X-Google-Smtp-Source: AGHT+IH+vbqiGv7IhAZbtEHpscm9CWbStdtuoVE2lDQPdAC8C7CGt+n+MVm9yBpSIxq0oWmjZZQfpQ==
-X-Received: by 2002:a05:600c:64cc:b0:43d:82c:2b11 with SMTP id
- 5b1f17b1804b1-442fd664f7dmr135228345e9.23.1747743386544; 
- Tue, 20 May 2025 05:16:26 -0700 (PDT)
-Received: from localhost ([2a02:8308:a00c:e200::ce80])
+ bh=Q0uBJKtqFG9aeHfU7/cQsmz2LcB1zU9PRX24VkaEuyU=;
+ b=H4MMXLp0xUW6XoMWBUW8Q9A7trrTl4zXNPx3WZjoQ1F24TG1D/EWzZ2V/CdpoNuuvb
+ BhboS0WHOA+OHMx4r5FPiFdd02dAyW12GkqTSSmcDgArkNUL2KmclHFPdXMqYZuqYkd+
+ j+4pYHfkIh2AeFwBv68ndGwaxKjnCBeuE2qaBrM16vgcAVGStjYCsDsM9fUxA8S54JRE
+ uimyIHPa2a0nbFIht/xbqhpkgWfUrHz26uZ03cENwbC0H9orUe0NT9BMEue6QHyfSBbB
+ jgfV2FTNYXg0Qk6kxEiifEhqzLAI6syCyrww+xcuPUaOTMaS/+v5pAC887pM4OxsIbJO
+ PySw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUY+CqfTZvrpPmW+QMaOChqv7bYdFg7td82oP59GIJICTh0bHtGw1plBph1SsDPRAS1JNfLWrSFs9dL@nongnu.org
+X-Gm-Message-State: AOJu0YzZJgX/OmaX16WRjY0r12Z5A5MQGYpM4Ibdly6sFoyVHi9f86/m
+ /Xcwas6lr0qEkTl7Ze0+/NvDJ1WWq65HRmqE7hQvaeekd9dbKs3o1lX70BM0GF0lfC+s0CgBhvL
+ xtPN3UB4gzAgZ0N1ExeW9zLUu3EwYKAbnekDOPcRoseDX60cd1Nv9ujt53iK2mgZm1TM=
+X-Gm-Gg: ASbGncu7O5vxk4GBVVVS//0BvxdWs95mzxIRNtqdyjLjaLXKDh6RWQ2oTW0xJXSHVw6
+ 0rMtakVB6lGQ6/kphBblrE1/jwEhr8/XwMS/giTg3P+stu9gQGsvrc2ojst5A6Pl+jCme+WDk+y
+ LB9LhzAMcK+zCLxdvJj2cPsTwLaJSUgRgxGwgD8jcYjPt9kWEr/gl001gvE5av0kHnt85kZzRwF
+ NANTpHuf3YTPK/onbaE/Gj4cTv06vt3NxlTEO/fsdhqpbbYgNoO2D6fatgfVHxr8tUpgupwWgAp
+ WNetjr1s5VcVEYjpZMHJ1SBYnmKqzARYcyTypmunbQdkIowQ/w==
+X-Received: by 2002:a05:600c:64ca:b0:43d:47b7:b32d with SMTP id
+ 5b1f17b1804b1-442fd664a1emr122290155e9.25.1747744049578; 
+ Tue, 20 May 2025 05:27:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4XQdNFIo1gLFzm1v4r/fI5vpQsXc2dPZdMdng5IXeMlGPS2pDIO2MHEr9uARBvpvUhRFJEQ==
+X-Received: by 2002:a05:600c:64ca:b0:43d:47b7:b32d with SMTP id
+ 5b1f17b1804b1-442fd664a1emr122290035e9.25.1747744049242; 
+ Tue, 20 May 2025 05:27:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f6f0554fsm28650305e9.9.2025.05.20.05.16.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 05:16:25 -0700 (PDT)
-Date: Tue, 20 May 2025 14:16:25 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Meng Zhuo <mengzhuo@iscas.ac.cn>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-Subject: Re: [PATCH v3] target/riscv/kvm: add satp mode for host cpu
-Message-ID: <20250520-6662f98a85c2e458d732887b@orel>
-References: <20250520104103.89736-1-mengzhuo@iscas.ac.cn>
- <20250520-317e19aeb55fa93e30941e63@orel>
+ 5b1f17b1804b1-447f7d975f4sm28601675e9.39.2025.05.20.05.27.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 May 2025 05:27:28 -0700 (PDT)
+Message-ID: <cac28777-c881-4ec5-b49a-8293019b1d33@redhat.com>
+Date: Tue, 20 May 2025 14:27:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250520-317e19aeb55fa93e30941e63@orel>
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 31/42] vfio/iommufd: use IOMMU_IOAS_MAP_FILE
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
+ <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-32-git-send-email-steven.sistare@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <1747063973-124548-32-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,120 +160,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 01:58:45PM +0200, Andrew Jones wrote:
-> On Tue, May 20, 2025 at 06:41:03PM +0800, Meng Zhuo wrote:
-> > This patch adds host satp mode while kvm/host cpu satp mode is not
-> > set.
-> > 
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2931
-> > Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
-> > ---
+On 5/12/25 17:32, Steve Sistare wrote:
+> Use IOMMU_IOAS_MAP_FILE when the mapped region is backed by a file.
+> Such a mapping can be preserved without modification during CPR,
+> because it depends on the file's address space, which does not change,
+> rather than on the process's address space, which does change.
 > 
-> Please provide a changelog here. I had to go reread the comments on v1 to
-> guess at what might have changed.
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>   hw/vfio/container-base.c              |  9 +++++++++
+>   hw/vfio/iommufd.c                     | 13 +++++++++++++
+>   include/hw/vfio/vfio-container-base.h |  3 +++
+>   3 files changed, 25 insertions(+)
 > 
-> >  target/riscv/cpu.c         |  3 +--
-> >  target/riscv/cpu.h         |  1 +
-> >  target/riscv/kvm/kvm-cpu.c | 20 +++++++++++++++++++-
-> >  3 files changed, 21 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > index d92874baa0..a84edd3a3b 100644
-> > --- a/target/riscv/cpu.c
-> > +++ b/target/riscv/cpu.c
-> > @@ -433,8 +433,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit)
-> >      g_assert_not_reached();
-> >  }
-> >  
-> > -static void set_satp_mode_max_supported(RISCVCPU *cpu,
-> > -                                        uint8_t satp_mode)
-> > +void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode)
-> 
-> In v1 I suggested we add some sanity checking to this function to ensure
-> we can never set an invalid mode (one that's higher than the max
-> supported).
+> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+> index 8f43bc8..72a51a6 100644
+> --- a/hw/vfio/container-base.c
+> +++ b/hw/vfio/container-base.c
+> @@ -79,7 +79,16 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>                              RAMBlock *rb)
+>   {
+>       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +    int mfd = rb ? qemu_ram_get_fd(rb) : -1;
+>   
+> +    if (mfd >= 0 && vioc->dma_map_file) {
+> +        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
+> +        unsigned long offset = qemu_ram_get_fd_offset(rb);
+> +
+> +        vioc->dma_map_file(bcontainer, iova, size, mfd, start + offset,
+> +                           readonly);
+> +        return 0;
+> +    }
+>       g_assert(vioc->dma_map);
+>       return vioc->dma_map(bcontainer, iova, size, vaddr, readonly);
+>   }
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 167bda4..6eb417a 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -44,6 +44,18 @@ static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+>                                      iova, size, vaddr, readonly);
+>   }
+>   
+> +static int iommufd_cdev_map_file(const VFIOContainerBase *bcontainer,
+> +                                 hwaddr iova, ram_addr_t size,
+> +                                 int fd, unsigned long start, bool readonly)
+> +{
+> +    const VFIOIOMMUFDContainer *container =
+> +        container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+> +
+> +    return iommufd_backend_map_file_dma(container->be,
+> +                                        container->ioas_id,
+> +                                        iova, size, fd, start, readonly);
+> +}
+> +
+>   static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
+>                                 hwaddr iova, ram_addr_t size,
+>                                 IOMMUTLBEntry *iotlb, bool unmap_all)
+> @@ -802,6 +814,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
+>       VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
+>   
+>       vioc->dma_map = iommufd_cdev_map;
+> +    vioc->dma_map_file = iommufd_cdev_map_file;
+>       vioc->dma_unmap = iommufd_cdev_unmap;
+>       vioc->attach_device = iommufd_cdev_attach;
+>       vioc->detach_device = iommufd_cdev_detach;
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index 03b3f9c..f30f828 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -123,6 +123,9 @@ struct VFIOIOMMUClass {
+>       int (*dma_map)(const VFIOContainerBase *bcontainer,
+>                      hwaddr iova, ram_addr_t size,
+>                      void *vaddr, bool readonly);
+> +    int (*dma_map_file)(const VFIOContainerBase *bcontainer,
+> +                        hwaddr iova, ram_addr_t size,
+> +                        int fd, unsigned long start, bool readonly);
 
-It appears [1], which I just learned exists (that series doesn't CC
-qemu-riscv) adds an assert for the check (among other changes).
-
-[1] https://lore.kernel.org/all/20250406070254.274797-3-pbonzini@redhat.com/
+Please add documentation.
 
 Thanks,
-drew
 
-> 
-> >  {
-> >      bool rv32 = riscv_cpu_mxl(&cpu->env) == MXL_RV32;
-> >      const bool *valid_vm = rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index b56d3afa69..d7136f1d72 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -915,6 +915,7 @@ char *riscv_cpu_get_name(RISCVCPU *cpu);
-> >  
-> >  void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
-> >  void riscv_add_satp_mode_properties(Object *obj);
-> > +void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode);
-> >  bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
-> >  
-> >  /* CSR function table */
-> > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> > index 82f9728636..18fbca1a08 100644
-> > --- a/target/riscv/kvm/kvm-cpu.c
-> > +++ b/target/riscv/kvm/kvm-cpu.c
-> > @@ -999,6 +999,23 @@ static void kvm_riscv_destroy_scratch_vcpu(KVMScratchCPU *scratch)
-> >      close(scratch->kvmfd);
-> >  }
-> >  
-> > +static void kvm_riscv_init_satp_mode(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
-> > +{
-> > +    CPURISCVState *env = &cpu->env;
-> > +    struct kvm_one_reg reg;
-> > +    int ret;
-> > +    uint64_t val;
-> > +
-> > +    reg.id = RISCV_CONFIG_REG(env, satp_mode);
-> > +    reg.addr = (uint64_t)&val;
-> > +    ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
-> > +    if (ret != 0) {
-> > +        error_report("Unable to retrieve satp from host, error %d", ret);
-> 
-> This will output "Unable..., error -1" on error. We should output at least
-> the errno and preferably the errno string. I see that this is just a copy
-> of a pattern used throughout this file though, so we need a patch fixing
-> all of the ioctl call error_reports.
-> 
-> > +    }
-> > +
-> > +    set_satp_mode_max_supported(cpu, val);
-> > +}
-> > +
-> >  static void kvm_riscv_init_machine_ids(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
-> >  {
-> >      struct kvm_one_reg reg;
-> > @@ -1302,6 +1319,7 @@ static void riscv_init_kvm_registers(Object *cpu_obj)
-> >      kvm_riscv_init_machine_ids(cpu, &kvmcpu);
-> >      kvm_riscv_init_misa_ext_mask(cpu, &kvmcpu);
-> >      kvm_riscv_init_cfg(cpu, &kvmcpu);
-> > +    kvm_riscv_init_satp_mode(cpu, &kvmcpu);
-> >  
-> >      kvm_riscv_destroy_scratch_vcpu(&kvmcpu);
-> >  }
-> > @@ -1980,7 +1998,7 @@ static bool kvm_cpu_realize(CPUState *cs, Error **errp)
-> >          }
-> >      }
-> >  
-> > -   return true;
-> > +    return true;
-> >  }
-> >  
-> >  void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-> > -- 
-> > 2.39.5
-> > 
-> >
-> 
-> Otherwise,
-> 
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+C.
+
+
+
+>       /**
+>        * @dma_unmap
+>        *
+
 
