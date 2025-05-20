@@ -4,109 +4,209 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61E38C3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 14:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7CD1C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHOQ9-0001IJ-LD; Tue, 20 May 2025 10:58:24 -0400
+	id 1uHOWf-0003GJ-Sq; Tue, 20 May 2025 11:05:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uHOQ6-0001Ht-BQ
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:58:18 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uHOQ3-00010L-U4
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:58:18 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id AAE6B2075D;
- Tue, 20 May 2025 14:58:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747753092; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zc0NXxGaHDQilt4Hjkb52J4hyjntzmNysUNSSQjbnqo=;
- b=A8M1a7bwJxwIEh4Ra+2PT47u9pCkyPCtuqtOE0cuKSCu74yVAy7v8zMmcLWkwspusIQ5Bw
- 8PLpmLtNJ//yTYR9NKtYnf9+Fn3qqzpetlB0cIeFshX+lMYA2l0bigKa0GjBKggFDs7c6U
- TEz5ksB9fODTQgYOg1n7AChMxR9a+v4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747753092;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zc0NXxGaHDQilt4Hjkb52J4hyjntzmNysUNSSQjbnqo=;
- b=1dWi5dCgt+HWmo4tnRCmUdlzsqGkWf38Gkgg+opPpUWnaP7YqO7TJ4HdBM1EU3gwct+MUD
- BgazlstvBGpnd9Ag==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747753092; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zc0NXxGaHDQilt4Hjkb52J4hyjntzmNysUNSSQjbnqo=;
- b=A8M1a7bwJxwIEh4Ra+2PT47u9pCkyPCtuqtOE0cuKSCu74yVAy7v8zMmcLWkwspusIQ5Bw
- 8PLpmLtNJ//yTYR9NKtYnf9+Fn3qqzpetlB0cIeFshX+lMYA2l0bigKa0GjBKggFDs7c6U
- TEz5ksB9fODTQgYOg1n7AChMxR9a+v4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747753092;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zc0NXxGaHDQilt4Hjkb52J4hyjntzmNysUNSSQjbnqo=;
- b=1dWi5dCgt+HWmo4tnRCmUdlzsqGkWf38Gkgg+opPpUWnaP7YqO7TJ4HdBM1EU3gwct+MUD
- BgazlstvBGpnd9Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1530013888;
- Tue, 20 May 2025 14:58:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2jdlMYOYLGjcLAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 20 May 2025 14:58:11 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Jamin Lin via <qemu-devel@nongnu.org>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Laurent Vivier <lvivier@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: jamin_lin@aspeedtech.com, troy_lee@aspeedtech.com
-Subject: Re: [PATCH v3 00/28] Fix incorrect hash results on AST2700
-In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
-References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
-Date: Tue, 20 May 2025 11:58:09 -0300
-Message-ID: <8734cz72im.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1uHOWe-0003Fi-Gl
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 11:05:04 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1uHOWb-0002TA-ST
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 11:05:04 -0400
+Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54K9twWJ009877;
+ Tue, 20 May 2025 08:04:59 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=32+Qwyy4PKCdAlU1XbkR2tPxH1dX91rBCeR80BoBB
+ kI=; b=c3Ky8YZE8toL/MV65d/c5dBNf9d6UiMwFCbc/cmXlLWrD7ZJ0TWV0/smZ
+ Io3WV0C6VYUvpAtz1u5hxbp5okxEW/V+uLg6NGaU4LWgTakWrqHWzAQQIBqMVLpU
+ 8npGtRuM4H/5NDpR0pyEuNnPXS+r2QbcsRB98C46pJsNnIFYqU/TiYTqnaFUcmav
+ rNUGYZVtYAoZtf/mVWMGT/Yhx3+8OTgj3Td6+EsOWzaWaE4eAsI40XtRQC7kEL7P
+ GELI+LCyRaGQ/OcOtFWrGnBz9Tiy6PxIC4alx62yeE6ZaI/uXSUDqddEqqI4nm2A
+ 37iRGwtPIYAnLQl0x/f2ekXH22hLw==
+Received: from nam02-bn1-obe.outbound.protection.outlook.com
+ (mail-bn1nam02lp2040.outbound.protection.outlook.com [104.47.51.40])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 46rcm2hydv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 May 2025 08:04:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AE1toe9joHa0PQWMCEwATSK5kyBWzzcXD7tMXxoj+oTiyIfqiCeoK3wL8bvL5CVz1twuh36/xmiZsulMHXkGJ+AjwGxmVJvzKjlQtyTIxDiRVjlMGj7wImrb8xAb/FU6gAnE2kl77UCaKQZJY5tz0/p9sasHgBGl+mohdF4f/ysSZq85leLC7c/wA42U/8l/69qPDU9cTX6aVy2iLq0zdEbJiwFYSp0M4lNSlx/OP2ljUCJlclMB3iatykUBVXqD47kTI07P2qeuCnHQyOrzKR+PaZ659JenHiaU/1Lq8iicG74gNNRvFg3Y5tv99iBV3LjXXrFDHwWuA/GDVCv3DA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=32+Qwyy4PKCdAlU1XbkR2tPxH1dX91rBCeR80BoBBkI=;
+ b=KI9sLIlH4DNQg5Ll9ZUdJWt/HXdDmHrSpe5bZfdNeLYBltnbh8CPCD3EmkP0CoyN6Z+svKJHmjEU8VstBMSJDoHqZKJ5yKLH2CYNwFIJWUcKgqAuSto1q5X1bB3zvaKuYM7YDSSKwEcsJyRb6FuvaG2Ui6WvuiPOqk/0QMHnmkCJPBQBpx6Jnzo1W/NzKyvd6TPNiwjb8dGZNXs0ZtxrcxsWYG24vAwMsk+WhXB6PPXHe7CIvRxNmkAxl8e2sJprUF7IJG+VgFy/P5BnoRI8b1ZvQljZkZ9E/GEzT+FB7a0f/Jf7qsqg2q6S6UIX75Y2ytSl1kVifFEP6n972rpPMw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=32+Qwyy4PKCdAlU1XbkR2tPxH1dX91rBCeR80BoBBkI=;
+ b=U6GLXb219zhgPk4zW4H+GYe0VBKyfbRT56ABGVsZ2Vh4u+kEY4jtxU6ALOmTig3ZZm3HXIWOMJW+P0yAGyrtZpcw2eOt3UQGG0fL0Du9PCTXLMvCbX6wKvlopexoky1kF7VxxTI8BjLhpPTwb5xs00OV9r7orhsjBYTIjAPkUX/n45GTbTB3nq39Ood1KvCctCu6vT2iEV3u63Y7ueAESdhZfrxLfMujhAAE1DZI64JJijh6hzy07hlmpVnnkHYMFo4C9XM917tSmUexX/ktAbIPd5hIvUmzlI7uA2+VHJHmVfKiMyeoqCutrF6wWrq66oQr1ibaOMMo5Sdt1zwL4A==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by SA1PR02MB8462.namprd02.prod.outlook.com (2603:10b6:806:1f6::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.23; Tue, 20 May
+ 2025 15:04:56 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8769.016; Tue, 20 May 2025
+ 15:04:56 +0000
+From: John Levon <john.levon@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Levon <john.levon@nutanix.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+Subject: [PATCH v2 13/29] vfio-user: connect vfio proxy to remote server
+Date: Tue, 20 May 2025 16:04:02 +0100
+Message-ID: <20250520150419.2172078-14-john.levon@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250520150419.2172078-1-john.levon@nutanix.com>
+References: <20250520150419.2172078-1-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: AM9P193CA0021.EURP193.PROD.OUTLOOK.COM
+ (2603:10a6:20b:21e::26) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,ast2700-default:email,nongnu.org:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_TO(0.00)[nongnu.org,kaod.org,linaro.org,aspeedtech.com,gmail.com,codeconstruct.com.au,jms.id.au,redhat.com];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[13]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|SA1PR02MB8462:EE_
+X-MS-Office365-Filtering-Correlation-Id: f1ae6d28-0ba7-416c-5a28-08dd97afaef1
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?L1RuM0xJTDhPdDBjUVBubGJ1SUNnUnd4UmhwOHpTd3NlUVlmV1Foa1ROZHRX?=
+ =?utf-8?B?NlJZckpZRGw4S2lGT3lJSHg0eUpRNFN0ZlExZ3ZDRE1mOC82dk1tbXBRS1R0?=
+ =?utf-8?B?WDUvVzBFeW50MGZUd1BWR1ptVksvQUExWUFjT2wzL1BNbFdPSW9iMEdjSlg5?=
+ =?utf-8?B?eWFzUHlPcVA0Zi9WLzkxOEloRXloSWJFZmYyc09CN0k3dXd4NlFJZTEvT25p?=
+ =?utf-8?B?bWdQMVY2Njg5alNLZGNaVGVldWxqZGhxalJBdnRKL29wVW5YWk10WFUwQnJJ?=
+ =?utf-8?B?Mk51YTBjMUxEK2Q2NmliTC9IK0E2Wko4aWNLTERyU3NtWGh0YUdwZmRoT2Zl?=
+ =?utf-8?B?OU1EalNoTC9BK3ROb1ZGd0svNE5uc3V5ekZPQmdGTm0vanJHb0xjTE5Ycnhk?=
+ =?utf-8?B?Tk9Va2tGclp6T0tGbnU3cGwxdVd3ZFIrOHRwNm8ybkM1Rmg5SzhYa3BQNmFY?=
+ =?utf-8?B?K0FWS1Q5UFNxbkxZalZMMm04YXVpUURzUTFSanpqTWQzWXl2eU1pSmdxejgw?=
+ =?utf-8?B?MVdOS09wOXhMbm1lWDlYbndLYWExTEVWcUtjUVAxTHlvaW4zT3o3YzZIYkth?=
+ =?utf-8?B?TDhHcU9oYjAyWnppTXJXdFRXZk9DSkg3TkNwKzdLZjk0ZHVVTk5TWkhpdFdR?=
+ =?utf-8?B?M3B6bFoyc29OR2RoQmhHUWwycm45UEF4Smhid09ISldFUWhNUmNlYlNqL0My?=
+ =?utf-8?B?U2llTHhaMVU0UGhEYkN6bFdIaVBKOVBLdTdyNTE1MkVHNEhpRGFOZHd0c2hm?=
+ =?utf-8?B?b29QVzh4WDFEQmp6TzJFTUVnYVpCbGhJeDB3RGlHN0g2WW04Ky9zZUo4eGFQ?=
+ =?utf-8?B?QTllcitENzhuOHBTbHpQNTBjL2NOU1BjRy9xQVMxNVlzSkgwUjNRMkRNWUhU?=
+ =?utf-8?B?ZW9HMGhudE1iR09tckRvUERoc0FYQk92T0w4ZmpOdW9wS3p2QzlDNmZZRjla?=
+ =?utf-8?B?MHA3VlpaRzdQeU0xc3ZtNytrVkxCR3N2SkdCQ2ovOUZVN1Z3UGtWWGJyMlhP?=
+ =?utf-8?B?TWFTb3QwM09QTVhlcjFWK2VjNTJaMUdaNmR5UEkwckVZQUxSVklTdGpRMW52?=
+ =?utf-8?B?NDZWcXMrTWhNUmZ2Q0NwUksrUVB3Zm9mOW5mMmV0bVkwQllxMlRuOHVwM244?=
+ =?utf-8?B?YjY5dURldi9PVnpYMzB5eHhvcTg1YlM3aGdGcndvOWlYZzA5WFFlL2pGVWty?=
+ =?utf-8?B?Sk03eURRMkhtUGFNcXhVUU1PZGJRMmhaMWNoVWYzQ2lMSVdEeXlGbkx3aTlB?=
+ =?utf-8?B?NGdybTJxZm1zRjlSM2F1YXNLRU41VUZjazQ5TWx4Nnd0MnRqZjhjWjRObWlO?=
+ =?utf-8?B?UzZwSTcweGc2aUxqMjNTRmgrcWRyaXQ5RnJ0eEd5OEpJNlZQQkxmVmVoTnMy?=
+ =?utf-8?B?Y0FtNFJDOHRyWWhKcytrVVVMOG85U1QwazI2KzhQdjNqNUdkSUxUTE11T1la?=
+ =?utf-8?B?VjdXVm1sWDA1QkNyejlaMS9yTm1Mbkg5bUJndTZQcUZpM294TncvUE81Vi96?=
+ =?utf-8?B?dFJmOEtRNndoUFZOQndLK2ZUVXdnbzNjQ0V3ekc2YjRRQk9YTHVndnM4eXBx?=
+ =?utf-8?B?cTBLaGtzM2Q4TFhjTkxSRU1xZ3IrQ1FmN2E3UUttSGpOa3IwOC96OHdvajdL?=
+ =?utf-8?B?dCtkWGhHdFdMU2d1RkZweGZ4K0J6R0cwSzVOcGFTQVpWR0ZVTkpHb09sdmdK?=
+ =?utf-8?B?SGdHUjRtL3BkeGJtM00zOUk0SXZlWTN3ZE5jbnN4dHF3Y2pFNEpFY1RIdnFC?=
+ =?utf-8?B?ZlAyWHdnelVVL3ozbmlPWE1TQlJxWmlsaFRpRmF3N2lIaTBYcmZGaWx0Y2Zv?=
+ =?utf-8?B?YkkzWThDNWVTSUdnY3VxUitOcE1oRWcybEwyVEFjc2dGd09QT2F3Z2F5WGxm?=
+ =?utf-8?B?TEhhQ1d4V3J3VmdQbmx6SS9PNmwyYVloUjdvbUduSWlFQlp5dVpBWGlkcEVD?=
+ =?utf-8?Q?19tZebXJSh4=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ejk4K1JLbDR2T1VBM2RGNExBOU1JNkxHT1hlVFV6SmJyVERuVUdVRWU2OTRK?=
+ =?utf-8?B?ZEdRT1pQQUFPQmtHckcvcWd0MVMyMDQyVmJQZllvVXcwd0h5Mlh0ZVlmdjZh?=
+ =?utf-8?B?L29GQk1WekxhdTlGb3J6NXJFZEY0SzFiVnNpaTJ5cWlOODVKT3lCbFl6Q25U?=
+ =?utf-8?B?Q0UxdUxBbkp4Sk1XVm14ZU54U3dTSmRIQVoxVHpyZEpJSnZ1QjM2eFdESmJl?=
+ =?utf-8?B?dWIwUDV6MFY5NGw4R3pLSFVZNzRERU1FYUkwaFA5R21BUFVsREtvRDhQeFFB?=
+ =?utf-8?B?UVMvdkR1b2RlaG0xRUdQMzdyZW5LVXZMNko4RzZjb0FNRXM3UEVPam04RFoy?=
+ =?utf-8?B?djlodWtKOXhvVGh0NzJ4eGJqL2FXbHk3TURMblhIaDQ1R040ZGlCdkU3Zkxx?=
+ =?utf-8?B?M0U1aENxS2VjSnNyWENxUzd0NTZBaWZOOWltcHJQaG51NUcxemQzV0lIU3Zq?=
+ =?utf-8?B?bnpRZ1dnV3QxWEthQ2dSRWNWU2lNeXc1QUViVGhmK1Y3RVdZY0JkVHNCVEYw?=
+ =?utf-8?B?dE9XSXZjMEE1N2tvaExXWldUV2d6a2hjci82aGdUdXJDcjYycWJtV1RYMG03?=
+ =?utf-8?B?UVNXbDFxczRlVFV5VThhUDBUK1c3NG5wbFIxdUhUSXZCSFJyOWFXRVdIVlJU?=
+ =?utf-8?B?eTdURlU1RmRpc1FaOEk1bGtrNmJrKzV5YW5CbE83aER0U2EyYTJueGZxaitZ?=
+ =?utf-8?B?ZnErT25UK0h1Z20zWHZ2dkp5REswRUVuekVwOXozZEt2b3U2TTgzeWhZdTBC?=
+ =?utf-8?B?YTlnS2JzZ0ZNV3d6V05WT1JMK2ZHT0NMVXovZGs1R1JWZzBMUFNxWnNZbGox?=
+ =?utf-8?B?UnpTOGo3UE1BQ1o5ZHl0eGY1V2JHVStuaUJ5akR6V3Zxaml2UXZEVEs1bDRi?=
+ =?utf-8?B?bE1FSEZFbHVTczdsM29DUTJFZmN2bUoyRkdvRjY1RUFrNjRidnhDbnJwRUpi?=
+ =?utf-8?B?NGVobnJOQkQ0NUFQYk0wTnRtTTlWeVBldTI4bUZDQmFrL2VhNmZuYnBFVEZS?=
+ =?utf-8?B?YllTL2J4M1N1dzR4YzVKeWd1OUE5MzVQTlEyb1NrVXJ6bjFYcWwycTc5Y1NV?=
+ =?utf-8?B?c09VQ2s2Nk4wMDBrcXZaVnlkWVlSdnFYUXFkQzR5YnU1aTlnano3VEtMaWRW?=
+ =?utf-8?B?TTBWc2RNOEhqMlc1eFV5VHJZV3psS3c5aVFGb0tFTFRZWFJGcFhDTTNKQXVa?=
+ =?utf-8?B?ZEdwWFEzaFhIUTJZRW90TDFOelVkZUVYR2JxWm1TRDRrcjdvbnpSMXBQZjRt?=
+ =?utf-8?B?WXFKMGVUK3ROY1Z3ajgyemkzZm9VNDVpQVhjb0Y0Y1JmcGQwb0pBMjJmWHVa?=
+ =?utf-8?B?TmMwTTJHUnp5SXlCcGZXNGxiaFhxdWN5akI5REk5UzNUSHdXemtlc2Mzbmtz?=
+ =?utf-8?B?K0hNeXREM3hLSW02VHMwbHEzOEt6bjV3R1hBc2tnOVZ6Zzh2Nnh4Z1dFQkQx?=
+ =?utf-8?B?ZGVUUFBjKzl2ZGVpT0RqRFROUE9nNVVINXdweEhsZkEvT0xpY2N2bkNLU0FY?=
+ =?utf-8?B?em52RjcyUjBsUDJlbFF4cGhrdE42SGtFKzBEV3RiQmxpcEY4K0xYTWp0enh0?=
+ =?utf-8?B?d2Jzb3ZjRnZQNnVrZ1ppVkRxdWxWTk04UURDVS9FTnhoa0JLRkVoTDd1NEtT?=
+ =?utf-8?B?d0xUTCtMU08zV0dZc1dXZVlDZHcyVUFuVXVVUlBzME5Fb3BYVlpqZTlUejFu?=
+ =?utf-8?B?QmtKbHRoZHZMbW1qY1dySy9wMzlSVGxFbWJMdVBJaDJLbXBpTmUraDBySDdX?=
+ =?utf-8?B?anVKU0NEMGtHWHI1V2VVSXZKb2JiRFhmdTFZK0tNVTdUQlBRQXZyZXVVRHdX?=
+ =?utf-8?B?Ynljdm5LcWUrTkdkY2tRYWtRYjJGQWVranVjWG9PNmhEKzV3N21rdm5acXVW?=
+ =?utf-8?B?RWcvUk4xRXBidnBEbzFKYi91ZEpHQndiZHRpc015TGhRYjJSMklQUTJMYnl4?=
+ =?utf-8?B?RUJoVmNleUpvMnVRa2VDWGZmbDQxUkpibnNORVN6S2UxOVlzVW0yTHFITEh1?=
+ =?utf-8?B?Ri92R2hzK29jNjNqeGdvRTZaQ1JPZnh3blIxWjJXeUtlUHlXNHZCNUtUclVF?=
+ =?utf-8?B?Vk5qdWZ2c1RDNUp1SWRXRE5pOHRWQ090SDhzUXFQNVV2QWp6c1JZVEVpSE5E?=
+ =?utf-8?Q?ozSqGgcQtoqNQddCn3LRm8RHz?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f1ae6d28-0ba7-416c-5a28-08dd97afaef1
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 15:04:56.8222 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Vi2COFyQv5gwpTv448kbl/ysJZv1j+CYqF6qyfZOrf1MK2cjs8LCwkmFOR25ytY9Wg4Q8pi4XjNaI7ZptRrs5w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR02MB8462
+X-Authority-Analysis: v=2.4 cv=HZoUTjE8 c=1 sm=1 tr=0 ts=682c9a1b cx=c_pps
+ a=UtaLnOzkojfj4BVWksq/2g==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=0kUYKlekyDsA:10 a=yPCof4ZbAAAA:8 a=64Cc0HZtAAAA:8
+ a=vhHEnE-nI2wpHcbFAcgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDEyMiBTYWx0ZWRfX2hLcMUho6yAW
+ LvlbI1b8WL806UnrbyIN09tZQtzwB7DrJBRxBLOc8gOWgIgAk86fN3chAollfIgTMK7uIdHP351
+ 6lD5Jrj3UsIsJNGIxPNr4fPxoHkRAbxzymGjmf3T2ww1WvHs/gMnlWGD1bzX+WOtSIlzkkyBun/
+ oOmAIpv2Fj2EAmCKkp3BbwnyAgEDOFJTVj58eDymR0GreFzOFGYFhHk+9iGjrt4uyjJg6A5pxHM
+ ICk1rE78suG+eSXPc4VWmtdSBSslAIJfTXtghnlYLrJzP1ku1Oo8TMQ/zzdxIMWl/vDE74Tw6+e
+ 0lvd+e6oVQvurn/AUMWj0XzQel/P4ZSpViNpc/etW7lsaK1Fj3FbYn4sGoZCC8Nnk8ocjsASZo2
+ HJNEq4khpNlon0W5QUBlGXSkhc+hkEzSO8X/lmeQVxDfSVmOOFmrsxAhZpJC6BsPwZk6SQYC
+X-Proofpoint-GUID: Gj_DUGR89tg30x0TW2qG8e7aPYaEfxgB
+X-Proofpoint-ORIG-GUID: Gj_DUGR89tg30x0TW2qG8e7aPYaEfxgB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-20_06,2025-05-20_01,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,188 +223,370 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin Lin via <qemu-devel@nongnu.org> writes:
+Introduce the vfio-user "proxy": this is the client code responsible for
+sending and receiving vfio-user messages across the control socket.
 
-> v1:
->  1. Added support for 64-bit DMA in the HACE model
->  2. Refactored the do_hash operation in the HACE model
->  3. Fixed a crash caused by out-of-bound memory access in HACE
->  4. Added more trace events and implemented dumping of source hash data and
->     resulting digests to improve debugging
->  5. Refactored the HACE QTest framework to support both AST1030 and AST2700
->  6. Added a test case for SHA384
->
-> v2:
->   1. Create new helper functions
->      hash_get_source_addr
->      hash_prepare_direct_iov
->      hash_prepare_sg_iov
->      hash_get_digest_addr
->      hash_write_digest_and_unmap_iov
->      hash_execute_non_acc_mode
->      hash_execute_acc_mode
->   2. Refactor do_hash_operation
->   3. Fix review issue
->   4. Revise trace-events
->   5. Move register size to instance class and dynamically allocate regs
->
-> v3:
->   1. Split patch to introduce these routines one by one : 
->        hash_prepare_sg_iov
->        hash_prepare_direct_iov
->        hash_execute_acc_mode
->        hash_execute_non_acc_mode
->        hash_write_digest_and_unmap_iov
->   2. Fix run qtest failed  
->  
-> This patchset resolves incorrect hash results reported on the AST2700 platform.
-> This update addresses the following kernel warnings and test failures related to
-> the crypto self-test framework:
->
-> aspeed-hmac-sha512 test failed (incorrect result)
-> aspeed-hmac-sha384 test failed (incorrect result)
-> aspeed-sha512 test failed (incorrect result)
-> aspeed-sha384 test failed (incorrect result)
-> aspeed-hmac-sha256 test failed (incorrect result)
-> aspeed-hmac-sha224 test failed (incorrect result)
-> aspeed-hmac-sha1 test failed (incorrect result)
-> aspeed-sha224 test failed (incorrect result)
-> aspeed-sha256 test failed (incorrect result)
-> aspeed-sha1 test failed (incorrect result)
->
-> How to test it
->
-> Use the following command to dump information about the supported digest methods
-> via the ast_crypto_engine hardware engine:
->
-> root@ast2700-default:~# openssl engine -pre DUMP_INFO ast_crypto_engine
->
-> Digest SHA1, NID=64, AF_ALG info: name=sha1ALG_ERR: , driver=aspeed-sha1 (hw accelerated)
-> Digest SHA224, NID=675, AF_ALG info: name=sha224ALG_ERR: , driver=aspeed-sha224 (hw accelerated)
-> Digest SHA256, NID=672, AF_ALG info: name=sha256ALG_ERR: , driver=aspeed-sha256 (hw accelerated)
-> Digest SHA384, NID=673, AF_ALG info: name=sha384ALG_ERR: , driver=aspeed-sha384 (hw accelerated)
-> Digest SHA512, NID=674, AF_ALG info: name=sha512ALG_ERR: , driver=aspeed-sha512 (hw accelerated)
->
-> The status of SHA1, SHA224, SHA256, SHA384, and SHA512 should be marked as
-> hw accelerated, indicating that these algorithms are supported by hardware
-> acceleration via the aspeed drivers.
->
-> Create a test file on the host machine and compute its HASH value as the
-> expected result
->
-> Create a 256MB test file
->
-> $ dd if=/dev/random of=/tmp/256M bs=1M count=256
-> Generate Hash Values Using SHA1, SHA224, SHA256, SHA384, and SHA512
->
-> Use the following commands to generate HASH values for a 256MB file using
-> different SHA algorithms:
->
-> $ sha1sum /tmp/256M
-> 7fc628811a31ab87b0502dab3ed8d3ef07565885  /tmp/256M
->
-> $ sha224sum /tmp/256M
-> 2d261c11ba05b3a62e0efeab51c307d9933426c7e18204683ef3da54  /tmp/256M
->
-> $ sha256sum /tmp/256M
-> 5716d1700ee35c92ca5ca5b466639e9c36eed3f1447c1aec27f16d0fe113f94d  /tmp/256M
->
-> $ sha384sum /tmp/256M
-> fb6bc62afa1096dcd3b870e7d2546b7a5a177b5f2bbd5c9759218182454709e0c504a2d9c26404e04aa8010a291b7f1c  /tmp/256M
->
-> $ sha512sum /tmp/256M
-> fbceda7be34836fe857781656318ecd5b457a833a24c8736d5b8ef8d07e1950eebcdb140eebe4f12b5ff59586f7eb1c64fa95869c63dd9e4703d91261093c5c9  /tmp/256M
->
-> Generate HASH Values Using the Hardware Engine
->
-> Use the following commands to generate HASH values for a 256MB file using
-> various SHA algorithms with the ast_crypto_engine hardware engine:
->
-> root@ast2700-default:~# openssl dgst -sha1 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA1(/tmp/256M)= 7fc628811a31ab87b0502dab3ed8d3ef07565885
->
-> root@ast2700-default:~# openssl dgst -sha224 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA2-224(/tmp/256M)= 2d261c11ba05b3a62e0efeab51c307d9933426c7e18204683ef3da54
->
-> root@ast2700-default:~# openssl dgst -sha256 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA2-256(/tmp/256M)= 5716d1700ee35c92ca5ca5b466639e9c36eed3f1447c1aec27f16d0fe113f94d
->
-> root@ast2700-default:~# openssl dgst -sha384 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA2-384(/tmp/256M)= fb6bc62afa1096dcd3b870e7d2546b7a5a177b5f2bbd5c9759218182454709e0c504a2d9c26404e04aa8010a291b7f1c
->
-> root@ast2700-default:~# openssl dgst -sha512 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA2-512(/tmp/256M)= fbceda7be34836fe857781656318ecd5b457a833a24c8736d5b8ef8d07e1950eebcdb140eebe4f12b5ff59586f7eb1c64fa95869c63dd9e4703d91261093c5c9
->
-> The HASH values generated here should exactly match those computed on the host
-> machine using sha shell commands, verifying both the correctness of the
-> hardware-accelerated results and the functionality of the ast_crypto_engine.
->
-> Jamin Lin (28):
->   hw/misc/aspeed_hace: Remove unused code for better readability
->   hw/misc/aspeed_hace: Improve readability and consistency in variable
->     naming
->   hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to prevent firmware
->     hang
->   hw/misc/aspeed_hace: Extract direct mode hash buffer setup into helper
->     function
->   hw/misc/aspeed_hace: Extract SG-mode hash buffer setup into helper
->     function
->   hw/misc/aspeed_hace: Extract digest write and iov unmap into helper
->     function
->   hw/misc/aspeed_hace: Extract non-accumulation hash execution into
->     helper function
->   hw/misc/aspeed_hace: Extract accumulation-mode hash execution into
->     helper function
->   hw/misc/aspeed_hace: Introduce 64-bit hash source address helper
->     function
->   hw/misc/aspeed_hace: Rename R_HASH_DEST to R_HASH_DIGEST and introduce
->     64-bit hash digest address helper
->   hw/misc/aspeed_hace: Support accumulative mode for direct access mode
->   hw/misc/aspeed_hace: Move register size to instance class and
->     dynamically allocate regs
->   hw/misc/aspeed_hace: Add support for source, digest, key buffer 64 bit
->     addresses
->   hw/misc/aspeed_hace: Support DMA 64 bits dram address
->   hw/misc/aspeed_hace: Add trace-events for better debugging
->   hw/misc/aspeed_hace: Support to dump plaintext and digest for better
->     debugging
->   tests/qtest: Reorder aspeed test list
->   test/qtest: Introduce a new aspeed-hace-utils.c to place common
->     testcases
->   test/qtest/hace: Specify explicit array sizes for test vectors and
->     hash results
->   test/qtest/hace: Adjust test address range for AST1030 due to SRAM
->     limitations
->   test/qtest/hace: Add SHA-384 test cases for ASPEED HACE model
->   test/qtest/hace: Add SHA-384 tests for AST2600
->   test/qtest/hace: Add tests for AST1030
->   test/qtest/hace: Update source data and digest data type to 64-bit
->   test/qtest/hace: Support 64-bit source and digest addresses for
->     AST2700
->   test/qtest/hace: Support to test upper 32 bits of digest and source
->     addresses
->   test/qtest/hace: Support to validate 64-bit hmac key buffer addresses
->   test/qtest/hace: Add tests for AST2700
->
->  include/hw/misc/aspeed_hace.h   |  11 +-
->  tests/qtest/aspeed-hace-utils.h |  84 +++++
->  hw/misc/aspeed_hace.c           | 479 +++++++++++++++--------
->  tests/qtest/aspeed-hace-utils.c | 646 ++++++++++++++++++++++++++++++++
->  tests/qtest/aspeed_hace-test.c  | 577 +++++-----------------------
->  tests/qtest/ast2700-hace-test.c |  98 +++++
->  hw/misc/trace-events            |   8 +
->  tests/qtest/meson.build         |  13 +-
->  8 files changed, 1279 insertions(+), 637 deletions(-)
->  create mode 100644 tests/qtest/aspeed-hace-utils.h
->  create mode 100644 tests/qtest/aspeed-hace-utils.c
->  create mode 100644 tests/qtest/ast2700-hace-test.c
+The new files hw/vfio-user/proxy.[ch] contain some basic plumbing for
+managing the proxy; initialize the proxy during realization of the
+VFIOUserPCIDevice instance.
 
-For qtest:
+Originally-by: John Johnson <john.g.johnson@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: John Levon <john.levon@nutanix.com>
+---
+ hw/vfio-user/proxy.h          |  82 +++++++++++++++++
+ include/hw/vfio/vfio-device.h |   2 +
+ hw/vfio-user/pci.c            |  17 ++++
+ hw/vfio-user/proxy.c          | 165 ++++++++++++++++++++++++++++++++++
+ hw/vfio-user/meson.build      |   1 +
+ 5 files changed, 267 insertions(+)
+ create mode 100644 hw/vfio-user/proxy.h
+ create mode 100644 hw/vfio-user/proxy.c
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
+new file mode 100644
+index 0000000000..60fe3e0b6d
+--- /dev/null
++++ b/hw/vfio-user/proxy.h
+@@ -0,0 +1,82 @@
++#ifndef VFIO_USER_PROXY_H
++#define VFIO_USER_PROXY_H
++
++/*
++ * vfio protocol over a UNIX socket.
++ *
++ * Copyright © 2018, 2021 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2.  See
++ * the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "io/channel.h"
++#include "io/channel-socket.h"
++
++typedef struct {
++    int send_fds;
++    int recv_fds;
++    int *fds;
++} VFIOUserFDs;
++
++enum msg_type {
++    VFIO_MSG_NONE,
++    VFIO_MSG_ASYNC,
++    VFIO_MSG_WAIT,
++    VFIO_MSG_NOWAIT,
++    VFIO_MSG_REQ,
++};
++
++typedef struct VFIOUserMsg {
++    QTAILQ_ENTRY(VFIOUserMsg) next;
++    VFIOUserFDs *fds;
++    uint32_t rsize;
++    uint32_t id;
++    QemuCond cv;
++    bool complete;
++    enum msg_type type;
++} VFIOUserMsg;
++
++
++enum proxy_state {
++    VFIO_PROXY_CONNECTED = 1,
++    VFIO_PROXY_ERROR = 2,
++    VFIO_PROXY_CLOSING = 3,
++    VFIO_PROXY_CLOSED = 4,
++};
++
++typedef QTAILQ_HEAD(VFIOUserMsgQ, VFIOUserMsg) VFIOUserMsgQ;
++
++typedef struct VFIOUserProxy {
++    QLIST_ENTRY(VFIOUserProxy) next;
++    char *sockname;
++    struct QIOChannel *ioc;
++    void (*request)(void *opaque, VFIOUserMsg *msg);
++    void *req_arg;
++    int flags;
++    QemuCond close_cv;
++    AioContext *ctx;
++    QEMUBH *req_bh;
++
++    /*
++     * above only changed when BQL is held
++     * below are protected by per-proxy lock
++     */
++    QemuMutex lock;
++    VFIOUserMsgQ free;
++    VFIOUserMsgQ pending;
++    VFIOUserMsgQ incoming;
++    VFIOUserMsgQ outgoing;
++    VFIOUserMsg *last_nowait;
++    enum proxy_state state;
++} VFIOUserProxy;
++
++/* VFIOProxy flags */
++#define VFIO_PROXY_CLIENT        0x1
++
++VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp);
++void vfio_user_disconnect(VFIOUserProxy *proxy);
++
++#endif /* VFIO_USER_PROXY_H */
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index a23ef4ea13..09f1a21bf8 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -46,6 +46,7 @@ typedef struct VFIOMigration VFIOMigration;
+ 
+ typedef struct IOMMUFDBackend IOMMUFDBackend;
+ typedef struct VFIOIOASHwpt VFIOIOASHwpt;
++typedef struct VFIOUserProxy VFIOUserProxy;
+ 
+ typedef struct VFIODevice {
+     QLIST_ENTRY(VFIODevice) next;
+@@ -86,6 +87,7 @@ typedef struct VFIODevice {
+     QLIST_ENTRY(VFIODevice) hwpt_next;
+     struct vfio_region_info **reginfo;
+     int *region_fds;
++    VFIOUserProxy *proxy;
+ } VFIODevice;
+ 
+ struct VFIODeviceOps {
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index 181fe0f02e..f77d0e497d 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -14,6 +14,7 @@
+ 
+ #include "hw/qdev-properties.h"
+ #include "hw/vfio/pci.h"
++#include "hw/vfio-user/proxy.h"
+ 
+ #define TYPE_VFIO_USER_PCI "vfio-user-pci"
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
+@@ -46,6 +47,8 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+     VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
+     VFIODevice *vbasedev = &vdev->vbasedev;
+     AddressSpace *as;
++    SocketAddress addr;
++    VFIOUserProxy *proxy;
+ 
+     /*
+      * TODO: make option parser understand SocketAddress
+@@ -58,6 +61,15 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         return;
+     }
+ 
++    memset(&addr, 0, sizeof(addr));
++    addr.type = SOCKET_ADDRESS_TYPE_UNIX;
++    addr.u.q_unix.path = udev->sock_name;
++    proxy = vfio_user_connect_dev(&addr, errp);
++    if (!proxy) {
++        return;
++    }
++    vbasedev->proxy = proxy;
++
+     vbasedev->name = g_strdup_printf("VFIO user <%s>", udev->sock_name);
+ 
+     /*
+@@ -103,8 +115,13 @@ static void vfio_user_instance_init(Object *obj)
+ static void vfio_user_instance_finalize(Object *obj)
+ {
+     VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
++    VFIODevice *vbasedev = &vdev->vbasedev;
+ 
+     vfio_pci_put_device(vdev);
++
++    if (vbasedev->proxy != NULL) {
++        vfio_user_disconnect(vbasedev->proxy);
++    }
+ }
+ 
+ static const Property vfio_user_pci_dev_properties[] = {
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+new file mode 100644
+index 0000000000..ac481553ba
+--- /dev/null
++++ b/hw/vfio-user/proxy.c
+@@ -0,0 +1,165 @@
++/*
++ * vfio protocol over a UNIX socket.
++ *
++ * Copyright © 2018, 2021 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include <sys/ioctl.h>
++
++#include "hw/vfio/vfio-device.h"
++#include "hw/vfio-user/proxy.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/lockable.h"
++#include "system/iothread.h"
++
++static IOThread *vfio_user_iothread;
++
++static void vfio_user_shutdown(VFIOUserProxy *proxy);
++
++
++/*
++ * Functions called by main, CPU, or iothread threads
++ */
++
++static void vfio_user_shutdown(VFIOUserProxy *proxy)
++{
++    qio_channel_shutdown(proxy->ioc, QIO_CHANNEL_SHUTDOWN_READ, NULL);
++    qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx, NULL,
++                                   proxy->ctx, NULL, NULL);
++}
++
++/*
++ * Functions only called by iothread
++ */
++
++static void vfio_user_cb(void *opaque)
++{
++    VFIOUserProxy *proxy = opaque;
++
++    QEMU_LOCK_GUARD(&proxy->lock);
++
++    proxy->state = VFIO_PROXY_CLOSED;
++    qemu_cond_signal(&proxy->close_cv);
++}
++
++
++/*
++ * Functions called by main or CPU threads
++ */
++
++static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
++    QLIST_HEAD_INITIALIZER(vfio_user_sockets);
++
++VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
++{
++    VFIOUserProxy *proxy;
++    QIOChannelSocket *sioc;
++    QIOChannel *ioc;
++    char *sockname;
++
++    if (addr->type != SOCKET_ADDRESS_TYPE_UNIX) {
++        error_setg(errp, "vfio_user_connect - bad address family");
++        return NULL;
++    }
++    sockname = addr->u.q_unix.path;
++
++    sioc = qio_channel_socket_new();
++    ioc = QIO_CHANNEL(sioc);
++    if (qio_channel_socket_connect_sync(sioc, addr, errp)) {
++        object_unref(OBJECT(ioc));
++        return NULL;
++    }
++    qio_channel_set_blocking(ioc, false, NULL);
++
++    proxy = g_malloc0(sizeof(VFIOUserProxy));
++    proxy->sockname = g_strdup_printf("unix:%s", sockname);
++    proxy->ioc = ioc;
++    proxy->flags = VFIO_PROXY_CLIENT;
++    proxy->state = VFIO_PROXY_CONNECTED;
++
++    qemu_mutex_init(&proxy->lock);
++    qemu_cond_init(&proxy->close_cv);
++
++    if (vfio_user_iothread == NULL) {
++        vfio_user_iothread = iothread_create("VFIO user", errp);
++    }
++
++    proxy->ctx = iothread_get_aio_context(vfio_user_iothread);
++
++    QTAILQ_INIT(&proxy->outgoing);
++    QTAILQ_INIT(&proxy->incoming);
++    QTAILQ_INIT(&proxy->free);
++    QTAILQ_INIT(&proxy->pending);
++    QLIST_INSERT_HEAD(&vfio_user_sockets, proxy, next);
++
++    return proxy;
++}
++
++void vfio_user_disconnect(VFIOUserProxy *proxy)
++{
++    VFIOUserMsg *r1, *r2;
++
++    qemu_mutex_lock(&proxy->lock);
++
++    /* our side is quitting */
++    if (proxy->state == VFIO_PROXY_CONNECTED) {
++        vfio_user_shutdown(proxy);
++        if (!QTAILQ_EMPTY(&proxy->pending)) {
++            error_printf("vfio_user_disconnect: outstanding requests\n");
++        }
++    }
++    object_unref(OBJECT(proxy->ioc));
++    proxy->ioc = NULL;
++
++    proxy->state = VFIO_PROXY_CLOSING;
++    QTAILQ_FOREACH_SAFE(r1, &proxy->outgoing, next, r2) {
++        qemu_cond_destroy(&r1->cv);
++        QTAILQ_REMOVE(&proxy->outgoing, r1, next);
++        g_free(r1);
++    }
++    QTAILQ_FOREACH_SAFE(r1, &proxy->incoming, next, r2) {
++        qemu_cond_destroy(&r1->cv);
++        QTAILQ_REMOVE(&proxy->incoming, r1, next);
++        g_free(r1);
++    }
++    QTAILQ_FOREACH_SAFE(r1, &proxy->pending, next, r2) {
++        qemu_cond_destroy(&r1->cv);
++        QTAILQ_REMOVE(&proxy->pending, r1, next);
++        g_free(r1);
++    }
++    QTAILQ_FOREACH_SAFE(r1, &proxy->free, next, r2) {
++        qemu_cond_destroy(&r1->cv);
++        QTAILQ_REMOVE(&proxy->free, r1, next);
++        g_free(r1);
++    }
++
++    /*
++     * Make sure the iothread isn't blocking anywhere
++     * with a ref to this proxy by waiting for a BH
++     * handler to run after the proxy fd handlers were
++     * deleted above.
++     */
++    aio_bh_schedule_oneshot(proxy->ctx, vfio_user_cb, proxy);
++    qemu_cond_wait(&proxy->close_cv, &proxy->lock);
++
++    /* we now hold the only ref to proxy */
++    qemu_mutex_unlock(&proxy->lock);
++    qemu_cond_destroy(&proxy->close_cv);
++    qemu_mutex_destroy(&proxy->lock);
++
++    QLIST_REMOVE(proxy, next);
++    if (QLIST_EMPTY(&vfio_user_sockets)) {
++        iothread_destroy(vfio_user_iothread);
++        vfio_user_iothread = NULL;
++    }
++
++    g_free(proxy->sockname);
++    g_free(proxy);
++}
+diff --git a/hw/vfio-user/meson.build b/hw/vfio-user/meson.build
+index f1fee70c85..695b341547 100644
+--- a/hw/vfio-user/meson.build
++++ b/hw/vfio-user/meson.build
+@@ -2,6 +2,7 @@ vfio_user_ss = ss.source_set()
+ vfio_user_ss.add(files(
+   'container.c',
+   'pci.c',
++  'proxy.c',
+ ))
+ 
+ if get_option('vfio_user_client').enabled()
+-- 
+2.43.0
+
 
