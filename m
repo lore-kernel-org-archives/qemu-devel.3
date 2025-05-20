@@ -4,150 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87928C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F3E9C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 16:24:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHPd2-00046n-IB; Tue, 20 May 2025 12:15:44 -0400
+	id 1uHPki-0005JX-GW; Tue, 20 May 2025 12:23:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHPcz-00046e-Qt
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:15:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHPcx-0007sA-6B
- for qemu-devel@nongnu.org; Tue, 20 May 2025 12:15:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747757733;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mC53Vo2OB3rO52JnGUUpNWzT2VLNwg8zBAVLQ4TTXUI=;
- b=AyV1fbx0HgAIt+zsODzMmPrPpOVa5MYYUH9uLJw0kEPaupEzBnO52y79mGgtPwUsKzDdN9
- e/XEUK+EgfZgtn1hAFPTQclckmaaQWLm30dH6py0vWrar8PlGm8Njhd+aE/oWvT46u6O6K
- JV1z3zozVERKgHGanURoTuuEx10EsOM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-_kEo_BbMOLSfDWNnE29Whw-1; Tue, 20 May 2025 12:14:39 -0400
-X-MC-Unique: _kEo_BbMOLSfDWNnE29Whw-1
-X-Mimecast-MFC-AGG-ID: _kEo_BbMOLSfDWNnE29Whw_1747757671
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-441c96c1977so39867135e9.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:14:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uHPkf-0005JI-TE
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:23:38 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uHPkc-00018B-Lo
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 12:23:37 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-231c86bffc1so59030115ad.0
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 09:23:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747758211; x=1748363011; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vlIS5XkEiQcfpB33GU5iY3RFpQbWgrVE/LiB3jjgNCk=;
+ b=WA6d5wHXD8B099Mv/kJFvJoQAu+WK8/PLgQZZvmN7T/BtZKpmstOHp0JMrHJ3uARfn
+ 1/LOxRln7poZQmQIjN5NgZBS8b4vZe2ODkGH7sxnFHnMQufoOTimJRtWYj9u4tPJxRrg
+ yEN17I9kTYMzqqsPp3r2gb9KuPnyoD+pSF124dpMRaKOW5DGpHmCDcrZhhJDzyHbDh9Q
+ mI4FfcSvXFA/LXznDMRPWKBZ140c8RQKThpcqeAcADBKeigplMhWlLQPNQ1EtPt2SPf8
+ pTtsP71Jj5fTTan208wrALRmX33CLy5TsdZ5vLhnTc1sKO1pZkbioElFe2CiHW6V714t
+ D+3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747757664; x=1748362464;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1747758211; x=1748363011;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mC53Vo2OB3rO52JnGUUpNWzT2VLNwg8zBAVLQ4TTXUI=;
- b=YUI/OLMfGz7lbGPQDf/7bfc2r/VJ9rraF17FasV+pk0FPREgYAKzIUY6VkYIUTpTzv
- PyrRWphOABkT2POy1iSENGgLuhQze/x4wZqmonxwb3PePR31zZcXvWpwmGAJEwyTyZXY
- EIjgknw+wHCPOzhnMAzQLFKSwjP8xip41dzJadidqNHLckXKAU1r+6rbyXI7IUvazywp
- H1AEqYRBRNBtufuk0Fjm8SHmQCRSCATkB6dObrCibsC3gKxMsw8vBjEvzYnWIUSVbHSy
- 5QLMn2Z/Ur2l5iJTTXwgg584BlCuD32UKWUnBh6ZnLLhz7pQonx71V7ONnIEN6C3iuKc
- uxUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBzBxx6HDuWQP4umZhn1/JrSpgFOglsOPtoh2H94scyIM+nlcDArCrLiZ1WfyFQe3uBE+5i65InW+/@nongnu.org
-X-Gm-Message-State: AOJu0YwxXyDHzH3/uSMEDJ2QJs/rXbmUvfYYv0+e9PaJ82ULQNKC+okG
- giq7dPJhBK2slurhIF3jljSkzkAqQ7387FPRPWU3MgZcV5zJWadXMVbbNFzEb0liTECBEtLpnRZ
- XWr6x7S+XGGg9wwBuJ2l1+c+k5/YS2w6Bt/YU4gNPpjn7m7mHh7maUJP3
-X-Gm-Gg: ASbGncvA+lfeMCIOq0mCBmwygmjuG6f4OZSmwYr7Au26AX0JkKEXZ1bzv0JUHLJCB8Q
- OQRVjzPGboWPgy0CnL2OkyR7G9oeOM1NNftKhBh7oKRu76qtdMtKW6YQFaN2uNvOMcmbIIhMXvs
- Iprri1VYX2O840dRDLzi/LO/t6tO1nO+IDvgUvAf9TQwF+klxpVHI7ArRiw8BsZ3Jp0oNcbm35b
- 3rnKLTFBYg4w0jIes3LySXfRkYUK+c1abjqUUrtVQkSHWFuZgHCxGp8C5Jd9kEDRbP9Y79z1+IR
- lJK7S0STvoltYEocx03Bjiamki1JOi9BOL6iEMqU0mdvAi9amw==
-X-Received: by 2002:a05:600c:3b86:b0:442:f8e7:25ef with SMTP id
- 5b1f17b1804b1-442fefeefebmr118652575e9.11.1747757664545; 
- Tue, 20 May 2025 09:14:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMJmGhewUezD2ML3709/akWGHNV1uHiklpA/iNKLMrqQRLCAjomRFJ/qL2ntw0ixseygT5RQ==
-X-Received: by 2002:a05:600c:3b86:b0:442:f8e7:25ef with SMTP id
- 5b1f17b1804b1-442fefeefebmr118652315e9.11.1747757664177; 
- Tue, 20 May 2025 09:14:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ bh=vlIS5XkEiQcfpB33GU5iY3RFpQbWgrVE/LiB3jjgNCk=;
+ b=T0mdF8MUHDYdvbyrIdLoB2u956+5ZQfznUYvYqjRsVn/n9MrJJ6v/i1pCcMSgn3DwY
+ Qix9jXG11f8N0nK/3kYd9bNCPH9Ftv8LgrBVIIqTO4P63ST0ZIDVrGE7z0R79flHx2ym
+ cIsR1mm929AAhaXy89bqLkmUsr0wP7yxp+Zr8x4/oz5YOBnBujAEaGY3oTp++Q8P+l1V
+ SfXFYqnbKGeoJnd9+VD16e3bKiLnPzKmfde7ftdGKHoRKcPEk1u8VQjIrJ7kxJ3NMrvw
+ cdu9Ld1q3k2JfPqnGuI6SIpCyoQRQuO4X9ydpgDl2dH18CgV5U1VfRrc02BTquokxQJ1
+ bqeg==
+X-Gm-Message-State: AOJu0YwwKVP7iNNG6q/ffk7CracSCqCW4E6PrQJ1gjazQGWYdtKGfoeC
+ 4fl/bvVP/aUP23FPc38hWTwbCzr6Yc+CY4AMG9MrfcKytKhgygwlFLlL
+X-Gm-Gg: ASbGncsOSLIq9NUUMIRBVpMfhrB6HIOhyLrm00DvfN8pG0vpBgnBOw4fdcBFvF6lC/t
+ 3ZhX/zPQ56mGWJYhFXE/q1f3wXAVRRH+/SmFgujRFK90DRiGH+pYwNNcPmxZ42EgvmsRdtjTW3O
+ GvPyDZyzxLvgBypSnaAKB/7CLzZVrjJoVnY9Dmq1q0YMzFNEzTQ04bNCZzD554wOK2hsIIORhjq
+ nHAMHsrEFyWLFK8IYK1ll8HYxqdyxYXJHbxxlr4LsTX+p1A62S5vhOHF5FaK0qLzWVEJ+qv7MvJ
+ 5jI0qlQU1Aw8i/V54Gwn5+hsD2+EUN/UKFwKdenq0g==
+X-Google-Smtp-Source: AGHT+IFVODoKkrtzlHVLin29APQi6H8q8atRsS0CZxOLTYpE/uHpUCwmNttZM212tup3D2nEt5OI/Q==
+X-Received: by 2002:a17:902:dac5:b0:231:d16c:7f55 with SMTP id
+ d9443c01a7336-231de21d5f5mr230631165ad.0.1747758209687; 
+ Tue, 20 May 2025 09:23:29 -0700 (PDT)
+Received: from lg ([2601:646:8f03:9fee:2c89:c0cf:1cbd:96d3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f73d4a3csm37975455e9.22.2025.05.20.09.14.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 09:14:23 -0700 (PDT)
-Message-ID: <e10b78aa-b8cc-4a69-b831-1a7f8caaa52c@redhat.com>
-Date: Tue, 20 May 2025 18:14:22 +0200
+ d9443c01a7336-231d4e97161sm78487625ad.153.2025.05.20.09.23.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 09:23:29 -0700 (PDT)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Tue, 20 May 2025 09:23:25 -0700
+To: anisa.su887@gmail.com
+Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
+ dave@stgolabs.net, linux-cxl@vger.kernel.org,
+ Anisa Su <anisa.su@samsung.com>
+Subject: Re: [PATCH v2 04/10] cxl-mailbox-utils: 0x5601 - FMAPI Get Host
+ Region Config
+Message-ID: <aCysfUNYZ4K-kNpA@lg>
+References: <20250508001754.122180-1-anisa.su887@gmail.com>
+ <20250508001754.122180-5-anisa.su887@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/29] vfio: add more VFIOIOMMUClass docs
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-References: <20250520150419.2172078-1-john.levon@nutanix.com>
- <20250520150419.2172078-2-john.levon@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250520150419.2172078-2-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250508001754.122180-5-anisa.su887@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,128 +102,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 17:03, John Levon wrote:
-> Add some additional doc comments for these class methods.
+On Thu, May 08, 2025 at 12:01:00AM +0000, anisa.su887@gmail.com wrote:
+> From: Anisa Su <anisa.su@samsung.com>
 > 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
+> FM DCD Management command 0x5601 implemented per CXL r3.2 Spec Section 7.6.7.6.2
+> 
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+
+One minor comment inline. Otherwise,
+
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+
 > ---
->   include/hw/vfio/vfio-container-base.h | 64 ++++++++++++++++++++++++++-
->   1 file changed, 63 insertions(+), 1 deletion(-)
+>  hw/cxl/cxl-mailbox-utils.c   | 102 +++++++++++++++++++++++++++++++++++
+>  include/hw/cxl/cxl_opcodes.h |   1 +
+>  2 files changed, 103 insertions(+)
 > 
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-> index 3d392b0fd8..41c49b2aa5 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -115,13 +115,52 @@ OBJECT_DECLARE_TYPE(VFIOContainerBase, VFIOIOMMUClass, VFIO_IOMMU)
->   struct VFIOIOMMUClass {
->       ObjectClass parent_class;
->   
-> -    /* basic feature */
-> +    /**
-> +     * @setup
-> +     *
-> +     * Perform basic setup of the container. 
-
-We could add a few details, something like :
-
-"IOMMU capabilities, page sizes and IOVA ranges initialization."
-
-
-> Returns true on success, or false
-> +     * with @errp filled in on failure.
-
-I would prefer the return statement to be at the end. See query_dirty_bitmap.
-
-> +     *
-> +     * @bcontainer: #VFIOContainerBase
-> +     * @errp: error filled in on failure
-> +     */
->       bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index d3c69233b8..6afc45833d 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -3326,6 +3326,106 @@ static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> +static void build_dsmas_flags(uint8_t *flags, CXLDCRegion *region)
+> +{
+> +    *flags = 0;
 > +
-> +    /**
-> +     * @listener_begin
-> +     *
-> +     * Called at the beginning of an address space update transaction.
-> +     * See #MemoryListener.
-> +     *
-> +     * @bcontainer: #VFIOContainerBase
-> +     */
->       void (*listener_begin)(VFIOContainerBase *bcontainer);
+> +    if (region->nonvolatile) {
+> +        *flags |= BIT(CXL_DSMAS_FLAGS_NONVOLATILE);
+> +    }
+> +    if (region->sharable) {
+> +        *flags |= BIT(CXL_DSMAS_FLAGS_SHARABLE);
+> +    }
+> +    if (region->hw_managed_coherency) {
+> +        *flags |= BIT(CXL_DSMAS_FLAGS_HW_MANAGED_COHERENCY);
+> +    }
+> +    if (region->ic_specific_dc_management) {
+> +        *flags |= BIT(CXL_DSMAS_FLAGS_IC_SPECIFIC_DC_MANAGEMENT);
+> +    }
+> +    if (region->rdonly) {
+> +        *flags |= BIT(CXL_DSMAS_FLAGS_RDONLY);
+> +    }
+> +}
 > +
-> +    /**
-> +     * @listener_commit
-> +     *
-> +     * Called at the end of an address space update transaction,
-> +     * See #MemoryListener.
-> +     *
-> +     * @bcontainer: #VFIOContainerBase
-> +     */
->       void (*listener_commit)(VFIOContainerBase *bcontainer);
+> +/* CXL r3.2 section 7.6.7.6.2: Get Host DC Region Configuration (Opcode 5601h) */
+> +static CXLRetCode cmd_fm_get_host_dc_region_config(const struct cxl_cmd *cmd,
+> +                                                   uint8_t *payload_in,
+> +                                                   size_t len_in,
+> +                                                   uint8_t *payload_out,
+> +                                                   size_t *len_out,
+> +                                                   CXLCCI *cci)
+> +{
+> +    struct {
+> +        uint16_t host_id;
+> +        uint8_t region_cnt;
+> +        uint8_t start_rid;
+> +    } QEMU_PACKED *in = (void *)payload_in;
+> +    struct {
+> +        uint16_t host_id;
+> +        uint8_t num_regions;
+> +        uint8_t regions_returned;
+> +        struct {
+> +            uint64_t base;
+> +            uint64_t decode_len;
+> +            uint64_t region_len;
+> +            uint64_t block_size;
+> +            uint8_t dsmas_flags;
+> +            uint8_t rsvd1[3];
+> +            uint8_t sanitize;
+
+We may have other flags in the future, maybe we want to generalize the
+name of the field.  Maybe "flags"?
+
+Fan
+> +            uint8_t rsvd2[3];
+> +        } QEMU_PACKED records[];
+> +    } QEMU_PACKED *out = (void *)payload_out;
+> +    struct {
+> +        uint32_t num_extents_supported;
+> +        uint32_t num_extents_available;
+> +        uint32_t num_tags_supported;
+> +        uint32_t num_tags_available;
+> +    } QEMU_PACKED *extra_out;
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    uint16_t record_count, out_pl_len, i;
 > +
-> +    /**
-> +     * @dma_map
-> +     *
-> +     * Map an address range into the container.
-> +     *
-> +     * @bcontainer: #VFIOContainerBase to use
-> +     * @iova: start address to map
-> +     * @size: size of the range to map
-> +     * @vaddr: process virtual address of mapping
-> +     * @readonly: true if mapping should be readonly
-
-Returns zero to indicate success and negative for error.
-
-In fact it returns -errno. Should be mentioned too.
-
-> +     */
->       int (*dma_map)(const VFIOContainerBase *bcontainer,
->                      hwaddr iova, ram_addr_t size,
->                      void *vaddr, bool readonly);
+> +    if (in->start_rid >= ct3d->dc.num_regions) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +    record_count = MIN(ct3d->dc.num_regions - in->start_rid, in->region_cnt);
 > +
->       /**
->        * @dma_unmap
->        *
-> @@ -136,8 +175,31 @@ struct VFIOIOMMUClass {
->       int (*dma_unmap)(const VFIOContainerBase *bcontainer,
->                        hwaddr iova, ram_addr_t size,
->                        IOMMUTLBEntry *iotlb, bool unmap_all);
+> +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
+> +    extra_out = (void *)out + out_pl_len;
+> +    out_pl_len += sizeof(*extra_out);
 > +
+> +    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
 > +
-> +    /**
-> +     * @attach_device
-> +     *
-> +     * Associate the given device with a container and do some related
-> +     * initialization of the device context. Returns true on success, or false
-> +     * with @errp filled in.
-> +     *
-> +     * @name: name of the device
-> +     * @vbasedev: the device
-> +     * @as: address space to use
-> +     * @errp: error filled in on failure
-
-Return: true on success, else false setting @errp with error.
-
-> +     */
->       bool (*attach_device)(const char *name, VFIODevice *vbasedev,>                             AddressSpace *as, Error **errp);
+> +    stw_le_p(&out->host_id, 0);
+> +    out->num_regions = ct3d->dc.num_regions;
+> +    out->regions_returned = record_count;
 > +
-> +    /*
-> +     * @detach_device
-> +     *
-> +     * Detach the given device from its container and clean up any necessary
-> +     * state.
-> +     *
-> +     * @vbasedev: the device to disassociate
-> +     */
->       void (*detach_device)(VFIODevice *vbasedev);
->   
->       /* migration feature */
+> +    for (i = 0; i < record_count; i++) {
+> +        stq_le_p(&out->records[i].base,
+> +                 ct3d->dc.regions[in->start_rid + i].base);
+> +        stq_le_p(&out->records[i].decode_len,
+> +                 ct3d->dc.regions[in->start_rid + i].decode_len /
+> +                 CXL_CAPACITY_MULTIPLIER);
+> +        stq_le_p(&out->records[i].region_len,
+> +                 ct3d->dc.regions[in->start_rid + i].len);
+> +        stq_le_p(&out->records[i].block_size,
+> +                 ct3d->dc.regions[in->start_rid + i].block_size);
+> +        build_dsmas_flags(&out->records[i].dsmas_flags,
+> +                          &ct3d->dc.regions[in->start_rid + i]);
+> +        /* Sanitize is bit 0 of flags. */
+> +        out->records[i].sanitize =
+> +            ct3d->dc.regions[in->start_rid + i].flags & BIT(0);
+> +    }
+> +
+> +    stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
+> +    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED -
+> +             ct3d->dc.total_extent_count);
+> +    stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
+> +    stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
+> +
+> +    *len_out = out_pl_len;
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+>  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+>          cmd_infostat_bg_op_abort, 0, 0 },
+> @@ -3450,6 +3550,8 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
+>  static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+>      [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
+>          cmd_fm_get_dcd_info, 0, 0 },
+> +    [FMAPI_DCD_MGMT][GET_HOST_DC_REGION_CONFIG] = { "GET_HOST_DC_REGION_CONFIG",
+> +        cmd_fm_get_host_dc_region_config, 4, 0 },
+>  };
+>  
+>  /*
+> diff --git a/include/hw/cxl/cxl_opcodes.h b/include/hw/cxl/cxl_opcodes.h
+> index c4c233665e..68ad68291c 100644
+> --- a/include/hw/cxl/cxl_opcodes.h
+> +++ b/include/hw/cxl/cxl_opcodes.h
+> @@ -63,5 +63,6 @@ enum {
+>          #define GET_MHD_INFO 0x0
+>      FMAPI_DCD_MGMT = 0x56,
+>          #define GET_DCD_INFO 0x0
+> +        #define GET_HOST_DC_REGION_CONFIG 0x1
+>      GLOBAL_MEMORY_ACCESS_EP_MGMT = 0X59
+>  };
+> -- 
+> 2.47.2
+> 
 
-Please resend independently of the series.
-
-Thanks,
-
-C.
-
-
-
+-- 
+Fan Ni
 
