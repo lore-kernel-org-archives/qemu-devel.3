@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6AE6C54799
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3679C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHKmy-0006Z9-SH; Tue, 20 May 2025 07:05:40 -0400
+	id 1uHKn4-0006nG-Ut; Tue, 20 May 2025 07:05:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHKmw-0006Xo-T1
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uHKn2-0006hz-2n
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHKmu-0002yf-VB
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:38 -0400
+ id 1uHKmz-000301-SO
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:05:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747739136;
+ s=mimecast20190719; t=1747739141;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mEPKkKRJjj2lmXwVNX0YwsAiiOP8WMc3UNx5qDidAh8=;
- b=jAdgAGPtjCRCm8LMaCKXR2QLTJLYKfXxsoBT+RkzkemdQXKnBigpWy0aoChMo3+OgUVrFK
- wFt1v4AqSr2yC3B+SJGSo2owUroEEYsRI/94lr68DL7+17nE9W9wLOOLoGu0X2OQ8Zvhsy
- q+ZZgimeXrkFju5M7tc7S8T8ONQmkNM=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=a0Xcm5bA00Me362rRmynF1HaRtvSKHHPxRY26ytB2T0=;
+ b=Z8Dnin8hA6LvZrDUUBwU8QTlkb+I4up7HPTVlBShMd31tuhSyQeG9Wneuu62Veur+hfep/
+ keOTTqOffrkgt/f8p7aPo7DBOisEX2j1MYdeBwhYAJ5hlCGCNddkpbJocRz9xwkXBUy6dB
+ peTgyk9wtJclsgo/87xpfJen3KUVxDg=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-GyrXv32wO_STS4ed0F0O8Q-1; Tue, 20 May 2025 07:05:35 -0400
-X-MC-Unique: GyrXv32wO_STS4ed0F0O8Q-1
-X-Mimecast-MFC-AGG-ID: GyrXv32wO_STS4ed0F0O8Q_1747739134
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-6002ac84dddso4161144a12.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:05:34 -0700 (PDT)
+ us-mta-278-DeXnH3GRNC6SqTTrFigFVA-1; Tue, 20 May 2025 07:05:39 -0400
+X-MC-Unique: DeXnH3GRNC6SqTTrFigFVA-1
+X-Mimecast-MFC-AGG-ID: DeXnH3GRNC6SqTTrFigFVA_1747739139
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-acbbb00099eso467801466b.2
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 04:05:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747739133; x=1748343933;
+ d=1e100.net; s=20230601; t=1747739138; x=1748343938;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mEPKkKRJjj2lmXwVNX0YwsAiiOP8WMc3UNx5qDidAh8=;
- b=SFmEvvszFxO2GPVKXEivrRtf0lkwV9EyXAheosDJdQulUwF4R2G5zUtRNup7wJpbUj
- XP93PvFkrw4I4uW6qmhNYLLNrhfO02T9CLgqOL/BVGp19tSaSjigJHVkIq+SzMrUEbbk
- NHVQbvIRKRsbCU9lkdwQhBQCHt6uCjbvFyPkH8r3BLYdghxP0/mRCJzZg+glal5WJ4Hc
- NItZCe87e/CUXG2CSedDMPpeEzSV4/wy6ms40byFNadmCGjT45PvQqTeQ5cs62Y2NsFA
- c1466emoQsLX/oCCP5tpiPGJxVIkAyPhjTR3auPc6ccfwTGw5At5XoodU9oOqiP45+Fg
- 3Szw==
-X-Gm-Message-State: AOJu0YxgkwkOCj5B8CJPO/xjhJcZr8DcRY5Rb9jZE1xFHqP9X7fSqAiF
- 84RINPbv/5BDnyaKRMwzV5Mn7xTpxzhx05fql5pevEzuGedLuLLNetAWLZSvUr9nKYV91kG51CJ
- f31D4aCpzjg7ikMUEvktb2CetNxIvgYXyuu+xdxBSyf0Qi6dWb/vC4zrUDoBoWC4NdmRD+geXzU
- OiIsYFkCrVvoB3iysUQwclp5K1j6NQ4h+PTkgySygb
-X-Gm-Gg: ASbGncsPrlJSIch988E0jaqiIw1f5Vmi+CfGauRF+ZNB9xVtG6LhvnUVcJSebWS4+ZA
- xip05FFwc6R4NKqt+DJ4UyzjNpjMyQLOPIumxBLumXU3MqxQk6CY0hva7U0SsS/6rRayOOGfm1s
- wSxOqfZJr8V+axIxkcAOYtm7dOSrYXUkCMUvg4YpVLANHA5KdkYtR6XxHS5Wsk4+g3Tht+Ssv3Z
- w8kTXk2smdcgpznEFY2B48TMWJyU5G7VPJEiOdURG8EUR5Eozgi3ZjSIOSWaQAM/+jKt3lDJivJ
- ChnJ1uDBtuk6aw==
-X-Received: by 2002:a17:907:7f08:b0:ad2:549b:4c8d with SMTP id
- a640c23a62f3a-ad52d604c1cmr1335556866b.51.1747739133388; 
- Tue, 20 May 2025 04:05:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjxXsIo/cAWS+nwnkY0amfX5EwHFCf6Yuhq9jjSmUnF99BWM0V1UEBOi5G2J861EF/sTdQNg==
-X-Received: by 2002:a17:907:7f08:b0:ad2:549b:4c8d with SMTP id
- a640c23a62f3a-ad52d604c1cmr1335553066b.51.1747739132855; 
- Tue, 20 May 2025 04:05:32 -0700 (PDT)
+ bh=a0Xcm5bA00Me362rRmynF1HaRtvSKHHPxRY26ytB2T0=;
+ b=O75uiBTxy/W5PidiSTP4Xs0IXtxjKMQP0uI5RScOsUe7G6LcVxl9cOuahl07z2/isf
+ oOEtvrg3FSBjty2drF9Dp35fTFXk00mHFaLPZ93NCAX5hP/65Xxn/cm6uO5o/ZKt8OKD
+ 0a3Zet+BzLi/2kjS+FMBSaC6I5t6Sf5hS1Neu23WFx/ZX7n5d49wur/EXtcFyrfR/031
+ bhqxM0vE21eLbiRKNBDVuAcR2b5vQxQvjIENxgYOI17p05TOewZGZ2fxXzGyKflKjKty
+ Xb5Wtegsjsqwos2YCTU5m75q+zn8QidH6S7SeCsMvPmZP3V0TA1XSkmDI9fm0VoP7O+f
+ Uwzg==
+X-Gm-Message-State: AOJu0YylzsZMDg6X/rUy/0lcN3JIBs4qqDYB1Aelsq35N0jCH5XA1NKv
+ ewKj9TMtXyv6hK/SaAHa6h71wrHC2orEXns4j9/A+vpfwV5hbRqEyVId7mAqWLxbozCk6rsmK4n
+ MZNItGlQ7XWN/nb3wgbI2U2odo5gz8lxERvCo0xhOrjASxcWdNq42ZzUPI9zXcBXgkw2Eq68/bp
+ oXPLZ47rCZXVTMOpGhpG7JDRg9Clcg0XbE+s/kIpWs
+X-Gm-Gg: ASbGncsVlc9gZfaM0haWOFhDJxLrQSHOzzKvdVyioDP+EOmFwz+da6cdbIGlqblF+P7
+ aon/YcEh2SI/sA42jHxiEqHoxnwMIEHAT6JVZjdz0JdFK8jGW175EryUY5XHVJAsMgfmWaJFjvy
+ +fFGcRjCEXO+6m261FQmZTvAj8YjeJDbjVHZM7jf4qcSBWsf2SDGfUQqj2X2p2DLgeTAP4nf3Sx
+ s3zRgfQ7OLNXX5x2JHyOgSy33nzVIPWk2faoGO1wJzeGXxn0jdBgEmzKuNUIcUrZh961qLnYbn1
+ IB85EgNR/X+Weg==
+X-Received: by 2002:a17:907:94d0:b0:ad2:2949:bdfc with SMTP id
+ a640c23a62f3a-ad536b7ca51mr1548033466b.3.1747739137716; 
+ Tue, 20 May 2025 04:05:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUw2cXljvCSutROYFW3Mdqws4CmPEUGC/f872J0I+xkvn4QpQTlEgMWW50kLldGYlDmSMGiQ==
+X-Received: by 2002:a17:907:94d0:b0:ad2:2949:bdfc with SMTP id
+ a640c23a62f3a-ad536b7ca51mr1548030466b.3.1747739137256; 
+ Tue, 20 May 2025 04:05:37 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.46.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d4382f8sm723576666b.94.2025.05.20.04.05.32
+ a640c23a62f3a-ad52d4967c9sm712361966b.129.2025.05.20.04.05.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 May 2025 04:05:32 -0700 (PDT)
+ Tue, 20 May 2025 04:05:36 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
-	Ewan Hai <ewanhai-oc@zhaoxin.com>
-Subject: [PULL 01/35] i386/tcg: Make CPUID_HT and CPUID_EXT3_CMP_LEG supported
-Date: Tue, 20 May 2025 13:04:56 +0200
-Message-ID: <20250520110530.366202-2-pbonzini@redhat.com>
+Cc: Rakesh Jeyasingh <rakeshjb010@gmail.com>,
+	Thomas Huth <thuth@redhat.com>
+Subject: [PULL 03/35] hw/pci-host/gt64120: Fix endianness handling
+Date: Tue, 20 May 2025 13:04:58 +0200
+Message-ID: <20250520110530.366202-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520110530.366202-1-pbonzini@redhat.com>
 References: <20250520110530.366202-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -109,65 +109,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Rakesh Jeyasingh <rakeshjb010@gmail.com>
 
-Since commit c6bd2dd63420 ("i386/cpu: Set up CPUID_HT in
-x86_cpu_expand_features() instead of cpu_x86_cpuid()") and
-commit 99a637a86f55 ("i386/cpu: Set and track CPUID_EXT3_CMP_LEG in
-env->features[FEAT_8000_0001_ECX]"), it gets warnings when booting the
-VM with vcpus >= 2 and with tcg:
+The GT-64120 PCI controller requires special handling where:
+1. Host bridge(bus 0 ,device 0) must never be byte-swapped
+2. Other devices follow MByteSwap bit in GT_PCI0_CMD
 
-  qemu-system-x86_64: warning: TCG doesn't support requested feature: CPUID.01H:EDX.ht [bit 28]
-  qemu-system-x86_64: warning: TCG doesn't support requested feature: CPUID.80000001H:ECX.cmp-legacy [bit 1]
+The previous implementation incorrectly  swapped all accesses, breaking
+host bridge detection (lspci -d 11ab:4620).
 
-This is because, after the two commits, CPUID_HT and CPUID_EXT3_CMP_LEG
-are set in env->features[] when vcpus >=2 (in x86_cpu_expand_features())
-later in x86_cpu_filter_features() it will check against the TCG supported
-bits. However, current TCG doesn't mark the two bits as supported, hence
-the warnings.
+Changes made:
+1. Removed gt64120_update_pci_cfgdata_mapping() and moved data_mem initialization
+  to gt64120_realize() for cleaner setup
+2. Implemented custom read/write handlers that:
+   - Preserve host bridge accesses (extract32(config_reg,11,13)==0)
+   - apply swapping only for non-bridge devices in big-endian mode
 
-Fix it by adding the two bits to the supported bits of TCG since multiple
-vcpus are supported by TCG.
+Fixes: 145e2198 ("hw/mips/gt64xxx_pci: Endian-swap using PCI_HOST_BRIDGE MemoryRegionOps")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2826
 
-Fixes: c6bd2dd63420 ("i386/cpu: Set up CPUID_HT in x86_cpu_expand_features() instead of cpu_x86_cpuid()")
-Fixes: 99a637a86f55 ("i386/cpu: Set and track CPUID_EXT3_CMP_LEG in env->features[FEAT_8000_0001_ECX]")
-Reported-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250514031652.838763-2-xiaoyao.li@intel.com
+Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Link: https://lore.kernel.org/r/20250429170354.150581-2-rakeshjb010@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ hw/pci-host/gt64120.c | 82 +++++++++++++++++++++++++------------------
+ 1 file changed, 48 insertions(+), 34 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index ec908d7d360..9689f6374e6 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -776,11 +776,12 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
-           CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC | CPUID_SEP | \
-           CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV | CPUID_PAT | \
-           CPUID_PSE36 | CPUID_CLFLUSH | CPUID_ACPI | CPUID_MMX | \
--          CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_DE)
-+          CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_DE | \
-+          CPUID_HT)
-           /* partly implemented:
-           CPUID_MTRR, CPUID_MCA, CPUID_CLFLUSH (needed for Win64) */
-           /* missing:
--          CPUID_VME, CPUID_DTS, CPUID_SS, CPUID_HT, CPUID_TM, CPUID_PBE */
-+          CPUID_VME, CPUID_DTS, CPUID_SS, CPUID_TM, CPUID_PBE */
+diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
+index 56a6ef93b7a..b12a25696c4 100644
+--- a/hw/pci-host/gt64120.c
++++ b/hw/pci-host/gt64120.c
+@@ -320,38 +320,6 @@ static void gt64120_isd_mapping(GT64120State *s)
+     memory_region_transaction_commit();
+ }
  
- /*
-  * Kernel-only features that can be shown to usermode programs even if
-@@ -848,7 +849,8 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+-static void gt64120_update_pci_cfgdata_mapping(GT64120State *s)
+-{
+-    /* Indexed on MByteSwap bit, see Table 158: PCI_0 Command, Offset: 0xc00 */
+-    static const MemoryRegionOps *pci_host_data_ops[] = {
+-        &pci_host_data_be_ops, &pci_host_data_le_ops
+-    };
+-    PCIHostState *phb = PCI_HOST_BRIDGE(s);
+-
+-    memory_region_transaction_begin();
+-
+-    /*
+-     * The setting of the MByteSwap bit and MWordSwap bit in the PCI Internal
+-     * Command Register determines how data transactions from the CPU to/from
+-     * PCI are handled along with the setting of the Endianness bit in the CPU
+-     * Configuration Register. See:
+-     * - Table 16: 32-bit PCI Transaction Endianness
+-     * - Table 158: PCI_0 Command, Offset: 0xc00
+-     */
+-
+-    if (memory_region_is_mapped(&phb->data_mem)) {
+-        memory_region_del_subregion(&s->ISD_mem, &phb->data_mem);
+-        object_unparent(OBJECT(&phb->data_mem));
+-    }
+-    memory_region_init_io(&phb->data_mem, OBJECT(phb),
+-                          pci_host_data_ops[s->regs[GT_PCI0_CMD] & 1],
+-                          s, "pci-conf-data", 4);
+-    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << 2,
+-                                        &phb->data_mem, 1);
+-
+-    memory_region_transaction_commit();
+-}
+-
+ static void gt64120_pci_mapping(GT64120State *s)
+ {
+     memory_region_transaction_begin();
+@@ -645,7 +613,6 @@ static void gt64120_writel(void *opaque, hwaddr addr,
+     case GT_PCI0_CMD:
+     case GT_PCI1_CMD:
+         s->regs[saddr] = val & 0x0401fc0f;
+-        gt64120_update_pci_cfgdata_mapping(s);
+         break;
+     case GT_PCI0_TOR:
+     case GT_PCI0_BS_SCS10:
+@@ -1024,6 +991,48 @@ static const MemoryRegionOps isd_mem_ops = {
+     },
+ };
  
- #define TCG_EXT3_FEATURES (CPUID_EXT3_LAHF_LM | CPUID_EXT3_SVM | \
-           CPUID_EXT3_CR8LEG | CPUID_EXT3_ABM | CPUID_EXT3_SSE4A | \
--          CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_KERNEL_FEATURES)
-+          CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_KERNEL_FEATURES | \
-+          CPUID_EXT3_CMP_LEG)
++static bool bswap(const GT64120State *s) 
++{
++    PCIHostState *phb = PCI_HOST_BRIDGE(s);
++    /*check for bus == 0 && device == 0, Bits 11:15 = Device , Bits 16:23 = Bus*/
++    bool is_phb_dev0 = extract32(phb->config_reg, 11, 13) == 0;
++    bool le_mode = FIELD_EX32(s->regs[GT_PCI0_CMD], GT_PCI0_CMD, MByteSwap);
++    /* Only swap for non-bridge devices in big-endian mode */
++    return !le_mode && !is_phb_dev0;
++}
++
++static uint64_t gt64120_pci_data_read(void *opaque, hwaddr addr, unsigned size)
++{
++    GT64120State *s = opaque;
++    uint32_t val = pci_host_data_le_ops.read(opaque, addr, size);
++
++    if (bswap(s)) {
++        val = bswap32(val);
++    }
++    return val;
++}
++
++static void gt64120_pci_data_write(void *opaque, hwaddr addr, 
++    uint64_t val, unsigned size)
++{
++    GT64120State *s = opaque;
++
++    if (bswap(s)) {
++        val = bswap32(val); 
++    }
++    pci_host_data_le_ops.write(opaque, addr, val, size);  
++}
++
++static const MemoryRegionOps gt64120_pci_data_ops = {
++    .read = gt64120_pci_data_read,
++    .write = gt64120_pci_data_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
+ static void gt64120_reset(DeviceState *dev)
+ {
+     GT64120State *s = GT64120_PCI_HOST_BRIDGE(dev);
+@@ -1178,7 +1187,6 @@ static void gt64120_reset(DeviceState *dev)
  
- #define TCG_EXT4_FEATURES 0
+     gt64120_isd_mapping(s);
+     gt64120_pci_mapping(s);
+-    gt64120_update_pci_cfgdata_mapping(s);
+ }
  
+ static void gt64120_realize(DeviceState *dev, Error **errp)
+@@ -1202,6 +1210,12 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGADDR << 2,
+                                         &phb->conf_mem, 1);
+ 
++    memory_region_init_io(&phb->data_mem, OBJECT(phb),
++                          &gt64120_pci_data_ops,
++                          s, "pci-conf-data", 4);
++    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << 2,
++                                        &phb->data_mem, 1);
++
+ 
+     /*
+      * The whole address space decoded by the GT-64120A doesn't generate
 -- 
 2.49.0
 
