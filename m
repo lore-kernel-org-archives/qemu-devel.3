@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805CCC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02845C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:34:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLCo-0000Tm-Mu; Tue, 20 May 2025 07:32:22 -0400
+	id 1uHLBu-00083g-UN; Tue, 20 May 2025 07:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uHLCm-0000Pj-5E
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:32:20 -0400
+ id 1uHLBs-00082a-SP
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:24 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLCj-0001Mh-US
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:32:19 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLBq-0001Dh-9l
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:24 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (unknown [172.201.77.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 1EA132068323;
- Tue, 20 May 2025 04:32:03 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1EA132068323
+ by linux.microsoft.com (Postfix) with ESMTPSA id 554C0206789F;
+ Tue, 20 May 2025 04:31:18 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 554C0206789F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1747740727;
- bh=0wIcMXzdSzy4e8J56u0pRhYsNsApdV7beq21jAMG+mI=;
+ s=default; t=1747740681;
+ bh=x2NDlsyVpYyiEQ7vZDimSe6K/SLMEX/v+LHB7mAmT38=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=aJjtHh6gGgOJbGJ75A0Pjbkfa9Pne4TiSSpTZHXomOwGWq1kwLEqUs8JW/HbS8R9c
- v/m7Mv6gxze31mo0meefwJO7NHMfFFAwn1TieAObJ+eC4Ma2QgvPRCrAM7xFHVu9De
- zX1jkWyTbKZtV2cr6J7ecyMYOKwfWaaUwkRTMpEE=
+ b=drH10LNWUnp0/sTxKSipQpUjfJfCEr46ytu2tFGJdq1mtSk5v5CWbutPSpLqBQDVs
+ ToiPm8TXJ7re0AQ+8+JEeXNeb+3cFLb7HwirAQo7tj6fUhya8fZchxNixyImtGUK1T
+ ZAphKoN3Ae16e+ylMljUvsJmjsloOZeJrGdc2oPI=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: magnuskulke@microsoft.com,
 	qemu-devel@nongnu.org,
@@ -43,9 +43,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cameron Esfahani <dirty@apple.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH 17/25] target/i386/mshv: Implement mshv_get_special_regs()
-Date: Tue, 20 May 2025 13:30:10 +0200
-Message-Id: <20250520113018.49569-18-magnuskulke@linux.microsoft.com>
+Subject: [RFC PATCH 04/25] hw/intc: Generalize APIC helper names from kvm_* to
+ accel_*
+Date: Tue, 20 May 2025 13:29:57 +0200
+Message-Id: <20250520113018.49569-5-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
 References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
@@ -75,173 +76,354 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Retrieve special registers (e.g. segment, control, and descriptor
-table registers) from MSHV vCPUs.
-
-Various helper functions to map register state representations between
-Qemu and MSHV are introduced.
+Rename APIC helper functions to use an accel_* prefix instead of kvm_*
+to support use by accelerators other than KVM. This is a preparatory
+step for integrating MSHV support with common APIC logic.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv.h       |   1 +
- target/i386/mshv/mshv-cpu.c | 118 +++++++++++++++++++++++++++++++++++-
- 2 files changed, 117 insertions(+), 2 deletions(-)
+ accel/accel-irq.c          | 95 ++++++++++++++++++++++++++++++++++++++
+ accel/meson.build          |  2 +-
+ hw/intc/ioapic.c           | 20 +++++---
+ hw/virtio/virtio-pci.c     | 19 ++++----
+ include/system/accel-irq.h | 26 +++++++++++
+ include/system/mshv.h      | 22 +++++++++
+ 6 files changed, 167 insertions(+), 17 deletions(-)
+ create mode 100644 accel/accel-irq.c
+ create mode 100644 include/system/accel-irq.h
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 9b78b66a24..055489a6f3 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -109,6 +109,7 @@ void mshv_init_cpu_logic(void);
- int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
- void mshv_remove_vcpu(int vm_fd, int cpu_fd);
- int mshv_get_standard_regs(CPUState *cpu);
-+int mshv_get_special_regs(CPUState *cpu);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
- int mshv_load_regs(CPUState *cpu);
- int mshv_store_regs(CPUState *cpu);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 41584c3f8e..979ee5b8c3 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -58,6 +58,27 @@ static enum hv_register_name STANDARD_REGISTER_NAMES[18] = {
-     HV_X64_REGISTER_RFLAGS,
- };
- 
-+static enum hv_register_name SPECIAL_REGISTER_NAMES[18] = {
-+    HV_X64_REGISTER_CS,
-+    HV_X64_REGISTER_DS,
-+    HV_X64_REGISTER_ES,
-+    HV_X64_REGISTER_FS,
-+    HV_X64_REGISTER_GS,
-+    HV_X64_REGISTER_SS,
-+    HV_X64_REGISTER_TR,
-+    HV_X64_REGISTER_LDTR,
-+    HV_X64_REGISTER_GDTR,
-+    HV_X64_REGISTER_IDTR,
-+    HV_X64_REGISTER_CR0,
-+    HV_X64_REGISTER_CR2,
-+    HV_X64_REGISTER_CR3,
-+    HV_X64_REGISTER_CR4,
-+    HV_X64_REGISTER_CR8,
-+    HV_X64_REGISTER_EFER,
-+    HV_X64_REGISTER_APIC_BASE,
-+    HV_REGISTER_PENDING_INTERRUPTION,
-+};
+diff --git a/accel/accel-irq.c b/accel/accel-irq.c
+new file mode 100644
+index 0000000000..63f8ed260a
+--- /dev/null
++++ b/accel/accel-irq.c
+@@ -0,0 +1,95 @@
++#include "qemu/osdep.h"
++#include "hw/pci/msi.h"
 +
- static void add_cpu_guard(int cpu_fd)
++#include "system/kvm.h"
++#include "system/mshv.h"
++#include "system/accel-irq.h"
++
++int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        return mshv_irqchip_add_msi_route(vector, dev);
++    }
++#endif
++    if (kvm_enabled()) {
++        return kvm_irqchip_add_msi_route(c, vector, dev);
++    }
++    return -ENOSYS;
++}
++
++int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        return mshv_irqchip_update_msi_route(vector, msg, dev);
++    }
++#endif
++    if (kvm_enabled()) {
++        return kvm_irqchip_update_msi_route(kvm_state, vector, msg, dev);
++    }
++    return -ENOSYS;
++}
++
++void accel_irqchip_commit_route_changes(KVMRouteChange *c)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        mshv_irqchip_commit_routes();
++    }
++#endif
++    if (kvm_enabled()) {
++        kvm_irqchip_commit_route_changes(c);
++    }
++}
++
++void accel_irqchip_commit_routes(void)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        mshv_irqchip_commit_routes();
++    }
++#endif
++    if (kvm_enabled()) {
++        kvm_irqchip_commit_routes(kvm_state);
++    }
++}
++
++void accel_irqchip_release_virq(int virq)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        mshv_irqchip_release_virq(virq);
++    }
++#endif
++    if (kvm_enabled()) {
++        kvm_irqchip_release_virq(kvm_state, virq);
++    }
++}
++
++int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
++                                         int virq)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        return mshv_irqchip_add_irqfd_notifier_gsi(n, rn, virq);
++    }
++#endif
++    if (kvm_enabled()) {
++        return kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, rn, virq);
++    }
++    return -ENOSYS;
++}
++
++int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        return mshv_irqchip_remove_irqfd_notifier_gsi(n, virq);
++    }
++#endif
++    if (kvm_enabled()) {
++        return kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, n, virq);
++    }
++    return -ENOSYS;
++}
+diff --git a/accel/meson.build b/accel/meson.build
+index 52909314bf..d5e982d152 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -1,6 +1,6 @@
+ common_ss.add(files('accel-common.c'))
+ specific_ss.add(files('accel-target.c'))
+-system_ss.add(files('accel-system.c', 'accel-blocker.c'))
++system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-irq.c'))
+ user_ss.add(files('accel-user.c'))
+ 
+ subdir('tcg')
+diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
+index 133bef852d..e431d00311 100644
+--- a/hw/intc/ioapic.c
++++ b/hw/intc/ioapic.c
+@@ -30,12 +30,18 @@
+ #include "hw/intc/ioapic_internal.h"
+ #include "hw/pci/msi.h"
+ #include "hw/qdev-properties.h"
++#include "system/accel-irq.h"
+ #include "system/kvm.h"
+ #include "system/system.h"
+ #include "hw/i386/apic-msidef.h"
+ #include "hw/i386/x86-iommu.h"
+ #include "trace.h"
+ 
++
++#if defined(CONFIG_KVM) || defined(CONFIG_MSHV)
++#define ACCEL_GSI_IRQFD_POSSIBLE
++#endif
++
+ #define APIC_DELIVERY_MODE_SHIFT 8
+ #define APIC_POLARITY_SHIFT 14
+ #define APIC_TRIG_MODE_SHIFT 15
+@@ -191,10 +197,10 @@ static void ioapic_set_irq(void *opaque, int vector, int level)
+ 
+ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
  {
-     QemuMutex *guard;
-@@ -215,6 +236,94 @@ int mshv_get_standard_regs(CPUState *cpu)
-     return 0;
+-#ifdef CONFIG_KVM
++#ifdef ACCEL_GSI_IRQFD_POSSIBLE
+     int i;
+ 
+-    if (kvm_irqchip_is_split()) {
++    if (accel_irqchip_is_split()) {
+         for (i = 0; i < IOAPIC_NUM_PINS; i++) {
+             MSIMessage msg;
+             struct ioapic_entry_info info;
+@@ -202,15 +208,15 @@ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
+             if (!info.masked) {
+                 msg.address = info.addr;
+                 msg.data = info.data;
+-                kvm_irqchip_update_msi_route(kvm_state, i, msg, NULL);
++                accel_irqchip_update_msi_route(i, msg, NULL);
+             }
+         }
+-        kvm_irqchip_commit_routes(kvm_state);
++        accel_irqchip_commit_routes();
+     }
+ #endif
  }
  
-+static void populate_segment_reg(const hv_x64_segment_register *hv_seg,
-+                                 SegmentCache *seg)
-+{
-+    memset(seg, 0, sizeof(SegmentCache));
-+
-+    seg->base = hv_seg->base;
-+    seg->limit = hv_seg->limit;
-+    seg->selector = hv_seg->selector;
-+
-+    seg->flags = (hv_seg->segment_type << DESC_TYPE_SHIFT)
-+                 | (hv_seg->present * DESC_P_MASK)
-+                 | (hv_seg->descriptor_privilege_level << DESC_DPL_SHIFT)
-+                 | (hv_seg->_default << DESC_B_SHIFT)
-+                 | (hv_seg->non_system_segment * DESC_S_MASK)
-+                 | (hv_seg->_long << DESC_L_SHIFT)
-+                 | (hv_seg->granularity * DESC_G_MASK)
-+                 | (hv_seg->available * DESC_AVL_MASK);
-+
-+}
-+
-+static void populate_table_reg(const hv_x64_table_register *hv_seg,
-+                               SegmentCache *tbl)
-+{
-+    memset(tbl, 0, sizeof(SegmentCache));
-+
-+    tbl->base = hv_seg->base;
-+    tbl->limit = hv_seg->limit;
-+}
-+
-+static void populate_special_regs(const hv_register_assoc *assocs,
-+                                  X86CPU *x86cpu)
-+{
-+    CPUX86State *env = &x86cpu->env;
-+
-+    populate_segment_reg(&assocs[0].value.segment, &env->segs[R_CS]);
-+    populate_segment_reg(&assocs[1].value.segment, &env->segs[R_DS]);
-+    populate_segment_reg(&assocs[2].value.segment, &env->segs[R_ES]);
-+    populate_segment_reg(&assocs[3].value.segment, &env->segs[R_FS]);
-+    populate_segment_reg(&assocs[4].value.segment, &env->segs[R_GS]);
-+    populate_segment_reg(&assocs[5].value.segment, &env->segs[R_SS]);
-+
-+    /* TODO: should we set TR + LDT? */
-+    /* populate_segment_reg(&assocs[6].value.segment, &regs->tr); */
-+    /* populate_segment_reg(&assocs[7].value.segment, &regs->ldt); */
-+
-+    populate_table_reg(&assocs[8].value.table, &env->gdt);
-+    populate_table_reg(&assocs[9].value.table, &env->idt);
-+
-+    env->cr[0] = assocs[10].value.reg64;
-+    env->cr[2] = assocs[11].value.reg64;
-+    env->cr[3] = assocs[12].value.reg64;
-+    env->cr[4] = assocs[13].value.reg64;
-+
-+    cpu_set_apic_tpr(x86cpu->apic_state, assocs[14].value.reg64);
-+    env->efer = assocs[15].value.reg64;
-+    cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
-+
-+    /* TODO: should we set those? */
-+    /* pending_reg = assocs[17].value.pending_interruption.as_uint64; */
-+    /* populate_interrupt_bitmap(pending_reg, regs->interrupt_bitmap); */
-+}
-+
-+
-+int mshv_get_special_regs(CPUState *cpu)
-+{
-+    size_t n_regs = sizeof(SPECIAL_REGISTER_NAMES) / sizeof(hv_register_name);
-+    struct hv_register_assoc *assocs;
-+    int ret;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    int cpu_fd = mshv_vcpufd(cpu);
-+
-+    assocs = g_new0(hv_register_assoc, n_regs);
-+    for (size_t i = 0; i < n_regs; i++) {
-+        assocs[i].name = SPECIAL_REGISTER_NAMES[i];
-+    }
-+    ret = get_generic_regs(cpu_fd, assocs, n_regs);
-+    if (ret < 0) {
-+        error_report("failed to get special registers");
-+        g_free(assocs);
-+        return -errno;
-+    }
-+
-+    populate_special_regs(assocs, x86cpu);
-+
-+    g_free(assocs);
-+    return 0;
-+}
-+
- int mshv_load_regs(CPUState *cpu)
+-#ifdef CONFIG_KVM
++#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
+ static void ioapic_iec_notifier(void *private, bool global,
+                                 uint32_t index, uint32_t mask)
  {
+@@ -428,11 +434,11 @@ static const MemoryRegionOps ioapic_io_ops = {
+ 
+ static void ioapic_machine_done_notify(Notifier *notifier, void *data)
+ {
+-#ifdef CONFIG_KVM
++#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
+     IOAPICCommonState *s = container_of(notifier, IOAPICCommonState,
+                                         machine_done);
+ 
+-    if (kvm_irqchip_is_split()) {
++    if (accel_irqchip_is_split()) {
+         X86IOMMUState *iommu = x86_iommu_get_default();
+         if (iommu) {
+             /* Register this IOAPIC with IOMMU IEC notifier, so that
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 0fa8fe4955..fac54e793e 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -33,6 +33,7 @@
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
+ #include "hw/loader.h"
++#include "system/accel-irq.h"
+ #include "system/kvm.h"
+ #include "hw/virtio/virtio-pci.h"
+ #include "qemu/range.h"
+@@ -826,7 +827,7 @@ static int kvm_virtio_pci_vq_vector_use(VirtIOPCIProxy *proxy,
+ 
+     if (irqfd->users == 0) {
+         KVMRouteChange c = kvm_irqchip_begin_route_changes(kvm_state);
+-        ret = kvm_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
++        ret = accel_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
+         if (ret < 0) {
+             return ret;
+         }
+@@ -842,7 +843,7 @@ static void kvm_virtio_pci_vq_vector_release(VirtIOPCIProxy *proxy,
+ {
+     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
+     if (--irqfd->users == 0) {
+-        kvm_irqchip_release_virq(kvm_state, irqfd->virq);
++        accel_irqchip_release_virq(irqfd->virq);
+     }
+ }
+ 
+@@ -851,7 +852,7 @@ static int kvm_virtio_pci_irqfd_use(VirtIOPCIProxy *proxy,
+                                  unsigned int vector)
+ {
+     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
+-    return kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NULL, irqfd->virq);
++    return accel_irqchip_add_irqfd_notifier_gsi(n, NULL, irqfd->virq);
+ }
+ 
+ static void kvm_virtio_pci_irqfd_release(VirtIOPCIProxy *proxy,
+@@ -861,7 +862,7 @@ static void kvm_virtio_pci_irqfd_release(VirtIOPCIProxy *proxy,
+     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
      int ret;
-@@ -225,8 +334,13 @@ int mshv_load_regs(CPUState *cpu)
-         return -1;
+ 
+-    ret = kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, n, irqfd->virq);
++    ret = accel_irqchip_remove_irqfd_notifier_gsi(n, irqfd->virq);
+     assert(ret == 0);
+ }
+ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
+@@ -996,12 +997,12 @@ static int virtio_pci_one_vector_unmask(VirtIOPCIProxy *proxy,
+     if (proxy->vector_irqfd) {
+         irqfd = &proxy->vector_irqfd[vector];
+         if (irqfd->msg.data != msg.data || irqfd->msg.address != msg.address) {
+-            ret = kvm_irqchip_update_msi_route(kvm_state, irqfd->virq, msg,
+-                                               &proxy->pci_dev);
++            ret = accel_irqchip_update_msi_route(irqfd->virq, msg,
++                                                 &proxy->pci_dev);
+             if (ret < 0) {
+                 return ret;
+             }
+-            kvm_irqchip_commit_routes(kvm_state);
++            accel_irqchip_commit_routes();
+         }
      }
  
--	error_report("unimplemented");
--	abort();
-+    ret = mshv_get_special_regs(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to load special registers");
-+        return -1;
-+    }
-+
-+    return 0;
- }
+@@ -1225,7 +1226,7 @@ static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
+     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+     int r, n;
+     bool with_irqfd = msix_enabled(&proxy->pci_dev) &&
+-        kvm_msi_via_irqfd_enabled();
++        accel_msi_via_irqfd_enabled() ;
  
- int mshv_arch_put_registers(const CPUState *cpu)
+     nvqs = MIN(nvqs, VIRTIO_QUEUE_MAX);
+ 
+@@ -1429,7 +1430,7 @@ static void virtio_pci_set_vector(VirtIODevice *vdev,
+                                   uint16_t new_vector)
+ {
+     bool kvm_irqfd = (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+-        msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
++        msix_enabled(&proxy->pci_dev) && accel_msi_via_irqfd_enabled();
+ 
+     if (new_vector == old_vector) {
+         return;
+diff --git a/include/system/accel-irq.h b/include/system/accel-irq.h
+new file mode 100644
+index 0000000000..8d17fe45ea
+--- /dev/null
++++ b/include/system/accel-irq.h
+@@ -0,0 +1,26 @@
++#ifndef SYSEMU_ACCEL_H
++#define SYSEMU_ACCEL_H
++#include "hw/pci/msi.h"
++#include "qemu/osdep.h"
++#include "system/kvm.h"
++#include "system/mshv.h"
++
++static inline bool accel_msi_via_irqfd_enabled(void)
++{
++  return mshv_msi_via_irqfd_enabled() || kvm_msi_via_irqfd_enabled();
++}
++
++static inline bool accel_irqchip_is_split(void)
++{
++  return mshv_msi_via_irqfd_enabled() || kvm_irqchip_is_split();
++}
++
++int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev);
++int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev);
++void accel_irqchip_commit_route_changes(KVMRouteChange *c);
++void accel_irqchip_commit_routes(void);
++void accel_irqchip_release_virq(int virq);
++int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
++                                         int virq);
++int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq);
++#endif
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 8380b92da2..bc8f2c228a 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -24,9 +24,31 @@
+ #define CONFIG_MSHV_IS_POSSIBLE
+ #endif
+ 
++
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++extern bool mshv_allowed;
++#define mshv_enabled() (mshv_allowed)
++#else /* CONFIG_MSHV_IS_POSSIBLE */
++#define mshv_enabled() false
++#endif
++#ifdef MSHV_USE_KERNEL_GSI_IRQFD
++#define mshv_msi_via_irqfd_enabled() mshv_enabled()
++#else
++#define mshv_msi_via_irqfd_enabled() false
++#endif
++
+ /* cpu */
+ /* EFER (technically not a register) bits */
+ #define EFER_LMA   ((uint64_t)0x400)
+ #define EFER_LME   ((uint64_t)0x100)
+ 
++/* interrupt */
++int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
++int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
++void mshv_irqchip_commit_routes(void);
++void mshv_irqchip_release_virq(int virq);
++int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
++                                        const EventNotifier *rn, int virq);
++int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
++
+ #endif
 -- 
 2.34.1
 
