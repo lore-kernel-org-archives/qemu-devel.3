@@ -4,75 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD1DDC3ABDD
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92642C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 15:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHPJ0-0003iw-Vl; Tue, 20 May 2025 11:55:03 -0400
+	id 1uHPM8-0005ef-AG; Tue, 20 May 2025 11:58:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uHPIz-0003iT-Jz
- for qemu-devel@nongnu.org; Tue, 20 May 2025 11:55:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uHPIx-0003g1-2g
- for qemu-devel@nongnu.org; Tue, 20 May 2025 11:55:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747756497;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=iev/2aQ63t4hncGcriw79KOw4Xi2m11jziKoSBJIeck=;
- b=fR6V5jDZ7YuMBJ+KX4yxMFqZpgwbK6YSObX7xAZXcfjTeXyfKinZMpCDAde5KAl12I/oFp
- Xg74QaGRDBlf0ZVHQeqHmCqIRgkmJqsXieJBO9ocpU23qz1bwBWHcWh3/kFwFJJIycLlse
- RTIhL+imQN8hEgVJlxTsPU+g6aPfKJk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-IjhC_dfVNnayy-TD1mUt5g-1; Tue,
- 20 May 2025 11:54:53 -0400
-X-MC-Unique: IjhC_dfVNnayy-TD1mUt5g-1
-X-Mimecast-MFC-AGG-ID: IjhC_dfVNnayy-TD1mUt5g_1747756488
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 90DDC180036F; Tue, 20 May 2025 15:54:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.201])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3DAE5180045B; Tue, 20 May 2025 15:54:42 +0000 (UTC)
-Date: Tue, 20 May 2025 10:54:40 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com, 
- den@virtuozzo.com, andrey.drobyshev@virtuozzo.com, hreitz@redhat.com, 
- stefanha@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru, 
- xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
- fam@euphon.net, ari@tuxera.com
-Subject: Re: [PATCH v2 24/24] block: add bdrv_graph_wrlock_drained()
- convenience wrapper
-Message-ID: <u32fzgpu4cyrofmsagtpitqyjz3anekfln3ej2gm5xz25bainb@l3h75hxzordy>
-References: <20250520103012.424311-1-f.ebner@proxmox.com>
- <20250520103012.424311-25-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uHPM3-0005eD-Dp
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 11:58:11 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uHPM0-0004RD-PK
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 11:58:11 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-70cca430085so27283957b3.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 08:58:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747756687; x=1748361487; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Zq/GEVJhhDgOVQYKrZa039iqFHl3+Fylcx95s374NQk=;
+ b=PO3jxe30quBHo0k5BwFkkuffwGjitGT7cwSK9SOAHKi/lBSbqNPxzc32Akml2pueVe
+ hoXeAByHTJ2Tk6sOEvsWDsjz6ocEr4/Blews1u6jzyPFyU93z7pAZNhwDSg5JGkYZFop
+ gSlJdRye9HTlQtYXWA1iCTyOC++ucsSRZdhg/NrBFKMSjf6Vr5s8OFtMzy0qLcOtA5Ue
+ MyBDWt3wgqwFbXckqzoEJoZwC73rICPkbbEvqLtwK2MmRoPbbx7rkZuAlPtBRrEcyexi
+ vueXN8/Ij1xF9U9Sv3bfPWlDWYhMJREfFErHNPQAMEZuK9S72vpTfNDlUox2L6wLg3x+
+ kuyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747756687; x=1748361487;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Zq/GEVJhhDgOVQYKrZa039iqFHl3+Fylcx95s374NQk=;
+ b=GsSlMSCmbfSq5DBusl381ZH/x4MXXiV5EgMDkyXizgWAFzbzAGHrOSMOzUtU0QB9BO
+ Uk4XaS1Y/b4PU+vAojV1tdjMbqLMq/YhtNKMdxMmXTLOJZf81b0qjwbZXh2zvMTvfm87
+ EprtGePOZYER4x2ohbxOxxET5oNfQEBDQLnmTNIeCetUHYCj3ZFp0Za8YXKpTQgCqlch
+ ghapHXay7iLsL4eSecGAcVmDBhmtWT9Tj3nyEOTbJbkUPZrYis6TEXdn+Z7JVgzVGk+D
+ eOhK3egndvd70DcbkOr86OIKTiVZ5k8uymdy4lj+tn/nH/9kvUYymhgvlaJ+x+nZ+Ew7
+ byTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWs0Tnli1j3GNRqa2XwjTSbnzbii3V5dx20EZCwBM8C9+oAmqq7+gyBqfwV+Fnj3WEmXALvKyl441IH@nongnu.org
+X-Gm-Message-State: AOJu0YzjCdCPql7SeQtpcgTRDLFBFd3i6nGk9C41t9cT2vCxay9+LRAh
+ X/0/6j/e9XyCDSuq8F8fg6IWpHgJydY5Fk73vDdzIZlgc5AkX6UaTPXgA5zOk6E+Tcc4Lw3QEET
+ Pmipoundhb97Yai4DTowPbbAIXJikw7H2XuUumTCVMA==
+X-Gm-Gg: ASbGnctrpsVlRPw955TNkDW4zzThKRI5n376CJDPA4Usrn7ibDl1bHCT7bXLZ5/c0BT
+ E2Z91dImZzijy0iMhZssuKXls3h17UnOd+JkIUhoMmoEnTdykCp1cXo4F1Vi7v45Ugfy/gagOKL
+ j4oSagABn7BLEhyVxliT8pLyqUMzMdtnDyFA==
+X-Google-Smtp-Source: AGHT+IHgq2qpX/TKV0lQVJIt395ndFq9Sm2qq4ctb47b0K302eCK4QAEgKKL1C8Jzb2GqD8ubrjmYRDaVMp3Qbvm1gQ=
+X-Received: by 2002:a05:690c:6c02:b0:702:d85:5347 with SMTP id
+ 00721157ae682-70cab109857mr221045177b3.36.1747756686992; Tue, 20 May 2025
+ 08:58:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250520103012.424311-25-f.ebner@proxmox.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20250520152750.2542612-1-zhao1.liu@intel.com>
+ <20250520152750.2542612-5-zhao1.liu@intel.com>
+In-Reply-To: <20250520152750.2542612-5-zhao1.liu@intel.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 20 May 2025 16:57:54 +0100
+X-Gm-Features: AX0GCFtmTkT8uefvGoOGOfVedfpMhoQWrVuKYA_aa0BwK7pxY3kcMsQ8MruaeNI
+Message-ID: <CAFEAcA9y-WRTGo5um1iwNi5FJOwuayeNLiOw88s=1vssqncRSQ@mail.gmail.com>
+Subject: Re: [PATCH 4/5] rust: Fix Zhao's email address
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org, Dapeng Mi <dapeng1.mi@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,24 +95,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 12:30:12PM +0200, Fiona Ebner wrote:
-> Many write-lockded sections are also drained sections. A new
+On Tue, 20 May 2025 at 16:09, Zhao Liu <zhao1.liu@intel.com> wrote:
+>
+> No one could find Zhao Liu via zhai1.liu@intel.com.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-write-locked
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-> bdrv_graph_wrunlock_drained() wrapper around bdrv_graph_wrunlock() is
-> introduced, which will begin a drained section first. A global
-> variable is used so bdrv_graph_wrunlock() knows if it also needs
-> to end such a drained section. Both the aio_poll call in
-> bdrv_graph_wrlock() and the aio_bh_poll() in bdrv_graph_wrunlock()
-> can re-enter a write-locked section. While for the latter, ending the
-> drain could be moved to before the call, the former requires that the
-> variable is a counter and not just a boolean.
-> 
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+thanks
+-- PMM
 
