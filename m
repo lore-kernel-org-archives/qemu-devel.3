@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76ED5C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD092C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 13:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHNPP-0001Da-Au; Tue, 20 May 2025 09:53:31 -0400
+	id 1uHNR1-000230-Oa; Tue, 20 May 2025 09:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHNPJ-0001Cb-V8
- for qemu-devel@nongnu.org; Tue, 20 May 2025 09:53:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uHNQz-000218-Fg
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 09:55:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHNPD-0004X5-TQ
- for qemu-devel@nongnu.org; Tue, 20 May 2025 09:53:22 -0400
+ id 1uHNQv-0004ji-Mp
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 09:55:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747749198;
+ s=mimecast20190719; t=1747749303;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uQY297q/qpN9tCJDbaMPk2rn3rxlGnqXOnF74IRuNPg=;
- b=cgTAGW1lzFBC8dD/Cj42d0ebzRJ+75O5MbP97lBlZdwnyMQEPaWPzLsGgsBE0g04Sx7UVd
- p7YrFAOM/p+px5Md9Dpo83TVaom3ZD/P0szNiNoDBTAPOhVNEgdTrgZrI5oxYMzlZqYkhe
- iZpS/hYTyMKdRY9dvdunynAbo+2HNKc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nteL1DlYy1uhnN7fqD4LlWsP8+tPI5rvQMc3Uo8f4m8=;
+ b=bFivVaks8ZbdvvLL7hWZQCj1HLI2mA8LLF+Ltz4t5Wn3ouZyUJrXYTM7YhCJtUkFMpM4Cp
+ 30ZP1SfLs2r/PxzT03Bi8F1Cz2cA0JGr8W7U6Jbo+9S3F+5IhGNBsFeZLzFgm3nx6+5lkt
+ u9q8SETwX/SfavXB3J6uT/WWe9DQoG0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-49-1KiZHSZ1OwyFPS81Zg21Pw-1; Tue, 20 May 2025 09:53:13 -0400
-X-MC-Unique: 1KiZHSZ1OwyFPS81Zg21Pw-1
-X-Mimecast-MFC-AGG-ID: 1KiZHSZ1OwyFPS81Zg21Pw_1747749193
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-442d472cf7fso45196255e9.3
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 06:53:13 -0700 (PDT)
+ us-mta-360-rAehukb_PmWBniAsVIeIkQ-1; Tue, 20 May 2025 09:55:00 -0400
+X-MC-Unique: rAehukb_PmWBniAsVIeIkQ-1
+X-Mimecast-MFC-AGG-ID: rAehukb_PmWBniAsVIeIkQ_1747749299
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a37a0d1005so498122f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 06:55:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747749193; x=1748353993;
+ d=1e100.net; s=20230601; t=1747749299; x=1748354099;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uQY297q/qpN9tCJDbaMPk2rn3rxlGnqXOnF74IRuNPg=;
- b=oYbj6+NHb3er3Oj63098S5PXHrOebQxwdLajBZkC9Us0hV4ahIBEgKdPIZ5ga0N7NV
- 204njFidUufXTss2Vz6d+XdxzWjw2I9pp7jq4m7bhm8Ex8mDxLe5sFqKoY+11fq/aJyi
- HkCtEla20XOKZLbYQQVsLcu8np5Wdmcqfpa1xwaOxzC8by2HZOi263ks6hOjy+n+aAIh
- b5PIcJdr3JKdCeGPTNPzew58NFBq/0z0ybsQD5ymjF+cUh8AtUFq8WbOp0Du0S0p3Ma/
- 56xZ0dwX4ENZwGTmTTneXmn8xsyDAZ0aFXcdMBXlzf4MbgBhoLYV/UaucOxP4iEL4v/l
- l8EA==
+ bh=nteL1DlYy1uhnN7fqD4LlWsP8+tPI5rvQMc3Uo8f4m8=;
+ b=othq7Wi6ERDWBzcdNYZ48dBrOsAk5O68XHlw27K0I6qB7Et8A1yBXFjsgx5XixGHKX
+ dUeffQoZQGH5C8Gz+jgwguJoESY36KXEpKCYeRSCh46NV5W2rtAMLd/4QzlnyD+AF19u
+ NkoCveJdqTNuLfrWN3pk4XB0FmGF7TjfbX4JSgpzs1OwFBmD0jaG8MWCWL4y6jWS8UkY
+ kSkH+oKPxE9wkvrdnKBbkgKSkeAQvhAUaIu8VTiGiNW0x//LYMT6DJTye/VOvy7YDlEi
+ ofQ6KtKjvTw8vh2piBEgXNqDRCDlNIBEs+fGbHG0nFbxEMg6OwAeFnrCfS0zzQVwVYjH
+ zZbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSc7Lu3hoFZY8QEG7FFShmQBZfQp3ILEOBPxaj+lKniZYcUEsMhbGVPGhNee5VrKask5IIo6imRN+s@nongnu.org
-X-Gm-Message-State: AOJu0YyjoPyiQso7G3bUeIejKz91IV0o6tM2JjTyIEsD55UGWu+38BNh
- OXCaBnbBb/2QKwHACPu/Ars5O7PkMAQtmQSUypNtRk68yjRf6TEWTKSdwpZWLs5rra3OHSjgN1Y
- giL3TacKnaSTz1Qib0cIYK250d+fiJNhy58KYvKW5jokaBFisZihVOx8h
-X-Gm-Gg: ASbGncs3pzbTZBG90fO6MpwbARwOdf6f0JYVtxex8HTImyK5zb0u9kPNAHlKg8lkWP1
- 2jnilyv5tzwkDgmFYT9pdMOkCe/38zEVWVcg68H4uClcE/d+A5/ZzJe2jhCIjc9xJ3WWTV606gx
- 8OUQlGoIrUM00XTVXecUdZvn/yOx9D0+4HUT0t9IpMfQ3HuozT4pBjSV1/LX200qmD8+f8aQ+aq
- KLi9hR+b3f3moKp0dcOUsjBb3H53rsxHs87ZLVCFGv9d+dnG4irIIVlH/9lq9fXb49P2A6FmyIB
- Ku+At4+KMrO27g==
-X-Received: by 2002:a05:6000:40d9:b0:39f:fd4:aec7 with SMTP id
- ffacd0b85a97d-3a35c808cacmr17683405f8f.7.1747749192639; 
- Tue, 20 May 2025 06:53:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkjuNvmgvA0VA0lmHyLQW2tCew2RtmK5q7vzC6wvV85uzcx2d/mh9JR8eJKGVa/v4khTPJEg==
-X-Received: by 2002:a05:6000:40d9:b0:39f:fd4:aec7 with SMTP id
- ffacd0b85a97d-3a35c808cacmr17683366f8f.7.1747749192199; 
- Tue, 20 May 2025 06:53:12 -0700 (PDT)
+ AJvYcCUc8+ejAqK3PM9Pt6DzPDU1fsb7mZgy0xHmmk7g/JhGkRLtl/iFLPZb0km+kFsj67pn6VrQeCCSXZIQ@nongnu.org
+X-Gm-Message-State: AOJu0Yx/8FGO7v5oaoSBVFdwQB7hiE0sSUyG2x4bLemOou+UxbFthIew
+ CfZJEyLdw41XIzhW5q337kpT2cK0tykccPIKTkMR4mvBnVmwYUwG9iGXdNm1IPqlYBZBdBxqK7j
+ +GHTm3zOgyxHqxAKZImoJxJqKcEiPQgYVStp66PEtx7Dg5JrvjzeZrte3
+X-Gm-Gg: ASbGncsuv6+hM+q1iNrjIbxNy9S5kGYc1VrqT6ZuAIFD1cRl3V/iviYCJTkN2YlXPtX
+ 8pfgn+2hho8FL8zBs8ZS/1K3XOwGz8m3iGdM2gX34q/13axT6b9hmNPHOsDRGNkzHrWN/FDYKvx
+ QnaZMQhS/6GG1jANE+d4e8n1CnUyTY+P9PLrbHJCg90FE8dLBW/UiYlJRnrKxHJ9WC/xo9J8NcV
+ BWBdMd2rwe5jfrn9ohMgAWMi/YIjmVSy3sfmER5HLADwiHad7z7B5aTe03Y8v49OQQfDqNZjbFq
+ 3WZW2AE3ckw3Yg==
+X-Received: by 2002:a05:6000:2385:b0:39c:13f5:dba0 with SMTP id
+ ffacd0b85a97d-3a35c821f75mr11885693f8f.13.1747749298817; 
+ Tue, 20 May 2025 06:54:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGIGTM3n/ALKQ4EcgB4Yh1sgHJlfnqImUaTZYKH45VnMiXR++QAiA+sx4x8pC5Af90sasG2g==
+X-Received: by 2002:a05:6000:2385:b0:39c:13f5:dba0 with SMTP id
+ ffacd0b85a97d-3a35c821f75mr11885677f8f.13.1747749298491; 
+ Tue, 20 May 2025 06:54:58 -0700 (PDT)
 Received: from [192.168.10.81] ([151.95.46.79])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca4d224sm16989776f8f.12.2025.05.20.06.53.10
+ ffacd0b85a97d-3a37b0bbd1fsm2124248f8f.100.2025.05.20.06.54.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 06:53:11 -0700 (PDT)
-Message-ID: <2b3b3e89-a471-4245-af63-d7ed8ab1c843@redhat.com>
-Date: Tue, 20 May 2025 15:53:10 +0200
+ Tue, 20 May 2025 06:54:57 -0700 (PDT)
+Message-ID: <12460861-2be5-4522-9ba7-009f16a61a59@redhat.com>
+Date: Tue, 20 May 2025 15:54:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 25/25] accel/mshv: Add memory remapping workaround
+Subject: Re: [RFC PATCH 12/25] accel/mshv: Add vCPU creation and execution loop
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: Magnus Kulke <magnuskulke@linux.microsoft.com>,
  magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
@@ -90,8 +91,8 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-26-magnuskulke@linux.microsoft.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+ <20250520113018.49569-13-magnuskulke@linux.microsoft.com>
+ <8b65b12c-ca3e-4528-9544-65784c862763@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
  xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
@@ -128,10 +129,10 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20250520113018.49569-26-magnuskulke@linux.microsoft.com>
+In-Reply-To: <8b65b12c-ca3e-4528-9544-65784c862763@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -156,32 +157,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 13:30, Magnus Kulke wrote:
-> Qemu maps regions of userland multiple times into the guest. The MSHV
-> kernel driver detects those overlapping regions and rejects those
-> mappings.
+On 5/20/25 15:50, Paolo Bonzini wrote:
+> You need support in the hypervisor for this: KVM and HVF both have it.
+> 
+> There are two ways to do it
 
-Can you explain what you see?  QEMU doesn't do that, just look at KVM code:
-
-static bool kvm_check_memslot_overlap(struct kvm_memslots *slots, int id,
-                                       gfn_t start, gfn_t end)
-{
-         struct kvm_memslot_iter iter;
-
-         kvm_for_each_memslot_in_gfn_range(&iter, slots, start, end) {
-                 if (iter.slot->id != id)
-                         return true;
-         }
-
-         return false;
-}
-
-...
-
-         if ((change == KVM_MR_CREATE || change == KVM_MR_MOVE) &&
-             kvm_check_memslot_overlap(slots, id, base_gfn, base_gfn + npages))
-                 return -EEXIST;
-
+Sorry - I left out the other way which is to pass something *into* 
+MSHV_RUN_VP since only half of it is currently used (I think).  But 
+that's more complicated; the advantage would be to avoid the ioctl in 
+the signal handler but it's not a fast path.  I would just do it the 
+easy way.
 
 Paolo
 
