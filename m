@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACD9C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 06:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA0DC54756
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 06:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHGgB-0004uD-P2; Tue, 20 May 2025 02:42:23 -0400
+	id 1uHGfw-0004hL-D8; Tue, 20 May 2025 02:42:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uHGg2-0004lx-I1; Tue, 20 May 2025 02:42:14 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1uHGft-0004ey-P2; Tue, 20 May 2025 02:42:05 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uHGfu-0006Qt-NI; Tue, 20 May 2025 02:42:14 -0400
+ id 1uHGfq-0006Nt-CW; Tue, 20 May 2025 02:42:05 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id D9D8B5C49F8;
- Tue, 20 May 2025 06:39:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25638C4AF0C;
+ by tor.source.kernel.org (Postfix) with ESMTP id 99E566113B;
  Tue, 20 May 2025 06:41:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8158C4CEF4;
+ Tue, 20 May 2025 06:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1747723316;
- bh=1N6hea/7ukAd+5GaVGFyPu+VhER4xnCVrmTaiBTUYb0=;
+ bh=jUN0vZpicM1ninmp5QdTzg4Xor1R6VHYCafj50G+/4g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TJfn770E9c2u1Vu/IUpti7Hi47TczN/Icwt32B/FAkHg0zA2sbvyuaaUyh8m4MlAl
- c0m5qv7ka6dtK2UQV/ISOzYNgJ0v0slZLW2NExDSMgBe1H6uUpc5Y2CXlSUKhy+8HL
- BhPSjuiu/etgK9zYeDE8W0uADIiBdehchk6A58LGEp23hHBkdzH5AxJirJjT/U7OYK
- lTg2LBXQ7ALm1JtEKtAM8irzKc1esckqZ2G32WXa2eiIf4Y4gI42Xx7dWd0xNO4sTD
- U7HUyFaPpIChEDdDhtEZ2t0q1fOpDMwTve32bwyAm1gB4N8dkKDX2N646w3GdVuTZa
- uap6cr7CWI1Tw==
+ b=oX9q0caBO9WUboHpmUTcZxNjEhG9QGgnhSDiCP6D8SrfM0bOaj4VDBUoXsmIKPxPn
+ akPF7x5v+GxsCeH5Y9pQFbQwxlB8rHka7h1B6itnwz7LdIBLoUbzCpSZAv11ddFZWo
+ kfQH/sbYLqHfZSGufeRWbFBzVvEgcKXBHLro2H2dpJU4QjY7boI7p28Vl6QUrDpIWm
+ 1hwrZeoHHYumdCV92etqN4F7BJxnHUv1dgi9yN1bqA1gL9eaQbWLSeLRhr5Ecj0HPG
+ ox3L4NOTUPkqn8DfHAG/SY3yD1evYcn9shtfYhEhv4Rty9cZlU/S9EkWGPEclsN8kU
+ 6D5wK6RzVmBjw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1uHGfh-00000005qtQ-3Vzc; Tue, 20 May 2025 08:41:53 +0200
+ id 1uHGfh-00000005qtc-3rZ4; Tue, 20 May 2025 08:41:53 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -43,24 +43,24 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v9 07/20] acpi/ghes: add a firmware file with HEST address
-Date: Tue, 20 May 2025 08:41:26 +0200
-Message-ID: <0f54365980a3c6fcb725368241a2872fea8e24e4.1747722973.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v9 10/20] acpi/ghes: add a notifier to notify when error data
+ is ready
+Date: Tue, 20 May 2025 08:41:29 +0200
+Message-ID: <d1cae8918a49530ce6efcbdcca1a96b0c29b4cb0.1747722973.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1747722973.git.mchehab+huawei@kernel.org>
 References: <cover.1747722973.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.13,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,97 +76,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Store HEST table address at GPA, placing its the start of the table at
-hest_addr_le variable.
+Some error injection notify methods are async, like GPIO
+notify. Add a notifier to be used when the error record is
+ready to be sent to the guest OS.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/ghes.c         | 22 ++++++++++++++++++++--
- include/hw/acpi/ghes.h |  6 +++++-
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ hw/acpi/ghes.c         | 5 ++++-
+ include/hw/acpi/ghes.h | 3 +++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 9243b5ad4acb..cbc96c1909f0 100644
+index f49d0d628fc4..0135ac844bcf 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -30,6 +30,7 @@
- 
- #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
- #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
-+#define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
- 
- /* The max size in bytes for one error block */
- #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
-@@ -341,6 +342,9 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
- {
-     AcpiTable table = { .sig = "HEST", .rev = 1,
-                         .oem_id = oem_id, .oem_table_id = oem_table_id };
-+    uint32_t hest_offset;
-+
-+    hest_offset = table_data->len;
- 
-     build_ghes_error_table(ags, hardware_errors, linker);
- 
-@@ -352,6 +356,17 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
-                   ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
- 
-     acpi_table_end(linker, &table);
-+
-+    if (ags->use_hest_addr) {
-+        /*
-+         * Tell firmware to write into GPA the address of HEST via fw_cfg,
-+         * once initialized.
-+         */
-+        bios_linker_loader_write_pointer(linker,
-+                                         ACPI_HEST_ADDR_FW_CFG_FILE, 0,
-+                                         sizeof(uint64_t),
-+                                         ACPI_BUILD_TABLE_FILE, hest_offset);
-+    }
+@@ -510,6 +510,9 @@ static void get_ghes_source_offsets(uint16_t source_id,
+     *read_ack_start_addr = le64_to_cpu(*read_ack_start_addr);
  }
  
- void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-@@ -361,7 +376,10 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-     fw_cfg_add_file(s, ACPI_HW_ERROR_FW_CFG_FILE, hardware_error->data,
-                     hardware_error->len);
++NotifierList acpi_generic_error_notifiers =
++    NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
++
+ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
+                              uint16_t source_id, Error **errp)
+ {
+@@ -550,7 +553,7 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
+     /* Write the generic error data entry into guest memory */
+     cpu_physical_memory_write(cper_addr, cper, len);
  
--    if (!ags->use_hest_addr) {
-+    if (ags->use_hest_addr) {
-+        fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
-+            NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
-+    } else {
-         /* Create a read-write fw_cfg file for Address */
-         fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
-             NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
-@@ -484,7 +502,7 @@ AcpiGhesState *acpi_ghes_get_state(void)
-     }
-     ags = &acpi_ged_state->ghes_state;
+-    return;
++    notifier_list_notify(&acpi_generic_error_notifiers, NULL);
+ }
  
--    if (!ags->hw_error_le) {
-+    if (!ags->hw_error_le && !ags->hest_addr_le) {
-         return NULL;
-     }
-     return ags;
+ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
 diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 411f592662af..ea9baab764e2 100644
+index 8c4b08433760..390943e46d99 100644
 --- a/include/hw/acpi/ghes.h
 +++ b/include/hw/acpi/ghes.h
-@@ -70,9 +70,13 @@ enum {
-  * When use_hest_addr is false, the GPA of the etc/hardware_errors firmware
-  * is stored at hw_error_le. This is the default on QEMU 9.x.
-  *
-- * An GPA value equal to zero means that GHES is not present.
-+ * When use_hest_addr is true, the GPA of the HEST table is stored at
-+ * hest_addr_le. This is the default for QEMU 10.x and above.
-+ *
-+ * Whe both GPA values are equal to zero means that GHES is not present.
-  */
- typedef struct AcpiGhesState {
-+    uint64_t hest_addr_le;
-     uint64_t hw_error_le;
-     bool use_hest_addr;         /* Currently, always false */
- } AcpiGhesState;
+@@ -24,6 +24,9 @@
+ 
+ #include "hw/acpi/bios-linker-loader.h"
+ #include "qapi/error.h"
++#include "qemu/notify.h"
++
++extern NotifierList acpi_generic_error_notifiers;
+ 
+ /*
+  * Values for Hardware Error Notification Type field
 -- 
 2.49.0
 
