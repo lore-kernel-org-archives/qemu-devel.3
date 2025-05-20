@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1D3C3ABDA
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 05:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44855C3ABDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 06:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHFtr-000259-Vf; Tue, 20 May 2025 01:52:28 -0400
+	id 1uHG0k-0003Yt-Ll; Tue, 20 May 2025 01:59:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHFtp-00024f-Jb
- for qemu-devel@nongnu.org; Tue, 20 May 2025 01:52:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHG0b-0003Tc-7E
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 01:59:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHFtm-00014Q-RN
- for qemu-devel@nongnu.org; Tue, 20 May 2025 01:52:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHG0X-0001fB-Bh
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 01:59:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747720339;
+ s=mimecast20190719; t=1747720758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qavP4vMDYy/AcFtgnR7pdYsT/6Mai3a6xwGhA8Gjpk0=;
- b=fhGlFm7/hqcWc5ZzmyDEAD7k3jKvbyXcLI/AMZciSnByhD6bbq7h+dE0ibTBdNUdFrh4iF
- ZKBzQowL2fRxRVXM0u6wnukeIgWfxBxZWccqlZzvHOMLLyR4NDkCKqjQbm22yhx4yAp4gk
- NRcpjaxjSxmgtygDoF7A2MhsQMq6Ek0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bZal457QhX1WQNVOpc6JcFvcNgaC67JlcgeipSS2WVs=;
+ b=E26RIMPWVjPKnOYe4tKl/tQp7uexSO0gaEDP7mdK8pfkd4i2UOG5X8VMWv2RCr3tGSdns1
+ 33xiLF6khjq05/3cRSrzCusYWPMUztBSvQ62m9ioAmqsH+teXoKsMwgKBOwsy09NszXGi1
+ hRZLgyt/mIYd+jDRC7wUPpRty4Cbnnw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-h6exft7gP8y6mOizG4a1QQ-1; Tue, 20 May 2025 01:52:14 -0400
-X-MC-Unique: h6exft7gP8y6mOizG4a1QQ-1
-X-Mimecast-MFC-AGG-ID: h6exft7gP8y6mOizG4a1QQ_1747720332
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43d5ca7c86aso32536825e9.0
- for <qemu-devel@nongnu.org>; Mon, 19 May 2025 22:52:13 -0700 (PDT)
+ us-mta-202-2qgpAbbuP86LNSpX60kK6A-1; Tue, 20 May 2025 01:59:16 -0400
+X-MC-Unique: 2qgpAbbuP86LNSpX60kK6A-1
+X-Mimecast-MFC-AGG-ID: 2qgpAbbuP86LNSpX60kK6A_1747720755
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43eed325461so29670705e9.3
+ for <qemu-devel@nongnu.org>; Mon, 19 May 2025 22:59:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747720332; x=1748325132;
+ d=1e100.net; s=20230601; t=1747720755; x=1748325555;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qavP4vMDYy/AcFtgnR7pdYsT/6Mai3a6xwGhA8Gjpk0=;
- b=WaU6aEUrcwO4Qsc2q6xaL6k1VGEBjLv+UqTl+p56CwmTmuco0jzW/3MIQW3D5WsenO
- TxWusRZhGLlZvB+vvngpj/bKU1tCtwxiLG/GUXYrduVTCMHRXPeOMlbSwHTE4YRt3glo
- 8il/RTN2vi62SEcG0ASdsxyD0sfHxRz82/1h9P1X6Bn+GykUPDwmiIZsk8ifYeDiRct8
- H7wqywCD0vsRr0mvJzNX2IOexTlKrui/vWWz+eriZTpjy2xlIbubHrH5Ztgkk9R+XX1x
- BXaOfjYf1jTskIfBFE+KBsL6sAZg3JNm6WMCgN0NmkIxE+WNq7mg7p9L4lF6njFfG0l1
- Uilw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoI55CPBqenlskm8cwth5Ha/Y2UgzVN+n3f+Y4Pg0OrlQtOtcWB4GZgdl4CtbjCmwIzw9welb7Xq48@nongnu.org
-X-Gm-Message-State: AOJu0YzDXrwIoxjlcCaoUNnW//AspIcWvAvi8HJ9MvX9aPH8qSoLbc8j
- ecDGzRo2qNwlOeNh6X/zoJiqKrpOwJAmjOSlvZjtBjXMW0LE5tYfdQLSKV1cZpB+qYogDJPpsvF
- tWLxYoGEZv++OPtT6a4hIbHj384zDx8ZTtvakhIuaH1JpkFepRUOm75Ic
-X-Gm-Gg: ASbGnctMBk8sizQkjwihNETzsPVAXqUUdVSbhKBj9PXVx3zdwnUFUptLMJXphGJyTke
- 8qHzq+DtrtuLaGkyV88beAr+/P2lUl832IQ8agFtW3jVvgeZCGzi8du3hdmD8xJy1xrqmTYwlDh
- QG79GhywDq5K5Z7OBsbuxUAJ7eAd3dK4c7neEcPW7oLVyT6TmjbZOnhCE2z2ehA3B7LIGl+zEtY
- 4KBta2Ks7uOI+WaKY/PpI48c29iLJmK9t2zLgcREJyBO5vzcl+UXrO6CHcbTvWCdqDdkN2ftg+2
- n32BKxVnHu9foJlwFqW7I1rXfhhOCllirXoJV+e343KbhUdR5w==
-X-Received: by 2002:a05:600c:c0da:b0:43d:ed:ad07 with SMTP id
- 5b1f17b1804b1-442fe667ec9mr116659005e9.29.1747720332475; 
- Mon, 19 May 2025 22:52:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvz4v6B3nd/YP5GPj6xEbFg6jbNh0qLFnMoZJ6BeU5u8tUFim42hPJOibDscRqNVAq9Vm3nQ==
-X-Received: by 2002:a05:600c:c0da:b0:43d:ed:ad07 with SMTP id
- 5b1f17b1804b1-442fe667ec9mr116658785e9.29.1747720332118; 
- Mon, 19 May 2025 22:52:12 -0700 (PDT)
+ bh=bZal457QhX1WQNVOpc6JcFvcNgaC67JlcgeipSS2WVs=;
+ b=r+aezQ52Y87X2RDKp1bXTu8wF9LpjR+TUj7ElBN3GXvXDxV2/6KsueYCnJN0Jl9Fwl
+ 4Wh+uc4DtU+N7wl4bd1LuQRF01pc9DcmXisdvIp8Qb9eQSVwyciMlVVR3GjmVFg33xSC
+ hDo0d4sjGVkkVZADXNZuoyP8h5nI/N5VEmrK3Bv1gLgB4K/L29GGuDaF82GiM0dB00R7
+ Fr+q0CswlCTeNhZPuT7txOUQi4ExY4i02J4mOaZmLU+NOSYFRMomciKVqkV6ozGHm6mA
+ kDRpBLzJsYJcOVU/rT7Kle2RNy95SCqjBGUJx/8WWzeCqHHerugZ24Ad2wH4sqNEa6bq
+ o1vA==
+X-Gm-Message-State: AOJu0YyuM7qP8YIxrICCYKLqgPdJepUj694DjQuhjnL0jIX+QT9bL0Us
+ xfz0soFaJn6WOI3/Uai086CNKRJYKZP0r6K7rd7h6J6nZNtePqVEeGmQysz2v3z6H7IOhPGHHNT
+ gGh/4Pvrmh4Ejgn8tycsfH6XTniuHJTml/Q2AArg+eMr6K0a7F3X+nzUx
+X-Gm-Gg: ASbGncvmWJsp/1ZalqdSiB6u0vsYIsjibcrCPrX73CbLaVT57c6onEytINCpOdnbEyu
+ 90e5WoA+p1Qo+D9lWlsqIRdY7rxOUlvGZOWSlRSG0sgczeeO3KtiWZ7CSfmWjHQ5CkDbv4oC+NJ
+ yggpWWCafkVRpYsaVa5D0gEoyBSAW6gRkkkGaY5msIoWqV+pkrErkfJOLC3KeTnEEoiJPmSQpbd
+ 6yvEECYSjyP6fg082+B+/OnCNE+5d7bmlv8SgGxGDEXPvHJ3OOuo/3Eff4N08DS7sUzJVglNZTZ
+ VP83efOS5CTwQiNgjR602vEyNI46ANlyELR1WUCHxDhGFneOTg==
+X-Received: by 2002:a05:600c:a36a:b0:442:d9fb:d9f1 with SMTP id
+ 5b1f17b1804b1-442fefdaba1mr148142785e9.4.1747720755462; 
+ Mon, 19 May 2025 22:59:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEChuKY2SV0Z/ZOTNozYaeAffrHyNUdcRxLS+5B3oUVhVeZ/KCNZNtmGrb5Ey+cuCwsExA5SA==
+X-Received: by 2002:a05:600c:a36a:b0:442:d9fb:d9f1 with SMTP id
+ 5b1f17b1804b1-442fefdaba1mr148142685e9.4.1747720755136; 
+ Mon, 19 May 2025 22:59:15 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f23bfdd9sm16494195e9.18.2025.05.19.22.52.11
+ 5b1f17b1804b1-447f38142aasm16575205e9.27.2025.05.19.22.59.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 May 2025 22:52:11 -0700 (PDT)
-Message-ID: <2e3e82f5-334c-4fac-aa5a-73e08967b431@redhat.com>
-Date: Tue, 20 May 2025 07:52:10 +0200
+ Mon, 19 May 2025 22:59:14 -0700 (PDT)
+Message-ID: <047d7d93-3fa5-41db-bdbf-3c14c8b47455@redhat.com>
+Date: Tue, 20 May 2025 07:59:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 21/42] vfio/pci: export MSI functions
-To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
- <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
- <1747063973-124548-22-git-send-email-steven.sistare@oracle.com>
- <c5696d3e-cd21-4d90-9e30-676434c1020c@redhat.com>
- <25435e62-50e1-4bf3-8227-e2ed93b959e2@oracle.com>
+Subject: Re: [PATCH 00/27] vfio-user client
+To: John Levon <john.levon@nutanix.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Steve Sistare <steven.sistare@oracle.com>
+References: <20250515154413.210315-1-john.levon@nutanix.com>
+ <6cc53fff-9583-48cc-a5e3-3dadf1dd215c@redhat.com> <aCsyUnQj33YEtAjb@lent>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -134,10 +133,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <25435e62-50e1-4bf3-8227-e2ed93b959e2@oracle.com>
+In-Reply-To: <aCsyUnQj33YEtAjb@lent>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -162,38 +161,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/16/25 19:58, Steven Sistare wrote:
-> On 5/16/2025 4:31 AM, Cédric Le Goater wrote:
->> On 5/12/25 17:32, Steve Sistare wrote:
->>> Export various MSI functions, for use by CPR in subsequent patches.
->>> No functional change.
->>>
->>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>
->> Please rename this routines with a 'vfio_pci' prefix.
+Hello John,
+
+>> Would it be complex to propose a functional test for it ?
 > 
-> Are you sure?  That makes sense for:
->    vfio_vector_init -> vfio_pci_vector_init
+> We have a libvfio-user we can use, but this would be a problem:
 > 
-> but the rest already have msi or intx in the name which unambiguously
-> means pci.  Adding pci_ seems unecessarily verbose:
+>   487   │ 2025-05-19 14:19:20,304: modprobe gpio-pci-idio-16
+>   488   │ 2025-05-19 14:19:20,306: modprobe: FATAL: Module gpio-pci-idio-16 not found in directory /lib/modules/5.3.7-301.fc31.x86_64
+> 
+> If somebody can help with how to get a suitable test initrd with this module
+> available, we could at least do basic testing (although no DMA).
 
-We are slowly defining an API for an internal VFIO library. I prefer
-to ensure the interface is clean by changing the names of external
-services to reflect the namespace they belong to.
-
-All routines are implemented in hw/vfio/pci.c and most take a
-VFIOPCIDevice as first argument.
-
-> +void vfio_msi_interrupt(void *opaque);
-> +void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
-> +                           int vector_n, bool msix);
-> +int vfio_msix_vector_use(PCIDevice *pdev, unsigned int nr, MSIMessage msg);
-> +void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr);
-
-vfio_msi_interrupt(), vfio_msix_vector_use() and
-vfio_msix_vector_release() are rather low level routines.
-I think we need a wrapper to avoid exposing them.
+Can't we update the asset and use newer images ? It's also possible
+to use a custom build, buildroot images for instance.
 
 
 Thanks,
@@ -201,116 +182,5 @@ Thanks,
 C.
 
 
-> +bool vfio_msix_present(void *opaque, int version_id);
-> +void vfio_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
-> +void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
-> +bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp);
-
-> 
-> - Steve
-> 
->>> ---
->>>   hw/vfio/pci.c | 21 ++++++++++-----------
->>>   hw/vfio/pci.h | 12 ++++++++++++
->>>   2 files changed, 22 insertions(+), 11 deletions(-)
->>>
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index d2b08a3..1bca415 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -279,7 +279,7 @@ static void vfio_irqchip_change(Notifier *notify, void *data)
->>>       vfio_intx_update(vdev, &vdev->intx.route);
->>>   }
->>> -static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
->>> +bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
->>>   {
->>>       uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
->>>       Error *err = NULL;
->>> @@ -353,7 +353,7 @@ static void vfio_intx_disable(VFIOPCIDevice *vdev)
->>>   /*
->>>    * MSI/X
->>>    */
->>> -static void vfio_msi_interrupt(void *opaque)
->>> +void vfio_msi_interrupt(void *opaque)
->>>   {
->>>       VFIOMSIVector *vector = opaque;
->>>       VFIOPCIDevice *vdev = vector->vdev;
->>> @@ -474,8 +474,8 @@ static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
->>>       return ret;
->>>   }
->>> -static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
->>> -                                  int vector_n, bool msix)
->>> +void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
->>> +                           int vector_n, bool msix)
->>>   {
->>>       if ((msix && vdev->no_kvm_msix) || (!msix && vdev->no_kvm_msi)) {
->>>           return;
->>> @@ -529,7 +529,7 @@ static void vfio_update_kvm_msi_virq(VFIOMSIVector *vector, MSIMessage msg,
->>>       kvm_irqchip_commit_routes(kvm_state);
->>>   }
->>> -static void vfio_vector_init(VFIOPCIDevice *vdev, int nr)
->>> +void vfio_vector_init(VFIOPCIDevice *vdev, int nr)
->>>   {
->>>       VFIOMSIVector *vector = &vdev->msi_vectors[nr];
->>>       PCIDevice *pdev = &vdev->pdev;
->>> @@ -641,13 +641,12 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->>>       return 0;
->>>   }
->>> -static int vfio_msix_vector_use(PCIDevice *pdev,
->>> -                                unsigned int nr, MSIMessage msg)
->>> +int vfio_msix_vector_use(PCIDevice *pdev, unsigned int nr, MSIMessage msg)
->>>   {
->>>       return vfio_msix_vector_do_use(pdev, nr, &msg, vfio_msi_interrupt);
->>>   }
->>> -static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
->>> +void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
->>>   {
->>>       VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->>>       VFIOMSIVector *vector = &vdev->msi_vectors[nr];
->>> @@ -674,14 +673,14 @@ static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
->>>       }
->>>   }
->>> -static void vfio_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
->>> +void vfio_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
->>>   {
->>>       assert(!vdev->defer_kvm_irq_routing);
->>>       vdev->defer_kvm_irq_routing = true;
->>>       vfio_route_change = kvm_irqchip_begin_route_changes(kvm_state);
->>>   }
->>> -static void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
->>> +void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
->>>   {
->>>       int i;
->>> @@ -2632,7 +2631,7 @@ static Object *vfio_pci_get_object(VFIODevice *vbasedev)
->>>       return OBJECT(vdev);
->>>   }
->>> -static bool vfio_msix_present(void *opaque, int version_id)
->>> +bool vfio_msix_present(void *opaque, int version_id)
->>>   {
->>>       PCIDevice *pdev = opaque;
->>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->>> index 5ce0fb9..c892054 100644
->>> --- a/hw/vfio/pci.h
->>> +++ b/hw/vfio/pci.h
->>> @@ -210,6 +210,18 @@ static inline bool vfio_is_vga(VFIOPCIDevice *vdev)
->>>       return class == PCI_CLASS_DISPLAY_VGA;
->>>   }
->>> +/* MSI/MSI-X/INTx */
->>> +void vfio_vector_init(VFIOPCIDevice *vdev, int nr);
->>> +void vfio_msi_interrupt(void *opaque);
->>> +void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
->>> +                           int vector_n, bool msix);
->>> +int vfio_msix_vector_use(PCIDevice *pdev, unsigned int nr, MSIMessage msg);
->>> +void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr);
->>> +bool vfio_msix_present(void *opaque, int version_id);
->>> +void vfio_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
->>> +void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
->>> +bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp);
->>> +
->>>   uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len);
->>>   void vfio_pci_write_config(PCIDevice *pdev,
->>>                              uint32_t addr, uint32_t val, int len);
->>
-> 
 
 
