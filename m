@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75722C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 14:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498D8C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 14:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHO1Y-0002ED-Ms; Tue, 20 May 2025 10:32:57 -0400
+	id 1uHO1p-0002HG-99; Tue, 20 May 2025 10:33:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHO1V-0002Df-P3
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:32:54 -0400
+ id 1uHO1m-0002H7-Le
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 10:33:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHO1T-0004SP-VV
- for qemu-devel@nongnu.org; Tue, 20 May 2025 10:32:53 -0400
+ id 1uHO1k-0004V9-CX
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 10:33:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747751570;
+ s=mimecast20190719; t=1747751587;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eyyKewFowLGN6weCf+HOMRYql1fcCQIkABOVNAcjl/4=;
- b=fX//qFFjbslKXTZMMmHKcMVm8Vw6rOqNFGnF486uuEKV/zpNOiPzwOnwSVXgEYM1eeK1BH
- D3+nbAZG47XHS01tJrd0ENYExafWlJXTQdZzl7h1A3qJAbBc5rIpWsyF/T9gzKRELRysPf
- hqgNpJk3GcGNRuE977+vENjRN5JxHjw=
+ bh=7tFvhY4kOLUkmNyk55vH1TkbyZlK7bdQvR0R383uuuI=;
+ b=VkoLWxw6PcHLtlQvShpEDGaWf0HGUbD7e5BfmuwQTWkCuDrWURIr+NvzDycLG+x/nW5Ze6
+ T8Zw8jswe+4JT2NY9JkHerjtMECG54YiZsKA7VLZKo4/gZbqx+ASMA4dFPkbOtqCZjuqsV
+ af6JAr9skTlrvu/noj5pGjNonqfdV+Q=
 Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
  [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-246-b9iMOJx6M4m48JmH0NUdJA-1; Tue, 20 May 2025 10:32:48 -0400
-X-MC-Unique: b9iMOJx6M4m48JmH0NUdJA-1
-X-Mimecast-MFC-AGG-ID: b9iMOJx6M4m48JmH0NUdJA_1747751567
+ us-mta-408-oHdQzhqCPum7H90OY-EXeA-1; Tue, 20 May 2025 10:33:06 -0400
+X-MC-Unique: oHdQzhqCPum7H90OY-EXeA-1
+X-Mimecast-MFC-AGG-ID: oHdQzhqCPum7H90OY-EXeA_1747751585
 Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-602047ace12so1233388a12.2
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 07:32:48 -0700 (PDT)
+ 4fb4d7f45d1cf-601f87bb9c8so1495072a12.2
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 07:33:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747751567; x=1748356367;
+ d=1e100.net; s=20230601; t=1747751585; x=1748356385;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eyyKewFowLGN6weCf+HOMRYql1fcCQIkABOVNAcjl/4=;
- b=WF95PyZ2ttX+GkRAF9fgqFSuU5UTSNS5fVGLOHHK1FNWZ4z7fPlPYx0o/Z/G/w2jXp
- Zn4x++Em1j/hI3RlIeJB2nAdDbsn0DK37wtiS7Fm4zs8Zw0naoy3cp7YJb5yDuoNkYz0
- y3Fw36Wn+BBFHQ0wntzdOnQLAxx8SJtTreDr1SL5YOY9GJ77ExccAvkHY6pvnBB6fwMR
- sSSnp3gCiDofkb4Nsaf75vDGr0GWEofVe/jEjH0alH1TBQ9PdkbvyQ6N8Ve6dcZow+Zw
- JXqzS3YIIUZcekacdg9C78zWGa+QO3tjSh2z2Z0btVBfygvGlyDRpVB63OtP7lD6F3cQ
- 7ydA==
+ bh=7tFvhY4kOLUkmNyk55vH1TkbyZlK7bdQvR0R383uuuI=;
+ b=sjnyFdLwYOM7X5vWo0UCkWa9FNTM/7hxAnek9URp4xDmHQdioIbud89HWFXPUzx+uH
+ BGTR2b/xso9ajV6TYFzUL19jW1NVegYmIQ0l86t7Jbkek6jz6tjZOXytSb2ym0FC9/dI
+ grsP/RYy+cV9G/rsXc9I3xTtCa5qeqk2GKSGlP8MNbNNDIBx3qy9sQH7GswDKtZpYSOC
+ 6J188E7VulwgG9pyYmYVBPVZbKMUi2GxVOznYWckOiF5yu9Bi0igG6+nIBix7QqHKDSm
+ QV3LXUT+rF9Y/z4wgT4qtDhiR7h7Lor8hiU8RK0KD1GKMW/HKYcrfeJV0oGsxQFuhJhr
+ iqLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWi3ueoqezERSppuw6uHUzCgDiWF2hi3bj2R0OnsWqMVyxe6qHmcMdndLuhMc29IzKLdM2E9EcC11fH@nongnu.org
-X-Gm-Message-State: AOJu0YxHUMcleNCsOvNDGNnvfxec1/M9jvEQOTltPurp538w7FA84JYz
- znCgsyYOAb/dpHKesrqT2F4tACOG18oTjF4zKOJ3Q3sXrYAA84rAkBOYVTawHjEdUs1xEz22wtf
- ntUHVSMSn4B71Vp1IHN2AaKmGilgy530N+jCikdtKzV6UU2WXpAImwk5e
-X-Gm-Gg: ASbGnctATaMe28WKSp4JyRJ6wNtjZ4qOU65o51MkrmgYnxEQE1aNpQXQiETtn7D88oT
- 6yNTg6+swAWv+c/5qSZY2owLB52MQundDLTlZkrjC5t3E2v8bVqsSbcHOjabh5b4i/x4bLGVpkd
- pYz5egm/UdxNtH8RHBMQGbWeMcmfgNN37K+2QdA4cQtnNyz8ZxehhBLFxJzl0X75/F4jWUskkvF
- oQuJQdNu0T8PUlFblPRCF+HuUoxUu+y05S8i/E6bycdrjOjP2885qvFLgPnyFQoAyb/cdxHFzMs
- aew3Km/ARFWdUQ==
-X-Received: by 2002:a17:907:e915:b0:ad5:1e70:7150 with SMTP id
- a640c23a62f3a-ad52d443a03mr1562848366b.2.1747751566971; 
- Tue, 20 May 2025 07:32:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF1SxvMnrYo33aixijukBQ/jU3ZzXQOYrVXJsOtOSsQa/0cDLcVOY8ds12Wdqw3mvwY7QVFrg==
-X-Received: by 2002:a17:907:e915:b0:ad5:1e70:7150 with SMTP id
- a640c23a62f3a-ad52d443a03mr1562843466b.2.1747751566513; 
- Tue, 20 May 2025 07:32:46 -0700 (PDT)
+ AJvYcCVKI8VGeToobXy+8ePInKhiG1HCt3Y8WeokqYtIeM/iwxsz/n/qN+SkEv4I5FDK0iQjEl4x8/ZfCVS7@nongnu.org
+X-Gm-Message-State: AOJu0YziIm8YtdpTsq3rXbi4GSxwH0lgav5wzB5nq0238f7YcfR0qP0G
+ rT7cZYT+oJYIx82e4mupvo3pWef9vO7pMc0xwkL1uNeEweuBkmADhxtwNmz28qvpvigrJYNlPAy
+ Ou3WmBuM6NmrX2OLOBPtJjpQ15oV2Z317Tscec1uTB18HJ2nw2BNSKmDa
+X-Gm-Gg: ASbGncun43Cva961q9NgCmrIjIp7lUazND6JPTZYu2JGtLlHEUjGadmaMhecSaHSkCT
+ 3Cj8kBc28OkqOY+fjaQhR4awFyuEtQB+/R+vqhtYgZVpBGyectP/CWlsuB9ElApb3GkN7tSSuhg
+ syfNAFcpYp5h0LFLzm760wyxjuWU0EQmvBXn5Yks96JbE0CJ1Oy82U6Y5PbRpnLiZ20XwN0B223
+ U0Bv3aECHfqsGS6lbvug1/GxXZCe7KCCI3QAL3GGIbt6BRdBnd3Aci8fB+vGMWf/fS3fMwaklWQ
+ epqlPi/Y2mb+IA==
+X-Received: by 2002:a05:6402:4307:b0:602:a0:1f0f with SMTP id
+ 4fb4d7f45d1cf-60200a02d9dmr4451513a12.18.1747751585047; 
+ Tue, 20 May 2025 07:33:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3/ihK7rOR4bGhf50pjc8+NRO8Wu7G2hDHTCo3K0LBjSBjHQQqT+77QIocmOPvX/y1JirpMw==
+X-Received: by 2002:a05:6402:4307:b0:602:a0:1f0f with SMTP id
+ 4fb4d7f45d1cf-60200a02d9dmr4451474a12.18.1747751584612; 
+ Tue, 20 May 2025 07:33:04 -0700 (PDT)
 Received: from [192.168.10.81] ([151.95.46.79])
  by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ad52d278247sm732727166b.76.2025.05.20.07.32.45
+ 4fb4d7f45d1cf-6004d502ec0sm7292443a12.31.2025.05.20.07.33.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 07:32:45 -0700 (PDT)
-Message-ID: <5d54270a-51be-4462-a02d-a12432e42be4@redhat.com>
-Date: Tue, 20 May 2025 16:32:44 +0200
+ Tue, 20 May 2025 07:33:04 -0700 (PDT)
+Message-ID: <a4be2749-ef7e-467a-a775-822222a06b99@redhat.com>
+Date: Tue, 20 May 2025 16:33:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/33] include/exec: Allow using 64bit guest addresses on
- emscripten
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
+Subject: Re: [RFC PATCH 18/25] target/i386/mshv: Implement
+ mshv_arch_put_registers()
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
+ <rbolshakov@ddn.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org
-References: <cover.1747744132.git.ktokunaga.mail@gmail.com>
- <d3e7e584cf61c76952f4c9d913ba80d905c80e76.1747744132.git.ktokunaga.mail@gmail.com>
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+ <20250520113018.49569-19-magnuskulke@linux.microsoft.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -133,7 +129,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <d3e7e584cf61c76952f4c9d913ba80d905c80e76.1747744132.git.ktokunaga.mail@gmail.com>
+In-Reply-To: <20250520113018.49569-19-magnuskulke@linux.microsoft.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -145,7 +141,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,52 +157,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 14:51, Kohei Tokunaga wrote:
->     target_kconfig = []
->     foreach sym: accelerators
-> -    # Disallow 64-bit on 32-bit emulation and virtualization
-> -    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-> -      continue
-> +    if host_arch != 'wasm32'
-> +      # Disallow 64-bit on 32-bit emulation and virtualization
-> +      if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-> +        continue
-> +      endif
->       endif
->       if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
->         config_target += { sym: 'y' }
+On 5/20/25 13:30, Magnus Kulke wrote:
+> Write CPU register state to MSHV vCPUs. Various mapping functions to
+> prepare the payload for the HV call have been implemented.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>   include/system/mshv.h       |  41 ++++++
+>   target/i386/mshv/mshv-cpu.c | 249 ++++++++++++++++++++++++++++++++++++
+>   2 files changed, 290 insertions(+)
+> 
+> diff --git a/include/system/mshv.h b/include/system/mshv.h
+> index 055489a6f3..76a3b0010e 100644
+> --- a/include/system/mshv.h
+> +++ b/include/system/mshv.h
+> @@ -99,6 +99,46 @@ typedef struct MshvMsiControl {
+>   #define EFER_LMA   ((uint64_t)0x400)
+>   #define EFER_LME   ((uint64_t)0x100)
+>   
+> +/* CR0 bits */
+> +#define CR0_PE     ((uint64_t)0x1)
+> +#define CR0_PG     ((uint64_t)0x80000000)
+> +
+> +/* CR4 bits */
+> +#define CR4_PAE    ((uint64_t)0x20)
+> +#define CR4_LA57   ((uint64_t)0x1000)
+> +
+> +/* rflags bits (shift values) */
+> +#define CF_SHIFT   0
+> +#define PF_SHIFT   2
+> +#define AF_SHIFT   4
+> +#define ZF_SHIFT   6
+> +#define SF_SHIFT   7
+> +#define DF_SHIFT   10
+> +#define OF_SHIFT   11
+> +
+> +/* rflags bits (bit masks) */
+> +#define CF         ((uint64_t)1 << CF_SHIFT)
+> +#define PF         ((uint64_t)1 << PF_SHIFT)
+> +#define AF         ((uint64_t)1 << AF_SHIFT)
+> +#define ZF         ((uint64_t)1 << ZF_SHIFT)
+> +#define SF         ((uint64_t)1 << SF_SHIFT)
+> +#define DF         ((uint64_t)1 << DF_SHIFT)
+> +#define OF         ((uint64_t)1 << OF_SHIFT)
 
-I'd prefer something like
-
-# Detect host pointer size for the target configuration loop.
-host_long_bits = cc.sizeof('void *') * 8
-tcg_vaddr_bits = host_arch == 'wasm32' ? 64 : host_long_bits
-...
-config_host_data.set('TCG_VADDR_BITS', tcg_vaddr_bits)
-
-Then in the target configuration loop
-
--    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-+    if tcg_vaddr_bits < config_target['TARGET_LONG_BITS'].to_int()
-
-and throughout the code you can have
-
-#ifdef TCG_VADDR_BITS == 32
-...
-#else
-...
-#endif
-
-instead of
-
-#ifdef EMSCRIPTEN
-...
-#else
-...
-#endif
-
-In fact, I think this patch would be acceptable as a separate 
-submission, because it could be tested using TCI already.
+All of these are either duplicate or unused.
 
 Paolo
 
