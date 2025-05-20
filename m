@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62DC1C3DA6D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE1F2C3ABDD
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 11:32:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHLBm-00081U-HW; Tue, 20 May 2025 07:31:18 -0400
+	id 1uHLC3-00086W-NT; Tue, 20 May 2025 07:31:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uHLBh-00080d-Aq
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:15 -0400
+ id 1uHLC0-00085W-2I
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:32 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLBe-000178-0y
- for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:12 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uHLBx-0001Fb-Na
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 07:31:31 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (unknown [172.201.77.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 2C7712067864;
- Tue, 20 May 2025 04:31:03 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2C7712067864
+ by linux.microsoft.com (Postfix) with ESMTPSA id 5286F201DB2F;
+ Tue, 20 May 2025 04:31:25 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5286F201DB2F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1747740667;
- bh=0eWhcyGT2SZdhe1ztMyfEKgEFMQEciLPDh0RAorlKR4=;
- h=From:To:Cc:Subject:Date:From;
- b=OluYBvhHRAAvOxdtxnBYVM56IIH1hEA/m7swgfw4by+TccO82OYyLnVTEog3SRcnr
- N8QYdqut5wa1apvYm0ZBTxFLuqMqzmelm0wS11p6kBGNoHcUufJWgqAhZlJTxNLDfX
- BdTkVT7LpcE3l2ryCe6xcAjw7R7tc+n30YxAecls=
+ s=default; t=1747740688;
+ bh=2j2Hac+kfpYWsKAqb5uP4YD7jcUnCWN4nzwJo06Di0g=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=HEGSl+PWo54FP7QYM+KO/QFAw6QUshl0fWnSGipUYL+GqF87/DSZ75ow+wvSZSLM3
+ 0p3xvaOC1V7u0+oyZIdv/JYtwLIvcUt8mc/Da+k2clUZQ0qZfO1kos9/KUrNME2XDg
+ G7WdcN6H82g/tddmlnV/Qv2hjV2szYAWNog5T3hA=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: magnuskulke@microsoft.com,
 	qemu-devel@nongnu.org,
@@ -43,11 +43,12 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cameron Esfahani <dirty@apple.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH 00/25] Implementing a MSHV (Microsoft Hypervisor)
- accelerator
-Date: Tue, 20 May 2025 13:29:53 +0200
-Message-Id: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+Subject: [RFC PATCH 06/25] accel/mshv: Add accelerator skeleton
+Date: Tue, 20 May 2025 13:29:59 +0200
+Message-Id: <20250520113018.49569-7-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
@@ -74,191 +75,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello all,
+Introduce the initial scaffold for the MSHV (Microsoft Hypervisor)
+accelerator backend. This includes the basic directory structure and
+stub implementations needed to integrate with QEMU's accelerator
+framework.
 
-as previously announced here, we are working on an integration that will
-expose the HyperV hypervisor to QEMU on Linux hosts. HyperV is a Type 1
-hypervisor with a layered architecture that features a "root partition"
-alongside VMs as "child partitions" that will interface with the
-hypervisor and has access to the hardware. (https://aka.ms/hypervarch)
-
-The effort to run Linux on such a Root Partition and expose HyperV to
-such a management partition is called "MSHV". Sometimes we refer to the
-root partition as "Dom0 Linux". Today we are targetting nested
-virtualization, that is: the creation + management of L2 VMs on an L1
-VM (L0 would indicate bare metal).
-
-+-------------+ +----------------+ +--------------+
-|             | |                | |              |
-| Azure Host  | | L1 Linux Dom0  | | L2 Guest VM  |
-|             | |                | |              |
-|     OS      | |                | |              |
-|             | | +------------+ | |              |
-|             | | |  Qemu VMM  | | |              |
-|             | | +------------+ | |              |
-|             | | +------------+ | |              |
-|             | | |   Kernel   | | |              |
-|             | | +-----+------+ | |              |
-|             | +-------|--------+ +--------------+
-|             | +-------v-------------------------+
-|             | |    Microsoft Hypervisor (L1)    |
-+-------------+ +-------+-------------------------+
-                        |
-+-----------------------v-------------------------+
-|            Microsoft Hypervisor (L0)            |
-+-------------------------------------------------+
-
-+-------------------------------------------------+
-|                                                 |
-|                    Hardware                     |
-|                                                 |
-+-------------------------------------------------+
-
-This submission is a port of the existing MSHV integration that is
-shipped in Cloud-Hypervisor and MSHV-specific rust-crates in rust-vmm.
-There are various products like AKS Pod Sandboxing and AKS Confidential
-Pods built on MSHV and Cloud-Hypervisor. We hope to achieve a seamless
-integration into the QEMU accelerator framework, similar to existing
-integrations like KVM, HVF or WHPX.
-
-The patch set has been split into chunks that should be applicable and
-buildable individually, but only the full set of commits will allow
-launching MSHV-accelerated guests on supported kernels and environments.
-
-The toggle to enable the feature at build time would be: `./configure
---enable-mshv`.
-
-When launching a VM, the accelerator `mshv` can be enabled via
-
-`-accel mshv` or `-machine q35,accel=mshv`.
-
-We concluded the porting, but we haven't performed any comprehensive
-testing yet. We opted to send our submission early to receive feedback
-about the general structure and potential problems of our integration.
-Most likely we will uncover problems during testing and address those in
-upcoming revisions of the patch set.
-
-The configuration we are using during development:
-
-machine q35 + OVMF + various recent linux distros as guests (fedora
-42, ubuntu 22.04)
-
-We would welcome any feedback around the structure and integration
-points that we chose, so we can incorporate them into upcoming
-revisions.
-
-Some notes/caveats about the initial submission:
-
-- The relevant MSHV kernel code has been accepted for inclusion in the
-  upcoming 6.15 release, which should be released shortly. To allow
-  building it on older kernel we vendored the kernel headers that define
-  the MSHV ABI into the patch set. We might remove it in later
-  revisions of the patch set, or put it behind a feature toggle. Once
-  the kernel is released we plan to published a preconfigured Azure
-  image, which can be used to test the MSHV accelerator.
-
-- QEMU is mapping regions into the guest that might partially overlap in
-  their userspace_addr range (e.g. for ROMs in early boot). Currently
-  MSHV will reject such overlaps. We are looking into whether we
-  can/want to relax that restriction. To work around this we maintain a
-  list of mapping references and swap in/out regions if there's a GPA
-  fault and we find a valid candidate region in our list. (see last
-  commit). Maybe there are alternative, less invasive, suggestions. We'd
-  be happy to hear those.
-
-- We noticed that when using SeaBIOS, in certain permutations of guest
-  configuration (> 2GB ram & >1 virtio-blk-pci devices), we run into
-  unmapped GPA errors. We suspect it has to do with SeaBIOS addressing
-  memory in the 4GB+ region in those cases. We are investigating, and
-  will hopefully be able to issue a fix soon. For the time being this
-  can be worked around by using OVMF as firmware:
-
-- Since the MHSV accelerator requires a HyperV hypervisor to be present,
-  it would make sense to provide testing infrastructure for integration
-  testing on Azure. We are looking into options how to implement that.
-
-best,
-
-magnus
-
-Magnus Kulke (25):
-  accel: Add Meson and config support for MSHV accelerator
-  target/i386/emulate: allow instruction decoding from stream
-  target/i386/mshv: Add x86 decoder/emu implementation
-  hw/intc: Generalize APIC helper names from kvm_* to accel_*
-  include/hw/hyperv: Add MSHV ABI header definitions
-  accel/mshv: Add accelerator skeleton
-  accel/mshv: Register memory region listeners
-  accel/mshv: Initialize VM partition
-  accel/mshv: Register guest memory regions with hypervisor
-  accel/mshv: Add ioeventfd support
-  accel/mshv: Add basic interrupt injection support
-  accel/mshv: Add vCPU creation and execution loop
-  accel/mshv: Add vCPU signal handling
-  target/i386/mshv: Add CPU create and remove logic
-  target/i386/mshv: Implement mshv_store_regs()
-  target/i386/mshv: Implement mshv_get_standard_regs()
-  target/i386/mshv: Implement mshv_get_special_regs()
-  target/i386/mshv: Implement mshv_arch_put_registers()
-  target/i386/mshv: Set local interrupt controller state
-  target/i386/mshv: Register CPUID entries with MSHV
-  target/i386/mshv: Register MSRs with MSHV
-  target/i386/mshv: Integrate x86 instruction decoder/emulator
-  target/i386/mshv: Write MSRs to the hypervisor
-  target/i386/mshv: Implement mshv_vcpu_run()
-  accel/mshv: Add memory remapping workaround
-
- accel/Kconfig                    |    3 +
- accel/accel-irq.c                |   95 ++
- accel/meson.build                |    3 +-
- accel/mshv/irq.c                 |  370 +++++++
- accel/mshv/mem.c                 |  434 ++++++++
- accel/mshv/meson.build           |    9 +
- accel/mshv/mshv-all.c            |  731 ++++++++++++
- accel/mshv/msr.c                 |  375 +++++++
- accel/mshv/trace-events          |   20 +
- accel/mshv/trace.h               |    1 +
- hw/intc/apic.c                   |    9 +
- hw/intc/ioapic.c                 |   20 +-
- hw/virtio/virtio-pci.c           |   19 +-
- include/hw/hyperv/hvgdk.h        |   20 +
- include/hw/hyperv/hvhdk.h        |  165 +++
- include/hw/hyperv/hvhdk_mini.h   |  106 ++
- include/hw/hyperv/linux-mshv.h   | 1038 ++++++++++++++++++
- include/system/accel-irq.h       |   26 +
- include/system/mshv.h            |  237 ++++
- meson.build                      |   17 +
- meson_options.txt                |    2 +
- scripts/meson-buildoptions.sh    |    3 +
- target/i386/cpu.h                |    2 +-
- target/i386/emulate/meson.build  |    7 +-
- target/i386/emulate/x86_decode.c |   32 +-
- target/i386/emulate/x86_decode.h |   11 +
- target/i386/emulate/x86_emu.c    |    3 +-
- target/i386/emulate/x86_emu.h    |    1 +
- target/i386/meson.build          |    2 +
- target/i386/mshv/meson.build     |    8 +
- target/i386/mshv/mshv-cpu.c      | 1768 ++++++++++++++++++++++++++++++
- target/i386/mshv/x86.c           |  330 ++++++
- 32 files changed, 5841 insertions(+), 26 deletions(-)
- create mode 100644 accel/accel-irq.c
- create mode 100644 accel/mshv/irq.c
- create mode 100644 accel/mshv/mem.c
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+---
+ accel/meson.build      |   1 +
+ accel/mshv/meson.build |   6 ++
+ accel/mshv/mshv-all.c  | 143 +++++++++++++++++++++++++++++++++++++++++
+ include/system/mshv.h  |  34 ++++++++++
+ 4 files changed, 184 insertions(+)
  create mode 100644 accel/mshv/meson.build
  create mode 100644 accel/mshv/mshv-all.c
- create mode 100644 accel/mshv/msr.c
- create mode 100644 accel/mshv/trace-events
- create mode 100644 accel/mshv/trace.h
- create mode 100644 include/hw/hyperv/hvgdk.h
- create mode 100644 include/hw/hyperv/hvhdk.h
- create mode 100644 include/hw/hyperv/hvhdk_mini.h
- create mode 100644 include/hw/hyperv/linux-mshv.h
- create mode 100644 include/system/accel-irq.h
- create mode 100644 include/system/mshv.h
- create mode 100644 target/i386/mshv/meson.build
- create mode 100644 target/i386/mshv/mshv-cpu.c
- create mode 100644 target/i386/mshv/x86.c
 
+diff --git a/accel/meson.build b/accel/meson.build
+index d5e982d152..efa62879b6 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -10,6 +10,7 @@ if have_system
+   subdir('kvm')
+   subdir('xen')
+   subdir('stubs')
++  subdir('mshv')
+ endif
+ 
+ # qtest
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
+new file mode 100644
+index 0000000000..4c03ac7921
+--- /dev/null
++++ b/accel/mshv/meson.build
+@@ -0,0 +1,6 @@
++mshv_ss = ss.source_set()
++mshv_ss.add(if_true: files(
++  'mshv-all.c'
++))
++
++specific_ss.add_all(when: 'CONFIG_MSHV', if_true: mshv_ss)
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+new file mode 100644
+index 0000000000..44605adf94
+--- /dev/null
++++ b/accel/mshv/mshv-all.c
+@@ -0,0 +1,143 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2025
++ *
++ * Authors:
++ *  Ziqiao Zhou       <ziqiaozhou@microsoft.com>
++ *  Magnus Kulke      <magnuskulke@microsoft.com>
++ *  Jinank Jain       <jinankjain@microsoft.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/event_notifier.h"
++#include "qemu/module.h"
++#include "qemu/main-loop.h"
++#include "hw/boards.h"
++
++#include "hw/hyperv/hvhdk.h"
++#include "hw/hyperv/hvhdk_mini.h"
++#include "hw/hyperv/hvgdk.h"
++#include "hw/hyperv/linux-mshv.h"
++
++#include "qemu/accel.h"
++#include "qemu/guest-random.h"
++#include "system/accel-ops.h"
++#include "system/cpus.h"
++#include "system/runstate.h"
++#include "system/accel-blocker.h"
++#include "system/address-spaces.h"
++#include "system/mshv.h"
++#include "system/reset.h"
++#include "trace.h"
++#include <err.h>
++#include <stdint.h>
++#include <sys/ioctl.h>
++
++#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
++
++DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
++
++bool mshv_allowed;
++
++MshvState *mshv_state;
++
++
++static int mshv_init(MachineState *ms)
++{
++	error_report("unimplemented");
++	abort();
++}
++
++static void mshv_start_vcpu_thread(CPUState *cpu)
++{
++	error_report("unimplemented");
++	abort();
++}
++
++static void mshv_cpu_synchronize_post_init(CPUState *cpu)
++{
++	error_report("unimplemented");
++	abort();
++}
++
++static void mshv_cpu_synchronize_post_reset(CPUState *cpu)
++{
++	error_report("unimplemented");
++	abort();
++}
++
++static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
++{
++	error_report("unimplemented");
++	abort();
++}
++
++static void mshv_cpu_synchronize(CPUState *cpu)
++{
++	error_report("unimplemented");
++	abort();
++}
++
++static bool mshv_cpus_are_resettable(void)
++{
++	error_report("unimplemented");
++	abort();
++}
++
++static void mshv_accel_class_init(ObjectClass *oc, const void *data)
++{
++    AccelClass *ac = ACCEL_CLASS(oc);
++
++    ac->name = "MSHV";
++    ac->init_machine = mshv_init;
++    ac->allowed = &mshv_allowed;
++}
++
++static void mshv_accel_instance_init(Object *obj)
++{
++    MshvState *s = MSHV_STATE(obj);
++
++    s->vm = 0;
++}
++
++static const TypeInfo mshv_accel_type = {
++    .name = TYPE_MSHV_ACCEL,
++    .parent = TYPE_ACCEL,
++    .instance_init = mshv_accel_instance_init,
++    .class_init = mshv_accel_class_init,
++    .instance_size = sizeof(MshvState),
++};
++
++static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
++{
++    AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
++
++    ops->create_vcpu_thread = mshv_start_vcpu_thread;
++    ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
++    ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
++    ops->synchronize_state = mshv_cpu_synchronize;
++    ops->synchronize_pre_loadvm = mshv_cpu_synchronize_pre_loadvm;
++    ops->cpus_are_resettable = mshv_cpus_are_resettable;
++}
++
++static const TypeInfo mshv_accel_ops_type = {
++    .name = ACCEL_OPS_NAME("mshv"),
++    .parent = TYPE_ACCEL_OPS,
++    .class_init = mshv_accel_ops_class_init,
++    .abstract = true,
++};
++
++static void mshv_type_init(void)
++{
++    type_register_static(&mshv_accel_type);
++    type_register_static(&mshv_accel_ops_type);
++}
++
++type_init(mshv_type_init);
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index bc8f2c228a..0858e47def 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -16,6 +16,14 @@
+ #ifndef QEMU_MSHV_INT_H
+ #define QEMU_MSHV_INT_H
+ 
++#include "qemu/osdep.h"
++#include "qemu/accel.h"
++#include "hw/hyperv/hyperv-proto.h"
++#include "hw/hyperv/linux-mshv.h"
++#include "hw/hyperv/hvhdk.h"
++#include "qapi/qapi-types-common.h"
++#include "system/memory.h"
++
+ #ifdef COMPILING_PER_TARGET
+ #ifdef CONFIG_MSHV
+ #define CONFIG_MSHV_IS_POSSIBLE
+@@ -28,6 +36,32 @@
+ #ifdef CONFIG_MSHV_IS_POSSIBLE
+ extern bool mshv_allowed;
+ #define mshv_enabled() (mshv_allowed)
++
++typedef struct MshvMemoryListener {
++  MemoryListener listener;
++  int as_id;
++} MshvMemoryListener;
++
++typedef struct MshvAddressSpace {
++    MshvMemoryListener *ml;
++    AddressSpace *as;
++} MshvAddressSpace;
++
++typedef struct MshvState {
++  AccelState parent_obj;
++  int vm;
++  MshvMemoryListener memory_listener;
++  /* number of listeners */
++  int nr_as;
++  MshvAddressSpace *as;
++} MshvState;
++extern MshvState *mshv_state;
++
++struct AccelCPUState {
++  int cpufd;
++  bool dirty;
++};
++
+ #else /* CONFIG_MSHV_IS_POSSIBLE */
+ #define mshv_enabled() false
+ #endif
 -- 
 2.34.1
 
