@@ -4,107 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C01AC54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 19:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B395C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 May 2025 19:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHSI1-0002lb-It; Tue, 20 May 2025 15:06:13 -0400
+	id 1uHSJ1-0003JP-H1; Tue, 20 May 2025 15:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uHSHy-0002l8-Tt
- for qemu-devel@nongnu.org; Tue, 20 May 2025 15:06:10 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uHSHu-00084A-6u
- for qemu-devel@nongnu.org; Tue, 20 May 2025 15:06:10 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5DE251F7DF;
- Tue, 20 May 2025 19:06:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747767961; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LBhs9K7cDJCD0mTJ0NAqOms7TMclS1Q931/0BZErBiA=;
- b=y2WhFH0JlrpsGfsALARFsKJ3Bv8owq/PQbZmtSfYVrQRPiaSUGcce6/MAoqPEOkIhN7uEX
- qDARxCQWudeVucoohotyC3BIblBo8W8giW6Ba6vwBM5XfvmQf2RGGmpCspJEWYEvy09FJa
- P0cqwCrdiZ0c4/Y4Vj19xKTeM8Y5hqc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747767961;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LBhs9K7cDJCD0mTJ0NAqOms7TMclS1Q931/0BZErBiA=;
- b=VGYFpZemiFSpWFvVPoJN8vUGw8Cxc32+nYaCtIwSq97gZtnLyrnpwKHzx1I25M1UFdHWOB
- YLoGxFvFe02wxHAA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=y2WhFH0J;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VGYFpZem
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1747767961; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LBhs9K7cDJCD0mTJ0NAqOms7TMclS1Q931/0BZErBiA=;
- b=y2WhFH0JlrpsGfsALARFsKJ3Bv8owq/PQbZmtSfYVrQRPiaSUGcce6/MAoqPEOkIhN7uEX
- qDARxCQWudeVucoohotyC3BIblBo8W8giW6Ba6vwBM5XfvmQf2RGGmpCspJEWYEvy09FJa
- P0cqwCrdiZ0c4/Y4Vj19xKTeM8Y5hqc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1747767961;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LBhs9K7cDJCD0mTJ0NAqOms7TMclS1Q931/0BZErBiA=;
- b=VGYFpZemiFSpWFvVPoJN8vUGw8Cxc32+nYaCtIwSq97gZtnLyrnpwKHzx1I25M1UFdHWOB
- YLoGxFvFe02wxHAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C94CC13888;
- Tue, 20 May 2025 19:06:00 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QDelIZjSLGjVaQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 20 May 2025 19:06:00 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yanfei Xu <yanfei.xu@bytedance.com>, peterx@redhat.com
-Cc: qemu-devel@nongnu.org, Yanfei Xu <yanfei.xu@bytedance.com>
-Subject: Re: [RFC PATCH] migration/ram: avoid to do log clear in the last round
-In-Reply-To: <20250514115827.3216082-1-yanfei.xu@bytedance.com>
-References: <20250514115827.3216082-1-yanfei.xu@bytedance.com>
-Date: Tue, 20 May 2025 16:05:57 -0300
-Message-ID: <87zff75ch6.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uHSIz-0003Hb-8i
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 15:07:13 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uHSIw-00089k-Rz
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 15:07:12 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 4300449F5F;
+ Tue, 20 May 2025 19:07:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FB5C4CEE9;
+ Tue, 20 May 2025 19:07:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1747768028;
+ bh=/ttkvxK3YWZha+cg5ICtPxg3cYJZPLDZfSM+VXz1VKg=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=BI5yvxfuRFbb+uXdgZ4gHtLCWi5UTcSvPS1pN381vCdGhkFDvk08xoxPVi8aZIuWy
+ R5h+OGKQhCCDOUGuv4i47+3mrYDJiwsvKWu63Jx73JPMghVToRlbfE4oI0b3eufrvu
+ v9wDE7os3qHdHNxe8tduysvDdF+dfEQiXgFQNHCnVQ1CjV2gD/iVkOk9oVP5w3Qm3w
+ TFH8xvMpAbSYZIDFeqIo59O5heGhF2TLJmLzym03YPF0U4IYmx4ZXtBOzJ3K3QlbGf
+ BzooKG80du1NYUMX4bx48df7/Au0X/ZSUyNect8nydPctLZA3vvOGtws+JNzOWqEW0
+ kXsU+mW55pZTA==
+Date: Tue, 20 May 2025 19:07:06 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 08/25] accel/mshv: Initialize VM partition
+Message-ID: <aCzS2h9UfGe-FZDW@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+ <20250520113018.49569-9-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 5DE251F7DF
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250520113018.49569-9-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=wei.liu@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,40 +81,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yanfei Xu <yanfei.xu@bytedance.com> writes:
-
-> There won't be any ram sync after the stage of save_complete, therefore
-> it's unnecessary to do manually protect for dirty pages being sent. Skip
-> to do this in last round can reduce noticeable downtime.
->
-> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+On Tue, May 20, 2025 at 01:30:01PM +0200, Magnus Kulke wrote:
+> Create the MSHV virtual machine by opening a partition and issuing
+> the necessary ioctl to initialize it. This sets up the basic VM
+> structure and initial configuration used by MSHV to manage guest state.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
-> As I don't have proper machine to test this patch in qemu and verify if it has
-> risks like in postcopy, colo and so on.(But I tested this idea on my rust VMM,
-> it works and can reduce ~50ms for a 128GB guest). So I raise the patch with RFC
-> for suggestions.
->
->  migration/ram.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/migration/ram.c b/migration/ram.c
-> index e12913b43e..2b169cdd18 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -838,7 +838,9 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
->       * the page in the chunk we clear the remote dirty bitmap for all.
->       * Clearing it earlier won't be a problem, but too late will.
->       */
-> -    migration_clear_memory_region_dirty_bitmap(rb, page);
-> +    if (!rs->last_stage) {
-> +        migration_clear_memory_region_dirty_bitmap(rb, page);
-> +    }
+[...]
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index 63b0eca1fc..95f1008a48 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -48,6 +48,178 @@ bool mshv_allowed;
 >  
->      ret = test_and_clear_bit(page, rb->bmap);
->      if (ret) {
+>  MshvState *mshv_state;
+>  
+> +static int init_mshv(int *mshv_fd)
+> +{
+> +    int fd = open("/dev/mshv", O_RDWR | O_CLOEXEC);
+> +    if (fd < 0) {
+> +        error_report("Failed to open /dev/mshv: %s", strerror(errno));
+> +        return -1;
+> +    }
+> +	*mshv_fd = fd;
+> +	return 0;
+> +}
+> +
+> +/* freeze 1 to pause, 0 to resume */
+> +static int set_time_freeze(int vm_fd, int freeze)
+> +{
+> +    int ret;
+> +
+> +    if (freeze != 0 && freeze != 1) {
+> +        error_report("Invalid time freeze value");
+> +        return -1;
+> +    }
+> +
+> +    struct hv_input_set_partition_property in = {0};
+> +    in.property_code = HV_PARTITION_PROPERTY_TIME_FREEZE;
+> +    in.property_value = freeze;
+> +
+> +    struct mshv_root_hvcall args = {0};
+> +    args.code = HVCALL_SET_PARTITION_PROPERTY;
+> +    args.in_sz = sizeof(in);
+> +    args.in_ptr = (uint64_t)&in;
+> +
+> +    ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to set time freeze");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static int pause_vm(int vm_fd)
 
-Well, it looks ok to me and passes all my tests.
+I feel like the name of this function and its counter part is too broad.
+Pausing the VM to me means not only freezing the time, but also making
+sure VCPUs are no longer scheduled, all I/O are quiescent.
 
-Tested-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+This is not blocking. Luckily we can always change the name later.
+
+> +{
+> +    int ret;
+> +
+> +    ret = set_time_freeze(vm_fd, 1);
+> +    if (ret < 0) {
+> +        error_report("Failed to pause partition: %s", strerror(errno));
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static int resume_vm(int vm_fd)
+> +{
+[...]
+> +
+> +static int create_vm(int mshv_fd)
+> +{
+> +    int vm_fd;
+> +
+> +    int ret = create_partition(mshv_fd, &vm_fd);
+> +    if (ret < 0) {
+> +        close(mshv_fd);
+
+No please don't close it here. This fd is not created by this function.
+
+> +        return -errno;
+> +    }
+> +
+> +    ret = set_synthetic_proc_features(vm_fd);
+> +    if (ret < 0) {
+> +        return -errno;
+> +    }
+> +
+> +    ret = initialize_vm(vm_fd);
+> +    if (ret < 0) {
+> +        return -1;
+> +    }
+> +
+> +    ret = mshv_arch_post_init_vm(vm_fd);
+> +    if (ret < 0) {
+> +        return -1;
+> +    }
+> +
+> +    /* Always create a frozen partition */
+> +    pause_vm(vm_fd);
+> +
+> +    return vm_fd;
+> +}
+>  
+>  static void mem_region_add(MemoryListener *listener,
+>                             MemoryRegionSection *section)
+> @@ -96,22 +268,54 @@ static void register_mshv_memory_listener(MshvState *s, MshvMemoryListener *mml,
+>          }
+>      }
+>  }
+> +static void mshv_reset(void *param)
+> +{
+> +    warn_report("mshv reset");
+
+What's missing for this hook?
+
+> +}
+> +
+> +int mshv_hvcall(int mshv_fd, const struct mshv_root_hvcall *args)
+
+Please be consistent and change mshv_fd to vm_fd.
+
+> +{
+> +    int ret = 0;
+> +
+> +    ret = ioctl(mshv_fd, MSHV_ROOT_HVCALL, args);
+> +    if (ret < 0) {
+> +        error_report("Failed to perform hvcall: %s", strerror(errno));
+> +        return -1;
+> +    }
+> +    return ret;
+> +}
+>  
+>  
+>  static int mshv_init(MachineState *ms)
+>  {
+>      MshvState *s;
+> +    int mshv_fd, ret;
+> +
+>      s = MSHV_STATE(ms->accelerator);
+>  
+>      accel_blocker_init();
+>  
+>      s->vm = 0;
+>  
+> +    ret = init_mshv(&mshv_fd);
+> +    if (ret < 0) {
+> +        return -1;
+> +    }
+> +
+> +    do {
+> +        int vm_fd = create_vm(mshv_fd);
+> +        s->vm = vm_fd;
+> +    } while (!s->vm);
+> +
+
+This loop doesn't make sense to me. The create_vm function doesn't
+return 0 as "try again".
+
+> +    resume_vm(s->vm);
+> +
+
+mshv_fd is neither stashed into a state structure nor freed after this
+point.  Is it leaked?
+
+Thanks,
+Wei.
+
+>      s->nr_as = 1;
+>      s->as = g_new0(MshvAddressSpace, s->nr_as);
+>  
+>      mshv_state = s;
+>  
+> +    qemu_register_reset(mshv_reset, NULL);
+> +
+>      register_mshv_memory_listener(s, &s->memory_listener, &address_space_memory,
+>                                    0, "mshv-memory");
+>      memory_listener_register(&mshv_io_listener, &address_space_io);
 
