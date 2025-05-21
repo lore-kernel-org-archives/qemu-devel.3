@@ -4,158 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8520DC54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 10:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B5A2C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 10:27:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHgfL-0000JX-Br; Wed, 21 May 2025 06:27:15 -0400
+	id 1uHgfj-0000PA-Uy; Wed, 21 May 2025 06:27:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uHgfF-0000Ij-FJ; Wed, 21 May 2025 06:27:09 -0400
-Received: from mail-db8eur05on2071d.outbound.protection.outlook.com
- ([2a01:111:f403:2614::71d]
+ id 1uHgfh-0000OZ-JO; Wed, 21 May 2025 06:27:38 -0400
+Received: from mail-db8eur05on2071b.outbound.protection.outlook.com
+ ([2a01:111:f403:2614::71b]
  helo=EUR05-DB8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uHgf8-0006IW-Hn; Wed, 21 May 2025 06:27:04 -0400
+ id 1uHgff-0006K2-La; Wed, 21 May 2025 06:27:37 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ugK6XSyDkAbqjP0zw3RAhV+3MJkC5rupVHpiuojSYaOVGRuWyVycCkZ5yjwBG6kqsW+dyNp7qx2znFY+YzuKiHYoJ+bEA69vFnBUrGlw197TaI4qWBCHQTwA6RMiG76CzKom4b7PNXm5Ioaf6icGiTIF9+MLEgTOqOEW5uhWu+52KO/dmKR+1hLCiaRUAAvPqmnzvOEv86dQaYiIVcErMUitL9mpLTIAqeRy4qf+bEpO0jb8BKhXRX7HXOlF3ECSrKzf73Hf3SRgKBIkm5wFwVpyFBrt4X5/3lcyN7TifVOMtU9vUOz2dESrdcMm4ZYbPjhUzqRh9GILSM8M23B/Fg==
+ b=zI513UBLuLfV/fRBkjqiQASwNwCG01I9XTsxdYVquTEbXnTcbUDLT1GDpGOnhFDPD90ONx57m+ofujLGsf9APrhJE82PvslRLGNr0WBtJCn1abfux+IVY7BmomSTx8QZty94mST+HJ6c2bPLC0ak3N+a0E1moCxSIgq0VFlRDSv7i7BS+Ua7qPFre0BGQ5Eop7AKSbAEjOZc6MaVBTmE8O6JHpAzizHTmdX9dkYeSjU6cePleizw7kDAk+htANs3YPz1gsY00CBLDlhEV0a2xWv5aUZYHg0dV0cMqw1q3XE8OBGOz75nkQ7DVvMLrdEV+Eji8eEEpMQyJzQu8GIPKw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3RYMgH6WAWfv0mpOe7kJJgEkVZE8n60jd1QCFhBbcGE=;
- b=oDOhkqbf/BQ15wvKI2r4ziSaO6rYwN/e55JplAKNwVzi7H1ccIxtz2SfqcTzF4yTbq7N3pJv+KFKDtJtP8L34I3wBDwxwOQZO/LBZkeasSMlWnUXziiYjnP8M71B00i7+CrNEEUP5KRSM+gaaFo3gvtMax5/AZtN+JMP+HpH55YYT+/0okA8R9cgiNzb/AxqNghUqqT+YZmunVaRlmHtkZl9T7N7pRkX2U+Nzkopj/EYU+t889wAUjQuu/6x+36734WzfYTq0H09iEx9qyriuMzIsBz7PO824rZGe4HY/iauEldvk71iUlqy58cGjDYHzYnOnK456HkEVSCkED7crA==
+ bh=9VfaTRQN7/FXsDOrXWgMo4tc2nnHlTxA+4kvifnqlC4=;
+ b=yUYFZphcu6P79XhgtaxiTZUvdr8AIZhQKqrL+ux5yJXFWMnDGL16DpNB1k4o+Z9E8bzYogf2eVNKop2u5PquRPBsvo42QFylyYsfdDskbiiJzcOf283arLwMhOSlZyeT7+Msj7Y2cL73LazX+2/ze4Q2knZHt5MtofgBzQrBxUW4Zh8O5H4pPztcv/29m38Xx5d8dOwL/QLK4fy+I2lCaBNEJIB/WNMYeQJgnj01uX7NeqQYKRB8jwr36fEW1oA7qDuLZQ+R+Sv327/Z4ArwooE3MYTOf+ZxoA1Yzdv2UHedYTRth85mZSh7y+BpnuZKxRnMLHE1E0CbbvPDf6bItw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3RYMgH6WAWfv0mpOe7kJJgEkVZE8n60jd1QCFhBbcGE=;
- b=XP8XBZ+1p1nUT/TCoC7gzEl2I2Whl+nPAu086cJqq+3n/gNJxvZD2H5tOVktQBO4ecvgB3VpHYBpS5u3NgiLsaocBYBNfJaIxN+L11zJTIsWJKTQf3rqgaUpspjviPxdAml7CUGg6Eh+cekwbAG5G0HZq590v+3s9GcyE4qYzeYdJHd6FYzK12aSYk1RaAC57CUd92Gckfx6jTenKEaDVBF0jUg6TP50dNV6z6IJf1L3akyRzacvjmGaKamENFFBRJRGMKRbMDzQyyLN0DsZeKMWk2gcGlZVmYS/h4UCe71xZy8D+40B7jaN+UTqRQ8FffqSfgkydilL13vW+jutsg==
+ bh=9VfaTRQN7/FXsDOrXWgMo4tc2nnHlTxA+4kvifnqlC4=;
+ b=MraiCNApvtyUrD7pqUq2cnMryC747W9vCkMOL2GWE0xsLYK6tAvM9Rib3CBRmbSJ0ZdkhI92lwN9eE6GiFwk+FrdBF5ssaVWAeZIfLSzXOfYba7Wlg3XCNZ2GWc2bA29u7e8eE8eeQDEDDXx2Zp/IQJ3n7nSwn3JV90EBZ3lFPBRgWNYADY1zlBUqJrMfNbP0HhYAtlSMruQk28hUzM3LP1K1MvYxaiWKO9UJp7sPjBcxxgAsrow/lqym94xBaz61udlWOxA65hcEaOcHciZKqtTKyfwJPViyfwdRi2YJuxjCSmZUnKEUF/4Qq0de5sZmvNIyLFvQquqca434yFGIg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from AM8PR08MB5732.eurprd08.prod.outlook.com (2603:10a6:20b:1d4::16)
  by DB3PR08MB8795.eurprd08.prod.outlook.com (2603:10a6:10:432::18)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.19; Wed, 21 May
- 2025 10:26:55 +0000
+ 2025 10:27:32 +0000
 Received: from AM8PR08MB5732.eurprd08.prod.outlook.com
  ([fe80::e543:a83c:a260:602b]) by AM8PR08MB5732.eurprd08.prod.outlook.com
  ([fe80::e543:a83c:a260:602b%5]) with mapi id 15.20.8769.019; Wed, 21 May 2025
- 10:26:54 +0000
-Message-ID: <791949d4-8931-43e6-93fc-5e4ffcf1328e@virtuozzo.com>
-Date: Wed, 21 May 2025 12:26:52 +0200
+ 10:27:32 +0000
+Message-ID: <f309622e-dbab-4e2e-b153-36cf631ceeb0@virtuozzo.com>
+Date: Wed, 21 May 2025 12:27:31 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hbitmap: introduce hbitmap_reverse()
+Subject: Re: [PATCH 3/4] block/copy-before-write: reverse access bitmap
 To: Eric Blake <eblake@redhat.com>
 Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru, jsnow@redhat.com,
  kwolf@redhat.com, hreitz@redhat.com, qemu-devel@nongnu.org,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
 References: <20250513013238.1213539-1-andrey.zhadchenko@virtuozzo.com>
- <20250513013238.1213539-3-andrey.zhadchenko@virtuozzo.com>
- <x6elam26xqiepon2bvrhpejczvia6ksqn4xviov5vhh7e7vfrc@yucgtxyeabe7>
+ <20250513013238.1213539-4-andrey.zhadchenko@virtuozzo.com>
+ <exbcf5hpdrc7lbcyhjgh4movj3fo2xt3sync62icuierlbtzeq@3z6venb5sxfc>
 Content-Language: en-US
 From: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
-In-Reply-To: <x6elam26xqiepon2bvrhpejczvia6ksqn4xviov5vhh7e7vfrc@yucgtxyeabe7>
+In-Reply-To: <exbcf5hpdrc7lbcyhjgh4movj3fo2xt3sync62icuierlbtzeq@3z6venb5sxfc>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0295.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e7::9) To AM8PR08MB5732.eurprd08.prod.outlook.com
+X-ClientProxiedBy: FR4P281CA0293.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:e7::6) To AM8PR08MB5732.eurprd08.prod.outlook.com
  (2603:10a6:20b:1d4::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AM8PR08MB5732:EE_|DB3PR08MB8795:EE_
-X-MS-Office365-Filtering-Correlation-Id: 469ee07e-f9f7-4813-8ee2-08dd9852018f
+X-MS-Office365-Filtering-Correlation-Id: 26518884-4f2b-4533-80c1-08dd9852187d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OXBGbVRPV25ocTd6cnJ3TE05RTEvYmsvN0F6L2dVMkdKcnROZmF0V1NacXp5?=
- =?utf-8?B?MS9mMm1PelNIaE9hWVoyV3BQa29IRHErVENvL29sOTQ0ZTBDK3VUSXJRakhr?=
- =?utf-8?B?dTFIU05uUUJ1SVNaZFgwNFI3dC9rYVpOb3NTUURZcTBseFpobSsxRjRNbEJI?=
- =?utf-8?B?R21NWXdDTGVQbys3bEJwSStyRCsvbmZXT2lwaDNVOGNiaEcwWFU2YVVvN1Jh?=
- =?utf-8?B?Vmo4OTZ3d1BqOC9BRmNtV0lWL1BtNjBobnVwZEJ0aGFyMUduc01iTzNOYlp6?=
- =?utf-8?B?N0o5WVRIeFlMV2k0OUNXbWl1dDkrMVhobnR5VU9IWXRWamFYUGlVUk05eWFP?=
- =?utf-8?B?SnovcWZJamordmlIOElEaFVHWi9VVVQvNmIxRlFwdUhicTJGcTlkVGlhdW9V?=
- =?utf-8?B?TGQ0VStBM0s5UGExNmEwRmxvMGl0dVpPNTNMZERJeGVhWkVNR1dhS2cxdG9C?=
- =?utf-8?B?a1VKNDBETHllbDU4eVNyYzgxUTFwaFpFWnVJTzVJV1J0aCtJaFR5TEFwTGta?=
- =?utf-8?B?S3I3ZURuRXJhV1VYNEs4aUVmZVpaUWVXMElRVDRyY1luVE9ld3VkaFdJQ1Ez?=
- =?utf-8?B?RjBSb0s1RnJqK1F4RytYOFY5WTJqcEJNYlV1MU1MSmdrVEY4NTFoTk5oVG9M?=
- =?utf-8?B?Z3VVU2p1bXpZUHMyMGtyWTZ5cTQ4cEk4Z05FN1E2Wnprb0toTCtwZTN4SkhD?=
- =?utf-8?B?WGxHV2JxdFFEbUU5VGZYekhmbEFhL0xkZTZTb3liVlIxenJjenEyeDMxWkpq?=
- =?utf-8?B?K3lyVkRpRGNreWovak5ibHBVZTZxK3QzUWVkd0dqOGVMLzQrOXVPMkd3cUVj?=
- =?utf-8?B?OVkyYzBjMG9ReC9jTWlTYlZNZG5EQkVJdGh3K0pXUFFPalhHcE9xUmU5ZE8w?=
- =?utf-8?B?dHF6TXZRcDd3ME5IWkdjM1lXU2ZPZUNKMkF0d0s4bzVBdzVhbk1iTlBOWWYz?=
- =?utf-8?B?VlFNK2ZrR2g1SjR2UnhjdjIzakU3c3EwalFFcUhLNUZVZmpvSjhLQ1hpWkZW?=
- =?utf-8?B?V0pKdDdiQjQyeXBld0cyM1l2UFFNeXlrd0RVTUgxNVdIaGM0SEZtRURjSnZZ?=
- =?utf-8?B?bFpwUWFVTXdWSmFhdlgvKzJlOU1VYStFRUpqT0NmTVdCYmJDeXM0clN2enQy?=
- =?utf-8?B?ZFFROHlJMVN2aXZtTjZxcURkUVk0eG9UOUlNZDNReGoyeU9memhPeWpEZkFp?=
- =?utf-8?B?L0VMblZyd0dyUDdBQy8vNEovOVlIRUVBUXJEMlBUVWJyN0dSLzAxVmgxTzk0?=
- =?utf-8?B?alRlc2FBVWxiRmZQMEdrUVE0SXlPZkhCL3ZOSTZwNXZlSGczdmUyZ09tL1Bt?=
- =?utf-8?B?YzlvVjA5NXh0SkdvcjdWR3pzTFZ3QzZxbDRWSGNXY3lMekVnOEV2cm8vcWVK?=
- =?utf-8?B?cmh4ZUlmOStqZ3N2THJkZ1VnY2d0WnV0VW9wWnV6V3VITGVwdWZzU0RFdUJO?=
- =?utf-8?B?VzFySFhCT1E0SldLenQvT3Y2WndUUTVnOThsZkMrY05ZRjk5ejVBYzcvdEp2?=
- =?utf-8?B?TW10RWIvU2ZNOFBMZkdWZjdZbFZLQ3phZjFZOTB1S3NJUkd5ZWFtem1xNDBl?=
- =?utf-8?B?RGVBY0FGMVBpQklGdkpkcjlFSTlSclM2bEt1KzVIc2x0aG9KUTVEY0V4ZDUr?=
- =?utf-8?B?d0hJaVNZdzFrQ0FESEZaNHFIY2IrRDR2alI0bXE1OHhGT0l1aTdGakswaWRX?=
- =?utf-8?B?OHFrVmJxbjJtenpoMnNxN0k0bkFUcG9hVnYxaWFnc1BNYi9yb2M0ek1POS9o?=
- =?utf-8?B?TUVZQm4vbGhRNDlCZ2dLa3lvOXRzdlNYd00wQ29lWGN3SUU4ZmpsNmVVNHBM?=
- =?utf-8?B?T0lCbkNPR2U3RmpjdFR4NTVoTzNHWi8vRFA3bzkzKzdNRGdOZGJsblVxamo3?=
- =?utf-8?B?Zm4rUnVkQWZXaWVVc0kyL0hlOC9GT01IWnh5RXBXUVhjYlE9PQ==?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YW13ZFBycDM3eWt3anV4Z2NyT3VPeGViMStVZGFFNTFZMGZkSDlmeTRSMXRu?=
+ =?utf-8?B?cHFPUitrRnRXQVhUVXdsZjQ2M3k3aWdubHN3UmhCcllIV0FsWVNZMHgxZFQ4?=
+ =?utf-8?B?NEk1dDlWeHZ0T1RBZncwbXg4UTJvUGRZK3VJR1R2L21WNXJZbzE4a1RVSFA1?=
+ =?utf-8?B?ekV4SHFRem1aalMvTHhHTUxVeU5UdlNpeDBnV2FqSm5rNmpQd3pNUyt6N0sr?=
+ =?utf-8?B?dXN1S0M1SkNmZzNDejUwRnduSmVFYTFJeTh2ck1NaWlPUERxSjdTOVRWazE4?=
+ =?utf-8?B?QUJNQlNnK0RLNTAwRk1FWkJkQzVWUEV0MUZvQWhFUEpHVkFLSmZHeVFERDRt?=
+ =?utf-8?B?SHp6RkZoNlVwZmRFTlY1YmpTWjY3NnQ1Y29zVDkrQWRwSzBWQUkzSU9UL1dD?=
+ =?utf-8?B?Si9mRHQvaFlPNDIwL0hhejRyeDNjTlQwSEpKeVVwU3NxeDBzd21YVmxoMUtw?=
+ =?utf-8?B?eXZ2T0txU0NETW5VbTFRc3VtUjZVRzFRQjcwSjNSSmsxNkQ2bk9RTXFZcnVk?=
+ =?utf-8?B?eGdaU2dMZndYa2hKemRXUHdxUGRJR1NXZ0NQd09QN2RDYkFDbGc5ckJrcUR0?=
+ =?utf-8?B?M1JvL04rOUtNTHFWTmtYNjYxUWhYN1dKbGtQZ3lxdzdTMVlrcWlPMEVIdW9K?=
+ =?utf-8?B?NTR5UDZ4WTkwVXFiL3haMXFrcXJ1RkQ4YS90U3JMRE1PRTNmVmVzcFJhd25u?=
+ =?utf-8?B?anpyNkxNYmVwbFdzV29UOUt0SHJkOTFiSllUeFo1d2lZWU1EYmtMY0x6M3gv?=
+ =?utf-8?B?TXl6MTArV2JDbkMrVW5saTRjOVhuVjBEWGppZVJzak5qV2hGekFBVlNhSjEz?=
+ =?utf-8?B?S0IyNjF0ejNmTFQxWWlaS3o5Sm0rS2xGeXlRSHArUTRVbkhIWTVOQ1U4QXpW?=
+ =?utf-8?B?ZmdPZGtCYnZiN1F4YnlRT2FkT05kRGE3Z1NHRFI2TGV3a1ZxVXprRldERVVn?=
+ =?utf-8?B?S1QzcnFiMG45TVVzQXpPTnhTaVd3RjBLODdOb2VHbVk5TFgvUVFGRkl4MTF5?=
+ =?utf-8?B?Zm1SUXVTdVVUb3JwNmxuemkrYkw2aWhLY3M4VDJDd215RStKdzBaRUhUTkJQ?=
+ =?utf-8?B?dmVtQWp2OTh0M1puMFRkdEFnY09oWjkvakc5OHdicS9qZDVOdXlLcTlvc0do?=
+ =?utf-8?B?eDB6akJLaXJQVVAycXlVb25RUVdwci9hb3FqdWNEQWlHSzlJWXUxOHcwQ2RZ?=
+ =?utf-8?B?cEpaajE2dlpYaGc1OW5PRVpmWER0c1Y2ck01VEtuQmsxUCt2TWZNVHR5RWpP?=
+ =?utf-8?B?eHVsNThNQkxxMGRXUzBPMzRJSG1JU1pNQWRnUzVPa2tLSFJERkxaZG5oeU9B?=
+ =?utf-8?B?OUNuZWM0c3k4VVVLVjIyV0IvSEZPOXV2bm5GWkFtWTA3eXVIZW4zbFVnbWo0?=
+ =?utf-8?B?b2hHeUlvUWF4cFRRbVV4UVpGT2ordFhsMXBQemFKeE01Qno4R2RwT29pSDJj?=
+ =?utf-8?B?UHRvUnU0RjdlUXc2WkZHUGZHTXFrREEwM0VGazFMUHJ5UysrQ21SOW5OaTV0?=
+ =?utf-8?B?eGRxNDBaQkhJd2J6ZEU1N1ZxL0pTNHBydUozdDNReUdWSVV5aDVoKzJ2T0Uw?=
+ =?utf-8?B?ek84bVRweU5BY3pOdldJQzY0SC9LM1ZZMmg5UG1SeURIZnNDaHpzZWp1UGZN?=
+ =?utf-8?B?VCtYVmx6blNxRHFKQlhMVllDak85N2I1cUI1d2hYL2tVVVcwaUVEdUV1MEtD?=
+ =?utf-8?B?T1YydWtkYTAyNmJ1a0d1Qi9BU3ZoUjVWT0huam1BSjZLZXJ1TitycENDR01O?=
+ =?utf-8?B?bG5CdXpyS3N1UHRVaUxEL3ZybVduWXUvMnhsb050eDZqYzRUc1c2Yi9scVNu?=
+ =?utf-8?B?Z2ZmL1lFQnNqOWZySktzcEZpSnBjQWlFMTA0elFUNzZFb0EwaU1aS0hieFM2?=
+ =?utf-8?B?WDlKT1JqWWhkZXk5SjhVeW53VlRVTmhLdnpvSnlFbEVqTGRZQ2NON2hjRmlT?=
+ =?utf-8?Q?A7eZgxmXhFs=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM8PR08MB5732.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(376014)(366016)(7053199007); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZDJ0alh5VlhVZWdlcXovdUUvejhUcUxjd1BmaEN4Unc5T1ZUaXViQzZxajZR?=
- =?utf-8?B?OWcyREZZcFJndHY1VnZNK3NrWVBuTlR2RDdJK21mNnk5d3lNT2krQ0NKWnJh?=
- =?utf-8?B?bkM3MUxmaVlsVjNjSDFhRlVtTFRUcDFNMWhiMDNtK2ppTGJuWjAwV3dhbXU3?=
- =?utf-8?B?NzB5YmNpeW1ZQ2NoazB3Z3k2Z0ptSXpscGJqODRqbDgxT2l5N2ZPNFRZSHF5?=
- =?utf-8?B?K0MzM0JVT1Awd2o2Zk5MVS9oWFFqU0hKSnh5Y1NiRnQ2WHRQNjBlNHF3dE1v?=
- =?utf-8?B?ckJkSm9yY2ppeVI1Q2hoUndPeXBMc3BjcVhWalRxbjJqSzEyNEQwbElzRlFs?=
- =?utf-8?B?MFZlY2FqcUJ4NHVlaFY3Z1FOUThoZzRWN0dJSjlic0IxNkVWbUlZMGFqY25m?=
- =?utf-8?B?c3FZaFA3L3RXSEJOaFBYbTNOTWlzRlFDTjVnVHFqZ3ZWMjAyN2srblcyWHNa?=
- =?utf-8?B?ViswK0FXV0JFNWZRNUtwUXBVMGJEYzdWVzVodmg4aTdyMW04NmVlR00wOEZI?=
- =?utf-8?B?cDd2WFdOamN0cWFyY1FsUEwza2d4ZnBkSnYyUjFYWUdFWk16UU54RklXNzlV?=
- =?utf-8?B?MFBpYVg1d01XWldub29ybUtrbitGZVVHcjM5VHBPOGVOSTVQZ1A4Nk9tOXRo?=
- =?utf-8?B?ZVd1ek8vWlNKUDYxeENjWVY4TjFFaE04aEJyaWs0SUdwSWE1RnY0S2JPSHh2?=
- =?utf-8?B?YytuWnVPVzFuNTZBeitpU2MveWFmVEY3Nk1qUXdpR2syUDlkS1FDV1FPVlFn?=
- =?utf-8?B?YlFyWThmeFZuK3NlbTJ3cDJveFZZSm5lUXFsWTduVU5jbEdlWWloOW5PWEJV?=
- =?utf-8?B?Nk5YVk9kc0cyZnhrMjduU0grd0NRbU5GaEQzbzFiZ1ZNMFlFNFFDMGR6NnpE?=
- =?utf-8?B?c3pHbWRyQTFxbERQY0tEeVFmcjh1SEllYU5nK2ZTeVY5RVVyUFRiZENZWGQr?=
- =?utf-8?B?Z1RJTExiYjliUXY3UFBJRnJLMXJrNFBVeUZ5ZTdBVXpSbnlvOEsrZXNiZjRY?=
- =?utf-8?B?ckJ4R3hFbk9TWFZwQ2hkMjRSUzRQbGJCZkhpYUFhOVQ4Y2c4SjNWcU4xQmhT?=
- =?utf-8?B?eWxKUlJPdzZxMmZZQ1NNQWZpaHJHeStaL1V3WGRLRnQycFZsUS96NWhGN2da?=
- =?utf-8?B?aVJiSUE0bm9lSjZSdnFwUjhYS2xiL2F4VEpxNFBFRFl1MGs5ejkrUVFwdFUw?=
- =?utf-8?B?emx0dlBpdkdQWTMyTVJkUVgybkEvSUM4bmhEek96ODkvOGVXbEkxM0hiTDA0?=
- =?utf-8?B?a0tmSnJkaFV0MS9pbHcrYmRqSjNsQldScGJDWElZSmJtUEhZSFNzaC81SHdU?=
- =?utf-8?B?YmZLMXozQXV0VGJLMU1BR1hHbjdYbUQxdDNVU01qbUpveWovZlJYeW5aN0JK?=
- =?utf-8?B?d3c5US8zbVNlUjNqS2szSHp5YmdwTEcycnA5MnducDlPbm9tODZnY3FBellt?=
- =?utf-8?B?eFhhZW9jT1oyRUFjRUFod2JQUmh4a3JPcklpbG1KdUF6bGhRQVREdm12bXAx?=
- =?utf-8?B?TVljUENrU2U1eGdBbHR1SGszZHpGTkY5eEpjTTFCdUJiV2RZYjNJVWFoRFNY?=
- =?utf-8?B?TVAxMi9obW5tNFE4dC9SbGkxS2RBTEdJeHgveEp4b1pxTHhnTG5GdTJuVmxD?=
- =?utf-8?B?UWhLRXpBUmZHNDhUMHh2U0RCZkdGQnVLT3czRnNsMlB3S2htZlBZUzE2eWlm?=
- =?utf-8?B?U080TmgwcFVzNUZwNUdqc2xoL09RbmpsQUNTTnVHYVNrNjQxb0tlWDFROFIv?=
- =?utf-8?B?UFNmT2JmZUtEWFF0Vy9UVzROOUhCQVl3Z3pCSkpZallDM01hK3Y2VXRsRDlS?=
- =?utf-8?B?TDVycEhRQWYzMVd2Tm5GbmkrZjB5TVEvREVrRnRtRkZNNVRYL1NJcGszTm5y?=
- =?utf-8?B?QzVld1lNSXNlc25OelhwYTJWZEdkdHBlRlRJcFI3Z2RFUDNwZDJWOC9HSUpv?=
- =?utf-8?B?a2xZcFk3RzQxajI5Z1NYRjQ3VWhUWVhreG44TjhFTTFhTWMranNTUkhNSXAz?=
- =?utf-8?B?S2Y5dmFlQnNZV29UTmxMRjlQWmxVcGIwSnFiVGFaVy9na0NMdXU0NHdOdUlr?=
- =?utf-8?B?aDBDYm1TZEJUNHArVmVGMW1Sb1hpVkI4MmJIaDNZMWp4eHFHeGIvZXlEeGhH?=
- =?utf-8?B?ekRaTytWOUh1OHNZUjd1ak0rWE9jRmxCNmpOS0I3Q1kyVUR3dytTbjZaaVBl?=
- =?utf-8?B?Snc9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UGJXQXpMdGlKWXVOdzMwVE1pTVFhdXlrYW1GSXhRL0FKWEkvVUVNVjZEeGla?=
+ =?utf-8?B?SnFqWkc4S3o2MGRWV09tWC9pcFV3bTgxMk9RMGJQcmI1Yms0ZlplYnlpZXlu?=
+ =?utf-8?B?NjQ3V3Urb25laDIwRTdBSzA4NURUTTBJYjdraU9kN3hDS0xwaGRvRGY3R2Vl?=
+ =?utf-8?B?RVRna3ltVm1UUDlJOW1UMVdVc2FhSE16eFRyTWNvVnM3bGg1UWM4NnVBcC8r?=
+ =?utf-8?B?Q3RicFpGU3NsMldBcFhxMGgzaEJTbXVvSVB2VVZ5cHRSb2gvemppcFczUyt4?=
+ =?utf-8?B?WkczaEE0VjQ5OWlBcW4rd0xpRXI3bThIQ0VIeXgwblRUVDVQVGdqc0lQTU5N?=
+ =?utf-8?B?U3dYMVpGcG9za3pRYWgySnNXMzVmMFltWm1sMm1ONWUzZWdhMERudDFuOWw1?=
+ =?utf-8?B?NWJrZFlqMFVtMlRCbTgxUUY1NGRSc2xxNzVVNzNnL01iQ3lubFRUQlBLOU5h?=
+ =?utf-8?B?K3hUQjlnRjRCM0FmcDYyMzFzOFkvcFJmWWY2dE5OZnZyNGl1bmxpTk9qalNp?=
+ =?utf-8?B?U0dweUFxcjhZaWpTZHpQQ0FKQXpOTDNoNi9SVkNZLzlXOGtnZUVpRThwOVd4?=
+ =?utf-8?B?L3pURUZmWlJYN0pabElGd2YrakFNcEl4V294bm1MeTY0MmkyWEU3bGg2Mld6?=
+ =?utf-8?B?M2NkbzlsU3dFU1RCOEN1YW5VRE5TRGQxY1oxczZ0OHdTSk0wUnc0dkhGbWFp?=
+ =?utf-8?B?a1VRWEIvdnlDTnRFYzNpQmxyWjlzZ0hRWG85eE5zamptTWZsSjZpOFdORFZY?=
+ =?utf-8?B?MFc0a2FsYjZ3U0t1S1J6Z3hoRUt5bEdkREhiTjByYUhGbmdLUDlLeWlnN1Qr?=
+ =?utf-8?B?b2ZHTTZTYUdXbk9jZys0enZEZmNWRllHdTBGMHFsdnZjQnFCNTl5REdUc1Qr?=
+ =?utf-8?B?R08ySWtzZDFvME1VU2ZHb3JkbGZMTUluUGtSMXEveUlZVVQ2WWpDa1FTVmxK?=
+ =?utf-8?B?UVh5N1VWdkxqWHk1ZEFINmNHSS9mUm5yWUdRUmJGMUQvU1ZtNUZPOWhYZFFL?=
+ =?utf-8?B?c0w4R0FiRGVuR3YxMC84bTJqQVB1R1pabzhpb2FyZ2dyekMwNWRDUE5rWXRR?=
+ =?utf-8?B?NjlIU1B4eGdJL3N1djhFRmxYSyt5T09pWHEzY1JTTUs0TWxBN1ZiQTJVcThi?=
+ =?utf-8?B?VnZwQjBjYW94UUhXeDgxQWVQU0tHWHh6U1RxV2lGUk8yTVAzblEvNjNpa0pV?=
+ =?utf-8?B?S0tWcWdLSithWW5DMEw4djRaUVFZQzJYeWEwaEpwNW5oZlVrUDY1QVJrNlpE?=
+ =?utf-8?B?Wmc1SDdnSlBSOGttZHRhcjI3QmhyQkk5dEczWDVqeDZRZ2plMVdOMzZPcWJP?=
+ =?utf-8?B?bWpuLzJ5UTZRSGRwM0NPZ1IxK05vVnFXVk5UREFOT0FjaGJoNEh0azFRL1VF?=
+ =?utf-8?B?RkdMSkRKWUxBUms5dGdlaE14TDdnUDBKOWNaQUxmQ0RtYUpJMnBrTjJXcFNi?=
+ =?utf-8?B?T0l2TnQ4dGR0TzdWZk5tUGpoVFZXbDhpNzc3SkVqUEphQjJyNnY4ZzBzTW9S?=
+ =?utf-8?B?SkpPcTNLZ1Y0TGhOZ3VLNksrWTdjK09kWHdJcG9DQmdEaWl1aTE0SjVsUjJY?=
+ =?utf-8?B?dlp2YVhtUThpZXFYTzluVEFpaWVhTGxXZG1HWGhtOWhmNXRPYjRTRm1vbHR2?=
+ =?utf-8?B?WE5RNi9uT3o0TUh5SmFjU3c2K2U5TGZHRVdoWUF5RlV3RVQ5cGpOMytWNXJn?=
+ =?utf-8?B?Tk56NTB5VVlvMGJxeVowdVpRQ3AzeUMrdHRNL0ZSNTRQODBhcEtLb1FBMDlU?=
+ =?utf-8?B?bHpBTmpOZGthZldhQng0QlI2RWdrZ0FBK1BhZmFsRXVla2U2Q3VBc3pXZ3Fa?=
+ =?utf-8?B?VXdJUGNEOU9RZGNGaVhMZHhkcy81MWFYRFJjdmFuMzVManZibnkxVkhUMkh5?=
+ =?utf-8?B?bFprRnpRZzZyVDBhbXdham4yTC9FUXhZUFEwd0hVMUlBY3lZR2tBZlRScWYr?=
+ =?utf-8?B?TGNtY2FjRWdXTXRUYWVtbnl3ZTlucVFZTlhCaXJDVEp0RjlxWG5Fa0xZQ25V?=
+ =?utf-8?B?ZzFFRDd2OEh0SDlMTEtiMVVrU1dHa2hhL0tGWkpMaE1IanZaMWZJcytWaStl?=
+ =?utf-8?B?REFybVp3V2JCd2NidzJXemVTSFJTREx3YUFFR3EzUjlMVUN3QU1xMEpqWGJF?=
+ =?utf-8?B?bHdTMFFiQjgvTkZ5dnZ6ZEFpdm9DV1E2d1hGTjJpcGJMeURZbHpqaExacXNN?=
+ =?utf-8?B?SUE9PQ==?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 469ee07e-f9f7-4813-8ee2-08dd9852018f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 26518884-4f2b-4533-80c1-08dd9852187d
 X-MS-Exchange-CrossTenant-AuthSource: AM8PR08MB5732.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2025 10:26:53.9758 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2025 10:27:32.3177 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KMI1a5aLY1TO9RrmB074e0abeLMwQRykReR7hsZLE7Zk5YAPT89VRbwENC4nt438tWqLE0V6UdTZdJgIx0TObvWjHBTLsa0dC06xTwGFs5E=
+X-MS-Exchange-CrossTenant-UserPrincipalName: OTDrfgrVWHVl3ppOdGuTIN3lxeBs1MpqtN4QFz+apJn8m8rCf7CQu6dMdxYYBFIJhViw5K5cCBe7lNOd5vYGFeju36fW1V8V1Xa0xwi6xc4=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR08MB8795
-Received-SPF: pass client-ip=2a01:111:f403:2614::71d;
+Received-SPF: pass client-ip=2a01:111:f403:2614::71b;
  envelope-from=andrey.zhadchenko@virtuozzo.com;
  helo=EUR05-DB8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
@@ -182,45 +183,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 5/20/25 18:29, Eric Blake wrote:
+On 5/20/25 19:26, Eric Blake wrote:
 > [?? ??????? ????????? ?????? ?? eblake@redhat.com. ???????, ?????? ??? ?????, ?? ?????? https://aka.ms/LearnAboutSenderIdentification ]
 > 
-> On Tue, May 13, 2025 at 03:32:36AM +0200, Andrey Zhadchenko wrote:
->> and bdrv_dirty_bitmap_reverse() helper
+> On Tue, May 13, 2025 at 03:32:37AM +0200, Andrey Zhadchenko wrote:
+>> HBitmaps allow us to search set bits pretty fast. On the contrary,
+>> when searching zeroes, we may be forced to fully traverse the lower
+>> level.
+>> When we run blockdev-backup with mode=full on top of snapshot filter
+>> + cbw filter, the job fills copy bitmap by calling block_status()
+>> with range (X, virtual_size). The problem is that we check for zeroes
+>> in this whole range. We also hit the worst case here, as access
+>> bitmap is fully set and we need to scan the entire lowest level.
+>> After scanning the full bitmap we actually ask the block status of
+>> original image, which may return significantly lower amount of empty
+>> clusters.
+>> Beacuse of this, the backup job 'hangs' on block copy initializaiton
+>> for a long time with 100% CPU.
+>>
+>> Example copy bitmap buildup time for image with clu_size=65536 and
+>> preallocated metadata
+>> size                 10T   11T
+>> blockdev-backup      52s   57s
+>> cbw + snap           325s  413s
+>> cbw + snap + patch   55s   61s
+>>
+>> To fix it, reverse the access bitmap in cbw filter: rather set it
 > 
-> Is 'inverse' a better name than 'reverse'?
-
-Yeah, it sounds much better this way!
-I will re-do the patchset
-
+> s/reverse/invert/
 > 
+>> when the user is not allowed to read the cluster.
+>>
+>> Update qemu-iotest 257: now access bitmap have count 0 instead of
+>> the image size 67108864
 >>
 >> Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 >> ---
->> +++ b/util/hbitmap.c
->> @@ -940,3 +940,18 @@ char *hbitmap_sha256(const HBitmap *bitmap, Error **errp)
->>
->>       return hash;
->>   }
->> +
->> +void hbitmap_reverse(HBitmap *bitmap)
->> +{
->> +    int64_t pnum, pos = 0;
->> +    int64_t size = bitmap->orig_size;
->> +
->> +    while (pos < size) {
->> +        if (hbitmap_status(bitmap, pos, size - pos, &pnum)) {
->> +            hbitmap_reset(bitmap, pos, pnum);
->> +        } else {
->> +            hbitmap_set(bitmap, pos, pnum);
->> +        }
+>> @@ -501,9 +501,12 @@ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
+>>           return -EINVAL;
+>>       }
+>>       bdrv_disable_dirty_bitmap(s->access_bitmap);
+>> -    bdrv_dirty_bitmap_merge_internal(s->access_bitmap,
+>> -                                     block_copy_dirty_bitmap(s->bcs), NULL,
+>> -                                     true);
+>> +    if (bitmap) {
+>> +        bdrv_dirty_bitmap_merge_internal(s->access_bitmap,
+>> +                                         block_copy_dirty_bitmap(s->bcs), NULL,
+>> +                                         true);
+>> +        bdrv_dirty_bitmap_reverse(s->access_bitmap);
 > 
-> To me, reverse on 1110000 would be 0000111 (swapping the order); while
-> inverse would be 0001111 (swapping the bits but preserving the order).
+> Is this setting the bits correctly?  Inverting a bitmap is a
+> reversible operation, but it looks odd that you are only reversing
+> once around the merge.  Either the two sources of the merge have the
+> same sense (whether that be 0 for dirty 1 for clean, or 0 for readable
+> 1 for avoid) and no inverting is needed before or after the merge, or
+> the two sources have opposite sense (in which case, I would have
+> expected inverting one of the bitmaps before the merge to get them to
+> agree on sense, then merging, then inverting back to the desired
+> sense).  Am I missing something?
+
+We have just created access bitmap a few lines above. So it is empty: 
+everything is accessible.
+  - If cbw did not have any bitmap, we don't need to to do anything
+  - If someone set bitmap on cbw, we used it to init block-copy dirty 
+bitmap. So to get the access bitmap, we inverse the bitmap that marks
+to-be-copied blocks: access bitmap now has all of them as 0 (allowed) 
+and not-to-be-copied as 1 (disallowed)
+
+This case is also covered with iotests/image-fleecing with filter 
+snapshot + cbw bitmap case: some not-in-a-bitmap blocks are accessed and 
+we expect to get errors:
+
+--- Sanity Check ---
+
+read -P0x5d 0 64k
+read -P0xd5 1M 64k
+read -P0xdc 32M 64k
+read -P0xcd 0x3ff0000 64k
+read -P0 0x00f8000 32k
+read failed: Invalid argument
+
+read -P0 0x2010000 32k
+read failed: Invalid argument
+
+read -P0 0x3fe0000 64k
+read failed: Invalid argument
+
+
 > 
-> The naming change will require respinning the series, but the concept
-> makes sense.
- > > --
+> --
 > Eric Blake, Principal Software Engineer
 > Red Hat, Inc.
 > Virtualization:  qemu.org | libguestfs.org
