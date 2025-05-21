@@ -4,62 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC6CC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45680C54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHltO-0001gn-0F; Wed, 21 May 2025 12:02:06 -0400
+	id 1uHlwT-0005gP-8l; Wed, 21 May 2025 12:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uHltD-0001Vx-6i
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:01:56 -0400
-Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHlwI-0005dA-PT
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:05:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uHlt9-0000Wf-Ck
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:01:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
- Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=EjgORWCxVXGE6WYnvxvXGhoWi/FN9cJTshKnA0rENI8=; b=aqTlcXXapM2ZKhHMMSA8fcTqOM
- yLzLkGg4Qu1roV5QaHalZy5qYCmnw1SKXRt9Xd9OBsQF9YoRXDC7UzEqwFJbLlj7eVgxTakRElLL7
- zOnUnHnIPVegtdNhjPOFcy5Mmpp7C3eY9C+OyiD6D0CfTzVFtB4IKeuYyssEEP4SxGT9IW9802YRZ
- ol5Ka835oxHYKd56zyN2TO5IGLIFR3ojmVCT1QnyNmMohPCmNO9NRNseRVLdyk7sJOKb0VW3UA6q/
- T+bWC6nOMxZrza82Mys+mhm4CbA28ilv+12kRRrjiVyIlwz6E+aBvh25XK11WQUGQe4vxVpr2p7cj
- c2kbMpcQ==;
-Received: from [167.98.27.226] (helo=rainbowdash)
- by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uHlt1-00FTdM-FE; Wed, 21 May 2025 17:01:43 +0100
-Received: from ben by rainbowdash with local (Exim 4.98.2)
- (envelope-from <ben@rainbowdash>) id 1uHlt1-000000006RD-0tc3;
- Wed, 21 May 2025 17:01:43 +0100
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-To: nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
- fran.redondo@codethink.co.uk, lawrence.hunter@codethink.co.uk,
- qemu-devel@nongnu.org
-Cc: ben.dooks@codethink.co.uk
-Subject: [RFC 2/3] hw/net: add bit-bang mdio decoding helper (mdio_bb)
-Date: Wed, 21 May 2025 17:01:41 +0100
-Message-Id: <20250521160142.24715-3-ben.dooks@codethink.co.uk>
-X-Mailer: git-send-email 2.37.2.352.g3c44437643
-In-Reply-To: <20250521160142.24715-1-ben.dooks@codethink.co.uk>
-References: <20250521160142.24715-1-ben.dooks@codethink.co.uk>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHlwG-0000tw-Fy
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:05:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747843500;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bs7XGcyM2aC+svS8PZpt2c+NweJT8nx9A1SJr9WqvlI=;
+ b=Ju98YPisjN32cfl8sUnQRAQtrpiR3gO/Qxg9sgWZx6DcKt7EBYCBH6d6GMem8XPe/EagDn
+ lmo8N4sSX4kVU9lnf16t2pUCfo3zUAZYHHQBQD9R0uOAcZYKFpVSh2MZdOYnktmk8Pi7d/
+ ROJrJH190QrZ3vqzr7Mll2JFt5/Xzn4=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-499-QPHsCk-gPdqDHX1fQqfbBA-1; Wed, 21 May 2025 12:04:59 -0400
+X-MC-Unique: QPHsCk-gPdqDHX1fQqfbBA-1
+X-Mimecast-MFC-AGG-ID: QPHsCk-gPdqDHX1fQqfbBA_1747843499
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7c5b9333642so823667185a.3
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:04:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747843499; x=1748448299;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bs7XGcyM2aC+svS8PZpt2c+NweJT8nx9A1SJr9WqvlI=;
+ b=YMMVyrmBugkrqmE9Nya0xfEq8WCC+uV5MaQAGm1kjTORxoN+Wgk07TJEkLGJhLexip
+ 7bfMHkQsBdiix1qvJxiliWnmp3JD3MByhbXSnKxwb8F+C4ys47xrPHmYN8NeQyDP1g55
+ OeYTEYhGMJ6l0QO899YomZbwUxfJuLdujZFOXo8JTVxRlkOysFsRmL3rLmatRViyDA8s
+ /V+D7hBEzRV0JDULHN3UHAZB7smEx7hPGcCA4AxYEJq0WAZHwEROF40cfuszVjZV6YVn
+ zq/3M4qkam/wfdZ5+Y+AdfSQXcjlobvOBg+FSyzdDgwsYbH4/QcTHwLdxGWaHAKpo0ir
+ zupg==
+X-Gm-Message-State: AOJu0Yx9kis6qHeuLxtkrbQTnnmmMfHHUpaAzDC92KgOABoKFklgZAG7
+ HZdWx0OsIpsYz32GoXp67ZXe66JODzRYiikMVsbh8BJYcrcNePCkAuuIIU15CdjMf2h03mcYOIL
+ qNV7CHQA5RCKl1cm1thzVUuq7P8WR/nYIiQYoTB4uU0KwyrC9Qz5BDWU6
+X-Gm-Gg: ASbGncvFWM8kTOed8qKcZhJGOs+60j780Li8icnZLnrwRUvojPHcqRBJrBO0kEnFCSo
+ p+Dq12F3sl+E+gugvuT838yTPx7YVgqsiPZVRGwgX9b+1U5Y1fZmoMrtiuQaMbx12VgRw7sUpzf
+ EO2hreJscFQ3PbBy9tWR/Pw1oabqulydNJgiYCPXnqvayBG0bKuAWit8u71czOnZ4N21k9X+F55
+ ihvIk95J4dFiduJgia6Oib0Sqaegnr8bmutPlr8D0TzdeaQMvLrrs93uhKS2a9czTDpSzSBYqNL
+ dtA=
+X-Received: by 2002:a05:620a:4415:b0:7ca:eb5b:9971 with SMTP id
+ af79cd13be357-7cd4677ddb3mr3882323885a.36.1747843498682; 
+ Wed, 21 May 2025 09:04:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtKmSV5scsRularTcU0VB+oALvGPiwcpMUEQxQIC8HVUjUzlvrg6PmlPTjZXJFjaH2MEbYww==
+X-Received: by 2002:a05:620a:4415:b0:7ca:eb5b:9971 with SMTP id
+ af79cd13be357-7cd4677ddb3mr3882316985a.36.1747843498132; 
+ Wed, 21 May 2025 09:04:58 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7cd467ecfbasm888286185a.49.2025.05.21.09.04.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 May 2025 09:04:57 -0700 (PDT)
+Date: Wed, 21 May 2025 12:04:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] ui/vnc: Update display update interval when VM state
+ changes to RUNNING
+Message-ID: <aC35pvtRC3OcQruO@x1.local>
+References: <20250521151616.3951178-1-jmarcin@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=188.40.203.114;
- envelope-from=srv_ts003@codethink.com; helo=imap4.hz.codethink.co.uk
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250521151616.3951178-1-jmarcin@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,308 +105,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mdio_bb allows PHY interfaces that are basically IO lines
-that are twiddle by registers (although GPIO isn't supported
-at this time, it would not be difficult to add)
+On Wed, May 21, 2025 at 05:16:13PM +0200, Juraj Marcin wrote:
+> From: Juraj Marcin <jmarcin@redhat.com>
+> 
+> If a virtual machine is paused for an extended period time, for example,
+> due to an incoming migration, there are also no changes on the screen.
+> VNC in such case increases the display update interval by
+> VNC_REFRESH_INTERVAL_INC (50 ms). The update interval can then grow up
+> to VNC_REFRESH_INTERVAL_MAX (3000 ms).
+> 
+> When the machine resumes, it can then take up to 3 seconds for the first
+> display update. Furthermore, the update interval is then halved with
+> each display update with changes on the screen. If there are moving
+> elements on the screen, such as a video, this can be perceived as
+> freezing and stuttering for few seconds before the movement is smooth
+> again.
+> 
+> This patch resolves this issue, by adding a listener to VM state changes
+> and changing the update interval when the VM state changes to RUNNING.
+> The update_displaychangelistener() function updates the internal timer,
+> and the display is refreshed immediately if the timer is expired.
+> 
+> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
 
-The code processes the clock changes and issues a callback to
-the driver when there is data to be transfered. It supports
-both read and write, any other OP code is deemed invalid and
-will abort the transfer.
+Thanks for looking into it!
 
-todo:
-- add proper vmstate helper for users
-- get implementation fully tested with lowrisc_eth
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
----
-notes:
-- squashed in tracing and fixups
----
- hw/net/Kconfig           |   3 +
- hw/net/mdio_bb.c         | 167 +++++++++++++++++++++++++++++++++++++++
- hw/net/meson.build       |   1 +
- hw/net/trace-events      |   8 ++
- include/hw/net/mdio_bb.h |  50 ++++++++++++
- 5 files changed, 229 insertions(+)
- create mode 100644 hw/net/mdio_bb.c
- create mode 100644 include/hw/net/mdio_bb.h
+One trivial comment (and partly, pure question) below,
 
-diff --git a/hw/net/Kconfig b/hw/net/Kconfig
-index 790fe1ce60..3abee9130e 100644
---- a/hw/net/Kconfig
-+++ b/hw/net/Kconfig
-@@ -109,6 +109,9 @@ config LASI_82596
-     bool
-     select I82596_COMMON
- 
-+config MDIO_BB
-+    bool
-+
- config LOWRISC_ETH
-     bool
- 
-diff --git a/hw/net/mdio_bb.c b/hw/net/mdio_bb.c
-new file mode 100644
-index 0000000000..945f32b7a8
---- /dev/null
-+++ b/hw/net/mdio_bb.c
-@@ -0,0 +1,167 @@
-+/*
-+ * QEMU MDIO bit-bang emulaiton
-+ *
-+ * Ben Dooks <ben.dooks@codethink.co.uk>
-+ * Copyright (c) 2025 Codethink Ltd,
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "hw/net/mdio_bb.h"
-+
-+#include "trace.h"
-+
-+void mdio_bb_init(struct mdio_bb *s)
-+{
-+    s->mdi = true;
-+    s->mdo = true;
-+    s->mdc = true;
-+
-+    s->opcode = 0;
-+    s->bitcount = 0;
-+    s->phy_reg_addr = 0;
-+    s->phy_data = 0;
-+    s->state = MDG_IDLE;
-+}
-+
-+void mdio_bb_update(struct mdio_bb *s,
-+                    bool mdc, bool mdo)
-+{
-+    enum mdio_bb_state n_state = MDG_ILLEGAL;
-+    bool rising = (!s->mdc && mdc);
-+
-+    s->mdc = mdc;
-+    s->mdo = mdo;
-+
-+    /* work on rising edge of mdclk */
-+    if (!rising)
-+        return;
-+
-+    trace_mdio_bb_update(s->name, s->state, mdc, mdo);
-+
-+    switch (s->state) {
-+    case MDG_IDLE:
-+        /* if we get a '1' stick in idle,the pre-amble is 32 '1' bits */
-+
-+        if (!mdo) {
-+            trace_mdio_bb_start(s->name);
-+            n_state = MDG_START0;
-+        } else {
-+            n_state = MDG_IDLE;
-+        }
-+        break;
-+
-+    case MDG_START0:
-+        if (!mdo) {
-+            n_state = MDG_IDLE;
-+        } else {
-+            n_state = MDG_OP0;
-+        };
-+        break;
-+
-+    case MDG_OP0:
-+        s->opcode = mdo << 1;
-+        n_state = MDG_OP1;
-+        break;
-+
-+    case MDG_OP1:
-+        s->opcode |= mdo;
-+        s->bitcount = 0;
-+        s->phy_reg_addr = 0;
-+
-+        if (s->opcode == OP_READ || s->opcode == OP_WRITE) {
-+            n_state = MDG_ADDR;
-+        } else {
-+            fprintf(stderr, "illegal MDIO op %02x\n", s->opcode);
-+            n_state = MDG_ILLEGAL;
-+        }
-+        break;
-+
-+    case MDG_ADDR:
-+        s->phy_reg_addr <<= 1;
-+        s->phy_reg_addr |= mdo;
-+        s->bitcount++;
-+
-+        if (s->bitcount == 10) {
-+            n_state = MDG_TURN1;
-+        } else {
-+            n_state = MDG_ADDR;
-+        }
-+        break;
-+
-+    case MDG_TURN1:
-+        n_state = MDG_TURN2;
-+        break;
-+
-+    case MDG_TURN2:
-+        s->bitcount = 15;
-+
-+        if (s->opcode == OP_READ) {
-+            s->phy_data = (s->read)(s->param, s->phy_reg_addr);
-+
-+            trace_mdio_bb_read(s->name, s->phy_reg_addr >> 5,
-+                               s->phy_reg_addr & 0x1f, s->phy_data);
-+            n_state = MDG_READ;
-+        } else {
-+            n_state = MDG_WRITE;
-+        }
-+        break;
-+
-+    case MDG_READ:
-+        s->mdi = s->phy_data & (1 << s->bitcount) ? 1 : 0;
-+
-+        if (s->bitcount == 0) {
-+            n_state = MDG_IDLE;
-+        } else {
-+            s->bitcount--;
-+            n_state = MDG_READ;
-+        }
-+        break;
-+
-+    case MDG_WRITE:
-+        /* writing data to the phy, mirror the mdi as the same as mdo in case
-+         * it is being checked, otherwise collect bits and invoke the write when
-+         * all the bits are received
-+         */
-+        s->mdi = mdo;
-+
-+        if (mdo) {
-+            s->phy_data |= 1 << s->bitcount;
-+        }
-+
-+        if (!s->bitcount) {
-+            trace_mdio_bb_write(s->name, s->phy_reg_addr >> 5,
-+                                s->phy_reg_addr & 0x1f, s->phy_data);
-+            (s->write)(s->param, s->phy_reg_addr, s->phy_data);
-+            n_state = MDG_IDLE;
-+        } else {
-+            s->bitcount--;
-+            n_state = MDG_WRITE;
-+        }
-+        break;
-+
-+    case MDG_ILLEGAL:
-+        n_state = MDG_IDLE;
-+        break;
-+
-+    default:
-+        /* should not need a default state, but if so, illega. */
-+        n_state = MDG_ILLEGAL;
-+    }
-+
-+    if (n_state != MDG_ILLEGAL) {
-+        trace_mdio_bb_new_state(s->name, s->state, n_state);
-+        s->state = n_state;
-+    } else {
-+        /* encountered an illegal state. not much we can do here but go back
-+         * into idle and hope that the reader is going to try and reset?
-+         */
-+
-+        trace_mdio_bb_illegal_state(s->name, s->state, mdo);
-+
-+        fprintf(stderr, "mdio_bb: illegal next state from current %d (mdo %u)\n", s->state, mdo);
-+        s->state = MDG_IDLE;
-+    }
-+}
-diff --git a/hw/net/meson.build b/hw/net/meson.build
-index 79a65850fc..fe34ee5c15 100644
---- a/hw/net/meson.build
-+++ b/hw/net/meson.build
-@@ -1,6 +1,7 @@
- system_ss.add(when: 'CONFIG_DP8393X', if_true: files('dp8393x.c'))
- system_ss.add(when: 'CONFIG_XEN_BUS', if_true: files('xen_nic.c'))
- system_ss.add(when: 'CONFIG_NE2000_COMMON', if_true: files('ne2000.c'))
-+system_ss.add(when: 'CONFIG_MDIO_BB', if_true: files('mdio_bb.c'))
- 
- # PCI network cards
- system_ss.add(when: 'CONFIG_NE2000_PCI', if_true: files('ne2000-pci.c'))
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index acf1851eb4..e35324c4fd 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -312,6 +312,14 @@ igb_wrn_rx_desc_modes_not_supp(int desc_type) "Not supported descriptor type: %d
- # igbvf.c
- igbvf_wrn_io_addr_unknown(uint64_t addr) "IO unknown register 0x%"PRIx64
- 
-+# mdio_bb.c
-+mdio_bb_update(const char *name, unsigned state, bool mdc, bool mdo) "(%s) state %u, mdc=%u mdo=%u"
-+mdio_bb_start(const char *name) "(%s) starting transaction"
-+mdio_bb_read(const char *name, unsigned phy, unsigned reg, unsigned data) "(%s) phy %d reg %u -> read %04x"
-+mdio_bb_write(const char *name, unsigned phy, unsigned reg, unsigned data) "(%s) phy %d reg %u -> write  %04x"
-+mdio_bb_new_state(const char *name, unsigned prev, unsigned state) "(%s) state %u to new state %u"
-+mdio_bb_illegal_state(const char *name, unsigned last, unsigned mdo) "(%s) illegal state from %u (mdo %u)"
-+
- # spapr_llan.c
- spapr_vlan_get_rx_bd_from_pool_found(int pool, int32_t count, uint32_t rx_bufs) "pool=%d count=%"PRId32" rxbufs=%"PRIu32
- spapr_vlan_get_rx_bd_from_page(int buf_ptr, uint64_t bd) "use_buf_ptr=%d bd=0x%016"PRIx64
-diff --git a/include/hw/net/mdio_bb.h b/include/hw/net/mdio_bb.h
-new file mode 100644
-index 0000000000..d3f80267c9
---- /dev/null
-+++ b/include/hw/net/mdio_bb.h
-@@ -0,0 +1,50 @@
-+/* MDIO GPIO based code
-+ *
-+ *  * Ben Dooks <ben.dooks@codethink.co.uk>
-+ * Copyright (c) 2025 Codethink Ltd,
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+*/
-+
-+#ifndef MDIO_BB_H
-+#define MDIO_BB_H
-+
-+ enum mdio_bb_state {
-+    MDG_IDLE,
-+    MDG_START0,
-+    MDG_OP0,
-+    MDG_OP1,
-+    MDG_ADDR,
-+    MDG_TURN1,
-+    MDG_TURN2,
-+    MDG_READ,
-+    MDG_WRITE,
-+    MDG_ILLEGAL,
-+};
-+
-+#define OP_READ  (2)
-+#define OP_WRITE (1)
-+
-+struct mdio_bb {
-+    const char *name;
-+    void *param;
-+    bool mdc, mdo, mdi;
-+    unsigned opcode;
-+    unsigned bitcount;
-+    unsigned phy_reg_addr;
-+    unsigned phy_data;
-+    enum mdio_bb_state state;
-+
-+    /* addresses are supplied as addr[4:0] = reg, addr[10:5] = phy-addr */
-+    /* read called to read from phy, so supply data to the MDIO bus */
-+    unsigned (*read)(void *opaque, unsigned addr);
-+    /* write called when data written to phy */
-+    void (*write)(void *opaque, unsigned addr, unsigned data);
-+};
-+
-+extern void mdio_bb_init(struct mdio_bb *bb);
-+
-+extern void mdio_bb_update(struct mdio_bb *s,
-+                           bool mdc, bool mdo);
-+    
-+#endif /* MDIO_BB_H */
+> ---
+>  ui/vnc.c | 12 ++++++++++++
+>  ui/vnc.h |  2 ++
+>  2 files changed, 14 insertions(+)
+> 
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index 9e097dc4b4..32f8bfd1f9 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+> @@ -3384,6 +3384,16 @@ static const DisplayChangeListenerOps dcl_ops = {
+>      .dpy_cursor_define    = vnc_dpy_cursor_define,
+>  };
+>  
+> +static void vmstate_change_handler(void *opaque, bool running, RunState state)
+> +{
+> +    VncDisplay *vd = opaque;
+> +
+> +    if (state != RUN_STATE_RUNNING) {
+
+Just to mention in vm_prepare_start() it's possible we migrate a VM that
+used to be suspended, if so it'll keep suspended after migration:
+
+    RunState state = vm_was_suspended ? RUN_STATE_SUSPENDED : RUN_STATE_RUNNING;
+
+Here I'm not sure whether SUSPENDED would also like to update the display
+freq.  I don't think it matters hugely, but just to say, if we want we can
+simply check "running=true" instead of checking the state to cover both
+RUNNING|SUSPENDED cases.
+
+> +        return;
+> +    }
+> +    update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
+> +}
+> +
+>  void vnc_display_init(const char *id, Error **errp)
+>  {
+>      VncDisplay *vd;
+> @@ -3420,6 +3430,8 @@ void vnc_display_init(const char *id, Error **errp)
+>      vd->dcl.ops = &dcl_ops;
+>      register_displaychangelistener(&vd->dcl);
+>      vd->kbd = qkbd_state_init(vd->dcl.con);
+> +    vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
+> +        &vmstate_change_handler, vd);
+>  }
+>  
+>  
+> diff --git a/ui/vnc.h b/ui/vnc.h
+> index acc53a2cc1..3bb23acd34 100644
+> --- a/ui/vnc.h
+> +++ b/ui/vnc.h
+> @@ -185,6 +185,8 @@ struct VncDisplay
+>  #endif
+>  
+>      AudioState *audio_state;
+> +
+> +    VMChangeStateEntry *vmstate_handler_entry;
+>  };
+>  
+>  typedef struct VncTight {
+> -- 
+> 2.49.0
+> 
+
 -- 
-2.37.2.352.g3c44437643
+Peter Xu
 
 
