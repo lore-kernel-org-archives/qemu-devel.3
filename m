@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA00AC54E90
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7031C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHsIj-0000oh-Ew; Wed, 21 May 2025 18:52:41 -0400
+	id 1uHsJa-0001y1-FD; Wed, 21 May 2025 18:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHsIh-0000oS-1W
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:52:39 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1uHsJY-0001uq-HB
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:53:32 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHsIf-0008VS-2Z
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:52:38 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-b0b2d0b2843so5502026a12.2
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 15:52:36 -0700 (PDT)
+ id 1uHsJW-0000BK-Hj
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:53:32 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-30e7e46cb47so5992239a91.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 15:53:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747867955; x=1748472755; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747868009; x=1748472809; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MmU26Oa6PRLSvLrU40jiBOoyh8LZIA7Nltq9z3yPoZA=;
- b=Yp8hnXPqHd4dNkMDz4WjbW5wccWnqOKpQxMfZMgLXcYvZsvlGiei9y6zgUW8N5y5yO
- epr7dbjQQnm4km93hycKPNSkDjfatkgcBHr4v2VncWZPGtsfTmIBS/FzB+DL9T6eF/tx
- tUtWBd1OCblpHAEEPXpfINs9WOcdHEqGogTyLF2OKj0neTFZGEMOfHmgthkOVpLltWHe
- GtYYGe4zX/4FD6RcAVR/X4B5dK3/JKuX6qBaTlqa/NrZPan/Rmyeh405tMdKiogQEQBs
- qPtMr6NKD4ci6k39VohRFYbpp5GSfOdbd/leJ9jG3g0cBMoPQRyaefWtx6PyW3V461zK
- P6/w==
+ bh=wcJT2kIk89iHTxtboW68hw5M9Lgdha4/NUieuiFxM0s=;
+ b=YwKfiDosNzDyZyYl9BfAnL2V2InYiwLyurEhQQnxOSvgWqRW9NQQyhYJPUdzPoDvID
+ VQt1YSIz4ZlJre/CggvZfzjf5OvjXruVO4TMnbGYwq1o5/ofkcAsfr0iKhe9j7PBE1CM
+ E7RqtxKpDp3zaAe20UyfaGRZgQIO9nC3bI3ceHHP6VEFd3ymTl+ZNchXHdS8rquLZNUr
+ I7ywHbxwEBrltcisAK5wGE6qF7exGtGGr8b+te07MbLYJCRec3URRe3h1h7z+2Aff1tb
+ dsz9O1J6qj0ZIR8Lfbywx3G1RcEgRUBIBDtZVFtIxk2njoA2s7V3h2WKwCJ9I8ABKQ/1
+ rFEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747867955; x=1748472755;
+ d=1e100.net; s=20230601; t=1747868009; x=1748472809;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MmU26Oa6PRLSvLrU40jiBOoyh8LZIA7Nltq9z3yPoZA=;
- b=OTUUHI3rW0Fi0tVlbqa5J5G2b+ldMJSMxKtOUROFkyKzKjfiY4juaeTisI6aHrgNse
- OJwr7yD2wlVafCwZ5GvYD/qRQSypnwF89aomctfLiOmU8kl54nFiyY2j+ASmAUaGFYiT
- WYhz//VuzKHAgwjXQVFAcFODPfU94/7tM5lmCxWsT5PrC2GjH6t1opP9tccsI3WkRS4I
- qYU/7YLA29RRYp98p8BDyVSsc5EIQ5mqOpujJKBtvEujOZj3GsOUIBSGSSooFpi8Xv+y
- LNZjpxSvz03GTbpj2G3Ovmw118kf7FutkaynxVXIDOH6nqXLfG9Hl1U1vzlfNWX3TgVo
- aP6Q==
+ bh=wcJT2kIk89iHTxtboW68hw5M9Lgdha4/NUieuiFxM0s=;
+ b=TdJdYxgpyqoZRpnFa0NKLUK0hfp16aGPpt66myIboParjsruGZ6JSGmEOaaLq8H9n1
+ ohce2hYrz/siP/q3xfT6kZpwfIRJiF9ZGNW5U9CLN9oHrOr0uD2DQZSX7G9byEy9raRT
+ Q6arAYcv4/85v5cUPtEw3Mp/PUP7K7C0YxVnImwoLyNxnyb34XrsRgRhmhgL/03IxOZ7
+ HED2Skvv0q9ay5lJzXSKrGH8dJu/kTocMXsO+ySXcngvNdRIyND3wzXTlU/tS1eWG4JM
+ F5f1FpXxtklqmG572/EoPo4wcKWOxgVEgRsidqgU6nFuhwvnZTSxZ5enUa7WHvMw7O2t
+ AaBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+WVWUiDZye1fsdLaZ5+fnPVPrmrK2UATevO8Grz7scnl5wfXfQM3PMkQjC+9Drm5mzcwnjRxV50XF@nongnu.org
-X-Gm-Message-State: AOJu0YwLjqIv+NfdsODl/7X3z+vm1pOyzyW+ljfL5foEOuWFMtTBGua4
- /mjVAg6nBzI8iqbSSjlKVuPViWra/vOp+8BZeG+5iDQ33KQY6IhnDFG2vHlAbKNHzoc=
-X-Gm-Gg: ASbGnctLI7WtqIrcRvUQsGN3307274LX8O+ioxxqBqkY1jhc59OCHBMS7NTpBYH4X1j
- Up8lNaJu94SvjfoNY6DC8GxjVaKNAzCrue3kgFFae2B8582lYjAg09x/eqKIA5nWgMvhFsLNDWR
- mH6rWAAhqi0xUbS8uLhizyMB2f7vndBoABg4e3V4DCD1e+GfFWUBvDqNCoh4+zr99Md08r85RPv
- EgxVk15dIOP5pUQjcHowMdU5xqKmFOIOJ0ljK6dvRuWAGVxiA0LiKRR7xNIdCFdkJJS7Mu21YNS
- ns+VE/jYYRIg2SZt42eb1Ddqr0q6XxES/e4tpRbDNOS7cMJnUBrr8bQVUOMv+Mea
-X-Google-Smtp-Source: AGHT+IEtfjmw2Lg9K1V4ZO264WReWCv/Nfay8rOK6OrRbpRIfsomB0sUyiypQraDC6n2PMFfyec7Bw==
-X-Received: by 2002:a17:903:4b4b:b0:223:5e6a:57ab with SMTP id
- d9443c01a7336-231d45327d9mr325942475ad.39.1747867955411; 
- Wed, 21 May 2025 15:52:35 -0700 (PDT)
+ AJvYcCUGZJhoMrh7H0TQfPoBy9v6EYnLNJa1g+JVUSK3JyVL0JcmPBo5O6d0c8WtzvpVEqk2QrmNrulBiayZ@nongnu.org
+X-Gm-Message-State: AOJu0YxL2OKfXwZFmkf9MrSHxGWLt+FElhaIU8Tw+r7VIXN9a4qXwjOg
+ 52tNsCFdpb6xF4DVux4+BxbIXb/x+OXi8WDh4pXBm5jbY8UxogeKvd3VBw5eAs3kHEA=
+X-Gm-Gg: ASbGncuhF+3updtxZyAbEgQKlL6amBOkW2arCL8gf6PnISG6vkicCv38AMht6r3vDb9
+ Iq0hOSlg7y1HO/xT+IpvW1lEoLgrin17Afn8Mk/MzrI4Z5G+9fljlakdNYkBPvzGeMckeurw/an
+ Q4nD6SP9cJWFDp4JVpzpw7Yi/QHXSIX9TSjg6m37JZaqLfXGacscYfKNV0DcEj1XeRZZDBulTGW
+ ypJH+YSL1cy6A56c2k4/RKp31i4wz/fGXeiQEuhzH5IPMth3VYtzyHWwFQ9X+xHgp83hg35A6pA
+ 5wo47v4PI+V9jXwHajOO0rEiUMLXEXngcSUnkpMJHqy7PjHex8/T6kybFtnohipp
+X-Google-Smtp-Source: AGHT+IF6nNNjMbz6GUI6a4zne2NEXRiBOS4ciV+Oq57aY1ib7OgxILyo80WnJSvSs9qZH+aFDnAErQ==
+X-Received: by 2002:a17:90a:dfc7:b0:30c:5479:c92e with SMTP id
+ 98e67ed59e1d1-30e830c7988mr33822085a91.4.1747868008725; 
+ Wed, 21 May 2025 15:53:28 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ed5683sm97856185ad.245.2025.05.21.15.52.34
+ 98e67ed59e1d1-30f365e5bd3sm4186512a91.37.2025.05.21.15.53.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 15:52:35 -0700 (PDT)
-Message-ID: <81a337b0-6799-4097-8583-ee83886a81b1@linaro.org>
-Date: Wed, 21 May 2025 15:52:34 -0700
+ Wed, 21 May 2025 15:53:28 -0700 (PDT)
+Message-ID: <f81ee368-8056-49c3-bf10-983412261ca6@linaro.org>
+Date: Wed, 21 May 2025 15:53:27 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] Add register write API
+Subject: Re: [PATCH v3 4/8] Add memory virtual address write API
 Content-Language: en-US
 To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
 Cc: Alexandre Iooss <erdnaxe@crans.org>,
@@ -79,13 +79,13 @@ Cc: Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20250521094333.4075796-1-rowanbhart@gmail.com>
- <20250521094333.4075796-3-rowanbhart@gmail.com>
+ <20250521094333.4075796-5-rowanbhart@gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250521094333.4075796-3-rowanbhart@gmail.com>
+In-Reply-To: <20250521094333.4075796-5-rowanbhart@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,9 +114,9 @@ On 5/21/25 2:43 AM, Rowan Hart wrote:
 > Signed-off-by: novafacing <rowanbhart@gmail.com>
 > Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
 > ---
->   include/qemu/qemu-plugin.h | 57 +++++++++++++++++++++++++-------------
->   plugins/api.c              | 26 ++++++++++++-----
->   2 files changed, 56 insertions(+), 27 deletions(-)
+>   include/qemu/qemu-plugin.h | 21 +++++++++++++++++++++
+>   plugins/api.c              | 18 ++++++++++++++++++
+>   2 files changed, 39 insertions(+)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
