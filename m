@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 433EAC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 09:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C4AC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 09:36:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHffi-0005fk-P3; Wed, 21 May 2025 05:23:34 -0400
+	id 1uHfrQ-00084a-98; Wed, 21 May 2025 05:35:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uHffh-0005fG-8i
- for qemu-devel@nongnu.org; Wed, 21 May 2025 05:23:33 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1uHfrP-00084S-6y
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 05:35:39 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uHffe-0007w9-OA
- for qemu-devel@nongnu.org; Wed, 21 May 2025 05:23:32 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-601fb2b7884so4632337a12.2
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 02:23:30 -0700 (PDT)
+ id 1uHfrL-0000y4-Ro
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 05:35:38 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-ad216a5a59cso925277866b.3
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 02:35:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747819409; x=1748424209; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747820133; x=1748424933; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sfIOo8IDzgQ3SnejEatqubQzae4yfAZCjfO8jfxjoxE=;
- b=y3K6hiMLmFjsqdKrHzYfF/asA547KEvHziQ5KjC5Q2QEtbAVQF5AhkJPupKJJmU3nd
- dyh7E4Q8PQM+ASbaeRFc4lqqZyY6AX0zKpzMwGpuAZZX7kHJi/gbwku2OiKVKcoApIpU
- Cqurx3Sk+OmT3yMjm2Cnqv6540NZW971zXdR9ZLI+X8picK0hsFZUFV+SNx+MJ25Awfc
- gad982Na/ZQn7QnP2AJxD+Za+ImC512+wAX7rt2xN+nkDVsjAwfzr44TABjduLpHPLIf
- 9vvjbSovrV/o4Isrpl0y0bcAmpaIfRbKTZWjFK57vEy8/HkEdM1H/vwyKqrichIjrm1O
- LUyA==
+ bh=AWBAKfnqZycymN3WJWS0hkWG8MSAZGAaCy5DopdBUIs=;
+ b=Smq99zMCpLXX6b/PHWFLqSOdxDmg/PZGKzgo3gXlwkHZ1w0IRiJWNOkrBhZZ5e6Usd
+ UEWcZAx7RlgUtidfI9SAjHm1Xw3MQJYj/Wa6U6qp97h8CmpXPzGwbMMofOhLYIVAPOA0
+ 5AwagxRpR97ahs8Qrq53A4HhT9NBVsMx12vL48C+gtXYqxtXBaNP9z6b7B8bGlBiOR/q
+ ZD4INB6UIiGjxal0bAYmyUTLsE7jl6O60dMBiiHiOSUPfKWWhcA7ihooRdqEgQoOz1rg
+ 7GnkSCRe1Ned4eRx+8L5unpU36SXDN938Lcq6gMNhYEmnmyJZ8yfR+az0fb/RIG+yxcz
+ dcYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747819409; x=1748424209;
+ d=1e100.net; s=20230601; t=1747820133; x=1748424933;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sfIOo8IDzgQ3SnejEatqubQzae4yfAZCjfO8jfxjoxE=;
- b=I7K5mGSPDw6u+X2tzZqIC0YJYqBa38JnuOuzjT3ugtYOIuA47VmadkqGRCAKGtbSU6
- iUhueg+OZZqg5Wg4MtRaRXLH1bMod2gBO7nyFFmL4H8iDYPn/Nlcon9e62OHnPEpnYTC
- xz/EvibtmU3r5rSbeAvGx6xJ2zzwUoHdqgo9tIop/9yxpmiyHdTY3anvcb5k76SKc2NS
- lA3tFzRFJjz8cqkiP8pkigtRhwnHzbLnPJ7IewtEZ7ZeL8YDESsQJG0RG/37BEX69Dpe
- ayUU9gTYFBaNsKACiT9fgOpfbkcce93TpZOqLaIX8p+p8zyZIYemzciZhp5JLZDxxRch
- PWkw==
+ bh=AWBAKfnqZycymN3WJWS0hkWG8MSAZGAaCy5DopdBUIs=;
+ b=i4HNsviC19WU08BBNCuOXyQFLTqrNPAg/RfqooHxJqcJj///ry7F+x2A+IA1ZdQn6d
+ 4D9ADmBS6yB7t3RG4SPYyblteWirnFOBEzJmPtJarZGDci7NyPZ6yxaNPhrs2G2Tjk34
+ 37c9LcXonbWAE7TXjoTgHeiVz/cc6E3fgLzQRg3vCRMTj182bPDwODxifblBii3ZyUUx
+ W35hOZkFQw3WaztvhyhZhu1nZsbnyKArVXSiCcrpJ4aiKALIoWWzjfdcScGHNpXadu4Y
+ OKb9K9X8w6VVSM9MYvkfFF6dEKpsNV7/j81VdWM8igHiXAtS6kHtKBJboxDkZvIaePPb
+ +p7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7NY2c/uYycpWmVWzO20AipZBsj4+5qZLy+L4RRA9qBckCB4825XlcNCnxGk9t5NCTVLNDllDCwqvN@nongnu.org
-X-Gm-Message-State: AOJu0YxmKaxb0ahhaAHnAif3Ix4JbcEcms0OTjur1vdZ4JhSb7e6IFm5
- U3M8tWZ60qsFrs7cVHxvlgt6W30zXr2ASX/19B6a4PxntNaSqL/1BTW00T3CEHvh+44eQZ1w1Rz
- VQk3quboZVVDlInd2WZx0A00s/Wi9Q17VsBID4jarlA==
-X-Gm-Gg: ASbGncvcNdUOa18vjLk0dULpsP1qe+cS3vFPifvBIVtPGkPSVpxIacbdsElJ+vMSIH8
- 1FyTqhPd8/ZofpAEX+HfSC+/Mh/I/xtHhM/4p866gkJBHiSF1I86r53Nb6FC84ztYWR0WfiW+GQ
- uaG4Cro2zTLDuBcED8B/s4ElEvWnU2
-X-Google-Smtp-Source: AGHT+IH4vUBZ78nVMTwecwnMF/FcXMpOh7ksyMkAstIv+1vtkovVY7H1DMlMspTMlh+RxIIvb4vmDBv9Rm7QfwyaAtI=
-X-Received: by 2002:a17:907:9408:b0:ad5:28a4:8205 with SMTP id
- a640c23a62f3a-ad536bc9cd5mr1742791366b.15.1747819408703; Wed, 21 May 2025
- 02:23:28 -0700 (PDT)
+ AJvYcCV/muqD3JUxtckcFhQQLCC4t7flwkGub349JbRgVWlfPuRI874OP32XEM7zFqXSYttuTHxFaMkNUUZB@nongnu.org
+X-Gm-Message-State: AOJu0YwUN/b9ziC7i5P009ZpnFI7KU2MlWH5NDlYwKvGGw2ud/rz7LBx
+ aWuKyacJ+52YOqKMgmLA6q40eTB35eozCmagd41fkGzW5BgmzMnvgv52Vsk5Y6qMFdIFF17fRwg
+ YV4sUdXcmcWIbXET9Rb+4V/gZKGrh49o9lZdTSpQebQ==
+X-Gm-Gg: ASbGncvUP2+riEbicap1y9HkB5iggIv2tpgip+sWUi9DKTnI639RBlBMR77UH4sxmNq
+ y6udLZeN40T36FNaEvzdy7xh4WKMIhfHRoD9k7xeRZiIuY4eaNJdr4Y4g68uIgnpLU40tzD2TrF
+ vXYOz8RUfDm3v9X0Nrx4Czk+rW6J1ygFKhCx9gkjg=
+X-Google-Smtp-Source: AGHT+IHF9LH01an0iC3l0lzCYZnI+jsjds66HFA1ceOas2GWN/PTYemUEapZO9OmTMVWNgWwwDhESId088qOd2H7W1k=
+X-Received: by 2002:a17:907:3d11:b0:ad2:35db:a727 with SMTP id
+ a640c23a62f3a-ad52d4ce22cmr1746038766b.19.1747820133086; Wed, 21 May 2025
+ 02:35:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250521081845.496442-1-pbonzini@redhat.com>
- <20250521081845.496442-2-pbonzini@redhat.com>
- <aC2O0iNVZZMQUpjQ@redhat.com>
-In-Reply-To: <aC2O0iNVZZMQUpjQ@redhat.com>
+References: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
+ <aCysct2L8Bosqy0N@intel.com>
+ <abe683f2-e679-4579-b68a-38a11d41e00b@gnu.org> <aC2R4BOR2tsYgEFI@intel.com>
+ <CAHFMJ7vsgPtfkpBkjvh_-NqKszEDj5UpWThU3rPjN9N4X5s0tA@mail.gmail.com>
+In-Reply-To: <CAHFMJ7vsgPtfkpBkjvh_-NqKszEDj5UpWThU3rPjN9N4X5s0tA@mail.gmail.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 21 May 2025 12:23:02 +0300
-X-Gm-Features: AX0GCFsNaSUxYKPjR1sdqQEHbT7S3RzFpy8oWRN-8o6mV7CeUbSRstpRM3cjNNo
-Message-ID: <CAAjaMXbuCFh3pY+Q=u1r5vGVf_a1kveyoeVgSOEPa8zwRicj_A@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/6] rust: add "bits", a custom bitflags implementation
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, qemu-rust@nongnu.org
+Date: Wed, 21 May 2025 12:35:06 +0300
+X-Gm-Features: AX0GCFvOlyMEhDT6bjmixXQ4M3gY5B9KXrKZvlcMcIErp3GVIO3_-Gp59oRl6M8
+Message-ID: <CAAjaMXb01Y3qoH56j4GsfJLQMRkA067mHjiWS86cr95akh4ckg@mail.gmail.com>
+Subject: Re: Rust in QEMU update, April 2025
+To: Paolo Bonzini <bonzini@gnu.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-rust@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Daniel Berrange <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,119 +102,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 21, 2025 at 11:29=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
+On Wed, May 21, 2025 at 11:36=E2=80=AFAM Paolo Bonzini <bonzini@gnu.org> wr=
+ote:
 >
-> On Wed, May 21, 2025 at 10:18:40AM +0200, Paolo Bonzini wrote:
-> > One common thing that device emulation does is manipulate bitmasks, for=
- example
-> > to check whether two bitmaps have common bits.  One example in the pl01=
-1 crate
-> > is the checks for pending interrupts, where an interrupt cause correspo=
-nds to
-> > at least one interrupt source from a fixed set.
-> >
-> > Unfortunately, this is one case where Rust *can* provide some kind of
-> > abstraction but it does so with a rather Perl-ish There Is More Way To
-> > Do It.  It is not something where a crate like "bilge" helps, because
-> > it only covers the packing of bits in a structure; operations like "are
-> > all bits of Y set in X" almost never make sense for bit-packed structs;
-> > you need something else, there are several crates that do it and of cou=
-rse
-> > we're going to roll our own.
-> >
-> > In particular I examined three:
-> >
-> > - bitmask (https://docs.rs/bitmask/0.5.0/bitmask/) does not support con=
-st
-> >   at all.  This is a showstopper because one of the ugly things in the
-> >   current pl011 code is the ugliness of code that defines interrupt mas=
-ks
-> >   at compile time:
-> >
-> >     pub const E: Self =3D Self(Self::OE.0 | Self::BE.0 | Self::PE.0 | S=
-elf::FE.0);
-> >
-> >   or even worse:
-> >
-> >     const IRQMASK: [u32; 6] =3D [
-> >       Interrupt::E.0 | Interrupt::MS.0 | Interrupt::RT.0 | Interrupt::T=
-X.0 | Interrupt::RX.0,
-> >       ...
-> >     }
-> >
-> >   You would have to use roughly the same code---"bitmask" only helps wi=
-th
-> >   defining the struct.
-> >
-> > - bitmask_enum (https://docs.rs/bitmask-enum/2.2.5/bitmask_enum/) does =
-not
-> >   have a good separation of "valid" and "invalid" bits, so for example =
-"!x"
-> >   will invert all 16 bits if you choose u16 as the representation -- ev=
-en if
-> >   you only defined 10 bits.  This makes it easier to introduce subtle b=
-ugs
-> >   in comparisons.
-> >
-> > - bitflags (https://docs.rs/bitflags/2.6.0/bitflags/) is generally the =
-most
-> >   used such crate and is the one that I took most inspiration from with
-> >   respect to the syntax.  It's a pretty sophisticated implementation,
-> >   with a lot of bells and whistles such as an implementation of "Iter"
-> >   that returns the bits one at a time.
-> >
-> > The main thing that all of them lack, however, is a way to simplify the
-> > ugly definitions like the above.  "bitflags" includes const methods tha=
-t
-> > perform AND/OR/XOR of masks (these are necessary because Rust operator
-> > overloading does not support const yet, and therefore overloaded operat=
-ors
-> > cannot be used in the definition of a "static" variable), but they beco=
-me
-> > even more verbose and unmanageable, like
-> >
-> >   Interrupt::E.union(Interrupt::MS).union(Interrupt::RT).union(Interrup=
-t::TX).union(Interrupt::RX)
-> >
-> > This was the main reason to create "bits", which allows something like
-> >
-> >   bits!(Interrupt: E | MS | RT | TX | RX)
-> >
-> > and expands it 1) add "Interrupt::" in front of all identifiers 2) conv=
-ert
-> > operators to the wordy const functions like "union".  It supports boole=
-an
-> > operators "&", "|", "^", "!" and parentheses, with a relatively simple
-> > recursive descent parser that's implemented in qemu_api_macros.
-> >
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >  rust/Cargo.lock                  |   7 +
-> >  rust/Cargo.toml                  |   1 +
-> >  rust/bits/Cargo.toml             |  19 ++
-> >  rust/bits/meson.build            |  12 +
-> >  rust/bits/src/lib.rs             | 441 +++++++++++++++++++++++++++++++
-> >  rust/meson.build                 |   1 +
-> >  rust/qemu-api-macros/src/bits.rs | 227 ++++++++++++++++
-> >  rust/qemu-api-macros/src/lib.rs  |  12 +
-> >  8 files changed, 720 insertions(+)
-> >  create mode 100644 rust/bits/Cargo.toml
-> >  create mode 100644 rust/bits/meson.build
-> >  create mode 100644 rust/bits/src/lib.rs
-> >  create mode 100644 rust/qemu-api-macros/src/bits.rs
 >
-> > diff --git a/rust/bits/src/lib.rs b/rust/bits/src/lib.rs
-> > new file mode 100644
-> > index 00000000000..d80a6263f1e
-> > --- /dev/null
-> > +++ b/rust/bits/src/lib.rs
-> > @@ -0,0 +1,441 @@
 >
-> This (and other new .rs files) needs SPDX-License-Identifier
+> Il mer 21 mag 2025, 10:21 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+>>
+>> I also realize that once FlatRange/FlatView is associated with GuestMemo=
+ryRegion/
+>> GuestMemory, it changes the usual practice in QEMU, where most memory op=
+erations
+>> are built around MemoryRegion/AddressSpace.
+>
+>
+> That shouldn't be a problem. In QEMU and vm-memory DMA always starts from=
+ Address space/GuestAddressSpace, not from MemoryRegion, so if QEMU impleme=
+nts GuestAddressSpace in qemu_api::AddressSpace everything matches well. Th=
+e only difference is that Rust code will do something like
+>
+>   AddressSpace::MEMORY::memory().read(...)
+>
+> (which retrieves the FlatView) instead of
+>
+>   address_space_read(&address_space_memory, ...)
+>
+> But that's just how the API is defined. It seems good to me. The mismatch=
+ between MemoryRegion and GuestMemoryRegion is confusing, but will be mostl=
+y hidden behind the prelude because Guest* are traits not structs.
+>
+>> > So... not sure what to do there.  It seems like vm-memory is very clos=
+e to
+>> > being usable by QEMU, but maybe not completely. :(
+>>
+>> Is it possible or necessary for vm-memory to support overlap? Because I
+>> feel that if it is possible, the problem might be simplified. (As a
+>> beginner, I have yet to understand exactly how difficult it is.)
+>
+>
+> I don't think that's necessary. Just like in QEMU C code we have AddressS=
+pace for DMA and MemoryRegion for hierarchy, in Rust code you have qemu_api=
+::{AddressSpace,MemoryRegion}. FlatView, FlatRange, MemoryRegionSection are=
+ hidden in both cases, and users don't care much about which type implement=
+s GuestMemoryRegion because all they see is AddressSpace. Again, it's all h=
+idden behind the prelude.
+>
+> The real problem is how hard it is to remove the references from the vm-m=
+emory API... Maybe not much.
+>
+> Paolo
+>
+>>
+>> Thanks,
+>> Zhao
+>>
+>>
 
-We should probably lint for this in .rs files.
+vm-memory is a very rigid API unfortunately. It's excellent for
+rust-vmm purposes. I presume it's possible to figure out a clever
+solution to satisfy both rust-vmm and QEMU use needs but I'm not sure
+it's worth it. It's really hard to retrofit other projects into
+vm-memory if they don't use rust-vmm crates API design and it might
+make both rust-vmm code and QEMU code more complex. QEMU would depend
+on rust-vmm architectural decisions and vice-versa. The thing I'm
+fearing most is needing to refactor memory APIs in QEMU in the future
+and turn the vm-memory dependency into technical debt.
 
+Perhaps it's more sensible to not use external dependencies to wrap
+over our APIs but we can surely design our Rust bindings inspired by
+them. I think it's an inescapable consequence of QEMU's internals
+being fluid over time and "private"/unstable.
+
+Personal anecdote: I tried using vm-memory on a personal TCG-like
+emulator I am writing for fun, and I found it a daunting task as new
+rust-vmm concepts appeared into my codebase as "scope creep". And I
+wasn't even adapting an existing API to vm-memory, but designing a new
+one based on it. I gave it up after a few days.
 
 --=20
 Manos Pitsidianakis
