@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2910C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 012E8C54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHmXH-0000bW-IV; Wed, 21 May 2025 12:43:19 -0400
+	id 1uHmXD-0000Z2-VN; Wed, 21 May 2025 12:43:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmXE-0000Z6-FN
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:16 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1uHmXA-0000Wb-8r
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:12 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmX3-0006CC-TU
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:16 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-ad572ba1347so503235166b.1
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:43:04 -0700 (PDT)
+ id 1uHmWz-0006AA-PJ
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:11 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-6015f8d4b7dso3388144a12.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:43:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747845783; x=1748450583; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747845779; x=1748450579; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZKjH7CjiJYzujGe3Nf/k6lUsudRskeBEN8uYYCNZGto=;
- b=hS7saKN+TKifPLGgSQIyS5jGUcFyW1+wkl4bTu3T4dkPqQ58Qd/8QbBn6RKr2RMp2B
- FludBUFPBS1bk/QJZWLWHqyfr6dFBktPap3Eir2R8WVJJ4j6mKqfzVUcB9VSvJQAoPug
- l9y6vnwobqSYZCbTgEJODgeiYkIV8zPQLtaVTlOm36ZxUcU/hskc0JNkbOvFIEUQLzq0
- k8krPrIFw6l5HUnbPriWsAFTuO14hOwuEZCgvWEHEWVEQ5nbNc0CIMYfYMaFHfHuCVfo
- jLHQNKValezHMhN4HiKEPhd6Pt8YQQgoM5+sss0aHBcStfGMFGMHmyy6d+Ql8ugArUMf
- +fKw==
+ bh=eBksJDjYxbj/jrleCQdl2ev5L2gMtbczqXLkNWvLosk=;
+ b=AKNuvGKWCAH32dDrdVldQoZZw8l2dC6OtoPWvv6mfFrRk0EZo3VnQaEQS1d8nEWF8g
+ TPOz750rb1tOXiL5HuZA91rvXjjk+1W17aSglLgvxKDHero+V/aKBRUmOJKCh4f0kweg
+ 6leZ++AS78Q4fj0heW5jmPb4G84mt9uPZNt6Eyoq+8g4ILJg26XOj6MW3Dv+N/b7GmIk
+ ayUjcQVZdK2bdy/ImykWoOoYIUoXeBQrrCKZPTor2mGUnFNgMaMYW3OklNZeR+0wunFH
+ zThC+hFebJo+zaUA2cDJiL0H8iEtCbFDAN958NMhV9ulT7x9iM0XZ92uQAJeNNxyW5AO
+ Jodg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747845783; x=1748450583;
+ d=1e100.net; s=20230601; t=1747845779; x=1748450579;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZKjH7CjiJYzujGe3Nf/k6lUsudRskeBEN8uYYCNZGto=;
- b=GTy6dG2UkpQAzjY4WfXOxqjJ8/XoUUDLZiHtNjUXHezXHor/ZPD6256pjsuQIDQPLV
- HIkWoYlErCS7EnQ/McOI9FFYaZTRXP8W4WwsDqGsXQRrObIU1cDEwLtA4r86G8uazSRd
- 0SqIxP5GqoeuCPftog8iWjlCveD1uo/ok3xtCSlSwBga8bD3RfWxmMGdnmmjewscKAlb
- 3HWCPwMFxaeQJa++2oQ6mBHzRozQNe3oBIFloyIkMC5kq79vbmGk8KPike/Pd0MPm6yF
- 88eNbG/PeIahxL9GKCRMHpDbnwKtVEikCmLUq1h3gaz7mbNUwPNqK4/kCz8a5perHZLE
- FN5Q==
-X-Gm-Message-State: AOJu0YypaXMNSpuxjFcIL60I2YiH1NKL++IlZpwABXVlJJ8iYLkbIWDb
- pwKZVSGJxMWoO4qcBIFSVk+bIscxI6VSiq+gkrSr0sKXN91viww3hHT4B5BzTIKdKjk=
-X-Gm-Gg: ASbGncuwdeQEMP3SwsAHZRBlFAALMgsyz1JYWk0mljqz00RdbRgukLMqGAWI6jeiCTI
- zt0fO1frKRUlUf7gBWIGmzJZRL0gUQDV+sFsf/lEmdiJ7mcFXj5DMUG7tx6LQD4i7OmEkaY7w6f
- O8JXMz8sUZ9qmIBXhDVkjeFdXIAq5UePW2d36YgBdAEl2MimXaqP3QT+gYjf623b+sx2gPc7i/s
- DPTg+b9yQa1cZTVPnCUnm+07Z7WyyJYfE2KoEm37j06KeE9Gomc+7xX4UVtZQnJXt5DYk4Y9yda
- tTaQtcrqhBBHL+59uyty72IMdiF0oWFTEZBpACWpzbCqlepLB5X8bswGjZU6+B8=
-X-Google-Smtp-Source: AGHT+IHMltgYjVzI6DdhAD5Bb0bdXPbcpoi6cVcQn52SQcGU0WHbpxhEOUICZPo5X8LhTxZX+fb7nQ==
-X-Received: by 2002:a17:907:d9f:b0:ad5:8414:497 with SMTP id
- a640c23a62f3a-ad58414049cmr949162266b.16.1747845783333; 
- Wed, 21 May 2025 09:43:03 -0700 (PDT)
+ bh=eBksJDjYxbj/jrleCQdl2ev5L2gMtbczqXLkNWvLosk=;
+ b=HVIY57SdAGOpC1Tc2XzBuAlLphROAXAZwn0JW0yYKqhwHHLkh04L6+eoEPmUCq2hTI
+ KVgwOUh/ZIQ2MrIhfy3vdYJAfIanWQwHcdjwxfFlmnN9E0WdD1o0rbzRYdrY/uFvYJ6l
+ 6gCJAQE0XWf8VSh17qo057mBa6rCGPPr7xXExCesuqafXZ/pfrnb6i/hlvKOhojoJegP
+ e8Y7TETY8btbSPebU0EoUUxUv1Choc2clWs46nk9meiznm0hquiq1eWX479qq/NXb3HH
+ E76OpC+uV0F5NhcgruPreQEiZ5C2CroA47RAnwOkQeh+UqlB59AvO+fzIv6gpaOoe0Pu
+ zZpw==
+X-Gm-Message-State: AOJu0YzoCMe1qWPiODt6saGw8vsKy6pfxmGqZib7KxY7kY5d92R9+AEO
+ e0+1GCoSkLk6Z2g36nw1p9tRMC5/ydolgeSqVUKp/lYX2uCC1oVKcGS1lVuM4UWFr9c=
+X-Gm-Gg: ASbGnct1vWTBvbipVbj4FeI8AqSah7ILosBFrtJb5x74vISAZnEyHCfoomOOQFfhYyH
+ NWHiq0eC5kZOk1Y4w7V9ujpMpWz6TPMptbFwhMKnITnjRWsrUbimTzV/o3BdT6FQXf9S2/+3NWT
+ Sb5BbfVPl0tqFWYN096cmT38SYDaG+lLWuRWbyYFAVo4ia2EibEV1idx69pxOmxJzKhOCQ6/ejA
+ /1uXezinvF6hNbKkAlnp/LReXl63us9FKozUN+45YusFL7+HBJGIxxYPLb46Masuyuan9/cd2dD
+ MHKpvboSWUMhF4Wr3OJUG+suUgas44FEvM1P8TfE8dYHtJ/vCHF9
+X-Google-Smtp-Source: AGHT+IEZQNK8srkgDbHlNOS49lrrDmrEqDNvwRubACyrTe6x8QHVG9ZX/ThXUILc9WHHGWNSpeDI1A==
+X-Received: by 2002:a17:906:6a14:b0:ad2:2e5c:89c5 with SMTP id
+ a640c23a62f3a-ad52d4c511cmr1980220966b.20.1747845778636; 
+ Wed, 21 May 2025 09:42:58 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-601e657a0b1sm5073214a12.45.2025.05.21.09.42.55
+ a640c23a62f3a-ad52d271916sm934897566b.69.2025.05.21.09.42.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 09:43:01 -0700 (PDT)
+ Wed, 21 May 2025 09:42:55 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 389BB5FA36;
- Wed, 21 May 2025 17:42:51 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id F34C15FA14;
+ Wed, 21 May 2025 17:42:50 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -82,20 +82,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Gustavo Romero <gustavo.romero@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH v3 13/20] virtio-gpu: refactor async blob unmapping
-Date: Wed, 21 May 2025 17:42:43 +0100
-Message-Id: <20250521164250.135776-14-alex.bennee@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v3 10/20] MAINTAINERS: add Akihiko and Dmitry as reviewers
+Date: Wed, 21 May 2025 17:42:40 +0100
+Message-Id: <20250521164250.135776-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250521164250.135776-1-alex.bennee@linaro.org>
 References: <20250521164250.135776-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -118,75 +116,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Thanks for volunteering to help.
 
-Change the 3 part async cleanup of a blob memory mapping to check if the
-unmapping has finished already after deleting the subregion; this
-condition allows us to skip suspending the command and responding to the
-guest right away.
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250410122643.1747913-4-manos.pitsidianakis@linaro.org>
-Cc: qemu-stable@nongnu.org
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/display/virtio-gpu-virgl.c | 35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ MAINTAINERS | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 8fbe4e70cc..32a32879f7 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -155,7 +155,32 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-      *    asynchronously by virtio_gpu_virgl_hostmem_region_free().
-      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
-      */
-+
-+    /* 1. Check if we should start unmapping now */
-+    if (!vmr->finish_unmapping) {
-+        /* begin async unmapping. render will be unblocked once MR is freed */
-+        b->renderer_blocked++;
-+
-+        memory_region_set_enabled(mr, false);
-+        memory_region_del_subregion(&b->hostmem, mr);
-+        object_unparent(OBJECT(mr));
-+        /*
-+         * The unmapping might have already finished at this point if no one
-+         * else held a reference to the MR; if yes, we can skip suspending the
-+         * command and unmap the resource right away.
-+         */
-+        *cmd_suspended = !vmr->finish_unmapping;
-+    }
-+
-+    /*
-+     * 2. if virtio_gpu_virgl_hostmem_region_free hasn't been executed yet, we
-+     * have marked the command to be re-processed later by setting
-+     * cmd_suspended to true. The freeing callback will be called from RCU
-+     * context later.
-+     */
-+
-     if (vmr->finish_unmapping) {
-+        /* 3. MemoryRegion has been freed, so finish unmapping */
-         res->mr = NULL;
-         g_free(vmr);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8dfb393c06..a14e2796e0 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2674,6 +2674,8 @@ F: include/hw/display/ramfb.h
  
-@@ -166,16 +191,6 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-                           __func__, strerror(-ret));
-             return ret;
-         }
--    } else {
--        *cmd_suspended = true;
--
--        /* render will be unblocked once MR is freed */
--        b->renderer_blocked++;
--
--        /* memory region owns self res->mr object and frees it by itself */
--        memory_region_set_enabled(mr, false);
--        memory_region_del_subregion(&b->hostmem, mr);
--        object_unparent(OBJECT(mr));
-     }
- 
-     return 0;
+ virtio-gpu
+ M: Alex Bennée <alex.bennee@linaro.org>
++R: Akihiko Odaki <akihiko.odaki@daynix.com>
++R: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+ S: Odd Fixes
+ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
 -- 
 2.39.5
 
