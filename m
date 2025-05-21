@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FDEAC54E90
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 20:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC764C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 21:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHpv4-0003gc-HT; Wed, 21 May 2025 16:20:06 -0400
+	id 1uHqYO-0002dM-5F; Wed, 21 May 2025 17:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uHpuu-0003d9-7X
- for qemu-devel@nongnu.org; Wed, 21 May 2025 16:20:00 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uHpuq-00042c-2K
- for qemu-devel@nongnu.org; Wed, 21 May 2025 16:19:55 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-22e09f57ed4so81405035ad.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 13:19:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747858789; x=1748463589; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=eHG847+hkMf1sdoXbCA9iDurNAwLb5cIo+F2Yg5n8Wg=;
- b=TU5vPYD3KrMNyEz1NHqq30A5/XKiR2RJp6eEtd4XRW0deGPjzWsuP5S3YYwaqsPOwL
- brwESHnXIitnWLtjApjPv/xlakGXP3OcVXYM/8A/S5PRR2YL1tb7kn/7HjhDRQ4OORf5
- JdFnwLiZBFcWaaU+2NkFzDhf0BU7d+3pq3cZUeaug7wbpuIlDMS2TaD2eDvcU++duxV9
- GLGbpJaDo9E2fTRWvEG7nIeswnINAnQ67nrFeKs/d7NIbZYKlXt7YfR1bJ2FVVATuX8Y
- ZvZ3toKbU37dceCCy1aESijGcu+lbtZ7W7q8EKxRVB1qC2hmwP5wXjap6NnJz7ErosBR
- Z6Ng==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uHqYC-0002cZ-Tm
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 17:00:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uHqYA-0002rA-4a
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 17:00:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747861228;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tPM8Q8KC2jlJZCIfPNHU2X9UqxtpMbIyJNccZNCX5oo=;
+ b=JDu5vy4ReY3wvZhAXMfDP6CBF5DFYLZtGsb638dadWuPnFg6GhtYdlWEih/qdEETVkimkQ
+ mJMy3eMpR9+IanopuycCLrIpdwuhyaylqrVPC3I4awWJvImTXkFRKn9tcaY8d10hRjHSlY
+ axYG/NDgRpIAnj/qEqm+IHxd8+wfScM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-66-rmp_wK93OWeVmZVSYyE6Pg-1; Wed, 21 May 2025 17:00:26 -0400
+X-MC-Unique: rmp_wK93OWeVmZVSYyE6Pg-1
+X-Mimecast-MFC-AGG-ID: rmp_wK93OWeVmZVSYyE6Pg_1747861225
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a35c8a7fd9so3083422f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 14:00:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747858789; x=1748463589;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eHG847+hkMf1sdoXbCA9iDurNAwLb5cIo+F2Yg5n8Wg=;
- b=IvCG+aq04222wOelhEdQYrNkeNo1t9ZyZJ57mrtkWvtZYdOCgdwif0s5K2opA5y29w
- T4ZFd0TYRS7Oo//7P6U+f8reqF0YakW2gBZ7R0w3iATkxd1//0spN+Ps9cUMPiXxPa4g
- rdeCzz7mH2+qPwxZmRdQa8qfBlYFwvKeet0DE0gZ/rs2Ay27j/GStljJ1JaoxPJfkLj7
- IfBIYqF2XC4hdsVAl7Tg9w+cAqcO4iwZz7JbrgAGWWY+IxvdOFLLs6Lf1qg7TtjoUVaf
- aXcnctbslMiZm0SjYnYahrcvv9KzL9lZ7Ib+fbCBkxM3KVbjAPK9CiHLyGV7cM592fYJ
- DZZw==
+ d=1e100.net; s=20230601; t=1747861225; x=1748466025;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tPM8Q8KC2jlJZCIfPNHU2X9UqxtpMbIyJNccZNCX5oo=;
+ b=JdZEdGTibWLg1dhY50oViy/tz3QG1piX0Oh+tCAHaE0rGb/gKwSDiYLAazvR1++ifs
+ mSSMmy3XWFxIhkMGX/CmCY6PNN+tKaNADgyZrB57AKttNIxyZEbyap830OzDxs9iVdB/
+ 9v2tAkj7wyxonWoduCz7iBYD1fZX6BMrCNkyxdIx5sEelO+OG7Ctwfq8Pc0w0MhYITUO
+ 1nEdqgrSqGyX7MPv/kjIQi+o99kd5qju4awz/w7cZ2pkPr96AMBiqUjzE/GQ2be5CeN2
+ TuRIx/ztbwS/kxlURhGNB4zZGQpJvwcWyvdwVaNJiI6xwks/NylQcHus7z7L5JbqyaaR
+ PoRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX45PKCsKSerJhzHTLYzQg5UGM/5aaXpArdHqASt/6wFrLI6R217pQaVkM+mz03WIWAkw7lSbMwrpJT@nongnu.org
-X-Gm-Message-State: AOJu0Ywr+U+y2V1l024MtFYau8K8ImIIdJrn6mTZuV9vRfGX6tWR6ZLE
- GqJhkRVSCWSD0uR5WwZrN2MOZYHpkugSPinjOXDFSKc/eARaO8ON+1bB+1PPqttvqcM=
-X-Gm-Gg: ASbGncurHO+o2NfYCzt4cA/dWaIPBCtI3KN/R27VzqI/0pdGryN/JSAz7jf5KYOOIpL
- DmJPQ4k9YhBpww2MB6MGtXvZYbmaxmeOSt9iEGNHmIj93BKRuc7mEQaYoyCWYa8jKQZ7M9lHvKS
- /OtccZ31CvERDC0sKbe4B3qc8XVqjpFeCtxZMKItOPOxP2hCCtjf5hzKc/mZSYW0eQv39hafQFc
- LxPSMEqzdFLzfwXSZCjN755jICAz77pOpetHsd3SPRhtyeLGoHbONIudRn+ObU61Ss+rEjybVYM
- lx3RMJgeJauq3mbjO6K9IpH6mYv/ZPiA/eHrmay+09/9UJZAu9UaBIMWelK9RDxnWKCRpeZELbn
- 8bYgSy2sbnyXFC/kqntw+6+TMG8Tq/w==
-X-Google-Smtp-Source: AGHT+IF/E+6kHLsWyoaEEXoUI624SA19pk4pG6E7J1Fp5dMN9n1XABcCWZjrB9w+drG4T1TMX45geg==
-X-Received: by 2002:a17:902:ea01:b0:231:7fbc:19f3 with SMTP id
- d9443c01a7336-231d4d2068fmr328737685ad.12.1747858788891; 
- Wed, 21 May 2025 13:19:48 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:b401:d47f:532e:8fb1:3c49:40da?
- ([2804:7f0:b401:d47f:532e:8fb1:3c49:40da])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ac93d4sm97094485ad.28.2025.05.21.13.19.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 13:19:48 -0700 (PDT)
-Message-ID: <55ef40d6-f940-4e53-b591-2a1df5f5b5e1@linaro.org>
-Date: Wed, 21 May 2025 17:19:26 -0300
+ AJvYcCX5MzpleQr24uSFvbW9gtOYEyNkhYYy9Ydy7du7we0XYUbFggDk+yfkWRJ53gruUXCCF9VzXGWHzcak@nongnu.org
+X-Gm-Message-State: AOJu0YyOLNZraRzQUq1Ns1x2Tvt3GHHOJZaXxHaQh8ZdFY6T2dzgW46H
+ u5rGb7UgQow2cfZyY6vc8241MLFKswqH2oL2JVSBjk7T1LYQq6x4zgSaReYnTdR+YsUhirN+PBn
+ 8Um5+xw2cJNm1eCjUGV0eqou636wxH96Dov1JCIeEmTjxmI1soCUu/1GwWaK+utzJqy1bLijZK8
+ FrSKomXl9JyO4xgupx/lp00JY9Td+KWk8=
+X-Gm-Gg: ASbGncve5zsCdlE+tlgw0Fp929xTWIT3kTgoExQN1o3GIz5htKYGZOCPpS6XpeE86UB
+ 3K0HddxZFj8yxOmAiiFtGJjMAsLAgEY+YscxZrIb759H40jAEtXRXm7oWGRAk5RklDFA=
+X-Received: by 2002:a05:6000:240e:b0:3a3:7117:1bba with SMTP id
+ ffacd0b85a97d-3a371171d64mr12815029f8f.24.1747861224731; 
+ Wed, 21 May 2025 14:00:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvJyhHk+YBHa6LMZpm9YPQmXQddzQ+ukFlB9UmX0AIiueHd0HBpB7CvuEUU88Pk3J5tYypU9z46zAIl8wpCYs=
+X-Received: by 2002:a05:6000:240e:b0:3a3:7117:1bba with SMTP id
+ ffacd0b85a97d-3a371171d64mr12815000f8f.24.1747861224316; Wed, 21 May 2025
+ 14:00:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/22] hw/i386/acpi-build: Move aml_pci_edsm to a generic
- place
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org
-References: <20250514170431.2786231-1-eric.auger@redhat.com>
- <20250514170431.2786231-15-eric.auger@redhat.com>
- <ad7c7b84-9f12-4767-a349-df47c489c726@linaro.org>
- <2f1d15ea-82fe-4633-9791-ef9a3721b87d@redhat.com>
- <95bff50a-4da9-4abe-b596-95c64ab85231@linaro.org>
-Content-Language: en-US
-In-Reply-To: <95bff50a-4da9-4abe-b596-95c64ab85231@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
+ <aCysct2L8Bosqy0N@intel.com>
+ <abe683f2-e679-4579-b68a-38a11d41e00b@gnu.org> <aC2R4BOR2tsYgEFI@intel.com>
+ <CAHFMJ7vsgPtfkpBkjvh_-NqKszEDj5UpWThU3rPjN9N4X5s0tA@mail.gmail.com>
+In-Reply-To: <CAHFMJ7vsgPtfkpBkjvh_-NqKszEDj5UpWThU3rPjN9N4X5s0tA@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 21 May 2025 23:00:11 +0200
+X-Gm-Features: AX0GCFsTpOh5YtxtjZMKD_WAiop2q5DVcqeWDYswI3lila-8LHW2og-gyJDTgbI
+Message-ID: <CABgObfYye21gpU=6btq3vT-7uj81qp7eWiuxb9Ztw2D7vWguJQ@mail.gmail.com>
+Subject: Re: Rust in QEMU update, April 2025
+To: Paolo Bonzini <bonzini@gnu.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-rust@nongnu.org, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Daniel Berrange <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000006478990635aba7cb"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,310 +110,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+--0000000000006478990635aba7cb
+Content-Type: text/plain; charset="UTF-8"
 
-On 5/21/25 13:24, Gustavo Romero wrote:
-> Hi Eric,
-> 
-> On 5/21/25 12:56, Eric Auger wrote:
->> Hi Gustavo,
+Il mer 21 mag 2025, 10:37 Paolo Bonzini <bonzini@gnu.org> ha scritto:
+
+> > So... not sure what to do there.  It seems like vm-memory is very close
+> to
+>
+>> > being usable by QEMU, but maybe not completely. :(
 >>
->> On 5/21/25 5:26 PM, Gustavo Romero wrote:
->>> Hi Eric,
->>>
->>> On 5/14/25 14:01, Eric Auger wrote:
->>>> Move aml_pci_edsm to pcihp since we want to reuse that for
->>>> ARM and acpi-index support.
->>>>
->>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>> ---
->>>>    include/hw/acpi/pcihp.h |  2 ++
->>>>    hw/acpi/pcihp.c         | 53 +++++++++++++++++++++++++++++++++++++++++
->>>>    hw/i386/acpi-build.c    | 53 -----------------------------------------
->>>>    3 files changed, 55 insertions(+), 53 deletions(-)
->>>>
->>>> diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
->>>> index 4d820b4baf..bc31dbff39 100644
->>>> --- a/include/hw/acpi/pcihp.h
->>>> +++ b/include/hw/acpi/pcihp.h
->>>> @@ -82,6 +82,8 @@ bool build_append_notification_callback(Aml
->>>> *parent_scope, const PCIBus *bus);
->>>>      void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
->>>>    +Aml *aml_pci_edsm(void);
->>>> +
->>>>    /* Called on reset */
->>>>    void acpi_pcihp_reset(AcpiPciHpState *s);
->>>>    diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
->>>> index d800371ddc..57fe8938b1 100644
->>>> --- a/hw/acpi/pcihp.c
->>>> +++ b/hw/acpi/pcihp.c
->>>> @@ -937,6 +937,59 @@ void build_append_pci_bus_devices(Aml
->>>> *parent_scope, PCIBus *bus)
->>>>        }
->>>>    }
->>>>    +Aml *aml_pci_edsm(void)
->>>> +{
->>>> +    Aml *method, *ifctx;
->>>> +    Aml *zero = aml_int(0);
->>>> +    Aml *func = aml_arg(2);
->>>> +    Aml *ret = aml_local(0);
->>>> +    Aml *aidx = aml_local(1);
->>>> +    Aml *params = aml_arg(4);
->>>> +
->>>> +    method = aml_method("EDSM", 5, AML_SERIALIZED);
->>>> +
->>>> +    /* get supported functions */
->>>> +    ifctx = aml_if(aml_equal(func, zero));
->>>> +    {
->>>> +        /* 1: have supported functions */
->>>> +        /* 7: support for function 7 */
->>>> +        const uint8_t caps = 1 | BIT(7);
->>>> +        build_append_pci_dsm_func0_common(ifctx, ret);
->>>> +        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret,
->>>> zero)));
->>>> +        aml_append(ifctx, aml_return(ret));
->>>> +    }
->>>> +    aml_append(method, ifctx);
->>>> +
->>>> +    /* handle specific functions requests */
->>>> +    /*
->>>> +     * PCI Firmware Specification 3.1
->>>> +     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
->>>> +     *        Operating Systems
->>>> +     */
->>>> +    ifctx = aml_if(aml_equal(func, aml_int(7)));
->>>> +    {
->>>> +       Aml *pkg = aml_package(2);
->>>> +       aml_append(pkg, zero);
->>>> +       /* optional, if not impl. should return null string */
->>>> +       aml_append(pkg, aml_string("%s", ""));
->>>> +       aml_append(ifctx, aml_store(pkg, ret));
->>>> +
->>>> +       /*
->>>> +        * IASL is fine when initializing Package with computational
->>>> data,
->>>> +        * however it makes guest unhappy /it fails to process such
->>>> AML/.
->>>> +        * So use runtime assignment to set acpi-index after initializer
->>>> +        * to make OSPM happy.
->>>> +        */
->>>> +       aml_append(ifctx,
->>>> +           aml_store(aml_derefof(aml_index(params, aml_int(0))),
->>>> aidx));
->>>> +       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
->>>> +       aml_append(ifctx, aml_return(ret));
->>>> +    }
->>>> +    aml_append(method, ifctx);
->>>> +
->>>> +    return method;
->>>> +}
->>>> +
->>>>    const VMStateDescription vmstate_acpi_pcihp_pci_status = {
->>>>        .name = "acpi_pcihp_pci_status",
->>>>        .version_id = 1,
->>>> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
->>>> index bcfba2ccb3..385e75d061 100644
->>>> --- a/hw/i386/acpi-build.c
->>>> +++ b/hw/i386/acpi-build.c
->>>> @@ -322,59 +322,6 @@ build_facs(GArray *table_data)
->>>>        g_array_append_vals(table_data, reserved, 40); /* Reserved */
->>>>    }
->>>>    -static Aml *aml_pci_edsm(void)
->>>> -{
->>>> -    Aml *method, *ifctx;
->>>> -    Aml *zero = aml_int(0);
->>>> -    Aml *func = aml_arg(2);
->>>> -    Aml *ret = aml_local(0);
->>>> -    Aml *aidx = aml_local(1);
->>>> -    Aml *params = aml_arg(4);
->>>> -
->>>> -    method = aml_method("EDSM", 5, AML_SERIALIZED);
->>>> -
->>>> -    /* get supported functions */
->>>> -    ifctx = aml_if(aml_equal(func, zero));
->>>> -    {
->>>> -        /* 1: have supported functions */
->>>> -        /* 7: support for function 7 */
->>>> -        const uint8_t caps = 1 | BIT(7);
->>>> -        build_append_pci_dsm_func0_common(ifctx, ret);
->>>> -        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret,
->>>> zero)));
->>>> -        aml_append(ifctx, aml_return(ret));
->>>> -    }
->>>> -    aml_append(method, ifctx);
->>>> -
->>>> -    /* handle specific functions requests */
->>>> -    /*
->>>> -     * PCI Firmware Specification 3.1
->>>> -     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
->>>> -     *        Operating Systems
->>>> -     */
->>>> -    ifctx = aml_if(aml_equal(func, aml_int(7)));
->>>> -    {
->>>> -       Aml *pkg = aml_package(2);
->>>> -       aml_append(pkg, zero);
->>>> -       /* optional, if not impl. should return null string */
->>>> -       aml_append(pkg, aml_string("%s", ""));
->>>> -       aml_append(ifctx, aml_store(pkg, ret));
->>>> -
->>>> -       /*
->>>> -        * IASL is fine when initializing Package with computational
->>>> data,
->>>> -        * however it makes guest unhappy /it fails to process such
->>>> AML/.
->>>> -        * So use runtime assignment to set acpi-index after initializer
->>>> -        * to make OSPM happy.
->>>> -        */
->>>> -       aml_append(ifctx,
->>>> -           aml_store(aml_derefof(aml_index(params, aml_int(0))),
->>>> aidx));
->>>> -       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
->>>> -       aml_append(ifctx, aml_return(ret));
->>>> -    }
->>>> -    aml_append(method, ifctx);
->>>> -
->>>> -    return method;
->>>> -}
->>>> -
->>>>    /*
->>>>     * build_prt - Define interrupt routing rules
->>>>     *
->>>
->>> EDSM is not called from anywhere. _DSM method actually calls the PDSM,
->>> already defined
->>> in pcihp.c and generated by aml_pci_pdsm(). build_acpi_pci_hotplug(),
->>> which calls
->>> aml_pci_pdsm(), properly creates the PDSM method. Then in
->>> build_append_pcihp_slots()
->>> the a _DSM is defined per slot and inside it there is a call to PDSM,
->>> so I understand
->>> we should actually stick to the PDSM in pcihp.c instead of EDSM.
+>> Is it possible or necessary for vm-memory to support overlap? Because I
+>> feel that if it is possible, the problem might be simplified. (As a
+>> beginner, I have yet to understand exactly how difficult it is.)
 >>
->> I see build_append_pci_bus_devices -> aml_pci_static_endpoint_dsm
->> adds a _DSM method which eventually calls EDSM.
-> 
-> Yes, but I meant in the final generated ACPI AML code.
-> 
-> 
->> aml_pci_device_dsm builds another _DSM implementation which calls PDSM.
->>
->> As we use build_append_pci_bus_devices and we are likely to have a _DSM
->> implementation that calls EDSM method, I think we shall have it in the
->> aml. What do I miss?
-> 
-> Maybe some condition in build_append_pci_bus_devices() of:
-> 
->          if (pdev->acpi_index &&
->              !object_property_get_bool(OBJECT(pdev), "hotpluggable",
->                                        &error_abort)) { ... }
-> 
-> 
-> is not met?
-> 
-> Does your _DSM method in the machine's ACPI has a call to EDSM? I don't
-> see it. In my case it's the PDSM that is being called:
-> 
-> gromero@xps13:/tmp$ grep -n PDSM dsdt.dsl
-> 1910:        Method (PDSM, 5, Serialized)
-> 2047:                    Return (PDSM (Arg0, Arg1, Arg2, Arg3, Local0))
-> gromero@xps13:/tmp$ grep -n EDSM dsdt.dsl
-> 1959:        Method (EDSM, 5, Serialized)
-> gromero@xps13:/tmp$
-> 
-> I also confirmed that PDSM is what is being used by reverting this patch and
-> dropping the aml_append(pci0_scope, aml_pci_edsm()); in 15/22.
-> 
-> But also, why shouldn't we use the PDSM defined already in pcihp.c? This is
-> indeed crafted for the acpi-pcihp-hotplug device as I understand it.
+>
+> I don't think that's necessary. Just like in QEMU C code we have
+> AddressSpace for DMA and MemoryRegion for hierarchy, in Rust code you have
+> qemu_api::{AddressSpace,MemoryRegion}. FlatView, FlatRange,
+> MemoryRegionSection are hidden in both cases, and users don't care much
+> about which type implements GuestMemoryRegion because all they see is
+> AddressSpace. Again, it's all hidden behind the prelude.
+>
+> The real problem is how hard it is to remove the references from the
+> vm-memory API... Maybe not much.
+>
 
-Sorry, I see now, the EDSM is actually only for static endpoint PCI devices,
-i.e. non-hotpluggable, I see. So PDSM and EDSM serve different purposes, although
-similar.
+Brain dump ahead! AddressSpaceDispatch is already storing
+MemoryRegionSections. Therefore it should be possible to make
+GuestMemory::R equal to MemoryRegionSection, or rather its Opaque wrapper.
 
-So, my point in the end is (and the one that confused me too) that EDSM can be
-present even if it will never be used by any static device, working pretty much
-like an ACPI deadcode. Could we avoid this? For instance, just emit EDSM if
-a _DSM that relies on it is emitted, like:
+Then one needs to implement Bytes<MemoryRegionAddress> in
+MemoryRegionSection like
+https://github.com/rust-vmm/vm-memory/blob/3f2fd80b11/src/mmap/mod.rs#L171,
+use address_space_lookup_region() to implement find_region(), and (except
+for IOMMU) everything should work.
 
-diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-index e87846a1fa..4d6dd3dd96 100644
---- a/hw/acpi/pcihp.c
-+++ b/hw/acpi/pcihp.c
-@@ -905,8 +905,9 @@ void build_append_pcihp_slots(Aml *parent_scope, PCIBus *bus)
-      aml_append(parent_scope, notify_method);
-  }
-  
--void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
-+bool build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
-  {
-+    bool has_dsm = false;
-      int devfn;
-      Aml *dev;
-  
-@@ -929,11 +930,14 @@ void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
-              !object_property_get_bool(OBJECT(pdev), "hotpluggable",
-                                        &error_abort)) {
-              aml_append(dev, aml_pci_static_endpoint_dsm(pdev));
-+            has_dsm = true;
-          }
-  
-          /* device descriptor has been composed, add it into parent context */
-          aml_append(parent_scope, dev);
-      }
-+
-+    return has_dsm;
-  }
-  
-  Aml *aml_pci_edsm(void)
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 05a754d368..e4788c03ed 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -844,15 +844,22 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-      if (vms->acpi_pcihp) {
-          Aml *pci0_scope = aml_scope("\\_SB.PCI0");
-  
--        aml_append(pci0_scope, aml_pci_edsm());
-          build_acpi_pci_hotplug(dsdt, AML_SYSTEM_MEMORY,
-                                 memmap[VIRT_ACPI_PCIHP].base);
-          build_append_pcihp_resources(pci0_scope,
-                                       memmap[VIRT_ACPI_PCIHP].base,
-                                       memmap[VIRT_ACPI_PCIHP].size);
-  
--        /* Scan all PCI buses. Generate tables to support hotplug. */
--        build_append_pci_bus_devices(pci0_scope, vms->bus);
-+        /*
-+         * Scan all PCI buses and devices. Generate tables to support static
-+         * endpoint devices and hotplug.
-+         */
-+        /* Generate tables for static endpoints. */
-+        if (build_append_pci_bus_devices(pci0_scope, vms->bus)) {
-+            /* Has a _DSM method that requires a EDSM method. */
-+            aml_append(pci0_scope, aml_pci_edsm());
-+        }
-+        /* Generate tables for PCI buses/slots/ */
-          if (object_property_find(OBJECT(vms->bus), ACPI_PCIHP_PROP_BSEL)) {
-              build_append_pcihp_slots(pci0_scope, vms->bus);
-          }
-diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
-index bda5ea24b5..25cc39f4ab 100644
---- a/include/hw/acpi/pcihp.h
-+++ b/include/hw/acpi/pcihp.h
-@@ -82,7 +82,7 @@ void build_append_pcihp_resources(Aml *table,
-                                    uint64_t io_addr, uint64_t io_len);
-  bool build_append_notification_callback(Aml *parent_scope, const PCIBus *bus);
-  
--void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
-+bool build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
-  
-  Aml *aml_pci_edsm(void);
+To implement IOMMUs later, it's probably possible to call
+flatview_translate() from the try_access() method, which is intended to be
+internal but comes in handy here. try_access() is a bit complicated, but
+we'll just have to copy some code from the default implementation at
+https://github.com/rust-vmm/vm-memory/blob/main/src/guest_memory.rs, in
+order to replace the call to find_region(). Notice how
+address_space_lookup_region() returns MemoryRegionSection*, which
+translates to Option<&Self::R>; while flatview_translate() returns a
+MemoryRegionSection by value, that can become a local variable in
+try_access() and everything is fine. Hopefully. The compiler will certainly
+prove me wrong.
 
+Another thing that will be needed later is support for MemTxAttrs. Maybe
+squeeze those into the address, i.e. implement Bytes<(GuestAddress,
+MemTxAttrs)> and Bytes<(MemoryRegionAddress, MemTxAttrs)>?
 
-Another question that I have is: could you please share a QEMU command line option
-that generates a static endpoint PCI device that matches the criteria for the emission
-of the _DSM method accordingly to build_append_pci_bus_devices()?
+The dirty bitmap does need some changes in vm-memory, but it's pretty small
+compared to the mess that I foreshadowed in order to change find_region().
 
+Paolo
 
-Cheers,
-Gustavo
+--0000000000006478990635aba7cb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il mer 21 mag 2025, 10:37 Paolo Bonzini &lt;<a href=3D=
+"mailto:bonzini@gnu.org" rel=3D"noreferrer noreferrer noreferrer noreferrer=
+" target=3D"_blank">bonzini@gnu.org</a>&gt; ha scritto:<br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex"><div dir=3D"auto"><div>&gt; So... n=
+ot sure what to do there.=C2=A0 It seems like vm-memory is very close to</d=
+iv><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">
+&gt; being usable by QEMU, but maybe not completely. :(<br>
+<br>
+Is it possible or necessary for vm-memory to support overlap? Because I<br>
+feel that if it is possible, the problem might be simplified. (As a<br>
+beginner, I have yet to understand exactly how difficult it is.)<br></block=
+quote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I don&#39;t=
+ think that&#39;s necessary. Just like in QEMU C code we have AddressSpace =
+for DMA and MemoryRegion for hierarchy, in Rust code you have qemu_api::{Ad=
+dressSpace,MemoryRegion}. FlatView, FlatRange, MemoryRegionSection are hidd=
+en in both cases, and users don&#39;t care much about which type implements=
+ GuestMemoryRegion because all they see is AddressSpace. Again, it&#39;s al=
+l hidden behind the prelude.</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">The real problem is how hard it is to remove the references from the v=
+m-memory API... Maybe not much.</div></div></blockquote></div></div><div di=
+r=3D"auto"><br></div><div dir=3D"auto">Brain dump ahead! AddressSpaceDispat=
+ch is already storing MemoryRegionSections. Therefore it should be possible=
+ to make GuestMemory::R equal to MemoryRegionSection, or rather its Opaque =
+wrapper.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Then one needs =
+to implement Bytes&lt;MemoryRegionAddress&gt; in MemoryRegionSection like <=
+a href=3D"https://github.com/rust-vmm/vm-memory/blob/3f2fd80b11/src/mmap/mo=
+d.rs#L171" rel=3D"noreferrer noreferrer" target=3D"_blank">https://github.c=
+om/rust-vmm/vm-memory/blob/3f2fd80b11/src/mmap/mod.rs#L171</a>, use address=
+_space_lookup_region() to implement find_region(), and (except for IOMMU) e=
+verything should work.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">To implement IOMMUs later, it&#39;s probably possible to call flatview=
+_translate() from the try_access() method, which is intended to be internal=
+ but comes in handy here. try_access() is a bit complicated, but we&#39;ll =
+just have to copy some code from the default implementation at <a href=3D"h=
+ttps://github.com/rust-vmm/vm-memory/blob/main/src/guest_memory.rs" rel=3D"=
+noreferrer noreferrer noreferrer" target=3D"_blank">https://github.com/rust=
+-vmm/vm-memory/blob/main/src/guest_memory.rs</a>, in order to replace the c=
+all to find_region(). Notice how address_space_lookup_region() returns Memo=
+ryRegionSection*, which translates to Option&lt;&amp;Self::R&gt;; while fla=
+tview_translate() returns a MemoryRegionSection by value, that can become a=
+ local variable in try_access() and everything is fine. Hopefully. The comp=
+iler will certainly prove me wrong.</div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto">Another thing that will be needed later is support for MemTxAtt=
+rs. Maybe squeeze those into the address, i.e. implement Bytes&lt;(GuestAdd=
+ress, MemTxAttrs)&gt; and Bytes&lt;(MemoryRegionAddress, MemTxAttrs)&gt;?</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">The dirty bitmap does nee=
+d some changes in vm-memory, but it&#39;s pretty small compared to the mess=
+ that I foreshadowed in order to change find_region().</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">Paolo</div></div>
+
+--0000000000006478990635aba7cb--
+
 
