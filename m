@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A119C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 11:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD73EC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 11:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHhk9-0003q6-OO; Wed, 21 May 2025 07:36:18 -0400
+	id 1uHhjV-0003bK-Kf; Wed, 21 May 2025 07:35:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uHhjx-0003eQ-On
- for qemu-devel@nongnu.org; Wed, 21 May 2025 07:36:07 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uHhjL-0003Zj-EJ
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 07:35:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uHhjo-00016c-Na
- for qemu-devel@nongnu.org; Wed, 21 May 2025 07:36:05 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uHhjC-000108-7K
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 07:35:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747827355;
+ s=mimecast20190719; t=1747827315;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=enaBYQCINliwTGyHAbl3e/ASgYxjRCYgvrL673vfrl4=;
- b=dfERX2pT9hB+smp7PJFTWT6wom/nBTsip2Sk2t65wB6UkRYusJsVpdnL1xbxmlYly8XH+L
- d21Vm3GvTIG40pw2c0fhZxHZqRscuevf6+AB0BNn7gPvm7P8lzQfrjTljM548lHVZ3xRX4
- 7WiINpio3IIihHgYxaXH3nbdpI//cQ0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZGJVdpExX3Cc45GeCGVAJ3Kq21Pgw3U+VPt6wNHS4Lk=;
+ b=OD/e2rzhvnDscORf8cDrA9qkJgzxdze/QmA/UdkNcP/MUVRZ9vroYQoSlohM/AqgDnOGvZ
+ NJMd1rcsVBNugQBSr4D0EW8yzu8GitT2jpELoSFWqzws8qTrzO0hDNO7kb98N+x9GIVosL
+ HJY2HP7rkcFIVaKJp9gQ0Dnf1gZ4jxA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-QwiUcKQgMIecFlxLmqYVdg-1; Wed,
- 21 May 2025 07:35:54 -0400
-X-MC-Unique: QwiUcKQgMIecFlxLmqYVdg-1
-X-Mimecast-MFC-AGG-ID: QwiUcKQgMIecFlxLmqYVdg_1747827353
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-1F56r0-_Oomx_DME8DDzMA-1; Wed,
+ 21 May 2025 07:35:11 -0400
+X-MC-Unique: 1F56r0-_Oomx_DME8DDzMA-1
+X-Mimecast-MFC-AGG-ID: 1F56r0-_Oomx_DME8DDzMA_1747827310
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E266A1954236; Wed, 21 May 2025 11:35:52 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A1461851071; Wed, 21 May 2025 11:34:54 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.45.224.39])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3B85E19560B7; Wed, 21 May 2025 11:35:46 +0000 (UTC)
+ id DBBD619560B7; Wed, 21 May 2025 11:34:47 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -60,24 +59,22 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH RFC 09/16] vhost-backend: implement extended features support.
-Date: Wed, 21 May 2025 13:34:03 +0200
-Message-ID: <5f1afbf8865c9d51f01aa5ba3b09fb4449c458a0.1747825544.git.pabeni@redhat.com>
-In-Reply-To: <cover.1747825544.git.pabeni@redhat.com>
-References: <cover.1747825544.git.pabeni@redhat.com>
+Subject: [PATCH RFC 00/16] virtio: introduce support for GSO over UDP tunnel
+Date: Wed, 21 May 2025 13:33:54 +0200
+Message-ID: <cover.1747825544.git.pabeni@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,109 +90,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Leverage the kernel extended features manipulation ioctls(), if
-available, and fallback to old ops otherwise. Error out when setting
-extended features but kernel support is not available.
+Some virtualized deployments use UDP tunnel pervasively and are impacted
+negatively by the lack of GSO support for such kind of traffic in the
+virtual NIC driver.
 
-Note that extended support for get/set backend features is not needed,
-as the only feature that can be changed belongs to the 64 bit range.
+The virtio_net specification recently introduced support for GSO over
+UDP tunnel, this series updates the virtio implementation to support
+such a feature.
 
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
----
- hw/virtio/vhost-backend.c | 59 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 53 insertions(+), 6 deletions(-)
+One of the reasons for the RFC tag is that the kernel-side
+implementation has just been shared upstream and is not merged yet, but
+there are also other relevant reasons, see below.
 
-diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
-index 833804dd40..a5e28e15ee 100644
---- a/hw/virtio/vhost-backend.c
-+++ b/hw/virtio/vhost-backend.c
-@@ -182,12 +182,6 @@ static int vhost_kernel_get_vring_worker(struct vhost_dev *dev,
-     return vhost_kernel_call(dev, VHOST_GET_VRING_WORKER, worker);
- }
- 
--static int vhost_kernel_set_features(struct vhost_dev *dev,
--                                     uint64_t features)
--{
--    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &features);
--}
--
- static int vhost_kernel_set_backend_cap(struct vhost_dev *dev)
- {
-     uint64_t features;
-@@ -210,11 +204,59 @@ static int vhost_kernel_set_backend_cap(struct vhost_dev *dev)
-     return 0;
- }
- 
-+#ifdef CONFIG_INT128
-+static int vhost_kernel_set_features_ex(struct vhost_dev *dev,
-+                                     virtio_features_t features)
-+{
-+    uint64_t features64;
-+    int r;
-+
-+    /*
-+     * Can't check for ENOTTY, as the kernel for unknown ioctls interprets
-+     * the argument as a virtio queue id and most likely errors out validating
-+     * such id, instead of reporting an unknown operation.
-+     */
-+    r = vhost_kernel_call(dev, VHOST_SET_FEATURES_EX, &features);
-+    if (!r) {
-+        return 0;
-+    }
-+
-+    if (!!(features >> 64)) {
-+        error_report("Trying to set extended features without kernel support");
-+        return -EINVAL;
-+    }
-+    features64 = (uint64_t)features;
-+    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &features64);
-+}
-+
-+static int vhost_kernel_get_features_ex(struct vhost_dev *dev,
-+                                        virtio_features_t *features)
-+{
-+    uint64_t features64;
-+    int r;
-+
-+    r = vhost_kernel_call(dev, VHOST_GET_FEATURES_EX, features);
-+    if (!r) {
-+        return 0;
-+    }
-+
-+    r = vhost_kernel_call(dev, VHOST_GET_FEATURES, &features64);
-+    *features = features64;
-+    return r;
-+}
-+#else
-+static int vhost_kernel_set_features(struct vhost_dev *dev,
-+                                     uint64_t features)
-+{
-+    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &features);
-+}
-+
- static int vhost_kernel_get_features(struct vhost_dev *dev,
-                                      uint64_t *features)
- {
-     return vhost_kernel_call(dev, VHOST_GET_FEATURES, features);
- }
-+#endif
- 
- static int vhost_kernel_set_owner(struct vhost_dev *dev)
- {
-@@ -341,8 +383,13 @@ const VhostOps kernel_ops = {
-         .vhost_attach_vring_worker = vhost_kernel_attach_vring_worker,
-         .vhost_new_worker = vhost_kernel_new_worker,
-         .vhost_free_worker = vhost_kernel_free_worker,
-+#ifdef CONFIG_INT128
-+        .vhost_set_features_ex = vhost_kernel_set_features_ex,
-+        .vhost_get_features_ex = vhost_kernel_get_features_ex,
-+#else
-         .vhost_set_features = vhost_kernel_set_features,
-         .vhost_get_features = vhost_kernel_get_features,
-+#endif
-         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
-         .vhost_set_owner = vhost_kernel_set_owner,
-         .vhost_get_vq_index = vhost_kernel_get_vq_index,
+Currently, the kernel virtio support limits the feature space to 64 bits,
+while the virtio specification allows for a larger number of features.
+Specifically, the GSO-over-UDP-tunnel-related virtio features use bits
+65-69; the larger part of this series (patches 2-11) actually deals with
+the extended feature space.
+
+I tried to minimize the otherwise very large code churn by limiting the
+extended features support to arches with native 128 integer support and
+introducing the extended features space support only in virtio/vhost
+core and in the relevant device driver.
+
+The actual offload implementation is in patches 12-16 and boils down to
+propagating the new offload to the tun devices and the vhost backend.
+
+Tested with basic stream transfer with all the possible permutations of
+host kernel/qemu/guest kernel with/without GSO over UDP tunnel support
+and vs snapshots creation and restore.
+
+Notably this does not include (yet) any additional tests. Some guidance
+on such matter would be really appreciated, and any feedback about the
+features extension strategy would be more than welcome!
+
+Paolo Abeni (16):
+  linux-headers: Update to Linux v6.15-rc net-next
+  migration: introduce support for 128 bit int state.
+  virtio: introduce extended features type
+  virtio: serialize extended features state
+  qmp: update virtio features map to support extended features
+  virtio: add support for negotiating extended features.
+  virtio-pci: implement support for extended features.
+  vhost: add support for negotiating extended features.
+  vhost-backend: implement extended features support.
+  vhost-net: implement extended features support.
+  qdev-properties: add property for extended virtio features
+  virtio-net: implement extended features support.
+  net: implement tunnel probing
+  net: bundle all offloads in a single struct
+  net: implement tnl feature offloading
+  net: make vhost-net aware of GSO over UDP tunnel hdr layout
+
+ hw/core/qdev-properties.c                     |  46 +++++
+ hw/net/e1000e_core.c                          |   5 +-
+ hw/net/igb_core.c                             |   5 +-
+ hw/net/vhost_net-stub.c                       |   7 +-
+ hw/net/vhost_net.c                            |  35 ++--
+ hw/net/virtio-net.c                           | 195 +++++++++++++-----
+ hw/net/vmxnet3.c                              |  13 +-
+ hw/virtio/vhost-backend.c                     |  59 +++++-
+ hw/virtio/vhost.c                             |  58 ++++--
+ hw/virtio/virtio-bus.c                        |  15 +-
+ hw/virtio/virtio-hmp-cmds.c                   |   3 +-
+ hw/virtio/virtio-pci.c                        |  19 +-
+ hw/virtio/virtio-qmp.c                        |  28 ++-
+ hw/virtio/virtio-qmp.h                        |   3 +-
+ hw/virtio/virtio.c                            | 103 ++++++++-
+ include/hw/qdev-properties.h                  |  13 ++
+ include/hw/virtio/vhost-backend.h             |  10 +
+ include/hw/virtio/vhost.h                     |  13 +-
+ include/hw/virtio/virtio-features.h           |  90 ++++++++
+ include/hw/virtio/virtio-net.h                |   2 +-
+ include/hw/virtio/virtio-pci.h                |   2 +-
+ include/hw/virtio/virtio.h                    |  17 +-
+ include/migration/qemu-file-types.h           |  15 ++
+ include/migration/vmstate.h                   |  11 +
+ include/net/net.h                             |  20 +-
+ include/net/vhost_net.h                       |   8 +-
+ include/standard-headers/asm-x86/setup_data.h |   4 +-
+ include/standard-headers/drm/drm_fourcc.h     |  41 ++++
+ include/standard-headers/linux/const.h        |   2 +-
+ include/standard-headers/linux/ethtool.h      | 156 ++++++++------
+ include/standard-headers/linux/fuse.h         |  12 +-
+ include/standard-headers/linux/pci_regs.h     |  13 +-
+ include/standard-headers/linux/virtio_net.h   |  46 +++++
+ include/standard-headers/linux/virtio_pci.h   |   1 +
+ include/standard-headers/linux/virtio_snd.h   |   2 +-
+ linux-headers/asm-arm64/kvm.h                 |  11 +
+ linux-headers/asm-arm64/unistd_64.h           |   1 +
+ linux-headers/asm-generic/mman-common.h       |   1 +
+ linux-headers/asm-generic/unistd.h            |   4 +-
+ linux-headers/asm-loongarch/unistd_64.h       |   1 +
+ linux-headers/asm-mips/unistd_n32.h           |   1 +
+ linux-headers/asm-mips/unistd_n64.h           |   1 +
+ linux-headers/asm-mips/unistd_o32.h           |   1 +
+ linux-headers/asm-powerpc/unistd_32.h         |   1 +
+ linux-headers/asm-powerpc/unistd_64.h         |   1 +
+ linux-headers/asm-riscv/kvm.h                 |   2 +
+ linux-headers/asm-riscv/unistd_32.h           |   1 +
+ linux-headers/asm-riscv/unistd_64.h           |   1 +
+ linux-headers/asm-s390/unistd_32.h            |   1 +
+ linux-headers/asm-s390/unistd_64.h            |   1 +
+ linux-headers/asm-x86/kvm.h                   |   3 +
+ linux-headers/asm-x86/unistd_32.h             |   1 +
+ linux-headers/asm-x86/unistd_64.h             |   1 +
+ linux-headers/asm-x86/unistd_x32.h            |   1 +
+ linux-headers/linux/bits.h                    |   8 +-
+ linux-headers/linux/const.h                   |   2 +-
+ linux-headers/linux/iommufd.h                 | 129 +++++++++++-
+ linux-headers/linux/kvm.h                     |   1 +
+ linux-headers/linux/psp-sev.h                 |  21 +-
+ linux-headers/linux/stddef.h                  |   2 +
+ linux-headers/linux/vfio.h                    |  30 ++-
+ linux-headers/linux/vhost.h                   |  12 +-
+ migration/qemu-file.c                         |  16 ++
+ migration/vmstate-types.c                     |  25 +++
+ net/net.c                                     |  21 +-
+ net/netmap.c                                  |   3 +-
+ net/tap-bsd.c                                 |   8 +-
+ net/tap-linux.c                               |  46 ++++-
+ net/tap-solaris.c                             |   9 +-
+ net/tap-stub.c                                |   8 +-
+ net/tap.c                                     |  19 +-
+ net/tap_int.h                                 |   5 +-
+ qapi/virtio.json                              |   8 +-
+ 73 files changed, 1209 insertions(+), 271 deletions(-)
+ create mode 100644 include/hw/virtio/virtio-features.h
+
 -- 
 2.49.0
 
