@@ -4,149 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813A7C54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A7DC54E90
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:08:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHrWt-0004Vb-Og; Wed, 21 May 2025 18:03:15 -0400
+	id 1uHrbJ-0005mk-5R; Wed, 21 May 2025 18:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uHrWr-0004V6-FQ
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:03:13 -0400
-Received: from mail-mw2nam04on2047.outbound.protection.outlook.com
- ([40.107.101.47] helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uHrbG-0005ma-Sc
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:07:46 -0400
+Received: from out-178.mta0.migadu.com ([91.218.175.178])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uHrWp-0007mh-6C
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:03:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ga3ap+9ckWhmYj+l+VWQY+YTmClIoT//624IHHJOHIIdl1GonNWSwdQpjV/Z/+tkxtJ0IR3CO2feGcq2547NYI9rl0GEG+1q13ZtXIr7/gTh7OeC1Hg6kJZnKV7+u+JhTI052d9VMU25+mIxDSeHZRRLesuCDMjgXgt2f2kzf0j0OWkbopo6HeLYEBa89XvAJGlRtQ3o0OlxSQJ2aT7Out8poCPJSzJisyhMyQmWLrAgJPD7LIJ63OBYelTKADElviWGSah6AKYYMhWnJoVaNXhclGSGPWc8yqlsqIU+VtFgoz0yLt1lWHuEiga2jfT/2+ZmCD/BlY8LQY6KNBW2+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jR9nusYACZOzEYIiv2ZfA9Q+SbAuD31oSk+wJ3ikmbA=;
- b=LtQLqkblMi+j1zAo73ym8O5E6MgZ5RThzWg1bvfuyAKfSXsMowWRaH5gHxTRSzDT5pVb/qHAam3mSC3vCOsB/nh7F+wKF5Ps/45M6u7K+cmYL2Rs/TqsQNrSddCNYpjAf8iERfLMh+b+GDEOIlJio2c2cEZmr/2Spq1dBy8bcBt2yU08NR0TjHjpiHwYWb9kw/pniuRgZy56Yxt4/kTTrX5GMx1QK7QczWRFzRrk89A+iu1FW4jYdxCFee4Ue0wSNJ+LPMu44NiRGvWwXFQztDIt2P5O8e4ytHch4Ywkc93HMmpCfgTuKUtfCXodS6FcPgnvOHs94HlGn6zKM/+eSg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jR9nusYACZOzEYIiv2ZfA9Q+SbAuD31oSk+wJ3ikmbA=;
- b=CcSDa9xLBxYqDm/H85P8xsTwzQ1KGp6AMJkWb5GbUjiTiWY4F84fZU0kSUeVTT/hlsAvKwEuyyldCEBCNLDzG4lSUtY3klDJbddPs2sqofYijGMLaw9buC8yTH+ZSJNIQepl3VZHS3Rkno4AFgHGnT1NjjTiN12jk28UsmpBm64UzcS89fzahrkhyeZKSvaNTr3TRhNKsbI5fnAxvWl22Ak18yIPJmSFeLgqmyQhDL/7wfVMYMD7btmlEoDmVbiv852dRcQr2NghPovAyGW4YzyYKkqcEbprud+DaSBiNpRXR3uS5SvnoUExAwOQ4zB13hxIzlKefprY1ZQDDuAj0g==
-Received: from MN2PR04CA0017.namprd04.prod.outlook.com (2603:10b6:208:d4::30)
- by SN7PR12MB7835.namprd12.prod.outlook.com (2603:10b6:806:328::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.19; Wed, 21 May
- 2025 21:58:01 +0000
-Received: from MN1PEPF0000ECD9.namprd02.prod.outlook.com
- (2603:10b6:208:d4:cafe::83) by MN2PR04CA0017.outlook.office365.com
- (2603:10b6:208:d4::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8746.30 via Frontend Transport; Wed,
- 21 May 2025 21:58:01 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- MN1PEPF0000ECD9.mail.protection.outlook.com (10.167.242.138) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8769.18 via Frontend Transport; Wed, 21 May 2025 21:58:01 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 21 May
- 2025 14:57:45 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 21 May
- 2025 14:57:44 -0700
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Wed, 21 May 2025 14:57:43 -0700
-Date: Wed, 21 May 2025 14:57:42 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-CC: <qemu-devel@nongnu.org>, <alex.williamson@redhat.com>, <clg@redhat.com>,
- <eric.auger@redhat.com>, <mst@redhat.com>, <jasowang@redhat.com>,
- <peterx@redhat.com>, <ddutile@redhat.com>, <jgg@nvidia.com>,
- <shameerali.kolothum.thodi@huawei.com>, <joao.m.martins@oracle.com>,
- <clement.mathieu--drif@eviden.com>, <kevin.tian@intel.com>,
- <yi.l.liu@intel.com>, <chao.p.peng@intel.com>
-Subject: Re: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device info
-Message-ID: <aC5MVvwPCFertplB@Asurada-Nvidia>
-References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
- <20250521111452.3316354-6-zhenzhong.duan@intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250521111452.3316354-6-zhenzhong.duan@intel.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD9:EE_|SN7PR12MB7835:EE_
-X-MS-Office365-Filtering-Correlation-Id: 44b4a512-585d-418e-6dc5-08dd98b28e50
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|36860700013|376014|7416014|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Ayqhm+alWMT+56bKyApjjl7Zs9n8azoHmY3ZyNZ0BBncosZbPZ7oagTNgLyv?=
- =?us-ascii?Q?0mMZUCu6wXtSZ+cgDXyrLJ0XSlmqXd5A7qExNK5DREF0sh0KDUKOl+RYdAVS?=
- =?us-ascii?Q?LET+8k/asILceLuLNe8WsLhIuiftnIOyAcECruTHomWB5x/SIgeAf6ldkkuc?=
- =?us-ascii?Q?R+qrrMGJ1xR8cFm4XMJV3bpzpANBBf1GaA4M0+jUsV3uMP6sINgQJGXt/8Go?=
- =?us-ascii?Q?nCgT++LLFXet3O2C/WRoyICjNoPE2Qo/gq7TG43wg3H9IFFooBwWzOM1c4Yr?=
- =?us-ascii?Q?fHEI073zJAlVgIP2o/jthon7f9dzKPskcQp0jF2aCw535mwJ7e0xmkByDDbU?=
- =?us-ascii?Q?ual9quN8XSXCaD7Vq41GBwwb5nNCY6m8hfDoIPlhU7S2jBTPONzVt3VwXGrc?=
- =?us-ascii?Q?UmgnJGhB3cup20XgOBj330WX3eCH0RUgQEL8SwXiaS0rcETUlkzXDk9D6Ln5?=
- =?us-ascii?Q?cWN9yNr+kAtPX5aZji9NdX1AICq1Eeggt1+qbMfnhcBc0YtR+G2STqpw2LZF?=
- =?us-ascii?Q?Z4WM2RDTkBW9c9LNOlqjwkNSdyJ8P42+DUgpU5bO+YVqxys6zRBgHfBKum68?=
- =?us-ascii?Q?/nb15xn4zgc4qrcPOLPpeBuXv8QkQAEZgYR29WvjlGWBQQoIde6NBfJTOd7a?=
- =?us-ascii?Q?UK6+WxxLBCD3EoZ24U77AaGFvi00z7KklTlzHfR+XQvujkbK27ODBJniYxX+?=
- =?us-ascii?Q?7R5D24iSbHAIabAbftc3QbsQlrV/EkmYGDM/0wLKnAWVVQV5TjvIHsFqvgWI?=
- =?us-ascii?Q?EoWiHk/i21QMj6Ai18tqRn2VhBgceuvos0Cj47RqOwY584/0WLETZdJ2OsgP?=
- =?us-ascii?Q?JIF81isO346gSDxRkuhU5JuNV5z1o2frhneDgBeGKPLIobCb6HWLl78ySaGJ?=
- =?us-ascii?Q?1w5yA8DGxX6lFWnfopSrxXqAzmlmeMLh4iWw2E4FvjUZC/fQu9GqiLRKp21w?=
- =?us-ascii?Q?KCCC7A7HmnGyMWlRbGpZ5oXSHEV6aYgt61yhRmYvWlbaqHAPIO95FqVRK/X1?=
- =?us-ascii?Q?LrO+WiBSBdZSR/SO1HkAuomWhBbf4iObLU17n2sE2I9IvQBlMkv64W7dcTXx?=
- =?us-ascii?Q?lhohKPRaASt/CTgSlq8xA6E8wGHFOk3VEXyuvK/K5i6VLrEkAHX/oSM0Foq6?=
- =?us-ascii?Q?d3OPMbaMGOMqiH9pDgU/zvBwOt427ktJQQKwrvPPVm6TiY+bH8rfNBOQha/R?=
- =?us-ascii?Q?/U0bXTuRyfzrY0r+AQdP9vfvSdsU1x1kq7g30/m62HRi3gVZAuNM5xVG0jrf?=
- =?us-ascii?Q?uaYzKovGoodt4lpEaTifVA04zCyGxD3SM8scSkbWgMm+xUPmo8luSGYIZoYE?=
- =?us-ascii?Q?VpBFXHQw/XF80PuHj4fwaBlgC1pyHDFAovJ63BvDwYSHG5gM3DSpkT4Uit5F?=
- =?us-ascii?Q?b+UfUvhT9kT0LzQ7Y+e0QGfp4JgE0EFPv/zd44NbsPnv5NbIr8NIKVnM9y2s?=
- =?us-ascii?Q?cLWZNSH1m+YVMuzdb6F4K9AsXjxS9KUhajb/tTPYo7uYKPYv8PXy3jHH5/dJ?=
- =?us-ascii?Q?MpAjmp8bPODau2PsICeWo8lyDbzFC3qDjjDM?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(36860700013)(376014)(7416014)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2025 21:58:01.3726 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44b4a512-585d-418e-6dc5-08dd98b28e50
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD9.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7835
-Received-SPF: permerror client-ip=40.107.101.47;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uHrbD-0000Up-6k
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:07:46 -0400
+Content-Type: text/plain;
+	charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1747865257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1vLkAUBDYK3sNFDLMY9liH8VgjHaEs3+UBhEp1Fq4WI=;
+ b=CqyDfhzncjx2qOGH7QMBE0DnkKIhKwClintTwwFWVE+TnqtLWS+6MDhn88rB16i6ShxHFw
+ nNnV+ztdFclH6SXino4FyJ0yl9GhiU4rDA+ReldED4TmO0ikGoJVzyf2poOeL7WAyhRuBE
+ 7ZU4WiTDGzJYiGZeVVveCFxr4dqdYc8=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v13 5/5] qtest/cxl: Add aarch64 virt test for CXL
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+In-Reply-To: <20250521185231.00005e4a@huawei.com>
+Date: Thu, 22 May 2025 07:07:17 +0900
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-arm@nongnu.org,
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <277C5799-872A-4A63-887B-92540FD63DDB@linux.dev>
+References: <20250513111455.128266-1-Jonathan.Cameron@huawei.com>
+ <20250513111455.128266-6-Jonathan.Cameron@huawei.com>
+ <D9E503CC-1271-4008-9975-9BAEC7A33376@linux.dev>
+ <20250519135413.000026b4@huawei.com>
+ <5CCC3C8C-7348-4409-9964-8367C8FC1C1E@linux.dev>
+ <20250521185231.00005e4a@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=91.218.175.178;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-178.mta0.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,22 +79,446 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 21, 2025 at 07:14:35PM +0800, Zhenzhong Duan wrote:
-> @@ -852,6 +853,17 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->      caps->type = type;
->      caps->hw_caps = hw_caps;
->  
-> +    switch (type) {
-> +    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
-> +        vendor_caps->vtd.flags = data.vtd.flags;
-> +        vendor_caps->vtd.cap_reg = data.vtd.cap_reg;
-> +        vendor_caps->vtd.ecap_reg = data.vtd.ecap_reg;
-> +        break;
-> +    case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
-> +    case IOMMU_HW_INFO_TYPE_NONE:
 
-Should this be a part of hiod_iommufd_get_vendor_cap() in backends?
 
-Thanks
-Nicolin
+> On May 22, 2025, at 2:52, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> On Wed, 21 May 2025 16:38:10 +0900
+> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>=20
+>>> On May 19, 2025, at 21:54, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>=20
+>>> On Thu, 15 May 2025 18:04:18 +0900
+>>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>>>=20
+>>>>> On May 13, 2025, at 20:14, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>>>=20
+>>>>> Add a single complex case for aarch64 virt machine.
+>>>>> Given existing much more comprehensive tests for x86 cover the
+>>>>> common functionality, a single test should be enough to verify
+>>>>> that the aarch64 part continue to work.
+>>>>>=20
+>>>>> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>>>>> ---
+>>>>> tests/qtest/cxl-test.c  | 59 =
+++++++++++++++++++++++++++++++++---------
+>>>>> tests/qtest/meson.build |  1 +
+>>>>> 2 files changed, 47 insertions(+), 13 deletions(-)
+>>>>>=20
+>>>>> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+>>>>> index a600331843..c7189d6222 100644
+>>>>> --- a/tests/qtest/cxl-test.c
+>>>>> +++ b/tests/qtest/cxl-test.c
+>>>>> @@ -19,6 +19,12 @@
+>>>>>   "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+>>>>>   "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+>>>>>=20
+>>>>> +#define QEMU_VIRT_2PXB_CMD \
+>>>>> +    "-machine virt,cxl=3Don -cpu max " \
+>>>>> +    "-device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52 " \
+>>>>> +    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+>>>>> +    "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+>>>>> +
+>>>>> #define QEMU_RP \
+>>>>>   "-device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 "
+>>>>>=20
+>>>>> @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
+>>>>>   qtest_end();
+>>>>>   rmdir(tmpfs);
+>>>>> }
+>>>>> +
+>>>>> +static void cxl_virt_2pxb_4rp_4t3d(void)
+>>>>> +{
+>>>>> +    g_autoptr(GString) cmdline =3D g_string_new(NULL);
+>>>>> +    char template[] =3D "/tmp/cxl-test-XXXXXX";
+>>>>> +    const char *tmpfs;
+>>>>> +
+>>>>> +    tmpfs =3D mkdtemp(template);
+>>>>> +
+>>>>> +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP =
+QEMU_4T3D,
+>>>>> +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
+>>>>> +                    tmpfs, tmpfs);
+>>>>> +
+>>>>> +    qtest_start(cmdline->str);
+>>>>> +    qtest_end();
+>>>>> +    rmdir(tmpfs);
+>>>>> +}
+>>>>> #endif /* CONFIG_POSIX */
+>>>>>=20
+>>>>> int main(int argc, char **argv)
+>>>>> {
+>>>>> -    g_test_init(&argc, &argv, NULL);
+>>>>> +    const char *arch =3D qtest_get_arch();
+>>>>>=20
+>>>>> -    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+>>>>> -    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+>>>>> -    qtest_add_func("/pci/cxl/pxb_with_window", =
+cxl_pxb_with_window);
+>>>>> -    qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+>>>>> -    qtest_add_func("/pci/cxl/rp", cxl_root_port);
+>>>>> -    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+>>>>> +    g_test_init(&argc, &argv, NULL);
+>>>>> +    if (strcmp(arch, "i386") =3D=3D 0 || strcmp(arch, "x86_64") =
+=3D=3D 0) {
+>>>>> +        qtest_add_func("/pci/cxl/basic_hostbridge", =
+cxl_basic_hb);
+>>>>> +        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+>>>>> +        qtest_add_func("/pci/cxl/pxb_with_window", =
+cxl_pxb_with_window);
+>>>>> +        qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+>>>>> +        qtest_add_func("/pci/cxl/rp", cxl_root_port);
+>>>>> +        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+>>>>> #ifdef CONFIG_POSIX
+>>>>> -    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+>>>>> -    qtest_add_func("/pci/cxl/type3_device_pmem", =
+cxl_t3d_persistent);
+>>>>> -    qtest_add_func("/pci/cxl/type3_device_vmem", =
+cxl_t3d_volatile);
+>>>>> -    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+>>>>> -    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+>>>>> -    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", =
+cxl_2pxb_4rp_4t3d);
+>>>>> +        qtest_add_func("/pci/cxl/type3_device", =
+cxl_t3d_deprecated);
+>>>>> +        qtest_add_func("/pci/cxl/type3_device_pmem", =
+cxl_t3d_persistent);
+>>>>> +        qtest_add_func("/pci/cxl/type3_device_vmem", =
+cxl_t3d_volatile);
+>>>>> +        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+>>>>> +        qtest_add_func("/pci/cxl/rp_x2_type3_x2", =
+cxl_1pxb_2rp_2t3d);
+>>>>> +        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
+>>>>> +                       cxl_2pxb_4rp_4t3d);
+>>>>> #endif
+>>>>> +    } else if (strcmp(arch, "aarch64") =3D=3D 0) {
+>>>>> +#ifdef CONFIG_POSIX
+>>>>> +        =
+qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
+>>>>> +                       cxl_virt_2pxb_4rp_4t3d);
+>>>>> +#endif
+>>>>> +    }
+>>>>> +
+>>>>>   return g_test_run();
+>>>>> }
+>>>>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>>>>> index 7daf619845..361000267a 100644
+>>>>> --- a/tests/qtest/meson.build
+>>>>> +++ b/tests/qtest/meson.build
+>>>>> @@ -258,6 +258,7 @@ qtests_aarch64 =3D \
+>>>>> (config_all_accel.has_key('CONFIG_TCG') and                        =
+                    \
+>>>>>  config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? =
+['tpm-tis-i2c-test'] : []) + \
+>>>>> (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 =
+: []) + \
+>>>>> +  qtests_cxl +                                                    =
+                              \
+>>>>> ['arm-cpu-features',
+>>>>>  'numa-test',
+>>>>>  'boot-serial-test',
+>>>>> --=20
+>>>>> 2.43.0
+>>>>>=20
+>>>>=20
+>>>> ~/projects/qemu/build$ meson test qtest-aarch64/cxl-test
+>>>> ninja: Entering directory `/home/realm/projects/qemu/build'
+>>>> [1/8] Generating qemu-version.h with a custom command (wrapped by =
+meson to capture output)
+>>>> 1/1 qemu:qtest+qtest-aarch64 / qtest-aarch64/cxl-test        OK     =
+         0.17s   1 subtests passed
+>>>>=20
+>>>> Ok:                 1
+>>>> Expected Fail:      0
+>>>> Fail:               0
+>>>> Unexpected Pass:    0
+>>>> Skipped:            0
+>>>> Timeout:            0
+>>>>=20
+>>>> Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com =
+<mailto:itaru.kitayama@fujitsu.com>>
+>>>>=20
+>>>> Jonathan, would you push your branch this series applied? I =
+manually applied your series no issues though. =20
+>>>=20
+>>> I'm reluctant to push a 'normal' staging CXL tree whilst we have the =
+TCG
+>>> issue outstanding (which is in mainline).
+>>> I can probably push one with a name that makes it clear we know it =
+will
+>>> crash under some circumstances though. I'll aim to get that done =
+later this week.
+>>>=20
+>>> After talking to Richard Henderson I'm going to spin some images etc =
+to
+>>> make it easier for him to replicate that TCG issue. =20
+>>=20
+>> While QEMU (the kernel is built off of cxl branch) boots fine and =
+lspci shows CXL devices as shown:
+>>=20
+>> root@localhost:~# lspci -mm
+>> 00:00.0 "Host bridge" "Red Hat, Inc." "QEMU PCIe Host bridge" -p00 =
+"Red Hat, Inc." "Device 1100"
+>> 00:01.0 "SCSI storage controller" "Red Hat, Inc." "Virtio block =
+device" -p00 "Red Hat, Inc." "Device 0002"
+>> 00:02.0 "Ethernet controller" "Intel Corporation" "82540EM Gigabit =
+Ethernet Controller" -r03 -p00 "Red Hat, Inc." "QEMU Virtual Machine"
+>> 00:03.0 "Host bridge" "Red Hat, Inc." "QEMU PCIe Expander bridge" =
+-p00 "Red Hat, Inc." "Device 1100"
+>> 00:04.0 "Host bridge" "Red Hat, Inc." "QEMU PCIe Expander bridge" =
+-p00 "Red Hat, Inc." "Device 1100"
+>> 35:00.0 "PCI bridge" "Intel Corporation" "Device 7075" -p00 "Intel =
+Corporation" "Device 0000"
+>> 35:01.0 "PCI bridge" "Intel Corporation" "Device 7075" -p00 "Intel =
+Corporation" "Device 0000"
+>> 36:00.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a128" =
+-p00 "" ""
+>> 36:00.1 "Serial bus controller [0c0b]" "Huawei Technologies Co., =
+Ltd." "Device a123" -p00 "Red Hat, Inc." "Device 1100"
+>> 37:00.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" =
+-p00 "" ""
+>> 37:01.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" =
+-p00 "" ""
+>> 37:02.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" =
+-p00 "" ""
+>> 37:03.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" =
+-p00 "" ""
+>> 38:00.0 "CXL" "Intel Corporation" "Device 0d93" -r01 -p10 "Red Hat, =
+Inc." "Device 1100"
+>> 3a:00.0 "CXL" "Intel Corporation" "Device 0d93" -r01 -p10 "Red Hat, =
+Inc." "Device 1100"
+>> bf:00.0 "PCI bridge" "Intel Corporation" "Device 7075" -p00 "Intel =
+Corporation" "Device 0000"
+>> bf:01.0 "PCI bridge" "Intel Corporation" "Device 7075" -p00 "Intel =
+Corporation" "Device 0000"
+>> c0:00.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a128" =
+-p00 "" ""
+>> c0:00.1 "Serial bus controller [0c0b]" "Huawei Technologies Co., =
+Ltd." "Device a123" -p00 "Red Hat, Inc." "Device 1100"
+>> c1:00.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" =
+-p00 "" ""
+>> c1:01.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" =
+-p00 "" ""
+>> c1:02.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" =
+-p00 "" ""
+>> c1:03.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" =
+-p00 "" ""
+>> c2:00.0 "CXL" "Intel Corporation" "Device 0d93" -r01 -p10 "Red Hat, =
+Inc." "Device 1100"
+>> c4:00.0 "CXL" "Intel Corporation" "Device 0d93" -r01 -p10 "Red Hat, =
+Inc." "Device 1100=E2=80=9D
+>>=20
+>> but the cxl-list command takes 5-10 minutes to return the =
+information. I=E2=80=99ll test with your qtest minimalist setup to see =
+if the system is loaded. Am I seeing the TCG issue you mentioned?
+>=20
+> I don't think so. That should only matter if the memory is hotplugged =
+in
+> as normal system RAM.
+>=20
+>>=20
+>> root@localhost:~# cxl list -M
+>> [
+>>  {
+>>    "memdev":"mem10",
+>>    "ram_size":2147483648,
+>>    "ram_qos_class":42,
+>>    "serial":11,
+>>    "numa_node":0,
+>>    "host":"cxl_rcd.10",
+>>    "firmware_version":"mock fw v1 "
+>=20
+> So this seems to be with both some emulated devices from qemu command =
+line
+> and CXL test at the same time.=20
+>=20
+> I replicated a similar setup and not setting a significant delay
+> (half a second maybe?)  So not sure.
+>=20
+
+Good news. And I confirm that the cxl-list command returns a list =
+quickly with older cxl/next kernel(s).
+I am still in the process of bisecting trying to narrow down the bad =
+commit.
+
+Itaru.
+
+> I did notice that there is a bug in qemu though which has surfaced
+> for some reason in the kernel log (it dates all the way back to=20
+> origin CXL support series). In=20
+> include/hw/cxl/cxl_pci.h
+> #define REG_LOC_DEVSEC_LENGTH is 0x24 and it should be 0x1C
+>=20
+> That results for me in a kernel log entry about a bar not being
+> big enough for a huge offset (which is random data coming from
+> somewhere in text I think).
+>=20
+> Seems unlikely to trigger your issue, but you never know!
+>=20
+> Jonathan
+>=20
+>=20
+>>  },
+>>  {
+>>    "memdev":"mem5",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":6,
+>>    "numa_node":1,
+>>    "host":"cxl_mem.5",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem1",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":2,
+>>    "numa_node":1,
+>>    "host":"cxl_mem.1",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem6",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":8,
+>>    "numa_node":1,
+>>    "host":"cxl_mem.7",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem3",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":4,
+>>    "numa_node":1,
+>>    "host":"cxl_mem.3",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem4",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":5,
+>>    "numa_node":0,
+>>    "host":"cxl_mem.4",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem0",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":1,
+>>    "numa_node":0,
+>>    "host":"cxl_mem.0",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem2",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":3,
+>>    "numa_node":0,
+>>    "host":"cxl_mem.2",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem7",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":7,
+>>    "numa_node":0,
+>>    "host":"cxl_mem.6",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem8",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":9,
+>>    "numa_node":0,
+>>    "host":"cxl_mem.8",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem9",
+>>    "pmem_size":1073741824,
+>>    "pmem_qos_class":42,
+>>    "ram_size":1073741824,
+>>    "ram_qos_class":42,
+>>    "serial":10,
+>>    "numa_node":1,
+>>    "host":"cxl_mem.9",
+>>    "firmware_version":"mock fw v1 "
+>>  },
+>>  {
+>>    "memdev":"mem12",
+>>    "ram_size":268435456,
+>>    "serial":0,
+>>    "host":"0000:c4:00.0",
+>>    "firmware_version":"BWFW VERSION 00"
+>>  },
+>>  {
+>>    "memdev":"mem11",
+>>    "ram_size":268435456,
+>>    "serial":0,
+>>    "host":"0000:c2:00.0",
+>>    "firmware_version":"BWFW VERSION 00"
+>>  },
+>>  {
+>>    "memdev":"mem14",
+>>    "pmem_size":268435456,
+>>    "serial":0,
+>>    "host":"0000:3a:00.0",
+>>    "firmware_version":"BWFW VERSION 00"
+>>  },
+>>  {
+>>    "memdev":"mem13",
+>>    "pmem_size":268435456,
+>>    "serial":0,
+>>    "host":"0000:38:00.0",
+>>    "firmware_version":"BWFW VERSION 00"
+>>  }
+>> ]
+>>=20
+>> Getting this shouldn=E2=80=99t take minutes, even with the emulator I =
+think.
+>>=20
+>> Itaru.
+>>=20
+>>>=20
+>>> Thanks for reviews.
+>>>=20
+>>> Jonathan
+
+
 
