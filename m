@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A786C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64FB3C54ED0
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHjXX-0001KR-Ir; Wed, 21 May 2025 09:31:23 -0400
+	id 1uHjne-0004YX-BQ; Wed, 21 May 2025 09:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHjXO-0001Hn-Cj
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:31:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHjXJ-0003yN-Dd
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:31:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747834265;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OJowd7GTAuSCrO4HpnLcLT1VaIPJBL9Vwplpc8VZE+U=;
- b=Stkqvz42h0A4kD83HdsBm2jFITPTgbZkcCycvTr9iaWjodETLA7zztMijELZCPNlIHdsTy
- dns2CE4bt9KMRf70ZPX11kBMmGfLEg5auPf/E0GuWpK+Jj1fLRfZnplIVwp11sYL0osmb0
- 3YYzutWLzaLTQMJdBpnac8nYfXa2lQg=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-Frk47T0gOVGofT2KfUAe3w-1; Wed, 21 May 2025 09:31:04 -0400
-X-MC-Unique: Frk47T0gOVGofT2KfUAe3w-1
-X-Mimecast-MFC-AGG-ID: Frk47T0gOVGofT2KfUAe3w_1747834264
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6f8df8d4585so53203606d6.3
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 06:31:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uHjnO-0004Rh-Ea
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:47:48 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uHjnL-0005ui-Sk
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:47:45 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-443a787bd14so33210725e9.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 06:47:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1747835261; x=1748440061; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=BBOiVfgZas08fl3qn+nnTypLVgYnx3GqcZbE6zRX5oM=;
+ b=ZsD3EJLlm6hwmQkZMRumwZJwFHAvu4VTIqxJjPozYCJ7IHboCXB+/SaLEoy9+iW83a
+ ZtOSAVcpTHsagmz7fEGRw12cxWugBDoIZZaQWO3pW2SiYenZ9mVoyDLLVQXUCCtz/qpj
+ WfJPFh9wMAL05tNE8nQezil9iH70LSHRZ/xmnAgTsVIedlXlkVauYGsLQYeIXA4wAAUy
+ UVysTW+UA3n2WAISPRSz6NnIWizEaOFz2+mukYhC6oaeWkKhF19cPLPogFjXOo7Cpcko
+ 392xMugbExv2PlBz5QmSb3dTUtZJNhgP6ew0y1XxFDuIj5NVc+fVqZGyxAei1hoxTn0Q
+ fU+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747834263; x=1748439063;
+ d=1e100.net; s=20230601; t=1747835261; x=1748440061;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OJowd7GTAuSCrO4HpnLcLT1VaIPJBL9Vwplpc8VZE+U=;
- b=oN+u0zfErPoHyX8GddOL9m5RPJiqBfe93SKAL+F0C5JWMym2LiInwvb8ku+REr8fwp
- KBWMUz2hRWgcG9K2d39zmNNHr5mQwiOw7EaGvJuU8fdCZcocFpmeD4qVaCSzeTl0lOhP
- 6DZzgCsFKajdAzb8mI6SksEN7t5Bj66/MGN99Fpi1t4pud3yfBFogUOUTrYvduZ5rJVQ
- qi4Dr6PEg8hyeI0CmGhe7+zCdctwE4W8M4ZVooxl9852uuMttT9fLCL67r4pXtpFESCY
- U8DwY8e2FjUiYRBBPRS0WmeY8wm/9suYT1jtDaK8uAsLLLHp5Gy3itBjvgzSk1ZQV2AX
- 7ysg==
-X-Gm-Message-State: AOJu0YxQyKbbz7wPNJxMHjVoKUj2UT46fJkbrVtrUNZmQIjNtwF96jf1
- mUZYNtDDT/vR0Uui/HObnprhwnul88fOR1JoC8c+F6pMFbvxR093UwmZZqTgwI8U9wHEH3ayqSd
- PSL7yId/BX2Yy6BVEchd3VYJQHNJ+BiGEBWMiwdpxSWMSV5A8BiGDnFqdEvSomzvQ
-X-Gm-Gg: ASbGncsXkHz7EASmJ/dXY3SMcL4ZhVZfVb5fjVTGSc0PqL2Qs5UkF2MY0lVB6jGONdn
- kVnbaNHNsLcNEHculh3rJI+SkIaleJ1RPiPIATI2q/nKr2rXfQWY/8W7L0VKtqzwsS0vNhGeMFs
- YtAWOhkGdhevvI0R5eWu6LK4YgSKSL0p+2/efXSConxfmvSa3TvABQg/RKoBsOpveVz7gDe5j9R
- 0DjrOdAJl3UploFvypb+/vb5NReEz9NZHG0vqsrZzva51se7YuCgxDWxvD8//xWIaBkNGPXZ6hg
- OK8=
-X-Received: by 2002:a05:6214:1c09:b0:6f8:9b78:1bf6 with SMTP id
- 6a1803df08f44-6f8b087095fmr339857246d6.18.1747834263133; 
- Wed, 21 May 2025 06:31:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHgh//1KdFPt1LVZDqBM0u2hmPPA1CWEF3vwA+viNE7W8qX+2eAQPDW7dp5cd9rZwfkN0MgwA==
-X-Received: by 2002:a05:6214:1c09:b0:6f8:9b78:1bf6 with SMTP id
- 6a1803df08f44-6f8b087095fmr339856876d6.18.1747834262619; 
- Wed, 21 May 2025 06:31:02 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6f8b0883ed6sm84930876d6.18.2025.05.21.06.31.01
+ bh=BBOiVfgZas08fl3qn+nnTypLVgYnx3GqcZbE6zRX5oM=;
+ b=XA3Dk5mdDydN9EL6i21DQlAMLuQVtaIQrlaK7eX1By6JK7AOBmwbZM84WwDDd2RUrh
+ feH+j+HakFRuoefhJ6unGkFNn7fh52bVLhb79Or+0Q+EJYUj25HtmrWATeUvdfPcyZAS
+ MlSKlZfAZ2LyoBvL9jyrxn8YhVddJG3vPtGbSfQiJajpwiXw1zOZYDWbkr0JwFjLt4pQ
+ wfyhozfTg3wedoBo8arvYSvWT4/3yrmxM0A7pakfGUGxCgSSGgq++KN8px4jZTdzfHBn
+ cSi6Sdu4+TqPjrJ9QI+dyYV7oexCOIhfHHXj+D3j/pC76qo98JcZlws0VpOS0eJAuS/G
+ KUvQ==
+X-Gm-Message-State: AOJu0YyUfS8bAmnedKN/RBuTRtz/i6u2A4uU0G5eJ7lb4lz1wNnTefSn
+ c+/a4wSnzUXkceeqGmRdfm+eBe4JyEXfhPshmhYJjYg4Wy5QDQs73yRG0tBv92uoL9U=
+X-Gm-Gg: ASbGncut8Y/2Gv7xAklFGIUd9tf5DAvjo2u5xQP7+jCDk87HTZcvdGRlG51ghv0kqq1
+ LBkzqVABz9hQY+PlofZqivoOKeb89V+qNijqPGIEwAuOqKZHpaZfDIGXGvoSPaV9D/JVzU5y2SP
+ CZJ4E4KWI662x/nIM9sGIIkDCIbYsn8j5nbcPtrTjOGhfMomrQQotCwmwdv6I86vTKqRxD590BW
+ 6L0eiTqVqRDwHxDGCn1ZTz+Db8o6sxetBQpkXc89o4+ddmqAiId8qgnMrD3/TKU5REFn9Lw/BVd
+ Gh4g2HwItm09oHazz+B6Jugea1zjkaUrPxdBbwQ=
+X-Google-Smtp-Source: AGHT+IE98AEcHT0KoEjy6WHPBoFwVw90DWokR+aTY2+ifwxa3b4Pdqbc3We3Ws+35hCmkbioxxXNmw==
+X-Received: by 2002:a5d:5f4f:0:b0:3a3:6d25:b8e2 with SMTP id
+ ffacd0b85a97d-3a36d25babemr11010286f8f.6.1747835261133; 
+ Wed, 21 May 2025 06:47:41 -0700 (PDT)
+Received: from localhost ([2a02:8308:a00c:e200::ce80])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f3dd99edsm69361615e9.36.2025.05.21.06.47.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 06:31:02 -0700 (PDT)
-Date: Wed, 21 May 2025 09:31:00 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 2/4] qapi/migration: Deprecate migrate argument @detach
-Message-ID: <aC3VlBLa0nmaXNLW@x1.local>
-References: <20250521063711.29840-1-armbru@redhat.com>
- <20250521063711.29840-3-armbru@redhat.com>
+ Wed, 21 May 2025 06:47:40 -0700 (PDT)
+Date: Wed, 21 May 2025 15:47:40 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ bjorn@kernel.org
+Subject: Re: [PATCH 1/3] target/riscv/tcg: restrict satp_mode changes in
+ cpu_set_profile
+Message-ID: <20250521-c4e831bfd3149e88193f391b@orel>
+References: <20250520172336.759708-1-dbarboza@ventanamicro.com>
+ <20250520172336.759708-2-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250521063711.29840-3-armbru@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+In-Reply-To: <20250520172336.759708-2-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,94 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 21, 2025 at 08:37:09AM +0200, Markus Armbruster wrote:
-> Argument @detach has always been ignored.  Start the clock to get rid
-> of it.
+On Tue, May 20, 2025 at 02:23:34PM -0300, Daniel Henrique Barboza wrote:
+> We're changing 'mmu' to true regardless of whether the profile is
+> being enabled or not, and at the same time we're changing satp_mode to
+> profile->enabled.
 > 
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> This will promote a situation where we'll set mmu=on without a virtual
+> memory mode, which is a mistake.
+> 
+> Only touch 'mmu' and satp_mode if the profile is being enabled.
+> 
+> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+> Fixes: 55398025e7 ("target/riscv: add satp_mode profile support")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  docs/about/deprecated.rst |  5 +++++
->  qapi/migration.json       | 18 +++++++++---------
->  2 files changed, 14 insertions(+), 9 deletions(-)
+>  target/riscv/tcg/tcg-cpu.c | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 9665bc6fcf..ef4ea84e69 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -179,6 +179,11 @@ Use ``job-dismiss`` instead.
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 55e00972b7..7f93414a76 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -1338,16 +1338,16 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
 >  
->  Use ``job-finalize`` instead.
+>      if (profile->enabled) {
+>          cpu->env.priv_ver = profile->priv_spec;
+> -    }
 >  
-> +``migrate`` argument ``detach`` (since 10.1)
-> +''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +This argument has always been ignored.
-> +
->  ``query-migrationthreads`` (since 9.2)
->  ''''''''''''''''''''''''''''''''''''''
+>  #ifndef CONFIG_USER_ONLY
+> -    if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
+> -        object_property_set_bool(obj, "mmu", true, NULL);
+> -        const char *satp_prop = satp_mode_str(profile->satp_mode,
+> -                                              riscv_cpu_is_32bit(cpu));
+> -        object_property_set_bool(obj, satp_prop, profile->enabled, NULL);
+> -    }
+> +        if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
+> +            object_property_set_bool(obj, "mmu", true, NULL);
+> +            const char *satp_prop = satp_mode_str(profile->satp_mode,
+> +                                                  riscv_cpu_is_32bit(cpu));
+> +            object_property_set_bool(obj, satp_prop, true, NULL);
+> +        }
+>  #endif
+> +    }
 >  
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 8b9c53595c..ecd266f98e 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -1660,6 +1660,10 @@
->  #
->  # @resume: resume one paused migration, default "off".  (since 3.0)
->  #
-> +# Features:
-> +#
-> +# @deprecated: Argument @detach is deprecated.
-> +#
->  # Since: 0.14
->  #
->  # .. admonition:: Notes
-> @@ -1668,19 +1672,14 @@
->  #        migration's progress and final result (this information is
->  #        provided by the 'status' member).
->  #
-> -#     2. All boolean arguments default to false.
-
-There's one more boolean ("resume") exists, but probably not a huge
-deal.. All booleans if not mentioned should have a default-false semantics
-at least to me.
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
-> -#
-> -#     3. The user Monitor's "detach" argument is invalid in QMP and
-> -#        should not be used.
-> -#
-> -#     4. The uri argument should have the Uniform Resource Identifier
-> +#     2. The uri argument should have the Uniform Resource Identifier
->  #        of default destination VM.  This connection will be bound to
->  #        default network.
->  #
-> -#     5. For now, number of migration streams is restricted to one,
-> +#     3. For now, number of migration streams is restricted to one,
->  #        i.e. number of items in 'channels' list is just 1.
->  #
-> -#     6. The 'uri' and 'channels' arguments are mutually exclusive;
-> +#     4. The 'uri' and 'channels' arguments are mutually exclusive;
->  #        exactly one of the two should be present.
->  #
->  # .. qmp-example::
-> @@ -1724,7 +1723,8 @@
->  { 'command': 'migrate',
->    'data': {'*uri': 'str',
->             '*channels': [ 'MigrationChannel' ],
-> -           '*detach': 'bool', '*resume': 'bool' } }
-> +           '*detach': { 'type': 'bool', 'features': [ 'deprecated' ] },
-> +           '*resume': 'bool' } }
->  
->  ##
->  # @migrate-incoming:
+>      for (i = 0; misa_bits[i] != 0; i++) {
+>          uint32_t bit = misa_bits[i];
 > -- 
-> 2.48.1
-> 
+> 2.49.0
+>
 
--- 
-Peter Xu
-
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
