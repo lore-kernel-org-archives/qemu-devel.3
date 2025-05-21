@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F52C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 17:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 056AFC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 17:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHmn7-0007gG-H8; Wed, 21 May 2025 12:59:41 -0400
+	id 1uHmpb-00008t-1n; Wed, 21 May 2025 13:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uHmn6-0007g2-Ex; Wed, 21 May 2025 12:59:40 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uHmpZ-00008g-Sy
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 13:02:13 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uHmn4-0008Dg-HW; Wed, 21 May 2025 12:59:40 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-742c9563fd9so3473814b3a.3; 
- Wed, 21 May 2025 09:59:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uHmpW-0000Cx-8S
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 13:02:13 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-442f4a3a4d6so45801745e9.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 10:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747846774; x=1748451574; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Bd6ZIFTZZmBbT7NmrB6VUv3CJ3IJftMLK1vLzp+yZ8Q=;
- b=NCiVnX0f6+ercfAYo67R7xq1sLwYYDPLrrxJ0TuTzE+uoriaM7R5aeApNbCumtRFS2
- rzeetM/mUZHyncpcCVtJBShxhV9dyusMTJj8GUgedGGFrl1hzhNZZrRaPLaEqeVbEhQ2
- hrqe86ytiZkCg0SPlORrywfkgWcuvohEXELgt51MI/uMbuaFoTZXEkKKDdHKzrsLbzjp
- Yyn5CCmdzlnGLkn0dqXc3mo/JIW4dlCt0n7hHAholXVDPjZXmulDFEpywYTNMPFnP1lF
- o/VawM7z0K45CToIS6vjlvSEzW8jaVDKvyVVZBhXnT9Rce1ZAnG3tIpXOAoZYq7Cgt75
- P4eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747846774; x=1748451574;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1747846926; x=1748451726; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Bd6ZIFTZZmBbT7NmrB6VUv3CJ3IJftMLK1vLzp+yZ8Q=;
- b=HNrmCDg/RipNKCFam+ofTdoAXTeNOaY5MTWxYm7raQz7rgkK0h+KYBQSaZUVYrwb2H
- Z4BlS67RMv9884iDNKipwSmj+7APE7k+7HsL9hEjIvnF4YrbWitMDWw4oOr8YtPLJxcM
- HHPmen4DktET6O8QGBLSenbm0Ya57pG0RlE5Xsh4FxFm9/2lg0ZStgzt9U193tJDPMNJ
- 2UJG3Fg0Vsx2w4c3RvDU4VOpvfklf/4U3y4PjMGwY9Jsj6rlRN3NWtv0WC768kaavxrG
- UEV+in1LMJRjHa5CkI26enZuedgr91VoWY2ts5xwPAzOadBRx34vyUOY/TVYGRK6JBmd
- Fnpg==
+ bh=wljp73RKnJculDNVmvqipa+xygRy3W2lnXrNd1zudmc=;
+ b=YCB1T7INyZJbhoelp1+R1byOQXpK9uJPV5rlB1HlHlUfyaUa0r1vgSmkVabqEGqRy5
+ uuO6kc50C+yTKQHz6E6cz1Z6dle6Hy1rn7cHlmttePjskI7MpV4x3EB+2tNINixtk55T
+ qRnEvTGBmTceI1X8v33jRp4zMBYVWgRrhU3u51VYKVjO0uX3wiyjlAtIux5ghsrRrYCK
+ eHxoHd+eUUOX85cT5a7VhXh2zUTbVMKJOl8ZYgMm3hYupCGl9DMmp7iUl0VZZzn2Z0DX
+ fA9tAIJVVZ1f2R19rMpGrUyudHtA0tC0ndBOvS4hZ0FQANR6ItH5UVPuI7h0UHAauG7F
+ 1a2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747846926; x=1748451726;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wljp73RKnJculDNVmvqipa+xygRy3W2lnXrNd1zudmc=;
+ b=gXEadCKnDAOMj7Cpkuwe/hdfPKNUFdI43nmCLuF5xgoz7UWCyOnxgG+m/gNwEj41HX
+ A6JR9Y8+D71SRHz1fd8n7qd5bCcNJOCv+7I4Hi/r4E4qVG4Z1afKF9Wo2spfEcMyGNZR
+ Ra//0U4wf71L1a3Pt9DW6+j6di14Hvp+PjFKpjG1Kb6U7PT6ZTg4xZjgOdiFOq+DUAX3
+ yCtVCKxnIX/lT7aZBo8bSzINUXaG/FVEfccGwTvCs+Ygi9h90Qn0K00JkrWqRT3S7mPu
+ d9yIsdGa7EstS7W1amxbgQEP60wtR0tFoN2GhxjJ3tvyhppMjFEBfVGefTPyVXsPcTmk
+ 7kzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXKoNPsuALsckZuKApYdN/CfJrBwFBv5ykCCMgvWUIwtCfNFNGMgWUNOC8HZNjxOW+hlM+yHzYs1Q==@nongnu.org
-X-Gm-Message-State: AOJu0YwfBK162LDdnfMbPP1ddzLP1ts7yOGFNqHgD7Jv3gI/A4USqur/
- eak8K8vJaloKt5j6MRLZFmuXzeo/RFuM6e5bVI3Pr82DR8rc+F8gjXpZ
-X-Gm-Gg: ASbGncu91p+rNJwEiWR1tJ9os4bQMd/QTeVdmJT8WKeqyj9Trlcu4FrhQlTPpp1Spef
- vLETKNL9OuVhIfTS4uh8JRG6g1cpMfJ1bmDEVXbLofTg0KWIpMnziFF/YgbjihJmcni7kxNHUAP
- lw/2VyanGYBusRsar/j1NV09xZePd6eu+4d/GgDC69XTsu6ofEaBHVh82Dy9d98fZyCU/yUKBZl
- NGTtt9zSVg9+2V6Kkq2gByWv8HVL/9U0/cLrjhd8ZBTPDWYkjyKaaXEEic4bqI8+LylI2OpYC6d
- /nSJn119xlNYv7mut0+l7fc34fspbg53522aDK/rFCBRZR3/LlT/oN0=
-X-Google-Smtp-Source: AGHT+IEFXEYkEG/bbYXgCGKkIh+JxF1NvuNlk0oZ8z6sRx8WzVQWgtRD58yDof9ZQfHnQN7Xkh2kEA==
-X-Received: by 2002:a05:6a20:1591:b0:204:695f:47e1 with SMTP id
- adf61e73a8af0-2170ccc0efdmr31537492637.23.1747846774329; 
- Wed, 21 May 2025 09:59:34 -0700 (PDT)
-Received: from smc-140338-bm01 ([149.97.161.244])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a9829bbesm9837482b3a.89.2025.05.21.09.59.33
+ AJvYcCX46Vlt6LBq7JEcIXUC/iOc10DdxK1Dlx6cTmUZvFm3VIkjr/MsMxRgd9fwLFGbPaKBwtRcTMu+bMz/@nongnu.org
+X-Gm-Message-State: AOJu0Yy59yVOQ2HRX9Bpf8CWpR4FvNuLbgoYdKItEvuPzu+FF/+4v8qu
+ sL9qCkgw4yKqRsbv5d2JbfLSu2HJvJKvbhVtzjWLipD/1c5YSegGzxSH3oOQkH5zTuM=
+X-Gm-Gg: ASbGnctgsDujON4HvTdZTldofKHsf+sD5XmBbZ10p/uiqfCFpWApRL7G+5M03e4mQIO
+ 2XKG9fGvo5X/+2BTP09LV6Gy22j9E2q5QWrjhlxtpRB/gRWn8vDGE+ZBcpI85Ix8M1HfCChHhed
+ t+lFAQZJW0R9NUAtZwQRounYSeCCZcqOW/GKpDURUq2WjbhlfThRymj6E4PibB4/cgyVsdpABZ8
+ bSOWXEI/zpzL7di5i6uxwaWG9zXb6bJ0PJmIS4nwLO9Bi4aPDl8+2nGlezim11tmnAZc/xWygUp
+ RWmsGcijVbg7eVkuql82HZ1fmRgFpuW1HbEhwjlfAEgQwIoupUYG
+X-Google-Smtp-Source: AGHT+IFW7uRJifF0n03oQfFxWfK9RrcpFgsRbo1L3FUb6kuGirAavcznR46wUpi2pAHFpjubmgNVNw==
+X-Received: by 2002:a05:600c:a08c:b0:442:f861:3536 with SMTP id
+ 5b1f17b1804b1-442fd94e353mr192506455e9.7.1747846926173; 
+ Wed, 21 May 2025 10:02:06 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f6b29633sm80423155e9.8.2025.05.21.10.02.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 09:59:33 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Wed, 21 May 2025 16:59:31 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- mst@redhat.com, linux-cxl@vger.kernel.org, linuxarm@huawei.com,
- qemu-arm@nongnu.org, Yuquan Wang <wangyuquan1236@phytium.com.cn>,
- Itaru Kitayama <itaru.kitayama@linux.dev>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v13 1/5] hw/cxl-host: Add an index field to
- CXLFixedMemoryWindow
-Message-ID: <aC4Gc7TMHHwuNGwl@smc-140338-bm01>
-References: <20250513111455.128266-1-Jonathan.Cameron@huawei.com>
- <20250513111455.128266-2-Jonathan.Cameron@huawei.com>
+ Wed, 21 May 2025 10:02:05 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A00FB5F786;
+ Wed, 21 May 2025 18:02:04 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH] tests/functional/test_sparc64_tuxrun: Explicitly set
+ the 'sun4u' machine
+In-Reply-To: <20250521145112.142222-1-thuth@redhat.com> (Thomas Huth's message
+ of "Wed, 21 May 2025 16:51:12 +0200")
+References: <20250521145112.142222-1-thuth@redhat.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Wed, 21 May 2025 18:02:04 +0100
+Message-ID: <87h61d99tf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250513111455.128266-2-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,75 +107,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 13, 2025 at 12:14:51PM +0100, Jonathan Cameron wrote:
-> To enable these to be found in a fixed order, that order needs
-> to be known.  This will later be used to sort a list of these
-> structures that address map and ACPI table entries are predictable.
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
+Thomas Huth <thuth@redhat.com> writes:
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
+> From: Thomas Huth <thuth@redhat.com>
+>
+> Use self.set_machine() to set the machine instead of relying on the
+> default machine of the binary. This way the test can be skipped in
+> case the machine has not been compiled into the QEMU binary.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
->  include/hw/cxl/cxl.h | 1 +
->  hw/cxl/cxl-host.c    | 9 ++++++---
->  2 files changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-> index 75e47b6864..b2bcce7ed6 100644
-> --- a/include/hw/cxl/cxl.h
-> +++ b/include/hw/cxl/cxl.h
-> @@ -27,6 +27,7 @@
->  typedef struct PXBCXLDev PXBCXLDev;
->  
->  typedef struct CXLFixedWindow {
-> +    int index;
->      uint64_t size;
->      char **targets;
->      PXBCXLDev *target_hbs[16];
-> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> index e010163174..b7aa429ddf 100644
-> --- a/hw/cxl/cxl-host.c
-> +++ b/hw/cxl/cxl-host.c
-> @@ -24,13 +24,15 @@
->  
->  static void cxl_fixed_memory_window_config(CXLState *cxl_state,
->                                             CXLFixedMemoryWindowOptions *object,
-> -                                           Error **errp)
-> +                                           int index, Error **errp)
->  {
->      ERRP_GUARD();
->      g_autofree CXLFixedWindow *fw = g_malloc0(sizeof(*fw));
->      strList *target;
->      int i;
->  
-> +    fw->index = index;
-> +
->      for (target = object->targets; target; target = target->next) {
->          fw->num_targets++;
->      }
-> @@ -325,14 +327,15 @@ static void machine_set_cfmw(Object *obj, Visitor *v, const char *name,
->      CXLState *state = opaque;
->      CXLFixedMemoryWindowOptionsList *cfmw_list = NULL;
->      CXLFixedMemoryWindowOptionsList *it;
-> +    int index;
->  
->      visit_type_CXLFixedMemoryWindowOptionsList(v, name, &cfmw_list, errp);
->      if (!cfmw_list) {
->          return;
->      }
->  
-> -    for (it = cfmw_list; it; it = it->next) {
-> -        cxl_fixed_memory_window_config(state, it->value, errp);
-> +    for (it = cfmw_list, index = 0; it; it = it->next, index++) {
-> +        cxl_fixed_memory_window_config(state, it->value, index, errp);
->      }
->      state->cfmw_list = cfmw_list;
->  }
-> -- 
-> 2.43.0
-> 
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
--- 
-Fan Ni (From gmail)
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
