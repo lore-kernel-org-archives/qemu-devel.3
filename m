@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E701C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 19:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0007EC54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 19:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHoiv-0004n2-LM; Wed, 21 May 2025 15:03:29 -0400
+	id 1uHp0d-00009b-RA; Wed, 21 May 2025 15:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHoiu-0004mq-JJ
- for qemu-devel@nongnu.org; Wed, 21 May 2025 15:03:28 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1uHp0b-00008a-VL
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 15:21:46 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHois-0004sk-RG
- for qemu-devel@nongnu.org; Wed, 21 May 2025 15:03:28 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7398d65476eso5546470b3a.1
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 12:03:25 -0700 (PDT)
+ id 1uHp0Z-00018Y-Tk
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 15:21:45 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7406c6dd2b1so6797394b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 12:21:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747854205; x=1748459005; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=34TfirTsXxTP6d62JGvYfcbC3QYrm28BoyruDIrjNVU=;
- b=igYLLLjsjryY2LE3j6YaFFlLutcaK22BkiyfAKaJo4xyGLTAlgNjFaboPLGMEoywQQ
- v37YchLMBx1NLQxhbsw883qkyVPE4WTkEdD8By4MYtkUIw5bNZ5nhC2CtcfpDFjUUt/6
- Ft6ZBU48rVrLXJGW2ocT1tnxewrdMqKhleuaFTWewIDNtyos6uwMvOBHj+rOUfAyTOoY
- OSepUvmTbNf6pOqGqSlt7AZxBc+DMuV1ayVKs+91SQY8UrDfQm/SuLNFb49rB7rN+Bpa
- DUO244L/TPy1WauhUYV2vwrokca9D05qZhq4nlVmP0gJ4sc3mpLKnQb/Kc/tnwrir4Sp
- lCmg==
+ d=linaro.org; s=google; t=1747855302; x=1748460102; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9qDHA+xSix926l7YrJ4wV6VmM8fWhiDAdq/6MRD2s9M=;
+ b=K3SjjQNYkJ1kr9k0zdduL91pcjBgy1F27NaDMKkZh6hfeRyxw+kDMAysnAD6WoMiG5
+ gs7XguW4ReY7As6Ir9pGgD9sJNVuTtVwcaduRIpTdTGfsTMIWPctm5rskDc0Nju2dNHo
+ sgIFRX1oNpf9FJBhYme+/W63v9pUMvxYHneZw2ZQB7kGS3jadsRJRRKGjhSRSkPPf9zI
+ qprrNenN4IGLy9z9fgD6rqDz39D5WJnhDiVvfHAuQP6vIcwfDWhgnQ9keNSnO2SPIbsY
+ 9sutRFtjeew5SO7sKJXUBGTxL0mYc2bzwU1Sh2UpbbVcGJJWhCrbh1oXp5WF0Vcv/NKg
+ ppAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747854205; x=1748459005;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1747855302; x=1748460102;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=34TfirTsXxTP6d62JGvYfcbC3QYrm28BoyruDIrjNVU=;
- b=BMpmPr0rnaolOEe9RF9PQNFxD/YHqSrFBWklENujY16o1HH36Jb8bu6TPrA7iZpPgb
- vAzpv3inWHZXby/qmgoqNY5sj551Xx09eX2/PUJDBLMrexB2UPz4SJZK/zbvUpadFV80
- iVgQss4da3EXEp7PEx9NXV4nOkXt0SMWJuqZmd06zz2gE1oU+gyWJCAP+QKTDv8b3Y9o
- /DK14CtIKG6v0s/pyFRytbbwTcYCiNgdpfA6shdiFkCJGo/bc2iydIlboSf+R9eRQ1S3
- kFY58ekmiP11Uz4kv1mKSZGHg7/F4QuppqxV+8utftwYrxlQpO8pZliYDSsmcW5HEPK9
- 26aA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDrL8HqKcVL3UJsiflG6i0QosklSvpmkWzwsHd7zEU+2d3GvK6X2fOgixexuYE7/DnsDoV1f8lSocM@nongnu.org
-X-Gm-Message-State: AOJu0YzPARgXDPy3XjFGQK03k3LJXv0c15F/d5DXVtuZP+Ta8E2Lgn4l
- GmvLg5cQijiTqiqOHWcAZuRHHYdtPHKQ2Oo7o1iu3QPYhW3ek5+eLVvTWMh34Vly7C8=
-X-Gm-Gg: ASbGncuSKktSNoBpKBHBJC4THe3bPTLXucPM8Zrfa59a4rk83lc66j8KvUcug4Z4mEl
- p2w4cQ0mRq0VWK3+vcn55VAMLCbEWnIKrZ/HRdgd01e/EbJ6SFy6iPBIoZudb7uGTedAH4FBhWm
- QO3RmutsoMb1kp76/eAvy43zsosmwV59v19QSqqNllzbBkqc8uJAnnxChZcw3WWg462RNHCltjW
- fRiDHw3gQdZjPDm3pbCv7ObBHQYdLkLGjSW/Pl5Lekmf4fXIL7X2VEZgBmnk8R+CzckUvgg4ic0
- jkoW1KEhdqCBarenQHhxQJsj9dhoB9hALHh73QLMhwZk7byR74NzvDAg5rLv7YjE
-X-Google-Smtp-Source: AGHT+IFMU2sIkDpP4mLQdqHJM53MJMzbjxvSJ3HLnjYcokHlUnhXSzJ2jd25pN3869hC7Q2TzJ1uyw==
-X-Received: by 2002:a05:6a00:790:b0:742:b9d2:dc8f with SMTP id
- d2e1a72fcca58-742b9d2e0fdmr16878358b3a.1.1747854204777; 
- Wed, 21 May 2025 12:03:24 -0700 (PDT)
+ bh=9qDHA+xSix926l7YrJ4wV6VmM8fWhiDAdq/6MRD2s9M=;
+ b=A93COuR/s4/2gpmYKSHh6acRiTgqbg8q1t00HH8yCVNK6eKX2SPdim0KQJoe7LGykU
+ 7brGIQqG9yFRoY1HJUs4wPSa9t3Lj2HSr4RoqukRloM4jmDr1jIYPlTwZcDeUlCdbE/R
+ onhCvWY353sdJgyHFqxt84dLUo27/hv1gakR0wHXlBf4jNE5nxkUcjQb9Uwlt7S3N6xT
+ M18S2Xd/aVQj57eRVotH9y0/B1evc9DmfE7bIFZo2q0b0BAruFRGXoAG/4Lp3Z0OmFud
+ jZMlH58FX4IiL6FJTh3pksPOVnRzCM7pR1fDHbQ6OZK5bfRHl7TII7VLxgqj3rO4SosU
+ /C0Q==
+X-Gm-Message-State: AOJu0YxeYPMVuBVGWAu+zBtewVfssRSMeWc8Zc+NMuzSLlLM467NEkQD
+ DNVZTeubSBqwSOBUTw+8Vzg3mACzcECHiMNjiD+GnWPnORm8RqonTUrNVVhGd7XzxJI=
+X-Gm-Gg: ASbGncufSW8R2NO0f+avr+tC4TYF+46Ea5VAw7+dfziW7uKr7eobFv5lMsmQ2FliqlV
+ 2nMPPAQWJjiHw7uGU20UtMGeOC5BXMN+c8OwWHCJ7pXHYsUrpjGnO+Ml4+iD6q48O0dwnblk9xE
+ S22lEmxPjrWCwaf4x/V5VQA+PZ7Yvd3HPGIyGqLWFi4RKRVLCI8p4MVnxoZWgbYtLsgtr+3hZ+m
+ PEHqZDGiOz7Wz+rYQZPtd90kgXHzZ0FQ3m9qHlgOqL8wcORHynp1XJAJKZ4YnONv8Upzhf4PKkM
+ bY0ZuYxD/J0Ue7tdgrON3Ya/fqXLLgEhbcP8gU4T0Xk/+Z34bQf04pF/eAsMRXIe
+X-Google-Smtp-Source: AGHT+IELb63qTsPtuKaet61WBaXmsujxLrcGdsKx5N6w//s+QPYLe8NoTE6vaH20et2hcKuwX4+nxg==
+X-Received: by 2002:a05:6a20:d70a:b0:218:17a2:4421 with SMTP id
+ adf61e73a8af0-21817a2540dmr24139972637.10.1747855301579; 
+ Wed, 21 May 2025 12:21:41 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a98a314esm9922851b3a.165.2025.05.21.12.03.23
+ 41be03b00d2f7-b26eaf8e054sm9953663a12.41.2025.05.21.12.21.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 12:03:24 -0700 (PDT)
-Message-ID: <66701dce-2eab-4670-b87b-f39f4cc2e213@linaro.org>
-Date: Wed, 21 May 2025 12:03:23 -0700
+ Wed, 21 May 2025 12:21:41 -0700 (PDT)
+Message-ID: <f2c36e84-9ae8-4b2e-8a4a-b6af8b2809b1@linaro.org>
+Date: Wed, 21 May 2025 12:21:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 23/25] tests: add plugin asserting correctness of
- discon event's to_pc
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <cover.1747666625.git.neither@nut.email>
- <2a30a629012f39f8495415f87568fe9b3a0eb32b.1747666625.git.neither@nut.email>
- <dbf71afe-1ae2-4110-8f83-fe1b1823a774@linaro.org>
- <4ea8edc376234e43230b09cb1b740616dee1652a@nut.email>
- <03a14875-170a-4897-a4fa-073fdfd1479f@linaro.org>
+Subject: Re: [PATCH v2 02/12] qapi: expand docs for SEV commands
 Content-Language: en-US
-In-Reply-To: <03a14875-170a-4897-a4fa-073fdfd1479f@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>
+References: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
+ <20250515172732.3992504-3-pierrick.bouvier@linaro.org>
+ <871pslkur5.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <871pslkur5.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,51 +106,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 2:09 PM, Pierrick Bouvier wrote:
-> On 5/20/25 1:44 PM, Julian Ganz wrote:
->> Hi Pierrick,
->>
->> May 20, 2025 at 10:01 PM, Pierrick Bouvier wrote:
->>> Regarding the issue with the same tb being mapped at different virtual addresses, I'm ok with the current solution of comparing only page bits.
->>>
->>> That said, a better solution could be to compare physical addresses when a discon is detected (on plugin side), and confirm it's really a discontinuity or just a different mapping. With this approach, it's not even needed to have a dedicated option, and there would be no false positive in the plugin. It's just a suggestion though.
->>
->> I actually tried to do this before resorting to the current appraoch.
->> However, there is only API for querying an instruction's or TB's
->> hardware address and none that would let me translate the virtual
->> addresses we receive in the discon callback, which we need to compare
->> against.
->>
+On 5/18/25 10:57 PM, Markus Armbruster wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 > 
-> It would be acceptable to add such a function allowing to query physical
-> address for a virtual address (using cpu_get_phys_page_debug behind the
-> hoods), as it's not leaking any QEMU implementation detail.
+>> From: Daniel P. Berrangé <berrange@redhat.com>
+>>
+>> This gives some more context about the behaviour of the commands in
+>> unsupported guest configuration or platform scenarios.
+>>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   qapi/misc-target.json | 43 ++++++++++++++++++++++++++++++++++++-------
+>>   1 file changed, 36 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+>> index 5d0ffb0164f..ae55e437a5f 100644
+>> --- a/qapi/misc-target.json
+>> +++ b/qapi/misc-target.json
+>> @@ -110,7 +110,11 @@
+>>   ##
+>>   # @query-sev:
+>>   #
+>> -# Returns information about SEV
+>> +# Returns information about SEV/SEV-ES/SEV-SNP.
 > 
-> We can implement this later if you don't want to extend your series with
-> this.
->
+> We prefer imperative mood "Return" over "Returns".  Could also use "Get"
+> or "Query"; matter of taste.
+> 
+>> +#
+>> +# If unavailable due to an incompatible configuration the
+>> +# returned @enabled field will be set to 'false' and the
+> 
+> I'd prefer "field is set".
+> 
+>> +# state of all other fields is undefined.
+>>   #
+>>   # Returns: @SevInfo
+>>   #
+>> @@ -141,7 +145,16 @@
+>>   ##
+>>   # @query-sev-launch-measure:
+>>   #
+>> -# Query the SEV guest launch information.
+>> +# Query the SEV/SEV-ES guest launch information.
+>> +#
+>> +# This is only valid on x86 machines configured with KVM and the
+>> +# 'sev-guest' confidential virtualization object. The launch
+>> +# measurement for SEV-SNP guests is only available within
+>> +# the guest.
+>> +#
+>> +# This will return an error if the launch measurement is
+>> +# unavailable, either due to an invalid guest configuration
+>> +# or if the guest has not reached the required SEV state.
+>>   #
+>>   # Returns: The @SevLaunchMeasureInfo for the guest
+>>   #
+> 
+> Errors better go into their own section.
+> 
+>     # Returns: The @SevLaunchMeasureInfo for the guest
+>     #
+>     # Errors:
+>     #     - If the launch measurement is unavailable, either due to an
+>     #       invalid guest configuration or if the guest has not reached
+>     #       the required SEV state, GenericError
+> 
+>> @@ -185,8 +198,9 @@
+>>   ##
+>>   # @query-sev-capabilities:
+>>   #
+>> -# This command is used to get the SEV capabilities, and is supported
+>> -# on AMD X86 platforms only.
+>> +# This command is used to get the SEV capabilities, and is only
+>> +# supported on AMD X86 platforms with KVM enabled. If SEV is not
+>> +# available on the platform an error will be returned.
+>>   #
+>>   # Returns: SevCapability objects.
+>>   #
+> 
+> Likewise.
+> 
+> Suggest to use the opportunity to switch the intro to imperative mood.
+> Together:
+> 
+>     ##
+>     # Get SEV capabilities.
+>     #
+>     # This is only supported on AMD X86 platforms with KVM enabled.
+>     #
+>     # Returns: SevCapability objects.
+>     #
+>     # Errors:
+>     #     - If # SEV is not available on the platform, GenericError
+>     #
+> 
+>> @@ -205,7 +219,15 @@
+>>   ##
+>>   # @sev-inject-launch-secret:
+>>   #
+>> -# This command injects a secret blob into memory of SEV guest.
+>> +# This command injects a secret blob into memory of a SEV/SEV-ES guest.
+>> +#
+>> +# This is only valid on x86 machines configured with KVM and the
+>> +# 'sev-guest' confidential virtualization object. SEV-SNP guests
+>> +# do not support launch secret injection
+>> +#
+>> +# This will return an error if launch secret injection is not possible,
+>> +# either due to an invalid guest configuration, or if the guest has not
+>> +# reached the required SEV state.
+>>   #
+>>   # @packet-header: the launch secret packet header encoded in base64
+>>   #
+> 
+> Likewise.
+> 
+>> @@ -236,8 +258,15 @@
+>>   ##
+>>   # @query-sev-attestation-report:
+>>   #
+>> -# This command is used to get the SEV attestation report, and is
+>> -# supported on AMD X86 platforms only.
+>> +# This command is used to get the SEV attestation report.
+>> +#
+>> +# This is only valid on x86 machines configured with KVM and the
+>> +# 'sev-guest' confidential virtualization object. The attestation
+>> +# report for SEV-SNP guests is only available within the guest.
+>> +#
+>> +# This will return an error if the attestation report is
+>> +# unavailable, either due to an invalid guest configuration
+>> +# or if the guest has not reached the required SEV state.
+>>   #
+>>   # @mnonce: a random 16 bytes value encoded in base64 (it will be
+>>   #     included in report)
+> 
+> Likewise.
+> 
+> docs/devel/qapi-code-gen.rst:
+> 
+>      For legibility, wrap text paragraphs so every line is at most 70
+>      characters long.
+> 
+>      Separate sentences with two spaces.
+> 
 
-An happy coincidence, this was just posted:
-https://lore.kernel.org/qemu-devel/20250521094333.4075796-6-rowanbhart@gmail.com/
-
->> I considered also passing the hardware address to the callback (do the
->> translation in the `plugin_vcpu_cb__discon` hook), but that turned out
->> to be not straight forward and not something we'd want to do in the
->> hook, either.
->>
-> 
-> Yes, in some cases, people will want virtual addresses, and sometimes
-> physical ones. So passing physical ones only is too restrictive.
-> 
-> This plugin is a bit specific, as it's explicitely tracking all
-> transitions between instructions, where a "normal" plugin will just work
-> with discontinuities. That said, the use case to get physical address
-> from a virtual one is a real need.
-> 
->> Regards,
->> Julian
-> 
-> Regards,
-> Pierrick
-
+All changes done, as requested.
 
