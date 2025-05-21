@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1782C54E90
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 993ECC54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHs4X-0006AO-By; Wed, 21 May 2025 18:38:01 -0400
+	id 1uHs4f-0006De-Sv; Wed, 21 May 2025 18:38:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHs4U-00068x-79
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:37:58 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1uHs4b-0006C8-Ip
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:38:06 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHs4N-0005Yd-MX
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:37:57 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-739b3fe7ce8so6094809b3a.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 15:37:50 -0700 (PDT)
+ id 1uHs4U-0005an-66
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:38:05 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-231fc83a33aso45174255ad.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 15:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747867069; x=1748471869; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747867075; x=1748471875; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LJmzJEfKJJ8E8nGh8tBJZD/8AHQeg+38e6Umva3AajU=;
- b=tlPKnQu+Ou/gwTvW0G6YdW0A1aXIg0TIZle5VA67zGsFpUy9vpKTs45ruZBN0wt5c0
- Zzi/QzJG1sX9vrCm6sw26JgKUHUUYKCBpyaePEgKq88KpK5LK1gBp3lqzD3toEWbJxRi
- FoPZg4ycPx+5s/O0lz5sjy28QReTFlWPYWYQo7+nlIO9s6F7wEhzqOoJMJxhHc40g9FC
- cfiVNsSei01As/nfCL4Ho6bQW1t3LvgzYAtSjt52rIVZDbOWh1KMc4yAMYceVwpNkF8m
- 0ifXpranKHKs+kwIFvsYsugbZBGzkdawW7ZQJ16R6ITYc9pDXCJrC5+5IWQiZ/4E4l7z
- ZLqQ==
+ bh=xKpDcwMErvQxgyaL+Q2tctV5ddB+KbCBa/wlI68stYM=;
+ b=kIJ+bRDU1R4UhJKjqPzMIUec98SalVSV/HVgN7JDubf68onnlSlSG4apxVotLq0uaF
+ T49t6tx3kMZh+NCCHvcG5ysQbwwaUh1ID8bITfwqzbXbVosT9zL79u5kFfqlyFQNyU1f
+ 1gIZL2gKHoPk9oeoM17ZWgXwbaIJGcNwsRPrS4uk1hBbFl1g/BJzvXlZ1gqoqH4egmMN
+ grWnYgx3fX973+oNHwxNir3RsQmNjKXmkgYEIHs+PlSj+LG6xa/DJNuu6yA8gOSUOi1V
+ LCuKrMmMX1G9KQDp2cxcDfaComJCqkLAFozfM5aU5RT+kFJ0+SzSTgD7RPSGLJ2R91oJ
+ N8Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747867069; x=1748471869;
+ d=1e100.net; s=20230601; t=1747867075; x=1748471875;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LJmzJEfKJJ8E8nGh8tBJZD/8AHQeg+38e6Umva3AajU=;
- b=Lnb10jpuU+Rb0KP1ZRWMhne/yErq1mqJ7n9wIUbfEEOztGyGcEWGTITSPJLCHnwZOu
- R53av10O8P5UI4Tab31RLzonnD38iGFPQ8IkxmSMxH7FcpO7B99l+BzDlg6vgoVop3ix
- A6RHSBNAYL3DuijQaUdCMiVhDojlMAREcXoINJkVay5GTTiouJsItN/uOYK18CzHgjXJ
- N6k8pGXWyVR0cf2WGoKxR8Ca2A7HBJcfO0H2z7yJGsoldGDEBnuKhrM1hRByZyB/kei1
- 85xFWDB1Fi5D82M4cO9G+AEk1RelJL1s9bK+ZUgvlVk4hHePvkuzyK/eekR9A522c5wQ
- aQIg==
-X-Gm-Message-State: AOJu0Ywt5F/pzZZRm6WfUWT+7bxQOBYrACeYmGr6CB98TAp+DzFcdk6v
- jQ+HbUtWZyNBqnfV+DfhZMrl6FQdu7iLnU7MQhdxRZqQzsoI9o/4l0A3L4G/o9/WsbumfSLu3eQ
- uTxTh
-X-Gm-Gg: ASbGncuv3G8cKpeSJjP7YAYzwFQB7TGSFDmKIiZuQSO6ZzcK6vL8O5RI+0XLlkpqnne
- LPqq2htQ32iaRkKVIWTagjw1s2gZ+jKvY1GTwgc46e8F3uXrjal2j/AMCnrvFGi+AuJMRuuKPnI
- t4sTlYls9nMFhZfxsInOqSg+zQ11z0VSe8+z/W51Mr1FZXwG6BHOWeAM6Wrzg+19Np91QrjK7JB
- qN3yzy2QulIUeeV8/keRXiC5+a+mkpAK+sMTuD3Eshdo/d09hzy+QffCEC7xxrJisbDyRB9Up4S
- lZQGqUXG/1qoOPHj8EHH60wpEx5dluG7n65JmzgByUJqG2+tpKs=
-X-Google-Smtp-Source: AGHT+IF4ruTupc6N4Ph1aCd9Z2wlGTx+6ATH6Z8x4OvNlsOK8khWfSF5oWBGIVxNJLObTZnSFZbqpQ==
-X-Received: by 2002:a05:6a20:3d88:b0:1fd:e9c8:cf3b with SMTP id
- adf61e73a8af0-216219b24cdmr36276934637.30.1747867068699; 
- Wed, 21 May 2025 15:37:48 -0700 (PDT)
+ bh=xKpDcwMErvQxgyaL+Q2tctV5ddB+KbCBa/wlI68stYM=;
+ b=B9mQAfG6M8IQDmVCoG0WcCtN9amNXp9lMQZG/Ja+YBxPVCrPnEA7uHQV1vXez20AfG
+ ZznHiJR0aI7BlA+mM8VfPP+bm4Yx4IVwSD0WQf05Rwu0tpqN/VAxniv4MxSTNTeUFOJF
+ 5omBn+/RB5Aigg4tGXky93vtNp2xrIcYYT28yt3FMFM2ONDEzF6Ah56eXIs5ZcfoYw46
+ Fg8Io0Xz5AFEb3d4DbJIwqDSueAuMIMOJW9J21DVVL65TMAwLlP9SecDnOUptHoyEv0E
+ WZUf0wnSl+v2CeGArMbQQOseylm6C+zrxDv3Bta6b5KpxH7eI+LRrLedepX85s7R68zL
+ 5vjQ==
+X-Gm-Message-State: AOJu0Yx1xawdeS/rLm4Am3GXyYztm0lc67GS1mnao1lO5DhnfnX6sIth
+ Qmtbd+/4mKTiZ81UqZkXmrD5108BTZ2GrZHaMcW/EL8lULwGhYAXDguFpUyOLDbZ2F2hAAFG1Ln
+ uYtbc
+X-Gm-Gg: ASbGncsl6TfBc/tEQy0KK73RbvAgbyBXKVJT1aGo5rfTp/afJOEy1WtWpkC0K1951UD
+ VxGludLK3gw2MHIyqRcudEXNza+A9yctBYQw7g6DDzY5yMQTtBcgYj8GQfa1qS9mw39BBRi5v44
+ jW5RepK9kE/exD3QCdI7JTPRV41jAakeN4fNGIe8TR1ogBPaTr/vMSPMiEvWH8CTob2z4hnpGd3
+ DNOxCpRBCbiI3VDrGpxLaY8+vKGpwh5BRO44uTZbaS3Kz3IE3GLEfLfY6BwcknI0MhydVU90TCW
+ sZcDHmC2Lu2cXmSLvlN8kYqcs1uPX2VkS4HvneVgrnFuQdIbPd8=
+X-Google-Smtp-Source: AGHT+IE8bb15Nmmy76tq0E32hsYIaWrKB2zggQmhQOa+EFtlzKvZr6af7RPPx9e0HlV35bRO2X6dJQ==
+X-Received: by 2002:a17:902:f54a:b0:231:b7a6:df1a with SMTP id
+ d9443c01a7336-231de3ba25fmr271002475ad.50.1747867075331; 
+ Wed, 21 May 2025 15:37:55 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4e97dcesm97711105ad.121.2025.05.21.15.37.47
+ d9443c01a7336-231d4e97dcesm97711105ad.121.2025.05.21.15.37.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 15:37:48 -0700 (PDT)
+ Wed, 21 May 2025 15:37:54 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com, peter.maydell@linaro.org,
  armbru@redhat.com, michael.roth@amd.com, philmd@linaro.org,
  richard.henderson@linaro.org, berrange@redhat.com, thuth@redhat.com
-Subject: [PATCH v3 04/14] qapi: expose query-gic-capability command
- unconditionally
-Date: Wed, 21 May 2025 15:37:30 -0700
-Message-ID: <20250521223740.249720-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 11/14] qapi: make all generated files common
+Date: Wed, 21 May 2025 15:37:37 -0700
+Message-ID: <20250521223740.249720-12-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250521223740.249720-1-pierrick.bouvier@linaro.org>
 References: <20250521223740.249720-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,209 +99,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+Monolithic files (qapi_nonmodule_outputs) can now be compiled just
+once, so we can remove qapi_util_outputs logic.
+This removes the need for any specific_ss file.
 
-This removes the TARGET_ARM condition from the query-gic-capability
-command. This requires providing a QMP command stub for non-ARM targets.
-This in turn requires moving the command out of misc-target.json, since
-that will trigger symbol poisoning errors when built from target
-independent code.
-
-Following the earlier precedent, this creates a misc-arm.json file to
-hold this ARM specific command.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qapi/misc-arm.json        | 49 +++++++++++++++++++++++++++++++++++++++
- qapi/misc-target.json     | 44 -----------------------------------
- qapi/qapi-schema.json     |  1 +
- stubs/monitor-arm-gic.c   | 12 ++++++++++
- target/arm/arm-qmp-cmds.c |  2 +-
- qapi/meson.build          |  1 +
- stubs/meson.build         |  1 +
- 7 files changed, 65 insertions(+), 45 deletions(-)
- create mode 100644 qapi/misc-arm.json
- create mode 100644 stubs/monitor-arm-gic.c
+ qapi/meson.build | 23 ++++-------------------
+ 1 file changed, 4 insertions(+), 19 deletions(-)
 
-diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
-new file mode 100644
-index 00000000000..f5341372f5a
---- /dev/null
-+++ b/qapi/misc-arm.json
-@@ -0,0 +1,49 @@
-+# -*- Mode: Python -*-
-+# vim: filetype=python
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+##
-+# @GICCapability:
-+#
-+# The struct describes capability for a specific GIC (Generic
-+# Interrupt Controller) version.  These bits are not only decided by
-+# QEMU/KVM software version, but also decided by the hardware that the
-+# program is running upon.
-+#
-+# @version: version of GIC to be described.  Currently, only 2 and 3
-+#     are supported.
-+#
-+# @emulated: whether current QEMU/hardware supports emulated GIC
-+#     device in user space.
-+#
-+# @kernel: whether current QEMU/hardware supports hardware accelerated
-+#     GIC device in kernel.
-+#
-+# Since: 2.6
-+##
-+{ 'struct': 'GICCapability',
-+  'data': { 'version': 'int',
-+            'emulated': 'bool',
-+            'kernel': 'bool' } }
-+
-+##
-+# @query-gic-capabilities:
-+#
-+# It will return a list of GICCapability objects that describe its
-+# capability bits.
-+#
-+# On non-ARM targets this command will report an error as the GIC
-+# technology is not applicable.
-+#
-+# Returns: a list of GICCapability objects.
-+#
-+# Since: 2.6
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-gic-capabilities" }
-+#     <- { "return": [{ "version": 2, "emulated": true, "kernel": false },
-+#                     { "version": 3, "emulated": false, "kernel": true } ] }
-+##
-+{ 'command': 'query-gic-capabilities', 'returns': ['GICCapability'] }
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index c0d7b311f30..cc472ce91cb 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -2,50 +2,6 @@
- # vim: filetype=python
- #
- 
--##
--# @GICCapability:
--#
--# The struct describes capability for a specific GIC (Generic
--# Interrupt Controller) version.  These bits are not only decided by
--# QEMU/KVM software version, but also decided by the hardware that the
--# program is running upon.
--#
--# @version: version of GIC to be described.  Currently, only 2 and 3
--#     are supported.
--#
--# @emulated: whether current QEMU/hardware supports emulated GIC
--#     device in user space.
--#
--# @kernel: whether current QEMU/hardware supports hardware accelerated
--#     GIC device in kernel.
--#
--# Since: 2.6
--##
--{ 'struct': 'GICCapability',
--  'data': { 'version': 'int',
--            'emulated': 'bool',
--            'kernel': 'bool' },
--  'if': 'TARGET_ARM' }
--
--##
--# @query-gic-capabilities:
--#
--# This command is ARM-only.  It will return a list of GICCapability
--# objects that describe its capability bits.
--#
--# Returns: a list of GICCapability objects.
--#
--# Since: 2.6
--#
--# .. qmp-example::
--#
--#     -> { "execute": "query-gic-capabilities" }
--#     <- { "return": [{ "version": 2, "emulated": true, "kernel": false },
--#                     { "version": 3, "emulated": false, "kernel": true } ] }
--##
--{ 'command': 'query-gic-capabilities', 'returns': ['GICCapability'],
--  'if': 'TARGET_ARM' }
--
- ##
- # @SgxEpcSection:
- #
-diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-index 96f6aa44133..e96bff8d38c 100644
---- a/qapi/qapi-schema.json
-+++ b/qapi/qapi-schema.json
-@@ -61,6 +61,7 @@
- { 'include': 'replay.json' }
- { 'include': 'yank.json' }
- { 'include': 'misc.json' }
-+{ 'include': 'misc-arm.json' }
- { 'include': 'misc-i386.json' }
- { 'include': 'misc-target.json' }
- { 'include': 'audio.json' }
-diff --git a/stubs/monitor-arm-gic.c b/stubs/monitor-arm-gic.c
-new file mode 100644
-index 00000000000..b3429243ef8
---- /dev/null
-+++ b/stubs/monitor-arm-gic.c
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-misc-arm.h"
-+
-+
-+GICCapabilityList *qmp_query_gic_capabilities(Error **errp)
-+{
-+    error_setg(errp, "GIC hardware is not available on this target");
-+    return NULL;
-+}
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index a1a944adb43..ef18c867ca4 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -27,7 +27,7 @@
- #include "qapi/visitor.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/qapi-commands-machine-target.h"
--#include "qapi/qapi-commands-misc-target.h"
-+#include "qapi/qapi-commands-misc-arm.h"
- #include "qobject/qdict.h"
- #include "qom/qom-qobject.h"
- 
 diff --git a/qapi/meson.build b/qapi/meson.build
-index 3a9bd061047..5e93e6b8cfd 100644
+index 7582c2b5bcf..3b035aea339 100644
 --- a/qapi/meson.build
 +++ b/qapi/meson.build
-@@ -64,6 +64,7 @@ if have_system
-     'qdev',
-     'pci',
-     'rocker',
-+    'misc-arm',
-     'misc-i386',
-     'tpm',
-     'uefi',
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 9922ec7b88e..07e9d3799a5 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -77,6 +77,7 @@ if have_system
-   stub_ss.add(files('target-monitor-defs.c'))
-   stub_ss.add(files('win32-kbd-hook.c'))
-   stub_ss.add(files('xen-hw-stub.c'))
-+  stub_ss.add(files('monitor-arm-gic.c'))
-   stub_ss.add(files('monitor-i386-rtc.c'))
-   stub_ss.add(files('monitor-i386-sev.c'))
- endif
+@@ -85,8 +85,7 @@ qapi_nonmodule_outputs = [
+   'qapi-emit-events.c', 'qapi-emit-events.h',
+ ]
+ 
+-# First build all sources
+-qapi_util_outputs = [
++qapi_outputs = qapi_nonmodule_outputs + [
+   'qapi-builtin-types.c', 'qapi-builtin-visit.c',
+   'qapi-builtin-types.h', 'qapi-builtin-visit.h',
+ ]
+@@ -109,20 +108,17 @@ foreach module : qapi_all_modules
+       'qapi-commands-@0@.trace-events'.format(module),
+     ]
+   endif
+-  qapi_util_outputs += qapi_module_outputs
++  qapi_outputs += qapi_module_outputs
+ endforeach
+ 
+ qapi_files = custom_target('shared QAPI source files',
+-  output: qapi_util_outputs + qapi_nonmodule_outputs,
++  output: qapi_outputs,
+   input: [ files('qapi-schema.json') ],
+   command: [ qapi_gen, '-o', 'qapi', '-b', '@INPUT0@' ],
+   depend_files: [ qapi_inputs, qapi_gen_depends ])
+ 
+-# Now go through all the outputs and add them to the right sourceset.
+-# These loops must be synchronized with the output of the above custom target.
+-
+ i = 0
+-foreach output : qapi_util_outputs
++foreach output : qapi_outputs
+   if output.endswith('.h')
+     genh += qapi_files[i]
+   endif
+@@ -132,14 +128,3 @@ foreach output : qapi_util_outputs
+   util_ss.add(qapi_files[i])
+   i = i + 1
+ endforeach
+-
+-foreach output : qapi_nonmodule_outputs
+-  if output.endswith('.h')
+-    genh += qapi_files[i]
+-  endif
+-  if output.endswith('.trace-events')
+-    qapi_trace_events += qapi_files[i]
+-  endif
+-  specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: qapi_files[i])
+-  i = i + 1
+-endforeach
 -- 
 2.47.2
 
