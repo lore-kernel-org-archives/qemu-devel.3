@@ -4,78 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C222C54ED0
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2FBC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHjux-0008MG-6Q; Wed, 21 May 2025 09:55:35 -0400
+	id 1uHjvT-0000cQ-2t; Wed, 21 May 2025 09:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uHjuo-0008D6-Oc
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1uHjvA-0000OJ-IK
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:49 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uHjun-000754-0Q
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747835723;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=B3+EyUCTIK9FqId1wl+BA9m2aXuQYDWfJ5AScKo9HVI=;
- b=cNPzTLVqoVqxnhyVdopk+1Hk66Zy5EHrjuJ9r7cR3xgfr6BehON/VrGy738DDSGJXx+oqL
- yWSn/JZzLqPH1vN6N7OWQyksdXAEkxdiFgyYHMNor1a4/BbmMJkS3wUbNvySyukD68lfgQ
- jpMVVz61+TZmlPvVXu9jX+coQWGhwok=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-wTsbBlX3MB-rVFMW-97xmA-1; Wed,
- 21 May 2025 09:55:22 -0400
-X-MC-Unique: wTsbBlX3MB-rVFMW-97xmA-1
-X-Mimecast-MFC-AGG-ID: wTsbBlX3MB-rVFMW-97xmA_1747835721
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 095FD18004AD; Wed, 21 May 2025 13:55:21 +0000 (UTC)
-Received: from fedora.brq.redhat.com (unknown [10.43.2.64])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66A3F19560AB; Wed, 21 May 2025 13:55:19 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1uHjv7-00076S-LZ
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:48 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:cca4:0:640:432b:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 941F46272A;
+ Wed, 21 May 2025 16:55:38 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex-team.ru (unknown
+ [2a02:6b8:b081:b529::1:7])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id RtO8uI0FbCg0-2hutRz6e; Wed, 21 May 2025 16:55:38 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1747835738;
+ bh=Z3gU/dZQAZ13cdSvQHpNy+pNJlo4mlyKL/qJEJh9+fQ=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=bV+H7s2963eGf06pdv7dqzVHQTTZj4Jq5QZCHe4xnczNNDOioyh44rcMi4IKXV9Rz
+ KXyrFxnvzBDI/yW+e/u55E5RoRw/Jag8cz7oBFHfUhzcP1kegXMcMVY9zg5rq7yHF7
+ lc7PKLURcljicJ4kYPwQ5rgKM3cpdmn3HvshQlJk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v5 4/6] util/qemu-sockets: Add support for keep-alive flag to
- passive sockets
-Date: Wed, 21 May 2025 15:52:33 +0200
-Message-ID: <20250521135240.3941598-5-jmarcin@redhat.com>
-In-Reply-To: <20250521135240.3941598-1-jmarcin@redhat.com>
-References: <20250521135240.3941598-1-jmarcin@redhat.com>
+Cc: Cleber Rosa <crosa@redhat.com>,
+ "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v7 0/2] tests/functional: add memlock tests
+Date: Wed, 21 May 2025 18:55:20 +0500
+Message-Id: <20250521135522.11180-1-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -87,69 +79,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+Add new tests to check the correctness of the `-overcommit memlock`
+option (possible values: off, on, on-fault) by using
+`/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
+anonymous segments:
 
-Commit aec21d3175 (qapi: Add InetSocketAddress member keep-alive)
-introduces the keep-alive flag, which enables the SO_KEEPALIVE socket
-option, but only on client-side sockets. However, this option is also
-useful for server-side sockets, so they can check if a client is still
-reachable or drop the connection otherwise.
+* if `memlock=off`, then Locked = 0 on every anonymous smaps;
+* if `memlock=on`, then Size, Rss and Locked values must be equal for
+every anon smaps where Rss is not 0;
+* if `memlock=on-fault`, then Rss and Locked must be equal on every anon
+smaps and anonymous segment with Rss < Size must exists.
 
-This patch enables the SO_KEEPALIVE socket option on passive server-side
-sockets if the keep-alive flag is enabled. This socket option is then
-inherited by active server-side sockets communicating with connected
-clients.
-
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qapi/sockets.json   | 4 ++--
- util/qemu-sockets.c | 9 +++------
- 2 files changed, 5 insertions(+), 8 deletions(-)
+v6 -> v7:
+* add skipTest if can't open smaps file of qemu process
 
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index 6a95023315..62797cd027 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -56,8 +56,8 @@
- # @ipv6: whether to accept IPv6 addresses, default try both IPv4 and
- #     IPv6
- #
--# @keep-alive: enable keep-alive when connecting to this socket.  Not
--#     supported for passive sockets.  (Since 4.2)
-+# @keep-alive: enable keep-alive when connecting to/listening on this socket.
-+#     (Since 4.2, not supported for listening sockets until 10.1)
- #
- # @mptcp: enable multi-path TCP.  (Since 6.1)
- #
-diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-index 329fdbfd97..4fbf1ed5bf 100644
---- a/util/qemu-sockets.c
-+++ b/util/qemu-sockets.c
-@@ -236,12 +236,6 @@ static int inet_listen_saddr(InetSocketAddress *saddr,
-     int saved_errno = 0;
-     bool socket_created = false;
- 
--    if (saddr->keep_alive) {
--        error_setg(errp, "keep-alive option is not supported for passive "
--                   "sockets");
--        return -1;
--    }
--
-     memset(&ai,0, sizeof(ai));
-     ai.ai_flags = AI_PASSIVE;
-     if (saddr->has_numeric && saddr->numeric) {
-@@ -349,6 +343,9 @@ static int inet_listen_saddr(InetSocketAddress *saddr,
-                 goto fail;
-             }
-             /* We have a listening socket */
-+            if (inet_set_sockopts(slisten, saddr, errp) < 0) {
-+                goto fail;
-+            }
-             freeaddrinfo(res);
-             return slisten;
-         }
+v5 -> v6:
+* add python3 shebang to tests/functional/test_memlock.py
+
+v4 -> v5:
+* refactor skipLockedMemoryTest decorator: using resource.getrlimit()
+  function instead of spawning a process
+
+v3 -> v4:
+* add skipLockedMemoryTest decorator to skip test if system's locked
+  memory limit is below the required threashold;
+* add to MemlockTest skipLockedMemoryTest decorator with 2 GB limit.
+
+v2 -> v3:
+Move tests to tests/functional dir, as the tests/avocado dir is being phased out.
+v2 was [PATCH v2] tests/avocado: add memlock tests.
+Supersedes: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
+
+v1 -> v2:
+In the previous send, i forgot to specify new patch version (v2)
+So i resend previous patch with version specified.
+
+
+Alexandr Moshkov (2):
+  tests/functional: add skipLockedMemoryTest decorator
+  tests/functional: add memlock tests
+
+ tests/functional/meson.build             |   1 +
+ tests/functional/qemu_test/__init__.py   |   2 +-
+ tests/functional/qemu_test/decorators.py |  18 ++++
+ tests/functional/test_memlock.py         | 107 +++++++++++++++++++++++
+ 4 files changed, 127 insertions(+), 1 deletion(-)
+ create mode 100755 tests/functional/test_memlock.py
+
 -- 
-2.49.0
+2.34.1
 
 
