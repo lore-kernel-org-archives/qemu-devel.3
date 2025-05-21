@@ -4,142 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECB2C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D40BC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHlLi-0001Rq-Mz; Wed, 21 May 2025 11:27:18 -0400
+	id 1uHlLg-0001Mz-2o; Wed, 21 May 2025 11:27:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHlLc-0001Mk-1q
- for qemu-devel@nongnu.org; Wed, 21 May 2025 11:27:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHlLY-00046c-Ov
- for qemu-devel@nongnu.org; Wed, 21 May 2025 11:27:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747841226;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=o6S8Bjl1tpAWFAPZfCM9gm6rO9Aig230NtXdapcL2rM=;
- b=a8gO4LFi0xj3pfBQNh6qXVW3bVHMLwzK+X+fqwfZaUUxs0MYPY2hJR/afy7uNXeuVdMvBM
- 2H2Qk99ZzoHukA4FVxzNDt9CVQ7NDd0evbu0B9HdIiq6tGzOaHSv0EqcMoHX2YeMQTA9OF
- Vck3zMYs2QUFVrkJsnFCMSljEs4SNOE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-34453NqLMWeVWHBBdRXS0A-1; Wed, 21 May 2025 11:27:03 -0400
-X-MC-Unique: 34453NqLMWeVWHBBdRXS0A-1
-X-Mimecast-MFC-AGG-ID: 34453NqLMWeVWHBBdRXS0A_1747841220
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d5ca7c86aso43534825e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 08:27:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uHlLa-0001M2-3y
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 11:27:10 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uHlLS-000454-LO
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 11:27:09 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-231fd67a9aeso37961775ad.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 08:27:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747841218; x=1748446018; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vYTckfD81agmH5Xmoc7T8HX6TcSOrbDNI8bR8zby13g=;
+ b=eInr1Y/GWsiqzvqie5z61PItyCwoqWpeuJgv1w3O41EmJsX/727Dicgyk2Lb9gOlqO
+ fBcPLuQd5m7OuG+NbX4DMlbcCQcLv3fmUlFrcSSHOglkT7B28KafC7oZOhwv5Zz7dn5H
+ sEc6AZKT52tW+Kf31WRBUKiPpr8GMGTcka8LwgAz+f1o/jzqKrVOh4SjfTn7RITtR69V
+ 5hETu1/hyiNPQhCpzYSMt4YXyRjXVV5hbIplBdTXBg3THbtBMJLfJJ5FxNgOtjQQKGkM
+ iu6aR/QTgz64W+inQHdkNaWGchsdasaqv1n9Wzp3w+sS90aZTxIK6+OORjpO6/DuDJY0
+ KTSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747841220; x=1748446020;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o6S8Bjl1tpAWFAPZfCM9gm6rO9Aig230NtXdapcL2rM=;
- b=G+6xR//ricOmDSQOQZL+BFcyhECPU1aZ5V3cvxg/dn9XsOyzgRaj227zWxn3ph25UR
- bb/qLisP9lL7B5Ho/IC97c920OqHOOlFzX7V1E7p5gXnL5eH8tC/SyZj1HKAQwec0TaT
- nlEZ2aCqz69H+gil6rnnKkxRAiMwwogdwAP9ccbbQ+ayjZB8dVr7dJnmvDWBb+ijF0xP
- tRYbu7SKpaPwA347X0jhXNmcVD5UGDuhuFgGZtNrvNoJHhq6qOyYs69d/6bYBMmLLXYx
- PHAtM36FSIHjqPYroyeUuZbwlujkVy6qHUmMUMFKJj8TQkavaNSDcCQK5zQoNYZ/7THf
- yQJg==
+ d=1e100.net; s=20230601; t=1747841218; x=1748446018;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vYTckfD81agmH5Xmoc7T8HX6TcSOrbDNI8bR8zby13g=;
+ b=fwUC2wsxWv6l2X9SrcKAkjBugoXFwmtUsXnbJ7E578T1ogguI2S+PRxfTHUvv4I1qw
+ p+yMkLfW1UsNLt0ARoBdqx1P6/7RW0wUOWNUNvv3eng3KpYOSRxzqVpuJU/f1t+mgd6K
+ GqeIcnp/H3tEC6Xu5YURh5uqGCGIISyqbSceGJovIaaJJ05WIoRXyDBnOIL5wUmRO6gP
+ d6SSjeOIxn5olCwPWQ8XHgupXAZPN7LmkzIR+cAs2Vi+clzaftJga4ycpNenxIoGNikJ
+ ZQ9yOQAE73nAqQXn7zkqba2wNpdMym4UN7fwhYO8MMPZlHj4gvMa0PNWuXtmr+Q+x7Pq
+ AV8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4xBCHcFnNPcDaMB/pNmfMCzxJyHVlF51xv8T6sV6ckUuNmLpqCPlYyAdINANdZpCwf8rP1EAAp+Pi@nongnu.org
-X-Gm-Message-State: AOJu0YxuPxMrV8VZVWWr/10CoauWeyKrz6crJreY/fUBJbwgzHncManO
- gd27q/33k13o+eexyv/P4+s9ncEXRXJN0sxlDeoJXoJKqG6cY5p2/S3OPoP51t/any2YpVhD2oY
- DDAJEvKfUvMhrJ3yE1kDwSHEiAGu/VsUtPonGJs1rVdeecuNl1qUgMGqN
-X-Gm-Gg: ASbGncs6qJpA55evSsRs6Rl4tiXSSwksPuagoAUa50rQANi2R0dj/y3BYJlL19NO1We
- 5fFK2z2ifjDu0Vt7MTz37CNsIbJxv1Nc49WyWfB+9GrHlsL/C/R234krlQc3MZq/HSQ/JPheL1q
- Mff4cu6x56DHywJMZkpUlrlja0sM1UEOZCRwU60k8qx47YL6396EDvsgK3MTgy124ltrC57ucD3
- +BMqXYK1pi9qp9gt55dT+129CG/a7vQcBsxEa/amI86RtiavjTyQxkoUSreLCdPVTooUFYqDu8s
- wQ/m6Iu+OwuyY+pLacV/4ZTWAftN+nhdsPTCdIVMqT8raK0kGQ==
-X-Received: by 2002:a05:600c:8708:b0:439:8c80:6af4 with SMTP id
- 5b1f17b1804b1-442fd64e42fmr194687985e9.19.1747841220198; 
- Wed, 21 May 2025 08:27:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGHZC/FpPhLx7QAkTLRnG+DvWkztx/NaVUyCqGXpYLKvEd2kgDM/lsirgMC0f8dovCzAbt8mA==
-X-Received: by 2002:a05:600c:8708:b0:439:8c80:6af4 with SMTP id
- 5b1f17b1804b1-442fd64e42fmr194687765e9.19.1747841219886; 
- Wed, 21 May 2025 08:26:59 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ AJvYcCWnYWx63eJ9wur9onpAJkEtRGqd8QyjkjcL/FDXtgtNivnePwSRg37Wb9IQlvTVeJCoAfsueY3Dtdr6@nongnu.org
+X-Gm-Message-State: AOJu0Yy1CQJYrgvXugz63XyLuArRZFkatY2xCDfVET3tdoA0WZ1OdTbz
+ oYRoyVE+vQCUcLZHPXLSosQxZHf2i9bCPrw3Yu1Zka3Qa5tX6WwutFC0eSaalJs3a1A=
+X-Gm-Gg: ASbGncv8XxseL0EljYXTOfe6A/V04N6qEEESYtLot/n5Y+xiZiugPNmpV4EK20tMzK6
+ aVD6Z0JQmGCaV5wcBvIaFkJ+Q9oZrMfMOw/ODr/r8Tt8qtZrfyVFxDqi7uWNLCfwRINFM1SP7OK
+ mu1pc2e1ug48mZuclrLjmqq/KVYTR9PFzR/MWWtTQIGUHqYMIyJTcMfzbDBtNnkcRgNA2d0Nz6+
+ v6u4yt1lWs0TR8xFH4M0tsCbYajIAnz21AWxFLjNkbLgxDHI+Ew63Uv43LF9C2iE6c2fCtZ2TpL
+ G9bn5Kqq3L8doTcNaEdZO/lEr5REe+p0+OR1vrscIIbGluw+7eWekRXJ6oZ/XD7NL0Jeq2f3Jqi
+ B96eAF82l/4IMEk1/NbQj6tT2J990fg==
+X-Google-Smtp-Source: AGHT+IFDBrggbgTAFRW74tnvRHyJSTcmC988dNI+BSGU6lOxz0XGx2zI02pWGHfzgXjAOaKZugKQuA==
+X-Received: by 2002:a17:902:d2cf:b0:221:89e6:ccb6 with SMTP id
+ d9443c01a7336-231d4ea09cfmr313156025ad.25.1747841218545; 
+ Wed, 21 May 2025 08:26:58 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:b401:d47f:532e:8fb1:3c49:40da?
+ ([2804:7f0:b401:d47f:532e:8fb1:3c49:40da])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f23c080asm75245385e9.22.2025.05.21.08.26.58
+ d9443c01a7336-231d4aca2d6sm94160185ad.3.2025.05.21.08.26.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
  Wed, 21 May 2025 08:26:58 -0700 (PDT)
-Message-ID: <49707a58-ae0d-41f0-96ca-799ca38edbd5@redhat.com>
-Date: Wed, 21 May 2025 17:26:58 +0200
+Message-ID: <ad7c7b84-9f12-4767-a349-df47c489c726@linaro.org>
+Date: Wed, 21 May 2025 12:26:39 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/iommufd: Add comment emphasizing no movement of
- hiod->realize() call
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, chao.p.peng@intel.com
-References: <20250521110301.3313877-1-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250521110301.3313877-1-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH 14/22] hw/i386/acpi-build: Move aml_pci_edsm to a generic
+ place
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com,
+ shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org
+References: <20250514170431.2786231-1-eric.auger@redhat.com>
+ <20250514170431.2786231-15-eric.auger@redhat.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20250514170431.2786231-15-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,39 +109,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/25 13:03, Zhenzhong Duan wrote:
-> The nested IOMMU support needs device and hwpt id which are generated
-> only after attachment. Hiod encapsulates these information in realize()
-> and passes to vIOMMU.
+Hi Eric,
+
+On 5/14/25 14:01, Eric Auger wrote:
+> Move aml_pci_edsm to pcihp since we want to reuse that for
+> ARM and acpi-index support.
 > 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 > ---
->   hw/vfio/iommufd.c | 4 ++++
->   1 file changed, 4 insertions(+)
+>   include/hw/acpi/pcihp.h |  2 ++
+>   hw/acpi/pcihp.c         | 53 +++++++++++++++++++++++++++++++++++++++++
+>   hw/i386/acpi-build.c    | 53 -----------------------------------------
+>   3 files changed, 55 insertions(+), 53 deletions(-)
 > 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index af1c7ab10a..6b2696793f 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -592,6 +592,10 @@ found_container:
->           goto err_listener_register;
->       }
+> diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
+> index 4d820b4baf..bc31dbff39 100644
+> --- a/include/hw/acpi/pcihp.h
+> +++ b/include/hw/acpi/pcihp.h
+> @@ -82,6 +82,8 @@ bool build_append_notification_callback(Aml *parent_scope, const PCIBus *bus);
 >   
+>   void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
+>   
+> +Aml *aml_pci_edsm(void);
+> +
+>   /* Called on reset */
+>   void acpi_pcihp_reset(AcpiPciHpState *s);
+>   
+> diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+> index d800371ddc..57fe8938b1 100644
+> --- a/hw/acpi/pcihp.c
+> +++ b/hw/acpi/pcihp.c
+> @@ -937,6 +937,59 @@ void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
+>       }
+>   }
+>   
+> +Aml *aml_pci_edsm(void)
+> +{
+> +    Aml *method, *ifctx;
+> +    Aml *zero = aml_int(0);
+> +    Aml *func = aml_arg(2);
+> +    Aml *ret = aml_local(0);
+> +    Aml *aidx = aml_local(1);
+> +    Aml *params = aml_arg(4);
+> +
+> +    method = aml_method("EDSM", 5, AML_SERIALIZED);
+> +
+> +    /* get supported functions */
+> +    ifctx = aml_if(aml_equal(func, zero));
+> +    {
+> +        /* 1: have supported functions */
+> +        /* 7: support for function 7 */
+> +        const uint8_t caps = 1 | BIT(7);
+> +        build_append_pci_dsm_func0_common(ifctx, ret);
+> +        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
+> +        aml_append(ifctx, aml_return(ret));
+> +    }
+> +    aml_append(method, ifctx);
+> +
+> +    /* handle specific functions requests */
 > +    /*
-> +     * Do not move this code before attachment! The nested IOMMU support
-> +     * needs device and hwpt id which are generated only after attachment.
+> +     * PCI Firmware Specification 3.1
+> +     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
+> +     *        Operating Systems
 > +     */
->       if (!vfio_device_hiod_create_and_realize(vbasedev,
->                        TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO, errp)) {
->           goto err_listener_register;
+> +    ifctx = aml_if(aml_equal(func, aml_int(7)));
+> +    {
+> +       Aml *pkg = aml_package(2);
+> +       aml_append(pkg, zero);
+> +       /* optional, if not impl. should return null string */
+> +       aml_append(pkg, aml_string("%s", ""));
+> +       aml_append(ifctx, aml_store(pkg, ret));
+> +
+> +       /*
+> +        * IASL is fine when initializing Package with computational data,
+> +        * however it makes guest unhappy /it fails to process such AML/.
+> +        * So use runtime assignment to set acpi-index after initializer
+> +        * to make OSPM happy.
+> +        */
+> +       aml_append(ifctx,
+> +           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
+> +       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
+> +       aml_append(ifctx, aml_return(ret));
+> +    }
+> +    aml_append(method, ifctx);
+> +
+> +    return method;
+> +}
+> +
+>   const VMStateDescription vmstate_acpi_pcihp_pci_status = {
+>       .name = "acpi_pcihp_pci_status",
+>       .version_id = 1,
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index bcfba2ccb3..385e75d061 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -322,59 +322,6 @@ build_facs(GArray *table_data)
+>       g_array_append_vals(table_data, reserved, 40); /* Reserved */
+>   }
+>   
+> -static Aml *aml_pci_edsm(void)
+> -{
+> -    Aml *method, *ifctx;
+> -    Aml *zero = aml_int(0);
+> -    Aml *func = aml_arg(2);
+> -    Aml *ret = aml_local(0);
+> -    Aml *aidx = aml_local(1);
+> -    Aml *params = aml_arg(4);
+> -
+> -    method = aml_method("EDSM", 5, AML_SERIALIZED);
+> -
+> -    /* get supported functions */
+> -    ifctx = aml_if(aml_equal(func, zero));
+> -    {
+> -        /* 1: have supported functions */
+> -        /* 7: support for function 7 */
+> -        const uint8_t caps = 1 | BIT(7);
+> -        build_append_pci_dsm_func0_common(ifctx, ret);
+> -        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
+> -        aml_append(ifctx, aml_return(ret));
+> -    }
+> -    aml_append(method, ifctx);
+> -
+> -    /* handle specific functions requests */
+> -    /*
+> -     * PCI Firmware Specification 3.1
+> -     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
+> -     *        Operating Systems
+> -     */
+> -    ifctx = aml_if(aml_equal(func, aml_int(7)));
+> -    {
+> -       Aml *pkg = aml_package(2);
+> -       aml_append(pkg, zero);
+> -       /* optional, if not impl. should return null string */
+> -       aml_append(pkg, aml_string("%s", ""));
+> -       aml_append(ifctx, aml_store(pkg, ret));
+> -
+> -       /*
+> -        * IASL is fine when initializing Package with computational data,
+> -        * however it makes guest unhappy /it fails to process such AML/.
+> -        * So use runtime assignment to set acpi-index after initializer
+> -        * to make OSPM happy.
+> -        */
+> -       aml_append(ifctx,
+> -           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
+> -       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
+> -       aml_append(ifctx, aml_return(ret));
+> -    }
+> -    aml_append(method, ifctx);
+> -
+> -    return method;
+> -}
+> -
+>   /*
+>    * build_prt - Define interrupt routing rules
+>    *
+
+EDSM is not called from anywhere. _DSM method actually calls the PDSM, already defined
+in pcihp.c and generated by aml_pci_pdsm(). build_acpi_pci_hotplug(), which calls
+aml_pci_pdsm(), properly creates the PDSM method. Then in build_append_pcihp_slots()
+the a _DSM is defined per slot and inside it there is a call to PDSM, so I understand
+we should actually stick to the PDSM in pcihp.c instead of EDSM.
+
+EDSM, being used in i386 code, feels a outdated PDSM, so maybe PDSM should be used there,
+although a different story or a clean up for later. I'm not sure what "static endpoint"
+means in the context of EDSM.
+
+Hence this patch can be dropped in my understanding and:
+
+aml_append(pci0_scope, aml_pci_edsm()) in 15/22 too, without any prejudice to the
+hotplugging and unplugging in this series.
 
 
-Applied to vfio-next.
-
-Thanks,
-
-C.
-
-
+Cheers,
+Gustavo
 
