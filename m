@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30010C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:46:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1023AC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHmXE-0000Z5-Bj; Wed, 21 May 2025 12:43:16 -0400
+	id 1uHmey-0004dI-Ed; Wed, 21 May 2025 12:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmX8-0000Vj-IC
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:11 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1uHmev-0004d5-IJ
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:51:14 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmX0-0006Ad-MY
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:10 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-601ed5e97e9so6523314a12.2
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:43:01 -0700 (PDT)
+ id 1uHmet-0007KO-K9
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:51:13 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-ad1b94382b8so1262470966b.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:51:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747845780; x=1748450580; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747846269; x=1748451069; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Bk8FpSTvxiM/NAT/RHs0cdgY5o8m/myin/sCjff0MlQ=;
- b=ai4Z0MBNkOIQqVT6FHvgQGC2NVvmlBMDuQsfUe4PWehb6CUWBnRIbZ6S+YUC8aV9Jj
- h2Q0Pez48xv4fFZypspXmSNvZQK7izoBHNMMiOj+l2kNHa3e9VHT8D6/WtLBwecaQ+iw
- iniedxKYXO/1bWVj1t9G9pIBnSS4VAXro10uhX0BssNpkvU7nMg3+uwYfPOULnz23vUY
- t5X7M0c6i1L/PWOrXIGQmvhQq0DBWi0s1y18KvGapsNwV6/jr6bRgUr9n6HHQJ+QwxdR
- wziMHjXrqNZ///C2V+Y/ezVEultboy2+W/FoC4PPq6s/hnuu/21RT6TNAzMXH7VneBPQ
- BVyQ==
+ bh=sGcCBogciGYCcQtD2ipd63qJym+pfIRLPkHANZ4+71E=;
+ b=vZcp78R77W8Vb9qYq1z0EOZyQXpiez9qvAPTNZe9u3I7+a4pUEHyZdNklqKyHCArf9
+ fWMunRIqvhpsz4K9SDTFan6QHaLWQIck/hnsQz5A3Y2J3r1CZAoIP48rG8SXToa2jzsd
+ E/KAIrERkBgdnqPBrWAthDljQEUoeAiiRk3rrwyJKXo4gzCWHMkIPGQzrQI+8+TXMjSG
+ OkF5TNg88ODA2RJknYWO7zQdLRrtoE0kDMxCpp9A58Z1EYivfsQ7si+fXf9VZ+nSlVpA
+ SAWUzsOIgmm/2gacORx8M4PzusDWQOGPyan12xxN38s26NOAp2aJKqEAt5LgMQBDN2ix
+ eI3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747845780; x=1748450580;
+ d=1e100.net; s=20230601; t=1747846269; x=1748451069;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Bk8FpSTvxiM/NAT/RHs0cdgY5o8m/myin/sCjff0MlQ=;
- b=jX6GpA71VcmyddYOUk4gQvLq9cuegbYnuV8tAHZl8CkJ9xmNyZ3nxSKeCztIEM1Eag
- OP8q0jfMSAllAmxLy2YUGU97VLkG/038v2RdG3bzdwf16PyiLly1S3UR8lhcRrDs3eA9
- G6K6K5sJIHST1ALbTIy1vbYod4UzgkeZlzT8XCldP1g3X1gRFNknrMVC4nwcga4rF1kd
- JSxQ3ItTGMp2FOa/iyj52bjFpn0Qwc0w7bvoolpiexDcwS6lk2kQFwk8/2TAxm//4W7z
- BOycB3jnd9BcS4npMiBYk86vI9mM0mGedoyhIdKigPwUT5ejv5GxjjiW7BmiYxh0SwWt
- Zlag==
-X-Gm-Message-State: AOJu0YwR2Qu5ucwk/kmfhSedQdoe7XT2us4TErDmfCZDFq1Fv8oGnpDs
- dcVjMRyLG3WKmV3FKTVqSQfQ/k2ssHkY1Qh1VGcmgQJcFSVHFRmNpuwDCDyiYYVUPXk=
-X-Gm-Gg: ASbGncvaA0vRB+A1QDeBiFs++ge/2GgEqDjjeEYkonBLsiyPLHKVLRyL2sKEi1BTb5M
- VEzoYnoAvS6YAquKs3eYJvYYXYjEWB0NdWBRsFqSCDnYZ4LibTN9yR09F0dbwc8qoEM2PgnLEZT
- ijSatisGUBdWPc5Nk5104D9+ceJlgByD1Bg+9LqIiNiEENjHTDjCHHhccbIPAcGRm+Iza4pxzkX
- +NElp79cvx09oDvybsqcXbQv/6T3t6kWcU2g+wylvehWdAzLO+z5VEz4d/YacyLT+IpsSmh5/VM
- TX69MLdMC8hHggzSQ6Y9LcgHIRycptsE9fRQ0KIhaS8lpL7E83lT
-X-Google-Smtp-Source: AGHT+IH9NN0WLJSVJmueJBQ2QgSM0o2wAFE4QqB5up/xqwzVXs6hiazGIO04dYNoK2VuFDqnMkyNmw==
-X-Received: by 2002:a17:907:2d1f:b0:ad2:23b6:149c with SMTP id
- a640c23a62f3a-ad536dcd710mr1664944866b.43.1747845779769; 
- Wed, 21 May 2025 09:42:59 -0700 (PDT)
+ bh=sGcCBogciGYCcQtD2ipd63qJym+pfIRLPkHANZ4+71E=;
+ b=Ox0PvBVWTGnfkv5CyJSWiaYJGz9Ii83F1J90R7IVezAQTQQsmXKus9rfW0HPivzeS3
+ y5pSo8p+Fz8tIS4PgxKaH41ZA4gmWqY/tjlf0FHoFfZUuqcp8NjVP/LTpExKWdHuzjJM
+ t3/CZEhtu0BSNeqf0v3Hgjx5BYreT+FEuOlGFJezXmWxMl/XI5sfJnDrsbMGkWQIENrY
+ g2Yjja53l3Wdl3cv7BYATY4kbVVenwCyJQ5nYC1aL8cMzAUDU8WICYh2kl9CvsAcUvHe
+ tiMcAWAsjt1qh6VRuoVv8A9QZfA20PMaNQsARnix9CzrLt9yZwPdleXp2PQj2q3E9inz
+ RMQw==
+X-Gm-Message-State: AOJu0YzNTKJ1dGyPso6nJUjTAMHBbCrwHR+xchofSwOcfZF+G+zvJkrM
+ qU3+SHHZPkMmNJLarHdeozjKdCqEXxEwQQuQRQ5miMZRpyPmCB22i+DLaGTd7xkuS7I=
+X-Gm-Gg: ASbGncslvqwvGvjSaTct6br6usR7/LpFxEt+OqXQJSAvCQMoodmHLBRLQYQlbN4RbJ+
+ eJ+x7LaaUtws9OybwpJLTnyfh+j4tDq+GsSWjHWiGshWwHFx0FG9pC0972+1sikTgBVYeipPv6z
+ n+RSVjqakZYPGY1dI9xAkZBP1pIBCyfxFKVv77MI7BlyVHeaUvdlZGOyzzQdKiGlL7KBAaidWrb
+ eU8tCBSB4Hki8FRNibuGUEVh3QI63USmgWghPUCGE+cr6qd1FmqEwPzHDtnl/tB126xF7OleLue
+ foBA7XSl2daIWcn7S2ZxiB0zcN9jArAvkPNHOyMq2onqCyI7lwA0
+X-Google-Smtp-Source: AGHT+IEETB0uQSx+vt2nQE05eghxn786gNgAonj45SZnNQqgb3soKKQpuLEkR2f2Qk6JFeEqJWJZnw==
+X-Received: by 2002:a17:906:730a:b0:ad5:112:48e4 with SMTP id
+ a640c23a62f3a-ad52d49e918mr2028702666b.18.1747846268911; 
+ Wed, 21 May 2025 09:51:08 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d490910sm929266466b.135.2025.05.21.09.42.52
+ a640c23a62f3a-ad52d4382e2sm932518866b.107.2025.05.21.09.51.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 09:42:55 -0700 (PDT)
+ Wed, 21 May 2025 09:51:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BB1FA5F9FA;
- Wed, 21 May 2025 17:42:50 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 951A25FAFC;
+ Wed, 21 May 2025 17:42:51 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -83,17 +83,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Gustavo Romero <gustavo.romero@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v3 07/20] contrib/plugins: add a scaling factor to the ips arg
-Date: Wed, 21 May 2025 17:42:37 +0100
-Message-Id: <20250521164250.135776-8-alex.bennee@linaro.org>
+Subject: [PATCH v3 18/20] gdbstub: assert earlier in handle_read_all_regs
+Date: Wed, 21 May 2025 17:42:48 +0100
+Message-Id: <20250521164250.135776-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250521164250.135776-1-alex.bennee@linaro.org>
 References: <20250521164250.135776-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -116,80 +116,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's easy to get lost in zeros while setting the numbers of
-instructions per second. Add a scaling suffix to make things simpler.
+When things go wrong we want to assert on the register that failed to
+be able to figure out what went wrong.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
 ---
-v2
-  - normalise the suffix before a full strcmp0
-  - check endptr actually set
-  - fix checkpatch
-  - scale_entry -> ScaleEntry
-  - drop hz from suffix
----
- contrib/plugins/ips.c | 34 +++++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ gdbstub/gdbstub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
-index e5297dbb01..eb4418c25b 100644
---- a/contrib/plugins/ips.c
-+++ b/contrib/plugins/ips.c
-@@ -129,6 +129,18 @@ static void plugin_exit(qemu_plugin_id_t id, void *udata)
-     qemu_plugin_scoreboard_free(vcpus);
- }
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 565f6b33a9..6023c80d25 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1343,8 +1343,8 @@ static void handle_read_all_regs(GArray *params, void *user_ctx)
+         len += gdb_read_register(gdbserver_state.g_cpu,
+                                  gdbserver_state.mem_buf,
+                                  reg_id);
++        g_assert(len == gdbserver_state.mem_buf->len);
+     }
+-    g_assert(len == gdbserver_state.mem_buf->len);
  
-+typedef struct {
-+    const char *suffix;
-+    unsigned long multipler;
-+} ScaleEntry;
-+
-+/* a bit like units.h but not binary */
-+static ScaleEntry scales[] = {
-+    { "k", 1000 },
-+    { "m", 1000 * 1000 },
-+    { "g", 1000 * 1000 * 1000 },
-+};
-+
- QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info, int argc,
-                                            char **argv)
-@@ -137,12 +149,32 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-         char *opt = argv[i];
-         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-         if (g_strcmp0(tokens[0], "ips") == 0) {
--            max_insn_per_second = g_ascii_strtoull(tokens[1], NULL, 10);
-+            char *endptr = NULL;
-+            max_insn_per_second = g_ascii_strtoull(tokens[1], &endptr, 10);
-             if (!max_insn_per_second && errno) {
-                 fprintf(stderr, "%s: couldn't parse %s (%s)\n",
-                         __func__, tokens[1], g_strerror(errno));
-                 return -1;
-             }
-+
-+            if (endptr && *endptr != 0) {
-+                g_autofree gchar *lower = g_utf8_strdown(endptr, -1);
-+                unsigned long scale = 0;
-+
-+                for (int j = 0; j < G_N_ELEMENTS(scales); j++) {
-+                    if (g_strcmp0(lower, scales[j].suffix) == 0) {
-+                        scale = scales[j].multipler;
-+                        break;
-+                    }
-+                }
-+
-+                if (scale) {
-+                    max_insn_per_second *= scale;
-+                } else {
-+                    fprintf(stderr, "bad suffix: %s\n", endptr);
-+                    return -1;
-+                }
-+            }
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
+     gdb_memtohex(gdbserver_state.str_buf, gdbserver_state.mem_buf->data, len);
+     gdb_put_strbuf();
 -- 
 2.39.5
 
