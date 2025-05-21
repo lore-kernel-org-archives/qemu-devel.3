@@ -4,198 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6F0C54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DA5FC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHepp-0005K0-5F; Wed, 21 May 2025 04:29:57 -0400
+	id 1uHepM-0005AT-HF; Wed, 21 May 2025 04:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uHepl-0005I8-Qa
- for qemu-devel@nongnu.org; Wed, 21 May 2025 04:29:54 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uHepg-0001e4-7s
- for qemu-devel@nongnu.org; Wed, 21 May 2025 04:29:53 -0400
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L57Iak015403;
- Wed, 21 May 2025 01:29:45 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=kciHwmRQnsr9aCwhz3wx5He9zFmn8FO1d47l3FvF1
- 7U=; b=mDxZ8fmJChIcvM8n7tR8WKlzOBXo8lVUaWy6Ecwa1yp57W9t4kLnZ8wwj
- dSy0q91spl12E/kFEetUKJ+okyre5W/JswZXdmbZGgFBN8T2sujpGJ12zX1VbUDV
- VlNiY899vwSXj5cMFwsEu9v+49v9xUXasVX95uG4zl3LFMLeoiPfm2GkJCDWvwHd
- VsifCjEJOVG0kA9EJs1Mc68ORUiQjsiS4f9odkWq0NXIUNZGWFJPQKNKgkCTe1AM
- IJA7aS4yn5DuNsTG2jbySsODM7fy7KewwS+yir53EF32NlmlDKKLksNJQ5X+dyzt
- Zqf+TwWhrjBId8Mn3cHhyaQBDXYwg==
-Received: from byapr05cu005.outbound.protection.outlook.com
- (mail-westusazlp17010002.outbound.protection.outlook.com [40.93.1.2])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 46rwgrhwsh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 May 2025 01:29:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Y5pV2X0gO3hRZ3452I5eAWUAW+CIJfQGUSzkVjxA8OOHq4j+uxCD+o+yfyNBuPYUu7P645j7hAtd/GDKywQMN7DMDXePDT14smgNzCs6/rvgAjCp480zdL0PBL442XwMk4e4biyRTxWWpxGwCByRYmLuupcLPe1w1StjHcbnT9xUHPCvDFqvGJsBycFqhw3Wdq09yhonnaL8Ao7Il95Oc6xiDqOndbpHs+CKoTpIMzfZ7slHJx99Gq7IR+5+bimhDaH+nF6vOYGlyHFiHYtMxTs1EEYGdX6aDc5dFBA8EptkexYjwZiJRVZ4zQGvsGpfnFyuYQGRHoF9zISDTp5OAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5WvEjllUSLgYQAYmm+C9cs5dAW1gmM2yDvkUH2N/aLk=;
- b=Tle9Tno9rGXzPC2VyIBnuKrcyQnE2saAcuyTHcnMojf9F6W9yoiPBBot3zrGyHxmJTUDs/+qLSyphOCd2yiI0h5amiJqC9IunNAQnlw3r+2MttJ5a3eYbtEFEuI3ptE4kvLWZL6AOBMFPBPBJyKG01mmyyl3sw0NapFWSzcA4u4JXQWnxf6ja6JyCQmaTZpN7ROAjN1oNBfh3CL8RX2JEMYE5jzwN8hc/vS2Ijj8CJSjqGXHxb4q9M6wjnvOvRNDRE8QxlXiccpvJnYCyFEjVKzq7fyHcTj2fDseUnokc19F+RjnVNkMprHKK942rTQQa+u5xBniE4E//kGE1E+xAw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5WvEjllUSLgYQAYmm+C9cs5dAW1gmM2yDvkUH2N/aLk=;
- b=WNQYlaBrPxPHBtdSFB6iX7nJ1AYkq642rHxqaHR4i9azRhlu4zbDcZvV1j4Tdti+wd2bGckEVMJ/66ynM+4AG30zhlcGGVC9iSjyYTNsI3/YTJWilSOEsEqwwXkJtlJjaYCgnXg8AkvGBew7LTdqxhiaAANWcz1B3VvGRoSiHkQDtNCLtGYldS5fBmf6Nq4gPo/wVUAGiQhZRg4VjghovAaVl/LoYcp96lJ3Z8KMAkBaLWMV19iMFoVifG8bC5CgKkUNQJjFPT8rS7sFUNUY1DeoVihbf0WOEmvrbSFkZtiAqJ6jVU5LAJLI5OZEDbHoJnU/F52/7+A94R+bC6H4nA==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by DM4PR02MB9053.namprd02.prod.outlook.com (2603:10b6:8:bc::5) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8769.18; Wed, 21 May 2025 08:29:42 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8769.016; Wed, 21 May 2025
- 08:29:42 +0000
-Date: Wed, 21 May 2025 09:29:37 +0100
-From: John Levon <john.levon@nutanix.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- John Johnson <john.g.johnson@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Steven Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH v2 10/29] vfio/container: pass MemoryRegion to DMA
- operations
-Message-ID: <aC2O8eGcRERFj4dL@lent>
-References: <20250520150419.2172078-1-john.levon@nutanix.com>
- <20250520150419.2172078-11-john.levon@nutanix.com>
- <6804143b-8dd4-4dba-84dc-c1ca44d3f4a6@redhat.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6804143b-8dd4-4dba-84dc-c1ca44d3f4a6@redhat.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: AS4P250CA0024.EURP250.PROD.OUTLOOK.COM
- (2603:10a6:20b:5e3::17) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1uHepK-00059i-KA; Wed, 21 May 2025 04:29:26 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1uHepG-0001bf-95; Wed, 21 May 2025 04:29:26 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b26f67f10ddso3624977a12.3; 
+ Wed, 21 May 2025 01:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747816157; x=1748420957; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9Yq/HLt0u14BIYiMVeYiqtquSRLg0l668z+sdOxNc1o=;
+ b=fo1SBL2RN5PWyL57nKAzy6mrlXOsXnx7LyzkPHwKoBT36wlDaHnw3K90mFiXyAElbH
+ o12DaqaIuIrvgXg6ntFWeCIqh7oQ0gRP1CRtc/+aowFdUnAFnD9M5ldAr13doyaQPQ6P
+ r17MM2dYzcV385QFgyyIFobpV2IMMDL6vrceh1ylTC1gLRnJPpPcVJGwMzab2DSFnBNK
+ 3dwOT3EXAVED4PuK9AmVtjyffk66bvheA3v8jHtkwTdJGe9zKxCYzArcxn/kuinTbXb6
+ AwRS1Fkfwx2P60uta4/YvzhoINFf8FJlgsIbJnUnXu4LcnkAiT3dLL+wU+osYmOEPCXy
+ pqZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747816157; x=1748420957;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9Yq/HLt0u14BIYiMVeYiqtquSRLg0l668z+sdOxNc1o=;
+ b=G0vkKJbd/mEiIf2AuGOsYcpqGoZRNyZ08q9S2Dhn1n8dyv4L/hUmru1Lyp/cT0/d0P
+ CoMQ0IyHwGIP3dB4PKq0CmYD7PYYEDx1gv8p9hfDWMc/D03K+/Rfl65p9GxI7SG08WNx
+ q7x7BVcBPv8vxfWtt/UgD/gqQE6xR95Pt2qkOrpvVia5g1Lh8LNbrJ5Y4z+HYDfqefZU
+ yl0OQILF9pX+3hGuQZvbOEdFMFjXgaTUVjARPnWszQjHSF5Y6s3cU0XqcvrN9dcQQq7O
+ 4m47n8sc4LJmIR0qpqSpFrRV/GrS3CawZmP0Tk8rSSV4HU62ZtC1aAECesV5lPSVFoST
+ /DGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU4QhMLCNuBUpQqsV9DuyysQNXnenKLEyyu7QOFjR6P+nIzfMeKNkRf9UoNwxSkY2bsEgmZ2jZmsKHaEA==@nongnu.org,
+ AJvYcCVrqMXH4oPOr5T0xLqOFt/eKoD0ZcvnzF9IXvai8JGaeAiT8p9FS4+o+jFdyBYiWXAQWYZIG4wRZJRINg==@nongnu.org,
+ AJvYcCWmFqM5rV9gJWza6omCjzoMjCd/QXO4ZgTb0XAojyik8bw3GjHOx3R+/GzEM728H0tB44w+zUz3zg==@nongnu.org
+X-Gm-Message-State: AOJu0YzNOXa/SDkiLZjgcRXJN+IA17nYYQbYAjz+f+ih5gVTD3DoLBPR
+ igThEQKlD9t/j6R1GmgGJ/jlcfNxgpAkmZOJowWnY8sOTLSIzIJRYzCOrgKPEvWClq1zPhES31l
+ 52nN6rU/Rf6uuPCnb9K2WO/7I07Dap4Q=
+X-Gm-Gg: ASbGncvGBrROa/o7NloJbXpbDdl1MHI9qoivzi7uKkPPCYpe6sr2p5DgWvTFuCQpKbT
+ wGf3X3raEQrgHDHTwanhuS7BNbbbKtI2S680+4iSOVdxy/jilei/s2pB9NiOOabjvbTWVbBCDQC
+ PvVrbwEFhmPDvXVUpEmAPIjeRSJb3w4dnjFP4euOIHW2trkNku+uHkK4Yy0JBdwS0=
+X-Google-Smtp-Source: AGHT+IEUh3uoaveZbpcJPUlHTxMxs7OkktAMIfznj5fp70O+RYxcRAtZuaoB5EIpvZT5hUNQ7guv3tzIEtG1/4ORiHc=
+X-Received: by 2002:a17:903:2284:b0:22f:b25b:8e93 with SMTP id
+ d9443c01a7336-231de3b9f2cmr296656725ad.48.1747816157263; Wed, 21 May 2025
+ 01:29:17 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|DM4PR02MB9053:EE_
-X-MS-Office365-Filtering-Correlation-Id: 99be2d76-fff7-421d-5c63-08dd9841a25a
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?ujOCvULRJVPSx8qyDqv7ooRncNezO191SPmrKcTePlCbJf1Izdm4l33cKU?=
- =?iso-8859-1?Q?tEW3pUw+nV17u7CZjqEMXpkFvl8ziODL/Y+R6KnB7pJQsqp6GOLIp5iALA?=
- =?iso-8859-1?Q?+BvOZJg5iG3k5zphA7RrMEBC/1RCXAHTyoaryCfzlXd7/JMN2EbYo1AggC?=
- =?iso-8859-1?Q?6KMm+R2RAqdMLJjNAmikg1zzkrcSandzq9sHsKKXXRdUOzNAaevxtV70Xm?=
- =?iso-8859-1?Q?4V2VHx1kKVnp1f5j0TqIpgTUPPWqeh5570NQGHX6TTlctZ/T86vKRaLx45?=
- =?iso-8859-1?Q?RGIna0OXQfYUww74ScVN7FZGEkQY/gndkvZKSlGCkdIAwO4sb/Gl0WPq5o?=
- =?iso-8859-1?Q?B4JY8XVYnpj1rT0dJeUUSM2lnQF/SeJ66JxdwUg0kEYW4L2aXtc27dVb9l?=
- =?iso-8859-1?Q?Zqu/v78liE9lZx2ryjqA+hqVEqBj8yw9QiGeEmdsfLsJbMpTkdpCnkLeUJ?=
- =?iso-8859-1?Q?/U4BXxbm5rgaPVY93fplTCa233f6nc+r1Fiii74GXSDcRhr2BcSFYh3yFk?=
- =?iso-8859-1?Q?tJaOMiiKDwsg571KLaMSPtHau0e2ofz/FO+qUF0NPgC16EalCQDjdZPm1w?=
- =?iso-8859-1?Q?75lK5Ay95im/EoByxrxn4EYHQvgj7GKD3jQlPbRL15hTNctGrD75oB0/j4?=
- =?iso-8859-1?Q?gjgYKypVraGU3MJ99M5KMklLIzEktAObO/uf4RPEGEZKahY5ySeYz+q/8e?=
- =?iso-8859-1?Q?OlNHkevqheaNEnQk/rHwqp94/YyvfwJacwP+AxcMQCEcOPx39F8jAXIDb4?=
- =?iso-8859-1?Q?+KJ6T11ABfg4hgbg1uzjdJ8d3nSLAfC4Aurxbg6eLTgIa+q2IYYClOzDM8?=
- =?iso-8859-1?Q?J9A+w8klzStK3LLIAGU308F39ZvrPoSbVydFSJDpicHecp911pAtfS3sTD?=
- =?iso-8859-1?Q?50tqnGgrqjy1Eu0kwTq49yqMiwtd1zPhkaWrVHoDc9BxUQKjBiBncVJ0I5?=
- =?iso-8859-1?Q?RM7mexE2ZpU7rDLou+tEPG90Ra8Vb27W7DbNkW24DsGfJqTb62Oi/wmAWZ?=
- =?iso-8859-1?Q?PIuFPlqVxfk+xvfAvzz9M5xA/l5aKS0NkasawoQhAhccoHP9N7I50BUy6f?=
- =?iso-8859-1?Q?TqxeOXvlAvQKynY0KGhf3BV1iw23nyA5JWYJSRPWAVIAqMdI+PUKANOF9r?=
- =?iso-8859-1?Q?Ko/6IvSQjP5nN3m+Wy8AE8a3Hw5pv01C3s8bBgLMRcuvjAHTB4rt/ZinBy?=
- =?iso-8859-1?Q?CoVi2Pfl0NzzSz2aOwgH6hOidp0qczxqdu8gBjXl5rHXiOe8oTHFMmJPqL?=
- =?iso-8859-1?Q?qD9jhWZJB8i9UHN2+1g7sAUhGxr0dUdzxM/p+lRPLBzdNkD53uvi8RtBC9?=
- =?iso-8859-1?Q?pZWgg74Xv6YI0129PPGOPeQDPkGag0h6iiadBt4z22vdEs56RIY9D+fU74?=
- =?iso-8859-1?Q?I6nRBN/JIn6nX9kilW39VHmdHu73hqM3dsgE/f0lnJA1x3zGak5hzeOLyS?=
- =?iso-8859-1?Q?INjT5F9wOTRzc02xxcvvfMbEbqqctTTI3AqSn4+lJZ7rseIG1oNhxiJrjb?=
- =?iso-8859-1?Q?Q=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?1ORIYAyimjabxB3O6JzMBjmJRNbRJHQX9eZKXkdONQGrBBHp8njIjuHWh4?=
- =?iso-8859-1?Q?3ZTz9EJgR8pkYYbPD7PgPcdWknpyqklKJ3Y1fny9hNDqf+Qg/aLVll2cFy?=
- =?iso-8859-1?Q?GZ63mGgCc7HWAP5FITdVbCx8BbIDdgK/i/nLVodVu2g0c1W1Gc5MaaLfCb?=
- =?iso-8859-1?Q?1uquMHTAbYequZ06kXExMrUfHT3YdpFnY9WwVs2HcHOGjRVGxqbzBp94uC?=
- =?iso-8859-1?Q?FZ5CeKJTu1Ut0y0as/gVIMV/2nt3GlJF0ADQKvjWKdn/QQyANI0bBqajyP?=
- =?iso-8859-1?Q?4rPk39vOodvKHBL5x2PWrXtCwVmzvAuvtHjTG7RzaE67Vm5XwVmIG/rE6e?=
- =?iso-8859-1?Q?89PV6wJL4z0sA35Pn53Bkfnt1bqJbyZx8mPTaQPFJzNz3/7n4u3sXa32Sh?=
- =?iso-8859-1?Q?cuT9iRj7T4zMiiLfaT25r/rzBXRyNnpeqi4gu48I/C+UA59KAgg3mdUVC7?=
- =?iso-8859-1?Q?fGWyqQA5bwDU9fcHBAqkoRgV25FU1DYsW0ppRoET5uEk9mNnRfurl5z6mL?=
- =?iso-8859-1?Q?rkwUbMsmDsasKMR42cYYwn3rhaO4IA/9M1VrhzKdwFekcwH5wOLt9r8rOO?=
- =?iso-8859-1?Q?a9ZpKyyOs92NniPVMTMaD73V2+3BZ4GvhfjLSz+m1mEcN8zM0qQkFuNRf+?=
- =?iso-8859-1?Q?dnP7NL5exX5ovrfkWX+8u/HlNFRjkfsffufW0OKERo4SmBLvdNPQV0LoQa?=
- =?iso-8859-1?Q?hu3nKgjZaxaAdOH+UaJSSmrDgwt6hYCbLLtLAr0dLHGFbCUfw0X8gmhM6W?=
- =?iso-8859-1?Q?RvAv/b7o+sr99A4FUnvAVcIsxgaocVFBXYs5OSYQ/htjL2X3doSjDzaz5e?=
- =?iso-8859-1?Q?Ly8bPmJLgjB4FghimQUnj6Yqo8dirmwFA2dUMyntN5PvKpevNFmIxwBJ+8?=
- =?iso-8859-1?Q?SWm9NHoxv9ckv5C8PUmC/tCaIH1lHyA1uAcoB8bS3+kc3h4kT00UQ3EjtS?=
- =?iso-8859-1?Q?5eEOJkPVpA/z8H7Oujo18uy9KhB986J9TnFTCvVvr78zqnVV5Cgh082xBT?=
- =?iso-8859-1?Q?H0ehSL2JklTRwwNnhCUKOpwDX8ex3MhYB9KCDClY99fNYdzH2ZZ2q3SXq9?=
- =?iso-8859-1?Q?ek+ACcbiiowUz7ZTi1d4MflbXVd0lMU5L0KJel1SI2yrEb+PARMfW/mxvD?=
- =?iso-8859-1?Q?2E69sxRzYPynRUwSppCkbbwLrGcgQ+iaKrj8F1xHO/zSbKs5mF0/dNBkzU?=
- =?iso-8859-1?Q?0FwSiCKmgDNfvhkK5K8bs26pNgR3oRcw8c9ZY7GWmX2qh3T5Kn4krp1BAH?=
- =?iso-8859-1?Q?l7F09S18G4ZhpdwCpMvwIPMPlM2rHdwsxmgiBcHPt26JRItu9QpKHR4W9+?=
- =?iso-8859-1?Q?aFaGZnFiKC9yq2Ww6LAKkE+8Yel2pnHBZuXPeNE+DW92uPfuNnC1ZUNEOs?=
- =?iso-8859-1?Q?Gk90KBE6IJNkD+eugKon9f/hFy8Mg/2rLw23XDsBrRVWJsbaNpmKr3nS4Z?=
- =?iso-8859-1?Q?7BqatjDuKzdUZla04S1GpVrwwnR1hEgEG4FFJ7mF9jaVQXA8EqKbRDwQSP?=
- =?iso-8859-1?Q?qxrvvpLFd2Rv3RzjPFtc1QWWCM86tGDrmzH76iZ3uSQuBvLMdaI3fqdiBU?=
- =?iso-8859-1?Q?kVw6nJo1HPgLBnvd2watCxWHPhLbjOKpTvRZO7PkYJ5SAGs/VAUHBZW9kt?=
- =?iso-8859-1?Q?RgL0KzxLBxYV34ekM3vO+hyyLMtoFR3BXl?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 99be2d76-fff7-421d-5c63-08dd9841a25a
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2025 08:29:42.2002 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P6omBisimYgYpg4b8LAyV8WSg4go0zKufn8mIzY34x4G0qX6RNUXJtcp2TnsgBxhUqP8e/N51q5WkB8jVB0KFg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR02MB9053
-X-Authority-Analysis: v=2.4 cv=C5/pyRP+ c=1 sm=1 tr=0 ts=682d8ef9 cx=c_pps
- a=Ku5Q1SXtyGRHaGBacwLxwg==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=dt9VzEwgFbYA:10 a=0kUYKlekyDsA:10 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8
- a=64Cc0HZtAAAA:8 a=zdPkfvw6A7Tea-IaKAwA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDA4MiBTYWx0ZWRfX1xIrNApyVTWD
- eLE3JGBGbmK6kRWuVxnS8dj3nf3YNIZdhohXOhOKvxeTkwJkQhFeZB+/VdopJBUbz7ZYhGDgMd3
- gCeUXuGfqEn+zefuiSEUkFNAQV9aLN+030Hmh/yNl/HCuEswD9HspZlNovan8KPOgYB8wV3fvXk
- eFnd5Vjr9sXHM9JhGxv+urxih7NcaywwWvEXuHcTm1KOnK9FyG2vY2gcetHX7oIw93D3Ll9C1Js
- czl7vUH5n9uK8O8/7Qiw8FxCv7ehwzRyZ28DVOpQ/FulYY0Oj+biiPSXDM8AcdmnWjgj8PZykN/
- wg6jjS/n23TKuiU1fMwpoHSL5LI8Y69jFlHZ2KMSKEbA38kxgUfNOwYVWz/yeKStlaJq1RLKHoO
- msun6YDpFjIvDZN/5HrLj5lXlho3GleCE/CemYoavJ62Nac4PtOThegVaT5HQJ1rudZqV29Q
-X-Proofpoint-GUID: B9tfAy5Pwboy9aZrfpjEkL2j7UdwSFzd
-X-Proofpoint-ORIG-GUID: B9tfAy5Pwboy9aZrfpjEkL2j7UdwSFzd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-21_02,2025-05-20_03,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <cover.1747744132.git.ktokunaga.mail@gmail.com>
+ <d3e7e584cf61c76952f4c9d913ba80d905c80e76.1747744132.git.ktokunaga.mail@gmail.com>
+ <5d54270a-51be-4462-a02d-a12432e42be4@redhat.com>
+In-Reply-To: <5d54270a-51be-4462-a02d-a12432e42be4@redhat.com>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Wed, 21 May 2025 17:29:05 +0900
+X-Gm-Features: AX0GCFtHiLrQRJyVIZfjX9qmk5k560ZlxcMBQ7lCVV5Zt-BYXWrNvzA8wIBXYI0
+Message-ID: <CAEDrbUYGOfY5EPB2g-+VxFYhwrNUFKsGR8Lm4dxML0HwsAD_3A@mail.gmail.com>
+Subject: Re: [PATCH 23/33] include/exec: Allow using 64bit guest addresses on
+ emscripten
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org, 
+ qemu-riscv@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000002fbbd40635a1292d"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -211,53 +108,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 21, 2025 at 09:43:11AM +0200, Cédric Le Goater wrote:
+--0000000000002fbbd40635a1292d
+Content-Type: text/plain; charset="UTF-8"
 
-> !-------------------------------------------------------------------|
->  CAUTION: External Email
-> 
-> |-------------------------------------------------------------------!
-> 
-> +Steven,
-> 
-> On 5/20/25 17:03, John Levon wrote:
-> > Pass through the MemoryRegion to DMA operation handlers of vfio
-> > containers. The vfio-user container will need this later, to translate
-> > the vaddr into an offset for the dma map vfio-user message.
-> > 
-> > Originally-by: John Johnson <john.g.johnson@oracle.com>
-> > Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
-> > Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-> > Signed-off-by: John Levon <john.levon@nutanix.com>
-> 
-> 
-> This change conflicts with :
-> 
->   https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_qemu-2Ddevel_1747063973-2D124548-2D28-2Dgit-2Dsend-2Demail-2Dsteven.sistare-40oracle.com&d=DwICaQ&c=s883GpUCOChKOHiocYtGcg&r=v7SNLJqx7b9Vfc7ZO82Wg4nnZ8O5XkACFQ30bVKxotI&m=ZGgaPL84zJdxC-NJiZdGWRzh1WIXiIKzDUt8YcytF-NfxOT9I_gSOxNCph5DfyVM&s=V-_fptKbd0WpQ_JDJWze9TxsbOrvVfEm2EIPPH6HJ2k&e=
-> 
-> Steven,
-> 
-> Could we use this version instead for the "live update" series ?
+Hi Paolo,
 
-I could use the ram block for the offset but the mrp is also used here:
+> On 5/20/25 14:51, Kohei Tokunaga wrote:
+> >     target_kconfig = []
+> >     foreach sym: accelerators
+> > -    # Disallow 64-bit on 32-bit emulation and virtualization
+> > -    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
+> > -      continue
+> > +    if host_arch != 'wasm32'
+> > +      # Disallow 64-bit on 32-bit emulation and virtualization
+> > +      if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
+> > +        continue
+> > +      endif
+> >       endif
+> >       if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym,
+[])
+> >         config_target += { sym: 'y' }
+>
+> I'd prefer something like
+>
+> # Detect host pointer size for the target configuration loop.
+> host_long_bits = cc.sizeof('void *') * 8
+> tcg_vaddr_bits = host_arch == 'wasm32' ? 64 : host_long_bits
+> ...
+> config_host_data.set('TCG_VADDR_BITS', tcg_vaddr_bits)
+>
+> Then in the target configuration loop
+>
+> -    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
+> +    if tcg_vaddr_bits < config_target['TARGET_LONG_BITS'].to_int()
+>
+> and throughout the code you can have
+>
+> #ifdef TCG_VADDR_BITS == 32
+> ...
+> #else
+> ...
+> #endif
+>
+> instead of
+>
+> #ifdef EMSCRIPTEN
+> ...
+> #else
+> ...
+> #endif
+>
+> In fact, I think this patch would be acceptable as a separate
+> submission, because it could be tested using TCI already.
 
-  86     int fd = memory_region_get_fd(mrp);
+Thank you for the feedback. I'll work on implementing this using
+TCG_VADDR_BITS and submit it as a separated series.
 
-which is
+--0000000000002fbbd40635a1292d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-  2406 int memory_region_get_fd(MemoryRegion *mr)
-  2407 {
-  2408     RCU_READ_LOCK_GUARD();
-  2409     while (mr->alias) {
-  2410         mr = mr->alias;
-  2411     }
-  2412     return mr->ram_block->fd;
-  2413 }
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Paolo,<br><br>&gt; On 5/20/25 14:51, K=
+ohei Tokunaga wrote:<br>&gt; &gt; =C2=A0 =C2=A0 target_kconfig =3D []<br>&g=
+t; &gt; =C2=A0 =C2=A0 foreach sym: accelerators<br>&gt; &gt; - =C2=A0 =C2=
+=A0# Disallow 64-bit on 32-bit emulation and virtualization<br>&gt; &gt; - =
+=C2=A0 =C2=A0if host_long_bits &lt; config_target[&#39;TARGET_LONG_BITS&#39=
+;].to_int()<br>&gt; &gt; - =C2=A0 =C2=A0 =C2=A0continue<br>&gt; &gt; + =C2=
+=A0 =C2=A0if host_arch !=3D &#39;wasm32&#39;<br>&gt; &gt; + =C2=A0 =C2=A0 =
+=C2=A0# Disallow 64-bit on 32-bit emulation and virtualization<br>&gt; &gt;=
+ + =C2=A0 =C2=A0 =C2=A0if host_long_bits &lt; config_target[&#39;TARGET_LON=
+G_BITS&#39;].to_int()<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0continue<br=
+>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0endif<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 en=
+dif<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 if sym =3D=3D &#39;CONFIG_TCG&#39; or=
+ target in accelerator_targets.get(sym, [])<br>&gt; &gt; =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 config_target +=3D { sym: &#39;y&#39; }<br>&gt; <br>&gt; I&#39;d=
+ prefer something like<br>&gt; <br>&gt; # Detect host pointer size for the =
+target configuration loop.<br>&gt; host_long_bits =3D cc.sizeof(&#39;void *=
+&#39;) * 8<br>&gt; tcg_vaddr_bits =3D host_arch =3D=3D &#39;wasm32&#39; ? 6=
+4 : host_long_bits<br>&gt; ...<br>&gt; config_host_data.set(&#39;TCG_VADDR_=
+BITS&#39;, tcg_vaddr_bits)<br>&gt; <br>&gt; Then in the target configuratio=
+n loop<br>&gt; <br>&gt; - =C2=A0 =C2=A0if host_long_bits &lt; config_target=
+[&#39;TARGET_LONG_BITS&#39;].to_int()<br>&gt; + =C2=A0 =C2=A0if tcg_vaddr_b=
+its &lt; config_target[&#39;TARGET_LONG_BITS&#39;].to_int()<br>&gt; <br>&gt=
+; and throughout the code you can have<br>&gt; <br>&gt; #ifdef TCG_VADDR_BI=
+TS =3D=3D 32<br>&gt; ...<br>&gt; #else<br>&gt; ...<br>&gt; #endif<br>&gt; <=
+br>&gt; instead of<br>&gt; <br>&gt; #ifdef EMSCRIPTEN<br>&gt; ...<br>&gt; #=
+else<br>&gt; ...<br>&gt; #endif<br>&gt; <br>&gt; In fact, I think this patc=
+h would be acceptable as a separate<br>&gt; submission, because it could be=
+ tested using TCI already.<br><br>Thank you for the feedback. I&#39;ll work=
+ on implementing this using<br>TCG_VADDR_BITS and submit it as a separated =
+series.</div></div>
 
-In the tests I've done, mr->alias is always NULL, but I don't know enough about
-MR handling to be sure this will always be the case? Perhaps others can, in
-which case I only need the ram block too.
-
-regards
-john
+--0000000000002fbbd40635a1292d--
 
