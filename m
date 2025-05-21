@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E622DC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 12:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE199C54ED0
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 12:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHiM5-0003uR-8H; Wed, 21 May 2025 08:15:31 -0400
+	id 1uHiRe-0005lF-Om; Wed, 21 May 2025 08:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHiLt-0003s5-GD
- for qemu-devel@nongnu.org; Wed, 21 May 2025 08:15:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHiRY-0005fq-9d
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 08:21:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHiLg-0007No-1G
- for qemu-devel@nongnu.org; Wed, 21 May 2025 08:15:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHiRR-0008QQ-Gy
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 08:21:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747829699;
+ s=mimecast20190719; t=1747830057;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EQOJwrp8NhT9Qgh+TJ8glrWSxO5V17+INUGhSK3Y8C4=;
- b=L/+kouP1j3+YYAr9cPunjd4OHffs9PyDghF8iviFbI7nI1aM+//P+SNYm076CTEctXcQFD
- gfZywMcX7JRkCk9ykBh462IrQ2iBfYCpZw/TZiy0XytoEVVfGqd6rrWDq86VPeFSSkMhqE
- +R67TyrDdWvN5hn91QlmEj16EklwIPQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PUMoQ4WVnpojTP+0R/wg5NTHLEtqJptoj5thA/XalsU=;
+ b=QS267ccIB/E+S24s14dkH3uEE6flxtlqDYhZoflNgYcqKW2DS6qSKbhhf85UTIJYLTBSUX
+ 7FuPcuzJIW+3KIYmd3gE+GNLsQSY8hRC88N4GP86lBmnEDMqcf/wm56fcCt6S7X7gmqMZL
+ 1exS4rZ6mzzHZOpP1BqNouyW2WddM1g=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-5obfSoRiNvSrvcJ1_sRcIw-1; Wed, 21 May 2025 08:14:56 -0400
-X-MC-Unique: 5obfSoRiNvSrvcJ1_sRcIw-1
-X-Mimecast-MFC-AGG-ID: 5obfSoRiNvSrvcJ1_sRcIw_1747829695
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a364394fa8so2296706f8f.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 05:14:56 -0700 (PDT)
+ us-mta-529-Y6nDWSxUNWWB3c52kh1Ovg-1; Wed, 21 May 2025 08:20:55 -0400
+X-MC-Unique: Y6nDWSxUNWWB3c52kh1Ovg-1
+X-Mimecast-MFC-AGG-ID: Y6nDWSxUNWWB3c52kh1Ovg_1747830055
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a35989e5b2so4159788f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 05:20:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747829695; x=1748434495;
+ d=1e100.net; s=20230601; t=1747830054; x=1748434854;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EQOJwrp8NhT9Qgh+TJ8glrWSxO5V17+INUGhSK3Y8C4=;
- b=l/gTu9OffJJ+mhWDSyBM6Snwqc0hHnha33AYTlpTc8+oDjLDKHr3W0i773ZfcGcGYr
- AMahS3F/o2NpZPBHZ2Xleh/HY0vSpaNgmtvfmTAi/zbFFSrEwFu4zvmevv9s9Zp+QVIY
- Wv6YMmkMh/v1pMgI/5ZtjDH7XGwdSBoMdmsefj/Kes9FFWfiQddLVe5K1nmwvvZ6RpIc
- CIUaIomj1QypSolWHH18d2a5JYegfG8jIto1C1YT1SxQ6j6oV/XvXt9pkvacTwN6DB4S
- A8geG1iOh31DUWAOmj5iB0BVw9Z3AaqoLbvrXQj1nEmKTXdH/CyqC6HmbRBaDR2Hi1HI
- GB9g==
+ bh=PUMoQ4WVnpojTP+0R/wg5NTHLEtqJptoj5thA/XalsU=;
+ b=u422jxL+8RLDZYoxTWrWe7E3/0GO2B+Fy/6D3yzL7P33ap3jFVvgltHNyLqfG7ekN0
+ n74kZnibXvw+xJ7VbA68rldSx/Xr0+OVYRxol/g0seixrojIEjS9h2IcT64pclcyMLZd
+ Dy6Bs68oD4ahO4QvGAWOoQNXdQ/kApHg+7xidjLsuSLHl9adVpf1M20g1z1WKf/bwicf
+ flBdD3RWos8KkG3CXFcqEgtF8oU3CAFnz9WOiuaTg6F6Xpu9uGT/7dy2X8ALUNdYtlAl
+ d7ksTfxyfIS7EsnUxYdTmS42rud/9B9M/OSVNgY67bRhHJfHLCxU51Crm9Fnjfk6OAke
+ 4UMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9ALSpyW6IiPzW23FiioNw5fVwk2brQYKBbofCdRfsMAmp+h8GTjfsVlczQkYsMpCfwDiIHUEywfV7@nongnu.org
-X-Gm-Message-State: AOJu0YyWjydYI/OUlfzMerSERqF2fCxVxk0Bo3oftIY214PVIRFYE9HS
- O1/Ke0kFoslv//Am8aeiJaGZPek6DzKcTEJW4E6NyUKOO1z90S3kQiZ2FgHCWL8pig1ezLSo16z
- eeGWX9sY2ZhDEXShqd/kBbyy3Xg+hwJE2RZvle95dmzr4XXiVLywcQ/xG
-X-Gm-Gg: ASbGncsXFzRxDxTmyC6SiANxptHJeHj0OWWv8rjI0ahzBte/w3xFLeG4gJ1Ut4AZLrR
- x8Ub99PX8MGHZWyA4UuL2p9bbF4WHlVMnw3vWHlAQEKvQwUS8nliJ9jz3H4YV0CJJJQpyLmDJN1
- YYbO6Sq2sELEIrBwEBBm+NXR237ON2lYeBuXeDfAA+/tmUzU5lkguTNuuDCVMTPBI4Ei+RKNv8A
- yv/5WCAgOlCYq/tr5cETtZrgJxcn6/CNwhos0FjZMZCzBZr3oc5EAmUVyF9xUe3/+1rvNGXUfFu
- flhPrZCg4iBKR+r0KWDwyQxeHINE2Mw1Wyqi93Apa0I=
-X-Received: by 2002:a05:6000:3112:b0:3a2:133:b17d with SMTP id
- ffacd0b85a97d-3a35fe796b6mr19265255f8f.14.1747829695145; 
- Wed, 21 May 2025 05:14:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHargzhzm0DV/+B3NDMWnGo7X4kCn0FXfHwvauTSw7YYa7izKgOHl7BQijb4QGOaGwdJBQwyg==
-X-Received: by 2002:a05:6000:3112:b0:3a2:133:b17d with SMTP id
- ffacd0b85a97d-3a35fe796b6mr19265219f8f.14.1747829694790; 
- Wed, 21 May 2025 05:14:54 -0700 (PDT)
+ AJvYcCV9BnRcPWIh1qgulpkX1fyhiIvpgsHrAykOCyFdrebN7kctj2b7FEE4H8fYudJQSMCcnkQblfvgsV9Y@nongnu.org
+X-Gm-Message-State: AOJu0Yzm43HT+jDG0+RxyIBTuxXaDwU6+qRAchr46sdRjSJgnseYQXO6
+ sXfffwesdYUZFk3yjyrqFhPEB5/m3JBFaIZVNoFVgy0eOYZy9YqdZxIspBAsFvFWRzEIfesVYhR
+ rbCoDtVGAbG9ELB/EktjddfstYKF9gP77GDQXbyYzJ5gYFQkHCH1iRYhX
+X-Gm-Gg: ASbGncuv+84dIl8maNvRa3K0pwVBHdGytL2zhiomtnFwR1gPXWCzQ1bzcFlZ45BNlgn
+ pjS0SLTH/bBz9qDw0UEycGgJscp2k7Q8ty2TSIbvDHDIj3lylxajyRGVW2DiQOAIuUXXtjFROKc
+ vYh5TfMnt++cBp6EcCdZ1yWWMfhjdvKiuJe2c8EPaEVih5KHAPAWIv+5rDc58nTdaqF+PUkNWcO
+ VmKBG6PG7ZEtLcPm7mw5sQKOHdOPItRZCfYysaC/OALUcDtmyPl5Twx821qYVvSTOMHplevb6rG
+ txxmtWD5jmc9YrKSFOGkE2MvRJF3BjIvY6Erb13kWWQ=
+X-Received: by 2002:a05:6000:a8f:b0:3a0:b4a7:6e56 with SMTP id
+ ffacd0b85a97d-3a35c84bc90mr14397613f8f.56.1747830054619; 
+ Wed, 21 May 2025 05:20:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGnHKfyN1/OKC1wJti+Rl+TDY36LEPwo8OCbsIPm+JhaPQ2vZ0nkSlMhipkj8ox0WQh24S/Vw==
+X-Received: by 2002:a05:6000:a8f:b0:3a0:b4a7:6e56 with SMTP id
+ ffacd0b85a97d-3a35c84bc90mr14397581f8f.56.1747830054176; 
+ Wed, 21 May 2025 05:20:54 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-201.web.vodafone.de.
  [109.42.49.201]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca5a84csm19616624f8f.31.2025.05.21.05.14.53
+ ffacd0b85a97d-3a35ca5a87fsm19171137f8f.29.2025.05.21.05.20.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 05:14:54 -0700 (PDT)
-Message-ID: <1c49a685-a076-4dce-8a7e-e76f099c04dd@redhat.com>
-Date: Wed, 21 May 2025 14:14:52 +0200
+ Wed, 21 May 2025 05:20:53 -0700 (PDT)
+Message-ID: <d10a6412-b9f1-4f31-85cb-964e0523c358@redhat.com>
+Date: Wed, 21 May 2025 14:20:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/25] Add -secure-boot to s390-ccw-virtio machine type
- option
+Subject: Re: [PATCH v2 21/25] hw/s390x/ipl: Set IPIB flags for secure IPL
 To: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
  david@redhat.com, pbonzini@redhat.com
 Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
@@ -85,7 +84,7 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
  farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250508225042.313672-1-zycai@linux.ibm.com>
- <20250508225042.313672-21-zycai@linux.ibm.com>
+ <20250508225042.313672-22-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,10 +129,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250508225042.313672-21-zycai@linux.ibm.com>
+In-Reply-To: <20250508225042.313672-22-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -159,15 +158,65 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 09/05/2025 00.50, Zhuoying Cai wrote:
-> Add -secure-boot as a parameter of s390-ccw-virtio machine type option.
->> The `-secure-boot on|off` command line option is implemented
-> to enable secure IPL.
+> If `-secure-boot on` is specified on the command line option, indicating
+> true secure IPL enabled, set Secure-IPL bit and IPL-Information-Report
+> bit on in IPIB Flags field, and trigger true secure IPL in the S390 BIOS.
 > 
-> By default, -secure-boot is set to false if not specified in
-> the command line.
+> Any error that occurs during true secure IPL will cause the IPL to
+> terminate.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   hw/s390x/ipl.c | 18 +++++++++++++++++-
+>   1 file changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+> index d1a972ac8d..4c827be121 100644
+> --- a/hw/s390x/ipl.c
+> +++ b/hw/s390x/ipl.c
+> @@ -437,6 +437,11 @@ static bool s390_has_certificate(void)
+>       return ipl->cert_store.count > 0;
+>   }
+>   
+> +static bool s390_secure_boot_enabled(void)
+> +{
+> +    return S390_CCW_MACHINE(qdev_get_machine())->secure_boot;
+> +}
+> +
+>   static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>   {
+>       CcwDevice *ccw_dev = NULL;
+> @@ -494,6 +499,17 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>           s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+>           iplb->flags |= DIAG308_FLAGS_LP_VALID;
+>   
+> +        /*
+> +         * If -secure-boot on, then toggle the secure IPL flags to trigger
+> +         * secure boot in the s390 BIOS.
 
-Remove the "-" in front of "secure-boot" now?
+"If secure-boot is enabled" ?
 
   Thomas
+
+
+> +         * Boot process will terminate if any error occurs during secure boot.
+> +         *
+> +         * If SIPL is on, IPLIR must also be on.
+> +         */
+> +        if (s390_secure_boot_enabled()) {
+> +            iplb->hdr_flags |= (DIAG308_IPIB_FLAGS_SIPL | DIAG308_IPIB_FLAGS_IPLIR);
+> +        }
+>           /*
+>            * Secure boot in audit mode will perform
+>            * if certificate(s) exist in the key store.
+> @@ -503,7 +519,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>            *
+>            * Results of secure boot will be stored in IIRB.
+>            */
+> -        if (s390_has_certificate()) {
+> +        else if (s390_has_certificate()) {
+>               iplb->hdr_flags |= DIAG308_IPIB_FLAGS_IPLIR;
+>           }
+>   
 
 
