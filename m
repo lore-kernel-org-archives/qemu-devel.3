@@ -4,73 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B4EC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F437C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:35:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHlR1-0005kS-VN; Wed, 21 May 2025 11:32:48 -0400
+	id 1uHlSw-0006a3-Fn; Wed, 21 May 2025 11:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uHlQb-0005gw-QO
- for qemu-devel@nongnu.org; Wed, 21 May 2025 11:32:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uHlQZ-00055j-4Y
- for qemu-devel@nongnu.org; Wed, 21 May 2025 11:32:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747841535;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DeZi5jq5JKOWEBab4inuDc2YFVWtCYh7uf7r41I0TM0=;
- b=RMXsxeWC5R0rRnfz/mNE5zYF6mF2JSArHiZl84k1s5++sjbJKOvrUVKUcJTmOehZLgQGwd
- 4PPQiQUMnpcRgXSZuCP5gomAlkCD2pZNrDbNIREjkx9sK6FBYumwvJo6Ob0zh3bDUZGmMR
- b/0SO5jDCrU0kUgeOM5wW3DNfJWJERY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-jp1WZ0cMPQ6Bk2dizauQOQ-1; Wed,
- 21 May 2025 11:32:08 -0400
-X-MC-Unique: jp1WZ0cMPQ6Bk2dizauQOQ-1
-X-Mimecast-MFC-AGG-ID: jp1WZ0cMPQ6Bk2dizauQOQ_1747841528
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B684719560B5; Wed, 21 May 2025 15:32:07 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.201])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7417F19560A7; Wed, 21 May 2025 15:32:05 +0000 (UTC)
-Date: Wed, 21 May 2025 10:32:02 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- "open list:Block layer core" <qemu-block@nongnu.org>
-Subject: Re: [PULL 13/14] tests: Add iotest mirror-sparse for recent patches
-Message-ID: <kd563ogyr5t2sh5nz3i3iydcy4r5o2kuze4byv3d22rjyffktt@gbmqgnuufpnh>
-References: <20250515022904.575509-16-eblake@redhat.com>
- <20250515022904.575509-29-eblake@redhat.com>
- <78bc08dc-5da5-4fcf-804b-1a387f2e9ea8@proxmox.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uHlSt-0006YX-Rx
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 11:34:44 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uHlSp-0005GY-9I
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 11:34:42 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-7086dcab64bso64997217b3.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 08:34:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747841677; x=1748446477; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=+gdPfSv/iUEZ0iV22CDF8Ccyp/t9XL8qu/hu9upFM3c=;
+ b=ABRNvDZDVlKXsIIre65d5wDd71lHLjyEji9g+QIfothitvr1p1c8h0oO+j0HfNQpHP
+ 6WU9gYp3PuOzPF3KeNuRi8X1h0G+tRp8UeZgAPmXNFE4QgkwURSD1zhRmM8E96spHKj7
+ M5uhylLkiD0TsCQCJ+Hs2Ly+1D7NzW8ag2ryngIKygLka+aLMINNPnedIUf8yCGUp2Qq
+ vRWaiCaCRhEK42khM9WqUwIbuUcDOldqewobYJLzIOwepehQE+rvXuv5Zyqc/WbW8q2Y
+ 4sfqGc3OCk8II90INAy2wSAbbwrD71aE1UlFtT3LMlS89exQ62twNjlw7H2AX6zrLZ3l
+ Qs8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747841677; x=1748446477;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+gdPfSv/iUEZ0iV22CDF8Ccyp/t9XL8qu/hu9upFM3c=;
+ b=d5x3GQOlysYl1CzyLUUgi9Ez3nyuo6Pr+9K54WiEVE9ZbBE1v03FmSbWEx+Nl6Nj7X
+ ABVOy4AYpEpbmHi5GBn+HtmmE66clSAjrx4dti2Lq9sJqKRW7T2MX2wK76DCqIescP6/
+ w0DQtwHm/ibn9YLG4sDMH3QqpfPyHLuAUWnc6HusEOTCgr8fmfjqqK1j5x8PGEzNqku4
+ XhQsssj4+9SkrzlIb2/ZLKaJN/A+XKqrbAVn3N4EjBN54uHPoj7uV6DoBZAOhIv3iewB
+ T7h6ijQ2lsBkD9CjVNfpi8tPzYmXboFX1PQpSK1WnjyC7EVMFQB+d0C0nuWtHFHUD+bV
+ jx/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQS8hOemoCOrYeNwhWMIzkpzKH/EKjWqatY6NvU5Dx+pRjEEt0SApaiOJQ1p4ZLgS67WtMZOMQkijk@nongnu.org
+X-Gm-Message-State: AOJu0Yz+CROvkcSx8tdoZAON6Q/lWWXDro5zEPNNGSka3ASUIKI071TI
+ IBAjg7eH+OaKDElwiRs7/9FfL7ipyF82txwjASpeFY0BaPP8j+XonawcIpLBNByXdmq/RS9omqh
+ EcnoCF44iQW6ATvtfwM7gMTu+PePUFgjlMRStYwGyeg==
+X-Gm-Gg: ASbGncsstYwWuWAW30WK4jIgdLS7tF/SUI/ILdS2uYtMwoABMvrLoB7bwTSmfcVbP/4
+ 00be7ZT7tq4Q/qdJFSIdeS2OQQINHDzvuwT9ah15fIblOBcx53DOl4L9Q2+YWs8bAgXmCtcegl5
+ NHbkyUwrWFn/lJVuPjLxttXkZavng3fR82wQiueQrhxOwY
+X-Google-Smtp-Source: AGHT+IEqiXL6sJmJknJBdAC1ULYcGaNnm5HYbGP1pXy1iaNzcNYUc1xLSSbp7Nqah/VoVnRRgBYH7kqq4fF1v6YW5uo=
+X-Received: by 2002:a05:690c:3686:b0:708:39f9:ae49 with SMTP id
+ 00721157ae682-70ca7b8b963mr288387497b3.29.1747841676875; Wed, 21 May 2025
+ 08:34:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <78bc08dc-5da5-4fcf-804b-1a387f2e9ea8@proxmox.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20250207153112.3939799-1-alex.bennee@linaro.org>
+ <20250207153112.3939799-12-alex.bennee@linaro.org>
+ <ee091002-a552-49fe-ae5e-8916937dba15@tls.msk.ru>
+ <56e0a35b5c53b416db130c414cd0f3d6@linux.ibm.com>
+In-Reply-To: <56e0a35b5c53b416db130c414cd0f3d6@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 21 May 2025 16:34:24 +0100
+X-Gm-Features: AX0GCFtQTqAUvcQ2co9hZjymHoBFnNlqTY5AGz0B7rNw7UAqe6lSJQfx9Cc154E
+Message-ID: <CAFEAcA8Mzo-Ne48=uFBTcy+CXNcnxGOaW941p=CRkD6gmC=JfA@mail.gmail.com>
+Subject: Re: [PATCH v2 11/17] gdbstub: Try unlinking the unix socket before
+ binding
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Weiwei Li <liwei1518@gmail.com>, qemu-arm@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, 
+ Kyle Evans <kevans@freebsd.org>, Alistair Francis <alistair.francis@wdc.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Laurent Vivier <lvivier@redhat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, Warner Losh <imp@bsdimp.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-ppc@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
+ qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,92 +115,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 21, 2025 at 11:54:03AM +0200, Fiona Ebner wrote:
-> Hi,
-> 
-> Am 15.05.25 um 04:28 schrieb Eric Blake:
-> > +do_test full ignore off full
-> 
-> for me, this one fails irregularly (more than 50% of the time) with:
-> -Destination is full; expected full
-> +Destination is unknown; expected full
-> 
-> My file system is ext4 inside a virtual machine.
-> > [I] febner@dev8 ~/repos/qemu/build/tests/qemu-iotests (master) [1]> findmnt --target .
-> > TARGET             SOURCE   FSTYPE OPTIONS
-> > /home/febner/repos /dev/sdb ext4   rw,relatime
-> 
-> The virtual disk is an LVM image. When the test fails, I consistently
-> get 20975616 bytes rather than 20971520 bytes as the result of
-> disk_usage(), i.e. it has one 4 KiB block more. ls -l will still report
-> 20971520 bytes as the length, qemu-img compare succeeds.
+On Tue, 20 May 2025 at 23:22, Ilya Leoshkevich <iii@linux.ibm.com> wrote:
+> However, wasn't it already broken in this regard?
+> With fccb744f41c69fec6fd92225fe907c6e69de5d44^ I get:
+>
+> [2/2] Linking target qemu-s390x
+> /usr/bin/ld: /usr/lib64/libglib-2.0.a(gutils.c.o): in function
+> `g_get_user_database_entry':
+> (.text+0xeb): warning: Using 'getpwnam_r' in statically linked
+> applications requires at runtime the shared libraries from the glibc
+> version used for linking
+> /usr/bin/ld: (.text+0x2be): warning: Using 'getpwuid' in statically
+> linked applications requires at runtime the shared libraries from the
+> glibc version used for linking
+> /usr/bin/ld: (.text+0x134): warning: Using 'getpwuid_r' in statically
+> linked applications requires at runtime the shared libraries from the
+> glibc version used for linking
+>
+> This comes from glib, but the ultimate result is still the same.
 
-Odd, but should be something I can cater to by treating any value >=
-20M (rather than exactly 20M) as fully allocated (the test still does
-the qemu-img compare to ensure that the actual length compares
-correctly, even if the allocated length was slightly overallocated due
-to filesystem magic).
+Those are in upstream glib, as you note. We can't fix those (unless we
+have the enthusiasm to write patches for upstream glib: last time
+we asked, they were not against the idea, but nobody on either side
+had the time available to try to write the necessary patches).
+But we can and should fix the cases in our own code.
 
-> 
-> After the image creation, i.e. job1, the allocation is still as expected:
-> > +20971520	/home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw
-> > +-rw-r--r-- 1 febner febner 20971520 May 21 11:18 /home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw
-> 
-> Only after mirroring, i.e. job2, it will be larger:
-> > +20975616	/home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw
-> > +-rw-r--r-- 1 febner febner 20971520 May 21 11:18 /home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw
+> Also, what are the symptoms of the breakage? IIUC as long as execution
+> does not reach getaddrinfo(), which it in this case should not, because
+> it is used only on inet paths, there should not be any issues, right?
 
-Weird, but filesystems have been known to do weird things.  So the
-test should be updated to tolerate it.
+Correct -- if we don't call the function it's fine. But the easiest
+way to be sure we don't call the function is to not link it in :-)
+Otherwise future code changes could result in a call without our
+realizing it.
 
-> 
-> Some more information:
-> 
-> > [I] febner@dev8 ~/repos/qemu/tests/qemu-iotests/tests (master)> sudo filefrag /home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw -e
-> > Filesystem type is: ef53
-> > File size of /home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw is 20971520 (5120 blocks of 4096 bytes)
-> >  ext:     logical_offset:        physical_offset: length:   expected: flags:
-> >    0:        0..      15:   36233216..  36233231:     16:            
-> >    1:       16..    2047:   36233232..  36235263:   2032:             unwritten
-> >    2:     2048..    2559:   36239360..  36239871:    512:   36235264:
-> >    3:     2560..    4095:   36239872..  36241407:   1536:             unwritten
-> >    4:     4096..    5119:   33792000..  33793023:   1024:   36241408: last,unwritten,eof
-> > /home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw: 3 extents found
-> 
-> Note that one of the offsets is not 4KiB-aligned:
-> > 36239360%4096
-> > 2048
-> 
-> I suppose that is the reason?
-> 
-> > [I] febner@dev8 ~/repos/qemu/tests/qemu-iotests/tests (master)> stat /home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw
-> >   File: /home/febner/repos/qemu/build/tests/qemu-iotests/scratch/raw-file-mirror-sparse/t.raw
-> >   Size: 20971520  	Blocks: 40968      IO Block: 4096   regular file
-> > Device: 8,16	Inode: 4866541     Links: 1
-> > Access: (0644/-rw-r--r--)  Uid: ( 1000/  febner)   Gid: ( 1000/  febner)
-> > Access: 2025-05-21 11:18:37.622692254 +0200
-> > Modify: 2025-05-21 11:18:37.540686997 +0200
-> > Change: 2025-05-21 11:18:37.540686997 +0200
-> >  Birth: 2025-05-21 11:18:37.463682059 +0200
-> 
-> I also tried it on my host, where the filesystem is ZFS using
-> compression, and there, 'du' will already report a lower value after
-> creating the image, because of compression. And even without compression
-> it seems that preallocation=full on ZFS is somehow async :/
-> 
-> > [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> qemu-img create my.raw 20M -f raw -o preallocation=full
-> > Formatting 'my.raw', fmt=raw size=20971520 preallocation=full
-> > [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> du --block-size=1 my.raw
-> > 512	my.raw
-> > [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> du --block-size=1 my.raw
-> > 20980224	my.raw
+Also, mjt's packaging for Debian puts in some stubs for the
+offending getwpuid etc functions, which suppress the glib warnings
+(this is why he noticed this whereas none of the rest of us did):
 
-That one may be a bit harder to work around, but I'll give it a shot
-while I'm patching the first one.
+https://sources.debian.org/patches/qemu/1:10.0.0%2Bds-2/static-linux-user-stubs.diff/
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+thanks
+-- PMM
 
