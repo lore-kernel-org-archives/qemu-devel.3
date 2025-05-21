@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21022C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AEFC54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHjny-0004ez-S5; Wed, 21 May 2025 09:48:27 -0400
+	id 1uHjrd-000705-3f; Wed, 21 May 2025 09:52:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uHjnj-0004cV-LD
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:48:07 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uHjng-0005wb-Uz
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:48:07 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-441d1ed82faso53244255e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 06:48:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1747835283; x=1748440083; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=5lB1QwMR7SISD/zyz/TtiJwCBsObjd2VAYRo1IONgBw=;
- b=ju8h3qI5CNhsclTKmxmpWvhlltQNjzGiconcS9HfqbBsRHNI9NJf5zZttlP/4d9bF+
- 2FIjbIAv+xhi/HImcQ38LRU5mG7m9xIfp/exmH1ssE2U0MnIL+XTYbafVS5ywuJhPlCD
- cZ8JBb1Tg8D80cXYVtc50jYCHAW2LZrb9tn0ItXTJvbk3EAmgEGkUpREnTOY0fX/Z70X
- sB7yTvZkQn/zn6u8+geS1FtV4VMfn2l9QHzNoCXWNt946WyT1eVwf7x0UxNZUzVaz1mX
- C4p6oKphd7zhPZACcQErJNju+7ccSVW/thHOI0dXxNrCf72jeKl/3QS6sS9j1G47HX9t
- kCsA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uHjrD-0006zE-9r
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:51:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uHjr9-0006ay-VO
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:51:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747835498;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TLAbJwWk+zXlTB1vrvkrehkS1xSOSoMPDH3c1wuQcsQ=;
+ b=BAwOP/kzRSLh8gktO2rUyLrpiBZLfZDAnF9of/9EYF4RXevTe/wbvWn8TnPN7Az3rWZBBw
+ 3TPEj6JIhZk1D6jICEmY28sEfmIA/CY+vvV6tWrT/xQ5s7u1WZiaXscefStJbpXF/YTY38
+ 0bf6TJfSjJdHHCR5PKz8jCQffVlCK+0=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-215-vDNp9ju6MK-8p7wfZIoeLw-1; Wed, 21 May 2025 09:51:37 -0400
+X-MC-Unique: vDNp9ju6MK-8p7wfZIoeLw-1
+X-Mimecast-MFC-AGG-ID: vDNp9ju6MK-8p7wfZIoeLw_1747835495
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-551fe205635so1023208e87.3
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 06:51:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747835283; x=1748440083;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5lB1QwMR7SISD/zyz/TtiJwCBsObjd2VAYRo1IONgBw=;
- b=tuFYKcs3XT2shtb444HYp/MVYOnHuHklJVlcrxNTJBmAMchXageyd7Qm7xxDVb0eq/
- guqHU8LSmBYLtOgRQGburdNXkJoiTFUPqOhnZgY3EfSdOyh29JYr5vUE0FcaxZUZzzVO
- Vh1T10FWCABsH5heOd8oS4Ln4RP2HogN20f+bz/HU6YDMvneEoBmfGlqeMAIqXVVcNPV
- yWvHGfT4NhCysUKVjrKEZQLeXw1zriLdP9uDtnmc1lHn9vGTOzrBfNFbnJKVil2a1BJ8
- 9q7lsomjkrNacps9zy7coxsoTrNqQhA9BoIpZrs7t72zAE0wo0P6JQEFde+ucN5sqqD3
- XHxg==
-X-Gm-Message-State: AOJu0Yy4hpTYrs6U2PiZciejzdN+og6yMHR7IWlu0WKYWXUzdoj8Ulq6
- 9FTMd8lsBm2j2bYzEgtwhRQ54h5RSzAnuZnmY6tXlN1XlxtA5uLFa5bGAhAy4BEXMNQ=
-X-Gm-Gg: ASbGncuCX289islwcEDEA7JDBkMJfwTDbIXvaY7Z6Pul+4p7XvKGODKHEnY2+avsmbF
- NbgZtc4RGcEIpl/ofGnJXMTbkEFUg5qPeR1YfWDdagZF90tmSjoC1jaZQcETygnH4xBfVU8rBqQ
- OmJCbOWHL7/IdYGTXaLEHlSIK2FFmo9SAVJbHcS7LVPDHyjcLbI1jEtTpQPj1+z0aS3zhm6xBxO
- YM1+s3sST0VwPJWwnsxbAtqdOoK91U+xd9LRKYgvCaWUWyG6oEOcZFRsbqxIpj2IRKSSY0vGx1k
- VKC/6IeXjORY4jJHlTdgVDhhvu2b/ansFDHxs7MEmx2mhSOzyQ==
-X-Google-Smtp-Source: AGHT+IECOBBM4i/vbbiJygZT/Q3Wsh2nPDpdkuEh/tk8/2Qoq8FHETke/JwIgEhxNPqlrkMBrYp28g==
-X-Received: by 2002:a05:600c:4713:b0:43c:efed:732c with SMTP id
- 5b1f17b1804b1-442ff039657mr155155295e9.28.1747835282587; 
- Wed, 21 May 2025 06:48:02 -0700 (PDT)
-Received: from localhost ([2a02:8308:a00c:e200::ce80])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f73d3d6csm72066895e9.19.2025.05.21.06.48.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 06:48:02 -0700 (PDT)
-Date: Wed, 21 May 2025 15:48:01 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
- bjorn@kernel.org
-Subject: Re: [PATCH 2/3] target/riscv/tcg: decouple profile enablement from
- user prop
-Message-ID: <20250521-f09745e013db8105f4a6f5f0@orel>
-References: <20250520172336.759708-1-dbarboza@ventanamicro.com>
- <20250520172336.759708-3-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1747835493; x=1748440293;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TLAbJwWk+zXlTB1vrvkrehkS1xSOSoMPDH3c1wuQcsQ=;
+ b=dmU639O5IaHRWOodUqemc/er3puuvzMA/12BK8svvg4IP0T2fDCollLTab/Eh0cVWe
+ WLINuadMl9IZn/2tVSgO+d1ABoh5pw7S6Rau8TSmRgauv832/uZFsoO9HSWfU7v8Fi7z
+ OPY7QP2JlmD5zf/TxoKgDUtOWCcm6zRewOGrEzWpM6JfyewMFENC1j5gzKNE1CRubNNP
+ v+usGxsHysI3otqrNvc7SoXTjWqxtEjIU3CHVNIdGFZsQ2lWyLX6Qa5TfPdmfkf17zds
+ HRg4yEMJatn6RgJqTBkcJ1yRR/Xq74N7aZjSHPgszSQu7vw558AlHzZUB7STh/+5JkF2
+ b7SQ==
+X-Gm-Message-State: AOJu0Yx75OPbpsLAVC+e2z4EDESCC6sHN7GTedl4JJmLksxTHqoPHXFh
+ 0/UY3ozNfs7nPbSvJhFJx0m1/pKJZok89y+XZy1ova8HgxBEFdw5q7Qap++UrTetbZXE5NShJys
+ bdtd3ZyhnlLC0mvFcPSzOB3vJBYUT5BMweGrj5GkJ0PKkxHEjv4d7IxAnsOalQ/2MD+WSEKepbM
+ MGMblX5yNuNKxyHzCafo1c1rjdh9uJ/D4ncQHbF4w=
+X-Gm-Gg: ASbGnctDFaWawXw38hvk9ergBKAG0quEscXY/g69qmkysrqh+d06vnkKHNKCgY307JH
+ Lf/E3Ka3oQvXVP2Vu1dZtuZbbQAZiPum4AsBPdeVdc7JzXo/1dL3tEC6kLz7QnHehsrc=
+X-Received: by 2002:a05:6512:2216:b0:549:39b1:65c2 with SMTP id
+ 2adb3069b0e04-550e72443e9mr6505743e87.48.1747835493459; 
+ Wed, 21 May 2025 06:51:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGS+CHiLnn3WLec1hDg1Mr4Hq7/8xJ/Vo7edMZtdaoLZVdggk+3kNFQOfoTpnWawi7JaurliNdok8fshU7BKWk=
+X-Received: by 2002:a05:6000:2385:b0:3a3:4ba4:f3cd with SMTP id
+ ffacd0b85a97d-3a35c821e38mr16589443f8f.1.1747835482114; Wed, 21 May 2025
+ 06:51:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250520172336.759708-3-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250521081845.496442-1-pbonzini@redhat.com>
+ <20250521081845.496442-6-pbonzini@redhat.com>
+ <CAAjaMXaeM0Nt3dzEJLCiAOeCQzneEDO6yeX3+CF5tZ2dhQ=YLw@mail.gmail.com>
+In-Reply-To: <CAAjaMXaeM0Nt3dzEJLCiAOeCQzneEDO6yeX3+CF5tZ2dhQ=YLw@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 21 May 2025 15:51:09 +0200
+X-Gm-Features: AX0GCFskEqIBfZzMwAaokzgt7MsktJWVY2naGoodt-FOhBPgcV6fQiBNnrq30nw
+Message-ID: <CABgObfbaTced6eqXW_h+Nkth9i0gB_myrtpG64a46K0MQgFRzQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 5/6] rust: pl011: switch from bilge to bitfield-struct
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, "Maydell,
+ Peter" <peter.maydell@linaro.org>, qemu-rust@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000099bb10635a5a9a5"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,192 +103,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 20, 2025 at 02:23:35PM -0300, Daniel Henrique Barboza wrote:
-> We have code in riscv_cpu_add_profiles() to enable a profile right away
-> in case a CPU chose the profile during its cpu_init(). But we're using
-> the user callback option to do so, setting profile->user_set.
-> 
-> Create a new helper that does all the grunt work to enable/disable a
-> given profile. Use this new helper in the cases where we want a CPU to
-> be compatible to a certain profile, leaving the user callback to be used
-> exclusively by users.
-> 
-> Fixes: fba92a92e3 ("target/riscv: add 'rva22u64' CPU")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/tcg/tcg-cpu.c | 127 +++++++++++++++++++------------------
->  1 file changed, 67 insertions(+), 60 deletions(-)
-> 
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 7f93414a76..af202c92a3 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -1139,6 +1139,70 @@ static bool riscv_cpu_is_generic(Object *cpu_obj)
->      return object_dynamic_cast(cpu_obj, TYPE_RISCV_DYNAMIC_CPU) != NULL;
->  }
->  
-> +static void riscv_cpu_set_profile(RISCVCPU *cpu,
-> +                                  RISCVCPUProfile *profile,
-> +                                  bool enabled)
-> +{
-> +    int i, ext_offset;
-> +
-> +    if (profile->u_parent != NULL) {
-> +        riscv_cpu_set_profile(cpu, profile->u_parent, enabled);
-> +    }
-> +
-> +    if (profile->s_parent != NULL) {
-> +        riscv_cpu_set_profile(cpu, profile->s_parent, enabled);
-> +    }
-> +
-> +    profile->enabled = enabled;
-> +
-> +    if (profile->enabled) {
-> +        cpu->env.priv_ver = profile->priv_spec;
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +        if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
-> +            object_property_set_bool(OBJECT(cpu), "mmu", true, NULL);
-> +            const char *satp_prop = satp_mode_str(profile->satp_mode,
-> +                                                  riscv_cpu_is_32bit(cpu));
-> +            object_property_set_bool(OBJECT(cpu), satp_prop, true, NULL);
-> +        }
-> +#endif
-> +    }
-> +
-> +    for (i = 0; misa_bits[i] != 0; i++) {
-> +        uint32_t bit = misa_bits[i];
-> +
-> +        if  (!(profile->misa_ext & bit)) {
-> +            continue;
-> +        }
-> +
-> +        if (bit == RVI && !profile->enabled) {
-> +            /*
-> +             * Disabling profiles will not disable the base
-> +             * ISA RV64I.
-> +             */
-> +            continue;
-> +        }
-> +
-> +        cpu_misa_ext_add_user_opt(bit, profile->enabled);
-> +        riscv_cpu_write_misa_bit(cpu, bit, profile->enabled);
-> +    }
-> +
-> +    for (i = 0; profile->ext_offsets[i] != RISCV_PROFILE_EXT_LIST_END; i++) {
-> +        ext_offset = profile->ext_offsets[i];
-> +
-> +        if (profile->enabled) {
-> +            if (cpu_cfg_offset_is_named_feat(ext_offset)) {
-> +                riscv_cpu_enable_named_feat(cpu, ext_offset);
-> +            }
-> +
-> +            cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
-> +        }
-> +
-> +        cpu_cfg_ext_add_user_opt(ext_offset, profile->enabled);
-> +        isa_ext_update_enabled(cpu, ext_offset, profile->enabled);
-> +    }
-> +}
-> +
->  /*
->   * We'll get here via the following path:
->   *
-> @@ -1305,7 +1369,6 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
->      RISCVCPUProfile *profile = opaque;
->      RISCVCPU *cpu = RISCV_CPU(obj);
->      bool value;
-> -    int i, ext_offset;
->  
->      if (riscv_cpu_is_vendor(obj)) {
->          error_setg(errp, "Profile %s is not available for vendor CPUs",
-> @@ -1324,64 +1387,8 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
->      }
->  
->      profile->user_set = true;
-> -    profile->enabled = value;
-> -
-> -    if (profile->u_parent != NULL) {
-> -        object_property_set_bool(obj, profile->u_parent->name,
-> -                                 profile->enabled, NULL);
-> -    }
-> -
-> -    if (profile->s_parent != NULL) {
-> -        object_property_set_bool(obj, profile->s_parent->name,
-> -                                 profile->enabled, NULL);
-> -    }
-> -
-> -    if (profile->enabled) {
-> -        cpu->env.priv_ver = profile->priv_spec;
-> -
-> -#ifndef CONFIG_USER_ONLY
-> -        if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
-> -            object_property_set_bool(obj, "mmu", true, NULL);
-> -            const char *satp_prop = satp_mode_str(profile->satp_mode,
-> -                                                  riscv_cpu_is_32bit(cpu));
-> -            object_property_set_bool(obj, satp_prop, true, NULL);
-> -        }
-> -#endif
-> -    }
-> -
-> -    for (i = 0; misa_bits[i] != 0; i++) {
-> -        uint32_t bit = misa_bits[i];
-> -
-> -        if  (!(profile->misa_ext & bit)) {
-> -            continue;
-> -        }
->  
-> -        if (bit == RVI && !profile->enabled) {
-> -            /*
-> -             * Disabling profiles will not disable the base
-> -             * ISA RV64I.
-> -             */
-> -            continue;
-> -        }
-> -
-> -        cpu_misa_ext_add_user_opt(bit, profile->enabled);
-> -        riscv_cpu_write_misa_bit(cpu, bit, profile->enabled);
-> -    }
-> -
-> -    for (i = 0; profile->ext_offsets[i] != RISCV_PROFILE_EXT_LIST_END; i++) {
-> -        ext_offset = profile->ext_offsets[i];
-> -
-> -        if (profile->enabled) {
-> -            if (cpu_cfg_offset_is_named_feat(ext_offset)) {
-> -                riscv_cpu_enable_named_feat(cpu, ext_offset);
-> -            }
-> -
-> -            cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
-> -        }
-> -
-> -        cpu_cfg_ext_add_user_opt(ext_offset, profile->enabled);
-> -        isa_ext_update_enabled(cpu, ext_offset, profile->enabled);
-> -    }
-> +    riscv_cpu_set_profile(cpu, profile, value);
->  }
->  
->  static void cpu_get_profile(Object *obj, Visitor *v, const char *name,
-> @@ -1396,7 +1403,7 @@ static void cpu_get_profile(Object *obj, Visitor *v, const char *name,
->  static void riscv_cpu_add_profiles(Object *cpu_obj)
->  {
->      for (int i = 0; riscv_profiles[i] != NULL; i++) {
-> -        const RISCVCPUProfile *profile = riscv_profiles[i];
-> +        RISCVCPUProfile *profile = riscv_profiles[i];
->  
->          object_property_add(cpu_obj, profile->name, "bool",
->                              cpu_get_profile, cpu_set_profile,
-> @@ -1408,7 +1415,7 @@ static void riscv_cpu_add_profiles(Object *cpu_obj)
->           * case.
->           */
->          if (profile->enabled) {
-> -            object_property_set_bool(cpu_obj, profile->name, true, NULL);
-> +            riscv_cpu_set_profile(RISCV_CPU(cpu_obj), profile, true);
->          }
->      }
->  }
-> -- 
-> 2.49.0
+--000000000000099bb10635a5a9a5
+Content-Type: text/plain; charset="UTF-8"
+
+Il mer 21 mag 2025, 11:22 Manos Pitsidianakis <
+manos.pitsidianakis@linaro.org> ha scritto:
+
+> Perhaps it'd be simpler to contribute const-ability to upstream bilge?
+> Is From/Into the only problem trait?
+
+
+Probably.
+
+I was thinking we can generate
+> from/into associated methods for each type that are const
+
+
+Yes, that's what bitfield-struct does too.
+
+. It'd not
+> even be a big change and we can carry it as a patch until we can
+> catchup with upstream crates.io version in subprojects/. WDYT?
 >
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Sure, I have no idea how hard it is but I think they'd accept it? The
+bitflags/bits part is more important; I put the two together just for
+convenience, as a "let's define our standard toolbox" kind of series,
+because they conflict. But it's possible to merge just the first part.
+
+Paolo
+
+
+> --
+> Manos Pitsidianakis
+> Emulation and Virtualization Engineer at Linaro Ltd
+>
+>
+
+--000000000000099bb10635a5a9a5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il mer 21 mag 2025, 11:22 Manos Pitsidianakis &lt;<a h=
+ref=3D"mailto:manos.pitsidianakis@linaro.org" target=3D"_blank" rel=3D"nore=
+ferrer">manos.pitsidianakis@linaro.org</a>&gt; ha scritto:</div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+Perhaps it&#39;d be simpler to contribute const-ability to upstream bilge?<=
+br>
+Is From/Into the only problem trait?</blockquote></div></div><div dir=3D"au=
+to"><br></div><div dir=3D"auto">Probably.</div><div dir=3D"auto"><br></div>=
+<div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex"> I was thinking we can generate<br>
+from/into associated methods for each type that are const</blockquote></div=
+></div><div dir=3D"auto"><br></div><div dir=3D"auto">Yes, that&#39;s what b=
+itfield-struct does too.</div><div dir=3D"auto"><br></div><div dir=3D"auto"=
+><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
+x">. It&#39;d not<br>
+even be a big change and we can carry it as a patch until we can<br>
+catchup with upstream <a href=3D"http://crates.io" rel=3D"noreferrer norefe=
+rrer noreferrer" target=3D"_blank">crates.io</a> version in subprojects/. W=
+DYT?<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">Sure, I have no idea how hard it is but I think they&#39;d accept it? T=
+he bitflags/bits part is more important; I put the two together just for co=
+nvenience, as a &quot;let&#39;s define our standard toolbox&quot; kind of s=
+eries, because they conflict. But it&#39;s possible to merge just the first=
+ part.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">
+<br>
+-- <br>
+Manos Pitsidianakis<br>
+Emulation and Virtualization Engineer at Linaro Ltd<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000099bb10635a5a9a5--
+
 
