@@ -4,83 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45680C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2D7CC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:06:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHlwT-0005gP-8l; Wed, 21 May 2025 12:05:17 -0400
+	id 1uHlxt-0006M8-GR; Wed, 21 May 2025 12:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHlwI-0005dA-PT
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:05:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uHlxr-0006KP-Bw
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:06:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uHlwG-0000tw-Fy
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:05:06 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uHlxn-0001FP-KD
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:06:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747843500;
+ s=mimecast20190719; t=1747843598;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=bs7XGcyM2aC+svS8PZpt2c+NweJT8nx9A1SJr9WqvlI=;
- b=Ju98YPisjN32cfl8sUnQRAQtrpiR3gO/Qxg9sgWZx6DcKt7EBYCBH6d6GMem8XPe/EagDn
- lmo8N4sSX4kVU9lnf16t2pUCfo3zUAZYHHQBQD9R0uOAcZYKFpVSh2MZdOYnktmk8Pi7d/
- ROJrJH190QrZ3vqzr7Mll2JFt5/Xzn4=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-QPHsCk-gPdqDHX1fQqfbBA-1; Wed, 21 May 2025 12:04:59 -0400
-X-MC-Unique: QPHsCk-gPdqDHX1fQqfbBA-1
-X-Mimecast-MFC-AGG-ID: QPHsCk-gPdqDHX1fQqfbBA_1747843499
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7c5b9333642so823667185a.3
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:04:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747843499; x=1748448299;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bs7XGcyM2aC+svS8PZpt2c+NweJT8nx9A1SJr9WqvlI=;
- b=YMMVyrmBugkrqmE9Nya0xfEq8WCC+uV5MaQAGm1kjTORxoN+Wgk07TJEkLGJhLexip
- 7bfMHkQsBdiix1qvJxiliWnmp3JD3MByhbXSnKxwb8F+C4ys47xrPHmYN8NeQyDP1g55
- OeYTEYhGMJ6l0QO899YomZbwUxfJuLdujZFOXo8JTVxRlkOysFsRmL3rLmatRViyDA8s
- /V+D7hBEzRV0JDULHN3UHAZB7smEx7hPGcCA4AxYEJq0WAZHwEROF40cfuszVjZV6YVn
- zq/3M4qkam/wfdZ5+Y+AdfSQXcjlobvOBg+FSyzdDgwsYbH4/QcTHwLdxGWaHAKpo0ir
- zupg==
-X-Gm-Message-State: AOJu0Yx9kis6qHeuLxtkrbQTnnmmMfHHUpaAzDC92KgOABoKFklgZAG7
- HZdWx0OsIpsYz32GoXp67ZXe66JODzRYiikMVsbh8BJYcrcNePCkAuuIIU15CdjMf2h03mcYOIL
- qNV7CHQA5RCKl1cm1thzVUuq7P8WR/nYIiQYoTB4uU0KwyrC9Qz5BDWU6
-X-Gm-Gg: ASbGncvFWM8kTOed8qKcZhJGOs+60j780Li8icnZLnrwRUvojPHcqRBJrBO0kEnFCSo
- p+Dq12F3sl+E+gugvuT838yTPx7YVgqsiPZVRGwgX9b+1U5Y1fZmoMrtiuQaMbx12VgRw7sUpzf
- EO2hreJscFQ3PbBy9tWR/Pw1oabqulydNJgiYCPXnqvayBG0bKuAWit8u71czOnZ4N21k9X+F55
- ihvIk95J4dFiduJgia6Oib0Sqaegnr8bmutPlr8D0TzdeaQMvLrrs93uhKS2a9czTDpSzSBYqNL
- dtA=
-X-Received: by 2002:a05:620a:4415:b0:7ca:eb5b:9971 with SMTP id
- af79cd13be357-7cd4677ddb3mr3882323885a.36.1747843498682; 
- Wed, 21 May 2025 09:04:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtKmSV5scsRularTcU0VB+oALvGPiwcpMUEQxQIC8HVUjUzlvrg6PmlPTjZXJFjaH2MEbYww==
-X-Received: by 2002:a05:620a:4415:b0:7ca:eb5b:9971 with SMTP id
- af79cd13be357-7cd4677ddb3mr3882316985a.36.1747843498132; 
- Wed, 21 May 2025 09:04:58 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd467ecfbasm888286185a.49.2025.05.21.09.04.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 09:04:57 -0700 (PDT)
-Date: Wed, 21 May 2025 12:04:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] ui/vnc: Update display update interval when VM state
- changes to RUNNING
-Message-ID: <aC35pvtRC3OcQruO@x1.local>
-References: <20250521151616.3951178-1-jmarcin@redhat.com>
+ bh=PPTT3eclU/nkalvJntiHvG8Gke394FpZFkZBX3rTyOs=;
+ b=BPpI0bTLfd5qxbzpPcNviVsGHrpeETbAExQq1VP3oW3y06dpKokuR4KBGL4p/UDozB+MPZ
+ XGtvzAtqX3M85mDLTvnGzypzwjxNdX3oQcUdKf7q0qxxws+deeD5GW+ODxUHT1tm/NKNQ7
+ TcU4id5xTsWKAZERm8pf1hndc2cmEWc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-356-odu03cxkNGSok0riR7Tujw-1; Wed,
+ 21 May 2025 12:06:35 -0400
+X-MC-Unique: odu03cxkNGSok0riR7Tujw-1
+X-Mimecast-MFC-AGG-ID: odu03cxkNGSok0riR7Tujw_1747843592
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A61261956094; Wed, 21 May 2025 16:06:31 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.226.112])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1874619560A7; Wed, 21 May 2025 16:06:11 +0000 (UTC)
+Date: Wed, 21 May 2025 18:05:20 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, hreitz@redhat.com,
+ stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
+ vsementsov@yandex-team.ru, xiechanglong.d@gmail.com,
+ wencongyang2@huawei.com, berto@igalia.com, fam@euphon.net, ari@tuxera.com
+Subject: Re: [PATCH v2 08/24] block: move drain outside of
+ bdrv_change_aio_context() and mark GRAPH_RDLOCK
+Message-ID: <aC35wP_tPcNzFvP9@redhat.com>
+References: <20250520103012.424311-1-f.ebner@proxmox.com>
+ <20250520103012.424311-9-f.ebner@proxmox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250521151616.3951178-1-jmarcin@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20250520103012.424311-9-f.ebner@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -105,99 +87,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 21, 2025 at 05:16:13PM +0200, Juraj Marcin wrote:
-> From: Juraj Marcin <jmarcin@redhat.com>
+Am 20.05.2025 um 12:29 hat Fiona Ebner geschrieben:
+> This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
 > 
-> If a virtual machine is paused for an extended period time, for example,
-> due to an incoming migration, there are also no changes on the screen.
-> VNC in such case increases the display update interval by
-> VNC_REFRESH_INTERVAL_INC (50 ms). The update interval can then grow up
-> to VNC_REFRESH_INTERVAL_MAX (3000 ms).
+> Note that even if bdrv_drained_begin() would already be marked as
+
+"if ... were already marked"
+
+> GRAPH_UNLOCKED, TSA would not complain about the instance in
+> bdrv_change_aio_context() before this change, because it is preceded
+> by a bdrv_graph_rdunlock_main_loop() call. It is not correct to
+> release the lock here, and in case the caller holds a write lock, it
+> wouldn't actually release the lock.
 > 
-> When the machine resumes, it can then take up to 3 seconds for the first
-> display update. Furthermore, the update interval is then halved with
-> each display update with changes on the screen. If there are moving
-> elements on the screen, such as a video, this can be perceived as
-> freezing and stuttering for few seconds before the movement is smooth
-> again.
+> In combination with block-stream, there is a deadlock that can happen
+> because of this [0]. In particular, it can happen that
+> main thread              IO thread
+> 1. acquires write lock
+>                          in blk_co_do_preadv_part():
+>                          2. have non-zero blk->in_flight
+>                          3. try to acquire read lock
+> 4. begin drain
 > 
-> This patch resolves this issue, by adding a listener to VM state changes
-> and changing the update interval when the VM state changes to RUNNING.
-> The update_displaychangelistener() function updates the internal timer,
-> and the display is refreshed immediately if the timer is expired.
+> Steps 3 and 4 might be switched. Draining will poll and get stuck,
+> because it will see the non-zero in_flight counter. But the IO thread
+> will not make any progress either, because it cannot acquire the read
+> lock.
 > 
-> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-
-Thanks for looking into it!
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
-One trivial comment (and partly, pure question) below,
-
+> After this change, all paths to bdrv_change_aio_context() drain:
+> bdrv_change_aio_context() is called by:
+> 1. bdrv_child_cb_change_aio_ctx() which is only called via the
+>    change_aio_ctx() callback, see below.
+> 2. bdrv_child_change_aio_context(), see below.
+> 3. bdrv_try_change_aio_context(), where a drained section is
+>    introduced.
+> 
+> The change_aio_ctx() callback is called by:
+> 1. bdrv_attach_child_common_abort(), where a drained section is
+>    introduced.
+> 2. bdrv_attach_child_common(), where a drained section is introduced.
+> 3. bdrv_parent_change_aio_context(), see below.
+> 
+> bdrv_child_change_aio_context() is called by:
+> 1. bdrv_change_aio_context(), i.e. recursive, so being in a drained
+>    section is invariant.
+> 2. child_job_change_aio_ctx(), which is only called via the
+>    change_aio_ctx() callback, see above.
+> 
+> bdrv_parent_change_aio_context() is called by:
+> 1. bdrv_change_aio_context(), i.e. recursive, so being in a drained
+>    section is invariant.
+> 
+> This resolves all code paths. Note that bdrv_attach_child_common()
+> and bdrv_attach_child_common_abort() hold the graph write lock and
+> callers of bdrv_try_change_aio_context() might too, so they are not
+> actually allowed to drain either. This will be addressed in the
+> following commits.
+> 
+> More granular draining is not trivially possible, because
+> bdrv_change_aio_context() can recursively call itself e.g. via
+> bdrv_child_change_aio_context().
+> 
+> [0]: https://lore.kernel.org/qemu-devel/73839c04-7616-407e-b057-80ca69e63f51@virtuozzo.com/
+> 
+> Reported-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 > ---
->  ui/vnc.c | 12 ++++++++++++
->  ui/vnc.h |  2 ++
->  2 files changed, 14 insertions(+)
 > 
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 9e097dc4b4..32f8bfd1f9 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -3384,6 +3384,16 @@ static const DisplayChangeListenerOps dcl_ops = {
->      .dpy_cursor_define    = vnc_dpy_cursor_define,
->  };
+> Changes in v2:
+> * Split up into smaller pieces, flesh out commit messages.
+> 
+>  block.c | 27 ++++++++++++++-------------
+>  1 file changed, 14 insertions(+), 13 deletions(-)
+> 
+> diff --git a/block.c b/block.c
+> index 01144c895e..7148618504 100644
+> --- a/block.c
+> +++ b/block.c
+> @@ -106,9 +106,9 @@ static void bdrv_reopen_abort(BDRVReopenState *reopen_state);
 >  
-> +static void vmstate_change_handler(void *opaque, bool running, RunState state)
-> +{
-> +    VncDisplay *vd = opaque;
-> +
-> +    if (state != RUN_STATE_RUNNING) {
+>  static bool bdrv_backing_overridden(BlockDriverState *bs);
+>  
+> -static bool bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+> -                                    GHashTable *visited, Transaction *tran,
+> -                                    Error **errp);
+> +static bool GRAPH_RDLOCK
+> +bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+> +                        GHashTable *visited, Transaction *tran, Error **errp);
 
-Just to mention in vm_prepare_start() it's possible we migrate a VM that
-used to be suspended, if so it'll keep suspended after migration:
+For static functions, we should have rhe GRAPH_RDLOCK annotation both
+here and in the actual definition, too.
 
-    RunState state = vm_was_suspended ? RUN_STATE_SUSPENDED : RUN_STATE_RUNNING;
+>  /* If non-zero, use only whitelisted block drivers */
+>  static int use_bdrv_whitelist;
+> @@ -3040,8 +3040,10 @@ static void GRAPH_WRLOCK bdrv_attach_child_common_abort(void *opaque)
+>  
+>          /* No need to visit `child`, because it has been detached already */
+>          visited = g_hash_table_new(NULL, NULL);
+> +        bdrv_drain_all_begin();
+>          ret = s->child->klass->change_aio_ctx(s->child, s->old_parent_ctx,
+>                                                visited, tran, &error_abort);
+> +        bdrv_drain_all_end();
+>          g_hash_table_destroy(visited);
+>  
+>          /* transaction is supposed to always succeed */
+> @@ -3122,9 +3124,11 @@ bdrv_attach_child_common(BlockDriverState *child_bs,
+>              bool ret_child;
+>  
+>              g_hash_table_add(visited, new_child);
+> +            bdrv_drain_all_begin();
+>              ret_child = child_class->change_aio_ctx(new_child, child_ctx,
+>                                                      visited, aio_ctx_tran,
+>                                                      NULL);
+> +            bdrv_drain_all_end();
+>              if (ret_child == true) {
+>                  error_free(local_err);
+>                  ret = 0;
 
-Here I'm not sure whether SUSPENDED would also like to update the display
-freq.  I don't think it matters hugely, but just to say, if we want we can
-simply check "running=true" instead of checking the state to cover both
-RUNNING|SUSPENDED cases.
+Should we document in the header file that BdrvChildClass.change_aio_ctx
+is called with the node drained?
 
-> +        return;
-> +    }
-> +    update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-> +}
-> +
->  void vnc_display_init(const char *id, Error **errp)
+We could add assertions to bdrv_child/parent_change_aio_context or at
+least comments to this effect. (Assertions might be over the top because
+it's easy to verify that both are only called from
+bdrv_change_aio_context().)
+
+> @@ -7619,10 +7623,6 @@ bool bdrv_child_change_aio_context(BdrvChild *c, AioContext *ctx,
+>  static void bdrv_set_aio_context_clean(void *opaque)
 >  {
->      VncDisplay *vd;
-> @@ -3420,6 +3430,8 @@ void vnc_display_init(const char *id, Error **errp)
->      vd->dcl.ops = &dcl_ops;
->      register_displaychangelistener(&vd->dcl);
->      vd->kbd = qkbd_state_init(vd->dcl.con);
-> +    vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
-> +        &vmstate_change_handler, vd);
+>      BdrvStateSetAioContext *state = (BdrvStateSetAioContext *) opaque;
+> -    BlockDriverState *bs = (BlockDriverState *) state->bs;
+> -
+> -    /* Paired with bdrv_drained_begin in bdrv_change_aio_context() */
+> -    bdrv_drained_end(bs);
+>  
+>      g_free(state);
 >  }
+> @@ -7650,6 +7650,8 @@ static TransactionActionDrv set_aio_context = {
+>   *
+>   * @visited will accumulate all visited BdrvChild objects. The caller is
+>   * responsible for freeing the list afterwards.
+> + *
+> + * @bs must be drained.
+>   */
+>  static bool bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+>                                      GHashTable *visited, Transaction *tran,
+> @@ -7664,21 +7666,17 @@ static bool bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+>          return true;
+>      }
 >  
+> -    bdrv_graph_rdlock_main_loop();
+>      QLIST_FOREACH(c, &bs->parents, next_parent) {
+>          if (!bdrv_parent_change_aio_context(c, ctx, visited, tran, errp)) {
+> -            bdrv_graph_rdunlock_main_loop();
+>              return false;
+>          }
+>      }
 >  
-> diff --git a/ui/vnc.h b/ui/vnc.h
-> index acc53a2cc1..3bb23acd34 100644
-> --- a/ui/vnc.h
-> +++ b/ui/vnc.h
-> @@ -185,6 +185,8 @@ struct VncDisplay
->  #endif
+>      QLIST_FOREACH(c, &bs->children, next) {
+>          if (!bdrv_child_change_aio_context(c, ctx, visited, tran, errp)) {
+> -            bdrv_graph_rdunlock_main_loop();
+>              return false;
+>          }
+>      }
+> -    bdrv_graph_rdunlock_main_loop();
 >  
->      AudioState *audio_state;
-> +
-> +    VMChangeStateEntry *vmstate_handler_entry;
->  };
+>      state = g_new(BdrvStateSetAioContext, 1);
+>      *state = (BdrvStateSetAioContext) {
+> @@ -7686,8 +7684,7 @@ static bool bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+>          .bs = bs,
+>      };
 >  
->  typedef struct VncTight {
-> -- 
-> 2.49.0
-> 
+> -    /* Paired with bdrv_drained_end in bdrv_set_aio_context_clean() */
+> -    bdrv_drained_begin(bs);
+> +    assert(bs->quiesce_counter > 0);
+>  
+>      tran_add(tran, &set_aio_context, state);
+>  
+> @@ -7720,7 +7717,11 @@ int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+>      if (ignore_child) {
+>          g_hash_table_add(visited, ignore_child);
+>      }
+> +    bdrv_drain_all_begin();
+> +    bdrv_graph_rdlock_main_loop();
+>      ret = bdrv_change_aio_context(bs, ctx, visited, tran, errp);
+> +    bdrv_graph_rdunlock_main_loop();
+> +    bdrv_drain_all_end();
+>      g_hash_table_destroy(visited);
 
--- 
-Peter Xu
+I think you're ending the drained section too early here. Previously,
+the nodes were kept drained until after tran_abort/commit(), and I think
+that's important (tran_commit() is the thing that actually switches the
+AioContext).
+
+Kevin
 
 
