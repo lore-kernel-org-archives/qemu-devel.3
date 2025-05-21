@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97D0C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1558AC2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHmX3-0000Rx-Cs; Wed, 21 May 2025 12:43:05 -0400
+	id 1uHmXO-0000fK-V3; Wed, 21 May 2025 12:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmX1-0000Qh-Ns
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:03 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1uHmXM-0000dx-1S
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:24 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmWv-00068p-V9
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:03 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-601d66f8cafso5760463a12.3
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:42:57 -0700 (PDT)
+ id 1uHmX7-0006DL-Dk
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:23 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-601d10de7e1so6025075a12.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:43:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747845775; x=1748450575; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747845786; x=1748450586; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0EeJt2/IHQl/YQCaB+UF88NGaWdjcKiX03wFO+hAP/s=;
- b=Er53yrV3/JavUEcsKQT0aT47SpZ2QPNwrDqg6+qf8fHzXtF/lTjsIWU30QYuCO4rbm
- uvY9HzNJUzkP3v3pwxN0R1DfBZF7i220Ewck01fsngEwZCS1R8WWuyV/dSjgWmiyKTk0
- fqzC6bKy/N1Q4xFq3WgGTNjtnOo5dgieuRzZ4p7npHjCjhnmJgV5AFz/0Q/4nJ3TX8dr
- ZKyonIiF95687G8u7p7oe1VW7jdXXYTkp16mh8cPzs/tb3r8soERjDwVgnARo45EQ3Fz
- od3IE3NgNImamsnMy6jhfpqaGhIuXUkEaoRBCzGQL/LWv2DNnMQwVZldAfRyvMHHQMmG
- XO7A==
+ bh=EQgFawT5s/msfN0Ty0yYdLDwFLO4xopk0Jf5DyIhBiU=;
+ b=n2t4qLno/iiN6p9mhzlmQmrUPn7H1XBvcMzdgxH1sSyzqZAKjTV4f28Ze2ozfr3gsp
+ 52fDvUY7NoI7yQqWbXmE/aiwfhvilCGT00BNok6kp4kLGc5KyXGV+lgV8mCJOR8A8OQF
+ rJ0BaBgzWYxOfsrbmA4l/5wU5M97+nNIANax7EVUGmWCvtK3B9M250ucz4s2+P2jvjnY
+ KOHw7Y+Ej3kUC+F7CgWBuKXwETtGg8DZJr3pH7mifH0rsS/AyvVVTxeZrgFpYdnZcM0b
+ S5Mx0xlqE/gASNaWUWAXllE2EIoLafJxGejr3IG8dKnxb1t9D8MZvdF9xDAkdrScZbuO
+ u42Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747845775; x=1748450575;
+ d=1e100.net; s=20230601; t=1747845786; x=1748450586;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0EeJt2/IHQl/YQCaB+UF88NGaWdjcKiX03wFO+hAP/s=;
- b=jjjIqo0F3a5w4ttfwXqRRxznFQ+9iDINvh3QKsrsorzOyYdDTb/XEmTwB4XMt/rnCF
- +wFoSM5mKnMSKBU26RUg60E8kpg1XGJBvirsJKc0D2wuUYTt1A5Up4SWQUN1pk0+JJoA
- RMWq2j4RByQMAN8h9II8MVOdB/yq9LeAmJmqGS3NBT1tGFXoeJRDwKT/HwrvPpb1ZW72
- MvT+IMhuGmy4G/Xpyqo/NKRGuVqJUjJtGRbtCSKFcpXKoHLg7TPVDJA+TyesM57KY7ZE
- P0OhwmKqZKTbNWd1CwzDpkpUJyJK9Asj6sf0+Ct6OF8WBEZw/R4VcrDPaJGQUZrbS/Gy
- 3/Iw==
-X-Gm-Message-State: AOJu0YwI/RTujqHLquDx5oLks/B+IgBTqKOAi4Ti7lVJV2X/p4Ikj1bE
- WsZ7lKVj3fsVUjGYLi+lGVr9wvNrgBwL2DuWVpVEnvylgMpOwHWpMu6ueqVfgLH8fRo=
-X-Gm-Gg: ASbGncsH6djsMuQVRAKjZjRGxIBs9VxvtTkyGtArErguX0u1I4Q9MJdHoj5HdStkEEM
- /bctPhI7gQOERLsMIh1EQsLkTAE+Ku68t9g+N98WpLo7D05uCK9g7HHptiSrgUoMBMou1PnuPQu
- thLCeJFdZuwuorpijpQeILjTcw8g1SsdyHPcC2ObN4176FwukvWamgfbhnxHOH8mQr1FgZp5Dn8
- STESNo/uzIgZJULdRSuH75GzjP0yzuUgZQy2tACCLN00kuIyzWSQd5Kb2h2AcN4gdFOK6dvJEdQ
- 0XoRju97L75GXzJs4XgAIheFKK2EHuokfZGBnrED8NhGyUu9ldKi
-X-Google-Smtp-Source: AGHT+IFrxIu+/MshD4fiI9PW2BvC+QKbI1SmQki2KAwmnYsk5yG1VUW4PuHMwuhKfWh3/HwJbRYNQA==
-X-Received: by 2002:a17:907:9803:b0:ad5:3156:2c06 with SMTP id
- a640c23a62f3a-ad536bdf940mr1711196366b.28.1747845774935; 
- Wed, 21 May 2025 09:42:54 -0700 (PDT)
+ bh=EQgFawT5s/msfN0Ty0yYdLDwFLO4xopk0Jf5DyIhBiU=;
+ b=FykHdUZ9KJnNbVim5h/lcQYGYuX3imCr+sXH5LDnmD+9iW8UTHY+Jpytr4QU/lNkaL
+ 15DnIszByRALgh2SoM9qU6LnJVnF9K+9fArc13ZWFnGxvwXJtVfeWjuTScBIGQfheCpI
+ X7H1lMuBs3Ca09rpSAMgCCNkOXP94yg9uQ8mhb1oJBAumoxiH+/RBMTYFe14Iwb9YMPQ
+ RChXZ36fIe7t62DE0ZTFFHvk9kDcqCFzPhhQPJd3TObao8ruNgJaL7VJFOEMplFjdp7G
+ kpFLE8ePgQOg3m+43DTbFEKJcg2ACRWwvtX35QV14QY5YWlqgSQPKXdGT1cU6k6svytQ
+ kT7A==
+X-Gm-Message-State: AOJu0YwHDDI7lgVsMZ1YlgsL/bzpTN64OvqktQ8BrtYX2XPXtaprq0Fj
+ bSeIC4m2oOY10xPSL/DOwmnsiBkVnRP0NcKXB2rAefYnEkEuKxyD7xV9fVBb0yvlhxM=
+X-Gm-Gg: ASbGncswQKt1UTpTHiczW08yPV1bUBEH8N/Av9U3T8dzEgiNRiLatCPXjsFze+BdycI
+ 6Ojjqj2Us2t4pJVIZOzfVMSySN/y7+WWrNPrPBzVlaasUUwP9OnjfhDP0ZaSb6cudNu/bwNaiF/
+ Hv83ERfZ4F5N9kVTTFgoo6QWeMpfmvhvMWqDLNNCZJmA8cQs7VoS/OITVHKE7inyiBMguxf1Qkk
+ a1h+elOXvBTlb0nsR0Mid7PJP/OSRIaPnPPO0XR8jkginveZvSiMngkPUyBDjwqnsHQAd2R373B
+ loy/t7A4Zr24HHIj4f6TnkIu6qJHjSuGQGeBd1C/6WGU0hrXWEEu
+X-Google-Smtp-Source: AGHT+IEp0yNBM+ELuOMhX0wKqofoVpQjl88b5WASP9z2iURC/oMWspJ6GAnpOGGWiHlLBLWpoHGvdA==
+X-Received: by 2002:a17:907:7da2:b0:ad2:39a9:f1b2 with SMTP id
+ a640c23a62f3a-ad536fa5966mr1921937666b.59.1747845785703; 
+ Wed, 21 May 2025 09:43:05 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d047754sm918511066b.7.2025.05.21.09.42.50
+ a640c23a62f3a-ad52d497214sm929070366b.146.2025.05.21.09.42.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 09:42:51 -0700 (PDT)
+ Wed, 21 May 2025 09:43:01 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6B9A15F9E3;
- Wed, 21 May 2025 17:42:50 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 4AD235FA53;
+ Wed, 21 May 2025 17:42:51 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -82,21 +82,19 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Gustavo Romero <gustavo.romero@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Julian Armistead <julian.armistead@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH v3 03/20] tests/tcg: make aarch64 boot.S handle different
- starting modes
-Date: Wed, 21 May 2025 17:42:33 +0100
-Message-Id: <20250521164250.135776-4-alex.bennee@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>, Dongwon Kim <dongwon.kim@intel.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>
+Subject: [PATCH v3 14/20] ui/gtk-gl-area: Remove extra draw call in refresh
+Date: Wed, 21 May 2025 17:42:44 +0100
+Message-Id: <20250521164250.135776-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250521164250.135776-1-alex.bennee@linaro.org>
 References: <20250521164250.135776-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -119,283 +117,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the boot.S code assumes everything starts at EL1. This will
-break things like the memory test which will barf on unaligned memory
-access when run at a higher level.
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Adapt the boot code to do some basic verification of the starting mode
-and the minimal configuration to move to the lower exception levels.
-With this we can run the memory test with:
+This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
+which causes some guest display corruption when gtk-gl-area
+is used for GTK rendering (e.g. Wayland Compositor) possibly due to
+simulataneous accesses on the guest frame buffer by host compositor
+and the guest.
 
-  -M virt,secure=on
-  -M virt,secure=on,virtualization=on
-  -M virt,virtualisation=on
-
-If a test needs to be at a particular EL it can use the semihosting
-command line to indicate the level we should execute in.
-
-Cc: Julian Armistead <julian.armistead@linaro.org>
-Cc: Jim MacArthur <jim.macarthur@linaro.org>
+Fixes: 77bf310084 ("ui/gtk: Draw guest frame at refresh cycle")
+Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reported-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Message-Id: <20250214170813.2234754-1-dongwon.kim@intel.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v3
-  - create system stack so we _exit cleanly
-  - normalise EL string before compares
-  - catch when we start in a lower EL than we asked for
-  - default to EL1 when arg unclear
-v2
-  - allow tests to control the final EL we end up at
-  - use tabs consistently
-  - validate command line arg is between 1 and 3
----
- tests/tcg/aarch64/Makefile.softmmu-target |   3 +-
- tests/tcg/aarch64/system/boot.S           | 171 +++++++++++++++++++++-
- 2 files changed, 168 insertions(+), 6 deletions(-)
+ ui/gtk-gl-area.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
-index 9c52475b7a..f7a7d2b800 100644
---- a/tests/tcg/aarch64/Makefile.softmmu-target
-+++ b/tests/tcg/aarch64/Makefile.softmmu-target
-@@ -68,7 +68,8 @@ run-plugin-semiconsole-with-%: semiconsole
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 2c9a0db425..9f7dc697f2 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -129,7 +129,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
  
- # vtimer test needs EL2
- QEMU_EL2_MACHINE=-machine virt,virtualization=on,gic-version=2 -cpu cortex-a57 -smp 4
--run-vtimer: QEMU_OPTS=$(QEMU_EL2_MACHINE) $(QEMU_BASE_ARGS) -kernel
-+QEMU_EL2_BASE_ARGS=-semihosting-config enable=on,target=native,chardev=output,arg="2"
-+run-vtimer: QEMU_OPTS=$(QEMU_EL2_MACHINE) $(QEMU_EL2_BASE_ARGS) -kernel
+     if (vc->gfx.guest_fb.dmabuf &&
+         qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        gd_gl_area_draw(vc);
+         return;
+     }
  
- # Simple Record/Replay Test
- .PHONY: memory-record
-diff --git a/tests/tcg/aarch64/system/boot.S b/tests/tcg/aarch64/system/boot.S
-index a5df9c173d..78380a6f75 100644
---- a/tests/tcg/aarch64/system/boot.S
-+++ b/tests/tcg/aarch64/system/boot.S
-@@ -16,6 +16,7 @@
- #define semihosting_call hlt 0xf000
- #define SYS_WRITEC	0x03	/* character to debug channel */
- #define SYS_WRITE0	0x04	/* string to debug channel */
-+#define SYS_GET_CMDLINE 0x15	/* get command line */
- #define SYS_EXIT	0x18
- 
- 	.align	12
-@@ -70,21 +71,171 @@ lower_a32_sync:
- lower_a32_irq:
- lower_a32_fiq:
- lower_a32_serror:
-+	adr	x1, .unexp_excp
-+exit_msg:
- 	mov	x0, SYS_WRITE0
--	adr	x1, .error
- 	semihosting_call
- 	mov	x0, 1 /* EXIT_FAILURE */
- 	bl 	_exit
- 	/* never returns */
- 
- 	.section .rodata
--.error:
--	.string "Terminated by exception.\n"
-+.unexp_excp:
-+	.string "Unexpected exception.\n"
-+.high_el_msg:
-+	.string "Started in lower EL than requested.\n"
-+
-+	.align 8
-+.get_cmd:
-+	.quad	cmdline
-+	.quad	128
- 
- 	.text
- 	.align 4
- 	.global __start
- __start:
-+	/*
-+         * Initialise the stack for whatever EL we are in before
-+	 * anything else, we need it to be able to _exit cleanly.
-+	 * It's smaller than the stack we pass to the C code but we
-+	 * don't need much.
-+	 */
-+	adrp	x0, system_stack_end
-+	add	x0, x0, :lo12:system_stack_end
-+	mov	sp, x0
-+
-+	/*
-+	 * The test can set the semihosting command line to the target
-+	 * EL needed for the test. However if no semihosting args are set we will
-+	 * end up with -kernel/-append data (see semihosting_arg_fallback).
-+	 * Keep the normalised target in w11.
-+	 */
-+	mov	x0, SYS_GET_CMDLINE
-+	adr	x1, .get_cmd
-+	semihosting_call
-+	adrp	x10, cmdline
-+	add	x10, x10, :lo12:cmdline
-+	ldrb	w11, [x10]
-+
-+	/* sanity check, normalise char to EL, clamp to 1 if outside range */
-+	subs w11, w11, #'0'
-+	b.lt el_default
-+	cmp  w11, #3
-+	b.gt el_default
-+	b 1f
-+
-+el_high:
-+	adr	x1, .high_el_msg
-+	b	exit_msg
-+
-+el_default:
-+	mov	w11, #1
-+
-+1:
-+	/* Determine current Exception Level */
-+	mrs	x0, CurrentEL
-+	lsr	x0, x0, #2	  /* CurrentEL[3:2] contains the current EL */
-+
-+	/* Are we already in a lower EL than we want? */
-+	cmp	w11, w0
-+	bgt	el_high
-+
-+	/* Branch based on current EL */
-+	cmp	x0, #3
-+	b.eq	setup_el3
-+	cmp	x0, #2
-+	b.eq	setup_el2
-+	cmp	x0, #1
-+	b.eq	at_testel	     /* Already at EL1, skip transition */
-+	/* Should not be at EL0 - error out */
-+	b	curr_sp0_sync
-+
-+setup_el3:
-+	/* Ensure we trap if we get anything wrong */
-+	adr	x0, vector_table
-+	msr	vbar_el3, x0
-+
-+	/* Does the test want to be at EL3? */
-+	cmp	w11, #3
-+	beq	at_testel
-+
-+	/* Configure EL3 to for lower states (EL2 or EL1) */
-+	mrs	x0, scr_el3
-+	orr	x0, x0, #(1 << 10)    /* RW = 1: EL2/EL1 execution state is AArch64 */
-+	orr	x0, x0, #(1 << 0)     /* NS = 1: Non-secure state */
-+	msr	scr_el3, x0
-+
-+	/*
-+	 * We need to check if EL2 is actually enabled via ID_AA64PFR0_EL1,
-+	 * otherwise we should just jump straight to EL1.
-+	 */
-+	mrs	x0, id_aa64pfr0_el1
-+	ubfx	x0, x0, #8, #4	      /* Extract EL2 field (bits 11:8) */
-+	cbz	x0, el2_not_present   /* If field is 0 no EL2 */
-+
-+
-+	/* Prepare SPSR for exception return to EL2 */
-+	mov	x0, #0x3c9	      /* DAIF bits and EL2h mode (9) */
-+	msr	spsr_el3, x0
-+
-+	/* Set EL2 entry point */
-+	adr	x0, setup_el2
-+	msr	elr_el3, x0
-+
-+	/* Return to EL2 */
-+	eret
-+	nop
-+
-+el2_not_present:
-+	/* Initialize SCTLR_EL1 with reset value */
-+	msr	sctlr_el1, xzr
-+
-+	/* Set EL1 entry point */
-+	adr	x0, at_testel
-+	msr	elr_el3, x0
-+
-+	/* Prepare SPSR for exception return to EL1h with interrupts masked */
-+	mov	x0, #0x3c5	      /* DAIF bits and EL1h mode (5) */
-+	msr	spsr_el3, x0
-+
-+	isb			      /* Synchronization barrier */
-+	eret			      /* Jump to EL1 */
-+
-+setup_el2:
-+	/* Ensure we trap if we get anything wrong */
-+	adr	x0, vector_table
-+	msr	vbar_el2, x0
-+
-+	/* Does the test want to be at EL2? */
-+	cmp	w11, #2
-+	beq	at_testel
-+
-+	/* Configure EL2 to allow transition to EL1 */
-+	mrs	x0, hcr_el2
-+	orr	x0, x0, #(1 << 31)    /* RW = 1: EL1 execution state is AArch64 */
-+	msr	hcr_el2, x0
-+
-+	/* Initialize SCTLR_EL1 with reset value */
-+	msr	sctlr_el1, xzr
-+
-+	/* Set EL1 entry point */
-+	adr	x0, at_testel
-+	msr	elr_el2, x0
-+
-+	/* Prepare SPSR for exception return to EL1 */
-+	mov	x0, #(0x5 << 0)	      /* EL1h (SPx), with interrupts disabled */
-+	msr	spsr_el2, x0
-+
-+	/* Return to EL1 */
-+	eret
-+
-+	nop
-+
-+	/*
-+	 * At the target EL for the test, usually EL1. Note we still
-+	 * set everything up as if we were at EL1.
-+	 */
-+at_testel:
- 	/* Installs a table of exception vectors to catch and handle all
- 	   exceptions by terminating the process with a diagnostic.  */
- 	adr	x0, vector_table
-@@ -100,7 +251,7 @@ __start:
- 	 * maps RAM to the first Gb. The stage2 tables have two 2mb
- 	 * translation block entries covering a series of adjacent
- 	 * 4k pages.
--	*/
-+	 */
- 
- 	/* Stage 1 entry: indexed by IA[38:30] */
- 	adr	x1, .				/* phys address */
-@@ -198,7 +349,8 @@ __start:
- 	orr	x0, x0, #(3 << 16)
- 	msr	cpacr_el1, x0
- 
--	/* Setup some stack space and enter the test code.
-+	/*
-+	 * Setup some stack space before we enter the test code.
- 	 * Assume everything except the return value is garbage when we
- 	 * return, we won't need it.
- 	 */
-@@ -233,6 +385,11 @@ __sys_outc:
- 	ret
- 
- 	.data
-+
-+	.align 8
-+cmdline:
-+	.space 128, 0
-+
- 	.align	12
- 
- 	/* Translation table
-@@ -246,6 +403,10 @@ ttb_stage2:
- 	.space	4096, 0
- 
- 	.align	12
-+system_stack:
-+	.space 4096, 0
-+system_stack_end:
-+
- stack:
- 	.space 65536, 0
- stack_end:
 -- 
 2.39.5
 
