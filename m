@@ -4,94 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DA5FC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E4F6C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHepM-0005AT-HF; Wed, 21 May 2025 04:29:28 -0400
+	id 1uHes6-0007Ru-5J; Wed, 21 May 2025 04:32:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHepK-00059i-KA; Wed, 21 May 2025 04:29:26 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uHepG-0001bf-95; Wed, 21 May 2025 04:29:26 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b26f67f10ddso3624977a12.3; 
- Wed, 21 May 2025 01:29:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747816157; x=1748420957; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9Yq/HLt0u14BIYiMVeYiqtquSRLg0l668z+sdOxNc1o=;
- b=fo1SBL2RN5PWyL57nKAzy6mrlXOsXnx7LyzkPHwKoBT36wlDaHnw3K90mFiXyAElbH
- o12DaqaIuIrvgXg6ntFWeCIqh7oQ0gRP1CRtc/+aowFdUnAFnD9M5ldAr13doyaQPQ6P
- r17MM2dYzcV385QFgyyIFobpV2IMMDL6vrceh1ylTC1gLRnJPpPcVJGwMzab2DSFnBNK
- 3dwOT3EXAVED4PuK9AmVtjyffk66bvheA3v8jHtkwTdJGe9zKxCYzArcxn/kuinTbXb6
- AwRS1Fkfwx2P60uta4/YvzhoINFf8FJlgsIbJnUnXu4LcnkAiT3dLL+wU+osYmOEPCXy
- pqZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747816157; x=1748420957;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9Yq/HLt0u14BIYiMVeYiqtquSRLg0l668z+sdOxNc1o=;
- b=G0vkKJbd/mEiIf2AuGOsYcpqGoZRNyZ08q9S2Dhn1n8dyv4L/hUmru1Lyp/cT0/d0P
- CoMQ0IyHwGIP3dB4PKq0CmYD7PYYEDx1gv8p9hfDWMc/D03K+/Rfl65p9GxI7SG08WNx
- q7x7BVcBPv8vxfWtt/UgD/gqQE6xR95Pt2qkOrpvVia5g1Lh8LNbrJ5Y4z+HYDfqefZU
- yl0OQILF9pX+3hGuQZvbOEdFMFjXgaTUVjARPnWszQjHSF5Y6s3cU0XqcvrN9dcQQq7O
- 4m47n8sc4LJmIR0qpqSpFrRV/GrS3CawZmP0Tk8rSSV4HU62ZtC1aAECesV5lPSVFoST
- /DGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4QhMLCNuBUpQqsV9DuyysQNXnenKLEyyu7QOFjR6P+nIzfMeKNkRf9UoNwxSkY2bsEgmZ2jZmsKHaEA==@nongnu.org,
- AJvYcCVrqMXH4oPOr5T0xLqOFt/eKoD0ZcvnzF9IXvai8JGaeAiT8p9FS4+o+jFdyBYiWXAQWYZIG4wRZJRINg==@nongnu.org,
- AJvYcCWmFqM5rV9gJWza6omCjzoMjCd/QXO4ZgTb0XAojyik8bw3GjHOx3R+/GzEM728H0tB44w+zUz3zg==@nongnu.org
-X-Gm-Message-State: AOJu0YzNOXa/SDkiLZjgcRXJN+IA17nYYQbYAjz+f+ih5gVTD3DoLBPR
- igThEQKlD9t/j6R1GmgGJ/jlcfNxgpAkmZOJowWnY8sOTLSIzIJRYzCOrgKPEvWClq1zPhES31l
- 52nN6rU/Rf6uuPCnb9K2WO/7I07Dap4Q=
-X-Gm-Gg: ASbGncvGBrROa/o7NloJbXpbDdl1MHI9qoivzi7uKkPPCYpe6sr2p5DgWvTFuCQpKbT
- wGf3X3raEQrgHDHTwanhuS7BNbbbKtI2S680+4iSOVdxy/jilei/s2pB9NiOOabjvbTWVbBCDQC
- PvVrbwEFhmPDvXVUpEmAPIjeRSJb3w4dnjFP4euOIHW2trkNku+uHkK4Yy0JBdwS0=
-X-Google-Smtp-Source: AGHT+IEUh3uoaveZbpcJPUlHTxMxs7OkktAMIfznj5fp70O+RYxcRAtZuaoB5EIpvZT5hUNQ7guv3tzIEtG1/4ORiHc=
-X-Received: by 2002:a17:903:2284:b0:22f:b25b:8e93 with SMTP id
- d9443c01a7336-231de3b9f2cmr296656725ad.48.1747816157263; Wed, 21 May 2025
- 01:29:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uHes3-0007RP-WC
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 04:32:16 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uHerz-00024q-5z
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 04:32:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747816331; x=1779352331;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=WYKrLqTpzo+Kn2nj+U3KFX7t/XvO3S/P5Se2toDBQk0=;
+ b=Zyc1pSpRWzjc0Wix4h8rJOGMzCoIWpd0DOrkN0NKCgyFvpJNPCSMAwI3
+ AgRPQpvqgkOb4ISDSU2fEKMhr7ga3fziU8IaD4c0sYt3+fbIpx/MixMHi
+ ZjCqNdG6TdUc9F55/8UZnahL9KT5GnuEqTTeUvcmwYkOiEDbUyi3YPR8W
+ g4UvwJnVT09Ms3tKFCAWx1f3/ReEpGJepncLi0AqYbokZCs3g/Xbq98z0
+ aRaF7ho3HcHjXxH6/0BER6OgcUBP0+vh/+XX2PNtipSFVfDiOGAdrBRyt
+ QrM0eiw99rwpSGVpYPgRGXzdLYniZsIbWYyeu3s1jM+C/lAVbJosEFYC5 w==;
+X-CSE-ConnectionGUID: oyhCEL4oTDurDXrZPFN4pA==
+X-CSE-MsgGUID: 3NoYIy4aRjWTOSeBSBaotg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="49043530"
+X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="49043530"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2025 01:32:06 -0700
+X-CSE-ConnectionGUID: 301eAhgwQDaptSZLeY+T+w==
+X-CSE-MsgGUID: Q91BmB1sTdeyeJxBnk7oRw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="144698852"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 21 May 2025 01:32:04 -0700
+Date: Wed, 21 May 2025 16:53:10 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Chuang Xu <xuchuangxclwt@bytedance.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Isaku Yamahata <isaku.yamahata@intel.com>,
+ Babu Moger <babu.moger@amd.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/4] i386/cpu: Fix topological field encoding & overflow
+Message-ID: <aC2UduRVRiALRVyk@intel.com>
+References: <20250227062523.124601-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-References: <cover.1747744132.git.ktokunaga.mail@gmail.com>
- <d3e7e584cf61c76952f4c9d913ba80d905c80e76.1747744132.git.ktokunaga.mail@gmail.com>
- <5d54270a-51be-4462-a02d-a12432e42be4@redhat.com>
-In-Reply-To: <5d54270a-51be-4462-a02d-a12432e42be4@redhat.com>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Wed, 21 May 2025 17:29:05 +0900
-X-Gm-Features: AX0GCFtHiLrQRJyVIZfjX9qmk5k560ZlxcMBQ7lCVV5Zt-BYXWrNvzA8wIBXYI0
-Message-ID: <CAEDrbUYGOfY5EPB2g-+VxFYhwrNUFKsGR8Lm4dxML0HwsAD_3A@mail.gmail.com>
-Subject: Re: [PATCH 23/33] include/exec: Allow using 64bit guest addresses on
- emscripten
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>, 
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org, 
- qemu-riscv@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000002fbbd40635a1292d"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250227062523.124601-1-zhao1.liu@intel.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,96 +86,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002fbbd40635a1292d
-Content-Type: text/plain; charset="UTF-8"
-
 Hi Paolo,
 
-> On 5/20/25 14:51, Kohei Tokunaga wrote:
-> >     target_kconfig = []
-> >     foreach sym: accelerators
-> > -    # Disallow 64-bit on 32-bit emulation and virtualization
-> > -    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-> > -      continue
-> > +    if host_arch != 'wasm32'
-> > +      # Disallow 64-bit on 32-bit emulation and virtualization
-> > +      if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-> > +        continue
-> > +      endif
-> >       endif
-> >       if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym,
-[])
-> >         config_target += { sym: 'y' }
->
-> I'd prefer something like
->
-> # Detect host pointer size for the target configuration loop.
-> host_long_bits = cc.sizeof('void *') * 8
-> tcg_vaddr_bits = host_arch == 'wasm32' ? 64 : host_long_bits
-> ...
-> config_host_data.set('TCG_VADDR_BITS', tcg_vaddr_bits)
->
-> Then in the target configuration loop
->
-> -    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
-> +    if tcg_vaddr_bits < config_target['TARGET_LONG_BITS'].to_int()
->
-> and throughout the code you can have
->
-> #ifdef TCG_VADDR_BITS == 32
-> ...
-> #else
-> ...
-> #endif
->
-> instead of
->
-> #ifdef EMSCRIPTEN
-> ...
-> #else
-> ...
-> #endif
->
-> In fact, I think this patch would be acceptable as a separate
-> submission, because it could be tested using TCI already.
+A gentle poke. There's no conflict for now. Do you agree with these
+fixes?
 
-Thank you for the feedback. I'll work on implementing this using
-TCG_VADDR_BITS and submit it as a separated series.
+Thanks,
+Zhao
 
---0000000000002fbbd40635a1292d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Paolo,<br><br>&gt; On 5/20/25 14:51, K=
-ohei Tokunaga wrote:<br>&gt; &gt; =C2=A0 =C2=A0 target_kconfig =3D []<br>&g=
-t; &gt; =C2=A0 =C2=A0 foreach sym: accelerators<br>&gt; &gt; - =C2=A0 =C2=
-=A0# Disallow 64-bit on 32-bit emulation and virtualization<br>&gt; &gt; - =
-=C2=A0 =C2=A0if host_long_bits &lt; config_target[&#39;TARGET_LONG_BITS&#39=
-;].to_int()<br>&gt; &gt; - =C2=A0 =C2=A0 =C2=A0continue<br>&gt; &gt; + =C2=
-=A0 =C2=A0if host_arch !=3D &#39;wasm32&#39;<br>&gt; &gt; + =C2=A0 =C2=A0 =
-=C2=A0# Disallow 64-bit on 32-bit emulation and virtualization<br>&gt; &gt;=
- + =C2=A0 =C2=A0 =C2=A0if host_long_bits &lt; config_target[&#39;TARGET_LON=
-G_BITS&#39;].to_int()<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0continue<br=
->&gt; &gt; + =C2=A0 =C2=A0 =C2=A0endif<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 en=
-dif<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 if sym =3D=3D &#39;CONFIG_TCG&#39; or=
- target in accelerator_targets.get(sym, [])<br>&gt; &gt; =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 config_target +=3D { sym: &#39;y&#39; }<br>&gt; <br>&gt; I&#39;d=
- prefer something like<br>&gt; <br>&gt; # Detect host pointer size for the =
-target configuration loop.<br>&gt; host_long_bits =3D cc.sizeof(&#39;void *=
-&#39;) * 8<br>&gt; tcg_vaddr_bits =3D host_arch =3D=3D &#39;wasm32&#39; ? 6=
-4 : host_long_bits<br>&gt; ...<br>&gt; config_host_data.set(&#39;TCG_VADDR_=
-BITS&#39;, tcg_vaddr_bits)<br>&gt; <br>&gt; Then in the target configuratio=
-n loop<br>&gt; <br>&gt; - =C2=A0 =C2=A0if host_long_bits &lt; config_target=
-[&#39;TARGET_LONG_BITS&#39;].to_int()<br>&gt; + =C2=A0 =C2=A0if tcg_vaddr_b=
-its &lt; config_target[&#39;TARGET_LONG_BITS&#39;].to_int()<br>&gt; <br>&gt=
-; and throughout the code you can have<br>&gt; <br>&gt; #ifdef TCG_VADDR_BI=
-TS =3D=3D 32<br>&gt; ...<br>&gt; #else<br>&gt; ...<br>&gt; #endif<br>&gt; <=
-br>&gt; instead of<br>&gt; <br>&gt; #ifdef EMSCRIPTEN<br>&gt; ...<br>&gt; #=
-else<br>&gt; ...<br>&gt; #endif<br>&gt; <br>&gt; In fact, I think this patc=
-h would be acceptable as a separate<br>&gt; submission, because it could be=
- tested using TCI already.<br><br>Thank you for the feedback. I&#39;ll work=
- on implementing this using<br>TCG_VADDR_BITS and submit it as a separated =
-series.</div></div>
-
---0000000000002fbbd40635a1292d--
+On Thu, Feb 27, 2025 at 02:25:19PM +0800, Zhao Liu wrote:
+> Date: Thu, 27 Feb 2025 14:25:19 +0800
+> From: Zhao Liu <zhao1.liu@intel.com>
+> Subject: [PATCH 0/4] i386/cpu: Fix topological field encoding & overflow
+> X-Mailer: git-send-email 2.34.1
+> 
+> Hi,
+> 
+> This series collects and organizes several topology-related cleanups and
+> fixes, based on b69801dd6b1e ("Merge tag 'for_upstream' of
+> https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging").
+> 
+> Patch 1 is picked from Chuang's v6 [1].
+> 
+> Patch 2-3 are picked from Qian's v4 [2], though it had previously gone
+> through sufficient review (got R/b tags), I dropped its R/b tags because
+> of my code change.
+> 
+> Patch 4 is newly added, inspired by patch 3, to also perform a check on
+> AMD's cache CPUID. This is to consider the current maximum number of
+> supported CPUs, which is approaching the overflow boundary.
+> 
+> In addition to the 0x1, 0x4, and 0x8000001d leaves involved in the patch
+> series, there is also the 0x1f leaf related to topology. However, the
+> upper limit for CPUID.1FH.EBX[bits 15:0] is 65,535 threads, which
+> provides enough room. Therefore, this field does not currently require
+> overflow checks.
+> 
+> This series correct the CPUIDs, but it doesn't affect the Guest's live
+> migration. Therefore, I did not add the compat property for this.
+> 
+> [1]: https://lore.kernel.org/qemu-devel/20241009035638.59330-1-xuchuangxclwt@bytedance.com/
+> [2]: https://lore.kernel.org/qemu-devel/20230829042405.932523-2-qian.wen@intel.com/
+> 
+> Thanks and Best Regards,
+> Zhao
+> ---
+> Chuang Xu (1):
+>   i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX[23:16]
+> 
+> Qian Wen (2):
+>   i386/cpu: Fix cpu number overflow in CPUID.01H.EBX[23:16]
+>   i386/cpu: Fix overflow of cache topology fields in CPUID.04H
+> 
+> Zhao Liu (1):
+>   i386/cpu: Honor maximum value for CPUID.8000001DH.EAX[25:14]
+> 
+>  target/i386/cpu.c | 35 ++++++++++++++++++++++++++++-------
+>  1 file changed, 28 insertions(+), 7 deletions(-)
+> 
+> -- 
+> 2.34.1
+> 
+> 
 
