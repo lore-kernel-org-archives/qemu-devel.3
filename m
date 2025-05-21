@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61A8C54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 388BAC54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:39:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHs4d-0006Ct-PQ; Wed, 21 May 2025 18:38:07 -0400
+	id 1uHs4j-0006Ec-ND; Wed, 21 May 2025 18:38:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHs4X-0006Ac-Ih
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:38:01 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1uHs4f-0006DD-Rp
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:38:10 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHs4O-0005YU-F1
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:38:01 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-23274dbcbc2so24989425ad.1
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 15:37:49 -0700 (PDT)
+ id 1uHs4W-0005az-7u
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:38:08 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b26ee6be1ecso4084306a12.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 15:37:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747867068; x=1748471868; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747867076; x=1748471876; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=htF0VZgASZ43ct5qX/VW/MjRlaWWMAyaJawS0GNM9SY=;
- b=WY/7dFVfW0T63NYi+6cfblR2ZFWNqCd6rClqV5SC/ceBYAlJRE6P5/TuM6ao774S0L
- PVTE7HcaK6NqriGYMdAA4Tm96ISSI7w9I3xWiJ354OfZT6LbHqHv9kSRILkb5pu7anLn
- aLGBMew/BuuUM+HotH7ioBKgYnNhEWGUbXY0XkrdhLIG1jIa3bsabJHeHmFSkhIDi4L+
- A9oKXv6hLcclt33LvgGFMA5riDX2d3yRGr9EmkxWNTa47kMmjgyLdN3wfVUieZFf49Qk
- /8rxpyfWt6pDapBN/7lm9VBAagJn4DfglLqiJ2LjyTXNcflez8t5NQXqozpRu/y4+SSC
- 8srw==
+ bh=xFNyLq61X9oj5XcqX9ULx+NmBqVjk0YKZDfCa6aorIU=;
+ b=WizQGAlm872BRDcdElbnExnsWviWxghyZhyyLVI13n2qbu8zKKSbjuZm9AgMeVPNG4
+ 4Gu6Vx12TOsJhRciqAd6yJUE/HY8inzSaFaJFxABQaeot1HMz9iOew0stUo2ovnrNQcZ
+ IMx6oi+MJdkUIlhhJcol9JG/cXfKJ/H3CQOoOWsQbe2+ja0o3bajewB/6+0O3wY8eAlW
+ HTJdOR82PWvNdwPbWmFaCxcUhFeFsVMH+WnSziTjxKgAKgurgp1/rshNTMah5u/fG3Z8
+ hNq6HFbVY5uKI3waRurIyqdfmRy2YkLGtDBSdbmKU2/BnZGYSvBVkErxFXc16oqVXU73
+ Eozg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747867068; x=1748471868;
+ d=1e100.net; s=20230601; t=1747867076; x=1748471876;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=htF0VZgASZ43ct5qX/VW/MjRlaWWMAyaJawS0GNM9SY=;
- b=JPMVnNsWRI6nWFGevCTIwDpcO5cEPtfngY7fwmGrSxaw3Kaz/jTNuz5cgVPGK6juOQ
- cdXdcmqrDlaJHKBiLG63Kt/H1+mmQRO3QdwTCFUY2FBpihkIwFPYGLPz+7T4TYtwcNi4
- gU8RFKdcceXpVZdKiUuwLqOn6W6xG7CYDDbEqZWGX3SGYAQuVX8E8e9JedFGMTfG1361
- 3YgYEeRquxaV88mh0V5P1M/EPqxS9Al/qT9XcACMNHel4Q5PrehsIQxY5kzChgq/VCy7
- uwGG84Yuv0spUJLaUs2ZuBh8A1Fkc4MZe4WJIOA0lbn6MqnS/uR2Dw2IwxSYjpwkUew1
- wyxQ==
-X-Gm-Message-State: AOJu0YyUP2E9wMasjaAC4SQRmLfrCSDUgAQQPiKJ7MpIASE3CKEOTXwx
- fKpdV5R6X/xBCFE7NufwEN3HPhBp+8C9iEe1riQT25f7/pIttzLKhQSukXkNXtkI8qHccjPWAZZ
- cv3RO
-X-Gm-Gg: ASbGncsqq4qmQ3L7n4q5u7hg4eKqg0yr77fEcTOWu0+aIHtBTw3bH2PqDkCIefwSqmq
- SsY+D1yB+wz6yrtdEWglOgfz/2SFGPMbLPg00deCdkTNi8BPY2FFnWxabXC7juJwkMPwvV6r9op
- UavcSMSYzT0bsxF91dQ4N5dV5xbsERorZq9aQVpHYLyU0UT9TwU7G08gGH6d+2gLA3JzkKYpy5C
- bHLP9MUjXLPxjEuZReHThGgckkjzK1WtFu1JIi4TGd4vFIh+b8cuhdBYIANa2ETVcE9UofqyDWk
- TRDXtAurTJ+mwzIt/kNnCz5CCSFDaS0Knmp6R0UcRXqXrvuC+X0=
-X-Google-Smtp-Source: AGHT+IGxZWngZAeMOLFAZ8ZHvpk9qxKqMwgVCdVAwuCUsFTVHX+wXQWc+73f600fNX/fe2B5vNylAg==
-X-Received: by 2002:a17:902:fc46:b0:231:cb8e:472e with SMTP id
- d9443c01a7336-231de3b9eedmr323389595ad.46.1747867067789; 
- Wed, 21 May 2025 15:37:47 -0700 (PDT)
+ bh=xFNyLq61X9oj5XcqX9ULx+NmBqVjk0YKZDfCa6aorIU=;
+ b=iZN/NGQ47lUUsaJJ0xGoquWMHQNVoxB3qgUY1dS5mxDGqWs9HFP+PbczM14A3rS54M
+ i3yrhcSo/aHl4vy0+A/2XdZhFin857amMiYi84OY6D9FPlk7kAVz8rhTKznC4ENN/fQn
+ AMC1yNjZ+MHQ0gZQokhztbS+SUVFNuY0tD/DeBPN1bKVzNisUqMeS+Vfo5ipO297P4Nw
+ Reun2+bCJaYYFheRzEpgicvFV6L4ppw8PJwmz2XiA4LnBTUelbT3anQCU6w5AhLS6lJM
+ yY9yVmkmWpUtYrWJ4TwWK7QCvou4QxuV76CBrwSVKOr3z+xdtRn09Z9mQ66wTLmmjk4k
+ TTug==
+X-Gm-Message-State: AOJu0YwWWCyQBpuJ3aeSm9F/BFS/c4q0ZfGJHvd7jogSq7wrn9ssYSVC
+ 4pMdZhtmhpNWZCen8w/28D1VgGVFevVjuqAAup1yha6qPip0T/bkxpVdF5rAd2HGWQxU3B35jSs
+ tH+NI
+X-Gm-Gg: ASbGncvbX3qWy3gSa5bIvEbmlw4GoPliFxVvWt2D4RRkWA81nXW/a8pXvmgAt/paDow
+ /IEAnL3I+cR6n3pViYFvQUga2j9HgLi6QcGWpatzFqI/S2V29Y/Sl/6mk+fvKl6VgXzG3hP+Et7
+ ldESX0ETkpxR664I5wVGTUpsDySr2Z4zLigJLwzFXWwigNDF5Dcd09SCYtP4W8uPe2wjyX8oY/D
+ 8q3DmV6n7e1s7WCxEq99uRlguACYjPXEQYeIPe21z98fzJLUYmavVLjBcwW3UfFl/fJ00MpsOqA
+ 4AunQ/4B1avNvJS5PICV4CxnwKlp1UbFkBRjoJm8xkS6zdGs7wU=
+X-Google-Smtp-Source: AGHT+IGKna2V+o0bir2P39PsvyeMw+2+W4JpVcCCOm1N4eu9SCEJDKzREMFeS/GQhS/8gBQt8QX7Lg==
+X-Received: by 2002:a17:902:e786:b0:231:d143:746c with SMTP id
+ d9443c01a7336-231de3ada00mr275968595ad.39.1747867076160; 
+ Wed, 21 May 2025 15:37:56 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4e97dcesm97711105ad.121.2025.05.21.15.37.47
+ d9443c01a7336-231d4e97dcesm97711105ad.121.2025.05.21.15.37.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 15:37:47 -0700 (PDT)
+ Wed, 21 May 2025 15:37:55 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com, peter.maydell@linaro.org,
  armbru@redhat.com, michael.roth@amd.com, philmd@linaro.org,
  richard.henderson@linaro.org, berrange@redhat.com, thuth@redhat.com
-Subject: [PATCH v3 03/14] qapi: make SEV commands unconditionally available
-Date: Wed, 21 May 2025 15:37:29 -0700
-Message-ID: <20250521223740.249720-4-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 12/14] qapi: use imperative style in documentation
+Date: Wed, 21 May 2025 15:37:38 -0700
+Message-ID: <20250521223740.249720-13-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250521223740.249720-1-pierrick.bouvier@linaro.org>
 References: <20250521223740.249720-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,720 +100,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+As requested by Markus:
+> We prefer imperative mood "Return" over "Returns".
 
-This removes the TARGET_I386 condition from the SEV confidential
-virtualization commands, moving them to the recently introduced
-misc-i386.json QAPI file, given they are inherantly i386 specific
-commands.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qapi/misc-i386.json           | 271 ++++++++++++++++++++++++++++++++
- qapi/misc-target.json         | 284 ----------------------------------
- stubs/monitor-i386-sev.c      |  36 +++++
- target/i386/sev-system-stub.c |  32 ----
- target/i386/sev.c             |   2 +-
- stubs/meson.build             |   1 +
- 6 files changed, 309 insertions(+), 317 deletions(-)
- create mode 100644 stubs/monitor-i386-sev.c
+ qapi/audio.json     | 2 +-
+ qapi/char.json      | 4 ++--
+ qapi/cryptodev.json | 2 +-
+ qapi/machine.json   | 4 ++--
+ qapi/migration.json | 8 ++++----
+ qapi/misc-i386.json | 6 +++---
+ qapi/ui.json        | 8 ++++----
+ 7 files changed, 17 insertions(+), 17 deletions(-)
 
+diff --git a/qapi/audio.json b/qapi/audio.json
+index dd5a58d13e6..826477c3072 100644
+--- a/qapi/audio.json
++++ b/qapi/audio.json
+@@ -533,7 +533,7 @@
+ ##
+ # @query-audiodevs:
+ #
+-# Returns information about audiodev configuration
++# Return information about audiodev configuration
+ #
+ # Returns: array of @Audiodev
+ #
+diff --git a/qapi/char.json b/qapi/char.json
+index dde2f9538f8..447c10b91a5 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -34,7 +34,7 @@
+ ##
+ # @query-chardev:
+ #
+-# Returns information about current character devices.
++# Return information about current character devices.
+ #
+ # Returns: a list of @ChardevInfo
+ #
+@@ -80,7 +80,7 @@
+ ##
+ # @query-chardev-backends:
+ #
+-# Returns information about character device backends.
++# Return information about character device backends.
+ #
+ # Returns: a list of @ChardevBackendInfo
+ #
+diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
+index 04d0e21d209..28b97eb3da6 100644
+--- a/qapi/cryptodev.json
++++ b/qapi/cryptodev.json
+@@ -94,7 +94,7 @@
+ ##
+ # @query-cryptodev:
+ #
+-# Returns information about current crypto devices.
++# Return information about current crypto devices.
+ #
+ # Returns: a list of @QCryptodevInfo
+ #
+diff --git a/qapi/machine.json b/qapi/machine.json
+index e6b4b2dfef8..7f3af355b36 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -99,7 +99,7 @@
+ ##
+ # @query-cpus-fast:
+ #
+-# Returns information about all virtual CPUs.
++# Return information about all virtual CPUs.
+ #
+ # Returns: list of @CpuInfoFast
+ #
+@@ -467,7 +467,7 @@
+ ##
+ # @query-kvm:
+ #
+-# Returns information about KVM acceleration
++# Return information about KVM acceleration
+ #
+ # Returns: @KvmInfo
+ #
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8b9c53595c4..1278450e09d 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -282,7 +282,7 @@
+ ##
+ # @query-migrate:
+ #
+-# Returns information about current migration process.  If migration
++# Return information about current migration process.  If migration
+ # is active there will be another json-object with RAM migration
+ # status.
+ #
+@@ -535,7 +535,7 @@
+ ##
+ # @query-migrate-capabilities:
+ #
+-# Returns information about the current migration capabilities status
++# Return information about the current migration capabilities status
+ #
+ # Returns: @MigrationCapabilityStatus
+ #
+@@ -1320,7 +1320,7 @@
+ ##
+ # @query-migrate-parameters:
+ #
+-# Returns information about the current migration parameters
++# Return information about the current migration parameters
+ #
+ # Returns: @MigrationParameters
+ #
+@@ -2294,7 +2294,7 @@
+ ##
+ # @query-vcpu-dirty-limit:
+ #
+-# Returns information about virtual CPU dirty page rate limits, if
++# Return information about virtual CPU dirty page rate limits, if
+ # any.
+ #
+ # Since: 7.1
 diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-index d5bfd91405e..de0e4ab67ff 100644
+index cbf85233eba..3fda7a20bdd 100644
 --- a/qapi/misc-i386.json
 +++ b/qapi/misc-i386.json
-@@ -22,3 +22,274 @@
- #     <- { "return": {} }
+@@ -126,7 +126,7 @@
  ##
- { 'command': 'rtc-reset-reinjection' }
-+
-+##
-+# @SevState:
-+#
-+# An enumeration of SEV state information used during @query-sev.
-+#
-+# @uninit: The guest is uninitialized.
-+#
-+# @launch-update: The guest is currently being launched; plaintext
-+#     data and register state is being imported.
-+#
-+# @launch-secret: The guest is currently being launched; ciphertext
-+#     data is being imported.
-+#
-+# @running: The guest is fully launched or migrated in.
-+#
-+# @send-update: The guest is currently being migrated out to another
-+#     machine.
-+#
-+# @receive-update: The guest is currently being migrated from another
-+#     machine.
-+#
-+# Since: 2.12
-+##
-+{ 'enum': 'SevState',
-+  'data': ['uninit', 'launch-update', 'launch-secret', 'running',
-+           'send-update', 'receive-update' ] }
-+
-+##
-+# @SevGuestType:
-+#
-+# An enumeration indicating the type of SEV guest being run.
-+#
-+# @sev: The guest is a legacy SEV or SEV-ES guest.
-+#
-+# @sev-snp: The guest is an SEV-SNP guest.
-+#
-+# Since: 6.2
-+##
-+{ 'enum': 'SevGuestType',
-+  'data': [ 'sev', 'sev-snp' ] }
-+
-+##
-+# @SevGuestInfo:
-+#
-+# Information specific to legacy SEV/SEV-ES guests.
-+#
-+# @policy: SEV policy value
-+#
-+# @handle: SEV firmware handle
-+#
-+# Since: 2.12
-+##
-+{ 'struct': 'SevGuestInfo',
-+  'data': { 'policy': 'uint32',
-+            'handle': 'uint32' } }
-+
-+##
-+# @SevSnpGuestInfo:
-+#
-+# Information specific to SEV-SNP guests.
-+#
-+# @snp-policy: SEV-SNP policy value
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'SevSnpGuestInfo',
-+  'data': { 'snp-policy': 'uint64' } }
-+
-+##
-+# @SevInfo:
-+#
-+# Information about Secure Encrypted Virtualization (SEV) support
-+#
-+# @enabled: true if SEV is active
-+#
-+# @api-major: SEV API major version
-+#
-+# @api-minor: SEV API minor version
-+#
-+# @build-id: SEV FW build id
-+#
-+# @state: SEV guest state
-+#
-+# @sev-type: Type of SEV guest being run
-+#
-+# Since: 2.12
-+##
-+{ 'union': 'SevInfo',
-+  'base': { 'enabled': 'bool',
-+            'api-major': 'uint8',
-+            'api-minor' : 'uint8',
-+            'build-id' : 'uint8',
-+            'state' : 'SevState',
-+            'sev-type' : 'SevGuestType' },
-+  'discriminator': 'sev-type',
-+  'data': {
-+      'sev': 'SevGuestInfo',
-+      'sev-snp': 'SevSnpGuestInfo' } }
-+
-+
-+##
-+# @query-sev:
-+#
-+# Returns information about SEV/SEV-ES/SEV-SNP.
-+#
-+# If unavailable due to an incompatible configuration the
-+# returned @enabled field will be set to 'false' and the
-+# state of all other fields is undefined.
-+#
-+# Returns: @SevInfo
-+#
-+# Since: 2.12
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-sev" }
-+#     <- { "return": { "enabled": true, "api-major" : 0, "api-minor" : 0,
-+#                      "build-id" : 0, "policy" : 0, "state" : "running",
-+#                      "handle" : 1 } }
-+##
-+{ 'command': 'query-sev', 'returns': 'SevInfo' }
-+
-+##
-+# @SevLaunchMeasureInfo:
-+#
-+# SEV Guest Launch measurement information
-+#
-+# @data: the measurement value encoded in base64
-+#
-+# Since: 2.12
-+##
-+{ 'struct': 'SevLaunchMeasureInfo', 'data': {'data': 'str'} }
-+
-+##
-+# @query-sev-launch-measure:
-+#
-+# Query the SEV/SEV-ES guest launch information.
-+#
-+# This is only valid on x86 machines configured with KVM and the
-+# 'sev-guest' confidential virtualization object. The launch
-+# measurement for SEV-SNP guests is only available within
-+# the guest.
-+#
-+# This will return an error if the launch measurement is
-+# unavailable, either due to an invalid guest configuration
-+# or if the guest has not reached the required SEV state.
-+#
-+# Returns: The @SevLaunchMeasureInfo for the guest
-+#
-+# Since: 2.12
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-sev-launch-measure" }
-+#     <- { "return": { "data": "4l8LXeNlSPUDlXPJG5966/8%YZ" } }
-+##
-+{ 'command': 'query-sev-launch-measure', 'returns': 'SevLaunchMeasureInfo' }
-+
-+##
-+# @SevCapability:
-+#
-+# The struct describes capability for a Secure Encrypted
-+# Virtualization feature.
-+#
-+# @pdh: Platform Diffie-Hellman key (base64 encoded)
-+#
-+# @cert-chain: PDH certificate chain (base64 encoded)
-+#
-+# @cpu0-id: Unique ID of CPU0 (base64 encoded) (since 7.1)
-+#
-+# @cbitpos: C-bit location in page table entry
-+#
-+# @reduced-phys-bits: Number of physical Address bit reduction when
-+#     SEV is enabled
-+#
-+# Since: 2.12
-+##
-+{ 'struct': 'SevCapability',
-+  'data': { 'pdh': 'str',
-+            'cert-chain': 'str',
-+            'cpu0-id': 'str',
-+            'cbitpos': 'int',
-+            'reduced-phys-bits': 'int'} }
-+
-+##
-+# @query-sev-capabilities:
-+#
-+# This command is used to get the SEV capabilities, and is only
-+# supported on AMD X86 platforms with KVM enabled. If SEV is not
-+# available on the platform an error will be returned.
-+#
-+# Returns: SevCapability objects.
-+#
-+# Since: 2.12
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-sev-capabilities" }
-+#     <- { "return": { "pdh": "8CCDD8DDD", "cert-chain": "888CCCDDDEE",
-+#                      "cpu0-id": "2lvmGwo+...61iEinw==",
-+#                      "cbitpos": 47, "reduced-phys-bits": 1}}
-+##
-+{ 'command': 'query-sev-capabilities', 'returns': 'SevCapability' }
-+
-+##
-+# @sev-inject-launch-secret:
-+#
-+# This command injects a secret blob into memory of a SEV/SEV-ES guest.
-+#
-+# This is only valid on x86 machines configured with KVM and the
-+# 'sev-guest' confidential virtualization object. SEV-SNP guests
-+# do not support launch secret injection
-+#
-+# This will return an error if launch secret injection is not possible,
-+# either due to an invalid guest configuration, or if the guest has not
-+# reached the required SEV state.
-+#
-+# @packet-header: the launch secret packet header encoded in base64
-+#
-+# @secret: the launch secret data to be injected encoded in base64
-+#
-+# @gpa: the guest physical address where secret will be injected.
-+#
-+# Since: 6.0
-+##
-+{ 'command': 'sev-inject-launch-secret',
-+  'data': { 'packet-header': 'str', 'secret': 'str', '*gpa': 'uint64' } }
-+
-+##
-+# @SevAttestationReport:
-+#
-+# The struct describes attestation report for a Secure Encrypted
-+# Virtualization feature.
-+#
-+# @data: guest attestation report (base64 encoded)
-+#
-+# Since: 6.1
-+##
-+{ 'struct': 'SevAttestationReport',
-+  'data': { 'data': 'str'} }
-+
-+##
-+# @query-sev-attestation-report:
-+#
-+# This command is used to get the SEV attestation report.
-+#
-+# This is only valid on x86 machines configured with KVM and the
-+# 'sev-guest' confidential virtualization object. The attestation
-+# report for SEV-SNP guests is only available within the guest.
-+#
-+# This will return an error if the attestation report is
-+# unavailable, either due to an invalid guest configuration
-+# or if the guest has not reached the required SEV state.
-+#
-+# @mnonce: a random 16 bytes value encoded in base64 (it will be
-+#     included in report)
-+#
-+# Returns: SevAttestationReport objects.
-+#
-+# Since: 6.1
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute" : "query-sev-attestation-report",
-+#                      "arguments": { "mnonce": "aaaaaaa" } }
-+#     <- { "return" : { "data": "aaaaaaaabbbddddd"} }
-+##
-+{ 'command': 'query-sev-attestation-report',
-+  'data': { 'mnonce': 'str' },
-+  'returns': 'SevAttestationReport' }
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index 6b857efc1cc..c0d7b311f30 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -2,290 +2,6 @@
- # vim: filetype=python
+ # @query-sev:
  #
- 
--##
--# @SevState:
--#
--# An enumeration of SEV state information used during @query-sev.
--#
--# @uninit: The guest is uninitialized.
--#
--# @launch-update: The guest is currently being launched; plaintext
--#     data and register state is being imported.
--#
--# @launch-secret: The guest is currently being launched; ciphertext
--#     data is being imported.
--#
--# @running: The guest is fully launched or migrated in.
--#
--# @send-update: The guest is currently being migrated out to another
--#     machine.
--#
--# @receive-update: The guest is currently being migrated from another
--#     machine.
--#
--# Since: 2.12
--##
--{ 'enum': 'SevState',
--  'data': ['uninit', 'launch-update', 'launch-secret', 'running',
--           'send-update', 'receive-update' ],
--  'if': 'TARGET_I386' }
--
--##
--# @SevGuestType:
--#
--# An enumeration indicating the type of SEV guest being run.
--#
--# @sev: The guest is a legacy SEV or SEV-ES guest.
--#
--# @sev-snp: The guest is an SEV-SNP guest.
--#
--# Since: 6.2
--##
--{ 'enum': 'SevGuestType',
--  'data': [ 'sev', 'sev-snp' ],
--  'if': 'TARGET_I386' }
--
--##
--# @SevGuestInfo:
--#
--# Information specific to legacy SEV/SEV-ES guests.
--#
--# @policy: SEV policy value
--#
--# @handle: SEV firmware handle
--#
--# Since: 2.12
--##
--{ 'struct': 'SevGuestInfo',
--  'data': { 'policy': 'uint32',
--            'handle': 'uint32' },
--  'if': 'TARGET_I386' }
--
--##
--# @SevSnpGuestInfo:
--#
--# Information specific to SEV-SNP guests.
--#
--# @snp-policy: SEV-SNP policy value
--#
--# Since: 9.1
--##
--{ 'struct': 'SevSnpGuestInfo',
--  'data': { 'snp-policy': 'uint64' },
--  'if': 'TARGET_I386' }
--
--##
--# @SevInfo:
--#
--# Information about Secure Encrypted Virtualization (SEV) support
--#
--# @enabled: true if SEV is active
--#
--# @api-major: SEV API major version
--#
--# @api-minor: SEV API minor version
--#
--# @build-id: SEV FW build id
--#
--# @state: SEV guest state
--#
--# @sev-type: Type of SEV guest being run
--#
--# Since: 2.12
--##
--{ 'union': 'SevInfo',
--  'base': { 'enabled': 'bool',
--            'api-major': 'uint8',
--            'api-minor' : 'uint8',
--            'build-id' : 'uint8',
--            'state' : 'SevState',
--            'sev-type' : 'SevGuestType' },
--  'discriminator': 'sev-type',
--  'data': {
--      'sev': 'SevGuestInfo',
--      'sev-snp': 'SevSnpGuestInfo' },
--  'if': 'TARGET_I386' }
--
--
--##
--# @query-sev:
--#
 -# Returns information about SEV/SEV-ES/SEV-SNP.
--#
--# If unavailable due to an incompatible configuration the
--# returned @enabled field will be set to 'false' and the
--# state of all other fields is undefined.
--#
--# Returns: @SevInfo
--#
--# Since: 2.12
--#
--# .. qmp-example::
--#
--#     -> { "execute": "query-sev" }
--#     <- { "return": { "enabled": true, "api-major" : 0, "api-minor" : 0,
--#                      "build-id" : 0, "policy" : 0, "state" : "running",
--#                      "handle" : 1 } }
--##
--{ 'command': 'query-sev', 'returns': 'SevInfo',
--  'if': 'TARGET_I386' }
--
--##
--# @SevLaunchMeasureInfo:
--#
--# SEV Guest Launch measurement information
--#
--# @data: the measurement value encoded in base64
--#
--# Since: 2.12
--##
--{ 'struct': 'SevLaunchMeasureInfo', 'data': {'data': 'str'},
--  'if': 'TARGET_I386' }
--
--##
--# @query-sev-launch-measure:
--#
--# Query the SEV/SEV-ES guest launch information.
--#
--# This is only valid on x86 machines configured with KVM and the
--# 'sev-guest' confidential virtualization object. The launch
--# measurement for SEV-SNP guests is only available within
--# the guest.
--#
--# This will return an error if the launch measurement is
--# unavailable, either due to an invalid guest configuration
--# or if the guest has not reached the required SEV state.
--#
--# Returns: The @SevLaunchMeasureInfo for the guest
--#
--# Since: 2.12
--#
--# .. qmp-example::
--#
--#     -> { "execute": "query-sev-launch-measure" }
--#     <- { "return": { "data": "4l8LXeNlSPUDlXPJG5966/8%YZ" } }
--##
--{ 'command': 'query-sev-launch-measure', 'returns': 'SevLaunchMeasureInfo',
--  'if': 'TARGET_I386' }
--
--##
--# @SevCapability:
--#
--# The struct describes capability for a Secure Encrypted
--# Virtualization feature.
--#
--# @pdh: Platform Diffie-Hellman key (base64 encoded)
--#
--# @cert-chain: PDH certificate chain (base64 encoded)
--#
--# @cpu0-id: Unique ID of CPU0 (base64 encoded) (since 7.1)
--#
--# @cbitpos: C-bit location in page table entry
--#
--# @reduced-phys-bits: Number of physical Address bit reduction when
--#     SEV is enabled
--#
--# Since: 2.12
--##
--{ 'struct': 'SevCapability',
--  'data': { 'pdh': 'str',
--            'cert-chain': 'str',
--            'cpu0-id': 'str',
--            'cbitpos': 'int',
--            'reduced-phys-bits': 'int'},
--  'if': 'TARGET_I386' }
--
--##
--# @query-sev-capabilities:
--#
--# This command is used to get the SEV capabilities, and is only
--# supported on AMD X86 platforms with KVM enabled. If SEV is not
--# available on the platform an error will be returned.
--#
--# Returns: SevCapability objects.
--#
--# Since: 2.12
--#
--# .. qmp-example::
--#
--#     -> { "execute": "query-sev-capabilities" }
--#     <- { "return": { "pdh": "8CCDD8DDD", "cert-chain": "888CCCDDDEE",
--#                      "cpu0-id": "2lvmGwo+...61iEinw==",
--#                      "cbitpos": 47, "reduced-phys-bits": 1}}
--##
--{ 'command': 'query-sev-capabilities', 'returns': 'SevCapability',
--  'if': 'TARGET_I386' }
--
--##
--# @sev-inject-launch-secret:
--#
--# This command injects a secret blob into memory of a SEV/SEV-ES guest.
--#
--# This is only valid on x86 machines configured with KVM and the
--# 'sev-guest' confidential virtualization object. SEV-SNP guests
--# do not support launch secret injection
--#
--# This will return an error if launch secret injection is not possible,
--# either due to an invalid guest configuration, or if the guest has not
--# reached the required SEV state.
--#
--# @packet-header: the launch secret packet header encoded in base64
--#
--# @secret: the launch secret data to be injected encoded in base64
--#
--# @gpa: the guest physical address where secret will be injected.
--#
--# Since: 6.0
--##
--{ 'command': 'sev-inject-launch-secret',
--  'data': { 'packet-header': 'str', 'secret': 'str', '*gpa': 'uint64' },
--  'if': 'TARGET_I386' }
--
--##
--# @SevAttestationReport:
--#
--# The struct describes attestation report for a Secure Encrypted
--# Virtualization feature.
--#
--# @data: guest attestation report (base64 encoded)
--#
--# Since: 6.1
--##
--{ 'struct': 'SevAttestationReport',
--  'data': { 'data': 'str'},
--  'if': 'TARGET_I386' }
--
--##
--# @query-sev-attestation-report:
--#
--# This command is used to get the SEV attestation report.
--#
--# This is only valid on x86 machines configured with KVM and the
--# 'sev-guest' confidential virtualization object. The attestation
--# report for SEV-SNP guests is only available within the guest.
--#
--# This will return an error if the attestation report is
--# unavailable, either due to an invalid guest configuration
--# or if the guest has not reached the required SEV state.
--#
--# @mnonce: a random 16 bytes value encoded in base64 (it will be
--#     included in report)
--#
--# Returns: SevAttestationReport objects.
--#
--# Since: 6.1
--#
--# .. qmp-example::
--#
--#     -> { "execute" : "query-sev-attestation-report",
--#                      "arguments": { "mnonce": "aaaaaaa" } }
--#     <- { "return" : { "data": "aaaaaaaabbbddddd"} }
--##
--{ 'command': 'query-sev-attestation-report',
--  'data': { 'mnonce': 'str' },
--  'returns': 'SevAttestationReport',
--  'if': 'TARGET_I386' }
--
- ##
- # @GICCapability:
++# Return information about SEV/SEV-ES/SEV-SNP.
  #
-diff --git a/stubs/monitor-i386-sev.c b/stubs/monitor-i386-sev.c
-new file mode 100644
-index 00000000000..d4f024128ca
---- /dev/null
-+++ b/stubs/monitor-i386-sev.c
-@@ -0,0 +1,36 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-misc-i386.h"
-+
-+SevInfo *qmp_query_sev(Error **errp)
-+{
-+    error_setg(errp, "SEV is not available in this QEMU");
-+    return NULL;
-+}
-+
-+SevLaunchMeasureInfo *qmp_query_sev_launch_measure(Error **errp)
-+{
-+    error_setg(errp, "SEV is not available in this QEMU");
-+    return NULL;
-+}
-+
-+SevCapability *qmp_query_sev_capabilities(Error **errp)
-+{
-+    error_setg(errp, "SEV is not available in this QEMU");
-+    return NULL;
-+}
-+
-+void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
-+                                  bool has_gpa, uint64_t gpa, Error **errp)
-+{
-+    error_setg(errp, "SEV is not available in this QEMU");
-+}
-+
-+SevAttestationReport *qmp_query_sev_attestation_report(const char *mnonce,
-+                                                       Error **errp)
-+{
-+    error_setg(errp, "SEV is not available in this QEMU");
-+    return NULL;
-+}
-diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
-index d5bf886e799..7c5c02a5657 100644
---- a/target/i386/sev-system-stub.c
-+++ b/target/i386/sev-system-stub.c
-@@ -14,34 +14,9 @@
- #include "qemu/osdep.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp-target.h"
--#include "qapi/qapi-commands-misc-target.h"
- #include "qapi/error.h"
- #include "sev.h"
- 
--SevInfo *qmp_query_sev(Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--    return NULL;
--}
--
--SevLaunchMeasureInfo *qmp_query_sev_launch_measure(Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--    return NULL;
--}
--
--SevCapability *qmp_query_sev_capabilities(Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--    return NULL;
--}
--
--void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
--                                  bool has_gpa, uint64_t gpa, Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--}
--
- int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
- {
-     g_assert_not_reached();
-@@ -56,13 +31,6 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
-     g_assert_not_reached();
- }
- 
--SevAttestationReport *qmp_query_sev_attestation_report(const char *mnonce,
--                                                       Error **errp)
--{
--    error_setg(errp, "SEV is not available in this QEMU");
--    return NULL;
--}
--
- void hmp_info_sev(Monitor *mon, const QDict *qdict)
- {
-     monitor_printf(mon, "SEV is not available in this QEMU\n");
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 7ee700d6a35..56dd64e659a 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -37,7 +37,7 @@
- #include "qom/object.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp-target.h"
--#include "qapi/qapi-commands-misc-target.h"
-+#include "qapi/qapi-commands-misc-i386.h"
- #include "confidential-guest.h"
- #include "hw/i386/pc.h"
- #include "system/address-spaces.h"
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 9907b54c1e6..9922ec7b88e 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -78,6 +78,7 @@ if have_system
-   stub_ss.add(files('win32-kbd-hook.c'))
-   stub_ss.add(files('xen-hw-stub.c'))
-   stub_ss.add(files('monitor-i386-rtc.c'))
-+  stub_ss.add(files('monitor-i386-sev.c'))
- endif
- 
- if have_system or have_user
+ # If unavailable due to an incompatible configuration the
+ # returned @enabled field will be set to 'false' and the
+@@ -336,7 +336,7 @@
+ ##
+ # @query-sgx:
+ #
+-# Returns information about configured SGX capabilities of guest
++# Return information about configured SGX capabilities of guest
+ #
+ # Returns: @SgxInfo
+ #
+@@ -355,7 +355,7 @@
+ ##
+ # @query-sgx-capabilities:
+ #
+-# Returns information about SGX capabilities of host
++# Return information about SGX capabilities of host
+ #
+ # Returns: @SgxInfo
+ #
+diff --git a/qapi/ui.json b/qapi/ui.json
+index c536d4e5241..59897fcb9f0 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -323,7 +323,7 @@
+ ##
+ # @query-spice:
+ #
+-# Returns information about the current SPICE server
++# Return information about the current SPICE server
+ #
+ # Returns: @SpiceInfo
+ #
+@@ -654,7 +654,7 @@
+ ##
+ # @query-vnc:
+ #
+-# Returns information about the current VNC server
++# Return information about the current VNC server
+ #
+ # Returns: @VncInfo
+ #
+@@ -820,7 +820,7 @@
+ ##
+ # @query-mice:
+ #
+-# Returns information about each active mouse device
++# Return information about each active mouse device
+ #
+ # Returns: a list of @MouseInfo for each device
+ #
+@@ -1562,7 +1562,7 @@
+ ##
+ # @query-display-options:
+ #
+-# Returns information about display configuration
++# Return information about display configuration
+ #
+ # Returns: @DisplayOptions
+ #
 -- 
 2.47.2
 
