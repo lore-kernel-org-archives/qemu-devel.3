@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0007EC54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 19:22:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2276EC54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 19:22:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHp0d-00009b-RA; Wed, 21 May 2025 15:21:47 -0400
+	id 1uHp1J-0000N6-U5; Wed, 21 May 2025 15:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHp0b-00008a-VL
- for qemu-devel@nongnu.org; Wed, 21 May 2025 15:21:46 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uHp1I-0000MM-Je
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 15:22:28 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHp0Z-00018Y-Tk
- for qemu-devel@nongnu.org; Wed, 21 May 2025 15:21:45 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7406c6dd2b1so6797394b3a.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 12:21:42 -0700 (PDT)
+ id 1uHp1G-0001KU-DX
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 15:22:28 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-739b3fe7ce8so5993906b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 12:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747855302; x=1748460102; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747855345; x=1748460145; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9qDHA+xSix926l7YrJ4wV6VmM8fWhiDAdq/6MRD2s9M=;
- b=K3SjjQNYkJ1kr9k0zdduL91pcjBgy1F27NaDMKkZh6hfeRyxw+kDMAysnAD6WoMiG5
- gs7XguW4ReY7As6Ir9pGgD9sJNVuTtVwcaduRIpTdTGfsTMIWPctm5rskDc0Nju2dNHo
- sgIFRX1oNpf9FJBhYme+/W63v9pUMvxYHneZw2ZQB7kGS3jadsRJRRKGjhSRSkPPf9zI
- qprrNenN4IGLy9z9fgD6rqDz39D5WJnhDiVvfHAuQP6vIcwfDWhgnQ9keNSnO2SPIbsY
- 9sutRFtjeew5SO7sKJXUBGTxL0mYc2bzwU1Sh2UpbbVcGJJWhCrbh1oXp5WF0Vcv/NKg
- ppAw==
+ bh=GPdlN5UXk6XW4sbbz2sp5I8HWlwBFTHeim/u0mXvZ3Q=;
+ b=dDQtz/Yc7qF/fLL1oKd3ToPYiAAdcHx50G5ZRaMUtxDs7yW2kEuQmw1gVptJGmUkEu
+ b3BD01o5awdUQSl//6R13eIlNozl+CcOtF6zYMqaqmqxGGhdfFDf1f211aehGaWelrmP
+ uDCGpNC3W4BdmXorlOKMBVtuhmTUbjJVqZORFOMbHW4iFCQnPPzJb3Zu2WqyiTDszWcr
+ aFFcS88e7lHDrT/+WzOIkpLNmRNJb9mEzxEadfSBm1UWjSx8fj+48zorWy5AK5EeRwHj
+ CrFS4JM9sbdIl4hQwalsWN3rrwC1qrn2767uLwrTgE0Nw92avVbCY1Uk+UxxsKotTIrU
+ x1nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747855302; x=1748460102;
+ d=1e100.net; s=20230601; t=1747855345; x=1748460145;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9qDHA+xSix926l7YrJ4wV6VmM8fWhiDAdq/6MRD2s9M=;
- b=A93COuR/s4/2gpmYKSHh6acRiTgqbg8q1t00HH8yCVNK6eKX2SPdim0KQJoe7LGykU
- 7brGIQqG9yFRoY1HJUs4wPSa9t3Lj2HSr4RoqukRloM4jmDr1jIYPlTwZcDeUlCdbE/R
- onhCvWY353sdJgyHFqxt84dLUo27/hv1gakR0wHXlBf4jNE5nxkUcjQb9Uwlt7S3N6xT
- M18S2Xd/aVQj57eRVotH9y0/B1evc9DmfE7bIFZo2q0b0BAruFRGXoAG/4Lp3Z0OmFud
- jZMlH58FX4IiL6FJTh3pksPOVnRzCM7pR1fDHbQ6OZK5bfRHl7TII7VLxgqj3rO4SosU
- /C0Q==
-X-Gm-Message-State: AOJu0YxeYPMVuBVGWAu+zBtewVfssRSMeWc8Zc+NMuzSLlLM467NEkQD
- DNVZTeubSBqwSOBUTw+8Vzg3mACzcECHiMNjiD+GnWPnORm8RqonTUrNVVhGd7XzxJI=
-X-Gm-Gg: ASbGncufSW8R2NO0f+avr+tC4TYF+46Ea5VAw7+dfziW7uKr7eobFv5lMsmQ2FliqlV
- 2nMPPAQWJjiHw7uGU20UtMGeOC5BXMN+c8OwWHCJ7pXHYsUrpjGnO+Ml4+iD6q48O0dwnblk9xE
- S22lEmxPjrWCwaf4x/V5VQA+PZ7Yvd3HPGIyGqLWFi4RKRVLCI8p4MVnxoZWgbYtLsgtr+3hZ+m
- PEHqZDGiOz7Wz+rYQZPtd90kgXHzZ0FQ3m9qHlgOqL8wcORHynp1XJAJKZ4YnONv8Upzhf4PKkM
- bY0ZuYxD/J0Ue7tdgrON3Ya/fqXLLgEhbcP8gU4T0Xk/+Z34bQf04pF/eAsMRXIe
-X-Google-Smtp-Source: AGHT+IELb63qTsPtuKaet61WBaXmsujxLrcGdsKx5N6w//s+QPYLe8NoTE6vaH20et2hcKuwX4+nxg==
-X-Received: by 2002:a05:6a20:d70a:b0:218:17a2:4421 with SMTP id
- adf61e73a8af0-21817a2540dmr24139972637.10.1747855301579; 
- Wed, 21 May 2025 12:21:41 -0700 (PDT)
+ bh=GPdlN5UXk6XW4sbbz2sp5I8HWlwBFTHeim/u0mXvZ3Q=;
+ b=iCX9Nk80nPMX6ohjTZqLah58aZMdwtx4SeKzB0DMi2Peq5YM9leM5+O2rTivsU4ON2
+ f5sXX3jBmOm/E3bBheC0/BcSWBfR4iAeFcxlJ7OhSFEzPF5vv63A3MP+VEzs2LRtPFGa
+ QnHxY9IvZRjQY9c75nVKLhj/uOocBcZMOoZkGBLIahGzXMasOfjf4zepJz0ksqIsqcFb
+ v4TZX6xjCFwJbbYjZzm72S3xhLDkpS5d9mBuPpfqH7+FbY9RaKCk3WVexIQZqvDjT6Dd
+ eTdi15D+ZPhMJMswUbakUKj2AUUK+tNnp6h7noIGv4vbui9VHfp3ob8W95eNqFKfqqit
+ ODuQ==
+X-Gm-Message-State: AOJu0YxHjc3IrujUB7zzOm30FbyIIpFoKmgDnV3mppMtDZWQx+wt2V1W
+ 2P8EyvMNU4wHahMoGmWVJAuG8Dg8IJnYGr3WCrFPVCk+u2520s5DH4utQzIe/n5jTK0=
+X-Gm-Gg: ASbGncttdbsqE/mm44OPDig7sWYZgReUE1n2L9uW2gMqCY2hCDozhPgDbLmRfTh+Ius
+ +UVvKJNcAoPmDfdrkGqkGaFISFVGMXFhj9Rv0xhkvZ57kt8qS+N/rTUvx3iOwnZnWCyXo5P+Cut
+ RnMIQWOGEyQrc0k9BK+/K6nOMwd5HkN6rj/HE8Ow7iFvsjIb+wq6SoOPMHdwFfmHK3fgOJ+Saa3
+ VeR3BoeXYo8jMhZ2K7uzOiZTQrwi48R4/y0ntf9IE3/ekhYfWDOwvUDBQqVxxgsPYmLfWhvb2ZO
+ CwjaFzNeNC5CMh++qK4xgcGE/h7f77pv4ZBB8kPAobDhqMyU2uk3k3JurfnNFJ+j
+X-Google-Smtp-Source: AGHT+IEV/b3AKGmI2ELJxwlqr/z+D5qXzztJs5iEzWqi2W+c2p4xGFWJn/TPQKYl6AFlIRSj/p7jCQ==
+X-Received: by 2002:a05:6a20:7d9c:b0:1fe:90c5:7cfb with SMTP id
+ adf61e73a8af0-216219b24bemr32062993637.27.1747855344748; 
+ Wed, 21 May 2025 12:22:24 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b26eaf8e054sm9953663a12.41.2025.05.21.12.21.40
+ 41be03b00d2f7-b26eaf6dc3csm9957711a12.24.2025.05.21.12.22.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 12:21:41 -0700 (PDT)
-Message-ID: <f2c36e84-9ae8-4b2e-8a4a-b6af8b2809b1@linaro.org>
-Date: Wed, 21 May 2025 12:21:40 -0700
+ Wed, 21 May 2025 12:22:24 -0700 (PDT)
+Message-ID: <376e7bce-afc8-439e-b24e-3e7e2acb22a8@linaro.org>
+Date: Wed, 21 May 2025 12:22:23 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/12] qapi: expand docs for SEV commands
+Subject: Re: [PATCH v2 08/12] qapi: Make
+ CpuModelExpansionInfo::deprecated-props optional and generic
 Content-Language: en-US
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
@@ -76,14 +77,14 @@ Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>
 References: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
- <20250515172732.3992504-3-pierrick.bouvier@linaro.org>
- <871pslkur5.fsf@pond.sub.org>
+ <20250515172732.3992504-9-pierrick.bouvier@linaro.org>
+ <87a579jf77.fsf@pond.sub.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <871pslkur5.fsf@pond.sub.org>
+In-Reply-To: <87a579jf77.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,150 +107,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/18/25 10:57 PM, Markus Armbruster wrote:
+On 5/18/25 11:18 PM, Markus Armbruster wrote:
 > Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 > 
->> From: Daniel P. Berrangé <berrange@redhat.com>
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
 >>
->> This gives some more context about the behaviour of the commands in
->> unsupported guest configuration or platform scenarios.
+>> We'd like to have some unified QAPI schema. Having a structure field
+>> conditional to a target being built in is not very practical.
+>>
+>> While @deprecated-props is only used by s390x target, it is generic
+>> enough and could be used by other targets (assuming we expand
+>> CpuModelExpansionType enum values).
+>>
+>> Let's always include this field, regardless of the target, but
+>> make it optional.
+> 
+> Let's add:
+> 
+>    This is not a compatibility break only because the field remains
+>    present always on S390x.
+> 
 >>
 >> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>   qapi/misc-target.json | 43 ++++++++++++++++++++++++++++++++++++-------
->>   1 file changed, 36 insertions(+), 7 deletions(-)
+>>   qapi/machine-target.json | 7 +++----
+>>   1 file changed, 3 insertions(+), 4 deletions(-)
 >>
->> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->> index 5d0ffb0164f..ae55e437a5f 100644
->> --- a/qapi/misc-target.json
->> +++ b/qapi/misc-target.json
->> @@ -110,7 +110,11 @@
+>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>> index 426ce4ee82d..e153291a7fc 100644
+>> --- a/qapi/machine-target.json
+>> +++ b/qapi/machine-target.json
+>> @@ -244,19 +244,18 @@
+>>   #
+>>   # @model: the expanded CpuModelInfo.
+>>   #
+>> -# @deprecated-props: a list of properties that are flagged as
+>> +# @deprecated-props: an optional list of properties that are flagged as
+>>   #     deprecated by the CPU vendor.  The list depends on the
+>>   #     CpuModelExpansionType: "static" properties are a subset of the
+>>   #     enabled-properties for the expanded model; "full" properties are
+>>   #     a set of properties that are deprecated across all models for
+>> -#     the architecture.  (since: 9.1).
+>> +#     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
+>>   #
+>>   # Since: 2.8
 >>   ##
->>   # @query-sev:
->>   #
->> -# Returns information about SEV
->> +# Returns information about SEV/SEV-ES/SEV-SNP.
+>>   { 'struct': 'CpuModelExpansionInfo',
+>>     'data': { 'model': 'CpuModelInfo',
+>> -            'deprecated-props' : { 'type': ['str'],
+>> -                                   'if': 'TARGET_S390X' } },
+>> +            '*deprecated-props' : { 'type': ['str'] } },
 > 
-> We prefer imperative mood "Return" over "Returns".  Could also use "Get"
-> or "Query"; matter of taste.
+> [Copied from review of prior posts]
 > 
->> +#
->> +# If unavailable due to an incompatible configuration the
->> +# returned @enabled field will be set to 'false' and the
+> Make this
 > 
-> I'd prefer "field is set".
+>                 '*deprecated-props' : ['str'] },
 > 
->> +# state of all other fields is undefined.
->>   #
->>   # Returns: @SevInfo
->>   #
->> @@ -141,7 +145,16 @@
->>   ##
->>   # @query-sev-launch-measure:
->>   #
->> -# Query the SEV guest launch information.
->> +# Query the SEV/SEV-ES guest launch information.
->> +#
->> +# This is only valid on x86 machines configured with KVM and the
->> +# 'sev-guest' confidential virtualization object. The launch
->> +# measurement for SEV-SNP guests is only available within
->> +# the guest.
->> +#
->> +# This will return an error if the launch measurement is
->> +# unavailable, either due to an invalid guest configuration
->> +# or if the guest has not reached the required SEV state.
->>   #
->>   # Returns: The @SevLaunchMeasureInfo for the guest
->>   #
+> please.
 > 
-> Errors better go into their own section.
+> When I see "optional array", I wonder about the difference between
+> "absent" and "present and empty".  The doc comment doesn't quite explain
+> it.  I figure "present and empty" means empty, while "absent" means we
+> don't know / not implemented.
 > 
->     # Returns: The @SevLaunchMeasureInfo for the guest
->     #
->     # Errors:
->     #     - If the launch measurement is unavailable, either due to an
->     #       invalid guest configuration or if the guest has not reached
->     #       the required SEV state, GenericError
+> Is the difference useful?
 > 
->> @@ -185,8 +198,9 @@
->>   ##
->>   # @query-sev-capabilities:
->>   #
->> -# This command is used to get the SEV capabilities, and is supported
->> -# on AMD X86 platforms only.
->> +# This command is used to get the SEV capabilities, and is only
->> +# supported on AMD X86 platforms with KVM enabled. If SEV is not
->> +# available on the platform an error will be returned.
->>   #
->>   # Returns: SevCapability objects.
->>   #
+> Daniel doubts it is.
 > 
-> Likewise.
+> Philippe is happy to implement either variant.
 > 
-> Suggest to use the opportunity to switch the intro to imperative mood.
-> Together:
+>>     'if': { 'any': [ 'TARGET_S390X',
+>>                      'TARGET_I386',
+>>                      'TARGET_ARM',
 > 
->     ##
->     # Get SEV capabilities.
->     #
->     # This is only supported on AMD X86 platforms with KVM enabled.
->     #
->     # Returns: SevCapability objects.
->     #
->     # Errors:
->     #     - If # SEV is not available on the platform, GenericError
->     #
-> 
->> @@ -205,7 +219,15 @@
->>   ##
->>   # @sev-inject-launch-secret:
->>   #
->> -# This command injects a secret blob into memory of SEV guest.
->> +# This command injects a secret blob into memory of a SEV/SEV-ES guest.
->> +#
->> +# This is only valid on x86 machines configured with KVM and the
->> +# 'sev-guest' confidential virtualization object. SEV-SNP guests
->> +# do not support launch secret injection
->> +#
->> +# This will return an error if launch secret injection is not possible,
->> +# either due to an invalid guest configuration, or if the guest has not
->> +# reached the required SEV state.
->>   #
->>   # @packet-header: the launch secret packet header encoded in base64
->>   #
-> 
-> Likewise.
-> 
->> @@ -236,8 +258,15 @@
->>   ##
->>   # @query-sev-attestation-report:
->>   #
->> -# This command is used to get the SEV attestation report, and is
->> -# supported on AMD X86 platforms only.
->> +# This command is used to get the SEV attestation report.
->> +#
->> +# This is only valid on x86 machines configured with KVM and the
->> +# 'sev-guest' confidential virtualization object. The attestation
->> +# report for SEV-SNP guests is only available within the guest.
->> +#
->> +# This will return an error if the attestation report is
->> +# unavailable, either due to an invalid guest configuration
->> +# or if the guest has not reached the required SEV state.
->>   #
->>   # @mnonce: a random 16 bytes value encoded in base64 (it will be
->>   #     included in report)
-> 
-> Likewise.
-> 
-> docs/devel/qapi-code-gen.rst:
-> 
->      For legibility, wrap text paragraphs so every line is at most 70
->      characters long.
-> 
->      Separate sentences with two spaces.
+> Note the patch doesn't touch any of the qmp_query_cpu_model_expansion().
+> The S390x version continues to set @deprecated_props always.  The others
+> continue not to set it.
 > 
 
-All changes done, as requested.
+Changed to "'*deprecated-props' : ['str'] }", as requested.
 
