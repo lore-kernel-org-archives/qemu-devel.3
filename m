@@ -4,96 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 372D3C54E90
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA28C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:21:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHefc-0004tj-M4; Wed, 21 May 2025 04:19:24 -0400
+	id 1uHehQ-00006S-Vl; Wed, 21 May 2025 04:21:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHefO-0004p1-Tw
- for qemu-devel@nongnu.org; Wed, 21 May 2025 04:19:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uHehO-0008Pn-GE; Wed, 21 May 2025 04:21:14 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uHefC-0000AS-Dm
- for qemu-devel@nongnu.org; Wed, 21 May 2025 04:19:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747815536;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TvUeya4TNcUwgoPZj33+aR4D24x0qlLX7SAj8FdNXBQ=;
- b=h4trkLZvP103MBA0cQlHW9HYthawaqwyaVHPAtT+dt2GfOKajPU2Ue/UVPjUUKYwmDZuCA
- OVD30TduBYD5NcuK0pUuAlZ/rxesnbQM9jrKYWud6BF1MPWLAzkFBIfVY79ByFytGWrC85
- EEZ/8/JzV0HQYD3tlWSqiRDd+D5q2KY=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-zRunBgQiNL2a_6eOQyLWyQ-1; Wed, 21 May 2025 04:18:54 -0400
-X-MC-Unique: zRunBgQiNL2a_6eOQyLWyQ-1
-X-Mimecast-MFC-AGG-ID: zRunBgQiNL2a_6eOQyLWyQ_1747815534
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d734da1a3so35327995e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 01:18:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747815533; x=1748420333;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TvUeya4TNcUwgoPZj33+aR4D24x0qlLX7SAj8FdNXBQ=;
- b=rCp9BYwsC8U/J0TlUD6rYvo1G+hn6uIeDAfBCLgwLZ4eK8mSHX3dWZXwysyOSaoo2R
- k6uhgb3jkShd7YME1Mz6Oza23hZyl9XDPuGRHc2WZ5lRRyBTn3iIlJFwn6Rz+3VkqdEY
- A97CxC5/ZpwZ+XkKnD4xyQZeBc+7U02sup1dbDeethLl3x3rAiz2oj/zVLvT/gMQw/oQ
- AgInjRcL0gS2ZcddqGsPRAmzzpNK/RFFatem0jle1jCX20F8VysElRJWvq4tKYVlYxHR
- /yarNYYJOeFJvLab9soxBRpAvIcM1b0Vh8LPPNXM7ffCGxxUjU6Cgy8OxTY2U8b47/Lz
- gFUQ==
-X-Gm-Message-State: AOJu0YweXr9jrTWNBz4B/OJVD8uVRsjPaEF4kqbOCgHRBb3nKSkUECBG
- 3YJJlr3iNtjqrO+sdWCBodJ4uNx1kPdfmLeh5F7uXaTE7SKQI2wAwZu19Wyh0h29R5kdK0rfZc9
- xGW8AxW/YEaXb+twlf1QvslCDos/7uhRF/DgkWSfhrA9jEefllh382iD/DIpuaJ2YHmqBo41v5x
- 1tPt3ROLPrIf3QlakXWQmm5mGwPYVxzVNm88xWOI2B
-X-Gm-Gg: ASbGncsVHYln8xFkW7RcJQAYG0+eyhhnhfSG0SzhnMApjAGZyWa9p81hNARvZHSKkcs
- zsVrD1/eFlc3VlWZ+RR+NCRzpXYhwSxDsO5G+hsV/lR06qTk4D3kNcTwiRW+OKZ3hblOWOGhdUz
- 8XVjlYI23aEgyjPMmEppv9UccO6qRUbQXDVBRxq0a4VV95E5bQyPqgO4ovXTEwNY1ocZIwmYt24
- k1MGVn7ha29WPO/TnJWmXNUTo7z0i1WVtO8uXluq6ruHCf1CCw1/XXlSXXuTQ8ZdiUeicSbXBHb
- 14iAdAjEu2HZyg==
-X-Received: by 2002:a05:600c:154b:b0:43d:fa58:8378 with SMTP id
- 5b1f17b1804b1-442ff03c7ebmr141772995e9.33.1747815532544; 
- Wed, 21 May 2025 01:18:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGSr4pzBy1XX8sKmCUrnbGxilzDfjYAPy6Afug8+TDre3jOzHh8kifNTVey5Nhkjy82ilnouw==
-X-Received: by 2002:a05:600c:154b:b0:43d:fa58:8378 with SMTP id
- 5b1f17b1804b1-442ff03c7ebmr141772735e9.33.1747815532098; 
- Wed, 21 May 2025 01:18:52 -0700 (PDT)
-Received: from [192.168.122.1] ([151.95.46.79])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f73d4aa2sm61404105e9.21.2025.05.21.01.18.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 01:18:51 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, qemu-rust@nongnu.org,
- manos.pitsidianakis@linaro.org
-Subject: [RFC PATCH 2/6] rust: pl011: use the bits macro
-Date: Wed, 21 May 2025 10:18:41 +0200
-Message-ID: <20250521081845.496442-3-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250521081845.496442-1-pbonzini@redhat.com>
-References: <20250521081845.496442-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uHehK-0000eb-Ic; Wed, 21 May 2025 04:21:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747815670; x=1779351670;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Hh+nUxCSLeGPgtwvL2cg5MtqP4RP/+SynAUDmMEhYgw=;
+ b=XqjJ18FLxOG+R1lfaSWfc9rqoEla0FkrKkot5aZXL0xgGgzQxWqsxfMU
+ P3jDf3XziukcKI8P+OIfejiyBAbZoaXwVcH0g8JWOuXAnVYRGXg36522w
+ swfrdRKuFedDRIlPb2LiAkT9ZzyKAw/jrIrHtsgipPGJpTJQ3WTPBRAoJ
+ sgUv3moen7aip6JW/H+a4N0L2CPlJhLkVfOd7SnglqgQBp1c1cYDgjHZ4
+ //IN6WlpffPj8gftjZtmp2E/gQvkdfNf0CQ7RPUqTkuoDudxfbZh790eU
+ B2VrqPxGS9BZH0eWSXM7rEod0rltDazJ0pB+/q5vA7Dgi1Wz16ppLCa03 w==;
+X-CSE-ConnectionGUID: uDg3E+HtRxa57pl8cb3iZQ==
+X-CSE-MsgGUID: zV0MsFulRs2I7mxEZNe3tg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="60015244"
+X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="60015244"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 May 2025 01:21:03 -0700
+X-CSE-ConnectionGUID: gE+Rdd1NTw2+9z1toHOTOA==
+X-CSE-MsgGUID: hGhLjPjpR9iW77XbnyCxDA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="141017027"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 21 May 2025 01:21:01 -0700
+Date: Wed, 21 May 2025 16:42:08 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <bonzini@gnu.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Daniel Berrange <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: Rust in QEMU update, April 2025
+Message-ID: <aC2R4BOR2tsYgEFI@intel.com>
+References: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
+ <aCysct2L8Bosqy0N@intel.com>
+ <abe683f2-e679-4579-b68a-38a11d41e00b@gnu.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abe683f2-e679-4579-b68a-38a11d41e00b@gnu.org>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,248 +86,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This avoids the repeated ".0" when using the Interrupt struct.
+On Tue, May 20, 2025 at 07:48:11PM +0200, Paolo Bonzini wrote:
+> Date: Tue, 20 May 2025 19:48:11 +0200
+> From: Paolo Bonzini <bonzini@gnu.org>
+> Subject: Re: Rust in QEMU update, April 2025
+> 
+> On 5/20/25 18:23, Zhao Liu wrote:
+> > > HPET does some very simple memory accesses; a good safe solution
+> > > for this may be the ``vm-memory`` crate.  While I have not looked into
+> > > using it, ``vm-memory`` and ``vm-virtio`` were written with QEMU's
+> > > use cases in mind.
+> > I'm working on this and trying to wrap simple memory access by
+> > vm-memory.
+> 
+> Ok.  Note that while the GuestAddressSpace corresponds QEMU's AddressSpace
+> (so far so good :)), QEMU's MemoryRegion is completely unrelated to
+> vm-memory's GuestMemoryRegion.  That's because vm-memory only operates on an
+> array of non-overlapping regions, like QEMU's FlatRange or
+> MemoryRegionSection structs.
+> 
+> The GuestMemory (GuestAddressSpace::M) corresponds to QEMU's FlatView.
+> Indeed the functions in the trait match with what you expect of a FlatView:
+> 
+>     fn num_regions(&self) -> usize;
+>     fn find_region(&self, addr: GuestAddress) -> Option<&Self::R>;
+>     fn iter(&self) -> impl Iterator<Item = &Self::R>;
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/Cargo.lock                     |  1 +
- rust/hw/char/pl011/Cargo.toml       |  1 +
- rust/hw/char/pl011/meson.build      |  1 +
- rust/hw/char/pl011/src/device.rs    | 51 ++++++++++++++---------------
- rust/hw/char/pl011/src/registers.rs | 39 ++++++++++++----------
- 5 files changed, 49 insertions(+), 44 deletions(-)
+This is indeed exactly what I meet now. GuestMemory and QEMU's design don't
+macth well! I've learned from the lessons of failure that MemoryRegion is
+different from GuestMemoryRegion. Thank you for pointing the direction and
+helping me decide to switch to FlatView.
 
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index 0dfe0fb6ced..bccfe855a70 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -73,6 +73,7 @@ version = "0.1.0"
- dependencies = [
-  "bilge",
-  "bilge-impl",
-+ "bits",
-  "qemu_api",
-  "qemu_api_macros",
- ]
-diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
-index a1f431ab4a3..003ef9613d4 100644
---- a/rust/hw/char/pl011/Cargo.toml
-+++ b/rust/hw/char/pl011/Cargo.toml
-@@ -18,6 +18,7 @@ crate-type = ["staticlib"]
- [dependencies]
- bilge = { version = "0.2.0" }
- bilge-impl = { version = "0.2.0" }
-+bits = { path = "../../../bits" }
- qemu_api = { path = "../../../qemu-api" }
- qemu_api_macros = { path = "../../../qemu-api-macros" }
- 
-diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-index 547cca5a96f..f134a6cdc6b 100644
---- a/rust/hw/char/pl011/meson.build
-+++ b/rust/hw/char/pl011/meson.build
-@@ -12,6 +12,7 @@ _libpl011_rs = static_library(
-   dependencies: [
-     bilge_dep,
-     bilge_impl_dep,
-+    bits_rs,
-     qemu_api,
-     qemu_api_macros,
-   ],
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index bde3be65c5b..8d89c2448dc 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -85,8 +85,8 @@ pub struct PL011Registers {
-     #[doc(alias = "cr")]
-     pub control: registers::Control,
-     pub dmacr: u32,
--    pub int_enabled: u32,
--    pub int_level: u32,
-+    pub int_enabled: Interrupt,
-+    pub int_level: Interrupt,
-     pub read_fifo: Fifo,
-     pub ilpr: u32,
-     pub ibrd: u32,
-@@ -199,9 +199,9 @@ pub(self) fn read(&mut self, offset: RegisterOffset) -> (bool, u32) {
-             LCR_H => u32::from(self.line_control),
-             CR => u32::from(self.control),
-             FLS => self.ifl,
--            IMSC => self.int_enabled,
--            RIS => self.int_level,
--            MIS => self.int_level & self.int_enabled,
-+            IMSC => u32::from(self.int_enabled),
-+            RIS => u32::from(self.int_level),
-+            MIS => u32::from(self.int_level & self.int_enabled),
-             ICR => {
-                 // "The UARTICR Register is the interrupt clear register and is write-only"
-                 // Source: ARM DDI 0183G 3.3.13 Interrupt Clear Register, UARTICR
-@@ -263,13 +263,13 @@ pub(self) fn write(
-                 self.set_read_trigger();
-             }
-             IMSC => {
--                self.int_enabled = value;
-+                self.int_enabled = Interrupt::from(value);
-                 return true;
-             }
-             RIS => {}
-             MIS => {}
-             ICR => {
--                self.int_level &= !value;
-+                self.int_level &= !Interrupt::from(value);
-                 return true;
-             }
-             DMACR => {
-@@ -295,7 +295,7 @@ fn read_data_register(&mut self, update: &mut bool) -> u32 {
-             self.flags.set_receive_fifo_empty(true);
-         }
-         if self.read_count + 1 == self.read_trigger {
--            self.int_level &= !Interrupt::RX.0;
-+            self.int_level &= !Interrupt::RX;
-         }
-         self.receive_status_error_clear.set_from_data(c);
-         *update = true;
-@@ -305,7 +305,7 @@ fn read_data_register(&mut self, update: &mut bool) -> u32 {
-     fn write_data_register(&mut self, value: u32) -> bool {
-         // interrupts always checked
-         let _ = self.loopback_tx(value.into());
--        self.int_level |= Interrupt::TX.0;
-+        self.int_level |= Interrupt::TX;
-         true
-     }
- 
-@@ -361,19 +361,19 @@ fn loopback_mdmctrl(&mut self) -> bool {
-         // Change interrupts based on updated FR
-         let mut il = self.int_level;
- 
--        il &= !Interrupt::MS.0;
-+        il &= !Interrupt::MS;
- 
-         if self.flags.data_set_ready() {
--            il |= Interrupt::DSR.0;
-+            il |= Interrupt::DSR;
-         }
-         if self.flags.data_carrier_detect() {
--            il |= Interrupt::DCD.0;
-+            il |= Interrupt::DCD;
-         }
-         if self.flags.clear_to_send() {
--            il |= Interrupt::CTS.0;
-+            il |= Interrupt::CTS;
-         }
-         if self.flags.ring_indicator() {
--            il |= Interrupt::RI.0;
-+            il |= Interrupt::RI;
-         }
-         self.int_level = il;
-         true
-@@ -391,8 +391,8 @@ pub fn reset(&mut self) {
-         self.line_control.reset();
-         self.receive_status_error_clear.reset();
-         self.dmacr = 0;
--        self.int_enabled = 0;
--        self.int_level = 0;
-+        self.int_enabled = 0.into();
-+        self.int_level = 0.into();
-         self.ilpr = 0;
-         self.ibrd = 0;
-         self.fbrd = 0;
-@@ -451,7 +451,7 @@ pub fn fifo_rx_put(&mut self, value: registers::Data) -> bool {
-         }
- 
-         if self.read_count == self.read_trigger {
--            self.int_level |= Interrupt::RX.0;
-+            self.int_level |= Interrupt::RX;
-             return true;
-         }
-         false
-@@ -632,7 +632,7 @@ fn update(&self) {
-         let regs = self.regs.borrow();
-         let flags = regs.int_level & regs.int_enabled;
-         for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
--            irq.set(flags & i != 0);
-+            irq.set(flags.any_set(i));
-         }
-     }
- 
-@@ -642,14 +642,13 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
- }
- 
- /// Which bits in the interrupt status matter for each outbound IRQ line ?
--const IRQMASK: [u32; 6] = [
--    /* combined IRQ */
--    Interrupt::E.0 | Interrupt::MS.0 | Interrupt::RT.0 | Interrupt::TX.0 | Interrupt::RX.0,
--    Interrupt::RX.0,
--    Interrupt::TX.0,
--    Interrupt::RT.0,
--    Interrupt::MS.0,
--    Interrupt::E.0,
-+const IRQMASK: [Interrupt; 6] = [
-+    Interrupt::all(),
-+    Interrupt::RX,
-+    Interrupt::TX,
-+    Interrupt::RT,
-+    Interrupt::MS,
-+    Interrupt::E,
- ];
- 
- /// # Safety
-diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src/registers.rs
-index 690feb63785..7ececd39f86 100644
---- a/rust/hw/char/pl011/src/registers.rs
-+++ b/rust/hw/char/pl011/src/registers.rs
-@@ -9,7 +9,8 @@
- // https://developer.arm.com/documentation/ddi0183/latest/
- 
- use bilge::prelude::*;
--use qemu_api::impl_vmstate_bitsized;
-+use bits::bits;
-+use qemu_api::{impl_vmstate_bitsized, impl_vmstate_forward};
- 
- /// Offset of each register from the base memory address of the device.
- #[doc(alias = "offset")]
-@@ -326,22 +327,24 @@ fn default() -> Self {
-     }
- }
- 
--/// Interrupt status bits in UARTRIS, UARTMIS, UARTIMSC
--pub struct Interrupt(pub u32);
-+bits! {
-+    /// Interrupt status bits in UARTRIS, UARTMIS, UARTIMSC
-+    #[derive(Default)]
-+    pub struct Interrupt(u32) {
-+        OE = 1 << 10,
-+        BE = 1 << 9,
-+        PE = 1 << 8,
-+        FE = 1 << 7,
-+        RT = 1 << 6,
-+        TX = 1 << 5,
-+        RX = 1 << 4,
-+        DSR = 1 << 3,
-+        DCD = 1 << 2,
-+        CTS = 1 << 1,
-+        RI = 1 << 0,
- 
--impl Interrupt {
--    pub const OE: Self = Self(1 << 10);
--    pub const BE: Self = Self(1 << 9);
--    pub const PE: Self = Self(1 << 8);
--    pub const FE: Self = Self(1 << 7);
--    pub const RT: Self = Self(1 << 6);
--    pub const TX: Self = Self(1 << 5);
--    pub const RX: Self = Self(1 << 4);
--    pub const DSR: Self = Self(1 << 3);
--    pub const DCD: Self = Self(1 << 2);
--    pub const CTS: Self = Self(1 << 1);
--    pub const RI: Self = Self(1 << 0);
--
--    pub const E: Self = Self(Self::OE.0 | Self::BE.0 | Self::PE.0 | Self::FE.0);
--    pub const MS: Self = Self(Self::RI.0 | Self::DSR.0 | Self::DCD.0 | Self::CTS.0);
-+        E = bits!(Self as u32: OE | BE | PE | FE),
-+        MS = bits!(Self as u32: RI | DSR | DCD | CTS),
-+    }
- }
-+impl_vmstate_forward!(Interrupt);
--- 
-2.49.0
+> If the GuestMemory is a FlatView, the GuestAddressSpace::T, implements Clone
+> + Deref<Target = FlatView>.  It's not too hard to see that
+> GuestAddressSpace's memory() method must call address_space_get_flatview()
+> and the GuestAddressSpace::T's drop method must call flatview_unref().
+> Let's call this (Rust-specific) struct FlatViewRefGuard, or something like
+> that.
+
+I also realize that once FlatRange/FlatView is associated with GuestMemoryRegion/
+GuestMemory, it changes the usual practice in QEMU, where most memory operations
+are built around MemoryRegion/AddressSpace.
+
+But that's okay because what users aware is the vm-memory interface.
+
+> Going back to the GuestMemoryRegion (<FlatView as GuestMemory>::R), it could
+> be either a QEMU FlatRange or a MemoryRegionSection.  Neither are good
+> options.  Without a MemoryRegionSection you can't support IOMMU regions; but
+> flatview_do_translate() returns the MemoryRegionSection by value, and
+> GuestMemory's
+> 
+>     fn find_region(&self, addr: GuestAddress) -> Option<&Self::R>;
+> 
+> wants a reference instead!
+
+Yes, there will be many gaps.
+
+> Anyhow, all three types (AddressSpace, FlatView, FlatRange) are better
+> wrapped with Opaque.
+> 
+> Looking more at FlatRange, these are easy:
+> 
+>     // Required methods
+>     fn len(&self) -> GuestUsize;
+>     fn start_addr(&self) -> GuestAddress;
+> 
+> But this one is another problem:
+> 
+>     fn bitmap(&self) -> &Self::B;
+> 
+> because it returns the "Bitmap" by reference.  QEMU's bitmap is a global
+> variable indexed by ram_addr_t.  It would be better if this was declared
+> like this:
+> 
+>    fn bitmap(&'a self) ->
+>       <Self::B as WithBitmapSlice<'a>>::S
+> 
+> I have no idea if this can be changed in upstream vm-virtio.  For now maybe
+> you can leave it as ().  That's buggy but it's ok for a proof of concept.
+
+Yes, the bitmap is also a problem for me, and I also haven't figured out
+how to align it with rust-vmm. In fact, in the code (that currently doesn't
+run), I indeed used `()`. :-(
+
+> So... not sure what to do there.  It seems like vm-memory is very close to
+> being usable by QEMU, but maybe not completely. :(
+
+Is it possible or necessary for vm-memory to support overlap? Because I
+feel that if it is possible, the problem might be simplified. (As a
+beginner, I have yet to understand exactly how difficult it is.)
+
+Thanks,
+Zhao
 
 
