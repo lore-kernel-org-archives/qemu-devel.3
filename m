@@ -4,154 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBABC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 07:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2385C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 07:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHdtW-0008Dq-7K; Wed, 21 May 2025 03:29:42 -0400
+	id 1uHe2J-0001kL-Of; Wed, 21 May 2025 03:38:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHdtU-0008D5-3t
- for qemu-devel@nongnu.org; Wed, 21 May 2025 03:29:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uHe2H-0001kB-TU
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 03:38:45 -0400
+Received: from out-170.mta1.migadu.com ([95.215.58.170])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHdtR-000136-Rg
- for qemu-devel@nongnu.org; Wed, 21 May 2025 03:29:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747812575;
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uHe2F-0002N0-Id
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 03:38:45 -0400
+Content-Type: text/plain;
+	charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1747813111;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uKhbBuqc70it5xk80+luwbcUq9MImIgT5up/B+STr/E=;
- b=Df6zgRG8qaLbsAnaHnYDUNrFuUONIzsejOIv5p0KB9aZ730IHPKh2JtLBMvUL6R7uoG7Oi
- ujjz/AsDiU7l0yM2GWJFxie7JpG99SnOOXlSLD/4Tgu7PV9XQqG+b5mLnfk+ZySHsyYF3a
- GdcZkLR4ijyI0j9PhNAxz+j/YuIM7wo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122-pOH4uBnYN6maMCKLtI-YPA-1; Wed, 21 May 2025 03:29:33 -0400
-X-MC-Unique: pOH4uBnYN6maMCKLtI-YPA-1
-X-Mimecast-MFC-AGG-ID: pOH4uBnYN6maMCKLtI-YPA_1747812572
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a36e6b7404so2054188f8f.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 00:29:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747812572; x=1748417372;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uKhbBuqc70it5xk80+luwbcUq9MImIgT5up/B+STr/E=;
- b=xJG//keWk3XfOkmaqXOAa/U7IDlQdIXJ+YnEcctPfk4dD+b4H9U0DS/hhblebPPObX
- wDKVRj3ckmSU9Toge8IcBWR6TN05IyVixrkjulvexhBoPoVfoPUO6diYZUa6A+cBjdjr
- lUXFBw8Kn/loO4FQ65jCGglIyj+ogN9ELXVWh8SqP756wRJRPvPrsMlmPzFNzrWVvoeF
- GNIB86FlWHxFZy8e3MySUsdhtW0pUKyn+n4ucCr7pRbrvEltFAqBcpQVHfSca8P9YDLY
- pB4IW2WUqMPtt0icSKlu1SjYHxkOQHeJQciv3fe2xT7bPK23CAYuqPAtArvO8pe1at12
- bzLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsfP4G4KLw3/1OTyvXT2JfvRR2hwZfJVMTCbmnV8ejISXTu5DKxdx5XXYziHvvbF4FfdiGZuYWQBU3@nongnu.org
-X-Gm-Message-State: AOJu0YwWzGWDD67SU+yfPf/rTTGNM7Ez7CC4k3tTIXwDTsKudpnLAQ15
- glcoNcgQSNLwY4/3w3JIZYElXuevtFQkyPsPoYYGinzaVh5eE/wBOX+UK6a6qsjhIcnkQKGPDUA
- 9tFGSyaLBRkbSyi9bpSU93Mv1z5Kd7w98CfxPuXcsfw4PNt9mpJHe8v+k
-X-Gm-Gg: ASbGncvmm8l4yV2Z3h9Ex8HuygPhcDo7Cx2Jsv0kk3sU6ozC5DOesRxTniW89KJ3nw9
- ZYUaxzDyxCnthJlsG+iNomp/ssc80rvfZr8vXJtlNeyf65HJMowwTWbw87i9QytoAi/kD/ACQTc
- d6CjQ0tbhetmug+V+93ufO50kcSu16l5ZrMzTgOLf7FDmzDV3w/11V7zpfuGOxOzNlJ30prVwnk
- FGHDRHKyBmEQ70jwR75WCvtgSUUf0HJLKrZ5IrX0D5/gX3KXmvnSGfck296n9zZ3L5F7jujbwLl
- 3EGRN+mKxCKGMr70QyAPS7y9tYz0r1Czzp6O++JpVpv66aSBrA==
-X-Received: by 2002:a05:6000:230f:b0:3a3:7749:9783 with SMTP id
- ffacd0b85a97d-3a37749987bmr7180737f8f.51.1747812572328; 
- Wed, 21 May 2025 00:29:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGSTqxcCI1UlaJKEIVUTtEJekF1p7L78VMP+imBN9dr80kAFitgR4p6nG+7em6isRNDNlAjkw==
-X-Received: by 2002:a05:6000:230f:b0:3a3:7749:9783 with SMTP id
- ffacd0b85a97d-3a37749987bmr7180695f8f.51.1747812571716; 
- Wed, 21 May 2025 00:29:31 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35e49262fsm18261125f8f.44.2025.05.21.00.29.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 00:29:31 -0700 (PDT)
-Message-ID: <19e2b44d-0dcc-424a-904d-a7519e25d93e@redhat.com>
-Date: Wed, 21 May 2025 09:29:30 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/29] vfio: enable per-IRQ MSI-X masking
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- John Johnson <john.g.johnson@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Steven Sistare <steven.sistare@oracle.com>
-References: <20250520150419.2172078-1-john.levon@nutanix.com>
- <20250520150419.2172078-7-john.levon@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250520150419.2172078-7-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+ in-reply-to:in-reply-to:references:references;
+ bh=FDRyYQYKESVO0x4TjsUHTCbe7EBx3+Et9GJ+7K2SYhk=;
+ b=uUaenXtGkHCAoKlVVK7XYAGJtMDWIEq9Q5B/I8h9bZAtf67j6zsT2eVr9MYPvwRO7d+nA0
+ Am+eTeMciLwNpaNrA87ibfEv1DUXIgQJd9DOQW31B89vmaYlpuFzmf/kD9c6vmiy2UoRg0
+ XfwmnfCamcNrOuu1zFgeu+Hj4A/W79k=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v13 5/5] qtest/cxl: Add aarch64 virt test for CXL
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+In-Reply-To: <20250519135413.000026b4@huawei.com>
+Date: Wed, 21 May 2025 16:38:10 +0900
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-arm@nongnu.org,
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5CCC3C8C-7348-4409-9964-8367C8FC1C1E@linux.dev>
+References: <20250513111455.128266-1-Jonathan.Cameron@huawei.com>
+ <20250513111455.128266-6-Jonathan.Cameron@huawei.com>
+ <D9E503CC-1271-4008-9975-9BAEC7A33376@linux.dev>
+ <20250519135413.000026b4@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.170;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-170.mta1.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,212 +77,404 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Sẗeven
-
-On 5/20/25 17:03, John Levon wrote:
-> If VFIO_IRQ_INFO_MASKABLE is set for VFIO_PCI_MSIX_IRQ_INDEX, record
-> this in ->can_mask_msix, and use it to individually mask MSI-X
-> interrupts as needed.
-> 
-> Originally-by: John Johnson <john.g.johnson@oracle.com>
-> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
-> Signed-off-by: John Levon <john.levon@nutanix.com>
 
 
-This one conflicts with the "live update" series. We will address it later.
+> On May 19, 2025, at 21:54, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> On Thu, 15 May 2025 18:04:18 +0900
+> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+>=20
+>>> On May 13, 2025, at 20:14, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>>>=20
+>>> Add a single complex case for aarch64 virt machine.
+>>> Given existing much more comprehensive tests for x86 cover the
+>>> common functionality, a single test should be enough to verify
+>>> that the aarch64 part continue to work.
+>>>=20
+>>> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>>> ---
+>>> tests/qtest/cxl-test.c  | 59 =
+++++++++++++++++++++++++++++++++---------
+>>> tests/qtest/meson.build |  1 +
+>>> 2 files changed, 47 insertions(+), 13 deletions(-)
+>>>=20
+>>> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+>>> index a600331843..c7189d6222 100644
+>>> --- a/tests/qtest/cxl-test.c
+>>> +++ b/tests/qtest/cxl-test.c
+>>> @@ -19,6 +19,12 @@
+>>>    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+>>>    "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+>>>=20
+>>> +#define QEMU_VIRT_2PXB_CMD \
+>>> +    "-machine virt,cxl=3Don -cpu max " \
+>>> +    "-device pxb-cxl,id=3Dcxl.0,bus=3Dpcie.0,bus_nr=3D52 " \
+>>> +    "-device pxb-cxl,id=3Dcxl.1,bus=3Dpcie.0,bus_nr=3D53 " \
+>>> +    "-M =
+cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=3Dcxl.1,cxl-fmw.0.size=3D4=
+G "
+>>> +
+>>> #define QEMU_RP \
+>>>    "-device cxl-rp,id=3Drp0,bus=3Dcxl.0,chassis=3D0,slot=3D0 "
+>>>=20
+>>> @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
+>>>    qtest_end();
+>>>    rmdir(tmpfs);
+>>> }
+>>> +
+>>> +static void cxl_virt_2pxb_4rp_4t3d(void)
+>>> +{
+>>> +    g_autoptr(GString) cmdline =3D g_string_new(NULL);
+>>> +    char template[] =3D "/tmp/cxl-test-XXXXXX";
+>>> +    const char *tmpfs;
+>>> +
+>>> +    tmpfs =3D mkdtemp(template);
+>>> +
+>>> +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
+>>> +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
+>>> +                    tmpfs, tmpfs);
+>>> +
+>>> +    qtest_start(cmdline->str);
+>>> +    qtest_end();
+>>> +    rmdir(tmpfs);
+>>> +}
+>>> #endif /* CONFIG_POSIX */
+>>>=20
+>>> int main(int argc, char **argv)
+>>> {
+>>> -    g_test_init(&argc, &argv, NULL);
+>>> +    const char *arch =3D qtest_get_arch();
+>>>=20
+>>> -    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+>>> -    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+>>> -    qtest_add_func("/pci/cxl/pxb_with_window", =
+cxl_pxb_with_window);
+>>> -    qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+>>> -    qtest_add_func("/pci/cxl/rp", cxl_root_port);
+>>> -    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+>>> +    g_test_init(&argc, &argv, NULL);
+>>> +    if (strcmp(arch, "i386") =3D=3D 0 || strcmp(arch, "x86_64") =3D=3D=
+ 0) {
+>>> +        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+>>> +        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+>>> +        qtest_add_func("/pci/cxl/pxb_with_window", =
+cxl_pxb_with_window);
+>>> +        qtest_add_func("/pci/cxl/pxb_x2_with_window", =
+cxl_2pxb_with_window);
+>>> +        qtest_add_func("/pci/cxl/rp", cxl_root_port);
+>>> +        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+>>> #ifdef CONFIG_POSIX
+>>> -    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+>>> -    qtest_add_func("/pci/cxl/type3_device_pmem", =
+cxl_t3d_persistent);
+>>> -    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
+>>> -    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+>>> -    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+>>> -    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", =
+cxl_2pxb_4rp_4t3d);
+>>> +        qtest_add_func("/pci/cxl/type3_device", =
+cxl_t3d_deprecated);
+>>> +        qtest_add_func("/pci/cxl/type3_device_pmem", =
+cxl_t3d_persistent);
+>>> +        qtest_add_func("/pci/cxl/type3_device_vmem", =
+cxl_t3d_volatile);
+>>> +        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", =
+cxl_t3d_volatile_lsa);
+>>> +        qtest_add_func("/pci/cxl/rp_x2_type3_x2", =
+cxl_1pxb_2rp_2t3d);
+>>> +        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
+>>> +                       cxl_2pxb_4rp_4t3d);
+>>> #endif
+>>> +    } else if (strcmp(arch, "aarch64") =3D=3D 0) {
+>>> +#ifdef CONFIG_POSIX
+>>> +        =
+qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
+>>> +                       cxl_virt_2pxb_4rp_4t3d);
+>>> +#endif
+>>> +    }
+>>> +
+>>>    return g_test_run();
+>>> }
+>>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>>> index 7daf619845..361000267a 100644
+>>> --- a/tests/qtest/meson.build
+>>> +++ b/tests/qtest/meson.build
+>>> @@ -258,6 +258,7 @@ qtests_aarch64 =3D \
+>>>  (config_all_accel.has_key('CONFIG_TCG') and                         =
+                   \
+>>>   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? =
+['tpm-tis-i2c-test'] : []) + \
+>>>  (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 =
+: []) + \
+>>> +  qtests_cxl +                                                      =
+                            \
+>>>  ['arm-cpu-features',
+>>>   'numa-test',
+>>>   'boot-serial-test',
+>>> --=20
+>>> 2.43.0
+>>>=20
+>>=20
+>> ~/projects/qemu/build$ meson test qtest-aarch64/cxl-test
+>> ninja: Entering directory `/home/realm/projects/qemu/build'
+>> [1/8] Generating qemu-version.h with a custom command (wrapped by =
+meson to capture output)
+>> 1/1 qemu:qtest+qtest-aarch64 / qtest-aarch64/cxl-test        OK       =
+       0.17s   1 subtests passed
+>>=20
+>> Ok:                 1
+>> Expected Fail:      0
+>> Fail:               0
+>> Unexpected Pass:    0
+>> Skipped:            0
+>> Timeout:            0
+>>=20
+>> Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com =
+<mailto:itaru.kitayama@fujitsu.com>>
+>>=20
+>> Jonathan, would you push your branch this series applied? I manually =
+applied your series no issues though.
+>=20
+> I'm reluctant to push a 'normal' staging CXL tree whilst we have the =
+TCG
+> issue outstanding (which is in mainline).
+> I can probably push one with a name that makes it clear we know it =
+will
+> crash under some circumstances though. I'll aim to get that done later =
+this week.
+>=20
+> After talking to Richard Henderson I'm going to spin some images etc =
+to
+> make it easier for him to replicate that TCG issue.
 
+While QEMU (the kernel is built off of cxl branch) boots fine and lspci =
+shows CXL devices as shown:
 
-Thanks,
+root@localhost:~# lspci -mm
+00:00.0 "Host bridge" "Red Hat, Inc." "QEMU PCIe Host bridge" -p00 "Red =
+Hat, Inc." "Device 1100"
+00:01.0 "SCSI storage controller" "Red Hat, Inc." "Virtio block device" =
+-p00 "Red Hat, Inc." "Device 0002"
+00:02.0 "Ethernet controller" "Intel Corporation" "82540EM Gigabit =
+Ethernet Controller" -r03 -p00 "Red Hat, Inc." "QEMU Virtual Machine"
+00:03.0 "Host bridge" "Red Hat, Inc." "QEMU PCIe Expander bridge" -p00 =
+"Red Hat, Inc." "Device 1100"
+00:04.0 "Host bridge" "Red Hat, Inc." "QEMU PCIe Expander bridge" -p00 =
+"Red Hat, Inc." "Device 1100"
+35:00.0 "PCI bridge" "Intel Corporation" "Device 7075" -p00 "Intel =
+Corporation" "Device 0000"
+35:01.0 "PCI bridge" "Intel Corporation" "Device 7075" -p00 "Intel =
+Corporation" "Device 0000"
+36:00.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a128" -p00 =
+"" ""
+36:00.1 "Serial bus controller [0c0b]" "Huawei Technologies Co., Ltd." =
+"Device a123" -p00 "Red Hat, Inc." "Device 1100"
+37:00.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" -p00 =
+"" ""
+37:01.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" -p00 =
+"" ""
+37:02.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" -p00 =
+"" ""
+37:03.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" -p00 =
+"" ""
+38:00.0 "CXL" "Intel Corporation" "Device 0d93" -r01 -p10 "Red Hat, =
+Inc." "Device 1100"
+3a:00.0 "CXL" "Intel Corporation" "Device 0d93" -r01 -p10 "Red Hat, =
+Inc." "Device 1100"
+bf:00.0 "PCI bridge" "Intel Corporation" "Device 7075" -p00 "Intel =
+Corporation" "Device 0000"
+bf:01.0 "PCI bridge" "Intel Corporation" "Device 7075" -p00 "Intel =
+Corporation" "Device 0000"
+c0:00.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a128" -p00 =
+"" ""
+c0:00.1 "Serial bus controller [0c0b]" "Huawei Technologies Co., Ltd." =
+"Device a123" -p00 "Red Hat, Inc." "Device 1100"
+c1:00.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" -p00 =
+"" ""
+c1:01.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" -p00 =
+"" ""
+c1:02.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" -p00 =
+"" ""
+c1:03.0 "PCI bridge" "Huawei Technologies Co., Ltd." "Device a129" -p00 =
+"" ""
+c2:00.0 "CXL" "Intel Corporation" "Device 0d93" -r01 -p10 "Red Hat, =
+Inc." "Device 1100"
+c4:00.0 "CXL" "Intel Corporation" "Device 0d93" -r01 -p10 "Red Hat, =
+Inc." "Device 1100=E2=80=9D
 
-C.
+but the cxl-list command takes 5-10 minutes to return the information. =
+I=E2=80=99ll test with your qtest minimalist setup to see if the system =
+is loaded. Am I seeing the TCG issue you mentioned?
 
+root@localhost:~# cxl list -M
+[
+  {
+    "memdev":"mem10",
+    "ram_size":2147483648,
+    "ram_qos_class":42,
+    "serial":11,
+    "numa_node":0,
+    "host":"cxl_rcd.10",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem5",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":6,
+    "numa_node":1,
+    "host":"cxl_mem.5",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem1",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":2,
+    "numa_node":1,
+    "host":"cxl_mem.1",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem6",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":8,
+    "numa_node":1,
+    "host":"cxl_mem.7",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem3",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":4,
+    "numa_node":1,
+    "host":"cxl_mem.3",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem4",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":5,
+    "numa_node":0,
+    "host":"cxl_mem.4",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem0",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":1,
+    "numa_node":0,
+    "host":"cxl_mem.0",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem2",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":3,
+    "numa_node":0,
+    "host":"cxl_mem.2",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem7",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":7,
+    "numa_node":0,
+    "host":"cxl_mem.6",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem8",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":9,
+    "numa_node":0,
+    "host":"cxl_mem.8",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem9",
+    "pmem_size":1073741824,
+    "pmem_qos_class":42,
+    "ram_size":1073741824,
+    "ram_qos_class":42,
+    "serial":10,
+    "numa_node":1,
+    "host":"cxl_mem.9",
+    "firmware_version":"mock fw v1 "
+  },
+  {
+    "memdev":"mem12",
+    "ram_size":268435456,
+    "serial":0,
+    "host":"0000:c4:00.0",
+    "firmware_version":"BWFW VERSION 00"
+  },
+  {
+    "memdev":"mem11",
+    "ram_size":268435456,
+    "serial":0,
+    "host":"0000:c2:00.0",
+    "firmware_version":"BWFW VERSION 00"
+  },
+  {
+    "memdev":"mem14",
+    "pmem_size":268435456,
+    "serial":0,
+    "host":"0000:3a:00.0",
+    "firmware_version":"BWFW VERSION 00"
+  },
+  {
+    "memdev":"mem13",
+    "pmem_size":268435456,
+    "serial":0,
+    "host":"0000:38:00.0",
+    "firmware_version":"BWFW VERSION 00"
+  }
+]
 
+Getting this shouldn=E2=80=99t take minutes, even with the emulator I =
+think.
 
-> ---
->   hw/vfio/pci.h                 |  1 +
->   include/hw/vfio/vfio-device.h |  2 ++
->   hw/vfio/device.c              | 26 +++++++++++++++++++
->   hw/vfio/pci.c                 | 47 ++++++++++++++++++++++++++++++-----
->   4 files changed, 70 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 61fa385ddb..43c2d72b84 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -191,6 +191,7 @@ struct VFIOPCIDevice {
->       bool defer_kvm_irq_routing;
->       bool clear_parent_atomics_on_exit;
->       bool skip_vsc_check;
-> +    bool can_mask_msix;
->       VFIODisplay *dpy;
->       Notifier irqchip_change_notifier;
->   };
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 8bcb3c19f6..923f9cd116 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -133,7 +133,9 @@ struct VFIODeviceOps {
->       (ret < 0 ? strerror(-ret) : "short write")
->   
->   void vfio_device_irq_disable(VFIODevice *vbasedev, int index);
-> +void vfio_device_irq_unmask_single(VFIODevice *vbasedev, int index, int irq);
->   void vfio_device_irq_unmask(VFIODevice *vbasedev, int index);
-> +void vfio_device_irq_mask_single(VFIODevice *vbasedev, int index, int irq);
->   void vfio_device_irq_mask(VFIODevice *vbasedev, int index);
->   bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex,
->                                      int action, int fd, Error **errp);
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 9fba2c7272..d0068086ae 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -85,6 +85,19 @@ void vfio_device_irq_disable(VFIODevice *vbasedev, int index)
->       vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
->   }
->   
-> +void vfio_device_irq_unmask_single(VFIODevice *vbasedev, int index, int irq)
-> +{
-> +    struct vfio_irq_set irq_set = {
-> +        .argsz = sizeof(irq_set),
-> +        .flags = VFIO_IRQ_SET_DATA_NONE | VFIO_IRQ_SET_ACTION_UNMASK,
-> +        .index = index,
-> +        .start = irq,
-> +        .count = 1,
-> +    };
-> +
-> +    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
-> +}
-> +
->   void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
->   {
->       struct vfio_irq_set irq_set = {
-> @@ -98,6 +111,19 @@ void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
->       vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
->   }
->   
-> +void vfio_device_irq_mask_single(VFIODevice *vbasedev, int index, int irq)
-> +{
-> +    struct vfio_irq_set irq_set = {
-> +        .argsz = sizeof(irq_set),
-> +        .flags = VFIO_IRQ_SET_DATA_NONE | VFIO_IRQ_SET_ACTION_MASK,
-> +        .index = index,
-> +        .start = irq,
-> +        .count = 1,
-> +    };
-> +
-> +    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
-> +}
-> +
->   void vfio_device_irq_mask(VFIODevice *vbasedev, int index)
->   {
->       struct vfio_irq_set irq_set = {
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 5159198bdb..ef38b4692a 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -535,6 +535,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->   {
->       VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       VFIOMSIVector *vector;
-> +    bool new_vec = false;
->       int ret;
->       bool resizing = !!(vdev->nr_vectors < nr + 1);
->   
-> @@ -549,6 +550,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->               error_report("vfio: Error: event_notifier_init failed");
->           }
->           vector->use = true;
-> +        new_vec = true;
->           msix_vector_use(pdev, nr);
->       }
->   
-> @@ -575,6 +577,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->                   kvm_irqchip_commit_route_changes(&vfio_route_change);
->                   vfio_connect_kvm_msi_virq(vector);
->               }
-> +            new_vec = true;
->           }
->       }
->   
-> @@ -584,6 +587,9 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->        * in use, so we shutdown and incrementally increase them as needed.
->        * nr_vectors represents the total number of vectors allocated.
->        *
-> +     * Otherwise, unmask the vector if the vector is already setup (and we can
-> +     * do so) or send the fd if not.
-> +     *
->        * When dynamic allocation is supported, let the host only allocate
->        * and enable a vector when it is in use in guest. nr_vectors represents
->        * the upper bound of vectors being enabled (but not all of the ranges
-> @@ -594,13 +600,20 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->       }
->   
->       if (!vdev->defer_kvm_irq_routing) {
-> -        if (vdev->msix->noresize && resizing) {
-> -            vfio_device_irq_disable(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX);
-> -            ret = vfio_enable_vectors(vdev, true);
-> -            if (ret) {
-> -                error_report("vfio: failed to enable vectors, %s",
-> -                             strerror(-ret));
-> +        if (resizing) {
-> +            if (vdev->msix->noresize) {
-> +                vfio_device_irq_disable(&vdev->vbasedev,
-> +                                        VFIO_PCI_MSIX_IRQ_INDEX);
-> +                ret = vfio_enable_vectors(vdev, true);
-> +                if (ret) {
-> +                    error_report("vfio: failed to enable vectors, %d", ret);
-> +                }
-> +            } else {
-> +                set_irq_signalling(&vdev->vbasedev, vector, nr);
->               }
-> +        } else if (vdev->can_mask_msix && !new_vec) {
-> +            vfio_device_irq_unmask_single(&vdev->vbasedev,
-> +                                          VFIO_PCI_MSIX_IRQ_INDEX, nr);
->           } else {
->               set_irq_signalling(&vdev->vbasedev, vector, nr);
->           }
-> @@ -630,6 +643,13 @@ static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
->   
->       trace_vfio_msix_vector_release(vdev->vbasedev.name, nr);
->   
-> +    /* just mask vector if peer supports it */
-> +    if (vdev->can_mask_msix) {
-> +        vfio_device_irq_mask_single(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
-> +                                    nr);
-> +        return;
-> +    }
-> +
->       /*
->        * There are still old guests that mask and unmask vectors on every
->        * interrupt.  If we're using QEMU bypass with a KVM irqfd, leave all of
-> @@ -702,6 +722,13 @@ static void vfio_msix_enable(VFIOPCIDevice *vdev)
->               error_report("vfio: failed to enable vectors, %s",
->                            strerror(-ret));
->           }
-> +    } else if (vdev->can_mask_msix) {
-> +        /*
-> +         * If we can use single irq masking, send an invalid fd on vector 0
-> +         * to enable MSI-X without any vectors enabled.
-> +         */
-> +        vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
-> +                                      0, VFIO_IRQ_SET_ACTION_TRIGGER, -1, NULL);
->       } else {
->           /*
->            * Some communication channels between VF & PF or PF & fw rely on the
-> @@ -2842,6 +2869,14 @@ bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
->           }
->       }
->   
-> +    ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
-> +                                   &irq_info);
-> +    if (ret == 0 && (irq_info.flags & VFIO_IRQ_INFO_MASKABLE)) {
-> +        vdev->can_mask_msix = true;
-> +    } else {
-> +        vdev->can_mask_msix = false;
-> +    }
-> +
->       ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_ERR_IRQ_INDEX, &irq_info);
->       if (ret) {
->           /* This can fail for an old kernel or legacy PCI dev */
+Itaru.
+
+>=20
+> Thanks for reviews.
+>=20
+> Jonathan
+>=20
+>>=20
+>>=20
+>=20
 
 
