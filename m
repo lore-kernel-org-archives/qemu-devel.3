@@ -4,149 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A05C54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 09:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D86AC54E90
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 09:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHfQB-0007eY-Lz; Wed, 21 May 2025 05:07:31 -0400
+	id 1uHfcC-0002zx-Cm; Wed, 21 May 2025 05:19:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHfQ9-0007eN-SJ
- for qemu-devel@nongnu.org; Wed, 21 May 2025 05:07:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
+ id 1uHfc4-0002z0-2q; Wed, 21 May 2025 05:19:50 -0400
+Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHfQ8-0006EZ-4K
- for qemu-devel@nongnu.org; Wed, 21 May 2025 05:07:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747818446;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dOZtdznRJkGZ6kktzbPGXgZe+X1DGjk7BD7kfZpjZCw=;
- b=jRXc8/Q/wesas5yQd3sjHV6hI0bKHgY3kkDfKE1mKhQ/kAg3T3IydeXPNXsCfvpUTPHolU
- TZ3wmQJNjkwnxYM8acT69fLmh5rSaochY92F5R8JYEfDSRVXQ2/a+GLTSkL8vz8QWv3KHe
- iHBkbUilMB+J8OEjNmfrJfmX5+0dVzg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-dqA3C6iyPTKBUQYP8u5qyg-1; Wed, 21 May 2025 05:07:24 -0400
-X-MC-Unique: dqA3C6iyPTKBUQYP8u5qyg-1
-X-Mimecast-MFC-AGG-ID: dqA3C6iyPTKBUQYP8u5qyg_1747818443
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a35989e5b2so4035709f8f.2
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 02:07:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747818443; x=1748423243;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dOZtdznRJkGZ6kktzbPGXgZe+X1DGjk7BD7kfZpjZCw=;
- b=r/AtCCcuq3WAG2H4ngj7HpHxgJpv8Ssfp2tUOU4dYg8wGqCPTrfTHyHe7OgxMuSxJ2
- OWjuRkmVLHNRVOHnTACmhAqLYOe9WoweoVL2ZlRPbwoPlYAmHR5MErp563jpF1TWdIeq
- B3/WeAAMXvT3TudXpSbZQxHDkja/YGp2MD7EpC2fGHeSjAhOH44g7IhKb/X0RxfFvgJ2
- B72K8at1665aiYnP/TVMeV4Oljop30reBNqaOXKKNJzmQ+0qcZyjn2l8JO/k0y7aT6Ze
- Qcgy0guKICxq3+9e5/CELiOcp8MPRpQQ2v8OYtJjobiKqboaVLhKQ5WuZFpyn+i4jrUZ
- oRyA==
-X-Gm-Message-State: AOJu0YwrI+9Mwi+roDed9oHmcMqPYC4VV26FROE37Cif0fdydimbOtIk
- VzH6eC4ZdqAJd/LW0cDUopsAptkK6BZ6yNGbWqhkLq9yvc+c/sZfHGJtSxBFpQ/rIl3S875fIOc
- kU2JqujW7+wVKvO3IGYJBPhZlHIxnUUmoozCdD21YuZpZt09rFdxNdilJ
-X-Gm-Gg: ASbGnctj4oBab04SZfDJW04vaiBQkXzMarDVuVE4ROvRV4FRwcsBOj7TUOhbuleN6B5
- VuvSo+vv3JGHXn3u2UXH/LcmhAT2wn86RPxH4Pv/7werjJCrNnpnWxSnWE+ZWnD6o2AYe+GbUap
- XLPdGT3afJ3ygB1/OMh+lShyjkJf5kTKrpQUYfXMT0Zba7Io6vYfKx/9IOV7h3aQau+rvtAv49n
- qnQ4a/67a/5ZXq/ZBp4CfOVL9IdLlsuDrX7SwAQBO5wn16eC6+sydgrljpRU6co8vQBfPgFeHQh
- XSAzDyS5qkRFfFXXhzyeD0OeCtaN4ppeFVkLCehi5Nv7QfYLvQ==
-X-Received: by 2002:a05:6000:310b:b0:3a3:783b:808a with SMTP id
- ffacd0b85a97d-3a3783b8195mr6016898f8f.29.1747818443132; 
- Wed, 21 May 2025 02:07:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaYcNkWCKn69Ur2XOq373qWKOZmouQgwoA0pFTvQ3Y7UqekEkwTu6qOr/8ZAO6ZBg5/qFVtw==
-X-Received: by 2002:a05:6000:310b:b0:3a3:783b:808a with SMTP id
- ffacd0b85a97d-3a3783b8195mr6016860f8f.29.1747818442612; 
- Wed, 21 May 2025 02:07:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f78b0a46sm59557475e9.30.2025.05.21.02.07.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 02:07:22 -0700 (PDT)
-Message-ID: <0a70dcbe-3ca9-4c98-8059-a4d6bbf57386@redhat.com>
-Date: Wed, 21 May 2025 11:07:21 +0200
+ (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
+ id 1uHfc1-0007UX-Pb; Wed, 21 May 2025 05:19:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
+ MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+ Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=YcdQNHhSjqbTUS0stbJYh4pu4yJRwdhDkuaiNSz5I3s=; b=OxyPNsN4DCIXov9y7R/u920xBH
+ Llqnln00/949bq8TZbkQnUoH3s7iSSVOQzEIZg9pGQ9m0MOKBj47obndDRwVMUqpnnQrvbFBaFpK7
+ j81EWoH4nN1NETwzKW8jVS6F6DdvKs8Agz909rUz9PrAMv5f9nczW0d1hpxP4EXzZJmE66cAawbZN
+ S556ICdhjV/FSftFz5hblVERpCFY6LaBwhE/PfG+M7SEsnvEo1N/c6GOmDdfmPusq0CjFmkqhlyxy
+ 1hZ2mtNJtyj5gNH4/uH/9RZI4DxH4lL+8VYMO+wt7E2Ujcw2i7Y0IqLAANxIGkaFsCY9pGNnrgIOw
+ gRuSmb9g==;
+Received: from [136.226.167.112] (helo=codethink..)
+ by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
+ id 1uHfbr-00FG11-Av; Wed, 21 May 2025 10:19:36 +0100
+From: Roan Richmond <roan.richmond@codethink.co.uk>
+To: qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ qemu-devel@nongnu.org, Roan Richmond <roan.richmond@codethink.co.uk>
+Subject: [PATCH 0/1] Add RISCV ZALASR Extension
+Date: Wed, 21 May 2025 10:17:54 +0100
+Message-ID: <20250521091921.180094-1-roan.richmond@codethink.co.uk>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/29] vfio: export PCI helpers needed for vfio-user
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-References: <20250520150419.2172078-1-john.levon@nutanix.com>
- <20250520150419.2172078-6-john.levon@nutanix.com>
- <71d44d9c-63f2-4f71-a0bd-366762d816d1@redhat.com> <aC2ReEZkRl3K6Bfk@lent>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aC2ReEZkRl3K6Bfk@lent>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=188.40.203.114;
+ envelope-from=roan.richmond@codethink.co.uk; helo=imap4.hz.codethink.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,47 +68,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/25 10:40, John Levon wrote:
-> On Wed, May 21, 2025 at 09:39:42AM +0200, Cédric Le Goater wrote:
-> 
->> These routines :
->>
->>    Object *vfio_pci_get_object(VFIODevice *vbasedev);
->>    void vfio_pci_intx_eoi(VFIODevice *vbasedev);
->>    int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f);
->>    int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp);
->>
->> are exported to simply define the VFIODeviceOps vfio_user_pci_ops struct
->> (and they don't take a VFIOPCIDevice as first argument). I wonder if we
->> could find a way to keep them private.
-> 
-> +static Object *vfio_user_pci_get_object(VFIODevice *vbasedev)
-> +{
-> +    VFIOUserPCIDevice *vdev = container_of(vbasedev, VFIOUserPCIDevice,
-> +                                           device.vbasedev);
-> +
-> +    return OBJECT(vdev);
-> +}
-> 
-> seems to work.
-> 
->> export vfio_pci_intx_eoi()
-> 
-> This is definitely required.
+Ping, resending as no comments in over 2 weeks.
 
-yes. it makes sense.
+Roan Richmond (1):
+  Add RISCV ZALASR extension
 
-> 
->> Also, does vfio-user support migration ?
-> 
-> Not yet: we dropped support during the v2 changeover. Happy to drop the
-> save/load config in the meantime.
+ target/riscv/cpu.c                           |   1 +
+ target/riscv/cpu_cfg.h                       |   1 +
+ target/riscv/insn32.decode                   |  10 ++
+ target/riscv/insn_trans/trans_rvzalasr.c.inc | 109 +++++++++++++++++++
+ target/riscv/translate.c                     |   1 +
+ 5 files changed, 122 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvzalasr.c.inc
 
-Then please drop vfio_pci_get_object too.
-
-
-Thanks,
-
-C.
+-- 
+2.43.0
 
 
