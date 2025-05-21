@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DA86C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B722C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHjv0-00005r-Gf; Wed, 21 May 2025 09:55:38 -0400
+	id 1uHjv6-0000Hf-12; Wed, 21 May 2025 09:55:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uHjuy-0008T2-PZ
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:36 -0400
+ id 1uHjv3-0000EE-BW
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uHjuw-00075j-6n
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:36 -0400
+ id 1uHjv0-000767-2G
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747835733;
+ s=mimecast20190719; t=1747835737;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BL05b1wqQ7FN+wTvyszSTfR+QUxn43lIBl73uDpbO7g=;
- b=XH9Ntq75sCRPIL5kjYz3nyzw8rR8W0qYTMiYEPTIaewoVHghFMKhfUcgo1+tSpScH1Pi7G
- ic9452O1v48ooeRYsD2PGbiyJTHyH+i7tJDl8+MDGQzuVV3mo69v3tRJ08CW0KoD+CMtvu
- 1FeGUgvX2x6eJoL8RVRk6MvZMmpt8Kk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zcDve3oQvRJolk/sF06L0Z5HFPQUmLIPk/w0wJEutfU=;
+ b=ASMknDuZKd/LnRfsb9RI6wY8ExZmMi3X+kiSBGO/hySF1H3iJUbz7O1LthNJZeITDVx2lZ
+ Vb1qCKce3bv4qvhqJtyg8RZc8v3a3TUPnAm3iG4fEv/ooqzP+waL/b3dt1Ojw7kdsq7Ufk
+ 2yjL7dbHEhmxvasMwqGdUY8lQSAJZtI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-547-fJp7WiNjMhCRvUKTpU54-g-1; Wed,
- 21 May 2025 09:55:30 -0400
-X-MC-Unique: fJp7WiNjMhCRvUKTpU54-g-1
-X-Mimecast-MFC-AGG-ID: fJp7WiNjMhCRvUKTpU54-g_1747835730
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-259--_wsRSRJO-ibg3EK8rQzqA-1; Wed,
+ 21 May 2025 09:55:26 -0400
+X-MC-Unique: -_wsRSRJO-ibg3EK8rQzqA-1
+X-Mimecast-MFC-AGG-ID: -_wsRSRJO-ibg3EK8rQzqA_1747835726
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B5C31800772; Wed, 21 May 2025 13:55:30 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B85D1180036D; Wed, 21 May 2025 13:55:25 +0000 (UTC)
 Received: from fedora.brq.redhat.com (unknown [10.43.2.64])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 47BE119560AB; Wed, 21 May 2025 13:55:28 +0000 (UTC)
+ id E2CC819560AB; Wed, 21 May 2025 13:55:23 +0000 (UTC)
 From: Juraj Marcin <jmarcin@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v5 6/6] util/qemu-sockets: Introduce inet socket options
- controlling TCP keep-alive
-Date: Wed, 21 May 2025 15:52:35 +0200
-Message-ID: <20250521135240.3941598-7-jmarcin@redhat.com>
+Subject: [PATCH v5 5/6] util/qemu-sockets: Refactor inet_parse() to use
+ QemuOpts
+Date: Wed, 21 May 2025 15:52:34 +0200
+Message-ID: <20250521135240.3941598-6-jmarcin@redhat.com>
 In-Reply-To: <20250521135240.3941598-1-jmarcin@redhat.com>
 References: <20250521135240.3941598-1-jmarcin@redhat.com>
 MIME-Version: 1.0
@@ -89,288 +89,440 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Juraj Marcin <jmarcin@redhat.com>
 
-With the default TCP stack configuration, it could be even 2 hours
-before the connection times out due to the other side not being
-reachable. However, in some cases, the application needs to be aware of
-a connection issue much sooner.
+Currently, the inet address parser cannot handle multiple options where
+one is prefixed with the name of the other. For example, with the
+'keep-alive-idle' option added, the current parser cannot parse
+'127.0.0.1:5000,keep-alive-idle=60,keep-alive' correctly. Instead, it
+fails with "error parsing 'keep-alive' flag '-idle=60,keep-alive'".
 
-This is the case, for example, for postcopy live migration. If there is
-no traffic from the migration destination guest (server-side) to the
-migration source guest (client-side), the destination keeps waiting for
-pages indefinitely and does not switch to the postcopy-paused state.
-This can happen, for example, if the destination QEMU instance is
-started with the '-S' command line option and the machine is not started
-yet, or if the machine is idle and produces no new page faults for
-not-yet-migrated pages.
-
-This patch introduces new inet socket parameters that control count,
-idle period, and interval of TCP keep-alive packets before the
-connection is considered broken. These parameters are available on
-systems where the respective TCP socket options are defined, that
-includes Linux, Windows, macOS, but not OpenBSD. Additionally, macOS
-defines TCP_KEEPIDLE as TCP_KEEPALIVE instead, so the patch supplies its
-own definition.
-
-The default value for all is 0, which means the system configuration is
-used.
+To resolve these issues, this patch rewrites the inet address parsing
+using the QemuOpts parser, which the inet_parse_flag() function tries to
+mimic. This new parser supports all previously supported options and on
+top of that the 'numeric' flag is now also supported. The only
+difference is, the new parser produces an error if an unknown option is
+passed, instead of silently ignoring it.
 
 Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- meson.build                    | 30 +++++++++++++
- qapi/sockets.json              | 19 ++++++++
- tests/unit/test-util-sockets.c | 33 ++++++++++++++
- util/qemu-sockets.c            | 80 ++++++++++++++++++++++++++++++++++
- 4 files changed, 162 insertions(+)
+ tests/unit/test-util-sockets.c | 195 +++++++++++++++++++++++++++++++++
+ util/qemu-sockets.c            | 158 +++++++++++++-------------
+ 2 files changed, 269 insertions(+), 84 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index ad2053f968..fdad3fb528 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2760,6 +2760,36 @@ if linux_io_uring.found()
-   config_host_data.set('HAVE_IO_URING_PREP_WRITEV2',
-                        cc.has_header_symbol('liburing.h', 'io_uring_prep_writev2'))
- endif
-+config_host_data.set('HAVE_TCP_KEEPCNT',
-+                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPCNT') or
-+                     cc.compiles('''
-+                     #include <ws2tcpip.h>
-+                     #ifndef TCP_KEEPCNT
-+                     #error
-+                     #endif
-+                     int main(void) { return 0; }''',
-+                     name: 'Win32 TCP_KEEPCNT'))
-+# On Darwin TCP_KEEPIDLE is available under different name, TCP_KEEPALIVE.
-+# https://github.com/apple/darwin-xnu/blob/xnu-4570.1.46/bsd/man/man4/tcp.4#L172
-+config_host_data.set('HAVE_TCP_KEEPIDLE',
-+                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPIDLE') or
-+                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPALIVE') or
-+                     cc.compiles('''
-+                     #include <ws2tcpip.h>
-+                     #ifndef TCP_KEEPIDLE
-+                     #error
-+                     #endif
-+                     int main(void) { return 0; }''',
-+                     name: 'Win32 TCP_KEEPIDLE'))
-+config_host_data.set('HAVE_TCP_KEEPINTVL',
-+                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPINTVL') or
-+                     cc.compiles('''
-+                     #include <ws2tcpip.h>
-+                     #ifndef TCP_KEEPINTVL
-+                     #error
-+                     #endif
-+                     int main(void) { return 0; }''',
-+                     name: 'Win32 TCP_KEEPINTVL'))
- 
- # has_member
- config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index 62797cd027..f9f559daba 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -59,6 +59,22 @@
- # @keep-alive: enable keep-alive when connecting to/listening on this socket.
- #     (Since 4.2, not supported for listening sockets until 10.1)
- #
-+# @keep-alive-count: number of keep-alive packets sent before the connection is
-+#     closed.  Only supported for TCP sockets on systems where TCP_KEEPCNT
-+#     socket option is defined (this includes Linux, Windows, macOS, FreeBSD,
-+#     but not OpenBSD).  When set to 0, system setting is used.  (Since 10.1)
-+#
-+# @keep-alive-idle: time in seconds the connection needs to be idle before
-+#     sending a keepalive packet.  Only supported for TCP sockets on systems
-+#     where TCP_KEEPIDLE socket option is defined (this includes Linux,
-+#     Windows, macOS, FreeBSD, but not OpenBSD).  When set to 0, system setting
-+#     is used.  (Since 10.1)
-+#
-+# @keep-alive-interval: time in seconds between keep-alive packets.  Only
-+#     supported for TCP sockets on systems where TCP_KEEPINTVL is defined (this
-+#     includes Linux, Windows, macOS, FreeBSD, but not OpenBSD).  When set to
-+#     0, system setting is used.  (Since 10.1)
-+#
- # @mptcp: enable multi-path TCP.  (Since 6.1)
- #
- # Since: 1.3
-@@ -71,6 +87,9 @@
-     '*ipv4': 'bool',
-     '*ipv6': 'bool',
-     '*keep-alive': 'bool',
-+    '*keep-alive-count': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPCNT' },
-+    '*keep-alive-idle': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPIDLE' },
-+    '*keep-alive-interval': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPINTVL' },
-     '*mptcp': { 'type': 'bool', 'if': 'HAVE_IPPROTO_MPTCP' } } }
- 
- ##
 diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
-index cca609fd90..af8e6e6af9 100644
+index 4c9dd0b271..cca609fd90 100644
 --- a/tests/unit/test-util-sockets.c
 +++ b/tests/unit/test-util-sockets.c
-@@ -358,6 +358,18 @@ static void inet_parse_test_helper(const char *str, InetSocketAddress *exp_addr,
-         g_assert_cmpint(addr.ipv6, ==, exp_addr->ipv6);
-         g_assert_cmpint(addr.has_keep_alive, ==, exp_addr->has_keep_alive);
-         g_assert_cmpint(addr.keep_alive, ==, exp_addr->keep_alive);
-+#ifdef HAVE_TCP_KEEPCNT
-+        g_assert_cmpint(addr.has_keep_alive_count, ==, exp_addr->has_keep_alive_count);
-+        g_assert_cmpint(addr.keep_alive_count, ==, exp_addr->keep_alive_count);
+@@ -332,6 +332,176 @@ static void test_socket_unix_abstract(void)
+ 
+ #endif  /* CONFIG_LINUX */
+ 
++static void inet_parse_test_helper(const char *str, InetSocketAddress *exp_addr, bool success)
++{
++    InetSocketAddress addr;
++    Error *error = NULL;
++
++    int rc = inet_parse(&addr, str, &error);
++
++    if (success) {
++        g_assert_cmpint(rc, ==, 0);
++    } else {
++        g_assert_cmpint(rc, <, 0);
++    }
++    if (exp_addr != NULL) {
++        g_assert_cmpstr(addr.host, ==, exp_addr->host);
++        g_assert_cmpstr(addr.port, ==, exp_addr->port);
++        /* Own members: */
++        g_assert_cmpint(addr.has_numeric, ==, exp_addr->has_numeric);
++        g_assert_cmpint(addr.numeric, ==, exp_addr->numeric);
++        g_assert_cmpint(addr.has_to, ==, exp_addr->has_to);
++        g_assert_cmpint(addr.to, ==, exp_addr->to);
++        g_assert_cmpint(addr.has_ipv4, ==, exp_addr->has_ipv4);
++        g_assert_cmpint(addr.ipv4, ==, exp_addr->ipv4);
++        g_assert_cmpint(addr.has_ipv6, ==, exp_addr->has_ipv6);
++        g_assert_cmpint(addr.ipv6, ==, exp_addr->ipv6);
++        g_assert_cmpint(addr.has_keep_alive, ==, exp_addr->has_keep_alive);
++        g_assert_cmpint(addr.keep_alive, ==, exp_addr->keep_alive);
++#ifdef HAVE_IPPROTO_MPTCP
++        g_assert_cmpint(addr.has_mptcp, ==, exp_addr->has_mptcp);
++        g_assert_cmpint(addr.mptcp, ==, exp_addr->mptcp);
 +#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+        g_assert_cmpint(addr.has_keep_alive_idle, ==, exp_addr->has_keep_alive_idle);
-+        g_assert_cmpint(addr.keep_alive_idle, ==, exp_addr->keep_alive_idle);
++    }
++
++    g_free(addr.host);
++    g_free(addr.port);
++}
++
++static void test_inet_parse_nohost_good(void)
++{
++    char host[] = "";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++    };
++    inet_parse_test_helper(":5000", &exp_addr, true);
++}
++
++static void test_inet_parse_empty_bad(void)
++{
++    inet_parse_test_helper("", NULL, false);
++}
++
++static void test_inet_parse_only_colon_bad(void)
++{
++    inet_parse_test_helper(":", NULL, false);
++}
++
++static void test_inet_parse_ipv4_good(void)
++{
++    char host[] = "127.0.0.1";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++    };
++    inet_parse_test_helper("127.0.0.1:5000", &exp_addr, true);
++}
++
++static void test_inet_parse_ipv4_noport_bad(void)
++{
++    inet_parse_test_helper("127.0.0.1", NULL, false);
++}
++
++static void test_inet_parse_ipv6_good(void)
++{
++    char host[] = "::1";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++    };
++    inet_parse_test_helper("[::1]:5000", &exp_addr, true);
++}
++
++static void test_inet_parse_ipv6_noend_bad(void)
++{
++    inet_parse_test_helper("[::1", NULL, false);
++}
++
++static void test_inet_parse_ipv6_noport_bad(void)
++{
++    inet_parse_test_helper("[::1]:", NULL, false);
++}
++
++static void test_inet_parse_ipv6_empty_bad(void)
++{
++    inet_parse_test_helper("[]:5000", NULL, false);
++}
++
++static void test_inet_parse_hostname_good(void)
++{
++    char host[] = "localhost";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++    };
++    inet_parse_test_helper("localhost:5000", &exp_addr, true);
++}
++
++static void test_inet_parse_all_options_good(void)
++{
++    char host[] = "::1";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++        .has_numeric = true,
++        .numeric =  true,
++        .has_to = true,
++        .to = 5006,
++        .has_ipv4 = true,
++        .ipv4 = false,
++        .has_ipv6 = true,
++        .ipv6 = true,
++        .has_keep_alive = true,
++        .keep_alive = true,
++#ifdef HAVE_IPPROTO_MPTCP
++        .has_mptcp = true,
++        .mptcp = false,
 +#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+        g_assert_cmpint(addr.has_keep_alive_interval, ==, exp_addr->has_keep_alive_interval);
-+        g_assert_cmpint(addr.keep_alive_interval, ==, exp_addr->keep_alive_interval);
++    };
++    inet_parse_test_helper(
++        "[::1]:5000,numeric=on,to=5006,ipv4=off,ipv6=on,keep-alive=on"
++#ifdef HAVE_IPPROTO_MPTCP
++        ",mptcp=off"
 +#endif
- #ifdef HAVE_IPPROTO_MPTCP
-         g_assert_cmpint(addr.has_mptcp, ==, exp_addr->has_mptcp);
-         g_assert_cmpint(addr.mptcp, ==, exp_addr->mptcp);
-@@ -459,6 +471,18 @@ static void test_inet_parse_all_options_good(void)
-         .ipv6 = true,
-         .has_keep_alive = true,
-         .keep_alive = true,
-+#ifdef HAVE_TCP_KEEPCNT
-+        .has_keep_alive_count = true,
-+        .keep_alive_count = 10,
++        , &exp_addr, true);
++}
++
++static void test_inet_parse_all_implicit_bool_good(void)
++{
++    char host[] = "::1";
++    char port[] = "5000";
++    InetSocketAddress exp_addr = {
++        .host = host,
++        .port = port,
++        .has_numeric = true,
++        .numeric =  true,
++        .has_to = true,
++        .to = 5006,
++        .has_ipv4 = true,
++        .ipv4 = true,
++        .has_ipv6 = true,
++        .ipv6 = true,
++        .has_keep_alive = true,
++        .keep_alive = true,
++#ifdef HAVE_IPPROTO_MPTCP
++        .has_mptcp = true,
++        .mptcp = true,
 +#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+        .has_keep_alive_idle = true,
-+        .keep_alive_idle = 60,
++    };
++    inet_parse_test_helper(
++        "[::1]:5000,numeric,to=5006,ipv4,ipv6,keep-alive"
++#ifdef HAVE_IPPROTO_MPTCP
++        ",mptcp"
 +#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+        .has_keep_alive_interval = true,
-+        .keep_alive_interval = 30,
-+#endif
- #ifdef HAVE_IPPROTO_MPTCP
-         .has_mptcp = true,
-         .mptcp = false,
-@@ -466,6 +490,15 @@ static void test_inet_parse_all_options_good(void)
-     };
-     inet_parse_test_helper(
-         "[::1]:5000,numeric=on,to=5006,ipv4=off,ipv6=on,keep-alive=on"
-+#ifdef HAVE_TCP_KEEPCNT
-+        ",keep-alive-count=10"
-+#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+        ",keep-alive-idle=60"
-+#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+        ",keep-alive-interval=30"
-+#endif
- #ifdef HAVE_IPPROTO_MPTCP
-         ",mptcp=off"
++        , &exp_addr, true);
++}
++
+ int main(int argc, char **argv)
+ {
+     bool has_ipv4, has_ipv6;
+@@ -377,6 +547,31 @@ int main(int argc, char **argv)
+                     test_socket_unix_abstract);
  #endif
+ 
++    g_test_add_func("/util/socket/inet-parse/nohost-good",
++                    test_inet_parse_nohost_good);
++    g_test_add_func("/util/socket/inet-parse/empty-bad",
++                    test_inet_parse_empty_bad);
++    g_test_add_func("/util/socket/inet-parse/only-colon-bad",
++                    test_inet_parse_only_colon_bad);
++    g_test_add_func("/util/socket/inet-parse/ipv4-good",
++                    test_inet_parse_ipv4_good);
++    g_test_add_func("/util/socket/inet-parse/ipv4-noport-bad",
++                    test_inet_parse_ipv4_noport_bad);
++    g_test_add_func("/util/socket/inet-parse/ipv6-good",
++                    test_inet_parse_ipv6_good);
++    g_test_add_func("/util/socket/inet-parse/ipv6-noend-bad",
++                    test_inet_parse_ipv6_noend_bad);
++    g_test_add_func("/util/socket/inet-parse/ipv6-noport-bad",
++                    test_inet_parse_ipv6_noport_bad);
++    g_test_add_func("/util/socket/inet-parse/ipv6-empty-bad",
++                    test_inet_parse_ipv6_empty_bad);
++    g_test_add_func("/util/socket/inet-parse/hostname-good",
++                    test_inet_parse_hostname_good);
++    g_test_add_func("/util/socket/inet-parse/all-options-good",
++                    test_inet_parse_all_options_good);
++    g_test_add_func("/util/socket/inet-parse/all-bare-bool-good",
++                    test_inet_parse_all_implicit_bool_good);
++
+ end:
+     return g_test_run();
+ }
 diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-index 403dc26b36..4773755fd5 100644
+index 4fbf1ed5bf..403dc26b36 100644
 --- a/util/qemu-sockets.c
 +++ b/util/qemu-sockets.c
-@@ -45,6 +45,14 @@
- # define AI_NUMERICSERV 0
- #endif
+@@ -30,6 +30,7 @@
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/qobject-output-visitor.h"
+ #include "qemu/cutils.h"
++#include "qemu/option.h"
+ #include "trace.h"
  
-+/*
-+ * On macOS TCP_KEEPIDLE is available under a different name, TCP_KEEPALIVE.
-+ * https://github.com/apple/darwin-xnu/blob/xnu-4570.1.46/bsd/man/man4/tcp.4#L172
-+ */
-+#if defined(TCP_KEEPALIVE) && !defined(TCP_KEEPIDLE)
-+# define TCP_KEEPIDLE TCP_KEEPALIVE
+ #ifndef AI_ADDRCONFIG
+@@ -600,115 +601,104 @@ err:
+     return -1;
+ }
+ 
+-/* compatibility wrapper */
+-static int inet_parse_flag(const char *flagname, const char *optstr, bool *val,
+-                           Error **errp)
+-{
+-    char *end;
+-    size_t len;
+-
+-    end = strstr(optstr, ",");
+-    if (end) {
+-        if (end[1] == ',') { /* Reject 'ipv6=on,,foo' */
+-            error_setg(errp, "error parsing '%s' flag '%s'", flagname, optstr);
+-            return -1;
+-        }
+-        len = end - optstr;
+-    } else {
+-        len = strlen(optstr);
+-    }
+-    if (len == 0 || (len == 3 && strncmp(optstr, "=on", len) == 0)) {
+-        *val = true;
+-    } else if (len == 4 && strncmp(optstr, "=off", len) == 0) {
+-        *val = false;
+-    } else {
+-        error_setg(errp, "error parsing '%s' flag '%s'", flagname, optstr);
+-        return -1;
+-    }
+-    return 0;
+-}
++static QemuOptsList inet_opts = {
++    .name = "InetSocketAddress",
++    .head = QTAILQ_HEAD_INITIALIZER(inet_opts.head),
++    .implied_opt_name = "addr",
++    .desc = {
++        {
++            .name = "addr",
++            .type = QEMU_OPT_STRING,
++        },
++        {
++            .name = "numeric",
++            .type = QEMU_OPT_BOOL,
++        },
++        {
++            .name = "to",
++            .type = QEMU_OPT_NUMBER,
++        },
++        {
++            .name = "ipv4",
++            .type = QEMU_OPT_BOOL,
++        },
++        {
++            .name = "ipv6",
++            .type = QEMU_OPT_BOOL,
++        },
++        {
++            .name = "keep-alive",
++            .type = QEMU_OPT_BOOL,
++        },
++#ifdef HAVE_IPPROTO_MPTCP
++        {
++            .name = "mptcp",
++            .type = QEMU_OPT_BOOL,
++        },
 +#endif
-+
++        { /* end of list */ }
++    },
++};
  
- static int inet_getport(struct addrinfo *e)
+ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
  {
-@@ -218,6 +226,42 @@ static int inet_set_sockopts(int sock, InetSocketAddress *saddr, Error **errp)
-                              "Unable to set keep-alive option on socket");
+-    const char *optstr, *h;
+-    char host[65];
+-    char port[33];
+-    int to;
+-    int pos;
+-    char *begin;
+-
++    QemuOpts *opts = qemu_opts_parse(&inet_opts, str, true, errp);
++    if (!opts) {
++        return -1;
++    }
+     memset(addr, 0, sizeof(*addr));
+ 
+     /* parse address */
+-    if (str[0] == ':') {
+-        /* no host given */
+-        host[0] = '\0';
+-        if (sscanf(str, ":%32[^,]%n", port, &pos) != 1) {
+-            error_setg(errp, "error parsing port in address '%s'", str);
+-            return -1;
+-        }
+-    } else if (str[0] == '[') {
++    const char *addr_str = qemu_opt_get(opts, "addr");
++    if (!addr_str) {
++        error_setg(errp, "error parsing address ''");
++        return -1;
++    }
++    if (str[0] == '[') {
+         /* IPv6 addr */
+-        if (sscanf(str, "[%64[^]]]:%32[^,]%n", host, port, &pos) != 2) {
+-            error_setg(errp, "error parsing IPv6 address '%s'", str);
++        const char *ip_end = strstr(addr_str, "]:");
++        if (!ip_end || ip_end - addr_str < 2 || strlen(ip_end) < 3) {
++            error_setg(errp, "error parsing IPv6 address '%s'", addr_str);
              return -1;
          }
-+#ifdef HAVE_TCP_KEEPCNT
-+        if (saddr->has_keep_alive_count && saddr->keep_alive_count) {
-+            int keep_count = saddr->keep_alive_count;
-+            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPCNT, &keep_count,
-+                             sizeof(keep_count));
-+            if (ret < 0) {
-+                error_setg_errno(errp, errno,
-+                                 "Unable to set TCP keep-alive count option on socket");
-+                return -1;
-+            }
-+        }
-+#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+        if (saddr->has_keep_alive_idle && saddr->keep_alive_idle) {
-+            int keep_idle = saddr->keep_alive_idle;
-+            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, &keep_idle,
-+                             sizeof(keep_idle));
-+            if (ret < 0) {
-+                error_setg_errno(errp, errno,
-+                                 "Unable to set TCP keep-alive idle option on socket");
-+                return -1;
-+            }
-+        }
-+#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+        if (saddr->has_keep_alive_interval && saddr->keep_alive_interval) {
-+            int keep_interval = saddr->keep_alive_interval;
-+            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPINTVL, &keep_interval,
-+                             sizeof(keep_interval));
-+            if (ret < 0) {
-+                error_setg_errno(errp, errno,
-+                                 "Unable to set TCP keep-alive interval option on socket");
-+                return -1;
-+            }
-+        }
-+#endif
++        addr->host = g_strndup(addr_str + 1, ip_end - addr_str - 1);
++        addr->port = g_strdup(ip_end + 2);
+     } else {
+-        /* hostname or IPv4 addr */
+-        if (sscanf(str, "%64[^:]:%32[^,]%n", host, port, &pos) != 2) {
+-            error_setg(errp, "error parsing address '%s'", str);
++        /* no host, hostname or IPv4 addr */
++        const char *port = strchr(addr_str, ':');
++        if (!port || strlen(port) < 2) {
++            error_setg(errp, "error parsing address '%s'", addr_str);
+             return -1;
+         }
++        addr->host = g_strndup(addr_str, port - addr_str);
++        addr->port = g_strdup(port + 1);
      }
-     return 0;
- }
-@@ -630,6 +674,24 @@ static QemuOptsList inet_opts = {
-             .name = "keep-alive",
-             .type = QEMU_OPT_BOOL,
-         },
-+#ifdef HAVE_TCP_KEEPCNT
-+        {
-+            .name = "keep-alive-count",
-+            .type = QEMU_OPT_NUMBER,
-+        },
-+#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+        {
-+            .name = "keep-alive-idle",
-+            .type = QEMU_OPT_NUMBER,
-+        },
-+#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+        {
-+            .name = "keep-alive-interval",
-+            .type = QEMU_OPT_NUMBER,
-+        },
-+#endif
- #ifdef HAVE_IPPROTO_MPTCP
-         {
-             .name = "mptcp",
-@@ -695,6 +757,24 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
+ 
+-    addr->host = g_strdup(host);
+-    addr->port = g_strdup(port);
+-
+     /* parse options */
+-    optstr = str + pos;
+-    h = strstr(optstr, ",to=");
+-    if (h) {
+-        h += 4;
+-        if (sscanf(h, "%d%n", &to, &pos) != 1 ||
+-            (h[pos] != '\0' && h[pos] != ',')) {
+-            error_setg(errp, "error parsing to= argument");
+-            return -1;
+-        }
++    if (qemu_opt_find(opts, "numeric")) {
++        addr->has_numeric = true,
++        addr->numeric = qemu_opt_get_bool(opts, "numeric", false);
++    }
++    if (qemu_opt_find(opts, "to")) {
+         addr->has_to = true;
+-        addr->to = to;
++        addr->to = qemu_opt_get_number(opts, "to", 0);
+     }
+-    begin = strstr(optstr, ",ipv4");
+-    if (begin) {
+-        if (inet_parse_flag("ipv4", begin + 5, &addr->ipv4, errp) < 0) {
+-            return -1;
+-        }
++    if (qemu_opt_find(opts, "ipv4")) {
+         addr->has_ipv4 = true;
++        addr->ipv4 = qemu_opt_get_bool(opts, "ipv4", false);
+     }
+-    begin = strstr(optstr, ",ipv6");
+-    if (begin) {
+-        if (inet_parse_flag("ipv6", begin + 5, &addr->ipv6, errp) < 0) {
+-            return -1;
+-        }
++    if (qemu_opt_find(opts, "ipv6")) {
+         addr->has_ipv6 = true;
++        addr->ipv6 = qemu_opt_get_bool(opts, "ipv6", false);
+     }
+-    begin = strstr(optstr, ",keep-alive");
+-    if (begin) {
+-        if (inet_parse_flag("keep-alive", begin + strlen(",keep-alive"),
+-                            &addr->keep_alive, errp) < 0)
+-        {
+-            return -1;
+-        }
++    if (qemu_opt_find(opts, "keep-alive")) {
          addr->has_keep_alive = true;
-         addr->keep_alive = qemu_opt_get_bool(opts, "keep-alive", false);
++        addr->keep_alive = qemu_opt_get_bool(opts, "keep-alive", false);
      }
-+#ifdef HAVE_TCP_KEEPCNT
-+    if (qemu_opt_find(opts, "keep-alive-count")) {
-+        addr->has_keep_alive_count = true;
-+        addr->keep_alive_count = qemu_opt_get_number(opts, "keep-alive-count", 0);
-+    }
-+#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+    if (qemu_opt_find(opts, "keep-alive-idle")) {
-+        addr->has_keep_alive_idle = true;
-+        addr->keep_alive_idle = qemu_opt_get_number(opts, "keep-alive-idle", 0);
-+    }
-+#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+    if (qemu_opt_find(opts, "keep-alive-interval")) {
-+        addr->has_keep_alive_interval = true;
-+        addr->keep_alive_interval = qemu_opt_get_number(opts, "keep-alive-interval", 0);
-+    }
-+#endif
  #ifdef HAVE_IPPROTO_MPTCP
-     if (qemu_opt_find(opts, "mptcp")) {
+-    begin = strstr(optstr, ",mptcp");
+-    if (begin) {
+-        if (inet_parse_flag("mptcp", begin + strlen(",mptcp"),
+-                            &addr->mptcp, errp) < 0)
+-        {
+-            return -1;
+-        }
++    if (qemu_opt_find(opts, "mptcp")) {
          addr->has_mptcp = true;
++        addr->mptcp = qemu_opt_get_bool(opts, "mptcp", 0);
+     }
+ #endif
+     return 0;
 -- 
 2.49.0
 
