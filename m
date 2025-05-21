@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCA0C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D026C54EDA
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHmX3-0000Rl-8r; Wed, 21 May 2025 12:43:05 -0400
+	id 1uHmXG-0000al-Dc; Wed, 21 May 2025 12:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmWx-0000NV-Rk
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:00 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1uHmXC-0000Y2-3F
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:14 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmWu-00068A-HZ
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:42:58 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-ad55d6aeb07so352181266b.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:42:53 -0700 (PDT)
+ id 1uHmX2-0006Bc-U3
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:13 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-ad51ba0af48so1115092766b.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:43:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747845772; x=1748450572; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747845781; x=1748450581; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=04euknF6hiqA68aLuG0ENQyvrvDpr8jpqKbpqudmzQg=;
- b=d/q3okzGMqhqPNOXMU4iLp6hsqwnFsrNu5wszs3D64jHOg8kN5hI27Tg0wBOe1T9es
- xXa9L5z285ut2ebSMvqSkG2et5Z02E0fXtUBO5yEm4317fuxPuuHE3LA2TtCUmJ1MFtU
- eeuZ1iUUgpSq9g2MAZ4zocGPqUJ2rI+0Tfyob2GZ8q7LW7kBB4LOHUqtS/2EFeYi+V0U
- FTAlrmW+8ZgIITKe5hJHEmt4aippMMRj9nnGAiVrthfiE0EqZw2x9py/g485dkDai856
- f4uJxDcR2XsrTHjB0yfKgOvSBCtZ5EExreopyuoBQhAzKhyanKTjMaYh2DzuseUFAejs
- gQxg==
+ bh=prKtOm6WcF+MO/JIEf9B+KJu4Pq11tFhYp9uWEc/J/U=;
+ b=X7gUsF4CDCkkn6R3Vk7QC7i1o4rOXnjuV8BfJngu6r98QEN3Jza7vsVwdlxwcwCe4G
+ UATWs7uyZ+Ku0zOB6yzrqg9JcOZwneUBIi483O7XjMkH2JAdE2ZV7Qne4QA8ohlayNBO
+ oUJdSATe3Z1ULtzSy54ApdHNvpQgWKt8DqQHR5L6/Tf7qkhUwYr+wzixpDZ4w0T7Zo5V
+ pYqllZysPxxe5EYL5ZmnztVA2BoZeHzXAvtbye+cxtCOVFwpl3YK2UdJiGCuT7KQkm7F
+ TE6eIFAA3LPTFoPhrPNlnAFJmBafE3X2y6Gs0gB8rIytfVKQ8StmfeILzdRnMDvxiweR
+ V+dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747845772; x=1748450572;
+ d=1e100.net; s=20230601; t=1747845781; x=1748450581;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=04euknF6hiqA68aLuG0ENQyvrvDpr8jpqKbpqudmzQg=;
- b=NziqReBRNy2rchRlNem4n/c+v0fqtoE1NpMyYj5SMgchWBgL4KufiEShksklnARcLW
- QJLfAVnJjBaOb1irVgi+k/LRSQnx8bIa27+0ivR3WNHqikK9wdaSsUbDEzVt8T+JTgAS
- 8zLTBJB39rriHq/E0bwHQ8oFRQ0G7GghJH1wSGjvVbJ1FAjFyFVPE6VnlnSnlvswZUTk
- cNXjUGJMwPjcj9MicrSsCGrCT7eoFS+ZDqrOW3WrqW0UcnLoxTgwnlMggl4ce++uryWv
- oyxP7nNRNnvjkq8YyQB8+IpK8LxmUbgyEemNILA5deQ9T7oh361mYvnR6I3GXjQcHJ1A
- vAMg==
-X-Gm-Message-State: AOJu0YzwdfcSMyeC7i5Hw8OWGAxbTaCSlGLO05a11w8Ck2fAU+i3IbsD
- GBTxJyt5DMhZ8cWuoNzxobqfjv0g6T/mjcYjxjIovSKrn0anmqzCqp5y1Oo7x9bgxPw=
-X-Gm-Gg: ASbGncsrvPzDhpJViWSTkI6rm+isyhnq3LV6rOL6bwIuVweoH8VHFliYjlpq2J3rCX5
- hOrohTvqNXNCq8xpi8HP+hiRgiLQcQBqw6BjlY3sqtPd7tlpppAMnT5u77IetDw3JVJpga18fZ3
- c569q/uWhFafyvXDMPmRM9dGyXt4fVTujpNNw4iiafFop/1jLn6L+/nFq8VNwCBZ/WRR6BtaDut
- Xb400vhANS22Rg9hyEBsioIPNhTocxDhblPQMPVGkEl7WmC0+tuco3PRNAHroOJul9fCLiJNHzq
- 2ttx5T44i4t3U9nZm+1MH0tqvgzUnLjuBZkSJQzmslZOzkopGs62
-X-Google-Smtp-Source: AGHT+IEyDJG1ivknWj8V2HWzfN+RKXW4ZVVvnu189k/2FQL2+fsx87GLzrgbKPC0kNm8wnMHRsUxYA==
-X-Received: by 2002:a17:906:1306:b0:ad4:d9b2:6ee4 with SMTP id
- a640c23a62f3a-ad536f2816fmr1546499766b.49.1747845771659; 
- Wed, 21 May 2025 09:42:51 -0700 (PDT)
+ bh=prKtOm6WcF+MO/JIEf9B+KJu4Pq11tFhYp9uWEc/J/U=;
+ b=orxtfismlq12eUfQc3DOzosAjThsD2ostXehPmDUOOnz8KqJ7zQFFf7W67bEj9GmZm
+ e4dfJGXhQYY0ASlibIPJNaUYGz0ytiUEP+jIHQYZL8q3f8dlHxi7sd4Sk9HdhKeFYAsp
+ R2mWY20zGQdqyGWxHifGZtO2pB6oClD9CfzM9FByKecKSv7FeYwYQf2EdFBUDjaRrfCH
+ j+Gu3bvlqbQO/JB8yLjDDP2meviWgJJBl/SMMbU5HD8PycxjQn2S3CNgTIZo1braYgIQ
+ sMbFs7UAE31WbAxcX2dWEqirgLZ84MYn7plBSCrIUCNEA8NkHLUe+IinGE4FRcxPzPnw
+ iWAA==
+X-Gm-Message-State: AOJu0YwuiBw/L5K/5ABA11teVn7GbjqiqqtzqgTFWdwegGZOiWP84l9X
+ cOdxjmaKqp7bEXNyxVdBgwK/6bz6mAdYiKda3vLGZghme+yyK3ggeo2UONf8LyBDu1A=
+X-Gm-Gg: ASbGncuKFOKPMUNdaadTscYmTBjufxvokMTQhqwrkHGkchbYfLUz066+urlPuFSvUdy
+ mRyRFVUQ9AXvg0uXuwCAjOpsQthtxg8pYv7xiYiV1lw36dYq6xq8+d/winbYnonbtzIs7/WnHZf
+ tyZY6aMa4iN+elb5YWvyMczCjln40Pg4B1vhsPAKjVNBxRMsrtJWYvGxJpFn9qWS4VlwD8Tqcm0
+ Yc11r/EEeZ5BtZ8l4CRwnJEOLA9zKE54LmioQdcZ89kA+md7EZ3Qd37cj2q/r1GxIxWbaW3Xtij
+ ALekRLwJl2MR+Jnr48x3DEuPDpZqKu6s1m5Yw+OsKwnEpTJSmsXBtEaFORAj1/o=
+X-Google-Smtp-Source: AGHT+IGDwfYt1DN9jIGOx0XsO2RSfvu00jcQDkb6KDTj4dmJF2gFYg/8jG5aiftzORhNcasR1F8heg==
+X-Received: by 2002:a17:907:60d2:b0:ad5:54ec:6b3c with SMTP id
+ a640c23a62f3a-ad554ec711bmr1487849966b.27.1747845781208; 
+ Wed, 21 May 2025 09:43:01 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d43770fsm941924866b.91.2025.05.21.09.42.50
+ a640c23a62f3a-ad52d06dcafsm945245966b.54.2025.05.21.09.42.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 09:42:50 -0700 (PDT)
+ Wed, 21 May 2025 09:42:55 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 444965F8AD;
- Wed, 21 May 2025 17:42:50 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 139A15FA16;
+ Wed, 21 May 2025 17:42:51 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -82,19 +82,20 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Gustavo Romero <gustavo.romero@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v3 01/20] tests/docker: expose $HOME/.cache/qemu as docker
- volume
-Date: Wed, 21 May 2025 17:42:31 +0100
-Message-Id: <20250521164250.135776-2-alex.bennee@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: [PATCH v3 11/20] hw/display: re-arrange memory region tracking
+Date: Wed, 21 May 2025 17:42:41 +0100
+Message-Id: <20250521164250.135776-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250521164250.135776-1-alex.bennee@linaro.org>
 References: <20250521164250.135776-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -117,54 +118,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If you want to run functional tests we should share .cache/qemu so we
-don't force containers to continually re-download images.
+QOM objects can be embedded in other QOM objects and managed as part
+of their lifetime but this isn't the case for
+virtio_gpu_virgl_hostmem_region. However before we can split it out we
+need some other way of associating the wider data structure with the
+memory region.
 
+Fortunately MemoryRegion has an opaque pointer. This is passed down to
+MemoryRegionOps for device type regions but is unused in the
+memory_region_init_ram_ptr() case. Use the opaque to carry the
+reference and allow the final MemoryRegion object to be reaped when
+its reference count is cleared.
+
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
+Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
+Cc: qemu-stable@nongnu.org
 ---
-v2
-  - Share a whole .cache/qemu path.
----
- tests/docker/Makefile.include | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ include/system/memory.h       |  1 +
+ hw/display/virtio-gpu-virgl.c | 23 ++++++++---------------
+ 2 files changed, 9 insertions(+), 15 deletions(-)
 
-diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-index fa1cbb6726..3959d8a028 100644
---- a/tests/docker/Makefile.include
-+++ b/tests/docker/Makefile.include
-@@ -185,8 +185,10 @@ docker:
+diff --git a/include/system/memory.h b/include/system/memory.h
+index fbbf4cf911..b3cef1acb5 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -783,6 +783,7 @@ struct MemoryRegion {
+     DeviceState *dev;
  
- docker-help: docker
+     const MemoryRegionOps *ops;
++    /* opaque data, used by backends like @ops */
+     void *opaque;
+     MemoryRegion *container;
+     int mapped_via_alias; /* Mapped via an alias, container might be NULL */
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 145a0b3879..71a7500de9 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -52,17 +52,11 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
  
-+# Where QEMU caches build artefacts
-+DOCKER_QEMU_CACHE_DIR := $$HOME/.cache/qemu
- # Use a global constant ccache directory to speed up repetitive builds
--DOCKER_CCACHE_DIR := $$HOME/.cache/qemu-docker-ccache
-+DOCKER_QEMU_CCACHE_DIR := DOCKER_QEMU_CACHE_DIR/docker-ccache
+ #if VIRGL_VERSION_MAJOR >= 1
+ struct virtio_gpu_virgl_hostmem_region {
+-    MemoryRegion mr;
++    MemoryRegion *mr;
+     struct VirtIOGPU *g;
+     bool finish_unmapping;
+ };
  
- # This rule if for directly running against an arbitrary docker target.
- # It is called by the expanded docker targets (e.g. make
-@@ -195,7 +197,7 @@ DOCKER_CCACHE_DIR := $$HOME/.cache/qemu-docker-ccache
- # For example: make docker-run TEST="test-quick" IMAGE="debian:arm64" EXECUTABLE=./aarch64-linux-user/qemu-aarch64
- #
- docker-run: docker-qemu-src
--	@mkdir -p "$(DOCKER_CCACHE_DIR)"
-+	@mkdir -p "$(DOCKER_QEMU_CCACHE_DIR)"
- 	@if test -z "$(IMAGE)" || test -z "$(TEST)"; \
- 		then echo "Invalid target $(IMAGE)/$(TEST)"; exit 1; \
- 	fi
-@@ -222,8 +224,8 @@ docker-run: docker-qemu-src
- 			-e V=$V -e J=$J -e DEBUG=$(DEBUG)		\
- 			-e SHOW_ENV=$(SHOW_ENV) 			\
- 			$(if $(NOUSER),,				\
--				-e CCACHE_DIR=/var/tmp/ccache 		\
--				-v $(DOCKER_CCACHE_DIR):/var/tmp/ccache:z \
-+				-v $(DOCKER_QEMU_CACHE_DIR):$(DOCKER_QEMU_CACHE_DIR) 	\
-+				-e CCACHE_DIR=$(DOCKER_QEMU_CCACHE_DIR)	\
- 			)						\
- 			-v $$(readlink -e $(DOCKER_SRC_COPY)):/var/tmp/qemu:z$(COMMA)ro \
- 			$(IMAGE) 					\
+-static struct virtio_gpu_virgl_hostmem_region *
+-to_hostmem_region(MemoryRegion *mr)
+-{
+-    return container_of(mr, struct virtio_gpu_virgl_hostmem_region, mr);
+-}
+-
+ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+ {
+     VirtIOGPU *g = opaque;
+@@ -73,14 +67,12 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+ static void virtio_gpu_virgl_hostmem_region_free(void *obj)
+ {
+     MemoryRegion *mr = MEMORY_REGION(obj);
+-    struct virtio_gpu_virgl_hostmem_region *vmr;
++    struct virtio_gpu_virgl_hostmem_region *vmr = mr->opaque;
+     VirtIOGPUBase *b;
+     VirtIOGPUGL *gl;
+ 
+-    vmr = to_hostmem_region(mr);
+-    vmr->finish_unmapping = true;
+-
+     b = VIRTIO_GPU_BASE(vmr->g);
++    vmr->finish_unmapping = true;
+     b->renderer_blocked--;
+ 
+     /*
+@@ -118,8 +110,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+ 
+     vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+     vmr->g = g;
++    mr = g_new0(MemoryRegion, 1);
+ 
+-    mr = &vmr->mr;
+     memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
+@@ -131,7 +123,9 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+      * command processing until MR is fully unreferenced and freed.
+      */
+     OBJECT(mr)->free = virtio_gpu_virgl_hostmem_region_free;
++    mr->opaque = vmr;
+ 
++    vmr->mr = mr;
+     res->mr = mr;
+ 
+     return 0;
+@@ -142,16 +136,15 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+                                      struct virtio_gpu_virgl_resource *res,
+                                      bool *cmd_suspended)
+ {
+-    struct virtio_gpu_virgl_hostmem_region *vmr;
+     VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+     MemoryRegion *mr = res->mr;
++    struct virtio_gpu_virgl_hostmem_region *vmr;
+     int ret;
+ 
+     if (!mr) {
+         return 0;
+     }
+-
+-    vmr = to_hostmem_region(res->mr);
++    vmr = mr->opaque;
+ 
+     /*
+      * Perform async unmapping in 3 steps:
 -- 
 2.39.5
 
