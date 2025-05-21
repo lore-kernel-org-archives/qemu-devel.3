@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA92C54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B2CC54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHeXt-0001E1-53; Wed, 21 May 2025 04:11:25 -0400
+	id 1uHeZL-0001wI-96; Wed, 21 May 2025 04:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHeXq-0001DQ-Sr
- for qemu-devel@nongnu.org; Wed, 21 May 2025 04:11:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHeZJ-0001w4-R6
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 04:12:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHeXj-0007Be-Rx
- for qemu-devel@nongnu.org; Wed, 21 May 2025 04:11:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHeZH-0007Nu-P3
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 04:12:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747815072;
+ s=mimecast20190719; t=1747815170;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2x7Zardb1nGF48lNRbcJKx2bgn4sBg1pr4dkri7hTCs=;
- b=DdnvnlOojVh2n8JwScEQIb9OfHNEdxeWF/Q9zOVlj1u+Z0ENu5ucncRI32ymsYjdmoEqaw
- xlbJl44GXrebiCoLMc+LKj3FK98ExNG/HzKLQ0OjjJElXPnpVZMcfhgw74Oo2tMwVbsOuZ
- djzpo3In0DeJdubuhxTukuyaBpVpcVI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rE3g3DSj6d+bA+SOSIChPIAmNWZ42TwCc3HtMavE+FI=;
+ b=LQm6xyhFzyOEqW5Q8++vQbz8e1i6nrR0Z9dH5N7fR1MR6yI4IVbwiu4lFAvBfDPM6zfIvh
+ gOlkzrM0LUlJiLz7JIid53ZspRqSfiItR87FngOr4L0035Miw2IFyYfjFJ7ohgqdmCHpO0
+ 36wgiExqzBGl8u3esH4ChIzV02Ji3f4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-P9tJ0TjGOjGA8NrdtDA4Nw-1; Wed, 21 May 2025 04:11:10 -0400
-X-MC-Unique: P9tJ0TjGOjGA8NrdtDA4Nw-1
-X-Mimecast-MFC-AGG-ID: P9tJ0TjGOjGA8NrdtDA4Nw_1747815069
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a36d041d06so1502934f8f.3
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 01:11:09 -0700 (PDT)
+ us-mta-421-S746mvYfMsqqVvmgeqTSiA-1; Wed, 21 May 2025 04:12:48 -0400
+X-MC-Unique: S746mvYfMsqqVvmgeqTSiA-1
+X-Mimecast-MFC-AGG-ID: S746mvYfMsqqVvmgeqTSiA_1747815167
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a367b3bb78so2609855f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 01:12:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747815069; x=1748419869;
+ d=1e100.net; s=20230601; t=1747815167; x=1748419967;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2x7Zardb1nGF48lNRbcJKx2bgn4sBg1pr4dkri7hTCs=;
- b=YMKuolI26ROY/hxSx5MSFzui8iqvr5FhYq1sFqPJv5F0REpmsQBdTyOfw7S1nuvpJh
- +AhUapCNknE3rCdDYpC6+lLW9pqTfVbJJbx/mrMbt6AmqZFysjEWX5eS1SetxDLdMB5v
- uqDTnp6Re/B6QQZeJ7NHPgzzBir2Tlw0yabFmXc9LchpA0eR4l5oLzlrXozZX/CMqSvK
- Waj29ZOKQSKZKth8vpsTyqAboBuLy1Xmwkend6fuWQ7FX/WZD5IHCO+k8zHCEoLA4u2G
- RcCjek5G0zbeNb0lNImR0V7tuW6lb0oA1N5thjBeeC2ygRepLrLKOc2tDW4jUJahmstF
- iwzA==
+ bh=rE3g3DSj6d+bA+SOSIChPIAmNWZ42TwCc3HtMavE+FI=;
+ b=BLjPxRqNBoK1/tmCwSniGZHUhWNj7a2TQExLswPdIwE/o/adztfy2Btshos8XaCIPD
+ kmKDrdJ9nKWdiAFiFE0M4HFuygFmohOJanl2vwakzjs+zU1AZKA6euTH08Laz/7wYgmm
+ Kr0i/rJE2YnJnQ++1zFyQS5hA9eBfAh3x8OydI3FICsGqdbnAr09+UeP6pAbajRA7w8a
+ JuRX5ZgI4+beYXm3TGMj1Flc+mNvvCHGwVIsVCloLJaAomN6ivOZKEzKxez+zSKoIIkO
+ EXeJVuX1SSEXZorLg5qMxuj3vEqS+c/t77cWV2nyMj1j0XdFj+4MmF2PBMGNHOU2I0DE
+ KSJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/3eVBQBvAYg8IHz1JSWH7IabD4JRmcxhvO4bMXc5glVtICt60DfrQLE8n+9pvXGX6OcOkhrCNKpk6@nongnu.org
-X-Gm-Message-State: AOJu0YyYwAbpxf2njOi5O7uQ6AXVb8KtHhgtXVfVL/lPnyDKlGqHtUfr
- omEvG00ufuzAcBKMfJdRjN1VmyLAl+3VCx1D1gJYGv+s0uM587TvaUo/KlZyyd24lwDXAACuc3y
- FA7G3Bj+RuHuWQk5YZv+d28mFqP0SFbGyYjTcLCsiiu8xmiv3sYOJT0dt
-X-Gm-Gg: ASbGncscIgB3mFa7Az0KB4hMaf4g9mUOsTWoLysfvAAoVjm8UlJGDr4hkxIAMUGp2Pv
- juMusZRcw9QGLrGYeKbicoGYhTIFnJx57v8seVBOcJGD/p5+5ey+ENq7njkSk0n6dolOve7kHGM
- ffktkVCFgtNs1iAmXWrNgLGwMODOYKVosLiAfJUxfQ8EGxy0B8Z1dyqsvyOeoXzaxvgHR2eUtSl
- gAs5tff76VjSkeq9cxRPfysA+PVvWJtiuGsaBoQEFu6VEKdy01s/P9lwDiX+XzHgUlWov0nUo0R
- KLqRa4cEDMSaKDIkTcaj8xOxz1321+lEhdlxZEiZVNHyEMJ55g==
-X-Received: by 2002:a5d:5f46:0:b0:3a0:b816:5a44 with SMTP id
- ffacd0b85a97d-3a35fe964dcmr16350270f8f.35.1747815068674; 
- Wed, 21 May 2025 01:11:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGWAP2poxJgFHBIpOGQpJJuNhuIClr2hpBsXAeiZkpqYOS2i8Z3dCTSzthrrLXx5wj2ZrskKA==
-X-Received: by 2002:a5d:5f46:0:b0:3a0:b816:5a44 with SMTP id
- ffacd0b85a97d-3a35fe964dcmr16350243f8f.35.1747815068284; 
- Wed, 21 May 2025 01:11:08 -0700 (PDT)
+ AJvYcCVzGPMYabBt6kBQUE6eZakxOWqBz2SjHWF5TyddnyDmLzNmFopT2jESo/sf10DjUTiolS/aB5PwkGyl@nongnu.org
+X-Gm-Message-State: AOJu0Yw1Pob066mXiekanfYDDjv5ZOkMXsDH3kPp5cx+JNrAzjn6xqIq
+ GBMcIWlGIra2tWphiw9UXn7UXo+gwPQorVMcobmCt0fs1mBfH8AG3CynnGerdqkXFGf+Vj6O9ii
+ YRUr2QM9gUbBCLaQ95Fp/wNAybCnDlOu3UutE+WjN0o6TdA9kGj/2K6wF
+X-Gm-Gg: ASbGncthhYhc9eFqbvoC2EfIPx/3FtBfrvqclh3cpQ6w6Grdz+n6Rc2iByOaGwflu/e
+ nSkxIpjWcqf1trL9sFC69dae3Kdg0HBHlgkWdKkAa6DC7JhQ1mTfSaLejjJXAi5Snt3WnmJIUbc
+ CYneojKgnst66uE+o/TcU2ZnUjQdh/91oS93TT1Zl22+LMstk+Uoxzvhm3tBbs9g00JPKq7nadB
+ rhQ5P099FQDlXuVvBprluOxhAqz9eagfYWOFdDJwNqhrPSjvcwG17NPs7BzhFQG+TZsn8BVmJPD
+ 04Np2JVU5jbWjsChQ6rf5WAckr6DbGZDvqM+SW6zr0nmCPXA4Q==
+X-Received: by 2002:a05:6000:18a7:b0:3a3:6af1:cc92 with SMTP id
+ ffacd0b85a97d-3a36af1cdafmr12126545f8f.7.1747815167280; 
+ Wed, 21 May 2025 01:12:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFuLuGgikuZQofIx6eoosm0lYlfpYi3DcqOGIapgocgPYQzZUK335JRB0jGM7yEfEfm6hHP7Q==
+X-Received: by 2002:a05:6000:18a7:b0:3a3:6af1:cc92 with SMTP id
+ ffacd0b85a97d-3a36af1cdafmr12126512f8f.7.1747815166795; 
+ Wed, 21 May 2025 01:12:46 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a37b0bbd1fsm4561342f8f.100.2025.05.21.01.11.07
+ ffacd0b85a97d-3a35ca4d224sm19515793f8f.12.2025.05.21.01.12.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 01:11:07 -0700 (PDT)
-Message-ID: <340d64a0-b85c-422a-ac81-4de6b10c8228@redhat.com>
-Date: Wed, 21 May 2025 10:11:06 +0200
+ Wed, 21 May 2025 01:12:46 -0700 (PDT)
+Message-ID: <a1bd108b-02a3-4802-b2f5-c6eb464e92e1@redhat.com>
+Date: Wed, 21 May 2025 10:12:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/29] vfio: add per-region fd support
+Subject: Re: [PATCH v2 08/29] vfio: mark posted writes in region write
+ callbacks
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -89,7 +90,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>
 References: <20250520150419.2172078-1-john.levon@nutanix.com>
- <20250520150419.2172078-8-john.levon@nutanix.com>
+ <20250520150419.2172078-9-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -135,10 +136,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250520150419.2172078-8-john.levon@nutanix.com>
+In-Reply-To: <20250520150419.2172078-9-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -164,207 +165,113 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/20/25 17:03, John Levon wrote:
-> For vfio-user, each region has its own fd rather than sharing
-> vbasedev's. Add the necessary plumbing to support this. For vfio
-> backends with a shared fd, initialize region->fd to the shared one.
+> For vfio-user, the region write implementation needs to know if the
+> write is posted; add the necessary plumbing to support this.
 > 
 > Signed-off-by: John Levon <john.levon@nutanix.com>
-> ---
->   include/hw/vfio/vfio-device.h |  7 +++++--
->   include/hw/vfio/vfio-region.h |  1 +
->   hw/vfio/device.c              | 28 ++++++++++++++++++++++++++--
->   hw/vfio/region.c              |  7 ++++++-
->   4 files changed, 38 insertions(+), 5 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 923f9cd116..5cb817fd6a 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -66,6 +66,7 @@ typedef struct VFIODevice {
->       OnOffAuto enable_migration;
->       OnOffAuto migration_multifd_transfer;
->       bool migration_events;
-> +    bool use_region_fds;
->       VFIODeviceOps *ops;
->       VFIODeviceIOOps *io_ops;
->       unsigned int num_irqs;
-> @@ -84,6 +85,7 @@ typedef struct VFIODevice {
->       VFIOIOASHwpt *hwpt;
->       QLIST_ENTRY(VFIODevice) hwpt_next;
->       struct vfio_region_info **reginfo;
-> +    int *region_fds;
->   } VFIODevice;
->   
->   struct VFIODeviceOps {
-> @@ -172,10 +174,11 @@ struct VFIODeviceIOOps {
->       /**
->        * @get_region_info
->        *
-> -     * Fill in @info with information on the region given by @info->index.
-> +     * Fill in @info (and optionally @fd) with information on the region given
-> +     * by @info->index.
-
-The whole VFIODeviceIOOps struct needs better documentation. The arguments
-are missing.
-
->        */
->       int (*get_region_info)(VFIODevice *vdev,
-> -                           struct vfio_region_info *info);
-> +                           struct vfio_region_info *info, int *fd);
->   
->       /**
->        * @get_irq_info
-> diff --git a/include/hw/vfio/vfio-region.h b/include/hw/vfio/vfio-region.h
-> index cbffb26962..80e83b23fd 100644
-> --- a/include/hw/vfio/vfio-region.h
-> +++ b/include/hw/vfio/vfio-region.h
-> @@ -29,6 +29,7 @@ typedef struct VFIORegion {
->       uint32_t nr_mmaps;
->       VFIOMmap *mmaps;
->       uint8_t nr; /* cache the region number for debug */
-> +    int fd; /* fd to mmap() region */
-
-Could you split this change ? I am not sure it is needed.
 
 
->   } VFIORegion;
->   
->   
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index d0068086ae..41db403992 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -226,6 +226,7 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
->                                   struct vfio_region_info **info)
->   {
->       size_t argsz = sizeof(struct vfio_region_info);
-> +    int fd = -1;
->       int ret;
->   
->       /* check cache */
-> @@ -240,7 +241,7 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
->   retry:
->       (*info)->argsz = argsz;
->   
-> -    ret = vbasedev->io_ops->get_region_info(vbasedev, *info);
-> +    ret = vbasedev->io_ops->get_region_info(vbasedev, *info, &fd);
->       if (ret != 0) {
->           g_free(*info);
->           *info = NULL;
-> @@ -251,11 +252,19 @@ retry:
->           argsz = (*info)->argsz;
->           *info = g_realloc(*info, argsz);
->   
-> +        if (fd != -1) {
-> +            close(fd);
-> +            fd = -1;
-> +        }
-> +
->           goto retry;
->       }
->   
->       /* fill cache */
->       vbasedev->reginfo[index] = *info;
-> +    if (vbasedev->region_fds != NULL) {
-> +        vbasedev->region_fds[index] = fd;
-> +    }
->   
->       return 0;
->   }
-> @@ -360,6 +369,7 @@ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
->       vbasedev->io_ops = &vfio_device_io_ops_ioctl;
->       vbasedev->dev = dev;
->       vbasedev->fd = -1;
-> +    vbasedev->use_region_fds = false;
-
-I wish we could avoid this bool. I have no idea yet.
-
-
->   
->       vbasedev->ram_block_discard_allowed = ram_discard;
->   }
-> @@ -470,6 +480,9 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
->   
->       vbasedev->reginfo = g_new0(struct vfio_region_info *,
->                                  vbasedev->num_regions);
-> +    if (vbasedev->use_region_fds) {
-> +        vbasedev->region_fds = g_new0(int, vbasedev->num_regions);
-> +    }
->   }
->   
->   void vfio_device_unprepare(VFIODevice *vbasedev)
-> @@ -478,9 +491,17 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
->   
->       for (i = 0; i < vbasedev->num_regions; i++) {
->           g_free(vbasedev->reginfo[i]);
-> +        if (vbasedev->region_fds != NULL && vbasedev->region_fds[i] != -1) {
-> +            close(vbasedev->region_fds[i]);
-> +        }
-> +
->       }
->       g_free(vbasedev->reginfo);
->       vbasedev->reginfo = NULL;
-> +    if (vbasedev->region_fds != NULL) {
-
-g_free is NULL safe. No need to test for it. g_clear_pointer() is a nice
-helper too.
-
-> +        g_free(vbasedev->region_fds);
-> +        vbasedev->region_fds = NULL;
-> +    }
->   
->       QLIST_REMOVE(vbasedev, container_next);
->       QLIST_REMOVE(vbasedev, global_next);
-> @@ -502,10 +523,13 @@ static int vfio_device_io_device_feature(VFIODevice *vbasedev,
->   }
->   
->   static int vfio_device_io_get_region_info(VFIODevice *vbasedev,
-> -                                          struct vfio_region_info *info)
-> +                                          struct vfio_region_info *info,
-> +                                          int *fd)
->   {
->       int ret;
->   
-> +    *fd = -1;
-> +
->       ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_REGION_INFO, info);
->   
->       return ret < 0 ? -errno : ret;
-> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index 34752c3f65..3c93da91d8 100644
-> --- a/hw/vfio/region.c
-> +++ b/hw/vfio/region.c
-> @@ -200,6 +200,11 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
->       region->size = info->size;
->       region->fd_offset = info->offset;
->       region->nr = index;
-> +    if (vbasedev->region_fds != NULL) {
-> +        region->fd = vbasedev->region_fds[index];
-> +    } else {
-> +        region->fd = vbasedev->fd;
-> +    }
->   
->       if (region->size) {
->           region->mem = g_new0(MemoryRegion, 1);
-> @@ -278,7 +283,7 @@ int vfio_region_mmap(VFIORegion *region)
->   
->           region->mmaps[i].mmap = mmap(map_align, region->mmaps[i].size, prot,
->                                        MAP_SHARED | MAP_FIXED,
-> -                                     region->vbasedev->fd,
-> +                                     region->fd,
-
-Would this work ?
-
-		vbasedev->region_fds ? vbasedev->region_fds[region->nr] : vbasedev->fd,
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
->                                        region->fd_offset +
->                                        region->mmaps[i].offset);
->           if (region->mmaps[i].mmap == MAP_FAILED) {
+> ---
+>   include/hw/vfio/vfio-device.h | 4 ++--
+>   include/hw/vfio/vfio-region.h | 1 +
+>   hw/vfio/device.c              | 3 ++-
+>   hw/vfio/pci.c                 | 5 ++++-
+>   hw/vfio/region.c              | 3 ++-
+>   5 files changed, 11 insertions(+), 5 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 5cb817fd6a..a23ef4ea13 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -207,10 +207,10 @@ struct VFIODeviceIOOps {
+>        * @region_write
+>        *
+>        * Write @size bytes to the region @nr at offset @off from the buffer
+> -     * @data.
+> +     * @data; if @post, the write is posted.
+>        */
+>       int (*region_write)(VFIODevice *vdev, uint8_t nr, off_t off, uint32_t size,
+> -                        void *data);
+> +                        void *data, bool post);
+>   };
+>   
+>   void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+> diff --git a/include/hw/vfio/vfio-region.h b/include/hw/vfio/vfio-region.h
+> index 80e83b23fd..f1ae5125ba 100644
+> --- a/include/hw/vfio/vfio-region.h
+> +++ b/include/hw/vfio/vfio-region.h
+> @@ -30,6 +30,7 @@ typedef struct VFIORegion {
+>       VFIOMmap *mmaps;
+>       uint8_t nr; /* cache the region number for debug */
+>       int fd; /* fd to mmap() region */
+> +    bool post_wr; /* writes can be posted */
+>   } VFIORegion;
+>   
+>   
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 41db403992..cb1a212b8f 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -572,7 +572,8 @@ static int vfio_device_io_region_read(VFIODevice *vbasedev, uint8_t index,
+>   }
+>   
+>   static int vfio_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
+> -                                       off_t off, uint32_t size, void *data)
+> +                                       off_t off, uint32_t size, void *data,
+> +                                       bool post)
+>   {
+>       struct vfio_region_info *info;
+>       int ret;
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index ef38b4692a..3d1dbdac38 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1016,7 +1016,7 @@ static int vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
+>   {
+>       return vdev->vbasedev.io_ops->region_write(&vdev->vbasedev,
+>                                                  VFIO_PCI_CONFIG_REGION_INDEX,
+> -                                               offset, size, data);
+> +                                               offset, size, data, false);
+>   }
+>   
+>   static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
+> @@ -1820,6 +1820,9 @@ static void vfio_bar_prepare(VFIOPCIDevice *vdev, int nr)
+>       bar->type = pci_bar & (bar->ioport ? ~PCI_BASE_ADDRESS_IO_MASK :
+>                                            ~PCI_BASE_ADDRESS_MEM_MASK);
+>       bar->size = bar->region.size;
+> +
+> +    /* IO regions are sync, memory can be async */
+> +    bar->region.post_wr = (bar->ioport == 0);
+>   }
+>   
+>   static void vfio_bars_prepare(VFIOPCIDevice *vdev)
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index 3c93da91d8..936502b37a 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -66,7 +66,7 @@ void vfio_region_write(void *opaque, hwaddr addr,
+>       }
+>   
+>       ret = vbasedev->io_ops->region_write(vbasedev, region->nr,
+> -                                         addr, size, &buf);
+> +                                         addr, size, &buf, region->post_wr);
+>       if (ret != size) {
+>           error_report("%s(%s:region%d+0x%"HWADDR_PRIx", 0x%"PRIx64
+>                        ",%d) failed: %s",
+> @@ -200,6 +200,7 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+>       region->size = info->size;
+>       region->fd_offset = info->offset;
+>       region->nr = index;
+> +    region->post_wr = false;
+>       if (vbasedev->region_fds != NULL) {
+>           region->fd = vbasedev->region_fds[index];
+>       } else {
 
 
