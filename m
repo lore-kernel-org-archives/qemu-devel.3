@@ -4,89 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A56C8C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 03:10:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A97C54756
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 03:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHZqJ-0002xr-Hq; Tue, 20 May 2025 23:10:07 -0400
+	id 1uHZs8-0003eR-Ob; Tue, 20 May 2025 23:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
- id 1uHZqI-0002wi-8u
- for qemu-devel@nongnu.org; Tue, 20 May 2025 23:10:06 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
- id 1uHZqF-0004iE-PO
- for qemu-devel@nongnu.org; Tue, 20 May 2025 23:10:05 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7425bd5a83aso6340663b3a.0
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 20:10:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747797002; x=1748401802; darn=nongnu.org;
- h=in-reply-to:from:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=aTaEOBfOa+9863R+xJOANtp0b5Hads7Q1Ao6wcJpHn8=;
- b=JBf+r2/8cN5JAI6sdGrvCldgRNOASb0+gacFszfMVS9omv2wBTHVTDr+J3q9mFFFIq
- IkWuu0rpYoDpD3UTdIE3F0r0BJ6riUBM1N7AEY6Ls+TvHUgNtTzYLi95q6MZjW0M61Xc
- zaM033zijOYGZUKdj09Oh/qkjXO72CY6MbOPRLLVubfxSsGnFV3jbT+4rwDmh6PqzaLC
- DyP3zv1rKOcs0+ZaZNM4ovZhb1OfzF5GEtAjfEM6H/xok+njBk5UOKrYZz/Mpsa3ejRt
- M+kYmII+/vdWMKOk8rWGEtR309DqDWqjOauFEjZcYv0R1CuEMTk+sgIHMfC8CJTirE2O
- mXlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747797002; x=1748401802;
- h=in-reply-to:from:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aTaEOBfOa+9863R+xJOANtp0b5Hads7Q1Ao6wcJpHn8=;
- b=DyYKb83EtYuQjhvKqYgV/W+XW8fDnFMSG+daxg5NfuZ8nty4954D4fOWatCpEV3zXg
- BAqKV3jXu0m9Oh7q/yQE6p616HnibjsB07M0hrvB4A6FcL5YNsBfWuIq21P2vCBA7rmn
- XK8sv/PQvdrti09dmbTp/cNOX/BWmGJ+BpxCwAR4EGeQZYExm63Qp6mV8SB+O0H6C8vF
- HGgZpmP+ah5F3HmVX++tR2QY0nSMTvLuj1V4K58Y0W2oS/kCWDL2kOTorj+atIK7z3X8
- ey/u77DGf51u2tXUq/garFcf6/8GF0LnsUL/O3Lat3ylZa7vB24F4lN4+NsJs9WwKioC
- VUug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/XtcjuZjStPOV0PGTZUn+YpgHZebxpKmwDVB342WVDImoIrcwQD7FxYD31UaqoKpq6CV9HE5qY/w/@nongnu.org
-X-Gm-Message-State: AOJu0Ywb1PpERUqPJuU/3UCDBX1cfhKR70nxO1ZNDB/cGLnpTnq1k0uK
- Fl/kN3MqhUHVAQFEuMg5ASI/EgayCsk/iVv3lyK4qwddDO5bzqWYJynN
-X-Gm-Gg: ASbGncvbEqBZYT/pLvAgQ3vBOPwWxxRumyVMMdNehH3Ra8c+u/tu6maAzRACAQzd+C+
- 3tByPGwz9QMq2aHMybPnYEOonusDRE8at+7rU7wwIBwrTGeOyQBTp7ItVmoSYFC1DV+ksVos47U
- 3b82fjbgKFNzbp5IDwOz0/TVugSmeEzL+AY0mavEcZG4J4CSDbT0jMUYKoHjDBeWhsyFcVALjeB
- uE/OTU3NxZR54RK0FcqfUyzByfPptzQcpWUWpeHjdubRxwJx5pYeif0DrTZTCn3tAKwEvPVHcLi
- NxK0MPHjm999/muBHCOS9F98nKqwPmPRdgyYupfMGAQyhHyQcXuw0rqzwFkvcysirvhE5VT8AMS
- y
-X-Google-Smtp-Source: AGHT+IE/fMvq4Oxumu8XFByNpHZrIT92v1cyReQwtxUswnhyq0ewJwn+jpZov7XxQM42+EtQluEAbg==
-X-Received: by 2002:a05:6a00:440b:b0:742:a7a8:4135 with SMTP id
- d2e1a72fcca58-742a98daa4amr31334319b3a.24.1747797001573; 
- Tue, 20 May 2025 20:10:01 -0700 (PDT)
-Received: from [10.3.188.223] ([61.213.176.8])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a970c8a8sm8941139b3a.60.2025.05.20.20.09.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 20:10:01 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------nhqGEpFEcHvOyp0BkUL0YJ0X"
-Message-ID: <506bb92a-1aea-45cc-b74b-040bb38eb82a@gmail.com>
-Date: Wed, 21 May 2025 11:09:57 +0800
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uHZs6-0003e6-BN
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 23:11:58 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uHZs4-00050P-6T
+ for qemu-devel@nongnu.org; Tue, 20 May 2025 23:11:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747797116; x=1779333116;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=n5NyMrAuU1T1W6pHFhrsMECoS0dGs2JP3sypeHfJBH0=;
+ b=G1azRffSn5wk65IsV3QhzWMPhlJwMGQMIbdGmRDoNe0I//Q/b4W85ndb
+ hTBEEn7sHHxF6VmOl1vVerYvzPqmLteRirkdZnzEwaxYb9pN/xJHz8NhO
+ HAtBesmQu7QwzFOeIqsNdsZs+urr7fJUx/TOWkI5CcEVZlEpJfSmPrd3Y
+ /lbhlHTudVXq5W2Vt3U+++9LS28UCsowM0c2i9EtRPjFSIAjevJMANVsN
+ UPZENJIZzH97ziTny8LgEXVvLR3tvJcjh0bmQYAL1cPPa+HxMHgZMpO4V
+ /+6WqC62dqO+eSEzBINy8yMZBXmSjkMwm3fEcgR5ztESu0qTmCTdRQ3LR A==;
+X-CSE-ConnectionGUID: 9wbAdyk9R96Qo+yXzkuy8g==
+X-CSE-MsgGUID: vft/ERtZRhmcC84pZo8+qQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="67173473"
+X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="67173473"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2025 20:11:53 -0700
+X-CSE-ConnectionGUID: JWfLuhc0Rd+G/uqPenTB1g==
+X-CSE-MsgGUID: X8s9skDNTuSi69kaeRfMVw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="140937082"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2025 20:11:53 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Tue, 20 May 2025 20:11:52 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Tue, 20 May 2025 20:11:52 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.43) by
+ edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.55; Tue, 20 May 2025 20:11:52 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sNFwzZKFTLzPTRHnC4+is71kBiExTONxMDeaJ0VK8VB8WDg6+ta3uRnCRtPQXLFYunY6xZ2fbQNQIc5/67NRg1uVQBAZcPntRNOe8vhfPaqhas48YRp5/+v6h4BBRvcdjWt4tgqiuRNedCBY4/xDOS3dxqS2MEHD2ef942Gx2ymWzPiKFc7oXIJVGNzYsNfQHJtO819lTVgKPVuEd6xvIvShpEU0WE0klaPGU0R6RUAgiWMUbvMeo20VRryIWKxgo/5v5HXkB2jGKgi/cRd5TlAdIRthk8HHyKX4pfaoNuf5kVgCBWpDR/U8QuWLdtJWiHWT0L+bvLSarNEzoPNigQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=n5NyMrAuU1T1W6pHFhrsMECoS0dGs2JP3sypeHfJBH0=;
+ b=CbN+SeNMiJMlUgXCPFK/Xrx+Czl9+m5zvohxCpMYFCHiFCeIplzH662ZXRcmG0oOLUHk9kYT222mv9s50yOFTePqLjcRYKI2xhvFCpjGEwiRXnDSUKZ0VXKdc2BD7OLCcdbGKEe7F6yU/MsIIAEFMcKvKtlfqsz+3d8KW8JygJ48AEPzLxHwqCztPTNPEjWERWuzSf52cY32k5JcZD4orfC6zumBURQEKAQY33mWlsE21Ame45uUquuzBGu+Uf8TWhq6a44IRrvzyX5V0o3bd6tgYO5PRu2OnrvK5JQSFCUaBu0jBf+HtbxR0CBbjTfZj2gRLVj093VeaqSxyGAFGA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by SJ0PR11MB6742.namprd11.prod.outlook.com (2603:10b6:a03:47b::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.19; Wed, 21 May
+ 2025 03:11:45 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%4]) with mapi id 15.20.8746.030; Wed, 21 May 2025
+ 03:11:44 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Steven Sistare <steven.sistare@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
+ <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: RE: [PATCH V3 29/42] backends/iommufd: change process ioctl
+Thread-Topic: [PATCH V3 29/42] backends/iommufd: change process ioctl
+Thread-Index: AQHbw1yUpeYjtdu/DU2o3xTJaAJiQbPU9flwgAUvL4CAAdBwAIAAb8tQ
+Date: Wed, 21 May 2025 03:11:44 +0000
+Message-ID: <SJ0PR11MB6744AF83E1B9956A76F529D3929EA@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-30-git-send-email-steven.sistare@oracle.com>
+ <SJ0PR11MB6744C9B04AE39DE76904CAEE9293A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <7aa3c76f-a171-47b1-a56b-5fa16e38f4a5@oracle.com>
+ <5c151081-07a9-4569-a3f5-4b48a6f1a1e3@oracle.com>
+In-Reply-To: <5c151081-07a9-4569-a3f5-4b48a6f1a1e3@oracle.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SJ0PR11MB6742:EE_
+x-ms-office365-filtering-correlation-id: 11ca3042-c55d-4635-17ac-08dd9815374a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?fbshg5nV6dDO17Ao5rCYBfOJUYeJBlrUBZPWY1GP6dds3YPMvldNCc/1HQ?=
+ =?iso-8859-1?Q?UFww7+JHqOkD/Ae6vSVXg/miA02yUY4Gy3bsYSiMOkAfqZKwipYwJYwB8W?=
+ =?iso-8859-1?Q?zWBI6DAz1eNwWD4OsNjJCAABXAD01NTyhEwQY9zdJGuLq0EXMmx02Dcfdp?=
+ =?iso-8859-1?Q?1PMtJCWOnfByU0fJvYI70842/OnJr5ywBWL07U+D9XyKHOzcs669g+UhS6?=
+ =?iso-8859-1?Q?GOrarY3vgftkSOzsdfSSiRkO4QnKxMpQ8SfM0w2+lfFLtNEow7b7yDkfAP?=
+ =?iso-8859-1?Q?Av3l/1BCYucTIlpLu7NdMtTlrTgAYGt0fKt9dFjonB0IOo5w+8f2grcWMs?=
+ =?iso-8859-1?Q?T+P3FkEjF7aDUCzXAACXOjIfPY9Oshva/HUyla88HnOyhGCSoXPe5Ax8xV?=
+ =?iso-8859-1?Q?BIejn0rr+xf93mRjgNsTz5m9l8ZTK5tugTq4tLiWOtBlrTTV8Xx/kVRojS?=
+ =?iso-8859-1?Q?SKk+8Bxg+55LdEAx+5AnUDVrT8F+5XKPLKol86G7C4W9g7rKZp0hY+qehV?=
+ =?iso-8859-1?Q?ICFqAiwvGRvn8tjlqiXkMDicbgq/9fi59fxkqF/JMkuw0+HMie/pWaUKRm?=
+ =?iso-8859-1?Q?Evb55aHVRQYQh15hMxWYpCi+Jah0U6bMlpFbfZ6CJuvjdhC+WT8tc6Yrad?=
+ =?iso-8859-1?Q?+qixgibdVgq4VkSCMuCzZ3uozU3Xm4iFwnC+VabINhUn7qBay97/pc0umW?=
+ =?iso-8859-1?Q?4J3UUDS6xdZM4LrLuqOetyrpIWu61XLBuO9VJ/6XZPEo2wpbffI1JmNVW2?=
+ =?iso-8859-1?Q?OzUrZ7/3vLjO+XpOqSVb7IooCfS2UHEITUUuaHIdavEVmOgrJTm95YmFBd?=
+ =?iso-8859-1?Q?uElts2qYRpn/qiZ/fCU53rnFFpEIccQ+iWAH2aRX5a7mKVRiAI+1DmGUVC?=
+ =?iso-8859-1?Q?0AQoyVtCFFmUN6FifIgtHrs2UaNfP2QAHHXogd8reSIw9CD03dJrHSG8UP?=
+ =?iso-8859-1?Q?d/7dRZjYFcMkj0+jRkolD64fQw7S8FF/+kh6dgzdPbe4zNarfDd/2U4v9p?=
+ =?iso-8859-1?Q?KYX6DT4l6RvICKhKki+VhhFV2jjOw0tf3Q7oJsULc4vxI36yJ1EmXZ8oE2?=
+ =?iso-8859-1?Q?SEGMobvrzraLSLkuU2nNmVM6nPjgkEbh5dO5cThfOc3EvZIXZ+CbY798u+?=
+ =?iso-8859-1?Q?AjGgwHMgoE6fgAIl3x9x9zrREpjjewHxyCgfQfIqRUS5D7BgfAiAyzDhL7?=
+ =?iso-8859-1?Q?E9QZ7awE14IqBLSjXqTURF/qDEQ/W6vwleg2S07Frm0+KTv6OkAvGealus?=
+ =?iso-8859-1?Q?nvGKsnJ/B77j78lWRDhVLsTTzXsEFIkOop6iJO/B1tVn6nB5iUmWbRqbtm?=
+ =?iso-8859-1?Q?/D+D6dqxHZp7BENuq16qFkr1tTB6ye35eZEvHlBNdDwTOmA7u0S7nSJ472?=
+ =?iso-8859-1?Q?lIDuZ4A/D/DiAWUTwJngKji13+Lxe0SB/nOAtPhSRTCin5jkUa6nVwWcL9?=
+ =?iso-8859-1?Q?JZDinAbnwaz1NZ8nqAYTbD3Ky7XixM3LvSN8vNX591GHQdYg4N+nzTWWks?=
+ =?iso-8859-1?Q?Ww3AeqUw5ryz7hI6qvvlYslCjQu9lug23Q+us0JJ7VkQ=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?K7pzWIZtwNfFlBLGiwXywZ/6z6/VsoWg64KbK4xItu9XLecT9cTbIztO4N?=
+ =?iso-8859-1?Q?ajlJT61jzmmquObxvjf6p/oqH23/auObQJ6k1fvI+ubCwo9bz+z02/Pkev?=
+ =?iso-8859-1?Q?cChbgipLvSvOZCwxFMmhaCtcahX2NrotqynvM1Z502L0XmFtRiqZ3Z1TUX?=
+ =?iso-8859-1?Q?mYjTUB5oKJIqSoqD20EUVxEmOs4b6iyOyJ2iElID8ov5x/zjUXvNo3Z6Ig?=
+ =?iso-8859-1?Q?64vFUQywXfJ0P2Cql3KVliSbkzw5zSQQQWNabMZjhjMXywlDi83Tsvx41w?=
+ =?iso-8859-1?Q?NqIqkAY2U4YqJSZjrb98IBq9PLYuZ/2t5ko7DIcJIJO3bthUEwPfTm4r52?=
+ =?iso-8859-1?Q?n3SJEUs2Tqb4meDy7rH2U4nj7+kTsj6nmDkXjmxCgzCSDWRFx27HDeEQi5?=
+ =?iso-8859-1?Q?mAflZgJTxzLQIuDlBCEk9pH9SXxvBq54QEERnIMpNYk2W81T215KO39cou?=
+ =?iso-8859-1?Q?Xk+jCtE4zLX96uFSmwGDOTKEM1bvZWJP2XsarywbALc4xs8rjBDw4IJ+I9?=
+ =?iso-8859-1?Q?BUzbmK6sHSup8GSwJVDjMPaPiyd39jRQCbPovyVLHqSmaAcLz1Qhz8Xgcq?=
+ =?iso-8859-1?Q?e0rcoDZXWzT3AylPCwZ8nCY5ag+pDgyMB4sqRhECahwEdoQWKcL4leLGbz?=
+ =?iso-8859-1?Q?rh0j2ykOmgstePXViYpkvus6Vw2V23tzekl6TbkNkEsIpMu6Xyv6LiPYI/?=
+ =?iso-8859-1?Q?Mmv19WHdvzhwnqI3zUGPZV3tpKgbJBdnzfbz4Zhtli49/2e/ItUepdiyAG?=
+ =?iso-8859-1?Q?KhHdrHFKRpwKp2u/XcOLC9fqyZzk4fHA/uK2mN+VrjSTyihQoDu7g8+AAo?=
+ =?iso-8859-1?Q?+hRt7codMy9axlu9MvSjFDmHVMdfYO9mdGGT0Y28dCx2dYtO0NR/WTkeq3?=
+ =?iso-8859-1?Q?yZh7U33S2kbTMxXyGV7g0y4kxdwVlVYjgKXM7/xBWWKA2m3ko1tdbdIGlM?=
+ =?iso-8859-1?Q?Qt71PwA+K1AyM4AQHGMC83JabtNBEBbC6vHs+SOViC2oIKDwPFA7Kja7IV?=
+ =?iso-8859-1?Q?q1frJArkUtfY0GfFZ8BaGGIJZpmMFN/s/JJhJB0Dli3XphCqRxN1LqkLTm?=
+ =?iso-8859-1?Q?/tJBUlcYa/7pZWBoYd+qjODAd6lktbK4R0M3DyCKvK8nIwaKpDo8b9GEcR?=
+ =?iso-8859-1?Q?oUh0gV0BDyoiZMhquQkgZt38OdB6qCo7BrQGuP/gwedIRIcpzqtYWpP2g3?=
+ =?iso-8859-1?Q?moZXmComsfccYNv2fgt+SAFHlwu+YF07/LyjC6jqkqTYHvOBkzsIJcpp7o?=
+ =?iso-8859-1?Q?0b2pYep7P9O64VbqR0yXl7z2KWrtskiMUIZJ3LG5Yzx1fRLNEBS7GNZt/j?=
+ =?iso-8859-1?Q?Gm9O+FxENqaEGyB87COVq2XLb6VZnjwKx9mmZ4bv29AVhFD9XW1m/kM+pd?=
+ =?iso-8859-1?Q?goOyD0QSfAgmcvOKH7aCKHt454rt4UrLoBgLO/5gmUDBarwN1+Zv79tfk3?=
+ =?iso-8859-1?Q?eKuQALwrvAKnvYtivNd/bdj1jLdxDBzTXGHQzglGDao7AcvnON/8bVqlO4?=
+ =?iso-8859-1?Q?12GuRNK2MsvllGZP8Onb8ZNDdChg8jWg4csH4lROHhM0rPE0Oq0Y9QvmDl?=
+ =?iso-8859-1?Q?35k4sE/OnG7qkSakRsIy5eg5VyHTf6ZeYUgW7jzyPUQ9mca8gMgADP5/fi?=
+ =?iso-8859-1?Q?QOSnpKdOHUZkh3i1nJUJtXWsxCxnrjPYqu?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] migration/ram: avoid to do log clear in the last round
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Yanfei Xu <yanfei.xu@bytedance.com>, qemu-devel@nongnu.org,
- zhouyibo@bytedance.com
-References: <20250514115827.3216082-1-yanfei.xu@bytedance.com>
- <87zff75ch6.fsf@suse.de> <aCznLilrKAn5jkWg@x1.local>
-From: Yanfei Xu <isyanfei.xu@gmail.com>
-In-Reply-To: <aCznLilrKAn5jkWg@x1.local>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=isyanfei.xu@gmail.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11ca3042-c55d-4635-17ac-08dd9815374a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 May 2025 03:11:44.5450 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: pMbrCVyZWWpSfE2FCBNFKCmy0D7Ya5CJ9+F4kE7nR0u9EO1BJBTkbROz9OVIOAJwuymamuYiL1hrlJrYtp1ikPHIVd7W7t03uTZEVJ0Pm8w=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB6742
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.10;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,213 +204,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------nhqGEpFEcHvOyp0BkUL0YJ0X
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
 
-On 2025/5/21 04:33, Peter Xu wrote:
-> On Tue, May 20, 2025 at 04:05:57PM -0300, Fabiano Rosas wrote:
->> Yanfei Xu<yanfei.xu@bytedance.com> writes:
+>-----Original Message-----
+>From: Steven Sistare <steven.sistare@oracle.com>
+>Subject: Re: [PATCH V3 29/42] backends/iommufd: change process ioctl
+>
+>On 5/19/2025 11:51 AM, Steven Sistare wrote:
+>> On 5/16/2025 4:42 AM, Duan, Zhenzhong wrote:
+>>>> -----Original Message-----
+>>>> From: Steve Sistare <steven.sistare@oracle.com>
+>>>> Subject: [PATCH V3 29/42] backends/iommufd: change process ioctl
+>>>>
+>>>> Define the change process ioctl
+>>>>
+>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>> ---
+>>>> backends/iommufd.c=A0=A0=A0=A0=A0=A0 | 20 ++++++++++++++++++++
+>>>> backends/trace-events=A0=A0=A0 |=A0 1 +
+>>>> include/system/iommufd.h |=A0 2 ++
+>>>> 3 files changed, 23 insertions(+)
+>>>>
+>>>> diff --git a/backends/iommufd.c b/backends/iommufd.c
+>>>> index 5c1958f..6fed1c1 100644
+>>>> --- a/backends/iommufd.c
+>>>> +++ b/backends/iommufd.c
+>>>> @@ -73,6 +73,26 @@ static void iommufd_backend_class_init(ObjectClass
+>*oc,
+>>>> const void *data)
+>>>> =A0=A0=A0=A0 object_class_property_add_str(oc, "fd", NULL, iommufd_bac=
+kend_set_fd);
+>>>> }
+>>>>
+>>>> +bool iommufd_change_process_capable(IOMMUFDBackend *be)
+>>>> +{
+>>>> +=A0=A0=A0 struct iommu_ioas_change_process args =3D {.size =3D sizeof=
+(args)};
+>>>> +
+>>>> +=A0=A0=A0 return !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
+>>>> +}
+>>>> +
+>>>> +bool iommufd_change_process(IOMMUFDBackend *be, Error **errp)
+>>>> +{
+>>>> +=A0=A0=A0 struct iommu_ioas_change_process args =3D {.size =3D sizeof=
+(args)};
+>>>> +=A0=A0=A0 bool ret =3D !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &arg=
+s);
+>>>
+>>> This is same ioctl as above check, could it be called more than once fo=
+r same
+>process?
 >>
->>> There won't be any ram sync after the stage of save_complete, therefore
->>> it's unnecessary to do manually protect for dirty pages being sent. Skip
->>> to do this in last round can reduce noticeable downtime.
->>>
->>> Signed-off-by: Yanfei Xu<yanfei.xu@bytedance.com>
->>> ---
->>> As I don't have proper machine to test this patch in qemu and verify if it has
->>> risks like in postcopy, colo and so on.(But I tested this idea on my rust VMM,
->>> it works and can reduce ~50ms for a 128GB guest). So I raise the patch with RFC
->>> for suggestions.
->>>
->>>   migration/ram.c | 4 +++-
->>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/migration/ram.c b/migration/ram.c
->>> index e12913b43e..2b169cdd18 100644
->>> --- a/migration/ram.c
->>> +++ b/migration/ram.c
->>> @@ -838,7 +838,9 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
->>>        * the page in the chunk we clear the remote dirty bitmap for all.
->>>        * Clearing it earlier won't be a problem, but too late will.
->>>        */
->>> -    migration_clear_memory_region_dirty_bitmap(rb, page);
->>> +    if (!rs->last_stage) {
->>> +        migration_clear_memory_region_dirty_bitmap(rb, page);
->>> +    }
->>>   
->>>       ret = test_and_clear_bit(page, rb->bmap);
->>>       if (ret) {
->> Well, it looks ok to me and passes all my tests.
->>
->> Tested-by: Fabiano Rosas<farosas@suse.de>
->> Reviewed-by: Fabiano Rosas<farosas@suse.de>
-> Thanks both!
+>> Yes, and it is a no-op if the process has not changed since the last tim=
+e DMA
+>> was mapped.
 >
-> I plan to test a bit on this patch later to see how much perf we can get in
-> QEMU.  Since it makes perfect sense on its own, queued it for now, and the
-> plan is with below comments squashed in.  Let me know if there's comments.
->
-> Postcopy unfortunately still cannot benefit much from this change, but I'll
-> prepare some patches soon so that this should ideally also work for the
-> whole lifecycle of postcopy.  After that done, I am expecting some further
-> page fault latency reduction with this change.
+>More questions?
 
-Thanks for Fabiano's test and Peter's elaboration in comments.
+Looks a bit redundant for me, meanwhile if iommufd_change_process_capable()=
+ is called on target qemu, may it do both checking and change?
 
-Look foward to the performance data.
+I would suggest to define only iommufd_change_process() and comment that it=
+'s no-op if process not changed...
 
-Regards, Yanfei
-
-> diff --git a/migration/ram.c b/migration/ram.c
-> index db70699f95..fd8d83b63c 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -831,14 +831,20 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
->       bool ret;
->   
->       /*
-> -     * Clear dirty bitmap if needed.  This _must_ be called before we
-> -     * send any of the page in the chunk because we need to make sure
-> -     * we can capture further page content changes when we sync dirty
-> -     * log the next time.  So as long as we are going to send any of
-> -     * the page in the chunk we clear the remote dirty bitmap for all.
-> -     * Clearing it earlier won't be a problem, but too late will.
-> +     * During the last stage (after source VM stopped), resetting the write
-> +     * protections isn't needed as we know there will be either (1) no
-> +     * further writes if migration will complete, or (2) migration fails
-> +     * at last then tracking isn't needed either.
->        */
->       if (!rs->last_stage) {
-> +        /*
-> +         * Clear dirty bitmap if needed.  This _must_ be called before we
-> +         * send any of the page in the chunk because we need to make sure
-> +         * we can capture further page content changes when we sync dirty
-> +         * log the next time.  So as long as we are going to send any of
-> +         * the page in the chunk we clear the remote dirty bitmap for all.
-> +         * Clearing it earlier won't be a problem, but too late will.
-> +         */
->           migration_clear_memory_region_dirty_bitmap(rb, page);
->       }
->
---------------nhqGEpFEcHvOyp0BkUL0YJ0X
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 2025/5/21 04:33, Peter Xu wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:aCznLilrKAn5jkWg@x1.local">
-      <pre wrap="" class="moz-quote-pre">On Tue, May 20, 2025 at 04:05:57PM -0300, Fabiano Rosas wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">Yanfei Xu <a class="moz-txt-link-rfc2396E" href="mailto:yanfei.xu@bytedance.com">&lt;yanfei.xu@bytedance.com&gt;</a> writes:
-
-</pre>
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">There won't be any ram sync after the stage of save_complete, therefore
-it's unnecessary to do manually protect for dirty pages being sent. Skip
-to do this in last round can reduce noticeable downtime.
-
-Signed-off-by: Yanfei Xu <a class="moz-txt-link-rfc2396E" href="mailto:yanfei.xu@bytedance.com">&lt;yanfei.xu@bytedance.com&gt;</a>
----
-As I don't have proper machine to test this patch in qemu and verify if it has
-risks like in postcopy, colo and so on.(But I tested this idea on my rust VMM,
-it works and can reduce ~50ms for a 128GB guest). So I raise the patch with RFC
-for suggestions.
-
- migration/ram.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/migration/ram.c b/migration/ram.c
-index e12913b43e..2b169cdd18 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -838,7 +838,9 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
-      * the page in the chunk we clear the remote dirty bitmap for all.
-      * Clearing it earlier won't be a problem, but too late will.
-      */
--    migration_clear_memory_region_dirty_bitmap(rb, page);
-+    if (!rs-&gt;last_stage) {
-+        migration_clear_memory_region_dirty_bitmap(rb, page);
-+    }
- 
-     ret = test_and_clear_bit(page, rb-&gt;bmap);
-     if (ret) {
-</pre>
-        </blockquote>
-        <pre wrap="" class="moz-quote-pre">
-Well, it looks ok to me and passes all my tests.
-
-Tested-by: Fabiano Rosas <a class="moz-txt-link-rfc2396E" href="mailto:farosas@suse.de">&lt;farosas@suse.de&gt;</a>
-Reviewed-by: Fabiano Rosas <a class="moz-txt-link-rfc2396E" href="mailto:farosas@suse.de">&lt;farosas@suse.de&gt;</a>
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Thanks both!
-
-I plan to test a bit on this patch later to see how much perf we can get in
-QEMU.  Since it makes perfect sense on its own, queued it for now, and the
-plan is with below comments squashed in.  Let me know if there's comments.
-
-Postcopy unfortunately still cannot benefit much from this change, but I'll
-prepare some patches soon so that this should ideally also work for the
-whole lifecycle of postcopy.  After that done, I am expecting some further
-page fault latency reduction with this change.
-</pre>
-    </blockquote>
-    <p><font face="monospace">Thanks for <span
-        style="white-space: pre-wrap">Fabiano's test and Peter's elaboration in comments.</span></font></p>
-    <p><font face="monospace"><span style="white-space: pre-wrap">Look foward to the performance data.</span></font></p>
-    <p><font face="monospace"><span style="white-space: pre-wrap">Regards,
-Yanfei 
-</span></font></p>
-    <blockquote type="cite" cite="mid:aCznLilrKAn5jkWg@x1.local">
-      <pre wrap="" class="moz-quote-pre">
-diff --git a/migration/ram.c b/migration/ram.c
-index db70699f95..fd8d83b63c 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -831,14 +831,20 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
-     bool ret;
- 
-     /*
--     * Clear dirty bitmap if needed.  This _must_ be called before we
--     * send any of the page in the chunk because we need to make sure
--     * we can capture further page content changes when we sync dirty
--     * log the next time.  So as long as we are going to send any of
--     * the page in the chunk we clear the remote dirty bitmap for all.
--     * Clearing it earlier won't be a problem, but too late will.
-+     * During the last stage (after source VM stopped), resetting the write
-+     * protections isn't needed as we know there will be either (1) no
-+     * further writes if migration will complete, or (2) migration fails
-+     * at last then tracking isn't needed either.
-      */
-     if (!rs-&gt;last_stage) {
-+        /*
-+         * Clear dirty bitmap if needed.  This _must_ be called before we
-+         * send any of the page in the chunk because we need to make sure
-+         * we can capture further page content changes when we sync dirty
-+         * log the next time.  So as long as we are going to send any of
-+         * the page in the chunk we clear the remote dirty bitmap for all.
-+         * Clearing it earlier won't be a problem, but too late will.
-+         */
-         migration_clear_memory_region_dirty_bitmap(rb, page);
-     }
-
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------nhqGEpFEcHvOyp0BkUL0YJ0X--
+Thanks
+Zhenzhong
 
