@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F83C54ED1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85467C54E71
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:44:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHmX9-0000VZ-4G; Wed, 21 May 2025 12:43:11 -0400
+	id 1uHmWz-0000P3-Il; Wed, 21 May 2025 12:43:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmX3-0000S8-Cf
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:05 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1uHmWw-0000NW-Sm
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:42:58 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uHmWx-00068z-5j
- for qemu-devel@nongnu.org; Wed, 21 May 2025 12:43:05 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-ad54e5389cdso684430066b.1
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:42:57 -0700 (PDT)
+ id 1uHmWu-00068E-JN
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 12:42:58 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-601fb2b7884so5590352a12.2
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 09:42:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747845775; x=1748450575; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NmqDsIQ60Ty23DxSPxeo+hGIPXJEhGzvguIi1HmtE4I=;
- b=FYvsQBGqqBRlIL6rgHMwfo46iWHr699aQOkiv4ow56a0nShNEMbYCd0nD9A7Tf9rdq
- npow9D/Zu0+3JUwj52DfEjQy0BHHqZP5butNSDw6AT4DCXa1k89h5YGnuecPAmFUcL4Z
- DCekOEytqvl3h3H3cqAYDmNkVqfhmUlW2MuJiaqv/ASar3zod8JailkpmoQBGYd75jFy
- toBs2DulYVlnrVkUfiRbsqioq6CWR+Oi7Ns4fd4aBGahcpefZmszA84uRrz4TanjGzOn
- b5mOoSMVB8imGa/Y1+uPVlezmuqk9bHbui1aE2QqWl9/wNg7xvBl7Cuw5t+/m65Bm6on
- zAWg==
+ d=linaro.org; s=google; t=1747845772; x=1748450572; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tuiJpxIfqq7ecvK9GRXekyPg/m+L/Ysi2Yko/jGzDgA=;
+ b=dzQtS3FdVjWvJE3ap5SDEAhok23Sg306Btr8UCD70058blZzf/CQaj250dvCPqC/lB
+ rtyxSkmfBuA5jD4dFlobAFskj9uPPt4K44jbzChZtGdQu0I9AJWrfuLliD6gVLElGcFg
+ pCQJPciHyAvBHEuVe/Atfirprcl4y3m+29hx5F+mItWwKDCOdauI+pUYrzz8NOMYu6kX
+ NPUGZK2R7CmZLw/ExeAShGJMHMIKTuo/7t3+NB0i+HR1+NL1PjEDhQyQtADyfhTQkjyj
+ FTCfc5u01sx4nhsV9eqD+zI7zytSXYFgfXY+h/+V6mHg3Jp5dhNu2Onx6jqmBson7rO4
+ +ZAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747845775; x=1748450575;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NmqDsIQ60Ty23DxSPxeo+hGIPXJEhGzvguIi1HmtE4I=;
- b=gNUR4BjO0SgzKXgM1rrKn53ee/LJojPW6y3tbOlaWXey67vsSDUXdRpC07PPHaEd2H
- dCWk4K9ygC2ask30IcpnB99kgXen21tvDBTfqHZtVP0yKoc14wBLGQMzeVmpNbZz1p4T
- D9hkNOvVdbQ6Ea3TNChgsb/AjezAdqML4/pFSTyyOBuX2tHTZ14kx8o90KuQ267CEZnt
- W5EO3TWskLrsz5bzkfw8bStm5MXFA/uXWrHnVmaPTlyU7PKLbpQQPse079xQy4tF3Zr4
- T4AbdOfHTA6o/h72tCoX9uEpdnzQDhBn628OqOhipPidUiMkH54ugIeo2X8TJjg97dZI
- 4CCg==
-X-Gm-Message-State: AOJu0YxbMlKCbF37hLL5Fh3jzUjnkNEHC55XUsET1cYdcJIV7/kjNM4v
- z8w6k0VPKLSxxDQTg5+fNCEUIsp3OpV0+uoiSFFImTpbAGX0cmGWekBBGa8MuMWk5S8=
-X-Gm-Gg: ASbGnctaHn7pabDhTxWQHpqNXNS75cQxXXLZoJ4QG5X05xIghN3Df4zu6wdFhjhxGAx
- IFN4M6u6Qpqeculipl6fddhHZSp3aepKIAEfwGs4AqcoqS/Aso8zYuPAeT51g/sHwFdNFize0xC
- ZKzyKPyXA9uuSrsP4TAPQgsKx01+yzwUqrb+DLrxCyv+8VPunlWvBpNjn7/DB/xi9tvWH1sXaqa
- sj3IFdmoqGfwkeQx6QRPPdIyQyYdoazmDLZXa0romQh/9W0lXG8wPAqrIjINNwbxoIEnbINrehg
- xVwKfWJQqI50yG+ygvPc+qY+8E57XuMdbZHMe0ST67LToGjpjtHOQT0b2O2UdVs=
-X-Google-Smtp-Source: AGHT+IFC/WweuYUnLxpxTu1O1RDHCw/OHrIYiInocgfeMCJ14qDTrKXxUMrvpEoR8D2+LnFbenQL4A==
-X-Received: by 2002:a17:907:7f21:b0:ac3:17bb:34fc with SMTP id
- a640c23a62f3a-ad52d5e1a9dmr1611527266b.52.1747845775415; 
- Wed, 21 May 2025 09:42:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1747845772; x=1748450572;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tuiJpxIfqq7ecvK9GRXekyPg/m+L/Ysi2Yko/jGzDgA=;
+ b=U0ax69CpoFO+FQilm+gWl7V8edI+5lj1+HKvPo/IBWcYwDAksIH+kI8/MOQS/I9qG8
+ /+fzqvDlC/SHn5pvcK5s2YqXVz3oSzRGDzKH12NHoDvY08tQhjRYtjiL7K/vhxw9HmW/
+ NZw2CPoC+l8keoGnMEKkoYW05xcdivBTecPCY7ikDNq3YXUYrrCXLAnbBthlozNR+7fk
+ SZanLAypsMVJnK/Dt/0wv1GLKQufGlxdC5RfdQi8f7W+SbdvTQPYgIoOttXtlfceYhWV
+ 4A1pCKZcvMl2iZbBDmIydlu/XZZuAjTCMnxX8wRZlUSgFgjaf+plgGTTZwybBnOk2eKu
+ ja0A==
+X-Gm-Message-State: AOJu0YxiFXrP3YMI50D0xdQcxAi8KI9aVjz/2wGmCgqfDGPOddSRcK7q
+ /KOa23Zw91oO04jfvZgBdij1uhkcXD+ZiFOoWqhLQrs57VhbwZgZ8FI/v7zBBku6whM=
+X-Gm-Gg: ASbGncshxv8qrRZ2dHDLkRxdWPBkXvwFZJ4ijk//QFUj9iTwfyqDbDL9f6y/0O8+ALP
+ czyKiwbLZjdkMcl4653p3yxOpJcxkkdwObqhW/hHqVvCQUG5uAgxPPoIVK0T9EZAtpLr7K28T7P
+ kzw+wUDqMFp0Er9ImX1xcalzLqhnmz9sffLEwcjMghynuSBUix9lIlvHMy6HqgfXmLu0XJCFnx0
+ eXFhESldjdi27iZP8Chf2ESRZM9bQfvQjwD2CPpTXu0Esl2xZGv+mVLMmcZbJLyG3KgzXaA6fKR
+ DWbWKotAfL5y48khbKXpxry3IUDY2+UdywEI6qjR5to5kSPfrEj8QUGn3Gjziy8=
+X-Google-Smtp-Source: AGHT+IGjZbAwuBp+N+ZBBNezbM0wWIjTb6YSFPn/w+iow7w+pJFg8EAsktUJeL1TxgwGrYFkh+HGrw==
+X-Received: by 2002:a17:907:1b1b:b0:ad2:40a1:7894 with SMTP id
+ a640c23a62f3a-ad536f9db58mr1786802866b.41.1747845772185; 
+ Wed, 21 May 2025 09:42:52 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d04b08bsm935707866b.13.2025.05.21.09.42.50
+ a640c23a62f3a-ad52d277a1fsm922258566b.85.2025.05.21.09.42.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 09:42:51 -0700 (PDT)
+ Wed, 21 May 2025 09:42:50 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7DCDD5F9EB;
+ by draig.lan (Postfix) with ESMTP id 31CB75F786;
  Wed, 21 May 2025 17:42:50 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -82,21 +81,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Gustavo Romero <gustavo.romero@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Nabih Estefan <nabihestefan@google.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 04/20] tests/qtest: fix igb test failure under
- --enable-ubsan
-Date: Wed, 21 May 2025 17:42:34 +0100
-Message-Id: <20250521164250.135776-5-alex.bennee@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v3 00/20] Maintainer updates for May (testing, plugins,
+ virtio-gpu) - pre-PR
+Date: Wed, 21 May 2025 17:42:30 +0100
+Message-Id: <20250521164250.135776-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250521164250.135776-1-alex.bennee@linaro.org>
-References: <20250521164250.135776-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -119,48 +114,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nabih Estefan <nabihestefan@google.com>
+Now the tree is open here is the state of my current maintainer
+queues. I've tagged the virtio-gpu changes as Cc: qemu-stable but
+given how close to release we were it didn't seem worth rushing them
+in for 10.0. I've included a MAINTAINERS patch just to make sure I can
+route any more fixes until a more full time maintainer volunteers.
 
-  ../tests/qtest/libqos/igb.c:106:5: runtime error: load of misaligned address 0x562040be8e33 for type 'uint32_t', which requires 4 byte alignment
+Unless there are any major objections I intend to send the PR on Friday.
 
-Instead of straight casting the uint8_t array, we can use ldl_le_p and
-lduw_l_p to assure the unaligned access working properly against
-uint32_t and uint16_t.
+For v3
+  - addressed review comments
+  - included gdb/next patches
 
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-Reviewed-by: Laurent Vivier <lvivier@redhat.com>
-Tested-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250429155621.2028198-1-nabihestefan@google.com>
-[AJB: fix commit message, remove unneeded casts]
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+For v2
+  - addressed various comments (see bellow --- in commits)
+  - added Akihiko/Dmitry as virtio-gpu reviewers
 
----
-v2
-  - change title to reflect test that failed
-  - re-phrase ldl functions to assure unaligned works
-  - remove excess ()'s
----
- tests/qtest/libqos/igb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The following still need review:
 
-diff --git a/tests/qtest/libqos/igb.c b/tests/qtest/libqos/igb.c
-index f40c4ec4cd..ab3ef6f0c3 100644
---- a/tests/qtest/libqos/igb.c
-+++ b/tests/qtest/libqos/igb.c
-@@ -104,10 +104,10 @@ static void igb_pci_start_hw(QOSGraphObject *obj)
-     e1000e_macreg_write(&d->e1000e, E1000_RDT(0), 0);
-     e1000e_macreg_write(&d->e1000e, E1000_RDH(0), 0);
-     e1000e_macreg_write(&d->e1000e, E1000_RA,
--                        le32_to_cpu(*(uint32_t *)address));
-+                        ldl_le_p(address));
-     e1000e_macreg_write(&d->e1000e, E1000_RA + 4,
-                         E1000_RAH_AV | E1000_RAH_POOL_1 |
--                        le16_to_cpu(*(uint16_t *)(address + 4)));
-+                        lduw_le_p(address + 4));
- 
-     /* Set supported receive descriptor mode */
-     e1000e_macreg_write(&d->e1000e,
+  MAINTAINERS: add Akihiko and Dmitry as reviewers
+  MAINTAINERS: add myself to virtio-gpu for Odd Fixes
+  tests/Makefile: include test-plugins in per-arch build deps
+  tests/tcg: make aarch64 boot.S handle different starting modes
+  tests/docker: expose $HOME/.cache/qemu as docker volume
+
+Alex.
+
+Alex Bennée (12):
+  tests/docker: expose $HOME/.cache/qemu as docker volume
+  gitlab: disable debug info on CI builds
+  tests/tcg: make aarch64 boot.S handle different starting modes
+  tests/Makefile: include test-plugins in per-arch build deps
+  contrib/plugins: add a scaling factor to the ips arg
+  contrib/plugins: allow setting of instructions per quantum
+  MAINTAINERS: add myself to virtio-gpu for Odd Fixes
+  MAINTAINERS: add Akihiko and Dmitry as reviewers
+  hw/display: re-arrange memory region tracking
+  include/exec: fix assert in size_memop
+  include/gdbstub: fix include guard in commands.h
+  gdbstub: assert earlier in handle_read_all_regs
+
+Dominik 'Disconnect3d' Czarnota (1):
+  gdbstub: Implement qGDBServerVersion packet
+
+Dongwon Kim (1):
+  ui/gtk-gl-area: Remove extra draw call in refresh
+
+Gustavo Romero (1):
+  tests/functional: Add PCI hotplug test for aarch64
+
+Manos Pitsidianakis (3):
+  virtio-gpu: fix hang under TCG when unmapping blob
+  virtio-gpu: refactor async blob unmapping
+  gdbstub: update aarch64-core.xml
+
+Nabih Estefan (1):
+  tests/qtest: fix igb test failure under --enable-ubsan
+
+Yiwei Zhang (1):
+  virtio-gpu: support context init multiple timeline
+
+ MAINTAINERS                                  |  11 +-
+ docs/about/emulation.rst                     |   4 +
+ include/exec/memop.h                         |   4 +-
+ include/gdbstub/commands.h                   |   2 +-
+ include/system/memory.h                      |   1 +
+ contrib/plugins/ips.c                        |  49 +++++-
+ gdbstub/gdbstub.c                            |  19 ++-
+ hw/display/virtio-gpu-virgl.c                | 104 ++++++++---
+ tests/qtest/libqos/igb.c                     |   4 +-
+ ui/gtk-gl-area.c                             |   1 -
+ .gitlab-ci.d/buildtest-template.yml          |   1 +
+ gdb-xml/aarch64-core.xml                     |  52 +++++-
+ tests/Makefile.include                       |   2 +-
+ tests/docker/Makefile.include                |  10 +-
+ tests/functional/meson.build                 |   1 +
+ tests/functional/test_aarch64_hotplug_pci.py |  74 ++++++++
+ tests/tcg/aarch64/Makefile.softmmu-target    |   3 +-
+ tests/tcg/aarch64/system/boot.S              | 171 ++++++++++++++++++-
+ 18 files changed, 464 insertions(+), 49 deletions(-)
+ create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
+
 -- 
 2.39.5
 
