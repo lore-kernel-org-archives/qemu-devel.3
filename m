@@ -4,70 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2FBC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DA86C54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 13:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHjvT-0000cQ-2t; Wed, 21 May 2025 09:56:07 -0400
+	id 1uHjv0-00005r-Gf; Wed, 21 May 2025 09:55:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1uHjvA-0000OJ-IK
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:49 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1uHjuy-0008T2-PZ
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1uHjv7-00076S-LZ
- for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:48 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:cca4:0:640:432b:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 941F46272A;
- Wed, 21 May 2025 16:55:38 +0300 (MSK)
-Received: from dtalexundeer-nx.yandex-team.ru (unknown
- [2a02:6b8:b081:b529::1:7])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id RtO8uI0FbCg0-2hutRz6e; Wed, 21 May 2025 16:55:38 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1747835738;
- bh=Z3gU/dZQAZ13cdSvQHpNy+pNJlo4mlyKL/qJEJh9+fQ=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=bV+H7s2963eGf06pdv7dqzVHQTTZj4Jq5QZCHe4xnczNNDOioyh44rcMi4IKXV9Rz
- KXyrFxnvzBDI/yW+e/u55E5RoRw/Jag8cz7oBFHfUhzcP1kegXMcMVY9zg5rq7yHF7
- lc7PKLURcljicJ4kYPwQ5rgKM3cpdmn3HvshQlJk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1uHjuw-00075j-6n
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 09:55:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747835733;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BL05b1wqQ7FN+wTvyszSTfR+QUxn43lIBl73uDpbO7g=;
+ b=XH9Ntq75sCRPIL5kjYz3nyzw8rR8W0qYTMiYEPTIaewoVHghFMKhfUcgo1+tSpScH1Pi7G
+ ic9452O1v48ooeRYsD2PGbiyJTHyH+i7tJDl8+MDGQzuVV3mo69v3tRJ08CW0KoD+CMtvu
+ 1FeGUgvX2x6eJoL8RVRk6MvZMmpt8Kk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-547-fJp7WiNjMhCRvUKTpU54-g-1; Wed,
+ 21 May 2025 09:55:30 -0400
+X-MC-Unique: fJp7WiNjMhCRvUKTpU54-g-1
+X-Mimecast-MFC-AGG-ID: fJp7WiNjMhCRvUKTpU54-g_1747835730
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1B5C31800772; Wed, 21 May 2025 13:55:30 +0000 (UTC)
+Received: from fedora.brq.redhat.com (unknown [10.43.2.64])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 47BE119560AB; Wed, 21 May 2025 13:55:28 +0000 (UTC)
+From: Juraj Marcin <jmarcin@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v7 0/2] tests/functional: add memlock tests
-Date: Wed, 21 May 2025 18:55:20 +0500
-Message-Id: <20250521135522.11180-1-dtalexundeer@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
+Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v5 6/6] util/qemu-sockets: Introduce inet socket options
+ controlling TCP keep-alive
+Date: Wed, 21 May 2025 15:52:35 +0200
+Message-ID: <20250521135240.3941598-7-jmarcin@redhat.com>
+In-Reply-To: <20250521135240.3941598-1-jmarcin@redhat.com>
+References: <20250521135240.3941598-1-jmarcin@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -79,55 +87,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new tests to check the correctness of the `-overcommit memlock`
-option (possible values: off, on, on-fault) by using
-`/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
-anonymous segments:
+From: Juraj Marcin <jmarcin@redhat.com>
 
-* if `memlock=off`, then Locked = 0 on every anonymous smaps;
-* if `memlock=on`, then Size, Rss and Locked values must be equal for
-every anon smaps where Rss is not 0;
-* if `memlock=on-fault`, then Rss and Locked must be equal on every anon
-smaps and anonymous segment with Rss < Size must exists.
+With the default TCP stack configuration, it could be even 2 hours
+before the connection times out due to the other side not being
+reachable. However, in some cases, the application needs to be aware of
+a connection issue much sooner.
 
+This is the case, for example, for postcopy live migration. If there is
+no traffic from the migration destination guest (server-side) to the
+migration source guest (client-side), the destination keeps waiting for
+pages indefinitely and does not switch to the postcopy-paused state.
+This can happen, for example, if the destination QEMU instance is
+started with the '-S' command line option and the machine is not started
+yet, or if the machine is idle and produces no new page faults for
+not-yet-migrated pages.
+
+This patch introduces new inet socket parameters that control count,
+idle period, and interval of TCP keep-alive packets before the
+connection is considered broken. These parameters are available on
+systems where the respective TCP socket options are defined, that
+includes Linux, Windows, macOS, but not OpenBSD. Additionally, macOS
+defines TCP_KEEPIDLE as TCP_KEEPALIVE instead, so the patch supplies its
+own definition.
+
+The default value for all is 0, which means the system configuration is
+used.
+
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
-v6 -> v7:
-* add skipTest if can't open smaps file of qemu process
+ meson.build                    | 30 +++++++++++++
+ qapi/sockets.json              | 19 ++++++++
+ tests/unit/test-util-sockets.c | 33 ++++++++++++++
+ util/qemu-sockets.c            | 80 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 162 insertions(+)
 
-v5 -> v6:
-* add python3 shebang to tests/functional/test_memlock.py
-
-v4 -> v5:
-* refactor skipLockedMemoryTest decorator: using resource.getrlimit()
-  function instead of spawning a process
-
-v3 -> v4:
-* add skipLockedMemoryTest decorator to skip test if system's locked
-  memory limit is below the required threashold;
-* add to MemlockTest skipLockedMemoryTest decorator with 2 GB limit.
-
-v2 -> v3:
-Move tests to tests/functional dir, as the tests/avocado dir is being phased out.
-v2 was [PATCH v2] tests/avocado: add memlock tests.
-Supersedes: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
-
-v1 -> v2:
-In the previous send, i forgot to specify new patch version (v2)
-So i resend previous patch with version specified.
-
-
-Alexandr Moshkov (2):
-  tests/functional: add skipLockedMemoryTest decorator
-  tests/functional: add memlock tests
-
- tests/functional/meson.build             |   1 +
- tests/functional/qemu_test/__init__.py   |   2 +-
- tests/functional/qemu_test/decorators.py |  18 ++++
- tests/functional/test_memlock.py         | 107 +++++++++++++++++++++++
- 4 files changed, 127 insertions(+), 1 deletion(-)
- create mode 100755 tests/functional/test_memlock.py
-
+diff --git a/meson.build b/meson.build
+index ad2053f968..fdad3fb528 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2760,6 +2760,36 @@ if linux_io_uring.found()
+   config_host_data.set('HAVE_IO_URING_PREP_WRITEV2',
+                        cc.has_header_symbol('liburing.h', 'io_uring_prep_writev2'))
+ endif
++config_host_data.set('HAVE_TCP_KEEPCNT',
++                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPCNT') or
++                     cc.compiles('''
++                     #include <ws2tcpip.h>
++                     #ifndef TCP_KEEPCNT
++                     #error
++                     #endif
++                     int main(void) { return 0; }''',
++                     name: 'Win32 TCP_KEEPCNT'))
++# On Darwin TCP_KEEPIDLE is available under different name, TCP_KEEPALIVE.
++# https://github.com/apple/darwin-xnu/blob/xnu-4570.1.46/bsd/man/man4/tcp.4#L172
++config_host_data.set('HAVE_TCP_KEEPIDLE',
++                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPIDLE') or
++                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPALIVE') or
++                     cc.compiles('''
++                     #include <ws2tcpip.h>
++                     #ifndef TCP_KEEPIDLE
++                     #error
++                     #endif
++                     int main(void) { return 0; }''',
++                     name: 'Win32 TCP_KEEPIDLE'))
++config_host_data.set('HAVE_TCP_KEEPINTVL',
++                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPINTVL') or
++                     cc.compiles('''
++                     #include <ws2tcpip.h>
++                     #ifndef TCP_KEEPINTVL
++                     #error
++                     #endif
++                     int main(void) { return 0; }''',
++                     name: 'Win32 TCP_KEEPINTVL'))
+ 
+ # has_member
+ config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
+diff --git a/qapi/sockets.json b/qapi/sockets.json
+index 62797cd027..f9f559daba 100644
+--- a/qapi/sockets.json
++++ b/qapi/sockets.json
+@@ -59,6 +59,22 @@
+ # @keep-alive: enable keep-alive when connecting to/listening on this socket.
+ #     (Since 4.2, not supported for listening sockets until 10.1)
+ #
++# @keep-alive-count: number of keep-alive packets sent before the connection is
++#     closed.  Only supported for TCP sockets on systems where TCP_KEEPCNT
++#     socket option is defined (this includes Linux, Windows, macOS, FreeBSD,
++#     but not OpenBSD).  When set to 0, system setting is used.  (Since 10.1)
++#
++# @keep-alive-idle: time in seconds the connection needs to be idle before
++#     sending a keepalive packet.  Only supported for TCP sockets on systems
++#     where TCP_KEEPIDLE socket option is defined (this includes Linux,
++#     Windows, macOS, FreeBSD, but not OpenBSD).  When set to 0, system setting
++#     is used.  (Since 10.1)
++#
++# @keep-alive-interval: time in seconds between keep-alive packets.  Only
++#     supported for TCP sockets on systems where TCP_KEEPINTVL is defined (this
++#     includes Linux, Windows, macOS, FreeBSD, but not OpenBSD).  When set to
++#     0, system setting is used.  (Since 10.1)
++#
+ # @mptcp: enable multi-path TCP.  (Since 6.1)
+ #
+ # Since: 1.3
+@@ -71,6 +87,9 @@
+     '*ipv4': 'bool',
+     '*ipv6': 'bool',
+     '*keep-alive': 'bool',
++    '*keep-alive-count': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPCNT' },
++    '*keep-alive-idle': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPIDLE' },
++    '*keep-alive-interval': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPINTVL' },
+     '*mptcp': { 'type': 'bool', 'if': 'HAVE_IPPROTO_MPTCP' } } }
+ 
+ ##
+diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
+index cca609fd90..af8e6e6af9 100644
+--- a/tests/unit/test-util-sockets.c
++++ b/tests/unit/test-util-sockets.c
+@@ -358,6 +358,18 @@ static void inet_parse_test_helper(const char *str, InetSocketAddress *exp_addr,
+         g_assert_cmpint(addr.ipv6, ==, exp_addr->ipv6);
+         g_assert_cmpint(addr.has_keep_alive, ==, exp_addr->has_keep_alive);
+         g_assert_cmpint(addr.keep_alive, ==, exp_addr->keep_alive);
++#ifdef HAVE_TCP_KEEPCNT
++        g_assert_cmpint(addr.has_keep_alive_count, ==, exp_addr->has_keep_alive_count);
++        g_assert_cmpint(addr.keep_alive_count, ==, exp_addr->keep_alive_count);
++#endif
++#ifdef HAVE_TCP_KEEPIDLE
++        g_assert_cmpint(addr.has_keep_alive_idle, ==, exp_addr->has_keep_alive_idle);
++        g_assert_cmpint(addr.keep_alive_idle, ==, exp_addr->keep_alive_idle);
++#endif
++#ifdef HAVE_TCP_KEEPINTVL
++        g_assert_cmpint(addr.has_keep_alive_interval, ==, exp_addr->has_keep_alive_interval);
++        g_assert_cmpint(addr.keep_alive_interval, ==, exp_addr->keep_alive_interval);
++#endif
+ #ifdef HAVE_IPPROTO_MPTCP
+         g_assert_cmpint(addr.has_mptcp, ==, exp_addr->has_mptcp);
+         g_assert_cmpint(addr.mptcp, ==, exp_addr->mptcp);
+@@ -459,6 +471,18 @@ static void test_inet_parse_all_options_good(void)
+         .ipv6 = true,
+         .has_keep_alive = true,
+         .keep_alive = true,
++#ifdef HAVE_TCP_KEEPCNT
++        .has_keep_alive_count = true,
++        .keep_alive_count = 10,
++#endif
++#ifdef HAVE_TCP_KEEPIDLE
++        .has_keep_alive_idle = true,
++        .keep_alive_idle = 60,
++#endif
++#ifdef HAVE_TCP_KEEPINTVL
++        .has_keep_alive_interval = true,
++        .keep_alive_interval = 30,
++#endif
+ #ifdef HAVE_IPPROTO_MPTCP
+         .has_mptcp = true,
+         .mptcp = false,
+@@ -466,6 +490,15 @@ static void test_inet_parse_all_options_good(void)
+     };
+     inet_parse_test_helper(
+         "[::1]:5000,numeric=on,to=5006,ipv4=off,ipv6=on,keep-alive=on"
++#ifdef HAVE_TCP_KEEPCNT
++        ",keep-alive-count=10"
++#endif
++#ifdef HAVE_TCP_KEEPIDLE
++        ",keep-alive-idle=60"
++#endif
++#ifdef HAVE_TCP_KEEPINTVL
++        ",keep-alive-interval=30"
++#endif
+ #ifdef HAVE_IPPROTO_MPTCP
+         ",mptcp=off"
+ #endif
+diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+index 403dc26b36..4773755fd5 100644
+--- a/util/qemu-sockets.c
++++ b/util/qemu-sockets.c
+@@ -45,6 +45,14 @@
+ # define AI_NUMERICSERV 0
+ #endif
+ 
++/*
++ * On macOS TCP_KEEPIDLE is available under a different name, TCP_KEEPALIVE.
++ * https://github.com/apple/darwin-xnu/blob/xnu-4570.1.46/bsd/man/man4/tcp.4#L172
++ */
++#if defined(TCP_KEEPALIVE) && !defined(TCP_KEEPIDLE)
++# define TCP_KEEPIDLE TCP_KEEPALIVE
++#endif
++
+ 
+ static int inet_getport(struct addrinfo *e)
+ {
+@@ -218,6 +226,42 @@ static int inet_set_sockopts(int sock, InetSocketAddress *saddr, Error **errp)
+                              "Unable to set keep-alive option on socket");
+             return -1;
+         }
++#ifdef HAVE_TCP_KEEPCNT
++        if (saddr->has_keep_alive_count && saddr->keep_alive_count) {
++            int keep_count = saddr->keep_alive_count;
++            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPCNT, &keep_count,
++                             sizeof(keep_count));
++            if (ret < 0) {
++                error_setg_errno(errp, errno,
++                                 "Unable to set TCP keep-alive count option on socket");
++                return -1;
++            }
++        }
++#endif
++#ifdef HAVE_TCP_KEEPIDLE
++        if (saddr->has_keep_alive_idle && saddr->keep_alive_idle) {
++            int keep_idle = saddr->keep_alive_idle;
++            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, &keep_idle,
++                             sizeof(keep_idle));
++            if (ret < 0) {
++                error_setg_errno(errp, errno,
++                                 "Unable to set TCP keep-alive idle option on socket");
++                return -1;
++            }
++        }
++#endif
++#ifdef HAVE_TCP_KEEPINTVL
++        if (saddr->has_keep_alive_interval && saddr->keep_alive_interval) {
++            int keep_interval = saddr->keep_alive_interval;
++            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPINTVL, &keep_interval,
++                             sizeof(keep_interval));
++            if (ret < 0) {
++                error_setg_errno(errp, errno,
++                                 "Unable to set TCP keep-alive interval option on socket");
++                return -1;
++            }
++        }
++#endif
+     }
+     return 0;
+ }
+@@ -630,6 +674,24 @@ static QemuOptsList inet_opts = {
+             .name = "keep-alive",
+             .type = QEMU_OPT_BOOL,
+         },
++#ifdef HAVE_TCP_KEEPCNT
++        {
++            .name = "keep-alive-count",
++            .type = QEMU_OPT_NUMBER,
++        },
++#endif
++#ifdef HAVE_TCP_KEEPIDLE
++        {
++            .name = "keep-alive-idle",
++            .type = QEMU_OPT_NUMBER,
++        },
++#endif
++#ifdef HAVE_TCP_KEEPINTVL
++        {
++            .name = "keep-alive-interval",
++            .type = QEMU_OPT_NUMBER,
++        },
++#endif
+ #ifdef HAVE_IPPROTO_MPTCP
+         {
+             .name = "mptcp",
+@@ -695,6 +757,24 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
+         addr->has_keep_alive = true;
+         addr->keep_alive = qemu_opt_get_bool(opts, "keep-alive", false);
+     }
++#ifdef HAVE_TCP_KEEPCNT
++    if (qemu_opt_find(opts, "keep-alive-count")) {
++        addr->has_keep_alive_count = true;
++        addr->keep_alive_count = qemu_opt_get_number(opts, "keep-alive-count", 0);
++    }
++#endif
++#ifdef HAVE_TCP_KEEPIDLE
++    if (qemu_opt_find(opts, "keep-alive-idle")) {
++        addr->has_keep_alive_idle = true;
++        addr->keep_alive_idle = qemu_opt_get_number(opts, "keep-alive-idle", 0);
++    }
++#endif
++#ifdef HAVE_TCP_KEEPINTVL
++    if (qemu_opt_find(opts, "keep-alive-interval")) {
++        addr->has_keep_alive_interval = true;
++        addr->keep_alive_interval = qemu_opt_get_number(opts, "keep-alive-interval", 0);
++    }
++#endif
+ #ifdef HAVE_IPPROTO_MPTCP
+     if (qemu_opt_find(opts, "mptcp")) {
+         addr->has_mptcp = true;
 -- 
-2.34.1
+2.49.0
 
 
