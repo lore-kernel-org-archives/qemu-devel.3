@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF8D3C54ED1
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04AD8C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 22:39:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHs4b-0006C7-Aj; Wed, 21 May 2025 18:38:05 -0400
+	id 1uHs4Y-0006Am-FT; Wed, 21 May 2025 18:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHs4W-00069l-EX
+ id 1uHs4W-00069i-8h
  for qemu-devel@nongnu.org; Wed, 21 May 2025 18:38:00 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHs4Q-0005Yu-4m
- for qemu-devel@nongnu.org; Wed, 21 May 2025 18:38:00 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-af51596da56so5561033a12.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 15:37:51 -0700 (PDT)
+ id 1uHs4R-0005aB-Ku
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 18:37:59 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2320e53167dso51045665ad.3
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 15:37:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747867070; x=1748471870; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747867073; x=1748471873; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HPVF35l9UHbNMEec1/7K6eJuGQybRaf36tQqQS1N9wo=;
- b=P0SxX6z0VkwNGuG783h9C0UPpbXP3T5Wb7CSW7WQkoNb6tGlUULVYtTp4yDlBUsmjI
- 0ChN0+G0P7onKUhYxLwqRRO1ARUIob+NmGkkU5dRUFAgbIEETaTgCJnti1aDNH128s2g
- Nn1b1M9RTTfor+wzSZ6t0/oY/OwuGNJKxK11ce9nL6QEa6mLVhPTplGByEn7BqxbJ7/7
- ikEJQ5/IJGOWJlosV8tm+WaVuJV+UM3bTGGkoVIrsr6bYa/O5l6XRiXDA81MzvsmSlZA
- OnOt9EN4ZDlgRrlFWoXd2sTYvk8v/zdT3ub0mEmFZwzY1wjBh25tlmopnxnVbfFAlM/Q
- ULcg==
+ bh=WbuE30bzkvC7HXdLQ6ZO7n7D2r6LctI3gV9TqL6oovs=;
+ b=c/TrN5HSVRdSUetqgljHJ6cJiy7gEyDEFMugUuk2q54j9yEwHIMrPi2UDv5ioMVadd
+ K0+jLn0zQdQDrSzXxs0sw2UBRb0N3lg8383BWgdtZ/VJGCPzBVPbYY5Vm5Wej2VM8TqQ
+ SzSy9Tqray0DOKQCq+lE3bPnrpX/U5naGm+v2HDB4qe/pJDySair8MYl32ZTmDN9kfb5
+ W0JDcllnLuljm8/mNC2bzqsNyDSaP+kqlcuro2bmoRTlCtiV0DJFyAnFS2GSN52awPCk
+ 3MgtGOlFewOXKiFMxNNQLTsjSjF8cvfNDmfcQFLnpj96buuJcM0lU8fgEL9qQ+h+FL8d
+ 9KAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747867070; x=1748471870;
+ d=1e100.net; s=20230601; t=1747867073; x=1748471873;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HPVF35l9UHbNMEec1/7K6eJuGQybRaf36tQqQS1N9wo=;
- b=YXJC+I7/8zQfXWR1Ek7u++9cc/nrUQTw00iN7TkFvs4U9Qrc1Y099PNSPWNDeaubiL
- /xuu5fyAH+MLkzICHRlJSXuJWoP4FF2F3r17DKsohySCr1ClYRsSBt1OzgS6w8Ga3R2j
- JjulYeKnCj2wxV8Cvd+DHOgB9aj7tplUL9dXPsS/lbOABvOmjB6f391+QRXTMTmFKYwC
- LDOzlQxSrd9DGwXkkrqFiEg0JYzCeIRDhZxjAXZyzUW7WNlIO876IbAVqIna95LaLD9T
- /s2nxb+kmm/ySB3gtpF8U1FbGH9y2YTAsJTrr3s2DNXONVbp1o1glAgi8iRoe5y87WDv
- FNOQ==
-X-Gm-Message-State: AOJu0YyGMU+P5KehSM33OH5Uvxm551hoRRgWM+5zcrjSmqCIzpYwu0xl
- QO607gJLcdMCT0iHh/FdgrJ7j7DV99afKXEMmQmpWOPYh90lOWNymEp7+Um4TTZaprcuMboBixz
- y0wqN
-X-Gm-Gg: ASbGncuWNjbcWBZQnf/tll9YCy5S+0RSZVsZyPdJil9NKNEv9TEbk6pUiEQmRInknFZ
- r5J0EtrS40G6ss9sUWMvie6F32VFWsKf/zuFIzKbSaH5x+/MmdDNvvg+yYjMHgfBaJRIJAP4G5G
- xwMLP0w531CggE0DApBamh94rHKdHxk1HhFFL1MMOmKnLE/bdUv5zuJUHM5juIh6vEzk+sEqFmC
- M8832RyEJI4opSBIQuWylg2Grw1kZCmra6qrCys8bxGV2LqYZnwxP7b9cqkjY3dR8DBL5Zbe8mf
- Svenh85mT61RW7QKQ/Fgq73W1NfeRkz0vQEzEfIMf/FBuNvZ0Zj51/YSmlOsVw==
-X-Google-Smtp-Source: AGHT+IFVQqJvgb2FsEaH69S/1zlF+Kp4srjSFF66l7n2XiyoNw5xDWdovpcFvWqwwmUSjQGEVS1Riw==
-X-Received: by 2002:a17:903:1a27:b0:21f:4649:fd49 with SMTP id
- d9443c01a7336-231d45acaa2mr314751775ad.49.1747867069580; 
- Wed, 21 May 2025 15:37:49 -0700 (PDT)
+ bh=WbuE30bzkvC7HXdLQ6ZO7n7D2r6LctI3gV9TqL6oovs=;
+ b=ois8u8le1tV9WZY1PrSzFGqcL8KeU+lUvG79QrKRHXgTEaY4LKUKlSHRSOhr048suz
+ 3naDCGt+CRgT/9Vy1jEainam/87DLlURNoJdfJ4BS7Z7552hVuCl3pTje+Q9yLIU4Dlg
+ O8gIH8IMQLbbOMsg4eobeAbGjNAfsMwsYR5OGhAFBdU5Q5UzFQi5LYCF1PqBzPmMFapk
+ XYt0fGLPHNn+YO08rFquhE4NsLe4reloTCEj9ae/G27+m+9NATNCRiJ1oBplGKgBoBxB
+ XhTAqBhKKp3VHWzJR0YVc0Loaxm2/WXjG+6Gf2WbHfH9WVMXNvLrZJ6fp8zUQXRFLhdm
+ LlwQ==
+X-Gm-Message-State: AOJu0YzI54UI/9VfG8OapQXh/GfZ5v4iiF99o1xr6rOQwTaDgsClB685
+ 3y1Zew4pudyFhJbTmldDYqr9GNQ9Nvn9uxzJ2SHNowyhP2OKsmmcTIGjxGUNyKXm8e1x/zimjQW
+ A/xvg
+X-Gm-Gg: ASbGncsQHOBpa1wbsKCIiSwJ6dY4L7Qp1PTYQu9QkB3fXjOvn7GG2RXptmIPd1nByGv
+ NRTiTEdmV+3bjcj9ha9dYCBCI+4+loGcndznrQfgQKU6OoIOOZARHBqF9hqwl2EV+PQm5yrrqGJ
+ MS9hnaG0EEy1mkA6CE8DHXobBhuV4ZDtaPJVX0zvgSKpJBLc0veYhnm3SqMTZIALURPb7Hxx15S
+ xcDfAvApXCbR1LSlhHzFImSCZmSuZyDZArQFwaO+ARzJxtBIwjSwfskzgWr5WFx+ivIrlPIjA+d
+ Vc2J/g4cB/qFtE7SHVJR3ovhV7B0KR0Q7sQE0/tZB/P87ZXw3Ec=
+X-Google-Smtp-Source: AGHT+IGdHGKLPSXb4JH0oFHxOaXRTerPf/3lAmTcaL8rYv4Vi2QwiCnqaUykurEmSweMSU6mL289Dg==
+X-Received: by 2002:a17:903:1983:b0:22e:62c3:6990 with SMTP id
+ d9443c01a7336-231d44e7182mr324414615ad.16.1747867073650; 
+ Wed, 21 May 2025 15:37:53 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4e97dcesm97711105ad.121.2025.05.21.15.37.48
+ d9443c01a7336-231d4e97dcesm97711105ad.121.2025.05.21.15.37.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 15:37:49 -0700 (PDT)
+ Wed, 21 May 2025 15:37:53 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com, peter.maydell@linaro.org,
  armbru@redhat.com, michael.roth@amd.com, philmd@linaro.org,
  richard.henderson@linaro.org, berrange@redhat.com, thuth@redhat.com
-Subject: [PATCH v3 05/14] qapi: make SGX commands unconditionally available
-Date: Wed, 21 May 2025 15:37:31 -0700
-Message-ID: <20250521223740.249720-6-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 09/14] qapi: make s390x specific CPU commands
+ unconditionally available
+Date: Wed, 21 May 2025 15:37:35 -0700
+Message-ID: <20250521223740.249720-10-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250521223740.249720-1-pierrick.bouvier@linaro.org>
 References: <20250521223740.249720-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,262 +104,198 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This removes the TARGET_I386 condition from the SGX confidential
-virtualization commands, moving them to the recently introduced
-misc-i386.json QAPI file, given they are inherantly i386 specific
-commands.
+This removes the TARGET_S390X and CONFIG_KVM conditions from the
+CPU commands that are conceptually specific to s390x. Top level
+stubs are provided to cope with non-s390x targets, or builds
+without KVM.
 
-Observe a pre-existing bug that the "SGXEPCSection" struct lacked
-a TARGET_I386 condition, despite its only usage being behind a
-TARGET_I386 condition.
+The removal of CONFIG_KVM is justified by the fact there is no
+conceptual difference between running 'qemu-system-s390x -accel tcg'
+on a build with and without KVM built-in, so apps only using TCG
+can't rely on the CONFIG_KVM in the schema.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qapi/misc-i386.json      | 77 +++++++++++++++++++++++++++++++++++++++
- qapi/misc-target.json    | 79 ----------------------------------------
- hw/i386/sgx-stub.c       |  2 +-
- hw/i386/sgx.c            |  2 +-
- stubs/monitor-i386-sgx.c | 17 +++++++++
- stubs/meson.build        |  1 +
- 6 files changed, 97 insertions(+), 81 deletions(-)
- create mode 100644 stubs/monitor-i386-sgx.c
+ ...machine-target.json => machine-s390x.json} | 16 +++++---------
+ qapi/qapi-schema.json                         |  2 +-
+ include/hw/s390x/cpu-topology.h               |  2 +-
+ hw/s390x/cpu-topology.c                       |  4 ++--
+ stubs/monitor-cpu-s390x-kvm.c                 | 22 +++++++++++++++++++
+ tests/qtest/qmp-cmd-test.c                    |  1 +
+ qapi/meson.build                              |  2 +-
+ stubs/meson.build                             |  1 +
+ 8 files changed, 35 insertions(+), 15 deletions(-)
+ rename qapi/{machine-target.json => machine-s390x.json} (85%)
+ create mode 100644 stubs/monitor-cpu-s390x-kvm.c
 
-diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-index de0e4ab67ff..92751d5e180 100644
---- a/qapi/misc-i386.json
-+++ b/qapi/misc-i386.json
-@@ -293,3 +293,80 @@
- { 'command': 'query-sev-attestation-report',
-   'data': { 'mnonce': 'str' },
-   'returns': 'SevAttestationReport' }
-+
-+##
-+# @SgxEpcSection:
-+#
-+# Information about intel SGX EPC section
-+#
-+# @node: the numa node
-+#
-+# @size: the size of EPC section
-+#
-+# Since: 7.0
-+##
-+{ 'struct': 'SgxEpcSection',
-+  'data': { 'node': 'int',
-+            'size': 'uint64'}}
-+
-+##
-+# @SgxInfo:
-+#
-+# Information about intel Safe Guard eXtension (SGX) support
-+#
-+# @sgx: true if SGX is supported
-+#
-+# @sgx1: true if SGX1 is supported
-+#
-+# @sgx2: true if SGX2 is supported
-+#
-+# @flc: true if FLC is supported
-+#
-+# @sections: The EPC sections information (Since: 7.0)
-+#
-+# Since: 6.2
-+##
-+{ 'struct': 'SgxInfo',
-+  'data': { 'sgx': 'bool',
-+            'sgx1': 'bool',
-+            'sgx2': 'bool',
-+            'flc': 'bool',
-+            'sections': ['SgxEpcSection']} }
-+
-+##
-+# @query-sgx:
-+#
-+# Returns information about configured SGX capabilities of guest
-+#
-+# Returns: @SgxInfo
-+#
-+# Since: 6.2
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-sgx" }
-+#     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
-+#                      "flc": true,
-+#                      "sections": [{"node": 0, "size": 67108864},
-+#                      {"node": 1, "size": 29360128}]} }
-+##
-+{ 'command': 'query-sgx', 'returns': 'SgxInfo' }
-+
-+##
-+# @query-sgx-capabilities:
-+#
-+# Returns information about SGX capabilities of host
-+#
-+# Returns: @SgxInfo
-+#
-+# Since: 6.2
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-sgx-capabilities" }
-+#     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
-+#                      "flc": true,
-+#                      "section" : [{"node": 0, "size": 67108864},
-+#                      {"node": 1, "size": 29360128}]} }
-+##
-+{ 'command': 'query-sgx-capabilities', 'returns': 'SgxInfo' }
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index cc472ce91cb..d62db37d7cf 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -2,85 +2,6 @@
+diff --git a/qapi/machine-target.json b/qapi/machine-s390x.json
+similarity index 85%
+rename from qapi/machine-target.json
+rename to qapi/machine-s390x.json
+index f19e34adaf9..966dbd61d2e 100644
+--- a/qapi/machine-target.json
++++ b/qapi/machine-s390x.json
+@@ -1,6 +1,7 @@
+ # -*- Mode: Python -*-
  # vim: filetype=python
  #
++# SPDX-License-Identifier: GPL-2.0-or-later
+ # This work is licensed under the terms of the GNU GPL, version 2 or later.
+ # See the COPYING file in the top-level directory.
  
--##
--# @SgxEpcSection:
--#
--# Information about intel SGX EPC section
--#
--# @node: the numa node
--#
--# @size: the size of EPC section
--#
--# Since: 7.0
--##
--{ 'struct': 'SgxEpcSection',
--  'data': { 'node': 'int',
--            'size': 'uint64'}}
--
--##
--# @SgxInfo:
--#
--# Information about intel Safe Guard eXtension (SGX) support
--#
--# @sgx: true if SGX is supported
--#
--# @sgx1: true if SGX1 is supported
--#
--# @sgx2: true if SGX2 is supported
--#
--# @flc: true if FLC is supported
--#
--# @sections: The EPC sections information (Since: 7.0)
--#
--# Since: 6.2
--##
--{ 'struct': 'SgxInfo',
--  'data': { 'sgx': 'bool',
--            'sgx1': 'bool',
--            'sgx2': 'bool',
--            'flc': 'bool',
--            'sections': ['SgxEpcSection']},
--   'if': 'TARGET_I386' }
--
--##
--# @query-sgx:
--#
--# Returns information about configured SGX capabilities of guest
--#
--# Returns: @SgxInfo
--#
--# Since: 6.2
--#
--# .. qmp-example::
--#
--#     -> { "execute": "query-sgx" }
--#     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
--#                      "flc": true,
--#                      "sections": [{"node": 0, "size": 67108864},
--#                      {"node": 1, "size": 29360128}]} }
--##
--{ 'command': 'query-sgx', 'returns': 'SgxInfo', 'if': 'TARGET_I386' }
--
--##
--# @query-sgx-capabilities:
--#
--# Returns information about SGX capabilities of host
--#
--# Returns: @SgxInfo
--#
--# Since: 6.2
--#
--# .. qmp-example::
--#
--#     -> { "execute": "query-sgx-capabilities" }
--#     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
--#                      "flc": true,
--#                      "section" : [{"node": 0, "size": 67108864},
--#                      {"node": 1, "size": 29360128}]} }
--##
--{ 'command': 'query-sgx-capabilities', 'returns': 'SgxInfo', 'if': 'TARGET_I386' }
--
--
+@@ -15,8 +16,7 @@
+ # Since: 8.2
  ##
- # @EvtchnPortType:
- #
-diff --git a/hw/i386/sgx-stub.c b/hw/i386/sgx-stub.c
-index ccb21a975d7..d295e54d239 100644
---- a/hw/i386/sgx-stub.c
-+++ b/hw/i386/sgx-stub.c
-@@ -3,8 +3,8 @@
- #include "monitor/hmp-target.h"
- #include "hw/i386/pc.h"
- #include "hw/i386/sgx-epc.h"
-+#include "qapi/qapi-commands-misc-i386.h"
- #include "qapi/error.h"
--#include "qapi/qapi-commands-misc-target.h"
+ { 'enum': 'S390CpuPolarization',
+-  'data': [ 'horizontal', 'vertical' ],
+-  'if': 'TARGET_S390X'
++  'data': [ 'horizontal', 'vertical' ]
+ }
  
- void sgx_epc_build_srat(GArray *table_data)
- {
-diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
-index c80203b438e..e2801546ad6 100644
---- a/hw/i386/sgx.c
-+++ b/hw/i386/sgx.c
-@@ -19,7 +19,7 @@
- #include "monitor/hmp-target.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
--#include "qapi/qapi-commands-misc-target.h"
-+#include "qapi/qapi-commands-misc-i386.h"
- #include "system/address-spaces.h"
- #include "system/hw_accel.h"
- #include "system/reset.h"
-diff --git a/stubs/monitor-i386-sgx.c b/stubs/monitor-i386-sgx.c
+ ##
+@@ -54,8 +54,7 @@
+       '*entitlement': 'S390CpuEntitlement',
+       '*dedicated': 'bool'
+   },
+-  'features': [ 'unstable' ],
+-  'if': { 'all': [ 'TARGET_S390X' , 'CONFIG_KVM' ] }
++  'features': [ 'unstable' ]
+ }
+ 
+ ##
+@@ -90,8 +89,7 @@
+ ##
+ { 'event': 'CPU_POLARIZATION_CHANGE',
+   'data': { 'polarization': 'S390CpuPolarization' },
+-  'features': [ 'unstable' ],
+-  'if': { 'all': [ 'TARGET_S390X', 'CONFIG_KVM' ] }
++  'features': [ 'unstable' ]
+ }
+ 
+ ##
+@@ -104,8 +102,7 @@
+ # Since: 8.2
+ ##
+ { 'struct': 'CpuPolarizationInfo',
+-  'data': { 'polarization': 'S390CpuPolarization' },
+-  'if': { 'all': [ 'TARGET_S390X', 'CONFIG_KVM' ] }
++  'data': { 'polarization': 'S390CpuPolarization' }
+ }
+ 
+ ##
+@@ -120,6 +117,5 @@
+ # Since: 8.2
+ ##
+ { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarizationInfo',
+-  'features': [ 'unstable' ],
+-  'if': { 'all': [ 'TARGET_S390X', 'CONFIG_KVM' ] }
++  'features': [ 'unstable' ]
+ }
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index d8eb79cfda6..a8f66163cb7 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -57,7 +57,7 @@
+ { 'include': 'qdev.json' }
+ { 'include': 'machine-common.json' }
+ { 'include': 'machine.json' }
+-{ 'include': 'machine-target.json' }
++{ 'include': 'machine-s390x.json' }
+ { 'include': 'replay.json' }
+ { 'include': 'yank.json' }
+ { 'include': 'misc.json' }
+diff --git a/include/hw/s390x/cpu-topology.h b/include/hw/s390x/cpu-topology.h
+index 9283c948e3a..d5e9aa43f8f 100644
+--- a/include/hw/s390x/cpu-topology.h
++++ b/include/hw/s390x/cpu-topology.h
+@@ -13,7 +13,7 @@
+ 
+ #include "qemu/queue.h"
+ #include "hw/boards.h"
+-#include "qapi/qapi-types-machine-target.h"
++#include "qapi/qapi-types-machine-s390x.h"
+ 
+ #define S390_TOPOLOGY_CPU_IFL   0x03
+ 
+diff --git a/hw/s390x/cpu-topology.c b/hw/s390x/cpu-topology.c
+index 7d4e1f54727..b513f8936e4 100644
+--- a/hw/s390x/cpu-topology.c
++++ b/hw/s390x/cpu-topology.c
+@@ -23,8 +23,8 @@
+ #include "target/s390x/cpu.h"
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "hw/s390x/cpu-topology.h"
+-#include "qapi/qapi-commands-machine-target.h"
+-#include "qapi/qapi-events-machine-target.h"
++#include "qapi/qapi-commands-machine-s390x.h"
++#include "qapi/qapi-events-machine-s390x.h"
+ 
+ /*
+  * s390_topology is used to keep the topology information.
+diff --git a/stubs/monitor-cpu-s390x-kvm.c b/stubs/monitor-cpu-s390x-kvm.c
 new file mode 100644
-index 00000000000..00e081d52dd
+index 00000000000..8683dd2d4c6
 --- /dev/null
-+++ b/stubs/monitor-i386-sgx.c
-@@ -0,0 +1,17 @@
++++ b/stubs/monitor-cpu-s390x-kvm.c
+@@ -0,0 +1,22 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
 +#include "qemu/osdep.h"
 +#include "qapi/error.h"
-+#include "qapi/qapi-commands-misc-i386.h"
++#include "qapi/qapi-commands-machine-s390x.h"
 +
-+SgxInfo *qmp_query_sgx(Error **errp)
++void qmp_set_cpu_topology(uint16_t core,
++                          bool has_socket, uint16_t socket,
++                          bool has_book, uint16_t book,
++                          bool has_drawer, uint16_t drawer,
++                          bool has_entitlement, S390CpuEntitlement entitlement,
++                          bool has_dedicated, bool dedicated,
++                          Error **errp)
 +{
-+    error_setg(errp, "SGX support is not compiled in");
-+    return NULL;
++    error_setg(errp, "CPU topology change is not supported on this target");
 +}
 +
-+SgxInfo *qmp_query_sgx_capabilities(Error **errp)
++CpuPolarizationInfo *qmp_query_s390x_cpu_polarization(Error **errp)
 +{
-+    error_setg(errp, "SGX support is not compiled in");
++    error_setg(errp, "CPU polarization is not supported on this target");
 +    return NULL;
 +}
+diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+index 15c88248b79..040d042810b 100644
+--- a/tests/qtest/qmp-cmd-test.c
++++ b/tests/qtest/qmp-cmd-test.c
+@@ -100,6 +100,7 @@ static bool query_is_ignored(const char *cmd)
+         /* Success depends on target arch: */
+         "query-cpu-definitions",  /* arm, i386, ppc, s390x */
+         "query-gic-capabilities", /* arm */
++        "query-s390x-cpu-polarization", /* s390x */
+         /* Success depends on target-specific build configuration: */
+         "query-pci",              /* CONFIG_PCI */
+         "x-query-virtio",         /* CONFIG_VIRTIO */
+diff --git a/qapi/meson.build b/qapi/meson.build
+index ffe44f9e0b8..e038b636c9d 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -39,7 +39,7 @@ qapi_all_modules = [
+   'job',
+   'machine-common',
+   'machine',
+-  'machine-target',
++  'machine-s390x',
+   'migration',
+   'misc',
+   'net',
 diff --git a/stubs/meson.build b/stubs/meson.build
-index 07e9d3799a5..f2eb4880181 100644
+index 3b2fad0824f..cef046e6854 100644
 --- a/stubs/meson.build
 +++ b/stubs/meson.build
-@@ -80,6 +80,7 @@ if have_system
-   stub_ss.add(files('monitor-arm-gic.c'))
-   stub_ss.add(files('monitor-i386-rtc.c'))
-   stub_ss.add(files('monitor-i386-sev.c'))
-+  stub_ss.add(files('monitor-i386-sgx.c'))
+@@ -84,6 +84,7 @@ if have_system
+   stub_ss.add(files('monitor-i386-xen.c'))
+   stub_ss.add(files('monitor-cpu.c'))
+   stub_ss.add(files('monitor-cpu-s390x.c'))
++  stub_ss.add(files('monitor-cpu-s390x-kvm.c'))
  endif
  
  if have_system or have_user
