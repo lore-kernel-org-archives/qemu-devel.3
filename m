@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13785C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3825DC54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:42:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHlWW-0007kN-B1; Wed, 21 May 2025 11:38:32 -0400
+	id 1uHlZR-0000XY-Nv; Wed, 21 May 2025 11:41:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uHlWN-0007jG-Rp
- for qemu-devel@nongnu.org; Wed, 21 May 2025 11:38:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uHlWL-0005lM-H4
- for qemu-devel@nongnu.org; Wed, 21 May 2025 11:38:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747841895;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=QkPgWZNcU+OqVl8Pjj5kWpwum/G2qsNBSEgRtMibbfE=;
- b=OuevJGmD7RhkP8ooyvhuqbKPYpzfXEB3yHByBJ7N88n02pX6NmPVSTAd/VKu48KpxfXc7Q
- FHVQm1+gT6m2c/JTTDaMT6vq+hbmtzJknQlGOFHSsQt8Lz3iwrJTiPRKc4dLecYTf+r7bb
- pVC2zHqdG2MGkHxxV0uddeJqs2M1R3Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-YTyPHlwkPIiwWQ3UF61MnA-1; Wed,
- 21 May 2025 11:38:12 -0400
-X-MC-Unique: YTyPHlwkPIiwWQ3UF61MnA-1
-X-Mimecast-MFC-AGG-ID: YTyPHlwkPIiwWQ3UF61MnA_1747841889
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 98859180048E; Wed, 21 May 2025 15:38:06 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.129])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 399BB18003FC; Wed, 21 May 2025 15:37:54 +0000 (UTC)
-Date: Wed, 21 May 2025 16:37:51 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Bin Meng <bmeng.cn@gmail.com>, Tyrone Ting <kfting@nuvoton.com>,
- Hao Wu <wuhaotsh@google.com>, Kyle Evans <kevans@freebsd.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Alexandre Iooss <erdnaxe@crans.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Warner Losh <imp@bsdimp.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
- qemu-riscv@nongnu.org
-Subject: Re: [PATCH v2 11/17] gdbstub: Try unlinking the unix socket before
- binding
-Message-ID: <aC3zT7gOMn4i-d4U@redhat.com>
-References: <20250207153112.3939799-1-alex.bennee@linaro.org>
- <20250207153112.3939799-12-alex.bennee@linaro.org>
- <ee091002-a552-49fe-ae5e-8916937dba15@tls.msk.ru>
- <56e0a35b5c53b416db130c414cd0f3d6@linux.ibm.com>
- <CAFEAcA8Mzo-Ne48=uFBTcy+CXNcnxGOaW941p=CRkD6gmC=JfA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1uHlZP-0000Wk-Vn
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 11:41:28 -0400
+Received: from mail-oa1-x43.google.com ([2001:4860:4864:20::43])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1uHlZJ-0006Tu-2i
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 11:41:27 -0400
+Received: by mail-oa1-x43.google.com with SMTP id
+ 586e51a60fabf-2dfb991cb45so2638873fac.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 08:41:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747842079; x=1748446879; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=A6jfLpKQptxg0zC9dbH9E123pO1cpNNT8hDmZ8jY5SE=;
+ b=RPahYFtOvIygVxkIMzz7xhd6GMeG+qZs74GqkpPQ6+DqyM281QIOmeGUOtFhH1CqKS
+ awW0KC1IRGBn+5p63mVSv4/rUcRKlbUvQcWi5p7DSwpsaF2M8qcLEOOMUBjBWX0f+IaI
+ yhgrdsMfCSqfeQbcIWBrsKqxErD4M5AeMFyD5MSZiVkkWQaFsMKij7wWccBb0rxmje8A
+ E33dPVNhovNYeFhSIfOSVcCQuw+wygbrWbf06Q2UE4h/OkeD0IaX4h2UMUTvdALiZk6o
+ Wq7jSLqNqAqxJKMP9kOPm7ZUU3KcUq2HyvKfP1RhwQPkEGuAx52t+8kD+NUHlnKfTZla
+ Jp3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747842079; x=1748446879;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=A6jfLpKQptxg0zC9dbH9E123pO1cpNNT8hDmZ8jY5SE=;
+ b=AwKQgO9ZvtQ6fODIhzR36QGaIFGCETh5z12NFnrEr5buZVllYWlvbq4WR+h9kA587x
+ Q+PyRY3DG1pI8c8wlWbTyBox6mZ79EZpb640BegjCdY+WsYl5NUk6xSFPQxyMOdq9BYp
+ ZHJAoCmtjWaTpOhvFvllEOcKNGLA2JDUUcniTJx929tcCyTWxFIqkkAobSUcKHU98qWi
+ 6djDQyvxJUfeEu6n+EYzChF+YcGJmyTnxGFFa8mK9/4mmXcZPviz9OSQEnm1TvuePU9G
+ GXYcWu/vaC0UAmSQOVAVgvPeJj3e019pGssUUW30ON4SYaCjwbCkzv8NaWLkyZOph0oj
+ 64mQ==
+X-Gm-Message-State: AOJu0Yz8o4asqi6sDiMYThabQLo4UwlHzmeidcA73YgzBqWPkTo6cScy
+ Y3MiL51DvB/iolgsSK5jNQVsY6VtMwE5NiiQyc+HMZK+LV2k6f6WPO8ltyYNgsOQqQ==
+X-Gm-Gg: ASbGncthBbGZY4TqLT6S/bAdh4bFoxucPD9SZZUDQcS/nlMdRY9+h/HvRT9pN+SdRn5
+ e33P44cdZ1fKnIrFX8Zz2V0Sr8OtWJC/O60PiOOXghrIdmOrcVxzz+/0Nu3HeHY85DKxYUxjavY
+ cW0p96BDo4eo6GwKDr391rjMIU1ntk/G3MHStHn9YOsdwtkS/vjpQx78iV0Ohb6CYFacUXLEIpN
+ Nio2jZvtJd4z1IGWz0fSQ4U8JDlFO1T34eOXPthn6qCgK3JB5KbcP23ZXXBZj3zQ2oNTVotFxMr
+ 9ZWV6uKmotJqanf1xnLa0SXHKbhZ+FN5cQXqjQKGBT9GgmyCdu8832PhYSjfC6lusMIdsxpI+0y
+ +xg==
+X-Google-Smtp-Source: AGHT+IEw0RIPqTO3VViwtxIoNKFZFp+5d4i0JkARTC1NGxLyX4eQM8zx2f+0FJscYRU+j4+HX2Gg/A==
+X-Received: by 2002:a17:903:2342:b0:223:90ec:80f0 with SMTP id
+ d9443c01a7336-231d4516a4fmr326557525ad.22.1747842067762; 
+ Wed, 21 May 2025 08:41:07 -0700 (PDT)
+Received: from localhost.localdomain ([139.227.182.131])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4adba6dsm94644865ad.68.2025.05.21.08.41.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 May 2025 08:41:07 -0700 (PDT)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ edmund.raile@proton.me, Edmund Raile <edmund.raile@protonmail.com>
+Subject: [PATCH] vfio/igd: Fix incorrect error propagation in
+ vfio_pci_igd_opregion_detect()
+Date: Wed, 21 May 2025 23:40:36 +0800
+Message-ID: <20250521154036.28219-1-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA8Mzo-Ne48=uFBTcy+CXNcnxGOaW941p=CRkD6gmC=JfA@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::43;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-oa1-x43.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,64 +98,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 21, 2025 at 04:34:24PM +0100, Peter Maydell wrote:
-> On Tue, 20 May 2025 at 23:22, Ilya Leoshkevich <iii@linux.ibm.com> wrote:
-> > However, wasn't it already broken in this regard?
-> > With fccb744f41c69fec6fd92225fe907c6e69de5d44^ I get:
-> >
-> > [2/2] Linking target qemu-s390x
-> > /usr/bin/ld: /usr/lib64/libglib-2.0.a(gutils.c.o): in function
-> > `g_get_user_database_entry':
-> > (.text+0xeb): warning: Using 'getpwnam_r' in statically linked
-> > applications requires at runtime the shared libraries from the glibc
-> > version used for linking
-> > /usr/bin/ld: (.text+0x2be): warning: Using 'getpwuid' in statically
-> > linked applications requires at runtime the shared libraries from the
-> > glibc version used for linking
-> > /usr/bin/ld: (.text+0x134): warning: Using 'getpwuid_r' in statically
-> > linked applications requires at runtime the shared libraries from the
-> > glibc version used for linking
-> >
-> > This comes from glib, but the ultimate result is still the same.
-> 
-> Those are in upstream glib, as you note. We can't fix those (unless we
-> have the enthusiasm to write patches for upstream glib: last time
-> we asked, they were not against the idea, but nobody on either side
-> had the time available to try to write the necessary patches).
-> But we can and should fix the cases in our own code.
-> 
-> > Also, what are the symptoms of the breakage? IIUC as long as execution
-> > does not reach getaddrinfo(), which it in this case should not, because
-> > it is used only on inet paths, there should not be any issues, right?
-> 
-> Correct -- if we don't call the function it's fine. But the easiest
-> way to be sure we don't call the function is to not link it in :-)
-> Otherwise future code changes could result in a call without our
-> realizing it.
-> 
-> Also, mjt's packaging for Debian puts in some stubs for the
-> offending getwpuid etc functions, which suppress the glib warnings
-> (this is why he noticed this whereas none of the rest of us did):
-> 
-> https://sources.debian.org/patches/qemu/1:10.0.0%2Bds-2/static-linux-user-stubs.diff/
+In vfio_pci_igd_opregion_detect(), errp will be set when device does
+not have OpRegion or is hotplugged. This errp will be propergated to
+pci_qdev_realize(), which interprets it as failure, causing unexpected
+termination on devices without OpRegion like SR-IOV VFs or discrete
+GPUs. Fix it by not setting errp in vfio_pci_igd_opregion_detect().
 
-Oh interesting, I was conincidentally wondering if adding dummy
-stubs might suppress this.
+This patch also checks if the device has OpRegion before hotplug status
+to prvent unwanted warning messages on non-IGD devices.
 
-How about we pull that change upstream, and expand it to getaddrinfo
-too ?  I like the stubs much more than artificially splitting up
-the source files
+Fixes: c0273e77f2d7 ("vfio/igd: Detect IGD device by OpRegion")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2968
+Reported-by: Edmund Raile <edmund.raile@protonmail.com>
+Link: https://lore.kernel.org/qemu-devel/30044d14-17ec-46e3-b9c3-63d27a5bde27@gmail.com
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+ hw/vfio/igd.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-
-With regards,
-Daniel
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index e7952d15a0..e7a9d1ffc1 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -187,23 +187,21 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+ }
+ 
+ static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice *vdev,
+-                                         struct vfio_region_info **opregion,
+-                                         Error **errp)
++                                         struct vfio_region_info **opregion)
+ {
+     int ret;
+ 
+-    /* Hotplugging is not supported for opregion access */
+-    if (vdev->pdev.qdev.hotplugged) {
+-        error_setg(errp, "IGD OpRegion is not supported on hotplugged device");
+-        return false;
+-    }
+-
+     ret = vfio_device_get_region_info_type(&vdev->vbasedev,
+                     VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+                     VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, opregion);
+     if (ret) {
+-        error_setg_errno(errp, -ret,
+-                         "Device does not supports IGD OpRegion feature");
++        return false;
++    }
++
++    /* Hotplugging is not supported for opregion access */
++    if (vdev->pdev.qdev.hotplugged) {
++        warn_report("IGD device detected, but OpRegion is not supported "
++                    "on hotplugged device.");
+         return false;
+     }
+ 
+@@ -524,7 +522,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+     }
+ 
+     /* IGD device always comes with OpRegion */
+-    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
++    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
+         return true;
+     }
+     info_report("OpRegion detected on Intel display %x.", vdev->device_id);
+@@ -695,7 +693,7 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+         return true;
+     }
+ 
+-    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
++    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
+         /* Should never reach here, KVMGT always emulates OpRegion */
+         return false;
+     }
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.2
 
 
