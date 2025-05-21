@@ -4,93 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B2CC54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB8EC54E90
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 08:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHeZL-0001wI-96; Wed, 21 May 2025 04:12:55 -0400
+	id 1uHean-0003Az-OP; Wed, 21 May 2025 04:14:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHeZJ-0001w4-R6
- for qemu-devel@nongnu.org; Wed, 21 May 2025 04:12:53 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHeal-0003Aj-94
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 04:14:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHeZH-0007Nu-P3
- for qemu-devel@nongnu.org; Wed, 21 May 2025 04:12:53 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHeaY-0007c1-Mf
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 04:14:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747815170;
+ s=mimecast20190719; t=1747815249;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rE3g3DSj6d+bA+SOSIChPIAmNWZ42TwCc3HtMavE+FI=;
- b=LQm6xyhFzyOEqW5Q8++vQbz8e1i6nrR0Z9dH5N7fR1MR6yI4IVbwiu4lFAvBfDPM6zfIvh
- gOlkzrM0LUlJiLz7JIid53ZspRqSfiItR87FngOr4L0035Miw2IFyYfjFJ7ohgqdmCHpO0
- 36wgiExqzBGl8u3esH4ChIzV02Ji3f4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1M9jemnbLFL7Kv+YNbqeVSFG3Gn0tlQaBbRvJdjpfdU=;
+ b=Bfho4LPx/PlNqD14T2Pbct6MZGNUh5UwQ+jAB5CaUuIm0TlnHoOE6M2wjvhyUk6pmcbq7F
+ 5PsI3wWH1UnZenMrnOn1ZCgXtK/rssc3k1BwW08GXeX5b7Ax115JR8L9GBwPcG/+yV6Lib
+ 4PaR2CWBXk0XDB11ODOhIuNKJnMJceA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-421-S746mvYfMsqqVvmgeqTSiA-1; Wed, 21 May 2025 04:12:48 -0400
-X-MC-Unique: S746mvYfMsqqVvmgeqTSiA-1
-X-Mimecast-MFC-AGG-ID: S746mvYfMsqqVvmgeqTSiA_1747815167
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a367b3bb78so2609855f8f.1
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 01:12:48 -0700 (PDT)
+ us-mta-627-H2EAD3_SMbGoLhB69HUg8A-1; Wed, 21 May 2025 04:14:07 -0400
+X-MC-Unique: H2EAD3_SMbGoLhB69HUg8A-1
+X-Mimecast-MFC-AGG-ID: H2EAD3_SMbGoLhB69HUg8A_1747815246
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a367b3bb78so2610747f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 01:14:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747815167; x=1748419967;
+ d=1e100.net; s=20230601; t=1747815245; x=1748420045;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rE3g3DSj6d+bA+SOSIChPIAmNWZ42TwCc3HtMavE+FI=;
- b=BLjPxRqNBoK1/tmCwSniGZHUhWNj7a2TQExLswPdIwE/o/adztfy2Btshos8XaCIPD
- kmKDrdJ9nKWdiAFiFE0M4HFuygFmohOJanl2vwakzjs+zU1AZKA6euTH08Laz/7wYgmm
- Kr0i/rJE2YnJnQ++1zFyQS5hA9eBfAh3x8OydI3FICsGqdbnAr09+UeP6pAbajRA7w8a
- JuRX5ZgI4+beYXm3TGMj1Flc+mNvvCHGwVIsVCloLJaAomN6ivOZKEzKxez+zSKoIIkO
- EXeJVuX1SSEXZorLg5qMxuj3vEqS+c/t77cWV2nyMj1j0XdFj+4MmF2PBMGNHOU2I0DE
- KSJg==
+ bh=1M9jemnbLFL7Kv+YNbqeVSFG3Gn0tlQaBbRvJdjpfdU=;
+ b=Mn5wsAKv88FYQ/kP/nUocIjiQzAbvAEQ0RJsy7ymVD9cXu2TA2uKSiPqwWUNf94fH7
+ 7kNZJrqMJ53u+tEm5qXXhgubHjTXzHl9K9msvtiNtNe9SjvCDjgYg06B+b2RxemdoUVF
+ Dx6ubPmzs1pl3xKmLDVmyMP8CwIQOYNoviQwqmFZYaAa5SQ+8nngxgrX/FlTMP6yId2J
+ 0WudAx2a2SHLLrLx/VymK3C9r8+dIERg75c5HzMV9P/1LlabZuMjM128HBvgmMDDTyjk
+ wUEgWJpwuUvO7OW2qkaxw37JapXFwdyS+qsONR21YTD8DJLcbipGd7PYUgD+171bN1Mn
+ zDvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVzGPMYabBt6kBQUE6eZakxOWqBz2SjHWF5TyddnyDmLzNmFopT2jESo/sf10DjUTiolS/aB5PwkGyl@nongnu.org
-X-Gm-Message-State: AOJu0Yw1Pob066mXiekanfYDDjv5ZOkMXsDH3kPp5cx+JNrAzjn6xqIq
- GBMcIWlGIra2tWphiw9UXn7UXo+gwPQorVMcobmCt0fs1mBfH8AG3CynnGerdqkXFGf+Vj6O9ii
- YRUr2QM9gUbBCLaQ95Fp/wNAybCnDlOu3UutE+WjN0o6TdA9kGj/2K6wF
-X-Gm-Gg: ASbGncthhYhc9eFqbvoC2EfIPx/3FtBfrvqclh3cpQ6w6Grdz+n6Rc2iByOaGwflu/e
- nSkxIpjWcqf1trL9sFC69dae3Kdg0HBHlgkWdKkAa6DC7JhQ1mTfSaLejjJXAi5Snt3WnmJIUbc
- CYneojKgnst66uE+o/TcU2ZnUjQdh/91oS93TT1Zl22+LMstk+Uoxzvhm3tBbs9g00JPKq7nadB
- rhQ5P099FQDlXuVvBprluOxhAqz9eagfYWOFdDJwNqhrPSjvcwG17NPs7BzhFQG+TZsn8BVmJPD
- 04Np2JVU5jbWjsChQ6rf5WAckr6DbGZDvqM+SW6zr0nmCPXA4Q==
-X-Received: by 2002:a05:6000:18a7:b0:3a3:6af1:cc92 with SMTP id
- ffacd0b85a97d-3a36af1cdafmr12126545f8f.7.1747815167280; 
- Wed, 21 May 2025 01:12:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuLuGgikuZQofIx6eoosm0lYlfpYi3DcqOGIapgocgPYQzZUK335JRB0jGM7yEfEfm6hHP7Q==
-X-Received: by 2002:a05:6000:18a7:b0:3a3:6af1:cc92 with SMTP id
- ffacd0b85a97d-3a36af1cdafmr12126512f8f.7.1747815166795; 
- Wed, 21 May 2025 01:12:46 -0700 (PDT)
+ AJvYcCUlddaTMZECdRFPti8bIis89joRD8cGSimpH3Fo7d+UpPMWOfApZcUP+FEm1/elCS30qZaVyd78DU7A@nongnu.org
+X-Gm-Message-State: AOJu0Yz0x6LG2jjT43BbtfW7jK2mvjjwZhz/Fm27hQNtiwbmkO9XwWYb
+ cc//H0Jj/qDVx7j4KK0j993YoYpgU5EWUoLvUtVnehWRptaJDPEwhV+4LewLyxXhncz/c8CZNEt
+ 4jaD5OQ7Ozsv/TdTHUDZxhdNlma3h2K0It7SXfTnlaZLLV7nAMU+q59qudmjf/I93Exk=
+X-Gm-Gg: ASbGncsqtRzFzZZsDC+aGI4xuLRu9kUyQr+HfHkRor0CfMWCHvv82hp96QAh19JFE3B
+ r0v8og5RGURUaHtBkGRvqnamHChrfZGJQH7Vpq072L+YW3HAXALxhJIrkyBwWeoXE5h3gtOFVQM
+ INFrLEXTlrjksLVdwYf4JiaC+TGHL3CiS7SVzIKFKO2q+m3KOhrmBKnbpIKyciKHGGNCRPgWE6W
+ QofuTUIfaYP7SkBEccIfFsbxDBNoG6HeQ6WLvncOJdfEHJtRf22qG2M4WazJTtprsLK5wEgGQD5
+ HQ8lXrKFJMwFFgTVtpX7Po1SlT3gY2GfBK5IsnsvJHxpryQOlA==
+X-Received: by 2002:a05:6000:184d:b0:3a0:b84c:52b4 with SMTP id
+ ffacd0b85a97d-3a35c809250mr19117583f8f.10.1747815245445; 
+ Wed, 21 May 2025 01:14:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHgBAxN6Yiy9XpebFD/5zJP1tJCPCj1rGEmLzdE+elnnsxrUXTVpfBM0SXbzBk1N1AIGpaOUw==
+X-Received: by 2002:a05:6000:184d:b0:3a0:b84c:52b4 with SMTP id
+ ffacd0b85a97d-3a35c809250mr19117550f8f.10.1747815245062; 
+ Wed, 21 May 2025 01:14:05 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca4d224sm19515793f8f.12.2025.05.21.01.12.45
+ 5b1f17b1804b1-447f78b0acasm58305845e9.31.2025.05.21.01.14.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 01:12:46 -0700 (PDT)
-Message-ID: <a1bd108b-02a3-4802-b2f5-c6eb464e92e1@redhat.com>
-Date: Wed, 21 May 2025 10:12:45 +0200
+ Wed, 21 May 2025 01:14:04 -0700 (PDT)
+Message-ID: <320624c6-b71e-4272-b87b-ca702d15b1c8@redhat.com>
+Date: Wed, 21 May 2025 10:14:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/29] vfio: mark posted writes in region write
- callbacks
+Subject: Re: [PATCH] vfio: add more VFIOIOMMUClass docs
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-References: <20250520150419.2172078-1-john.levon@nutanix.com>
- <20250520150419.2172078-9-john.levon@nutanix.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>
+References: <20250520162530.2194548-1-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -136,7 +126,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250520150419.2172078-9-john.levon@nutanix.com>
+In-Reply-To: <20250520162530.2194548-1-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -146,9 +136,8 @@ X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,9 +153,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 17:03, John Levon wrote:
-> For vfio-user, the region write implementation needs to know if the
-> write is posted; add the necessary plumbing to support this.
+On 5/20/25 18:25, John Levon wrote:
+> Add some additional doc comments for these class methods.
 > 
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 
@@ -179,99 +167,127 @@ C.
 
 
 > ---
->   include/hw/vfio/vfio-device.h | 4 ++--
->   include/hw/vfio/vfio-region.h | 1 +
->   hw/vfio/device.c              | 3 ++-
->   hw/vfio/pci.c                 | 5 ++++-
->   hw/vfio/region.c              | 3 ++-
->   5 files changed, 11 insertions(+), 5 deletions(-)
+>   include/hw/vfio/vfio-container-base.h | 75 +++++++++++++++++++++++++--
+>   1 file changed, 72 insertions(+), 3 deletions(-)
 > 
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 5cb817fd6a..a23ef4ea13 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -207,10 +207,10 @@ struct VFIODeviceIOOps {
->        * @region_write
->        *
->        * Write @size bytes to the region @nr at offset @off from the buffer
-> -     * @data.
-> +     * @data; if @post, the write is posted.
->        */
->       int (*region_write)(VFIODevice *vdev, uint8_t nr, off_t off, uint32_t size,
-> -                        void *data);
-> +                        void *data, bool post);
->   };
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index 3d392b0fd8..f9e561cb08 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -115,13 +115,56 @@ OBJECT_DECLARE_TYPE(VFIOContainerBase, VFIOIOMMUClass, VFIO_IOMMU)
+>   struct VFIOIOMMUClass {
+>       ObjectClass parent_class;
 >   
->   void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-> diff --git a/include/hw/vfio/vfio-region.h b/include/hw/vfio/vfio-region.h
-> index 80e83b23fd..f1ae5125ba 100644
-> --- a/include/hw/vfio/vfio-region.h
-> +++ b/include/hw/vfio/vfio-region.h
-> @@ -30,6 +30,7 @@ typedef struct VFIORegion {
->       VFIOMmap *mmaps;
->       uint8_t nr; /* cache the region number for debug */
->       int fd; /* fd to mmap() region */
-> +    bool post_wr; /* writes can be posted */
->   } VFIORegion;
->   
->   
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 41db403992..cb1a212b8f 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -572,7 +572,8 @@ static int vfio_device_io_region_read(VFIODevice *vbasedev, uint8_t index,
->   }
->   
->   static int vfio_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
-> -                                       off_t off, uint32_t size, void *data)
-> +                                       off_t off, uint32_t size, void *data,
-> +                                       bool post)
->   {
->       struct vfio_region_info *info;
->       int ret;
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index ef38b4692a..3d1dbdac38 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1016,7 +1016,7 @@ static int vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
->   {
->       return vdev->vbasedev.io_ops->region_write(&vdev->vbasedev,
->                                                  VFIO_PCI_CONFIG_REGION_INDEX,
-> -                                               offset, size, data);
-> +                                               offset, size, data, false);
->   }
->   
->   static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
-> @@ -1820,6 +1820,9 @@ static void vfio_bar_prepare(VFIOPCIDevice *vdev, int nr)
->       bar->type = pci_bar & (bar->ioport ? ~PCI_BASE_ADDRESS_IO_MASK :
->                                            ~PCI_BASE_ADDRESS_MEM_MASK);
->       bar->size = bar->region.size;
+> -    /* basic feature */
+> +    /**
+> +     * @setup
+> +     *
+> +     * Perform basic setup of the container, including configuring IOMMU
+> +     * capabilities, IOVA ranges, supported page sizes, etc.
+> +     *
+> +     * @bcontainer: #VFIOContainerBase
+> +     * @errp: pointer to Error*, to store an error if it happens.
+> +     *
+> +     * Returns true to indicate success and false for error.
+> +     */
+>       bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
 > +
-> +    /* IO regions are sync, memory can be async */
-> +    bar->region.post_wr = (bar->ioport == 0);
->   }
+> +    /**
+> +     * @listener_begin
+> +     *
+> +     * Called at the beginning of an address space update transaction.
+> +     * See #MemoryListener.
+> +     *
+> +     * @bcontainer: #VFIOContainerBase
+> +     */
+>       void (*listener_begin)(VFIOContainerBase *bcontainer);
+> +
+> +    /**
+> +     * @listener_commit
+> +     *
+> +     * Called at the end of an address space update transaction,
+> +     * See #MemoryListener.
+> +     *
+> +     * @bcontainer: #VFIOContainerBase
+> +     */
+>       void (*listener_commit)(VFIOContainerBase *bcontainer);
+> +
+> +    /**
+> +     * @dma_map
+> +     *
+> +     * Map an address range into the container.
+> +     *
+> +     * @bcontainer: #VFIOContainerBase to use
+> +     * @iova: start address to map
+> +     * @size: size of the range to map
+> +     * @vaddr: process virtual address of mapping
+> +     * @readonly: true if mapping should be readonly
+> +     *
+> +     * Returns 0 to indicate success and -errno otherwise.
+> +     */
+>       int (*dma_map)(const VFIOContainerBase *bcontainer,
+>                      hwaddr iova, ram_addr_t size,
+>                      void *vaddr, bool readonly);
+> +
+>       /**
+>        * @dma_unmap
+>        *
+> @@ -132,12 +175,38 @@ struct VFIOIOMMUClass {
+>        * @size: size of the range to unmap
+>        * @iotlb: The IOMMU TLB mapping entry (or NULL)
+>        * @unmap_all: if set, unmap the entire address space
+> +     *
+> +     * Returns 0 to indicate success and -errno otherwise.
+>        */
+>       int (*dma_unmap)(const VFIOContainerBase *bcontainer,
+>                        hwaddr iova, ram_addr_t size,
+>                        IOMMUTLBEntry *iotlb, bool unmap_all);
+> +
+> +
+> +    /**
+> +     * @attach_device
+> +     *
+> +     * Associate the given device with a container and do some related
+> +     * initialization of the device context.
+> +     *
+> +     * @name: name of the device
+> +     * @vbasedev: the device
+> +     * @as: address space to use
+> +     * @errp: pointer to Error*, to store an error if it happens.
+> +     *
+> +     * Returns true to indicate success and false for error.
+> +     */
+>       bool (*attach_device)(const char *name, VFIODevice *vbasedev,
+>                             AddressSpace *as, Error **errp);
+> +
+> +    /*
+> +     * @detach_device
+> +     *
+> +     * Detach the given device from its container and clean up any necessary
+> +     * state.
+> +     *
+> +     * @vbasedev: the device to disassociate
+> +     */
+>       void (*detach_device)(VFIODevice *vbasedev);
 >   
->   static void vfio_bars_prepare(VFIOPCIDevice *vdev)
-> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index 3c93da91d8..936502b37a 100644
-> --- a/hw/vfio/region.c
-> +++ b/hw/vfio/region.c
-> @@ -66,7 +66,7 @@ void vfio_region_write(void *opaque, hwaddr addr,
->       }
->   
->       ret = vbasedev->io_ops->region_write(vbasedev, region->nr,
-> -                                         addr, size, &buf);
-> +                                         addr, size, &buf, region->post_wr);
->       if (ret != size) {
->           error_report("%s(%s:region%d+0x%"HWADDR_PRIx", 0x%"PRIx64
->                        ",%d) failed: %s",
-> @@ -200,6 +200,7 @@ int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
->       region->size = info->size;
->       region->fd_offset = info->offset;
->       region->nr = index;
-> +    region->post_wr = false;
->       if (vbasedev->region_fds != NULL) {
->           region->fd = vbasedev->region_fds[index];
->       } else {
+>       /* migration feature */
+> @@ -152,7 +221,7 @@ struct VFIOIOMMUClass {
+>        * @start: indicates whether to start or stop dirty pages tracking
+>        * @errp: pointer to Error*, to store an error if it happens.
+>        *
+> -     * Returns zero to indicate success and negative for error
+> +     * Returns zero to indicate success and negative for error.
+>        */
+>       int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+>                                      bool start, Error **errp);
+> @@ -167,7 +236,7 @@ struct VFIOIOMMUClass {
+>        * @size: size of iova range
+>        * @errp: pointer to Error*, to store an error if it happens.
+>        *
+> -     * Returns zero to indicate success and negative for error
+> +     * Returns zero to indicate success and negative for error.
+>        */
+>       int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
+>                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
 
 
