@@ -4,51 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB75CC54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED1BC54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 16:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHmIL-0003DI-7o; Wed, 21 May 2025 12:27:53 -0400
+	id 1uHmLL-00045t-HU; Wed, 21 May 2025 12:30:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bjorn@kernel.org>)
- id 1uHmIJ-0003Cz-Cq; Wed, 21 May 2025 12:27:51 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1uHmLK-00045c-B9; Wed, 21 May 2025 12:30:58 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bjorn@kernel.org>)
- id 1uHmIC-00043c-Ew; Wed, 21 May 2025 12:27:50 -0400
+ id 1uHmLG-0004dk-K1; Wed, 21 May 2025 12:30:57 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id C48C9629D6;
- Wed, 21 May 2025 16:27:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C609C4CEE4;
- Wed, 21 May 2025 16:27:32 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id B9AB543568;
+ Wed, 21 May 2025 16:30:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C549C4CEE4;
+ Wed, 21 May 2025 16:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1747844853;
- bh=tzb5sGhVMDzupySLCWTjAhBuzcNQW3B0ZTsCc6E/cug=;
+ s=k20201202; t=1747845049;
+ bh=jPZsmNkITI06LFGvRwpv3kF9du7ONQLpqdlQqeI0J58=;
  h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=lacOkdGn7xc8P6y3aHP5bCJbbr287dY+NwtnxZ20HOp1NrnQZx5fZ9l9IHpJRvYtU
- 7t1kJFc/C2UYNNHd4/osNxG8kFlb9tH6J4nN0OMvLHh2hFjet93IxnEAZ7St7Phrb2
- 4TqsaQ0vCPc5Gj7RZK6vykX3m6fz4n9dlF0Ss3f+nUqHkjkugwekXZ5LGuIBHdJTPY
- vJH2/zYIw6AVEut8yDmsPOes5uoTYqSDpc2I1m4ApupJDKoz1np0Nnk8hBbW4NhOzf
- XlM9+rndyZUX/BCmlCd4UEQapugwUYQXnrlhIGzO1gCKzFPBwF/0H0lR5V4wkDZxRx
- rT3OHB7o6AmjA==
+ b=bbJZAyHYvUq6zlJ1dLfMFzNNWMqkYFuDzuI35O8KGUIgf5j5QCbrnnseARxXwIwSQ
+ 0DZMPxFXegHCluranFCV2qu0WNoZieoHEkLENRjJE20R2zPWW/xm7oeEWWUX7l6ueQ
+ YYWlHkSWQVzustlyXapKUF5uJnWGTFduBWoYaIrvs4Hq8I2pDHmZ2snqVO0YuIYznV
+ TiG/iPYTOoiRKM5h37iNaaaKj2X7HkBmQrCFnMSxGEA55JUHUeo0uFeTd0oz6JjmV5
+ YMQHGxUtkDHA3htlv2sqJxeSbiJgnfsKvtB4WXw50JzmDdl0Fv50i5I6ptfv5m40PM
+ CgbKWotz0M/bg==
 From: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  ajones@ventanamicro.com, Daniel Henrique Barboza
  <dbarboza@ventanamicro.com>
-Subject: Re: [PATCH 0/3] target/riscv: profile handling fixes
-In-Reply-To: <20250520172336.759708-1-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH 1/3] target/riscv/tcg: restrict satp_mode changes in
+ cpu_set_profile
+In-Reply-To: <20250520172336.759708-2-dbarboza@ventanamicro.com>
 References: <20250520172336.759708-1-dbarboza@ventanamicro.com>
-Date: Wed, 21 May 2025 18:27:29 +0200
-Message-ID: <87bjrmyln2.fsf@all.your.base.are.belong.to.us>
+ <20250520172336.759708-2-dbarboza@ventanamicro.com>
+Date: Wed, 21 May 2025 18:30:46 +0200
+Message-ID: <877c2aylhl.fsf@all.your.base.are.belong.to.us>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=bjorn@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=bjorn@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -70,21 +72,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel!
-
 Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
 
-> Hi,
+> We're changing 'mmu' to true regardless of whether the profile is
+> being enabled or not, and at the same time we're changing satp_mode to
+> profile->enabled.
 >
-> The motivation of this short series is to fix a reported in [1]. A
-> couple of bugs were fixed along the way.
+> This will promote a situation where we'll set mmu=3Don without a virtual
+> memory mode, which is a mistake.
 >
-> Bj=C3=B6rn, these patches should remediate the situation you're experienc=
-ing.
+> Only touch 'mmu' and satp_mode if the profile is being enabled.
+>
+> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+> Fixes: 55398025e7 ("target/riscv: add satp_mode profile support")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Thanks for the fast turn-around!
-
-This indeed fixes the hart0 boot!
-
-Tested-by: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
+Reviewed-by: Bj=C3=B6rn T=C3=B6pel <bjorn@rivosinc.com>
 
