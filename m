@@ -4,140 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78472C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 10:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF6C7C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 10:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHgit-0001x9-IE; Wed, 21 May 2025 06:30:55 -0400
+	id 1uHh35-0005Ta-Hl; Wed, 21 May 2025 06:51:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHgir-0001wR-BF
- for qemu-devel@nongnu.org; Wed, 21 May 2025 06:30:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHgip-00071W-Ng
- for qemu-devel@nongnu.org; Wed, 21 May 2025 06:30:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747823450;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cN1YLYnvTi+B7Iyz5E6cIEozGw69QZ/dhP/brWpKmw8=;
- b=bMBMqtn6jlt89lcpkhdTqLXxv0ExiCubafQkF+IZb3lsgsMvufgQ89Az1i9PRvsvw1bRAp
- zoHoF6ML63OSm497MTr3xeiU3QXIjJeFmVIYHww9owpC7tykhv+dV4owFKQFWcA9XM2OxV
- yCtXxuES2AK16YKURtnVILMwlO2FrGY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-WNsGbnPbOKKcYuFTMoU61g-1; Wed, 21 May 2025 06:30:49 -0400
-X-MC-Unique: WNsGbnPbOKKcYuFTMoU61g-1
-X-Mimecast-MFC-AGG-ID: WNsGbnPbOKKcYuFTMoU61g_1747823448
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-442cdf07ad9so38060235e9.2
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 03:30:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
+ id 1uHh33-0005TM-Pp; Wed, 21 May 2025 06:51:45 -0400
+Received: from mail-pl1-f173.google.com ([209.85.214.173])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
+ id 1uHh31-0001C7-Ah; Wed, 21 May 2025 06:51:44 -0400
+Received: by mail-pl1-f173.google.com with SMTP id
+ d9443c01a7336-2320d2a7852so32791635ad.3; 
+ Wed, 21 May 2025 03:51:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747823448; x=1748428248;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cN1YLYnvTi+B7Iyz5E6cIEozGw69QZ/dhP/brWpKmw8=;
- b=ABvvQyt+148eIsrzZVMi80AeCIv1BzGt9pNN7Yv/M9XXnWz4Uj5Daelae44UqSbnHl
- C9vGd4mY8flIKDTYlYVa8Eei8jKRWmF++PUX2fQ/vZWp5VC8WTAxo6V1TkFjbRQY1ASK
- 1f6Ew9qGjpRHHOpKwOXhUFYRZ/OyRxmtbox3EMmgoPSUZ+oWhspPi1eRX+p8fW3I91XT
- BunimB0D/lws2thCxNizbEdW1yQ1kLz6fU2FL8vz1yYB1OR+famfTlg8T7B0SRqe9m7d
- f3Z7KXXcRREl9hoOe0eyHwhJOlFvRXR/u2zdfUt5A226lUFSl73SkVYFo4lcMkMk7pAp
- MzWA==
-X-Gm-Message-State: AOJu0Yz2XFiLYLhw3CAeByPbqi+j/P2io9hE/iMyebqSFMw4iSWgfmy/
- ox7XGwe16hM+PhTZEX9/Vf3gQZ9R+c1FesPxq1sQuG4MObE1tHLUR1eeEgmN/3g27ALDkwenRz5
- kY24fexWYPNlJbkCj+1jrlBO9YxyTb6d2In1/0edwVtZyKlNzwytXQez+W5Bh+p2VzCc=
-X-Gm-Gg: ASbGnctShOO6lKW1oVHIY3mB/02q+u/1wm0hJHeFdhdLIdPFxnP9bHYTJV9EcY+jFCf
- KjgZ/76DqbIEE890mbnaNsNLuNIE8KPwaZ2DRJok/szCf0NU78WEAvQlbYhcJscEMCkLDzYVL+o
- yoENMOJyUzLHalKX3aaWuWC+u8cqZ6S0w0iMFDNEPVWKWyOwF2VOYUWfQvRkZN/G9MPuyWdJifg
- wMGSIPSqaTlkNjpVknpITAv+I5XNnQjBuwhrdfmU9eMSb0DITSLI9ea/oTO3C7Whl9SLup+blzj
- gtYOKWIUd7JywrKhcOD3ohDnMRVtHPymRH94gmeP5wDScbBwPQ==
-X-Received: by 2002:a05:600c:1c16:b0:43c:fd27:a216 with SMTP id
- 5b1f17b1804b1-442ff029e12mr154807815e9.23.1747823447690; 
- Wed, 21 May 2025 03:30:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8sT2Oi2RHQiPqu+qPpUwHuUqXrWADnU7B0VCaMKQxgsEhpoZ56rgcHmh1dP60KUzD0nftqw==
-X-Received: by 2002:a05:600c:1c16:b0:43c:fd27:a216 with SMTP id
- 5b1f17b1804b1-442ff029e12mr154807505e9.23.1747823447334; 
- Wed, 21 May 2025 03:30:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f7ca2dd9sm62590245e9.37.2025.05.21.03.30.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 03:30:46 -0700 (PDT)
-Message-ID: <f69c26fc-3cdb-469d-8f46-127c0c20cecb@redhat.com>
-Date: Wed, 21 May 2025 12:30:46 +0200
+ d=1e100.net; s=20230601; t=1747824701; x=1748429501;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7u3vq12xPqLYJQwIRDmY+7+d2kzYw2mYVkVHCOH6CFk=;
+ b=flTS2gsOjklhLKMJ0Rm7Gj7tJ0UE+J1Bj5vN3RsfdBvh+RHnXykjFze7exULXc0s24
+ dmtJqwM80BzdpD689o6Vwu6oyGNwU2XrVzXQDLy6BLnciV87H3w1DjJDMUWUchXe85SZ
+ +eS49G+n8oM/lXNn1psK5ZxD4XUD2ge/ut1WIbKXvPykUUB/vRkjFC7zI/MQNu6g3Nd6
+ 2Rl949jv1DpOh/DRe001K2QizRitLJctKgGzAWoWndTHXKLec7RFH25RnvgAsYT7VYW2
+ 5YQUjYZ2YMxYSqSFaaznBB2eSWog1rBv5seFvaiOqA7S4DTiqAJMI+L8+o2H9jPn2DYW
+ v3qw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUElojpG1Jvhgu6U7LZJjDNJiSxkmuaJrslnxuwZ2ad6R47MSUleFyNkt+tdgT+zWcKsK+nFafZOl6@nongnu.org,
+ AJvYcCWW0glywAnbLc+4U26ANXKvwYfaifr+R6O9NDXscpjcXLnP9Th2kiaM2/nFHVZ2wMZV/3vv68HZhTp1@nongnu.org
+X-Gm-Message-State: AOJu0Ywn27ofgQXdi/RtfVRgTduEbTwKJWO5LwtbjcekYcgEWIMP1qdk
+ b+O4PWvtTy/meV1Y1NGAq6Btox9D+GblV2fErCa7xWxEy9nxBJb18qEq5cE4tdm6383rdnDe/yh
+ F6DrkYi6zvKMU014ogtw4hJ2OXJ8HJEfCVA==
+X-Gm-Gg: ASbGncvQ7p//W59OikhVpGVGNSxrhsHuHhC2jmzrBnRc2wM9d04Y9X0sw4XPpIHBA7Y
+ 0N0H8nKjb3JiL9DSYAZURR58VyljOUtBE6y40VJDFAcB12LHdRiSjZGoLfHprsR6/LO8RRhT/um
+ wmqY7uxyFByH91C6XvtZMfJlnHxrnTiBNi0Zav96kjOA==
+X-Google-Smtp-Source: AGHT+IGxE+tmWeNjk45cirtDv18oIYWB7/f3Gw+xHBb8NjxEscy1c51ljT7jiJgztVLADsWDBKqcRpZgsrNFImDLimg=
+X-Received: by 2002:a17:902:e808:b0:22f:c19c:810c with SMTP id
+ d9443c01a7336-231de3bad0dmr229376635ad.51.1747824701488; Wed, 21 May 2025
+ 03:51:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/igd: OpRegion not found fix error typo
-To: "edmund.raile" <edmund.raile@protonmail.com>,
- "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "edmund.raile@proton.me" <edmund.raile@proton.me>
-References: <MFFbQoTpea_CK5ELq8oJ-a3Q57wo7ywQlrIqDvdIDKhUuCm59VUz2QzvdojO5r_wb_7SHifU0Kym3loj4eASPhdzYpjtiMCTePzyg1zrroo=@protonmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <MFFbQoTpea_CK5ELq8oJ-a3Q57wo7ywQlrIqDvdIDKhUuCm59VUz2QzvdojO5r_wb_7SHifU0Kym3loj4eASPhdzYpjtiMCTePzyg1zrroo=@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+References: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
+ <aCysct2L8Bosqy0N@intel.com>
+ <abe683f2-e679-4579-b68a-38a11d41e00b@gnu.org> <aC2R4BOR2tsYgEFI@intel.com>
+ <CAHFMJ7vsgPtfkpBkjvh_-NqKszEDj5UpWThU3rPjN9N4X5s0tA@mail.gmail.com>
+ <CAAjaMXb01Y3qoH56j4GsfJLQMRkA067mHjiWS86cr95akh4ckg@mail.gmail.com>
+In-Reply-To: <CAAjaMXb01Y3qoH56j4GsfJLQMRkA067mHjiWS86cr95akh4ckg@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Date: Wed, 21 May 2025 12:51:30 +0200
+X-Gm-Features: AX0GCFuf4rW2M-iP9zuSVgao0rp8moxHJ08ytRDBjQIeVKNsV7GUngVqlT3Tu5s
+Message-ID: <CAHFMJ7v9a+85OtFCoW4bKYXACGQ_yqR8rKxRbNS9jjELMONdbg@mail.gmail.com>
+Subject: Re: Rust in QEMU update, April 2025
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-rust@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Daniel Berrange <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: multipart/alternative; boundary="00000000000076438c0635a32664"
+Received-SPF: pass client-ip=209.85.214.173;
+ envelope-from=paolo.bonzini@gmail.com; helo=mail-pl1-f173.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,32 +91,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/25 13:24, edmund.raile wrote:
-> Signed-off-by: Edmund Raile <edmund.raile@protonmail.com>
-> ---
->   hw/vfio/igd.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index e54a2a2f00..36ceb85212 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -203,7 +203,7 @@ static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice *vdev,
->                       VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, opregion);
->       if (ret) {
->           error_setg_errno(errp, -ret,
-> -                         "Device does not supports IGD OpRegion feature");
-> +                         "Device does not support IGD OpRegion feature");
->           return false;
->       }
->   
+--00000000000076438c0635a32664
+Content-Type: text/plain; charset="UTF-8"
+
+Il mer 21 mag 2025, 11:35 Manos Pitsidianakis <
+manos.pitsidianakis@linaro.org> ha scritto:
+
+> vm-memory is a very rigid API unfortunately. It's excellent for
+> rust-vmm purposes. I presume it's possible to figure out a clever
+> solution to satisfy both rust-vmm and QEMU use needs but I'm not sure
+> it's worth it. It's really hard to retrofit other projects into
+> vm-memory if they don't use rust-vmm crates API design and it might
+> make both rust-vmm code and QEMU code more complex. QEMU would depend
+> on rust-vmm architectural decisions and vice-versa. The thing I'm
+> fearing most is needing to refactor memory APIs in QEMU in the future
+> and turn the vm-memory dependency into technical debt.
 
 
-Applied to vfio-next.
+I agree that changing the memory API for the sake of Rust code is a bad
+idea.
 
-Thanks,
+That said, I have some hope. vm-memory's GuestAddressSpace was designed for
+cloud-hypervisor but with QEMU in mind and I was really happy about it. Of
+course it's easy to screw up and miss details elsewhere (like the
+difference between FlatRange * and MemoryRegionSection, and consequently
+the type of the GuestMemory iterator); I am not even sure what QEMU code
+for IOMMUs looked like in 2018. But it might be salvageable if the rust-vmm
+guys accept a couple of small API breaks.
 
-C.
+Perhaps it's more sensible to not use external dependencies to wrap
+> over our APIs but we can surely design our Rust bindings inspired by
+> them.
+>
 
+It would be nice to have crates like linux-loader or vm-virtio available.
+But even then, even if we can fork the basic vm-memory traits, we can get
+by with it as long as those handy crates still compile. :)
 
+Paolo
+
+>
+
+--00000000000076438c0635a32664
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 21 mag 2025, 11:35 Manos =
+Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidianakis@linaro.org">manos.p=
+itsidianakis@linaro.org</a>&gt; ha scritto:</div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:=
+1ex">
+vm-memory is a very rigid API unfortunately. It&#39;s excellent for<br>
+rust-vmm purposes. I presume it&#39;s possible to figure out a clever<br>
+solution to satisfy both rust-vmm and QEMU use needs but I&#39;m not sure<b=
+r>
+it&#39;s worth it. It&#39;s really hard to retrofit other projects into<br>
+vm-memory if they don&#39;t use rust-vmm crates API design and it might<br>
+make both rust-vmm code and QEMU code more complex. QEMU would depend<br>
+on rust-vmm architectural decisions and vice-versa. The thing I&#39;m<br>
+fearing most is needing to refactor memory APIs in QEMU in the future<br>
+and turn the vm-memory dependency into technical debt.</blockquote></div></=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">I agree that changing the=
+ memory API for the sake of Rust code is a bad idea.</div><div dir=3D"auto"=
+><br></div><div dir=3D"auto">That said, I have some hope. vm-memory&#39;s G=
+uestAddressSpace was designed for cloud-hypervisor but with QEMU in mind an=
+d I was really happy about it. Of course it&#39;s easy to screw up and miss=
+ details elsewhere (like the difference between FlatRange * and MemoryRegio=
+nSection, and consequently the type of the GuestMemory iterator); I am not =
+even sure what QEMU code for IOMMUs looked like in 2018. But it might be sa=
+lvageable if the rust-vmm guys accept a couple of small API breaks.</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail=
+_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .=
+8ex;border-left:1px #ccc solid;padding-left:1ex">Perhaps it&#39;s more sens=
+ible to not use external dependencies to wrap<br>
+over our APIs but we can surely design our Rust bindings inspired by<br>
+them.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">It would be nice to have crates like linux-loader or vm-virtio availab=
+le. But even then, even if we can fork the basic vm-memory traits, we can g=
+et by with it as long as those handy crates still compile. :)</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><div cla=
+ss=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" =
+style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
+
+--00000000000076438c0635a32664--
 
