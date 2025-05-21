@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57E6EC54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 09:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEFC8C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 09:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHfdr-0004JX-70; Wed, 21 May 2025 05:21:40 -0400
+	id 1uHfeS-00052n-No; Wed, 21 May 2025 05:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uHfdl-0004Em-6i
- for qemu-devel@nongnu.org; Wed, 21 May 2025 05:21:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uHfdi-0007o1-Nb
- for qemu-devel@nongnu.org; Wed, 21 May 2025 05:21:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747819287;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nYfMj5TI3dULmWSb+lgdwwHSl5Dx/PEBOcEAgDYpkSU=;
- b=g4aJgoAkw2lSgmWoP/fhiGjGAJWEL0VpwQ0vEZuCnzgOmOF38mB7q+Ty73inxKEunvzc/k
- C14//ACThvmkdzvQViyKQTVD2oUsz+Dvk8KVAplnpaz2E1gShwJkzWm7q7nFYJ8bRQzrak
- 3t5o9OCWXXp1QfMIucPG7V1Il3cG0WY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-os8aqRapNn6MISpTjkp7EA-1; Wed,
- 21 May 2025 05:21:24 -0400
-X-MC-Unique: os8aqRapNn6MISpTjkp7EA-1
-X-Mimecast-MFC-AGG-ID: os8aqRapNn6MISpTjkp7EA_1747819283
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1519A195608E; Wed, 21 May 2025 09:21:23 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6E7A19560AD; Wed, 21 May 2025 09:21:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 311C521E6757; Wed, 21 May 2025 11:21:20 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Krempa <pkrempa@redhat.com>
-Cc: qemu-devel@nongnu.org,  devel@lists.libvirt.org,  Peter Xu
- <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 2/4] qapi/migration: Deprecate migrate argument @detach
-In-Reply-To: <aC2OIhz7-9-AWE9P@angien.pipo.sk> (Peter Krempa's message of
- "Wed, 21 May 2025 10:26:10 +0200")
-References: <20250521063711.29840-1-armbru@redhat.com>
- <20250521063711.29840-3-armbru@redhat.com>
- <aC2EwjHq82ANZ83J@angien.pipo.sk> <aC2OIhz7-9-AWE9P@angien.pipo.sk>
-Date: Wed, 21 May 2025 11:21:20 +0200
-Message-ID: <87seky1fqn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uHfeR-00052R-9G
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 05:22:15 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uHfeN-0007qv-BH
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 05:22:14 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-601a6e2e93cso3532090a12.1
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 02:22:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747819326; x=1748424126; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zb8q/SmPRpppwbgMXjZ7fPIPS3K7I9owG5+ij7uJ31s=;
+ b=RRLmHkwoFYRElRk+7oOiQowW84GcCzOgnUY3qsBpMaLPu4vbm49Eb7CoJYmdN6OYNB
+ MyV7ek+eRZs99xJkWL/+M1Ay9nGjK7oaJ8/CTVi+Cj5j33nqXgUb7tF095GNkYZPJzFJ
+ DxZQRvShGA1SSqr7ggsteYB6ix2lZQCn4UoNjYzzbcTJjRIYkswbt59AME+8QJI30PkX
+ M1rm5VoVHhUJkH/ECgUJyNQo1brXpyA6+qwRjNY/GWn3a5W9zK8OlSYxZi9MaaUlzdX9
+ 3OAYsQlPO7BKZEsCQ+JOjO95kDWciTETWpTGW6aGntYWPHUuZfi9sN7LjO8H+0eHjeHG
+ v/6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747819326; x=1748424126;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zb8q/SmPRpppwbgMXjZ7fPIPS3K7I9owG5+ij7uJ31s=;
+ b=BVXQfJjaL4IwTFt0JN/UqQtvUkfL+VKsWpn+l01CosH//Hdh8WCmrMujOMrERNICFj
+ TdqUbNzwq4Ms/Nyd5fqVV3jCO3qcmTuZA+qRaQWj/qmCLzOrFAPqKLxIRMUITIFIsssX
+ m7ZnUx03kHDNFJFnOEcEKYIgqDM2W0A/FfLcS2DXqfeJScmuxb3tBAigl0AXdUI7hXQQ
+ 8QyFinlaBD+KtlMl0Xcz0Ud+qLZtgiYVTTPQA6emiX4+w3s3OMtDucMucc0cbek9Xvzs
+ IsU+9avy2N4KlFJngEnW2WvmywEzvlDJPpqqQmTMZfaNl9Syy2vrlwUVW7G5czmdfs01
+ FhoQ==
+X-Gm-Message-State: AOJu0YymXP0ImWfb0+QIcUf5e574R3fQ4g5VAmeuNvxeun4q1pZ9SPOr
+ mQEGuWdonOx6O+ViUGvWVWQpyhwb/LrWUT87fel7RLd0XDM0mmm9DrEzvVInwM7Zg9xqVBOigGf
+ QZ8styvGknZt5h/ikHunwXFROef4kAKUpgMkLGpUWAw==
+X-Gm-Gg: ASbGncvwu/QeSq4bI01bngJ+ggl5Ezs6R19/pskV4/l9aH8Jf7Ab9Fvx4sHuovXp96C
+ T4FOXRqmBv5aTnuwN130EgRO/4DygnPam2Japio8DhAOSQm5gWKV7B5jAHlXwNWtEHBBAM8MBZw
+ /WNiBU9Ws7Ww/znQjza6gDF1ZXVbxI
+X-Google-Smtp-Source: AGHT+IFx4l/hM9hYgXVHHM9GKRPoXfbzrhoF00ZoCjwKNu3T6LwSO4IUSFLh4iiRZdPq4QxA3vi34SHMbFansZ6BJCk=
+X-Received: by 2002:a05:6402:254c:b0:601:9afe:8da9 with SMTP id
+ 4fb4d7f45d1cf-6019afe8ee7mr12495815a12.11.1747819326435; Wed, 21 May 2025
+ 02:22:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20250521081845.496442-1-pbonzini@redhat.com>
+ <20250521081845.496442-6-pbonzini@redhat.com>
+In-Reply-To: <20250521081845.496442-6-pbonzini@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 21 May 2025 12:21:40 +0300
+X-Gm-Features: AX0GCFtjwf2hNxVWBVZeB9p8qnuLMEZMMHhgYfQmgeGdUdVkCgfole99mQWYMOU
+Message-ID: <CAAjaMXaeM0Nt3dzEJLCiAOeCQzneEDO6yeX3+CF5tZ2dhQ=YLw@mail.gmail.com>
+Subject: Re: [RFC PATCH 5/6] rust: pl011: switch from bilge to bitfield-struct
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.487,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,54 +94,367 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Krempa <pkrempa@redhat.com> writes:
-
-> On Wed, May 21, 2025 at 09:46:10 +0200, Peter Krempa via Devel wrote:
->> On Wed, May 21, 2025 at 08:37:09 +0200, Markus Armbruster via Devel wrote:
->> > Argument @detach has always been ignored.  Start the clock to get rid
->> > of it.
->> > 
->> > Cc: Peter Xu <peterx@redhat.com>
->> > Cc: Fabiano Rosas <farosas@suse.de>
->> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> > ---
->> >  docs/about/deprecated.rst |  5 +++++
->> >  qapi/migration.json       | 18 +++++++++---------
->> >  2 files changed, 14 insertions(+), 9 deletions(-)
->> > 
->> > diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> > index 9665bc6fcf..ef4ea84e69 100644
->> > --- a/docs/about/deprecated.rst
->> > +++ b/docs/about/deprecated.rst
->> > @@ -179,6 +179,11 @@ Use ``job-dismiss`` instead.
->> >  
->> >  Use ``job-finalize`` instead.
->> >  
->> > +``migrate`` argument ``detach`` (since 10.1)
->> > +''''''''''''''''''''''''''''''''''''''''''''
->> > +
->> > +This argument has always been ignored.
->> 
->> Huh; libvirt is actually always specifying it for some reason.
->> 
->> I'll post patches shortly getting rid of it completely in libvirt
+On Wed, May 21, 2025 at 11:19=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
 >
-> Patch 2/2 of
+> The bilge crate, while very nice and espressive, is heavily reliant on
+> traits; because trait functions are never const, bilge and const mix
+> about as well as water and oil.
 >
-> https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/message/VPMPVPG5DSFORQODG4JGMZ2MTOJDQPPF/
+> Try using the bitfield-struct crate instead.  It is built to support
+> const very well and the only downside is that more manual annotations
+> are needed (for enums and non-full-byte members).  Otherwise, the use
+> is pretty much the same and in fact device code does not change at all,
+> only register declarations.
 >
-> addresses the above. I noticed that 'dump-guest-memory' does also have
-> 'detach' option but that one at least has effect, even when it's not
-> really useful (blocking monitor if not used).
-
-Another long-running task that should be a job...
-
-> On behalf of libvirt:
+> Recent versions want to use Rust 1.83, so this uses a slightly older
+> version with basically no lost functionality; but anyway, I want to switc=
+h
+> to 1.83 for QEMU as well due to improved "const" support in the compiler.
 >
-> Series:
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/Cargo.toml                     |   1 +
+>  rust/hw/char/pl011/Cargo.toml       |   3 +-
+>  rust/hw/char/pl011/meson.build      |  11 +--
+>  rust/hw/char/pl011/src/registers.rs | 108 ++++++++++++++--------------
+>  4 files changed, 56 insertions(+), 67 deletions(-)
 >
-> ACKed-by: Peter Krempa <pkrempa@redhat.com>
+> diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+> index 165328b6d01..3345858b5b4 100644
+> --- a/rust/Cargo.toml
+> +++ b/rust/Cargo.toml
+> @@ -97,5 +97,6 @@ used_underscore_binding =3D "deny"
+>  #wildcard_imports =3D "deny"   # still have many bindings::* imports
+>
+>  # these may have false positives
+> +enum_variant_names =3D "allow"
+>  #option_if_let_else =3D "deny"
+>  cognitive_complexity =3D "deny"
+> diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.tom=
+l
+> index 003ef9613d4..97e3dd00c35 100644
+> --- a/rust/hw/char/pl011/Cargo.toml
+> +++ b/rust/hw/char/pl011/Cargo.toml
+> @@ -16,8 +16,7 @@ rust-version.workspace =3D true
+>  crate-type =3D ["staticlib"]
+>
+>  [dependencies]
+> -bilge =3D { version =3D "0.2.0" }
+> -bilge-impl =3D { version =3D "0.2.0" }
+> +bitfield-struct =3D { version =3D "0.9" }
+>  bits =3D { path =3D "../../../bits" }
+>  qemu_api =3D { path =3D "../../../qemu-api" }
+>  qemu_api_macros =3D { path =3D "../../../qemu-api-macros" }
+> diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.bu=
+ild
+> index f134a6cdc6b..1bae5a03310 100644
+> --- a/rust/hw/char/pl011/meson.build
+> +++ b/rust/hw/char/pl011/meson.build
+> @@ -1,17 +1,10 @@
+> -subproject('bilge-0.2-rs', required: true)
+> -subproject('bilge-impl-0.2-rs', required: true)
+> -
+> -bilge_dep =3D dependency('bilge-0.2-rs')
+> -bilge_impl_dep =3D dependency('bilge-impl-0.2-rs')
+> -
+>  _libpl011_rs =3D static_library(
+>    'pl011',
+>    files('src/lib.rs'),
+>    override_options: ['rust_std=3D2021', 'build.rust_std=3D2021'],
+>    rust_abi: 'rust',
+>    dependencies: [
+> -    bilge_dep,
+> -    bilge_impl_dep,
+> +    bitfield_struct_dep,
+>      bits_rs,
+>      qemu_api,
+>      qemu_api_macros,
+> @@ -22,6 +15,6 @@ rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_tru=
+e: [declare_dependency(
+>    link_whole: [_libpl011_rs],
+>    # Putting proc macro crates in `dependencies` is necessary for Meson t=
+o find
+>    # them when compiling the root per-target static rust lib.
+> -  dependencies: [bilge_impl_dep, qemu_api_macros],
+> +  dependencies: [bitfield_struct_dep, qemu_api_macros],
+>    variables: {'crate': 'pl011'},
+>  )])
+> diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src=
+/registers.rs
+> index 7ececd39f86..f2138c637c5 100644
+> --- a/rust/hw/char/pl011/src/registers.rs
+> +++ b/rust/hw/char/pl011/src/registers.rs
+> @@ -5,12 +5,16 @@
+>  //! Device registers exposed as typed structs which are backed by arbitr=
+ary
+>  //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
+>
+> +// rustc prefers "constant-like" enums to use upper case names, but that
+> +// is inconsistent in its own way.
+> +#![allow(non_upper_case_globals)]
+> +
+>  // For more detail see the PL011 Technical Reference Manual DDI0183:
+>  // https://developer.arm.com/documentation/ddi0183/latest/
+>
+> -use bilge::prelude::*;
+> +use bitfield_struct::bitfield;
+>  use bits::bits;
+> -use qemu_api::{impl_vmstate_bitsized, impl_vmstate_forward};
+> +use qemu_api::impl_vmstate_forward;
+>
+>  /// Offset of each register from the base memory address of the device.
+>  #[doc(alias =3D "offset")]
+> @@ -78,14 +82,18 @@ pub enum RegisterOffset {
+>  /// The `UARTRSR` register is updated only when a read occurs
+>  /// from the `UARTDR` register with the same status information
+>  /// that can also be obtained by reading the `UARTDR` register
+> -#[bitsize(8)]
+> -#[derive(Clone, Copy, Default, DebugBits, FromBits)]
+> +#[bitfield(u8)]
+>  pub struct Errors {
+>      pub framing_error: bool,
+>      pub parity_error: bool,
+>      pub break_error: bool,
+>      pub overrun_error: bool,
+> -    _reserved_unpredictable: u4,
+> +    #[bits(4)]
+> +    _reserved_unpredictable: u8,
+> +}
+> +
+> +impl Errors {
+> +    pub const BREAK: Self =3D Errors::new().with_break_error(true);
+>  }
+>
+>  /// Data Register, `UARTDR`
+> @@ -93,19 +101,18 @@ pub struct Errors {
+>  /// The `UARTDR` register is the data register; write for TX and
+>  /// read for RX. It is a 12-bit register, where bits 7..0 are the
+>  /// character and bits 11..8 are error bits.
+> -#[bitsize(32)]
+> -#[derive(Clone, Copy, Default, DebugBits, FromBits)]
+> +#[bitfield(u32)]
+>  #[doc(alias =3D "UARTDR")]
+>  pub struct Data {
+>      pub data: u8,
+> +    #[bits(8)]
+>      pub errors: Errors,
+>      _reserved: u16,
+>  }
+> -impl_vmstate_bitsized!(Data);
+> +impl_vmstate_forward!(Data);
+>
+>  impl Data {
+> -    // bilge is not very const-friendly, unfortunately
+> -    pub const BREAK: Self =3D Self { value: 1 << 10 };
+> +    pub const BREAK: Self =3D Self::new().with_errors(Errors::BREAK);
+>  }
+>
+>  /// Receive Status Register / Error Clear Register, `UARTRSR/UARTECR`
+> @@ -119,13 +126,14 @@ impl Data {
+>  /// and UARTECR for writes, but really it's a single error status
+>  /// register where writing anything to the register clears the error
+>  /// bits.
+> -#[bitsize(32)]
+> -#[derive(Clone, Copy, DebugBits, FromBits)]
+> +#[bitfield(u32)]
+>  pub struct ReceiveStatusErrorClear {
+> +    #[bits(8)]
+>      pub errors: Errors,
+> -    _reserved_unpredictable: u24,
+> +    #[bits(24)]
+> +    _reserved_unpredictable: u32,
+>  }
+> -impl_vmstate_bitsized!(ReceiveStatusErrorClear);
+> +impl_vmstate_forward!(ReceiveStatusErrorClear);
+>
+>  impl ReceiveStatusErrorClear {
+>      pub fn set_from_data(&mut self, data: Data) {
+> @@ -138,14 +146,7 @@ pub fn reset(&mut self) {
+>      }
+>  }
+>
+> -impl Default for ReceiveStatusErrorClear {
+> -    fn default() -> Self {
+> -        0.into()
+> -    }
+> -}
+> -
+> -#[bitsize(32)]
+> -#[derive(Clone, Copy, DebugBits, FromBits)]
+> +#[bitfield(u32, default =3D false)]
+>  /// Flag Register, `UARTFR`
+>  ///
+>  /// This has the usual inbound RS232 modem-control signals, plus flags
+> @@ -171,9 +172,10 @@ pub struct Flags {
+>      pub transmit_fifo_empty: bool,
+>      /// RI: Ring indicator
+>      pub ring_indicator: bool,
+> -    _reserved_zero_no_modify: u23,
+> +    #[bits(23)]
+> +    _reserved_zero_no_modify: u32,
+>  }
+> -impl_vmstate_bitsized!(Flags);
+> +impl_vmstate_forward!(Flags);
+>
+>  impl Flags {
+>      pub fn reset(&mut self) {
+> @@ -183,16 +185,14 @@ pub fn reset(&mut self) {
+>
+>  impl Default for Flags {
+>      fn default() -> Self {
+> -        let mut ret: Self =3D 0.into();
+>          // After reset TXFF, RXFF, and BUSY are 0, and TXFE and RXFE are=
+ 1
+> -        ret.set_receive_fifo_empty(true);
+> -        ret.set_transmit_fifo_empty(true);
+> -        ret
+> +        Self::from(0)
+> +            .with_receive_fifo_empty(true)
+> +            .with_transmit_fifo_empty(true)
+>      }
+>  }
+>
+> -#[bitsize(32)]
+> -#[derive(Clone, Copy, DebugBits, FromBits)]
+> +#[bitfield(u32)]
+>  /// Line Control Register, `UARTLCR_H`
+>  #[doc(alias =3D "UARTLCR_H")]
+>  pub struct LineControl {
+> @@ -201,48 +201,46 @@ pub struct LineControl {
+>      /// PEN: Parity enable
+>      pub parity_enabled: bool,
+>      /// EPS: Even parity select
+> +    #[bits(1)]
+>      pub parity: Parity,
+>      /// STP2: Two stop bits select
+>      pub two_stops_bits: bool,
+>      /// FEN: Enable FIFOs
+> +    #[bits(1)]
+>      pub fifos_enabled: Mode,
+>      /// WLEN: Word length in bits
+>      /// b11 =3D 8 bits
+>      /// b10 =3D 7 bits
+>      /// b01 =3D 6 bits
+>      /// b00 =3D 5 bits.
+> +    #[bits(2)]
+>      pub word_length: WordLength,
+>      /// SPS Stick parity select
+>      pub sticky_parity: bool,
+>      /// 31:8 - Reserved, do not modify, read as zero.
+> -    _reserved_zero_no_modify: u24,
+> +    #[bits(24)]
+> +    _reserved_zero_no_modify: u32,
+>  }
+> -impl_vmstate_bitsized!(LineControl);
+> +impl_vmstate_forward!(LineControl);
+>
+>  impl LineControl {
+>      pub fn reset(&mut self) {
+>          // All the bits are cleared to 0 when reset.
+> -        *self =3D 0.into();
+> +        *self =3D Self::default();
+>      }
+>  }
+>
+> -impl Default for LineControl {
+> -    fn default() -> Self {
+> -        0.into()
+> -    }
+> -}
+> -
+> -#[bitsize(1)]
+> -#[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
+>  /// `EPS` "Even parity select", field of [Line Control
+>  /// register](LineControl).
+> +#[repr(u8)]
+> +#[derive(Clone, Copy, Debug, Eq, PartialEq, qemu_api_macros::TryInto)]
+>  pub enum Parity {
+>      Odd =3D 0,
+>      Even =3D 1,
+>  }
+>
+> -#[bitsize(1)]
+> -#[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
+> +#[repr(u8)]
+> +#[derive(Clone, Copy, Debug, Eq, PartialEq, qemu_api_macros::TryInto)]
+>  /// `FEN` "Enable FIFOs" or Device mode, field of [Line Control
+>  /// register](LineControl).
+>  pub enum Mode {
+> @@ -253,8 +251,8 @@ pub enum Mode {
+>      FIFO =3D 1,
+>  }
+>
+> -#[bitsize(2)]
+> -#[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
+> +#[repr(u8)]
+> +#[derive(Clone, Copy, Debug, Eq, PartialEq, qemu_api_macros::TryInto)]
+>  /// `WLEN` Word length, field of [Line Control register](LineControl).
+>  ///
+>  /// These bits indicate the number of data bits transmitted or received =
+in a
+> @@ -275,9 +273,8 @@ pub enum WordLength {
+>  /// The `UARTCR` register is the control register. It contains various
+>  /// enable bits, and the bits to write to set the usual outbound RS232
+>  /// modem control signals. All bits reset to 0 except TXE and RXE.
+> -#[bitsize(32)]
+> +#[bitfield(u32, default =3D false)]
+>  #[doc(alias =3D "UARTCR")]
+> -#[derive(Clone, Copy, DebugBits, FromBits)]
+>  pub struct Control {
+>      /// `UARTEN` UART enable: 0 =3D UART is disabled.
+>      pub enable_uart: bool,
+> @@ -285,9 +282,10 @@ pub struct Control {
+>      /// QEMU does not model this.
+>      pub enable_sir: bool,
+>      /// `SIRLP` SIR low-power IrDA mode. QEMU does not model this.
+> -    pub sir_lowpower_irda_mode: u1,
+> +    pub sir_lowpower_irda_mode: bool,
+>      /// Reserved, do not modify, read as zero.
+> -    _reserved_zero_no_modify: u4,
+> +    #[bits(4)]
+> +    _reserved_zero_no_modify: u8,
+>      /// `LBE` Loopback enable: feed UART output back to the input
+>      pub enable_loopback: bool,
+>      /// `TXE` Transmit enable
+> @@ -309,21 +307,19 @@ pub struct Control {
+>      /// 31:16 - Reserved, do not modify, read as zero.
+>      _reserved_zero_no_modify2: u16,
+>  }
+> -impl_vmstate_bitsized!(Control);
+> +impl_vmstate_forward!(Control);
+>
+>  impl Control {
+>      pub fn reset(&mut self) {
+> -        *self =3D 0.into();
+> -        self.set_enable_receive(true);
+> -        self.set_enable_transmit(true);
+> +        *self =3D Self::default();
+>      }
+>  }
+>
+>  impl Default for Control {
+>      fn default() -> Self {
+> -        let mut ret: Self =3D 0.into();
+> -        ret.reset();
+> -        ret
+> +        Self::from(0)
+> +            .with_enable_receive(true)
+> +            .with_enable_transmit(true)
+>      }
+>  }
+>
+> --
+> 2.49.0
+>
 
-Thanks!
+Perhaps it'd be simpler to contribute const-ability to upstream bilge?
+Is From/Into the only problem trait? I was thinking we can generate
+from/into associated methods for each type that are const. It'd not
+even be a big change and we can carry it as a patch until we can
+catchup with upstream crates.io version in subprojects/. WDYT?
 
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
