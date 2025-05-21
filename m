@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D78EC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 07:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3355DC54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 07:43:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHe3Q-0002OK-MU; Wed, 21 May 2025 03:39:56 -0400
+	id 1uHe6o-0003YZ-7l; Wed, 21 May 2025 03:43:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHe3L-0002M6-RE
- for qemu-devel@nongnu.org; Wed, 21 May 2025 03:39:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHe6l-0003YE-0r
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 03:43:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHe3J-0002St-Ad
- for qemu-devel@nongnu.org; Wed, 21 May 2025 03:39:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uHe6h-00032I-Sw
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 03:43:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747813187;
+ s=mimecast20190719; t=1747813397;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4qeV11GLUkCPmlL4u7pSnTmoH4Mca5rENRHX5EYM5Cw=;
- b=htIpE7ydcpbbEMmSlccjk4yo7+ni22nyDnfuXOomWecG0qIONKcCaL/WOoeMZrBjysY0Wi
- 0oNgJUXrBoBdyNyX3DNqrW3SSunH53SNqtfx6PC7YKK1nRi/HyJ/hUFTJwmh40bIovX5gv
- F3j2qv/3gsSVRKtPhPRx2OLMAj13N28=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jYf+TVTVlvFpo//IqEPGrJiQsoKsSb44O1jN+9SWAq4=;
+ b=Ahs0HX309M2qd5LvKQVJ9SRHxw1JFp7xsWuRVI5RzO17F3lOMeAntTuKjz5W/0qI0bmgQi
+ KrjQtZObYBE9QkiTIFQTVuqk1ww5JSmZgm0LnFJvsmbwq6/yjQpypTohXsNXD1g4rXYYfL
+ I0dAOuh6EBPVcGATCZrKOPh8dYlUDaQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-zYIgAJEdMvW6cH0yxt5xPg-1; Wed, 21 May 2025 03:39:45 -0400
-X-MC-Unique: zYIgAJEdMvW6cH0yxt5xPg-1
-X-Mimecast-MFC-AGG-ID: zYIgAJEdMvW6cH0yxt5xPg_1747813185
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-442f4a3851fso55194285e9.1
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 00:39:45 -0700 (PDT)
+ us-mta-625-pAqtFHrFOwexZpLYYNpzpA-1; Wed, 21 May 2025 03:43:15 -0400
+X-MC-Unique: pAqtFHrFOwexZpLYYNpzpA-1
+X-Mimecast-MFC-AGG-ID: pAqtFHrFOwexZpLYYNpzpA_1747813394
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43f251dc364so14285345e9.2
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 00:43:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747813184; x=1748417984;
+ d=1e100.net; s=20230601; t=1747813394; x=1748418194;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4qeV11GLUkCPmlL4u7pSnTmoH4Mca5rENRHX5EYM5Cw=;
- b=b4zI17e9ufEJZFaTi3cotr7zNdVMT2gsNGRU1GDvSx6bU9KcVcfXGXAhgV9Gb+Y6t1
- CTpPQe+HBYhYHWTm9X3hE3c8NdzGXML0YQW1W6jh67zbS6r+KSQ/WhFf2VnNKXqFRRQY
- LmoWicKG+3vwSDU6sXKorBkNGaSWaQ3sYy+9ESNwbAS+FRVRJ2NBDFegpg2wcTRcDHRg
- cVcUC/+lnmFU0tIuiyCfRvbAMODjrUY4nmGZqDG+dqzalFnMVtDcOoN7zhQDYlR/lFhB
- 4e4SJVjWvGn7NDujE7dUFfQhg+XEtKYibHfZsE0ynp4oSBSK3O2gbVK4mOzf2lrm2Li9
- ODdA==
+ bh=jYf+TVTVlvFpo//IqEPGrJiQsoKsSb44O1jN+9SWAq4=;
+ b=kSg9BKH24WOlKCjNvEPA044AD5SUAufQOzU+roKC/J/Pqc2SBlKypsy1/IO8inKO6M
+ ObkHnDmimDkTjMHR7kT80DM12VahRSjb5alQCPd9F2cUmvWLKbumMvFm4SHrLnNEiXDg
+ wEYyTBaLUbanODLnPhreluGJDvBFamE8/Dn2jO4n+SHfjFKML4c5I5/6xQIBOWx2NPQz
+ SWdu81SF4v18omsGj8Ju31Bv8zMrBLM1Zj0N6ww8xabp5x4ZTm/qrVN4SyCG6pLMBelE
+ r2LlRQQF5Bod7m5++7UQxhSnSP95vA2r/NAWOJxFrNRmo/IL4nqlI3DUo75MLD3hqlvW
+ IlcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVzcX17pp+J99ISW1RbPYoNBqJ5Viji7N24OZkWahQZqpnjmIMLYJnnfo+8hlueacmLW/WIbNMVGAWB@nongnu.org
-X-Gm-Message-State: AOJu0YzrzfFFnoldVS39dOcuZAK0rR6DC1fBr4WNmw+Dq6PMrBT7RFVn
- HoOewjSPnykMPQnjAaQdbkdPH1+mtGodbwJ0DEyxCyGg76z9o2pPh1Fw96oGGGqVzH29/BeM/3r
- aLRph8x7eGMREFl4hdQNHV6K9H6HGbryBg9BrVAb56WL89R/iU9ml2aLy
-X-Gm-Gg: ASbGncu7Oh47txL2Axvu+qCWb/rW/NwvoE1TuXpTn3rnZztfT+F/j9agFjpHN9SUKHN
- 31OdjzkPPS2mBSUt9j9dpb0FV1s3Q7pmPmnVhn+YSh8OPdmIo0Dr1l6nmg09opoRBm2N4uQ7Rqm
- LFTnzfnYQiHgpxbREqOUdkZ7PPyy0yU5Xb3q4woegfmGsH400ObiiF7FbCoROIO2klMjFQqoWmC
- dbi6Ge/YACzVkLu/CF1YF27m+1T96YIuWVbUg+cGH9ulUGsBWaUrZBsxRS8lTngmv/g16u2uul1
- SHglGHIs7BBIsd/eH0u8rly9UvDZthn0+Bsv7lbB71S0YfaOqw==
-X-Received: by 2002:a05:600c:3d09:b0:442:f990:3ce7 with SMTP id
- 5b1f17b1804b1-442feffb6e6mr208661895e9.16.1747813184539; 
- Wed, 21 May 2025 00:39:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEpB+H37I1KB4pB2SaV9wnWjB2c5cnbBG030A+5Xhh3wEY1wh4Ou3Y5PBcoQYQlyFIFFiR/gQ==
-X-Received: by 2002:a05:600c:3d09:b0:442:f990:3ce7 with SMTP id
- 5b1f17b1804b1-442feffb6e6mr208661545e9.16.1747813184087; 
- Wed, 21 May 2025 00:39:44 -0700 (PDT)
+ AJvYcCUYK4n0a0eE4SC+WrAcVDX109HcvyKF+uoNU45vxrioGeVhAXvtEpHYyUgD+c3Q6VTIaq5WVmR1p8qG@nongnu.org
+X-Gm-Message-State: AOJu0YwJAQdbkiHeN9KF77Ytww+xGuBMJbKwvjeOCpOM3gRVMWdqzsJI
+ kikWOVlQ2h19eZzFy8r/SEIhx559RlA7y4DbXUT9WitrfU+o2chNUeFtmOR1g7WGDRj+bxsPypG
+ jKMFsbfVQJvjTK1oQ4BwXKgvRqKykQpK1uwCRbspKflefZ4XmiF+iDDv7
+X-Gm-Gg: ASbGncuHIQ9OaKS5irp1KFOC2H8CDEdacHmQpYU+3yb+BIdotXS5K2JVOXk3RfMDmJF
+ S1ZMHRqEg5LPJMhDuk77/BnH8aNSsxqz2n+Ls73ao03emYPa16UrmRP0vRm9Po2pjKjJ0vlAKs3
+ 8zyhEybbV2j+NAtyzDslSd4fWg9gTdtf0ea2D7wQWvoS2NLi2bviY+0BEJMugfgRGxqHw+cTHQp
+ +vMZ35hIg/RWaNmzxEgIiPvnNtKnNdpicQQQVl3FK1VFVHlgGk5VZNHBmH27hNvu8yaNVSjwHQE
+ Bupk7Ll/IuIA6VSRRmri3nsP1MZN4h2BpVbk1r3x10/1RqEI0A==
+X-Received: by 2002:a05:600c:820c:b0:442:f97b:87e with SMTP id
+ 5b1f17b1804b1-442fd608746mr177440525e9.6.1747813393961; 
+ Wed, 21 May 2025 00:43:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGncWHEL52I++JiCI6LIB7QBqIyKHQGZmrQyPT5+13F0hjBy2i5xL1kgz26gJAk/neYdaJyEA==
+X-Received: by 2002:a05:600c:820c:b0:442:f97b:87e with SMTP id
+ 5b1f17b1804b1-442fd608746mr177440295e9.6.1747813393585; 
+ Wed, 21 May 2025 00:43:13 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447eee9d8desm61853685e9.0.2025.05.21.00.39.43
+ 5b1f17b1804b1-447f6b295e7sm58420075e9.2.2025.05.21.00.43.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 00:39:43 -0700 (PDT)
-Message-ID: <71d44d9c-63f2-4f71-a0bd-366762d816d1@redhat.com>
-Date: Wed, 21 May 2025 09:39:42 +0200
+ Wed, 21 May 2025 00:43:12 -0700 (PDT)
+Message-ID: <6804143b-8dd4-4dba-84dc-c1ca44d3f4a6@redhat.com>
+Date: Wed, 21 May 2025 09:43:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/29] vfio: export PCI helpers needed for vfio-user
+Subject: Re: [PATCH v2 10/29] vfio/container: pass MemoryRegion to DMA
+ operations
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -87,9 +88,13 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Steven Sistare <steven.sistare@oracle.com>
 References: <20250520150419.2172078-1-john.levon@nutanix.com>
- <20250520150419.2172078-6-john.levon@nutanix.com>
+ <20250520150419.2172078-11-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -135,7 +140,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250520150419.2172078-6-john.levon@nutanix.com>
+In-Reply-To: <20250520150419.2172078-11-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -163,59 +168,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
++Steven,
+
 On 5/20/25 17:03, John Levon wrote:
-> The vfio-user code will need to re-use various parts of the vfio PCI
-> code. Export them in hw/vfio/pci.h, and rename them to the vfio_pci_*
-> namespace.
+> Pass through the MemoryRegion to DMA operation handlers of vfio
+> containers. The vfio-user container will need this later, to translate
+> the vaddr into an offset for the dma map vfio-user message.
 > 
+> Originally-by: John Johnson <john.g.johnson@oracle.com>
+> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 > Signed-off-by: John Levon <john.levon@nutanix.com>
-> ---
->   hw/vfio/pci.h        | 14 ++++++++++++
->   hw/vfio/pci.c        | 54 ++++++++++++++++++++++----------------------
->   hw/vfio/trace-events |  6 ++---
->   3 files changed, 44 insertions(+), 30 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 5ce0fb916f..61fa385ddb 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -248,4 +248,18 @@ void vfio_display_finalize(VFIOPCIDevice *vdev);
->   
->   extern const VMStateDescription vfio_display_vmstate;
->   
-> +void vfio_pci_bars_exit(VFIOPCIDevice *vdev);
-> +bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp);
-> +bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp);
-> +Object *vfio_pci_get_object(VFIODevice *vbasedev);
-> +bool vfio_pci_interrupt_setup(VFIOPCIDevice *vdev, Error **errp);
-> +void vfio_pci_intx_eoi(VFIODevice *vbasedev);
-> +int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f);
-> +void vfio_pci_put_device(VFIOPCIDevice *vdev);
-> +bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp);
-> +void vfio_pci_register_err_notifier(VFIOPCIDevice *vdev);
-> +void vfio_pci_register_req_notifier(VFIOPCIDevice *vdev);
-> +int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp);
-> +void vfio_pci_teardown_msi(VFIOPCIDevice *vdev);
-> +
 
-The rename is a good thing. There are more to be done.
 
-One comment,
+This change conflicts with :
 
-These routines :
+   https://lore.kernel.org/qemu-devel/1747063973-124548-28-git-send-email-steven.sistare@oracle.com
 
-   Object *vfio_pci_get_object(VFIODevice *vbasedev);
-   void vfio_pci_intx_eoi(VFIODevice *vbasedev);
-   int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f);
-   int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp);
+Steven,
 
-are exported to simply define the VFIODeviceOps vfio_user_pci_ops struct
-(and they don't take a VFIOPCIDevice as first argument). I wonder if we
-could find a way to keep them private.
-
-Also, does vfio-user support migration ? if not then, we only need to
-export vfio_pci_intx_eoi()
-
+Could we use this version instead for the "live update" series ?
 
 Thanks,
 
@@ -223,258 +195,127 @@ C.
 
 
 
-
->   #endif /* HW_VFIO_VFIO_PCI_H */
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index b1250d85bf..5159198bdb 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -103,7 +103,7 @@ static void vfio_intx_interrupt(void *opaque)
+> ---
+>   include/hw/vfio/vfio-container-base.h | 9 +++++----
+>   hw/vfio/container-base.c              | 4 ++--
+>   hw/vfio/container.c                   | 3 ++-
+>   hw/vfio/iommufd.c                     | 3 ++-
+>   hw/vfio/listener.c                    | 6 +++---
+>   5 files changed, 14 insertions(+), 11 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index 41c49b2aa5..c18986a621 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -78,7 +78,7 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
+>   
+>   int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>                              hwaddr iova, ram_addr_t size,
+> -                           void *vaddr, bool readonly);
+> +                           void *vaddr, bool readonly, MemoryRegion *mrp);
+>   int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+>                                hwaddr iova, ram_addr_t size,
+>                                IOMMUTLBEntry *iotlb, bool unmap_all);
+> @@ -149,18 +149,19 @@ struct VFIOIOMMUClass {
+>       /**
+>        * @dma_map
+>        *
+> -     * Map an address range into the container.
+> +     * Map an address range into the container. Note that @mrp will within an
+> +     * RCU read lock region across this call.
+>        *
+>        * @bcontainer: #VFIOContainerBase to use
+>        * @iova: start address to map
+>        * @size: size of the range to map
+>        * @vaddr: process virtual address of mapping
+>        * @readonly: true if mapping should be readonly
+> +     * @mrp: the memory region for this mapping
+>        */
+>       int (*dma_map)(const VFIOContainerBase *bcontainer,
+>                      hwaddr iova, ram_addr_t size,
+> -                   void *vaddr, bool readonly);
+> -
+> +                   void *vaddr, bool readonly, MemoryRegion *mrp);
+>       /**
+>        * @dma_unmap
+>        *
+> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+> index 1c6ca94b60..a677bb6694 100644
+> --- a/hw/vfio/container-base.c
+> +++ b/hw/vfio/container-base.c
+> @@ -75,12 +75,12 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
+>   
+>   int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>                              hwaddr iova, ram_addr_t size,
+> -                           void *vaddr, bool readonly)
+> +                           void *vaddr, bool readonly, MemoryRegion *mrp)
+>   {
+>       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+>   
+>       g_assert(vioc->dma_map);
+> -    return vioc->dma_map(bcontainer, iova, size, vaddr, readonly);
+> +    return vioc->dma_map(bcontainer, iova, size, vaddr, readonly, mrp);
+>   }
+>   
+>   int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index a9f0dbaec4..98d6b9f90c 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -207,7 +207,8 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+>   }
+>   
+>   static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+> -                               ram_addr_t size, void *vaddr, bool readonly)
+> +                               ram_addr_t size, void *vaddr, bool readonly,
+> +                               MemoryRegion *mrp)
+>   {
+>       const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+>                                                     bcontainer);
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index af1c7ab10a..a2518c4a5d 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -34,7 +34,8 @@
+>               TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
+>   
+>   static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+> -                            ram_addr_t size, void *vaddr, bool readonly)
+> +                            ram_addr_t size, void *vaddr, bool readonly,
+> +                            MemoryRegion *mrp)
+>   {
+>       const VFIOIOMMUFDContainer *container =
+>           container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index 0afafe3464..a1d2d2561d 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -170,7 +170,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>            */
+>           ret = vfio_container_dma_map(bcontainer, iova,
+>                                        iotlb->addr_mask + 1, vaddr,
+> -                                     read_only);
+> +                                     read_only, mr);
+>           if (ret) {
+>               error_report("vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+>                            "0x%"HWADDR_PRIx", %p) = %d (%s)",
+> @@ -240,7 +240,7 @@ static int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
+>           vaddr = memory_region_get_ram_ptr(section->mr) + start;
+>   
+>           ret = vfio_container_dma_map(bcontainer, iova, next - start,
+> -                                     vaddr, section->readonly);
+> +                                     vaddr, section->readonly, section->mr);
+>           if (ret) {
+>               /* Rollback */
+>               vfio_ram_discard_notify_discard(rdl, section);
+> @@ -564,7 +564,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
 >       }
->   }
 >   
-> -static void vfio_intx_eoi(VFIODevice *vbasedev)
-> +void vfio_pci_intx_eoi(VFIODevice *vbasedev)
->   {
->       VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
->   
-> @@ -111,7 +111,7 @@ static void vfio_intx_eoi(VFIODevice *vbasedev)
->           return;
->       }
->   
-> -    trace_vfio_intx_eoi(vbasedev->name);
-> +    trace_vfio_pci_intx_eoi(vbasedev->name);
->   
->       vdev->intx.pending = false;
->       pci_irq_deassert(&vdev->pdev);
-> @@ -236,7 +236,7 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
->       }
->   
->       /* Re-enable the interrupt in cased we missed an EOI */
-> -    vfio_intx_eoi(&vdev->vbasedev);
-> +    vfio_pci_intx_eoi(&vdev->vbasedev);
->   }
->   
->   static void vfio_intx_routing_notifier(PCIDevice *pdev)
-> @@ -1743,7 +1743,7 @@ static bool vfio_msix_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
->       return true;
->   }
->   
-> -static void vfio_teardown_msi(VFIOPCIDevice *vdev)
-> +void vfio_pci_teardown_msi(VFIOPCIDevice *vdev)
->   {
->       msi_uninit(&vdev->pdev);
->   
-> @@ -1839,7 +1839,7 @@ static void vfio_bars_register(VFIOPCIDevice *vdev)
->       }
->   }
->   
-> -static void vfio_bars_exit(VFIOPCIDevice *vdev)
-> +void vfio_pci_bars_exit(VFIOPCIDevice *vdev)
->   {
->       int i;
->   
-> @@ -2430,7 +2430,7 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->       g_free(config);
->   }
->   
-> -static bool vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
-> +bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
->   {
->       PCIDevice *pdev = &vdev->pdev;
->   
-> @@ -2599,7 +2599,7 @@ static void vfio_pci_compute_needs_reset(VFIODevice *vbasedev)
->       }
->   }
->   
-> -static Object *vfio_pci_get_object(VFIODevice *vbasedev)
-> +Object *vfio_pci_get_object(VFIODevice *vbasedev)
->   {
->       VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
->   
-> @@ -2655,7 +2655,7 @@ static const VMStateDescription vmstate_vfio_pci_config = {
->       }
->   };
->   
-> -static int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp)
-> +int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp)
->   {
->       VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
->   
-> @@ -2663,7 +2663,7 @@ static int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp)
->                                          errp);
->   }
->   
-> -static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
-> +int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
->   {
->       VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
->       PCIDevice *pdev = &vdev->pdev;
-> @@ -2706,7 +2706,7 @@ static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
->   static VFIODeviceOps vfio_pci_ops = {
->       .vfio_compute_needs_reset = vfio_pci_compute_needs_reset,
->       .vfio_hot_reset_multi = vfio_pci_hot_reset_multi,
-> -    .vfio_eoi = vfio_intx_eoi,
-> +    .vfio_eoi = vfio_pci_intx_eoi,
->       .vfio_get_object = vfio_pci_get_object,
->       .vfio_save_config = vfio_pci_save_config,
->       .vfio_load_config = vfio_pci_load_config,
-> @@ -2777,7 +2777,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->       return true;
->   }
->   
-> -static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-> +bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
->   {
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       struct vfio_region_info *reg_info = NULL;
-> @@ -2823,7 +2823,7 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->           return false;
->       }
->   
-> -    trace_vfio_populate_device_config(vdev->vbasedev.name,
-> +    trace_vfio_pci_populate_device_config(vdev->vbasedev.name,
->                                         (unsigned long)reg_info->size,
->                                         (unsigned long)reg_info->offset,
->                                         (unsigned long)reg_info->flags);
-> @@ -2845,7 +2845,7 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->       ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_ERR_IRQ_INDEX, &irq_info);
+>       ret = vfio_container_dma_map(bcontainer, iova, int128_get64(llsize),
+> -                                 vaddr, section->readonly);
+> +                                 vaddr, section->readonly, section->mr);
 >       if (ret) {
->           /* This can fail for an old kernel or legacy PCI dev */
-> -        trace_vfio_populate_device_get_irq_info_failure(strerror(-ret));
-> +        trace_vfio_pci_populate_device_get_irq_info_failure(strerror(-ret));
->       } else if (irq_info.count == 1) {
->           vdev->pci_aer = true;
->       } else {
-> @@ -2857,7 +2857,7 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->       return true;
->   }
->   
-> -static void vfio_pci_put_device(VFIOPCIDevice *vdev)
-> +void vfio_pci_put_device(VFIOPCIDevice *vdev)
->   {
->       vfio_display_finalize(vdev);
->       vfio_bars_finalize(vdev);
-> @@ -2905,7 +2905,7 @@ static void vfio_err_notifier_handler(void *opaque)
->    * and continue after disabling error recovery support for the
->    * device.
->    */
-> -static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
-> +void vfio_pci_register_err_notifier(VFIOPCIDevice *vdev)
->   {
->       Error *err = NULL;
->       int32_t fd;
-> @@ -2964,7 +2964,7 @@ static void vfio_req_notifier_handler(void *opaque)
->       }
->   }
->   
-> -static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
-> +void vfio_pci_register_req_notifier(VFIOPCIDevice *vdev)
->   {
->       struct vfio_irq_info irq_info;
->       Error *err = NULL;
-> @@ -3018,7 +3018,7 @@ static void vfio_unregister_req_notifier(VFIOPCIDevice *vdev)
->       vdev->req_enabled = false;
->   }
->   
-> -static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
-> +bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
->   {
->       PCIDevice *pdev = &vdev->pdev;
->       VFIODevice *vbasedev = &vdev->vbasedev;
-> @@ -3124,7 +3124,7 @@ static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
->       return true;
->   }
->   
-> -static bool vfio_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
-> +bool vfio_pci_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
->   {
->       PCIDevice *pdev = &vdev->pdev;
->   
-> @@ -3214,7 +3214,7 @@ static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
->           goto error;
->       }
->   
-> -    if (!vfio_populate_device(vdev, errp)) {
-> +    if (!vfio_pci_populate_device(vdev, errp)) {
->           goto error;
->       }
->   
-> @@ -3228,7 +3228,7 @@ static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
->           goto out_teardown;
->       }
->   
-> -    if (!vfio_add_capabilities(vdev, errp)) {
-> +    if (!vfio_pci_add_capabilities(vdev, errp)) {
->           goto out_unset_idev;
->       }
->   
-> @@ -3244,7 +3244,7 @@ static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
->           vfio_bar_quirk_setup(vdev, i);
->       }
->   
-> -    if (!vfio_interrupt_setup(vdev, errp)) {
-> +    if (!vfio_pci_interrupt_setup(vdev, errp)) {
->           goto out_unset_idev;
->       }
->   
-> @@ -3288,8 +3288,8 @@ static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
->           }
->       }
->   
-> -    vfio_register_err_notifier(vdev);
-> -    vfio_register_req_notifier(vdev);
-> +    vfio_pci_register_err_notifier(vdev);
-> +    vfio_pci_register_req_notifier(vdev);
->       vfio_setup_resetfn_quirk(vdev);
->   
->       return;
-> @@ -3310,8 +3310,8 @@ out_unset_idev:
->           pci_device_unset_iommu_device(pdev);
->       }
->   out_teardown:
-> -    vfio_teardown_msi(vdev);
-> -    vfio_bars_exit(vdev);
-> +    vfio_pci_teardown_msi(vdev);
-> +    vfio_pci_bars_exit(vdev);
->   error:
->       error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
->   }
-> @@ -3338,9 +3338,9 @@ static void vfio_exitfn(PCIDevice *pdev)
->       if (vdev->intx.mmap_timer) {
->           timer_free(vdev->intx.mmap_timer);
->       }
-> -    vfio_teardown_msi(vdev);
-> +    vfio_pci_teardown_msi(vdev);
->       vfio_pci_disable_rp_atomics(vdev);
-> -    vfio_bars_exit(vdev);
-> +    vfio_pci_bars_exit(vdev);
->       vfio_migration_exit(vbasedev);
->       if (!vbasedev->mdev) {
->           pci_device_unset_iommu_device(pdev);
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index e90ec9bff8..f06236f37b 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -2,7 +2,7 @@
->   
->   # pci.c
->   vfio_intx_interrupt(const char *name, char line) " (%s) Pin %c"
-> -vfio_intx_eoi(const char *name) " (%s) EOI"
-> +vfio_pci_intx_eoi(const char *name) " (%s) EOI"
->   vfio_intx_enable_kvm(const char *name) " (%s) KVM INTx accel enabled"
->   vfio_intx_disable_kvm(const char *name) " (%s) KVM INTx accel disabled"
->   vfio_intx_update(const char *name, int new_irq, int target_irq) " (%s) IRQ moved %d -> %d"
-> @@ -35,8 +35,8 @@ vfio_pci_hot_reset(const char *name, const char *type) " (%s) %s"
->   vfio_pci_hot_reset_has_dep_devices(const char *name) "%s: hot reset dependent devices:"
->   vfio_pci_hot_reset_dep_devices(int domain, int bus, int slot, int function, int group_id) "\t%04x:%02x:%02x.%x group %d"
->   vfio_pci_hot_reset_result(const char *name, const char *result) "%s hot reset: %s"
-> -vfio_populate_device_config(const char *name, unsigned long size, unsigned long offset, unsigned long flags) "Device '%s' config: size: 0x%lx, offset: 0x%lx, flags: 0x%lx"
-> -vfio_populate_device_get_irq_info_failure(const char *errstr) "VFIO_DEVICE_GET_IRQ_INFO failure: %s"
-> +vfio_pci_populate_device_config(const char *name, unsigned long size, unsigned long offset, unsigned long flags) "Device '%s' config: size: 0x%lx, offset: 0x%lx, flags: 0x%lx"
-> +vfio_pci_populate_device_get_irq_info_failure(const char *errstr) "VFIO_DEVICE_GET_IRQ_INFO failure: %s"
->   vfio_mdev(const char *name, bool is_mdev) " (%s) is_mdev %d"
->   vfio_add_ext_cap_dropped(const char *name, uint16_t cap, uint16_t offset) "%s 0x%x@0x%x"
->   vfio_pci_reset(const char *name) " (%s)"
+>           error_setg(&err, "vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+>                      "0x%"HWADDR_PRIx", %p) = %d (%s)",
 
 
