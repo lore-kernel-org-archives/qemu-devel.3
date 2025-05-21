@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A2B1C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46EC7C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHlnB-00045O-6F; Wed, 21 May 2025 11:55:41 -0400
+	id 1uHlnB-00045v-CK; Wed, 21 May 2025 11:55:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uHlmz-00043W-1m; Wed, 21 May 2025 11:55:29 -0400
+ id 1uHlmz-00043m-Jy; Wed, 21 May 2025 11:55:31 -0400
 Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uHlmv-0008Ag-IT; Wed, 21 May 2025 11:55:28 -0400
+ id 1uHlmv-00089u-IM; Wed, 21 May 2025 11:55:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
  List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=s3+CHHmXAYyrW55D/Y+I1Y7QpnQ4qrn51rNdFIxUd7I=; b=Qv+CEgSSzOXJdyWVJSTzJ9S0g+
- L9rci/Jcez9IGmbGdI1c2Mr/QVbwtCGcvpRYol5J/GlYfz8Mw65Y0pr/V2G0XVJmF46YEg5zGqYyX
- FlZUrMWyLu4pxQCXTOFSA5NHU0eE23s939m948YVnsaR6MIy93YDZqvgAG8RzYLBJIQ1qp/44rHjW
- ZhzFU9RElRuQnTpbpSSynkXKaSvXuTeqoYXkQywMlJfhQhIH0kS9Lh6IuZWpMf+v3R1zngQD6pQym
- xJaec55KakXhGngpKUm3pPDRhpo9yW0JDxi+Sp9EVn5NbkbqEyviBvKZf5maQiM2MK0UgpyeXZxAz
- 64UwpyqA==;
+ bh=Y77OHP/CHbAxcBmdqswS/zBfLL0MSERB2UK3cGprX0g=; b=3PhPPYw/fV4a3iD640id1JHP0X
+ 9jfESbrxtQV0EMLCf3aLy300a8Oh7dhn0X30PJt2OwCIWOfudbEIk4Cs6zQa+aQ1FbfEoXQLKbOcw
+ zLG5BZsJm1XzSfVSwI5P9X+Py3foBDM88FKEpbTYobgws8xr+YC0ev5JfWwWJPoBcYFxp1pyfq/J7
+ yvqAx5NWjqE+4OKHs6O7Q4fTLN5pPinjRX2EkfbVZjfMfWcji7U03FElqcElM5o7cZWvOVjZyKITg
+ u9nlWHhYUNoA+jep0m6hKDZLWJy5GSP1o255seQfAQ/Sv5AwxUBYEDHiVq4Ewj2aaZGc16TieM+jV
+ VjMKE/tg==;
 Received: from [167.98.27.226] (helo=rainbowdash)
  by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uHlmZ-001dlq-B4; Wed, 21 May 2025 16:55:03 +0100
+ id 1uHlmZ-001dlk-1b; Wed, 21 May 2025 16:55:03 +0100
 Received: from ben by rainbowdash with local (Exim 4.98.2)
- (envelope-from <ben@rainbowdash>) id 1uHlmZ-000000006KP-0Yky;
- Wed, 21 May 2025 16:55:03 +0100
+ (envelope-from <ben@rainbowdash>) id 1uHlmY-000000006KK-33RM;
+ Wed, 21 May 2025 16:55:02 +0100
 From: Ben Dooks <ben.dooks@codethink.co.uk>
 To: nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
  fran.redondo@codethink.co.uk, lawrence.hunter@codethink.co.uk,
@@ -43,9 +43,9 @@ To: nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
  zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
 Cc: ben.dooks@codethink.co.uk,
 	qemu-devel@nongnu.org
-Subject: [PATCH 2/2] target/riscv: add cva6 cpu type
-Date: Wed, 21 May 2025 16:54:58 +0100
-Message-Id: <20250521155458.24255-3-ben.dooks@codethink.co.uk>
+Subject: [PATCH 1/2] hw/riscv: add CVA6 machine
+Date: Wed, 21 May 2025 16:54:57 +0100
+Message-Id: <20250521155458.24255-2-ben.dooks@codethink.co.uk>
 X-Mailer: git-send-email 2.37.2.352.g3c44437643
 In-Reply-To: <20250521155458.24255-1-ben.dooks@codethink.co.uk>
 References: <20250521155458.24255-1-ben.dooks@codethink.co.uk>
@@ -75,63 +75,385 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CVA6 CPU type, for the OpenHW CVA6 cores
+Add a (currently Genesy2 based) CVA6 machine.
+
+Has SPI and UART, the GPIO and Ethernet are currently black-holed
+as there is no hardware model for them (lowRISC ethernet and Xilinx
+GPIO)
 
 Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
 ---
- target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
+- squashed in fixes for sd-card and new qemu init
+- move to spdx for cva6 machine
+- code cleanups missed in first review
+---
+ hw/riscv/Kconfig        |  10 ++
+ hw/riscv/cva6.c         | 231 ++++++++++++++++++++++++++++++++++++++++
+ hw/riscv/meson.build    |   1 +
+ include/hw/riscv/cva6.h |  83 +++++++++++++++
+ 4 files changed, 325 insertions(+)
+ create mode 100644 hw/riscv/cva6.c
+ create mode 100644 include/hw/riscv/cva6.h
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 4cfdb74891..b5460771d7 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -34,6 +34,7 @@
- #define TYPE_RISCV_CPU_BASE32           RISCV_CPU_TYPE_NAME("rv32")
- #define TYPE_RISCV_CPU_BASE64           RISCV_CPU_TYPE_NAME("rv64")
- #define TYPE_RISCV_CPU_BASE128          RISCV_CPU_TYPE_NAME("x-rv128")
-+#define TYPE_RISCV_CPU_CVA6             RISCV_CPU_TYPE_NAME("cva6")
- #define TYPE_RISCV_CPU_RV32I            RISCV_CPU_TYPE_NAME("rv32i")
- #define TYPE_RISCV_CPU_RV32E            RISCV_CPU_TYPE_NAME("rv32e")
- #define TYPE_RISCV_CPU_RV64I            RISCV_CPU_TYPE_NAME("rv64i")
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d92874baa0..0ad6a7b616 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -496,6 +496,24 @@ static void rv64_base_cpu_init(Object *obj)
- #endif
- }
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index e6a0ac1fa1..b96f6fa014 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -9,6 +9,16 @@ config IBEX
  
-+static void rv64_cva6_cpu_init(Object *obj)
+ # RISC-V machines in alphabetical order
+ 
++config CVA6
++    bool
++    default y
++    depends on RISCV32 || RISCV64
++    select DEVICE_TREE
++    select SIFIVE_PLIC
++    select XILINX_SPI
++    select RISCV_ACLINT
++    select UNIMP
++
+ config MICROCHIP_PFSOC
+     bool
+     default y
+diff --git a/hw/riscv/cva6.c b/hw/riscv/cva6.c
+new file mode 100644
+index 0000000000..822714d794
+--- /dev/null
++++ b/hw/riscv/cva6.c
+@@ -0,0 +1,231 @@
++/*
++ * QEMU RISC-V Board for OpenHW CVA6 SoC
++ *
++ * Copyright (c) 2025 Codethink Ltd
++ * Ben Dooks <ben.dooks@codethink.co.uk>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qemu/units.h"
++#include "qapi/error.h"
++#include "qapi/visitor.h"
++#include "hw/boards.h"
++#include "hw/irq.h"
++#include "hw/loader.h"
++#include "hw/sysbus.h"
++#include "hw/misc/unimp.h"
++
++#include "hw/sd/sd.h"
++#include "hw/ssi/ssi.h"
++
++#include "hw/riscv/cva6.h"
++#include "hw/riscv/boot.h"
++#include "hw/intc/riscv_aclint.h"
++
++#include "system/system.h"
++
++#include <libfdt.h>
++
++#define CVA6_ROM_BASE  0x10000
++
++static const MemMapEntry cva6_memmap[] = {
++    [CVA6_DEBUG] =              {  0x0000000,  0x1000 },
++    [CVA6_ROM] =                { CVA6_ROM_BASE, 0x10000 },
++    [CVA6_CLINT] =              {  0x2000000, 0xC0000 },
++    [CVA6_PLIC] =               {  0xC000000, 0x4000000 },
++    [CVA6_UART] =               { 0x10000000, 0x1000 },
++    [CVA6_TIMER] =              { 0x18000000, 0x10000 },
++    [CVA6_SPI] =                { 0x20000000, 0x800000 },
++    [CVA6_ETHERNET] =           { 0x30000000, 0x10000 },
++    [CVA6_GPIO] =               { 0x40000000, 0x1000 },
++    [CVA6_DRAM] =               { 0x80000000, 0x40000000 },
++};
++
++static void cva6_machine_init(MachineState *machine)
 +{
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    CPURISCVState *env = &cpu->env;
++    MachineClass *mc = MACHINE_GET_CLASS(machine);
++    MemoryRegion *sys_mem = get_system_memory();
++    hwaddr dram_addr = cva6_memmap[CVA6_DRAM].base;
++    CVA6State *s = CVA6_MACHINE(machine);
++    RISCVBootInfo boot_info;
 +
-+    riscv_cpu_set_misa_ext(env, RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVS | RVU);
-+    env->priv_ver = PRIV_VERSION_1_12_0;
-+#ifndef CONFIG_USER_ONLY
-+    set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV39);
-+#endif
++    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RISCV_CVA6);
++    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
 +
-+    /* inherited from parent obj via riscv_cpu_init() */
-+    cpu->cfg.ext_zifencei = true;
-+    cpu->cfg.ext_zicsr = true;
-+    cpu->cfg.mmu = true;
-+    cpu->cfg.pmp = true;
++    if (machine->ram_size > mc->default_ram_size) {
++        error_report("RAM size is too big for DRAM area");
++        exit(EXIT_FAILURE);
++    }
++
++    memory_region_add_subregion(sys_mem, dram_addr, machine->ram);
++    riscv_boot_info_init(&boot_info, &s->soc.cpus);
++
++    if (machine->firmware) {
++         hwaddr firmware_load_addr = cva6_memmap[CVA6_ROM].base;
++         riscv_load_firmware(machine->firmware, &firmware_load_addr, NULL);
++    }
++
++     if (machine->kernel_filename) {
++         /* note - we've not tested just loading the kernel w/o uboot */
++         riscv_load_kernel(machine, &boot_info, dram_addr, false, NULL);
++    }
++
 +}
 +
- static void rv64_sifive_u_cpu_init(Object *obj)
- {
-     RISCVCPU *cpu = RISCV_CPU(obj);
-@@ -3247,6 +3265,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- 
- #if defined(TARGET_RISCV64)
-     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE64,    MXL_RV64,  rv64_base_cpu_init),
-+    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_CVA6,       MXL_RV64,  rv64_cva6_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E51, MXL_RV64,  rv64_sifive_e_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_U54, MXL_RV64,  rv64_sifive_u_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SHAKTI_C,   MXL_RV64,  rv64_sifive_u_cpu_init),
++static void cva6_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "RISC-V board for CVA6";
++    mc->init = cva6_machine_init;
++    mc->max_cpus = 1;
++    mc->default_ram_id = "cva6.ram";
++    /* start with "max" cpu type until we sort out CVA6 type */
++    mc->default_cpu_type = TYPE_RISCV_CPU_MAX;
++    mc->default_ram_size = cva6_memmap[CVA6_DRAM].size;
++};
++
++static void cva6_soc_init(Object *obj)
++{
++    CVA6SoCState *s = RISCV_CVA6(obj);
++
++    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
++}
++
++static void cva6_add_spi(CVA6SoCState *s, const MemMapEntry *map)
++{
++    DriveInfo *dinfo;
++    BlockBackend *blk;
++    DeviceState *card_dev;
++    qemu_irq sd_cs;
++    DeviceState *sddev;
++    SysBusDevice *busdev;
++    DeviceState *spi_dev;
++    SSIBus *spi;
++
++    spi_dev = qdev_new("xlnx.xps-spi");
++    qdev_prop_set_uint8(spi_dev, "num-ss-bits", 1);
++    qdev_prop_set_string(spi_dev, "endianness", "little");
++
++    busdev = SYS_BUS_DEVICE(spi_dev);
++    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_mmio_map(busdev, 0, map->base);
++    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(DEVICE(s->plic), CVA6_SPI_IRQ));
++
++    spi = (SSIBus *)qdev_get_child_bus(spi_dev, "spi");
++
++    sddev = ssi_create_peripheral(spi, "ssi-sd");
++    sd_cs = qdev_get_gpio_in_named(sddev, SSI_GPIO_CS, 0);
++    sysbus_connect_irq(busdev, 1, sd_cs);
++
++    dinfo = drive_get(IF_SD, 0, 0);
++    blk = dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
++    card_dev = qdev_new(TYPE_SD_CARD_SPI);
++    qdev_prop_set_drive_err(card_dev, "drive", blk, &error_fatal);
++
++    qdev_realize_and_unref(card_dev, qdev_get_child_bus(sddev, "sd-bus"), &error_fatal);
++}
++
++static void not_implemented(const char *name, const MemMapEntry *map)
++{
++    create_unimplemented_device(name, map->base, map->size);
++}
++
++static void cva6_soc_realize(DeviceState *dev_soc, Error **errp)
++{
++    MemoryRegion *system_memory = get_system_memory();
++    MachineState *ms = MACHINE(qdev_get_machine());
++    CVA6SoCState *s = RISCV_CVA6(dev_soc);
++    const MemMapEntry *memmap = cva6_memmap;
++    MemoryRegion *rom = g_new(MemoryRegion, 1);
++    char *plic_hart_config;
++
++    object_property_set_str(OBJECT(&s->cpus), "cpu-type", ms->cpu_type,
++                            &error_abort);
++    object_property_set_int(OBJECT(&s->cpus), "num-harts", ms->smp.cpus,
++                            &error_abort);
++    object_property_set_int(OBJECT(&s->cpus), "resetvec", CVA6_ROM_BASE,
++                            &error_abort);
++    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
++
++    /* boot rom */
++    memory_region_init_rom(rom, OBJECT(dev_soc), "riscv.cva6.bootrom",
++                           memmap[CVA6_ROM].size, &error_fatal);
++    memory_region_add_subregion(system_memory, memmap[CVA6_ROM].base,
++                                rom);
++
++    /* create PLIC hart topology configuration string */
++    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
++
++    /* MMIO */
++    s->plic = sifive_plic_create(memmap[CVA6_PLIC].base,
++        plic_hart_config, ms->smp.cpus, 0,
++        CVA6_PLIC_NUM_SOURCES,
++        CVA6_PLIC_NUM_PRIORITIES,
++        CVA6_PLIC_PRIORITY_BASE,
++        CVA6_PLIC_PENDING_BASE,
++        CVA6_PLIC_ENABLE_BASE,
++        CVA6_PLIC_ENABLE_STRIDE,
++        CVA6_PLIC_CONTEXT_BASE,
++        CVA6_PLIC_CONTEXT_STRIDE,
++        memmap[CVA6_PLIC].size);
++    g_free(plic_hart_config);
++
++    riscv_aclint_swi_create(memmap[CVA6_CLINT].base, 0,
++                            ms->smp.cpus, false);
++
++#define CLINT_TIMEBASE_FREQ 25000000
++    riscv_aclint_mtimer_create(
++        memmap[CVA6_CLINT].base + RISCV_ACLINT_SWI_SIZE,
++        RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
++        RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
++        CLINT_TIMEBASE_FREQ, true);
++
++    /* something in cva6-sdk uboot seems to prod the debug
++     * unit by accident, so make it not implemented */
++    not_implemented("debug", &memmap[CVA6_DEBUG]);
++
++    /* 16550 uart, one 32bit register per 32bit word */
++
++    serial_mm_init(system_memory, memmap[CVA6_UART].base, 2,
++                   qdev_get_gpio_in(DEVICE(s->plic), CVA6_UART_IRQ),
++                   50*1000*10000,
++                   serial_hd(0), DEVICE_LITTLE_ENDIAN);
++
++    /* just unimplement the timers, network and gpio here for now.
++     * no-one seems to be using the apb timer block anyway*/
++    not_implemented("net", &memmap[CVA6_ETHERNET]);
++    not_implemented("gpio", &memmap[CVA6_GPIO]);
++    not_implemented("timer", &memmap[CVA6_TIMER]);
++
++    /* connect xilinx spi block here */
++    cva6_add_spi(s, &memmap[CVA6_SPI]);
++}
++
++static void cva6_soc_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    dc->realize = cva6_soc_realize;
++    dc->user_creatable = false;
++};
++
++static const TypeInfo cva6_types[] = {
++    {
++        .name           = TYPE_RISCV_CVA6,
++        .parent         = TYPE_DEVICE,
++        .instance_size  = sizeof(CVA6SoCState),
++        .instance_init  = cva6_soc_init,
++        .class_init     = cva6_soc_class_init,
++    }, {
++        .name           = TYPE_CVA6_MACHINE,
++        .parent         = TYPE_MACHINE,
++        .instance_size  = sizeof(CVA6State),
++        .class_init     = cva6_machine_class_init,
++    }
++};
++
++DEFINE_TYPES(cva6_types)
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index c22f3a7216..a32fffab63 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -2,6 +2,7 @@ riscv_ss = ss.source_set()
+ riscv_ss.add(files('boot.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+ riscv_ss.add(files('riscv_hart.c'))
++riscv_ss.add(when: 'CONFIG_CVA6', if_true: files('cva6.c'))
+ riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+ riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+diff --git a/include/hw/riscv/cva6.h b/include/hw/riscv/cva6.h
+new file mode 100644
+index 0000000000..2d82d7eaf0
+--- /dev/null
++++ b/include/hw/riscv/cva6.h
+@@ -0,0 +1,83 @@
++/*
++ * QEMU RISC-V Board for OpenHW CVA6 SoC
++ *
++ * Copyright (c) 2025 Codethink Ltd
++ * Ben Dooks <ben.dooks@codethink.co.uk>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_CVA6_H
++#define HW_CVA6_H
++
++#include "hw/riscv/riscv_hart.h"
++#include "hw/intc/sifive_plic.h"
++#include "hw/char/serial-mm.h"
++
++#include "hw/boards.h"
++#include "hw/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_RISCV_CVA6 "riscv.cva6.soc"
++OBJECT_DECLARE_SIMPLE_TYPE(CVA6SoCState, RISCV_CVA6)
++
++typedef struct CVA6SoCState {
++    /*< private >*/
++    DeviceState parent_obj;
++
++    /*< public >*/
++    RISCVHartArrayState cpus;
++    DeviceState *plic;
++    MemoryRegion rom;
++
++    uint32_t resetvec;
++} CVA6SoCState;
++
++#define TYPE_CVA6_MACHINE MACHINE_TYPE_NAME("cva6")
++OBJECT_DECLARE_SIMPLE_TYPE(CVA6State, CVA6_MACHINE)
++
++typedef struct CVA6State {
++    /*< private >*/
++    MachineState parent_obj;
++
++    /*< public >*/
++    CVA6SoCState soc;
++}
++CVA6State;
++
++enum {
++    CVA6_DEBUG,
++    CVA6_ROM,
++    CVA6_CLINT,
++    CVA6_PLIC,
++    CVA6_UART,
++    CVA6_TIMER,
++    CVA6_SPI,
++    CVA6_ETHERNET,
++    CVA6_GPIO,
++    CVA6_DRAM,
++};
++
++enum {
++    CVA6_UART_IRQ       = 1,
++    CVA6_SPI_IRQ        = 2,
++    CVA6_ETH_IRQ        = 3,
++    CVA6_TIMER0_OVF_IRQ = 4,
++    CVA6_TIMER0_CMP_IRQ = 5,
++    CVA6_TIMER1_OVF_IRQ = 6,
++    CVA6_TIMER1_CMP_IRQ = 7,
++};
++
++/* plic register interface in corev_apu/rv_plic/rtl/plic_regmap.sv  */
++
++#define CVA6_PLIC_NUM_SOURCES           32
++#define CVA6_PLIC_NUM_PRIORITIES        7
++#define CVA6_PLIC_PRIORITY_BASE         0x0000
++#define CVA6_PLIC_PENDING_BASE          0x1000
++#define CVA6_PLIC_ENABLE_BASE           0x2000
++#define CVA6_PLIC_ENABLE_STRIDE         0x80
++#define CVA6_PLIC_CONTEXT_BASE          0x200000
++#define CVA6_PLIC_CONTEXT_STRIDE        0x1000
++
++#endif
++
 -- 
 2.37.2.352.g3c44437643
 
