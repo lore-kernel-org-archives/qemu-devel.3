@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 573E0C54E90
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 19:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1492C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 19:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHpFq-000506-HN; Wed, 21 May 2025 15:37:30 -0400
+	id 1uHpaM-0007nF-26; Wed, 21 May 2025 15:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uHpFk-0004zn-Rp
- for qemu-devel@nongnu.org; Wed, 21 May 2025 15:37:25 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uHpFi-0004WR-Oj
- for qemu-devel@nongnu.org; Wed, 21 May 2025 15:37:24 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-6ff4faf858cso51182917b3.2
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 12:37:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747856238; x=1748461038; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IbzmVBRSO4g4c0IGjooH1aJnH8y7YXALfQS1pfKpUOs=;
- b=Lrp79kIALmY/p/ZO9+i2e3f8ecZqQvgfbnoRc3+EPmkd0hYcytC+DydXnQaISGkpPf
- LjljSkRFiQCfOTSZERv1KMkl+XAanwNbvMn9rA7+g2hA1p38dboAb2W7oBNYbXW2hJXA
- Zi6jOJf9df0olz075XrZPSzMTNUecSf/wu9pUcWFLoGMY/JQnNgj0qybZk1wET2myDNf
- KY9cyg/xj9fWqEt9NggmWum+9Lj85xkTXnNAKdcipG+ByjAVdFO8Cy7K5crABl34amH/
- 38mBLXwVvyJa215yzs4rnn6xStypr1qNE82tCasDUwFtyfmMcyqyWw/iSOHmdE6ZL+SQ
- TlJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747856238; x=1748461038;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IbzmVBRSO4g4c0IGjooH1aJnH8y7YXALfQS1pfKpUOs=;
- b=HbWotPCkbNq3hzDo5h+1gXMWUIQj4bsQBmUvkCrmehsMBgrhlRFnUfxdpSoOh5Fv0a
- yHVP11z/CS8bKK7c+tt7MREl5twwxUGRccHk0lx7lwe5ysy/tiH03ry5XiSWNHiyyaVG
- vGPsGUZQNMHlZ+f5VwGPhoGZL2mlD+I6Y9RbrogLDqm6R+LA6dHpAc1CXabpAyHtOA0f
- g4m6tqAGc4pqjirWrO+zIF6hinNzvqD9c9RSUMjrkBzMDR30XvVspYEyoB6jrGqN6tRe
- MAIXgqK+NSUkLGHyJPGz71S77WzIpKvYhPirinxn3VV4KPd4Qop5Y5ITxpcBclaHRqEm
- OdwA==
-X-Gm-Message-State: AOJu0YzFRiH4GjdO8qkgm347pBquO+GyRJUaRSnUw5JLAd4MV6QPuuss
- jCEG/VSVd204K7XWu95QLiEoUZ5LA+Xk0i8TuVxM3zgJgMDHF5l/VKRBySB648CZSTUZvf9MaAN
- KW3zl6tJzJsOC52e5vHiY8bNJsYwtCopZJb7dwGlyGQ==
-X-Gm-Gg: ASbGnctABuT7paaicTiYm5pxpyzZkppCoC2NPCiPhXscdnPuUI9YphYW2kvgzOjD5W5
- c3mVktt2JR1oSPx0SrE6IjQukjew2UWNvzAYzNtquR2n0G9rMua6yzi4TORkRuJpMg7y8eUsFqm
- Gl+FxlOHZm9C7ytQj5diiPY85kdXyWVPbbSg==
-X-Google-Smtp-Source: AGHT+IEOyWq9QA/1KkZ2inmA/jQx7YoWrVu16m5QczKYzyz+0BkxVK7QwJcmhdui9XnHJtwjmKtG/cO3uPQFocwxqLY=
-X-Received: by 2002:a05:690c:4c13:b0:70c:a5c2:cef8 with SMTP id
- 00721157ae682-70ca7a070c8mr325848057b3.19.1747856238395; Wed, 21 May 2025
- 12:37:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <bmarzins@redhat.com>)
+ id 1uHo7W-0004nZ-7B
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 14:24:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bmarzins@redhat.com>)
+ id 1uHo7Q-00059g-R8
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 14:24:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747851882;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MtYnxm+R9qr+gg54NUhqzGSSx4sYOYfUwPDWgVozEig=;
+ b=S85D1gGas4lgiwhbtoTBs9j04R1ilw5lhywMlWaYMc5flnPHcWwSbKqLiMwoLBKDTUtGPn
+ AsJ4gmcMG7lsWIIMZoy0J7bJwRJT9Vpl5gyL8pR4WAfGqFQ5tc2YYqYDL3R2QqQwKESXlk
+ YqupOF/1PfFWJzpl28imk2RV66/G4/s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-Hheea976OvOqZ6EOhr0zEg-1; Wed,
+ 21 May 2025 14:23:32 -0400
+X-MC-Unique: Hheea976OvOqZ6EOhr0zEg-1
+X-Mimecast-MFC-AGG-ID: Hheea976OvOqZ6EOhr0zEg_1747851811
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0CB71800446; Wed, 21 May 2025 18:23:31 +0000 (UTC)
+Received: from bmarzins-01.fast.eng.rdu2.dc.redhat.com (unknown [10.6.23.247])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix)
+ with ESMTPS id EACE719560B7; Wed, 21 May 2025 18:23:30 +0000 (UTC)
+Received: from bmarzins-01.fast.eng.rdu2.dc.redhat.com (localhost [127.0.0.1])
+ by bmarzins-01.fast.eng.rdu2.dc.redhat.com (8.18.1/8.17.1) with
+ ESMTPS id 54LINTBo597458
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 21 May 2025 14:23:29 -0400
+Received: (from bmarzins@localhost)
+ by bmarzins-01.fast.eng.rdu2.dc.redhat.com (8.18.1/8.18.1/Submit) id
+ 54LINTQI597457; Wed, 21 May 2025 14:23:29 -0400
+Date: Wed, 21 May 2025 14:23:29 -0400
+From: Benjamin Marzinski <bmarzins@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ hreitz@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH] file-posix: Probe paths and retry SG_IO on potential
+ path errors
+Message-ID: <aC4aIXX-Ce7ZY8J8@redhat.com>
+References: <20250513113730.37404-1-kwolf@redhat.com>
+ <20250513135148.GB227327@fedora> <aCWiuYUWiwKJz4_j@redhat.com>
+ <20250515140142.GA333399@fedora> <aCYCFrh_As6XuPQj@redhat.com>
+ <20250520140339.GC82528@fedora> <aC4Rdt5HWgh7LGjG@redhat.com>
 MIME-Version: 1.0
-References: <CAJSP0QXoQBbA-HATMo0OTLOnUcvYjHiUM2nmAQj1i=ZXkbStoQ@mail.gmail.com>
-In-Reply-To: <CAJSP0QXoQBbA-HATMo0OTLOnUcvYjHiUM2nmAQj1i=ZXkbStoQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 21 May 2025 20:37:05 +0100
-X-Gm-Features: AX0GCFtfZQSInK7TE5olKuW0RYA4wvbwV4cjGPbqsJYG8Ac3CkNZFLY2CxwzYec
-Message-ID: <CAFEAcA_A36=RrQ2K+kLQgwVRdT=dFJkPW4vTsQn9RZ7FJMpktQ@mail.gmail.com>
-Subject: Re: QEMU 10.1 release schedule
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Daniel P. Berrange" <berrange@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aC4Rdt5HWgh7LGjG@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=bmarzins@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 21 May 2025 15:58:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,29 +97,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 May 2025 at 19:30, Stefan Hajnoczi <stefanha@gmail.com> wrote:
->
-> Hi,
-> Daniel Berrang=C3=A9 has proposed a release schedule that looks good to m=
-e.
-> The release will happen just before the KVM Forum conference.
->
-> Please reply if you have any questions or concerns about these dates!
->
-> - Soft freeze: 2025-07-22
-> - Hard freeze (rc0): 2025-07-29
-> - rc1: 2025-08-05
-> - rc2: 2025-08-12
-> - rc3: 2025-08-19
-> - Release or rc4: 2025-08-26
-> - Release if rc4 was needed: 2025-09-02
->
-> https://wiki.qemu.org/Planning/10.1
+On Wed, May 21, 2025 at 07:46:30PM +0200, Kevin Wolf wrote:
+> Am 20.05.2025 um 16:03 hat Stefan Hajnoczi geschrieben:
+> > On Thu, May 15, 2025 at 05:02:46PM +0200, Kevin Wolf wrote:
+> > > Am 15.05.2025 um 16:01 hat Stefan Hajnoczi geschrieben:
+> > > > On Thu, May 15, 2025 at 10:15:53AM +0200, Kevin Wolf wrote:
+> > > > > Am 13.05.2025 um 15:51 hat Stefan Hajnoczi geschrieben:
+> > > > > > On Tue, May 13, 2025 at 01:37:30PM +0200, Kevin Wolf wrote:
+> > > > > > > When scsi-block is used on a host multipath device, it runs into the
+> > > > > > > problem that the kernel dm-mpath doesn't know anything about SCSI or
+> > > > > > > SG_IO and therefore can't decide if a SG_IO request returned an error
+> > > > > > > and needs to be retried on a different path. Instead of getting working
+> > > > > > > failover, an error is returned to scsi-block and handled according to
+> > > > > > > the configured error policy. Obviously, this is not what users want,
+> > > > > > > they want working failover.
+> > > > > > > 
+> > > > > > > QEMU can parse the SG_IO result and determine whether this could have
+> > > > > > > been a path error, but just retrying the same request could just send it
+> > > > > > > to the same failing path again and result in the same error.
+> > > > > > > 
+> > > > > > > With a kernel that supports the DM_MPATH_PROBE_PATHS ioctl on dm-mpath
+> > > > > > > block devices (queued in the device mapper tree for Linux 6.16), we can
+> > > > > > > tell the kernel to probe all paths and tell us if any usable paths
+> > > > > > > remained. If so, we can now retry the SG_IO ioctl and expect it to be
+> > > > > > > sent to a working path.
+> > > > > > > 
+> > > > > > > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > > > > > > ---
+> > > > > > >  block/file-posix.c | 82 +++++++++++++++++++++++++++++++++++++++++++++-
+> > > > > > >  1 file changed, 81 insertions(+), 1 deletion(-)
+> > > > > > 
+> > > > > > Maybe the probability of retry success would be higher with a delay so
+> > > > > > that intermittent issues have time to resolve themselves. Either way,
+> > > > > > the patch looks good.
+> > > > > 
+> > > > > I don't think adding a delay here would be helpful. The point of
+> > > > > multipath isn't that you wait until a bad path comes back, but that you
+> > > > > just switch to a different path until it is restored.
+> > > > 
+> > > > That's not what this loop does. DM_MPATH_PROBE_PATHS probes all paths
+> > > > and fails when no paths are available. The delay would only apply in the
+> > > > case when there are no paths available.
+> > > > 
+> > > > If the point is not to wait until some path comes back, then why loop at
+> > > > all?
+> > > 
+> > > DM_MPATH_PROBE_PATHS can only send I/O to paths in the active path
+> > > group, so it doesn't fail over to different path groups. If there are no
+> > > usable paths left in the current path group, but there are some in
+> > > another one, then the ioctl returns 0 and the next SG_IO would switch to
+> > > a different path group, which may or may not succeed. If it fails, we
+> > > have to probe the paths in that group, too.
+> > 
+> > This wasn't obvious to me, can that be emphasized in the code via naming
+> > or comments? About retrying up to 5 times: is the assumption that there
+> > will be 5 or fewer path groups?
+> 
+> Originally, the thought behind the 5 was more about the case where
+> DM_MPATH_PROBE_PATHS offlines bad paths, but then another one goes down
+> before we retry SG_IO, so that it fails again.
+> 
+> But you're right that it would now apply to retrying in a different path
+> group. The assumption we make would then be that there will be 5 or
+> fewer path groups with no working path in them (rather than just 5 of
+> them existing). That doesn't seem like a completely unreasonable
+> assumption, but maybe we should increase the number now just to be on
+> the safe side?
+> 
+> Ben, do you have an opinion on this?
 
-Personally if I were running the release this time around I
-would move everything a week earlier, to avoid the potential
-need to do a release the week of KVM Forum. (My experience is
-that "we need an rc4" is the common case.)
+5 seems like a reasonable number. Unless people have the
+path_grouping_policy set to failover, 5 path groups seems like more
+than enough. You could make the argument that if users were configured
+with failover (one path per path group) or had a number paths marked
+marginal (and placed into marginal path groups), you could exceed 5
+path groups. 8 would seems like a reasonable maximum then. It is
+possible to have multipath devices with over 8 paths, but that's pretty
+rare.
 
--- PMM
+-Ben
+
+> 
+> Kevin
+
+
 
