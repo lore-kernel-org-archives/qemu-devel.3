@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6AA3C54E65
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 11:20:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D94C54E65
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 11:20:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHhUw-0007PZ-Rb; Wed, 21 May 2025 07:20:35 -0400
+	id 1uHhUs-0007Di-Bs; Wed, 21 May 2025 07:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uHhUb-0006eX-17
- for qemu-devel@nongnu.org; Wed, 21 May 2025 07:20:16 -0400
+ id 1uHhUf-0006rI-AN
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 07:20:20 -0400
 Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uHhUT-0006eB-MP
- for qemu-devel@nongnu.org; Wed, 21 May 2025 07:20:08 -0400
+ id 1uHhUc-0006eB-JR
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 07:20:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747826405; x=1779362405;
+ t=1747826414; x=1779362414;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=7uZF7LXKSEvtnLUYWbu7U7taCl0Fo5AtkRBczRB0268=;
- b=Yhazoh6g2Na85XwuG22ruTp1q0ONcHgIIMl8Se9wh2vnuD+SwaBjxX8F
- vLaVhUyXjUbFbSnOikZa0Mqcm09IyRqOGyCdy3BiQFIe7xotiI8cpuhka
- YacqvdHUvTXj5soIv1G8SuvH7Cm4stwzTpjzexmfkFx8ZxFr34RDlYuL4
- xjWlNkKV/Tjttf7nK4ugq8R3Mu7AbgPHI6iPoXq3dhZA8Kyc9qi6UM5Yu
- bnE60e27oMRhv+dENWMseawXn7qJSjFkeCEqFpPum7UKdPJ0Xc3QNdtoe
- vzO/H5V2yujoj+ugTS0Qq3Gm5zvVkJyERmUQwLDB8Je/0rGCg7hzpRw9a A==;
-X-CSE-ConnectionGUID: SYurJIIgS0G6NSkyHyXP/Q==
-X-CSE-MsgGUID: ba072gFYSPCW3HDMn6AJnw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="49895141"
-X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="49895141"
+ bh=JYjpbRjIjKR0Gja310odOFYqYkbagbfHA+iNIYGMZkI=;
+ b=l3OjHlTh9W08qAGsBuNH92aUOwEy/EFYUMPCGByimDDpq1rikVNHsAj2
+ 6hIt2w6QC4GGWO2FitSaRbmxi4WUrb6qOWWG8dvku5R89iWuj70LEHWSP
+ qGE7quI6tNPE9FsaIUeomiAxdCQluLSSMsu1P3bSinfRsYwX58ssRNmwZ
+ mBHf6Bwb+HA0X6fUXocQalmFoCpR3P0WdvYa57Qqof3J9TFVTyGdJ7I/U
+ bzZLibkTUIzAYYpsO6LCFmCiXZNCGQX2p74Ym8JC9mAvSmZtyNiwmpMVj
+ syK9BBVzC+xI/46ZWmE3ZnQZAVT5nRPXVxmvsMO9hZrfWZRD0cnbHYiFx A==;
+X-CSE-ConnectionGUID: eZo20kAlRU6U389+lTg1WQ==
+X-CSE-MsgGUID: 2kZD3j+qR4Cyh70sRkY/fA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="49895175"
+X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="49895175"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2025 04:20:02 -0700
-X-CSE-ConnectionGUID: d+gP7gWDQza8YTn2XKQNiw==
-X-CSE-MsgGUID: q0NMp4kOQnug1o1GDjwqTQ==
+ 21 May 2025 04:20:12 -0700
+X-CSE-ConnectionGUID: VdAQK/qJQt6eG+5sb+49/Q==
+X-CSE-MsgGUID: q/60nqvvSVycJXzm5Fz3FQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="145158427"
+X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; d="scan'208";a="145158488"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2025 04:19:57 -0700
+ 21 May 2025 04:20:07 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,16 +53,15 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Yi Sun <yi.y.sun@linux.intel.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH rfcv3 17/21] intel_iommu: Replay pasid binds after context
- cache invalidation
-Date: Wed, 21 May 2025 19:14:47 +0800
-Message-Id: <20250521111452.3316354-18-zhenzhong.duan@intel.com>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH rfcv3 19/21] intel_iommu: Refresh pasid bind when either SRTP
+ or TE bit is changed
+Date: Wed, 21 May 2025 19:14:49 +0800
+Message-Id: <20250521111452.3316354-20-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
 References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
@@ -95,155 +94,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yi Liu <yi.l.liu@intel.com>
 
-This replays guest pasid attachments after context cache invalidation.
-This is a behavior to ensure safety. Actually, programmer should issue
-pasid cache invalidation with proper granularity after issuing a context
-cache invalidation.
+When either 'Set Root Table Pointer' or 'Translation Enable' bit is changed,
+the pasid bindings on host side become stale and need to be updated.
+
+Introduce a helper function vtd_refresh_pasid_bind() for that purpose.
 
 Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  1 +
- hw/i386/intel_iommu.c          | 51 ++++++++++++++++++++++++++++++++--
- hw/i386/trace-events           |  1 +
- 3 files changed, 51 insertions(+), 2 deletions(-)
+ hw/i386/intel_iommu.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 75d840f9fe..198726b48f 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -575,6 +575,7 @@ typedef enum VTDPCInvType {
-     VTD_PASID_CACHE_FORCE_RESET = 0,
-     /* pasid cache invalidation rely on guest PASID entry */
-     VTD_PASID_CACHE_GLOBAL_INV, /* pasid cache global invalidation */
-+    VTD_PASID_CACHE_DEVSI,      /* pasid cache device selective invalidation */
-     VTD_PASID_CACHE_DOMSI,      /* pasid cache domain selective invalidation */
-     VTD_PASID_CACHE_PASIDSI,    /* pasid cache pasid selective invalidation */
- } VTDPCInvType;
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 9ffc2a8ffc..d686d0ee1a 100644
+index bb21060d7e..b8f3b8effa 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -91,6 +91,10 @@ static void vtd_address_space_refresh_all(IntelIOMMUState *s);
+@@ -89,6 +89,7 @@ struct vtd_iotlb_key {
+ 
+ static void vtd_address_space_refresh_all(IntelIOMMUState *s);
  static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
++static void vtd_refresh_pasid_bind(IntelIOMMUState *s);
  
  static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s);
-+static void vtd_pasid_cache_sync(IntelIOMMUState *s,
-+                                 VTDPASIDCacheInfo *pc_info);
-+static void vtd_pasid_cache_devsi(IntelIOMMUState *s,
-+                                  PCIBus *bus, uint16_t devfn);
- 
- static void vtd_panic_require_caching_mode(void)
- {
-@@ -2417,6 +2421,8 @@ static void vtd_iommu_replay_all(IntelIOMMUState *s)
- 
- static void vtd_context_global_invalidate(IntelIOMMUState *s)
- {
-+    VTDPASIDCacheInfo pc_info = { .error_happened = false, };
-+
-     trace_vtd_inv_desc_cc_global();
-     /* Protects context cache */
-     vtd_iommu_lock(s);
-@@ -2434,6 +2440,9 @@ static void vtd_context_global_invalidate(IntelIOMMUState *s)
-      * VT-d emulation codes.
-      */
-     vtd_iommu_replay_all(s);
-+
-+    pc_info.type = VTD_PASID_CACHE_GLOBAL_INV;
-+    vtd_pasid_cache_sync(s, &pc_info);
+ static void vtd_pasid_cache_sync(IntelIOMMUState *s,
+@@ -3362,6 +3363,7 @@ static void vtd_handle_gcmd_srtp(IntelIOMMUState *s)
+     vtd_set_clear_mask_long(s, DMAR_GSTS_REG, 0, VTD_GSTS_RTPS);
+     vtd_reset_caches(s);
+     vtd_address_space_refresh_all(s);
++    vtd_refresh_pasid_bind(s);
  }
  
- #ifdef CONFIG_IOMMUFD
-@@ -2989,6 +2998,21 @@ static void vtd_context_device_invalidate(IntelIOMMUState *s,
-              * happened.
-              */
-             vtd_address_space_sync(vtd_as);
-+            /*
-+             * Per spec, context flush should also followed with PASID
-+             * cache and iotlb flush. Regards to a device selective
-+             * context cache invalidation:
-+             * if (emaulted_device)
-+             *    invalidate pasid cache and pasid-based iotlb
-+             * else if (assigned_device)
-+             *    check if the device has been bound to any pasid
-+             *    invoke pasid_unbind regards to each bound pasid
-+             * Here, we have vtd_pasid_cache_devsi() to invalidate pasid
-+             * caches, while for piotlb in QEMU, we don't have it yet, so
-+             * no handling. For assigned device, host iommu driver would
-+             * flush piotlb when a pasid unbind is pass down to it.
-+             */
-+             vtd_pasid_cache_devsi(s, vtd_as->bus, devfn);
-         }
+ /* Set Interrupt Remap Table Pointer */
+@@ -3396,6 +3398,7 @@ static void vtd_handle_gcmd_te(IntelIOMMUState *s, bool en)
+ 
+     vtd_reset_caches(s);
+     vtd_address_space_refresh_all(s);
++    vtd_refresh_pasid_bind(s);
+ }
+ 
+ /* Handle Interrupt Remap Enable/Disable */
+@@ -4111,6 +4114,26 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
      }
  }
-@@ -3737,6 +3761,11 @@ static gboolean vtd_flush_pasid(gpointer key, gpointer value,
-         /* Fall through */
-     case VTD_PASID_CACHE_GLOBAL_INV:
-         break;
-+    case VTD_PASID_CACHE_DEVSI:
-+        if (pc_info->bus != vtd_as->bus || pc_info->devfn != vtd_as->devfn) {
-+            return false;
-+        }
-+        break;
-     default:
-         error_report("invalid pc_info->type");
-         abort();
-@@ -3933,6 +3962,11 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
-     case VTD_PASID_CACHE_GLOBAL_INV:
-         /* loop all assigned devices */
-         break;
-+    case VTD_PASID_CACHE_DEVSI:
-+        walk_info.bus = pc_info->bus;
-+        walk_info.devfn = pc_info->devfn;
-+        vtd_replay_pasid_bind_for_dev(s, start, end, &walk_info);
-+        return;
-     case VTD_PASID_CACHE_FORCE_RESET:
-         /* For force reset, no need to go further replay */
-         return;
-@@ -3968,8 +4002,7 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
-  * It includes updating the pasid cache in vIOMMU and updating the
-  * pasid bindings per guest's latest pasid entry presence.
-  */
--static void vtd_pasid_cache_sync(IntelIOMMUState *s,
--                                 VTDPASIDCacheInfo *pc_info)
-+static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
- {
-     if (!s->flts || !s->root_scalable || !s->dmar_enabled) {
-         return;
-@@ -4030,6 +4063,20 @@ static void vtd_pasid_cache_sync(IntelIOMMUState *s,
-     vtd_replay_guest_pasid_bindings(s, pc_info);
- }
  
-+static void vtd_pasid_cache_devsi(IntelIOMMUState *s,
-+                                  PCIBus *bus, uint16_t devfn)
++static void vtd_refresh_pasid_bind(IntelIOMMUState *s)
 +{
-+    VTDPASIDCacheInfo pc_info = { .error_happened = false, };
++    VTDPASIDCacheInfo pc_info = { .error_happened = false,
++                                  .type = VTD_PASID_CACHE_GLOBAL_INV };
 +
-+    trace_vtd_pasid_cache_devsi(devfn);
++    /*
++     * Only when dmar is enabled, should pasid bindings replayed,
++     * otherwise no need to replay.
++     */
++    if (!s->dmar_enabled) {
++        return;
++    }
 +
-+    pc_info.type = VTD_PASID_CACHE_DEVSI;
-+    pc_info.bus = bus;
-+    pc_info.devfn = devfn;
++    if (!s->flts || !s->root_scalable) {
++        return;
++    }
 +
-+    vtd_pasid_cache_sync(s, &pc_info);
++    vtd_replay_guest_pasid_bindings(s, &pc_info);
 +}
 +
- static bool vtd_process_pasid_desc(IntelIOMMUState *s,
-                                    VTDInvDesc *inv_desc)
- {
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index de903a0033..f001b820d9 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -28,6 +28,7 @@ vtd_pasid_cache_reset(void) ""
- vtd_pasid_cache_gsi(void) ""
- vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
- vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
-+vtd_pasid_cache_devsi(uint16_t devfn) "Dev selective PC invalidation dev: 0x%"PRIx16
- vtd_re_not_present(uint8_t bus) "Root entry bus %"PRIu8" not present"
- vtd_ce_not_present(uint8_t bus, uint8_t devfn) "Context entry bus %"PRIu8" devfn %"PRIu8" not present"
- vtd_iotlb_page_hit(uint16_t sid, uint64_t addr, uint64_t slpte, uint16_t domain) "IOTLB page hit sid 0x%"PRIx16" iova 0x%"PRIx64" slpte 0x%"PRIx64" domain 0x%"PRIx16
+ /*
+  * This function syncs the pasid bindings between guest and host.
+  * It includes updating the pasid cache in vIOMMU and updating the
 -- 
 2.34.1
 
