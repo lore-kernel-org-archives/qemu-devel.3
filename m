@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD73EC2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 11:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B049C2D0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 11:37:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHhjV-0003bK-Kf; Wed, 21 May 2025 07:35:38 -0400
+	id 1uHhkF-0003s4-9q; Wed, 21 May 2025 07:36:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uHhjL-0003Zj-EJ
- for qemu-devel@nongnu.org; Wed, 21 May 2025 07:35:30 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uHhkD-0003rl-P8
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 07:36:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uHhjC-000108-7K
- for qemu-devel@nongnu.org; Wed, 21 May 2025 07:35:27 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uHhk8-00019H-T5
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 07:36:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747827315;
+ s=mimecast20190719; t=1747827375;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ZGJVdpExX3Cc45GeCGVAJ3Kq21Pgw3U+VPt6wNHS4Lk=;
- b=OD/e2rzhvnDscORf8cDrA9qkJgzxdze/QmA/UdkNcP/MUVRZ9vroYQoSlohM/AqgDnOGvZ
- NJMd1rcsVBNugQBSr4D0EW8yzu8GitT2jpELoSFWqzws8qTrzO0hDNO7kb98N+x9GIVosL
- HJY2HP7rkcFIVaKJp9gQ0Dnf1gZ4jxA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4Qnkj3gk794sIguByyjpMjyUEyEFTPe94F5f1GjfOo8=;
+ b=X3RRqU2iAd3Ga9WUCTF45w5q0o5y6LbWcukTDtEeluzvq631f4gWDmkgdFB/DKXZzo82/u
+ uX4R8GEIwMULKy0tPp37UoxH+0PekESFr29C41hqKzZuHeWwyllp2uCMTo3gEUNccBaJWI
+ 55Gcjxn1NHaB7TVjzeZ0qbMm5+P8YEc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-1F56r0-_Oomx_DME8DDzMA-1; Wed,
- 21 May 2025 07:35:11 -0400
-X-MC-Unique: 1F56r0-_Oomx_DME8DDzMA-1
-X-Mimecast-MFC-AGG-ID: 1F56r0-_Oomx_DME8DDzMA_1747827310
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-zSjoF4hBNNyVbJC39j5qHw-1; Wed,
+ 21 May 2025 07:36:12 -0400
+X-MC-Unique: zSjoF4hBNNyVbJC39j5qHw-1
+X-Mimecast-MFC-AGG-ID: zSjoF4hBNNyVbJC39j5qHw_1747827371
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A1461851071; Wed, 21 May 2025 11:34:54 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 234431956080; Wed, 21 May 2025 11:36:11 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.45.224.39])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DBBD619560B7; Wed, 21 May 2025 11:34:47 +0000 (UTC)
+ id 7251A19560B7; Wed, 21 May 2025 11:36:05 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -59,9 +60,11 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH RFC 00/16] virtio: introduce support for GSO over UDP tunnel
-Date: Wed, 21 May 2025 13:33:54 +0200
-Message-ID: <cover.1747825544.git.pabeni@redhat.com>
+Subject: [PATCH RFC 12/16] virtio-net: implement extended features support.
+Date: Wed, 21 May 2025 13:34:06 +0200
+Message-ID: <8fb9f142e25a0f1b01e8cf54a6c2a0971db00d83.1747825544.git.pabeni@redhat.com>
+In-Reply-To: <cover.1747825544.git.pabeni@redhat.com>
+References: <cover.1747825544.git.pabeni@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
@@ -90,134 +93,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some virtualized deployments use UDP tunnel pervasively and are impacted
-negatively by the lack of GSO support for such kind of traffic in the
-virtual NIC driver.
+Use the extended types and helpers to manipulate the virtio_net
+features.
 
-The virtio_net specification recently introduced support for GSO over
-UDP tunnel, this series updates the virtio implementation to support
-such a feature.
+Note that offloads are still 64bits wide, as per specification,
+and extended offloads will be mapped into such range.
 
-One of the reasons for the RFC tag is that the kernel-side
-implementation has just been shared upstream and is not merged yet, but
-there are also other relevant reasons, see below.
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+---
+ hw/net/virtio-net.c            | 87 +++++++++++++++++++++-------------
+ include/hw/virtio/virtio-net.h |  2 +-
+ 2 files changed, 55 insertions(+), 34 deletions(-)
 
-Currently, the kernel virtio support limits the feature space to 64 bits,
-while the virtio specification allows for a larger number of features.
-Specifically, the GSO-over-UDP-tunnel-related virtio features use bits
-65-69; the larger part of this series (patches 2-11) actually deals with
-the extended feature space.
-
-I tried to minimize the otherwise very large code churn by limiting the
-extended features support to arches with native 128 integer support and
-introducing the extended features space support only in virtio/vhost
-core and in the relevant device driver.
-
-The actual offload implementation is in patches 12-16 and boils down to
-propagating the new offload to the tun devices and the vhost backend.
-
-Tested with basic stream transfer with all the possible permutations of
-host kernel/qemu/guest kernel with/without GSO over UDP tunnel support
-and vs snapshots creation and restore.
-
-Notably this does not include (yet) any additional tests. Some guidance
-on such matter would be really appreciated, and any feedback about the
-features extension strategy would be more than welcome!
-
-Paolo Abeni (16):
-  linux-headers: Update to Linux v6.15-rc net-next
-  migration: introduce support for 128 bit int state.
-  virtio: introduce extended features type
-  virtio: serialize extended features state
-  qmp: update virtio features map to support extended features
-  virtio: add support for negotiating extended features.
-  virtio-pci: implement support for extended features.
-  vhost: add support for negotiating extended features.
-  vhost-backend: implement extended features support.
-  vhost-net: implement extended features support.
-  qdev-properties: add property for extended virtio features
-  virtio-net: implement extended features support.
-  net: implement tunnel probing
-  net: bundle all offloads in a single struct
-  net: implement tnl feature offloading
-  net: make vhost-net aware of GSO over UDP tunnel hdr layout
-
- hw/core/qdev-properties.c                     |  46 +++++
- hw/net/e1000e_core.c                          |   5 +-
- hw/net/igb_core.c                             |   5 +-
- hw/net/vhost_net-stub.c                       |   7 +-
- hw/net/vhost_net.c                            |  35 ++--
- hw/net/virtio-net.c                           | 195 +++++++++++++-----
- hw/net/vmxnet3.c                              |  13 +-
- hw/virtio/vhost-backend.c                     |  59 +++++-
- hw/virtio/vhost.c                             |  58 ++++--
- hw/virtio/virtio-bus.c                        |  15 +-
- hw/virtio/virtio-hmp-cmds.c                   |   3 +-
- hw/virtio/virtio-pci.c                        |  19 +-
- hw/virtio/virtio-qmp.c                        |  28 ++-
- hw/virtio/virtio-qmp.h                        |   3 +-
- hw/virtio/virtio.c                            | 103 ++++++++-
- include/hw/qdev-properties.h                  |  13 ++
- include/hw/virtio/vhost-backend.h             |  10 +
- include/hw/virtio/vhost.h                     |  13 +-
- include/hw/virtio/virtio-features.h           |  90 ++++++++
- include/hw/virtio/virtio-net.h                |   2 +-
- include/hw/virtio/virtio-pci.h                |   2 +-
- include/hw/virtio/virtio.h                    |  17 +-
- include/migration/qemu-file-types.h           |  15 ++
- include/migration/vmstate.h                   |  11 +
- include/net/net.h                             |  20 +-
- include/net/vhost_net.h                       |   8 +-
- include/standard-headers/asm-x86/setup_data.h |   4 +-
- include/standard-headers/drm/drm_fourcc.h     |  41 ++++
- include/standard-headers/linux/const.h        |   2 +-
- include/standard-headers/linux/ethtool.h      | 156 ++++++++------
- include/standard-headers/linux/fuse.h         |  12 +-
- include/standard-headers/linux/pci_regs.h     |  13 +-
- include/standard-headers/linux/virtio_net.h   |  46 +++++
- include/standard-headers/linux/virtio_pci.h   |   1 +
- include/standard-headers/linux/virtio_snd.h   |   2 +-
- linux-headers/asm-arm64/kvm.h                 |  11 +
- linux-headers/asm-arm64/unistd_64.h           |   1 +
- linux-headers/asm-generic/mman-common.h       |   1 +
- linux-headers/asm-generic/unistd.h            |   4 +-
- linux-headers/asm-loongarch/unistd_64.h       |   1 +
- linux-headers/asm-mips/unistd_n32.h           |   1 +
- linux-headers/asm-mips/unistd_n64.h           |   1 +
- linux-headers/asm-mips/unistd_o32.h           |   1 +
- linux-headers/asm-powerpc/unistd_32.h         |   1 +
- linux-headers/asm-powerpc/unistd_64.h         |   1 +
- linux-headers/asm-riscv/kvm.h                 |   2 +
- linux-headers/asm-riscv/unistd_32.h           |   1 +
- linux-headers/asm-riscv/unistd_64.h           |   1 +
- linux-headers/asm-s390/unistd_32.h            |   1 +
- linux-headers/asm-s390/unistd_64.h            |   1 +
- linux-headers/asm-x86/kvm.h                   |   3 +
- linux-headers/asm-x86/unistd_32.h             |   1 +
- linux-headers/asm-x86/unistd_64.h             |   1 +
- linux-headers/asm-x86/unistd_x32.h            |   1 +
- linux-headers/linux/bits.h                    |   8 +-
- linux-headers/linux/const.h                   |   2 +-
- linux-headers/linux/iommufd.h                 | 129 +++++++++++-
- linux-headers/linux/kvm.h                     |   1 +
- linux-headers/linux/psp-sev.h                 |  21 +-
- linux-headers/linux/stddef.h                  |   2 +
- linux-headers/linux/vfio.h                    |  30 ++-
- linux-headers/linux/vhost.h                   |  12 +-
- migration/qemu-file.c                         |  16 ++
- migration/vmstate-types.c                     |  25 +++
- net/net.c                                     |  21 +-
- net/netmap.c                                  |   3 +-
- net/tap-bsd.c                                 |   8 +-
- net/tap-linux.c                               |  46 ++++-
- net/tap-solaris.c                             |   9 +-
- net/tap-stub.c                                |   8 +-
- net/tap.c                                     |  19 +-
- net/tap_int.h                                 |   5 +-
- qapi/virtio.json                              |   8 +-
- 73 files changed, 1209 insertions(+), 271 deletions(-)
- create mode 100644 include/hw/virtio/virtio-features.h
-
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 9f500c64e7..193469fc27 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -90,6 +90,17 @@
+                                          VIRTIO_NET_RSS_HASH_TYPE_TCP_EX | \
+                                          VIRTIO_NET_RSS_HASH_TYPE_UDP_EX)
+ 
++#define VIRTIO_OFFLOAD_MAP_MIN    46
++#define VIRTIO_OFFLOAD_MAP_LENGTH 4
++#define VIRTIO_OFFLOAD_MAP        MAKE_64BIT_MASK(VIRTIO_OFFLOAD_MAP_MIN, \
++                                                VIRTIO_OFFLOAD_MAP_LENGTH)
++#define VIRTIO_FEATURES_MAP_MIN   65
++#define VIRTIO_O2F_DELTA          (VIRTIO_FEATURES_MAP_MIN - \
++                                   VIRTIO_OFFLOAD_MAP_MIN)
++
++#define VIRTIO_FEATURE_TO_OFFLOAD(fbit)  (fbit >= 64 ? \
++                                          fbit - VIRTIO_O2F_DELTA : fbit)
++
+ static const VirtIOFeature feature_sizes[] = {
+     {.flags = 1ULL << VIRTIO_NET_F_MAC,
+      .end = endof(struct virtio_net_config, mac)},
+@@ -751,44 +762,45 @@ static void virtio_net_set_queue_pairs(VirtIONet *n)
+ 
+ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue);
+ 
+-static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
+-                                        Error **errp)
++static virtio_features_t virtio_net_get_features(VirtIODevice *vdev,
++                                                 virtio_features_t features,
++                                                 Error **errp)
+ {
+     VirtIONet *n = VIRTIO_NET(vdev);
+     NetClientState *nc = qemu_get_queue(n->nic);
+ 
+     /* Firstly sync all virtio-net possible supported features */
+-    features |= n->host_features;
++    features |= n->host_features_ex;
+ 
+-    virtio_add_feature(&features, VIRTIO_NET_F_MAC);
++    virtio_add_feature_ex(&features, VIRTIO_NET_F_MAC);
+ 
+     if (!peer_has_vnet_hdr(n)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_CSUM);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO4);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO6);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_ECN);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_CSUM);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_HOST_TSO4);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_HOST_TSO6);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_HOST_ECN);
+ 
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_CSUM);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO4);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO6);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ECN);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_CSUM);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_TSO4);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_TSO6);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_ECN);
+ 
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_HOST_USO);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_USO4);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_USO6);
+ 
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_HASH_REPORT);
+     }
+ 
+     if (!peer_has_vnet_hdr(n) || !peer_has_ufo(n)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_UFO);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_UFO);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_UFO);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_HOST_UFO);
+     }
+ 
+     if (!peer_has_uso(n)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_HOST_USO);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_USO4);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_USO6);
+     }
+ 
+     if (!get_vhost_net(nc->peer)) {
+@@ -796,7 +808,7 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
+     }
+ 
+     if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_RSS);
+     }
+     features = vhost_net_get_features(get_vhost_net(nc->peer), features);
+     vdev->backend_features_ex = features;
+@@ -818,7 +830,7 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
+      * support it.
+      */
+     if (!virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_CTRL_VQ)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ANNOUNCE);
++        virtio_clear_feature_ex(&features, VIRTIO_NET_F_GUEST_ANNOUNCE);
+     }
+ 
+     return features;
+@@ -851,9 +863,16 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
+             !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)));
+ }
+ 
+-static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
++static uint64_t virtio_net_features_to_offload(virtio_features_t features)
++{
++    return (features & ~VIRTIO_OFFLOAD_MAP) |
++           ((features >> VIRTIO_O2F_DELTA) & VIRTIO_OFFLOAD_MAP);
++}
++
++static uint64_t
++virtio_net_guest_offloads_by_features(virtio_features_t features)
+ {
+-    static const uint64_t guest_offloads_mask =
++    static const virtio_features_t guest_offloads_mask =
+         (1ULL << VIRTIO_NET_F_GUEST_CSUM) |
+         (1ULL << VIRTIO_NET_F_GUEST_TSO4) |
+         (1ULL << VIRTIO_NET_F_GUEST_TSO6) |
+@@ -862,13 +881,13 @@ static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
+         (1ULL << VIRTIO_NET_F_GUEST_USO4) |
+         (1ULL << VIRTIO_NET_F_GUEST_USO6);
+ 
+-    return guest_offloads_mask & features;
++    return guest_offloads_mask & virtio_net_features_to_offload(features);
+ }
+ 
+ uint64_t virtio_net_supported_guest_offloads(const VirtIONet *n)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(n);
+-    return virtio_net_guest_offloads_by_features(vdev->guest_features);
++    return virtio_net_guest_offloads_by_features(vdev->guest_features_ex);
+ }
+ 
+ typedef struct {
+@@ -947,7 +966,8 @@ static void failover_add_primary(VirtIONet *n, Error **errp)
+     error_propagate(errp, err);
+ }
+ 
+-static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
++static void virtio_net_set_features(VirtIODevice *vdev,
++                                    virtio_features_t features)
+ {
+     VirtIONet *n = VIRTIO_NET(vdev);
+     Error *err = NULL;
+@@ -955,7 +975,7 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
+ 
+     if (n->mtu_bypass_backend &&
+             !virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU)) {
+-        features &= ~(1ULL << VIRTIO_NET_F_MTU);
++        features &= ~VIRTIO_BIT(VIRTIO_NET_F_MTU);
+     }
+ 
+     virtio_net_set_multiqueue(n,
+@@ -1962,10 +1982,11 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+                 virtio_error(vdev, "virtio-net unexpected empty queue: "
+                              "i %zd mergeable %d offset %zd, size %zd, "
+                              "guest hdr len %zd, host hdr len %zd "
+-                             "guest features 0x%" PRIx64,
++                             "guest features 0x" VIRTIO_FEATURES_FMT,
+                              i, n->mergeable_rx_bufs, offset, size,
+                              n->guest_hdr_len, n->host_hdr_len,
+-                             vdev->guest_features);
++                             VIRTIO_FEATURES_HI(vdev->guest_features_ex),
++                             VIRTIO_FEATURES_LOW(vdev->guest_features_ex));
+             }
+             err = -1;
+             goto err;
+@@ -4146,8 +4167,8 @@ static void virtio_net_class_init(ObjectClass *klass, const void *data)
+     vdc->unrealize = virtio_net_device_unrealize;
+     vdc->get_config = virtio_net_get_config;
+     vdc->set_config = virtio_net_set_config;
+-    vdc->get_features = virtio_net_get_features;
+-    vdc->set_features = virtio_net_set_features;
++    vdc->get_features_ex = virtio_net_get_features;
++    vdc->set_features_ex = virtio_net_set_features;
+     vdc->bad_features = virtio_net_bad_features;
+     vdc->reset = virtio_net_reset;
+     vdc->queue_reset = virtio_net_queue_reset;
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index b9ea9e824e..5ccdbeb253 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -178,7 +178,7 @@ struct VirtIONet {
+     uint32_t has_vnet_hdr;
+     size_t host_hdr_len;
+     size_t guest_hdr_len;
+-    uint64_t host_features;
++    DECLARE_FEATURES(host_features);
+     uint32_t rsc_timeout;
+     uint8_t rsc4_enabled;
+     uint8_t rsc6_enabled;
 -- 
 2.49.0
 
