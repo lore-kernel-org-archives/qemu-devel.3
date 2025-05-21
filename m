@@ -4,60 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46EC7C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62EC2C54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 15:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHlnB-00045v-CK; Wed, 21 May 2025 11:55:41 -0400
+	id 1uHlnq-0004L0-1r; Wed, 21 May 2025 11:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uHlmz-00043m-Jy; Wed, 21 May 2025 11:55:31 -0400
-Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
+ (Exim 4.90_1) (envelope-from <SRS0=LBbo=YF=kaod.org=clg@ozlabs.org>)
+ id 1uHlnn-0004Cd-1m; Wed, 21 May 2025 11:56:19 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uHlmv-00089u-IM; Wed, 21 May 2025 11:55:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
- Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=Y77OHP/CHbAxcBmdqswS/zBfLL0MSERB2UK3cGprX0g=; b=3PhPPYw/fV4a3iD640id1JHP0X
- 9jfESbrxtQV0EMLCf3aLy300a8Oh7dhn0X30PJt2OwCIWOfudbEIk4Cs6zQa+aQ1FbfEoXQLKbOcw
- zLG5BZsJm1XzSfVSwI5P9X+Py3foBDM88FKEpbTYobgws8xr+YC0ev5JfWwWJPoBcYFxp1pyfq/J7
- yvqAx5NWjqE+4OKHs6O7Q4fTLN5pPinjRX2EkfbVZjfMfWcji7U03FElqcElM5o7cZWvOVjZyKITg
- u9nlWHhYUNoA+jep0m6hKDZLWJy5GSP1o255seQfAQ/Sv5AwxUBYEDHiVq4Ewj2aaZGc16TieM+jV
- VjMKE/tg==;
-Received: from [167.98.27.226] (helo=rainbowdash)
- by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uHlmZ-001dlk-1b; Wed, 21 May 2025 16:55:03 +0100
-Received: from ben by rainbowdash with local (Exim 4.98.2)
- (envelope-from <ben@rainbowdash>) id 1uHlmY-000000006KK-33RM;
- Wed, 21 May 2025 16:55:02 +0100
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-To: nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
- fran.redondo@codethink.co.uk, lawrence.hunter@codethink.co.uk,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
-Cc: ben.dooks@codethink.co.uk,
-	qemu-devel@nongnu.org
-Subject: [PATCH 1/2] hw/riscv: add CVA6 machine
-Date: Wed, 21 May 2025 16:54:57 +0100
-Message-Id: <20250521155458.24255-2-ben.dooks@codethink.co.uk>
-X-Mailer: git-send-email 2.37.2.352.g3c44437643
-In-Reply-To: <20250521155458.24255-1-ben.dooks@codethink.co.uk>
-References: <20250521155458.24255-1-ben.dooks@codethink.co.uk>
+ (Exim 4.90_1) (envelope-from <SRS0=LBbo=YF=kaod.org=clg@ozlabs.org>)
+ id 1uHlnf-0008F9-TB; Wed, 21 May 2025 11:56:18 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4b2bcd3th9z4xTx;
+ Thu, 22 May 2025 01:56:01 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4b2bcZ3Hn4z4xNG;
+ Thu, 22 May 2025 01:55:57 +1000 (AEST)
+Message-ID: <55f9f007-44c5-4a27-b3a5-9c4a939d1c6b@kaod.org>
+Date: Wed, 21 May 2025 17:55:54 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=78.40.148.171;
- envelope-from=srv_ts003@codethink.com; helo=imap5.colo.codethink.co.uk
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/3] hw/arm/aspeed_ast27x0: Fix RAM size detection
+ failure on BE hosts
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250520073540.2014240-1-jamin_lin@aspeedtech.com>
+ <20250520073540.2014240-4-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250520073540.2014240-4-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=LBbo=YF=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -75,386 +113,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a (currently Genesy2 based) CVA6 machine.
+On 5/20/25 09:35, Jamin Lin wrote:
+> On big-endian hosts, the aspeed_ram_capacity_write() function previously passed
+> the address of a 64-bit "data" variable directly to address_space_write(),
+> assuming host and guest endianness matched.
+> 
+> However, the data is expected to be written in little-endian format to DRAM.
+> On big-endian hosts, this led to incorrect data being written into DRAM,
+> which caused the guest firmware to misdetect the DRAM size.
+> 
+> As a result, U-Boot fails to boot and hangs.
+> 
+> - Explicitly converting the 32-bit portion of "data" to little-endian format
+>    using cpu_to_le32(), storing it in a temporary "uint32_t le_data".
+> - Updating the MemoryRegionOps to restrict access to exactly 4 bytes
+>    using .valid.{min,max}_access_size = 4 and .impl.min_access_size = 4.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Fixes: 7436db1 ("aspeed/soc: fix incorrect dram size for AST2700")
+> ---
+>   hw/arm/aspeed_ast27x0.c | 21 ++++++++++++++++-----
+>   1 file changed, 16 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 1974a25766..7ed0919b3f 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -335,24 +335,34 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
+>       AspeedSoCState *s = ASPEED_SOC(opaque);
+>       ram_addr_t ram_size;
+>       MemTxResult result;
+> +    uint32_t le_data;
+>   
+>       ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+>                                           &error_abort);
+>   
+>       assert(ram_size > 0);
+>   
+> +    if (size != 4) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Unsupported write size: %d (only 4-byte allowed)\n",
+> +                      __func__, size);
+> +        return;
+> +    }
 
-Has SPI and UART, the GPIO and Ethernet are currently black-holed
-as there is no hardware model for them (lowRISC ethernet and Xilinx
-GPIO)
+The core memory subsystem should find such issues if the valid attributes
+of MemoryRegionOps are set correctly.
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
----
-- squashed in fixes for sd-card and new qemu init
-- move to spdx for cva6 machine
-- code cleanups missed in first review
----
- hw/riscv/Kconfig        |  10 ++
- hw/riscv/cva6.c         | 231 ++++++++++++++++++++++++++++++++++++++++
- hw/riscv/meson.build    |   1 +
- include/hw/riscv/cva6.h |  83 +++++++++++++++
- 4 files changed, 325 insertions(+)
- create mode 100644 hw/riscv/cva6.c
- create mode 100644 include/hw/riscv/cva6.h
+> +    le_data = cpu_to_le32((uint32_t)data);
+> +
+>       /*
+>        * Emulate ddr capacity hardware behavior.
+>        * If writes the data to the address which is beyond the ram size,
+>        * it would write the data to the "address % ram_size".
+>        */
+>       result = address_space_write(&s->dram_as, addr % ram_size,
+> -                                 MEMTXATTRS_UNSPECIFIED, &data, 4);
+> +                                 MEMTXATTRS_UNSPECIFIED, &le_data, 4);
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index e6a0ac1fa1..b96f6fa014 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -9,6 +9,16 @@ config IBEX
- 
- # RISC-V machines in alphabetical order
- 
-+config CVA6
-+    bool
-+    default y
-+    depends on RISCV32 || RISCV64
-+    select DEVICE_TREE
-+    select SIFIVE_PLIC
-+    select XILINX_SPI
-+    select RISCV_ACLINT
-+    select UNIMP
-+
- config MICROCHIP_PFSOC
-     bool
-     default y
-diff --git a/hw/riscv/cva6.c b/hw/riscv/cva6.c
-new file mode 100644
-index 0000000000..822714d794
---- /dev/null
-+++ b/hw/riscv/cva6.c
-@@ -0,0 +1,231 @@
-+/*
-+ * QEMU RISC-V Board for OpenHW CVA6 SoC
-+ *
-+ * Copyright (c) 2025 Codethink Ltd
-+ * Ben Dooks <ben.dooks@codethink.co.uk>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "qapi/visitor.h"
-+#include "hw/boards.h"
-+#include "hw/irq.h"
-+#include "hw/loader.h"
-+#include "hw/sysbus.h"
-+#include "hw/misc/unimp.h"
-+
-+#include "hw/sd/sd.h"
-+#include "hw/ssi/ssi.h"
-+
-+#include "hw/riscv/cva6.h"
-+#include "hw/riscv/boot.h"
-+#include "hw/intc/riscv_aclint.h"
-+
-+#include "system/system.h"
-+
-+#include <libfdt.h>
-+
-+#define CVA6_ROM_BASE  0x10000
-+
-+static const MemMapEntry cva6_memmap[] = {
-+    [CVA6_DEBUG] =              {  0x0000000,  0x1000 },
-+    [CVA6_ROM] =                { CVA6_ROM_BASE, 0x10000 },
-+    [CVA6_CLINT] =              {  0x2000000, 0xC0000 },
-+    [CVA6_PLIC] =               {  0xC000000, 0x4000000 },
-+    [CVA6_UART] =               { 0x10000000, 0x1000 },
-+    [CVA6_TIMER] =              { 0x18000000, 0x10000 },
-+    [CVA6_SPI] =                { 0x20000000, 0x800000 },
-+    [CVA6_ETHERNET] =           { 0x30000000, 0x10000 },
-+    [CVA6_GPIO] =               { 0x40000000, 0x1000 },
-+    [CVA6_DRAM] =               { 0x80000000, 0x40000000 },
-+};
-+
-+static void cva6_machine_init(MachineState *machine)
-+{
-+    MachineClass *mc = MACHINE_GET_CLASS(machine);
-+    MemoryRegion *sys_mem = get_system_memory();
-+    hwaddr dram_addr = cva6_memmap[CVA6_DRAM].base;
-+    CVA6State *s = CVA6_MACHINE(machine);
-+    RISCVBootInfo boot_info;
-+
-+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RISCV_CVA6);
-+    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
-+
-+    if (machine->ram_size > mc->default_ram_size) {
-+        error_report("RAM size is too big for DRAM area");
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    memory_region_add_subregion(sys_mem, dram_addr, machine->ram);
-+    riscv_boot_info_init(&boot_info, &s->soc.cpus);
-+
-+    if (machine->firmware) {
-+         hwaddr firmware_load_addr = cva6_memmap[CVA6_ROM].base;
-+         riscv_load_firmware(machine->firmware, &firmware_load_addr, NULL);
-+    }
-+
-+     if (machine->kernel_filename) {
-+         /* note - we've not tested just loading the kernel w/o uboot */
-+         riscv_load_kernel(machine, &boot_info, dram_addr, false, NULL);
-+    }
-+
-+}
-+
-+static void cva6_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "RISC-V board for CVA6";
-+    mc->init = cva6_machine_init;
-+    mc->max_cpus = 1;
-+    mc->default_ram_id = "cva6.ram";
-+    /* start with "max" cpu type until we sort out CVA6 type */
-+    mc->default_cpu_type = TYPE_RISCV_CPU_MAX;
-+    mc->default_ram_size = cva6_memmap[CVA6_DRAM].size;
-+};
-+
-+static void cva6_soc_init(Object *obj)
-+{
-+    CVA6SoCState *s = RISCV_CVA6(obj);
-+
-+    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
-+}
-+
-+static void cva6_add_spi(CVA6SoCState *s, const MemMapEntry *map)
-+{
-+    DriveInfo *dinfo;
-+    BlockBackend *blk;
-+    DeviceState *card_dev;
-+    qemu_irq sd_cs;
-+    DeviceState *sddev;
-+    SysBusDevice *busdev;
-+    DeviceState *spi_dev;
-+    SSIBus *spi;
-+
-+    spi_dev = qdev_new("xlnx.xps-spi");
-+    qdev_prop_set_uint8(spi_dev, "num-ss-bits", 1);
-+    qdev_prop_set_string(spi_dev, "endianness", "little");
-+
-+    busdev = SYS_BUS_DEVICE(spi_dev);
-+    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_mmio_map(busdev, 0, map->base);
-+    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(DEVICE(s->plic), CVA6_SPI_IRQ));
-+
-+    spi = (SSIBus *)qdev_get_child_bus(spi_dev, "spi");
-+
-+    sddev = ssi_create_peripheral(spi, "ssi-sd");
-+    sd_cs = qdev_get_gpio_in_named(sddev, SSI_GPIO_CS, 0);
-+    sysbus_connect_irq(busdev, 1, sd_cs);
-+
-+    dinfo = drive_get(IF_SD, 0, 0);
-+    blk = dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
-+    card_dev = qdev_new(TYPE_SD_CARD_SPI);
-+    qdev_prop_set_drive_err(card_dev, "drive", blk, &error_fatal);
-+
-+    qdev_realize_and_unref(card_dev, qdev_get_child_bus(sddev, "sd-bus"), &error_fatal);
-+}
-+
-+static void not_implemented(const char *name, const MemMapEntry *map)
-+{
-+    create_unimplemented_device(name, map->base, map->size);
-+}
-+
-+static void cva6_soc_realize(DeviceState *dev_soc, Error **errp)
-+{
-+    MemoryRegion *system_memory = get_system_memory();
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    CVA6SoCState *s = RISCV_CVA6(dev_soc);
-+    const MemMapEntry *memmap = cva6_memmap;
-+    MemoryRegion *rom = g_new(MemoryRegion, 1);
-+    char *plic_hart_config;
-+
-+    object_property_set_str(OBJECT(&s->cpus), "cpu-type", ms->cpu_type,
-+                            &error_abort);
-+    object_property_set_int(OBJECT(&s->cpus), "num-harts", ms->smp.cpus,
-+                            &error_abort);
-+    object_property_set_int(OBJECT(&s->cpus), "resetvec", CVA6_ROM_BASE,
-+                            &error_abort);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
-+
-+    /* boot rom */
-+    memory_region_init_rom(rom, OBJECT(dev_soc), "riscv.cva6.bootrom",
-+                           memmap[CVA6_ROM].size, &error_fatal);
-+    memory_region_add_subregion(system_memory, memmap[CVA6_ROM].base,
-+                                rom);
-+
-+    /* create PLIC hart topology configuration string */
-+    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-+
-+    /* MMIO */
-+    s->plic = sifive_plic_create(memmap[CVA6_PLIC].base,
-+        plic_hart_config, ms->smp.cpus, 0,
-+        CVA6_PLIC_NUM_SOURCES,
-+        CVA6_PLIC_NUM_PRIORITIES,
-+        CVA6_PLIC_PRIORITY_BASE,
-+        CVA6_PLIC_PENDING_BASE,
-+        CVA6_PLIC_ENABLE_BASE,
-+        CVA6_PLIC_ENABLE_STRIDE,
-+        CVA6_PLIC_CONTEXT_BASE,
-+        CVA6_PLIC_CONTEXT_STRIDE,
-+        memmap[CVA6_PLIC].size);
-+    g_free(plic_hart_config);
-+
-+    riscv_aclint_swi_create(memmap[CVA6_CLINT].base, 0,
-+                            ms->smp.cpus, false);
-+
-+#define CLINT_TIMEBASE_FREQ 25000000
-+    riscv_aclint_mtimer_create(
-+        memmap[CVA6_CLINT].base + RISCV_ACLINT_SWI_SIZE,
-+        RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
-+        RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
-+        CLINT_TIMEBASE_FREQ, true);
-+
-+    /* something in cva6-sdk uboot seems to prod the debug
-+     * unit by accident, so make it not implemented */
-+    not_implemented("debug", &memmap[CVA6_DEBUG]);
-+
-+    /* 16550 uart, one 32bit register per 32bit word */
-+
-+    serial_mm_init(system_memory, memmap[CVA6_UART].base, 2,
-+                   qdev_get_gpio_in(DEVICE(s->plic), CVA6_UART_IRQ),
-+                   50*1000*10000,
-+                   serial_hd(0), DEVICE_LITTLE_ENDIAN);
-+
-+    /* just unimplement the timers, network and gpio here for now.
-+     * no-one seems to be using the apb timer block anyway*/
-+    not_implemented("net", &memmap[CVA6_ETHERNET]);
-+    not_implemented("gpio", &memmap[CVA6_GPIO]);
-+    not_implemented("timer", &memmap[CVA6_TIMER]);
-+
-+    /* connect xilinx spi block here */
-+    cva6_add_spi(s, &memmap[CVA6_SPI]);
-+}
-+
-+static void cva6_soc_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    dc->realize = cva6_soc_realize;
-+    dc->user_creatable = false;
-+};
-+
-+static const TypeInfo cva6_types[] = {
-+    {
-+        .name           = TYPE_RISCV_CVA6,
-+        .parent         = TYPE_DEVICE,
-+        .instance_size  = sizeof(CVA6SoCState),
-+        .instance_init  = cva6_soc_init,
-+        .class_init     = cva6_soc_class_init,
-+    }, {
-+        .name           = TYPE_CVA6_MACHINE,
-+        .parent         = TYPE_MACHINE,
-+        .instance_size  = sizeof(CVA6State),
-+        .class_init     = cva6_machine_class_init,
-+    }
-+};
-+
-+DEFINE_TYPES(cva6_types)
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index c22f3a7216..a32fffab63 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -2,6 +2,7 @@ riscv_ss = ss.source_set()
- riscv_ss.add(files('boot.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
- riscv_ss.add(files('riscv_hart.c'))
-+riscv_ss.add(when: 'CONFIG_CVA6', if_true: files('cva6.c'))
- riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
- riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
-diff --git a/include/hw/riscv/cva6.h b/include/hw/riscv/cva6.h
-new file mode 100644
-index 0000000000..2d82d7eaf0
---- /dev/null
-+++ b/include/hw/riscv/cva6.h
-@@ -0,0 +1,83 @@
-+/*
-+ * QEMU RISC-V Board for OpenHW CVA6 SoC
-+ *
-+ * Copyright (c) 2025 Codethink Ltd
-+ * Ben Dooks <ben.dooks@codethink.co.uk>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_CVA6_H
-+#define HW_CVA6_H
-+
-+#include "hw/riscv/riscv_hart.h"
-+#include "hw/intc/sifive_plic.h"
-+#include "hw/char/serial-mm.h"
-+
-+#include "hw/boards.h"
-+#include "hw/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_RISCV_CVA6 "riscv.cva6.soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(CVA6SoCState, RISCV_CVA6)
-+
-+typedef struct CVA6SoCState {
-+    /*< private >*/
-+    DeviceState parent_obj;
-+
-+    /*< public >*/
-+    RISCVHartArrayState cpus;
-+    DeviceState *plic;
-+    MemoryRegion rom;
-+
-+    uint32_t resetvec;
-+} CVA6SoCState;
-+
-+#define TYPE_CVA6_MACHINE MACHINE_TYPE_NAME("cva6")
-+OBJECT_DECLARE_SIMPLE_TYPE(CVA6State, CVA6_MACHINE)
-+
-+typedef struct CVA6State {
-+    /*< private >*/
-+    MachineState parent_obj;
-+
-+    /*< public >*/
-+    CVA6SoCState soc;
-+}
-+CVA6State;
-+
-+enum {
-+    CVA6_DEBUG,
-+    CVA6_ROM,
-+    CVA6_CLINT,
-+    CVA6_PLIC,
-+    CVA6_UART,
-+    CVA6_TIMER,
-+    CVA6_SPI,
-+    CVA6_ETHERNET,
-+    CVA6_GPIO,
-+    CVA6_DRAM,
-+};
-+
-+enum {
-+    CVA6_UART_IRQ       = 1,
-+    CVA6_SPI_IRQ        = 2,
-+    CVA6_ETH_IRQ        = 3,
-+    CVA6_TIMER0_OVF_IRQ = 4,
-+    CVA6_TIMER0_CMP_IRQ = 5,
-+    CVA6_TIMER1_OVF_IRQ = 6,
-+    CVA6_TIMER1_CMP_IRQ = 7,
-+};
-+
-+/* plic register interface in corev_apu/rv_plic/rtl/plic_regmap.sv  */
-+
-+#define CVA6_PLIC_NUM_SOURCES           32
-+#define CVA6_PLIC_NUM_PRIORITIES        7
-+#define CVA6_PLIC_PRIORITY_BASE         0x0000
-+#define CVA6_PLIC_PENDING_BASE          0x1000
-+#define CVA6_PLIC_ENABLE_BASE           0x2000
-+#define CVA6_PLIC_ENABLE_STRIDE         0x80
-+#define CVA6_PLIC_CONTEXT_BASE          0x200000
-+#define CVA6_PLIC_CONTEXT_STRIDE        0x1000
-+
-+#endif
-+
--- 
-2.37.2.352.g3c44437643
+
+This should be enough :
+
+     address_space_stl_le(&s->dram_as, addr % ram_size, data,
+                          MEMTXATTRS_UNSPECIFIED, &result);
+
+Sorry for not spotting this earlier. Finding a BE host is difficult.
+Thanks for the time you spent on fixing this issue.
+
+C.
+
+
+>       if (result != MEMTX_OK) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "%s: DRAM write failed, addr:0x%" HWADDR_PRIx
+> -                      ", data :0x%" PRIx64  "\n",
+> -                      __func__, addr % ram_size, data);
+> +                      ", data :0x%x\n",
+> +                      __func__, addr % ram_size, le_data);
+>       }
+>   }
+>   
+> @@ -360,9 +370,10 @@ static const MemoryRegionOps aspeed_ram_capacity_ops = {
+>       .read = aspeed_ram_capacity_read,
+>       .write = aspeed_ram_capacity_write,
+>       .endianness = DEVICE_LITTLE_ENDIAN,
+> +    .impl.min_access_size = 4,
+>       .valid = {
+> -        .min_access_size = 1,
+> -        .max_access_size = 8,
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+>       },
+>   };
+>   
 
 
