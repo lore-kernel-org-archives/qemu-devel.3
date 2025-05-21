@@ -4,93 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51064C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 03:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C04AC54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 06:23:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHaUL-0002f4-QW; Tue, 20 May 2025 23:51:30 -0400
+	id 1uHcrB-0002en-D2; Wed, 21 May 2025 02:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uHaUJ-0002ep-9j
- for qemu-devel@nongnu.org; Tue, 20 May 2025 23:51:27 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uHcqx-0002a3-2F
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 02:23:00 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uHaUG-0002nK-1C
- for qemu-devel@nongnu.org; Tue, 20 May 2025 23:51:26 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7390d21bb1cso5583975b3a.2
- for <qemu-devel@nongnu.org>; Tue, 20 May 2025 20:51:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uHcqt-00080g-0U
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 02:22:57 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-601dfef6a8dso5190462a12.1
+ for <qemu-devel@nongnu.org>; Tue, 20 May 2025 23:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747799482; x=1748404282;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bZKPfEkqbMC3Fn67c4OgivPjzVU/E6vlO8f69b9MnPk=;
- b=QSoQUsELRCTVnkzoBzJKmSWwc+HN2D9JBAbL8KMKbS+NR0DtSZRavIk1lhoHYIA3Js
- z0KXPqsBSkV6KGIFsiO92wE5bYmF0Yst0A9C+fFwgN9FKfxMBaAp/qmexMd484iU4MMk
- hu6XNiCe0SCMIYloDdDgRqhz8ReYjrC3k1pRE6AmGVDBX+cxKDh449s48E72NxQjTLmn
- ACnfc67YCS8Z8JpMMFEfV5VWgRyAn50KrUcjpttWeXFdS4vgCYocMMOXzXY4YWlszHf5
- bTpd2mtrAxt/l9Ng+eFJSHzlrK9eFTnX0GkXNxnwyxnHQMJU/5d+Itw7HRr4mPpsTX+Q
- a/fw==
+ d=linaro.org; s=google; t=1747808571; x=1748413371; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PmjMaExr94xpqZ6RskD0B1uI5hCJx3jJ3vRdFWdXEik=;
+ b=yUKTrdO0QnFg1yPYMCxl1w6YQIqUcMn5tNn/BvcLl2husW4iHoaVka3S/ElOJ8MZDx
+ ZCOLDChsugDwrRGvPsZ464ONtHRXbneu6v4JgbhdcIcZbO1su9p6mqP8/3tsODwngrc/
+ 8AEY0rxVEiojhdB+PnIBduvZnFmq8TV3gbybWg1Cgge9dS+Vv6LcXinBBIpTXsWikAZt
+ itoINjKV3h0H+FZC6ub00lZL97GFHAJPfTB8Qa3MZlabmw9HIFR1APHEmr5wC2wTCWAa
+ vlvS10twM4Tnw1HTDqccGkIJg7cEQ5EDlBmUVoA+SLF6Lj5bcHwWN/N4BVyEBpMO16k1
+ snlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747799482; x=1748404282;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bZKPfEkqbMC3Fn67c4OgivPjzVU/E6vlO8f69b9MnPk=;
- b=THKNmcIinzl1O+5iv7ql0TSbetfI3Vhc3erW9YhMOJhXKtEWP/UuURECB/CgOlzZVb
- GntLjJnSCr69XSt30/udjXY3Nrdp/8ygv1Mw5bXNCZlQmb4Si1a/noCqHFckM+Cq23Im
- 6Q26SjUfFHn/p/0LGKMcUQfN5abP/6ASh4ay6VGBrF7+q+f+0obuC8nb8XzzEcohfXDW
- M46DqxWZoNpDiKyTPTiWf0uZH0jBkAn2ylX4u58dz2+DXEELacXHiSXeabJjSlGTTPVq
- Hlifp6Ds8uOgvcgyWar741PV+o9kPPzZ0molh8QwMKxm2Rg06rPJKKcavW5XUR8H1yqY
- zyMw==
-X-Gm-Message-State: AOJu0Yx4T2qfnx3FKU+gZwzV8RfSnIpy5fpLzGoSGh2wB8Dk4tuDP1x4
- P+rbGgOlf5TSzxoA9F5tDS0mjDVgYuNU9kkuZ2GYjXbc3Gn0lsZHgrnXRHaAG0PlSOA=
-X-Gm-Gg: ASbGncuCybABcccvf0kY+wRo8I46DmQ6+XU1obLUtX1M0OgHvlwFiAR0BWe12M5oR0T
- cy+lzyaQcaNBa0a9Td3mHAclE2Fp62QI1OzlYubKezWLuiU9U+n1NpZO8nLFpjy6Tg677nVnvV9
- +B6w1PHFOR7nEni5fQhz84D62Ht4943EyK1m3tXU4BmkOKR+O90pCeihqdFjt7Y8IZl23werMwS
- gzNEETXjwWYJ1sj7c9pS/aslYTCd5/EZikYOb4mpAq5hPO1Xr0zbNGc/eM1xzZTTrZ81vj0M/Tj
- LrPkem3fWxiJVEMIwmja6Ipnv4nAnCcLkRmESl0MllB/iNW4XJmXEItWB4ymKejE4COHUhGs
-X-Google-Smtp-Source: AGHT+IFbDjK4CSmEznpP+P9uyF88RW5RF4IBisQaKGRPgWzSaScl2LyRyc5Bw502kO0Nk8RosyrtZg==
-X-Received: by 2002:a05:6a00:a88f:b0:736:33fd:f57d with SMTP id
- d2e1a72fcca58-742a98a32e1mr20410237b3a.17.1747799481912; 
- Tue, 20 May 2025 20:51:21 -0700 (PDT)
-Received: from [10.100.116.185] ([157.82.128.1])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a98a242asm8647580b3a.164.2025.05.20.20.51.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 May 2025 20:51:21 -0700 (PDT)
-Message-ID: <f299600a-cf0b-47e4-85d1-5c3d1b4eaef0@daynix.com>
-Date: Wed, 21 May 2025 12:51:19 +0900
+ d=1e100.net; s=20230601; t=1747808571; x=1748413371;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PmjMaExr94xpqZ6RskD0B1uI5hCJx3jJ3vRdFWdXEik=;
+ b=oSrTpGRRPuCZObLkBo8r8D6WYAbpLN9ozRIudZKsFJa7S43wWzYRZjx/bjgRK1sBvY
+ F6blbsKKACPSUU0PfA6GmOkfVwLIoYz/WqZmBckz+mF6+LUskoCgPnEG3s45u2UNrMb3
+ fO8ra38ra8VdXM3n4kszTwUf21wPdPc9R+ng/C+vvPWZpU5nLaIszgE9iBC4gLerM+ru
+ ZHCQG/ka//tOZJvb3m0y64h+jnpNoFXBfP63Th2IzKpREHaXNMh8F2cqTgJRVHNbJJ3K
+ c589pI7R/gi1IoimyyP/P4B9t26oCkAG/dp7nTqdLqVyqtGDLJ7tGsiTtO+EtXnXErfF
+ vZlA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmuqPREL6ms9UO4f3n4QW1cKjvhQoZ1R+cAwNsCETRcWMSxnYKngNUidobJ+7cvFzTh/OnjLea4Mgf@nongnu.org
+X-Gm-Message-State: AOJu0YwvLeDMZKOds3wthX+BEW/FNg6E2QDx12qHorKI4XyVSPBku4c4
+ 9qpMM8PGknTK6gN5VLzlPVvuuv4tR/9yh5sfPFowvKDTrxJbD2VKXSXc0BiUUKEubH4=
+X-Gm-Gg: ASbGncv2Alf+7hMbJ4+UR07bV0yguQPQlOwl2YKNKxNmBsNXmHMkzZpy5Jvm0YjYMj/
+ 8r7ostZa+h/MmzXWSAq7nzul/oqrP7QVNTsD6A+Bp4vooXiYI9VEty089AXzTE5DzW0PKjFnBkx
+ Y4XqXK/+zTCQBk6ogIOdtmcuB+E42NyzHuVUXsH2asHKljnDHxLwLOjmdOw5F/gxWMaPUlEKZhX
+ zisHJAqsKgm7ExBENy2edg+wvZtlMBABUWq4oYubjOWBM9IJNLGX+NJZ2U3vJLsN8kTKmg9Tz2K
+ VKjmpGZgpe5AaMm06ysETzAla4PKlcj+0RCx2jp20xg5+6wzwVyZ
+X-Google-Smtp-Source: AGHT+IH1/gQhfVRuvcL1z1r0r1JLSqn5JrfMp3cb4sB+s0qyXM84NTy8sluQLk3OJDJpqAP1+dqV4Q==
+X-Received: by 2002:a17:907:7f08:b0:ac7:3817:d8da with SMTP id
+ a640c23a62f3a-ad52d609170mr1523651866b.52.1747808570802; 
+ Tue, 20 May 2025 23:22:50 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad5572f6436sm598125566b.182.2025.05.20.23.22.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 May 2025 23:22:50 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 62DD65F9CB;
+ Wed, 21 May 2025 07:22:49 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,  qemu-devel@nongnu.org,  Peter Xu
+ <peterx@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Weiwei Li
+ <liwei1518@gmail.com>,  qemu-arm@nongnu.org,  Nicholas Piggin
+ <npiggin@gmail.com>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,  Bin Meng
+ <bmeng.cn@gmail.com>,  Tyrone Ting <kfting@nuvoton.com>,  Hao Wu
+ <wuhaotsh@google.com>,  Kyle Evans <kevans@freebsd.org>,  Alistair Francis
+ <alistair.francis@wdc.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,  Riku Voipio <riku.voipio@iki.fi>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,  Fabiano Rosas
+ <farosas@suse.de>,  Alexandre Iooss <erdnaxe@crans.org>,  Laurent Vivier
+ <lvivier@redhat.com>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Warner Losh <imp@bsdimp.com>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Palmer Dabbelt <palmer@dabbelt.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,  qemu-ppc@nongnu.org,  Paolo
+ Bonzini <pbonzini@redhat.com>,  qemu-rust@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2 11/17] gdbstub: Try unlinking the unix socket before
+ binding
+In-Reply-To: <56e0a35b5c53b416db130c414cd0f3d6@linux.ibm.com> (Ilya
+ Leoshkevich's message of "Tue, 20 May 2025 23:21:37 +0100")
+References: <20250207153112.3939799-1-alex.bennee@linaro.org>
+ <20250207153112.3939799-12-alex.bennee@linaro.org>
+ <ee091002-a552-49fe-ae5e-8916937dba15@tls.msk.ru>
+ <56e0a35b5c53b416db130c414cd0f3d6@linux.ibm.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Wed, 21 May 2025 07:22:49 +0100
+Message-ID: <877c2aa3eu.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-net: Add queues for RSS during migration
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- devel@daynix.com
-References: <20250510-n-v1-1-19ee26ac3ca6@daynix.com>
- <CACGkMEt7xoX-HvV1mOo=zqpyV0se2ELBMvNV-uGpKUZPQ-PB2A@mail.gmail.com>
- <f3d10b18-9755-46af-9623-fb0ed7d99c51@daynix.com>
- <CACGkMEu_hyc-mP4zk9kJprCpFQbVzO0D2SEMy9eid5TmUH7Uaw@mail.gmail.com>
- <7f1c31de-de22-4290-a4fd-44e523477ca5@daynix.com>
- <CACGkMEsPb6TdT5qx9CkNOeT3ScJmS8_-FDjGh916fi8pWkuxNQ@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CACGkMEsPb6TdT5qx9CkNOeT3ScJmS8_-FDjGh916fi8pWkuxNQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,139 +123,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/21 9:51, Jason Wang wrote:
-> On Fri, May 16, 2025 at 11:29 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> On 2025/05/16 10:44, Jason Wang wrote:
->>> On Wed, May 14, 2025 at 2:58 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>>
->>>> On 2025/05/14 14:05, 'Jason Wang' via devel wrote:
->>>>> On Sat, May 10, 2025 at 3:24 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>>>>
->>>>>> virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
->>>>>> VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
->>>>>> number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
->>>>>> VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_features
->>>>>> is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
->>>>>> VIRTIO_NET_F_MQ uses bit 22.
->>>>>>
->>>>>> Instead of inferring the required number of queues from
->>>>>> vdev->guest_features, use the number loaded from the vm state.
->>>>>>
->>>>>> Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing")
->>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>> ---
->>>>>>     include/hw/virtio/virtio.h |  2 +-
->>>>>>     hw/net/virtio-net.c        | 11 ++++-------
->>>>>>     hw/virtio/virtio.c         | 14 +++++++-------
->>>>>>     3 files changed, 12 insertions(+), 15 deletions(-)
->>>>>>
->>>>>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->>>>>> index 638691028050..af52580c1e63 100644
->>>>>> --- a/include/hw/virtio/virtio.h
->>>>>> +++ b/include/hw/virtio/virtio.h
->>>>>> @@ -211,7 +211,7 @@ struct VirtioDeviceClass {
->>>>>>         int (*start_ioeventfd)(VirtIODevice *vdev);
->>>>>>         void (*stop_ioeventfd)(VirtIODevice *vdev);
->>>>>>         /* Called before loading queues. Useful to add queues before loading. */
->>>>>> -    int (*pre_load_queues)(VirtIODevice *vdev);
->>>>>> +    int (*pre_load_queues)(VirtIODevice *vdev, uint32_t n);
->>>>>
->>>>> This turns out to be tricky as it has a lot of assumptions as
->>>>> described in the changelog (e.g only lower 32bit of guest_features is
->>>>> correct etc when calling this function).
->>>>
->>>> The problem is that I missed the following comment in
->>>> hw/virtio/virtio.c:
->>>>        /*
->>>>         * Temporarily set guest_features low bits - needed by
->>>>         * virtio net load code testing for VIRTIO_NET_F_CTRL_GUEST_OFFLOADS
->>>>         * VIRTIO_NET_F_GUEST_ANNOUNCE and VIRTIO_NET_F_CTRL_VQ.
->>>>         *
->>>>         * Note: devices should always test host features in future - don't
->>>> create
->>>>         * new dependencies like this.
->>>>         */
->>>>        vdev->guest_features = features;
->>>>
->>>> This problem is specific to guest_features so avoiding it should give us
->>>> a reliable solution.
->>>
->>> I meant not all the states were fully loaded for pre_load_queues(),
->>> this seems another trick besides the above one. We should seek a way
->>> to do it in post_load() or at least document the assumptions.
->>
->> The name of the function already clarifies the state is not fully
->> loaded. An implementation of the function can make no assumption on the
->> state except that you can add queues here, which is already documented.
-> 
-> Where? I can only see this:
-> 
->      /* Called before loading queues. Useful to add queues before loading. */
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-I meant it is documented that it can add queues. There is nothing else 
-to document as an implementation of the function can make no assumption 
-else.
+> On 2025-05-20 15:50, Michael Tokarev wrote:
+>> 07.02.2025 18:31, Alex Benn=C3=A9e wrote:
+>>> From: Ilya Leoshkevich <iii@linux.ibm.com>
+>>> In case an emulated process execve()s another emulated process,
+>>> bind()
+>>> will fail, because the socket already exists. So try deleting it. Use
+>>> the existing unix_listen() function which does this. Link qemu-user
+>>> with qemu-sockets.c and add the monitor_get_fd() stub.
+>>> Note that it is not possible to handle this in do_execv(): deleting
+>>> gdbserver_user_state.socket_path before safe_execve() is not correct,
+>>> because the latter may fail, and afterwards we may lose control.
+>> Please note: this is linux-user stuff, which is usually linked
+>> statically.
+>> By linking it with qemu-sockets, we basically broke static linking,
+>> because
+>> qemu-sockets uses getaddrinfo() &Co.  The previous code, I think,
+>> was there
+>> for a reason, - to avoid this linkage.
+>> How do you think about reverting this one and addressing the
+>> original
+>> problem without using qemu-sockets?
+>> Alternatively, it might be possible to split qemu-sockets.c into
+>> unix-related
+>> stuff and generic stuff.
+>> Thanks,
+>> /mjt
+>
+> I can split it.
+>
+> However, wasn't it already broken in this regard?
+> With fccb744f41c69fec6fd92225fe907c6e69de5d44^ I get:
+>
+> [2/2] Linking target qemu-s390x
+> /usr/bin/ld: /usr/lib64/libglib-2.0.a(gutils.c.o): in function
+> `g_get_user_database_entry':
+> (.text+0xeb): warning: Using 'getpwnam_r' in statically linked
+> applications requires at runtime the shared libraries from the glibc
+> version used for linking
+> /usr/bin/ld: (.text+0x2be): warning: Using 'getpwuid' in statically
+> linked applications requires at runtime the shared libraries from the
+> glibc version used for linking
+> /usr/bin/ld: (.text+0x134): warning: Using 'getpwuid_r' in statically
+> linked applications requires at runtime the shared libraries from the
+> glibc version used for linking
+>
+> This comes from glib, but the ultimate result is still the same.
+>
+> Also, what are the symptoms of the breakage? IIUC as long as execution
+> does not reach getaddrinfo(), which it in this case should not, because
+> it is used only on inet paths, there should not be any issues, right?
+>
+> In any case, the new warning is annoying and I better fix it for this
+> reason alone.
 
-> 
->>
->>>
->>>>
->>>>>
->>>>> Looking at the commit that introduces this which is 9379ea9db3c that says:
->>>>>
->>>>> """
->>>>> Otherwise the loaded queues will not have handlers and elements
->>>>> in them will not be processed.
->>>>> """
->>>>>
->>>>> I fail to remember what it means or what happens if we don't do 9379ea9db3c.
->>>>
->>>> The packets and control commands in the queues except the first queue
->>>> will not be processed because they do not have handle_output set.
->>>
->>> I don't understand here, the VM is not resumed in this case. Or what
->>> issue did you see here?
->>
->> Below is the order of relevant events that happen when loading and
->> resuming a VM for migration:
->>
->> 1) vdc->realize() gets called. virtio-net adds one RX queue, one TX
->> queue, and one control queue.
->> 2) vdc->pre_load_queues() gets called. virtio-net adds more queues if
->> the "n" parameter requires that.
->> 3) The state of queues are loaded.
->> 4) The VM gets resumed.
->>
->> If we skip 2), 3) will load states of queues that are not added yet,
->> which breaks these queues and packets and leave control packets on them
->> unprocessed.
-> 
-> Ok, let's document this and
-> 
-> 1) explain why only virtio-net requires the pre_load_queues (due to
-> the fact that the index of ctrl vq could be changed according to
-> #queue_paris)
+I sent:
 
-We would need this logic even if the index of ctrl vq didn't change. We 
-need it because virtio-net have varying number of queues, which needs to 
-be added before loading.
+  Message-Id: <20250520165706.3976971-1-alex.bennee@linaro.org>
+  Date: Tue, 20 May 2025 17:57:06 +0100
+  Subject: [RFC PATCH] util: split unix socket functions out of qemu-sockets
+  From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.org>
 
-> 2) the commit also fixes the issue that changing the TAP queue pairs twice
+Although I'm still seeing some warnings on my build:
 
-Commit 9379ea9db3c makes it change the TAP queue pairs once more. This 
-patch reverts it, but that doesn't matter because the operation is 
-idempotent.
+  # QEMU configure log Tue 20 May 18:14:18 BST 2025
+  # Configured with: '../../configure' '--disable-docs' '--disable-tools' '=
+--disable-system' '--disable-vhost-kernel' '--disable-vhost-user' '--disabl=
+e-vhost-net' '--static'
 
-More concretely, before commit 9379ea9db3c, we had two points that 
-updates the TAP queue pairs when loading a VM for migration:
-1) virtio_net_set_features()
-2) virtio_net_post_load_device()
+Gives:
 
-Commit 9379ea9db3c added a third point: virtio_net_pre_load_queues().
-This patch removes the third point by avoid calling 
-virtio_net_set_queue_pairs(), which is a nice side effect.
+  [142/142] Linking target qemu-xtensaeb
+  /usr/bin/ld: /usr/lib/x86_64-linux-gnu/libglib-2.0.a(gutils.c.o): in func=
+tion `g_get_user_database_entry':
+  (.text+0x287): warning: Using 'getpwuid' in statically linked application=
+s requires at runtime the shared libraries from the glibc version used for =
+linking
+  /usr/bin/ld: (.text+0xe0): warning: Using 'getpwnam_r' in statically link=
+ed applications requires at runtime the shared libraries from the glibc ver=
+sion used for linking
+  /usr/bin/ld: (.text+0x11e): warning: Using 'getpwuid_r' in statically lin=
+ked applications requires at runtime the shared libraries from the glibc ve=
+rsion used for linking
 
-Regards,
-Akihiko Odaki
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
