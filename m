@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE9A4C2D0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 19:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 573E0C54E90
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 May 2025 19:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHp7z-0003lN-SZ; Wed, 21 May 2025 15:29:23 -0400
+	id 1uHpFq-000506-HN; Wed, 21 May 2025 15:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHp7x-0003kx-HC
- for qemu-devel@nongnu.org; Wed, 21 May 2025 15:29:21 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uHpFk-0004zn-Rp
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 15:37:25 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uHp7p-0002oy-8e
- for qemu-devel@nongnu.org; Wed, 21 May 2025 15:29:19 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-b1a1930a922so4971606a12.3
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 12:29:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uHpFi-0004WR-Oj
+ for qemu-devel@nongnu.org; Wed, 21 May 2025 15:37:24 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-6ff4faf858cso51182917b3.2
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 12:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747855747; x=1748460547; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TnD0/WlVr7vjeaAiRr041svGe4C3YveaHI4Ld3ZWln0=;
- b=oyxzmw8pa7I+0oQECTKbtm3IX8GxVuZKxLM1g13O4pSKSPgeP1qrIxeJeCO4qF9Eod
- VH/FZuCzbYvazGPmj/s30R0Gphix/jIXR+YNUVnNKYEijxekD0Tpnw7jedDnok5skDel
- /ExY8k0rpB6BJVHktjnGp75RqChd/5+0lhBtfyDvi5ZQuPYbqAzvcPdiGAW3V24kkP6L
- +6cRDKLekW5DTIiP7PH4LOyTOX+5+erxU1sQjuaW2CKcZV2K/VCyExkjQeN6qnjSeEwi
- lbc2onjXZ2vWehY13zwJUD65szE+pKJWK7kkFVkrt0sd5+jBvauPzOQDM7kMdS6LTgG2
- PCZA==
+ d=linaro.org; s=google; t=1747856238; x=1748461038; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IbzmVBRSO4g4c0IGjooH1aJnH8y7YXALfQS1pfKpUOs=;
+ b=Lrp79kIALmY/p/ZO9+i2e3f8ecZqQvgfbnoRc3+EPmkd0hYcytC+DydXnQaISGkpPf
+ LjljSkRFiQCfOTSZERv1KMkl+XAanwNbvMn9rA7+g2hA1p38dboAb2W7oBNYbXW2hJXA
+ Zi6jOJf9df0olz075XrZPSzMTNUecSf/wu9pUcWFLoGMY/JQnNgj0qybZk1wET2myDNf
+ KY9cyg/xj9fWqEt9NggmWum+9Lj85xkTXnNAKdcipG+ByjAVdFO8Cy7K5crABl34amH/
+ 38mBLXwVvyJa215yzs4rnn6xStypr1qNE82tCasDUwFtyfmMcyqyWw/iSOHmdE6ZL+SQ
+ TlJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747855747; x=1748460547;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TnD0/WlVr7vjeaAiRr041svGe4C3YveaHI4Ld3ZWln0=;
- b=IQ53OUBVdM56Pxsq0Zkax0HYQ09fEmWUvx5vsIQz5erD2oqMRRbvylbeNzaIYG7fqc
- tY8V8zrBOPKiCa/zyb/N1anips+pPLtAC83PM92vRagJ9PMTI/HIwpUqps4HfQNihQJw
- ooumse2+vXyXwldCsUNGehQo6+4snTxmmElhCh03DNP2//pwlDlqzuzgOqlEew62mGS0
- T06zMYcK5YfhClWSuSZ/4MC+dMRv1oFFJeRiVPL6LZemA3O2ncomjmQuWLQo6WvKdK7n
- 1YrJ1WBcd7nTGkl6SAVFWX8rxaHwet2fwSYFFCiFek9a7IS9kJp+UnXUqhurJFGZ7GnY
- 8TEw==
-X-Gm-Message-State: AOJu0YyDrAsKMoBrT/4VykXeRydXZ/SQkMzk06JRZfJVaoB3iXd0OzvC
- wS4Lu5CasV+J9KU29FH4v/0TQvoZk5fcDr+ld8/8E2HIROng5/2PtS01zKEEtTQcSVpomY8U98D
- OuuOE
-X-Gm-Gg: ASbGncs5xDQB1a4kYGGNFd/STBcxjhJ6laRHV0h3tx/NwOB8D4vnR2ztNZna4u092nK
- VOWj2zOA5mpOyvJKzJpytvRdQD+WXTdFKBMY5vO/HlkIt20jPTpG92/576OPyJ+GpKWg04snAC0
- Y+vjjhF6OVD9L8v0b6dtNeStayW6AjZP8dKhvNP67StRU+cmhZeOnqDn+jOLfZF+Oy/9UagcFx7
- bDJD+4LWqGpAZPf87q01kc1UE3YtaJAX4DvtxArc4zAaXg94199oNj1H7V1mdsBJdK8MIVXvA/A
- QSiZesB0krEW+pQVoJdhXqtQvYbqCDsDP6luuQqjjrqTE8tFjIAbJCniuGsde2Jv
-X-Google-Smtp-Source: AGHT+IHrhiqBcQhAUwZIta07+B9wJi7W4YlkhdqXRf1u7iUcMtYQD1y5cudOJDG5l6aYojoAG16vNg==
-X-Received: by 2002:a17:903:2cd:b0:220:ff3f:6cc0 with SMTP id
- d9443c01a7336-231d459a546mr313919695ad.38.1747855746801; 
- Wed, 21 May 2025 12:29:06 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4aee45dsm96737555ad.83.2025.05.21.12.29.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 12:29:06 -0700 (PDT)
-Message-ID: <8e2df5cd-0cb4-4c0c-88f1-30523c6c5315@linaro.org>
-Date: Wed, 21 May 2025 12:29:05 -0700
+ d=1e100.net; s=20230601; t=1747856238; x=1748461038;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IbzmVBRSO4g4c0IGjooH1aJnH8y7YXALfQS1pfKpUOs=;
+ b=HbWotPCkbNq3hzDo5h+1gXMWUIQj4bsQBmUvkCrmehsMBgrhlRFnUfxdpSoOh5Fv0a
+ yHVP11z/CS8bKK7c+tt7MREl5twwxUGRccHk0lx7lwe5ysy/tiH03ry5XiSWNHiyyaVG
+ vGPsGUZQNMHlZ+f5VwGPhoGZL2mlD+I6Y9RbrogLDqm6R+LA6dHpAc1CXabpAyHtOA0f
+ g4m6tqAGc4pqjirWrO+zIF6hinNzvqD9c9RSUMjrkBzMDR30XvVspYEyoB6jrGqN6tRe
+ MAIXgqK+NSUkLGHyJPGz71S77WzIpKvYhPirinxn3VV4KPd4Qop5Y5ITxpcBclaHRqEm
+ OdwA==
+X-Gm-Message-State: AOJu0YzFRiH4GjdO8qkgm347pBquO+GyRJUaRSnUw5JLAd4MV6QPuuss
+ jCEG/VSVd204K7XWu95QLiEoUZ5LA+Xk0i8TuVxM3zgJgMDHF5l/VKRBySB648CZSTUZvf9MaAN
+ KW3zl6tJzJsOC52e5vHiY8bNJsYwtCopZJb7dwGlyGQ==
+X-Gm-Gg: ASbGnctABuT7paaicTiYm5pxpyzZkppCoC2NPCiPhXscdnPuUI9YphYW2kvgzOjD5W5
+ c3mVktt2JR1oSPx0SrE6IjQukjew2UWNvzAYzNtquR2n0G9rMua6yzi4TORkRuJpMg7y8eUsFqm
+ Gl+FxlOHZm9C7ytQj5diiPY85kdXyWVPbbSg==
+X-Google-Smtp-Source: AGHT+IEOyWq9QA/1KkZ2inmA/jQx7YoWrVu16m5QczKYzyz+0BkxVK7QwJcmhdui9XnHJtwjmKtG/cO3uPQFocwxqLY=
+X-Received: by 2002:a05:690c:4c13:b0:70c:a5c2:cef8 with SMTP id
+ 00721157ae682-70ca7a070c8mr325848057b3.19.1747856238395; Wed, 21 May 2025
+ 12:37:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/12] qapi: make most CPU commands unconditionally
- available
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-References: <20250515172732.3992504-1-pierrick.bouvier@linaro.org>
- <20250515172732.3992504-10-pierrick.bouvier@linaro.org>
- <875xhxjeq3.fsf@pond.sub.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <875xhxjeq3.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52d.google.com
+References: <CAJSP0QXoQBbA-HATMo0OTLOnUcvYjHiUM2nmAQj1i=ZXkbStoQ@mail.gmail.com>
+In-Reply-To: <CAJSP0QXoQBbA-HATMo0OTLOnUcvYjHiUM2nmAQj1i=ZXkbStoQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 21 May 2025 20:37:05 +0100
+X-Gm-Features: AX0GCFtfZQSInK7TE5olKuW0RYA4wvbwV4cjGPbqsJYG8Ac3CkNZFLY2CxwzYec
+Message-ID: <CAFEAcA_A36=RrQ2K+kLQgwVRdT=dFJkPW4vTsQn9RZ7FJMpktQ@mail.gmail.com>
+Subject: Re: QEMU 10.1 release schedule
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,160 +95,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/18/25 11:29 PM, Markus Armbruster wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-> 
->> From: Daniel P. Berrangé <berrange@redhat.com>
->>
->> This removes the TARGET_* conditions from all the CPU commands
->> that are conceptually target independent. Top level stubs are
->> provided to cope with targets which do not currently implement
->> all of the commands.
->>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
-> [...]
-> 
->> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
->> deleted file mode 100644
->> index e153291a7fc..00000000000
->> --- a/qapi/machine-target.json
->> +++ /dev/null
-> 
-> [...]
-> 
->> -##
->> -# @query-cpu-model-comparison:
->> -#
->> -# Compares two CPU models, @modela and @modelb, returning how they
->> -# compare in a specific configuration.  The results indicates how
->> -# both models compare regarding runnability.  This result can be
->> -# used by tooling to make decisions if a certain CPU model will
->> -# run in a certain configuration or if a compatible CPU model has
->> -# to be created by baselining.
->> -#
->> -# Usually, a CPU model is compared against the maximum possible CPU
->> -# model of a certain configuration (e.g. the "host" model for KVM).
->> -# If that CPU model is identical or a subset, it will run in that
->> -# configuration.
->> -#
->> -# The result returned by this command may be affected by:
->> -#
->> -# * QEMU version: CPU models may look different depending on the QEMU
->> -#   version.  (Except for CPU models reported as "static" in
->> -#   query-cpu-definitions.)
->> -# * machine-type: CPU model may look different depending on the
->> -#   machine-type.  (Except for CPU models reported as "static" in
->> -#   query-cpu-definitions.)
->> -# * machine options (including accelerator): in some architectures,
->> -#   CPU models may look different depending on machine and accelerator
->> -#   options.  (Except for CPU models reported as "static" in
->> -#   query-cpu-definitions.)
->> -# * "-cpu" arguments and global properties: arguments to the -cpu
->> -#   option and global properties may affect expansion of CPU models.
->> -#   Using query-cpu-model-expansion while using these is not advised.
->> -#
->> -# Some architectures may not support comparing CPU models.  s390x
->> -# supports comparing CPU models.
->> -#
->> -# @modela: description of the first CPU model to compare, referred to
->> -#     as "model A" in CpuModelCompareResult
->> -#
->> -# @modelb: description of the second CPU model to compare, referred to
->> -#     as "model B" in CpuModelCompareResult
->> -#
->> -# Returns: a CpuModelCompareInfo describing how both CPU models
->> -#     compare
->> -#
->> -# Errors:
->> -#     - if comparing CPU models is not supported
->> -#     - if a model cannot be used
->> -#     - if a model contains an unknown cpu definition name, unknown
->> -#       properties or properties with wrong types.
->> -#
->> -# .. note:: This command isn't specific to s390x, but is only
->> -#    implemented on this architecture currently.
-> 
-> We lose this note.  Intentional?
-> 
-> Perhaps because we also have the "Some architectures ..." paragraph
-> above?
-> 
->> -#
->> -# Since: 2.8
->> -##
->> -{ 'command': 'query-cpu-model-comparison',
->> -  'data': { 'modela': 'CpuModelInfo', 'modelb': 'CpuModelInfo' },
->> -  'returns': 'CpuModelCompareInfo',
->> -  'if': 'TARGET_S390X' }
->> -
->> -##
->> -# @query-cpu-model-baseline:
->> -#
->> -# Baseline two CPU models, @modela and @modelb, creating a compatible
->> -# third model.  The created model will always be a static,
->> -# migration-safe CPU model (see "static" CPU model expansion for
->> -# details).
->> -#
->> -# This interface can be used by tooling to create a compatible CPU
->> -# model out two CPU models.  The created CPU model will be identical
->> -# to or a subset of both CPU models when comparing them.  Therefore,
->> -# the created CPU model is guaranteed to run where the given CPU
->> -# models run.
->> -#
->> -# The result returned by this command may be affected by:
->> -#
->> -# * QEMU version: CPU models may look different depending on the QEMU
->> -#   version.  (Except for CPU models reported as "static" in
->> -#   query-cpu-definitions.)
->> -# * machine-type: CPU model may look different depending on the
->> -#   machine-type.  (Except for CPU models reported as "static" in
->> -#   query-cpu-definitions.)
->> -# * machine options (including accelerator): in some architectures,
->> -#   CPU models may look different depending on machine and accelerator
->> -#   options.  (Except for CPU models reported as "static" in
->> -#   query-cpu-definitions.)
->> -# * "-cpu" arguments and global properties: arguments to the -cpu
->> -#   option and global properties may affect expansion of CPU models.
->> -#   Using query-cpu-model-expansion while using these is not advised.
->> -#
->> -# Some architectures may not support baselining CPU models.  s390x
->> -# supports baselining CPU models.
->> -#
->> -# @modela: description of the first CPU model to baseline
->> -#
->> -# @modelb: description of the second CPU model to baseline
->> -#
->> -# Returns: a CpuModelBaselineInfo describing the baselined CPU model
->> -#
->> -# Errors:
->> -#     - if baselining CPU models is not supported
->> -#     - if a model cannot be used
->> -#     - if a model contains an unknown cpu definition name, unknown
->> -#       properties or properties with wrong types.
->> -#
->> -# .. note:: This command isn't specific to s390x, but is only
->> -#    implemented on this architecture currently.
-> 
-> We lose this note.  Intentional?
-> 
-> Perhaps because we also have the "Some architectures ..." paragraph
-> above?
-> 
->> -#
->> -# Since: 2.8
->> -##
->> -{ 'command': 'query-cpu-model-baseline',
->> -  'data': { 'modela': 'CpuModelInfo',
->> -            'modelb': 'CpuModelInfo' },
->> -  'returns': 'CpuModelBaselineInfo',
->> -  'if': 'TARGET_S390X' }
-> 
-> [...]
-> 
+On Wed, 21 May 2025 at 19:30, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+>
+> Hi,
+> Daniel Berrang=C3=A9 has proposed a release schedule that looks good to m=
+e.
+> The release will happen just before the KVM Forum conference.
+>
+> Please reply if you have any questions or concerns about these dates!
+>
+> - Soft freeze: 2025-07-22
+> - Hard freeze (rc0): 2025-07-29
+> - rc1: 2025-08-05
+> - rc2: 2025-08-12
+> - rc3: 2025-08-19
+> - Release or rc4: 2025-08-26
+> - Release if rc4 was needed: 2025-09-02
+>
+> https://wiki.qemu.org/Planning/10.1
 
-Yes, those notes don't have any reason to be present anymore, and the 
-new "Some architectures..." paragraph replaces them.
+Personally if I were running the release this time around I
+would move everything a week earlier, to avoid the potential
+need to do a release the week of KVM Forum. (My experience is
+that "we need an rc4" is the common case.)
+
+-- PMM
 
