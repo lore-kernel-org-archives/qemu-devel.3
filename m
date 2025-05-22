@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1940AC54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 11:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87385C54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 11:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI4AS-0007TP-GC; Thu, 22 May 2025 07:32:56 -0400
+	id 1uI4Bn-0008JN-02; Thu, 22 May 2025 07:34:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uI4AQ-0007Sv-PI; Thu, 22 May 2025 07:32:54 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uI4AO-0008Cz-GI; Thu, 22 May 2025 07:32:54 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E12D31243BE;
- Thu, 22 May 2025 14:32:42 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 921192131A6;
- Thu, 22 May 2025 14:32:49 +0300 (MSK)
-Message-ID: <5ae8f525-2383-4d78-8d53-b0ccea0624e6@tls.msk.ru>
-Date: Thu, 22 May 2025 14:32:49 +0300
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uI4Bd-0008E5-RA
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 07:34:11 -0400
+Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uI4BY-0008K4-C6
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 07:34:09 -0400
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-4947635914aso82241171cf.3
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 04:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1747913641; x=1748518441; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pvtJvKwED2g/sZa1Pk53e57hJmDqDX/ksZLl4/V2mTo=;
+ b=fa9nWotXASHcE/BB3lSkmxrgoDHp7wyE4wRgqk2Um99P2NvpCn2l2LS4JxVTbAaR1E
+ RQZGsUgTExS+/qudrnQ0ZeBa4CNRma2qfPw4Rcuntlwgyuu9rQUJvD06R0/xDw0WmH8b
+ aabQ+dkODmaV6tsQIYroL86Z1HTgJ6xCosemmHbLrZSN2dkt3ZXYTRtHPGaoMvkTE8lO
+ fK7plEqY+6+OjU3+3asqmbICjsj+3YTg3x8N4B7BfWVkWoKVBZW+QpWGXam2GoodMzwq
+ btK20KGy/kuk4RC6HhJk+eLWgeDe353oU82DOXBCw6bjZWLrKKy/oW/ZArA/7LDz827e
+ YcFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747913641; x=1748518441;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pvtJvKwED2g/sZa1Pk53e57hJmDqDX/ksZLl4/V2mTo=;
+ b=lhI93aajEDTyAeZBlWpZFRzdQSoIfgKJ2ewbjdBFYJ79qFhCoGE8eyZVikiSzrAQgW
+ MgF7aEfon9j8SAAc8IxiSKGTQN+VqEi7v8vSsNkJ67KWUigXRal6YDcErtRDjHI1I9EA
+ pOuV87jQF5zxo4mLV4zd5EkyAoiF1HNaowA1S7LftDOC1k9i95xNyWiiodcucns1q/9K
+ xJ35DL6H24Iscr7rlA7Gb7VzArIICH1A0tjgR1lnbSP0fagZWkO2FMBZYgX/ub/Oy0EU
+ PEdigdXjMlwxUgfw4po4XfKqrBsIWEQbMWoQvg8dhzt0fwQqcbnq20bAn8XGr+lirJzy
+ vk2w==
+X-Gm-Message-State: AOJu0Yx1xMW3VvyCsT4iFE34PSHOJ8FzSEAVEUUn0UvUXSMA5j2wP7qd
+ ESX8RlODi6zX/Oap3l2jzsKM/3YR2UI1gOhWhzRDc3h9PZbR98oZA3FeE91FgeKfF7cfPDWBo+d
+ uIYWR
+X-Gm-Gg: ASbGncvbHymWsRKfwiahGWSfSLBJKv3meya8ukA6KuY2gu0OFDPPVt+NM1/F16tydUm
+ SRtCyyVPcj9T3gh3xRPRNN0Vh33ZblRhUnb6e9OSFgtkiyEhLLbysg2Jqah1s9klBIRjSjKTNWl
+ ijWVWL8dww8S1oOktunBmfliMc/4YNRYWiF90aiL95q/IS0rX5fen2YQ+PQvRew92Uc15G4U3gM
+ Oo8uUx9ak3fbmKnrDcjWUGG77nTR9dj6OihbvKZ/1NJBuwAqFxxnjhE83bZUQipQjpUmuA9K04a
+ D+EaijTry50T+2tb5baloZyswVzUpuRqsrMk3N3JCkuBplxRFVo18pA=
+X-Google-Smtp-Source: AGHT+IFo5+kejL+1q9pTU9z+PYylIyDVyGojvS6ukE9jY+rlX+f4ftGNkfHM4KjSbiiKIPQWGIQKrQ==
+X-Received: by 2002:a05:6122:88c:b0:52a:cdd8:fc33 with SMTP id
+ 71dfb90a1353d-52dba614e02mr19310817e0c.0.1747913630748; 
+ Thu, 22 May 2025 04:33:50 -0700 (PDT)
+Received: from grind.. ([2804:7f0:bcc0:906e:57d5:dca2:1ab3:20de])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-52dbab6c0c2sm11514466e0c.42.2025.05.22.04.33.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 May 2025 04:33:50 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-trivial@nongnu.org
+Subject: [PATCH] target/riscv/cpu.c: fix zama16b order in isa_edata_arr[]
+Date: Thu, 22 May 2025 08:33:44 -0300
+Message-ID: <20250522113344.823294-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] hw/pci-host/gt64120: Fix endianness handling
-To: Rakesh Jeyasingh <rakeshjb010@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@linaro.org, thuth@redhat.com,
- balaton@eik.bme.hu, qemu-stable <qemu-stable@nongnu.org>
-References: <20250429170354.150581-1-rakeshjb010@gmail.com>
- <20250429170354.150581-2-rakeshjb010@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250429170354.150581-2-rakeshjb010@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qt1-x82a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,31 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.04.2025 20:03, Rakesh Jeyasingh wrote:
-> The GT-64120 PCI controller requires special handling where:
-> 1. Host bridge(bus 0 ,device 0) must never be byte-swapped
-> 2. Other devices follow MByteSwap bit in GT_PCI0_CMD
-> 
-> The previous implementation incorrectly  swapped all accesses, breaking
-> host bridge detection (lspci -d 11ab:4620).
-> 
-> Changes made:
-> 1. Removed gt64120_update_pci_cfgdata_mapping() and moved data_mem initialization
->    to gt64120_realize() for cleaner setup
-> 2. Implemented custom read/write handlers that:
->     - Preserve host bridge accesses (extract32(config_reg,11,13)==0)
->     - apply swapping only for non-bridge devices in big-endian mode
-> 
-> Fixes: 145e2198 ("hw/mips/gt64xxx_pci: Endian-swap using PCI_HOST_BRIDGE MemoryRegionOps")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2826
-> Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+Put it after zalrsc and before zawrs.
 
-This seems to be qemu-stable material.
+Cc: qemu-trivial@nongnu.org
+Fixes: a60ce58fd9 ("target/riscv: Support Zama16b extension")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I picked this one up for 9.2 and 10.0,
-please let me know if I shouldn't.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 629ac37501..fe21e0fb44 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -127,8 +127,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
+     ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
+     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+-    ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
+     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
++    ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
+     ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+     ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
+     ISA_EXT_DATA_ENTRY(zfbfmin, PRIV_VERSION_1_12_0, ext_zfbfmin),
+-- 
+2.49.0
 
-Thanks,
-
-/mjt
 
