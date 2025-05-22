@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3380C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2292C54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:08:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIBEp-0000uy-NB; Thu, 22 May 2025 15:05:55 -0400
+	id 1uIBEp-0000uu-AP; Thu, 22 May 2025 15:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIBEm-0000uF-W5
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:05:53 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1uIBEm-0000uB-Ki
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:05:52 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIBEk-0006Rg-Nm
+ id 1uIBEk-0006RZ-8j
  for qemu-devel@nongnu.org; Thu, 22 May 2025 15:05:52 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7398d65476eso163539b3a.1
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:05:50 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7399838db7fso210975b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747940749; x=1748545549; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0N4C9DptqevA9wK4usU3+DxvuKBaI+3ZGbXSlc09sfk=;
- b=fvMtgx0rHhSJPe7Jicc2QMVNTB54yhnZj7Ncz3EZgTdP/IAXwNvS5b3HNALTkzv6vv
- Z5RAo1cBmWq+41y6ATIlV5CxKYEaq9oJH8s9ERcRJtds5JdkQyZ9PtEHaN6f6U55V2T4
- 4WE5R7KClIU5iIchgmt4nzv2au7P/9Ner41Al7IMPe83xyKr9xSmqoOLNU9JoOiAcmwm
- HcnTV+kZQ6Bklbz/UJX9OIkgasIa5cRNuZAT3tULMmte3ixzpWRV6i0MGOL1PCJbdLao
- v4kO/63gP2A+w9cLxKCbsZZuU2pcgcczp6E3pzTn1xN99h605TbslQEKATMT99macJKG
- mUrA==
+ d=linaro.org; s=google; t=1747940748; x=1748545548; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qvoSiU2oEaTcNlVi5fKaSmduLQsgBHGwXgaoEWcRctE=;
+ b=QTDPrgCdgAID4FJT+9Cv1WDWqNQ5sn242rBxEQHpGDjS+V+povb2GMBiBpSY2x23UF
+ oHD+Nsj/2gkMyeYq57pwgOkkHjDyWG90KO1LgUx3WNBtyHBGoHR2ALmfUYJy26Sdpuwi
+ YesMMP8ofgkjv2yqTqCZ+kDg4CfWWIPRfRsCq+yy7w+RR19YjvEgnxu0rRerL+hyVG+F
+ w0+wE4KjbZmhA4pOUGIZl2pGrSWLSRY9z0eG7Fym5zK/bkyAqOQPFivTAK/Ti+6JZx1s
+ vpy3mhVXQhKpDf9b2Vs77UYCq9SFFMbtpLzz6rocSMDON9QQyKg916eKFD5CiABE1MJM
+ ia/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747940749; x=1748545549;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0N4C9DptqevA9wK4usU3+DxvuKBaI+3ZGbXSlc09sfk=;
- b=UczxtQTXhUhCgmDtIqqgvKVSGVIo2sHZhcZoNgKI1g9wFlVj3obfI4dHYN7gtS6dM4
- LZ3VQcxw7g94XslTAs2CmH4jXCQdddVvJyvZezjxhRDZSXsmZzTWdhWqG46ysgHkFUSJ
- ZR3PVOrDfx0BKaSYC83DPuQbL5CGNM4zqfHFbBP7B5yFa6dAuzcbyNRKkMVnYCKF6HAs
- oESgDLSZ58hj9Hb0T+WXZvFyO6pN35H4HF2xg/nJn9vk3pu5tAuE6FCuu2PmaLOW0RIm
- PNQtTb4oyCVexOVcyS6nbRIKS1JBDjKWeJBlMP+5t7g9N/6a1yyWcS3M+8AsAVyHbc1a
- p4yQ==
-X-Gm-Message-State: AOJu0YzyvDqpGWrIC+QrCwws2CPNweyHL3d7QNLKo981nO4ciWon5ieU
- EAPTUbLM4vaZnEm8O62T6+C9825YLwe6WCji53gIQuVcf1E9GRfisznUHi9we/atx8Gw3Kt0dU7
- wEhmJ
-X-Gm-Gg: ASbGncvLnKucg1l8bQFX1MFXcUFFcv8KXm4IcMn95UK8GNk8QbUZA4eV7/QAU7cqwJD
- LmvRwvFrNUvvTNEyKFkCDLkKnVUOcdEnFaHBnt8vUexxa/8fmUpjmR/Svv8mGuIDDCUYk9I/1Ny
- CXS9KW6Z2KcvjE5ogTaerJrag6SyrPsSwBRmEs80gm8jFJosf9+aNZMSSgRlxNM8uvS7S/CWjgH
- xlkl8C/k/YVnQgElp0p0zi7zarx5EIdZ9oI/i19VARvKKBBXDOoTdWsY0syOEvF3rwu5LB1+tdP
- 7aYLJRZ8dpe5RPTgOmakYZr1MM+uXgrw3LCBkAAZnnhTHxroJfI=
-X-Google-Smtp-Source: AGHT+IGghbpf45jURXSgeAZKpf/Mx7qzD3TVIR4LIiuvQG7JLGuXxL6vD3c29NWUI5S6MpOSZjn4ag==
-X-Received: by 2002:a05:6a00:e06:b0:742:b31e:e9c1 with SMTP id
- d2e1a72fcca58-745ece8e3c9mr778740b3a.11.1747940749349; 
- Thu, 22 May 2025 12:05:49 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b26eb082c66sm11625565a12.60.2025.05.22.12.05.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ d=1e100.net; s=20230601; t=1747940748; x=1748545548;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qvoSiU2oEaTcNlVi5fKaSmduLQsgBHGwXgaoEWcRctE=;
+ b=usGaMWId2XogXAcObOx0qgKObOnfUHnoAFws8tiEkFO3xw8qDnNqF1sFlrmivE+ZVr
+ 4V6cW/ibC0Tc+mZqw1Of4D+gid8CY+JybrSkTnVfYzTvEDDc40BC3jZJedLHCVGMJS9B
+ Zsur6Bi+uHTrCb5xW/Pu0MSrFhK/kt0f7xhvdIWDllM6+7oMRmPqGzWVtA5yrXVmAwnG
+ v/MXAxCWvGvY3aOPALXKiez4Zg6f90x3wab0IK5J7EW/BggslG6DrsoUMgMtejIjPLHD
+ +j2EuE1OaawQykusp0mnoXA4Us22BU2Qkoc6QoRTA2w6YGUdlbz+u/fiKGLIJnM/5+gN
+ EH9Q==
+X-Gm-Message-State: AOJu0YwfLNjrvIMZY3ZcPkU6RDWq51n3dHybstaKmBcOnj7tV0qvoJ/y
+ qbw4P+w+1gRZMgBQs7fLHIKOcv6IwDO1DxxmxHK/5EaxLEUxG8eZ51hlNouqk48lMOdFf9aN2YU
+ TXVtb
+X-Gm-Gg: ASbGncvEHs2L5EgBzeu1ZwnyWR+W0o0Wi5NsNV2Y66Z5q1rG0Fc7vi/gAWumtBblIbw
+ z+sgghvPaEPduZCRhKk17KClClOSS+sEphaivAjly5n7S2/UlFiJfweTM36Y2oJJwBkKVE3vA8s
+ zXdErnNNKOLKW1S6K0aJHPr98t8+iXrDM8papjLs1xJygPFwhH2x9vurn6m4arsZgZ64BiJTnCn
+ Ed382U9xkZKFJaQMemxmpzSBWbeGsCL1sheGLGdcOwq0SM72hgI2gtTyrSxojCF7SDva4OjLPEE
+ B7ImMlWhclmAdE58WXjJa1Ygj1p//1UpyRtaGcdp4/NmlqccRdg=
+X-Google-Smtp-Source: AGHT+IH5xcalb99jPDZsnN/cQ/mE0zhaMwnL54H++DZ9jghAG6xocw3tj+FH/VPEnWkyV7fUcRIM/w==
+X-Received: by 2002:a05:6a20:e614:b0:218:11d6:b66 with SMTP id
+ adf61e73a8af0-21877a392aemr896624637.5.1747940748359; 
  Thu, 22 May 2025 12:05:48 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b26eb082c66sm11625565a12.60.2025.05.22.12.05.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 May 2025 12:05:47 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, thuth@redhat.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, armbru@redhat.com,
  pierrick.bouvier@linaro.org, peter.maydell@linaro.org, berrange@redhat.com,
  philmd@linaro.org
-Subject: [PATCH v4 01/15] qapi: expose rtc-reset-reinjection command
- unconditionally
-Date: Thu, 22 May 2025 12:05:28 -0700
-Message-ID: <20250522190542.588267-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 00/15] qapi: remove all TARGET_* conditionals from the
+ schema
+Date: Thu, 22 May 2025 12:05:27 -0700
+Message-ID: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
-References: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,168 +100,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+This series exposes all qmp commands for any target unconditionally, allowing to
+compile QAPI generated code without any TARGET conditionals.
 
-This removes the TARGET_I386 condition from the rtc-reset-reinjection
-command. This requires providing a QMP command stub for non-i386 target.
-This in turn requires moving the command out of misc-target.json, since
-that will trigger symbol poisoning errors when built from target
-independent code.
+Based on original RFC from Daniel P. Berrangé:
+https://lore.kernel.org/qemu-devel/20250508135816.673087-1-berrange@redhat.com/
 
-Rather than putting the command into misc.json, it is proposed to create
-misc-$TARGET.json files to hold commands whose impl is conceptually
-only applicable to a single target. This gives an obvious docs hint to
-consumers that the command is only useful in relation a specific target,
-while misc.json is for commands applicable to 2 or more targets.
+v4
+--
 
-The current impl of qmp_rtc_reset_reinject() is a no-op if the i386
-RTC is disabled in Kconfig, or if the running machine type lack any
-RTC device.
+- Update commit description to say that doc was updated accordingly (Markus)
+- Fixed a rebase error in v3 where two patches were wrongly merged together
 
-The stub impl for non-i386 targets retains this no-op behaviour.
-However, it is now reporting an Error mentioning this command is not
-available for current target.
+v3
+--
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- qapi/misc-i386.json      | 24 ++++++++++++++++++++++++
- qapi/misc-target.json    | 17 -----------------
- qapi/qapi-schema.json    |  1 +
- hw/i386/monitor.c        |  2 +-
- stubs/monitor-i386-rtc.c | 12 ++++++++++++
- qapi/meson.build         |  1 +
- stubs/meson.build        |  1 +
- 7 files changed, 40 insertions(+), 18 deletions(-)
- create mode 100644 qapi/misc-i386.json
+- Change error message for rtc-reset-injection stub
+- s/'*deprecated-props' : { 'type': ['str'] }/'*deprecated-props' : ['str'] }
+- further cleanup in qapi/meson.build
+- move qapi/machine-target.json deletion to s390x cpu commands commit
+- cleanup qapi_outputs in qapi/meson.build
+- All comment and commit description updates requested
+- Rebase on top of master (conflict with s/SGX/Sgx/ case change)
+
+v2
+--
+
+- rtc-reset-reinjection now returns an error if the command is not applicable
+  for current target (Markus & Daniel)
+
+v1
+--
+
+- remove file qapi/misc-target.json (Markus)
+- remove qapi/*-target.json from MAINTAINERS (Markus)
+- remove qapi_specific_outputs from qapi/meson.build (Markus)
+- update comment in rtc-reset-reinjection stub (Markus)
+- build QAPI generated code only once
+
+Daniel P. Berrangé (8):
+  qapi: expose rtc-reset-reinjection command unconditionally
+  qapi: expand docs for SEV commands
+  qapi: make SEV commands unconditionally available
+  qapi: expose query-gic-capability command unconditionally
+  qapi: make SGX commands unconditionally available
+  qapi: make Xen event commands unconditionally available
+  qapi: remove the misc-target.json file
+  qapi: make s390x specific CPU commands unconditionally available
+
+Philippe Mathieu-Daudé (1):
+  qapi: Make CpuModelExpansionInfo::deprecated-props optional and
+    generic
+
+Pierrick Bouvier (6):
+  qapi: make most CPU commands unconditionally available
+  qapi: remove qapi_specific_outputs from meson.build
+  qapi: make all generated files common
+  qapi: use imperative style in documentation
+  qapi/misc-i386: s/field will be set/field is set/
+  qapi/misc-i386: move errors to their own documentation section
+
+ MAINTAINERS                               |   1 -
+ qapi/audio.json                           |   2 +-
+ qapi/char.json                            |   4 +-
+ qapi/cryptodev.json                       |   2 +-
+ qapi/machine-s390x.json                   | 121 +++++
+ qapi/machine-target.json                  | 523 ----------------------
+ qapi/machine.json                         | 367 ++++++++++++++-
+ qapi/migration.json                       |   8 +-
+ qapi/misc-arm.json                        |  49 ++
+ qapi/{misc-target.json => misc-i386.json} | 165 +++----
+ qapi/qapi-schema.json                     |   5 +-
+ qapi/ui.json                              |   8 +-
+ include/hw/s390x/cpu-topology.h           |   2 +-
+ hw/i386/kvm/xen-stubs.c                   |  13 -
+ hw/i386/kvm/xen_evtchn.c                  |   2 +-
+ hw/i386/monitor.c                         |   2 +-
+ hw/i386/sgx-stub.c                        |   2 +-
+ hw/i386/sgx.c                             |   2 +-
+ hw/s390x/cpu-topology.c                   |   4 +-
+ hw/s390x/s390-skeys.c                     |   1 -
+ stubs/monitor-arm-gic.c                   |  12 +
+ stubs/monitor-cpu-s390x-kvm.c             |  22 +
+ stubs/monitor-cpu-s390x.c                 |  23 +
+ stubs/monitor-cpu.c                       |  21 +
+ stubs/monitor-i386-rtc.c                  |  12 +
+ stubs/monitor-i386-sev.c                  |  36 ++
+ stubs/monitor-i386-sgx.c                  |  17 +
+ stubs/monitor-i386-xen.c                  |  16 +
+ target/arm/arm-qmp-cmds.c                 |   4 +-
+ target/i386/cpu-system.c                  |   2 +-
+ target/i386/cpu.c                         |   2 +-
+ target/i386/monitor.c                     |   1 -
+ target/i386/sev-system-stub.c             |  32 --
+ target/i386/sev.c                         |   2 +-
+ target/loongarch/loongarch-qmp-cmds.c     |   2 +-
+ target/mips/system/mips-qmp-cmds.c        |  12 +-
+ target/ppc/ppc-qmp-cmds.c                 |  12 +-
+ target/riscv/riscv-qmp-cmds.c             |   2 +-
+ target/s390x/cpu_models_system.c          |   2 +-
+ tests/qtest/qmp-cmd-test.c                |   1 +
+ qapi/meson.build                          |  33 +-
+ stubs/meson.build                         |   8 +
+ 42 files changed, 833 insertions(+), 724 deletions(-)
+ create mode 100644 qapi/machine-s390x.json
+ delete mode 100644 qapi/machine-target.json
+ create mode 100644 qapi/misc-arm.json
+ rename qapi/{misc-target.json => misc-i386.json} (75%)
+ create mode 100644 stubs/monitor-arm-gic.c
+ create mode 100644 stubs/monitor-cpu-s390x-kvm.c
+ create mode 100644 stubs/monitor-cpu-s390x.c
+ create mode 100644 stubs/monitor-cpu.c
  create mode 100644 stubs/monitor-i386-rtc.c
+ create mode 100644 stubs/monitor-i386-sev.c
+ create mode 100644 stubs/monitor-i386-sgx.c
+ create mode 100644 stubs/monitor-i386-xen.c
 
-diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-new file mode 100644
-index 00000000000..d5bfd91405e
---- /dev/null
-+++ b/qapi/misc-i386.json
-@@ -0,0 +1,24 @@
-+# -*- Mode: Python -*-
-+# vim: filetype=python
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+##
-+# @rtc-reset-reinjection:
-+#
-+# This command will reset the RTC interrupt reinjection backlog.  Can
-+# be used if another mechanism to synchronize guest time is in effect,
-+# for example QEMU guest agent's guest-set-time command.
-+#
-+# Use of this command is only applicable for x86 machines with an RTC,
-+# and on other machines will silently return without performing any
-+# action.
-+#
-+# Since: 2.1
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "rtc-reset-reinjection" }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'rtc-reset-reinjection' }
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index f7ec695caad..c5f9f6be7e1 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -2,23 +2,6 @@
- # vim: filetype=python
- #
- 
--##
--# @rtc-reset-reinjection:
--#
--# This command will reset the RTC interrupt reinjection backlog.  Can
--# be used if another mechanism to synchronize guest time is in effect,
--# for example QEMU guest agent's guest-set-time command.
--#
--# Since: 2.1
--#
--# .. qmp-example::
--#
--#     -> { "execute": "rtc-reset-reinjection" }
--#     <- { "return": {} }
--##
--{ 'command': 'rtc-reset-reinjection',
--  'if': 'TARGET_I386' }
--
- ##
- # @SevState:
- #
-diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-index 7bc600bb768..96f6aa44133 100644
---- a/qapi/qapi-schema.json
-+++ b/qapi/qapi-schema.json
-@@ -61,6 +61,7 @@
- { 'include': 'replay.json' }
- { 'include': 'yank.json' }
- { 'include': 'misc.json' }
-+{ 'include': 'misc-i386.json' }
- { 'include': 'misc-target.json' }
- { 'include': 'audio.json' }
- { 'include': 'acpi.json' }
-diff --git a/hw/i386/monitor.c b/hw/i386/monitor.c
-index 1921e4d52e9..79df96562f6 100644
---- a/hw/i386/monitor.c
-+++ b/hw/i386/monitor.c
-@@ -26,7 +26,7 @@
- #include "monitor/monitor.h"
- #include "qobject/qdict.h"
- #include "qapi/error.h"
--#include "qapi/qapi-commands-misc-target.h"
-+#include "qapi/qapi-commands-misc-i386.h"
- #include "hw/i386/x86.h"
- #include "hw/rtc/mc146818rtc.h"
- 
-diff --git a/stubs/monitor-i386-rtc.c b/stubs/monitor-i386-rtc.c
-new file mode 100644
-index 00000000000..8420d7c93c2
---- /dev/null
-+++ b/stubs/monitor-i386-rtc.c
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-misc-i386.h"
-+
-+void qmp_rtc_reset_reinjection(Error **errp)
-+{
-+    error_setg(errp,
-+               "RTC interrupt reinjection backlog reset is not available for"
-+               "this machine");
-+}
-diff --git a/qapi/meson.build b/qapi/meson.build
-index eadde4db307..3a9bd061047 100644
---- a/qapi/meson.build
-+++ b/qapi/meson.build
-@@ -64,6 +64,7 @@ if have_system
-     'qdev',
-     'pci',
-     'rocker',
-+    'misc-i386',
-     'tpm',
-     'uefi',
-   ]
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 63392f5e785..9907b54c1e6 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -77,6 +77,7 @@ if have_system
-   stub_ss.add(files('target-monitor-defs.c'))
-   stub_ss.add(files('win32-kbd-hook.c'))
-   stub_ss.add(files('xen-hw-stub.c'))
-+  stub_ss.add(files('monitor-i386-rtc.c'))
- endif
- 
- if have_system or have_user
 -- 
 2.47.2
 
