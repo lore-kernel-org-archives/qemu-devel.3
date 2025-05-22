@@ -4,70 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57760C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 14:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E01C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 14:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI7ML-0002LC-T0; Thu, 22 May 2025 10:57:25 -0400
+	id 1uI7Nq-0003Xp-RO; Thu, 22 May 2025 10:58:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uI7MK-0002Km-Ir
- for qemu-devel@nongnu.org; Thu, 22 May 2025 10:57:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1uI7Np-0003WB-71
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 10:58:57 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uI7MH-0004Vt-Qn
- for qemu-devel@nongnu.org; Thu, 22 May 2025 10:57:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747925840;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SAxu2TG4Qa6wmMYOMNFQxrCbLKii1Tnw4EYNpLqDRbA=;
- b=Nzfnt0LQDRP2C2soNMhT9KfIChkWDRTvO3GbYXPXOsUF9q6dt+zQ7EZsXb7Do9kWibQnBQ
- gfFl+ZPkzS1olzhSq74H85WzVX6YDeLKkdiFcYr0R6h+7NzVEin0TgbTxZpQdJpPoIK5R7
- iNPaCh6f+wIbkgE5rHklQGHaxCEDupU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-MVrCb6tuMV6t1dQupT4XOA-1; Thu,
- 22 May 2025 10:57:17 -0400
-X-MC-Unique: MVrCb6tuMV6t1dQupT4XOA-1
-X-Mimecast-MFC-AGG-ID: MVrCb6tuMV6t1dQupT4XOA_1747925836
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CCFD31956095; Thu, 22 May 2025 14:57:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.76])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6835019560AB; Thu, 22 May 2025 14:57:12 +0000 (UTC)
-Date: Thu, 22 May 2025 16:57:10 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, bmarzins@redhat.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] file-posix: Probe paths and retry SG_IO on potential
- path errors
-Message-ID: <aC87RvpJ9O-4jmMM@redhat.com>
-References: <20250522130803.34738-1-kwolf@redhat.com>
- <20250522144607.GA258433@fedora>
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1uI7Nm-0004gP-DX
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 10:58:56 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54MEuXQl008753;
+ Thu, 22 May 2025 14:58:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=9NTsKDdk0NbWu2D+ldb9e9+9idlkeDoHsxuccsCLv0g=; b=
+ JPYWk5TpKlMdO0uYy4ndWk4PQzKrG2B2UdthKpOuYN05STsGvrXMSw2pJKXVlSAU
+ is8mDUpKpMN4DSceDibgp9kzNx5LjJxSKn8D1LVvZp3q/8fIBxHVKHFr5Im3BctR
+ yKMbgvUDwTn7qRw9x9adN74WpiWyIeiQQSwWm1Mt/x2Aq4ZYdGfRlwrAApCzIjCT
+ K+giag1j64L5XzN9tBc9FWpupDzCNvo11KTT/taIlQ3u0FHAXGNEfDii7AMAZOyT
+ QQBEHkEvU15vhoS5LLvygHCmM4nMNk9JAKHZELzHy86O55nv/pXY29/xQkjgXodp
+ zHd6LXUEPK3nuVtFc7N2sA==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46t5fug5h9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 May 2025 14:58:48 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54MEV3Iw034614; Thu, 22 May 2025 14:58:47 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46rwer990u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 May 2025 14:58:47 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54MEwiTx010227;
+ Thu, 22 May 2025 14:58:46 GMT
+Received: from dhcp-10-43-71-124.usdhcp.oraclecorp.com.com
+ (dhcp-10-43-71-124.usdhcp.oraclecorp.com [10.43.71.124])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 46rwer98yj-3; Thu, 22 May 2025 14:58:46 +0000
+From: Jonah Palmer <jonah.palmer@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: jonah.palmer@oracle.com, eperezma@redhat.com, peterx@redhat.com,
+ mst@redhat.com, jasowang@redhat.com, lvivier@redhat.com,
+ dtatulea@nvidia.com, leiyang@redhat.com, parav@mellanox.com,
+ sgarzare@redhat.com, si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
+ armbru@redhat.com
+Subject: [PATCH v5 2/7] vdpa: reorder vhost_vdpa_set_backend_cap
+Date: Thu, 22 May 2025 10:58:34 -0400
+Message-ID: <20250522145839.59974-3-jonah.palmer@oracle.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250522145839.59974-1-jonah.palmer@oracle.com>
+References: <20250522145839.59974-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="6RZJ7/Ph9I/N1Yzs"
-Content-Disposition: inline
-In-Reply-To: <20250522144607.GA258433@fedora>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-22_07,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxscore=0 spamscore=0
+ suspectscore=0 adultscore=0 malwarescore=0 phishscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2505220152
+X-Proofpoint-GUID: 6ovEj7H4NwvZZhoFFEixpWdC0sE4krro
+X-Proofpoint-ORIG-GUID: 6ovEj7H4NwvZZhoFFEixpWdC0sE4krro
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDE1MiBTYWx0ZWRfX55hT2mQHKGOL
+ 6wQvW34iVztQGr7l4L80xaITqDj9TpMe1JWpax8eLqJDesKh39jBdwmsgNZT8W475A6X5zTxAfZ
+ +EUnZJp3ArN1BDIPANM9rX7qoEYe1hLihogM8bn078ITeWo4ExMEdBtivH3OmCHvCeLR12838TT
+ 4HrdB4DArALMZT3PtyPfVovFb94Td6ENF/GgeB1MzP6Tj154NKKlem/pz6KB368+9fKcKQILVf1
+ L1/wLq6rORKcqJCaxvjY2Uce5IrPLuLUTT+Ii2voBEfU1AjrGtwWHgmBFmGt5ZsIn0ntsIvNbqe
+ ffPkRaYs6xSMWB14reCtbOIcUzIg27EIVBn9NEt55Vqm0Tdqeg8HX8ZZTPGaci5VTbNW82Ni6wm
+ cKbzdZn5ClT1FJK5UAAvybQ7n2/Jn4ponOFHBMowoCvRLUnt7O+ZDnQUiI3/H6rQ5DqLSqMy
+X-Authority-Analysis: v=2.4 cv=CMQqXQrD c=1 sm=1 tr=0 ts=682f3ba8 b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8
+ a=9uU6UdUwUmv73zic5QwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 cc=ntf awl=host:13206
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,93 +118,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Eugenio Pérez <eperezma@redhat.com>
 
---6RZJ7/Ph9I/N1Yzs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It will be used directly by vhost_vdpa_init.
 
-Am 22.05.2025 um 16:46 hat Stefan Hajnoczi geschrieben:
-> On Thu, May 22, 2025 at 03:08:03PM +0200, Kevin Wolf wrote:
-> > When scsi-block is used on a host multipath device, it runs into the
-> > problem that the kernel dm-mpath doesn't know anything about SCSI or
-> > SG_IO and therefore can't decide if a SG_IO request returned an error
-> > and needs to be retried on a different path. Instead of getting working
-> > failover, an error is returned to scsi-block and handled according to
-> > the configured error policy. Obviously, this is not what users want,
-> > they want working failover.
-> >=20
-> > QEMU can parse the SG_IO result and determine whether this could have
-> > been a path error, but just retrying the same request could just send it
-> > to the same failing path again and result in the same error.
-> >=20
-> > With a kernel that supports the DM_MPATH_PROBE_PATHS ioctl on dm-mpath
-> > block devices (queued in the device mapper tree for Linux 6.16), we can
-> > tell the kernel to probe all paths and tell us if any usable paths
-> > remained. If so, we can now retry the SG_IO ioctl and expect it to be
-> > sent to a working path.
-> >=20
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > ---
-> > v2:
-> > - Add a comment to explain retry scenarios [Stefan]
-> > - Handle -EAGAIN returned for suspended devices [Ben]
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+---
+ hw/virtio/vhost-vdpa.c | 60 +++++++++++++++++++++---------------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
 
-> >  #if defined(__linux__)
-> > +#if defined(DM_MPATH_PROBE_PATHS)
-> > +static bool sgio_path_error(int ret, sg_io_hdr_t *io_hdr)
-> > +{
-> > +    if (ret < 0) {
-> > +        switch (ret) {
-> > +        case -ENODEV:
-> > +            return true;
-> > +        case -EAGAIN:
-> > +            /*
-> > +             * The device is probably suspended. This happens while th=
-e dm table
-> > +             * is reloaded, e.g. because a path is added or removed. T=
-his is an
-> > +             * operation that should complete within 1ms, so just wait=
- a bit and
-> > +             * retry.
-> > +             *
-> > +             * If the device was suspended for another reason, we'll w=
-ait and
-> > +             * retry SG_IO_MAX_RETRIES times. This is a tolerable dela=
-y before
-> > +             * we return an error and potentially stop the VM.
-> > +             */
-> > +            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
->=20
-> sgio_path_error() is missing coroutine_fn.
->=20
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
-Thanks, good catch. I already applied the patch and fixed it up to make
-sure that I won't forget.
-
-Kevin
-
---6RZJ7/Ph9I/N1Yzs
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmgvO0YACgkQfwmycsiP
-L9Y6YA//UosZ7aMjtAl4tOd56NSTB5G5fhflWPmsWN1H4MZTQ1+Q9vE3jOtJalIZ
-/1xsoLveuSzRmDGWzOEaqZpsMvrMt2Fjw9F3Wm/Ckdp1I0dlcK6lle37Ned2kvVf
-TrRbH1CLCkmOB20WOHPbTLmMkINL3a51GglOx8+BzeQagIV/M0WAleCQ2WQG336R
-Xiy9GN9LE8C5rUbi5QtbvPx3rya30XGnNACWr+bX4Q2OdjusHp9QbSLNndIEOHrO
-TSuXzwv60pdTotaiVY8UEPFNRj7VfYfXLH4iK/h7SBzRH2HSkVagr6NLao8RVhzO
-aVeHfBrp9X5uPKRdeUoXxkXVJQffbOrPB8BnkkOe1T+644UbvlKAKvjgyB0N+wfG
-z9BFmJgZlOt2aAV0kECPfX2sJ5w3NK4B7a8LEtLXJBj08piCpyr3cyT6/xXNyrkJ
-TsIxZu5SEFHZRLp8szFViSMguoBJGcniR9NQr2WH0vIlGAJo5Ohf+dJ3dmj5kvuG
-FhMEaPghFIrMcQ+IQt+N6Az6AoLvcQM9coB9bYarNJOM+9v1HFb4pwjoAkHjBJnx
-dC9Lwtm37bei+wacIc00z49VQNFM7IlvPPnFEqvy/xwjTSc9/zfsytBytnCVv1Js
-IPqOnqonpNEIJR9vTYpnSQ4NY1ZnfDTwZxbBz32Ee4s8OMYce68=
-=0OOc
------END PGP SIGNATURE-----
-
---6RZJ7/Ph9I/N1Yzs--
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 1ab2c11fa8..6b242ca56a 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -594,6 +594,36 @@ static void vhost_vdpa_init_svq(struct vhost_dev *hdev, struct vhost_vdpa *v)
+     v->shadow_vqs = g_steal_pointer(&shadow_vqs);
+ }
+ 
++static int vhost_vdpa_set_backend_cap(struct vhost_dev *dev)
++{
++    struct vhost_vdpa *v = dev->opaque;
++
++    uint64_t features;
++    uint64_t f = 0x1ULL << VHOST_BACKEND_F_IOTLB_MSG_V2 |
++        0x1ULL << VHOST_BACKEND_F_IOTLB_BATCH |
++        0x1ULL << VHOST_BACKEND_F_IOTLB_ASID |
++        0x1ULL << VHOST_BACKEND_F_SUSPEND;
++    int r;
++
++    if (vhost_vdpa_call(dev, VHOST_GET_BACKEND_FEATURES, &features)) {
++        return -EFAULT;
++    }
++
++    features &= f;
++
++    if (vhost_vdpa_first_dev(dev)) {
++        r = vhost_vdpa_call(dev, VHOST_SET_BACKEND_FEATURES, &features);
++        if (r) {
++            return -EFAULT;
++        }
++    }
++
++    dev->backend_cap = features;
++    v->shared->backend_cap = features;
++
++    return 0;
++}
++
+ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
+ {
+     struct vhost_vdpa *v = opaque;
+@@ -841,36 +871,6 @@ static int vhost_vdpa_set_features(struct vhost_dev *dev,
+     return vhost_vdpa_add_status(dev, VIRTIO_CONFIG_S_FEATURES_OK);
+ }
+ 
+-static int vhost_vdpa_set_backend_cap(struct vhost_dev *dev)
+-{
+-    struct vhost_vdpa *v = dev->opaque;
+-
+-    uint64_t features;
+-    uint64_t f = 0x1ULL << VHOST_BACKEND_F_IOTLB_MSG_V2 |
+-        0x1ULL << VHOST_BACKEND_F_IOTLB_BATCH |
+-        0x1ULL << VHOST_BACKEND_F_IOTLB_ASID |
+-        0x1ULL << VHOST_BACKEND_F_SUSPEND;
+-    int r;
+-
+-    if (vhost_vdpa_call(dev, VHOST_GET_BACKEND_FEATURES, &features)) {
+-        return -EFAULT;
+-    }
+-
+-    features &= f;
+-
+-    if (vhost_vdpa_first_dev(dev)) {
+-        r = vhost_vdpa_call(dev, VHOST_SET_BACKEND_FEATURES, &features);
+-        if (r) {
+-            return -EFAULT;
+-        }
+-    }
+-
+-    dev->backend_cap = features;
+-    v->shared->backend_cap = features;
+-
+-    return 0;
+-}
+-
+ static int vhost_vdpa_get_device_id(struct vhost_dev *dev,
+                                     uint32_t *device_id)
+ {
+-- 
+2.43.5
 
 
