@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED8BC54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 11:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7402C54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 11:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3sL-0002CO-NA; Thu, 22 May 2025 07:14:13 -0400
+	id 1uI452-00068F-Sn; Thu, 22 May 2025 07:27:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3sJ-0002C7-OP
- for qemu-devel@nongnu.org; Thu, 22 May 2025 07:14:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uI44z-00067s-Iv
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 07:27:17 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3sH-0004Nt-4x
- for qemu-devel@nongnu.org; Thu, 22 May 2025 07:14:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747912446;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CEpuxocpvewqN6jBWWGnIyW2PNWbJRCuhs0Cnxgqz4U=;
- b=TqQUMoJBiDyh1/IsCpLZpP1BDtg5deEcK5uqw8A4vtaWC2N+/y+3k3aR+TaPy0yZGYS1fd
- rgorIVQkvzWEbw5KaA4IuXQzDyn5NJb6NvhTfh2DYlPD4bmHXxHObd5ilnmAjt5JzMzvpL
- shw1HT3wi98D4vt3fpxvzb5U8zpGmKA=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-323-bnHmM538ODKYQA5ee7IuKA-1; Thu,
- 22 May 2025 07:14:04 -0400
-X-MC-Unique: bnHmM538ODKYQA5ee7IuKA-1
-X-Mimecast-MFC-AGG-ID: bnHmM538ODKYQA5ee7IuKA_1747912443
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94D711955DAD; Thu, 22 May 2025 11:14:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.179])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 146051958014; Thu, 22 May 2025 11:14:00 +0000 (UTC)
-Date: Thu, 22 May 2025 12:13:57 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v7 2/2] tests/functional: add memlock tests
-Message-ID: <aC8G9aXYQVWxuP1z@redhat.com>
-References: <20250521135522.11180-1-dtalexundeer@yandex-team.ru>
- <20250521135522.11180-3-dtalexundeer@yandex-team.ru>
- <430eaa84-5695-4fc2-90d5-d488a204e999@redhat.com>
- <af6b28bd-44cf-4540-b5f8-49d8b2781e13@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uI44x-0007Wi-4O
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 07:27:17 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 800C01243B5;
+ Thu, 22 May 2025 14:26:55 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B99B21319C;
+ Thu, 22 May 2025 14:27:02 +0300 (MSK)
+Message-ID: <b83e5265-0853-42c7-bfa1-0577d3f80b3f@tls.msk.ru>
+Date: Thu, 22 May 2025 14:27:01 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <af6b28bd-44cf-4540-b5f8-49d8b2781e13@yandex-team.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Fixes for TCG/HVF warning of CPUID_HT and
+ CPUID_EXT3_CMP_LEG
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, qemu-devel@nongnu.org
+References: <20250514031652.838763-1-xiaoyao.li@intel.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250514031652.838763-1-xiaoyao.li@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,154 +103,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 22, 2025 at 01:51:44PM +0500, Alexandr Moshkov wrote:
+On 14.05.2025 06:16, Xiaoyao Li wrote:
+> Starting from QEMU v10.0.0, QEMU hits warnings when vcpus >= 2 with TCG
 > 
-> On 5/22/25 12:49, Thomas Huth wrote:
-> > On 21/05/2025 15.55, Alexandr Moshkov wrote:
-> > > Add new tests to check the correctness of the `-overcommit memlock`
-> > > option (possible values: off, on, on-fault) by using
-> > > `/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
-> > > anonymous segments:
-> > > 
-> > > * if `memlock=off`, then Locked = 0 on every anonymous smaps;
-> > > * if `memlock=on`, then Size, Rss and Locked values must be equal for
-> > > every anon smaps where Rss is not 0;
-> > > * if `memlock=on-fault`, then Rss and Locked must be equal on every anon
-> > > smaps and anonymous segment with Rss < Size must exists.
-> > > 
-> > > Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> > > ---
-> > ...
-> > > diff --git a/tests/functional/test_memlock.py
-> > > b/tests/functional/test_memlock.py
-> > > new file mode 100755
-> > > index 0000000000..a090e7f9ad
-> > > --- /dev/null
-> > > +++ b/tests/functional/test_memlock.py
-> > > @@ -0,0 +1,107 @@
-> > > +#!/usr/bin/env python3
-> > > +#
-> > > +# Functional test that check overcommit memlock options
-> > > +#
-> > > +# Copyright (c) Yandex Technologies LLC, 2025
-> > > +#
-> > > +# Author:
-> > > +#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> > > +#
-> > > +#
-> > > +# This work is licensed under the terms of the GNU GPL, version 2 or
-> > > +# later.  See the COPYING file in the top-level directory.
-> > 
-> > I just noticed: New file need a SPDX identifier nowadays to keep
-> > scripts/check_patch.pl happy.
+>   qemu-system-x86_64: warning: TCG doesn't support requested feature: CPUID.01H:EDX.ht [bit 28]
+>   qemu-system-x86_64: warning: TCG doesn't support requested feature: CPUID.80000001H:ECX.cmp-legacy [bit 1]
 > 
-> Hello, thanks for reply, i fix that in a moment!
+> For HVF, it should have the same warning of CPUID.01H:EDX.ht [bit 28].
 > 
-> > 
-> > Anyway, I now also tested the patch, but for me, it's not working: After
-> > setting ulimit -l to 2G and running the test, I get:
-> > 
-> > $ ~/devel/qemu/tests/functional/test_memlock.py
-> > TAP version 13
-> > ok 1 test_memlock.MemlockTest.test_memlock_off
-> > Traceback (most recent call last):
-> >   File "~/devel/qemu/tests/functional/test_memlock.py", line 60, in
-> > test_memlock_on
-> >     self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
-> >     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > AssertionError: False is not true
-> > 
-> > not ok 2 test_memlock.MemlockTest.test_memlock_on
-> > Traceback (most recent call last):
-> >   File "~/devel/qemu/tests/functional/test_memlock.py", line 70, in
-> > test_memlock_onfault
-> >     self.assertTrue(smap['Rss'] == smap['Locked'])
-> >     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > AssertionError: False is not true
-> > 
-> > not ok 3 test_memlock.MemlockTest.test_memlock_onfault
-> > 
-> > I added two print statements right in front of the asserts to see the
-> > values, and for the first one it shows (after many successfully
-> > comparisons):
-> > 
-> > line 60: 4 == 4 == 0
-> > 
-> > And similar for the second one:
-> > 
-> > line 70: 4 == 0
-> > 
-> > FWIW, this is on Fedora 41.
-> > 
-> > Looking at the smaps file, it seems like this comes from a shared
-> > library:
-> > 
-> > 7ff16c7c9000-7ff16c7ca000 r--p 00000000 00:2a 29149631
-> > /usr/lib64/spa-0.2/support/libspa-support.so
-> > Size:                  4 kB
-> > KernelPageSize:        4 kB
-> > MMUPageSize:           4 kB
-> > Rss:                   4 kB
-> > Pss:                   0 kB
-> > Pss_Dirty:             0 kB
-> > Shared_Clean:          4 kB
-> > Shared_Dirty:          0 kB
-> > Private_Clean:         0 kB
-> > Private_Dirty:         0 kB
-> > Referenced:            4 kB
-> > Anonymous:             0 kB
-> > KSM:                   0 kB
-> > LazyFree:              0 kB
-> > AnonHugePages:         0 kB
-> > ShmemPmdMapped:        0 kB
-> > FilePmdMapped:         0 kB
-> > Shared_Hugetlb:        0 kB
-> > Private_Hugetlb:       0 kB
-> > Swap:                  0 kB
-> > SwapPss:               0 kB
-> > Locked:                0 kB
-> > THPeligible:           0
-> > ProtectionKey:         0
-> > 
-> > So maybe you've got to ignore the mappings of .so files in your test?
+> This series tries to fix them.
 > 
-> Oh, this segments are already ignored in _parse_anonymous_smaps(), so this
-> segment should not have returned from it.
-> 
-> Maybe it comes from another segment? Or i have bug in anon segments
-> parsing.. I'll take a closer look, thanks.
+> Xiaoyao Li (2):
+>    i386/tcg: Make CPUID_HT and CPUID_EXT3_CMP_LEG supported
+>    i386/hvf: Make CPUID_HT supported
 
-It is strange that smaps reports regioons as not locked, despite
-being resident, as mlockall() claims that it locks *everything*.
+This seems to be a qemu-stable material (10.0).
+Applied to staging-10.0, please let me know if I shouldn't.
 
-None the less, I wonder if using smaps is overkill & more trouble
-than it is worth ?
+Thanks,
 
-The /proc/$PID/status file is simpler giving a process level overview:
-
-Normal usage:
-
-  VmSize:   378964 kB
-  VmLck:         0 kB
-
-mem-lock=on usage:
-
-  VmSize:   378964 kB
-  VmLck:    378964 kB
-
-and mem-lock=on-fault will be some value in between the two extremes.
-
-Parsing this seems likely to be more reliable and easier than smaps.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+/mjt
 
