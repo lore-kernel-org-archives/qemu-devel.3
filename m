@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDD6C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457FCC54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIBcg-00008w-JG; Thu, 22 May 2025 15:30:34 -0400
+	id 1uIBiV-0002ng-MM; Thu, 22 May 2025 15:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uIBcd-00007B-HI
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:30:31 -0400
-Received: from mail-co1nam11on20609.outbound.protection.outlook.com
- ([2a01:111:f403:2416::609]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ id 1uIBiG-0002nI-Qs
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:36:21 -0400
+Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::600]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uIBcW-0002dK-VC
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:30:31 -0400
+ id 1uIBiE-0003kN-4A
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:36:20 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yl/Om+k7tD9Mf7x2gNx/641RTa9NEbcuMQh4Y976tspV34UhLj3WV1Gp2so8P2sWyur+yJbe7MvJDplWs73BfvN6U66cMvHIEUjt64BUCfEX6tmaApdoJXuAdSrlOgClfkwSSCTPc3S8p5oGYEZq7O6hbOYrBmPkhCTjh5uV5hJzoTgqZE5gBdfUywd+5ZPhVMM6ADLrX86BPcGraovLi8kaPwSUxonWbIddPo6gqMEI1cL6IBHomgX3jtQDu8Tvh+BFVMEKS3ixs73rHJBC0hGqCqSzPYWpUpyH/NUjUqW6KdQrUlUw3L3mSm2G0x35iHJHmq6q87xMH70268btDg==
+ b=PPJuXt5P1nuKQC/u9XQIWD8ugGPKTxhm/kYVCnI+IqYjMTqRvWthHCENmmnuClzokjaTu99ZANyUSScy65fmpgru9q9MKYxBrpWxlyliwAsd6gHCNjyhIlVWu9JpChNB8OZw5yRqNSx2Cm/eVXblQDYSt7YvJCji2aKAx1PRdNT0fhzNrf8KJKrt7qvPDH6+41I+ErYNKlaj5snJFScACii7I2uC7DxyHrY42taT6OhV8oeAaazPt8RvX3zKGEnJG2BWNNfhPZzQu7t4g9C4cgwSM9HU7IV1c++1p76N2x6ccvvBph3TiGwj/qw/RnlVocpW+CLi3trCZHTOeca+LA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tH6oTjTA/KJOW6ky/t4R1jGLguW2CcMOKxl4aBiHxqY=;
- b=RgxUKuV2wqrBHoRQCWx9RI2cj59vieG5cYho2/RTWiDVMTub4wJJdMg3dZqUT4nlFTdswNPmErD0GHf/xv2qfGUhwZr+F2vtNc4p7yi/I5Hs2llSFtetUOQN3Eovx1zAXXA0kKg8H2Nf7vc4fSlysjvN4NtX6NaB7N19YKv6ZmmS8zI6LTfU1JJWHWZyzPgkFyAtsvRE+c3Ytr59ZDfd0YalMNWMH/M/LlJpmlwqLuZKFUiafb6c69ULiRvE/cmYfhNE2kVXeeMHYU6PQXRpEysJC0ahOPk9QUUIMG+2Ke2Ad6YVeODqmtZQzRLNEJ9PJGtSDnykFuPTB1Eo1e6E7A==
+ bh=97Z6H7z9EDuf+IL8C/PCSMONoeGtBsHTgl7n6pmkmSI=;
+ b=jtBxp5Y/CidmV3ZN8FCOTAy0PuCYUhsaknErdUawe9ZkwSO9H4XU1rxjdbBMkJ+Y2kgVVjfD6BsLTA3H/NB9aBDlvCUxIGE+v92IutMmaEuSY+W5qskuBbYNW6gbIPocHgkVADnLrfyS2YLqqilcQG/O5ysLornjxVgDOBZc/0msC7GPTfTRWCkUkxhFaB3eZ8cPiMq49fIJlD2nLrunAYY23qAQwbacPoo7CVAmiHCT9DBYN2GYdQINltyppA/Dp6ZhHlJdS1ujZvy0+wABuyYTmrsTb5LUyQ9qKi6RSlOM3UVLwvEyCMtdJdHPjsq9dFBphZ7mwnUQVYOKVk90rQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -36,18 +36,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tH6oTjTA/KJOW6ky/t4R1jGLguW2CcMOKxl4aBiHxqY=;
- b=cWVEKQB+5tfhpVlZUhdiqz+5muMnbHJ60g1LtUuiDRxKipV0dfwEOAlgo5FH/nXcU69euM0Sf6IqgSQDNlWrUUNTFNyoldyaYFc2DGha4/XR+LvPvNsvweaiBJ8l0T32/HuSMmhZvjUtELwerEH16XI5miAoleSrImLEPL6LHAB30HnZeCnbpMGH0Aw9XmhECbG9Txcw2eFsAfdPdsRWrCPvb1le7BOEmsQxg/JsAPGe6JoTSM1FddGWJzH2BsBNmxFtJd7VhY9uPh1ebBVoPgokDFr63fWxqxh9WtRygWyXqImXlOGMWID4VT3R5UkdNTGKxwzSfovs1EeZStk7gw==
-Received: from CH5P222CA0013.NAMP222.PROD.OUTLOOK.COM (2603:10b6:610:1ee::14)
- by PH7PR12MB6633.namprd12.prod.outlook.com (2603:10b6:510:1ff::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.30; Thu, 22 May
- 2025 19:30:05 +0000
-Received: from CH2PEPF00000142.namprd02.prod.outlook.com
- (2603:10b6:610:1ee:cafe::7c) by CH5P222CA0013.outlook.office365.com
- (2603:10b6:610:1ee::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8769.19 via Frontend Transport; Thu,
- 22 May 2025 19:30:05 +0000
+ bh=97Z6H7z9EDuf+IL8C/PCSMONoeGtBsHTgl7n6pmkmSI=;
+ b=JxhX2is5/KE/k2ytYOfWOwhVcqVHAZ59Cjn3WI+QnvtTnqbslH9vdy7EZOPN7uwUNEYmlbo88DzLZ/nOkfoH2mHNvlaUZgaYzfFV0i/KZ62TrgoR6cPfWwQzNNZFFuRAjrYmooJ6OSd6GF54GngOX+kodpsw5ZuHBQDXsCO32uhWvjGR/K7fULQI7hnyyxEWoYbOy3FZSZI12JfUOXiMS2oKGczNjEouhml6CVtD0bsRiesEnvUikXj6lLnrbA14QCD2qAJXiU1/2ZjHrZ5fhETyCLFPqn74Q0XpuHprf9GPS+gPM7XQLkZ1kpQ46uoEhuXMZCsh4HV8SgPINSBOYg==
+Received: from DS7PR03CA0060.namprd03.prod.outlook.com (2603:10b6:5:3b5::35)
+ by SN7PR12MB7130.namprd12.prod.outlook.com (2603:10b6:806:2a2::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.31; Thu, 22 May
+ 2025 19:36:13 +0000
+Received: from DS2PEPF0000343B.namprd02.prod.outlook.com
+ (2603:10b6:5:3b5:cafe::78) by DS7PR03CA0060.outlook.office365.com
+ (2603:10b6:5:3b5::35) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8769.18 via Frontend Transport; Thu,
+ 22 May 2025 19:36:13 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
@@ -56,22 +56,22 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.160 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.160) by
- CH2PEPF00000142.mail.protection.outlook.com (10.167.244.75) with Microsoft
+ DS2PEPF0000343B.mail.protection.outlook.com (10.167.18.38) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8769.18 via Frontend Transport; Thu, 22 May 2025 19:30:03 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ 15.20.8769.18 via Frontend Transport; Thu, 22 May 2025 19:36:12 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
  (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 22 May
- 2025 12:29:49 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ 2025 12:35:57 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 22 May
- 2025 12:29:49 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.6)
+ 2025 12:35:56 -0700
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.10)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Thu, 22 May 2025 12:29:48 -0700
-Date: Thu, 22 May 2025 12:29:46 -0700
+ Transport; Thu, 22 May 2025 12:35:55 -0700
+Date: Thu, 22 May 2025 12:35:54 -0700
 From: Nicolin Chen <nicolinc@nvidia.com>
 To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
 CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
@@ -84,75 +84,69 @@ CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
  <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
  <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, "Yi
- Sun" <yi.y.sun@linux.intel.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, "Richard
- Henderson" <richard.henderson@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>
-Subject: Re: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
- host
-Message-ID: <aC97Kn+M5/9/naY0@Asurada-Nvidia>
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: Re: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device info
+Message-ID: <aC98moHCEJ3kWJGC@Asurada-Nvidia>
 References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
- <20250521111452.3316354-16-zhenzhong.duan@intel.com>
- <aC5YjHrv5EMDixzZ@Asurada-Nvidia>
- <SJ0PR11MB67446AF2F48F35D64E98B3D69299A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <20250521111452.3316354-6-zhenzhong.duan@intel.com>
+ <aC5MVvwPCFertplB@Asurada-Nvidia>
+ <SJ0PR11MB67449F7571B0604A8D2522D39299A@SJ0PR11MB6744.namprd11.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <SJ0PR11MB67446AF2F48F35D64E98B3D69299A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <SJ0PR11MB67449F7571B0604A8D2522D39299A@SJ0PR11MB6744.namprd11.prod.outlook.com>
 X-NV-OnPremToCloud: AnonymousSubmission
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF00000142:EE_|PH7PR12MB6633:EE_
-X-MS-Office365-Filtering-Correlation-Id: 05046b8c-0f7e-4775-152d-08dd99670d5c
+X-MS-TrafficTypeDiagnostic: DS2PEPF0000343B:EE_|SN7PR12MB7130:EE_
+X-MS-Office365-Filtering-Correlation-Id: e334ccbc-e503-4429-459f-08dd9967e913
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?qWjzLqtG4fJPB/GIXO17merzA5KZjLpmfaUBa0Q5Q1NX2/Cw2eevA1tAFriS?=
- =?us-ascii?Q?wv41G9nBlD50nrNKg6oUDzW8zwNCFhBwgYZbmv6rlrzgZYVZTep5jSO9yLSu?=
- =?us-ascii?Q?AKz1ZJEu8VHn/lKMVEDSP4q+CulcdPay40HpodKBWtO6yKL1oTyKZ6XPLW5k?=
- =?us-ascii?Q?J/w6ZaPsSQ1tVpRUwjFVfs0MRrxTLkdyXZ+OwPAbqvI+q/im4db1nEQXtHvy?=
- =?us-ascii?Q?E52sJBGb+GoTqk30Aydb24QbTehCGvkMlGhilV1zv9bdapdC+iWL+hksNJel?=
- =?us-ascii?Q?o2CegizQtCHSZrjV9+PNjSWBnJb620bfqgC1jQVtOVfrASJ/bayI/4NCuiHT?=
- =?us-ascii?Q?qN5uF47gTGvyicBeHq4KH7Q72HJBUQ0T2IT6Bxb88vhrRGz7xugLOySrvpJI?=
- =?us-ascii?Q?a9Lr1MnvH1AJrZcb9+iG1axHvgRc/QVb1f45OhTf2Blnc8LLJO+cL/hc5qjW?=
- =?us-ascii?Q?DldzX7Ari2KEzxHL1KGNp/aKsucYPIhpSxsMCveQKPIBkALUs5mBizwcHnob?=
- =?us-ascii?Q?oQ9w511vJRRjaDFp358dAVgz7js0dp0fgeWWyp6b89yEofQv5GHrNnDrKxk/?=
- =?us-ascii?Q?EKQiwP+KyFDkRqFUkW0YsCcMsEkI5BWplP84MFq9Z7tcMQL0P9ZgSAuu584J?=
- =?us-ascii?Q?Op86J19trwJaJWOw2g5HKtyWiQJmWsw6KpRyMDSB3xSgREwE7yIprIwlv6m/?=
- =?us-ascii?Q?ptrtQwNBz0hlL8fOBquRmo0Ya9fZO9zc/Ut6vFtdsdoIXT9T0pPDP/I1KhV+?=
- =?us-ascii?Q?Y0ohSDALonWghqIjNkfX1/HJq/QRpI1UhXCJBTKw69+rFvSq0Se5rq2tZzFK?=
- =?us-ascii?Q?ntmKa5rEad9hUaUAJcaq5FayQbJ72qiE2m3vpPGsZi1WeuFWDHjxuTh5gGb0?=
- =?us-ascii?Q?kB9tYutWktc76RaHhJsolQh+mB55iOA5gTFrrK4/EqUYmqp4p8LjTzgSA2Y2?=
- =?us-ascii?Q?CHarLzb1HpipiLBs3aXMt6EQ/mhL0zyYfkdRHwk5zXkGOOb7+v+YhNIg6S0a?=
- =?us-ascii?Q?VyYlyfIMEJHC0ed9Db5j56WxCv5nj9e+oxpfDZbhWZendYd1IA+oIpaeVtwJ?=
- =?us-ascii?Q?SyIjdt+1T3CsbyOKEncNruALpLxva1zMi0FL8LnLgvjhQhk7z2K7NzNqsb7r?=
- =?us-ascii?Q?B/kdBOz9lNIvDz4Fk3kWkS94L7bBP6lCZoIJLi0Xz7tg1EheveYmPWmjGPGp?=
- =?us-ascii?Q?wUuGlwVDDRKetjS0hneuIv3BCubkkWUXZobVSvyhjNFadEV5mkTbmhMU6dkM?=
- =?us-ascii?Q?c0UiVt1bglAVqDbpSO9txFaFZBp1Bw9f56HqIY182Mk4v4I6KQZLFTBvvC+W?=
- =?us-ascii?Q?ey/NtOp9CcDYL5xTiYwap2iWaNUS4V3+XHbjuZdYNBR5F8N7uAZ4fx3cxViV?=
- =?us-ascii?Q?vTlxFtkRta28HPqrMQGKSiJ/Zqd+BaDKJaFdnEoy47Np/ve6p6EYhE+pBMwc?=
- =?us-ascii?Q?Y6sKF4eI/ZcHIrcKoaCfJvke/lLSkJ5OmANpwE1QJukmcapqxKLN4IXaqW2W?=
- =?us-ascii?Q?P2opG2Ro6oYxqwsZKOLQsbYMNDCCVz6Czzl50ZTCtH4Qua/gv2jTiiBuqQ?=
- =?us-ascii?Q?=3D=3D?=
+ ARA:13230040|36860700013|82310400026|1800799024|7416014|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?H7GiIYGi7BU6VSndo4ThtxOVZh3d1YxilAvBA3wNNXeAMgFthaEE+oxyQUWt?=
+ =?us-ascii?Q?2pk3kXG92HVG0cgIGXq+7QEV3V3YGUrpxLp2+3DJqGETxI3uYfZiwHovJ+ks?=
+ =?us-ascii?Q?oDa/m2Dqk66UgaSr/qUh1Ar3NB2KNQ9zdhxKF+b/or4DfnQZs9DofkR/sls4?=
+ =?us-ascii?Q?KAjpKLz7tAsTM3xXkLInTHc4S8W7ETJANu/lbhGYWl4iBuE/NJ30I5xNio2A?=
+ =?us-ascii?Q?/XHzww2E7Zr2FS9Rbmn+e7mpYewEetUSjbvyLU8vx/yBQOQlqVKX7yrlvfoz?=
+ =?us-ascii?Q?Fx4lM06KiRi6f7jkXbplqWYHLd6r0aFhFIyip0ZNYgB1Mo7EruLMLwYM0TRm?=
+ =?us-ascii?Q?whHkpk0PaDCg2tqwnZ/bOhat1081VkbkhVwRgaUBFhnOVnZ1SC0zmeDaxxYB?=
+ =?us-ascii?Q?egPDqZ8LAz86r0dCo+aGyUvGn/iw+R6ZFZ0WNzD7F7QUgz1pKqyA5UswmZym?=
+ =?us-ascii?Q?Q1g1e9aIpcOaM27lfEDBnCjhdiymAcpTF9yVrdl8PDkDVosQ9/s/0NqRNnyb?=
+ =?us-ascii?Q?F63rmGIAnUUiCy4a8TsVd7/aw2DllyDxNQ8qgnYrL6ItScZ5AIWeYz6JA0Db?=
+ =?us-ascii?Q?FgsYXjwNt73sm9I0sFT2xqZTCVO64xLtLQvQkaapS6dwE8lih95IaVFPAyVL?=
+ =?us-ascii?Q?AlTNux1WCGUE4GF7fcmfmanPGijL3XplCeD1uq/PYD2EjtlwOOBDO7tl4Dm2?=
+ =?us-ascii?Q?AurAJvA3nNNlgD2mvYriB7PUccNaPLb/QimbvafG9hBVXPLy+W68d4TzQ0qc?=
+ =?us-ascii?Q?YcYC+dmWImdMKfnsL3iLjEGoszIcuqW3I4aIsTFtkTlQGoNKnNibJguOqemq?=
+ =?us-ascii?Q?+36pT/CRLuIo+dNcmHnYkG/0GbIcYeJMM9eR6tfaEFTPRRmJiapa+lccqlBY?=
+ =?us-ascii?Q?7KXwYECSygUvRXc2KorK2CLynrio9MIHQJPyzinfFm9HgkyI6yW5trN3WURM?=
+ =?us-ascii?Q?IshbjNxUZdIwVLE7xGzZokR+IEhAq0Duwf86uAjV9Ngrdg2jyF9qvc7hLycv?=
+ =?us-ascii?Q?BRKjvkB/L5lGdR4rj6kkj2vp3r7GtjRkaft7ndM/bzgiuPMwV4TvYEME1M07?=
+ =?us-ascii?Q?i0nqBb/yB7CTbl1x5MWBjiEz16oVnbrLkU/vdi2FxQRjF7+Yp5cQdUnEBWOX?=
+ =?us-ascii?Q?ncN1bJ6AD2zOO6+i+3/Vu/xt4CIOuM0zJfdn3D1CYkcvefyi3uRqF89tc544?=
+ =?us-ascii?Q?jlJbnnlJENWogmp1gQVyANRBhsYLCPEBN1IirP0E7PRwvaQ/vWUbspsSAHo0?=
+ =?us-ascii?Q?d7qplkBa6W/4aO/tqrgZV76nt3BOUwuhgBIiE5p6xb0smfeVvpJtQqQxdCUM?=
+ =?us-ascii?Q?zQvoL/aVM++ddqGZ0ArHwnrZ1zOnK1r9N4L7B/17ouX+yT5ELbqr88M1RijS?=
+ =?us-ascii?Q?eGSzH5qVAih+JdaxCldW0LQcsS68EUJTKyixLE/vUg+Up90DCCarqK//wAUQ?=
+ =?us-ascii?Q?5gnjUy+f0xO8Pll/gauV8HUlWzLDABIgWXgqlRtxIK75FowFRdi7zRxu4zm6?=
+ =?us-ascii?Q?RQLRoP0uedl9GVazd8N6VKfl/nAo84Nt/3u/?=
 X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(36860700013)(82310400026); DIR:OUT;
+ SFS:(13230040)(36860700013)(82310400026)(1800799024)(7416014)(376014); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2025 19:30:03.9791 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 05046b8c-0f7e-4775-152d-08dd99670d5c
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2025 19:36:12.6388 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e334ccbc-e503-4429-459f-08dd9967e913
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000142.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF0000343B.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6633
-Received-SPF: permerror client-ip=2a01:111:f403:2416::609;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7130
+Received-SPF: permerror client-ip=2a01:111:f403:2418::600;
  envelope-from=nicolinc@nvidia.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -174,151 +168,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 22, 2025 at 06:50:42AM +0000, Duan, Zhenzhong wrote:
+On Thu, May 22, 2025 at 09:21:04AM +0000, Duan, Zhenzhong wrote:
 > 
 > 
 > >-----Original Message-----
 > >From: Nicolin Chen <nicolinc@nvidia.com>
-> >Subject: Re: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
-> >host
+> >Subject: Re: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device info
 > >
-> >On Wed, May 21, 2025 at 07:14:45PM +0800, Zhenzhong Duan wrote:
-> >> +static const MemoryListener iommufd_s2domain_memory_listener = {
-> >> +    .name = "iommufd_s2domain",
-> >> +    .priority = 1000,
-> >> +    .region_add = iommufd_listener_region_add_s2domain,
-> >> +    .region_del = iommufd_listener_region_del_s2domain,
-> >> +};
+> >On Wed, May 21, 2025 at 07:14:35PM +0800, Zhenzhong Duan wrote:
+> >> @@ -852,6 +853,17 @@ static bool
+> >hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+> >>      caps->type = type;
+> >>      caps->hw_caps = hw_caps;
+> >>
+> >> +    switch (type) {
+> >> +    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
+> >> +        vendor_caps->vtd.flags = data.vtd.flags;
+> >> +        vendor_caps->vtd.cap_reg = data.vtd.cap_reg;
+> >> +        vendor_caps->vtd.ecap_reg = data.vtd.ecap_reg;
+> >> +        break;
+> >> +    case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
+> >> +    case IOMMU_HW_INFO_TYPE_NONE:
 > >
-> >Would you mind elaborating When and how vtd does all S2 mappings?
+> >Should this be a part of hiod_iommufd_get_vendor_cap() in backends?
 > 
-> When guest trigger pasid cache invalidation, vIOMMU will attach device
-> to stage2 page table if guest's PGTT=PT or nested page table if PGTT=Stage1.
-> All these page tables are dynamically created during attach. We don't use
-> VFIO's shadow page table. The S2 mappings are also created during attach.
+> Made following	adjustments which save raw data in VendorCaps,
+> let me know if it matches your thought.
 
-OK. That I can understand.
-
-Next question: what does VTD actually map onto the S2 page table?
-The entire guest RAM? Or just a part of that?
-
-On ARM, the VFIO listener would capture the entire RAM, and map it
-on S2 page table. I wonder if VTD would do the same.
-
-> >On ARM, the default vfio_memory_listener could capture the entire
-> >guest RAM and add to the address space. So what we do is basically
-> >reusing the vfio_memory_listener:
-> >https://lore.kernel.org/qemu-devel/20250311141045.66620-13-
-> >shameerali.kolothum.thodi@huawei.com/
-> >
-> >The thing is that when a VFIO device is attached to the container
-> >upon a nesting configuration, the ->get_address_space op should
-> >return the system address space as S1 nested HWPT isn't allocated
-> >yet. Then all the iommu as routines in vfio_listener_region_add()
-> >would be skipped, ending up with mapping the guest RAM in S2 HWPT
-> >correctly. Not until the S1 nested HWPT is allocated by the guest
-> >OS (after guest boots), can the ->get_address_space op return the
-> >iommu address space.
-> 
-> When S1 hwpt is allocated by guest, who will notify VFIO to call
-> ->get_address_space op() again to get iommu address space?
-
-Hmm, would you please elaborate why VFIO needs to call that again?
-
-I can see VFIO create the MAP/UNMAP notifiers for an iommu address
-space. However, the device operating in the nested translation mode
-should go through IOMMU HW for these two:
- - S1 page table (MAP) will be created by the guest OS
- - S1 invalidation (UNMAP) will be issued by the guest OS, and then
-   trapped by QEMU to forward to the HWPT uAPI to the host kernel.
-
-As you mentioned, there is no need of a shadow page table in this
-mode. What else does VT-d need from an iommu address space?
-
-On ARM, the only reason that we shift address space, is for KVM to
-inject MSI, as it only has the gIOVA and requires the iommu address
-space to translate that to gPA. Refer to kvm_arch_fixup_msi_route()
-in target/arm/kvm.c where it calls pci_device_iommu_address_space.
-
-> >With this address space shift, S2 mappings can be simply captured
-> >and done by vfio_memory_listener. Then, such an s2domain listener
-> >would be largely redundant.
-> 
-> I didn't get how arm smmu supports switching address space, will VFIO call
-> ->get_address_space() twice, once to get system address space and the other
-> for iommu address space?
-
-The set_iommu_device() attaches the device to an stage2 page table
-by default, indicating that the device works in the S1 passthrough
-mode (for VTD, that's PGTT=PT) at VM creation. And this is where
-the system address space should be returned by get_address_space().
-
-If the guest kernel sets an S1 Translate mode for the device (for
-VTD, that's PGTT=Stage1), QEMU would trap that and allocate an S1
-HWPT for device to attach. Starting from here, get_address_space()
-can return the iommu address space -- on ARM, we only need it for
-KVM to translate MSI.
-
-If the guest kernel sets an S1 Bypass mode for the device (for VTD,
-that's PGTT=PT), the device would continue stay in the system AS,
-i.e. get_address_space() wouldn't need to switch.
-
-> >> +static int vtd_create_s1_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> >> +                              VTDS2Hwpt *s2_hwpt, VTDHwpt *hwpt,
-> >> +                              VTDPASIDEntry *pe, Error **errp)
-> >> +{
-> >> +    struct iommu_hwpt_vtd_s1 vtd;
-> >> +    uint32_t hwpt_id, s2_hwpt_id = s2_hwpt->hwpt_id;
-> >> +
-> >> +    vtd_init_s1_hwpt_data(&vtd, pe);
-> >> +
-> >> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> >> +                                    s2_hwpt_id, 0, IOMMU_HWPT_DATA_VTD_S1,
-> >> +                                    sizeof(vtd), &vtd, &hwpt_id, errp)) {
-> >> +        return -EINVAL;
-> >> +    }
-> >> +
-> >> +    hwpt->hwpt_id = hwpt_id;
-> >> +
-> >> +    return 0;
-> >> +}
-> >> +
-> >> +static void vtd_destroy_s1_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> >VTDHwpt *hwpt)
-> >> +{
-> >> +    iommufd_backend_free_id(idev->iommufd, hwpt->hwpt_id);
-> >> +}
-> >
-> >I think you did some substantial work to isolate the get_hw_info
-> >part inside the iommufd backend code, which looks nice and clean
-> >as the vIOMMU code simply does iodc->get_cap().
-> >
-> >However, that then makes these direct raw backend function calls
-> >very awkward :-/
-> >
-> >In my view, the way to make sense is either:
-> >* We don't do any isolation, but just call raw backend functions
-> >  in vIOMMU code
-> >* We do every isolation, and never call raw backend functions in
-> >  vIOMMU code
-> 
-> Iommufd backend functions are general for all modules usage including
-> vIOMMU. I think we are not blocking vIOMMU calling raw backend functions.
-
-Well, I am not against doing that. Calling the raw iommufd APIs is
-easier :)
-
-> We just provide a general interface for querying capabilities, not all capabilities
-> are from iommufd get_hw_info result, e.g., aw_bits.
-
-Question is why we need a general interface for get_hw_info(), yet
-not for other iommufd APIs.
-
-IIRC, Cedirc's suggested a general interface for get_hw_info so the
-vIOMMU code can be unaware of the underlying source (doesn't matter
-if it's from iommufd or from vfio).
-
-I see aw_bits from QEMU command line. Mind elaborating?
+Yea, LGTM. Point is that we keep all vendor structure decoding
+inside the backend, so VFIO wouldn't need to care about types
+nor what's inside the data.
 
 Thanks
 Nicolin
