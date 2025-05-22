@@ -4,50 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4AE9C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 22:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84892C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 22:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIES6-0003er-9o; Thu, 22 May 2025 18:31:50 -0400
+	id 1uIEYC-0005Dq-S0; Thu, 22 May 2025 18:38:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uIES4-0003ed-L0; Thu, 22 May 2025 18:31:48 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uIERx-0005mi-IE; Thu, 22 May 2025 18:31:48 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D8D0A55BC03;
- Fri, 23 May 2025 00:31:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 261qlfsUnyq3; Fri, 23 May 2025 00:31:28 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id F0C4C55BC02; Fri, 23 May 2025 00:31:28 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EEBEF745683;
- Fri, 23 May 2025 00:31:28 +0200 (CEST)
-Date: Fri, 23 May 2025 00:31:28 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-cc: Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH 00/13] Pegasos2 clean up and pegasos1 emulation
-In-Reply-To: <cover.1746139668.git.balaton@eik.bme.hu>
-Message-ID: <d4f3967e-24cc-a723-6d19-30b389bdacfd@eik.bme.hu>
-References: <cover.1746139668.git.balaton@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uIEY9-0005DM-30
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 18:38:06 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uIEY1-0006Ru-U5
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 18:38:03 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-742c3d06de3so6478832b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 15:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747953473; x=1748558273; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RN4mZHjloUYc5xBEcx0zXmdorZNruJ4VWRnKGIZ7Wbc=;
+ b=BE35zbM90I7LK0zqC6Z2ecGuLdfObfhDO1AXJ3YmfvNazXRjyH0kAavb1Qh35ezLfm
+ ZNVoFo2pwHITTg1TJfYh/L2NWnJEyPeBgjuM2nu8Q/lriw9YjqadBt9Mr91hnjmCXQPy
+ xKM4JYMvqZvZ/EGiTYKe+bcaMihW2wxZMEZlAp5A/ngY2i0xB6mNdZZwAMVuCwQ3KHea
+ q50fFk4cIieHbYoP/4BKyRZCG+TxHtQA1APqb6UbjbFWoYtXSHOCk401/m/XBDgcelYf
+ LC++UMsERbFbfPubUUJ4s/R02CmdzBeT3MQ1YwEa85rqFMXiV4lgMDKdTExzCV3BcgeS
+ Z3Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747953473; x=1748558273;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RN4mZHjloUYc5xBEcx0zXmdorZNruJ4VWRnKGIZ7Wbc=;
+ b=OTVbONMZ3vjQiMB8hjPbkwcVN1Up+LhkZE74UXLsQ99ctXjuug5gCZGWNaW1pNbtQs
+ 1jM1adiKj2Z9h8eeIgOVfDtvnidoU8Zyg0v4V0Kva5dazH0wc3scEohWFs1DrjsH1B7L
+ EHntB1E1E9YOqZasl4yxCIlpZKjsdlyKq52ZV9P+XpW8/pB1utwOhqZVVgRDDydhU7Dy
+ v52JQNSCACqPpjJlcgA37ecmOdCOXDuQt6hT0CTBwSSG7wOwq0aleBaU0X+sCOLit4dc
+ NxShNiQcYPziiKtDlEb7Cgdx6PGJkUrtlijpuSAgqTyqzBLAQIvK8dJgA6DIJTK9TxjM
+ +/Ng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtuJlze9EJm8taNLdRBvskKDC1XXwu3H4pmqZnWusvsrgTyh2bPXng0SvXEAHmz4Q7M0hknsofwefe@nongnu.org
+X-Gm-Message-State: AOJu0YxbusVqO2k7oSU9Q5oCjsQyxeYwxUtLeb2T8ix+2MfYpOXFYxEv
+ 3hLlIk8Fh6rXiLAGztgtyZMyM/m+pG32lHfBGC80WtnDRZiTCnsZC7YevjIinGnU7pE=
+X-Gm-Gg: ASbGncuhaZhDgcwbUpvePLn70GXBLf57H4X1vnv4j8LrbVgg2REdoyisBddUD8s+Bc5
+ JaCcubhanGpwP3NoSWnXRCtcFldHMRBaDFwj9h1WJ8TdThuhuWzqKIT4F1+kEmXDh/JYsZvYHeV
+ GFOje4/iPYvMGd/lQczN3GV5NlIgCNZxIb00a70mrAXGBjJJukaQfeQ2XWYxeic/ZVCXO8ldXZb
+ 3cXB8jieM5UpbFrbJWzkre4MHUZnGwcAyBFk+IdRyC4A2rWOJbT7lwbsdgb4YbE6X63E3UGGN20
+ ZaQ5oNH10Xq/ec/uJ+AH8WyD4HlP4DltHCDNmuN3LeXUhlByH2TtHnpWv+Jt48sq
+X-Google-Smtp-Source: AGHT+IG1Ef+vEla6bYfUvGeaKaGOG2esj1QWgNjZiTA3Ckkd/ybJjDyvbLtkiGVk69RI84RMPbWsXQ==
+X-Received: by 2002:a05:6a00:4106:b0:740:9c57:3907 with SMTP id
+ d2e1a72fcca58-742acd50f3amr36895617b3a.19.1747953473103; 
+ Thu, 22 May 2025 15:37:53 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-742a96e589esm11695457b3a.9.2025.05.22.15.37.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 May 2025 15:37:52 -0700 (PDT)
+Message-ID: <25730845-c77c-47b0-8c23-a254dbbb32d6@linaro.org>
+Date: Thu, 22 May 2025 15:37:51 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/8] Add memory hardware address read/write API
+To: Rowan Hart <rowanbhart@gmail.com>
+Cc: Julian Ganz <neither@nut.email>, Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20250521094333.4075796-1-rowanbhart@gmail.com>
+ <20250521094333.4075796-6-rowanbhart@gmail.com>
+ <20250522115935.34716-3-neither@nut.email>
+ <bbbc7639-9ef0-4510-b481-0c3145b6ff11@linaro.org>
+ <CAE5MsNaacPXefwk=tsUmmAoxUZ9UU3uc084rOT7TOarW7Y7FwQ@mail.gmail.com>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAE5MsNaacPXefwk=tsUmmAoxUZ9UU3uc084rOT7TOarW7Y7FwQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,60 +112,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 May 2025, BALATON Zoltan wrote:
-> This series changes how the fdt for VOF is generated in pegasos2 by
-> moving the static parts to a dtb and only generate the changing parts
-> such as memory size and PCI devices programmatically. This simplifies
-> the code and allows simply adding emulation of Pegasos I which has a
-> different north bridge and slightly different memory map but otherwise
-> very similar and can be emulated by reusing parts from the amigaone
-> machine.
->
-> The first patch adds an extended DEFINE_MACHINE macro that is later
-> used for more easily define the abstract machine type and hide most of
-> the QOM boiler plate.
->
-> The second patch (submitted separetely before, v3 is included here)
-> fixes handling the name property in VOF that cannot be represented in
-> a dts as that always takes the path as the name and cannot accept an
-> explicit name property but we need that to appear when guest queries
-> properties which previously was worked around by adding it to every
-> node.
+On 5/22/25 2:01 PM, Rowan Hart wrote:
+> 
+>      > This definition strikes me as odd. What was your reason to assert
+>      > `current_cpu` here, but not in the other two functions? Also a bit
+>      > surprising is the declaration of `cpu` if you use it in just one
+>     place
+>      > (rather than just use `current_cpu` directly as for the assertion).
+>      >
+>      > And there is no reason in particular why the vCPU could not be a
+>      > function parameter of `qemu_plugin_translate_vaddr`, right? You don't
+>      > have the same restrictions as in `qemu_plugin_read_memory_hwaddr` or
+>      > `qemu_plugin_hwaddr_operation_result` where you actually touch
+>     memory?
+>      >
+> 
+>     That's a good point, adding a "unsigned int vcpu_index" to the
+>     signature
+>     should be enough to query current or any other vcpu easily.
+> 
+> This is a really nice idea, it might be nice to make a vcpu version of 
+> read/write register too. For memory, I'd think going with the current 
+> memory is probably fine, I don't see any configs with different memory 
+> per vcpu?
+> 
 
-Ping?
-
-> Regards,
-> BALATON Zoltan
->
-> BALATON Zoltan (13):
->  hw/boards: Extend DEFINE_MACHINE macro to cover more use cases
->  ppc/vof: Make nextprop behave more like Open Firmware
->  hw/ppc/pegasos2: Remove explicit name properties from device tree
->  hw/ppc/pegasos2: Change device tree generation
->  hw/ppc/pegasos2: Remove fdt pointer from machine state
->  hw/ppc/pegasos2: Rename mv field in machine state
->  hw/ppc/pegasos2: Add south bridge pointer in the machine state
->  hw/ppc/pegasos2: Move PCI IRQ routing setup to a function
->  hw/ppc/pegasos2: Move hardware specific parts out of machine reset
->  hw/ppc/pegasos2: Introduce abstract superclass
->  hw/ppc/pegasos2: Add bus frequency to machine state
->  hw/ppc/pegasos2: Add Pegasos I emulation
->  hw/ppc/pegasos2: Add VOF support for pegasos1
->
-> MAINTAINERS              |   1 +
-> hw/ppc/pegasos2.c        | 770 +++++++++++++++++++--------------------
-> hw/ppc/vof.c             |  50 ++-
-> include/hw/boards.h      |  16 +-
-> pc-bios/dtb/meson.build  |   2 +
-> pc-bios/dtb/pegasos1.dtb | Bin 0 -> 857 bytes
-> pc-bios/dtb/pegasos1.dts | 125 +++++++
-> pc-bios/dtb/pegasos2.dtb | Bin 0 -> 1701 bytes
-> pc-bios/dtb/pegasos2.dts | 167 +++++++++
-> 9 files changed, 718 insertions(+), 413 deletions(-)
-> create mode 100644 pc-bios/dtb/pegasos1.dtb
-> create mode 100644 pc-bios/dtb/pegasos1.dts
-> create mode 100644 pc-bios/dtb/pegasos2.dtb
-> create mode 100644 pc-bios/dtb/pegasos2.dts
->
->
+Thinking about it twice, and after reading Alex comments for writing 
+registers, it's probably not a good idea to allow such side effects on 
+other vcpus (on registers and memory).
+In case of registers, there is nothing ensuring they will be written 
+correctly, so it only makes sense for current_cpu, as we are in a 
+callback running on it.
+Safer to have the same semantic for memory read/write also, so please 
+forget my idea.
 
