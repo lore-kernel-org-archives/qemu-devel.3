@@ -4,100 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B178C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC072C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIBMe-0005QC-Qt; Thu, 22 May 2025 15:14:01 -0400
+	id 1uIBO7-0006AD-Rc; Thu, 22 May 2025 15:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uIBMd-0005PW-0r
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:13:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1uIBNu-00068j-FU
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:15:22 -0400
+Received: from shrimp.cherry.relay.mailchannels.net ([23.83.223.164])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uIBMa-0007rE-RG
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:13:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747941235;
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1uIBNn-0008Ey-Jw
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:15:14 -0400
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 6C7382C4297;
+ Thu, 22 May 2025 19:15:06 +0000 (UTC)
+Received: from pdx1-sub0-mail-a240.dreamhost.com
+ (trex-green-5.trex.outbound.svc.cluster.local [100.120.55.12])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id C1A402C5E14;
+ Thu, 22 May 2025 19:15:05 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1747941305; a=rsa-sha256;
+ cv=none;
+ b=wIN/0TyAevyANmlwOJonc/AJ52qfJRJu6yTmjMgJNabnujTCeaUxJjk/nL9cCdtCvAFlQM
+ lbzSrP7FIHwhbch6XLbG8pdJEEm53NwSTfjpj0DSDJJkTDT45g2yZwASmiOqqrUBaeN2HG
+ pXCaA4Yby6QXSCiqWAN2Egpceyy4oiiLnyF4wIGveyXYTUKw2SsY2X8pbr0NR0EY/PPDB1
+ A3mVAeJHKXTozo4cSPmz/1hD6UudVBhA1+OzefG9KUtcjLwtFoiRKvtaFw4gImG0C2fQ9W
+ rN8hcio/MSsfjk1J1xAG4I0S3wOP4KkUpGBfMzA6rDEorhm9bfk5ZMggwjs9ow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1747941305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HSSnnoEK2d+vdgFQbD5XNON7KKR4YZRVpFajvpeRFFM=;
- b=KaqexmfFMqjmnqoonH8UmOXm4bKw7iY+vaaCq7vl8j03rpV1JqURH8ztGY9G+5S3/uhXda
- x/5Km9L8uayKKzE6pTuThymK9rJP7DR/OiFnWcCNvXuNKEGyTZ8/JxY5DPcoXTCwwHdfux
- Yr38Gf1FfaHFKP13cUYNUzwS55Bu7gM=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-5G5tz32QMFymqmMIAN809w-1; Thu, 22 May 2025 15:13:54 -0400
-X-MC-Unique: 5G5tz32QMFymqmMIAN809w-1
-X-Mimecast-MFC-AGG-ID: 5G5tz32QMFymqmMIAN809w_1747941233
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-231e76f6eafso57905025ad.0
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:13:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747941233; x=1748546033;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HSSnnoEK2d+vdgFQbD5XNON7KKR4YZRVpFajvpeRFFM=;
- b=drNBui686DxDnd+NqOOpWAcckJcWyVRnDLgrMVR4PMwKWB46vUrvu+tiANk3pwuRKT
- 0XBMtGB5jrL+0MykpGU7cys3+UAcd8ROLwI4ZVGgxv+KQFPafEiTBorJHGr35lFF8HsR
- S70ANWXEvcPPcUVlJvR2a1BEkr60DHcm30H/y37Sy2/5RTnBun5CsB+l4lPMVSEu4319
- epmew0ncuWrD9wLYWbzTvBxC8XjJPuKzNsTwmCioDplyuyJyBr7tCi6j2shSP7fmj8B4
- elR48Izu5Qrq0MWx1oeF3eeDgF+F0MmzWtlUABUuDQhlVaZIfEB+AoKALJ8hEeLrFOfS
- vkUQ==
-X-Gm-Message-State: AOJu0Yzwv3GQqqthO7VB0Dsw+aIF3hexsqVAipWUm51XvAw5e1WmLml3
- m050GCjyAX9vbm1lSyJqv7cWUAmX+AU0LUurBOgGcqLJ/fxodqt1Zs8LlSlhFa/5Vt8FKz2MWKZ
- MzqhXxlOJ/jhissDKqYBjOyD8DPHieNk1iiFfbVShLKQbY0V3+eQSf2IVxfKZIXJBPd3M6eQ/Kf
- j392k85Fm6innCBYf5FDkB7OW0NDppwl4=
-X-Gm-Gg: ASbGncsnmKFRfOCCXhPLn7jBEtzDqH4d1ui/zfpDXyEMHk3FhCaT/F1LnbyNg4rtRyI
- Us5pxS/5YdJbGS07y2YXEXFTM/rfD2Q8metZMjJIlhteFjJDwhT4PyMD+FqQ0uz/m54Yy6CcoIZ
- q4SNZKSmX7Ieo/K/x8fXRo3DM+
-X-Received: by 2002:a17:902:f551:b0:227:eb61:34b8 with SMTP id
- d9443c01a7336-231de31b3e6mr374006815ad.25.1747941233051; 
- Thu, 22 May 2025 12:13:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGYgXmi1Jtqf68xRCZo1FeaIysHc2TICFE2Sh78xVzHAbM/Pnw2Te2JHy4qK2DZKsns8N4x+ngM/YqYzulkKyA=
-X-Received: by 2002:a17:902:f551:b0:227:eb61:34b8 with SMTP id
- d9443c01a7336-231de31b3e6mr374006555ad.25.1747941232747; Thu, 22 May 2025
- 12:13:52 -0700 (PDT)
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=K4cUqz35dS7dKQoragEtYnv/LjvHnd4/odkizloLND0=;
+ b=JbAlFiTIdZHx5jS+BDenXin1i2xI4oPndA2P1eQzSraNa9JmwY4Jk8Y5BbLWipEjgUCAcs
+ DcDtxASwTkwVVFyf5wEZjjWwcrp2RamAqAfZwe0C7ybWp7myCnQX3HGdkfPN+o2c4yqcLa
+ YOwdap9NVeKukCkWnlDJ0v/JRrDeFQz3UCOu2dnd8ZUYhUGKgfqyC/wpNqM40XG6lbeVEc
+ 2ZwONPMA0ixuh51s23PtZPP944hYBh5zbINTqPvTnfZjQVhC8xx2a65VE/6sC6qqWvKUHt
+ rwVsfySqA+yy55hye3CiNuXplRWqr98qB0e9x6iMwUhcmIjdVqQ8sC05rZ7mYQ==
+ARC-Authentication-Results: i=1; rspamd-766f9cfddb-csmgf;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Belong-Harbor: 2ab8768010bbda9b_1747941306172_1997564933
+X-MC-Loop-Signature: 1747941306172:2643112698
+X-MC-Ingress-Time: 1747941306172
+Received: from pdx1-sub0-mail-a240.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.120.55.12 (trex/7.0.3); Thu, 22 May 2025 19:15:06 +0000
+Received: from offworld (unknown [104.36.25.248])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ (Authenticated sender: dave@stgolabs.net)
+ by pdx1-sub0-mail-a240.dreamhost.com (Postfix) with ESMTPSA id 4b3Hzs0cksz2P; 
+ Thu, 22 May 2025 12:15:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+ s=dreamhost; t=1747941305;
+ bh=K4cUqz35dS7dKQoragEtYnv/LjvHnd4/odkizloLND0=;
+ h=Date:From:To:Cc:Subject:Content-Type;
+ b=oFTRpyt5MtBirrc5igNAGPBJK3s3rDqf4uukYPXK9gcjFSk70RDltJHtM7OXQ/6yl
+ Iz6rvBd1ZwkMmk+DIwoHoWlt5a0c99VxM/jaqs2TQpKrKWOwLf/7apZ+3ixnGGbBEb
+ 8n+USRCSNYHLevhFi05SQAOAz9Ci7VY7XP1cX1LEWI8Ic/95quypK8i9V5uFWEIGlk
+ fub+LuyK69t+3nr8L8h7Oe7lBi4lSyJePuJKv9TvaaRR2WEKfY6tQshQfYwW0cR4Qp
+ NC4tyZRUXocPkDrgeCRZ/sMPmIe6okzvYv5aS4YQpVeMdE9nipYfUi0rXCky+VbmUK
+ u7sj5mrjRTWMw==
+Date: Thu, 22 May 2025 12:15:02 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: Vinayak Holikatti <vinayak.kh@samsung.com>, Jonathan.Cameron@huawei.com
+Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
+ nifan.cxl@gmail.com, vishak.g@samsung.com, krish.reddy@samsung.com,
+ a.manzanares@samsung.com, alok.rathore@samsung.com
+Subject: Re: [PATCH] Add support for FMAPI Get Mutliheaded Head info opcode
+ (5501h)
+Message-ID: <20250522191502.v7hw56s3f3cg7y3o@offworld>
+References: <CGME20250522063149epcas5p13719600aa8f59313ff3dc2570c996aec@epcas5p1.samsung.com>
+ <20250522063135.366295-1-vinayak.kh@samsung.com>
 MIME-Version: 1.0
-References: <20250519182153.3835722-1-jsnow@redhat.com>
- <20250519182153.3835722-6-jsnow@redhat.com>
- <87r00jaaso.fsf@pond.sub.org>
-In-Reply-To: <87r00jaaso.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 22 May 2025 15:13:40 -0400
-X-Gm-Features: AX0GCFsxPYV6IherBtyKwNjC8zyT-T273S-VqY808FMMfnkktY9Afhx0sSkaob4
-Message-ID: <CAFn=p-Zo5urERRMzLWpa9mQCsv8Sa5ujmO1OkVRrr2TRRMWLEA@mail.gmail.com>
-Subject: Re: [PATCH 5/8] python: convert remaining deprecated type hints for
- 3.9+
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Hanna Reitz <hreitz@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-block@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org, 
- Maksim Davydov <davydov-max@yandex-team.ru>, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000004448530635be4832"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20250522063135.366295-1-vinayak.kh@samsung.com>
+User-Agent: NeoMutt/20220429
+Received-SPF: pass client-ip=23.83.223.164; envelope-from=dave@stgolabs.net;
+ helo=shrimp.cherry.relay.mailchannels.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,198 +115,283 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004448530635be4832
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, 22 May 2025, Vinayak Holikatti wrote:
 
-On Tue, May 20, 2025 at 5:31=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+>CXL spec 3.2 section 7.6.7.5.2  describes Get Head Info.
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > In this patch, we don't have a builtin type to use for a type hint, but
-> > we do have collections.abc and other standard library types. Replace
-> > deprecated type hints with their standard library equivalents:
-> >
-> > typing.Awaitable      =3D> collections.abc.Awaitable
-> > typing.AbstractSet    =3D> collections.abc.AbstractSet
-> > typing.AsyncIterator  =3D> collections.abc.AsyncIterator
-> > typing.Callable       =3D> collections.abc.Callable
-> > typing.Coroutine      =3D> collections.abc.Coroutine
-> > typing.Deque          =3D> collections.deque
-> > typing.Generator      =3D> collections.abc.Generator
-> > typing.Iterable       =3D> collections.abc.Iterable
-> > typing.Iterator       =3D> collections.abc.Iterator
-> > typing.Mapping        =3D> collections.abc.Mapping
-> > typing.Match          =3D> re.Match
-> > typing.MutableMapping =3D> collections.abc.MutableMapping
-> > typing.Sequence       =3D> collections.abc.Sequence
-> > typing.ValuesView     =3D> collections.abc.ValuesView
-> >
-> > The primary benefit of this is, of course, that the standard type can
-> > now be used directly as the type hint. In general, this means far fewer
-> > imports from `typing`. The reason we *have* to do this is because the
-> > old type hints have been deprecated and will be dropped from a Python
-> > release in the future, so I am just getting ahead of it before it cause=
-s
-> > a problem.
-> >
-> > (Granted, yes, in practice this just means we're usually importing from
-> > collections.abc instead of typing, but... ah well. What are you gonna
-> > do.)
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
-> I'd expect to catch mistakes in the manual parts.  I gave scripts/qapi/
-> an eye-over anyway, and it looks good to me.
->
-> Acked-by: Markus Armbruster <armbru@redhat.com>
->
-> Typing imports left at the end of the series:
->
->     *
->     Any
->     BinaryIO
->     Generic
->     IO
->     Literal
->     NamedTuple
->     NewType
->     NoReturn
->     Optional
->     Protocol
->     TYPE_CHECKING
->     TextIO
->     TypeVar
->     Union
->     cast
->
+So how was this tested? Ideally this now comes with a libcxlmi (or equivalent)
+test case. See for example how Anisa is going about this with the FMAPI DCD
+patches:
 
-Yep, all of these are good. Except the *.
+https://lore.kernel.org/linux-cxl/20250508001754.122180-1-anisa.su887@gmail.com/
 
+>Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+>---
+>This patch is generated against Jonathan Cameron's branch cxl-2025-03-20
+
+Adding him to the thread :)
 
 >
-> The * are in scripts/codeconverter/.  You might want to double-check
-> nothing deprecated hides behind the *.
+> hw/cxl/cxl-mailbox-utils.c  | 21 +++++++++
+> hw/cxl/mhsld/mhsld.c        | 92 ++++++++++++++++++++++++++++++++++++-
+> hw/cxl/mhsld/mhsld.h        | 26 +++++++++++
+> include/hw/cxl/cxl_device.h |  6 +++
+> 4 files changed, 144 insertions(+), 1 deletion(-)
 >
-
-Yep. Meant to, forgot. O:-) Thanks for the callout.
-
-
+>diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>index a02d130926..4f25caecea 100644
+>--- a/hw/cxl/cxl-mailbox-utils.c
+>+++ b/hw/cxl/cxl-mailbox-utils.c
+>@@ -122,6 +122,7 @@ enum {
+>         #define MANAGEMENT_COMMAND     0x0
+>     MHD = 0x55,
+>         #define GET_MHD_INFO 0x0
+>+        #define GET_MHD_HEAD_INFO 0x1
+> };
 >
-> The others are all still good, I presume.
-
-
-Yep! I double-checked the list and none of the remaining ones here are
-deprecated.
-
---js
-
---0000000000004448530635be4832
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, May 20,=
- 2025 at 5:31=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; In this patch, we don&#39;t have a builtin type to use for a type hint=
-, but<br>
-&gt; we do have collections.abc and other standard library types. Replace<b=
-r>
-&gt; deprecated type hints with their standard library equivalents:<br>
-&gt;<br>
-&gt; typing.Awaitable=C2=A0 =C2=A0 =C2=A0 =3D&gt; collections.abc.Awaitable=
-<br>
-&gt; typing.AbstractSet=C2=A0 =C2=A0 =3D&gt; collections.abc.AbstractSet<br=
+> /* CCI Message Format CXL r3.1 Figure 7-19 */
+>@@ -267,6 +268,23 @@ static CXLRetCode cmd_mhd_get_info(const struct cxl_cmd *cmd,
+>     return CXL_MBOX_UNSUPPORTED;
+> }
 >
-&gt; typing.AsyncIterator=C2=A0 =3D&gt; collections.abc.AsyncIterator<br>
-&gt; typing.Callable=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D&gt; collections.abc.Call=
-able<br>
-&gt; typing.Coroutine=C2=A0 =C2=A0 =C2=A0 =3D&gt; collections.abc.Coroutine=
-<br>
-&gt; typing.Deque=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D&gt; collections.deq=
-ue<br>
-&gt; typing.Generator=C2=A0 =C2=A0 =C2=A0 =3D&gt; collections.abc.Generator=
-<br>
-&gt; typing.Iterable=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D&gt; collections.abc.Iter=
-able<br>
-&gt; typing.Iterator=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D&gt; collections.abc.Iter=
-ator<br>
-&gt; typing.Mapping=C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D&gt; collections.abc.Mapp=
-ing<br>
-&gt; typing.Match=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D&gt; re.Match<br>
-&gt; typing.MutableMapping =3D&gt; collections.abc.MutableMapping<br>
-&gt; typing.Sequence=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D&gt; collections.abc.Sequ=
-ence<br>
-&gt; typing.ValuesView=C2=A0 =C2=A0 =C2=A0=3D&gt; collections.abc.ValuesVie=
-w<br>
-&gt;<br>
-&gt; The primary benefit of this is, of course, that the standard type can<=
-br>
-&gt; now be used directly as the type hint. In general, this means far fewe=
-r<br>
-&gt; imports from `typing`. The reason we *have* to do this is because the<=
-br>
-&gt; old type hints have been deprecated and will be dropped from a Python<=
-br>
-&gt; release in the future, so I am just getting ahead of it before it caus=
-es<br>
-&gt; a problem.<br>
-&gt;<br>
-&gt; (Granted, yes, in practice this just means we&#39;re usually importing=
- from<br>
-&gt; collections.abc instead of typing, but... ah well. What are you gonna<=
-br>
-&gt; do.)<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-<br>
-I&#39;d expect to catch mistakes in the manual parts.=C2=A0 I gave scripts/=
-qapi/<br>
-an eye-over anyway, and it looks good to me.<br>
-<br>
-Acked-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" target=
-=3D"_blank">armbru@redhat.com</a>&gt;<br>
-<br>
-Typing imports left at the end of the series:<br>
-<br>
-=C2=A0 =C2=A0 *<br>
-=C2=A0 =C2=A0 Any<br>
-=C2=A0 =C2=A0 BinaryIO<br>
-=C2=A0 =C2=A0 Generic<br>
-=C2=A0 =C2=A0 IO<br>
-=C2=A0 =C2=A0 Literal<br>
-=C2=A0 =C2=A0 NamedTuple<br>
-=C2=A0 =C2=A0 NewType<br>
-=C2=A0 =C2=A0 NoReturn<br>
-=C2=A0 =C2=A0 Optional<br>
-=C2=A0 =C2=A0 Protocol<br>
-=C2=A0 =C2=A0 TYPE_CHECKING<br>
-=C2=A0 =C2=A0 TextIO<br>
-=C2=A0 =C2=A0 TypeVar<br>
-=C2=A0 =C2=A0 Union<br>
-=C2=A0 =C2=A0 cast<br></blockquote><div><br></div><div>Yep, all of these ar=
-e good. Except the *.</div><div>=C2=A0</div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">
-<br>
-The * are in scripts/codeconverter/.=C2=A0 You might want to double-check<b=
-r>
-nothing deprecated hides behind the *.<br></blockquote><div><br></div><div>=
-Yep. Meant to, forgot. O:-) Thanks for the callout.</div><div>=C2=A0</div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-The others are all still good, I presume.</blockquote><div><br></div><div>Y=
-ep! I double-checked the list and none of the remaining ones here are depre=
-cated.</div><div><br></div><div>--js <br></div></div></div>
-
---0000000000004448530635be4832--
-
+>+/*
+>+ * CXL r3.2 section 7.6.7.5.2 - Get Multi-Headed Head Info (Opcode 5501h)
+>+ */
+>+static CXLRetCode cmd_mhd_get_head_info(const struct cxl_cmd *cmd,
+>+                                   uint8_t *payload_in, size_t len_in,
+>+                                   uint8_t *payload_out, size_t *len_out,
+>+                                   CXLCCI *cci)
+>+{
+>+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+>+    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(ct3d);
+>+    if (cvc->mhd_get_head_info) {
+>+        return cvc->mhd_get_head_info(cmd, payload_in, len_in, payload_out,
+>+                                 len_out, cci);
+>+    }
+>+    return CXL_MBOX_UNSUPPORTED;
+>+}
+>+
+> static CXLRetCode cmd_events_get_records(const struct cxl_cmd *cmd,
+>                                          uint8_t *payload_in, size_t len_in,
+>                                          uint8_t *payload_out, size_t *len_out,
+>@@ -3429,6 +3447,7 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>         "MEDIA_AND_POISON_GET_SCAN_MEDIA_RESULTS",
+>         cmd_media_get_scan_media_results, 0, 0 },
+>     [MHD][GET_MHD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_info, 2, 0},
+>+    [MHD][GET_MHD_HEAD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_head_info, 2, 0},
+> };
+>
+> static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
+>@@ -3761,6 +3780,8 @@ static const struct cxl_cmd cxl_cmd_set_t3_fm_owned_ld_mctp[256][256] = {
+>     [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
+>     [TUNNEL][MANAGEMENT_COMMAND] = { "TUNNEL_MANAGEMENT_COMMAND",
+>                                      cmd_tunnel_management_cmd, ~0, 0 },
+>+    [MHD][GET_MHD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_info, 2, 0},
+>+    [MHD][GET_MHD_HEAD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_head_info, 2, 0},
+> };
+>
+> void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
+>diff --git a/hw/cxl/mhsld/mhsld.c b/hw/cxl/mhsld/mhsld.c
+>index 9f633b3bed..981546b5ff 100644
+>--- a/hw/cxl/mhsld/mhsld.c
+>+++ b/hw/cxl/mhsld/mhsld.c
+>@@ -61,9 +61,57 @@ static CXLRetCode cmd_mhd_get_info(const struct cxl_cmd *cmd,
+>     return CXL_MBOX_SUCCESS;
+> }
+>
+>+/*
+>+ * CXL r3.2 section 7.6.7.5.2 - Get Head Info (Opcode 5501h)
+>+ *
+>+ * This command retrieves the number of heads, number of supported LDs,
+>+ * and Head-to-LD mapping of a Multi-Headed device.
+>+ */
+>+static CXLRetCode cmd_mhd_get_head_info(const struct cxl_cmd *cmd,
+>+                                        uint8_t *payload_in, size_t len_in,
+>+                                        uint8_t *payload_out, size_t *len_out,
+>+                                        CXLCCI *cci)
+>+{
+>+    CXLMHSLDState *s = CXL_MHSLD(cci->d);
+>+    MHDGetHeadInfoInput *input = (void *)payload_in;
+>+    MHDGetHeadInfoOutput *output = (void *)payload_out;
+>+    int i = 0;
+>+
+>+    if (input->start_head > MHSLD_HEADS) {
+>+        return CXL_MBOX_INVALID_INPUT;
+>+    }
+>+
+>+    output->nr_heads = MIN((MHSLD_HEADS - input->start_head), input->nr_heads);
+>+    for (i = input->start_head; i < input->start_head + output->nr_heads; i++) {
+>+        output->head_info_list[i].port_number =
+>+                                 s->mhd_state->head_info_blocks[i].port_number;
+>+        output->head_info_list[i].max_link_width =
+>+                              s->mhd_state->head_info_blocks[i].max_link_width;
+>+        output->head_info_list[i].nego_link_width =
+>+                             s->mhd_state->head_info_blocks[i].nego_link_width;
+>+        output->head_info_list[i].supp_link_speeds_vector =
+>+                     s->mhd_state->head_info_blocks[i].supp_link_speeds_vector;
+>+        output->head_info_list[i].max_link_speed =
+>+                              s->mhd_state->head_info_blocks[i].max_link_speed;
+>+        output->head_info_list[i].current_link_speed =
+>+                          s->mhd_state->head_info_blocks[i].current_link_speed;
+>+        output->head_info_list[i].ltssm_state =
+>+                                 s->mhd_state->head_info_blocks[i].ltssm_state;
+>+        output->head_info_list[i].first_nego_lane_num =
+>+                         s->mhd_state->head_info_blocks[i].first_nego_lane_num;
+>+        output->head_info_list[i].link_state_flags =
+>+                            s->mhd_state->head_info_blocks[i].link_state_flags;
+>+    }
+>+
+>+    *len_out = sizeof(*output) + output->nr_heads * sizeof(MHDHeadInfoBlock);
+>+    return CXL_MBOX_SUCCESS;
+>+}
+>+
+> static const struct cxl_cmd cxl_cmd_set_mhsld[256][256] = {
+>     [MHSLD_MHD][GET_MHD_INFO] = {"GET_MULTI_HEADED_INFO",
+>         cmd_mhd_get_info, 2, 0},
+>+    [MHSLD_MHD][GET_MHD_HEAD_INFO] = {"GET_HEAD_INFO",
+>+        cmd_mhd_get_head_info, 2, 0},
+> };
+>
+> static const Property cxl_mhsld_props[] = {
+>@@ -166,6 +214,47 @@ static void cxl_mhsld_state_initialize(CXLMHSLDState *s, size_t dc_size)
+>     s->mhd_state->nr_blocks = dc_size / MHSLD_BLOCK_SZ;
+> }
+>
+>+
+>+static void cxl_mhsld_init_head_info(CXLMHSLDState *s, PCIDevice *pdev)
+>+{
+>+    uint16_t lnksta = 0;
+>+    uint16_t current_link_speed = 0;
+>+    uint16_t negotiated_link_width = 0;
+>+    uint16_t lnkcap = 0, lnkcap2 = 0;
+>+    uint16_t max_link_width = 0;
+>+    uint16_t max_link_speed = 0;
+>+    uint16_t supported_link_speeds_vector = 0;
+>+
+>+    lnksta = pdev->config_read(pdev,
+>+                               pdev->exp.exp_cap + PCI_EXP_LNKSTA,
+>+                               sizeof(lnksta));
+>+    lnkcap = pdev->config_read(pdev,
+>+                               pdev->exp.exp_cap + PCI_EXP_LNKCAP,
+>+                               sizeof(lnkcap));
+>+    lnkcap2 = pdev->config_read(pdev,
+>+                                pdev->exp.exp_cap + PCI_EXP_LNKCAP2,
+>+                                sizeof(lnkcap2));
+>+    supported_link_speeds_vector = (lnkcap2 & 0xFE) >> 1;
+>+    max_link_width = (lnkcap & PCI_EXP_LNKCAP_MLW) >> 4;
+>+    max_link_speed = lnkcap & PCI_EXP_LNKCAP_SLS;
+>+    current_link_speed = lnksta & PCI_EXP_LNKSTA_CLS;
+>+    negotiated_link_width = (lnksta & PCI_EXP_LNKSTA_NLW) >> 4;
+>+
+>+    s->mhd_state->head_info_blocks[s->mhd_head].port_number = s->mhd_head;
+>+    s->mhd_state->head_info_blocks[s->mhd_head].max_link_width = max_link_width;
+>+    s->mhd_state->head_info_blocks[s->mhd_head].nego_link_width =
+>+                                                          negotiated_link_width;
+>+    s->mhd_state->head_info_blocks[s->mhd_head].supp_link_speeds_vector =
+>+                                                   supported_link_speeds_vector;
+>+    s->mhd_state->head_info_blocks[s->mhd_head].max_link_speed =
+>+                                                                 max_link_speed;
+>+    s->mhd_state->head_info_blocks[s->mhd_head].current_link_speed =
+>+                                                             current_link_speed;
+>+    s->mhd_state->head_info_blocks[s->mhd_head].ltssm_state = 0x7;
+>+    s->mhd_state->head_info_blocks[s->mhd_head].first_nego_lane_num = 0;
+>+    s->mhd_state->head_info_blocks[s->mhd_head].link_state_flags = 0;
+>+}
+>+
+> /* Returns starting index of region in MHD map. */
+> static inline size_t cxl_mhsld_find_dc_region_start(PCIDevice *d,
+>                                                     CXLDCRegion *r)
+>@@ -376,7 +465,7 @@ static void cxl_mhsld_realize(PCIDevice *pci_dev, Error **errp)
+>     }
+>
+>     cxl_mhsld_state_initialize(s, dc_size);
+>-
+>+    cxl_mhsld_init_head_info(s, pci_dev);
+>     /* Set the LD ownership for this head to this system */
+>     s->mhd_state->ldmap[s->mhd_head] = s->mhd_head;
+>     return;
+>@@ -428,6 +517,7 @@ static void cxl_mhsld_class_init(ObjectClass *klass, void *data)
+>
+>     CXLType3Class *cvc = CXL_TYPE3_CLASS(klass);
+>     cvc->mhd_get_info = cmd_mhd_get_info;
+>+    cvc->mhd_get_head_info = cmd_mhd_get_head_info;
+>     cvc->mhd_access_valid = cxl_mhsld_access_valid;
+>     cvc->mhd_reserve_extents = cxl_mhsld_reserve_extents;
+>     cvc->mhd_reclaim_extents = cxl_mhsld_reclaim_extents;
+>diff --git a/hw/cxl/mhsld/mhsld.h b/hw/cxl/mhsld/mhsld.h
+>index e7ead1f0d2..c9fbec71ca 100644
+>--- a/hw/cxl/mhsld/mhsld.h
+>+++ b/hw/cxl/mhsld/mhsld.h
+>@@ -23,6 +23,18 @@
+>  */
+> #define MHSLD_HEADS  (8)
+>
+>+typedef struct MHDHeadInfoBlock {
+>+    uint8_t port_number;
+>+    uint8_t max_link_width;
+>+    uint8_t nego_link_width;
+>+    uint8_t supp_link_speeds_vector;
+>+    uint8_t max_link_speed;
+>+    uint8_t current_link_speed;
+>+    uint8_t ltssm_state;
+>+    uint8_t first_nego_lane_num;
+>+    uint8_t link_state_flags;
+>+} QEMU_PACKED MHDHeadInfoBlock;
+>+
+> /*
+>  * The shared state cannot have 2 variable sized regions
+>  * so we have to max out the ldmap.
+>@@ -32,6 +44,7 @@ typedef struct MHSLDSharedState {
+>     uint8_t nr_lds;
+>     uint8_t ldmap[MHSLD_HEADS];
+>     uint64_t nr_blocks;
+>+    MHDHeadInfoBlock head_info_blocks[MHSLD_HEADS];
+>     uint8_t blocks[];
+> } MHSLDSharedState;
+>
+>@@ -52,6 +65,7 @@ struct CXLMHSLDClass {
+> enum {
+>     MHSLD_MHD = 0x55,
+>         #define GET_MHD_INFO 0x0
+>+        #define GET_MHD_HEAD_INFO 0x1
+> };
+>
+> /*
+>@@ -72,4 +86,16 @@ typedef struct MHDGetInfoOutput {
+>     uint16_t resv2;
+>     uint8_t ldmap[];
+> } QEMU_PACKED MHDGetInfoOutput;
+>+
+>+typedef struct MHDGetHeadInfoInput {
+>+    uint8_t start_head;
+>+    uint8_t nr_heads;
+>+} QEMU_PACKED MHDGetHeadInfoInput;
+>+
+>+typedef struct MHDGetHeadInfoOutput {
+>+    uint8_t nr_heads;
+>+    uint8_t rsvd[3];
+>+    MHDHeadInfoBlock head_info_list[];
+>+} QEMU_PACKED MHDGetHeadInfoOutput;
+>+
+> #endif
+>diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>index ca515cab13..c93c71c45d 100644
+>--- a/include/hw/cxl/cxl_device.h
+>+++ b/include/hw/cxl/cxl_device.h
+>@@ -732,6 +732,12 @@ struct CXLType3Class {
+>                                uint8_t *payload_out,
+>                                size_t *len_out,
+>                                CXLCCI *cci);
+>+    CXLRetCode (*mhd_get_head_info)(const struct cxl_cmd *cmd,
+>+                               uint8_t *payload_in,
+>+                               size_t len_in,
+>+                               uint8_t *payload_out,
+>+                               size_t *len_out,
+>+                               CXLCCI *cci);
+>     bool (*mhd_access_valid)(PCIDevice *d, uint64_t addr, unsigned int size);
+>     bool (*mhd_reserve_extents)(PCIDevice *d,
+>                                 CxlDynamicCapacityExtentList *records,
+>-- 
+>2.34.1
+>
 
