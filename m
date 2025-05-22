@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA7FC54756
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 07:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52548C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 07:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI0iU-00086K-JO; Thu, 22 May 2025 03:51:50 -0400
+	id 1uI0jq-0000LY-WB; Thu, 22 May 2025 03:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org>)
- id 1uI0iS-00085s-QN; Thu, 22 May 2025 03:51:48 -0400
+ id 1uI0jn-0000LC-K0; Thu, 22 May 2025 03:53:13 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org>)
- id 1uI0iQ-0001A8-Dm; Thu, 22 May 2025 03:51:48 -0400
+ id 1uI0jk-0001GU-To; Thu, 22 May 2025 03:53:10 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4b30qJ6dyrz4xdg;
- Thu, 22 May 2025 17:51:40 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4b30ry2QFwz4xdS;
+ Thu, 22 May 2025 17:53:06 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4b30qF0Ns9z4xdF;
- Thu, 22 May 2025 17:51:36 +1000 (AEST)
-Message-ID: <f88ca20f-ec6b-486a-834f-5c7eafa3baaa@kaod.org>
-Date: Thu, 22 May 2025 09:51:34 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4b30rt4DRbz4xcw;
+ Thu, 22 May 2025 17:53:02 +1000 (AEST)
+Message-ID: <2676a852-88d1-411c-8a17-3c60fdd1836c@kaod.org>
+Date: Thu, 22 May 2025 09:53:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] hw/arm/aspeed_ast2700-fc: Fix null pointer
- dereference in ca35 init
+Subject: Re: [PATCH v3 3/5] hw/arm/aspeed_ast27x0-fc: Map ca35 memory into
+ system memory
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -41,7 +41,7 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
 References: <20250522033628.3752086-1-steven_lee@aspeedtech.com>
- <20250522033628.3752086-2-steven_lee@aspeedtech.com>
+ <20250522033628.3752086-5-steven_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,9 +86,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250522033628.3752086-2-steven_lee@aspeedtech.com>
+In-Reply-To: <20250522033628.3752086-5-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -112,62 +112,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Steven
-
 On 5/22/25 05:36, Steven Lee wrote:
-> Clang's sanitizer reports a runtime error when booting with
-> '-net nic -net user', due to a null pointer being passed
-> to memory_region_find(), which subsequently triggers a crash in
-> flatview_lookup().
+> Map the CA35 memory region as a subregion of system_memory to ensure
+> a valid FlatView. This prevents failures in APIs that rely on the
+> global memory view, such as rom_check_and_register_reset().
 > 
-> Root cause:
-> - Missing NIC configuration in the CA35 initialization.
-> 
-> Fix:
-> - Reduce ca35 ram size from 2GiB to 1GiB to align with ast2700a1-evb,
->    where the ram-container is defined as 1GiB in its class.
-> - Add nic configuration in ast2700fc's ca35 init function.
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 
 
-Please split in 2.
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
+>   hw/arm/aspeed_ast27x0-fc.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
 > diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 125a3ade40..f8cb632bca 100644
+> index f8cb632bca..7087be4288 100644
 > --- a/hw/arm/aspeed_ast27x0-fc.c
 > +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -48,7 +48,7 @@ struct Ast2700FCState {
->       bool mmio_exec;
->   };
+> @@ -68,6 +68,7 @@ static void ast2700fc_ca35_init(MachineState *machine)
 >   
-> -#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
-> +#define AST2700FC_BMC_RAM_SIZE (1 * GiB)
->   #define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
+>       memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
+>                          UINT64_MAX);
+> +    memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
 >   
->   #define AST2700FC_HW_STRAP1 0x000000C0
-> @@ -86,6 +86,13 @@ static void ast2700fc_ca35_init(MachineState *machine)
->                                    AST2700FC_BMC_RAM_SIZE, &error_abort)) {
->           return;
->       }
-> +
-> +    for (int i = 0; i < sc->macs_num; i++) {
-> +        if (!qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
-> +                                       true, NULL)) {
-> +            break;
-> +        }
-> +    }
->       if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
->                                    AST2700FC_HW_STRAP1, &error_abort)) {
->           return;
+>       if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
+>                                   AST2700FC_BMC_RAM_SIZE, &error_abort)) {
 
 
