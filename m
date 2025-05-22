@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98D0C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:32:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08FFC54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3BK-0002zx-8p; Thu, 22 May 2025 06:29:46 -0400
+	id 1uI3CD-0003Lt-V4; Thu, 22 May 2025 06:30:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3BI-0002zS-I3
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:44 -0400
+ id 1uI3C7-0003FY-P3
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3BG-0006N6-Q2
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:44 -0400
+ id 1uI3C5-0006eD-CE
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747909781;
+ s=mimecast20190719; t=1747909831;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=biXxzScDBWVmE+hD/uFL07beKKlaR++rnGpBnyLbCto=;
- b=BBOydzOo254S59zhMPyV5xgWJj8r5dc+XdO+9/LfST+lZGxkAr27bWcC2ayDYZxP5aHDwD
- +CORa9UviLwkcgN0TGzDiHGI/38ESeOikE5MBQs2nqAjqB19K5uT6IPXUZbXO+hkVhpx0M
- 9a/TE1BORjYX3VGEXEbaB3eNOaGAfLE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=YeVGPqqBG6X5kTXB75qnLsL0StBNE9cX70oHLqpo4kI=;
+ b=PkhwbSJx8Icx2DCAyXodAYtsAnHVE5N6Qf0DgcQUvLE96p9kvQBT2HrPNSfnXca46h2TPx
+ Ubz7qjPajNi/rmkb4pUnOoXndtYwVDzTzkn/7OZavrj8yeGed/lKAfVwmi9niS/W4y17tR
+ MrcrVyVii7i9/UVWMkI9dI37p77gml8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-167-MVlD0FQwNc6uMRLyrL4GWA-1; Thu,
- 22 May 2025 06:29:39 -0400
-X-MC-Unique: MVlD0FQwNc6uMRLyrL4GWA-1
-X-Mimecast-MFC-AGG-ID: MVlD0FQwNc6uMRLyrL4GWA_1747909778
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-ZHxpZ2i8MzKZ9hOapG9i8Q-1; Thu,
+ 22 May 2025 06:30:28 -0400
+X-MC-Unique: ZHxpZ2i8MzKZ9hOapG9i8Q-1
+X-Mimecast-MFC-AGG-ID: ZHxpZ2i8MzKZ9hOapG9i8Q_1747909827
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB34E19560B5; Thu, 22 May 2025 10:29:38 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2A0018003FC; Thu, 22 May 2025 10:30:27 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.179])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D03311958014; Thu, 22 May 2025 10:29:35 +0000 (UTC)
+ id C2FF01958014; Thu, 22 May 2025 10:30:24 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 03/23] ui/vnc: fix tight palette pixel encoding for 8/16-bpp
- formats
-Date: Thu, 22 May 2025 11:29:03 +0100
-Message-ID: <20250522102923.309452-4-berrange@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 16/23] scripts/checkpatch: reject license boilerplate on new
+ files
+Date: Thu, 22 May 2025 11:29:16 +0100
+Message-ID: <20250522102923.309452-17-berrange@redhat.com>
 In-Reply-To: <20250522102923.309452-1-berrange@redhat.com>
 References: <20250522102923.309452-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -89,50 +91,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When sending a tight rectangle with the palette filter, if the client
-format was 8/16bpp, the colours on big endian hosts are not set as
-we're sending the wrong bytes. We must first cast the 32-bit colour
-to a 16/8-bit value, and then send the result.
+The previous commit mandates use of SPDX-License-Identifier on common
+source files, and encourages it on all other files.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Some contributors are none the less still also including the license
+boilerplate text. This is redundant and will potentially cause
+trouble if inconsistent with the SPDX declaration.
+
+Match common boilerplate text blurbs and report them as invalid,
+for newly added files.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- ui/vnc-enc-tight.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ scripts/checkpatch.pl | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/ui/vnc-enc-tight.c b/ui/vnc-enc-tight.c
-index a5bdc19ebb..25c7b2c788 100644
---- a/ui/vnc-enc-tight.c
-+++ b/ui/vnc-enc-tight.c
-@@ -1001,16 +1001,24 @@ static int send_mono_rect(VncState *vs, int x, int y,
-         break;
-     }
-     case 2:
--        vnc_write(vs, &bg, 2);
--        vnc_write(vs, &fg, 2);
-+    {
-+        uint16_t bg16 = bg;
-+        uint16_t fg16 = fg;
-+        vnc_write(vs, &bg16, 2);
-+        vnc_write(vs, &fg16, 2);
-         tight_encode_mono_rect16(vs->tight->tight.buffer, w, h, bg, fg);
-         break;
-+    }
-     default:
--        vnc_write_u8(vs, bg);
--        vnc_write_u8(vs, fg);
-+    {
-+        uint8_t bg8 = bg;
-+        uint8_t fg8 = fg;
-+        vnc_write_u8(vs, bg8);
-+        vnc_write_u8(vs, fg8);
-         tight_encode_mono_rect8(vs->tight->tight.buffer, w, h, bg, fg);
-         break;
-     }
-+    }
-     vs->tight->tight.offset = bytes;
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index da13102eda..9291bc9209 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -365,6 +365,18 @@ our @typeList = (
+ 	qr{guintptr},
+ );
  
-     bytes = tight_compress_data(vs, stream, bytes, level, Z_DEFAULT_STRATEGY);
++# Match text found in common license boilerplate comments:
++# for new files the SPDX-License-Identifier line is sufficient.
++our @LICENSE_BOILERPLATE = (
++	"licensed under the terms of the GNU GPL",
++	"under the terms of the GNU General Public License",
++	"under the terms of the GNU Lesser General Public",
++	"Permission is hereby granted, free of charge",
++	"GNU GPL, version 2 or later",
++	"See the COPYING file"
++);
++our $LICENSE_BOILERPLATE_RE = join("|", @LICENSE_BOILERPLATE);
++
+ # Load common spelling mistakes and build regular expression list.
+ my $misspellings;
+ my %spelling_fix;
+@@ -1497,6 +1509,13 @@ sub process_end_of_file {
+ 			     "' need 'SPDX-License-Identifier'?");
+ 		}
+ 	}
++	if ($fileinfo->{action} eq "new" &&
++	    exists $fileinfo->{facts}->{sawboilerplate}) {
++		ERROR("New file '" . $fileinfo->{filenew} . "' must " .
++		      "not have license boilerplate header text, only " .
++		      "the SPDX-License-Identifier, unless this file was " .
++		      "copied from existing code already having such text.");
++	}
+ }
+ 
+ sub process {
+@@ -1799,6 +1818,10 @@ sub process {
+ 			&checkspdx($realfile, $1);
+ 		}
+ 
++		if ($rawline =~ /$LICENSE_BOILERPLATE_RE/) {
++			$fileinfo->{facts}->{sawboilerplate} = 1;
++		}
++
+ 		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
+ 			my $tag = $1;
+ 			my @permitted = qw(
 -- 
 2.49.0
 
