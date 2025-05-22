@@ -4,99 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 831E2C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 20:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F5D4C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 21:02:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uICnv-0005fw-JR; Thu, 22 May 2025 16:46:15 -0400
+	id 1uID30-0007oX-EH; Thu, 22 May 2025 17:01:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uICnk-0005fH-W7
- for qemu-devel@nongnu.org; Thu, 22 May 2025 16:46:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uICnj-0006Fl-4A
- for qemu-devel@nongnu.org; Thu, 22 May 2025 16:46:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747946761;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xfbQ+O8kvx6fHJSh6M8IJ9Ossd+z4mTp6GQWrK2VD6M=;
- b=R/4r8yqCnIBQCbGxJyN0VA7Ub8QSw2MKiPgnNdxxaSkWNXe2dTLQIaAMm6ItQZpeVt8Y9J
- XIqSJwV70cOhOCKKVj+sRBYhIklIelW+x2TxtVqUqVdIyTYzyP110iOmBiA6HcxMTDjAFR
- Ojl6s7QBJZSTPy8i92nd8fy5cTL1K00=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-pXxmjWTNMdmpYh2jkfa-Qg-1; Thu, 22 May 2025 16:45:58 -0400
-X-MC-Unique: pXxmjWTNMdmpYh2jkfa-Qg-1
-X-Mimecast-MFC-AGG-ID: pXxmjWTNMdmpYh2jkfa-Qg_1747946758
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4766c80d57eso127606421cf.2
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 13:45:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uID2p-0007gJ-C1
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 17:01:40 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uID2n-0008Tw-Qp
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 17:01:39 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-30e7bfef364so6467704a91.1
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 14:01:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747947696; x=1748552496; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mcVMP7cF3+AZ6aEMNCRze6xv1pI3yV++usmfMaDhPo4=;
+ b=cn2isPfMM/t/70k9IX2v+mOUuZH2q+c5MjHCE6L3iR1W5omKJGYlX5vNDMxZZhnc1s
+ owPTWnNRD9Zw2tIYhdxWI529gFdif4PF6Rq2Sssa8pWUoywRQ08M9Qa3h/GEetjF+sNL
+ DcJWhBeUc4IUdKBtltc0zaTIwLjbtuCgkJxaUxEs+LrEqYlUArlJ7wdr419iH2HWphHB
+ ezbW68Q3UsRCwfRtuwj0WxMzC7OAxcICU4mVw8WRJ5iTTSxF99aF5y75aFvRovdvT9yl
+ 0e6jKJdfv8WXYoHW4a1KdoF6x09+38kI63PgfEZf2xCkV33o7brtwUtCWz/ELlWxVDOM
+ dD2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747946758; x=1748551558;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xfbQ+O8kvx6fHJSh6M8IJ9Ossd+z4mTp6GQWrK2VD6M=;
- b=vS7V8M3UdpxOFGKtcAdBlZPsnYQepNhXBSxMEUuLNHOuyhpuVs1q1dWo59/PmOac9d
- gcJwvvNV80/v23zO5cb78I9H6EPFfbQ663cK3lMk4Sgamqpknzfgl8A3iVup8b4tcY9Q
- Khz07AbrgUuDCZSlxLDZT+xiXJ7knofGdYWMc7a5zk04bu0zVebuvQ1pipX0qzgDUYfM
- 5nUPYgnx2xhUFmTXEPUTVrEiiOT+PcMhJHvfsvwzdR5dNeT6JfZuIv/triGPkt6X4mSh
- UW/vbC4ONxQ9uaQC4ySxjXLobonc3zpz+6RrK5IQfm0YCnVUi3db7902+RlHPTLvCCQu
- f/CQ==
+ d=1e100.net; s=20230601; t=1747947696; x=1748552496;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mcVMP7cF3+AZ6aEMNCRze6xv1pI3yV++usmfMaDhPo4=;
+ b=mwUAuTaLKah4y8a2ZlVvkyQsDv7iJbMm0h3jr4P+OFB7M1ai5k6+mIf/Vv7ej7xNjo
+ o93BYDbD/mdIjnkU5INEsogIbmYZy1IW07U+QIGavk1AUO5MZfXtNNyHCDd/muJlPVc5
+ 3/vblBZ5YDIiJOKblSb9Uxp25yQz606O7sy3uuVNBDuRi6oI+k15VDLNmMmWKGL6rn0t
+ VoKcLKs/Ie6J+Qf8s9IfaKod8xJGUJ7CyF1vMufaZMErM4Ug/RHqX4T+Xx5qhZwW7YT/
+ z5Q+vrzJTeNQ0UzjXMYeTBNGaoQ7PxqjZAN6T3Y7e6pq0F+l5mFhGRIbUXyJ8/Jeo2oD
+ +vHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/GRqDWEANlBqBYPPiXZDufeHiuH2dIZW9P6/8zB33lBDyHmpBFqEJqOo/zad3eyV4aWJGdxwMguBX@nongnu.org
-X-Gm-Message-State: AOJu0YwMdPLbGuXIv9uz41z3U+feTSzbXPEakKmwfXI603+BNN+anz3A
- TWCPvwbmSEGtgdhx19uCMqS+xWcXoSSwtadhnyZqg8RRV41e303AgeSwN/F+7BVKdnqNRDe3j/N
- MmF1n7bBqYx2rFMIsy1nzdUsyLjZdmuOPUlNAgJ1CZHr6pcB38kD0Mp3n
-X-Gm-Gg: ASbGncuCA4+dm03I8NHkI7sMSgqGb8E0fP4EQRSBuZFuPCk5VdjkBidVVUsrFwb6iTD
- orpp5ztTlCSzXUUZpmHc6U2JRBJSLy/ZZmYASlgV1xdTRilwd0SLTMP6QcCNWYdAEYwZmAL1hKy
- dBsMe1lEUl3f4ueHShrkrPxQVDDECx1bSLB2GCok6v4Rgryu053xUObT1MucVbEM+8nUoaa4zpG
- k0F4PKd9SUe91FRUXc6TacBNp2on4YELpeqeTIOeKR1FJLKREMteb1awUBr+U/BjjxQuvMJDPVY
- Vw4=
-X-Received: by 2002:a05:622a:4297:b0:48d:d1fb:3eee with SMTP id
- d75a77b69052e-494ae38e68emr410773821cf.23.1747946757716; 
- Thu, 22 May 2025 13:45:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqzOPP0ftEuqWPDY+qbZQzRkXOcig931bHCkkNmRpbXWEDwKorUPb3DrUNR4K5nLJziZBTlQ==
-X-Received: by 2002:a05:622a:4297:b0:48d:d1fb:3eee with SMTP id
- d75a77b69052e-494ae38e68emr410773621cf.23.1747946757381; 
- Thu, 22 May 2025 13:45:57 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-494ae3ccfd5sm102409691cf.2.2025.05.22.13.45.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 13:45:56 -0700 (PDT)
-Date: Thu, 22 May 2025 16:45:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Fabiano Rosas <farosas@suse.de>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PATCH] migration/multifd: Don't send device state packets with
- zerocopy flag
-Message-ID: <aC-NAZEznD1gvJ3r@x1.local>
-References: <3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com>
- <4a5a68dd-74b2-4ffc-baa7-42eba9276b81@tls.msk.ru>
+ AJvYcCUARRpqDRBDlpMUioyXMSzgDfJYEVqtXZgqnghw8Ypq031KiFgoUssaKzHaLmrsv8IJIrtPeCOjIOTm@nongnu.org
+X-Gm-Message-State: AOJu0YwFqldHRkpLXMu9lcUTThkGnzkqC8ZYO4MQsNobhJLD6008iCKA
+ UPW9XIGh5enbYkAAKWpc5TAJiiVxv5fbOkTZGOVWsXgJxk1ruohZ2iECv2OAeU7jFgV2DeWQVyL
+ vZQ/GS3ZteoskQMr4lMGvC8YKfUJmLMg=
+X-Gm-Gg: ASbGncvmSabKw06sv1UBPqjyElqFi/67HzrWCko23y+06fjhUHAE6qQAa4y5V7bbvjc
+ O8GB3sv3bKiufk0N+YsYgxX6b2T8RL+Wm+LSRXKMQafrg/2cfPIqiqznnDHAf6PS7fNkc9oK27Y
+ 1e1ynegTiPMZWHfhSFOKu7jhl/qIGJVkg=
+X-Google-Smtp-Source: AGHT+IHj4UV0X6hYSvb17+4A41+oXlOTP7ZMZxrIwEpaSkuEnnqvpBFBpw+H/WsPchF26xtNttkstsItvuGDr0KnNfw=
+X-Received: by 2002:a17:90a:d604:b0:30e:ee6:671a with SMTP id
+ 98e67ed59e1d1-30e7d50b022mr43135691a91.10.1747947696075; Thu, 22 May 2025
+ 14:01:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4a5a68dd-74b2-4ffc-baa7-42eba9276b81@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20250521094333.4075796-1-rowanbhart@gmail.com>
+ <20250521094333.4075796-6-rowanbhart@gmail.com>
+ <20250522115935.34716-3-neither@nut.email>
+ <bbbc7639-9ef0-4510-b481-0c3145b6ff11@linaro.org>
+In-Reply-To: <bbbc7639-9ef0-4510-b481-0c3145b6ff11@linaro.org>
+From: Rowan Hart <rowanbhart@gmail.com>
+Date: Thu, 22 May 2025 14:01:26 -0700
+X-Gm-Features: AX0GCFv6j_V1qiOvE8htC17x0Nv5RNbnJlrN_a254tLmRQcPcDNEep84RCb9TSY
+Message-ID: <CAE5MsNaacPXefwk=tsUmmAoxUZ9UU3uc084rOT7TOarW7Y7FwQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/8] Add memory hardware address read/write API
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Julian Ganz <neither@nut.email>, Alexandre Iooss <erdnaxe@crans.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000082b7c80635bfc917"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,31 +102,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 22, 2025 at 11:12:22PM +0300, Michael Tokarev wrote:
-> On 16.05.2025 16:53, Maciej S. Szmigiero wrote:
-> > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> > 
-> > If zerocopy is enabled for multifd then QIO_CHANNEL_WRITE_FLAG_ZERO_COPY
-> > flag is forced into all multifd channel write calls via p->write_flags
-> > that was setup in multifd_nocomp_send_setup().
-> > 
-> > However, device state packets aren't compatible with zerocopy - the data
-> > buffer isn't getting kept pinned until multifd channel flush.
-> > 
-> > Make sure to mask that QIO_CHANNEL_WRITE_FLAG_ZERO_COPY flag in a multifd
-> > send thread if the data being sent is device state.
-> > 
-> > Fixes: 0525b91a0b99 ("migration/multifd: Device state transfer support - send side")
-> > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> 
-> Is this qemu-stable material (for 10.0)?
-> 
-> I'm picking it up for 10.0 branch, please let me know if I shouldn't.
+--00000000000082b7c80635bfc917
+Content-Type: text/plain; charset="UTF-8"
 
-Yes please, for two migration patches in the lastest pull.  I forgot to add
-Cc: for stable.  I'll try to remember again, thanks.
+>
+>
+> > This definition strikes me as odd. What was your reason to assert
+> > `current_cpu` here, but not in the other two functions? Also a bit
+> > surprising is the declaration of `cpu` if you use it in just one place
+> > (rather than just use `current_cpu` directly as for the assertion).
+> >
+> > And there is no reason in particular why the vCPU could not be a
+> > function parameter of `qemu_plugin_translate_vaddr`, right? You don't
+> > have the same restrictions as in `qemu_plugin_read_memory_hwaddr` or
+> > `qemu_plugin_hwaddr_operation_result` where you actually touch memory?
+> >
+>
+> That's a good point, adding a "unsigned int vcpu_index" to the signature
+> should be enough to query current or any other vcpu easily.
+>
+This is a really nice idea, it might be nice to make a vcpu version of
+read/write register too. For memory, I'd think going with the current
+memory is probably fine, I don't see any configs with different memory per
+vcpu?
 
--- 
-Peter Xu
+>
 
+--00000000000082b7c80635bfc917
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><div class=3D"gmail_quote gmail_quote_container"><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #=
+ccc solid;padding-left:1ex"><br>
+&gt; This definition strikes me as odd. What was your reason to assert<br>
+&gt; `current_cpu` here, but not in the other two functions? Also a bit<br>
+&gt; surprising is the declaration of `cpu` if you use it in just one place=
+<br>
+&gt; (rather than just use `current_cpu` directly as for the assertion).<br=
+>
+&gt; <br>
+&gt; And there is no reason in particular why the vCPU could not be a<br>
+&gt; function parameter of `qemu_plugin_translate_vaddr`, right? You don&#3=
+9;t<br>
+&gt; have the same restrictions as in `qemu_plugin_read_memory_hwaddr` or<b=
+r>
+&gt; `qemu_plugin_hwaddr_operation_result` where you actually touch memory?=
+<br>
+&gt;<br>
+<br>
+That&#39;s a good point, adding a &quot;unsigned int vcpu_index&quot; to th=
+e signature <br>
+should be enough to query current or any other vcpu easily.<br></blockquote=
+></div></div><div dir=3D"auto">This is a really nice idea, it might be nice=
+ to make a vcpu version of read/write register too. For memory, I&#39;d thi=
+nk going with the current memory is probably fine, I don&#39;t see any conf=
+igs with different memory per vcpu?</div><div dir=3D"auto"><div class=3D"gm=
+ail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D=
+"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
+
+--00000000000082b7c80635bfc917--
 
