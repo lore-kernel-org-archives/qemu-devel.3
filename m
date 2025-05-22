@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42647C54E90
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD50C54ED1
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:33:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3CX-00043u-3y; Thu, 22 May 2025 06:31:01 -0400
+	id 1uI3BI-0002zR-Bv; Thu, 22 May 2025 06:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3CO-0003lf-Kb
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:56 -0400
+ id 1uI3BE-0002yu-Qu
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3CI-0006ft-8t
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:52 -0400
+ id 1uI3BC-0006Mb-Mz
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747909842;
+ s=mimecast20190719; t=1747909777;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iIZzfgTdaV8CXAkQx0Ke4gbgAg+jKeWuEAcGyxYH8Lc=;
- b=TzmczH3QfVNtj5O2Udvz6+89bHDoSQgELffRPduv7McuW7aJHf0ba5Uon1mjYcrKSHrFAQ
- gKPrHPoVHDVnfeBwk1XfTpP05rlUKxXgs3sTjmx3hLCgJh57Fo/qBe7TRtYZal0pQ4H4oI
- aC/Obh98P99OHQmfcIHjTtlFbYi9azY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Ap10gC6UPF4kfaH1XFvlSl7+azVePcG6UA51Fn1/tbg=;
+ b=fTTjfVRa45wFeooSMeeNpko75EhVHE4oCaHlTdcsD25qnbOSMs/f9Be4tklLi1fIXmNrun
+ 8Iad8hb1z3xuM10MTxk5TuaZkfi/mwyDKwE90mvzNGdd5F017wOTu5gDGvClWyw/eAzK/D
+ 7Q2ooh6NwtM3leh/FfpXYMfNaiFTkXc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-448-TArIV9rBMFi9sp0jJp7jsw-1; Thu,
- 22 May 2025 06:30:39 -0400
-X-MC-Unique: TArIV9rBMFi9sp0jJp7jsw-1
-X-Mimecast-MFC-AGG-ID: TArIV9rBMFi9sp0jJp7jsw_1747909838
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-Eg7Jj7uYPjGIuNF-WhBtFg-1; Thu,
+ 22 May 2025 06:29:36 -0400
+X-MC-Unique: Eg7Jj7uYPjGIuNF-WhBtFg-1
+X-Mimecast-MFC-AGG-ID: Eg7Jj7uYPjGIuNF-WhBtFg_1747909775
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84B7919560B0; Thu, 22 May 2025 10:30:38 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 862CC1800373; Thu, 22 May 2025 10:29:35 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.179])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 866721958014; Thu, 22 May 2025 10:30:35 +0000 (UTC)
+ id BD6531958014; Thu, 22 May 2025 10:29:32 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 19/23] util/qemu-sockets: Refactor success and failure paths in
- inet_listen_saddr()
-Date: Thu, 22 May 2025 11:29:19 +0100
-Message-ID: <20250522102923.309452-20-berrange@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 02/23] ui/vnc: take account of client byte order in pixman
+ format
+Date: Thu, 22 May 2025 11:29:02 +0100
+Message-ID: <20250522102923.309452-3-berrange@redhat.com>
 In-Reply-To: <20250522102923.309452-1-berrange@redhat.com>
 References: <20250522102923.309452-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -90,124 +89,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+The set_pixel_conversion() method is responsible for determining whether
+the VNC client pixel format matches the server format, and thus whether
+we can use the fast path "copy" impl for sending pixels, or must use
+the generic impl with bit swizzling.
 
-To get a listening socket, we need to first create a socket, try binding
-it to a certain port, and lastly starting listening to it. Each of these
-operations can fail due to various reasons, one of them being that the
-requested address/port is already in use. In such case, the function
-tries the same process with a new port number.
+The VNC server format is set at build time to VNC_SERVER_FB_FORMAT,
+which corresponds to PIXMAN_x8r8g8b8.
 
-This patch refactors the port number loop, so the success path is no
-longer buried inside the 'if' statements in the middle of the loop. Now,
-the success path is not nested and ends at the end of the iteration
-after successful socket creation, binding, and listening. In case any of
-the operations fails, it either continues to the next iteration (and the
-next port) or jumps out of the loop to handle the error and exits the
-function.
+The qemu_pixman_get_format() method is then responsible for converting
+the VNC pixel format into a pixman format.
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+The VNC client pixel shifts are relative to the associated endianness.
+
+The pixman formats are always relative to the host native endianness.
+
+The qemu_pixman_get_format() method does not take into account the
+VNC client endianness, and is thus returning a pixman format that is
+only valid with the host endianness matches that of the VNC client.
+
+This has been broken since pixman was introduced to the VNC server:
+
+  commit 9f64916da20eea67121d544698676295bbb105a7
+  Author: Gerd Hoffmann <kraxel@redhat.com>
+  Date:   Wed Oct 10 13:29:43 2012 +0200
+
+    pixman/vnc: use pixman images in vnc.
+
+The flaw can be demonstrated using the Tigervnc client by using
+
+   vncviewer -AutoSelect=0 -PreferredEncoding=raw server:display
+
+connecting from a LE client to a QEMU on a BE server, or the
+reverse.
+
+The bug was masked, however, because almost all VNC clients will
+advertize support for the "tight" encoding and the QEMU VNC server
+will prefer "tight" if advertized.
+
+The tight_pack24 method is responsible for taking a set of pixels
+which have already been converted into client endianness and then
+repacking them into the TPIXEL format which the RFB spec defines
+as
+
+  "TPIXEL is only 3 bytes long, where the first byte is the
+   red component, the second byte is the green component,
+   and the third byte is the blue component of the pixel
+   color value"
+
+IOW, the TPIXEL format is fixed on the wire, regardless of what
+the VNC client declare as its endianness.
+
+Since the VNC pixel encoding code was failing to honour the endian
+flag of the client, the tight_pack24 method was always operating
+on data in native endianness. Its impl cancelled out the VNC pixel
+encoding bug.
+
+With the VNC pixel encoding code now fixed, the tight_pack24 method
+needs to take into account that it is operating on data in client
+endianness, not native endianness. It thus may need to invert the
+pixel shifts.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/qemu-sockets.c | 51 ++++++++++++++++++++++++---------------------
- 1 file changed, 27 insertions(+), 24 deletions(-)
+ include/ui/qemu-pixman.h |  4 ++--
+ ui/qemu-pixman.c         | 15 ++++++++-------
+ ui/vnc-enc-tight.c       |  2 +-
+ ui/vnc.c                 |  3 ++-
+ 4 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-index 4a878e0527..329fdbfd97 100644
---- a/util/qemu-sockets.c
-+++ b/util/qemu-sockets.c
-@@ -303,11 +303,20 @@ static int inet_listen_saddr(InetSocketAddress *saddr,
-         port_min = inet_getport(e);
-         port_max = saddr->has_to ? saddr->to + port_offset : port_min;
-         for (p = port_min; p <= port_max; p++) {
-+            if (slisten >= 0) {
-+                /*
-+                 * We have a socket we tried with the previous port. It cannot
-+                 * be rebound, we need to close it and create a new one.
-+                 */
-+                close(slisten);
-+                slisten = -1;
-+            }
-             inet_setport(e, p);
+diff --git a/include/ui/qemu-pixman.h b/include/ui/qemu-pixman.h
+index 193bc046d1..2ca0ed7029 100644
+--- a/include/ui/qemu-pixman.h
++++ b/include/ui/qemu-pixman.h
+@@ -75,12 +75,12 @@ PixelFormat qemu_pixelformat_from_pixman(pixman_format_code_t format);
+ pixman_format_code_t qemu_default_pixman_format(int bpp, bool native_endian);
+ pixman_format_code_t qemu_drm_format_to_pixman(uint32_t drm_format);
+ uint32_t qemu_pixman_to_drm_format(pixman_format_code_t pixman);
+-int qemu_pixman_get_type(int rshift, int gshift, int bshift);
++int qemu_pixman_get_type(int rshift, int gshift, int bshift, int endian);
+ bool qemu_pixman_check_format(DisplayChangeListener *dcl,
+                               pixman_format_code_t format);
  
-             slisten = create_fast_reuse_socket(e);
-             if (slisten < 0) {
--                /* First time we expect we might fail to create the socket
-+                /*
-+                 * First time we expect we might fail to create the socket
-                  * eg if 'e' has AF_INET6 but ipv6 kmod is not loaded.
-                  * Later iterations should always succeed if first iteration
-                  * worked though, so treat that as fatal.
-@@ -317,40 +326,38 @@ static int inet_listen_saddr(InetSocketAddress *saddr,
-                 } else {
-                     error_setg_errno(errp, errno,
-                                      "Failed to recreate failed listening socket");
--                    goto listen_failed;
-+                    goto fail;
-                 }
-             }
-             socket_created = true;
- 
-             rc = try_bind(slisten, saddr, e);
-             if (rc < 0) {
--                if (errno != EADDRINUSE) {
--                    error_setg_errno(errp, errno, "Failed to bind socket");
--                    goto listen_failed;
--                }
--            } else {
--                if (!listen(slisten, num)) {
--                    goto listen_ok;
-+                if (errno == EADDRINUSE) {
-+                    /* This port is already used, try the next one */
-+                    continue;
-                 }
--                if (errno != EADDRINUSE) {
--                    error_setg_errno(errp, errno, "Failed to listen on socket");
--                    goto listen_failed;
-+                error_setg_errno(errp, errno, "Failed to bind socket");
-+                goto fail;
-+            }
-+            if (listen(slisten, num)) {
-+                if (errno == EADDRINUSE) {
-+                    /* This port is already used, try the next one */
-+                    continue;
-                 }
-+                error_setg_errno(errp, errno, "Failed to listen on socket");
-+                goto fail;
-             }
--            /* Someone else managed to bind to the same port and beat us
--             * to listen on it! Socket semantics does not allow us to
--             * recover from this situation, so we need to recreate the
--             * socket to allow bind attempts for subsequent ports:
--             */
--            close(slisten);
--            slisten = -1;
-+            /* We have a listening socket */
-+            freeaddrinfo(res);
-+            return slisten;
-         }
-     }
-     error_setg_errno(errp, errno,
-                      socket_created ?
-                      "Failed to find an available port" :
-                      "Failed to create a socket");
--listen_failed:
-+fail:
-     saved_errno = errno;
-     if (slisten >= 0) {
-         close(slisten);
-@@ -358,10 +365,6 @@ listen_failed:
-     freeaddrinfo(res);
-     errno = saved_errno;
-     return -1;
--
--listen_ok:
--    freeaddrinfo(res);
--    return slisten;
+ #ifdef CONFIG_PIXMAN
+-pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf);
++pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf, int endian);
+ pixman_image_t *qemu_pixman_linebuf_create(pixman_format_code_t format,
+                                            int width);
+ void qemu_pixman_linebuf_fill(pixman_image_t *linebuf, pixman_image_t *fb,
+diff --git a/ui/qemu-pixman.c b/ui/qemu-pixman.c
+index 6ef4376f4e..ef4e71da11 100644
+--- a/ui/qemu-pixman.c
++++ b/ui/qemu-pixman.c
+@@ -126,33 +126,34 @@ uint32_t qemu_pixman_to_drm_format(pixman_format_code_t pixman_format)
+     return 0;
  }
  
- #ifdef _WIN32
+-int qemu_pixman_get_type(int rshift, int gshift, int bshift)
++int qemu_pixman_get_type(int rshift, int gshift, int bshift, int endian)
+ {
+     int type = PIXMAN_TYPE_OTHER;
++    bool native_endian = (endian == G_BYTE_ORDER);
+ 
+     if (rshift > gshift && gshift > bshift) {
+         if (bshift == 0) {
+-            type = PIXMAN_TYPE_ARGB;
++            type = native_endian ? PIXMAN_TYPE_ARGB : PIXMAN_TYPE_BGRA;
+         } else {
+-            type = PIXMAN_TYPE_RGBA;
++            type = native_endian ? PIXMAN_TYPE_RGBA : PIXMAN_TYPE_ABGR;
+         }
+     } else if (rshift < gshift && gshift < bshift) {
+         if (rshift == 0) {
+-            type = PIXMAN_TYPE_ABGR;
++            type = native_endian ? PIXMAN_TYPE_ABGR : PIXMAN_TYPE_RGBA;
+         } else {
+-            type = PIXMAN_TYPE_BGRA;
++            type = native_endian ? PIXMAN_TYPE_BGRA : PIXMAN_TYPE_ARGB;
+         }
+     }
+     return type;
+ }
+ 
+ #ifdef CONFIG_PIXMAN
+-pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf)
++pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf, int endian)
+ {
+     pixman_format_code_t format;
+     int type;
+ 
+-    type = qemu_pixman_get_type(pf->rshift, pf->gshift, pf->bshift);
++    type = qemu_pixman_get_type(pf->rshift, pf->gshift, pf->bshift, endian);
+     format = PIXMAN_FORMAT(pf->bits_per_pixel, type,
+                            pf->abits, pf->rbits, pf->gbits, pf->bbits);
+     if (!pixman_format_supported_source(format)) {
+diff --git a/ui/vnc-enc-tight.c b/ui/vnc-enc-tight.c
+index f8aaa8f346..a5bdc19ebb 100644
+--- a/ui/vnc-enc-tight.c
++++ b/ui/vnc-enc-tight.c
+@@ -891,7 +891,7 @@ static void tight_pack24(VncState *vs, uint8_t *buf, size_t count, size_t *ret)
+ 
+     buf8 = buf;
+ 
+-    if (1 /* FIXME */) {
++    if (vs->client_endian == G_BYTE_ORDER) {
+         rshift = vs->client_pf.rshift;
+         gshift = vs->client_pf.gshift;
+         bshift = vs->client_pf.bshift;
+diff --git a/ui/vnc.c b/ui/vnc.c
+index ab18172c4d..d095cd7da3 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2240,7 +2240,8 @@ static void set_encodings(VncState *vs, int32_t *encodings, size_t n_encodings)
+ 
+ static void set_pixel_conversion(VncState *vs)
+ {
+-    pixman_format_code_t fmt = qemu_pixman_get_format(&vs->client_pf);
++    pixman_format_code_t fmt = qemu_pixman_get_format(&vs->client_pf,
++                                                      vs->client_endian);
+ 
+     if (fmt == VNC_SERVER_FB_FORMAT) {
+         vs->write_pixels = vnc_write_pixels_copy;
 -- 
 2.49.0
 
