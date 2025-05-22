@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE58C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 14:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748E3C54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 14:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI71s-0004UB-5F; Thu, 22 May 2025 10:36:16 -0400
+	id 1uI72Y-0005Su-IV; Thu, 22 May 2025 10:36:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uI71q-0004SW-Aw
- for qemu-devel@nongnu.org; Thu, 22 May 2025 10:36:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uI72W-0005Rq-DV
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 10:36:56 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uI71o-0001SO-MH
- for qemu-devel@nongnu.org; Thu, 22 May 2025 10:36:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747924570;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fp7K5g4cypCHber5g+OBJ2QBCKPqwNkkdnVi2GefpzQ=;
- b=Udp1H5vmPSD5aR7CAY3cZClWF/jEQZ5G8UdY3ZY3xDmD7sega6ypeSpoz9beDbxDhKmW5i
- AgE+VLP2YhXeDwdMZmYW4ErvBKgiMHEEZqkBbROvazguz+Hj1IFRIeD5PHLaLIHcuBqEIQ
- 1t+2tt2scINrYxqL8GMCy4v2o//4kI8=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-P-gI5ESEP0Ks9YmfKuM30g-1; Thu, 22 May 2025 10:36:09 -0400
-X-MC-Unique: P-gI5ESEP0Ks9YmfKuM30g-1
-X-Mimecast-MFC-AGG-ID: P-gI5ESEP0Ks9YmfKuM30g_1747924568
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-30e78145dc4so8948332a91.2
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 07:36:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747924568; x=1748529368;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Fp7K5g4cypCHber5g+OBJ2QBCKPqwNkkdnVi2GefpzQ=;
- b=DLe3X5nGdP88kOEnU+TfZIlL5ttERpokG2AlXMn5Ik7dJz00h/RhUJMLoSjxPkBLaW
- RL0SyWGhbV/fAi937aF4O8j95BNS4uemQOn6LI6J0ft/BDrxsvDspxg5nKDpxVqIHJ1i
- MWkNPOdnkspnuIE3sQAFbZGcMXQLRcAdUNbMvZ+1Jdae4NkV72kbRzweixWXU9gzx4v3
- zu9qLIGAqGKx2zIqPM0wwzuPzUvEBdi9qShE5mshUwlJ2HHKavnWeEjn5SKi5Rix1HQL
- eU1YmPkXO/+MnbP0d5U8fOW72oyuiyAdDejLTDqN0kMieS/wa8s1db/0yVS4OXueUIXx
- 3qQA==
-X-Gm-Message-State: AOJu0YzkO/V7FbAzjcdVz00MONTlX004H7mqSmRgrA0DF8I4V8Xx+ygy
- iYqSilTSOhTnBAxzTmeJ1wyT1taF/75vX2tzwrAeI6Rq7yJdToqXfCMBtp5eKA5tBxa6DAO1ENa
- 5YvBEVPCX+Zyp6lNaxtIHYHmHfbibqx0bnGSGi4ffFfKypafKUqZdQ8aO2Ss6o7IO
-X-Gm-Gg: ASbGncuQGeHFJ7XbeRQ7zh3DltLN42P5KLVxVJCSCPygCKrLIlWwwIdhrWJXIjnOY/A
- GbgMsmoLenOys79a+bl7JbMk17NkrykFeHxM5rcg8RVZVUUa2KHVBADDNFLNSWBoSCXYe9rWExR
- DHEXUfolN+hhyjNBZ8g6IQ7sKT4MwTg49S81sBQhVoXc77nEsf9KhShE4q8yqJeaRxR+7x2a+oh
- +Yte4b1ICiNfOgVXbP1/dsgciehQh7gIdAi+N0YqonxCMMLth3U7KUogZqee03G7sEPAbgVeYj8
- kJM=
-X-Received: by 2002:a17:90b:17d0:b0:2ff:53ad:a0ec with SMTP id
- 98e67ed59e1d1-30e7d57f38bmr32371821a91.21.1747924568162; 
- Thu, 22 May 2025 07:36:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFK3UZGNcqAOsq+TSNZaL0tyv8jvy2TufVvv8QAqoc2GKOz5ihDnI8fFXZlRmO5FIQxIR/r7w==
-X-Received: by 2002:a05:620a:f07:b0:7cd:2c8a:2839 with SMTP id
- af79cd13be357-7cd4670a67bmr4409673085a.7.1747924557614; 
- Thu, 22 May 2025 07:35:57 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd467ec38bsm1030638485a.51.2025.05.22.07.35.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 07:35:57 -0700 (PDT)
-Date: Thu, 22 May 2025 10:35:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 2/4] tests/data/vmstate-static-checker: Add dump files
- from QEMU 7.2.17
-Message-ID: <aC82SrxyqNLeyn_e@x1.local>
-References: <20250522133756.259194-1-thuth@redhat.com>
- <20250522133756.259194-3-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uI72Q-0001a5-Od
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 10:36:56 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54M6Ibju008460;
+ Thu, 22 May 2025 14:36:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=fZyUrS
+ AA//6zRVBI2fHz7ds7t8wYde7nHD1lyk8CAto=; b=iOqWfsDjaB0RwnsoiXzujh
+ Ebhg2aZGGeRPxrhDesQ9H/nUakZrUqCueBhvRMSMrEKcPy0pNKNMJ9TWLW3UbiVw
+ 0OAOWKYOt0PBSbV4LXi/AqPKWqun8mZ5n+EM1btnc8gf9FUEMCUpQq56K7xcgq17
+ yNHfqj/HjJP47w0Gf2fO8VMv2V7lAVaUKyigFTUPncpjoFXI5HGtVQZoCwlkkjd4
+ vEi27m2XP7j81L5G9h3yy5PywCQ3ehqOahvfOGYMsh1tPfQbpQEw7W3rsdeq2NnN
+ YTIyTjOAWPxAQIEUrJdsDVzK2W1a3a+AMtkGx6k1oIiEekL9N760JxkdxynGNNfA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46sxhwaak9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 May 2025 14:36:46 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54MDoAUh015480;
+ Thu, 22 May 2025 14:36:45 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 46rwnnhv0n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 May 2025 14:36:45 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54MEajdI32244422
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 May 2025 14:36:45 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62DE15805E;
+ Thu, 22 May 2025 14:36:45 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 20E0C58052;
+ Thu, 22 May 2025 14:36:45 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 22 May 2025 14:36:45 +0000 (GMT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250522133756.259194-3-thuth@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Date: Thu, 22 May 2025 15:36:44 +0100
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Da?=
+ =?UTF-8?Q?niel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH] util: split unix socket functions out of qemu-sockets
+In-Reply-To: <20250520165706.3976971-1-alex.bennee@linaro.org>
+References: <20250520165706.3976971-1-alex.bennee@linaro.org>
+Message-ID: <659b49bc31ca4f3d9572f9d48e7d09b0@linux.ibm.com>
+X-Sender: iii@linux.ibm.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDE0OSBTYWx0ZWRfX2WncfrjihAOf
+ GP45i7PsqV+Phm4fEDYSszMX0x3zOs40mVy9pp6Z/e5zavqnz0x4P0yz2mXkn0LjZsKcn7fogi6
+ 6iyQYe7WuB7Ve1/wnDvF3smVeszVFRM3+wP+mtpVr8hJRnwlAjvHYHyP92eS9rgTiSGeCT574u9
+ 7cmWij4GXkpvU/Rr/ZBFNm4EbUIRpV3PSr8EVoPtzmk7i9OjaRX87jqUFw4C4n4719aXxD0/j7x
+ oH4KScE1QyKO8Jv+TFzjbuIsRBXHKc1qKONBzqx3FM65+CeXXE8lk7ox+IpcTVbHYLMIhD00XBB
+ s839KnbcqlUCyFEkPSS0JVPBqDEsL/TokbevwjrDZ5p8NxvG8CEjOI50qpeeivLX9ZNn+MaU64R
+ QMvztma3dN7UkwcMUonHpqYmX/JdTXdEbWikEIkoLMkloF45+8Sx+4JTqeq/YjhvmgOiNkWk
+X-Proofpoint-GUID: TtsygdwzYtQlPmXFNoY2-Yw04YfMn_gW
+X-Authority-Analysis: v=2.4 cv=O685vA9W c=1 sm=1 tr=0 ts=682f367e cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=9qUTvQc-AAAA:8
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
+ a=X0LHbmb94AnUssr0TkIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=axOgMmt4Ejcwn1cqzmsR:22
+X-Proofpoint-ORIG-GUID: TtsygdwzYtQlPmXFNoY2-Yw04YfMn_gW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-22_07,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxlogscore=999
+ spamscore=0 mlxscore=0 phishscore=0 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 clxscore=1011 malwarescore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505220149
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,27 +123,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 22, 2025 at 03:37:54PM +0200, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> For automatic tests, we need reference files from older QEMU versions.
-> QEMU 7.2 is a long term stable release, so it's a good candidate for
-> checking whether the migration could still work correctly. Let's add the
-> files from that version that have been taken with the "-dump-vmstate"
-> parameter of QEMU (compiled with single machines and the configure switch
-> "--without-default-devices" to keep the json files reasonable small).
-> 
-> Some devices also have been removed manually from the json files, e.g.
-> the "pci-bridge" (which can be disabled in later QEMU versions via Kconfig),
-> and some Linux-related devices like "scsi-block" and "scsi-generic" and
-> KVM-related devices. Without removing them, we might get errors otherwise
-> if these devices have not been compiled into the destination QEMU build.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Thanks for looking into this!
 
-Acked-by: Peter Xu <peterx@redhat.com>
+On 2025-05-20 17:57, Alex Bennée wrote:
+> Since fccb744f41 (gdbstub: Try unlinking the unix socket before
+> binding) we use the unix_listen() function from linux-user which
+> causes complications when trying to build statically.
 
--- 
-Peter Xu
+Should this be in Fixes: tag?
 
+> Fix this by splitting the unix functions into its own file and doing
+> the appropriate tweaks to the headers.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>  include/qemu/sockets.h |   1 +
+>  util/socket-helpers.h  |  17 ++++
+>  util/qemu-sockets.c    | 199 +--------------------------------------
+>  util/unix-sockets.c    | 207 +++++++++++++++++++++++++++++++++++++++++
+>  util/meson.build       |   5 +-
+>  5 files changed, 231 insertions(+), 198 deletions(-)
+>  create mode 100644 util/socket-helpers.h
+>  create mode 100644 util/unix-sockets.c
+
+[...]
+
+> --- a/util/qemu-sockets.c
+> +++ b/util/qemu-sockets.c
+> @@ -1,5 +1,5 @@
+>  /*
+> - *  inet and unix socket functions for qemu
+> + *  inet socket functions for qemu
+>   *
+>   *  (c) 2008 Gerd Hoffmann <kraxel@redhat.com>
+>   *
+
+Should we mention that static linking of this file is not supported?
+
+With or without this:
+
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
