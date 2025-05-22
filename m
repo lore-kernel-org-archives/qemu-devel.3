@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5821AC54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 09:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A92BC54756
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 09:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI23N-0006eM-Qj; Thu, 22 May 2025 05:17:29 -0400
+	id 1uI23O-0006ej-GS; Thu, 22 May 2025 05:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uI23A-0006bC-2L; Thu, 22 May 2025 05:17:16 -0400
+ id 1uI23F-0006c7-RK; Thu, 22 May 2025 05:17:25 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uI238-0003Jw-Fc; Thu, 22 May 2025 05:17:15 -0400
+ id 1uI23D-0003Jw-SM; Thu, 22 May 2025 05:17:21 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 22 May
@@ -31,17 +31,18 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
- <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
-Subject: [PATCH v4 2/6] hw/arm/aspeed_ast2700-fc: Reduce ca35 ram size to
- align with ast2700a1
-Date: Thu, 22 May 2025 17:16:56 +0800
-Message-ID: <20250522091701.354185-3-steven_lee@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 4/6] hw/arm/aspeed_ast27x0-fc: Map ca35 memory into system
+ memory
+Date: Thu, 22 May 2025 17:16:58 +0800
+Message-ID: <20250522091701.354185-5-steven_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250522091701.354185-1-steven_lee@aspeedtech.com>
 References: <20250522091701.354185-1-steven_lee@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=steven_lee@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,27 +68,28 @@ From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reduce ca35 ram size from 2GiB to 1GiB to align with ast2700a1-evb,
-where the ram-container is defined as 1GiB in its class.
+Map the CA35 memory region as a subregion of system_memory to ensure
+a valid FlatView. This prevents failures in APIs that rely on the
+global memory view, such as rom_check_and_register_reset().
 
 Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0-fc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/aspeed_ast27x0-fc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 7bf4f2a52d..f8cb632bca 100644
+index f8cb632bca..7087be4288 100644
 --- a/hw/arm/aspeed_ast27x0-fc.c
 +++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -48,7 +48,7 @@ struct Ast2700FCState {
-     bool mmio_exec;
- };
+@@ -68,6 +68,7 @@ static void ast2700fc_ca35_init(MachineState *machine)
  
--#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
-+#define AST2700FC_BMC_RAM_SIZE (1 * GiB)
- #define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
+     memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
+                        UINT64_MAX);
++    memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
  
- #define AST2700FC_HW_STRAP1 0x000000C0
+     if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
+                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
 -- 
 2.43.0
 
