@@ -4,69 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 736CCC54ED0
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 18:33:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB93C54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 18:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIAhX-0005kY-Of; Thu, 22 May 2025 14:31:32 -0400
+	id 1uIArd-0002DE-03; Thu, 22 May 2025 14:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uIAhW-0005k3-Na
- for qemu-devel@nongnu.org; Thu, 22 May 2025 14:31:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uIAhU-0000N1-MN
- for qemu-devel@nongnu.org; Thu, 22 May 2025 14:31:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747938687;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sUaTgO2vTys8H4ViTayW5yivwWSc1BhR5TJhH22T7z0=;
- b=Mbj+/CT56TFjul3dTaQFLf6Fx5r/DXiEGVCcc/yUjM6QJFT++9eQtjG12dr8sqLlzGudrf
- 9K71pWeYC5ENzOZRRo2BI6mwnEDT/l5kz0akMLzEugHZMLY0ja8SIfdsgocyff1ssqB/YO
- HaZhyXqXNJ588KXxN6yjDFm0j6RfjXE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-UVIFQtojPNW7pZi49kk_oA-1; Thu,
- 22 May 2025 14:31:24 -0400
-X-MC-Unique: UVIFQtojPNW7pZi49kk_oA-1
-X-Mimecast-MFC-AGG-ID: UVIFQtojPNW7pZi49kk_oA_1747938683
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71B4018004AD; Thu, 22 May 2025 18:31:23 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.45.226.76])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0C70E1944DFF; Thu, 22 May 2025 18:31:21 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 2/5] scsi-disk: Advertise FUA support by default
-Date: Thu, 22 May 2025 20:31:12 +0200
-Message-ID: <20250522183115.246746-3-kwolf@redhat.com>
-In-Reply-To: <20250522183115.246746-1-kwolf@redhat.com>
-References: <20250522183115.246746-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uIArZ-0002Cb-N2
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 14:41:53 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uIArX-0002Cn-Ts
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 14:41:53 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-742c3d06de3so6269722b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 11:41:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747939309; x=1748544109; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Dqf+6w2QfOmdXavhJ3Obery6ceilUl9qhvYxqUCLtHw=;
+ b=ge4hSLLPBteZDkBVYR4l7wYmutW2RwjhtmL9u1/RDBvn6tGe9YikkEMYUrC1vGvdyg
+ AKEZ2Cgdl5JdbS0/TRprHdpqwPlv8t47j3omJpZlAKsBXfZ9K+8/NZ23240gmD8KvkWT
+ IMh6Me/gmZGP7JzHPD3/LFVTjrVo6YI7UeHgbFer/w84T+8XhVnS7YY70pF4mYE/ANgO
+ l9Y+8jP9ErIa9lr86r+PV6CLPGQYwJhndvhkjTNKY5qY7KjH2E+WppQcwRu9uI35+oFg
+ +RyluUwqEQawBilEQwbTxRH4GFUll3zq0lWUqVFP0OocURzmV0AS+IzDrEPW+aN2z0C6
+ 8oKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747939309; x=1748544109;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dqf+6w2QfOmdXavhJ3Obery6ceilUl9qhvYxqUCLtHw=;
+ b=eHof/O/M1pawFrfjDIT9YUa0t9eBahlNz6bXs9uzcaYf66SQQAl/MDO2tQMhMRl2zD
+ ikNBsBQfEZs+WNr/Hxl08UyLIswmu3HvU6Ce0UkUtXoi6QDO8OAjDgoR8n3nu0ZXI/SD
+ xPP0D15FRPeQDpezCMEZOAPDStMIhuWETYTClyFLP7E8SGtpnXCNPYzFAAGWK69/Q4tg
+ 0EUmQYNbjq/M4eCAR7r5lwTlMOXv9IODxhIvbKe40XgazRAbsVrizHOpViHLxB9RDQ12
+ VqUXCx/in4ouVa1jdRSdUZA0w1cbYdFvgT3wnPW2DSj9r4DEyaRXiIeL8Tj1++YVwatH
+ Ow7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVO9nUQpOEo6M3iaozVHtNKnyEBT9rM/4r/i0b1aI9a2UuPGp1Ejw8CTVdVNSjOOY7duOjDqWr+PhbC@nongnu.org
+X-Gm-Message-State: AOJu0YyIISQkPkZv1vWkBs+TkijLazQ1hkxcaLNwepja8u1gx8LygNOv
+ uxByFaXaKGwNujURa6CmdAlp3X0FM8O3nf7h7sxrCMypX2ZVLrch0V7wlgUUeZ6AR4I=
+X-Gm-Gg: ASbGncs2JOe1L8i+H38ndICSor2Z6yd2+XNblsE1akGd2rBxFE8JTOdBHaMsWZMMyE6
+ U2yZ8qJDBFlvc9r5YJgMvAWtBzU2+n6k9QLMvI8e4sMJCbkW0wl6CiuIcIT7HiAnxyuoa+rd8t0
+ dmXNVmjJ7uSfJYsN5sQGu+eMy1emmxo0mwKmJL1usGXihOqPAmrhTSmuWES3IyADHh7G38Iy1HF
+ ROrb5snHg1oJuZXK3xxpxvsU8Mpx6VJ2lzN3QqykHQTwBAAp2OSLHtGOZESgiQVxqVxTZZZdrA2
+ 7q/HX9/fGwI7MYcSi/q3JkJTQASFRpI1h2sMnLyLjSFlM+P9jlNqK0li/rqxkEMV
+X-Google-Smtp-Source: AGHT+IEWk7mGWRc+KoxqKjiasU2XzKA7uaPpJVNySwHRFLgNzh5f8+IUNe75ERsDwX2gruzEh+Paqw==
+X-Received: by 2002:a05:6a20:1591:b0:215:e60b:3bcf with SMTP id
+ adf61e73a8af0-2170cdeb43emr41521787637.30.1747939309133; 
+ Thu, 22 May 2025 11:41:49 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-742a98a471bsm11554857b3a.180.2025.05.22.11.41.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 May 2025 11:41:48 -0700 (PDT)
+Message-ID: <1a5b4bd2-4648-41b7-a6c3-9ad5c843a063@linaro.org>
+Date: Thu, 22 May 2025 11:41:47 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/7] hw/arm: remove explicit dependencies listed
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250521223414.248276-1-pierrick.bouvier@linaro.org>
+ <20250521223414.248276-3-pierrick.bouvier@linaro.org>
+ <a86894c0-5afa-4a85-bace-aa138f77a161@redhat.com>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <a86894c0-5afa-4a85-bace-aa138f77a161@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,49 +109,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alberto Faria <afaria@redhat.com>
+On 5/21/25 9:52 PM, Thomas Huth wrote:
+> On 22/05/2025 00.34, Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    hw/arm/meson.build | 4 ++--
+>>    1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
+> There is another bunch of pixmans in hw/display/meson.build and
+> hw/s390x/meson.build ... I wonder whether we could get rid of those now, too?
+> 
 
-Allow the guest to submit FUA requests directly, instead of forcing it
-to emulate them using a regular flush.
-
-Signed-off-by: Alberto Faria <afaria@redhat.com>
-Message-ID: <20250502121115.3613717-3-afaria@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- hw/core/machine.c   | 4 +++-
- hw/scsi/scsi-disk.c | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index b8ae155dfa..c3f3a5020d 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -37,7 +37,9 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "audio/audio.h"
- 
--GlobalProperty hw_compat_10_0[] = {};
-+GlobalProperty hw_compat_10_0[] = {
-+    { "scsi-hd", "dpofua", "off" },
-+};
- const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
- 
- GlobalProperty hw_compat_9_2[] = {
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 738d8df8ec..b4782c6248 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -3192,7 +3192,7 @@ static const Property scsi_hd_properties[] = {
-     DEFINE_PROP_BIT("removable", SCSIDiskState, features,
-                     SCSI_DISK_F_REMOVABLE, false),
-     DEFINE_PROP_BIT("dpofua", SCSIDiskState, features,
--                    SCSI_DISK_F_DPOFUA, false),
-+                    SCSI_DISK_F_DPOFUA, true),
-     DEFINE_PROP_UINT64("wwn", SCSIDiskState, qdev.wwn, 0),
-     DEFINE_PROP_UINT64("port_wwn", SCSIDiskState, qdev.port_wwn, 0),
-     DEFINE_PROP_UINT16("port_index", SCSIDiskState, port_index, 0),
--- 
-2.49.0
-
+It could, but those files are not (yet) included in target_common 
+libraries, so I think it can be cleaned up later.
 
