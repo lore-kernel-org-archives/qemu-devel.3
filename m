@@ -4,76 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE816C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 12:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0CFC54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 12:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI5GQ-0000Jm-D7; Thu, 22 May 2025 08:43:10 -0400
+	id 1uI5Ot-0001Wc-V5; Thu, 22 May 2025 08:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1uI5GN-0000JM-VR
- for qemu-devel@nongnu.org; Thu, 22 May 2025 08:43:07 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1uI5GF-00027W-3n
- for qemu-devel@nongnu.org; Thu, 22 May 2025 08:43:07 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1a8e:0:640:71ba:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 6579E61E67;
- Thu, 22 May 2025 15:42:51 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b598::1:10] (unknown
- [2a02:6b8:b081:b598::1:10])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id mgOv310FVKo0-3mJmzb2l; Thu, 22 May 2025 15:42:50 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1747917770;
- bh=A4H8wfwXul+4aov8gXqzTZRyYOPJxtv+EFIJCJC2gHY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=GrBvDF1tITCeDp1o4ZSopXj2/dNbyWV1LwrG5oZehLrANKNgBFlggemwFQ0D7BM8w
- cL+C4LpgEx6iVepDkAQIpEhnzGPjl75m4nWtyecfcjNvXizLqerlU7uEqG8ajGuxhb
- 7VJ0xV1fuWaKkpNUMEgJ6USDqJUe6DY78lasTSkE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <616ffb7f-1b23-49af-a75a-13d1a1f85ea0@yandex-team.ru>
-Date: Thu, 22 May 2025 17:40:57 +0500
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1uI5Or-0001W8-Ih
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 08:51:53 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uI5On-0003F2-80
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 08:51:51 -0400
+Received: from example.com (unknown [167.220.208.38])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 98A09211CF86;
+ Thu, 22 May 2025 05:51:42 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 98A09211CF86
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1747918305;
+ bh=eINPUPvgDVlDrBT6Dkpv3woGPkLJ0JeZzjI1lgPBINo=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=bNnQWSvcmgog7THi91QdiwK35n3OiNKLXduILflpWtDN0g4h+idmosbmjCB0Qv6Jd
+ rNayfCbsSArmcryPHM1dF/vY6dYkQDo1iHK+jiJOUK9a+3yc/yPoIU83JlTOGJ/upt
+ Z3Jv8tI5SYJwStjsGVV5GG+f8LRB5RBlltl+vtGs=
+Date: Thu, 22 May 2025 14:51:39 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 25/25] accel/mshv: Add memory remapping workaround
+Message-ID: <aC8d2/B54ro/uT3Q@example.com>
+References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+ <20250520113018.49569-26-magnuskulke@linux.microsoft.com>
+ <2b3b3e89-a471-4245-af63-d7ed8ab1c843@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/2] tests/functional: add memlock tests
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250521135522.11180-1-dtalexundeer@yandex-team.ru>
- <20250521135522.11180-3-dtalexundeer@yandex-team.ru>
- <430eaa84-5695-4fc2-90d5-d488a204e999@redhat.com>
- <af6b28bd-44cf-4540-b5f8-49d8b2781e13@yandex-team.ru>
- <aC8G9aXYQVWxuP1z@redhat.com>
-Content-Language: en-US
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-In-Reply-To: <aC8G9aXYQVWxuP1z@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2b3b3e89-a471-4245-af63-d7ed8ab1c843@redhat.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -85,150 +76,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, May 20, 2025 at 03:53:10PM +0200, Paolo Bonzini wrote:
+> On 5/20/25 13:30, Magnus Kulke wrote:
+> > Qemu maps regions of userland multiple times into the guest. The MSHV
+> > kernel driver detects those overlapping regions and rejects those
+> > mappings.
+> 
+> Can you explain what you see?  QEMU doesn't do that, just look at KVM code:
 
-On 5/22/25 16:13, Daniel P. Berrangé wrote:
-> On Thu, May 22, 2025 at 01:51:44PM +0500, Alexandr Moshkov wrote:
->> On 5/22/25 12:49, Thomas Huth wrote:
->>> On 21/05/2025 15.55, Alexandr Moshkov wrote:
->>>> Add new tests to check the correctness of the `-overcommit memlock`
->>>> option (possible values: off, on, on-fault) by using
->>>> `/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
->>>> anonymous segments:
->>>>
->>>> * if `memlock=off`, then Locked = 0 on every anonymous smaps;
->>>> * if `memlock=on`, then Size, Rss and Locked values must be equal for
->>>> every anon smaps where Rss is not 0;
->>>> * if `memlock=on-fault`, then Rss and Locked must be equal on every anon
->>>> smaps and anonymous segment with Rss < Size must exists.
->>>>
->>>> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->>>> ---
->>> ...
->>>> diff --git a/tests/functional/test_memlock.py
->>>> b/tests/functional/test_memlock.py
->>>> new file mode 100755
->>>> index 0000000000..a090e7f9ad
->>>> --- /dev/null
->>>> +++ b/tests/functional/test_memlock.py
->>>> @@ -0,0 +1,107 @@
->>>> +#!/usr/bin/env python3
->>>> +#
->>>> +# Functional test that check overcommit memlock options
->>>> +#
->>>> +# Copyright (c) Yandex Technologies LLC, 2025
->>>> +#
->>>> +# Author:
->>>> +#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->>>> +#
->>>> +#
->>>> +# This work is licensed under the terms of the GNU GPL, version 2 or
->>>> +# later.  See the COPYING file in the top-level directory.
->>> I just noticed: New file need a SPDX identifier nowadays to keep
->>> scripts/check_patch.pl happy.
->> Hello, thanks for reply, i fix that in a moment!
->>
->>> Anyway, I now also tested the patch, but for me, it's not working: After
->>> setting ulimit -l to 2G and running the test, I get:
->>>
->>> $ ~/devel/qemu/tests/functional/test_memlock.py
->>> TAP version 13
->>> ok 1 test_memlock.MemlockTest.test_memlock_off
->>> Traceback (most recent call last):
->>>    File "~/devel/qemu/tests/functional/test_memlock.py", line 60, in
->>> test_memlock_on
->>>      self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
->>>      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>> AssertionError: False is not true
->>>
->>> not ok 2 test_memlock.MemlockTest.test_memlock_on
->>> Traceback (most recent call last):
->>>    File "~/devel/qemu/tests/functional/test_memlock.py", line 70, in
->>> test_memlock_onfault
->>>      self.assertTrue(smap['Rss'] == smap['Locked'])
->>>      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>> AssertionError: False is not true
->>>
->>> not ok 3 test_memlock.MemlockTest.test_memlock_onfault
->>>
->>> I added two print statements right in front of the asserts to see the
->>> values, and for the first one it shows (after many successfully
->>> comparisons):
->>>
->>> line 60: 4 == 4 == 0
->>>
->>> And similar for the second one:
->>>
->>> line 70: 4 == 0
->>>
->>> FWIW, this is on Fedora 41.
->>>
->>> Looking at the smaps file, it seems like this comes from a shared
->>> library:
->>>
->>> 7ff16c7c9000-7ff16c7ca000 r--p 00000000 00:2a 29149631
->>> /usr/lib64/spa-0.2/support/libspa-support.so
->>> Size:                  4 kB
->>> KernelPageSize:        4 kB
->>> MMUPageSize:           4 kB
->>> Rss:                   4 kB
->>> Pss:                   0 kB
->>> Pss_Dirty:             0 kB
->>> Shared_Clean:          4 kB
->>> Shared_Dirty:          0 kB
->>> Private_Clean:         0 kB
->>> Private_Dirty:         0 kB
->>> Referenced:            4 kB
->>> Anonymous:             0 kB
->>> KSM:                   0 kB
->>> LazyFree:              0 kB
->>> AnonHugePages:         0 kB
->>> ShmemPmdMapped:        0 kB
->>> FilePmdMapped:         0 kB
->>> Shared_Hugetlb:        0 kB
->>> Private_Hugetlb:       0 kB
->>> Swap:                  0 kB
->>> SwapPss:               0 kB
->>> Locked:                0 kB
->>> THPeligible:           0
->>> ProtectionKey:         0
->>>
->>> So maybe you've got to ignore the mappings of .so files in your test?
->> Oh, this segments are already ignored in _parse_anonymous_smaps(), so this
->> segment should not have returned from it.
->>
->> Maybe it comes from another segment? Or i have bug in anon segments
->> parsing.. I'll take a closer look, thanks.
-> It is strange that smaps reports regioons as not locked, despite
-> being resident, as mlockall() claims that it locks *everything*.
+Hey Paolo, I appreciate that you took a look so swiftly, we'll try to
+accomodate and post a fixed series up soon.
 
-Yes it is. Maybe its just segment from mlock=off test case?
+I think what I am referring to is a "memory region alias", e.g. in this
+mtree output (machine q35 + seabios):
 
->
-> None the less, I wonder if using smaps is overkill & more trouble
-> than it is worth ?
->
-> The /proc/$PID/status file is simpler giving a process level overview:
->
-> Normal usage:
->
->    VmSize:   378964 kB
->    VmLck:         0 kB
->
-> mem-lock=on usage:
->
->    VmSize:   378964 kB
->    VmLck:    378964 kB
->
-> and mem-lock=on-fault will be some value in between the two extremes.
->
-> Parsing this seems likely to be more reliable and easier than smaps.
+00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
+...
+00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
 
-Maybe you right. I guess I choose smaps over status for more detailed 
-assertions in tests.
+parts of the bios are mapped into different regions on the guest. a
+code path for such a mapping that is refused by the MSHV kernel driver
+would start in hw/i386/pc.c:894
 
+memory_region_init_alias(ram_below_4g, NULL, "ram-below-4g", machine->ram,
+                         0, x86ms->below_4g_mem_size);
+memory_region_add_subregion(system_memory, 0, ram_below_4g);
 
-Best regards,
+eventually that ends up in a hv call that registers a region, but the
+userspace_addr of pc.bios is already registered, so the mapping of an alias
+slice is rejected by the kernel driver.
 
-Alexandr
+best,
 
+magnus
+
+> 
+> static bool kvm_check_memslot_overlap(struct kvm_memslots *slots, int id,
+>                                       gfn_t start, gfn_t end)
+> {
+>         struct kvm_memslot_iter iter;
+> 
+>         kvm_for_each_memslot_in_gfn_range(&iter, slots, start, end) {
+>                 if (iter.slot->id != id)
+>                         return true;
+>         }
+> 
+>         return false;
+> }
+> 
+> ...
+> 
+>         if ((change == KVM_MR_CREATE || change == KVM_MR_MOVE) &&
+>             kvm_check_memslot_overlap(slots, id, base_gfn, base_gfn + npages))
+>                 return -EEXIST;
+> 
+> 
+> Paolo
+> 
 
