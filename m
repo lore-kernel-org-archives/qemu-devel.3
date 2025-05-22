@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFBDC54ED0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8EFCC54E90
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 18:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIAhz-0005oT-Vi; Thu, 22 May 2025 14:32:02 -0400
+	id 1uIAhj-0005nL-7I; Thu, 22 May 2025 14:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uIAhf-0005nA-5t
- for qemu-devel@nongnu.org; Thu, 22 May 2025 14:31:40 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uIAhZ-0005lO-6W
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 14:31:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uIAhX-0000OI-WC
- for qemu-devel@nongnu.org; Thu, 22 May 2025 14:31:38 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uIAhW-0000Nx-T1
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 14:31:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747938691;
+ s=mimecast20190719; t=1747938690;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EoG2vVF1mLkEop2GmLcTYDfoevSG58BUGG0ufuqbsyE=;
- b=dU/1U5h8QpiwMrt5lc4HqYnyBScxKTUVWiK4PETMgyRgTykBMzDPnz0PXiiFYsT8DU88+n
- CBvUjkhj32uWbQad+CvdNC5rGFrLPYUfJDwiYW7qLyzs/TFJrmkZ5kAi7I2LrOi+vhkmOS
- xfAOsvuWgDOJR8VxkiZcOah9hVCTAf8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=hjuYirBkwph/WiIGkgU7D8925XkGSUPnaUZ8PN66ITk=;
+ b=evTZ9C2M5HchUrSw4PCFoFvbw/ZfMaOVeLUT7GCeTlmsxjKQiNrC94An5sqtlRIX5z1zE6
+ C6DJ+L8q8a2+wt1N64v2+lwnKCHlFL687Mz3CDCyhYn0nbluCYb7HaZ6ttAqv4x0QLveOU
+ Q1lYr5LqrhTgQdOFwITBjdhAz4d2gMk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-2gpnAbIzNp6LiGBWBt2ggQ-1; Thu,
- 22 May 2025 14:31:27 -0400
-X-MC-Unique: 2gpnAbIzNp6LiGBWBt2ggQ-1
-X-Mimecast-MFC-AGG-ID: 2gpnAbIzNp6LiGBWBt2ggQ_1747938686
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-bWT-2s-COa-NtK3JM93YfQ-1; Thu,
+ 22 May 2025 14:31:26 -0400
+X-MC-Unique: bWT-2s-COa-NtK3JM93YfQ-1
+X-Mimecast-MFC-AGG-ID: bWT-2s-COa-NtK3JM93YfQ_1747938685
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D147F180036F; Thu, 22 May 2025 18:31:26 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16BA9195609F; Thu, 22 May 2025 18:31:25 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.45.226.76])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8DE0D1944DFF; Thu, 22 May 2025 18:31:25 +0000 (UTC)
+ id C76A51944DFF; Thu, 22 May 2025 18:31:23 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 4/5] file-posix: allow BLKZEROOUT with -t writeback
-Date: Thu, 22 May 2025 20:31:14 +0200
-Message-ID: <20250522183115.246746-5-kwolf@redhat.com>
+Subject: [PULL 3/5] qemu-img: fix offset calculation in bench
+Date: Thu, 22 May 2025 20:31:13 +0200
+Message-ID: <20250522183115.246746-4-kwolf@redhat.com>
 In-Reply-To: <20250522183115.246746-1-kwolf@redhat.com>
 References: <20250522183115.246746-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -82,55 +82,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Denis Rastyogin <gerben@altlinux.org>
 
-The Linux BLKZEROOUT ioctl is only invoked when BDRV_O_NOCACHE is set
-because old kernels did not invalidate the page cache. In that case
-mixing BLKZEROOUT with buffered I/O could lead to corruption.
+This error was discovered by fuzzing qemu-img.
 
-However, Linux 4.9 commit 22dd6d356628 ("block: invalidate the page
-cache when issuing BLKZEROOUT") made BLKZEROOUT coherent with the page
-cache.
+The current offset calculation leads to an EIO error
+in block/block-backend.c: blk_check_byte_request():
 
-I have checked that Linux 4.9+ kernels are shipped at least as far back
-as Debian 10 (buster), openSUSE Leap 15.2, and RHEL/CentOS 8.
+ if (offset > len || len - offset < bytes) {
+     return -EIO;
+ }
 
-Use BLKZEROOUT with buffered I/O, mostly so `qemu-img ... -t
-writeback` can offload write zeroes.
+This triggers the error message:
+"qemu-img: Failed request: Input/output error".
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20250417211053.98700-1-stefanha@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Example of the issue:
+ offset: 260076
+ len: 260096
+ bytes: 4096
+
+This fix ensures that offset remains within a valid range.
+
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+Message-ID: <20250506141410.100119-1-gerben@altlinux.org>
+[kwolf: Fixed up integer overflow]
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/file-posix.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ qemu-img.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index ec95b74869..5a3532e40b 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -785,17 +785,6 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
-     }
- #endif
- 
--    if (S_ISBLK(st.st_mode)) {
--#ifdef __linux__
--        /* On Linux 3.10, BLKDISCARD leaves stale data in the page cache.  Do
--         * not rely on the contents of discarded blocks unless using O_DIRECT.
--         * Same for BLKZEROOUT.
--         */
--        if (!(bs->open_flags & BDRV_O_NOCACHE)) {
--            s->has_write_zeroes = false;
--        }
--#endif
--    }
- #ifdef __FreeBSD__
-     if (S_ISCHR(st.st_mode)) {
-         /*
+diff --git a/qemu-img.c b/qemu-img.c
+index 76ac5d3028..139eeb5039 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -4488,10 +4488,10 @@ static void bench_cb(void *opaque, int ret)
+          */
+         b->in_flight++;
+         b->offset += b->step;
+-        if (b->image_size == 0) {
++        if (b->image_size <= b->bufsize) {
+             b->offset = 0;
+         } else {
+-            b->offset %= b->image_size;
++            b->offset %= b->image_size - b->bufsize;
+         }
+         if (b->write) {
+             acb = blk_aio_pwritev(b->blk, offset, b->qiov, 0, bench_cb, b);
 -- 
 2.49.0
 
