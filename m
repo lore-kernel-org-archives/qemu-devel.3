@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2292C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC014C54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIBEp-0000uu-AP; Thu, 22 May 2025 15:05:55 -0400
+	id 1uIBFv-0001h1-F1; Thu, 22 May 2025 15:07:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIBEm-0000uB-Ki
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:05:52 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uIBF2-0000xm-KY
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:06:10 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIBEk-0006RZ-8j
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:05:52 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7399838db7fso210975b3a.0
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:05:49 -0700 (PDT)
+ id 1uIBEz-0006U6-Og
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:06:08 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-74019695377so6161262b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:06:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747940748; x=1748545548; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qvoSiU2oEaTcNlVi5fKaSmduLQsgBHGwXgaoEWcRctE=;
- b=QTDPrgCdgAID4FJT+9Cv1WDWqNQ5sn242rBxEQHpGDjS+V+povb2GMBiBpSY2x23UF
- oHD+Nsj/2gkMyeYq57pwgOkkHjDyWG90KO1LgUx3WNBtyHBGoHR2ALmfUYJy26Sdpuwi
- YesMMP8ofgkjv2yqTqCZ+kDg4CfWWIPRfRsCq+yy7w+RR19YjvEgnxu0rRerL+hyVG+F
- w0+wE4KjbZmhA4pOUGIZl2pGrSWLSRY9z0eG7Fym5zK/bkyAqOQPFivTAK/Ti+6JZx1s
- vpy3mhVXQhKpDf9b2Vs77UYCq9SFFMbtpLzz6rocSMDON9QQyKg916eKFD5CiABE1MJM
- ia/g==
+ d=linaro.org; s=google; t=1747940760; x=1748545560; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eI0EvUmIkbWrjMKnBfnwOSekuZrl/EU3iIxo3aepxTQ=;
+ b=yN7jISKNttC6ki5CzMzcTEmiTW7y4aEEvtJo/cEFYxRYhhVd6c+ZEzpD2OJbBE70BH
+ psudSXnaxXZqfV3rAv3N/YHRyL8G0VZXMZv/xvbqi0zYAjb+0EBZIZXvKPUl+cemg3J9
+ eFEbUMxLCJluv7ZJk1+oUA/FdUOgG37ly5IGvjeAZVtA9SqdAbAn6urkN9fSqNKW31Y4
+ 7gvMk0aYPL1AG7gngF7Gf9e2tp9LJfN+HrACNfdSYUZOCIgM4uOD9fz21K37DimHaT8H
+ P2hzcF4TNlhJTuftQ9xdqJLvTD5yWOAD1LEL09J5f251To3CJct6846ApB2vt2qgJPEB
+ BTnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747940748; x=1748545548;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qvoSiU2oEaTcNlVi5fKaSmduLQsgBHGwXgaoEWcRctE=;
- b=usGaMWId2XogXAcObOx0qgKObOnfUHnoAFws8tiEkFO3xw8qDnNqF1sFlrmivE+ZVr
- 4V6cW/ibC0Tc+mZqw1Of4D+gid8CY+JybrSkTnVfYzTvEDDc40BC3jZJedLHCVGMJS9B
- Zsur6Bi+uHTrCb5xW/Pu0MSrFhK/kt0f7xhvdIWDllM6+7oMRmPqGzWVtA5yrXVmAwnG
- v/MXAxCWvGvY3aOPALXKiez4Zg6f90x3wab0IK5J7EW/BggslG6DrsoUMgMtejIjPLHD
- +j2EuE1OaawQykusp0mnoXA4Us22BU2Qkoc6QoRTA2w6YGUdlbz+u/fiKGLIJnM/5+gN
- EH9Q==
-X-Gm-Message-State: AOJu0YwfLNjrvIMZY3ZcPkU6RDWq51n3dHybstaKmBcOnj7tV0qvoJ/y
- qbw4P+w+1gRZMgBQs7fLHIKOcv6IwDO1DxxmxHK/5EaxLEUxG8eZ51hlNouqk48lMOdFf9aN2YU
- TXVtb
-X-Gm-Gg: ASbGncvEHs2L5EgBzeu1ZwnyWR+W0o0Wi5NsNV2Y66Z5q1rG0Fc7vi/gAWumtBblIbw
- z+sgghvPaEPduZCRhKk17KClClOSS+sEphaivAjly5n7S2/UlFiJfweTM36Y2oJJwBkKVE3vA8s
- zXdErnNNKOLKW1S6K0aJHPr98t8+iXrDM8papjLs1xJygPFwhH2x9vurn6m4arsZgZ64BiJTnCn
- Ed382U9xkZKFJaQMemxmpzSBWbeGsCL1sheGLGdcOwq0SM72hgI2gtTyrSxojCF7SDva4OjLPEE
- B7ImMlWhclmAdE58WXjJa1Ygj1p//1UpyRtaGcdp4/NmlqccRdg=
-X-Google-Smtp-Source: AGHT+IH5xcalb99jPDZsnN/cQ/mE0zhaMwnL54H++DZ9jghAG6xocw3tj+FH/VPEnWkyV7fUcRIM/w==
-X-Received: by 2002:a05:6a20:e614:b0:218:11d6:b66 with SMTP id
- adf61e73a8af0-21877a392aemr896624637.5.1747940748359; 
- Thu, 22 May 2025 12:05:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1747940760; x=1748545560;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eI0EvUmIkbWrjMKnBfnwOSekuZrl/EU3iIxo3aepxTQ=;
+ b=RqEIieEOgrjSuDC2SFB6Mtnr0yjsCS0W9zGMWfwTwRoAy2enwC8nix8YLR4IqWI9qt
+ VWttLBPm4AHHc1zyahZ7Z/lBnNXLiOSZ7TuoEh7WKIBMQlrpnJdDFlNE+FWMWsvnkZs3
+ aomkMgXLbARhDsDvdXfZt2IaJqiQsFYpm+trzQVaI8OILQoNd4jDowhz5E6/dCmq16A6
+ fSfKg4jXRFIzxNxi7KT+SeDKnsr03X84t/d5ildxgtABY1miUNtXrA9J+xbOMRdZKoF8
+ vgWkNp+wd0FZCIC7KTMSMGZ9uMUBPOgjG9Uk2PvU9sKeeW0maEiRWta068q9xgw6sLJ4
+ tB9Q==
+X-Gm-Message-State: AOJu0Yy+rj4BjiEvu0gwmXHkw1EGOPkh4diNG/G/8PQw3PV/xPj+kify
+ AcJHPCwiabVbZovjtdKv5D7KLEriELFKMWrgryUWz4WIteZnpNTyWDokgiTcGCiyEozgLL5bWxn
+ XyGBj
+X-Gm-Gg: ASbGnctPBWk8MsklRQOezVxk/4fwp7AwHtxzRJsmxW8Ty62vGumlrFmNbFR3Xlu3ek0
+ mE8KOscIjJAZ4ib6fIeimrlv9iCSDwFHAEtb4aOi+QmWrAJHIZkcz4VgyXfPoqIiyWkOoE3Nvpl
+ BInfqmqh6+4bpLhGN1rQWTMu5y/iFytEOKMXX0uJVwgX5II4vV9lycj5BzZ9yg/MaUYU93swaId
+ n8l2+NQi1zrYX8K4N9JltITg0XQdbUjqFDCEo/0LFy4zM9APC1bcwTl0UrXaDESHDTMbu0x0gq9
+ 6VdX/OKS0rHGQBsRgCunY7h+b65t7BvGDsihaU0Jz/btdjb050c=
+X-Google-Smtp-Source: AGHT+IF4KvT7GGS/qqlbRAOkwHE22T50UmZ/6YYCOmaKzQ14zDfVDprLjEbQM4LO0UnhIj9iXhBVvg==
+X-Received: by 2002:a05:6a21:9012:b0:216:19c1:1f54 with SMTP id
+ adf61e73a8af0-2162188b866mr36919548637.4.1747940760545; 
+ Thu, 22 May 2025 12:06:00 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b26eb082c66sm11625565a12.60.2025.05.22.12.05.47
+ 41be03b00d2f7-b26eb082c66sm11625565a12.60.2025.05.22.12.05.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 12:05:47 -0700 (PDT)
+ Thu, 22 May 2025 12:05:59 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, thuth@redhat.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, armbru@redhat.com,
  pierrick.bouvier@linaro.org, peter.maydell@linaro.org, berrange@redhat.com,
  philmd@linaro.org
-Subject: [PATCH v4 00/15] qapi: remove all TARGET_* conditionals from the
- schema
-Date: Thu, 22 May 2025 12:05:27 -0700
-Message-ID: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 11/15] qapi: remove qapi_specific_outputs from meson.build
+Date: Thu, 22 May 2025 12:05:38 -0700
+Message-ID: <20250522190542.588267-12-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
+References: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,122 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series exposes all qmp commands for any target unconditionally, allowing to
-compile QAPI generated code without any TARGET conditionals.
+There is no more QAPI files that need to be compiled per target, so we
+can remove this. qapi_specific_outputs is now empty, so we can remove
+the associated logic in meson.
 
-Based on original RFC from Daniel P. Berrangé:
-https://lore.kernel.org/qemu-devel/20250508135816.673087-1-berrange@redhat.com/
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ qapi/meson.build | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-v4
---
-
-- Update commit description to say that doc was updated accordingly (Markus)
-- Fixed a rebase error in v3 where two patches were wrongly merged together
-
-v3
---
-
-- Change error message for rtc-reset-injection stub
-- s/'*deprecated-props' : { 'type': ['str'] }/'*deprecated-props' : ['str'] }
-- further cleanup in qapi/meson.build
-- move qapi/machine-target.json deletion to s390x cpu commands commit
-- cleanup qapi_outputs in qapi/meson.build
-- All comment and commit description updates requested
-- Rebase on top of master (conflict with s/SGX/Sgx/ case change)
-
-v2
---
-
-- rtc-reset-reinjection now returns an error if the command is not applicable
-  for current target (Markus & Daniel)
-
-v1
---
-
-- remove file qapi/misc-target.json (Markus)
-- remove qapi/*-target.json from MAINTAINERS (Markus)
-- remove qapi_specific_outputs from qapi/meson.build (Markus)
-- update comment in rtc-reset-reinjection stub (Markus)
-- build QAPI generated code only once
-
-Daniel P. Berrangé (8):
-  qapi: expose rtc-reset-reinjection command unconditionally
-  qapi: expand docs for SEV commands
-  qapi: make SEV commands unconditionally available
-  qapi: expose query-gic-capability command unconditionally
-  qapi: make SGX commands unconditionally available
-  qapi: make Xen event commands unconditionally available
-  qapi: remove the misc-target.json file
-  qapi: make s390x specific CPU commands unconditionally available
-
-Philippe Mathieu-Daudé (1):
-  qapi: Make CpuModelExpansionInfo::deprecated-props optional and
-    generic
-
-Pierrick Bouvier (6):
-  qapi: make most CPU commands unconditionally available
-  qapi: remove qapi_specific_outputs from meson.build
-  qapi: make all generated files common
-  qapi: use imperative style in documentation
-  qapi/misc-i386: s/field will be set/field is set/
-  qapi/misc-i386: move errors to their own documentation section
-
- MAINTAINERS                               |   1 -
- qapi/audio.json                           |   2 +-
- qapi/char.json                            |   4 +-
- qapi/cryptodev.json                       |   2 +-
- qapi/machine-s390x.json                   | 121 +++++
- qapi/machine-target.json                  | 523 ----------------------
- qapi/machine.json                         | 367 ++++++++++++++-
- qapi/migration.json                       |   8 +-
- qapi/misc-arm.json                        |  49 ++
- qapi/{misc-target.json => misc-i386.json} | 165 +++----
- qapi/qapi-schema.json                     |   5 +-
- qapi/ui.json                              |   8 +-
- include/hw/s390x/cpu-topology.h           |   2 +-
- hw/i386/kvm/xen-stubs.c                   |  13 -
- hw/i386/kvm/xen_evtchn.c                  |   2 +-
- hw/i386/monitor.c                         |   2 +-
- hw/i386/sgx-stub.c                        |   2 +-
- hw/i386/sgx.c                             |   2 +-
- hw/s390x/cpu-topology.c                   |   4 +-
- hw/s390x/s390-skeys.c                     |   1 -
- stubs/monitor-arm-gic.c                   |  12 +
- stubs/monitor-cpu-s390x-kvm.c             |  22 +
- stubs/monitor-cpu-s390x.c                 |  23 +
- stubs/monitor-cpu.c                       |  21 +
- stubs/monitor-i386-rtc.c                  |  12 +
- stubs/monitor-i386-sev.c                  |  36 ++
- stubs/monitor-i386-sgx.c                  |  17 +
- stubs/monitor-i386-xen.c                  |  16 +
- target/arm/arm-qmp-cmds.c                 |   4 +-
- target/i386/cpu-system.c                  |   2 +-
- target/i386/cpu.c                         |   2 +-
- target/i386/monitor.c                     |   1 -
- target/i386/sev-system-stub.c             |  32 --
- target/i386/sev.c                         |   2 +-
- target/loongarch/loongarch-qmp-cmds.c     |   2 +-
- target/mips/system/mips-qmp-cmds.c        |  12 +-
- target/ppc/ppc-qmp-cmds.c                 |  12 +-
- target/riscv/riscv-qmp-cmds.c             |   2 +-
- target/s390x/cpu_models_system.c          |   2 +-
- tests/qtest/qmp-cmd-test.c                |   1 +
- qapi/meson.build                          |  33 +-
- stubs/meson.build                         |   8 +
- 42 files changed, 833 insertions(+), 724 deletions(-)
- create mode 100644 qapi/machine-s390x.json
- delete mode 100644 qapi/machine-target.json
- create mode 100644 qapi/misc-arm.json
- rename qapi/{misc-target.json => misc-i386.json} (75%)
- create mode 100644 stubs/monitor-arm-gic.c
- create mode 100644 stubs/monitor-cpu-s390x-kvm.c
- create mode 100644 stubs/monitor-cpu-s390x.c
- create mode 100644 stubs/monitor-cpu.c
- create mode 100644 stubs/monitor-i386-rtc.c
- create mode 100644 stubs/monitor-i386-sev.c
- create mode 100644 stubs/monitor-i386-sgx.c
- create mode 100644 stubs/monitor-i386-xen.c
-
+diff --git a/qapi/meson.build b/qapi/meson.build
+index e038b636c9d..7582c2b5bcf 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -92,7 +92,6 @@ qapi_util_outputs = [
+ ]
+ 
+ qapi_inputs = []
+-qapi_specific_outputs = []
+ foreach module : qapi_all_modules
+   qapi_inputs += [ files(module + '.json') ]
+   qapi_module_outputs = [
+@@ -110,15 +109,11 @@ foreach module : qapi_all_modules
+       'qapi-commands-@0@.trace-events'.format(module),
+     ]
+   endif
+-  if module.endswith('-target')
+-    qapi_specific_outputs += qapi_module_outputs
+-  else
+-    qapi_util_outputs += qapi_module_outputs
+-  endif
++  qapi_util_outputs += qapi_module_outputs
+ endforeach
+ 
+ qapi_files = custom_target('shared QAPI source files',
+-  output: qapi_util_outputs + qapi_specific_outputs + qapi_nonmodule_outputs,
++  output: qapi_util_outputs + qapi_nonmodule_outputs,
+   input: [ files('qapi-schema.json') ],
+   command: [ qapi_gen, '-o', 'qapi', '-b', '@INPUT0@' ],
+   depend_files: [ qapi_inputs, qapi_gen_depends ])
+@@ -138,7 +133,7 @@ foreach output : qapi_util_outputs
+   i = i + 1
+ endforeach
+ 
+-foreach output : qapi_specific_outputs + qapi_nonmodule_outputs
++foreach output : qapi_nonmodule_outputs
+   if output.endswith('.h')
+     genh += qapi_files[i]
+   endif
 -- 
 2.47.2
 
