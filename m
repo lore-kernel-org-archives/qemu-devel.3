@@ -4,145 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86036C54756
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 04:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAC0C54756
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 05:12:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHxw1-0005MW-Mc; Thu, 22 May 2025 00:53:37 -0400
+	id 1uHyD5-0000UA-HS; Thu, 22 May 2025 01:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHxvv-0005IA-Hc
- for qemu-devel@nongnu.org; Thu, 22 May 2025 00:53:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHxvt-0006E3-Rt
- for qemu-devel@nongnu.org; Thu, 22 May 2025 00:53:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747889608;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CrO+kg4F7BBLpsOzKtbajK0q4mWuE6p0WkHC3JZBrvY=;
- b=GtKBjmWPC1ycPmeogotUGCIzDbV3nq6PrsQs07s82ZZJ4g326QU0mNbH2iHxYQXy3Kq6ln
- hYDdBmXmWME66iU2dzI6IsTDP4VwKX5g7LQxdopzvli4nx9IzlBIhWFUUJIawsrFTkqr1U
- IglA1bSn7q7BxESvzKK7jnGG9L6VsMc=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-uHJJDOCoPJ-fn71wisU_5g-1; Thu, 22 May 2025 00:53:26 -0400
-X-MC-Unique: uHJJDOCoPJ-fn71wisU_5g-1
-X-Mimecast-MFC-AGG-ID: uHJJDOCoPJ-fn71wisU_5g_1747889605
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ad56c38dbeaso483491766b.0
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 21:53:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uHyCw-0000Tc-87
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 01:11:07 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uHyCr-0008Fh-DO
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 01:11:04 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-73c17c770a7so8146922b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 22:11:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747890659; x=1748495459;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aBE+gmB0wIIuuVY+QPTGxfpJaOc5JyIquMbbFNf8+x4=;
+ b=J5Fv7UmTu4N/t1ItnxUrqUKT57p+St68+vCeEGBWbN3inX5RiCo6PSrybvVQ/nqdWd
+ LWzEYyrb1dhgiNBF3ivIrPBhghMMwt3nzMGQQpv2PN/NUAgGdAkKUxdlO0O0DX9DIyXp
+ sEIzAOo/p17BV6yWeJVAlRlW7BeMC+9ipy+OucZN2kqeCoLcvOTylz5+PJid8xd01cUB
+ nUfQlTz3VPN305r1E2NyOJLhWkGgBUsgkt6dugWh75gWDm80auThwb8le/XyF4Xs/mDb
+ C8TwMm3zdNJE84aTBKWmSdOnWM46IJKRv/6eK9QB3/9WsQksTNO2fQMhRwxy0AsXwpa+
+ v9xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747889605; x=1748494405;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CrO+kg4F7BBLpsOzKtbajK0q4mWuE6p0WkHC3JZBrvY=;
- b=M10jaN+H5D6QrEheGuqA3/mMdfJpjX6DKM3h9SFN4aAF47rLcGow6o4nfrVygbf3Kn
- Vh3OdT3wM8gK2uvHtaIahPP0MEAGB5bMXiPJZQp8HLct2cPJluj5iRFQU14buibHAUKd
- opa4LzUHz1NKKahC1Q3DgsydGtjiS2hv+FIe8Cn0cMemRgmMhEqd/RH/IZK06MRWDig3
- C4/cMfXF1kmJxYLuzWYuC+uQI/d9uKk3F7tKOEt6vEv8ZscHF8jeC7ezz6p0z603hIuy
- vd4IA2FEnzdAN/QtWQLOqcRDb6eB1w0N/3CmN6We3B27BMFUghNqinT7i2lTHV2D3Kyw
- DkkA==
+ d=1e100.net; s=20230601; t=1747890659; x=1748495459;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aBE+gmB0wIIuuVY+QPTGxfpJaOc5JyIquMbbFNf8+x4=;
+ b=j+HJLbniLz/nW/hWs6vyx4uqs8sAfpEYQJP6XKqJKV8pKX1YK/62McqCWaOxrE3xaI
+ N0YaMzWD+r6rUacHWd7jX7gM7O+tnwzWVbyejqkXbBmhY9lllcgA1EvMB5LRWG8+veKh
+ yReFUtuqNyb2yvUUOuYtUT5QVEM7997Ze7LlUpImQPk25z2ZDstEl0hS52S7K6oBrjBT
+ tHVjc09R2W6zcqcFuKz903p7BwHRB/0YHN3vxoWBlboALSyHcDJpIp5dR7VZPmB3EbIi
+ W4Q9ACETaygpqiDoc8997js60B9KuOMivMc+XZVTVvvd7W+/xpw37PRA1yTHF1VuYuJ1
+ tStg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgFL5CVGSos2q0MUshKLe3hcQQB7swYB3OL7txMd2DbdPoGTgaHRlTwrglns0yGbR6HJ9BSo2YtwYC@nongnu.org
-X-Gm-Message-State: AOJu0YxnSuC/CpKL6MtbNxIwOjbiDPxrCAFmbYb1LKhYktwV5e1CW+dt
- HZv92KCBovei0EGSTl+d56REmV4AJYcFVxWkXcTnkg0hZHC99MLc5ulLQTu96L4UnQybkReDR/v
- w/tV5CvyZWFCAGZjswqX4ufTNGmvodxYfLh8IfVsr8OrNePGSM9uWBmpL
-X-Gm-Gg: ASbGncu39x0CyRvoED+gWZ2Mvr1Ttu0gzK24wa2SX5zfDRqj2Htnyy85vK28PryBE7A
- y35/Bxgyfs0f/Y1N/126kWEG53SGPD+H9hoKmLuXkeGrWkJ/kW8F9mzpSA9jZ7R4vR6dsc3Qql/
- XMamhBpbDkJQyNP5ERGhlOKsVbewf7bzIeRtKLtpF0VJhiAo7Vk6UiL9WS72AulrWSzCO5KeX11
- MWxDtaQY7gbNSoGv+n3uRyVFiZIEnJoCQh/mzDwB/dRpQzr0672rO4g+7PStUyfllQoalwOSLDb
- VCw44sHuU2Fuc4zyu+YC5FX7B3Ik1UG1/xh756p+lcQ=
-X-Received: by 2002:a17:907:7e94:b0:ad2:2c89:7a8 with SMTP id
- a640c23a62f3a-ad536ff23f9mr1970637366b.51.1747889604799; 
- Wed, 21 May 2025 21:53:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFxMrOFl77gZ2wwLhJJ9ZqT1bxif4sya1ErGimC3njUbqV/8/o1T1tJmjptvoOVqFJgBJKdg==
-X-Received: by 2002:a17:907:7e94:b0:ad2:2c89:7a8 with SMTP id
- a640c23a62f3a-ad536ff23f9mr1970635066b.51.1747889604462; 
- Wed, 21 May 2025 21:53:24 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-201.web.vodafone.de.
- [109.42.49.201]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d278274sm1006921666b.86.2025.05.21.21.53.23
+ AJvYcCXhZhQMu7v31A4inqSHuj1WXFKDCQOJWP/7f2OeHAtKsECLBKsnKQHpdozxGPjRtNEEUMArJI+VBrQB@nongnu.org
+X-Gm-Message-State: AOJu0YzvTQROxDWmyNf3DoGBu0Otb4G8Y0kbs/LlT2DrpvTKg9tuuzub
+ Qt6ftjiJzyIp0MBCF2ksBcUfyAXTrhQJpW4dVQHRaSLjQ+j8YXnEp0ZzoYpe+UPai8c=
+X-Gm-Gg: ASbGncs4do0z1dYXn0CfwkSOrW7oTwBXPkNZe+S6r6q5J6jEwGLKNNPl/o47IrNk7g3
+ +qncnNBfM71qhaU5KORu06u3skNMo2afcF1NjKwF0/m9ITvhsIFB3JTTu2oxmOsQcvd15kfAa85
+ yc3vLBnwWG79X3T21LwFrDtLg1o64DMjX92SQx0hj7OYKkP9Kv31y6YZ8kvQQw7IKL9FRXoFeL7
+ 9AkZeLp3GMFl98HWQQLYXQ3HiZ6nARTVv8r+qRHyMnNR22o9UQVBpkGRwNBBn/AYmLBp8Vn8tB1
+ iT7W/wBDqomedqEuUWk4vz6gHrOzWbhl26UqMDcrxDf0AbIUfYMFcQiEdOTp3Q==
+X-Google-Smtp-Source: AGHT+IGLQId5d3lmhJlTNd/LKsI9RLP1Xu7ZyxKwOYcuz2XpYztfNuIondhh0Mwh9XHsCLY0CR29cw==
+X-Received: by 2002:aa7:9ddd:0:b0:742:b3a6:db16 with SMTP id
+ d2e1a72fcca58-742b3a6dbc0mr23729734b3a.20.1747890658973; 
+ Wed, 21 May 2025 22:10:58 -0700 (PDT)
+Received: from [10.100.116.185] ([157.82.128.1])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-742a9829bb3sm10752070b3a.100.2025.05.21.22.10.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 21:53:23 -0700 (PDT)
-Message-ID: <cbe1ede8-1054-488e-a6ad-5874140ce061@redhat.com>
-Date: Thu, 22 May 2025 06:53:22 +0200
+ Wed, 21 May 2025 22:10:58 -0700 (PDT)
+Message-ID: <7a76e746-9022-48cf-8216-775071e6d631@daynix.com>
+Date: Thu, 22 May 2025 14:10:53 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] target/arm: remove explicit dependencies listed
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250521223414.248276-1-pierrick.bouvier@linaro.org>
- <20250521223414.248276-4-pierrick.bouvier@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 03/20] tests/tcg: make aarch64 boot.S handle different
+ starting modes
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Julian Armistead <julian.armistead@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20250521164250.135776-1-alex.bennee@linaro.org>
+ <20250521164250.135776-4-alex.bennee@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250521223414.248276-4-pierrick.bouvier@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20250521164250.135776-4-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,26 +120,330 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/05/2025 00.34, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On 2025/05/22 1:42, Alex Bennée wrote:
+> Currently the boot.S code assumes everything starts at EL1. This will
+> break things like the memory test which will barf on unaligned memory
+> access when run at a higher level.
 > 
-> diff --git a/target/arm/meson.build b/target/arm/meson.build
-> index b404fa54863..2ff7ed6e98f 100644
-> --- a/target/arm/meson.build
-> +++ b/target/arm/meson.build
-> @@ -28,7 +28,7 @@ arm_user_ss.add(files(
->     'vfp_fpscr.c',
->   ))
+> Adapt the boot code to do some basic verification of the starting mode
+> and the minimal configuration to move to the lower exception levels.
+> With this we can run the memory test with:
+> 
+>    -M virt,secure=on
+>    -M virt,secure=on,virtualization=on
+>    -M virt,virtualisation=on
+> 
+> If a test needs to be at a particular EL it can use the semihosting
+> command line to indicate the level we should execute in.
+> 
+> Cc: Julian Armistead <julian.armistead@linaro.org>
+> Cc: Jim MacArthur <jim.macarthur@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+> ---
+> v3
+>    - create system stack so we _exit cleanly
+>    - normalise EL string before compares
+>    - catch when we start in a lower EL than we asked for
+>    - default to EL1 when arg unclear
+> v2
+>    - allow tests to control the final EL we end up at
+>    - use tabs consistently
+>    - validate command line arg is between 1 and 3
+> ---
+>   tests/tcg/aarch64/Makefile.softmmu-target |   3 +-
+>   tests/tcg/aarch64/system/boot.S           | 171 +++++++++++++++++++++-
+>   2 files changed, 168 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
+> index 9c52475b7a..f7a7d2b800 100644
+> --- a/tests/tcg/aarch64/Makefile.softmmu-target
+> +++ b/tests/tcg/aarch64/Makefile.softmmu-target
+> @@ -68,7 +68,8 @@ run-plugin-semiconsole-with-%: semiconsole
 >   
-> -arm_common_system_ss.add(files('cpu.c'), capstone)
-> +arm_common_system_ss.add(files('cpu.c'))
->   arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
->     'cpu32-stubs.c'))
->   arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
+>   # vtimer test needs EL2
+>   QEMU_EL2_MACHINE=-machine virt,virtualization=on,gic-version=2 -cpu cortex-a57 -smp 4
+> -run-vtimer: QEMU_OPTS=$(QEMU_EL2_MACHINE) $(QEMU_BASE_ARGS) -kernel
+> +QEMU_EL2_BASE_ARGS=-semihosting-config enable=on,target=native,chardev=output,arg="2"
+> +run-vtimer: QEMU_OPTS=$(QEMU_EL2_MACHINE) $(QEMU_EL2_BASE_ARGS) -kernel
+>   
+>   # Simple Record/Replay Test
+>   .PHONY: memory-record
+> diff --git a/tests/tcg/aarch64/system/boot.S b/tests/tcg/aarch64/system/boot.S
+> index a5df9c173d..78380a6f75 100644
+> --- a/tests/tcg/aarch64/system/boot.S
+> +++ b/tests/tcg/aarch64/system/boot.S
+> @@ -16,6 +16,7 @@
+>   #define semihosting_call hlt 0xf000
+>   #define SYS_WRITEC	0x03	/* character to debug channel */
+>   #define SYS_WRITE0	0x04	/* string to debug channel */
+> +#define SYS_GET_CMDLINE 0x15	/* get command line */
+>   #define SYS_EXIT	0x18
+>   
+>   	.align	12
+> @@ -70,21 +71,171 @@ lower_a32_sync:
+>   lower_a32_irq:
+>   lower_a32_fiq:
+>   lower_a32_serror:
+> +	adr	x1, .unexp_excp
+> +exit_msg:
+>   	mov	x0, SYS_WRITE0
+> -	adr	x1, .error
+>   	semihosting_call
+>   	mov	x0, 1 /* EXIT_FAILURE */
+>   	bl 	_exit
+>   	/* never returns */
+>   
+>   	.section .rodata
+> -.error:
+> -	.string "Terminated by exception.\n"
+> +.unexp_excp:
+> +	.string "Unexpected exception.\n"
+> +.high_el_msg:
+> +	.string "Started in lower EL than requested.\n"
+> +
+> +	.align 8
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+.get_cmd may be put before strings to avoid unnecessary padding for 
+alignment.
+
+> +.get_cmd:
+
+I pointed out a style problem with this label in the last review:
+
+ > This label is prefixed with a dot, which is inconsistent with the other
+ > labels except ".error".
+ >
+ > I guess ".error" is prefixed with a dot to make it local, but a local
+ > symbol needs to be prefixed with ".L" instead according to:
+ > https://sourceware.org/binutils/docs-2.41/as/Symbol-Names.html#Local-
+ > Symbol-Names
+ >
+ >  > A local symbol is any symbol beginning with certain local label
+ >  > prefixes. By default, the local label prefix is ‘.L’ for ELF systems
+ >  > or ‘L’ for traditional a.out systems, but each target may have its own
+ >  > set of local label prefixes. On the HPPA local symbols begin with
+ >  > ‘L$’.
+
+> +	.quad	cmdline
+> +	.quad	128
+>   
+>   	.text
+>   	.align 4
+>   	.global __start
+>   __start:
+> +	/*
+> +         * Initialise the stack for whatever EL we are in before
+> +	 * anything else, we need it to be able to _exit cleanly.
+> +	 * It's smaller than the stack we pass to the C code but we
+> +	 * don't need much.
+> +	 */
+> +	adrp	x0, system_stack_end
+> +	add	x0, x0, :lo12:system_stack_end
+> +	mov	sp, x0
+> +
+> +	/*
+> +	 * The test can set the semihosting command line to the target
+> +	 * EL needed for the test. However if no semihosting args are set we will
+> +	 * end up with -kernel/-append data (see semihosting_arg_fallback).
+> +	 * Keep the normalised target in w11.
+> +	 */
+> +	mov	x0, SYS_GET_CMDLINE
+> +	adr	x1, .get_cmd
+> +	semihosting_call
+> +	adrp	x10, cmdline
+> +	add	x10, x10, :lo12:cmdline
+> +	ldrb	w11, [x10]
+> +
+> +	/* sanity check, normalise char to EL, clamp to 1 if outside range */
+> +	subs w11, w11, #'0'
+> +	b.lt el_default
+> +	cmp  w11, #3
+> +	b.gt el_default
+> +	b 1f
+> +
+> +el_high:
+> +	adr	x1, .high_el_msg
+> +	b	exit_msg
+> +
+> +el_default:
+> +	mov	w11, #1
+> +
+> +1:
+> +	/* Determine current Exception Level */
+> +	mrs	x0, CurrentEL
+> +	lsr	x0, x0, #2	  /* CurrentEL[3:2] contains the current EL */
+> +
+> +	/* Are we already in a lower EL than we want? */
+> +	cmp	w11, w0
+> +	bgt	el_high
+
+Shorter:
+
+	/* sanity check, normalise char to EL, clamp to 1 if outside range */
+	subs	w11, w11, #'0'
+	mov	w0, #1
+	cmp	w11, #3
+	csel	w11, w11, w0, GT
+
+	/* Determine current Exception Level */
+	mrs	x0, CurrentEL
+	lsr	x0, x0, #2
+
+	cmp	w11, w0
+	ble	el_correct
+	adr	x1, high_el_msg
+	b	exit_msg
+
+el_correct:
+
+> +
+> +	/* Branch based on current EL */
+> +	cmp	x0, #3
+> +	b.eq	setup_el3
+> +	cmp	x0, #2
+> +	b.eq	setup_el2
+> +	cmp	x0, #1
+> +	b.eq	at_testel	     /* Already at EL1, skip transition */
+> +	/* Should not be at EL0 - error out */
+> +	b	curr_sp0_sync
+
+This still says "Unexpected exception."
+
+> +
+> +setup_el3:
+> +	/* Ensure we trap if we get anything wrong */
+> +	adr	x0, vector_table
+> +	msr	vbar_el3, x0
+> +
+> +	/* Does the test want to be at EL3? */
+> +	cmp	w11, #3
+> +	beq	at_testel
+> +
+> +	/* Configure EL3 to for lower states (EL2 or EL1) */
+> +	mrs	x0, scr_el3
+> +	orr	x0, x0, #(1 << 10)    /* RW = 1: EL2/EL1 execution state is AArch64 */
+> +	orr	x0, x0, #(1 << 0)     /* NS = 1: Non-secure state */
+> +	msr	scr_el3, x0
+> +
+> +	/*
+> +	 * We need to check if EL2 is actually enabled via ID_AA64PFR0_EL1,
+> +	 * otherwise we should just jump straight to EL1.
+> +	 */
+> +	mrs	x0, id_aa64pfr0_el1
+> +	ubfx	x0, x0, #8, #4	      /* Extract EL2 field (bits 11:8) */
+> +	cbz	x0, el2_not_present   /* If field is 0 no EL2 */
+> +
+> +
+> +	/* Prepare SPSR for exception return to EL2 */
+> +	mov	x0, #0x3c9	      /* DAIF bits and EL2h mode (9) */
+> +	msr	spsr_el3, x0
+> +
+> +	/* Set EL2 entry point */
+> +	adr	x0, setup_el2
+> +	msr	elr_el3, x0
+> +
+> +	/* Return to EL2 */
+> +	eret
+> +	nop
+
+NOP is still present here.
+
+> +
+> +el2_not_present:
+> +	/* Initialize SCTLR_EL1 with reset value */
+> +	msr	sctlr_el1, xzr
+> +
+> +	/* Set EL1 entry point */
+> +	adr	x0, at_testel
+> +	msr	elr_el3, x0
+> +
+> +	/* Prepare SPSR for exception return to EL1h with interrupts masked */
+> +	mov	x0, #0x3c5	      /* DAIF bits and EL1h mode (5) */
+> +	msr	spsr_el3, x0
+> +
+> +	isb			      /* Synchronization barrier */
+> +	eret			      /* Jump to EL1 */
+> +
+> +setup_el2:
+> +	/* Ensure we trap if we get anything wrong */
+> +	adr	x0, vector_table
+> +	msr	vbar_el2, x0
+> +
+> +	/* Does the test want to be at EL2? */
+> +	cmp	w11, #2
+> +	beq	at_testel
+> +
+> +	/* Configure EL2 to allow transition to EL1 */
+> +	mrs	x0, hcr_el2
+> +	orr	x0, x0, #(1 << 31)    /* RW = 1: EL1 execution state is AArch64 */
+> +	msr	hcr_el2, x0
+> +
+> +	/* Initialize SCTLR_EL1 with reset value */
+> +	msr	sctlr_el1, xzr
+> +
+> +	/* Set EL1 entry point */
+> +	adr	x0, at_testel
+> +	msr	elr_el2, x0
+> +
+> +	/* Prepare SPSR for exception return to EL1 */
+> +	mov	x0, #(0x5 << 0)	      /* EL1h (SPx), with interrupts disabled */
+> +	msr	spsr_el2, x0
+> +
+> +	/* Return to EL1 */
+> +	eret
+> +
+> +	nop
+> +
+> +	/*
+> +	 * At the target EL for the test, usually EL1. Note we still
+> +	 * set everything up as if we were at EL1.
+> +	 */
+> +at_testel:
+>   	/* Installs a table of exception vectors to catch and handle all
+>   	   exceptions by terminating the process with a diagnostic.  */
+>   	adr	x0, vector_table
+> @@ -100,7 +251,7 @@ __start:
+>   	 * maps RAM to the first Gb. The stage2 tables have two 2mb
+>   	 * translation block entries covering a series of adjacent
+>   	 * 4k pages.
+> -	*/
+> +	 */
+>   
+>   	/* Stage 1 entry: indexed by IA[38:30] */
+>   	adr	x1, .				/* phys address */
+> @@ -198,7 +349,8 @@ __start:
+>   	orr	x0, x0, #(3 << 16)
+>   	msr	cpacr_el1, x0
+>   
+> -	/* Setup some stack space and enter the test code.
+> +	/*
+> +	 * Setup some stack space before we enter the test code.
+>   	 * Assume everything except the return value is garbage when we
+>   	 * return, we won't need it.
+>   	 */
+> @@ -233,6 +385,11 @@ __sys_outc:
+>   	ret
+>   
+>   	.data
+> +
+> +	.align 8
+> +cmdline:
+> +	.space 128, 0
+> +
+>   	.align	12
+>   
+>   	/* Translation table
+> @@ -246,6 +403,10 @@ ttb_stage2:
+>   	.space	4096, 0
+>   
+>   	.align	12
+> +system_stack:
+> +	.space 4096, 0
+> +system_stack_end:
+> +
+>   stack:
+>   	.space 65536, 0
+>   stack_end:
 
 
