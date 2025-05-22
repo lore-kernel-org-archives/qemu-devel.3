@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2538C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 07:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C25C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 07:56:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI0mB-0001pk-A8; Thu, 22 May 2025 03:55:39 -0400
+	id 1uI0mG-000229-Gb; Thu, 22 May 2025 03:55:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1uI0m8-0001fB-Bv
- for qemu-devel@nongnu.org; Thu, 22 May 2025 03:55:36 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1uI0mD-0001vJ-Ta
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 03:55:41 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1uI0m5-0001Vo-GT
- for qemu-devel@nongnu.org; Thu, 22 May 2025 03:55:35 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7425bd5a83aso7561211b3a.0
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 00:55:32 -0700 (PDT)
+ id 1uI0mB-0001WD-Le
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 03:55:41 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7399a2dc13fso9438936b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 00:55:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1747900532; x=1748505332; darn=nongnu.org;
+ d=sifive.com; s=google; t=1747900537; x=1748505337; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kDUjEB/vJ2yVoqziIu+W6v0UJ+QZBHaAB90ytl7UYQo=;
- b=XBTSBMD3nQ/WUpmgiM9PynmRn7lq86zh/8ccG1p8PnhkjRQAeyyPJbQ6ogAbCaOThC
- tGbRvMXesvoWbIMAYtj755qh0iQQagTvoOPFusKmDXBNYIJ9BFVEmI3olBnRhG7F/oE6
- scjFqEKXC56oh5D7Rxm63IbbjmjDCmIG7zswGJuDJoEeJsjiQtAEaX/JkQznuCXXjnRt
- 9KEpGRIcLxPSSleY/RNRKeLhS074uNuasBj3sK2TSRIR3BnUBVTeaU/caXJclHkHhIg/
- gMKqs5v6n7vBbN4bPASSMaE0lDwNNKJ69kUldsERxRCqmj9KXgJkxMYGFTzTbRmA51k2
- 4mvQ==
+ bh=RNAFN0EjwXkVon8YIZZz0MOl+lRootJsaQTfUKdGkh8=;
+ b=mZQ4UBs9nbIxufWhZYlC/cWjr7jitGGUSOUTdq+Dm05qg8tijGUEZDp7Glm/x8nn3K
+ tqnaTQLk525kzpoNrlJKYr9Y0POV9VL7QGdGaH70kCJRoQWsqNxTK4KkgnN+NMuwkmiO
+ rHsCafrkAVsrCNOOpx2bOu3OzCu8/AlOQmNZ+DuDTnPmvF3XSusKqwuM/06EfVW2ilF3
+ fce4j+5CDV2RQfliFCnqFBEsJSWBCexhE7tJXaGQO3rYzCtyChYnrX60UHzEO7SQEsx2
+ Xh4KQtjXT0cQjlkqpNUpPMNEbBZ+/4CtT/j/RpLcsJC7ujxjUWEdf6IzP517+5tMgnUR
+ RUcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747900532; x=1748505332;
+ d=1e100.net; s=20230601; t=1747900538; x=1748505338;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kDUjEB/vJ2yVoqziIu+W6v0UJ+QZBHaAB90ytl7UYQo=;
- b=wZZTkQSVt1wGk1cmZZZWlof//hHkh765Q3hfJN6yGo3lAKz2RmKGwOrD4nLFmfKi5M
- f43s+B9ykOsjwH6QQQNpwc7+ZbmpHrEOo9QuuX31J00qTLoQp8vNSwClvHzxQ8Mcd/aO
- hV8CSsGCH7yNMxDoyH05NheWOKBEyXJEtyzRytG2kYkI36gQz16BFtaKAZZ+0mhEBTqw
- jqKpblR+6EfOkG13+bmeLVynm9idnrf4bCOgLPJQfuAo69kk9qjG4d2dHUVQdP1NINkS
- XaSKEIP3FTBVNiSkMafGcdAsM+s/OmLi9KQRVcyeHn1X/mwS3igmERmO1dCj1a5i685v
- iGPg==
-X-Gm-Message-State: AOJu0Yyh4oiRBQ7DvBrpz8ifys8I8Fj5N8sNS4i7lUAvnAF2rOnzgV+e
- fiWjozjBupsfK1uxE9mKjE+dARx+BD5NoP3fnT0gTOE51IzmDIWLJiBCa+o8FwVktg5KQrH86vO
- aRdYoJ3L5HeB8rzlXG810CtKLFktdDMHw2CGNSB2I2WgzijLKHsqny+uHqOUbaHtWEQUIXiPoQB
- nFjurNEaTqOcTBpOhGufn3Moi3O5JWXoeEV2ylUb/S
-X-Gm-Gg: ASbGnctA1TnZ1DzhwKg/A/Xx2MKMdxGra5F04rHsSxYDNWOa4QUYIFW28YGnmKkDwR0
- k4mbRrZj/A2t9dEveir3X6VCzKIQq4+di9LDB/cxdCEkXoJZwrpttVH7h0dbQM0PTqwmCMNBzSb
- kqeOYiXmK+VJe6SX7+9UiK8KNaKVj6udArwE9P13gq240i09U1rghZ97wr2j/Ri31JU3gjzHU6w
- 9h1sectf7Jl8dsDcLCwIlM6LpaVnwLvsKALfxd/NJApU18TqbTAYf/AdhpwIEloih4D6A35SsbS
- f31aqdoD8iS1WwJLJpsht4lKQLuU0eFCgBLxRvYWpc4ZMbCrCIk/G22WNMBp0YUbQFRCjYphe6E
- z2gEhpPa+rMJ+evA=
-X-Google-Smtp-Source: AGHT+IF9VI4kHNWO6Wi/dHXanum8R10tyw3LBjzMbozv/VvqjP97eTkwRt9CVWIMdmWAP4ZRnFv7bA==
-X-Received: by 2002:a05:6a20:d04e:b0:218:17c4:248c with SMTP id
- adf61e73a8af0-21817c4f2b6mr30528309637.22.1747900531578; 
- Thu, 22 May 2025 00:55:31 -0700 (PDT)
+ bh=RNAFN0EjwXkVon8YIZZz0MOl+lRootJsaQTfUKdGkh8=;
+ b=P1Gs5tZd9Yq4H2YC81NlRsG7+p0lr2Prgx8CUZ6ZTBKPid31IpUBC8Yjf7McQaQUXZ
+ DmugsvNBoME00BKTsj0ehnfqND3O2YkGVHdIxtxI/bv39QeZ0bVnh1aSTIGIvH1kQ7jp
+ E1B8jNdg0TvxMsi/nZNWt7fEnW08rWSJpnwPTl6rUDY6CyJuJRPjQdTR0W3SyLiTnMlz
+ sb3H4+j4+9u+S5p5vO4mfheBuCecDSJ+2fi/k7l8U6RHHTcgX0omB15wYqOLYDmkr9WQ
+ WV+Q5chiebyZFj2Fh+ep8ep5SMgo3YRT6gg7j9hMfs0Wz2UzcvOPRrMiWYYbWbAwIwgj
+ MH+A==
+X-Gm-Message-State: AOJu0Yz4TZtCnMuCGKYFaA3Sd3Kojem/hsFGV+602jPMZ381t7rA4kbr
+ hp9B6aTBe0NbIxOMFDQbVzTR38iv/1+58cwf8O5hv8x/ZW/adxF7JiMM8W34SSlW24jHk0M9xPW
+ UlCuKaEvqDm8CHp9whqk7GwS3WJiq6TNU5a2yhwX1MHoL5zRcn8Hoc3moC2LwJk28OBClLezw48
+ vc240l6UnT5jtr8ESaduXMIjsrNXVrQxdp/+2nxTUn
+X-Gm-Gg: ASbGncv3BSTJrdwbDhkWIo2L9JTXy4EhgpzNknBmmUbJVArSG6500ART1bnBqu2PEng
+ 9qYuTMMRGQYNXk4rS12JBFIVWtXi/Vh1AYhR4951sV6TIGJ5gP8XgLQ7LE7dlrCOoTrF7zudqB0
+ 5RXFEC2kbzBax8XvUSuWmW9LbCI+VnREiC1NFo+pDuZX7Eg6Mmh70xiUZC7HNjVZ3GyB3EDh0rc
+ HpNTkRwNbRm2YfFsMD09DINo7kBspi/KdQsRznDv7usLB/nl7knR2HTPIBKOJ73APRdXxVUwgNs
+ mhfiBxjNYNGPl5xHzrou6QNZPFHWC5TEoG/L7zKLS/vxIYWi4D5TrZicCcLZl/NkGsRI0IY+Ltq
+ uq2TLtIYzqr6HzLWGfO2Wtw/gNA==
+X-Google-Smtp-Source: AGHT+IHac4mgpCy4/QINLprPcGnILKmjpXfS0pvQKOnwGS5D7fJ4n2AC++RS+k0fSIJwW5UNA0XblQ==
+X-Received: by 2002:a05:6a00:2d22:b0:742:a7a8:4132 with SMTP id
+ d2e1a72fcca58-742accc5834mr33253413b3a.7.1747900537177; 
+ Thu, 22 May 2025 00:55:37 -0700 (PDT)
 Received: from jchang-1875.internal.sifive.com ([136.226.240.172])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a970bd2asm10692963b3a.44.2025.05.22.00.55.29
+ d2e1a72fcca58-742a970bd2asm10692963b3a.44.2025.05.22.00.55.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 May 2025 00:55:31 -0700 (PDT)
+ Thu, 22 May 2025 00:55:36 -0700 (PDT)
 From: Jay Chang <jay.chang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -75,17 +75,16 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v3 1/2] target/riscv: Extend PMP region up to 64
-Date: Thu, 22 May 2025 15:55:19 +0800
-Message-ID: <20250522075520.89527-2-jay.chang@sifive.com>
+Subject: [PATCH v3 2/2] target/riscv: Make PMP region count configurable
+Date: Thu, 22 May 2025 15:55:20 +0800
+Message-ID: <20250522075520.89527-3-jay.chang@sifive.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250522075520.89527-1-jay.chang@sifive.com>
 References: <20250522075520.89527-1-jay.chang@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=jay.chang@sifive.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=jay.chang@sifive.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,239 +107,341 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the RISC-V Privileged Specification (version >1.12),
-RV32 supports 16 CSRs (pmpcfg0–pmpcfg15) to configure 64 PMP regions
-(pmpaddr0–pmpaddr63).
+Previously, the number of PMP regions was hardcoded to 16 in QEMU.
+This patch replaces the fixed value with a new `pmp_regions` field,
+allowing platforms to configure the number of PMP regions.
+
+If no specific value is provided, the default number of PMP regions
+remains 16 to preserve the existing behavior.
+
+A new CPU parameter num-pmp-regions has been introduced to the QEMU
+command line. For example:
+
+	-cpu rv64, g=true, c=true, pmp=true, num-pmp-regions=8
 
 Signed-off-by: Jay Chang <jay.chang@sifive.com>
 Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- target/riscv/cpu_bits.h |  60 +++++++++++++++++++
- target/riscv/csr.c      | 124 +++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 182 insertions(+), 2 deletions(-)
+ target/riscv/cpu.c                | 54 +++++++++++++++++++++++++++++--
+ target/riscv/cpu.h                |  3 +-
+ target/riscv/cpu_cfg_fields.h.inc |  1 +
+ target/riscv/csr.c                |  5 ++-
+ target/riscv/machine.c            |  3 +-
+ target/riscv/pmp.c                | 28 ++++++++++------
+ 6 files changed, 80 insertions(+), 14 deletions(-)
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index a30317c617..e6b3e28386 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -372,6 +372,18 @@
- #define CSR_PMPCFG1         0x3a1
- #define CSR_PMPCFG2         0x3a2
- #define CSR_PMPCFG3         0x3a3
-+#define CSR_PMPCFG4         0x3a4
-+#define CSR_PMPCFG5         0x3a5
-+#define CSR_PMPCFG6         0x3a6
-+#define CSR_PMPCFG7         0x3a7
-+#define CSR_PMPCFG8         0x3a8
-+#define CSR_PMPCFG9         0x3a9
-+#define CSR_PMPCFG10        0x3aa
-+#define CSR_PMPCFG11        0x3ab
-+#define CSR_PMPCFG12        0x3ac
-+#define CSR_PMPCFG13        0x3ad
-+#define CSR_PMPCFG14        0x3ae
-+#define CSR_PMPCFG15        0x3af
- #define CSR_PMPADDR0        0x3b0
- #define CSR_PMPADDR1        0x3b1
- #define CSR_PMPADDR2        0x3b2
-@@ -388,6 +400,54 @@
- #define CSR_PMPADDR13       0x3bd
- #define CSR_PMPADDR14       0x3be
- #define CSR_PMPADDR15       0x3bf
-+#define CSR_PMPADDR16       0x3c0
-+#define CSR_PMPADDR17       0x3c1
-+#define CSR_PMPADDR18       0x3c2
-+#define CSR_PMPADDR19       0x3c3
-+#define CSR_PMPADDR20       0x3c4
-+#define CSR_PMPADDR21       0x3c5
-+#define CSR_PMPADDR22       0x3c6
-+#define CSR_PMPADDR23       0x3c7
-+#define CSR_PMPADDR24       0x3c8
-+#define CSR_PMPADDR25       0x3c9
-+#define CSR_PMPADDR26       0x3ca
-+#define CSR_PMPADDR27       0x3cb
-+#define CSR_PMPADDR28       0x3cc
-+#define CSR_PMPADDR29       0x3cd
-+#define CSR_PMPADDR30       0x3ce
-+#define CSR_PMPADDR31       0x3cf
-+#define CSR_PMPADDR32       0x3d0
-+#define CSR_PMPADDR33       0x3d1
-+#define CSR_PMPADDR34       0x3d2
-+#define CSR_PMPADDR35       0x3d3
-+#define CSR_PMPADDR36       0x3d4
-+#define CSR_PMPADDR37       0x3d5
-+#define CSR_PMPADDR38       0x3d6
-+#define CSR_PMPADDR39       0x3d7
-+#define CSR_PMPADDR40       0x3d8
-+#define CSR_PMPADDR41       0x3d9
-+#define CSR_PMPADDR42       0x3da
-+#define CSR_PMPADDR43       0x3db
-+#define CSR_PMPADDR44       0x3dc
-+#define CSR_PMPADDR45       0x3dd
-+#define CSR_PMPADDR46       0x3de
-+#define CSR_PMPADDR47       0x3df
-+#define CSR_PMPADDR48       0x3e0
-+#define CSR_PMPADDR49       0x3e1
-+#define CSR_PMPADDR50       0x3e2
-+#define CSR_PMPADDR51       0x3e3
-+#define CSR_PMPADDR52       0x3e4
-+#define CSR_PMPADDR53       0x3e5
-+#define CSR_PMPADDR54       0x3e6
-+#define CSR_PMPADDR55       0x3e7
-+#define CSR_PMPADDR56       0x3e8
-+#define CSR_PMPADDR57       0x3e9
-+#define CSR_PMPADDR58       0x3ea
-+#define CSR_PMPADDR59       0x3eb
-+#define CSR_PMPADDR60       0x3ec
-+#define CSR_PMPADDR61       0x3ed
-+#define CSR_PMPADDR62       0x3ee
-+#define CSR_PMPADDR63       0x3ef
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 629ac37501..8e32252c11 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1117,6 +1117,7 @@ static void riscv_cpu_init(Object *obj)
+     cpu->cfg.cbom_blocksize = 64;
+     cpu->cfg.cbop_blocksize = 64;
+     cpu->cfg.cboz_blocksize = 64;
++    cpu->cfg.pmp_regions = 16;
+     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+     cpu->cfg.max_satp_mode = -1;
  
- /* RNMI */
- #define CSR_MNSCRATCH       0x740
+@@ -1568,6 +1569,46 @@ static const PropertyInfo prop_pmp = {
+     .set = prop_pmp_set,
+ };
+ 
++static void prop_num_pmp_regions_set(Object *obj, Visitor *v, const char *name,
++                                     void *opaque, Error **errp)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++    uint8_t value;
++
++    visit_type_uint8(v, name, &value, errp);
++
++    if (cpu->cfg.pmp_regions != value && riscv_cpu_is_vendor(obj)) {
++        cpu_set_prop_err(cpu, name, errp);
++        return;
++    }
++
++    if (cpu->env.priv_ver < PRIV_VERSION_1_12_0 && value > OLD_MAX_RISCV_PMPS) {
++        error_setg(errp, "Number of PMP regions exceeds maximum available");
++        return;
++    } else if (value > MAX_RISCV_PMPS) {
++        error_setg(errp, "Number of PMP regions exceeds maximum available");
++        return;
++    }
++
++    cpu_option_add_user_setting(name, value);
++    cpu->cfg.pmp_regions = value;
++}
++
++static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char *name,
++                                     void *opaque, Error **errp)
++{
++    uint8_t value = RISCV_CPU(obj)->cfg.pmp_regions;
++
++    visit_type_uint8(v, name, &value, errp);
++}
++
++static const PropertyInfo prop_num_pmp_regions = {
++    .type = "uint8",
++    .description = "num-pmp-regions",
++    .get = prop_num_pmp_regions_get,
++    .set = prop_num_pmp_regions_set,
++};
++
+ static int priv_spec_from_str(const char *priv_spec_str)
+ {
+     int priv_version = -1;
+@@ -2567,6 +2608,7 @@ static const Property riscv_cpu_properties[] = {
+ 
+     {.name = "mmu", .info = &prop_mmu},
+     {.name = "pmp", .info = &prop_pmp},
++    {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
+ 
+     {.name = "priv_spec", .info = &prop_priv_spec},
+     {.name = "vext_spec", .info = &prop_vext_spec},
+@@ -2891,6 +2933,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_DYNAMIC_CPU, TYPE_RISCV_CPU,
+         .cfg.mmu = true,
+         .cfg.pmp = true,
++        .cfg.pmp_regions = 8,
+         .priv_spec = PRIV_VERSION_LATEST,
+     ),
+ 
+@@ -2937,7 +2980,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.max_satp_mode = VM_1_10_MBARE,
+         .cfg.ext_zifencei = true,
+         .cfg.ext_zicsr = true,
+-        .cfg.pmp = true
++        .cfg.pmp = true,
++        .cfg.pmp_regions = 8
+     ),
+ 
+     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U, TYPE_RISCV_VENDOR_CPU,
+@@ -2948,7 +2992,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_zifencei = true,
+         .cfg.ext_zicsr = true,
+         .cfg.mmu = true,
+-        .cfg.pmp = true
++        .cfg.pmp = true,
++        .cfg.pmp_regions = 8
+     ),
+ 
+ #if defined(TARGET_RISCV32) || \
+@@ -2966,6 +3011,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_zifencei = true,
+         .cfg.ext_zicsr = true,
+         .cfg.pmp = true,
++        .cfg.pmp_regions = 8,
+         .cfg.ext_smepmp = true,
+ 
+         .cfg.ext_zba = true,
+@@ -3040,6 +3086,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_xtheadmempair = true,
+         .cfg.ext_xtheadsync = true,
+         .cfg.pmp = true,
++        .cfg.pmp_regions = 8,
+ 
+         .cfg.mvendorid = THEAD_VENDOR_ID,
+ 
+@@ -3063,6 +3110,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.rvv_ta_all_1s = true,
+         .cfg.misa_w = true,
+         .cfg.pmp = true,
++        .cfg.pmp_regions = 8,
+         .cfg.cbom_blocksize = 64,
+         .cfg.cbop_blocksize = 64,
+         .cfg.cboz_blocksize = 64,
+@@ -3119,6 +3167,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_zifencei = true,
+         .cfg.ext_zicsr = true,
+         .cfg.pmp = true,
++        .cfg.pmp_regions = 8,
+         .cfg.ext_zicbom = true,
+         .cfg.cbom_blocksize = 64,
+         .cfg.cboz_blocksize = 64,
+@@ -3163,6 +3212,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+ 
+         .cfg.mmu = true,
+         .cfg.pmp = true,
++        .cfg.pmp_regions = 8,
+ 
+         .cfg.max_satp_mode = VM_1_10_SV39,
+     ),
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 229ade9ed9..67323a7d9d 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -159,7 +159,8 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
+ 
+ #define MMU_USER_IDX 3
+ 
+-#define MAX_RISCV_PMPS (16)
++#define MAX_RISCV_PMPS (64)
++#define OLD_MAX_RISCV_PMPS (16)
+ 
+ #if !defined(CONFIG_USER_ONLY)
+ #include "pmp.h"
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 59f134a419..33c4f9bac8 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -163,6 +163,7 @@ TYPED_FIELD(uint16_t, elen, 0)
+ TYPED_FIELD(uint16_t, cbom_blocksize, 0)
+ TYPED_FIELD(uint16_t, cbop_blocksize, 0)
+ TYPED_FIELD(uint16_t, cboz_blocksize, 0)
++TYPED_FIELD(uint8_t,  pmp_regions, 0)
+ 
+ TYPED_FIELD(int8_t, max_satp_mode, -1)
+ 
 diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 1151ebb6ad..d6cd441133 100644
+index d6cd441133..44fb664636 100644
 --- a/target/riscv/csr.c
 +++ b/target/riscv/csr.c
-@@ -6164,6 +6164,30 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-     [CSR_PMPCFG1]    = { "pmpcfg1",   pmp, read_pmpcfg,  write_pmpcfg  },
-     [CSR_PMPCFG2]    = { "pmpcfg2",   pmp, read_pmpcfg,  write_pmpcfg  },
-     [CSR_PMPCFG3]    = { "pmpcfg3",   pmp, read_pmpcfg,  write_pmpcfg  },
-+    [CSR_PMPCFG4]    = { "pmpcfg4",   pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG5]    = { "pmpcfg5",   pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG6]    = { "pmpcfg6",   pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG7]    = { "pmpcfg7",   pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG8]    = { "pmpcfg8",   pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG9]    = { "pmpcfg9",   pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG10]   = { "pmpcfg10",  pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG11]   = { "pmpcfg11",  pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG12]   = { "pmpcfg12",  pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG13]   = { "pmpcfg13",  pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG14]   = { "pmpcfg14",  pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPCFG15]   = { "pmpcfg15",  pmp, read_pmpcfg,  write_pmpcfg,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-     [CSR_PMPADDR0]   = { "pmpaddr0",  pmp, read_pmpaddr, write_pmpaddr },
-     [CSR_PMPADDR1]   = { "pmpaddr1",  pmp, read_pmpaddr, write_pmpaddr },
-     [CSR_PMPADDR2]   = { "pmpaddr2",  pmp, read_pmpaddr, write_pmpaddr },
-@@ -6178,8 +6202,104 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-     [CSR_PMPADDR11]  = { "pmpaddr11", pmp, read_pmpaddr, write_pmpaddr },
-     [CSR_PMPADDR12]  = { "pmpaddr12", pmp, read_pmpaddr, write_pmpaddr },
-     [CSR_PMPADDR13]  = { "pmpaddr13", pmp, read_pmpaddr, write_pmpaddr },
--    [CSR_PMPADDR14] =  { "pmpaddr14", pmp, read_pmpaddr, write_pmpaddr },
--    [CSR_PMPADDR15] =  { "pmpaddr15", pmp, read_pmpaddr, write_pmpaddr },
-+    [CSR_PMPADDR14]  = { "pmpaddr14", pmp, read_pmpaddr, write_pmpaddr },
-+    [CSR_PMPADDR15]  = { "pmpaddr15", pmp, read_pmpaddr, write_pmpaddr },
-+    [CSR_PMPADDR16]  = { "pmpaddr16", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR17]  = { "pmpaddr17", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR18]  = { "pmpaddr18", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR19]  = { "pmpaddr19", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR20]  = { "pmpaddr20", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR21]  = { "pmpaddr21", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR22]  = { "pmpaddr22", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR23]  = { "pmpaddr23", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR24]  = { "pmpaddr24", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR25]  = { "pmpaddr25", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR26]  = { "pmpaddr26", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR27]  = { "pmpaddr27", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR28]  = { "pmpaddr28", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR29]  = { "pmpaddr29", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR30]  = { "pmpaddr30", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR31]  = { "pmpaddr31", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR32]  = { "pmpaddr32", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR33]  = { "pmpaddr33", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR34]  = { "pmpaddr34", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR35]  = { "pmpaddr35", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR36]  = { "pmpaddr36", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR37]  = { "pmpaddr37", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR38]  = { "pmpaddr38", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR39]  = { "pmpaddr39", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR40]  = { "pmpaddr40", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR41]  = { "pmpaddr41", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR42]  = { "pmpaddr42", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR43]  = { "pmpaddr43", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR44]  = { "pmpaddr44", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR45]  = { "pmpaddr45", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR46]  = { "pmpaddr46", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR47]  = { "pmpaddr47", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR48]  = { "pmpaddr48", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR49]  = { "pmpaddr49", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR50]  = { "pmpaddr50", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR51]  = { "pmpaddr51", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR52]  = { "pmpaddr52", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR53]  = { "pmpaddr53", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR54]  = { "pmpaddr54", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR55]  = { "pmpaddr55", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR56]  = { "pmpaddr56", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR57]  = { "pmpaddr57", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR58]  = { "pmpaddr58", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR59]  = { "pmpaddr59", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR60]  = { "pmpaddr60", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR61]  = { "pmpaddr61", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR62]  = { "pmpaddr62", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
-+    [CSR_PMPADDR63]  = { "pmpaddr63", pmp, read_pmpaddr, write_pmpaddr,
-+                         .min_priv_ver = PRIV_VERSION_1_12_0           },
+@@ -738,7 +738,10 @@ static RISCVException dbltrp_hmode(CPURISCVState *env, int csrno)
+ static RISCVException pmp(CPURISCVState *env, int csrno)
+ {
+     if (riscv_cpu_cfg(env)->pmp) {
+-        if (csrno <= CSR_PMPCFG3) {
++        uint8_t max_pmpcfg = (env->priv_ver >= PRIV_VERSION_1_12_0) ?
+++                              CSR_PMPCFG15 : CSR_PMPCFG3;
++
++        if (csrno <= max_pmpcfg) {
+             uint32_t reg_index = csrno - CSR_PMPCFG0;
  
-     /* Debug CSRs */
-     [CSR_TSELECT]   =  { "tselect",  debug, read_tselect,  write_tselect  },
+             /* TODO: RV128 restriction check */
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index c97e9ce9df..1600ec44f0 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -36,8 +36,9 @@ static int pmp_post_load(void *opaque, int version_id)
+     RISCVCPU *cpu = opaque;
+     CPURISCVState *env = &cpu->env;
+     int i;
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+ 
+-    for (i = 0; i < MAX_RISCV_PMPS; i++) {
++    for (i = 0; i < pmp_regions; i++) {
+         pmp_update_rule_addr(env, i);
+     }
+     pmp_update_rule_nums(env);
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 5af295e410..3540327c9a 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -122,7 +122,9 @@ uint32_t pmp_get_num_rules(CPURISCVState *env)
+  */
+ static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_index)
+ {
+-    if (pmp_index < MAX_RISCV_PMPS) {
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
++
++    if (pmp_index < pmp_regions) {
+         return env->pmp_state.pmp[pmp_index].cfg_reg;
+     }
+ 
+@@ -136,7 +138,9 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_index)
+  */
+ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+ {
+-    if (pmp_index < MAX_RISCV_PMPS) {
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
++
++    if (pmp_index < pmp_regions) {
+         if (env->pmp_state.pmp[pmp_index].cfg_reg == val) {
+             /* no change */
+             return false;
+@@ -236,9 +240,10 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+ void pmp_update_rule_nums(CPURISCVState *env)
+ {
+     int i;
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+ 
+     env->pmp_state.num_rules = 0;
+-    for (i = 0; i < MAX_RISCV_PMPS; i++) {
++    for (i = 0; i < pmp_regions; i++) {
+         const uint8_t a_field =
+             pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg);
+         if (PMP_AMATCH_OFF != a_field) {
+@@ -332,6 +337,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+     int pmp_size = 0;
+     hwaddr s = 0;
+     hwaddr e = 0;
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+ 
+     /* Short cut if no rules */
+     if (0 == pmp_get_num_rules(env)) {
+@@ -356,7 +362,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+      * 1.10 draft priv spec states there is an implicit order
+      * from low to high
+      */
+-    for (i = 0; i < MAX_RISCV_PMPS; i++) {
++    for (i = 0; i < pmp_regions; i++) {
+         s = pmp_is_in_range(env, i, addr);
+         e = pmp_is_in_range(env, i, addr + pmp_size - 1);
+ 
+@@ -527,8 +533,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+ {
+     trace_pmpaddr_csr_write(env->mhartid, addr_index, val);
+     bool is_next_cfg_tor = false;
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+ 
+-    if (addr_index < MAX_RISCV_PMPS) {
++    if (addr_index < pmp_regions) {
+         if (env->pmp_state.pmp[addr_index].addr_reg == val) {
+             /* no change */
+             return;
+@@ -538,7 +545,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+          * In TOR mode, need to check the lock bit of the next pmp
+          * (if there is a next).
+          */
+-        if (addr_index + 1 < MAX_RISCV_PMPS) {
++        if (addr_index + 1 < pmp_regions) {
+             uint8_t pmp_cfg = env->pmp_state.pmp[addr_index + 1].cfg_reg;
+             is_next_cfg_tor = PMP_AMATCH_TOR == pmp_get_a_field(pmp_cfg);
+ 
+@@ -573,8 +580,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
+ {
+     target_ulong val = 0;
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+ 
+-    if (addr_index < MAX_RISCV_PMPS) {
++    if (addr_index < pmp_regions) {
+         val = env->pmp_state.pmp[addr_index].addr_reg;
+         trace_pmpaddr_csr_read(env->mhartid, addr_index, val);
+     } else {
+@@ -592,6 +600,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
+ {
+     int i;
+     uint64_t mask = MSECCFG_MMWP | MSECCFG_MML;
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+     /* Update PMM field only if the value is valid according to Zjpm v1.0 */
+     if (riscv_cpu_cfg(env)->ext_smmpm &&
+         riscv_cpu_mxl(env) == MXL_RV64 &&
+@@ -603,7 +612,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
+ 
+     /* RLB cannot be enabled if it's already 0 and if any regions are locked */
+     if (!MSECCFG_RLB_ISSET(env)) {
+-        for (i = 0; i < MAX_RISCV_PMPS; i++) {
++        for (i = 0; i < pmp_regions; i++) {
+             if (pmp_is_locked(env, i)) {
+                 val &= ~MSECCFG_RLB;
+                 break;
+@@ -659,6 +668,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
+     hwaddr tlb_sa = addr & ~(TARGET_PAGE_SIZE - 1);
+     hwaddr tlb_ea = tlb_sa + TARGET_PAGE_SIZE - 1;
+     int i;
++    uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
+ 
+     /*
+      * If PMP is not supported or there are no PMP rules, the TLB page will not
+@@ -669,7 +679,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
+         return TARGET_PAGE_SIZE;
+     }
+ 
+-    for (i = 0; i < MAX_RISCV_PMPS; i++) {
++    for (i = 0; i < pmp_regions; i++) {
+         if (pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg) == PMP_AMATCH_OFF) {
+             continue;
+         }
 -- 
 2.48.1
 
