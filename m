@@ -4,103 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C57C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 15:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59B2C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 15:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI7O6-0003cL-EE; Thu, 22 May 2025 10:59:14 -0400
+	id 1uI7Ro-0008QR-DK; Thu, 22 May 2025 11:03:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uI7O0-0003b3-TE
- for qemu-devel@nongnu.org; Thu, 22 May 2025 10:59:09 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uI7Nx-0004gD-T3
- for qemu-devel@nongnu.org; Thu, 22 May 2025 10:59:08 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54MEuW26022292;
- Thu, 22 May 2025 14:58:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=corp-2025-04-25; bh=jtNFJpZiwmU9xF4q
- rlHLhnddEZ4A8NSN64FcE49XGVo=; b=lWIrvKWeAV/TN9cerPQbZjWou2QChqzk
- YAzPtqQ7EB2zBP2i9Sf/qh7IcRgO/bTBiS7tsWnpHIXYC1CnNj46oQbIonoSpmMB
- DIHMbukj7q/0lcZ2kSaUQTbZl7HS742iwUP47CUFhO1vYidpfcDlr4QDjrA3ZGv4
- oOFKEmQCDVEtPmLR/xkszxkifk1gmdrwEzBqQtddBjWsFe2ndlW+SbgHAJL0h558
- xdI/COYZ1renD1YsxuWBUx8QeEHu9NK+VykV4f2Ouy1EJDqKylB5FClv17JV4OZE
- rN0rwhvNtQ9PWNSZJKOa0xY/77VJ5lnPhwGEqh3KNCdBjitCjarYyw==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46t5b407d7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 May 2025 14:58:46 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54MEFRLt034557; Thu, 22 May 2025 14:58:45 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46rwer98yx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 May 2025 14:58:44 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54MEwiTt010227;
- Thu, 22 May 2025 14:58:44 GMT
-Received: from dhcp-10-43-71-124.usdhcp.oraclecorp.com.com
- (dhcp-10-43-71-124.usdhcp.oraclecorp.com [10.43.71.124])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 46rwer98yj-1; Thu, 22 May 2025 14:58:44 +0000
-From: Jonah Palmer <jonah.palmer@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: jonah.palmer@oracle.com, eperezma@redhat.com, peterx@redhat.com,
- mst@redhat.com, jasowang@redhat.com, lvivier@redhat.com,
- dtatulea@nvidia.com, leiyang@redhat.com, parav@mellanox.com,
- sgarzare@redhat.com, si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
- armbru@redhat.com
-Subject: [PATCH v5 0/7] Move memory listener register to vhost_vdpa_init
-Date: Thu, 22 May 2025 10:58:32 -0400
-Message-ID: <20250522145839.59974-1-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uI7Rm-0008Pw-Fe
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 11:03:02 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uI7Rj-0005ME-VM
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 11:03:02 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-879d2e419b9so6870676a12.2
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 08:02:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747926177; x=1748530977; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nTy/XVNu5Lka/SoXgsV7D8fpc3MBCWmzO9f19ccLcgg=;
+ b=ACu911jDvdp97yvt4pW0D+TQsbb7Y8uncrTkdlX5k9qbHX6J+alP4HL1Vzyw8bEESC
+ 7I22YD7kfOy6+uM6K9Q+7ktFHVx5kfZk/VBolmbUxHw5sece1KjOMf1tc979uV29d21i
+ 73zYgnBpa2bYs2VzxdyNvBfVTYbV09fMg5SdSGKnkC5JorRf5F2bWbHyCtu2pgkcrJQs
+ L5m35yP/pNljJeZz6+DYIvPe1+EGlkTShnTmjWBX/GTTY1kHmORnz9fhfwN0/y72D9Xa
+ xzCrAd4G4840fmdFcPDTIEt4pFRJfrPdBiIGmGSthuZS6hqDVRqcgpApkKv0KlliuUiX
+ lhiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747926177; x=1748530977;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nTy/XVNu5Lka/SoXgsV7D8fpc3MBCWmzO9f19ccLcgg=;
+ b=NGFVJ0c3RuhT+dUyhQFpI5FePq/CK4NBehZ6oWTb1efTatP8e8fd7UCSGSHo3TVZjw
+ UPsd2UXBBytIrTupkxb5lI1VVa2M71PhXUS54wiidxdrJ1VeeN+XKoOlApGmtTmSiDJh
+ uirQYXyVSO/aR1ctHIVaIOCq3xV6mg3MIWdXuRbEmCx0JCouUEAlfgZx1IraTmiWOekO
+ tvVbas1WU+HymMqBtN36UhPCUsx0J69MKOT3cp1WW/YYzuY9z2Hf6IFVf7CBcroiSgNe
+ vK61VIbA6Ygoe/0Ux/PnFDv9qHnkBSKAFQGUEBGxIWf6Hygtc2QxGr6+kbRgXGvtiKN0
+ iIlA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVttUmrer3wRTFUHhz2mSseOmpOV/JvNeLu+RVemdc/8xjpKv6Id/qROYzxIsZAu8S5ApKTQFoTsNxJ@nongnu.org
+X-Gm-Message-State: AOJu0Yy6KQ1lBhujSYuotOqdgval25GmxzHckuHnfJK4KgyFcRi1vkZw
+ vQ/3Fs0p9xJcyoK0jwv7GmVuWF9lHYEsYgjAJOeAaZwSq8mVqu94EPjPaer7rrCt3lJq1y/rpkL
+ sr/P1cTFTG0Pl8rYD7ji/jUNyzLtYzQ2RMGvYYkc=
+X-Gm-Gg: ASbGncvm7Va0SPqRa7yhOxLjKap7oWnn2vZfVhEMJn5B/KvvPF/NUXyG1VisFEFXnrg
+ UXgW6zgpHiBl94UPRV6aPQIGMQ0YsCmaJBPKkQw5KscIuZyD7ldwXO6DeU338Ap4OfsOKx2ATNZ
+ 5+pbGGn0EPjMj/j+cqrE7oeA/fgWfgcvA=
+X-Google-Smtp-Source: AGHT+IHlHgYQeWaKlGtKdgRXLcgZvXdyVplmDLU2SOQQKBUxSAKvj9NfummV3A6UVsR+tZpEGyJDg098oXiMIPdsVL0=
+X-Received: by 2002:a17:90b:28c5:b0:2fc:a3b7:108e with SMTP id
+ 98e67ed59e1d1-30e7d4fea80mr39084900a91.4.1747926176814; Thu, 22 May 2025
+ 08:02:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-22_07,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxscore=0 spamscore=0
- suspectscore=0 adultscore=0 malwarescore=0 phishscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2505220152
-X-Proofpoint-ORIG-GUID: peO5WENZi0dRDjOkropl8COv2agkwTUM
-X-Authority-Analysis: v=2.4 cv=AdaxH2XG c=1 sm=1 tr=0 ts=682f3ba6 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=mDV3o1hIAAAA:8 a=VwQbUJbxAAAA:8
- a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8
- a=WQgBD-38X1HkX1-ZmYAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=5WABlXvFAscA:10
- a=n0c7R5xxTHgA:10 cc=ntf awl=host:13206
-X-Proofpoint-GUID: peO5WENZi0dRDjOkropl8COv2agkwTUM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDE1MiBTYWx0ZWRfXy2wlzFpHkMVY
- ztnilPMrPYHU4GYQ/iPehzCbEuHrB9WeRSbFGXT8yf07g08KqvNKEDvlskxeCLAmE/U56RNIVa7
- 6D6OW+fCEV22ZPbnR6JqQvEl5aSN9KYirWYFtOqE6HPfrh/BcGrHVcGRpgM9XQUMZYl6K73n/MI
- 79in0ATW0k0d5htp1qj+sPt57XTx7hWxLOJ45/7gOzup7fvYDI4CoLHVbK+vP35NN3Shve+XMPx
- oEFnqLC+lfglNMXwVk2CgSDsErhujvSDgRhaLo61btYQg/xNM5XGNBBNkXd+0ByzB5HWNcyWO+0
- 5EonNrwlRlmXD5XHPshl2A0kOMWgQq0OLay7pCdCn/ukQ+7k5RMh4xI0t09EvxI4v4/C+dN8w+I
- NyJwnoaukxrxj7dtCVxHFiLdNYJ35RBP0zhjJgZ/2fBxSmPSXU9P4VaUYjJdzC5jS5wCW5bI
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250521094333.4075796-1-rowanbhart@gmail.com>
+ <20250521094333.4075796-3-rowanbhart@gmail.com>
+ <20250522115935.34716-2-neither@nut.email>
+In-Reply-To: <20250522115935.34716-2-neither@nut.email>
+From: Rowan Hart <rowanbhart@gmail.com>
+Date: Thu, 22 May 2025 08:02:46 -0700
+X-Gm-Features: AX0GCFsfs0tWqj_jxQslmhaawMe8XsEzl0xnifRGfJvU2v8nOrOweNfvjCZw_ps
+Message-ID: <CAE5MsNZhr8eNvsDHqVSAWkn4=Yw8ZFU713NNBy0ax0cSxtp1yQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/8] Add register write API
+To: Julian Ganz <neither@nut.email>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000dcdb3a0635bac6a4"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,92 +102,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current memory operations like pinning may take a lot of time at the
-destination.  Currently they are done after the source of the migration is
-stopped, and before the workload is resumed at the destination.  This is a
-period where neigher traffic can flow, nor the VM workload can continue
-(downtime).
+--000000000000dcdb3a0635bac6a4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-We can do better as we know the memory layout of the guest RAM at the
-destination from the moment that all devices are initializaed.  So
-moving that operation allows QEMU to communicate the kernel the maps
-while the workload is still running in the source, so Linux can start
-mapping them.
+Hi Julian,
 
-As a small drawback, there is a time in the initialization where QEMU
-cannot respond to QMP etc.  By some testing, this time is about
-0.2seconds.  This may be further reduced (or increased) depending on the
-vdpa driver and the platform hardware, and it is dominated by the cost
-of memory pinning.
+> Again, what was the reason for moving `qemu_plugin_read_register`?
 
-This matches the time that we move out of the called downtime window.
-The guest-visible downtime is measured as the elapsed trace time between
-the last vhost_vdpa_suspend on the source and the last
-vhost_vdpa_set_vring_enable_one on the destination. In other words, from
-"guest CPUs freeze" to the instant the final Rx/Tx queue-pair is able to
-start moving data.
+I moved it so it's grouped with get_registers above instead of being
+separated below the memory functions. I can move it back, just seemed nicer
+that way.
 
-Using ConnectX-6 Dx (MLX5) NICs in vhost-vDPA mode with 8 queue-pairs,
-the series reduces guest-visible downtime during back-to-back live
-migrations by more than half:
-- 39G VM:   4.72s -> 2.09s (-2.63s, ~56% improvement)
-- 128G VM:  14.72s -> 5.83s (-8.89s, ~60% improvement)
+-Rowan
 
-Future directions on top of this series may include to move more things ahead
-of the migration time, like set DRIVER_OK or perform actual iterative migration
-of virtio-net devices.
+On Thu, May 22, 2025, 4:59=E2=80=AFAM Julian Ganz <neither@nut.email> wrote=
+:
 
-Comments are welcome.
+> Hi Rowan,
+>
+> > diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> > index 3a850aa216..68c8632fd7 100644
+> > --- a/include/qemu/qemu-plugin.h
+> > +++ b/include/qemu/qemu-plugin.h
+> > @@ -893,6 +891,41 @@ typedef struct {
+> >  QEMU_PLUGIN_API
+> >  GArray *qemu_plugin_get_registers(void);
+> >
+> > +/**
+> > + * qemu_plugin_read_register() - read register for current vCPU
+> > + *
+> > + * @handle: a @qemu_plugin_reg_handle handle
+> > + * @buf: A GByteArray for the data owned by the plugin
+> > + *
+> > + * This function is only available in a context that register read
+> access is
+> > + * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
+> > + *
+> > + * Returns the size of the read register. The content of @buf is in
+> target byte
+> > + * order. On failure returns -1.
+> > + */
+> > +QEMU_PLUGIN_API
+> > +int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+> > +                              GByteArray *buf);
+> > +
+> > +/**
+> > + * qemu_plugin_write_register() - write register for current vCPU
+> > + *
+> > + * @handle: a @qemu_plugin_reg_handle handle
+> > + * @buf: A GByteArray for the data owned by the plugin
+> > + *
+> > + * This function is only available in a context that register write
+> access is
+> > + * explicitly requested via the QEMU_PLUGIN_CB_W_REGS flag.
+> > + *
+> > + * The size of @buf must be at least the size of the requested registe=
+r.
+> > + * Attempting to write a register with @buf smaller than the register
+> size
+> > + * will result in a crash or other undesired behavior.
+> > + *
+> > + * Returns the number of bytes written. On failure returns 0.
+> > + */
+> > +QEMU_PLUGIN_API
+> > +int qemu_plugin_write_register(struct qemu_plugin_register *handle,
+> > +                              GByteArray *buf);
+> > +
+> >  /**
+> >   * qemu_plugin_read_memory_vaddr() - read from memory using a virtual
+> address
+> >   *
+> > @@ -915,22 +948,6 @@ QEMU_PLUGIN_API
+> >  bool qemu_plugin_read_memory_vaddr(uint64_t addr,
+> >                                     GByteArray *data, size_t len);
+> >
+> > -/**
+> > - * qemu_plugin_read_register() - read register for current vCPU
+> > - *
+> > - * @handle: a @qemu_plugin_reg_handle handle
+> > - * @buf: A GByteArray for the data owned by the plugin
+> > - *
+> > - * This function is only available in a context that register read
+> access is
+> > - * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
+> > - *
+> > - * Returns the size of the read register. The content of @buf is in
+> target byte
+> > - * order. On failure returns -1.
+> > - */
+> > -QEMU_PLUGIN_API
+> > -int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+> > -                              GByteArray *buf);
+> > -
+>
+> Why the code move?
+>
+> > diff --git a/plugins/api.c b/plugins/api.c
+> > index 3c9d4832e9..79b2dc20b8 100644
+> > --- a/plugins/api.c
+> > +++ b/plugins/api.c
+> > @@ -433,6 +433,25 @@ GArray *qemu_plugin_get_registers(void)
+> >      return create_register_handles(regs);
+> >  }
+> >
+> > +int qemu_plugin_read_register(struct qemu_plugin_register *reg,
+> GByteArray *buf)
+> > +{
+> > +    g_assert(current_cpu);
+> > +
+> > +    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) -
+> 1);
+> > +}
+> > +
+> > +int qemu_plugin_write_register(struct qemu_plugin_register *reg,
+> > +                               GByteArray *buf)
+> > +{
+> > +    g_assert(current_cpu);
+> > +
+> > +    if (buf->len =3D=3D 0) {
+> > +        return 0;
+> > +    }
+> > +
+> > +    return gdb_write_register(current_cpu, buf->data,
+> GPOINTER_TO_INT(reg) - 1);
+> > +}
+> > +
+> >  bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data,
+> size_t len)
+> >  {
+> >      g_assert(current_cpu);
+> > @@ -453,13 +472,6 @@ bool qemu_plugin_read_memory_vaddr(uint64_t addr,
+> GByteArray *data, size_t len)
+> >      return true;
+> >  }
+> >
+> > -int qemu_plugin_read_register(struct qemu_plugin_register *reg,
+> GByteArray *buf)
+> > -{
+> > -    g_assert(current_cpu);
+> > -
+> > -    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) -
+> 1);
+> > -}
+> > -
+>
+> Again, what was the reason for moving `qemu_plugin_read_register`?
+>
+> Reviewed-By: Julian Ganz <neither@nut.email>
+>
+> Regards,
+> Julian
+>
 
-This series is a different approach of series [1]. As the title does not
-reflect the changes anymore, please refer to the previous one to know the
-series history.
+--000000000000dcdb3a0635bac6a4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This series is based on [2] and has already been merged.
+<p dir=3D"ltr">Hi Julian, </p>
+<p dir=3D"ltr">&gt; Again, what was the reason for moving `qemu_plugin_read=
+_register`?</p>
+<p dir=3D"ltr">I moved it so it&#39;s grouped with get_registers above inst=
+ead of being separated below the memory functions. I can move it back, just=
+ seemed nicer that way. </p>
+<p dir=3D"ltr">-Rowan<br>
+</p>
+<br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Thu, May 22, 2025, 4:59=E2=80=AFAM Julian Ganz &lt;neith=
+er@nut.email&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hi Rowan,<b=
+r>
+<br>
+&gt; diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h<b=
+r>
+&gt; index 3a850aa216..68c8632fd7 100644<br>
+&gt; --- a/include/qemu/qemu-plugin.h<br>
+&gt; +++ b/include/qemu/qemu-plugin.h<br>
+&gt; @@ -893,6 +891,41 @@ typedef struct {<br>
+&gt;=C2=A0 QEMU_PLUGIN_API<br>
+&gt;=C2=A0 GArray *qemu_plugin_get_registers(void);<br>
+&gt; <br>
+&gt; +/**<br>
+&gt; + * qemu_plugin_read_register() - read register for current vCPU<br>
+&gt; + *<br>
+&gt; + * @handle: a @qemu_plugin_reg_handle handle<br>
+&gt; + * @buf: A GByteArray for the data owned by the plugin<br>
+&gt; + *<br>
+&gt; + * This function is only available in a context that register read ac=
+cess is<br>
+&gt; + * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.<br>
+&gt; + *<br>
+&gt; + * Returns the size of the read register. The content of @buf is in t=
+arget byte<br>
+&gt; + * order. On failure returns -1.<br>
+&gt; + */<br>
+&gt; +QEMU_PLUGIN_API<br>
+&gt; +int qemu_plugin_read_register(struct qemu_plugin_register *handle,<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GByteArray *buf);<br>
+&gt; +<br>
+&gt; +/**<br>
+&gt; + * qemu_plugin_write_register() - write register for current vCPU<br>
+&gt; + *<br>
+&gt; + * @handle: a @qemu_plugin_reg_handle handle<br>
+&gt; + * @buf: A GByteArray for the data owned by the plugin<br>
+&gt; + *<br>
+&gt; + * This function is only available in a context that register write a=
+ccess is<br>
+&gt; + * explicitly requested via the QEMU_PLUGIN_CB_W_REGS flag.<br>
+&gt; + *<br>
+&gt; + * The size of @buf must be at least the size of the requested regist=
+er.<br>
+&gt; + * Attempting to write a register with @buf smaller than the register=
+ size<br>
+&gt; + * will result in a crash or other undesired behavior.<br>
+&gt; + *<br>
+&gt; + * Returns the number of bytes written. On failure returns 0.<br>
+&gt; + */<br>
+&gt; +QEMU_PLUGIN_API<br>
+&gt; +int qemu_plugin_write_register(struct qemu_plugin_register *handle,<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GByteArray *buf);<br>
+&gt; +<br>
+&gt;=C2=A0 /**<br>
+&gt;=C2=A0 =C2=A0* qemu_plugin_read_memory_vaddr() - read from memory using=
+ a virtual address<br>
+&gt;=C2=A0 =C2=A0*<br>
+&gt; @@ -915,22 +948,6 @@ QEMU_PLUGIN_API<br>
+&gt;=C2=A0 bool qemu_plugin_read_memory_vaddr(uint64_t addr,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0GByteArray *d=
+ata, size_t len);<br>
+&gt; <br>
+&gt; -/**<br>
+&gt; - * qemu_plugin_read_register() - read register for current vCPU<br>
+&gt; - *<br>
+&gt; - * @handle: a @qemu_plugin_reg_handle handle<br>
+&gt; - * @buf: A GByteArray for the data owned by the plugin<br>
+&gt; - *<br>
+&gt; - * This function is only available in a context that register read ac=
+cess is<br>
+&gt; - * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.<br>
+&gt; - *<br>
+&gt; - * Returns the size of the read register. The content of @buf is in t=
+arget byte<br>
+&gt; - * order. On failure returns -1.<br>
+&gt; - */<br>
+&gt; -QEMU_PLUGIN_API<br>
+&gt; -int qemu_plugin_read_register(struct qemu_plugin_register *handle,<br=
+>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GByteArray *buf);<br>
+&gt; -<br>
+<br>
+Why the code move?<br>
+<br>
+&gt; diff --git a/plugins/api.c b/plugins/api.c<br>
+&gt; index 3c9d4832e9..79b2dc20b8 100644<br>
+&gt; --- a/plugins/api.c<br>
+&gt; +++ b/plugins/api.c<br>
+&gt; @@ -433,6 +433,25 @@ GArray *qemu_plugin_get_registers(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return create_register_handles(regs);<br>
+&gt;=C2=A0 }<br>
+&gt; <br>
+&gt; +int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByte=
+Array *buf)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 g_assert(current_cpu);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return gdb_read_register(current_cpu, buf, GPOINTER_TO_=
+INT(reg) - 1);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +int qemu_plugin_write_register(struct qemu_plugin_register *reg, <br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0GByteArray *buf)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 g_assert(current_cpu);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (buf-&gt;len =3D=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return gdb_write_register(current_cpu, buf-&gt;data, GP=
+OINTER_TO_INT(reg) - 1);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt;=C2=A0 bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *da=
+ta, size_t len)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 g_assert(current_cpu);<br>
+&gt; @@ -453,13 +472,6 @@ bool qemu_plugin_read_memory_vaddr(uint64_t addr,=
+ GByteArray *data, size_t len)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return true;<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; -int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByte=
+Array *buf)<br>
+&gt; -{<br>
+&gt; -=C2=A0 =C2=A0 g_assert(current_cpu);<br>
+&gt; -<br>
+&gt; -=C2=A0 =C2=A0 return gdb_read_register(current_cpu, buf, GPOINTER_TO_=
+INT(reg) - 1);<br>
+&gt; -}<br>
+&gt; -<br>
+<br>
+Again, what was the reason for moving `qemu_plugin_read_register`?<br>
+<br>
+Reviewed-By: Julian Ganz &lt;neither@nut.email&gt;<br>
+<br>
+Regards,<br>
+Julian<br>
+</blockquote></div>
 
-[Jonah Palmer]
-This series was rebased after [3] was pulled in, as [3] was a prerequisite
-fix for this series.
-
-v5:
----
-* Update performance metrics from the change in v4.
-
-v4:
----
-* Add memory listener unregistration to vhost_vdpa_reset_device.
-* Remove memory listener unregistration from vhost_vdpa_reset_status.
-
-v3:
----
-* Rebase
-
-v2:
----
-* Move the memory listener registration to vhost_vdpa_set_owner function.
-* Move the iova_tree allocation to net_vhost_vdpa_init.
-
-v1 at https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02136.html.
-
-[1] https://patchwork.kernel.org/project/qemu-devel/cover/20231215172830.2540987-1-eperezma@redhat.com/
-[2] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg05910.html
-[3] https://lore.kernel.org/qemu-devel/20250217144936.3589907-1-jonah.palmer@oracle.com/
-
-Eugenio Pérez (7):
-  vdpa: check for iova tree initialized at net_client_start
-  vdpa: reorder vhost_vdpa_set_backend_cap
-  vdpa: set backend capabilities at vhost_vdpa_init
-  vdpa: add listener_registered
-  vdpa: reorder listener assignment
-  vdpa: move iova_tree allocation to net_vhost_vdpa_init
-  vdpa: move memory listener register to vhost_vdpa_init
-
- hw/virtio/vhost-vdpa.c         | 107 +++++++++++++++++++++------------
- include/hw/virtio/vhost-vdpa.h |  22 ++++++-
- net/vhost-vdpa.c               |  34 +----------
- 3 files changed, 93 insertions(+), 70 deletions(-)
-
--- 
-2.43.5
-
+--000000000000dcdb3a0635bac6a4--
 
