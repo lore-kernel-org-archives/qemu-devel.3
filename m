@@ -4,76 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD50C54ED1
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:33:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6757AC54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:33:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3BI-0002zR-Bv; Thu, 22 May 2025 06:29:44 -0400
+	id 1uI3Df-000118-QF; Thu, 22 May 2025 06:32:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3BE-0002yu-Qu
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3BC-0006Mb-Mz
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747909777;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ap10gC6UPF4kfaH1XFvlSl7+azVePcG6UA51Fn1/tbg=;
- b=fTTjfVRa45wFeooSMeeNpko75EhVHE4oCaHlTdcsD25qnbOSMs/f9Be4tklLi1fIXmNrun
- 8Iad8hb1z3xuM10MTxk5TuaZkfi/mwyDKwE90mvzNGdd5F017wOTu5gDGvClWyw/eAzK/D
- 7Q2ooh6NwtM3leh/FfpXYMfNaiFTkXc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-Eg7Jj7uYPjGIuNF-WhBtFg-1; Thu,
- 22 May 2025 06:29:36 -0400
-X-MC-Unique: Eg7Jj7uYPjGIuNF-WhBtFg-1
-X-Mimecast-MFC-AGG-ID: Eg7Jj7uYPjGIuNF-WhBtFg_1747909775
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 862CC1800373; Thu, 22 May 2025 10:29:35 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.179])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BD6531958014; Thu, 22 May 2025 10:29:32 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 02/23] ui/vnc: take account of client byte order in pixman
- format
-Date: Thu, 22 May 2025 11:29:02 +0100
-Message-ID: <20250522102923.309452-3-berrange@redhat.com>
-In-Reply-To: <20250522102923.309452-1-berrange@redhat.com>
-References: <20250522102923.309452-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uI3Dc-0000nH-FU
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:32:08 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uI3DS-0006lc-Ud
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:32:08 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a36ab95a13so3114788f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 03:31:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747909915; x=1748514715; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LVfeZE4/OnXx9R+daZQfc/d9GFHawu2i98auKpXPFTE=;
+ b=W6s/gVaZe53FadezNF2qTMsFXUmyFE9BEtKLgfRtrfefUhkA3yuoGpi7A/Tg/ue3NZ
+ SC8XVGtgtJnmQT15t/d/s01LBRdwLxeCaTVV+E+Z4iD1nGa5qnwXp4nimUATC0bJvlmP
+ gv9okl0cQvd1NGNyhZ392Hb4EYMQhxvlzDhJhB8NQxi7tKmgeEbUhfQyqhx4JzyghXsy
+ 0Qb79ccJUXzKcfeA1Adl6sz90MV3OlsIzTtk4003sKkV7SWArtrra4o+s3a75rEULXYY
+ DRfHuTaqGrqgWGYkKolDu+OprncjZ7c9+Xv9N9+wyHnMnSgnfm7pFVlFfgcnGCQYkvz5
+ 4N9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747909915; x=1748514715;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LVfeZE4/OnXx9R+daZQfc/d9GFHawu2i98auKpXPFTE=;
+ b=h6cgUc8hQyDTLLxlLv+8K6U8GXaTHJM3j5XFpwhspXIoo5O2L2hZ/wCWyeJz3GiW2H
+ c8afMOxB4vFxcdExm2k/2o0joLFWIFWpQBersafiNMAa+OVQyP0ce4myHbCikq6nmOF6
+ SLlMg/0UdeZxM8cDn2thbBbMxcdf+o5Q4E1fSQ/4wwaCs5fdDVTU+1p9EU9MvwjLuJ9t
+ rq+VRZoyfxuMEI7MIUcoTnnYkoycQ7h8DCVBukmpiGbPR8azG0/b2PEZQSGY1gbHrul+
+ 7ds0uyJxUjQb9jIrnBjpSgafxIlsM9YX2GLv/lRRq+nEoYm3C6R4BpXMBuxWssL+NKw9
+ DWvg==
+X-Gm-Message-State: AOJu0YyWc5DhdmbOkjCh5dY43RXrE2XOReSsvKWEE383CqHtAvnMd1cJ
+ +cniSk8R3TfqeJ/kSVwbZ7o5Hpt6x6iIo5QxKRSwdLdpS30jNGXUP3R0JIuvArTw7bA=
+X-Gm-Gg: ASbGnctsiURq3w4H/UCdR32KY3HetIqKKlq50czVeyRm5VeZSyv4IsbFKGWoMGQd4OO
+ RXgAa50GPYX7B6tDM7W9xrmf6Zxy0MyrUKLfy4pUSMlEC6s+97vmlvKavSxz5FgPzKfED7cQqfM
+ Sg3i3c64wRIAz60ftc1jNEvgg6p5wGJlbR2P2LKzpWalcEQkk2HgY6v2+8D73YkWF8ptE4lM/uc
+ lbrEYaiYjLqirH+ANqC/fqQlw/sTJzusGQ/5FXFHt276RZFoXkf67T28i2d6yWXOWkhBwzvL3iP
+ skpsLJKk9RXu5M1DRwCEVkknYEjxtPDl5QR1H8AOct4TP1IMyQuB
+X-Google-Smtp-Source: AGHT+IH8vsIljR4g3fT+QVZ5C0bTzA+s7wC7AyYRcniQBqZ6byLqy4PbKklkFpaKWN+L489FL877Cw==
+X-Received: by 2002:a05:6000:2282:b0:3a3:7bbc:d94e with SMTP id
+ ffacd0b85a97d-3a37bbcdc22mr10341995f8f.6.1747909915154; 
+ Thu, 22 May 2025 03:31:55 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a35ca8caaasm22312941f8f.83.2025.05.22.03.31.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 May 2025 03:31:54 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C09BA5F944;
+ Thu, 22 May 2025 11:31:53 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Peter Xu
+ <peterx@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Markus Armbruster
+ <armbru@redhat.com>,  David Hildenbrand <david@redhat.com>,  Laurent
+ Vivier <lvivier@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Sriram Yagnaraman
+ <sriram.yagnaraman@ericsson.com>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  Gustavo Romero
+ <gustavo.romero@linaro.org>,  "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v3 05/20] tests/Makefile: include test-plugins in
+ per-arch build deps
+In-Reply-To: <15677d5c-cd86-4d75-a21e-0c011800cd55@daynix.com> (Akihiko
+ Odaki's message of "Thu, 22 May 2025 14:37:44 +0900")
+References: <20250521164250.135776-1-alex.bennee@linaro.org>
+ <20250521164250.135776-6-alex.bennee@linaro.org>
+ <15677d5c-cd86-4d75-a21e-0c011800cd55@daynix.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Thu, 22 May 2025 11:31:53 +0100
+Message-ID: <87tt5d6ina.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,169 +119,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The set_pixel_conversion() method is responsible for determining whether
-the VNC client pixel format matches the server format, and thus whether
-we can use the fast path "copy" impl for sending pixels, or must use
-the generic impl with bit swizzling.
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-The VNC server format is set at build time to VNC_SERVER_FB_FORMAT,
-which corresponds to PIXMAN_x8r8g8b8.
+> On 2025/05/22 1:42, Alex Benn=C3=A9e wrote:
+>> The user can run a subset of the tcg tests directly, e.g.:
+>>    make run-tcg-tests-hexagon-linux-user
+>> but in this case we fail if there has not been a full build to
+>> ensure
+>> all the test-plugins are there. Fix the dependency to ensure we always
+>> will build them before running tests.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   tests/Makefile.include | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>> diff --git a/tests/Makefile.include b/tests/Makefile.include
+>> index 23fb722d42..7f7f62cbf6 100644
+>> --- a/tests/Makefile.include
+>> +++ b/tests/Makefile.include
+>> @@ -46,7 +46,7 @@ $(foreach TARGET,$(TCG_TESTS_TARGETS), \
+>>           $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-hos=
+t.mak))
+>>     .PHONY: $(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%)
+>> -$(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%): build-tcg-tests-%: $(BUILD_=
+DIR)/tests/tcg/config-%.mak
+>> +$(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%): build-tcg-tests-%: $(BUILD_=
+DIR)/tests/tcg/config-%.mak test-plugins
+>
+> I don't think this is going to work.
+>
+> test-plugins will invoke run-ninja, which is defined as follows:
+>
+> run-ninja: config-host.mak
+> ifneq ($(filter $(ninja-targets), $(ninja-cmd-goals)),)
+> 	+$(if $(MAKE.nq),@:,$(quiet-@)$(NINJA) $(NINJAFLAGS) \
+> 	   $(sort $(filter $(ninja-targets), $(ninja-cmd-goals))) | cat)
+>
+> $(ninja-cmd-goals) should contain test-plugins, but it doesn't if I
+> understand it correctly.
 
-The qemu_pixman_get_format() method is then responsible for converting
-the VNC pixel format into a pixman format.
+It certainly does:
 
-The VNC client pixel shifts are relative to the associated endianness.
+=E2=9E=9C  rm -rf tests/tcg/plugins/
+=F0=9F=95=9911:31:03 alex@draig:qemu.git/builds/all  on =EE=82=A0 HEAD (61e=
+51c3) (REBASING 5/26) [$?]=20
+=E2=9E=9C  make test-plugins
+/home/alex/lsrc/qemu.git/builds/all/pyvenv/bin/meson introspect --targets -=
+-tests --benchmarks | /home/alex/lsrc/qemu.git/builds/all/pyvenv/bin/python=
+3 -B scripts/mtest2make.py > Makefile.mtest
+[1/14] Compiling C object tests/tcg/plugins/libbb.so.p/bb.c.o
+[2/14] Linking target tests/tcg/plugins/libbb.so
+[3/14] Compiling C object tests/tcg/plugins/libempty.so.p/empty.c.o
+[4/14] Linking target tests/tcg/plugins/libempty.so
+[5/14] Compiling C object tests/tcg/plugins/libinline.so.p/inline.c.o
+[6/14] Linking target tests/tcg/plugins/libinline.so
+[7/14] Compiling C object tests/tcg/plugins/libinsn.so.p/insn.c.o
+[8/14] Linking target tests/tcg/plugins/libinsn.so
+[9/14] Compiling C object tests/tcg/plugins/libmem.so.p/mem.c.o
+[10/14] Linking target tests/tcg/plugins/libmem.so
+[11/14] Compiling C object tests/tcg/plugins/libreset.so.p/reset.c.o
+[12/14] Linking target tests/tcg/plugins/libreset.so
+[13/14] Compiling C object tests/tcg/plugins/libsyscall.so.p/syscall.c.o
+[14/14] Linking target tests/tcg/plugins/libsyscall.so
 
-The pixman formats are always relative to the host native endianness.
+>
+>>   	$(call quiet-command, \
+>>               $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS), \
+>>           "BUILD","$* guest-tests")
 
-The qemu_pixman_get_format() method does not take into account the
-VNC client endianness, and is thus returning a pixman format that is
-only valid with the host endianness matches that of the VNC client.
-
-This has been broken since pixman was introduced to the VNC server:
-
-  commit 9f64916da20eea67121d544698676295bbb105a7
-  Author: Gerd Hoffmann <kraxel@redhat.com>
-  Date:   Wed Oct 10 13:29:43 2012 +0200
-
-    pixman/vnc: use pixman images in vnc.
-
-The flaw can be demonstrated using the Tigervnc client by using
-
-   vncviewer -AutoSelect=0 -PreferredEncoding=raw server:display
-
-connecting from a LE client to a QEMU on a BE server, or the
-reverse.
-
-The bug was masked, however, because almost all VNC clients will
-advertize support for the "tight" encoding and the QEMU VNC server
-will prefer "tight" if advertized.
-
-The tight_pack24 method is responsible for taking a set of pixels
-which have already been converted into client endianness and then
-repacking them into the TPIXEL format which the RFB spec defines
-as
-
-  "TPIXEL is only 3 bytes long, where the first byte is the
-   red component, the second byte is the green component,
-   and the third byte is the blue component of the pixel
-   color value"
-
-IOW, the TPIXEL format is fixed on the wire, regardless of what
-the VNC client declare as its endianness.
-
-Since the VNC pixel encoding code was failing to honour the endian
-flag of the client, the tight_pack24 method was always operating
-on data in native endianness. Its impl cancelled out the VNC pixel
-encoding bug.
-
-With the VNC pixel encoding code now fixed, the tight_pack24 method
-needs to take into account that it is operating on data in client
-endianness, not native endianness. It thus may need to invert the
-pixel shifts.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/ui/qemu-pixman.h |  4 ++--
- ui/qemu-pixman.c         | 15 ++++++++-------
- ui/vnc-enc-tight.c       |  2 +-
- ui/vnc.c                 |  3 ++-
- 4 files changed, 13 insertions(+), 11 deletions(-)
-
-diff --git a/include/ui/qemu-pixman.h b/include/ui/qemu-pixman.h
-index 193bc046d1..2ca0ed7029 100644
---- a/include/ui/qemu-pixman.h
-+++ b/include/ui/qemu-pixman.h
-@@ -75,12 +75,12 @@ PixelFormat qemu_pixelformat_from_pixman(pixman_format_code_t format);
- pixman_format_code_t qemu_default_pixman_format(int bpp, bool native_endian);
- pixman_format_code_t qemu_drm_format_to_pixman(uint32_t drm_format);
- uint32_t qemu_pixman_to_drm_format(pixman_format_code_t pixman);
--int qemu_pixman_get_type(int rshift, int gshift, int bshift);
-+int qemu_pixman_get_type(int rshift, int gshift, int bshift, int endian);
- bool qemu_pixman_check_format(DisplayChangeListener *dcl,
-                               pixman_format_code_t format);
- 
- #ifdef CONFIG_PIXMAN
--pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf);
-+pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf, int endian);
- pixman_image_t *qemu_pixman_linebuf_create(pixman_format_code_t format,
-                                            int width);
- void qemu_pixman_linebuf_fill(pixman_image_t *linebuf, pixman_image_t *fb,
-diff --git a/ui/qemu-pixman.c b/ui/qemu-pixman.c
-index 6ef4376f4e..ef4e71da11 100644
---- a/ui/qemu-pixman.c
-+++ b/ui/qemu-pixman.c
-@@ -126,33 +126,34 @@ uint32_t qemu_pixman_to_drm_format(pixman_format_code_t pixman_format)
-     return 0;
- }
- 
--int qemu_pixman_get_type(int rshift, int gshift, int bshift)
-+int qemu_pixman_get_type(int rshift, int gshift, int bshift, int endian)
- {
-     int type = PIXMAN_TYPE_OTHER;
-+    bool native_endian = (endian == G_BYTE_ORDER);
- 
-     if (rshift > gshift && gshift > bshift) {
-         if (bshift == 0) {
--            type = PIXMAN_TYPE_ARGB;
-+            type = native_endian ? PIXMAN_TYPE_ARGB : PIXMAN_TYPE_BGRA;
-         } else {
--            type = PIXMAN_TYPE_RGBA;
-+            type = native_endian ? PIXMAN_TYPE_RGBA : PIXMAN_TYPE_ABGR;
-         }
-     } else if (rshift < gshift && gshift < bshift) {
-         if (rshift == 0) {
--            type = PIXMAN_TYPE_ABGR;
-+            type = native_endian ? PIXMAN_TYPE_ABGR : PIXMAN_TYPE_RGBA;
-         } else {
--            type = PIXMAN_TYPE_BGRA;
-+            type = native_endian ? PIXMAN_TYPE_BGRA : PIXMAN_TYPE_ARGB;
-         }
-     }
-     return type;
- }
- 
- #ifdef CONFIG_PIXMAN
--pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf)
-+pixman_format_code_t qemu_pixman_get_format(PixelFormat *pf, int endian)
- {
-     pixman_format_code_t format;
-     int type;
- 
--    type = qemu_pixman_get_type(pf->rshift, pf->gshift, pf->bshift);
-+    type = qemu_pixman_get_type(pf->rshift, pf->gshift, pf->bshift, endian);
-     format = PIXMAN_FORMAT(pf->bits_per_pixel, type,
-                            pf->abits, pf->rbits, pf->gbits, pf->bbits);
-     if (!pixman_format_supported_source(format)) {
-diff --git a/ui/vnc-enc-tight.c b/ui/vnc-enc-tight.c
-index f8aaa8f346..a5bdc19ebb 100644
---- a/ui/vnc-enc-tight.c
-+++ b/ui/vnc-enc-tight.c
-@@ -891,7 +891,7 @@ static void tight_pack24(VncState *vs, uint8_t *buf, size_t count, size_t *ret)
- 
-     buf8 = buf;
- 
--    if (1 /* FIXME */) {
-+    if (vs->client_endian == G_BYTE_ORDER) {
-         rshift = vs->client_pf.rshift;
-         gshift = vs->client_pf.gshift;
-         bshift = vs->client_pf.bshift;
-diff --git a/ui/vnc.c b/ui/vnc.c
-index ab18172c4d..d095cd7da3 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2240,7 +2240,8 @@ static void set_encodings(VncState *vs, int32_t *encodings, size_t n_encodings)
- 
- static void set_pixel_conversion(VncState *vs)
- {
--    pixman_format_code_t fmt = qemu_pixman_get_format(&vs->client_pf);
-+    pixman_format_code_t fmt = qemu_pixman_get_format(&vs->client_pf,
-+                                                      vs->client_endian);
- 
-     if (fmt == VNC_SERVER_FB_FORMAT) {
-         vs->write_pixels = vnc_write_pixels_copy;
--- 
-2.49.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
