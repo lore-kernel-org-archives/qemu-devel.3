@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240D0C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 13:39:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B770C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 13:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI67z-0000Qp-OA; Thu, 22 May 2025 09:38:31 -0400
+	id 1uI67x-0000QI-VS; Thu, 22 May 2025 09:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uI67y-0000QY-LO
- for qemu-devel@nongnu.org; Thu, 22 May 2025 09:38:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uI67v-0000Py-Rx
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 09:38:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uI67u-0001Ya-BM
- for qemu-devel@nongnu.org; Thu, 22 May 2025 09:38:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uI67s-0001YT-Ta
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 09:38:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747921104;
+ s=mimecast20190719; t=1747921103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iKncvbn82nOHPWHmU1XDHDKjl0wHTa22YpTf/yJS19s=;
- b=KTW+/1E8vNrZONjTDk6u0UVxs+MkYxGXBFAwwXXiDUkRqxD83rr5cc88t9eav/XLeY4uFc
- 8MeTuGsTA3b6s3WpVLF9eorfCjDnlPapf2uJiv4Gj0STbajuR6HVo27KUqcYUiFPsNfHE3
- obSjoqm4os3n9AA9zOuaCikmF/qBVUU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=FOxYpbZOSNLW7pDDjikF00tCEjCwg8lNxMYXYj6efo4=;
+ b=Xk71BPhsThUlIYTR66VjQlLcxljiqLe0/bjwZrC9Tr3Se+NmVEBuU56OWOBREXlowrcTDT
+ tSOPKTqzOWxgDjocy/TYvjdYhnX9Yxw7JdYj7VqsYrSBcJ0TyqAYAfx1H7gaWRP1Rm/zlL
+ /+pqQLWVaC5lhYga9sRjTMUNou5CK7g=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-202-AwTC1LujPvWEbYu1zOgVWw-1; Thu,
- 22 May 2025 09:38:17 -0400
-X-MC-Unique: AwTC1LujPvWEbYu1zOgVWw-1
-X-Mimecast-MFC-AGG-ID: AwTC1LujPvWEbYu1zOgVWw_1747921096
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-455-jfUrfzmNM6y93pcG4RMDdA-1; Thu,
+ 22 May 2025 09:38:20 -0400
+X-MC-Unique: jfUrfzmNM6y93pcG4RMDdA-1
+X-Mimecast-MFC-AGG-ID: jfUrfzmNM6y93pcG4RMDdA_1747921099
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B9D21956080; Thu, 22 May 2025 13:38:15 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B7A61800261; Thu, 22 May 2025 13:38:19 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.12])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 00D4F30001A1; Thu, 22 May 2025 13:38:13 +0000 (UTC)
+ id C956430001A1; Thu, 22 May 2025 13:38:16 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Peter Xu <peterx@redhat.com>
-Subject: [PATCH v2 3/4] tests/functional: Test with
- scripts/vmstate-static-checker.py
-Date: Thu, 22 May 2025 15:37:55 +0200
-Message-ID: <20250522133756.259194-4-thuth@redhat.com>
+Subject: [PATCH v2 4/4] tests/functional/test_vmstate: Test whether the
+ checker script works as expected
+Date: Thu, 22 May 2025 15:37:56 +0200
+Message-ID: <20250522133756.259194-5-thuth@redhat.com>
 In-Reply-To: <20250522133756.259194-1-thuth@redhat.com>
 References: <20250522133756.259194-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -84,150 +84,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-We've got this nice vmstate-static-checker.py script that can help
-to detect screw-ups in the migration states. Unfortunately, it's
-currently only run manually, so there are regressions that nobody
-notices immediately. Let's run it from a functional test automatically
-so that we got at least a basic coverage in each CI run.
+We've got two vmstate dump files in the repository which are meant
+for verifying whether the vmstate-static-checker.py works as expected.
+Since running this manually is a cumbersome job, let's add an automated
+test for this instead that runs the script with the two dump files
+and checks for the expected output.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                      |  1 +
- tests/functional/meson.build     | 13 ++++++-
- tests/functional/test_vmstate.py | 59 ++++++++++++++++++++++++++++++++
- 3 files changed, 72 insertions(+), 1 deletion(-)
- create mode 100755 tests/functional/test_vmstate.py
+ tests/functional/test_vmstate.py | 37 ++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 55735de4e4e..e92c60f891d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3548,6 +3548,7 @@ F: migration/
- F: scripts/vmstate-static-checker.py
- F: tests/data/vmstate-static-checker/
- F: tests/functional/test_migration.py
-+F: tests/functional/test_vmstate.py
- F: tests/qtest/migration/
- F: tests/qtest/migration-*
- F: docs/devel/migration/
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 52b4706cfe8..81fc26ca3d5 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -78,6 +78,7 @@ tests_generic_bsduser = [
- 
- tests_aarch64_system_quick = [
-   'migration',
-+  'vmstate',
- ]
- 
- tests_aarch64_system_thorough = [
-@@ -168,6 +169,10 @@ tests_loongarch64_system_thorough = [
-   'loongarch64_virt',
- ]
- 
-+tests_m68k_system_quick = [
-+  'vmstate',
-+]
-+
- tests_m68k_system_thorough = [
-   'm68k_mcf5208evb',
-   'm68k_nextcube',
-@@ -234,6 +239,7 @@ tests_ppc_system_thorough = [
- 
- tests_ppc64_system_quick = [
-   'migration',
-+  'vmstate',
- ]
- 
- tests_ppc64_system_thorough = [
-@@ -269,6 +275,10 @@ tests_rx_system_thorough = [
-   'rx_gdbsim',
- ]
- 
-+tests_s390x_system_quick = [
-+  'vmstate',
-+]
-+
- tests_s390x_system_thorough = [
-   's390x_ccw_virtio',
-   's390x_replay',
-@@ -309,8 +319,9 @@ tests_x86_64_system_quick = [
-   'migration',
-   'pc_cpu_hotplug_props',
-   'virtio_version',
--  'x86_cpu_model_versions',
-+  'vmstate',
-   'vnc',
-+  'x86_cpu_model_versions',
- ]
- 
- tests_x86_64_system_thorough = [
 diff --git a/tests/functional/test_vmstate.py b/tests/functional/test_vmstate.py
-new file mode 100755
-index 00000000000..cc988987481
---- /dev/null
+index cc988987481..19a62e8a17e 100755
+--- a/tests/functional/test_vmstate.py
 +++ b/tests/functional/test_vmstate.py
-@@ -0,0 +1,59 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# This test runs the vmstate-static-checker script with the current QEMU
+@@ -9,6 +9,22 @@
+ from qemu_test import QemuSystemTest
+ 
+ 
++expected_output='''Warning: checking incompatible machine types: "pc-i440fx-2.1", "pc-i440fx-2.2"
++Section "fw_cfg" does not exist in dest
++Section "fusbh200-ehci-usb" version error: 2 > 1
++Section "fusbh200-ehci-usb", Description "ehci-core": expected field "usbsts", got "usbsts_pending"; skipping rest
++Section "pci-serial-4x" Description "pci-serial-multi": Entry "Fields" missing
++Section "intel-hda-generic", Description "intel-hda", Field "pci": missing description
++Section "cfi.pflash01": Entry "Description" missing
++Section "megasas", Description "PCIDevice": expected field "irq_state", while dest has no further fields
++Section "PIIX3-xen" Description "PIIX3": minimum version error: 1 < 2
++Section "PIIX3-xen" Description "PIIX3": Entry "Subsections" missing
++Section "tpci200": Description "tpci200" missing, got "tpci2002" instead; skipping
++Section "sun-fdtwo" Description "fdc": version error: 2 > 1
++Section "sun-fdtwo", Description "fdrive": Subsection "fdrive/media_rate" not found
++Section "usb-kbd" Description "usb-kbd" Field "kbd.keycodes" size mismatch: 4 , 2
++'''
 +
-+import subprocess
-+
-+from qemu_test import QemuSystemTest
-+
-+
-+class VmStateTest(QemuSystemTest):
-+
-+    def run_vmstate_checker(self, src_json, dst_json):
-+        checkerscript = self.data_file('..', '..', 'scripts',
-+                                       'vmstate-static-checker.py')
-+        return subprocess.run([checkerscript, '-s', src_json, '-d', dst_json],
-+                              stdout=subprocess.PIPE,
-+                              stderr=subprocess.STDOUT,
-+                              text=True)
-+
-+    def test_vmstate(self):
-+        target_machine = {
-+            'aarch64': 'virt-7.2',
-+            'm68k': 'virt-7.2',
-+            'ppc64': 'pseries-7.2',
-+            's390x': 's390-ccw-virtio-7.2',
-+            'x86_64': 'pc-q35-7.2',
-+        }
-+        self.set_machine(target_machine[self.arch])
-+
-+        # Run QEMU to get the current vmstate json file:
-+        dst_json = self.scratch_file('dest.json')
-+        self.log.info('Dumping vmstate from ' + self.qemu_bin)
-+        cp = subprocess.run([self.qemu_bin, '-nodefaults',
-+                             '-M', target_machine[self.arch],
-+                             '-dump-vmstate', dst_json],
-+                            stdout=subprocess.PIPE,
-+                            stderr=subprocess.STDOUT,
-+                            text=True)
-+        if cp.returncode != 0:
-+            self.fail('Running QEMU failed:\n' + cp.stdout)
-+        if cp.stdout:
-+            self.log.info('QEMU output: ' + cp.stdout)
-+
-+        # Check whether the old vmstate json file is still compatible:
+ class VmStateTest(QemuSystemTest):
+ 
+     def run_vmstate_checker(self, src_json, dst_json):
+@@ -19,6 +35,27 @@ def run_vmstate_checker(self, src_json, dst_json):
+                               stderr=subprocess.STDOUT,
+                               text=True)
+ 
++    def test_checker(self):
++        """
++        Test whether the checker script correctly detects the changes
++        between dump1.json and dump2.json.
++        """
++        if self.arch != 'x86_64':
++            self.skipTest('for x86 only')
 +        src_json = self.data_file('..', 'data', 'vmstate-static-checker',
-+                                  self.arch,
-+                                  target_machine[self.arch] + '.json')
-+        self.log.info('Comparing vmstate with ' + src_json)
++                                  'dump1.json')
++        dst_json = self.data_file('..', 'data', 'vmstate-static-checker',
++                                  'dump2.json')
++        self.log.info(f'Comparing {src_json} with {dst_json}')
 +        cp = self.run_vmstate_checker(src_json, dst_json)
-+        if cp.returncode != 0:
-+            self.fail('Running vmstate-static-checker failed:\n' + cp.stdout)
-+        if cp.stdout:
-+            self.log.warning('vmstate-static-checker output: ' + cp.stdout)
++        if cp.returncode != 13:
++            self.fail('Unexpected return code of vmstate-static-checker: ' +
++                      cp.returncode)
++        if cp.stdout != expected_output:
++            self.log.info('vmstate-static-checker output:\n' + cp.stdout)
++            self.log.info('expected output:\n' + expected_output)
++            self.fail('Unexpected vmstate-static-checker output!')
 +
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+     def test_vmstate(self):
+         target_machine = {
+             'aarch64': 'virt-7.2',
 -- 
 2.49.0
 
