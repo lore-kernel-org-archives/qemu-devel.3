@@ -4,85 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04534C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 20:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4132FC54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 20:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uICGU-0007oG-It; Thu, 22 May 2025 16:11:42 -0400
+	id 1uICHH-000867-V0; Thu, 22 May 2025 16:12:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uICGS-0007mB-Vv
- for qemu-devel@nongnu.org; Thu, 22 May 2025 16:11:41 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uICGR-0001RS-En
- for qemu-devel@nongnu.org; Thu, 22 May 2025 16:11:40 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-30e57a37294so7955342a91.2
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 13:11:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747944698; x=1748549498; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=L/YGkXS8XTM4cPqrRDL70ok+YAsJd6sV/SJH1fTiKDM=;
- b=SzMzen207Yfmj07ZQz2kpF++DdMTpiBD3swX4Ai7q+xlOUJk03i35Pt5wJxCaLYu21
- F5yYDL2y0J37kunb3+7DcfajPwmkI8a5Sdf/UrkCyUyhZsBu6PZK3L3UCwgiFH1nvx7J
- X3IM3fHsb5Rx2/AHYM/edoIlMWlltr9AFmIL4AalcRyjNBTKOSCnMudpvCMUd55O3wWd
- QDrf4ud52I/VbHwYbv1QI+1TxwArVQ81aMI6ibFx0ardoKRB9eXjIReX+QA6uqDPJqis
- XqBweBIfaDKE8J4CQNu72ilVviVWrzfDHS5eJS+hDEsOUMEThy5b/CjTnzE1MZRFeGNU
- 72cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747944698; x=1748549498;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=L/YGkXS8XTM4cPqrRDL70ok+YAsJd6sV/SJH1fTiKDM=;
- b=Q/xX/SZ7qwwi5cZaaQpcnDHCN5MoxNTpx8RpXXLsMToUzdVSNZviK8rZeFoP2owaJ6
- msqKPvWi97MhPHhQY+V6q/CO87TqVbpdjYf5S8JsVRLIx69kZmmLGxX92cFizNdj1tJv
- n34QBJD3JqlIB/3Yu66/4Dcz1w1d5fd+/+KhRNMe4FMMAy37ryLU17iqyIpaHxhFPisi
- iD6NCacdzbqi+J4TxBVuAn17qXTc+rdeSN/M5tAfcxGi7opKZa77UFDcru5Dy6t2ewJj
- lWbPHBpF1abJX1USc7zGrqMQiKL7k2ahheVNMaKWQ1y4/YL+d1pMuDCHeNb+mzLGtyty
- xC1A==
-X-Gm-Message-State: AOJu0Yxms21Bo66pfNI9hY4CGb527RfIOi/Km5dYng5L78LSGXB1tNid
- gmOWYVyVqFiGOcMGvO4d0dZVRJM79AoTh9UCjdI60t1gAXLiUBz+uew6VqYM0RbOYPiNsWRz/Fv
- y9g5VCm17QF8ZefYfJBEPZNwKjINYE1o=
-X-Gm-Gg: ASbGncvsy42lwVaTfohywilXibJ2QOhxYRzUJ/IKxApbM5AmAVcC5gefSXzHvQm90rX
- Y7ZCeBdk841cPSFsGlYtRs5Uog/Qatpjn7zOhYzM68kyNOIOCZDFpO5kz5D+hjoaU9f2ULmb9BP
- PoZGObKNayJyzaY2BP8MLiAjQQ1L2iSQ4=
-X-Google-Smtp-Source: AGHT+IGsfoSfEhdJ/Gerp3lrKWq0LBpAZ5SHB9xADXklUBzBuWGDJoKPLQ7ELhKj34lI6rft6Yge1kDEIRgqUbA9fcY=
-X-Received: by 2002:a17:90b:57e8:b0:30a:255c:9d10 with SMTP id
- 98e67ed59e1d1-30e830e87f6mr37926849a91.8.1747944697890; Thu, 22 May 2025
- 13:11:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uICHF-00085l-TO; Thu, 22 May 2025 16:12:29 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uICHD-0001Y8-Ui; Thu, 22 May 2025 16:12:29 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 422371245B1;
+ Thu, 22 May 2025 23:12:16 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 77E692137E2;
+ Thu, 22 May 2025 23:12:23 +0300 (MSK)
+Message-ID: <4a5a68dd-74b2-4ffc-baa7-42eba9276b81@tls.msk.ru>
+Date: Thu, 22 May 2025 23:12:22 +0300
 MIME-Version: 1.0
-References: <20250521094333.4075796-1-rowanbhart@gmail.com>
- <20250521094333.4075796-3-rowanbhart@gmail.com>
- <874ixcwt69.fsf@draig.linaro.org>
-In-Reply-To: <874ixcwt69.fsf@draig.linaro.org>
-From: Rowan Hart <rowanbhart@gmail.com>
-Date: Thu, 22 May 2025 13:11:27 -0700
-X-Gm-Features: AX0GCFuA_6GwZnconTj_HFs36_8UpHxnhITANZRmvNcVkIv2kRVbIO0VCEQwZWw
-Message-ID: <CAE5MsNbZOwr6OYrUir2mXo21ejiVN_b9YYHiF-QRijFs5J+fWQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/8] Add register write API
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000ce0c4d0635bf16df"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=rowanbhart@gmail.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] migration/multifd: Don't send device state packets with
+ zerocopy flag
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,35 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ce0c4d0635bf16df
-Content-Type: text/plain; charset="UTF-8"
+On 16.05.2025 16:53, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> 
+> If zerocopy is enabled for multifd then QIO_CHANNEL_WRITE_FLAG_ZERO_COPY
+> flag is forced into all multifd channel write calls via p->write_flags
+> that was setup in multifd_nocomp_send_setup().
+> 
+> However, device state packets aren't compatible with zerocopy - the data
+> buffer isn't getting kept pinned until multifd channel flush.
+> 
+> Make sure to mask that QIO_CHANNEL_WRITE_FLAG_ZERO_COPY flag in a multifd
+> send thread if the data being sent is device state.
+> 
+> Fixes: 0525b91a0b99 ("migration/multifd: Device state transfer support - send side")
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
->  a) handle the QEMU_PLUGIN_CB_RW_REGS
+Is this qemu-stable material (for 10.0)?
 
-I missed that this was not already handled. I'll fix that.
+I'm picking it up for 10.0 branch, please let me know if I shouldn't.
 
-> b) try and enforce we are only being called from such callbacks
+Thanks,
 
-Sure, beyond documentation I suppose we can add and check a flag to ensure
-this. I think it's a good idea to reduce foot guns from just calling it
-from any old place.
-
--Rowan
-
---000000000000ce0c4d0635bf16df
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><p dir=3D"ltr">&gt;=C2=A0 a) handle the QEMU_PLUGIN_CB_RW=
-_REGS</p>
-<p dir=3D"ltr">I missed that this was not already handled. I&#39;ll fix tha=
-t. </p>
-<p dir=3D"ltr">&gt; b) try and enforce we are only being called from such c=
-allbacks</p>
-<p dir=3D"ltr">Sure, beyond documentation I suppose we can add and check a =
-flag to ensure this. I think it&#39;s a good idea to reduce foot guns from =
-just calling it from any old place.</p>
-<p dir=3D"ltr">-Rowan</p></div>
-
---000000000000ce0c4d0635bf16df--
+/mjt
 
