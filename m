@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CDFC54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2FBC54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:31:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3C1-0003CJ-3y; Thu, 22 May 2025 06:30:29 -0400
+	id 1uI3BQ-00030l-LA; Thu, 22 May 2025 06:29:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3Bz-0003BW-Do
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:27 -0400
+ id 1uI3BP-00030O-7r
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3Bx-0006da-H6
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:27 -0400
+ id 1uI3BN-0006NV-KQ
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747909823;
+ s=mimecast20190719; t=1747909787;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/KSIReOtCXI9OAmTNpxHjWOwdW11sGtW+E03elYeBeQ=;
- b=gja5f3UID3fgKdAwID3vfe4WbKk2b+tmVj/hopR3pIbcOxW71JY1o8wn5nVX1OYvy82Qrk
- OrMbRDH0UWDAuulSkyRdMDXy4NY7GSdq/7jgmpQG8Axo0WH7SvcLonrLkOjpVX5vLXl8hU
- XgxDl07+wMzzAsmctrR0w1xzv8F9M7c=
+ bh=ZxpEFbLS34uMmcFhE5xzGXyMY8b1zltlu/qrjpYdh8I=;
+ b=L+AD+sZ0HPq9CXlqKO+rPxR4UUqUiKQDGw1vH3mLJijDw0vaO1NTAH40S67svyhFlGTDVZ
+ j8ZQX2gU+6c2kJmR3OELbJC9kEaPOzt9TFYkukTpsWpWp03Hx1IeyBWO3vGqmFbh0lDTvZ
+ LlSn5PC2+ygmBojC+TmJ6/Dq2/E1yAI=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-dAfYL1_4Nde_jfbvT_USPQ-1; Thu,
- 22 May 2025 06:30:20 -0400
-X-MC-Unique: dAfYL1_4Nde_jfbvT_USPQ-1
-X-Mimecast-MFC-AGG-ID: dAfYL1_4Nde_jfbvT_USPQ_1747909819
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-dzxVuL-FMyC7ojCtk3EsgQ-1; Thu,
+ 22 May 2025 06:29:46 -0400
+X-MC-Unique: dzxVuL-FMyC7ojCtk3EsgQ-1
+X-Mimecast-MFC-AGG-ID: dzxVuL-FMyC7ojCtk3EsgQ_1747909785
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 489E3180087F; Thu, 22 May 2025 10:30:19 +0000 (UTC)
+ id 7AF5A18004A7; Thu, 22 May 2025 10:29:45 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.179])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D95621958014; Thu, 22 May 2025 10:30:15 +0000 (UTC)
+ id 7C3B01958014; Thu, 22 May 2025 10:29:42 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -54,12 +54,11 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 14/23] scripts/checkpatch: use new hook for MAINTAINERS update
- check
-Date: Thu, 22 May 2025 11:29:14 +0100
-Message-ID: <20250522102923.309452-15-berrange@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 05/23] tests: skip legacy qcow2 encryption test if AES is not
+ available
+Date: Thu, 22 May 2025 11:29:05 +0100
+Message-ID: <20250522102923.309452-6-berrange@redhat.com>
 In-Reply-To: <20250522102923.309452-1-berrange@redhat.com>
 References: <20250522102923.309452-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,82 +90,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When seeing a new/deleted/renamed file we check to see if MAINTAINERS
-is updated, but we don't give the user a list of files affected, as
-we don't want to repeat the same warning many times over.
+This avoids test breakage when we drop support for using the
+built-in AES impl as a fallback for missing crypto libraries.
 
-Using the new file list hook, we can give a single warning at the
-end with a list of filenames included.
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/checkpatch.pl | 37 +++++++++++++++++++------------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ tests/unit/test-crypto-block.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 82ec71e05d..c05559a108 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1443,6 +1443,25 @@ sub process_file_list {
- 		      join("\n  ", @acpi_nontestexpected) .
- 		      "\n\nfound in the same patch\n");
- 	}
-+
-+	my $sawmaintainers = 0;
-+	my @maybemaintainers;
-+	foreach my $fileinfo (@fileinfos) {
-+		if ($fileinfo->{action} ne "modified" &&
-+		    $fileinfo->{filenew} !~ m#^tests/data/acpi/#) {
-+			push @maybemaintainers, $fileinfo->{filenew};
-+		}
-+		if ($fileinfo->{filenew} eq "MAINTAINERS") {
-+			$sawmaintainers = 1;
-+		}
-+	}
-+
-+	# If we don't see a MAINTAINERS update, prod the user to check
-+	if (int(@maybemaintainers) > 0 && !$sawmaintainers) {
-+		WARN("added, moved or deleted file(s):\n\n  " .
-+		     join("\n  ", @maybemaintainers) .
-+		     "\n\nDoes MAINTAINERS need updating?\n");
-+	}
- }
- 
- # Called at the start of processing a diff hunk for a file
-@@ -1486,7 +1505,6 @@ sub process {
- 
- 	my $in_header_lines = $file ? 0 : 1;
- 	my $in_commit_log = 0;		#Scanning lines before patch
--	my $reported_maintainer_file = 0;
- 	my $reported_mixing_imported_file = 0;
- 	my $in_imported_file = 0;
- 	my $in_no_imported_file = 0;
-@@ -1761,23 +1779,6 @@ sub process {
- 			}
- 		}
- 
--# Check if MAINTAINERS is being updated.  If so, there's probably no need to
--# emit the "does MAINTAINERS need updating?" message on file add/move/delete
--		if ($line =~ /^\s*MAINTAINERS\s*\|/) {
--			$reported_maintainer_file = 1;
--		}
--
--# Check for added, moved or deleted files
--		if (!$reported_maintainer_file && !$in_commit_log &&
--		    ($line =~ /^(?:new|deleted) file mode\s*\d+\s*$/ ||
--		     $line =~ /^rename (?:from|to) [\w\/\.\-]+\s*$/ ||
--		     ($line =~ /\{\s*([\w\/\.\-]*)\s*\=\>\s*([\w\/\.\-]*)\s*\}/ &&
--		      (defined($1) || defined($2)))) &&
--		    $realfile !~ m#^tests/data/acpi/#) {
--			$reported_maintainer_file = 1;
--			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
--		}
--
- # Check SPDX-License-Identifier references a permitted license
- 		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
- 			&checkspdx($realfile, $1);
+diff --git a/tests/unit/test-crypto-block.c b/tests/unit/test-crypto-block.c
+index 9217b9a2ef..3ac7f17b2a 100644
+--- a/tests/unit/test-crypto-block.c
++++ b/tests/unit/test-crypto-block.c
+@@ -574,6 +574,13 @@ int main(int argc, char **argv)
+     for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
+         if (test_data[i].open_opts->format == QCRYPTO_BLOCK_FORMAT_LUKS &&
+             !qcrypto_hash_supports(test_data[i].hash_alg)) {
++            g_printerr("# skip unsupported %s\n",
++                       QCryptoHashAlgo_str(test_data[i].hash_alg));
++            continue;
++        }
++        if (!qcrypto_cipher_supports(QCRYPTO_CIPHER_ALGO_AES_128,
++                                     QCRYPTO_CIPHER_MODE_CBC)) {
++            g_printerr("# skip unsupported aes-128:cbc\n");
+             continue;
+         }
+         if (!test_data[i].slow ||
 -- 
 2.49.0
 
