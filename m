@@ -4,115 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B6DC54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 15:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79D1C54ED0
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 16:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI8Gf-0008N1-KU; Thu, 22 May 2025 11:55:38 -0400
+	id 1uI8wz-00071n-2i; Thu, 22 May 2025 12:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1uI8Ga-0008Lh-0E; Thu, 22 May 2025 11:55:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1uI8GW-0005My-Qd; Thu, 22 May 2025 11:55:30 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54MENVZZ005437;
- Thu, 22 May 2025 15:55:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=R0DvMj
- CQ4eRAecr6K6HF2TdsCJSYLcEKQg0B77z5rfA=; b=ceDVDx64XQBXY+d8U7RN8G
- NHMVjf5jX+YgG78cE+b227j2KAoBITg5VNxIRnCIcgrz7ESPoTLV5JNwpwPBeAuU
- 6T164nhFqT+b9d9kP3+c+5gFSLkspcvO+B1hzZ0XXLL+eiYGWDATzGv1JFBJ2ooG
- hUfhsSOYa0ARAEG/oPl8glbARTrt2GnjMmUvlf3wFPk/ei4wAFrmTMjW37D52jBN
- BBtpf3rcz5LARpI4KZewMNX/1IopcrC3H7kcljCQp5K0LNfSWYqkOs07BUonzF86
- VEG9V49zS/7crEfqnX1fKiFnxFzbHLurhBZ9RyZepspLWk3/2nJa+IICLvNH3PTw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46smf9d8jx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 May 2025 15:55:25 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54MDhk6D010701;
- Thu, 22 May 2025 15:55:24 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46rwnmj4kf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 May 2025 15:55:24 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54MFtNCN30999294
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 May 2025 15:55:23 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1960458059;
- Thu, 22 May 2025 15:55:23 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2FEAB58058;
- Thu, 22 May 2025 15:55:22 +0000 (GMT)
-Received: from [9.61.242.155] (unknown [9.61.242.155])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 22 May 2025 15:55:22 +0000 (GMT)
-Message-ID: <c5f9dd66-f11d-4312-a1fb-2651fe894e6d@linux.ibm.com>
-Date: Thu, 22 May 2025 11:55:20 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uI8wx-00071R-Fr
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 12:39:19 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uI8wv-0004UY-GT
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 12:39:19 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4D90E21A54;
+ Thu, 22 May 2025 16:39:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747931954; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gUXh3sHeH+QWe34SFKyrhLNN2nugjFBHJu/Uk9kFCEk=;
+ b=emLLRgLBAJ2NobOE3uiFTmenwyFVjP/5l6eLlxoPYQvOU55Vb+/dVxisEgrkr2skxZnUyh
+ DHNDVovqlQXGF7CD31FiC6DypeRzN/+3wlxDybCBX9v1rf4nD+rUG+n0mwYtiIndrYg5ml
+ vjHx+tpNiRc/3ZDNrNZFgJ6PeIWRJwM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747931954;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gUXh3sHeH+QWe34SFKyrhLNN2nugjFBHJu/Uk9kFCEk=;
+ b=kB+3Mccy1t7KDniNKFpEhDt8DNjVcAvbq0U6iBc3xfanDbTibWL7ni/Xfc2xOJaEJLLbl3
+ qNfSQgtrZcUPmwAg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=emLLRgLB;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=kB+3Mccy
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1747931954; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gUXh3sHeH+QWe34SFKyrhLNN2nugjFBHJu/Uk9kFCEk=;
+ b=emLLRgLBAJ2NobOE3uiFTmenwyFVjP/5l6eLlxoPYQvOU55Vb+/dVxisEgrkr2skxZnUyh
+ DHNDVovqlQXGF7CD31FiC6DypeRzN/+3wlxDybCBX9v1rf4nD+rUG+n0mwYtiIndrYg5ml
+ vjHx+tpNiRc/3ZDNrNZFgJ6PeIWRJwM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1747931954;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gUXh3sHeH+QWe34SFKyrhLNN2nugjFBHJu/Uk9kFCEk=;
+ b=kB+3Mccy1t7KDniNKFpEhDt8DNjVcAvbq0U6iBc3xfanDbTibWL7ni/Xfc2xOJaEJLLbl3
+ qNfSQgtrZcUPmwAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B79DE137B8;
+ Thu, 22 May 2025 16:39:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 80c2HTFTL2iOOwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 22 May 2025 16:39:13 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 04/13] migration: Fix parameter validation
+In-Reply-To: <aCZVolkNMBZb5KvC@x1.local>
+References: <20250411191443.22565-1-farosas@suse.de>
+ <20250411191443.22565-5-farosas@suse.de> <aCZVolkNMBZb5KvC@x1.local>
+Date: Thu, 22 May 2025 13:39:10 -0300
+Message-ID: <87r00g61n5.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v9 2/4] hw/vfio/ap: store object indicating AP config
- changed in a queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
-References: <20250512180230.50129-1-rreyes@linux.ibm.com>
- <20250512180230.50129-3-rreyes@linux.ibm.com>
- <f917f4f3-836b-4bdf-8dde-4d83cb226334@redhat.com>
- <38ba5741-e564-4812-87e2-ba6235e077b1@linux.ibm.com>
- <73d159e9-abde-4f97-8d04-4f8f8783975d@redhat.com>
-Content-Language: en-US
-From: Rorie Reyes <rreyes@linux.ibm.com>
-In-Reply-To: <73d159e9-abde-4f97-8d04-4f8f8783975d@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: X4G1FSifaVQC-ggmdeAe6EfKFuIjKxD2
-X-Proofpoint-ORIG-GUID: X4G1FSifaVQC-ggmdeAe6EfKFuIjKxD2
-X-Authority-Analysis: v=2.4 cv=TbqWtQQh c=1 sm=1 tr=0 ts=682f48ed cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=pi8Qu_Bq_sj6Cl0Ak0sA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDE1OSBTYWx0ZWRfXyf7+sfUgE8DC
- QZrHd5hcPXLpLlaXQSjhCyUtymCVXtGR1vToc/eYY7byxypdYQ56wOcSqxnfzgX6sHDw0n2eDa2
- NM9MGPgRT8HigK4ldnYP+SZWoGkAXeHnzJYEA+lNAHXsDOo//dWfrxNI81e2N9VKmJwnA1Yw9+E
- FGg/WcqBP3yD67Mk48VRy4LxQUO7fjALpbDIb1b0l6UEShsnBZbRxmsji2MZWsLhuQa/7IdoSsE
- ELKcBXX9oJNtFRqUuDYM24P7fX3nFOCJEInk6tE5/LzDbtXOw+ZLvYnrBP21tCCcM1ow8o2Ox2w
- mnwwUJq3s2pfpc1Ro51k24BBRguZUfgLfr2NW96IW7M9iyYjwpOIKyocONJPDqBwxchGYLgwQD0
- UxQV/lJRtr+69Cd417aXNqkHfSi+uUxB0Yg2dOxCX4v1Daap6vywSBtKi+or9s/FHXBfsXQB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-22_07,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 bulkscore=0
- phishscore=0 adultscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505220159
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rreyes@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 4D90E21A54
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-1.51 / 50.00]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,56 +126,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
-On 5/22/25 11:36 AM, Cédric Le Goater wrote:
-> On 5/22/25 16:28, Rorie Reyes wrote:
->>
->> On 5/22/25 9:27 AM, Cédric Le Goater wrote:
->>> On 5/12/25 20:02, Rorie Reyes wrote:
->>>> Creates an object indicating that an AP configuration change event
->>>> has been received and stores it in a queue. These objects will later
->>>> be used to store event information for an AP configuration change
->>>> when the CHSC instruction is intercepted.
->>>>
->>>> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
->>>> ---
->>>>   hw/vfio/ap.c | 12 ++++++++++++
->>>>   1 file changed, 12 insertions(+)
->>>>
->>>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
->>>> index 3d0af7a54a..5ea5dd9cca 100644
->>>> --- a/hw/vfio/ap.c
->>>> +++ b/hw/vfio/ap.c
->>>> @@ -41,6 +41,13 @@ struct VFIOAPDevice {
->>>>       EventNotifier cfg_notifier;
->>>>   };
->>>>   +typedef struct APConfigChgEvent {
->>>> +    QTAILQ_ENTRY(APConfigChgEvent) next;
->>>> +} APConfigChgEvent;
->>>> +
->>>> +QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
->>>> +    QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
->>>> +
->>>
->>> Could cfg_chg_events be static ?
->>>
->>>
->>> Thanks,
->>>
->>> C.
->>>
->> You make a good point, Cedric. I'm only using this variable in ap.c. 
->> Having it as a static would prevent it from being modified anywhere else
->>
+> On Fri, Apr 11, 2025 at 04:14:34PM -0300, Fabiano Rosas wrote:
+>> The migration parameters validation involves producing a temporary
+>> structure which merges the current parameter values with the new
+>> parameters set by the user.
+>> 
+>> The has_ boolean fields of MigrateSetParameter are taken into
+>> consideration when writing the temporary structure, however the copy
+>> of the current parameters also copies all the has_ fields of
+>> s->parameters and those are (almost) all true due to being initialized
+>> by migrate_params_init().
+>> 
+>> Since the temporary structure copy does not carry over the has_ fields
+>> from MigrateSetParameters, only the values which were initialized in
+>> migrate_params_init() will end up being validated. This causes
+>> (almost) all of the migration parameters to be validated again every
+>> time a parameter is set, which could be considered a bug. But it also
+>> skips validation of those values which are not set in
+>> migrate_params_init(), which is a worse issue.
 >
-> Good. Would you have time to send a v10 ?
+> IMHO it's ok to double check all parameters in slow path.  Definitely not
+> ok to skip them.. So now the question is, if migrate_params_test_apply() so
+> far should check all params anyway...
 >
+
+Well, either way is fine by me. In the current code, I can't tell what
+the intention was, unfortunately.
+
+We could check all params, but then we need to make sure they never
+change in between calls to migrate-set-params. Looking at the code I
+don't see any place where we allow s->parameters to change.
+
+But then I worry about checks that:
+- might be too costly
+- only make sense the first time
+- depend on the order of setting (a param/cap that should only be set
+before/after some other param/cap)
+
+> Shall we drop the checking for all has_ there, then IIUC we also don't need
+> any initializations for has_* in migrate_params_init() here?
 >
-> Thanks,
+
+It'd be nice to not have to touch the has_ fields, yes. I'll experiment
+with it.
+
+> So, admittedly s->parameters.has_* is still ugly to be present.. we declare
+> all of them not used and ignore them always at least in s->parameters.
 >
-> C.
->
->
-I should be able to send a v10 by today. I'm currently working on the 
-other two comments you left for patch 3
+>> 
+>> Fix by initializing the missing values in migrate_params_init().
+>> Currently 'avail_switchover_bandwidth' and 'block_bitmap_mapping' are
+>> affected.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/options.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>> 
+>> diff --git a/migration/options.c b/migration/options.c
+>> index cac28540dd..625d597a85 100644
+>> --- a/migration/options.c
+>> +++ b/migration/options.c
+>> @@ -987,6 +987,8 @@ void migrate_params_init(MigrationParameters *params)
+>>      params->has_mode = true;
+>>      params->has_zero_page_detection = true;
+>>      params->has_direct_io = true;
+>> +    params->has_avail_switchover_bandwidth = true;
+>> +    params->has_block_bitmap_mapping = true;
+>>  }
+>>  
+>>  /*
+>> -- 
+>> 2.35.3
+>> 
 
