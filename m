@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFF71C54E71
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 02:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33767C54E71
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 02:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHvkY-0003L3-Qp; Wed, 21 May 2025 22:33:40 -0400
+	id 1uHvkc-0003MH-Aj; Wed, 21 May 2025 22:33:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uHvkF-0003J0-QG; Wed, 21 May 2025 22:33:21 -0400
+ id 1uHvkC-0003Iq-Dt; Wed, 21 May 2025 22:33:18 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uHvkD-00010W-Gl; Wed, 21 May 2025 22:33:19 -0400
+ id 1uHvk8-00010W-Ow; Wed, 21 May 2025 22:33:14 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 22 May
@@ -30,14 +30,11 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 1/3] hw/intc/aspeed: Set impl.min_access_size to 4
-Date: Thu, 22 May 2025 10:33:02 +0800
-Message-ID: <20250522023305.2486536-2-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v2 0/3] Fix RAM size detection failure on BE hosts
+Date: Thu, 22 May 2025 10:33:01 +0800
+Message-ID: <20250522023305.2486536-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250522023305.2486536-1-jamin_lin@aspeedtech.com>
-References: <20250522023305.2486536-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -66,69 +63,22 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch explicitly sets ".impl.min_access_size = 4" to match the
-declared ".valid.min_access_size = 4", enforcing stricter access size
-checking and preventing inconsistent partial accesses to the interrupt
-controller registers.
+v1:
+ 1. Fix RAM size detection failure on BE hosts
+ 2. INTC: Set impl.min_access_size to 4
+          Fix coding style
+v2:
+  Fix review issue.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- hw/intc/aspeed_intc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Jamin Lin (3):
+  hw/intc/aspeed: Set impl.min_access_size to 4
+  hw/intc/aspeed Fix coding style
+  hw/arm/aspeed_ast27x0: Fix RAM size detection failure on BE hosts
 
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 33fcbe729c..19f88853d8 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -737,6 +737,7 @@ static const MemoryRegionOps aspeed_intc_ops = {
-     .read = aspeed_intc_read,
-     .write = aspeed_intc_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size = 4,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -747,6 +748,7 @@ static const MemoryRegionOps aspeed_intcio_ops = {
-     .read = aspeed_intcio_read,
-     .write = aspeed_intcio_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size = 4,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -757,6 +759,7 @@ static const MemoryRegionOps aspeed_ssp_intc_ops = {
-     .read = aspeed_intc_read,
-     .write = aspeed_ssp_intc_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size = 4,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -767,6 +770,7 @@ static const MemoryRegionOps aspeed_ssp_intcio_ops = {
-     .read = aspeed_intcio_read,
-     .write = aspeed_ssp_intcio_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size = 4,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -777,6 +781,7 @@ static const MemoryRegionOps aspeed_tsp_intc_ops = {
-     .read = aspeed_intc_read,
-     .write = aspeed_tsp_intc_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size = 4,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -787,6 +792,7 @@ static const MemoryRegionOps aspeed_tsp_intcio_ops = {
-     .read = aspeed_intcio_read,
-     .write = aspeed_tsp_intcio_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size = 4,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
+ hw/arm/aspeed_ast27x0.c | 10 ++++++----
+ hw/intc/aspeed_intc.c   | 12 ++++++++++--
+ 2 files changed, 16 insertions(+), 6 deletions(-)
+
 -- 
 2.43.0
 
