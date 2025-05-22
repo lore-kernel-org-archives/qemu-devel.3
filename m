@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DDDC54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 21:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15848C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 22:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIDFq-0003o1-6H; Thu, 22 May 2025 17:15:06 -0400
+	id 1uIEOY-0002UH-J8; Thu, 22 May 2025 18:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uIDFn-0003m0-Nb
- for qemu-devel@nongnu.org; Thu, 22 May 2025 17:15:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <henson@acm.org>) id 1uIEOV-0002Td-Qp
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 18:28:08 -0400
+Received: from 004.mia.mailroute.net ([199.89.3.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uIDFl-0002Tq-Tp
- for qemu-devel@nongnu.org; Thu, 22 May 2025 17:15:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747948500;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Vqfo21sayTMPUfyXWQIXcwaEp+Rt4NrWMpr55qZYO/o=;
- b=ciVBW6mE4O1SVKPiZPfD3gs1ZqVtG525KX6rsT+U/+ysx0tUtulqlEzX1GhhJv0qx43Hno
- FMt+CNckIFveGydoogIR9xBDSK3V+t6Qql3WFExSHBkBPYQ1eP8Jt2JQuoFFoimrY1O9I4
- F/wR9Q2xI9S3Sk5ZcE3R4QtsxQrNSrE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-UORwyq4PO4ahWB5dSJC2lQ-1; Thu,
- 22 May 2025 17:14:57 -0400
-X-MC-Unique: UORwyq4PO4ahWB5dSJC2lQ-1
-X-Mimecast-MFC-AGG-ID: UORwyq4PO4ahWB5dSJC2lQ_1747948496
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (Exim 4.90_1) (envelope-from <henson@acm.org>) id 1uIEOQ-0005B5-Gg
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 18:28:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by 004.mia.mailroute.net (Postfix) with ESMTP id 4b3NGF0qBbzm1Hbc
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 22:27:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+ content-transfer-encoding:content-type:content-type:subject
+ :subject:from:from:content-language:user-agent:mime-version:date
+ :date:message-id:received:received; s=mr01; t=1747952868; x=
+ 1750544869; bh=z+6lNas0E2ByKjVQ2TrXgQJpE/UPa2yF6X88D5hZo4Y=; b=L
+ qXsHCWSjQG1j/QbLkqV4hupCABVgIBwjTkFkHG9Oq7Mhd4jrDULBqVIMGKmyWh2Q
+ Lc2Fs0CAlVR2uipazc2aSKWMLBvysTJF3FbcZanKCNw9xoJl1Z/8NOkhgg18/kkq
+ yF3WjM702NJRT2t5Qbjs9jl20Iby65EyQk65E9czuGHtg5hBdvEDU5X5sDv+HPsB
+ VPdk7TKAbIZbs/5+Lm2M0gxNyj6XS21g9M78j/Y+lDYfZJKWRgt+DwFZkPDGuo2W
+ QPKjlIYgHfMx488y5wuJcCMX1FzRU/yuPZUK78yUvkUPc7M2Uv0f0GqVF2M8Vp8G
+ 8pFoPx7lf/pL1xDzsPk2w==
+X-Virus-Scanned: by MailRoute
+Received: from 004.mia.mailroute.net ([127.0.0.1])
+ by localhost (004.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id zd2a8Vsr4sTK for <qemu-devel@nongnu.org>;
+ Thu, 22 May 2025 22:27:48 +0000 (UTC)
+Received: from [10.128.60.154] (vip.pbhware.com [47.181.41.151])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6208D1956094; Thu, 22 May 2025 21:14:56 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.201])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6F63F1944A8B; Thu, 22 May 2025 21:14:54 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH] iotests: Improve mirror-sparse on various filesystems
-Date: Thu, 22 May 2025 16:14:49 -0500
-Message-ID: <20250522211451.2301791-2-eblake@redhat.com>
+ (Authenticated sender: henson@acm.org)
+ by 004.mia.mailroute.net (Postfix) with ESMTPSA id 4b3NGD1cNszm1Hbd
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 22:27:47 +0000 (UTC)
+Message-ID: <b27e86f8-a93f-4b77-a2d6-3a47e23dfb12@acm.org>
+Date: Thu, 22 May 2025 15:27:45 -0700
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+From: "Paul B. Henson" <henson@acm.org>
+Subject: sr-iov live migration with NET_FAILOVER
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=199.89.3.7; envelope-from=henson@acm.org;
+ helo=004.mia.mailroute.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,70 +79,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fiona reported that an ext4 filesystem on top of LVM can sometimes
-report over-allocation to du (based on the hueristics the filesystem
-is making while observing the contents being mirrored); even though
-the contents and actual size matched, about 50% of the time the size
-reported by disk_usage was too large by 4k, failing the test.
+I'm running libvirtd under Debian 12 and trying to set up live migration 
+of a linux vm that's using an sr-iov VF as its primary ethernet device. 
+I have that device and the corresponding virtio backup device properly 
+configured in libvirt, and when the vm starts up everything looks good:
 
-Similarly, on ZFS where a file is created with preallocation=full, du
-does not see the full allocation until things have had time to settle;
-adding a sync call reduces the chance of catching that async window:
+2: nic0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state 
+UP mode DEFAULT group default qlen 1000
+     link/ether 52:54:00:a1:e0:38 brd ff:ff:ff:ff:ff:ff
+3: enp8s0nsby: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc 
+fq_codel master nic0 state DOWN mode DEFAULT group default qlen 1000
+     link/ether 52:54:00:a1:e0:38 brd ff:ff:ff:ff:ff:ff
+5: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master 
+nic0 state UP mode DEFAULT group default qlen 1000
+     link/ether 52:54:00:a1:e0:38 brd ff:ff:ff:ff:ff:ff
 
-| [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> qemu-img create my.raw 20M -f
-|w -o preallocation=full
-| Formatting 'my.raw', fmt=raw size=20971520 preallocation=full
-| [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> du --block-size=1 my.raw
-| 512 my.raw
-| [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> du --block-size=1 my.raw
-| 20980224    my.raw
+The problem I am having is that when I do a live migration of the box, 
+link on the standby virtio interface does not come up when the VF is 
+unplugged, so all network traffic to the system is dropped during the 
+interval between the source pulling the VF and the destination plugging 
+it back in.
 
-Fiona also reported that on a compressed ZFS, the filesystem can end
-up reporting smaller disk_usage if it re-compresses a file, despite a
-fully-allocating mirror - but since I don't have a compressed ZFS
-handy for reproducing that test, that may remain a sporadic problem
-for another day.
+It's not clear to me who is responsible for doing that? But from what I 
+can tell, it seems like it should be qmeu?
 
-Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-Fixes: c0ddcb2c ("tests: Add iotest mirror-sparse for recent patches")
-Signed-off-by: Eric Blake <eblake@redhat.com>
----
- tests/qemu-iotests/common.rc           | 2 ++
- tests/qemu-iotests/tests/mirror-sparse | 4 +++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+Per the documentation:
 
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 237f746af88..c3fc0bcf02a 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -143,6 +143,8 @@ _optstr_add()
- # report real disk usage for sparse files
- disk_usage()
- {
-+    # ZFS has lazy allocation; sync the file first for best results
-+    sync "$1"
-     du --block-size=1 "$1" | awk '{print $1}'
- }
+https://www.kernel.org/doc/html/latest/networking/net_failover.html
 
-diff --git a/tests/qemu-iotests/tests/mirror-sparse b/tests/qemu-iotests/tests/mirror-sparse
-index 8c52a4e2448..338d6cfbb35 100755
---- a/tests/qemu-iotests/tests/mirror-sparse
-+++ b/tests/qemu-iotests/tests/mirror-sparse
-@@ -96,10 +96,12 @@ _send_qemu_cmd $h1 '{"execute": "blockdev-del", "arguments":
-                 {"node-name": "dst"}}' 'return' \
-                   | _filter_block_job_offset | _filter_block_job_len
- $QEMU_IMG compare -U -f $IMGFMT -F raw $TEST_IMG.base $TEST_IMG
-+# Some filesystems can fudge allocations for various reasons; rather
-+# than expecting precise 2M and 20M images, it is better to allow for slop.
- result=$(disk_usage $TEST_IMG)
- if test $result -lt $((3*1024*1024)); then
-     actual=sparse
--elif test $result = $((20*1024*1024)); then
-+elif test $result -gt $((19*1024*1024)); then
-     actual=full
- else
-     actual=unknown
--- 
-2.49.0
+The sequence of events should be:
+
+* bring up link on standby device
+* detach sr-iov device
+* migrate vm
+* attach sr-iov device
+* bring down link on standby device
+
+If I do that manually, using virsh to light up the standby device and 
+detach the VF before migration and then manually reattach the device and 
+bring down standby link, no traffic is lost at all during the migration 
+process.
+
+I initially thought perhaps libvirt was supposed to be doing it, but 
+reviewing the debug logs and the QMP commands, it is neither detaching 
+nor reattaching the VF. It's just telling qmeu there's a failover pair, 
+and qemu is doing the detach/attach while migrating:
+
+-device 
+{"driver":"virtio-net-pci","failover":true,"netdev":"hostua-sr-iov-backup","id":"ua-sr-iov-backup","mac":"52:54:00:a1:e0:38","bus":"pci.7","addr":"0x0"}
+
+-device 
+{"driver":"vfio-pci","host":"0000:37:10.0","id":"hostdev0","failover_pair_id":"ua-sr-iov-backup","bus":"pci.1","addr":"0x0"}
+
+
+I tried manually bringing up link on the standby device before migrating 
+the system and letting qemu deal with the vf detach/attach, but that 
+resulted in even more lost traffic than simply letting the standby 
+device be down during the migration (the network started sending packets 
+to the standby device but the failover device didn't forward them on to 
+the virtual nic as long as the VF existed).
+
+Am I missing something? Is there some other configuration I'm supposed 
+to do? Any insight on this issue would be most appreciated.
+
+Debian 12 has qemu 7.2 as stable, but I also tried the backport of 9.2 
+with the same apparent behavior.
+
+Thanks much...
 
 
