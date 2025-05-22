@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 437B1C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF698C54ED1
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3Bs-0003AU-Tw; Thu, 22 May 2025 06:30:21 -0400
+	id 1uI3Ca-0004Kg-0Q; Thu, 22 May 2025 06:31:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3Br-000392-6H
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:19 -0400
+ id 1uI3CI-0003i2-GU
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3Bo-0006cs-5t
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:17 -0400
+ id 1uI3CC-0006f6-SY
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747909815;
+ s=mimecast20190719; t=1747909839;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IbbIsrmYqzBf/pcS4JhraC6Fa/Yn5do/AQdr/9z95P8=;
- b=DtfYkINpTXe6FNkAhpqCSBH3UCy10DZek0A0HhRfTvmones9E0I6ApllcHoEfim35WG4yq
- XDeu7P0yZBRDlQutCSk3og+FWLZ86d2LiYi1dcntqNMR8N1aRlPomcE4l1t3LtpD5gZU3G
- 8thccy/6DnwW2ZSlQZ7nH0pT27w3omY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=LT8u+Odh24aw54w1xRgnLKb526I+ZLroJYzIr5dgjt0=;
+ b=gFYoIdCXpDuqzr+3jjT5kIzQrp8+JY3W4NlLB/whHNkiuSCzlYSpSuuqSe9EFYYLPrY9i8
+ Zxxq76aD4bOY4Shwc+Ug50xN84CH4L8OLTSRkkm1rv5tR1a+XqVa/Xl81EfJ4Q7OlurBRe
+ r4xjFwxP3D/6mq68Uvan+GFBol9+nJA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-4ycuZalKPIyzlZofpUHnuQ-1; Thu,
- 22 May 2025 06:30:12 -0400
-X-MC-Unique: 4ycuZalKPIyzlZofpUHnuQ-1
-X-Mimecast-MFC-AGG-ID: 4ycuZalKPIyzlZofpUHnuQ_1747909811
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-pupDLAsnPiKQYTOEDWEBwA-1; Thu,
+ 22 May 2025 06:30:35 -0400
+X-MC-Unique: pupDLAsnPiKQYTOEDWEBwA-1
+X-Mimecast-MFC-AGG-ID: pupDLAsnPiKQYTOEDWEBwA_1747909835
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00DCC19560AE; Thu, 22 May 2025 10:30:11 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB71F195608B; Thu, 22 May 2025 10:30:34 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.179])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 01FE51958014; Thu, 22 May 2025 10:30:07 +0000 (UTC)
+ id AE70C1958014; Thu, 22 May 2025 10:30:31 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -54,12 +54,11 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 12/23] scripts/checkpatch: use new hook for file permissions
- check
-Date: Thu, 22 May 2025 11:29:12 +0100
-Message-ID: <20250522102923.309452-13-berrange@redhat.com>
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 18/23] util/qemu-sockets: Refactor setting client sockopts into
+ a separate function
+Date: Thu, 22 May 2025 11:29:18 +0100
+Message-ID: <20250522102923.309452-19-berrange@redhat.com>
 In-Reply-To: <20250522102923.309452-1-berrange@redhat.com>
 References: <20250522102923.309452-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,53 +90,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The file permissions check is the kind of check intended to be performed
-in the new start of file hook.
+From: Juraj Marcin <jmarcin@redhat.com>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+This is done in preparation for enabling the SO_KEEPALIVE support for
+server sockets and adding settings for more TCP keep-alive socket
+options.
+
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/checkpatch.pl | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ util/qemu-sockets.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 817df98231..881dcac29b 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1448,6 +1448,17 @@ sub process_file_list {
- # Called at the start of processing a diff hunk for a file
- sub process_start_of_file {
- 	my $fileinfo = shift;
-+
-+	# Check for incorrect file permissions
-+	if ($fileinfo->{action} eq "new" && ($fileinfo->{mode} & 0111)) {
-+		my $permhere = $fileinfo->{linestart} . "FILE: " .
-+			$fileinfo->{filenew} . "\n";
-+		if ($fileinfo->{filenew} =~
-+		    /(\bMakefile(?:\.objs)?|\.(c|cc|cpp|h|mak|s|S))$/) {
-+			ERROR("do not set execute permissions for source " .
-+			      "files\n" . $permhere);
-+		}
-+	}
+diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+index 77477c1cd5..4a878e0527 100644
+--- a/util/qemu-sockets.c
++++ b/util/qemu-sockets.c
+@@ -205,6 +205,22 @@ static int try_bind(int socket, InetSocketAddress *saddr, struct addrinfo *e)
+ #endif
  }
  
- # Called at the end of processing a diff hunk for a file
-@@ -1719,14 +1730,6 @@ sub process {
++static int inet_set_sockopts(int sock, InetSocketAddress *saddr, Error **errp)
++{
++    if (saddr->keep_alive) {
++        int keep_alive = 1;
++        int ret = setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE,
++                             &keep_alive, sizeof(keep_alive));
++
++        if (ret < 0) {
++            error_setg_errno(errp, errno,
++                             "Unable to set keep-alive option on socket");
++            return -1;
++        }
++    }
++    return 0;
++}
++
+ static int inet_listen_saddr(InetSocketAddress *saddr,
+                              int port_offset,
+                              int num,
+@@ -475,16 +491,9 @@ int inet_connect_saddr(InetSocketAddress *saddr, Error **errp)
+         return sock;
+     }
  
- 		$cnt_lines++ if ($realcnt != 0);
- 
--# Check for incorrect file permissions
--		if ($line =~ /^new (file )?mode.*[7531]\d{0,2}$/) {
--			my $permhere = $here . "FILE: $realfile\n";
--			if ($realfile =~ /(\bMakefile(?:\.objs)?|\.c|\.cc|\.cpp|\.h|\.mak|\.[sS])$/) {
--				ERROR("do not set execute permissions for source files\n" . $permhere);
--			}
--		}
+-    if (saddr->keep_alive) {
+-        int val = 1;
+-        int ret = setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE,
+-                             &val, sizeof(val));
 -
- # Only allow Python 3 interpreter
- 		if ($realline == 1 &&
- 			$line =~ /^\+#!\ *\/usr\/bin\/(?:env )?python$/) {
+-        if (ret < 0) {
+-            error_setg_errno(errp, errno, "Unable to set KEEPALIVE");
+-            close(sock);
+-            return -1;
+-        }
++    if (inet_set_sockopts(sock, saddr, errp) < 0) {
++        close(sock);
++        return -1;
+     }
+ 
+     return sock;
 -- 
 2.49.0
 
