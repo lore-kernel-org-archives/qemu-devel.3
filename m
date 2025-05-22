@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E4EC54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 13:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D82FC54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 13:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI60X-0006hh-Ub; Thu, 22 May 2025 09:30:49 -0400
+	id 1uI65O-0007o0-Qf; Thu, 22 May 2025 09:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uI60W-0006hU-8W
- for qemu-devel@nongnu.org; Thu, 22 May 2025 09:30:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uI65L-0007nK-4p
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 09:35:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uI60P-0000Xr-44
- for qemu-devel@nongnu.org; Thu, 22 May 2025 09:30:47 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uI65I-0001Hn-CS
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 09:35:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747920640;
+ s=mimecast20190719; t=1747920941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lheolW7SVR1PBT9hzUnWjsGDINa/Irqdk4Ihcroxevw=;
- b=YkQvURh9EUdTLd3Rxk98UlAg1RnqPpg7dVot2MVolJiLHvlQL/NWDFqtI6EoTQAgQWKyS5
- mBVuubcajIXe0DKigDPzwpnwdapISTBMHYceBgrcjA0kY9/+WRkPPPa8cctkS3+D29vQdP
- gkPye8wGhePWJSrFKZsRahb6PSKmCSI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YTDH19IWN+kKj4OHFjs1ZK3wsT7lv36lVkF84MH3yWg=;
+ b=Zv3sy9e2o7FcgpzXfLiahvth4Tlnsi9hwIbrCHlPcWJe6A9MeGwbE1qO8UbSjDbGzn7pir
+ L8ryZyBbXDYAyB3UToOCTb07a6Y1SZ4HqYx2UdJGbc3o7n9P9bk84fXJ666l8qXe3hZSu9
+ IeAHkaA/57SgZf7Dsodup4lYtuXQc/c=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-GtB7n_cQPTmnb1DBLnfyzw-1; Thu, 22 May 2025 09:30:36 -0400
-X-MC-Unique: GtB7n_cQPTmnb1DBLnfyzw-1
-X-Mimecast-MFC-AGG-ID: GtB7n_cQPTmnb1DBLnfyzw_1747920635
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a363beb5ebso3811326f8f.3
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 06:30:36 -0700 (PDT)
+ us-mta-489-4rQo1qk2NAma6spH5PK8Vw-1; Thu, 22 May 2025 09:35:40 -0400
+X-MC-Unique: 4rQo1qk2NAma6spH5PK8Vw-1
+X-Mimecast-MFC-AGG-ID: 4rQo1qk2NAma6spH5PK8Vw_1747920939
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a362939f61so3196326f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 06:35:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747920635; x=1748525435;
+ d=1e100.net; s=20230601; t=1747920939; x=1748525739;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lheolW7SVR1PBT9hzUnWjsGDINa/Irqdk4Ihcroxevw=;
- b=wjGGMdsvK1Q9kMp9sZpM4TnE01qZDT1VIb6D0nuv0k3EkH18C5d78KWd12xsh0IPhk
- 3A9DMWRNCm/sVnBv8XQzUYHqs3hbxt7moqeDSgmVtyhOBQD4UtFIFzBPo4QjnejUz6Dq
- Q/JTRo1r2kbwTA5zv8CVfwRP38hOHLHO0bpGJ+BODmbCXTid131XWjnnlQOU7FxyepJ2
- VmZhN5lvEpsmCaKhA0bD73c+YuGxAD441rt9eo859mIeXM9RjRa6POxvARrICq9d4ufj
- kQ8HXwfWl0/FBaU9d44jfZFAYzEsIJZcefnK8Vrcarciqq5oIRrsYQKhV0SLaq5BNR4B
- gJjg==
+ bh=YTDH19IWN+kKj4OHFjs1ZK3wsT7lv36lVkF84MH3yWg=;
+ b=FJiUs9Qmj3W3IDbq0eOAsgHvvzAksPSXH/o8MB1yp/rL0rySWN0QWgTzC9C9BZEwvp
+ F3DP8FExCIPTp1yzkbwLQoBvFoiRvb5ccn/WC66uLvLM/Wl7Gq/5qXMhQJiJLBIE9ovE
+ R4h8WJqNFQe9Zz5h90l0QW2VYp4ke3g+WViUwzGkKEXfAxrHLc9Mi9UUQ235XDlOQtNE
+ ug2dAkV/H+6tYEs9GC6KORu+/ckvoxnLtAWLhZEFhX6WcQ0uU0v2mlQsTVqH8Xp4+M2S
+ GOKEb6EvN0C9KCZS5fAO5vh4765gdoZ7jN0dnfYHGFACMYGEnlAVl2WVr8ZHQ6fHI2qv
+ O8VQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWOzfGSH2+a4QkhelG/ZCoRz21FuIhtAgZJaWEiFApk7eWA9OY9qJd+rMKfC7S37R95jwYRwv/kNgj@nongnu.org
-X-Gm-Message-State: AOJu0YyugMA5Qp09/is5do5s87KZBd6dWqF34UxafLd9SuRXwLN3hXUo
- Nq3bUaZQLq8e38xPRwkbsYLdPoc6JazVWx9aw7S+3vUpky+SkiXsj+/fsksaGBL50T8MOvltupD
- NXTrElVElghuAdTB1PzN4FA/k0bnq69aNCblpaBiCLDZPjHj3UrS+rIN6
-X-Gm-Gg: ASbGncvVSWaBRY44XjT06IEVOxSXgkRgIlk3APegjc2v2WFhNf5PSnshAusBqcaFoA9
- S3tGz4qjPwJRh/2ULwUwS7nJhK3u585qbIF4aqRN+9g7my9VHLML8/zWnUctkAsgLg7N7FNT+ph
- vZapljf45F3iUSV1HMsMHhakk3lgf4Th97JLLZQHg5/BmogoUQ6Vjtdk1Cxld2Oxzy6FCWEbeG2
- 7nrUoBKVonnE3ZwDPY0ztvKvwK2k9njYsXGaWfto1Dk70tyZwOjxXnZucS8m8A8KV28WaeIuSJT
- Xr+/BEW2iajoYKvivmTHTnlKJAp9gzt0Xq+LQgoPuskgznf6eg==
-X-Received: by 2002:a5d:5f4e:0:b0:3a3:2aa4:6f6b with SMTP id
- ffacd0b85a97d-3a35fe5c59amr21306491f8f.1.1747920635090; 
- Thu, 22 May 2025 06:30:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiLvbzUhmKfqW8xkv9iNC273N6ZNBngjy9vP1AVxGaxJPI3yoCFwNJSiTsb1s7I7qxhw3Paw==
-X-Received: by 2002:a5d:5f4e:0:b0:3a3:2aa4:6f6b with SMTP id
- ffacd0b85a97d-3a35fe5c59amr21306449f8f.1.1747920634535; 
- Thu, 22 May 2025 06:30:34 -0700 (PDT)
+ AJvYcCWq+fgIUgvprjJN/KQ7WgBT1p98HF3H/IOs8NvkuJ3va6qPTbOAHJkHoZxmhswGcosbqJvtfeq6y6uv@nongnu.org
+X-Gm-Message-State: AOJu0YwI1xU4ZKmQg0TXSssDDbXwUrFLBxgMQJFWxsu29mCMbX/jLg7I
+ D7+V+T/tPmjY02Eh0wE6XELzDvxuqvfI9isrzeX3Y62Pv7y6WdzNyPq5Qeoyw7pvu3omT72bzSV
+ 6pnQgjUj3Ysgz1ucBQMFlN45/Rjs+dX2VeAu8VCPJz0LS3t6hT3CUecAe
+X-Gm-Gg: ASbGncsIY+/cdEviUgQ9ZYy0MXWAa7R9bd/+pLSQIhyjh5jBvElb44DbhxcCD3dKveQ
+ /oFLzb1cq9cDnggq8rinG8sxXOrTMZkseULyqinGUNC5lnnkATb4ixXSTzWdQ/xlxJkqiQwAUqy
+ hhYIfoZIFp7vpK+oc7j27SJjwp+rX/qjUwIj396DekIt4Nw6W9zFDssq/lQfrUdPo6tqWYfhsDp
+ /JHCZBTbMrqmVKSE+IoSn+Ob2WTVYK9dyBRHUHsGP3hsU6l7YVQVvJ/Cupi5pWPplJfBAgoej01
+ uT/onWKHFuwCzVigeT65SZ77XdqXLMDwwuMNZf/jQ7TjllFGAw==
+X-Received: by 2002:a05:6000:3112:b0:3a2:133:b17d with SMTP id
+ ffacd0b85a97d-3a35fe796b6mr23801708f8f.14.1747920938831; 
+ Thu, 22 May 2025 06:35:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0VriZhQBFtDBWwo2pEZXatnKA5nv4acVEjszPdpZvVosYq3Md8EgbCQCmE7QMA3TFdRdi+g==
+X-Received: by 2002:a05:6000:3112:b0:3a2:133:b17d with SMTP id
+ ffacd0b85a97d-3a35fe796b6mr23801662f8f.14.1747920938427; 
+ Thu, 22 May 2025 06:35:38 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a3643e24e2sm20952353f8f.79.2025.05.22.06.30.33
+ ffacd0b85a97d-3a366e08747sm20021853f8f.95.2025.05.22.06.35.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 May 2025 06:30:33 -0700 (PDT)
-Message-ID: <7d1699d4-6d7d-4de3-a0bc-6dd345d9c2dd@redhat.com>
-Date: Thu, 22 May 2025 15:30:33 +0200
+ Thu, 22 May 2025 06:35:37 -0700 (PDT)
+Message-ID: <f94d3555-2f09-4620-b0e7-19fbdae86323@redhat.com>
+Date: Thu, 22 May 2025 15:35:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v9 3/4] hw/vfio/ap: Storing event information for an
@@ -134,7 +134,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
 In-Reply-To: <20250512180230.50129-4-rreyes@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -143,7 +143,7 @@ X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -191,10 +191,6 @@ On 5/12/25 20:02, Rorie Reyes wrote:
 > +    memset(nt0_res, 0, sizeof(*nt0_res));
 > +
 > +    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
-
-btw, I don't know if this was discussed. Are we OK to manipulate the
-'cfg_chg_events' construct withou locking ?
-
 > +    g_free(cfg_chg_event);
 > +
 > +    /*
@@ -214,11 +210,19 @@ btw, I don't know if this was discussed. Are we OK to manipulate the
 > +
 > +    return 0;
 > +
+
+extra white line ^
+
+and returning a bool would make more sense.
+
 > +}
 > +
 > +int ap_chsc_sei_nt0_have_event(void)
 > +{
 > +    return !QTAILQ_EMPTY(&cfg_chg_events);
+
+same here for the bool.
+
 > +}
 > +
 >   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
@@ -249,21 +253,19 @@ btw, I don't know if this was discussed. Are we OK to manipulate the
 > +#define NT0_RES_NT_DEFAULT    0;
 > +#define NT0_RES_RS_AP_CHANGE  5;
 > +#define NT0_RES_CC_AP_CHANGE  3;
+> +
+> +int ap_chsc_sei_nt0_get_event(void *res);
 
+Documentation would be nice to have since a "return 1" means failure.
 
-
-please drop the ending ';'
+> +
+> +int ap_chsc_sei_nt0_have_event(void);
+> +>   #endif
 
 
 Thanks,
 
 C.
 
-
-> +int ap_chsc_sei_nt0_get_event(void *res);
-> +
-> +int ap_chsc_sei_nt0_have_event(void);
-> +
->   #endif
 
 
