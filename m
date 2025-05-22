@@ -4,94 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E63C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 13:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD28AC54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 13:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI5ul-0004sQ-Pg; Thu, 22 May 2025 09:24:51 -0400
+	id 1uI5xH-0005te-9N; Thu, 22 May 2025 09:27:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1uI5uj-0004rz-Jd; Thu, 22 May 2025 09:24:49 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uI5xF-0005tI-PV
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 09:27:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1uI5uf-00086d-8d; Thu, 22 May 2025 09:24:49 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b385m5r9bz6M4gs;
- Thu, 22 May 2025 21:19:40 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id BF8FF1402EE;
- Thu, 22 May 2025 21:24:33 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (7.182.85.172) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 22 May 2025 15:24:33 +0200
-Received: from frapeml500007.china.huawei.com ([7.182.85.172]) by
- frapeml500007.china.huawei.com ([7.182.85.172]) with mapi id 15.01.2507.039;
- Thu, 22 May 2025 15:24:33 +0200
-To: Gavin Shan <gshan@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "mst@redhat.com" <mst@redhat.com>, Jonathan Cameron
- <jonathan.cameron@huawei.com>, Igor Mammedov <imammedo@redhat.com>, "Eric
- Auger" <eauger@redhat.com>
-CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
- <jean-philippe@linaro.org>, "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "peterx@redhat.com" <peterx@redhat.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "will@kernel.org" <will@kernel.org>,
- "ardb@kernel.org" <ardb@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "rafael@kernel.org" <rafael@kernel.org>, "borntraeger@linux.ibm.com"
- <borntraeger@linux.ibm.com>, "alex.bennee@linaro.org"
- <alex.bennee@linaro.org>, "npiggin@gmail.com" <npiggin@gmail.com>,
- "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, "linux@armlinux.org.uk"
- <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
- <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
- <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
- <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
- <karl.heubaum@oracle.com>, "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>, zhukeqian
- <zhukeqian1@huawei.com>, "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>, "jiakernel2@gmail.com"
- <jiakernel2@gmail.com>, "maobibo@loongson.cn" <maobibo@loongson.cn>,
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>, "shahuang@redhat.com"
- <shahuang@redhat.com>, "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm
- <linuxarm@huawei.com>
-Subject: RE: [PATCH RFC V5 00/30] Support of Virtual CPU Hotplug for ARMv8 Arch
-Thread-Topic: [PATCH RFC V5 00/30] Support of Virtual CPU Hotplug for ARMv8
- Arch
-Thread-Index: AQHbyeZ/exOrsEEeSkGHg/Tv58YKarPdDqmAgACTRACAAP7B4A==
-Date: Thu, 22 May 2025 13:24:33 +0000
-Message-ID: <67025b22e4864caaa5b3dd19eb6d95ac@huawei.com>
-References: <20241015100012.254223-1-salil.mehta@huawei.com>
- <b65590b1-8a6f-43e5-b367-732d6305c095@redhat.com>
- <429a8131-2b59-4800-891b-bcfbc6e44737@linaro.org>
- <0d1208fa-9fca-4b4b-bad0-8b596d5102fb@redhat.com>
-In-Reply-To: <0d1208fa-9fca-4b4b-bad0-8b596d5102fb@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.47.75.110]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uI5xC-00006I-4U
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 09:27:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747920438;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mNkTqJvG/9mywneZi8pDRbkYgS1F0EKIZ2pDUprKTc4=;
+ b=esX1xgDjsxhzaehlspucsmkk/2h4Uw76BUMTgYLN+MrC+DKf6AmqizB2Bp427rW7Wdk1oF
+ GuDWw/8NjF0S51MnLm+48aquQGlEwrSIQ1fiuwfMAW9P+vQBbwOSYTNqXvUvZDoXGu02C7
+ m1yjZlzIm8VIWvyjxSDhA457sJ9f1eE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-QIs2PSKTNUKAyf35b5uDTQ-1; Thu, 22 May 2025 09:27:16 -0400
+X-MC-Unique: QIs2PSKTNUKAyf35b5uDTQ-1
+X-Mimecast-MFC-AGG-ID: QIs2PSKTNUKAyf35b5uDTQ_1747920435
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a379218f6cso1552918f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 06:27:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747920435; x=1748525235;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mNkTqJvG/9mywneZi8pDRbkYgS1F0EKIZ2pDUprKTc4=;
+ b=hyguynte51DrFfyRj8BukA7zzdF49Lx8kl9O5+hVvHOVGlJBUzVQefFlAQx4OBbvfo
+ nEiM0nwsG35ty1HA4FKAFzpTHo/5IxMRSdjxe15K1y7q+FtCpiM5X1F4wzbbb3TiUAjE
+ s44DbzMFVvUgIvC9hqvLUR1Dnzy8OGZ9Pf7d0zDGfyjSqn2bbEBchwkMDrbnZQ73xiVI
+ 73p9TZVDr7WPNWML0Vz/ehklDI4veNojsBm16B5p7hbb6wuhK3P0C7SOMdcLULDR64vU
+ 4ZUCeeKJE1cyxAJ6XsdUXDZl20uDqFmLiRGL8aPuuHGKkLrpWUzz/hFs//gsLSCXljju
+ IvUg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUObyx4MO0aEhZwc441JuT+MU2kDFp40rMZXzDbtDfrBWPfTb2ibs73lEUp/MTqgNy8ls72Tg/c5QUh@nongnu.org
+X-Gm-Message-State: AOJu0Yz0Yha+uffbptF0A47H6M4V2WEu6vs5sRuIXJRdFLf/mMyk+rBW
+ R7Yj9k11I827Sjav3IXtXj5GiVWA0kVZUJxBmtgt5qRHKs0P72SJDVYvmau6Ezst64inOrrKIqZ
+ r8Wxg6R1TXF10nbp08pg91rWRfaAJf9GGMqZ/VucEflqXw+uTtXR6mYpD
+X-Gm-Gg: ASbGncvLdcKbQwt5ug/e7w0VxcTNGn4kgEG1BbxSfGSX8s5CHYyF+pZNe0xBGRNH51l
+ BflJ3V/iRTh8L8WfYmvAFGxjcIIwcj2znyLZ0aTNfxxByfMXyChWJOzSEZKB+VrfSKRgC/ecOq8
+ +835/IaONSd1VTUKeulmmwQRHf8pdJrANiSz8WzdyTB/xu21BJRb/Hc4EDDISuDtjaNv362H8qN
+ 02/R939xbroG6VuIkar7zp1AuaHo0LqOIznS/mCK/PrTG9DTgThYJJADcm6Ac138fPK1LkstS0w
+ m7CQxGfzrODUgVfZToiF1CtI2MLf8X1wnvnJ6O6sWplBAM5duw==
+X-Received: by 2002:a5d:5a44:0:b0:391:4674:b136 with SMTP id
+ ffacd0b85a97d-3a35c8443f5mr19266007f8f.29.1747920435430; 
+ Thu, 22 May 2025 06:27:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGuUEjBme2SL4OZHvVw2L3+0Y0aqwQpk4TYMQNuN04/zMDRpNIvW18YTYLHf/TsYRwJFr1HFA==
+X-Received: by 2002:a5d:5a44:0:b0:391:4674:b136 with SMTP id
+ ffacd0b85a97d-3a35c8443f5mr19265967f8f.29.1747920435051; 
+ Thu, 22 May 2025 06:27:15 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f6b29619sm112890555e9.7.2025.05.22.06.27.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 May 2025 06:27:14 -0700 (PDT)
+Message-ID: <f917f4f3-836b-4bdf-8dde-4d83cb226334@redhat.com>
+Date: Thu, 22 May 2025 15:27:13 +0200
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v9 2/4] hw/vfio/ap: store object indicating AP config
+ changed in a queue
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
+References: <20250512180230.50129-1-rreyes@linux.ibm.com>
+ <20250512180230.50129-3-rreyes@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250512180230.50129-3-rreyes@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,74 +156,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SEkgR2F2aW4sDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogR2F2aW4g
-U2hhbiA8Z3NoYW5AcmVkaGF0LmNvbT4NCj4gU2VudDogVGh1cnNkYXksIE1heSAyMiwgMjAyNSAx
-Mjo1NCBBTQ0KPiBUbzogR3VzdGF2byBSb21lcm8gPGd1c3Rhdm8ucm9tZXJvQGxpbmFyby5vcmc+
-OyBTYWxpbCBNZWh0YQ0KPiA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT47IHFlbXUtZGV2ZWxAbm9u
-Z251Lm9yZzsgcWVtdS0NCj4gYXJtQG5vbmdudS5vcmc7IG1zdEByZWRoYXQuY29tOyBKb25hdGhh
-biBDYW1lcm9uDQo+IDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+OyBJZ29yIE1hbW1lZG92
-DQo+IDxpbWFtbWVkb0ByZWRoYXQuY29tPjsgRXJpYyBBdWdlciA8ZWF1Z2VyQHJlZGhhdC5jb20+
-DQoNClsuLl0NCg0KPiANCj4gSGkgR3VzdGF2byBhbmQgU2FsaWwsDQo+IA0KPiBPbiA1LzIyLzI1
-IDE6MDYgQU0sIEd1c3Rhdm8gUm9tZXJvIHdyb3RlOg0KPiA+IEhpIFNhbGlsLCBHYXZpbiwgYW5k
-IGZvbGtzLA0KPiA+DQo+ID4gT24gNS8yMC8yNSAyMToyMiwgR2F2aW4gU2hhbiB3cm90ZToNCj4g
-Pj4gSGkgU2FsaWwsDQo+ID4+DQo+ID4+IEEga2luZGx5IHBpbmcuIHZDUFUgaG90cGx1ZyBpcyBh
-biBpbXBvcnRhbnQgZmVhdHVyZSBhbmQgWW91IGhhcyBwdXQNCj4gPj4gc28gbXVjaCBlbmVyZ2ll
-cyBhbmQgYW1hemluZyBlZmZvcnRzIHRvIGVuYWJsZSB0aGUgZmVhdHVyZSBmcm9tIFFFTVUNCj4g
-Pj4gc2lkZSwgYnV0IGl0IHNlZW1zIGl0IGhhcyBiZWVuIHN0dWNrIHJlY2VudGx5LiBJIHJlY2Vp
-dmVkIG1hbnkNCj4gPj4gbWVzc2FnZXMgZnJvbSBSZWRoYXQgaW50ZXJuYWwgYW5kIGV4dGVybmFs
-IHRvIGFzayBpZiB2Q1BVIGhvdHBsdWcgaGFzDQo+ID4+IGJlZW4gc3VwcG9ydGVkIG9uIGFhcmNo
-NjQgaW4gdGhlIHBhc3QuIFNvIEknbSBoZWFkaW5nIHVwIHRvIGNoZWNrIGlmDQo+ID4+IHlvdSBo
-YXZlIGJhbmR3aWR0aCB0byBjb250aW51ZSB0aGUgZWZmb3J0LCBhbnkga2luZHMgb2YgaGVscHMg
-YXJlDQo+IG5lZWRlZCwgZXNwZWNpYWxseSBmcm9tIG1lLg0KPiA+DQo+ID4gWW91IGNhbiBjb3Vu
-dCBvbiBtZSBhcyB3ZWxsLCBTYWxpbC4gSSdtIGRlZmluaXRlbHkgaW4gYSBiZXR0ZXINCj4gPiBw
-b3NpdGlvbiBub3cgdG8gaGVscCB5b3Ugd2l0aCB0aGUgdGVjaG5pY2FsIHJldmlldyBvZiB0aGUg
-c2VyaWVzLCBhbmQNCj4gPiBJIGNhbiBhbHNvIHdlaWdoIGluIHRvIGhlbHAgcmVzb2x2ZSBhbnkg
-cmVtYWluaW5nIGlzc3VlcyBzbyB3ZSBjYW4NCj4gPiBmaW5hbGx5IGdldCBpdCBtZXJnZWQuIERv
-bid0IGdpdmUgdXAhIDopDQo+ID4NCj4gPiBNeSBzdWdnZXN0aW9uOiBnbyBhaGVhZCBhbmQgcG9z
-dCB3aGF0IHlvdSBoYXZlIG5vdy4gSnVzdCBoaWdobGlnaHQgdGhlDQo+ID4gbWFpbiBwb2ludHMg
-b2Ygb2JqZWN0aW9uIHJhaXNlZCBpbiB0aGUgbGFzdCByZXZpZXcgdGhhdCBzdGlsbCBuZWVkIHRv
-IGJlDQo+IGFkZHJlc3NlZC4NCj4gPg0KPiANCj4gVGhhbmtzIGZvciB5b3VyIHJlc3BvbnNlIGFu
-ZCB0byBvZmZlciBoZWxwcy4gQW5vdGhlciBzdWdnZXN0aW9uIEkgaGF2ZSBpbg0KPiBtaW5kOg0K
-PiBpZiB0aGVyZSBpcyB1bmNlcnRhaW50eSByZWdhcmRpbmcgdGhlIGRlc2lnbiwgaXQgd291bGQg
-YmUgbmljZSB0byBwb3N0IGEgc3BlY2lmaWMNCj4gdGhyZWFkIGZvciBkaXNjdXNzaW9uIHVudGls
-IGl0J3MgY2xlYXJlZCBwcmlvciB0byBkaXZpbmcgaW50byBjb2RlLiBBZnRlciB0aGUNCj4gZGVz
-aWduIGlzIGFja25vd2xlZGdlZCBieSBtYWludGFpbmVycywgb3VyIGxpZmUgd2lsbCBiZSBtdWNo
-IGVhc2llci4gVGhlDQo+IHBvaW50IGlzIHRvIGdldCBlbm91Z2ggYXR0ZW50aW9ucyBhbmQgZmVl
-ZGJhY2tzIGZyb20gdGhlIG1haW50YWluZXJzIHVudGlsDQo+IGl0J3MgYWNrbm93bGVkZ2VkLg0K
-DQoNClRoZSBjaGFuZ2VzIHdlcmUgbWFpbmx5IHRvIGFkZHJlc3MgSWdvcidzIGNvbmNlcm4gd2hp
-Y2ggaGF2ZSB0byBiZSByZXNwZWN0ZWQNCmFzIGhlIGlzIGEgbWFpbnRhaW5lciBvZiB2Q1BVIGhv
-dHBsdWcgb24geDg2LiBBbmQgdG8gZW5zdXJlIHRoYXQgaGlzIHRpbWUgaXMNCnV0aWxpemVkIGJl
-c3QgYXMgaGUgaXMgdW5kZXJzdGFuZGFibHkgYSBidXN5IHBlcnNvbiwgd2UgYWxsIHRob3VnaHQg
-dG8gc2hhcmUgdGhlDQp1cGRhdGVkIGNvZGUgdG8gaGltLg0KDQpUaGVyZSBhcmUgZGVzaWduIGNo
-YW5nZXMgYnV0IHRoZXNlIGFyZSBub3Qgd2hpY2ggbWFrZXMgdGhlIGRlc2lnbiBjb21wbGV0ZWx5
-DQpkaWZmZXJlbnQgYXMgd2UgaGF2ZSB0byByZXNwZWN0IHRoZSBpbnRlcmZhY2VzIHdoaWNoIGhh
-dmUgYmVlbiBmcm96ZW4gd2l0aCB0aGUNCmtlcm5lbCBhbmQgaGVuY2UgdGhlIGhhbmRzaGFrZXMg
-aWRlYWxseSBzaG91bGQgcmVtYWluIHNhbWUuIEFsc28sIGFzIHBhcnQgb2YNCnRoZSByZXZpZXcs
-IEkndmUgaGFkIHNvbWUgaW50ZXJuYWwgZGlzY3Vzc2lvbnMgcmVsYXRlZCB0byB0aGVzZSBjaGFu
-Z2VzIGluIEh1YXdlaQ0Kd2l0aCBKb25hdGhhbiBhbmQgaGUgd2FzIGluIGFncmVlbWVudCB3aXRo
-IHRoZSBhcHByb2FjaC4gQnV0IG9mIGNvdXJzZSwgZW5kDQphY2tub3dsZWRnZW1lbnQgaGFzIHRv
-IGNvbWUgZnJvbSBJZ29yLiDwn5iKDQoNCiANCj4gPj4gQmVzaWRlcywgSSdtIHJlbHVjdGFudGx5
-IHRvIGFzayBpZiB5b3UncmUgZmluZSBmb3Igc29tZSBib2R5IGVsc2UgdG8NCj4gPj4gcGljayB0
-aGlzIHVwIGFuZCBjb250aW51ZSB0aGUgZWZmb3J0LiBUaGUgY3JlZGl0cyBmb3IgYWxsIHRoZQ0K
-PiA+PiBjb250cmlidXRvcnMgKEtlcWlhbiBaaHUsIEplYW4gUGhpbGlwcGUsIE1pZ3VlbCBMdWlz
-IGFuZCB5b3UpIHdpbGwgYmUga2VwdC4NCj4gPg0KPiA+IEkgZG9u4oCZdCB3YW50IHRvIHNwZWFr
-IGZvciBvdGhlcnMsIGJ1dCBpbiBteSB2aWV3LCBTYWxpbCBzaG91bGQgaWRlYWxseQ0KPiA+IGJl
-IHRoZSBvbmUgdG8gY29tcGxldGUgdGhpcyB3b3JrIOKAlCBhcyB5b3Ugc2FpZCwgaGXigJlzIGFs
-cmVhZHkgaW52ZXN0ZWQNCj4gPiBhIGdyZWF0IGRlYWwgb2YgdGltZSBhbmQgZW5lcmd5IGludG8g
-aXQuDQo+ID4NCj4gPiBJdCB3b3VsZCBiZSB0cmVtZW5kb3VzbHkgaGVscGZ1bCBpZiBtYWludGFp
-bmVycyBjb3VsZCBzdXBwb3J0IFNhbGlsIGluDQo+ID4gYnJpbmdpbmcgdGhpcyB0byBjb21wbGV0
-aW9uLCBraW5kbHkgZ3VpZGluZyBoaW0gdG93YXJkIHRoZSBwYXRoIHRvIGdldCBpdA0KPiBmaW5h
-bGl6ZWQuDQo+ID4NCj4gDQo+IEFic29sdXRlbHksIFNhbGlsIGtub3dzIGFsbCB0aGUgZGV0YWls
-cywgZXNwZWNpYWxseSB0aGUgaGlzdG9yaWMgc3RlcHMgaG93IHZDUFUNCj4gaG90cGx1ZyBoYXMg
-YmVlbiBldm9sdmluZy4gSSB0cnVseSBob3BlIFNhbGlsIGlzIGFibGUgdG8gY29udGludWUgdGhl
-IGVmZm9ydHMNCj4gdW50aWwgdGhlIGZlYXR1cmUgbGFuZHMgdXBzdHJlYW0hDQoNCg0KU29ycnks
-IGZvciBhbnkgaGFzc2xlIGNhdXNlZCBkdWUgdG8gbXkgYWJzZW5jZXMuIFllcywgSSdtIGJhY2sg
-dG8gd29yayBhbmQgd2lsbA0KdHJ5IHRvIGV4cGVkaXRlIHRoZSBjaGFuZ2VzIGFuZCBwaW5nIHlv
-dSBzb29uIGZvciB5b3VyIGhlbHAuDQoNClRoYW5rcyBmb3IgdW5kZXJzdGFuZGluZy4NCg0KQmVz
-dCByZWdhcmRzDQpTYWxpbC4NCg0KDQo+IA0KPiBUaGFua3MsDQo+IEdhdmluDQo+IA0KDQo=
+On 5/12/25 20:02, Rorie Reyes wrote:
+> Creates an object indicating that an AP configuration change event
+> has been received and stores it in a queue. These objects will later
+> be used to store event information for an AP configuration change
+> when the CHSC instruction is intercepted.
+> 
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+> ---
+>   hw/vfio/ap.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+> 
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 3d0af7a54a..5ea5dd9cca 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -41,6 +41,13 @@ struct VFIOAPDevice {
+>       EventNotifier cfg_notifier;
+>   };
+>   
+> +typedef struct APConfigChgEvent {
+> +    QTAILQ_ENTRY(APConfigChgEvent) next;
+> +} APConfigChgEvent;
+> +
+> +QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+> +    QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
+> +
+
+Could cfg_chg_events be static ?
+
+
+Thanks,
+
+C.
+
+
+
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+>   
+>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+> @@ -74,12 +81,17 @@ static void vfio_ap_req_notifier_handler(void *opaque)
+>   
+>   static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>   {
+> +    APConfigChgEvent *cfg_chg_event;
+>       VFIOAPDevice *vapdev = opaque;
+>   
+>       if (!event_notifier_test_and_clear(&vapdev->cfg_notifier)) {
+>           return;
+>       }
+>   
+> +    cfg_chg_event = g_new0(APConfigChgEvent, 1);
+> +
+> +    QTAILQ_INSERT_TAIL(&cfg_chg_events, cfg_chg_event, next);
+> +
+>       css_generate_css_crws(0);
+>   
+>   }
+
 
