@@ -4,84 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81CF8C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 09:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF4EC54756
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 09:29:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI2Cq-0004f4-74; Thu, 22 May 2025 05:27:16 -0400
+	id 1uI2Dy-0005Ps-71; Thu, 22 May 2025 05:28:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
- id 1uI2Cn-0004eu-8y
- for qemu-devel@nongnu.org; Thu, 22 May 2025 05:27:13 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uI2Dq-0005LI-5R
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 05:28:19 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
- id 1uI2Ci-0005Fn-MB
- for qemu-devel@nongnu.org; Thu, 22 May 2025 05:27:12 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-442ed8a275fso97865555e9.2
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 02:27:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uI2Dn-0005ST-JC
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 05:28:17 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-442fda876a6so55495715e9.0
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 02:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747906026; x=1748510826; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dZz1dJNsJD0vu2hmJukjMk22LukA/Pf6RQDcoto72aI=;
- b=Re8JSVa0XkkNCx63pALKeKhyF016iTRaxlDU35dNQqDkSoeUxzLyyzwECp0d1wVech
- 2seiwMp1FBKmZr+Hr+FOQbF1QEtiV3Y/VvTsh1G9NpbgHBGgBqiNzyTfQEOUiXLGO6SB
- l+hAx8TzdEEEer1VwWcOXtePgvjSvb6kwNJcwLYtIgYOtX5q4WvgcQOzVTGLzYdI7N37
- F1b+RRfzaD+VnsOTg7CB2mRrnS+5nwaiKS2PugNkt9wpOTDO2ZzavskZh0sjDSa8aoy8
- LBFjc2P0BF4LlMx3Enn97dgZCB4LYBUHT2XybqeiNMVWmqj79CFhCXtyj/xJW6Hluhrz
- Rlzg==
+ d=linaro.org; s=google; t=1747906093; x=1748510893; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gDq06Qu8XjMjOqmzHAD9Z1Y173iAzWbcG825ElOCaoM=;
+ b=HtARaOxbjtmD4j8Dhgwm//R+dGMOcFbq7pj8DDI8v/sIqR3NwTB+C0JYUJ7W6+JIu9
+ IIrQyOaqRevlSCudq3gnbZUvoIwV9EiORMlUjmISS1Uv0veqGLnTPLicZ8s2sCb0ZbXJ
+ 5+N5Dz+jsSztb5tDe85NqUDVdUndfcd+qUFdQ/5kW3JfvDTLR1M3oXasGWV8dkd2qW6R
+ ENGcBnMvavJw2+Ob5VKTTytO49AIdFvc0dyYPzH3aj7tICcM/ytMCPOlYXoUAA2L9iZ+
+ A7oFHgwtKwpIVf8tAPBX1d17gWpkL7TRh2C4NQ0yIaIpFeUbolDe0DkthLFqVhw7vC2Q
+ dPeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747906026; x=1748510826;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dZz1dJNsJD0vu2hmJukjMk22LukA/Pf6RQDcoto72aI=;
- b=RIpS8sqA5UM4MBtCEUWsuVyUQbb79y0fJ3sLU4McIm/ZVnXKO8qCLW/4mN0K/Q79Aw
- 5F3HcRvmlj6FL9rJq3MwDfixeRzYyL8nv6xUj0u3w8Z9c2tpJuCKazG/2cBnRgoCRdFg
- krikK++hPkNgPTx5+JTYjJkRS5wGe5jIunySyros1nPpFjCsihmCMzGEZaVw/LdYXJc9
- HJ0yOo+S2XoGkpGVmtfmrUgFV4YbIpFBDbvgFjvUWhlrKRXmLy3bBinDm4L1vkyXrf2i
- XVqTXh22FsDrqLXrFIHQaSA82CpiulTb3ZICAOGC6chCfnweTM0vErHXnD+bZAWwm3Ge
- 4VCw==
-X-Gm-Message-State: AOJu0YzpFgCUf6/vV2VwjT0oagFFstlq2lX5nKr7SzttWfwVkXT1uMaD
- FTRqcjdq/mPBsGOIg7lvOCvz5GGu6pQFvqcfJ8Y9tJuWFctuAucSUuoQGDBDIdaX
-X-Gm-Gg: ASbGncsR6zRoy0zTBkArDobF4tM7qcRf+7evQF3wlzh8U88eEouMyONpieGQ4DM4hff
- Af2Lcmaaeg9ui8MdFGbgLfEvF/dJe0phdkOF4yvjmfxAT59EYDDL126Yw9XsEINrg+uPJFUNSZb
- Td9i++rWkJ+mo27iekXTB2hGrVovFQqenZmXO76DBCvvgTlQe1VJwlp/H8O1LLSZOerw81doGM4
- q43UpO3qJqUSsvOttYLsBY38SUpbCeebpZJWbUASwAjwCFGeQhFWb6Nvafm6LBFUBEzyZYU4yuw
- QCDYH5MQZWdx4zaN8+4hixBWWAnCqaaA1SPqIBkbWzc72fYK2oUvfVUckzHjYrWvS1hsJjZTOU8
- yAhYRbyEQ8hUXDGWl58gj7EPyPFaeCgT3110s6csx
-X-Google-Smtp-Source: AGHT+IHHWE4nZdHoiz+htO0CPQAZuL/hMo/6d/xLQ4Geqalxl828rnWlqHv5iVE5vV6gTgXVwOOvdg==
-X-Received: by 2002:a05:600c:34cf:b0:43d:1b95:6d0e with SMTP id
- 5b1f17b1804b1-442fd664aa5mr205840885e9.23.1747906025664; 
- Thu, 22 May 2025 02:27:05 -0700 (PDT)
-Received: from localhost (mac76-h03-89-88-247-135.dsl.sta.abo.bbox.fr.
- [89.88.247.135]) by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-447f3dd9c65sm103057325e9.39.2025.05.22.02.27.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 May 2025 02:27:05 -0700 (PDT)
-From: conte.souleymane@gmail.com
-To: qemu-devel@nongnu.org
-Cc: eblake@redhat.com, jsnow@redhat.com, peter.maydell@linaro.org,
- Souleymane Conte <conte.souleymane@gmail.com>
-Subject: [PATCH v3] docs/interop: convert text files to restructuredText
-Date: Thu, 22 May 2025 09:26:22 +0000
-Message-ID: <20250522092622.40869-1-conte.souleymane@gmail.com>
-X-Mailer: git-send-email 2.49.0
+ d=1e100.net; s=20230601; t=1747906093; x=1748510893;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gDq06Qu8XjMjOqmzHAD9Z1Y173iAzWbcG825ElOCaoM=;
+ b=mxKRI6a8mebwt98H1OJ8VD/WDG2HFy61MlP5x6Y7iJWJvIcrvkG3NXssx8Qhx7Gpgi
+ 6cEiZLTtFKLlVkQO9b/mpXL/HZvl40PSLMtmAJ80Ov9avM5zF8RX9iCGJuLekRjn8eEG
+ wuSLkR0B/Wb9uxvw7dXlhU8ouRkMFBqY01gQGN64Vl4L2Hx1p3mT1QQpLw4wIZpFEHMm
+ TDoQEEHkS6u7Y2/lNOGELY9vGFxvdSHpWoh36U6mBVLtXR5awzk/3/uHcPnUiGCJQSlj
+ zCSY2N/1d8wSb5it0iMglZQJXnyG78ZWS7j8I1BJTGDCtp/if9i2Wc3ckGiP/6ALTTQU
+ ZwyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAF7l5lFciiwZ2o8UjBxKbis5Ka+2/VrQdbPcH5Yhgte/lB5jRv3kvZP0NXJhuo0GWZHzs+280FjtQ@nongnu.org
+X-Gm-Message-State: AOJu0YwVFg1z3k1cZo62Ic0MUpbIxR5KGA2gyr3ylMTbbTfJjB4CwB0/
+ M6ogT3QMs0/LiIwiszK9Zo9Hz+w3ByOkkDUp4QMGs2Ok52pKORfQPpG78CMR1C0+tbM=
+X-Gm-Gg: ASbGncu1KVNGZMeyNsgP/wR0Zxado5tWmTc672hYIbhMtM/OsE6abHnEM/JeWWg4yPc
+ G2SfVH6f6ixC5CPDgcRrv5grGm/kgA/G/iGiBJTC01lkYZb2OsOHOa8n0i6B6xslXH8x2fA28Ut
+ G4qMdSYGlu3SYbsSthYrWaqoMUKufXT92suhSYAhFoA/J+SHmsN7CeCWfOKg3IeYGMSV7n5VVKn
+ kxPR5rNLeBiIn+4rWXVYDOwCzpfRBc8sUKrOm6RGShjy606gGKVhFcYTN5DCCvAMsYlXb7HE017
+ krEFTdBMQMHniqRK/T+9YDGf0GjRzAdi2o8aFafLAoNL9aJY262VFgVr+W4zJcE=
+X-Google-Smtp-Source: AGHT+IHq+rhlziu6d7ea2I7ZoWMhtJvc573/Zr6s1oBv0Yq4Ku+fheo/mAgL9QWLHfYCoaBdacHJdg==
+X-Received: by 2002:a05:6000:ecf:b0:3a3:5e77:436e with SMTP id
+ ffacd0b85a97d-3a35e77460fmr16926354f8f.43.1747906093021; 
+ Thu, 22 May 2025 02:28:13 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a35ca5a04csm22165834f8f.23.2025.05.22.02.28.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 May 2025 02:28:12 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 800F05F8AD;
+ Thu, 22 May 2025 10:28:11 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Peter Xu
+ <peterx@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Markus Armbruster
+ <armbru@redhat.com>,  David Hildenbrand <david@redhat.com>,  Laurent
+ Vivier <lvivier@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Sriram Yagnaraman
+ <sriram.yagnaraman@ericsson.com>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  Gustavo Romero
+ <gustavo.romero@linaro.org>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v3 12/20] virtio-gpu: fix hang under TCG when unmapping
+ blob
+In-Reply-To: <199e7486-7d05-459b-ad51-cb9b130f299f@daynix.com> (Akihiko
+ Odaki's message of "Thu, 22 May 2025 16:40:13 +0900")
+References: <20250521164250.135776-1-alex.bennee@linaro.org>
+ <20250521164250.135776-13-alex.bennee@linaro.org>
+ <4d300cca-3ac2-4072-a35c-0b6aef970b26@daynix.com>
+ <87bjrl87p5.fsf@draig.linaro.org>
+ <83945c43-bfb2-4469-90bd-e3a7c2ca5d89@daynix.com>
+ <CAAjaMXZ8acKBSGHvcQOcOnzBDCjFU1SOjse7pHtHWxNeREc2gg@mail.gmail.com>
+ <199e7486-7d05-459b-ad51-cb9b130f299f@daynix.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Thu, 22 May 2025 10:28:11 +0100
+Message-ID: <875xht805w.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=conte.souleymane@gmail.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,579 +127,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Souleymane Conte <conte.souleymane@gmail.com>
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-buglink: https://gitlab.com/qemu-project/qemu/-/issues/527
+> On 2025/05/22 16:31, Manos Pitsidianakis wrote:
+>> On Thu, May 22, 2025 at 10:03=E2=80=AFAM Akihiko Odaki <akihiko.odaki@da=
+ynix.com> wrote:
+>>>
+>>> On 2025/05/22 15:45, Alex Benn=C3=A9e wrote:
+>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>>>>
+>>>>> On 2025/05/22 1:42, Alex Benn=C3=A9e wrote:
+>>>>>> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>>>>> This commit fixes an indefinite hang when using VIRTIO GPU blob
+>>>>>> objects
+>>>>>> under TCG in certain conditions.
+>>>>>> The VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB VIRTIO command creates a
+>>>>>> MemoryRegion and attaches it to an offset on a PCI BAR of the
+>>>>>> VirtIOGPUdevice. The VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB command unma=
+ps
+>>>>>> it.
+>>>>>> Because virglrenderer commands are not thread-safe they are only
+>>>>>> called on the main context and QEMU performs the cleanup in three st=
+eps
+>>>>>> to prevent a use-after-free scenario where the guest can access the
+>>>>>> region after it=E2=80=99s unmapped:
+>>>>>> 1. From the main context, the region=E2=80=99s field finish_unmappin=
+g is
+>>>>>> false
+>>>>>>       by default, so it sets a variable cmd_suspended, increases the
+>>>>>>       renderer_blocked variable, deletes the blob subregion, and unp=
+arents
+>>>>>>       the blob subregion causing its reference count to decrement.
+>>>>>> 2. From an RCU context, the MemoryView gets freed, the FlatView gets
+>>>>>>       recalculated, the free callback of the blob region
+>>>>>>       virtio_gpu_virgl_hostmem_region_free is called which sets the
+>>>>>>       region=E2=80=99s field finish_unmapping to true, allowing the =
+main thread
+>>>>>>       context to finish replying to the command
+>>>>>> 3. From the main context, the command is processed again, but this
+>>>>>> time
+>>>>>>       finish_unmapping is true, so virgl_renderer_resource_unmap can=
+ be
+>>>>>>       called and a response is sent to the guest.
+>>>>>> It happens so that under TCG, if the guest has no timers configured
+>>>>>> (and
+>>>>>> thus no interrupt will cause the CPU to exit), the RCU thread does n=
+ot
+>>>>>> have enough time to grab the locks and recalculate the FlatView.
+>>>>>> That=E2=80=99s not a big problem in practice since most guests will =
+assume a
+>>>>>> response will happen later in time and go on to do different things,
+>>>>>> potentially triggering interrupts and allowing the RCU context to ru=
+n.
+>>>>>> If the guest waits for the unmap command to complete though, it bloc=
+ks
+>>>>>> indefinitely. Attaching to the QEMU monitor and force quitting the g=
+uest
+>>>>>> allows the cleanup to continue.
+>>>>>> There's no reason why the FlatView recalculation can't occur right
+>>>>>> away
+>>>>>> when we delete the blob subregion, however. It does not, because whe=
+n we
+>>>>>> create the subregion we set the object as its own parent:
+>>>>>>        memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data=
+);
+>>>>>> The extra reference is what prevents freeing the memory region
+>>>>>> object in
+>>>>>> the memory transaction of deleting the subregion.
+>>>>>> This commit changes the owner object to the device, which removes
+>>>>>> the
+>>>>>> extra owner reference in the memory region and causes the MR to be
+>>>>>> freed right away in the main context.
+>>>>>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>>>>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>>>>> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>>>>> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>>>>> Message-Id: <20250410122643.1747913-3-manos.pitsidianakis@linaro.org>
+>>>>>> Cc: qemu-stable@nongnu.org
+>>>>>> ---
+>>>>>>     hw/display/virtio-gpu-virgl.c | 2 +-
+>>>>>>     1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>> diff --git a/hw/display/virtio-gpu-virgl.c
+>>>>>> b/hw/display/virtio-gpu-virgl.c
+>>>>>> index 71a7500de9..8fbe4e70cc 100644
+>>>>>> --- a/hw/display/virtio-gpu-virgl.c
+>>>>>> +++ b/hw/display/virtio-gpu-virgl.c
+>>>>>> @@ -112,7 +112,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>>>>>>         vmr->g =3D g;
+>>>>>>         mr =3D g_new0(MemoryRegion, 1);
+>>>>>>     -    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size,
+>>>>>> data);
+>>>>>> +    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
+>>>>>>         memory_region_add_subregion(&b->hostmem, offset, mr);
+>>>>>>         memory_region_set_enabled(mr, true);
+>>>>>>
+>>>>>
+>>>>> I suggest dropping this patch for now due to the reason I pointed out
+>>>>> for the first version of this series.
+>>>>
+>>>> This fixes an actual bug - without it we get a hang.
+>>>>
+>>>
+>>> I understand that but it also introduces a regression; "[PATCH v3 14/20]
+>>> ui/gtk-gl-area: Remove extra draw call in refresh" is also a similar ca=
+se.
+>>>
+>>> Ideally such a bug should be fixed without regression, but I understand
+>>> it is sometimes difficult to do that and postponing the bug resolution
+>>> until figuring out the correct way does not make sense.
+>>>
+>>> In such a case, a bug should be fixed minimizing the regression and the
+>>> documentation of the regression should be left in the code.
+>>>
+>>> In particular, this patch can cause use-after-free whether TCG is used
+>>> or not. Instead, I suggest to avoid freeing memory regions at all on
+>>> TCG. It will surely leak memory, but won't result in use-after-free at
+>>> least and the other accelerators will be unaffected.
+>>>
+>>> Regards,
+>>> Akihiko Odaki
+>> We tested this fix with ASAN and didn't see anything. Do you have a
+>> test case in mind that can reproduce this use-after-free? It'd help
+>> make a certain decision on whether to drop this patch or not. I'm not
+>> doubting that this can cause a use-after-free by the way, it's just
+>> that it is hypothetical only. If it causes a use-after-free for sure
+>> we should definitely drop it.
+>
+> No, I don't have a test case and it should rarely occur. More
+> concretely, a UAF occurs if the guest accesses the memory region while
+> trying to unmap it. It is just a theory indeed, but the theory says
+> the UAF is possible.
 
-Signed-off-by: Souleymane Conte <conte.souleymane@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Eric Blake <eblake@redhat.com>
----
-Changes since v2:
-- Nested table rendering in code blocks
-- monospace usage for all filenames, fields name and function references
-- rendering of "\0" character using `` 
+I have a test case this fixes which I think trumps a theoretical UAF
+without a test case.
 
- docs/interop/index.rst                |   1 +
- docs/interop/{qcow2.txt => qcow2.rst} | 187 +++++++++++++++-----------
- 2 files changed, 110 insertions(+), 78 deletions(-)
- rename docs/interop/{qcow2.txt => qcow2.rst} (90%)
+Why would the guest attempt to access after triggering the free itself?
+Wouldn't it be correct to fault the guest for violating its own memory
+safety rules?
 
-diff --git a/docs/interop/index.rst b/docs/interop/index.rst
-index 999e44eae1..5b9b0653b5 100644
---- a/docs/interop/index.rst
-+++ b/docs/interop/index.rst
-@@ -16,6 +16,7 @@ are useful for making QEMU interoperate with other software.
-    live-block-operations
-    nbd
-    parallels
-+   qcow2
-    prl-xml
-    pr-helper
-    qmp-spec
-diff --git a/docs/interop/qcow2.txt b/docs/interop/qcow2.rst
-similarity index 90%
-rename from docs/interop/qcow2.txt
-rename to docs/interop/qcow2.rst
-index 2c4618375a..6fc99e6b9a 100644
---- a/docs/interop/qcow2.txt
-+++ b/docs/interop/qcow2.rst
-@@ -1,6 +1,8 @@
--== General ==
-+================
-+Qcow2 Image File
-+================
- 
--A qcow2 image file is organized in units of constant size, which are called
-+A *qcow2* image file is organized in units of constant size, which are called
- (host) clusters. A cluster is the unit in which all allocations are done,
- both for actual guest data and for image metadata.
- 
-@@ -9,10 +11,10 @@ clusters of the same size.
- 
- All numbers in qcow2 are stored in Big Endian byte order.
- 
-+Header
-+------
- 
--== Header ==
--
--The first cluster of a qcow2 image contains the file header:
-+The first cluster of a qcow2 image contains the file header::
- 
-     Byte  0 -  3:   magic
-                     QCOW magic string ("QFI\xfb")
-@@ -38,7 +40,7 @@ The first cluster of a qcow2 image contains the file header:
-                     within a cluster (1 << cluster_bits is the cluster size).
-                     Must not be less than 9 (i.e. 512 byte clusters).
- 
--                    Note: qemu as of today has an implementation limit of 2 MB
-+                    Note: QEMU as of today has an implementation limit of 2 MB
-                     as the maximum cluster size and won't be able to open images
-                     with larger cluster sizes.
- 
-@@ -48,7 +50,7 @@ The first cluster of a qcow2 image contains the file header:
-          24 - 31:   size
-                     Virtual disk size in bytes.
- 
--                    Note: qemu has an implementation limit of 32 MB as
-+                    Note: QEMU has an implementation limit of 32 MB as
-                     the maximum L1 table size.  With a 2 MB cluster
-                     size, it is unable to populate a virtual cluster
-                     beyond 2 EB (61 bits); with a 512 byte cluster
-@@ -87,7 +89,8 @@ The first cluster of a qcow2 image contains the file header:
- 
- For version 2, the header is exactly 72 bytes in length, and finishes here.
- For version 3 or higher, the header length is at least 104 bytes, including
--the next fields through header_length.
-+the next fields through ``header_length``.
-+::
- 
-          72 -  79:  incompatible_features
-                     Bitmask of incompatible features. An implementation must
-@@ -185,7 +188,8 @@ the next fields through header_length.
-                     of 8.
- 
- 
--=== Additional fields (version 3 and higher) ===
-+Additional fields (version 3 and higher)
-+----------------------------------------
- 
- In general, these fields are optional and may be safely ignored by the software,
- as well as filled by zeros (which is equal to field absence), if software needs
-@@ -193,21 +197,25 @@ to set field B, but does not care about field A which precedes B. More
- formally, additional fields have the following compatibility rules:
- 
- 1. If the value of the additional field must not be ignored for correct
--handling of the file, it will be accompanied by a corresponding incompatible
--feature bit.
-+   handling of the file, it will be accompanied by a corresponding incompatible
-+   feature bit.
- 
- 2. If there are no unrecognized incompatible feature bits set, an unknown
--additional field may be safely ignored other than preserving its value when
--rewriting the image header.
-+   additional field may be safely ignored other than preserving its value when
-+   rewriting the image header.
-+
-+.. _ref_rules_3:
- 
- 3. An explicit value of 0 will have the same behavior as when the field is not
--present*, if not altered by a specific incompatible bit.
-+   present*, if not altered by a specific incompatible bit.
- 
--*. A field is considered not present when header_length is less than or equal
-+(*) A field is considered not present when ``header_length`` is less than or equal
- to the field's offset. Also, all additional fields are not present for
- version 2.
- 
--              104:  compression_type
-+::
-+
-+        104:        compression_type
- 
-                     Defines the compression method used for compressed clusters.
-                     All compressed clusters in an image use the same compression
-@@ -219,8 +227,8 @@ version 2.
-                     or must be zero (which means deflate).
- 
-                     Available compression type values:
--                        0: deflate <https://www.ietf.org/rfc/rfc1951.txt>
--                        1: zstd <http://github.com/facebook/zstd>
-+                       - 0: deflate <https://www.ietf.org/rfc/rfc1951.txt>
-+                       - 1: zstd <http://github.com/facebook/zstd>
- 
-                     The deflate compression type is called "zlib"
-                     <https://www.zlib.net/> in QEMU. However, clusters with the
-@@ -228,19 +236,21 @@ version 2.
- 
-         105 - 111:  Padding, contents defined below.
- 
--=== Header padding ===
-+Header padding
-+--------------
- 
--@header_length must be a multiple of 8, which means that if the end of the last
-+``header_length`` must be a multiple of 8, which means that if the end of the last
- additional field is not aligned, some padding is needed. This padding must be
- zeroed, so that if some existing (or future) additional field will fall into
--the padding, it will be interpreted accordingly to point [3.] of the previous
-+the padding, it will be interpreted accordingly to point `[3.] <#ref_rules_3>`_ of the previous
- paragraph, i.e.  in the same manner as when this field is not present.
- 
- 
--=== Header extensions ===
-+Header extensions
-+-----------------
- 
- Directly after the image header, optional sections called header extensions can
--be stored. Each extension has a structure like the following:
-+be stored. Each extension has a structure like the following::
- 
-     Byte  0 -  3:   Header extension type:
-                         0x00000000 - End of the header extension area
-@@ -270,17 +280,19 @@ data of compatible features that it doesn't support. Compatible features that
- need space for additional data can use a header extension.
- 
- 
--== String header extensions ==
-+String header extensions
-+------------------------
- 
- Some header extensions (such as the backing file format name and the external
- data file name) are just a single string. In this case, the header extension
--length is the string length and the string is not '\0' terminated. (The header
--extension padding can make it look like a string is '\0' terminated, but
-+length is the string length and the string is not ``\0`` terminated. (The header
-+extension padding can make it look like a string is ``\0`` terminated, but
- neither is padding always necessary nor is there a guarantee that zero bytes
- are used for padding.)
- 
- 
--== Feature name table ==
-+Feature name table
-+------------------
- 
- The feature name table is an optional header extension that contains the name
- for features used by the image. It can be used by applications that don't know
-@@ -288,7 +300,7 @@ the respective feature (e.g. because the feature was introduced only later) to
- display a useful error message.
- 
- The number of entries in the feature name table is determined by the length of
--the header extension data. Each entry look like this:
-+the header extension data. Each entry looks like this::
- 
-     Byte       0:   Type of feature (select feature bitmap)
-                         0: Incompatible feature
-@@ -302,7 +314,8 @@ the header extension data. Each entry look like this:
-                     terminated if it has full length)
- 
- 
--== Bitmaps extension ==
-+Bitmaps extension
-+-----------------
- 
- The bitmaps extension is an optional header extension. It provides the ability
- to store bitmaps related to a virtual disk. For now, there is only one bitmap
-@@ -310,9 +323,9 @@ type: the dirty tracking bitmap, which tracks virtual disk changes from some
- point in time.
- 
- The data of the extension should be considered consistent only if the
--corresponding auto-clear feature bit is set, see autoclear_features above.
-+corresponding auto-clear feature bit is set, see ``autoclear_features`` above.
- 
--The fields of the bitmaps extension are:
-+The fields of the bitmaps extension are::
- 
-     Byte  0 -  3:  nb_bitmaps
-                    The number of bitmaps contained in the image. Must be
-@@ -331,15 +344,17 @@ The fields of the bitmaps extension are:
-                    Offset into the image file at which the bitmap directory
-                    starts. Must be aligned to a cluster boundary.
- 
--== Full disk encryption header pointer ==
-+Full disk encryption header pointer
-+-----------------------------------
- 
- The full disk encryption header must be present if, and only if, the
--'crypt_method' header requires metadata. Currently this is only true
--of the 'LUKS' crypt method. The header extension must be absent for
-+``crypt_method`` header requires metadata. Currently this is only true
-+of the *LUKS* crypt method. The header extension must be absent for
- other methods.
- 
- This header provides the offset at which the crypt method can store
- its additional data, as well as the length of such data.
-+::
- 
-     Byte  0 -  7:   Offset into the image file at which the encryption
-                     header starts in bytes. Must be aligned to a cluster
-@@ -357,10 +372,10 @@ The first 592 bytes of the header clusters will contain the LUKS
- partition header. This is then followed by the key material data areas.
- The size of the key material data areas is determined by the number of
- stripes in the key slot and key size. Refer to the LUKS format
--specification ('docs/on-disk-format.pdf' in the cryptsetup source
-+specification (*docs/on-disk-format.pdf* in the cryptsetup source
- package) for details of the LUKS partition header format.
- 
--In the LUKS partition header, the "payload-offset" field will be
-+In the LUKS partition header, the ``payload-offset`` field will be
- calculated as normal for the LUKS spec. ie the size of the LUKS
- header, plus key material regions, plus padding, relative to the
- start of the LUKS header. This offset value is not required to be
-@@ -369,11 +384,12 @@ context of qcow2, since the qcow2 file format itself defines where
- the real payload offset is, but none the less a valid payload offset
- should always be present.
- 
--In the LUKS key slots header, the "key-material-offset" is relative
-+In the LUKS key slots header, the ``key-material-offset`` is relative
- to the start of the LUKS header clusters in the qcow2 container,
- not the start of the qcow2 file.
- 
- Logically the layout looks like
-+::
- 
-   +-----------------------------+
-   | QCow2 header                |
-@@ -405,7 +421,8 @@ Logically the layout looks like
-   |                             |
-   +-----------------------------+
- 
--== Data encryption ==
-+Data encryption
-+---------------
- 
- When an encryption method is requested in the header, the image payload
- data must be encrypted/decrypted on every write/read. The image headers
-@@ -413,7 +430,7 @@ and metadata are never encrypted.
- 
- The algorithms used for encryption vary depending on the method
- 
-- - AES:
-+ - **AES**:
- 
-    The AES cipher, in CBC mode, with 256 bit keys.
- 
-@@ -425,7 +442,7 @@ The algorithms used for encryption vary depending on the method
-    supported in the command line tools for the sake of back compatibility
-    and data liberation.
- 
-- - LUKS:
-+ - **LUKS**:
- 
-    The algorithms are specified in the LUKS header.
- 
-@@ -433,7 +450,8 @@ The algorithms used for encryption vary depending on the method
-    in the LUKS header, with the physical disk sector as the
-    input tweak.
- 
--== Host cluster management ==
-+Host cluster management
-+-----------------------
- 
- qcow2 manages the allocation of host clusters by maintaining a reference count
- for each host cluster. A refcount of 0 means that the cluster is free, 1 means
-@@ -453,14 +471,15 @@ Although a large enough refcount table can reserve clusters past 64 PB
- large), note that some qcow2 metadata such as L1/L2 tables must point
- to clusters prior to that point.
- 
--Note: qemu has an implementation limit of 8 MB as the maximum refcount
--table size.  With a 2 MB cluster size and a default refcount_order of
--4, it is unable to reference host resources beyond 2 EB (61 bits); in
--the worst case, with a 512 cluster size and refcount_order of 6, it is
--unable to access beyond 32 GB (35 bits).
-+.. note::
-+    QEMU has an implementation limit of 8 MB as the maximum refcount
-+    table size.  With a 2 MB cluster size and a default refcount_order of
-+    4, it is unable to reference host resources beyond 2 EB (61 bits); in
-+    the worst case, with a 512 cluster size and refcount_order of 6, it is
-+    unable to access beyond 32 GB (35 bits).
- 
- Given an offset into the image file, the refcount of its cluster can be
--obtained as follows:
-+obtained as follows::
- 
-     refcount_block_entries = (cluster_size * 8 / refcount_bits)
- 
-@@ -470,7 +489,7 @@ obtained as follows:
-     refcount_block = load_cluster(refcount_table[refcount_table_index]);
-     return refcount_block[refcount_block_index];
- 
--Refcount table entry:
-+Refcount table entry::
- 
-     Bit  0 -  8:    Reserved (set to 0)
- 
-@@ -482,14 +501,15 @@ Refcount table entry:
-                     been allocated. All refcounts managed by this refcount block
-                     are 0.
- 
--Refcount block entry (x = refcount_bits - 1):
-+Refcount block entry ``(x = refcount_bits - 1)``::
- 
-     Bit  0 -  x:    Reference count of the cluster. If refcount_bits implies a
-                     sub-byte width, note that bit 0 means the least significant
-                     bit in this context.
- 
- 
--== Cluster mapping ==
-+Cluster mapping
-+---------------
- 
- Just as for refcounts, qcow2 uses a two-level structure for the mapping of
- guest clusters to host clusters. They are called L1 and L2 table.
-@@ -509,7 +529,7 @@ compressed clusters to reside below 512 TB (49 bits), and this limit
- cannot be relaxed without an incompatible layout change).
- 
- Given an offset into the virtual disk, the offset into the image file can be
--obtained as follows:
-+obtained as follows::
- 
-     l2_entries = (cluster_size / sizeof(uint64_t))        [*]
- 
-@@ -523,7 +543,7 @@ obtained as follows:
- 
-     [*] this changes if Extended L2 Entries are enabled, see next section
- 
--L1 table entry:
-+L1 table entry::
- 
-     Bit  0 -  8:    Reserved (set to 0)
- 
-@@ -538,7 +558,7 @@ L1 table entry:
-                     refcount is exactly one. This information is only accurate
-                     in the active L1 table.
- 
--L2 table entry:
-+L2 table entry::
- 
-     Bit  0 -  61:   Cluster descriptor
- 
-@@ -555,7 +575,7 @@ L2 table entry:
-                     mapping for guest cluster offsets), so this bit should be 1
-                     for all allocated clusters.
- 
--Standard Cluster Descriptor:
-+Standard Cluster Descriptor::
- 
-     Bit       0:    If set to 1, the cluster reads as all zeros. The host
-                     cluster offset can be used to describe a preallocation,
-@@ -577,7 +597,7 @@ Standard Cluster Descriptor:
-         56 - 61:    Reserved (set to 0)
- 
- 
--Compressed Clusters Descriptor (x = 62 - (cluster_bits - 8)):
-+Compressed Clusters Descriptor ``(x = 62 - (cluster_bits - 8))``::
- 
-     Bit  0 - x-1:   Host cluster offset. This is usually _not_ aligned to a
-                     cluster or sector boundary!  If cluster_bits is
-@@ -601,7 +621,8 @@ file (except if bit 0 in the Standard Cluster Descriptor is set). If there is
- no backing file or the backing file is smaller than the image, they shall read
- zeros for all parts that are not covered by the backing file.
- 
--== Extended L2 Entries ==
-+Extended L2 Entries
-+-------------------
- 
- An image uses Extended L2 Entries if bit 4 is set on the incompatible_features
- field of the header.
-@@ -615,6 +636,8 @@ subclusters so they are treated the same as in images without this feature.
- The size of an extended L2 entry is 128 bits so the number of entries per table
- is calculated using this formula:
- 
-+.. code::
-+
-     l2_entries = (cluster_size / (2 * sizeof(uint64_t)))
- 
- The first 64 bits have the same format as the standard L2 table entry described
-@@ -623,7 +646,7 @@ descriptor.
- 
- The last 64 bits contain a subcluster allocation bitmap with this format:
- 
--Subcluster Allocation Bitmap (for standard clusters):
-+Subcluster Allocation Bitmap (for standard clusters)::
- 
-     Bit  0 - 31:    Allocation status (one bit per subcluster)
- 
-@@ -647,13 +670,14 @@ Subcluster Allocation Bitmap (for standard clusters):
-                     Bits are assigned starting from the least significant
-                     one (i.e. bit x is used for subcluster x - 32).
- 
--Subcluster Allocation Bitmap (for compressed clusters):
-+Subcluster Allocation Bitmap (for compressed clusters)::
- 
-     Bit  0 - 63:    Reserved (set to 0)
-                     Compressed clusters don't have subclusters,
-                     so this field is not used.
- 
--== Snapshots ==
-+Snapshots
-+---------
- 
- qcow2 supports internal snapshots. Their basic principle of operation is to
- switch the active L1 table, so that a different set of host clusters are
-@@ -672,7 +696,7 @@ in the image file, whose starting offset and length are given by the header
- fields snapshots_offset and nb_snapshots. The entries of the snapshot table
- have variable length, depending on the length of ID, name and extra data.
- 
--Snapshot table entry:
-+Snapshot table entry::
- 
-     Byte 0 -  7:    Offset into the image file at which the L1 table for the
-                     snapshot starts. Must be aligned to a cluster boundary.
-@@ -728,7 +752,8 @@ Snapshot table entry:
-                     next multiple of 8.
- 
- 
--== Bitmaps ==
-+Bitmaps
-+-------
- 
- As mentioned above, the bitmaps extension provides the ability to store bitmaps
- related to a virtual disk. This section describes how these bitmaps are stored.
-@@ -739,20 +764,23 @@ each bitmap size is equal to the virtual disk size.
- Each bit of the bitmap is responsible for strictly defined range of the virtual
- disk. For bit number bit_nr the corresponding range (in bytes) will be:
- 
-+.. code::
-+
-     [bit_nr * bitmap_granularity .. (bit_nr + 1) * bitmap_granularity - 1]
- 
- Granularity is a property of the concrete bitmap, see below.
- 
- 
--=== Bitmap directory ===
-+Bitmap directory
-+----------------
- 
- Each bitmap saved in the image is described in a bitmap directory entry. The
- bitmap directory is a contiguous area in the image file, whose starting offset
--and length are given by the header extension fields bitmap_directory_offset and
--bitmap_directory_size. The entries of the bitmap directory have variable
-+and length are given by the header extension fields ``bitmap_directory_offset`` and
-+``bitmap_directory_size``. The entries of the bitmap directory have variable
- length, depending on the lengths of the bitmap name and extra data.
- 
--Structure of a bitmap directory entry:
-+Structure of a bitmap directory entry::
- 
-     Byte 0 -  7:    bitmap_table_offset
-                     Offset into the image file at which the bitmap table
-@@ -833,7 +861,8 @@ Structure of a bitmap directory entry:
-                     next multiple of 8. All bytes of the padding must be zero.
- 
- 
--=== Bitmap table ===
-+Bitmap table
-+------------
- 
- Each bitmap is stored using a one-level structure (as opposed to two-level
- structures like for refcounts and guest clusters mapping) for the mapping of
-@@ -843,7 +872,7 @@ Each bitmap table has a variable size (stored in the bitmap directory entry)
- and may use multiple clusters, however, it must be contiguous in the image
- file.
- 
--Structure of a bitmap table entry:
-+Structure of a bitmap table entry::
- 
-     Bit       0:    Reserved and must be zero if bits 9 - 55 are non-zero.
-                     If bits 9 - 55 are zero:
-@@ -860,11 +889,12 @@ Structure of a bitmap table entry:
-         56 - 63:    Reserved and must be zero.
- 
- 
--=== Bitmap data ===
-+Bitmap data
-+-----------
- 
- As noted above, bitmap data is stored in separate clusters, described by the
- bitmap table. Given an offset (in bytes) into the bitmap data, the offset into
--the image file can be obtained as follows:
-+the image file can be obtained as follows::
- 
-     image_offset(bitmap_data_offset) =
-         bitmap_table[bitmap_data_offset / cluster_size] +
-@@ -875,7 +905,7 @@ above).
- 
- Given an offset byte_nr into the virtual disk and the bitmap's granularity, the
- bit offset into the image file to the corresponding bit of the bitmap can be
--calculated like this:
-+calculated like this::
- 
-     bit_offset(byte_nr) =
-         image_offset(byte_nr / granularity / 8) * 8 +
-@@ -886,21 +916,22 @@ last cluster of the bitmap data contains some unused tail bits. These bits must
- be zero.
- 
- 
--=== Dirty tracking bitmaps ===
-+Dirty tracking bitmaps
-+----------------------
- 
--Bitmaps with 'type' field equal to one are dirty tracking bitmaps.
-+Bitmaps with *type* field equal to one are dirty tracking bitmaps.
- 
--When the virtual disk is in use dirty tracking bitmap may be 'enabled' or
--'disabled'. While the bitmap is 'enabled', all writes to the virtual disk
-+When the virtual disk is in use dirty tracking bitmap may be *enabled* or
-+*disabled*. While the bitmap is *enabled*, all writes to the virtual disk
- should be reflected in the bitmap. A set bit in the bitmap means that the
- corresponding range of the virtual disk (see above) was written to while the
--bitmap was 'enabled'. An unset bit means that this range was not written to.
-+bitmap was *enabled*. An unset bit means that this range was not written to.
- 
- The software doesn't have to sync the bitmap in the image file with its
--representation in RAM after each write or metadata change. Flag 'in_use'
-+representation in RAM after each write or metadata change. Flag *in_use*
- should be set while the bitmap is not synced.
- 
--In the image file the 'enabled' state is reflected by the 'auto' flag. If this
--flag is set, the software must consider the bitmap as 'enabled' and start
-+In the image file the *enabled* state is reflected by the *auto* flag. If this
-+flag is set, the software must consider the bitmap as *enabled* and start
- tracking virtual disk changes to this bitmap from the first write to the
- virtual disk. If this flag is not set then the bitmap is disabled.
--- 
-2.49.0
+>>> Instead, I suggest to avoid freeing memory regions at all on
+>>> TCG. It will surely leak memory, but won't result in use-after-free at
+>>> least and the other accelerators will be unaffected.
+>> Leaking memory for blob objects is also not ideal, since they are
+>> frequently allocated. It's memory-safe but the leak can accumulate
+>> over time.
+>>
+>
+> Memory safety and leak free cannot be compatible unless RCU is fixed.
+> We need to choose either of them.
 
+How can the guest access something that is now unmapped? The RCU should
+only run after the flatview has been updated.
+
+>
+> Regards,
+> Akihiko Odaki
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
