@@ -4,106 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6757AC54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ECB9C54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3Df-000118-QF; Thu, 22 May 2025 06:32:12 -0400
+	id 1uI3Bj-00034M-FB; Thu, 22 May 2025 06:30:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uI3Dc-0000nH-FU
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:32:08 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uI3DS-0006lc-Ud
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:32:08 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a36ab95a13so3114788f8f.3
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 03:31:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747909915; x=1748514715; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LVfeZE4/OnXx9R+daZQfc/d9GFHawu2i98auKpXPFTE=;
- b=W6s/gVaZe53FadezNF2qTMsFXUmyFE9BEtKLgfRtrfefUhkA3yuoGpi7A/Tg/ue3NZ
- SC8XVGtgtJnmQT15t/d/s01LBRdwLxeCaTVV+E+Z4iD1nGa5qnwXp4nimUATC0bJvlmP
- gv9okl0cQvd1NGNyhZ392Hb4EYMQhxvlzDhJhB8NQxi7tKmgeEbUhfQyqhx4JzyghXsy
- 0Qb79ccJUXzKcfeA1Adl6sz90MV3OlsIzTtk4003sKkV7SWArtrra4o+s3a75rEULXYY
- DRfHuTaqGrqgWGYkKolDu+OprncjZ7c9+Xv9N9+wyHnMnSgnfm7pFVlFfgcnGCQYkvz5
- 4N9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747909915; x=1748514715;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LVfeZE4/OnXx9R+daZQfc/d9GFHawu2i98auKpXPFTE=;
- b=h6cgUc8hQyDTLLxlLv+8K6U8GXaTHJM3j5XFpwhspXIoo5O2L2hZ/wCWyeJz3GiW2H
- c8afMOxB4vFxcdExm2k/2o0joLFWIFWpQBersafiNMAa+OVQyP0ce4myHbCikq6nmOF6
- SLlMg/0UdeZxM8cDn2thbBbMxcdf+o5Q4E1fSQ/4wwaCs5fdDVTU+1p9EU9MvwjLuJ9t
- rq+VRZoyfxuMEI7MIUcoTnnYkoycQ7h8DCVBukmpiGbPR8azG0/b2PEZQSGY1gbHrul+
- 7ds0uyJxUjQb9jIrnBjpSgafxIlsM9YX2GLv/lRRq+nEoYm3C6R4BpXMBuxWssL+NKw9
- DWvg==
-X-Gm-Message-State: AOJu0YyWc5DhdmbOkjCh5dY43RXrE2XOReSsvKWEE383CqHtAvnMd1cJ
- +cniSk8R3TfqeJ/kSVwbZ7o5Hpt6x6iIo5QxKRSwdLdpS30jNGXUP3R0JIuvArTw7bA=
-X-Gm-Gg: ASbGnctsiURq3w4H/UCdR32KY3HetIqKKlq50czVeyRm5VeZSyv4IsbFKGWoMGQd4OO
- RXgAa50GPYX7B6tDM7W9xrmf6Zxy0MyrUKLfy4pUSMlEC6s+97vmlvKavSxz5FgPzKfED7cQqfM
- Sg3i3c64wRIAz60ftc1jNEvgg6p5wGJlbR2P2LKzpWalcEQkk2HgY6v2+8D73YkWF8ptE4lM/uc
- lbrEYaiYjLqirH+ANqC/fqQlw/sTJzusGQ/5FXFHt276RZFoXkf67T28i2d6yWXOWkhBwzvL3iP
- skpsLJKk9RXu5M1DRwCEVkknYEjxtPDl5QR1H8AOct4TP1IMyQuB
-X-Google-Smtp-Source: AGHT+IH8vsIljR4g3fT+QVZ5C0bTzA+s7wC7AyYRcniQBqZ6byLqy4PbKklkFpaKWN+L489FL877Cw==
-X-Received: by 2002:a05:6000:2282:b0:3a3:7bbc:d94e with SMTP id
- ffacd0b85a97d-3a37bbcdc22mr10341995f8f.6.1747909915154; 
- Thu, 22 May 2025 03:31:55 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca8caaasm22312941f8f.83.2025.05.22.03.31.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 03:31:54 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C09BA5F944;
- Thu, 22 May 2025 11:31:53 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Peter Xu
- <peterx@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>,  Markus Armbruster
- <armbru@redhat.com>,  David Hildenbrand <david@redhat.com>,  Laurent
- Vivier <lvivier@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Sriram Yagnaraman
- <sriram.yagnaraman@ericsson.com>,  Dmitry Osipenko
- <dmitry.osipenko@collabora.com>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v3 05/20] tests/Makefile: include test-plugins in
- per-arch build deps
-In-Reply-To: <15677d5c-cd86-4d75-a21e-0c011800cd55@daynix.com> (Akihiko
- Odaki's message of "Thu, 22 May 2025 14:37:44 +0900")
-References: <20250521164250.135776-1-alex.bennee@linaro.org>
- <20250521164250.135776-6-alex.bennee@linaro.org>
- <15677d5c-cd86-4d75-a21e-0c011800cd55@daynix.com>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Thu, 22 May 2025 11:31:53 +0100
-Message-ID: <87tt5d6ina.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uI3Bh-00033X-L4
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uI3Be-0006bf-FH
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747909805;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NSadqX7JF7v4vi+CLTCLnCLIIM+Idk1jD2gv7AoF4PA=;
+ b=SBARdGUZLE3RqxFzJcL/a3yEySD1I9rQD60OqFRv65Nm34viUPXtT7moyB0QwIGPwf6zCj
+ 6K2e1SM+2LwYQjYkQUU8iyklAcyr44NaU1Yvu4zE+xy8ElQEXwvVSI3U5Xn5jNhfGxG356
+ mHNjLErSM8NkzEBkAs0/10hRebTKitc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-L5mxZXFNO7iboIdCK3atpg-1; Thu,
+ 22 May 2025 06:30:02 -0400
+X-MC-Unique: L5mxZXFNO7iboIdCK3atpg-1
+X-Mimecast-MFC-AGG-ID: L5mxZXFNO7iboIdCK3atpg_1747909800
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 424FE1800256; Thu, 22 May 2025 10:30:00 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.179])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3DB79195801F; Thu, 22 May 2025 10:29:56 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 09/23] scripts/checkpatch.pl: fix various indentation mistakes
+Date: Thu, 22 May 2025 11:29:09 +0100
+Message-ID: <20250522102923.309452-10-berrange@redhat.com>
+In-Reply-To: <20250522102923.309452-1-berrange@redhat.com>
+References: <20250522102923.309452-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,74 +90,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+Various checks in the code were under-indented relative to other
+surrounding code. Some places used 4-space indents instead of
+single tab, while other places simply used too few tabs.
 
-> On 2025/05/22 1:42, Alex Benn=C3=A9e wrote:
->> The user can run a subset of the tcg tests directly, e.g.:
->>    make run-tcg-tests-hexagon-linux-user
->> but in this case we fail if there has not been a full build to
->> ensure
->> all the test-plugins are there. Fix the dependency to ensure we always
->> will build them before running tests.
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>   tests/Makefile.include | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->> diff --git a/tests/Makefile.include b/tests/Makefile.include
->> index 23fb722d42..7f7f62cbf6 100644
->> --- a/tests/Makefile.include
->> +++ b/tests/Makefile.include
->> @@ -46,7 +46,7 @@ $(foreach TARGET,$(TCG_TESTS_TARGETS), \
->>           $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-hos=
-t.mak))
->>     .PHONY: $(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%)
->> -$(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%): build-tcg-tests-%: $(BUILD_=
-DIR)/tests/tcg/config-%.mak
->> +$(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%): build-tcg-tests-%: $(BUILD_=
-DIR)/tests/tcg/config-%.mak test-plugins
->
-> I don't think this is going to work.
->
-> test-plugins will invoke run-ninja, which is defined as follows:
->
-> run-ninja: config-host.mak
-> ifneq ($(filter $(ninja-targets), $(ninja-cmd-goals)),)
-> 	+$(if $(MAKE.nq),@:,$(quiet-@)$(NINJA) $(NINJAFLAGS) \
-> 	   $(sort $(filter $(ninja-targets), $(ninja-cmd-goals))) | cat)
->
-> $(ninja-cmd-goals) should contain test-plugins, but it doesn't if I
-> understand it correctly.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/checkpatch.pl | 101 ++++++++++++++++++++++--------------------
+ 1 file changed, 52 insertions(+), 49 deletions(-)
 
-It certainly does:
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index d355c0dad5..2c19f6f0f2 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1681,19 +1681,20 @@ sub process {
+ 
+ # Check SPDX-License-Identifier references a permitted license
+ 		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
+-		    &checkspdx($realfile, $1);
++			&checkspdx($realfile, $1);
+ 		}
+ 
+ 		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
+-		    my $tag = $1;
+-		    my @permitted = qw(
+-			SPDX-License-Identifier
+-		    );
+-
+-		    unless (grep { /^$tag$/ } @permitted) {
+-			ERROR("Tag $tag not permitted in QEMU code, valid " .
+-			      "choices are: " . join(", ", @permitted));
+-		    }
++			my $tag = $1;
++			my @permitted = qw(
++				SPDX-License-Identifier
++			);
++
++			unless (grep { /^$tag$/ } @permitted) {
++			    ERROR("Tag $tag not permitted in QEMU code, " .
++				  "valid choices are: " .
++				  join(", ", @permitted));
++			}
+ 		}
+ 
+ # Check for wrappage within a valid hunk of the file
+@@ -2274,7 +2275,7 @@ sub process {
+ 
+ # missing space after union, struct or enum definition
+ 		if ($line =~ /^.\s*(?:typedef\s+)?(enum|union|struct)(?:\s+$Ident)?(?:\s+$Ident)?[=\{]/) {
+-		    ERROR("missing space after $1 definition\n" . $herecurr);
++			ERROR("missing space after $1 definition\n" . $herecurr);
+ 		}
+ 
+ # check for spacing round square brackets; allowed:
+@@ -2569,7 +2570,7 @@ sub process {
+ 
+ 		if ($line =~ /^.\s*(Q(?:S?LIST|SIMPLEQ|TAILQ)_HEAD)\s*\(\s*[^,]/ &&
+ 		    $line !~ /^.typedef/) {
+-		    ERROR("named $1 should be typedefed separately\n" . $herecurr);
++			ERROR("named $1 should be typedefed separately\n" . $herecurr);
+ 		}
+ 
+ # Need a space before open parenthesis after if, while etc
+@@ -3118,48 +3119,50 @@ sub process {
+ 
+ # Qemu error function tests
+ 
+-	# Find newlines in error messages
+-	my $qemu_error_funcs = qr{error_setg|
+-				error_setg_errno|
+-				error_setg_win32|
+-				error_setg_file_open|
+-				error_set|
+-				error_prepend|
+-				warn_reportf_err|
+-				error_reportf_err|
+-				error_vreport|
+-				warn_vreport|
+-				info_vreport|
+-				error_report|
+-				warn_report|
+-				info_report|
+-				g_test_message}x;
+-
+-	if ($rawline =~ /\b(?:$qemu_error_funcs)\s*\(.*\".*\\n/) {
+-		ERROR("Error messages should not contain newlines\n" . $herecurr);
+-	}
++		# Find newlines in error messages
++		my $qemu_error_funcs = qr{error_setg|
++					 error_setg_errno|
++					 error_setg_win32|
++					 error_setg_file_open|
++					 error_set|
++					 error_prepend|
++					 warn_reportf_err|
++					 error_reportf_err|
++					 error_vreport|
++					 warn_vreport|
++					 info_vreport|
++					 error_report|
++					 warn_report|
++					 info_report|
++					 g_test_message}x;
++
++		if ($rawline =~ /\b(?:$qemu_error_funcs)\s*\(.*\".*\\n/) {
++			ERROR("Error messages should not contain newlines\n" . $herecurr);
++		}
+ 
+-	# Continue checking for error messages that contains newlines. This
+-	# check handles cases where string literals are spread over multiple lines.
+-	# Example:
+-	# error_report("Error msg line #1"
+-	#              "Error msg line #2\n");
+-	my $quoted_newline_regex = qr{\+\s*\".*\\n.*\"};
+-	my $continued_str_literal = qr{\+\s*\".*\"};
++		# Continue checking for error messages that contains newlines.
++		# This check handles cases where string literals are spread
++		# over multiple lines.
++		# Example:
++		# error_report("Error msg line #1"
++		#              "Error msg line #2\n");
++		my $quoted_newline_regex = qr{\+\s*\".*\\n.*\"};
++		my $continued_str_literal = qr{\+\s*\".*\"};
+ 
+-	if ($rawline =~ /$quoted_newline_regex/) {
+-		# Backtrack to first line that does not contain only a quoted literal
+-		# and assume that it is the start of the statement.
+-		my $i = $linenr - 2;
++		if ($rawline =~ /$quoted_newline_regex/) {
++			# Backtrack to first line that does not contain only
++			# a quoted literal and assume that it is the start
++			# of the statement.
++			my $i = $linenr - 2;
+ 
+-		while (($i >= 0) & $rawlines[$i] =~ /$continued_str_literal/) {
+-			$i--;
+-		}
++			while (($i >= 0) & $rawlines[$i] =~ /$continued_str_literal/) {
++				$i--;
++			}
+ 
+-		if ($rawlines[$i] =~ /\b(?:$qemu_error_funcs)\s*\(/) {
+-			ERROR("Error messages should not contain newlines\n" . $herecurr);
++			if ($rawlines[$i] =~ /\b(?:$qemu_error_funcs)\s*\(/) {
++				ERROR("Error messages should not contain newlines\n" . $herecurr);
++			}
+ 		}
+-	}
+ 
+ # check for non-portable libc calls that have portable alternatives in QEMU
+ 		if ($line =~ /\bffs\(/) {
+-- 
+2.49.0
 
-=E2=9E=9C  rm -rf tests/tcg/plugins/
-=F0=9F=95=9911:31:03 alex@draig:qemu.git/builds/all  on =EE=82=A0 HEAD (61e=
-51c3) (REBASING 5/26) [$?]=20
-=E2=9E=9C  make test-plugins
-/home/alex/lsrc/qemu.git/builds/all/pyvenv/bin/meson introspect --targets -=
--tests --benchmarks | /home/alex/lsrc/qemu.git/builds/all/pyvenv/bin/python=
-3 -B scripts/mtest2make.py > Makefile.mtest
-[1/14] Compiling C object tests/tcg/plugins/libbb.so.p/bb.c.o
-[2/14] Linking target tests/tcg/plugins/libbb.so
-[3/14] Compiling C object tests/tcg/plugins/libempty.so.p/empty.c.o
-[4/14] Linking target tests/tcg/plugins/libempty.so
-[5/14] Compiling C object tests/tcg/plugins/libinline.so.p/inline.c.o
-[6/14] Linking target tests/tcg/plugins/libinline.so
-[7/14] Compiling C object tests/tcg/plugins/libinsn.so.p/insn.c.o
-[8/14] Linking target tests/tcg/plugins/libinsn.so
-[9/14] Compiling C object tests/tcg/plugins/libmem.so.p/mem.c.o
-[10/14] Linking target tests/tcg/plugins/libmem.so
-[11/14] Compiling C object tests/tcg/plugins/libreset.so.p/reset.c.o
-[12/14] Linking target tests/tcg/plugins/libreset.so
-[13/14] Compiling C object tests/tcg/plugins/libsyscall.so.p/syscall.c.o
-[14/14] Linking target tests/tcg/plugins/libsyscall.so
-
->
->>   	$(call quiet-command, \
->>               $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS), \
->>           "BUILD","$* guest-tests")
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
