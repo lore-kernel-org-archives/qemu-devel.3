@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4132FC54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 20:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03E9DC54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 20:15:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uICHH-000867-V0; Thu, 22 May 2025 16:12:32 -0400
+	id 1uICJs-0001Ri-0L; Thu, 22 May 2025 16:15:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uICHF-00085l-TO; Thu, 22 May 2025 16:12:29 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uICJp-0001OW-Co
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 16:15:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uICHD-0001Y8-Ui; Thu, 22 May 2025 16:12:29 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uICJm-00022D-LR
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 16:15:08 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 422371245B1;
- Thu, 22 May 2025 23:12:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D57F41245B5;
+ Thu, 22 May 2025 23:14:56 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 77E692137E2;
- Thu, 22 May 2025 23:12:23 +0300 (MSK)
-Message-ID: <4a5a68dd-74b2-4ffc-baa7-42eba9276b81@tls.msk.ru>
-Date: Thu, 22 May 2025 23:12:22 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1AFFB2137E7;
+ Thu, 22 May 2025 23:15:04 +0300 (MSK)
+Message-ID: <9194efc3-e5ac-4131-902e-2feb90aa3532@tls.msk.ru>
+Date: Thu, 22 May 2025 23:15:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration/multifd: Don't send device state packets with
- zerocopy flag
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com>
+Subject: Re: [PATCH v2 1/2] migration: Allow caps to be set when preempt or
+ multifd cap enabled
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Juraj Marcin <jmarcin@redhat.com>
+References: <20250514200137.581935-1-peterx@redhat.com>
+ <20250514200137.581935-2-peterx@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -82,7 +81,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <20250514200137.581935-2-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -108,25 +107,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.05.2025 16:53, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 14.05.2025 23:01, Peter Xu wrote:
+> With commit 82137e6c8c ("migration: enforce multifd and postcopy preempt to
+> be set before incoming"), and if postcopy preempt / multifd is enabled, one
+> cannot setup any capability because these checks would always fail.
 > 
-> If zerocopy is enabled for multifd then QIO_CHANNEL_WRITE_FLAG_ZERO_COPY
-> flag is forced into all multifd channel write calls via p->write_flags
-> that was setup in multifd_nocomp_send_setup().
+> (qemu) migrate_set_capability xbzrle off
+> Error: Postcopy preempt must be set before incoming starts
 > 
-> However, device state packets aren't compatible with zerocopy - the data
-> buffer isn't getting kept pinned until multifd channel flush.
+> To fix it, check existing cap and only raise an error if the specific cap
+> changed.
 > 
-> Make sure to mask that QIO_CHANNEL_WRITE_FLAG_ZERO_COPY flag in a multifd
-> send thread if the data being sent is device state.
-> 
-> Fixes: 0525b91a0b99 ("migration/multifd: Device state transfer support - send side")
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> Fixes: 82137e6c8c ("migration: enforce multifd and postcopy preempt to be set before incoming")
+> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-Is this qemu-stable material (for 10.0)?
+Hi!
 
-I'm picking it up for 10.0 branch, please let me know if I shouldn't.
+Is this a qemu-stable material (for 9.2 and 10.0 branches)?
+Please let me know if it is not.
 
 Thanks,
 
