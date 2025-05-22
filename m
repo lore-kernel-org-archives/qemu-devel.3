@@ -4,60 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40BB0C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 15:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD32FC54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 15:40:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI7yN-0003Ql-Tn; Thu, 22 May 2025 11:36:43 -0400
+	id 1uI81p-0005V8-N9; Thu, 22 May 2025 11:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edmund.raile@proton.me>)
- id 1uI7yL-0003N7-Ne
- for qemu-devel@nongnu.org; Thu, 22 May 2025 11:36:41 -0400
-Received: from mail-24425.protonmail.ch ([109.224.244.25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edmund.raile@proton.me>)
- id 1uI7y9-0002TN-R6
- for qemu-devel@nongnu.org; Thu, 22 May 2025 11:36:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1747928184; x=1748187384;
- bh=ZMMy3wNTzo1mB5J12StlPZhTmmXys1OeNRsTvcZ9IrI=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
- b=C/srw7RXf0QTgvGvUqi5ORKhoC6FWt+Cd1Bma+drV2pWO1U5YuE261ANHuWkb2RGL
- WMgxyVC6UUpOwknyyobJeGsQNq5MCwoN+qbimaMAmFoJTsSOYymPgwVktE4Vvb+7O0
- nggR2/2Xjs2Y6LDYU28nBsGJ9X3DgxgU0Xmr8kamfH+RYum02Qe+8Efba0Coj0cpbU
- uJuRg+B+jy6gNR5iUTPTzz0BCr8CMaxJ/nrPAnJyE7Cot7vEIslnPjQiocuJUGxgFX
- yM3EoRF1Bz9g29V4WJdCrC3CEGy3fXT6Ko3AgtdMuMSXOTonXhC0A1e5HJ1jC661yK
- dZ2jOVSV7wj3g==
-Date: Thu, 22 May 2025 15:36:20 +0000
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "c.koehne@beckhoff.com" <c.koehne@beckhoff.com>
-Subject: Re: [PATCH] vfio/igd: Fix incorrect error propagation in
- vfio_pci_igd_opregion_detect()
-Message-ID: <eNe_mk1SBIlC3q43ujt4rZfx2rEmWy9h08Faxg4kaSLinxbZbY5-XfjCP4wcZLfkOtrIS1yVnlO9cmKOS_Qak6JgqnswyIIiCk2NL5gwrXs=@proton.me>
-In-Reply-To: <20250521154036.28219-1-tomitamoeko@gmail.com>
-References: <20250521154036.28219-1-tomitamoeko@gmail.com>
-Feedback-ID: 45198251:user:proton
-X-Pm-Message-ID: 62f246532b73f5032ac46eae6497a52107cc1cbc
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uI81d-0005TX-PM
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 11:40:05 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uI81a-0002vU-Qp
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 11:40:05 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-601d10de7e1so7800221a12.1
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 08:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747928400; x=1748533200; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ot8JENurp6e7aO2NzX5cehLZR9sNFK64U95hYjOdV6U=;
+ b=WlXffOqugWMNbwwTou2KUjXc4d+fvsN6j5lEcZZzfaDFiI/nt78eU3Gyw/jW65DxFI
+ x0oUZ4+U2OTmgno5Vz2ujddSmO77nPOsiLB9xGDvNkt60g+V0Oplr7Ih0US4CWlTHoSX
+ pCVQeTaH4fXg8f/eT7775x0HVVASMZb4rfgSQS0ryduS/Bs/5K94dcRN27wYFisXJqYa
+ EST+AjUwEX7CjfnNnP6VKrXdUlg6KV8oEZsqGtWS7Re0zJMRgyHBRAwlmq910Lh4fswv
+ xlI3isNuHUfG/8am3wfa7Y3fSgrvlaWDl72PnvLfYydUvLEm13OkUoh4YrqJrMfUMG44
+ XV0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747928400; x=1748533200;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ot8JENurp6e7aO2NzX5cehLZR9sNFK64U95hYjOdV6U=;
+ b=MLVOXVnEYd/+B2obhlXNTBg3bVicV7GeD+iTMfnKZQPUixEJATLUtC5Biou0yPTTg6
+ Ai5ZVazBYnyIN1s45zVl6s59HAhiwQ0SFMXMmBYfeUx1U4bSRm8s1CCFc3IHH78qioDT
+ A9xTpyk/VIyHGrqL2L+sRk0pYnn1oGbbxQLa0WU9b2ETP0UbX9od4NZJ5SNIy4ZHJzQp
+ UVVU8E9bmC7Uqm91kCz3ZpQm26nbXfBqXjdJJIZ5TF5T7zq0cshifaM5/2/TIPr8oVN1
+ 7+xojOglQz+BnuIeRvqMzxdrCApEuPNXByLBgrU3nY+huShU8/F9P7loYyDcGZITCiDP
+ eZEw==
+X-Gm-Message-State: AOJu0YwKiF5fkS+hESCAG9gfmX2sKDBspNx/p+Q3Ja7anuB3aI2hPY5s
+ FOwnerAFSwVIl/13jiCKjozLkUzlWawLTRvA2FPYdV1DjJJLhvVbEqpEDa95O4fE/U4=
+X-Gm-Gg: ASbGncvDnvfwTALrbTctUKJV1D0IWxHqjSAJnyTyB3ZM7MQC7+ucCqFG0zNjIRkc4J8
+ sNh8qHITvuZ+auJvMfiBV0bZr2PE5ZApp4aHh/HSPiKF7pua7nvCV3AE7CSZTR/izRr0nF+5a6T
+ hidFQiLOqEeULtopc51VnVJIv9qXVdlvhZP7ohjzBnrZQj28Iq9bLP4vS9V0klnGJxid9Jnx7aH
+ dkvYeMKgvRwDJaOV9IRKOT9BzwiqYq1rm/JI9grefzPRNnFEGW8pKpkAjuAYFrivYPXC3IOJFwO
+ M/5c+t21wp7FGBr3yREfzbreivyDuoGLZRpnWxNTPauF5T62ImiT
+X-Google-Smtp-Source: AGHT+IFqIFgqDn4Za3TOSx2QnqAfbnOjugpBhv9tC9qUZrDGyR9sAC8X2EoBFd61DKShWLPqF0dK4A==
+X-Received: by 2002:a05:6402:26c9:b0:5ec:cbf8:ab28 with SMTP id
+ 4fb4d7f45d1cf-6011411a904mr22891545a12.22.1747928400192; 
+ Thu, 22 May 2025 08:40:00 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6005ac33a98sm10824421a12.49.2025.05.22.08.39.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 May 2025 08:39:59 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 76E645F7D1;
+ Thu, 22 May 2025 16:39:58 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Rowan Hart <rowanbhart@gmail.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Mahmoud
+ Mandour <ma.mandourr@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 2/8] Add register write API
+In-Reply-To: <20250521094333.4075796-3-rowanbhart@gmail.com> (Rowan Hart's
+ message of "Wed, 21 May 2025 02:43:26 -0700")
+References: <20250521094333.4075796-1-rowanbhart@gmail.com>
+ <20250521094333.4075796-3-rowanbhart@gmail.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Thu, 22 May 2025 16:39:58 +0100
+Message-ID: <874ixcwt69.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=109.224.244.25;
- envelope-from=edmund.raile@proton.me; helo=mail-24425.protonmail.ch
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,129 +104,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "edmund.raile" <edmund.raile@proton.me>
-From:  "edmund.raile" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Moeko,
+Rowan Hart <rowanbhart@gmail.com> writes:
 
->I did some further debugging, and found it was caused by a mistake in
->error handling. In vfio_pci_igd_opregion_detect(), `errp` is set when
->OpRegion is not found. However, in pci_qdev_realize(), the caller of
->vfio_realize(), it checks if the errp is set for failure, rather than
->the return value.
+> From: novafacing <rowanbhart@gmail.com>
+>
+> Signed-off-by: novafacing <rowanbhart@gmail.com>
+> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+> ---
+>  include/qemu/qemu-plugin.h | 57 +++++++++++++++++++++++++-------------
+>  plugins/api.c              | 26 ++++++++++++-----
+>  2 files changed, 56 insertions(+), 27 deletions(-)
+>
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index 3a850aa216..68c8632fd7 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -254,9 +254,6 @@ typedef struct {
+>   * @QEMU_PLUGIN_CB_NO_REGS: callback does not access the CPU's regs
+>   * @QEMU_PLUGIN_CB_R_REGS: callback reads the CPU's regs
+>   * @QEMU_PLUGIN_CB_RW_REGS: callback reads and writes the CPU's regs
+> - *
+> - * Note: currently QEMU_PLUGIN_CB_RW_REGS is unused, plugins cannot chan=
+ge
+> - * system register state.
 
-Am I correct in assuming that errp can just be removed because the
-return status already carries the information?
+I would expect us to:
 
->I will submit a patch later to fix error handling.
+ a) handle the QEMU_PLUGIN_CB_RW_REGS
+ b) try and enforce we are only being called from such callbacks
 
-I've had to manually apply the patch by hand.
-For me, your patch became:
+Otherwise TCG won't know to restore register state from what has been
+written to.
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index e7952d15a0..e7a9d1ffc1 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -187,23 +187,21 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice =
-*vdev,
- }
-=20
- static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice *vdev,
--                                         struct vfio_region_info **opregio=
-n,
--                                         Error **errp)
-+                                         struct vfio_region_info **opregio=
-n)
- {
-     int ret;
-=20
--    /* Hotplugging is not supported for opregion access */
--    if (vdev->pdev.qdev.hotplugged) {
--        error_setg(errp, "IGD OpRegion is not supported on hotplugged devi=
-ce");
--        return false;
--    }
--
-     ret =3D vfio_device_get_region_info_type(&vdev->vbasedev,
-                     VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL=
-,
-                     VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, opregion);
-     if (ret) {
--        error_setg_errno(errp, -ret,
--                         "Device does not supports IGD OpRegion feature");
-+        return false;
-+    }
-+
-+    /* Hotplugging is not supported for opregion access */
-+    if (vdev->pdev.qdev.hotplugged) {
-+        warn_report("IGD device detected, but OpRegion is not supported "
-+                    "on hotplugged device.");
-         return false;
-     }
-=20
-@@ -524,7 +522,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vd=
-ev, Error **errp)
-     }
-=20
-     /* IGD device always comes with OpRegion */
--    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
-+    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
-         return true;
-     }
-     info_report("OpRegion detected on Intel display %x.", vdev->device_id)=
-;
-@@ -695,7 +693,7 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *=
-vdev, Error **errp)
-         return true;
-     }
-=20
--    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
-+    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
-         /* Should never reach here, KVMGT always emulates OpRegion */
-         return false;
-     }
-
-Testing it, it works (for me)!
-Though I can only confirm the negative (for a SR-IOV iGPU
-virtual function).
-I can't unbind my primary GPU (the root iGPU device) since
-I'm using it.
-The VM boots fine regardless whether
-`-device vfio-pci,...,x-igd-opregion=3D` is set to off or on now.
-Tested-by: Edmund Raile <edmund.raile@protonmail.com>
-
-Your patch provides successful automatic OpRegion detection.
-
-But for the case that this automatic detection should some day break
-or become ineffective due to new hardware: should I still send in my
-[PATCH v3]?
-
-[PATCH v3] vfio/igd: Respect x-igd-opregion=3Doff in IGD quirk handling
-
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index e7a9d1ffc1..ac9f504e8f 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -521,6 +521,11 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *v=
-dev, Error **errp)
-         return true;
-     }
-=20
-+    /* Respect x-igd-opregion=3Doff by skipping OpRegion handling */
-+    if (!(vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION)) {
-+        return true;
-+    }
-+
-     /* IGD device always comes with OpRegion */
-     if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
-         return true;
-
-That way, we'd have a certain way to force it off if need be
-A redundancy, in case.
-Can't always expect everything to always work perfectly.
-
-Thanks,
-Edmund
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
