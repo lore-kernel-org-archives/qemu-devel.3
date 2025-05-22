@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7402C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 11:28:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1940AC54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 11:33:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI452-00068F-Sn; Thu, 22 May 2025 07:27:21 -0400
+	id 1uI4AS-0007TP-GC; Thu, 22 May 2025 07:32:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uI44z-00067s-Iv
- for qemu-devel@nongnu.org; Thu, 22 May 2025 07:27:17 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uI4AQ-0007Sv-PI; Thu, 22 May 2025 07:32:54 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uI44x-0007Wi-4O
- for qemu-devel@nongnu.org; Thu, 22 May 2025 07:27:17 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uI4AO-0008Cz-GI; Thu, 22 May 2025 07:32:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 800C01243B5;
- Thu, 22 May 2025 14:26:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E12D31243BE;
+ Thu, 22 May 2025 14:32:42 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2B99B21319C;
- Thu, 22 May 2025 14:27:02 +0300 (MSK)
-Message-ID: <b83e5265-0853-42c7-bfa1-0577d3f80b3f@tls.msk.ru>
-Date: Thu, 22 May 2025 14:27:01 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 921192131A6;
+ Thu, 22 May 2025 14:32:49 +0300 (MSK)
+Message-ID: <5ae8f525-2383-4d78-8d53-b0ccea0624e6@tls.msk.ru>
+Date: Thu, 22 May 2025 14:32:49 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Fixes for TCG/HVF warning of CPUID_HT and
- CPUID_EXT3_CMP_LEG
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
- <phil@philjordan.eu>, qemu-devel@nongnu.org
-References: <20250514031652.838763-1-xiaoyao.li@intel.com>
+Subject: Re: [PATCH v5 1/2] hw/pci-host/gt64120: Fix endianness handling
+To: Rakesh Jeyasingh <rakeshjb010@gmail.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, philmd@linaro.org, thuth@redhat.com,
+ balaton@eik.bme.hu, qemu-stable <qemu-stable@nongnu.org>
+References: <20250429170354.150581-1-rakeshjb010@gmail.com>
+ <20250429170354.150581-2-rakeshjb010@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -80,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250514031652.838763-1-xiaoyao.li@intel.com>
+In-Reply-To: <20250429170354.150581-2-rakeshjb010@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -106,22 +105,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.05.2025 06:16, Xiaoyao Li wrote:
-> Starting from QEMU v10.0.0, QEMU hits warnings when vcpus >= 2 with TCG
+On 29.04.2025 20:03, Rakesh Jeyasingh wrote:
+> The GT-64120 PCI controller requires special handling where:
+> 1. Host bridge(bus 0 ,device 0) must never be byte-swapped
+> 2. Other devices follow MByteSwap bit in GT_PCI0_CMD
 > 
->   qemu-system-x86_64: warning: TCG doesn't support requested feature: CPUID.01H:EDX.ht [bit 28]
->   qemu-system-x86_64: warning: TCG doesn't support requested feature: CPUID.80000001H:ECX.cmp-legacy [bit 1]
+> The previous implementation incorrectly  swapped all accesses, breaking
+> host bridge detection (lspci -d 11ab:4620).
 > 
-> For HVF, it should have the same warning of CPUID.01H:EDX.ht [bit 28].
+> Changes made:
+> 1. Removed gt64120_update_pci_cfgdata_mapping() and moved data_mem initialization
+>    to gt64120_realize() for cleaner setup
+> 2. Implemented custom read/write handlers that:
+>     - Preserve host bridge accesses (extract32(config_reg,11,13)==0)
+>     - apply swapping only for non-bridge devices in big-endian mode
 > 
-> This series tries to fix them.
-> 
-> Xiaoyao Li (2):
->    i386/tcg: Make CPUID_HT and CPUID_EXT3_CMP_LEG supported
->    i386/hvf: Make CPUID_HT supported
+> Fixes: 145e2198 ("hw/mips/gt64xxx_pci: Endian-swap using PCI_HOST_BRIDGE MemoryRegionOps")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2826
+> Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
 
-This seems to be a qemu-stable material (10.0).
-Applied to staging-10.0, please let me know if I shouldn't.
+This seems to be qemu-stable material.
+
+I picked this one up for 9.2 and 10.0,
+please let me know if I shouldn't.
 
 Thanks,
 
