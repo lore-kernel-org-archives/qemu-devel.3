@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839D2C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EEEAC54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:32:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3Bm-00036b-4K; Thu, 22 May 2025 06:30:14 -0400
+	id 1uI3Bw-0003B5-Oz; Thu, 22 May 2025 06:30:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3Bj-000357-R4
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:11 -0400
+ id 1uI3Bv-0003Ar-3p
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3Bh-0006bz-H7
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:11 -0400
+ id 1uI3Bt-0006dK-3y
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747909808;
+ s=mimecast20190719; t=1747909820;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uTWc2uEJKIdMwUEEtwdUZJgeePM924WrG63gPuY07qk=;
- b=HAcby9MfZzBz2V+MJjQ0qzmabTpP/LB3yQMOP73mqCQbKgaPpFRcuJddMbu4zt0rYd5c8d
- OL94sIJQcVRFO560jU7DxoIGunjvXJttFQYvHNoKCV0K7S7IG+FuzItEqKhQYmYsXMVIlE
- K2dyeW1BcxmBLv/uG40NhsPP2PZgaXA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=UubmKbpvSmyR3eE673UXh5T78kpLeKhgcFJtHfX49Mk=;
+ b=jKPXb470OHypoC+gveidOPEjOrvHC10juqnda9X5LCdrlQ+xDN6IhnG2k3Y5Ok8i1K+ZAV
+ SFCPEXTE3f1SbRpSJuEoYvswoqHyj7qAH7Qz2Qtuu81NhZiss3Z5oVqIHuNfXt06BtcHXX
+ XiYqxsrKWdhExBcn7McjH2TobO0ScX0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-E7YYqfvXO0el1s7NS6wXCQ-1; Thu,
- 22 May 2025 06:30:05 -0400
-X-MC-Unique: E7YYqfvXO0el1s7NS6wXCQ-1
-X-Mimecast-MFC-AGG-ID: E7YYqfvXO0el1s7NS6wXCQ_1747909804
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-WEuZzYxsM8-V9rL48SHskQ-1; Thu,
+ 22 May 2025 06:30:16 -0400
+X-MC-Unique: WEuZzYxsM8-V9rL48SHskQ-1
+X-Mimecast-MFC-AGG-ID: WEuZzYxsM8-V9rL48SHskQ_1747909815
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22609195608A; Thu, 22 May 2025 10:30:04 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4911F180036F; Thu, 22 May 2025 10:30:15 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.179])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B55AD1958014; Thu, 22 May 2025 10:30:00 +0000 (UTC)
+ id F42201958014; Thu, 22 May 2025 10:30:11 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -56,9 +56,9 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 10/23] scripts/checkpatch: introduce tracking of file start/end
-Date: Thu, 22 May 2025 11:29:10 +0100
-Message-ID: <20250522102923.309452-11-berrange@redhat.com>
+Subject: [PULL 13/23] scripts/checkpatch: expand pattern for matching makefiles
+Date: Thu, 22 May 2025 11:29:13 +0100
+Message-ID: <20250522102923.309452-14-berrange@redhat.com>
 In-Reply-To: <20250522102923.309452-1-berrange@redhat.com>
 References: <20250522102923.309452-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -90,182 +90,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some checks want to be performed either at the start of a new file
-within a patch, or at the end. This is complicated by the fact that
-the information relevant to the check may be spread across multiple
-lines. It is further complicated by a need to support both git and
-non-git diffs, and special handling for renames where there might
-not be any patch hunks.
-
-To handle this more sanely, introduce explicit tracking of file
-start/end, taking account of git metadata, and calling a hook
-function at each transition.
+The current regex matches Makefile & Makefile.objs, but the latter is
+no longer used, anjd we're missing coverage of Makefile.include and
+Makefile.target. Expand the pattern to match any suffix.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/checkpatch.pl | 110 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 107 insertions(+), 3 deletions(-)
+ scripts/checkpatch.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 2c19f6f0f2..bb3830d693 100755
+index 881dcac29b..82ec71e05d 100755
 --- a/scripts/checkpatch.pl
 +++ b/scripts/checkpatch.pl
-@@ -1417,6 +1417,39 @@ sub checkspdx {
-     }
- }
- 
-+# All three of the methods below take a 'file info' record
-+# which is a hash ref containing
-+#
-+#  'isgit': 1 if an enhanced git diff or 0 for a plain diff
-+#  'githeader': 1 if still parsing git patch header, 0 otherwise
-+#  'linestart': line number of start of file diff
-+#  'lineend': line number of end of file diff
-+#  'filenew': the new filename
-+#  'fileold': the old filename (same as 'new filename' except
-+#             for renames in git diffs)
-+#  'action': one of 'modified' (always) or 'new' or 'deleted' or
-+#            'renamed' (git diffs only)
-+#  'mode': file mode for new/deleted files (git diffs only)
-+#  'similarity': file similarity when renamed (git diffs only)
-+#  'facts': hash ref for storing any metadata related to checks
-+#
-+
-+# Called at the end of each patch, with the list of
-+# real filenames that were seen in the patch
-+sub process_file_list {
-+	my @fileinfos = @_;
-+}
-+
-+# Called at the start of processing a diff hunk for a file
-+sub process_start_of_file {
-+	my $fileinfo = shift;
-+}
-+
-+# Called at the end of processing a diff hunk for a file
-+sub process_end_of_file {
-+	my $fileinfo = shift;
-+}
-+
- sub process {
- 	my $filename = shift;
- 
-@@ -1453,7 +1486,10 @@ sub process {
- 	my $realfile = '';
- 	my $realline = 0;
- 	my $realcnt = 0;
-+	my $fileinfo;
-+	my @fileinfolist;
- 	my $here = '';
-+	my $oldhere = '';
- 	my $in_comment = 0;
- 	my $comment_edge = 0;
- 	my $first_line = 0;
-@@ -1591,17 +1627,56 @@ sub process {
- 		$prefix = "$filename:$realline: " if ($emacs && $file);
- 		$prefix = "$filename:$linenr: " if ($emacs && !$file);
- 
-+		$oldhere = $here;
- 		$here = "#$linenr: " if (!$file);
- 		$here = "#$realline: " if ($file);
- 
- 		# extract the filename as it passes
--		if ($line =~ /^diff --git.*?(\S+)$/) {
--			$realfile = $1;
--			$realfile =~ s@^([^/]*)/@@ if (!$file);
-+		if ($line =~ /^diff --git\s+(\S+)\s+(\S+)$/) {
-+			my $fileold = $1;
-+			my $filenew = $2;
-+
-+			if (defined $fileinfo) {
-+				$fileinfo->{lineend} = $oldhere;
-+				process_end_of_file($fileinfo)
-+		        }
-+			$fileold =~ s@^([^/]*)/@@ if (!$file);
-+			$filenew =~ s@^([^/]*)/@@ if (!$file);
-+			$realfile = $filenew;
- 	                checkfilename($realfile, \$acpi_testexpected, \$acpi_nontestexpected);
-+
-+			$fileinfo = {
-+				"isgit" => 1,
-+				"githeader" => 1,
-+				"linestart" => $here,
-+				"lineend" => 0,
-+				"fileold" => $fileold,
-+				"filenew" => $filenew,
-+				"action" => "modified",
-+				"mode" => 0,
-+				"similarity" => 0,
-+				"facts" => {},
-+		        };
-+			push @fileinfolist, $fileinfo;
-+		} elsif (defined $fileinfo && $fileinfo->{githeader} &&
-+			 $line =~ /^(new|deleted) (?:file )?mode\s+([0-7]+)$/) {
-+			$fileinfo->{action} = $1;
-+			$fileinfo->{mode} = oct($2);
-+		} elsif (defined $fileinfo && $fileinfo->{githeader} &&
-+			 $line =~ /^similarity index (\d+)%/) {
-+			$fileinfo->{similarity} = int($1);
-+		} elsif (defined $fileinfo && $fileinfo->{githeader} &&
-+			 $line =~ /^rename (from|to) [\w\/\.\-]+\s*$/) {
-+			$fileinfo->{action} = "renamed";
-+			# For a no-change rename, we'll never have any "+++..."
-+			# lines, so trigger actions now
-+			if ($1 eq "to" && $fileinfo->{similarity} == 100)  {
-+				process_start_of_file($fileinfo);
-+			}
- 		} elsif ($line =~ /^\+\+\+\s+(\S+)/) {
- 			$realfile = $1;
- 			$realfile =~ s@^([^/]*)/@@ if (!$file);
-+
- 	                checkfilename($realfile, \$acpi_testexpected, \$acpi_nontestexpected);
- 
- 			$p1_prefix = $1;
-@@ -1610,6 +1685,30 @@ sub process {
- 				WARN("patch prefix '$p1_prefix' exists, appears to be a -p0 patch\n");
- 			}
- 
-+			if (defined $fileinfo && !$fileinfo->{isgit}) {
-+				$fileinfo->{lineend} = $oldhere;
-+				process_end_of_file($fileinfo);
-+			}
-+
-+			if (!defined $fileinfo || !$fileinfo->{isgit}) {
-+				$fileinfo = {
-+					"isgit" => 0,
-+					"githeader" => 0,
-+					"linestart" => $here,
-+					"lineend" => 0,
-+					"fileold" => $realfile,
-+					"filenew" => $realfile,
-+					"action" => "modified",
-+					"mode" => 0,
-+					"similarity" => 0,
-+					"facts" => {},
-+			        };
-+				push @fileinfolist, $fileinfo;
-+			} else {
-+				$fileinfo->{githeader} = 0;
-+			}
-+			process_start_of_file($fileinfo);
-+
- 			next;
+@@ -1454,7 +1454,7 @@ sub process_start_of_file {
+ 		my $permhere = $fileinfo->{linestart} . "FILE: " .
+ 			$fileinfo->{filenew} . "\n";
+ 		if ($fileinfo->{filenew} =~
+-		    /(\bMakefile(?:\.objs)?|\.(c|cc|cpp|h|mak|s|S))$/) {
++		    /(\bMakefile.*|\.(c|cc|cpp|h|mak|s|S))$/) {
+ 			ERROR("do not set execute permissions for source " .
+ 			      "files\n" . $permhere);
  		}
- 
-@@ -3216,6 +3315,11 @@ sub process {
- 		}
- 	}
- 
-+	if (defined $fileinfo) {
-+		process_end_of_file($fileinfo);
-+	}
-+	process_file_list(@fileinfolist);
-+
- 	if ($is_patch && $chk_signoff && $signoff == 0) {
- 		ERROR("Missing Signed-off-by: line(s)\n");
- 	}
 -- 
 2.49.0
 
