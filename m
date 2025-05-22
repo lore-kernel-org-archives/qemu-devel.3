@@ -4,144 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32496C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 07:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA7FC54756
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 07:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI0gY-0007Q7-Ju; Thu, 22 May 2025 03:49:50 -0400
+	id 1uI0iU-00086K-JO; Thu, 22 May 2025 03:51:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uI0gW-0007Px-O5
- for qemu-devel@nongnu.org; Thu, 22 May 2025 03:49:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org>)
+ id 1uI0iS-00085s-QN; Thu, 22 May 2025 03:51:48 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uI0gU-0000sJ-Qd
- for qemu-devel@nongnu.org; Thu, 22 May 2025 03:49:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747900185;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+hKpZWy2HrnfZVddUMW9MUFAIeddvotB56qPw6UQdBg=;
- b=GzzRxP4E8m49XpbEqFCfBxgvPZglh6p+EQnh9ErLXbFqQYp8gyhMXrH0dQnRzE3kLHSlMD
- 98YO4YD66bl4a9wuqVk2utjjdGLTFBlO8WqAowTjQ+gKj7jUUVc3NwTQgDpC1pPsBy87vl
- 4X5/+SIP0humpULIfya34i8FG307yvA=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-5WZMSmJoPZWwIg4Nigy4OA-1; Thu, 22 May 2025 03:49:44 -0400
-X-MC-Unique: 5WZMSmJoPZWwIg4Nigy4OA-1
-X-Mimecast-MFC-AGG-ID: 5WZMSmJoPZWwIg4Nigy4OA_1747900183
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-acb23361d73so878226466b.0
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 00:49:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747900183; x=1748504983;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+hKpZWy2HrnfZVddUMW9MUFAIeddvotB56qPw6UQdBg=;
- b=XU/I9y+msJ0OKexT1S6+Ilwd7NCCR4+Iwdtk6O3d5N+Nmg5hIK5BkGyA1vjubd0fpC
- IWHkLnhiaDmn443Lvp36LH43oBcdDfZkJahIGaSJ3ywpTeEcS1WbOAKG2YzK1fADFzFm
- zkuNf1RNrcbmaNs4R5cwD04kJwGV4VO2rsE1N4Gol/NvFdIwMSvpTeCULk08AVbx5HJU
- Mu+VHMuJTYSAR2OapYCZ8RQ0R2DuCZEExnBbygV7OczW/rAvQBX+h8oo/0XgD3T2hLHC
- T8Fxl4/yn271rTwLv5RV2+ppX2bIkj0tfvmr0ce4ZpFNk0yg3CThYAt3tJ6I51i1x4Iv
- YBYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVA65l4a5DyyjySY1eGtPuvmI69VA5vLFxkMAPAd7PgbmEDZM3Pe4bXxL7fLm0O331PdKhgPYuSOq+8@nongnu.org
-X-Gm-Message-State: AOJu0YwJJximGnKpidXgz0Z7SR+cn6usEQz6foJ8stQ0atSIBAPLgseQ
- ZLkGI2fM8z/vBsHwN+yPc4G6AeLlcf9V3URbW8TSow0bCdoX9v9jOPT71U++tA2JmrkUUDBLt83
- jkDttpzbpTun5kplp6p10uApmsRtkZzWNzYCnqAwAUo6G5nUjkjaeCx7n
-X-Gm-Gg: ASbGncsTWBjP0YinKeT4BvNSEJNXuZlpX/F9++HpRQZd2JFzQWjqCT84HvEp/tB7C1y
- 6PUjUNbqNv1CJi8F9FleLiqx+xWJcZuUO3o4o1KXGoQXDG2uVgNkRTVhKqg10HY1T5vcaXrCgPe
- NIYvOHh5YwZgyaeoJZ00MIVSlPe0dMR9Mup2OdoD1JMcbWVlJdCRAGbs/7MPlwqix0QAo+sJC5H
- rwPYZpCz8opO+2O5gvMboGy6Aq8dNEEo1Ayf7rqwKdttzSQzodyjLDbtrjpREwAOgqZsmc2nHna
- sqGPBkeoa2DTa7cQkwF7/ftSrITkw6kojlL21deKLuc=
-X-Received: by 2002:a17:907:9603:b0:ad2:2e9d:7517 with SMTP id
- a640c23a62f3a-ad52f32194emr2064545266b.8.1747900182831; 
- Thu, 22 May 2025 00:49:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdKv/iU0CbhCetZEU7/8N/al/k3MURuJN7b5Ngls1+yjyFUIKCQJ5L69q70EpL1Ksvq3reYw==
-X-Received: by 2002:a17:907:9603:b0:ad2:2e9d:7517 with SMTP id
- a640c23a62f3a-ad52f32194emr2064543266b.8.1747900182407; 
- Thu, 22 May 2025 00:49:42 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-201.web.vodafone.de.
- [109.42.49.201]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d4c9e62sm1032333366b.155.2025.05.22.00.49.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 May 2025 00:49:41 -0700 (PDT)
-Message-ID: <430eaa84-5695-4fc2-90d5-d488a204e999@redhat.com>
-Date: Thu, 22 May 2025 09:49:40 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org>)
+ id 1uI0iQ-0001A8-Dm; Thu, 22 May 2025 03:51:48 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4b30qJ6dyrz4xdg;
+ Thu, 22 May 2025 17:51:40 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4b30qF0Ns9z4xdF;
+ Thu, 22 May 2025 17:51:36 +1000 (AEST)
+Message-ID: <f88ca20f-ec6b-486a-834f-5c7eafa3baaa@kaod.org>
+Date: Thu, 22 May 2025 09:51:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/2] tests/functional: add memlock tests
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250521135522.11180-1-dtalexundeer@yandex-team.ru>
- <20250521135522.11180-3-dtalexundeer@yandex-team.ru>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250521135522.11180-3-dtalexundeer@yandex-team.ru>
+Subject: Re: [PATCH v3 1/5] hw/arm/aspeed_ast2700-fc: Fix null pointer
+ dereference in ca35 init
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
+References: <20250522033628.3752086-1-steven_lee@aspeedtech.com>
+ <20250522033628.3752086-2-steven_lee@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250522033628.3752086-2-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,108 +112,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/05/2025 15.55, Alexandr Moshkov wrote:
-> Add new tests to check the correctness of the `-overcommit memlock`
-> option (possible values: off, on, on-fault) by using
-> `/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
-> anonymous segments:
+Hello Steven
+
+On 5/22/25 05:36, Steven Lee wrote:
+> Clang's sanitizer reports a runtime error when booting with
+> '-net nic -net user', due to a null pointer being passed
+> to memory_region_find(), which subsequently triggers a crash in
+> flatview_lookup().
 > 
-> * if `memlock=off`, then Locked = 0 on every anonymous smaps;
-> * if `memlock=on`, then Size, Rss and Locked values must be equal for
-> every anon smaps where Rss is not 0;
-> * if `memlock=on-fault`, then Rss and Locked must be equal on every anon
-> smaps and anonymous segment with Rss < Size must exists.
+> Root cause:
+> - Missing NIC configuration in the CA35 initialization.
 > 
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> Fix:
+> - Reduce ca35 ram size from 2GiB to 1GiB to align with ast2700a1-evb,
+>    where the ram-container is defined as 1GiB in its class.
+> - Add nic configuration in ast2700fc's ca35 init function.
+
+
+Please split in 2.
+
+
+Thanks,
+
+C.
+
+
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 > ---
-...
-> diff --git a/tests/functional/test_memlock.py b/tests/functional/test_memlock.py
-> new file mode 100755
-> index 0000000000..a090e7f9ad
-> --- /dev/null
-> +++ b/tests/functional/test_memlock.py
-> @@ -0,0 +1,107 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that check overcommit memlock options
-> +#
-> +# Copyright (c) Yandex Technologies LLC, 2025
-> +#
-> +# Author:
-> +#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> +#
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2 or
-> +# later.  See the COPYING file in the top-level directory.
-
-I just noticed: New file need a SPDX identifier nowadays to keep 
-scripts/check_patch.pl happy.
-
-Anyway, I now also tested the patch, but for me, it's not working: After 
-setting ulimit -l to 2G and running the test, I get:
-
-$ ~/devel/qemu/tests/functional/test_memlock.py
-TAP version 13
-ok 1 test_memlock.MemlockTest.test_memlock_off
-Traceback (most recent call last):
-   File "~/devel/qemu/tests/functional/test_memlock.py", line 60, in 
-test_memlock_on
-     self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
-     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: False is not true
-
-not ok 2 test_memlock.MemlockTest.test_memlock_on
-Traceback (most recent call last):
-   File "~/devel/qemu/tests/functional/test_memlock.py", line 70, in 
-test_memlock_onfault
-     self.assertTrue(smap['Rss'] == smap['Locked'])
-     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: False is not true
-
-not ok 3 test_memlock.MemlockTest.test_memlock_onfault
-
-I added two print statements right in front of the asserts to see the 
-values, and for the first one it shows (after many successfully comparisons):
-
-line 60: 4 == 4 == 0
-
-And similar for the second one:
-
-line 70: 4 == 0
-
-FWIW, this is on Fedora 41.
-
-Looking at the smaps file, it seems like this comes from a shared library:
-
-7ff16c7c9000-7ff16c7ca000 r--p 00000000 00:2a 29149631 
-/usr/lib64/spa-0.2/support/libspa-support.so
-Size:                  4 kB
-KernelPageSize:        4 kB
-MMUPageSize:           4 kB
-Rss:                   4 kB
-Pss:                   0 kB
-Pss_Dirty:             0 kB
-Shared_Clean:          4 kB
-Shared_Dirty:          0 kB
-Private_Clean:         0 kB
-Private_Dirty:         0 kB
-Referenced:            4 kB
-Anonymous:             0 kB
-KSM:                   0 kB
-LazyFree:              0 kB
-AnonHugePages:         0 kB
-ShmemPmdMapped:        0 kB
-FilePmdMapped:         0 kB
-Shared_Hugetlb:        0 kB
-Private_Hugetlb:       0 kB
-Swap:                  0 kB
-SwapPss:               0 kB
-Locked:                0 kB
-THPeligible:           0
-ProtectionKey:         0
-
-So maybe you've got to ignore the mappings of .so files in your test?
-
-  Thomas
+>   hw/arm/aspeed_ast27x0-fc.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+> index 125a3ade40..f8cb632bca 100644
+> --- a/hw/arm/aspeed_ast27x0-fc.c
+> +++ b/hw/arm/aspeed_ast27x0-fc.c
+> @@ -48,7 +48,7 @@ struct Ast2700FCState {
+>       bool mmio_exec;
+>   };
+>   
+> -#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
+> +#define AST2700FC_BMC_RAM_SIZE (1 * GiB)
+>   #define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
+>   
+>   #define AST2700FC_HW_STRAP1 0x000000C0
+> @@ -86,6 +86,13 @@ static void ast2700fc_ca35_init(MachineState *machine)
+>                                    AST2700FC_BMC_RAM_SIZE, &error_abort)) {
+>           return;
+>       }
+> +
+> +    for (int i = 0; i < sc->macs_num; i++) {
+> +        if (!qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
+> +                                       true, NULL)) {
+> +            break;
+> +        }
+> +    }
+>       if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
+>                                    AST2700FC_HW_STRAP1, &error_abort)) {
+>           return;
 
 
