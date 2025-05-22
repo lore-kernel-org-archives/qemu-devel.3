@@ -4,60 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0355C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CDFC54E90
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:31:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3BF-0002yv-Im; Thu, 22 May 2025 06:29:41 -0400
+	id 1uI3C1-0003CJ-3y; Thu, 22 May 2025 06:30:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3BC-0002yK-K3
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:38 -0400
+ id 1uI3Bz-0003BW-Do
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uI3B7-0006M7-RP
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:29:38 -0400
+ id 1uI3Bx-0006da-H6
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:30:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747909771;
+ s=mimecast20190719; t=1747909823;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ektz7OD0hYzBphenw5zpimORufWjXvtSTh7ImPDDEts=;
- b=ME+TICn39JqsUr6thLfbM+bxZ1gVV8hsQxJP97AINNKG0M5FNNUwQNpTlPMAmVIr+W75Ck
- cSdqrbtbwXHoAnpmHox+rMtWqa8prTazkEf1HVTnZaPE5AqZV2UNA+HXZI2ye9qNtgR7cY
- RsaDugCf7uSFoC7En5XvZ3VRrbGRDB4=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/KSIReOtCXI9OAmTNpxHjWOwdW11sGtW+E03elYeBeQ=;
+ b=gja5f3UID3fgKdAwID3vfe4WbKk2b+tmVj/hopR3pIbcOxW71JY1o8wn5nVX1OYvy82Qrk
+ OrMbRDH0UWDAuulSkyRdMDXy4NY7GSdq/7jgmpQG8Axo0WH7SvcLonrLkOjpVX5vLXl8hU
+ XgxDl07+wMzzAsmctrR0w1xzv8F9M7c=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-450-UOuSp77WMwqPuVdLN0ts-Q-1; Thu,
- 22 May 2025 06:29:29 -0400
-X-MC-Unique: UOuSp77WMwqPuVdLN0ts-Q-1
-X-Mimecast-MFC-AGG-ID: UOuSp77WMwqPuVdLN0ts-Q_1747909768
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-dAfYL1_4Nde_jfbvT_USPQ-1; Thu,
+ 22 May 2025 06:30:20 -0400
+X-MC-Unique: dAfYL1_4Nde_jfbvT_USPQ-1
+X-Mimecast-MFC-AGG-ID: dAfYL1_4Nde_jfbvT_USPQ_1747909819
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 967CB1801A1E; Thu, 22 May 2025 10:29:28 +0000 (UTC)
+ id 489E3180087F; Thu, 22 May 2025 10:30:19 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.179])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B4FE91958014; Thu, 22 May 2025 10:29:24 +0000 (UTC)
+ id D95621958014; Thu, 22 May 2025 10:30:15 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 00/23] Misc VNC, I/O, Crypto & checkpatch fixes
-Date: Thu, 22 May 2025 11:29:00 +0100
-Message-ID: <20250522102923.309452-1-berrange@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 14/23] scripts/checkpatch: use new hook for MAINTAINERS update
+ check
+Date: Thu, 22 May 2025 11:29:14 +0100
+Message-ID: <20250522102923.309452-15-berrange@redhat.com>
+In-Reply-To: <20250522102923.309452-1-berrange@redhat.com>
+References: <20250522102923.309452-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -85,85 +91,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f0737158b483e7ec2b2512145aeab888b85cc1f7:
+When seeing a new/deleted/renamed file we check to see if MAINTAINERS
+is updated, but we don't give the user a list of files affected, as
+we don't want to repeat the same warning many times over.
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-05-20 10:26:30 -0400)
+Using the new file list hook, we can give a single warning at the
+end with a list of filenames included.
 
-are available in the Git repository at:
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/checkpatch.pl | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-  https://gitlab.com/berrange/qemu tags/misc-next-pull-request
-
-for you to fetch changes up to 81941aa896b718c194f08cebb4303561b64c60b4:
-
-  scripts/checkpatch.pl: mandate SPDX tag for Rust src files (2025-05-22 11:24:41 +0100)
-
-----------------------------------------------------------------
-
-* Fix VNC tight encoding with 8/16-bpp formats with
-  mixed endian server/client
-* Fix VNC non-tight encoding with mixed endian server/client
-* Drop built-in AES impl from non-TCG usage, requiring
-  nettle/gcrypt/gnutls
-* Fix validation of SPDX-License-Identifier in new files
-* Mandate SPDX-License-Identifier in Rust source
-* Reject license boilerplate in new files
-* Add full control over TCP keep alive setting for sockets
-
-----------------------------------------------------------------
-
-Daniel P. Berrangé (17):
-  ui/vnc.c: replace big endian flag with byte order value
-  ui/vnc: take account of client byte order in pixman format
-  ui/vnc: fix tight palette pixel encoding for 8/16-bpp formats
-  tests: skip encrypted secret tests if AES is not available
-  tests: skip legacy qcow2 encryption test if AES is not available
-  tests: fix skipping cipher tests when AES is not available
-  crypto: fully drop built-in cipher provider
-  Revert "scripts: mandate that new files have SPDX-License-Identifier"
-  scripts/checkpatch.pl: fix various indentation mistakes
-  scripts/checkpatch: introduce tracking of file start/end
-  scripts/checkpatch: use new hook for ACPI test data check
-  scripts/checkpatch: use new hook for file permissions check
-  scripts/checkpatch: expand pattern for matching makefiles
-  scripts/checkpatch: use new hook for MAINTAINERS update check
-  scripts/checkpatch: reimplement mandate for SPDX-License-Identifier
-  scripts/checkpatch: reject license boilerplate on new files
-  scripts/checkpatch.pl: mandate SPDX tag for Rust src files
-
-Juraj Marcin (6):
-  io: Fix partial struct copy in qio_dns_resolver_lookup_sync_inet()
-  util/qemu-sockets: Refactor setting client sockopts into a separate
-    function
-  util/qemu-sockets: Refactor success and failure paths in
-    inet_listen_saddr()
-  util/qemu-sockets: Add support for keep-alive flag to passive sockets
-  util/qemu-sockets: Refactor inet_parse() to use QemuOpts
-  util/qemu-sockets: Introduce inet socket options controlling TCP
-    keep-alive
-
- crypto/cipher-builtin.c.inc     | 303 ------------------------
- crypto/cipher-stub.c.inc        |  30 +++
- crypto/cipher.c                 |   2 +-
- include/ui/qemu-pixman.h        |   4 +-
- io/dns-resolver.c               |  21 +-
- meson.build                     |  30 +++
- qapi/sockets.json               |  23 +-
- scripts/checkpatch.pl           | 392 +++++++++++++++++++++-----------
- tests/unit/test-crypto-block.c  |   7 +
- tests/unit/test-crypto-cipher.c |  13 +-
- tests/unit/test-crypto-secret.c |  28 ++-
- tests/unit/test-util-sockets.c  | 235 +++++++++++++++++++
- ui/qemu-pixman.c                |  15 +-
- ui/vnc-enc-tight.c              |  20 +-
- ui/vnc-enc-zrle.c               |   2 +-
- ui/vnc-jobs.c                   |   2 +-
- ui/vnc.c                        |   9 +-
- ui/vnc.h                        |   2 +-
- util/qemu-sockets.c             | 327 ++++++++++++++++----------
- 19 files changed, 843 insertions(+), 622 deletions(-)
- delete mode 100644 crypto/cipher-builtin.c.inc
- create mode 100644 crypto/cipher-stub.c.inc
-
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 82ec71e05d..c05559a108 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1443,6 +1443,25 @@ sub process_file_list {
+ 		      join("\n  ", @acpi_nontestexpected) .
+ 		      "\n\nfound in the same patch\n");
+ 	}
++
++	my $sawmaintainers = 0;
++	my @maybemaintainers;
++	foreach my $fileinfo (@fileinfos) {
++		if ($fileinfo->{action} ne "modified" &&
++		    $fileinfo->{filenew} !~ m#^tests/data/acpi/#) {
++			push @maybemaintainers, $fileinfo->{filenew};
++		}
++		if ($fileinfo->{filenew} eq "MAINTAINERS") {
++			$sawmaintainers = 1;
++		}
++	}
++
++	# If we don't see a MAINTAINERS update, prod the user to check
++	if (int(@maybemaintainers) > 0 && !$sawmaintainers) {
++		WARN("added, moved or deleted file(s):\n\n  " .
++		     join("\n  ", @maybemaintainers) .
++		     "\n\nDoes MAINTAINERS need updating?\n");
++	}
+ }
+ 
+ # Called at the start of processing a diff hunk for a file
+@@ -1486,7 +1505,6 @@ sub process {
+ 
+ 	my $in_header_lines = $file ? 0 : 1;
+ 	my $in_commit_log = 0;		#Scanning lines before patch
+-	my $reported_maintainer_file = 0;
+ 	my $reported_mixing_imported_file = 0;
+ 	my $in_imported_file = 0;
+ 	my $in_no_imported_file = 0;
+@@ -1761,23 +1779,6 @@ sub process {
+ 			}
+ 		}
+ 
+-# Check if MAINTAINERS is being updated.  If so, there's probably no need to
+-# emit the "does MAINTAINERS need updating?" message on file add/move/delete
+-		if ($line =~ /^\s*MAINTAINERS\s*\|/) {
+-			$reported_maintainer_file = 1;
+-		}
+-
+-# Check for added, moved or deleted files
+-		if (!$reported_maintainer_file && !$in_commit_log &&
+-		    ($line =~ /^(?:new|deleted) file mode\s*\d+\s*$/ ||
+-		     $line =~ /^rename (?:from|to) [\w\/\.\-]+\s*$/ ||
+-		     ($line =~ /\{\s*([\w\/\.\-]*)\s*\=\>\s*([\w\/\.\-]*)\s*\}/ &&
+-		      (defined($1) || defined($2)))) &&
+-		    $realfile !~ m#^tests/data/acpi/#) {
+-			$reported_maintainer_file = 1;
+-			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
+-		}
+-
+ # Check SPDX-License-Identifier references a permitted license
+ 		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
+ 			&checkspdx($realfile, $1);
 -- 
 2.49.0
 
