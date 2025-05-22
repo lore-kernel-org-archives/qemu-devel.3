@@ -4,108 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DCDC54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A9EC54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 10:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI3HC-0000eB-Qp; Thu, 22 May 2025 06:35:50 -0400
+	id 1uI3Hh-0001Pr-RP; Thu, 22 May 2025 06:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uI3H8-0000aS-R1
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:35:46 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uI3H2-0007Dc-Ie
- for qemu-devel@nongnu.org; Thu, 22 May 2025 06:35:46 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-23274dbcbc2so28788565ad.1
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 03:35:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747910138; x=1748514938;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+/YDTvjOrO7IViJpwqQz7zuEkqIdZ05kpcKcNyN8J4M=;
- b=Oh9kbh2ssSvOkPww/UKxcXeCTUjeiTO/RurAedsDgnOzisWKi0HSzQiwlilay+tvz2
- 3kVGxJ4iRmQs33a+GKCpVbu5dkINAXFaLXNhYTaiM2Yg6+1JkdASmVwlhTs/YlqqshsG
- 16Zj6WJUzOcWUaewTmBcT5/Q+rHBvdra5U9r6sZNb2JaqstMXKxLrePN0YY3mQ7uP9W1
- L6qC93TT4OlFms7SahP65ZqkdBDo07OsBSLAwxWs7h/bj/0KVulLqOquOyNmYsi/POtn
- IabSHBP7BAw2qq+oUAZJ648CWLwGj8e9nQcuNeS80bqNrTFH70WyhyOa8GE5Id7wcXaM
- CbKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747910138; x=1748514938;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+/YDTvjOrO7IViJpwqQz7zuEkqIdZ05kpcKcNyN8J4M=;
- b=QDSsb7PIXoNjC9uALKyuFDHQM8Hi6nkXteK0zcj+TB6lbyLh3BGajehHaOAgNR+piQ
- o4FlsL2OKPfOlK/JxvSNOxeXh9xSNvpU8Tf8GZ4jf8NZ5YZ8aAy3e9FSuxJjiwHBQrah
- KN6kGBiOBP6w7P0cCnobl2mOvxeNx7IIKvmmI4umdSjw4hvjv6WRe6FvAUzspoFOLrOe
- R4DEzsqa7kF6ng/v6MASWmvQwEpdjC+B6yt5Pg+w5ksQdd903vkBxSzc40cTd0HB/oB+
- W2eObW5ExDTrpbGo79+C0Dn8qy2Vw+bdz6tnl3icS+OXVd/02yNAw3OBZfxVQQvVJu4t
- Mzgw==
-X-Gm-Message-State: AOJu0Yyg43s7R+JLMZctVrMAvgODEs3EpEtESy+YznW+UNpq73u9QkoR
- vR1yoNKcs9KwZBUzOfh0xEatrFMTeZTVRgeB+9faDE7t1iV7F0nYpo5ufjAcIQ315RE=
-X-Gm-Gg: ASbGncsTc7SYNuSsLlIqKyBDc/AEDnDA9DtAkRHnDekDUyCm8xmLOZSOClE9XJcoBRW
- 1Mf6XvO8txSBcQ8iLIzMR387Mc+re7pqBmYda3OwNXARQyLddpHyejbEqX/nPP58zjU7jsp57GI
- vcfK8MD9R1G6pOXe6MQPigVB46v87cwpjrvXwUFwz3tXldq6XIVbwhEbNbPWpbGwPctWqbfuy47
- g/Qpsmy9Za65SlRsRVqb9LWM6kJHw9EY0MVUX8qy4wKm5YmwbQJTpupAV6tO6rWi++e4e0MsO3e
- 2PKvzPdOB4yEfpa5YE17mEMHxDraXbABIwFdnSjryE+cavbMG5dP1WtTcmuVHA==
-X-Google-Smtp-Source: AGHT+IHPFoFO3WKSRS7xIIAWlCB5S5nbksA/ArsxSJDa7Gg8WdftYamfFsrAIi6ZHaCv3EColsvO8g==
-X-Received: by 2002:a17:902:dac5:b0:22e:4509:cb89 with SMTP id
- d9443c01a7336-231de21d4d5mr323170165ad.0.1747910137815; 
- Thu, 22 May 2025 03:35:37 -0700 (PDT)
-Received: from [10.100.116.185] ([157.82.128.1])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ade028sm106776165ad.82.2025.05.22.03.35.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 May 2025 03:35:37 -0700 (PDT)
-Message-ID: <3d16d571-0f71-49e0-b2d2-b1a144e92e26@daynix.com>
-Date: Thu, 22 May 2025 19:35:30 +0900
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1uI3Hg-0001OS-8c
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:36:20 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1uI3Hd-0007Hs-0q
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 06:36:19 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:cca4:0:640:432b:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 50BA162104;
+ Thu, 22 May 2025 13:36:09 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:803e:400:5ed1:ca1a:388:8e9e] (unknown
+ [2a02:6bf:803e:400:5ed1:ca1a:388:8e9e])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 6aMdAo0FZKo0-uIr8e8gV; Thu, 22 May 2025 13:36:08 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1747910168;
+ bh=4wjfaexxVWBo+0ALNAAUr/GcPGU8Bd+MmwKvZNQalCI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Ur125VhqUf0W3x/q2A5+QtGiJvXeM/ifMsB+rs5/brWJ9d2v9OLPIf9e8GgsNwqal
+ CTCcZGEMeMr7AHyJ8tD3QT6/rMSL296ZWyPZe7ibqg/K6p5TFTlFrpq2blnvGcGr9/
+ 21cBMeshCn6mWYOxr7Ii4UGCj1zlJpfOGBBXNbl8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <f73a0380-d594-4237-a547-4b8ec531224f@yandex-team.ru>
+Date: Thu, 22 May 2025 15:36:06 +0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/20] tests/Makefile: include test-plugins in per-arch
- build deps
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250521164250.135776-1-alex.bennee@linaro.org>
- <20250521164250.135776-6-alex.bennee@linaro.org>
- <15677d5c-cd86-4d75-a21e-0c011800cd55@daynix.com>
- <87tt5d6ina.fsf@draig.linaro.org>
+Subject: Re: [PATCH v7 2/2] tests/functional: add memlock tests
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>,
+ "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250521135522.11180-1-dtalexundeer@yandex-team.ru>
+ <20250521135522.11180-3-dtalexundeer@yandex-team.ru>
+ <430eaa84-5695-4fc2-90d5-d488a204e999@redhat.com>
+ <af6b28bd-44cf-4540-b5f8-49d8b2781e13@yandex-team.ru>
+ <0e4a5fe1-186b-4c69-87d0-9b0743d795b7@redhat.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <87tt5d6ina.fsf@draig.linaro.org>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+In-Reply-To: <0e4a5fe1-186b-4c69-87d0-9b0743d795b7@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -117,73 +85,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/22 19:31, Alex Bennée wrote:
-> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
-> 
->> On 2025/05/22 1:42, Alex Bennée wrote:
->>> The user can run a subset of the tcg tests directly, e.g.:
->>>     make run-tcg-tests-hexagon-linux-user
->>> but in this case we fail if there has not been a full build to
->>> ensure
->>> all the test-plugins are there. Fix the dependency to ensure we always
->>> will build them before running tests.
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> ---
->>>    tests/Makefile.include | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>> diff --git a/tests/Makefile.include b/tests/Makefile.include
->>> index 23fb722d42..7f7f62cbf6 100644
->>> --- a/tests/Makefile.include
->>> +++ b/tests/Makefile.include
->>> @@ -46,7 +46,7 @@ $(foreach TARGET,$(TCG_TESTS_TARGETS), \
->>>            $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-host.mak))
->>>      .PHONY: $(TCG_TESTS_TARGETS:%=build-tcg-tests-%)
->>> -$(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/tcg/config-%.mak
->>> +$(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/tcg/config-%.mak test-plugins
->>
->> I don't think this is going to work.
->>
->> test-plugins will invoke run-ninja, which is defined as follows:
->>
->> run-ninja: config-host.mak
->> ifneq ($(filter $(ninja-targets), $(ninja-cmd-goals)),)
->> 	+$(if $(MAKE.nq),@:,$(quiet-@)$(NINJA) $(NINJAFLAGS) \
->> 	   $(sort $(filter $(ninja-targets), $(ninja-cmd-goals))) | cat)
->>
->> $(ninja-cmd-goals) should contain test-plugins, but it doesn't if I
->> understand it correctly.
-> 
-> It certainly does:
-> 
-> ➜  rm -rf tests/tcg/plugins/
-> 🕙11:31:03 alex@draig:qemu.git/builds/all  on  HEAD (61e51c3) (REBASING 5/26) [$?]
-> ➜  make test-plugins
-> /home/alex/lsrc/qemu.git/builds/all/pyvenv/bin/meson introspect --targets --tests --benchmarks | /home/alex/lsrc/qemu.git/builds/all/pyvenv/bin/python3 -B scripts/mtest2make.py > Makefile.mtest
-> [1/14] Compiling C object tests/tcg/plugins/libbb.so.p/bb.c.o
-> [2/14] Linking target tests/tcg/plugins/libbb.so
-> [3/14] Compiling C object tests/tcg/plugins/libempty.so.p/empty.c.o
-> [4/14] Linking target tests/tcg/plugins/libempty.so
-> [5/14] Compiling C object tests/tcg/plugins/libinline.so.p/inline.c.o
-> [6/14] Linking target tests/tcg/plugins/libinline.so
-> [7/14] Compiling C object tests/tcg/plugins/libinsn.so.p/insn.c.o
-> [8/14] Linking target tests/tcg/plugins/libinsn.so
-> [9/14] Compiling C object tests/tcg/plugins/libmem.so.p/mem.c.o
-> [10/14] Linking target tests/tcg/plugins/libmem.so
-> [11/14] Compiling C object tests/tcg/plugins/libreset.so.p/reset.c.o
-> [12/14] Linking target tests/tcg/plugins/libreset.so
-> [13/14] Compiling C object tests/tcg/plugins/libsyscall.so.p/syscall.c.o
-> [14/14] Linking target tests/tcg/plugins/libsyscall.so
-> 
 
-ninja-cmd-goals is defined as follows:
+On 5/22/25 14:16, Thomas Huth wrote:
+> On 22/05/2025 10.51, Alexandr Moshkov wrote:
+>>
+>> On 5/22/25 12:49, Thomas Huth wrote:
+>>> On 21/05/2025 15.55, Alexandr Moshkov wrote:
+>>>> Add new tests to check the correctness of the `-overcommit memlock`
+>>>> option (possible values: off, on, on-fault) by using
+>>>> `/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked 
+>>>> fields of
+>>>> anonymous segments:
+>>>>
+>>>> * if `memlock=off`, then Locked = 0 on every anonymous smaps;
+>>>> * if `memlock=on`, then Size, Rss and Locked values must be equal for
+>>>> every anon smaps where Rss is not 0;
+>>>> * if `memlock=on-fault`, then Rss and Locked must be equal on every 
+>>>> anon
+>>>> smaps and anonymous segment with Rss < Size must exists.
+>>>>
+>>>> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>>>> ---
+>>> ...
+>>>> diff --git a/tests/functional/test_memlock.py b/tests/functional/ 
+>>>> test_memlock.py
+>>>> new file mode 100755
+>>>> index 0000000000..a090e7f9ad
+>>>> --- /dev/null
+>>>> +++ b/tests/functional/test_memlock.py
+>>>> @@ -0,0 +1,107 @@
+>>>> +#!/usr/bin/env python3
+>>>> +#
+>>>> +# Functional test that check overcommit memlock options
+>>>> +#
+>>>> +# Copyright (c) Yandex Technologies LLC, 2025
+>>>> +#
+>>>> +# Author:
+>>>> +#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>>>> +#
+>>>> +#
+>>>> +# This work is licensed under the terms of the GNU GPL, version 2 or
+>>>> +# later.  See the COPYING file in the top-level directory.
+>>>
+>>> I just noticed: New file need a SPDX identifier nowadays to keep 
+>>> scripts/ check_patch.pl happy.
+>>
+>> Hello, thanks for reply, i fix that in a moment!
+>>
+>>>
+>>> Anyway, I now also tested the patch, but for me, it's not working: 
+>>> After setting ulimit -l to 2G and running the test, I get:
+>>>
+>>> $ ~/devel/qemu/tests/functional/test_memlock.py
+>>> TAP version 13
+>>> ok 1 test_memlock.MemlockTest.test_memlock_off
+>>> Traceback (most recent call last):
+>>>   File "~/devel/qemu/tests/functional/test_memlock.py", line 60, in 
+>>> test_memlock_on
+>>>     self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
+>>> ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>> AssertionError: False is not true
+>>>
+>>> not ok 2 test_memlock.MemlockTest.test_memlock_on
+>>> Traceback (most recent call last):
+>>>   File "~/devel/qemu/tests/functional/test_memlock.py", line 70, in 
+>>> test_memlock_onfault
+>>>     self.assertTrue(smap['Rss'] == smap['Locked'])
+>>>     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>> AssertionError: False is not true
+>>>
+>>> not ok 3 test_memlock.MemlockTest.test_memlock_onfault
+>>>
+>>> I added two print statements right in front of the asserts to see 
+>>> the values, and for the first one it shows (after many successfully 
+>>> comparisons):
+>>>
+>>> line 60: 4 == 4 == 0
+>>>
+>>> And similar for the second one:
+>>>
+>>> line 70: 4 == 0
+>>>
+>>> FWIW, this is on Fedora 41.
+>>>
+>>> Looking at the smaps file, it seems like this comes from a shared 
+>>> library:
+>>>
+>>> 7ff16c7c9000-7ff16c7ca000 r--p 00000000 00:2a 29149631 
+>>> /usr/lib64/spa-0.2/ support/libspa-support.so
+>>> Size:                  4 kB
+>>> KernelPageSize:        4 kB
+>>> MMUPageSize:           4 kB
+>>> Rss:                   4 kB
+>>> Pss:                   0 kB
+>>> Pss_Dirty:             0 kB
+>>> Shared_Clean:          4 kB
+>>> Shared_Dirty:          0 kB
+>>> Private_Clean:         0 kB
+>>> Private_Dirty:         0 kB
+>>> Referenced:            4 kB
+>>> Anonymous:             0 kB
+>>> KSM:                   0 kB
+>>> LazyFree:              0 kB
+>>> AnonHugePages:         0 kB
+>>> ShmemPmdMapped:        0 kB
+>>> FilePmdMapped:         0 kB
+>>> Shared_Hugetlb:        0 kB
+>>> Private_Hugetlb:       0 kB
+>>> Swap:                  0 kB
+>>> SwapPss:               0 kB
+>>> Locked:                0 kB
+>>> THPeligible:           0
+>>> ProtectionKey:         0
+>>>
+>>> So maybe you've got to ignore the mappings of .so files in your test?
+>>
+>> Oh, this segments are already ignored in _parse_anonymous_smaps(), so 
+>> this segment should not have returned from it.
+>>
+>> Maybe it comes from another segment? Or i have bug in anon segments 
+>> parsing.. I'll take a closer look, thanks.
+>
+> Yes, it seems to be another segment. After looking through the smaps a 
+> little bit longer, I also spotted this one here:
+>
+> 7f8fcc6a1000-7f8fcc6a2000 rw-p 00000000 00:00 0
+> Size:                  4 kB
+> KernelPageSize:        4 kB
+> MMUPageSize:           4 kB
+> Rss:                   4 kB
+> Pss:                   4 kB
+> Pss_Dirty:             4 kB
+> Shared_Clean:          0 kB
+> Shared_Dirty:          0 kB
+> Private_Clean:         0 kB
+> Private_Dirty:         4 kB
+> Referenced:            4 kB
+> Anonymous:             4 kB
+> KSM:                   0 kB
+> LazyFree:              0 kB
+> AnonHugePages:         0 kB
+> ShmemPmdMapped:        0 kB
+> FilePmdMapped:         0 kB
+> Shared_Hugetlb:        0 kB
+> Private_Hugetlb:       0 kB
+> Swap:                  0 kB
+> SwapPss:               0 kB
+> Locked:                0 kB
+> THPeligible:           0
+> ProtectionKey:         0
+>
+>  HTH,
+>   Thomas
 
-ninja-cmd-goals = $(or $(MAKECMDGOALS), all)
-ninja-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.ninja-goals.$g))
 
-If you run "make test-plugins", $(ninja-cmd-goals) will contain 
-"test-plugins" because $(MAKECMDGOALS) will be "test-plugins". It won't 
-if you run "make run-tcg-tests-hexagon-linux-user".
+Can you, please, also provide QEMU package version or how you configure 
+and build it?
 
-Regards,
-Akihiko Odaki
+Or maybe attach full smaps file, I think it would help me a lot. Thanks!
+
+
+Best regards,
+
+Alexandr
+
 
