@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52548C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 07:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61E43C54756
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 07:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI0jq-0000LY-WB; Thu, 22 May 2025 03:53:15 -0400
+	id 1uI0lY-00011y-Te; Thu, 22 May 2025 03:55:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org>)
- id 1uI0jn-0000LC-K0; Thu, 22 May 2025 03:53:13 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1uI0lX-00011E-32; Thu, 22 May 2025 03:54:59 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org>)
- id 1uI0jk-0001GU-To; Thu, 22 May 2025 03:53:10 -0400
+ id 1uI0lU-0001IH-TI; Thu, 22 May 2025 03:54:58 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4b30ry2QFwz4xdS;
- Thu, 22 May 2025 17:53:06 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4b30tz70xfz4xdV;
+ Thu, 22 May 2025 17:54:51 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4b30rt4DRbz4xcw;
- Thu, 22 May 2025 17:53:02 +1000 (AEST)
-Message-ID: <2676a852-88d1-411c-8a17-3c60fdd1836c@kaod.org>
-Date: Thu, 22 May 2025 09:53:00 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4b30tv4J1pz4xcw;
+ Thu, 22 May 2025 17:54:47 +1000 (AEST)
+Message-ID: <1d94b240-252a-4942-a8be-88f2cad326c5@kaod.org>
+Date: Thu, 22 May 2025 09:54:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] hw/arm/aspeed_ast27x0-fc: Map ca35 memory into
- system memory
+Subject: Re: [PATCH v3 0/5] hw/arm/aspeed_ast2700-fc: Fix null pointer
+ dereference
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -41,7 +41,6 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
 References: <20250522033628.3752086-1-steven_lee@aspeedtech.com>
- <20250522033628.3752086-5-steven_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,16 +85,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250522033628.3752086-5-steven_lee@aspeedtech.com>
+In-Reply-To: <20250522033628.3752086-1-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=J2Rp=YG=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,35 +113,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/22/25 05:36, Steven Lee wrote:
-> Map the CA35 memory region as a subregion of system_memory to ensure
-> a valid FlatView. This prevents failures in APIs that rely on the
-> global memory view, such as rom_check_and_register_reset().
+> Clang's sanitizer reports a runtime error when booting with
+> '-net nic -net user', due to a null pointer being passed
+> to memory_region_find(), which subsequently triggers a crash in
+> flatview_lookup().
 > 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> Root cause:
+> - Missing NIC configuration in the CA35 initialization.
+> 
+> Fix:
+> - Reduce ca35 ram size from 2GiB to 1GiB to align with ast2700a1-evb,
+>    where the ram-container is defined as 1GiB in its class.
+> - Add nic configuration in ast2700fc's ca35 init function.
+> 
+> 
+> v2:
+> - Split the CA35 memory mapping into a separate patch.
+> - Added a new patch to fix BMC memory mapping in the fby35 machine,
+>    which had a similar issue (unmapped system_memory).
+> - Removed Change-Id tag from commit messages
+> 
+> v3:
+> - Fixed issue with incorrectly inheriting TYPE_ASPEED_MACHINE.
+> - Rewrote the commit message for "Map BMC memory into system memory".
+> - Added more details to the commit message for "Fix unimplemented region
+>    overlap with VBootROM".
+> 
+> Steven Lee (5):
+>    hw/arm/aspeed_ast2700-fc: Fix null pointer dereference in ca35 init
+>    hw/arm/aspeed_ast27x0: Fix unimplemented region overlap with vbootrom
+>    hw/arm/aspeed_ast27x0-fc: Map ca35 memory into system memory
+>    hw/arm/fby35: Map BMC memory into system memory
+>    docs: Remove ast2700fc from Aspeed family boards
+> 
+>   docs/system/arm/aspeed.rst |  2 +-
+>   hw/arm/aspeed_ast27x0-fc.c | 10 +++++++++-
+>   hw/arm/aspeed_ast27x0.c    |  4 ++--
+>   hw/arm/fby35.c             |  1 +
+>   4 files changed, 13 insertions(+), 4 deletions(-)
+> 
 
+Steven,
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+please resend. the number of patches is confusing the b4 tool. It's easier
+for me too.
 
 Thanks,
 
 C.
 
-
-> ---
->   hw/arm/aspeed_ast27x0-fc.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index f8cb632bca..7087be4288 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -68,6 +68,7 @@ static void ast2700fc_ca35_init(MachineState *machine)
->   
->       memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
->                          UINT64_MAX);
-> +    memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
->   
->       if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
->                                   AST2700FC_BMC_RAM_SIZE, &error_abort)) {
 
 
