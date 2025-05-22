@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD32FC54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 15:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE685C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 15:42:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI81p-0005V8-N9; Thu, 22 May 2025 11:40:17 -0400
+	id 1uI82z-00068A-9J; Thu, 22 May 2025 11:41:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uI81d-0005TX-PM
- for qemu-devel@nongnu.org; Thu, 22 May 2025 11:40:05 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1uI82v-00061b-M5
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 11:41:26 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uI81a-0002vU-Qp
- for qemu-devel@nongnu.org; Thu, 22 May 2025 11:40:05 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-601d10de7e1so7800221a12.1
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 08:40:02 -0700 (PDT)
+ id 1uI82t-0003F0-FR
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 11:41:25 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-442f4a3a4d6so110935e9.0
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 08:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747928400; x=1748533200; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747928480; x=1748533280; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ot8JENurp6e7aO2NzX5cehLZR9sNFK64U95hYjOdV6U=;
- b=WlXffOqugWMNbwwTou2KUjXc4d+fvsN6j5lEcZZzfaDFiI/nt78eU3Gyw/jW65DxFI
- x0oUZ4+U2OTmgno5Vz2ujddSmO77nPOsiLB9xGDvNkt60g+V0Oplr7Ih0US4CWlTHoSX
- pCVQeTaH4fXg8f/eT7775x0HVVASMZb4rfgSQS0ryduS/Bs/5K94dcRN27wYFisXJqYa
- EST+AjUwEX7CjfnNnP6VKrXdUlg6KV8oEZsqGtWS7Re0zJMRgyHBRAwlmq910Lh4fswv
- xlI3isNuHUfG/8am3wfa7Y3fSgrvlaWDl72PnvLfYydUvLEm13OkUoh4YrqJrMfUMG44
- XV0Q==
+ bh=vwExYfA2GP2Urz7P2OZ5xK+zCyBA34VHT+vqTc6AJSg=;
+ b=srrUm+TcPzuSmix4YFsW+u9CEs2YtPJfbFqzT9rEsaEZmIVhHuHifFpHpUZK6qrcPR
+ ajq7hClqdBQf8jDUl+/1GSXGHBT4ZaO+4o+vOGyOsJdVVRQ86wHMlrWm4s/XbPBzGp2K
+ 0Ci2XXzUqMYk/IEyaYvrpIwdBGC1bgce+73mG/XWZDNbuOTB8cH8PRwE+5IrJ5xZfuci
+ Q7JQS/fnMrAmP7zXHz6aPutlVH/EuUY2rjnwYB/L9gnHAU1XowLnEnRTs9DmRymVzy9K
+ DBm6wRX3DATRICIjwn//DCDHi7A9ydv4SL9cKenD+lqG2KAMWOa5RkHOO2a8upD+Ds8o
+ hBpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747928400; x=1748533200;
+ d=1e100.net; s=20230601; t=1747928480; x=1748533280;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ot8JENurp6e7aO2NzX5cehLZR9sNFK64U95hYjOdV6U=;
- b=MLVOXVnEYd/+B2obhlXNTBg3bVicV7GeD+iTMfnKZQPUixEJATLUtC5Biou0yPTTg6
- Ai5ZVazBYnyIN1s45zVl6s59HAhiwQ0SFMXMmBYfeUx1U4bSRm8s1CCFc3IHH78qioDT
- A9xTpyk/VIyHGrqL2L+sRk0pYnn1oGbbxQLa0WU9b2ETP0UbX9od4NZJ5SNIy4ZHJzQp
- UVVU8E9bmC7Uqm91kCz3ZpQm26nbXfBqXjdJJIZ5TF5T7zq0cshifaM5/2/TIPr8oVN1
- 7+xojOglQz+BnuIeRvqMzxdrCApEuPNXByLBgrU3nY+huShU8/F9P7loYyDcGZITCiDP
- eZEw==
-X-Gm-Message-State: AOJu0YwKiF5fkS+hESCAG9gfmX2sKDBspNx/p+Q3Ja7anuB3aI2hPY5s
- FOwnerAFSwVIl/13jiCKjozLkUzlWawLTRvA2FPYdV1DjJJLhvVbEqpEDa95O4fE/U4=
-X-Gm-Gg: ASbGncvDnvfwTALrbTctUKJV1D0IWxHqjSAJnyTyB3ZM7MQC7+ucCqFG0zNjIRkc4J8
- sNh8qHITvuZ+auJvMfiBV0bZr2PE5ZApp4aHh/HSPiKF7pua7nvCV3AE7CSZTR/izRr0nF+5a6T
- hidFQiLOqEeULtopc51VnVJIv9qXVdlvhZP7ohjzBnrZQj28Iq9bLP4vS9V0klnGJxid9Jnx7aH
- dkvYeMKgvRwDJaOV9IRKOT9BzwiqYq1rm/JI9grefzPRNnFEGW8pKpkAjuAYFrivYPXC3IOJFwO
- M/5c+t21wp7FGBr3yREfzbreivyDuoGLZRpnWxNTPauF5T62ImiT
-X-Google-Smtp-Source: AGHT+IFqIFgqDn4Za3TOSx2QnqAfbnOjugpBhv9tC9qUZrDGyR9sAC8X2EoBFd61DKShWLPqF0dK4A==
-X-Received: by 2002:a05:6402:26c9:b0:5ec:cbf8:ab28 with SMTP id
- 4fb4d7f45d1cf-6011411a904mr22891545a12.22.1747928400192; 
- Thu, 22 May 2025 08:40:00 -0700 (PDT)
+ bh=vwExYfA2GP2Urz7P2OZ5xK+zCyBA34VHT+vqTc6AJSg=;
+ b=gI8lAzc/xiD2HzovKa7nTc0+X/7hwBPbz5Xcrar1yi02L82GTHK63diid4wmL+nhO/
+ 7ArUz/vr8O/jMLncbh6k71EZJaaTETJjSwNw7jb6zGi//O1LQS2vnqFedUAVYmcstb24
+ rsoa12vcU6TMMONPeCJf8xFfwI1gmWrJmm/qYjsHBLcUAXmnx2XiCnFrLTNyMXCjqG8s
+ NMNHST9QFv7wRS1E+yAATgwhVYl9GARYIyMNnuMr329jD/xW/0vjU4fvFtOk1Lr7kKeV
+ 80X4yu5vg+2RifyYzsesLkJoeHoNRVMKdvvVqUcVbcBAG2yfIgyxwoL3RS2dGbWnTBr+
+ 2N4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFC6QO0eP9PxDMi3dUaUx1GVTp/5u0rBfGpKnnEBj3FdZmD2h8He2DZN+KN13rIyDIYh/WDtMBgZa9@nongnu.org
+X-Gm-Message-State: AOJu0Yz54Z4vWEpGKLW2mpMbGEa62RLFVuk/d7K24vfoq/hOTXiLJwUL
+ s1gb1W8RJm1+m8oi7UdaZsOz1yDmD41oLM7MP+jqe/xK6RY4aMCbT8ODt31kc1Md+JQ=
+X-Gm-Gg: ASbGncutOyjrA05g2k46I0IxXgB7F9znLfUrxQZeZv21sl6OEdOOdMfnBZvOCWeUTz7
+ h82pWVMJd6Uqhbp1N5NEpIQ72S0oON5EwaDlfNJ+dWaJ3kvrlvfxKu9v+GL/KHoqG9uUOQgiBcU
+ sNQbDX4ECaNPvpdhm1YDO6sRojqQav7u1GxdlXqMoJ6NrLbk7XGTpZA2UdXb1j54njJGhkqBdgy
+ 4rfKUv3e3eavO3rlQVdsVp8JQzn2pcgMydtce/zpyQVkWoUO27quAfeZboxDlETrj00y62CKyfK
+ Pg5cHxgo3NQ71mhOJB9Y0Oo7CfWL7QBctEUt1JViYe+fFb4uEHYL
+X-Google-Smtp-Source: AGHT+IH9H1cWkxlTZnzRbXBjwRPsMt++GncBalVmRLfcBHHNY0QdgmJAPdEZLNXb5EmJqm9/+8gTdQ==
+X-Received: by 2002:a05:600c:821b:b0:43b:bfa7:c7d with SMTP id
+ 5b1f17b1804b1-442f84c2008mr276661515e9.2.1747928480255; 
+ Thu, 22 May 2025 08:41:20 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6005ac33a98sm10824421a12.49.2025.05.22.08.39.59
+ ffacd0b85a97d-3a364d2636bsm20974149f8f.99.2025.05.22.08.41.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 08:39:59 -0700 (PDT)
+ Thu, 22 May 2025 08:41:19 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 76E645F7D1;
- Thu, 22 May 2025 16:39:58 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 153865F7D1;
+ Thu, 22 May 2025 16:41:19 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 2/8] Add register write API
-In-Reply-To: <20250521094333.4075796-3-rowanbhart@gmail.com> (Rowan Hart's
- message of "Wed, 21 May 2025 02:43:26 -0700")
-References: <20250521094333.4075796-1-rowanbhart@gmail.com>
- <20250521094333.4075796-3-rowanbhart@gmail.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,  Jiaxun Yang
+ <jiaxun.yang@flygoat.com>
+Subject: Re: [PATCH] tests/functional/test_mips_malta: Re-enable the check
+ for the PCI host bridge
+In-Reply-To: <20250522080208.205489-1-thuth@redhat.com> (Thomas Huth's message
+ of "Thu, 22 May 2025 10:02:08 +0200")
+References: <20250522080208.205489-1-thuth@redhat.com>
 User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Thu, 22 May 2025 16:39:58 +0100
-Message-ID: <874ixcwt69.fsf@draig.linaro.org>
+Date: Thu, 22 May 2025 16:41:19 +0100
+Message-ID: <87y0uovejk.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -107,37 +107,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rowan Hart <rowanbhart@gmail.com> writes:
+Thomas Huth <thuth@redhat.com> writes:
 
-> From: novafacing <rowanbhart@gmail.com>
+> From: Thomas Huth <thuth@redhat.com>
 >
-> Signed-off-by: novafacing <rowanbhart@gmail.com>
-> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
-> ---
->  include/qemu/qemu-plugin.h | 57 +++++++++++++++++++++++++-------------
->  plugins/api.c              | 26 ++++++++++++-----
->  2 files changed, 56 insertions(+), 27 deletions(-)
+> The problem with the PCI bridge has been fixed in commit e5894fd6f411c1
+> ("hw/pci-host/gt64120: Fix endianness handling"), so we can enable the
+> corresponding test again.
 >
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 3a850aa216..68c8632fd7 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -254,9 +254,6 @@ typedef struct {
->   * @QEMU_PLUGIN_CB_NO_REGS: callback does not access the CPU's regs
->   * @QEMU_PLUGIN_CB_R_REGS: callback reads the CPU's regs
->   * @QEMU_PLUGIN_CB_RW_REGS: callback reads and writes the CPU's regs
-> - *
-> - * Note: currently QEMU_PLUGIN_CB_RW_REGS is unused, plugins cannot chan=
-ge
-> - * system register state.
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-I would expect us to:
-
- a) handle the QEMU_PLUGIN_CB_RW_REGS
- b) try and enforce we are only being called from such callbacks
-
-Otherwise TCG won't know to restore register state from what has been
-written to.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
