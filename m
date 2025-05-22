@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B75C54756
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 04:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86036C54756
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 04:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uHxut-0004gT-VR; Thu, 22 May 2025 00:52:28 -0400
+	id 1uHxw1-0005MW-Mc; Thu, 22 May 2025 00:53:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHxus-0004gB-4p
- for qemu-devel@nongnu.org; Thu, 22 May 2025 00:52:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHxvv-0005IA-Hc
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 00:53:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHxup-00067V-U9
- for qemu-devel@nongnu.org; Thu, 22 May 2025 00:52:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uHxvt-0006E3-Rt
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 00:53:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747889541;
+ s=mimecast20190719; t=1747889608;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ylqGcT80dEy7FN/OIJB+hIKyKsBtZIq2AD8HQSXGyAI=;
- b=BugI6sn9xlgcCFNkWAyPI85iL1SrXCWc4y17rqERr3UBX+qpDjEnyxe2QrlNSNBrjOCqdk
- q7xbtMn3e5c8v/TXsacMktIvaFtaAxR9KrwNn12w/Ypozdm/kjLuTgsYBKl744AX2YCaJT
- 2ZIBxwueaddsfBu+ihPnWvRkUKFsSTw=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CrO+kg4F7BBLpsOzKtbajK0q4mWuE6p0WkHC3JZBrvY=;
+ b=GtKBjmWPC1ycPmeogotUGCIzDbV3nq6PrsQs07s82ZZJ4g326QU0mNbH2iHxYQXy3Kq6ln
+ hYDdBmXmWME66iU2dzI6IsTDP4VwKX5g7LQxdopzvli4nx9IzlBIhWFUUJIawsrFTkqr1U
+ IglA1bSn7q7BxESvzKK7jnGG9L6VsMc=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-BWbwd95cOam6N321MpLEVQ-1; Thu, 22 May 2025 00:52:19 -0400
-X-MC-Unique: BWbwd95cOam6N321MpLEVQ-1
-X-Mimecast-MFC-AGG-ID: BWbwd95cOam6N321MpLEVQ_1747889538
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-60211a1705dso2530464a12.2
- for <qemu-devel@nongnu.org>; Wed, 21 May 2025 21:52:19 -0700 (PDT)
+ us-mta-554-uHJJDOCoPJ-fn71wisU_5g-1; Thu, 22 May 2025 00:53:26 -0400
+X-MC-Unique: uHJJDOCoPJ-fn71wisU_5g-1
+X-Mimecast-MFC-AGG-ID: uHJJDOCoPJ-fn71wisU_5g_1747889605
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ad56c38dbeaso483491766b.0
+ for <qemu-devel@nongnu.org>; Wed, 21 May 2025 21:53:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747889538; x=1748494338;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ylqGcT80dEy7FN/OIJB+hIKyKsBtZIq2AD8HQSXGyAI=;
- b=ZYZltqtir7WXnl2czUIHdQPZlW7Qfo6HLTlWk0AaLYFDMaANSM6J9WwcZW2maBj0yb
- xQU0q/nekp9mK1yaojDvJValUz4to21uDEs2PR2MK0ailNtATWN8zhiGknyAgk3r1Pvz
- OavNDEpslCEQQAGzG8T8y1mPxJ8BF6vRMxrY3N5cIm3u4zXhIC0wkowFGjAXu3Piy6nQ
- a2deStRkm/CLBYMmNEuB8PpO6FYbKRdGqqjVCWOnpkJzZkV2RrB88OLbt7Ya7FxP7N3V
- ZU5A14nIm8RhzSJzfB17yUpN9PQTwq3ssniJLvAYHQhSY+eFGtEXh9cpzFrIg0utdy2/
- i+Kg==
+ d=1e100.net; s=20230601; t=1747889605; x=1748494405;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CrO+kg4F7BBLpsOzKtbajK0q4mWuE6p0WkHC3JZBrvY=;
+ b=M10jaN+H5D6QrEheGuqA3/mMdfJpjX6DKM3h9SFN4aAF47rLcGow6o4nfrVygbf3Kn
+ Vh3OdT3wM8gK2uvHtaIahPP0MEAGB5bMXiPJZQp8HLct2cPJluj5iRFQU14buibHAUKd
+ opa4LzUHz1NKKahC1Q3DgsydGtjiS2hv+FIe8Cn0cMemRgmMhEqd/RH/IZK06MRWDig3
+ C4/cMfXF1kmJxYLuzWYuC+uQI/d9uKk3F7tKOEt6vEv8ZscHF8jeC7ezz6p0z603hIuy
+ vd4IA2FEnzdAN/QtWQLOqcRDb6eB1w0N/3CmN6We3B27BMFUghNqinT7i2lTHV2D3Kyw
+ DkkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1/jJYDZGdZAFIhpsLdoTj4ChnVJHzjCaWJngYu4YjivzKO6TySkHOuGNhjVYGWNUf/c9Ww1sHSCmr@nongnu.org
-X-Gm-Message-State: AOJu0YyoiF4UXE23/nqQkzzrfmTs9bQhSGSQfLTPfBs8Oa2owBS7Qh8w
- 609MnwIf7qruvy1cFmG5Qz3b3VnG3Ldt8zobqMJhoeeH9/2xXRzNyCkNnHavJxBcY4Vs2DcjLMy
- xbareVKykDumeRD0ZgdTfRBEHdICMYTJs+LUzIwkmZX9IwLsORzaokXER
-X-Gm-Gg: ASbGnctRdx9xtNtxgKQKue8XFl5DbxRxx/IGX9+TA112bpQrhB/aW02q9RAeVR8wVke
- uqL/Osj7uwXpKlPPCbOXuXl2472mWjmMxgLMVioQZO4gttH97jNvpKnF7jXp1zvWIgiv2U8C4qy
- eRdvoDPU/IAAZI8jJJudi1UpnqMKNApZrbv1DYeHr7mEmFSujA3b8VBQE8fLvB0rfNuzkXvc/vQ
- wOxweOFWMunKC3EVtMEuvMH54eHGb2U2pooiJVPWjbxTBs6GgDq/OdcLu2AELARchyVcMrt3QD4
- 1heMtem/fexRLHGNfVNtZGQyv8y8CEju6lE1CtjXz9M=
-X-Received: by 2002:a17:907:788:b0:acb:5583:6fe4 with SMTP id
- a640c23a62f3a-ad52d42c0e1mr1868381066b.6.1747889538340; 
- Wed, 21 May 2025 21:52:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEriJuIzjICYFiVY56/LYzSH/1SRB78qlBXnGyhwDSQFDzowX2ii4lV7k+zisl3NNajH7ufsQ==
-X-Received: by 2002:a17:907:788:b0:acb:5583:6fe4 with SMTP id
- a640c23a62f3a-ad52d42c0e1mr1868379966b.6.1747889538008; 
- Wed, 21 May 2025 21:52:18 -0700 (PDT)
+ AJvYcCXgFL5CVGSos2q0MUshKLe3hcQQB7swYB3OL7txMd2DbdPoGTgaHRlTwrglns0yGbR6HJ9BSo2YtwYC@nongnu.org
+X-Gm-Message-State: AOJu0YxnSuC/CpKL6MtbNxIwOjbiDPxrCAFmbYb1LKhYktwV5e1CW+dt
+ HZv92KCBovei0EGSTl+d56REmV4AJYcFVxWkXcTnkg0hZHC99MLc5ulLQTu96L4UnQybkReDR/v
+ w/tV5CvyZWFCAGZjswqX4ufTNGmvodxYfLh8IfVsr8OrNePGSM9uWBmpL
+X-Gm-Gg: ASbGncu39x0CyRvoED+gWZ2Mvr1Ttu0gzK24wa2SX5zfDRqj2Htnyy85vK28PryBE7A
+ y35/Bxgyfs0f/Y1N/126kWEG53SGPD+H9hoKmLuXkeGrWkJ/kW8F9mzpSA9jZ7R4vR6dsc3Qql/
+ XMamhBpbDkJQyNP5ERGhlOKsVbewf7bzIeRtKLtpF0VJhiAo7Vk6UiL9WS72AulrWSzCO5KeX11
+ MWxDtaQY7gbNSoGv+n3uRyVFiZIEnJoCQh/mzDwB/dRpQzr0672rO4g+7PStUyfllQoalwOSLDb
+ VCw44sHuU2Fuc4zyu+YC5FX7B3Ik1UG1/xh756p+lcQ=
+X-Received: by 2002:a17:907:7e94:b0:ad2:2c89:7a8 with SMTP id
+ a640c23a62f3a-ad536ff23f9mr1970637366b.51.1747889604799; 
+ Wed, 21 May 2025 21:53:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFxMrOFl77gZ2wwLhJJ9ZqT1bxif4sya1ErGimC3njUbqV/8/o1T1tJmjptvoOVqFJgBJKdg==
+X-Received: by 2002:a17:907:7e94:b0:ad2:2c89:7a8 with SMTP id
+ a640c23a62f3a-ad536ff23f9mr1970635066b.51.1747889604462; 
+ Wed, 21 May 2025 21:53:24 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-201.web.vodafone.de.
  [109.42.49.201]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d443a0fsm1026319366b.97.2025.05.21.21.52.16
+ a640c23a62f3a-ad52d278274sm1006921666b.86.2025.05.21.21.53.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 May 2025 21:52:17 -0700 (PDT)
-Message-ID: <a86894c0-5afa-4a85-bace-aa138f77a161@redhat.com>
-Date: Thu, 22 May 2025 06:52:15 +0200
+ Wed, 21 May 2025 21:53:23 -0700 (PDT)
+Message-ID: <cbe1ede8-1054-488e-a6ad-5874140ce061@redhat.com>
+Date: Thu, 22 May 2025 06:53:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/7] hw/arm: remove explicit dependencies listed
+Subject: Re: [PATCH v2 3/7] target/arm: remove explicit dependencies listed
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -85,9 +85,9 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>
 References: <20250521223414.248276-1-pierrick.bouvier@linaro.org>
- <20250521223414.248276-3-pierrick.bouvier@linaro.org>
-Content-Language: en-US
+ <20250521223414.248276-4-pierrick.bouvier@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -130,7 +130,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250521223414.248276-3-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250521223414.248276-4-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -161,32 +161,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 22/05/2025 00.34, Pierrick Bouvier wrote:
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   hw/arm/meson.build | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   target/arm/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 5098795f61d..d90be8f4c94 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -8,7 +8,7 @@ arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
->   arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
->   arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
->   arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
-> -arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
-> +arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [files('musicpal.c')])
->   arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
->   arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
->   arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
-> @@ -79,7 +79,7 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
->   arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
->   arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+> diff --git a/target/arm/meson.build b/target/arm/meson.build
+> index b404fa54863..2ff7ed6e98f 100644
+> --- a/target/arm/meson.build
+> +++ b/target/arm/meson.build
+> @@ -28,7 +28,7 @@ arm_user_ss.add(files(
+>     'vfp_fpscr.c',
+>   ))
 >   
-> -arm_common_ss.add(fdt, files('boot.c'))
-> +arm_common_ss.add(files('boot.c'))
+> -arm_common_system_ss.add(files('cpu.c'), capstone)
+> +arm_common_system_ss.add(files('cpu.c'))
+>   arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
+>     'cpu32-stubs.c'))
+>   arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-There is another bunch of pixmans in hw/display/meson.build and 
-hw/s390x/meson.build ... I wonder whether we could get rid of those now, too?
 
 
