@@ -4,83 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63E4C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 14:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1C5C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 14:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI75w-0007Vo-EI; Thu, 22 May 2025 10:40:28 -0400
+	id 1uI7Bp-0000Rv-19; Thu, 22 May 2025 10:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uI75g-0007Py-CY
- for qemu-devel@nongnu.org; Thu, 22 May 2025 10:40:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uI7Bh-0000Qo-RO
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 10:46:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uI75d-0002DK-5H
- for qemu-devel@nongnu.org; Thu, 22 May 2025 10:40:12 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uI7Bb-00037t-CV
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 10:46:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747924806;
+ s=mimecast20190719; t=1747925175;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=234H6DpL/3orM4ZjqyyMst2tXl5uXKkanqmnsYrXUzA=;
- b=OnLWAjR4cZuM2CUFSqJ/i+hLBYWKsfB19CDcurfgkUQXE9OqXaTGsEbLJLXRfdAbHxyCt3
- 17bv9Tmpcuv9QN+QDCFTLcxVvlpyY7UgFg9m0d3S7ooidGKgNcvQAzAczMr3cdd8QeGSQO
- w3JBlY9pzIWxHuRTfL6IvgmRfiFpWjw=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-yZKzXH2CP8iozUhaPFcASA-1; Thu, 22 May 2025 10:40:05 -0400
-X-MC-Unique: yZKzXH2CP8iozUhaPFcASA-1
-X-Mimecast-MFC-AGG-ID: yZKzXH2CP8iozUhaPFcASA_1747924805
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c791987cf6so1708148485a.0
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 07:40:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747924805; x=1748529605;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=234H6DpL/3orM4ZjqyyMst2tXl5uXKkanqmnsYrXUzA=;
- b=oSNvBhAZmnPDelHH2N8hy0ekOEn13E68ri7I+E/Sn4Cn3Z8AvYO2kv6XKs8FUq68hU
- qxBhEKbySt154RefdosUHsgzyoAgP9h15CTTDPXvL3QXWTrebpZ84RFLS1CWMWMrCoeF
- KC9PDC76LNeQLBG1Yjqr4b7nUarF+pun9fPvItXoC5AF09uu7XiWtrEOh9dmwZqoRV0Y
- 5nX0nEW9X443mDB/2Sbd5gQ77HbqIzoe/QmL1K4ZLGraRfW4ltjTF30VAJ1IoaNT2dLh
- JZM3VffS9zMIvszbY77taE89jj2cm2BfPtzxphoc8jgf4jEkwq7IqkhrUuNTPBU0eqPv
- JzFg==
-X-Gm-Message-State: AOJu0Yy3pVeLqdxiYWyBU1FIBGM3tjEpGrXbtMN0BnHRE2kaRKWjkr/R
- movyCGuce/ms34H9PMc3sk9VfAgdmMhAMLpfF1w3lxiHU/oj+FYVgiMA3ZdSkv8C8NlDz5wBIoy
- iEf9ttegxY++M3WY/5O3HMMdXIkJcee127pPcgxaVFyYVHBRbvlGQJoBh
-X-Gm-Gg: ASbGncumrpzWHd+SBN03O7GlDwY1lyAS7TUjgEWXCE3EfXXVSLtYOrbcKwZtvXrqBWI
- iit9cyDUEBw6juNL3GI+ct5pqUnyC4hJU27D05hVn9VnF01V76xU0uBmbQXvcGiGfCz7utP5NJ5
- 8s0fd7lL27Aa2GcxtkcBFXKRHKUGq0LD8nrOTRmuFlAaLdF+ya20NWSN59L2ZnSlIMGuCl2O5fG
- o7btra12ylVsoTj81yV3BS71jodvIRHt1AVeKZENNzEfVXNsgalbqv2jgI8ojuX2vxKrV+rECae
- k68=
-X-Received: by 2002:a05:620a:2847:b0:7ca:f04b:3fa2 with SMTP id
- af79cd13be357-7cd4679cf74mr3577037485a.38.1747924804838; 
- Thu, 22 May 2025 07:40:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH5WmcG3Sfuc3tvv2YfaVZpsa11jfve3Dioqpu6a8HTHU9+FMMyvzBwPjHawPAH3RgX0j6pFg==
-X-Received: by 2002:a05:620a:2847:b0:7ca:f04b:3fa2 with SMTP id
- af79cd13be357-7cd4679cf74mr3577034985a.38.1747924804491; 
- Thu, 22 May 2025 07:40:04 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd468b6bfbsm1036670685a.73.2025.05.22.07.40.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 07:40:04 -0700 (PDT)
-Date: Thu, 22 May 2025 10:40:01 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 4/4] tests/functional/test_vmstate: Test whether the
- checker script works as expected
-Message-ID: <aC83QUmY6B255lTb@x1.local>
-References: <20250522133756.259194-1-thuth@redhat.com>
- <20250522133756.259194-5-thuth@redhat.com>
+ bh=teEKCvIeXu/n2+atKvJmpPNGg5ONV3xXKdmVjYApXRQ=;
+ b=SgtRjQjPdtctlG6vlWW8/WCyrwm48A3nEYLoBer9Ec7+G7CKK/I2cTvXbtAGGDQEdV+anx
+ juiZKz9HhdRkCKwDob1jFb7SZZJhx1izHeqLbz5IV3rXLPdCzjE/y7jtXa3OFqw0UeWkXP
+ ukGafou7t/msKIUQHRu7JHsLTz7Od9A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-DDdNTN1TNHOU28P5Km7tvw-1; Thu,
+ 22 May 2025 10:46:11 -0400
+X-MC-Unique: DDdNTN1TNHOU28P5Km7tvw-1
+X-Mimecast-MFC-AGG-ID: DDdNTN1TNHOU28P5Km7tvw_1747925170
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F8F719560BB; Thu, 22 May 2025 14:46:10 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.192])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A3EAF1800570; Thu, 22 May 2025 14:46:08 +0000 (UTC)
+Date: Thu, 22 May 2025 10:46:07 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, bmarzins@redhat.com,
+ pbonzini@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] file-posix: Probe paths and retry SG_IO on potential
+ path errors
+Message-ID: <20250522144607.GA258433@fedora>
+References: <20250522130803.34738-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="/cP+Wp3x2lclgAbk"
 Content-Disposition: inline
-In-Reply-To: <20250522133756.259194-5-thuth@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20250522130803.34738-1-kwolf@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -89,7 +70,7 @@ X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,87 +86,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 22, 2025 at 03:37:56PM +0200, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> We've got two vmstate dump files in the repository which are meant
-> for verifying whether the vmstate-static-checker.py works as expected.
-> Since running this manually is a cumbersome job, let's add an automated
-> test for this instead that runs the script with the two dump files
-> and checks for the expected output.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+
+--/cP+Wp3x2lclgAbk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, May 22, 2025 at 03:08:03PM +0200, Kevin Wolf wrote:
+> When scsi-block is used on a host multipath device, it runs into the
+> problem that the kernel dm-mpath doesn't know anything about SCSI or
+> SG_IO and therefore can't decide if a SG_IO request returned an error
+> and needs to be retried on a different path. Instead of getting working
+> failover, an error is returned to scsi-block and handled according to
+> the configured error policy. Obviously, this is not what users want,
+> they want working failover.
+>=20
+> QEMU can parse the SG_IO result and determine whether this could have
+> been a path error, but just retrying the same request could just send it
+> to the same failing path again and result in the same error.
+>=20
+> With a kernel that supports the DM_MPATH_PROBE_PATHS ioctl on dm-mpath
+> block devices (queued in the device mapper tree for Linux 6.16), we can
+> tell the kernel to probe all paths and tell us if any usable paths
+> remained. If so, we can now retry the SG_IO ioctl and expect it to be
+> sent to a working path.
+>=20
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->  tests/functional/test_vmstate.py | 37 ++++++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
-> 
-> diff --git a/tests/functional/test_vmstate.py b/tests/functional/test_vmstate.py
-> index cc988987481..19a62e8a17e 100755
-> --- a/tests/functional/test_vmstate.py
-> +++ b/tests/functional/test_vmstate.py
-> @@ -9,6 +9,22 @@
->  from qemu_test import QemuSystemTest
->  
->  
-> +expected_output='''Warning: checking incompatible machine types: "pc-i440fx-2.1", "pc-i440fx-2.2"
-> +Section "fw_cfg" does not exist in dest
-> +Section "fusbh200-ehci-usb" version error: 2 > 1
-> +Section "fusbh200-ehci-usb", Description "ehci-core": expected field "usbsts", got "usbsts_pending"; skipping rest
-> +Section "pci-serial-4x" Description "pci-serial-multi": Entry "Fields" missing
-> +Section "intel-hda-generic", Description "intel-hda", Field "pci": missing description
-> +Section "cfi.pflash01": Entry "Description" missing
-> +Section "megasas", Description "PCIDevice": expected field "irq_state", while dest has no further fields
-> +Section "PIIX3-xen" Description "PIIX3": minimum version error: 1 < 2
-> +Section "PIIX3-xen" Description "PIIX3": Entry "Subsections" missing
-> +Section "tpci200": Description "tpci200" missing, got "tpci2002" instead; skipping
-> +Section "sun-fdtwo" Description "fdc": version error: 2 > 1
-> +Section "sun-fdtwo", Description "fdrive": Subsection "fdrive/media_rate" not found
-> +Section "usb-kbd" Description "usb-kbd" Field "kbd.keycodes" size mismatch: 4 , 2
-> +'''
+> v2:
+> - Add a comment to explain retry scenarios [Stefan]
+> - Handle -EAGAIN returned for suspended devices [Ben]
+>=20
+>  block/file-posix.c | 115 ++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 114 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index ec95b74869..569f4ca472 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -41,6 +41,7 @@
+> =20
+>  #include "scsi/pr-manager.h"
+>  #include "scsi/constants.h"
+> +#include "scsi/utils.h"
+> =20
+>  #if defined(__APPLE__) && (__MACH__)
+>  #include <sys/ioctl.h>
+> @@ -72,6 +73,7 @@
+>  #include <linux/blkzoned.h>
+>  #endif
+>  #include <linux/cdrom.h>
+> +#include <linux/dm-ioctl.h>
+>  #include <linux/fd.h>
+>  #include <linux/fs.h>
+>  #include <linux/hdreg.h>
+> @@ -138,6 +140,22 @@
+>  #define RAW_LOCK_PERM_BASE             100
+>  #define RAW_LOCK_SHARED_BASE           200
+> =20
+> +/*
+> + * Multiple retries are mostly meant for two separate scenarios:
+> + *
+> + * - DM_MPATH_PROBE_PATHS returns success, but before SG_IO completes, a=
+nother
+> + *   path goes down.
+> + *
+> + * - DM_MPATH_PROBE_PATHS failed all paths in the current path group, so=
+ we have
+> + *   to send another SG_IO to switch to another path group to probe the =
+paths in
+> + *   it.
+> + *
+> + * Even if each path is in a separate path group (path_grouping_policy s=
+et to
+> + * failover), it's rare to have more than eight path groups - and even t=
+hen
+> + * pretty unlikely that only bad path groups would be chosen in eight re=
+tries.
+> + */
+> +#define SG_IO_MAX_RETRIES 8
 > +
->  class VmStateTest(QemuSystemTest):
->  
->      def run_vmstate_checker(self, src_json, dst_json):
-> @@ -19,6 +35,27 @@ def run_vmstate_checker(self, src_json, dst_json):
->                                stderr=subprocess.STDOUT,
->                                text=True)
->  
-> +    def test_checker(self):
-> +        """
-> +        Test whether the checker script correctly detects the changes
-> +        between dump1.json and dump2.json.
-> +        """
-> +        if self.arch != 'x86_64':
-> +            self.skipTest('for x86 only')
-> +        src_json = self.data_file('..', 'data', 'vmstate-static-checker',
-> +                                  'dump1.json')
-> +        dst_json = self.data_file('..', 'data', 'vmstate-static-checker',
-> +                                  'dump2.json')
-> +        self.log.info(f'Comparing {src_json} with {dst_json}')
-> +        cp = self.run_vmstate_checker(src_json, dst_json)
-> +        if cp.returncode != 13:
-> +            self.fail('Unexpected return code of vmstate-static-checker: ' +
-> +                      cp.returncode)
-> +        if cp.stdout != expected_output:
-> +            self.log.info('vmstate-static-checker output:\n' + cp.stdout)
-> +            self.log.info('expected output:\n' + expected_output)
-> +            self.fail('Unexpected vmstate-static-checker output!')
+>  typedef struct BDRVRawState {
+>      int fd;
+>      bool use_lock;
+> @@ -165,6 +183,7 @@ typedef struct BDRVRawState {
+>      bool use_linux_aio:1;
+>      bool has_laio_fdsync:1;
+>      bool use_linux_io_uring:1;
+> +    bool use_mpath:1;
+>      int page_cache_inconsistent; /* errno from fdatasync failure */
+>      bool has_fallocate;
+>      bool needs_alignment;
+> @@ -4264,15 +4283,105 @@ hdev_open_Mac_error:
+>      /* Since this does ioctl the device must be already opened */
+>      bs->sg =3D hdev_is_sg(bs);
+> =20
+> +    /* sg devices aren't even block devices and can't use dm-mpath */
+> +    s->use_mpath =3D !bs->sg;
 > +
+>      return ret;
+>  }
+> =20
+>  #if defined(__linux__)
+> +#if defined(DM_MPATH_PROBE_PATHS)
+> +static bool sgio_path_error(int ret, sg_io_hdr_t *io_hdr)
+> +{
+> +    if (ret < 0) {
+> +        switch (ret) {
+> +        case -ENODEV:
+> +            return true;
+> +        case -EAGAIN:
+> +            /*
+> +             * The device is probably suspended. This happens while the =
+dm table
+> +             * is reloaded, e.g. because a path is added or removed. Thi=
+s is an
+> +             * operation that should complete within 1ms, so just wait a=
+ bit and
+> +             * retry.
+> +             *
+> +             * If the device was suspended for another reason, we'll wai=
+t and
+> +             * retry SG_IO_MAX_RETRIES times. This is a tolerable delay =
+before
+> +             * we return an error and potentially stop the VM.
+> +             */
+> +            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
 
-Would this run for every make check and every CI run?
+sgio_path_error() is missing coroutine_fn.
 
-Since the script almost never change, I wonder whether this test should be
-triggered only if manually.  But maybe I totally missed how the functional
-framework works..
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
->      def test_vmstate(self):
->          target_machine = {
->              'aarch64': 'virt-7.2',
-> -- 
-> 2.49.0
-> 
+--/cP+Wp3x2lclgAbk
+Content-Type: application/pgp-signature; name=signature.asc
 
--- 
-Peter Xu
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgvOK8ACgkQnKSrs4Gr
+c8gdoQf8D4MgHU+SKZuJ/+fjYn5vxvHpOa76eZn/HOgv1wNEAchMTyRNr8SREptb
+nbtzH3G+EWTGlaK7AmV/Zpw5Qviq90TOamYiULbxyt2nAx+CLh18r5cmlWDaiAhA
+zR/7S5+MK42ZoaY/Zw4W+euosM53vY7o+tjy3KhkzqiSt07KJr66oX/OnKV9CvOs
+b+sMipZp1fMGMMqB1N3YMTNkOSTT7F1oKLLin+5cPNxU5kTwdsCyuSpGL9cd+wMc
+i3Loc5L0FAYHhi4zIYx8B5BhlYCTXrsQV6pz2ysIQn+rmgRDzYTj1E1ssJIEC3XS
+IfSa9ek1Kra6e/uv5+tWGl7gqZE+/g==
+=ArY6
+-----END PGP SIGNATURE-----
+
+--/cP+Wp3x2lclgAbk--
 
 
