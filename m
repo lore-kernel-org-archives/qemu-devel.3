@@ -4,155 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457FCC54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F266C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIBiV-0002ng-MM; Thu, 22 May 2025 15:36:36 -0400
+	id 1uIBry-000430-Ru; Thu, 22 May 2025 15:46:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uIBiG-0002nI-Qs
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:36:21 -0400
-Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2418::600]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uIBiE-0003kN-4A
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:36:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PPJuXt5P1nuKQC/u9XQIWD8ugGPKTxhm/kYVCnI+IqYjMTqRvWthHCENmmnuClzokjaTu99ZANyUSScy65fmpgru9q9MKYxBrpWxlyliwAsd6gHCNjyhIlVWu9JpChNB8OZw5yRqNSx2Cm/eVXblQDYSt7YvJCji2aKAx1PRdNT0fhzNrf8KJKrt7qvPDH6+41I+ErYNKlaj5snJFScACii7I2uC7DxyHrY42taT6OhV8oeAaazPt8RvX3zKGEnJG2BWNNfhPZzQu7t4g9C4cgwSM9HU7IV1c++1p76N2x6ccvvBph3TiGwj/qw/RnlVocpW+CLi3trCZHTOeca+LA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=97Z6H7z9EDuf+IL8C/PCSMONoeGtBsHTgl7n6pmkmSI=;
- b=jtBxp5Y/CidmV3ZN8FCOTAy0PuCYUhsaknErdUawe9ZkwSO9H4XU1rxjdbBMkJ+Y2kgVVjfD6BsLTA3H/NB9aBDlvCUxIGE+v92IutMmaEuSY+W5qskuBbYNW6gbIPocHgkVADnLrfyS2YLqqilcQG/O5ysLornjxVgDOBZc/0msC7GPTfTRWCkUkxhFaB3eZ8cPiMq49fIJlD2nLrunAYY23qAQwbacPoo7CVAmiHCT9DBYN2GYdQINltyppA/Dp6ZhHlJdS1ujZvy0+wABuyYTmrsTb5LUyQ9qKi6RSlOM3UVLwvEyCMtdJdHPjsq9dFBphZ7mwnUQVYOKVk90rQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=97Z6H7z9EDuf+IL8C/PCSMONoeGtBsHTgl7n6pmkmSI=;
- b=JxhX2is5/KE/k2ytYOfWOwhVcqVHAZ59Cjn3WI+QnvtTnqbslH9vdy7EZOPN7uwUNEYmlbo88DzLZ/nOkfoH2mHNvlaUZgaYzfFV0i/KZ62TrgoR6cPfWwQzNNZFFuRAjrYmooJ6OSd6GF54GngOX+kodpsw5ZuHBQDXsCO32uhWvjGR/K7fULQI7hnyyxEWoYbOy3FZSZI12JfUOXiMS2oKGczNjEouhml6CVtD0bsRiesEnvUikXj6lLnrbA14QCD2qAJXiU1/2ZjHrZ5fhETyCLFPqn74Q0XpuHprf9GPS+gPM7XQLkZ1kpQ46uoEhuXMZCsh4HV8SgPINSBOYg==
-Received: from DS7PR03CA0060.namprd03.prod.outlook.com (2603:10b6:5:3b5::35)
- by SN7PR12MB7130.namprd12.prod.outlook.com (2603:10b6:806:2a2::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.31; Thu, 22 May
- 2025 19:36:13 +0000
-Received: from DS2PEPF0000343B.namprd02.prod.outlook.com
- (2603:10b6:5:3b5:cafe::78) by DS7PR03CA0060.outlook.office365.com
- (2603:10b6:5:3b5::35) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8769.18 via Frontend Transport; Thu,
- 22 May 2025 19:36:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DS2PEPF0000343B.mail.protection.outlook.com (10.167.18.38) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8769.18 via Frontend Transport; Thu, 22 May 2025 19:36:12 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 22 May
- 2025 12:35:57 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 22 May
- 2025 12:35:56 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Thu, 22 May 2025 12:35:55 -0700
-Date: Thu, 22 May 2025 12:35:54 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
- <clg@redhat.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
-Subject: Re: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device info
-Message-ID: <aC98moHCEJ3kWJGC@Asurada-Nvidia>
-References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
- <20250521111452.3316354-6-zhenzhong.duan@intel.com>
- <aC5MVvwPCFertplB@Asurada-Nvidia>
- <SJ0PR11MB67449F7571B0604A8D2522D39299A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uIBrw-00042d-Kz
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:46:20 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uIBru-0005Ty-QU
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:46:20 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-30e5430ed0bso8258634a91.3
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:46:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747943177; x=1748547977; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QRQvRcGWje8aYe7d9iXGg7V2ptAjM+lXsSFvmidvhkY=;
+ b=GNa3zSevmVsFhW7ZIyPsrkUhpCkAaB+i28g+F4oizLd5Ut2KdezpWh5ck73rWctjAo
+ jZ7wMknFykcnA2W5/dNaFzJW2Gydscu8YkWs8VLSL3SsUdo6DfurqHeYyUCWYoZw5V0S
+ OVkXEbtQCCYTXqL3FnkvPJBJ33+AdFWUa3BJob2sE3Xv0Fj6WplOTUuoy/20o9r+AgX3
+ 2BPsVrXZthEFOCANgn/mqY38gJhwdloF7Jvsm8mtLnaHI79q6C7Dy48ywTTPHpX22XEM
+ B0AWp6HCBeesN0+SqkhNZn+orwHTn1/T+mvhOTU92wIrg+TO6BdAHtFVHASAhRKrht46
+ 0Zcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747943177; x=1748547977;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QRQvRcGWje8aYe7d9iXGg7V2ptAjM+lXsSFvmidvhkY=;
+ b=gkcgQKzlv/Xy3fKHT/8io08+cz3ghwoyl9nZ2D1Jqh2teXPVS2LADle/21eySFX4qL
+ SeBnklk125Ll62m+BveDIFjD5wUWKWroe9aJrVFTNulckU0u0E5xnh+ZtU9hvaljjXEB
+ sdMwkB6xaM2HmxQE54hMSoWX74rYqgw+QlopO9mlGxsUZvX0AVobew1wYG5NibuqGeRa
+ DypjJLjHP+S1eZtrnSPsOpsocGfsOTB/+2lTek8Uiovqf7Eao/nBsE8ZcNNgS0xxmkJj
+ jUvX9H1qZuBGUOA75dMlMV0/2XR8gpvUupfvxlgGcyPCEuMjfAwPNdC4jmkd7cGWmi5E
+ HUeA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXd5gizSAPHNC3QSvQxgqAQrSl/7AZ86JY28/CmoB/WcAjDsEubObRl0+VP7W2zVC2iLTn7TreUXcY3@nongnu.org
+X-Gm-Message-State: AOJu0YyC3G7Sf1pgdeEcSUcvT8Zj9Ip2u2dnO95g9ftde5G0sw3MRdhq
+ pfQCmp+SD/ggIEjJ9mLlQLSQsUonHvPiMG1DvkkrJHLLBDC4b2t7+hhi2oAXDAiaxq0=
+X-Gm-Gg: ASbGncvOBgduUg7Iu6hf0nySQWZPWADZkO+TK972pKqvnSVtlkSpSVnhgvgO4okFGei
+ OQJa2LT0NuDQFhprmyaI+xjq11WLDSCy4vqiVIXt0nS5dZvqFCyycJL9pVhyCaUdRIhFWkm4tam
+ 7/O3oSN5/I4CdP99TysUPBht7+0cAXNkNeJQ3t9Ge5RwWmOtPyex1/COw/0WGenStSoB8ZMh1xu
+ P2HL8fbLmXvNSAFruC37IfE2AQSR3ULixAViKKD1iY3qI1CuILpQD7vlR/16n04SYe8TJDZ+5M+
+ ZMeB+4n66T1Qq3fLnEJTqkPfNo5IlcIRA9JUrwVSPo+jtWs+LBLEUULl510pK6WW
+X-Google-Smtp-Source: AGHT+IGW5Aq+SpOsTVeh/sdWXtsmz6NoW86s6U2Url5E92qbHtv2L//Ox2tELfTyJyj3BN2i5K6nTw==
+X-Received: by 2002:a17:90b:51c2:b0:310:8d7a:cfe0 with SMTP id
+ 98e67ed59e1d1-3108d7ad020mr13025504a91.16.1747943176635; 
+ Thu, 22 May 2025 12:46:16 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30f365e545asm5900212a91.31.2025.05.22.12.46.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 May 2025 12:46:16 -0700 (PDT)
+Message-ID: <39d3cfdf-10b6-484c-824a-fe84377acb54@linaro.org>
+Date: Thu, 22 May 2025 12:46:15 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <SJ0PR11MB67449F7571B0604A8D2522D39299A@SJ0PR11MB6744.namprd11.prod.outlook.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF0000343B:EE_|SN7PR12MB7130:EE_
-X-MS-Office365-Filtering-Correlation-Id: e334ccbc-e503-4429-459f-08dd9967e913
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|82310400026|1800799024|7416014|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?H7GiIYGi7BU6VSndo4ThtxOVZh3d1YxilAvBA3wNNXeAMgFthaEE+oxyQUWt?=
- =?us-ascii?Q?2pk3kXG92HVG0cgIGXq+7QEV3V3YGUrpxLp2+3DJqGETxI3uYfZiwHovJ+ks?=
- =?us-ascii?Q?oDa/m2Dqk66UgaSr/qUh1Ar3NB2KNQ9zdhxKF+b/or4DfnQZs9DofkR/sls4?=
- =?us-ascii?Q?KAjpKLz7tAsTM3xXkLInTHc4S8W7ETJANu/lbhGYWl4iBuE/NJ30I5xNio2A?=
- =?us-ascii?Q?/XHzww2E7Zr2FS9Rbmn+e7mpYewEetUSjbvyLU8vx/yBQOQlqVKX7yrlvfoz?=
- =?us-ascii?Q?Fx4lM06KiRi6f7jkXbplqWYHLd6r0aFhFIyip0ZNYgB1Mo7EruLMLwYM0TRm?=
- =?us-ascii?Q?whHkpk0PaDCg2tqwnZ/bOhat1081VkbkhVwRgaUBFhnOVnZ1SC0zmeDaxxYB?=
- =?us-ascii?Q?egPDqZ8LAz86r0dCo+aGyUvGn/iw+R6ZFZ0WNzD7F7QUgz1pKqyA5UswmZym?=
- =?us-ascii?Q?Q1g1e9aIpcOaM27lfEDBnCjhdiymAcpTF9yVrdl8PDkDVosQ9/s/0NqRNnyb?=
- =?us-ascii?Q?F63rmGIAnUUiCy4a8TsVd7/aw2DllyDxNQ8qgnYrL6ItScZ5AIWeYz6JA0Db?=
- =?us-ascii?Q?FgsYXjwNt73sm9I0sFT2xqZTCVO64xLtLQvQkaapS6dwE8lih95IaVFPAyVL?=
- =?us-ascii?Q?AlTNux1WCGUE4GF7fcmfmanPGijL3XplCeD1uq/PYD2EjtlwOOBDO7tl4Dm2?=
- =?us-ascii?Q?AurAJvA3nNNlgD2mvYriB7PUccNaPLb/QimbvafG9hBVXPLy+W68d4TzQ0qc?=
- =?us-ascii?Q?YcYC+dmWImdMKfnsL3iLjEGoszIcuqW3I4aIsTFtkTlQGoNKnNibJguOqemq?=
- =?us-ascii?Q?+36pT/CRLuIo+dNcmHnYkG/0GbIcYeJMM9eR6tfaEFTPRRmJiapa+lccqlBY?=
- =?us-ascii?Q?7KXwYECSygUvRXc2KorK2CLynrio9MIHQJPyzinfFm9HgkyI6yW5trN3WURM?=
- =?us-ascii?Q?IshbjNxUZdIwVLE7xGzZokR+IEhAq0Duwf86uAjV9Ngrdg2jyF9qvc7hLycv?=
- =?us-ascii?Q?BRKjvkB/L5lGdR4rj6kkj2vp3r7GtjRkaft7ndM/bzgiuPMwV4TvYEME1M07?=
- =?us-ascii?Q?i0nqBb/yB7CTbl1x5MWBjiEz16oVnbrLkU/vdi2FxQRjF7+Yp5cQdUnEBWOX?=
- =?us-ascii?Q?ncN1bJ6AD2zOO6+i+3/Vu/xt4CIOuM0zJfdn3D1CYkcvefyi3uRqF89tc544?=
- =?us-ascii?Q?jlJbnnlJENWogmp1gQVyANRBhsYLCPEBN1IirP0E7PRwvaQ/vWUbspsSAHo0?=
- =?us-ascii?Q?d7qplkBa6W/4aO/tqrgZV76nt3BOUwuhgBIiE5p6xb0smfeVvpJtQqQxdCUM?=
- =?us-ascii?Q?zQvoL/aVM++ddqGZ0ArHwnrZ1zOnK1r9N4L7B/17ouX+yT5ELbqr88M1RijS?=
- =?us-ascii?Q?eGSzH5qVAih+JdaxCldW0LQcsS68EUJTKyixLE/vUg+Up90DCCarqK//wAUQ?=
- =?us-ascii?Q?5gnjUy+f0xO8Pll/gauV8HUlWzLDABIgWXgqlRtxIK75FowFRdi7zRxu4zm6?=
- =?us-ascii?Q?RQLRoP0uedl9GVazd8N6VKfl/nAo84Nt/3u/?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(82310400026)(1800799024)(7416014)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2025 19:36:12.6388 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e334ccbc-e503-4429-459f-08dd9967e913
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF0000343B.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7130
-Received-SPF: permerror client-ip=2a01:111:f403:2418::600;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/8] Add memory hardware address read/write API
+Content-Language: en-US
+To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250521094333.4075796-1-rowanbhart@gmail.com>
+ <20250521094333.4075796-6-rowanbhart@gmail.com>
+ <348a6c09-3c8d-471f-af6c-e8201760614e@linaro.org>
+ <9e1ebea2-bfbf-4ba6-85fa-c068d627d9e1@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <9e1ebea2-bfbf-4ba6-85fa-c068d627d9e1@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,37 +110,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 22, 2025 at 09:21:04AM +0000, Duan, Zhenzhong wrote:
+On 5/21/25 8:34 PM, Rowan Hart wrote:
+> Well, first I just noticed that I left a debug print in this function!
+> So I'll fix that.
 > 
+>> Reading this patch, and patch 3 (Add address space API), I am not sure
+>> AddressSpace is something we want to leak in plugins interface.
+>> It is a concept *very* internal to QEMU, and not reflecting directly
+>> something concerning the emulated architecture (it is related, but not
+>> officially described for it).
+>>
+>> The same way qemu_plugin_write_memory_vaddr is only valid in the
+>> current page table setup, we could assume the same for current address
+>> space, and return an error if memory is not mapped with current AS.
+>> Eventually, we could read/write a given hwaddr in all existing address
+>> spaces (starting with current mapped one), if it makes sense to do
+>> this, which I'm not sure about.
+>>
+>> What are your thoughts on this?
 > 
-> >-----Original Message-----
-> >From: Nicolin Chen <nicolinc@nvidia.com>
-> >Subject: Re: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device info
-> >
-> >On Wed, May 21, 2025 at 07:14:35PM +0800, Zhenzhong Duan wrote:
-> >> @@ -852,6 +853,17 @@ static bool
-> >hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-> >>      caps->type = type;
-> >>      caps->hw_caps = hw_caps;
-> >>
-> >> +    switch (type) {
-> >> +    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
-> >> +        vendor_caps->vtd.flags = data.vtd.flags;
-> >> +        vendor_caps->vtd.cap_reg = data.vtd.cap_reg;
-> >> +        vendor_caps->vtd.ecap_reg = data.vtd.ecap_reg;
-> >> +        break;
-> >> +    case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
-> >> +    case IOMMU_HW_INFO_TYPE_NONE:
-> >
-> >Should this be a part of hiod_iommufd_get_vendor_cap() in backends?
+> I definitely see the arguments for not exposing it even as an opaque
+> struct, internality not withstanding it also adds some complexity for
+> plugin authors.
 > 
-> Made following	adjustments which save raw data in VendorCaps,
-> let me know if it matches your thought.
+> My thought with exposing it is kind of twofold. First, there are
+> specific address spaces like the secure address space on ARM or I/O
+> memory on x86 that plugins might like to access and I think it's easiest
+> to facilitate that if we just let them choose which one they want to r/w
+> to. Second, I wanted to lean towards being less restrictive now to avoid
+> having to go back and remove restrictions later since even though it's
+> very internal, it doesn't seem very likely to change.
+> 
+> That said, if you think it's more trouble than it's worth I'm totally
+> fine with just defaulting to writing to the current AS (or to
+> cpu-memory, whichever's more reasonable). Your call, just let me know
+> which way you think is best for v4 :)
 
-Yea, LGTM. Point is that we keep all vendor structure decoding
-inside the backend, so VFIO wouldn't need to care about types
-nor what's inside the data.
+I understand your point, but to the opposite of registers, I think we 
+should refrain from exposing all this.
+For now, we can just use the current AS.
 
-Thanks
-Nicolin
+Later, we could consider to add a new architecture specific parameter 
+for that need (being a union, with fields per base architecture). So 
+people writing architecture specific plugins can have a solution.
+
+AddressSpace as = {.arm = ADDRESS_SPACE_ARM_SECURE};
+qemu_plugin_read_memory_hwaddr_as(addr, data, as);
+
+>> qemu_plugin_translate_vaddr is fine for me.
+> I did have a question about this -- one of the test plugins prints out
+> vaddr, haddr from qemu_plugin_insn_haddr, and the translated haddr from
+> qemu_plugin_translate_vaddr. When running with direct memory mappings in
+> a system test, the vaddr = translated haddr, which is correct, but the
+> haddr from qemu_plugin_insn_haddr was incorrect (it was 0x7f....f<actual
+> address>). Is this expected behavior?
+>
+
+qemu_plugin_insn_haddr returns directly a pointer to instruction in 
+(host) memory, which is different from hwaddr, thus the void* signature.
+Name is pretty confusing though, qemu_plugin_insn_ptr could have been a 
+better name.
+
+> Thanks for the feedback!
+> 
+> 
 
