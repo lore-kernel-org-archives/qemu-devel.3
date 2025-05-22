@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84892C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 22:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB9E8C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 23:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIEYC-0005Dq-S0; Thu, 22 May 2025 18:38:08 -0400
+	id 1uIF5E-0000r2-PX; Thu, 22 May 2025 19:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIEY9-0005DM-30
- for qemu-devel@nongnu.org; Thu, 22 May 2025 18:38:06 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1uIF5C-0000qr-ED
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 19:12:14 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIEY1-0006Ru-U5
- for qemu-devel@nongnu.org; Thu, 22 May 2025 18:38:03 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-742c3d06de3so6478832b3a.0
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 15:37:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1uIF5A-0002Z3-6w
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 19:12:14 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-739b3fe7ce8so6927282b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 16:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747953473; x=1748558273; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RN4mZHjloUYc5xBEcx0zXmdorZNruJ4VWRnKGIZ7Wbc=;
- b=BE35zbM90I7LK0zqC6Z2ecGuLdfObfhDO1AXJ3YmfvNazXRjyH0kAavb1Qh35ezLfm
- ZNVoFo2pwHITTg1TJfYh/L2NWnJEyPeBgjuM2nu8Q/lriw9YjqadBt9Mr91hnjmCXQPy
- xKM4JYMvqZvZ/EGiTYKe+bcaMihW2wxZMEZlAp5A/ngY2i0xB6mNdZZwAMVuCwQ3KHea
- q50fFk4cIieHbYoP/4BKyRZCG+TxHtQA1APqb6UbjbFWoYtXSHOCk401/m/XBDgcelYf
- LC++UMsERbFbfPubUUJ4s/R02CmdzBeT3MQ1YwEa85rqFMXiV4lgMDKdTExzCV3BcgeS
- Z3Hw==
+ d=gmail.com; s=20230601; t=1747955528; x=1748560328; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=j1J0rdfNf6oSVNd0zB5466LyVNvbYFqQVm29KeuaT/c=;
+ b=CSyV44zrUT03oWB0N5EZROS2tuH7FJdnuxnSbUDs3uuwTKKCK7oTUEef5oNWS5GS1e
+ kbSSEA/wOt7bk7DyyxGNIsPi5X1kq+1fnmGcA9B3kXDOipi2AsBm4UinGqECMR/Ppt49
+ zq3OkRo4/nm8bS5dY5ZkgS1s4eY9HlYDczU2NXeFJKvdTrco9cbw4aPYR41/FEEVjPxM
+ w5oaOnfdqQfdQ5LF8t4u5pewx8XpxY0tM23p9uSVRl+vgeWA3rpm6key78HOOVSnIc7C
+ PBX7JrNYbomj3VtYtrFfpaVTQrGlMFgcyZvZ9WF8N1w5Nnp8gTeCvsKzwZYtKM2TKdwU
+ 1vhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747953473; x=1748558273;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RN4mZHjloUYc5xBEcx0zXmdorZNruJ4VWRnKGIZ7Wbc=;
- b=OTVbONMZ3vjQiMB8hjPbkwcVN1Up+LhkZE74UXLsQ99ctXjuug5gCZGWNaW1pNbtQs
- 1jM1adiKj2Z9h8eeIgOVfDtvnidoU8Zyg0v4V0Kva5dazH0wc3scEohWFs1DrjsH1B7L
- EHntB1E1E9YOqZasl4yxCIlpZKjsdlyKq52ZV9P+XpW8/pB1utwOhqZVVgRDDydhU7Dy
- v52JQNSCACqPpjJlcgA37ecmOdCOXDuQt6hT0CTBwSSG7wOwq0aleBaU0X+sCOLit4dc
- NxShNiQcYPziiKtDlEb7Cgdx6PGJkUrtlijpuSAgqTyqzBLAQIvK8dJgA6DIJTK9TxjM
- +/Ng==
+ d=1e100.net; s=20230601; t=1747955528; x=1748560328;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j1J0rdfNf6oSVNd0zB5466LyVNvbYFqQVm29KeuaT/c=;
+ b=JJkYkXx3BWXb6uV4Ane1DbpcdsdHCFezKPPPhYpqZBKh2a3tnBAKqFPprqn21uXQmT
+ 2o6cVO3p4MEo2TyyNGJafLtkmV4pSw/0lw7OTd0oO3dfTssFtToo2tcvbrupUwoPRJ9x
+ u7qNjB/4r9d2+ITNbLTanVuPiVVFqenowekTLNyRZSSEX+B+eLGsSbveFKlP3Prt4PbP
+ b6LddtwLiAYPuK2VYHJqudOFocVRLtk0DfDnnD0dAGFwsum9r2kFrTP/P5TMDwMw6AXP
+ CmFbCfVZmEk8cQ/kXaTqdBhGdm7u9sdeMRbiKySTz+oC2Ag+FLBqiZqoXWhAx33CDInQ
+ jI9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWtuJlze9EJm8taNLdRBvskKDC1XXwu3H4pmqZnWusvsrgTyh2bPXng0SvXEAHmz4Q7M0hknsofwefe@nongnu.org
-X-Gm-Message-State: AOJu0YxbusVqO2k7oSU9Q5oCjsQyxeYwxUtLeb2T8ix+2MfYpOXFYxEv
- 3hLlIk8Fh6rXiLAGztgtyZMyM/m+pG32lHfBGC80WtnDRZiTCnsZC7YevjIinGnU7pE=
-X-Gm-Gg: ASbGncuhaZhDgcwbUpvePLn70GXBLf57H4X1vnv4j8LrbVgg2REdoyisBddUD8s+Bc5
- JaCcubhanGpwP3NoSWnXRCtcFldHMRBaDFwj9h1WJ8TdThuhuWzqKIT4F1+kEmXDh/JYsZvYHeV
- GFOje4/iPYvMGd/lQczN3GV5NlIgCNZxIb00a70mrAXGBjJJukaQfeQ2XWYxeic/ZVCXO8ldXZb
- 3cXB8jieM5UpbFrbJWzkre4MHUZnGwcAyBFk+IdRyC4A2rWOJbT7lwbsdgb4YbE6X63E3UGGN20
- ZaQ5oNH10Xq/ec/uJ+AH8WyD4HlP4DltHCDNmuN3LeXUhlByH2TtHnpWv+Jt48sq
-X-Google-Smtp-Source: AGHT+IG1Ef+vEla6bYfUvGeaKaGOG2esj1QWgNjZiTA3Ckkd/ybJjDyvbLtkiGVk69RI84RMPbWsXQ==
-X-Received: by 2002:a05:6a00:4106:b0:740:9c57:3907 with SMTP id
- d2e1a72fcca58-742acd50f3amr36895617b3a.19.1747953473103; 
- Thu, 22 May 2025 15:37:53 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCXzrwK0DNtWYDT7EUh7GHrJFP43IMAENx7P+CFJo9YJx2knPet6Xn/AAJV6Tb+9fG+6DJyVAidgPp1c@nongnu.org
+X-Gm-Message-State: AOJu0YxOzpb1hf4QXvhxF9TEvuqAtShu6k50r9gLyPk1LLNcy9UabjOn
+ xXpdG5vR4vTOwJwbM7EhNnz8jzWeE3cztmJGp5TtA68b1+s1Iv4gtvmO
+X-Gm-Gg: ASbGncvTMyW7/PFiTxJ0MwHfZcU/DcIxIuU/dC2KxFC839gsQ2V3tabca76L/x5hvBK
+ SGVnN4h33zGUGrWeysvytzpKJRHibJX6TFkbSsxE8XWlMawy+Is5EvIemq0AIlqluw0YiDQiwv1
+ Qdxv8i9TiHh5WygVttxuJ6rZ6XxJ4EmVq+d8/3z0C2D8zsXYPTbAELnHeG+vVB8EbJB9KyShu5R
+ HpJtNcRaeaTvGU2pqPIvd3rLgQyuJffSmfI2FDZeY7IP78Gngma8eZDAkrO8dUCuOCMsD0trGmB
+ SCJ60lAx29JLq8GDziroIrIp38YxMXr3bcSSpLW8aPcmaDFBlOlI5nmu4EZmGERVlweduv5gmfJ
+ Yt1KRboJCYQO9
+X-Google-Smtp-Source: AGHT+IFEIgXigdlw1VBiXkMiCdivhEwucMa8iHNVPAwYBgAkncbxZL2qPZ1uPumoF+TIZfHlqUeqAA==
+X-Received: by 2002:aa7:88c8:0:b0:73e:2dc5:a93c with SMTP id
+ d2e1a72fcca58-742a97c4fd9mr34074533b3a.11.1747955528252; 
+ Thu, 22 May 2025 16:12:08 -0700 (PDT)
+Received: from deb-101020-bm01.eng.stellus.in ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a96e589esm11695457b3a.9.2025.05.22.15.37.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 May 2025 15:37:52 -0700 (PDT)
-Message-ID: <25730845-c77c-47b0-8c23-a254dbbb32d6@linaro.org>
-Date: Thu, 22 May 2025 15:37:51 -0700
+ d2e1a72fcca58-742a9739906sm11733480b3a.80.2025.05.22.16.12.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 May 2025 16:12:07 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Thu, 22 May 2025 23:12:05 +0000
+To: Vinayak Holikatti <vinayak.kh@samsung.com>
+Cc: nifan.cxl@gmail.com, a.manzanares@samsung.com, alok.rathore@samsung.com,
+ dave@stgolabs.net, gost.dev@samsung.com, krish.reddy@samsung.com,
+ linux-cxl@vger.kernel.org, qemu-devel@nongnu.org, vishak.g@samsung.com
+Subject: Re: [PATCH] Add support for FMAPI Get Mutliheaded Head info opcode
+ (5501h)
+Message-ID: <aC-vRUoCDJ70_yox@deb-101020-bm01.eng.stellus.in>
+References: <20250522063135.366295-1-vinayak.kh@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/8] Add memory hardware address read/write API
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: Julian Ganz <neither@nut.email>, Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20250521094333.4075796-1-rowanbhart@gmail.com>
- <20250521094333.4075796-6-rowanbhart@gmail.com>
- <20250522115935.34716-3-neither@nut.email>
- <bbbc7639-9ef0-4510-b481-0c3145b6ff11@linaro.org>
- <CAE5MsNaacPXefwk=tsUmmAoxUZ9UU3uc084rOT7TOarW7Y7FwQ@mail.gmail.com>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CAE5MsNaacPXefwk=tsUmmAoxUZ9UU3uc084rOT7TOarW7Y7FwQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250522063135.366295-1-vinayak.kh@samsung.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,37 +105,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/22/25 2:01 PM, Rowan Hart wrote:
+On Thu, May 22, 2025 at 12:01:35PM +0530, Vinayak Holikatti wrote:
+> CXL spec 3.2 section 7.6.7.5.2  describes Get Head Info.
 > 
->      > This definition strikes me as odd. What was your reason to assert
->      > `current_cpu` here, but not in the other two functions? Also a bit
->      > surprising is the declaration of `cpu` if you use it in just one
->     place
->      > (rather than just use `current_cpu` directly as for the assertion).
->      >
->      > And there is no reason in particular why the vCPU could not be a
->      > function parameter of `qemu_plugin_translate_vaddr`, right? You don't
->      > have the same restrictions as in `qemu_plugin_read_memory_hwaddr` or
->      > `qemu_plugin_hwaddr_operation_result` where you actually touch
->     memory?
->      >
+> Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+> ---
+> This patch is generated against Jonathan Cameron's branch cxl-2025-03-20
 > 
->     That's a good point, adding a "unsigned int vcpu_index" to the
->     signature
->     should be enough to query current or any other vcpu easily.
+>  hw/cxl/cxl-mailbox-utils.c  | 21 +++++++++
+>  hw/cxl/mhsld/mhsld.c        | 92 ++++++++++++++++++++++++++++++++++++-
+>  hw/cxl/mhsld/mhsld.h        | 26 +++++++++++
+>  include/hw/cxl/cxl_device.h |  6 +++
+>  4 files changed, 144 insertions(+), 1 deletion(-)
 > 
-> This is a really nice idea, it might be nice to make a vcpu version of 
-> read/write register too. For memory, I'd think going with the current 
-> memory is probably fine, I don't see any configs with different memory 
-> per vcpu?
-> 
-
-Thinking about it twice, and after reading Alex comments for writing 
-registers, it's probably not a good idea to allow such side effects on 
-other vcpus (on registers and memory).
-In case of registers, there is nothing ensuring they will be written 
-correctly, so it only makes sense for current_cpu, as we are in a 
-callback running on it.
-Safer to have the same semantic for memory read/write also, so please 
-forget my idea.
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index a02d130926..4f25caecea 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -122,6 +122,7 @@ enum {
+>          #define MANAGEMENT_COMMAND     0x0
+>      MHD = 0x55,
+>          #define GET_MHD_INFO 0x0
+> +        #define GET_MHD_HEAD_INFO 0x1
+>  };
+>  
+>  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> @@ -267,6 +268,23 @@ static CXLRetCode cmd_mhd_get_info(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_UNSUPPORTED;
+>  }
+>  
+> +/*
+> + * CXL r3.2 section 7.6.7.5.2 - Get Multi-Headed Head Info (Opcode 5501h)
+> + */
+> +static CXLRetCode cmd_mhd_get_head_info(const struct cxl_cmd *cmd,
+> +                                   uint8_t *payload_in, size_t len_in,
+> +                                   uint8_t *payload_out, size_t *len_out,
+> +                                   CXLCCI *cci)
+> +{
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(ct3d);
+> +    if (cvc->mhd_get_head_info) {
+> +        return cvc->mhd_get_head_info(cmd, payload_in, len_in, payload_out,
+> +                                 len_out, cci);
+> +    }
+> +    return CXL_MBOX_UNSUPPORTED;
+> +}
+> +
+>  static CXLRetCode cmd_events_get_records(const struct cxl_cmd *cmd,
+>                                           uint8_t *payload_in, size_t len_in,
+>                                           uint8_t *payload_out, size_t *len_out,
+> @@ -3429,6 +3447,7 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>          "MEDIA_AND_POISON_GET_SCAN_MEDIA_RESULTS",
+>          cmd_media_get_scan_media_results, 0, 0 },
+>      [MHD][GET_MHD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_info, 2, 0},
+> +    [MHD][GET_MHD_HEAD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_head_info, 2, 0},
+The name here "GET_MULTI_HEADED_INFO" is the same as the previous command.
+>  };
+>  
+...  
+> +
+> +static void cxl_mhsld_init_head_info(CXLMHSLDState *s, PCIDevice *pdev)
+> +{
+> +    uint16_t lnksta = 0;
+> +    uint16_t current_link_speed = 0;
+> +    uint16_t negotiated_link_width = 0;
+> +    uint16_t lnkcap = 0, lnkcap2 = 0;
+> +    uint16_t max_link_width = 0;
+> +    uint16_t max_link_speed = 0;
+> +    uint16_t supported_link_speeds_vector = 0;
+> +
+> +    lnksta = pdev->config_read(pdev,
+> +                               pdev->exp.exp_cap + PCI_EXP_LNKSTA,
+> +                               sizeof(lnksta));
+> +    lnkcap = pdev->config_read(pdev,
+> +                               pdev->exp.exp_cap + PCI_EXP_LNKCAP,
+> +                               sizeof(lnkcap));
+> +    lnkcap2 = pdev->config_read(pdev,
+> +                                pdev->exp.exp_cap + PCI_EXP_LNKCAP2,
+> +                                sizeof(lnkcap2));
+> +    supported_link_speeds_vector = (lnkcap2 & 0xFE) >> 1;
+> +    max_link_width = (lnkcap & PCI_EXP_LNKCAP_MLW) >> 4;
+> +    max_link_speed = lnkcap & PCI_EXP_LNKCAP_SLS;
+> +    current_link_speed = lnksta & PCI_EXP_LNKSTA_CLS;
+> +    negotiated_link_width = (lnksta & PCI_EXP_LNKSTA_NLW) >> 4;
+> +
+> +    s->mhd_state->head_info_blocks[s->mhd_head].port_number = s->mhd_head;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].max_link_width = max_link_width;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].nego_link_width =
+> +                                                          negotiated_link_width;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].supp_link_speeds_vector =
+> +                                                   supported_link_speeds_vector;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].max_link_speed =
+> +                                                                 max_link_speed;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].current_link_speed =
+> +                                                             current_link_speed;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].ltssm_state = 0x7;
+I think it would be helpful to make a define for the ltssm states?
+> +    s->mhd_state->head_info_blocks[s->mhd_head].first_nego_lane_num = 0;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].link_state_flags = 0;
+> +}
+> +
+>  /* Returns starting index of region in MHD map. */
+>  static inline size_t cxl_mhsld_find_dc_region_start(PCIDevice *d,
+>                                                      CXLDCRegion *r)
+> @@ -376,7 +465,7 @@ static void cxl_mhsld_realize(PCIDevice *pci_dev, Error **errp)
+>      }
+>  
+>      cxl_mhsld_state_initialize(s, dc_size);
+> -
+> +    cxl_mhsld_init_head_info(s, pci_dev);
+>      /* Set the LD ownership for this head to this system */
+>      s->mhd_state->ldmap[s->mhd_head] = s->mhd_head;
+>      return;
+> @@ -428,6 +517,7 @@ static void cxl_mhsld_class_init(ObjectClass *klass, void *data)
+>  
+>      CXLType3Class *cvc = CXL_TYPE3_CLASS(klass);
+>      cvc->mhd_get_info = cmd_mhd_get_info;
+> +    cvc->mhd_get_head_info = cmd_mhd_get_head_info;
+>      cvc->mhd_access_valid = cxl_mhsld_access_valid;
+>      cvc->mhd_reserve_extents = cxl_mhsld_reserve_extents;
+>      cvc->mhd_reclaim_extents = cxl_mhsld_reclaim_extents;
+> diff --git a/hw/cxl/mhsld/mhsld.h b/hw/cxl/mhsld/mhsld.h
+> index e7ead1f0d2..c9fbec71ca 100644
+> --- a/hw/cxl/mhsld/mhsld.h
+> +++ b/hw/cxl/mhsld/mhsld.h
+> @@ -23,6 +23,18 @@
+>   */
+>  #define MHSLD_HEADS  (8)
+>  
+> +typedef struct MHDHeadInfoBlock {
+> +    uint8_t port_number;
+> +    uint8_t max_link_width;
+> +    uint8_t nego_link_width;
+> +    uint8_t supp_link_speeds_vector;
+> +    uint8_t max_link_speed;
+> +    uint8_t current_link_speed;
+> +    uint8_t ltssm_state;
+> +    uint8_t first_nego_lane_num;
+> +    uint8_t link_state_flags;
+> +} QEMU_PACKED MHDHeadInfoBlock;
+> +
+>  /*
+>   * The shared state cannot have 2 variable sized regions
+>   * so we have to max out the ldmap.
+> @@ -32,6 +44,7 @@ typedef struct MHSLDSharedState {
+>      uint8_t nr_lds;
+>      uint8_t ldmap[MHSLD_HEADS];
+>      uint64_t nr_blocks;
+> +    MHDHeadInfoBlock head_info_blocks[MHSLD_HEADS];
+>      uint8_t blocks[];
+>  } MHSLDSharedState;
+>  
+> @@ -52,6 +65,7 @@ struct CXLMHSLDClass {
+>  enum {
+>      MHSLD_MHD = 0x55,
+>          #define GET_MHD_INFO 0x0
+> +        #define GET_MHD_HEAD_INFO 0x1
+>  };
+>  
+>  /*
+> @@ -72,4 +86,16 @@ typedef struct MHDGetInfoOutput {
+>      uint16_t resv2;
+>      uint8_t ldmap[];
+>  } QEMU_PACKED MHDGetInfoOutput;
+> +
+> +typedef struct MHDGetHeadInfoInput {
+> +    uint8_t start_head;
+> +    uint8_t nr_heads;
+> +} QEMU_PACKED MHDGetHeadInfoInput;
+> +
+> +typedef struct MHDGetHeadInfoOutput {
+> +    uint8_t nr_heads;
+> +    uint8_t rsvd[3];
+> +    MHDHeadInfoBlock head_info_list[];
+> +} QEMU_PACKED MHDGetHeadInfoOutput;
+> +
+>  #endif
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index ca515cab13..c93c71c45d 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -732,6 +732,12 @@ struct CXLType3Class {
+>                                 uint8_t *payload_out,
+>                                 size_t *len_out,
+>                                 CXLCCI *cci);
+> +    CXLRetCode (*mhd_get_head_info)(const struct cxl_cmd *cmd,
+> +                               uint8_t *payload_in,
+> +                               size_t len_in,
+> +                               uint8_t *payload_out,
+> +                               size_t *len_out,
+> +                               CXLCCI *cci);
+I think the indent here needs to be aligned with the open parentheses on
+the first line of the function declaration
+>      bool (*mhd_access_valid)(PCIDevice *d, uint64_t addr, unsigned int size);
+>      bool (*mhd_reserve_extents)(PCIDevice *d,
+>                                  CxlDynamicCapacityExtentList *records,
+> -- 
+> 2.34.1
 
