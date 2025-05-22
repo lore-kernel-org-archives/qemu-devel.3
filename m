@@ -4,96 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F266C54E65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04534C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 20:12:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIBry-000430-Ru; Thu, 22 May 2025 15:46:22 -0400
+	id 1uICGU-0007oG-It; Thu, 22 May 2025 16:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIBrw-00042d-Kz
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:46:20 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uICGS-0007mB-Vv
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 16:11:41 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIBru-0005Ty-QU
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:46:20 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-30e5430ed0bso8258634a91.3
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:46:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uICGR-0001RS-En
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 16:11:40 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-30e57a37294so7955342a91.2
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 13:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747943177; x=1748547977; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QRQvRcGWje8aYe7d9iXGg7V2ptAjM+lXsSFvmidvhkY=;
- b=GNa3zSevmVsFhW7ZIyPsrkUhpCkAaB+i28g+F4oizLd5Ut2KdezpWh5ck73rWctjAo
- jZ7wMknFykcnA2W5/dNaFzJW2Gydscu8YkWs8VLSL3SsUdo6DfurqHeYyUCWYoZw5V0S
- OVkXEbtQCCYTXqL3FnkvPJBJ33+AdFWUa3BJob2sE3Xv0Fj6WplOTUuoy/20o9r+AgX3
- 2BPsVrXZthEFOCANgn/mqY38gJhwdloF7Jvsm8mtLnaHI79q6C7Dy48ywTTPHpX22XEM
- B0AWp6HCBeesN0+SqkhNZn+orwHTn1/T+mvhOTU92wIrg+TO6BdAHtFVHASAhRKrht46
- 0Zcw==
+ d=gmail.com; s=20230601; t=1747944698; x=1748549498; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=L/YGkXS8XTM4cPqrRDL70ok+YAsJd6sV/SJH1fTiKDM=;
+ b=SzMzen207Yfmj07ZQz2kpF++DdMTpiBD3swX4Ai7q+xlOUJk03i35Pt5wJxCaLYu21
+ F5yYDL2y0J37kunb3+7DcfajPwmkI8a5Sdf/UrkCyUyhZsBu6PZK3L3UCwgiFH1nvx7J
+ X3IM3fHsb5Rx2/AHYM/edoIlMWlltr9AFmIL4AalcRyjNBTKOSCnMudpvCMUd55O3wWd
+ QDrf4ud52I/VbHwYbv1QI+1TxwArVQ81aMI6ibFx0ardoKRB9eXjIReX+QA6uqDPJqis
+ XqBweBIfaDKE8J4CQNu72ilVviVWrzfDHS5eJS+hDEsOUMEThy5b/CjTnzE1MZRFeGNU
+ 72cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747943177; x=1748547977;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QRQvRcGWje8aYe7d9iXGg7V2ptAjM+lXsSFvmidvhkY=;
- b=gkcgQKzlv/Xy3fKHT/8io08+cz3ghwoyl9nZ2D1Jqh2teXPVS2LADle/21eySFX4qL
- SeBnklk125Ll62m+BveDIFjD5wUWKWroe9aJrVFTNulckU0u0E5xnh+ZtU9hvaljjXEB
- sdMwkB6xaM2HmxQE54hMSoWX74rYqgw+QlopO9mlGxsUZvX0AVobew1wYG5NibuqGeRa
- DypjJLjHP+S1eZtrnSPsOpsocGfsOTB/+2lTek8Uiovqf7Eao/nBsE8ZcNNgS0xxmkJj
- jUvX9H1qZuBGUOA75dMlMV0/2XR8gpvUupfvxlgGcyPCEuMjfAwPNdC4jmkd7cGWmi5E
- HUeA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXd5gizSAPHNC3QSvQxgqAQrSl/7AZ86JY28/CmoB/WcAjDsEubObRl0+VP7W2zVC2iLTn7TreUXcY3@nongnu.org
-X-Gm-Message-State: AOJu0YyC3G7Sf1pgdeEcSUcvT8Zj9Ip2u2dnO95g9ftde5G0sw3MRdhq
- pfQCmp+SD/ggIEjJ9mLlQLSQsUonHvPiMG1DvkkrJHLLBDC4b2t7+hhi2oAXDAiaxq0=
-X-Gm-Gg: ASbGncvOBgduUg7Iu6hf0nySQWZPWADZkO+TK972pKqvnSVtlkSpSVnhgvgO4okFGei
- OQJa2LT0NuDQFhprmyaI+xjq11WLDSCy4vqiVIXt0nS5dZvqFCyycJL9pVhyCaUdRIhFWkm4tam
- 7/O3oSN5/I4CdP99TysUPBht7+0cAXNkNeJQ3t9Ge5RwWmOtPyex1/COw/0WGenStSoB8ZMh1xu
- P2HL8fbLmXvNSAFruC37IfE2AQSR3ULixAViKKD1iY3qI1CuILpQD7vlR/16n04SYe8TJDZ+5M+
- ZMeB+4n66T1Qq3fLnEJTqkPfNo5IlcIRA9JUrwVSPo+jtWs+LBLEUULl510pK6WW
-X-Google-Smtp-Source: AGHT+IGW5Aq+SpOsTVeh/sdWXtsmz6NoW86s6U2Url5E92qbHtv2L//Ox2tELfTyJyj3BN2i5K6nTw==
-X-Received: by 2002:a17:90b:51c2:b0:310:8d7a:cfe0 with SMTP id
- 98e67ed59e1d1-3108d7ad020mr13025504a91.16.1747943176635; 
- Thu, 22 May 2025 12:46:16 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30f365e545asm5900212a91.31.2025.05.22.12.46.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 May 2025 12:46:16 -0700 (PDT)
-Message-ID: <39d3cfdf-10b6-484c-824a-fe84377acb54@linaro.org>
-Date: Thu, 22 May 2025 12:46:15 -0700
+ d=1e100.net; s=20230601; t=1747944698; x=1748549498;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=L/YGkXS8XTM4cPqrRDL70ok+YAsJd6sV/SJH1fTiKDM=;
+ b=Q/xX/SZ7qwwi5cZaaQpcnDHCN5MoxNTpx8RpXXLsMToUzdVSNZviK8rZeFoP2owaJ6
+ msqKPvWi97MhPHhQY+V6q/CO87TqVbpdjYf5S8JsVRLIx69kZmmLGxX92cFizNdj1tJv
+ n34QBJD3JqlIB/3Yu66/4Dcz1w1d5fd+/+KhRNMe4FMMAy37ryLU17iqyIpaHxhFPisi
+ iD6NCacdzbqi+J4TxBVuAn17qXTc+rdeSN/M5tAfcxGi7opKZa77UFDcru5Dy6t2ewJj
+ lWbPHBpF1abJX1USc7zGrqMQiKL7k2ahheVNMaKWQ1y4/YL+d1pMuDCHeNb+mzLGtyty
+ xC1A==
+X-Gm-Message-State: AOJu0Yxms21Bo66pfNI9hY4CGb527RfIOi/Km5dYng5L78LSGXB1tNid
+ gmOWYVyVqFiGOcMGvO4d0dZVRJM79AoTh9UCjdI60t1gAXLiUBz+uew6VqYM0RbOYPiNsWRz/Fv
+ y9g5VCm17QF8ZefYfJBEPZNwKjINYE1o=
+X-Gm-Gg: ASbGncvsy42lwVaTfohywilXibJ2QOhxYRzUJ/IKxApbM5AmAVcC5gefSXzHvQm90rX
+ Y7ZCeBdk841cPSFsGlYtRs5Uog/Qatpjn7zOhYzM68kyNOIOCZDFpO5kz5D+hjoaU9f2ULmb9BP
+ PoZGObKNayJyzaY2BP8MLiAjQQ1L2iSQ4=
+X-Google-Smtp-Source: AGHT+IGsfoSfEhdJ/Gerp3lrKWq0LBpAZ5SHB9xADXklUBzBuWGDJoKPLQ7ELhKj34lI6rft6Yge1kDEIRgqUbA9fcY=
+X-Received: by 2002:a17:90b:57e8:b0:30a:255c:9d10 with SMTP id
+ 98e67ed59e1d1-30e830e87f6mr37926849a91.8.1747944697890; Thu, 22 May 2025
+ 13:11:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/8] Add memory hardware address read/write API
-Content-Language: en-US
-To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20250521094333.4075796-1-rowanbhart@gmail.com>
- <20250521094333.4075796-6-rowanbhart@gmail.com>
- <348a6c09-3c8d-471f-af6c-e8201760614e@linaro.org>
- <9e1ebea2-bfbf-4ba6-85fa-c068d627d9e1@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <9e1ebea2-bfbf-4ba6-85fa-c068d627d9e1@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+ <20250521094333.4075796-3-rowanbhart@gmail.com>
+ <874ixcwt69.fsf@draig.linaro.org>
+In-Reply-To: <874ixcwt69.fsf@draig.linaro.org>
+From: Rowan Hart <rowanbhart@gmail.com>
+Date: Thu, 22 May 2025 13:11:27 -0700
+X-Gm-Features: AX0GCFuA_6GwZnconTj_HFs36_8UpHxnhITANZRmvNcVkIv2kRVbIO0VCEQwZWw
+Message-ID: <CAE5MsNbZOwr6OYrUir2mXo21ejiVN_b9YYHiF-QRijFs5J+fWQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/8] Add register write API
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000ce0c4d0635bf16df"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,68 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/25 8:34 PM, Rowan Hart wrote:
-> Well, first I just noticed that I left a debug print in this function!
-> So I'll fix that.
-> 
->> Reading this patch, and patch 3 (Add address space API), I am not sure
->> AddressSpace is something we want to leak in plugins interface.
->> It is a concept *very* internal to QEMU, and not reflecting directly
->> something concerning the emulated architecture (it is related, but not
->> officially described for it).
->>
->> The same way qemu_plugin_write_memory_vaddr is only valid in the
->> current page table setup, we could assume the same for current address
->> space, and return an error if memory is not mapped with current AS.
->> Eventually, we could read/write a given hwaddr in all existing address
->> spaces (starting with current mapped one), if it makes sense to do
->> this, which I'm not sure about.
->>
->> What are your thoughts on this?
-> 
-> I definitely see the arguments for not exposing it even as an opaque
-> struct, internality not withstanding it also adds some complexity for
-> plugin authors.
-> 
-> My thought with exposing it is kind of twofold. First, there are
-> specific address spaces like the secure address space on ARM or I/O
-> memory on x86 that plugins might like to access and I think it's easiest
-> to facilitate that if we just let them choose which one they want to r/w
-> to. Second, I wanted to lean towards being less restrictive now to avoid
-> having to go back and remove restrictions later since even though it's
-> very internal, it doesn't seem very likely to change.
-> 
-> That said, if you think it's more trouble than it's worth I'm totally
-> fine with just defaulting to writing to the current AS (or to
-> cpu-memory, whichever's more reasonable). Your call, just let me know
-> which way you think is best for v4 :)
+--000000000000ce0c4d0635bf16df
+Content-Type: text/plain; charset="UTF-8"
 
-I understand your point, but to the opposite of registers, I think we 
-should refrain from exposing all this.
-For now, we can just use the current AS.
+>  a) handle the QEMU_PLUGIN_CB_RW_REGS
 
-Later, we could consider to add a new architecture specific parameter 
-for that need (being a union, with fields per base architecture). So 
-people writing architecture specific plugins can have a solution.
+I missed that this was not already handled. I'll fix that.
 
-AddressSpace as = {.arm = ADDRESS_SPACE_ARM_SECURE};
-qemu_plugin_read_memory_hwaddr_as(addr, data, as);
+> b) try and enforce we are only being called from such callbacks
 
->> qemu_plugin_translate_vaddr is fine for me.
-> I did have a question about this -- one of the test plugins prints out
-> vaddr, haddr from qemu_plugin_insn_haddr, and the translated haddr from
-> qemu_plugin_translate_vaddr. When running with direct memory mappings in
-> a system test, the vaddr = translated haddr, which is correct, but the
-> haddr from qemu_plugin_insn_haddr was incorrect (it was 0x7f....f<actual
-> address>). Is this expected behavior?
->
+Sure, beyond documentation I suppose we can add and check a flag to ensure
+this. I think it's a good idea to reduce foot guns from just calling it
+from any old place.
 
-qemu_plugin_insn_haddr returns directly a pointer to instruction in 
-(host) memory, which is different from hwaddr, thus the void* signature.
-Name is pretty confusing though, qemu_plugin_insn_ptr could have been a 
-better name.
+-Rowan
 
-> Thanks for the feedback!
-> 
-> 
+--000000000000ce0c4d0635bf16df
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><p dir=3D"ltr">&gt;=C2=A0 a) handle the QEMU_PLUGIN_CB_RW=
+_REGS</p>
+<p dir=3D"ltr">I missed that this was not already handled. I&#39;ll fix tha=
+t. </p>
+<p dir=3D"ltr">&gt; b) try and enforce we are only being called from such c=
+allbacks</p>
+<p dir=3D"ltr">Sure, beyond documentation I suppose we can add and check a =
+flag to ensure this. I think it&#39;s a good idea to reduce foot guns from =
+just calling it from any old place.</p>
+<p dir=3D"ltr">-Rowan</p></div>
+
+--000000000000ce0c4d0635bf16df--
 
