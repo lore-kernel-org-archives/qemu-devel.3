@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7A5C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 12:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40138C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 12:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI4at-0004yG-EM; Thu, 22 May 2025 08:00:15 -0400
+	id 1uI4gu-0000EG-KS; Thu, 22 May 2025 08:06:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uI4ap-0004wx-89
- for qemu-devel@nongnu.org; Thu, 22 May 2025 08:00:12 -0400
-Received: from mailgate02.uberspace.is ([185.26.156.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uI4ak-0003m3-2N
- for qemu-devel@nongnu.org; Thu, 22 May 2025 08:00:09 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 2C8151802F6
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 13:59:53 +0200 (CEST)
-Received: (qmail 29660 invoked by uid 990); 22 May 2025 11:59:53 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Thu, 22 May 2025 13:59:52 +0200
-From: Julian Ganz <neither@nut.email>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: Julian Ganz <neither@nut.email>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 1/8] Expose gdb_write_register function to consumers of
- gdbstub
-Date: Thu, 22 May 2025 13:59:30 +0200
-Message-ID: <20250522115935.34716-1-neither@nut.email>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250521094333.4075796-2-rowanbhart@gmail.com>
-References: <20250521094333.4075796-1-rowanbhart@gmail.com>
- <20250521094333.4075796-2-rowanbhart@gmail.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uI4gn-0000DT-Rf
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 08:06:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uI4gY-00057D-QJ
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 08:06:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747915562;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hG/11CuvHu1HvUyGEUNQHX0COYeSQw/zXUoe2N0J/oU=;
+ b=CGIKpc4inKi14itboHQw7xtTwyXzIcgnmcSEVtN9M4OFiYk9GxM+IKMIzVstSdpP0NCkoj
+ XrciACymfzM9gakmZ1604ULb2zrQDZeaBexpoRbEGxUBPbTjCqxlFnI7ZPHxsUlg9lJYB7
+ Kspa91tG424AJq9BbgJjzta34vZw7Ec=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-MjqP47shOcqXNcfhU3zW7g-1; Thu,
+ 22 May 2025 08:05:58 -0400
+X-MC-Unique: MjqP47shOcqXNcfhU3zW7g-1
+X-Mimecast-MFC-AGG-ID: MjqP47shOcqXNcfhU3zW7g_1747915557
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D294B1800258; Thu, 22 May 2025 12:05:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.226.76])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31139195801F; Thu, 22 May 2025 12:05:49 +0000 (UTC)
+Date: Thu, 22 May 2025 14:05:47 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, hreitz@redhat.com,
+ stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
+ vsementsov@yandex-team.ru, xiechanglong.d@gmail.com,
+ wencongyang2@huawei.com, berto@igalia.com, fam@euphon.net, ari@tuxera.com
+Subject: Re: [PATCH v2 08/24] block: move drain outside of
+ bdrv_change_aio_context() and mark GRAPH_RDLOCK
+Message-ID: <aC8TG0ut33F_kkMP@redhat.com>
+References: <20250520103012.424311-1-f.ebner@proxmox.com>
+ <20250520103012.424311-9-f.ebner@proxmox.com>
+ <aC35wP_tPcNzFvP9@redhat.com>
+ <da1004d1-6366-4d2f-bc71-fd20de054bde@proxmox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: ++
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.01156)
- MID_CONTAINS_FROM(1) MIME_GOOD(-0.1)
-X-Rspamd-Score: 2.388439
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=+1vetvm9cQqSzD4/InBZJvm2127GQIH+Ws0LgCmssrM=;
- b=yFWYrnQ1iKeJFzjJIDOR7C7Fw9G/6GIf56P4NkpmPIBCQsxeOpNr9W9nHno61+ETA0CGO/tU2b
- lLtLZxsbMhd06skVVzwIjrTJkZwjN6Mkdy/HdXrkisdtf90At6LtmSHg1kkJKPJHOWMfpMiqQLc/
- /PSfvFliZ3zlHhgiOxWbLyWi+BzU+2LmZEUTqtzc4hQuRHi2fHenuWuLzv6jdaFRPbXkRi2YDO2U
- 2444dPzgiFYV/zCMTTrZ9CVz39dCDlTdVoy8mIENBsL8axlg0SLT0mB9K3A4cLhApyB1Iqw9y60R
- cwjXcf1Mox9d5UDRj/3n3i6Nuff9yA6nkUH5sEU7ZpoZAZiN4Zv5w1m4s515fuKkTnJQH9FpreeH
- rxzk5mbO0E1na9sRQePDYuvL28FEpSqOgoMYkhw+yweApUH5ElWRTdRcAjn06u6Bet/Kt3Ebmx1Y
- srEoKTuC4CtaBR2C1g+maDuIRIadoeUN3DIJrlZjv/PI0L0I0QIwF+GSd+JbXdaJl4iwjP6rFn2B
- j212BiJvcVYQmIMZyr14kvyRsjOH0gKYJWCS1FfoowxcQuXphpK51jtjzLojgFX4wm6LqaBm9AmV
- syr58+tokIaan6Q6ULhdz9sL6M2Ic9FBnDdkqvMH/l3AGnmI4cyLJAD+kfF69gD9HK/i0ETZ2oHT
- o=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <da1004d1-6366-4d2f-bc71-fd20de054bde@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,23 +89,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Rowan,
-
-> From: novafacing <rowanbhart@gmail.com>
+Am 22.05.2025 um 11:09 hat Fiona Ebner geschrieben:
+> Am 21.05.25 um 18:05 schrieb Kevin Wolf:
+> > Am 20.05.2025 um 12:29 hat Fiona Ebner geschrieben:
+> >> This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
+> >>
+> >> Note that even if bdrv_drained_begin() would already be marked as
+> > 
+> > "if ... were already marked"
 > 
-> Signed-off-by: novafacing <rowanbhart@gmail.com>
-> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+> Ack.
+> 
+> ---snip 8<---
+> 
+> >> diff --git a/block.c b/block.c
+> >> index 01144c895e..7148618504 100644
+> >> --- a/block.c
+> >> +++ b/block.c
+> >> @@ -106,9 +106,9 @@ static void bdrv_reopen_abort(BDRVReopenState *reopen_state);
+> >>  
+> >>  static bool bdrv_backing_overridden(BlockDriverState *bs);
+> >>  
+> >> -static bool bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+> >> -                                    GHashTable *visited, Transaction *tran,
+> >> -                                    Error **errp);
+> >> +static bool GRAPH_RDLOCK
+> >> +bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+> >> +                        GHashTable *visited, Transaction *tran, Error **errp);
+> > 
+> > For static functions, we should have rhe GRAPH_RDLOCK annotation both
+> > here and in the actual definition, too.
+> 
+> Will fix in v3!
+> 
+> >>  /* If non-zero, use only whitelisted block drivers */
+> >>  static int use_bdrv_whitelist;
+> >> @@ -3040,8 +3040,10 @@ static void GRAPH_WRLOCK bdrv_attach_child_common_abort(void *opaque)
+> >>  
+> >>          /* No need to visit `child`, because it has been detached already */
+> >>          visited = g_hash_table_new(NULL, NULL);
+> >> +        bdrv_drain_all_begin();
+> >>          ret = s->child->klass->change_aio_ctx(s->child, s->old_parent_ctx,
+> >>                                                visited, tran, &error_abort);
+> >> +        bdrv_drain_all_end();
+> >>          g_hash_table_destroy(visited);
+> >>  
+> >>          /* transaction is supposed to always succeed */
+> >> @@ -3122,9 +3124,11 @@ bdrv_attach_child_common(BlockDriverState *child_bs,
+> >>              bool ret_child;
+> >>  
+> >>              g_hash_table_add(visited, new_child);
+> >> +            bdrv_drain_all_begin();
+> >>              ret_child = child_class->change_aio_ctx(new_child, child_ctx,
+> >>                                                      visited, aio_ctx_tran,
+> >>                                                      NULL);
+> >> +            bdrv_drain_all_end();
+> >>              if (ret_child == true) {
+> >>                  error_free(local_err);
+> >>                  ret = 0;
+> > 
+> > Should we document in the header file that BdrvChildClass.change_aio_ctx
+> > is called with the node drained?
+> > 
+> > We could add assertions to bdrv_child/parent_change_aio_context or at
+> > least comments to this effect. (Assertions might be over the top because
+> > it's easy to verify that both are only called from
+> > bdrv_change_aio_context().)
+> 
+> Sounds good. Would the following be okay?
+> 
+> For bdrv_parent_change_aio_context() and for change_aio_ctx() the same
+> (except the name of @child is @c for the former):
+> 
+> > /*
+> >  * Changes the AioContext of for @child to @ctx and recursively for the
+> >  * associated block nodes and all their children and parents. Returns true if
 
-As I understand it, the commit subject should be prefixed with the
-subsystem the patch (mainly) touches. In this case "plugins".
+"of for"?
 
-Commit message bodies would also be appreciated. In this case maybe one
-motivating the change in one or two sentences. It's obvious enough from
-context here, but you want at least some context when stumbling accross
-a commit in isolation (e.g. after consulting git blame).
+This might be a bit too specific for child_of_bds, while the function is
+also implemented for BlockBackends and block jobs. Keeping the
+description more in line with other BdrvChildClass functions, maybe
+something generic like:
 
-Reviewed-By: Julian Ganz <neither@nut.email>
+    Notifies the parent that the child is trying to change its
+    AioContext. The parent may in turn change the AioContext of other
+    nodes in the same transaction.
 
-Regards,
-Julian
+> >  * the change is possible and the transaction @tran can be continued. Returns
+> >  * false and sets @errp if not and the transaction must be aborted.
+> >  *
+> >  * @visited will accumulate all visited BdrvChild objects. The caller is
+> >  * responsible for freeing the list afterwards.
+> >  *
+> >  * Must be called with the affected block nodes drained.
+> >  */
+> 
+> and for bdrv_child_change_aio_context() slightly different:
+> 
+> > /*
+> >  * Changes the AioContext of for @c->bs to @ctx and recursively for all its
+
+Again "of for".
+
+> >  * children and parents. Returns true if the change is possible and the
+> >  * transaction @tran can be continued. Returns false and sets @errp if not and
+> >  * the transaction must be aborted.
+> >  *
+> >  * @visited will accumulate all visited BdrvChild objects. The caller is
+> >  * responsible for freeing the list afterwards.
+> >  *
+> >  * Must be called with the affected block nodes drained.
+> >  */
+
+The rest looks good. (Much better than what I would have done, I was
+only thinking of the last line without a proper documentation of the
+whole function.)
+
+Kevin
+
 
