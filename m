@@ -4,195 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7139C54756
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 09:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81CF8C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 09:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI28t-0003LW-6H; Thu, 22 May 2025 05:23:11 -0400
+	id 1uI2Cq-0004f4-74; Thu, 22 May 2025 05:27:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uI28q-0003L0-5L
- for qemu-devel@nongnu.org; Thu, 22 May 2025 05:23:09 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uI28n-0004MM-38
- for qemu-devel@nongnu.org; Thu, 22 May 2025 05:23:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747905785; x=1779441785;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=ko2cF908OpoooXfw8XxavB+FVUKAd6dE+ItBhAnZeoo=;
- b=FeM4EYlAZUAhDhtQJVC3VhSgKL44fTBWWzADmbpf9kxcSC0Q6b8W4Wx6
- SRZUhojtkY9Wqlc14Ad829Rlz+5/JeUFt8kA1pDNPnpZ4n3/NGLMUTsxV
- XxuY0SxCBKKAKCEVAvQxwJtOMcDp8yPKU6HFXth1GTNBRzOy3xSKeZ3tc
- nLaM45zXWGquhlOWbXqGG8E+a3xeTbKHTtv+XeDVeQg3e2wi0KYhkMEly
- puyauVew1NSGsuero/oqYy9BsJjleX7dyjd4gbQvAeBEofDPMFx2dnWvP
- mTX6dG2gAZvfIgwIoqm0wcgloQcoa6k5wGI5pzZWOqwN9C0WpFGyW03A6 A==;
-X-CSE-ConnectionGUID: sE8CXii1RjeJM0WJu698JQ==
-X-CSE-MsgGUID: E7bhwXl2SJG1x01G1XZmJw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11440"; a="37539568"
-X-IronPort-AV: E=Sophos;i="6.15,305,1739865600"; d="scan'208";a="37539568"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 May 2025 02:22:56 -0700
-X-CSE-ConnectionGUID: x68afCkbR4WHlr/xb6SUDQ==
-X-CSE-MsgGUID: qHG2aC/nSsasvxCFeSACFg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,305,1739865600"; d="scan'208";a="144451239"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 May 2025 02:22:38 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Thu, 22 May 2025 02:22:37 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Thu, 22 May 2025 02:22:37 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.41) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.55; Thu, 22 May 2025 02:22:20 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Wjsewh7M/1k7b6XoN9yqRWUr3j38UlN/Ml7Ro9Kz1BfNszufp6nq2RXzJ1BnS0xsWKqBR3lFDuzBuw0+SZCAs+WV4NNWrGoHvi1bJvC0dMYdBoHPeRcfTnCwz+0D+zugJsI55lbSl+r4HvsE3f87FJUAZqKF+xB/JtDW8oZhlc4jDqlC1jHUBSrclerIBc77lhNHIu0/98Yn/PuquJXtDUXBaUzEo3foVVCQiQ7xW/fGmYgn6FTB60zfX3rOPUFiI1lCWezEO35Lun5NI/2lJUx6LE4pdobROtvB6efxgXZsfNs1K4SmQ5HTz42vnlQaK2ihZA5Y9yFsfX1ihuLHoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vDDOqLtOnOIjb0ZoClHVy2qPvcvpA0T4QuIIlFKZQQo=;
- b=CmfE+4PpRIKYRLCip+WIzW7sxlV/Ixt1r2cdSj1zQVUM+DBTDciP/O7+0O0gJeFtGORT4pwyI6vwIXVy6nPT6oZ+8GP7Vmbv8NhsGlrLJaxZD8DewEORTu8u/rx/kJzPpcSK7V9SQzifb7Mo2aH4loUkrT+JakY5IqWnvEfVT5eXI26xhJZrNVX/kucEU27uCkoNtUab0ketIZzwH0K5bXKog0LMEXu7md8tTSPlQwT9NgfuE6pBC2ZAf3SMDgek1iN7zsBOktGxHxMJNa+9CMP5XSENrftn2I0X4l+J/e/yWZAeldudOmKS5IOtc7mr9dhMd3ruAxX242soTqoKcg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by MN6PR11MB8145.namprd11.prod.outlook.com (2603:10b6:208:474::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.21; Thu, 22 May
- 2025 09:21:05 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%4]) with mapi id 15.20.8746.030; Thu, 22 May 2025
- 09:21:04 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
- <clg@redhat.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
-Subject: RE: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device info
-Thread-Topic: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device
- info
-Thread-Index: AQHbykIti5D5SWxjUESxh4+ddQnLJ7PdojwAgABat6A=
-Date: Thu, 22 May 2025 09:21:04 +0000
-Message-ID: <SJ0PR11MB67449F7571B0604A8D2522D39299A@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
- <20250521111452.3316354-6-zhenzhong.duan@intel.com>
- <aC5MVvwPCFertplB@Asurada-Nvidia>
-In-Reply-To: <aC5MVvwPCFertplB@Asurada-Nvidia>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|MN6PR11MB8145:EE_
-x-ms-office365-filtering-correlation-id: 321e36ab-0f90-49ed-1f0b-08dd9911f9e7
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|7416014|38070700018; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?42evcp67veRC1ez558Rii+hTDUAcwATI+ALHCspAuLU3prJXTGw83cmTnLYN?=
- =?us-ascii?Q?gXjEb+iy1Z0myDeqmV/WAHhb4TA/QynbMSvU/Otz9RRE5ElI3aeCKpdIRM0/?=
- =?us-ascii?Q?9mIUyYkkpqZ9mn6+kKmecMgwanYJQZ5M6g5H6F6LimXZ/aJQ+VuHeNFCMBqC?=
- =?us-ascii?Q?2cotwoAC1XI2vXNwpwezb71Y+xrWkwQBuFMlk9D6fIvb2T24dSJImbFiBqEW?=
- =?us-ascii?Q?5BRpmxaSMCEVg5iT/8Fj9k6Le3ftuRikV+HzThhjrthAR1qwfmDmHccIRSXu?=
- =?us-ascii?Q?797bqWU8eQh4QHfu3ehfSzB9IlnSTw5Yq+9yim4tnvDq8W5vAhgIpGphAOns?=
- =?us-ascii?Q?EAQDAb1NbsWCL1ZqJKms+9V54VUDzZWdhFbF2TQ9Uo4WEeklTA5Jg9P4nPS3?=
- =?us-ascii?Q?S3WcgLPoYYF2W48MkCBxVXz/U3NeANEcqMs20tj/THm6jGElJ9RtY6sw19QG?=
- =?us-ascii?Q?y7S4PCZAwNj5MB2TGEhd47aRYfq6EpTTYhfvcVmpa4f1RDEigflH0d290D4q?=
- =?us-ascii?Q?8Q4xTSdMS30JBlJtJPbM1UtgiwKAN3KDj6CVA9zEzCR6EI6Gr5Efttmo1A+P?=
- =?us-ascii?Q?4UBG90DnDCAEhz5yYSbN/FzNpzMgKqSutvLXsYNQWEHILyx+rdruhjsLyJLy?=
- =?us-ascii?Q?Sk3AxZQZTb4FknCm8HL2oOXz6hCr2AY4i8RJt+3QCIkFgHY4HhmWTMC33kCP?=
- =?us-ascii?Q?KlsUIsZY8waktssEmR2aR730OkT2kX1kpbHZlkMzUP+JRPEjv0lD9etbVEGS?=
- =?us-ascii?Q?8uWy+IfKaPdNafWytS5z9IeQ91oXfGby2ZLM5pCFH4ZQUTF9+2PM7fkeiCN7?=
- =?us-ascii?Q?A//AlSnaC/M6f3VMgj7NLX2sY2GLKr6FMx0sFcy3baFw2QqWbpaotVycCmZp?=
- =?us-ascii?Q?jOcN+sodsjGR3ugp2SqQ8ODQguqlo6I7abNzbS1DuoP6uSIE1wgbX+qLoIA8?=
- =?us-ascii?Q?g+1AhcGXefn/vEuYWN0uDaiLP6GsKLK3zZHCC1CBN+IXypakQx+LWFRjlqEB?=
- =?us-ascii?Q?06+ladFxgta5P6B/iaUUSBC8H4afCG3t8wRehGP1ouXLzdW96qyrDLtYSrvq?=
- =?us-ascii?Q?ObuwT30V/a7s5v/EMfHi2QOjxRnGukkjALGywR4DL/t2bbGsuiDKIkULjcat?=
- =?us-ascii?Q?ux/pTjZqOIz8ZcZm25XxXGhrerLQ0Jskj7kPs2X5C6/CsCBJJAC2uQVIp14+?=
- =?us-ascii?Q?bhHaonw7+chEwLimpZZelnuuuVFjHOowdsgWS1aBioNnngWQbfQ0VfwH6piA?=
- =?us-ascii?Q?bvVrVv+MB0opyqrGtRh+8kG+iF8pM4DIz1khVfLY4FSEEPpAScM2zHHM0mlP?=
- =?us-ascii?Q?r3TnTuJbD+5l0OjrmvswvMaWFeExjFWmhPj1RJQ6UetGNn646n63mFXLFEw4?=
- =?us-ascii?Q?rwJH/k1sSdIRI+9bl2K+HbNCR/6Cvzuky5OmYpOxHAWNVUlKZNb2V6XcI3wF?=
- =?us-ascii?Q?OK0IU5ZF0PlEZYppmeiNeY7wammduvxPDdpK/ajmFn+JvA6WHlE+a4zJveqk?=
- =?us-ascii?Q?jEFGyY0YokfUEpQ=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?nvw2BN7XhOwe0l+x0jclE3y3WLOe3l2g+PN2AsfYU4RTPPIxVhmfPDyXbWUB?=
- =?us-ascii?Q?E6x8+I2Be8QR3YeA7l5bJ+tlG4rBlMpe1+xwK96O1L4n0SAyF0VPyWEIvfqd?=
- =?us-ascii?Q?f2/23ZB9Chr6XJZzYvS+oAmlqU0vK93Ru0CTTAPEKuyMAm8yLwJy78uzoOLC?=
- =?us-ascii?Q?RGWE6bymFWl2DFJc1fK7FD+adzJQ/RKzietFniN0XBkmjW+TfJ7x6zrh7zG+?=
- =?us-ascii?Q?ISk0PbNHz3AwziSI9Wkw1kzIPs5n6h4O2nQkFuax4MuYjwLfFund6GZgDZPU?=
- =?us-ascii?Q?s9RzmBgEfutyulUijTsHzxapc2EBXYdAAoqEqrrDUBvo9uSgCSDwn9yAFk3N?=
- =?us-ascii?Q?niuJJRnrj0e2/1cM/LO6/0aOdHsBnCB26Tfnediug2k1Qubz7MgUnx+qj8Cl?=
- =?us-ascii?Q?LyBxLD/v9shZhk7aFVsysgfiwNdoLdPfarvVdvJa/5DUtvz8lUPh4rmb6liB?=
- =?us-ascii?Q?ap/PYjjWpZZFfNIpmzkdsKkJrwcJrb0ZUJyYgFjoT+wFrnFp6Hl4Eu2A/FGp?=
- =?us-ascii?Q?m7/DES5yEBb7z7Wu+8TTKKSS8Pdds95Xq+Q6rk3pa87Xtr3pmGttazoJdyhQ?=
- =?us-ascii?Q?+sd3XfphFKKAM6awvjP9U8d62aJ/IFwuOHR7rq/32N1EoHLwmuupduZEq9Ms?=
- =?us-ascii?Q?UlF4DgiT0iLEDhXikuz6IlpVImZyBeVQkB1sgcpVoaSLJnb/tQJnOI28RTci?=
- =?us-ascii?Q?q6zCKltb6jtqSLRXtxLfFhQ1D+l/UZRxGj+0xxScdTBxPQEky4jWMeoiynbS?=
- =?us-ascii?Q?zTCKj/qABB4FiRhQNJfD97KoY04J37nQszt44wtHhd5fRqBAeYH050XNpayk?=
- =?us-ascii?Q?xiJLKzWLc4xGnh0YVv/hkZwdFsd48xoUnudgY9RnwFUbEwrddSM0jrVdnF6c?=
- =?us-ascii?Q?0VF4BjWdjkb5zrFk/k7JG0OGwVoEZs1kBBIRwGVAgARFb1M4SuGCK4x2suLi?=
- =?us-ascii?Q?F3o0XGKoTYKhlcpPHac/s8SnqpVv2ouCKGgTncKERMCevcZ0BH5j4xsukTOC?=
- =?us-ascii?Q?1UK0KQ2t2u+ty29uKTsb3UKMEPxv8360Kd4ftak9X5IdltSiv6rUZLIAlOpC?=
- =?us-ascii?Q?BpTdbRiCl1TM1JcoOgdwmc9fMX6MmHOWKKPq4GLa+FdyK8zTUeqyWnyMUMCm?=
- =?us-ascii?Q?eFlnFIV/iKlPRTf/VgNQaP7so5TUDz7b3XBZsEX9z2Ko51N/WsE9erMajXLC?=
- =?us-ascii?Q?qUi6iJtM+BwK4wTXrMD/NVkb4qMrxC1OLl6NGaDrg9WEOAOtnxruy8ibOlpC?=
- =?us-ascii?Q?gwloN/thhVlMtfqoIWNMXnLWoE9TZnZ9k/d2qHetpQaVCQSUho26KsnH2kDn?=
- =?us-ascii?Q?kph8ZEo+bDm+t/RiSgVOREHedDHXPa7hHhraw7Pr2+zJ1r4+UIauJFzHVLo6?=
- =?us-ascii?Q?yU8bj/PS6AJxJfFf0a4wWD2OBwqOhMqJlVOKik5OdJ9ETQpodw2o6lDjlYYE?=
- =?us-ascii?Q?QeVZL9pYQoqH6SbMaj5v4m2lILIFl3sxuR2Ckw6OSd07nII/BclkQ+eshnZB?=
- =?us-ascii?Q?s6m02wS66veOuQwYtScNL9f6cVhwPain89lrWosPLal+WrSqyVH4XgSl0Kyn?=
- =?us-ascii?Q?cKDDYo6ZXMBRtGmw6TmF71sFI62GOrnuDkC0DN6X?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
+ id 1uI2Cn-0004eu-8y
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 05:27:13 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
+ id 1uI2Ci-0005Fn-MB
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 05:27:12 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-442ed8a275fso97865555e9.2
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 02:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747906026; x=1748510826; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dZz1dJNsJD0vu2hmJukjMk22LukA/Pf6RQDcoto72aI=;
+ b=Re8JSVa0XkkNCx63pALKeKhyF016iTRaxlDU35dNQqDkSoeUxzLyyzwECp0d1wVech
+ 2seiwMp1FBKmZr+Hr+FOQbF1QEtiV3Y/VvTsh1G9NpbgHBGgBqiNzyTfQEOUiXLGO6SB
+ l+hAx8TzdEEEer1VwWcOXtePgvjSvb6kwNJcwLYtIgYOtX5q4WvgcQOzVTGLzYdI7N37
+ F1b+RRfzaD+VnsOTg7CB2mRrnS+5nwaiKS2PugNkt9wpOTDO2ZzavskZh0sjDSa8aoy8
+ LBFjc2P0BF4LlMx3Enn97dgZCB4LYBUHT2XybqeiNMVWmqj79CFhCXtyj/xJW6Hluhrz
+ Rlzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747906026; x=1748510826;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dZz1dJNsJD0vu2hmJukjMk22LukA/Pf6RQDcoto72aI=;
+ b=RIpS8sqA5UM4MBtCEUWsuVyUQbb79y0fJ3sLU4McIm/ZVnXKO8qCLW/4mN0K/Q79Aw
+ 5F3HcRvmlj6FL9rJq3MwDfixeRzYyL8nv6xUj0u3w8Z9c2tpJuCKazG/2cBnRgoCRdFg
+ krikK++hPkNgPTx5+JTYjJkRS5wGe5jIunySyros1nPpFjCsihmCMzGEZaVw/LdYXJc9
+ HJ0yOo+S2XoGkpGVmtfmrUgFV4YbIpFBDbvgFjvUWhlrKRXmLy3bBinDm4L1vkyXrf2i
+ XVqTXh22FsDrqLXrFIHQaSA82CpiulTb3ZICAOGC6chCfnweTM0vErHXnD+bZAWwm3Ge
+ 4VCw==
+X-Gm-Message-State: AOJu0YzpFgCUf6/vV2VwjT0oagFFstlq2lX5nKr7SzttWfwVkXT1uMaD
+ FTRqcjdq/mPBsGOIg7lvOCvz5GGu6pQFvqcfJ8Y9tJuWFctuAucSUuoQGDBDIdaX
+X-Gm-Gg: ASbGncsR6zRoy0zTBkArDobF4tM7qcRf+7evQF3wlzh8U88eEouMyONpieGQ4DM4hff
+ Af2Lcmaaeg9ui8MdFGbgLfEvF/dJe0phdkOF4yvjmfxAT59EYDDL126Yw9XsEINrg+uPJFUNSZb
+ Td9i++rWkJ+mo27iekXTB2hGrVovFQqenZmXO76DBCvvgTlQe1VJwlp/H8O1LLSZOerw81doGM4
+ q43UpO3qJqUSsvOttYLsBY38SUpbCeebpZJWbUASwAjwCFGeQhFWb6Nvafm6LBFUBEzyZYU4yuw
+ QCDYH5MQZWdx4zaN8+4hixBWWAnCqaaA1SPqIBkbWzc72fYK2oUvfVUckzHjYrWvS1hsJjZTOU8
+ yAhYRbyEQ8hUXDGWl58gj7EPyPFaeCgT3110s6csx
+X-Google-Smtp-Source: AGHT+IHHWE4nZdHoiz+htO0CPQAZuL/hMo/6d/xLQ4Geqalxl828rnWlqHv5iVE5vV6gTgXVwOOvdg==
+X-Received: by 2002:a05:600c:34cf:b0:43d:1b95:6d0e with SMTP id
+ 5b1f17b1804b1-442fd664aa5mr205840885e9.23.1747906025664; 
+ Thu, 22 May 2025 02:27:05 -0700 (PDT)
+Received: from localhost (mac76-h03-89-88-247-135.dsl.sta.abo.bbox.fr.
+ [89.88.247.135]) by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-447f3dd9c65sm103057325e9.39.2025.05.22.02.27.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 May 2025 02:27:05 -0700 (PDT)
+From: conte.souleymane@gmail.com
+To: qemu-devel@nongnu.org
+Cc: eblake@redhat.com, jsnow@redhat.com, peter.maydell@linaro.org,
+ Souleymane Conte <conte.souleymane@gmail.com>
+Subject: [PATCH v3] docs/interop: convert text files to restructuredText
+Date: Thu, 22 May 2025 09:26:22 +0000
+Message-ID: <20250522092622.40869-1-conte.souleymane@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 321e36ab-0f90-49ed-1f0b-08dd9911f9e7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 May 2025 09:21:04.2369 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 11l7iyNhjViQA2C7SES/2JsWlt3HGQIDP5d7+OysHuvPOQ1ONr1uBP8Lq0y+eTaRdmUCwq69NKauOWFSufFQNqT0glBHreD4rXcbO8UdAPU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR11MB8145
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.16;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=conte.souleymane@gmail.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -209,134 +97,579 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Souleymane Conte <conte.souleymane@gmail.com>
 
+buglink: https://gitlab.com/qemu-project/qemu/-/issues/527
 
->-----Original Message-----
->From: Nicolin Chen <nicolinc@nvidia.com>
->Subject: Re: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device=
- info
->
->On Wed, May 21, 2025 at 07:14:35PM +0800, Zhenzhong Duan wrote:
->> @@ -852,6 +853,17 @@ static bool
->hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->>      caps->type =3D type;
->>      caps->hw_caps =3D hw_caps;
->>
->> +    switch (type) {
->> +    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
->> +        vendor_caps->vtd.flags =3D data.vtd.flags;
->> +        vendor_caps->vtd.cap_reg =3D data.vtd.cap_reg;
->> +        vendor_caps->vtd.ecap_reg =3D data.vtd.ecap_reg;
->> +        break;
->> +    case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
->> +    case IOMMU_HW_INFO_TYPE_NONE:
->
->Should this be a part of hiod_iommufd_get_vendor_cap() in backends?
+Signed-off-by: Souleymane Conte <conte.souleymane@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+---
+Changes since v2:
+- Nested table rendering in code blocks
+- monospace usage for all filenames, fields name and function references
+- rendering of "\0" character using `` 
 
-Made following	adjustments which save raw data in VendorCaps,
-let me know if it matches your thought.
+ docs/interop/index.rst                |   1 +
+ docs/interop/{qcow2.txt => qcow2.rst} | 187 +++++++++++++++-----------
+ 2 files changed, 110 insertions(+), 78 deletions(-)
+ rename docs/interop/{qcow2.txt => qcow2.rst} (90%)
 
-diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu=
-_device.h
-index 38070aff09..14cda4fdc3 100644
---- a/include/system/host_iommu_device.h
-+++ b/include/system/host_iommu_device.h
-@@ -14,16 +14,12 @@
-
- #include "qom/object.h"
- #include "qapi/error.h"
+diff --git a/docs/interop/index.rst b/docs/interop/index.rst
+index 999e44eae1..5b9b0653b5 100644
+--- a/docs/interop/index.rst
++++ b/docs/interop/index.rst
+@@ -16,6 +16,7 @@ are useful for making QEMU interoperate with other software.
+    live-block-operations
+    nbd
+    parallels
++   qcow2
+    prl-xml
+    pr-helper
+    qmp-spec
+diff --git a/docs/interop/qcow2.txt b/docs/interop/qcow2.rst
+similarity index 90%
+rename from docs/interop/qcow2.txt
+rename to docs/interop/qcow2.rst
+index 2c4618375a..6fc99e6b9a 100644
+--- a/docs/interop/qcow2.txt
++++ b/docs/interop/qcow2.rst
+@@ -1,6 +1,8 @@
+-== General ==
++================
++Qcow2 Image File
++================
+ 
+-A qcow2 image file is organized in units of constant size, which are called
++A *qcow2* image file is organized in units of constant size, which are called
+ (host) clusters. A cluster is the unit in which all allocations are done,
+ both for actual guest data and for image metadata.
+ 
+@@ -9,10 +11,10 @@ clusters of the same size.
+ 
+ All numbers in qcow2 are stored in Big Endian byte order.
+ 
++Header
++------
+ 
+-== Header ==
 -
--/* This is mirror of struct iommu_hw_info_vtd */
--typedef struct Vtd_Caps {
--    uint32_t flags;
--    uint64_t cap_reg;
--    uint64_t ecap_reg;
--} Vtd_Caps;
-+#ifdef CONFIG_LINUX
-+#include "linux/iommufd.h"
+-The first cluster of a qcow2 image contains the file header:
++The first cluster of a qcow2 image contains the file header::
+ 
+     Byte  0 -  3:   magic
+                     QCOW magic string ("QFI\xfb")
+@@ -38,7 +40,7 @@ The first cluster of a qcow2 image contains the file header:
+                     within a cluster (1 << cluster_bits is the cluster size).
+                     Must not be less than 9 (i.e. 512 byte clusters).
+ 
+-                    Note: qemu as of today has an implementation limit of 2 MB
++                    Note: QEMU as of today has an implementation limit of 2 MB
+                     as the maximum cluster size and won't be able to open images
+                     with larger cluster sizes.
+ 
+@@ -48,7 +50,7 @@ The first cluster of a qcow2 image contains the file header:
+          24 - 31:   size
+                     Virtual disk size in bytes.
+ 
+-                    Note: qemu has an implementation limit of 32 MB as
++                    Note: QEMU has an implementation limit of 32 MB as
+                     the maximum L1 table size.  With a 2 MB cluster
+                     size, it is unable to populate a virtual cluster
+                     beyond 2 EB (61 bits); with a 512 byte cluster
+@@ -87,7 +89,8 @@ The first cluster of a qcow2 image contains the file header:
+ 
+ For version 2, the header is exactly 72 bytes in length, and finishes here.
+ For version 3 or higher, the header length is at least 104 bytes, including
+-the next fields through header_length.
++the next fields through ``header_length``.
++::
+ 
+          72 -  79:  incompatible_features
+                     Bitmask of incompatible features. An implementation must
+@@ -185,7 +188,8 @@ the next fields through header_length.
+                     of 8.
+ 
+ 
+-=== Additional fields (version 3 and higher) ===
++Additional fields (version 3 and higher)
++----------------------------------------
+ 
+ In general, these fields are optional and may be safely ignored by the software,
+ as well as filled by zeros (which is equal to field absence), if software needs
+@@ -193,21 +197,25 @@ to set field B, but does not care about field A which precedes B. More
+ formally, additional fields have the following compatibility rules:
+ 
+ 1. If the value of the additional field must not be ignored for correct
+-handling of the file, it will be accompanied by a corresponding incompatible
+-feature bit.
++   handling of the file, it will be accompanied by a corresponding incompatible
++   feature bit.
+ 
+ 2. If there are no unrecognized incompatible feature bits set, an unknown
+-additional field may be safely ignored other than preserving its value when
+-rewriting the image header.
++   additional field may be safely ignored other than preserving its value when
++   rewriting the image header.
++
++.. _ref_rules_3:
+ 
+ 3. An explicit value of 0 will have the same behavior as when the field is not
+-present*, if not altered by a specific incompatible bit.
++   present*, if not altered by a specific incompatible bit.
+ 
+-*. A field is considered not present when header_length is less than or equal
++(*) A field is considered not present when ``header_length`` is less than or equal
+ to the field's offset. Also, all additional fields are not present for
+ version 2.
+ 
+-              104:  compression_type
++::
++
++        104:        compression_type
+ 
+                     Defines the compression method used for compressed clusters.
+                     All compressed clusters in an image use the same compression
+@@ -219,8 +227,8 @@ version 2.
+                     or must be zero (which means deflate).
+ 
+                     Available compression type values:
+-                        0: deflate <https://www.ietf.org/rfc/rfc1951.txt>
+-                        1: zstd <http://github.com/facebook/zstd>
++                       - 0: deflate <https://www.ietf.org/rfc/rfc1951.txt>
++                       - 1: zstd <http://github.com/facebook/zstd>
+ 
+                     The deflate compression type is called "zlib"
+                     <https://www.zlib.net/> in QEMU. However, clusters with the
+@@ -228,19 +236,21 @@ version 2.
+ 
+         105 - 111:  Padding, contents defined below.
+ 
+-=== Header padding ===
++Header padding
++--------------
+ 
+-@header_length must be a multiple of 8, which means that if the end of the last
++``header_length`` must be a multiple of 8, which means that if the end of the last
+ additional field is not aligned, some padding is needed. This padding must be
+ zeroed, so that if some existing (or future) additional field will fall into
+-the padding, it will be interpreted accordingly to point [3.] of the previous
++the padding, it will be interpreted accordingly to point `[3.] <#ref_rules_3>`_ of the previous
+ paragraph, i.e.  in the same manner as when this field is not present.
+ 
+ 
+-=== Header extensions ===
++Header extensions
++-----------------
+ 
+ Directly after the image header, optional sections called header extensions can
+-be stored. Each extension has a structure like the following:
++be stored. Each extension has a structure like the following::
+ 
+     Byte  0 -  3:   Header extension type:
+                         0x00000000 - End of the header extension area
+@@ -270,17 +280,19 @@ data of compatible features that it doesn't support. Compatible features that
+ need space for additional data can use a header extension.
+ 
+ 
+-== String header extensions ==
++String header extensions
++------------------------
+ 
+ Some header extensions (such as the backing file format name and the external
+ data file name) are just a single string. In this case, the header extension
+-length is the string length and the string is not '\0' terminated. (The header
+-extension padding can make it look like a string is '\0' terminated, but
++length is the string length and the string is not ``\0`` terminated. (The header
++extension padding can make it look like a string is ``\0`` terminated, but
+ neither is padding always necessary nor is there a guarantee that zero bytes
+ are used for padding.)
+ 
+ 
+-== Feature name table ==
++Feature name table
++------------------
+ 
+ The feature name table is an optional header extension that contains the name
+ for features used by the image. It can be used by applications that don't know
+@@ -288,7 +300,7 @@ the respective feature (e.g. because the feature was introduced only later) to
+ display a useful error message.
+ 
+ The number of entries in the feature name table is determined by the length of
+-the header extension data. Each entry look like this:
++the header extension data. Each entry looks like this::
+ 
+     Byte       0:   Type of feature (select feature bitmap)
+                         0: Incompatible feature
+@@ -302,7 +314,8 @@ the header extension data. Each entry look like this:
+                     terminated if it has full length)
+ 
+ 
+-== Bitmaps extension ==
++Bitmaps extension
++-----------------
+ 
+ The bitmaps extension is an optional header extension. It provides the ability
+ to store bitmaps related to a virtual disk. For now, there is only one bitmap
+@@ -310,9 +323,9 @@ type: the dirty tracking bitmap, which tracks virtual disk changes from some
+ point in time.
+ 
+ The data of the extension should be considered consistent only if the
+-corresponding auto-clear feature bit is set, see autoclear_features above.
++corresponding auto-clear feature bit is set, see ``autoclear_features`` above.
+ 
+-The fields of the bitmaps extension are:
++The fields of the bitmaps extension are::
+ 
+     Byte  0 -  3:  nb_bitmaps
+                    The number of bitmaps contained in the image. Must be
+@@ -331,15 +344,17 @@ The fields of the bitmaps extension are:
+                    Offset into the image file at which the bitmap directory
+                    starts. Must be aligned to a cluster boundary.
+ 
+-== Full disk encryption header pointer ==
++Full disk encryption header pointer
++-----------------------------------
+ 
+ The full disk encryption header must be present if, and only if, the
+-'crypt_method' header requires metadata. Currently this is only true
+-of the 'LUKS' crypt method. The header extension must be absent for
++``crypt_method`` header requires metadata. Currently this is only true
++of the *LUKS* crypt method. The header extension must be absent for
+ other methods.
+ 
+ This header provides the offset at which the crypt method can store
+ its additional data, as well as the length of such data.
++::
+ 
+     Byte  0 -  7:   Offset into the image file at which the encryption
+                     header starts in bytes. Must be aligned to a cluster
+@@ -357,10 +372,10 @@ The first 592 bytes of the header clusters will contain the LUKS
+ partition header. This is then followed by the key material data areas.
+ The size of the key material data areas is determined by the number of
+ stripes in the key slot and key size. Refer to the LUKS format
+-specification ('docs/on-disk-format.pdf' in the cryptsetup source
++specification (*docs/on-disk-format.pdf* in the cryptsetup source
+ package) for details of the LUKS partition header format.
+ 
+-In the LUKS partition header, the "payload-offset" field will be
++In the LUKS partition header, the ``payload-offset`` field will be
+ calculated as normal for the LUKS spec. ie the size of the LUKS
+ header, plus key material regions, plus padding, relative to the
+ start of the LUKS header. This offset value is not required to be
+@@ -369,11 +384,12 @@ context of qcow2, since the qcow2 file format itself defines where
+ the real payload offset is, but none the less a valid payload offset
+ should always be present.
+ 
+-In the LUKS key slots header, the "key-material-offset" is relative
++In the LUKS key slots header, the ``key-material-offset`` is relative
+ to the start of the LUKS header clusters in the qcow2 container,
+ not the start of the qcow2 file.
+ 
+ Logically the layout looks like
++::
+ 
+   +-----------------------------+
+   | QCow2 header                |
+@@ -405,7 +421,8 @@ Logically the layout looks like
+   |                             |
+   +-----------------------------+
+ 
+-== Data encryption ==
++Data encryption
++---------------
+ 
+ When an encryption method is requested in the header, the image payload
+ data must be encrypted/decrypted on every write/read. The image headers
+@@ -413,7 +430,7 @@ and metadata are never encrypted.
+ 
+ The algorithms used for encryption vary depending on the method
+ 
+- - AES:
++ - **AES**:
+ 
+    The AES cipher, in CBC mode, with 256 bit keys.
+ 
+@@ -425,7 +442,7 @@ The algorithms used for encryption vary depending on the method
+    supported in the command line tools for the sake of back compatibility
+    and data liberation.
+ 
+- - LUKS:
++ - **LUKS**:
+ 
+    The algorithms are specified in the LUKS header.
+ 
+@@ -433,7 +450,8 @@ The algorithms used for encryption vary depending on the method
+    in the LUKS header, with the physical disk sector as the
+    input tweak.
+ 
+-== Host cluster management ==
++Host cluster management
++-----------------------
+ 
+ qcow2 manages the allocation of host clusters by maintaining a reference count
+ for each host cluster. A refcount of 0 means that the cluster is free, 1 means
+@@ -453,14 +471,15 @@ Although a large enough refcount table can reserve clusters past 64 PB
+ large), note that some qcow2 metadata such as L1/L2 tables must point
+ to clusters prior to that point.
+ 
+-Note: qemu has an implementation limit of 8 MB as the maximum refcount
+-table size.  With a 2 MB cluster size and a default refcount_order of
+-4, it is unable to reference host resources beyond 2 EB (61 bits); in
+-the worst case, with a 512 cluster size and refcount_order of 6, it is
+-unable to access beyond 32 GB (35 bits).
++.. note::
++    QEMU has an implementation limit of 8 MB as the maximum refcount
++    table size.  With a 2 MB cluster size and a default refcount_order of
++    4, it is unable to reference host resources beyond 2 EB (61 bits); in
++    the worst case, with a 512 cluster size and refcount_order of 6, it is
++    unable to access beyond 32 GB (35 bits).
+ 
+ Given an offset into the image file, the refcount of its cluster can be
+-obtained as follows:
++obtained as follows::
+ 
+     refcount_block_entries = (cluster_size * 8 / refcount_bits)
+ 
+@@ -470,7 +489,7 @@ obtained as follows:
+     refcount_block = load_cluster(refcount_table[refcount_table_index]);
+     return refcount_block[refcount_block_index];
+ 
+-Refcount table entry:
++Refcount table entry::
+ 
+     Bit  0 -  8:    Reserved (set to 0)
+ 
+@@ -482,14 +501,15 @@ Refcount table entry:
+                     been allocated. All refcounts managed by this refcount block
+                     are 0.
+ 
+-Refcount block entry (x = refcount_bits - 1):
++Refcount block entry ``(x = refcount_bits - 1)``::
+ 
+     Bit  0 -  x:    Reference count of the cluster. If refcount_bits implies a
+                     sub-byte width, note that bit 0 means the least significant
+                     bit in this context.
+ 
+ 
+-== Cluster mapping ==
++Cluster mapping
++---------------
+ 
+ Just as for refcounts, qcow2 uses a two-level structure for the mapping of
+ guest clusters to host clusters. They are called L1 and L2 table.
+@@ -509,7 +529,7 @@ compressed clusters to reside below 512 TB (49 bits), and this limit
+ cannot be relaxed without an incompatible layout change).
+ 
+ Given an offset into the virtual disk, the offset into the image file can be
+-obtained as follows:
++obtained as follows::
+ 
+     l2_entries = (cluster_size / sizeof(uint64_t))        [*]
+ 
+@@ -523,7 +543,7 @@ obtained as follows:
+ 
+     [*] this changes if Extended L2 Entries are enabled, see next section
+ 
+-L1 table entry:
++L1 table entry::
+ 
+     Bit  0 -  8:    Reserved (set to 0)
+ 
+@@ -538,7 +558,7 @@ L1 table entry:
+                     refcount is exactly one. This information is only accurate
+                     in the active L1 table.
+ 
+-L2 table entry:
++L2 table entry::
+ 
+     Bit  0 -  61:   Cluster descriptor
+ 
+@@ -555,7 +575,7 @@ L2 table entry:
+                     mapping for guest cluster offsets), so this bit should be 1
+                     for all allocated clusters.
+ 
+-Standard Cluster Descriptor:
++Standard Cluster Descriptor::
+ 
+     Bit       0:    If set to 1, the cluster reads as all zeros. The host
+                     cluster offset can be used to describe a preallocation,
+@@ -577,7 +597,7 @@ Standard Cluster Descriptor:
+         56 - 61:    Reserved (set to 0)
+ 
+ 
+-Compressed Clusters Descriptor (x = 62 - (cluster_bits - 8)):
++Compressed Clusters Descriptor ``(x = 62 - (cluster_bits - 8))``::
+ 
+     Bit  0 - x-1:   Host cluster offset. This is usually _not_ aligned to a
+                     cluster or sector boundary!  If cluster_bits is
+@@ -601,7 +621,8 @@ file (except if bit 0 in the Standard Cluster Descriptor is set). If there is
+ no backing file or the backing file is smaller than the image, they shall read
+ zeros for all parts that are not covered by the backing file.
+ 
+-== Extended L2 Entries ==
++Extended L2 Entries
++-------------------
+ 
+ An image uses Extended L2 Entries if bit 4 is set on the incompatible_features
+ field of the header.
+@@ -615,6 +636,8 @@ subclusters so they are treated the same as in images without this feature.
+ The size of an extended L2 entry is 128 bits so the number of entries per table
+ is calculated using this formula:
+ 
++.. code::
++
+     l2_entries = (cluster_size / (2 * sizeof(uint64_t)))
+ 
+ The first 64 bits have the same format as the standard L2 table entry described
+@@ -623,7 +646,7 @@ descriptor.
+ 
+ The last 64 bits contain a subcluster allocation bitmap with this format:
+ 
+-Subcluster Allocation Bitmap (for standard clusters):
++Subcluster Allocation Bitmap (for standard clusters)::
+ 
+     Bit  0 - 31:    Allocation status (one bit per subcluster)
+ 
+@@ -647,13 +670,14 @@ Subcluster Allocation Bitmap (for standard clusters):
+                     Bits are assigned starting from the least significant
+                     one (i.e. bit x is used for subcluster x - 32).
+ 
+-Subcluster Allocation Bitmap (for compressed clusters):
++Subcluster Allocation Bitmap (for compressed clusters)::
+ 
+     Bit  0 - 63:    Reserved (set to 0)
+                     Compressed clusters don't have subclusters,
+                     so this field is not used.
+ 
+-== Snapshots ==
++Snapshots
++---------
+ 
+ qcow2 supports internal snapshots. Their basic principle of operation is to
+ switch the active L1 table, so that a different set of host clusters are
+@@ -672,7 +696,7 @@ in the image file, whose starting offset and length are given by the header
+ fields snapshots_offset and nb_snapshots. The entries of the snapshot table
+ have variable length, depending on the length of ID, name and extra data.
+ 
+-Snapshot table entry:
++Snapshot table entry::
+ 
+     Byte 0 -  7:    Offset into the image file at which the L1 table for the
+                     snapshot starts. Must be aligned to a cluster boundary.
+@@ -728,7 +752,8 @@ Snapshot table entry:
+                     next multiple of 8.
+ 
+ 
+-== Bitmaps ==
++Bitmaps
++-------
+ 
+ As mentioned above, the bitmaps extension provides the ability to store bitmaps
+ related to a virtual disk. This section describes how these bitmaps are stored.
+@@ -739,20 +764,23 @@ each bitmap size is equal to the virtual disk size.
+ Each bit of the bitmap is responsible for strictly defined range of the virtual
+ disk. For bit number bit_nr the corresponding range (in bytes) will be:
+ 
++.. code::
++
+     [bit_nr * bitmap_granularity .. (bit_nr + 1) * bitmap_granularity - 1]
+ 
+ Granularity is a property of the concrete bitmap, see below.
+ 
+ 
+-=== Bitmap directory ===
++Bitmap directory
++----------------
+ 
+ Each bitmap saved in the image is described in a bitmap directory entry. The
+ bitmap directory is a contiguous area in the image file, whose starting offset
+-and length are given by the header extension fields bitmap_directory_offset and
+-bitmap_directory_size. The entries of the bitmap directory have variable
++and length are given by the header extension fields ``bitmap_directory_offset`` and
++``bitmap_directory_size``. The entries of the bitmap directory have variable
+ length, depending on the lengths of the bitmap name and extra data.
+ 
+-Structure of a bitmap directory entry:
++Structure of a bitmap directory entry::
+ 
+     Byte 0 -  7:    bitmap_table_offset
+                     Offset into the image file at which the bitmap table
+@@ -833,7 +861,8 @@ Structure of a bitmap directory entry:
+                     next multiple of 8. All bytes of the padding must be zero.
+ 
+ 
+-=== Bitmap table ===
++Bitmap table
++------------
+ 
+ Each bitmap is stored using a one-level structure (as opposed to two-level
+ structures like for refcounts and guest clusters mapping) for the mapping of
+@@ -843,7 +872,7 @@ Each bitmap table has a variable size (stored in the bitmap directory entry)
+ and may use multiple clusters, however, it must be contiguous in the image
+ file.
+ 
+-Structure of a bitmap table entry:
++Structure of a bitmap table entry::
+ 
+     Bit       0:    Reserved and must be zero if bits 9 - 55 are non-zero.
+                     If bits 9 - 55 are zero:
+@@ -860,11 +889,12 @@ Structure of a bitmap table entry:
+         56 - 63:    Reserved and must be zero.
+ 
+ 
+-=== Bitmap data ===
++Bitmap data
++-----------
+ 
+ As noted above, bitmap data is stored in separate clusters, described by the
+ bitmap table. Given an offset (in bytes) into the bitmap data, the offset into
+-the image file can be obtained as follows:
++the image file can be obtained as follows::
+ 
+     image_offset(bitmap_data_offset) =
+         bitmap_table[bitmap_data_offset / cluster_size] +
+@@ -875,7 +905,7 @@ above).
+ 
+ Given an offset byte_nr into the virtual disk and the bitmap's granularity, the
+ bit offset into the image file to the corresponding bit of the bitmap can be
+-calculated like this:
++calculated like this::
+ 
+     bit_offset(byte_nr) =
+         image_offset(byte_nr / granularity / 8) * 8 +
+@@ -886,21 +916,22 @@ last cluster of the bitmap data contains some unused tail bits. These bits must
+ be zero.
+ 
+ 
+-=== Dirty tracking bitmaps ===
++Dirty tracking bitmaps
++----------------------
+ 
+-Bitmaps with 'type' field equal to one are dirty tracking bitmaps.
++Bitmaps with *type* field equal to one are dirty tracking bitmaps.
+ 
+-When the virtual disk is in use dirty tracking bitmap may be 'enabled' or
+-'disabled'. While the bitmap is 'enabled', all writes to the virtual disk
++When the virtual disk is in use dirty tracking bitmap may be *enabled* or
++*disabled*. While the bitmap is *enabled*, all writes to the virtual disk
+ should be reflected in the bitmap. A set bit in the bitmap means that the
+ corresponding range of the virtual disk (see above) was written to while the
+-bitmap was 'enabled'. An unset bit means that this range was not written to.
++bitmap was *enabled*. An unset bit means that this range was not written to.
+ 
+ The software doesn't have to sync the bitmap in the image file with its
+-representation in RAM after each write or metadata change. Flag 'in_use'
++representation in RAM after each write or metadata change. Flag *in_use*
+ should be set while the bitmap is not synced.
+ 
+-In the image file the 'enabled' state is reflected by the 'auto' flag. If this
+-flag is set, the software must consider the bitmap as 'enabled' and start
++In the image file the *enabled* state is reflected by the *auto* flag. If this
++flag is set, the software must consider the bitmap as *enabled* and start
+ tracking virtual disk changes to this bitmap from the first write to the
+ virtual disk. If this flag is not set then the bitmap is disabled.
+-- 
+2.49.0
 
- typedef union VendorCaps {
--    Vtd_Caps vtd;
-+    struct iommu_hw_info_vtd vtd;
-+    struct iommu_hw_info_arm_smmuv3 smmuv3;
- } VendorCaps;
-
- /**
-@@ -43,6 +39,7 @@ typedef struct HostIOMMUDeviceCaps {
-     uint64_t hw_caps;
-     VendorCaps vendor_caps;
- } HostIOMMUDeviceCaps;
-+#endif
-
- #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
- OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass, HOST_IOMMU_DEVI=
-CE)
-@@ -54,7 +51,9 @@ struct HostIOMMUDevice {
-     void *agent; /* pointer to agent device, ie. VFIO or VDPA device */
-     PCIBus *aliased_bus;
-     int aliased_devfn;
-+#ifdef CONFIG_LINUX
-     HostIOMMUDeviceCaps caps;
-+#endif
- };
-
- /**
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index d91c1eb8b8..63209659f3 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -368,7 +368,7 @@ bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDev=
-iceIOMMUFD *idev,
- static int hiod_iommufd_get_vtd_cap(HostIOMMUDevice *hiod, int cap,
-                                     Error **errp)
- {
--    Vtd_Caps *caps =3D &hiod->caps.vendor_caps.vtd;
-+    struct iommu_hw_info_vtd *caps =3D &hiod->caps.vendor_caps.vtd;
-
-     switch (cap) {
-     case HOST_IOMMU_DEVICE_CAP_NESTING:
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 5c740222e5..fbf47cab09 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -836,15 +836,12 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice=
- *hiod, void *opaque,
-     HostIOMMUDeviceCaps *caps =3D &hiod->caps;
-     VendorCaps *vendor_caps =3D &caps->vendor_caps;
-     enum iommu_hw_info_type type;
--    union {
--        struct iommu_hw_info_vtd vtd;
--    } data;
-     uint64_t hw_caps;
-
-     hiod->agent =3D opaque;
-
--    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
--                                         &type, &data, sizeof(data),
-+    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid, &type=
-,
-+                                         vendor_caps, sizeof(*vendor_caps)=
-,
-                                          &hw_caps, errp)) {
-         return false;
-     }
-@@ -853,17 +850,6 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice =
-*hiod, void *opaque,
-     caps->type =3D type;
-     caps->hw_caps =3D hw_caps;
-
--    switch (type) {
--    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
--        vendor_caps->vtd.flags =3D data.vtd.flags;
--        vendor_caps->vtd.cap_reg =3D data.vtd.cap_reg;
--        vendor_caps->vtd.ecap_reg =3D data.vtd.ecap_reg;
--        break;
--    case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
--    case IOMMU_HW_INFO_TYPE_NONE:
--        break;
--    }
--
-     idev =3D HOST_IOMMU_DEVICE_IOMMUFD(hiod);
-     idev->iommufd =3D vdev->iommufd;
-     idev->devid =3D vdev->devid;
 
