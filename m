@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A39FC54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5BAC54ED0
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 19:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIBFU-0001Dx-ME; Thu, 22 May 2025 15:06:45 -0400
+	id 1uIBEy-0000wN-5N; Thu, 22 May 2025 15:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIBF6-00011d-RC
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:06:13 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1uIBEq-0000vG-74
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:05:57 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uIBEz-0006Tn-O5
- for qemu-devel@nongnu.org; Thu, 22 May 2025 15:06:11 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-30e5430ed0bso8228409a91.3
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:05:59 -0700 (PDT)
+ id 1uIBEn-0006SD-DQ
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 15:05:55 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-742c035f2afso3759295b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 12:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747940758; x=1748545558; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747940752; x=1748545552; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y6R30qCsDcLMF5khuyJMZe5QuT1s3sa6vKuD4tE2yEo=;
- b=YuGz8IXuS77VnyneGz6aggdU7SJmDMFvF6KlAP2U15tNO5ApdFsNU40/ats7oJ3sI8
- aRv2l6Q9BvzecQhSmvzNHjDEE5CsH5Ai5TUKQahDZBhohitsfrCPsUykvFP/9hzSyZ+8
- eDLwgQCNYRSVnWgeYcEOTYoAGMGkUN/+A8xBwXO4jTxQ1dUncsuWWk4KWMk3pdwsYHGt
- aCbQhwAXAblfNC9F7O67f1TAfw9SXxwQNNLsfyBtt+JLSwTHc7Jl0PsVCmVQAX7H7AnV
- wwiKZILTNpgAPqnQjXJ+eS+DPG+0oPdeFvOo7Hy7KZrACb63/ercw6dEI4g6dPN7kFGl
- 3opw==
+ bh=htF0VZgASZ43ct5qX/VW/MjRlaWWMAyaJawS0GNM9SY=;
+ b=rZVshwKiv7YJKwqEubwpD1EIjZGaj4c7RpFql/Clvofgg916OPswb2OzmzizE5uFNT
+ MeLG5sbJWrAEuRx7wTc9d9YDjaAfTbfex8DAYAlVlZC5eZOaN4E3FDown2UcsdgI2PtU
+ /aNUHYGvlrggZFAfH2pcU6r+WG1wpilkEnqREgDybMmDmZ0BaXhFZDBwAoe7hgWf2XQ5
+ v7EVUVFHpNbaMftFShEwZiy1EsaAHp8WfWKdylz9lt91eIH6gMiIsq4LX2qTnlsYUF/+
+ rCW1qMusjQYfBlEQM0BqE4eJlwt63pcmGZWpB5UNiIQIfYiY+xQPw0oDu8exjs1Ts66A
+ nXaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747940758; x=1748545558;
+ d=1e100.net; s=20230601; t=1747940752; x=1748545552;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y6R30qCsDcLMF5khuyJMZe5QuT1s3sa6vKuD4tE2yEo=;
- b=b700ORo2NBHPuk1SSngxxlrdx0/ZE4YzULPjr+sNaBtI588JWlRGXprtwcBPoGuUGz
- f+pxytld+f0/GHDR4HmvuMhlKGWxIlQu7/TcGu+1EScpCxMN+EPLl+jL1iyNECoe/aQT
- qM/2igrFC9wvtqeN8lSjzxcY9/+Iqi6/CQcOsYy/ZpVRr+AAY9/+sJxw9DAAtPuunoZ3
- gqhOLvmDdnte8AHEJJO00NlNbe7Efa1KeL05mT9gOwAtbzDtWGIGgbg2V70N2dyAxo+3
- EQLYcC/SaubQxlD2FrJqtQ8uGyWf2ZkFGUfuURv+dSbBYj1pbaPnfaESUtncSPtlVgbd
- xR6Q==
-X-Gm-Message-State: AOJu0YzQRS8JuHv4el8bkkSKGweoWYrb/PSlWcqxnfTq6webRpvC7qJe
- ULZfxAfQgTAJkLA42NQdEAQOijV38Pn9OFpv+VPPlXrh2sSMIy9X8MnkmbyOzYSRRULX7nyQsJR
- 2zBL7
-X-Gm-Gg: ASbGncsZl8D/EvXU8T+bhCHjDDrKBhrE62UAldaiCzOCg7v+BCp5qZ4wj712oXesvXG
- GmK0Qyg+UaDqyWxe5JKfDSGBiNpLFnDTTen94acyEBqRKyOQMdohPWsekuufjaUsx8gCgJPHRkl
- SOEMUpLnqWj65vDxuHIJTj3au95HEANXpY1kBVG22dJD2MnrCBR2gZ+YOcBgGkjK7ZF/xz09n9j
- rLXPvQkYq7Y1trHJiZ0kZ2yNCIXRn7e9+Rzv364veKKxGlqVB1U6tF9LGpViICXEKRmwE+78pUG
- yZusVQIjuyLnqTawPRpzjNhHVLbnU07XRkSBE5fTk29hRg2DrxY=
-X-Google-Smtp-Source: AGHT+IGYgUJ+OufmeqdJznbzFVi55PtqQEY4HLlZ/wsQN4xbWpCBqeTe+iroORzEV2sAH3l2r/ggog==
-X-Received: by 2002:a17:90b:5603:b0:2ee:9b2c:3253 with SMTP id
- 98e67ed59e1d1-30e8323cd14mr35340884a91.30.1747940758003; 
- Thu, 22 May 2025 12:05:58 -0700 (PDT)
+ bh=htF0VZgASZ43ct5qX/VW/MjRlaWWMAyaJawS0GNM9SY=;
+ b=n2vT3b3P/WpQobr46McmkRxbYaXRr5UZTwMIrxw7DZbNr0zUwjnPNkySEYYzB9hNDh
+ xzOMu/R2LdCpOvTuUGmrFijDoaAXhu6GinQDi/+taypjzjOY/0qfdTdyE2AGdW3yyfn8
+ QjTdRuzvdnx9mRWx+o1Sv2JtA9y94Mzxj88BLG721izz7IjH5vUGHpHIINkWtRgW1ReW
+ ghLO/rVAZzZXVYwM0/GAB7vvXWRzLRZyQ5XkQ4359GJT22URiR2+QUMguCG7MK/MHz6L
+ ixEHzkvQVZNTga1DrHlbXvh+J9No4Gykn6ou9q23h40J2O128dbLdSgfFJ8L3q0PzpCJ
+ Z94A==
+X-Gm-Message-State: AOJu0Yzbj1T8RsjE06prce6GlVQzHA108BE1FMu2hQYCQAOk8vOMjWGD
+ a2r8zYnscQeGTZ7dXTrELfE54h2tf3tMeDSqSNDYyt+hUq+XgZgSSNMo0daq8A+20C8jK9fVqCa
+ 8aGEP
+X-Gm-Gg: ASbGncvkdIZ/yRKqc75CJeuDIhiDWCf6auPqOS2z6TOalF4SXxBs2kOx3Z566Z+JMwO
+ oMUH125DF7xFifQZKcyhuOz35n7pcfA2P1FgjPY3pFPbpjUTFBbt4FCVIEQOoeAQgLbRxsv6lLz
+ lso3MdpJ8CP3xHON95U4hRgM0OvQV1pOiOa5pJ7BND5rm/ptTlgvZ+arpwRUmZgzlF4bRVnUIIi
+ RX41ygSIZJkkumdC/GBS3VaXDEZMViCrAEkVAC8Xxcl04C0qSpXwpJVNuic8iE9qzVKjvHGTzcl
+ YwfrlxZZgSbGgLZsgV2ztcdXVCUgotVl5HOZZCAWpkTqOjRhPp4=
+X-Google-Smtp-Source: AGHT+IGRME/yrK0PKFoQFGYBL3f9+3v7eC35PCSMRLduwQtKtZx/xMAo31jHxeOtoLXRA4GNu0gOrA==
+X-Received: by 2002:a05:6a20:258e:b0:1f5:7fcb:397d with SMTP id
+ adf61e73a8af0-2162189eedemr36771719637.16.1747940751836; 
+ Thu, 22 May 2025 12:05:51 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b26eb082c66sm11625565a12.60.2025.05.22.12.05.57
+ 41be03b00d2f7-b26eb082c66sm11625565a12.60.2025.05.22.12.05.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 12:05:57 -0700 (PDT)
+ Thu, 22 May 2025 12:05:51 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, thuth@redhat.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, armbru@redhat.com,
  pierrick.bouvier@linaro.org, peter.maydell@linaro.org, berrange@redhat.com,
  philmd@linaro.org
-Subject: [PATCH v4 09/15] qapi: make most CPU commands unconditionally
- available
-Date: Thu, 22 May 2025 12:05:36 -0700
-Message-ID: <20250522190542.588267-10-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 03/15] qapi: make SEV commands unconditionally available
+Date: Thu, 22 May 2025 12:05:30 -0700
+Message-ID: <20250522190542.588267-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
 References: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,1023 +102,717 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes the TARGET_* conditions from all the CPU commands
-that are conceptually target independent. Top level stubs are
-provided to cope with targets which do not currently implement
-all of the commands. Adjust the doc comments accordingly.
+From: Daniel P. Berrangé <berrange@redhat.com>
+
+This removes the TARGET_I386 condition from the SEV confidential
+virtualization commands, moving them to the recently introduced
+misc-i386.json QAPI file, given they are inherantly i386 specific
+commands.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS                           |   1 -
- qapi/machine-target.json              | 397 --------------------------
- qapi/machine.json                     | 363 +++++++++++++++++++++++
- stubs/monitor-cpu-s390x.c             |  23 ++
- stubs/monitor-cpu.c                   |  21 ++
- target/arm/arm-qmp-cmds.c             |   2 +-
- target/i386/cpu-system.c              |   2 +-
- target/i386/cpu.c                     |   2 +-
- target/loongarch/loongarch-qmp-cmds.c |   2 +-
- target/mips/system/mips-qmp-cmds.c    |  12 +-
- target/ppc/ppc-qmp-cmds.c             |  12 +-
- target/riscv/riscv-qmp-cmds.c         |   2 +-
- target/s390x/cpu_models_system.c      |   2 +-
- stubs/meson.build                     |   2 +
- 14 files changed, 437 insertions(+), 406 deletions(-)
- create mode 100644 stubs/monitor-cpu-s390x.c
- create mode 100644 stubs/monitor-cpu.c
+ qapi/misc-i386.json           | 271 ++++++++++++++++++++++++++++++++
+ qapi/misc-target.json         | 284 ----------------------------------
+ stubs/monitor-i386-sev.c      |  36 +++++
+ target/i386/sev-system-stub.c |  32 ----
+ target/i386/sev.c             |   2 +-
+ stubs/meson.build             |   1 +
+ 6 files changed, 309 insertions(+), 317 deletions(-)
+ create mode 100644 stubs/monitor-i386-sev.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 01684c5a3ff..9df6c818b28 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1938,7 +1938,6 @@ F: hw/core/numa.c
- F: hw/cpu/cluster.c
- F: qapi/machine.json
- F: qapi/machine-common.json
--F: qapi/machine-target.json
- F: include/hw/boards.h
- F: include/hw/core/cpu.h
- F: include/hw/cpu/cluster.h
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index d8dbda4b508..f19e34adaf9 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -6,403 +6,6 @@
- 
- { 'include': 'machine-common.json' }
- 
--##
--# @CpuModelInfo:
--#
--# Virtual CPU model.
--#
--# A CPU model consists of the name of a CPU definition, to which delta
--# changes are applied (e.g. features added/removed).  Most magic
--# values that an architecture might require should be hidden behind
--# the name.  However, if required, architectures can expose relevant
--# properties.
--#
--# @name: the name of the CPU definition the model is based on
--#
--# @props: a dictionary of QOM properties to be applied
--#
--# Since: 2.8
--##
--{ 'struct': 'CpuModelInfo',
--  'data': { 'name': 'str',
--            '*props': 'any' } }
--
--##
--# @CpuModelExpansionType:
--#
--# An enumeration of CPU model expansion types.
--#
--# @static: Expand to a static CPU model, a combination of a static
--#     base model name and property delta changes.  As the static base
--#     model will never change, the expanded CPU model will be the
--#     same, independent of QEMU version, machine type, machine
--#     options, and accelerator options.  Therefore, the resulting
--#     model can be used by tooling without having to specify a
--#     compatibility machine - e.g. when displaying the "host" model.
--#     The @static CPU models are migration-safe.
--#
--# @full: Expand all properties.  The produced model is not guaranteed
--#     to be migration-safe, but allows tooling to get an insight and
--#     work with model details.
--#
--# .. note:: When a non-migration-safe CPU model is expanded in static
--#    mode, some features enabled by the CPU model may be omitted,
--#    because they can't be implemented by a static CPU model
--#    definition (e.g. cache info passthrough and PMU passthrough in
--#    x86).  If you need an accurate representation of the features
--#    enabled by a non-migration-safe CPU model, use @full.  If you
--#    need a static representation that will keep ABI compatibility
--#    even when changing QEMU version or machine-type, use @static (but
--#    keep in mind that some features may be omitted).
--#
--# Since: 2.8
--##
--{ 'enum': 'CpuModelExpansionType',
--  'data': [ 'static', 'full' ] }
--
--##
--# @CpuModelCompareResult:
--#
--# An enumeration of CPU model comparison results.  The result is
--# usually calculated using e.g. CPU features or CPU generations.
--#
--# @incompatible: If model A is incompatible to model B, model A is not
--#     guaranteed to run where model B runs and the other way around.
--#
--# @identical: If model A is identical to model B, model A is
--#     guaranteed to run where model B runs and the other way around.
--#
--# @superset: If model A is a superset of model B, model B is
--#     guaranteed to run where model A runs.  There are no guarantees
--#     about the other way.
--#
--# @subset: If model A is a subset of model B, model A is guaranteed to
--#     run where model B runs.  There are no guarantees about the other
--#     way.
--#
--# Since: 2.8
--##
--{ 'enum': 'CpuModelCompareResult',
--  'data': [ 'incompatible', 'identical', 'superset', 'subset' ] }
--
--##
--# @CpuModelBaselineInfo:
--#
--# The result of a CPU model baseline.
--#
--# @model: the baselined CpuModelInfo.
--#
--# Since: 2.8
--##
--{ 'struct': 'CpuModelBaselineInfo',
--  'data': { 'model': 'CpuModelInfo' },
--  'if': 'TARGET_S390X' }
--
--##
--# @CpuModelCompareInfo:
--#
--# The result of a CPU model comparison.
--#
--# @result: The result of the compare operation.
--#
--# @responsible-properties: List of properties that led to the
--#     comparison result not being identical.
--#
--# @responsible-properties is a list of QOM property names that led to
--# both CPUs not being detected as identical.  For identical models,
--# this list is empty.  If a QOM property is read-only, that means
--# there's no known way to make the CPU models identical.  If the
--# special property name "type" is included, the models are by
--# definition not identical and cannot be made identical.
--#
--# Since: 2.8
--##
--{ 'struct': 'CpuModelCompareInfo',
--  'data': { 'result': 'CpuModelCompareResult',
--            'responsible-properties': ['str'] },
--  'if': 'TARGET_S390X' }
--
--##
--# @query-cpu-model-comparison:
--#
--# Compares two CPU models, @modela and @modelb, returning how they
--# compare in a specific configuration.  The results indicates how
--# both models compare regarding runnability.  This result can be
--# used by tooling to make decisions if a certain CPU model will
--# run in a certain configuration or if a compatible CPU model has
--# to be created by baselining.
--#
--# Usually, a CPU model is compared against the maximum possible CPU
--# model of a certain configuration (e.g. the "host" model for KVM).
--# If that CPU model is identical or a subset, it will run in that
--# configuration.
--#
--# The result returned by this command may be affected by:
--#
--# * QEMU version: CPU models may look different depending on the QEMU
--#   version.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * machine-type: CPU model may look different depending on the
--#   machine-type.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * machine options (including accelerator): in some architectures,
--#   CPU models may look different depending on machine and accelerator
--#   options.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * "-cpu" arguments and global properties: arguments to the -cpu
--#   option and global properties may affect expansion of CPU models.
--#   Using query-cpu-model-expansion while using these is not advised.
--#
--# Some architectures may not support comparing CPU models.  s390x
--# supports comparing CPU models.
--#
--# @modela: description of the first CPU model to compare, referred to
--#     as "model A" in CpuModelCompareResult
--#
--# @modelb: description of the second CPU model to compare, referred to
--#     as "model B" in CpuModelCompareResult
--#
--# Returns: a CpuModelCompareInfo describing how both CPU models
--#     compare
--#
--# Errors:
--#     - if comparing CPU models is not supported
--#     - if a model cannot be used
--#     - if a model contains an unknown cpu definition name, unknown
--#       properties or properties with wrong types.
--#
--# .. note:: This command isn't specific to s390x, but is only
--#    implemented on this architecture currently.
--#
--# Since: 2.8
--##
--{ 'command': 'query-cpu-model-comparison',
--  'data': { 'modela': 'CpuModelInfo', 'modelb': 'CpuModelInfo' },
--  'returns': 'CpuModelCompareInfo',
--  'if': 'TARGET_S390X' }
--
--##
--# @query-cpu-model-baseline:
--#
--# Baseline two CPU models, @modela and @modelb, creating a compatible
--# third model.  The created model will always be a static,
--# migration-safe CPU model (see "static" CPU model expansion for
--# details).
--#
--# This interface can be used by tooling to create a compatible CPU
--# model out two CPU models.  The created CPU model will be identical
--# to or a subset of both CPU models when comparing them.  Therefore,
--# the created CPU model is guaranteed to run where the given CPU
--# models run.
--#
--# The result returned by this command may be affected by:
--#
--# * QEMU version: CPU models may look different depending on the QEMU
--#   version.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * machine-type: CPU model may look different depending on the
--#   machine-type.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * machine options (including accelerator): in some architectures,
--#   CPU models may look different depending on machine and accelerator
--#   options.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * "-cpu" arguments and global properties: arguments to the -cpu
--#   option and global properties may affect expansion of CPU models.
--#   Using query-cpu-model-expansion while using these is not advised.
--#
--# Some architectures may not support baselining CPU models.  s390x
--# supports baselining CPU models.
--#
--# @modela: description of the first CPU model to baseline
--#
--# @modelb: description of the second CPU model to baseline
--#
--# Returns: a CpuModelBaselineInfo describing the baselined CPU model
--#
--# Errors:
--#     - if baselining CPU models is not supported
--#     - if a model cannot be used
--#     - if a model contains an unknown cpu definition name, unknown
--#       properties or properties with wrong types.
--#
--# .. note:: This command isn't specific to s390x, but is only
--#    implemented on this architecture currently.
--#
--# Since: 2.8
--##
--{ 'command': 'query-cpu-model-baseline',
--  'data': { 'modela': 'CpuModelInfo',
--            'modelb': 'CpuModelInfo' },
--  'returns': 'CpuModelBaselineInfo',
--  'if': 'TARGET_S390X' }
--
--##
--# @CpuModelExpansionInfo:
--#
--# The result of a cpu model expansion.
--#
--# @model: the expanded CpuModelInfo.
--#
--# @deprecated-props: an optional list of properties that are flagged as
--#     deprecated by the CPU vendor.  The list depends on the
--#     CpuModelExpansionType: "static" properties are a subset of the
--#     enabled-properties for the expanded model; "full" properties are
--#     a set of properties that are deprecated across all models for
--#     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
--#
--# Since: 2.8
--##
--{ 'struct': 'CpuModelExpansionInfo',
--  'data': { 'model': 'CpuModelInfo',
--            '*deprecated-props' : ['str'] },
--  'if': { 'any': [ 'TARGET_S390X',
--                   'TARGET_I386',
--                   'TARGET_ARM',
--                   'TARGET_LOONGARCH64',
--                   'TARGET_RISCV' ] } }
--
--##
--# @query-cpu-model-expansion:
--#
--# Expands a given CPU model, @model, (or a combination of CPU model +
--# additional options) to different granularities, specified by @type,
--# allowing tooling to get an understanding what a specific CPU model
--# looks like in QEMU under a certain configuration.
--#
--# This interface can be used to query the "host" CPU model.
--#
--# The data returned by this command may be affected by:
--#
--# * QEMU version: CPU models may look different depending on the QEMU
--#   version.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * machine-type: CPU model may look different depending on the
--#   machine-type.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * machine options (including accelerator): in some architectures,
--#   CPU models may look different depending on machine and accelerator
--#   options.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
--# * "-cpu" arguments and global properties: arguments to the -cpu
--#   option and global properties may affect expansion of CPU models.
--#   Using query-cpu-model-expansion while using these is not advised.
--#
--# Some architectures may not support all expansion types.  s390x
--# supports "full" and "static".  Arm only supports "full".
--#
--# @model: description of the CPU model to expand
--#
--# @type: expansion type, specifying how to expand the CPU model
--#
--# Returns: a CpuModelExpansionInfo describing the expanded CPU model
--#
--# Errors:
--#     - if expanding CPU models is not supported
--#     - if the model cannot be expanded
--#     - if the model contains an unknown CPU definition name, unknown
--#       properties or properties with a wrong type
--#     - if an expansion type is not supported
--#
--# Since: 2.8
--##
--{ 'command': 'query-cpu-model-expansion',
--  'data': { 'type': 'CpuModelExpansionType',
--            'model': 'CpuModelInfo' },
--  'returns': 'CpuModelExpansionInfo',
--  'if': { 'any': [ 'TARGET_S390X',
--                   'TARGET_I386',
--                   'TARGET_ARM',
--                   'TARGET_LOONGARCH64',
--                   'TARGET_RISCV' ] } }
--
--##
--# @CpuDefinitionInfo:
--#
--# Virtual CPU definition.
--#
--# @name: the name of the CPU definition
--#
--# @migration-safe: whether a CPU definition can be safely used for
--#     migration in combination with a QEMU compatibility machine when
--#     migrating between different QEMU versions and between hosts with
--#     different sets of (hardware or software) capabilities.  If not
--#     provided, information is not available and callers should not
--#     assume the CPU definition to be migration-safe.  (since 2.8)
--#
--# @static: whether a CPU definition is static and will not change
--#     depending on QEMU version, machine type, machine options and
--#     accelerator options.  A static model is always migration-safe.
--#     (since 2.8)
--#
--# @unavailable-features: List of properties that prevent the CPU model
--#     from running in the current host.  (since 2.8)
--#
--# @typename: Type name that can be used as argument to
--#     @device-list-properties, to introspect properties configurable
--#     using -cpu or -global.  (since 2.9)
--#
--# @alias-of: Name of CPU model this model is an alias for.  The target
--#     of the CPU model alias may change depending on the machine type.
--#     Management software is supposed to translate CPU model aliases
--#     in the VM configuration, because aliases may stop being
--#     migration-safe in the future (since 4.1)
--#
--# @deprecated: If true, this CPU model is deprecated and may be
--#     removed in some future version of QEMU according to the QEMU
--#     deprecation policy.  (since 5.2)
--#
--# @unavailable-features is a list of QOM property names that represent
--# CPU model attributes that prevent the CPU from running.  If the QOM
--# property is read-only, that means there's no known way to make the
--# CPU model run in the current host.  Implementations that choose not
--# to provide specific information return the property name "type".  If
--# the property is read-write, it means that it MAY be possible to run
--# the CPU model in the current host if that property is changed.
--# Management software can use it as hints to suggest or choose an
--# alternative for the user, or just to generate meaningful error
--# messages explaining why the CPU model can't be used.  If
--# @unavailable-features is an empty list, the CPU model is runnable
--# using the current host and machine-type.  If @unavailable-features
--# is not present, runnability information for the CPU is not
--# available.
--#
--# Since: 1.2
--##
--{ 'struct': 'CpuDefinitionInfo',
--  'data': { 'name': 'str',
--            '*migration-safe': 'bool',
--            'static': 'bool',
--            '*unavailable-features': [ 'str' ],
--            'typename': 'str',
--            '*alias-of' : 'str',
--            'deprecated' : 'bool' },
--  'if': { 'any': [ 'TARGET_PPC',
--                   'TARGET_ARM',
--                   'TARGET_I386',
--                   'TARGET_S390X',
--                   'TARGET_MIPS',
--                   'TARGET_LOONGARCH64',
--                   'TARGET_RISCV' ] } }
--
--##
--# @query-cpu-definitions:
--#
--# Return a list of supported virtual CPU definitions
--#
--# Returns: a list of CpuDefinitionInfo
--#
--# Since: 1.2
--##
--{ 'command': 'query-cpu-definitions', 'returns': ['CpuDefinitionInfo'],
--  'if': { 'any': [ 'TARGET_PPC',
--                   'TARGET_ARM',
--                   'TARGET_I386',
--                   'TARGET_S390X',
--                   'TARGET_MIPS',
--                   'TARGET_LOONGARCH64',
--                   'TARGET_RISCV' ] } }
--
+diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
+index d5bfd91405e..de0e4ab67ff 100644
+--- a/qapi/misc-i386.json
++++ b/qapi/misc-i386.json
+@@ -22,3 +22,274 @@
+ #     <- { "return": {} }
  ##
- # @S390CpuPolarization:
+ { 'command': 'rtc-reset-reinjection' }
++
++##
++# @SevState:
++#
++# An enumeration of SEV state information used during @query-sev.
++#
++# @uninit: The guest is uninitialized.
++#
++# @launch-update: The guest is currently being launched; plaintext
++#     data and register state is being imported.
++#
++# @launch-secret: The guest is currently being launched; ciphertext
++#     data is being imported.
++#
++# @running: The guest is fully launched or migrated in.
++#
++# @send-update: The guest is currently being migrated out to another
++#     machine.
++#
++# @receive-update: The guest is currently being migrated from another
++#     machine.
++#
++# Since: 2.12
++##
++{ 'enum': 'SevState',
++  'data': ['uninit', 'launch-update', 'launch-secret', 'running',
++           'send-update', 'receive-update' ] }
++
++##
++# @SevGuestType:
++#
++# An enumeration indicating the type of SEV guest being run.
++#
++# @sev: The guest is a legacy SEV or SEV-ES guest.
++#
++# @sev-snp: The guest is an SEV-SNP guest.
++#
++# Since: 6.2
++##
++{ 'enum': 'SevGuestType',
++  'data': [ 'sev', 'sev-snp' ] }
++
++##
++# @SevGuestInfo:
++#
++# Information specific to legacy SEV/SEV-ES guests.
++#
++# @policy: SEV policy value
++#
++# @handle: SEV firmware handle
++#
++# Since: 2.12
++##
++{ 'struct': 'SevGuestInfo',
++  'data': { 'policy': 'uint32',
++            'handle': 'uint32' } }
++
++##
++# @SevSnpGuestInfo:
++#
++# Information specific to SEV-SNP guests.
++#
++# @snp-policy: SEV-SNP policy value
++#
++# Since: 9.1
++##
++{ 'struct': 'SevSnpGuestInfo',
++  'data': { 'snp-policy': 'uint64' } }
++
++##
++# @SevInfo:
++#
++# Information about Secure Encrypted Virtualization (SEV) support
++#
++# @enabled: true if SEV is active
++#
++# @api-major: SEV API major version
++#
++# @api-minor: SEV API minor version
++#
++# @build-id: SEV FW build id
++#
++# @state: SEV guest state
++#
++# @sev-type: Type of SEV guest being run
++#
++# Since: 2.12
++##
++{ 'union': 'SevInfo',
++  'base': { 'enabled': 'bool',
++            'api-major': 'uint8',
++            'api-minor' : 'uint8',
++            'build-id' : 'uint8',
++            'state' : 'SevState',
++            'sev-type' : 'SevGuestType' },
++  'discriminator': 'sev-type',
++  'data': {
++      'sev': 'SevGuestInfo',
++      'sev-snp': 'SevSnpGuestInfo' } }
++
++
++##
++# @query-sev:
++#
++# Returns information about SEV/SEV-ES/SEV-SNP.
++#
++# If unavailable due to an incompatible configuration the
++# returned @enabled field will be set to 'false' and the
++# state of all other fields is undefined.
++#
++# Returns: @SevInfo
++#
++# Since: 2.12
++#
++# .. qmp-example::
++#
++#     -> { "execute": "query-sev" }
++#     <- { "return": { "enabled": true, "api-major" : 0, "api-minor" : 0,
++#                      "build-id" : 0, "policy" : 0, "state" : "running",
++#                      "handle" : 1 } }
++##
++{ 'command': 'query-sev', 'returns': 'SevInfo' }
++
++##
++# @SevLaunchMeasureInfo:
++#
++# SEV Guest Launch measurement information
++#
++# @data: the measurement value encoded in base64
++#
++# Since: 2.12
++##
++{ 'struct': 'SevLaunchMeasureInfo', 'data': {'data': 'str'} }
++
++##
++# @query-sev-launch-measure:
++#
++# Query the SEV/SEV-ES guest launch information.
++#
++# This is only valid on x86 machines configured with KVM and the
++# 'sev-guest' confidential virtualization object. The launch
++# measurement for SEV-SNP guests is only available within
++# the guest.
++#
++# This will return an error if the launch measurement is
++# unavailable, either due to an invalid guest configuration
++# or if the guest has not reached the required SEV state.
++#
++# Returns: The @SevLaunchMeasureInfo for the guest
++#
++# Since: 2.12
++#
++# .. qmp-example::
++#
++#     -> { "execute": "query-sev-launch-measure" }
++#     <- { "return": { "data": "4l8LXeNlSPUDlXPJG5966/8%YZ" } }
++##
++{ 'command': 'query-sev-launch-measure', 'returns': 'SevLaunchMeasureInfo' }
++
++##
++# @SevCapability:
++#
++# The struct describes capability for a Secure Encrypted
++# Virtualization feature.
++#
++# @pdh: Platform Diffie-Hellman key (base64 encoded)
++#
++# @cert-chain: PDH certificate chain (base64 encoded)
++#
++# @cpu0-id: Unique ID of CPU0 (base64 encoded) (since 7.1)
++#
++# @cbitpos: C-bit location in page table entry
++#
++# @reduced-phys-bits: Number of physical Address bit reduction when
++#     SEV is enabled
++#
++# Since: 2.12
++##
++{ 'struct': 'SevCapability',
++  'data': { 'pdh': 'str',
++            'cert-chain': 'str',
++            'cpu0-id': 'str',
++            'cbitpos': 'int',
++            'reduced-phys-bits': 'int'} }
++
++##
++# @query-sev-capabilities:
++#
++# This command is used to get the SEV capabilities, and is only
++# supported on AMD X86 platforms with KVM enabled. If SEV is not
++# available on the platform an error will be returned.
++#
++# Returns: SevCapability objects.
++#
++# Since: 2.12
++#
++# .. qmp-example::
++#
++#     -> { "execute": "query-sev-capabilities" }
++#     <- { "return": { "pdh": "8CCDD8DDD", "cert-chain": "888CCCDDDEE",
++#                      "cpu0-id": "2lvmGwo+...61iEinw==",
++#                      "cbitpos": 47, "reduced-phys-bits": 1}}
++##
++{ 'command': 'query-sev-capabilities', 'returns': 'SevCapability' }
++
++##
++# @sev-inject-launch-secret:
++#
++# This command injects a secret blob into memory of a SEV/SEV-ES guest.
++#
++# This is only valid on x86 machines configured with KVM and the
++# 'sev-guest' confidential virtualization object. SEV-SNP guests
++# do not support launch secret injection
++#
++# This will return an error if launch secret injection is not possible,
++# either due to an invalid guest configuration, or if the guest has not
++# reached the required SEV state.
++#
++# @packet-header: the launch secret packet header encoded in base64
++#
++# @secret: the launch secret data to be injected encoded in base64
++#
++# @gpa: the guest physical address where secret will be injected.
++#
++# Since: 6.0
++##
++{ 'command': 'sev-inject-launch-secret',
++  'data': { 'packet-header': 'str', 'secret': 'str', '*gpa': 'uint64' } }
++
++##
++# @SevAttestationReport:
++#
++# The struct describes attestation report for a Secure Encrypted
++# Virtualization feature.
++#
++# @data: guest attestation report (base64 encoded)
++#
++# Since: 6.1
++##
++{ 'struct': 'SevAttestationReport',
++  'data': { 'data': 'str'} }
++
++##
++# @query-sev-attestation-report:
++#
++# This command is used to get the SEV attestation report.
++#
++# This is only valid on x86 machines configured with KVM and the
++# 'sev-guest' confidential virtualization object. The attestation
++# report for SEV-SNP guests is only available within the guest.
++#
++# This will return an error if the attestation report is
++# unavailable, either due to an invalid guest configuration
++# or if the guest has not reached the required SEV state.
++#
++# @mnonce: a random 16 bytes value encoded in base64 (it will be
++#     included in report)
++#
++# Returns: SevAttestationReport objects.
++#
++# Since: 6.1
++#
++# .. qmp-example::
++#
++#     -> { "execute" : "query-sev-attestation-report",
++#                      "arguments": { "mnonce": "aaaaaaa" } }
++#     <- { "return" : { "data": "aaaaaaaabbbddddd"} }
++##
++{ 'command': 'query-sev-attestation-report',
++  'data': { 'mnonce': 'str' },
++  'returns': 'SevAttestationReport' }
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 6b857efc1cc..c0d7b311f30 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -2,290 +2,6 @@
+ # vim: filetype=python
  #
-diff --git a/qapi/machine.json b/qapi/machine.json
-index c8feb9fe17b..e6b4b2dfef8 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1916,3 +1916,366 @@
+ 
+-##
+-# @SevState:
+-#
+-# An enumeration of SEV state information used during @query-sev.
+-#
+-# @uninit: The guest is uninitialized.
+-#
+-# @launch-update: The guest is currently being launched; plaintext
+-#     data and register state is being imported.
+-#
+-# @launch-secret: The guest is currently being launched; ciphertext
+-#     data is being imported.
+-#
+-# @running: The guest is fully launched or migrated in.
+-#
+-# @send-update: The guest is currently being migrated out to another
+-#     machine.
+-#
+-# @receive-update: The guest is currently being migrated from another
+-#     machine.
+-#
+-# Since: 2.12
+-##
+-{ 'enum': 'SevState',
+-  'data': ['uninit', 'launch-update', 'launch-secret', 'running',
+-           'send-update', 'receive-update' ],
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @SevGuestType:
+-#
+-# An enumeration indicating the type of SEV guest being run.
+-#
+-# @sev: The guest is a legacy SEV or SEV-ES guest.
+-#
+-# @sev-snp: The guest is an SEV-SNP guest.
+-#
+-# Since: 6.2
+-##
+-{ 'enum': 'SevGuestType',
+-  'data': [ 'sev', 'sev-snp' ],
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @SevGuestInfo:
+-#
+-# Information specific to legacy SEV/SEV-ES guests.
+-#
+-# @policy: SEV policy value
+-#
+-# @handle: SEV firmware handle
+-#
+-# Since: 2.12
+-##
+-{ 'struct': 'SevGuestInfo',
+-  'data': { 'policy': 'uint32',
+-            'handle': 'uint32' },
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @SevSnpGuestInfo:
+-#
+-# Information specific to SEV-SNP guests.
+-#
+-# @snp-policy: SEV-SNP policy value
+-#
+-# Since: 9.1
+-##
+-{ 'struct': 'SevSnpGuestInfo',
+-  'data': { 'snp-policy': 'uint64' },
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @SevInfo:
+-#
+-# Information about Secure Encrypted Virtualization (SEV) support
+-#
+-# @enabled: true if SEV is active
+-#
+-# @api-major: SEV API major version
+-#
+-# @api-minor: SEV API minor version
+-#
+-# @build-id: SEV FW build id
+-#
+-# @state: SEV guest state
+-#
+-# @sev-type: Type of SEV guest being run
+-#
+-# Since: 2.12
+-##
+-{ 'union': 'SevInfo',
+-  'base': { 'enabled': 'bool',
+-            'api-major': 'uint8',
+-            'api-minor' : 'uint8',
+-            'build-id' : 'uint8',
+-            'state' : 'SevState',
+-            'sev-type' : 'SevGuestType' },
+-  'discriminator': 'sev-type',
+-  'data': {
+-      'sev': 'SevGuestInfo',
+-      'sev-snp': 'SevSnpGuestInfo' },
+-  'if': 'TARGET_I386' }
+-
+-
+-##
+-# @query-sev:
+-#
+-# Returns information about SEV/SEV-ES/SEV-SNP.
+-#
+-# If unavailable due to an incompatible configuration the
+-# returned @enabled field will be set to 'false' and the
+-# state of all other fields is undefined.
+-#
+-# Returns: @SevInfo
+-#
+-# Since: 2.12
+-#
+-# .. qmp-example::
+-#
+-#     -> { "execute": "query-sev" }
+-#     <- { "return": { "enabled": true, "api-major" : 0, "api-minor" : 0,
+-#                      "build-id" : 0, "policy" : 0, "state" : "running",
+-#                      "handle" : 1 } }
+-##
+-{ 'command': 'query-sev', 'returns': 'SevInfo',
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @SevLaunchMeasureInfo:
+-#
+-# SEV Guest Launch measurement information
+-#
+-# @data: the measurement value encoded in base64
+-#
+-# Since: 2.12
+-##
+-{ 'struct': 'SevLaunchMeasureInfo', 'data': {'data': 'str'},
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @query-sev-launch-measure:
+-#
+-# Query the SEV/SEV-ES guest launch information.
+-#
+-# This is only valid on x86 machines configured with KVM and the
+-# 'sev-guest' confidential virtualization object. The launch
+-# measurement for SEV-SNP guests is only available within
+-# the guest.
+-#
+-# This will return an error if the launch measurement is
+-# unavailable, either due to an invalid guest configuration
+-# or if the guest has not reached the required SEV state.
+-#
+-# Returns: The @SevLaunchMeasureInfo for the guest
+-#
+-# Since: 2.12
+-#
+-# .. qmp-example::
+-#
+-#     -> { "execute": "query-sev-launch-measure" }
+-#     <- { "return": { "data": "4l8LXeNlSPUDlXPJG5966/8%YZ" } }
+-##
+-{ 'command': 'query-sev-launch-measure', 'returns': 'SevLaunchMeasureInfo',
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @SevCapability:
+-#
+-# The struct describes capability for a Secure Encrypted
+-# Virtualization feature.
+-#
+-# @pdh: Platform Diffie-Hellman key (base64 encoded)
+-#
+-# @cert-chain: PDH certificate chain (base64 encoded)
+-#
+-# @cpu0-id: Unique ID of CPU0 (base64 encoded) (since 7.1)
+-#
+-# @cbitpos: C-bit location in page table entry
+-#
+-# @reduced-phys-bits: Number of physical Address bit reduction when
+-#     SEV is enabled
+-#
+-# Since: 2.12
+-##
+-{ 'struct': 'SevCapability',
+-  'data': { 'pdh': 'str',
+-            'cert-chain': 'str',
+-            'cpu0-id': 'str',
+-            'cbitpos': 'int',
+-            'reduced-phys-bits': 'int'},
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @query-sev-capabilities:
+-#
+-# This command is used to get the SEV capabilities, and is only
+-# supported on AMD X86 platforms with KVM enabled. If SEV is not
+-# available on the platform an error will be returned.
+-#
+-# Returns: SevCapability objects.
+-#
+-# Since: 2.12
+-#
+-# .. qmp-example::
+-#
+-#     -> { "execute": "query-sev-capabilities" }
+-#     <- { "return": { "pdh": "8CCDD8DDD", "cert-chain": "888CCCDDDEE",
+-#                      "cpu0-id": "2lvmGwo+...61iEinw==",
+-#                      "cbitpos": 47, "reduced-phys-bits": 1}}
+-##
+-{ 'command': 'query-sev-capabilities', 'returns': 'SevCapability',
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @sev-inject-launch-secret:
+-#
+-# This command injects a secret blob into memory of a SEV/SEV-ES guest.
+-#
+-# This is only valid on x86 machines configured with KVM and the
+-# 'sev-guest' confidential virtualization object. SEV-SNP guests
+-# do not support launch secret injection
+-#
+-# This will return an error if launch secret injection is not possible,
+-# either due to an invalid guest configuration, or if the guest has not
+-# reached the required SEV state.
+-#
+-# @packet-header: the launch secret packet header encoded in base64
+-#
+-# @secret: the launch secret data to be injected encoded in base64
+-#
+-# @gpa: the guest physical address where secret will be injected.
+-#
+-# Since: 6.0
+-##
+-{ 'command': 'sev-inject-launch-secret',
+-  'data': { 'packet-header': 'str', 'secret': 'str', '*gpa': 'uint64' },
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @SevAttestationReport:
+-#
+-# The struct describes attestation report for a Secure Encrypted
+-# Virtualization feature.
+-#
+-# @data: guest attestation report (base64 encoded)
+-#
+-# Since: 6.1
+-##
+-{ 'struct': 'SevAttestationReport',
+-  'data': { 'data': 'str'},
+-  'if': 'TARGET_I386' }
+-
+-##
+-# @query-sev-attestation-report:
+-#
+-# This command is used to get the SEV attestation report.
+-#
+-# This is only valid on x86 machines configured with KVM and the
+-# 'sev-guest' confidential virtualization object. The attestation
+-# report for SEV-SNP guests is only available within the guest.
+-#
+-# This will return an error if the attestation report is
+-# unavailable, either due to an invalid guest configuration
+-# or if the guest has not reached the required SEV state.
+-#
+-# @mnonce: a random 16 bytes value encoded in base64 (it will be
+-#     included in report)
+-#
+-# Returns: SevAttestationReport objects.
+-#
+-# Since: 6.1
+-#
+-# .. qmp-example::
+-#
+-#     -> { "execute" : "query-sev-attestation-report",
+-#                      "arguments": { "mnonce": "aaaaaaa" } }
+-#     <- { "return" : { "data": "aaaaaaaabbbddddd"} }
+-##
+-{ 'command': 'query-sev-attestation-report',
+-  'data': { 'mnonce': 'str' },
+-  'returns': 'SevAttestationReport',
+-  'if': 'TARGET_I386' }
+-
  ##
- { 'command': 'dump-skeys',
-   'data': { 'filename': 'str' } }
-+
-+##
-+# @CpuModelInfo:
-+#
-+# Virtual CPU model.
-+#
-+# A CPU model consists of the name of a CPU definition, to which delta
-+# changes are applied (e.g. features added/removed).  Most magic
-+# values that an architecture might require should be hidden behind
-+# the name.  However, if required, architectures can expose relevant
-+# properties.
-+#
-+# @name: the name of the CPU definition the model is based on
-+#
-+# @props: a dictionary of QOM properties to be applied
-+#
-+# Since: 2.8
-+##
-+{ 'struct': 'CpuModelInfo',
-+  'data': { 'name': 'str',
-+            '*props': 'any' } }
-+
-+##
-+# @CpuModelExpansionType:
-+#
-+# An enumeration of CPU model expansion types.
-+#
-+# @static: Expand to a static CPU model, a combination of a static
-+#     base model name and property delta changes.  As the static base
-+#     model will never change, the expanded CPU model will be the
-+#     same, independent of QEMU version, machine type, machine
-+#     options, and accelerator options.  Therefore, the resulting
-+#     model can be used by tooling without having to specify a
-+#     compatibility machine - e.g. when displaying the "host" model.
-+#     The @static CPU models are migration-safe.
-+#
-+# @full: Expand all properties.  The produced model is not guaranteed
-+#     to be migration-safe, but allows tooling to get an insight and
-+#     work with model details.
-+#
-+# .. note:: When a non-migration-safe CPU model is expanded in static
-+#    mode, some features enabled by the CPU model may be omitted,
-+#    because they can't be implemented by a static CPU model
-+#    definition (e.g. cache info passthrough and PMU passthrough in
-+#    x86).  If you need an accurate representation of the features
-+#    enabled by a non-migration-safe CPU model, use @full.  If you
-+#    need a static representation that will keep ABI compatibility
-+#    even when changing QEMU version or machine-type, use @static (but
-+#    keep in mind that some features may be omitted).
-+#
-+# Since: 2.8
-+##
-+{ 'enum': 'CpuModelExpansionType',
-+  'data': [ 'static', 'full' ] }
-+
-+##
-+# @CpuModelCompareResult:
-+#
-+# An enumeration of CPU model comparison results.  The result is
-+# usually calculated using e.g. CPU features or CPU generations.
-+#
-+# @incompatible: If model A is incompatible to model B, model A is not
-+#     guaranteed to run where model B runs and the other way around.
-+#
-+# @identical: If model A is identical to model B, model A is
-+#     guaranteed to run where model B runs and the other way around.
-+#
-+# @superset: If model A is a superset of model B, model B is
-+#     guaranteed to run where model A runs.  There are no guarantees
-+#     about the other way.
-+#
-+# @subset: If model A is a subset of model B, model A is guaranteed to
-+#     run where model B runs.  There are no guarantees about the other
-+#     way.
-+#
-+# Since: 2.8
-+##
-+{ 'enum': 'CpuModelCompareResult',
-+  'data': [ 'incompatible', 'identical', 'superset', 'subset' ] }
-+
-+##
-+# @CpuModelBaselineInfo:
-+#
-+# The result of a CPU model baseline.
-+#
-+# @model: the baselined CpuModelInfo.
-+#
-+# Since: 2.8
-+##
-+{ 'struct': 'CpuModelBaselineInfo',
-+  'data': { 'model': 'CpuModelInfo' } }
-+
-+##
-+# @CpuModelCompareInfo:
-+#
-+# The result of a CPU model comparison.
-+#
-+# @result: The result of the compare operation.
-+#
-+# @responsible-properties: List of properties that led to the
-+#     comparison result not being identical.
-+#
-+# @responsible-properties is a list of QOM property names that led to
-+# both CPUs not being detected as identical.  For identical models,
-+# this list is empty.  If a QOM property is read-only, that means
-+# there's no known way to make the CPU models identical.  If the
-+# special property name "type" is included, the models are by
-+# definition not identical and cannot be made identical.
-+#
-+# Since: 2.8
-+##
-+{ 'struct': 'CpuModelCompareInfo',
-+  'data': { 'result': 'CpuModelCompareResult',
-+            'responsible-properties': ['str'] } }
-+
-+##
-+# @query-cpu-model-comparison:
-+#
-+# Compares two CPU models, @modela and @modelb, returning how they
-+# compare in a specific configuration.  The results indicates how
-+# both models compare regarding runnability.  This result can be
-+# used by tooling to make decisions if a certain CPU model will
-+# run in a certain configuration or if a compatible CPU model has
-+# to be created by baselining.
-+#
-+# Usually, a CPU model is compared against the maximum possible CPU
-+# model of a certain configuration (e.g. the "host" model for KVM).
-+# If that CPU model is identical or a subset, it will run in that
-+# configuration.
-+#
-+# The result returned by this command may be affected by:
-+#
-+# * QEMU version: CPU models may look different depending on the QEMU
-+#   version.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * machine-type: CPU model may look different depending on the
-+#   machine-type.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * machine options (including accelerator): in some architectures,
-+#   CPU models may look different depending on machine and accelerator
-+#   options.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * "-cpu" arguments and global properties: arguments to the -cpu
-+#   option and global properties may affect expansion of CPU models.
-+#   Using query-cpu-model-expansion while using these is not advised.
-+#
-+# Some architectures may not support comparing CPU models.  s390x
-+# supports comparing CPU models.
-+#
-+# @modela: description of the first CPU model to compare, referred to
-+#     as "model A" in CpuModelCompareResult
-+#
-+# @modelb: description of the second CPU model to compare, referred to
-+#     as "model B" in CpuModelCompareResult
-+#
-+# Returns: a CpuModelCompareInfo describing how both CPU models
-+#     compare
-+#
-+# Errors:
-+#     - if comparing CPU models is not supported by the target
-+#     - if a model cannot be used
-+#     - if a model contains an unknown cpu definition name, unknown
-+#       properties or properties with wrong types.
-+#
-+# Since: 2.8
-+##
-+{ 'command': 'query-cpu-model-comparison',
-+  'data': { 'modela': 'CpuModelInfo', 'modelb': 'CpuModelInfo' },
-+  'returns': 'CpuModelCompareInfo' }
-+
-+##
-+# @query-cpu-model-baseline:
-+#
-+# Baseline two CPU models, @modela and @modelb, creating a compatible
-+# third model.  The created model will always be a static,
-+# migration-safe CPU model (see "static" CPU model expansion for
-+# details).
-+#
-+# This interface can be used by tooling to create a compatible CPU
-+# model out two CPU models.  The created CPU model will be identical
-+# to or a subset of both CPU models when comparing them.  Therefore,
-+# the created CPU model is guaranteed to run where the given CPU
-+# models run.
-+#
-+# The result returned by this command may be affected by:
-+#
-+# * QEMU version: CPU models may look different depending on the QEMU
-+#   version.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * machine-type: CPU model may look different depending on the
-+#   machine-type.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * machine options (including accelerator): in some architectures,
-+#   CPU models may look different depending on machine and accelerator
-+#   options.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * "-cpu" arguments and global properties: arguments to the -cpu
-+#   option and global properties may affect expansion of CPU models.
-+#   Using query-cpu-model-expansion while using these is not advised.
-+#
-+# Some architectures may not support baselining CPU models.  s390x
-+# supports baselining CPU models.
-+#
-+# @modela: description of the first CPU model to baseline
-+#
-+# @modelb: description of the second CPU model to baseline
-+#
-+# Returns: a CpuModelBaselineInfo describing the baselined CPU model
-+#
-+# Errors:
-+#     - if baselining CPU models is not supported by the target
-+#     - if a model cannot be used
-+#     - if a model contains an unknown cpu definition name, unknown
-+#       properties or properties with wrong types.
-+#
-+# Since: 2.8
-+##
-+{ 'command': 'query-cpu-model-baseline',
-+  'data': { 'modela': 'CpuModelInfo',
-+            'modelb': 'CpuModelInfo' },
-+  'returns': 'CpuModelBaselineInfo' }
-+
-+##
-+# @CpuModelExpansionInfo:
-+#
-+# The result of a cpu model expansion.
-+#
-+# @model: the expanded CpuModelInfo.
-+#
-+# @deprecated-props: an optional list of properties that are flagged as
-+#     deprecated by the CPU vendor.  The list depends on the
-+#     CpuModelExpansionType: "static" properties are a subset of the
-+#     enabled-properties for the expanded model; "full" properties are
-+#     a set of properties that are deprecated across all models for
-+#     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
-+#
-+# Since: 2.8
-+##
-+{ 'struct': 'CpuModelExpansionInfo',
-+  'data': { 'model': 'CpuModelInfo',
-+            '*deprecated-props' : ['str'] } }
-+
-+##
-+# @query-cpu-model-expansion:
-+#
-+# Expands a given CPU model, @model, (or a combination of CPU model +
-+# additional options) to different granularities, specified by @type,
-+# allowing tooling to get an understanding what a specific CPU model
-+# looks like in QEMU under a certain configuration.
-+#
-+# This interface can be used to query the "host" CPU model.
-+#
-+# The data returned by this command may be affected by:
-+#
-+# * QEMU version: CPU models may look different depending on the QEMU
-+#   version.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * machine-type: CPU model may look different depending on the
-+#   machine-type.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * machine options (including accelerator): in some architectures,
-+#   CPU models may look different depending on machine and accelerator
-+#   options.  (Except for CPU models reported as "static" in
-+#   query-cpu-definitions.)
-+# * "-cpu" arguments and global properties: arguments to the -cpu
-+#   option and global properties may affect expansion of CPU models.
-+#   Using query-cpu-model-expansion while using these is not advised.
-+#
-+# Some architectures may not support all expansion types.  s390x
-+# supports "full" and "static".  Arm only supports "full".
-+#
-+# @model: description of the CPU model to expand
-+#
-+# @type: expansion type, specifying how to expand the CPU model
-+#
-+# Returns: a CpuModelExpansionInfo describing the expanded CPU model
-+#
-+# Errors:
-+#     - if expanding CPU models is not supported
-+#     - if the model cannot be expanded
-+#     - if the model contains an unknown CPU definition name, unknown
-+#       properties or properties with a wrong type
-+#     - if an expansion type is not supported
-+#
-+# Since: 2.8
-+##
-+{ 'command': 'query-cpu-model-expansion',
-+  'data': { 'type': 'CpuModelExpansionType',
-+            'model': 'CpuModelInfo' },
-+  'returns': 'CpuModelExpansionInfo' }
-+
-+##
-+# @CpuDefinitionInfo:
-+#
-+# Virtual CPU definition.
-+#
-+# @name: the name of the CPU definition
-+#
-+# @migration-safe: whether a CPU definition can be safely used for
-+#     migration in combination with a QEMU compatibility machine when
-+#     migrating between different QEMU versions and between hosts with
-+#     different sets of (hardware or software) capabilities.  If not
-+#     provided, information is not available and callers should not
-+#     assume the CPU definition to be migration-safe.  (since 2.8)
-+#
-+# @static: whether a CPU definition is static and will not change
-+#     depending on QEMU version, machine type, machine options and
-+#     accelerator options.  A static model is always migration-safe.
-+#     (since 2.8)
-+#
-+# @unavailable-features: List of properties that prevent the CPU model
-+#     from running in the current host.  (since 2.8)
-+#
-+# @typename: Type name that can be used as argument to
-+#     @device-list-properties, to introspect properties configurable
-+#     using -cpu or -global.  (since 2.9)
-+#
-+# @alias-of: Name of CPU model this model is an alias for.  The target
-+#     of the CPU model alias may change depending on the machine type.
-+#     Management software is supposed to translate CPU model aliases
-+#     in the VM configuration, because aliases may stop being
-+#     migration-safe in the future (since 4.1)
-+#
-+# @deprecated: If true, this CPU model is deprecated and may be
-+#     removed in some future version of QEMU according to the QEMU
-+#     deprecation policy.  (since 5.2)
-+#
-+# @unavailable-features is a list of QOM property names that represent
-+# CPU model attributes that prevent the CPU from running.  If the QOM
-+# property is read-only, that means there's no known way to make the
-+# CPU model run in the current host.  Implementations that choose not
-+# to provide specific information return the property name "type".  If
-+# the property is read-write, it means that it MAY be possible to run
-+# the CPU model in the current host if that property is changed.
-+# Management software can use it as hints to suggest or choose an
-+# alternative for the user, or just to generate meaningful error
-+# messages explaining why the CPU model can't be used.  If
-+# @unavailable-features is an empty list, the CPU model is runnable
-+# using the current host and machine-type.  If @unavailable-features
-+# is not present, runnability information for the CPU is not
-+# available.
-+#
-+# Since: 1.2
-+##
-+{ 'struct': 'CpuDefinitionInfo',
-+  'data': { 'name': 'str',
-+            '*migration-safe': 'bool',
-+            'static': 'bool',
-+            '*unavailable-features': [ 'str' ],
-+            'typename': 'str',
-+            '*alias-of' : 'str',
-+            'deprecated' : 'bool' } }
-+
-+##
-+# @query-cpu-definitions:
-+#
-+# Return a list of supported virtual CPU definitions
-+#
-+# Returns: a list of CpuDefinitionInfo
-+#
-+# Since: 1.2
-+##
-+{ 'command': 'query-cpu-definitions', 'returns': ['CpuDefinitionInfo'] }
-diff --git a/stubs/monitor-cpu-s390x.c b/stubs/monitor-cpu-s390x.c
+ # @GICCapability:
+ #
+diff --git a/stubs/monitor-i386-sev.c b/stubs/monitor-i386-sev.c
 new file mode 100644
-index 00000000000..71e794482b5
+index 00000000000..d4f024128ca
 --- /dev/null
-+++ b/stubs/monitor-cpu-s390x.c
-@@ -0,0 +1,23 @@
++++ b/stubs/monitor-i386-sev.c
+@@ -0,0 +1,36 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
 +#include "qemu/osdep.h"
 +#include "qapi/error.h"
-+#include "qapi/qapi-commands-machine.h"
++#include "qapi/qapi-commands-misc-i386.h"
 +
-+CpuModelCompareInfo *
-+qmp_query_cpu_model_comparison(CpuModelInfo *infoa,
-+                               CpuModelInfo *infob,
-+                               Error **errp)
++SevInfo *qmp_query_sev(Error **errp)
 +{
-+    error_setg(errp, "CPU model comparison is not supported on this target");
++    error_setg(errp, "SEV is not available in this QEMU");
 +    return NULL;
 +}
 +
-+CpuModelBaselineInfo *
-+qmp_query_cpu_model_baseline(CpuModelInfo *infoa,
-+                             CpuModelInfo *infob,
-+                             Error **errp)
++SevLaunchMeasureInfo *qmp_query_sev_launch_measure(Error **errp)
 +{
-+    error_setg(errp, "CPU model baseline is not supported on this target");
-+    return NULL;
-+}
-diff --git a/stubs/monitor-cpu.c b/stubs/monitor-cpu.c
-new file mode 100644
-index 00000000000..a8c7ee89b9d
---- /dev/null
-+++ b/stubs/monitor-cpu.c
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-machine.h"
-+
-+CpuModelExpansionInfo *
-+qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-+                              CpuModelInfo *model,
-+                              Error **errp)
-+{
-+    error_setg(errp, "CPU model expansion is not supported on this target");
++    error_setg(errp, "SEV is not available in this QEMU");
 +    return NULL;
 +}
 +
-+CpuDefinitionInfoList *
-+qmp_query_cpu_definitions(Error **errp)
++SevCapability *qmp_query_sev_capabilities(Error **errp)
 +{
-+    error_setg(errp, "CPU model definitions are not supported on this target");
++    error_setg(errp, "SEV is not available in this QEMU");
 +    return NULL;
 +}
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index ef18c867ca4..cca6b9722b2 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -26,7 +26,7 @@
- #include "qapi/error.h"
- #include "qapi/visitor.h"
- #include "qapi/qobject-input-visitor.h"
--#include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/qapi-commands-machine.h"
- #include "qapi/qapi-commands-misc-arm.h"
- #include "qobject/qdict.h"
- #include "qom/qom-qobject.h"
-diff --git a/target/i386/cpu-system.c b/target/i386/cpu-system.c
-index 55f192e8193..b1494aa6740 100644
---- a/target/i386/cpu-system.c
-+++ b/target/i386/cpu-system.c
-@@ -24,7 +24,7 @@
- #include "qobject/qdict.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qom/qom-qobject.h"
--#include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/qapi-commands-machine.h"
- 
- #include "cpu-internal.h"
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 9689f6374e6..33afc3ec60e 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -38,7 +38,7 @@
- #include "exec/watchpoint.h"
- #ifndef CONFIG_USER_ONLY
- #include "system/reset.h"
--#include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/qapi-commands-machine.h"
- #include "system/address-spaces.h"
- #include "hw/boards.h"
- #include "hw/i386/sgx-epc.h"
-diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index 6f732d80f3f..f5f1cd0009d 100644
---- a/target/loongarch/loongarch-qmp-cmds.c
-+++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -8,7 +8,7 @@
- 
++
++void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
++                                  bool has_gpa, uint64_t gpa, Error **errp)
++{
++    error_setg(errp, "SEV is not available in this QEMU");
++}
++
++SevAttestationReport *qmp_query_sev_attestation_report(const char *mnonce,
++                                                       Error **errp)
++{
++    error_setg(errp, "SEV is not available in this QEMU");
++    return NULL;
++}
+diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
+index d5bf886e799..7c5c02a5657 100644
+--- a/target/i386/sev-system-stub.c
++++ b/target/i386/sev-system-stub.c
+@@ -14,34 +14,9 @@
  #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/qapi-commands-machine.h"
- #include "cpu.h"
- #include "qobject/qdict.h"
- #include "qapi/qobject-input-visitor.h"
-diff --git a/target/mips/system/mips-qmp-cmds.c b/target/mips/system/mips-qmp-cmds.c
-index 7340ac70ba0..d98d6623f2f 100644
---- a/target/mips/system/mips-qmp-cmds.c
-+++ b/target/mips/system/mips-qmp-cmds.c
-@@ -7,9 +7,19 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-machine.h"
- #include "cpu.h"
- 
-+CpuModelExpansionInfo *
-+qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-+                              CpuModelInfo *model,
-+                              Error **errp)
-+{
-+    error_setg(errp, "CPU model expansion is not supported on this target");
-+    return NULL;
-+}
-+
- static void mips_cpu_add_definition(gpointer data, gpointer user_data)
- {
-     ObjectClass *oc = data;
-diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
-index a25d86a8d19..7022564604f 100644
---- a/target/ppc/ppc-qmp-cmds.c
-+++ b/target/ppc/ppc-qmp-cmds.c
-@@ -28,7 +28,8 @@
- #include "qemu/ctype.h"
+ #include "monitor/monitor.h"
  #include "monitor/hmp-target.h"
- #include "monitor/hmp.h"
--#include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-machine.h"
- #include "cpu-models.h"
- #include "cpu-qom.h"
+-#include "qapi/qapi-commands-misc-target.h"
+ #include "qapi/error.h"
+ #include "sev.h"
  
-@@ -175,6 +176,15 @@ int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
-     return -EINVAL;
+-SevInfo *qmp_query_sev(Error **errp)
+-{
+-    error_setg(errp, "SEV is not available in this QEMU");
+-    return NULL;
+-}
+-
+-SevLaunchMeasureInfo *qmp_query_sev_launch_measure(Error **errp)
+-{
+-    error_setg(errp, "SEV is not available in this QEMU");
+-    return NULL;
+-}
+-
+-SevCapability *qmp_query_sev_capabilities(Error **errp)
+-{
+-    error_setg(errp, "SEV is not available in this QEMU");
+-    return NULL;
+-}
+-
+-void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
+-                                  bool has_gpa, uint64_t gpa, Error **errp)
+-{
+-    error_setg(errp, "SEV is not available in this QEMU");
+-}
+-
+ int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+ {
+     g_assert_not_reached();
+@@ -56,13 +31,6 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
+     g_assert_not_reached();
  }
  
-+CpuModelExpansionInfo *
-+qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-+                              CpuModelInfo *model,
-+                              Error **errp)
-+{
-+    error_setg(errp, "CPU model expansion is not supported on this target");
-+    return NULL;
-+}
-+
- static void ppc_cpu_defs_entry(gpointer data, gpointer user_data)
+-SevAttestationReport *qmp_query_sev_attestation_report(const char *mnonce,
+-                                                       Error **errp)
+-{
+-    error_setg(errp, "SEV is not available in this QEMU");
+-    return NULL;
+-}
+-
+ void hmp_info_sev(Monitor *mon, const QDict *qdict)
  {
-     ObjectClass *oc = data;
-diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
-index d0a324364dd..8ba8aa0d5f8 100644
---- a/target/riscv/riscv-qmp-cmds.c
-+++ b/target/riscv/riscv-qmp-cmds.c
-@@ -25,7 +25,7 @@
- #include "qemu/osdep.h"
- 
- #include "qapi/error.h"
--#include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/qapi-commands-machine.h"
- #include "qobject/qbool.h"
- #include "qobject/qdict.h"
- #include "qapi/qobject-input-visitor.h"
-diff --git a/target/s390x/cpu_models_system.c b/target/s390x/cpu_models_system.c
-index 4351182f720..9d84faa3c9e 100644
---- a/target/s390x/cpu_models_system.c
-+++ b/target/s390x/cpu_models_system.c
-@@ -19,7 +19,7 @@
- #include "qapi/visitor.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qobject/qdict.h"
--#include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/qapi-commands-machine.h"
- 
- static void list_add_feat(const char *name, void *opaque);
- 
+     monitor_printf(mon, "SEV is not available in this QEMU\n");
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 7ee700d6a35..56dd64e659a 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -37,7 +37,7 @@
+ #include "qom/object.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp-target.h"
+-#include "qapi/qapi-commands-misc-target.h"
++#include "qapi/qapi-commands-misc-i386.h"
+ #include "confidential-guest.h"
+ #include "hw/i386/pc.h"
+ #include "system/address-spaces.h"
 diff --git a/stubs/meson.build b/stubs/meson.build
-index 0ef11976a2f..3b2fad0824f 100644
+index 9907b54c1e6..9922ec7b88e 100644
 --- a/stubs/meson.build
 +++ b/stubs/meson.build
-@@ -82,6 +82,8 @@ if have_system
-   stub_ss.add(files('monitor-i386-sev.c'))
-   stub_ss.add(files('monitor-i386-sgx.c'))
-   stub_ss.add(files('monitor-i386-xen.c'))
-+  stub_ss.add(files('monitor-cpu.c'))
-+  stub_ss.add(files('monitor-cpu-s390x.c'))
+@@ -78,6 +78,7 @@ if have_system
+   stub_ss.add(files('win32-kbd-hook.c'))
+   stub_ss.add(files('xen-hw-stub.c'))
+   stub_ss.add(files('monitor-i386-rtc.c'))
++  stub_ss.add(files('monitor-i386-sev.c'))
  endif
  
  if have_system or have_user
