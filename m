@@ -4,92 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AE0DC54756
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 09:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9E5C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 09:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI1rD-0003Xy-D3; Thu, 22 May 2025 05:04:55 -0400
+	id 1uI1vf-0004YW-VP; Thu, 22 May 2025 05:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uI1rA-0003XX-ON
- for qemu-devel@nongnu.org; Thu, 22 May 2025 05:04:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uI1vb-0004Xe-CG; Thu, 22 May 2025 05:09:27 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uI1r3-00010O-AZ
- for qemu-devel@nongnu.org; Thu, 22 May 2025 05:04:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747904681;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2UQF9iAcSeIofk5PhEWnltNZobL88RbKqDt0sMN5zqc=;
- b=UCdToRpSsctE6/L1W3ttFgCfzk4k3EXkS358fVuuW117+09xxT1OQL56x/HRsQOtcZ061i
- FLInLT8xnjXk9w/ZDJtvWpcHHweeVl417eaO3WUch1kvXJ+HSjOqyJkTy/oVuWnTy3HU/9
- CZbQOLuWHImAWZzHuMqdQYDtKF/nhOY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-om6-ztjcOuGO-AYZGJB6Eg-1; Thu, 22 May 2025 05:04:39 -0400
-X-MC-Unique: om6-ztjcOuGO-AYZGJB6Eg-1
-X-Mimecast-MFC-AGG-ID: om6-ztjcOuGO-AYZGJB6Eg_1747904678
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a375938404so2692731f8f.0
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 02:04:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747904678; x=1748509478;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2UQF9iAcSeIofk5PhEWnltNZobL88RbKqDt0sMN5zqc=;
- b=s90xhue8Pfx7UHxqH4dgSIlaP+HUlpZDUnm9zVCHiT1Ll8h+RPCQrjv1cYHm9DUc+z
- vB2NEMgqInP/xDFTahDgKyXWsA2x3vu282LU6xDv7FUzqWik+pIC1sD9DT6AdW7zqIjv
- tofpR3EWQNOmXR/gFTKQ+xb86T0D4+t+t6sp4dO7gXpn8hLB2FiyUrnDC9lPexx08hfQ
- 4BsNVroxtaBYZ7o5vSUKjF10BZMQ7HXGsoOlONc8KLmvM4UNuibUUcSb6ikenuOtdZ4Y
- WMhY5aXsE2Rbpvv/V5PzplecVtPZSsbwrBc9zEvo52vr6S1aMtxq74T/5loKRwFacTv8
- jx3g==
-X-Gm-Message-State: AOJu0YxGnj+s5zZ43po74MiXO2SPQ7OXFaE2aAPKu86NVFKI6gCbakk/
- eW2Sr1sCNoSx6NMEDpVHNVXqYftgX/JqEQnDEfwtuMdyXrqWzEcC4djJ68HCC1J5IfFObWpLZcy
- /8HmEt9cbGMxc4Wv/Xz+mALk1fk0o1788YsUzSyVbwiNxPThGZPg6vLYo
-X-Gm-Gg: ASbGncsWW/siG4xi1oAAF4MSgeYsQpn/YMp99B/nNaLF3PLxHVfYKJR5lKKuDzlputo
- MEs83FbT+0a+zWNhEVrcJm7XRbpGMzpLi+fFyqut7HFrRfE/mWRYMPX3rCFyodBCU8qrqtMMKTF
- fftMWWXjJiMAfPxjRnMUabri9EpfWY0f7nAVFTq79FgLbqjzDyrGMSSIfuZGWHpRLI5AgWZCDFb
- OuBZ6uTvWic9bWyjvtgBzjRREMd07RDMZYQa1oX9/WOPZETOfksdTJZIqu87LLlUfeURIvTxxSk
-X-Received: by 2002:adf:faca:0:b0:3a3:620a:696a with SMTP id
- ffacd0b85a97d-3a3620a6a26mr19333986f8f.39.1747904677970; 
- Thu, 22 May 2025 02:04:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+hshikhtsYy7dpMhGXzRSiqKFMUKCgAlJJTq6VzaytmJXPIYxH6DQtxbsCNRxPmtdSuf99Q==
-X-Received: by 2002:adf:faca:0:b0:3a3:620a:696a with SMTP id
- ffacd0b85a97d-3a3620a6a26mr19333951f8f.39.1747904677540; 
- Thu, 22 May 2025 02:04:37 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca888fcsm23483394f8f.78.2025.05.22.02.04.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 02:04:37 -0700 (PDT)
-Date: Thu, 22 May 2025 11:04:35 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com, 
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] ui/vnc: Update display update interval when VM state
- changes to RUNNING
-Message-ID: <ixiqrbp5ktv5awwdhnjrmbnsq4m5faf6mxpyr7qhhpchakbsrd@z3lzegdczbrg>
-References: <20250521151616.3951178-1-jmarcin@redhat.com>
- <aC35pvtRC3OcQruO@x1.local>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uI1vY-0001d9-BB; Thu, 22 May 2025 05:09:26 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 9440D43CA7;
+ Thu, 22 May 2025 11:09:19 +0200 (CEST)
+Message-ID: <da1004d1-6366-4d2f-bc71-fd20de054bde@proxmox.com>
+Date: Thu, 22 May 2025 11:09:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aC35pvtRC3OcQruO@x1.local>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.184,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/24] block: move drain outside of
+ bdrv_change_aio_context() and mark GRAPH_RDLOCK
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, hreitz@redhat.com, stefanha@redhat.com,
+ eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
+ xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
+ fam@euphon.net, ari@tuxera.com
+References: <20250520103012.424311-1-f.ebner@proxmox.com>
+ <20250520103012.424311-9-f.ebner@proxmox.com> <aC35wP_tPcNzFvP9@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <aC35wP_tPcNzFvP9@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,114 +63,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter
+Am 21.05.25 um 18:05 schrieb Kevin Wolf:
+> Am 20.05.2025 um 12:29 hat Fiona Ebner geschrieben:
+>> This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
+>>
+>> Note that even if bdrv_drained_begin() would already be marked as
+> 
+> "if ... were already marked"
 
-On 2025-05-21 12:04, Peter Xu wrote:
-> On Wed, May 21, 2025 at 05:16:13PM +0200, Juraj Marcin wrote:
-> > From: Juraj Marcin <jmarcin@redhat.com>
-> > 
-> > If a virtual machine is paused for an extended period time, for example,
-> > due to an incoming migration, there are also no changes on the screen.
-> > VNC in such case increases the display update interval by
-> > VNC_REFRESH_INTERVAL_INC (50 ms). The update interval can then grow up
-> > to VNC_REFRESH_INTERVAL_MAX (3000 ms).
-> > 
-> > When the machine resumes, it can then take up to 3 seconds for the first
-> > display update. Furthermore, the update interval is then halved with
-> > each display update with changes on the screen. If there are moving
-> > elements on the screen, such as a video, this can be perceived as
-> > freezing and stuttering for few seconds before the movement is smooth
-> > again.
-> > 
-> > This patch resolves this issue, by adding a listener to VM state changes
-> > and changing the update interval when the VM state changes to RUNNING.
-> > The update_displaychangelistener() function updates the internal timer,
-> > and the display is refreshed immediately if the timer is expired.
-> > 
-> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> 
-> Thanks for looking into it!
-> 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> 
-> One trivial comment (and partly, pure question) below,
-> 
-> > ---
-> >  ui/vnc.c | 12 ++++++++++++
-> >  ui/vnc.h |  2 ++
-> >  2 files changed, 14 insertions(+)
-> > 
-> > diff --git a/ui/vnc.c b/ui/vnc.c
-> > index 9e097dc4b4..32f8bfd1f9 100644
-> > --- a/ui/vnc.c
-> > +++ b/ui/vnc.c
-> > @@ -3384,6 +3384,16 @@ static const DisplayChangeListenerOps dcl_ops = {
-> >      .dpy_cursor_define    = vnc_dpy_cursor_define,
-> >  };
-> >  
-> > +static void vmstate_change_handler(void *opaque, bool running, RunState state)
-> > +{
-> > +    VncDisplay *vd = opaque;
-> > +
-> > +    if (state != RUN_STATE_RUNNING) {
-> 
-> Just to mention in vm_prepare_start() it's possible we migrate a VM that
-> used to be suspended, if so it'll keep suspended after migration:
-> 
->     RunState state = vm_was_suspended ? RUN_STATE_SUSPENDED : RUN_STATE_RUNNING;
-> 
-> Here I'm not sure whether SUSPENDED would also like to update the display
-> freq.  I don't think it matters hugely, but just to say, if we want we can
-> simply check "running=true" instead of checking the state to cover both
-> RUNNING|SUSPENDED cases.
+Ack.
 
-Thank you for the comment. I don't think it is necessary to update the
-screen frequency if the machine is suspended. In case there is an
-explicit request for that, we can change it then. The display frequency
-is still updated when the machine is resumed, same as if it was just
-suspended and then resumed without migration.
+---snip 8<---
 
-Best regards
+>> diff --git a/block.c b/block.c
+>> index 01144c895e..7148618504 100644
+>> --- a/block.c
+>> +++ b/block.c
+>> @@ -106,9 +106,9 @@ static void bdrv_reopen_abort(BDRVReopenState *reopen_state);
+>>  
+>>  static bool bdrv_backing_overridden(BlockDriverState *bs);
+>>  
+>> -static bool bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+>> -                                    GHashTable *visited, Transaction *tran,
+>> -                                    Error **errp);
+>> +static bool GRAPH_RDLOCK
+>> +bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+>> +                        GHashTable *visited, Transaction *tran, Error **errp);
+> 
+> For static functions, we should have rhe GRAPH_RDLOCK annotation both
+> here and in the actual definition, too.
 
-Juraj Marcin
+Will fix in v3!
 
+>>  /* If non-zero, use only whitelisted block drivers */
+>>  static int use_bdrv_whitelist;
+>> @@ -3040,8 +3040,10 @@ static void GRAPH_WRLOCK bdrv_attach_child_common_abort(void *opaque)
+>>  
+>>          /* No need to visit `child`, because it has been detached already */
+>>          visited = g_hash_table_new(NULL, NULL);
+>> +        bdrv_drain_all_begin();
+>>          ret = s->child->klass->change_aio_ctx(s->child, s->old_parent_ctx,
+>>                                                visited, tran, &error_abort);
+>> +        bdrv_drain_all_end();
+>>          g_hash_table_destroy(visited);
+>>  
+>>          /* transaction is supposed to always succeed */
+>> @@ -3122,9 +3124,11 @@ bdrv_attach_child_common(BlockDriverState *child_bs,
+>>              bool ret_child;
+>>  
+>>              g_hash_table_add(visited, new_child);
+>> +            bdrv_drain_all_begin();
+>>              ret_child = child_class->change_aio_ctx(new_child, child_ctx,
+>>                                                      visited, aio_ctx_tran,
+>>                                                      NULL);
+>> +            bdrv_drain_all_end();
+>>              if (ret_child == true) {
+>>                  error_free(local_err);
+>>                  ret = 0;
 > 
-> > +        return;
-> > +    }
-> > +    update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-> > +}
-> > +
-> >  void vnc_display_init(const char *id, Error **errp)
-> >  {
-> >      VncDisplay *vd;
-> > @@ -3420,6 +3430,8 @@ void vnc_display_init(const char *id, Error **errp)
-> >      vd->dcl.ops = &dcl_ops;
-> >      register_displaychangelistener(&vd->dcl);
-> >      vd->kbd = qkbd_state_init(vd->dcl.con);
-> > +    vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
-> > +        &vmstate_change_handler, vd);
-> >  }
-> >  
-> >  
-> > diff --git a/ui/vnc.h b/ui/vnc.h
-> > index acc53a2cc1..3bb23acd34 100644
-> > --- a/ui/vnc.h
-> > +++ b/ui/vnc.h
-> > @@ -185,6 +185,8 @@ struct VncDisplay
-> >  #endif
-> >  
-> >      AudioState *audio_state;
-> > +
-> > +    VMChangeStateEntry *vmstate_handler_entry;
-> >  };
-> >  
-> >  typedef struct VncTight {
-> > -- 
-> > 2.49.0
-> > 
+> Should we document in the header file that BdrvChildClass.change_aio_ctx
+> is called with the node drained?
 > 
-> -- 
-> Peter Xu
+> We could add assertions to bdrv_child/parent_change_aio_context or at
+> least comments to this effect. (Assertions might be over the top because
+> it's easy to verify that both are only called from
+> bdrv_change_aio_context().)
+
+Sounds good. Would the following be okay?
+
+For bdrv_parent_change_aio_context() and for change_aio_ctx() the same
+(except the name of @child is @c for the former):
+
+> /*
+>  * Changes the AioContext of for @child to @ctx and recursively for the
+>  * associated block nodes and all their children and parents. Returns true if
+>  * the change is possible and the transaction @tran can be continued. Returns
+>  * false and sets @errp if not and the transaction must be aborted.
+>  *
+>  * @visited will accumulate all visited BdrvChild objects. The caller is
+>  * responsible for freeing the list afterwards.
+>  *
+>  * Must be called with the affected block nodes drained.
+>  */
+
+and for bdrv_child_change_aio_context() slightly different:
+
+> /*
+>  * Changes the AioContext of for @c->bs to @ctx and recursively for all its
+>  * children and parents. Returns true if the change is possible and the
+>  * transaction @tran can be continued. Returns false and sets @errp if not and
+>  * the transaction must be aborted.
+>  *
+>  * @visited will accumulate all visited BdrvChild objects. The caller is
+>  * responsible for freeing the list afterwards.
+>  *
+>  * Must be called with the affected block nodes drained.
+>  */
+
+---snip 8<---
+
+>> @@ -7720,7 +7717,11 @@ int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+>>      if (ignore_child) {
+>>          g_hash_table_add(visited, ignore_child);
+>>      }
+>> +    bdrv_drain_all_begin();
+>> +    bdrv_graph_rdlock_main_loop();
+>>      ret = bdrv_change_aio_context(bs, ctx, visited, tran, errp);
+>> +    bdrv_graph_rdunlock_main_loop();
+>> +    bdrv_drain_all_end();
+>>      g_hash_table_destroy(visited);
 > 
+> I think you're ending the drained section too early here. Previously,
+> the nodes were kept drained until after tran_abort/commit(), and I think
+> that's important (tran_commit() is the thing that actually switches the
+> AioContext).
+
+Right, I'll change this in v3.
+
+Best Regards,
+Fiona
 
 
