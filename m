@@ -4,98 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF437C54E90
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 11:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7104C54E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 May 2025 12:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uI4My-0002Gu-6U; Thu, 22 May 2025 07:45:52 -0400
+	id 1uI4ao-0004vu-4L; Thu, 22 May 2025 08:00:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uI4Mq-0002AD-4I
- for qemu-devel@nongnu.org; Thu, 22 May 2025 07:45:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uI4Mn-0001lu-F2
- for qemu-devel@nongnu.org; Thu, 22 May 2025 07:45:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747914339;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bRPhXblA8J7fizv58w853LZHARqbP/0pPmDyhoZxGCQ=;
- b=WsPsZvLfZyV1hAevOy+ZRoXvZ/deL/cQ1yLEtOO0x4nUTySUkUESlciStjLt0iUIVcZlUD
- ++8jOPwwcXmfjwoF+F/AKEMR7Zp0NtMEFLO5ALBRT6q2jSJYwt2AkiQIMF6h8COMB/WS1m
- GBL00WMbSqwiWbhieF7Wai/CChpDd+I=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595--OeqTyfAPG6FTs8LKa94Dw-1; Thu, 22 May 2025 07:45:36 -0400
-X-MC-Unique: -OeqTyfAPG6FTs8LKa94Dw-1
-X-Mimecast-MFC-AGG-ID: -OeqTyfAPG6FTs8LKa94Dw_1747914335
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a376da334dso2552977f8f.0
- for <qemu-devel@nongnu.org>; Thu, 22 May 2025 04:45:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747914335; x=1748519135;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bRPhXblA8J7fizv58w853LZHARqbP/0pPmDyhoZxGCQ=;
- b=GCz8S+G8iLCj4sBVyjxxW+AQQ7Fwe+c0bVs++UkJEB+GqJg6V0MVHM26xNra2LKxA9
- 6u8f9s16GhdoGjVpPLYSuAKn+hAEhQ7GzQwLDZhL7tpCs/DW/jnujLNFchHunYqQ9qPG
- ERbvGJETcY/UE35YQrWGAQXY8DL1EE+WXXMBqsBbNeh8OjqCEHeVMgJu9EsxL1O2wFF1
- F9e4UHFsM5OAX9OwDvImKwOFJ/87TkEijfmYQhzoTKsWSUxyGkFmlPDMjXzni08R5CJr
- oEruBzOgHdh8pBKiRlTW3JXj8+Z3SZ2JHtS6hRNTtmw7BDEdQrGYII+rJYSQRdu2iKeX
- UIaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqu+dGpCt3Cs8NZHw4Dsshr/ifCqISfYDK9uFCSNeTU5+C3yo+ql8n5w7YXy7XlHuCNGdxEmpBq/cr@nongnu.org
-X-Gm-Message-State: AOJu0Ywd7umbZy5EIDGOLGEf387ODSeHGr1V4UJc/h0bZOb3nzRRBLAB
- swHLXxn9nRNFBzGcpcMqmhINKcdzE7q+Hq8WNCi6vHxykEagRkyHoIXOn85w4Uz7915QUypjhhn
- n6gppvOIr4OsszNZV9pQ4TRD1SR5gHBDP8Zoyq0xaNhih4P3cd9Q/2jjL
-X-Gm-Gg: ASbGncuvHM/UFtgCh42C0RrznnxDkbhf8sMSHKMM0+Y+T1C5LkeWz3b7ob4+7tqoU/O
- uUxDcf0eHWhJv3Mza7T9Ikqg78V4g7gnrUnBc9cSbxOsosiJy8cLso0BUerLSwHTGn0jw90dL8n
- 1m6LFm5OXACOLwRUHCsmM6MXoH1xVpRtyRKNxkSP1NPFj0X2qUjiN1GLlkS0AbwDxdz60y+Myl+
- UIIivjs8euEucRdfdmXssWXgFJZLOV2iEK/Q+lpmBjGDIXxZLJoDgRk/p0LXDjwzzuH6N6uS3gj
- FmuGIAcQtS9cpbapbvXUIlhd0IdtoHPMPq2CteDWW+isu3ToMoRowEMrnnR9
-X-Received: by 2002:a05:6000:1846:b0:38f:4d20:4a17 with SMTP id
- ffacd0b85a97d-3a35c8218b5mr21582716f8f.13.1747914334967; 
- Thu, 22 May 2025 04:45:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgAnZma/bQxH9d/VzdTOkElm8ZxkLh5fonLeuJSjKXJDgWep+gZqe7U7LNian5yu8E7JDS3w==
-X-Received: by 2002:a05:6000:1846:b0:38f:4d20:4a17 with SMTP id
- ffacd0b85a97d-3a35c8218b5mr21582667f8f.13.1747914334401; 
- Thu, 22 May 2025 04:45:34 -0700 (PDT)
-Received: from sgarzare-redhat (host-82-53-134-35.retail.telecomitalia.it.
- [82.53.134.35]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca8874bsm23164039f8f.67.2025.05.22.04.45.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 May 2025 04:45:33 -0700 (PDT)
-Date: Thu, 22 May 2025 13:45:28 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: oenhan@gmail.com
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, cohuck@redhat.com, 
- pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com, 
- leiyang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Huaitong Han <hanht2@chinatelecom.cn>,
- Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>, 
- Jidong Xia <xiajd@chinatelecom.cn>
-Subject: Re: [PATCH V3] vhost: Don't set vring call if guest notifier is unused
-Message-ID: <6rqjkyuvautarpuubc4s42ouwz4yupskyrowe3r5z6tcagw5ss@zsxqzeolyauj>
-References: <20250522100548.212740-1-hanht2@chinatelecom.cn>
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uI4am-0004vX-JF
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 08:00:08 -0400
+Received: from mailgate02.uberspace.is ([185.26.156.114])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uI4ai-0003mH-TO
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 08:00:07 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 03F1218031B
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 13:59:53 +0200 (CEST)
+Received: (qmail 29706 invoked by uid 990); 22 May 2025 11:59:53 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Thu, 22 May 2025 13:59:53 +0200
+From: Julian Ganz <neither@nut.email>
+To: Rowan Hart <rowanbhart@gmail.com>
+Cc: Julian Ganz <neither@nut.email>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 5/8] Add memory hardware address read/write API
+Date: Thu, 22 May 2025 13:59:32 +0200
+Message-ID: <20250522115935.34716-3-neither@nut.email>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250521094333.4075796-6-rowanbhart@gmail.com>
+References: <20250521094333.4075796-1-rowanbhart@gmail.com>
+ <20250521094333.4075796-6-rowanbhart@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250522100548.212740-1-hanht2@chinatelecom.cn>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Bar: /
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-3) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1)
+X-Rspamd-Score: -0.6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=doSqRyXXsf1NTn+TJKo4v2nGsZfnhTW2imRNbaJYcPU=;
+ b=RpObsh5y6VBv2I4mNpNdByUIDYnZ/qbac5Ql9ag5+96AG9n8vPpK+MMJza7b8+FO83nz64twW+
+ m56/9v8qxbUxHX/zkQp8HNMs36T2AtnRstzSKJ1Umsqz1FX1ilS/YLScreOY5TCJxrQWYWdEPsBo
+ qZP6rvePeIl0Jp6uUrw7oNev9FyHWQPgGgmYJ8OOmW4L4L9B88oLgsPPjgflllrIfDbb8INrfn/x
+ rls+bZqzKl+C/e5XM390NM5Kx/TsPbmH/4g7cLOvD/mmBx7hbUtrO2lj2ca/5SL+BdIt0KglY578
+ 7JGkwPvQu+Z7qlkKNAxvFPbA4JbLIv5nK5IxmxDMmxKXt2vGujC1p7dklffgSQXHp2RDus4tXn1E
+ 7dk9DZbdnRBPb0RMTPOy7s6TPf8F8bFLEvx4gfxunGd54D9gcuJDrdCgKwVTrKMMEgZ5bU8ydRHI
+ pfAfHCsENFASejhghw1g4xKCFuRLXQseuiDyzGXLhMkRmRK0douwUqmCKgqmbi/uHJI/usT9lpxQ
+ +vZrjHA3Zkjh66N2E+c/kSOMU6+lw2/qcStdpRrMxhoqIOM2o900QcGyWlDru+hkytt20ZunvcWI
+ Y3Z4pnn7PnLGbxREZIikOFtprsYDVgFF1y9DQFaS7aCD4S7ze9QKamAsLbYfCuRXzI5UzJWF0Cf7
+ U=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,97 +89,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 22, 2025 at 06:05:48PM +0800, oenhan@gmail.com wrote:
->From: Huaitong Han <hanht2@chinatelecom.cn>
->
->The vring call fd is set even when the guest does not use MSI-X (e.g., in the
->case of virtio PMD), leading to unnecessary CPU overhead for processing
->interrupts.
->
->The commit 96a3d98d2c("vhost: don't set vring call if no vector") optimized the
->case where MSI-X is enabled but the queue vector is unset. However, there's an
->additional case where the guest uses INTx and the INTx_DISABLED bit in the PCI
->config is set, meaning that no interrupt notifier will actually be used.
->
->In such cases, the vring call fd should also be cleared to avoid redundant
->interrupt handling.
->
->Fixes: 96a3d98d2c("vhost: don't set vring call if no vector")
->
+Hi Rowan,
 
-As I pointed out on v2 [1], we may fix the tag format and I think we
-can also remove this empty line between Fixes and Reported-by.
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index eff8430b4a..d4f229abd9 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -1014,6 +1014,102 @@ QEMU_PLUGIN_API
+>  bool qemu_plugin_write_memory_vaddr(uint64_t addr,
+>                                     GByteArray *data);
+>  
+> <snip>
+> +/**
+> + * qemu_plugin_translate_vaddr() - translate a virtual address to a physical one
+> + *
+> + * @vaddr: virtual address to translate
+> + * @hwaddr: pointer to store the physical address
+> + *
+> + * This function is only valid in vCPU context (i.e. in callbacks) and is only
+> + * valid for softmmu targets.
+> + *
+> + * Returns true on success and false on failure.
+> + */
+> +QEMU_PLUGIN_API
+> +bool qemu_plugin_translate_vaddr(uint64_t vaddr, uint64_t *hwaddr);
 
-[1] https://lore.kernel.org/qemu-devel/dmtvkhqkwdv7rzum6c4gs3uiekwckou3yp7w2ql6tijxshoiju@w4rplxvassk6/
+As a (testing) plugin author, I'm quite interested in this function in
+particular. For the next iteration, would you be willing to split this
+one out into its own patch? This would enhance the chance of it getting
+picked up even if other parts of the series should not make it.
 
-I don't know if Michael can fix will applying or you need to resend.
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 19c10bb39e..5983768783 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -569,6 +569,106 @@ bool qemu_plugin_write_memory_vaddr(uint64_t addr, GByteArray *data)
+> <snip> 
+> +bool qemu_plugin_translate_vaddr(uint64_t vaddr, uint64_t *hwaddr)
+> +{
+> +#ifdef CONFIG_SOFTMMU
+> +    g_assert(current_cpu);
+> +
+> +    CPUState *cpu = current_cpu;
+> +
+> +    uint64_t res = cpu_get_phys_page_debug(cpu, vaddr);
+> +
+> +    if (res == (uint64_t)-1) {
+> +        return false;
+> +    }
+> +
+> +    *hwaddr = res | (vaddr & ~TARGET_PAGE_MASK);
+> +
+> +    return true;
+> +#else
+> +    return false;
+> +#endif
+> +}
 
-BTW I still didn't completely get the pci bits, but for vhost LGTM:
+This definition strikes me as odd. What was your reason to assert
+`current_cpu` here, but not in the other two functions? Also a bit
+surprising is the declaration of `cpu` if you use it in just one place
+(rather than just use `current_cpu` directly as for the assertion).
 
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+And there is no reason in particular why the vCPU could not be a
+function parameter of `qemu_plugin_translate_vaddr`, right? You don't
+have the same restrictions as in `qemu_plugin_read_memory_hwaddr` or
+`qemu_plugin_hwaddr_operation_result` where you actually touch memory?
 
->Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
->Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
->Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
->---
->V3:
->- Don't change query_guest_notifiers semantics, just fix the issue
->
->V2:
->- Retain the name `query_guest_notifiers`
->- All qtest/unit test cases pass
->- Fix V1 patch style problems
->
-> hw/pci/pci.c           | 2 +-
-> hw/virtio/virtio-pci.c | 7 ++++++-
-> include/hw/pci/pci.h   | 1 +
-> 3 files changed, 8 insertions(+), 2 deletions(-)
->
->diff --git a/hw/pci/pci.c b/hw/pci/pci.c
->index f5ab510697..82f82e726b 100644
->--- a/hw/pci/pci.c
->+++ b/hw/pci/pci.c
->@@ -1725,7 +1725,7 @@ static void pci_update_mappings(PCIDevice *d)
->     pci_update_vga(d);
-> }
->
->-static inline int pci_irq_disabled(PCIDevice *d)
->+int pci_irq_disabled(PCIDevice *d)
-> {
->     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
-> }
->diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
->index 9b48aa8c3e..7e309d1d49 100644
->--- a/hw/virtio/virtio-pci.c
->+++ b/hw/virtio/virtio-pci.c
->@@ -1215,7 +1215,12 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
-> static bool virtio_pci_query_guest_notifiers(DeviceState *d)
-> {
->     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
->-    return msix_enabled(&proxy->pci_dev);
->+
->+    if (msix_enabled(&proxy->pci_dev)) {
->+        return true;
->+    } else {
->+        return pci_irq_disabled(&proxy->pci_dev);
->+    }
-> }
->
-> static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
->diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
->index c2fe6caa2c..8c24bd97db 100644
->--- a/include/hw/pci/pci.h
->+++ b/include/hw/pci/pci.h
->@@ -668,6 +668,7 @@ void lsi53c8xx_handle_legacy_cmdline(DeviceState *lsi_dev);
->
-> qemu_irq pci_allocate_irq(PCIDevice *pci_dev);
-> void pci_set_irq(PCIDevice *pci_dev, int level);
->+int pci_irq_disabled(PCIDevice *d);
->
-> static inline void pci_irq_assert(PCIDevice *pci_dev)
-> {
->-- 
->2.43.5
->
-
+Regards,
+Julian
 
