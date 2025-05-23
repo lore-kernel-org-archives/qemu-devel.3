@@ -4,69 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16831C54ED1
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 15:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1909EC54ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 16:03:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIUaU-0006U6-QT; Fri, 23 May 2025 11:45:34 -0400
+	id 1uIUqb-0001sg-W2; Fri, 23 May 2025 12:02:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uIUaQ-0006SY-6t
- for qemu-devel@nongnu.org; Fri, 23 May 2025 11:45:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <liam.merwick@oracle.com>)
+ id 1uIUqE-0001nz-Bj
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 12:01:50 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uIUaO-0000r5-Cc
- for qemu-devel@nongnu.org; Fri, 23 May 2025 11:45:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748015127;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Q/56R77gfOvpg/GaFRp+S98sqx/xuTgbxb/zD/VQ7J4=;
- b=J1y+Er6gkQEzOkYB8EpzoMV7h8+90j6MkDVm2McUJR9dSYrp1jVzMzWmUcmW1btuZBEG9p
- bpCk8zVbIN4l+GfJPJQRltI7SNxnNmaP0yqO+hEufL+xlgp2f4U6sz0gEjjrT0kQUAy1Ln
- OKUn9atjVaKCqAEIxev+HDKOo2ycRaw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-tZfemcMFPXSLif6IjJ5WSw-1; Fri,
- 23 May 2025 11:45:23 -0400
-X-MC-Unique: tZfemcMFPXSLif6IjJ5WSw-1
-X-Mimecast-MFC-AGG-ID: tZfemcMFPXSLif6IjJ5WSw_1748015122
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5275F1800361; Fri, 23 May 2025 15:45:22 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.119])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A590730001A1; Fri, 23 May 2025 15:45:21 +0000 (UTC)
-Date: Fri, 23 May 2025 11:45:20 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, kwolf@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PULL 0/5] Block layer patches
-Message-ID: <20250523154520.GA23031@fedora>
-References: <20250522183115.246746-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <liam.merwick@oracle.com>)
+ id 1uIUqB-0002gT-JN
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 12:01:49 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54NFxT4H011710;
+ Fri, 23 May 2025 16:01:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=corp-2025-04-25; bh=/HSM8HF+XvdzD7AJ
+ OUGZLdAp3QeqS8wTKQhywnwBqrU=; b=TjHYYmKPXQxfff6avkU4904RFrpK6MxZ
+ 78zUWbATL69DasbWSJ3BVrtJXfCF0q31N20tHWeo45l7H8DQoiiKGtR05VT310z2
+ +xjiAhIqw0PLW4n7mVms9vfF/bPJDLfxFTzy/KYGEr8ZpsBzFNtjsTahdYzqKtfc
+ xVpY1GLYAGF0eS2AB5Cm7deF4/ZXuOEqRgb2b+3nr5zR/hxTx9o1fT3lS1zBCEK7
+ t7cTxg6R1JqqIYSd6g2JWwZVEF2jw6QqvtDjrkNalQ1WVxq7Eh+70EAR8DPA5wlK
+ 8NMhWQZ3GNBx0DWuM57161MJQ0a0JuAAFRCJY50nrmXDZOU+Zh5y9w==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46tv4q8079-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 23 May 2025 16:01:37 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54NFvE9H001898; Fri, 23 May 2025 16:01:36 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46rwev5r1b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 23 May 2025 16:01:36 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54NG1Zq7032523;
+ Fri, 23 May 2025 16:01:35 GMT
+Received: from lmerwick-vm-ol8.osdevelopmeniad.oraclevcn.com
+ (lmerwick-vm-ol8.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.255.219])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 46rwev5qyx-1; Fri, 23 May 2025 16:01:35 +0000
+From: Liam Merwick <liam.merwick@oracle.com>
+To: dwmw@amazon.co.uk, anthony.perard@vates.tech, roger.pau@citrix.com,
+ xen-devel@lists.xenproject.org, qemu-devel@nongnu.org,
+ liam.merwick@oracle.com
+Subject: [PATCH] hw/xen: Fix trace_xs_node_read() params
+Date: Fri, 23 May 2025 16:01:34 +0000
+Message-ID: <20250523160134.218997-1-liam.merwick@oracle.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="0ymyhVehze+O2DLR"
-Content-Disposition: inline
-In-Reply-To: <20250522183115.246746-1-kwolf@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.287,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-23_05,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxlogscore=963
+ spamscore=0 bulkscore=0 adultscore=0 mlxscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505160000 definitions=main-2505230145
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIzMDE0NSBTYWx0ZWRfXzKhc12nOACPq
+ ry0AdFC6085lYP89tiCbsgK59zp6dbmGaRNLjkmSFkTDJLkCByJwoyBoF7T3ms3Km+VGNsBnv0w
+ bcZQCvQbXst7hNmq8vXblCJsOpzLCj8E4Z77T2KILxalaY2J528WJ8rXiSN3pqT55wXq4LLyvJa
+ Lf7EOYZDKVWD0rIrrp1Nt/vkgpoIO6J5HBgV6LPif/qf5xReyirOybjbk1fJ2lg+Ut+5RN3TQbF
+ 4BPh0x/POI6wgvyXoI0XIFzRNl8qN9Okqk8okEBJrV8D0Y2rdnmgyKO3SuKzGTW2Fy1yr2XB9ot
+ aeun3TTD6dparyeqlownuPfW9DdzbFufu4CF+EwADGThttaShBZbXZeVjBeK1rULfVdaTzsMKjm
+ EF7FuUwlUsMQBvtmJMMSbTuJI4UizbVeXBDKJJEtpXb4csCcfm9MV08Kanh2eGa4ciqAhYdk
+X-Authority-Analysis: v=2.4 cv=VoUjA/2n c=1 sm=1 tr=0 ts=68309be1 cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=bOG54WbAxldRIBuYn70A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: yj_f9Ug9G2CAGoj9LV9uUD-tIWKa7atM
+X-Proofpoint-ORIG-GUID: yj_f9Ug9G2CAGoj9LV9uUD-tIWKa7atM
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=liam.merwick@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.498,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,30 +112,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When the '--enable-trace-backends=syslog' build option is configured,
+the following compilation error is encountered.
 
---0ymyhVehze+O2DLR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+In file included from /usr/include/sys/syslog.h:207,
+                 from /usr/include/syslog.h:1,
+                 from ./trace/trace-hw_xen.h:224,
+                 from ../hw/xen/trace.h:1,
+                 from ../hw/xen/xen-bus-helper.c:13:
+In function ‘syslog’,
+    inlined from ‘_nocheck__trace_xs_node_read’ at ../hw/xen/trace-events:41:9,
+    inlined from ‘trace_xs_node_read’ at trace/trace-hw_xen.h:903:9,
+    inlined from ‘xs_node_read’ at ../hw/xen/xen-bus-helper.c:154:5:
+/usr/include/bits/syslog.h:45:3: error: ‘%s’ directive argument is null [-Werror=format-overflow=]
+   45 |   __syslog_chk (__pri, __USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Applied, thanks.
+Add a check that 'value' is not null before passing it to trace_xs_node_read().
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+Fixes: e6cdeee95990 ("hw/xen: Add xs_node_read() helper function")
+Signed-off-by: Liam Merwick <liam.merwick@oracle.com>
+---
+ hw/xen/xen-bus-helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---0ymyhVehze+O2DLR
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgwmBAACgkQnKSrs4Gr
-c8jmagf9HoqWeanMxWEJnyYROY7lg9aDhlPmTMDQGbzafk+rUicpRSh+OKaNcsfW
-XvMZpd+/4vBP3BqeZjcXsLzMK6YklwuotK6quGVHiFluHi5rhV9Oqxwumeh/83Pz
-JcmOIWk+PrCDwGUcQ7Jq5GNPHVEv+jlpb5Qx/H5qadSzZryG3B/xrKWQYPwVnqJD
-sROTHjPhZ8v5INwv9E1E3GDlg0BbZ0/qiQblsAHpZEzSQsVBmRyNwmUQEyfuoYrN
-jXrjPbeWzUwjmQ8PApn28JPW1Cl/FK+3zJcMSUY8bWqZmeN97Wdc6eurr7UdSx5H
-S4Es4vO615M+cZxa8yezJbF7t/iUyA==
-=7jvf
------END PGP SIGNATURE-----
-
---0ymyhVehze+O2DLR--
+diff --git a/hw/xen/xen-bus-helper.c b/hw/xen/xen-bus-helper.c
+index 288fad422be3..1087a585cc71 100644
+--- a/hw/xen/xen-bus-helper.c
++++ b/hw/xen/xen-bus-helper.c
+@@ -151,7 +151,7 @@ char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
+     va_end(ap);
+ 
+     value = qemu_xen_xs_read(h, tid, path, len);
+-    trace_xs_node_read(path, value);
++    trace_xs_node_read(path, value ? value : "<null>");
+     if (!value) {
+         error_setg_errno(errp, errno, "failed to read from '%s'", path);
+     }
+-- 
+2.47.1
 
 
