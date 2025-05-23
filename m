@@ -4,78 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7998BC54ED0
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 08:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A521C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 08:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uINl1-00005D-Al; Fri, 23 May 2025 04:27:59 -0400
+	id 1uIO7T-0002uz-Rp; Fri, 23 May 2025 04:51:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uINkx-0008W1-8Y; Fri, 23 May 2025 04:27:55 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uINks-0004zA-B8; Fri, 23 May 2025 04:27:53 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b3dVT2ZLRz6L5BG;
- Fri, 23 May 2025 16:24:17 +0800 (CST)
-Received: from frapeml100005.china.huawei.com (unknown [7.182.85.132])
- by mail.maildlp.com (Postfix) with ESMTPS id 5B9451402FF;
- Fri, 23 May 2025 16:27:34 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100005.china.huawei.com (7.182.85.132) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 23 May 2025 10:27:34 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Fri, 23 May 2025 10:27:34 +0200
-To: Cornelia Huck <cohuck@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "maz@kernel.org"
- <maz@kernel.org>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "sebott@redhat.com" <sebott@redhat.com>, "armbru@redhat.com"
- <armbru@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>, "jdenemar@redhat.com"
- <jdenemar@redhat.com>
-CC: "agraf@csgraf.de" <agraf@csgraf.de>, "shahuang@redhat.com"
- <shahuang@redhat.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>
-Subject: RE: [PATCH v3 06/10] arm/kvm: Allow reading all the writable ID
- registers
-Thread-Topic: [PATCH v3 06/10] arm/kvm: Allow reading all the writable ID
- registers
-Thread-Index: AQHbrVwDcXqCrMgzAUqDqJzZ5+FsArPgHVQw
-Date: Fri, 23 May 2025 08:27:34 +0000
-Message-ID: <ee2e2631faf640f3807c08c6acd95732@huawei.com>
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <20250414163849.321857-7-cohuck@redhat.com>
-In-Reply-To: <20250414163849.321857-7-cohuck@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uIO7Q-0002um-RO
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 04:51:08 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uIO7N-0007js-49
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 04:51:08 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxLGvrNjBoNVX4AA--.8135S3;
+ Fri, 23 May 2025 16:50:52 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMAxzxvoNjBovbTqAA--.25989S3;
+ Fri, 23 May 2025 16:50:50 +0800 (CST)
+Subject: Re: [PATCH 2/2] hw/loongarch/virt: Remove global variables about
+ memmap tables
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20250430094738.1556670-1-maobibo@loongson.cn>
+ <20250430094738.1556670-3-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <4cc499f4-3a0a-d214-29d3-772e3c14fa20@loongson.cn>
+Date: Fri, 23 May 2025 16:53:27 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+In-Reply-To: <20250430094738.1556670-3-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMAxzxvoNjBovbTqAA--.25989S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxuw1UGw47Jr15Jw15ZrWftFc_yoW3uF1UpF
+ Wav395KFs5Jr4DJr97J34UXrsxXrs7KF1ag3W7GryFkrnrKF17XF4rJa9FyFyDAw18Ca40
+ vFnY9aySvFsrJ3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-0.75, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,289 +81,233 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> -----Original Message-----
-> From: Cornelia Huck <cohuck@redhat.com>
-> Sent: Monday, April 14, 2025 5:39 PM
-> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
-> peter.maydell@linaro.org; richard.henderson@linaro.org;
-> alex.bennee@linaro.org; maz@kernel.org; oliver.upton@linux.dev;
-> sebott@redhat.com; Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>; armbru@redhat.com;
-> berrange@redhat.com; abologna@redhat.com; jdenemar@redhat.com
-> Cc: agraf@csgraf.de; shahuang@redhat.com; mark.rutland@arm.com;
-> philmd@linaro.org; pbonzini@redhat.com; Cornelia Huck
-> <cohuck@redhat.com>
-> Subject: [PATCH v3 06/10] arm/kvm: Allow reading all the writable ID
-> registers
->=20
-> From: Eric Auger <eric.auger@redhat.com>
->=20
-> At the moment kvm_arm_get_host_cpu_features() reads a subset of the
-> ID regs. As we want to introduce properties for all writable ID reg
-> fields, we want more genericity and read more default host register
-> values.
->=20
-> Introduce a new get_host_cpu_idregs() helper and add a new exhaustive
-> boolean parameter to kvm_arm_get_host_cpu_features() and
-> kvm_arm_set_cpu_features_from_host() to select the right behavior.
-> The host cpu model will keep the legacy behavior unless the writable
-> id register interface is available.
->=20
-> A writable_map IdRegMap is introduced in the CPU object. A subsequent
-> patch will populate it.
->=20
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+ÔÚ 2025/4/30 ÏÂÎç5:47, Bibo Mao Ð´µÀ:
+> Global variables memmap_table and memmap_entries stores UEFI memory
+> map table informations. It can be moved into structure
+> LoongArchVirtMachineState.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->  target/arm/cpu-sysregs.h |  2 ++
->  target/arm/cpu.h         |  3 ++
->  target/arm/cpu64.c       |  2 +-
->  target/arm/kvm.c         | 78 ++++++++++++++++++++++++++++++++++++++--
->  target/arm/kvm_arm.h     |  9 +++--
->  target/arm/trace-events  |  1 +
->  6 files changed, 89 insertions(+), 6 deletions(-)
->=20
-> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-> index e89a1105904c..367fab51f19e 100644
-> --- a/target/arm/cpu-sysregs.h
-> +++ b/target/arm/cpu-sysregs.h
-> @@ -41,6 +41,8 @@ int get_sysreg_idx(ARMSysRegs sysreg);
->=20
->  #ifdef CONFIG_KVM
->  uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg);
-> +int kvm_idx_to_idregs_idx(int kidx);
-> +int idregs_idx_to_kvm_idx(ARMIDRegisterIdx idx);
->  #endif
->=20
->  #endif /* ARM_CPU_SYSREGS_H */
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 775a8aebc5d3..8717c5e7695b 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1088,6 +1088,9 @@ struct ArchCPU {
->       */
->      ARMIdRegsState writable_id_regs;
->=20
-> +    /* ID reg writable bitmask (KVM only) */
-> +    IdRegMap *writable_map;
-> +
->      /* QOM property to indicate we should use the back-compat CNTFRQ
-> default */
->      bool backcompat_cntfrq;
->=20
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 839442745ea4..60a709502697 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -757,7 +757,7 @@ static void aarch64_host_initfn(Object *obj)
->  {
->  #if defined(CONFIG_KVM)
->      ARMCPU *cpu =3D ARM_CPU(obj);
-> -    kvm_arm_set_cpu_features_from_host(cpu);
-> +    kvm_arm_set_cpu_features_from_host(cpu, false);
->      if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
->          aarch64_add_sve_properties(obj);
->          aarch64_add_pauth_properties(obj);
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 6e3cd06e9bc5..b07d5f16db50 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -41,6 +41,7 @@
->  #include "hw/acpi/ghes.h"
->  #include "target/arm/gtimer.h"
->  #include "migration/blocker.h"
-> +#include "cpu-custom.h"
->=20
->  const KVMCapabilityInfo kvm_arch_required_capabilities[] =3D {
->      KVM_CAP_INFO(DEVICE_CTRL),
-> @@ -270,7 +271,73 @@ static int get_host_cpu_reg(int fd,
-> ARMHostCPUFeatures *ahcf, ARMIDRegisterIdx i
->      return ret;
->  }
->=20
-> -static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-> +int kvm_idx_to_idregs_idx(int kidx)
-> +{
-> +    int op1, crm, op2;
-> +    ARMSysRegs sysreg;
-> +
-> +    op1 =3D kidx / 64;
-> +    if (op1 =3D=3D 2) {
-> +        op1 =3D 3;
-> +    }
-> +    crm =3D (kidx % 64) / 8;
-> +    op2 =3D kidx % 8;
-> +    sysreg =3D ENCODE_ID_REG(3, op1, 0, crm, op2);
-> +    return get_sysreg_idx(sysreg);
-> +}
-> +
-> +int idregs_idx_to_kvm_idx(ARMIDRegisterIdx idx)
-> +{
-> +    ARMSysRegs sysreg =3D id_register_sysreg[idx];
-> +
-> +    return KVM_ARM_FEATURE_ID_RANGE_IDX((sysreg &
-> CP_REG_ARM64_SYSREG_OP0_MASK) >>
-> CP_REG_ARM64_SYSREG_OP0_SHIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_OP=
-1_MASK) >>
-> CP_REG_ARM64_SYSREG_OP1_SHIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_CR=
-N_MASK) >>
-> CP_REG_ARM64_SYSREG_CRN_SHIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_CR=
-M_MASK) >>
-> CP_REG_ARM64_SYSREG_CRM_SHIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_OP=
-2_MASK) >>
-> CP_REG_ARM64_SYSREG_OP2_SHIFT);
-> +}
-> +
-> +
-> +/*
-> + * get_host_cpu_idregs: Read all the writable ID reg host values
-> + *
-> + * Need to be called once the writable mask has been populated
-> + * Note we may want to read all the known id regs but some of them are
-> not
-> + * writable and return an error, hence the choice of reading only those
-> which
-> + * are writable. Those are also readable!
-> + */
-> +static int get_host_cpu_idregs(ARMCPU *cpu, int fd, ARMHostCPUFeatures
-> *ahcf)
-> +{
-> +    int err =3D 0;
-> +    int i;
-> +
-> +    for (i =3D 0; i < NUM_ID_IDX; i++) {
-> +        ARM64SysReg *sysregdesc =3D &arm64_id_regs[i];
-> +        ARMSysRegs sysreg =3D sysregdesc->sysreg;
-> +        uint64_t writable_mask =3D cpu->writable_map-
-> >regs[idregs_idx_to_kvm_idx(i)];
-> +        uint64_t *reg;
-> +        int ret;
-> +
-> +        if (!writable_mask) {
-> +            continue;
-> +        }
-> +
-> +        reg =3D &ahcf->isar.idregs[i];
-> +        ret =3D read_sys_reg64(fd, reg, idregs_sysreg_to_kvm_reg(sysreg)=
-);
+>   hw/loongarch/boot.c         | 31 +++++++++++++++++++------------
+>   hw/loongarch/virt.c         | 23 ++++++++++++++++-------
+>   include/hw/loongarch/boot.h |  3 ---
+>   include/hw/loongarch/virt.h |  2 ++
+>   4 files changed, 37 insertions(+), 22 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-I think we can use get_host_cpu_reg() here.
-
-> +        trace_get_host_cpu_idregs(sysregdesc->name, *reg);
-> +        if (ret) {
-> +            error_report("%s error reading value of host %s register (%m=
-)",
-> +                         __func__, sysregdesc->name);
+Thanks.
+Song Gao
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index 44d537d987..86435caa5e 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -35,9 +35,6 @@ struct loongarch_linux_hdr {
+>       uint32_t pe_header_offset;
+>   } QEMU_PACKED;
+>   
+> -struct memmap_entry *memmap_table;
+> -unsigned memmap_entries;
+> -
+>   static const unsigned int slave_boot_code[] = {
+>                     /* Configure reset ebase.                    */
+>       0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
+> @@ -91,12 +88,16 @@ static inline void *guidcpy(void *dst, const void *src)
+>       return memcpy(dst, src, sizeof(efi_guid_t));
+>   }
+>   
+> -static void init_efi_boot_memmap(struct efi_system_table *systab,
+> +static void init_efi_boot_memmap(MachineState *ms,
+> +                                 struct efi_system_table *systab,
+>                                    void *p, void *start)
+>   {
+>       unsigned i;
+>       struct efi_boot_memmap *boot_memmap = p;
+>       efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
+> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+> +    struct memmap_entry *memmap_table;
+> +    unsigned int memmap_entries;
+>   
+>       /* efi_configuration_table 1 */
+>       guidcpy(&systab->tables[0].guid, &tbl_guid);
+> @@ -108,6 +109,8 @@ static void init_efi_boot_memmap(struct efi_system_table *systab,
+>       boot_memmap->map_size = 0;
+>   
+>       efi_memory_desc_t *map = p + sizeof(struct efi_boot_memmap);
+> +    memmap_table = lvms->memmap_table;
+> +    memmap_entries = lvms->memmap_entries;
+>       for (i = 0; i < memmap_entries; i++) {
+>           map = (void *)boot_memmap + sizeof(*map);
+>           map[i].type = memmap_table[i].type;
+> @@ -144,10 +147,12 @@ static void init_efi_fdt_table(struct efi_system_table *systab)
+>       systab->nr_tables = 3;
+>   }
+>   
+> -static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+> +static void init_systab(MachineState *ms,
+> +                        struct loongarch_boot_info *info, void *p, void *start)
+>   {
+>       void *bp_tables_start;
+>       struct efi_system_table *systab = p;
+> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+>   
+>       info->a2 = p - start;
+>   
+> @@ -164,9 +169,9 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+>       systab->tables = p;
+>       bp_tables_start = p;
+>   
+> -    init_efi_boot_memmap(systab, p, start);
+> +    init_efi_boot_memmap(ms, systab, p, start);
+>       p += ROUND_UP(sizeof(struct efi_boot_memmap) +
+> -                  sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
+> +                  sizeof(efi_memory_desc_t) * lvms->memmap_entries, 64 * KiB);
+>       init_efi_initrd_table(info, systab, p, start);
+>       p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
+>       init_efi_fdt_table(systab);
+> @@ -333,17 +338,19 @@ static void loongarch_firmware_boot(LoongArchVirtMachineState *lvms,
+>       fw_cfg_add_kernel_info(info, lvms->fw_cfg);
+>   }
+>   
+> -static void init_boot_rom(struct loongarch_boot_info *info, void *p)
+> +static void init_boot_rom(MachineState *ms,
+> +                          struct loongarch_boot_info *info, void *p)
+>   {
+>       void *start = p;
+>   
+>       init_cmdline(info, p, start);
+>       p += COMMAND_LINE_SIZE;
+>   
+> -    init_systab(info, p, start);
+> +    init_systab(ms, info, p, start);
+>   }
+>   
+> -static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+> +static void loongarch_direct_kernel_boot(MachineState *ms,
+> +                                         struct loongarch_boot_info *info)
+>   {
+>       void *p, *bp;
+>       int64_t kernel_addr = VIRT_FLASH0_BASE;
+> @@ -361,7 +368,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+>       /* Load cmdline and system tables at [0 - 1 MiB] */
+>       p = g_malloc0(1 * MiB);
+>       bp = p;
+> -    init_boot_rom(info, p);
+> +    init_boot_rom(ms, info, p);
+>       rom_add_blob_fixed_as("boot_info", bp, 1 * MiB, 0, &address_space_memory);
+>   
+>       /* Load slave boot code at pflash0 . */
+> @@ -401,6 +408,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+>       if (lvms->bios_loaded) {
+>           loongarch_firmware_boot(lvms, info);
+>       } else {
+> -        loongarch_direct_kernel_boot(info);
+> +        loongarch_direct_kernel_boot(ms, info);
+>       }
+>   }
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 779544fada..601e7c6bd3 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -168,8 +168,15 @@ static void virt_powerdown_req(Notifier *notifier, void *opaque)
+>       acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
+>   }
+>   
+> -static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
+> +static void memmap_add_entry(MachineState *ms, uint64_t address,
+> +                             uint64_t length, uint32_t type)
+>   {
+> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+> +    struct memmap_entry *memmap_table;
+> +    unsigned int memmap_entries;
 > +
-> +            err =3D ret;
-> +        }
-> +    }
-> +    return err;
-> +}
-> +
-> +static bool
-> +kvm_arm_get_host_cpu_features(ARMCPU *cpu, ARMHostCPUFeatures
-> *ahcf,
-> +                              bool exhaustive)
->  {
->      /* Identify the feature bits corresponding to the host CPU, and
->       * fill out the ARMHostCPUClass fields accordingly. To do this
-> @@ -398,6 +465,11 @@ static bool
-> kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->          err |=3D get_host_cpu_reg(fd, ahcf, ID_DFR1_EL1_IDX);
->          err |=3D get_host_cpu_reg(fd, ahcf, ID_MMFR5_EL1_IDX);
->=20
-> +        /* Make sure writable ID reg values are read */
-> +        if (exhaustive) {
-> +            err |=3D get_host_cpu_idregs(cpu, fd, ahcf);
-> +        }
-
-
-Also if we do this a bit above can we avoid reading the ID registers twice
-if "exhaustive=3Dtrue" ?
-
-Thanks,
-Shameer
-
-> +
->          /*
->           * DBGDIDR is a bit complicated because the kernel doesn't
->           * provide an accessor for it in 64-bit mode, which is what this
-> @@ -467,13 +539,13 @@ static bool
-> kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->      return true;
->  }
->=20
-> -void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-> +void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool
-> exhaustive)
->  {
->      CPUARMState *env =3D &cpu->env;
->=20
->      if (!arm_host_cpu_features.dtb_compatible) {
->          if (!kvm_enabled() ||
-> -            !kvm_arm_get_host_cpu_features(&arm_host_cpu_features)) {
-> +            !kvm_arm_get_host_cpu_features(cpu, &arm_host_cpu_features,
-> exhaustive)) {
->              /* We can't report this error yet, so flag that we need to
->               * in arm_cpu_realizefn().
->               */
-> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-> index 8d1f20ca8d89..90ba4f7d8987 100644
-> --- a/target/arm/kvm_arm.h
-> +++ b/target/arm/kvm_arm.h
-> @@ -141,8 +141,12 @@ uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu);
->   *
->   * Set up the ARMCPU struct fields up to match the information probed
->   * from the host CPU.
-> + *
-> + * @cpu: cpu object
-> + * @exhaustive: if true, all the feature ID regs are queried instead of
-> + *              a subset
->   */
-> -void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
-> +void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool
-> exhaustive);
->=20
->  /**
->   * kvm_arm_add_vcpu_properties:
-> @@ -257,7 +261,8 @@ static inline int
-> kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
->  /*
->   * These functions should never actually be called without KVM support.
->   */
-> -static inline void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-> +static inline void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu,
-> +                                                      bool exhaustive)
->  {
->      g_assert_not_reached();
->  }
-> diff --git a/target/arm/trace-events b/target/arm/trace-events
-> index 4438dce7becc..17e52c0705f2 100644
-> --- a/target/arm/trace-events
-> +++ b/target/arm/trace-events
-> @@ -13,3 +13,4 @@ arm_gt_update_irq(int timer, int irqstate)
-> "gt_update_irq: timer %d irqstate %d"
->=20
->  # kvm.c
->  kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova =3D
-> 0x%"PRIx64" is translated into 0x%"PRIx64
-> +get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host
-> value for %s is 0x%"PRIx64
-> --
-> 2.49.0
->=20
+> +    memmap_table = lvms->memmap_table;
+> +    memmap_entries = lvms->memmap_entries;
+>       /* Ensure there are no duplicate entries. */
+>       for (unsigned i = 0; i < memmap_entries; i++) {
+>           assert(memmap_table[i].address != address);
+> @@ -182,6 +189,8 @@ static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
+>       memmap_table[memmap_entries].type = cpu_to_le32(type);
+>       memmap_table[memmap_entries].reserved = 0;
+>       memmap_entries++;
+> +    lvms->memmap_table = memmap_table;
+> +    lvms->memmap_entries = memmap_entries;
+>   }
+>   
+>   static DeviceState *create_acpi_ged(DeviceState *pch_pic,
+> @@ -625,13 +634,13 @@ static void fw_cfg_add_memory(MachineState *ms)
+>       }
+>   
+>       if (size >= gap) {
+> -        memmap_add_entry(base, gap, 1);
+> +        memmap_add_entry(ms, base, gap, 1);
+>           size -= gap;
+>           base = VIRT_HIGHMEM_BASE;
+>       }
+>   
+>       if (size) {
+> -        memmap_add_entry(base, size, 1);
+> +        memmap_add_entry(ms, base, size, 1);
+>           base += size;
+>       }
+>   
+> @@ -646,7 +655,7 @@ static void fw_cfg_add_memory(MachineState *ms)
+>            * lowram:  [base, +(gap - numa_info[0].node_mem))
+>            * highram: [VIRT_HIGHMEM_BASE, +(ram_size - gap))
+>            */
+> -        memmap_add_entry(base, gap - numa_info[0].node_mem, 1);
+> +        memmap_add_entry(ms, base, gap - numa_info[0].node_mem, 1);
+>           size = ram_size - gap;
+>           base = VIRT_HIGHMEM_BASE;
+>       } else {
+> @@ -654,7 +663,7 @@ static void fw_cfg_add_memory(MachineState *ms)
+>       }
+>   
+>       if (size) {
+> -        memmap_add_entry(base, size, 1);
+> +        memmap_add_entry(ms, base, size, 1);
+>       }
+>   }
+>   
+> @@ -740,8 +749,8 @@ static void virt_init(MachineState *machine)
+>       rom_set_fw(lvms->fw_cfg);
+>       if (lvms->fw_cfg != NULL) {
+>           fw_cfg_add_file(lvms->fw_cfg, "etc/memmap",
+> -                        memmap_table,
+> -                        sizeof(struct memmap_entry) * (memmap_entries));
+> +                        lvms->memmap_table,
+> +                        sizeof(struct memmap_entry) * lvms->memmap_entries);
+>       }
+>   
+>       /* Initialize the IO interrupt subsystem */
+> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+> index 27399de99c..9819f7fbe3 100644
+> --- a/include/hw/loongarch/boot.h
+> +++ b/include/hw/loongarch/boot.h
+> @@ -106,9 +106,6 @@ struct loongarch_boot_info {
+>       uint64_t initrd_size;
+>   };
+>   
+> -extern struct memmap_entry *memmap_table;
+> -extern unsigned memmap_entries;
+> -
+>   struct memmap_entry {
+>       uint64_t address;
+>       uint64_t length;
+> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+> index 2b7d19953f..602feab0f0 100644
+> --- a/include/hw/loongarch/virt.h
+> +++ b/include/hw/loongarch/virt.h
+> @@ -63,6 +63,8 @@ struct LoongArchVirtMachineState {
+>       struct loongarch_boot_info bootinfo;
+>       DeviceState *ipi;
+>       DeviceState *extioi;
+> +    struct memmap_entry *memmap_table;
+> +    unsigned int memmap_entries;
+>   };
+>   
+>   #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
 
 
