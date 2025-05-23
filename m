@@ -4,69 +4,209 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A521C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 08:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C58C54ED0
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 08:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIO7T-0002uz-Rp; Fri, 23 May 2025 04:51:11 -0400
+	id 1uIOD4-0004QD-4b; Fri, 23 May 2025 04:56:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uIO7Q-0002um-RO
- for qemu-devel@nongnu.org; Fri, 23 May 2025 04:51:08 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uIO7N-0007js-49
- for qemu-devel@nongnu.org; Fri, 23 May 2025 04:51:08 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxLGvrNjBoNVX4AA--.8135S3;
- Fri, 23 May 2025 16:50:52 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMAxzxvoNjBovbTqAA--.25989S3;
- Fri, 23 May 2025 16:50:50 +0800 (CST)
-Subject: Re: [PATCH 2/2] hw/loongarch/virt: Remove global variables about
- memmap tables
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20250430094738.1556670-1-maobibo@loongson.cn>
- <20250430094738.1556670-3-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <4cc499f4-3a0a-d214-29d3-772e3c14fa20@loongson.cn>
-Date: Fri, 23 May 2025 16:53:27 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <20250430094738.1556670-3-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uIOD2-0004Px-ON
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 04:56:56 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uIOCz-0008L9-TL
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 04:56:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1747990614; x=1779526614;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=wPjAK7xCotXD9mHnH9OrQlaIXSFPMnsKyx9881tJPrk=;
+ b=kEXV4LKLjFEc/PoQxZBk7nPLpocKpD33dLG8FL3CmqbqnxTgUjbwsfc6
+ 1k/VQ7k8fFKZ9c3o5G7Inm5+Jw1ljFULIbm2YeeaodOoXU5OfSqM52jwt
+ MwAwrCBV6lS186NUtaxI+UzAC9rkbyzmqAUegzfHKNYIguP6t7/nJ0LEu
+ KKJ8SOnC/1Uj6rwRveTFgRQjcJVXVbN8xRJMH1Tv1QXKTWh3+1Bk604QE
+ 6Q6dnAxabSurf96kfoqGekv9vB7wake6uXw5Ir0R9qNfP9ICt+CM+ghvw
+ l4p3Ed8QhEtruSh/xdXt1C0wuD1DR/5J1FR1gxbnN7fleHqszoo9aAF1U Q==;
+X-CSE-ConnectionGUID: knj6U3I6SBeCQf+mXj88Yg==
+X-CSE-MsgGUID: yI46fEYFTHebR8ntoBlejw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11441"; a="50096605"
+X-IronPort-AV: E=Sophos;i="6.15,308,1739865600"; d="scan'208";a="50096605"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 May 2025 01:56:46 -0700
+X-CSE-ConnectionGUID: rPLftJhLScqQIH08HnwYNQ==
+X-CSE-MsgGUID: PKfh6LV2QTOLYs7dPEUnqA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,308,1739865600"; d="scan'208";a="178196065"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 May 2025 01:56:40 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Fri, 23 May 2025 01:56:38 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Fri, 23 May 2025 01:56:38 -0700
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (40.107.243.86)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.55; Fri, 23 May 2025 01:56:37 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=A0fIt3JK2lZFxJYL5qyi7ajG9gq/vl2n5wO1uEc6W+K6/CpPUQWgRJID+zrFUqScklzfqvyaYUf01HdWMaB3i9iHqaV95l/7Tvbx8DmscjMAGLIUMnWIJQEurJLFVzIRQo9yYVeqilcq+gwwQV2PlT+AXcicIrgEwt2cuKIHpeozQm3pxWPy3+HZFd50gcGjZxG6mu+SoD63Y4CpCBta2OVoqidxWpe7K5Bio6F4HkRE79NnKJZNz+69ZXs+GgbopcBi7E/pG1MPvnbUuHthXywlsbqwoqYl52reS6bknxFMFddsfaCTLcS5j3b5oAJLPWB6MqM+nirdREN6brNKGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wPjAK7xCotXD9mHnH9OrQlaIXSFPMnsKyx9881tJPrk=;
+ b=HhSLQa9TSokvO5BBVYMsD3REykS3f6Q4Gandw0iZ5AyY0fdQAIVEQzfal5PBOPw6tLhODQWRs2sYpXq4SPwQ5spw7PzJet8ziTNYZl/7B56pi9L8MdyYmsqwwvhzIxPpNsqOSirOXH915TaBQH5fgAc/tzMu6QlH4W43eertzliUE8omcAT17V1YuB8zfqek/l7ZlhpWI2Oli6uy+fzIRUJT/iD97z97hTGUwInyCRhi6tdwh/SpQHs3n+jzWuF96UjciXtK9rzAPDqWbFeQZu/m3zgEifnBRqKUShE+Eif9XXOTvj0ZPlX0toI5n6b5E+m95EzaSvRQLaKHO/e/Rg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by DM4PR11MB8089.namprd11.prod.outlook.com (2603:10b6:8:17f::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.21; Fri, 23 May
+ 2025 08:56:28 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%4]) with mapi id 15.20.8769.021; Fri, 23 May 2025
+ 08:56:28 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Steven Sistare <steven.sistare@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
+ <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: RE: [PATCH V3 29/42] backends/iommufd: change process ioctl
+Thread-Topic: [PATCH V3 29/42] backends/iommufd: change process ioctl
+Thread-Index: AQHbw1yUpeYjtdu/DU2o3xTJaAJiQbPU9flwgAUvL4CAAdBwAIAAb8tQgAC02wCAAOjXUIABMliAgADDF3A=
+Date: Fri, 23 May 2025 08:56:28 +0000
+Message-ID: <SJ0PR11MB6744E8AE3F29A924FB0866E09298A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-30-git-send-email-steven.sistare@oracle.com>
+ <SJ0PR11MB6744C9B04AE39DE76904CAEE9293A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <7aa3c76f-a171-47b1-a56b-5fa16e38f4a5@oracle.com>
+ <5c151081-07a9-4569-a3f5-4b48a6f1a1e3@oracle.com>
+ <SJ0PR11MB6744AF83E1B9956A76F529D3929EA@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <c0db92f1-5bc9-413e-b0c6-39f9eb40344e@oracle.com>
+ <SJ0PR11MB6744673E8B958DB5E408D90B9299A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <9455e537-7426-4332-8d7b-4c6260086ea0@oracle.com>
+In-Reply-To: <9455e537-7426-4332-8d7b-4c6260086ea0@oracle.com>
+Accept-Language: en-US
 Content-Language: en-US
-X-CM-TRANSID: qMiowMAxzxvoNjBovbTqAA--.25989S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuw1UGw47Jr15Jw15ZrWftFc_yoW3uF1UpF
- Wav395KFs5Jr4DJr97J34UXrsxXrs7KF1ag3W7GryFkrnrKF17XF4rJa9FyFyDAw18Ca40
- vFnY9aySvFsrJ3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-0.75, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DM4PR11MB8089:EE_
+x-ms-office365-filtering-correlation-id: b07014a8-14be-4a0f-de77-08dd99d7b4a1
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?WXFlSko4K3h2M0t2VkNqMHZaYlFJVFFqMkxoSzAxazcyZk1kOHY2ZmExVVY4?=
+ =?utf-8?B?bi9iMk1IeW9lL29hZFR1TkRjcTNYN0puZXR6L3hzbHhPTHZKazBkbjBHTmpt?=
+ =?utf-8?B?U2hVMGh2ZGIxQWdGanJ6enFqanNQN0ZidzZsSXNRUllKRVNBbXIxMElMVk9l?=
+ =?utf-8?B?NFpPc2EwNXpCSDcweHFGT0JmT0VSZlRZYXBEWHBHdU9BemlwNlhmV0tsUTJx?=
+ =?utf-8?B?dkp5OGRKS0NLeDQ1a09KWVJsMW4xakR6dzR3M2tLb0tTNTdnV1NaNjVYRVA4?=
+ =?utf-8?B?dGxENXdLR21oR2F0V3pETmlJbkVCT0FHN0wxVlRQdVNSMGFicDdsZEpsTDha?=
+ =?utf-8?B?OEtxOU1PcENZMEhoSWlnLzQzNWJjaXZYVDdYUVB3S281dkh5YURuYVNGVlFW?=
+ =?utf-8?B?VGNvZjJLUU8zcm5iK0tqWmxtV0lQYXJVVjJSbEJiNUlWUVE4d25VbzVvbEY5?=
+ =?utf-8?B?VHd2UTN0V0ZuUytlaCtzVnpYOFdkMW1LS3czQkVMMGt0Y0NTNmNFek1naUJW?=
+ =?utf-8?B?cHpCUjR1OU5Icm1YblNuWFRwV3ZUT3pyUTJkZTgvYUl0NkxlQXF5aTdmaExK?=
+ =?utf-8?B?d1BBZ3BITllYNnRhT1BYRmV2L3ZSWFZteTR5SnFSZ0tPOXprb1hXOFdONklD?=
+ =?utf-8?B?dUdOSXQ1VDRKMi9YOVBGUFpabTJSYmJnODFZbklPSkh4UWRtcXlHSVJCcFhm?=
+ =?utf-8?B?dlJ5SldhYzV2d1NDK0daK2NwWHlPbEYrdzJ5NDJWY1gzMStOMDhWSFFHdm5i?=
+ =?utf-8?B?K3o2NzliUmlIWjRDeHdSVXNqclhGTWNuNXN2TE9uZ3lqc3p6SVZCRTBGdXN6?=
+ =?utf-8?B?d1NWR0tGOTNOaFdXMENjMnNHRVJTYjF1aVpIWWJHWkhHZHNqZmNNZEVScVZn?=
+ =?utf-8?B?MTl3K3J4ckJGczVIZHdlRDJ4U3pvNGljNXI0MDJvVHM5elUyc1lwU2Y3c2Rj?=
+ =?utf-8?B?N0lHNGtLV1J5elBvMk1iWFY5eStRTGZOWFprOCtFRCtuWEp3UG1HamN3TUJI?=
+ =?utf-8?B?T0tJREhOR0tieUx3dVE4YjVaVWg1dU84ODRiOXlnL3VoSXFrZXlzdUxOeVU2?=
+ =?utf-8?B?WTRURXgwSFZKbmV6TmMzNDlFQWovcERjY2hFVVFZd29GbVNvaW84LzhCQm9l?=
+ =?utf-8?B?ZUJYS2ZKN1JqRGUxVzQzbHdpc3c5Vmg2WlVYSGxmTDZ6eDRUME9qQTZCL3FQ?=
+ =?utf-8?B?L3p1dmRRNnMzamRYM3hxZ0t4Ri8vWmZNMUUwRVlkMFFQMDdua0xyT003SnFm?=
+ =?utf-8?B?Q3JxMEdIVThlR20rVGdlQVNqd0dZTUtHU3BwN3hHZ3kxSE8wVVpmUjVoMHBJ?=
+ =?utf-8?B?UkhldE81NmdkWkFyYVhOMGVsQXFiU0ZKVmVXcjMzWU9TQjhzQmh5dlBqSzlT?=
+ =?utf-8?B?NmczbmUwTUR2bVc3VEZpL014UEphcTJoa3dBT3JmMDFmUjRFMC8zTVAxS2tO?=
+ =?utf-8?B?VFNQcWhHTi9GOEZMZGRtMHVZNm9TWjljWVNyd21peG1hNU1YbS9ieFU0OUov?=
+ =?utf-8?B?ZUNVbHVMajRxMHV3N1lIQ1VDZm5qMTJDTk9mTFZyVU8ydit1Tmp4YWhTTWoy?=
+ =?utf-8?B?ZFpLbFRxL1NLUlg3Q2tidmpCQzh2NnArY2U5RFN5MkRXcmU0WDUyNkVZOWY2?=
+ =?utf-8?B?WnJ0N0M2U2lHTUFYbGU2a2pyRTRUU2tJemIyUlhLN3FlYnlZSCtNaTZkSS9E?=
+ =?utf-8?B?MW9UZUpMdGEwQnYvSmVJNVc1TElodXdselRXNFZEV250Y0h3Ujk5NjdNbVI1?=
+ =?utf-8?B?dXBFQnk1bXJ4dE9kL0F2SFUwQjI4WTNIWVREdzJyd011WTRvdTg3cHpMMWo3?=
+ =?utf-8?B?eklKNXh3cHIvWHlOMk1PTVZGODNFQ2FhamJOZmovZzZjdzFpaVpDQlJhbExH?=
+ =?utf-8?B?ZW9zemhyeTdJeFRsZDVmaWp3YkdnQng0WGhwd0pTK3h6R0hYRm5hZENWQUVD?=
+ =?utf-8?B?bXFDU3FUMmsyOUJtYW9HRkNMRXh6cDZBK0ZUTXpnc2dEUmhub0NhMGRyYnRm?=
+ =?utf-8?B?RmJZTE8zVWZRPT0=?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cllieFUvSS9ZNWV3V2JsT2JuVmI1VWxIREo5K2hyZE4rRFJpQ2k3b2s2NTUw?=
+ =?utf-8?B?WmY1a1dwU3ZEblV3QVlWRmZadllxMm9HSDlKMWxIRmYwOGZvQjJBbjZ1SzUr?=
+ =?utf-8?B?WWJCeXBwd21YU2c2WjNtVktqMDgxSzc1M0UzNHlTL1h5eC9yMWRzL015U2Rw?=
+ =?utf-8?B?bHFJdVVxYS8rQmlOSldZTjY1Ri9nVSs0NU9ONS9pY1BYdW5rMmxKUG1IaU8x?=
+ =?utf-8?B?WU95UGRTVEFjMEdHM1hHU2crOVY1aWlFcUM2bGFMYUtnYnZGS2xyMDdiWW9D?=
+ =?utf-8?B?dTZ2eGhZNDhtMm9OUFM1YVliSGtGUm9xMTNTemRXcVI2NDFkNkpOWVZZMlZP?=
+ =?utf-8?B?SitOT05MZGtxR0F4eVQ2eFF1cnAwekxTNzlDT1dKbXgxR3pQU1hYbEozN2hJ?=
+ =?utf-8?B?RlVtR0t0cVYzMmdIUVgydU1DMkMyNmlhRmFqSXZuZU01ay91RjZheVFoaDdY?=
+ =?utf-8?B?SDRIUE5YTVR3YWE3Z3pGL2RIRUhKZ0hURWhOZVJ4c1lMaVZXdHFSQy9qZEpy?=
+ =?utf-8?B?NEN6MEtpWE11UlEvdE0zemxaU0h6VE8zNG91L0NpOHc5eXc4Rk9MZzREdVdU?=
+ =?utf-8?B?UFRSRXZKNVRNa3d3WVdkWTFCSWtDWWJJTXM0U1F3M3gwdXgrZXdCakhobmU4?=
+ =?utf-8?B?OXRtT0IweUc1SVdnZzI5dUwyTnp0d21aZUMvZXp1OWUvTlFGYXQ1OERMM2Ux?=
+ =?utf-8?B?Tys4SE9MMi9tVEtzWXAxd25yWE5TU0VaYk53cXd6dno4V3VPWkVsNXVQRzJJ?=
+ =?utf-8?B?VTBFTUQ4M2NGR2QyS2FkazNLM1BQOE5YRWR1RzIvcDVVbjhqZ3I5WllOUXhW?=
+ =?utf-8?B?M0kyeEZVTHpLT1Njd0lKcVgxRzhDdStZVExtRXNrS2UrYjJrMkx6N2FVSE1X?=
+ =?utf-8?B?cm9mcW9rSHA3Q3NkSkJCR21LbzRiWElMYXEwTTd6OTY1anUwS1FRSzlNUHVm?=
+ =?utf-8?B?bnhaQkowK201WVBZeUorRE9VdlBlMG1JWStVdjhNZG1PWEFyemR1Lzl4MTV4?=
+ =?utf-8?B?dW5JZTZJTElSWWtwanRZT0J5Rk1WQ0QyKyt6WS9nanRIbTFYa3hOSTIwVXVV?=
+ =?utf-8?B?b3Q4N202QXNBcmgyNDlMN1VncjUzSHQzQUY3bkZ4NkdraVZZY2ZNZTA2S2c4?=
+ =?utf-8?B?cFhkK1RnNm1Nb2pjM1pzSFV2MmVDSG1DVnhKNG9EM0RodEhsNXJXVGpUMVVY?=
+ =?utf-8?B?TFkrSW8rTFA2dkdnZ3Zsa0dETjMzOHV4UGYzTGJUeUt4OWorNWIrWWFVZ1hF?=
+ =?utf-8?B?SWZvWnF2Q1FRczhocWt4cnNGSjd4Q1Y4T0NyVDdaQ0c4VSs1ZzluTFl3cmg0?=
+ =?utf-8?B?Y3htRnRXUFd3UGt3NGxxbGhKZ0RrVTNrdkk2ZExKcHpZblhlUkJpbVJkdnhr?=
+ =?utf-8?B?dFdlM2diRE80M20xdFVqQVB3NEVXT0tMWkRiekdXL1EzbnJpQTZ1NklqcWgx?=
+ =?utf-8?B?YXZLRDROWlBiZGgwdG1vTXBTeHpBZTVENDhtUEZySnhJdGVobzB4UFJreXlw?=
+ =?utf-8?B?VlkyTzFwbjdUdXJ6V2haUEt0S1NGZklrempvSmVtV0I0dkJBUlZaUkxNOG5X?=
+ =?utf-8?B?bk9oOVFFVUVKc1IvVVo3bXhKZzg1dFpvWGxKZjFMWTVWTXdHK2E5dTg3SnJC?=
+ =?utf-8?B?WTFQdk0reHJtb0NBcjVlNjgwdnovU3pzMGtzR2MzeXhBcXpBOUVtVGRETytP?=
+ =?utf-8?B?eFd4RGllVUdGYnQvdWpKd3JWcVltblJvNlM2SHptekpsU0pBVXRIb3ZNaVhn?=
+ =?utf-8?B?S3IyYU5qbFNucEcxcXlzWStUZU5MeVc0dXFucmNCTUdOTGRzbkxTVVhnb1po?=
+ =?utf-8?B?d1IrOVdjeDl5U1FOTHJYME1YdjNFVHVNUGR2TTZqSmpCZysxSFNhd3RLUnp3?=
+ =?utf-8?B?VmtmeEZGaWFyMkc2ZVJtTEc0OCswQmR5SmlxTnJkUDd1bGNzcVNzMXVQVkNo?=
+ =?utf-8?B?YlQxZE5DbDl4SmFucUF6dWk2K0Z4Uk4rU0dUd0xJY2VKK25GcTJSeUxGZlY2?=
+ =?utf-8?B?VVVlaFdqVnl6b1ZqR1lNWmxBV2ZmYkZwV2hPeTFuelpRaHdLSUlKN2tJNzJC?=
+ =?utf-8?B?R0VUUHRKeUlvaHF4QU5hRmJBQzc2VGE2QU9zWGxQNTQ1MC8yUFJaY1BLaHJp?=
+ =?utf-8?Q?b2G+1mzgeiN6v6ehLhUyyuetm?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b07014a8-14be-4a0f-de77-08dd99d7b4a1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 May 2025 08:56:28.3842 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EV75SQQpS2hgrrF9dhD7fhGhrWmiu32gM8F8P1UFlJ1gtDwMOq9NZWPO0ZFgxPcHJwy5hpdL8SIDgG2G++pOUcoQ1M2H1FoRpmmwYpMeK9E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB8089
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,230 +224,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2025/4/30 ÏÂÎç5:47, Bibo Mao Ð´µÀ:
-> Global variables memmap_table and memmap_entries stores UEFI memory
-> map table informations. It can be moved into structure
-> LoongArchVirtMachineState.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   hw/loongarch/boot.c         | 31 +++++++++++++++++++------------
->   hw/loongarch/virt.c         | 23 ++++++++++++++++-------
->   include/hw/loongarch/boot.h |  3 ---
->   include/hw/loongarch/virt.h |  2 ++
->   4 files changed, 37 insertions(+), 22 deletions(-)
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-
-Thanks.
-Song Gao
-> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-> index 44d537d987..86435caa5e 100644
-> --- a/hw/loongarch/boot.c
-> +++ b/hw/loongarch/boot.c
-> @@ -35,9 +35,6 @@ struct loongarch_linux_hdr {
->       uint32_t pe_header_offset;
->   } QEMU_PACKED;
->   
-> -struct memmap_entry *memmap_table;
-> -unsigned memmap_entries;
-> -
->   static const unsigned int slave_boot_code[] = {
->                     /* Configure reset ebase.                    */
->       0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
-> @@ -91,12 +88,16 @@ static inline void *guidcpy(void *dst, const void *src)
->       return memcpy(dst, src, sizeof(efi_guid_t));
->   }
->   
-> -static void init_efi_boot_memmap(struct efi_system_table *systab,
-> +static void init_efi_boot_memmap(MachineState *ms,
-> +                                 struct efi_system_table *systab,
->                                    void *p, void *start)
->   {
->       unsigned i;
->       struct efi_boot_memmap *boot_memmap = p;
->       efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-> +    struct memmap_entry *memmap_table;
-> +    unsigned int memmap_entries;
->   
->       /* efi_configuration_table 1 */
->       guidcpy(&systab->tables[0].guid, &tbl_guid);
-> @@ -108,6 +109,8 @@ static void init_efi_boot_memmap(struct efi_system_table *systab,
->       boot_memmap->map_size = 0;
->   
->       efi_memory_desc_t *map = p + sizeof(struct efi_boot_memmap);
-> +    memmap_table = lvms->memmap_table;
-> +    memmap_entries = lvms->memmap_entries;
->       for (i = 0; i < memmap_entries; i++) {
->           map = (void *)boot_memmap + sizeof(*map);
->           map[i].type = memmap_table[i].type;
-> @@ -144,10 +147,12 @@ static void init_efi_fdt_table(struct efi_system_table *systab)
->       systab->nr_tables = 3;
->   }
->   
-> -static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
-> +static void init_systab(MachineState *ms,
-> +                        struct loongarch_boot_info *info, void *p, void *start)
->   {
->       void *bp_tables_start;
->       struct efi_system_table *systab = p;
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
->   
->       info->a2 = p - start;
->   
-> @@ -164,9 +169,9 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
->       systab->tables = p;
->       bp_tables_start = p;
->   
-> -    init_efi_boot_memmap(systab, p, start);
-> +    init_efi_boot_memmap(ms, systab, p, start);
->       p += ROUND_UP(sizeof(struct efi_boot_memmap) +
-> -                  sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
-> +                  sizeof(efi_memory_desc_t) * lvms->memmap_entries, 64 * KiB);
->       init_efi_initrd_table(info, systab, p, start);
->       p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
->       init_efi_fdt_table(systab);
-> @@ -333,17 +338,19 @@ static void loongarch_firmware_boot(LoongArchVirtMachineState *lvms,
->       fw_cfg_add_kernel_info(info, lvms->fw_cfg);
->   }
->   
-> -static void init_boot_rom(struct loongarch_boot_info *info, void *p)
-> +static void init_boot_rom(MachineState *ms,
-> +                          struct loongarch_boot_info *info, void *p)
->   {
->       void *start = p;
->   
->       init_cmdline(info, p, start);
->       p += COMMAND_LINE_SIZE;
->   
-> -    init_systab(info, p, start);
-> +    init_systab(ms, info, p, start);
->   }
->   
-> -static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
-> +static void loongarch_direct_kernel_boot(MachineState *ms,
-> +                                         struct loongarch_boot_info *info)
->   {
->       void *p, *bp;
->       int64_t kernel_addr = VIRT_FLASH0_BASE;
-> @@ -361,7 +368,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
->       /* Load cmdline and system tables at [0 - 1 MiB] */
->       p = g_malloc0(1 * MiB);
->       bp = p;
-> -    init_boot_rom(info, p);
-> +    init_boot_rom(ms, info, p);
->       rom_add_blob_fixed_as("boot_info", bp, 1 * MiB, 0, &address_space_memory);
->   
->       /* Load slave boot code at pflash0 . */
-> @@ -401,6 +408,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
->       if (lvms->bios_loaded) {
->           loongarch_firmware_boot(lvms, info);
->       } else {
-> -        loongarch_direct_kernel_boot(info);
-> +        loongarch_direct_kernel_boot(ms, info);
->       }
->   }
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 779544fada..601e7c6bd3 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -168,8 +168,15 @@ static void virt_powerdown_req(Notifier *notifier, void *opaque)
->       acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
->   }
->   
-> -static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
-> +static void memmap_add_entry(MachineState *ms, uint64_t address,
-> +                             uint64_t length, uint32_t type)
->   {
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-> +    struct memmap_entry *memmap_table;
-> +    unsigned int memmap_entries;
-> +
-> +    memmap_table = lvms->memmap_table;
-> +    memmap_entries = lvms->memmap_entries;
->       /* Ensure there are no duplicate entries. */
->       for (unsigned i = 0; i < memmap_entries; i++) {
->           assert(memmap_table[i].address != address);
-> @@ -182,6 +189,8 @@ static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
->       memmap_table[memmap_entries].type = cpu_to_le32(type);
->       memmap_table[memmap_entries].reserved = 0;
->       memmap_entries++;
-> +    lvms->memmap_table = memmap_table;
-> +    lvms->memmap_entries = memmap_entries;
->   }
->   
->   static DeviceState *create_acpi_ged(DeviceState *pch_pic,
-> @@ -625,13 +634,13 @@ static void fw_cfg_add_memory(MachineState *ms)
->       }
->   
->       if (size >= gap) {
-> -        memmap_add_entry(base, gap, 1);
-> +        memmap_add_entry(ms, base, gap, 1);
->           size -= gap;
->           base = VIRT_HIGHMEM_BASE;
->       }
->   
->       if (size) {
-> -        memmap_add_entry(base, size, 1);
-> +        memmap_add_entry(ms, base, size, 1);
->           base += size;
->       }
->   
-> @@ -646,7 +655,7 @@ static void fw_cfg_add_memory(MachineState *ms)
->            * lowram:  [base, +(gap - numa_info[0].node_mem))
->            * highram: [VIRT_HIGHMEM_BASE, +(ram_size - gap))
->            */
-> -        memmap_add_entry(base, gap - numa_info[0].node_mem, 1);
-> +        memmap_add_entry(ms, base, gap - numa_info[0].node_mem, 1);
->           size = ram_size - gap;
->           base = VIRT_HIGHMEM_BASE;
->       } else {
-> @@ -654,7 +663,7 @@ static void fw_cfg_add_memory(MachineState *ms)
->       }
->   
->       if (size) {
-> -        memmap_add_entry(base, size, 1);
-> +        memmap_add_entry(ms, base, size, 1);
->       }
->   }
->   
-> @@ -740,8 +749,8 @@ static void virt_init(MachineState *machine)
->       rom_set_fw(lvms->fw_cfg);
->       if (lvms->fw_cfg != NULL) {
->           fw_cfg_add_file(lvms->fw_cfg, "etc/memmap",
-> -                        memmap_table,
-> -                        sizeof(struct memmap_entry) * (memmap_entries));
-> +                        lvms->memmap_table,
-> +                        sizeof(struct memmap_entry) * lvms->memmap_entries);
->       }
->   
->       /* Initialize the IO interrupt subsystem */
-> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-> index 27399de99c..9819f7fbe3 100644
-> --- a/include/hw/loongarch/boot.h
-> +++ b/include/hw/loongarch/boot.h
-> @@ -106,9 +106,6 @@ struct loongarch_boot_info {
->       uint64_t initrd_size;
->   };
->   
-> -extern struct memmap_entry *memmap_table;
-> -extern unsigned memmap_entries;
-> -
->   struct memmap_entry {
->       uint64_t address;
->       uint64_t length;
-> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> index 2b7d19953f..602feab0f0 100644
-> --- a/include/hw/loongarch/virt.h
-> +++ b/include/hw/loongarch/virt.h
-> @@ -63,6 +63,8 @@ struct LoongArchVirtMachineState {
->       struct loongarch_boot_info bootinfo;
->       DeviceState *ipi;
->       DeviceState *extioi;
-> +    struct memmap_entry *memmap_table;
-> +    unsigned int memmap_entries;
->   };
->   
->   #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFN0ZXZlbiBTaXN0YXJlIDxz
+dGV2ZW4uc2lzdGFyZUBvcmFjbGUuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggVjMgMjkvNDJd
+IGJhY2tlbmRzL2lvbW11ZmQ6IGNoYW5nZSBwcm9jZXNzIGlvY3RsDQo+DQo+T24gNS8yMS8yMDI1
+IDExOjE5IFBNLCBEdWFuLCBaaGVuemhvbmcgd3JvdGU6DQo+Pj4gLS0tLS1PcmlnaW5hbCBNZXNz
+YWdlLS0tLS0NCj4+PiBGcm9tOiBTdGV2ZW4gU2lzdGFyZSA8c3RldmVuLnNpc3RhcmVAb3JhY2xl
+LmNvbT4NCj4+PiBTdWJqZWN0OiBSZTogW1BBVENIIFYzIDI5LzQyXSBiYWNrZW5kcy9pb21tdWZk
+OiBjaGFuZ2UgcHJvY2VzcyBpb2N0bA0KPj4+DQo+Pj4gT24gNS8yMC8yMDI1IDExOjExIFBNLCBE
+dWFuLCBaaGVuemhvbmcgd3JvdGU6DQo+Pj4+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0K
+Pj4+Pj4gRnJvbTogU3RldmVuIFNpc3RhcmUgPHN0ZXZlbi5zaXN0YXJlQG9yYWNsZS5jb20+DQo+
+Pj4+PiBTdWJqZWN0OiBSZTogW1BBVENIIFYzIDI5LzQyXSBiYWNrZW5kcy9pb21tdWZkOiBjaGFu
+Z2UgcHJvY2VzcyBpb2N0bA0KPj4+Pj4NCj4+Pj4+IE9uIDUvMTkvMjAyNSAxMTo1MSBBTSwgU3Rl
+dmVuIFNpc3RhcmUgd3JvdGU6DQo+Pj4+Pj4gT24gNS8xNi8yMDI1IDQ6NDIgQU0sIER1YW4sIFpo
+ZW56aG9uZyB3cm90ZToNCj4+Pj4+Pj4+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+Pj4+
+Pj4+PiBGcm9tOiBTdGV2ZSBTaXN0YXJlIDxzdGV2ZW4uc2lzdGFyZUBvcmFjbGUuY29tPg0KPj4+
+Pj4+Pj4gU3ViamVjdDogW1BBVENIIFYzIDI5LzQyXSBiYWNrZW5kcy9pb21tdWZkOiBjaGFuZ2Ug
+cHJvY2VzcyBpb2N0bA0KPj4+Pj4+Pj4NCj4+Pj4+Pj4+IERlZmluZSB0aGUgY2hhbmdlIHByb2Nl
+c3MgaW9jdGwNCj4+Pj4+Pj4+DQo+Pj4+Pj4+PiBTaWduZWQtb2ZmLWJ5OiBTdGV2ZSBTaXN0YXJl
+IDxzdGV2ZW4uc2lzdGFyZUBvcmFjbGUuY29tPg0KPj4+Pj4+Pj4gLS0tDQo+Pj4+Pj4+PiBiYWNr
+ZW5kcy9pb21tdWZkLmPCoMKgwqDCoMKgwqAgfCAyMCArKysrKysrKysrKysrKysrKysrKw0KPj4+
+Pj4+Pj4gYmFja2VuZHMvdHJhY2UtZXZlbnRzwqDCoMKgIHzCoCAxICsNCj4+Pj4+Pj4+IGluY2x1
+ZGUvc3lzdGVtL2lvbW11ZmQuaCB8wqAgMiArKw0KPj4+Pj4+Pj4gMyBmaWxlcyBjaGFuZ2VkLCAy
+MyBpbnNlcnRpb25zKCspDQo+Pj4+Pj4+Pg0KPj4+Pj4+Pj4gZGlmZiAtLWdpdCBhL2JhY2tlbmRz
+L2lvbW11ZmQuYyBiL2JhY2tlbmRzL2lvbW11ZmQuYw0KPj4+Pj4+Pj4gaW5kZXggNWMxOTU4Zi4u
+NmZlZDFjMSAxMDA2NDQNCj4+Pj4+Pj4+IC0tLSBhL2JhY2tlbmRzL2lvbW11ZmQuYw0KPj4+Pj4+
+Pj4gKysrIGIvYmFja2VuZHMvaW9tbXVmZC5jDQo+Pj4+Pj4+PiBAQCAtNzMsNiArNzMsMjYgQEAg
+c3RhdGljIHZvaWQNCj4+PiBpb21tdWZkX2JhY2tlbmRfY2xhc3NfaW5pdChPYmplY3RDbGFzcw0K
+Pj4+Pj4gKm9jLA0KPj4+Pj4+Pj4gY29uc3Qgdm9pZCAqZGF0YSkNCj4+Pj4+Pj4+ICAgwqDCoMKg
+wqAgb2JqZWN0X2NsYXNzX3Byb3BlcnR5X2FkZF9zdHIob2MsICJmZCIsIE5VTEwsDQo+Pj4gaW9t
+bXVmZF9iYWNrZW5kX3NldF9mZCk7DQo+Pj4+Pj4+PiB9DQo+Pj4+Pj4+Pg0KPj4+Pj4+Pj4gK2Jv
+b2wgaW9tbXVmZF9jaGFuZ2VfcHJvY2Vzc19jYXBhYmxlKElPTU1VRkRCYWNrZW5kICpiZSkNCj4+
+Pj4+Pj4+ICt7DQo+Pj4+Pj4+PiArwqDCoMKgIHN0cnVjdCBpb21tdV9pb2FzX2NoYW5nZV9wcm9j
+ZXNzIGFyZ3MgPSB7LnNpemUgPSBzaXplb2YoYXJncyl9Ow0KPj4+Pj4+Pj4gKw0KPj4+Pj4+Pj4g
+K8KgwqDCoCByZXR1cm4gIWlvY3RsKGJlLT5mZCwgSU9NTVVfSU9BU19DSEFOR0VfUFJPQ0VTUywg
+JmFyZ3MpOw0KPj4+Pj4+Pj4gK30NCj4+Pj4+Pj4+ICsNCj4+Pj4+Pj4+ICtib29sIGlvbW11ZmRf
+Y2hhbmdlX3Byb2Nlc3MoSU9NTVVGREJhY2tlbmQgKmJlLCBFcnJvciAqKmVycnApDQo+Pj4+Pj4+
+PiArew0KPj4+Pj4+Pj4gK8KgwqDCoCBzdHJ1Y3QgaW9tbXVfaW9hc19jaGFuZ2VfcHJvY2VzcyBh
+cmdzID0gey5zaXplID0gc2l6ZW9mKGFyZ3MpfTsNCj4+Pj4+Pj4+ICvCoMKgwqAgYm9vbCByZXQg
+PSAhaW9jdGwoYmUtPmZkLCBJT01NVV9JT0FTX0NIQU5HRV9QUk9DRVNTLCAmYXJncyk7DQo+Pj4+
+Pj4+DQo+Pj4+Pj4+IFRoaXMgaXMgc2FtZSBpb2N0bCBhcyBhYm92ZSBjaGVjaywgY291bGQgaXQg
+YmUgY2FsbGVkIG1vcmUgdGhhbiBvbmNlIGZvcg0KPj4+IHNhbWUNCj4+Pj4+IHByb2Nlc3M/DQo+
+Pj4+Pj4NCj4+Pj4+PiBZZXMsIGFuZCBpdCBpcyBhIG5vLW9wIGlmIHRoZSBwcm9jZXNzIGhhcyBu
+b3QgY2hhbmdlZCBzaW5jZSB0aGUgbGFzdCB0aW1lDQo+RE1BDQo+Pj4+Pj4gd2FzIG1hcHBlZC4N
+Cj4+Pj4+DQo+Pj4+PiBNb3JlIHF1ZXN0aW9ucz8NCj4+Pj4NCj4+Pj4gTG9va3MgYSBiaXQgcmVk
+dW5kYW50IGZvciBtZSwgbWVhbndoaWxlIGlmDQo+aW9tbXVmZF9jaGFuZ2VfcHJvY2Vzc19jYXBh
+YmxlKCkNCj4+PiBpcyBjYWxsZWQgb24gdGFyZ2V0IHFlbXUsIG1heSBpdCBkbyBib3RoIGNoZWNr
+aW5nIGFuZCBjaGFuZ2U/DQo+Pj4+DQo+Pj4+IEkgd291bGQgc3VnZ2VzdCB0byBkZWZpbmUgb25s
+eSBpb21tdWZkX2NoYW5nZV9wcm9jZXNzKCkgYW5kIGNvbW1lbnQgdGhhdA0KPj4+IGl0J3Mgbm8t
+b3AgaWYgcHJvY2VzcyBub3QgY2hhbmdlZC4uLg0KPj4+DQo+Pj4gV2UgbmVlZCB0byBjaGVjayBp
+ZiBJT01NVV9JT0FTX0NIQU5HRV9QUk9DRVNTIGlzIGFsbG93ZWQgYmVmb3JlDQo+Pj4gcGVyZm9y
+bWluZw0KPj4+IGxpdmUgdXBkYXRlIHNvIHdlIGNhbiBhZGQgYSBibG9ja2VyIGFuZCBwcmV2ZW50
+IGxpdmUgdXBkYXRlIGNsZWFubHk6DQo+Pj4NCj4+PiB2ZmlvX2lvbW11ZmRfY3ByX3JlZ2lzdGVy
+X2NvbnRhaW5lcg0KPj4+ICAgICAgaWYgIXZmaW9fY3ByX3N1cHBvcnRlZCgpICAgICAgICAvLyBj
+YWxscyBpb21tdWZkX2NoYW5nZV9wcm9jZXNzX2NhcGFibGUNCj4+PiAgICAgICAgICBtaWdyYXRl
+X2FkZF9ibG9ja2VyX21vZGVzKCkNCj4+DQo+PiBUaGlzIHJlbWluZHMgbWUgb2Ygb3RoZXIgcXVl
+c3Rpb25zLCBpcyB0aGlzIGlvY3RsKCkgc3VpdGFibGUgZm9yIGNoZWNraW5nIGlmIGNwci0NCj50
+cmFuc2ZlciBzdXBwb3J0ZWQ/DQo+PiBJZiB0aGVyZSBpcyB2SU9NTVUsIHRoZXJlIGNhbiBiZSBu
+byBtYXBwaW5nIGFuZCBwcm9jZXNzX2NhcGFibGUoKSBjaGVjayB3aWxsDQo+cGFzcywNCj4+IGJ1
+dCBpZiBtZW1vcnkgaXMgbm90IGZpbGUgYmFja2VkLi4uDQo+PiBEb2VzIGNwci10cmFuc2ZlciBz
+dXBwb3J0IHZJT01NVSBvciBub3Q/DQo+DQo+SSBkb24ndCBrbm93LCBJIGhhdmUgbm90IHRyaWVk
+IHlvdXIgc2FtcGxlIGFyZ3MgeWV0LCBidXQgSSB3aWxsLg0KPldpdGggdklPTU1VLCB3aGF0IGVu
+dGl0eS9pbnRlcmZhY2UgcGlucyBtZW1vcnkgZm9yIHRoZSB2ZmlvIGRldmljZT8NCg0KT2gsIEkg
+ZG9uJ3QgbWVhbiB2aXJ0aW8taW9tbXUsIGl0IGNhbiBiZSBpbnRlbC1pb21tdSBvciB2aXJ0aW8t
+aW9tbXUgZm9yIHRoaXMgaXNzdWUuDQpJIG1lYW4gd2hlbiBndWVzdCBhdHRhY2ggZGV2aWNlIHRv
+IGEgRE1BIGRvbWFpbiwgdGhlcmUgY2FuIGJlIG5vIG1hcHBpbmcgaW4gdGhhdCBkb21haW4gaW5p
+dGlhbGx5Lg0KDQo+DQo+PiBRRU1VIGtub3dzIGRldGFpbHMgb2YgYWxsIG1lbW9yeSBiYWNrZW5k
+cywgd2h5IG5vdCBjaGVja2luZyBtZW1vcnkNCj5iYWNrZW5kcyBkaXJlY3RseSBpbnN0ZWFkIG9m
+IGEgc3lzdGVtIGNhbGw/DQo+DQo+SU9NTVVfSU9BU19DSEFOR0VfUFJPQ0VTUyBpcyByZWxhdGl2
+ZWx5IG5ldy4gVGhlIGlvY3RsIHZlcmlmaWVzIHRoYXQgdGhlDQo+a2VybmVsDQo+c3VwcG9ydHMg
+aXQuICBBbmQgaWYgc3VwcG9ydGVkLCBpdCBhbHNvIHZlcmlmaWVzIHRoYXQgYWxsIGRtYSBtYXBw
+aW5ncyBhcmUNCj5vZiB0aGUgZmlsZSB0eXBlLg0KDQpCdXQgdGhlIGRtYSBtYXBwaW5ncyBhcmUg
+ZHluYW1pYyBpZiB0aGVyZSBpcyB2SU9NTVUsIHNvIGNoZWNraW5nIGRtYSBtYXBwaW5ncyBhcmUg
+Y2hlY2tpbmcgbm90aGluZyBpZiB0aGVyZSBpcyBubyBtYXBwaW5nIGluIHRoZSBETUEgZG9tYWlu
+Lg0KDQo+DQo+LSBTdGV2ZQ0KPg0KPj4+IEhvdyBhYm91dCBJIGp1c3QgYWRkIGEgY29tbWVudDoN
+Cj4+Pg0KPj4+IGJvb2wgaW9tbXVmZF9jaGFuZ2VfcHJvY2Vzc19jYXBhYmxlKElPTU1VRkRCYWNr
+ZW5kICpiZSkNCj4+PiB7DQo+Pj4gICAgICAvKg0KPj4+ICAgICAgICogQ2FsbCBJT01NVV9JT0FT
+X0NIQU5HRV9QUk9DRVNTIHRvIHZlcmlmeSBpdCBpcyBhIHJlY29nbml6ZWQgaW9jdGwuDQo+Pj4g
+ICAgICAgKiBUaGlzIGlzIGEgbm8tb3AgaWYgdGhlIHByb2Nlc3MgaGFzIG5vdCBjaGFuZ2VkIHNp
+bmNlIERNQSB3YXMgbWFwcGVkLg0KPj4+ICAgICAgICovDQo+Pj4NCj4+PiAtIFN0ZXZlDQo+Pg0K
+DQo=
 
