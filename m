@@ -4,62 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F1DC54ED0
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 11:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C742C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 12:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIQi3-00087k-A0; Fri, 23 May 2025 07:37:07 -0400
+	id 1uIRCD-00070y-MB; Fri, 23 May 2025 08:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1uIQhz-00083k-0t; Fri, 23 May 2025 07:37:03 -0400
-Received: from forward500d.mail.yandex.net ([2a02:6b8:c41:1300:1:45:d181:d500])
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1uIRC4-000707-Pd; Fri, 23 May 2025 08:08:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1uIQht-0003g5-Ju; Fri, 23 May 2025 07:37:00 -0400
-Received: from mail-nwsmtp-smtp-production-main-84.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-production-main-84.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:4946:0:640:90b4:0])
- by forward500d.mail.yandex.net (Yandex) with ESMTPS id CFB4061319;
- Fri, 23 May 2025 14:36:51 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-84.klg.yp-c.yandex.net
- (smtp/Yandex) with ESMTPSA id kaOXlq9LjuQ0-DQOMmh0C; 
- Fri, 23 May 2025 14:36:51 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
- t=1748000211; bh=feFR28ur8iWV2E6dtw3gC5COSsFgqvfRjlNM0tviJLg=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=od7ApWyrtlh9/dy0kUZ8MdcEIU1i3GabeBGPfJHflzFAqyXmUlnDDTo9WqYhw7SqJ
- aDuHMVRSrSWQ6YKoSCV9Y1rVH5446lqOQ6/oIOxGEJny1eVTExrcatFIkml1EfgfyJ
- Ascl1nVG8xZ6JM+QEWYtuIluvs041U+nyVsI8Mpg=
-Authentication-Results: mail-nwsmtp-smtp-production-main-84.klg.yp-c.yandex.net;
- dkim=pass header.i=@maquefel.me
-From: Nikita Shubin <nikita.shubin@maquefel.me>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Alexandre Iooss <erdnaxe@crans.org>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Ilya Chichkov <i.chichkov@yadro.com>,
- Nikita Shubin <n.shubin@yadro.com>
-Subject: [PATCH v2 3/3] tests/qtest: add qtests for STM32 DMA
-Date: Fri, 23 May 2025 14:36:47 +0300
-Message-ID: <20250523113647.4388-4-nikita.shubin@maquefel.me>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250523113647.4388-1-nikita.shubin@maquefel.me>
-References: <20250523113647.4388-1-nikita.shubin@maquefel.me>
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1uIRBx-0007aW-NI; Fri, 23 May 2025 08:08:08 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54NAJ0sO004905;
+ Fri, 23 May 2025 12:07:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=49Bb4Q
+ XKG8LElInLMFT00GF9LgKQVqsnYyRB5uOd8Lw=; b=fgN+JVq7zpmn5sPS2wcbrs
+ GnfTY92vtnGskX/Z5SBo2sDqsMxCUK/JWwi6Krfgwg2Ts68QaP0a/Q99O3ZEpS7B
+ FNMwEJPuu9ojoIMbAIEY+9YCXK9JImSdcbOR/HdTUGh2PYOEQA5xAWQ++VkdUJiq
+ VxmxdJjmsp3037WAwV2kGcuxeM1+oy6FmUcmyEs2BzmOph8D7EIYm6fRqpOKUcWi
+ PX/Z+Z8AFeZfiJaD6y2mUTKozkPTbDbjZ43gPAzqOSwcUZcy1HNFuT6iitu2klc5
+ ypnhwAUkh/F03ayCIOFPlNRaEggjCzeJqlg2Rn7cddXPVYTFRtQWLUCnlsR/y6wg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46t14jppru-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 23 May 2025 12:07:55 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54NAY9Dc015487;
+ Fri, 23 May 2025 12:07:54 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 46rwnnpeau-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 23 May 2025 12:07:54 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54NC7oH559638150
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 23 May 2025 12:07:51 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C83A120043;
+ Fri, 23 May 2025 12:07:50 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AE9BB20040;
+ Fri, 23 May 2025 12:07:50 +0000 (GMT)
+Received: from vela (unknown [9.111.50.39])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 23 May 2025 12:07:50 +0000 (GMT)
+Received: from brueckner by vela with local (Exim 4.98.2)
+ (envelope-from <brueckner@linux.ibm.com>) id 1uIRBl-000000009IQ-2UL2;
+ Fri, 23 May 2025 14:07:49 +0200
+Date: Fri, 23 May 2025 14:07:49 +0200
+From: Hendrik Brueckner <brueckner@linux.ibm.com>
+To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ qemu-s390x mailing list <qemu-s390x@nongnu.org>,
+ Daniel Berrange <berrange@redhat.com>,
+ qemu-devel mailing list <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v4 1/4] hw/s390x: add SCLP event type CPI
+Message-ID: <aDBlFR1GpaerO59r@linux.ibm.com>
+References: <ad66ac925ff301a945ac1f56fc1d31cc@linux.ibm.com>
+ <db6dbf5b1baf3a6ada04168ecf9fde24890cc1c1.camel@linux.ibm.com>
+ <5077ebbe-5a4d-4db5-8a1d-067d88244bfb@redhat.com>
+ <2d53cf272ae58736b7904c9a86a2a1ce@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:d500;
- envelope-from=nikita.shubin@maquefel.me; helo=forward500d.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <2d53cf272ae58736b7904c9a86a2a1ce@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: auqvUUTYuKaD7saqSiSmFGZXZ2IWogMZ
+X-Authority-Analysis: v=2.4 cv=XOkwSRhE c=1 sm=1 tr=0 ts=6830651b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=8nJEP1OIZ-IA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=CGpzUJuCNQDKkO0R5_4A:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIzMDEwNiBTYWx0ZWRfX5bvzMX6kaNfR
+ uJsRzxKpPvXmWpGtcg9YeXEB3KnYiNMRXfQ+xXq5oql1FqPeTPa5tTjazW0DyGSTBCTO7/Cv05a
+ N1dKqbvBrB/IAxQGTyANfjpwR7IDklG+Pb36atBVl7mYia++BoOn2KIcuVUxrZ/MBpcjyuE5Foq
+ EUbL7bPHa2U0C0cLkI/gzmEHDqw6vvrzPPMVVtcd5dSrX6uOcfygu6UVlhqw0DbYFhkbd4r+8ld
+ LDudsLstFmXv1GRUSALDPF/Jj5Qw/vhkvprFS1kUnK7CqTRT6fGilbNqAsSK0/JwB0ZUmbcaoiA
+ rWqgvw3m0rGz+XisKisn5Aui2gxefR6rNztC5DQeby2xtkJq/3mdcoZKIXYdebRUy/PYu/zxUMk
+ W4tiTkEzTlrNRp9fq47JSVsWf4hhVcxTV8UTpRPXkv9HrU8GrjEpzt1UoQww20ehHxZF+nhu
+X-Proofpoint-GUID: auqvUUTYuKaD7saqSiSmFGZXZ2IWogMZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-23_03,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 malwarescore=0
+ mlxlogscore=999 bulkscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505230106
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=brueckner@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,455 +131,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nikita Shubin <n.shubin@yadro.com>
+On Tue, May 06, 2025 at 02:16:18PM +0200, Shalini Chellathurai Saroja wrote:
+> On 2025-05-06 09:48, Thomas Huth wrote:
+> > On 06/05/2025 08.48, Nina Schoetterl-Glausch wrote:
+> > > On Mon, 2025-05-05 at 08:55 +0200, Shalini Chellathurai Saroja wrote:
+> > > > On 2025-04-28 11:22, Janis Schoetterl-Glausch wrote:
+> > > > > On Thu, 2025-04-10 at 17:09 +0200, Shalini Chellathurai
+> > > > > Saroja wrote:
+> > > > > > Implement the Service-Call Logical Processor (SCLP) event
+> > > > > > type Control-Program Identification (CPI) in QEMU. This
+> > > > > > event is used to send CPI identifiers from the guest to the
+> > > > > > host. The CPI identifiers are: system type, system name,
+> > > > > > system level and sysplex name.
+> > > > > > 
+> > > > > > System type: operating system of the guest (e.g. "LINUX").
+> > > > > > System name: user configurable name of the guest (e.g. "TESTVM").
+> > > > > > System level: distribution and kernel version, if the
+> > > > > > system type is
+> > > > > > Linux
+> > > > > > (e.g. 0x50e00).
+> > > > > > Sysplex name: name of the cluster which the guest
+> > > > > > belongs to (if any)
+> > > > > > (e.g. "PLEX").
+> > > > > > 
+> > > > > > Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+> > > > > > Reviewed-by: Thomas Huth <thuth@redhat.com>
+> > > > > > ---
+> > > > > >   hw/s390x/event-facility.c         |  2 +
+> > > > > >   hw/s390x/meson.build              |  1 +
+> > > > > >   hw/s390x/s390-virtio-ccw.c        | 14 +++++
+> > > > > >   hw/s390x/sclpcpi.c                | 92
+> > > > > > +++++++++++++++++++++++++++++++
+> > > > > >   include/hw/s390x/event-facility.h | 13 +++++
+> > > > > >   5 files changed, 122 insertions(+)
+> > > > > >   create mode 100644 hw/s390x/sclpcpi.c
+> > > > > > 
+> > > > > > diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
+> > > > > > index 2b0332c20e..60237b8581 100644
+> > > > > > --- a/hw/s390x/event-facility.c
+> > > > > > +++ b/hw/s390x/event-facility.c
+> > > 
+> > > [...]
+> > > 
+> > > > It is possible to add the identifiers directly as the properties of
+> > > > sclpcpi (eg. system type as shown below) and remove the
+> > > > control-program-id.
+> > > 
+> > > This is what I meant, drop it from qom.
+> 
+> Ok.
+> 
+> > > > 
+> > > > virsh # qemu-monitor-command vm --pretty
+> > > > '{"execute":"qom-list","arguments": {"path":
+> > > > "/machine/sclp/s390-sclp-event-facility/sclpcpi"}}'
+> > > > {
+> > > >     "return": [
+> > > >       {
+> > > >         "name": "type",
+> > > >         "type": "string"
+> > > >       },
+> > > >       {
+> > > >         "name": "parent_bus",
+> > > >         "type": "link<bus>"
+> > > >       },
+> > > >       {
+> > > >         "name": "realized",
+> > > >         "type": "bool"
+> > > >       },
+> > > >       {
+> > > >         "name": "hotplugged",
+> > > >         "type": "bool"
+> > > >       },
+> > > >       {
+> > > >         "name": "hotpluggable",
+> > > >         "type": "bool"
+> > > >       },
+> > > >       {
+> > > >         "name": "system_type",
+> > > >         "type": "string"
+> > > >       },
+> > > >       {
+> > > >         "name": "control-program-id",
+> > > >         "type": "S390ControlProgramId"
+> > > >       }
+> > > >     ],
+> > > >     "id": "libvirt-16"
+> > > > }
+> > > > 
+> > > > virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get",
+> > > > "arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi",
+> > > > "property":"system_type"}}'
+> > > > {
+> > > >     "return": "LINUX   ",
+> > > >     "id": "libvirt-17"
+> > > > }
+> > > > 
+> > > > However, Hendrik Brückner suggested to group the identifiers together
+> > > > during the initial discussion of this line item. So, I would
+> > > > prefer to
+> > > 
+> > > They are grouped together under "sclpcpi", no?
+> 
+> Yes.
+> 
+> > > 
+> > > > leave this as it is. Please let me know if you still think otherwise.
+> > > 
+> > > I don't have a strong opinion on this, just wanted to mention it and
+> > > see what other people say.
+> > 
+> > I guess it mostly depends on whether there are future plans for using
+> > the QOM type elsewhere. If this type is supposed to be used in other
+> > QAPI calls in the future, it makes sense to keep it separate now. If
+> > there are no such plans, it's maybe easier to integrate the values
+> > into sclpcpi directly. Hendrik, any opinion from your side?
+> > 
+> >  Thomas
+> 
+> Hello Hendrik,
+> 
+> I have provided the output of both the options below. Please let me know
+> which option do you prefer.
+> 
+> I have incorporated the other comments. So I will be able to send V5 after
+> your response. Thank you very much!
+> 
+> Option 1: Control-program identifiers set as the properties of sclpcpi:
+> 
+> virsh # qemu-monitor-command vm --pretty '{"execute":"qom-list","arguments":
+> {"path": "/machine/sclp/s390-sclp-event-facility/sclpcpi"}}'
+> {
+>   "return": [
+>     {
+> [...]
+>     },
+>     {
+>       "name": "system_level",
+>       "type": "uint64"
+>     },
+>     {
+>       "name": "system_name",
+>       "type": "string"
+>     },
+>     {
+>       "name": "system_type",
+>       "type": "string"
+>     },
+>     {
+>       "name": "timestamp",
+>       "type": "uint64"
+>     },
+>     {
+>       "name": "sysplex_name",
+>       "type": "string"
+>     }
+>   ],
+>   "id": "libvirt-14"
+> }
 
-Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
----
- tests/qtest/meson.build      |   1 +
- tests/qtest/stm32-dma-test.c | 421 +++++++++++++++++++++++++++++++++++
- 2 files changed, 422 insertions(+)
- create mode 100644 tests/qtest/stm32-dma-test.c
-
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 3136d15e0f..5cd14d3cfd 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -239,6 +239,7 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] : []) + \
-   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
-+  (config_all_devices.has_key('CONFIG_STM32F100_SOC') ? ['stm32-dma-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
-   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
-diff --git a/tests/qtest/stm32-dma-test.c b/tests/qtest/stm32-dma-test.c
-new file mode 100644
-index 0000000000..36c9898756
---- /dev/null
-+++ b/tests/qtest/stm32-dma-test.c
-@@ -0,0 +1,421 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * QTest testcase for STM32 DMA engine.
-+ *
-+ * This includes STM32F1xxxx, STM32F2xxxx and GD32F30x
-+ *
-+ * Author: 2025 Nikita Shubin <n.shubin@yadro.com>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "libqtest-single.h"
-+#include "libqos/libqos.h"
-+
-+/* Offsets in stm32vldiscovery platform: */
-+#define DMA_BASE    0x40020000
-+#define SRAM_BASE   0x20000000
-+
-+/* Global interrupt flag */
-+#define DMA_ISR_GIF   BIT(0)
-+/* Full transfer finish */
-+#define DMA_ISR_TCIF  BIT(1)
-+/* Half transfer finish */
-+#define DMA_ISR_HTIF  BIT(2)
-+/* Transfer error */
-+#define DMA_ISR_TEIF  BIT(3)
-+
-+/* Used register/fields definitions */
-+#define DMA_CCR(idx)     (0x08 + 0x14 * idx)
-+#define DMA_CNDTR(idx)   (0x0C + 0x14 * idx)
-+#define DMA_CPAR(idx)    (0x10 + 0x14 * idx)
-+#define DMA_CMAR(idx)    (0x14 + 0x14 * idx)
-+
-+#define DMA_MAX_CHAN    7
-+
-+/* Register offsets for a dma chan0 within a dma block. */
-+#define DMA_CHAN(_idx, _irq)  \
-+    { \
-+        .ccr = DMA_CCR(_idx), \
-+        .cndrt = DMA_CNDTR(_idx), \
-+        .cpar = DMA_CPAR(_idx), \
-+        .cmar = DMA_CMAR(_idx), \
-+        .irq_line = _irq,\
-+    }
-+
-+typedef struct DMAChan {
-+    uint32_t ccr;
-+    uint32_t cndrt;
-+    uint32_t cpar;
-+    uint32_t cmar;
-+    uint8_t irq_line;
-+} DMAChan;
-+
-+const DMAChan dma_chans[] = {
-+    DMA_CHAN(0, 11),
-+    DMA_CHAN(1, 12),
-+    DMA_CHAN(2, 12),
-+    DMA_CHAN(3, 13),
-+    DMA_CHAN(4, 14),
-+    DMA_CHAN(5, 16),
-+    DMA_CHAN(6, 17),
-+};
-+
-+/* Register offsets for a dma within a dma block. */
-+typedef struct DMA {
-+    uint32_t base_addr;
-+    uint32_t isr;
-+    uint32_t ofcr;
-+} DMA;
-+
-+const DMA dma = {
-+    .base_addr = DMA_BASE,
-+    .isr = 0x00,
-+    .ofcr = 0x04,
-+};
-+
-+typedef struct TestData {
-+    QTestState *qts;
-+    const DMA *dma;
-+    const DMAChan *chans;
-+} TestData;
-+
-+#define NVIC_ISER 0xE000E100
-+#define NVIC_ISPR 0xE000E200
-+#define NVIC_ICPR 0xE000E280
-+
-+static void enable_nvic_irq(unsigned int n)
-+{
-+    writel(NVIC_ISER, 1 << n);
-+}
-+
-+static void unpend_nvic_irq(unsigned int n)
-+{
-+    writel(NVIC_ICPR, 1 << n);
-+}
-+
-+static bool check_nvic_pending(unsigned int n)
-+{
-+    return readl(NVIC_ISPR) & (1 << n);
-+}
-+
-+static uint32_t dma_read(const TestData *td, uint32_t offset)
-+{
-+    return qtest_readl(td->qts, td->dma->base_addr + offset);
-+}
-+
-+static void dma_write(const TestData *td, uint32_t offset, uint32_t value)
-+{
-+    qtest_writel(td->qts, td->dma->base_addr + offset, value);
-+}
-+
-+static void dma_write_ofcr(const TestData *td, uint32_t value)
-+{
-+    return dma_write(td, td->dma->ofcr, value);
-+}
-+
-+static uint32_t dma_read_isr(const TestData *td)
-+{
-+    return dma_read(td, td->dma->isr);
-+}
-+
-+static void dma_write_ccr(const TestData *td, uint8_t idx, uint32_t value)
-+{
-+    dma_write(td, td->chans[idx].ccr, value);
-+}
-+
-+static uint32_t dma_read_ccr(const TestData *td, uint8_t idx)
-+{
-+    return dma_read(td, td->chans[idx].ccr);
-+}
-+
-+static void dma_write_cndrt(const TestData *td, uint8_t idx, uint32_t value)
-+{
-+    dma_write(td, td->chans[idx].cndrt, value);
-+}
-+
-+static void dma_write_cpar(const TestData *td, uint8_t idx, uint32_t value)
-+{
-+    dma_write(td, td->chans[idx].cpar, value);
-+}
-+
-+static void dma_write_cmar(const TestData *td, uint8_t idx, uint32_t value)
-+{
-+    dma_write(td, td->chans[idx].cmar, value);
-+}
-+
-+static void test_m2m(gconstpointer test_data)
-+{
-+    const TestData *td = test_data;
-+    QTestState *s = td->qts;
-+    const uint32_t patt_len = 0xff;
-+    g_autofree char *pattern_check = g_malloc(patt_len);
-+    g_autofree char *pattern = g_malloc(patt_len);
-+    uint8_t idx = 0;
-+    uint32_t val;
-+
-+    enable_nvic_irq(td->chans[idx].irq_line);
-+    qtest_irq_intercept_in(global_qtest, "/machine/soc/dma[0]");
-+
-+    /* write addr */
-+    dma_write_cpar(td, idx, SRAM_BASE);
-+    dma_write_cmar(td, idx, SRAM_BASE + patt_len);
-+
-+    /* enable increment and M2M */
-+    val = dma_read_ccr(td, idx);
-+    val |= BIT(1); /* TCIE */
-+    val |= BIT(6); /* PINC */
-+    val |= BIT(7); /* MINC */
-+    val |= BIT(14); /* M2M */
-+    dma_write_ccr(td, idx, val);
-+
-+    generate_pattern(pattern, patt_len, patt_len);
-+    qtest_memwrite(s, SRAM_BASE, pattern, patt_len);
-+
-+    dma_write_cndrt(td, idx, patt_len);
-+
-+    val |= BIT(0); /* enable channel */
-+    dma_write_ccr(td, idx, val);
-+
-+    qtest_memread(s, SRAM_BASE + patt_len, pattern_check, patt_len);
-+
-+    g_assert(memcmp(pattern, pattern_check, patt_len) == 0);
-+
-+    g_assert_true(check_nvic_pending(td->chans[idx].irq_line));
-+}
-+
-+typedef struct width_pattern {
-+    uint32_t src;
-+    uint8_t swidth;
-+    uint32_t dst;
-+    uint8_t dwidth;
-+} width_pattern;
-+
-+static void test_width(gconstpointer test_data)
-+{
-+    const width_pattern patterns[] = {
-+        { 0xb0,       1, 0xb0,       1 },
-+        { 0xb0,       1, 0x00b0,     2 },
-+        { 0xb0,       1, 0x000000b0, 4 },
-+        { 0xb1b0,     2, 0xb0,       1 },
-+        { 0xb1b0,     2, 0xb1b0,     2 },
-+        { 0xb1b0,     2, 0x0000b1b0, 4 },
-+        { 0xb3b2b1b0, 4, 0xb0,       1 },
-+        { 0xb3b2b1b0, 4, 0xb1b0,     2 },
-+        { 0xb3b2b1b0, 4, 0xb3b2b1b0, 4 },
-+    };
-+
-+    const TestData *td = test_data;
-+    QTestState *s = td->qts;
-+    const uint32_t patt = 0xffffffff;
-+    const uint32_t patt_len = 4;
-+    uint8_t idx = 0;
-+    uint32_t dst;
-+    uint32_t val;
-+    QDict *resp;
-+
-+    resp = qmp("{'execute':'system_reset' }");
-+    qobject_unref(resp);
-+
-+    /* write addr */
-+    dma_write_cpar(td, idx, SRAM_BASE);
-+    dma_write_cmar(td, idx, SRAM_BASE + patt_len);
-+
-+    /* enable increment and M2M */
-+    val = dma_read_ccr(td, idx);
-+    val |= BIT(6); /* PINC */
-+    val |= BIT(7); /* MINC */
-+    val |= BIT(14); /* M2M */
-+    dma_write_ccr(td, idx, val);
-+
-+    for (int i = 0; i < ARRAY_SIZE(patterns); i++) {
-+        /* fill destination and source with pattern */
-+        qtest_memwrite(s, SRAM_BASE, &patt, patt_len);
-+        qtest_memwrite(s, SRAM_BASE + patt_len, &patt, patt_len);
-+
-+        qtest_memwrite(s, SRAM_BASE, &patterns[i].src, patterns[i].swidth);
-+
-+        dma_write_cndrt(td, idx, 1);
-+        val |= BIT(0); /* enable channel */
-+        val = deposit32(val, 8, 2, patterns[i].swidth >> 1);
-+        val = deposit32(val, 10, 2, patterns[i].dwidth >> 1);
-+        dma_write_ccr(td, idx, val);
-+
-+        qtest_memread(s, SRAM_BASE + patt_len, &dst, patterns[i].dwidth);
-+
-+        g_assert(memcmp(&dst, &patterns[i].dst, patterns[i].dwidth) == 0);
-+
-+        /* disable chan */
-+        val &= ~BIT(0);
-+        dma_write_ccr(td, idx, val);
-+    }
-+}
-+
-+static void dma_set_irq(unsigned int idx, int num, int level)
-+{
-+    g_autofree char *name = g_strdup_printf("/machine/soc/dma[%u]",
-+                                            idx);
-+    qtest_set_irq_in(global_qtest, name, NULL, num, level);
-+}
-+
-+static void test_triggers(gconstpointer test_data)
-+{
-+    const TestData *td = test_data;
-+    QTestState *s = td->qts;
-+    const uint32_t patt = 0xffffffff;
-+    const uint32_t patt_len = 4;
-+    uint32_t dst;
-+    uint32_t val;
-+    QDict *resp;
-+
-+    resp = qmp("{'execute':'system_reset' }");
-+    qobject_unref(resp);
-+
-+    for (int i = 0; i < ARRAY_SIZE(dma_chans); i++) {
-+        qtest_memset(s, SRAM_BASE, 0, patt_len * 2);
-+        qtest_memwrite(s, SRAM_BASE, &patt, patt_len);
-+
-+        /* write addr */
-+        dma_write_cpar(td, i, SRAM_BASE);
-+        dma_write_cmar(td, i, SRAM_BASE + patt_len);
-+
-+        val = dma_read_ccr(td, i);
-+
-+        dma_write_cndrt(td, i, 1);
-+        val |= BIT(0); /* enable channel */
-+        val = deposit32(val, 8, 2, patt_len >> 1);
-+        val = deposit32(val, 10, 2, patt_len >> 1);
-+        dma_write_ccr(td, i, val);
-+
-+        dma_set_irq(0, i, 1);
-+
-+        qtest_memread(s, SRAM_BASE + patt_len, &dst, patt_len);
-+
-+        g_assert(memcmp(&dst, &patt, patt_len) == 0);
-+
-+        /* disable chan */
-+        val &= ~BIT(0);
-+        dma_write_ccr(td, i, val);
-+    }
-+}
-+
-+static void test_interrupts(gconstpointer test_data)
-+{
-+    const TestData *td = test_data;
-+    const uint32_t patt_len = 1024;
-+    uint8_t idx = 0;
-+    uint32_t val;
-+    QDict *resp;
-+
-+    resp = qmp("{'execute':'system_reset' }");
-+    qobject_unref(resp);
-+
-+    enable_nvic_irq(td->chans[idx].irq_line);
-+
-+    /* write addr */
-+    dma_write_cpar(td, idx, SRAM_BASE);
-+    dma_write_cmar(td, idx, SRAM_BASE + patt_len);
-+
-+    /* write counter */
-+    dma_write_cndrt(td, idx, 2);
-+
-+    /* enable increment and M2M */
-+    val = dma_read_ccr(td, idx);
-+    val |= BIT(0); /* EN */
-+    val |= BIT(1); /* TCIE */
-+    val |= BIT(2); /* HTIE */
-+    val |= BIT(3); /* TEIE */
-+    val |= BIT(6); /* PINC */
-+    val |= BIT(7); /* MINC */
-+    dma_write_ccr(td, idx, val);
-+
-+    /* Half-transfer */
-+    dma_set_irq(0, idx, 1);
-+    g_assert_true(check_nvic_pending(td->chans[idx].irq_line));
-+    val = dma_read_isr(td);
-+
-+    g_assert_true(val & DMA_ISR_GIF);
-+    g_assert_true(val & DMA_ISR_HTIF);
-+    unpend_nvic_irq(td->chans[idx].irq_line);
-+
-+    dma_write_ofcr(td, 0xffffffff);
-+    val = dma_read_isr(td);
-+    g_assert_false(val & DMA_ISR_GIF);
-+    g_assert_false(val & DMA_ISR_HTIF);
-+
-+    /* Full-transfer */
-+    dma_set_irq(0, idx, 1);
-+    g_assert_true(check_nvic_pending(td->chans[idx].irq_line));
-+    val = dma_read_isr(td);
-+
-+    g_assert_true(val & DMA_ISR_GIF);
-+    g_assert_true(val & DMA_ISR_HTIF);
-+    g_assert_true(val & DMA_ISR_TCIF);
-+    unpend_nvic_irq(td->chans[idx].irq_line);
-+
-+    dma_write_ofcr(td, 0xffffffff);
-+    val = dma_read_isr(td);
-+    g_assert_false(val & DMA_ISR_GIF);
-+    g_assert_false(val & DMA_ISR_HTIF);
-+    g_assert_false(val & DMA_ISR_TCIF);
-+
-+    /* Error-on-transfer */
-+    val = dma_read_ccr(td, idx);
-+    val &= ~BIT(0);
-+    dma_write_ccr(td, idx, val);
-+
-+    dma_write_cndrt(td, idx, 1);
-+    dma_write_cpar(td, idx, 0xffffffff);
-+
-+    val |= BIT(0);
-+    dma_write_ccr(td, idx, val);
-+
-+    dma_set_irq(0, idx, 1);
-+    g_assert_true(check_nvic_pending(td->chans[idx].irq_line));
-+    val = dma_read_isr(td);
-+
-+    g_assert_true(val & DMA_ISR_GIF);
-+    g_assert_true(val & DMA_ISR_TEIF);
-+    unpend_nvic_irq(td->chans[idx].irq_line);
-+
-+    dma_write_ofcr(td, 0xffffffff);
-+    val = dma_read_isr(td);
-+    g_assert_false(val & DMA_ISR_GIF);
-+    g_assert_false(val & DMA_ISR_TEIF);
-+}
-+
-+static void stm32_add_test(const char *name, const TestData *td,
-+                           GTestDataFunc fn)
-+{
-+    g_autofree char *full_name = g_strdup_printf(
-+        "stm32_dma/%s", name);
-+    qtest_add_data_func(full_name, td, fn);
-+}
-+
-+/* Convenience macro for adding a test with a predictable function name. */
-+#define add_test(name, td) stm32_add_test(#name, td, test_##name)
-+
-+int main(int argc, char **argv)
-+{
-+    TestData testdata;
-+    QTestState *s;
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+    s = qtest_start("-machine stm32vldiscovery");
-+    g_test_set_nonfatal_assertions();
-+
-+    TestData *td = &testdata;
-+    td->qts = s;
-+    td->dma = &dma;
-+    td->chans = dma_chans;
-+    add_test(m2m, td);
-+    add_test(width, td);
-+    add_test(triggers, td);
-+    add_test(interrupts, td);
-+
-+    ret = g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
--- 
-2.48.1
-
+I would vote for Option 1 as this seems to be a bit more natural from
+an object model.  There is not much impact for the upcoming changes
+to consume this information.
 
