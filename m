@@ -4,99 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F092C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE443C54ED0
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIPoi-0002R1-I4; Fri, 23 May 2025 06:39:56 -0400
+	id 1uIPp4-0002ng-I9; Fri, 23 May 2025 06:40:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
- id 1uIPog-0002QX-LU; Fri, 23 May 2025 06:39:54 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIPp2-0002id-Na
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:40:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
- id 1uIPoe-0004np-FY; Fri, 23 May 2025 06:39:54 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4b3hVr1W0Dz4xf9;
- Fri, 23 May 2025 20:39:48 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4b3hVm3VFfz4xdx;
- Fri, 23 May 2025 20:39:44 +1000 (AEST)
-Message-ID: <97b35cef-8c31-4d06-9658-651d0babdd8f@kaod.org>
-Date: Fri, 23 May 2025 12:39:41 +0200
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIPoz-00052C-8l
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:40:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747996811;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wSAR2oP9aif2PDPWow5q8ViVzjxb1+2hfHb5dvrmC30=;
+ b=gKJ0GJUZhv4gtEQmVygT2sbdpZehaM3SnqfA4hqM21iIq49875QPLlrzLbxinpNAk4rLXh
+ OAdqw+jrX4jJsvP1z+9rBVlZf+bRrdn5JQ6102Ilo1LQ+ghvEPpx/37r91N3PAHaBK0qUY
+ zUTRGQhVCH5oN2WYWyvb1rhEsdowWcI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-411-oJpKAt4PPia4Q06OJyv5TQ-1; Fri, 23 May 2025 06:40:09 -0400
+X-MC-Unique: oJpKAt4PPia4Q06OJyv5TQ-1
+X-Mimecast-MFC-AGG-ID: oJpKAt4PPia4Q06OJyv5TQ_1747996808
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43ce8f82e66so48905255e9.3
+ for <qemu-devel@nongnu.org>; Fri, 23 May 2025 03:40:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747996808; x=1748601608;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wSAR2oP9aif2PDPWow5q8ViVzjxb1+2hfHb5dvrmC30=;
+ b=GihS6zeDymh973bV7xYKBC7CslvG9n8ZkHHMUKBxglIEhO4IdU99J41rgrelj/4BNK
+ uZ6mjEEnuPp2Igy4qFIdwAQvzye4dBCtdg0PLyi4gf3BQqpYf8zvsxah9WE81+u3ihEw
+ mpMZ3JWjmCSKN99n3b/IfEiIU9u8X5yD4xBSorvgG3N6cvl/65ds8kulwgcjIkdR31dR
+ qlyg9qL5mhGUbzwFqbwZU33YwDwCClDAFD9MGV++SIvrhndcTgUCJ09H0ANj6S4SqqRE
+ l0GBCazDzDTlLFV3At09iRsD9hpL803oEfmt4tekzuY8dplr/xvu/ouKrBT838rHZ+KV
+ Y5mw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbv/VAnjJ16Us9Y/DBY32hBFTcq/MUnNuENITETjNc0oA7IE0oEA84yloZlAe8XYpxMFcgZzm5400t@nongnu.org
+X-Gm-Message-State: AOJu0YxRqcF47BzSwrcCM6ilSkZ4DuvYM1bNAFhCNo/8O2GcPI886rQi
+ +Hp3Pknw6pYrnT0PUnMjmNnqyDRIlSg4rPCQrSgQcb8L9Mp3O8Tx6odmYhh6NaVPEKiW9S6sBQd
+ jfUYE+K4Yg95kPEgPqm8EmwcrphKJGJpL+f841LdCAbveZvS8/Y/9rqaF
+X-Gm-Gg: ASbGncv4ySiXWVHDNiz4tuQQI8sUXAQzdgb9cRQqNHj9Ik4GtfiMlq+1Yj60dflEcqb
+ Kgtfa/U+IAUUrU62OI5yHENlOkB1ZG9oCfza5c22g7+8HyRrjqceXBniZSnQ10vb39/IW4/krus
+ x1Sn2QghQTo/YoCwRejkzhSlKVqYmebHef6xx2HbRPz874BIbRiW/EQ6VbiUq1ShSs640lB7F6d
+ IJEkv6SYWGv0S/hvHekPy/aw0tSEmlOfiNS9W05EYZMRiF5NDqbauq+J0YKqI7OAeGW1Xw1mYd+
+ C2oPLw2lvXpQDMybe1k=
+X-Received: by 2002:a05:600c:820e:b0:43d:2313:7b4a with SMTP id
+ 5b1f17b1804b1-44b6cc09789mr41197025e9.3.1747996808466; 
+ Fri, 23 May 2025 03:40:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IELNKvww9fhNfl3zJyHSIqVqjn7ICzT1OKo1K27pNsKEg0UfA/BxHoq8NMLflI0HlKcUmvKAw==
+X-Received: by 2002:a05:600c:820e:b0:43d:2313:7b4a with SMTP id
+ 5b1f17b1804b1-44b6cc09789mr41196545e9.3.1747996808059; 
+ Fri, 23 May 2025 03:40:08 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:247a:1010::f39? ([2a0d:3344:247a:1010::f39])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f74cce5bsm132089705e9.24.2025.05.23.03.40.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 May 2025 03:40:07 -0700 (PDT)
+Message-ID: <3277a9a5-10a7-49a9-901d-cdeef503b1d1@redhat.com>
+Date: Fri, 23 May 2025 12:40:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/6] hw/arm/aspeed_ast2700-fc: Fix null pointer
- dereference
-To: Steven Lee <steven_lee@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
-References: <20250523093144.991408-1-steven_lee@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250523093144.991408-1-steven_lee@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH RFC 15/16] net: implement tnl feature offloading
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
+ <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Cornelia Huck <cohuck@redhat.com>,
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <cover.1747825544.git.pabeni@redhat.com>
+ <3ee26dacd91d6c12ae4fc64bc42890553739a2fe.1747825544.git.pabeni@redhat.com>
+ <0aba4f0d-f6e8-4c46-a183-eebb401c13a2@daynix.com>
+Content-Language: en-US
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <0aba4f0d-f6e8-4c46-a183-eebb401c13a2@daynix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=fO70=YH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,63 +121,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/23/25 11:31, Steven Lee wrote:
-> Clang's sanitizer reports a runtime error when booting with
-> '-net nic -net user', due to a null pointer being passed
-> to memory_region_find(), which subsequently triggers a crash in
-> flatview_lookup().
+On 5/23/25 10:16 AM, Akihiko Odaki wrote:
+> On 2025/05/21 20:34, Paolo Abeni wrote:
+>> @@ -890,6 +915,12 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
+>>          .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
+>>          .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
+>>          .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
+>> +#ifdef CONFIG_INT128
+>> +       .tnl  = !!(n->curr_guest_offloads &
+>> +                  (1ULL << VIRTIO_NET_O_GUEST_UDP_TUNNEL_GSO)),
+>> +       .tnl_csum = !!(n->curr_guest_offloads &
+>> +                      (1ULL << VIRTIO_NET_O_GUEST_UDP_TUNNEL_GSO_CSUM)),
 > 
-> Root cause:
-> - Missing NIC configuration in the CA35 initialization.
+> "[PATCH RFC 14/16] net: bundle all offloads in a single struct" added a 
+> struct for offloading, but how about passing n->curr_guest_offloads as 
+> is instead?
 > 
-> Fix:
-> - Reduce ca35 ram size from 2GiB to 1GiB to align with ast2700a1-evb,
->    where the ram-container is defined as 1GiB in its class.
-> - Add nic configuration in ast2700fc's ca35 init function.
-> 
-> 
-> v2:
-> - Split the CA35 memory mapping into a separate patch.
-> - Added a new patch to fix BMC memory mapping in the fby35 machine,
->    which had a similar issue (unmapped system_memory).
-> - Removed Change-Id tag from commit messages
-> 
-> v3:
-> - Fixed issue with incorrectly inheriting TYPE_ASPEED_MACHINE.
-> - Rewrote the commit message for "Map BMC memory into system memory".
-> - Added more details to the commit message for "Fix unimplemented region
->    overlap with VBootROM".
-> 
-> v4:
-> - Split the first patch "Fix null pointer dereference" into two patches.
-> - Remove the patch "hw/arm/aspeed_ast27x0: Fix unimplemented
->    region overlap with vbootrom".
-> 
-> v5:
-> - Rewrote the commit message for the first patch to:
->      "hw/arm/aspeed_ast2700-fc: Add network support".
-> 
-> Steven Lee (6):
->    hw/arm/aspeed_ast2700-fc: Add network support
->    hw/arm/aspeed_ast2700-fc: Reduce ca35 ram size to align with ast2700a1
->    hw/arm/aspeed_ast27x0: Fix unimplemented region overlap with vbootrom
->    hw/arm/aspeed_ast27x0-fc: Map ca35 memory into system memory
->    hw/arm/fby35: Map BMC memory into system memory
->    docs: Remove ast2700fc from Aspeed family boards
-> 
->   docs/system/arm/aspeed.rst |  2 +-
->   hw/arm/aspeed_ast27x0-fc.c | 10 +++++++++-
->   hw/arm/aspeed_ast27x0.c    |  4 ++--
->   hw/arm/fby35.c             |  1 +
->   4 files changed, 13 insertions(+), 4 deletions(-)
-> 
+> It loses some type safety and makes it prone to have unknown bits, but 
+> omitting duplicate these bit operations may outweigh the downside.
 
+I *think* that one of the relevant point about the current interface is
+that qemu_set_offload() abstracts from the virtio specifics, as it's
+also used by other drivers. Forcing them to covert the to-be-configured
+offloads to a virtio specific bitmask sound incorrect to me. Possibly I
+misread your suggestion?
 
-Applied to aspeed-next.
+[...]
+>> diff --git a/net/tap-linux.c b/net/tap-linux.c
+>> index aa5f3a6e22..b7662ece63 100644
+>> --- a/net/tap-linux.c
+>> +++ b/net/tap-linux.c
+>> @@ -287,6 +287,12 @@ void tap_fd_set_offload(int fd, const NetOffloads *ol)
+>>           if (ol->uso6) {
+>>               offload |= TUN_F_USO6;
+>>           }
+>> +        if ((ol->tso4 || ol->tso6 || ol->uso4 || ol->uso6) && ol->tnl) {
+> 
+> Is it possible to have ol->tnl without TSO or USO? If so, is ignoring 
+> ol->tnl really what you want?
 
-Thanks,
+The virtio specifications actually prevent setting UDP-tunnel offload
+without any other "inner" offload (TSO or USO), as it makes little to no
+sense (the stack can't GSO/GRO the outer header without doing the same
+for the inner).
 
-C.
+Does the above makes sense/answer your questions?
 
+/P
 
 
