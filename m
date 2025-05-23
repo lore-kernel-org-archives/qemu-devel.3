@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB03C54ED0
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F092C3DA6D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIPnL-0001gz-91; Fri, 23 May 2025 06:38:31 -0400
+	id 1uIPoi-0002R1-I4; Fri, 23 May 2025 06:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
- id 1uIPn9-0001fh-Py; Fri, 23 May 2025 06:38:19 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1uIPog-0002QX-LU; Fri, 23 May 2025 06:39:54 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
- id 1uIPn7-0004gd-4r; Fri, 23 May 2025 06:38:19 -0400
+ id 1uIPoe-0004np-FY; Fri, 23 May 2025 06:39:54 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4b3hSy3rGPz4xf9;
- Fri, 23 May 2025 20:38:10 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4b3hVr1W0Dz4xf9;
+ Fri, 23 May 2025 20:39:48 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4b3hSt3pYDz4xD9;
- Fri, 23 May 2025 20:38:03 +1000 (AEST)
-Message-ID: <a77a5b0d-10b2-4180-a61a-be617af118b8@kaod.org>
-Date: Fri, 23 May 2025 12:38:00 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4b3hVm3VFfz4xdx;
+ Fri, 23 May 2025 20:39:44 +1000 (AEST)
+Message-ID: <97b35cef-8c31-4d06-9658-651d0babdd8f@kaod.org>
+Date: Fri, 23 May 2025 12:39:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/6] hw/arm/aspeed_ast2700-fc: Add network support
+Subject: Re: [PATCH v5 0/6] hw/arm/aspeed_ast2700-fc: Fix null pointer
+ dereference
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -40,7 +41,6 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
 References: <20250523093144.991408-1-steven_lee@aspeedtech.com>
- <20250523093144.991408-2-steven_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -85,16 +85,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250523093144.991408-2-steven_lee@aspeedtech.com>
+In-Reply-To: <20250523093144.991408-1-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=fO70=YH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,40 +113,62 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/23/25 11:31, Steven Lee wrote:
-> This patch adds network support to the ast2700fc machine by initializing
-> the NIC device in the ca35.
+> Clang's sanitizer reports a runtime error when booting with
+> '-net nic -net user', due to a null pointer being passed
+> to memory_region_find(), which subsequently triggers a crash in
+> flatview_lookup().
 > 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> Root cause:
+> - Missing NIC configuration in the CA35 initialization.
+> 
+> Fix:
+> - Reduce ca35 ram size from 2GiB to 1GiB to align with ast2700a1-evb,
+>    where the ram-container is defined as 1GiB in its class.
+> - Add nic configuration in ast2700fc's ca35 init function.
+> 
+> 
+> v2:
+> - Split the CA35 memory mapping into a separate patch.
+> - Added a new patch to fix BMC memory mapping in the fby35 machine,
+>    which had a similar issue (unmapped system_memory).
+> - Removed Change-Id tag from commit messages
+> 
+> v3:
+> - Fixed issue with incorrectly inheriting TYPE_ASPEED_MACHINE.
+> - Rewrote the commit message for "Map BMC memory into system memory".
+> - Added more details to the commit message for "Fix unimplemented region
+>    overlap with VBootROM".
+> 
+> v4:
+> - Split the first patch "Fix null pointer dereference" into two patches.
+> - Remove the patch "hw/arm/aspeed_ast27x0: Fix unimplemented
+>    region overlap with vbootrom".
+> 
+> v5:
+> - Rewrote the commit message for the first patch to:
+>      "hw/arm/aspeed_ast2700-fc: Add network support".
+> 
+> Steven Lee (6):
+>    hw/arm/aspeed_ast2700-fc: Add network support
+>    hw/arm/aspeed_ast2700-fc: Reduce ca35 ram size to align with ast2700a1
+>    hw/arm/aspeed_ast27x0: Fix unimplemented region overlap with vbootrom
+>    hw/arm/aspeed_ast27x0-fc: Map ca35 memory into system memory
+>    hw/arm/fby35: Map BMC memory into system memory
+>    docs: Remove ast2700fc from Aspeed family boards
+> 
+>   docs/system/arm/aspeed.rst |  2 +-
+>   hw/arm/aspeed_ast27x0-fc.c | 10 +++++++++-
+>   hw/arm/aspeed_ast27x0.c    |  4 ++--
+>   hw/arm/fby35.c             |  1 +
+>   4 files changed, 13 insertions(+), 4 deletions(-)
+> 
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Applied to aspeed-next.
 
 Thanks,
 
 C.
 
-
-> ---
->   hw/arm/aspeed_ast27x0-fc.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 125a3ade40..7bf4f2a52d 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -86,6 +86,13 @@ static void ast2700fc_ca35_init(MachineState *machine)
->                                    AST2700FC_BMC_RAM_SIZE, &error_abort)) {
->           return;
->       }
-> +
-> +    for (int i = 0; i < sc->macs_num; i++) {
-> +        if (!qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
-> +                                       true, NULL)) {
-> +            break;
-> +        }
-> +    }
->       if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
->                                    AST2700FC_HW_STRAP1, &error_abort)) {
->           return;
 
 
