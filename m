@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 196ADC54ED0
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 07:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DB8C54ED0
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 07:19:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIMfA-0006tR-Ak; Fri, 23 May 2025 03:17:52 -0400
+	id 1uIMgh-0007il-G6; Fri, 23 May 2025 03:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
- id 1uIMew-0006ra-Jn; Fri, 23 May 2025 03:17:39 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
- id 1uIMet-0004ZE-Dx; Fri, 23 May 2025 03:17:38 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4b3c1L57g8z4xf9;
- Fri, 23 May 2025 17:17:26 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4b3c1G01Jqz4x5k;
- Fri, 23 May 2025 17:17:19 +1000 (AEST)
-Message-ID: <2927392b-72de-4bba-8382-8c2bbe81f6f4@kaod.org>
-Date: Fri, 23 May 2025 09:17:16 +0200
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uIMge-0007iI-E7
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 03:19:24 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uIMgb-0004gr-E5
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 03:19:24 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-af5085f7861so5666077a12.3
+ for <qemu-devel@nongnu.org>; Fri, 23 May 2025 00:19:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747984758; x=1748589558;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BE9Cj4wjyVkmC10ajXeVohkOF58CJrSGnrxEZFR6L9E=;
+ b=XNPjCWxdO9GvgTLcTgMJd+QUx/wmWTB6pOlk2seOGtPdQtYNPmZXyYX9z32IEG3Tcu
+ G3A3jDOZX6uKHL3F6U3E+QDm8eySNRm6xpBJTIhxiV/PGJK1ij5TxT+Yd8hh0zoXX7fc
+ MrBVjo2gBVKKLqd7/GJJEORzlibM3Et+nhGoV+03U6i2ajMWn4Ulm8Ok/ipJsh1CgFYr
+ yBI5TtCX8qwG8yZ26WR3S24xJta4I+vTzxHWYQ21tb0/nBxeeeHJL0eeV1IFwUMe8Ha6
+ Cj+b/kuRSpp71XnWoWQ4r4M+YuQLIOtYD/93UEr59bhXrOc5Q/iVDmC/kj930DiIJgyu
+ DLHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747984758; x=1748589558;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BE9Cj4wjyVkmC10ajXeVohkOF58CJrSGnrxEZFR6L9E=;
+ b=CemolzHfeH6g/hnnyDa8tSXxwIBGthAMvo5C607L9P/qTMVES3alte6vhFYv82dnGp
+ ChQK75qmDcH7Z3ZnM4iGd1Oc47En1cXXvcsGJeutSngTqBkJ2FuhxuAAR7647wGNMuFN
+ 2stwd6cUWq95FxmgU9CxO4PpIUKJBudTdaG1d41oUj/eSDygpnbljjhV7fAlUhiBrPe1
+ i0DtKda14oJmtogjr9ZNNZAyvCiDPOK4tnzly5BPPU01d7OjoaOGP7z7D7Ay0eDgpQ0v
+ 89dU+fDEXxYfLb2zTiYa3az8SRYDUvFqHFLttNazyisw6PJayEznlkwP6w0n7HsuPtTm
+ ti6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5WRgAymj5A+vGlOFyJrZN//5U1vhAIcd8vGdatfdDk0WoeD4d8KQN5rDlmDgxYfvZcazlb7Kk+T5U@nongnu.org
+X-Gm-Message-State: AOJu0Yz9FkeoKCzgQlQw+CswJd0v22PwD7BS5mpiQ33BHlJEBF4ZySdK
+ +V/ErgoYucmz0yQr9CuI58SmuQVNRvuuqxsKhYrRYW6cayyv3kH6rsNo65myCFIVTVIhOyor4Py
+ DZT9s
+X-Gm-Gg: ASbGncvZyVG5J5rc2IDdL8mLuCGcRhODcySEJTfT1Lu4cVtgVIrkNTABLk/Jkjyfc7O
+ TrsqOZTpQtVueCzVkKb38l+7WKnk9TSshaeLwvB1/ksxlAvEXnLC+ebufBOsI3s0TwfzFjBfT2S
+ K/5o52uYRZscBPA4p8XP81J81LKdWJo+kzsL/Oiebmein8Iog2ZoyHJTIkTit/zyM1Xr9n32DTQ
+ q6HDUd6DDMw9wHTNv2UocFv3Qd/sQoE2yqk7oy5RkG006W49F3O5PMzVXmZ4tQ0RiWcFHol6NbH
+ OKkNWRcri0G6msDH3cv1Ui5e2g1YA9MfJr38TBHjVbwUCJYNBdKyEBfrg+DEZw==
+X-Google-Smtp-Source: AGHT+IGQPf2LXS8n5y2PRscFSyVqlmBRLT0jaDORLl68o4E8HaleQjuBvBF0jKG5RYiAmB2ZTyPm5g==
+X-Received: by 2002:a17:902:ec89:b0:224:93e:b5d7 with SMTP id
+ d9443c01a7336-231de370eb9mr388956705ad.34.1747984758158; 
+ Fri, 23 May 2025 00:19:18 -0700 (PDT)
+Received: from [10.100.116.185] ([157.82.128.1])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4ebb168sm117819985ad.204.2025.05.23.00.19.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 May 2025 00:19:17 -0700 (PDT)
+Message-ID: <29808015-f8b3-4e18-8d1d-5280bda4ee3d@daynix.com>
+Date: Fri, 23 May 2025 16:19:13 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/28] Fix incorrect hash results on AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH RFC 00/16] virtio: introduce support for GSO over UDP
+ tunnel
+To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
+ <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Cornelia Huck <cohuck@redhat.com>,
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <cover.1747825544.git.pabeni@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <cover.1747825544.git.pabeni@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=fO70=YH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,194 +114,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 10:09, Jamin Lin wrote:
-> v1:
->   1. Added support for 64-bit DMA in the HACE model
->   2. Refactored the do_hash operation in the HACE model
->   3. Fixed a crash caused by out-of-bound memory access in HACE
->   4. Added more trace events and implemented dumping of source hash data and
->      resulting digests to improve debugging
->   5. Refactored the HACE QTest framework to support both AST1030 and AST2700
->   6. Added a test case for SHA384
+On 2025/05/21 20:33, Paolo Abeni wrote:
+> Some virtualized deployments use UDP tunnel pervasively and are impacted
+> negatively by the lack of GSO support for such kind of traffic in the
+> virtual NIC driver.
 > 
-> v2:
->    1. Create new helper functions
->       hash_get_source_addr
->       hash_prepare_direct_iov
->       hash_prepare_sg_iov
->       hash_get_digest_addr
->       hash_write_digest_and_unmap_iov
->       hash_execute_non_acc_mode
->       hash_execute_acc_mode
->    2. Refactor do_hash_operation
->    3. Fix review issue
->    4. Revise trace-events
->    5. Move register size to instance class and dynamically allocate regs
+> The virtio_net specification recently introduced support for GSO over
+> UDP tunnel, this series updates the virtio implementation to support
+> such a feature.
 > 
-> v3:
->    1. Split patch to introduce these routines one by one :
->         hash_prepare_sg_iov
->         hash_prepare_direct_iov
->         hash_execute_acc_mode
->         hash_execute_non_acc_mode
->         hash_write_digest_and_unmap_iov
->    2. Fix run qtest failed
->   
-> This patchset resolves incorrect hash results reported on the AST2700 platform.
-> This update addresses the following kernel warnings and test failures related to
-> the crypto self-test framework:
+> One of the reasons for the RFC tag is that the kernel-side
+> implementation has just been shared upstream and is not merged yet, but
+> there are also other relevant reasons, see below.
 > 
-> aspeed-hmac-sha512 test failed (incorrect result)
-> aspeed-hmac-sha384 test failed (incorrect result)
-> aspeed-sha512 test failed (incorrect result)
-> aspeed-sha384 test failed (incorrect result)
-> aspeed-hmac-sha256 test failed (incorrect result)
-> aspeed-hmac-sha224 test failed (incorrect result)
-> aspeed-hmac-sha1 test failed (incorrect result)
-> aspeed-sha224 test failed (incorrect result)
-> aspeed-sha256 test failed (incorrect result)
-> aspeed-sha1 test failed (incorrect result)
+> Currently, the kernel virtio support limits the feature space to 64 bits,
+> while the virtio specification allows for a larger number of features.
+> Specifically, the GSO-over-UDP-tunnel-related virtio features use bits
+> 65-69; the larger part of this series (patches 2-11) actually deals with
+> the extended feature space.
 > 
-> How to test it
-> 
-> Use the following command to dump information about the supported digest methods
-> via the ast_crypto_engine hardware engine:
-> 
-> root@ast2700-default:~# openssl engine -pre DUMP_INFO ast_crypto_engine
-> 
-> Digest SHA1, NID=64, AF_ALG info: name=sha1ALG_ERR: , driver=aspeed-sha1 (hw accelerated)
-> Digest SHA224, NID=675, AF_ALG info: name=sha224ALG_ERR: , driver=aspeed-sha224 (hw accelerated)
-> Digest SHA256, NID=672, AF_ALG info: name=sha256ALG_ERR: , driver=aspeed-sha256 (hw accelerated)
-> Digest SHA384, NID=673, AF_ALG info: name=sha384ALG_ERR: , driver=aspeed-sha384 (hw accelerated)
-> Digest SHA512, NID=674, AF_ALG info: name=sha512ALG_ERR: , driver=aspeed-sha512 (hw accelerated)
-> 
-> The status of SHA1, SHA224, SHA256, SHA384, and SHA512 should be marked as
-> hw accelerated, indicating that these algorithms are supported by hardware
-> acceleration via the aspeed drivers.
-> 
-> Create a test file on the host machine and compute its HASH value as the
-> expected result
-> 
-> Create a 256MB test file
-> 
-> $ dd if=/dev/random of=/tmp/256M bs=1M count=256
-> Generate Hash Values Using SHA1, SHA224, SHA256, SHA384, and SHA512
-> 
-> Use the following commands to generate HASH values for a 256MB file using
-> different SHA algorithms:
-> 
-> $ sha1sum /tmp/256M
-> 7fc628811a31ab87b0502dab3ed8d3ef07565885  /tmp/256M
-> 
-> $ sha224sum /tmp/256M
-> 2d261c11ba05b3a62e0efeab51c307d9933426c7e18204683ef3da54  /tmp/256M
-> 
-> $ sha256sum /tmp/256M
-> 5716d1700ee35c92ca5ca5b466639e9c36eed3f1447c1aec27f16d0fe113f94d  /tmp/256M
-> 
-> $ sha384sum /tmp/256M
-> fb6bc62afa1096dcd3b870e7d2546b7a5a177b5f2bbd5c9759218182454709e0c504a2d9c26404e04aa8010a291b7f1c  /tmp/256M
-> 
-> $ sha512sum /tmp/256M
-> fbceda7be34836fe857781656318ecd5b457a833a24c8736d5b8ef8d07e1950eebcdb140eebe4f12b5ff59586f7eb1c64fa95869c63dd9e4703d91261093c5c9  /tmp/256M
-> 
-> Generate HASH Values Using the Hardware Engine
-> 
-> Use the following commands to generate HASH values for a 256MB file using
-> various SHA algorithms with the ast_crypto_engine hardware engine:
-> 
-> root@ast2700-default:~# openssl dgst -sha1 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA1(/tmp/256M)= 7fc628811a31ab87b0502dab3ed8d3ef07565885
-> 
-> root@ast2700-default:~# openssl dgst -sha224 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA2-224(/tmp/256M)= 2d261c11ba05b3a62e0efeab51c307d9933426c7e18204683ef3da54
-> 
-> root@ast2700-default:~# openssl dgst -sha256 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA2-256(/tmp/256M)= 5716d1700ee35c92ca5ca5b466639e9c36eed3f1447c1aec27f16d0fe113f94d
-> 
-> root@ast2700-default:~# openssl dgst -sha384 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA2-384(/tmp/256M)= fb6bc62afa1096dcd3b870e7d2546b7a5a177b5f2bbd5c9759218182454709e0c504a2d9c26404e04aa8010a291b7f1c
-> 
-> root@ast2700-default:~# openssl dgst -sha512 -engine ast_crypto_engine /tmp/256M
-> Engine "ast_crypto_engine" set.
-> SHA2-512(/tmp/256M)= fbceda7be34836fe857781656318ecd5b457a833a24c8736d5b8ef8d07e1950eebcdb140eebe4f12b5ff59586f7eb1c64fa95869c63dd9e4703d91261093c5c9
-> 
-> The HASH values generated here should exactly match those computed on the host
-> machine using sha shell commands, verifying both the correctness of the
-> hardware-accelerated results and the functionality of the ast_crypto_engine.
-> 
-> Jamin Lin (28):
->    hw/misc/aspeed_hace: Remove unused code for better readability
->    hw/misc/aspeed_hace: Improve readability and consistency in variable
->      naming
->    hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to prevent firmware
->      hang
->    hw/misc/aspeed_hace: Extract direct mode hash buffer setup into helper
->      function
->    hw/misc/aspeed_hace: Extract SG-mode hash buffer setup into helper
->      function
->    hw/misc/aspeed_hace: Extract digest write and iov unmap into helper
->      function
->    hw/misc/aspeed_hace: Extract non-accumulation hash execution into
->      helper function
->    hw/misc/aspeed_hace: Extract accumulation-mode hash execution into
->      helper function
->    hw/misc/aspeed_hace: Introduce 64-bit hash source address helper
->      function
->    hw/misc/aspeed_hace: Rename R_HASH_DEST to R_HASH_DIGEST and introduce
->      64-bit hash digest address helper
->    hw/misc/aspeed_hace: Support accumulative mode for direct access mode
->    hw/misc/aspeed_hace: Move register size to instance class and
->      dynamically allocate regs
->    hw/misc/aspeed_hace: Add support for source, digest, key buffer 64 bit
->      addresses
->    hw/misc/aspeed_hace: Support DMA 64 bits dram address
->    hw/misc/aspeed_hace: Add trace-events for better debugging
->    hw/misc/aspeed_hace: Support to dump plaintext and digest for better
->      debugging
->    tests/qtest: Reorder aspeed test list
->    test/qtest: Introduce a new aspeed-hace-utils.c to place common
->      testcases
->    test/qtest/hace: Specify explicit array sizes for test vectors and
->      hash results
->    test/qtest/hace: Adjust test address range for AST1030 due to SRAM
->      limitations
->    test/qtest/hace: Add SHA-384 test cases for ASPEED HACE model
->    test/qtest/hace: Add SHA-384 tests for AST2600
->    test/qtest/hace: Add tests for AST1030
->    test/qtest/hace: Update source data and digest data type to 64-bit
->    test/qtest/hace: Support 64-bit source and digest addresses for
->      AST2700
->    test/qtest/hace: Support to test upper 32 bits of digest and source
->      addresses
->    test/qtest/hace: Support to validate 64-bit hmac key buffer addresses
->    test/qtest/hace: Add tests for AST2700
-> 
->   include/hw/misc/aspeed_hace.h   |  11 +-
->   tests/qtest/aspeed-hace-utils.h |  84 +++++
->   hw/misc/aspeed_hace.c           | 479 +++++++++++++++--------
->   tests/qtest/aspeed-hace-utils.c | 646 ++++++++++++++++++++++++++++++++
->   tests/qtest/aspeed_hace-test.c  | 577 +++++-----------------------
->   tests/qtest/ast2700-hace-test.c |  98 +++++
->   hw/misc/trace-events            |   8 +
->   tests/qtest/meson.build         |  13 +-
->   8 files changed, 1279 insertions(+), 637 deletions(-)
->   create mode 100644 tests/qtest/aspeed-hace-utils.h
->   create mode 100644 tests/qtest/aspeed-hace-utils.c
->   create mode 100644 tests/qtest/ast2700-hace-test.c
-> 
+> I tried to minimize the otherwise very large code churn by limiting the
+> extended features support to arches with native 128 integer support and
+> introducing the extended features space support only in virtio/vhost
+> core and in the relevant device driver.
 
-For the whole series,
+What about adding another 64-bit integer to hold the high bits? It makes 
+adding the 128-bit integer type to VMState and properties and 
+CONFIG_INT128 checks unnecessary.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> 
+> The actual offload implementation is in patches 12-16 and boils down to
+> propagating the new offload to the tun devices and the vhost backend.
+> 
+> Tested with basic stream transfer with all the possible permutations of
+> host kernel/qemu/guest kernel with/without GSO over UDP tunnel support
+> and vs snapshots creation and restore.
+> 
+> Notably this does not include (yet) any additional tests. Some guidance
+> on such matter would be really appreciated, and any feedback about the
+> features extension strategy would be more than welcome!
 
-Thanks,
+My proposal to add a feature to tap devices[1] simply omitted tests and 
+I wrote simple testing scripts for my personal usage. As you can see, 
+there is no testing code that covers tap devices, unfortunately, and I 
+think adding one takes significant effort.
 
-C.
+[1] https://patchew.org/QEMU/20250313-hash-v4-0-c75c494b495e@daynix.com/
 
+> 
+> Paolo Abeni (16):
+>    linux-headers: Update to Linux v6.15-rc net-next
+>    migration: introduce support for 128 bit int state.
+>    virtio: introduce extended features type
+>    virtio: serialize extended features state
+>    qmp: update virtio features map to support extended features
+>    virtio: add support for negotiating extended features.
+>    virtio-pci: implement support for extended features.
+>    vhost: add support for negotiating extended features.
+>    vhost-backend: implement extended features support.
+>    vhost-net: implement extended features support.
+>    qdev-properties: add property for extended virtio features
+>    virtio-net: implement extended features support.
+>    net: implement tunnel probing
+>    net: bundle all offloads in a single struct
+>    net: implement tnl feature offloading
+>    net: make vhost-net aware of GSO over UDP tunnel hdr layout
+> 
+>   hw/core/qdev-properties.c                     |  46 +++++
+>   hw/net/e1000e_core.c                          |   5 +-
+>   hw/net/igb_core.c                             |   5 +-
+>   hw/net/vhost_net-stub.c                       |   7 +-
+>   hw/net/vhost_net.c                            |  35 ++--
+>   hw/net/virtio-net.c                           | 195 +++++++++++++-----
+>   hw/net/vmxnet3.c                              |  13 +-
+>   hw/virtio/vhost-backend.c                     |  59 +++++-
+>   hw/virtio/vhost.c                             |  58 ++++--
+>   hw/virtio/virtio-bus.c                        |  15 +-
+>   hw/virtio/virtio-hmp-cmds.c                   |   3 +-
+>   hw/virtio/virtio-pci.c                        |  19 +-
+>   hw/virtio/virtio-qmp.c                        |  28 ++-
+>   hw/virtio/virtio-qmp.h                        |   3 +-
+>   hw/virtio/virtio.c                            | 103 ++++++++-
+>   include/hw/qdev-properties.h                  |  13 ++
+>   include/hw/virtio/vhost-backend.h             |  10 +
+>   include/hw/virtio/vhost.h                     |  13 +-
+>   include/hw/virtio/virtio-features.h           |  90 ++++++++
+>   include/hw/virtio/virtio-net.h                |   2 +-
+>   include/hw/virtio/virtio-pci.h                |   2 +-
+>   include/hw/virtio/virtio.h                    |  17 +-
+>   include/migration/qemu-file-types.h           |  15 ++
+>   include/migration/vmstate.h                   |  11 +
+>   include/net/net.h                             |  20 +-
+>   include/net/vhost_net.h                       |   8 +-
+>   include/standard-headers/asm-x86/setup_data.h |   4 +-
+>   include/standard-headers/drm/drm_fourcc.h     |  41 ++++
+>   include/standard-headers/linux/const.h        |   2 +-
+>   include/standard-headers/linux/ethtool.h      | 156 ++++++++------
+>   include/standard-headers/linux/fuse.h         |  12 +-
+>   include/standard-headers/linux/pci_regs.h     |  13 +-
+>   include/standard-headers/linux/virtio_net.h   |  46 +++++
+>   include/standard-headers/linux/virtio_pci.h   |   1 +
+>   include/standard-headers/linux/virtio_snd.h   |   2 +-
+>   linux-headers/asm-arm64/kvm.h                 |  11 +
+>   linux-headers/asm-arm64/unistd_64.h           |   1 +
+>   linux-headers/asm-generic/mman-common.h       |   1 +
+>   linux-headers/asm-generic/unistd.h            |   4 +-
+>   linux-headers/asm-loongarch/unistd_64.h       |   1 +
+>   linux-headers/asm-mips/unistd_n32.h           |   1 +
+>   linux-headers/asm-mips/unistd_n64.h           |   1 +
+>   linux-headers/asm-mips/unistd_o32.h           |   1 +
+>   linux-headers/asm-powerpc/unistd_32.h         |   1 +
+>   linux-headers/asm-powerpc/unistd_64.h         |   1 +
+>   linux-headers/asm-riscv/kvm.h                 |   2 +
+>   linux-headers/asm-riscv/unistd_32.h           |   1 +
+>   linux-headers/asm-riscv/unistd_64.h           |   1 +
+>   linux-headers/asm-s390/unistd_32.h            |   1 +
+>   linux-headers/asm-s390/unistd_64.h            |   1 +
+>   linux-headers/asm-x86/kvm.h                   |   3 +
+>   linux-headers/asm-x86/unistd_32.h             |   1 +
+>   linux-headers/asm-x86/unistd_64.h             |   1 +
+>   linux-headers/asm-x86/unistd_x32.h            |   1 +
+>   linux-headers/linux/bits.h                    |   8 +-
+>   linux-headers/linux/const.h                   |   2 +-
+>   linux-headers/linux/iommufd.h                 | 129 +++++++++++-
+>   linux-headers/linux/kvm.h                     |   1 +
+>   linux-headers/linux/psp-sev.h                 |  21 +-
+>   linux-headers/linux/stddef.h                  |   2 +
+>   linux-headers/linux/vfio.h                    |  30 ++-
+>   linux-headers/linux/vhost.h                   |  12 +-
+>   migration/qemu-file.c                         |  16 ++
+>   migration/vmstate-types.c                     |  25 +++
+>   net/net.c                                     |  21 +-
+>   net/netmap.c                                  |   3 +-
+>   net/tap-bsd.c                                 |   8 +-
+>   net/tap-linux.c                               |  46 ++++-
+>   net/tap-solaris.c                             |   9 +-
+>   net/tap-stub.c                                |   8 +-
+>   net/tap.c                                     |  19 +-
+>   net/tap_int.h                                 |   5 +-
+>   qapi/virtio.json                              |   8 +-
+>   73 files changed, 1209 insertions(+), 271 deletions(-)
+>   create mode 100644 include/hw/virtio/virtio-features.h
+> 
 
 
