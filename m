@@ -4,45 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A8DC3DA6D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 07:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24968C54EDA
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 08:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uINFg-0007j1-R5; Fri, 23 May 2025 03:55:38 -0400
+	id 1uINSq-0001bV-81; Fri, 23 May 2025 04:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uINFb-0007ia-Aq; Fri, 23 May 2025 03:55:31 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
+ id 1uINSn-0001b3-Ny; Fri, 23 May 2025 04:09:09 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uINFW-0000vE-In; Fri, 23 May 2025 03:55:30 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0DB6B43EA1;
- Fri, 23 May 2025 09:55:22 +0200 (CEST)
-Message-ID: <c02139a7-de4a-42da-bff3-525c0679223c@proxmox.com>
-Date: Fri, 23 May 2025 09:55:16 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
+ id 1uINSl-0002Bj-97; Fri, 23 May 2025 04:09:09 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4b3d8r0l8jz4xfM;
+ Fri, 23 May 2025 18:09:00 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4b3d8m13tsz4xfL;
+ Fri, 23 May 2025 18:08:55 +1000 (AEST)
+Message-ID: <2c8cfff2-8a8f-451a-8495-7f151dd7a376@kaod.org>
+Date: Fri, 23 May 2025 10:08:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iotests: Improve mirror-sparse on various filesystems
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20250522211451.2301791-2-eblake@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20250522211451.2301791-2-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v4 1/6] hw/arm/aspeed_ast2700-fc: Fix null pointer
+ dereference in ca35 init
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
+References: <20250522091701.354185-1-steven_lee@aspeedtech.com>
+ <20250522091701.354185-2-steven_lee@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250522091701.354185-2-steven_lee@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=fO70=YH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,86 +113,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 22.05.25 um 23:14 schrieb Eric Blake:
-> Fiona reported that an ext4 filesystem on top of LVM can sometimes
-> report over-allocation to du (based on the hueristics the filesystem
+On 5/22/25 11:16, Steven Lee wrote:
+> Clang's sanitizer reports a runtime error when booting with
+> '-net nic -net user', due to a null pointer being passed
+> to memory_region_find(), which subsequently triggers a crash in
+> flatview_lookup().
 
-Typo: heuristics
+I don't see such errors.
 
-> is making while observing the contents being mirrored); even though
-> the contents and actual size matched, about 50% of the time the size
-> reported by disk_usage was too large by 4k, failing the test.
+> Root cause:
+> - Missing NIC configuration in the CA35 initialization.
 > 
-> Similarly, on ZFS where a file is created with preallocation=full, du
-> does not see the full allocation until things have had time to settle;
-> adding a sync call reduces the chance of catching that async window:
-> 
-> | [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> qemu-img create my.raw 20M -f
-> |w -o preallocation=full
-> | Formatting 'my.raw', fmt=raw size=20971520 preallocation=full
-> | [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> du --block-size=1 my.raw
-> | 512 my.raw
-> | [I] febner@enia ~/qemu/build/tests/qemu-iotests (master)> du --block-size=1 my.raw
-> | 20980224    my.raw
-> 
-> Fiona also reported that on a compressed ZFS, the filesystem can end
-> up reporting smaller disk_usage if it re-compresses a file, despite a
-> fully-allocating mirror - but since I don't have a compressed ZFS
-> handy for reproducing that test, that may remain a sporadic problem
-> for another day.
-> 
-> Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-> Fixes: c0ddcb2c ("tests: Add iotest mirror-sparse for recent patches")
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+> Fix:
+> - Add nic configuration in ast2700fc's ca35 init function.
 
-If you drop the hunk with the sync:
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+However it would be nice to have network support.
 
+Could you please rephrase the commit log ?
+
+
+Thanks,
+
+C.
+
+
+
+> 
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 > ---
->  tests/qemu-iotests/common.rc           | 2 ++
->  tests/qemu-iotests/tests/mirror-sparse | 4 +++-
->  2 files changed, 5 insertions(+), 1 deletion(-)
+>   hw/arm/aspeed_ast27x0-fc.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
 > 
-> diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-> index 237f746af88..c3fc0bcf02a 100644
-> --- a/tests/qemu-iotests/common.rc
-> +++ b/tests/qemu-iotests/common.rc
-> @@ -143,6 +143,8 @@ _optstr_add()
->  # report real disk usage for sparse files
->  disk_usage()
->  {
-> +    # ZFS has lazy allocation; sync the file first for best results
-> +    sync "$1"
-
-Unfortunately, just syncing the file seems to be not enough. It seems to
-be necessary to sync the whole filesystem, but that of course is too
-expensive for the helper here:
-
-[I] febner@enia ~> rm my.raw; qemu-img create my.raw 20M -f raw -o
-preallocation=full; sync my.raw; du --block-size=1 my.raw
-Formatting 'my.raw', fmt=raw size=20971520 preallocation=full
-512	my.raw
-[I] febner@enia ~> rm my.raw; qemu-img create my.raw 20M -f raw -o
-preallocation=full; sync -f my.raw; du --block-size=1 my.raw
-Formatting 'my.raw', fmt=raw size=20971520 preallocation=full
-20980224	my.raw
-
-There's already quite a few other test failures on ZFS, so I guess it's
-not worth it right now if there's no easy fix (mirror-sparse also still
-fails, because the file is sparse again after mirroring, ZFS seems very
-aggressive trying to reduce allocation):
-
-For -raw:
-Failures: 106 109 150 175 221 240 253 308 mirror-sparse write-zeroes-unmap
-Failed 10 of 86 iotests
-
-
->      du --block-size=1 "$1" | awk '{print $1}'
->  }
-> 
-
-Best Regards,
-Fiona
+> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+> index 125a3ade40..7bf4f2a52d 100644
+> --- a/hw/arm/aspeed_ast27x0-fc.c
+> +++ b/hw/arm/aspeed_ast27x0-fc.c
+> @@ -86,6 +86,13 @@ static void ast2700fc_ca35_init(MachineState *machine)
+>                                    AST2700FC_BMC_RAM_SIZE, &error_abort)) {
+>           return;
+>       }
+> +
+> +    for (int i = 0; i < sc->macs_num; i++) {
+> +        if (!qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
+> +                                       true, NULL)) {
+> +            break;
+> +        }
+> +    }
+>       if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
+>                                    AST2700FC_HW_STRAP1, &error_abort)) {
+>           return;
 
 
