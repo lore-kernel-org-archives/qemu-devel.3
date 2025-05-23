@@ -4,102 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6864BC54ED0
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB03C54ED0
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:39:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIPhN-0008V0-FW; Fri, 23 May 2025 06:32:21 -0400
+	id 1uIPnL-0001gz-91; Fri, 23 May 2025 06:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uIPhL-0008Tm-Tg
- for qemu-devel@nongnu.org; Fri, 23 May 2025 06:32:20 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uIPhJ-000498-MP
- for qemu-devel@nongnu.org; Fri, 23 May 2025 06:32:19 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2322bace4ceso52321225ad.2
- for <qemu-devel@nongnu.org>; Fri, 23 May 2025 03:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747996336; x=1748601136;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PSEHWrmCxvZrWC9/38HxuQJStJPZ1c8I/b9ANXvBdQU=;
- b=w7suPzY3krRlqBV24vuDh14z8oaoDLzxTrAcFJg5iLUG4CciDf8NFDDCr+HNRcuw0i
- eEaZJC/c8fzEE1Dk38fKnh2S+PKav+N4kx4fpKyV8BbMX6OsXgsMXoVvR8Kayx+9aWm3
- k9HdP4rhR1Fi4gCg4+h5vuYNucke+RndyBTdD9/U1bbXwJ0vCi9Q/XvOXnBy6TpZLXDG
- +v2xcXmLdj9Hevtw80nMLh5JJKKk0Q2sN/trCMbeThzWuG6QDOTmkI/3ij4RBD0SOiQw
- X3Athu9p6vIX/hdYoFZJYY871ZD75hIl9P1SR+1XHx9k+WCs/qDonMF9y1b3fxCBWpaO
- 9IUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747996336; x=1748601136;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PSEHWrmCxvZrWC9/38HxuQJStJPZ1c8I/b9ANXvBdQU=;
- b=YDJWXxH2/U8qsI4U+uMSIrYlHgxDn9cTaxn3vGY8iXNX8NF39jH9jhwr3obFEvfQ3x
- MtH8o4U1sTxI9Ra7RjBk2VhKQr9eQQRT/F1XMEkDq3LtUK2idL93TPo1MDLpadTe+xr0
- UQ2yW3oQFmprvEpfl2sQ+Bf3lu2c2grBLUGx15lHk25LEavBmlG9Z5i8Gcr+4/GhAlGT
- 2EpTA5HAjJ2GvoYbCL0Kf8J43udbqzjR2IVjYn/sxP3Of8yJVUCfiCU12Vnveqjx93mu
- X4DJMvZ+0obbqkH3N8blLihtEnfVQe8/zuQitzXvz43w8cpv+S3f0Z6JQYT3GnG+QWcO
- rXWw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbl/I3+4gkA2WmRQqX3/qdhD69gMO4YWqot+scgY1AneXwDgk6PWZa3r70ODRNjBhwGGFhNClUtEc1@nongnu.org
-X-Gm-Message-State: AOJu0Yx8OhWFj4xcDJiUs7RG018i/bDThhUBUM9etiLiAroCSDIIR86k
- 9sJ8y7P5h+nB+2flpC3VcB01TFax1Lm3VP/Cfw/smVndO2QV12xH1bYR4CP2WNDsn58=
-X-Gm-Gg: ASbGncujmCRLSxpWtNm0/xVBHHIxxOno7Y354nCajk2te1Z7qW3hTBMhzKwMmeBpjRS
- N37pwBKo1i5KFummUhb3iWnz0NzVrWrUPiWH9ItQPCJVbY+JlX/jQMLt299X6B8KedVhULlh5ak
- 3oafLOsKho9quXshYh+jduFJyDcEXmcAi+a3sHAmc4mLiEkbRrbKEcfRhCaxQomKt+PS8x9FpNH
- oN80OlqDipTU0Ymcuv8aLylFJ/uxeaDhZrHAcgaurGTZtXrSa52ZtXoG1N/vEgbtHhjQ73/Tj6X
- XE4+gARtWLSyKLZpoc+YwXNMQpUeCBjAICyWfUOJPLi6vhGSyigdX2FI1VWJFw==
-X-Google-Smtp-Source: AGHT+IHUAts1whuAmBAcxKdu9VmUUsda5AkP26Ugs2NogbMlTs94/R5fhVAih1FubrV11QC5cD8Pag==
-X-Received: by 2002:a17:903:2301:b0:22e:364b:4f3e with SMTP id
- d9443c01a7336-231d4562cc5mr413880375ad.49.1747996335654; 
- Fri, 23 May 2025 03:32:15 -0700 (PDT)
-Received: from [10.100.116.185] ([157.82.128.1])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4e978adsm121014415ad.119.2025.05.23.03.32.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 May 2025 03:32:15 -0700 (PDT)
-Message-ID: <5b6d42e8-572f-4eb2-bd1a-0d360713734f@daynix.com>
-Date: Fri, 23 May 2025 19:32:11 +0900
+ (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
+ id 1uIPn9-0001fh-Py; Fri, 23 May 2025 06:38:19 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=fO70=YH=kaod.org=clg@ozlabs.org>)
+ id 1uIPn7-0004gd-4r; Fri, 23 May 2025 06:38:19 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4b3hSy3rGPz4xf9;
+ Fri, 23 May 2025 20:38:10 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4b3hSt3pYDz4xD9;
+ Fri, 23 May 2025 20:38:03 +1000 (AEST)
+Message-ID: <a77a5b0d-10b2-4180-a61a-be617af118b8@kaod.org>
+Date: Fri, 23 May 2025 12:38:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 13/16] net: implement tunnel probing
-To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
- <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1747825544.git.pabeni@redhat.com>
- <b0e5839ab3e723247b12ddecf36c75c51c5a0b83.1747825544.git.pabeni@redhat.com>
- <6c48edb8-082c-4474-8815-36ab4c64a228@daynix.com>
- <3f5b288c-af84-4bb9-996f-c77ab63bb020@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <3f5b288c-af84-4bb9-996f-c77ab63bb020@redhat.com>
+Subject: Re: [PATCH v5 1/6] hw/arm/aspeed_ast2700-fc: Add network support
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
+References: <20250523093144.991408-1-steven_lee@aspeedtech.com>
+ <20250523093144.991408-2-steven_lee@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250523093144.991408-2-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=fO70=YH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,42 +111,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/23 19:24, Paolo Abeni wrote:
-> On 5/23/25 9:39 AM, Akihiko Odaki wrote:
->>> diff --git a/net/tap-linux.c b/net/tap-linux.c
->>> index 22ec2f45d2..2df601551e 100644
->>> --- a/net/tap-linux.c
->>> +++ b/net/tap-linux.c
->>> @@ -37,6 +37,14 @@
->>>    
->>>    #define PATH_NET_TUN "/dev/net/tun"
->>>    
->>> +#ifndef TUN_F_UDP_TUNNEL_GSO
->>> +#define TUN_F_UDP_TUNNEL_GSO       0x080
->>> +#endif
->>> +
->>> +#ifndef TUN_F_UDP_TUNNEL_GSO_CSUM
->>> +#define TUN_F_UDP_TUNNEL_GSO_CSUM  0x100
->>> +#endif
->>> +
->>
->> These should be added to net/tap-linux.h, which contains other UAPI
->> definitions.
->>
->> But perhaps it may be better to refactor it to add the real header file
->> using scripts/update-linux-headers.sh. Such a refactoring can be done
->> before this series gets ready to merge and will make this series a bit
->> smaller.
+On 5/23/25 11:31, Steven Lee wrote:
+> This patch adds network support to the ast2700fc machine by initializing
+> the NIC device in the ca35.
 > 
-> I may be missing something, but I don't think such refactor will make
-> this series relevantly smaller?!? Also, it looks something quite
-> orthogonal to me.
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/arm/aspeed_ast27x0-fc.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
 > 
-> I propose to just move the above definition in net/tap-linux.h, if possible.
+> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+> index 125a3ade40..7bf4f2a52d 100644
+> --- a/hw/arm/aspeed_ast27x0-fc.c
+> +++ b/hw/arm/aspeed_ast27x0-fc.c
+> @@ -86,6 +86,13 @@ static void ast2700fc_ca35_init(MachineState *machine)
+>                                    AST2700FC_BMC_RAM_SIZE, &error_abort)) {
+>           return;
+>       }
+> +
+> +    for (int i = 0; i < sc->macs_num; i++) {
+> +        if (!qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
+> +                                       true, NULL)) {
+> +            break;
+> +        }
+> +    }
+>       if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
+>                                    AST2700FC_HW_STRAP1, &error_abort)) {
+>           return;
 
-You can get rid of this 8 lines and that's all. Just moving to 
-net/tap-linux.h is also fine.
-
-Regards,
-Akihiko Odaki
 
