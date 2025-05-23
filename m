@@ -4,113 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE202C54F2E
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 13:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70CC0C54F2E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 13:39:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uISac-0006y5-LB; Fri, 23 May 2025 09:37:34 -0400
+	id 1uISc6-0007Xx-I6; Fri, 23 May 2025 09:39:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1uISaX-0006x9-Oz; Fri, 23 May 2025 09:37:30 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1uISaV-0001Qo-Kh; Fri, 23 May 2025 09:37:29 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54NC8jh9030278;
- Fri, 23 May 2025 13:37:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6Z7Stk
- IPAd2Y2fkc9sVwBkrtnXyPF8XRGpWHmp7qzZE=; b=X0/5nAN1Yq6BoAhYsAqzDT
- K/jMJ4L4tkDSQ0/yJ5EMkEOpd7ReI/GlpZ13rU8sje6xOV4Ta4h3oP58EAp60KjY
- sEnN0/KIba7IEsosvNwE+mAj24xUPLstKIdwLOgmnFxgqUgkk/nTqJ/gec5Zp6cq
- gnyDddhBaQ3PsQBaJVP/WG79yttxzSfscBg20Oj1WVOY9AJd/tn1GMM6Emc93cx2
- 3YKwWaGCe+Z2zZVeq80l2PRgEC1A4P8rbWxDEmeq2/Zr+BSkdGIN6UM9JBA4J11e
- O9opZT8ybhrWPrxzGUHFxl2IP0L8RVM7GV71Ozuuk6nQqfbbuN5TV23mAuEXQo/g
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46t669nm9y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 23 May 2025 13:37:24 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54N9d7pR032024;
- Fri, 23 May 2025 13:37:23 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46rwmqermk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 23 May 2025 13:37:23 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54NDbLpv33161916
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 23 May 2025 13:37:21 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CA94058063;
- Fri, 23 May 2025 13:37:21 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2E9B158058;
- Fri, 23 May 2025 13:37:21 +0000 (GMT)
-Received: from [9.61.240.236] (unknown [9.61.240.236])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 23 May 2025 13:37:21 +0000 (GMT)
-Message-ID: <2b3ec51f-0f60-41fa-b8ba-5882c019e8ac@linux.ibm.com>
-Date: Fri, 23 May 2025 09:37:20 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uISbs-0007We-68
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 09:38:53 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uISbo-0001XN-3U
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 09:38:50 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id DB5B721204;
+ Fri, 23 May 2025 13:38:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748007526; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OoMtimprzdKhlGEJt44zQj0LIevZXt9VHSzYo6dBeJY=;
+ b=paP5p4QrEndajAMmek8Fy55XA0JaH3Pq4EKXHIO+8lKfz2oWllk1P3SL63UZGB1h46flq4
+ 6AzNgjcezKnn/0mU7lA1WC8T4ql/BiJXO8cTyWnHIPgo3W6nTxfo+ZcFQAPopRAzKNBP6w
+ Wa/Owetn14SaWeIjeNsNaoj0dD5A/N8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748007526;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OoMtimprzdKhlGEJt44zQj0LIevZXt9VHSzYo6dBeJY=;
+ b=Li/Ne8JY1AlFubHWgEaixCXQthgyOO2Q8MAVwF3eMZnYGkXq/yhLiiudYl1CLMLxcUu3rL
+ 71ENnk5WgJbvxaCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748007525; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OoMtimprzdKhlGEJt44zQj0LIevZXt9VHSzYo6dBeJY=;
+ b=mPw26S3lrn26BXE7HGte4INWOcnfw/TrM12y6XqVmC5/pkQAK/S2XTbTav0DRI5JSJKwza
+ XsXs9zRtw8RLyAkR9jHnoAnim11oxi7/UQPjp4MiAr0FS5nFSjcU9U8M7PcTgsfmxXVBbP
+ Z+Zqc+GSMpAE0E2qtyj8cbodeDen0Qg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748007525;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OoMtimprzdKhlGEJt44zQj0LIevZXt9VHSzYo6dBeJY=;
+ b=DYA+udUG3tD7VYVw05VzaLYJiVzUfP6tQj1HocaVduoe01eEs1E9gC7p1pu+DZJaCgOk6/
+ vVg+mtK8HyrxDJCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 510841336F;
+ Fri, 23 May 2025 13:38:45 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id MSAFBGV6MGiIBwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 May 2025 13:38:45 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel?=
+ =?utf-8?Q?_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 07/13] migration: Introduce new MigrationConfig
+ structure
+In-Reply-To: <87jz7idk97.fsf@pond.sub.org>
+References: <20250411191443.22565-1-farosas@suse.de>
+ <20250411191443.22565-8-farosas@suse.de> <87jz7idk97.fsf@pond.sub.org>
+Date: Fri, 23 May 2025 10:38:41 -0300
+Message-ID: <87ldqn5twe.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v10 3/4] hw/vfio/ap: Storing event information for an
- AP configuration change event
-To: Anthony Krowiak <akrowiak@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com
-References: <20250523044741.59936-1-rreyes@linux.ibm.com>
- <20250523044741.59936-4-rreyes@linux.ibm.com>
- <073a01a0-dce2-4788-b07c-dbc75a54f54e@linux.ibm.com>
-Content-Language: en-US
-From: Rorie Reyes <rreyes@linux.ibm.com>
-In-Reply-To: <073a01a0-dce2-4788-b07c-dbc75a54f54e@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RrPFLDmK c=1 sm=1 tr=0 ts=68307a14 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=sWKEhP36mHoA:10
- a=l2k30bRfp1dmlEPDac4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: HT4w5lEI0xd7d6vTvTOgkwCAEtqrbQMC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIzMDEyMCBTYWx0ZWRfX9EyV/o3MvcMZ
- GSsXiEttrcTT0WjUBth4C8tGdQuf3Md84FFBz1hXhnvPCNmiOCslxxPpMTV2kC5sfNH9mRg0qts
- omoHvFLevyFW+5WfIdOepA73o/LpBY83kCtal1FgmQjmdjmx2cgEwdISB7RqezWTTjP5oX7tap0
- WmIpiFnnlZxooctIh/P6qegSIwNG5YPj+2MZFSPd6mpd6xSHLCXVE0MKcHBzHZib6TsCaDKbuzk
- b7p2rfraWoYYiQNiVA44v6mTfCeNPj4y+FJUin5aTZSmIwtoAoRy4KrNumKUs+n4hRWGEQyFTKg
- Wgc5NCNKUIIA3Wd2TmPkp833gRhPLDMeOgktog1h8JziDoj6+C1SgxDJGqqfkVUewFMIdJCKsCJ
- aLI/kXhUXWNe40UyR5koARO/ParkrkFIPzSL+XW0B7TqnMC4Y/jDrZK38j+f/C75UiaJSmAb
-X-Proofpoint-GUID: HT4w5lEI0xd7d6vTvTOgkwCAEtqrbQMC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-23_04,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0
- impostorscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0 adultscore=0
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505230120
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rreyes@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-1.30 / 50.00]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,98 +115,380 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->> @@ -96,6 +99,49 @@ static void vfio_ap_cfg_chg_notifier_handler(void 
->> *opaque)
->>     }
->>   +bool ap_chsc_sei_nt0_get_event(void *res)
->> +{
->> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
->> +    APConfigChgEvent *cfg_chg_event;
->> +
->> +    qemu_mutex_lock(&cfg_chg_events_lock);
->> +
->> +    if (!ap_chsc_sei_nt0_have_event()) {
->> +        qemu_mutex_unlock(&cfg_chg_events_lock);
->> +        return true;
->> +    }
->> +
->> +    cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
->> +    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
->> +
->> +    qemu_mutex_unlock(&cfg_chg_events_lock);
->> +
->> +    memset(nt0_res, 0, sizeof(*nt0_res));
->> +    g_free(cfg_chg_event);
->> +
->> +    /*
->> +     * If there are any AP configuration change events in the queue,
->> +     * indicate to the caller that there is pending event info in
->> +     * the response block
->> +     */
->> +    if (ap_chsc_sei_nt0_have_event()) {
->> +        nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
->> +    }
->> +
->> +    nt0_res->length = sizeof(ChscSeiNt0Res);
->> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
->> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
->> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
->> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
->> +
->> +    return false;
->> +}
->
-> The boolean return values in the function above do not make logical 
-> sense.
-> What they are effectively saying is that event information has been 
-> stored
-> in the response when there is no event information to store (i.e., the 
-> event
-> queue is empty), and that event information has not been stored if the
-> response has been filled with event information.
->
-> After looking at the calling code in target/s390x/ionst.c, apparently 
-> the meaning of
-> the int value originally returned from the above function was not in 
-> fact intended to
-> be a boolean value. It looks like the caller uses this value to 
-> indicate whether the
-> response code should be set to 0x0001 (this function returns 0) or 
-> 0x0005 (this
-> function returns 1); so, the boolean values returned match what is 
-> expected by
-> the caller. I think this is why your original pass at returning a 
-> boolean caused your
-> patch to fail; because you did what made logical sense in this function.
->
-> I think the calling code is very convoluted to say the least, so maybe 
-> what makes sense
-> here is to continue to return an int and use #define to document the 
-> return value; for
-> example:
->
-> #define EVENT_INFORMATION_STORED           0
-> #define EVENT_INFORMATION_NOT_STORED 1
->
-> It would probably make a great deal of sense to refactor the calling 
-> code, but that
-> could potentially open up a large can of worms, so at least this makes 
-> sense from
-> the perspective of reading this code.
->
-I agree with you on that, Tony. It makes sense to return an int due to 
-the calling code. I will make these updates and set up the appropriate 
-definitions in the header file, 'ap-bridge.h'. I'll also reflect the 
-same type changes in the stub file to match
->> +
->> +bool ap_chsc_sei_nt0_have_event(void)
->> +{
->> +    return !QTAILQ_EMPTY(&cfg_chg_events);
->> +}
->
-> It's probably fine to return boolean from the above function because it
-> makes sense even from the caller's perspective.
->
-I'll keep this as is as, but I'll update the stub file to match
+Markus Armbruster <armbru@redhat.com> writes:
 
+Markus, sorry for the delay here. I had vacations and holidays, plus a
+pile of patches to review.
+
+> Fabiano Rosas <farosas@suse.de> writes:
+>
+>> Add a new migration structure to consolidate the capabilities and
+>> parameters. This structure will be used in place of the s->parameters
+>> and s->capabilities data structures in the next few patches.
+>>
+>> The QAPI migration types now look like this:
+>>
+>> /* options previously known as parameters */
+>
+> Configuration previously known as parameters less the TLS stuff.
+>
+>> { 'struct': 'MigrationConfigBase',
+>>   'data': {
+>>       <parameters>
+>> } }
+>>
+>>
+>> /* for compat with query-migrate-parameters */
+>> { 'struct': 'MigrationParameters',
+>>   'base': 'MigrationConfigBase',
+>>   'data': {
+>>       <TLS options in 'str' format>
+>> } }
+>>
+>> /* for compat with migrate-set-parameters */
+>> { 'struct': 'MigrateSetParameters',
+>>   'base': 'MigrationConfigBase',
+>>   'data': {
+>>       <TLS options in 'StrOrNull' format>
+>> } }
+>
+> Yes, this is the state since PATCH 05.
+>
+>> /* to replace MigrationParameters in the MigrationState */
+>> { 'struct': 'MigrationConfig',
+>>   'base': 'MigrationConfigBase'
+>>   'data': {
+>>     <TLS options in 'str' format>
+>> } }
+>
+> This is new in this patch.
+>
+> Your description doesn't cover optionalness.  Here's my understanding:
+>
+> * MigrationSetParameters has optional members, because
+>   migrate-set-parameters needs that.
+>
+
+Yes.
+
+> * MigrationParameters would ideally have these members non-optional,
+>   because query-migrate-parameters wants that.
+>
+
+Yes.
+
+> * But to enable sharing via common base type MigrationConfigBase, we
+>   accept unwanted optional in MigrationParameters and thus
+>   query-migrate-parameters.
+>
+
+Yes.
+
+> * This doesn't apply to the non-shared members of MigrationParameters,
+>   so you made them non-optional.  These are @tls-creds, @tls-hostname,
+>   @tls-authz.
+>
+
+Yes.
+
+> * But in MigrationConfig they're optional again, because "empty string
+>   means absent" is silly; we want "NULL means absent".
+>
+
+Yes. But mostly because MigrationConfig will become the type for the new
+'*config' argument to migrate/migrate_incoming (patches 12 & 13) and we
+want to keep all members optional. Otherwise the user would have to pass
+all ~50 migration options in every migrate command, which is bad IMO.
+
+> Correct?
+>
+> Up to here, this enables cleanup of some "empty string means absent"
+> silliness in later patches.
+>
+> The remainder is about unifying capabilities into parameters.  I'd split
+> the patch (but I'm a compulsive patch splitter).
+>
+>> The above keeps the query/set-parameters commands stable. For the
+>> capabilities as well as the options added in the future, we have a
+>> choice of where to put them:
+>>
+>> 1) In MigrationConfigBase, this means that the existing
+>>    query/set-parameters commands will be updated to deal with
+>>    capabilities/new options.
+>>
+>>   { 'struct': 'MigrationConfigBase',
+>>     'data': {
+>>       <parameters>
+>>       <capabilities>
+>>       <new opts>
+>>   } }
+>>
+>>   { 'struct': 'MigrationConfig',
+>>     'base': 'MigrationConfigBase'
+>>     'data': {
+>>       <TLS options in 'str' format>
+>>   } }
+>>
+>> 2) In MigrationConfig, this means that the existing commands will be
+>>    frozen in time.
+>>
+>>   { 'struct': 'MigrationConfigBase',
+>>     'data': {
+>>       <parameters>
+>>   } }
+>>
+>>   { 'struct': 'MigrationConfig',
+>>     'base': 'MigrationConfigBase'
+>>     'data': {
+>>       <TLS options in 'str' format>
+>>       <capabilities>
+>>       <new opts>
+>>   } }
+>>
+>> For now, I've chosen the option 1, all capabilities and new options go
+>> into MigrationConfigBase. This gives the option to keep the existing
+>> commands for as long as we'd like.
+>
+> Perhaps this would be slightly easier to digest for the reader if you
+> talked just about capabilities at first.  Once that's understood,
+> mention we have the same choice for new configuration bits.
+>
+
+Ok, I'll reorganize, along with the other comments you've made.
+
+>> Note that the query/set capabilities commands will have to go, we can
+>> treat parameters as generic configuration options, but capabilities
+>> are just too different.
+>
+> I think the argument is that migration capabilities are a pointless
+> interface complication.  One mechanism (parameters) is better than two
+> (parameters and capabilities).
+>
+
+Yes, that's the main point indeed.
+
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  qapi/migration.json | 163 +++++++++++++++++++++++++++++++++++++++++++-
+>>  1 file changed, 160 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/qapi/migration.json b/qapi/migration.json
+>> index 5a4d5a2d3e..5e39f21adc 100644
+>> --- a/qapi/migration.json
+>> +++ b/qapi/migration.json
+>> @@ -1063,10 +1063,108 @@
+>>  #     @tls-creds, @tls-hostname are mandatory and a valid string is
+>>  #     expected. (Since 10.1)
+>>  #
+>> +# @xbzrle: Migration supports xbzrle (Xor Based Zero Run Length
+>> +#     Encoding).  This feature allows us to minimize migration traffic
+>> +#     for certain work loads, by sending compressed difference of the
+>> +#     pages
+>> +#
+>> +# @rdma-pin-all: Controls whether or not the entire VM memory
+>> +#     footprint is mlock()'d on demand or all at once.  Refer to
+>> +#     docs/rdma.txt for usage.  Disabled by default.  (since 2.0)
+>> +#
+>> +# @zero-blocks: During storage migration encode blocks of zeroes
+>> +#     efficiently.  This essentially saves 1MB of zeroes per block on
+>> +#     the wire.  Enabling requires source and target VM to support
+>> +#     this feature.  To enable it is sufficient to enable the
+>> +#     capability on the source VM.  The feature is disabled by
+>> +#     default.  (since 1.6)
+>> +#
+>> +# @events: generate events for each migration state change (since 2.4)
+>> +#
+>> +# @auto-converge: If enabled, QEMU will automatically throttle down
+>> +#     the guest to speed up convergence of RAM migration.  (since 1.6)
+>> +#
+>> +# @postcopy-ram: Start executing on the migration target before all of
+>> +#     RAM has been migrated, pulling the remaining pages along as
+>> +#     needed.  The capacity must have the same setting on both source
+>> +#     and target or migration will not even start.  NOTE: If the
+>> +#     migration fails during postcopy the VM will fail.  (since 2.6)
+>> +#
+>> +# @x-colo: If enabled, migration will never end, and the state of the
+>> +#     VM on the primary side will be migrated continuously to the VM
+>> +#     on secondary side, this process is called COarse-Grain LOck
+>> +#     Stepping (COLO) for Non-stop Service.  (since 2.8)
+>> +#
+>> +# @release-ram: if enabled, qemu will free the migrated ram pages on
+>> +#     the source during postcopy-ram migration.  (since 2.9)
+>> +#
+>> +# @return-path: If enabled, migration will use the return path even
+>> +#     for precopy.  (since 2.10)
+>> +#
+>> +# @pause-before-switchover: Pause outgoing migration before
+>> +#     serialising device state and before disabling block IO (since
+>> +#     2.11)
+>> +#
+>> +# @multifd: Use more than one fd for migration (since 4.0)
+>> +#
+>> +# @dirty-bitmaps: If enabled, QEMU will migrate named dirty bitmaps.
+>> +#     (since 2.12)
+>> +#
+>> +# @postcopy-blocktime: Calculate downtime for postcopy live migration
+>> +#     (since 3.0)
+>> +#
+>> +# @late-block-activate: If enabled, the destination will not activate
+>> +#     block devices (and thus take locks) immediately at the end of
+>> +#     migration.  (since 3.0)
+>> +#
+>> +# @x-ignore-shared: If enabled, QEMU will not migrate shared memory
+>> +#     that is accessible on the destination machine.  (since 4.0)
+>> +#
+>> +# @validate-uuid: Send the UUID of the source to allow the destination
+>> +#     to ensure it is the same.  (since 4.2)
+>> +#
+>> +# @background-snapshot: If enabled, the migration stream will be a
+>> +#     snapshot of the VM exactly at the point when the migration
+>> +#     procedure starts.  The VM RAM is saved with running VM.
+>> +#     (since 6.0)
+>> +#
+>> +# @zero-copy-send: Controls behavior on sending memory pages on
+>> +#     migration.  When true, enables a zero-copy mechanism for sending
+>> +#     memory pages, if host supports it.  Requires that QEMU be
+>> +#     permitted to use locked memory for guest RAM pages.  (since 7.1)
+>> +#
+>> +# @postcopy-preempt: If enabled, the migration process will allow
+>> +#     postcopy requests to preempt precopy stream, so postcopy
+>> +#     requests will be handled faster.  This is a performance feature
+>> +#     and should not affect the correctness of postcopy migration.
+>> +#     (since 7.1)
+>> +#
+>> +# @switchover-ack: If enabled, migration will not stop the source VM
+>> +#     and complete the migration until an ACK is received from the
+>> +#     destination that it's OK to do so.  Exactly when this ACK is
+>> +#     sent depends on the migrated devices that use this feature.  For
+>> +#     example, a device can use it to make sure some of its data is
+>> +#     sent and loaded in the destination before doing switchover.
+>> +#     This can reduce downtime if devices that support this capability
+>> +#     are present.  'return-path' capability must be enabled to use
+>> +#     it.  (since 8.1)
+>> +#
+>> +# @dirty-limit: If enabled, migration will throttle vCPUs as needed to
+>> +#     keep their dirty page rate within @vcpu-dirty-limit.  This can
+>> +#     improve responsiveness of large guests during live migration,
+>> +#     and can result in more stable read performance.  Requires KVM
+>> +#     with accelerator property "dirty-ring-size" set.  (Since 8.1)
+>> +#
+>> +# @mapped-ram: Migrate using fixed offsets in the migration file for
+>> +#     each RAM page.  Requires a migration URI that supports seeking,
+>> +#     such as a file.  (since 9.0)
+>> +#
+>>  # Features:
+>>  #
+>> -# @unstable: Members @x-checkpoint-delay and
+>> -#     @x-vcpu-dirty-limit-period are experimental.
+>> +# @unstable: Members @x-checkpoint-delay, @x-vcpu-dirty-limit-period,
+>> +#     @x-colo and @x-ignore-shared are experimental.
+>> +# @deprecated: Member @zero-blocks is deprecated as being part of
+>> +#     block migration which was already removed.
+>>  #
+>>  # Since: 10.1
+>>  ##
+>> @@ -1099,7 +1197,29 @@
+>>              '*mode': 'MigMode',
+>>              '*zero-page-detection': 'ZeroPageDetection',
+>>              '*direct-io': 'bool',
+>> -            '*tls': 'bool' } }
+>> +            '*tls': 'bool',
+>> +            '*xbzrle': 'bool',
+>> +            '*rdma-pin-all': 'bool',
+>> +            '*auto-converge': 'bool',
+>> +            '*zero-blocks': { 'type': 'bool', 'features': [ 'deprecated' ] },
+>> +            '*events': 'bool',
+>> +            '*postcopy-ram': 'bool',
+>> +            '*x-colo': { 'type': 'bool', 'features': [ 'unstable' ] },
+>> +            '*release-ram': 'bool',
+>> +            '*return-path': 'bool',
+>> +            '*pause-before-switchover': 'bool',
+>> +            '*multifd': 'bool',
+>> +            '*dirty-bitmaps': 'bool',
+>> +            '*postcopy-blocktime': 'bool',
+>> +            '*late-block-activate': 'bool',
+>> +            '*x-ignore-shared': { 'type': 'bool', 'features': [ 'unstable' ] },
+>> +            '*validate-uuid': 'bool',
+>> +            '*background-snapshot': 'bool',
+>> +            '*zero-copy-send': 'bool',
+>> +            '*postcopy-preempt': 'bool',
+>> +            '*switchover-ack': 'bool',
+>> +            '*dirty-limit': 'bool',
+>> +            '*mapped-ram': 'bool' } }
+>
+> This is part 2 "unify capabilities into parameters".
+>
+> Missing in your series: deprecate migrate-set-capabilities and
+> query-migrate-capabilities.
+>
+
+I'll add when repost.
+
+>>  
+>>  ##
+>>  # @MigrationParameters:
+>> @@ -2395,3 +2515,40 @@
+>>    'data': { 'job-id': 'str',
+>>              'tag': 'str',
+>>              'devices': ['str'] } }
+>> +
+>> +##
+>> +# @MigrationConfig:
+>> +#
+>> +# Migration configuration options
+>> +#
+>> +# @tls-creds: ID of the 'tls-creds' object that provides credentials
+>> +#     for establishing a TLS connection over the migration data
+>> +#     channel.  On the outgoing side of the migration, the credentials
+>> +#     must be for a 'client' endpoint, while for the incoming side the
+>> +#     credentials must be for a 'server' endpoint.  Setting this to a
+>> +#     non-empty string enables TLS for all migrations.  An empty
+>> +#     string means that QEMU will use plain text mode for migration,
+>> +#     rather than TLS.  (Since 2.7)
+>
+> Is "empty string" expected to occur here?
+>
+
+Yes. Up until this point I'm keeping everything compatible, only
+switching to use MigrationConfig internally. Come patch 12, when we
+expose this type externally, it will be time to decide whether to
+declare that the new way of setting migration configuration options
+treats the empty string as invalid. I haven't made the call yet because
+I wanted some feedback on the new commands, backward compatibility, etc.
+
+>> +#
+>> +# @tls-hostname: migration target's hostname for validating the
+>> +#     server's x509 certificate identity.  If empty, QEMU will use the
+>> +#     hostname from the migration URI, if any.  A non-empty value is
+>> +#     required when using x509 based TLS credentials and the migration
+>> +#     URI does not include a hostname, such as fd: or exec: based
+>> +#     migration.  (Since 2.7)
+>> +#
+>> +#     Note: empty value works only since 2.9.
+>
+> Likewise.
+>
+
+Same here.
+
+>> +#
+>> +# @tls-authz: ID of the 'authz' object subclass that provides access
+>> +#     control checking of the TLS x509 certificate distinguished name.
+>> +#     This object is only resolved at time of use, so can be deleted
+>> +#     and recreated on the fly while the migration server is active.
+>> +#     If missing, it will default to denying access (Since 4.0)
+>> +#
+>> +# Since: 10.1
+>> +##
+>> +{ 'struct': 'MigrationConfig',
+>> +  'base': 'MigrationConfigBase',
+>> +  'data': { '*tls-creds': 'str',
+>> +            '*tls-hostname': 'str',
+>> +            '*tls-authz': 'str' } }
+>
+> This is part 1 "enable cleanup".
+
+Ok.
+
+Thanks for the review!
 
