@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5208C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 09:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D70BC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:02:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIP5Q-0005tn-QA; Fri, 23 May 2025 05:53:08 -0400
+	id 1uIPEF-0007ix-LE; Fri, 23 May 2025 06:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIP5P-0005tZ-4D
- for qemu-devel@nongnu.org; Fri, 23 May 2025 05:53:07 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIPEC-0007hJ-Kw
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:02:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIP5M-0007u7-I4
- for qemu-devel@nongnu.org; Fri, 23 May 2025 05:53:06 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIPE8-0000QH-MS
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:02:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747993982;
+ s=mimecast20190719; t=1747994526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2ZZ3dhvN/+WGpdgY1lYen+PucTLOpHBm/uT7GrHHWF8=;
- b=Hvv5+UfcvjfsHVgU5Tsqe49WUJg6SGeXUXhhyPrthJCVOB8Jl8CiqxB7h0vsyDt9H2liil
- JQO8BI7e5ON6ZfECpLsTNgQCGtU+da+p6nL1siKTX/QFw1ce/+1SQ7iykqHViJ+HT/qr7c
- SE1XbQWvQmeO/2CAv1pIPSjY47V1v0E=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6cWKYtJIUm7m8DhxzIaxdbaEZEAbaZSOIQvCGk0ZDT0=;
+ b=A2vUdAgUODS0ChE+Uhr/sCArWdBZPgLATcbxy5ssTxQOHv2JNnAomkQfilXz6HGuaw1j/T
+ VGvA6wtXbjWNlVxdJl4xtzQZNjPI1IswX7zji3btvIFnqN7hmffj/NnCcjykzIxWCZcahO
+ p0kkdMRhC+rW2rRFdaxYVpIzl4zmAEc=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-ovA5cridOcevssUY0d_rbw-1; Fri, 23 May 2025 05:53:01 -0400
-X-MC-Unique: ovA5cridOcevssUY0d_rbw-1
-X-Mimecast-MFC-AGG-ID: ovA5cridOcevssUY0d_rbw_1747993980
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a3703c1fe7so2733356f8f.1
- for <qemu-devel@nongnu.org>; Fri, 23 May 2025 02:53:01 -0700 (PDT)
+ us-mta-211-7cbE0GPsNNSVBX3gKC5W3g-1; Fri, 23 May 2025 06:02:05 -0400
+X-MC-Unique: 7cbE0GPsNNSVBX3gKC5W3g-1
+X-Mimecast-MFC-AGG-ID: 7cbE0GPsNNSVBX3gKC5W3g_1747994524
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-55203a08e39so1501812e87.2
+ for <qemu-devel@nongnu.org>; Fri, 23 May 2025 03:02:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747993980; x=1748598780;
+ d=1e100.net; s=20230601; t=1747994523; x=1748599323;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2ZZ3dhvN/+WGpdgY1lYen+PucTLOpHBm/uT7GrHHWF8=;
- b=L4ZoJ8SS3z1jL0xBeSgQQbJC7aWqhSC32c9prLPBKzyzfOxqaoRr3+YItkwc1oz9Xv
- +GmBcvCb6aP1jnA0YRdpPznOvw9K2a8xtAJET6zYOTxqEGLijc6ELx2IxIfRTrGqkAWc
- EV3/fvhDHmcZZ6R7ja+morWB+JZ3OFFaigVrd5G+19SOo0yx4kJ0KE0zL6IxkBgBSgrX
- Zm8xE5rJH1VdZP7bzPzPMTlXDtzGPVpz3PLIdYUcEJX8KidCV/fp4jgwyK2sxyRENrEu
- WkmqjMSC1rhPusbfMStaWeWS/qZn4QVcqXq4nCNYwxDdpH577zR7Z34S8brhQ5q5i94K
- SeXQ==
+ bh=6cWKYtJIUm7m8DhxzIaxdbaEZEAbaZSOIQvCGk0ZDT0=;
+ b=uzmPaT6yaDVKXqhaFf5F7ly92Tu0EK1gSIAm5I9SwGlcT/m2RwsozRXMYzlBKWR1Bm
+ e8sfbirjClKkvvklpbieTbwaKPgAudpgUO8MPNl9I7MLX97JTQzgnps1DmKIF5v2EyKU
+ L8skYW1UnZv9ereXvEqNiN6/De0+m++6NLMF+ujYuNmUIZcUO6KLSpnreJHXZi4+VC1L
+ M8vlOdLEET7ke4A0UTNlEIgwG6RsjHLRQyvweYfsOplrasjN4VBDAqiN2BNB07XRT1M5
+ PL/1ccmkXH9RxUcF6WhdauvYZdc2b5UDLnwB7zSBbkmtivbrtPeMJS9dSOrmDyiE2TrN
+ WZmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLGSQv8EFQrFpnHAClhlAeVf7jWqtwYfSMOOyd7z6FwNw7qMbEbFl/gau4x7yELVIyrQI0z8EPP3IJ@nongnu.org
-X-Gm-Message-State: AOJu0Yz9p9aRH4sooeRei2XIhrjUfWqD9bZuNYG1Rd4GrIFULACjj+Su
- 8aCHaPLI/bCH9iwjAq3oirfN7tHXmQvdI0HAbX8j1OA1/e5UI5KdKtyC7jWwejeimtSubghXVfV
- sqkZWCT3lcTUW6p1LR8ZkcOn6KvP9eE3BUUdYn9/8RVkphjNdsW0/le1j
-X-Gm-Gg: ASbGncsquLmok09S0/5oRxfFCPTtDaD/47HEDVjBdYi2iHTNMD1VNTyjxopBqX+WPoe
- lPO073E0zJ1GaKE9tNNGBIiXiLNfs/pbAhNRlLT7RAbCUhs/gosWE5Ad799bKf133u078YbXDEU
- uvXFIvu8r858tXk9w1YOLzgdGsrg25SbbsvgxR6vOBtAsftiqKzNmqbSRzmndNLnf6bZ/K0gstq
- N6XtQh4PHEoXA5/GHr79Intl19qT05LPqhFtzZ5w2DniG2Dv+HT6qby7Fx3LesCAPX9mBCIHlWl
- w4FqFZg6d9eUpfDQt1E=
-X-Received: by 2002:a05:6000:2407:b0:3a1:f564:cd9d with SMTP id
- ffacd0b85a97d-3a3600da1edmr25051859f8f.36.1747993980337; 
- Fri, 23 May 2025 02:53:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3o6EWPCQizb6UwGDKZJSOttgrYeFGiG/2sJyO0+ct5emAb9ZPuaEsUZkDdcT7jS/e5vRkjw==
-X-Received: by 2002:a05:6000:2407:b0:3a1:f564:cd9d with SMTP id
- ffacd0b85a97d-3a3600da1edmr25051832f8f.36.1747993979943; 
- Fri, 23 May 2025 02:52:59 -0700 (PDT)
+ AJvYcCX0oQWWPen7QUE6xFCEJSzYQrWRcSJ+Vajv9N4U4YslUS+KkHQFatwg6IqxxQMY8LI/ybDkSgkhoGms@nongnu.org
+X-Gm-Message-State: AOJu0YzDMWCBZLSnstceG/QssgpECd4eKbblXKDpmRi+prprqBw9ShZi
+ mQDWyugx9m7k9srDvAVGf3Vh8AT6znWSq46AMtJ9+3YwZSHYP9SXJr1iReKkUId7Zal9d6BdGoL
+ PXoFLZZqavAPFL6A5iGJGywri6LxgwQFUpzefkEB1BEqmpp3gjzvPpcIzb+MpqIFDOKo=
+X-Gm-Gg: ASbGnctCxQAyboKQU3J2gs38WMZzmMfmEkPQufwnwQnH863Bngwv95+d76tvqKnu2FC
+ cSJzBUBdcOJYcsFCSKUY90Iwo7nYf1LB8WfsGu4WqheKbsrwwqVSFz6sN7FQyz7UEtvZuHEt8eg
+ fThLwG/8kMuESm7teO8lX/6rdEKqLS4c/hTyl1ywgeMU/mUzh7ww7CI28q14mNp/++fF0y966oF
+ tl3DjfTvlRI91i0m5lFaBAs5nrCs8ecn/1X3NY/LaY6LBqozSZ+BMWud6HidqzOWnVKXg5kzo7a
+ cTmLJQCIElqIOqbMJqg=
+X-Received: by 2002:a05:6512:10c1:b0:545:1e2d:6b73 with SMTP id
+ 2adb3069b0e04-55216e0cd3emr653003e87.13.1747994522872; 
+ Fri, 23 May 2025 03:02:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmeN94PQ9eXd7ZpYrN3ZxkM2P2KxEo4bKuQmcxlbGWfaz4Mdq5LTXdpA1oGMVEktYCogzqxA==
+X-Received: by 2002:a05:600c:3e08:b0:441:ac58:eb31 with SMTP id
+ 5b1f17b1804b1-44b6e7634bfmr17154325e9.20.1747994511994; 
+ Fri, 23 May 2025 03:01:51 -0700 (PDT)
 Received: from ?IPV6:2a0d:3344:247a:1010::f39? ([2a0d:3344:247a:1010::f39])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a37b0bbd1fsm11578695f8f.100.2025.05.23.02.52.58
+ 5b1f17b1804b1-447f78b0a46sm130822845e9.30.2025.05.23.03.01.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 May 2025 02:52:59 -0700 (PDT)
-Message-ID: <4fb8d841-653c-4d76-b7f6-06b5a676f768@redhat.com>
-Date: Fri, 23 May 2025 11:52:57 +0200
+ Fri, 23 May 2025 03:01:51 -0700 (PDT)
+Message-ID: <0c0efab7-826b-4759-b322-453a10499606@redhat.com>
+Date: Fri, 23 May 2025 12:01:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 07/16] virtio-pci: implement support for extended
- features.
+Subject: Re: [PATCH RFC 12/16] virtio-net: implement extended features support.
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -90,11 +89,11 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <cover.1747825544.git.pabeni@redhat.com>
- <b91bba9115031af5c8b66eca737296ea5889dbec.1747825544.git.pabeni@redhat.com>
- <2739771c-cfc7-43df-af68-5445cd714ff2@daynix.com>
+ <8fb9f142e25a0f1b01e8cf54a6c2a0971db00d83.1747825544.git.pabeni@redhat.com>
+ <f598f776-e852-442c-a7c7-077d74b33503@daynix.com>
 Content-Language: en-US
 From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <2739771c-cfc7-43df-af68-5445cd714ff2@daynix.com>
+In-Reply-To: <f598f776-e852-442c-a7c7-077d74b33503@daynix.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
@@ -122,25 +121,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/23/25 9:23 AM, Akihiko Odaki wrote:
->> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
->> index 0fa8fe4955..7815ef2d9b 100644
->> --- a/hw/virtio/virtio-pci.c
->> +++ b/hw/virtio/virtio-pci.c
->> @@ -123,7 +123,8 @@ static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
->>       .fields = (const VMStateField[]) {
->>           VMSTATE_UINT32(dfselect, VirtIOPCIProxy),
->>           VMSTATE_UINT32(gfselect, VirtIOPCIProxy),
->> -        VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy, 2),
->> +        VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy,
->> +                             VIRTIO_FEATURES_WORDS),
+On 5/23/25 10:09 AM, Akihiko Odaki wrote:
+> On 2025/05/21 20:34, Paolo Abeni wrote:
+>> Use the extended types and helpers to manipulate the virtio_net
+>> features.
+>>
+>> Note that offloads are still 64bits wide, as per specification,
+>> and extended offloads will be mapped into such range.
+>>
+>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+>> ---
+>>   hw/net/virtio-net.c            | 87 +++++++++++++++++++++-------------
+>>   include/hw/virtio/virtio-net.h |  2 +-
+>>   2 files changed, 55 insertions(+), 34 deletions(-)
+>>
+>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+>> index 9f500c64e7..193469fc27 100644
+>> --- a/hw/net/virtio-net.c
+>> +++ b/hw/net/virtio-net.c
+>> @@ -90,6 +90,17 @@
+>>                                            VIRTIO_NET_RSS_HASH_TYPE_TCP_EX | \
+>>                                            VIRTIO_NET_RSS_HASH_TYPE_UDP_EX)
+>>   
+>> +#define VIRTIO_OFFLOAD_MAP_MIN    46
+>> +#define VIRTIO_OFFLOAD_MAP_LENGTH 4
+>> +#define VIRTIO_OFFLOAD_MAP        MAKE_64BIT_MASK(VIRTIO_OFFLOAD_MAP_MIN, \
+>> +                                                VIRTIO_OFFLOAD_MAP_LENGTH)
+>> +#define VIRTIO_FEATURES_MAP_MIN   65
+>> +#define VIRTIO_O2F_DELTA          (VIRTIO_FEATURES_MAP_MIN - \
+>> +                                   VIRTIO_OFFLOAD_MAP_MIN)
+>> +
+>> +#define VIRTIO_FEATURE_TO_OFFLOAD(fbit)  (fbit >= 64 ? \
+>> +                                          fbit - VIRTIO_O2F_DELTA : fbit)
+>> +
 > 
-> Modifying existing fields breaks migration across versions. Please refer 
-> to docs/devel/migration/main.rst for details.
+> These are specific to virtio-net but look like they are common for 
+> virtio as the names don't contain "NET".
+> 
+> VIRTIO_FEATURES_MAP_MIN is also a bit confusing. It points to the least 
+> significant bit that refers to an offloading feature in the upper-half 
+> of the feature bits, but the name lacks the context.
 
-Thanks for the pointer! I missed a lot of context. I guess I need some
-trickery similar to the "virtio/64bit_features"/"virtio/128bit_features"
-VMstate description.
+Uhmmm... putting the whole context in the macro name sounds very verbose
+and/or hard, what about:
+
+How about VIRTIO_NET_OFFLOAD_MAPPED_MIN
+
+?
+
+> @@ -862,13 +881,13 @@ static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
+>>           (1ULL << VIRTIO_NET_F_GUEST_USO4) |
+>>           (1ULL << VIRTIO_NET_F_GUEST_USO6);
+>>   
+>> -    return guest_offloads_mask & features;
+>> +    return guest_offloads_mask & virtio_net_features_to_offload(features);
+> 
+> 
+> How about:
+> 
+> static const virtio_features_t guest_offload_features_mask = ...
+> virtio_features_t masked_features = guest_offload_features_mask & features;
+> 
+> return masked_features | ((masked_features >> VIRTIO_FEATURES_MAP_MIN) 
+> << VIRTIO_OFFLOAD_MAP_MIN);
+> 
+> This makes virtio_net_features_to_offload() unnecessary.
+
+The above looks a little fragile, as (in future) 'features' could have
+some bit in the mapped range set (and not representing a guest offload):
+we need to explicitly mask such bits out before the first '&' operator.
+
+If dropping the helper is preferred, it can still be dropped.
 
 /P
 
