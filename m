@@ -4,42 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4548C54EDA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1417C3DA6D
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 09:33:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIOl9-0005H8-5k; Fri, 23 May 2025 05:32:12 -0400
+	id 1uIOkv-0005DI-7C; Fri, 23 May 2025 05:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uIOl3-0005GM-4S; Fri, 23 May 2025 05:32:05 -0400
+ id 1uIOks-0005Cf-QF; Fri, 23 May 2025 05:31:54 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uIOl0-0005Md-UL; Fri, 23 May 2025 05:32:04 -0400
+ id 1uIOkq-0005Md-Du; Fri, 23 May 2025 05:31:54 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 23 May
- 2025 17:31:45 +0800
+ 2025 17:31:44 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Fri, 23 May 2025 17:31:45 +0800
+ Transport; Fri, 23 May 2025 17:31:44 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
  <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
- <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 4/6] hw/arm/aspeed_ast27x0-fc: Map ca35 memory into system
- memory
-Date: Fri, 23 May 2025 17:31:41 +0800
-Message-ID: <20250523093144.991408-5-steven_lee@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
+Subject: [PATCH v5 0/6] hw/arm/aspeed_ast2700-fc: Fix null pointer dereference
+Date: Fri, 23 May 2025 17:31:37 +0800
+Message-ID: <20250523093144.991408-1-steven_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250523093144.991408-1-steven_lee@aspeedtech.com>
-References: <20250523093144.991408-1-steven_lee@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -68,28 +64,55 @@ From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Map the CA35 memory region as a subregion of system_memory to ensure
-a valid FlatView. This prevents failures in APIs that rely on the
-global memory view, such as rom_check_and_register_reset().
+Clang's sanitizer reports a runtime error when booting with
+'-net nic -net user', due to a null pointer being passed
+to memory_region_find(), which subsequently triggers a crash in
+flatview_lookup().
 
-Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- hw/arm/aspeed_ast27x0-fc.c | 1 +
- 1 file changed, 1 insertion(+)
+Root cause:
+- Missing NIC configuration in the CA35 initialization.
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index f8cb632bca..7087be4288 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -68,6 +68,7 @@ static void ast2700fc_ca35_init(MachineState *machine)
- 
-     memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
-                        UINT64_MAX);
-+    memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
- 
-     if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
-                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
+Fix:
+- Reduce ca35 ram size from 2GiB to 1GiB to align with ast2700a1-evb,
+  where the ram-container is defined as 1GiB in its class.
+- Add nic configuration in ast2700fc's ca35 init function.
+
+
+v2:
+- Split the CA35 memory mapping into a separate patch.
+- Added a new patch to fix BMC memory mapping in the fby35 machine,
+  which had a similar issue (unmapped system_memory).
+- Removed Change-Id tag from commit messages
+
+v3:
+- Fixed issue with incorrectly inheriting TYPE_ASPEED_MACHINE.
+- Rewrote the commit message for "Map BMC memory into system memory".
+- Added more details to the commit message for "Fix unimplemented region
+  overlap with VBootROM".
+
+v4:
+- Split the first patch "Fix null pointer dereference" into two patches.
+- Remove the patch "hw/arm/aspeed_ast27x0: Fix unimplemented
+  region overlap with vbootrom".
+
+v5:
+- Rewrote the commit message for the first patch to:
+    "hw/arm/aspeed_ast2700-fc: Add network support".
+
+Steven Lee (6):
+  hw/arm/aspeed_ast2700-fc: Add network support
+  hw/arm/aspeed_ast2700-fc: Reduce ca35 ram size to align with ast2700a1
+  hw/arm/aspeed_ast27x0: Fix unimplemented region overlap with vbootrom
+  hw/arm/aspeed_ast27x0-fc: Map ca35 memory into system memory
+  hw/arm/fby35: Map BMC memory into system memory
+  docs: Remove ast2700fc from Aspeed family boards
+
+ docs/system/arm/aspeed.rst |  2 +-
+ hw/arm/aspeed_ast27x0-fc.c | 10 +++++++++-
+ hw/arm/aspeed_ast27x0.c    |  4 ++--
+ hw/arm/fby35.c             |  1 +
+ 4 files changed, 13 insertions(+), 4 deletions(-)
+
 -- 
 2.43.0
 
