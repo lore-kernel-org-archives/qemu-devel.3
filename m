@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D64C54ED0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01AFAC54F32
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 16:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIVIb-0001R4-8o; Fri, 23 May 2025 12:31:09 -0400
+	id 1uIVIa-0001Qi-AX; Fri, 23 May 2025 12:31:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uIVIR-0001Ov-Sa
- for qemu-devel@nongnu.org; Fri, 23 May 2025 12:31:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uIVIP-0001OA-Oz
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 12:30:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uIVIQ-0006Xf-1s
- for qemu-devel@nongnu.org; Fri, 23 May 2025 12:30:59 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uIVIN-0006XL-TK
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 12:30:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748017857;
+ s=mimecast20190719; t=1748017855;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yoUc7S9ZxW1OXHM9W64yjUiO4aEYPNW0PaKNrb+pmJE=;
- b=i0n+moES+Lpp0dup+cccTeXZiJX4i3gp/HrdLTmhgHGP4xg/icShdof+1/CouAwaLA8NoL
- WBKs3G+g+7KC29jkTsl/nlReCkTuBc2iVlpj4RUMiBBMnNDy+CAgRJEMcYUxsk/UwWTQyc
- 4K4IihNQPUbf3dvxU+9J/nycjszUJ2E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EiRD1Rvo5qlgffSZ3bR6VrSUTKIKB+PJh+sKyKvmYj4=;
+ b=JoPsf/gJvMD+AZntpr/U11OGhVwiMPodrMHEER26u1qP3ixbicpYs0YQcETnbdSonhKL+t
+ PUWLpBBlXkmQmcJ5iYTspYCz0Xt4OkuCrYWoROgan9hRakfZOql9gaihu/Zv6GKhHj1ELD
+ C9fmnz/+67TUCbVYiH5rmi+CmT1TqA0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-qWMerglCPWCABqEu9iuypw-1; Fri,
- 23 May 2025 12:30:53 -0400
-X-MC-Unique: qWMerglCPWCABqEu9iuypw-1
-X-Mimecast-MFC-AGG-ID: qWMerglCPWCABqEu9iuypw_1748017852
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-60n3V470Nfq7QS-vedKF5A-1; Fri,
+ 23 May 2025 12:30:52 -0400
+X-MC-Unique: 60n3V470Nfq7QS-vedKF5A-1
+X-Mimecast-MFC-AGG-ID: 60n3V470Nfq7QS-vedKF5A_1748017851
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9D401800446; Fri, 23 May 2025 16:30:52 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CE58918004A7; Fri, 23 May 2025 16:30:50 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.201])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7BC06195608F; Fri, 23 May 2025 16:30:51 +0000 (UTC)
+ id 5BE92195608F; Fri, 23 May 2025 16:30:49 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, f.ebner@proxmox.com, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v2 3/3] iotests: Filter out ZFS in several tests
-Date: Fri, 23 May 2025 11:27:23 -0500
-Message-ID: <20250523163041.2548675-8-eblake@redhat.com>
+Subject: [PATCH v2 2/3] iotests: Improve mirror-sparse on ext4
+Date: Fri, 23 May 2025 11:27:22 -0500
+Message-ID: <20250523163041.2548675-7-eblake@redhat.com>
 In-Reply-To: <20250523163041.2548675-5-eblake@redhat.com>
 References: <20250523163041.2548675-5-eblake@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -83,162 +83,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fiona reported that ZFS makes sparse file testing awkward, since:
-- it has asynchronous allocation (not even 'fsync $file' makes du see
-  the desired size; it takes the slower 'fsync -f $file' which is not
-  appropriate for the tests)
-- for tests of fully allocated files, ZFS with compression enabled
-  still reports smaller disk usage
-
-Add a new _require_sparse_file that quickly probes whether an attempt
-to create a sparse 5M file shows as less than 1M usage, while the same
-file with -o preallocation=full shows as more than 4M usage without
-sync, which should filter out ZFS behavior.  Then use it in various
-affected tests.
-
-This does not add the new filter on all tests that Fiona is seeing ZFS
-failures on, but only those where I could quickly spot that there is
-at least one place where the test depends on the output of 'du -b' or
-'stat -c %b'.
+Fiona reported that an ext4 filesystem on top of LVM can sometimes
+report over-allocation to du (based on the hueristics the filesystem
+is making while observing the contents being mirrored); even though
+the contents and actual size matched, about 50% of the time the size
+reported by disk_usage was too large by 4k, failing the test.  In
+auditing other iotests, this is a common problem we've had to deal
+with.
 
 Reported-by: Fiona Ebner <f.ebner@proxmox.com>
+Fixes: c0ddcb2c ("tests: Add iotest mirror-sparse for recent patches")
 Signed-off-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+
 ---
- tests/qemu-iotests/common.rc                | 30 +++++++++++++++++++++
- tests/qemu-iotests/106                      |  1 +
- tests/qemu-iotests/175                      |  1 +
- tests/qemu-iotests/221                      |  1 +
- tests/qemu-iotests/253                      |  1 +
- tests/qemu-iotests/308                      |  1 +
- tests/qemu-iotests/tests/mirror-sparse      |  1 +
- tests/qemu-iotests/tests/write-zeroes-unmap |  1 +
- 8 files changed, 37 insertions(+)
+v2: Drop sync for ZFS
+---
+ tests/qemu-iotests/tests/mirror-sparse | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 237f746af88..e977cb4eb61 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -996,6 +996,36 @@ _require_large_file()
-     rm "$FILENAME"
- }
-
-+# Check whether disk_usage can be reliably used.
-+_require_disk_usage()
-+{
-+    local unusable=false
-+    # ZFS triggers known failures on this front; it does not immediately
-+    # allocate files, and then aggressively compresses writes even when full
-+    # allocation was requested.
-+    if [ -z "$TEST_IMG_FILE" ]; then
-+        FILENAME="$TEST_IMG"
-+    else
-+        FILENAME="$TEST_IMG_FILE"
-+    fi
-+    if [ -e "FILENAME" ]; then
-+        echo "unwilling to overwrite existing file"
-+        exit 1
-+    fi
-+    $QEMU_IMG create -f raw "$FILENAME" 5M > /dev/null
-+    if [ $(disk_usage "$FILENAME") -gt $((1024*1024)) ]; then
-+        unusable=true
-+    fi
-+    $QEMU_IMG create -f raw -o preallocation=full "$FILENAME" 5M > /dev/null
-+    if [ $(disk_usage "$FILENAME") -lt $((4*1024*1024)) ]; then
-+        unusable=true
-+    fi
-+    rm -f "$FILENAME"
-+    if $unusable; then
-+        _notrun "file system on $TEST_DIR does not handle sparse files nicely"
-+    fi
-+}
-+
- # Check that a set of devices is available in the QEMU binary
- #
- _require_devices()
-diff --git a/tests/qemu-iotests/106 b/tests/qemu-iotests/106
-index ae0fc466910..55548439aad 100755
---- a/tests/qemu-iotests/106
-+++ b/tests/qemu-iotests/106
-@@ -40,6 +40,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt raw
- _supported_proto file fuse
- _supported_os Linux
-+_require_disk_usage
-
- # in kB
- CREATION_SIZE=128
-diff --git a/tests/qemu-iotests/175 b/tests/qemu-iotests/175
-index f74f053b719..bbbf550a5af 100755
---- a/tests/qemu-iotests/175
-+++ b/tests/qemu-iotests/175
-@@ -77,6 +77,7 @@ _supported_os Linux
-
- _default_cache_mode none
- _supported_cache_modes none directsync
-+_require_disk_usage
-
- size=$((1 * 1024 * 1024))
-
-diff --git a/tests/qemu-iotests/221 b/tests/qemu-iotests/221
-index c463fd4b113..eba00b80adb 100755
---- a/tests/qemu-iotests/221
-+++ b/tests/qemu-iotests/221
-@@ -41,6 +41,7 @@ _supported_os Linux
-
- _default_cache_mode writeback
- _supported_cache_modes writeback writethrough unsafe
-+_require_disk_usage
-
- echo
- echo "=== Check mapping of unaligned raw image ==="
-diff --git a/tests/qemu-iotests/253 b/tests/qemu-iotests/253
-index 35039d20a89..6da85e6a113 100755
---- a/tests/qemu-iotests/253
-+++ b/tests/qemu-iotests/253
-@@ -41,6 +41,7 @@ _supported_os Linux
-
- _default_cache_mode none
- _supported_cache_modes none directsync
-+_require_disk_usage
-
- echo
- echo "=== Check mapping of unaligned raw image ==="
-diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
-index 437a9014da5..6eced3aefb9 100755
---- a/tests/qemu-iotests/308
-+++ b/tests/qemu-iotests/308
-@@ -51,6 +51,7 @@ _unsupported_fmt vpc
-
- _supported_proto file # We create the FUSE export manually
- _supported_os Linux # We need /dev/urandom
-+_require_disk_usage
-
- # $1: Export ID
- # $2: Options (beyond the node-name and ID)
 diff --git a/tests/qemu-iotests/tests/mirror-sparse b/tests/qemu-iotests/tests/mirror-sparse
-index 338d6cfbb35..39e3196c811 100755
+index 8c52a4e2448..338d6cfbb35 100755
 --- a/tests/qemu-iotests/tests/mirror-sparse
 +++ b/tests/qemu-iotests/tests/mirror-sparse
-@@ -40,6 +40,7 @@ cd ..
- _supported_fmt qcow2 raw  # Format of the source. dst is always raw file
- _supported_proto file
- _supported_os Linux
-+_require_disk_usage
-
- echo
- echo "=== Initial image setup ==="
-diff --git a/tests/qemu-iotests/tests/write-zeroes-unmap b/tests/qemu-iotests/tests/write-zeroes-unmap
-index 7cfeeaf8391..f90fb8e8d27 100755
---- a/tests/qemu-iotests/tests/write-zeroes-unmap
-+++ b/tests/qemu-iotests/tests/write-zeroes-unmap
-@@ -32,6 +32,7 @@ cd ..
- _supported_fmt raw
- _supported_proto file
- _supported_os Linux
-+_require_disk_usage
-
- create_test_image() {
-     _make_test_img -f $IMGFMT 1m
+@@ -96,10 +96,12 @@ _send_qemu_cmd $h1 '{"execute": "blockdev-del", "arguments":
+                 {"node-name": "dst"}}' 'return' \
+                   | _filter_block_job_offset | _filter_block_job_len
+ $QEMU_IMG compare -U -f $IMGFMT -F raw $TEST_IMG.base $TEST_IMG
++# Some filesystems can fudge allocations for various reasons; rather
++# than expecting precise 2M and 20M images, it is better to allow for slop.
+ result=$(disk_usage $TEST_IMG)
+ if test $result -lt $((3*1024*1024)); then
+     actual=sparse
+-elif test $result = $((20*1024*1024)); then
++elif test $result -gt $((19*1024*1024)); then
+     actual=full
+ else
+     actual=unknown
 -- 
 2.49.0
 
