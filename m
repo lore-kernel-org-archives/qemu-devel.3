@@ -4,60 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB09C3DA6D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6864BC54ED0
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIPeI-0006pZ-2a; Fri, 23 May 2025 06:29:10 -0400
+	id 1uIPhN-0008V0-FW; Fri, 23 May 2025 06:32:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uIPeF-0006hT-3H
- for qemu-devel@nongnu.org; Fri, 23 May 2025 06:29:07 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uIPeC-0003jo-R4
- for qemu-devel@nongnu.org; Fri, 23 May 2025 06:29:06 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b3hBd613Bz6L55s;
- Fri, 23 May 2025 18:25:45 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 438561400CA;
- Fri, 23 May 2025 18:29:03 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.47.30.103) by
- frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 23 May 2025 12:29:02 +0200
-To: <qemu-devel@nongnu.org>, <mst@redhat.com>
-CC: <anisinha@redhat.com>, <imammedo@redhat.com>,
- <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>,
- <peter.maydell@linaro.org>, <prime.zeng@hisilicon.com>,
- <shameerali.kolothum.thodi@huawei.com>, <wangyanan55@huawei.com>,
- <yangyicong@hisilicon.com>
-Subject: [PATCH v5 4/4] tests: virt: Update expected ACPI tables for virt test
-Date: Fri, 23 May 2025 11:26:54 +0100
-Message-ID: <20250523102654.1719-5-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250523102654.1719-1-alireza.sanaee@huawei.com>
-References: <20250523102654.1719-1-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uIPhL-0008Tm-Tg
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:32:20 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uIPhJ-000498-MP
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:32:19 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2322bace4ceso52321225ad.2
+ for <qemu-devel@nongnu.org>; Fri, 23 May 2025 03:32:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747996336; x=1748601136;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PSEHWrmCxvZrWC9/38HxuQJStJPZ1c8I/b9ANXvBdQU=;
+ b=w7suPzY3krRlqBV24vuDh14z8oaoDLzxTrAcFJg5iLUG4CciDf8NFDDCr+HNRcuw0i
+ eEaZJC/c8fzEE1Dk38fKnh2S+PKav+N4kx4fpKyV8BbMX6OsXgsMXoVvR8Kayx+9aWm3
+ k9HdP4rhR1Fi4gCg4+h5vuYNucke+RndyBTdD9/U1bbXwJ0vCi9Q/XvOXnBy6TpZLXDG
+ +v2xcXmLdj9Hevtw80nMLh5JJKKk0Q2sN/trCMbeThzWuG6QDOTmkI/3ij4RBD0SOiQw
+ X3Athu9p6vIX/hdYoFZJYY871ZD75hIl9P1SR+1XHx9k+WCs/qDonMF9y1b3fxCBWpaO
+ 9IUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747996336; x=1748601136;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PSEHWrmCxvZrWC9/38HxuQJStJPZ1c8I/b9ANXvBdQU=;
+ b=YDJWXxH2/U8qsI4U+uMSIrYlHgxDn9cTaxn3vGY8iXNX8NF39jH9jhwr3obFEvfQ3x
+ MtH8o4U1sTxI9Ra7RjBk2VhKQr9eQQRT/F1XMEkDq3LtUK2idL93TPo1MDLpadTe+xr0
+ UQ2yW3oQFmprvEpfl2sQ+Bf3lu2c2grBLUGx15lHk25LEavBmlG9Z5i8Gcr+4/GhAlGT
+ 2EpTA5HAjJ2GvoYbCL0Kf8J43udbqzjR2IVjYn/sxP3Of8yJVUCfiCU12Vnveqjx93mu
+ X4DJMvZ+0obbqkH3N8blLihtEnfVQe8/zuQitzXvz43w8cpv+S3f0Z6JQYT3GnG+QWcO
+ rXWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbl/I3+4gkA2WmRQqX3/qdhD69gMO4YWqot+scgY1AneXwDgk6PWZa3r70ODRNjBhwGGFhNClUtEc1@nongnu.org
+X-Gm-Message-State: AOJu0Yx8OhWFj4xcDJiUs7RG018i/bDThhUBUM9etiLiAroCSDIIR86k
+ 9sJ8y7P5h+nB+2flpC3VcB01TFax1Lm3VP/Cfw/smVndO2QV12xH1bYR4CP2WNDsn58=
+X-Gm-Gg: ASbGncujmCRLSxpWtNm0/xVBHHIxxOno7Y354nCajk2te1Z7qW3hTBMhzKwMmeBpjRS
+ N37pwBKo1i5KFummUhb3iWnz0NzVrWrUPiWH9ItQPCJVbY+JlX/jQMLt299X6B8KedVhULlh5ak
+ 3oafLOsKho9quXshYh+jduFJyDcEXmcAi+a3sHAmc4mLiEkbRrbKEcfRhCaxQomKt+PS8x9FpNH
+ oN80OlqDipTU0Ymcuv8aLylFJ/uxeaDhZrHAcgaurGTZtXrSa52ZtXoG1N/vEgbtHhjQ73/Tj6X
+ XE4+gARtWLSyKLZpoc+YwXNMQpUeCBjAICyWfUOJPLi6vhGSyigdX2FI1VWJFw==
+X-Google-Smtp-Source: AGHT+IHUAts1whuAmBAcxKdu9VmUUsda5AkP26Ugs2NogbMlTs94/R5fhVAih1FubrV11QC5cD8Pag==
+X-Received: by 2002:a17:903:2301:b0:22e:364b:4f3e with SMTP id
+ d9443c01a7336-231d4562cc5mr413880375ad.49.1747996335654; 
+ Fri, 23 May 2025 03:32:15 -0700 (PDT)
+Received: from [10.100.116.185] ([157.82.128.1])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-231d4e978adsm121014415ad.119.2025.05.23.03.32.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 May 2025 03:32:15 -0700 (PDT)
+Message-ID: <5b6d42e8-572f-4eb2-bd1a-0d360713734f@daynix.com>
+Date: Fri, 23 May 2025 19:32:11 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.47.30.103]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- frapeml500003.china.huawei.com (7.182.85.28)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 13/16] net: implement tunnel probing
+To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
+ <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Cornelia Huck <cohuck@redhat.com>,
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <cover.1747825544.git.pabeni@redhat.com>
+ <b0e5839ab3e723247b12ddecf36c75c51c5a0b83.1747825544.git.pabeni@redhat.com>
+ <6c48edb8-082c-4474-8815-36ab4c64a228@daynix.com>
+ <3f5b288c-af84-4bb9-996f-c77ab63bb020@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <3f5b288c-af84-4bb9-996f-c77ab63bb020@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,156 +112,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the ACPI tables according to the acpi aml_build change, also
-empty bios-tables-test-allowed-diff.h.
+On 2025/05/23 19:24, Paolo Abeni wrote:
+> On 5/23/25 9:39 AM, Akihiko Odaki wrote:
+>>> diff --git a/net/tap-linux.c b/net/tap-linux.c
+>>> index 22ec2f45d2..2df601551e 100644
+>>> --- a/net/tap-linux.c
+>>> +++ b/net/tap-linux.c
+>>> @@ -37,6 +37,14 @@
+>>>    
+>>>    #define PATH_NET_TUN "/dev/net/tun"
+>>>    
+>>> +#ifndef TUN_F_UDP_TUNNEL_GSO
+>>> +#define TUN_F_UDP_TUNNEL_GSO       0x080
+>>> +#endif
+>>> +
+>>> +#ifndef TUN_F_UDP_TUNNEL_GSO_CSUM
+>>> +#define TUN_F_UDP_TUNNEL_GSO_CSUM  0x100
+>>> +#endif
+>>> +
+>>
+>> These should be added to net/tap-linux.h, which contains other UAPI
+>> definitions.
+>>
+>> But perhaps it may be better to refactor it to add the real header file
+>> using scripts/update-linux-headers.sh. Such a refactoring can be done
+>> before this series gets ready to merge and will make this series a bit
+>> smaller.
+> 
+> I may be missing something, but I don't think such refactor will make
+> this series relevantly smaller?!? Also, it looks something quite
+> orthogonal to me.
+> 
+> I propose to just move the above definition in net/tap-linux.h, if possible.
 
-The disassembled differences between actual and expected PPTT shows
-below. Only about the root node adding and identification flag set
-as expected.
+You can get rid of this 8 lines and that's all. Just moving to 
+net/tap-linux.h is also fine.
 
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20200925 (64-bit version)
-  * Copyright (c) 2000 - 2020 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/PPTT, Thu Apr 24 11:02:39 2025
-+ * Disassembly of /tmp/aml-E0RF52, Thu Apr 24 11:02:39 2025
-  *
-  * ACPI Data Table [PPTT]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
-  */
-
- [000h 0000   4]                    Signature : "PPTT"    [Processor Properties Topology Table]
--[004h 0004   4]                 Table Length : 0000004C
-+[004h 0004   4]                 Table Length : 00000060
- [008h 0008   1]                     Revision : 02
--[009h 0009   1]                     Checksum : A8
-+[009h 0009   1]                     Checksum : 27
- [00Ah 0010   6]                       Oem ID : "BOCHS "
- [010h 0016   8]                 Oem Table ID : "BXPC    "
- [018h 0024   4]                 Oem Revision : 00000001
- [01Ch 0028   4]              Asl Compiler ID : "BXPC"
- [020h 0032   4]        Asl Compiler Revision : 00000001
-
- [024h 0036   1]                Subtable Type : 00 [Processor Hierarchy Node]
- [025h 0037   1]                       Length : 14
- [026h 0038   2]                     Reserved : 0000
--[028h 0040   4]        Flags (decoded below) : 00000001
-+[028h 0040   4]        Flags (decoded below) : 00000011
-                             Physical package : 1
-                      ACPI Processor ID valid : 0
-                        Processor is a thread : 0
-                               Node is a leaf : 0
--                    Identical Implementation : 0
-+                    Identical Implementation : 1
- [02Ch 0044   4]                       Parent : 00000000
- [030h 0048   4]            ACPI Processor ID : 00000000
- [034h 0052   4]      Private Resource Number : 00000000
-
- [038h 0056   1]                Subtable Type : 00 [Processor Hierarchy Node]
- [039h 0057   1]                       Length : 14
- [03Ah 0058   2]                     Reserved : 0000
--[03Ch 0060   4]        Flags (decoded below) : 0000000A
-+[03Ch 0060   4]        Flags (decoded below) : 00000011
-+                            Physical package : 1
-+                     ACPI Processor ID valid : 0
-+                       Processor is a thread : 0
-+                              Node is a leaf : 0
-+                    Identical Implementation : 1
-+[040h 0064   4]                       Parent : 00000024
-+[044h 0068   4]            ACPI Processor ID : 00000000
-+[048h 0072   4]      Private Resource Number : 00000000
-+
-+[04Ch 0076   1]                Subtable Type : 00 [Processor Hierarchy Node]
-+[04Dh 0077   1]                       Length : 14
-+[04Eh 0078   2]                     Reserved : 0000
-+[050h 0080   4]        Flags (decoded below) : 0000000A
-                             Physical package : 0
-                      ACPI Processor ID valid : 1
-                        Processor is a thread : 0
-                               Node is a leaf : 1
-                     Identical Implementation : 0
--[040h 0064   4]                       Parent : 00000024
--[044h 0068   4]            ACPI Processor ID : 00000000
--[048h 0072   4]      Private Resource Number : 00000000
-+[054h 0084   4]                       Parent : 00000038
-+[058h 0088   4]            ACPI Processor ID : 00000000
-+[05Ch 0092   4]      Private Resource Number : 00000000
-
--Raw Table Data: Length 76 (0x4C)
-+Raw Table Data: Length 96 (0x60)
-
--    0000: 50 50 54 54 4C 00 00 00 02 A8 42 4F 43 48 53 20  // PPTTL.....BOCHS
-+    0000: 50 50 54 54 60 00 00 00 02 27 42 4F 43 48 53 20  // PPTT`....'BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
--    0020: 01 00 00 00 00 14 00 00 01 00 00 00 00 00 00 00  // ................
--    0030: 00 00 00 00 00 00 00 00 00 14 00 00 0A 00 00 00  // ................
--    0040: 24 00 00 00 00 00 00 00 00 00 00 00              // $...........
-+    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
-+    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
-+    0040: 24 00 00 00 00 00 00 00 00 00 00 00 00 14 00 00  // $...............
-+    0050: 0A 00 00 00 38 00 00 00 00 00 00 00 00 00 00 00  // ....8...........
-
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
----
- tests/data/acpi/aarch64/virt/PPTT              | Bin 76 -> 96 bytes
- tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt | Bin 156 -> 176 bytes
- tests/data/acpi/aarch64/virt/PPTT.topology     | Bin 336 -> 356 bytes
- tests/qtest/bios-tables-test-allowed-diff.h    |   3 ---
- 4 files changed, 3 deletions(-)
-
-diff --git a/tests/data/acpi/aarch64/virt/PPTT b/tests/data/acpi/aarch64/virt/PPTT
-index 7a1258ecf123555b24462c98ccbb76b4ac1d0c2b..15598a9b8a3cc0cdd50bc1f77c73ae0ba728a272 100644
-GIT binary patch
-literal 96
-zcmWFt2nk7GU|?WUck*}k2v%^42yj*a0!E-1hz+6{L>L$ZK{PUeim9N9aRK=jNMZmJ
-Cwg&+K
-
-delta 38
-kcmYfB;R*-{3GrcIU|?D?kxP!15y)bg=qSvi0%AY`0D`Lo$p8QV
-
-diff --git a/tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt b/tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt
-index 4eef303a5b6168c6bc3795c2e2c53f65b4c4cfd4..7b613ddaf4b8cfa13821aa2e835d290077221897 100644
-GIT binary patch
-literal 176
-zcmWFt2npH1z`(%7>*Vk35v<@85#X!<1dKp25F11@h%hh+f@ov_6;nYI;{x(6aEO7;
-b0?8riMHU0;EdgRCkQxvGs)LC!Lqr$=thxyS
-
-literal 156
-zcmWFt2nm_Pz`(%t&&l7}BUr&HBEVSz2pEB4AU23*5Mf{d(;zks0L8d~Y!w(EL?em8
-b)g$Re76a)`0AeN}1_P+x1R#eQBEkRwWK9VH
-
-diff --git a/tests/data/acpi/aarch64/virt/PPTT.topology b/tests/data/acpi/aarch64/virt/PPTT.topology
-index 3fbcae5ff08aaf16fedf4da45e941661d79c1174..6b864f035c9f48845e9a3beb482c5171074864a5 100644
-GIT binary patch
-literal 356
-zcmWFt2nk7HWME*L?&R<65v<@85#X!<1VAAM5F11@h%hh+f@ov_6;nYI69Dopu!#Af
-ziSYsX2{^>Sc7o)9c7V(S=|vU;>74__Oh60<Ky@%NW+X9~TafjF#BRXUfM}@RH$Wx}
-cOdLs!6-f-H7uh_Jy&6CPHY9a0F?OgJ00?&w0RR91
-
-literal 336
-zcmWFt2nh*bWME*baq@Te2v%^42yj*a0-z8Bhz+6{L>L&rG>8oYKrs+dflv?<DrSKu
-z#s}p4;1GkGi=-D>45YUMh?!vef$Csl%t&G&Cde(wdO>1GKm-gx_1*yTS+Iz)B8h>R
-aAic=uf$S9l3b27BK>%tVNQ@mK!T<mOd=3Es
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index e84d6c695520..dfb8523c8bf4 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,4 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/PPTT",
--"tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt",
--"tests/data/acpi/aarch64/virt/PPTT.topology",
--- 
-2.34.1
-
+Regards,
+Akihiko Odaki
 
