@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6964EC54ED0
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57FADC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIPPp-0002CQ-Bg; Fri, 23 May 2025 06:14:13 -0400
+	id 1uIPaN-00048I-GI; Fri, 23 May 2025 06:25:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uIPPn-0002C0-2G
- for qemu-devel@nongnu.org; Fri, 23 May 2025 06:14:11 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uIPPk-0001uZ-O4
- for qemu-devel@nongnu.org; Fri, 23 May 2025 06:14:10 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-742c3d06de3so7012548b3a.0
- for <qemu-devel@nongnu.org>; Fri, 23 May 2025 03:14:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747995247; x=1748600047;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TgJYSl9bVviVQAmYdw6fpWcTNcQNdQIal5umXeWgRdg=;
- b=GIA3pfj1poFM5dc4+C9vc4C25dkMofx5DCVQf6M/p8xJe8VoF6/EiIwfxb9PfMLPKH
- yM9nNW4SbQ+/jad4BrJBb06DrCERSMbMsKND/Ri2YzG+NvKID9POz/89wUnAq2esWBSU
- Kd77lc7+5hiM39/5Ql37GakpMhfYx3W35tRn798IjcmcnfpuvLCkVAn0hhYJ03hG/onq
- 7MZ/Pe7DBmh+P16uLiTG+sckEuOoXtHgt94uqOSh65TjKZ0fBSH76I3ddhEY8fxiuWg3
- KbQoU2uWfWfGg6MKlS7OIskybwznI6f1hT3QIDtRWVWvXnhWT8DFOjsGQ2kA4SxrFuJ0
- MOCg==
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIPaK-00046x-Np
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:25:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIPaG-000386-Ng
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:25:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747995898;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oawNubQda7x1Nmr+pSHpzPgh3HUWShnOFG1X3WdiyDw=;
+ b=UYS0/T3bDKxMdqGbczUJAnudw6aVAOYxjpgf9blahzSnmSDQ+MFWY2/m4Oo3ozH1AHLWOK
+ VdHtHpnXek4Z4I1UKe+VmiPaJDXgNz6c/6wOt4LIy/vkxyAdNvtA9NmUDeSP/zud9/NU4/
+ aBhf+jXycbcdRNI2itX6FH4a8whk+yo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-oAceqp2SNJWj3Ol8etY-aw-1; Fri, 23 May 2025 06:24:57 -0400
+X-MC-Unique: oAceqp2SNJWj3Ol8etY-aw-1
+X-Mimecast-MFC-AGG-ID: oAceqp2SNJWj3Ol8etY-aw_1747995896
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-442cdf07ad9so50223185e9.2
+ for <qemu-devel@nongnu.org>; Fri, 23 May 2025 03:24:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747995247; x=1748600047;
+ d=1e100.net; s=20230601; t=1747995896; x=1748600696;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TgJYSl9bVviVQAmYdw6fpWcTNcQNdQIal5umXeWgRdg=;
- b=V/+OtmdLQromSoERaO8EETozDkBoSwJUZd7+aaz4y2AWO6adv86c5hqk92WhX4uo+a
- V+ADEwZTCafnuDMpiSmO5XA5cOQ5bBbxYzkR9/4FtkI9isy2Af/LwTNTtVGiOvgZfDYm
- UQQJqaOa2JM22l/4xBsTDondAPy9rY4AHm5Q9twmxbn7gA6LIF3X0UHYXO19EME364JL
- gEhPpMU8iMiy9QoKuhalLBeNf0oxuNyq6mZtlTzyEk0cKJEbDZvHGM8Vlu9bB2mt7g2X
- 8juaYJVTJ8FiT6vA5+53+FhLZbgvVtepDeZjnDDN9gFH2ClRHqJcUTMgREE75P/PQYVY
- Qsng==
+ bh=oawNubQda7x1Nmr+pSHpzPgh3HUWShnOFG1X3WdiyDw=;
+ b=w6W4TAIXXpSH2O6lM7XNVrFog3x28sC1YJOtBh3q69IUV+QIrhR4e94EUpLXxDNnzu
+ ZKz8xGGOpslcXKcimwXR00bJh3wPGMzk0Y+KGfXhP0XXzfcXs0QAozl3huHQqdkoPF9h
+ TyQ0jW/bmW1vSr/f5W6ggyq4pvx/W4R/+eV8xe+u7FyxxIpnwvJqsX70je5BZ35cMU3W
+ W6YGJ5mnPUCN2G6T2PfoaQP5tU5HSp3kHOAUAH6LYxQ8LmA2o4D+632tvblW1MDzoNuX
+ +w6Vnj0S77D9ARhoFoG8UlGasCeVUefRIz+V+nAc5LKmU+ZtahIHSRA5E19onFnDYhcG
+ m1Vg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEMiJtyJynWsbSYr6heDWLy2hnYTPH94Pbm02QH8aSPDPR3PFTtEHaZmN7qoRz6EpXameqCUS2ra+i@nongnu.org
-X-Gm-Message-State: AOJu0Yw9ifRuogVKGoPEvUcWJwhQ3Fc0KiW3GWL5ObztkTbhktvfNFR+
- j+R7RBwmZPAHUeaq3Ldw5kiE/xtTnS09zwL74rTRJPPKQQS2v0uuCCT5e2VmKd54xTI=
-X-Gm-Gg: ASbGncvgBLrUmjEIsdRtTl5Z8Q2p+4DhnPYUjgQARy+2kPS6wvlgopq41LIhg8GjXfR
- UxVJtb8tQlfuliJJhTRZ4aM1ESNqDeSayJVclVXjThfLL8cJnNmh2vRY1KAMnRAe8kj58k0Riop
- 7fyzCbYHvSXuZCzTep8HTeKxNOAcJ4QGqrM+IEQmX5KlAyGkUWGwcMC8jlBKCTwWtA3Hmuxw4qd
- 1LU4aPI2MccoNLeFQ9+vkS3pH6mExfQ9T7FMfU4DuhZ8+AhVHRo1V3yvVpf4LVsJ/rjeYSczXnL
- QbfBiCnNwLo4047yM/i63LlOK/v9T4EGcgIV40XWtW3oQKimciADGeHdfxM2pA==
-X-Google-Smtp-Source: AGHT+IFd0+d5ItBajCrl8Gm1fLGRo0Bfvk4aK4XP5oGqrCy44vfEsyxYRzPDnspUD8b5Bb+2I/O7Yw==
-X-Received: by 2002:a05:6a00:124d:b0:742:362c:d2e4 with SMTP id
- d2e1a72fcca58-742acc8ff66mr34374900b3a.5.1747995246650; 
- Fri, 23 May 2025 03:14:06 -0700 (PDT)
-Received: from [10.100.116.185] ([157.82.128.1])
+ AJvYcCUF2KIdLN+vc1jRlRRqBGy1UNV3NjQos4zg4DX6lmusQdITwB/gK8dN1MCdPVr9vCcDwB4KTQzO1RT5@nongnu.org
+X-Gm-Message-State: AOJu0YzkfAcw/7x5/46AJwNFb8IbwxqJ24YF1sDWktrIOLeUZdeP8t41
+ gvt2yJzDqjDVv/4pJAKU/B3Icw9PHUuWz+7dC0tPPSgsAYHUwV09uGhPgVFxM0deJlnEvrzWcYx
+ rzGH0Nyut7M85LIYg8QYVpwNVdhScc3d+gzH3gY0K+WKeeQx4655gzMEc
+X-Gm-Gg: ASbGncsZRFOZqJ5mwP7PHhP6SMYELaOieGfCICQvhC5YaFoIIodsGaYVt6cuMO8Jp6M
+ dkxitU9Cy4qy4BR9a6n9LLvE6lEDi/c4lbdXcVXXBreaM8naj/SoVzK3l1HZNPUDMr4c19st6aa
+ fZvA7+/1rSAODHQzWLu6PaqLAOc8u8WJ8Ys+JW90kaoVjU+a/Bs/mqkvJvgqWHXlxCgd35kydh0
+ 0hdOfIxA8HdT1v1vGtwkYfnUz7YVGK15k0ItIYERRT/PMDCX8iz7ADYjfoDMwOLOspG+fw1RFoF
+ eLFGdTjtZxTNrjDHuaI=
+X-Received: by 2002:a05:600c:3511:b0:43c:eea9:f45d with SMTP id
+ 5b1f17b1804b1-442feffb5e7mr258959725e9.18.1747995895717; 
+ Fri, 23 May 2025 03:24:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgkqxa2llAf5ZXF9wZ5wZREDxlpN5PP+4vv6yc/Cu3DhHSyEbs0rqg+V+2i2bwhMxxXoYwPA==
+X-Received: by 2002:a05:600c:3511:b0:43c:eea9:f45d with SMTP id
+ 5b1f17b1804b1-442feffb5e7mr258959325e9.18.1747995895337; 
+ Fri, 23 May 2025 03:24:55 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:247a:1010::f39? ([2a0d:3344:247a:1010::f39])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a96e58a9sm12528495b3a.34.2025.05.23.03.14.02
+ ffacd0b85a97d-3a3631c728esm24856178f8f.60.2025.05.23.03.24.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 May 2025 03:14:06 -0700 (PDT)
-Message-ID: <25df923a-33b4-4593-a754-f3a92c8e7fb3@daynix.com>
-Date: Fri, 23 May 2025 19:14:01 +0900
+ Fri, 23 May 2025 03:24:54 -0700 (PDT)
+Message-ID: <3f5b288c-af84-4bb9-996f-c77ab63bb020@redhat.com>
+Date: Fri, 23 May 2025 12:24:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 12/16] virtio-net: implement extended features support.
-To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH RFC 13/16] net: implement tunnel probing
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -84,22 +89,23 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <cover.1747825544.git.pabeni@redhat.com>
- <8fb9f142e25a0f1b01e8cf54a6c2a0971db00d83.1747825544.git.pabeni@redhat.com>
- <f598f776-e852-442c-a7c7-077d74b33503@daynix.com>
- <0c0efab7-826b-4759-b322-453a10499606@redhat.com>
+ <b0e5839ab3e723247b12ddecf36c75c51c5a0b83.1747825544.git.pabeni@redhat.com>
+ <6c48edb8-082c-4474-8815-36ab4c64a228@daynix.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <0c0efab7-826b-4759-b322-453a10499606@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <6c48edb8-082c-4474-8815-36ab4c64a228@daynix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,92 +121,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/23 19:01, Paolo Abeni wrote:
-> On 5/23/25 10:09 AM, Akihiko Odaki wrote:
->> On 2025/05/21 20:34, Paolo Abeni wrote:
->>> Use the extended types and helpers to manipulate the virtio_net
->>> features.
->>>
->>> Note that offloads are still 64bits wide, as per specification,
->>> and extended offloads will be mapped into such range.
->>>
->>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->>> ---
->>>    hw/net/virtio-net.c            | 87 +++++++++++++++++++++-------------
->>>    include/hw/virtio/virtio-net.h |  2 +-
->>>    2 files changed, 55 insertions(+), 34 deletions(-)
->>>
->>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->>> index 9f500c64e7..193469fc27 100644
->>> --- a/hw/net/virtio-net.c
->>> +++ b/hw/net/virtio-net.c
->>> @@ -90,6 +90,17 @@
->>>                                             VIRTIO_NET_RSS_HASH_TYPE_TCP_EX | \
->>>                                             VIRTIO_NET_RSS_HASH_TYPE_UDP_EX)
->>>    
->>> +#define VIRTIO_OFFLOAD_MAP_MIN    46
->>> +#define VIRTIO_OFFLOAD_MAP_LENGTH 4
->>> +#define VIRTIO_OFFLOAD_MAP        MAKE_64BIT_MASK(VIRTIO_OFFLOAD_MAP_MIN, \
->>> +                                                VIRTIO_OFFLOAD_MAP_LENGTH)
->>> +#define VIRTIO_FEATURES_MAP_MIN   65
->>> +#define VIRTIO_O2F_DELTA          (VIRTIO_FEATURES_MAP_MIN - \
->>> +                                   VIRTIO_OFFLOAD_MAP_MIN)
->>> +
->>> +#define VIRTIO_FEATURE_TO_OFFLOAD(fbit)  (fbit >= 64 ? \
->>> +                                          fbit - VIRTIO_O2F_DELTA : fbit)
->>> +
->>
->> These are specific to virtio-net but look like they are common for
->> virtio as the names don't contain "NET".
->>
->> VIRTIO_FEATURES_MAP_MIN is also a bit confusing. It points to the least
->> significant bit that refers to an offloading feature in the upper-half
->> of the feature bits, but the name lacks the context.
+On 5/23/25 9:39 AM, Akihiko Odaki wrote:
+>> diff --git a/net/tap-linux.c b/net/tap-linux.c
+>> index 22ec2f45d2..2df601551e 100644
+>> --- a/net/tap-linux.c
+>> +++ b/net/tap-linux.c
+>> @@ -37,6 +37,14 @@
+>>   
+>>   #define PATH_NET_TUN "/dev/net/tun"
+>>   
+>> +#ifndef TUN_F_UDP_TUNNEL_GSO
+>> +#define TUN_F_UDP_TUNNEL_GSO       0x080
+>> +#endif
+>> +
+>> +#ifndef TUN_F_UDP_TUNNEL_GSO_CSUM
+>> +#define TUN_F_UDP_TUNNEL_GSO_CSUM  0x100
+>> +#endif
+>> +
 > 
-> Uhmmm... putting the whole context in the macro name sounds very verbose
-> and/or hard, what about:
+> These should be added to net/tap-linux.h, which contains other UAPI 
+> definitions.
 > 
-> How about VIRTIO_NET_OFFLOAD_MAPPED_MIN
-> 
-> ?
+> But perhaps it may be better to refactor it to add the real header file 
+> using scripts/update-linux-headers.sh. Such a refactoring can be done 
+> before this series gets ready to merge and will make this series a bit 
+> smaller.
 
-It looks like it represents a bit in the 64-bit mapping 
-(VIRTIO_OFFLOAD_MAP) instead of a feature bit as it contains "MAPPED" 
-while it doesn't contain "FEATURE".
+I may be missing something, but I don't think such refactor will make
+this series relevantly smaller?!? Also, it looks something quite
+orthogonal to me.
 
-Perhaps VIRTIO_OFFLOAD_MAP is the one that is confusing. As it is 
-intended to be a compact 64-bit representation, how about:
+I propose to just move the above definition in net/tap-linux.h, if possible.
 
-VIRTIO_OFFLOAD_MAP -> VIRTIO_NET_OFFLOAD64
-VIRTIO_FEATURE_TO_OFFLOAD -> VIRTIO_NET_FEATURE_TO_OFFLOAD64
-VIRTIO_FEATURES_MAP_MIN -> VIRTIO_NET_OFFLOAD_FEATURE_MIN
+Thanks,
 
-> 
->> @@ -862,13 +881,13 @@ static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
->>>            (1ULL << VIRTIO_NET_F_GUEST_USO4) |
->>>            (1ULL << VIRTIO_NET_F_GUEST_USO6);
->>>    
->>> -    return guest_offloads_mask & features;
->>> +    return guest_offloads_mask & virtio_net_features_to_offload(features);
->>
->>
->> How about:
->>
->> static const virtio_features_t guest_offload_features_mask = ...
->> virtio_features_t masked_features = guest_offload_features_mask & features;
->>
->> return masked_features | ((masked_features >> VIRTIO_FEATURES_MAP_MIN)
->> << VIRTIO_OFFLOAD_MAP_MIN);
->>
->> This makes virtio_net_features_to_offload() unnecessary.
-> 
-> The above looks a little fragile, as (in future) 'features' could have
-> some bit in the mapped range set (and not representing a guest offload):
-> we need to explicitly mask such bits out before the first '&' operator.
-My suggestion is to mask all feature bits that don't represent guest 
-offloading first. masked_features should only contain guest offload 
-features.
+Paolo
 
-Regards,
-Akihiko Odaki
 
