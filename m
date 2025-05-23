@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC45C54ED0
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 06:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F4CC3DA6D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 07:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIMHh-0001UX-Fp; Fri, 23 May 2025 02:53:43 -0400
+	id 1uIMQA-0003TM-Cf; Fri, 23 May 2025 03:02:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uIMHZ-0001UG-Ui; Fri, 23 May 2025 02:53:30 -0400
+ id 1uIMQ8-0003Sj-Gz; Fri, 23 May 2025 03:02:20 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uIMHX-0001rV-Cs; Fri, 23 May 2025 02:53:29 -0400
+ id 1uIMQ5-0002i6-Qq; Fri, 23 May 2025 03:02:19 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 3EF2043EA1;
- Fri, 23 May 2025 08:53:22 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id C420243E01;
+ Fri, 23 May 2025 09:02:14 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, eduardo@habkost.net, berrange@redhat.com,
  pbonzini@redhat.com, vsementsov@virtuozzo.com
-Subject: [PATCH] hw/core/qdev-properties-system: Add missing return in
+Subject: [PATCH v2] hw/core/qdev-properties-system: Add missing return in
  set_drive_helper()
-Date: Fri, 23 May 2025 08:53:18 +0200
-Message-Id: <20250523065318.278544-1-f.ebner@proxmox.com>
+Date: Fri, 23 May 2025 09:02:11 +0200
+Message-Id: <20250523070211.280498-1-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -55,8 +55,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, changing the drive property of e.g. a scsi-hd object will
-result in an assertion failure:
+Currently, changing the 'drive' property of e.g. a scsi-hd object will
+result in an assertion failure if the aio context of the block node
+it's replaced with doesn't match the current aio context:
 
 > bdrv_replace_child_noperm: Assertion `bdrv_get_aio_context(old_bs) ==
 > bdrv_get_aio_context(new_bs)' failed.
@@ -68,6 +69,9 @@ Cc: qemu-stable@nongnu.org
 Fixes: d1a58c176a ("qdev: allow setting drive property for realized device")
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
+
+Changes in v2:
+* Add missing condition in commit message, sorry for the noise!
 
 Reproducer:
 
