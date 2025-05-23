@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE443C54ED0
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F1CC54F2E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 10:55:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIPp4-0002ng-I9; Fri, 23 May 2025 06:40:18 -0400
+	id 1uIQ2h-0006MA-Hx; Fri, 23 May 2025 06:54:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIPp2-0002id-Na
- for qemu-devel@nongnu.org; Fri, 23 May 2025 06:40:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uIPoz-00052C-8l
- for qemu-devel@nongnu.org; Fri, 23 May 2025 06:40:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747996811;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wSAR2oP9aif2PDPWow5q8ViVzjxb1+2hfHb5dvrmC30=;
- b=gKJ0GJUZhv4gtEQmVygT2sbdpZehaM3SnqfA4hqM21iIq49875QPLlrzLbxinpNAk4rLXh
- OAdqw+jrX4jJsvP1z+9rBVlZf+bRrdn5JQ6102Ilo1LQ+ghvEPpx/37r91N3PAHaBK0qUY
- zUTRGQhVCH5oN2WYWyvb1rhEsdowWcI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-411-oJpKAt4PPia4Q06OJyv5TQ-1; Fri, 23 May 2025 06:40:09 -0400
-X-MC-Unique: oJpKAt4PPia4Q06OJyv5TQ-1
-X-Mimecast-MFC-AGG-ID: oJpKAt4PPia4Q06OJyv5TQ_1747996808
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43ce8f82e66so48905255e9.3
- for <qemu-devel@nongnu.org>; Fri, 23 May 2025 03:40:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uIQ2e-0006LU-2E
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:54:20 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uIQ2b-0006er-R4
+ for qemu-devel@nongnu.org; Fri, 23 May 2025 06:54:19 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-30e8daea8c6so5748448a91.0
+ for <qemu-devel@nongnu.org>; Fri, 23 May 2025 03:54:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1747997656; x=1748602456;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FiITWBtG9CncF1MdKwG3Zdo6MyGCGkS7VgyFg4fEuGQ=;
+ b=Hi6qolVvU6s0IxDUHrb4mPANWuimNbZLhnnLz+MSORUyzle0/YSJxJbqatATF7yW/d
+ fZ4mbtDV/faycGm9wLgAIY8X44WWr+rD2T/++Nl8UB97IfkibxcpydbG+fCdIvx6NfQZ
+ NgvR3F85yoe5oAXh5+Mf4Zdn264MFdLYcwpW1aZjKtMiEJyti4gh2fCm7lvpGSd+1lzy
+ NlFRTVUn2FdqCBSfn2/LpbPoonpO6PFaNrwIlE+qoglPyYrFVNgJ1QG3GghvaHn7cykp
+ 5zuR61eLRdsg7eLAsY766LwkMPx+Ww9liLrm31/Gb2srjUbztFXyh1tdyUdkz05WQEVV
+ 4Uww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747996808; x=1748601608;
+ d=1e100.net; s=20230601; t=1747997656; x=1748602456;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wSAR2oP9aif2PDPWow5q8ViVzjxb1+2hfHb5dvrmC30=;
- b=GihS6zeDymh973bV7xYKBC7CslvG9n8ZkHHMUKBxglIEhO4IdU99J41rgrelj/4BNK
- uZ6mjEEnuPp2Igy4qFIdwAQvzye4dBCtdg0PLyi4gf3BQqpYf8zvsxah9WE81+u3ihEw
- mpMZ3JWjmCSKN99n3b/IfEiIU9u8X5yD4xBSorvgG3N6cvl/65ds8kulwgcjIkdR31dR
- qlyg9qL5mhGUbzwFqbwZU33YwDwCClDAFD9MGV++SIvrhndcTgUCJ09H0ANj6S4SqqRE
- l0GBCazDzDTlLFV3At09iRsD9hpL803oEfmt4tekzuY8dplr/xvu/ouKrBT838rHZ+KV
- Y5mw==
+ bh=FiITWBtG9CncF1MdKwG3Zdo6MyGCGkS7VgyFg4fEuGQ=;
+ b=CMFZRVyuKwc6UT20kmBE207+AA3NbXk6YEQJoL+94LBrfoyi5c+/eWEZOe8OTogHH6
+ DYYcpOUmW2VkUGGRz2P19unTlffqrf8hG+imFYIuRwp+U5uTtwglrUa8SIErsyBqO7NM
+ twsVdMZKdxJvpAnFef4qH1IuaW68h+7NGIpxsoiGnMqQf25b/f8gvSgLLL2cEG+M/VGO
+ sQ0eqS15KYNVEw6zxIOf0+X1Q/lN1r9PPQ1WliTGEhukzYPKrcY7moBtnOe0Be7Wrslt
+ eEZ/O4DLRVZX2RpuqDHvdTXKGnbZtkoqFt0lpuNtbeI/mf6ZGVaZtwdp1UVCJ4exbkuU
+ ilFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbv/VAnjJ16Us9Y/DBY32hBFTcq/MUnNuENITETjNc0oA7IE0oEA84yloZlAe8XYpxMFcgZzm5400t@nongnu.org
-X-Gm-Message-State: AOJu0YxRqcF47BzSwrcCM6ilSkZ4DuvYM1bNAFhCNo/8O2GcPI886rQi
- +Hp3Pknw6pYrnT0PUnMjmNnqyDRIlSg4rPCQrSgQcb8L9Mp3O8Tx6odmYhh6NaVPEKiW9S6sBQd
- jfUYE+K4Yg95kPEgPqm8EmwcrphKJGJpL+f841LdCAbveZvS8/Y/9rqaF
-X-Gm-Gg: ASbGncv4ySiXWVHDNiz4tuQQI8sUXAQzdgb9cRQqNHj9Ik4GtfiMlq+1Yj60dflEcqb
- Kgtfa/U+IAUUrU62OI5yHENlOkB1ZG9oCfza5c22g7+8HyRrjqceXBniZSnQ10vb39/IW4/krus
- x1Sn2QghQTo/YoCwRejkzhSlKVqYmebHef6xx2HbRPz874BIbRiW/EQ6VbiUq1ShSs640lB7F6d
- IJEkv6SYWGv0S/hvHekPy/aw0tSEmlOfiNS9W05EYZMRiF5NDqbauq+J0YKqI7OAeGW1Xw1mYd+
- C2oPLw2lvXpQDMybe1k=
-X-Received: by 2002:a05:600c:820e:b0:43d:2313:7b4a with SMTP id
- 5b1f17b1804b1-44b6cc09789mr41197025e9.3.1747996808466; 
- Fri, 23 May 2025 03:40:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELNKvww9fhNfl3zJyHSIqVqjn7ICzT1OKo1K27pNsKEg0UfA/BxHoq8NMLflI0HlKcUmvKAw==
-X-Received: by 2002:a05:600c:820e:b0:43d:2313:7b4a with SMTP id
- 5b1f17b1804b1-44b6cc09789mr41196545e9.3.1747996808059; 
- Fri, 23 May 2025 03:40:08 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:247a:1010::f39? ([2a0d:3344:247a:1010::f39])
+ AJvYcCVYsWlZstPp6M8fZCSOtW1l2+zT+n4OEMyFFY0xNnMY/OFIEw9rwDLi31mfFUYZl8QyqXEmJsJmUkkv@nongnu.org
+X-Gm-Message-State: AOJu0YzX8xwluCDWdAhJ4Isl6gii1Osl0Rjalh2ncnCg8nDeVF0RO0Eb
+ MpIN3cVKATAomKLkOGD9xivegU6sAFjWi2UcpDyLwaAV+XumTTlw3PAX9vdUdpJvAVM=
+X-Gm-Gg: ASbGnctVZkHsYv3Q5EOMhaYSNruEKSQtaUqai7UN4r8b5W5hfH8Eg2i33SMU9/NHmD9
+ Bgd7wQgvTZKTAsAaBiUb+kebpk89CV4jC/wbnc3sdjN1BcHDz85DmBFov7IjbaEHdrw+Ly9D0nY
+ 45GS5lnEW+DI1BgtqMgjVyBe71YW0vfNOrBNmzwznLL5YChdsEBmaCTGkLQfFt9x3Lvy7NbY0E3
+ 6x3BFNvfyrLAamkvFgB3fheGielUpe0F433i77Rzma9/zIzqqqpq4PSCI5kGPCVpQjPtko13Kwl
+ gZ42ycQVPELQqaCgRTxhWfn2Yk7MKGa36hwiRWv6BdVI5cPVBkmtl9KtJ+2gTw==
+X-Google-Smtp-Source: AGHT+IFpiOMn5fsClMqYWl6rZ7WdYLr3Soek8ucs01HWGV0O7YhatrnYutpl+rlCQuGywy0jmcshGQ==
+X-Received: by 2002:a17:90b:1e04:b0:30e:54be:37e7 with SMTP id
+ 98e67ed59e1d1-310e972b37dmr4265595a91.24.1747997656061; 
+ Fri, 23 May 2025 03:54:16 -0700 (PDT)
+Received: from [10.100.116.185] ([157.82.128.1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f74cce5bsm132089705e9.24.2025.05.23.03.40.06
+ 98e67ed59e1d1-30ee9f34a59sm5518590a91.1.2025.05.23.03.54.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 May 2025 03:40:07 -0700 (PDT)
-Message-ID: <3277a9a5-10a7-49a9-901d-cdeef503b1d1@redhat.com>
-Date: Fri, 23 May 2025 12:40:05 +0200
+ Fri, 23 May 2025 03:54:15 -0700 (PDT)
+Message-ID: <0ddd6a2f-55b4-4356-8881-6744580fafd7@daynix.com>
+Date: Fri, 23 May 2025 19:54:11 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RFC 15/16] net: implement tnl feature offloading
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
+To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -91,21 +86,20 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
 References: <cover.1747825544.git.pabeni@redhat.com>
  <3ee26dacd91d6c12ae4fc64bc42890553739a2fe.1747825544.git.pabeni@redhat.com>
  <0aba4f0d-f6e8-4c46-a183-eebb401c13a2@daynix.com>
+ <3277a9a5-10a7-49a9-901d-cdeef503b1d1@redhat.com>
 Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <0aba4f0d-f6e8-4c46-a183-eebb401c13a2@daynix.com>
-Content-Type: text/plain; charset=UTF-8
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <3277a9a5-10a7-49a9-901d-cdeef503b1d1@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.275,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,52 +115,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/23/25 10:16 AM, Akihiko Odaki wrote:
-> On 2025/05/21 20:34, Paolo Abeni wrote:
->> @@ -890,6 +915,12 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
->>          .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
->>          .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
->>          .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
->> +#ifdef CONFIG_INT128
->> +       .tnl  = !!(n->curr_guest_offloads &
->> +                  (1ULL << VIRTIO_NET_O_GUEST_UDP_TUNNEL_GSO)),
->> +       .tnl_csum = !!(n->curr_guest_offloads &
->> +                      (1ULL << VIRTIO_NET_O_GUEST_UDP_TUNNEL_GSO_CSUM)),
+On 2025/05/23 19:40, Paolo Abeni wrote:
+> On 5/23/25 10:16 AM, Akihiko Odaki wrote:
+>> On 2025/05/21 20:34, Paolo Abeni wrote:
+>>> @@ -890,6 +915,12 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
+>>>           .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
+>>>           .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
+>>>           .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
+>>> +#ifdef CONFIG_INT128
+>>> +       .tnl  = !!(n->curr_guest_offloads &
+>>> +                  (1ULL << VIRTIO_NET_O_GUEST_UDP_TUNNEL_GSO)),
+>>> +       .tnl_csum = !!(n->curr_guest_offloads &
+>>> +                      (1ULL << VIRTIO_NET_O_GUEST_UDP_TUNNEL_GSO_CSUM)),
+>>
+>> "[PATCH RFC 14/16] net: bundle all offloads in a single struct" added a
+>> struct for offloading, but how about passing n->curr_guest_offloads as
+>> is instead?
+>>
+>> It loses some type safety and makes it prone to have unknown bits, but
+>> omitting duplicate these bit operations may outweigh the downside.
 > 
-> "[PATCH RFC 14/16] net: bundle all offloads in a single struct" added a 
-> struct for offloading, but how about passing n->curr_guest_offloads as 
-> is instead?
+> I *think* that one of the relevant point about the current interface is
+> that qemu_set_offload() abstracts from the virtio specifics, as it's
+> also used by other drivers. Forcing them to covert the to-be-configured
+> offloads to a virtio specific bitmask sound incorrect to me. Possibly I
+> misread your suggestion?
 > 
-> It loses some type safety and makes it prone to have unknown bits, but 
-> omitting duplicate these bit operations may outweigh the downside.
-
-I *think* that one of the relevant point about the current interface is
-that qemu_set_offload() abstracts from the virtio specifics, as it's
-also used by other drivers. Forcing them to covert the to-be-configured
-offloads to a virtio specific bitmask sound incorrect to me. Possibly I
-misread your suggestion?
-
-[...]
->> diff --git a/net/tap-linux.c b/net/tap-linux.c
->> index aa5f3a6e22..b7662ece63 100644
->> --- a/net/tap-linux.c
->> +++ b/net/tap-linux.c
->> @@ -287,6 +287,12 @@ void tap_fd_set_offload(int fd, const NetOffloads *ol)
->>           if (ol->uso6) {
->>               offload |= TUN_F_USO6;
->>           }
->> +        if ((ol->tso4 || ol->tso6 || ol->uso4 || ol->uso6) && ol->tnl) {
+> [...]
+>>> diff --git a/net/tap-linux.c b/net/tap-linux.c
+>>> index aa5f3a6e22..b7662ece63 100644
+>>> --- a/net/tap-linux.c
+>>> +++ b/net/tap-linux.c
+>>> @@ -287,6 +287,12 @@ void tap_fd_set_offload(int fd, const NetOffloads *ol)
+>>>            if (ol->uso6) {
+>>>                offload |= TUN_F_USO6;
+>>>            }
+>>> +        if ((ol->tso4 || ol->tso6 || ol->uso4 || ol->uso6) && ol->tnl) {
+>>
+>> Is it possible to have ol->tnl without TSO or USO? If so, is ignoring
+>> ol->tnl really what you want?
 > 
-> Is it possible to have ol->tnl without TSO or USO? If so, is ignoring 
-> ol->tnl really what you want?
+> The virtio specifications actually prevent setting UDP-tunnel offload
+> without any other "inner" offload (TSO or USO), as it makes little to no
+> sense (the stack can't GSO/GRO the outer header without doing the same
+> for the inner).
+> 
+> Does the above makes sense/answer your questions?
 
-The virtio specifications actually prevent setting UDP-tunnel offload
-without any other "inner" offload (TSO or USO), as it makes little to no
-sense (the stack can't GSO/GRO the outer header without doing the same
-for the inner).
+The code implies the following:
+1a. ol->tnl may be true while TSO and USO are disabled.
+2a. It is defined as no-op in such a case.
 
-Does the above makes sense/answer your questions?
+But the reality is as follows:
+1b. ol->tnl being true while TSO and USO are disabled is an error.
+2b. The consequence is undefined in such a case.
 
-/P
+In that case, virtio_net_get_features() should report the error for 1b, 
+which will prevent the error condition from reaching to 
+tap_fd_set_offload().
 
+Making the error condition no-op in tap_fd_set_offload() does not make 
+it (more) correct as the consequence is undefined anyway (2b). It may 
+simply ignore the condition under the assumption that it will never 
+happen or assert that assumption.
 
