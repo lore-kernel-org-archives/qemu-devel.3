@@ -4,49 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D0C4C54ED1
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 01:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24723C54ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 May 2025 02:05:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIHOY-0006rN-8O; Thu, 22 May 2025 21:40:22 -0400
+	id 1uIHlY-0001I7-C1; Thu, 22 May 2025 22:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uIHOU-0006qP-Ct; Thu, 22 May 2025 21:40:18 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1uIHOR-00056q-2k; Thu, 22 May 2025 21:40:17 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxHHL20S9oUbz3AA--.7052S3;
- Fri, 23 May 2025 09:40:06 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBx3MTz0S9oStbpAA--.8898S2;
- Fri, 23 May 2025 09:40:03 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uIHlR-0001Fc-OY
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 22:04:02 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uIHlK-0007ki-V8
+ for qemu-devel@nongnu.org; Thu, 22 May 2025 22:04:01 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-742c5f3456fso4363031b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 22 May 2025 19:03:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747965833; x=1748570633; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Io8QAlH/AZbTYfjODl1SD6d4ZkI/a0qoPWASwOSekic=;
+ b=VkgJWWSrJOxj8cqyEbqWQJ8t1muJ2xduSTJZSegqLvZEki8sLx1FJICKpk5hnJLmUE
+ NxCJwDoclwNCK6/8Y9a/sBnDjoZy1XOnpzU8IZPDa5nawhiuIKt9KID9hmY8BTWVm04c
+ wYC4qTPuEkI/FWZ1cyrVfEiLTsHf8trDqKICsKH40C3GdIlrXwuHpgw7uwiCkU/5kUjC
+ I3ZQb9lwzMF8IOiBZE2cijypJDZKjS3/uTenk8lqmn4PVZ1BEHDrhs0jEKgkN5tyjo0u
+ Vj468QzqO8BNntN5dV6mu9GnWqr6e0HUsVHgCePyE5dErwJsjkgvNF2rlwrxZKeoU3EX
+ 0ijw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747965833; x=1748570633;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Io8QAlH/AZbTYfjODl1SD6d4ZkI/a0qoPWASwOSekic=;
+ b=KbnmAigxWl7Fly2XvaYw9e/kw0sn/Eb2ZYOKWqBQfWfUWiRuxyYCviLObeBIj9uTTp
+ kGCQyH+PbwO6W+vuuS9QEy703/FbFTpquKnOEAfHDAYdUn164RmyZ0Aav4oKUP8hEEsw
+ x6VUi4eAx/tBDttwUfoyyIC5JCsr3WJY0UdDaPYHzHMe1FK2kZeM7+nsP8fXhrNV0Uv8
+ /jrPlua92E/velI9gc/As7cyWg+s9MbOYXaOb6OhuYa21T5VIigP51Y3u/eeUT52E9Xp
+ 21o5zQrGvdldVtPpNlsGUNleLGR5meym/0iknqYatVaUfpgwJREXdE0QDA+9O4hbu993
+ rJuQ==
+X-Gm-Message-State: AOJu0YwW+WpRUnA5luIqtbDQpG4uH5kUTP3UstMFFQ+3GobNJERGRmRf
+ sXc04TcGQzDiMkbhqxoA0SbJZgMUPfztPF7apydyfvfyVXFJauHUUV9nYPzczMs8RrA=
+X-Gm-Gg: ASbGncv2YRdX/TJtHRBFKBqkCkKBL53yz36OcJQTafWDu257p9yZ59PAZPlJbBYn8fZ
+ hgamhGpnxrJby+8HHEmUKWDJuDjX1sISMv3VEFWVS5h6b4XcBTqFk9Nv69OdcwnHwTtWv+38s8L
+ 0Yfzx1d/eol2xV+WtXdGrpmp38SD6eN+WVCcDgqVgHN69hg7FM1F8CamtBx2CVLiZ+vQqc7DK4K
+ HEXEu0n2saH1njGMMOgXd+uF5okatF9Y8y2ebnh2p1e5ztX2npSWbk769koWBtXCQ3NY+MZ27sl
+ p01Px3UFaoFTvuT5xfDCxktcugL6frKOad0LY+es4pZfeaur+qBcAkfp4aZvqg==
+X-Google-Smtp-Source: AGHT+IFsujTE/WP91RBzfc4Ma15ALzQau+vs5gDpYvGLFDvfVcUDHt1l2MbdxhInoQW48PhI//cgVw==
+X-Received: by 2002:a05:6a00:98d:b0:736:34a2:8a23 with SMTP id
+ d2e1a72fcca58-745ed8f5d5bmr1702673b3a.15.1747965833047; 
+ Thu, 22 May 2025 19:03:53 -0700 (PDT)
+Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-742a98a242asm11820818b3a.164.2025.05.22.19.03.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 May 2025 19:03:52 -0700 (PDT)
+From: Rowan Hart <rowanbhart@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, maobibo@loongson.cn, philmd@linaro.org,
- lorenz.hetterich@cispa.de, qemu-stable@nongnu.org
-Subject: [PATCH] target/loongarch: add check for fcond
-Date: Fri, 23 May 2025 09:17:45 +0800
-Message-Id: <20250523011745.3833883-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Eduardo Habkost <eduardo@habkost.net>,
+ novafacing <rowanbhart@gmail.com>
+Subject: [PATCH v4 9/9] plugins: Update plugin version and add notes
+Date: Thu, 22 May 2025 19:03:43 -0700
+Message-ID: <20250523020344.1341179-10-rowanbhart@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250523020344.1341179-1-rowanbhart@gmail.com>
+References: <20250523020344.1341179-1-rowanbhart@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx3MTz0S9oStbpAA--.8898S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,78 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fcond only has 22 types, add a check for fcond.
+From: novafacing <rowanbhart@gmail.com>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2972
+This patch updates the plugin version to gate new APIs and adds notes
+describing what has been added.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
 ---
- target/loongarch/tcg/insn_trans/trans_fcmp.c.inc | 11 ++++++++---
- target/loongarch/tcg/insn_trans/trans_vec.c.inc  |  4 ++--
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ include/qemu/qemu-plugin.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc b/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
-index 3babf69e4a..5be759d30c 100644
---- a/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
-@@ -4,10 +4,15 @@
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 2cb5de9f64..170a79e667 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -65,11 +65,18 @@ typedef uint64_t qemu_plugin_id_t;
+  *
+  * version 4:
+  * - added qemu_plugin_read_memory_vaddr
++ *
++ * version 5:
++ * - added qemu_plugin_write_memory_vaddr
++ * - added qemu_plugin_read_memory_hwaddr
++ * - added qemu_plugin_write_memory_hwaddr
++ * - added qemu_plugin_write_register
++ * - added qemu_plugin_translate_vaddr
   */
  
- /* bit0(signaling/quiet) bit1(lt) bit2(eq) bit3(un) bit4(neq) */
--static uint32_t get_fcmp_flags(int cond)
-+static uint32_t get_fcmp_flags(DisasContext *ctx, int cond)
- {
-     uint32_t flags = 0;
+ extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
  
-+    /*check cond , cond =[0-8,10,12] */
-+    if ((cond > 8) &&(cond != 10) && (cond != 12)) {
-+        generate_exception(ctx, EXCCODE_INE);
-+    }
-+
-     if (cond & 0x1) {
-         flags |= FCMP_LT;
-     }
-@@ -39,7 +44,7 @@ static bool trans_fcmp_cond_s(DisasContext *ctx, arg_fcmp_cond_s *a)
-     src1 = get_fpr(ctx, a->fj);
-     src2 = get_fpr(ctx, a->fk);
-     fn = (a->fcond & 1 ? gen_helper_fcmp_s_s : gen_helper_fcmp_c_s);
--    flags = get_fcmp_flags(a->fcond >> 1);
-+    flags = get_fcmp_flags(ctx, a->fcond >> 1);
+-#define QEMU_PLUGIN_VERSION 4
++#define QEMU_PLUGIN_VERSION 5
  
-     fn(var, tcg_env, src1, src2, tcg_constant_i32(flags));
- 
-@@ -63,7 +68,7 @@ static bool trans_fcmp_cond_d(DisasContext *ctx, arg_fcmp_cond_d *a)
-     src1 = get_fpr(ctx, a->fj);
-     src2 = get_fpr(ctx, a->fk);
-     fn = (a->fcond & 1 ? gen_helper_fcmp_s_d : gen_helper_fcmp_c_d);
--    flags = get_fcmp_flags(a->fcond >> 1);
-+    flags = get_fcmp_flags(ctx, a->fcond >> 1);
- 
-     fn(var, tcg_env, src1, src2, tcg_constant_i32(flags));
- 
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index b33622ff79..0128a2398f 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -4666,7 +4666,7 @@ static bool do_vfcmp_cond_s(DisasContext *ctx, arg_vvv_fcond *a, uint32_t sz)
-     }
- 
-     fn = (a->fcond & 1 ? gen_helper_vfcmp_s_s : gen_helper_vfcmp_c_s);
--    flags = get_fcmp_flags(a->fcond >> 1);
-+    flags = get_fcmp_flags(ctx, a->fcond >> 1);
-     fn(tcg_env, oprsz, vd, vj, vk, tcg_constant_i32(flags));
- 
-     return true;
-@@ -4686,7 +4686,7 @@ static bool do_vfcmp_cond_d(DisasContext *ctx, arg_vvv_fcond *a, uint32_t sz)
-     }
- 
-     fn = (a->fcond & 1 ? gen_helper_vfcmp_s_d : gen_helper_vfcmp_c_d);
--    flags = get_fcmp_flags(a->fcond >> 1);
-+    flags = get_fcmp_flags(ctx, a->fcond >> 1);
-     fn(tcg_env, oprsz, vd, vj, vk, tcg_constant_i32(flags));
- 
-     return true;
+ /**
+  * struct qemu_info_t - system information for plugins
 -- 
-2.34.1
+2.49.0
 
 
