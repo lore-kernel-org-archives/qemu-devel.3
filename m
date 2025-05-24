@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA587C54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 12:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C288C54FC6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 13:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIoRO-0003if-1E; Sat, 24 May 2025 08:57:30 -0400
+	id 1uIoe3-0007HK-5z; Sat, 24 May 2025 09:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIoRI-0003dE-8f
- for qemu-devel@nongnu.org; Sat, 24 May 2025 08:57:24 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1uIoe1-0007HB-So
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 09:10:33 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIoRG-0004M0-EI
- for qemu-devel@nongnu.org; Sat, 24 May 2025 08:57:23 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43cfa7e7f54so5226335e9.1
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 05:57:17 -0700 (PDT)
+ id 1uIoe0-0006c7-AL
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 09:10:33 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-44b1ff82597so5800005e9.3
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 06:10:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748091436; x=1748696236; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748092230; x=1748697030; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4fATkiHxnCgwwWf8Tj9469zyzQR2gluXIfOLqguTXpE=;
- b=yFQ/cpLOFW3qBoDD6R4ULafLsZk0YR8vTB2nZ8I7ASLoJC9bS0sE/u6H+2hMz2lFsF
- oz7kvY3RFlHDjjoMyDY/8uEskXS7+C+gRUHkfaD7vv8HYO5O64isdJB0YKyE04TqcPNa
- hvG14jdzPxauzGbYyeZ6whi5boKoBZ86iGeAPBcQ7wabDLuaMA0sLX+0JACJ2Bba4F+z
- V6U/KpUSRvC3AXzHb3eIvivEh6eYJ10q3njh6l8U3Q7J4lZxatqalSvc0vP92lvSBSyY
- ve6hVdj+EEyS34QJiRfMKMqtVhKqlk77P1eeZL2TVT4X90f3U8xOU5LcX0eUBiOcotsL
- WFHQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K3JLK9pZmogTjVHVYQLPlR6FT90z3gKv0ZAIHmISogY=;
+ b=Kf1U57wEmBO9jbhIVrALGhJs6gKz09sIpnN7AUsVKr/y4fqhW91aG2Y9N0eurd9qYu
+ A1sioNVjg7A+x8x/nYUj3GWRL1XwRNw8afDWmh9C6V2saPXXfw7UVgJrcXb/TbCd0CUH
+ RSuhDCb4bz6Wr5PNZ8Tw2Hjtu0xVD4ikzDdND3xA4Geq8UJbet5ShqUj28khnfHNPwNF
+ Bri+/xH6Cim34hlRgZoG7khos61JbrRSMh8kzyrTk0ZX3fKphaeVvvfk+QJJztH5q2l6
+ QRxLxIHISSzXcerEsU6ZdJP3XiKHW4fjZL+VUCy2HXFJ1ewIyFR4/WpvewrVyZymKL7W
+ +l8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748091436; x=1748696236;
+ d=1e100.net; s=20230601; t=1748092230; x=1748697030;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4fATkiHxnCgwwWf8Tj9469zyzQR2gluXIfOLqguTXpE=;
- b=Ee37yxIvuR6Q6enGor3tZwDS6t4kZSeULqYLTos9ynfFIkowTYzpwaqaNsSkoZuTBn
- WWkskwbCsyNbniK58vkpR7rpWXrozxig7UM0J0cbJpZkUO1ZGy3uqKLWM6LNBK4LY6Bi
- 5J1fSHf7H6/ut8HZGH2OqOCy6hHQ1FklPL3yJQxXW2zs1BEUWVU0JTuXbvOd+kfe6xN/
- dPw/BIw4X1xjnuHd5DLwDGOeKHL9dPTaP3z4PdYOtHV4bmNifkYctbOb1xzK3H1neEmT
- lkSkZfSYHWUG8MLXOH+spwwfQfyrmJUih++6dmmb6Smo7HVLTUa3qOD2ableAvMMWK5T
- NjuA==
-X-Gm-Message-State: AOJu0YwulBEhNEsaiWHZ6qeT+cFtN6CffJ4FkMpRYmdDbknaMKn5EaPN
- gmP0f4RX0BBuwEGGLBhn+DGrawCTWrzzH00iwo2bPsNfA6SXHC8lDB7sI2SHI/ffJal/0IRtlIZ
- QfsQApUYuGQ==
-X-Gm-Gg: ASbGncv9nghODOQATF7HLovp/jt4wiLqukCfp/nNJ/msZHXhpUi4NNWsYolbUpV2oRf
- tLuWTpSP9rhukDQpKqxUS9rQfDVn67nFPFPcm7hG/X+XDOmqqMDEWzJsM6cCRwa3bjjlM1FMYW4
- BgPjiUWe9tuHqXePoPaNbSD3PiUUUVFN2vhX01IWBzGatBFcbsE51YoTG3ygXzalMfapp2OFGhJ
- zTx4a+bCbqQdn/V9T1t/7risA6VzVhbJNT3YdyP/0UGBjER1sQdGG8CIBn26Vx2qvZ4c6ifUbuc
- ROjyhj7YJ+Eb0b+iKD6fHFl6G2+xMimzQOF0O5GJ5CypLo/eXfLWA+t9+iJ3YgKTaQzeat1v1zU
- c
-X-Google-Smtp-Source: AGHT+IFKmpuYdtbWAJnE54Crt+9fM5H5VoDZQo8DHQG/HQ/Y0R86olpr2Mcn6PLntewmjXpAkMopUg==
-X-Received: by 2002:a05:600c:6303:b0:43d:b33:679c with SMTP id
- 5b1f17b1804b1-44c7c185313mr27418535e9.14.1748091436304; 
- Sat, 24 May 2025 05:57:16 -0700 (PDT)
+ bh=K3JLK9pZmogTjVHVYQLPlR6FT90z3gKv0ZAIHmISogY=;
+ b=uz7a6dbUOdxUAnokl+3Swlm7Szf1j+d8VW/XRe7N2PbEpLSXQYov7G+m3XUYWQKT3y
+ ALln6zojSho/OkgyQOeMoO/ay7DJZH/8tfZe9orjbvejPgcAut5SEFgCwNrmi1jRCzHA
+ p4983YCPuU2sw84OZkD1Yt2ASCrY3Z4s9WdjiaBga3qUPrONGsiEU7qXOX9LZ6bQg2Iv
+ gT2aCeEVvYaoYCnFWsJ+bo2Ilxq68L4Sh56x72TbmQ4TPach2aH48OTkVkzoW/Tcc8WO
+ 5x9A1vT53Cp80SDE9iKUOv0GzdCj5DMHgcRkf7KMrkSBhMXDFURPm6fupn/tXhYy6Ytf
+ xyTQ==
+X-Gm-Message-State: AOJu0Yz4fdncAf68qTK02As9+amYuwuVbgUs4MayjP2vusorD8jLZQwi
+ 0mUtYsIxcR6NBOO94+BUuHB5CV4Z2Eb292J71Hjy9OhctR1wAyJh+OOLV9jY5sM1x2I=
+X-Gm-Gg: ASbGncuh7KJbizNh9g1qLYDMEM832Z84+RyaIyY3Eeaz/3WXyyBhdtRLnKsrfan8K4D
+ iydVKCNlZV3QeDNJkQbfA1N5BhVIVQUyIH1cbgtMkXsh8ux8OMmx5Kpf5FFUJhtIWHlnGPrl7Pi
+ YFnlGEaQzTG6tFqGC6xntnmMXGfE3We3hFgsmKY+dL4xxV6txk0/6/EYELOwlzVJHqmRHJsKwwh
+ N2qAsFIC4yw4L5+IUfhezQ4u5oOFfU7t4Q1Z+nS2/+HXZuRrHzF4OshHdimB2twwKAKdlexYi2v
+ OPz4Hn7uNNTaqZV3aR43hm0+AcXJtdh1ZHtcqYeq62J8N1l5hweW7PKncuJngRehLw==
+X-Google-Smtp-Source: AGHT+IF0PHHPrrD9sq64hK2QwW+XiNCTHVkKOLdytI4DnqKoNWzfodqPAp7yQD9ibLmgOCKbLU+PMg==
+X-Received: by 2002:a05:600c:83cd:b0:440:66a4:8d1a with SMTP id
+ 5b1f17b1804b1-44c917f3f54mr20476455e9.7.1748092229890; 
+ Sat, 24 May 2025 06:10:29 -0700 (PDT)
 Received: from [172.16.25.47] ([195.53.115.74])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f73d25b8sm183341375e9.17.2025.05.24.05.57.15
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-447f38142b8sm174439155e9.30.2025.05.24.06.10.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 05:57:15 -0700 (PDT)
-Message-ID: <166b7801-e230-43be-8bd8-3a08847c6d19@linaro.org>
-Date: Sat, 24 May 2025 13:57:12 +0100
+ Sat, 24 May 2025 06:10:29 -0700 (PDT)
+Message-ID: <f51ba01f-2886-4e73-8c89-396a6b21b18c@linaro.org>
+Date: Sat, 24 May 2025 14:10:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] docs: Deprecate the qemu-system-microblazeel binary
-To: qemu-devel@nongnu.org
-References: <20250515132019.569365-1-thuth@redhat.com>
- <20250515132019.569365-5-thuth@redhat.com>
+Subject: Re: [PATCH] tcg/perf: Placate clang-21's
+ -Wdefault-const-init-field-unsafe
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20250519214903.55284-1-iii@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250515132019.569365-5-thuth@redhat.com>
+In-Reply-To: <20250519214903.55284-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,17 +101,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 14:20, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> The (former big-endian only) binary qemu-system-microblaze can
-> handle both endiannesses nowadays, so we don't need the separate
-> qemu-system-microblazeel binary for little endian anymore. Let's
-> deprecate it to avoid unnecessary compilation and test time in
-> the future.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-
+On 5/19/25 22:48, Ilya Leoshkevich wrote:
+> diff --git a/tcg/perf.c b/tcg/perf.c
+> index 4e8d2c1bee7..f30c5b489d1 100644
+> --- a/tcg/perf.c
+> +++ b/tcg/perf.c
+> @@ -154,7 +154,7 @@ struct debug_entry {
+>       uint64_t addr;
+>       int lineno;
+>       int discrim;
+> -    const char name[];
+> +    char name[];
+>   };
+>   
+>   struct jr_code_debug_info {
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
