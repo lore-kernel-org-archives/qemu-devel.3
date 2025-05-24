@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A5FC54F30
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0020C5AE59
 	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 17:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIsmv-00005C-M8; Sat, 24 May 2025 13:36:01 -0400
+	id 1uIsmx-000095-P0; Sat, 24 May 2025 13:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uIsmn-0008Eq-6r
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:35:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uIsmt-0008Re-SQ
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 13:36:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uIsml-0000jY-Ky
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:35:52 -0400
+ id 1uIsms-0000kG-6b
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 13:35:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748108151;
+ s=mimecast20190719; t=1748108157;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XUfnDwYRc5/qq1OUomuApWVfWvzcXVHwfvl96q7zTjo=;
- b=BHgd1IdvfkL9jNJNTjLO20ICU/rF6jiuU4kQbr+P7bM3TEy7SPXhGc3ZSBMAkNXj0rqpzM
- hcGDJeBud+UyACDYKbGFpahgmCBdpJHTRbqoM6i8JIld2UvqlzjYr1bdvHU9ppBiBHo3xN
- l2/Whd1x5WZtdE7NoTh1pJs6Ip7Y9Eg=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=EvfmhXkFKgpdo74Mx0i48lY/oqi/ZCY4LrmYKzh3wB0=;
+ b=QoAzyK1NCx9YXuf05deX5Z14rtUmy2WQh8f50pAe0yhXoW16RcJ4Q58r6cEBSbKVyCCg9s
+ guvwouare5ONHgOJ+mWjzJpCCUQrOJNaWIxA9/gkIcpvpHVYJ5xxrxJXJu0wZwoCaEhFeX
+ cnpTwnHYJL7PwgrWG4YLB/K+FwMeZaM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-7-BnLn_uNxOP5rYZRr7h5Q-1; Sat,
- 24 May 2025 13:35:48 -0400
-X-MC-Unique: 7-BnLn_uNxOP5rYZRr7h5Q-1
-X-Mimecast-MFC-AGG-ID: 7-BnLn_uNxOP5rYZRr7h5Q_1748108148
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-1-eYWJV0MuiQ07Hf6nnN1Q-1; Sat,
+ 24 May 2025 13:35:55 -0400
+X-MC-Unique: 1-eYWJV0MuiQ07Hf6nnN1Q-1
+X-Mimecast-MFC-AGG-ID: 1-eYWJV0MuiQ07Hf6nnN1Q_1748108155
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B86519560AA
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 17:35:48 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E7E7318004AD; Sat, 24 May 2025 17:35:54 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7DB0819560AF; Sat, 24 May 2025 17:35:47 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A1C2F19560AD; Sat, 24 May 2025 17:35:53 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- stefanha@redhat.com
-Subject: [PULL 09/19] ui/vdagent: add migration support
-Date: Sat, 24 May 2025 19:35:02 +0200
-Message-ID: <20250524173514.317886-10-marcandre.lureau@redhat.com>
+ stefanha@redhat.com, Weifeng Liu <weifeng.liu.z@gmail.com>
+Subject: [PULL 11/19] ui/gtk: Document scale and coordinate handling
+Date: Sat, 24 May 2025 19:35:04 +0200
+Message-ID: <20250524173514.317886-12-marcandre.lureau@redhat.com>
 In-Reply-To: <20250524173514.317886-1-marcandre.lureau@redhat.com>
 References: <20250524173514.317886-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -87,181 +86,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Weifeng Liu <weifeng.liu.z@gmail.com>
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+The existence of multiple scaling factors forces us to deal with various
+coordinate systems and this would be confusing. It would be beneficial
+to define the concepts clearly and use consistent representation for
+variables in different coordinates.
+
+Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
+Message-ID: <20250511073337.876650-2-weifeng.liu.z@gmail.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vdagent.c | 142 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 142 insertions(+)
+ ui/gtk.c | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index fcbd7b167b..adc8755bd9 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -10,6 +10,7 @@
- #include "ui/clipboard.h"
- #include "ui/console.h"
- #include "ui/input.h"
-+#include "migration/vmstate.h"
- #include "trace.h"
- 
- #include "qapi/qapi-types-char.h"
-@@ -930,6 +931,146 @@ static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
-     cc->chr_accept_input = vdagent_chr_accept_input;
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 982037b2c0..9f3171abc5 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -800,6 +800,71 @@ void gd_update_monitor_refresh_rate(VirtualConsole *vc, GtkWidget *widget)
+ #endif
  }
  
-+static int post_load(void *opaque, int version_id)
-+{
-+    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(opaque);
++/**
++ * DOC: Coordinate handling.
++ *
++ * We are coping with sizes and positions in various coordinates and the
++ * handling of these coordinates is somewhat confusing. It would benefit us
++ * all if we define these coordinates explicitly and clearly. Besides, it's
++ * also helpful to follow the same naming convention for variables
++ * representing values in different coordinates.
++ *
++ * I. Definitions
++ *
++ * - (guest) buffer coordinate: this is the coordinates that the guest will
++ *   see. The x/y offsets and width/height specified in commands sent by
++ *   guest is basically in buffer coordinate.
++ *
++ * - (host) pixel coordinate: this is the coordinate in pixel level on the
++ *   host destop. A window/widget of width 300 in pixel coordinate means it
++ *   occupies 300 pixels horizontally.
++ *
++ * - (host) logical window coordinate: the existence of global scaling
++ *   factor in desktop level makes this kind of coordinate play a role. It
++ *   always holds that (logical window size) * (global scale factor) =
++ *   (pixel size).
++ *
++ * - global scale factor: this is specified in desktop level and is
++ *   typically invariant during the life cycle of the process. Users with
++ *   high-DPI monitors might set this scale, for example, to 2, in order to
++ *   make the UI look larger.
++ *
++ * - zooming scale: this can be freely controlled by the QEMU user to zoom
++ *   in/out the guest content.
++ *
++ * II. Representation
++ *
++ * We'd like to use consistent representation for variables in different
++ * coordinates:
++ * - buffer coordinate: prefix fb
++ * - pixel coordinate: prefix p
++ * - logical window coordinate: prefix w
++ *
++ * For scales:
++ * - global scale factor: prefix gs
++ * - zooming scale: prefix scale/s
++ *
++ * Example: fbw, pw, ww for width in different coordinates
++ *
++ * III. Equation
++ *
++ * - fbw * gs * scale_x = pw
++ * - pw = gs * ww
++ *
++ * Consequently we have
++ *
++ * - fbw * scale_x = ww
++ *
++ * Example: assuming we are running QEMU on a 3840x2160 screen and have set
++ * global scaling factor to 2, if the guest buffer size is 1920x1080 and the
++ * zooming scale is 0.5, then we have:
++ * - fbw = 1920, fbh = 1080
++ * - pw  = 1920, ph  = 1080
++ * - ww  = 960,  wh  = 540
++ * A bonus of this configuration is that we can achieve pixel to pixel
++ * presentation of the guest content.
++ */
 +
-+    if (have_mouse(vd) && vd->mouse_hs) {
-+        qemu_input_handler_activate(vd->mouse_hs);
-+    }
-+
-+    if (have_clipboard(vd)) {
-+        vdagent_clipboard_peer_register(vd);
-+    }
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_chunk = {
-+    .name = "vdagent/chunk",
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(port, VDIChunkHeader),
-+        VMSTATE_UINT32(size, VDIChunkHeader),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription vmstate_vdba = {
-+    .name = "vdagent/bytearray",
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(len, GByteArray),
-+        VMSTATE_VBUFFER_ALLOC_UINT32(data, GByteArray, 0, 0, len),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+struct CBInfoArray {
-+    uint32_t n;
-+    QemuClipboardInfo cbinfo[QEMU_CLIPBOARD_SELECTION__COUNT];
-+};
-+
-+static const VMStateDescription vmstate_cbinfo_array = {
-+    .name = "cbinfoarray",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(n, struct CBInfoArray),
-+        VMSTATE_STRUCT_VARRAY_UINT32(cbinfo, struct CBInfoArray, n,
-+                                     0, vmstate_cbinfo, QemuClipboardInfo),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static int put_cbinfo(QEMUFile *f, void *pv, size_t size,
-+                      const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(pv);
-+    struct CBInfoArray cbinfo = {};
-+    int i;
-+
-+    if (!have_clipboard(vd)) {
-+        return 0;
-+    }
-+
-+    for (i = 0; i < QEMU_CLIPBOARD_SELECTION__COUNT; i++) {
-+        if (qemu_clipboard_peer_owns(&vd->cbpeer, i)) {
-+            cbinfo.cbinfo[cbinfo.n++] = *qemu_clipboard_info(i);
-+        }
-+    }
-+
-+    return vmstate_save_state(f, &vmstate_cbinfo_array, &cbinfo, vmdesc);
-+}
-+
-+static int get_cbinfo(QEMUFile *f, void *pv, size_t size,
-+                      const VMStateField *field)
-+{
-+    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(pv);
-+    struct CBInfoArray cbinfo = {};
-+    int i, ret;
-+
-+    if (!have_clipboard(vd)) {
-+        return 0;
-+    }
-+
-+    vdagent_clipboard_peer_register(vd);
-+
-+    ret = vmstate_load_state(f, &vmstate_cbinfo_array, &cbinfo, 0);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    for (i = 0; i < cbinfo.n; i++) {
-+        g_autoptr(QemuClipboardInfo) info =
-+            qemu_clipboard_info_new(&vd->cbpeer, cbinfo.cbinfo[i].selection);
-+        /* this will steal clipboard data pointer from cbinfo.types */
-+        memcpy(info->types, cbinfo.cbinfo[i].types, sizeof(cbinfo.cbinfo[i].types));
-+        qemu_clipboard_update(info);
-+    }
-+
-+    return 0;
-+}
-+
-+static const VMStateInfo vmstate_cbinfos = {
-+    .name = "vdagent/cbinfos",
-+    .get  = get_cbinfo,
-+    .put  = put_cbinfo,
-+};
-+
-+static const VMStateDescription vmstate_vdagent = {
-+    .name = "vdagent",
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .post_load = post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BOOL(connected, VDAgentChardev),
-+        VMSTATE_UINT32(caps, VDAgentChardev),
-+        VMSTATE_STRUCT(chunk, VDAgentChardev, 0, vmstate_chunk, VDIChunkHeader),
-+        VMSTATE_UINT32(chunksize, VDAgentChardev),
-+        VMSTATE_UINT32(msgsize, VDAgentChardev),
-+        VMSTATE_VBUFFER_ALLOC_UINT32(msgbuf, VDAgentChardev, 0, 0, msgsize),
-+        VMSTATE_UINT32(xsize, VDAgentChardev),
-+        VMSTATE_UINT32(xoff, VDAgentChardev),
-+        VMSTATE_VBUFFER_ALLOC_UINT32(xbuf, VDAgentChardev, 0, 0, xsize),
-+        VMSTATE_STRUCT_POINTER(outbuf, VDAgentChardev, vmstate_vdba, GByteArray),
-+        VMSTATE_UINT32(mouse_x, VDAgentChardev),
-+        VMSTATE_UINT32(mouse_y, VDAgentChardev),
-+        VMSTATE_UINT32(mouse_btn, VDAgentChardev),
-+        VMSTATE_UINT32(mouse_display, VDAgentChardev),
-+        VMSTATE_UINT32_ARRAY(last_serial, VDAgentChardev,
-+                             QEMU_CLIPBOARD_SELECTION__COUNT),
-+        VMSTATE_UINT32_ARRAY(cbpending, VDAgentChardev,
-+                             QEMU_CLIPBOARD_SELECTION__COUNT),
-+        {
-+            .name         = "cbinfos",
-+            .info         = &vmstate_cbinfos,
-+            .flags        = VMS_SINGLE,
-+        },
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static void vdagent_chr_init(Object *obj)
+ static gboolean gd_draw_event(GtkWidget *widget, cairo_t *cr, void *opaque)
  {
-     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
-@@ -937,6 +1078,7 @@ static void vdagent_chr_init(Object *obj)
-     vd->outbuf = g_byte_array_new();
-     error_setg(&vd->migration_blocker,
-                "The vdagent chardev doesn't yet support migration");
-+    vmstate_register_any(NULL, &vmstate_vdagent, vd);
- }
- 
- static void vdagent_chr_fini(Object *obj)
+     VirtualConsole *vc = opaque;
 -- 
 2.49.0
 
