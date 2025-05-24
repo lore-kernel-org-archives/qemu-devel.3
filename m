@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683CAC54ED1
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 15:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98850C54ED1
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 15:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIqxC-0007d8-Sg; Sat, 24 May 2025 11:38:30 -0400
+	id 1uIqzu-0008RC-Lt; Sat, 24 May 2025 11:41:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uIqxA-0007cx-2U
- for qemu-devel@nongnu.org; Sat, 24 May 2025 11:38:28 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uIqzr-0008Qt-PN
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 11:41:15 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uIqx7-0005G4-Nf
- for qemu-devel@nongnu.org; Sat, 24 May 2025 11:38:27 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-601f278369bso1676257a12.1
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 08:38:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uIqzq-0005Yr-6n
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 11:41:15 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3a37d24e607so745724f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 08:41:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748101102; x=1748705902; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SOkRho4ifL0KQlTw9HAxQGYJduiEFISXV9vo1c/ohsE=;
- b=YW4NZTFhsm4Js73TIE+5nQM+VDY6vkG0HDblip5cbmeYbo01LxHQVCUtj7p0zc+Ph+
- J3CcZBwF/xYeRfVxEXxwYhlzbJfsS8dSviegRqNTpwO31x93BZGr2kFH6X/QO+YUPM16
- 5/q1/vnElX4rwL3PIqvQ75bId7ZZbgggcpp7qI+71U6ETkNkJE4Jka6WuWQ2omSbBbzo
- KqPbOvAypa5nq33jqtuosPhuozJdzUbwXoVAyRvOJVyw1otZGLJdr72OIB+SQsVvRMOd
- KM/05tpOqhC1EsxIU46/azfmJlqx5u/LM1KEoaaQKfZUvi9/HszIOf/Mfkn1Z9nrBF4N
- 30/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748101102; x=1748705902;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=linaro.org; s=google; t=1748101272; x=1748706072; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SOkRho4ifL0KQlTw9HAxQGYJduiEFISXV9vo1c/ohsE=;
- b=Zd44jRM2XS8ORLp+gPr86YND6IwGWXmYobagmRwMNHiZp8v+WU6QM0G2ByVIgYlPAF
- wjNHJvS+nXDk9D0TkJdJ7SVc8h1cdv4/KSNdr5+JwV4qPkf+QP6rwKQGFliRpqxgjQIJ
- +fX/reAZVueHvyRQ8ilnx/trNF53rbH0FJD2NaDdEDC4bgAQLI/H1R8f6IHTjQde3n5A
- nrdHojhFaaV7trecdmd8/v56vQsH58c65os4ErMSRYKiAFfDouC9vq6QdYso4CbGC8mF
- 9MdrDVgECO+k6HTB7lMPs7C5fVvsViP79UcGXDQ7tCOiJVWODv6wmrqgW+Bdw801yJ+C
- ifPw==
-X-Gm-Message-State: AOJu0YyR9H+MNL5vvJq2qpyEYb/QkQpezyuETZDV5yh8XDyL3cIPuAnm
- 0waT9tf+eDgMV83ntCQbtbTpgzS5o5XioyHfyKuZGxl1G30ZrgCZuTwULuqZEPUheuA=
-X-Gm-Gg: ASbGncvF7gxR+NKXz+oYA2XbP1yOOKEjS/IrtWG4vjFRkAaH9Qn+ha3HXvflqTflg7C
- QQFkaN+IDQ/WL+cb+dNP8baBZsL9kG4BjDqqv8RPm52gdAC1lRpNKs6M5T08WNijkbaQv67xYyU
- WxoGISqq1OAvcDt2V5rbOo0J0aY98UfMKL5pIBPH4zTDpwGNsRPIHp+5C0dCddOg151gesEDqwm
- wVgySM6MlQQhPtpu4NXGOgMsGbGRlkYB05ZqaM3q6WjHKjWmoH30E25ldlRUA1pPxQf3M0MnEB0
- Xfva/+NCkhYOEXWG113+/uhTgqQRb2O1UxcUQtyHUsgj2JY6fcWq
-X-Google-Smtp-Source: AGHT+IHX8yxfzpH9XCieuhWHJfJdA5iCmT1UaN1XUJj5Ru6QtRvSdkAoZ8mS+GxmJRJKHM60VQPa6A==
-X-Received: by 2002:a05:6402:3486:b0:601:89d4:968e with SMTP id
- 4fb4d7f45d1cf-602dacbfd7amr2417019a12.27.1748101102408; 
- Sat, 24 May 2025 08:38:22 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-602d2282d3asm1267520a12.16.2025.05.24.08.38.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 May 2025 08:38:21 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D30D75F782;
- Sat, 24 May 2025 16:38:20 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org,  thuth@redhat.com,  berrange@redhat.com,
- eric.auger@redhat.com,  philmd@linaro.org,  peter.maydell@linaro.org,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH v4] tests/functional: Add PCI hotplug test for aarch64
-In-Reply-To: <20250512144629.182340-1-gustavo.romero@linaro.org> (Gustavo
- Romero's message of "Mon, 12 May 2025 15:45:45 +0100")
-References: <20250512144629.182340-1-gustavo.romero@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Sat, 24 May 2025 16:38:20 +0100
-Message-ID: <87a57210k3.fsf@draig.linaro.org>
+ bh=JstNNR19O/xeXhv9oEzrMg52dogzQAeCNqm4a/pQDrY=;
+ b=NM+j82fvSm1LuJ7rkWMBAaDI5yl1EDEng8XEdSxVzMhV1EP78eKPxhifKPT5k/jlgm
+ Gs+4fumItjMzghpsJ7tjZb1iuHYq6RkRDivlcA+cKMBbiXjQkqitmrbEjDhnvZAz5u+L
+ SYqcaCjr5XEAd+zM7r1iymwcE83Z7RrXTaHZJI7P4ArBiahfQKdOwo5RZVw5MawS70EH
+ 1wfK1S1b2B0FNS5x0vi0udXARFIXDbMotWyejr6h672xrzU11pt3j8XO5qZQ0mQzFPFr
+ Q19wOkqZU1VtqmfXOea8TElqL+SrJAy6vFDiVqpRN+Zkjg9fFShhLv8ZOPgUgTz0iGyj
+ pCwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748101272; x=1748706072;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JstNNR19O/xeXhv9oEzrMg52dogzQAeCNqm4a/pQDrY=;
+ b=ao+PnwtfrPQgwmrFAObFgcnKk2ARb4vq9/Pv5U2HkIUAJGoGsI34egyAw+otxGvTD+
+ EPGHxP0LWKKHr9ZJKmtKwvhDN5XaNHjIf+x21bNRJ4445MiANNZ1mM/CqBjAYvYZuxN4
+ SjNAOhdIaMe5so+HassNDOP91+WiZ1UAh1mayYaoCWq5YU/TvLfgjD9J4ZJTWJzMiEoz
+ +xEasYW5d0oo3zWZWEO6x5eZWk/Qs0mQC+LOb1Qh0bL6GwEeAhjpzB8G+OT2UkPcJh8V
+ zbqVKvIjHaA5K9sflpJXtVyeldxcnmlX/n+ZfifNJ4GH/u56uYY5yrdFcdyZKQcGsnI+
+ r7eQ==
+X-Gm-Message-State: AOJu0Yx9GGCmeus/pvR6ozGL6pI6eg5mB8OGGjZZ6rUxsEYRiOVUwySc
+ pRjkgqpHVQX4Rt/VY9Ny/3LDUDZUiJp89SrFUz6xooS+ezh9duwVgtV41NwpwDhIX4RJnVaIH5u
+ y7/NPyoTuMQ==
+X-Gm-Gg: ASbGncskLGaqmmVDHE9gFgYKivJfP2E8DWpzC1vDmsoVFiFnmBPdrK5mjAITD/hzRbF
+ Vux0ynlNKaCgYrmP9/Ef6FNriyL4w+fkVAmO7y2Caq7ZFmirAtPtgs4/Tlml6Y606UllxiUtpM4
+ 6b+zRIDhfYoO8oBJD9y6BSUk8rYNuBSiGIUQwIZVObnIwCKOWyaFWMjX54TCiql+IB8jBZ4D67p
+ BgYe9/yreb7XiQubyW7FHKTvt+nlYpEaPz9kYIuQngBCAHI4hKkDW0Q10RKxEAxyaIXs+817Q4n
+ WEAZ70STIm7QX34s/5/cRlmWYq+48TsAPVWlIr0+dioo54Vts4bnsh7iqrkyc1ranw==
+X-Google-Smtp-Source: AGHT+IGYRzTsK6of/oqDhqIoxXUNdJY6g1iJB3NNUNCWNiVN8JCGBs8TwFKcIGEXZD2Aq0ktpusqog==
+X-Received: by 2002:a05:6000:2304:b0:3a0:88e4:3d2f with SMTP id
+ ffacd0b85a97d-3a4cb43dbacmr3166335f8f.5.1748101272612; 
+ Sat, 24 May 2025 08:41:12 -0700 (PDT)
+Received: from [172.16.25.47] ([195.53.115.74])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f6b29672sm190688745e9.3.2025.05.24.08.41.11
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 24 May 2025 08:41:12 -0700 (PDT)
+Message-ID: <953b015b-b9b5-4a4f-94d5-f8eea14596e1@linaro.org>
+Date: Sat, 24 May 2025 16:41:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/block: Drop unused nand.c
+To: qemu-devel@nongnu.org
+References: <20250522142859.3122389-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250522142859.3122389-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,128 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
-
-> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
-> hot-unplug on arm64.
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+On 5/22/25 15:28, Peter Maydell wrote:
+> The nand.c device (TYPE_NAND) is an emulation of a NAND flash memory
+> chip which was used by the old OMAP boards.  No current QEMU board
+> uses it, and although techically "-device nand,chip-id=0x6b" doesn't
+> error out, it's not possible to usefully use it from the command
+> line because the only interface it has is via calling C functions
+> like nand_setpins() and nand_setio().
+> 
+> The "config OMAP" stanza (used only by the SX1 board) is the only
+> thing that does "select NAND" to compile in this code, but the SX1
+> board doesn't actually use the NAND device.
+> 
+> Remove the NAND device code entirely; this is effectively leftover
+> cleanup from when we dropped the PXA boards and the OMAP boards
+> other than the sx1.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->  MAINTAINERS                                  |  5 ++
->  tests/functional/meson.build                 |  1 +
->  tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
->  3 files changed, 80 insertions(+)
->  create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 23174b4ca7..9ebb768214 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2065,6 +2065,11 @@ S: Supported
->  F: include/hw/pci/pcie_doe.h
->  F: hw/pci/pcie_doe.c
->=20=20
-> +ARM PCI Hotplug
-> +M: Gustavo Romero <gustavo.romero@linaro.org>
-> +S: Supported
-> +F: tests/functional/test_aarch64_hotplug_pci.py
-> +
->  ACPI/SMBIOS
->  M: Michael S. Tsirkin <mst@redhat.com>
->  M: Igor Mammedov <imammedo@redhat.com>
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 52b4706cfe..2d68840fa2 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -83,6 +83,7 @@ tests_aarch64_system_quick =3D [
->  tests_aarch64_system_thorough =3D [
->    'aarch64_aspeed_ast2700',
->    'aarch64_aspeed_ast2700fc',
-> +  'aarch64_hotplug_pci',
->    'aarch64_imx8mp_evk',
->    'aarch64_raspi3',
->    'aarch64_raspi4',
-> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functio=
-nal/test_aarch64_hotplug_pci.py
-> new file mode 100755
-> index 0000000000..fa1bb62c8f
-> --- /dev/null
-> +++ b/tests/functional/test_aarch64_hotplug_pci.py
-> @@ -0,0 +1,74 @@
-> +#!/usr/bin/env python3
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +#
-> +# The test hotplugs a PCI device and checks it on a Linux guest.
-> +#
-> +# Copyright (c) 2025 Linaro Ltd.
-> +#
-> +# Author:
-> +#  Gustavo Romero <gustavo.romero@linaro.org>
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2 or
-> +# later.  See the COPYING file in the top-level directory.
-> +
-> +from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_=
-pattern
-> +from qemu_test import BUILD_DIR
-> +
-> +class HotplugPCI(LinuxKernelTest):
-> +
-> +    ASSET_KERNEL =3D Asset(
-> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
-4/'
-> +         'current/images/netboot/debian-installer/arm64/linux'),
-> +        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b=
-2')
-> +
-> +    ASSET_INITRD =3D Asset(
-> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
-4/'
-> +         'current/images/netboot/debian-installer/arm64/initrd.gz'),
-> +
-> '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
+>   include/hw/block/flash.h |  18 -
+>   hw/block/nand.c          | 835 ---------------------------------------
+>   hw/arm/Kconfig           |   1 -
+>   hw/block/Kconfig         |   3 -
+>   hw/block/meson.build     |   1 -
+>   5 files changed, 858 deletions(-)
+>   delete mode 100644 hw/block/nand.c
 
-Hmm do we need to specify a checksum type now?
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-  TAP version 13
-  not ok 1 test_aarch64_hotplug_pci.HotplugPCI.test_hotplug_pci
-  1..1
-  ----------------------------------- stderr ------------------------------=
------
-  Traceback (most recent call last):
-    File "/home/alex/lsrc/qemu.git/tests/functional/test_aarch64_hotplug_pc=
-i.py", line 44, in test_hotplug_pci
-      self.launch_kernel(self.ASSET_KERNEL.fetch(),
-                         ~~~~~~~~~~~~~~~~~~~~~~~^^
-    File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/asset.py", li=
-ne 189, in fetch
-      raise AssetError(self, "Hash does not match %s" % self.hash)
-  qemu_test.asset.AssetError: https://ftp.debian.org/debian/dists/stable/ma=
-in/installer-arm64/current/images/netboot/debian-installer/arm64/linux: Has=
-h does not match 3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca=
-3117b2
-
-  More information on test_aarch64_hotplug_pci.HotplugPCI.test_hotplug_pci =
-could be found here:
-   /home/alex/lsrc/qemu.git/builds/all/tests/functional/aarch64/test_aarch6=
-4_hotplug_pci.HotplugPCI.test_hotplug_pci/base.log
-   /home/alex/lsrc/qemu.git/builds/all/tests/functional/aarch64/test_aarch6=
-4_hotplug_pci.HotplugPCI.test_hotplug_pci/console.log
-
-  (test program exited with status code 1)
-  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-
-In fact could we use the existing tuxrun images instead of relying on
-debian stable not changing?
-
-<snip>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
