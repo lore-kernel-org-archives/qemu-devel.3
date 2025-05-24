@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 888C4C54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 12:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2498C54FC6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 12:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIoPa-0001aG-AX; Sat, 24 May 2025 08:55:38 -0400
+	id 1uIoR1-0003SB-FA; Sat, 24 May 2025 08:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIoPZ-0001Zm-0K
- for qemu-devel@nongnu.org; Sat, 24 May 2025 08:55:37 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1uIoQt-0003N9-5z
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 08:57:01 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIoPX-000484-1s
- for qemu-devel@nongnu.org; Sat, 24 May 2025 08:55:36 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-441c99459e9so3857635e9.3
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 05:55:34 -0700 (PDT)
+ id 1uIoQp-0004JE-B9
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 08:56:57 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-441ab63a415so7756385e9.3
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 05:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748091333; x=1748696133; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748091412; x=1748696212; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9N33DF1xZp9jCtZ6B0TcdwvHYyV+fSwoVuf806uc7qc=;
- b=MIUdp1C05YTubE3vMgwSkQgTltxqpV9aLkiWGpgV+h/JeZD0RHlfKSjzvlkLXt9+mG
- gD9z2ASdLtFxEc9+scM4BDr03OOulnbrKIFv9yDAJsdXwvg+W9plh9F3MLJ9OhgLwBms
- 4xJ7dGt1cSUYWwL99OEdIysCPL4/jnYjNF3FrbxuYsnINxsog+3FsmTIa0Xir3m5NDeW
- 9YVSxJ6ZMkSEWyiTtMOWD7VhavS3WZTRvZU92NtQpJYhdu/gSlMlQGLUYNWlE0m2hqXD
- Y2+XVrJOthf7mHgwXaQfwMEvOFiZ4dK4GhIqUIEiHXNVXxXCKNoEywahKhK+mESWOp81
- S4Mg==
+ bh=rWICcmQInSwMPM6QRaPvZ9hJQo3lL+FVTyCiwmu5m4o=;
+ b=x4SOKOjj2MfwJIbs6EeBaOyDzrmZ+PeSJbL3orPNBl0wcpZHyEl2VxE7SVocBDc7j6
+ WPoXenJ1YnRBUSdeKJPfKmcZ+ThI8WcEWiuUajbhU8hAV+/uOeqJaHwuua9mLBd9UQsX
+ HyfRuA/VpFj3zc0jgWObKCBzEFRycGTuzdEAVZW/uR+27YuPTdaY6xL3cfdLkVpfMe4x
+ 1DjAqEf157fx2FohasJWeVqwDh6CoFefnUbWQsnkNL3cQI1Hg9Ohl0rTUS7ELMj9Ecx/
+ hHiaFWmvH3Eill2nQ2EdCLd+saxXqFBU5i7MPqIM3G6XoCn+9/xWzh76VAs5aaHJ1f1k
+ MD6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748091333; x=1748696133;
+ d=1e100.net; s=20230601; t=1748091412; x=1748696212;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9N33DF1xZp9jCtZ6B0TcdwvHYyV+fSwoVuf806uc7qc=;
- b=qPsEmzDxpNlPMmW7oqSIu04JZU1VT0cVRkCZEKoLowgNflp7S3K/CzCpU4Sg9rCh0W
- aqRoE3Or2FJJ9zB4Hn2onLlL4j6OMYQipQ1rL0ReQ45QCVa0TTSZ/g197FgXlq86cpEV
- CG+R5DxFmTkmbFw4i5xxIDQgzFGC6RMAJjj/A4/SqhTakbCt3SHAYKHRmPc7WggXqe7y
- mJLjxD68/fs5/RUqCTvS29bi15poMDyQAFVocC6GgpKcQ3OE5FE0baFS4+B7IdHignPx
- 9SFRWx0YyqoFaxEN4X+ll7Iy0NsURg5RKlUpstp9twKR9ndaxTLG6+BrtpXSKFNgLInz
- lpGg==
-X-Gm-Message-State: AOJu0YwhDkjtJ474Se0LFhnuD7szKdf/s0RcxxvIpDYQQjkX2pt/hYLP
- G2kgvJjVZJ6sq6MKJMbc/V9okD73MP62vy+q3YTK0ixb8FntAhWj/KWS9ceotv1HP8AXOupIOok
- ELEo/iJ5pYA==
-X-Gm-Gg: ASbGncv+L1DGMx9BKwbqF05+oNfIi2iAaR00g/EqX+0fwWnp2UBquJijFgU9TIH7499
- eP5x6O3Jo2Zm6Hp/8UngSEIouqR6Ud6qkEvHeqr22f3hYQzmE8FCQBt3yyWPLn27D2mTkEzNZvU
- 9FaJW/ATNZS/0LtQoESL9KM3LZHaukc0ZTn8LTVbhAujZb86HuKHUzyYHSS3c2Ica/Lt+eiKgrZ
- sotgNOAylT3G1YqJ3ITdjfcUSQqz6cBCBzloDveLTSSgDS1nruG/I+lQqNKTZ1aJk9F3kIOr17P
- J+xBpm6PYoaLMe+NF63naueYpAUfJ/84fJf/N6au9tYXYbMCFEiFpgcj/TD0jBEl6Q==
-X-Google-Smtp-Source: AGHT+IEZPGHaLgtHvEEMs6Tn+W1c5O53P/lAWVfEgNSxpYzTmKADIVbMGUgeqsZct1PDAp4uyS+XuA==
-X-Received: by 2002:a05:600c:3c93:b0:43d:fa58:81d3 with SMTP id
- 5b1f17b1804b1-44c933f0edfmr18793775e9.32.1748091332703; 
- Sat, 24 May 2025 05:55:32 -0700 (PDT)
+ bh=rWICcmQInSwMPM6QRaPvZ9hJQo3lL+FVTyCiwmu5m4o=;
+ b=kBZL2KhUaqCeiP3u7uIhZYUvs53/x1WWhr70eFTjbKqTKvoqLoYHj9hwU/Br+o3TJQ
+ SizBqYiBBjjQnNdID7jkSvrdCHIiHOkTZPQE+xEmNec1bv+0x4al9r88kIGaVhmX7F2l
+ iGi3qo/L/Izs65HtQunSrsf1OeXaclT+dMDnDq9QpcOL6/DgJmtluh1YL5QO13k0BQwl
+ HJyDvG32Ue2BnAqyi3AQUecGBcGIKa1qnbMBtJuivVNZ3Hc457HIHt3g5xk2Rlqdsgso
+ hUdG7Ek5o4Tc4vC5cJ1yxBqPTxp7h8lYdrJl1vhYdoiN2B4vJlRnzZo8l+Mq9ReTDTYR
+ s8qw==
+X-Gm-Message-State: AOJu0YylUIi4HYVUzVkulab9PUeJnDr/uq3NPtv3kvFPseN4AhpF3fBc
+ WC6IF9xAOrQE2u5NbIQT9rzCkwoM/dFgJcyAtkzceEMvBk7Obt4Es4F/3H0n8mV2RvU8kJyYbk7
+ MB1CwXniHTw==
+X-Gm-Gg: ASbGncs6dNWCHyzThIEMB0EhG70v60ZDdDvGRBzERdXOMI+0bXNm6vKEaeadG230dY7
+ gQZl7D8xsfeqqHnz5Go7W8L3VGExppBQux4XttxfWrxpoyqC+zbJbm6KQEexVtmNRRhk0T3ziOD
+ hecQpSCg6qzmgh8ytZMlup89gw/mpVpMCGb3ZU2RLk6pivJh4o6dfdllb7QT1WVAL1dVJ5EIE+k
+ sp8S3zn5dLJm88i5NE2UZQHYvOBRr9iyC/j/1XSRI+erH7hzq+6Ib0HKB594WNpa5bkkhKAQT4c
+ cfXktylaXnqVG56BSNnM9bxd79cDCSLBfaiP21ZqTYWJbZvIOJtvbnhrmtDktFE9Ow==
+X-Google-Smtp-Source: AGHT+IH6X7DyceYw6nnSQfbXTGoijMHHwPDQX2EtZtr/mIfvqVDMExIFYZD1cEFy0BpR42LkRYbdJw==
+X-Received: by 2002:a05:6000:4028:b0:3a1:f68c:3b63 with SMTP id
+ ffacd0b85a97d-3a4cb428e82mr2221029f8f.5.1748091412552; 
+ Sat, 24 May 2025 05:56:52 -0700 (PDT)
 Received: from [172.16.25.47] ([195.53.115.74])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f1fe4fa6sm172959035e9.16.2025.05.24.05.55.31
+ ffacd0b85a97d-3a4c90624cfsm3214293f8f.62.2025.05.24.05.56.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 05:55:32 -0700 (PDT)
-Message-ID: <00ec097f-b43a-4831-b4b6-c5d20aac236f@linaro.org>
-Date: Sat, 24 May 2025 13:55:27 +0100
+ Sat, 24 May 2025 05:56:52 -0700 (PDT)
+Message-ID: <792d2099-ee22-4ceb-a481-919e59512515@linaro.org>
+Date: Sat, 24 May 2025 13:56:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/microblaze: Add endianness property to the
- petalogix_s3adsp1800 machine
+Subject: Re: [PATCH 3/4] hw/microblaze: Remove the big-endian variants of
+ ml605 and xlnx-zynqmp-pmu
 To: qemu-devel@nongnu.org
 References: <20250515132019.569365-1-thuth@redhat.com>
- <20250515132019.569365-2-thuth@redhat.com>
+ <20250515132019.569365-4-thuth@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250515132019.569365-2-thuth@redhat.com>
+In-Reply-To: <20250515132019.569365-4-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,46 +104,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/15/25 14:20, Thomas Huth wrote:
-> +static int machine_get_endianness(Object *obj, Error **errp G_GNUC_UNUSED)
-> +{
-> +    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
-> +    return ms->endianness;
-> +}
-> +
-> +static void machine_set_endianness(Object *obj, int endianness, Error **errp)
-> +{
-> +    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
-> +    ms->endianness = endianness;
-> +}
-> +
->   static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
->                                                       const void *data)
->   {
->       MachineClass *mc = MACHINE_CLASS(oc);
-> +    ObjectProperty *prop;
->   
->       mc->desc = "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800";
->       mc->init = petalogix_s3adsp1800_init;
->       mc->is_default = true;
-> +
-> +    prop = object_class_property_add_enum(oc, "endianness", "EndianMode",
-> +                                          &EndianMode_lookup,
-> +                                          machine_get_endianness,
-> +                                          machine_set_endianness);
-> +    object_property_set_default_str(prop, TARGET_BIG_ENDIAN ? "big" : "little");
-> +    object_class_property_set_description(oc, "endianness",
-> +            "Defines whether the machine runs in big or little endian mode");
+> From: Thomas Huth<thuth@redhat.com>
+> 
+> Both machines were added with little-endian in mind only (the
+> "endianness" CPU property was hard-wired to "true", see commits
+> 133d23b3ad1 and a88bbb006a52), so the variants that showed up
+> on the big endian target likely never worked. We deprecated these
+> non-working machine variants two releases ago, and so far nobody
+> complained, so it should be fine now to disable them. Hard-wire
+> the machines to little endian now.
+> 
+> Signed-off-by: Thomas Huth<thuth@redhat.com>
+> ---
+>   docs/about/deprecated.rst           |  6 ------
+>   docs/about/removed-features.rst     |  9 +++++++++
+>   hw/microblaze/petalogix_ml605_mmu.c | 15 ++++-----------
+>   hw/microblaze/xlnx-zynqmp-pmu.c     |  7 +------
+>   4 files changed, 14 insertions(+), 23 deletions(-)
 
-
-Better with Property?  You don't have to write get/set...
-
-   static const Property props[] = {
-     DEFINE_PROP_ENDIAN("endianness", S3Adsp1800MachineState, endianness,
-                        TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE),
-   };
-
-   device_class_set_props(dc, props);
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
