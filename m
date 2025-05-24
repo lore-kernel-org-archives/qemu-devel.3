@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26350C54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 10:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AEF5C54F30
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 10:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIm59-0001Ue-H7; Sat, 24 May 2025 06:26:23 -0400
+	id 1uImBP-0003IW-Li; Sat, 24 May 2025 06:32:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uIm58-0001To-6W; Sat, 24 May 2025 06:26:22 -0400
+ id 1uImBM-0003IF-FD; Sat, 24 May 2025 06:32:48 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uIm56-0001mU-EV; Sat, 24 May 2025 06:26:21 -0400
+ id 1uImBK-0002bO-SX; Sat, 24 May 2025 06:32:48 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 50467124BBE;
- Sat, 24 May 2025 13:25:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 49A15124BC5;
+ Sat, 24 May 2025 13:32:35 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1390D21443C;
- Sat, 24 May 2025 13:26:06 +0300 (MSK)
-Message-ID: <6998a9c5-90ca-4bbf-bf8f-81391ad79009@tls.msk.ru>
-Date: Sat, 24 May 2025 13:26:05 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1311D214442;
+ Sat, 24 May 2025 13:32:45 +0300 (MSK)
+Message-ID: <3371b5fc-80ad-4873-b914-21e8af9690fe@tls.msk.ru>
+Date: Sat, 24 May 2025 13:32:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] target/hppa: Fix FP exception handling
-To: deller@kernel.org, Richard Henderson <richard.henderson@linaro.org>,
+Subject: Re: [PATCH v2 0/3] ui/vnc: fix some endian problems
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250517120053.18231-1-deller@kernel.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250514111931.1711390-1-berrange@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -78,16 +79,16 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250517120053.18231-1-deller@kernel.org>
+In-Reply-To: <20250514111931.1711390-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
 X-Spam_score: -6.9
 X-Spam_bar: ------
 X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,29 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.05.2025 15:00, deller@kernel.org wrote:
-> From: Helge Deller <deller@gmx.de>
+On 14.05.2025 14:19, Daniel P. Berrangé wrote:
+> This fixes some edge cases in endian handling in the VNC server. These
+> bugs are rarely going to be visible by default, since most servers will
+> negotiate encoding formats / framebuffer formats that avoid hitting
+> the problem scenarios.
 > 
-> This series fixes and improves the floating point exception
-> handling in the hppa system and user emulation.
-> A testcase is included in patch #3.
+> In v2:
 > 
-> Please review.
+>   - Rename 'client_bo' to 'client_endian' for reviewer clarity
+>   - Rename 'native' to 'native_endian' for code consistency
 > 
-> Thanks!
-> Helge
-> 
-> Helge Deller (3):
->    target/hppa: Copy instruction code into fr1 on FPU assist fault
->    linux-user/hppa: Send proper si_code on SIGFPE exception
->    target/hppa: Fix FPE exceptions
+> Daniel P. Berrangé (3):
+>    ui/vnc.c: replace big endian flag with byte order value
+>    ui/vnc: take account of client byte order in pixman format
+>    ui/vnc: fix tight palette pixel encoding for 8/16-bpp formats
 
-Is there anything relevant for qemu-stable?
+Hi!
 
-At least patch #1 seems to be relevant, at least for the recent
-qemu-stable series.
+Is there anything in there which is relevant for qemu-stable?
 
 Thanks,
 
 /mjt
+
 
