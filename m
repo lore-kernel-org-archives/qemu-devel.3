@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FE5C54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 16:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE09DC54ED1
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 16:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIrLO-0005kU-O4; Sat, 24 May 2025 12:03:30 -0400
+	id 1uIryO-00025m-Ej; Sat, 24 May 2025 12:43:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIrLN-0005kM-AK
- for qemu-devel@nongnu.org; Sat, 24 May 2025 12:03:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1uIryN-00025a-9t
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 12:43:47 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIrLL-0007ZJ-LB
- for qemu-devel@nongnu.org; Sat, 24 May 2025 12:03:29 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-441d437cfaaso4113145e9.1
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 09:03:26 -0700 (PDT)
+ id 1uIryL-0003Bg-Lf
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 12:43:47 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-442f5b3c710so7517435e9.1
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 09:43:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748102605; x=1748707405; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748105024; x=1748709824; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SsI+S+dhj8PkP81dN9eNTv9v0LxqzOKIGeTqAwNt1uk=;
- b=xHRRlfx5YMZVUUxOZCwSf8FcMlr0TGU8wkiuzc9tgG61KbVpqDhcMCSkoUa8WUoNqF
- F4uaPqjir0IDr8Iyr2z3xdiBwngR52nZ0rNhC1BDLZmpMqlpCSy89UDsTfr4xbTAtgmR
- Jt8WNQrLFmXCYJWT5J424WxIsNQD0YRveLDg2mspWXDvpGBeDZpQ2dIwu0fth5jAX/A1
- CpoAKlK8O1oHamVuOfw2l5RbXJTpxC7UtdgP+Jax0Wwhu2JIbS6TDALQ6seE6jZd3fd9
- IPIfD2U9jNLpCg7rxQ3JjfBQXt1hdkaSPxPMCl1DBRyWL04oo1mqMR0ebkVyivkj3B3L
- Ne/Q==
+ bh=THJd5Q5AdeLLJm63T7bvXc3xm9kM4DiKTrpqtlSUKU8=;
+ b=hw71Th0gYOeu44UEpQXoaoudYdvhrsOO7xH/F++SIPzZhBHCiFA+EPJR1XNStJeYhw
+ bCel0RRCQ71w+i35mY3gmX6ELn+kr3alDHEJfQJDrIQXY4oM3oVWB4qCEPp8sLhexcBj
+ ByonoAUeGE60FIRe109J//7iGRdB9OrJa8YfcvSp08dijBpE1cAxWLhWPdbTVXncyX2F
+ R92iCAecS34I7a17cy3U22urJi5y3PjC3Cf6VG+qCsf3eWg7ZrY6+KHGbyR1vbpbGkLY
+ ntUkIE7Hvtv60R6g1rSi3TTKfnwJsclp4e0dT2/s20W8Q7knzbLLuoZ9qtE7p3aVHl7Y
+ FvZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748102605; x=1748707405;
+ d=1e100.net; s=20230601; t=1748105024; x=1748709824;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SsI+S+dhj8PkP81dN9eNTv9v0LxqzOKIGeTqAwNt1uk=;
- b=M3N03ShjlqKO7k+CM5mHicUIjH3l6pxFz7P1JqqVq0FmZ8AS7scZsomTVJJBlcDTS9
- wJZlzjSo6i9v2RzJilVq7r7XOxq9jyffvxeVvmolB0E5timJAcqXb4hS/+rQY8hWmQzE
- x7HDeWSw0YjcqIcbXtKmI41BvKPlB4E0kQG9AdAqH/mW0fJt+OHB0kydgV1kPGvr7HdT
- TyIDXsi0H7I1XEpnqxC6kCZbA0CwgPE+Rzmx7M1XSWJZUvDnKI7AwjdQZsbHSkatP9tP
- sPAeeS5rE63OIQkxFxAm3I9JTA5Gl3/GhDXy3qHt7gj47SkRm2E+ZdU0Wzww5Fy+KTHl
- BRTQ==
-X-Gm-Message-State: AOJu0YyLaeA43l8KjlPrqiZOeEhKVHicqyDZXxLGASuiieXkuyB3r+wu
- MsJRrVgm7S/9unIDoQZc+xAigvUBAZER3WEqzlpK6XW0Tplh66vPgJZk4XSi4fiaPOG92clh4rN
- GHzonGJw5GQ==
-X-Gm-Gg: ASbGncuPp02QlagMbKP+x5tYKqEKwHxDBg8yaNGaboTZus/mg2rw1PDmTQHfMP88NxS
- uFtaTbdi5aLd7y4zLopGSGZt2G25C7W4Dt7u5TRFefM5byjtuaZafjZD1qwN8SWzwXjfVWT8521
- ZsK9p26mlLJYEKJm6vAHnmFa4ht0nh+NsYYHlr8KQ3QA0bdh2fO8U1/Jfb1vm15JpSQmiEcGwNg
- YL4/VPaheBeixG9mo127EYx8MMKJGtclvsJ3KMNmavvsiXXzdF1SfkQ3mYyPNvM2IlNwXSZBKta
- xsVFNvsDiIjY9Ge4R+fJz8C+70zS4/oOOeOV/tOLLOZt5TTBzohqC69EUOD5nLL4tqQfwFqOpIt
- s
-X-Google-Smtp-Source: AGHT+IGf8HkvILIb1PfHTfIwjYfTsYLfYJbc+cZgihn7gv+ywkEN6ANz0jqQ+SRugsyOhw0EVRu/PA==
-X-Received: by 2002:a05:600c:a08b:b0:43c:fe15:41dd with SMTP id
- 5b1f17b1804b1-44c932023e7mr27881785e9.6.1748102605420; 
- Sat, 24 May 2025 09:03:25 -0700 (PDT)
+ bh=THJd5Q5AdeLLJm63T7bvXc3xm9kM4DiKTrpqtlSUKU8=;
+ b=Y7AZEegwEzUp95emPV3oxJwsmf2UyxFrZXHnUqTzqE2PXN5arW+2CbgVvN/ecqRY9X
+ ltH37d2nC+wcvEBYhSZGesOUG21horPBnZ2qicCJOwFtJBCobTbJFVe5Ao4aDm7KkgR2
+ 5JKzWFA1s1z1u4yHja7WFwEsKCBB7dKNTu98pzCIvmV4uchR9eZYjjQlU8jJ3KmNtmb5
+ Xw7Kv7/FMZk2eaThJxnFFt7P4YmuZmi5q3iHKSA459ePX7VmxADV83DdFmGeY1NucYMi
+ sf0sRb64iEDZjVAy3EiEL+PrqY7r9/KxpKcLY1OStRK4hbDKrCKrnExDQbAc4O2riFTa
+ kIww==
+X-Gm-Message-State: AOJu0YxkpytBvzumwz58d0H5gFLOjV2kMelv+ZPxGMLyClV/92NA0x/X
+ 18Y2lz9iViGn7Sp+bN83WwGvBdtvCGSMO/0MWfFfWWOjWjSKU8iaj8P+wFSvFH0YXqMJC/k/tGc
+ mINf8Ht8NKA==
+X-Gm-Gg: ASbGncu72ErVfcb4VTR6pq1+bc8jjnS+zQoQUN5t5QWQNYSxxwaGHdAD8sDS+ci1noi
+ h1uB1KnBU6+fU47Y5+KIqMApOJOlUtKF1FQBsJ5zU6Yd33+fZ2jezbfmysdwpFaLwQ/PObVWuVv
+ BYbzJ4Q+AfzvyuqxdEBEuR+Wlt4VYuKPu5OtTA+cp1dWKeUJ1kuhxq0jE86l0/Odu/PwHX1koeR
+ bn86YXeaiX1BUlNKwsULOOAhHIm9P9oXNRXUaliWVPicEpEDU6ENxAc7EumDpmsppFVniAGtOEE
+ /TmZ2aKy45f39lhBSFMGL8MnHahbGLKRl6dF0yIm7hTJ4Qhv1lv47i5AAwkF9mBunA==
+X-Google-Smtp-Source: AGHT+IF1g4aLHOEU9iQyjq+/ZACjux2TNKheqeedfOQG+AfOPjYfVEJl9dfLdQVDOlpfFgfsH4T6yQ==
+X-Received: by 2002:a05:600c:4f41:b0:43c:fe85:e4ba with SMTP id
+ 5b1f17b1804b1-44c91dd10ebmr36166045e9.15.1748105023719; 
+ Sat, 24 May 2025 09:43:43 -0700 (PDT)
 Received: from [172.16.25.47] ([195.53.115.74])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442ffaa75cfsm179696365e9.1.2025.05.24.09.03.24
+ 5b1f17b1804b1-447f6f0552esm179627815e9.11.2025.05.24.09.43.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 09:03:24 -0700 (PDT)
-Message-ID: <1bc6bb9a-c13b-49f0-bb53-08b9b97cdc72@linaro.org>
-Date: Sat, 24 May 2025 17:03:22 +0100
+ Sat, 24 May 2025 09:43:43 -0700 (PDT)
+Message-ID: <5f75db65-d158-49e5-bb04-c01462fd8ea2@linaro.org>
+Date: Sat, 24 May 2025 17:43:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Ignore SCTLR_EL2.EnSCXT when !ELIsInHost()
+Subject: Re: [PATCH v5 01/25] plugins: add types for callbacks related to
+ certain discontinuities
 To: qemu-devel@nongnu.org
-References: <20250521190228.3921172-1-oliver.upton@linux.dev>
+References: <cover.1747666625.git.neither@nut.email>
+ <08cd73b30ee74d4b264890e193ef56d2270c04c0.1747666625.git.neither@nut.email>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250521190228.3921172-1-oliver.upton@linux.dev>
+In-Reply-To: <08cd73b30ee74d4b264890e193ef56d2270c04c0.1747666625.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/25 20:02, Oliver Upton wrote:
-> Using an EL2 that enables SCXTNUM_ELx for guests while disabling the
-> feature for the host generates erroneous traps to EL2 when running under
-> TCG.
+On 5/19/25 16:19, Julian Ganz wrote:
+> The plugin API allows registration of callbacks for a variety of VCPU
+> related events, such as VCPU reset, idle and resume. However, traps of
+> any kind, i.e. interrupts or exceptions, were previously not covered.
+> These kinds of events are arguably quite significant and usually go hand
+> in hand with a PC discontinuity. On most platforms, the discontinuity
+> also includes a transition from some "mode" to another. Thus, plugins
+> for the analysis of (virtualized) embedded systems may benefit from or
+> even require the possiblity to perform work on the occurance of an
+> interrupt or exception.
 > 
-> Fix the issue by only evaluating SCTLR_EL2.EnSCXT when ELIsInHost().
+> This change introduces the concept of such a discontinuity event in the
+> form of an enumeration. Currently only traps are covered. Specifically
+> we (loosely) define interrupts, exceptions and host calls across all
+> platforms. In addition, this change introduces a type to use for
+> callback functions related to such events. Since possible modes and the
+> enumeration of interupts and exceptions vary greatly between different
+> architectures, the callback type only receives the VCPU id, the type of
+> event as well as the old and new PC.
 > 
-> Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> Signed-off-by: Julian Ganz<neither@nut.email>
 > ---
->   target/arm/helper.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 7631210287..83d4236417 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -7389,16 +7389,16 @@ static CPAccessResult access_scxtnum(CPUARMState *env, const ARMCPRegInfo *ri,
->   {
->       uint64_t hcr = arm_hcr_el2_eff(env);
->       int el = arm_current_el(env);
-> +    uint64_t sctlr;
->   
-> -    if (el == 0 && !((hcr & HCR_E2H) && (hcr & HCR_TGE))) {
-> -        if (env->cp15.sctlr_el[1] & SCTLR_TSCXT) {
-> -            if (hcr & HCR_TGE) {
-> -                return CP_ACCESS_TRAP_EL2;
-> -            }
-> -            return CP_ACCESS_TRAP_EL1;
-> +    sctlr = el_is_in_host(env, el) ? env->cp15.sctlr_el[2] :
-> +            env->cp15.sctlr_el[1];
+>   include/qemu/plugin.h      |  1 +
+>   include/qemu/qemu-plugin.h | 44 ++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 45 insertions(+)
 
-Use arm_sctlr() instead.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
