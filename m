@@ -4,79 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D0CC54ED1
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 17:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC7CC54F30
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 23:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIt12-0005LM-MV; Sat, 24 May 2025 13:50:36 -0400
+	id 1uIy9w-0006AY-Bu; Sat, 24 May 2025 19:20:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uIt10-0005L8-N9
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:50:34 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uIy9s-0006AC-E3
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 19:20:05 -0400
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uIt0y-0002ak-7m
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:50:33 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-477296dce8dso8225311cf.3
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 10:50:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748109029; x=1748713829; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mHnobuPoj1ossbI4FcI68P2O5rSq2nbjHUXRqGOiZzk=;
- b=fMP6RUD3hZIIPH141oo9wbWX41fdxhgtfzJK2hjPWgCGdMJIPZMvVbCZP28+4usVbx
- S8s1NS0IzetIKt5On0Sfn/AjPifKLXdR0uvxuUEKLe4rdkTJcYY3b+huzeDDL7IWl04w
- JeX3x+z7ouIdGFiP3vPm5SCoYLavrkMtnYaLHZI2+jMl7g4fjFZ/VpCcGAaTiIGxK7pL
- JZCHFiilv9Bonr9+L7+iSs9SvzgzLt2TpEwi5dY3D0yCqFAo8IwzqKHxbjwGcYwSJNut
- 1RmM94zINZjwLvB80ZvNVZL11fu+PvZZxNKgptUprqfL+qLiZEha8vXVRnn6tYW4+/1F
- gRgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748109029; x=1748713829;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mHnobuPoj1ossbI4FcI68P2O5rSq2nbjHUXRqGOiZzk=;
- b=StY1bVWRofqf785Ffa/ZMrQKLTNEiEdbHcsTW8JYptti3eIzl9HSkBQ4dQz8j1Lzy7
- xLL440NkiGedr/Dq707Vk/ZXFjISY5JBE/yQpTwQPN3U308oH5Pbkc1gqS51s7hkUqvA
- 0XIxkAMNsoJRETJzZ8X5U/gmPdcdUX/YTmPOpc5aLlmF3exjm7LMfw/lyxM71NAHe4XK
- /BENs06AbWy1umkh5vBVY9RrdirI+D8xgCvy9BNa3ceDIS8TrqLgWnwX06lO+Ncm57d3
- +dNiRryVM/ewo3YZpVqrKi3hhaallO8lNtmIs8dUuNvT/Nw+mZosuYgUYBEU5nm1dqC+
- sBdQ==
-X-Gm-Message-State: AOJu0YwscEnnePZHiTxxbivhqyZedW8STpGU8jotgc/xx8BivI6wUd9v
- smNwAp+owuoWLtQUGwoKH51RzQa07AdTV0NqXoz5JAe/FVgTavWat25EtRuFL+BdTEPTmwY8uT4
- rMeTkaJUQ6AObdr8fpPg1fN53Ttbfmz8=
-X-Gm-Gg: ASbGncu5YJ/GlBWcM28a+1EXdxo8/4ooReSine/vcvb8aicEaKOwLxpUC/Bsk6sdau1
- hnxZ97wkhcx9aH0+3dRehX4+Z8QAerXBXiw6ZT0ymjoeEo54Ypryopn+Jwx/WsgJ1iHiFr0QOW9
- eeRUSY+udvNdaTkzAxbPyOQvgunu7RCVctBKaG9PIi5ILOz4fqMbMvt59AB72iTGf1Bg==
-X-Google-Smtp-Source: AGHT+IF+Nc5xK69v4MnwyVSFXLd7BFGIpza2oroNp61U7Xr8VeYjzpaGgdz2FA23qy/lquHFn0StbWXg+59vReTnNPo=
-X-Received: by 2002:ac8:690e:0:b0:494:f705:3ba7 with SMTP id
- d75a77b69052e-49f481bec7emr66821121cf.44.1748109029406; Sat, 24 May 2025
- 10:50:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uIy9p-0002Xd-Bm
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 19:20:03 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 077EC17FC6B
+ for <qemu-devel@nongnu.org>; Sun, 25 May 2025 01:19:51 +0200 (CEST)
+Received: (qmail 14573 invoked by uid 990); 24 May 2025 23:19:50 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Sun, 25 May 2025 01:19:50 +0200
 MIME-Version: 1.0
-References: <20250515222014.4161-1-farosas@suse.de>
-In-Reply-To: <20250515222014.4161-1-farosas@suse.de>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Sat, 24 May 2025 19:50:18 +0200
-X-Gm-Features: AX0GCFu7R88caG_kVUZGZ-hai-NC-auifFeQrEJqkwDyCBuBfvwQniBY5C89JqA
-Message-ID: <CAJ+F1C+wJ4od6G3wbRw9iNvD8Des2YSKdwAzbHh0XwNu6sOtcw@mail.gmail.com>
-Subject: Re: [PATCH 0/4] chardev: Fix issues found by vhost-user-test
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Date: Sat, 24 May 2025 23:19:50 +0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <d63337579fd7eac49aea0452496a3f8cef9f8fc7@nut.email>
+TLS-Required: No
+Subject: Re: [PATCH v5 08/25] target/hppa: call plugin trap callbacks
+To: "Richard Henderson" <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: "Helge Deller" <deller@gmx.de>
+In-Reply-To: <54ddae99-e399-465d-ac9e-7f01ed26207f@linaro.org>
+References: <cover.1747666625.git.neither@nut.email>
+ <62a954b31818763a2f3e0806fb9c912f6dd44972.1747666625.git.neither@nut.email>
+ <54ddae99-e399-465d-ac9e-7f01ed26207f@linaro.org>
+X-Rspamd-Bar: --
+X-Rspamd-Report: BAYES_HAM(-2.089823) MIME_GOOD(-0.1)
+X-Rspamd-Score: -2.189823
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=Wzk/ulonSPvsCag0Q6asSn567vy93cry/B7nngri8YY=;
+ b=Cv6883SyQpOoCYJ6kq03kfdTNPXLu/3OAmaf4fc1PhqGREgrP82KXJd+cNjOfuRrBxJGr6Pdic
+ bQ0wW+KZvT9sMjdvUJcKB7mv9L0EC9SV/xZ18s/stOGdtv7JSx9qrwP/+fnHDx8182ynsMkT9ED6
+ vdP6Ls3roWMnit9xwDG8Vgb7QkyfT1a5wgottKHYXLqFJoNsVH8D650mAzPVkcbKLMSntTM7bn+O
+ R+TfGGCZ4tz5XCAM9Qq7B+EjeWjcuGfbcsKzdEEbFFscltg4If0uZ0IyMJYXQ3m5SKw19EMCM6KK
+ 2Z62CKXNkv98V4H9HAUP0xX8aCKupT7ouL6qExvAvO9ShPPvvJ1ZXqT70E+u32gBIBVEvrFO1aR0
+ GsPp3JY+82NBw3otzd43Lcz0H0DBNUoae2fh/8f9RqOgM/ZL2og45eM5In+M6xIqPLo23xpSt++v
+ Vv3wee2twHFfp28RefVTtVU8gvSKLYA7mC5N+2n6GP87MtKHOrABP+rc5z+t/pdKf15C1qNShD3L
+ LzIEu3meryxm5+Ct39MSQHbTLtoMRAsQhDaqUYLE8iSjwc3yThwiy/atgeIHQNcApDSfSmDlB6Wn
+ U1w9wIhCZensBXojDUhNLsdwrsHuNz27ak+KJ9yuX68gkOqVHDgonDjBMbYzqJ4ewvAPMb4C4AXc
+ A=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,54 +82,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Hi Richard,
 
-On Fri, May 16, 2025 at 12:21=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wr=
-ote:
->
-> Running vhost-user-test with ASAN on a loaded machine reveals several
-> intermittent issues. These show up every time I test the qtest tree so
-> I'm trying to get rid of them.
->
-> 1- UAF of IOWatchPoll.
->    This one is self explanatory, ASAN caught it.
->
-> 2- Reference counting issues in glib. It seems it's possible to unref
->    a source while adding a callback to it, and glib asserts. This
->    shows up on all architectures, only on the ASAN build after
->    hundreds of iterations.
->
-> 3- Extra yank_unregister_function call leads to abort(). This shows up
->    on all architectures, but it's quite hidden due to vhost-user-test
->    using a dedicated server thread which dies and causes timeouts in
->    the test.
->
->    Manifests as assert(s->fds_num) failing. Only on the ASAN build,
->    after tens of iterations (quite common).
->
-> Thanks
->
-> Fabiano Rosas (4):
->   chardev: Fix QIOChannel refcount
->   chardev: Don't attempt to unregister yank function more than once
->   chardev: Consolidate yank registration
->   chardev: Introduce a lock for hup_source
+thanks for the feedback. For some reason only three of your replies made
+it to my inbox, but I've seen them (on lore.kernel.org) and I will
+incorporate it.
 
-Daniel, would you take the first 3 (or all) patches in your next I/O PR ?
+May 24, 2025 at 7:07 PM, Richard Henderson wrote:
+> On 5/19/25 16:19, Julian Ganz wrote:
+> >  diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+> >  index 7d48643bb6..e9325319a7 100644
+> >  --- a/target/hppa/int_helper.c
+> >  +++ b/target/hppa/int_helper.c
+> > <snip>
+> >  @@ -208,6 +210,48 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+> >  env->iasq_f =3D 0;
+> >  env->iasq_b =3D 0;
+> >  > + switch (i) {
+> >  + case EXCP_HPMC:
+> >  + case EXCP_POWER_FAIL:
+> >  + case EXCP_RC:
+> >  + case EXCP_EXT_INTERRUPT:
+> >  + case EXCP_LPMC:
+> >  + case EXCP_PER_INTERRUPT:
+> >  + case EXCP_TOC:
+> >  + qemu_plugin_vcpu_exception_cb(cs, last_pc);
+> >=20
+>=20Interrupts. Why are these separate from default:?
 
->
->  chardev/char-io.c      |  5 +++++
->  chardev/char-socket.c  | 38 ++++++++++++--------------------------
->  chardev/char.c         |  2 ++
->  include/chardev/char.h |  1 +
->  4 files changed, 20 insertions(+), 26 deletions(-)
->
-> --
-> 2.35.3
->
->
+Oh, right. That should have been interrupts. Thanks for catching that.
 
+It's a crude attempt to make sure I covered all exception types
+correctly. The default case handles unknown exceptions, which I _assume_
+are interrupts triggered by some periphery (but i might be wrong about
+that). I was afraid that the simple absence of a name from the list
+below would be too error-prone in terms of long-term maintenance. I'm
+not against removing this, though.
 
---=20
-Marc-Andr=C3=A9 Lureau
+Regards,
+Julian
 
