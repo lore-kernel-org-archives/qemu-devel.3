@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB675C54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 10:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1734CC54F32
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 10:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uImFl-00049p-K8; Sat, 24 May 2025 06:37:21 -0400
+	id 1uImWi-0006Qt-Vi; Sat, 24 May 2025 06:54:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uImFk-00049c-0T
- for qemu-devel@nongnu.org; Sat, 24 May 2025 06:37:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uImWg-0006QR-Hl
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 06:54:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uImFh-00033R-KJ
- for qemu-devel@nongnu.org; Sat, 24 May 2025 06:37:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uImWe-0004wH-Jt
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 06:54:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748083035;
+ s=mimecast20190719; t=1748084087;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=szvTzvKj5x32meHVvCO/VysnfM/CIK9OlP9wQI7PHEc=;
- b=P7Ye+H6ApmHgoaRhGx5D0VWMWkB3l/eA2J5GFvfdpjbLpCXfVYPkOoi6eYzDx3woe+iBtI
- 6p/v2Ng4nHwcEMOnwNAC4YYEb4YPKagkOaKs/EdYAftBkjzhBARmrhCkWKrKZpwSbPNQUk
- WH17keCDjZNaUuLDlPu+YjtR8XI+zMY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FM8zIdqMag/fILXWK49jB4inIeNGGe7lrWhZ9Yj9lIU=;
+ b=fODY1SyNkuPtqlRDNmPCiGW08NC0r/MT8oa4ijF//mEyNUsjQmwowgb/kJoneka9tf6lN/
+ bFh9TIvqe0wW/G4N1MBrmRFDA8SAkG7p+zjUxlMEyo8QcwtuDDMx6Gg1Pt+isbYrFQKKtC
+ ipKZRzGpoO6pEbQJ3r8Q+skdWTNFb84=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-182-LqwsmTqsNXK3y7j7EOedFw-1; Sat, 24 May 2025 06:37:13 -0400
-X-MC-Unique: LqwsmTqsNXK3y7j7EOedFw-1
-X-Mimecast-MFC-AGG-ID: LqwsmTqsNXK3y7j7EOedFw_1748083032
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43cfda30a3cso3143575e9.3
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 03:37:13 -0700 (PDT)
+ us-mta-192-Tx9xUvAJNPeK-MArRu5q_w-1; Sat, 24 May 2025 06:54:45 -0400
+X-MC-Unique: Tx9xUvAJNPeK-MArRu5q_w-1
+X-Mimecast-MFC-AGG-ID: Tx9xUvAJNPeK-MArRu5q_w_1748084083
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a364d121ccso426743f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 03:54:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748083032; x=1748687832;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=szvTzvKj5x32meHVvCO/VysnfM/CIK9OlP9wQI7PHEc=;
- b=n5ftNR8vzlv9bJT+gX5DIZ33v8THQIMgZ7XaAe0L7rJ9oikxOtu1VgEx8EPp8JA5yR
- 6jHEaDC2z7StTgf052iSK1w7yT9B6BNFkLzdAn/0GDuqtFmREAb/KTpxIeuO+1OrsWnc
- dedlNyQZEXcP8NEvqf6YTu1KBAtr5f3Duh2jQuUEiTeVzdWOMoc+80ZgvLju2gSab1VQ
- pO7p3IZYjlE4uZaxhH1vQ+x1r9iVNPuu4DFqHsDJ2mApZhNQlcVKlaa4oFPZWS0ziKpw
- 02qlutR1KN/o5iThutXZQpLmroF3fSdxEfUNN7l9ALxXL/Zitro31tcmIIg4rLlqzwFf
- +NgA==
-X-Gm-Message-State: AOJu0Yy8huVQmVOnetj0Rlbt5nvuIFrW4lLaYhzSvagBBmSWEr0t0te6
- WUuaWe2mqC11Qs8zyb8G2nVM0kNJH+26+lMyLGOpzbNtPq3A0xdcZMeNw6SLyqJ7Ah6KD9MOTPo
- 1tv8z1rIgJS/vzmLLyL80cxowSfSgKy0mw2Kd5pFxJyW82A3byet+iL8M
-X-Gm-Gg: ASbGncvRKDusPv+JLZ5WWi9zu/hfLKxr55lN/T8Ge3b13W4va4mgCSqUmSmXjT8XCUS
- wDfSDKWo/pZm3Mi4KhzWKo4jWLaYxADiQmz1jKxjGBI75Tv3u1pkwlYAOhx7rBWZlVTFcZjNHT+
- 0GB9vQlTA/gyZZ2wC+owy71a4rubz8h3UWtR5H8X5+fHOex1WQ5er/+y2gf+9sxPCTH7L8fMeUP
- wXXVQrGD5CEaBSQxShXP5sVvXw6xNzMb4qyA62jcm/eIwGA9tMsRyAwvtUV3+QSLrF4PqlEEEMe
- k8+dsA==
-X-Received: by 2002:a05:600c:1e1c:b0:444:c28f:e818 with SMTP id
- 5b1f17b1804b1-44c9493e382mr21407465e9.26.1748083032377; 
- Sat, 24 May 2025 03:37:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGcn8gbAPhLL0GpCdRj8vP7BB0uNp02HW//P8sigBWvGYYPLbTrpGO0IgPXqw0b6yXkoOmtqQ==
-X-Received: by 2002:a05:600c:1e1c:b0:444:c28f:e818 with SMTP id
- 5b1f17b1804b1-44c9493e382mr21407195e9.26.1748083032007; 
- Sat, 24 May 2025 03:37:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748084083; x=1748688883;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FM8zIdqMag/fILXWK49jB4inIeNGGe7lrWhZ9Yj9lIU=;
+ b=pSDetpF1pmHH9alhoPzWPgzlQkLB3+mprb7DEHWTCfK3GttsCxhdDMV2MN2XxpPgmK
+ G/h+1UpkObFM7sz+06gSgagr9jqNpju7HJVr6jJa+wIyDNf2IDF+gjG8u0JWZ0ttgU6g
+ YeWsD+jFhRUbPG3S6wS++DpxRnZk+qF0G4N9qxJSiCCo7Quouw2Kcsu+djpFC+7B1oQy
+ xYh4aqhzAGNbgUeMo7vEJbvfDOGo+8Cu0Hen7VgdmTN22F8lS4QspobNGO2Uw467GBSe
+ vvoClGgklEvsa2xmuL/P+JZQZPzYiDKnnDs7FX5zZ6J8T6+FrTEyn/fGujOwUrLESXRc
+ GegQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUzEOHGaCehsmw/34cFJqNlsxSqHMdKIO81ll+tm7r6X3Exe4eECV1pXoD2ZefuOnGIoTVOG9GlJjtR@nongnu.org
+X-Gm-Message-State: AOJu0YxpaN3lllOU3KCdPhmrSXy7AeH69Qv3x996qD+/AmI195G5jLN3
+ tOyU/cN0OcbP37lVVj0utbg44YyBDn0EGNK7jutAZR9C4OLJ0WwsUjluZ1h+uEgz/+mSR/LO63V
+ H2cwgzHn+/RgBJHGDnyzOM/KpQfHPHBI/GOfjyxsXvRsMX2dzHegRZ9//
+X-Gm-Gg: ASbGncsHY9y6cdawUNeXHrFF3eJbpTHwJ6cU0nKTKczrJsyuuR8ozvZCL9iVa/Z8WWp
+ MPI4ChEyLyizC2Ee+uDSyYefE1TrcwAVHttkJa7qnlbELMOayWyZ1n2ulhyT2n5BAL0/fOLeI3c
+ TwgjKC1gVmD2ifXTYAuGQ6rrhiPeblaElE7cJdU2Jfl5Wkq36m0UzQDkl2jcYWwPXt+YmUgwuM+
+ VnB33lNdZLO75GMgo3W4VGdk2Opiq88KTTp0VAwsDKmI6h39BPrnsxcN8kcyp0NM71gEdzbMwPG
+ pVL/SQ==
+X-Received: by 2002:a05:6000:4023:b0:3a3:621a:d3c2 with SMTP id
+ ffacd0b85a97d-3a4cb49f1a6mr2013461f8f.58.1748084082790; 
+ Sat, 24 May 2025 03:54:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGX8EYuox5coAhaaceVZdowhqgUDiksbKKbuhFPFHNZEmFE1/adce5XjwP2h0QUT5O2igSMFA==
+X-Received: by 2002:a05:6000:4023:b0:3a3:621a:d3c2 with SMTP id
+ ffacd0b85a97d-3a4cb49f1a6mr2013443f8f.58.1748084082307; 
+ Sat, 24 May 2025 03:54:42 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f7ca2dd9sm169743815e9.37.2025.05.24.03.37.09
+ ffacd0b85a97d-3a4c002e937sm6976914f8f.29.2025.05.24.03.54.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 May 2025 03:37:11 -0700 (PDT)
-Date: Sat, 24 May 2025 06:37:07 -0400
+ Sat, 24 May 2025 03:54:41 -0700 (PDT)
+Date: Sat, 24 May 2025 06:54:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, anisinha@redhat.com, imammedo@redhat.com,
- jonathan.cameron@huawei.com, linuxarm@huawei.com,
- peter.maydell@linaro.org, prime.zeng@hisilicon.com,
- shameerali.kolothum.thodi@huawei.com, wangyanan55@huawei.com,
- yangyicong@hisilicon.com
-Subject: Re: [PATCH v4 3/4] hw/acpi/aml-build: Build a root node in the PPTT
- table
-Message-ID: <20250524063700-mutt-send-email-mst@kernel.org>
-References: <20250424122439.550-1-alireza.sanaee@huawei.com>
- <20250424122439.550-4-alireza.sanaee@huawei.com>
- <20250511140938-mutt-send-email-mst@kernel.org>
- <20250519095551.0000525d.alireza.sanaee@huawei.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, imammedo@redhat.com, anisinha@redhat.com,
+ shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org
+Subject: Re: [PATCH 08/22] hw/pci-host/gpex-acpi: Use
+ build_pci_host_bridge_osc_method
+Message-ID: <20250524065230-mutt-send-email-mst@kernel.org>
+References: <20250514170431.2786231-1-eric.auger@redhat.com>
+ <20250514170431.2786231-9-eric.auger@redhat.com>
+ <e1ec0e15-ad26-456b-a8d7-16f683290651@linaro.org>
+ <ed823ddc-6faa-42dc-bae5-c765d21c3cca@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250519095551.0000525d.alireza.sanaee@huawei.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ed823ddc-6faa-42dc-bae5-c765d21c3cca@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -96,7 +100,7 @@ X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.298,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,85 +116,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 19, 2025 at 09:55:51AM +0100, Alireza Sanaee wrote:
-> On Sun, 11 May 2025 14:10:46 -0400
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
+On Wed, May 21, 2025 at 06:12:34PM +0200, Eric Auger wrote:
+> Hi Gustavo,
 > 
-> > On Thu, Apr 24, 2025 at 01:24:38PM +0100, Alireza Sanaee wrote:
-> > > From: Yicong Yang <yangyicong@hisilicon.com>
-> > > 
-> > > Currently we build the PPTT starting from the socket node and each
-> > > socket will be a separate tree. For a multi-socket system it'll
-> > > be hard for the OS to know the whole system is homogeneous or not
-> > > (actually we're in the current implementation) since no parent node
-> > > to telling the identical implementation informentation. Add a
-> > > root node for indicating this.
-> > > 
-> > > Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-> > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> > > ---
-> > >  hw/acpi/aml-build.c | 15 ++++++++++++++-
-> > >  1 file changed, 14 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> > > index 560cee12a24b..3010325ca423 100644
-> > > --- a/hw/acpi/aml-build.c
-> > > +++ b/hw/acpi/aml-build.c
-> > > @@ -2153,12 +2153,25 @@ void build_pptt(GArray *table_data,
-> > > BIOSLinker *linker, MachineState *ms, int64_t socket_id = -1,
-> > > cluster_id = -1, core_id = -1; uint32_t socket_offset = 0,
-> > > cluster_offset = 0, core_offset = 0; uint32_t pptt_start =
-> > > table_data->len;
-> > > +    uint32_t root_offset;
-> > >      int n;
-> > >      AcpiTable table = { .sig = "PPTT", .rev = 2,
-> > >                          .oem_id = oem_id, .oem_table_id =
-> > > oem_table_id }; 
-> > >      acpi_table_begin(&table, table_data);
-> > >  
-> > > +    /*
-> > > +     * Build a root node for all the processor nodes. Otherwise
-> > > when
-> > > +     * building a multi-socket system each socket tree are
-> > > separated  
-> > 
-> > is separated
-> Hi Michael,
+> On 5/20/25 4:09 PM, Gustavo Romero wrote:
+> > Hi Eric,
+> >
+> > On 5/14/25 14:00, Eric Auger wrote:
+> >> gpex build_host_bridge_osc() and x86 originated
+> >> build_pci_host_bridge_osc_method() are mostly identical.
+> >>
+> >> In GPEX, SUPP is set to CDW2 but is not further used. CTRL
+> >> is same as Local0.
+> >>
+> >> So let gpex code reuse build_pci_host_bridge_osc_method()
+> >> and remove build_host_bridge_osc().
+> >>
+> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> >>
+> >> ---
+> >>
+> >> The DSDT diff  is given below:
+> >> diff --git a/dsdt.dsl_before b/dsdt.dsl_after_osc_change
+> >> index 3224a56..fa7558e 100644
+> >> --- a/dsdt.dsl_before
+> >> +++ b/dsdt.dsl_after_osc_change
+> >> @@ -5,13 +5,13 @@
+> >>    *
+> >>    * Disassembling to symbolic ASL+ operators
+> >>    *
+> >> - * Disassembly of dsdt.dat, Mon Apr  7 05:33:06 2025
+> >> + * Disassembly of dsdt.dat, Mon Apr  7 05:37:20 2025
+> >>    *
+> >>    * Original Table Header:
+> >>    *     Signature        "DSDT"
+> >> - *     Length           0x00001A4F (6735)
+> >> + *     Length           0x00001A35 (6709)
+> >>    *     Revision         0x02
+> >> - *     Checksum         0xBF
+> >> + *     Checksum         0xDD
+> >>    *     OEM ID           "BOCHS "
+> >>    *     OEM Table ID     "BXPC    "
+> >>    *     OEM Revision     0x00000001 (1)
+> >> @@ -1849,27 +1849,26 @@ DefinitionBlock ("", "DSDT", 2, "BOCHS ",
+> >> "BXPC    ", 0x00000001)
+> >>                   {
+> >>                       CreateDWordField (Arg3, 0x04, CDW2)
+> >>                       CreateDWordField (Arg3, 0x08, CDW3)
+> >> -                    SUPP = CDW2 /* \_SB_.PCI0._OSC.CDW2 */
+> >> -                    CTRL = CDW3 /* \_SB_.PCI0._OSC.CDW3 */
+> >> -                    CTRL &= 0x1F
+> >> +                    Local0 = CDW3 /* \_SB_.PCI0._OSC.CDW3 */
+> >> +                    Local0 &= 0x1F
+> >>                       If ((Arg1 != One))
+> >>                       {
+> >>                           CDW1 |= 0x08
+> >>                       }
+> >>
+> >> -                    If ((CDW3 != CTRL))
+> >> +                    If ((CDW3 != Local0))
+> >>                       {
+> >>                           CDW1 |= 0x10
+> >>                       }
+> >>
+> >> -                    CDW3 = CTRL /* \_SB_.PCI0.CTRL */
+> >> -                    Return (Arg3)
+> >> +                    CDW3 = Local0
+> >>                   }
+> >>                   Else
+> >>                   {
+> >>                       CDW1 |= 0x04
+> >> -                    Return (Arg3)
+> >>                   }
+> >> +
+> >> +                Return (Arg3)
+> >>               }
+> >>
+> >>               Method (_DSM, 4, NotSerialized)  // _DSM:
+> >> Device-Specific Method
+> >
+> > The problem I face with diffs in the commit body is that tools like
+> > b4, which are
+> > based on git am, get very confused on how to handle it. I'm surprised
+> > nobody ever
+> > complained about it. I'm wondering if there is any catch on it,
+> > because I have to
+> > edit commits like this manually, removing the diff, to make it finally
+> > apply to
+> > the series. Anyways, do you mind at least removing the valid diff
+> > header, like:
+> >
+> >> diff --git a/dsdt.dsl_before b/dsdt.dsl_after_osc_change
+> >> index 3224a56..fa7558e 100644
+> >> --- a/dsdt.dsl_before
+> >> +++ b/dsdt.dsl_after_osc_change
+> >
+> > from the commit message so it doesn't confuse b4?
+> Thank you for reporting the issue. in tests/qtest/bios-tables-test.c it
+> is written at the top that we shall put the diffs in disasembled ACPI
+> content in the commit msg. I will look for previously landed patches and
+> see whether the current layout can be fixed.
 > 
-> Happy to send another version for this issue, or maybe you can
-> fix this when pulling, if that's the only problem? Up to you :)
+> Cheers
 > 
-> Alireza
+> Eric
 
-resend pls.
 
-> > 
-> > > +     * and will be hard for the OS like Linux to know whether the
-> > > +     * system is homogeneous.
-> > > +     */
-> > > +    root_offset = table_data->len - pptt_start;
-> > > +    build_processor_hierarchy_node(table_data,
-> > > +        (1 << 0) | /* Physical package */
-> > > +        (1 << 4), /* Identical Implementation */
-> > > +        0, 0, NULL, 0);
-> > > +
-> > >      /*
-> > >       * This works with the assumption that cpus[n].props.*_id has
-> > > been
-> > >       * sorted from top to down levels in
-> > > mc->possible_cpu_arch_ids(). @@ -2175,7 +2188,7 @@ void
-> > > build_pptt(GArray *table_data, BIOSLinker *linker, MachineState
-> > > *ms, build_processor_hierarchy_node(table_data, (1 << 0) | /*
-> > > Physical package */ (1 << 4), /* Identical Implementation */
-> > > -                0, socket_id, NULL, 0);
-> > > +                root_offset, socket_id, NULL, 0);
-> > >          }
-> > >  
-> > >          if (mc->smp_props.clusters_supported &&
-> > > mc->smp_props.has_clusters) { -- 
-> > > 2.34.1  
-> > 
-> > 
+Eric, to clarify, the diff is supposed to go into commit log,
+not after ---.
+This will make it apply cleanly.
+Also, removing the "index" line as well as date diff at least is a good
+idea: the diff should be clean, not include irrelevant information.
+
+Pls feel free to clarify the text in tests/qtest/bios-tables-test.c
+
+
+
+> >
+> >
+> >> ---
+> >>   hw/pci-host/gpex-acpi.c | 60 +++--------------------------------------
+> >>   1 file changed, 4 insertions(+), 56 deletions(-)
+> >>
+> >> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+> >> index f1ab30f3d5..98c9868c3f 100644
+> >> --- a/hw/pci-host/gpex-acpi.c
+> >> +++ b/hw/pci-host/gpex-acpi.c
+> >> @@ -50,60 +50,7 @@ static void acpi_dsdt_add_pci_route_table(Aml
+> >> *dev, uint32_t irq,
+> >>       }
+> >>   }
+> >>   -static Aml *build_host_bridge_osc(bool enable_native_pcie_hotplug)
+> >> -{
+> >> -    Aml *method, *UUID, *ifctx, *ifctx1, *elsectx;
+> >> -
+> >> -    method = aml_method("_OSC", 4, AML_NOTSERIALIZED);
+> >> -    aml_append(method,
+> >> -        aml_create_dword_field(aml_arg(3), aml_int(0), "CDW1"));
+> >> -
+> >> -    /* PCI Firmware Specification 3.0
+> >> -     * 4.5.1. _OSC Interface for PCI Host Bridge Devices
+> >> -     * The _OSC interface for a PCI/PCI-X/PCI Express hierarchy is
+> >> -     * identified by the Universal Unique IDentifier (UUID)
+> >> -     * 33DB4D5B-1FF7-401C-9657-7441C03DD766
+> >> -     */
+> >> -    UUID = aml_touuid("33DB4D5B-1FF7-401C-9657-7441C03DD766");
+> >> -    ifctx = aml_if(aml_equal(aml_arg(0), UUID));
+> >> -    aml_append(ifctx,
+> >> -        aml_create_dword_field(aml_arg(3), aml_int(4), "CDW2"));
+> >> -    aml_append(ifctx,
+> >> -        aml_create_dword_field(aml_arg(3), aml_int(8), "CDW3"));
+> >> -    aml_append(ifctx, aml_store(aml_name("CDW2"), aml_name("SUPP")));
+> >> -    aml_append(ifctx, aml_store(aml_name("CDW3"), aml_name("CTRL")));
+> >> -
+> >> -    /*
+> >> -     * Allow OS control for SHPCHotplug, PME, AER, PCIeCapability,
+> >> -     * and PCIeHotplug depending on enable_native_pcie_hotplug
+> >> -     */
+> >> -    aml_append(ifctx, aml_and(aml_name("CTRL"),
+> >> -               aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 :
+> >> 0x0)),
+> >> -               aml_name("CTRL")));
+> >> -
+> >> -    ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(0x1))));
+> >> -    aml_append(ifctx1, aml_or(aml_name("CDW1"), aml_int(0x08),
+> >> -                              aml_name("CDW1")));
+> >> -    aml_append(ifctx, ifctx1);
+> >> -
+> >> -    ifctx1 = aml_if(aml_lnot(aml_equal(aml_name("CDW3"),
+> >> aml_name("CTRL"))));
+> >> -    aml_append(ifctx1, aml_or(aml_name("CDW1"), aml_int(0x10),
+> >> -                              aml_name("CDW1")));
+> >> -    aml_append(ifctx, ifctx1);
+> >> -
+> >> -    aml_append(ifctx, aml_store(aml_name("CTRL"), aml_name("CDW3")));
+> >> -    aml_append(ifctx, aml_return(aml_arg(3)));
+> >> -    aml_append(method, ifctx);
+> >> -
+> >> -    elsectx = aml_else();
+> >> -    aml_append(elsectx, aml_or(aml_name("CDW1"), aml_int(4),
+> >> -                               aml_name("CDW1")));
+> >> -    aml_append(elsectx, aml_return(aml_arg(3)));
+> >> -    aml_append(method, elsectx);
+> >> -    return method;
+> >> -}
+> >> -
+> >> -static Aml *build_host_bridge_dsm(void)
+> >> +static Aml *build_pci_host_bridge_dsm_method(void)
+> >>   {
+> >>       Aml *method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
+> >>       Aml *UUID, *ifctx, *ifctx1, *buf;
+> >> @@ -134,8 +81,9 @@ static void acpi_dsdt_add_host_bridge_methods(Aml
+> >> *dev,
+> >>       aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
+> >>       aml_append(dev, aml_name_decl("CTRL", aml_int(0)));
+> >>       /* Declare an _OSC (OS Control Handoff) method */
+> >> -    aml_append(dev, build_host_bridge_osc(enable_native_pcie_hotplug));
+> >> -    aml_append(dev, build_host_bridge_dsm());
+> >> +    aml_append(dev,
+> >> +              
+> >> build_pci_host_bridge_osc_method(enable_native_pcie_hotplug));
+> >> +    aml_append(dev, build_pci_host_bridge_dsm_method());
+> >>   }
+> >>     void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+> >
+> > Otherwise:
+> >
+> > Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> >
+> >
+> > Cheers,
+> > Gustavo
+> >
 
 
