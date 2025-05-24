@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B1EC54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 17:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD8EC54FB3
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 17:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIsmt-0008Q3-IB; Sat, 24 May 2025 13:35:59 -0400
+	id 1uIsnA-0000yI-49; Sat, 24 May 2025 13:36:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uIsmh-0008Ds-6l
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:35:51 -0400
+ id 1uIsn7-0000dw-8W
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 13:36:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uIsmf-0000ii-1T
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:35:46 -0400
+ id 1uIsn5-0000lI-LB
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 13:36:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748108143;
+ s=mimecast20190719; t=1748108171;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uX4W6oscBViDkzVCmMiWL2OgGFIZSnMNoIBKHZYTsUQ=;
- b=M0aNwNlaTT8o/lnUZ5KnDREP+B+eDbTF94LecN9wWwC1zlVwfH2idb+nmQrcYHY/Bd3Voq
- yxmjE7L7Wi4QZ48/Ct6kdIns+28wcYM5NwlyfNXnWsDki45MrbvEUk7t4vAYtN/Yl9kSVh
- S5/oJjMjWpyH4DGbxA5s0Xef+d6PXqM=
+ bh=1jHlFib1jbqDOGmIU5Jdl45qo+cDKFJf60/0MFNRQ3w=;
+ b=hCupxoGd0GrxQeuT+uzqnca3uC9766k3fMa2/Whqv60gpYBIm24hA7dwqihKN/mCuctdfH
+ dYWTe3C2ZM6qsk195gPRArjz1eZW9nO24y+rfr6NX5O4G2gV4iSFN1DGmalTcstuwS52yW
+ 0u4AM6mmhpjTEWhYl9D26m4/75sad1Q=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-jBiUQ04TPvK_5ZgVc5dpkg-1; Sat,
- 24 May 2025 13:35:42 -0400
-X-MC-Unique: jBiUQ04TPvK_5ZgVc5dpkg-1
-X-Mimecast-MFC-AGG-ID: jBiUQ04TPvK_5ZgVc5dpkg_1748108141
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297--bDCd0xNO7W4cPDU3vykjQ-1; Sat,
+ 24 May 2025 13:36:09 -0400
+X-MC-Unique: -bDCd0xNO7W4cPDU3vykjQ-1
+X-Mimecast-MFC-AGG-ID: -bDCd0xNO7W4cPDU3vykjQ_1748108169
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C31911800446
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 17:35:41 +0000 (UTC)
+ id DB2E2180048E; Sat, 24 May 2025 17:36:08 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F422D19560AF; Sat, 24 May 2025 17:35:40 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 85CC030001A1; Sat, 24 May 2025 17:36:07 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- stefanha@redhat.com
-Subject: [PULL 07/19] ui/vdagent: keep "connected" state
-Date: Sat, 24 May 2025 19:35:00 +0200
-Message-ID: <20250524173514.317886-8-marcandre.lureau@redhat.com>
+ stefanha@redhat.com, Weifeng Liu <weifeng.liu@intel.com>
+Subject: [PULL 15/19] ui/sdl: Consider scaling in mouse event handling
+Date: Sat, 24 May 2025 19:35:08 +0200
+Message-ID: <20250524173514.317886-16-marcandre.lureau@redhat.com>
 In-Reply-To: <20250524173514.317886-1-marcandre.lureau@redhat.com>
 References: <20250524173514.317886-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -87,57 +86,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Weifeng Liu <weifeng.liu@intel.com>
 
-During post-load of migration, virtio will notify of fe_open state.
-However vdagent code will handle this as a reconnection. This will
-trigger a connection reset/caps with the agent.
+When using sdl display backend, if the window is scaled, incorrect mouse
+positions will be reported since scaling is not properly handled. Fix it
+by transforming the positions from window coordinate to guest buffer
+coordinate.
 
-Check if the state actually changed before resetting the connection.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Weifeng Liu <weifeng.liu@intel.com>
+Message-ID: <20250511073337.876650-6-weifeng.liu.z@gmail.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vdagent.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ ui/sdl2.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index 4027126b7d..210b8c14ca 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -40,6 +40,7 @@ struct VDAgentChardev {
-     bool clipboard;
- 
-     /* guest vdagent */
-+    bool connected;
-     uint32_t caps;
-     VDIChunkHeader chunk;
-     uint32_t chunksize;
-@@ -858,6 +859,7 @@ static void vdagent_disconnect(VDAgentChardev *vd)
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index cda4293a53..b00e421f7f 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -488,14 +488,14 @@ static void handle_mousemotion(SDL_Event *ev)
  {
-     trace_vdagent_disconnect();
+     int max_x, max_y;
+     struct sdl2_console *scon = get_scon_from_window(ev->motion.windowID);
++    int scr_w, scr_h, surf_w, surf_h, x, y, dx, dy;
  
-+    vd->connected = false;
-     g_byte_array_set_size(vd->outbuf, 0);
-     vdagent_reset_bufs(vd);
-     vd->caps = 0;
-@@ -876,6 +878,10 @@ static void vdagent_chr_set_fe_open(struct Chardev *chr, int fe_open)
- 
-     trace_vdagent_fe_open(fe_open);
- 
-+    if (vd->connected == fe_open) {
-+        return;
-+    }
-+
-     if (!fe_open) {
-         trace_vdagent_close();
-         vdagent_disconnect(vd);
-@@ -885,6 +891,7 @@ static void vdagent_chr_set_fe_open(struct Chardev *chr, int fe_open)
+     if (!scon || !qemu_console_is_graphic(scon->dcl.con)) {
          return;
      }
  
-+    vd->connected = true;
-     vdagent_send_caps(vd, true);
++    SDL_GetWindowSize(scon->real_window, &scr_w, &scr_h);
+     if (qemu_input_is_absolute(scon->dcl.con) || absolute_enabled) {
+-        int scr_w, scr_h;
+-        SDL_GetWindowSize(scon->real_window, &scr_w, &scr_h);
+         max_x = scr_w - 1;
+         max_y = scr_h - 1;
+         if (gui_grab && !gui_fullscreen
+@@ -509,9 +509,14 @@ static void handle_mousemotion(SDL_Event *ev)
+             sdl_grab_start(scon);
+         }
+     }
++    surf_w = surface_width(scon->surface);
++    surf_h = surface_height(scon->surface);
++    x = (int64_t)ev->motion.x * surf_w / scr_w;
++    y = (int64_t)ev->motion.y * surf_h / scr_h;
++    dx = (int64_t)ev->motion.xrel * surf_w / scr_w;
++    dy = (int64_t)ev->motion.yrel * surf_h / scr_h;
+     if (gui_grab || qemu_input_is_absolute(scon->dcl.con) || absolute_enabled) {
+-        sdl_send_mouse_event(scon, ev->motion.xrel, ev->motion.yrel,
+-                             ev->motion.x, ev->motion.y, ev->motion.state);
++        sdl_send_mouse_event(scon, dx, dy, x, y, ev->motion.state);
+     }
+ }
+ 
+@@ -520,12 +525,17 @@ static void handle_mousebutton(SDL_Event *ev)
+     int buttonstate = SDL_GetMouseState(NULL, NULL);
+     SDL_MouseButtonEvent *bev;
+     struct sdl2_console *scon = get_scon_from_window(ev->button.windowID);
++    int scr_w, scr_h, x, y;
+ 
+     if (!scon || !qemu_console_is_graphic(scon->dcl.con)) {
+         return;
+     }
+ 
+     bev = &ev->button;
++    SDL_GetWindowSize(scon->real_window, &scr_w, &scr_h);
++    x = (int64_t)bev->x * surface_width(scon->surface) / scr_w;
++    y = (int64_t)bev->y * surface_height(scon->surface) / scr_h;
++
+     if (!gui_grab && !qemu_input_is_absolute(scon->dcl.con)) {
+         if (ev->type == SDL_MOUSEBUTTONUP && bev->button == SDL_BUTTON_LEFT) {
+             /* start grabbing all events */
+@@ -537,7 +547,7 @@ static void handle_mousebutton(SDL_Event *ev)
+         } else {
+             buttonstate &= ~SDL_BUTTON(bev->button);
+         }
+-        sdl_send_mouse_event(scon, 0, 0, bev->x, bev->y, buttonstate);
++        sdl_send_mouse_event(scon, 0, 0, x, y, buttonstate);
+     }
  }
  
 -- 
