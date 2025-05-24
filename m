@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 088CDC54ED1
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 16:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B982C54ED1
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 16:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIs3B-0002un-EO; Sat, 24 May 2025 12:48:45 -0400
+	id 1uIs9S-0003tX-Nd; Sat, 24 May 2025 12:55:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIs38-0002uZ-G5
- for qemu-devel@nongnu.org; Sat, 24 May 2025 12:48:42 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1uIs9Q-0003tB-OD
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 12:55:12 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIs36-0003VR-QR
- for qemu-devel@nongnu.org; Sat, 24 May 2025 12:48:42 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-442ea341570so5446105e9.1
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 09:48:40 -0700 (PDT)
+ id 1uIs9O-0004DW-Fu
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 12:55:11 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43edb40f357so6511165e9.0
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 09:55:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748105319; x=1748710119; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748105709; x=1748710509; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TUUPUwcRCfgIknEVmNOCMzJ3hvMRXrOqsw1xUPQIDdU=;
- b=txRoP3z7v8zEY4sWFoXLxTYQ8PPcLwEsqdfpxTzOo8utp5deEvddq5giM50hKf/uoM
- okRsoBQ1fkNPvvxxl2CicQwWPp49F0YpJ4F6LRMlxxszrK0VcoFzHhQdbn/4rFs0apJb
- orABfvX6Yiq3QDPu0EZCndkJRmEU1WWX+gqpi3E3XLOtJq2bUndkX+cFWzVcgYmXQAtl
- WZ22h5TNtKnP0W63ogecH/fjVLY2qEQIjhoSFppxXiQWbBkJH77k+aJR/cSacve4hfcC
- NMhUYxx+uDXLUjApjfNv9DQMGPOtQRIqX3RlKhCsbpsbb+nwF5s7h0nFr+JZBM7DiVkx
- b0LQ==
+ bh=vXPuwt6b4HHVKgOAMOCmQqYJTLrU3fsUzJUX4VBqOh0=;
+ b=u5foMsjWRWUTRzeQfwAgnaRNViVc8XGVD9o/hYeSdBnlTPEMJ9h50+1a5GzK+oZExs
+ OI7WwR/vvqhgkeVzBnJdlclMQSNwzsWpAMx41Fhgv28j1OCdyICHi/f8eNPW9ErNECcQ
+ v+DoqzS7RTm5hDapbFsJzxLzG+tJfVjgKdX6ygt/DPSq6SKGL/3BgXpVdVVIsrckObzW
+ kGzK+wrvnY1eD+e8srqNMgIWFSZSaAQa4oF/lHSJtAbY/5QLTfC7nz6H4CdXksL6Ppxo
+ 16EvuOt+sh9wWUcXUsB+15DlBLZ6tyG+YURYeuCd40cM4uiY89nTXS/9HQ3p5VviNVWN
+ vClg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748105319; x=1748710119;
+ d=1e100.net; s=20230601; t=1748105709; x=1748710509;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TUUPUwcRCfgIknEVmNOCMzJ3hvMRXrOqsw1xUPQIDdU=;
- b=W6T9LqbiD4VxuMI9T62LfxK8tf02xX4EfkNn4m2JRAnubbDuMuj/qC3T3zF6gPWEf1
- 6W2uOO7q+MXWpDKIgrOPt8zCzqxwB4C5yqpizzLU4CNryef65jXI24JvaTJJKDV5meji
- CA4+ChqUce4GVr4lR6AHE/9nFgwMCRxGHmr4oANCTfaEJ4g4Putzi35APDvqG6cPucIg
- XFXrFxcL5WzbIolU6J4r+/yxQPTdWraSHY/AyNgL7scqeRAXmip9dix7FloU3gXlasrS
- RepjYH+BhdNH9lD2H6F6TXvB0p5JsjBpCMy7DbOk/N8mwTr/T5Ows/jBpXfXqyYHoxL2
- Q9JQ==
-X-Gm-Message-State: AOJu0YyHZ6KaplBpKGkNWNR/ulmB5vugCO1M/3URBlqKIlC1Iifk5lof
- AN61m0ebe0qVepq64N4YCz8e3M4Sjq/eJ2i6pIl801nnCk/u/mIdIihIMlEG0KfV3uk3A9yi25M
- DipPpmsCVSQ==
-X-Gm-Gg: ASbGnctTy0W7QovBo518/28KIQpPxJOCwrsIcec/JJdu/2z1ZQDPr4ROegz4QTIA2dT
- 85hRPn7B2h92vQUWYX5+Z+y0+dccGyH0OGxT/HFtmniFMQ1yPHHT95BwqhdYPqGkf1H3uBA4YZj
- Evzz8TlrTftY7qEZxzD9nTFe7d0P1TQyGarclUC/lDjLUqfDTutZmLJTkMMbqEdx+XHAfW0SO/O
- FlFZs8tvRbXMlyK82ItjORX/X7f8Q/nt047X3fjc5yfw9tHmwQYbftevVsa8jNc9QsGF8yY4KEC
- +JwbDdJBnASKvOUYBF/ldwmlnKeSQ7Ey8OM3HylaO6PjJMNt5TxNTbcElK310egPhA==
-X-Google-Smtp-Source: AGHT+IFbz3CNpYMgqJ8KDuvNw15sH9RsF1MRtrCw1nvPCccSMflhTAf2kkcsihapbXzREwrHNpJZ+w==
-X-Received: by 2002:a05:600c:5126:b0:43d:a90:9f1 with SMTP id
- 5b1f17b1804b1-44c93016686mr29212855e9.6.1748105319135; 
- Sat, 24 May 2025 09:48:39 -0700 (PDT)
+ bh=vXPuwt6b4HHVKgOAMOCmQqYJTLrU3fsUzJUX4VBqOh0=;
+ b=PMogPW1jKVmnLUFwH05i7L5AGtBsa6wQaYIcDCm2mfaoUMFLH7tGqABchGk3P3SasT
+ dBFRNY5wtRo5rlfnqcSF5xDvZK+VjISrafbYEVKkXXYsvSaO5Qt6cj2utay3xsRXbOTl
+ PK8gm9dxaz/4igKBzHVZ7R28IUn6T1uVaXQmjYlBJdivOsnNMOxouA/A7cmaCR21D6wU
+ EKpYG/wIxoHLQ5B3M7Mu0r/vxKtciZCO1Fb0GcY+2+0Jy+1sLZrxp7GXrGlLLDGWlb5t
+ 2vCAE2C+rFGqt89QsqWVSsxlQwtDFznYGlxIewvwe3gvtTygQOozU5r2N9r5meA+tNf/
+ Gjew==
+X-Gm-Message-State: AOJu0YxSm/rcBrHxoSKu/wH9mLL9J68bgXj7BLavLbTI4LxoujGlaAlg
+ 9eTBtLlBqUEYQUg/YPLc2kuOBIbKfipPKV4KleUKWgu3ItDd2GfBIeJcyJXpYoqHx5y4DWZM9A4
+ fBuVNdjP4vQ==
+X-Gm-Gg: ASbGncvKFBdOZCNzCkSbydHcKjvBLO348k+AzgqHj4EXAL9KbmqtZF4XjfD5ufTP9zZ
+ aegGGCYY9iyrzRal2y8B2nWfY4zRHVUY3Hc63UceJDsavIdwpSTJsY3FkClDDJpTAoOo8hBygqo
+ /uxet2Dqa+GISwWqfgvpCwbHZjps+z8IDCczinipXY28VgPxk/kIuMfyRgwMh7rN9SAk4sUP/pO
+ Z/Tm9ZUWsqT6LKg0EOTJ8KIF5U9n+wZzx04M8RnqWEVJZY4DJGN4NHQob3ohJ9B/MltE5lHpa2Y
+ xfpz6nwrTDs/NqrBysX+3iqkTnHlOOJuuXnKECww+3y1dthz7zNRfC+UJUlvEvvZaA==
+X-Google-Smtp-Source: AGHT+IF9p93hBUsxwbUtcEhvaTijY7rE0DmsctXOgWrion8ljaMaDDVFBNNyjPgsOOnGTN+Ip1gzAQ==
+X-Received: by 2002:a05:600c:46cb:b0:43d:94:2d1e with SMTP id
+ 5b1f17b1804b1-44c919e16a8mr26533465e9.13.1748105708609; 
+ Sat, 24 May 2025 09:55:08 -0700 (PDT)
 Received: from [172.16.25.47] ([195.53.115.74])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f7d9bde0sm181635995e9.40.2025.05.24.09.48.37
+ ffacd0b85a97d-3a35ca888fcsm31645738f8f.78.2025.05.24.09.55.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 09:48:38 -0700 (PDT)
-Message-ID: <66730f94-559c-44a7-8cb3-a7bc3759e28f@linaro.org>
-Date: Sat, 24 May 2025 17:48:36 +0100
+ Sat, 24 May 2025 09:55:08 -0700 (PDT)
+Message-ID: <edf78ed0-7ada-467e-86de-47e2515588bc@linaro.org>
+Date: Sat, 24 May 2025 17:55:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/25] plugins: add API for registering discontinuity
+Subject: Re: [PATCH v5 03/25] plugins: add hooks for new discontinuity related
  callbacks
 To: qemu-devel@nongnu.org
 References: <cover.1747666625.git.neither@nut.email>
- <3b5ee8f787cf2ebf17962b172eaf2bd46343235f.1747666625.git.neither@nut.email>
+ <70c5a0d487731b08e803240061a97bfc110bfbcb.1747666625.git.neither@nut.email>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <3b5ee8f787cf2ebf17962b172eaf2bd46343235f.1747666625.git.neither@nut.email>
+In-Reply-To: <70c5a0d487731b08e803240061a97bfc110bfbcb.1747666625.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,25 +104,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/19/25 16:19, Julian Ganz wrote:
-> The plugin API allows registration of callbacks for a variety of VCPU
-> related events, such as VCPU reset, idle and resume. In addition to
-> those events, we recently defined discontinuity events, which include
-> traps.
-> 
-> This change introduces a function to register callbacks for these
-> events. We define one distinct plugin event type for each type of
-> discontinuity, granting fine control to plugins in term of which events
-> they receive.
-> 
-> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> Signed-off-by: Julian Ganz<neither@nut.email>
-> ---
->   include/qemu/plugin-event.h |  3 +++
->   include/qemu/qemu-plugin.h  | 16 ++++++++++++++++
->   plugins/core.c              | 15 +++++++++++++++
->   3 files changed, 34 insertions(+)
+> +QEMU_DISABLE_CFI
+> +static void plugin_vcpu_cb__discon(CPUState *cpu,
+> +                                   enum qemu_plugin_discon_type type,
+> +                                   uint64_t from)
+> +{
+> +    struct qemu_plugin_cb *cb, *next;
+> +    enum qemu_plugin_event ev;
+> +    uint64_t to = cpu->cc->get_pc(cpu);
+> +
+> +    if (cpu->cpu_index < plugin.num_vcpus) {
+> +        switch (type) {
+> +        case QEMU_PLUGIN_DISCON_INTERRUPT:
+> +            ev = QEMU_PLUGIN_EV_VCPU_INTERRUPT;
+> +            break;
+> +        case QEMU_PLUGIN_DISCON_EXCEPTION:
+> +            ev = QEMU_PLUGIN_EV_VCPU_EXCEPTION;
+> +            break;
+> +        case QEMU_PLUGIN_DISCON_HOSTCALL:
+> +            ev = QEMU_PLUGIN_EV_VCPU_HOSTCALL;
+> +            break;
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+No point passing in QEMU_PLUGIN_DISCON_* only to covert it to QEMU_PLUGIN_EV_*.
+
+> +void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_INTERRUPT, from);
+> +}
+> +
+> +void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_EXCEPTION, from);
+> +}
+> +
+> +void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_HOSTCALL, from);
+> +}
+
+Better to pass in the value we really want here.
+
 
 r~
 
