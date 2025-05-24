@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3F9C54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 12:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 888C4C54F30
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 12:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIoGK-0008J6-J3; Sat, 24 May 2025 08:46:04 -0400
+	id 1uIoPa-0001aG-AX; Sat, 24 May 2025 08:55:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIoGB-0008Ih-1V
- for qemu-devel@nongnu.org; Sat, 24 May 2025 08:45:59 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1uIoPZ-0001Zm-0K
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 08:55:37 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIoG9-00034U-3y
- for qemu-devel@nongnu.org; Sat, 24 May 2025 08:45:54 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3a36efcadb8so677678f8f.0
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 05:45:50 -0700 (PDT)
+ id 1uIoPX-000484-1s
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 08:55:36 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-441c99459e9so3857635e9.3
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 05:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748090748; x=1748695548; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748091333; x=1748696133; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bH/WbEQ6QePZwNev228Z4SiBpSVmwpXhMMQz2fE+g3o=;
- b=sezS3YfdPaZ5WCp+6uztDUcJ+WI9n+StFYRK/1mrGoPycUOIYpotWpWykT2AFr6EiR
- x50b3g3OClDl6EI6xdJtb/8hx7TCVpLqYMwzRIk/syb9OIwUXDiihklYy6ACqLOJ8LuZ
- Y/WQt3IHSwiRNvAWiYH1WWAK1PWag4iD4XFFl1s/TnwB5CbLRZAor8mvyQb1IncNIlXC
- XiPHkFrCPin+HKAZVec3JiDsFVVUhNW+AWDNSODNmTPQ7j5jtRUQ9dYIId3tufAiKrYH
- 8OsW12mg13UphaBdKiEZM9BhyXxSkrrgNAoRDYRtY69ApesL0sBpBv/gFY42fnWYG6TL
- rybw==
+ bh=9N33DF1xZp9jCtZ6B0TcdwvHYyV+fSwoVuf806uc7qc=;
+ b=MIUdp1C05YTubE3vMgwSkQgTltxqpV9aLkiWGpgV+h/JeZD0RHlfKSjzvlkLXt9+mG
+ gD9z2ASdLtFxEc9+scM4BDr03OOulnbrKIFv9yDAJsdXwvg+W9plh9F3MLJ9OhgLwBms
+ 4xJ7dGt1cSUYWwL99OEdIysCPL4/jnYjNF3FrbxuYsnINxsog+3FsmTIa0Xir3m5NDeW
+ 9YVSxJ6ZMkSEWyiTtMOWD7VhavS3WZTRvZU92NtQpJYhdu/gSlMlQGLUYNWlE0m2hqXD
+ Y2+XVrJOthf7mHgwXaQfwMEvOFiZ4dK4GhIqUIEiHXNVXxXCKNoEywahKhK+mESWOp81
+ S4Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748090748; x=1748695548;
+ d=1e100.net; s=20230601; t=1748091333; x=1748696133;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bH/WbEQ6QePZwNev228Z4SiBpSVmwpXhMMQz2fE+g3o=;
- b=BeQ2hc+JZ88PqJY8SbikTb1MHB/ILxdvU1TrjngvxYzo5QcfU7UqCC7H+c/yvmMIov
- LDZaYx/+FASdPzoptPOrNCIaqi0uo8SVQQytxuL0AEYy45sx0r6o8V9u/TZNG3e9fdmA
- JcE7BmjArg7Qz0l2466I7FqAZtxx6d+gxrJHOCA92TDw2ewZEnjAxVDllBagxnTUTGkj
- gOT+Y26JhtwXzh8y0Kzeubl5+3PNCA5ZRSBT/WyagZMezGMC6dBsw5kgnLBAWSToLXVF
- cpHc1l1W7ZLcnopvaOYbpnFRK2yXMytlrw2JnNviC5WCLQ+7JRmxfkkuUXyn6UtUD7Wr
- 1NTQ==
-X-Gm-Message-State: AOJu0YwgJdyzNnNTBQ/SrCx0oRT+zzUKGHWdaHSKILuAAtHMrZikRcHL
- ZNTMlW81mjZKRAiEKqL0NST1EUX/qNIpsY2UCGHahLE5IUlGDUQcsIlgwTX9uhp4xq+xQesXCB2
- t7ikPDJE31A==
-X-Gm-Gg: ASbGncsr4Cx5AdKm837zWHZdpOKUuDIYPQgHmuR0LkccccppPivLxwiirxY44rWSVT6
- UWuGa/lyQrQKNEyc0axEWF9iMs8E1JABddgRmZDyarOxJucScNcwDNTFNMHe9bxudYsLXEmvgxo
- bSVhO2EOTgKejv6XN5s26p8l2yAuxD41xfmYY1Ii1nmtM8wnRcOx4WEOMbmlHBYA+XxejI01wZG
- JTbVY7IoqqXEQbwb+1zL8IcV6wSlqMaA8NKyBqVL+B1Lt6f3Mo9YvVQ28pube03+sjQbRWyS9KI
- /lfHgMP9bc3DJnUEdHzedR1EMmBBXtdvGHFq3AaL0vS/ZF2Eaau91eid6Jn+sxYbkQ==
-X-Google-Smtp-Source: AGHT+IHx+JjXN2Zf1WygCFiFU5DpMfv8JM84hMXpG37RR8Jnt2xzogTVaBzN/y6K3DJ/jaway3XnoA==
-X-Received: by 2002:a05:6000:e4d:b0:3a3:75d7:5864 with SMTP id
- ffacd0b85a97d-3a4cb4834cdmr1926278f8f.47.1748090747723; 
- Sat, 24 May 2025 05:45:47 -0700 (PDT)
+ bh=9N33DF1xZp9jCtZ6B0TcdwvHYyV+fSwoVuf806uc7qc=;
+ b=qPsEmzDxpNlPMmW7oqSIu04JZU1VT0cVRkCZEKoLowgNflp7S3K/CzCpU4Sg9rCh0W
+ aqRoE3Or2FJJ9zB4Hn2onLlL4j6OMYQipQ1rL0ReQ45QCVa0TTSZ/g197FgXlq86cpEV
+ CG+R5DxFmTkmbFw4i5xxIDQgzFGC6RMAJjj/A4/SqhTakbCt3SHAYKHRmPc7WggXqe7y
+ mJLjxD68/fs5/RUqCTvS29bi15poMDyQAFVocC6GgpKcQ3OE5FE0baFS4+B7IdHignPx
+ 9SFRWx0YyqoFaxEN4X+ll7Iy0NsURg5RKlUpstp9twKR9ndaxTLG6+BrtpXSKFNgLInz
+ lpGg==
+X-Gm-Message-State: AOJu0YwhDkjtJ474Se0LFhnuD7szKdf/s0RcxxvIpDYQQjkX2pt/hYLP
+ G2kgvJjVZJ6sq6MKJMbc/V9okD73MP62vy+q3YTK0ixb8FntAhWj/KWS9ceotv1HP8AXOupIOok
+ ELEo/iJ5pYA==
+X-Gm-Gg: ASbGncv+L1DGMx9BKwbqF05+oNfIi2iAaR00g/EqX+0fwWnp2UBquJijFgU9TIH7499
+ eP5x6O3Jo2Zm6Hp/8UngSEIouqR6Ud6qkEvHeqr22f3hYQzmE8FCQBt3yyWPLn27D2mTkEzNZvU
+ 9FaJW/ATNZS/0LtQoESL9KM3LZHaukc0ZTn8LTVbhAujZb86HuKHUzyYHSS3c2Ica/Lt+eiKgrZ
+ sotgNOAylT3G1YqJ3ITdjfcUSQqz6cBCBzloDveLTSSgDS1nruG/I+lQqNKTZ1aJk9F3kIOr17P
+ J+xBpm6PYoaLMe+NF63naueYpAUfJ/84fJf/N6au9tYXYbMCFEiFpgcj/TD0jBEl6Q==
+X-Google-Smtp-Source: AGHT+IEZPGHaLgtHvEEMs6Tn+W1c5O53P/lAWVfEgNSxpYzTmKADIVbMGUgeqsZct1PDAp4uyS+XuA==
+X-Received: by 2002:a05:600c:3c93:b0:43d:fa58:81d3 with SMTP id
+ 5b1f17b1804b1-44c933f0edfmr18793775e9.32.1748091332703; 
+ Sat, 24 May 2025 05:55:32 -0700 (PDT)
 Received: from [172.16.25.47] ([195.53.115.74])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca889d9sm29728932f8f.77.2025.05.24.05.45.46
+ 5b1f17b1804b1-447f1fe4fa6sm172959035e9.16.2025.05.24.05.55.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 05:45:47 -0700 (PDT)
-Message-ID: <6efd040a-e54e-43df-874d-5801f876bd6a@linaro.org>
-Date: Sat, 24 May 2025 13:45:43 +0100
+ Sat, 24 May 2025 05:55:32 -0700 (PDT)
+Message-ID: <00ec097f-b43a-4831-b4b6-c5d20aac236f@linaro.org>
+Date: Sat, 24 May 2025 13:55:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/main: comment lock rationale
+Subject: Re: [PATCH 1/4] hw/microblaze: Add endianness property to the
+ petalogix_s3adsp1800 machine
 To: qemu-devel@nongnu.org
-References: <20250515174641.4000309-1-pierrick.bouvier@linaro.org>
+References: <20250515132019.569365-1-thuth@redhat.com>
+ <20250515132019.569365-2-thuth@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250515174641.4000309-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250515132019.569365-2-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,40 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/25 18:46, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   system/main.c | 13 +++++++++++++
->   1 file changed, 13 insertions(+)
-> 
-> diff --git a/system/main.c b/system/main.c
-> index 1c022067349..b8f7157cc34 100644
-> --- a/system/main.c
-> +++ b/system/main.c
-> @@ -69,8 +69,21 @@ int (*qemu_main)(void) = os_darwin_cfrunloop_main;
->   int main(int argc, char **argv)
+On 5/15/25 14:20, Thomas Huth wrote:
+> +static int machine_get_endianness(Object *obj, Error **errp G_GNUC_UNUSED)
+> +{
+> +    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
+> +    return ms->endianness;
+> +}
+> +
+> +static void machine_set_endianness(Object *obj, int endianness, Error **errp)
+> +{
+> +    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
+> +    ms->endianness = endianness;
+> +}
+> +
+>   static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
+>                                                       const void *data)
 >   {
->       qemu_init(argc, argv);
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> +    ObjectProperty *prop;
+>   
+>       mc->desc = "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800";
+>       mc->init = petalogix_s3adsp1800_init;
+>       mc->is_default = true;
 > +
-> +    /*
-> +     * qemu_init acquires the BQL and replay mutex lock. BQL is acquired when
-> +     * initializing cpus, to block associated threads until initialization is
-> +     * complete. Replay_mutex lock is acquired on initialization, because it
-> +     * must be held when configuring icount_mode.
-> +     *
-> +     * On MacOS, qemu main event loop runs in a background thread, as main
-> +     * thread must be reserved for UI. Thus, we need to transfer lock ownership,
-> +     * and the simplest way to do that is to release them, and reacquire them
-> +     * from qemu_default_main.
-> +     */
->       bql_unlock();
->       replay_mutex_unlock();
-> +
->       if (qemu_main) {
->           QemuThread main_loop_thread;
->           qemu_thread_create(&main_loop_thread, "qemu_main",
+> +    prop = object_class_property_add_enum(oc, "endianness", "EndianMode",
+> +                                          &EndianMode_lookup,
+> +                                          machine_get_endianness,
+> +                                          machine_set_endianness);
+> +    object_property_set_default_str(prop, TARGET_BIG_ENDIAN ? "big" : "little");
+> +    object_class_property_set_description(oc, "endianness",
+> +            "Defines whether the machine runs in big or little endian mode");
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Better with Property?  You don't have to write get/set...
+
+   static const Property props[] = {
+     DEFINE_PROP_ENDIAN("endianness", S3Adsp1800MachineState, endianness,
+                        TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE),
+   };
+
+   device_class_set_props(dc, props);
+
 
 r~
 
