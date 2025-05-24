@@ -4,97 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5D4C54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 14:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F02C54FC6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 14:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIq4X-0004ZF-CZ; Sat, 24 May 2025 10:42:01 -0400
+	id 1uIq6P-0005nd-CN; Sat, 24 May 2025 10:43:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIq4V-0004Yr-5J
- for qemu-devel@nongnu.org; Sat, 24 May 2025 10:41:59 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIq4S-0007vh-JA
- for qemu-devel@nongnu.org; Sat, 24 May 2025 10:41:58 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6045b95d1feso233672a12.1
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 07:41:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748097715; x=1748702515; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X00GC3Z/p6aWDzGGqhVH3t/681NDinTLeQwjLaoVPps=;
- b=WTWYSNd+VPagQDxHCF1HmxWm3AWWpAWG2xQIcxHgM9zbsLyCBOqgER1jGyzeCBQpO4
- pu03l55wDzRvAV5QvkdLyCkn8RQXpvajS5wZ0KDWft887a7HepJ8K2z8VW3RDdnS9PCT
- grLDaXPxReTQ7yx86qkY/k7yZ0sKu8LwUoHxhDgiJnJownpk6aktCTmKsRd8QjEQgMZ2
- M66x08WjOipDBU7MB7WHuBjsSKxHqH6pt89jsc3LOPVYBMRw+pEBvUp8FD2TSToK5r8O
- i81p2cDxIMF13ftVxAn4Pz4YAvHRJrr/xcsmxObLCzjVp8MxzCVeV7h2a4fl0/Zu/E/e
- mP5w==
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1uIq6D-0005lT-3W
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 10:43:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1uIq6A-00083e-CT
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 10:43:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748097819;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=z6J+priNGe2NN21HW8HYtdsRYNH2qk+iZOUEacs45wc=;
+ b=E2P/SnG58OD9avw6XPkBpJXlHdztHRV+P+URG6aHSH1VpKUreF2ht8+DrfGzQO1PtgizES
+ ZKrF2LzIgcfxQOLkJ+CTfG5pieHQ/PuHVE5Jx6UQwRerA0C8W8VxInxYGJhjurN8+kNsA+
+ UtX0FhNRDjLO6BQEs/7gXZL4J4fr1k0=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-91-IE6PaCQPN7WiXXei5JlMhA-1; Sat, 24 May 2025 10:43:37 -0400
+X-MC-Unique: IE6PaCQPN7WiXXei5JlMhA-1
+X-Mimecast-MFC-AGG-ID: IE6PaCQPN7WiXXei5JlMhA_1748097817
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4768f9fea35so22391541cf.2
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 07:43:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748097715; x=1748702515;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X00GC3Z/p6aWDzGGqhVH3t/681NDinTLeQwjLaoVPps=;
- b=JePcTf8WCSF74CDiMlPW4gm+m272bZ4apmeTsmuwbsFvYbJ5yYMXObPEp6a7LlIrxI
- ysQr6ExzQjTU1tAoIS6+CeNAZ/C3x5iPrCjfOroP/ONAS2V6j4UP9g1zFpRbXHqQfw5f
- b02hsK8ij5XDVSkYfySf/gTKKY5hKQppnjesxhm4LQv43waF2Uy0k/UMthdkhlIlareB
- PUtKA59NxCt7QZyXS+ho6kn28uYE1E6JNvDBdJLbEuT65IlSJWW1TKfzjMgYn/BCpsN+
- po0oPD81169ir0PsOJzeaYg2KFKG1zRDygODV4IePFFZEN18XdGIu0yfFRd6D9yFhRCQ
- DoLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5jygqlNuR/GBj2qHIRWNtHg7su7Q6QQfjkY9ye4rV4jAYRn0NUq9EmSFKnmdTZ5s+VAbbO8YH3jbF@nongnu.org
-X-Gm-Message-State: AOJu0YyUXko9wxUe32hPIrVUjILnEUlZ2ZdMnOJIEz3cDIwxI9jdbAAJ
- gCLLXm+EoANmuAlqu40YG6lSRH2fBx6k+ffW+XdMOmBD8JzV1MqhP0/z1Yb8ah0gnGQbBoYZCvB
- Z0Z/crnFvMQ==
-X-Gm-Gg: ASbGncsBs6T6KMD/hhXbYlzZmG3d0mvQ6Pe6FtwalIrK9jqYLF3wDcFmpFsAxiCqTpW
- nRBAI0RDOQ++3rIvEoTNCekMy6u2vw9p4Ja26ObngjC861m8JOhq/aq3b7CSHqm5qdJByOxo9hb
- mlDm6VWNId0OnF/fuK/++kr/AlXcprQSefhEroUWTO+pSe7ywn8udJRv6d0Z7LJ886HuGUgwDmV
- 0TW7NsEiCmsdu38oM8z0ZDEOUjtecoW1Z9EDAVlYpykj/3qB+0mNos6t1diwv+E9tuRcCVXeLvT
- tV4kD0bSU3NfDgqXZqO4tz6tpi51juZv3tmlJBTBzP0ws7WzYQakDZgC5K1tFV5nXIlzXu5MCeM
- G
-X-Google-Smtp-Source: AGHT+IEmEMCSFw1PCkzy76eKNiIdrSzFH9IGCtAmMsLkDM+vCWkR9vZLn8RjaJmWXpAhZ5PbN3z5yg==
-X-Received: by 2002:aa7:c312:0:b0:602:f026:7cf0 with SMTP id
- 4fb4d7f45d1cf-602f0267d74mr1243303a12.21.1748097714902; 
- Sat, 24 May 2025 07:41:54 -0700 (PDT)
-Received: from [172.16.25.47] ([195.53.115.74])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60451d367cfsm437358a12.22.2025.05.24.07.41.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 07:41:54 -0700 (PDT)
-Message-ID: <42c3669d-0d04-4f6b-b1f7-5455beaeeb38@linaro.org>
-Date: Sat, 24 May 2025 15:41:51 +0100
+ d=1e100.net; s=20230601; t=1748097817; x=1748702617;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=z6J+priNGe2NN21HW8HYtdsRYNH2qk+iZOUEacs45wc=;
+ b=HaMXKivj4Qmi5FaXBYFznrZtbhcvxAC1o+NtM3XV7/HvYWSEA5Zggsl72MbRMxaKL8
+ ipmJhk8WriLnEIr3owmFpyymi7PEx5BW7NLQJ3iwubCV4+UVEZjMdk7sO7seJmmgTqCH
+ nsb3h3AI+mnnXsmI4H8zaTAfnjF1+5QA7z+KEC0Pdex1G6D1cmqmC+cLA8pNKiEmkOZr
+ QmBSbmEHUzWPg2GLHGSF19toUgZ21ONk8SNzucGe4nr5EYNpUaPpdm11OtkCoHz5jkYt
+ ckt5Xt9WLpo7qIaXLrMtHLkORsUwGFXWZiZxBECAiSRwc6PQIeKYVI9apqIqoSkmy+vn
+ cvfQ==
+X-Gm-Message-State: AOJu0YwRVBZR9nNpERwICTOsIAe84CDdhTSFfTxsTq4kMVlsYR3x6ToU
+ xrdUfJPtffP4ur4SB/7diD9o4rzRie2NMMHLGHcOoutMQee6LNIvhDPyQXAz3jczeMngQ3aRX04
+ 52xhWECYnSdfBP6Av00afkEYr8Zy/k9hwcp3J3QdEAFDOC4OzuooI1k2wKbeb06C5w5ov8xeo12
+ yvacC33l+jloEdxoxLGO+kEOuFEDOVFHE=
+X-Gm-Gg: ASbGnctXN2ZyeCYYSc7jwpY/ttwI+CEZahZEnrufilv2s5NouZjN7xJHWAwsBO5eU8s
+ WP9tAYArQ7WK/HpghxNB3mJrb8vAGwOKwh7SAxzS7BZUyI94Vp/qWp4WARd3bqrJYBN3KeiaOSo
+ xwC066ymmjJ9JmvzIwFfOGY2JA3Q==
+X-Received: by 2002:a05:622a:114e:b0:476:8f90:b5d9 with SMTP id
+ d75a77b69052e-49f4624949bmr57240461cf.5.1748097816794; 
+ Sat, 24 May 2025 07:43:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMk6hsZlxzfsl7VsMK/GO0Qv/6TvrFQsDTs11WPyIrROWtSPuQ/RSF6xA8nhmGeWWxyDNX/AuU7SjrEqr7DaU=
+X-Received: by 2002:a05:622a:114e:b0:476:8f90:b5d9 with SMTP id
+ d75a77b69052e-49f4624949bmr57240071cf.5.1748097816357; Sat, 24 May 2025
+ 07:43:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 066/147] include/exec: Move TLB_MMIO, TLB_DISCARD_WRITE to
- slow flags
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, linuxarm@huawei.com
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org
-References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-67-richard.henderson@linaro.org>
- <20250425183524.00000b28@huawei.com>
- <CAKmqyKMN5bo12Oh8hrwdiimqJSzHMZwB7JjAquBrEK3PTbtGyA@mail.gmail.com>
- <04875ca2-781b-4000-b74c-fc338bc6ec4d@linaro.org>
- <20250508142918.0000248d@huawei.com> <20250520180035.00004142@huawei.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250520180035.00004142@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250515024734.758335-1-vivek.kasireddy@intel.com>
+In-Reply-To: <20250515024734.758335-1-vivek.kasireddy@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Sat, 24 May 2025 16:43:25 +0200
+X-Gm-Features: AX0GCFum4Bd-c8LArm8NilLnmuwGUntp2QMoatynm3RFZP-_ZewHmo-tW-vRTG0
+Message-ID: <CAMxuvayYXPg8OHEY3E_3BXo+whr7jmTghf3CWq0+EcH8WdRWtA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] ui/spice: Enable gl=on option for non-local or
+ remote clients
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Frediano Ziglio <freddy77@gmail.com>, 
+ Michael Scherle <michael.scherle@rz.uni-freiburg.de>,
+ Dongwon Kim <dongwon.kim@intel.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000006086680635e2bdf3"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.298,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,125 +107,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 18:01, Jonathan Cameron wrote:
-> On Thu, 8 May 2025 14:29:18 +0100
-> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-> 
->> On Tue, 29 Apr 2025 19:43:05 -0700
->> Richard Henderson <richard.henderson@linaro.org> wrote:
->>
->>> On 4/29/25 14:35, Alistair Francis wrote:
->>>> On Sat, Apr 26, 2025 at 3:36 AM Jonathan Cameron via
->>>> <qemu-devel@nongnu.org> wrote:
->>>>>
->>>>> On Tue, 22 Apr 2025 12:26:55 -0700
->>>>> Richard Henderson <richard.henderson@linaro.org> wrote:
->>>>>     
->>>>>> Recover two bits from the inline flags.
->>>>>
->>>>>
->>>>> Hi Richard,
->>>>>
->>>>> Early days but something (I'm fairly sure in this patch) is tripping up my favourite
->>>>> TCG corner case of running code out of MMIO memory (interleaved CXL memory).
->>>>>
->>>>> Only seeing it on arm64 tests so far which isn't upstream yet..
->>>>> (guess what I was getting ready to post today)
->>>>>
->>>>> Back trace is:
->>>>>
->>>>> #0  0x0000555555fd4296 in cpu_atomic_fetch_andq_le_mmu (env=0x555557ee19b0, addr=18442241572520067072, val=18446744073701163007, oi=8244, retaddr=<optimized out>) at ../../accel/tcg/atomic_template.h:140
->>>>> #1  0x00007fffb6894125 in code_gen_buffer ()
->>>>> #2  0x0000555555fc4c46 in cpu_tb_exec (cpu=cpu@entry=0x555557ededf0, itb=itb@entry=0x7fffb6894000 <code_gen_buffer+200511443>, tb_exit=tb_exit@entry=0x7ffff4bfb744) at ../../accel/tcg/cpu-exec.c:455
->>>>> #3  0x0000555555fc51c2 in cpu_loop_exec_tb (tb_exit=0x7ffff4bfb744, last_tb=<synthetic pointer>, pc=<optimized out>, tb=0x7fffb6894000 <code_gen_buffer+200511443>, cpu=0x555557ededf0) at ../../accel/tcg/cpu-exec.c:904
->>>>> #4  cpu_exec_loop (cpu=cpu@entry=0x555557ededf0, sc=sc@entry=0x7ffff4bfb7f0) at ../../accel/tcg/cpu-exec.c:1018
->>>>> #5  0x0000555555fc58f1 in cpu_exec_setjmp (cpu=cpu@entry=0x555557ededf0, sc=sc@entry=0x7ffff4bfb7f0) at ../../accel/tcg/cpu-exec.c:1035
->>>>> #6  0x0000555555fc5f6c in cpu_exec (cpu=cpu@entry=0x555557ededf0) at ../../accel/tcg/cpu-exec.c:1061
->>>>> #7  0x0000555556146ac3 in tcg_cpu_exec (cpu=cpu@entry=0x555557ededf0) at ../../accel/tcg/tcg-accel-ops.c:81
->>>>> #8  0x0000555556146ee3 in mttcg_cpu_thread_fn (arg=arg@entry=0x555557ededf0) at ../../accel/tcg/tcg-accel-ops-mttcg.c:94
->>>>> #9  0x00005555561f6450 in qemu_thread_start (args=0x555557f8f430) at ../../util/qemu-thread-posix.c:541
->>>>> #10 0x00007ffff7750aa4 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
->>>>> #11 0x00007ffff77ddc3c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
->>>>>
->>>>> I haven't pushed out the rebased tree yet making this a truly awful bug report.
->>>>>
->>>>> The pull request you sent with this in wasn't bisectable so this was a bit of a guessing
->>>>> game. I see the seg fault only after this patch.
->>>>
->>>> I see the same thing with some RISC-V tests. I can provide the test
->>>> images if you want as well
->>>
->>>
->>> Yes please.
->>>
->>>
->>> r~
->>
->> I'm guessing Alastair is busy.
->>
->> I got around to testing this on x86 and indeed blow up is the same.
->>
->> 0x0000555555e3dd77 in cpu_atomic_add_fetchl_le_mmu (env=0x55555736bef0, addr=140271756837240, val=1, oi=34, retaddr=<optimized out>) at ../../accel/tcg/atomic_template.h:143
->> 143     GEN_ATOMIC_HELPER(add_fetch)
->> (gdb) bt
->> #0  0x0000555555e3dd77 in cpu_atomic_add_fetchl_le_mmu (env=0x55555736bef0, addr=140271756837240, val=1, oi=34, retaddr=<optimized out>) at ../../accel/tcg/atomic_template.h:143
->> #1  0x00007fffbc31c6f0 in code_gen_buffer ()
->> #2  0x0000555555e23aa6 in cpu_tb_exec (cpu=cpu@entry=0x555557369330, itb=itb@entry=0x7fffbc31c600 <code_gen_buffer+295441875>, tb_exit=tb_exit@entry=0x7ffff4bfd6ec) at ../../accel/tcg/cpu-exec.c:438
->> #3  0x0000555555e24025 in cpu_loop_exec_tb (tb_exit=0x7ffff4bfd6ec, last_tb=<synthetic pointer>, pc=<optimized out>, tb=0x7fffbc31c600 <code_gen_buffer+295441875>, cpu=0x555557369330) at ../../accel/tcg/cpu-exec.c:872
->> #4  cpu_exec_loop (cpu=cpu@entry=0x555557369330, sc=sc@entry=0x7ffff4bfd7b0) at ../../accel/tcg/cpu-exec.c:982
->> #5  0x0000555555e247a1 in cpu_exec_setjmp (cpu=cpu@entry=0x555557369330, sc=sc@entry=0x7ffff4bfd7b0) at ../../accel/tcg/cpu-exec.c:999
->> #6  0x0000555555e24e2c in cpu_exec (cpu=cpu@entry=0x555557369330) at ../../accel/tcg/cpu-exec.c:1025
->> #7  0x0000555555e42c73 in tcg_cpu_exec (cpu=cpu@entry=0x555557369330) at ../../accel/tcg/tcg-accel-ops.c:81
->> #8  0x0000555555e43093 in mttcg_cpu_thread_fn (arg=arg@entry=0x555557369330) at ../../accel/tcg/tcg-accel-ops-mttcg.c:94
->> #9  0x0000555555ef2250 in qemu_thread_start (args=0x5555573e6e20) at ../../util/qemu-thread-posix.c:541
->> #10 0x00007ffff7750aa4 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:447
->> #11 0x00007ffff77ddc3c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
->>
->> Need one patch for my particular setup to work around some DMA buffer issues in virtio (similar to
->> a patch for pci space last year).  I've been meaning to post an RFC to get feedback on how
->> to handle this but not gotten to it yet!
->>
->>  From 801e47897c5959a22ed050d7e7feebbbd3a12588 Mon Sep 17 00:00:00 2001
->> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->> Date: Mon, 22 Apr 2024 13:54:37 +0100
->> Subject: [PATCH] physmem: Increase bounce buffers for "memory" address space.
->>
->> Doesn't need to be this big and should be configurable.
->>
->> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->> ---
->>   system/physmem.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/system/physmem.c b/system/physmem.c
->> index 3f4fd69d9a..651b875827 100644
->> --- a/system/physmem.c
->> +++ b/system/physmem.c
->> @@ -2798,6 +2798,7 @@ static void memory_map_init(void)
->>       memory_region_init(system_memory, NULL, "system", UINT64_MAX);
->>       address_space_init(&address_space_memory, system_memory, "memory");
->>   
->> +    address_space_memory.max_bounce_buffer_size = 1024 * 1024 * 1024;
->>       system_io = g_malloc(sizeof(*system_io));
->>       memory_region_init_io(system_io, NULL, &unassigned_io_ops, NULL, "io",
->>                             65536);
-> 
-> Hi Richard
-> 
-> As discussed on Friday, I've put test kernel up at https://gitlab.com/jic23/qemu-debug
-> It's just a build of mainline as checked out today. I'll commit the kernel config as well
-> for information.  Nothing particularly special just a lot of stuff built in so
-> you don't need to fuss around with modules in the root fs / initrd etc.
-> 
-> The readme.md file in that repo has instructions to replicate with a typical setup +
-> shell scripts.  Only thing you'll need to install on the mentioned standard debian nocloud
-> image is numactl. Otherwise all cut and paste scripts.
-> 
-> Let me know if this either doesn't work for you (should segfault) on numctl -m 2 ls
-> or there is anything else I can do to help debug this one.
+--0000000000006086680635e2bdf3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Got it.  I failed to reconstruct tlb flags properly in the cmpxchg path,
-which causes a crash for cmpxchg on mmio.
+Hi
 
-r~
+On Thu, May 15, 2025 at 4:49=E2=80=AFAM Vivek Kasireddy <vivek.kasireddy@in=
+tel.com>
+wrote:
+
+> To address the limitation that this option is incompatible with
+> remote clients, this patch series adds an option to select a
+> preferred codec and also enable gl=3Don option for clients that
+> are connected via the network. In other words, with this option
+> enabled (and the below linked Spice series merged), it would be
+> possible to have Qemu share a dmabuf fd with Spice, which would
+> then forward it to a hardware or software based encoder and
+> eventually send the data associated with the fd to a client that
+> could be located on a different machine.
+>
+> Essentially, this patch series provides a hardware accelerated,
+> opensource VDI option for users using Qemu and Spice by leveraging
+> the iGPU/dGPU on the host machine to encode the Guest FB via the
+> Gstreamer framework.
+>
+>
+for v5, please fix the patches to pass scripts/checkpatch.pl.
+
+
+> v3 -> v4 (suggestions from Marc-Andr=C3=A9):
+> - Add a new parameter to make max_refresh_rate configurable
+> - Have surface_gl_create_texture_from_fd() return bool after checking
+>   for errors
+> - Remove the check for PIXMAN_r5g6b5() in spice_gl_replace_fd_texture()
+> - Report errors in spice_gl_replace_fd_texture() when someting fails
+> - Use glGetError() correctly by adding an additional (dummy) call
+>   before checking for actual errors (Dmitry)
+> - Add a new patch to check fd values in egl_dmabuf_export_texture()
+> - Rebase on Qemu master
+>
+> v2 -> v3:
+> - Check for errors after invoking glImportMemoryFdEXT() using
+>   glGetError() and report the error to user (Dmitry)
+>
+> v1 -> v2:
+> - Replace the option name preferred-codec with video-codecs (Marc-Andr=C3=
+=A9)
+> - Add a warning when an fd cannot be created from texture (Marc-Andr=C3=
+=A9)
+> - Add a new patch to blit the scanout texture into a linear one to
+>   make it work with virgl
+> - Rebased and tested against the latest Spice master
+>
+> Tested with the following Qemu parameters:
+> -device virtio-vga,max_outputs=3D1,xres=3D1920,yres=3D1080,blob=3Dtrue
+> -spice port=3D3001,gl=3Don,disable-ticketing=3Don,video-codecs=3Dgstreame=
+r:h264
+>
+> and remote-viewer --spice-debug spice://x.x.x.x:3001 on the client side.
+>
+> Associated Spice server MR (merged):
+> https://gitlab.freedesktop.org/spice/spice/-/merge_requests/229
+>
+> ---
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Frediano Ziglio <freddy77@gmail.com>
+> Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+> Cc: Dongwon Kim <dongwon.kim@intel.com>
+> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> Vivek Kasireddy (7):
+>   ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
+>   ui/spice: Add an option for users to provide a preferred codec
+>   ui/spice: Enable gl=3Don option for non-local or remote clients
+>   ui/spice: Add an option to submit gl_draw requests at fixed rate
+>   ui/console-gl: Add a helper to create a texture with linear memory
+>     layout
+>   ui/spice: Create a new texture with linear layout when gl=3Don is
+>     enabled
+>   ui/spice: Blit the scanout texture if its memory layout is not linear
+>
+>  include/ui/console.h       |   2 +
+>  include/ui/spice-display.h |   5 +
+>  qemu-options.hx            |  10 ++
+>  ui/console-gl.c            |  32 ++++++
+>  ui/egl-helpers.c           |   6 ++
+>  ui/spice-core.c            |  27 +++++
+>  ui/spice-display.c         | 212 ++++++++++++++++++++++++++++++++++---
+>  7 files changed, 278 insertions(+), 16 deletions(-)
+>
+> --
+> 2.49.0
+>
+>
+
+--0000000000006086680635e2bdf3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi</div><br><div class=3D"gmail_quote gmail_quote_con=
+tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 15, 2025 at 4:49=
+=E2=80=AFAM Vivek Kasireddy &lt;<a href=3D"mailto:vivek.kasireddy@intel.com=
+">vivek.kasireddy@intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">To address the limitation that this option is in=
+compatible with<br>
+remote clients, this patch series adds an option to select a<br>
+preferred codec and also enable gl=3Don option for clients that<br>
+are connected via the network. In other words, with this option<br>
+enabled (and the below linked Spice series merged), it would be<br>
+possible to have Qemu share a dmabuf fd with Spice, which would<br>
+then forward it to a hardware or software based encoder and<br>
+eventually send the data associated with the fd to a client that<br>
+could be located on a different machine.<br>
+<br>
+Essentially, this patch series provides a hardware accelerated,<br>
+opensource VDI option for users using Qemu and Spice by leveraging<br>
+the iGPU/dGPU on the host machine to encode the Guest FB via the<br>
+Gstreamer framework.<br>
+<br></blockquote><div><br></div><div>for v5, please fix the patches to pass=
+=C2=A0scripts/<a href=3D"http://checkpatch.pl">checkpatch.pl</a>.</div><div=
+>=C2=A0<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+v3 -&gt; v4 (suggestions from Marc-Andr=C3=A9):<br>
+- Add a new parameter to make max_refresh_rate configurable<br>
+- Have surface_gl_create_texture_from_fd() return bool after checking<br>
+=C2=A0 for errors<br>
+- Remove the check for PIXMAN_r5g6b5() in spice_gl_replace_fd_texture()<br>
+- Report errors in spice_gl_replace_fd_texture() when someting fails<br>
+- Use glGetError() correctly by adding an additional (dummy) call<br>
+=C2=A0 before checking for actual errors (Dmitry)<br>
+- Add a new patch to check fd values in egl_dmabuf_export_texture()<br>
+- Rebase on Qemu master<br>
+<br>
+v2 -&gt; v3:<br>
+- Check for errors after invoking glImportMemoryFdEXT() using<br>
+=C2=A0 glGetError() and report the error to user (Dmitry)<br>
+<br>
+v1 -&gt; v2:<br>
+- Replace the option name preferred-codec with video-codecs (Marc-Andr=C3=
+=A9)<br>
+- Add a warning when an fd cannot be created from texture (Marc-Andr=C3=A9)=
+<br>
+- Add a new patch to blit the scanout texture into a linear one to<br>
+=C2=A0 make it work with virgl<br>
+- Rebased and tested against the latest Spice master<br>
+<br>
+Tested with the following Qemu parameters:<br>
+-device virtio-vga,max_outputs=3D1,xres=3D1920,yres=3D1080,blob=3Dtrue<br>
+-spice port=3D3001,gl=3Don,disable-ticketing=3Don,video-codecs=3Dgstreamer:=
+h264<br>
+<br>
+and remote-viewer --spice-debug spice://x.x.x.x:3001 on the client side.<br=
+>
+<br>
+Associated Spice server MR (merged):<br>
+<a href=3D"https://gitlab.freedesktop.org/spice/spice/-/merge_requests/229"=
+ rel=3D"noreferrer" target=3D"_blank">https://gitlab.freedesktop.org/spice/=
+spice/-/merge_requests/229</a><br>
+<br>
+---<br>
+Cc: Gerd Hoffmann &lt;<a href=3D"mailto:kraxel@redhat.com" target=3D"_blank=
+">kraxel@redhat.com</a>&gt;<br>
+Cc: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.co=
+m" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+Cc: Dmitry Osipenko &lt;<a href=3D"mailto:dmitry.osipenko@collabora.com" ta=
+rget=3D"_blank">dmitry.osipenko@collabora.com</a>&gt;<br>
+Cc: Frediano Ziglio &lt;<a href=3D"mailto:freddy77@gmail.com" target=3D"_bl=
+ank">freddy77@gmail.com</a>&gt;<br>
+Cc: Michael Scherle &lt;<a href=3D"mailto:michael.scherle@rz.uni-freiburg.d=
+e" target=3D"_blank">michael.scherle@rz.uni-freiburg.de</a>&gt;<br>
+Cc: Dongwon Kim &lt;<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_bla=
+nk">dongwon.kim@intel.com</a>&gt;<br>
+Cc: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org" target=
+=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+<br>
+Vivek Kasireddy (7):<br>
+=C2=A0 ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()<b=
+r>
+=C2=A0 ui/spice: Add an option for users to provide a preferred codec<br>
+=C2=A0 ui/spice: Enable gl=3Don option for non-local or remote clients<br>
+=C2=A0 ui/spice: Add an option to submit gl_draw requests at fixed rate<br>
+=C2=A0 ui/console-gl: Add a helper to create a texture with linear memory<b=
+r>
+=C2=A0 =C2=A0 layout<br>
+=C2=A0 ui/spice: Create a new texture with linear layout when gl=3Don is<br=
+>
+=C2=A0 =C2=A0 enabled<br>
+=C2=A0 ui/spice: Blit the scanout texture if its memory layout is not linea=
+r<br>
+<br>
+=C2=A0include/ui/console.h=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +<br>
+=C2=A0include/ui/spice-display.h |=C2=A0 =C2=A05 +<br>
+=C2=A0qemu-options.hx=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 10 +=
++<br>
+=C2=A0ui/console-gl.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 32 +=
++++++<br>
+=C2=A0ui/egl-helpers.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=
+=A06 ++<br>
+=C2=A0ui/spice-core.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 27 +=
+++++<br>
+=C2=A0ui/spice-display.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 212 +++++++++++=
++++++++++++++++++++++++---<br>
+=C2=A07 files changed, 278 insertions(+), 16 deletions(-)<br>
+<br>
+-- <br>
+2.49.0<br>
+<br>
+</blockquote></div></div>
+
+--0000000000006086680635e2bdf3--
+
 
