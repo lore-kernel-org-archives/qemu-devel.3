@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A3CC54ED1
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 17:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D0CC54ED1
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 17:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIsve-0004P6-20; Sat, 24 May 2025 13:45:02 -0400
+	id 1uIt12-0005LM-MV; Sat, 24 May 2025 13:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIsvY-0004Or-Ko
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:44:59 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uIt10-0005L8-N9
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 13:50:34 -0400
+Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIsvW-0001iY-Vx
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:44:56 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-44a57d08bbfso5969675e9.2
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 10:44:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uIt0y-0002ak-7m
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 13:50:33 -0400
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-477296dce8dso8225311cf.3
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 10:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748108693; x=1748713493; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/QYNqjvVSe24+ACWRyWt89eB4Co84GsFkHqD14aCepw=;
- b=AK1B7QWWO0J5bBkCKUZCo6wT0yhZGgCIphc3DtHobUUxAo0dTi8HtuYVuhFHTIyKBB
- U7kD6YgLLjjBG9pwRQILYaI/TYtE4aI5QWQmP1gguk2Kb8mW5xCR+vcqZDUDLYPqtC1k
- ppc+P6X/fbriF3jBK0OXvQx4Kc7jNfnDThmDrQ6zW+vj/+O7kGUzgrvvPWy8r3UrPwpm
- xzgsYmyCvbiVbRYc4oElBGMcY+b7rZWDRk8zW9dQ+K5gB/jaGCb1bMgufatRhLr8H28o
- gP8AXvZSiJQBSY4jgI016YVM7S7p6rpv06FRtcRQGe+sgKdsCQmH9CjcUkZRC7PPjkK6
- Ccfw==
+ d=gmail.com; s=20230601; t=1748109029; x=1748713829; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mHnobuPoj1ossbI4FcI68P2O5rSq2nbjHUXRqGOiZzk=;
+ b=fMP6RUD3hZIIPH141oo9wbWX41fdxhgtfzJK2hjPWgCGdMJIPZMvVbCZP28+4usVbx
+ S8s1NS0IzetIKt5On0Sfn/AjPifKLXdR0uvxuUEKLe4rdkTJcYY3b+huzeDDL7IWl04w
+ JeX3x+z7ouIdGFiP3vPm5SCoYLavrkMtnYaLHZI2+jMl7g4fjFZ/VpCcGAaTiIGxK7pL
+ JZCHFiilv9Bonr9+L7+iSs9SvzgzLt2TpEwi5dY3D0yCqFAo8IwzqKHxbjwGcYwSJNut
+ 1RmM94zINZjwLvB80ZvNVZL11fu+PvZZxNKgptUprqfL+qLiZEha8vXVRnn6tYW4+/1F
+ gRgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748108693; x=1748713493;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/QYNqjvVSe24+ACWRyWt89eB4Co84GsFkHqD14aCepw=;
- b=W+DuFGYYlxpzoBSfxAwkVV+M9+39vozV15c73GxbJvEGLRHosmkXTtlmZmqlXnJXF1
- cqY0OMZPsJU0T+VL+mJiagCojZMqCjX0rJmiC4mehRFN4rWJGmwbtyWgj2v+Ys39ngR9
- TwJp0OVnEGQ0dN+Q6U26nm7UrvPnP88rVR8icwlPscBTXf5KllVkJ63vo2V+VWAWkXX6
- SaB5j3YKm6hLylIag2o+F0asr5TLtuzcDht7awo6u8U1zSAfrCyUvgo8p1W/gGYDl7cW
- dphTGgVYX7V+mpwojFk5oNwsvfjg19o8ODXhPb6XvQkQQu8VPbsfke/D5vqRTeppafnX
- nveA==
-X-Gm-Message-State: AOJu0YzF6v+GTTUn5U4wU8E8b5uaIFC30fPCLIBTD1O29krHssPp/zNm
- 690xp6yks1pMKv0yG65qH/oKNU3INSBpQPWOp2iA/p4S1cPJ2c8cbuJycbR5PwOgCjfiJsh70+U
- N7UD2OeSTKQ==
-X-Gm-Gg: ASbGncvx3lYY41yy+903Qd2sIjwYg0oe5899Y/J0CSZ39SptrBTHYDBQs54Ti6KhXJc
- YFQBEZ1rQiv/uVTrt5MobkoN+FpuO14XLCnAEZP9RbNGH7YswVsnP7hk1ga8T2yllJPIp/YtHuJ
- /edH2uR4eutNTCNe9FV53tcAnFx9wIdo4pR1aspdzGyZAHMP7nL/N7g9k8B+O0A+z3ob2JYqIpn
- PjF2jm91Du1QU44vKVRL8qEt8IkTpBunFp7wAhrOK8A5KvYZBCbyGifw8Q5ubPiblBrwv8nD8ob
- UaBHtkSAUy24xS6UoUkMmoI4Rha/2Q9eUEitb4ingIf2n10RuEdgidfRKojRdcs6LA==
-X-Google-Smtp-Source: AGHT+IFplq/s2YSpgeHzhgyefecGv2T2g5LEBORDxQi6sf1R5lY0uiHamM9DdIVcJeR1j67+ssADxg==
-X-Received: by 2002:a05:6000:4284:b0:3a3:5c8b:5581 with SMTP id
- ffacd0b85a97d-3a4cb43da9bmr1979848f8f.4.1748108693113; 
- Sat, 24 May 2025 10:44:53 -0700 (PDT)
-Received: from [172.16.25.47] ([195.53.115.74])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f182538fsm190801345e9.7.2025.05.24.10.44.52
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 10:44:52 -0700 (PDT)
-Message-ID: <4d4e420e-3365-4f43-b2a8-f45318752118@linaro.org>
-Date: Sat, 24 May 2025 18:44:50 +0100
+ d=1e100.net; s=20230601; t=1748109029; x=1748713829;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mHnobuPoj1ossbI4FcI68P2O5rSq2nbjHUXRqGOiZzk=;
+ b=StY1bVWRofqf785Ffa/ZMrQKLTNEiEdbHcsTW8JYptti3eIzl9HSkBQ4dQz8j1Lzy7
+ xLL440NkiGedr/Dq707Vk/ZXFjISY5JBE/yQpTwQPN3U308oH5Pbkc1gqS51s7hkUqvA
+ 0XIxkAMNsoJRETJzZ8X5U/gmPdcdUX/YTmPOpc5aLlmF3exjm7LMfw/lyxM71NAHe4XK
+ /BENs06AbWy1umkh5vBVY9RrdirI+D8xgCvy9BNa3ceDIS8TrqLgWnwX06lO+Ncm57d3
+ +dNiRryVM/ewo3YZpVqrKi3hhaallO8lNtmIs8dUuNvT/Nw+mZosuYgUYBEU5nm1dqC+
+ sBdQ==
+X-Gm-Message-State: AOJu0YwscEnnePZHiTxxbivhqyZedW8STpGU8jotgc/xx8BivI6wUd9v
+ smNwAp+owuoWLtQUGwoKH51RzQa07AdTV0NqXoz5JAe/FVgTavWat25EtRuFL+BdTEPTmwY8uT4
+ rMeTkaJUQ6AObdr8fpPg1fN53Ttbfmz8=
+X-Gm-Gg: ASbGncu5YJ/GlBWcM28a+1EXdxo8/4ooReSine/vcvb8aicEaKOwLxpUC/Bsk6sdau1
+ hnxZ97wkhcx9aH0+3dRehX4+Z8QAerXBXiw6ZT0ymjoeEo54Ypryopn+Jwx/WsgJ1iHiFr0QOW9
+ eeRUSY+udvNdaTkzAxbPyOQvgunu7RCVctBKaG9PIi5ILOz4fqMbMvt59AB72iTGf1Bg==
+X-Google-Smtp-Source: AGHT+IF+Nc5xK69v4MnwyVSFXLd7BFGIpza2oroNp61U7Xr8VeYjzpaGgdz2FA23qy/lquHFn0StbWXg+59vReTnNPo=
+X-Received: by 2002:ac8:690e:0:b0:494:f705:3ba7 with SMTP id
+ d75a77b69052e-49f481bec7emr66821121cf.44.1748109029406; Sat, 24 May 2025
+ 10:50:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 21/25] target/tricore: call plugin trap callbacks
-To: qemu-devel@nongnu.org
-References: <cover.1747666625.git.neither@nut.email>
- <8bd3931ba67e8beb420cb198e2eb16b7b1270084.1747666625.git.neither@nut.email>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <8bd3931ba67e8beb420cb198e2eb16b7b1270084.1747666625.git.neither@nut.email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x331.google.com
+References: <20250515222014.4161-1-farosas@suse.de>
+In-Reply-To: <20250515222014.4161-1-farosas@suse.de>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Sat, 24 May 2025 19:50:18 +0200
+X-Gm-Features: AX0GCFu7R88caG_kVUZGZ-hai-NC-auifFeQrEJqkwDyCBuBfvwQniBY5C89JqA
+Message-ID: <CAJ+F1C+wJ4od6G3wbRw9iNvD8Des2YSKdwAzbHh0XwNu6sOtcw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] chardev: Fix issues found by vhost-user-test
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,21 +93,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/25 16:20, Julian Ganz wrote:
-> We recently introduced API for registering callbacks for trap related
-> events as well as the corresponding hook functions. Due to differences
-> between architectures, the latter need to be called from target specific
-> code.
-> 
-> This change places an exception hook for TriCore targets. Interrupts are
-> not implemented for this target and it has no host calls.
-> 
-> Signed-off-by: Julian Ganz<neither@nut.email>
-> ---
->   target/tricore/op_helper.c | 5 +++++
->   1 file changed, 5 insertions(+)
+Hi
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Fri, May 16, 2025 at 12:21=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wr=
+ote:
+>
+> Running vhost-user-test with ASAN on a loaded machine reveals several
+> intermittent issues. These show up every time I test the qtest tree so
+> I'm trying to get rid of them.
+>
+> 1- UAF of IOWatchPoll.
+>    This one is self explanatory, ASAN caught it.
+>
+> 2- Reference counting issues in glib. It seems it's possible to unref
+>    a source while adding a callback to it, and glib asserts. This
+>    shows up on all architectures, only on the ASAN build after
+>    hundreds of iterations.
+>
+> 3- Extra yank_unregister_function call leads to abort(). This shows up
+>    on all architectures, but it's quite hidden due to vhost-user-test
+>    using a dedicated server thread which dies and causes timeouts in
+>    the test.
+>
+>    Manifests as assert(s->fds_num) failing. Only on the ASAN build,
+>    after tens of iterations (quite common).
+>
+> Thanks
+>
+> Fabiano Rosas (4):
+>   chardev: Fix QIOChannel refcount
+>   chardev: Don't attempt to unregister yank function more than once
+>   chardev: Consolidate yank registration
+>   chardev: Introduce a lock for hup_source
 
-r~
+Daniel, would you take the first 3 (or all) patches in your next I/O PR ?
+
+>
+>  chardev/char-io.c      |  5 +++++
+>  chardev/char-socket.c  | 38 ++++++++++++--------------------------
+>  chardev/char.c         |  2 ++
+>  include/chardev/char.h |  1 +
+>  4 files changed, 20 insertions(+), 26 deletions(-)
+>
+> --
+> 2.35.3
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
