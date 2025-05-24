@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F02C54FC6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 14:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04844C54F30
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 14:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIq6P-0005nd-CN; Sat, 24 May 2025 10:43:59 -0400
+	id 1uIq7Y-0006hC-3k; Sat, 24 May 2025 10:45:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1uIq6D-0005lT-3W
- for qemu-devel@nongnu.org; Sat, 24 May 2025 10:43:45 -0400
+ id 1uIq7T-0006fG-VJ
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 10:45:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1uIq6A-00083e-CT
- for qemu-devel@nongnu.org; Sat, 24 May 2025 10:43:44 -0400
+ id 1uIq7R-00088c-9S
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 10:45:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748097819;
+ s=mimecast20190719; t=1748097900;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=z6J+priNGe2NN21HW8HYtdsRYNH2qk+iZOUEacs45wc=;
- b=E2P/SnG58OD9avw6XPkBpJXlHdztHRV+P+URG6aHSH1VpKUreF2ht8+DrfGzQO1PtgizES
- ZKrF2LzIgcfxQOLkJ+CTfG5pieHQ/PuHVE5Jx6UQwRerA0C8W8VxInxYGJhjurN8+kNsA+
- UtX0FhNRDjLO6BQEs/7gXZL4J4fr1k0=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0TwItUV09RBBftgwZWAwAp2ne9U5BIVzdGLcYwfsvCg=;
+ b=XFEEYPPZNkZOE0hbj/TsFPgTBYDWElhIwU9iCTl6YfVeP38Bl9ME1es0PYEM5UHXTBGcAg
+ 8n8Yo9VasUUazSHBJ3xMsoLsdtAmIifpJfk43B9epk6tEKa9j33PTNXiN2kLUDNkF64+E3
+ sqo7lhbBC8bAHoEJh9taw10NcBFCssc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-91-IE6PaCQPN7WiXXei5JlMhA-1; Sat, 24 May 2025 10:43:37 -0400
-X-MC-Unique: IE6PaCQPN7WiXXei5JlMhA-1
-X-Mimecast-MFC-AGG-ID: IE6PaCQPN7WiXXei5JlMhA_1748097817
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4768f9fea35so22391541cf.2
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 07:43:37 -0700 (PDT)
+ us-mta-547-ZS88HrNMOPODzUm_jg-_Ew-1; Sat, 24 May 2025 10:44:57 -0400
+X-MC-Unique: ZS88HrNMOPODzUm_jg-_Ew-1
+X-Mimecast-MFC-AGG-ID: ZS88HrNMOPODzUm_jg-_Ew_1748097897
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-476a44cec4cso11983551cf.2
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 07:44:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748097817; x=1748702617;
+ d=1e100.net; s=20230601; t=1748097897; x=1748702697;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=z6J+priNGe2NN21HW8HYtdsRYNH2qk+iZOUEacs45wc=;
- b=HaMXKivj4Qmi5FaXBYFznrZtbhcvxAC1o+NtM3XV7/HvYWSEA5Zggsl72MbRMxaKL8
- ipmJhk8WriLnEIr3owmFpyymi7PEx5BW7NLQJ3iwubCV4+UVEZjMdk7sO7seJmmgTqCH
- nsb3h3AI+mnnXsmI4H8zaTAfnjF1+5QA7z+KEC0Pdex1G6D1cmqmC+cLA8pNKiEmkOZr
- QmBSbmEHUzWPg2GLHGSF19toUgZ21ONk8SNzucGe4nr5EYNpUaPpdm11OtkCoHz5jkYt
- ckt5Xt9WLpo7qIaXLrMtHLkORsUwGFXWZiZxBECAiSRwc6PQIeKYVI9apqIqoSkmy+vn
- cvfQ==
-X-Gm-Message-State: AOJu0YwRVBZR9nNpERwICTOsIAe84CDdhTSFfTxsTq4kMVlsYR3x6ToU
- xrdUfJPtffP4ur4SB/7diD9o4rzRie2NMMHLGHcOoutMQee6LNIvhDPyQXAz3jczeMngQ3aRX04
- 52xhWECYnSdfBP6Av00afkEYr8Zy/k9hwcp3J3QdEAFDOC4OzuooI1k2wKbeb06C5w5ov8xeo12
- yvacC33l+jloEdxoxLGO+kEOuFEDOVFHE=
-X-Gm-Gg: ASbGnctXN2ZyeCYYSc7jwpY/ttwI+CEZahZEnrufilv2s5NouZjN7xJHWAwsBO5eU8s
- WP9tAYArQ7WK/HpghxNB3mJrb8vAGwOKwh7SAxzS7BZUyI94Vp/qWp4WARd3bqrJYBN3KeiaOSo
- xwC066ymmjJ9JmvzIwFfOGY2JA3Q==
-X-Received: by 2002:a05:622a:114e:b0:476:8f90:b5d9 with SMTP id
- d75a77b69052e-49f4624949bmr57240461cf.5.1748097816794; 
- Sat, 24 May 2025 07:43:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMk6hsZlxzfsl7VsMK/GO0Qv/6TvrFQsDTs11WPyIrROWtSPuQ/RSF6xA8nhmGeWWxyDNX/AuU7SjrEqr7DaU=
-X-Received: by 2002:a05:622a:114e:b0:476:8f90:b5d9 with SMTP id
- d75a77b69052e-49f4624949bmr57240071cf.5.1748097816357; Sat, 24 May 2025
- 07:43:36 -0700 (PDT)
+ bh=0TwItUV09RBBftgwZWAwAp2ne9U5BIVzdGLcYwfsvCg=;
+ b=WecwBYz0DHbbHGSSrMvVBlPRXObjdrGgIHvQahcZEeQr0t+atqn5rHa6MMlcbwyDCD
+ ZDcF2jE4KlRKGtKFXrFCbYvR58RpU4A3uyLV0jOjL71smH0xYptNN7l32cdcrr4kZS8C
+ 67z99CxGDnECIOHK5y+sKuxGchWuKuzHX9dyA8WJXTmgdtu7e8AhNXtPuKHvx7PEtn3q
+ ZGMDhNrgJShBnp/eWOsVrar1ncY+Nuy3bvfIRBL13r9OU6jH4OxycL8I1sdSQtS/GJEx
+ ZYkz5XWbRywlmzh1RcTOUTENWa93dxjqPfh3kr6eJx0z9wXLQZWzny4Z+YB3xF5/pRdE
+ 0NHQ==
+X-Gm-Message-State: AOJu0YzhZojwz0g06zOWVzdpJi4ozfOvWBpeaEPo5s74LXYI3MhdKYRD
+ JSXwCtkqXFBMQiyxC+eMSZsn3iozDQ3jXwZN/thsh+Ge8DT6nwwH4bA/XbrrJYuQVeScdXCavIJ
+ jQgIXOEGPLG6Y0qOdAyG3R2bq+HBmW5+mo1i51AX8REKQYcy9hREPApnieUbnqB7fooRRMI6ETr
+ RQhIRaZqnC+aY4K4WEDPj5HmT6iV/70wk=
+X-Gm-Gg: ASbGncsdd8oQCWczPXZw//42n94Q9B5l0zj0FwkffxdZQ380Db3JJbR7lt7jmNhBooZ
+ cAy6vtPX0yopgjzfS39EPE+8d63uIvUjKqgxiOLP2qSicqR1Hs7g7jt6ilZUFGBRQsHrFb+K+h9
+ HjydRzS1g/F/+2a9GValUewH8Mhg==
+X-Received: by 2002:a05:622a:a0b:b0:48d:8053:d8ee with SMTP id
+ d75a77b69052e-49f485aa677mr46967221cf.36.1748097897200; 
+ Sat, 24 May 2025 07:44:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrWc+8BeWqPCEdzoW2SW9NltFDBx11Zal5wC2Dokqsg3SPJPxDw07OLhcLrwogwtQ8+rtOpVYF65VnXyEaC78=
+X-Received: by 2002:a05:622a:a0b:b0:48d:8053:d8ee with SMTP id
+ d75a77b69052e-49f485aa677mr46966891cf.36.1748097896904; Sat, 24 May 2025
+ 07:44:56 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250515024734.758335-1-vivek.kasireddy@intel.com>
-In-Reply-To: <20250515024734.758335-1-vivek.kasireddy@intel.com>
+ <20250515024734.758335-4-vivek.kasireddy@intel.com>
+In-Reply-To: <20250515024734.758335-4-vivek.kasireddy@intel.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sat, 24 May 2025 16:43:25 +0200
-X-Gm-Features: AX0GCFum4Bd-c8LArm8NilLnmuwGUntp2QMoatynm3RFZP-_ZewHmo-tW-vRTG0
-Message-ID: <CAMxuvayYXPg8OHEY3E_3BXo+whr7jmTghf3CWq0+EcH8WdRWtA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/7] ui/spice: Enable gl=on option for non-local or
+Date: Sat, 24 May 2025 16:44:45 +0200
+X-Gm-Features: AX0GCFsKbr6RR5NJEBG_n7x8kcwWerPa3wrbA7TA8OIHlGIHMsOkNO4Fzsmq_AY
+Message-ID: <CAMxuvaxAXVhVXL-h+TorOD5ivyoOrQQH3NpWpgXwngvNFRxZ7Q@mail.gmail.com>
+Subject: Re: [PATCH v4 3/7] ui/spice: Enable gl=on option for non-local or
  remote clients
 To: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, 
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>,
- Dongwon Kim <dongwon.kim@intel.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000006086680635e2bdf3"
+ Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
+Content-Type: multipart/alternative; boundary="0000000000002d8dc10635e2c2c8"
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -107,7 +105,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006086680635e2bdf3
+--0000000000002d8dc10635e2c2c8
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -117,159 +115,96 @@ On Thu, May 15, 2025 at 4:49=E2=80=AFAM Vivek Kasireddy <vivek.kasireddy@in=
 tel.com>
 wrote:
 
-> To address the limitation that this option is incompatible with
-> remote clients, this patch series adds an option to select a
-> preferred codec and also enable gl=3Don option for clients that
-> are connected via the network. In other words, with this option
-> enabled (and the below linked Spice series merged), it would be
-> possible to have Qemu share a dmabuf fd with Spice, which would
-> then forward it to a hardware or software based encoder and
-> eventually send the data associated with the fd to a client that
-> could be located on a different machine.
+> Newer versions of Spice server should be able to accept dmabuf
+> fds from Qemu for clients that are connected via the network.
+> In other words, when this option is enabled, Qemu would share
+> a dmabuf fd with Spice which would encode and send the data
+> associated with the fd to a client that could be located on
+> a different machine.
 >
-> Essentially, this patch series provides a hardware accelerated,
-> opensource VDI option for users using Qemu and Spice by leveraging
-> the iGPU/dGPU on the host machine to encode the Guest FB via the
-> Gstreamer framework.
->
->
-for v5, please fix the patches to pass scripts/checkpatch.pl.
-
-
-> v3 -> v4 (suggestions from Marc-Andr=C3=A9):
-> - Add a new parameter to make max_refresh_rate configurable
-> - Have surface_gl_create_texture_from_fd() return bool after checking
->   for errors
-> - Remove the check for PIXMAN_r5g6b5() in spice_gl_replace_fd_texture()
-> - Report errors in spice_gl_replace_fd_texture() when someting fails
-> - Use glGetError() correctly by adding an additional (dummy) call
->   before checking for actual errors (Dmitry)
-> - Add a new patch to check fd values in egl_dmabuf_export_texture()
-> - Rebase on Qemu master
->
-> v2 -> v3:
-> - Check for errors after invoking glImportMemoryFdEXT() using
->   glGetError() and report the error to user (Dmitry)
->
-> v1 -> v2:
-> - Replace the option name preferred-codec with video-codecs (Marc-Andr=C3=
-=A9)
-> - Add a warning when an fd cannot be created from texture (Marc-Andr=C3=
-=A9)
-> - Add a new patch to blit the scanout texture into a linear one to
->   make it work with virgl
-> - Rebased and tested against the latest Spice master
->
-> Tested with the following Qemu parameters:
-> -device virtio-vga,max_outputs=3D1,xres=3D1920,yres=3D1080,blob=3Dtrue
-> -spice port=3D3001,gl=3Don,disable-ticketing=3Don,video-codecs=3Dgstreame=
-r:h264
->
-> and remote-viewer --spice-debug spice://x.x.x.x:3001 on the client side.
->
-> Associated Spice server MR (merged):
-> https://gitlab.freedesktop.org/spice/spice/-/merge_requests/229
->
-> ---
 > Cc: Gerd Hoffmann <kraxel@redhat.com>
 > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > Cc: Frediano Ziglio <freddy77@gmail.com>
-> Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
 > Cc: Dongwon Kim <dongwon.kim@intel.com>
-> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> ---
+>  include/ui/spice-display.h | 1 +
+>  ui/spice-core.c            | 4 ++++
+>  ui/spice-display.c         | 1 +
+>  3 files changed, 6 insertions(+)
 >
-> Vivek Kasireddy (7):
->   ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
->   ui/spice: Add an option for users to provide a preferred codec
->   ui/spice: Enable gl=3Don option for non-local or remote clients
->   ui/spice: Add an option to submit gl_draw requests at fixed rate
->   ui/console-gl: Add a helper to create a texture with linear memory
->     layout
->   ui/spice: Create a new texture with linear layout when gl=3Don is
->     enabled
->   ui/spice: Blit the scanout texture if its memory layout is not linear
+> diff --git a/include/ui/spice-display.h b/include/ui/spice-display.h
+> index e1a9b36185..f4922dd74b 100644
+> --- a/include/ui/spice-display.h
+> +++ b/include/ui/spice-display.h
+> @@ -151,6 +151,7 @@ struct SimpleSpiceCursor {
+>  };
 >
->  include/ui/console.h       |   2 +
->  include/ui/spice-display.h |   5 +
->  qemu-options.hx            |  10 ++
->  ui/console-gl.c            |  32 ++++++
->  ui/egl-helpers.c           |   6 ++
->  ui/spice-core.c            |  27 +++++
->  ui/spice-display.c         | 212 ++++++++++++++++++++++++++++++++++---
->  7 files changed, 278 insertions(+), 16 deletions(-)
+>  extern bool spice_opengl;
+> +extern bool remote_client;
 >
+
+All the globals you introduce here should have a spice_ prefix, for
+readability and consistency.
+
+
+>
+>  int qemu_spice_rect_is_empty(const QXLRect* r);
+>  void qemu_spice_rect_union(QXLRect *dest, const QXLRect *r);
+> diff --git a/ui/spice-core.c b/ui/spice-core.c
+> index 907b0e9a81..6c3bfe1d0f 100644
+> --- a/ui/spice-core.c
+> +++ b/ui/spice-core.c
+> @@ -848,9 +848,13 @@ static void qemu_spice_init(void)
+>  #ifdef HAVE_SPICE_GL
+>      if (qemu_opt_get_bool(opts, "gl", 0)) {
+>          if ((port !=3D 0) || (tls_port !=3D 0)) {
+> +#if SPICE_SERVER_VERSION >=3D 0x000f03 /* release 0.15.3 */
+> +            remote_client =3D 1;
+> +#else
+>              error_report("SPICE GL support is local-only for now and "
+>                           "incompatible with -spice port/tls-port");
+>              exit(1);
+> +#endif
+>          }
+>          egl_init(qemu_opt_get(opts, "rendernode"), DISPLAY_GL_MODE_ON,
+> &error_fatal);
+>          spice_opengl =3D 1;
+> diff --git a/ui/spice-display.c b/ui/spice-display.c
+> index 9c39d2c5c8..9140169015 100644
+> --- a/ui/spice-display.c
+> +++ b/ui/spice-display.c
+> @@ -31,6 +31,7 @@
+>  #include "standard-headers/drm/drm_fourcc.h"
+>
+>  bool spice_opengl;
+> +bool remote_client;
+>
+>  int qemu_spice_rect_is_empty(const QXLRect* r)
+>  {
 > --
 > 2.49.0
 >
 >
 
---0000000000006086680635e2bdf3
+--0000000000002d8dc10635e2c2c8
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Hi</div><br><div class=3D"gmail_quote gmail_quote_con=
-tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 15, 2025 at 4:49=
-=E2=80=AFAM Vivek Kasireddy &lt;<a href=3D"mailto:vivek.kasireddy@intel.com=
-">vivek.kasireddy@intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">To address the limitation that this option is in=
-compatible with<br>
-remote clients, this patch series adds an option to select a<br>
-preferred codec and also enable gl=3Don option for clients that<br>
-are connected via the network. In other words, with this option<br>
-enabled (and the below linked Spice series merged), it would be<br>
-possible to have Qemu share a dmabuf fd with Spice, which would<br>
-then forward it to a hardware or software based encoder and<br>
-eventually send the data associated with the fd to a client that<br>
-could be located on a different machine.<br>
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 15, 2=
+025 at 4:49=E2=80=AFAM Vivek Kasireddy &lt;<a href=3D"mailto:vivek.kasiredd=
+y@intel.com">vivek.kasireddy@intel.com</a>&gt; wrote:<br></div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex">Newer versions of Spice server should=
+ be able to accept dmabuf<br>
+fds from Qemu for clients that are connected via the network.<br>
+In other words, when this option is enabled, Qemu would share<br>
+a dmabuf fd with Spice which would encode and send the data<br>
+associated with the fd to a client that could be located on<br>
+a different machine.<br>
 <br>
-Essentially, this patch series provides a hardware accelerated,<br>
-opensource VDI option for users using Qemu and Spice by leveraging<br>
-the iGPU/dGPU on the host machine to encode the Guest FB via the<br>
-Gstreamer framework.<br>
-<br></blockquote><div><br></div><div>for v5, please fix the patches to pass=
-=C2=A0scripts/<a href=3D"http://checkpatch.pl">checkpatch.pl</a>.</div><div=
->=C2=A0<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-v3 -&gt; v4 (suggestions from Marc-Andr=C3=A9):<br>
-- Add a new parameter to make max_refresh_rate configurable<br>
-- Have surface_gl_create_texture_from_fd() return bool after checking<br>
-=C2=A0 for errors<br>
-- Remove the check for PIXMAN_r5g6b5() in spice_gl_replace_fd_texture()<br>
-- Report errors in spice_gl_replace_fd_texture() when someting fails<br>
-- Use glGetError() correctly by adding an additional (dummy) call<br>
-=C2=A0 before checking for actual errors (Dmitry)<br>
-- Add a new patch to check fd values in egl_dmabuf_export_texture()<br>
-- Rebase on Qemu master<br>
-<br>
-v2 -&gt; v3:<br>
-- Check for errors after invoking glImportMemoryFdEXT() using<br>
-=C2=A0 glGetError() and report the error to user (Dmitry)<br>
-<br>
-v1 -&gt; v2:<br>
-- Replace the option name preferred-codec with video-codecs (Marc-Andr=C3=
-=A9)<br>
-- Add a warning when an fd cannot be created from texture (Marc-Andr=C3=A9)=
-<br>
-- Add a new patch to blit the scanout texture into a linear one to<br>
-=C2=A0 make it work with virgl<br>
-- Rebased and tested against the latest Spice master<br>
-<br>
-Tested with the following Qemu parameters:<br>
--device virtio-vga,max_outputs=3D1,xres=3D1920,yres=3D1080,blob=3Dtrue<br>
--spice port=3D3001,gl=3Don,disable-ticketing=3Don,video-codecs=3Dgstreamer:=
-h264<br>
-<br>
-and remote-viewer --spice-debug spice://x.x.x.x:3001 on the client side.<br=
->
-<br>
-Associated Spice server MR (merged):<br>
-<a href=3D"https://gitlab.freedesktop.org/spice/spice/-/merge_requests/229"=
- rel=3D"noreferrer" target=3D"_blank">https://gitlab.freedesktop.org/spice/=
-spice/-/merge_requests/229</a><br>
-<br>
----<br>
 Cc: Gerd Hoffmann &lt;<a href=3D"mailto:kraxel@redhat.com" target=3D"_blank=
 ">kraxel@redhat.com</a>&gt;<br>
 Cc: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.co=
@@ -278,47 +213,71 @@ Cc: Dmitry Osipenko &lt;<a href=3D"mailto:dmitry.osipenko@collabora.com" ta=
 rget=3D"_blank">dmitry.osipenko@collabora.com</a>&gt;<br>
 Cc: Frediano Ziglio &lt;<a href=3D"mailto:freddy77@gmail.com" target=3D"_bl=
 ank">freddy77@gmail.com</a>&gt;<br>
-Cc: Michael Scherle &lt;<a href=3D"mailto:michael.scherle@rz.uni-freiburg.d=
-e" target=3D"_blank">michael.scherle@rz.uni-freiburg.de</a>&gt;<br>
 Cc: Dongwon Kim &lt;<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_bla=
 nk">dongwon.kim@intel.com</a>&gt;<br>
-Cc: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org" target=
-=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+Signed-off-by: Vivek Kasireddy &lt;<a href=3D"mailto:vivek.kasireddy@intel.=
+com" target=3D"_blank">vivek.kasireddy@intel.com</a>&gt;<br>
+---<br>
+=C2=A0include/ui/spice-display.h | 1 +<br>
+=C2=A0ui/spice-core.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 4 ++++<br>
+=C2=A0ui/spice-display.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 1 +<br>
+=C2=A03 files changed, 6 insertions(+)<br>
 <br>
-Vivek Kasireddy (7):<br>
-=C2=A0 ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()<b=
-r>
-=C2=A0 ui/spice: Add an option for users to provide a preferred codec<br>
-=C2=A0 ui/spice: Enable gl=3Don option for non-local or remote clients<br>
-=C2=A0 ui/spice: Add an option to submit gl_draw requests at fixed rate<br>
-=C2=A0 ui/console-gl: Add a helper to create a texture with linear memory<b=
-r>
-=C2=A0 =C2=A0 layout<br>
-=C2=A0 ui/spice: Create a new texture with linear layout when gl=3Don is<br=
->
-=C2=A0 =C2=A0 enabled<br>
-=C2=A0 ui/spice: Blit the scanout texture if its memory layout is not linea=
-r<br>
+diff --git a/include/ui/spice-display.h b/include/ui/spice-display.h<br>
+index e1a9b36185..f4922dd74b 100644<br>
+--- a/include/ui/spice-display.h<br>
++++ b/include/ui/spice-display.h<br>
+@@ -151,6 +151,7 @@ struct SimpleSpiceCursor {<br>
+=C2=A0};<br>
 <br>
-=C2=A0include/ui/console.h=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +<br>
-=C2=A0include/ui/spice-display.h |=C2=A0 =C2=A05 +<br>
-=C2=A0qemu-options.hx=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 10 +=
-+<br>
-=C2=A0ui/console-gl.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 32 +=
-+++++<br>
-=C2=A0ui/egl-helpers.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=
-=A06 ++<br>
-=C2=A0ui/spice-core.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 27 +=
-++++<br>
-=C2=A0ui/spice-display.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 212 +++++++++++=
-+++++++++++++++++++++++---<br>
-=C2=A07 files changed, 278 insertions(+), 16 deletions(-)<br>
+=C2=A0extern bool spice_opengl;<br>
++extern bool remote_client;<br></blockquote><div><br></div><div>All the glo=
+bals you introduce here should have a spice_ prefix, for readability and co=
+nsistency.</div><div>=C2=A0<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">
 <br>
+=C2=A0int qemu_spice_rect_is_empty(const QXLRect* r);<br>
+=C2=A0void qemu_spice_rect_union(QXLRect *dest, const QXLRect *r);<br>
+diff --git a/ui/spice-core.c b/ui/spice-core.c<br>
+index 907b0e9a81..6c3bfe1d0f 100644<br>
+--- a/ui/spice-core.c<br>
++++ b/ui/spice-core.c<br>
+@@ -848,9 +848,13 @@ static void qemu_spice_init(void)<br>
+=C2=A0#ifdef HAVE_SPICE_GL<br>
+=C2=A0 =C2=A0 =C2=A0if (qemu_opt_get_bool(opts, &quot;gl&quot;, 0)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((port !=3D 0) || (tls_port !=3D 0)) {=
+<br>
++#if SPICE_SERVER_VERSION &gt;=3D 0x000f03 /* release 0.15.3 */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 remote_client =3D 1;<br>
++#else<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_report(&quot;SPICE GL=
+ support is local-only for now and &quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &quot;incompatible with -spice port/tls-port&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0exit(1);<br>
++#endif<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0egl_init(qemu_opt_get(opts, &quot;rendern=
+ode&quot;), DISPLAY_GL_MODE_ON, &amp;error_fatal);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0spice_opengl =3D 1;<br>
+diff --git a/ui/spice-display.c b/ui/spice-display.c<br>
+index 9c39d2c5c8..9140169015 100644<br>
+--- a/ui/spice-display.c<br>
++++ b/ui/spice-display.c<br>
+@@ -31,6 +31,7 @@<br>
+=C2=A0#include &quot;standard-headers/drm/drm_fourcc.h&quot;<br>
+<br>
+=C2=A0bool spice_opengl;<br>
++bool remote_client;<br>
+<br>
+=C2=A0int qemu_spice_rect_is_empty(const QXLRect* r)<br>
+=C2=A0{<br>
 -- <br>
 2.49.0<br>
 <br>
 </blockquote></div></div>
 
---0000000000006086680635e2bdf3--
+--0000000000002d8dc10635e2c2c8--
 
 
