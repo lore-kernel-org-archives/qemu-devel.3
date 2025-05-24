@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD14C54F30
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 14:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F76C54F30
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 14:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIqAX-0007yh-MF; Sat, 24 May 2025 10:48:13 -0400
+	id 1uIqK7-00018J-Jd; Sat, 24 May 2025 10:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1uIqAV-0007yU-Ts
- for qemu-devel@nongnu.org; Sat, 24 May 2025 10:48:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uIqK4-00017i-FQ
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 10:58:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1uIqAT-0008Vf-EC
- for qemu-devel@nongnu.org; Sat, 24 May 2025 10:48:11 -0400
+ id 1uIqK2-0000ra-2T
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 10:58:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748098088;
+ s=mimecast20190719; t=1748098681;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=zHFaaYgjcxQpC6ePDfU0dLazOJZ0YOV22v1NXxme0Cs=;
- b=P9waTgemL8FFh8XTPvLkSNyknlaMk+XHkUTXZ4N6H8Mbm6tU3vP25U/jtQKFGn4dM6hohY
- Vhg8nuy1/Yj813Tdf7BBB+hSkhGmsxdwbDZMvfCHaGNGQ2Da03wZcDNpxsJq6YVnNHo8/5
- kvWYlsfgHE/K0hooHQh7Z/8c+KWxQL4=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R4E1ZvnP686yfPCWGBT9jfRwrth/FrJnN3MjfxYwNaE=;
+ b=h3R5qgk6uBRD6I/HoRLMiMlcSw/sqc25zdjSqooaGpZN2eSkgF9rCqS9LNasJGLiLNl+OE
+ qOSnX7gco1hS5+FkjFivBx+E4RqR2+fU0J1fXitQgOyCoaxnfSQDy5nnhIMfJix+B/9hoP
+ 9Zf42HGkjNmpHDM4gwVYGc9LMDBmRfY=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-oFa2N3ZgMLijtw6qAbYRHg-1; Sat, 24 May 2025 10:48:06 -0400
-X-MC-Unique: oFa2N3ZgMLijtw6qAbYRHg-1
-X-Mimecast-MFC-AGG-ID: oFa2N3ZgMLijtw6qAbYRHg_1748098086
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4767e6b4596so15265011cf.2
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 07:48:06 -0700 (PDT)
+ us-mta-286-aBQZkhOBPVO4SHbgdsSmPQ-1; Sat, 24 May 2025 10:57:59 -0400
+X-MC-Unique: aBQZkhOBPVO4SHbgdsSmPQ-1
+X-Mimecast-MFC-AGG-ID: aBQZkhOBPVO4SHbgdsSmPQ_1748098679
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4766c80d57eso13960691cf.2
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 07:57:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748098086; x=1748702886;
+ d=1e100.net; s=20230601; t=1748098679; x=1748703479;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zHFaaYgjcxQpC6ePDfU0dLazOJZ0YOV22v1NXxme0Cs=;
- b=AC2q52MKIpxlUpJh2hpiJAWFUC1ZJtNK/lXJc5x4nY0c4Dky6dKKleZQPzuOKfRjIs
- FLrc/qB9T8NZsHn8Djp6e1BFuMToVCmLTHPZZi1EGKMuQQFgX2OQwk3jRlFNTliue+hA
- yK3khdD6St4AXDW9WEH0jzRlq6Nu0grLb8eQe0w+GZJhEb/a5dPAs52KFvcabYKFx5jI
- +bVzfbR5wqRthRwIMnnUDJp2Lvoj3vGeMPY0iYXNyvkHT97WiC4c/0qgGBl/t7+Esu7s
- 6qsk5Trd3eFSx+GhGD7AWsaaVN21LgPpUTi+Xknl3TvxBiQqc6I7hOGTelCi3kNSWF/i
- qNLg==
-X-Gm-Message-State: AOJu0YwEkv4ZOTDg2autsL7pShoq/VOkkY7x1lhxz31L6aPgTo5goDwH
- SATBjkxCczhrJ0aM2TGEf6pRdP5yKjtm0FGWzsN3R5HZ16CLMbDc6UgGEErgEvndulSXavZPRnp
- rMAEJVCoXmgG9A/9aHceTdNsCm5fR3P3ILWtR63xmey9Cf1T3ve9+hzmGjEubQTET0yI/VL3Opb
- ZuM0Jumvx2/4tCgG2PZsNDMFe9SE941Iw=
-X-Gm-Gg: ASbGncsl1QgCHlkFMoyPwG8bYi3VaqjuyruEKPRs00iTkMuwaUSEns4tdHF5mw8FjbS
- tPH8bSqgd9JNJxmvIru0PxegnTou/9Ipd5PxD/o5A0gOK0veUWr9hEDPNhyxrI3He/u/7WqwZDS
- xqFqTvbQeouzn0f6Y8xaxGzYE8qQ==
-X-Received: by 2002:a05:622a:5a0b:b0:476:6b20:2cf3 with SMTP id
- d75a77b69052e-49f4791450amr56195141cf.33.1748098085878; 
- Sat, 24 May 2025 07:48:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOv2+DbSB3DUBosscoPe/c5mqDiaqwemK3RQ49Jf0StgXFsAftLDLClePnGgFeOZduBHBewmN3V0wIDcBSIBg=
-X-Received: by 2002:a05:622a:5a0b:b0:476:6b20:2cf3 with SMTP id
- d75a77b69052e-49f4791450amr56194831cf.33.1748098085488; Sat, 24 May 2025
- 07:48:05 -0700 (PDT)
+ bh=R4E1ZvnP686yfPCWGBT9jfRwrth/FrJnN3MjfxYwNaE=;
+ b=FIaSNhZ6kDPuiB+TCK0elFzIdxHd4TfKGcohi1oA+rab54Z0kKY9h2+b7T7mzWO9GD
+ qXkP+QiockZWveBCCG+fo9RcaX24PFHzeYzOiW+uiqWtpS/Eqq1+h60ZchOaO8OY/UeF
+ bwsLutoathvAoCJMYAJFcbn4UIAqWXXOXop6oO0uCo8YpGaKLGZDBqKLGg641KrQNeSo
+ 1Gzk/BIwZuWMMRdISg9lRmxotpgRWPf7DeHeow8fnAkaWS7qsx/JqWaX1pH1I2nlu1Cy
+ UNZVfXGlGbASawrNmPcKrJ6x4zQDB947fS6g4Wq+lsjj9KfiWuqlSPhInxeeSYd/CMJO
+ elfg==
+X-Gm-Message-State: AOJu0YxHAYq8N+PqDMyHbvCuCOe0lWhNmhMgNlA7D6Pfo+r9Iv5Qlxl4
+ l4tr1e4PvhhTnbJx0Sqo0D8ewioKbBFtZd21Y81QzYf+KQNiYrilslxkbbu5Gic1hQH68WZhiNP
+ EqV6fwTwXnHEdMvseKETWlscf75tHmoUefvtVzRofMYNW+op5+N3n89PX5uMvtXtwomec5EGytd
+ qVP4+oDdnBWlYoJIzy3vBgd8YWETCOS5w=
+X-Gm-Gg: ASbGncuMSpRYel3wGPWtSwjawgOLwitDpsI3XLM+l+5X1iSJ8eFX0uq5eB8RCX/JB0/
+ m78KdlP2HEfE1aZLZ5lgzG68kqQej+JAx0pYgAzZN74sXufbcOjJPUli3yrDJun82JWTd2Am5VA
+ uu1/VKy6+zIBj9pfw6Qc4DF1xgUA==
+X-Received: by 2002:a05:622a:4ccc:b0:494:9fca:8f8f with SMTP id
+ d75a77b69052e-49f464571edmr49097591cf.3.1748098678691; 
+ Sat, 24 May 2025 07:57:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHbhKY7MLcXhYlbbwZA/6wCzTpuwgriX+XLEC3nXlx+rO+wcnH52om6zMkn/LmoncLtGLDcQkhQ5Y7F6Ix1Aus=
+X-Received: by 2002:a05:622a:4ccc:b0:494:9fca:8f8f with SMTP id
+ d75a77b69052e-49f464571edmr49097281cf.3.1748098678245; Sat, 24 May 2025
+ 07:57:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250515024734.758335-1-vivek.kasireddy@intel.com>
  <20250515024734.758335-5-vivek.kasireddy@intel.com>
 In-Reply-To: <20250515024734.758335-5-vivek.kasireddy@intel.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sat, 24 May 2025 16:47:54 +0200
-X-Gm-Features: AX0GCFsftIxm98upWAbcQZC5Dsj2cr-jde0ntzcLY-Fd9Q962D5ZQ7IHjeJj11I
-Message-ID: <CAMxuvayCgDBc94fWXqkt1nzuVdJ7jKKfSAv=D3ZMKtkoA+rjSQ@mail.gmail.com>
+Date: Sat, 24 May 2025 16:57:47 +0200
+X-Gm-Features: AX0GCFtsx1onKxDN8rIdKYAl9DczZ_9eu0qVySzZsoATc_khVa6QxtC3oOnBcs4
+Message-ID: <CAMxuvazk2UMmneKa3=WSyXpqj+GOzFLzSFJ-stb8X4qN=0p3NQ@mail.gmail.com>
 Subject: Re: [PATCH v4 4/7] ui/spice: Add an option to submit gl_draw requests
  at fixed rate
 To: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-Content-Type: multipart/alternative; boundary="0000000000006b22360635e2cdfe"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+Content-Type: multipart/alternative; boundary="000000000000bfe17f0635e2f010"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -105,9 +105,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006b22360635e2cdfe
+--000000000000bfe17f0635e2f010
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+
+Hi
 
 On Thu, May 15, 2025 at 4:49=E2=80=AFAM Vivek Kasireddy <vivek.kasireddy@in=
 tel.com>
@@ -121,6 +123,7 @@ wrote:
 > frame which is not optimal as it would lead to increased network
 > traffic and wastage of GPU cycles if the frames get dropped.
 >
+
 > Cc: Gerd Hoffmann <kraxel@redhat.com>
 > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
@@ -143,11 +146,6 @@ wrote:
 >  extern bool spice_opengl;
 >  extern bool remote_client;
 > +extern int max_refresh_rate;
->
-
-(use spice_ prefix)
-
-
 >
 >  int qemu_spice_rect_is_empty(const QXLRect* r);
 >  void qemu_spice_rect_union(QXLRect *dest, const QXLRect *r);
@@ -186,11 +184,6 @@ wrote:
 >  };
 >
 > +#define MAX_REFRESH_RATE 30
->
-
-Better call it DEFAULT_MAX_REFRESH_RATE.
-
-
 > +
 >  static SpiceTimer *timer_add(SpiceTimerFunc func, void *opaque)
 >  {
@@ -335,6 +328,14 @@ l);
 > +    } else {
 > +        spice_gl_draw(ssd, x, y, w, h);
 > +    }
+>
+
+I think this is not the right place to handle the remote vs local case. It
+should be done at the spice server level, since the server can serve
+various sockets / connections (not just the one it listens to, but the one
+it has been given).
+
+
 >  }
 >
 >  static const DisplayChangeListenerOps display_listener_gl_ops =3D {
@@ -343,23 +344,25 @@ l);
 >
 >
 
---0000000000006b22360635e2cdfe
+--000000000000bfe17f0635e2f010
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 15,=
- 2025 at 4:49=E2=80=AFAM Vivek Kasireddy &lt;<a href=3D"mailto:vivek.kasire=
-ddy@intel.com">vivek.kasireddy@intel.com</a>&gt; wrote:<br></div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">In the specific case where the disp=
-lay layer (virtio-gpu) is using<br>
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 15, 2=
+025 at 4:49=E2=80=AFAM Vivek Kasireddy &lt;<a href=3D"mailto:vivek.kasiredd=
+y@intel.com">vivek.kasireddy@intel.com</a>&gt; wrote:<br></div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex">In the specific case where the displa=
+y layer (virtio-gpu) is using<br>
 dmabuf, and if remote clients are enabled (-spice gl=3Don,port=3Dxxxx),<br>
 it makes sense to limit the maximum (streaming) rate (refresh rate)<br>
 to a fixed value using the GUI refresh timer. Otherwise, the updates<br>
 or gl_draw requests would be sent as soon as the Guest submits a new<br>
 frame which is not optimal as it would lead to increased network<br>
-traffic and wastage of GPU cycles if the frames get dropped.<br>
+traffic and wastage of GPU cycles if the frames get dropped.<br></blockquot=
+e><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex">
 <br>
 Cc: Gerd Hoffmann &lt;<a href=3D"mailto:kraxel@redhat.com" target=3D"_blank=
 ">kraxel@redhat.com</a>&gt;<br>
@@ -391,10 +394,7 @@ index f4922dd74b..2fe524b59c 100644<br>
 <br>
 =C2=A0extern bool spice_opengl;<br>
 =C2=A0extern bool remote_client;<br>
-+extern int max_refresh_rate;<br></blockquote><div><br></div><div>(use spic=
-e_ prefix)</div><div>=C2=A0<br></div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex">
++extern int max_refresh_rate;<br>
 <br>
 =C2=A0int qemu_spice_rect_is_empty(const QXLRect* r);<br>
 =C2=A0void qemu_spice_rect_union(QXLRect *dest, const QXLRect *r);<br>
@@ -441,10 +441,7 @@ index 6c3bfe1d0f..d8925207b1 100644<br>
 =C2=A0 =C2=A0 =C2=A0QEMUTimer *timer;<br>
 =C2=A0};<br>
 <br>
-+#define MAX_REFRESH_RATE 30<br></blockquote><div><br></div><div>Better cal=
-l it DEFAULT_MAX_REFRESH_RATE.</div><div>=C2=A0<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
++#define MAX_REFRESH_RATE 30<br>
 +<br>
 =C2=A0static SpiceTimer *timer_add(SpiceTimerFunc func, void *opaque)<br>
 =C2=A0{<br>
@@ -617,7 +614,12 @@ _DONE, 0);<br>
 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ssd-&gt;gl_updates++;<br>
 +=C2=A0 =C2=A0 } else {<br>
 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 spice_gl_draw(ssd, x, y, w, h);<br>
-+=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }<br></blockquote><div><br></div><div>I think this is not th=
+e right place to handle the remote vs local case. It should be done at the =
+spice server level, since the server can serve various sockets / connection=
+s (not just the one it listens to, but the one it has been given).</div><di=
+v>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
 =C2=A0}<br>
 <br>
 =C2=A0static const DisplayChangeListenerOps display_listener_gl_ops =3D {<b=
@@ -627,6 +629,6 @@ r>
 <br>
 </blockquote></div></div>
 
---0000000000006b22360635e2cdfe--
+--000000000000bfe17f0635e2f010--
 
 
