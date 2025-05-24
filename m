@@ -4,132 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F15C54ED1
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 15:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683CAC54ED1
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 15:38:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIqtY-0006rI-1q; Sat, 24 May 2025 11:34:44 -0400
+	id 1uIqxC-0007d8-Sg; Sat, 24 May 2025 11:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uIqtW-0006rA-Ei
- for qemu-devel@nongnu.org; Sat, 24 May 2025 11:34:42 -0400
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uIqxA-0007cx-2U
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 11:38:28 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uIqtU-0004po-KW
- for qemu-devel@nongnu.org; Sat, 24 May 2025 11:34:42 -0400
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-22c33677183so5188085ad.2
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 08:34:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uIqx7-0005G4-Nf
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 11:38:27 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-601f278369bso1676257a12.1
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 08:38:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748100879; x=1748705679; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=7yE1qCsDMyek8vOG1YvC3zJC6TgSTGGOJrcZwmANjm4=;
- b=mQSsyvtNSqaE8w+Y59Tt0LdcfYzqALT2ll3ruAspPJydVsGDyziwjKlwGgrviui4YL
- 56bKGzeBcIkmn96p3IN6CgYgEpQcSact5bUuZ3tdtimLD0nqZBtcDLw3MeL3ggKBfU3w
- dxFUmsPCik6LO+7OEy1rjUJrCHTng8+EoryYl9yXAjfbXhA6ck+ZNKfW4H0idz5O1gCq
- g8akVM0Jz6sUozC4wrcV3CZjqtTUyfx1Qj/3zBJ7DyiHayqMn50Ahc8BgUQZKzED6iFm
- qCzykGLhD2xwebksaCm7p/HeCOww1H+0wtacn64RWRsphUNYJzgE+7HbAkcd1JW3fELT
- VQ6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748100879; x=1748705679;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1748101102; x=1748705902; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7yE1qCsDMyek8vOG1YvC3zJC6TgSTGGOJrcZwmANjm4=;
- b=C5vnZVc5eCSD2B5ZJk9bAcnkgPx3tc1D4sDskLQfrm0Mrh0bN5vHqLfcjXcHTxatDt
- bOYA7nJcBlQk7Ict/jEGSkNCsRijryXNwkM8+18XfSmg+s68BZSvDIdvpJbp+eIQ2iY/
- LCGC7w4TPOSseLbSqaQPSUMNoi/r3eGoO26qGcH58TCORHwbOBSurEvtpfii64w70UyC
- uzYpyO9KB2GiDu+7EZv3fB/17UvhUcVyQYBz+OGRkFObVgkc0nbzlqOUKi4MPralCDqc
- r44GUfmSJIUV2qTMWP4DDMB4kcBK4iehzHpiGyKrnvte261pMeCLoLv8p+Hho8Nb7f1J
- /8wA==
-X-Gm-Message-State: AOJu0YxyOuXffF0O+qFkQOQPqenanKgrDP4zolYYkAqJ9QY9ks4Kjtu4
- 2ziAyUiObo1/3X7JwEJBBWJcSMpEZuRkHy91dXS/d74haOWuHx3mg9A=
-X-Gm-Gg: ASbGnctzQC1ZaJw6xrbZj9JyFmMkVs4uSBtSDAYgSDEBxFgY5Oh4OmkFYcrVBgkElDS
- cupRROxShDXUE5OuNisPiu+0WecD+6Zpm6zPKocqja4eM/0k/wnDGMRtGxp3pBhuZotDFVQlVNP
- j9XSJbfTWKEB0naCGGJhHrTycVRZRlQllHPyWBgc1R6HWB/6/pljnYELAq2Wl4skJeM+Wkmf4Zg
- URwt+VvI7i8uVD2euscD8K2JwFJiY/hp0Qf465TukSdrfiKu8K5noWRrqadjDckiPQWj7Lb0cYg
- 1+NCHAxXlXesR9zMGJFGOz29jpAlIvTwKuso+ewqO+cXHuZ2/nnr0b5fSl8=
-X-Google-Smtp-Source: AGHT+IFE7ljrJeF4LzwW+CnqnS+9qoi3n+My+OBRcF3AnlwhP6sQyaBJGrcg3SdNFs2peoP4USWb3w==
-X-Received: by 2002:a17:903:1946:b0:231:b7f5:cab5 with SMTP id
- d9443c01a7336-23414fbb6c9mr58670365ad.33.1748100879014; 
- Sat, 24 May 2025 08:34:39 -0700 (PDT)
-Received: from [192.168.0.113] ([139.227.182.131])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23401ab6c3asm21844315ad.72.2025.05.24.08.34.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 08:34:38 -0700 (PDT)
-Message-ID: <ef86389b-ce08-4530-8150-55fac6ec6f66@gmail.com>
-Date: Sat, 24 May 2025 23:34:32 +0800
+ bh=SOkRho4ifL0KQlTw9HAxQGYJduiEFISXV9vo1c/ohsE=;
+ b=YW4NZTFhsm4Js73TIE+5nQM+VDY6vkG0HDblip5cbmeYbo01LxHQVCUtj7p0zc+Ph+
+ J3CcZBwF/xYeRfVxEXxwYhlzbJfsS8dSviegRqNTpwO31x93BZGr2kFH6X/QO+YUPM16
+ 5/q1/vnElX4rwL3PIqvQ75bId7ZZbgggcpp7qI+71U6ETkNkJE4Jka6WuWQ2omSbBbzo
+ KqPbOvAypa5nq33jqtuosPhuozJdzUbwXoVAyRvOJVyw1otZGLJdr72OIB+SQsVvRMOd
+ KM/05tpOqhC1EsxIU46/azfmJlqx5u/LM1KEoaaQKfZUvi9/HszIOf/Mfkn1Z9nrBF4N
+ 30/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748101102; x=1748705902;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SOkRho4ifL0KQlTw9HAxQGYJduiEFISXV9vo1c/ohsE=;
+ b=Zd44jRM2XS8ORLp+gPr86YND6IwGWXmYobagmRwMNHiZp8v+WU6QM0G2ByVIgYlPAF
+ wjNHJvS+nXDk9D0TkJdJ7SVc8h1cdv4/KSNdr5+JwV4qPkf+QP6rwKQGFliRpqxgjQIJ
+ +fX/reAZVueHvyRQ8ilnx/trNF53rbH0FJD2NaDdEDC4bgAQLI/H1R8f6IHTjQde3n5A
+ nrdHojhFaaV7trecdmd8/v56vQsH58c65os4ErMSRYKiAFfDouC9vq6QdYso4CbGC8mF
+ 9MdrDVgECO+k6HTB7lMPs7C5fVvsViP79UcGXDQ7tCOiJVWODv6wmrqgW+Bdw801yJ+C
+ ifPw==
+X-Gm-Message-State: AOJu0YyR9H+MNL5vvJq2qpyEYb/QkQpezyuETZDV5yh8XDyL3cIPuAnm
+ 0waT9tf+eDgMV83ntCQbtbTpgzS5o5XioyHfyKuZGxl1G30ZrgCZuTwULuqZEPUheuA=
+X-Gm-Gg: ASbGncvF7gxR+NKXz+oYA2XbP1yOOKEjS/IrtWG4vjFRkAaH9Qn+ha3HXvflqTflg7C
+ QQFkaN+IDQ/WL+cb+dNP8baBZsL9kG4BjDqqv8RPm52gdAC1lRpNKs6M5T08WNijkbaQv67xYyU
+ WxoGISqq1OAvcDt2V5rbOo0J0aY98UfMKL5pIBPH4zTDpwGNsRPIHp+5C0dCddOg151gesEDqwm
+ wVgySM6MlQQhPtpu4NXGOgMsGbGRlkYB05ZqaM3q6WjHKjWmoH30E25ldlRUA1pPxQf3M0MnEB0
+ Xfva/+NCkhYOEXWG113+/uhTgqQRb2O1UxcUQtyHUsgj2JY6fcWq
+X-Google-Smtp-Source: AGHT+IHX8yxfzpH9XCieuhWHJfJdA5iCmT1UaN1XUJj5Ru6QtRvSdkAoZ8mS+GxmJRJKHM60VQPa6A==
+X-Received: by 2002:a05:6402:3486:b0:601:89d4:968e with SMTP id
+ 4fb4d7f45d1cf-602dacbfd7amr2417019a12.27.1748101102408; 
+ Sat, 24 May 2025 08:38:22 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-602d2282d3asm1267520a12.16.2025.05.24.08.38.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 24 May 2025 08:38:21 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D30D75F782;
+ Sat, 24 May 2025 16:38:20 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  thuth@redhat.com,  berrange@redhat.com,
+ eric.auger@redhat.com,  philmd@linaro.org,  peter.maydell@linaro.org,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH v4] tests/functional: Add PCI hotplug test for aarch64
+In-Reply-To: <20250512144629.182340-1-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Mon, 12 May 2025 15:45:45 +0100")
+References: <20250512144629.182340-1-gustavo.romero@linaro.org>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Sat, 24 May 2025 16:38:20 +0100
+Message-ID: <87a57210k3.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/pci: Introduce x-pci-class-code option
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250524153102.19747-1-tomitamoeko@gmail.com>
-Content-Language: en-US
-From: Tomita Moeko <tomitamoeko@gmail.com>
-Autocrypt: addr=tomitamoeko@gmail.com; keydata=
- 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
-In-Reply-To: <20250524153102.19747-1-tomitamoeko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x643.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,84 +104,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/24/25 23:31, Tomita Moeko wrote:
-> Introduce x-pci-class-code option to allow users to override PCI class
-> code of a device, similar to the existing x-pci-vendor-id option. Only
-> the lower 24 bits of this option are used, though a uint32 is used here
-> for determining whether the value is valid and set by user.
-> 
-> This is mainly intended for IGD devices that expose themselves either
-> as VGA controller (primary display) or Display controller (non-primary
-> display). The UEFI GOP driver depends on the device reporting a VGA
-> controller class code (0x030000).
-> 
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Gustavo Romero <gustavo.romero@linaro.org> writes:
+
+> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
+> hot-unplug on arm64.
+>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
->  hw/vfio/pci.c        | 17 +++++++++++++++++
->  hw/vfio/pci.h        |  1 +
->  hw/vfio/trace-events |  1 +
->  3 files changed, 19 insertions(+)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index a1bfdfe375..879347a54e 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3062,6 +3062,21 @@ static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
->                                                vdev->sub_device_id);
->      }
->  
-> +    /*
-> +     * Class code is a 24-bit value at config space 0x09. Allow overriding it
-> +     * with any 24-bit value.
-> +     */
-> +    if (vdev->class_code != PCI_ANY_ID) {
-> +        if (vdev->class_code > 0xffffff) {
-> +            error_setg(errp, "invalid PCI class code provided");
-> +            return false;
-> +        }
-> +        /* Higher 24 bits of PCI_CLASS_REVISION are class code */
-> +        vfio_add_emulated_long(vdev, PCI_CLASS_REVISION,
-> +                               vdev->class_code << 8, ~0xff);
-> +        trace_vfio_pci_emulated_class_code(vbasedev->name, vdev->class_code);
-> +    }
+>  MAINTAINERS                                  |  5 ++
+>  tests/functional/meson.build                 |  1 +
+>  tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
+>  3 files changed, 80 insertions(+)
+>  create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 23174b4ca7..9ebb768214 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2065,6 +2065,11 @@ S: Supported
+>  F: include/hw/pci/pcie_doe.h
+>  F: hw/pci/pcie_doe.c
+>=20=20
+> +ARM PCI Hotplug
+> +M: Gustavo Romero <gustavo.romero@linaro.org>
+> +S: Supported
+> +F: tests/functional/test_aarch64_hotplug_pci.py
 > +
->      /* QEMU can change multi-function devices to single function, or reverse */
->      vdev->emulated_config_bits[PCI_HEADER_TYPE] =
->                                                PCI_HEADER_TYPE_MULTI_FUNCTION;
-> @@ -3482,6 +3497,8 @@ static const Property vfio_pci_dev_properties[] = {
->                         sub_vendor_id, PCI_ANY_ID),
->      DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
->                         sub_device_id, PCI_ANY_ID),
-> +    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
-> +                       class_code, PCI_ANY_ID),
->      DEFINE_PROP_UINT32("x-igd-gms", VFIOPCIDevice, igd_gms, 0),
->      DEFINE_PROP_UNSIGNED_NODEFAULT("x-nv-gpudirect-clique", VFIOPCIDevice,
->                                     nv_gpudirect_clique,
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 5ce0fb916f..587eb8cc9a 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -156,6 +156,7 @@ struct VFIOPCIDevice {
->      uint32_t device_id;
->      uint32_t sub_vendor_id;
->      uint32_t sub_device_id;
-> +    uint32_t class_code;
->      uint32_t features;
->  #define VFIO_FEATURE_ENABLE_VGA_BIT 0
->  #define VFIO_FEATURE_ENABLE_VGA (1 << VFIO_FEATURE_ENABLE_VGA_BIT)
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index e90ec9bff8..d0b006aa29 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -46,6 +46,7 @@ vfio_pci_emulated_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
->  vfio_pci_emulated_device_id(const char *name, uint16_t val) "%s 0x%04x"
->  vfio_pci_emulated_sub_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
->  vfio_pci_emulated_sub_device_id(const char *name, uint16_t val) "%s 0x%04x"
-> +vfio_pci_emulated_class_code(const char *name, uint16_t val) "%s 0x%06x"
-                                                  ^^^^^^^^
-Sorry there is a mistake, it should be `uint32_t` here...
+>  ACPI/SMBIOS
+>  M: Michael S. Tsirkin <mst@redhat.com>
+>  M: Igor Mammedov <imammedo@redhat.com>
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 52b4706cfe..2d68840fa2 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -83,6 +83,7 @@ tests_aarch64_system_quick =3D [
+>  tests_aarch64_system_thorough =3D [
+>    'aarch64_aspeed_ast2700',
+>    'aarch64_aspeed_ast2700fc',
+> +  'aarch64_hotplug_pci',
+>    'aarch64_imx8mp_evk',
+>    'aarch64_raspi3',
+>    'aarch64_raspi4',
+> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functio=
+nal/test_aarch64_hotplug_pci.py
+> new file mode 100755
+> index 0000000000..fa1bb62c8f
+> --- /dev/null
+> +++ b/tests/functional/test_aarch64_hotplug_pci.py
+> @@ -0,0 +1,74 @@
+> +#!/usr/bin/env python3
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +# The test hotplugs a PCI device and checks it on a Linux guest.
+> +#
+> +# Copyright (c) 2025 Linaro Ltd.
+> +#
+> +# Author:
+> +#  Gustavo Romero <gustavo.romero@linaro.org>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_=
+pattern
+> +from qemu_test import BUILD_DIR
+> +
+> +class HotplugPCI(LinuxKernelTest):
+> +
+> +    ASSET_KERNEL =3D Asset(
+> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
+4/'
+> +         'current/images/netboot/debian-installer/arm64/linux'),
+> +        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b=
+2')
+> +
+> +    ASSET_INITRD =3D Asset(
+> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
+4/'
+> +         'current/images/netboot/debian-installer/arm64/initrd.gz'),
+> +
+> '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
 
->  # pci-quirks.c
->  vfio_quirk_rom_in_denylist(const char *name, uint16_t vid, uint16_t did) "%s %04x:%04x"
+Hmm do we need to specify a checksum type now?
 
+  TAP version 13
+  not ok 1 test_aarch64_hotplug_pci.HotplugPCI.test_hotplug_pci
+  1..1
+  ----------------------------------- stderr ------------------------------=
+-----
+  Traceback (most recent call last):
+    File "/home/alex/lsrc/qemu.git/tests/functional/test_aarch64_hotplug_pc=
+i.py", line 44, in test_hotplug_pci
+      self.launch_kernel(self.ASSET_KERNEL.fetch(),
+                         ~~~~~~~~~~~~~~~~~~~~~~~^^
+    File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/asset.py", li=
+ne 189, in fetch
+      raise AssetError(self, "Hash does not match %s" % self.hash)
+  qemu_test.asset.AssetError: https://ftp.debian.org/debian/dists/stable/ma=
+in/installer-arm64/current/images/netboot/debian-installer/arm64/linux: Has=
+h does not match 3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca=
+3117b2
+
+  More information on test_aarch64_hotplug_pci.HotplugPCI.test_hotplug_pci =
+could be found here:
+   /home/alex/lsrc/qemu.git/builds/all/tests/functional/aarch64/test_aarch6=
+4_hotplug_pci.HotplugPCI.test_hotplug_pci/base.log
+   /home/alex/lsrc/qemu.git/builds/all/tests/functional/aarch64/test_aarch6=
+4_hotplug_pci.HotplugPCI.test_hotplug_pci/console.log
+
+  (test program exited with status code 1)
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+
+In fact could we use the existing tuxrun images instead of relying on
+debian stable not changing?
+
+<snip>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
