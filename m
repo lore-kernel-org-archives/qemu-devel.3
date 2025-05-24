@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C288C54FC6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 13:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE67C54F30
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 13:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIoe3-0007HK-5z; Sat, 24 May 2025 09:10:35 -0400
+	id 1uIpAg-0005ZJ-QM; Sat, 24 May 2025 09:44:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIoe1-0007HB-So
- for qemu-devel@nongnu.org; Sat, 24 May 2025 09:10:33 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1uIpAf-0005ZA-3P
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 09:44:17 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uIoe0-0006c7-AL
- for qemu-devel@nongnu.org; Sat, 24 May 2025 09:10:33 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-44b1ff82597so5800005e9.3
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 06:10:31 -0700 (PDT)
+ id 1uIpAd-0002G0-5S
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 09:44:16 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43cf680d351so10305885e9.0
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 06:44:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748092230; x=1748697030; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748094253; x=1748699053; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=K3JLK9pZmogTjVHVYQLPlR6FT90z3gKv0ZAIHmISogY=;
- b=Kf1U57wEmBO9jbhIVrALGhJs6gKz09sIpnN7AUsVKr/y4fqhW91aG2Y9N0eurd9qYu
- A1sioNVjg7A+x8x/nYUj3GWRL1XwRNw8afDWmh9C6V2saPXXfw7UVgJrcXb/TbCd0CUH
- RSuhDCb4bz6Wr5PNZ8Tw2Hjtu0xVD4ikzDdND3xA4Geq8UJbet5ShqUj28khnfHNPwNF
- Bri+/xH6Cim34hlRgZoG7khos61JbrRSMh8kzyrTk0ZX3fKphaeVvvfk+QJJztH5q2l6
- QRxLxIHISSzXcerEsU6ZdJP3XiKHW4fjZL+VUCy2HXFJ1ewIyFR4/WpvewrVyZymKL7W
- +l8g==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kEWOUDA3q06GZ5GkbSQHmEZI1g8mcQKpm5PdVrCbWmY=;
+ b=a5eCQZvQlrQlbibodpX4LGIbtug83A38QfipYaYKC7KEq19eRfbktkpRbHzfQw2E8d
+ h5tcMjcJJU9l2CyJhdDnfaaykTL/69hWpDSvMPZHbyHdid3Be6W54XVDRQLrT8gPN+pZ
+ RQGcIL2QUTDciMteC1pTSn1ZJ7ZjDDgCMKT09J1ukSvlQtkV7W8qvV6afOWMyHOy96+5
+ HXtq3pTmd8py4XR565L7NJqZqkVddU9AFHAjjRYu6wY58vHunamUQkhtt3fr0Fi5TaqI
+ PG7PuOdYR3lBvoOjElteYg96w1tL02NeUE1Xvi/wHJIlvCl2GHGsNWYghVF+dw9uyOu4
+ 9LvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748092230; x=1748697030;
+ d=1e100.net; s=20230601; t=1748094253; x=1748699053;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K3JLK9pZmogTjVHVYQLPlR6FT90z3gKv0ZAIHmISogY=;
- b=uz7a6dbUOdxUAnokl+3Swlm7Szf1j+d8VW/XRe7N2PbEpLSXQYov7G+m3XUYWQKT3y
- ALln6zojSho/OkgyQOeMoO/ay7DJZH/8tfZe9orjbvejPgcAut5SEFgCwNrmi1jRCzHA
- p4983YCPuU2sw84OZkD1Yt2ASCrY3Z4s9WdjiaBga3qUPrONGsiEU7qXOX9LZ6bQg2Iv
- gT2aCeEVvYaoYCnFWsJ+bo2Ilxq68L4Sh56x72TbmQ4TPach2aH48OTkVkzoW/Tcc8WO
- 5x9A1vT53Cp80SDE9iKUOv0GzdCj5DMHgcRkf7KMrkSBhMXDFURPm6fupn/tXhYy6Ytf
- xyTQ==
-X-Gm-Message-State: AOJu0Yz4fdncAf68qTK02As9+amYuwuVbgUs4MayjP2vusorD8jLZQwi
- 0mUtYsIxcR6NBOO94+BUuHB5CV4Z2Eb292J71Hjy9OhctR1wAyJh+OOLV9jY5sM1x2I=
-X-Gm-Gg: ASbGncuh7KJbizNh9g1qLYDMEM832Z84+RyaIyY3Eeaz/3WXyyBhdtRLnKsrfan8K4D
- iydVKCNlZV3QeDNJkQbfA1N5BhVIVQUyIH1cbgtMkXsh8ux8OMmx5Kpf5FFUJhtIWHlnGPrl7Pi
- YFnlGEaQzTG6tFqGC6xntnmMXGfE3We3hFgsmKY+dL4xxV6txk0/6/EYELOwlzVJHqmRHJsKwwh
- N2qAsFIC4yw4L5+IUfhezQ4u5oOFfU7t4Q1Z+nS2/+HXZuRrHzF4OshHdimB2twwKAKdlexYi2v
- OPz4Hn7uNNTaqZV3aR43hm0+AcXJtdh1ZHtcqYeq62J8N1l5hweW7PKncuJngRehLw==
-X-Google-Smtp-Source: AGHT+IF0PHHPrrD9sq64hK2QwW+XiNCTHVkKOLdytI4DnqKoNWzfodqPAp7yQD9ibLmgOCKbLU+PMg==
-X-Received: by 2002:a05:600c:83cd:b0:440:66a4:8d1a with SMTP id
- 5b1f17b1804b1-44c917f3f54mr20476455e9.7.1748092229890; 
- Sat, 24 May 2025 06:10:29 -0700 (PDT)
+ bh=kEWOUDA3q06GZ5GkbSQHmEZI1g8mcQKpm5PdVrCbWmY=;
+ b=OYHvwSWzkssUhzezBeIA4mxaxZgXzWLxxVK4QBDhllAQTPqg6FGijchg775NcoZC5J
+ med5EjdC7dm6tb5OspdvJdztisDWyFW71/fxuNGpXqzupWE778yeCa7N96dC2UKtl4WQ
+ WgZTPvtklFFSj8k0vBslTWV12xiBsntpu8gfbwjm4jeF88FNJIC4SzrBWX4eiYTPN4a3
+ 3r5/24k2QilT9n6y5xrg+lyiDBnbCEgn7CkxhMprJxGss6pURntnY0RooMfH9HgJlHti
+ w2pAMphvq7c77mLsOo4XMd1J6p/ZJWWx2phOa+p1C8H7pPQvdCacoNaBkKkA8Jn/7USM
+ 3wgg==
+X-Gm-Message-State: AOJu0YxVP5tWtanp0mfF7w+nVQAf83hYoFLM0rwcp0JMRrI8P3jnqvL5
+ PFguntkwaTyMfq6U8FVZnO25Cc+M1M6FxUZ87IMdi6JGzLsEqdJ4pEnXQFYkn5w73GWJHxun8Ne
+ GKlrTiOexVg==
+X-Gm-Gg: ASbGnctlSVW+CiLSClH0jgCmMIpVwuxZvyigR1aQitjzTU1huWYV3MTz8KPpOxjEpBw
+ vqpvRJI+D5eKHUP8CBlaXbS373piPsKpwmZjboKi2MlILDcR2mpdSnpFVxHnTIoIQvQiQeBO5KN
+ MANtb5N6tJQZ6MYXP4f6UShD3an6SP6WfD7iDOWVc/u6oAunxqLWAL/LCIWBGDiOiXVO2dfcijJ
+ FLOFP8rHZhzOat8ktxjcrZfPG80o4CXfdqCLlRJYc722ghzEypka5WEprJSIvjlphk1eRL5b77q
+ QRdTLH3Gh5RnBwVxk1GDKyWJNYO4qVjG8VxpJz+dIQ9JV8H0yf0TIj34mwMDjKfBSwX9jIIA+n0
+ L
+X-Google-Smtp-Source: AGHT+IG8nuvUzqvRHOCOvlXwPajE5IPbwCI1iNZtFSupGqH43uJIFMigwBKG3XXp+Yo4xfBlEhCAnA==
+X-Received: by 2002:a05:600c:c8e:b0:442:d9fb:d9a5 with SMTP id
+ 5b1f17b1804b1-44c7ad31701mr24689535e9.9.1748094252701; 
+ Sat, 24 May 2025 06:44:12 -0700 (PDT)
 Received: from [172.16.25.47] ([195.53.115.74])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f38142b8sm174439155e9.30.2025.05.24.06.10.28
+ 5b1f17b1804b1-44804e89c42sm185509185e9.21.2025.05.24.06.44.10
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 May 2025 06:10:29 -0700 (PDT)
-Message-ID: <f51ba01f-2886-4e73-8c89-396a6b21b18c@linaro.org>
-Date: Sat, 24 May 2025 14:10:27 +0100
+ Sat, 24 May 2025 06:44:11 -0700 (PDT)
+Message-ID: <b5c020e9-fa79-4d07-bd39-9f45ad1fe329@linaro.org>
+Date: Sat, 24 May 2025 14:44:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/perf: Placate clang-21's
- -Wdefault-const-init-field-unsafe
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20250519214903.55284-1-iii@linux.ibm.com>
+Subject: Re: [PATCH] linux-user: implement pgid field of /proc/self/stat
+To: qemu-devel@nongnu.org
+References: <mvmfrgzcr4m.fsf@suse.de>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250519214903.55284-1-iii@linux.ibm.com>
+In-Reply-To: <mvmfrgzcr4m.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,20 +102,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/25 22:48, Ilya Leoshkevich wrote:
-> diff --git a/tcg/perf.c b/tcg/perf.c
-> index 4e8d2c1bee7..f30c5b489d1 100644
-> --- a/tcg/perf.c
-> +++ b/tcg/perf.c
-> @@ -154,7 +154,7 @@ struct debug_entry {
->       uint64_t addr;
->       int lineno;
->       int discrim;
-> -    const char name[];
-> +    char name[];
->   };
->   
->   struct jr_code_debug_info {
+On 5/20/25 15:07, Andreas Schwab wrote:
+> Signed-off-by: Andreas Schwab <schwab@suse.de>
+> ---
+>   linux-user/syscall.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 8820ca4dfd..5536e364dc 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -8235,6 +8235,9 @@ static int open_self_stat(CPUArchState *cpu_env, int fd)
+>           } else if (i == 3) {
+>               /* ppid */
+>               g_string_printf(buf, FMT_pid " ", getppid());
+> +        } else if (i == 4) {
+> +            /* pgid */
+> +            g_string_printf(buf, FMT_pid " ", getpgrp());
+>           } else if (i == 19) {
+>               /* num_threads */
+>               int cpus = 0;
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
