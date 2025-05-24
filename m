@@ -4,79 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE28C54E71
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 08:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E230CC54F32
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 09:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIkWT-0003aY-80; Sat, 24 May 2025 04:46:34 -0400
+	id 1uIlHf-0003lZ-Tz; Sat, 24 May 2025 05:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uIkWR-0003Z5-0I
- for qemu-devel@nongnu.org; Sat, 24 May 2025 04:46:27 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uIkWM-0006al-Ph
- for qemu-devel@nongnu.org; Sat, 24 May 2025 04:46:24 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-551eb58b707so779452e87.0
- for <qemu-devel@nongnu.org>; Sat, 24 May 2025 01:46:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748076379; x=1748681179; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Y7x6duzkL2zmJbXYlWpGD++TMeuRVrhHMc3TFITH0pI=;
- b=SFBR6PDLG8/iSwcpwtivL39C9wUw+t7nscK0oEU+YztznVSGHHRWhi+lvRl8mm04lk
- H7CBMAZYs9/vIRuMIAu2hYxiMabz1T+dO5i/1JasWY+hEnS9BLPS1CMP9mJI3EqC7yxa
- I/z0qqoUI+Lg9kUJKG29XEOPTWJAiDdIGjLNgEnZGlIGD4mKWPyiSKDw5gAW4FxEQYEZ
- vIWNUqTW0wETSvF2e4z3KuAbPxoURTB54U/+EPz/MbRebD1BHpeZEd0/tIBH2XWBYdWf
- VkU6eNQ4iD3K4LKOBqVWrQWp44KOKyG4TCNmW8FrFQJAJeRvcGMB0UsKVtagG5bk90tz
- TkuQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uIlHe-0003jx-86
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 05:35:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uIlHa-0004Le-2N
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 05:35:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748079306;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hJMf8mV/vrCseW7P7INA/2njK7m6Kj/xvi2LsolW5U4=;
+ b=PVPUGbBNv2EDqU0OC/4w5QBxrC+h3k+zNH7YomKWUMG3jkEBTX2z1Iz4vT9YZewKFgowGm
+ CZGlAYNkvZqcrfA0Zj7ZlPhKpUg5OLJ/KSRsww8rncjBjKr3YV+/+azFDehi/QVhz4cmxS
+ l6QZSOiyiJ2XFIUC25jalsnw/81z+8M=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-tF9o_sDhMzKWgidTSe04Pg-1; Sat, 24 May 2025 05:35:05 -0400
+X-MC-Unique: tF9o_sDhMzKWgidTSe04Pg-1
+X-Mimecast-MFC-AGG-ID: tF9o_sDhMzKWgidTSe04Pg_1748079304
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43ceeaf1524so2922005e9.1
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 02:35:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748076379; x=1748681179;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y7x6duzkL2zmJbXYlWpGD++TMeuRVrhHMc3TFITH0pI=;
- b=kTfR3eHK0v+mXjy8SkryrTM0L7IucZEwfnufSFhb/0vBDmk1xqLoXeq6+pCzTKeAwl
- PnwmW/bWSj4I5o4my4RjmupIEDzHDCyrKvN1jNZmH6Uhvlw61btkX/BD8YRZ4w2DgMsv
- wIGLuZ9AEVSJwLTLZMzmLsTtDEMVMemD/p49OfYpk1vyehswTFcnLlih9BMPGcoUhbwP
- hqLGtc3YweMysLEIf7S2nzwpno5gk45/zdNLSR4rgEVpdeYjFtMPXcQ9Tbszo7qjRvUB
- hVuUx9UFK8b0lPImWDlY020AtWsxyEiHSuE+kouR4fCM4OpC9XG5IaodvSiJvZgw2sj9
- 3WKg==
-X-Gm-Message-State: AOJu0YzklMfi64tToRM/IOg6M1gzRMSlc5geze568GnVlxj07vcksDeJ
- pvweH3GHUW0/TN2cCpFniRp1IncMqF/dAF8p/cTExMvO0tSquSnk0mArhQllIak9JR2eH2tFyOn
- mLK+V0y6ARSrUyfTx/xSZ9k3nqfTU2MoV1R5z
-X-Gm-Gg: ASbGncs6qQJaQQBGOkEbzGPY0+2Ff5px5lkZaUsvOxc98I7iGN1py9HzDGtSR7x83FV
- VbJAHJS0ZTcSOsyTbVA1uIQRPET2XgUFrrjNLqN8yxj7CAvhK6usmkN2gBzmi3foCdExLocU451
- uGMvGjuI4WAJ0nmVRKBTPdAzFRMP+YqYGbKRsNsoLPqsS7zRt0w67x++RBL9Cx8bUe
-X-Google-Smtp-Source: AGHT+IFjmGJB2XIZPSQTftHgf4wr5N7KnH0B0FcUmrLr6eYUFzeuhLa34VjTcJLul1qlkJeHfRVu8x8i0h3OZVPxKsw=
-X-Received: by 2002:a05:6512:3ba6:b0:54d:6aa1:8f5a with SMTP id
- 2adb3069b0e04-5521c7b9dcamr553345e87.13.1748076379176; Sat, 24 May 2025
- 01:46:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748079304; x=1748684104;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hJMf8mV/vrCseW7P7INA/2njK7m6Kj/xvi2LsolW5U4=;
+ b=QbeEpneLhcyjSIdGxQjuHN+FEk78E4HnSIjUsk22g5+I/1JemZrOosFjGhNlmDxUPT
+ msk1RdP5itIO8tIh3qFK9xaKwqUQmtREcKzcfGaHCEW++b8cZwq6jnQGZ8S0znO43LvL
+ c8DjwiyD9yxGSQSaFdu2lRsj+VXo19LqWZmhzhnmIgSpSfuOFEkkHQBlFXQswsI4kcYf
+ MuB1FQK/7XC/sInRbby4CJAGUpN1BWI3hL6OLCYh5gmaBzGMUC2IUHEkZkM9nn04Kv/c
+ /1P/6H6Q1Fsfl4YVessq1R+mTXwOnsfS3kgdPbAOFWj2TgNbAEiJVIcNE9eho+ii06YZ
+ krtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWiiREAI+dOVtvqmNLdUNwvelzVpzD7DW27EvbaZAy5TsUF65VPKslFFSPn/oFvLtOxmghFfaeazMKc@nongnu.org
+X-Gm-Message-State: AOJu0YzdrIyEepGYFwRed6vEeMAC7ckFCGSUY076t+LJd94iiYb0Nsin
+ KEYlMaOdtx+TcjO/BhkUTHvSNkp0rrhc1QZBEFALtJKncUMSgOymI6LXlc3B3X0YNkcztR1jSR3
+ cU9XlsC8aitZqzPogLYTMh4wxDTPsJHJQEe5fqb0vEDMtAXwwu6SWieb8
+X-Gm-Gg: ASbGncuHd2NEDC4LVulS/OrjqHNGC2atooctiWoi048SviPrq94SfmHkSx0pqNBIaZT
+ z3SCqriq4MzkTvAqYrEXTVPqcAf/e0xNLSOr3L1WkAopPC5I0D+D1aNSvCCDWcMn1VzZp4kNWuk
+ j82LITVXbHrOaEm/UKdMkMGI+PkUW9jl2ob6XamY8HvkZBk7C6+Eq+N9Kf3d/+1YA7K4grECQb6
+ Hb274njxEWa2bGbFqLdUU37z6Y3T6IWY2HwSo19jfgcZinUvNtVK6CJLwUUMtITyYFQS1lrna0k
+ O7WGvQ==
+X-Received: by 2002:a05:600c:34cb:b0:439:8490:d1e5 with SMTP id
+ 5b1f17b1804b1-44b51b67c5fmr61897795e9.4.1748079303848; 
+ Sat, 24 May 2025 02:35:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHtHbHu3qAhIixGHHV4ucEjUvG2LmAyQl6Ej4ZBXiDkkODFCd0sQqnYjvdwwiT4+mUWRGkJg==
+X-Received: by 2002:a05:600c:34cb:b0:439:8490:d1e5 with SMTP id
+ 5b1f17b1804b1-44b51b67c5fmr61897475e9.4.1748079303483; 
+ Sat, 24 May 2025 02:35:03 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f1ef035csm167912855e9.11.2025.05.24.02.35.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 24 May 2025 02:35:02 -0700 (PDT)
+Date: Sat, 24 May 2025 05:34:59 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH V3 14/42] pci: skip reset during cpr
+Message-ID: <20250524053413-mutt-send-email-mst@kernel.org>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-15-git-send-email-steven.sistare@oracle.com>
+ <c0aa3971-85bd-4e69-bb13-4e13349794b8@redhat.com>
 MIME-Version: 1.0
-References: <20250523195703.168-2-oleg.tolmatcev@gmail.com>
- <250a2a35-478f-4b3e-a517-27a0cd4fb51e@redhat.com>
-In-Reply-To: <250a2a35-478f-4b3e-a517-27a0cd4fb51e@redhat.com>
-From: Oleg Tolmatcev <oleg.tolmatcev@gmail.com>
-Date: Sat, 24 May 2025 10:46:07 +0200
-X-Gm-Features: AX0GCFsD3YoV1jRiCCACkJPOxxFnc7TGubrqP3wqLYeNAlbufnXD4CTbVKW3nmM
-Message-ID: <CACcXsZgADRbNG7XLcHQsH=9sU5Q6sGirqPTmQ4EKu5s0rfBh1w@mail.gmail.com>
-Subject: Re: [PATCH] meson: fix Windows build
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=oleg.tolmatcev@gmail.com; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c0aa3971-85bd-4e69-bb13-4e13349794b8@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.287,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,87 +115,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Fr., 23. Mai 2025 um 23:28 Uhr schrieb Paolo Bonzini <pbonzini@redhat.com>:
->
-> Thanks for the patch!  The Windows build configurations that we support
-> currently are cross-building from Linux and native build with MSYS2.
-> MSYS2 is sufficiently POSIX-like, and also has a nice package manager.
->
-> Can you share how you set up your build environment, and especially
-> where you get all the dependencies?  Generally we'd prefer to have it
-> covered in CI to avoid that it breaks again.
+On Fri, May 16, 2025 at 10:19:09AM +0200, Cédric Le Goater wrote:
+> On 5/12/25 17:32, Steve Sistare wrote:
+> > Do not reset a vfio-pci device during CPR.
+> > 
+> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > ---
+> >   hw/pci/pci.c | 13 +++++++++++++
+> >   1 file changed, 13 insertions(+)
+> > 
+> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > index fe38c4c..2ba2e0f 100644
+> > --- a/hw/pci/pci.c
+> > +++ b/hw/pci/pci.c
+> > @@ -32,6 +32,8 @@
+> >   #include "hw/pci/pci_host.h"
+> >   #include "hw/qdev-properties.h"
+> >   #include "hw/qdev-properties-system.h"
+> > +#include "migration/cpr.h"
+> > +#include "migration/misc.h"
+> >   #include "migration/qemu-file-types.h"
+> >   #include "migration/vmstate.h"
+> >   #include "net/net.h"
+> > @@ -537,6 +539,17 @@ static void pci_reset_regions(PCIDevice *dev)
+> >   static void pci_do_device_reset(PCIDevice *dev)
+> >   {
+> > +    /*
+> > +     * A PCI device that is resuming for cpr is already configured, so do
+> > +     * not reset it here when we are called from qemu_system_reset prior to
+> > +     * cpr load, else interrupts may be lost for vfio-pci devices.  It is
+> > +     * safe to skip this reset for all PCI devices, because vmstate load will
+> > +     * set all fields that would have been set here.
+> > +     */
+> > +    if (cpr_is_incoming()) {
+> 
+> Why can't we use cpr_is_incoming() in vfio instead of using an heuristic
+> on saved fds?
+> 
+> Thanks,
+> 
+> C.
 
-I use MSYS2, but I only use `bash` it to run `configure` initially and
-afterwards I use `cmd.exe` for running Meson and Ninja.
+Think I agree.
 
-> Some more comments below.
->
-> >   import os.path
-> > +from pathlib import PurePath
-> >
-> >   from tracetool import out
-> >
-> > @@ -30,6 +31,12 @@ def generate_h(event, group):
-> >       if len(event.args) > 0:
-> >           argnames = ", " + argnames
-> >
-> > +    try:
-> > +        event_filename = os.path.relpath(event.filename)
-> > +    except ValueError:
-> > +        event_filename = event.filename
->
-> Can this actually happen during the build?  (Same for other backends)
+> 
+> 
+> > +        return;
+> > +    }
+> > +
+> >       pci_device_deassert_intx(dev);
+> >       assert(dev->irq_state == 0);
 
-I only tested with the `log` backend.
-
-[18/1577] Generating trace/trace-crypto.h with a custom command
-FAILED: trace/trace-crypto.h
-"C:\msys64\mingw64\bin\python.exe" "C:/src/qemu/scripts/tracetool.py"
-"--backend=log" "--group=crypto" "--format=h"
-"C:/src/qemu/crypto/trace-events" "trace/trace-crypto.h"
-Traceback (most recent call last):
-  File "C:/src/qemu/scripts/tracetool.py", line 140, in <module>
-    main(sys.argv)
-  File "C:/src/qemu/scripts/tracetool.py", line 134, in main
-    tracetool.generate(events, arg_group, arg_format, arg_backends,
-  File "C:\src\qemu\scripts\tracetool\__init__.py", line 449, in generate
-    tracetool.format.generate(events, format, backend, group)
-  File "C:\src\qemu\scripts\tracetool\format\__init__.py", line 84, in generate
-    func(events, backend, group)
-  File "C:\src\qemu\scripts\tracetool\format\h.py", line 70, in generate
-    backend.generate(e, group)
-  File "C:\src\qemu\scripts\tracetool\backend\__init__.py", line 119,
-in generate
-    self._run_function("generate_%s", event, group)
-  File "C:\src\qemu\scripts\tracetool\backend\__init__.py", line 113,
-in _run_function
-    func(*args, **kwargs)
-  File "C:\src\qemu\scripts\tracetool\backend\log.py", line 58, in generate_h
-    event_filename=os.path.relpath(event.filename),
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<frozen ntpath>", line 808, in relpath
-ValueError: path is on mount 'C:', start on mount 'E:'
-
-> > diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> > index 52b4706cf..2e3bd4057 100644
-> > --- a/tests/functional/meson.build
-> > +++ b/tests/functional/meson.build
-> > @@ -413,4 +413,4 @@ endforeach
-> >
-> >   run_target('precache-functional',
-> >              depends: precache_all,
-> > -           command: ['true'])
-> > +           command: [python, '-c', ''])
->
-> I wonder if this can be replaced with alias_target() too; and also the
-> pre-existing code suggests that alias_target needs at least one target,
-> but is that really true?
->
-> So, maybe all or most uses of 'true' can just go away.
-
-I could replace this one with `alias_target()`, but it does need at
-least one dependency so I could not replace the others.
-
-Best regards
-Oleg Tolmatcev
 
