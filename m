@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C9CC54ED1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7CB7C54F30
 	for <qemu-devel@archiver.kernel.org>; Sat, 24 May 2025 17:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uIsnF-0001GN-B2; Sat, 24 May 2025 13:36:21 -0400
+	id 1uIsmx-000092-MP; Sat, 24 May 2025 13:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uIsnC-0001AW-HQ
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:36:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uIsmq-0008Ib-IN
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 13:35:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uIsnB-0000lZ-1u
- for qemu-devel@nongnu.org; Sat, 24 May 2025 13:36:18 -0400
+ id 1uIsmp-0000jw-4v
+ for qemu-devel@nongnu.org; Sat, 24 May 2025 13:35:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748108176;
+ s=mimecast20190719; t=1748108153;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4G0ur/AkT7SipDaNafCzLmxGscCER56Xdc2UIqquo54=;
- b=WEJd6rOMEu54RIAnSJF51A/hWDAu0khhxBXgtRWhIZh4d+0pV73fW3AErEc/ruVLvMPLB8
- n0CdU+WfFbKMXoA1bV6INtr5iWygiMOYrdNVsvQRj3igZFtmZ3Z4svsEB4FLb21akIWQdi
- 8jxNri6yaCsE/JLiA/NpH2UBmjNiYEo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=TkdhgyOb714kh1D6jnvl7f0hAIUjxiJ6emgKevVzWKs=;
+ b=Uhv0Bd98Z3QsmiJvNdEeW8FzTD4rDUbdpQGcfOKOii2QJgJd17jfTFcwYVO53oWkyBqa6q
+ 6FvwR4G26ulnVcC/KDZF9sP/ONeUKH+uIYXapniDGFv+MjypDcGoDL2XL4fwIlj70uXPoR
+ 89AnTsJiNwyfF6YhCC2UEsDQUMaVwlk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-Tdvc3Q9sPV2PMoAZiXaKog-1; Sat,
- 24 May 2025 13:36:13 -0400
-X-MC-Unique: Tdvc3Q9sPV2PMoAZiXaKog-1
-X-Mimecast-MFC-AGG-ID: Tdvc3Q9sPV2PMoAZiXaKog_1748108172
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-RAZANPQ9PtWC3CTN6yTAkg-1; Sat,
+ 24 May 2025 13:35:52 -0400
+X-MC-Unique: RAZANPQ9PtWC3CTN6yTAkg-1
+X-Mimecast-MFC-AGG-ID: RAZANPQ9PtWC3CTN6yTAkg_1748108151
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D1AE19560BC; Sat, 24 May 2025 17:36:12 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FD4218004AD
+ for <qemu-devel@nongnu.org>; Sat, 24 May 2025 17:35:51 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 390D91800570; Sat, 24 May 2025 17:36:10 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3BD6930001B5; Sat, 24 May 2025 17:35:49 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- stefanha@redhat.com, Weifeng Liu <weifeng.liu.z@gmail.com>
-Subject: [PULL 16/19] ui/gtk: Don't update scale in fixed scale mode in
- gtk-egl.c
-Date: Sat, 24 May 2025 19:35:09 +0200
-Message-ID: <20250524173514.317886-17-marcandre.lureau@redhat.com>
+ stefanha@redhat.com
+Subject: [PULL 10/19] ui/vdagent: remove migration blocker
+Date: Sat, 24 May 2025 19:35:03 +0200
+Message-ID: <20250524173514.317886-11-marcandre.lureau@redhat.com>
 In-Reply-To: <20250524173514.317886-1-marcandre.lureau@redhat.com>
 References: <20250524173514.317886-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -87,48 +87,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Weifeng Liu <weifeng.liu.z@gmail.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Scale shouldn't be changed until user explicitly requests it in fixed
-scale mode (full-screen=false and free-scale=false). Use function
-gd_update_scale to complete scale updating instead.
-
-Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
-Message-ID: <20250511073337.876650-7-weifeng.liu.z@gmail.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: https://issues.redhat.com/browse/RHEL-81894
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- ui/gtk-egl.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ ui/vdagent.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 947c99334b..f8e4f4bc70 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -95,8 +95,9 @@ void gd_egl_draw(VirtualConsole *vc)
+diff --git a/ui/vdagent.c b/ui/vdagent.c
+index adc8755bd9..c0746fe5b1 100644
+--- a/ui/vdagent.c
++++ b/ui/vdagent.c
+@@ -6,7 +6,6 @@
+ #include "qemu/option.h"
+ #include "qemu/units.h"
+ #include "hw/qdev-core.h"
+-#include "migration/blocker.h"
+ #include "ui/clipboard.h"
+ #include "ui/console.h"
+ #include "ui/input.h"
+@@ -33,9 +32,6 @@
+ struct VDAgentChardev {
+     Chardev parent;
+ 
+-    /* TODO: migration isn't yet supported */
+-    Error *migration_blocker;
+-
+     /* config */
+     bool mouse;
+     bool clipboard;
+@@ -673,10 +669,6 @@ static void vdagent_chr_open(Chardev *chr,
+     return;
  #endif
-         gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
  
--        vc->gfx.scale_x = (double)ww / surface_width(vc->gfx.ds);
--        vc->gfx.scale_y = (double)wh / surface_height(vc->gfx.ds);
-+        gd_update_scale(vc, ww, wh,
-+                        surface_width(vc->gfx.ds),
-+                        surface_height(vc->gfx.ds));
+-    if (migrate_add_blocker(&vd->migration_blocker, errp) != 0) {
+-        return;
+-    }
+-
+     vd->mouse = VDAGENT_MOUSE_DEFAULT;
+     if (cfg->has_mouse) {
+         vd->mouse = cfg->mouse;
+@@ -1076,8 +1068,6 @@ static void vdagent_chr_init(Object *obj)
+     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
  
-         glFlush();
- #ifdef CONFIG_GBM
-@@ -122,8 +123,9 @@ void gd_egl_draw(VirtualConsole *vc)
+     vd->outbuf = g_byte_array_new();
+-    error_setg(&vd->migration_blocker,
+-               "The vdagent chardev doesn't yet support migration");
+     vmstate_register_any(NULL, &vmstate_vdagent, vd);
+ }
  
-         eglSwapBuffers(qemu_egl_display, vc->gfx.esurface);
+@@ -1085,7 +1075,6 @@ static void vdagent_chr_fini(Object *obj)
+ {
+     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
  
--        vc->gfx.scale_x = (double)ww / surface_width(vc->gfx.ds);
--        vc->gfx.scale_y = (double)wh / surface_height(vc->gfx.ds);
-+        gd_update_scale(vc, ww, wh,
-+                        surface_width(vc->gfx.ds),
-+                        surface_height(vc->gfx.ds));
- 
-         glFlush();
-     }
+-    migrate_del_blocker(&vd->migration_blocker);
+     vdagent_disconnect(vd);
+     if (vd->mouse_hs) {
+         qemu_input_handler_unregister(vd->mouse_hs);
 -- 
 2.49.0
 
