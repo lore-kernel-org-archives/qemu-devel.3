@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D90AC54F30
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59388C54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ7tC-0007hi-Vj; Sun, 25 May 2025 05:43:31 -0400
+	id 1uJ7uW-0001La-Mp; Sun, 25 May 2025 05:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7tA-0007c2-U8; Sun, 25 May 2025 05:43:28 -0400
+ id 1uJ7uU-0001Eg-Ru; Sun, 25 May 2025 05:44:50 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7t9-0004ZI-80; Sun, 25 May 2025 05:43:28 -0400
+ id 1uJ7uT-0004lj-8o; Sun, 25 May 2025 05:44:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B43B124DE0;
+ by isrv.corpit.ru (Postfix) with ESMTP id E54C1124DED;
  Sun, 25 May 2025 12:42:47 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 33F58215F08;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C97A1215F15;
  Sun, 25 May 2025 12:42:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Anton Blanchard <antonb@tenstorrent.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 46/62] target/riscv: rvv: Apply vext_check_input_eew to
- vector integer extension instructions(OPMVV)
-Date: Sun, 25 May 2025 12:42:29 +0300
-Message-Id: <20250525094246.174612-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Juraj Marcin <jmarcin@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 59/62] migration: Allow caps to be set when preempt or
+ multifd cap enabled
+Date: Sun, 25 May 2025 12:42:42 +0300
+Message-Id: <20250525094246.174612-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
@@ -63,34 +61,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Peter Xu <peterx@redhat.com>
 
-Handle the overlap of source registers with different EEWs.
+With commit 82137e6c8c ("migration: enforce multifd and postcopy preempt to
+be set before incoming"), and if postcopy preempt / multifd is enabled, one
+cannot setup any capability because these checks would always fail.
 
-Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20250408103938.3623486-8-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit 411eefd56a3921ddbfdbadca596e1a8593ce834c)
+(qemu) migrate_set_capability xbzrle off
+Error: Postcopy preempt must be set before incoming starts
+
+To fix it, check existing cap and only raise an error if the specific cap
+changed.
+
+Fixes: 82137e6c8c ("migration: enforce multifd and postcopy preempt to be set before incoming")
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 17bec9235bb0775cf8dec4103c167757ee8898f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index d72792e46a..585ee98b27 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -3659,7 +3659,9 @@ static bool int_ext_check(DisasContext *s, arg_rmr *a, uint8_t div)
-         require_align(a->rd, s->lmul) &&
-         require_align(a->rs2, s->lmul - div) &&
-         require_vm(a->vm, a->rd) &&
--        require_noover(a->rd, s->lmul, a->rs2, s->lmul - div);
-+        require_noover(a->rd, s->lmul, a->rs2, s->lmul - div) &&
-+        vext_check_input_eew(s, -1, 0, a->rs2, s->sew, a->vm);
-+
-     return ret;
- }
+diff --git a/migration/options.c b/migration/options.c
+index ad8d6989a8..0ee1c74937 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -543,7 +543,7 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+             return false;
+         }
  
+-        if (migrate_incoming_started()) {
++        if (!migrate_postcopy_preempt() && migrate_incoming_started()) {
+             error_setg(errp,
+                        "Postcopy preempt must be set before incoming starts");
+             return false;
+@@ -551,7 +551,7 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+     }
+ 
+     if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
+-        if (migrate_incoming_started()) {
++        if (!migrate_multifd() && migrate_incoming_started()) {
+             error_setg(errp, "Multifd must be set before incoming starts");
+             return false;
+         }
 -- 
 2.39.5
 
