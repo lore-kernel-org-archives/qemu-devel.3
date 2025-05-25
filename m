@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E0D8C54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F04C54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ7tq-0008TZ-Bh; Sun, 25 May 2025 05:44:10 -0400
+	id 1uJ7tG-0007nN-1S; Sun, 25 May 2025 05:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7th-0008Ao-Ca; Sun, 25 May 2025 05:44:01 -0400
+ id 1uJ7tD-0007jb-HV; Sun, 25 May 2025 05:43:31 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7tf-0004eb-Q8; Sun, 25 May 2025 05:44:01 -0400
+ id 1uJ7tB-0004bb-Iz; Sun, 25 May 2025 05:43:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ABEFF124DE7;
+ by isrv.corpit.ru (Postfix) with ESMTP id 694EB124DE1;
  Sun, 25 May 2025 12:42:47 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 909B0215F0F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4AAF8215F09;
  Sun, 25 May 2025 12:42:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
+ Anton Blanchard <antonb@tenstorrent.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 53/62] target/riscv/kvm: turn u32/u64 reg functions
- into macros
-Date: Sun, 25 May 2025 12:42:36 +0300
-Message-Id: <20250525094246.174612-19-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 47/62] target/riscv: rvv: Apply vext_check_input_eew to
+ vector narrow/widen instructions
+Date: Sun, 25 May 2025 12:42:30 +0300
+Message-Id: <20250525094246.174612-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
@@ -63,83 +63,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Max Chou <max.chou@sifive.com>
 
-This change is motivated by a future change w.r.t CSRs management. We
-want to handle them the same way as KVM extensions, i.e. a static array
-with KVMCPUConfig objs that will be read/write during init and so on.
-But to do that properly we must be able to declare a static array that
-hold KVM regs.
+Handle the overlap of source registers with different EEWs.
+The vd of vector widening mul-add instructions is one of the input
+operands.
 
-C does not allow to init static arrays and use functions as
-initializers, e.g. we can't do:
-
-.kvm_reg_id = kvm_riscv_reg_id_ulong(...)
-
-When instantiating the array. We can do that with macros though, so our
-goal is turn kvm_riscv_reg_ulong() in a macro. It is cleaner to turn
-every other reg_id_*() function in macros, and ulong will end up using
-the macros for u32 and u64, so we'll start with them.
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250429124421.223883-4-dbarboza@ventanamicro.com>
+Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-9-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit b6096103494506514d9bfa442f62fef36ffc8fba)
+(cherry picked from commit 1f090a229f85e662394267680408bd31fd0a99c9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 49a8bc34ca..dcf5fee38a 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -58,6 +58,12 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level)
+diff --git a/target/riscv/insn_trans/trans_rvbf16.c.inc b/target/riscv/insn_trans/trans_rvbf16.c.inc
+index 0a9cd1ec31..066dc364c5 100644
+--- a/target/riscv/insn_trans/trans_rvbf16.c.inc
++++ b/target/riscv/insn_trans/trans_rvbf16.c.inc
+@@ -119,8 +119,11 @@ static bool trans_vfwmaccbf16_vv(DisasContext *ctx, arg_vfwmaccbf16_vv *a)
+     REQUIRE_FPU;
+     REQUIRE_ZVFBFWMA(ctx);
  
- static bool cap_has_mp_state;
++    uint8_t sew = ctx->sew;
+     if (require_rvv(ctx) && vext_check_isa_ill(ctx) && (ctx->sew == MO_16) &&
+-        vext_check_dss(ctx, a->rd, a->rs1, a->rs2, a->vm)) {
++        vext_check_dss(ctx, a->rd, a->rs1, a->rs2, a->vm) &&
++        vext_check_input_eew(ctx, a->rd, sew + 1, a->rs1, sew, a->vm) &&
++        vext_check_input_eew(ctx, a->rd, sew + 1, a->rs2, sew, a->vm)) {
+         uint32_t data = 0;
  
-+#define KVM_RISCV_REG_ID_U32(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U32 | \
-+                                         type | idx)
-+
-+#define KVM_RISCV_REG_ID_U64(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U64 | \
-+                                         type | idx)
-+
- static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type,
-                                  uint64_t idx)
+         gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
+@@ -146,8 +149,10 @@ static bool trans_vfwmaccbf16_vf(DisasContext *ctx, arg_vfwmaccbf16_vf *a)
+     REQUIRE_FPU;
+     REQUIRE_ZVFBFWMA(ctx);
+ 
++    uint8_t sew = ctx->sew;
+     if (require_rvv(ctx) && (ctx->sew == MO_16) && vext_check_isa_ill(ctx) &&
+-        vext_check_ds(ctx, a->rd, a->rs2, a->vm)) {
++        vext_check_ds(ctx, a->rd, a->rs2, a->vm) &&
++        vext_check_input_eew(ctx, a->rd, sew + 1, a->rs2, sew, a->vm)) {
+         uint32_t data = 0;
+ 
+         gen_set_rm(ctx, RISCV_FRM_DYN);
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 585ee98b27..2d067a59e2 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -528,6 +528,7 @@ static bool vext_narrow_check_common(DisasContext *s, int vd, int vs2,
+ static bool vext_check_ds(DisasContext *s, int vd, int vs, int vm)
  {
-@@ -76,16 +82,6 @@ static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type,
-     return id;
+     return vext_wide_check_common(s, vd, vm) &&
++           vext_check_input_eew(s, vs, s->sew, -1, 0, vm) &&
+            require_align(vs, s->lmul) &&
+            require_noover(vd, s->lmul + 1, vs, s->lmul);
+ }
+@@ -535,6 +536,7 @@ static bool vext_check_ds(DisasContext *s, int vd, int vs, int vm)
+ static bool vext_check_dd(DisasContext *s, int vd, int vs, int vm)
+ {
+     return vext_wide_check_common(s, vd, vm) &&
++           vext_check_input_eew(s, vs, s->sew + 1, -1, 0, vm) &&
+            require_align(vs, s->lmul + 1);
  }
  
--static uint64_t kvm_riscv_reg_id_u32(uint64_t type, uint64_t idx)
--{
--    return KVM_REG_RISCV | KVM_REG_SIZE_U32 | type | idx;
--}
--
--static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
--{
--    return KVM_REG_RISCV | KVM_REG_SIZE_U64 | type | idx;
--}
--
- static uint64_t kvm_encode_reg_size_id(uint64_t id, size_t size_b)
+@@ -553,6 +555,7 @@ static bool vext_check_dd(DisasContext *s, int vd, int vs, int vm)
+ static bool vext_check_dss(DisasContext *s, int vd, int vs1, int vs2, int vm)
  {
-     uint64_t size_ctz = __builtin_ctz(size_b);
-@@ -119,12 +115,12 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
-     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG, \
-                            KVM_REG_RISCV_CONFIG_REG(name))
+     return vext_check_ds(s, vd, vs2, vm) &&
++           vext_check_input_eew(s, vs1, s->sew, vs2, s->sew, vm) &&
+            require_align(vs1, s->lmul) &&
+            require_noover(vd, s->lmul + 1, vs1, s->lmul);
+ }
+@@ -575,12 +578,14 @@ static bool vext_check_dss(DisasContext *s, int vd, int vs1, int vs2, int vm)
+ static bool vext_check_dds(DisasContext *s, int vd, int vs1, int vs2, int vm)
+ {
+     return vext_check_ds(s, vd, vs1, vm) &&
++           vext_check_input_eew(s, vs1, s->sew, vs2, s->sew + 1, vm) &&
+            require_align(vs2, s->lmul + 1);
+ }
  
--#define RISCV_TIMER_REG(name)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_TIMER, \
-+#define RISCV_TIMER_REG(name)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_TIMER, \
-                  KVM_REG_RISCV_TIMER_REG(name))
+ static bool vext_check_sd(DisasContext *s, int vd, int vs, int vm)
+ {
+-    bool ret = vext_narrow_check_common(s, vd, vs, vm);
++    bool ret = vext_narrow_check_common(s, vd, vs, vm) &&
++               vext_check_input_eew(s, vs, s->sew + 1, -1, 0, vm);
+     if (vd != vs) {
+         ret &= require_noover(vd, s->lmul, vs, s->lmul + 1);
+     }
+@@ -603,6 +608,7 @@ static bool vext_check_sd(DisasContext *s, int vd, int vs, int vm)
+ static bool vext_check_sds(DisasContext *s, int vd, int vs1, int vs2, int vm)
+ {
+     return vext_check_sd(s, vd, vs2, vm) &&
++           vext_check_input_eew(s, vs1, s->sew, vs2, s->sew + 1, vm) &&
+            require_align(vs1, s->lmul);
+ }
  
--#define RISCV_FP_F_REG(idx)  kvm_riscv_reg_id_u32(KVM_REG_RISCV_FP_F, idx)
-+#define RISCV_FP_F_REG(idx)  KVM_RISCV_REG_ID_U32(KVM_REG_RISCV_FP_F, idx)
+@@ -1531,6 +1537,16 @@ static bool opivv_widen_check(DisasContext *s, arg_rmrr *a)
+            vext_check_dss(s, a->rd, a->rs1, a->rs2, a->vm);
+ }
  
--#define RISCV_FP_D_REG(idx)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_FP_D, idx)
-+#define RISCV_FP_D_REG(idx)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_FP_D, idx)
++/* OPIVV with overwrite and WIDEN */
++static bool opivv_overwrite_widen_check(DisasContext *s, arg_rmrr *a)
++{
++    return require_rvv(s) &&
++           vext_check_isa_ill(s) &&
++           vext_check_dss(s, a->rd, a->rs1, a->rs2, a->vm) &&
++           vext_check_input_eew(s, a->rd, s->sew + 1, a->rs1, s->sew, a->vm) &&
++           vext_check_input_eew(s, a->rd, s->sew + 1, a->rs2, s->sew, a->vm);
++}
++
+ static bool do_opivv_widen(DisasContext *s, arg_rmrr *a,
+                            gen_helper_gvec_4_ptr *fn,
+                            bool (*checkfn)(DisasContext *, arg_rmrr *))
+@@ -1578,6 +1594,14 @@ static bool opivx_widen_check(DisasContext *s, arg_rmrr *a)
+            vext_check_ds(s, a->rd, a->rs2, a->vm);
+ }
  
- #define RISCV_VECTOR_CSR_REG(env, name) \
-     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_VECTOR, \
++static bool opivx_overwrite_widen_check(DisasContext *s, arg_rmrr *a)
++{
++    return require_rvv(s) &&
++           vext_check_isa_ill(s) &&
++           vext_check_ds(s, a->rd, a->rs2, a->vm) &&
++           vext_check_input_eew(s, a->rd, s->sew + 1, a->rs2, s->sew, a->vm);
++}
++
+ #define GEN_OPIVX_WIDEN_TRANS(NAME, CHECK) \
+ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                    \
+ {                                                                         \
+@@ -2049,13 +2073,13 @@ GEN_OPIVX_TRANS(vmadd_vx, opivx_check)
+ GEN_OPIVX_TRANS(vnmsub_vx, opivx_check)
+ 
+ /* Vector Widening Integer Multiply-Add Instructions */
+-GEN_OPIVV_WIDEN_TRANS(vwmaccu_vv, opivv_widen_check)
+-GEN_OPIVV_WIDEN_TRANS(vwmacc_vv, opivv_widen_check)
+-GEN_OPIVV_WIDEN_TRANS(vwmaccsu_vv, opivv_widen_check)
+-GEN_OPIVX_WIDEN_TRANS(vwmaccu_vx, opivx_widen_check)
+-GEN_OPIVX_WIDEN_TRANS(vwmacc_vx, opivx_widen_check)
+-GEN_OPIVX_WIDEN_TRANS(vwmaccsu_vx, opivx_widen_check)
+-GEN_OPIVX_WIDEN_TRANS(vwmaccus_vx, opivx_widen_check)
++GEN_OPIVV_WIDEN_TRANS(vwmaccu_vv, opivv_overwrite_widen_check)
++GEN_OPIVV_WIDEN_TRANS(vwmacc_vv, opivv_overwrite_widen_check)
++GEN_OPIVV_WIDEN_TRANS(vwmaccsu_vv, opivv_overwrite_widen_check)
++GEN_OPIVX_WIDEN_TRANS(vwmaccu_vx, opivx_overwrite_widen_check)
++GEN_OPIVX_WIDEN_TRANS(vwmacc_vx, opivx_overwrite_widen_check)
++GEN_OPIVX_WIDEN_TRANS(vwmaccsu_vx, opivx_overwrite_widen_check)
++GEN_OPIVX_WIDEN_TRANS(vwmaccus_vx, opivx_overwrite_widen_check)
+ 
+ /* Vector Integer Merge and Move Instructions */
+ static bool trans_vmv_v_v(DisasContext *s, arg_vmv_v_v *a)
+@@ -2396,6 +2420,17 @@ static bool opfvv_widen_check(DisasContext *s, arg_rmrr *a)
+            vext_check_dss(s, a->rd, a->rs1, a->rs2, a->vm);
+ }
+ 
++static bool opfvv_overwrite_widen_check(DisasContext *s, arg_rmrr *a)
++{
++    return require_rvv(s) &&
++           require_rvf(s) &&
++           require_scale_rvf(s) &&
++           vext_check_isa_ill(s) &&
++           vext_check_dss(s, a->rd, a->rs1, a->rs2, a->vm) &&
++           vext_check_input_eew(s, a->rd, s->sew + 1, a->rs1, s->sew, a->vm) &&
++           vext_check_input_eew(s, a->rd, s->sew + 1, a->rs2, s->sew, a->vm);
++}
++
+ /* OPFVV with WIDEN */
+ #define GEN_OPFVV_WIDEN_TRANS(NAME, CHECK)                       \
+ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+@@ -2435,6 +2470,16 @@ static bool opfvf_widen_check(DisasContext *s, arg_rmrr *a)
+            vext_check_ds(s, a->rd, a->rs2, a->vm);
+ }
+ 
++static bool opfvf_overwrite_widen_check(DisasContext *s, arg_rmrr *a)
++{
++    return require_rvv(s) &&
++           require_rvf(s) &&
++           require_scale_rvf(s) &&
++           vext_check_isa_ill(s) &&
++           vext_check_ds(s, a->rd, a->rs2, a->vm) &&
++           vext_check_input_eew(s, a->rd, s->sew + 1, a->rs2, s->sew, a->vm);
++}
++
+ /* OPFVF with WIDEN */
+ #define GEN_OPFVF_WIDEN_TRANS(NAME, CHECK)                       \
+ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+@@ -2559,14 +2604,14 @@ GEN_OPFVF_TRANS(vfmsub_vf, opfvf_check)
+ GEN_OPFVF_TRANS(vfnmsub_vf, opfvf_check)
+ 
+ /* Vector Widening Floating-Point Fused Multiply-Add Instructions */
+-GEN_OPFVV_WIDEN_TRANS(vfwmacc_vv, opfvv_widen_check)
+-GEN_OPFVV_WIDEN_TRANS(vfwnmacc_vv, opfvv_widen_check)
+-GEN_OPFVV_WIDEN_TRANS(vfwmsac_vv, opfvv_widen_check)
+-GEN_OPFVV_WIDEN_TRANS(vfwnmsac_vv, opfvv_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf, opfvf_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf, opfvf_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf, opfvf_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf, opfvf_widen_check)
++GEN_OPFVV_WIDEN_TRANS(vfwmacc_vv, opfvv_overwrite_widen_check)
++GEN_OPFVV_WIDEN_TRANS(vfwnmacc_vv, opfvv_overwrite_widen_check)
++GEN_OPFVV_WIDEN_TRANS(vfwmsac_vv, opfvv_overwrite_widen_check)
++GEN_OPFVV_WIDEN_TRANS(vfwnmsac_vv, opfvv_overwrite_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf, opfvf_overwrite_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf, opfvf_overwrite_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf, opfvf_overwrite_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf, opfvf_overwrite_widen_check)
+ 
+ /* Vector Floating-Point Square-Root Instruction */
+ 
 -- 
 2.39.5
 
