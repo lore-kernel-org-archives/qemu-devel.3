@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE700C54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D02C5AD49
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJABD-0006Od-UR; Sun, 25 May 2025 08:10:16 -0400
+	id 1uJAB6-0005tM-8e; Sun, 25 May 2025 08:10:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAA6-0004iE-W9; Sun, 25 May 2025 08:09:08 -0400
+ id 1uJA9l-0004X5-V6; Sun, 25 May 2025 08:08:47 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAA3-0003NT-OS; Sun, 25 May 2025 08:09:05 -0400
+ id 1uJA9i-0003Ev-3H; Sun, 25 May 2025 08:08:44 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AF363124E56;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6890E124E50;
  Sun, 25 May 2025 15:08:17 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B0395215FBD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74CCF215FB7;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Anton Blanchard <antonb@tenstorrent.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 36/59] target/riscv: rvv: Apply vext_check_input_eew
- to OPIVI/OPIVX/OPFVF(vext_check_ss) instructions
-Date: Sun, 25 May 2025 15:07:53 +0300
-Message-Id: <20250525120818.273372-13-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 30/59] hw/riscv: Fix type conflict of GLib function
+ pointers
+Date: Sun, 25 May 2025 15:07:47 +0300
+Message-Id: <20250525120818.273372-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,33 +64,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Handle the overlap of source registers with different EEWs.
+qtest_set_command_cb passed to g_once should match GThreadFunc,
+which it does not.  But using g_once is actually unnecessary,
+because the function is called by riscv_harts_realize() under
+the Big QEMU Lock.
 
-Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20250408103938.3623486-5-max.chou@sifive.com>
+Reported-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250410161722.595634-1-pbonzini@redhat.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit fbeaf35838768086b435833cb4dc5182c73ec2bc)
+(cherry picked from commit 56cde18d048e1e1f889e31f7553e1f39f03eeec5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 4a0c9fbeff..e8197f779e 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -412,7 +412,8 @@ static bool vext_check_ss(DisasContext *s, int vd, int vs, int vm)
- {
-     return require_vm(vm, vd) &&
-            require_align(vd, s->lmul) &&
--           require_align(vs, s->lmul);
-+           require_align(vs, s->lmul) &&
-+           vext_check_input_eew(s, vs, s->sew, -1, s->sew, vm);
- }
+diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+index a55d156668..bb9104bae0 100644
+--- a/hw/riscv/riscv_hart.c
++++ b/hw/riscv/riscv_hart.c
+@@ -104,8 +104,11 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
  
- /*
+ static void riscv_cpu_register_csr_qtest_callback(void)
+ {
+-    static GOnce once;
+-    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback);
++    static bool first = true;
++    if (first) {
++        first = false;
++        qtest_set_command_cb(csr_qtest_callback);
++    }
+ }
+ #endif
+ 
 -- 
 2.39.5
 
