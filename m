@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD85C5AD49
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 15:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BC5C54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 15:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJD7O-0003xZ-Bo; Sun, 25 May 2025 11:18:30 -0400
+	id 1uJD90-00059W-7D; Sun, 25 May 2025 11:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJD7H-0003vs-HG
- for qemu-devel@nongnu.org; Sun, 25 May 2025 11:18:23 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJD8r-00053q-Cc
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 11:20:01 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJD7F-0006sb-W0
- for qemu-devel@nongnu.org; Sun, 25 May 2025 11:18:23 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3a37d24e607so1444656f8f.1
- for <qemu-devel@nongnu.org>; Sun, 25 May 2025 08:18:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJD8p-0006ya-IB
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 11:20:01 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a4d877dfb3so238791f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 25 May 2025 08:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748186300; x=1748791100; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748186397; x=1748791197; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Vr/pbhByActHs1ar2a+X+XNZlO98ZE1daapFhpfPLRo=;
- b=rKl/NyZ7R1m8GhRtphxiKWay5qdRAPS9+BxLbUkFl/MvyKHep8Y96J4IqyJTauymp7
- +0QOOjlHRm6ZaMDEqFQOdg7t35VjiYlBSsZCtDwyiusz5DYShPVdStBtRFq5MKAzPz+l
- mooQf1THcDQneCYd3dPYENvUNIynvczaT3W+ui1utSTMsjxobzRxy8g7qLMdWime6alm
- uES1dSCZogDUZSQPzj9ffk4RXYjF8XHZRXmdKBuS/3SIPw6RqS6JSEgUHwYXqH83Tl6H
- tCPqun4fSAylvsgyO/PMckRJ4NIijiL1yLc7fv8K8aH1lusrq8hSoYSIJwyR9vqeshjJ
- 2tiA==
+ bh=sUcRthyO7NQK7sZA75EGL4Oasjz/aYc7VVal8xGYmY0=;
+ b=X2M5UV0+w96d5pN6o+/QanlIyNeV8WlX15GnWoRy8+uoPS1PRjasMWQvaoYvldBvht
+ MnOccIMsmJCxHRR6+ejA6pdixzQq53h89WhCwMA9gSV0Rx/67dqW1WwfQ++TLj0MWT1v
+ hJodE3J55MIyMmLafzrWIecnBixrmoSVU+bn2IU+CAk7lPKO+mw78tXdCGp04jeuQC6z
+ 4RyeYXHr3q5EjzVhkXKILk5ba6Bi4sQZm1mxfB0ySWT8SA/j5/8E8DoaqH1IvjjjJm3T
+ 5RK9KHB3SYN8LmTJC8gTdwoBNuL7BsITDvUImZ9Te+x4Qj8tujFU0/5vzLN4v3u6xvud
+ aHkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748186300; x=1748791100;
+ d=1e100.net; s=20230601; t=1748186397; x=1748791197;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Vr/pbhByActHs1ar2a+X+XNZlO98ZE1daapFhpfPLRo=;
- b=pzilD7IBv9/w5a9U/VjPSX5mXfhgFyll4oOTMca8vt/N6y2s6jLYQJEAGD+/vJAPOl
- 490hg1P8QfKWMiBOsDOqvHNODyTEgzIWSz7zRieMP1c5YWeT2pk+rv8l+A7HIqOt+H3P
- MnCso72K502bNQw6mkhH3a+WMgR7UL1zVG4gO+8NLX6OdwKDFywDHJPTF20qmZXfHKpz
- kdlLA1Gwfzt8zIrHewedJ+9NYFfdSEnhLvX9fevmk/iBkyhmpHU+CDXfibVIcnFWC0L3
- vIvU8fx9E/MVNTN4D+tbvVlmQuH9JyntnKJWhWSj0jcvCJluceSG8hmJBnZnXEWlkRBO
- VAtA==
+ bh=sUcRthyO7NQK7sZA75EGL4Oasjz/aYc7VVal8xGYmY0=;
+ b=HBmHPxFFhQZlG7q/oL1zo43o3bl13qoiDtzqP8AliSJrB4Mu+YOmjANuSsiTpNVcf1
+ B6UlFfGUXkHt11DwqHdDN0Z1Y7r34gAHRizzxM8/5FhImlXTlMYnFCrrlpH8QBlqDgMu
+ BvZdkaa8K04d6/mpjAjmHl8aBl2n0dIr46CHKRTnes180jHddZYi3NCOkqD4xb25Efsz
+ vRtEdqq09mUng1gvkzZUu35xT79KmvHFMPCM3r/X0kTokIJnZhaFy1EqdFFL3b5uH0mj
+ sh2jCWz504NXMnoq0dhldnQBF+Lgnnb8PNJkH0You+EmVyWBSu42HwUsBxSpPxGOHP/9
+ u0oQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXfrlxE+Uacy58JBxVDs0V6snwq4yWp24h81DEZzqXsSf92dHm7Ed7OYc7aGT3d29ND7HHVOMbEzrQP@nongnu.org
-X-Gm-Message-State: AOJu0YzFsRDDJu4Koo9hGyREe74Rmp/tqyKVwiWQko744mUYFHEhFywA
- z8rRzXapTIqJ7IB8q1w3XQl/uRUigdRYTiIzD9fnWpEmo7GOu+VXTE0pYQ0sRfOvpWeT8+U0jP3
- 7ChPr
-X-Gm-Gg: ASbGnctBMU+9MfLIkX2Uj7yUJBGxkqWuO+wCHeXw/l767Tqj6iw/fRKW/PLfOm1TXVP
- ZYVu7B/wfKJYSJSuGUNX6DKm/Dw3YMECssvgZ5/3sS1FlJaeTWbQ4jzrgSYdEmk1IVkftPgZxjA
- Y8D1b4+jvappmuOA2a1v1CbNK5T80IYYj/GJEVWL6IX9sOVeoERx+9Luaj+1tU6n4swKCPXBBli
- +Wr7MyxiSlinY5XmzlojB/ZiBQ4hyg4TsUmL2AjcsADllECumDjjNlTXB+DQtqDZs27BgCiz4SE
- 4Kvs9tJG/RGgAuM4GuY4vMUCtE3H2O4Gl1yMBLV5elkjdIMLae2dVmyJvCY2DHjIsRBtOE2vn+K
- FrCNhbz2LS10+BrCP/n6UEQWSR4U=
-X-Google-Smtp-Source: AGHT+IGyuAiJfDtlqmc+S2wZPDOgMF9AVZEuWH32nIsxuPwYIQU0kga/d/mPrOnThrsXgfVqaMl/hA==
-X-Received: by 2002:a05:6000:2503:b0:3a4:d048:125c with SMTP id
- ffacd0b85a97d-3a4d04813ffmr3831852f8f.35.1748186300377; 
- Sun, 25 May 2025 08:18:20 -0700 (PDT)
+ AJvYcCUujzi8RAZ1bw0E8XEZKD+EMJEmS1vEjIzjfmh+KywPbwzQx0IQ+dc/J8o4xoQsNG7ZHcjiznHYFhnv@nongnu.org
+X-Gm-Message-State: AOJu0Yy4DyPTa0O9CDJdFKyvXqI759ZNBzH57TtEg1RIe4kWTCuMVaqk
+ 8NtHHXdNOdpVSFU5LeJGVny79yqvkEU8pTnv3fiD6Xk2pubMab/V5WQ9zbRhBUuOPJA=
+X-Gm-Gg: ASbGncsrE6NCAeGtUx/jj4ix3dvhPGdKbHDaUeqUZ1lsjOyuxNO2q7hohKy5peBAhis
+ j4TXpuJXTCqImewgkPY5hEORAn3t4q5gKNas+5QV6r4+fEphYuDE/peuJ9MLl4bvWyelYSOqQlc
+ 7cxKCdopEYzEiIo8ZMZfcLz/VjRANugTWx+jDRNf/TPmHAr7MxtIyB3j2bHBtMJXc/mjNxB5zgb
+ ucu0RmtumBBLF17QZo/YXZyhP1tcWJDjtKIIFAmh4ztXooBGmj4gk3TATJ/yV/5UdWk2ux8O8Jm
+ q27IVmj7Cou0PvNhh9o22tHTYoJLdIJ6Ivr9iecMY4gQrYncPM6358BeZiHBRHSCbE/sgsxNJJV
+ UslI0zGMgRuuJDng0aKwi+eDbXylQME1P7x4yWw==
+X-Google-Smtp-Source: AGHT+IFlT5i5kKk3Z0SM0a41dpKM6/SUmh8tZRBXgiz7PPSaXTpz+AAwwxzsDzMQnnTRJv/bi4kwdg==
+X-Received: by 2002:a05:6000:2389:b0:3a4:d238:682b with SMTP id
+ ffacd0b85a97d-3a4d2386cbamr2446821f8f.51.1748186397110; 
+ Sun, 25 May 2025 08:19:57 -0700 (PDT)
 Received: from [10.132.0.213] (17.red-95-127-33.staticip.rima-tde.net.
  [95.127.33.17]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4ccc2c88dsm5076314f8f.69.2025.05.25.08.18.17
+ 5b1f17b1804b1-442ebd6fe86sm301311865e9.0.2025.05.25.08.19.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 May 2025 08:18:19 -0700 (PDT)
-Message-ID: <41694d45-fac3-425c-bef9-7ea0ec1cb773@linaro.org>
-Date: Sun, 25 May 2025 17:18:12 +0200
+ Sun, 25 May 2025 08:19:56 -0700 (PDT)
+Message-ID: <25d9fac2-66c2-4a55-b41c-d932c8a33dee@linaro.org>
+Date: Sun, 25 May 2025 17:19:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/20] tests/qtest: fix igb test failure under
- --enable-ubsan
+Subject: Re: [PATCH v3 07/20] contrib/plugins: add a scaling factor to the ips
+ arg
 To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -85,26 +84,24 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Gustavo Romero <gustavo.romero@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Nabih Estefan <nabihestefan@google.com>,
- Richard Henderson <richard.henderson@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>
 References: <20250521164250.135776-1-alex.bennee@linaro.org>
- <20250521164250.135776-5-alex.bennee@linaro.org>
- <acc76a26-d6b5-4ff4-a8d6-3595873157ea@daynix.com>
+ <20250521164250.135776-8-alex.bennee@linaro.org>
+ <2aece273-04e9-48ee-aa97-dfe1d8c0d6d8@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <acc76a26-d6b5-4ff4-a8d6-3595873157ea@daynix.com>
+In-Reply-To: <2aece273-04e9-48ee-aa97-dfe1d8c0d6d8@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,23 +117,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/5/25 06:19, Akihiko Odaki wrote:
+On 22/5/25 06:45, Akihiko Odaki wrote:
 > On 2025/05/22 1:42, Alex Bennée wrote:
->> From: Nabih Estefan <nabihestefan@google.com>
+>> It's easy to get lost in zeros while setting the numbers of
+>> instructions per second. Add a scaling suffix to make things simpler.
 >>
->>    ../tests/qtest/libqos/igb.c:106:5: runtime error: load of 
->> misaligned address 0x562040be8e33 for type 'uint32_t', which requires 
->> 4 byte alignment
+>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >>
->> Instead of straight casting the uint8_t array, we can use ldl_le_p and
->> lduw_l_p to assure the unaligned access working properly against
->> uint32_t and uint16_t.
+>> ---
+>> v2
+>>    - normalise the suffix before a full strcmp0
+>>    - check endptr actually set
+>>    - fix checkpatch
+>>    - scale_entry -> ScaleEntry
+>>    - drop hz from suffix
+>> ---
+>>   contrib/plugins/ips.c | 34 +++++++++++++++++++++++++++++++++-
+>>   1 file changed, 33 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+>> index e5297dbb01..eb4418c25b 100644
+>> --- a/contrib/plugins/ips.c
+>> +++ b/contrib/plugins/ips.c
+>> @@ -129,6 +129,18 @@ static void plugin_exit(qemu_plugin_id_t id, void 
+>> *udata)
+>>       qemu_plugin_scoreboard_free(vcpus);
+>>   }
+>> +typedef struct {
+>> +    const char *suffix;
+>> +    unsigned long multipler;
 > 
-> I think the subject should mention the problem (the unaligned access) 
-> instead of the method used to detect it (UBSan).
+> As I suggested for the previous version, let's use uint32_t or uint64_t.
+> 
+>> +} ScaleEntry;
+>> +
+>> +/* a bit like units.h but not binary */
+>> +static 
 
-"tests/qtest: Avoid unaligned access in IGB test"
+const
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ScaleEntry scales[] = {
+>> +    { "k", 1000 },
+>> +    { "m", 1000 * 1000 },
+>> +    { "g", 1000 * 1000 * 1000 },
+>> +};
 
 
