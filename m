@@ -4,33 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37ABCC5AD49
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A09FC54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ7qO-0004AR-F7; Sun, 25 May 2025 05:40:36 -0400
+	id 1uJ7qR-0004BH-Jf; Sun, 25 May 2025 05:40:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7qK-00048w-MC; Sun, 25 May 2025 05:40:33 -0400
+ id 1uJ7qN-0004AG-Ul; Sun, 25 May 2025 05:40:35 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7qI-0004Gf-7G; Sun, 25 May 2025 05:40:32 -0400
+ id 1uJ7qM-0004Hp-5f; Sun, 25 May 2025 05:40:35 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D5A3D124DC7;
+ by isrv.corpit.ru (Postfix) with ESMTP id E8E9D124DC9;
  Sun, 25 May 2025 12:40:24 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B9573215EF9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CCAF5215EFB;
  Sun, 25 May 2025 12:40:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.18 19/21] virtio: Call set_features during reset
-Date: Sun, 25 May 2025 12:40:20 +0300
-Message-Id: <20250525094025.174507-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.18 21/21] qapi/misc-target: Fix the doc to distinguish
+ query-sgx and query-sgx-capabilities
+Date: Sun, 25 May 2025 12:40:22 +0300
+Message-Id: <20250525094025.174507-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.18-20250525111620@cover.tls.msk.ru>
 References: <qemu-stable-7.2.18-20250525111620@cover.tls.msk.ru>
@@ -59,51 +61,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-virtio-net expects set_features() will be called when the feature set
-used by the guest changes to update the number of virtqueues but it is
-not called during reset, which will clear all features, leaving the
-queues added for VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS. Not only these
-extra queues are visible to the guest, they will cause segmentation
-fault during migration.
+There're 2 QMP commands: query-sgx and query-sgx-capabilities, but
+their outputs are very similar and the documentation lacks clear
+differentiation.
 
-Call set_features() during reset to remove those queues for virtio-net
-as we call set_status(). It will also prevent similar bugs for
-virtio-net and other devices in the future.
+From the codes, query-sgx is used to gather guest's SGX capabilities
+(including SGX related CPUIDs and EPC sections' size, in SGXInfo), and
+if guest doesn't have SGX, then QEMU will report the error message.
 
-Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
-Buglink: https://issues.redhat.com/browse/RHEL-73842
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20250421-reset-v2-1-e4c1ead88ea1@daynix.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 0caed25cd171c611781589b5402161d27d57229c)
+On the other hand, query-sgx-capabilities is used to gather host's SGX
+capabilities (descripted by SGXInfo as well). And if host doesn't
+support SGX, then QEMU will also report the error message.
+
+Considering that SGXInfo is already documented and both these 2 commands
+have enough error messages (for the exception case in their codes).
+
+Therefore the QAPI documentation for these two commands only needs to
+emphasize that one of them applies to the guest and the other to the
+host.
+
+Fix their documentation to reflect this difference.
+
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/r/20250513143131.2008078-3-zhao1.liu@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 7f2131c35c1781ca41c62dc26fd93282e1351323)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index d0d13f4766..5914f839ea 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2578,6 +2578,8 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
-     }
- }
- 
-+static int virtio_set_features_nocheck(VirtIODevice *vdev, uint64_t val);
-+
- void virtio_reset(void *opaque)
- {
-     VirtIODevice *vdev = opaque;
-@@ -2600,7 +2602,7 @@ void virtio_reset(void *opaque)
-     vdev->start_on_kick = false;
-     vdev->started = false;
-     vdev->broken = false;
--    vdev->guest_features = 0;
-+    virtio_set_features_nocheck(vdev, 0);
-     vdev->queue_sel = 0;
-     vdev->status = 0;
-     vdev->disabled = false;
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 4944c0528f..d3a6ce355e 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -352,7 +352,7 @@
+ ##
+ # @query-sgx:
+ #
+-# Returns information about SGX
++# Returns information about configured SGX capabilities of guest
+ #
+ # Returns: @SGXInfo
+ #
+@@ -372,7 +372,7 @@
+ ##
+ # @query-sgx-capabilities:
+ #
+-# Returns information from host SGX capabilities
++# Returns information about SGX capabilities of host
+ #
+ # Returns: @SGXInfo
+ #
 -- 
 2.39.5
 
