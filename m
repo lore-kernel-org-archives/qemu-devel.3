@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E0CC54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5BBC54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJABI-0006nF-B6; Sun, 25 May 2025 08:10:20 -0400
+	id 1uJABf-00088Z-CU; Sun, 25 May 2025 08:10:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAAZ-0004yx-78; Sun, 25 May 2025 08:09:38 -0400
+ id 1uJABA-0006By-3T; Sun, 25 May 2025 08:10:12 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAAT-0003P6-Ie; Sun, 25 May 2025 08:09:33 -0400
+ id 1uJAB7-0003n4-S2; Sun, 25 May 2025 08:10:11 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA351124E58;
- Sun, 25 May 2025 15:08:17 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DBE77215FBF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 519BF124E60;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5E9D7215FC7;
+ Sun, 25 May 2025 15:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Anton Blanchard <antonb@tenstorrent.com>,
+Cc: qemu-stable@nongnu.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 38/59] target/riscv: rvv: Apply vext_check_input_eew
- to vector slide instructions(OPIVI/OPIVX)
-Date: Sun, 25 May 2025 15:07:55 +0300
-Message-Id: <20250525120818.273372-15-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 46/59] target/riscv/kvm: turn u32/u64 reg functions
+ into macros
+Date: Sun, 25 May 2025 15:08:03 +0300
+Message-Id: <20250525120818.273372-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -63,34 +63,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Handle the overlap of source registers with different EEWs.
+This change is motivated by a future change w.r.t CSRs management. We
+want to handle them the same way as KVM extensions, i.e. a static array
+with KVMCPUConfig objs that will be read/write during init and so on.
+But to do that properly we must be able to declare a static array that
+hold KVM regs.
 
-Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20250408103938.3623486-7-max.chou@sifive.com>
+C does not allow to init static arrays and use functions as
+initializers, e.g. we can't do:
+
+.kvm_reg_id = kvm_riscv_reg_id_ulong(...)
+
+When instantiating the array. We can do that with macros though, so our
+goal is turn kvm_riscv_reg_ulong() in a macro. It is cleaner to turn
+every other reg_id_*() function in macros, and ulong will end up using
+the macros for u32 and u64, so we'll start with them.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250429124421.223883-4-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit b5480a693e3e657108746721ffe434b3bb6e7a72)
+(cherry picked from commit b6096103494506514d9bfa442f62fef36ffc8fba)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2a4bededd1..d72792e46a 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -638,7 +638,9 @@ static bool vext_check_slide(DisasContext *s, int vd, int vs2,
- {
-     bool ret = require_align(vs2, s->lmul) &&
-                require_align(vd, s->lmul) &&
--               require_vm(vm, vd);
-+               require_vm(vm, vd) &&
-+               vext_check_input_eew(s, -1, 0, vs2, s->sew, vm);
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 616360bd04..991adbaf74 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -58,6 +58,12 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level)
+ 
+ static bool cap_has_mp_state;
+ 
++#define KVM_RISCV_REG_ID_U32(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U32 | \
++                                         type | idx)
 +
-     if (is_over) {
-         ret &= (vd != vs2);
-     }
++#define KVM_RISCV_REG_ID_U64(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U64 | \
++                                         type | idx)
++
+ static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type,
+                                  uint64_t idx)
+ {
+@@ -76,16 +82,6 @@ static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type,
+     return id;
+ }
+ 
+-static uint64_t kvm_riscv_reg_id_u32(uint64_t type, uint64_t idx)
+-{
+-    return KVM_REG_RISCV | KVM_REG_SIZE_U32 | type | idx;
+-}
+-
+-static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
+-{
+-    return KVM_REG_RISCV | KVM_REG_SIZE_U64 | type | idx;
+-}
+-
+ static uint64_t kvm_encode_reg_size_id(uint64_t id, size_t size_b)
+ {
+     uint64_t size_ctz = __builtin_ctz(size_b);
+@@ -119,12 +115,12 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
+     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG, \
+                            KVM_REG_RISCV_CONFIG_REG(name))
+ 
+-#define RISCV_TIMER_REG(name)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_TIMER, \
++#define RISCV_TIMER_REG(name)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_TIMER, \
+                  KVM_REG_RISCV_TIMER_REG(name))
+ 
+-#define RISCV_FP_F_REG(idx)  kvm_riscv_reg_id_u32(KVM_REG_RISCV_FP_F, idx)
++#define RISCV_FP_F_REG(idx)  KVM_RISCV_REG_ID_U32(KVM_REG_RISCV_FP_F, idx)
+ 
+-#define RISCV_FP_D_REG(idx)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_FP_D, idx)
++#define RISCV_FP_D_REG(idx)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_FP_D, idx)
+ 
+ #define RISCV_VECTOR_CSR_REG(env, name) \
+     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_VECTOR, \
 -- 
 2.39.5
 
