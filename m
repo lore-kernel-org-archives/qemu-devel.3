@@ -4,36 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B4DFC5AD49
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F76C54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJADM-0004kb-Os; Sun, 25 May 2025 08:12:29 -0400
+	id 1uJAE3-0006hT-6P; Sun, 25 May 2025 08:13:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAC9-00017p-W1; Sun, 25 May 2025 08:11:15 -0400
+ id 1uJACc-0002cA-T5; Sun, 25 May 2025 08:11:43 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAC7-0003ud-Vh; Sun, 25 May 2025 08:11:13 -0400
+ id 1uJACZ-0003vT-GL; Sun, 25 May 2025 08:11:41 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ADB6C124E69;
+ by isrv.corpit.ru (Postfix) with ESMTP id DDD0B124E6D;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B6AA5215FD0;
+ by tsrv.corpit.ru (Postfix) with ESMTP id ECA6B215FD4;
  Sun, 25 May 2025 15:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 55/59] migration/multifd: Don't send device state
- packets with zerocopy flag
-Date: Sun, 25 May 2025 15:08:12 +0300
-Message-Id: <20250525120818.273372-32-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 59/59] target/hppa: Fix FPE exceptions
+Date: Sun, 25 May 2025 15:08:16 +0300
+Message-Id: <20250525120818.273372-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -62,58 +59,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+From: Helge Deller <deller@gmx.de>
 
-If zerocopy is enabled for multifd then QIO_CHANNEL_WRITE_FLAG_ZERO_COPY
-flag is forced into all multifd channel write calls via p->write_flags
-that was setup in multifd_nocomp_send_setup().
+Implement FP exception register #1 (lower 32-bits of 64-bit fr[0]).
+A proper implementation is necessary to allow the Linux kernel in
+system mode and the qemu linux-user to send proper si_code values
+on SIGFPE signal.
 
-However, device state packets aren't compatible with zerocopy - the data
-buffer isn't getting kept pinned until multifd channel flush.
+Always set the T-bit on taken exception, and merge over- and underflow
+in system mode to just set overflow bit to mimic the behaviour I tested
+on a physical machine.
 
-Make sure to mask that QIO_CHANNEL_WRITE_FLAG_ZERO_COPY flag in a multifd
-send thread if the data being sent is device state.
+The test program below can be used to verify correct behaviour. Note
+that behaviour on SIGFPE may vary on different platforms. The program
+should always detect the correct signal, but it may or may not be able
+to sucessfully continue afterwards.
 
-Fixes: 0525b91a0b99 ("migration/multifd: Device state transfer support - send side")
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 6be7696129b302830a9cff7e30484e08c2d64b57)
+ #define _GNU_SOURCE
+ #include <signal.h>
+ #include <stdio.h>
+ #include <fenv.h>
+ #include <float.h>
+
+ static void fpe_func(int sig, siginfo_t *i, void *v) {
+    sigset_t set;
+    sigemptyset(&set);
+    sigaddset(&set, SIGFPE);
+    sigprocmask(SIG_UNBLOCK, &set, NULL);
+    printf("GOT signal %d with si_code %ld\n", sig, i->si_code);
+ }
+
+ int main(int argc, char *argv[]) {
+    struct sigaction action = {
+        .sa_sigaction = fpe_func,
+        .sa_flags = SA_RESTART|SA_SIGINFO };
+    sigaction(SIGFPE, &action, 0);
+    feenableexcept(FE_OVERFLOW | FE_UNDERFLOW);
+    double x = DBL_MIN;
+    return printf("%lf\n", argc > 1
+        ? 1.7976931348623158E308*1.7976931348623158E308
+        : x / 10);
+ }
+
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit ebd394948de4e868cb8fc5b265a8a18f0935dce1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index dfb5189f0e..198763bada 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -695,6 +695,7 @@ static void *multifd_send_thread(void *opaque)
-         if (qatomic_load_acquire(&p->pending_job)) {
-             bool is_device_state = multifd_payload_device_state(p->data);
-             size_t total_size;
-+            int write_flags_masked = 0;
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index a62d9d3083..294ce0a970 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -95,7 +95,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+ {
+     uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
+     uint32_t hard_exp = 0;
+-    uint32_t shadow = env->fr0_shadow;
++    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
++    uint32_t fr1 = 0;
  
-             p->flags = 0;
-             p->iovs_num = 0;
-@@ -702,6 +703,9 @@ static void *multifd_send_thread(void *opaque)
+     if (likely(soft_exp == 0)) {
+         env->fr[0] = (uint64_t)shadow << 32;
+@@ -108,9 +109,22 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+     hard_exp |= CONVERT_BIT(soft_exp, float_flag_overflow,  R_FPSR_ENA_O_MASK);
+     hard_exp |= CONVERT_BIT(soft_exp, float_flag_divbyzero, R_FPSR_ENA_Z_MASK);
+     hard_exp |= CONVERT_BIT(soft_exp, float_flag_invalid,   R_FPSR_ENA_V_MASK);
+-    shadow |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
++    if (hard_exp & shadow) {
++        shadow = FIELD_DP32(shadow, FPSR, T, 1);
++        /* fill exception register #1, which is lower 32-bits of fr[0] */
++#if !defined(CONFIG_USER_ONLY)
++        if (hard_exp & (R_FPSR_ENA_O_MASK | R_FPSR_ENA_U_MASK)) {
++            /* over- and underflow both set overflow flag only */
++            fr1 = FIELD_DP32(fr1, FPSR, C, 1);
++            fr1 = FIELD_DP32(fr1, FPSR, FLG_O, 1);
++        } else
++#endif
++        {
++            fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
++        }
++    }
+     env->fr0_shadow = shadow;
+-    env->fr[0] = (uint64_t)shadow << 32;
++    env->fr[0] = (uint64_t)shadow << 32 | fr1;
  
-             if (is_device_state) {
-                 multifd_device_state_send_prepare(p);
-+
-+                /* Device state packets cannot be sent via zerocopy */
-+                write_flags_masked |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
-             } else {
-                 ret = multifd_send_state->ops->send_prepare(p, &local_err);
-                 if (ret != 0) {
-@@ -723,7 +727,8 @@ static void *multifd_send_thread(void *opaque)
-                                               &p->data->u.ram, &local_err);
-             } else {
-                 ret = qio_channel_writev_full_all(p->c, p->iov, p->iovs_num,
--                                                  NULL, 0, p->write_flags,
-+                                                  NULL, 0,
-+                                                  p->write_flags & ~write_flags_masked,
-                                                   &local_err);
-             }
- 
+     if (hard_exp & shadow) {
+         hppa_dynamic_excp(env, EXCP_ASSIST, ra);
 -- 
 2.39.5
 
