@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A671C54E90
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D5A7C54F30
 	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 07:09:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ5T9-0005FU-MT; Sun, 25 May 2025 03:08:27 -0400
+	id 1uJ5Tf-0005Ij-OI; Sun, 25 May 2025 03:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1uJ5T5-0005FF-M1
- for qemu-devel@nongnu.org; Sun, 25 May 2025 03:08:24 -0400
+ id 1uJ5Td-0005ID-D7
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 03:08:57 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1uJ5T3-0008Dg-5V
- for qemu-devel@nongnu.org; Sun, 25 May 2025 03:08:23 -0400
+ id 1uJ5Tb-0008HO-BR
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 03:08:56 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c11:4195:0:640:137b:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 5174160D8B;
- Sun, 25 May 2025 10:08:13 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B2DE360DF8;
+ Sun, 25 May 2025 10:08:53 +0300 (MSK)
 Received: from dtalexundeer-nx.yandex-team.ru (unknown
  [2a02:6b8:b081:7309::1:2])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 68MOog1FXOs0-2j3gkgez; Sun, 25 May 2025 10:08:12 +0300
+ ESMTPSA id 68MOog1FXOs0-RFKGp3Xu; Sun, 25 May 2025 10:08:52 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1748156892;
- bh=2wz8NYYOSE4+eOYf9uGfHS74gP0P31D93W7Ug4Opkes=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=g5i7sD5bj4ZqWLRYYj7kt3h/tI1r4O2A8kIYKN55WfKu2AquYRtiywgRUfcyHiE8M
- c/ZYILMTKsZAk/f4h9/JOZiJ8AVuPQ6TorvWO44RY+ITICV5tknO9WXfXBoypiw2WJ
- h2aMSK6IOVwEE+QYRzzUPKwd61OxLxLPTnX8YlXs=
+ s=default; t=1748156933;
+ bh=uKJzMszss7xvilZ1oDyVTg9m8N74JuEiqrv9BmQoVdo=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=ptRWTXYVg2A/ddU/9X6wy17+2Qqd4z9gXVLqZjx2mS/tQwSmQMTfwZOApYWjb+OLD
+ bRiZZkljfs2ELJmzZ/+Rgd3IbCW3qRl+3PA7uKJv2N1XeOGMHCHcHGfyGvz5b3or5w
+ BnVsFgYNhWkYFn1IDyp9ytVWgaL2EXKXgvJW21a8=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
@@ -50,10 +50,12 @@ Cc: Cleber Rosa <crosa@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v8 0/2] tests/functional: add memlock tests
-Date: Sun, 25 May 2025 12:07:36 +0500
-Message-Id: <20250525070737.54267-1-dtalexundeer@yandex-team.ru>
+Subject: [PATCH v8 2/2] tests/functional: add memlock tests
+Date: Sun, 25 May 2025 12:07:40 +0500
+Message-Id: <20250525070737.54267-3-dtalexundeer@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250525070737.54267-1-dtalexundeer@yandex-team.ru>
+References: <20250525070737.54267-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
@@ -80,58 +82,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Add new tests to check the correctness of the `-overcommit memlock`
 option (possible values: off, on, on-fault) by using
-`/proc/{qemu_pid}/status` file to check in VmSize, VmRSS and VmLck values:
-    
+`/proc/{qemu_pid}/status` file to check in VmSize, VmRSS and VmLck
+values:
+
 * if `memlock=off`, then VmLck = 0;
 * if `memlock=on`, then VmLck > 0 and almost all memory is resident;
 * if `memlock=on-fault`, then VmLck > 0 and only few memory is resident.
 
-On `memlock=on` and `memlock=on-fault` VmLck will be the same.
-
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 ---
-v7 -> v8:
-* rewrite test, using process status file instead of smaps
-for checking overcommit option;
-* change error handling on opening status file;
-* add SPDX identifier.
-
-v6 -> v7:
-* add skipTest if can't open smaps file of qemu process
-
-v5 -> v6:
-* add python3 shebang to tests/functional/test_memlock.py
-
-v4 -> v5:
-* refactor skipLockedMemoryTest decorator: using resource.getrlimit()
-  function instead of spawning a process
-
-v3 -> v4:
-* add skipLockedMemoryTest decorator to skip test if system's locked
-  memory limit is below the required threashold;
-* add to MemlockTest skipLockedMemoryTest decorator with 2 GB limit.
-
-v2 -> v3:
-Move tests to tests/functional dir, as the tests/avocado dir is being
-phased out.
-v2 was [PATCH v2] tests/avocado: add memlock tests.
-Supersedes: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
-
-v1 -> v2:
-In the previous send, i forgot to specify new patch version (v2)
-So i resend previous patch with version specified.
-
-
-Alexandr Moshkov (2):
-  tests/functional: add skipLockedMemoryTest decorator
-  tests/functional: add memlock tests
-
- tests/functional/meson.build             |  1 +
- tests/functional/qemu_test/__init__.py   |  2 +-
- tests/functional/qemu_test/decorators.py | 18 ++++++
- tests/functional/test_memlock.py         | 79 ++++++++++++++++++++++++
- 4 files changed, 99 insertions(+), 1 deletion(-)
+ tests/functional/meson.build     |  1 +
+ tests/functional/test_memlock.py | 79 ++++++++++++++++++++++++++++++++
+ 2 files changed, 80 insertions(+)
  create mode 100755 tests/functional/test_memlock.py
 
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 52b4706cfe..13079f58b6 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -68,6 +68,7 @@ tests_generic_system = [
+   'empty_cpu_model',
+   'info_usernet',
+   'version',
++  'memlock',
+ ]
+ 
+ tests_generic_linuxuser = [
+diff --git a/tests/functional/test_memlock.py b/tests/functional/test_memlock.py
+new file mode 100755
+index 0000000000..83cb5394cd
+--- /dev/null
++++ b/tests/functional/test_memlock.py
+@@ -0,0 +1,79 @@
++#!/usr/bin/env python3
++#
++# Functional test that check overcommit memlock options
++#
++# Copyright (c) Yandex Technologies LLC, 2025
++#
++# Author:
++#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import re
++
++from typing import Dict
++
++from qemu_test import QemuSystemTest
++from qemu_test import skipLockedMemoryTest
++
++
++STATUS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
++
++
++@skipLockedMemoryTest(2_097_152)  # 2GB
++class MemlockTest(QemuSystemTest):
++    """
++    Boots a Linux system with memlock options.
++    Then verify, that this options is working correctly
++    by checking the smaps of the QEMU proccess.
++    """
++
++    def common_vm_setup_with_memlock(self, memlock):
++        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
++        self.vm.launch()
++
++    def test_memlock_off(self):
++        self.common_vm_setup_with_memlock('off')
++
++        status = self.get_process_status_values(self.vm.get_pid())
++
++        self.assertTrue(status['VmLck'] == 0)
++
++    def test_memlock_on(self):
++        self.common_vm_setup_with_memlock('on')
++
++        status = self.get_process_status_values(self.vm.get_pid())
++
++        # VmLck > 0 kB and almost all memory is resident
++        self.assertTrue(status['VmLck'] > 0)
++        self.assertTrue(status['VmRSS'] >= status['VmSize'] * 0.70)
++
++    def test_memlock_onfault(self):
++        self.common_vm_setup_with_memlock('on-fault')
++
++        status = self.get_process_status_values(self.vm.get_pid())
++
++        # VmLck > 0 kB and only few memory is resident
++        self.assertTrue(status['VmLck'] > 0)
++        self.assertTrue(status['VmRSS'] <= status['VmSize'] * 0.30)
++
++    def get_process_status_values(self, pid: int) -> Dict[str, int]:
++        result = {}
++        raw_status = self._get_raw_process_status(pid)
++
++        for line in raw_status.split('\n'):
++            if m := STATUS_VALUE_PATTERN.match(line):
++                result[m.group(1)] = int(m.group(2))
++
++        return result
++
++    def _get_raw_process_status(self, pid: int) -> str:
++        try:
++            with open(f'/proc/{pid}/status', 'r') as f:
++                return f.read()
++        except FileNotFoundError:
++            self.skipTest("Can't open status file of the process")
++
++
++if __name__ == '__main__':
++    MemlockTest.main()
 -- 
 2.34.1
 
