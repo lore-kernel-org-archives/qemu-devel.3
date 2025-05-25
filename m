@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11776C54FB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B4DFC5AD49
 	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJACM-0001Uf-8p; Sun, 25 May 2025 08:11:27 -0400
+	id 1uJADM-0004kb-Os; Sun, 25 May 2025 08:12:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAAZ-0004yw-6s; Sun, 25 May 2025 08:09:38 -0400
+ id 1uJAC9-00017p-W1; Sun, 25 May 2025 08:11:15 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAAW-0003X0-1k; Sun, 25 May 2025 08:09:33 -0400
+ id 1uJAC7-0003ud-Vh; Sun, 25 May 2025 08:11:13 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F23A2124E59;
- Sun, 25 May 2025 15:08:17 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F15E2215FC0;
+ by isrv.corpit.ru (Postfix) with ESMTP id ADB6C124E69;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B6AA5215FD0;
+ Sun, 25 May 2025 15:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Anton Blanchard <antonb@tenstorrent.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 39/59] target/riscv: rvv: Apply vext_check_input_eew
- to vector integer extension instructions(OPMVV)
-Date: Sun, 25 May 2025 15:07:56 +0300
-Message-Id: <20250525120818.273372-16-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 55/59] migration/multifd: Don't send device state
+ packets with zerocopy flag
+Date: Sun, 25 May 2025 15:08:12 +0300
+Message-Id: <20250525120818.273372-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -63,33 +62,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Handle the overlap of source registers with different EEWs.
+If zerocopy is enabled for multifd then QIO_CHANNEL_WRITE_FLAG_ZERO_COPY
+flag is forced into all multifd channel write calls via p->write_flags
+that was setup in multifd_nocomp_send_setup().
 
-Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20250408103938.3623486-8-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit 411eefd56a3921ddbfdbadca596e1a8593ce834c)
+However, device state packets aren't compatible with zerocopy - the data
+buffer isn't getting kept pinned until multifd channel flush.
+
+Make sure to mask that QIO_CHANNEL_WRITE_FLAG_ZERO_COPY flag in a multifd
+send thread if the data being sent is device state.
+
+Fixes: 0525b91a0b99 ("migration/multifd: Device state transfer support - send side")
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/3bd5f48578e29f3a78f41b1e4fbea3d4b2d9b136.1747403393.git.maciej.szmigiero@oracle.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 6be7696129b302830a9cff7e30484e08c2d64b57)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index d72792e46a..585ee98b27 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -3659,7 +3659,9 @@ static bool int_ext_check(DisasContext *s, arg_rmr *a, uint8_t div)
-         require_align(a->rd, s->lmul) &&
-         require_align(a->rs2, s->lmul - div) &&
-         require_vm(a->vm, a->rd) &&
--        require_noover(a->rd, s->lmul, a->rs2, s->lmul - div);
-+        require_noover(a->rd, s->lmul, a->rs2, s->lmul - div) &&
-+        vext_check_input_eew(s, -1, 0, a->rs2, s->sew, a->vm);
+diff --git a/migration/multifd.c b/migration/multifd.c
+index dfb5189f0e..198763bada 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -695,6 +695,7 @@ static void *multifd_send_thread(void *opaque)
+         if (qatomic_load_acquire(&p->pending_job)) {
+             bool is_device_state = multifd_payload_device_state(p->data);
+             size_t total_size;
++            int write_flags_masked = 0;
+ 
+             p->flags = 0;
+             p->iovs_num = 0;
+@@ -702,6 +703,9 @@ static void *multifd_send_thread(void *opaque)
+ 
+             if (is_device_state) {
+                 multifd_device_state_send_prepare(p);
 +
-     return ret;
- }
++                /* Device state packets cannot be sent via zerocopy */
++                write_flags_masked |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
+             } else {
+                 ret = multifd_send_state->ops->send_prepare(p, &local_err);
+                 if (ret != 0) {
+@@ -723,7 +727,8 @@ static void *multifd_send_thread(void *opaque)
+                                               &p->data->u.ram, &local_err);
+             } else {
+                 ret = qio_channel_writev_full_all(p->c, p->iov, p->iovs_num,
+-                                                  NULL, 0, p->write_flags,
++                                                  NULL, 0,
++                                                  p->write_flags & ~write_flags_masked,
+                                                   &local_err);
+             }
  
 -- 
 2.39.5
