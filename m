@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B34C54F30
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 19:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926E6C54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 19:20:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJGjV-0001iy-Ri; Sun, 25 May 2025 15:10:05 -0400
+	id 1uJGsw-0002tK-Pj; Sun, 25 May 2025 15:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJGjU-0001ik-5a
- for qemu-devel@nongnu.org; Sun, 25 May 2025 15:10:04 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJGsu-0002sn-SP
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 15:19:48 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJGjS-0005QU-Bc
- for qemu-devel@nongnu.org; Sun, 25 May 2025 15:10:03 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cfa7e7f54so11763035e9.1
- for <qemu-devel@nongnu.org>; Sun, 25 May 2025 12:10:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJGss-0006Uq-Vp
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 15:19:48 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-442eb5d143eso17691665e9.0
+ for <qemu-devel@nongnu.org>; Sun, 25 May 2025 12:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748200200; x=1748805000; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=a/EuDC5lMwk7lNciuUI5wEWbaDayqJ3KVMIvJeEB21o=;
- b=yUkioJikD9Wv8LfNvEVE/F0rfAPOffZR13mqnENaG8S7Ni/fsQw9xkHP6PBfK055P2
- cOdJ3jZneZuPHjHBNZUHdeOCYEuwOyW7iJBdf6JZqi1aWbbcr62x2+kfIxQEZCJR2Jum
- 2tInjMdJxWlAWzYavj1uyh+BoWERLxeL30RbGe8gS6TOAca8Y780M5huEkT1lrAxY0J6
- mVJPdgv0kENEJgwHKfdmVDoFjFIrz0jYiaKAfplSmZd/ZWzY9hk/otpifl3JdTEJWAGQ
- ptwhSlBKqMXZ5Bzd7+p+JJjy5SQasNpdOE21kgBX+hdAW3BqZWXf8WtvcjSnuCTypGyB
- zJvg==
+ d=linaro.org; s=google; t=1748200784; x=1748805584; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=A5pBbL8dr6vYLY+VVJEcdZ86HtYRJX2M2/J3dHD5Hls=;
+ b=ke/JkUSiKkbV2fdUmidxGF3vQgV9cyu7wHYe1Jf8BvPpJZCmRqi4siMlgVMuhuerS2
+ 1R7pWMhucq3V6ooP3uJz4c9VSMQgdCmZ9bqiCcibdQ7Jw6+UcnGPBxvv0vOBth2X4czH
+ jb0vgXewXhJUcjAe9QKrossL1ddCNll+UlKPbBPVbgssFa5biMfoaqwkyntJO6YjCBEo
+ oIViT70D/lQ6PbmjI8W3ROKlgiHFJrNPrFkTqwW8ANqcpjW5tjoEpsYs+T1PdrAOBgMf
+ BoNDsAwSWgFAJdXhNLiDjF48yFfyeqAwHkvmfnbxkRVyZA4Y9LKO7LCr01OjgLUiDSpk
+ 7tTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748200200; x=1748805000;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1748200784; x=1748805584;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a/EuDC5lMwk7lNciuUI5wEWbaDayqJ3KVMIvJeEB21o=;
- b=NHpe1SqQUYjCHPMm9xp1xMwSSE2U/s7sLLYYRMMu+ToOBH5/65ucaKhxBNZPypb7Tk
- VU1F3tX4uRAdKwul/Y44LaIJezBlWiLOu2nEpphTG5Kq6eYaelrGd2av5KNT3NLhxw7x
- 2kAaeJp83n3sFGccpWs0cFwEx1ug0fETkXRBUbgqTUgATytyiSLU60WIEA0/jmPkHm4B
- mO6wUFDWV9ljkG361RWBleV3QsCT/gaT11hO5ozESiFDRCQx5sGnKNdjKy9hZypbfYFH
- ve9GP3hodnnVRaj/4OQ+rtRUtI8zedlnCnc32hGsd312arS0XWl63zk4zccxWCfxdzCw
- 5HWA==
+ bh=A5pBbL8dr6vYLY+VVJEcdZ86HtYRJX2M2/J3dHD5Hls=;
+ b=me7XsIGHqN0Zx3lTWPAdZcXrj7qdkeNQNBCF++q/7A0oan/YFBaa0HLxo8mbo9pUv2
+ BLozMB/LzneHUdTY2QtpExErZikP7Su5UxB2vXAGJnc7fGp31+Tr6heGWkcerXLKi7N7
+ d0gvVEO5dzHPwWoGM64XucQ3Z0pPjYYC/DytsBPDARbafbZDIeWdxMHNTMwKWxwul3Ex
+ klTgYU6UBKzlb2nM7N1zpDKZbGJBHFCWUFzJHwaX/yN71c+JcMQmIkAeaSMu41/UGtgA
+ o9RdJwlxt78JoBWj3uEDam6Mn7Br/IDOoB9cfFj2p9UC+GrHe5fPTqpaUsFRksGqBxX2
+ /m3Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUOWQRjNlTa9xgodQe8NuAPG2xyi4Tpf2H/LXpGO6gV+1KZ7m6gRe2oQn6WW5MiSrNcdsokpkAQ2uLB@nongnu.org
-X-Gm-Message-State: AOJu0YzlTCg5XoDbw/wzMB3m66Ld0Ia2dRI2bYM4ha64YxU0KLkQ4+gC
- HaIjy9f6NPjb3N3LGO9XkJCz/WDmzo2WJ5HWCIVmleP8v1EOehGY7WiGCngIbWsrbVw=
-X-Gm-Gg: ASbGncsI/JdsDCPjM4paZHGfwvPJDn5ShXd1Pkxe03UKQgFe2WKBLauYmdMBoQ5rnh3
- a/ymnNVe7FVg3Y9rUM7PT0HonBbWkesMin+6yj2MSHXFt6yacWe+c64Hb5vedfESk00QRiqXPHW
- Tq0paekyBZDRHB5/mYi2NT5Almz/p8MCXcU5307gxaK45I1I65PYNPvY2Z8Vea8IO17Y7cbzA/E
- TmfWmBXsfIxT4vkBNFRT13TLB1WoVe0vbdW/QQ8Cl6oKZpiQxB40oBOovkKKvDyTywG7eRZzEU+
- 4KBgzTyIJo8MSbxhqKLp4alku9jDqeY5H5AIynfGWVSYdQWRJuD/GzIff3dqmUrg75Xos80qJRd
- okkde93duNbmGZPqoFCXAjJv2
-X-Google-Smtp-Source: AGHT+IFAizI5Tb7Jvs/CKOGpzii2iOYgGVCjYzYTO3d3y401TbBKbTgswfLbN/NGxPl9NaUd+b1Iaw==
-X-Received: by 2002:a05:600c:3f09:b0:439:9434:4f3b with SMTP id
- 5b1f17b1804b1-44c7ad31729mr63531085e9.8.1748200200591; 
- Sun, 25 May 2025 12:10:00 -0700 (PDT)
+ AJvYcCVeVUYbj9wcpnlv0M2hnLbwRcIDNfSyNSumHh2UIbyev7fTDueyA0NU27NQD4jt+av3BLXLNrsgrOO8@nongnu.org
+X-Gm-Message-State: AOJu0YwPTNBWqhD7XRHSuh6d9FHgSrfKyprcQRXkVUuLz5G1fURZmCEa
+ dmr+CDCZVK+5sGvbBuJrx+BZMJeBfXXAf8xcxI5NBwEOyTYSWSYy0k0YIBJloQwvepI=
+X-Gm-Gg: ASbGnct5wJeS5rIm/bNVbfnX1D5dcRydUj4KX4TlIBJzuUqgaOXgE86yu1AmW3ASOuh
+ yi0zcmjigQ+6NrSoQ6BxZ1BxN+sYOrb19ltEA5RSZf8Y0+1KqsXNBUAwpaK48kNFoaQdrOgYnnI
+ kOp2H+kqGrzkAa3Tqk8HMmcVB+V6bdTMy+Aq52a9IUawTeKVVO6K0qKg8dlDQhaWIiqZPH8IF/g
+ A28B/Pu/NslDEuqh9/SF5rC7NgKlwp+ULobS+K4/kfeerqlb+WjzU6tyTQ6C9xnjCEtDo/mcm4f
+ E4qA4trGvBN+Ws3OaC21z3+SKRYvsAbnqtZs5JJiQNcRK/337QpoEIoRrGMA4jSOMxr84PZdOns
+ nl2cHfBDkC7ygjAlXHZy8POGA
+X-Google-Smtp-Source: AGHT+IHWUvmTKmC81RyNFte6SwhTdy4+lG3s0pSGn682MEOorA2nRHZx6+TOMVz3y0mDjiFdb3XLYQ==
+X-Received: by 2002:a05:6000:18a2:b0:3a3:5ae4:6e9e with SMTP id
+ ffacd0b85a97d-3a4cb4613admr5624560f8f.1.1748200784164; 
+ Sun, 25 May 2025 12:19:44 -0700 (PDT)
 Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4c9220245sm6191818f8f.23.2025.05.25.12.09.59
+ ffacd0b85a97d-3a4d1ed8740sm3328334f8f.83.2025.05.25.12.19.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 May 2025 12:10:00 -0700 (PDT)
-Message-ID: <9f5fddbd-8989-4549-af89-87a19cb68a19@linaro.org>
-Date: Sun, 25 May 2025 21:09:58 +0200
+ Sun, 25 May 2025 12:19:43 -0700 (PDT)
+Message-ID: <d03581a8-412d-4e3c-adc8-68a94aefd189@linaro.org>
+Date: Sun, 25 May 2025 21:19:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/microblaze: Add endianness property to the
- petalogix_s3adsp1800 machine
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 3/4] hw/microblaze: Remove the big-endian variants of
+ ml605 and xlnx-zynqmp-pmu
+To: Thomas Huth <thuth@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>
 References: <20250515132019.569365-1-thuth@redhat.com>
- <20250515132019.569365-2-thuth@redhat.com>
- <00ec097f-b43a-4831-b4b6-c5d20aac236f@linaro.org>
+ <20250515132019.569365-4-thuth@redhat.com>
+ <d5dbb421-83bc-4ac9-9a88-953ec0f97735@linaro.org>
+ <9b75c7a1-b9c1-47cf-b421-0779fad23e5a@redhat.com>
 Content-Language: en-US
-Cc: Markus Armbruster <armbru@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <00ec097f-b43a-4831-b4b6-c5d20aac236f@linaro.org>
+In-Reply-To: <9b75c7a1-b9c1-47cf-b421-0779fad23e5a@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,62 +107,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Markus
+On 16/5/25 16:06, Thomas Huth wrote:
+> On 16/05/2025 17.00, Philippe Mathieu-Daudé wrote:
+>> On 15/5/25 15:20, Thomas Huth wrote:
+>>> From: Thomas Huth <thuth@redhat.com>
+>>>
+>>> Both machines were added with little-endian in mind only (the
+>>> "endianness" CPU property was hard-wired to "true", see commits
+>>> 133d23b3ad1 and a88bbb006a52), so the variants that showed up
+>>> on the big endian target likely never worked. We deprecated these
+>>> non-working machine variants two releases ago, and so far nobody
+>>> complained, so it should be fine now to disable them. Hard-wire
+>>> the machines to little endian now.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   docs/about/deprecated.rst           |  6 ------
+>>>   docs/about/removed-features.rst     |  9 +++++++++
+>>>   hw/microblaze/petalogix_ml605_mmu.c | 15 ++++-----------
+>>>   hw/microblaze/xlnx-zynqmp-pmu.c     |  7 +------
+>>>   4 files changed, 14 insertions(+), 23 deletions(-)
+>>
+>> \o/
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Thanks!
+> 
+>> I won't be able to look at the rest of this series until in 10 days,
+>> feel free to merge if necessary.
+> 
+> Maybe you could at least provide a quick comment on the idea of 
+> controlling the endianness of the s3adsp1800 machine via a machine 
+> property? (since your original idea was to do it via different machine 
+> names instead ... does the property sound acceptable to you?)
 
-On 24/5/25 13:55, Richard Henderson wrote:
-> On 5/15/25 14:20, Thomas Huth wrote:
->> +static int machine_get_endianness(Object *obj, Error **errp 
->> G_GNUC_UNUSED)
->> +{
->> +    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
->> +    return ms->endianness;
->> +}
->> +
->> +static void machine_set_endianness(Object *obj, int endianness, Error 
->> **errp)
->> +{
->> +    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
->> +    ms->endianness = endianness;
->> +}
->> +
->>   static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
->>                                                       const void *data)
->>   {
->>       MachineClass *mc = MACHINE_CLASS(oc);
->> +    ObjectProperty *prop;
->>       mc->desc = "PetaLogix linux refdesign for xilinx Spartan 
->> 3ADSP1800";
->>       mc->init = petalogix_s3adsp1800_init;
->>       mc->is_default = true;
->> +
->> +    prop = object_class_property_add_enum(oc, "endianness", 
->> "EndianMode",
->> +                                          &EndianMode_lookup,
->> +                                          machine_get_endianness,
->> +                                          machine_set_endianness);
->> +    object_property_set_default_str(prop, TARGET_BIG_ENDIAN ? "big" : 
->> "little");
->> +    object_class_property_set_description(oc, "endianness",
->> +            "Defines whether the machine runs in big or little endian 
->> mode");
-> 
-> 
-> Better with Property?  You don't have to write get/set...
-> 
->    static const Property props[] = {
->      DEFINE_PROP_ENDIAN("endianness", S3Adsp1800MachineState, endianness,
->                         TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : 
-> ENDIAN_MODE_LITTLE),
->    };
-> 
->    device_class_set_props(dc, props);
+IIRC my goal was to remove TARGET_BIG_ENDIAN from hw/, but I was
+aiming for heterogeneous binary, trying to not introduce any changes
+for users. Now we are only considering "single binary" and we have
+the TargetInfo API, so things are simpler.
 
-DEFINE_PROP_FOO() are restricted to QDev (DeviceClass). Here we have
-a MachineClass, which only inherits ObjectClass, not DeviceClass.
+Using the TargetInfo API, that would be:
 
-Markus once explained me the difference between QDev properties
-and bare object ones; I asked why we couldn't make qdev properties
-generic to objects, but I don't remember the historical rationale.
-QDev predates QOM, QDev used static properties, QOM introduced
-dynamic ones? We definitively should document that...
+-- >8 --
+@@ -26,7 +26,8 @@
+  #include "qemu/osdep.h"
+  #include "qemu/units.h"
+  #include "qapi/error.h"
++#include "qemu/target-info.h"
+  #include "hw/sysbus.h"
+  #include "net/net.h"
+  #include "hw/block/flash.h"
+@@ -71,13 +83,16 @@ petalogix_s3adsp1800_init(MachineState *machine)
+      MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
+      qemu_irq irq[32];
+      MemoryRegion *sysmem = get_system_memory();
+-    EndianMode endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG
+-                                              : ENDIAN_MODE_LITTLE;
++    EndianMode endianness = psms->endianness;
++
++    if (endianness == ENDIAN_MODE_UNSPECIFIED) {
++        endianness = target_endian_mode();
++    }
+
+---
+
+(NB target_endian_mode is not on the list yet)
 
