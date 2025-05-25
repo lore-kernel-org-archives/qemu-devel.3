@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313CEC54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF76C54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJAB7-0005yD-Qk; Sun, 25 May 2025 08:10:10 -0400
+	id 1uJABQ-0007KB-UK; Sun, 25 May 2025 08:10:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9i-0004Vo-F2; Sun, 25 May 2025 08:08:43 -0400
+ id 1uJAB6-0005wV-9V; Sun, 25 May 2025 08:10:08 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9f-0003Db-8k; Sun, 25 May 2025 08:08:40 -0400
+ id 1uJAB3-0003ZW-ID; Sun, 25 May 2025 08:10:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5DCE0124E4F;
- Sun, 25 May 2025 15:08:17 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6A73B215FB6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3300C124E5E;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 403C8215FC5;
+ Sun, 25 May 2025 15:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, =?UTF-8?q?Lo=C3=AFc=20Lefort?= <loic@rivosinc.com>,
+Cc: qemu-stable@nongnu.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 29/59] target/riscv: pmp: fix checks on writes to
- pmpcfg in Smepmp MML mode
-Date: Sun, 25 May 2025 15:07:46 +0300
-Message-Id: <20250525120818.273372-6-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 44/59] target/riscv/kvm: minor fixes/tweaks
+Date: Sun, 25 May 2025 15:08:01 +0300
+Message-Id: <20250525120818.273372-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,132 +62,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Loïc Lefort <loic@rivosinc.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-With Machine Mode Lockdown (mseccfg.MML) set and RLB not set, checks on pmpcfg
-writes would match the wrong cases of Smepmp truth table.
+Remove an unused 'KVMScratchCPU' pointer argument in
+kvm_riscv_check_sbi_dbcn_support().
 
-The existing code allows writes for the following cases:
-- L=1, X=0: cases 8, 10, 12, 14
-- L=0, RWX!=WX: cases 0-2, 4-6
-This leaves cases 3, 7, 9, 11, 13, 15 for which writes are ignored.
+Put kvm_riscv_reset_regs_csr() after kvm_riscv_put_regs_csr(). This will
+make a future patch diff easier to read, when changes in
+kvm_riscv_reset_regs_csr() and kvm_riscv_get_regs_csr() will be made.
 
-From the Smepmp specification: "Adding a rule with executable privileges that
-either is M-mode-only or a locked Shared-Region is not possible (...)" This
-description matches cases 9-11, 13 of the truth table.
-
-This commit implements an explicit check for these cases by using
-pmp_get_epmp_operation to convert between PMP configuration and Smepmp truth
-table cases.
-
-Signed-off-by: Loïc Lefort <loic@rivosinc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Message-ID: <20250313193011.720075-4-loic@rivosinc.com>
+Fixes: a6b53378f5 ("target/riscv/kvm: implement SBI debug console (DBCN) calls")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250429124421.223883-2-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit 19cf1a7d9e59b71bf8d6571d4747e5c82667c3d1)
+(cherry picked from commit 73f81da0a3628180409a0ae90ece19534bcdf09b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 7d65dc24a5..c5f6cdaccb 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -75,6 +75,44 @@ static int pmp_is_readonly(CPURISCVState *env, uint32_t pmp_index)
-     return pmp_is_locked(env, pmp_index) && !MSECCFG_RLB_ISSET(env);
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 0f4997a918..afe3d3e609 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -613,19 +613,6 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
+     return ret;
  }
  
-+/*
-+ * Check whether `val` is an invalid Smepmp config value
-+ */
-+static int pmp_is_invalid_smepmp_cfg(CPURISCVState *env, uint8_t val)
+-static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
+-{
+-    env->mstatus = 0;
+-    env->mie = 0;
+-    env->stvec = 0;
+-    env->sscratch = 0;
+-    env->sepc = 0;
+-    env->scause = 0;
+-    env->stval = 0;
+-    env->mip = 0;
+-    env->satp = 0;
+-}
+-
+ static int kvm_riscv_get_regs_csr(CPUState *cs)
+ {
+     CPURISCVState *env = &RISCV_CPU(cs)->env;
+@@ -660,6 +647,19 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
+     return 0;
+ }
+ 
++static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
 +{
-+    /* No check if mseccfg.MML is not set or if mseccfg.RLB is set */
-+    if (!MSECCFG_MML_ISSET(env) || MSECCFG_RLB_ISSET(env)) {
-+        return 0;
-+    }
-+
-+    /*
-+     * Adding a rule with executable privileges that either is M-mode-only
-+     * or a locked Shared-Region is not possible
-+     */
-+    switch (pmp_get_smepmp_operation(val)) {
-+    case 0:
-+    case 1:
-+    case 2:
-+    case 3:
-+    case 4:
-+    case 5:
-+    case 6:
-+    case 7:
-+    case 8:
-+    case 12:
-+    case 14:
-+    case 15:
-+        return 0;
-+    case 9:
-+    case 10:
-+    case 11:
-+    case 13:
-+        return 1;
-+    default:
-+        g_assert_not_reached();
-+    }
++    env->mstatus = 0;
++    env->mie = 0;
++    env->stvec = 0;
++    env->sscratch = 0;
++    env->sepc = 0;
++    env->scause = 0;
++    env->stval = 0;
++    env->mip = 0;
++    env->satp = 0;
 +}
 +
- /*
-  * Count the number of active rules.
-  */
-@@ -103,44 +141,13 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_index)
- static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+ static int kvm_riscv_get_regs_fp(CPUState *cs)
  {
-     if (pmp_index < MAX_RISCV_PMPS) {
--        bool readonly = true;
--
--        if (riscv_cpu_cfg(env)->ext_smepmp) {
--            /* mseccfg.RLB is set */
--            if (MSECCFG_RLB_ISSET(env)) {
--                readonly = false;
--            }
--
--            /* mseccfg.MML is not set */
--            if (!MSECCFG_MML_ISSET(env) && !pmp_is_readonly(env, pmp_index)) {
--                readonly = false;
--            }
--
--            /* mseccfg.MML is set */
--            if (MSECCFG_MML_ISSET(env)) {
--                /* not adding execute bit */
--                if ((val & PMP_LOCK) != 0 && (val & PMP_EXEC) != PMP_EXEC) {
--                    readonly = false;
--                }
--                /* shared region and not adding X bit */
--                if ((val & PMP_LOCK) != PMP_LOCK &&
--                    (val & 0x7) != (PMP_WRITE | PMP_EXEC)) {
--                    readonly = false;
--                }
--            }
--        } else {
--            readonly = pmp_is_readonly(env, pmp_index);
--        }
--
--        if (readonly) {
-+        if (pmp_is_readonly(env, pmp_index)) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "ignoring pmpcfg write - read only\n");
--        } else if (env->pmp_state.pmp[pmp_index].cfg_reg != val) {
--            /* If !mseccfg.MML then ignore writes with encoding RW=01 */
--            if ((val & PMP_WRITE) && !(val & PMP_READ) &&
--                !MSECCFG_MML_ISSET(env)) {
--                return false;
--            }
-+        } else if (pmp_is_invalid_smepmp_cfg(env, val)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "ignoring pmpcfg write - invalid\n");
-+        } else {
-             env->pmp_state.pmp[pmp_index].cfg_reg = val;
-             pmp_update_rule_addr(env, pmp_index);
-             return true;
+     int ret = 0;
+@@ -1078,7 +1078,6 @@ static int uint64_cmp(const void *a, const void *b)
+ }
+ 
+ static void kvm_riscv_check_sbi_dbcn_support(RISCVCPU *cpu,
+-                                             KVMScratchCPU *kvmcpu,
+                                              struct kvm_reg_list *reglist)
+ {
+     struct kvm_reg_list *reg_search;
+@@ -1197,7 +1196,7 @@ static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
+         kvm_riscv_read_vlenb(cpu, kvmcpu, reglist);
+     }
+ 
+-    kvm_riscv_check_sbi_dbcn_support(cpu, kvmcpu, reglist);
++    kvm_riscv_check_sbi_dbcn_support(cpu, reglist);
+ }
+ 
+ static void riscv_init_kvm_registers(Object *cpu_obj)
 -- 
 2.39.5
 
