@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B627C54F30
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8710CC54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ7tH-0007p2-UI; Sun, 25 May 2025 05:43:36 -0400
+	id 1uJ7sn-0006xk-Vr; Sun, 25 May 2025 05:43:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7tD-0007k3-SV; Sun, 25 May 2025 05:43:31 -0400
+ id 1uJ7si-0006uk-GD; Sun, 25 May 2025 05:43:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7tC-0004bm-Ba; Sun, 25 May 2025 05:43:31 -0400
+ id 1uJ7sh-0004Xa-0C; Sun, 25 May 2025 05:43:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 74190124DE2;
- Sun, 25 May 2025 12:42:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F17E8124DDB;
+ Sun, 25 May 2025 12:42:46 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 577E3215F0A;
- Sun, 25 May 2025 12:42:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D537C215F03;
+ Sun, 25 May 2025 12:42:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Anton Blanchard <antonb@tenstorrent.com>,
+Cc: qemu-stable@nongnu.org, Anton Blanchard <antonb@tenstorrent.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 48/62] target/riscv: rvv: Apply vext_check_input_eew to
- vector indexed load/store instructions
-Date: Sun, 25 May 2025 12:42:31 +0300
-Message-Id: <20250525094246.174612-14-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 41/62] target/riscv: rvv: Add CHECK arg to
+ GEN_OPFVF_WIDEN_TRANS
+Date: Sun, 25 May 2025 12:42:24 +0300
+Message-Id: <20250525094246.174612-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
@@ -63,43 +63,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-Handle the overlap of source registers with different EEWs.
-
-Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20250408103938.3623486-10-max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-3-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit db21c3eb05504c4cedaad4f7b19e588361b02385)
+(cherry picked from commit b0450a101d6c88789d0e8df2bcbef61bc7cd159a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2d067a59e2..445a0b72a5 100644
+index 20b1cb127b..e630f8661e 100644
 --- a/target/riscv/insn_trans/trans_rvv.c.inc
 +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -1043,7 +1043,8 @@ static bool ld_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ld_index(s, a->rd, a->rs2, a->nf, a->vm, eew);
-+           vext_check_ld_index(s, a->rd, a->rs2, a->nf, a->vm, eew) &&
-+           vext_check_input_eew(s, -1, 0, a->rs2, eew, a->vm);
+@@ -2403,10 +2403,10 @@ static bool opfvf_widen_check(DisasContext *s, arg_rmrr *a)
  }
  
- GEN_VEXT_TRANS(vlxei8_v,  MO_8,  rnfvm, ld_index_op, ld_index_check)
-@@ -1095,7 +1096,8 @@ static bool st_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_st_index(s, a->rd, a->rs2, a->nf, eew);
-+           vext_check_st_index(s, a->rd, a->rs2, a->nf, eew) &&
-+           vext_check_input_eew(s, a->rd, s->sew, a->rs2, eew, a->vm);
+ /* OPFVF with WIDEN */
+-#define GEN_OPFVF_WIDEN_TRANS(NAME)                              \
++#define GEN_OPFVF_WIDEN_TRANS(NAME, CHECK)                       \
+ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+ {                                                                \
+-    if (opfvf_widen_check(s, a)) {                               \
++    if (CHECK(s, a)) {                                           \
+         uint32_t data = 0;                                       \
+         static gen_helper_opfvf *const fns[2] = {                \
+             gen_helper_##NAME##_h, gen_helper_##NAME##_w,        \
+@@ -2422,8 +2422,8 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+     return false;                                                \
  }
  
- GEN_VEXT_TRANS(vsxei8_v,  MO_8,  rnfvm, st_index_op, st_index_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwadd_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwsub_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwadd_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwsub_vf, opfvf_widen_check)
+ 
+ static bool opfwv_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+@@ -2505,7 +2505,7 @@ GEN_OPFVF_TRANS(vfrdiv_vf,  opfvf_check)
+ 
+ /* Vector Widening Floating-Point Multiply */
+ GEN_OPFVV_WIDEN_TRANS(vfwmul_vv, opfvv_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwmul_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwmul_vf, opfvf_widen_check)
+ 
+ /* Vector Single-Width Floating-Point Fused Multiply-Add Instructions */
+ GEN_OPFVV_TRANS(vfmacc_vv, opfvv_check)
+@@ -2530,10 +2530,10 @@ GEN_OPFVV_WIDEN_TRANS(vfwmacc_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwnmacc_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwmsac_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwnmsac_vv, opfvv_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf, opfvf_widen_check)
+ 
+ /* Vector Floating-Point Square-Root Instruction */
+ 
 -- 
 2.39.5
 
