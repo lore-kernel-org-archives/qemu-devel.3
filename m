@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A6CC54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7DCAC54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJACT-000203-3g; Sun, 25 May 2025 08:11:33 -0400
+	id 1uJABW-0007j8-Vu; Sun, 25 May 2025 08:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJABf-0008Ed-Iq; Sun, 25 May 2025 08:10:45 -0400
+ id 1uJAA1-0004h6-6G; Sun, 25 May 2025 08:09:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJABZ-0003sD-V6; Sun, 25 May 2025 08:10:42 -0400
+ id 1uJA9v-0003Ks-9M; Sun, 25 May 2025 08:08:58 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 793DC124E64;
- Sun, 25 May 2025 15:08:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8F77B124E54;
+ Sun, 25 May 2025 15:08:17 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 86FAE215FCB;
- Sun, 25 May 2025 15:08:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9C0BD215FBB;
+ Sun, 25 May 2025 15:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
- Ewan Hai <ewanhai-oc@zhaoxin.com>, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Anton Blanchard <antonb@tenstorrent.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 50/59] i386/tcg: Make CPUID_HT and CPUID_EXT3_CMP_LEG
- supported
-Date: Sun, 25 May 2025 15:08:07 +0300
-Message-Id: <20250525120818.273372-27-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 34/59] target/riscv: rvv: Add CHECK arg to
+ GEN_OPFVF_WIDEN_TRANS
+Date: Sun, 25 May 2025 15:07:51 +0300
+Message-Id: <20250525120818.273372-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -61,63 +63,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-Since commit c6bd2dd63420 ("i386/cpu: Set up CPUID_HT in
-x86_cpu_expand_features() instead of cpu_x86_cpuid()") and
-commit 99a637a86f55 ("i386/cpu: Set and track CPUID_EXT3_CMP_LEG in
-env->features[FEAT_8000_0001_ECX]"), it gets warnings when booting the
-VM with vcpus >= 2 and with tcg:
-
-  qemu-system-x86_64: warning: TCG doesn't support requested feature: CPUID.01H:EDX.ht [bit 28]
-  qemu-system-x86_64: warning: TCG doesn't support requested feature: CPUID.80000001H:ECX.cmp-legacy [bit 1]
-
-This is because, after the two commits, CPUID_HT and CPUID_EXT3_CMP_LEG
-are set in env->features[] when vcpus >=2 (in x86_cpu_expand_features())
-later in x86_cpu_filter_features() it will check against the TCG supported
-bits. However, current TCG doesn't mark the two bits as supported, hence
-the warnings.
-
-Fix it by adding the two bits to the supported bits of TCG since multiple
-vcpus are supported by TCG.
-
-Fixes: c6bd2dd63420 ("i386/cpu: Set up CPUID_HT in x86_cpu_expand_features() instead of cpu_x86_cpuid()")
-Fixes: 99a637a86f55 ("i386/cpu: Set and track CPUID_EXT3_CMP_LEG in env->features[FEAT_8000_0001_ECX]")
-Reported-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250514031652.838763-2-xiaoyao.li@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 5979f50fa9fdbb3fb49e2b498f84faa7503c8ed1)
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-3-max.chou@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit b0450a101d6c88789d0e8df2bcbef61bc7cd159a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 3fb1ec62da..5e12cba1b8 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -774,11 +774,12 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
-           CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC | CPUID_SEP | \
-           CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV | CPUID_PAT | \
-           CPUID_PSE36 | CPUID_CLFLUSH | CPUID_ACPI | CPUID_MMX | \
--          CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_DE)
-+          CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_DE | \
-+          CPUID_HT)
-           /* partly implemented:
-           CPUID_MTRR, CPUID_MCA, CPUID_CLFLUSH (needed for Win64) */
-           /* missing:
--          CPUID_VME, CPUID_DTS, CPUID_SS, CPUID_HT, CPUID_TM, CPUID_PBE */
-+          CPUID_VME, CPUID_DTS, CPUID_SS, CPUID_TM, CPUID_PBE */
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 20b1cb127b..e630f8661e 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -2403,10 +2403,10 @@ static bool opfvf_widen_check(DisasContext *s, arg_rmrr *a)
+ }
  
- /*
-  * Kernel-only features that can be shown to usermode programs even if
-@@ -846,7 +847,8 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+ /* OPFVF with WIDEN */
+-#define GEN_OPFVF_WIDEN_TRANS(NAME)                              \
++#define GEN_OPFVF_WIDEN_TRANS(NAME, CHECK)                       \
+ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+ {                                                                \
+-    if (opfvf_widen_check(s, a)) {                               \
++    if (CHECK(s, a)) {                                           \
+         uint32_t data = 0;                                       \
+         static gen_helper_opfvf *const fns[2] = {                \
+             gen_helper_##NAME##_h, gen_helper_##NAME##_w,        \
+@@ -2422,8 +2422,8 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+     return false;                                                \
+ }
  
- #define TCG_EXT3_FEATURES (CPUID_EXT3_LAHF_LM | CPUID_EXT3_SVM | \
-           CPUID_EXT3_CR8LEG | CPUID_EXT3_ABM | CPUID_EXT3_SSE4A | \
--          CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_KERNEL_FEATURES)
-+          CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_KERNEL_FEATURES | \
-+          CPUID_EXT3_CMP_LEG)
+-GEN_OPFVF_WIDEN_TRANS(vfwadd_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwsub_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwadd_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwsub_vf, opfvf_widen_check)
  
- #define TCG_EXT4_FEATURES 0
+ static bool opfwv_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+@@ -2505,7 +2505,7 @@ GEN_OPFVF_TRANS(vfrdiv_vf,  opfvf_check)
+ 
+ /* Vector Widening Floating-Point Multiply */
+ GEN_OPFVV_WIDEN_TRANS(vfwmul_vv, opfvv_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwmul_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwmul_vf, opfvf_widen_check)
+ 
+ /* Vector Single-Width Floating-Point Fused Multiply-Add Instructions */
+ GEN_OPFVV_TRANS(vfmacc_vv, opfvv_check)
+@@ -2530,10 +2530,10 @@ GEN_OPFVV_WIDEN_TRANS(vfwmacc_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwnmacc_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwmsac_vv, opfvv_widen_check)
+ GEN_OPFVV_WIDEN_TRANS(vfwnmsac_vv, opfvv_widen_check)
+-GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf)
+-GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf)
++GEN_OPFVF_WIDEN_TRANS(vfwmacc_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwnmacc_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwmsac_vf, opfvf_widen_check)
++GEN_OPFVF_WIDEN_TRANS(vfwnmsac_vf, opfvf_widen_check)
+ 
+ /* Vector Floating-Point Square-Root Instruction */
  
 -- 
 2.39.5
