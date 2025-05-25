@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F541C54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E782C54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJA9e-0004RS-0Z; Sun, 25 May 2025 08:08:39 -0400
+	id 1uJA9z-0004g9-RN; Sun, 25 May 2025 08:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9X-0004No-E6; Sun, 25 May 2025 08:08:32 -0400
+ id 1uJA9c-0004QE-6x; Sun, 25 May 2025 08:08:36 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9V-0003Ag-G4; Sun, 25 May 2025 08:08:31 -0400
+ id 1uJA9Z-0003BU-1P; Sun, 25 May 2025 08:08:35 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2AE6B124E4B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3E07D124E4C;
  Sun, 25 May 2025 15:08:17 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 38C6E215FB2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 41C03215FB3;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 25/59] virtio: Call set_features during reset
-Date: Sun, 25 May 2025 15:07:42 +0300
-Message-Id: <20250525120818.273372-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Keith Busch <kbusch@kernel.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 26/59] hw/nvme: fix nvme hotplugging
+Date: Sun, 25 May 2025 15:07:43 +0300
+Message-Id: <20250525120818.273372-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,51 +61,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-virtio-net expects set_features() will be called when the feature set
-used by the guest changes to update the number of virtqueues but it is
-not called during reset, which will clear all features, leaving the
-queues added for VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS. Not only these
-extra queues are visible to the guest, they will cause segmentation
-fault during migration.
+Commit cd59f50ab017 caused a regression on nvme hotplugging for devices
+with an implicit nvm subsystem.
 
-Call set_features() during reset to remove those queues for virtio-net
-as we call set_status(). It will also prevent similar bugs for
-virtio-net and other devices in the future.
+The nvme-subsys device was incorrectly left with being marked as
+non-hotpluggable. Fix this.
 
-Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
-Buglink: https://issues.redhat.com/browse/RHEL-73842
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20250421-reset-v2-1-e4c1ead88ea1@daynix.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 0caed25cd171c611781589b5402161d27d57229c)
+Reported-by: Stéphane Graber <stgraber@stgraber.org>
+Tested-by: Stéphane Graber <stgraber@stgraber.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2950
+Fixes: cd59f50ab017 ("hw/nvme: always initialize a subsystem")
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 0b1c23a582f7bc721a9b858c289a8d165152a6a0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 85110bce37..755260981e 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2316,6 +2316,8 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
-     }
- }
+diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
+index b617ac3892..64138cbd6d 100644
+--- a/hw/nvme/subsys.c
++++ b/hw/nvme/subsys.c
+@@ -226,7 +226,6 @@ static void nvme_subsys_class_init(ObjectClass *oc, void *data)
  
-+static int virtio_set_features_nocheck(VirtIODevice *vdev, uint64_t val);
-+
- void virtio_reset(void *opaque)
- {
-     VirtIODevice *vdev = opaque;
-@@ -2346,7 +2348,7 @@ void virtio_reset(void *opaque)
-     vdev->start_on_kick = false;
-     vdev->started = false;
-     vdev->broken = false;
--    vdev->guest_features = 0;
-+    virtio_set_features_nocheck(vdev, 0);
-     vdev->queue_sel = 0;
-     vdev->status = 0;
-     vdev->disabled = false;
+     dc->realize = nvme_subsys_realize;
+     dc->desc = "Virtual NVMe subsystem";
+-    dc->hotpluggable = false;
+ 
+     device_class_set_props(dc, nvme_subsystem_props);
+ }
 -- 
 2.39.5
 
