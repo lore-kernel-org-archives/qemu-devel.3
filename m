@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8AEC54F30
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 19:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9144CC54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 19:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJH0E-0003y9-BO; Sun, 25 May 2025 15:27:22 -0400
+	id 1uJH2f-0004o6-It; Sun, 25 May 2025 15:29:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1uJH0C-0003xt-Kf
- for qemu-devel@nongnu.org; Sun, 25 May 2025 15:27:20 -0400
-Received: from mail-dm6nam11on2062c.outbound.protection.outlook.com
- ([2a01:111:f403:2415::62c]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1uJH2e-0004nx-DH
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 15:29:52 -0400
+Received: from mail-bn7nam10on2061e.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::61e]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1uJH09-0007TJ-RD
- for qemu-devel@nongnu.org; Sun, 25 May 2025 15:27:20 -0400
+ id 1uJH2b-0007jo-WD
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 15:29:52 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lS/DmxUtHvgtRw5GEPawrUr1w8Cs0pinF8Kly6A+JOopH5O49G1GOHluK4oRFwSek/toohAP+F/B7Pl28sduAaC7/YXq7LmUyq//UXkX8nTDXpkTGZd1IJxOmaUNGlrhvNKMnVyt5xgIXLtRXzoceWWhQFejPNF/xrPYBN9Sn+hx0Pl7X9ooArgGOq/OhhgyHuVhBcLBv5tJEuXZ1k1RkSUdNEmDtXXJv75lUxEpe3z6u0mO+DPuX+LbuuDXPK/bnkDsg7Q5Gbv+2nZTqw0tA7FFQCsPJpO2NY6BB1Fjz4mjsWP12Bz1hQqanLXAmRowJkp1N7HUlQKO3td/2cehDg==
+ b=tquYZOmv/l7GX1Ro5gi0Noy840YQ6w7WtFBTN0gRWliriz46MvAWvLeKcNe3OMTo9iYdiivd3cK8VfJ+x3W1dcWfmi2cEuwO/KDMjFkI2mGYgRrKrtJqhqFQMUVNRiOs31dBvviApNzx+yvQFs6juhOUPo4amvPpwBG88nQ4tHL1zuxHXj8DDTtloYX3PTGypJVTWQZaTdFtdVu43JZHBlNAaVEflQy2QLZxerhoS+d5C/JpD2/Q816+i9fBJuptdHGBdV4Ku9Vwj2/NcXZkMME4b2JvHDo44oboi5HFF5f8NxIw3aTD3crk/t+TBILVp5QSbli0PRa/dHlL3l4S4w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sDrUrY8gJkRO+zhyop9yhkpO7J/dJ+zTgqBK7mkDuKk=;
- b=oaFSDyi7tlNCu8xyhO+yAlnqL8scMgWkf19NkXRfblH8IbfGTJEIxUOjtRqncq8/AYeNYBz2NTONPTfAl6BKqOxqYhtY+dv5PmuJ9uibSzwlyz8nGxxZwsk6il9fqG9ib9Mkl0DwNfEeej9KKggrf+BuaX9G1kNfrKkkKf6Re3Z1wwmWjCOzQH9iy8Aa0511kKgxcmDCSskxOH8ken/c5Z3jLekHGgU11fcxjJ2NPImPd3udd0kC6NMNdfRgjr1cAfz/nb3YhccOGcGyHl5BjjrXNVW7TYDFOkvHgYClEqpkuBkxpLLnYUMA+KMicYLu0BwLaACUUEFzKSA+mfTu0g==
+ bh=pzq1ZljuGEa3K69hGahPWsxTZbAhzUErLpxlnx8p9lE=;
+ b=TejpHxecA5QKYK7VFk3N7e9TXQ6bcDdHWBOFZlTxbt0jmPOw1S6sO1Mi0gGVgcVG/cT3WedQtVVDq5VtsA0p4wFmz4RIgFmT1mbuHkzS5r3jhWi8LvnueXoVNNfTRd3ajPi9uv853E69iVnRvq3K405iaZ5q+/vD3k2OjExlZ3dCWdBc46YvcWSC1o+wAP4OsMNhy9m2NgZLi7E6we/jYm0K8l4f3asJ+K/Kcw4fhGcDzL6aZ8CeSoaYEnVe2J6jF530aW0CnOqOYQtucIqmVsZFLJ4j8X1UM0aKa1JIMCyKMbu6skLM6aFkaKjNKqr8ssRSEj6I6Kxu1eEHak8gQQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sDrUrY8gJkRO+zhyop9yhkpO7J/dJ+zTgqBK7mkDuKk=;
- b=qdirHvaSsuXkaFYhoqxTyFV0738yug/wZC+gqVQaABLvUdtaLBGYdHV0jdY5FrViX0sx3UeuUNCEbYspAKHK+0RNeQxXc0VMEBcLBtJP957lFvj3RnRlFOFJrDSehux0kq2sAJfXwrugijBk8C6r8GK4P6FuaCOyNHdCbpVhCf0=
-Received: from BYAPR11CA0078.namprd11.prod.outlook.com (2603:10b6:a03:f4::19)
- by SA3PR12MB9199.namprd12.prod.outlook.com (2603:10b6:806:398::19)
- with Microsoft SMTP Server (version=TLS1_2,
+ bh=pzq1ZljuGEa3K69hGahPWsxTZbAhzUErLpxlnx8p9lE=;
+ b=oi/Auoe27WY1NfCTdncZeXNETnj9nwlDpxxcsPI6vBYx45Vzn62jGPKU8y/5gTBEdDpH8I2DuPZsqujnOhsKiLyyfcjYtifq2fTc6aJJKuNNUZiC4kjCuzzInY8ltvsI3azBXiuDmgeDxJ3gVGhFHSL1uHdNTp+s5hQkJpUu8aA=
+Received: from MW4PR04CA0363.namprd04.prod.outlook.com (2603:10b6:303:81::8)
+ by DS7PR12MB6167.namprd12.prod.outlook.com (2603:10b6:8:98::20) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.21; Sun, 25 May
- 2025 19:27:11 +0000
-Received: from CY4PEPF0000EE31.namprd05.prod.outlook.com
- (2603:10b6:a03:f4:cafe::1d) by BYAPR11CA0078.outlook.office365.com
- (2603:10b6:a03:f4::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8746.30 via Frontend Transport; Sun,
- 25 May 2025 19:27:10 +0000
+ 2025 19:29:45 +0000
+Received: from SJ5PEPF000001EF.namprd05.prod.outlook.com
+ (2603:10b6:303:81:cafe::81) by MW4PR04CA0363.outlook.office365.com
+ (2603:10b6:303:81::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8746.31 via Frontend Transport; Sun,
+ 25 May 2025 19:29:44 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,81 +54,81 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CY4PEPF0000EE31.mail.protection.outlook.com (10.167.242.37) with Microsoft
+ SJ5PEPF000001EF.mail.protection.outlook.com (10.167.242.203) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8769.18 via Frontend Transport; Sun, 25 May 2025 19:27:10 +0000
+ 15.20.8769.18 via Frontend Transport; Sun, 25 May 2025 19:29:44 +0000
 Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sun, 25 May
- 2025 14:27:08 -0500
-Date: Sun, 25 May 2025 21:27:02 +0200
+ 2025 14:29:42 -0500
+Date: Sun, 25 May 2025 21:29:41 +0200
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 CC: <qemu-devel@nongnu.org>, <edgar.iglesias@gmail.com>, <philmd@linaro.org>
-Subject: Re: [PATCH v2 02/10] target/microblaze: Introduce
- helper_unaligned_access
-Message-ID: <aDNvBoLLiZBJRQVI@zapote>
+Subject: Re: [PATCH v2 03/10] target/microblaze: Split out
+ mb_transaction_failed_internal
+Message-ID: <aDNvpTmZ1NmfrzEw@zapote>
 References: <20250525160220.222154-1-richard.henderson@linaro.org>
- <20250525160220.222154-3-richard.henderson@linaro.org>
+ <20250525160220.222154-4-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250525160220.222154-3-richard.henderson@linaro.org>
+In-Reply-To: <20250525160220.222154-4-richard.henderson@linaro.org>
 User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
 X-Originating-IP: [10.180.168.240]
 X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE31:EE_|SA3PR12MB9199:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2539695c-a471-4d96-c1a0-08dd9bc22519
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EF:EE_|DS7PR12MB6167:EE_
+X-MS-Office365-Filtering-Correlation-Id: d79c66dc-ed29-4329-7fb4-08dd9bc28113
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|376014|82310400026|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?rkPWokkj3svOMLYMcOE+phnvEXBL51rWQQrqUW/V+jpDs5bnHGpcxVXOPmO5?=
- =?us-ascii?Q?9lNxvM7s3rm4EJy5Xsxsslzw30cHhu446pH2JiGvdBbAWepEagsUHJnEV+x4?=
- =?us-ascii?Q?i3+l/DN6SGM1sXkR276euFsQKVxBVZEhpmKXw1GcLqgzgE/TzoM4V+4kfMx7?=
- =?us-ascii?Q?wCijib9W4IvhD4e2lHcIWkamNaw3vMH1AZj3yKW/CQKzIA2i4Gg5RSMp3jXu?=
- =?us-ascii?Q?DWULVtfBn18XSVJALlM+Si6S/6bAx9mTpOreRtQB92imuVBCIEFH5V/3Y/46?=
- =?us-ascii?Q?RRzYlUp6aNAXK1DAUPgIVGd06ctjVBJDZ1V9/Or7/pmIj3Rj6UoOm4WaP/Xn?=
- =?us-ascii?Q?oR3EeDrp589C8ElYOtleLN2EUA05nNaDpBjrcXSOP87xARklnfudPx28IVe9?=
- =?us-ascii?Q?NN6VD176iyqlY922t9Bgl1uhr9DSJY9iNJC3CBUXRJh7DdVhR6LvVnOI3neN?=
- =?us-ascii?Q?o64eH1LqiuwsgQUcMqeutvrmsdotrEIBPY/MaTBQQ8b//5j1aXmnXOgEYG1o?=
- =?us-ascii?Q?R/7yK7xYDlLZbbWNWiF7zoDmm5M65tQlFUu4QAHb/CDs7w9y67Zqnm44apjX?=
- =?us-ascii?Q?qUm2a8UXLJ0oOq6hmPOan3DtSi6M/dlv7BvfRhAK1zN322FYBB83C5kn7w+3?=
- =?us-ascii?Q?ZK9vERSEj8VS2I+WGIbfGitlxxe893K/bD02Q5Sa2fDlRJHY3dr9Zz8td3PE?=
- =?us-ascii?Q?D5br9Fr6R6wdQ19YI9W1wr31EXbXvW6ZSFhHGnNBPuZTxRYCX1XFAszszDXX?=
- =?us-ascii?Q?6UlKLYuuPSjJQFoHn6MUpYzKdlMaO1gxJkACrU9mqJzXI72iJ+8P6uAKvS+c?=
- =?us-ascii?Q?hcyUsPPt1qqE3StY7WTx5O+Lp6CkvuA89u9ZGz08GOHNqsIw4+Kwqz5fesX4?=
- =?us-ascii?Q?pWMIDzpjL9DPTekINZTwnP65J1gODlmGS/b7CPuP3m2P4NDRTCRf9MRoP9IL?=
- =?us-ascii?Q?d3bwF+hUgkkSVX0VGRdExF4r14+Jue10oagVVOygIiD4zWc4oaHigQeQSz4o?=
- =?us-ascii?Q?uofHXXQ3Euh82x3mZmD16BiW46C9PWTRvgFifUKyRqIwCpidxwsyo2RwsZYj?=
- =?us-ascii?Q?LtiUQktRHBANOhyid6E036sBQh4K71UwWzKnIrtpD2GnoVXcTnbD16jCMIwW?=
- =?us-ascii?Q?BwTzy4qAq9Iz5pwM3fGPYql3+KAkR3MsnpQ7IelKaFUP0kKWq+N/oMMFB69+?=
- =?us-ascii?Q?g3/USjRTkwKneK7Gl2Lv5vGTdcuWTrhhjowQ4Zshm++pHAaqAKO/Ay0M4q3T?=
- =?us-ascii?Q?R9eKWTzoYs3+0dHnxNgs3Rh2KG7rGszNO8HZp91Cpki1Y2jNEyaZzmWInAFl?=
- =?us-ascii?Q?ugF6eBClZYGX5eSQ5QSWJYJFZs2MK+TaNyY7TcFmaeyKmREUJpoZyCcbzhrB?=
- =?us-ascii?Q?kWmJptUgwyuVmmJ+nIssul9Zu8+LJMI/H1OTndlQ5YeCeXP+4vjtd64Th9Wf?=
- =?us-ascii?Q?eYb0U1C8xRVxoDYK37yeVV+BUb1++rS/IqCVnrXAXXkN7gLgmNrvquUu9ZuH?=
- =?us-ascii?Q?4BfKQRhGw80t1HdUQGR0vAPIrxqJCK3lMkoj?=
+ ARA:13230040|82310400026|1800799024|36860700013|376014|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?1J6BPB50wLl2c0G/ONz6KUzYy3DVOs8ocQvFTeBwNcFAPR+mZujjzCxhgQAI?=
+ =?us-ascii?Q?Sf8Qv0y07oy1Bdcuy2FgF2pVxUuSTTc8QIPqOYH0Vusiv9xsQiMZIFa86VjH?=
+ =?us-ascii?Q?jAyQkrCy01JC5mxd3Fvb6vZwKbWTUoek7Pia+PzQP9r5J7oeKqovpLsaWghI?=
+ =?us-ascii?Q?LBCSYPT5bePzOaf34/1OGr3wjEXUaAsrFj+KX1txuvEQppEA541Mz+vfsgqm?=
+ =?us-ascii?Q?1JbFeZ+2Jqyk2n0WYO8UypXqe5vExgCGuJ4wz8QQQjApgor4uNtZHaNX+wZe?=
+ =?us-ascii?Q?qbTV6Dv+qhJkTh/L2E5K6Pqxhl4mvnSi3jZCG8DQzYBdIwjxY8dfyZ/Ca+mK?=
+ =?us-ascii?Q?f7jdldl+QpJJBKdUiapqWdlEF/RTe1TWvf/81U1y96aL0RCO3DXVx+YQ3j9y?=
+ =?us-ascii?Q?+KTmWzcwjOp0nRCdQzgy5ADzPaiqw6GvaMU4NJWD4tTY1U8lAVA3iSCG+drO?=
+ =?us-ascii?Q?vZVfI4JUzS7KzoWvRTA93Gy/xOJqQtGQ3LpHSQgiM5uB1UX2X9ECcV1y9Q4s?=
+ =?us-ascii?Q?2QjJgW41/k1Oktvg4P7g2yh5FG9B/4s8qF+ab75HPT9Uu80W/Xb15AzirAug?=
+ =?us-ascii?Q?ka+4z1LpPO9TG8un+1aTXyabvK/Uma2ev426AoJIa2X/riELGRx3Nq/epp5I?=
+ =?us-ascii?Q?CGmQvpKnengbTmCvx/vKx4OdXVmL5hkNB0tI3q9FieN+TVKJEZDNqZ6MvjGt?=
+ =?us-ascii?Q?/7y8dxdDQmYIW3LF7JqNmd0s2Ktgzjepjdn9CuAcOG1ZYZ+t/qUeCaqcs6+m?=
+ =?us-ascii?Q?OCxYnhng954KfZ/DXkwMXedX+r21kJYvmgbGbd/iD03DUO0lzAXGHCTawIhT?=
+ =?us-ascii?Q?TBolA/oWyZXSbcxz8VEmJHkEcEUc2LRhqFdqmvfmX1t5m7blk/7B9lwyYwYi?=
+ =?us-ascii?Q?FkcXtxK7f9GOhtR2NxvzERI/Mu1RJPKmzCVywTBLX8FG2O0vIxdv/7o0ev+W?=
+ =?us-ascii?Q?Gg4HzbdZZ9d4QRK3KgKmQK0Hf8rzNS8OQgvb1nZsZdAr2XxueH2iMh2272Yw?=
+ =?us-ascii?Q?buCSWgt5g4qWql0siOXtnzw/GRoQWIiYiXlj7feLzPckLqp3bAGtsDWfeTl2?=
+ =?us-ascii?Q?b+3utczoUXVli2J9vtOIcDRczKmIEPHsB2pLoxnLqjrVuyLW88okh0dtiwqB?=
+ =?us-ascii?Q?Jr5RpLNS3tzcFqRm1HIAo4HXUZxgnXx6VVhbjdu2QUwFjhPxbsrTaXOrniUl?=
+ =?us-ascii?Q?OWPeTu+dcgJyj/UHV40QXIAOtXjRQdaQ+Q9qoVICr4OYNO1ExQLtcHGZRiYT?=
+ =?us-ascii?Q?q67OjU6IDHadRP2vv/S6mBDsiXb4vElN3Ky0SAiRy5jJoXAonKhd1yvOHBRG?=
+ =?us-ascii?Q?WnLuI6m7Jg/QlM/AX/KlO+5KlgfvDnMvgUjRt97Mv+FK5McWtTQJuY7Mg/rP?=
+ =?us-ascii?Q?9MrAH8dzwURzyUzO43POD0V3YpduSYHYPaENMDXLEZsFSXFpBw0yYDyVZ8JJ?=
+ =?us-ascii?Q?zUewnH+JL/65wD+ErpiQCe1jhkP8GYhr8oQ8afthdswKJiBkgIw40uLU3r0e?=
+ =?us-ascii?Q?kxHArCG/ET92BbBsUYuNSjgRrrqZAzGEK1mv?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026)(7053199007);
+ SFS:(13230040)(82310400026)(1800799024)(36860700013)(376014)(7053199007);
  DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2025 19:27:10.3877 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2539695c-a471-4d96-c1a0-08dd9bc22519
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2025 19:29:44.6720 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d79c66dc-ed29-4329-7fb4-08dd9bc28113
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE31.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001EF.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9199
-Received-SPF: permerror client-ip=2a01:111:f403:2415::62c;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6167
+Received-SPF: permerror client-ip=2a01:111:f403:2009::61e;
  envelope-from=Edgar.Iglesias@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
 X-Spam_bar: -----
@@ -150,65 +150,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 25, 2025 at 05:02:12PM +0100, Richard Henderson wrote:
+On Sun, May 25, 2025 at 05:02:13PM +0100, Richard Henderson wrote:
+> Use an explicit 64-bit type for the address to store in EAR.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
 
 > ---
->  target/microblaze/helper.h | 12 ++++++------
->  target/microblaze/helper.c |  7 +++++++
->  2 files changed, 13 insertions(+), 6 deletions(-)
+>  target/microblaze/op_helper.c | 70 +++++++++++++++++++++--------------
+>  1 file changed, 42 insertions(+), 28 deletions(-)
 > 
-> diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
-> index f740835fcb..41f56a5601 100644
-> --- a/target/microblaze/helper.h
-> +++ b/target/microblaze/helper.h
-> @@ -20,12 +20,12 @@ DEF_HELPER_FLAGS_3(fcmp_ne, TCG_CALL_NO_WG, i32, env, i32, i32)
->  DEF_HELPER_FLAGS_3(fcmp_ge, TCG_CALL_NO_WG, i32, env, i32, i32)
->  
->  DEF_HELPER_FLAGS_2(pcmpbf, TCG_CALL_NO_RWG_SE, i32, i32, i32)
-> -#if !defined(CONFIG_USER_ONLY)
-> -DEF_HELPER_FLAGS_3(mmu_read, TCG_CALL_NO_RWG, i32, env, i32, i32)
-> -DEF_HELPER_FLAGS_4(mmu_write, TCG_CALL_NO_RWG, void, env, i32, i32, i32)
-> -#endif
-> -
->  DEF_HELPER_FLAGS_2(stackprot, TCG_CALL_NO_WG, void, env, tl)
-> -
->  DEF_HELPER_FLAGS_2(get, TCG_CALL_NO_RWG, i32, i32, i32)
->  DEF_HELPER_FLAGS_3(put, TCG_CALL_NO_RWG, void, i32, i32, i32)
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +DEF_HELPER_FLAGS_3(mmu_read, TCG_CALL_NO_RWG, i32, env, i32, i32)
-> +DEF_HELPER_FLAGS_4(mmu_write, TCG_CALL_NO_RWG, void, env, i32, i32, i32)
-> +DEF_HELPER_FLAGS_2(unaligned_access, TCG_CALL_NO_WG, noreturn, env, i64)
-> +#endif
-> diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-> index 5fe81e4b16..ef0e2f973f 100644
-> --- a/target/microblaze/helper.c
-> +++ b/target/microblaze/helper.c
-> @@ -26,6 +26,7 @@
->  #include "exec/target_page.h"
->  #include "qemu/host-utils.h"
->  #include "exec/log.h"
-> +#include "exec/helper-proto.h"
->  
->  
->  G_NORETURN
-> @@ -64,6 +65,12 @@ void mb_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+> diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+> index 9e838dfa15..4c39207a55 100644
+> --- a/target/microblaze/op_helper.c
+> +++ b/target/microblaze/op_helper.c
+> @@ -393,38 +393,52 @@ void helper_mmu_write(CPUMBState *env, uint32_t ext, uint32_t rn, uint32_t v)
+>      mmu_write(env, ext, rn, v);
 >  }
 >  
->  #ifndef CONFIG_USER_ONLY
-> +
-> +void HELPER(unaligned_access)(CPUMBState *env, uint64_t addr)
+> +static void mb_transaction_failed_internal(CPUState *cs, hwaddr physaddr,
+> +                                           uint64_t addr, unsigned size,
+> +                                           MMUAccessType access_type,
+> +                                           uintptr_t retaddr)
 > +{
-> +    mb_unaligned_access_internal(env_cpu(env), addr, GETPC());
+> +    CPUMBState *env = cpu_env(cs);
+> +    MicroBlazeCPU *cpu = env_archcpu(env);
+> +    const char *access_name = "INVALID";
+> +    bool take = env->msr & MSR_EE;
+> +    uint32_t esr = ESR_EC_DATA_BUS;
+> +
+> +    switch (access_type) {
+> +    case MMU_INST_FETCH:
+> +        access_name = "INST_FETCH";
+> +        esr = ESR_EC_INSN_BUS;
+> +        take &= cpu->cfg.iopb_bus_exception;
+> +        break;
+> +    case MMU_DATA_LOAD:
+> +        access_name = "DATA_LOAD";
+> +        take &= cpu->cfg.dopb_bus_exception;
+> +        break;
+> +    case MMU_DATA_STORE:
+> +        access_name = "DATA_STORE";
+> +        take &= cpu->cfg.dopb_bus_exception;
+> +        break;
+> +    }
+> +
+> +    qemu_log_mask(CPU_LOG_INT, "Transaction failed: addr 0x%" PRIx64
+> +                  "physaddr 0x" HWADDR_FMT_plx " size %d access-type %s (%s)\n",
+> +                  addr, physaddr, size, access_name,
+> +                  take ? "TAKEN" : "DROPPED");
+> +
+> +    if (take) {
+> +        env->esr = esr;
+> +        env->ear = addr;
+> +        cs->exception_index = EXCP_HW_EXCP;
+> +        cpu_loop_exit_restore(cs, retaddr);
+> +    }
 > +}
 > +
->  static bool mb_cpu_access_is_secure(MicroBlazeCPU *cpu,
->                                      MMUAccessType access_type)
+>  void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+>                                 unsigned size, MMUAccessType access_type,
+>                                 int mmu_idx, MemTxAttrs attrs,
+>                                 MemTxResult response, uintptr_t retaddr)
 >  {
+> -    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+> -    CPUMBState *env = &cpu->env;
+> -
+> -    qemu_log_mask(CPU_LOG_INT, "Transaction failed: vaddr 0x%" VADDR_PRIx
+> -                  " physaddr 0x" HWADDR_FMT_plx " size %d access type %s\n",
+> -                  addr, physaddr, size,
+> -                  access_type == MMU_INST_FETCH ? "INST_FETCH" :
+> -                  (access_type == MMU_DATA_LOAD ? "DATA_LOAD" : "DATA_STORE"));
+> -
+> -    if (!(env->msr & MSR_EE)) {
+> -        return;
+> -    }
+> -
+> -    if (access_type == MMU_INST_FETCH) {
+> -        if (!cpu->cfg.iopb_bus_exception) {
+> -            return;
+> -        }
+> -        env->esr = ESR_EC_INSN_BUS;
+> -    } else {
+> -        if (!cpu->cfg.dopb_bus_exception) {
+> -            return;
+> -        }
+> -        env->esr = ESR_EC_DATA_BUS;
+> -    }
+> -
+> -    env->ear = addr;
+> -    cs->exception_index = EXCP_HW_EXCP;
+> -    cpu_loop_exit_restore(cs, retaddr);
+> +    mb_transaction_failed_internal(cs, physaddr, addr, size,
+> +                                   access_type, retaddr);
+>  }
+>  #endif
 > -- 
 > 2.43.0
 > 
