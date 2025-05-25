@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C95E3C54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 366EDC54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:47:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ7ub-0001bq-03; Sun, 25 May 2025 05:44:57 -0400
+	id 1uJ7tK-0007qB-Ra; Sun, 25 May 2025 05:43:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7uY-0001QW-4n; Sun, 25 May 2025 05:44:54 -0400
+ id 1uJ7tG-0007oK-LP; Sun, 25 May 2025 05:43:34 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7uV-0004m6-R1; Sun, 25 May 2025 05:44:53 -0400
+ id 1uJ7tE-0004cC-Vv; Sun, 25 May 2025 05:43:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 03862124DEE;
- Sun, 25 May 2025 12:42:48 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D7F8124DE3;
+ Sun, 25 May 2025 12:42:47 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D2AD8215F16;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 61D43215F0B;
  Sun, 25 May 2025 12:42:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 60/62] target/hppa: Copy instruction code into fr1 on
- FPU assist fault
-Date: Sun, 25 May 2025 12:42:43 +0300
-Message-Id: <20250525094246.174612-26-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 49/62] target/riscv: Fix the rvv reserved encoding of
+ unmasked instructions
+Date: Sun, 25 May 2025 12:42:32 +0300
+Message-Id: <20250525094246.174612-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
@@ -60,33 +62,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Max Chou <max.chou@sifive.com>
 
-The hardware stores the instruction code in the lower bits of the FP
-exception register #1 on FP assist traps.
-This fixes the FP exception handler on Linux, as the Linux kernel uses
-the value to decide on the correct signal which should be pushed into
-userspace (see decode_fpu() in Linux kernel).
+According to the v spec, the encodings of vcomoress.vm and vector
+mask-register logical instructions with vm=0 are reserved.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 923976dfe367b0bfed45ff660c369f3fe65604a7)
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-11-max.chou@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit 8539a1244bf240d28917effb88a140eb58e45e88)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index 58695def82..d87e5a5a34 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -175,6 +175,10 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-                     }
-                 }
-                 env->cr[CR_IIR] = ldl_phys(cs->as, paddr);
-+                if (i == EXCP_ASSIST) {
-+                    /* stuff insn code into bits of FP exception register #1 */
-+                    env->fr[0] |= (env->cr[CR_IIR] & 0x03ffffff);
-+                }
-             }
-             break;
- 
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index e9139ec1b9..2ba997e269 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -700,14 +700,14 @@ vfredmax_vs     000111 . ..... ..... 001 ..... 1010111 @r_vm
+ # Vector widening ordered and unordered float reduction sum
+ vfwredusum_vs   110001 . ..... ..... 001 ..... 1010111 @r_vm
+ vfwredosum_vs   110011 . ..... ..... 001 ..... 1010111 @r_vm
+-vmand_mm        011001 - ..... ..... 010 ..... 1010111 @r
+-vmnand_mm       011101 - ..... ..... 010 ..... 1010111 @r
+-vmandn_mm       011000 - ..... ..... 010 ..... 1010111 @r
+-vmxor_mm        011011 - ..... ..... 010 ..... 1010111 @r
+-vmor_mm         011010 - ..... ..... 010 ..... 1010111 @r
+-vmnor_mm        011110 - ..... ..... 010 ..... 1010111 @r
+-vmorn_mm        011100 - ..... ..... 010 ..... 1010111 @r
+-vmxnor_mm       011111 - ..... ..... 010 ..... 1010111 @r
++vmand_mm        011001 1 ..... ..... 010 ..... 1010111 @r
++vmnand_mm       011101 1 ..... ..... 010 ..... 1010111 @r
++vmandn_mm       011000 1 ..... ..... 010 ..... 1010111 @r
++vmxor_mm        011011 1 ..... ..... 010 ..... 1010111 @r
++vmor_mm         011010 1 ..... ..... 010 ..... 1010111 @r
++vmnor_mm        011110 1 ..... ..... 010 ..... 1010111 @r
++vmorn_mm        011100 1 ..... ..... 010 ..... 1010111 @r
++vmxnor_mm       011111 1 ..... ..... 010 ..... 1010111 @r
+ vcpop_m         010000 . ..... 10000 010 ..... 1010111 @r2_vm
+ vfirst_m        010000 . ..... 10001 010 ..... 1010111 @r2_vm
+ vmsbf_m         010100 . ..... 00001 010 ..... 1010111 @r2_vm
+@@ -729,7 +729,7 @@ vrgather_vv     001100 . ..... ..... 000 ..... 1010111 @r_vm
+ vrgatherei16_vv 001110 . ..... ..... 000 ..... 1010111 @r_vm
+ vrgather_vx     001100 . ..... ..... 100 ..... 1010111 @r_vm
+ vrgather_vi     001100 . ..... ..... 011 ..... 1010111 @r_vm
+-vcompress_vm    010111 - ..... ..... 010 ..... 1010111 @r
++vcompress_vm    010111 1 ..... ..... 010 ..... 1010111 @r
+ vmv1r_v         100111 1 ..... 00000 011 ..... 1010111 @r2rd
+ vmv2r_v         100111 1 ..... 00001 011 ..... 1010111 @r2rd
+ vmv4r_v         100111 1 ..... 00011 011 ..... 1010111 @r2rd
 -- 
 2.39.5
 
