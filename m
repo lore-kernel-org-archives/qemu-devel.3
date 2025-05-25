@@ -4,33 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41BD3C54F30
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E0D8C54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ7se-0006sc-Q3; Sun, 25 May 2025 05:42:56 -0400
+	id 1uJ7tq-0008TZ-Bh; Sun, 25 May 2025 05:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7sb-0006rI-QI; Sun, 25 May 2025 05:42:54 -0400
+ id 1uJ7th-0008Ao-Ca; Sun, 25 May 2025 05:44:01 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7sa-0004WC-6j; Sun, 25 May 2025 05:42:53 -0400
+ id 1uJ7tf-0004eb-Q8; Sun, 25 May 2025 05:44:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BE4E4124DD6;
- Sun, 25 May 2025 12:42:46 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A37FF215EFE;
+ by isrv.corpit.ru (Postfix) with ESMTP id ABEFF124DE7;
  Sun, 25 May 2025 12:42:47 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 909B0215F0F;
+ Sun, 25 May 2025 12:42:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 36/62] virtio: Call set_features during reset
-Date: Sun, 25 May 2025 12:42:19 +0300
-Message-Id: <20250525094246.174612-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 53/62] target/riscv/kvm: turn u32/u64 reg functions
+ into macros
+Date: Sun, 25 May 2025 12:42:36 +0300
+Message-Id: <20250525094246.174612-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
@@ -59,51 +63,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-virtio-net expects set_features() will be called when the feature set
-used by the guest changes to update the number of virtqueues but it is
-not called during reset, which will clear all features, leaving the
-queues added for VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS. Not only these
-extra queues are visible to the guest, they will cause segmentation
-fault during migration.
+This change is motivated by a future change w.r.t CSRs management. We
+want to handle them the same way as KVM extensions, i.e. a static array
+with KVMCPUConfig objs that will be read/write during init and so on.
+But to do that properly we must be able to declare a static array that
+hold KVM regs.
 
-Call set_features() during reset to remove those queues for virtio-net
-as we call set_status(). It will also prevent similar bugs for
-virtio-net and other devices in the future.
+C does not allow to init static arrays and use functions as
+initializers, e.g. we can't do:
 
-Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
-Buglink: https://issues.redhat.com/browse/RHEL-73842
+.kvm_reg_id = kvm_riscv_reg_id_ulong(...)
+
+When instantiating the array. We can do that with macros though, so our
+goal is turn kvm_riscv_reg_ulong() in a macro. It is cleaner to turn
+every other reg_id_*() function in macros, and ulong will end up using
+the macros for u32 and u64, so we'll start with them.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250429124421.223883-4-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20250421-reset-v2-1-e4c1ead88ea1@daynix.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 0caed25cd171c611781589b5402161d27d57229c)
+(cherry picked from commit b6096103494506514d9bfa442f62fef36ffc8fba)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index f12c4aa81e..8378c19a43 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2316,6 +2316,8 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
-     }
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 49a8bc34ca..dcf5fee38a 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -58,6 +58,12 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level)
+ 
+ static bool cap_has_mp_state;
+ 
++#define KVM_RISCV_REG_ID_U32(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U32 | \
++                                         type | idx)
++
++#define KVM_RISCV_REG_ID_U64(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U64 | \
++                                         type | idx)
++
+ static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type,
+                                  uint64_t idx)
+ {
+@@ -76,16 +82,6 @@ static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type,
+     return id;
  }
  
-+static int virtio_set_features_nocheck(VirtIODevice *vdev, uint64_t val);
-+
- void virtio_reset(void *opaque)
+-static uint64_t kvm_riscv_reg_id_u32(uint64_t type, uint64_t idx)
+-{
+-    return KVM_REG_RISCV | KVM_REG_SIZE_U32 | type | idx;
+-}
+-
+-static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
+-{
+-    return KVM_REG_RISCV | KVM_REG_SIZE_U64 | type | idx;
+-}
+-
+ static uint64_t kvm_encode_reg_size_id(uint64_t id, size_t size_b)
  {
-     VirtIODevice *vdev = opaque;
-@@ -2346,7 +2348,7 @@ void virtio_reset(void *opaque)
-     vdev->start_on_kick = false;
-     vdev->started = false;
-     vdev->broken = false;
--    vdev->guest_features = 0;
-+    virtio_set_features_nocheck(vdev, 0);
-     vdev->queue_sel = 0;
-     vdev->status = 0;
-     vdev->disabled = false;
+     uint64_t size_ctz = __builtin_ctz(size_b);
+@@ -119,12 +115,12 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
+     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG, \
+                            KVM_REG_RISCV_CONFIG_REG(name))
+ 
+-#define RISCV_TIMER_REG(name)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_TIMER, \
++#define RISCV_TIMER_REG(name)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_TIMER, \
+                  KVM_REG_RISCV_TIMER_REG(name))
+ 
+-#define RISCV_FP_F_REG(idx)  kvm_riscv_reg_id_u32(KVM_REG_RISCV_FP_F, idx)
++#define RISCV_FP_F_REG(idx)  KVM_RISCV_REG_ID_U32(KVM_REG_RISCV_FP_F, idx)
+ 
+-#define RISCV_FP_D_REG(idx)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_FP_D, idx)
++#define RISCV_FP_D_REG(idx)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_FP_D, idx)
+ 
+ #define RISCV_VECTOR_CSR_REG(env, name) \
+     kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_VECTOR, \
 -- 
 2.39.5
 
