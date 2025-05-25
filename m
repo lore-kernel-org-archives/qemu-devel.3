@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9E7C54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E44C54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJAC1-0000f9-PO; Sun, 25 May 2025 08:11:06 -0400
+	id 1uJADh-0005MK-Cs; Sun, 25 May 2025 08:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAB8-00060C-0C; Sun, 25 May 2025 08:10:10 -0400
+ id 1uJAC9-00017o-Lt; Sun, 25 May 2025 08:11:15 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAB5-0003m6-C0; Sun, 25 May 2025 08:10:09 -0400
+ id 1uJAC7-0003tt-MT; Sun, 25 May 2025 08:11:13 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 47B27124E5F;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9FD35124E68;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4A4E6215FC6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id ACC43215FCF;
  Sun, 25 May 2025 15:08:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 45/59] target/riscv/kvm: fix leak in
- kvm_riscv_init_multiext_cfg()
-Date: Sun, 25 May 2025 15:08:02 +0300
-Message-Id: <20250525120818.273372-22-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 54/59] qapi/misc-target: Fix the doc to distinguish
+ query-sgx and query-sgx-capabilities
+Date: Sun, 25 May 2025 15:08:11 +0300
+Message-Id: <20250525120818.273372-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -63,36 +61,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-'reglist' is being g-malloc'ed but never freed.
+There're 2 QMP commands: query-sgx and query-sgx-capabilities, but
+their outputs are very similar and the documentation lacks clear
+differentiation.
 
-Reported-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250429124421.223883-3-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit 906af6de9462c5192547cca0beac2c134659a437)
+From the codes, query-sgx is used to gather guest's SGX capabilities
+(including SGX related CPUIDs and EPC sections' size, in SGXInfo), and
+if guest doesn't have SGX, then QEMU will report the error message.
+
+On the other hand, query-sgx-capabilities is used to gather host's SGX
+capabilities (descripted by SGXInfo as well). And if host doesn't
+support SGX, then QEMU will also report the error message.
+
+Considering that SGXInfo is already documented and both these 2 commands
+have enough error messages (for the exception case in their codes).
+
+Therefore the QAPI documentation for these two commands only needs to
+emphasize that one of them applies to the guest and the other to the
+host.
+
+Fix their documentation to reflect this difference.
+
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/r/20250513143131.2008078-3-zhao1.liu@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 7f2131c35c1781ca41c62dc26fd93282e1351323)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index afe3d3e609..616360bd04 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1119,10 +1119,10 @@ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, KVMScratchCPU *kvmcpu,
- 
- static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
- {
-+    g_autofree struct kvm_reg_list *reglist = NULL;
-     KVMCPUConfig *multi_ext_cfg;
-     struct kvm_one_reg reg;
-     struct kvm_reg_list rl_struct;
--    struct kvm_reg_list *reglist;
-     uint64_t val, reg_id, *reg_search;
-     int i, ret;
- 
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 8d70bd24d8..827515c363 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -380,7 +380,7 @@
+ ##
+ # @query-sgx:
+ #
+-# Returns information about SGX
++# Returns information about configured SGX capabilities of guest
+ #
+ # Returns: @SGXInfo
+ #
+@@ -399,7 +399,7 @@
+ ##
+ # @query-sgx-capabilities:
+ #
+-# Returns information from host SGX capabilities
++# Returns information about SGX capabilities of host
+ #
+ # Returns: @SGXInfo
+ #
 -- 
 2.39.5
 
