@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 246BBC54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 13:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D2EC54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 13:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJBO5-0007UV-0i; Sun, 25 May 2025 09:27:37 -0400
+	id 1uJBOA-0007Vt-Rx; Sun, 25 May 2025 09:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uJBO3-0007Tx-7Y
- for qemu-devel@nongnu.org; Sun, 25 May 2025 09:27:35 -0400
+ id 1uJBO9-0007VY-MP
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 09:27:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uJBO1-0003KL-Ku
- for qemu-devel@nongnu.org; Sun, 25 May 2025 09:27:34 -0400
+ id 1uJBO8-0003Kj-08
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 09:27:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748179652;
+ s=mimecast20190719; t=1748179659;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BqlUAxT+hdSLz403cEf2Dsl53ycpIlMX0426Ocr9F4U=;
- b=ijw1ljmtPT+Jf5GbMJKsahxcCxIovbvHyjAGfyCeEGjHBHCMLI6eb5NuFqGfb7cShZJk0c
- mQma9fCr1tD3ssJokmZPqYWgw7rZXz/56kZsG0golo55idGHtmSwfBRsMBQWyJJKZ1YkSl
- U0b9CS67uRUuZvuob4To98xjaPZ6C4Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=4zBlc/trBlZVvlSclE+TjFVwrWRwhdoV0H1DLERA2U0=;
+ b=cUt1pMZzeHGj6E11OndJUNZFKEl3chFdGTrVfbiC0mLIUbaJH23+IbEptwklk8bhI9q0TG
+ u+XZjr4TmmEj9heBfamCnwTC7zAZmXL8CiBUbPvcONlI0tlvjeqVWsiqBJi5c466l+QC8J
+ 9YMwa6cyapZwjz5HFwMW0aLsZlYiS5A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-lO1IB8owPni4NJ4xU90g0g-1; Sun,
- 25 May 2025 09:27:31 -0400
-X-MC-Unique: lO1IB8owPni4NJ4xU90g0g-1
-X-Mimecast-MFC-AGG-ID: lO1IB8owPni4NJ4xU90g0g_1748179650
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-0x-jPlCWO8K_cTYlWVGtxQ-1; Sun,
+ 25 May 2025 09:27:37 -0400
+X-MC-Unique: 0x-jPlCWO8K_cTYlWVGtxQ-1
+X-Mimecast-MFC-AGG-ID: 0x-jPlCWO8K_cTYlWVGtxQ_1748179656
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 684301956080; Sun, 25 May 2025 13:27:30 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 559C61800447; Sun, 25 May 2025 13:27:36 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 262DF1956095; Sun, 25 May 2025 13:27:28 +0000 (UTC)
+ id A7A5D1956095; Sun, 25 May 2025 13:27:35 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 3/9] audio: fix size calculation in AUD_get_buffer_size_out()
-Date: Sun, 25 May 2025 15:27:10 +0200
-Message-ID: <20250525132717.527392-4-marcandre.lureau@redhat.com>
+ Laurent Vivier <laurent@vivier.eu>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 5/9] hw/audio/asc: replace g_malloc0() with g_malloc()
+Date: Sun, 25 May 2025 15:27:12 +0200
+Message-ID: <20250525132717.527392-6-marcandre.lureau@redhat.com>
 In-Reply-To: <20250525132717.527392-1-marcandre.lureau@redhat.com>
 References: <20250525132717.527392-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -90,37 +89,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Volker Rümelin <vr_qemu@t-online.de>
 
-The buffer size calculated by AUD_get_buffer_size_out() is often
-incorrect. sw->hw->samples * sw->hw->info.bytes_per_frame is the
-size of the mixing engine buffer in audio frames multiplied by
-the size of one frame of the audio backend. Due to resampling or
-format conversion, the size of the frontend buffer can differ
-significantly.
-
-Return the correct buffer size when the mixing engine is used.
+There is no need to allocate initialized memory with g_malloc0()
+if it's directly followed by a memset() function call. g_malloc()
+is sufficient.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Message-Id: <20250515054429.7385-3-vr_qemu@t-online.de>
+Message-Id: <20250515054429.7385-5-vr_qemu@t-online.de>
 ---
- audio/audio.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/audio/asc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/audio/audio.c b/audio/audio.c
-index 70ef22b1a4..3f5baf0cc6 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -909,6 +909,10 @@ int AUD_get_buffer_size_out(SWVoiceOut *sw)
-         return 0;
-     }
+diff --git a/hw/audio/asc.c b/hw/audio/asc.c
+index 6721c0d9fb..edd42d6d91 100644
+--- a/hw/audio/asc.c
++++ b/hw/audio/asc.c
+@@ -664,7 +664,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
+     s->samples = AUD_get_buffer_size_out(s->voice) >> s->shift;
+     s->mixbuf = g_malloc0(s->samples << s->shift);
  
-+    if (audio_get_pdo_out(sw->s->dev)->mixing_engine) {
-+        return sw->resample_buf.size * sw->info.bytes_per_frame;
-+    }
-+
-     return sw->hw->samples * sw->hw->info.bytes_per_frame;
- }
+-    s->silentbuf = g_malloc0(s->samples << s->shift);
++    s->silentbuf = g_malloc(s->samples << s->shift);
+     memset(s->silentbuf, 0x80, s->samples << s->shift);
  
+     /* Add easc registers if required */
 -- 
 2.49.0
 
