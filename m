@@ -4,64 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D2EC54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 13:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84334C54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 13:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJBOA-0007Vt-Rx; Sun, 25 May 2025 09:27:43 -0400
+	id 1uJBOP-0007bj-Gy; Sun, 25 May 2025 09:27:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uJBO9-0007VY-MP
- for qemu-devel@nongnu.org; Sun, 25 May 2025 09:27:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uJBON-0007ZY-2U
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 09:27:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uJBO8-0003Kj-08
- for qemu-devel@nongnu.org; Sun, 25 May 2025 09:27:41 -0400
+ id 1uJBOL-0003MN-1y
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 09:27:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748179659;
+ s=mimecast20190719; t=1748179672;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4zBlc/trBlZVvlSclE+TjFVwrWRwhdoV0H1DLERA2U0=;
- b=cUt1pMZzeHGj6E11OndJUNZFKEl3chFdGTrVfbiC0mLIUbaJH23+IbEptwklk8bhI9q0TG
- u+XZjr4TmmEj9heBfamCnwTC7zAZmXL8CiBUbPvcONlI0tlvjeqVWsiqBJi5c466l+QC8J
- 9YMwa6cyapZwjz5HFwMW0aLsZlYiS5A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=uGQQjmsFQDOZCLUWla4tbc9wwaNUFpGpLEggjyCxOWY=;
+ b=gzODGqx79j/u2HMGuBccj8acf6D8l9dfmPEaUziCZnwPRRnn+kIVo1Sq2I3I7e6SlCZZVb
+ rxijbGj/knjue0fEfBTtS0QVIFF8pSof6ollUytoWIjQsBf6J8AM2XIqsTv3wJLAtEp5W6
+ b29cIAQ+JaQGbj08YDZhTezPCdVaXGA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-0x-jPlCWO8K_cTYlWVGtxQ-1; Sun,
- 25 May 2025 09:27:37 -0400
-X-MC-Unique: 0x-jPlCWO8K_cTYlWVGtxQ-1
-X-Mimecast-MFC-AGG-ID: 0x-jPlCWO8K_cTYlWVGtxQ_1748179656
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-cOcm32kANVOAQcg5ACGA_A-1; Sun,
+ 25 May 2025 09:27:48 -0400
+X-MC-Unique: cOcm32kANVOAQcg5ACGA_A-1
+X-Mimecast-MFC-AGG-ID: cOcm32kANVOAQcg5ACGA_A_1748179667
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 559C61800447; Sun, 25 May 2025 13:27:36 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 131E61800446; Sun, 25 May 2025 13:27:47 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A7A5D1956095; Sun, 25 May 2025 13:27:35 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 763B719560AF; Sun, 25 May 2025 13:27:45 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
- =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Laurent Vivier <laurent@vivier.eu>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 5/9] hw/audio/asc: replace g_malloc0() with g_malloc()
-Date: Sun, 25 May 2025 15:27:12 +0200
-Message-ID: <20250525132717.527392-6-marcandre.lureau@redhat.com>
+Cc: stefanha@redhat.com, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 8/9] alsaaudio: Set try-poll to false by default
+Date: Sun, 25 May 2025 15:27:15 +0200
+Message-ID: <20250525132717.527392-9-marcandre.lureau@redhat.com>
 In-Reply-To: <20250525132717.527392-1-marcandre.lureau@redhat.com>
 References: <20250525132717.527392-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -59
@@ -87,33 +89,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-There is no need to allocate initialized memory with g_malloc0()
-if it's directly followed by a memset() function call. g_malloc()
-is sufficient.
+Quoting Volker Rümelin: "try-poll=on tells the ALSA backend to try to
+use an event loop instead of the audio timer. This works most of the
+time. But the poll event handler in the ALSA backend has a bug. For
+example, if the guest can't provide enough audio frames in time, the
+ALSA buffer is only partly full and the event handler will be called
+again and again on every iteration of the main loop. This increases
+the processor load and the guest has less processor time to provide
+new audio frames in time. I have two examples where a guest can't
+recover from this situation and the guest seems to hang."
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Message-Id: <20250515054429.7385-5-vr_qemu@t-online.de>
+One reproducer I've found is booting MorphOS demo iso on
+qemu-system-ppc -machine pegasos2 -audio alsa which should play a
+startup sound but instead it freezes. Even when it does not hang it
+plays choppy sound. Volker suggested using command line to set
+try-poll=off saying: "The try-poll=off arguments are typically
+necessary, because the alsa backend has a design issue with
+try-poll=on. If the guest can't provide enough audio frames, it's
+really unhelpful to ask for new audio frames on every main loop
+iteration until the guest can provide enough audio frames. Timer based
+playback doesn't have that problem."
+
+But users cannot easily find this option and having a non-working
+default is really unhelpful so to make life easier just set it to
+false by default which works until the issue with the alsa backend can
+be fixed.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+[ Marc-André - Updated QAPI and CLI doc ]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20250316002046.D066A4E6004@zero.eik.bme.hu>
 ---
- hw/audio/asc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ qapi/audio.json   | 2 +-
+ audio/alsaaudio.c | 2 +-
+ qemu-options.hx   | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/audio/asc.c b/hw/audio/asc.c
-index 6721c0d9fb..edd42d6d91 100644
---- a/hw/audio/asc.c
-+++ b/hw/audio/asc.c
-@@ -664,7 +664,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
-     s->samples = AUD_get_buffer_size_out(s->voice) >> s->shift;
-     s->mixbuf = g_malloc0(s->samples << s->shift);
+diff --git a/qapi/audio.json b/qapi/audio.json
+index dd5a58d13e..49633cf317 100644
+--- a/qapi/audio.json
++++ b/qapi/audio.json
+@@ -96,7 +96,7 @@
+ # @period-length: the period length in microseconds
+ #
+ # @try-poll: attempt to use poll mode, falling back to non-polling
+-#     access on failure (default true)
++#     access on failure (default false)
+ #
+ # Since: 4.0
+ ##
+diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+index cacae1ea59..9b6c01c0ef 100644
+--- a/audio/alsaaudio.c
++++ b/audio/alsaaudio.c
+@@ -899,7 +899,7 @@ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
+ static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
+ {
+     if (!apdo->has_try_poll) {
+-        apdo->try_poll = true;
++        apdo->try_poll = false;
+         apdo->has_try_poll = true;
+     }
+ }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index aab53bcfe8..7eb8e02b4b 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -965,7 +965,7 @@ SRST
+         Sets the period length in microseconds.
  
--    s->silentbuf = g_malloc0(s->samples << s->shift);
-+    s->silentbuf = g_malloc(s->samples << s->shift);
-     memset(s->silentbuf, 0x80, s->samples << s->shift);
+     ``in|out.try-poll=on|off``
+-        Attempt to use poll mode with the device. Default is on.
++        Attempt to use poll mode with the device. Default is off.
  
-     /* Add easc registers if required */
+     ``threshold=threshold``
+         Threshold (in microseconds) when playback starts. Default is 0.
+@@ -1002,7 +1002,7 @@ SRST
+     ``in|out.buffer-count=count``
+         Sets the count of the buffers.
+ 
+-    ``in|out.try-poll=on|of``
++    ``in|out.try-poll=on|off``
+         Attempt to use poll mode with the device. Default is on.
+ 
+     ``try-mmap=on|off``
 -- 
 2.49.0
 
