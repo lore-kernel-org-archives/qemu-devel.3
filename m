@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AEAC54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26378C54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJAAn-0005CV-Ba; Sun, 25 May 2025 08:09:51 -0400
+	id 1uJABi-0008Aw-Q5; Sun, 25 May 2025 08:10:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9t-0004cG-0s; Sun, 25 May 2025 08:08:53 -0400
+ id 1uJAA1-0004hK-EG; Sun, 25 May 2025 08:09:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9n-0003IO-SX; Sun, 25 May 2025 08:08:50 -0400
+ id 1uJA9x-0003Ly-73; Sun, 25 May 2025 08:08:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7AED6124E52;
+ by isrv.corpit.ru (Postfix) with ESMTP id 99548124E55;
  Sun, 25 May 2025 15:08:17 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 88882215FB9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A66C7215FBC;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Icenowy Zheng <uwu@icenowy.me>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
+ Anton Blanchard <antonb@tenstorrent.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 32/59] common-user/host/riscv: use tail
- pseudoinstruction for calling tail
-Date: Sun, 25 May 2025 15:07:49 +0300
-Message-Id: <20250525120818.273372-9-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 35/59] target/riscv: rvv: Apply vext_check_input_eew
+ to vrgather instructions to check mismatched input EEWs encoding constraint
+Date: Sun, 25 May 2025 15:07:52 +0300
+Message-Id: <20250525120818.273372-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -62,42 +63,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Max Chou <max.chou@sifive.com>
 
-The j pseudoinstruction maps to a JAL instruction, which can only handle
-a jump to somewhere with a signed 20-bit destination. In case of static
-linking and LTO'ing this easily leads to "relocation truncated to fit"
-error.
+According to the v spec, a vector register cannot be used to provide source
+operands with more than one EEW for a single instruction.
+The vs1 EEW of vrgatherei16.vv is 16.
 
-Switch to use tail pseudoinstruction, which is the standard way to
-tail-call a function in medium code model (emits AUIPC+JALR).
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250417072206.364008-1-uwu@icenowy.me>
+Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-4-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit 22b448ccc6611a59d4aa54419f4d88c1f343cb35)
+(cherry picked from commit 629c2a8dd7506e1cb9b6b7127604641632ac453f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/common-user/host/riscv/safe-syscall.inc.S b/common-user/host/riscv/safe-syscall.inc.S
-index dfe83c300e..c8b81e33d0 100644
---- a/common-user/host/riscv/safe-syscall.inc.S
-+++ b/common-user/host/riscv/safe-syscall.inc.S
-@@ -69,11 +69,11 @@ safe_syscall_end:
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index e630f8661e..4a0c9fbeff 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -379,6 +379,35 @@ static bool vext_check_ld_index(DisasContext *s, int vd, int vs2,
+     return ret;
+ }
  
-         /* code path setting errno */
- 0:      neg     a0, a0
--        j       safe_syscall_set_errno_tail
-+        tail    safe_syscall_set_errno_tail
- 
-         /* code path when we didn't execute the syscall */
- 2:      li      a0, QEMU_ERESTARTSYS
--        j       safe_syscall_set_errno_tail
-+        tail    safe_syscall_set_errno_tail
- 
-         .cfi_endproc
-         .size   safe_syscall_base, .-safe_syscall_base
++/*
++ * Check whether a vector register is used to provide source operands with
++ * more than one EEW for the vector instruction.
++ * Returns true if the instruction has valid encoding
++ * Returns false if encoding violates the mismatched input EEWs constraint
++ */
++static bool vext_check_input_eew(DisasContext *s, int vs1, uint8_t eew_vs1,
++                                 int vs2, uint8_t eew_vs2, int vm)
++{
++    bool is_valid = true;
++    int8_t emul_vs1 = eew_vs1 - s->sew + s->lmul;
++    int8_t emul_vs2 = eew_vs2 - s->sew + s->lmul;
++
++    /* When vm is 0, vs1 & vs2(EEW!=1) group can't overlap v0 (EEW=1) */
++    if ((vs1 != -1 && !require_vm(vm, vs1)) ||
++        (vs2 != -1 && !require_vm(vm, vs2))) {
++        is_valid = false;
++    }
++
++    /* When eew_vs1 != eew_vs2, check whether vs1 and vs2 are overlapped */
++    if ((vs1 != -1 && vs2 != -1) && (eew_vs1 != eew_vs2) &&
++        is_overlapped(vs1, 1 << MAX(emul_vs1, 0),
++                      vs2, 1 << MAX(emul_vs2, 0))) {
++        is_valid = false;
++    }
++
++    return is_valid;
++}
++
+ static bool vext_check_ss(DisasContext *s, int vd, int vs, int vm)
+ {
+     return require_vm(vm, vd) &&
+@@ -3449,6 +3478,7 @@ static bool vrgather_vv_check(DisasContext *s, arg_rmrr *a)
+ {
+     return require_rvv(s) &&
+            vext_check_isa_ill(s) &&
++           vext_check_input_eew(s, a->rs1, s->sew, a->rs2, s->sew, a->vm) &&
+            require_align(a->rd, s->lmul) &&
+            require_align(a->rs1, s->lmul) &&
+            require_align(a->rs2, s->lmul) &&
+@@ -3461,6 +3491,7 @@ static bool vrgatherei16_vv_check(DisasContext *s, arg_rmrr *a)
+     int8_t emul = MO_16 - s->sew + s->lmul;
+     return require_rvv(s) &&
+            vext_check_isa_ill(s) &&
++           vext_check_input_eew(s, a->rs1, MO_16, a->rs2, s->sew, a->vm) &&
+            (emul >= -3 && emul <= 3) &&
+            require_align(a->rd, s->lmul) &&
+            require_align(a->rs1, emul) &&
+@@ -3480,6 +3511,7 @@ static bool vrgather_vx_check(DisasContext *s, arg_rmrr *a)
+ {
+     return require_rvv(s) &&
+            vext_check_isa_ill(s) &&
++           vext_check_input_eew(s, -1, MO_64, a->rs2, s->sew, a->vm) &&
+            require_align(a->rd, s->lmul) &&
+            require_align(a->rs2, s->lmul) &&
+            (a->rd != a->rs2) &&
 -- 
 2.39.5
 
