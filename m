@@ -4,88 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56BD8CD6E57
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AF7CD6E5F
 	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 21:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTnUo-0002LC-8O; Sun, 31 May 2026 17:14:58 -0400
+	id 1wTnUm-0002Kg-SK; Sun, 31 May 2026 17:14:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnUm-0002Ko-V5
- for qemu-devel@nongnu.org; Sun, 31 May 2026 17:14:56 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnUl-0002KE-JU
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 17:14:55 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnUl-00054S-Db
- for qemu-devel@nongnu.org; Sun, 31 May 2026 17:14:56 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-490a762db7aso4487685e9.0
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 14:14:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnUk-00054C-42
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 17:14:55 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-490426d72f7so83046765e9.3
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 14:14:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780262094; x=1780866894; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780262092; x=1780866892; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kqTXH1ay+tXsfAhmUW46JipuJudzLkGyr855uaDFxVY=;
- b=y9qQPV+P4YkUjwSDcTN3Zm3le3xCXlQTjxDQO8IfGtJ1L4C1ybQDLWiv5r/aW4ztJU
- ORO21MPp8uV6nI3RRVlGgRiNQoPyi4x3eeGt19JHxD8JE+tSZ2EaZ/xJuSqQGvoXZZw6
- yKXq/DBlGbpnFoInh27hluNat4zFfiueKIU738B6WSNtjm2WmmDv8NTmDFC5S8YGwH8I
- QM2YiHydVF78kxvnWBF/d4Fg87hOBOWCpWTZlghR9jQWERfugvBT/33uKnwZaw+QKZvc
- wnlRW4vMT2t5l7JDsx9rjjzx64evGmsL8ow0taKqoa3nNM9S05TV7+azBxtYJPqw62DT
- lZwQ==
+ bh=GC26qijtq+5/YjaYroUAqe0d2zUcLKKCmsBjOkkY6lk=;
+ b=W4T2qvm1anH9XjbUcdxDMckaKBB2D9YqFMvAIF3/2qUT8mmZkEay/8mYRtfU68oA5K
+ sFzPvOEfnZ4urxWMO3BjPBInYN7kiDp6VfvJc+I2P9l6Wso0XgsNYgMdskuv9+4GG6tv
+ jWyccdXLroPI7as5WHNFYdWKRjNZoOoHSEPX6/iSowDbbKhGQWiunNhKasiI/MYCWuVw
+ /mfa/S9QyMpdkXePBXi6yvQBJRbHY3G5hzFUZ+9e4r1uSB/GzeCX42yPeOU1rg6761Jx
+ kUnxfoKya/W4oNPOvcz0Jz0FilW38qmQw8oADCDBanNz6lUDN2uK3lDE1fj8Wh1wKJ8Y
+ EAFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780262094; x=1780866894;
+ d=1e100.net; s=20251104; t=1780262092; x=1780866892;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kqTXH1ay+tXsfAhmUW46JipuJudzLkGyr855uaDFxVY=;
- b=PJ2DwIeUhq3lcCmXuPbZEe5/wlux3LdSp8cb9uO87HH/Hd2eh+4gHnDzDtEqWgjNVP
- FIgJH8gJsNyczJdv0rlyVyhAAMYhAQPumKtI4mHn4F57XtP/DeVvXYaFNoY6FiM9uEpf
- M+WFhKD9CrhAcZiyNjxHxWGu2Umzgfdrxakblev+I1V9WI0kdzjFlY0ioAkPuA/HBFgP
- cmsE73dtqx2h9FBBfecQZJsjk2yD0LPGRsmGir11gYtSkpj+fg7njqqEt67lWo58pAm2
- hg/o9Nhc02Grqn7JfgzMWdCS59eOc4SwUqaGqjr5tuD6zgiVj3nWSQ13GZqmwGFjS+6n
- 8eBg==
+ bh=GC26qijtq+5/YjaYroUAqe0d2zUcLKKCmsBjOkkY6lk=;
+ b=kchWJj55o5ai/30G7jftqBK3FRVXvfYqIJG3KKAKenkLh6A3a2IZMNObakp+N/idi6
+ Psjio2vG0xkzHm+/6DqnUwJnb9os5xW7a1300Scde2HBZQ6Nn8In2AIOSYb8LjA180Af
+ iGLROB5NxVk2WgT6+GUhGWxrwmxK+4sZApHyruqUIHOPmRQTINCbrkeQmh72xzt3Vu8b
+ 7ocBTbZNZtdKwzevjp6KVO2L7HSBJ3qjx3lUi51RcM8wLTijJQ/6zDfTuABrqnFx3zGG
+ 7P9Cvhoq2CrYQKuS67IBj2fXbD3xTRYIKcxUa1JYIs6AYW3WI+TRkrriObUIA6yCy3Zl
+ aikw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9KEFsdA8xHo0zIYsc9y+JDM3XMm9lXztW2OdENAMJjH0Zs8FtWEOpCY202THOFIFVKx83JzKz4+7/+@nongnu.org
-X-Gm-Message-State: AOJu0Yzn7F398B53dNkld4hYHm3qBphtof14BE/6A7QQDMuC2n/9Ojs2
- v2gfxyUwN/UB1iV+fwtJxYlQ3nP46GV3pYnVHzPlnBPSlOGFeXFUJFLdcXggRwz8yANegKjQ6Y7
- uXUvN3fcLDw==
-X-Gm-Gg: Acq92OG/kVV2BIrBKgT5ZnWaMLFhLF5AQx+mgwQGzwAKC1NkzYE/RWeFoEEzQy/pvGO
- xJj9w/sE/h8rMaXPt1yDugjCb784FDpSNR+popfUF5lcsZu91beGBinSn4D31neo48hVKhhKn/O
- v6RQ2r4qlG0r4ASQpHw9pPxPi50mxNBDF2CNrPR79c0Ed6fUACkk6U5IUDxPF3htEEadnVM4fjt
- 2nM7830NWWwz6YQ7fst1VApkAQt3jp/D+ZY1mcB5CIuna3AjcrX0LpUYcGrNrjxnB3xK3nmZJME
- A2PFwqfDPfygPkqm5kBv8/BboQyrBy4uiptN1o5kD6OMaCxfQZanYDgOuYYN8GuPVYU+amjGOFo
- hlY0LX9aT9H/vYBX/vFwR0wcNTaNXc1nm65ad3Rzg82yBKpWGHdsWqNo0sbStJk+UxKU9PfSw1V
- NgooFhLA12a47WFvQPxB0B4uaLnSP7UFimNORbJCwUQ0hNkwDTFyka4ZtpSPOKBnws5ejJ9EU+a
- aPW
-X-Received: by 2002:a05:600c:1988:b0:490:9d1b:201f with SMTP id
- 5b1f17b1804b1-490a294d4b0mr143131435e9.32.1780262093761; 
- Sun, 31 May 2026 14:14:53 -0700 (PDT)
+ AFNElJ8sUVTubxnb/hBsUkZpgs0coXKPem/PAgQBXFRv8U9HLHqrO37QYHk5B0z92gfEnXB+7IMXDwQU/DDf@nongnu.org
+X-Gm-Message-State: AOJu0Yy3Q2tiwlXd6/lZIMJku9anpnNc6oLp0mFF+f/V9aLZvofXkpDk
+ 6Hbuk4kGVusJa0SiDnhdIo/ACxDx3VeE4/tEQYQ8CBiyeVvcMeQlXgIffo1xigAkqeQ=
+X-Gm-Gg: Acq92OHyt0H0INr6CK/qxzda+T9gdo2Ywr7IWMkQesnD12wraFInQ2ZYW7EepICqDU7
+ mkluUmIAtVV9CYnwvuqxHeQ2qG6jogEYa4DyyAbOHxhh2JuKZ54Y0qZXXWt4xWLeNxjr97U2JsI
+ ozSOuEsAQ/VbMG+6NHRrXiiYF/EdanN1inT2DDXkMosDspOOLExMlsxpcwTdT8NZ0c86hBGZUhf
+ QklDBVVjFnfe95Eud9QwUxtAg0mYkaiWb8wXyP48i2cFJ2zX7sy/0p8Rh3Y/tKV8Q4uI+4S/A9K
+ clZwwhoGqW8VItfDYkuPXB6W6X5mJ4DKQSa4WJSdx3WbcoUxY6cE7T9q3PJFe96EbdiTJuIGSYp
+ woNyof2dE9hRYD1GdQjOhHMUXGm8O4KZiiHeeMotmhPTrPYhAmp82gVdvl3I3UKHoHOCY3+VDru
+ YlD7u6fxOIP9rqiA8QgwFxbORBr5oxVB+8YLpoZ0Bqq/68C+dUN+r4Dkw4yo1phJcxNqZNy/t7C
+ ogo
+X-Received: by 2002:a05:600d:4453:10b0:490:6869:ef13 with SMTP id
+ 5b1f17b1804b1-490a2918e9fmr106300055e9.14.1780262092515; 
+ Sun, 31 May 2026 14:14:52 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909c0f74fasm87954635e9.4.2026.05.31.14.14.52
+ 5b1f17b1804b1-4909c0f74fasm87954635e9.4.2026.05.31.14.14.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 31 May 2026 14:14:52 -0700 (PDT)
-Message-ID: <e287f18b-757d-4fbf-a680-7d66f962eb11@linaro.org>
-Date: Sun, 25 May 2025 18:15:42 +0200
+ Sun, 31 May 2026 14:14:51 -0700 (PDT)
+Message-ID: <81922d15-a603-473d-b532-c52c3697b4ce@linaro.org>
+Date: Sun, 25 May 2025 17:06:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] semihosting/uaccess: Compile once
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250502220524.81548-1-philmd@linaro.org>
- <20250502220524.81548-3-philmd@linaro.org>
- <5ebb1a1c-efdd-4dcd-8027-aa3dc031b755@linaro.org>
+Subject: Re: [PATCH 2/3] docs: remove legacy QAPI manual generator
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Fan Ni <fan.ni@samsung.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Kashyap Chamarthy <kchamart@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>, Jason Wang <jasowang@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jiri Pirko <jiri@resnulli.us>, Igor Mammedov <imammedo@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, Eric Blake <eblake@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Yanan Wang <wangyanan55@huawei.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Mads Ynddal <mads@ynddal.dk>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250522170219.58058-1-jsnow@redhat.com>
+ <20250522170219.58058-3-jsnow@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5ebb1a1c-efdd-4dcd-8027-aa3dc031b755@linaro.org>
+In-Reply-To: <20250522170219.58058-3-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: 13
 X-Spam_score: 1.3
 X-Spam_bar: +
@@ -108,49 +127,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/25 22:04, Pierrick Bouvier wrote:
-> On 5/2/25 3:05 PM, Philippe Mathieu-Daudé wrote:
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   semihosting/meson.build | 4 +---
->>   1 file changed, 1 insertion(+), 3 deletions(-)
->>
->> diff --git a/semihosting/meson.build b/semihosting/meson.build
->> index f3d38dda91d..a0a1c081f43 100644
->> --- a/semihosting/meson.build
->> +++ b/semihosting/meson.build
->> @@ -3,9 +3,7 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: 
->> files(
->>     'syscalls.c',
->>   ))
->> -specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], 
->> if_true: files(
->> -  'uaccess.c',
->> -))
->> +libsystem_ss.add(files('uaccess.c'))
->>   common_ss.add(when: 'CONFIG_SEMIHOSTING', if_false: files('stubs- 
->> all.c'))
->>   user_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files('user.c'))
+On 22/5/25 18:02, John Snow wrote:
+> Thanks for your service!
 > 
-> Fails to build with:
-> ./configure --disable-tcg && ninja -C build
-> FAILED: libsystem.a.p/semihosting_uaccess.c.o
-> ../semihosting/uaccess.c
-> ../semihosting/uaccess.c: In function ‘uaccess_strlen_user’:
-> ../semihosting/uaccess.c:43:17: error: implicit declaration of function 
-> ‘probe_access_flags’ [-Wimplicit-function-declaration]
->      43 |         flags = probe_access_flags(env, addr, 0, MMU_DATA_LOAD,
->         |                 ^~~~~~~~~~~~~~~~~~
-> ../semihosting/uaccess.c:43:17: error: nested extern declaration of 
-> ‘probe_access_flags’ [-Werror=nested-externs]
+> Remove the old qapidoc and the option to enable the transmogrifier,
+> leaving the transmogrifier as the ONLY qapi doc generator. This has the
+> side effect of converting the tests to use the new system, too.
 > 
-> CONFIG_SEMIHOSTING conditional must be kept.
-> -libsystem_ss.add(files('uaccess.c'))
-> +libsystem_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files('uaccess.c'))
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>   docs/interop/qemu-ga-ref.rst                 |   1 -
+>   docs/interop/qemu-qmp-ref.rst                |   1 -
+>   docs/interop/qemu-storage-daemon-qmp-ref.rst |   1 -
+>   docs/sphinx/qapidoc.py                       |  25 +-
+>   docs/sphinx/qapidoc_legacy.py                | 440 -------------------
+>   python/tests/qapi-isort.sh                   |   2 +-
+>   6 files changed, 2 insertions(+), 468 deletions(-)
+>   delete mode 100644 docs/sphinx/qapidoc_legacy.py
 
-This produces:
-
-../../meson.build:4119:28: ERROR: Entry CONFIG_SEMIHOSTING not in 
-configuration dictionary.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
