@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 352E0C54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 17:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B34C54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 19:10:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJEwi-0000g6-Lo; Sun, 25 May 2025 13:15:36 -0400
+	id 1uJGjV-0001iy-Ri; Sun, 25 May 2025 15:10:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJEwf-0000fu-3h; Sun, 25 May 2025 13:15:34 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJEwd-0002Xd-4S; Sun, 25 May 2025 13:15:32 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 86C74124F04;
- Sun, 25 May 2025 20:15:23 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D9CB4216706;
- Sun, 25 May 2025 20:15:24 +0300 (MSK)
-Message-ID: <cc7ea274-cb94-451a-b31e-00f6e51a2a8c@tls.msk.ru>
-Date: Sun, 25 May 2025 20:15:24 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJGjU-0001ik-5a
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 15:10:04 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJGjS-0005QU-Bc
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 15:10:03 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43cfa7e7f54so11763035e9.1
+ for <qemu-devel@nongnu.org>; Sun, 25 May 2025 12:10:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748200200; x=1748805000; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=a/EuDC5lMwk7lNciuUI5wEWbaDayqJ3KVMIvJeEB21o=;
+ b=yUkioJikD9Wv8LfNvEVE/F0rfAPOffZR13mqnENaG8S7Ni/fsQw9xkHP6PBfK055P2
+ cOdJ3jZneZuPHjHBNZUHdeOCYEuwOyW7iJBdf6JZqi1aWbbcr62x2+kfIxQEZCJR2Jum
+ 2tInjMdJxWlAWzYavj1uyh+BoWERLxeL30RbGe8gS6TOAca8Y780M5huEkT1lrAxY0J6
+ mVJPdgv0kENEJgwHKfdmVDoFjFIrz0jYiaKAfplSmZd/ZWzY9hk/otpifl3JdTEJWAGQ
+ ptwhSlBKqMXZ5Bzd7+p+JJjy5SQasNpdOE21kgBX+hdAW3BqZWXf8WtvcjSnuCTypGyB
+ zJvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748200200; x=1748805000;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=a/EuDC5lMwk7lNciuUI5wEWbaDayqJ3KVMIvJeEB21o=;
+ b=NHpe1SqQUYjCHPMm9xp1xMwSSE2U/s7sLLYYRMMu+ToOBH5/65ucaKhxBNZPypb7Tk
+ VU1F3tX4uRAdKwul/Y44LaIJezBlWiLOu2nEpphTG5Kq6eYaelrGd2av5KNT3NLhxw7x
+ 2kAaeJp83n3sFGccpWs0cFwEx1ug0fETkXRBUbgqTUgATytyiSLU60WIEA0/jmPkHm4B
+ mO6wUFDWV9ljkG361RWBleV3QsCT/gaT11hO5ozESiFDRCQx5sGnKNdjKy9hZypbfYFH
+ ve9GP3hodnnVRaj/4OQ+rtRUtI8zedlnCnc32hGsd312arS0XWl63zk4zccxWCfxdzCw
+ 5HWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOWQRjNlTa9xgodQe8NuAPG2xyi4Tpf2H/LXpGO6gV+1KZ7m6gRe2oQn6WW5MiSrNcdsokpkAQ2uLB@nongnu.org
+X-Gm-Message-State: AOJu0YzlTCg5XoDbw/wzMB3m66Ld0Ia2dRI2bYM4ha64YxU0KLkQ4+gC
+ HaIjy9f6NPjb3N3LGO9XkJCz/WDmzo2WJ5HWCIVmleP8v1EOehGY7WiGCngIbWsrbVw=
+X-Gm-Gg: ASbGncsI/JdsDCPjM4paZHGfwvPJDn5ShXd1Pkxe03UKQgFe2WKBLauYmdMBoQ5rnh3
+ a/ymnNVe7FVg3Y9rUM7PT0HonBbWkesMin+6yj2MSHXFt6yacWe+c64Hb5vedfESk00QRiqXPHW
+ Tq0paekyBZDRHB5/mYi2NT5Almz/p8MCXcU5307gxaK45I1I65PYNPvY2Z8Vea8IO17Y7cbzA/E
+ TmfWmBXsfIxT4vkBNFRT13TLB1WoVe0vbdW/QQ8Cl6oKZpiQxB40oBOovkKKvDyTywG7eRZzEU+
+ 4KBgzTyIJo8MSbxhqKLp4alku9jDqeY5H5AIynfGWVSYdQWRJuD/GzIff3dqmUrg75Xos80qJRd
+ okkde93duNbmGZPqoFCXAjJv2
+X-Google-Smtp-Source: AGHT+IFAizI5Tb7Jvs/CKOGpzii2iOYgGVCjYzYTO3d3y401TbBKbTgswfLbN/NGxPl9NaUd+b1Iaw==
+X-Received: by 2002:a05:600c:3f09:b0:439:9434:4f3b with SMTP id
+ 5b1f17b1804b1-44c7ad31729mr63531085e9.8.1748200200591; 
+ Sun, 25 May 2025 12:10:00 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4c9220245sm6191818f8f.23.2025.05.25.12.09.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 25 May 2025 12:10:00 -0700 (PDT)
+Message-ID: <9f5fddbd-8989-4549-af89-87a19cb68a19@linaro.org>
+Date: Sun, 25 May 2025 21:09:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/6] io: Fix partial struct copy in
- qio_dns_resolver_lookup_sync_inet()
-To: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
-Cc: vsementsov@yandex-team.ru, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250521135240.3941598-1-jmarcin@redhat.com>
- <20250521135240.3941598-2-jmarcin@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250521135240.3941598-2-jmarcin@redhat.com>
+Subject: Re: [PATCH 1/4] hw/microblaze: Add endianness property to the
+ petalogix_s3adsp1800 machine
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+References: <20250515132019.569365-1-thuth@redhat.com>
+ <20250515132019.569365-2-thuth@redhat.com>
+ <00ec097f-b43a-4831-b4b6-c5d20aac236f@linaro.org>
+Content-Language: en-US
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <00ec097f-b43a-4831-b4b6-c5d20aac236f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,24 +107,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.05.2025 16:52, Juraj Marcin wrote:
-> From: Juraj Marcin <jmarcin@redhat.com>
-> 
-> Commit aec21d3175 (qapi: Add InetSocketAddress member keep-alive)
-> introduces the keep-alive flag, but this flag is not copied together
-> with other options in qio_dns_resolver_lookup_sync_inet().
-> 
-> This patch fixes this issue and also prevents future ones by copying the
-> entire structure first and only then overriding a few attributes that
-> need to be different.
-> 
-> Fixes: aec21d31756c (qapi: Add InetSocketAddress member keep-alive)
-> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
++Markus
 
-Is this a qemu-stable material?
+On 24/5/25 13:55, Richard Henderson wrote:
+> On 5/15/25 14:20, Thomas Huth wrote:
+>> +static int machine_get_endianness(Object *obj, Error **errp 
+>> G_GNUC_UNUSED)
+>> +{
+>> +    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
+>> +    return ms->endianness;
+>> +}
+>> +
+>> +static void machine_set_endianness(Object *obj, int endianness, Error 
+>> **errp)
+>> +{
+>> +    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
+>> +    ms->endianness = endianness;
+>> +}
+>> +
+>>   static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
+>>                                                       const void *data)
+>>   {
+>>       MachineClass *mc = MACHINE_CLASS(oc);
+>> +    ObjectProperty *prop;
+>>       mc->desc = "PetaLogix linux refdesign for xilinx Spartan 
+>> 3ADSP1800";
+>>       mc->init = petalogix_s3adsp1800_init;
+>>       mc->is_default = true;
+>> +
+>> +    prop = object_class_property_add_enum(oc, "endianness", 
+>> "EndianMode",
+>> +                                          &EndianMode_lookup,
+>> +                                          machine_get_endianness,
+>> +                                          machine_set_endianness);
+>> +    object_property_set_default_str(prop, TARGET_BIG_ENDIAN ? "big" : 
+>> "little");
+>> +    object_class_property_set_description(oc, "endianness",
+>> +            "Defines whether the machine runs in big or little endian 
+>> mode");
+> 
+> 
+> Better with Property?  You don't have to write get/set...
+> 
+>    static const Property props[] = {
+>      DEFINE_PROP_ENDIAN("endianness", S3Adsp1800MachineState, endianness,
+>                         TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : 
+> ENDIAN_MODE_LITTLE),
+>    };
+> 
+>    device_class_set_props(dc, props);
 
-Thanks,
+DEFINE_PROP_FOO() are restricted to QDev (DeviceClass). Here we have
+a MachineClass, which only inherits ObjectClass, not DeviceClass.
 
-/mjt
+Markus once explained me the difference between QDev properties
+and bare object ones; I asked why we couldn't make qdev properties
+generic to objects, but I don't remember the historical rationale.
+QDev predates QOM, QDev used static properties, QOM introduced
+dynamic ones? We definitively should document that...
 
