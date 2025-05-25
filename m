@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF76C54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AEAC54E90
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJABQ-0007KB-UK; Sun, 25 May 2025 08:10:29 -0400
+	id 1uJAAn-0005CV-Ba; Sun, 25 May 2025 08:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAB6-0005wV-9V; Sun, 25 May 2025 08:10:08 -0400
+ id 1uJA9t-0004cG-0s; Sun, 25 May 2025 08:08:53 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAB3-0003ZW-ID; Sun, 25 May 2025 08:10:07 -0400
+ id 1uJA9n-0003IO-SX; Sun, 25 May 2025 08:08:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3300C124E5E;
- Sun, 25 May 2025 15:08:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7AED6124E52;
+ Sun, 25 May 2025 15:08:17 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 403C8215FC5;
- Sun, 25 May 2025 15:08:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 88882215FB9;
+ Sun, 25 May 2025 15:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
+Cc: qemu-stable@nongnu.org, Icenowy Zheng <uwu@icenowy.me>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 44/59] target/riscv/kvm: minor fixes/tweaks
-Date: Sun, 25 May 2025 15:08:01 +0300
-Message-Id: <20250525120818.273372-21-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 32/59] common-user/host/riscv: use tail
+ pseudoinstruction for calling tail
+Date: Sun, 25 May 2025 15:07:49 +0300
+Message-Id: <20250525120818.273372-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -62,86 +62,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-Remove an unused 'KVMScratchCPU' pointer argument in
-kvm_riscv_check_sbi_dbcn_support().
+The j pseudoinstruction maps to a JAL instruction, which can only handle
+a jump to somewhere with a signed 20-bit destination. In case of static
+linking and LTO'ing this easily leads to "relocation truncated to fit"
+error.
 
-Put kvm_riscv_reset_regs_csr() after kvm_riscv_put_regs_csr(). This will
-make a future patch diff easier to read, when changes in
-kvm_riscv_reset_regs_csr() and kvm_riscv_get_regs_csr() will be made.
+Switch to use tail pseudoinstruction, which is the standard way to
+tail-call a function in medium code model (emits AUIPC+JALR).
 
-Fixes: a6b53378f5 ("target/riscv/kvm: implement SBI debug console (DBCN) calls")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250429124421.223883-2-dbarboza@ventanamicro.com>
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250417072206.364008-1-uwu@icenowy.me>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit 73f81da0a3628180409a0ae90ece19534bcdf09b)
+(cherry picked from commit 22b448ccc6611a59d4aa54419f4d88c1f343cb35)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 0f4997a918..afe3d3e609 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -613,19 +613,6 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
-     return ret;
- }
+diff --git a/common-user/host/riscv/safe-syscall.inc.S b/common-user/host/riscv/safe-syscall.inc.S
+index dfe83c300e..c8b81e33d0 100644
+--- a/common-user/host/riscv/safe-syscall.inc.S
++++ b/common-user/host/riscv/safe-syscall.inc.S
+@@ -69,11 +69,11 @@ safe_syscall_end:
  
--static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
--{
--    env->mstatus = 0;
--    env->mie = 0;
--    env->stvec = 0;
--    env->sscratch = 0;
--    env->sepc = 0;
--    env->scause = 0;
--    env->stval = 0;
--    env->mip = 0;
--    env->satp = 0;
--}
--
- static int kvm_riscv_get_regs_csr(CPUState *cs)
- {
-     CPURISCVState *env = &RISCV_CPU(cs)->env;
-@@ -660,6 +647,19 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
-     return 0;
- }
+         /* code path setting errno */
+ 0:      neg     a0, a0
+-        j       safe_syscall_set_errno_tail
++        tail    safe_syscall_set_errno_tail
  
-+static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
-+{
-+    env->mstatus = 0;
-+    env->mie = 0;
-+    env->stvec = 0;
-+    env->sscratch = 0;
-+    env->sepc = 0;
-+    env->scause = 0;
-+    env->stval = 0;
-+    env->mip = 0;
-+    env->satp = 0;
-+}
-+
- static int kvm_riscv_get_regs_fp(CPUState *cs)
- {
-     int ret = 0;
-@@ -1078,7 +1078,6 @@ static int uint64_cmp(const void *a, const void *b)
- }
+         /* code path when we didn't execute the syscall */
+ 2:      li      a0, QEMU_ERESTARTSYS
+-        j       safe_syscall_set_errno_tail
++        tail    safe_syscall_set_errno_tail
  
- static void kvm_riscv_check_sbi_dbcn_support(RISCVCPU *cpu,
--                                             KVMScratchCPU *kvmcpu,
-                                              struct kvm_reg_list *reglist)
- {
-     struct kvm_reg_list *reg_search;
-@@ -1197,7 +1196,7 @@ static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
-         kvm_riscv_read_vlenb(cpu, kvmcpu, reglist);
-     }
- 
--    kvm_riscv_check_sbi_dbcn_support(cpu, kvmcpu, reglist);
-+    kvm_riscv_check_sbi_dbcn_support(cpu, reglist);
- }
- 
- static void riscv_init_kvm_registers(Object *cpu_obj)
+         .cfi_endproc
+         .size   safe_syscall_base, .-safe_syscall_base
 -- 
 2.39.5
 
