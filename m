@@ -4,140 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68794CD6E52
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 20:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 539BFCD6E56
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 21:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTmf7-00045Q-9O; Sun, 31 May 2026 16:21:33 -0400
+	id 1wTnUl-0002KD-EW; Sun, 31 May 2026 17:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wTmf1-000455-OF
- for qemu-devel@nongnu.org; Sun, 31 May 2026 16:21:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wTmf0-0007gB-05
- for qemu-devel@nongnu.org; Sun, 31 May 2026 16:21:27 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64UNe3go201403
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 20:21:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- KjeqK4seL66sPDy6/0rSo5ZQXLF9mIMhDvhsnUDjZDE=; b=R4/agwmmCRbKmWjR
- mIkrXrPN39odZ3YxzFd79HAqCccftzoWU1kuFBQ0V10dYPIVqt4O/Ennc1As321i
- Q+2p/8bylTo3uJ5WHux5IOxJgc8IXk4aaW6U4CF+uTkLlBwrgSwr357IPQMORioE
- 6c3Dp7fabV+GYDimXyNdMUnltK1dRiQJ3sxYy2CoF0m5slKFpCFTJmiy4DdOPAki
- as3EoHdmGOa1EWCvEtWqgWzWeZs+8DbKrQru3Ftz24jajbMN/UTvYKpMpJGpFx63
- 2KIU1Ah09/hwuju+l3KNnN7EBXoxx2JA+/zZQEVd6YpiulXe7nzjIBtwLV9do1VI
- p6C37A==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efq7fcka4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 20:21:23 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8ccdfe1ff26so39740016d6.1
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 13:21:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnUj-0002K4-R3
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 17:14:53 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnUi-00053x-9N
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 17:14:53 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-490a7a34493so4338055e9.0
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 14:14:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780258883; x=1780863683; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=linaro.org; s=google; t=1780262090; x=1780866890; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KjeqK4seL66sPDy6/0rSo5ZQXLF9mIMhDvhsnUDjZDE=;
- b=cn2y5EAQZVu9GBhUjBGJlQI4/5lCyXU/PSDw3eQNbjL5ulZS36TU0tbyk4DyURY+3I
- 9ghpiTuOvSvDAnpj0W7+GN2CD/2O567SgvFQVuclXrrMdOQqK4GRBsl/Xye5WRR/vlEb
- nXdIUlVxlQo9OinJf3YY++Sm3Svctpbv/G4TDpulxdzEsbdqGh4L7dP1Tl2xQmmUptOw
- FRNA6mlBCCpcGRYjKgOKzW9ArAGnu95dRtHLwMV/IqoSw87SjQqgXXhZupjNQBqXj5MR
- Yta6D6kst8C5PIXqtNo75xVrKlv7CHljApyGQ0iDCrGGEcGBfxLW1m6sITdKIxBv79gG
- Romg==
+ bh=5vtLWEbn2cmB9xzpJaVbtuyH97w9SJ2eB9+kuZuVPiU=;
+ b=KhRkzfWDDtkDgUq6G/lSj55K16LtmSefBLrS6K1XwWLQUV6AoikPYXbWUYjK3dyx84
+ GTC6zm/i6AGcDriIGueZaoTaE3xe9PNP8W2ykzFIjAOPmf5lc8KHOE+JHwYjArHnOozi
+ 6UEFq9Teq4fCdruwnMMrzRP+7RHEjq4flwF4bK3Bu0srfJtlY0sq487p1VazyU3zIg4F
+ IN0vU/zI/zHl7XMAB+IozK5itOQoCMwL7HxbHm+WGBKuSsEkfwlwjbxznVkmB2xsZbxu
+ +WoquKnXLAn8/Vay0HKfOMxB7Z0HmRdCHyBvYn4gQnFdIkPwoswgv2Fkp4BaoNaT7x42
+ YlbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780258883; x=1780863683;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=1e100.net; s=20251104; t=1780262090; x=1780866890;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=KjeqK4seL66sPDy6/0rSo5ZQXLF9mIMhDvhsnUDjZDE=;
- b=cPrgCbm2o4J2qYVnEyGye8CyTi01uhW9s7bQMFga/scckgd2iyxyjqB6fkH4CPLGnG
- VtyoCHYXTlTmhCe4TzHtrWe9Jxy5by7OARm50WauJn5qiKlPdFIdvd1K6nLwqXdfc6Wo
- eF87ojR7apmuAUXjSGufd7uFKrREasoHrCg5PUXCD8SwJSH3+Eo/1Bfsb5dPKscVg3Gg
- 98NQlbpmSJ3eGSklRIPIxjbTfRUxU+tsi6cImCAoCtlCc9isacxsocGvTyxuTP7UE8+j
- WdO28XzneT8ZM73c2Wjdx6Ao7T4GEJS8/fRsmun1CWH0U+eONojf9y6deYabHt5D6TVt
- dZzQ==
+ bh=5vtLWEbn2cmB9xzpJaVbtuyH97w9SJ2eB9+kuZuVPiU=;
+ b=mYT/GHvbxrqW8M5y9T4Kpoe1z3YHQYoE9P/hQ1dwgX4k/tA7isSm9ZwQjM5WDWkCke
+ FKS7FfrWuJiKmW4B3fk2is9qRlj9dmN2CxZkypn1GUUW2n5VI1yeVKG+7arVV6pIL4uS
+ RTE0GXPYFuZK3xvIvWpR+/MFp3grcmAf/SbjU7JDcUIeJaRj1whmio+ExZ/CDCOpii4o
+ Gntqx3niXwszIzGMk1qF9J1rrElQD3k4de8hONLhApgDHpzBVoe86PQACdq6e/dsvX6X
+ r9i04vD818D3SSrVmk0R6cuCg1ZiEt4xdI3oXswTzeuQ8P8ex4i8ED0GGcyRN52Xoz5x
+ njkg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+S7d/+dLIMJFAis5i/4tzISABeoesr7qPeDTUJ2yiz3bh9o03z++VXgqFJCIkrTqaoAEANz1/uGu7H@nongnu.org
-X-Gm-Message-State: AOJu0YwcLPVsVNNs5oC6EWkQGUtR0vGEOo8O5OleRAyjB2YuTfZVeBUK
- c22yYpdPKggd4c6SLJ80MRIYijTW5NG372iZx1d9UPVHje/MsbNN+DH1KxsLNKRuoUPMYKWm19f
- 24Ynco/sgkpI9GVUusOMwaxlGKmNTrNuoqWnKJNhSdkeE/qC79F3lHxfmdg==
-X-Gm-Gg: Acq92OFSDst6kXoD7ZS17E0p/tAKOSaecQZST4SyEHtZbAq3l1QuG3/KdtJgG4552D7
- J6Z71JTZ2Bvu/7pM07Jfr9Sbhq0r2Hln6qXJi+MIkF66N9TUaQj6UrCv2DhKsFHVSvBxlS311Fz
- RjSuLB5la1mDjL7HPRNZB8AYPWX5xLSwRl5cG7NY8JjqSKXVoh2OBU/ZsI59v6D6ynm898/dTEr
- 0XhBPfG+/XcTZMe8h2VcIIi1wZbjMktWC9dIbkaVWDd1O06g2dPGJcv7IogUqbS5cn1CQKK2nVQ
- ULxjoVUdfeZtCOwKpGi75BP0Y6IIhPvhoiP8m5Skwu51MSDGJASBRuIZP7gkMhoDq+/6r5qGliZ
- 9yPYcLNcHSXja+IWyHLVIs5gsIVlQyp8PZ/raHDwRhcBVG32i0rZtHDLJnFTSR27xMg9u
-X-Received: by 2002:a05:6214:419f:b0:8cc:f882:2564 with SMTP id
- 6a1803df08f44-8ccf8822883mr99000646d6.40.1780258883037; 
- Sun, 31 May 2026 13:21:23 -0700 (PDT)
-X-Received: by 2002:a05:6214:419f:b0:8cc:f882:2564 with SMTP id
- 6a1803df08f44-8ccf8822883mr99000346d6.40.1780258882667; 
- Sun, 31 May 2026 13:21:22 -0700 (PDT)
-Received: from [192.168.68.106] ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ccea042bb5sm75710756d6.8.2026.05.31.13.21.20
+ AFNElJ9AnpHNLeHSydZpuUo257WQF1qG5zqW2x0dJLRTN5bLN3rp9Xi9hFMHBloIMGP2RszoqxvGe16jLwXz@nongnu.org
+X-Gm-Message-State: AOJu0Yyc8Ib32rQUK2gW703t+vj1RzdWMQPEA2zcuMmv8po+nFhurD8R
+ OvzfV4G3IWaIXRV+/b2J7mhh+K6y5e9jXpQtYFT3hX6p5LL+fa3PylVgQRTafxm336M=
+X-Gm-Gg: Acq92OEruEXPhSx6ICERsbMmP/7x7FkI53g9g23FCbhPoEZGp8yZIMQtatURNIZ0HdO
+ l2wu3GM148Jr536JvHcr7ABVmVd0oDcMxP6FCXHKhKcn3t3rAmSE2VUNL5ZWLx2p8IfyHan60J5
+ bK9hZ59stPnd/mVgI+YYxU7bNuTf5AojACJ0zD4tJ6J2nXYVdMSWpF4hM8DM/j1JD3PvYJq0pGo
+ vu1VV12dnP8WV1gL4HaMdIR7gCv1McxX4ztgW9BVSUqQ00J2mfTzxD3xxBjQpyRPCZUSmqzC6XG
+ /+t8DZrOKTGuYI0hyfT4Oe3Rv0FBfqXMwoyUT8EaU6n4+c/sH+vI7vznkWooMXOz0TDdlSNOEm7
+ JltntwpLVdTgO8mAQr7hyikkgg6a2vEsmzUubgXAG+t1iJdybbABUYdGTraVzdkj4Em3pFzIF8Z
+ Rwaryht4kE50AUHKRc6wR01vdCLujoKmEVxefI13dbZy/xz8aGvs6RB81rKScwKHHto5Pqf5wJS
+ spr
+X-Received: by 2002:a05:600c:37c3:b0:48a:79d8:a8d6 with SMTP id
+ 5b1f17b1804b1-490a2a2713bmr109787675e9.7.1780262089990; 
+ Sun, 31 May 2026 14:14:49 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4909c0f74fasm87954635e9.4.2026.05.31.14.14.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 31 May 2026 13:21:22 -0700 (PDT)
-Message-ID: <e9481765-c3dd-4ce5-87a3-a35736c5444c@oss.qualcomm.com>
-Date: Sun, 31 May 2026 17:21:18 -0300
+ Sun, 31 May 2026 14:14:49 -0700 (PDT)
+Message-ID: <d7b34b9d-6398-433b-8ffd-b9a7156b3eb0@linaro.org>
+Date: Sun, 25 May 2025 17:06:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: fix invalid sstc predicate in gdbstub
-To: Abhigyan Kumar <314abh@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260530053200.902591-1-314abh@gmail.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH] vfio/container: pass MemoryRegion to DMA operations
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, steven.sistare@oracle.com,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>
+References: <20250521215534.2688540-1-john.levon@nutanix.com>
 Content-Language: en-US
-In-Reply-To: <20260530053200.902591-1-314abh@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250521215534.2688540-1-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: UlY_cejgCQ2nNFWeXOZTl658xm5_zXIv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTMxMDIyMSBTYWx0ZWRfX9oMTKqf5rtz1
- PuUiwqdKmqpWvQyXDfoe7x95lAaWCpskd9sXpW25wBxIKEGTMtE4DpXlHlrRf8gnc+KpZtBfQE1
- n7wXh/Uv9WwlL8iZp/bh9Na0mIGaH+cZJjjnfhVTy4XGdRQKrpmKB5GvfQ6gC1XGrT9VL/g3rFO
- Ir0T8VG3RQIAZUCsoERoL6kyOuypAZ/pPGIB5iO9C1TCKRNaqlMNj0IKtAaSM2JlaOcPDVDGQoP
- 9KBJZXVV8t0BR93OINIvXpKenrQ5UYA1nhf4tzPoexfndRfIPwwcgfixzsemyaRZpHcqauWwwLg
- wrlym8/mtxI27Oe8oyZhK7iscLkz2IhIduL7UKFJBC/stJJwA1/+A3QpjTHKEZ+ZWrjPvtkka+c
- 7XKjJVOCq1NU23wInvT0ZMq0TcPdb+YKr3CxIhhisMJPB7JMLnuGsLpUbZrFCxO/EDZ/Amycobp
- lHJ87XF1HXp156na8WA==
-X-Proofpoint-GUID: UlY_cejgCQ2nNFWeXOZTl658xm5_zXIv
-X-Authority-Analysis: v=2.4 cv=XqzK/1F9 c=1 sm=1 tr=0 ts=6a1c9843 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=wd-fH7nAH_oVZBzBhrcA:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-31_06,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 adultscore=0 clxscore=1015 phishscore=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2605310221
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: 13
+X-Spam_score: 1.3
+X-Spam_bar: +
+X-Spam_report: (1.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,71 +107,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 21/5/25 22:55, John Levon wrote:
+> Pass through the MemoryRegion to DMA operation handlers of vfio
+> containers. The vfio-user container will need this later, to translate
+> the vaddr into an offset for the dma map vfio-user message; CPR will
+> also will need this.
 
-
-On 5/30/2026 2:32 AM, Abhigyan Kumar wrote:
-> sstc function incorrectly checks for avaibility of env->rdtime_fn.
-> This causes it to fail each time it's called because rdtime_fn is setup
-> later in the procedure (when timer devices are created). This prevents
-> stimecmp's addition to gdb.
-> 
-> This change ensures only the riscv_cpu_cfg(env) check is done. rdtime_fn
-> will always be NULL otherwise and fail.
-
-I am not sure we can do that - there are several boards that don't create
-the timer that implements rdtime_fn (e.g. spike).  If we just remove the
-check we'll break the sstc check for them.
-
-I suggest using the 'env->debugger' flag to skip the rdtimer check if
-we're running the gdbstub:
-
-$ git diff
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5514e0f455..63f4795ac7 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -590,7 +590,8 @@ static RISCVException sstc(CPURISCVState *env, int csrno)
-  {
-      bool hmode_check = false;
-
--    if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn) {
-+    if (!riscv_cpu_cfg(env)->ext_sstc
-+        || (!env->debugger && !env->rdtime_fn)) {
-          return RISCV_EXCP_ILLEGAL_INST;
-      }
-
-Testing with gitlab 3496 this seems to work:
-
-
-$ riscv64-unknown-elf-gdb
-(gdb) target extended-remote :1234
-(gdb)  p $stimecmp
-$1 = 0
-(gdb)
-
-
-Thanks,
-Daniel
+"will ... will" typo.
 
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3496
-> Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+> Originally-by: John Johnson <john.g.johnson@oracle.com>
+> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   target/riscv/csr.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/hw/vfio/vfio-container-base.h | 9 +++++----
+>   hw/vfio/container-base.c              | 4 ++--
+>   hw/vfio/container.c                   | 3 ++-
+>   hw/vfio/iommufd.c                     | 3 ++-
+>   hw/vfio/listener.c                    | 6 +++---
+>   5 files changed, 14 insertions(+), 11 deletions(-)
 > 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index f5b0895fd..d72df945f 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -590,7 +590,7 @@ static RISCVException sstc(CPURISCVState *env, int csrno)
->   {
->       bool hmode_check = false;
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index f9e561cb08..3feb773e5f 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -78,7 +78,7 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
 >   
-> -    if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn) {
-> +    if (!riscv_cpu_cfg(env)->ext_sstc) {
->           return RISCV_EXCP_ILLEGAL_INST;
->       }
->   
+>   int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>                              hwaddr iova, ram_addr_t size,
+> -                           void *vaddr, bool readonly);
+> +                           void *vaddr, bool readonly, MemoryRegion *mr);
+>   int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+>                                hwaddr iova, ram_addr_t size,
+>                                IOMMUTLBEntry *iotlb, bool unmap_all);
+> @@ -151,20 +151,21 @@ struct VFIOIOMMUClass {
+>       /**
+>        * @dma_map
+>        *
+> -     * Map an address range into the container.
+> +     * Map an address range into the container. Note that the memory region is
+> +     * referenced within an RCU read lock region across this call.
+>        *
+>        * @bcontainer: #VFIOContainerBase to use
+>        * @iova: start address to map
+>        * @size: size of the range to map
+>        * @vaddr: process virtual address of mapping
+>        * @readonly: true if mapping should be readonly
+> +     * @mr: the memory region for this mapping
+>        *
+>        * Returns 0 to indicate success and -errno otherwise.
+>        */
+>       int (*dma_map)(const VFIOContainerBase *bcontainer,
+>                      hwaddr iova, ram_addr_t size,
+> -                   void *vaddr, bool readonly);
+> -
+> +                   void *vaddr, bool readonly, MemoryRegion *mr);
+
+Since the memory region shouldn't be altered, preferably
+"const MemoryRegion *mr" (here and in vfio_container_dma_map).
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
