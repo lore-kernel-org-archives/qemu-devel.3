@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E782C54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78118C54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJA9z-0004g9-RN; Sun, 25 May 2025 08:09:00 -0400
+	id 1uJAAL-0004kC-RM; Sun, 25 May 2025 08:09:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9c-0004QE-6x; Sun, 25 May 2025 08:08:36 -0400
+ id 1uJA9o-0004X9-8W; Sun, 25 May 2025 08:08:48 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9Z-0003BU-1P; Sun, 25 May 2025 08:08:35 -0400
+ id 1uJA9k-0003Fq-7s; Sun, 25 May 2025 08:08:46 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E07D124E4C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 718DA124E51;
  Sun, 25 May 2025 15:08:17 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 41C03215FB3;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7F757215FB8;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- Keith Busch <kbusch@kernel.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 26/59] hw/nvme: fix nvme hotplugging
-Date: Sun, 25 May 2025 15:07:43 +0300
-Message-Id: <20250525120818.273372-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ziqiao Kong <ziqiaokong@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 31/59] target/riscv: fix endless translation loop on
+ big endian systems
+Date: Sun, 25 May 2025 15:07:48 +0300
+Message-Id: <20250525120818.273372-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,36 +62,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Ziqiao Kong <ziqiaokong@gmail.com>
 
-Commit cd59f50ab017 caused a regression on nvme hotplugging for devices
-with an implicit nvm subsystem.
+On big endian systems, pte and updated_pte hold big endian host data
+while pte_pa points to little endian target data. This means the branch
+at cpu_helper.c:1669 will be always satisfied and restart translation,
+causing an endless translation loop.
 
-The nvme-subsys device was incorrectly left with being marked as
-non-hotpluggable. Fix this.
+The correctness of this patch can be deduced by:
 
+old_pte will hold value either from cpu_to_le32/64(pte) or
+cpu_to_le32/64(updated_pte), both of wich is litte endian. After that,
+an in-place conversion by le32/64_to_cpu(old_pte) ensures that old_pte
+now is in native endian, same with pte. Therefore, the endianness of the
+both side of if (old_pte != pte) is correct.
+
+Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250415080254.3667878-2-ziqiaokong@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-Reported-by: Stéphane Graber <stgraber@stgraber.org>
-Tested-by: Stéphane Graber <stgraber@stgraber.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2950
-Fixes: cd59f50ab017 ("hw/nvme: always initialize a subsystem")
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 0b1c23a582f7bc721a9b858c289a8d165152a6a0)
+(cherry picked from commit ad63158bdb33dab5704ea1cf740d2ea0387175df)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
-index b617ac3892..64138cbd6d 100644
---- a/hw/nvme/subsys.c
-+++ b/hw/nvme/subsys.c
-@@ -226,7 +226,6 @@ static void nvme_subsys_class_init(ObjectClass *oc, void *data)
- 
-     dc->realize = nvme_subsys_realize;
-     dc->desc = "Virtual NVMe subsystem";
--    dc->hotpluggable = false;
- 
-     device_class_set_props(dc, nvme_subsystem_props);
- }
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 6c4391d96b..3233b66e7e 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1662,9 +1662,11 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             target_ulong *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
+             target_ulong old_pte;
+             if (riscv_cpu_sxl(env) == MXL_RV32) {
+-                old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, pte, updated_pte);
++                old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_le32(pte), cpu_to_le32(updated_pte));
++                old_pte = le32_to_cpu(old_pte);
+             } else {
+-                old_pte = qatomic_cmpxchg(pte_pa, pte, updated_pte);
++                old_pte = qatomic_cmpxchg(pte_pa, cpu_to_le64(pte), cpu_to_le64(updated_pte));
++                old_pte = le64_to_cpu(old_pte);
+             }
+             if (old_pte != pte) {
+                 goto restart;
 -- 
 2.39.5
 
