@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC5BC54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12CCC54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ7uc-0001jT-M6; Sun, 25 May 2025 05:44:58 -0400
+	id 1uJ7uf-0001yX-VP; Sun, 25 May 2025 05:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7uY-0001Rq-8X; Sun, 25 May 2025 05:44:54 -0400
+ id 1uJ7ub-0001d6-7e; Sun, 25 May 2025 05:44:57 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7uW-0004oq-7w; Sun, 25 May 2025 05:44:53 -0400
+ id 1uJ7uZ-0004pI-KX; Sun, 25 May 2025 05:44:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0A884124DEF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 11F3D124DF0;
  Sun, 25 May 2025 12:42:48 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E4EB1215F17;
+ by tsrv.corpit.ru (Postfix) with ESMTP id EC65E215F18;
  Sun, 25 May 2025 12:42:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 61/62] linux-user/hppa: Send proper si_code on SIGFPE
- exception
-Date: Sun, 25 May 2025 12:42:44 +0300
-Message-Id: <20250525094246.174612-27-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 62/62] target/hppa: Fix FPE exceptions
+Date: Sun, 25 May 2025 12:42:45 +0300
+Message-Id: <20250525094246.174612-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
@@ -62,46 +61,89 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Improve the linux-user emulation to send the correct si_code depending
-on overflow (TARGET_FPE_FLTOVF), underflow (TARGET_FPE_FLTUND), ...
-Note that the hardware stores the relevant flags in FP exception
-register #1, which is actually the lower 32-bits of the 64-bit fr[0]
-register in qemu.
+Implement FP exception register #1 (lower 32-bits of 64-bit fr[0]).
+A proper implementation is necessary to allow the Linux kernel in
+system mode and the qemu linux-user to send proper si_code values
+on SIGFPE signal.
+
+Always set the T-bit on taken exception, and merge over- and underflow
+in system mode to just set overflow bit to mimic the behaviour I tested
+on a physical machine.
+
+The test program below can be used to verify correct behaviour. Note
+that behaviour on SIGFPE may vary on different platforms. The program
+should always detect the correct signal, but it may or may not be able
+to sucessfully continue afterwards.
+
+ #define _GNU_SOURCE
+ #include <signal.h>
+ #include <stdio.h>
+ #include <fenv.h>
+ #include <float.h>
+
+ static void fpe_func(int sig, siginfo_t *i, void *v) {
+    sigset_t set;
+    sigemptyset(&set);
+    sigaddset(&set, SIGFPE);
+    sigprocmask(SIG_UNBLOCK, &set, NULL);
+    printf("GOT signal %d with si_code %ld\n", sig, i->si_code);
+ }
+
+ int main(int argc, char *argv[]) {
+    struct sigaction action = {
+        .sa_sigaction = fpe_func,
+        .sa_flags = SA_RESTART|SA_SIGINFO };
+    sigaction(SIGFPE, &action, 0);
+    feenableexcept(FE_OVERFLOW | FE_UNDERFLOW);
+    double x = DBL_MIN;
+    return printf("%lf\n", argc > 1
+        ? 1.7976931348623158E308*1.7976931348623158E308
+        : x / 10);
+ }
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit b4b49cf39dba5f993ad925f204cb820aacfc8e45)
+(cherry picked from commit ebd394948de4e868cb8fc5b265a8a18f0935dce1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
-index 23b38ff9b2..13f18d79ab 100644
---- a/linux-user/hppa/cpu_loop.c
-+++ b/linux-user/hppa/cpu_loop.c
-@@ -112,7 +112,7 @@ static abi_ulong hppa_lws(CPUHPPAState *env)
- void cpu_loop(CPUHPPAState *env)
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index 0e44074ba8..ff3008a542 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -71,7 +71,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
  {
-     CPUState *cs = env_cpu(env);
--    abi_ulong ret;
-+    abi_ulong ret, si_code = 0;
-     int trapnr;
+     uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
+     uint32_t hard_exp = 0;
+-    uint32_t shadow = env->fr0_shadow;
++    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
++    uint32_t fr1 = 0;
  
-     while (1) {
-@@ -169,7 +169,15 @@ void cpu_loop(CPUHPPAState *env)
-             force_sig_fault(TARGET_SIGFPE, TARGET_FPE_CONDTRAP, env->iaoq_f);
-             break;
-         case EXCP_ASSIST:
--            force_sig_fault(TARGET_SIGFPE, 0, env->iaoq_f);
-+            #define set_si_code(mask, val) \
-+                if (env->fr[0] & mask) { si_code = val; }
-+            set_si_code(R_FPSR_FLG_I_MASK, TARGET_FPE_FLTRES);
-+            set_si_code(R_FPSR_FLG_U_MASK, TARGET_FPE_FLTUND);
-+            set_si_code(R_FPSR_FLG_O_MASK, TARGET_FPE_FLTOVF);
-+            set_si_code(R_FPSR_FLG_Z_MASK, TARGET_FPE_FLTDIV);
-+            set_si_code(R_FPSR_FLG_V_MASK, TARGET_FPE_FLTINV);
-+            #undef set_si_code
-+            force_sig_fault(TARGET_SIGFPE, si_code, env->iaoq_f);
-             break;
-         case EXCP_BREAK:
-             force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->iaoq_f);
+     if (likely(soft_exp == 0)) {
+         env->fr[0] = (uint64_t)shadow << 32;
+@@ -84,9 +85,22 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+     hard_exp |= CONVERT_BIT(soft_exp, float_flag_overflow,  R_FPSR_ENA_O_MASK);
+     hard_exp |= CONVERT_BIT(soft_exp, float_flag_divbyzero, R_FPSR_ENA_Z_MASK);
+     hard_exp |= CONVERT_BIT(soft_exp, float_flag_invalid,   R_FPSR_ENA_V_MASK);
+-    shadow |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
++    if (hard_exp & shadow) {
++        shadow = FIELD_DP32(shadow, FPSR, T, 1);
++        /* fill exception register #1, which is lower 32-bits of fr[0] */
++#if !defined(CONFIG_USER_ONLY)
++        if (hard_exp & (R_FPSR_ENA_O_MASK | R_FPSR_ENA_U_MASK)) {
++            /* over- and underflow both set overflow flag only */
++            fr1 = FIELD_DP32(fr1, FPSR, C, 1);
++            fr1 = FIELD_DP32(fr1, FPSR, FLG_O, 1);
++        } else
++#endif
++        {
++            fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
++        }
++    }
+     env->fr0_shadow = shadow;
+-    env->fr[0] = (uint64_t)shadow << 32;
++    env->fr[0] = (uint64_t)shadow << 32 | fr1;
+ 
+     if (hard_exp & shadow) {
+         hppa_dynamic_excp(env, EXCP_ASSIST, ra);
 -- 
 2.39.5
 
