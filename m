@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A33BCC54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0F2C54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:10:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJA9c-0004Oc-Nu; Sun, 25 May 2025 08:08:37 -0400
+	id 1uJAAz-0005ax-Ec; Sun, 25 May 2025 08:10:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9S-0004Lx-Us; Sun, 25 May 2025 08:08:29 -0400
+ id 1uJA9g-0004Uv-9M; Sun, 25 May 2025 08:08:41 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJA9Q-000380-Fw; Sun, 25 May 2025 08:08:26 -0400
+ id 1uJA9d-0003D2-Vc; Sun, 25 May 2025 08:08:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 21E31124E4A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 53511124E4E;
  Sun, 25 May 2025 15:08:17 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2F30C215FB1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5FACE215FB5;
  Sun, 25 May 2025 15:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 24/59] s390x: Fix leak in machine_set_loadparm
-Date: Sun, 25 May 2025 15:07:41 +0300
-Message-Id: <20250525120818.273372-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, =?UTF-8?q?Lo=C3=AFc=20Lefort?= <loic@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 28/59] target/riscv: pmp: move Smepmp operation
+ conversion into a function
+Date: Sun, 25 May 2025 15:07:45 +0300
+Message-Id: <20250525120818.273372-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -62,48 +63,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Loïc Lefort <loic@rivosinc.com>
 
-ASAN spotted a leaking string in machine_set_loadparm():
-
-Direct leak of 9 byte(s) in 1 object(s) allocated from:
-    #0 0x560ffb5bb379 in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:69:3
-    #1 0x7f1aca926518 in g_malloc ../glib/gmem.c:106
-    #2 0x7f1aca94113e in g_strdup ../glib/gstrfuncs.c:364
-    #3 0x560ffc8afbf9 in qobject_input_type_str ../qapi/qobject-input-visitor.c:542:12
-    #4 0x560ffc8a80ff in visit_type_str ../qapi/qapi-visit-core.c:349:10
-    #5 0x560ffbe6053a in machine_set_loadparm ../hw/s390x/s390-virtio-ccw.c:802:10
-    #6 0x560ffc0c5e52 in object_property_set ../qom/object.c:1450:5
-    #7 0x560ffc0d4175 in object_property_set_qobject ../qom/qom-qobject.c:28:10
-    #8 0x560ffc0c6004 in object_property_set_str ../qom/object.c:1458:15
-    #9 0x560ffbe2ae60 in update_machine_ipl_properties ../hw/s390x/ipl.c:569:9
-    #10 0x560ffbe2aa65 in s390_ipl_update_diag308 ../hw/s390x/ipl.c:594:5
-    #11 0x560ffbdee132 in handle_diag_308 ../target/s390x/diag.c:147:9
-    #12 0x560ffbebb956 in helper_diag ../target/s390x/tcg/misc_helper.c:137:9
-    #13 0x7f1a3c51c730  (/memfd:tcg-jit (deleted)+0x39730)
-
+Signed-off-by: Loïc Lefort <loic@rivosinc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Message-ID: <20250313193011.720075-3-loic@rivosinc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20250509174938.25935-1-farosas@suse.de>
-Fixes: 1fd396e3228 ("s390x: Register TYPE_S390_CCW_MACHINE properties as class properties")
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit bdf12f2a56bf3f13c52eb51f0a994bbfe40706b2)
+(cherry picked from commit 915b203745540e908943758f78f5da49e0a15e45)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 75b32182eb..f1936caca2 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -802,6 +802,7 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
-     }
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index e1e5ca589e..7d65dc24a5 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -31,6 +31,15 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t addr_index,
+                           uint8_t val);
+ static uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t addr_index);
  
-     s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
-+    g_free(val);
- }
++/*
++ * Convert the PMP permissions to match the truth table in the Smepmp spec.
++ */
++static inline uint8_t pmp_get_smepmp_operation(uint8_t cfg)
++{
++    return ((cfg & PMP_LOCK) >> 4) | ((cfg & PMP_READ) << 2) |
++           (cfg & PMP_WRITE) | ((cfg & PMP_EXEC) >> 2);
++}
++
+ /*
+  * Accessor method to extract address matching type 'a field' from cfg reg
+  */
+@@ -355,16 +364,6 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+         const uint8_t a_field =
+             pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg);
  
- static void ccw_machine_class_init(ObjectClass *oc, void *data)
+-        /*
+-         * Convert the PMP permissions to match the truth table in the
+-         * Smepmp spec.
+-         */
+-        const uint8_t smepmp_operation =
+-            ((env->pmp_state.pmp[i].cfg_reg & PMP_LOCK) >> 4) |
+-            ((env->pmp_state.pmp[i].cfg_reg & PMP_READ) << 2) |
+-            (env->pmp_state.pmp[i].cfg_reg & PMP_WRITE) |
+-            ((env->pmp_state.pmp[i].cfg_reg & PMP_EXEC) >> 2);
+-
+         if (((s + e) == 2) && (PMP_AMATCH_OFF != a_field)) {
+             /*
+              * If the PMP entry is not off and the address is in range,
+@@ -383,6 +382,9 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+                 /*
+                  * If mseccfg.MML Bit set, do the enhanced pmp priv check
+                  */
++                const uint8_t smepmp_operation =
++                    pmp_get_smepmp_operation(env->pmp_state.pmp[i].cfg_reg);
++
+                 if (mode == PRV_M) {
+                     switch (smepmp_operation) {
+                     case 0:
 -- 
 2.39.5
 
