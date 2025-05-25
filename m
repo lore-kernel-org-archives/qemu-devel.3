@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C28C54E90
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 889CFC54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 09:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJ7sa-0006qH-Lr; Sun, 25 May 2025 05:42:52 -0400
+	id 1uJ7tB-0007fF-Or; Sun, 25 May 2025 05:43:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7sY-0006pj-O8; Sun, 25 May 2025 05:42:50 -0400
+ id 1uJ7tA-0007bn-41; Sun, 25 May 2025 05:43:28 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJ7sX-0004Vk-7V; Sun, 25 May 2025 05:42:50 -0400
+ id 1uJ7t8-0004Z7-Mt; Sun, 25 May 2025 05:43:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B5CEC124DD5;
- Sun, 25 May 2025 12:42:46 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9A1FB215EFD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 474FE124DDF;
  Sun, 25 May 2025 12:42:47 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1E153215F07;
+ Sun, 25 May 2025 12:42:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
+ Anton Blanchard <antonb@tenstorrent.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.4 35/62] s390x: Fix leak in machine_set_loadparm
-Date: Sun, 25 May 2025 12:42:18 +0300
-Message-Id: <20250525094246.174612-1-mjt@tls.msk.ru>
+Subject: [Stable-9.2.4 45/62] target/riscv: rvv: Apply vext_check_input_eew to
+ vector slide instructions(OPIVI/OPIVX)
+Date: Sun, 25 May 2025 12:42:28 +0300
+Message-Id: <20250525094246.174612-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
 References: <qemu-stable-9.2.4-20250525112803@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,48 +63,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Max Chou <max.chou@sifive.com>
 
-ASAN spotted a leaking string in machine_set_loadparm():
+Handle the overlap of source registers with different EEWs.
 
-Direct leak of 9 byte(s) in 1 object(s) allocated from:
-    #0 0x560ffb5bb379 in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:69:3
-    #1 0x7f1aca926518 in g_malloc ../glib/gmem.c:106
-    #2 0x7f1aca94113e in g_strdup ../glib/gstrfuncs.c:364
-    #3 0x560ffc8afbf9 in qobject_input_type_str ../qapi/qobject-input-visitor.c:542:12
-    #4 0x560ffc8a80ff in visit_type_str ../qapi/qapi-visit-core.c:349:10
-    #5 0x560ffbe6053a in machine_set_loadparm ../hw/s390x/s390-virtio-ccw.c:802:10
-    #6 0x560ffc0c5e52 in object_property_set ../qom/object.c:1450:5
-    #7 0x560ffc0d4175 in object_property_set_qobject ../qom/qom-qobject.c:28:10
-    #8 0x560ffc0c6004 in object_property_set_str ../qom/object.c:1458:15
-    #9 0x560ffbe2ae60 in update_machine_ipl_properties ../hw/s390x/ipl.c:569:9
-    #10 0x560ffbe2aa65 in s390_ipl_update_diag308 ../hw/s390x/ipl.c:594:5
-    #11 0x560ffbdee132 in handle_diag_308 ../target/s390x/diag.c:147:9
-    #12 0x560ffbebb956 in helper_diag ../target/s390x/tcg/misc_helper.c:137:9
-    #13 0x7f1a3c51c730  (/memfd:tcg-jit (deleted)+0x39730)
-
+Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-7-max.chou@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20250509174938.25935-1-farosas@suse.de>
-Fixes: 1fd396e3228 ("s390x: Register TYPE_S390_CCW_MACHINE properties as class properties")
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit bdf12f2a56bf3f13c52eb51f0a994bbfe40706b2)
+(cherry picked from commit b5480a693e3e657108746721ffe434b3bb6e7a72)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 54f09cf096..9d66e2e0a9 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -739,6 +739,7 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 2a4bededd1..d72792e46a 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -638,7 +638,9 @@ static bool vext_check_slide(DisasContext *s, int vd, int vs2,
+ {
+     bool ret = require_align(vs2, s->lmul) &&
+                require_align(vd, s->lmul) &&
+-               require_vm(vm, vd);
++               require_vm(vm, vd) &&
++               vext_check_input_eew(s, -1, 0, vs2, s->sew, vm);
++
+     if (is_over) {
+         ret &= (vd != vs2);
      }
- 
-     s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
-+    g_free(val);
- }
- 
- static void ccw_machine_class_init(ObjectClass *oc, void *data)
 -- 
 2.39.5
 
