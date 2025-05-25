@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A797EC5AE59
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8678EC54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 12:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJABa-00080F-Lh; Sun, 25 May 2025 08:10:39 -0400
+	id 1uJABN-00079I-RB; Sun, 25 May 2025 08:10:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAAe-00057d-5I; Sun, 25 May 2025 08:09:43 -0400
+ id 1uJA9v-0004eD-MF; Sun, 25 May 2025 08:08:56 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uJAAc-0003YF-91; Sun, 25 May 2025 08:09:39 -0400
+ id 1uJA9q-0003JG-D0; Sun, 25 May 2025 08:08:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 166DE124E5B;
- Sun, 25 May 2025 15:08:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 851CA124E53;
+ Sun, 25 May 2025 15:08:17 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 22A8E215FC2;
- Sun, 25 May 2025 15:08:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 91E1F215FBA;
+ Sun, 25 May 2025 15:08:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Anton Blanchard <antonb@tenstorrent.com>,
+Cc: qemu-stable@nongnu.org, Anton Blanchard <antonb@tenstorrent.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.1 41/59] target/riscv: rvv: Apply vext_check_input_eew
- to vector indexed load/store instructions
-Date: Sun, 25 May 2025 15:07:58 +0300
-Message-Id: <20250525120818.273372-18-mjt@tls.msk.ru>
+Subject: [Stable-10.0.1 33/59] target/riscv: rvv: Source vector registers
+ cannot overlap mask register
+Date: Sun, 25 May 2025 15:07:50 +0300
+Message-Id: <20250525120818.273372-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
 References: <qemu-stable-10.0.1-20250525112807@cover.tls.msk.ru>
@@ -63,43 +63,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-Handle the overlap of source registers with different EEWs.
+Add the relevant ISA paragraphs explaining why source (and destination)
+registers cannot overlap the mask register.
 
-Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20250408103938.3623486-10-max.chou@sifive.com>
+Message-ID: <20250408103938.3623486-2-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit db21c3eb05504c4cedaad4f7b19e588361b02385)
+(cherry picked from commit 3e8d1e4a628bb234c0b5d1ccd510900047181dbd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2d067a59e2..445a0b72a5 100644
+index b9883a5d32..20b1cb127b 100644
 --- a/target/riscv/insn_trans/trans_rvv.c.inc
 +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -1043,7 +1043,8 @@ static bool ld_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ld_index(s, a->rd, a->rs2, a->nf, a->vm, eew);
-+           vext_check_ld_index(s, a->rd, a->rs2, a->nf, a->vm, eew) &&
-+           vext_check_input_eew(s, -1, 0, a->rs2, eew, a->vm);
+@@ -100,10 +100,33 @@ static bool require_scale_rvfmin(DisasContext *s)
+     }
  }
  
- GEN_VEXT_TRANS(vlxei8_v,  MO_8,  rnfvm, ld_index_op, ld_index_check)
-@@ -1095,7 +1096,8 @@ static bool st_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
+-/* Destination vector register group cannot overlap source mask register. */
+-static bool require_vm(int vm, int vd)
++/*
++ * Source and destination vector register groups cannot overlap source mask
++ * register:
++ *
++ * A vector register cannot be used to provide source operands with more than
++ * one EEW for a single instruction. A mask register source is considered to
++ * have EEW=1 for this constraint. An encoding that would result in the same
++ * vector register being read with two or more different EEWs, including when
++ * the vector register appears at different positions within two or more vector
++ * register groups, is reserved.
++ * (Section 5.2)
++ *
++ * A destination vector register group can overlap a source vector
++ * register group only if one of the following holds:
++ *  1. The destination EEW equals the source EEW.
++ *  2. The destination EEW is smaller than the source EEW and the overlap
++ *     is in the lowest-numbered part of the source register group.
++ *  3. The destination EEW is greater than the source EEW, the source EMUL
++ *     is at least 1, and the overlap is in the highest-numbered part of
++ *     the destination register group.
++ * For the purpose of determining register group overlap constraints, mask
++ * elements have EEW=1.
++ * (Section 5.2)
++ */
++static bool require_vm(int vm, int v)
  {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_st_index(s, a->rd, a->rs2, a->nf, eew);
-+           vext_check_st_index(s, a->rd, a->rs2, a->nf, eew) &&
-+           vext_check_input_eew(s, a->rd, s->sew, a->rs2, eew, a->vm);
+-    return (vm != 0 || vd != 0);
++    return (vm != 0 || v != 0);
  }
  
- GEN_VEXT_TRANS(vsxei8_v,  MO_8,  rnfvm, st_index_op, st_index_check)
+ static bool require_nf(int vd, int nf, int lmul)
 -- 
 2.39.5
 
