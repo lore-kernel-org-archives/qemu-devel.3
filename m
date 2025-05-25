@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11683C54F30
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 19:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD9FC54F30
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 May 2025 19:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJH4J-0005Vx-Sd; Sun, 25 May 2025 15:31:35 -0400
+	id 1uJH6n-0006O4-Ea; Sun, 25 May 2025 15:34:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1uJH4G-0005Vf-1J
- for qemu-devel@nongnu.org; Sun, 25 May 2025 15:31:32 -0400
-Received: from mail-mw2nam10on2076.outbound.protection.outlook.com
- ([40.107.94.76] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ id 1uJH6k-0006Nh-Ht
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 15:34:06 -0400
+Received: from mail-dm6nam12on2062b.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::62b]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1uJH4E-00086J-3t
- for qemu-devel@nongnu.org; Sun, 25 May 2025 15:31:31 -0400
+ id 1uJH6h-0008AV-P1
+ for qemu-devel@nongnu.org; Sun, 25 May 2025 15:34:06 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=i0bkgJ/ue4a2LNCt0VHYcAU37dtfwknfsRy6BXO3p8tX1OHGudTFUxCOTpkwyg+uiC3p0d7yD7KscGQ99Xte18w2EN6drbX8ywaihcZQwuo8jjRF65Z+eePbd9ZsGf5F2VbhUbJSzVIpW4QjCmzRYtol5LkNAavZ3WbvhGOIcY99N3CXPC9Ebdvl0Ys28KKyAKihvNZEH56jsYO+GZl8tXI/duzLLu8yaE3HoY2hxm2CZ5DfEepF48yPGetYbjgMcYgn/YN1OAauy1Fqgr1MjuopMJvCqDzkSoWCfLN2IbkhEYM59Ih677AS/gSc4R7Z9u8Ln60sWCUkK1YoKj4hvA==
+ b=aiPsrx25SXpSFtb/l0xbeaSkR+xVoVGSpoFql5E951s5/tHWOKGrTjRBRisD7ytxYyVbgvuq0QgREkGpXjVDSIqffX2TyIVBp+hkzDF8vUWbIIxrXWOsb2J04PvBqrgO1po7tLB/k9RBc/SWzUD3uHGUvd8EI11pIt6X2Bcadk0rO7Q/HRTtgFsXWQgoyW1zIARnkyux42h55hajnuOqubfz9DiOU/6um8hkQfLmkPfrJiQqSWuCZqNCeGIQtUZlda/2j+tulyQD48t/lZoJRiRFKz+EwcvT3GS6HNn58YS7rEOeGfQCDPiiQDmuM+ehd7IpxSs0J25alFwomHL/Ig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cytz+9KXOJseXjqXH2d61l15VgXuFScqE7g+i1VxMlo=;
- b=RIKXAlfB+sRD4pE/q/rbAgDZMv9uPrh1CHPjYvCiXGsGhH39L+OX1IGkTz+4/xC3SZwtyxTa/5w4twEryN3C5Zs55ptT8StSFTtRrDow2wm3kSbtE7PwgLaUlRhZ8n6YytqcGThwvZDXW2tjfCtxgu0rRKjg+s7eW0BBLfqJO75j3CzT+1M3oU/xs6CnzwfyTqngb9U+bk+Ljxr+n4NeDyKfBJjoEdjk4//93kLnTAy7pKIj2QIj9n/sKPYt7MqVc6K+ohpcCCSUlpiIw8+LoLe38F0wNNkGQTjpnwlbYyVLbnptgDUKL5zj0RZKw6KCV2+dnyK4amDSJGWW4/bf+w==
+ bh=02faRF3vYmJMrv5gpFXsXtldvVUwI5uW2V6MkOehO38=;
+ b=fnzXBPv7qoqA0ijCXjc4baRJAahH2e1J5lHTyMd4hTEtJRkfLuVW1RjLNKmBAEgzXBFgxfusDRW8rkfYHRFgbmChxkXliltwIfUoF8yR8QJMQNn8tcShElWU7FASAxqnf6/k35Wqnp9lTUKNZxSd8GkaMCzoLSdGtklfW6kl8SlVueAK2UWtKBraPG82ndKfxtfQbtGxkM+Hq6ewuUrht2HrnpBjKOJAB2UD2EZ68dAmKYSVAVp3QVB1jQgAFSjD4wsP1CbDAxRIyPTcsMmcrrys1odE+0jWkUHKYGIgir4gYeT+CYWgft6TfgoJzD5ZWwuYXktwmqg50mhEwTpqDw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cytz+9KXOJseXjqXH2d61l15VgXuFScqE7g+i1VxMlo=;
- b=3SW0zmGEh7vgB1JdqJdLlArZJIGWDdb19LwIY+nhPh+jww93y174srp/EgdPoIVOGBDvu1KqqZPdA0qJGoNDDHg6EUMiL+rGEa7CXjLTACKM/K629KCjioP7h8uU2IJRCcGXO4s/ULNq/jEh738DMTpZ2YP6zoWWvJwahbtsX9Q=
-Received: from BYAPR11CA0090.namprd11.prod.outlook.com (2603:10b6:a03:f4::31)
- by SN7PR12MB7420.namprd12.prod.outlook.com (2603:10b6:806:2a7::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.26; Sun, 25 May
- 2025 19:26:21 +0000
-Received: from CY4PEPF0000EE31.namprd05.prod.outlook.com
- (2603:10b6:a03:f4:cafe::37) by BYAPR11CA0090.outlook.office365.com
- (2603:10b6:a03:f4::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8746.29 via Frontend Transport; Sun,
- 25 May 2025 19:26:21 +0000
+ bh=02faRF3vYmJMrv5gpFXsXtldvVUwI5uW2V6MkOehO38=;
+ b=K0uUuo+jDTvBMMqqZR0HEi3ZH4U0XV3DY0h0zuGt5LW1cfLaowfyOPcWjpouMWPAa3sI5t0uhGmFuSN1sHT3CssPH0IC8Gxfk3tTeWCNAV6aDm7B8z1XZHv756OtFsFk4u1aVLADLff4L8gm5qvhrhrffppnt2TK9u6K24O1vyg=
+Received: from BY5PR17CA0006.namprd17.prod.outlook.com (2603:10b6:a03:1b8::19)
+ by DM4PR12MB5723.namprd12.prod.outlook.com (2603:10b6:8:5e::9) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8769.21; Sun, 25 May 2025 19:33:44 +0000
+Received: from SJ5PEPF000001EA.namprd05.prod.outlook.com
+ (2603:10b6:a03:1b8:cafe::ff) by BY5PR17CA0006.outlook.office365.com
+ (2603:10b6:a03:1b8::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8746.32 via Frontend Transport; Sun,
+ 25 May 2025 19:33:43 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,88 +54,86 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CY4PEPF0000EE31.mail.protection.outlook.com (10.167.242.37) with Microsoft
+ SJ5PEPF000001EA.mail.protection.outlook.com (10.167.242.198) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8769.18 via Frontend Transport; Sun, 25 May 2025 19:26:20 +0000
+ 15.20.8769.18 via Frontend Transport; Sun, 25 May 2025 19:33:43 +0000
 Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sun, 25 May
- 2025 14:26:20 -0500
-Date: Sun, 25 May 2025 21:26:18 +0200
+ 2025 14:33:42 -0500
+Date: Sun, 25 May 2025 21:33:36 +0200
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 CC: <qemu-devel@nongnu.org>, <edgar.iglesias@gmail.com>, <philmd@linaro.org>
-Subject: Re: [PATCH v2 01/10] target/microblaze: Split out
- mb_unaligned_access_internal
-Message-ID: <aDNu2nGrPyIc-gMC@zapote>
+Subject: Re: [PATCH v2 04/10] target/microblaze: Implement extended address
+ load/store out of line
+Message-ID: <aDNwkAvUfFlj7cSp@zapote>
 References: <20250525160220.222154-1-richard.henderson@linaro.org>
- <20250525160220.222154-2-richard.henderson@linaro.org>
+ <20250525160220.222154-5-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250525160220.222154-2-richard.henderson@linaro.org>
+In-Reply-To: <20250525160220.222154-5-richard.henderson@linaro.org>
 User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
 X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE31:EE_|SN7PR12MB7420:EE_
-X-MS-Office365-Filtering-Correlation-Id: fa23f7dc-6613-4244-9704-08dd9bc20780
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EA:EE_|DM4PR12MB5723:EE_
+X-MS-Office365-Filtering-Correlation-Id: cdcaad9a-0726-45cf-8f02-08dd9bc30f7f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?gZxEjT6JAe/XzkouzblgGwNWzn74KUyW/1ZbMi0krWEf6B4hR0mp/8tCCIxR?=
- =?us-ascii?Q?rbM7GfhIcJT1kXqKZSLW6/yfjHp1np/x5nkjf5A1ypKvLf1hl7Gelxeukh3k?=
- =?us-ascii?Q?25kng3wfwx7wPm+eNtX64sauH3McHSlGgEi1VFzXLKH661+FGSJ/ky3p+dAq?=
- =?us-ascii?Q?RZ72SOukYtdWDhzJOtLJS/yQz71LNmAOFBZQhWGBsskvMsZ2XJ2cfQnHTXBO?=
- =?us-ascii?Q?pki41sWg3BPLUPSECRb3Klhl9yjJ8GFI3ijj87UcjpEzVYPpUd08QWIff1Y1?=
- =?us-ascii?Q?knFfue+B/mmAJXNCXfetJzlFmAJmEfzcjhixbwkhUCpUlOmL/XZCxqyUzjUa?=
- =?us-ascii?Q?KUiSlxeR1WUM9Y/C565YLeDi0YSJ25Yx2CoFZf0Ncz6biZorsDyBBWiMUyiF?=
- =?us-ascii?Q?fkoxyraVcWU9DefjVDJISb6UcJxWOfbdl0ycm5aQ1/diUaOkHV4FO/BDr8tp?=
- =?us-ascii?Q?E9FfAT+WGGYvmozqq9hNLJkK/Edyk7dolktT26sbwuPhHKMB6lnNHZQnPMMR?=
- =?us-ascii?Q?kxwpq9LcivhfKcISdDK8YShrwgcs65VZR66undT8nXyP8qRui53KY+uEqvXI?=
- =?us-ascii?Q?krjftkoSivvK05x0QRWuDJIoNRGz7TUxOfcu57RXhTmh5+K2hz8QNqVnp7F1?=
- =?us-ascii?Q?cB3iizuC3VsdK2IrOqxH9SrFBP0vOHfMPFSkMVNpr+vm9ZCIiY8ZMcY0X3zy?=
- =?us-ascii?Q?tNigBvlOBoUsfKQbSGmkaNikOdN6OqsSwiplEQVmPu7q0EXbPDRaWvSJvgdN?=
- =?us-ascii?Q?QMDbGG6Idu7Lup/mv14/1jxFa0RYyXVBsJVI63DoQ8c9TaKyZDzyDRzkPfZc?=
- =?us-ascii?Q?5+ajuAoxPpWVBDWh66JjkYP1ESpYCJEmYZ8uL6TiZZKQgksjsZdrz3aMraMG?=
- =?us-ascii?Q?EbABaZHETdBBrNKX/XihBG90bdqdcgXDmyJiZzYzndGp0GY4pHu/ZMaixODx?=
- =?us-ascii?Q?4jFoBkqdbWmP0ERfU7f7CNo0+dUYdklc1JnNh8jZ/sUccMTtrDTmk9q+dcrx?=
- =?us-ascii?Q?1Gmrui0S+4ItAg8SqhOilDL0oGPeXUbWsYIOSJ77+NeQmxgz4lyHXRqLWlg5?=
- =?us-ascii?Q?OkzJei8uLzeLJqjTwp3ADQILbPjtp+BXOCp62/C1toW8/l6ghBJztwEHvTZJ?=
- =?us-ascii?Q?/v2r9e5kdRRaintX/Ga0ymp8E4WxNvutUJiF3cFzhz0hDb70aNQm0JwmSKiG?=
- =?us-ascii?Q?Qp92e9d5mt94FRqMlG1f2EtuvVIxv5Ik71nxx3o9s/YoXo9cQNX3xKtwh0ew?=
- =?us-ascii?Q?YjNRDTUofgq4xO2667SvIZVxvJ36jh8ha29xsIyEErOxvb4oor1MDw2MRqb0?=
- =?us-ascii?Q?lMwpk4ycbfOc9oQeT/FVQQovE2rpvJvrF/QegPsy4UH36Vjm4cqlau9jVOhz?=
- =?us-ascii?Q?k2sbvFf12tHvVr4qqdKhYu9Q0OfQlO51yp0vd7cYado2YM3BtnG6rdNvjPwx?=
- =?us-ascii?Q?fpOMHb55Nsbgw+NnkcnPKwYREJ+KOAAewVU4x5Z1TcxPAz36oLAAgn83Schc?=
- =?us-ascii?Q?6rkZwz8vVXVV/E2XbZjXiWVzUwRyv2cuO0AN?=
+ ARA:13230040|82310400026|36860700013|376014|1800799024|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?qfA0Kx73WbzN8uH14YHfXS7udS6fmzdEIOvo+rjep+U8ceXq1FwBB4au+fyJ?=
+ =?us-ascii?Q?FZ6LNjR02AD9JVi2NZ+0MPPTdIpqnpJGzJ9eSabWbY37ixB0XwyFoqWJKjft?=
+ =?us-ascii?Q?ymKm+0Z4vqGEwU0LAoeeK5OVMm0RvvobYf7zJ47Oow2JVVFivm/MS9aRFaPs?=
+ =?us-ascii?Q?VdYtmLK3p3U3uIs6N3Au2s2L1fmFIBPZWulMg6bb+KQJSIVg8UMfDBIZ7LEF?=
+ =?us-ascii?Q?qxHo3zgr8HX03L4r0zWRyrraB0EoNaA/fJzfFe5n2cEwXiZHgQ2esRCaq/3Z?=
+ =?us-ascii?Q?iLt+8rVz0+RbpY8Q4bqCrt6oL18gpwuFekMWh1q+sgRxFoe95Cn3hWjT1NPz?=
+ =?us-ascii?Q?pczXKt4RBYHE99VnIkrKY9Myu+aXrn/bz1gabjqV9P5wXflbq0YUxnT4raMp?=
+ =?us-ascii?Q?cfqU2zO0ZB0UCvbcOVaj8EO9x6jbvF36OQocfsHkIZgLI1XffiJZHv1wymNl?=
+ =?us-ascii?Q?vvfeljtRqaDBuVHa8RbsXjGYK6sZBoQ/yP7PnhA6apsY3eM2iEozvxh6c/T7?=
+ =?us-ascii?Q?pfDqWM++bKo01bCsCsdpFc7KseC2v2KQ1MooUiqfb2NiEPHkRFJfnk0+kPzV?=
+ =?us-ascii?Q?ZpHHJ3pzIfrXykpQK3WFF2rR4sH/7eK0cwRsCOWFa+xLueDPshWc8CRMPrgN?=
+ =?us-ascii?Q?omo08GuPfiFEeXT9YBjhy4hvRKKrnpNQdJqjDJFfsOTkPA2sa98fSkO6IqWp?=
+ =?us-ascii?Q?RtzO30tqqgGK9J/vIJQDAJ88u2CXNervQABg3z4nfyb7Pcv9qNXGrKZWJYz0?=
+ =?us-ascii?Q?XdERWEGFZSUiPtCpVRJKIGZZo/o4tkBcLl5Z5/kDRY7BrkfHEIpcsXGxvCN7?=
+ =?us-ascii?Q?b2SeKNHicMtb05RAD0KCBWUi3mAbA8aYuPCW1Uv7dUYYDNPM4/By7RMLpUfi?=
+ =?us-ascii?Q?MR5f7joRSlLR8jp6ixzzNMMSzhe/17LuZ0K2XyjwMFcDXhxZkfVxOaLbls1U?=
+ =?us-ascii?Q?KaXOx/azVXRDEnPv8gsDu8NSovCdZlhzC8ko0Ud4CeDTnpytXNnEhncGlsFm?=
+ =?us-ascii?Q?2xi9jBD4cAzpHZuwfUccBDvPr7iX5YotBI6lTs65iTLyEa/f4lV5A5fPiqM1?=
+ =?us-ascii?Q?iFpgRqC4XhrtA3j+pocSZu8urpCMfBFpSC+Chwy3b2CP4BgCMlAJTNEBO3EK?=
+ =?us-ascii?Q?2IrPz+2O3X2Lm3dcSIlIKvSOCDEJzdfe354/I8tOcmgDNP2KIBLz95ikDiUq?=
+ =?us-ascii?Q?yLGH+Fc4clUhIzJPPVSN6+osu9GLX3P0AdBvQtMdLfLVwJKVVhd7glJwHMxL?=
+ =?us-ascii?Q?2KlPAot1IaLK1dmAxaeok/1MFHn0g7KlFd4Lhbgk/nBp9o8FPIaOMjZuxw9A?=
+ =?us-ascii?Q?LTSAJ/jcuvG8jufaUUMmpb0zwd3CMCJfXpKoYGLdiHc9b2eioFDSI9z/SJvn?=
+ =?us-ascii?Q?i9xjv3yy/fYeg6Xby3ie32T1t72KJsiD5F6/P5XcKjyewDJAE62c4b/qoXVC?=
+ =?us-ascii?Q?eg9F7xOzVBhQFpQT3NJfE/VbgDU9c3TdL+UT1n+ErwySqlQ8pciRP9h/AGhA?=
+ =?us-ascii?Q?MeQqbSrBUv5H558Li0m8ZybhgvKX3TruqtG8?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024)(7053199007);
+ SFS:(13230040)(82310400026)(36860700013)(376014)(1800799024)(7053199007);
  DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2025 19:26:20.7311 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fa23f7dc-6613-4244-9704-08dd9bc20780
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2025 19:33:43.6163 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cdcaad9a-0726-45cf-8f02-08dd9bc30f7f
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE31.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001EA.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7420
-Received-SPF: permerror client-ip=40.107.94.76;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5723
+Received-SPF: permerror client-ip=2a01:111:f403:2417::62b;
  envelope-from=Edgar.Iglesias@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
 X-Spam_bar: -----
 X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,8 +150,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 25, 2025 at 05:02:11PM +0100, Richard Henderson wrote:
-> Use an explicit 64-bit type for the address to store in EAR.
+On Sun, May 25, 2025 at 05:02:14PM +0100, Richard Henderson wrote:
+> Use helpers and address_space_ld/st instead of inline
+> loads and stores.  This allows us to perform operations
+> on physical addresses wider than virtual addresses.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
@@ -160,88 +161,203 @@ Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
 
 > ---
->  target/microblaze/helper.c | 64 +++++++++++++++++++++-----------------
->  1 file changed, 36 insertions(+), 28 deletions(-)
+>  target/microblaze/helper.h    | 10 +++++++
+>  target/microblaze/op_helper.c | 40 +++++++++++++++++++++++++++
+>  target/microblaze/translate.c | 52 +++++++++++++++++++++++++++--------
+>  3 files changed, 90 insertions(+), 12 deletions(-)
 > 
-> diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-> index 9203192483..5fe81e4b16 100644
-> --- a/target/microblaze/helper.c
-> +++ b/target/microblaze/helper.c
-> @@ -27,6 +27,42 @@
->  #include "qemu/host-utils.h"
->  #include "exec/log.h"
->  
-> +
-> +G_NORETURN
-> +static void mb_unaligned_access_internal(CPUState *cs, uint64_t addr,
-> +                                         uintptr_t retaddr)
-> +{
-> +    CPUMBState *env = cpu_env(cs);
-> +    uint32_t esr, iflags;
-> +
-> +    /* Recover the pc and iflags from the corresponding insn_start.  */
-> +    cpu_restore_state(cs, retaddr);
-> +    iflags = env->iflags;
-> +
-> +    qemu_log_mask(CPU_LOG_INT,
-> +                  "Unaligned access addr=0x%" PRIx64 " pc=%x iflags=%x\n",
-> +                  addr, env->pc, iflags);
-> +
-> +    esr = ESR_EC_UNALIGNED_DATA;
-> +    if (likely(iflags & ESR_ESS_FLAG)) {
-> +        esr |= iflags & ESR_ESS_MASK;
-> +    } else {
-> +        qemu_log_mask(LOG_UNIMP, "Unaligned access without ESR_ESS_FLAG\n");
-> +    }
-> +
-> +    env->ear = addr;
-> +    env->esr = esr;
-> +    cs->exception_index = EXCP_HW_EXCP;
-> +    cpu_loop_exit(cs);
-> +}
-> +
-> +void mb_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-> +                                MMUAccessType access_type,
-> +                                int mmu_idx, uintptr_t retaddr)
-> +{
-> +    mb_unaligned_access_internal(cs, addr, retaddr);
-> +}
-> +
->  #ifndef CONFIG_USER_ONLY
->  static bool mb_cpu_access_is_secure(MicroBlazeCPU *cpu,
->                                      MMUAccessType access_type)
-> @@ -269,31 +305,3 @@ bool mb_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+> diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
+> index 41f56a5601..ef4fad9b91 100644
+> --- a/target/microblaze/helper.h
+> +++ b/target/microblaze/helper.h
+> @@ -28,4 +28,14 @@ DEF_HELPER_FLAGS_3(put, TCG_CALL_NO_RWG, void, i32, i32, i32)
+>  DEF_HELPER_FLAGS_3(mmu_read, TCG_CALL_NO_RWG, i32, env, i32, i32)
+>  DEF_HELPER_FLAGS_4(mmu_write, TCG_CALL_NO_RWG, void, env, i32, i32, i32)
+>  DEF_HELPER_FLAGS_2(unaligned_access, TCG_CALL_NO_WG, noreturn, env, i64)
+> +DEF_HELPER_FLAGS_2(lbuea, TCG_CALL_NO_WG, i32, env, i64)
+> +DEF_HELPER_FLAGS_2(lhuea_be, TCG_CALL_NO_WG, i32, env, i64)
+> +DEF_HELPER_FLAGS_2(lhuea_le, TCG_CALL_NO_WG, i32, env, i64)
+> +DEF_HELPER_FLAGS_2(lwea_be, TCG_CALL_NO_WG, i32, env, i64)
+> +DEF_HELPER_FLAGS_2(lwea_le, TCG_CALL_NO_WG, i32, env, i64)
+> +DEF_HELPER_FLAGS_3(sbea, TCG_CALL_NO_WG, void, env, i32, i64)
+> +DEF_HELPER_FLAGS_3(shea_be, TCG_CALL_NO_WG, void, env, i32, i64)
+> +DEF_HELPER_FLAGS_3(shea_le, TCG_CALL_NO_WG, void, env, i32, i64)
+> +DEF_HELPER_FLAGS_3(swea_be, TCG_CALL_NO_WG, void, env, i32, i64)
+> +DEF_HELPER_FLAGS_3(swea_le, TCG_CALL_NO_WG, void, env, i32, i64)
+>  #endif
+> diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+> index 4c39207a55..b8365b3b1d 100644
+> --- a/target/microblaze/op_helper.c
+> +++ b/target/microblaze/op_helper.c
+> @@ -382,6 +382,8 @@ void helper_stackprot(CPUMBState *env, target_ulong addr)
 >  }
 >  
->  #endif /* !CONFIG_USER_ONLY */
-> -
-> -void mb_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-> -                                MMUAccessType access_type,
-> -                                int mmu_idx, uintptr_t retaddr)
-> -{
-> -    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-> -    uint32_t esr, iflags;
-> -
-> -    /* Recover the pc and iflags from the corresponding insn_start.  */
-> -    cpu_restore_state(cs, retaddr);
-> -    iflags = cpu->env.iflags;
-> -
-> -    qemu_log_mask(CPU_LOG_INT,
-> -                  "Unaligned access addr=" TARGET_FMT_lx " pc=%x iflags=%x\n",
-> -                  (target_ulong)addr, cpu->env.pc, iflags);
-> -
-> -    esr = ESR_EC_UNALIGNED_DATA;
-> -    if (likely(iflags & ESR_ESS_FLAG)) {
-> -        esr |= iflags & ESR_ESS_MASK;
-> -    } else {
-> -        qemu_log_mask(LOG_UNIMP, "Unaligned access without ESR_ESS_FLAG\n");
-> -    }
-> -
-> -    cpu->env.ear = addr;
-> -    cpu->env.esr = esr;
-> -    cs->exception_index = EXCP_HW_EXCP;
-> -    cpu_loop_exit(cs);
-> -}
+>  #if !defined(CONFIG_USER_ONLY)
+> +#include "system/memory.h"
+> +
+>  /* Writes/reads to the MMU's special regs end up here.  */
+>  uint32_t helper_mmu_read(CPUMBState *env, uint32_t ext, uint32_t rn)
+>  {
+> @@ -441,4 +443,42 @@ void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+>      mb_transaction_failed_internal(cs, physaddr, addr, size,
+>                                     access_type, retaddr);
+>  }
+> +
+> +#define LD_EA(NAME, TYPE, FUNC) \
+> +uint32_t HELPER(NAME)(CPUMBState *env, uint64_t ea)                     \
+> +{                                                                       \
+> +    CPUState *cs = env_cpu(env);                                        \
+> +    MemTxResult txres;                                                  \
+> +    TYPE ret = FUNC(cs->as, ea, MEMTXATTRS_UNSPECIFIED, &txres);        \
+> +    if (unlikely(txres != MEMTX_OK)) {                                  \
+> +        mb_transaction_failed_internal(cs, ea, ea, sizeof(TYPE),        \
+> +                                       MMU_DATA_LOAD, GETPC());         \
+> +    }                                                                   \
+> +    return ret;                                                         \
+> +}
+> +
+> +LD_EA(lbuea, uint8_t, address_space_ldub)
+> +LD_EA(lhuea_be, uint16_t, address_space_lduw_be)
+> +LD_EA(lhuea_le, uint16_t, address_space_lduw_le)
+> +LD_EA(lwea_be, uint32_t, address_space_ldl_be)
+> +LD_EA(lwea_le, uint32_t, address_space_ldl_le)
+> +
+> +#define ST_EA(NAME, TYPE, FUNC) \
+> +void HELPER(NAME)(CPUMBState *env, uint32_t data, uint64_t ea)          \
+> +{                                                                       \
+> +    CPUState *cs = env_cpu(env);                                        \
+> +    MemTxResult txres;                                                  \
+> +    FUNC(cs->as, ea, data, MEMTXATTRS_UNSPECIFIED, &txres);             \
+> +    if (unlikely(txres != MEMTX_OK)) {                                  \
+> +        mb_transaction_failed_internal(cs, ea, ea, sizeof(TYPE),        \
+> +                                       MMU_DATA_STORE, GETPC());        \
+> +    }                                                                   \
+> +}
+> +
+> +ST_EA(sbea, uint8_t, address_space_stb)
+> +ST_EA(shea_be, uint16_t, address_space_stw_be)
+> +ST_EA(shea_le, uint16_t, address_space_stw_le)
+> +ST_EA(swea_be, uint32_t, address_space_stl_be)
+> +ST_EA(swea_le, uint32_t, address_space_stl_le)
+> +
+>  #endif
+> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+> index 671b1ae4db..3d9756391e 100644
+> --- a/target/microblaze/translate.c
+> +++ b/target/microblaze/translate.c
+> @@ -700,6 +700,20 @@ static void record_unaligned_ess(DisasContext *dc, int rd,
+>  
+>      tcg_set_insn_start_param(dc->base.insn_start, 1, iflags);
+>  }
+> +
+> +static void gen_alignment_check_ea(DisasContext *dc, TCGv_i64 ea, int rb,
+> +                                   int rd, MemOp size, bool store)
+> +{
+> +    if (rb && (dc->tb_flags & MSR_EE) && dc->cfg->unaligned_exceptions) {
+> +        TCGLabel *over = gen_new_label();
+> +
+> +        record_unaligned_ess(dc, rd, size, store);
+> +
+> +        tcg_gen_brcondi_i64(TCG_COND_TSTEQ, ea, (1 << size) - 1, over);
+> +        gen_helper_unaligned_access(tcg_env, ea);
+> +        gen_set_label(over);
+> +    }
+> +}
+>  #endif
+>  
+>  static inline MemOp mo_endian(DisasContext *dc)
+> @@ -765,10 +779,11 @@ static bool trans_lbuea(DisasContext *dc, arg_typea *arg)
+>          return true;
+>      }
+>  #ifdef CONFIG_USER_ONLY
+> -    return true;
+> +    g_assert_not_reached();
+>  #else
+>      TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UB, MMU_NOMMU_IDX, false);
+> +    gen_helper_lbuea(reg_for_write(dc, arg->rd), tcg_env, addr);
+> +    return true;
+>  #endif
+>  }
+>  
+> @@ -796,10 +811,13 @@ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
+>          return true;
+>      }
+>  #ifdef CONFIG_USER_ONLY
+> -    return true;
+> +    g_assert_not_reached();
+>  #else
+>      TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UW, MMU_NOMMU_IDX, false);
+> +    gen_alignment_check_ea(dc, addr, arg->rb, arg->rd, MO_16, false);
+> +    (mo_endian(dc) == MO_BE ? gen_helper_lhuea_be : gen_helper_lhuea_le)
+> +        (reg_for_write(dc, arg->rd), tcg_env, addr);
+> +    return true;
+>  #endif
+>  }
+>  
+> @@ -827,10 +845,13 @@ static bool trans_lwea(DisasContext *dc, arg_typea *arg)
+>          return true;
+>      }
+>  #ifdef CONFIG_USER_ONLY
+> -    return true;
+> +    g_assert_not_reached();
+>  #else
+>      TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UL, MMU_NOMMU_IDX, false);
+> +    gen_alignment_check_ea(dc, addr, arg->rb, arg->rd, MO_32, false);
+> +    (mo_endian(dc) == MO_BE ? gen_helper_lwea_be : gen_helper_lwea_le)
+> +        (reg_for_write(dc, arg->rd), tcg_env, addr);
+> +    return true;
+>  #endif
+>  }
+>  
+> @@ -918,10 +939,11 @@ static bool trans_sbea(DisasContext *dc, arg_typea *arg)
+>          return true;
+>      }
+>  #ifdef CONFIG_USER_ONLY
+> -    return true;
+> +    g_assert_not_reached();
+>  #else
+>      TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UB, MMU_NOMMU_IDX, false);
+> +    gen_helper_sbea(tcg_env, reg_for_read(dc, arg->rd), addr);
+> +    return true;
+>  #endif
+>  }
+>  
+> @@ -949,10 +971,13 @@ static bool trans_shea(DisasContext *dc, arg_typea *arg)
+>          return true;
+>      }
+>  #ifdef CONFIG_USER_ONLY
+> -    return true;
+> +    g_assert_not_reached();
+>  #else
+>      TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UW, MMU_NOMMU_IDX, false);
+> +    gen_alignment_check_ea(dc, addr, arg->rb, arg->rd, MO_16, true);
+> +    (mo_endian(dc) == MO_BE ? gen_helper_shea_be : gen_helper_shea_le)
+> +        (tcg_env, reg_for_read(dc, arg->rd), addr);
+> +    return true;
+>  #endif
+>  }
+>  
+> @@ -980,10 +1005,13 @@ static bool trans_swea(DisasContext *dc, arg_typea *arg)
+>          return true;
+>      }
+>  #ifdef CONFIG_USER_ONLY
+> -    return true;
+> +    g_assert_not_reached();
+>  #else
+>      TCGv addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UL, MMU_NOMMU_IDX, false);
+> +    gen_alignment_check_ea(dc, addr, arg->rb, arg->rd, MO_32, true);
+> +    (mo_endian(dc) == MO_BE ? gen_helper_swea_be : gen_helper_swea_le)
+> +        (tcg_env, reg_for_read(dc, arg->rd), addr);
+> +    return true;
+>  #endif
+>  }
+>  
 > -- 
 > 2.43.0
 > 
