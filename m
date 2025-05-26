@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EFFBC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 18:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1027C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 18:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJcHv-0006D7-8R; Mon, 26 May 2025 14:11:03 -0400
+	id 1uJcKf-0007GH-S1; Mon, 26 May 2025 14:13:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcHu-0006CJ-1Y
- for qemu-devel@nongnu.org; Mon, 26 May 2025 14:11:02 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcKa-0007Fj-N3
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 14:13:50 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcHs-0005f6-Aw
- for qemu-devel@nongnu.org; Mon, 26 May 2025 14:11:01 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-442f5b3c710so23848105e9.1
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 11:10:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcKY-0005wD-2a
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 14:13:47 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a4c9df6f92so2147875f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 11:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748283058; x=1748887858; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748283224; x=1748888024; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4hX3H0nQ/uRGryOBXGKaAFz/GEsqKixCKRGKQGRw0Nw=;
- b=nT81NrpGXVdccROxwdR8gos0NNTFq/bs4zKeNjJOswOV67wZTP6RIL8/VlK1fOdTI2
- tlKSMolL+MvkNOjHYsqAWfYf6xcv8CJjDi5y9BpLL2XPstjylyevyxET5+TBTWCbJcNo
- gOWzW0xrVcvtOXnQaByleuTx0ZlbUlm5G3dHlvjDqgvs3pbMXUdSgG6ua4qrxvf13h9J
- ws1K139Q29fyhh816CacIkXpbEb4JkxkEEBlAlAXxKey5fcZ4nSxxNNpQMH0qBiMCerv
- 1jwIzNPKGcbFkZ7iyB1Fr2x+izP+gygQrwC3OOdj6KwtnwKOThySl8LSYcGmFo9iP7zm
- b8SQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MX/2oQovkWhnKf4iB+xkHA5twOjQ9CshfHVlUM5TGYw=;
+ b=jHf7nvUfax5N1W5ERj1M8PdsATaR7TRFjBXJenuyEV6ZpdgrEggO/P3L/7+tWCsufE
+ vQToAUHIDS+eJZuRXx+7JOxuwTA+8jTN1NEK4ZliUiOAl+Wlc54GgnFtBXTt6nUIjphn
+ Dv312GUzaO3iV09O9KTtpnLQ0jMCaIHLHmGGNVYMZ+2rTF6P3TBf4WNRnSJ38PUByM5N
+ GOMMbLC2q8s4j5UfGHenwSxe1EOvJaz4wuBAL+17wU1VrU8hyE7r0gQkzO3juYCm6BIC
+ IZEO2oCb4eLF5PA1vBoSQhJ/Z6eIKs2Gp+NobIo8YOSz+1k2eSyC/A/djkf6WybaqAXa
+ /2lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748283058; x=1748887858;
+ d=1e100.net; s=20230601; t=1748283224; x=1748888024;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4hX3H0nQ/uRGryOBXGKaAFz/GEsqKixCKRGKQGRw0Nw=;
- b=DFru7ajbwvbQJnOUGtkV9TCzDpy+KVUQCFfAQY6QqdRXjMTfHEbECSIPotPizYGUqp
- /vkDDGoN3LZ0S+n655MEq9v6sRV/VTpDWAZClmkh23LTCdOcyYdfgh2feQYrDqyCwoxa
- A+TMp7fllPfSg5jOv4v+QrBcydOOsdJ72R8N9sLQokvRmxScqgbdD/oiRoUYH6tTgye5
- P2+aYqsyistC97x2zpXlK9RFAtq6qMNXff1Veycl1GcaT/swtvv3T6zLGpzOeVhRvSsp
- 2W7Sz8hoaTQU6kJ83s5cnjFdC5moDX924n0yWdB8kSiOAym/jvMXTg+ZedZ2jBJ/Ka/c
- E+kg==
+ bh=MX/2oQovkWhnKf4iB+xkHA5twOjQ9CshfHVlUM5TGYw=;
+ b=eKvmLCieRda7jO6nqDz+AZwUkR4puzW59nldkzA9i3zyaViplwDfIz0Orp4iC2Ntg3
+ C8n0D8V8xlnFGLCIv4ZifdnrUD42A5JrqEVae44ULey+EqpoXyMfpKkhA6+FWrXYgCH+
+ K0jQbSHt/hn5tSKThRBgXbMCKa0tyiy1QEnpR29AEoDUiJcCf+a5fkfF0yA8jtg64UHX
+ LDTvnc7/Y6G4qBm9xDcmjtxbI7RSxKNRvTmZaj2pFdG4F27yTXfdLtaYIBgaMuv/8v0X
+ jk/YFAAmx8BRK5G8xVJl4mBRrGMm721D+w7q+njc4uzU5W9HayQVKSGdW5jDwmWdtX4R
+ bO8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQZWKj+I25/376Rs94W0qpPELjKYAemXDGx0cREEOi3AAzmix5lOz0VwPlrwixITgaocpT7rI9Uwu3@nongnu.org
-X-Gm-Message-State: AOJu0YxkuWrrugauMLATSx2cEW1HoE07RP3S1Z1EK1OGtDQKy4VScrpO
- GXg/Gx5ivcpoJs1/AsBkbsdc+gO3q/7epMOEtvg3rXun0L3NYyE3XMyymLN0qh1Apz3/bEhXwrv
- 0GmzSsb0=
-X-Gm-Gg: ASbGnctKrQXLCWbohawEX9rxFmYoEpFlOjwnKn6C1Mcd9CMUnd8DcSegDRL84wjWwR6
- xJV8MyNSnd9smz4o8waHaCUs3qcyW8PXGj6XuvqYjRGE2E1ot1pwsyXjh5lqF8qrhmdKH2Ouq+o
- tz3kTeLpRAHB9qem676jyrlxR93gHD5U39NkDF8DEQqqwvRfucKRoxrDDgWt9V3XyUvqC1tlW0t
- gHUBLuo4bgByvpKnYPSm2YvNS+MnFxtcNw82/x3NAug2ILVON9qENDSRqsWNH3v3z2x/u0B3Gef
- dAeB0yXvFXs2jiz+Gt1VPfS/LWxK5DPBQzGaQGEZv3UzfNvRpwTcMCYOPsnI/8Fy8fM0jGjD3Kc
- j884xjKtxtSeZvnFqnicqkYBF
-X-Google-Smtp-Source: AGHT+IFFgr/ne1qcBJDMbJQAu1YEVf6uq+N/Ex3btwBHU7LvVD1MvYujkqcNtnDbggk9BtKqdPocFQ==
-X-Received: by 2002:a05:600c:3849:b0:439:6118:c188 with SMTP id
- 5b1f17b1804b1-44c91dd166bmr82436095e9.19.1748283058397; 
- Mon, 26 May 2025 11:10:58 -0700 (PDT)
+ AJvYcCW9E8Fq2IyA3QtUMGLB0uTJl8gicEEdO3LB8jw16H2gR6natDbBgJ5Wv+RI4EiTBKgsLfa7C7INxTW1@nongnu.org
+X-Gm-Message-State: AOJu0YwNmP8muDQ4J21S0U/6Rsu6cPzyIcgt0cMz/eIbEuD7ULzfVBc7
+ sPAIAeGJ6xaeNk8DDZC3o0ktW4lliPaaKzw1qRCVJWE0y6XOpNmjSTzZ9rY+Fj3Zb/k=
+X-Gm-Gg: ASbGncsVVBITNs+ephlPV85jtFggRba5sqg7qPTNdgr+Dbx/uiaxm2D+r66ebeybHtO
+ 0zaaIvsAZE1ZtKVFmpJ6yBpgHtZ8aE+t0k31qcT2z4o6rWHWz1B3CXLwjNuPJC4ncQGOW1OKqUk
+ JpPmimLWr2MuGb0IVccTK7GugdwvvmWJuqJ2rIQCD3f3WYE6w6ZPVqedaq16zZQf/i6KWFSaO6Z
+ ysS0SsfPVZMC6XCRzy7T62zJnGtgeYW30tcVOF5dlqa5II3q4vAwACO3sLCvX6GtASQo4FN5UAm
+ osUHNAkQIXv9hE/B+Sa/fEz3wDmTYDeaN5KVA2f5AgRVEDQV0mAwh3RiLF+d1RifcHrjVsYrwhw
+ n6HdMag5g5TDiyqcY2dc9Ayfx7ugOYlCkHyI=
+X-Google-Smtp-Source: AGHT+IFQVusiXvWfI/MJ4+R++WwGhP+TkmMsdTqk5r4Vs/F6AWdJzMhJ3n8YmgpdvfrUeMRAufOmYQ==
+X-Received: by 2002:a5d:64c9:0:b0:3a0:bdeb:c489 with SMTP id
+ ffacd0b85a97d-3a4cb464b99mr8511204f8f.33.1748283223658; 
+ Mon, 26 May 2025 11:13:43 -0700 (PDT)
 Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f38142f1sm243665085e9.31.2025.05.26.11.10.57
+ ffacd0b85a97d-3a4d74843b2sm4469754f8f.53.2025.05.26.11.13.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 11:10:57 -0700 (PDT)
-Message-ID: <3a7386f9-a4ba-4268-a3fe-45c18360d878@linaro.org>
-Date: Mon, 26 May 2025 20:10:56 +0200
+ Mon, 26 May 2025 11:13:43 -0700 (PDT)
+Message-ID: <9d313409-5197-4abc-9213-4037aa563e96@linaro.org>
+Date: Mon, 26 May 2025 20:13:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/xen: Fix trace_xs_node_read() params
-To: Liam Merwick <liam.merwick@oracle.com>, dwmw@amazon.co.uk,
- anthony.perard@vates.tech, roger.pau@citrix.com,
- xen-devel@lists.xenproject.org, qemu-devel@nongnu.org
-References: <20250523160134.218997-1-liam.merwick@oracle.com>
+Subject: Re: [PATCH] accel/tcg: Fix atomic_mmu_lookup vs TLB_FORCE_SLOW
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250524144031.49810-1-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250523160134.218997-1-liam.merwick@oracle.com>
+In-Reply-To: <20250524144031.49810-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,82 +102,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/5/25 18:01, Liam Merwick wrote:
-> When the '--enable-trace-backends=syslog' build option is configured,
-> the following compilation error is encountered.
+On 24/5/25 16:40, Richard Henderson wrote:
+> When we moved TLB_MMIO and TLB_DISCARD_WRITE to TLB_SLOW_FLAGS_MASK,
+> we failed to update atomic_mmu_lookup to properly reconstruct flags.
 > 
-> In file included from /usr/include/sys/syslog.h:207,
->                   from /usr/include/syslog.h:1,
->                   from ./trace/trace-hw_xen.h:224,
->                   from ../hw/xen/trace.h:1,
->                   from ../hw/xen/xen-bus-helper.c:13:
-> In function ‘syslog’,
->      inlined from ‘_nocheck__trace_xs_node_read’ at ../hw/xen/trace-events:41:9,
->      inlined from ‘trace_xs_node_read’ at trace/trace-hw_xen.h:903:9,
->      inlined from ‘xs_node_read’ at ../hw/xen/xen-bus-helper.c:154:5:
-> /usr/include/bits/syslog.h:45:3: error: ‘%s’ directive argument is null [-Werror=format-overflow=]
->     45 |   __syslog_chk (__pri, __USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
->        |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> Add a check that 'value' is not null before passing it to trace_xs_node_read().
-> 
-> Fixes: e6cdeee95990 ("hw/xen: Add xs_node_read() helper function")
-> Signed-off-by: Liam Merwick <liam.merwick@oracle.com>
+> Fixes: 24b5e0fdb543 ("include/exec: Move TLB_MMIO, TLB_DISCARD_WRITE to slow flags")
+
+Cc'ing Pierrick
+
+> Reported-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/xen/xen-bus-helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   accel/tcg/cputlb.c | 15 ++++++++-------
+>   1 file changed, 8 insertions(+), 7 deletions(-)
 > 
-> diff --git a/hw/xen/xen-bus-helper.c b/hw/xen/xen-bus-helper.c
-> index 288fad422be3..1087a585cc71 100644
-> --- a/hw/xen/xen-bus-helper.c
-> +++ b/hw/xen/xen-bus-helper.c
-> @@ -151,7 +151,7 @@ char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
->       va_end(ap);
->   
->       value = qemu_xen_xs_read(h, tid, path, len);
-> -    trace_xs_node_read(path, value);
-> +    trace_xs_node_read(path, value ? value : "<null>");
->       if (!value) {
->           error_setg_errno(errp, errno, "failed to read from '%s'", path);
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index 5f6d7c601c..86d0deb08c 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -1871,8 +1871,12 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>           goto stop_the_world;
 >       }
+>   
+> -    /* Collect tlb flags for read. */
+> +    /* Finish collecting tlb flags for both read and write. */
+> +    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
+>       tlb_addr |= tlbe->addr_read;
+> +    tlb_addr &= TLB_FLAGS_MASK & ~TLB_FORCE_SLOW;
+> +    tlb_addr |= full->slow_flags[MMU_DATA_STORE];
+> +    tlb_addr |= full->slow_flags[MMU_DATA_LOAD];
+>   
+>       /* Notice an IO access or a needs-MMU-lookup access */
+>       if (unlikely(tlb_addr & (TLB_MMIO | TLB_DISCARD_WRITE))) {
+> @@ -1882,13 +1886,12 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>       }
+>   
+>       hostaddr = (void *)((uintptr_t)addr + tlbe->addend);
+> -    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
+>   
+>       if (unlikely(tlb_addr & TLB_NOTDIRTY)) {
+>           notdirty_write(cpu, addr, size, full, retaddr);
+>       }
+>   
+> -    if (unlikely(tlb_addr & TLB_FORCE_SLOW)) {
+> +    if (unlikely(tlb_addr & TLB_WATCHPOINT)) {
+>           int wp_flags = 0;
+>   
+>           if (full->slow_flags[MMU_DATA_STORE] & TLB_WATCHPOINT) {
+> @@ -1897,10 +1900,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>           if (full->slow_flags[MMU_DATA_LOAD] & TLB_WATCHPOINT) {
+>               wp_flags |= BP_MEM_READ;
+>           }
+> -        if (wp_flags) {
+> -            cpu_check_watchpoint(cpu, addr, size,
+> -                                 full->attrs, wp_flags, retaddr);
+> -        }
+> +        cpu_check_watchpoint(cpu, addr, size,
+> +                             full->attrs, wp_flags, retaddr);
+>       }
+>   
+>       return hostaddr;
 
-Alternatively, since this is an error path:
+Patch LGTM but this is outside my comfort zone, so better wait for
+a second review ;)
 
--- >8 --
-diff --git a/hw/xen/xen-bus-helper.c b/hw/xen/xen-bus-helper.c
-index 288fad422be..1e49e60e147 100644
---- a/hw/xen/xen-bus-helper.c
-+++ b/hw/xen/xen-bus-helper.c
-@@ -143,7 +143,8 @@ char *xs_node_read(struct qemu_xs_handle *h, 
-xs_transaction_t tid,
-                     unsigned int *len, Error **errp,
-                     const char *path_fmt, ...)
-  {
--    char *path, *value;
-+    g_autofree char *value;
-+    char *path;
-      va_list ap;
-
-      va_start(ap, path_fmt);
-@@ -151,12 +152,11 @@ char *xs_node_read(struct qemu_xs_handle *h, 
-xs_transaction_t tid,
-      va_end(ap);
-
-      value = qemu_xen_xs_read(h, tid, path, len);
--    trace_xs_node_read(path, value);
-      if (!value) {
-          error_setg_errno(errp, errno, "failed to read from '%s'", path);
-+        return NULL;
-      }
--
--    g_free(path);
-+    trace_xs_node_read(path, value);
-
-      return value;
-  }
----
-
-But your patch isn't wrong, so:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
