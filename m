@@ -4,68 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF5ABC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 15:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 080C3C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 15:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJZZ0-00082p-TS; Mon, 26 May 2025 11:16:32 -0400
+	id 1uJZks-0005Qi-Q5; Mon, 26 May 2025 11:28:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael.scherle@rz.uni-freiburg.de>)
- id 1uJZYz-00082a-M0
- for qemu-devel@nongnu.org; Mon, 26 May 2025 11:16:29 -0400
-Received: from b1422.mx.srv.dfn.de ([194.95.235.70])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uJZkq-0005QP-HA
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 11:28:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael.scherle@rz.uni-freiburg.de>)
- id 1uJZYw-0004mw-6d
- for qemu-devel@nongnu.org; Mon, 26 May 2025 11:16:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=
- rz.uni-freiburg.de; h=content-transfer-encoding:content-type
- :content-type:in-reply-to:content-language:references:from:from
- :subject:subject:user-agent:mime-version:date:date:message-id
- :received; s=s1; t=1748272580; x=1750086981; bh=99SLHN1nHnYvzQIA
- cdbKk5uT/Ocfbz0m4CiGBvHD8vw=; b=DKILwAkloz/Y8vxO+0LJkOXuR1AR/QHs
- +zad6SdONyzvD59RtGEB1Y2oW0waEjXfI91ycRLHHt1PFWgPofSWo//7gGSHRclr
- i2pMI291B/2KQpbyHSoOU8t7SfBrMtPbQATqFSoc6q1subQcRYKt1Qv2W1agggky
- Z2kCo/XnjSQ=
-Received: from fe1.uni-freiburg.de (fe1.uni-freiburg.de [132.230.2.221])
- by b1422.mx.srv.dfn.de (Postfix) with ESMTP id A594A260193
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 17:16:20 +0200 (CEST)
-Received: from [2001:7c0:2517:20:2d65:91f6:f0da:8564] (account
- michael.scherle@rz.uni-freiburg.de HELO
- [IPV6:2001:7c0:2517:20:2d65:91f6:f0da:8564])
- by mail.uni-freiburg.de (CommuniGate Pro SMTP 6.3.19)
- with ESMTPSA id 47703735; Mon, 26 May 2025 17:16:20 +0200
-Message-ID: <746d41f7-4028-4f70-9038-63edf494429b@rz.uni-freiburg.de>
-Date: Mon, 26 May 2025 17:16:20 +0200
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uJZki-0007Gr-T6
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 11:28:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748273314;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0D4G09sMAs0RI5p0M++zlUeeduTrotw29CxcbTEtKGM=;
+ b=OMKllwRQTwK70c0zKh33kB7VFc7ZVO5RV6GuxzqACSbeUYpeKeZlCBfJTnkcztrjI9AnkO
+ rGDlGTnrUG40taHtgfWuTOsPXbabezOOAifN+oWWFzBY0I/Lpvi0pZd5zQyXe+C5Msejg0
+ NyR/LjkIREo1FeuvlYOnd9ziar1YmHk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-632-QBnAXOsTMsyQIFhrIv2xMg-1; Mon, 26 May 2025 11:28:33 -0400
+X-MC-Unique: QBnAXOsTMsyQIFhrIv2xMg-1
+X-Mimecast-MFC-AGG-ID: QBnAXOsTMsyQIFhrIv2xMg_1748273312
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4dcfc375aso526870f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 08:28:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748273311; x=1748878111;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0D4G09sMAs0RI5p0M++zlUeeduTrotw29CxcbTEtKGM=;
+ b=XssVuedb4GTR8dlSrKf+e9zq6lW261PsZpUWJT4B0OQ2qSHKNq5PBvZcmCW9kErwHw
+ Ag03Ab0XVZ6r2yfbD5Xa1AZH2nTxGNye26JzVyCsYKcTyXqlfJmyrjO7ZolqVULaO8Dd
+ 9479S+jlSlIln2ov4lts4BQJ4te7iaAb56HVRWfEeecipPClne9njNJwTIT4cLaUL+t5
+ tDrnbY/zTTNLLD6pR1Z7EQhjR1yAxh7DuwYi3X22igCdpg6s4Z8oyK54GV0zd+EWsHTn
+ VFzuNG8NlHBxr/2rqTocbg5lPyWWVUp9oHJNxl52V3Kfo51UeONEsnlRfXqXG5QBmc7D
+ 8LZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV28URdWo3n6mcdtRksb+f+xBbCPy9MovBKSCJWA7bT+qhGpI01uVPJtsLKmFgUY468o6tKNfI6RQwV@nongnu.org
+X-Gm-Message-State: AOJu0Yzb6QjuK/j9LF3F+khtHr84MRMvWiHwOIyFuh2zdDmOpl/zwmRS
+ jAL0vfya1Ihvu4cGV11B6E/J2fMNYWrLhurgOuzvTWtkgg8x0w8SUb/yyDh6maCQcE0LvBrl/en
+ FNG0MzuNyszxVPD497VJkBNwUwpP002tbOHKdKHSFSSikCqG/0KRa8hXZ
+X-Gm-Gg: ASbGncuKMl090HPphCMo1SzQuOUcYeVfdb1eSryBjuxYi2vSkwpd3+QS+CqTQAPJAdz
+ oPK2lyg1Qr7tY0rQaNYEy6hIUhn+xfqtdB8FmPpFVfTAVJI7EwiBk0d0Q1RZRfxgqimh0wdXp5e
+ E+wg2ufLD6JS9tQsFvEgn2jKX9fLTAU5rpI1FXtw7Kj0HRZvyL8ByKWdlLi94CZUaxJcIdfEPM7
+ cniPQe+UHWiqxu3RkJUqAM/2d0Vqomy1t3LYbj1o8pfJVi1ENzKaqMtUjz5JlcXkhRer2PHV6A0
+ 7CqzX4FL4zDOo8/I41g5+lHS9xRppK7X3JcKyPzO0BnsUOaRZNijhnY4ycI=
+X-Received: by 2002:a05:6000:4203:b0:3a4:79e8:d1d8 with SMTP id
+ ffacd0b85a97d-3a4cb0eaf18mr7382042f8f.0.1748273311643; 
+ Mon, 26 May 2025 08:28:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGuo4ZjT3WRUKvBnT35tg9hXEHu6UvFu8ynqDn31C+dT6wU4vrZGFcK3HxRJMcD91eIB053rg==
+X-Received: by 2002:a05:6000:4203:b0:3a4:79e8:d1d8 with SMTP id
+ ffacd0b85a97d-3a4cb0eaf18mr7382021f8f.0.1748273311244; 
+ Mon, 26 May 2025 08:28:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4c591c044sm9910815f8f.52.2025.05.26.08.28.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 May 2025 08:28:30 -0700 (PDT)
+Message-ID: <a9a8d55f-7409-4dd6-97f6-a373de9870df@redhat.com>
+Date: Mon, 26 May 2025 17:28:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/7] ui/console-gl: Add a helper to create a texture
- with linear memory layout
-From: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-References: <20250515024734.758335-1-vivek.kasireddy@intel.com>
- <20250515024734.758335-6-vivek.kasireddy@intel.com>
- <7dba8ee4-3af2-4bdb-9edb-df49fea1e842@rz.uni-freiburg.de>
+Subject: Re: [PATCH 2/5] tests/qtest/bios-tables-test: Keep ACPI PCI hotplug
+ off
 Content-Language: en-US
-In-Reply-To: <7dba8ee4-3af2-4bdb-9edb-df49fea1e842@rz.uni-freiburg.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=194.95.235.70;
- envelope-from=michael.scherle@rz.uni-freiburg.de; helo=b1422.mx.srv.dfn.de
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, thuth@redhat.com, alex.bennee@linaro.org,
+ mst@redhat.com, imammedo@redhat.com
+References: <20250526053123.1434204-1-gustavo.romero@linaro.org>
+ <20250526053123.1434204-3-gustavo.romero@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250526053123.1434204-3-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,152 +114,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+Hi Gustavo,
 
-I just noticed that Dmitry Osipenko had already pointed out a similar 
-issue earlier—so my message was somewhat redundant. Apologies for the 
-duplication.
+On 5/26/25 7:31 AM, Gustavo Romero wrote:
+> ACPI PCI hotplug is now turned on by default so we need to change the
+> existing tests to keep it off. However, even setting the ACPI PCI
+> hotplug off in the existing tests, there will be changes in the ACPI
+> tables because the _OSC method was modified, hence in the next patch of
+> this series the blobs are updated accordingly.
+>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>  tests/qtest/bios-tables-test.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+> index 0a333ec435..216941dbb5 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
+>      };
+>  
+>      data.variant = ".memhp";
+> -    test_acpi_one(" -machine nvdimm=on"
+> +    test_acpi_one(" -machine nvdimm=on,acpi-pcihp=off"
+>                    " -cpu cortex-a57"
+>                    " -m 256M,slots=3,maxmem=1G"
+>                    " -object memory-backend-ram,id=ram0,size=128M"
+> @@ -1775,7 +1775,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
+>       * to solve the conflicts.
+>       */
+>      data.variant = ".pxb";
+> -    test_acpi_one(" -device pcie-root-port,chassis=1,id=pci.1"
+> +    test_acpi_one(" -machine acpi-pcihp=off"
+> +                  " -device pcie-root-port,chassis=1,id=pci.1"
+>                    " -device virtio-scsi-pci,id=scsi0,bus=pci.1"
+>                    " -drive file="
+>                    "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2,"
+> @@ -1846,7 +1847,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
+>  
+>      data.variant = ".acpihmatvirt";
+>  
+> -    test_acpi_one(" -machine hmat=on"
+> +    test_acpi_one(" -machine hmat=on,acpi-pcihp=off"
+>                    " -cpu cortex-a57"
+>                    " -smp 4,sockets=2"
+>                    " -m 384M"
+> @@ -2123,6 +2124,7 @@ static void test_acpi_aarch64_virt_tcg(void)
+>      data.smbios_cpu_max_speed = 2900;
+>      data.smbios_cpu_curr_speed = 2700;
+>      test_acpi_one("-cpu cortex-a57 "
+> +                  "-machine acpi-pcihp=off "
+>                    "-smbios type=4,max-speed=2900,current-speed=2700", &data);
+>      free_test_data(&data);
+On my end I also need to add -machine acpi-pcihp=off in
+test_acpi_aarch64_virt_tcg_numamem
 
-Also, I made a small mistake in the patch I proposed:
-The call to glDeleteMemoryObjectsEXT(1, &mem_obj); should be placed 
-above the #endif, not after it. Sorry about that oversight!
+with that fixed,
 
-Best regards,
-Michael
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
 
-On 26.05.25 15:06, Michael Scherle wrote:
-> Great to see this patch making progress.
-> 
-> I've tested it extensively, and unfortunately, I’ve noticed a memory 
-> leak in surface_gl_create_texture_from_fd(). The memory leak is hard to 
-> see since the memory is owned by the gpu driver.
-> On Intel hardware, it's possible to observe the leak using:
-> 
-> cat /sys/module/i915/refcnt
-> or
-> xpu-smi ps
-> 
-> In on of my use case—which involves frequent scanout disable/enable 
-> cycles—the leak is quite apparent. However, in more typical scenarios, 
-> it might be difficult to catch.
-> 
-> The issue stems from the mem_obj not being deleted after use. I’ve put 
-> together a minimal modification to address it:
-> 
-> 
-> 
-> On 15.05.25 04:45, Vivek Kasireddy wrote:
->> There are cases where we do not want the memory layout of a texture to
->> be tiled as the component processing the texture would not know how to
->> de-tile either via software or hardware. Therefore, ensuring that the
->> memory backing the texture has a linear layout is absolutely necessary
->> in these situations.
->>
->> Cc: Gerd Hoffmann <kraxel@redhat.com>
->> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> Cc: Frediano Ziglio <freddy77@gmail.com>
->> Cc: Dongwon Kim <dongwon.kim@intel.com>
->> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->> ---
->>   include/ui/console.h |  2 ++
->>   ui/console-gl.c      | 32 ++++++++++++++++++++++++++++++++
->>   2 files changed, 34 insertions(+)
->>
->> diff --git a/include/ui/console.h b/include/ui/console.h
->> index 46b3128185..5cfa6ae215 100644
->> --- a/include/ui/console.h
->> +++ b/include/ui/console.h
->> @@ -422,6 +422,8 @@ bool console_gl_check_format(DisplayChangeListener 
->> *dcl,
->>                                pixman_format_code_t format);
->>   void surface_gl_create_texture(QemuGLShader *gls,
->>                                  DisplaySurface *surface);
->> +bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
->> +                                       int fd, GLuint *texture);
->>   void surface_gl_update_texture(QemuGLShader *gls,
->>                                  DisplaySurface *surface,
->>                                  int x, int y, int w, int h);
->> diff --git a/ui/console-gl.c b/ui/console-gl.c
->> index 103b954017..97f7989651 100644
->> --- a/ui/console-gl.c
->> +++ b/ui/console-gl.c
->> @@ -25,6 +25,7 @@
->>    * THE SOFTWARE.
->>    */
->>   #include "qemu/osdep.h"
->> +#include "qemu/error-report.h"
->>   #include "ui/console.h"
->>   #include "ui/shader.h"
->> @@ -96,6 +97,37 @@ void surface_gl_create_texture(QemuGLShader *gls,
->>       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
->>   }
->> +bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
->> +                                       int fd, GLuint *texture)
->> +{
->> +    unsigned long size = surface_stride(surface) * 
->> surface_height(surface);
->> +    GLenum err = glGetError();
->> +    GLuint mem_obj;
-> 
-> +    GLuint mem_obj = 0;
-> 
->> +
->> +    if (!epoxy_has_gl_extension("GL_EXT_memory_object") ||
->> +        !epoxy_has_gl_extension("GL_EXT_memory_object_fd")) {
->> +        return false;
->> +    }
->> +
->> +#ifdef GL_EXT_memory_object_fd
->> +    glCreateMemoryObjectsEXT(1, &mem_obj);
->> +    glImportMemoryFdEXT(mem_obj, size, GL_HANDLE_TYPE_OPAQUE_FD_EXT, 
->> fd);
->> +
->> +    err = glGetError();
->> +    if (err != GL_NO_ERROR) {
-> 
-> +          if (mem_obj) {
-> +              glDeleteMemoryObjectsEXT(1, &mem_obj);
-> +          }
-> 
->> +        error_report("spice: cannot import memory object from fd");
->> +        return false;
->> +    }
->> +
->> +    glGenTextures(1, texture);
->> +    glBindTexture(GL_TEXTURE_2D, *texture);
->> +    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_TILING_EXT, 
->> GL_LINEAR_TILING_EXT);
->> +    glTexStorageMem2DEXT(GL_TEXTURE_2D, 1, GL_RGBA8, 
->> surface_width(surface),
->> +                         surface_height(surface), mem_obj, 0);
->> +#endif
-> 
-> +    glDeleteMemoryObjectsEXT(1, &mem_obj);
-> 
->> +    return *texture > 0 && glGetError() == GL_NO_ERROR;
->> +}
->> +
->>   void surface_gl_update_texture(QemuGLShader *gls,
->>                                  DisplaySurface *surface,
->>                                  int x, int y, int w, int h)
-> 
-> 
-> 
-> That said, my OpenGL knowledge is somewhat limited, and the 
-> documentation wasn’t entirely clear to me on whether deleting the memory 
-> object while the texture is still being used, is always safe. Based on a 
-> quick look at the iris and llvmpipe implementations, it appears to be 
-> acceptable.
-> 
-> If that's not the case, an alternative fix could follow this approach 
-> instead: https://gitlab.uni-freiburg.de/opensourcevdi/qemu/-/ 
-> commit/4ca806871c141089be16af25c1820d3e04f3e27d
-> 
-> Greetings Michael
+Thanks
+
+Eric
+>  }
+> @@ -2142,6 +2144,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+>      };
+>  
+>      test_acpi_one("-cpu cortex-a57 "
+> +                  "-machine acpi-pcihp=off "
+>                    "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
+>      free_test_data(&data);
+>  }
+> @@ -2227,6 +2230,7 @@ static void test_acpi_aarch64_virt_viot(void)
+>      };
+>  
+>      test_acpi_one("-cpu cortex-a57 "
+> +                  "-machine acpi-pcihp=off "
+>                    "-device virtio-iommu-pci", &data);
+>      free_test_data(&data);
+>  }
 
 
