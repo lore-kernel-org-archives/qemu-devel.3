@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED37CC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D8DCC5B542
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:28:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJU4j-0003Sh-El; Mon, 26 May 2025 05:24:53 -0400
+	id 1uJU7l-0004or-2R; Mon, 26 May 2025 05:28:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJU4g-0003SK-3Y
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:24:50 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJU7e-0004lz-8r
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:27:55 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJU4c-0003TZ-SI
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:24:49 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a363d15c64so1430109f8f.3
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:24:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJU7Z-00047V-L5
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:27:52 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3a363d15c64so1432374f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748251485; x=1748856285; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748251667; x=1748856467; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=M3ZKxr6bSGU5ifqS5UUoLOZyPIxtRh/BmTIMqdYSQm0=;
- b=SbxUGvf+LMR0EhcmTPcMYqGat6TzZdp1DHycrMNXVau/B7/Vwgj7MGnsbh0ySzWfWg
- nBfksOBIhXt2FwcZErO210PqrA3s/M8whtLQkw15GHoU85PoU2ZHzw3t5pt+d04ohsI/
- rLXE9DXfkDAN1y7qiEIjyLCHLzgK3ON5suqwp36ywiXQA4L7wQMEk9JofZCF9oxMQ7cO
- mLe3tXTnYLSpBTe4aEAz04psHkjugJuN9uBElZw6E2820mwJLjdNqHwQg8KjeGHUbzXK
- eOex+uj80YlKCOkCkIjgC5MIFqGXxC5Bpjq8OL9Ry/TO/bBQLCf1/89I/02Yp0djCdd7
- Asuw==
+ bh=Myt/jBehPwPRp6X9I6p32CvetV1l1ax0nwJ92+Q51dE=;
+ b=QNioxcAwGBT+y+WDHjwhuGdrT8UJlllxad6hHiqnL63GPRHLf8zbxhSY8yzgKPFkr3
+ lZBNcx0c4rhITCyMQlOYoWqlkrPhrJCK7WY4F9DFIavXGgMdsCGHgL5WMiCyyboN3Wi1
+ DJNMQP/sqLBR6ykIYr8TCQKslEpSF5sGVmhAaQvaIGyuDeYq6BVDhIedxCLf5l0KfiLv
+ EdS+a77qPAM18MT+qVSUMzlIYpmY6qOoQrynXaB1Sd6OHddOP6F1/9c6D/7eYJ/kDbMH
+ 4+lmC7GebouN+0KYoJvUuz0x0gmgNP0onhec1cfoKvE1gXIkCwfuhp5qXHwRYW7eOs2m
+ D5gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748251485; x=1748856285;
+ d=1e100.net; s=20230601; t=1748251667; x=1748856467;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M3ZKxr6bSGU5ifqS5UUoLOZyPIxtRh/BmTIMqdYSQm0=;
- b=FCme5bC3Hlq14GzX0AcdKBLm1F5qeZND2j/WsH+jZp/Wt3eDmEW8EEKjsRUC2ILM6S
- U9KnIsx8uUWY3Jw4FRsa4cBc+KyiZLu8r0bRsB6inM3k4qtqC00PdYtA9O7AkGzrJDEf
- ZbwD6uipcwXMV4I8N4WPLvGylT5Zb+UxFrky7WUYSdK9N4ywIdDRiVfna2PNRC4/COJi
- F3ANvBnb3bet8vmbaFUFzzaK5uHANROh5+kkOIAvQZeFUcXBewy5RbbayTxvK3osHDZO
- l/etAbKO1nONClQnmc4F3xQa2OXIUHGenjf+VD1D6Gp9eY8oMtl7MixEtJnPztJI7M2R
- u5Cw==
+ bh=Myt/jBehPwPRp6X9I6p32CvetV1l1ax0nwJ92+Q51dE=;
+ b=GuWGP2t/Sr8Ck+5D4WZEEyLMmMtsoTgx0/O5k54ZoBZd2lc6LNoFpSGRx/jRLzxzpg
+ 3mdpnqpOu9H0WY/eqwDrOVT9EXC7sxefLg6BLJle3664kvyOw7S7ingdBkbJhM80zFL1
+ XBJyT99DA2jWNkJovKFafKAq2hj9xDAlbyBVdKm3xYDkgxM5usq/Z1p9pn37SMeUgbZU
+ q5TeB6nbEIRk73+Ha0QvjXm814a+6us8POf6y5yzd8qgGI3b30epmDvECNkzzsaPPRja
+ 1v/HuSSvhCp0GTxxjujT2vVunlTJW3vcb3x5EH440rb+TcAubZSXlLJzTuijCc5XDsjS
+ O+BA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUldP37rL2g6hWT/yWQ1Qj4CvDezyf+6OBoYJpGXa+QgiZ0q+oCM6X7GwFaUGjdectCZanaycMTpuAK@nongnu.org
-X-Gm-Message-State: AOJu0YxTiF9DL6zyHxEz06DBcN6hG9XhidgJbDaVt9OacblKc6bKqnPp
- jw2bX7aaJI4inCKWzKc0estvlkMI3B/OqJiHt1YTpWwzy3Wc7tlne1YYA+0anvYa0Wk=
-X-Gm-Gg: ASbGncuQbO2uliZavBEzJYi+NgiSPJNEkwim+bAmqkl9FyPFvL0MWvYhFaQqp3O+UXm
- u67ziu2wCkHh0t1DsRPgzDu9kCJJtph7czlkhD5CtD2irrPc/kmAfps5Z9WtKe4Vo17+6NSx0A8
- 3jsh/KVqpqZAnH3u8A5yOmUkKFlAGsGY/WsJHQvtBv/G0+Dy4Vk2pVGiRUGbRIz7Rkh6nmHkvy9
- o61AMio/UuuBHI3QsPy383LVSskvp5ATHQySTSCmFB0Rolc4BLwLiQSvbhLtOj2Yby2wO4mMAqM
- Y5FuAqnTjt7/Ao9+Feg+0f2GaYqVVzXRjbf/rE5pTk0rbXRGLjw55rIKJDKJNFm/OjF+EexEiYK
- AQ62jAQZrmA7CJ38ClxzI1Acq
-X-Google-Smtp-Source: AGHT+IHb++datmEhVVbP7NSmI8YqwSj5e+VzVNcjK7/hOdNpcZyizxraquDPO4qtjv0oFdakiMO8Kg==
-X-Received: by 2002:a05:6000:2512:b0:3a4:6093:d596 with SMTP id
- ffacd0b85a97d-3a4cb484588mr6216221f8f.37.1748251484944; 
- Mon, 26 May 2025 02:24:44 -0700 (PDT)
+ AJvYcCU2Avh8I0o7CezEDtIv6kZLhX2prd9wtz2YcAqND9PkzX6nN58bFAEPU35VPbsfARSTH0Xy+gOgTopx@nongnu.org
+X-Gm-Message-State: AOJu0YxRbe7B/sF0lIMq4+P1v2BcB9n3Gw8Y0rerc+Dto6VYugunprMV
+ 6vuy/0Ggh9kJS3wgTAx5hqynUKsc+RcMzDAnYFAaL72BdTY82x4P0852mZmtTENKYYk=
+X-Gm-Gg: ASbGnctK7BgbfHmWwmmgpCYvtmgABEvUEEvRh1gjLCfQ7P3do72EGn1AERT0x01jzpV
+ 8Ywnwg3TdFYmqDsMNoqCaj/j1ZpZG1LUfD8mvcLw2YKqB1V5VGKwHh1uSA2jLu/4yUQs47oHWRa
+ jtlRkW4guXFuqyKMKg4PXLXv5o28Pd+khzQsLHycNDlfeRaPpL+amsLW0AQtEo9uf/uRqCVnstk
+ 6mFRgcMBm7zhzXsloJIBly1CJ1gfzKieG9yf9Znu2m1eThOseOnDnhkIzHx+rfvRmmf7uxq1cr0
+ ITUO0H94+uIL/wXLZ5fDezBOgHFfcknKeesIRjBW+KLh0G16wZNccARF5txVVwKtK/MiNcAbF+G
+ ZMb6tP74ZgqOor1d756UQqRpY
+X-Google-Smtp-Source: AGHT+IH5MOufIDe+zoy9S0iKWQxFKGrv7O67ECEcl4ALhTN7Bn8H5XbISfYOJXcziglAj1n8IXGLeA==
+X-Received: by 2002:a05:6000:2287:b0:3a4:d41d:8f40 with SMTP id
+ ffacd0b85a97d-3a4d41d92b2mr3503434f8f.46.1748251667159; 
+ Mon, 26 May 2025 02:27:47 -0700 (PDT)
 Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4d56641absm3723254f8f.4.2025.05.26.02.24.43
+ ffacd0b85a97d-3a4d0bb54e6sm5536691f8f.97.2025.05.26.02.27.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 02:24:44 -0700 (PDT)
-Message-ID: <f1610782-922e-4c1c-a731-5010a792be54@linaro.org>
-Date: Mon, 26 May 2025 11:24:43 +0200
+ Mon, 26 May 2025 02:27:46 -0700 (PDT)
+Message-ID: <8905dbb0-a6b0-42e3-98e6-095ac2b9e8d7@linaro.org>
+Date: Mon, 26 May 2025 11:27:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/11] migration/colo: Replace QemuSemaphore with
+Subject: Re: [PATCH v4 11/11] hw/display/apple-gfx: Replace QemuSemaphore with
  QemuEvent
 To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
@@ -79,14 +79,14 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
  <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>
 References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
- <20250526-event-v4-9-5b784cc8e1de@daynix.com>
+ <20250526-event-v4-11-5b784cc8e1de@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250526-event-v4-9-5b784cc8e1de@daynix.com>
+In-Reply-To: <20250526-event-v4-11-5b784cc8e1de@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,15 +110,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/5/25 07:29, Akihiko Odaki wrote:
-> colo_exit_sem and colo_incoming_sem represent one-shot events so they
-> can be converted into QemuEvent, which is more lightweight.
+> sem in AppleGFXReadMemoryJob is an one-shot event so it can be converted
+> into QemuEvent, which is more specialized for such a use case.
 > 
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   migration/migration.h |  6 +++---
->   migration/colo.c      | 20 ++++++++++----------
->   2 files changed, 13 insertions(+), 13 deletions(-)
+>   hw/display/apple-gfx.m | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
