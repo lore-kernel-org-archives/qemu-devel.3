@@ -4,46 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87779C5B547
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB8FC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:47:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJULt-0002aH-De; Mon, 26 May 2025 05:42:37 -0400
+	id 1uJUQI-0004Ks-If; Mon, 26 May 2025 05:47:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJULr-0002Za-SU; Mon, 26 May 2025 05:42:35 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uJUQD-0004KL-Jx
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:47:05 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJULp-000654-Pa; Mon, 26 May 2025 05:42:35 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D58DD44489;
- Mon, 26 May 2025 11:42:24 +0200 (CEST)
-Message-ID: <6eff882f-0a71-456d-b3ff-16d82ec9b8ff@proxmox.com>
-Date: Mon, 26 May 2025 11:42:24 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uJUQA-0006W0-7I
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:47:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748252822; x=1779788822;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=WXSCegbcQET021IEi08NwVKZqv9oTZ5wKTErIsYJ80g=;
+ b=ZN7DzDqFM5kV1GTky6KDWnoeZ4HiFjMej3HJsKMQSshCKQLs13xRZyBu
+ 3OdGug9klaDgMc2rg01jU9uE7RnF6KW4LSc6443XJzwuw36EEIFhwHcyd
+ 5k114VNYeYeny+0MeloEeaaE0ki4EvWxNC3L8Vy96+l8WNZ0mlG/6HeJW
+ xRBYquSFMkQX18XRd6c/7aZbeUcGCsUSukzp5cuHxoRGeU7/lxFl4sh1Z
+ 8Tpe2b6YE4FoTs3dxTwy8KXhBPHxT0D9lz+Ekt+XlUUmWKE8PG2ZmxG7G
+ 1BNShYmG0aG50LD8Z7qohb1BxjTveKV3RDRv505CS+TIvp9A+wTj6aCGl g==;
+X-CSE-ConnectionGUID: KO705ghYRDiX/ueMngStOA==
+X-CSE-MsgGUID: UIbxVyhYRueeNDqbhwBeYw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11444"; a="60880934"
+X-IronPort-AV: E=Sophos;i="6.15,315,1739865600"; d="scan'208";a="60880934"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 May 2025 02:46:58 -0700
+X-CSE-ConnectionGUID: VqQ+sJQbQhqNYEy5br3hpg==
+X-CSE-MsgGUID: TzhyT2WISWCsORezVAf/Xw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,315,1739865600"; d="scan'208";a="165494528"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 May 2025 02:46:52 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Mon, 26 May 2025 02:46:52 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Mon, 26 May 2025 02:46:52 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (40.107.93.63) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.55; Mon, 26 May 2025 02:46:50 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ftXsdNIGOtJ1ra/LD8FKf9oNcz4V14xVZhHweT4hs9YbJ8vEGcg+8PwVpMQ3as9fGEBynzj1+wdFGeLx/u8KRzZm01kTtFYJlsUolOSiW+/ZZZXA5fdI3OepeC5acAKdbpqnLQbbg02gaArWegS2Q5xvIqs5WMBVL693sp8zq0/ZHPwz1WH7NmDDoWw5X+iazW7P0Jpc556h3EwDerGQqg91YHw01Zo8a4tY0fHudq3oZmafB/2At/VEk61PpghE7DIPe8AyweCvm0+eeH9Jes+omnM/dMjmjbzBi4lfLzFrs7GlOTi0mFWorDuww6t3OBK1/C5dlg4DmTyjWDuKcQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0Zd2d/5+ebKQ1hMCWCKp9fO3GV+IRLgLaekjQmM/K4g=;
+ b=bdoJPahf0BJz8jV8i65WSE9H6na7YR9+U7rX2lmTW5QjWyUohRHO+uge2huJCXRdo+P44l0cWPm2KM18mkGuH8LU6d4JRTjBCRbSs2Da/AFrqQKfWXgnED54LGwhl0Srm3u+5+HEMOFxTJYazHvpUbV3rubUtdIcOORpt4SfuN4iugS91bC4ah1mmEyg2fuUF7EhpFFDzwXTwyOHk94DqENmB255Ruz4su/7ctVgk1MZ73sWeVGF5hDiam6nT50Pp9oKMrHoCfnixQBSCDV7u5ug9JgN2PLO42LAImMVcZ1UfqHkdQlGURtN592uf/W1HWte/3dda2xck0M/WX8NhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ CY5PR11MB6258.namprd11.prod.outlook.com (2603:10b6:930:25::16) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8769.24; Mon, 26 May 2025 09:46:35 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.8769.022; Mon, 26 May 2025
+ 09:46:35 +0000
+Message-ID: <a76dca84-335f-40d1-8e1b-0cf43d84b7d9@intel.com>
+Date: Mon, 26 May 2025 17:46:23 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] iotests: Filter out ZFS in several tests
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20250523163041.2548675-5-eblake@redhat.com>
- <20250523163041.2548675-8-eblake@redhat.com>
+Subject: Re: [PATCH v5 06/10] memory: Attach RamBlockAttribute to
+ guest_memfd-backed RAMBlocks
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, 
+ Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>, Baolu Lu
+ <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>, Xu Yilun
+ <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+References: <20250520102856.132417-1-chenyi.qiang@intel.com>
+ <20250520102856.132417-7-chenyi.qiang@intel.com>
+ <d22512b9-d5f0-4e0f-9a4c-530767953f3c@redhat.com>
 Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20250523163041.2548675-8-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+In-Reply-To: <d22512b9-d5f0-4e0f-9a4c-530767953f3c@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: KL1PR0401CA0005.apcprd04.prod.outlook.com
+ (2603:1096:820:f::10) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|CY5PR11MB6258:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2a474fe0-b070-4dd9-3375-08dd9c3a33c6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?cFNpMFMweGhqRXJLeEdLdkVtd3llbWdOT1QvbElMdVAvSEl0VWQwMmEwYmhR?=
+ =?utf-8?B?TW5CbmxJemovWUZ4QUJLS3EzUEFQN3JpY2s0UVVFeHZlbVg2YVprMGMxbU4v?=
+ =?utf-8?B?OUx5bG9vNU1zTWd2SmZTZU1EZFhNTUNYUGk5cktsckZYS2hPNHlTWXVDV3ZK?=
+ =?utf-8?B?UFVCbU12NFg3MTgxV2xuTXFaSDBaZERuOVhVVWRNdzNGaTZ4NnRDTGN6elA0?=
+ =?utf-8?B?SkZ6YlVHVmJLNzRWZ1RlMXZvV0duaVh4WjhQRVl5N1FlZEErMTZCWnlJTDBI?=
+ =?utf-8?B?VkJmbHk3Z2VwbkZVRmVxc1kxRFU3dmk3YXBaZUtoNTFGZmRiMDgzOFlqQkFC?=
+ =?utf-8?B?VTZLMlZsNDJEUjd5a2dOUXkvQnREVFdnVXBDZGxGZlQ3TDJ0NTA0Z1dkSG82?=
+ =?utf-8?B?T1h1RDI1UU0wQjVYSmZta3NKbWhpZktBQnRVZ2U3RHVLZ1RTZUVFelVOQkU4?=
+ =?utf-8?B?d2lHSld2K3U1YURKcytmRDhZaDRVK25QWjhDT1EzL08zZTdPTU1XQUJ3RnBl?=
+ =?utf-8?B?Ym5peHU1QzBiOGNPU3RocTBQL2J2MW9NRkIwT0xwSzhRVkN6SjdnQXdNTnBu?=
+ =?utf-8?B?Q3lGblUwMFRLRkNRU01jTU1iZHFjbmZ3cTVTKzgzM0pjZDFoUzBFSXMvWllj?=
+ =?utf-8?B?ZkRhdm1YVVRXUjNDRnhaMVkvSDFySXN0R1lSQWdkNTU2L2lyRTMraDhkUnFa?=
+ =?utf-8?B?djVvSUg5ZnJrMVJKWHlENGVIa2xKZ282WFllb2gwR3dORnBIZHRNZXhqRjdv?=
+ =?utf-8?B?SnY5SFZCaEJTZ1k5Lzl4NXZyYzRDdS85NDVRem9CNlBnUDFpV2VhK3NkTmNu?=
+ =?utf-8?B?L1d0aWNvQmpQQ2orK2VFRExGODBDeGtSWHVZWWUrV1d3aEliWllHMUk4bTZy?=
+ =?utf-8?B?aU4xSWRCVm1UQklaNW9STVNQQk1zZFNCWGIyUG81Nno4Y2V6eEc2T0hmc25K?=
+ =?utf-8?B?eWFpcE5ZRzQ2OUpCajZZV0VJY0dZQ25lT1M1WHRzMjJHbTdKWGRYeGx3ZHJF?=
+ =?utf-8?B?T1dtZ2JtRlUxQU84VGpXV1g4MFByYWpQOUp3eXJyNGJEaWlGM2s1Wnh1VXU4?=
+ =?utf-8?B?SDdDWW5mdDdzdTh1RmMyL1lYODVWOU1DVVdNRnlBWlhScDU0K3FkRnpod3o3?=
+ =?utf-8?B?UmQ3aDJuOUgzZEZleHgvbWNCcVk0akRFSjdTYmw4bDJVQzdCc0VrWXlrQ3Bu?=
+ =?utf-8?B?WDA4OG1WRE92MmoyS2hLVVFBcjJERFg1VFFtMy9tNUJDZC9xckl6YVkwb091?=
+ =?utf-8?B?bDFqWDdxdDB5VXZ3ckxmYVhZNkREM1p4NXJTQzMrSnVpRnVScDNUU1Y2RUxX?=
+ =?utf-8?B?ZU9RemZwRkllMU5lQUVGdkhWZm5IYUhJUm1ZbUtmdUE1TU9pT0RSL2pNK2NR?=
+ =?utf-8?B?ZjJqOWxXU1VCaHhuNmtQZFgzRVlNK3pueGRqUDlsZmU1cXhkNm1wQlJWRDR4?=
+ =?utf-8?B?NnBjSXhhNElpV3VjaHpzZVJURC9kWXpXTWR0M1Bud3RablFlL3NpYUFhdmZ4?=
+ =?utf-8?B?ZXN0TWNFalBJYnRCV0lwS1I4ZlJGQ2F5Y0NVZ3E3STFEWHp5MXhVNENiUVNY?=
+ =?utf-8?B?eUZpNnpBMlpsc0svMVdxWXhKd1ljblZaK2ZSaGJuV2JVN2JFbHRlMVF4U3pP?=
+ =?utf-8?B?cFhta1IxUU9XeEtKZ255NEpHbG9SdjZYaU5US1lLNDA0V1pDVjN3Q2NJdnNa?=
+ =?utf-8?B?VzFJeGpKKzNiTEJKZnJraVJQbURFRDJES3hkeXp4QnpkNmRaVUcwZzk3OGtL?=
+ =?utf-8?B?ZlBpRTFVWGlIM1ZQMWhOK0tSMzJjWW1WT0V0UHM0K1BQMWp2cUF5eDArWTBm?=
+ =?utf-8?B?RE5QSmU5dElWTENHcDAzYit0YTY0OUJwdzIySGQwbUlPa2xJaXErYTc3Q1E1?=
+ =?utf-8?B?c0JjOXdPWmluMWE3UFYwYXpUZmh6Lzl3eEg4ME0vNnQzdm9ERU5JbE1kbEFo?=
+ =?utf-8?Q?OtLC/A9O5rg=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZFVLZTNucDhFNldGWWVLWWJXOWZUN2tsWFB6WnR2a01hSXVGNXhZNHBybFZJ?=
+ =?utf-8?B?T3ZZeGczS1BwMExrbWRTZzJFNFJ3ZFJHMTY5SjR0dStXbGxIN0RMMjNDMzgr?=
+ =?utf-8?B?bkF6YnFCeUNuTUxDMHF5S2IxaUpLckxCZ3BvVy9pZVpZTTFhWEpFbi9KRm90?=
+ =?utf-8?B?VTJVSms0L3BpN3VWUjhsSVBqWUM5enB6enRJYzNaRGc4cjVuTklIQkRVSE1C?=
+ =?utf-8?B?NHFMRlZwRk5CNmZtWmN1R05UdVNkRGx2OFFlZDhRMEkvanBSVmtvVUJzelNw?=
+ =?utf-8?B?VUREWFZFRmZZSzNaRlAvY2ZXcVcyU0dLYzVLcDFOZmsxTFovYnVyU3NUdHJl?=
+ =?utf-8?B?SGNjTFcyd3hDRkY5R0FrZENic1RNMC8yUjgzaER2N0xoQ0FrRm9SbGgvZ0px?=
+ =?utf-8?B?cHlJbjhqcjNVdThmbjNVSENIbitMS0tSYW1rVzd4Z3Q0NmV1c2tOVENrYkx1?=
+ =?utf-8?B?bTZJQ2dpYkRhVjVVVnV0NS9vT25vWkVBeVFoUXk0c0g3YVdBMVNzUUh5bGZH?=
+ =?utf-8?B?NDlrVTNkWXVzNUQ5S01vdFpCWUIvNmN5ZVBOZDU3R0NHdHVSdGdISWRFOHdq?=
+ =?utf-8?B?UlMrR25mR093cDZoRU9qa3JKbVNqMUdxUzlsYjBWSmowVWhwRXVjZHA2R0VI?=
+ =?utf-8?B?MFc1c2lISGQ5QTZQNkJlYmhaR1NheXRFSlhmRmdIU3U1bFFmQWEwUDErZyt3?=
+ =?utf-8?B?R3Uxcjh6NWhvdnpLOWZzWHdMVWx4dEc3L3RiYlFBanJVVW45TFBCUzhYM1gy?=
+ =?utf-8?B?QmJWdjJkekFBZEFrblpkU3VBSDhjNHlkOXBOUnU0OHFiQ1JxUHYwc3FCTVN3?=
+ =?utf-8?B?ZkkzUzVXS2RaRUg1OHQrSXptVi9iV3NQUlpXbUNxOG44Z29Pd053UTFCejdi?=
+ =?utf-8?B?RmFDS1FnSXRRSTN1T21ST3ByNFBhWG9oQUoyd1BucVNEaFAvSGN2L21RN3Rm?=
+ =?utf-8?B?SHJRNHB2R09hcGMzVnkxcndUTS8rYjd1bU96UDJ6NlU3a0hUVlFzZGpOS2xj?=
+ =?utf-8?B?MTlFdDM4ZnJpb1pyYmtQUnBEWUdoQmtYYm1FQ0xHbWVNSzNJZitNMStOT1dB?=
+ =?utf-8?B?MjIvZ1g4UU4wYnZCNU5IQnZlL1BNMmV2UGVIZ1ptWENFRDdxOFkvb3BhQmxX?=
+ =?utf-8?B?M3RQMWJhVytJNWhiYzVPdm5TQ3h4RU9DL2ZmSkp0ZnJQUEpCTVpCUllTajVJ?=
+ =?utf-8?B?bEMxbXVsRlFidW1EdlhObHJFTWJFZmFFK0wya1pvZjRvZWthRlV6bWlQR2hN?=
+ =?utf-8?B?aDQyeFpkc3YzbDRWZHY3aTg2VkhjUHZaUGdkWERuckNGOC8rczJidy9GbldN?=
+ =?utf-8?B?ZU1mcGdQYU13aCtLQmt5RXFFRXF6TXRDQ3lUK1dmMjE1ZkRwKzFSenNkZWgv?=
+ =?utf-8?B?WmNFR1JNek41MGVibDJUTHNJblV6czN4YXhGVjVWR0xBeVZtc0xSa3RKcG5i?=
+ =?utf-8?B?WFFNMGpwMHlva2tWSm4xNHVKTHBUWXgvSWJkYThNbCtIVTRnLzR5M2REUklu?=
+ =?utf-8?B?Zk5Mc2pEUm9USHc5S0FOQ3pvMWgvTGRHQmVzR1RaeFRqNytxL1IyVzZpcGFo?=
+ =?utf-8?B?SmRMeVpBNUVpdWtESnVoRTRPVUtIWmpKbXVodENFSHVoOGg5Tmp5OUJtQWNa?=
+ =?utf-8?B?V21SVFh2K2QwK2ZBK0I3RzNBNWlLMEN0OVRFcVVtNUs5bnFzdlcxdml3TlRt?=
+ =?utf-8?B?bk1BczZSY0VXbmxIaTBKSHRyQ1d5TkNiL2wzbUlmRE1PS2tPbFJrQk1rZnhI?=
+ =?utf-8?B?cWRuOUI0QUlFOFVUK1NVR2tTYmY2Yi9ZdkJ1QnpPaDg5aWNERlptcjVSbmRn?=
+ =?utf-8?B?aVNXSmhqMCs3Ukc0dTByYlVtWHVWQ01lVGRXQlF0bXpkQVpiQzV6YlVZcnBY?=
+ =?utf-8?B?UWxDWnkrdUt0M0VmV2xTalNMbDl6TmtPTm0wVjBNd0JITG96a0NzVDQxNkVL?=
+ =?utf-8?B?VUhOYXFNK05hUHlPRE1vb2RaT0RVZTI3aWd0OFZSbVdTZHNXVmJudVZEQmN6?=
+ =?utf-8?B?ZjVXeU44U0VRaXpPRWdFNjl5YlVScFQ1NjhBbmluRzFvcXVBVDYzeEdySVdU?=
+ =?utf-8?B?bG9nVkI3TmN3aU5wWUxZVEV1V281cEtWNDhNUGxGeHNtRHk2ZE1OZVo2WnJz?=
+ =?utf-8?B?ZDdYUXRzZXY3aGhPNi9JSGx0Nnl1c2J2ZFljdW82TVI2RjVWTWg5REZiZGJL?=
+ =?utf-8?B?REE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2a474fe0-b070-4dd9-3375-08dd9c3a33c6
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2025 09:46:35.0400 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hbglWMcEJtFUctE7fxyltarlZItBCFCSVYBwiDueM1Un5T0P3U8W38ZcfqYD1FPyQBpa2BjjSZ7xz4LBxAtwEw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR11MB6258
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.9;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,32 +219,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 23.05.25 um 18:27 schrieb Eric Blake:
-> Fiona reported that ZFS makes sparse file testing awkward, since:
-> - it has asynchronous allocation (not even 'fsync $file' makes du see
->   the desired size; it takes the slower 'fsync -f $file' which is not
->   appropriate for the tests)
-> - for tests of fully allocated files, ZFS with compression enabled
->   still reports smaller disk usage
-> 
-> Add a new _require_sparse_file that quickly probes whether an attempt
 
-It's called _require_disk_usage in the implementation.
 
-> to create a sparse 5M file shows as less than 1M usage, while the same
-> file with -o preallocation=full shows as more than 4M usage without
-> sync, which should filter out ZFS behavior.  Then use it in various
-> affected tests.
+On 5/26/2025 5:06 PM, David Hildenbrand wrote:
+> On 20.05.25 12:28, Chenyi Qiang wrote:
+>> A new field, ram_shared, was introduced in RAMBlock to link to a
+>> RamBlockAttribute object, which centralizes all guest_memfd state
+>> information (such as fd and shared_bitmap) within a RAMBlock.
+>>
+>> Create and initialize the RamBlockAttribute object upon ram_block_add().
+>> Meanwhile, register the object in the target RAMBlock's MemoryRegion.
+>> After that, guest_memfd-backed RAMBlock is associated with the
+>> RamDiscardManager interface, and the users will execute
+>> RamDiscardManager specific handling. For example, VFIO will register the
+>> RamDiscardListener as expected. The live migration path needs to be
+>> avoided since it is not supported yet in confidential VMs.
+>>
+>> Additionally, use the ram_block_attribute_state_change() helper to
+>> notify the registered RamDiscardListener of these changes.
+>>
+>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>> ---
+>> Changes in v5:
+>>      - Revert to use RamDiscardManager interface.
+>>      - Move the object_new() into the ram_block_attribute_create()
+>>        helper.
+>>      - Add some check in migration path.
+>>
+>> Changes in v4:
+>>      - Remove the replay operations for attribute changes which will be
+>>        handled in a listener in following patches.
+>>      - Add some comment in the error path of realize() to remind the
+>>        future development of the unified error path.
+>>
+>> Changes in v3:
+>>      - Use ram_discard_manager_reply_populated/discarded() to set the
+>>        memory attribute and add the undo support if state_change()
+>>        failed.
+>>      - Didn't add Reviewed-by from Alexey due to the new changes in this
+>>        commit.
+>>
+>> Changes in v2:
+>>      - Introduce a new field memory_attribute_manager in RAMBlock.
+>>      - Move the state_change() handling during page conversion in this
+>> patch.
+>>      - Undo what we did if it fails to set.
+>>      - Change the order of close(guest_memfd) and
+>> memory_attribute_manager cleanup.
+>> ---
+>>   accel/kvm/kvm-all.c |  9 +++++++++
+>>   migration/ram.c     | 28 ++++++++++++++++++++++++++++
+>>   system/physmem.c    | 14 ++++++++++++++
+>>   3 files changed, 51 insertions(+)
+>>
+>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>> index 51526d301b..2d7ecaeb6a 100644
+>> --- a/accel/kvm/kvm-all.c
+>> +++ b/accel/kvm/kvm-all.c
+>> @@ -3089,6 +3089,15 @@ int kvm_convert_memory(hwaddr start, hwaddr
+>> size, bool to_private)
+>>       addr = memory_region_get_ram_ptr(mr) +
+>> section.offset_within_region;
+>>       rb = qemu_ram_block_from_host(addr, false, &offset);
+>>   +    ret = ram_block_attribute_state_change(RAM_BLOCK_ATTRIBUTE(mr-
+>> >rdm),
+>> +                                           offset, size, to_private);
+>> +    if (ret) {
+>> +        error_report("Failed to notify the listener the state change
+>> of "
+>> +                     "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
+>> +                     start, size, to_private ? "private" : "shared");
+>> +        goto out_unref;
+>> +    }
+>> +
+>>       if (to_private) {
+>>           if (rb->page_size != qemu_real_host_page_size()) {
+>>               /*
+>> diff --git a/migration/ram.c b/migration/ram.c
+>> index c004f37060..69c9a42f16 100644
+>> --- a/migration/ram.c
+>> +++ b/migration/ram.c
+>> @@ -890,6 +890,13 @@ static uint64_t
+>> ramblock_dirty_bitmap_clear_discarded_pages(RAMBlock *rb)
+>>         if (rb->mr && rb->bmap &&
+>> memory_region_has_ram_discard_manager(rb->mr)) {
+>>           RamDiscardManager *rdm =
+>> memory_region_get_ram_discard_manager(rb->mr);
+>> +
+>> +        if (object_dynamic_cast(OBJECT(rdm),
+>> TYPE_RAM_BLOCK_ATTRIBUTE)) {
+>> +            error_report("%s: Live migration for confidential VM is
+>> not "
+>> +                         "supported yet.", __func__);
+>> +            exit(1);
+>> +        }
+>>
 > 
-> This does not add the new filter on all tests that Fiona is seeing ZFS
-> failures on, but only those where I could quickly spot that there is
-> at least one place where the test depends on the output of 'du -b' or
-> 'stat -c %b'.
+> These checks seem conceptually wrong.
 > 
-> Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+> I think if we were to special-case specific implementations, we should
+> do so using a different callback.
+> 
+> But why should we bother at all checking basic live migration handling
+> ("unsupported for confidential VMs") on this level, and even just
+> exit()'ing the process?
 
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+I thought these checks can act as some placeholder and provide
+notifications when someone is trying to implement live migration in
+Coco-VM. (As this series brought some confusion when developing the
+related live migration handling internally). It is perfectly OK to drop
+them. Sorry for confusion.
+
+> 
+> All these object_dynamic_cast() checks in this patch should be dropped.
+
+Will do. Thanks!
+
+> 
 
 
