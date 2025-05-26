@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A4EC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 05:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF91C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 05:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJQP2-0006zK-Vl; Mon, 26 May 2025 01:29:37 -0400
+	id 1uJQPG-00072l-W1; Mon, 26 May 2025 01:29:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uJQOs-0006ye-3p
- for qemu-devel@nongnu.org; Mon, 26 May 2025 01:29:27 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1uJQPE-00072O-K2
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 01:29:48 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uJQOp-0001wr-Db
- for qemu-devel@nongnu.org; Mon, 26 May 2025 01:29:25 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2347d505445so671145ad.2
- for <qemu-devel@nongnu.org>; Sun, 25 May 2025 22:29:23 -0700 (PDT)
+ id 1uJQPB-0001yd-S7
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 01:29:48 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-234488c2ea6so7581475ad.3
+ for <qemu-devel@nongnu.org>; Sun, 25 May 2025 22:29:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748237362; x=1748842162;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748237384; x=1748842184;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yTPfHSkJeZJYv7e6JgZMLSvgYFLhEBeDXdNvOQ5ttIE=;
- b=hLYrT2XHtV1lMUXPyJj0Vm+mdBW9NQTwEwekJ3PjtWouxB1BxVNI5yYIAo55bMO6nd
- 1zrATict/H73kKGtY7f6YZVQnuyYzvd5h4Cg1XhFECW+6umdiNG7Zu4BQujinTAgZwJ2
- v800V6DqoWaWSdKGW+0JH7lDLoo85lUZz09bQLm/h6eZ9JN/yviGRytoqc1VQWFRciBK
- jM9D2f2Dz/2ZEr1jffbVPXDFGMj72XhgKPVeVNTvQNLwV26wW4XTw49uNShQyvIuC70c
- HmgTJUyzmy6nOjimoUB+OUD5Liug/Lb50ix97Y5pTzC8mUAuitTrKo335EhAmve9C2pD
- BPug==
+ :reply-to; bh=LRmGqS56UwtxXjkW8h/cpyE/WS/5VcSCCyYow5d7ec8=;
+ b=azlclMwo75RFV2GB782oyYQ3ZWfsMPP8iSs3cEIZFJ155waNc9+wirtgvbynO/WXiG
+ of0LqBzly0vaq9OxpF6Bp9XrmV+TYnkhgmnJ1vTgwl+nHXTyoA1ZH2H9GmcaCTCWJhxz
+ DMZ1/QSZvq/u5ouqLIaRNEn1vjF+Fketj2sZ4WyL1EgOSCdu3YTMEG/MRgur6F2Oy0Ll
+ roIYAIum5xUnhueQ+ss2A/2fQqmgmuCbJymealxplfXZGIDrywioPlvUcL6u7Eqj0ako
+ euWLAqHrmn+sPpb4ijUDJTzh/5IuKhTDS9Jjv0BmfF5tMIV+QRfaGl0YmqvXIvhuP93v
+ uylg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748237362; x=1748842162;
+ d=1e100.net; s=20230601; t=1748237384; x=1748842184;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yTPfHSkJeZJYv7e6JgZMLSvgYFLhEBeDXdNvOQ5ttIE=;
- b=Aj1TUWcNODT6EAiMRmgMzK/qTfMS4ZjEBpNRl0Wv9z/fFKViDEiyuoPkj4Ohy5yJxe
- uW1MzwvhVE4Uo+JQmBXw+PEsteNqePkkAQ6c4hL4qv1R7SQswFz59I5fb/v8SYTFnBFC
- XtLklmhhhl/VEUZ2KyWM85R+E0T6cY9Bpb186R3ufvePF2qITgdJmlpfzRsLqM7aO6r4
- ds67RUf3Mr1iea0k1lh474PHbz6ejdK510HDVgcpvefDUL4ToF0/iXBJtSgaoCxxdcjm
- mTPDE5OhtLgghEEEB5+FTbHUiyxAIor6WKF8DsQLwbas1dBX1Wy0LqFYxxmEP+qL4wh9
- jg2g==
+ bh=LRmGqS56UwtxXjkW8h/cpyE/WS/5VcSCCyYow5d7ec8=;
+ b=cHdWrDhuf89l81FAZW3+lk2zUgIABg5+ok0uODt7Q+gK12oIBxtkHvaPHzSXnrDa7r
+ qU6NqGpu1bo9LYbo91VX90+wVKNLdhoGJk8Fyv72pO4nypt4XPucuzU0tXU3O2vN7tbp
+ d2zKrTq/Wyak4Wt6vAd9QRUx7NHfdrnmDr/J+FlkMTiqgR6HjJ2qelhUVxY77VAZDgfZ
+ x5DURSnkFDjmwTtNXxvr6jZvpCrgIb9qTW/fZrjQMclBfa8YMfUsDnxHQCJmo+LYdJ2P
+ nr6QkF/FyLirmMQjTrDw6bwFSY/MWPugO3Jsyk3yg2XXDU/Eko3VrKxtT2jdziu0mP5J
+ CXQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSYGcZJCHRjUWYtRqNY1vY517B8Uxx1Br+EuXKW2ByGa4Xg2TjaY9nGYDJDskB9x1g3j1yjz7pQUiv@nongnu.org
-X-Gm-Message-State: AOJu0Yw7X6gqeYxSK0XEpv25pI7fg/E8cVs2ZLt1jjWllFa5wVRnGdo3
- kg3REwa2+nq0RbHQQAS09sREDLR0zbjyAq5Pj1qCYfwRnxcfj5BlDlb8FZXMDHslo4ukZFws27t
- wfbYT
-X-Gm-Gg: ASbGncvVG91Txl9qDFAHsGBcusJ+C3X1s+2iUXXZ8/5WPUlm0nFeBRlM6Wqwon6g+Vt
- 4mYAqi/9xCHkDNBIQgIcWwbvrX08sVHpzF6vNBmL8vIhMLWei2RKT1vF+9AWINVfDEn+M3h9uWK
- XOwRoSsUOydMMJOcTwjJ2SfKOVExKE4B9i3h77bKn5aKahvgxdu5CoVrQWiOiFEn3WGYegOA2ry
- L5Pl7pR/rfQINm1/xWALtO6v9dETxdtbsUmHPNIcOa1YKp41w2iFnHcS+kNZXK/U5P/Xwh/0c87
- Dmd73Z0ottc1QcY9+Y8Q/wHtxU3uxtxi9b0JMejeL3Wj9Kk2HxTG
-X-Google-Smtp-Source: AGHT+IG6D00Vkzrdtz1BoGZzsKkk7Rvyr6qPMSJbV5WbXbynlqwoRgbeJZ7kFMDxZePvjbZI2Dnw3g==
-X-Received: by 2002:a17:903:3a86:b0:231:9902:1519 with SMTP id
- d9443c01a7336-23414fd3e28mr125388425ad.39.1748237361709; 
- Sun, 25 May 2025 22:29:21 -0700 (PDT)
+ AJvYcCURQavL1woPYmxRA9A691jyA1Ft7v3hNxmIwMZ/2rmq61cSa9mEKDF5+caEm7wN8vt9QwOlQSay6qeP@nongnu.org
+X-Gm-Message-State: AOJu0YwUvYJQ2uzrEW27OM8EVghv+FfXPOaq4Ur3i8JqFLj9ABCMtoyH
+ gF3eu/vegN/4tumXauAv/3BaoncT1B+9Or0m4Hb+Y5HGrjWsxOyXdo2LQruRMCR8m69G2hUEyjs
+ ntZ9W
+X-Gm-Gg: ASbGncvjvFdazxajh5OCWowz+ddOI69Ea9Fx6esUurY16VNb7Xs0pptFgE/T53HXYrX
+ za2mliNqPT43N2rDaiPVXJn7kiuSzti7C3CGo7G9a/aqS8XWHNIdiSy3nyUbCbg83k7ROCvIew+
+ X3aOYDuCFYZ7WPQUwjZ9Pikx/9aFERi3em9W8F/DqfayCMlABZ6uenCw6kf8ii355p9mWGSK8R4
+ VLl6zF41ylF/hBgXQvCMcKLDfD8nJ0P/XKWObTqudOnlxtojt6MPzGHZuCubzhHPwxTyga/Q7rr
+ zsIjYbyyiJVD61UWnsZMgPyrkuiJ0R17mOovDT98GldqbdUmmrg2YThgDZQqTkI=
+X-Google-Smtp-Source: AGHT+IFAVMCWqvCWcbzYyhhLcTub/jdYX1Ud9BQaknYQXC8INqEZfZepiBQLrCg5cLtRRpng39o0dQ==
+X-Received: by 2002:a17:903:32c2:b0:22e:3eb9:471b with SMTP id
+ d9443c01a7336-23414f60848mr120699775ad.23.1748237383959; 
+ Sun, 25 May 2025 22:29:43 -0700 (PDT)
 Received: from localhost ([157.82.128.1]) by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-2340c4eb87dsm38075125ad.17.2025.05.25.22.29.19
+ d9443c01a7336-23211e75f58sm134799125ad.252.2025.05.25.22.29.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 May 2025 22:29:21 -0700 (PDT)
+ Sun, 25 May 2025 22:29:43 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 26 May 2025 14:29:11 +0900
-Subject: [PATCH v4 01/11] futex: Check value after qemu_futex_wait()
+Date: Mon, 26 May 2025 14:29:16 +0900
+Subject: [PATCH v4 06/11] qemu-thread: Use futex for QemuEvent on Windows
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250526-event-v4-1-5b784cc8e1de@daynix.com>
+Message-Id: <20250526-event-v4-6-5b784cc8e1de@daynix.com>
 References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
 In-Reply-To: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
@@ -84,8 +84,8 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,80 +107,438 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-futex(2) - Linux manual page
-https://man7.org/linux/man-pages/man2/futex.2.html
-> Note that a wake-up can also be caused by common futex usage patterns
-> in unrelated code that happened to have previously used the futex
-> word's memory location (e.g., typical futex-based implementations of
-> Pthreads mutexes can cause this under some conditions).  Therefore,
-> callers should always conservatively assume that a return value of 0
-> can mean a spurious wake-up, and use the futex word's value (i.e.,
-> the user-space synchronization scheme) to decide whether to continue
-> to block or not.
+Use the futex-based implementation of QemuEvent on Windows to
+remove code duplication and remove the overhead of event object
+construction and destruction.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/qemu/futex.h              |  9 +++++++++
- tests/unit/test-aio-multithread.c |  4 +++-
- util/qemu-thread-posix.c          | 35 +++++++++++++----------------------
- 3 files changed, 25 insertions(+), 23 deletions(-)
+ include/qemu/thread-posix.h |   9 ----
+ include/qemu/thread-win32.h |   6 ---
+ include/qemu/thread.h       |  11 +++-
+ util/event.c                | 122 +++++++++++++++++++++++++++++++++++++++++
+ util/qemu-thread-posix.c    | 121 -----------------------------------------
+ util/qemu-thread-win32.c    | 129 --------------------------------------------
+ util/meson.build            |   1 +
+ 7 files changed, 133 insertions(+), 266 deletions(-)
 
-diff --git a/include/qemu/futex.h b/include/qemu/futex.h
-index 91ae88966e12..f57774005330 100644
---- a/include/qemu/futex.h
-+++ b/include/qemu/futex.h
-@@ -24,6 +24,15 @@ static inline void qemu_futex_wake(void *f, int n)
-     qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
+diff --git a/include/qemu/thread-posix.h b/include/qemu/thread-posix.h
+index c412623a9143..758808b705e4 100644
+--- a/include/qemu/thread-posix.h
++++ b/include/qemu/thread-posix.h
+@@ -32,15 +32,6 @@ struct QemuSemaphore {
+     unsigned int count;
+ };
+ 
+-struct QemuEvent {
+-#ifndef CONFIG_LINUX
+-    pthread_mutex_t lock;
+-    pthread_cond_t cond;
+-#endif
+-    unsigned value;
+-    bool initialized;
+-};
+-
+ struct QemuThread {
+     pthread_t thread;
+ };
+diff --git a/include/qemu/thread-win32.h b/include/qemu/thread-win32.h
+index d95af4498fc9..da9e7322990c 100644
+--- a/include/qemu/thread-win32.h
++++ b/include/qemu/thread-win32.h
+@@ -28,12 +28,6 @@ struct QemuSemaphore {
+     bool initialized;
+ };
+ 
+-struct QemuEvent {
+-    int value;
+-    HANDLE event;
+-    bool initialized;
+-};
+-
+ typedef struct QemuThreadData QemuThreadData;
+ struct QemuThread {
+     QemuThreadData *data;
+diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+index 6f800aad31a9..573f8c9ede20 100644
+--- a/include/qemu/thread.h
++++ b/include/qemu/thread.h
+@@ -3,13 +3,22 @@
+ 
+ #include "qemu/processor.h"
+ #include "qemu/atomic.h"
++#include "qemu/futex.h"
+ 
+ typedef struct QemuCond QemuCond;
+ typedef struct QemuSemaphore QemuSemaphore;
+-typedef struct QemuEvent QemuEvent;
+ typedef struct QemuLockCnt QemuLockCnt;
+ typedef struct QemuThread QemuThread;
+ 
++typedef struct QemuEvent {
++#ifndef HAVE_FUTEX
++    pthread_mutex_t lock;
++    pthread_cond_t cond;
++#endif
++    unsigned value;
++    bool initialized;
++} QemuEvent;
++
+ #ifdef _WIN32
+ #include "qemu/thread-win32.h"
+ #else
+diff --git a/util/event.c b/util/event.c
+new file mode 100644
+index 000000000000..663b7042b17a
+--- /dev/null
++++ b/util/event.c
+@@ -0,0 +1,122 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "qemu/thread.h"
++
++/*
++ * Valid transitions:
++ * - free->set, when setting the event
++ * - busy->set, when setting the event, followed by qemu_futex_wake_all
++ * - set->free, when resetting the event
++ * - free->busy, when waiting
++ *
++ * set->busy does not happen (it can be observed from the outside but
++ * it really is set->free->busy).
++ *
++ * busy->free provably cannot happen; to enforce it, the set->free transition
++ * is done with an OR, which becomes a no-op if the event has concurrently
++ * transitioned to free or busy.
++ */
++
++#define EV_SET         0
++#define EV_FREE        1
++#define EV_BUSY       -1
++
++void qemu_event_init(QemuEvent *ev, bool init)
++{
++#ifndef HAVE_FUTEX
++    pthread_mutex_init(&ev->lock, NULL);
++    pthread_cond_init(&ev->cond, NULL);
++#endif
++
++    ev->value = (init ? EV_SET : EV_FREE);
++    ev->initialized = true;
++}
++
++void qemu_event_destroy(QemuEvent *ev)
++{
++    assert(ev->initialized);
++    ev->initialized = false;
++#ifndef HAVE_FUTEX
++    pthread_mutex_destroy(&ev->lock);
++    pthread_cond_destroy(&ev->cond);
++#endif
++}
++
++void qemu_event_set(QemuEvent *ev)
++{
++    assert(ev->initialized);
++
++#ifdef HAVE_FUTEX
++    if (qatomic_xchg(&ev->value, EV_SET) == EV_BUSY) {
++        /* There were waiters, wake them up.  */
++        qemu_futex_wake_all(ev);
++    }
++#else
++    pthread_mutex_lock(&ev->lock);
++    qatomic_store_release(&ev->value, EV_SET);
++    pthread_cond_broadcast(&ev->cond);
++    pthread_mutex_unlock(&ev->lock);
++#endif
++}
++
++void qemu_event_reset(QemuEvent *ev)
++{
++    assert(ev->initialized);
++
++    /*
++     * If there was a concurrent reset (or even reset+wait),
++     * do nothing.  Otherwise change EV_SET->EV_FREE.
++     */
++    qatomic_or(&ev->value, EV_FREE);
++
++    /*
++     * Order reset before checking the condition in the caller.
++     * Pairs with the store-release in qemu_event_set().
++     */
++    smp_mb__after_rmw();
++}
++
++void qemu_event_wait(QemuEvent *ev)
++{
++    assert(ev->initialized);
++
++#ifdef HAVE_FUTEX
++    while (true) {
++        /*
++         * qemu_event_wait must synchronize with qemu_event_set even if it does
++         * not go down the slow path, so this load-acquire is needed that
++         * synchronizes with the store-release in qemu_event_set().
++         */
++        unsigned value = qatomic_load_acquire(&ev->value);
++        if (value == EV_SET) {
++            break;
++        }
++
++        if (value == EV_FREE) {
++            /*
++             * Leave the event reset and tell qemu_event_set that there are
++             * waiters.  No need to retry, because there cannot be a concurrent
++             * busy->free transition.  After the CAS, the event will be either
++             * set or busy.
++             *
++             * This cmpxchg doesn't have particular ordering requirements if it
++             * succeeds (moving the store earlier can only cause
++             * qemu_event_set() to issue _more_ wakeups), the failing case needs
++             * acquire semantics like the load above.
++             */
++            if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
++                break;
++            }
++        }
++
++        qemu_futex_wait(ev, EV_BUSY);
++    }
++#else
++    pthread_mutex_lock(&ev->lock);
++    while (qatomic_read(&ev->value) != EV_SET) {
++        pthread_cond_wait(&ev->cond, &ev->lock);
++    }
++    pthread_mutex_unlock(&ev->lock);
++#endif
++}
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index be7f25f9b31d..ba725444ba63 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -317,127 +317,6 @@ void qemu_sem_wait(QemuSemaphore *sem)
+     qemu_mutex_unlock(&sem->mutex);
  }
  
-+/*
-+ * Note that a wake-up can also be caused by common futex usage patterns in
-+ * unrelated code that happened to have previously used the futex word's
-+ * memory location (e.g., typical futex-based implementations of Pthreads
-+ * mutexes can cause this under some conditions).  Therefore, callers should
-+ * always conservatively assume that it is a spurious wake-up, and use the futex
-+ * word's value (i.e., the user-space synchronization scheme) to decide whether
-+ * to continue to block or not.
-+ */
- static inline void qemu_futex_wait(void *f, unsigned val)
- {
-     while (qemu_futex(f, FUTEX_WAIT, (int) val, NULL, NULL, 0)) {
-diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
-index 08d4570ccb14..8c2e41545a29 100644
---- a/tests/unit/test-aio-multithread.c
-+++ b/tests/unit/test-aio-multithread.c
-@@ -305,7 +305,9 @@ static void mcs_mutex_lock(void)
-     prev = qatomic_xchg(&mutex_head, id);
-     if (prev != -1) {
-         qatomic_set(&nodes[prev].next, id);
--        qemu_futex_wait(&nodes[id].locked, 1);
-+        while (qatomic_read(&nodes[id].locked) == 1) {
-+            qemu_futex_wait(&nodes[id].locked, 1);
-+        }
+-#ifdef CONFIG_LINUX
+-#include "qemu/futex.h"
+-#endif
+-
+-/* Valid transitions:
+- * - free->set, when setting the event
+- * - busy->set, when setting the event, followed by qemu_futex_wake_all
+- * - set->free, when resetting the event
+- * - free->busy, when waiting
+- *
+- * set->busy does not happen (it can be observed from the outside but
+- * it really is set->free->busy).
+- *
+- * busy->free provably cannot happen; to enforce it, the set->free transition
+- * is done with an OR, which becomes a no-op if the event has concurrently
+- * transitioned to free or busy.
+- */
+-
+-#define EV_SET         0
+-#define EV_FREE        1
+-#define EV_BUSY       -1
+-
+-void qemu_event_init(QemuEvent *ev, bool init)
+-{
+-#ifndef CONFIG_LINUX
+-    pthread_mutex_init(&ev->lock, NULL);
+-    pthread_cond_init(&ev->cond, NULL);
+-#endif
+-
+-    ev->value = (init ? EV_SET : EV_FREE);
+-    ev->initialized = true;
+-}
+-
+-void qemu_event_destroy(QemuEvent *ev)
+-{
+-    assert(ev->initialized);
+-    ev->initialized = false;
+-#ifndef CONFIG_LINUX
+-    pthread_mutex_destroy(&ev->lock);
+-    pthread_cond_destroy(&ev->cond);
+-#endif
+-}
+-
+-void qemu_event_set(QemuEvent *ev)
+-{
+-    assert(ev->initialized);
+-
+-#ifdef CONFIG_LINUX
+-    if (qatomic_xchg(&ev->value, EV_SET) == EV_BUSY) {
+-        /* There were waiters, wake them up.  */
+-        qemu_futex_wake_all(ev);
+-    }
+-#else
+-    pthread_mutex_lock(&ev->lock);
+-    qatomic_store_release(&ev->value, EV_SET);
+-    pthread_cond_broadcast(&ev->cond);
+-    pthread_mutex_unlock(&ev->lock);
+-#endif
+-}
+-
+-void qemu_event_reset(QemuEvent *ev)
+-{
+-    assert(ev->initialized);
+-
+-    /*
+-     * If there was a concurrent reset (or even reset+wait),
+-     * do nothing.  Otherwise change EV_SET->EV_FREE.
+-     */
+-    qatomic_or(&ev->value, EV_FREE);
+-
+-    /*
+-     * Order reset before checking the condition in the caller.
+-     * Pairs with the store-release in qemu_event_set().
+-     */
+-    smp_mb__after_rmw();
+-}
+-
+-void qemu_event_wait(QemuEvent *ev)
+-{
+-    assert(ev->initialized);
+-
+-#ifdef CONFIG_LINUX
+-    while (true) {
+-        /*
+-         * qemu_event_wait must synchronize with qemu_event_set even if it does
+-         * not go down the slow path, so this load-acquire is needed that
+-         * synchronizes with the store-release in qemu_event_set().
+-         */
+-        unsigned value = qatomic_load_acquire(&ev->value);
+-        if (value == EV_SET) {
+-            break;
+-        }
+-
+-        if (value == EV_FREE) {
+-            /*
+-             * Leave the event reset and tell qemu_event_set that there are
+-             * waiters.  No need to retry, because there cannot be a concurrent
+-             * busy->free transition.  After the CAS, the event will be either
+-             * set or busy.
+-             *
+-             * This cmpxchg doesn't have particular ordering requirements if it
+-             * succeeds (moving the store earlier can only cause qemu_event_set()
+-             * to issue _more_ wakeups), the failing case needs acquire semantics
+-             * like the load above.
+-             */
+-            if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
+-                break;
+-            }
+-        }
+-
+-        qemu_futex_wait(ev, EV_BUSY);
+-    }
+-#else
+-    pthread_mutex_lock(&ev->lock);
+-    while (qatomic_read(&ev->value) != EV_SET) {
+-        pthread_cond_wait(&ev->cond, &ev->lock);
+-    }
+-    pthread_mutex_unlock(&ev->lock);
+-#endif
+-}
+-
+ static __thread NotifierList thread_exit;
+ 
+ /*
+diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+index a7fe3cc345f0..ca2e0b512e26 100644
+--- a/util/qemu-thread-win32.c
++++ b/util/qemu-thread-win32.c
+@@ -231,135 +231,6 @@ void qemu_sem_wait(QemuSemaphore *sem)
      }
  }
  
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index b2e26e21205b..04fc3bf2298e 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -394,11 +394,7 @@ void qemu_event_set(QemuEvent *ev)
-      */
-     smp_mb();
-     if (qatomic_read(&ev->value) != EV_SET) {
+-/* Wrap a Win32 manual-reset event with a fast userspace path.  The idea
+- * is to reset the Win32 event lazily, as part of a test-reset-test-wait
+- * sequence.  Such a sequence is, indeed, how QemuEvents are used by
+- * RCU and other subsystems!
+- *
+- * Valid transitions:
+- * - free->set, when setting the event
+- * - busy->set, when setting the event, followed by SetEvent
+- * - set->free, when resetting the event
+- * - free->busy, when waiting
+- *
+- * set->busy does not happen (it can be observed from the outside but
+- * it really is set->free->busy).
+- *
+- * busy->free provably cannot happen; to enforce it, the set->free transition
+- * is done with an OR, which becomes a no-op if the event has concurrently
+- * transitioned to free or busy (and is faster than cmpxchg).
+- */
+-
+-#define EV_SET         0
+-#define EV_FREE        1
+-#define EV_BUSY       -1
+-
+-void qemu_event_init(QemuEvent *ev, bool init)
+-{
+-    /* Manual reset.  */
+-    ev->event = CreateEvent(NULL, TRUE, TRUE, NULL);
+-    ev->value = (init ? EV_SET : EV_FREE);
+-    ev->initialized = true;
+-}
+-
+-void qemu_event_destroy(QemuEvent *ev)
+-{
+-    assert(ev->initialized);
+-    ev->initialized = false;
+-    CloseHandle(ev->event);
+-}
+-
+-void qemu_event_set(QemuEvent *ev)
+-{
+-    assert(ev->initialized);
+-
+-    /*
+-     * Pairs with both qemu_event_reset() and qemu_event_wait().
+-     *
+-     * qemu_event_set has release semantics, but because it *loads*
+-     * ev->value we need a full memory barrier here.
+-     */
+-    smp_mb();
+-    if (qatomic_read(&ev->value) != EV_SET) {
 -        int old = qatomic_xchg(&ev->value, EV_SET);
 -
--        /* Pairs with memory barrier in kernel futex_wait system call.  */
+-        /* Pairs with memory barrier after ResetEvent.  */
 -        smp_mb__after_rmw();
 -        if (old == EV_BUSY) {
-+        if (qatomic_xchg(&ev->value, EV_SET) == EV_BUSY) {
-             /* There were waiters, wake them up.  */
-             qemu_futex_wake(ev, INT_MAX);
-         }
-@@ -428,17 +424,17 @@ void qemu_event_wait(QemuEvent *ev)
- 
-     assert(ev->initialized);
- 
+-            /* There were waiters, wake them up.  */
+-            SetEvent(ev->event);
+-        }
+-    }
+-}
+-
+-void qemu_event_reset(QemuEvent *ev)
+-{
+-    assert(ev->initialized);
+-
+-    /*
+-     * If there was a concurrent reset (or even reset+wait),
+-     * do nothing.  Otherwise change EV_SET->EV_FREE.
+-     */
+-    qatomic_or(&ev->value, EV_FREE);
+-
+-    /*
+-     * Order reset before checking the condition in the caller.
+-     * Pairs with the first memory barrier in qemu_event_set().
+-     */
+-    smp_mb__after_rmw();
+-}
+-
+-void qemu_event_wait(QemuEvent *ev)
+-{
+-    unsigned value;
+-
+-    assert(ev->initialized);
+-
 -    /*
 -     * qemu_event_wait must synchronize with qemu_event_set even if it does
 -     * not go down the slow path, so this load-acquire is needed that
@@ -192,37 +550,55 @@ index b2e26e21205b..04fc3bf2298e 100644
 -     */
 -    value = qatomic_load_acquire(&ev->value);
 -    if (value != EV_SET) {
-+    while (true) {
-+        /*
-+         * qemu_event_wait must synchronize with qemu_event_set even if it does
-+         * not go down the slow path, so this load-acquire is needed that
-+         * synchronizes with the first memory barrier in qemu_event_set().
-+         */
-+        value = qatomic_load_acquire(&ev->value);
-+        if (value == EV_SET) {
-+            break;
-+        }
-+
-         if (value == EV_FREE) {
-             /*
-              * Leave the event reset and tell qemu_event_set that there are
-@@ -452,15 +448,10 @@ void qemu_event_wait(QemuEvent *ev)
-              * like the load above.
-              */
-             if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
+-        if (value == EV_FREE) {
+-            /*
+-             * Here the underlying kernel event is reset, but qemu_event_set is
+-             * not yet going to call SetEvent.  However, there will be another
+-             * check for EV_SET below when setting EV_BUSY.  At that point it
+-             * is safe to call WaitForSingleObject.
+-             */
+-            ResetEvent(ev->event);
+-
+-            /*
+-             * It is not clear whether ResetEvent provides this barrier; kernel
+-             * APIs (KeResetEvent/KeClearEvent) do not.  Better safe than sorry!
+-             */
+-            smp_mb();
+-
+-            /*
+-             * Leave the event reset and tell qemu_event_set that there are
+-             * waiters.  No need to retry, because there cannot be a concurrent
+-             * busy->free transition.  After the CAS, the event will be either
+-             * set or busy.
+-             */
+-            if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
 -                return;
-+                break;
-             }
-         }
- 
+-            }
+-        }
+-
 -        /*
--         * This is the final check for a concurrent set, so it does need
--         * a smp_mb() pairing with the second barrier of qemu_event_set().
--         * The barrier is inside the FUTEX_WAIT system call.
+-         * ev->value is now EV_BUSY.  Since we didn't observe EV_SET,
+-         * qemu_event_set() must observe EV_BUSY and call SetEvent().
 -         */
-         qemu_futex_wait(ev, EV_BUSY);
-     }
- }
+-        WaitForSingleObject(ev->event, INFINITE);
+-    }
+-}
+-
+ struct QemuThreadData {
+     /* Passed to win32_start_routine.  */
+     void             *(*start_routine)(void *);
+diff --git a/util/meson.build b/util/meson.build
+index 5735f65f1994..35029380a376 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -35,6 +35,7 @@ if glib_has_gslice
+ endif
+ util_ss.add(files('defer-call.c'))
+ util_ss.add(files('envlist.c', 'path.c', 'module.c'))
++util_ss.add(files('event.c'))
+ util_ss.add(files('host-utils.c'))
+ util_ss.add(files('bitmap.c', 'bitops.c'))
+ util_ss.add(files('fifo8.c'))
 
 -- 
 2.49.0
