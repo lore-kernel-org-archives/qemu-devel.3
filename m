@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948F9C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 16:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E255C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 16:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJb8U-0002BE-83; Mon, 26 May 2025 12:57:14 -0400
+	id 1uJb9Q-0002SH-8F; Mon, 26 May 2025 12:58:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJb8S-0002AO-W4
- for qemu-devel@nongnu.org; Mon, 26 May 2025 12:57:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJb91-0002MH-WB
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 12:57:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJb8Q-0003gY-QR
- for qemu-devel@nongnu.org; Mon, 26 May 2025 12:57:12 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJb8w-0003hT-GF
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 12:57:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748278629;
+ s=mimecast20190719; t=1748278661;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XMvOBl4JBvP9rxwQP13NOL9Dl2rE+GAhZKC88UlUQtg=;
- b=d6CuKs6Ehsax2ke1MGUe81dIT8uvcU+w7Trql2XXGioyy7Y69RKQRCaF4W29VNVMLdc6BM
- c4RPlXRTvcYJK3qIjsL3FC3Md0Ei+59OBYkooU+iyrEf8snTJBamlKHgrIGRKkfMmy7C8L
- yIxe2LhgqmJacMDRi+FVgaRMUuT0QsU=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JR9F0RLANhUU3B0457Fy2cAHZn42wAbaxqAsjyjXvyE=;
+ b=frwKejMBhiQbylLEEfa4q6EtbjBI1g7ccZcSIzJoba9m1H6X/5zgaRWC7i+ProDh9gLFxZ
+ 8MN0y83jxGYqG1x4ankVEvQO7xI2Dl3VTZyI5I7uf5aTcGU06WD/4ae2aJltiAvTDldRDq
+ 7+eLe5P2NUNENf/6L9RHjsqUCA20GOQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-gQjxPzBFM_2OMbwqNfFY7g-1; Mon, 26 May 2025 12:57:07 -0400
-X-MC-Unique: gQjxPzBFM_2OMbwqNfFY7g-1
-X-Mimecast-MFC-AGG-ID: gQjxPzBFM_2OMbwqNfFY7g_1748278627
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a371fb826cso974444f8f.1
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 09:57:07 -0700 (PDT)
+ us-mta-623-zOQiTUdPOoqil2x_pmUqng-1; Mon, 26 May 2025 12:57:39 -0400
+X-MC-Unique: zOQiTUdPOoqil2x_pmUqng-1
+X-Mimecast-MFC-AGG-ID: zOQiTUdPOoqil2x_pmUqng_1748278659
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-442cdf07ad9so13569075e9.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 09:57:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748278626; x=1748883426;
+ d=1e100.net; s=20230601; t=1748278659; x=1748883459;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XMvOBl4JBvP9rxwQP13NOL9Dl2rE+GAhZKC88UlUQtg=;
- b=WrkrHYAr7UfQKjnXjT/ysrRhj797LiNqFWEpgdiWICZu6uYCHslau5GQpsmVTPhubJ
- QpfphUUHG5hic1g24T+o6LzObgzA/RRerWl3olx6BBmFuYfsaCmyGh7LyqWDEKGGqZI2
- 3kUN1gWbdA5Yu0yko3x3DZ12LphoPWzS1W/GpEWiX/fi2zicT/4hvTAd7ahnsPBlu/b+
- FSknkYzjxAh8SJZgqmK+h2fOURHnE3wTp0V3dO0fzKY8bb0xttPhHq5I8r0RDkbnAQZO
- 0hRfmO1qbqL5qBs59nLGGmJfaH99ZwqkxtEtnsiZzjSCmzP7KMYwTUHEqE6EQkuGVcoy
- LhEQ==
-X-Gm-Message-State: AOJu0YydJ3tIjsG+yVi/Qnsl4tutzizk+d5QJ+XnPRQbSx0MWDqkjck9
- ZXLlkCBupSVCiyC/6iwbGdSGV9q3N2AUvlZ0tqgOjR6/vZFRwYJxe9ZMm6/93Y0Nt1sdVJtusI2
- DDNWYQS8Zkgn6l2+WRcnpl+dnh6eJVeK8JloBsvoiQwtqNpQSfB63enRQ
-X-Gm-Gg: ASbGnctU+VS3Hl2Y5NXytIIsX718g+zbho20SZ8VbHLO+1SLwWtLAZTF2MWNOjzm837
- pCXjlgR3Tl9wV0UjdLuh9exjHZok57N5BPkRDfidY58MxkuiF3bs6nxUw1gzt4zrMg71M9N/If8
- RNmFAblqoTgQm83IpVK7NezMGD+kXmpSsA4wEPSQo6769+tcEiTB3U14buBcQwboPQpGmo1nsd8
- JHIx9YmyMPRQvqNu7Ts29hdsL67Z64etkfXRtk/k+jFrDbcd7yLciI1TBetPmoB52BFISoLqe2K
- 4PBUcLhEOSd3ZU29LPLJC0ky345DOYE8fc8QXlgUzcUjOLm/Vw==
-X-Received: by 2002:a05:6000:3103:b0:3a4:c81:a075 with SMTP id
- ffacd0b85a97d-3a4cb49dde4mr7165575f8f.45.1748278626527; 
- Mon, 26 May 2025 09:57:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFNI52F//zq18dl2306MvKO/2UjaZ08mBOUCXxQPEK31tH4VPYLPh7MY22AcFp/jt5t6N8i1A==
-X-Received: by 2002:a05:6000:3103:b0:3a4:c81:a075 with SMTP id
- ffacd0b85a97d-3a4cb49dde4mr7165555f8f.45.1748278626030; 
- Mon, 26 May 2025 09:57:06 -0700 (PDT)
+ bh=JR9F0RLANhUU3B0457Fy2cAHZn42wAbaxqAsjyjXvyE=;
+ b=fbsDH5w22EVpUDLwTdc+0fYjpigybcoz6ugqV/Xms9rta/iObGX3CCi/N2JiKOUExT
+ bj0ZICG588akOJlL9g8luidD2ozkb6HOmNYud6O4KAAu3f8kCC/QUyXr7BjJWijqJRAW
+ 7krBvWFRsASXsDrTprcmskOHu/F8MFG0hJqBhbh47RGMjs4sve1GS/lDse8KVp+TowV0
+ es8NQsasegcR1dwHDSzZjSi3JrGyJp3YrMezGNlJhTQGKX/WSonqHdtB+bUyMWMh9Lgl
+ S0FzgTXnVKCl5kl/YoBE2ypDtvyjeTu+RlLSFnNe6BJkdPlGnFxBglOeyUOPJkClmrap
+ VTIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVDbKmMOK/c8roNEJXJMN5f5vIfLOakVoMT+9sLA2paP4A72q54kY50FDXLrpO+K4G2vwtSlPzBGCxp@nongnu.org
+X-Gm-Message-State: AOJu0YxGZDID9XpGLJrFMHaWiCzc16pfUnqc3cfuP24CH/U/qK8ouft2
+ mD92wTTt+pybwr9QH/g17fX+GxyuFuH/GLSGEweXKed3VZIxzri0yP72rRCsccRrfDGZwLhkps6
+ ngRNhocR0Ao6+O/P14mWrTrrzdJvvEUE1iCN4mV9L8qNCWFkY07KxqMJX
+X-Gm-Gg: ASbGncvJmvB3g6+riOZftt9I6ftf9HpExyU8aGvBMoXluzEcA+u6MXJM4QIIlY8Bc43
+ WXC3OE4GvpYp07jddVq5jbOiWOL5kzpEdd4uZsvbxt8CNXIZstpLkctIejOVZ8WxVXZUEsMu+K8
+ rS5ESggnNTaA9iHS9SV41lBSkZqD+kygty5Ej6j81JBOIwv2wiWc8IqEDubn1dginrULZhOht5z
+ tW6qEYhyjYJelOyzNiE0XDM1xvpmYD3Nf7un1h1Cvrs++vB1yTUGEFO/o40epHQKw3NyqKY0nDT
+ lki3Yvixgt0ggeoh1tOBxPWhtWkKDmPGbbOVRzR2OHTaJWmYMg==
+X-Received: by 2002:a05:600c:348d:b0:43c:e7a7:1e76 with SMTP id
+ 5b1f17b1804b1-44c930164e9mr76539735e9.1.1748278658681; 
+ Mon, 26 May 2025 09:57:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH43/CrFWixO43wtGANC1mYitfxPj4ZwWg/2VfDs4CfGY49HCZb+wpQhBdxCP/nTwRzaxnafw==
+X-Received: by 2002:a05:600c:348d:b0:43c:e7a7:1e76 with SMTP id
+ 5b1f17b1804b1-44c930164e9mr76539575e9.1.1748278658290; 
+ Mon, 26 May 2025 09:57:38 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4c9dd7c27sm8507288f8f.45.2025.05.26.09.57.05
+ ffacd0b85a97d-3a4d2a7a317sm5733117f8f.24.2025.05.26.09.57.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 09:57:05 -0700 (PDT)
-Message-ID: <22265d1d-207b-4e84-bd4d-7a2f56cb1348@redhat.com>
-Date: Mon, 26 May 2025 18:57:04 +0200
+ Mon, 26 May 2025 09:57:37 -0700 (PDT)
+Message-ID: <ff64dd4c-3437-4570-9fec-408c65339b8c@redhat.com>
+Date: Mon, 26 May 2025 18:57:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vfio/igd: Fix incorrect error propagation in
- vfio_pci_igd_opregion_detect()
-To: Tomita Moeko <tomitamoeko@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
- <c.koehne@beckhoff.com>, edmund.raile@proton.me,
- Edmund Raile <edmund.raile@protonmail.com>
-References: <20250522151636.20001-1-tomitamoeko@gmail.com>
+Subject: Re: [PATCH V5] vfio: return mr from vfio_get_xlat_addr
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Alex Williamson <alex.williamson@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ John Levon <john.levon@nutanix.com>
+References: <1747661203-136490-1-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -128,10 +134,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250522151636.20001-1-tomitamoeko@gmail.com>
+In-Reply-To: <1747661203-136490-1-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -156,95 +162,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/22/25 17:16, Tomita Moeko wrote:
-> In vfio_pci_igd_opregion_detect(), errp will be set when the device does
-> not have OpRegion or is hotplugged. This errp will be propagated to
-> pci_qdev_realize(), which interprets it as failure, causing unexpected
-> termination on devices without OpRegion like SR-IOV VFs or discrete
-> GPUs. Fix it by not setting errp in vfio_pci_igd_opregion_detect().
+On 5/19/25 15:26, Steve Sistare wrote:
+> Modify memory_get_xlat_addr and vfio_get_xlat_addr to return the memory
+> region that the translated address is found in.  This will be needed by
+> CPR in a subsequent patch to map blocks using IOMMU_IOAS_MAP_FILE.
 > 
-> This patch also checks if the device has OpRegion before hotplug status
-> to prevent unwanted warning messages on non-IGD devices.
+> Also return the xlat offset, so we can simplify the interface by removing
+> the out parameters that can be trivially derived from mr and xlat.
 > 
-> Fixes: c0273e77f2d7 ("vfio/igd: Detect IGD device by OpRegion")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2968
-> Reported-by: Edmund Raile <edmund.raile@protonmail.com>
-> Link: https://lore.kernel.org/qemu-devel/30044d14-17ec-46e3-b9c3-63d27a5bde27@gmail.com
-> Tested-by: Edmund Raile <edmund.raile@protonmail.com>
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> ---
-> v2:
-> * Add Tested-by from Edmund Raile. Thanks for the contribution.
-> * Rebased on vfio-next
-> * Fix typos.
+> Lastly, rename the functions to  to memory_translate_iotlb() and
+> vfio_translate_iotlb().
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Acked-by: David Hildenbrand <david@redhat.com>
 
-
-Edmund, Alex,
-
-Could you please send a R-b ?
+Applied to vfio-next.
 
 Thanks,
 
 C.
 
 
-
->   hw/vfio/igd.c | 22 ++++++++++------------
->   1 file changed, 10 insertions(+), 12 deletions(-)
+> ---
+>   hw/vfio/listener.c      | 33 ++++++++++++++++++++++-----------
+>   hw/virtio/vhost-vdpa.c  |  9 +++++++--
+>   include/system/memory.h | 19 +++++++++----------
+>   system/memory.c         | 32 +++++++-------------------------
+>   4 files changed, 45 insertions(+), 48 deletions(-)
 > 
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index 5b6341c5bf..e7a9d1ffc1 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -187,23 +187,21 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index bfacb3d..0afafe3 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -90,16 +90,17 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+>              section->offset_within_address_space & (1ULL << 63);
 >   }
 >   
->   static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice *vdev,
-> -                                         struct vfio_region_info **opregion,
-> -                                         Error **errp)
-> +                                         struct vfio_region_info **opregion)
+> -/* Called with rcu_read_lock held.  */
+> -static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+> -                               ram_addr_t *ram_addr, bool *read_only,
+> -                               Error **errp)
+> +/*
+> + * Called with rcu_read_lock held.
+> + * The returned MemoryRegion must not be accessed after calling rcu_read_unlock.
+> + */
+> +static MemoryRegion *vfio_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
+> +                                          Error **errp)
 >   {
->       int ret;
+> -    bool ret, mr_has_discard_manager;
+> +    MemoryRegion *mr;
 >   
-> -    /* Hotplugging is not supported for opregion access */
-> -    if (vdev->pdev.qdev.hotplugged) {
-> -        error_setg(errp, "IGD OpRegion is not supported on hotplugged device");
+> -    ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+> -                               &mr_has_discard_manager, errp);
+> -    if (ret && mr_has_discard_manager) {
+> +    mr = memory_translate_iotlb(iotlb, xlat_p, errp);
+> +    if (mr && memory_region_has_ram_discard_manager(mr)) {
+>           /*
+>            * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+>            * pages will remain pinned inside vfio until unmapped, resulting in a
+> @@ -118,7 +119,7 @@ static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>                            " intended via an IOMMU. It's possible to mitigate "
+>                            " by setting/adjusting RLIMIT_MEMLOCK.");
+>       }
+> -    return ret;
+> +    return mr;
+>   }
+>   
+>   static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+> @@ -126,6 +127,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
+>       VFIOContainerBase *bcontainer = giommu->bcontainer;
+>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
+> +    MemoryRegion *mr;
+> +    hwaddr xlat;
+>       void *vaddr;
+>       int ret;
+>       Error *local_err = NULL;
+> @@ -150,10 +153,14 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>           bool read_only;
+>   
+> -        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
+> +        mr = vfio_translate_iotlb(iotlb, &xlat, &local_err);
+> +        if (!mr) {
+>               error_report_err(local_err);
+>               goto out;
+>           }
+> +        vaddr = memory_region_get_ram_ptr(mr) + xlat;
+> +        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
+> +
+>           /*
+>            * vaddr is only valid until rcu_read_unlock(). But after
+>            * vfio_dma_map has set up the mapping the pages will be
+> @@ -1010,6 +1017,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       ram_addr_t translated_addr;
+>       Error *local_err = NULL;
+>       int ret = -EINVAL;
+> +    MemoryRegion *mr;
+> +    ram_addr_t xlat;
+>   
+>       trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
+>   
+> @@ -1021,9 +1030,11 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       }
+>   
+>       rcu_read_lock();
+> -    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
+> +    mr = vfio_translate_iotlb(iotlb, &xlat, &local_err);
+> +    if (!mr) {
+>           goto out_unlock;
+>       }
+> +    translated_addr = memory_region_get_ram_addr(mr) + xlat;
+>   
+>       ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+>                                   translated_addr, &local_err);
+> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> index 1ab2c11..a1dd9e1 100644
+> --- a/hw/virtio/vhost-vdpa.c
+> +++ b/hw/virtio/vhost-vdpa.c
+> @@ -209,6 +209,8 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       int ret;
+>       Int128 llend;
+>       Error *local_err = NULL;
+> +    MemoryRegion *mr;
+> +    hwaddr xlat;
+>   
+>       if (iotlb->target_as != &address_space_memory) {
+>           error_report("Wrong target AS \"%s\", only system memory is allowed",
+> @@ -228,11 +230,14 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>           bool read_only;
+>   
+> -        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
+> -                                  &local_err)) {
+> +        mr = memory_translate_iotlb(iotlb, &xlat, &local_err);
+> +        if (!mr) {
+>               error_report_err(local_err);
+>               return;
+>           }
+> +        vaddr = memory_region_get_ram_ptr(mr) + xlat;
+> +        read_only = !(iotlb->perm & IOMMU_WO) || mr->readonly;
+> +
+>           ret = vhost_vdpa_dma_map(s, VHOST_VDPA_GUEST_PA_ASID, iova,
+>                                    iotlb->addr_mask + 1, vaddr, read_only);
+>           if (ret) {
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index fbbf4cf..13416d7 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -738,21 +738,20 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+>                                                RamDiscardListener *rdl);
+>   
+>   /**
+> - * memory_get_xlat_addr: Extract addresses from a TLB entry
+> + * memory_translate_iotlb: Extract addresses from a TLB entry.
+> + *                         Called with rcu_read_lock held.
+>    *
+>    * @iotlb: pointer to an #IOMMUTLBEntry
+> - * @vaddr: virtual address
+> - * @ram_addr: RAM address
+> - * @read_only: indicates if writes are allowed
+> - * @mr_has_discard_manager: indicates memory is controlled by a
+> - *                          RamDiscardManager
+> + * @xlat_p: return the offset of the entry from the start of the returned
+> + *          MemoryRegion.
+>    * @errp: pointer to Error*, to store an error if it happens.
+>    *
+> - * Return: true on success, else false setting @errp with error.
+> + * Return: On success, return the MemoryRegion containing the @iotlb translated
+> + *         addr.  The MemoryRegion must not be accessed after rcu_read_unlock.
+> + *         On failure, return NULL, setting @errp with error.
+>    */
+> -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+> -                          ram_addr_t *ram_addr, bool *read_only,
+> -                          bool *mr_has_discard_manager, Error **errp);
+> +MemoryRegion *memory_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
+> +                                     Error **errp);
+>   
+>   typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+>   typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+> diff --git a/system/memory.c b/system/memory.c
+> index 63b983e..306e9ff 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2174,18 +2174,14 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+>   }
+>   
+>   /* Called with rcu_read_lock held.  */
+> -bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+> -                          ram_addr_t *ram_addr, bool *read_only,
+> -                          bool *mr_has_discard_manager, Error **errp)
+> +MemoryRegion *memory_translate_iotlb(IOMMUTLBEntry *iotlb, hwaddr *xlat_p,
+> +                                     Error **errp)
+>   {
+>       MemoryRegion *mr;
+>       hwaddr xlat;
+>       hwaddr len = iotlb->addr_mask + 1;
+>       bool writable = iotlb->perm & IOMMU_WO;
+>   
+> -    if (mr_has_discard_manager) {
+> -        *mr_has_discard_manager = false;
+> -    }
+>       /*
+>        * The IOMMU TLB entry we have just covers translation through
+>        * this IOMMU to its immediate target.  We need to translate
+> @@ -2195,7 +2191,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>                                    &xlat, &len, writable, MEMTXATTRS_UNSPECIFIED);
+>       if (!memory_region_is_ram(mr)) {
+>           error_setg(errp, "iommu map to non memory area %" HWADDR_PRIx "", xlat);
 > -        return false;
+> +        return NULL;
+>       } else if (memory_region_has_ram_discard_manager(mr)) {
+>           RamDiscardManager *rdm = memory_region_get_ram_discard_manager(mr);
+>           MemoryRegionSection tmp = {
+> @@ -2203,9 +2199,6 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>               .offset_within_region = xlat,
+>               .size = int128_make64(len),
+>           };
+> -        if (mr_has_discard_manager) {
+> -            *mr_has_discard_manager = true;
+> -        }
+>           /*
+>            * Malicious VMs can map memory into the IOMMU, which is expected
+>            * to remain discarded. vfio will pin all pages, populating memory.
+> @@ -2216,7 +2209,7 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>               error_setg(errp, "iommu map to discarded memory (e.g., unplugged"
+>                            " via virtio-mem): %" HWADDR_PRIx "",
+>                            iotlb->translated_addr);
+> -            return false;
+> +            return NULL;
+>           }
+>       }
+>   
+> @@ -2226,22 +2219,11 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>        */
+>       if (len & iotlb->addr_mask) {
+>           error_setg(errp, "iommu has granularity incompatible with target AS");
+> -        return false;
+> +        return NULL;
+>       }
+>   
+> -    if (vaddr) {
+> -        *vaddr = memory_region_get_ram_ptr(mr) + xlat;
 > -    }
 > -
->       ret = vfio_device_get_region_info_type(&vdev->vbasedev,
->                       VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
->                       VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, opregion);
->       if (ret) {
-> -        error_setg_errno(errp, -ret,
-> -                         "Device does not support IGD OpRegion feature");
-> +        return false;
-> +    }
-> +
-> +    /* Hotplugging is not supported for opregion access */
-> +    if (vdev->pdev.qdev.hotplugged) {
-> +        warn_report("IGD device detected, but OpRegion is not supported "
-> +                    "on hotplugged device.");
->           return false;
->       }
+> -    if (ram_addr) {
+> -        *ram_addr = memory_region_get_ram_addr(mr) + xlat;
+> -    }
+> -
+> -    if (read_only) {
+> -        *read_only = !writable || mr->readonly;
+> -    }
+> -
+> -    return true;
+> +    *xlat_p = xlat;
+> +    return mr;
+>   }
 >   
-> @@ -524,7 +522,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->       }
->   
->       /* IGD device always comes with OpRegion */
-> -    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
-> +    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
->           return true;
->       }
->       info_report("OpRegion detected on Intel display %x.", vdev->device_id);
-> @@ -695,7 +693,7 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->           return true;
->       }
->   
-> -    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
-> +    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
->           /* Should never reach here, KVMGT always emulates OpRegion */
->           return false;
->       }
+>   void memory_region_set_log(MemoryRegion *mr, bool log, unsigned client)
 
 
