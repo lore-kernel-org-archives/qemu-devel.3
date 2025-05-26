@@ -4,92 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67193C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 10:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC81C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 10:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJUg1-0002jh-CF; Mon, 26 May 2025 06:03:26 -0400
+	id 1uJUhR-0003K5-Fi; Mon, 26 May 2025 06:04:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1uJUfw-0002jP-Of
- for qemu-devel@nongnu.org; Mon, 26 May 2025 06:03:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1uJUft-0008Kg-Mi
- for qemu-devel@nongnu.org; Mon, 26 May 2025 06:03:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748253793;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XfRqWFA/1d2njlvTb9omadUsmia429DgztI3OIEpGgs=;
- b=jChBKXrEsr8k3mzGaDrRtk2FklMVd7sU+cFLCf71FPKIjzX5SAZctNpT+U9/kvooJ6gUoy
- FeqkMDFUBnYVoCQ+rmOCQjRB67fWZf8yIZDIB5YcTAKOJiUVrworhAkCcY/aBnx0j6Hqnc
- zE/zvdh+U5f0VfpCKm1xAb8mwpGXVn8=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-soRh2h5pMWeK6twgPNqaUw-1; Mon, 26 May 2025 06:03:11 -0400
-X-MC-Unique: soRh2h5pMWeK6twgPNqaUw-1
-X-Mimecast-MFC-AGG-ID: soRh2h5pMWeK6twgPNqaUw_1748253791
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c5c82c6d72so415943385a.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 03:03:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748253791; x=1748858591;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XfRqWFA/1d2njlvTb9omadUsmia429DgztI3OIEpGgs=;
- b=taixduDxLIAwI0oD9rt4RaXW2NFwCd0EJdeHKI888ZKj/1cm4aqWtkrrGi9AE9q65U
- Q7kIqvB4GCcxR0GzEqvMrz0Njv4L0DBMHOwM1UGBME62wNd6gkw6fPe5wJZ+G1DMO/BX
- zLNH5aB+TPSBT0UwVagreXfZsrLUZT9A0DDSlfoV2GHC/5x5WN06ofqZBj5UFf/Yc2Mh
- daa2NjBf4GDVGEkIuboU93vOP10HHy2fvXXIOeI0b66t3Kg9n1quIWpSEowRtLyJSJPg
- v2Fgce3+Egrzi4nJR30MspClGFA5Yydng7bUj6/YG1Rds60rCkq29lhkrer5WU1Bxa4+
- ebgg==
-X-Gm-Message-State: AOJu0YxXpReRumxs1EXsZMOTeKBip+whvudQ91vugDWvJBJWPOauOmsg
- 2KJvzgIfpHLJ2JwyqHYTueuRJ1rvEeGStD2uXzWjXryLNwQgUmeVyiGuIJJDAxFCJ98R0SS3KYx
- dTJEsN/5FB8SeuGvchodSiwKZN3JDA/oAOnpGQljk+OUxpnWm9jFUPnzD7Y3GMEuyzduooH6t+e
- GioXksFT6lpzuX/aQXvwcvTxltNl9tI/1Ky+Cznc/R9Ywq
-X-Gm-Gg: ASbGncvq5NEzjGWKQSsszJA4iNGloCM6V0Gw7g/3M7wtBVl/tfVz2SgZrsrjkVMpfqw
- 62DAAk5C4cHtJ89xiPvQ3I7KwgMX1csfLd9i528I9BZVpdVK8RGPTA6HoUSGNKGu3YcDO0oO1YZ
- GKp5aYx95Cr74BhKLzRB7pm5BbdQ==
-X-Received: by 2002:a05:6102:41aa:b0:4c1:71b6:6c with SMTP id
- ada2fe7eead31-4e42409f7damr5614309137.7.1748253779940; 
- Mon, 26 May 2025 03:02:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0Jp/OYKatOx62p0yBD+zKi+ZWF6QVlY6dhqURM+HeOpgKBcQ2I4S18YPEgjoBTSUHH/WusyPrnV/wxjpQuZ8=
-X-Received: by 2002:a05:622a:429a:b0:494:af61:f9c3 with SMTP id
- d75a77b69052e-49f46651165mr132781281cf.21.1748253760041; Mon, 26 May 2025
- 03:02:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uJUhL-0003Je-4d
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 06:04:49 -0400
+Received: from mailgate02.uberspace.is ([185.26.156.114])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uJUhJ-0008V9-7C
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 06:04:46 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 50AC9180240
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 12:04:42 +0200 (CEST)
+Received: (qmail 6370 invoked by uid 990); 26 May 2025 10:04:42 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Mon, 26 May 2025 12:04:42 +0200
+From: Julian Ganz <neither@nut.email>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Julian Ganz <neither@nut.email>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 15/25] target/ppc: call plugin trap callbacks
+Date: Mon, 26 May 2025 12:04:32 +0200
+Message-ID: <20250526100434.140715-1-neither@nut.email>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <8879f07b-7d4b-4013-b798-a59d6a69bb48@linaro.org>
+References: <cover.1747666625.git.neither@nut.email>
+ <bc32d3f37c3e8d33e7f1c4f0d08b858d934f1ecf.1747666625.git.neither@nut.email>
+ <8879f07b-7d4b-4013-b798-a59d6a69bb48@linaro.org>
 MIME-Version: 1.0
-References: <20250525132717.527392-1-marcandre.lureau@redhat.com>
- <20250525132717.527392-9-marcandre.lureau@redhat.com>
- <87cybvkhtt.fsf@pond.sub.org>
-In-Reply-To: <87cybvkhtt.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 26 May 2025 12:02:28 +0200
-X-Gm-Features: AX0GCFtb6cuOEwDB7r0LHZNdZcGc4ke41kQ9XNOtIRQCe5IeNcPEg2GnrpxnciQ
-Message-ID: <CAMxuvawUQ0o1i7zgop7rQd-75CB69HpJaLstM8ZjrpgHZ0rT-g@mail.gmail.com>
-Subject: Re: [PULL 8/9] alsaaudio: Set try-poll to false by default
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
- BALATON Zoltan <balaton@eik.bme.hu>, Gerd Hoffmann <kraxel@redhat.com>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Eric Blake <eblake@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000005846c80636070c16"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Bar: /
+X-Rspamd-Report: MID_CONTAINS_FROM(1) BAYES_HAM(-0.250626) MIME_GOOD(-0.1)
+X-Rspamd-Score: 0.649373
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=L9cYxMQEcBKvIk7TTralNnFUYqOHlx13RG1PHZiLQRQ=;
+ b=m0autTUuqFQZBWxA4gaTFp2aZxS0PWm44ozuiU+Ws6vbIGUMKM2KnoxaOpFm0PpWjo9GNHqsan
+ rBj5hgMUMPyATOAsUZsThoqGYdqfD1Uy7zmGJtF+ypqwzh9cowZMxzz/GSOFdujyzHm9jGPM4W0R
+ ulHo3yxPcZUe5v1gcrcmeS7+4+Ts7chIOLbnzToesriX2d/KJnMwK7qIFDX16Vc21PqCHAUHzabv
+ OXQcFuNGbTx3kwHQBMHiuPll5vU9yqjORaxlksWWaULaEJyrBwTQKH6aJsEQ3tFqAuaXs2wdyj8l
+ 1yDdf61zAvpgSAl13SsJYAC18ZwryW+yA6dmM0Ft0yQp/e7VXcaurqumMoKMPbF+jcZKu36OBUIt
+ 7Y5TyC3v+8Wve0FUU/r/c3W0ZiKQdPpPixrHMEhCfqGAng6oANBTz8HI28zJWN/aabqmvHbG9fT8
+ 8jzo2cmxFjbq6jhvPQL+Ul8soEpXIM+37F/7o5usdqT5JiTIt/gHARnh/v1WTFjX1Z7L1QByDP/S
+ k+apmkXK42zNWKY+BPQH6gt2f55RcJx/tQAp69EpC3rrbMWJV8Y8zGC1Zw2p48D7t5ujl/L8kemt
+ cXevZs3glZD6lHyPAgM3EAtjzGacLU7JOvrGoX6losTH8wqQ5GjbBga/6byaON0a8UEGJlQE61Ze
+ 8=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,198 +83,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005846c80636070c16
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Richard,
 
-Hi
+sorry for the late reply to this mail in particular. I needed my memory to be
+refreshed.
 
-On Mon, May 26, 2025 at 8:27=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+On 5/19/25 16:19, Julian Ganz wrote:
+> > @@ -758,6 +787,7 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
+> >           if (lev == 1 && cpu->vhyp) {
+> >               cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
+> >               powerpc_reset_excp_state(cpu);
+> > +            qemu_plugin_vcpu_hostcall_cb(env_cpu(env), last_pc);
+> 
+> Err... I think you need to be more specific about what you mean by "hostcall".  Certainly 
+> this isn't the same thing as semihosting.
 
-> marcandre.lureau@redhat.com writes:
->
-> > From: BALATON Zoltan <balaton@eik.bme.hu>
-> >
-> > Quoting Volker R=C3=BCmelin: "try-poll=3Don tells the ALSA backend to t=
-ry to
-> > use an event loop instead of the audio timer. This works most of the
-> > time. But the poll event handler in the ALSA backend has a bug. For
-> > example, if the guest can't provide enough audio frames in time, the
-> > ALSA buffer is only partly full and the event handler will be called
-> > again and again on every iteration of the main loop. This increases
-> > the processor load and the guest has less processor time to provide
-> > new audio frames in time. I have two examples where a guest can't
-> > recover from this situation and the guest seems to hang."
-> >
-> > One reproducer I've found is booting MorphOS demo iso on
-> > qemu-system-ppc -machine pegasos2 -audio alsa which should play a
-> > startup sound but instead it freezes. Even when it does not hang it
-> > plays choppy sound. Volker suggested using command line to set
-> > try-poll=3Doff saying: "The try-poll=3Doff arguments are typically
-> > necessary, because the alsa backend has a design issue with
-> > try-poll=3Don. If the guest can't provide enough audio frames, it's
-> > really unhelpful to ask for new audio frames on every main loop
-> > iteration until the guest can provide enough audio frames. Timer based
-> > playback doesn't have that problem."
-> >
-> > But users cannot easily find this option and having a non-working
-> > default is really unhelpful so to make life easier just set it to
-> > false by default which works until the issue with the alsa backend can
-> > be fixed.
-> >
-> > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> > Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > [ Marc-Andr=C3=A9 - Updated QAPI and CLI doc ]
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > Message-Id: <20250316002046.D066A4E6004@zero.eik.bme.hu>
-> > ---
-> >  qapi/audio.json   | 2 +-
-> >  audio/alsaaudio.c | 2 +-
-> >  qemu-options.hx   | 4 ++--
-> >  3 files changed, 4 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/qapi/audio.json b/qapi/audio.json
-> > index dd5a58d13e..49633cf317 100644
-> > --- a/qapi/audio.json
-> > +++ b/qapi/audio.json
-> > @@ -96,7 +96,7 @@
-> >  # @period-length: the period length in microseconds
-> >  #
-> >  # @try-poll: attempt to use poll mode, falling back to non-polling
-> > -#     access on failure (default true)
-> > +#     access on failure (default false)
-> >  #
-> >  # Since: 4.0
-> >  ##
->
-> Missed this when it was posted (it wasn't cc'ed to me).  Flipping the
-> default is technically an incompatible change.  I understand the
-> justification, and I'm not passing judgement on its validity; that's the
-> audio maintainers job.  I just want to ask: does this need a release
-> note?
->
->
-I doubt anyone will care as long as it doesn't break (that we can't know).
+We count as a hostcall anything that is handled by code which execution is not
+visible to plugins through the exec_insn callbacks. I believe that this is the
+case hee, but I might be wrong.
 
-I added a note to https://wiki.qemu.org/ChangeLog/10.1#Audio
-
-
-We normally record incompatible changes in docs/about/deprecated.rst and
-> then docs/about/removed-features.rst, but these don't fit here.
->
-> [...]
->
->
-
---0000000000005846c80636070c16
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
-il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 26, 2=
-025 at 8:27=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redha=
-t.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
-_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
-,204);padding-left:1ex"><a href=3D"mailto:marcandre.lureau@redhat.com" targ=
-et=3D"_blank">marcandre.lureau@redhat.com</a> writes:<br>
-<br>
-&gt; From: BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.hu" target=
-=3D"_blank">balaton@eik.bme.hu</a>&gt;<br>
-&gt;<br>
-&gt; Quoting Volker R=C3=BCmelin: &quot;try-poll=3Don tells the ALSA backen=
-d to try to<br>
-&gt; use an event loop instead of the audio timer. This works most of the<b=
-r>
-&gt; time. But the poll event handler in the ALSA backend has a bug. For<br=
->
-&gt; example, if the guest can&#39;t provide enough audio frames in time, t=
-he<br>
-&gt; ALSA buffer is only partly full and the event handler will be called<b=
-r>
-&gt; again and again on every iteration of the main loop. This increases<br=
->
-&gt; the processor load and the guest has less processor time to provide<br=
->
-&gt; new audio frames in time. I have two examples where a guest can&#39;t<=
-br>
-&gt; recover from this situation and the guest seems to hang.&quot;<br>
-&gt;<br>
-&gt; One reproducer I&#39;ve found is booting MorphOS demo iso on<br>
-&gt; qemu-system-ppc -machine pegasos2 -audio alsa which should play a<br>
-&gt; startup sound but instead it freezes. Even when it does not hang it<br=
->
-&gt; plays choppy sound. Volker suggested using command line to set<br>
-&gt; try-poll=3Doff saying: &quot;The try-poll=3Doff arguments are typicall=
-y<br>
-&gt; necessary, because the alsa backend has a design issue with<br>
-&gt; try-poll=3Don. If the guest can&#39;t provide enough audio frames, it&=
-#39;s<br>
-&gt; really unhelpful to ask for new audio frames on every main loop<br>
-&gt; iteration until the guest can provide enough audio frames. Timer based=
-<br>
-&gt; playback doesn&#39;t have that problem.&quot;<br>
-&gt;<br>
-&gt; But users cannot easily find this option and having a non-working<br>
-&gt; default is really unhelpful so to make life easier just set it to<br>
-&gt; false by default which works until the issue with the alsa backend can=
-<br>
-&gt; be fixed.<br>
-&gt;<br>
-&gt; Signed-off-by: BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.hu=
-" target=3D"_blank">balaton@eik.bme.hu</a>&gt;<br>
-&gt; Acked-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lurea=
-u@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
-&gt; [ Marc-Andr=C3=A9 - Updated QAPI and CLI doc ]<br>
-&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
-lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br=
->
-&gt; Message-Id: &lt;<a href=3D"mailto:20250316002046.D066A4E6004@zero.eik.=
-bme.hu" target=3D"_blank">20250316002046.D066A4E6004@zero.eik.bme.hu</a>&gt=
-;<br>
-&gt; ---<br>
-&gt;=C2=A0 qapi/audio.json=C2=A0 =C2=A0| 2 +-<br>
-&gt;=C2=A0 audio/alsaaudio.c | 2 +-<br>
-&gt;=C2=A0 qemu-options.hx=C2=A0 =C2=A0| 4 ++--<br>
-&gt;=C2=A0 3 files changed, 4 insertions(+), 4 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/qapi/audio.json b/qapi/audio.json<br>
-&gt; index dd5a58d13e..49633cf317 100644<br>
-&gt; --- a/qapi/audio.json<br>
-&gt; +++ b/qapi/audio.json<br>
-&gt; @@ -96,7 +96,7 @@<br>
-&gt;=C2=A0 # @period-length: the period length in microseconds<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # @try-poll: attempt to use poll mode, falling back to non-polli=
-ng<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0access on failure (default true)<br>
-&gt; +#=C2=A0 =C2=A0 =C2=A0access on failure (default false)<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 4.0<br>
-&gt;=C2=A0 ##<br>
-<br>
-Missed this when it was posted (it wasn&#39;t cc&#39;ed to me).=C2=A0 Flipp=
-ing the<br>
-default is technically an incompatible change.=C2=A0 I understand the<br>
-justification, and I&#39;m not passing judgement on its validity; that&#39;=
-s the<br>
-audio maintainers job.=C2=A0 I just want to ask: does this need a release<b=
-r>
-note?<br>
-<br></blockquote><div><br></div><div>I doubt anyone will care as long as it=
- doesn&#39;t break (that we can&#39;t know).</div><div><br></div><div>I add=
-ed a note to <a href=3D"https://wiki.qemu.org/ChangeLog/10.1#Audio">https:/=
-/wiki.qemu.org/ChangeLog/10.1#Audio</a></div><div><br></div><div><br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">
-We normally record incompatible changes in docs/about/deprecated.rst and<br=
->
-then docs/about/removed-features.rst, but these don&#39;t fit here.<br>
-<br>
-[...]<br>
-<br>
-</blockquote></div></div>
-
---0000000000005846c80636070c16--
-
+Regards,
+Julian
 
