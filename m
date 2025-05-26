@@ -4,137 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68695C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 12:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434DFC5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 12:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJWnj-0002Iz-Oi; Mon, 26 May 2025 08:19:31 -0400
+	id 1uJX3I-0005O8-2o; Mon, 26 May 2025 08:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJWnh-0002El-4i
- for qemu-devel@nongnu.org; Mon, 26 May 2025 08:19:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uJX3G-0005Ns-Qz
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 08:35:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJWnc-0000BL-Ih
- for qemu-devel@nongnu.org; Mon, 26 May 2025 08:19:28 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uJX3E-000298-Ka
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 08:35:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748261959;
+ s=mimecast20190719; t=1748262926;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yjGz78lNZqce45P0w5v4tUTDkBBStHgYwQkSpHQPiWo=;
- b=FQHeQty+VRniM6PCUD2rr7ACW0A+WWM0Ne43SA9WIn0K5DKVfvPjifIY8Cf0voBuclCmY8
- yBkn1Vdstb7maKisMSx4Of0ACf/4dmb3XqHHfG4NbnA+Cs1UkxQEPXQfpNdgM7h/y8Xd+j
- BgDc7DY/SiUoQEN+D/J1d0UMn8Aiqjc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=V4nsKL5XYpAnQ14Q1cZNYas8WaUj40agsGA/CVUFyzs=;
+ b=C6KpN9zvxGyvX7b99NivDS1we+33zDLc+5gCel2q1yLD87doRs5cHeBuvczcA3QuqDbv0z
+ Ewmg1zKaR0XHsG2mrG9XNJhXg76gnepIJeIaZoJ/ZNfOJjW41yhv2hz+JN00WuYgaKVACO
+ YNX01nPwX5nduy++1GU+jGcW9so7if0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-nl9d3ybKNTukPscxDplTbw-1; Mon, 26 May 2025 08:19:17 -0400
-X-MC-Unique: nl9d3ybKNTukPscxDplTbw-1
-X-Mimecast-MFC-AGG-ID: nl9d3ybKNTukPscxDplTbw_1748261957
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a3684a5655so836200f8f.0
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 05:19:17 -0700 (PDT)
+ us-mta-206-6B4fy5LtPUWdwJ03tjzoMw-1; Mon, 26 May 2025 08:35:24 -0400
+X-MC-Unique: 6B4fy5LtPUWdwJ03tjzoMw-1
+X-Mimecast-MFC-AGG-ID: 6B4fy5LtPUWdwJ03tjzoMw_1748262923
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-442cdf07ad9so12276335e9.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 05:35:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748261956; x=1748866756;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yjGz78lNZqce45P0w5v4tUTDkBBStHgYwQkSpHQPiWo=;
- b=NC6ANOQooktSFPmw425eCY4yBzZy5xt0j+pJ2G5ksRK8fRmNeZXVTGoE4kURc/woDG
- xJbBfj+KBqVyXPQ3sb/8LILo4uRcyQ54QCfvf1F8gOe2LANYQmHYkKNzH9iCamHcjpUW
- ofyuWX43jb+ktwLiLy/kmppl9N5ZV/aSDQY0Bjq0p526trKk2OjdAKgnDgK5TwNJ1SBJ
- VOyBwg75BIPJN6dyoTEnxRijrFTnaVss1F8dXl9+lvn5g7Ses58kwXsqntFM1NEDHZW5
- glXoXJRw6LmuKaTrf4jL2YM7ynM7kHqXjFBnw3hRAxPBgB/dMNaG25BsDBKB/qTPj0NH
- jGEg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiUMlbmOTsCRwwZgNGll3qzWUXxTdQDUzqXGvgCNiFzA+EVTxOM9ne7nFYAcAVfIqySAXN+Tl6juHD@nongnu.org
-X-Gm-Message-State: AOJu0YzAr6fWUDWiQwLAFIV+Za/urZigy3dyKW1P8VmesqGoGGkm9rhQ
- DwNCwyfMRj3+6qSTZyQr9PPND24VwsNOVrvN/ICmpGQiwt5a0kcvW+JBALKkEEkzDl2ljfE90PR
- 2Q9s+EXGkYbFIeIPe3HGG/DyHNc4MSSAisD/AKT6vf3iQ9FN5zHNGgeC9
-X-Gm-Gg: ASbGncvTCtbAU0FINowWJNprRqP6J8ASAUWG3vkx+8bnTZ1wyopGghI6/sKscbVbV1V
- GPZBMCJy1nACng+o+HvAp/cuo+p4brVrEsRtR/R0E0nAG1Nfd94nWpDeQ0FedJ3BoVBOROqGoks
- JYbEZ0AHWAAI8IxwdBrQ3DEfQ0Y+OkYvC+7sesYTLsixIf4PkW/ZIFNUU0EhAn0KO9V4y3MUUC+
- 0x7FqzaW4WckKEyoBh+4wvrhOlAYxZSHSoRRybWc8fET/RcfHr7D/UGrw1RN7xLkBv+IKXzr50g
- Qxfe2ZL6JAA7d60S6hNn35jdm5Fru+WImmx6LBllK/kDDK0bTA==
-X-Received: by 2002:a05:6000:1ac9:b0:3a3:7077:ab99 with SMTP id
- ffacd0b85a97d-3a4cb48445amr7383062f8f.45.1748261956464; 
- Mon, 26 May 2025 05:19:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGC4wDiBIjyoPVRMb26X1K8fC1AhdSRImIuIW5JQBsco0aXvuO5FAfN1MvGZk6oTFE34KDC7g==
-X-Received: by 2002:a05:6000:1ac9:b0:3a3:7077:ab99 with SMTP id
- ffacd0b85a97d-3a4cb48445amr7383034f8f.45.1748261956024; 
- Mon, 26 May 2025 05:19:16 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442eb85a3b1sm279180155e9.0.2025.05.26.05.19.15
+ d=1e100.net; s=20230601; t=1748262923; x=1748867723;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=V4nsKL5XYpAnQ14Q1cZNYas8WaUj40agsGA/CVUFyzs=;
+ b=AreUgFR/WbCZ4V8z1aQOou/aFyj+27zq/vriDEYf6guEZ+zTWbVHtjHyJtPkT8f7Dj
+ 2+kbywO46nbG800QQz87oqz9Y+0vB9her14hfyRaDCC8VqGh1W8uWjZejHXsrT/OdXW8
+ RTDbk2J6+2o+IBjal6hayfEpP/fH8z57PUe6k1+3SuWKstkagLFoznP/pv91mFkoucc/
+ 6bqHIfw0e7svqjbstJLGu7DzluEbTtiwz2rERmQztaoOqVXIp84A6/jkasoQIkoi6FL1
+ EZVycdISmwPNp0bv7jJLtHFYVvcBaA8+z8AddDYQ68Ni6nYCX5jt4v5/4UounFb/Il5J
+ yerg==
+X-Gm-Message-State: AOJu0YxmDA41RxZbgxx+Otd8IZYOMLAI40DVRok2ZYmd1g5wik5KAtvw
+ bCVxvIQUG1T7rvBnkRHBafao04w0pvTk6J49PBjHlhl+ZynDqMYYi803MBFyNRjXSrcVsChz6G+
+ pnYxNzk/e741/r4J2ObF6s7krxEptW6ehaVIuilCc/3NaOjpnj1JRfhIY
+X-Gm-Gg: ASbGnct+K4VsRyDCH3Cf3FjqgKihagcZeg27hwf11hJIuFpbLKEFMg3U9OsJJ/uL/0w
+ STvQwmO12I+qP9oAiHV93S09S4UvBKDiB+NmLaQu88iWwfkW1Wzpxxc2qJ50HWoR6NqLgNodMIt
+ Ylew3FwiqqsznysgnMRJPrf5sWoAW8jakK2M+kYho52LVGMxwga5TohpqRkaKnbJ9z+j9vQf3O1
+ OE6VvDY0s71KqTz6G6vpXKrq+GPOOLrFU1GILl4vIkkSxxaKroyvAwTWVgYsHGCbAlUt1i2hU1N
+ Mqyv5B70snrS7w==
+X-Received: by 2002:a05:600c:35d3:b0:442:f4a3:b5ec with SMTP id
+ 5b1f17b1804b1-44c9301650cmr86681595e9.4.1748262923120; 
+ Mon, 26 May 2025 05:35:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2bzTWdOu7ChYBi1Dq1tRhmSjyDYxWAYjJ70yynaNOQWI9kCWx4UkSZaIt0arUTRAV8BLqiQ==
+X-Received: by 2002:a05:600c:35d3:b0:442:f4a3:b5ec with SMTP id
+ 5b1f17b1804b1-44c9301650cmr86681265e9.4.1748262922771; 
+ Mon, 26 May 2025 05:35:22 -0700 (PDT)
+Received: from [192.168.10.27] ([151.95.46.79])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-447f6b295e7sm235168965e9.2.2025.05.26.05.35.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 05:19:15 -0700 (PDT)
-Message-ID: <946512ca-7fb6-4d56-a1f7-c14e507c00e4@redhat.com>
-Date: Mon, 26 May 2025 14:19:14 +0200
+ Mon, 26 May 2025 05:35:22 -0700 (PDT)
+Message-ID: <10a65a3b-f2ab-40f4-9bb0-81da46cd5ed1@redhat.com>
+Date: Mon, 26 May 2025 14:35:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv3 00/21] intel_iommu: Enable stage-1 translation for
- passthrough device
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH 03/14] rust: define traits and pointer wrappers to convert
+ from/to C representations
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>
+References: <20240701145853.1394967-1-pbonzini@redhat.com>
+ <20240701145853.1394967-4-pbonzini@redhat.com>
+ <CAJSP0QU3iT9REzdciVZBhRWLtQXtoabJ9Jb=S9Maun1cDb+WFw@mail.gmail.com>
+ <CABgObfY=Lm_868Me7xqEk2zA+UGARbeH-4ELvBJn4tYucUCXJg@mail.gmail.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <CABgObfY=Lm_868Me7xqEk2zA+UGARbeH-4ELvBJn4tYucUCXJg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -159,233 +155,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/25 13:14, Zhenzhong Duan wrote:
-> Hi,
+On 9/27/24 22:26, Paolo Bonzini wrote:
+> On Fri, Sep 27, 2024 at 9:36 PM Stefan Hajnoczi <stefanha@gmail.com> wrote:
+>>
+>> On Mon, 1 Jul 2024 at 11:02, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>> +/// A type for which there is a canonical representation as a C datum.
+>>> +pub trait CloneToForeign {
+>>> +    /// The representation of `Self` as a C datum.  Typically a
+>>> +    /// `struct`, though there are exceptions for example `c_char`
+>>> +    /// for strings, since C strings are of `char *` type).
+>>> +    type Foreign;
+>>> +
+>>> +    /// Free the C datum pointed to by `p`.
+>>> +    ///
+>>> +    /// # Safety
+>>> +    ///
+>>> +    /// `p` must be `NULL` or point to valid data.
+>>> +    unsafe fn free_foreign(p: *mut Self::Foreign);
+>>> +
+>>> +    /// Convert a native Rust object to a foreign C struct, copying
+>>> +    /// everything pointed to by `self` (same as `to_glib_full` in `glib-rs`)
+>>> +    fn clone_to_foreign(&self) -> OwnedPointer<Self>;
+>>
+>> I expected the return type to be OwnedPointer<Self::Foreign>. Is this a typo?
 > 
-> Per Jason Wang's suggestion, iommufd nesting series[1] is split into
-> "Enable stage-1 translation for emulated device" series and
-> "Enable stage-1 translation for passthrough device" series.
-> 
-> This series is 2nd part focusing on passthrough device. We don't do
-> shadowing of guest page table for passthrough device but pass stage-1
-> page table to host side to construct a nested domain. There was some
-> effort to enable this feature in old days, see [2] for details.
-> 
-> The key design is to utilize the dual-stage IOMMU translation
-> (also known as IOMMU nested translation) capability in host IOMMU.
-> As the below diagram shows, guest I/O page table pointer in GPA
-> (guest physical address) is passed to host and be used to perform
-> the stage-1 address translation. Along with it, modifications to
-> present mappings in the guest I/O page table should be followed
-> with an IOTLB invalidation.
-> 
->          .-------------.  .---------------------------.
->          |   vIOMMU    |  | Guest I/O page table      |
->          |             |  '---------------------------'
->          .----------------/
->          | PASID Entry |--- PASID cache flush --+
->          '-------------'                        |
->          |             |                        V
->          |             |           I/O page table pointer in GPA
->          '-------------'
->      Guest
->      ------| Shadow |---------------------------|--------
->            v        v                           v
->      Host
->          .-------------.  .------------------------.
->          |   pIOMMU    |  | Stage1 for GIOVA->GPA  |
->          |             |  '------------------------'
->          .----------------/  |
->          | PASID Entry |     V (Nested xlate)
->          '----------------\.--------------------------------------.
->          |             |   | Stage2 for GPA->HPA, unmanaged domain|
->          |             |   '--------------------------------------'
->          '-------------'
-> For history reason, there are different namings in different VTD spec rev,
-> Where:
->   - Stage1 = First stage = First level = flts
->   - Stage2 = Second stage = Second level = slts
-> <Intel VT-d Nested translation>
-> 
-> There are some interactions between VFIO and vIOMMU
-> * vIOMMU registers PCIIOMMUOps [set|unset]_iommu_device to PCI
->    subsystem. VFIO calls them to register/unregister HostIOMMUDevice
->    instance to vIOMMU at vfio device realize stage.
-> * vIOMMU calls HostIOMMUDeviceIOMMUFD interface [at|de]tach_hwpt
->    to bind/unbind device to IOMMUFD backed domains, either nested
->    domain or not.
-> 
-> See below diagram:
-> 
->          VFIO Device                                 Intel IOMMU
->      .-----------------.                         .-------------------.
->      |                 |                         |                   |
->      |       .---------|PCIIOMMUOps              |.-------------.    |
->      |       | IOMMUFD |(set_iommu_device)       || Host IOMMU  |    |
->      |       | Device  |------------------------>|| Device list |    |
->      |       .---------|(unset_iommu_device)     |.-------------.    |
->      |                 |                         |       |           |
->      |                 |                         |       V           |
->      |       .---------|  HostIOMMUDeviceIOMMUFD |  .-------------.  |
->      |       | IOMMUFD |            (attach_hwpt)|  | Host IOMMU  |  |
->      |       | link    |<------------------------|  |   Device    |  |
->      |       .---------|            (detach_hwpt)|  .-------------.  |
->      |                 |                         |       |           |
->      |                 |                         |       ...         |
->      .-----------------.                         .-------------------.
-> 
-> Based on Yi's suggestion, this design is optimal in sharing ioas/hwpt
-> whenever possible and create new one on demand, also supports multiple
-> iommufd objects and ERRATA_772415.
-> 
-> E.g., Under one guest's scope, Stage-2 page table could be shared by different
-> devices if there is no conflict and devices link to same iommufd object,
-> i.e. devices under same host IOMMU can share same stage-2 page table. If there
-> is conflict, i.e. there is one device under non cache coherency mode which is
-> different from others, it requires a separate stage-2 page table in non-CC mode.
-> 
-> SPR platform has ERRATA_772415 which requires no readonly mappings
-> in stage-2 page table. This series supports creating VTDIOASContainer
-> with no readonly mappings. If there is a rare case that some IOMMUs
-> on a multiple IOMMU host have ERRATA_772415 and others not, this
-> design can still survive.
-> 
-> See below example diagram for a full view:
-> 
->        IntelIOMMUState
->               |
->               V
->      .------------------.    .------------------.    .-------------------.
->      | VTDIOASContainer |--->| VTDIOASContainer |--->| VTDIOASContainer  |-->...
->      | (iommufd0,RW&RO) |    | (iommufd1,RW&RO) |    | (iommufd0,only RW)|
->      .------------------.    .------------------.    .-------------------.
->               |                       |                              |
->               |                       .-->...                        |
->               V                                                      V
->        .-------------------.    .-------------------.          .---------------.
->        |   VTDS2Hwpt(CC)   |--->| VTDS2Hwpt(non-CC) |-->...    | VTDS2Hwpt(CC) |-->...
->        .-------------------.    .-------------------.          .---------------.
->            |            |               |                            |
->            |            |               |                            |
->      .-----------.  .-----------.  .------------.              .------------.
->      | IOMMUFD   |  | IOMMUFD   |  | IOMMUFD    |              | IOMMUFD    |
->      | Device(CC)|  | Device(CC)|  | Device     |              | Device(CC) |
->      | (iommufd0)|  | (iommufd0)|  | (non-CC)   |              | (errata)   |
->      |           |  |           |  | (iommufd0) |              | (iommufd0) |
->      .-----------.  .-----------.  .------------.              .------------.
-> 
-> This series is also a prerequisite work for vSVA, i.e. Sharing
-> guest application address space with passthrough devices.
-> 
-> To enable stage-1 translation, only need to add "x-scalable-mode=on,x-flts=on".
-> i.e. -device intel-iommu,x-scalable-mode=on,x-flts=on...
-> 
-> Passthrough device should use iommufd backend to work with stage-1 translation.
-> i.e. -object iommufd,id=iommufd0 -device vfio-pci,iommufd=iommufd0,...
-> 
-> If host doesn't support nested translation, qemu will fail with an unsupported
-> report.
-> 
-> Test done:
-> - VFIO devices hotplug/unplug
-> - different VFIO devices linked to different iommufds
-> - vhost net device ping test
-> 
-> Fault report isn't supported in this series, we presume guest kernel always
-> construct correct S1 page table for passthrough device. For emulated devices,
-> the emulation code already provided S1 fault injection.
-> 
-> PATCH1-6:  Add HWPT-based nesting infrastructure support
+> Kevin noticed the same. I'd have to check if I am missing something
+> but it seems to be just tunnel vision.
 
-The first 6 patches are all VFIO or IOMMUFD related. They are
-mostly  additions and I didn't see anything wrong. They could
-be merged in advance through the VFIO tree.
+It's been a while and probably everybody has forgotten about this. 
+Anyhow, the main reason why this returns for example 
+OwnedPointer<String> instead of OwnedPointer<c_char>, is that it tracks 
+whether the pointer can be NULL or not.  A possibly-NULL pointer will be 
+OwnedPointer<Option<String>>; if the pointer is certainly non-NULL, 
+instead, it will be OwnedPointer<String>.  So you can express 
+nullability in functions that accept an OwnedPointer<>.
 
-Thanks,
+Secondarily, it makes it possible to implement 
+OwnedPointer::into_native().  That is, it makes it easier to do the 
+opposite conversion once you're done with the foreign representation:
 
-C.
+     // s is a String
+     foreign_ptr = s.clone_to_foreign();
+     call_c_function(foreign_ptr);
+     *s = foreign_ptr.into_native();
 
+as opposed to
 
+     foreign_ptr = s.clone_to_foreign();
+     call_c_function(foreign_ptr);
+     *s = String::from_foreign(foreign_ptr);
 
+By the way, I have now extracted this library and published it on 
+crates.io with the name "foreign".
 
-> PATCH7-8:  Some cleanup work
-> PATCH9:    cap/ecap related compatibility check between vIOMMU and Host IOMMU
-> PATCH10-20:Implement stage-1 page table for passthrough device
-> PATCH21:   Enable stage-1 translation for passthrough device
-> 
-> Qemu code can be found at [3]
-> 
-> TODO:
-> - RAM discard
-> - dirty tracking on stage-2 page table
-> - Fault report to guest when HW Stage-1 faults
-> 
-> [1] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02740.html
-> [2] https://patchwork.kernel.org/project/kvm/cover/20210302203827.437645-1-yi.l.liu@intel.com/
-> [3] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv3
-> 
-> Thanks
-> Zhenzhong
-> 
-> Changelog:
-> rfcv3:
-> - s/hwpt_id/id in iommufd_backend_invalidate_cache()'s parameter (Shameer)
-> - hide vtd vendor specific caps in a wrapper union (Eric, Nicolin)
-> - simplify return value check of get_cap() (Eric)
-> - drop realize_late (Cedric, Eric)
-> - split patch13:intel_iommu: Add PASID cache management infrastructure (Eric)
-> - s/vtd_pasid_cache_reset/vtd_pasid_cache_reset_locked (Eric)
-> - s/vtd_pe_get_domain_id/vtd_pe_get_did (Eric)
-> - refine comments (Eric, Donald)
-> 
-> rfcv2:
-> - Drop VTDPASIDAddressSpace and use VTDAddressSpace (Eric, Liuyi)
-> - Move HWPT uAPI patches ahead(patch1-8) so arm nesting could easily rebase
-> - add two cleanup patches(patch9-10)
-> - VFIO passes iommufd/devid/hwpt_id to vIOMMU instead of iommufd/devid/ioas_id
-> - add vtd_as_[from|to]_iommu_pasid() helper to translate between vtd_as and
->    iommu pasid, this is important for dropping VTDPASIDAddressSpace
-> 
-> 
-> Yi Liu (3):
->    intel_iommu: Replay pasid binds after context cache invalidation
->    intel_iommu: Propagate PASID-based iotlb invalidation to host
->    intel_iommu: Refresh pasid bind when either SRTP or TE bit is changed
-> 
-> Zhenzhong Duan (18):
->    backends/iommufd: Add a helper to invalidate user-managed HWPT
->    vfio/iommufd: Add properties and handlers to
->      TYPE_HOST_IOMMU_DEVICE_IOMMUFD
->    vfio/iommufd: Initialize iommufd specific members in
->      HostIOMMUDeviceIOMMUFD
->    vfio/iommufd: Implement [at|de]tach_hwpt handlers
->    vfio/iommufd: Save vendor specific device info
->    iommufd: Implement query of host VTD IOMMU's capability
->    intel_iommu: Rename vtd_ce_get_rid2pasid_entry to
->      vtd_ce_get_pasid_entry
->    intel_iommu: Optimize context entry cache utilization
->    intel_iommu: Check for compatibility with IOMMUFD backed device when
->      x-flts=on
->    intel_iommu: Introduce a new structure VTDHostIOMMUDevice
->    intel_iommu: Introduce two helpers vtd_as_from/to_iommu_pasid_locked
->    intel_iommu: Handle PASID entry removing and updating
->    intel_iommu: Handle PASID entry adding
->    intel_iommu: Introduce a new pasid cache invalidation type FORCE_RESET
->    intel_iommu: Bind/unbind guest page table to host
->    intel_iommu: ERRATA_772415 workaround
->    intel_iommu: Bypass replay in stage-1 page table mode
->    intel_iommu: Enable host device when x-flts=on in scalable mode
-> 
->   hw/i386/intel_iommu_internal.h     |   56 +
->   include/hw/i386/intel_iommu.h      |   33 +-
->   include/system/host_iommu_device.h |   32 +
->   include/system/iommufd.h           |   54 +
->   backends/iommufd.c                 |   94 +-
->   hw/i386/intel_iommu.c              | 1670 ++++++++++++++++++++++++----
->   hw/vfio/iommufd.c                  |   40 +
->   backends/trace-events              |    1 +
->   hw/i386/trace-events               |   13 +
->   9 files changed, 1791 insertions(+), 202 deletions(-)
-> 
+Paolo
 
 
