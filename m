@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A33ACC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:01:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21981C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJTi5-0000Vs-4B; Mon, 26 May 2025 05:01:29 -0400
+	id 1uJTj5-0001MR-9f; Mon, 26 May 2025 05:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uJTi2-0000Vf-PA
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:01:27 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1uJTiq-0001Ih-Go
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:02:16 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uJTi0-0000DU-Rw
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:01:26 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3a4c4e6a0ccso1362175f8f.3
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:01:23 -0700 (PDT)
+ id 1uJTio-0000Jc-NV
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:02:16 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43cfe63c592so26648115e9.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748250081; x=1748854881; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748250132; x=1748854932; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=j0nvD2KKz30tpEQ2zu1JMsv6t/6YW7YdzjE02XOtVvU=;
- b=vZUruYvFVD62nR6h2tU2OqzXdSshKOmnPvyiek/U/Ov5sK5ckda0kNQItA3dXiL3JP
- oxTff8rZEjU+CS9CfZKxVsi1AHS3coSI+WR1TsjAOSPDn2QXziMIsWAaiYLjWC4S+Fgf
- +j/Cr9v32d7NfvzZzyxfMbj7RskzL03u5AMwIzEx5NjEYBXBq5S1QGxsMLx+E6K4+TqA
- gF6Pn85fprChyyOIC9qwKJuQVpqa6d5XxRYmpaI/NUc6oGmkkc5VK99vOHKImF7d4cei
- SavSDcT+UsSbUqkqaOaKj96+fLgvjrGc6x7i54niq9pbjoVWM+dNj5vjy02rRgfIABWY
- 6AWg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=O+COapwU08PssNtERgLXksu9oJt/Nq3jGVqqntcNsdQ=;
+ b=q7DjVjZUR8I5t8ksW1S0zpf2Lrqff5/OzZ7ahpmd/HxE8OsqR00dREmKbVZlUHmrOj
+ odbXZcM9EPdQQpOGXANMEi6+X0T9E1G6lyNeHiGUkIu0W88EtidLYpeGlyM5bqm9+yvn
+ U7szWyK6wleY0F2aYdFE5jMkZ3O8r/tEqzTIML4C6eE8KvyqHD6N45d+2vmXdPkw2HLQ
+ fHnis3YYlLYjsaDh/KDWfnDny62rX5hk2PoXgH7yODrZMhN3Te57e7SndJnCW34nA1O4
+ dtaAxZ9A/9ZJGdMw9BSM5sy72PC9syrmL9dJKg4K9b6TGLhTohdpwBRMzaI6ui9hoHp9
+ FnJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748250081; x=1748854881;
+ d=1e100.net; s=20230601; t=1748250132; x=1748854932;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j0nvD2KKz30tpEQ2zu1JMsv6t/6YW7YdzjE02XOtVvU=;
- b=igafMvphFk+/BO/khwGOSXXP3LteBj8EJ7sM6l7Re0AdbnBWMYkpSGLjBGc8wPCshd
- qwdlvW5csou/xzhoZjynbOOyyXP06DGkMK6PDgj7/E2LzK9ABWVEOKE0Zgnw3KiTx9xp
- 92hHuCkPcZHZbrV84bSTde+M9scBPlBQvlRjjjvJpfNIUyk9CLoAEs0a7MWaG63VUQ4V
- dPThSSqyyQoCKoXrQUotwGm+n+L8ZYvkXJVZZPABdQGhG0C/Hbw9bAcHVSYnZIKkFZvt
- MrOxVvyRWCLZrxVmA3ePz5TfYhwISxgLq8dts9CCX8vVuPgB9STuPceicQcH2fNwHviV
- FXKg==
+ bh=O+COapwU08PssNtERgLXksu9oJt/Nq3jGVqqntcNsdQ=;
+ b=aOOAbUHs0iFMT7Xq1VWmQ1vTl01itQG9/plXTtYuQQsHwsIsq0SpS0NlLqsUoy309d
+ EX2FFq8RbH0z2A5iDJDpcJ1fCs6wSKRdeZrrY7QMNhsbM3klRzojIkVjS2O46GKRn9kJ
+ EvoepCY9kRhND14xHFR8qXIZ7lJ8Q8fCRJsjqxYCG2ElI4ga4HgkQKtstCCz+nHMNBXv
+ AU01tM8ddLQS3nrfz8YS69Q9HsyL3TQOGk89z7f3Pyd6kRbPDnzmzXnk8pYRNsIvWhVn
+ pd6UY7dTfGo3ARSMkD7o+cJ0ckq7UpDBac8iKryTg/YdRMeDaIH/zm6B71+rY1v957qr
+ tKNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhiESkTEVdJVHfOpbJTB2afk6Fihmc3nsNLQFWP71zP5zZCWE9ey8fFAnFnwYRm3qJ3F2xmjmroHlL@nongnu.org
-X-Gm-Message-State: AOJu0YxBLNynSHDNTpLjLWqLylyY66hrx/BEXYZgZZxzhY2sOeTKx2Mg
- 3BO2MKRTCDBW1XplhF/LKze+BWlUwmrnfAB/J5SZqLYTHrVRWjos86RwnJQ3sC2oVNNPvHCKbGr
- kCbVgAjw=
-X-Gm-Gg: ASbGncu8dsT3VZ9uvo8bjbLS2zYqLgh5hRps61OK6hJa2LwITqBJoJiQDH36xUxJQS+
- Q+dNx/S0/ZntKGSS5hCDnCXRoH5b4m2BA8ZJ6VYLBHMLNn54BWVqnypLECkusIAbUeGc+90aF7F
- FNIsKe2ZC6gU3aRtCDsdwZ6bEx9M/nP2jxOamgxHHSjTUjL4tnZBJTdnV/VPyExxos+Ri7sV0LJ
- i2sDrqQ/mBwY2eW43r4cIaVlO4TJAQuwISmFELLqbJbH7+bqpytNziEIc/r4WwJP9BG4UEd1R/W
- VMKxG4YidoEL1ggLy3B2B2RNwM7rmf/fqc+RScCC7LHxTLYbdc/LCeCGmTYzRgSXhA==
-X-Google-Smtp-Source: AGHT+IEMSVu0DsjlYtFSl0L+i8uUevXiYttPTOz3pknqg1iD2OBV3kV7H54Wq9AMAezsjc8cV8iqVg==
-X-Received: by 2002:a05:6000:2401:b0:3a4:dd63:4ad2 with SMTP id
- ffacd0b85a97d-3a4dd634c14mr894756f8f.37.1748250081505; 
- Mon, 26 May 2025 02:01:21 -0700 (PDT)
+ AJvYcCUrtuAdube1U64xzjAfL+YVhFpTRFbAhHVOJnF6X9T4SSJTchA943eYyoVusPbI9yKlqV4n3xPimOs1@nongnu.org
+X-Gm-Message-State: AOJu0Yz8iYjvZWv5jQ6T7sINWyE63uccaJSuoUx3OYVC8dhNw5RjjIek
+ n+uyaWrwnSMOH9aJaWcIJxx+v6pGkXAvwX6oKLN6upW2pYKPpRJzKGttX7MaBFh+e+c=
+X-Gm-Gg: ASbGnctqBxCtApiVH9pXw+IGCMcbzeq0VkW+8Q8cNu3iHjO6cP+E3ezM2afJqa6j1AX
+ fvRkHGfN/cOYbwVI7jMvi8L5FZZAOfqR+4lYCeISaBw794lQsQ9Ia4g+xCV6dRjBoxXMgUaj8Av
+ 5bjxRSKIqiSbSOwY1Rt4mTxzAUZr/E0cS9aTZxHdmg2H32q8ZMVe3Nowi4VNyDEwH1MCs/hOUhQ
+ JSXWpiZUyRo1rjkHW5ufSOkKTK6DWylFX5GsvL3J7DvEwg/vGYfIXb6C2u3BzEblVM5wu0VLnvh
+ PxPPa8UlZzSGVKF1qDofAOmYrK/mfxSAfY7yDm0PEFD/TYRpRcfBxLVEzyCOR23kxw==
+X-Google-Smtp-Source: AGHT+IFkTnypBOL72qljhMoWyNtwDmBWKrnxEdpnLxaT12tNPLaWdDiHyLg1Z2xBdIGwM1IQHOWp8Q==
+X-Received: by 2002:a05:600c:1d0d:b0:43c:f44c:72a6 with SMTP id
+ 5b1f17b1804b1-44c9160702fmr80806465e9.2.1748250132457; 
+ Mon, 26 May 2025 02:02:12 -0700 (PDT)
 Received: from [172.16.25.47] ([195.53.115.74])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4dc7e69c8sm1157748f8f.95.2025.05.26.02.01.20
+ 5b1f17b1804b1-447f24b6471sm231268445e9.24.2025.05.26.02.02.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 02:01:20 -0700 (PDT)
-Message-ID: <d90dd6ad-71c7-4720-a07f-8504f7fdfece@linaro.org>
-Date: Mon, 26 May 2025 10:01:18 +0100
+ Mon, 26 May 2025 02:02:11 -0700 (PDT)
+Message-ID: <aa7b7f19-648f-4ce8-911a-045173a5fa71@linaro.org>
+Date: Mon, 26 May 2025 10:02:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/25] target/alpha: call plugin trap callbacks
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org,
- David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v5 03/25] plugins: add hooks for new discontinuity related
+ callbacks
+To: Julian Ganz <neither@nut.email>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, qemu-devel@nongnu.org
 References: <cover.1747666625.git.neither@nut.email>
- <a5ec8863418a946530d167677184d40319470af2.1747666625.git.neither@nut.email>
- <f140b06d-53c7-4d32-ab95-1327d2659a37@linaro.org>
- <3626834acffdaf2f6f2504c1dbb2c457601964f2@nut.email>
+ <70c5a0d487731b08e803240061a97bfc110bfbcb.1747666625.git.neither@nut.email>
+ <edf78ed0-7ada-467e-86de-47e2515588bc@linaro.org>
+ <20250525205645.4366-1-neither@nut.email>
+ <ec6f71c19f2f000844e0767e6742e7de3213e023@nut.email>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <3626834acffdaf2f6f2504c1dbb2c457601964f2@nut.email>
+In-Reply-To: <ec6f71c19f2f000844e0767e6742e7de3213e023@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,56 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/25/25 21:16, Julian Ganz wrote:
-> Hi Richard,
+On 5/26/25 09:08, Julian Ganz wrote:
+> May 25, 2025 at 10:56 PM, "Julian Ganz" wrote:
+>> Richard Henderson wrote:
+>>> On 5/19/25 16:19, Julian Ganz wrote:
+>>>   +QEMU_DISABLE_CFI
+>>>   +static void plugin_vcpu_cb__discon(CPUState *cpu,
+>>>   + enum qemu_plugin_discon_type type,
+>>>   + uint64_t from)
+>>>   +{
+>>>   + struct qemu_plugin_cb *cb, *next;
+>>>   + enum qemu_plugin_event ev;
+>>>   + uint64_t to = cpu->cc->get_pc(cpu);
+>>>   +
+>>>   + if (cpu->cpu_index < plugin.num_vcpus) {
+>>>   + switch (type) {
+>>>   + case QEMU_PLUGIN_DISCON_INTERRUPT:
+>>>   + ev = QEMU_PLUGIN_EV_VCPU_INTERRUPT;
+>>>   + break;
+>>>   + case QEMU_PLUGIN_DISCON_EXCEPTION:
+>>>   + ev = QEMU_PLUGIN_EV_VCPU_EXCEPTION;
+>>>   + break;
+>>>   + case QEMU_PLUGIN_DISCON_HOSTCALL:
+>>>   + ev = QEMU_PLUGIN_EV_VCPU_HOSTCALL;
+>>>   + break;
+>>>   
+>>>   No point passing in QEMU_PLUGIN_DISCON_* only to covert it to QEMU_PLUGIN_EV_*.
+>>>
+>> It easily looks that way, and I myself stubled upon this at least one or two
+>> times, but `type` is the enum we pass to the callback a few lines down and part
+>> of the public plugin API. `ev` on the other hand is the offset in the `cb_list`.
+>> So some translation is neccessary, unfortunately.
 > 
-> May 25, 2025 at 2:14 PM, Richard Henderson wrote:
->> Having read the whole series now, I think it would be better to change the TCGCPUOps.do_interrupt interface.
->>
->> Instead of having each target call qemu_plugin_*, instead have each do_interrupt return the discontinuity type, or 0 if the interrupt is blocked so no state change.
->>
->> Change to cpu_handle_exception would be of the form:
->>
->>   if (qemu_plugin_discon_enabled(cpu)) {
->>   vaddr from = tcg_ops->get_pc(cpu);
->>   unsigned ev = tcg_ops->do_interrupt(cpu);
->>   if (ev) {
->>   qemu_plugin_vcpu_discon_cb(cpu, ev, from);
->>   }
->>   } else {
->>   tcg_ops->do_interrupt(cpu);
->>   }
-> 
-> Personally, I'd be in favour of that. However, I do see some obstacles
-> to that.
-> 
-> Quite a few targets to call their do_interrupt function internally,
-> usually from their exec_interrupt. We would then handle that function's
-> return value at the call site?
+> I just realized that you probably meant that we should pass ev as a
+> parameter to plugin_vcpu_cb__discon. This we can obviously do.
 
-Yes, I think we'd alter the return value of exec_interrupt to match do_interrupt.
-There's a comment about exec_interrupt may longjmp away, but that *appears* to be 
-historical.  I couldn't identify an existing target that does that.
-
-> Also, some targets such as tricore only have a dummy/stub do_interrupt
-> and handle exceptions differently inside non-returning functions. For
-> those, we would call the hooks directly from there as we do now?
-
-It may be only tricore.  And you're right, it would be a non-trivial reorg to make tricore 
-fall in line with other implementations.  So retaining the separate 
-qemu_plugin_vcpu_exception_cb will be required in the short term.
-
-
-> And then we have some targets that deviate in some other way. For
-> example, s390x_cpu_do_interrupt effectively contains a loop, and we
-> potentially need to call one of the hooks for each iteration.
-
-That is distinctly odd.  I don't understand what's going on there.
-
-David, can you elucidate re ce204cba74b?  Is this intending to stack all outstanding 
-interrupts all at once, leaving the highest priority, then return-from-interrupt processes 
-the lower priorities?  It's definitely unusual, but most things about s390x are...  :-)
-
+Yes, that's what I meant.
 
 r~
 
