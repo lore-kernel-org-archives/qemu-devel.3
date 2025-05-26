@@ -4,62 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6367AC54FC6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 06:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70F3CC5B542
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 06:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJR1b-0000op-4s; Mon, 26 May 2025 02:09:27 -0400
+	id 1uJRJ5-0004oR-2r; Mon, 26 May 2025 02:27:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJR1X-0000oL-JB
- for qemu-devel@nongnu.org; Mon, 26 May 2025 02:09:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJRIz-0004o9-Ds
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 02:27:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJR1V-0006Ip-Lo
- for qemu-devel@nongnu.org; Mon, 26 May 2025 02:09:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJRIx-00009O-1F
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 02:27:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748239759;
+ s=mimecast20190719; t=1748240839;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZilIz7FWnS1OfGqz/1CDvegrKKm5lsnsQNj5oYNOkJI=;
- b=SXhggmtDbEB7332QcDfrosuOAgN6C8Z/djZ+sWy5pDmeDmvcYh9NgLoz2Y29abn1hPiZhH
- G0yTbxzVSypg5tGXGtD34eSjV7acQOznglW4TkN4+C82cBNKrjIbN1n9cwkaO9oGT7+QxQ
- 8A3xnPEI0Q5iAj8A309dikA4/81bik4=
+ bh=OIo4DgUU8ilOdeGOoDXvQt58SEkyb9AXEDymqht9a7M=;
+ b=GO2f3X7wjSPDLlgPFpcLQ647/wSl5t3+fJaKBiPo1rnqy6nY/sXpRpWeWm2jVr/xsNAsxy
+ DVsobuZ5nCh6zGUDnRujpKHzHgHcDUONgRnfLN4wW66a33/ZYG8WWpInPs4TP4zePdCaYm
+ pCXDCiCbpp7kaIgvlD7/smUyKDiXL4g=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-9ZeyZakfN-uSP_gYUh0T8w-1; Mon,
- 26 May 2025 02:09:17 -0400
-X-MC-Unique: 9ZeyZakfN-uSP_gYUh0T8w-1
-X-Mimecast-MFC-AGG-ID: 9ZeyZakfN-uSP_gYUh0T8w_1748239757
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-anRTHdJGN6SyrckBtuPLWQ-1; Mon,
+ 26 May 2025 02:27:15 -0400
+X-MC-Unique: anRTHdJGN6SyrckBtuPLWQ-1
+X-Mimecast-MFC-AGG-ID: anRTHdJGN6SyrckBtuPLWQ_1748240834
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C1AAD1800570; Mon, 26 May 2025 06:09:16 +0000 (UTC)
+ id F41691800446; Mon, 26 May 2025 06:27:13 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 795D619560AB; Mon, 26 May 2025 06:09:16 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4436E1800361; Mon, 26 May 2025 06:27:13 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E354F21E6768; Mon, 26 May 2025 08:09:13 +0200 (CEST)
+ id C74BD21E66C3; Mon, 26 May 2025 08:27:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH] tests/qtest: Remove migration-helpers.c
-In-Reply-To: <20250523123023.19284-1-farosas@suse.de> (Fabiano Rosas's message
- of "Fri, 23 May 2025 09:30:23 -0300")
-References: <20250523123023.19284-1-farosas@suse.de>
-Date: Mon, 26 May 2025 08:09:13 +0200
-Message-ID: <87msazkinq.fsf@pond.sub.org>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org,  stefanha@redhat.com,  BALATON Zoltan
+ <balaton@eik.bme.hu>,  Gerd Hoffmann <kraxel@redhat.com>,  Christian
+ Schoenebeck <qemu_oss@crudebyte.com>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PULL 8/9] alsaaudio: Set try-poll to false by default
+In-Reply-To: <20250525132717.527392-9-marcandre.lureau@redhat.com> (marcandre
+ lureau's message of "Sun, 25 May 2025 15:27:15 +0200")
+References: <20250525132717.527392-1-marcandre.lureau@redhat.com>
+ <20250525132717.527392-9-marcandre.lureau@redhat.com>
+Date: Mon, 26 May 2025 08:27:10 +0200
+Message-ID: <87cybvkhtt.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -59
 X-Spam_score: -6.0
@@ -84,74 +89,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+marcandre.lureau@redhat.com writes:
 
-> Commit 407bc4bf90 ("qapi: Move include/qapi/qmp/ to include/qobject/")
-> brought the migration-helpers.c back by mistake. This file has been
-> replaced with migration/migration-qmp.c and
-> migration/migration-util.c.
+> From: BALATON Zoltan <balaton@eik.bme.hu>
 >
-> Fixes: 407bc4bf90 ("qapi: Move include/qapi/qmp/ to include/qobject/")
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Quoting Volker R=C3=BCmelin: "try-poll=3Don tells the ALSA backend to try=
+ to
+> use an event loop instead of the audio timer. This works most of the
+> time. But the poll event handler in the ALSA backend has a bug. For
+> example, if the guest can't provide enough audio frames in time, the
+> ALSA buffer is only partly full and the event handler will be called
+> again and again on every iteration of the main loop. This increases
+> the processor load and the guest has less processor time to provide
+> new audio frames in time. I have two examples where a guest can't
+> recover from this situation and the guest seems to hang."
+>
+> One reproducer I've found is booting MorphOS demo iso on
+> qemu-system-ppc -machine pegasos2 -audio alsa which should play a
+> startup sound but instead it freezes. Even when it does not hang it
+> plays choppy sound. Volker suggested using command line to set
+> try-poll=3Doff saying: "The try-poll=3Doff arguments are typically
+> necessary, because the alsa backend has a design issue with
+> try-poll=3Don. If the guest can't provide enough audio frames, it's
+> really unhelpful to ask for new audio frames on every main loop
+> iteration until the guest can provide enough audio frames. Timer based
+> playback doesn't have that problem."
+>
+> But users cannot easily find this option and having a non-working
+> default is really unhelpful so to make life easier just set it to
+> false by default which works until the issue with the alsa backend can
+> be fixed.
+>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> [ Marc-Andr=C3=A9 - Updated QAPI and CLI doc ]
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Message-Id: <20250316002046.D066A4E6004@zero.eik.bme.hu>
+> ---
+>  qapi/audio.json   | 2 +-
+>  audio/alsaaudio.c | 2 +-
+>  qemu-options.hx   | 4 ++--
+>  3 files changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/qapi/audio.json b/qapi/audio.json
+> index dd5a58d13e..49633cf317 100644
+> --- a/qapi/audio.json
+> +++ b/qapi/audio.json
+> @@ -96,7 +96,7 @@
+>  # @period-length: the period length in microseconds
+>  #
+>  # @try-poll: attempt to use poll mode, falling back to non-polling
+> -#     access on failure (default true)
+> +#     access on failure (default false)
+>  #
+>  # Since: 4.0
+>  ##
 
-I have no idea how that happened.  Rebase accident, perhaps?  Thanks for
-cleaning up the mess I made!
+Missed this when it was posted (it wasn't cc'ed to me).  Flipping the
+default is technically an incompatible change.  I understand the
+justification, and I'm not passing judgement on its validity; that's the
+audio maintainers job.  I just want to ask: does this need a release
+note?
 
-Your patch does what it says on the tin, but there's another dangling
-#include:
+We normally record incompatible changes in docs/about/deprecated.rst and
+then docs/about/removed-features.rst, but these don't fit here.
 
-    $ git-grep migration-helpers
---> tests/qtest/dbus-vmstate-test.c:#include "migration-helpers.h"
-    tests/qtest/migration-helpers.c:#include "migration-helpers.h"
-
-Missed in commit b7d7f723a985 (tests/qtest/migration: Rename
-migration-helpers.c).  Looks like dbus-vmstate-test is never compiled in
-CI.  Dig, dig...
-
-    dbus_daemon = find_program('dbus-daemon', required: false)
-    if dbus_daemon.found() and gdbus_codegen.found()
-      # Temporarily disabled due to Patchew failures:
--->   #qtests_i386 += ['dbus-vmstate-test']
-      dbus_vmstate1 = custom_target('dbus-vmstate description',
-                                    output: ['dbus-vmstate1.h', 'dbus-vmstate1.c'],
-                                    input: meson.project_source_root() / 'backends/dbus-vmstate1.xml',
-                                    command: [gdbus_codegen, '@INPUT@',
-                                              '--interface-prefix', 'org.qemu',
-                                              '--generate-c-code', '@BASENAME@']).to_list()
-    else
-      dbus_vmstate1 = []
-    endif
-
-It's been "emporarily" disabled for more than five years:
-
-commit d46f81cb746d18b4530b5fe63e75b11f6b926f1f
-Author: Peter Maydell <peter.maydell@linaro.org>
-Date:   Tue Mar 10 15:21:41 2020 +0000
-
-    tests: Disable dbus-vmstate-test
-    
-    The dbus-vmstate-test has been failing in some Patchew configs
-    since about the 6th March:
-    
-      dbus-daemon[9321]: Could not get password database information for UID of current process: User "???" unknown or no memory to allocate password entry
-    
-      **
-      ERROR:/tmp/qemu-test/src/tests/qtest/dbus-vmstate-test.c:114:get_connection: assertion failed (err == NULL): The connection is closed (g-io-error-quark, 18)
-      cleaning up pid 9321
-      ERROR - Bail out! ERROR:/tmp/qemu-test/src/tests/qtest/dbus-vmstate-test.c:114:get_connection: assertion failed (err == NULL): The connection is closed (g-io-error-quark, 18)
-      make: *** [/tmp/qemu-test/src/tests/Makefile.include:632: check-qtest-x86_64] Error 1
-      make: *** Waiting for unfinished jobs....
-    
-    It's not clear why this is happening (perhaps a recently revealed
-    race condition or a change in the patchew build environment?).
-    
-    For the moment, disable this test so that patchew test runs are
-    useful and don't email the list with spurious failure mails.
-    
-    Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-    Message-id: 20200310152141.13959-1-peter.maydell@linaro.org
-
-Separate issue, so for this patch
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+[...]
 
 
