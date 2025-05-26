@@ -4,148 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10F45C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28657C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJWKQ-000856-BP; Mon, 26 May 2025 07:49:14 -0400
+	id 1uJWNM-0001Db-CX; Mon, 26 May 2025 07:52:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJWKC-0007vT-G3
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:49:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJWKA-0004pS-8f
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:49:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748260136;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vZPgxWPMSWWUV+3oUjq1r6Jckye4rPS/QqNFNYgWyVs=;
- b=jJM6CpXFEiIgTcyK0SUJ+mmh/YwOZ2XQ9CkFVeuP74LbiSaoFd1bKR1JZvJhhG8cIf7YPj
- qfNIcgYU1bFFt5uEjKFm5ZqQG4YC2EibuSQGUDChAoMmh8x1xPhwza67yYZbJ5lA3vmggl
- WGBm+5Q5cM57nr9sG2IvDfPdrJpiTIc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-57-gc0aZcgBPfq7rlMiCVYCiw-1; Mon, 26 May 2025 07:48:55 -0400
-X-MC-Unique: gc0aZcgBPfq7rlMiCVYCiw-1
-X-Mimecast-MFC-AGG-ID: gc0aZcgBPfq7rlMiCVYCiw_1748260134
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cec217977so12269715e9.0
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 04:48:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJWNC-0001Bd-Iq
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:52:07 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJWN9-0005N2-8b
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:52:06 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43cfa7e7f54so16128125e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 04:52:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748260321; x=1748865121; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5bj6bIwbgPkXidk1nsmH1ouD1Rr4jzxJndqN4ZKZ1sU=;
+ b=YbtqnI9GPSVNCtho9tHtyFHr4tNEpcTruuUEliqH5+AVd0/eKQ8dZMrGIEcHfNJgpe
+ h0MtwFmVxAoRyG39wc676J5zIEFjYd1nlYNTd1pmRMcsL0O0JnQ4ZPWKzGpvLHwtjESk
+ 6nXvm4mXIHdfk+MaGjrO0ufB0ImEAMi0BLn2tflF+rw+1Cbi8rHLdv3BO7omcqmWoXrP
+ I3ftWdRXsyZzAs9kl27VzuVRdU+Tp1W8TdSo22eL0RH+ZBC1LMhyVHtpYzUBCJfG7Qg2
+ Lc1yd6X3Z6rTY1UI4hBelnjUqkK3EjrwEewnjjZixmCyjuQEdRy6otCnlQ0CJmeMIOUj
+ zupA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748260134; x=1748864934;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vZPgxWPMSWWUV+3oUjq1r6Jckye4rPS/QqNFNYgWyVs=;
- b=bGjZ3sa6oGeWCqVEPvefFLKEu6DWBjzyYJ+LVsZvHENS0hTfhQQ20bbkC+0NQ6lQMH
- /aPfGTJTvBZWqhEy+SIY2mOWKrdqheg1GQw733RulAixZXyDAa1lyKFaVkDuz2iHdKU+
- 1XgYamnySzt9MR//b6pLyUu8z7XylWOmDYv6852Ab0vmkPVXejCHTvM5EJKbUlJLl+hw
- gZJT1jeS4iAFqQ/vYSPYdhrpPqe6RYyQap+EO+LZdPyQCWDnJl1/NdjUXg/TJn/F6go4
- RoeK/UY1TLjqeul1TaL+4Apt1jxH55eLzGB0mWVZrhgBeJFp4X8wFGCTOzTUiWXQMx/u
- qcFw==
+ d=1e100.net; s=20230601; t=1748260321; x=1748865121;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5bj6bIwbgPkXidk1nsmH1ouD1Rr4jzxJndqN4ZKZ1sU=;
+ b=EwqTPpD+7Gb/M5vKGDVw8Y2M3hKxMbUZ7dr7Xx8rhQpBDeFQht3t0lIei68N1dpaRy
+ A6xT213VK8QzX7oklsLTQ8UskbxAMBnkLod2Qvax5pkSkY+fvIndZJ2iM67dGHWfCmqw
+ 4wbaEzcoKMtQw2KQjrxxGV/uAjkSJuks02w2QYfpqdW/lEkfJuDurB7qPIG35A6JLNnb
+ aEKuE/3TBOGKueSshc8hRdN4OcfHEmwPga0Cmxn7y6+gkPrmgA3gRW4F8oWq5aECflJZ
+ YAPGJ9miRBLsFc95iEzdF+GkGWVbD/e1495HIJs03NkVsGtyMIZmlNSwieXHS6g7jmtR
+ ZOjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmwH+ZDzR2y5H7ql4OXGGw2XCtrTa9QlSW1O5fWC+TqcspbpTShCNVQaPIk9Tbjj0JGy7ZmWyTNzKt@nongnu.org
-X-Gm-Message-State: AOJu0Yzfy4WdUf604xsLmZjr9OStx5juQicxgypANPoP2z9LGUT8VnwC
- 0rvCrcGRnwLUr+qqhcEXI66a6SauAy5AiWLZM7Ev/xef5BNpa0surTKTRPKkeUBl/3niyoZP3GX
- mU8Y5KcpH8/FSWsN/VXqKgBzjzYJpPNAW/TpTZfCIO5Dhx9HY3NYuIpoY
-X-Gm-Gg: ASbGncsED1wV6Q+BRJNsCoUFkRiADt5sP7SD4EUHRIEgT8960joF+6dKPweMq8M0Rr9
- jbDOVsybWEdXMcFQefUDXpie9cv3zacDRf2TFn3mfbLDBG4a6NkWTrWjuaDjzu3H7b6fDHZ4bvr
- Fssrq1x7fA4Ten2T4UMRlFscNQiW02OHiyymDwL3U53FP+f4J6oUiOtaSZOWKBayFRrz1KOGuvb
- xN3Y0LBRYBLAHwxAhaODA73IM1y0Yz0w6/819pvu4nq2l1xGnxej7xXO0RCOQopiBqf6Bq2X1lu
- gUZNq1uGRd8GZMzIKxnW+UVK3aLJUlbde+XtzXR4mTp2Aa6Zsg==
-X-Received: by 2002:a05:6000:4020:b0:3a4:de01:e5de with SMTP id
- ffacd0b85a97d-3a4de01e749mr1065043f8f.59.1748260133900; 
- Mon, 26 May 2025 04:48:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEho35lUZSi8kyH3TNyHsK1TgTgWm8XnteUFnkSPwP4CBpVJ3HjYK0pFIVeRnZ/bQD7qRnb8A==
-X-Received: by 2002:a05:6000:4020:b0:3a4:de01:e5de with SMTP id
- ffacd0b85a97d-3a4de01e749mr1065015f8f.59.1748260133482; 
- Mon, 26 May 2025 04:48:53 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f6f0554fsm232649265e9.9.2025.05.26.04.48.52
+ AJvYcCUhFrHLErL79JRl41VhK1i6Ze2jdQUMLA/X2GWp8QJCZ1mEUsps3etsbtM+Hj7+Jm8Ci+NK3NwdVGB/@nongnu.org
+X-Gm-Message-State: AOJu0YyZhxtmSiPUNIfDpcD9aJ9KreIymEI4RhEkeUgJ7M6Ecvb77YHF
+ UBGOKtfHF7uCKJEkg27bw+j8aXGH4ritNAU1qQsCevOW8RwkMzPD4W/fPfdOFtFp/QQ=
+X-Gm-Gg: ASbGncsZBizpi/ja67ejfEwDhQ9Oy0WXTm+QI+XKOnQertPwJENAes48glD5Ryap5K1
+ +J92vrUh7IOQ6R0NQnFbCyL7+i7+6NOnd8HgmLurAvGkwxQH7Xoi17t/zEyho0Op8bnf/7kCoy4
+ 9qoXp1As9ikjyO8niEviG1BCEdNfnqlsnnmrL1oomczsMoHKqBMBXouIC/RD0eNTNY1pklVmFht
+ ilkxGj7O9gfxw7D6jHdMHjMvTzX+Hd7L/gO0MTGlRjPSSRj7jxWLQI6LK+HuGpEaYZFh3C4cXt7
+ 6w1HMbWMbLk2fBpj5JjlEt88FIfodiDNZE5+6TyhgXQtPPzSH+yZDPL8TFZmDXzbOuGy5qTmveA
+ B5fGbmWGmQfHsnSj6bL48UnZX
+X-Google-Smtp-Source: AGHT+IE1ejIXk88oBQMZiTtbVnM0TOne1rJvR8pzFBmoladnA925zty2zgka17YBrsh70WkX4zEUUg==
+X-Received: by 2002:a05:600c:848e:b0:43b:c6a7:ac60 with SMTP id
+ 5b1f17b1804b1-44c7bda05dcmr83956955e9.10.1748260320745; 
+ Mon, 26 May 2025 04:52:00 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4d37498e8sm4860779f8f.16.2025.05.26.04.51.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 04:48:53 -0700 (PDT)
-Message-ID: <53085b7d-ed47-4a3b-bb8e-3b92e24f2bc4@redhat.com>
-Date: Mon, 26 May 2025 13:48:52 +0200
+ Mon, 26 May 2025 04:52:00 -0700 (PDT)
+Message-ID: <ba766eae-e8e0-436a-ad30-625744b872e4@linaro.org>
+Date: Mon, 26 May 2025 13:51:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] hw/ppc: PowerNV machines expose a I2C bus
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/3] hw/ppc: Add stub for pnv_chip_find_core()
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
  Igor Mammedov <imammedo@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
- Ani Sinha <anisinha@redhat.com>
+ Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
 References: <20250526112346.48744-1-philmd@linaro.org>
- <20250526112346.48744-3-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250526112346.48744-3-philmd@linaro.org>
+ <20250526112346.48744-4-philmd@linaro.org>
+ <eff37ca7-d977-450e-85e0-ca8e4f6f3d5a@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <eff37ca7-d977-450e-85e0-ca8e4f6f3d5a@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,42 +109,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/25 13:23, Philippe Mathieu-Daudé wrote:
-> Since commit 263b81ee15a, PowerNV machines instanciate
-> a I2C controller, so expose a I2C bus. Express that in
-> Kconfig, otherwise we get a configure error when trying
-> to use '--without-default-devices':
+On 26/5/25 13:48, Cédric Le Goater wrote:
+> On 5/26/25 13:23, Philippe Mathieu-Daudé wrote:
+>> Since commit 9808ce6d5cb, building QEMU configured with
+>> '--without-default-devices' fails:
+>>
+>>    Undefined symbols for architecture arm64:
+>>      "_pnv_chip_find_core", referenced from:
+>>          _helper_load_sprd in target_ppc_misc_helper.c.o
+>>          _helper_store_sprd in target_ppc_misc_helper.c.o
+>>    ld: symbol(s) not found for architecture arm64
+>>    clang: error: linker command failed with exit code 1
+>> > Fix by adding a stub when CONFIG_POWERNV is not available.
 > 
->    The following clauses were found for PCA9552
->        config PCA9552 depends on I2C
->        select PCA9552 if POWERNV
+> The fix would be to add an abstract handler to implement SPRD accesses
+> on the PowerNV machine.
+
+I don't know what "SPRD" is so I'll let someone more familiar with
+this area do the proper cleanup.
+
+Regards,
+
+Phil.
+
 > 
-> Fixes: 263b81ee15a ("ppc/pnv: Add an I2C controller model")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/ppc/Kconfig | 1 +
->   1 file changed, 1 insertion(+)
+> Thanks,
 > 
-> diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
-> index ced6bbc7404..0d017df83ee 100644
-> --- a/hw/ppc/Kconfig
-> +++ b/hw/ppc/Kconfig
-> @@ -29,6 +29,7 @@ config POWERNV
->       depends on PPC64 && FDT
->       imply PCI_DEVICES
->       imply TEST_DEVICES
-> +    select I2C
->       select ISA_IPMI_BT
->       select IPMI_LOCAL
->       select ISA_BUS
-
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
+> C.
 
 
