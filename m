@@ -4,44 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B37C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BA8C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJXnN-0001ec-SQ; Mon, 26 May 2025 09:23:14 -0400
+	id 1uJYAu-0000vP-Sx; Mon, 26 May 2025 09:47:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXmc-0000G5-2D; Mon, 26 May 2025 09:22:26 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJYAq-0000vC-Ji
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 09:47:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXmV-0000KK-U3; Mon, 26 May 2025 09:22:24 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id AF8C14455D;
- Mon, 26 May 2025 15:21:50 +0200 (CEST)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, hreitz@redhat.com, stefanha@redhat.com,
- eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
- xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
- fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v3 15/24] block: move drain outside of bdrv_root_unref_child()
-Date: Mon, 26 May 2025 15:21:31 +0200
-Message-Id: <20250526132140.1641377-16-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250526132140.1641377-1-f.ebner@proxmox.com>
-References: <20250526132140.1641377-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJYAo-0003Xz-Sz
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 09:47:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748267244;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rZ4JvpKZxj5hngF9eLOt1AsdcpmcLWKX/H+SWKzjBAc=;
+ b=a0mAahZmEN8QnOLZlBaTHW1RXgdTh0gw5zDBtXef7WjDorawAxn4bmG9HoshkuvuBB3kjj
+ JtrUqP/GiiHZRPRBTjkfCgTjcPonW7r8F9cq0ndk5dRx7IV97q/varFYHkCHPMaltKOQhs
+ w+OUglt7XV/fCrL8iFJs5jUIf19ALhM=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-660-fls_v04UOFyLxRW8a5Y1yw-1; Mon, 26 May 2025 09:47:23 -0400
+X-MC-Unique: fls_v04UOFyLxRW8a5Y1yw-1
+X-Mimecast-MFC-AGG-ID: fls_v04UOFyLxRW8a5Y1yw_1748267242
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6faa53cbc74so25573426d6.0
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 06:47:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748267242; x=1748872042;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rZ4JvpKZxj5hngF9eLOt1AsdcpmcLWKX/H+SWKzjBAc=;
+ b=FJ+kgWMf0CiXZTMMMaIIlLYxtDJpStQwDNKtJHPXiVi9+3ExQO1b/kNR+F9rsZweZ2
+ VVTLx33Uo194udKEU0r1HEnn5ZlI4ge5qL7sSQvWib5wXGEVhLiaq4xA6XAct76Hgsae
+ 883QvPfsnian/pYX366KFPnt3fCKH70DqydxOkB+v3pBG8ouJk7/pNCvy+OmX2tr/2Un
+ B3gWcpJJVwb5Z6zidLIZ21GyVvHm+RIOewpxexapK91AxZrxCD/07OmtXcND83vTQG3V
+ r+5LlEGmaNSQWI8vs6LvWFUuezKtEZqnUvsGtDTvWUpVeGfipNEbWrYaW8ykvr+etWHE
+ Qiqg==
+X-Gm-Message-State: AOJu0YymRkHb70RGTcjhlMCAYGQn+r1ZGPpWVasXkxUM4SmPR4vYcZxA
+ ArieR0Bqet98C011kXU2WXWCa65yIjawuRiTzaifD+uVZQ2yjjgNc1pHjWh+lKPEUGv3qbrgDsD
+ xDJn7ClC6H9YCfBKRJDw44a9dh+WV7s8Or8bDs38+z0IlVx1ZGNXFNiLq
+X-Gm-Gg: ASbGncsy9fLbJBE0sJsBqJ8eCxxMCjW84Cr19mRmnhdBJZVZ5fzxsIlguxe0n6f7w7M
+ GLzDCE53a0FXKNt2O4FkSBBwHPGcL16cu4ervbKVTgaiBsMuhA2wq9VIcI4Fy/YHH2bkX144A2K
+ pkG2GAJi7ILCoWUm3grP4YH6Xlj0+jMbhjLOZf8cobDdtwHYBpb7RPjr/uk7rDU0T2sTn6g6VoQ
+ Eaz7ZcQqoujNOK64zHuomcKAO7ToT576lEbgqUFSG/I1dlvz8JvuCLFu2I8z2QOmA63pSlvmtFo
+ IZs=
+X-Received: by 2002:a05:6214:c6f:b0:6f4:cbcf:5cea with SMTP id
+ 6a1803df08f44-6fa9d2bde67mr131035216d6.44.1748267242393; 
+ Mon, 26 May 2025 06:47:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFt5/2Ug5ZRgmZFyPFHqQ4PQd2FH+zbjEl85BeUY9y36iTv6Wtq9kcdtQ59+Dl33WMBBhHkfg==
+X-Received: by 2002:a05:6214:c6f:b0:6f4:cbcf:5cea with SMTP id
+ 6a1803df08f44-6fa9d2bde67mr131034916d6.44.1748267241994; 
+ Mon, 26 May 2025 06:47:21 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6faa56dabe0sm20788116d6.103.2025.05.26.06.47.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 May 2025 06:47:21 -0700 (PDT)
+Date: Mon, 26 May 2025 09:47:18 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 4/4] tests/functional/test_vmstate: Test whether the
+ checker script works as expected
+Message-ID: <aDRw5jst47MwwOi1@x1.local>
+References: <20250522133756.259194-1-thuth@redhat.com>
+ <20250522133756.259194-5-thuth@redhat.com>
+ <aC83QUmY6B255lTb@x1.local>
+ <1fa7b5a7-585b-415d-900b-092f9ec13c52@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1fa7b5a7-585b-415d-900b-092f9ec13c52@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -59,349 +107,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is part of resolving the deadlock mentioned in commit "block:
-move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
+On Thu, May 22, 2025 at 08:12:49PM +0200, Thomas Huth wrote:
+> On 22/05/2025 16.40, Peter Xu wrote:
+> > On Thu, May 22, 2025 at 03:37:56PM +0200, Thomas Huth wrote:
+> > > From: Thomas Huth <thuth@redhat.com>
+> > > 
+> > > We've got two vmstate dump files in the repository which are meant
+> > > for verifying whether the vmstate-static-checker.py works as expected.
+> > > Since running this manually is a cumbersome job, let's add an automated
+> > > test for this instead that runs the script with the two dump files
+> > > and checks for the expected output.
+> > > 
+> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > > ---
+> > >   tests/functional/test_vmstate.py | 37 ++++++++++++++++++++++++++++++++
+> > >   1 file changed, 37 insertions(+)
+> > > 
+> > > diff --git a/tests/functional/test_vmstate.py b/tests/functional/test_vmstate.py
+> > > index cc988987481..19a62e8a17e 100755
+> > > --- a/tests/functional/test_vmstate.py
+> > > +++ b/tests/functional/test_vmstate.py
+> > > @@ -9,6 +9,22 @@
+> > >   from qemu_test import QemuSystemTest
+> > > +expected_output='''Warning: checking incompatible machine types: "pc-i440fx-2.1", "pc-i440fx-2.2"
+> > > +Section "fw_cfg" does not exist in dest
+> > > +Section "fusbh200-ehci-usb" version error: 2 > 1
+> > > +Section "fusbh200-ehci-usb", Description "ehci-core": expected field "usbsts", got "usbsts_pending"; skipping rest
+> > > +Section "pci-serial-4x" Description "pci-serial-multi": Entry "Fields" missing
+> > > +Section "intel-hda-generic", Description "intel-hda", Field "pci": missing description
+> > > +Section "cfi.pflash01": Entry "Description" missing
+> > > +Section "megasas", Description "PCIDevice": expected field "irq_state", while dest has no further fields
+> > > +Section "PIIX3-xen" Description "PIIX3": minimum version error: 1 < 2
+> > > +Section "PIIX3-xen" Description "PIIX3": Entry "Subsections" missing
+> > > +Section "tpci200": Description "tpci200" missing, got "tpci2002" instead; skipping
+> > > +Section "sun-fdtwo" Description "fdc": version error: 2 > 1
+> > > +Section "sun-fdtwo", Description "fdrive": Subsection "fdrive/media_rate" not found
+> > > +Section "usb-kbd" Description "usb-kbd" Field "kbd.keycodes" size mismatch: 4 , 2
+> > > +'''
+> > > +
+> > >   class VmStateTest(QemuSystemTest):
+> > >       def run_vmstate_checker(self, src_json, dst_json):
+> > > @@ -19,6 +35,27 @@ def run_vmstate_checker(self, src_json, dst_json):
+> > >                                 stderr=subprocess.STDOUT,
+> > >                                 text=True)
+> > > +    def test_checker(self):
+> > > +        """
+> > > +        Test whether the checker script correctly detects the changes
+> > > +        between dump1.json and dump2.json.
+> > > +        """
+> > > +        if self.arch != 'x86_64':
+> > > +            self.skipTest('for x86 only')
+> > > +        src_json = self.data_file('..', 'data', 'vmstate-static-checker',
+> > > +                                  'dump1.json')
+> > > +        dst_json = self.data_file('..', 'data', 'vmstate-static-checker',
+> > > +                                  'dump2.json')
+> > > +        self.log.info(f'Comparing {src_json} with {dst_json}')
+> > > +        cp = self.run_vmstate_checker(src_json, dst_json)
+> > > +        if cp.returncode != 13:
+> > > +            self.fail('Unexpected return code of vmstate-static-checker: ' +
+> > > +                      cp.returncode)
+> > > +        if cp.stdout != expected_output:
+> > > +            self.log.info('vmstate-static-checker output:\n' + cp.stdout)
+> > > +            self.log.info('expected output:\n' + expected_output)
+> > > +            self.fail('Unexpected vmstate-static-checker output!')
+> > > +
+> > 
+> > Would this run for every make check and every CI run?
+> 
+> Yes.
+> 
+> > Since the script almost never change, I wonder whether this test should be
+> > triggered only if manually.
+> 
+> We could disable it by default with a @skip... decorator, but I think it's
+> not really worth the effort: The runtime of test_checker() is about 100 ms,
+> that's really nothing compared to the hunders of seconds that some other
+> tests take.
 
-bdrv_root_unref_child() is called by:
-1. blk_remove_bs(), where a drained section is introduced.
-2. bdrv_unref_child(), which runs under the graph lock, so the drain
-   will be moved further up to its callers.
-3. block_job_remove_all_bdrv(), where a drained section is introduced.
+Right, not a concern of time used but only CPU burns.
 
-For all callers of bdrv_unref_child() a drained section is introduced,
-they are not explicilty listed here. The caller quorum_del_child()
-holds the graph lock, so it is not actually allowed to drain. This
-will be addressed in the next commit.
+Meanwhile, this is not part of the QEMU function that the repo delivers,
+but the infra to test QEMU, hence here we're always running this check
+script for everyone testing yet another almost not-changing (and may not be
+helpful, not anymore?) script to test QEMU..
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
+I think we should save the cycles, but no strong opinions.
 
-No changes in v3.
+Thanks,
 
- block.c                      |  6 ++++--
- block/blklogwrites.c         |  4 ++++
- block/blkverify.c            |  2 ++
- block/block-backend.c        |  2 ++
- block/qcow2.c                |  2 ++
- block/quorum.c               |  6 ++++++
- block/replication.c          |  2 ++
- block/snapshot.c             |  2 ++
- block/vmdk.c                 | 10 ++++++++++
- blockjob.c                   |  2 ++
- tests/unit/test-bdrv-drain.c |  2 ++
- 11 files changed, 38 insertions(+), 2 deletions(-)
-
-diff --git a/block.c b/block.c
-index 66fbc707f3..e1b1a8abc7 100644
---- a/block.c
-+++ b/block.c
-@@ -1721,12 +1721,14 @@ bdrv_open_driver(BlockDriverState *bs, BlockDriver *drv, const char *node_name,
- open_failed:
-     bs->drv = NULL;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     if (bs->file != NULL) {
-         bdrv_unref_child(bs, bs->file);
-         assert(!bs->file);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     g_free(bs->opaque);
-     bs->opaque = NULL;
-@@ -3316,10 +3318,8 @@ void bdrv_root_unref_child(BdrvChild *child)
-          * When the parent requiring a non-default AioContext is removed, the
-          * node moves back to the main AioContext
-          */
--        bdrv_drain_all_begin();
-         bdrv_try_change_aio_context_locked(child_bs, qemu_get_aio_context(),
-                                            NULL, NULL);
--        bdrv_drain_all_end();
-     }
- 
-     bdrv_schedule_unref(child_bs);
-@@ -5163,6 +5163,7 @@ static void bdrv_close(BlockDriverState *bs)
-         bs->drv = NULL;
-     }
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     QLIST_FOREACH_SAFE(child, &bs->children, next, next) {
-         bdrv_unref_child(bs, child);
-@@ -5171,6 +5172,7 @@ static void bdrv_close(BlockDriverState *bs)
-     assert(!bs->backing);
-     assert(!bs->file);
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     g_free(bs->opaque);
-     bs->opaque = NULL;
-diff --git a/block/blklogwrites.c b/block/blklogwrites.c
-index b0f78c4bc7..70ac76f401 100644
---- a/block/blklogwrites.c
-+++ b/block/blklogwrites.c
-@@ -281,9 +281,11 @@ static int blk_log_writes_open(BlockDriverState *bs, QDict *options, int flags,
-     ret = 0;
- fail_log:
-     if (ret < 0) {
-+        bdrv_drain_all_begin();
-         bdrv_graph_wrlock();
-         bdrv_unref_child(bs, s->log_file);
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
-         s->log_file = NULL;
-         qemu_mutex_destroy(&s->mutex);
-     }
-@@ -296,10 +298,12 @@ static void blk_log_writes_close(BlockDriverState *bs)
- {
-     BDRVBlkLogWritesState *s = bs->opaque;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     bdrv_unref_child(bs, s->log_file);
-     s->log_file = NULL;
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
-     qemu_mutex_destroy(&s->mutex);
- }
- 
-diff --git a/block/blkverify.c b/block/blkverify.c
-index db79a36681..3a71f7498c 100644
---- a/block/blkverify.c
-+++ b/block/blkverify.c
-@@ -151,10 +151,12 @@ static void blkverify_close(BlockDriverState *bs)
- {
-     BDRVBlkverifyState *s = bs->opaque;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     bdrv_unref_child(bs, s->test_file);
-     s->test_file = NULL;
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- }
- 
- static int64_t coroutine_fn GRAPH_RDLOCK
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 24cae3cb55..68209bb2f7 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -889,9 +889,11 @@ void blk_remove_bs(BlockBackend *blk)
-     root = blk->root;
-     blk->root = NULL;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     bdrv_root_unref_child(root);
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- }
- 
- /*
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 66fba89b41..420918b3c3 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -2821,9 +2821,11 @@ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
-     if (close_data_file && has_data_file(bs)) {
-         GLOBAL_STATE_CODE();
-         bdrv_graph_rdunlock_main_loop();
-+        bdrv_drain_all_begin();
-         bdrv_graph_wrlock();
-         bdrv_unref_child(bs, s->data_file);
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
-         s->data_file = NULL;
-         bdrv_graph_rdlock_main_loop();
-     }
-diff --git a/block/quorum.c b/block/quorum.c
-index ed8ce801ee..81407a38ee 100644
---- a/block/quorum.c
-+++ b/block/quorum.c
-@@ -1037,6 +1037,7 @@ static int quorum_open(BlockDriverState *bs, QDict *options, int flags,
- 
- close_exit:
-     /* cleanup on error */
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     for (i = 0; i < s->num_children; i++) {
-         if (!opened[i]) {
-@@ -1045,6 +1046,7 @@ close_exit:
-         bdrv_unref_child(bs, s->children[i]);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
-     g_free(s->children);
-     g_free(opened);
- exit:
-@@ -1057,11 +1059,13 @@ static void quorum_close(BlockDriverState *bs)
-     BDRVQuorumState *s = bs->opaque;
-     int i;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     for (i = 0; i < s->num_children; i++) {
-         bdrv_unref_child(bs, s->children[i]);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     g_free(s->children);
- }
-@@ -1143,7 +1147,9 @@ quorum_del_child(BlockDriverState *bs, BdrvChild *child, Error **errp)
-             (s->num_children - i - 1) * sizeof(BdrvChild *));
-     s->children = g_renew(BdrvChild *, s->children, --s->num_children);
- 
-+    bdrv_drain_all_begin();
-     bdrv_unref_child(bs, child);
-+    bdrv_drain_all_end();
- 
-     quorum_refresh_flags(bs);
- }
-diff --git a/block/replication.c b/block/replication.c
-index 54cbd03e00..0879718854 100644
---- a/block/replication.c
-+++ b/block/replication.c
-@@ -656,12 +656,14 @@ static void replication_done(void *opaque, int ret)
-     if (ret == 0) {
-         s->stage = BLOCK_REPLICATION_DONE;
- 
-+        bdrv_drain_all_begin();
-         bdrv_graph_wrlock();
-         bdrv_unref_child(bs, s->secondary_disk);
-         s->secondary_disk = NULL;
-         bdrv_unref_child(bs, s->hidden_disk);
-         s->hidden_disk = NULL;
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
- 
-         s->error = 0;
-     } else {
-diff --git a/block/snapshot.c b/block/snapshot.c
-index 9f300a78bd..28c9c43621 100644
---- a/block/snapshot.c
-+++ b/block/snapshot.c
-@@ -291,9 +291,11 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
-         }
- 
-         /* .bdrv_open() will re-attach it */
-+        bdrv_drain_all_begin();
-         bdrv_graph_wrlock();
-         bdrv_unref_child(bs, fallback);
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
- 
-         ret = bdrv_snapshot_goto(fallback_bs, snapshot_id, errp);
-         memset(bs->opaque, 0, drv->instance_size);
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 9c7ab037e1..89a7250120 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -271,6 +271,7 @@ static void vmdk_free_extents(BlockDriverState *bs)
-     BDRVVmdkState *s = bs->opaque;
-     VmdkExtent *e;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     for (i = 0; i < s->num_extents; i++) {
-         e = &s->extents[i];
-@@ -283,6 +284,7 @@ static void vmdk_free_extents(BlockDriverState *bs)
-         }
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     g_free(s->extents);
- }
-@@ -1247,9 +1249,11 @@ vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-                             0, 0, 0, 0, 0, &extent, errp);
-             if (ret < 0) {
-                 bdrv_graph_rdunlock_main_loop();
-+                bdrv_drain_all_begin();
-                 bdrv_graph_wrlock();
-                 bdrv_unref_child(bs, extent_file);
-                 bdrv_graph_wrunlock();
-+                bdrv_drain_all_end();
-                 bdrv_graph_rdlock_main_loop();
-                 goto out;
-             }
-@@ -1266,9 +1270,11 @@ vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-             g_free(buf);
-             if (ret) {
-                 bdrv_graph_rdunlock_main_loop();
-+                bdrv_drain_all_begin();
-                 bdrv_graph_wrlock();
-                 bdrv_unref_child(bs, extent_file);
-                 bdrv_graph_wrunlock();
-+                bdrv_drain_all_end();
-                 bdrv_graph_rdlock_main_loop();
-                 goto out;
-             }
-@@ -1277,9 +1283,11 @@ vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-             ret = vmdk_open_se_sparse(bs, extent_file, bs->open_flags, errp);
-             if (ret) {
-                 bdrv_graph_rdunlock_main_loop();
-+                bdrv_drain_all_begin();
-                 bdrv_graph_wrlock();
-                 bdrv_unref_child(bs, extent_file);
-                 bdrv_graph_wrunlock();
-+                bdrv_drain_all_end();
-                 bdrv_graph_rdlock_main_loop();
-                 goto out;
-             }
-@@ -1287,9 +1295,11 @@ vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-         } else {
-             error_setg(errp, "Unsupported extent type '%s'", type);
-             bdrv_graph_rdunlock_main_loop();
-+            bdrv_drain_all_begin();
-             bdrv_graph_wrlock();
-             bdrv_unref_child(bs, extent_file);
-             bdrv_graph_wrunlock();
-+            bdrv_drain_all_end();
-             bdrv_graph_rdlock_main_loop();
-             ret = -ENOTSUP;
-             goto out;
-diff --git a/blockjob.c b/blockjob.c
-index 44991e3ff7..e68181a35b 100644
---- a/blockjob.c
-+++ b/blockjob.c
-@@ -198,6 +198,7 @@ void block_job_remove_all_bdrv(BlockJob *job)
-      * one to make sure that such a concurrent access does not attempt
-      * to process an already freed BdrvChild.
-      */
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     while (job->nodes) {
-         GSList *l = job->nodes;
-@@ -211,6 +212,7 @@ void block_job_remove_all_bdrv(BlockJob *job)
-         g_slist_free_1(l);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- }
- 
- bool block_job_has_bdrv(BlockJob *job, BlockDriverState *bs)
-diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index ac76525e5a..c33f7d31c2 100644
---- a/tests/unit/test-bdrv-drain.c
-+++ b/tests/unit/test-bdrv-drain.c
-@@ -955,11 +955,13 @@ static void bdrv_test_top_close(BlockDriverState *bs)
- {
-     BdrvChild *c, *next_c;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     QLIST_FOREACH_SAFE(c, &bs->children, next, next_c) {
-         bdrv_unref_child(bs, c);
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- }
- 
- static int coroutine_fn GRAPH_RDLOCK
 -- 
-2.39.5
-
+Peter Xu
 
 
