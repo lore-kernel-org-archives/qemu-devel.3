@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35280C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E71EAC5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:24:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJXn6-0000xM-MW; Mon, 26 May 2025 09:22:57 -0400
+	id 1uJXmJ-00008M-Sk; Mon, 26 May 2025 09:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXmZ-0000Ec-4F; Mon, 26 May 2025 09:22:23 -0400
+ id 1uJXm8-0008TS-Pe; Mon, 26 May 2025 09:21:56 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXmU-0000Jc-Af; Mon, 26 May 2025 09:22:20 -0400
+ id 1uJXm3-0000Hh-Nu; Mon, 26 May 2025 09:21:54 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 91DB1445EF;
- Mon, 26 May 2025 15:21:48 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 9615B44466;
+ Mon, 26 May 2025 15:21:45 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v3 17/24] blockdev: drain while unlocked in
- internal_snapshot_action()
-Date: Mon, 26 May 2025 15:21:33 +0200
-Message-Id: <20250526132140.1641377-18-f.ebner@proxmox.com>
+Subject: [PATCH v3 04/24] block: move drain outside of read-locked
+ bdrv_inactivate_recurse()
+Date: Mon, 26 May 2025 15:21:20 +0200
+Message-Id: <20250526132140.1641377-5-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250526132140.1641377-1-f.ebner@proxmox.com>
 References: <20250526132140.1641377-1-f.ebner@proxmox.com>
@@ -62,66 +62,93 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
 
+More granular draining is not trivially possible, because
+bdrv_inactivate_recurse() can recursively call itself.
+
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
 
 No changes in v3.
 
- blockdev.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ block.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/blockdev.c b/blockdev.c
-index bd5ca77619..506755bef1 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -1208,7 +1208,7 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
-     Error *local_err = NULL;
-     const char *device;
-     const char *name;
--    BlockDriverState *bs;
-+    BlockDriverState *bs, *check_bs;
-     QEMUSnapshotInfo old_sn, *sn;
-     bool ret;
-     int64_t rt;
-@@ -1216,7 +1216,7 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
-     int ret1;
+diff --git a/block.c b/block.c
+index 3065d5c91e..fa55dfba68 100644
+--- a/block.c
++++ b/block.c
+@@ -6989,6 +6989,8 @@ bdrv_inactivate_recurse(BlockDriverState *bs, bool top_level)
+ 
+     GLOBAL_STATE_CODE();
+ 
++    assert(bs->quiesce_counter > 0);
++
+     if (!bs->drv) {
+         return -ENOMEDIUM;
+     }
+@@ -7032,9 +7034,7 @@ bdrv_inactivate_recurse(BlockDriverState *bs, bool top_level)
+         return -EPERM;
+     }
+ 
+-    bdrv_drained_begin(bs);
+     bs->open_flags |= BDRV_O_INACTIVE;
+-    bdrv_drained_end(bs);
+ 
+     /*
+      * Update permissions, they may differ for inactive nodes.
+@@ -7059,20 +7059,26 @@ int bdrv_inactivate(BlockDriverState *bs, Error **errp)
+     int ret;
  
      GLOBAL_STATE_CODE();
 -    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    bdrv_drain_all_begin();
 +    bdrv_graph_rdlock_main_loop();
  
-     tran_add(tran, &internal_snapshot_drv, state);
- 
-@@ -1225,14 +1225,29 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
- 
-     bs = qmp_get_root_bs(device, errp);
-     if (!bs) {
-+        bdrv_graph_rdunlock_main_loop();
-         return;
+     if (bdrv_has_bds_parent(bs, true)) {
+         error_setg(errp, "Node has active parent node");
+-        return -EPERM;
++        ret = -EPERM;
++        goto out;
      }
  
-     state->bs = bs;
+     ret = bdrv_inactivate_recurse(bs, true);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret, "Failed to inactivate node");
+-        return ret;
++        goto out;
+     }
  
-+    /* Need to drain while unlocked. */
+-    return 0;
++out:
 +    bdrv_graph_rdunlock_main_loop();
-     /* Paired with .clean() */
-     bdrv_drained_begin(bs);
++    bdrv_drain_all_end();
++    return ret;
+ }
  
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
+ int bdrv_inactivate_all(void)
+@@ -7082,7 +7088,9 @@ int bdrv_inactivate_all(void)
+     int ret = 0;
+ 
+     GLOBAL_STATE_CODE();
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
 +
-+    /* Make sure the root bs did not change with the drain. */
-+    check_bs = qmp_get_root_bs(device, errp);
-+    if (bs != check_bs) {
-+        if (check_bs) {
-+            error_setg(errp, "Block node of device '%s' unexpectedly changed",
-+                       device);
-+        } /* else errp is already set */
-+        return;
-+    }
-+
-     if (bdrv_op_is_blocked(bs, BLOCK_OP_TYPE_INTERNAL_SNAPSHOT, errp)) {
-         return;
++    bdrv_drain_all_begin();
++    bdrv_graph_rdlock_main_loop();
+ 
+     for (bs = bdrv_first(&it); bs; bs = bdrv_next(&it)) {
+         /* Nodes with BDS parents are covered by recursion from the last
+@@ -7098,6 +7106,9 @@ int bdrv_inactivate_all(void)
+         }
      }
+ 
++    bdrv_graph_rdunlock_main_loop();
++    bdrv_drain_all_end();
++
+     return ret;
+ }
+ 
 -- 
 2.39.5
 
