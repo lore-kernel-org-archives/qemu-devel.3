@@ -4,94 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF17C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 15:11:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A77EC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 15:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJZTY-0003KF-RT; Mon, 26 May 2025 11:10:53 -0400
+	id 1uJZUK-0003dA-7e; Mon, 26 May 2025 11:11:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJZTU-0003Js-M0
- for qemu-devel@nongnu.org; Mon, 26 May 2025 11:10:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1uJZUI-0003bI-AZ
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 11:11:38 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJZTR-00046c-JD
- for qemu-devel@nongnu.org; Mon, 26 May 2025 11:10:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748272241;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kMoXzdk/bV1Xq2sRiFQfcZoBE7LZ5GQVprIfU6IBEYQ=;
- b=YJRbbomu/jIhacO3wIceHGSP6rpmeu0l1sFVFW9iC7tWvisHmKE5XGGAhw4YFJiOfKkpfV
- ATmNM2z5xwtJuOJetUZYEvrJdXT2qsH+XscXYFRmWmFKOD3Wf3jYhVUdCOmhjbp8P3krgH
- s76kwXipZzTmw+T4UhjZdWRoJO7+Mug=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-6Da3wGnLO9OBCVtOEsclug-1; Mon, 26 May 2025 11:10:40 -0400
-X-MC-Unique: 6Da3wGnLO9OBCVtOEsclug-1
-X-Mimecast-MFC-AGG-ID: 6Da3wGnLO9OBCVtOEsclug_1748272240
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c54e7922a1so560556285a.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 08:10:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748272240; x=1748877040;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kMoXzdk/bV1Xq2sRiFQfcZoBE7LZ5GQVprIfU6IBEYQ=;
- b=TdDzYa0td8fqw84Idb1VFB7+LyNepvO2/OQRKkiSUVcZ6t+XEUH8nLwpk9FYthmACn
- oRyzD0n8IEXfOOm61NfVDAi8fkYPELQQVztCz/jCe7t81CdP2RJp4g1gWNA3fuauhrIE
- jRVFBpPX68aHzu261DfxvUHp5xHcq1AgJ2wLQNzV9PwRlTKliiZtYSWjJobnIoSeePpJ
- LG18w3tmLhM7UTK4NLM5b1Ll3EJIKEgT2plunveJDl4fzqoz4GGy+f/78uCVhNnytl6g
- wOoDc6cC33gUxWaiVe4pHcMaVNYZrFiqpjI/lOZwDsxizF0c8Do16AbLh9auxwfZp5ub
- O1EQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVX26JmUYC6hdmEtYW7S2agtahMdG4vheJYFk60+d22nyosK42NO/iqk9IFS78ncld/Q009Maskox3h@nongnu.org
-X-Gm-Message-State: AOJu0YxntfWoIGuPLiC/8dvvOagHKv+HTtFoeVeZzZhtiwXgUoUTmfTj
- /pDf2Lt+mQna+V5p7E/OiN8t0HEIC2doo5YpZFpPQ2co4hHG6IDMumMvWAjYy5McnRZF0pktMwO
- bfT2I0ITg/pYUtLM8LP8+nxOShLCKYVYV7ca43SDlKT5lgy8dOCgZ6mcQ
-X-Gm-Gg: ASbGnctWI0Kxj5ZKIZqRIaKPwzLQ+EtFUN51MzjmmF0KosADYdpMqOC3vbsCdSCqW3P
- RQV7iTe2zEasA6diIaLIyGorplwCtjPHMOvHr1kRzdpdog0KwckoABiOl17qwM43wCasymmEJY6
- mGSOCFOV3qlA25dj1k5JhRH441P3iXySOvhbvfBQSV4N7neuT9s67iVQ382wLNnbSgxFoVfr8c4
- RD8eNePc44HRsbGVXdAiI+Z1lnISonxkx94ZoGiVZsTz8K2U/DYWODF+i/I66tPKNbj5XF6JPbJ
- vAE=
-X-Received: by 2002:a05:620a:6013:b0:7c5:674c:eecc with SMTP id
- af79cd13be357-7ceecbe8957mr1372711285a.32.1748272239733; 
- Mon, 26 May 2025 08:10:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDBoseGIkivgy+uYJpPiWHbycqciZgnPUziM93QnOU6vkOIMha/4g8TXlm4seIEyXWfJ0UGg==
-X-Received: by 2002:a05:620a:6013:b0:7c5:674c:eecc with SMTP id
- af79cd13be357-7ceecbe8957mr1372707185a.32.1748272239317; 
- Mon, 26 May 2025 08:10:39 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd468b879csm1574239585a.70.2025.05.26.08.10.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 May 2025 08:10:38 -0700 (PDT)
-Date: Mon, 26 May 2025 11:10:35 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 13/13] [PoC] migration: Allow migrate commands to
- provide the migration config
-Message-ID: <aDSEa8eh1txwwun6@x1.local>
-References: <20250411191443.22565-1-farosas@suse.de>
- <20250411191443.22565-14-farosas@suse.de>
- <87tt57ajdg.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1uJZUG-00049K-6N
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 11:11:38 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1748272273; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=a3PeFozq2a+UE2W3GQxnsKvM8UE+zUlgocLFCVaKPsStoc2iD5A/do64vDI6Kug8yiLa5bDZWbegM7hdVy7alvE+V2Us3Pnsg7Q3r51Len1MFOgIuT2ibZZzwnpgzHqlmANMjyant+dyv/A1KZIy0V+FtXnzr/blLBbUkRvAG70=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1748272273;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=sFywvsH+FbU1GfGgUHGa4FRs0PlNtjWljaacFJHVYss=; 
+ b=TfZ5tYzyVqaSiiR1ttAcwNflPx7ecO9qNArDgyckrQeIxZGTBLSOeffeH6eFX1aN7j9pNOT618nQAdQEijK1oJSjhClaZ8i3Ri1LQ5Ql9Ueu8rvhI8l8JDyVENr0h0DJLfVj7BpL5PchdhuzYkPeViKnUlsnmbT4aA8bceVHJgU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1748272273; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=sFywvsH+FbU1GfGgUHGa4FRs0PlNtjWljaacFJHVYss=;
+ b=Zu25hUpGYbcPi0h+fgWTzDmUfP29jsL0iy7nV04Hwu0wCguSpZXH0mXbOeeP11yw
+ 1HT7JTWrK79ZkQP+cZYn8Kptg9/KvJcAcHro40IIyVIp5P1ATFj6eKvOX2XPned/RvT
+ qdhZFsKMkgqaaHny4bawE5gv9QcNaZxq/PeMojBg=
+Received: by mx.zohomail.com with SMTPS id 1748272269462331.2828269970603;
+ Mon, 26 May 2025 08:11:09 -0700 (PDT)
+Message-ID: <284cd0dd-86f3-4659-ae0d-73e17e328bd8@collabora.com>
+Date: Mon, 26 May 2025 18:11:02 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87tt57ajdg.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 03/10] virtio-gpu: Handle virgl fence creation errors
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250523233305.433424-1-dmitry.osipenko@collabora.com>
+ <20250523233305.433424-4-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20250523233305.433424-4-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,59 +96,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 26, 2025 at 10:03:55AM +0200, Markus Armbruster wrote:
-> > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index bb2487dbc6..5bd8f0f1b2 100644
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
-> > @@ -1638,6 +1638,10 @@
->    ##
->    # @migrate:
->    #
->    # Migrates the current running guest to another Virtual Machine.
->    #
->    # @uri: the Uniform Resource Identifier of the destination VM
->    #
->    # @channels: list of migration stream channels with each stream in the
->    #     list connected to a destination interface endpoint.
->    #
->    # @detach: this argument exists only for compatibility reasons and is
->    #     ignored by QEMU
-> >  #
-> >  # @resume: resume one paused migration, default "off".  (since 3.0)
-> 
-> Unrelated to this patch, but here goes anyway.  What happens if I pass
-> @uri and @channels with I "resume": true, and they differ from the ones
-> passed originally?
+On 5/24/25 02:32, Dmitry Osipenko wrote:
+> @@ -872,6 +872,8 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                        struct virtio_gpu_ctrl_command *cmd)
+>  {
+>      bool cmd_suspended = false;
+> +    uint32_t flags;
 
-I can answer this one - "resume" was designed to work always with new
-channels/URI passed in.  It was currently only used for postcopy to resume
-a paused postcopy migration where the old URI/channels stopped working
-already.
-
-The doc is indeed not obvious to show that, and can be confusing.  If
-anyone thinks worthwhile, I can send a patch to touch it up:
-
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 8b9c53595c..a4c9272e8b 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -1658,7 +1658,10 @@
- # @detach: this argument exists only for compatibility reasons and is
- #     ignored by QEMU
- #
--# @resume: resume one paused migration, default "off".  (since 3.0)
-+# @resume: when set, resume one paused postcopy migration, using the new
-+#     URI/channels specified to replace the old/broken channels.  The user
-+#     should make sure the migration is in "postcopy-paused" state before
-+#     the resume request.  Default "off".  (since 3.0)
- #
- # Since: 0.14
- #
-
-Thanks,
+Realized I re-introduced the build warning with older virglrenderer.
+Will fix in v13.
 
 -- 
-Peter Xu
-
+Best regards,
+Dmitry
 
