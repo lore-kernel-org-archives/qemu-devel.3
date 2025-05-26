@@ -4,74 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB23C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 07:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F25FC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 07:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJScY-0000hY-SX; Mon, 26 May 2025 03:51:42 -0400
+	id 1uJSif-0001rg-JF; Mon, 26 May 2025 03:58:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJScV-0000hO-T5
- for qemu-devel@nongnu.org; Mon, 26 May 2025 03:51:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJScU-0000av-8Q
- for qemu-devel@nongnu.org; Mon, 26 May 2025 03:51:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748245894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pK5ZsDwQQXpiW+o7H6rm2+5BPo4V87ycDVp2gU9bTeY=;
- b=AWu8RcUpPFU9vnCOOjXEUGYipviv+n2fNI1Br6qQpk4cFcF2yWeEL/AxHvv9A2XcxQuoda
- /Ssw2peXK0utCZrwOcyREbjsh28aZi52KMrlowpAWT5OchTnLEwyXoHZBQMmpIM7ZvnA0w
- iqJynzykPbCHOrTfGC1foHCDBCzs4qQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-Q1z8bDDYNbKU7EByfe8x-Q-1; Mon,
- 26 May 2025 03:51:32 -0400
-X-MC-Unique: Q1z8bDDYNbKU7EByfe8x-Q-1
-X-Mimecast-MFC-AGG-ID: Q1z8bDDYNbKU7EByfe8x-Q_1748245892
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 08C9A19560A7; Mon, 26 May 2025 07:51:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AAF891800371; Mon, 26 May 2025 07:51:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id F2D9821E6768; Mon, 26 May 2025 09:51:28 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 12/13] [PoC] migration: Add query/set commands for
- MigrationConfig
-In-Reply-To: <20250411191443.22565-13-farosas@suse.de> (Fabiano Rosas's
- message of "Fri, 11 Apr 2025 16:14:42 -0300")
-References: <20250411191443.22565-1-farosas@suse.de>
- <20250411191443.22565-13-farosas@suse.de>
-Date: Mon, 26 May 2025 09:51:28 +0200
-Message-ID: <874ix7byin.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
+ id 1uJSiX-0001oF-Is; Mon, 26 May 2025 03:57:53 -0400
+Received: from smtp84.cstnet.cn ([159.226.251.84] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
+ id 1uJSiQ-0001Fv-M5; Mon, 26 May 2025 03:57:52 -0400
+Received: from iscas.ac.cn (unknown [180.140.173.24])
+ by APP-05 (Coremail) with SMTP id zQCowABXpRPpHjRofekYAA--.12997S2;
+ Mon, 26 May 2025 15:57:30 +0800 (CST)
+From: Meng Zhuo <mengzhuo@iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: Meng Zhuo <mengzhuo@iscas.ac.cn>, Andrew Jones <ajones@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH v5] target/riscv/kvm: add satp mode for host cpu
+Date: Mon, 26 May 2025 15:57:27 +0800
+Message-Id: <20250526075727.105004-1-mengzhuo@iscas.ac.cn>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zQCowABXpRPpHjRofekYAA--.12997S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxZw15AF13tF1fCrWDWFWDXFb_yoW5KF4kpr
+ W5GrZ5CrWftF9rJayxtr1kXF45Jws5Kr42ka1j9r17Xan8JrWUWF1kKa13CF98JF47AFnx
+ A3WFkrW3CF40yFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUvK14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+ 6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
+ Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+ I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+ 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
+ tVW8ZwCY1x0264kExVAvwVAq07x20xyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7
+ v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF
+ 1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIx
+ AIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI
+ 42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxh
+ VjvjDU0xZFpf9x0JU2oGQUUUUU=
+X-Originating-IP: [180.140.173.24]
+X-CM-SenderInfo: pphqw6xkxrqxpvfd2hldfou0/1tbiBwsOEmgz9QejzAAAsW
+Received-SPF: pass client-ip=159.226.251.84; envelope-from=mengzhuo@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,124 +78,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+This patch adds host satp mode while kvm/host cpu satp mode is not
+set.
 
-> Add the QMP commands query-migrate-config and migrate-set-config to
-> read and write the migration configuration options.
+This patch not change the output of errno nor errno strings pattern
+like other functions do. See [v3] for further information.
 
-These supersede query-migrate-capabilities, query-migrate-parameters,
-migrate-set-capabilities, and migrate-set-parameters, right?
+Change in v5:
+- Adds R-B comment from Andrew Jones
 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/options.c | 24 ++++++++++++++++++++++++
->  migration/options.h |  2 +-
->  qapi/migration.json | 42 ++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 67 insertions(+), 1 deletion(-)
->
-> diff --git a/migration/options.c b/migration/options.c
-> index 4e3792dec3..c85ee2e506 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -1441,3 +1441,27 @@ void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
->      migrate_config_apply(&tmp);
->      migrate_post_update_config(&tmp, errp);
->  }
-> +
-> +void qmp_migrate_set_config(MigrationConfig *config, Error **errp)
-> +{
-> +    if (!migrate_config_check(config, errp)) {
-> +        /* Invalid parameter */
-> +        return;
-> +    }
-> +
-> +    migrate_config_apply(config);
-> +    migrate_post_update_config(config, errp);
-> +}
-> +
-> +MigrationConfig *qmp_query_migrate_config(Error **errp)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +    MigrationConfig *config = g_new0(MigrationConfig, 1);
-> +
-> +    QAPI_CLONE_MEMBERS(MigrationConfig, config, &s->config);
-> +
-> +    /* set the has_* fields for every option */
-> +    migrate_config_init(config);
-> +
-> +    return config;
-> +}
-> diff --git a/migration/options.h b/migration/options.h
-> index 61ee854bb0..0e36dafe80 100644
-> --- a/migration/options.h
-> +++ b/migration/options.h
-> @@ -72,7 +72,7 @@ uint64_t migrate_xbzrle_cache_size(void);
->  ZeroPageDetection migrate_zero_page_detection(void);
->  
->  bool migrate_config_check(MigrationConfig *params, Error **errp);
-> -void migrate_config_init(MigrationConfig *params);
-> +void migrate_config_init(MigrationConfig *config);
+Change in v4:
+- Adds changelog in commit message
+- Link to v3: https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg04629.html
 
-Have you considered renaming the declaration's parameter when you change
-its type in PATCH 08, or when you rename the definition's parameter in
-PATCH 11?
+Change in v3:
+- Rebase on https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+  as requested
+- Link to v2: https://lists.nongnu.org/archive/html/qemu-devel/2025-04/msg05203.html
 
->  bool migrate_config_get_cap_compat(MigrationConfig *config, int i);
->  bool migrate_caps_check(MigrationConfig *new, Error **errp);
->  #endif
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 5e39f21adc..bb2487dbc6 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -2552,3 +2552,45 @@
->    'data': { '*tls-creds': 'str',
->              '*tls-hostname': 'str',
->              '*tls-authz': 'str' } }
-> +
-> +##
-> +# @query-migrate-config:
-> +#
-> +# Returns information about the current migration configuration
-> +# options
-> +#
-> +# Returns: @MigrationConfig
-> +#
-> +# Since: 10.1
-> +#
-> +# .. qmp-example::
-> +#
-> +#     -> { "execute": "query-migrate-config" }
-> +#     <- { "return": {
-> +#              "multifd-channels": 2,
-> +#              "cpu-throttle-increment": 10,
-> +#              "cpu-throttle-initial": 20,
-> +#              "max-bandwidth": 33554432,
-> +#              "downtime-limit": 300
-> +#           }
-> +#        }
-> +##
-> +{ 'command': 'query-migrate-config',
-> +  'returns': 'MigrationConfig' }
-> +
-> +##
-> +# @migrate-set-config:
-> +#
-> +# Set various migration configuration options.
-> +#
-> +# Since: 10.1
-> +#
-> +# .. qmp-example::
-> +#
-> +#     -> { "execute": "migrate-set-config" ,
-> +#          "arguments": { "max-bandwidth": 33554432,
-> +#                         "downtime-limit": 300 } }
-> +#     <- { "return": {} }
-> +##
-> +{ 'command': 'migrate-set-config', 'boxed': true,
-> +  'data': 'MigrationConfig' }
+Changes in v2:
+- use set_satp_mode_max_supported instead of hard code
+- Link to v1: https://lists.nongnu.org/archive/html/qemu-devel/2025-04/msg05094.html
 
-This patch exposes MigrationConfig externally.  We should double-check
-its documentation to make sure it's what we want there.  Known issue:
-how to reset @tls-creds & friends.  Touched in my review of PATCH 07.
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2931
+Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
+---
+ target/riscv/cpu.c         |  3 +--
+ target/riscv/cpu.h         |  1 +
+ target/riscv/kvm/kvm-cpu.c | 20 +++++++++++++++++++-
+ 3 files changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index d92874baa0..a84edd3a3b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -433,8 +433,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit)
+     g_assert_not_reached();
+ }
+ 
+-static void set_satp_mode_max_supported(RISCVCPU *cpu,
+-                                        uint8_t satp_mode)
++void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode)
+ {
+     bool rv32 = riscv_cpu_mxl(&cpu->env) == MXL_RV32;
+     const bool *valid_vm = rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index b56d3afa69..d7136f1d72 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -915,6 +915,7 @@ char *riscv_cpu_get_name(RISCVCPU *cpu);
+ 
+ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ void riscv_add_satp_mode_properties(Object *obj);
++void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode);
+ bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+ 
+ /* CSR function table */
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 82f9728636..18fbca1a08 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -999,6 +999,23 @@ static void kvm_riscv_destroy_scratch_vcpu(KVMScratchCPU *scratch)
+     close(scratch->kvmfd);
+ }
+ 
++static void kvm_riscv_init_satp_mode(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
++{
++    CPURISCVState *env = &cpu->env;
++    struct kvm_one_reg reg;
++    int ret;
++    uint64_t val;
++
++    reg.id = RISCV_CONFIG_REG(env, satp_mode);
++    reg.addr = (uint64_t)&val;
++    ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
++    if (ret != 0) {
++        error_report("Unable to retrieve satp from host, error %d", ret);
++    }
++
++    set_satp_mode_max_supported(cpu, val);
++}
++
+ static void kvm_riscv_init_machine_ids(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
+ {
+     struct kvm_one_reg reg;
+@@ -1302,6 +1319,7 @@ static void riscv_init_kvm_registers(Object *cpu_obj)
+     kvm_riscv_init_machine_ids(cpu, &kvmcpu);
+     kvm_riscv_init_misa_ext_mask(cpu, &kvmcpu);
+     kvm_riscv_init_cfg(cpu, &kvmcpu);
++    kvm_riscv_init_satp_mode(cpu, &kvmcpu);
+ 
+     kvm_riscv_destroy_scratch_vcpu(&kvmcpu);
+ }
+@@ -1980,7 +1998,7 @@ static bool kvm_cpu_realize(CPUState *cs, Error **errp)
+         }
+     }
+ 
+-   return true;
++    return true;
+ }
+ 
+ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+-- 
+2.39.5
 
 
