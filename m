@@ -4,137 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 646B5C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 08:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 431BDC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 08:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJTOP-0008Gs-Gy; Mon, 26 May 2025 04:41:09 -0400
+	id 1uJTPR-0000cQ-8g; Mon, 26 May 2025 04:42:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJTOM-0008GO-CD
- for qemu-devel@nongnu.org; Mon, 26 May 2025 04:41:06 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uJTPP-0000W9-Cy
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 04:42:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJTOF-0006Po-QJ
- for qemu-devel@nongnu.org; Mon, 26 May 2025 04:41:01 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uJTPN-0006VN-FC
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 04:42:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748248857;
+ s=mimecast20190719; t=1748248927;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2gk8J4qdN+7/WzVTYDJmsbzuW+AyW4oYejYE3RoeY7U=;
- b=isxOQ+OGpMtDRzalHCSY60JIHA9YQ/+LtA0pF5151PRDW0xOFXKxIbpqkkJQhxgoFOv0L4
- ZVdN13wignw7n2unvYUzNhuzKZB3tE09sWLGEGTDuFR/h4hBHudXMRYrB3RqAQ4Duqg56v
- dF8A3sh+uKr0MzO9Vgb8fbqqv3N+GpY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=97kbZtlgIExA4qKYGRP1ynOk/EWcY3gmjZBtZIIcE1E=;
+ b=WiBe1lCrkENIHDOAWeMkvWrzbGPEZNujyO7CXH2D4LpaStBbLbC6NJJ5AFjrqJ4BRLuNYY
+ AXNjmCdN05BY/yXJQ6imUCFrf6XfMLwdNeDvK4XvkPa+VPiH8HJRyfAqhf14D8Po97mqiU
+ kk9kU1eEd6d86oEq9p4KgCuHpd7Vf9I=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-wzDNOZWaNqeFZRDwymy0mg-1; Mon, 26 May 2025 04:40:55 -0400
-X-MC-Unique: wzDNOZWaNqeFZRDwymy0mg-1
-X-Mimecast-MFC-AGG-ID: wzDNOZWaNqeFZRDwymy0mg_1748248855
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-441c122fa56so9385395e9.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 01:40:55 -0700 (PDT)
+ us-mta-621-5zn6jXVxMDeYclz89g1tdw-1; Mon, 26 May 2025 04:42:05 -0400
+X-MC-Unique: 5zn6jXVxMDeYclz89g1tdw-1
+X-Mimecast-MFC-AGG-ID: 5zn6jXVxMDeYclz89g1tdw_1748248925
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d209dc2d3so11950595e9.3
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 01:42:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748248854; x=1748853654;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2gk8J4qdN+7/WzVTYDJmsbzuW+AyW4oYejYE3RoeY7U=;
- b=BL/pmwgBtBeZDsafAMCitiHJM4fUl1PpUmWENsHEP4PjDxpkj5QfgHJLJBiVrBiJmy
- zAO8g2hAOebyghHZGEkGmt8sBV3NAs4d71ttrGaVezim6VEYr9TrQkd6xVvT5BmEmEzq
- SsaQKvLK7sA+IbOPB/YIAvvSgnHBZjTmuuOTUxJx3bVc9aEO8mAJzmbBShCHWAI7pFc4
- rbkQu23T0iUeT5VkZ8Ty/zMqx/VXrLx+5nGsc43cKuTBjkyvQkS74WNc/ILJZldkN5he
- vY+WjEKT4LcLYBzQl4+MdBkU/1CqvYTy8pC4B3WLMW9fZuhG6ZLV+omOuAsl7BHW3myD
- NhRg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVuQLfEElL58N17Xm6QfE3zvua9n6sJ0zk6WaEuFe3KyHCPV7Z+DGOQU3HWO/ojXDulE9CcCvLZ6jDR@nongnu.org
-X-Gm-Message-State: AOJu0YwjqAERXd7xm7vRj9EVIkDlDEMXDpiQh3p27XiydP7agJNFlq52
- SFamRgtBvSl+gFnW1DS38z+UUikWHCJlBAO3OVKAIbTBF/aZnHL9b/l/iS/IoAJ4yLkDHxroBsi
- jx8RVsN4AeF/T+K9cIHNxJRl0savGWJYnWqs8MRcQ8iqLZXUqNdo0SkF5
-X-Gm-Gg: ASbGncvXi8pKW2lA/CoTG6+D87o2dwfoywMbFxnxxcR3JozItD4crztkwmkSinMxFw4
- 4xHxGu4cfza12sg9llEtxneEZP2matD+HqBRTu81xcn4MjIB6DxJIv+zogvDzNSBaCiQfwzx57r
- BCNQ0B+9uSNYX5i3mRRJMJdhUCQSMfAscX5BETxUg085N22pi9Y4c5Tv2GjXfYUoJJ4oOdI0UK8
- a/y7cCNbrLIDMenhyB5Rebq/9DbHYR/6wBR511aI6pHRJiyEnodsAZdp3JSRUXYzmFFsljhiqNo
- q/mbeKYN2W9XZdzNtxZ+w84Ru6vU60UKylluhC5oPF274Q0PTA==
-X-Received: by 2002:a05:600c:1c8b:b0:44a:ac77:26d5 with SMTP id
- 5b1f17b1804b1-44c919e1873mr72295655e9.14.1748248854611; 
- Mon, 26 May 2025 01:40:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElZTB/8NdBCXa+noVoBZEvRB3aPhx5ktQrwbM31b9TCTQt73Ii0tDgsygGfyu/Z8K7g/Y4Iw==
-X-Received: by 2002:a05:600c:1c8b:b0:44a:ac77:26d5 with SMTP id
- 5b1f17b1804b1-44c919e1873mr72295395e9.14.1748248854225; 
- Mon, 26 May 2025 01:40:54 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ d=1e100.net; s=20230601; t=1748248925; x=1748853725;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=97kbZtlgIExA4qKYGRP1ynOk/EWcY3gmjZBtZIIcE1E=;
+ b=dzuzputTI0dY+e/fajcuKgo4wfrdjuf1WqKoCy/BA40tD7MoWshoD5n3VV9+qpiKVJ
+ bJRzQQr8fLs3YyXCNn+WKxcdxNUWNKInbOee4tDD+ByA5GBESltwXuzyboFO6opiDVoY
+ Yjzd9vK4e5aGFdu/TTT0oJSlTf5TLbXOamfcDGMwIWt8ICR4KaYGi6YYQGPcJyhy/xvt
+ ZH0ERk9MqeH2utz26Pq+umAcLaZJwGKMs2ouSXaeI5kgKTcdVfhAeRpF6Bje34XpqKFO
+ QHtMgr0KPm8g7rzVV+RHR3Zl27e7nqIIuWAE6LKIHm5EvfclUuBUn9cm9e2eClOAj1AW
+ Vg2Q==
+X-Gm-Message-State: AOJu0YxfAAK8a3Nz5ef3xTgJ5VYIG5FxBfxRPvVmjMvC4lW09LAhFt0V
+ 6GKO6W6pc1kZ3PXFS6TKOJvQwcFTgRJ1M66AnQSgjKYBjJUT8a4szNI3bWbbsEJDIYZFrhG5tHF
+ Hoj0V521mngDLe8vtKDO/mSszzJARe87QxsEx/XtbtPdC3dVRnSJMUPPl
+X-Gm-Gg: ASbGnctt8eD8wJEIaAtEWMjAEWZ/jzHwMuKsxn6mIB1T4uYPgMPcUdpH/Fm842FOu4I
+ lppIBlDndKr2w3qjI59e18WfFhNnNUNZBrRNUqflwZZK9H0DNRaSxtir4mGG74flJ/uyr6MEf6T
+ IfH8LNChdJt+gemsQbs7tlqkZoiUKoXOS0aP7tWO1bZkGvIBZpuIkc1hUcYF4MhxjIgj6oBHn38
+ 8z/bOvrJPW1wsSSY3+gK+SC0s7jfIML/MOdOd7FUO7Cr9RiZBRw9PjRs6nXimI19ea8zi68r6GJ
+ rgOuABiDiUSsANEODq0NqaXc7fh8L2lhAWcZEpOv0FeFQREhxJlUSLf5xPd5a3Kn0+fV15aAaZL
+ Ual3EDytlcYiimSIFrDRrzpk2LxIPr8B2fMqgbMc=
+X-Received: by 2002:a05:600c:3c84:b0:442:f4d4:53a with SMTP id
+ 5b1f17b1804b1-44c9151293fmr82089755e9.2.1748248924820; 
+ Mon, 26 May 2025 01:42:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+4zjh0O/r8X0NQKFOR2Y6GHPZFlzGjvoXiENYfVluXT0XK1FAhn8FH2HkNN46fQhcZ46RPQ==
+X-Received: by 2002:a05:600c:3c84:b0:442:f4d4:53a with SMTP id
+ 5b1f17b1804b1-44c9151293fmr82089345e9.2.1748248924369; 
+ Mon, 26 May 2025 01:42:04 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f19:6500:e1c1:8216:4c25:efe4?
+ (p200300d82f196500e1c182164c25efe4.dip0.t-ipconnect.de.
+ [2003:d8:2f19:6500:e1c1:8216:4c25:efe4])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f78b2f19sm224943065e9.32.2025.05.26.01.40.52
+ 5b1f17b1804b1-447f3dd9c21sm234863005e9.38.2025.05.26.01.42.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 01:40:53 -0700 (PDT)
-Message-ID: <66ad7451-b7a6-4112-8f20-1af06d5b482a@redhat.com>
-Date: Mon, 26 May 2025 10:40:52 +0200
+ Mon, 26 May 2025 01:42:04 -0700 (PDT)
+Message-ID: <7f10e5e8-9585-4323-96d5-760e6652db1b@redhat.com>
+Date: Mon, 26 May 2025 10:42:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v11 3/4] hw/vfio/ap: Storing event information for an
- AP configuration change event
-To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
-References: <20250523160338.41896-1-rreyes@linux.ibm.com>
- <20250523160338.41896-4-rreyes@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250523160338.41896-4-rreyes@linux.ibm.com>
+Subject: Re: [PATCH v5 03/10] memory: Unify the definiton of
+ ReplayRamPopulate() and ReplayRamDiscard()
+To: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
+ <aik@amd.com>, Peter Xu <peterx@redhat.com>,
+ Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+References: <20250520102856.132417-1-chenyi.qiang@intel.com>
+ <20250520102856.132417-4-chenyi.qiang@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250520102856.132417-4-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -59
 X-Spam_score: -6.0
@@ -143,7 +149,7 @@ X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,162 +165,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/23/25 18:03, Rorie Reyes wrote:
-> These functions can be invoked by the function that handles interception
-> of the CHSC SEI instruction for requests indicating the accessibility of
-> one or more adjunct processors has changed.
+On 20.05.25 12:28, Chenyi Qiang wrote:
+> Update ReplayRamDiscard() function to return the result and unify the
+> ReplayRamPopulate() and ReplayRamDiscard() to ReplayRamDiscardState() at
+> the same time due to their identical definitions. This unification
+> simplifies related structures, such as VirtIOMEMReplayData, which makes
+> it cleaner.
 > 
-> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
-> ---
->   hw/vfio/ap.c                 | 53 ++++++++++++++++++++++++++++++++++++
->   include/hw/s390x/ap-bridge.h | 39 ++++++++++++++++++++++++++
->   2 files changed, 92 insertions(+)
-> 
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index fc435f5c5b..97a42a575a 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -10,6 +10,7 @@
->    * directory.
->    */
->   
-> +#include <stdbool.h>
->   #include "qemu/osdep.h"
->   #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
->   #include <linux/vfio.h>
-> @@ -48,6 +49,8 @@ typedef struct APConfigChgEvent {
->   static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
->       QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
->   
-> +static QemuMutex cfg_chg_events_lock;
-> +
->   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
->   
->   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
-> @@ -96,6 +99,49 @@ static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
->   
->   }
->   
-> +int ap_chsc_sei_nt0_get_event(void *res)
-> +{
-> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
-> +    APConfigChgEvent *cfg_chg_event;
-> +
-> +    qemu_mutex_lock(&cfg_chg_events_lock);
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 
-please consider using WITH_QEMU_LOCK_GUARD()
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-> +    if (!ap_chsc_sei_nt0_have_event()) {
-> +        qemu_mutex_unlock(&cfg_chg_events_lock);
-> +        return EVENT_INFORMATION_NOT_STORED;
-> +    }
-> +
-> +    cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
-> +    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
-> +
-> +    qemu_mutex_unlock(&cfg_chg_events_lock);
-> +
-> +    memset(nt0_res, 0, sizeof(*nt0_res));
-> +    g_free(cfg_chg_event);
-> +
-> +    /*
-> +     * If there are any AP configuration change events in the queue,
-> +     * indicate to the caller that there is pending event info in
-> +     * the response block
-> +     */
-> +    if (ap_chsc_sei_nt0_have_event()) {
-> +        nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
-> +    }
-> +
-> +    nt0_res->length = sizeof(ChscSeiNt0Res);
-> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
-> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
-> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
-> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
-> +
-> +    return EVENT_INFORMATION_STORED;
-> +}
-> +
-> +bool ap_chsc_sei_nt0_have_event(void)
+-- 
+Cheers,
 
-hmm, no locking ?
-
-> +{
-> +    return !QTAILQ_EMPTY(&cfg_chg_events);
-> +}
-> +
->   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->                                             unsigned int irq, Error **errp)
->   {
-> @@ -192,6 +238,13 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
->       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
->       VFIODevice *vbasedev = &vapdev->vdev;
->   
-> +    static bool lock_initialized;
-> +
-> +    if (!lock_initialized) {
-> +        qemu_mutex_init(&cfg_chg_events_lock);
-> +        lock_initialized = true;
-> +    }
-
-this could be replaced with a constructor routine. See hyperv.
-
-
-Thanks,
-
-C.
-
-
-
->       if (!vfio_device_get_name(vbasedev, errp)) {
->           return;
->       }
-> diff --git a/include/hw/s390x/ap-bridge.h b/include/hw/s390x/ap-bridge.h
-> index 470e439a98..7efc52928d 100644
-> --- a/include/hw/s390x/ap-bridge.h
-> +++ b/include/hw/s390x/ap-bridge.h
-> @@ -16,4 +16,43 @@
->   
->   void s390_init_ap(void);
->   
-> +typedef struct ChscSeiNt0Res {
-> +    uint16_t length;
-> +    uint16_t code;
-> +    uint8_t reserved1;
-> +    uint16_t reserved2;
-> +    uint8_t nt;
-> +#define PENDING_EVENT_INFO_BITMASK 0x80;
-> +    uint8_t flags;
-> +    uint8_t reserved3;
-> +    uint8_t rs;
-> +    uint8_t cc;
-> +} QEMU_PACKED ChscSeiNt0Res;
-> +
-> +#define NT0_RES_RESPONSE_CODE 1
-> +#define NT0_RES_NT_DEFAULT    0
-> +#define NT0_RES_RS_AP_CHANGE  5
-> +#define NT0_RES_CC_AP_CHANGE  3
-> +
-> +#define EVENT_INFORMATION_NOT_STORED 1
-> +#define EVENT_INFORMATION_STORED     0
-> +
-> +/**
-> + * ap_chsc_sei_nt0_get_event - Retrieve the next pending AP config
-> + * change event
-> + * @res: Pointer to a ChscSeiNt0Res struct to be filled with event
-> + * data
-> + *
-> + * This function checks for any pending AP config change events and,
-> + * if present, populates the provided response structure with the
-> + * appropriate SEI NT0 fields.
-> + *
-> + * Return:
-> + *   EVENT_INFORMATION_STORED - An event was available and written to @res
-> + *   EVENT_INFORMATION_NOT_STORED - No event was available
-> + */
-> +int ap_chsc_sei_nt0_get_event(void *res);
-> +
-> +bool ap_chsc_sei_nt0_have_event(void);
-> +>   #endif
+David / dhildenb
 
 
