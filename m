@@ -4,102 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42CA4C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 18:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D79C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 20:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJcWW-0005d9-En; Mon, 26 May 2025 14:26:10 -0400
+	id 1uJeah-0005U9-KJ; Mon, 26 May 2025 16:38:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1uJcWD-0005aY-Gb; Mon, 26 May 2025 14:25:49 -0400
-Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1uJcW9-0008K0-Ej; Mon, 26 May 2025 14:25:48 -0400
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 7024A11401AC;
- Mon, 26 May 2025 14:25:42 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
- by phl-compute-06.internal (MEProxy); Mon, 26 May 2025 14:25:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1748283942;
- x=1748370342; bh=DbEvi04odDkuYge9ibqPaf9mltgovXntUpZFPNGgi6U=; b=
- UW+tLw3I1ml65YKuSDFR1ENJFM8EPh0ipmLyw5EfrLZj59wNQKQgWskufD2diC2G
- fIrcjHUEi69jlNIoa5MIUuRsgFbwc0cKfuwEM0cbGCtWd0NrEbh4SJSXBqWg9WwH
- B1Bd0oxx/9h8rigtPOetNybxdKiMXyPLelJgvDzs8bUH3IrdQiQHpLT4lvAsDT2m
- +Qhl80Zb5461siGOEdMJY16psMU4iUzo1+ZgKUbHxAqA4OlVw0YBa816bYAe30YX
- GqketwbGT4D2dwGrFCrcEhKZtepGbVrwTt18zySN0odo1pbLmyxCL3GEugSUwHTb
- OGymZKFKuf51kQb4m4KvNQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748283942; x=
- 1748370342; bh=DbEvi04odDkuYge9ibqPaf9mltgovXntUpZFPNGgi6U=; b=E
- ZU6xW0Lo5nSXVsZEJk4O6UNDZ/ODY9B4usiUCnaFKXlqD5lrXo0sOhv5pnMEOZdh
- gCoAobCp7EGSMfE4eYDexk6dq8i7FJlXv78MKKVOUWE8i7Mq8PsB4JW8riWu0ak+
- y/Y9asDblkBQhWq20VO98LkPPU8Sv9UrtOWLGZHiv8+HIKuQqlPNJI8TnxxI8Zfn
- wJrfpaHv5hMdcOCfgAvb5cIF/ugrsFsvejEQJwyA9BsFYTe/+XUy9KqsXnwyhBic
- 5e/5VAPzm4CkGGgi2C+qgSK6nzyC7xrrm7/GrLdvgyk/71o03qQFur70Bl8dUelY
- 0mxDxdDg8hysLYn1y/lQw==
-X-ME-Sender: <xms:JrI0aDEcBKKPRq-qrpWgpCROqVGulfvhCJEXKVdI-XYfErUTcuaRKw>
- <xme:JrI0aAUjNnAHkKh0GDNOZWDkuPHhp55s52G3g6tAWNKOYZfYgX28qd-NwyVq6KD7p
- 5jD_N9tXL2IprMissA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddukedvfeculddtuddrgeefvddrtd
- dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
- fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
- dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefk
- jghfufgtgfesthhqredtredtjeenucfhrhhomhepfdflihgrgihunhcujggrnhhgfdcuoe
- hjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqeenucggtffrrghtthgvrhhn
- peejheefuddvtdfggfdvffekteehhfelgfdvvedvkeeuffefkeehheegvefhveetjeenuc
- evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihu
- nhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvg
- epshhmthhpohhuthdprhgtphhtthhopehphhhilhhmugeslhhinhgrrhhordhorhhgpdhr
- tghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthhope
- hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepjhhsnhhofies
- rhgvughhrghtrdgtohhmpdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomh
- dprhgtphhtthhopehlvhhivhhivghrsehrvgguhhgrthdrtghomhdprhgtphhtthhopehp
- sghonhiiihhnihesrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrrhhoshgrshessh
- hushgvrdguvg
-X-ME-Proxy: <xmx:JrI0aFK_fwB4JVdOIlCrJkZ1vSq-I9eg_j1DqEZQbDRWWWqOq03IdA>
- <xmx:JrI0aBGOw7wrnh8n2nUs2ntzorqWAY7etJZPJZfiaXScKZ7DgiSA8A>
- <xmx:JrI0aJWH1gIe_f8BxmuLAJhETDg_03-rvtrkLNfBM4cNTzT_Isjb5Q>
- <xmx:JrI0aMM0aqexDeObuW6dHZbaGU9Q-egmfYgBHW8mqrWzitDbo3iJRg>
- <xmx:JrI0aEoaV2oRQzuU0LZniM3sFpsfjd_4F1GoQel79ZEfa83culQOlSCk>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id 137821EA005E; Mon, 26 May 2025 14:25:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uJeag-0005Tz-5z
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 16:38:34 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uJeae-0003Fc-Jq
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 16:38:33 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ad1d1f57a01so526862566b.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 13:38:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748291910; x=1748896710; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LPXHECAissZnEw+lEAzkB8iRvv3z5heujH7hDxNB0NY=;
+ b=DXTLziP8lqeGe8OJNBx4Oa/8xRHmJ5ilKXq5FDlptWj/AcjRtiK4iE8FmgRYWUH2J3
+ he04F+X7OtSSXFYs/KiVj0FM9FFICKBD8+mmq1edhra3aNq00voaDu0rJNQRZcHHhf46
+ 1c/VwUCxFXY25QQkTt3lNEK5we/hig7OU10NYXuxaZmmx1HRAc4pyqXhBUTFcSFdUgzS
+ uuHfZWWmSC9ABVTrwowcU1ysYaJ1Dj5kba6CvYvEi4czS56Mx2NMI7ADQ4i1CYK7PwHo
+ OaAn11tEC7DDdJjLQiRB91/aNyBskLGfIIcOqA8gWtlDTL9ZuiEp2k7BAV+AmK/B7HHz
+ RkRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748291910; x=1748896710;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LPXHECAissZnEw+lEAzkB8iRvv3z5heujH7hDxNB0NY=;
+ b=YFWWShyYTrIzxFjNT8uUeIc4XfJo04UB73CHyezsmOMw7lPSyjNwXsWCi/ThTsYqSK
+ kaNqLQELzUT+bczbmqvPhd0B6ClJwYAMyyVoFcGJpiItSrnPrvLfE8Y0lAGLiCwwjaZg
+ g/TGFAaEH2d6hxda4Vu4ulhbdpIca54bMH6nXlCh1toVShR9ITV+Ce3RXEgGEquFifU2
+ MoLkKJbMgbU/nnkr/Zwlp6iwF7+QGz7lbm6ppyBFjBUygtBYYr8nW0fbbvjpW/m705q7
+ Qcsj2OgDXV6BbeKRZdrQSaPo6PIAR5+WvXa73HPdEaqXld6vDp+8XEMe56LdTIBV+spY
+ N/qQ==
+X-Gm-Message-State: AOJu0YyB6sQTRQPwJi6CtZM3yb0il5yiaypdqKkXW2yzd94ePYWOwElb
+ MWfJjQrG2fSAmRqfHR8hsvEXWGC92EkMfmVK1t5kjQum6/xZmZNZeeIiGzB1TK3b
+X-Gm-Gg: ASbGnctspwZQjrxblwuKBVxxtTZX6+UJGRKHON7DL1Ef16zuAQYbN/niT8zrRxLI8TA
+ qhhOgMXY7j1HLqwDz+oy3DV+esusaAxut3UY7wsz+crYWSsJ3Fg95EjlkhXNgluguT6XlIvMNze
+ GBJKwJR7GVbfTvt/6sJqTI8rFKCIbHS8rrMK6z2p6hkk+h8+OKRgTlVS/lW7aYqtX8rBCKS7VzC
+ dYYp1VFamTYn/IudfI6JtR+TUUejA1heKBfL3+gwWcVSt825X8jyNO8S8YIK3Wd7SN91y7SsBGU
+ 6Z9NY20WzXWC2Fybe8i0zqkddPDWzs+Efgk8LzLLFObm7PLYHOgpW5kyUpKMDnNEuY3AQwe3tLW
+ UZVeDqdLBdju8Qt1Ptv5ZCfPqsa5IcPPlT8uNUDc1z4/TgNhOJ8GTyc+tPv7Wxf6O/vNn1kU=
+X-Google-Smtp-Source: AGHT+IHcibaMZlrD2lSNNh45tDWMB4AoFWiwMl9PVdV5QhehVvS1SbPZo2FJk1ov+SW84BjTCoP5mA==
+X-Received: by 2002:a17:907:9715:b0:ad8:8835:f794 with SMTP id
+ a640c23a62f3a-ad88835f7bbmr110854466b.32.1748291909721; 
+ Mon, 26 May 2025 13:38:29 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-2a02-3100-2e3c-a000-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:2e3c:a000:219:99ff:feb2:2458])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad52d4ea8aesm1740919966b.179.2025.05.26.13.38.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 May 2025 13:38:29 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: [PATCH v2] hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
+Date: Mon, 26 May 2025 22:38:20 +0200
+Message-ID: <20250526203820.1853-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-X-ThreadId: T8a47643d8fea1639
-Date: Mon, 26 May 2025 19:25:20 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "John Snow" <jsnow@redhat.com>, "Gerd Hoffmann" <kraxel@redhat.com>,
- "Laurent Vivier" <lvivier@redhat.com>, qemu-block@nongnu.org,
- "Fabiano Rosas" <farosas@suse.de>, "Paolo Bonzini" <pbonzini@redhat.com>
-Message-Id: <9bfb089e-6bbb-45dd-8da1-14ba4e28d935@app.fastmail.com>
-In-Reply-To: <20250526180558.65613-1-philmd@linaro.org>
-References: <20250526180558.65613-1-philmd@linaro.org>
-Subject: Re: [RFC PATCH 0/2] hw/ide/ahci: Delay a bit before completing reset
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.157;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,52 +101,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Commit 56b1f50e3c10 ("hw/i386/pc: Wire RTC ISA IRQs in south bridges")
+attempted to refactor RTC IRQ wiring which was previously done in
+pc_basic_device_init() but forgot about the isapc machine. Fix this by
+wiring in the code section dedicated exclusively to the isapc machine.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2961
+Fixes: 56b1f50e3c10 ("hw/i386/pc: Wire RTC ISA IRQs in south bridges")
+cc: qemu-stable
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-=E5=9C=A82025=E5=B9=B45=E6=9C=8826=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=
-=8D=887:05=EF=BC=8CPhilippe Mathieu-Daud=C3=A9=E5=86=99=E9=81=93=EF=BC=9A
-> Intented to help SeaBIOS development; untested there
-> (except with QEMU test suite).
->
-> Jiaxun, is it helpful to you?
+---
+v2:
+* add ISA_DEVICE() QOM cast as a safety check (Mark)
+---
+ hw/i386/pc_piix.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 0dce512f18..6b6359ef65 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -285,6 +285,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         pcms->idebus[0] = qdev_get_child_bus(dev, "ide.0");
+         pcms->idebus[1] = qdev_get_child_bus(dev, "ide.1");
+     } else {
++        uint32_t irq;
++
+         isa_bus = isa_bus_new(NULL, system_memory, system_io,
+                               &error_abort);
+         isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
+@@ -292,6 +294,9 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         x86ms->rtc = isa_new(TYPE_MC146818_RTC);
+         qdev_prop_set_int32(DEVICE(x86ms->rtc), "base_year", 2000);
+         isa_realize_and_unref(x86ms->rtc, isa_bus, &error_fatal);
++        irq = object_property_get_uint(OBJECT(x86ms->rtc), "irq",
++                                       &error_fatal);
++        isa_connect_gpio_out(ISA_DEVICE(x86ms->rtc), 0, irq);
+ 
+         i8257_dma_init(OBJECT(machine), isa_bus, 0);
+         pcms->hpet_enabled = false;
+-- 
+2.49.0
 
-Hi Philippe,
-
-Thanks for the proposal!
-
-The spec says:
-
-```
-HBA Reset (HR): When set by SW, this bit causes an internal reset of the=
- HBA. All
-state machines that relate to data transfers and queuing shall return to=
- an idle
-condition, and all ports shall be re-initialized via COMRESET (if stagge=
-red spin-up is
-not supported). If staggered spin-up is supported, then it is the respon=
-sibility of
-software to spin-up each port after the reset has completed.
-
-When the HBA has performed the reset action, it shall reset this bit to =
-=E2=80=980=E2=80=99. A software
-write of =E2=80=980=E2=80=99 shall have no effect. For a description on =
-which bits are reset when this bit is
-set, see section 10.4.3.
-```
-
-I do believe QEMU's current implementation is also in conformance to the=
- spec,
-as the reset process itself is done instantly in QEMU.
-
-I don't know if it's worth it to introduce extra complexity in QEMU to m=
-odel
-a very specific hardware behaviour. Even some hardware is working in QEM=
-U's way.
-
-[...]
-
-Thanks
---=20
-- Jiaxun
 
