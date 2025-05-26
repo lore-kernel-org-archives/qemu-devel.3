@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1618EC5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 10:00:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67193C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 10:03:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJUcR-00016K-It; Mon, 26 May 2025 05:59:43 -0400
+	id 1uJUg1-0002jh-CF; Mon, 26 May 2025 06:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uJUcL-000161-VN
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:59:41 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uJUcJ-0007hu-OT
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:59:37 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43cf257158fso17363965e9.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748253573; x=1748858373; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rKYWIkEksdeuZJ6gbHvGraHFCtyi40qni5poZgDrRhw=;
- b=Ze7DYqLKqq4aCv0p0p7ChCtfv5MX4cOkeA2eM43q20ZS0nHoOI5wykrK6O1xLEufnC
- 6sKiQenh+ex/diSt5LcXTRJ67yDsPmnxXP81QTlU5QsvvRmSEPATwYhdd2Y7fKWT0Uct
- g8CEFDtj/zLufQ+BUTtfhnOX3IJ0/5F0Q9xaOnpnGV+GmqDcS8oB4xYzUu91ONYgTi6J
- +tT1jiC/my4OJ3GxQGVJaNd4A0XLvTKaq8oZpIYck+0pfIkvlHk2h4lKgFipk8cl/8bU
- nhlflG2qyQyjykanWhOKUO25xR/O2dLj48xqCDwbwA68a0YIoEcF42DUCfCoaIkhRqOc
- CJtg==
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1uJUfw-0002jP-Of
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 06:03:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1uJUft-0008Kg-Mi
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 06:03:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748253793;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XfRqWFA/1d2njlvTb9omadUsmia429DgztI3OIEpGgs=;
+ b=jChBKXrEsr8k3mzGaDrRtk2FklMVd7sU+cFLCf71FPKIjzX5SAZctNpT+U9/kvooJ6gUoy
+ FeqkMDFUBnYVoCQ+rmOCQjRB67fWZf8yIZDIB5YcTAKOJiUVrworhAkCcY/aBnx0j6Hqnc
+ zE/zvdh+U5f0VfpCKm1xAb8mwpGXVn8=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-647-soRh2h5pMWeK6twgPNqaUw-1; Mon, 26 May 2025 06:03:11 -0400
+X-MC-Unique: soRh2h5pMWeK6twgPNqaUw-1
+X-Mimecast-MFC-AGG-ID: soRh2h5pMWeK6twgPNqaUw_1748253791
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7c5c82c6d72so415943385a.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 03:03:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748253573; x=1748858373;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rKYWIkEksdeuZJ6gbHvGraHFCtyi40qni5poZgDrRhw=;
- b=Wusm6tng97VEzkusA7OXbc5SwOAEOun1vi3A/CZEzTWfuUaII7uIDgfu8/1NJlGIJA
- 7Oj1Xjxl1oMLiORYaIDmw+42bBk/PEYyQW7lXTpobkQIHzgdNfHiSaBwiDDgs8YhuBEl
- X9gUZqg+LACR2YUWhh85NrsC01/9qhzBtCxjrkZUIS/rr3Ketea9WZ5TkD7+1XNdwIgA
- 85PsywGsrHrmkcwmpwt7Bz+G3MZwg1w2f+Gx6a16tghKJ1zgLEdok8pcpSJJCfmn7Xai
- XkyGOt6DvB8dwrcszOdg1MyFj0TOUyI0u5ztoKGLCRQQ17tPOndkaPVpqmf6rmR1jZLF
- wEEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX78NuWQ0VtfYCmeL5ZCLz1OQkhELBIl/nzzzcRV4HTf5BNqaNwTYpEF5cbNyCXFSDmKT17YupPrHt9@nongnu.org
-X-Gm-Message-State: AOJu0YwAJM/SK6/m6K9ZtVZevXvs43TVc/A9JGMxr/cSzwRMtRy1DzcU
- XregPL9//GWlgTVWlcQ+0la4SkODzFlIwbqvScHQd9YRyIK3NkY/Edis
-X-Gm-Gg: ASbGncuE1ZBJ1udy6eX4NIP32jClhh2P6R2Je/iiG2x/QryaS46wBzbLUjB0LQnK8TG
- do/gC8+tzqdUMLrfA0IVEqilKf+tqp9UYPwwYiqokXZfIfl7ZNi25URWmilfB6Yj+wXv4j1M9Bz
- FGWa2vwbGHWhcbXdCNr27lwvvQJdDr2Lh8Tde1Z4SH3AKVodCKQuS5B5GqPFu102DzdlfZHnxej
- p6d1096kbovJv3ud2FMYJrr8yUB1JcmhdlIC5G3cEXFJa4oc3O3dIU+S6Dp+cDCxBvUW15I+THp
- lAoXsw8x4dQHbNgfhl+kexjo4lQy9ZXE4RDG3E49CReJbXjkCYgSBoApcw==
-X-Google-Smtp-Source: AGHT+IHLbEgbFMFqQB2/YUJ7f4aC42L2ocmdDALE17N9Y4GB1IMKrk8sFqS8qiuJXN8E7/ciI3EUyA==
-X-Received: by 2002:a05:600c:348d:b0:43b:d0fe:b8ac with SMTP id
- 5b1f17b1804b1-44c94c2a69fmr71958845e9.30.1748253572909; 
- Mon, 26 May 2025 02:59:32 -0700 (PDT)
-Received: from [127.0.0.1] ([185.238.219.91]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f78aea59sm238608115e9.25.2025.05.26.02.59.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 02:59:32 -0700 (PDT)
-Date: Mon, 26 May 2025 09:59:30 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-CC: philmd@linaro.org, smarkusg@gmail.com
-Subject: Re: Using parallel port on the Pegasos 2
-In-Reply-To: <1d4bc5e4-54ee-84d4-6f5c-50e2d5dd2850@eik.bme.hu>
-References: <CACUh7aGriKAtKtUW5c1X2ipy4RX0Mt_gwwfdQRC94EZNvE89jg@mail.gmail.com>
- <e8832eee-01fe-4cef-d6c4-31fb63677d5c@eik.bme.hu>
- <1d4bc5e4-54ee-84d4-6f5c-50e2d5dd2850@eik.bme.hu>
-Message-ID: <9F18409A-D9E4-45B3-8A82-BF605F9C56CE@gmail.com>
+ d=1e100.net; s=20230601; t=1748253791; x=1748858591;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XfRqWFA/1d2njlvTb9omadUsmia429DgztI3OIEpGgs=;
+ b=taixduDxLIAwI0oD9rt4RaXW2NFwCd0EJdeHKI888ZKj/1cm4aqWtkrrGi9AE9q65U
+ Q7kIqvB4GCcxR0GzEqvMrz0Njv4L0DBMHOwM1UGBME62wNd6gkw6fPe5wJZ+G1DMO/BX
+ zLNH5aB+TPSBT0UwVagreXfZsrLUZT9A0DDSlfoV2GHC/5x5WN06ofqZBj5UFf/Yc2Mh
+ daa2NjBf4GDVGEkIuboU93vOP10HHy2fvXXIOeI0b66t3Kg9n1quIWpSEowRtLyJSJPg
+ v2Fgce3+Egrzi4nJR30MspClGFA5Yydng7bUj6/YG1Rds60rCkq29lhkrer5WU1Bxa4+
+ ebgg==
+X-Gm-Message-State: AOJu0YxXpReRumxs1EXsZMOTeKBip+whvudQ91vugDWvJBJWPOauOmsg
+ 2KJvzgIfpHLJ2JwyqHYTueuRJ1rvEeGStD2uXzWjXryLNwQgUmeVyiGuIJJDAxFCJ98R0SS3KYx
+ dTJEsN/5FB8SeuGvchodSiwKZN3JDA/oAOnpGQljk+OUxpnWm9jFUPnzD7Y3GMEuyzduooH6t+e
+ GioXksFT6lpzuX/aQXvwcvTxltNl9tI/1Ky+Cznc/R9Ywq
+X-Gm-Gg: ASbGncvq5NEzjGWKQSsszJA4iNGloCM6V0Gw7g/3M7wtBVl/tfVz2SgZrsrjkVMpfqw
+ 62DAAk5C4cHtJ89xiPvQ3I7KwgMX1csfLd9i528I9BZVpdVK8RGPTA6HoUSGNKGu3YcDO0oO1YZ
+ GKp5aYx95Cr74BhKLzRB7pm5BbdQ==
+X-Received: by 2002:a05:6102:41aa:b0:4c1:71b6:6c with SMTP id
+ ada2fe7eead31-4e42409f7damr5614309137.7.1748253779940; 
+ Mon, 26 May 2025 03:02:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0Jp/OYKatOx62p0yBD+zKi+ZWF6QVlY6dhqURM+HeOpgKBcQ2I4S18YPEgjoBTSUHH/WusyPrnV/wxjpQuZ8=
+X-Received: by 2002:a05:622a:429a:b0:494:af61:f9c3 with SMTP id
+ d75a77b69052e-49f46651165mr132781281cf.21.1748253760041; Mon, 26 May 2025
+ 03:02:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20250525132717.527392-1-marcandre.lureau@redhat.com>
+ <20250525132717.527392-9-marcandre.lureau@redhat.com>
+ <87cybvkhtt.fsf@pond.sub.org>
+In-Reply-To: <87cybvkhtt.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 26 May 2025 12:02:28 +0200
+X-Gm-Features: AX0GCFtb6cuOEwDB7r0LHZNdZcGc4ke41kQ9XNOtIRQCe5IeNcPEg2GnrpxnciQ
+Message-ID: <CAMxuvawUQ0o1i7zgop7rQd-75CB69HpJaLstM8ZjrpgHZ0rT-g@mail.gmail.com>
+Subject: Re: [PULL 8/9] alsaaudio: Set try-poll to false by default
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Eric Blake <eblake@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000005846c80636070c16"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -59
+X-Spam_score: -6.0
+X-Spam_bar: ------
+X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,73 +105,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000005846c80636070c16
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi
 
-Am 25=2E Mai 2025 00:03:15 UTC schrieb BALATON Zoltan <balaton@eik=2Ebme=
-=2Ehu>:
->On Sun, 28 Jul 2024, BALATON Zoltan wrote:
->> On Sun, 28 Jul 2024, quan wrote:
->>> I am playing around with the parallel port on the pegasos 2 and I noti=
-ced
->>> the following issue:
->>> The parallel port on startup is set to iobase 0x378, then later it get=
-s
->>> remapped to iobase 0x3bc=2E
->>> When I tried writing to the 0x3bc location with
->>> trace:memory_region_ops_write on, I get logs about writing to the loca=
-tion
->>> 'parallel', so far so good, but the writes don't make it through (it n=
-ever
->>> calls parallel_ioport_write* functions)
->>>=20
->>> I traced it through where it calls portio_write, and inside the
->>> portio_write code:
->>> This line always fails for me:
->>> const MemoryRegionPortio *mrp =3D find_portio(mrpio, addr, size, true)=
-;
->>> This is due to the mrpio has the offset of 0x44 (0x3bc-0x378) in the l=
-ist,
->>> and the 'addr' in the code ranges from (0-15) (address relative to 0x3=
-bc),
->>> so it can never match the parallel io function to execute=2E
->>>=20
->>> This seems like a bug to me=2E I think there is some issue where the
->>> portio_list is not getting updated properly after the remapping to 0x3=
-bc=2E
->>>=20
->>> The other devices (Serial, RTC, PM, VGA) responds properly for me, so =
-it is
->>> only the parallel port that has this issue=2E
->>=20
->> Is this something that broke recently or can the same be reproduced wit=
-h QEMU v8=2E2=2E0=2E The relocation of these devices was implemented around=
- commit 35a6380b4ed27f (and the ones before that)=2E Adding Bernhard to cc =
-as well=2E
+On Mon, May 26, 2025 at 8:27=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+
+> marcandre.lureau@redhat.com writes:
 >
->This commit also seems to break display with some VGA ROMs as can be repr=
-oduced with:
+> > From: BALATON Zoltan <balaton@eik.bme.hu>
+> >
+> > Quoting Volker R=C3=BCmelin: "try-poll=3Don tells the ALSA backend to t=
+ry to
+> > use an event loop instead of the audio timer. This works most of the
+> > time. But the poll event handler in the ALSA backend has a bug. For
+> > example, if the guest can't provide enough audio frames in time, the
+> > ALSA buffer is only partly full and the event handler will be called
+> > again and again on every iteration of the main loop. This increases
+> > the processor load and the guest has less processor time to provide
+> > new audio frames in time. I have two examples where a guest can't
+> > recover from this situation and the guest seems to hang."
+> >
+> > One reproducer I've found is booting MorphOS demo iso on
+> > qemu-system-ppc -machine pegasos2 -audio alsa which should play a
+> > startup sound but instead it freezes. Even when it does not hang it
+> > plays choppy sound. Volker suggested using command line to set
+> > try-poll=3Doff saying: "The try-poll=3Doff arguments are typically
+> > necessary, because the alsa backend has a design issue with
+> > try-poll=3Don. If the guest can't provide enough audio frames, it's
+> > really unhelpful to ask for new audio frames on every main loop
+> > iteration until the guest can provide enough audio frames. Timer based
+> > playback doesn't have that problem."
+> >
+> > But users cannot easily find this option and having a non-working
+> > default is really unhelpful so to make life easier just set it to
+> > false by default which works until the issue with the alsa backend can
+> > be fixed.
+> >
+> > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> > Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > [ Marc-Andr=C3=A9 - Updated QAPI and CLI doc ]
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > Message-Id: <20250316002046.D066A4E6004@zero.eik.bme.hu>
+> > ---
+> >  qapi/audio.json   | 2 +-
+> >  audio/alsaaudio.c | 2 +-
+> >  qemu-options.hx   | 4 ++--
+> >  3 files changed, 4 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/qapi/audio.json b/qapi/audio.json
+> > index dd5a58d13e..49633cf317 100644
+> > --- a/qapi/audio.json
+> > +++ b/qapi/audio.json
+> > @@ -96,7 +96,7 @@
+> >  # @period-length: the period length in microseconds
+> >  #
+> >  # @try-poll: attempt to use poll mode, falling back to non-polling
+> > -#     access on failure (default true)
+> > +#     access on failure (default false)
+> >  #
+> >  # Since: 4.0
+> >  ##
 >
->qemu-system-ppc -machine pegasos2 -bios pegasos2=2Erom -serial stdio -vga=
- none -device ati-vga,romfile=3Dati-rage128progl16mb=2EVBI
+> Missed this when it was posted (it wasn't cc'ed to me).  Flipping the
+> default is technically an incompatible change.  I understand the
+> justification, and I'm not passing judgement on its validity; that's the
+> audio maintainers job.  I just want to ask: does this need a release
+> note?
 >
->where the romfile is something from http://vgamuseum=2Einfo/index=2Ephp/c=
-ompanies/item/111-ati-rage-128-pro for example)=2E Until commit 35a6380b4ed=
-27f^ you get picture on emulated VGA but not after (although I have no idea=
- what a VGA BIOS has to do with the parallel port)=2E Any idea how to fix t=
-his?
-
-Here an observation: Executing `info mtree` reveals that the parallel port=
- gets mapped to 0x3bc - 0x3c3 which overlaps with some vga region (0x3c0 - =
-0x3cf)=2E So the commit seems to expose a firmware bug in pegasos2=2Erom or=
- in its default configuration=2E On real hardware both devices might respon=
-d such that the bug might not materialize there like in QEMU, but that's ju=
-st a guess=2E Maybe one could work around that by decreasing the priority o=
-f the parallel io ports=2E
-
-Best regards,
-Bernhard
-
 >
->Regards,
->BALATON Zoltan
+I doubt anyone will care as long as it doesn't break (that we can't know).
+
+I added a note to https://wiki.qemu.org/ChangeLog/10.1#Audio
+
+
+We normally record incompatible changes in docs/about/deprecated.rst and
+> then docs/about/removed-features.rst, but these don't fit here.
+>
+> [...]
+>
+>
+
+--0000000000005846c80636070c16
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 26, 2=
+025 at 8:27=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redha=
+t.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex"><a href=3D"mailto:marcandre.lureau@redhat.com" targ=
+et=3D"_blank">marcandre.lureau@redhat.com</a> writes:<br>
+<br>
+&gt; From: BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.hu" target=
+=3D"_blank">balaton@eik.bme.hu</a>&gt;<br>
+&gt;<br>
+&gt; Quoting Volker R=C3=BCmelin: &quot;try-poll=3Don tells the ALSA backen=
+d to try to<br>
+&gt; use an event loop instead of the audio timer. This works most of the<b=
+r>
+&gt; time. But the poll event handler in the ALSA backend has a bug. For<br=
+>
+&gt; example, if the guest can&#39;t provide enough audio frames in time, t=
+he<br>
+&gt; ALSA buffer is only partly full and the event handler will be called<b=
+r>
+&gt; again and again on every iteration of the main loop. This increases<br=
+>
+&gt; the processor load and the guest has less processor time to provide<br=
+>
+&gt; new audio frames in time. I have two examples where a guest can&#39;t<=
+br>
+&gt; recover from this situation and the guest seems to hang.&quot;<br>
+&gt;<br>
+&gt; One reproducer I&#39;ve found is booting MorphOS demo iso on<br>
+&gt; qemu-system-ppc -machine pegasos2 -audio alsa which should play a<br>
+&gt; startup sound but instead it freezes. Even when it does not hang it<br=
+>
+&gt; plays choppy sound. Volker suggested using command line to set<br>
+&gt; try-poll=3Doff saying: &quot;The try-poll=3Doff arguments are typicall=
+y<br>
+&gt; necessary, because the alsa backend has a design issue with<br>
+&gt; try-poll=3Don. If the guest can&#39;t provide enough audio frames, it&=
+#39;s<br>
+&gt; really unhelpful to ask for new audio frames on every main loop<br>
+&gt; iteration until the guest can provide enough audio frames. Timer based=
+<br>
+&gt; playback doesn&#39;t have that problem.&quot;<br>
+&gt;<br>
+&gt; But users cannot easily find this option and having a non-working<br>
+&gt; default is really unhelpful so to make life easier just set it to<br>
+&gt; false by default which works until the issue with the alsa backend can=
+<br>
+&gt; be fixed.<br>
+&gt;<br>
+&gt; Signed-off-by: BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.hu=
+" target=3D"_blank">balaton@eik.bme.hu</a>&gt;<br>
+&gt; Acked-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lurea=
+u@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+&gt; [ Marc-Andr=C3=A9 - Updated QAPI and CLI doc ]<br>
+&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
+lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br=
+>
+&gt; Message-Id: &lt;<a href=3D"mailto:20250316002046.D066A4E6004@zero.eik.=
+bme.hu" target=3D"_blank">20250316002046.D066A4E6004@zero.eik.bme.hu</a>&gt=
+;<br>
+&gt; ---<br>
+&gt;=C2=A0 qapi/audio.json=C2=A0 =C2=A0| 2 +-<br>
+&gt;=C2=A0 audio/alsaaudio.c | 2 +-<br>
+&gt;=C2=A0 qemu-options.hx=C2=A0 =C2=A0| 4 ++--<br>
+&gt;=C2=A0 3 files changed, 4 insertions(+), 4 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/qapi/audio.json b/qapi/audio.json<br>
+&gt; index dd5a58d13e..49633cf317 100644<br>
+&gt; --- a/qapi/audio.json<br>
+&gt; +++ b/qapi/audio.json<br>
+&gt; @@ -96,7 +96,7 @@<br>
+&gt;=C2=A0 # @period-length: the period length in microseconds<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # @try-poll: attempt to use poll mode, falling back to non-polli=
+ng<br>
+&gt; -#=C2=A0 =C2=A0 =C2=A0access on failure (default true)<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0access on failure (default false)<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # Since: 4.0<br>
+&gt;=C2=A0 ##<br>
+<br>
+Missed this when it was posted (it wasn&#39;t cc&#39;ed to me).=C2=A0 Flipp=
+ing the<br>
+default is technically an incompatible change.=C2=A0 I understand the<br>
+justification, and I&#39;m not passing judgement on its validity; that&#39;=
+s the<br>
+audio maintainers job.=C2=A0 I just want to ask: does this need a release<b=
+r>
+note?<br>
+<br></blockquote><div><br></div><div>I doubt anyone will care as long as it=
+ doesn&#39;t break (that we can&#39;t know).</div><div><br></div><div>I add=
+ed a note to <a href=3D"https://wiki.qemu.org/ChangeLog/10.1#Audio">https:/=
+/wiki.qemu.org/ChangeLog/10.1#Audio</a></div><div><br></div><div><br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">
+We normally record incompatible changes in docs/about/deprecated.rst and<br=
+>
+then docs/about/removed-features.rst, but these don&#39;t fit here.<br>
+<br>
+[...]<br>
+<br>
+</blockquote></div></div>
+
+--0000000000005846c80636070c16--
+
 
