@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3239C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B1BC5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJVw9-0006Nt-CG; Mon, 26 May 2025 07:24:09 -0400
+	id 1uJVw4-0006Gj-Do; Mon, 26 May 2025 07:24:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJVw6-0006HN-Ay
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:24:06 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJVw2-0006GC-1x
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:24:03 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJVw4-0001qZ-JI
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:24:06 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3a4d877dfb3so1008403f8f.1
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 04:24:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJVvz-0001ps-Vv
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:24:01 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-442d146a1aaso25718265e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 04:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748258642; x=1748863442; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748258638; x=1748863438; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ELCLDmiYgPuDHAGlIm5WFjN8VBeP03kfHU9C8of95Hc=;
- b=Nfsl29ia8jPOzsHMHnTwNY2JbyR0wHDCdPoW0MpXUhu1oPCffLBdh8A6MjfxGuk/db
- ja062goDkLmUjiO82hMB84nhfGaAevnQ15+DjeA3GoualCvZ8MKlXCakEd03RIImLkmB
- ehaR9DDRvV4D+DiHpx4CohbQ80tIckE0mh0z3Wr9+oO+EQg8jr51ZzmyYPt2UNXnHvv0
- +FS1Veux8MqOBAikV+xWx28q90Bj6JmuuaTV5pCwkHcXdNB06kT7wCfJ5VX/IjWTDGBN
- Fql8oPlYPFyYuhwVfFmHPkU6UqLA0L011Z9GmcL4N4rbj+NPpB/jN8ccpVzCeHKco16b
- MYHQ==
+ bh=wDNGc9uXORNTBpjrU5AzqhH7cBKsBdI7XLELUbLErSA=;
+ b=VUQ6ftxzjWsRRtFnYn6R8uk2isreSdsVr+PrEVvwkfsqnD+jHDftf8xtUiwMVlUasX
+ PGePyl05YMalQOc53uYYC3HpcBbDyFcYg1c1KqC0fCzfNT+CktfhIIOIMH5hAmHsLVYt
+ +AK1Z5Qg8Gt1L/G+g/mqMloUaeV1KN7ieb/JKSam5uYasJ8AfZ+ivFGO8LxnjhuMbBra
+ YaTWbagRu2U9dIeZlku9kCgRtjVn1KZJY5br+X6wmRfqzJXlFdVpUrgcGK0YYYbzjKzU
+ B/AD8REEPhf9R90tLK9cZYyYWeo75RLeQTh/Ian7rmxsfDri7mDfW3ZpLLcNEmWwytOz
+ VyHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748258642; x=1748863442;
+ d=1e100.net; s=20230601; t=1748258638; x=1748863438;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ELCLDmiYgPuDHAGlIm5WFjN8VBeP03kfHU9C8of95Hc=;
- b=r3aHBZYrDf36uPg+tzvzeQyZZxY91sST+cymSuCsEpRJenKF51Dsp7nzevF8Klf/5M
- 9QwVey3HSZ0HymXO3FmzxMgi1TQqkBhPbn3YePLiQtqoXKNx1qeJOIgWEYuFWyo50Wgo
- fe7zMgWxLeG7iEWweEhMLd/lmlxUuu/ZdDOC8EQ3WXtOXS+/hTiNg6GCmouJ+NY5eWoZ
- xmiO3EnNBNVzDr1k99X+tyV58FB4F9UPN0+w6KFLXkHbgNLvfpskakwpsbO8oGb3smxF
- RWZyoLm09LJIybvKPMFjYMfS/sfZIbnTGYkX5T91QDATfsdoePzq8qVsuA5fng6omxEt
- uJuQ==
-X-Gm-Message-State: AOJu0YznkqYfL3BpYJ3urYuvkY0Mt9an2qER0gDjqn8FP7WChfW2MgS3
- Vs7hHGT5wXpqVs+1BgtUjajKxvnXN9Qe/OTp/Tq+lylXyBSIqeataq2EAwIV1AjCC9yYDhyzrMm
- spvZTEr8fhQ==
-X-Gm-Gg: ASbGncv51IVU8vF7wzQ5EEw3jzDAZrnG9QHWKh0v9kf/0OqjqRUf438NNd+sT7lQbJw
- XbnI8kGzsduxf/y3fL7pdsTQ4FG7xLMxGn59aDrIoJskMvoz/o6xg7aSaO73S8gGsiyKSOkvMOf
- iegPJ4DkdaDsD/fy+UcsvHBZ4TSrcUtOb8J3cLMvCOvLEFQDC5nxaevT8RT8Wbi88qhsXkAd9aU
- DlzOQRE7P7tljDGlIGSpVw4k0bUl7P3I+r+oa1YM94cL31KcZQpp2qUrfvHCIJBPlLge3Ytgmxq
- gVR0RZjuasAou/5rvgUNgXtBfAsVfizbbRud1f9oIXMOdk67DS48VB8C88NN8jrZG39YP0V3kI6
- TXxqkFjrAd9x88TN9cgt1PshGf9As3Wc=
-X-Google-Smtp-Source: AGHT+IHk6BXJp9xgqQztiA3nhi4npvFes8NekY1N1GE1nODKEDT0H0V1NojsYSYhAU9rM40r88+fpg==
-X-Received: by 2002:a5d:64cb:0:b0:3a1:fa6c:4735 with SMTP id
- ffacd0b85a97d-3a4cb474157mr7616249f8f.35.1748258642576; 
- Mon, 26 May 2025 04:24:02 -0700 (PDT)
+ bh=wDNGc9uXORNTBpjrU5AzqhH7cBKsBdI7XLELUbLErSA=;
+ b=j0KXLXFmQ1fzdzVEtSAvK6p00Y8YMeq775wEquhROPxmiXcCQoaEnzTdCIOdb8HEjh
+ hInWzgL1aLrygSXIRNq7qJ5dcZ/iCRtujFBikCKDhLQPuCiUi71wWwSuosVNZgwqG4IZ
+ UnygZBZ0hQbq+pxAEFs1Jc0H1ssii2WbBRvqh3LV5vyZL1o8aj4lQrgIUA181pmkgfwS
+ RCsg3CenDm0yvRQxpsR0t5lSLqmkH80L6SDpP6SdeygOLzGwMehmhmRyCmQVhlRPU69v
+ 2LHQWHmbmK8uoqmR391Le9DhJFJ6FjTSTv0yNAUtVqJWWEfp4n20cnlXX4E/X5uEZhB2
+ Wq7A==
+X-Gm-Message-State: AOJu0Yz2k0VUImvsPr6k1z9o5X7ZEuL+vMmrpsA2RrqHCQ1q4F2IxVSe
+ gI1E850jy+nkKSW7TiWz87lMoeDJ2+l/FjNzUdUOjnoIY20ewqu5NFnSgcEtC7NVelyF8KitoeE
+ uuQ9DePwYDA==
+X-Gm-Gg: ASbGncszS8sSFZ/efTRw8yNTUZ5JHIhu5Zg5BYcbNENI1yzWBFObvPwTA8AEc/xsImn
+ NlYBz29VzmXZL2Ysb02UgVPi6Q1fc5LM4NVc6nVB4f+zda9hdq9InFv4DahE/DU7HCEsZZimI6R
+ jabvGc+eMerQUMbzqIWO/DnkiF9y2cDDJzkhtc64qtRCapr22prGmAEhXZtUBzCTSHCG99p1EE/
+ U9sA4GtTehs/mYP3C+gpqbkhdR8PFED6EhJ/zHA8yDuSBUzThIQVPCGV6uQG/4lPvhZ8XLkIsZH
+ EZqcvh0Tl7K8FUc3+WG0JheczHy7SWDWxJoEK0YviZNcGKFTmeh64dBqkxsWqpv9lD83M6uq89a
+ wJxoGQjsM3dp/kheBksGUpU+4OAVzTdE=
+X-Google-Smtp-Source: AGHT+IFJI2AYVXInSHCGxcYwdH6ujJIhjEW80Q/nrWHP0UB0Ndxy6hOFxEY3sJf12WvcgaCWQSYVXA==
+X-Received: by 2002:a05:600c:314b:b0:43d:45a:8fc1 with SMTP id
+ 5b1f17b1804b1-44c93da7c4dmr77361285e9.4.1748258637735; 
+ Mon, 26 May 2025 04:23:57 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4d8ea9520sm2841634f8f.70.2025.05.26.04.24.01
+ ffacd0b85a97d-3a4de9c9853sm550080f8f.27.2025.05.26.04.23.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 May 2025 04:24:02 -0700 (PDT)
+ Mon, 26 May 2025 04:23:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,19 +72,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 3/3] hw/ppc: Add stub for pnv_chip_find_core()
-Date: Mon, 26 May 2025 13:23:46 +0200
-Message-ID: <20250526112346.48744-4-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 2/3] hw/ppc: PowerNV machines expose a I2C bus
+Date: Mon, 26 May 2025 13:23:45 +0200
+Message-ID: <20250526112346.48744-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250526112346.48744-1-philmd@linaro.org>
 References: <20250526112346.48744-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,62 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 9808ce6d5cb, building QEMU configured with
-'--without-default-devices' fails:
+Since commit 263b81ee15a, PowerNV machines instanciate
+a I2C controller, so expose a I2C bus. Express that in
+Kconfig, otherwise we get a configure error when trying
+to use '--without-default-devices':
 
-  Undefined symbols for architecture arm64:
-    "_pnv_chip_find_core", referenced from:
-        _helper_load_sprd in target_ppc_misc_helper.c.o
-        _helper_store_sprd in target_ppc_misc_helper.c.o
-  ld: symbol(s) not found for architecture arm64
-  clang: error: linker command failed with exit code 1
+  The following clauses were found for PCA9552
+      config PCA9552 depends on I2C
+      select PCA9552 if POWERNV
 
-Fix by adding a stub when CONFIG_POWERNV is not available.
-
-Reported-by: Thomas Huth <thuth@redhat.com>
-Fixes: 9808ce6d5cb ("target/ppc: Big-core scratch register fix")
+Fixes: 263b81ee15a ("ppc/pnv: Add an I2C controller model")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/pnv_stub.c  | 15 +++++++++++++++
- hw/ppc/meson.build |  3 ++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
- create mode 100644 hw/ppc/pnv_stub.c
+ hw/ppc/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/ppc/pnv_stub.c b/hw/ppc/pnv_stub.c
-new file mode 100644
-index 00000000000..8d11c8b65bb
---- /dev/null
-+++ b/hw/ppc/pnv_stub.c
-@@ -0,0 +1,15 @@
-+/*
-+ * QEMU PowerPC PowerNV stubs
-+ *
-+ *  Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/ppc/pnv.h"
-+
-+PnvCore *pnv_chip_find_core(PnvChip *chip, uint32_t core_id)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
-index 9893f8adebb..02f248f5f46 100644
---- a/hw/ppc/meson.build
-+++ b/hw/ppc/meson.build
-@@ -55,7 +55,8 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
-   'pnv_pnor.c',
-   'pnv_nest_pervasive.c',
-   'pnv_n1_chiplet.c',
--))
-+), if_false: files('pnv_stub.c'))
-+
- # PowerPC 4xx boards
- ppc_ss.add(when: 'CONFIG_PPC440', if_true: files(
-   'ppc440_bamboo.c',
+diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+index ced6bbc7404..0d017df83ee 100644
+--- a/hw/ppc/Kconfig
++++ b/hw/ppc/Kconfig
+@@ -29,6 +29,7 @@ config POWERNV
+     depends on PPC64 && FDT
+     imply PCI_DEVICES
+     imply TEST_DEVICES
++    select I2C
+     select ISA_IPMI_BT
+     select IPMI_LOCAL
+     select ISA_BUS
 -- 
 2.47.1
 
