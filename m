@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A6C0C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 14:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF17C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 15:11:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJZ7t-0007Sq-F4; Mon, 26 May 2025 10:48:30 -0400
+	id 1uJZTY-0003KF-RT; Mon, 26 May 2025 11:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJZ7j-0007Po-IM
- for qemu-devel@nongnu.org; Mon, 26 May 2025 10:48:20 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJZTU-0003Js-M0
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 11:10:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJZ7f-0001gr-97
- for qemu-devel@nongnu.org; Mon, 26 May 2025 10:48:17 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJZTR-00046c-JD
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 11:10:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748270893;
+ s=mimecast20190719; t=1748272241;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HDaGnJQzmm5IH/fd1G97Fb9TeD5PnGoFR4Dv1ckxPRM=;
- b=dbpguObPbNS0NuxolnJr5W4/5YMBtuT2rqthwOwDag1H78WCE6O8ZNvlckjhICyfIdKNpk
- La1rGmm0vEUbqUzkgLcQOsDnKHzcLu4rgnrWKdWuvBSPC/vCR+TKjPntmM0w0TXNhkeYdB
- mSnvKLNhOvOpzOQDLF98PzcuMcRcx3k=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kMoXzdk/bV1Xq2sRiFQfcZoBE7LZ5GQVprIfU6IBEYQ=;
+ b=YJRbbomu/jIhacO3wIceHGSP6rpmeu0l1sFVFW9iC7tWvisHmKE5XGGAhw4YFJiOfKkpfV
+ ATmNM2z5xwtJuOJetUZYEvrJdXT2qsH+XscXYFRmWmFKOD3Wf3jYhVUdCOmhjbp8P3krgH
+ s76kwXipZzTmw+T4UhjZdWRoJO7+Mug=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-Y9wifRNyNdqA_ttXovYXxA-1; Mon, 26 May 2025 10:48:12 -0400
-X-MC-Unique: Y9wifRNyNdqA_ttXovYXxA-1
-X-Mimecast-MFC-AGG-ID: Y9wifRNyNdqA_ttXovYXxA_1748270892
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7c5e2872e57so481762185a.0
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 07:48:12 -0700 (PDT)
+ us-mta-112-6Da3wGnLO9OBCVtOEsclug-1; Mon, 26 May 2025 11:10:40 -0400
+X-MC-Unique: 6Da3wGnLO9OBCVtOEsclug-1
+X-Mimecast-MFC-AGG-ID: 6Da3wGnLO9OBCVtOEsclug_1748272240
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7c54e7922a1so560556285a.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 08:10:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748270892; x=1748875692;
+ d=1e100.net; s=20230601; t=1748272240; x=1748877040;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HDaGnJQzmm5IH/fd1G97Fb9TeD5PnGoFR4Dv1ckxPRM=;
- b=uNphwAs0oUJM3TOwcNKxGAPsfzTND1HV+mnUe+DsbDrgtwgve/r/NSTgUA0VwYb3Kr
- 1g8O4vgDV0sI15oJY0ngAuCmPO2wHZQl2BCNVk2rYa8pPJiz1KMgoi1DfWjivCndLirI
- vfxm3so1L8QbWsibszVieAw+8BpZTnN2OB9DIaifb2lM0wDkxSnsVZLunFNOudChpKDd
- bYSOqlvEfgRTb6j85ypNZGBNrLRM8QA6RmUzUWU/SwvKFAizQAslmwJim/jKc07qPHJU
- Yj+SR5iVzBLAKnizjxlxK8jBwBKi2t3eqcFVXoMUWK2wdQWHaeMVPAR8hx66MNEKdFEK
- R8jg==
+ bh=kMoXzdk/bV1Xq2sRiFQfcZoBE7LZ5GQVprIfU6IBEYQ=;
+ b=TdDzYa0td8fqw84Idb1VFB7+LyNepvO2/OQRKkiSUVcZ6t+XEUH8nLwpk9FYthmACn
+ oRyzD0n8IEXfOOm61NfVDAi8fkYPELQQVztCz/jCe7t81CdP2RJp4g1gWNA3fuauhrIE
+ jRVFBpPX68aHzu261DfxvUHp5xHcq1AgJ2wLQNzV9PwRlTKliiZtYSWjJobnIoSeePpJ
+ LG18w3tmLhM7UTK4NLM5b1Ll3EJIKEgT2plunveJDl4fzqoz4GGy+f/78uCVhNnytl6g
+ wOoDc6cC33gUxWaiVe4pHcMaVNYZrFiqpjI/lOZwDsxizF0c8Do16AbLh9auxwfZp5ub
+ O1EQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBK3fAif6bieReBvSuh/7B5GnGcgJ1vSHJea8Dq9tlzrVFOkKH12ew3WUZpcoBiNSVxZ/6kFeZENSk@nongnu.org
-X-Gm-Message-State: AOJu0YzbcCzAeCnJnT1JFd2+DAbEV/l9fhE2uD63RGMG06p5W3Qn2hPO
- CtD8PVwktJGGVfme2Ysc6k25hm0DbCOud3VmshKzwpxs4Y0mRRPdRvoUJe2CeDQnkm2TwwaKaCe
- omt7mXghfOcnmltqlbQiqhM1++2f5hN/mL2Q0NpjM+XliPRf2FWe/pbNP
-X-Gm-Gg: ASbGncuEQoIXAGbKZ6CxlvIMd/XF+0sPyswyljVVsjbf4ZnOhKLzkPj3YLk/j1lpVBY
- GhlQ9IBoPzfbzzc/TLb8s6yDSdvqGeqNxJA9Xtu3KUCed6zzWg3okSX7ud9VYc9Y2aF4bTHJhhc
- JlgD2HF6rJc89S0VgA2sbePstqzAQhYfmPydJgW4EsUax+xAof9dG5CPZCkCUIMyQmpcdgtTNe0
- WIohvHRFGu/UFqCn+do0gA/su+LbQdCDZjD5Gp6FY6zE46zjFiSyN4HKZATn1HK6br/fgJ2/F1/
- JXs=
-X-Received: by 2002:a05:620a:1916:b0:7c8:4634:51d3 with SMTP id
- af79cd13be357-7ceecc90411mr1476206785a.55.1748270891813; 
- Mon, 26 May 2025 07:48:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFXZo2a/8xKJs3sTKqO0RgVal+G6vBrYugaJ2N455lFEQ4mlSXMUYrQuBMmtho8J9BEO5yB8Q==
-X-Received: by 2002:a05:620a:1916:b0:7c8:4634:51d3 with SMTP id
- af79cd13be357-7ceecc90411mr1476202985a.55.1748270891370; 
- Mon, 26 May 2025 07:48:11 -0700 (PDT)
+ AJvYcCVX26JmUYC6hdmEtYW7S2agtahMdG4vheJYFk60+d22nyosK42NO/iqk9IFS78ncld/Q009Maskox3h@nongnu.org
+X-Gm-Message-State: AOJu0YxntfWoIGuPLiC/8dvvOagHKv+HTtFoeVeZzZhtiwXgUoUTmfTj
+ /pDf2Lt+mQna+V5p7E/OiN8t0HEIC2doo5YpZFpPQ2co4hHG6IDMumMvWAjYy5McnRZF0pktMwO
+ bfT2I0ITg/pYUtLM8LP8+nxOShLCKYVYV7ca43SDlKT5lgy8dOCgZ6mcQ
+X-Gm-Gg: ASbGnctWI0Kxj5ZKIZqRIaKPwzLQ+EtFUN51MzjmmF0KosADYdpMqOC3vbsCdSCqW3P
+ RQV7iTe2zEasA6diIaLIyGorplwCtjPHMOvHr1kRzdpdog0KwckoABiOl17qwM43wCasymmEJY6
+ mGSOCFOV3qlA25dj1k5JhRH441P3iXySOvhbvfBQSV4N7neuT9s67iVQ382wLNnbSgxFoVfr8c4
+ RD8eNePc44HRsbGVXdAiI+Z1lnISonxkx94ZoGiVZsTz8K2U/DYWODF+i/I66tPKNbj5XF6JPbJ
+ vAE=
+X-Received: by 2002:a05:620a:6013:b0:7c5:674c:eecc with SMTP id
+ af79cd13be357-7ceecbe8957mr1372711285a.32.1748272239733; 
+ Mon, 26 May 2025 08:10:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGDBoseGIkivgy+uYJpPiWHbycqciZgnPUziM93QnOU6vkOIMha/4g8TXlm4seIEyXWfJ0UGg==
+X-Received: by 2002:a05:620a:6013:b0:7c5:674c:eecc with SMTP id
+ af79cd13be357-7ceecbe8957mr1372707185a.32.1748272239317; 
+ Mon, 26 May 2025 08:10:39 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd467bcc19sm1581645885a.3.2025.05.26.07.48.10
+ af79cd13be357-7cd468b879csm1574239585a.70.2025.05.26.08.10.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 May 2025 07:48:10 -0700 (PDT)
-Date: Mon, 26 May 2025 10:48:07 -0400
+ Mon, 26 May 2025 08:10:38 -0700 (PDT)
+Date: Mon, 26 May 2025 11:10:35 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
- devel@daynix.com,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v4 00/11] Improve futex usage
-Message-ID: <aDR_J5iYsSlBTDJm@x1.local>
-References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 13/13] [PoC] migration: Allow migrate commands to
+ provide the migration config
+Message-ID: <aDSEa8eh1txwwun6@x1.local>
+References: <20250411191443.22565-1-farosas@suse.de>
+ <20250411191443.22565-14-farosas@suse.de>
+ <87tt57ajdg.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
+In-Reply-To: <87tt57ajdg.fsf@pond.sub.org>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
@@ -112,29 +109,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 26, 2025 at 02:29:10PM +0900, Akihiko Odaki wrote:
-> Akihiko Odaki (11):
->       futex: Check value after qemu_futex_wait()
->       futex: Support Windows
->       qemu-thread: Remove qatomic_read() in qemu_event_set()
->       qemu-thread: Replace __linux__ with CONFIG_LINUX
->       qemu-thread: Avoid futex abstraction for non-Linux
->       qemu-thread: Use futex for QemuEvent on Windows
->       qemu-thread: Use futex if available for QemuLockCnt
->       migration: Replace QemuSemaphore with QemuEvent
->       migration/colo: Replace QemuSemaphore with QemuEvent
->       migration/postcopy: Replace QemuSemaphore with QemuEvent
+On Mon, May 26, 2025 at 10:03:55AM +0200, Markus Armbruster wrote:
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index bb2487dbc6..5bd8f0f1b2 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -1638,6 +1638,10 @@
+>    ##
+>    # @migrate:
+>    #
+>    # Migrates the current running guest to another Virtual Machine.
+>    #
+>    # @uri: the Uniform Resource Identifier of the destination VM
+>    #
+>    # @channels: list of migration stream channels with each stream in the
+>    #     list connected to a destination interface endpoint.
+>    #
+>    # @detach: this argument exists only for compatibility reasons and is
+>    #     ignored by QEMU
+> >  #
+> >  # @resume: resume one paused migration, default "off".  (since 3.0)
+> 
+> Unrelated to this patch, but here goes anyway.  What happens if I pass
+> @uri and @channels with I "resume": true, and they differ from the ones
+> passed originally?
 
-In case it makes things easier.. I queued the three migration patches;
-AFAIU they look like standalone to go even without prior patches, meanwhile
-it shouldn't be an issue if they're queued in two pulls.
+I can answer this one - "resume" was designed to work always with new
+channels/URI passed in.  It was currently only used for postcopy to resume
+a paused postcopy migration where the old URI/channels stopped working
+already.
 
-I am still not sure whether patch 1 is needed at all, but I'll leave that
-to others to decide.
+The doc is indeed not obvious to show that, and can be confusing.  If
+anyone thinks worthwhile, I can send a patch to touch it up:
 
-Thanks!
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8b9c53595c..a4c9272e8b 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1658,7 +1658,10 @@
+ # @detach: this argument exists only for compatibility reasons and is
+ #     ignored by QEMU
+ #
+-# @resume: resume one paused migration, default "off".  (since 3.0)
++# @resume: when set, resume one paused postcopy migration, using the new
++#     URI/channels specified to replace the old/broken channels.  The user
++#     should make sure the migration is in "postcopy-paused" state before
++#     the resume request.  Default "off".  (since 3.0)
+ #
+ # Since: 0.14
+ #
 
->       hw/display/apple-gfx: Replace QemuSemaphore with QemuEvent
+Thanks,
 
 -- 
 Peter Xu
