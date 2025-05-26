@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0952CC5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2150C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:52:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJYEm-00024H-Dx; Mon, 26 May 2025 09:51:32 -0400
+	id 1uJYFO-0002LP-Ri; Mon, 26 May 2025 09:52:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJYEj-000247-Ro
- for qemu-devel@nongnu.org; Mon, 26 May 2025 09:51:30 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJYFN-0002L1-HK
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 09:52:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJYEi-0003zp-39
- for qemu-devel@nongnu.org; Mon, 26 May 2025 09:51:29 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJYFL-00044L-T8
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 09:52:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748267487;
+ s=mimecast20190719; t=1748267527;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nwiMO0GmFW6gURifRC14A8WUqX/PLsbtDIA39chKSXM=;
- b=Y3LrrVJSpm7VLtpd5KTyI4EKSic2NYiUTusc23te2WghKrZUQojAamm4YZVj8ryhNuUZux
- q2dyU7PYi3Q4+wCHYm8Bdo3Llc0l8AcPV01d0GXTpRu5Q/KZLuTIIRtEBMVr7Wqi9ELWq/
- RK1UzqeLyBIr3GYO9lV31BvGyxMSMh4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-nihLdV-JP0S1mB0uQIMi2Q-1; Mon,
- 26 May 2025 09:51:23 -0400
-X-MC-Unique: nihLdV-JP0S1mB0uQIMi2Q-1
-X-Mimecast-MFC-AGG-ID: nihLdV-JP0S1mB0uQIMi2Q_1748267482
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 846BB180048E; Mon, 26 May 2025 13:51:22 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C60071956095; Mon, 26 May 2025 13:51:21 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7006B21E675E; Mon, 26 May 2025 15:51:19 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Bernhard Beschow
- <shentey@gmail.com>,  Igor Mammedov <imammedo@redhat.com>,  Gerd Hoffmann
- <kraxel@redhat.com>
-Subject: Re: [PATCH 1/4] hw/microblaze: Add endianness property to the
- petalogix_s3adsp1800 machine
-In-Reply-To: <9f5fddbd-8989-4549-af89-87a19cb68a19@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Sun, 25 May 2025 21:09:58
- +0200")
-References: <20250515132019.569365-1-thuth@redhat.com>
- <20250515132019.569365-2-thuth@redhat.com>
- <00ec097f-b43a-4831-b4b6-c5d20aac236f@linaro.org>
- <9f5fddbd-8989-4549-af89-87a19cb68a19@linaro.org>
-Date: Mon, 26 May 2025 15:51:19 +0200
-Message-ID: <87o6vfzdig.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=jU1pPQJIISNWMRhHnJ3cVHgdqW5TSEcB01tiZUkxClU=;
+ b=cHba9Q7nGhLw9hnMsHNs8yC9d8FiDZdxs61dcfmxOcHeBVmu47dlheLNqrE78YoZAAr+tF
+ puLnNCmUjE6i0lESvVcOojlmDpOn+FfpfAyOt27UhbMTpcCU+waCLjq2ENKyQvYyDb9JlD
+ 3MfD8TGTyAdYt4kYUWYN8NFb51ael7Y=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-440-jis5M2PuOv6TEyWSVYGUMQ-1; Mon, 26 May 2025 09:52:05 -0400
+X-MC-Unique: jis5M2PuOv6TEyWSVYGUMQ-1
+X-Mimecast-MFC-AGG-ID: jis5M2PuOv6TEyWSVYGUMQ_1748267525
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6f2b50a75d8so28691446d6.0
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 06:52:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748267525; x=1748872325;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jU1pPQJIISNWMRhHnJ3cVHgdqW5TSEcB01tiZUkxClU=;
+ b=EvU4sP99NVhJ9eQNMWRwAgnGH7MdQ0k1laj6wJDkWoP+yxzXUkfd3tdEud9S5VnMr4
+ xbQtQmGAoMFyT7NgF/4QCj1pCuBLzKK7UCURz+zykk2tSEBU9xukfbCwEfWiC2l3vIv9
+ 5DUy68HCEoCS6v7p46kaXmpZ5xgJ57WnsK6N+itl5E+VU3Oo3JmmSzvHnwOpMZ5VddX6
+ c6qN3n4pxZwU29DXNxoCEIuya0q9P+BflMpOzUnxI+CkWEh37r04BPGyFrsPnMNpidZm
+ g8X+mHIA0gKyX3T/OwxUdbacuKbWv7ZTnjt7UaOhB9rxqLddP6XpNSlPeDZdxOJ018gh
+ SHDg==
+X-Gm-Message-State: AOJu0YyYHizP79Zhfe6JpsRtwhrxIdvM+OjkWeDWRimIBuIeWxijls8C
+ sFZlcPTw5hd8135bGV4BDdlp7F0EWgv741jrN7HKEA1aNRgEyxIsPK9Zz2wCS6clAkQ1Gabg8YJ
+ PKmvRh9gPTxeL4mila4IN6GfzFEFC1RwHqDP2/oyVhlBKvo1nvLJb/1HA
+X-Gm-Gg: ASbGnctSo37F+Acrdxl4ZcOYRqL9KpWHgw8CaqFlkFbN75Z8hus4Ivnrvd4SpMek9jY
+ pKyYtmPi0YKkO2shiSm3uhjA2pz9l7Zi8SuexIUkN6Rhc3GT0qsj3CbQ6EMzgnqDYWjvUdYAqha
+ L2fOsoAjfOmzeoUdlquldQIu4oBoPMStcQmj81wUsnzlbHqB3qaoj7eq8N5BfcrEBGIfHlJMHcc
+ N/I3gd5i+BnZs/WrnKb6kR1M4eXcWbNuk9/DY6NsPDK/YqYD5JSXFsbZzX9nE8CIP2B+o3kH6wi
+ 7sE=
+X-Received: by 2002:ad4:5c8f:0:b0:6fa:9c1d:91d4 with SMTP id
+ 6a1803df08f44-6fa9d152c62mr144694016d6.10.1748267524985; 
+ Mon, 26 May 2025 06:52:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOC9K/Ss/p5xlZVn6mEnsANzmV0K3nZTWHV9KEqyNCjLEw5thjJ4Bq5Euwsg+YRcEiW4nZew==
+X-Received: by 2002:ad4:5c8f:0:b0:6fa:9c1d:91d4 with SMTP id
+ 6a1803df08f44-6fa9d152c62mr144693686d6.10.1748267524634; 
+ Mon, 26 May 2025 06:52:04 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fa9e29af4fsm34130636d6.3.2025.05.26.06.52.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 May 2025 06:52:04 -0700 (PDT)
+Date: Mon, 26 May 2025 09:52:01 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 3/4] tests/functional: Test with
+ scripts/vmstate-static-checker.py
+Message-ID: <aDRyAal_jXSrsNjO@x1.local>
+References: <20250522133756.259194-1-thuth@redhat.com>
+ <20250522133756.259194-4-thuth@redhat.com>
+ <aC820hzwtrFBV9oq@x1.local>
+ <2f83dee7-6bfc-435e-8392-2236b98cbcfe@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+In-Reply-To: <2f83dee7-6bfc-435e-8392-2236b98cbcfe@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -94,101 +107,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-UGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPiB3cml0ZXM6DQoNCj4g
-K01hcmt1cw0KPg0KPiBPbiAyNC81LzI1IDEzOjU1LCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90ZToN
-Cj4+IE9uIDUvMTUvMjUgMTQ6MjAsIFRob21hcyBIdXRoIHdyb3RlOg0KPj4+ICtzdGF0aWMgaW50
-IG1hY2hpbmVfZ2V0X2VuZGlhbm5lc3MoT2JqZWN0ICpvYmosIEVycm9yICoqZXJycCBHX0dOVUNf
-VU5VU0VEKQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBTM0Fkc3AxODAwTWFjaGluZVN0YXRlICptcyA9
-IFBFVEFMT0dJWF9TM0FEU1AxODAwX01BQ0hJTkUob2JqKTsNCj4+PiArwqDCoMKgIHJldHVybiBt
-cy0+ZW5kaWFubmVzczsNCj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGljIHZvaWQgbWFjaGluZV9z
-ZXRfZW5kaWFubmVzcyhPYmplY3QgKm9iaiwgaW50IGVuZGlhbm5lc3MsIEVycm9yICoqZXJycCkN
-Cj4+PiArew0KPj4+ICvCoMKgwqAgUzNBZHNwMTgwME1hY2hpbmVTdGF0ZSAqbXMgPSBQRVRBTE9H
-SVhfUzNBRFNQMTgwMF9NQUNISU5FKG9iaik7DQo+Pj4gK8KgwqDCoCBtcy0+ZW5kaWFubmVzcyA9
-IGVuZGlhbm5lc3M7DQo+Pj4gK30NCj4+PiArDQo+Pj4gwqAgc3RhdGljIHZvaWQgcGV0YWxvZ2l4
-X3MzYWRzcDE4MDBfbWFjaGluZV9jbGFzc19pbml0KE9iamVjdENsYXNzICpvYywNCj4+PiDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNvbnN0IHZvaWQg
-KmRhdGEpDQo+Pj4gwqAgew0KPj4+IMKgwqDCoMKgwqAgTWFjaGluZUNsYXNzICptYyA9IE1BQ0hJ
-TkVfQ0xBU1Mob2MpOw0KPj4+ICvCoMKgwqAgT2JqZWN0UHJvcGVydHkgKnByb3A7DQo+Pj4gwqDC
-oMKgwqDCoCBtYy0+ZGVzYyA9ICJQZXRhTG9naXggbGludXggcmVmZGVzaWduIGZvciB4aWxpbngg
-U3BhcnRhbiAzQURTUDE4MDAiOw0KPj4+IMKgwqDCoMKgwqAgbWMtPmluaXQgPSBwZXRhbG9naXhf
-czNhZHNwMTgwMF9pbml0Ow0KPj4+IMKgwqDCoMKgwqAgbWMtPmlzX2RlZmF1bHQgPSB0cnVlOw0K
-Pj4+ICsNCj4+PiArwqDCoMKgIHByb3AgPSBvYmplY3RfY2xhc3NfcHJvcGVydHlfYWRkX2VudW0o
-b2MsICJlbmRpYW5uZXNzIiwgIkVuZGlhbk1vZGUiLA0KPj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgICZFbmRpYW5Nb2RlX2xvb2t1cCwNCj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCBtYWNoaW5lX2dldF9lbmRpYW5uZXNzLA0KPj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IG1hY2hpbmVfc2V0X2VuZGlhbm5lc3MpOw0KPj4+ICvCoMKgwqAgb2JqZWN0X3Byb3BlcnR5X3Nl
-dF9kZWZhdWx0X3N0cihwcm9wLCBUQVJHRVRfQklHX0VORElBTiA/ICJiaWciIDogImxpdHRsZSIp
-Ow0KPj4+ICvCoMKgwqAgb2JqZWN0X2NsYXNzX3Byb3BlcnR5X3NldF9kZXNjcmlwdGlvbihvYywg
-ImVuZGlhbm5lc3MiLA0KPj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICJEZWZpbmVzIHdoZXRo
-ZXIgdGhlIG1hY2hpbmUgcnVucyBpbiBiaWcgb3IgbGl0dGxlIGVuZGlhbiBtb2RlIik7DQo+PiBC
-ZXR0ZXIgd2l0aCBQcm9wZXJ0eT/CoCBZb3UgZG9uJ3QgaGF2ZSB0byB3cml0ZSBnZXQvc2V0Li4u
-DQo+PiAgwqAgc3RhdGljIGNvbnN0IFByb3BlcnR5IHByb3BzW10gPSB7DQo+PiAgwqDCoMKgIERF
-RklORV9QUk9QX0VORElBTigiZW5kaWFubmVzcyIsIFMzQWRzcDE4MDBNYWNoaW5lU3RhdGUsIGVu
-ZGlhbm5lc3MsDQo+PiAgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgVEFSR0VUX0JJR19FTkRJQU4gPyBFTkRJQU5fTU9ERV9CSUcgOiBFTkRJQU5fTU9ERV9MSVRU
-TEUpLA0KPj4gIMKgIH07DQo+PiAgwqAgZGV2aWNlX2NsYXNzX3NldF9wcm9wcyhkYywgcHJvcHMp
-Ow0KPg0KPiBERUZJTkVfUFJPUF9GT08oKSBhcmUgcmVzdHJpY3RlZCB0byBRRGV2IChEZXZpY2VD
-bGFzcykuIEhlcmUgd2UgaGF2ZQ0KPiBhIE1hY2hpbmVDbGFzcywgd2hpY2ggb25seSBpbmhlcml0
-cyBPYmplY3RDbGFzcywgbm90IERldmljZUNsYXNzLg0KPg0KPiBNYXJrdXMgb25jZSBleHBsYWlu
-ZWQgbWUgdGhlIGRpZmZlcmVuY2UgYmV0d2VlbiBRRGV2IHByb3BlcnRpZXMNCj4gYW5kIGJhcmUg
-b2JqZWN0IG9uZXM7IEkgYXNrZWQgd2h5IHdlIGNvdWxkbid0IG1ha2UgcWRldiBwcm9wZXJ0aWVz
-DQo+IGdlbmVyaWMgdG8gb2JqZWN0cywgYnV0IEkgZG9uJ3QgcmVtZW1iZXIgdGhlIGhpc3Rvcmlj
-YWwgcmF0aW9uYWxlLg0KPiBRRGV2IHByZWRhdGVzIFFPTSwgUURldiB1c2VkIHN0YXRpYyBwcm9w
-ZXJ0aWVzLCBRT00gaW50cm9kdWNlZA0KPiBkeW5hbWljIG9uZXM/IFdlIGRlZmluaXRpdmVseSBz
-aG91bGQgZG9jdW1lbnQgdGhhdC4uLg0KDQpZZXMuDQoNClFkZXYgcHJvcGVydGllcyBhcmUgZGVm
-aW5lZCBpbiBkYXRhIGF0IGNvbXBpbGUgdGltZSwgYW5kIGFyZSBjb25uZWN0ZWQNCnRvIHRoZSBk
-ZXZpY2UgY2xhc3MuICBTcGVjaWZpY2FsbHksIGEgRGV2aWNlQ2xhc3MgaGFzIGFuIGFycmF5IG9m
-DQpQcm9wZXJ0eSwgd2hlcmUgZWFjaCBlbGVtZW50IHNwZWNpZmllcyBhIHByb3BlcnR5IG9mIGl0
-cyBEZXZpY2VTdGF0ZQ0KaW5zdGFuY2VzLiAgVGhlIGFycmF5IG5ldmVyIGNoYW5nZXMuDQoNClRo
-ZSBERUZJTkVfUFJPUF9GT08oKSBtYWNyb3MgZXhwYW5kIGludG8gUHJvcGVydHkgbGl0ZXJhbHMg
-c3VpdGFibGUgZm9yDQp0aGUgYXJyYXkuICBCb2lsZXJwbGF0ZSBpcyByZWxhdGl2ZWx5IGxpZ2h0
-OiBubyBuZWVkIHRvIHdyaXRlIHNldHRlcnMgb3INCmdldHRlcnMgdW5sZXNzIHlvdSBkZWZpbmUg
-YSBuZXcgRk9PLg0KDQpRT00gcHJvcGVydGllcyBhcmUgZGVmaW5lZCBpbiBjb2RlIGF0IHJ1bnRp
-bWUsIGFuZCBhcmUgY29ubmVjdGVkIHRvIHRoZQ0KT2JqZWN0LCBpLmUuIHRoZSBpbnN0YW5jZSwg
-bm90IHRoZSBjbGFzcy4gIFRoZXkgc2hvdWxkIGJlIGNyZWF0ZWQgaW4NCi5pbnN0YW5jZV9pbml0
-KCksIGJ1dCBub3RoaW5nIHByZXZlbnRzIGNyZWF0aW9uIGVsc2V3aGVyZS4gIE1vc3Qgb2YgdGhl
-DQp0aW1lLCB3ZSBjcmVhdGUgdGhlIGV4YWN0IHNhbWUgcHJvcGVydGllcyBmb3IgYWxsIGluc3Rh
-bmNlcyBvZiBhbg0KT2JqZWN0Q2xhc3MsIGJ1dCBub3QgYWx3YXlzLg0KDQpEZWZpbmluZyBwcm9w
-ZXJ0aWVzIGF0IHJ1bnRpbWUgaXMgbW9yZSBmbGV4aWJsZSB0aGFuIGRlZmluaW5nIHRoZW0gaW4N
-CmRhdGEgYXQgY29tcGlsZSB0aW1lLiAgSG93ZXZlcjoNCg0KKiBTdGF0aWMgZGF0YSBpcyBtdWNo
-IGVhc2llciB0byByZWFzb24gYWJvdXQgdGhhbiBiZWhhdmlvciBvZiBjb2RlLg0KICBRZGV2IHBy
-b3BlcnRpZXMgYXJlIHN0YXRpY2FsbHkga25vd24uICBkZXZpY2VfYWRkIEZPTyxoZWxwIGNhbg0K
-ICByZWxpYWJseSBzaG93IHRoZW06IGl0IGR1bXBzIHRoZSB1bmNoYW5naW5nIGFycmF5LiAgUU9N
-IHByb3BlcnRpZXMgY2FuDQogIGJlIGRpZmZlcmVudCBlYWNoIHRpbWUgeW91IGNyZWF0ZSBhbiBv
-YmplY3QuICBkZXZpY2VfYWRkIEZPTyxoZWxwDQogIG5lZWRzIHRvIGNyZWF0ZSBhIHRlbXBvcmFy
-eSBpbnN0YW5jZSwgYW5kIGR1bXBzIHdoYXRldmVyIHByb3BlcnRpZXMNCiAgdGhpcyBpbnN0YW5j
-ZSBnb3QuICBUaGUgbmV4dCBpbnN0YW5jZSBtYXkgZ2V0IGRpZmZlcmVudCBvbmVzLg0KDQoqIFRo
-ZSBwcm9wZXJ0eSBkZXNjcmlwdGlvbnMgYXJlIGR1cGxpY2F0ZWQgaW4gZXZlcnkgaW5zdGFuY2Us
-IHdoaWNoIGlzIGENCiAgd2FzdGUgb2Ygc3BhY2UuICBTZWUgIlFPTSBjbGFzcyBwcm9wZXJ0aWVz
-IiBiZWxvdy4NCg0KKiBUaGUgZnVuY3Rpb25zIHRvIGNyZWF0ZSBwcm9wZXJ0aWVzIHRha2UgZ2V0
-dGVyIGFuZCBzZXR0ZXIgZnVuY3Rpb25zIGFzDQogIGFyZ3VtZW50cy4gIEZ1bmN0aW9ucyB5b3Ug
-Z2V0IHRvIHdyaXRlIGJhc2ljYWxseSBmb3IgZWFjaCBwcm9wZXJ0eS4NCiAgTXVjaCBtb3JlIGJv
-aWxlcnBsYXRlIHRoYW4gd2l0aCBxZGV2Lg0KDQpJIGNoYWxsZW5nZWQgdGhlIG5lZWQgZm9yIHRo
-aXMgbXVjaCBmbGV4aWJpbGl0eSBhdCB0aGUgdGltZSwgd2l0aG91dA0Kc3VjY2Vzcy4gIFdlIGFj
-dHVhbGx5IHVzZSB0aGUgZmxleGliaWxpdHkgb25seSByYXJlbHkuICBJIGJlbGlldmUgdGhpcw0K
-YXNwZWN0IG9mIFFPTSdzIGRlc2lnbiB3YXMgYSBtaXN0YWtlLg0KDQpRT00gYWN0dWFsbHkgaGFz
-IGEgc2Vjb25kIGtpbmQgb2YgcHJvcGVydHk6IFFPTSBjbGFzcyBwcm9wZXJ0aWVzIGFyZQ0KYWxz
-byBkZWZpbmVkIGluIGNvZGUgYXQgcnVudGltZSwgYnV0IGNvbm5lY3RlZCB0byB0aGUgT2JqZWN0
-Q2xhc3MuICBUaGV5DQpzaG91bGQgYmUgY3JlYXRlZCBpbiAuY2xhc3NfaW5pdCgpLCBidXQgbm90
-aGluZyBwcmV2ZW50cyBjcmVhdGlvbg0KZWxzZXdoZXJlLiAgRGVzcGl0ZSB0aGVpciBuYW1lLCB0
-aGV5IGFyZSBwcm9wZXJ0aWVzIG9mIHRoZSBpbnN0YW5jZSwNCmp1c3QgbGlrZSBvcmRpbmFyeSBR
-T00gcHJvcGVydGllcy4gIFRoZSBkaWZmZXJlbmNlIGlzIG9ubHkgdGhlIHNoYXJpbmcuDQoNCk1v
-c3QgcHJvcGVydGllcyBzaG91bGQgYmUgY2xhc3MgcHJvcGVydGllcywgYnV0IGFyZW4ndC4gIFRo
-aXMgaXMgYmVjYXVzZQ0KY2xhc3MgcHJvcGVydGllcyB3ZXJlIGFkZGVkIGxhdGUsIGFuZCBhcmUg
-dW5kZXJkb2N1bWVudGVkLg0KDQpRZGV2IGlzIGFjdHVhbGx5IGEgbGVha3kgbGF5ZXIgYWJvdmUg
-UU9NLiAgSSBiZWNhbWUgb25lIHdoZW4gd2UgcmViYXNlZA0KaXQgb24gdG9wIG9mIFFPTS4NCg0K
-QSBxZGV2J3MgLmluc3RhbmNlX2luaXQoKSBpdGVyYXRlcyBvdmVyIHRoZSBwcm9wZXJ0eSBhcnJh
-eSBhbmQgYWRkcyBhDQpRT00gY2xhc3MgcHJvcGVydHkgZm9yIGVhY2ggZWxlbWVudFsqXS4NCg0K
-VGhpcyBQcm9wZXJ0eSBwYXJ0IG9mIHFkZXYgaXNuJ3QgYWN0dWFsbHkgZGV2aWNlLXNwZWNpZmlj
-LiAgV2UgY291bGQNCmxpZnQgaXQgaW50byBPYmplY3QuICBCdXQgd291bGQgdGhhdCBiZSBhbiBp
-bXByb3ZlbWVudD8gIEknbSBub3Qgc3VyZTsNClFPTSBpcyBjb25mdXNpbmcgZW5vdWdoIGFzIGl0
-IGlzLg0KDQo+ICAgICAgICAgICAgICAgV2UgZGVmaW5pdGl2ZWx5IHNob3VsZCBkb2N1bWVudCB0
-aGF0Li4uDQoNCkkga25vdyBqdXN0IGVub3VnaCBhYm91dCBRT00gdG8gYmUgZGFuZ2Vyb3VzIDop
-DQoNCg0KDQpbKl0gSXQgYWxzbyBhZGRzIGEgImxlZ2FjeSBwcm9wZXJ0eSIsIGJ1dCBJIGZvcmdv
-dCB3aGF0IHRoYXQgaXMsIGFuZCB3aHkNCml0IGV4aXN0cy4NCg==
+On Thu, May 22, 2025 at 08:08:44PM +0200, Thomas Huth wrote:
+> On 22/05/2025 16.38, Peter Xu wrote:
+> > On Thu, May 22, 2025 at 03:37:55PM +0200, Thomas Huth wrote:
+> > 
+> > [...]
+> > 
+> > > +    def test_vmstate(self):
+> > > +        target_machine = {
+> > > +            'aarch64': 'virt-7.2',
+> > > +            'm68k': 'virt-7.2',
+> > > +            'ppc64': 'pseries-7.2',
+> > > +            's390x': 's390-ccw-virtio-7.2',
+> > > +            'x86_64': 'pc-q35-7.2',
+> > > +        }
+> > > +        self.set_machine(target_machine[self.arch])
+> > > +
+> > > +        # Run QEMU to get the current vmstate json file:
+> > > +        dst_json = self.scratch_file('dest.json')
+> > > +        self.log.info('Dumping vmstate from ' + self.qemu_bin)
+> > > +        cp = subprocess.run([self.qemu_bin, '-nodefaults',
+> > > +                             '-M', target_machine[self.arch],
+> > > +                             '-dump-vmstate', dst_json],
+> > > +                            stdout=subprocess.PIPE,
+> > > +                            stderr=subprocess.STDOUT,
+> > > +                            text=True)
+> > > +        if cp.returncode != 0:
+> > > +            self.fail('Running QEMU failed:\n' + cp.stdout)
+> > > +        if cp.stdout:
+> > > +            self.log.info('QEMU output: ' + cp.stdout)
+> > > +
+> > > +        # Check whether the old vmstate json file is still compatible:
+> > > +        src_json = self.data_file('..', 'data', 'vmstate-static-checker',
+> > > +                                  self.arch,
+> > > +                                  target_machine[self.arch] + '.json')
+> > > +        self.log.info('Comparing vmstate with ' + src_json)
+> > > +        cp = self.run_vmstate_checker(src_json, dst_json)
+> > > +        if cp.returncode != 0:
+> > > +            self.fail('Running vmstate-static-checker failed:\n' + cp.stdout)
+> > 
+> > Would false positives happen here?  Would it fail "make check" and CI, even
+> > if the change was intended?
+> 
+> Yes. In that case, the quick fix is to remove the problematic piece from the
+> 7.2 json files. Or we could try to improve the vmstate-static-checker
+> script. At least we now notice it immediately, not only after a long delay
+> until someone runs the script manually again.
+
+Yes, the thing is I worry it'll almost always be false positives (from
+statistical POV.. unfortunately).  Then in that case it's actually better
+to be found later because otherwise it means we're adding overhead to every
+developer who might cause the false positive and each of them doing this
+work with no real gain.. :(
+
+> 
+> But yes, this can be confusing for the who runs into this problem for the
+> first time. I guess I should at least add some friendly words here with
+> instructions what has to be done?
+
+Some instructions would be helpful for sure.  Though do we have easy way to
+whitelist any false positives?  As this test compares the dumps so there's
+no diff to fix or work around.
+
+-- 
+Peter Xu
 
 
