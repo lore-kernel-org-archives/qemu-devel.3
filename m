@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5562C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65233C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJTmm-0003BE-Ls; Mon, 26 May 2025 05:06:20 -0400
+	id 1uJTon-0004Pb-6p; Mon, 26 May 2025 05:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uJTmk-00039t-Nk
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:06:18 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uJTom-0004PS-4T
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:08:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uJTmi-0000lO-AQ
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:06:18 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uJTok-0000uM-7R
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:08:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748250375;
+ s=mimecast20190719; t=1748250501;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ETfJt7uNoG4312JPyvmiSg2Go85laadRukbqwKIKcNo=;
- b=a+bPj0WzYnfA3FTbpEG6BWRvGVkYCamNXImQIhGzPK7UMxTl/Pihb548zrvvW1mx4spVp0
- eTHixS/pprGjKc+BcMMChxBb8UdPdB0oXVcR4MVunprYr3AdfhLZJryYBDIfV6KU4p6iMF
- 62+na9n/Efr4qjngbKl6oOQMCKjD6jg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LQxCWuutrhRX1ozeQ1hSnlARkYaLf5Pk8UUtSEwfD18=;
+ b=gdqZEKJabMMR1OaLfOlLaDEuUdpThQXDdfg2/dlBS4+nz7uP5X28IcNi8XSuHQ03Mowo21
+ ezS9233rUPP4o4ED0YVWYs7QMMDBgi0oN6seCIQX00zENMP94jOPhGLYVREDWOhvU8MZ0s
+ wfr1HdNSR3orO/jymIbQY48U8KX4/Mg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-345q0XpcNnaLfFPy4_x8ng-1; Mon, 26 May 2025 05:06:14 -0400
-X-MC-Unique: 345q0XpcNnaLfFPy4_x8ng-1
-X-Mimecast-MFC-AGG-ID: 345q0XpcNnaLfFPy4_x8ng_1748250373
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cf44b66f7so11667705e9.1
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:06:13 -0700 (PDT)
+ us-mta-690-P7_9T8rqMB-UZaQ17YALdA-1; Mon, 26 May 2025 05:08:19 -0400
+X-MC-Unique: P7_9T8rqMB-UZaQ17YALdA-1
+X-Mimecast-MFC-AGG-ID: P7_9T8rqMB-UZaQ17YALdA_1748250498
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-442e0e6eb84so12196775e9.0
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:08:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748250373; x=1748855173;
+ d=1e100.net; s=20230601; t=1748250498; x=1748855298;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=ETfJt7uNoG4312JPyvmiSg2Go85laadRukbqwKIKcNo=;
- b=gRUf1IkrbSSuzXvtZ1/FqwYJFWxwN4oEZopWcL5Fb0uNzO4YQjlWusLUdDKbEiJTkk
- zeiyKntz0eh9IfEXXjoCSzlouAaQyzoLHD+3wfP9EZg1Vx6jYomZSkfQx+U8cRXtQfBK
- LbsJBwNP+GqWvDhRiQuI8nnAiBR5JiHUCgIO9jqhVOIc0SPqw94a4Fto41fQKzcQBDDA
- SEFnPcWmXvhKwYC8ETmHuhdcGe5rA9Ov5xKII9UFcJWgqnPM55Y1IMhmd3+NZSdlCoDq
- D83+0BHaq5HpcRARHlC5QBMGmKCbpOlMg8/P9bR8Tw7REcIZ8tPd/WIUobHljZKJFjPJ
- 1ewg==
-X-Gm-Message-State: AOJu0YyKRaMcSzU+bOJSFR0Y6lS8BfZYetyW+AkcER/J8vRyp9izxi/c
- k+s8zfw2n/7/Jd+DAXOxRsogL4rPXCGLMMlXtnK7jzbcUwUhHr7bQnOK10n3mKixC8XXJHISDoj
- NolplWAiJ1RGtCXohBhhXf5IRbbdjut0wiepSvwdGujMsrV5uNE0Q6/Rd
-X-Gm-Gg: ASbGnct2S0FlQPDMee1UtmYuxAyfvPeYR+E9vHNK/o+D3ZeaGcSp74fc3invsIJ8lbf
- vdhUxwe6bHKTwXscuaMTBGvq7psEDiVPl+AKZYh4ICg+HNBxLdlRwrYuF3GRlNz6vlR80ImLqFm
- zY2CISMxznc43Lp0p9gt+s0q1iA5wJOtL3RebvgNxAvJKHSsAQ8ylg5HdGixcdyDMUWub4GQcjC
- QliWLoKvfwlDFx19GYVtZecTL/3PWxYAhUjF8LWberR5XlOYcd678tL6r9HoKNiVWMGGuC79tCl
- PZ+BUS9OwSoHWODbrHXA+nEOGqJFFz3ZlgzVmZc5Kb1/fLURItArdO1YucfBfnmMsCNjCk/pE6z
- dTX1AdZM3q8qvJsiK6lrREtRgvMS39s9CP9Gw5fc=
-X-Received: by 2002:a05:600c:22c1:b0:442:dc6e:b9a6 with SMTP id
- 5b1f17b1804b1-44c91dcc104mr58685705e9.17.1748250372649; 
- Mon, 26 May 2025 02:06:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQajF7W8Ky0PnIT7msrygsvDZEux0zYBVRLwzJpWPDsN6a9kDdML90ZGzqQbLcEjqC9qLnlg==
-X-Received: by 2002:a05:600c:22c1:b0:442:dc6e:b9a6 with SMTP id
- 5b1f17b1804b1-44c91dcc104mr58685415e9.17.1748250372190; 
- Mon, 26 May 2025 02:06:12 -0700 (PDT)
+ bh=LQxCWuutrhRX1ozeQ1hSnlARkYaLf5Pk8UUtSEwfD18=;
+ b=w7f8ItDiMaGhph/A2QsCfgJ3qrrV94GWnvJVc4xW560++wov+CyLXAUKySnXLKCF/D
+ qu6lUxFPL8B0QHIIr27ytxHUwm+8ekKT05c/vAid0cGNiSjv4ZtL2rza/nHvvJTw/EiX
+ pC/HceQkBavx3Wv2D/bKKa2oV7yqBjtMxpjHXFCc4A+LAAGP7QxV0aMQuk2SYMx39nem
+ +KIJnB3zNod4b10Y5jIOxXzhqFWNWWTC4lu5iIOlq5x4qcPRPgbkoPifO2kqRwVEX3xU
+ S43ST8SNsgflOzDsCag23P7CyJntRVoOyZGdkOIK7naYwrWbI1qlRzFH0wHsNiX8Gnwm
+ /aXQ==
+X-Gm-Message-State: AOJu0YwTW+PNIiQnI1filLX0vdfE8wwE2vRhhITN2vbs1e/qFH6gISWA
+ xDsBfbp6x/8juKfcGd2ZwdFJbeP67ZuYoepyV2oT1v6ndNdL4ipw6VcLWz617ytnHYpI+qedwQg
+ zY8NkRKeM840HkW4RWu1suzGRYzT8LrlkfnOoLBwcPWCP+KYG2BqFmmsS
+X-Gm-Gg: ASbGncvVN9tiEKWHnq9kMfHPSwGVtelCCDABT5W9wOrR8b3lzEDDme4TP+Lp7KN+RpJ
+ UV/WWQzCk7v1D5NkyB0/64a2/4QjCLJxElgPI8RIsO0Q9yk1+HNcoeOnoSQe9K3IgLL7GWWGQdK
+ z9V0GpZFn4MFtdORwuT5BpCeS4fK4e7Lypa6BiK1P4zPjdZuFqqBuQLfih5FzgJCB4AnH36zSCh
+ QyOQ6v1VeqNM334ZgZIIALQZhO/H+5uWL39TCu5vGhin56ecWaH7NEwWT1Wp8Q1ubmL79fn/i1Y
+ 3PBbaWWyC50TDL3s07Lmd5eGOwihQiuYJaiOJ9tXQf/5mmGmJpJviRTVlVipi0ifD2aEAw8Kd8h
+ zys9acA7RoeqDzilQNFr6vCC/2L1MHI6eF60UZNI=
+X-Received: by 2002:a05:600c:5286:b0:43b:c0fa:f9cd with SMTP id
+ 5b1f17b1804b1-44c91ad6c06mr67951075e9.7.1748250497717; 
+ Mon, 26 May 2025 02:08:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEBNQlYC1hvLZSSmh6Jjv2kh2e5AJrTyiKyxY21nmxjLlkOjxliRfA3Bxef5aUzhLswspqfqQ==
+X-Received: by 2002:a05:600c:5286:b0:43b:c0fa:f9cd with SMTP id
+ 5b1f17b1804b1-44c91ad6c06mr67950705e9.7.1748250497280; 
+ Mon, 26 May 2025 02:08:17 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f19:6500:e1c1:8216:4c25:efe4?
  (p200300d82f196500e1c182164c25efe4.dip0.t-ipconnect.de.
  [2003:d8:2f19:6500:e1c1:8216:4c25:efe4])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f7d975f4sm228362635e9.39.2025.05.26.02.06.11
+ 5b1f17b1804b1-447f73d3edcsm236811905e9.20.2025.05.26.02.08.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 02:06:11 -0700 (PDT)
-Message-ID: <d22512b9-d5f0-4e0f-9a4c-530767953f3c@redhat.com>
-Date: Mon, 26 May 2025 11:06:10 +0200
+ Mon, 26 May 2025 02:08:16 -0700 (PDT)
+Message-ID: <7af3f5c9-7385-432f-aad6-7c25db2fafe2@redhat.com>
+Date: Mon, 26 May 2025 11:08:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 06/10] memory: Attach RamBlockAttribute to
- guest_memfd-backed RAMBlocks
+Subject: Re: [PATCH v5 07/10] RAMBlock: Make guest_memfd require coordinate
+ discard
 To: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
  <aik@amd.com>, Peter Xu <peterx@redhat.com>,
  Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -89,7 +89,7 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
  Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
 References: <20250520102856.132417-1-chenyi.qiang@intel.com>
- <20250520102856.132417-7-chenyi.qiang@intel.com>
+ <20250520102856.132417-8-chenyi.qiang@intel.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -137,7 +137,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250520102856.132417-7-chenyi.qiang@intel.com>
+In-Reply-To: <20250520102856.132417-8-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -166,99 +166,62 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20.05.25 12:28, Chenyi Qiang wrote:
-> A new field, ram_shared, was introduced in RAMBlock to link to a
-> RamBlockAttribute object, which centralizes all guest_memfd state
-> information (such as fd and shared_bitmap) within a RAMBlock.
-> 
-> Create and initialize the RamBlockAttribute object upon ram_block_add().
-> Meanwhile, register the object in the target RAMBlock's MemoryRegion.
-> After that, guest_memfd-backed RAMBlock is associated with the
-> RamDiscardManager interface, and the users will execute
-> RamDiscardManager specific handling. For example, VFIO will register the
-> RamDiscardListener as expected. The live migration path needs to be
-> avoided since it is not supported yet in confidential VMs.
-> 
-> Additionally, use the ram_block_attribute_state_change() helper to
-> notify the registered RamDiscardListener of these changes.
+> As guest_memfd is now managed by RamBlockAttribute with
+> RamDiscardManager, only block uncoordinated discard.
 > 
 > Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 > ---
 > Changes in v5:
->      - Revert to use RamDiscardManager interface.
->      - Move the object_new() into the ram_block_attribute_create()
->        helper.
->      - Add some check in migration path.
+>      - Revert to use RamDiscardManager.
 > 
 > Changes in v4:
->      - Remove the replay operations for attribute changes which will be
->        handled in a listener in following patches.
->      - Add some comment in the error path of realize() to remind the
->        future development of the unified error path.
+>      - Modify commit message (RamDiscardManager->PrivateSharedManager).
 > 
 > Changes in v3:
->      - Use ram_discard_manager_reply_populated/discarded() to set the
->        memory attribute and add the undo support if state_change()
->        failed.
->      - Didn't add Reviewed-by from Alexey due to the new changes in this
->        commit.
+>      - No change.
 > 
 > Changes in v2:
->      - Introduce a new field memory_attribute_manager in RAMBlock.
->      - Move the state_change() handling during page conversion in this patch.
->      - Undo what we did if it fails to set.
->      - Change the order of close(guest_memfd) and memory_attribute_manager cleanup.
+>      - Change the ram_block_discard_require(false) to
+>        ram_block_coordinated_discard_require(false).
 > ---
->   accel/kvm/kvm-all.c |  9 +++++++++
->   migration/ram.c     | 28 ++++++++++++++++++++++++++++
->   system/physmem.c    | 14 ++++++++++++++
->   3 files changed, 51 insertions(+)
+>   system/physmem.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 51526d301b..2d7ecaeb6a 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -3089,6 +3089,15 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
->       addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
->       rb = qemu_ram_block_from_host(addr, false, &offset);
+> diff --git a/system/physmem.c b/system/physmem.c
+> index f05f7ff09a..58b7614660 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -1916,7 +1916,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>           }
+>           assert(new_block->guest_memfd < 0);
 >   
-> +    ret = ram_block_attribute_state_change(RAM_BLOCK_ATTRIBUTE(mr->rdm),
-> +                                           offset, size, to_private);
-> +    if (ret) {
-> +        error_report("Failed to notify the listener the state change of "
-> +                     "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
-> +                     start, size, to_private ? "private" : "shared");
-> +        goto out_unref;
-> +    }
-> +
->       if (to_private) {
->           if (rb->page_size != qemu_real_host_page_size()) {
->               /*
-> diff --git a/migration/ram.c b/migration/ram.c
-> index c004f37060..69c9a42f16 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -890,6 +890,13 @@ static uint64_t ramblock_dirty_bitmap_clear_discarded_pages(RAMBlock *rb)
+> -        ret = ram_block_discard_require(true);
+> +        ret = ram_block_coordinated_discard_require(true);
+>           if (ret < 0) {
+>               error_setg_errno(errp, -ret,
+>                                "cannot set up private guest memory: discard currently blocked");
+> @@ -1939,7 +1939,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>                * ever develops a need to check for errors.
+>                */
+>               close(new_block->guest_memfd);
+> -            ram_block_discard_require(false);
+> +            ram_block_coordinated_discard_require(false);
+>               qemu_mutex_unlock_ramlist();
+>               goto out_free;
+>           }
+> @@ -2302,7 +2302,7 @@ static void reclaim_ramblock(RAMBlock *block)
+>       if (block->guest_memfd >= 0) {
+>           ram_block_attribute_destroy(block->ram_shared);
+>           close(block->guest_memfd);
+> -        ram_block_discard_require(false);
+> +        ram_block_coordinated_discard_require(false);
+>       }
 >   
->       if (rb->mr && rb->bmap && memory_region_has_ram_discard_manager(rb->mr)) {
->           RamDiscardManager *rdm = memory_region_get_ram_discard_manager(rb->mr);
-> +
-> +        if (object_dynamic_cast(OBJECT(rdm), TYPE_RAM_BLOCK_ATTRIBUTE)) {
-> +            error_report("%s: Live migration for confidential VM is not "
-> +                         "supported yet.", __func__);
-> +            exit(1);
-> +        }
->
+>       g_free(block);
 
-These checks seem conceptually wrong.
 
-I think if we were to special-case specific implementations, we should 
-do so using a different callback.
-
-But why should we bother at all checking basic live migration handling 
-("unsupported for confidential VMs") on this level, and even just 
-exit()'ing the process?
-
-All these object_dynamic_cast() checks in this patch should be dropped.
+I think this patch should be squashed into the previous one, then the 
+story in that single patch is consistent.
 
 -- 
 Cheers,
