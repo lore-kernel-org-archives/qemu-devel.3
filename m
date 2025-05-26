@@ -4,112 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4CEC5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 14:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AED3C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 14:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJYw0-0002w2-6o; Mon, 26 May 2025 10:36:12 -0400
+	id 1uJYxS-0004VP-A5; Mon, 26 May 2025 10:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steffen_hirschmann@web.de>)
- id 1uJYvx-0002vX-9E
- for qemu-devel@nongnu.org; Mon, 26 May 2025 10:36:09 -0400
-Received: from mout.web.de ([212.227.17.11])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uJYxO-0004Tr-RK
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 10:37:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steffen_hirschmann@web.de>)
- id 1uJYvu-0000fS-R6
- for qemu-devel@nongnu.org; Mon, 26 May 2025 10:36:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
- s=s29768273; t=1748270153; x=1748874953;
- i=steffen_hirschmann@web.de;
- bh=J6qylt3a8aq06XbALlDEr1oyyh5CC935iAtT8V59h8I=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Transfer-Encoding:cc:
- content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=tmmUZKzwaR0kFEi8+eHBFmFpKK3R1aEX5MhULTvRmxN8r/1jRxFiX8ote1yb7JeV
- 5O7o/iXfMuSRfegMWGmxOD1VYTyvvherJeSA4aBlwq55omnoWkD0g0ViC90J6ZhY4
- sptvi5rx2g5fPJMJLfXeZzvz2g1MSluPU1X+R43wj5KcOB0d00SR4Su7x4uqPTJ6N
- yYDQuMP6xUI1FFKyH0y1e7msUwmqaD7TERMcxVLbRgJOztrCL3dwSZWaFnWR2jqbP
- vR966XfP+DVFYEeXxqiI2zJJCr2uLOBR1o3i4dxEXxEiZBiCJjSO/LLMCGqGg98Xr
- 5MIajqdRdA9L3zxL2g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([89.246.96.127]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MDMvE-1uAB0o3YNa-00AFSH; Mon, 26
- May 2025 16:35:52 +0200
-From: steffen_hirschmann@web.de
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Cc: Steffen Hirschmann <steffen_hirschmann@web.de>
-Subject: [PATCH RFC v2 1/1] TCG insn.c: Implement counting specific addresses
-Date: Mon, 26 May 2025 16:35:50 +0200
-Message-ID: <20250526143550.29856-1-steffen_hirschmann@web.de>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250430105937.191814-2-steffen_hirschmann@web.de>
-References: <20250430105937.191814-2-steffen_hirschmann@web.de>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uJYxM-0000k6-RF
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 10:37:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748270254;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t6vT7plzL8+eh/pmrbveZn6s7JnfNWGZRNE3WQFB1rM=;
+ b=Qqz7zm1diVDrfiEz0ALNXz+fk2kHplpOwP2fcE/J/brKjFeU1641YCkaCd37AeRnN1Q/eb
+ lNLoQfQFdJ2YBXNwagBeGqY8z/SnsMQCLTE9TSoKNr7AYV1Fa2aFUl28mN+4wHSt5Inuij
+ n68NaWRQAHV9ZxSzNKB1Z77+P/39SeE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-674-eBCQjo5VOO-Ehm4tSxwszQ-1; Mon, 26 May 2025 10:37:33 -0400
+X-MC-Unique: eBCQjo5VOO-Ehm4tSxwszQ-1
+X-Mimecast-MFC-AGG-ID: eBCQjo5VOO-Ehm4tSxwszQ_1748270252
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43d734da1a3so13953835e9.0
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 07:37:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748270252; x=1748875052;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=t6vT7plzL8+eh/pmrbveZn6s7JnfNWGZRNE3WQFB1rM=;
+ b=NQl0XT8S81khuxxFlkkqE6iXm0xUwww1G0vQkjJszBlREjc/MMCLyBDFHSlb31qq5Q
+ B4KLbbQbtgxDrM80llgaX+0mmgWMLAgh1PR44q5jmoJj6GypIJsp3fAExY8oZW1RwcRa
+ qMydPnJDdYR6ptfkbkIrV0eXs7j2Ij4BO+GfV/2F0PplJ6PCmAmVvVxBp/FI205847PX
+ FuLRn/sbHbYxGzmCScu9pEDqiYQgZA77mxQsiPy0HIfcK7EykQr1W+wEcsSxj81zbd0V
+ ryXU++uQAE5WVwIG9inb+C1NZnTxlDuymD9tdTAO5Xog5X2byjQ5xSjGIzjZoX2AFsf5
+ u4HA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+YHq+mSqZfMJqUR4xG2O7IpZ5zzz1ZZIuwvyvIBcwc2uYRMduSBOPeOggS9aDAn791bT5gGm1ogbk@nongnu.org
+X-Gm-Message-State: AOJu0YyNIMLq8kkuYhI2P2BlmJkx5KDU14bCQBNOByLZesJFDaVX0jHw
+ XVR0lb2p3d2jdmq1yxZhvpy2W9oXv2Af6ZrGBgsq2dpm1D2N6fONWmr4EVh1J2qhB3wIv4DQ7OS
+ MIXpehTLv5ts3Wi1duDxeld9gMd8s3/WFKsOc/eLPiotzqzNyHC/7yT22
+X-Gm-Gg: ASbGncugVzGIfqLPLo6wmNev/s4+UpG5UmuCo1n5MqjOJHLf51LOzfPIHrKQ8uIAvHG
+ WlLD5l9GvQVqvR8AKQcnN75YNzbx6OI6Pb5xhyIoMs6pccG9HbWVTnBhQm1EvblWU+I0IJsithH
+ 0zZp//hoKjMVLnxDFt/zlQyJi7t+xn+mLFrgmEebDcQpkMraxJtT82sDpMiRi8vr2GLaZGfnE7l
+ 0uGXzPI4znIxS7SZ/G2Y19iNYJoJfj4mpITM5FK6KmOaqEXkkwKDUqOpuF2PKoDn9fZ8sz5EzTB
+ wBQ3gw==
+X-Received: by 2002:a05:600c:35d3:b0:43d:4e9:27ff with SMTP id
+ 5b1f17b1804b1-44c93016587mr72338955e9.7.1748270251674; 
+ Mon, 26 May 2025 07:37:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGakDjVkauGgQhNuw5iQP276znKcv7ouVrJOGb/8Nk5T7CZv8cSsqSFNysHVElKXQX4MqQrXQ==
+X-Received: by 2002:a05:600c:35d3:b0:43d:4e9:27ff with SMTP id
+ 5b1f17b1804b1-44c93016587mr72338745e9.7.1748270251256; 
+ Mon, 26 May 2025 07:37:31 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f18251c7sm239475825e9.3.2025.05.26.07.37.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 May 2025 07:37:30 -0700 (PDT)
+Date: Mon, 26 May 2025 10:37:27 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ John Levon <john.levon@nutanix.com>
+Subject: Re: [PATCH V5] vfio: return mr from vfio_get_xlat_addr
+Message-ID: <20250526103712-mutt-send-email-mst@kernel.org>
+References: <1747661203-136490-1-git-send-email-steven.sistare@oracle.com>
+ <bad3129a-8470-415e-8e85-0238b3ef1b26@redhat.com>
+ <ef48d347-b36e-4442-b97e-bea284eab1ac@oracle.com>
+ <304064d5-7211-443a-8ded-43f704a7ab1f@redhat.com>
+ <bc0d41f3-752a-4797-ac61-6716d78a2aea@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:+5Xp3nIP4b5QII0sCA8+XCTjhc91Kos8LhGt4+sGmk54/tyPEHD
- yCPAH66GPztt0sOREan16v7eqFDIbjVz6Y6HkHzLgjCiTpN43ywELBz9Q4ZTFdnNzcni4X7
- aIPoJfwtDvQIso/9GXE7dYWksj85EhAyAZAJEILaBqCPOwgvdqtzW4KHDjmBulIt68+nacI
- N43QLcEvwx8p/B8ljYzxw==
-UI-OutboundReport: notjunk:1;M01:P0:XU/ND4dTgyo=;hQLPuhNkNQ6YVvii95EIzcQBrBY
- 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
- +x6x4TlAVEZ86dhnT3mG8Z0Cn8v2pzRCVE
-Received-SPF: pass client-ip=212.227.17.11;
- envelope-from=steffen_hirschmann@web.de; helo=mout.web.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <bc0d41f3-752a-4797-ac61-6716d78a2aea@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -127,195 +121,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steffen Hirschmann <steffen_hirschmann@web.de>
+On Sun, May 25, 2025 at 11:23:57PM +0200, Cédric Le Goater wrote:
+> Michael,
+> 
+> On 5/20/25 15:46, Cédric Le Goater wrote:
+> > 
+> > > > > @@ -1010,6 +1017,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+> > > > >       ram_addr_t translated_addr;
+> > > > >       Error *local_err = NULL;
+> > > > >       int ret = -EINVAL;
+> > > > > +    MemoryRegion *mr;
+> > > > > +    ram_addr_t xlat;
+> > > > 
+> > > > xlat should be :
+> > > > 
+> > > >      hwaddr xlat;
+> > > 
+> > > Will you make that change when you pull, or do you want me to submit a V6
+> > > with this and the RB's?
+> > 
+> > I can handle it.
+> > 
+> > An ack from Michael (vhost) is needed for the PR.
+> 
+> Are you okay with us merging this patch via the vfio queue ?
+> 
+> This would facilitate the progress of 2 larges series : live update
+> and vfio-user
+> 
+> Thanks,
+> 
+> C.
 
-This commit implements counting of executed instruction within certain
-virtual address ranges via libinsn.so
-
-Signed-off-by: Steffen Hirschmann <steffen_hirschmann@web.de>
-=2D--
- docs/about/emulation.rst |  2 +
- tests/tcg/plugins/insn.c | 91 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 93 insertions(+)
-
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index a72591ee4d..1fd122bc50 100644
-=2D-- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -336,6 +336,8 @@ Behaviour can be tweaked with the following arguments:
-     - Give a summary of the instruction sizes for the execution
-   * - match=3D<string>
-     - Only instrument instructions matching the string prefix
-+  * - vaddr=3D<start>+<count>
-+    - Counts executed instructions in this virtual address range. <start>=
- and <count> must be in base 16
-=20
- The ``match`` option will show some basic stats including how many
- instructions have executed since the last execution. For
-diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
-index 0c723cb9ed..41c2a2ae32 100644
-=2D-- a/tests/tcg/plugins/insn.c
-+++ b/tests/tcg/plugins/insn.c
-@@ -48,6 +48,14 @@ static GHashTable *match_insn_records;
- static GMutex match_hash_lock;
-=20
-=20
-+typedef struct {
-+    uint64_t start;
-+    uint64_t end;
-+    qemu_plugin_u64 hits; /* Number of insn executed in this range */
-+} VaddrRange;
-+
-+static GArray *vaddr_ranges;
-+
- static Instruction * get_insn_record(const char *disas, uint64_t vaddr, M=
-atch *m)
- {
-     g_autofree char *str_hash =3D g_strdup_printf("%"PRIx64" %s", vaddr, =
-disas);
-@@ -187,6 +195,15 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct=
- qemu_plugin_tb *tb)
-             }
-             g_free(insn_disas);
-         }
-+
-+        for (int j =3D 0; j < vaddr_ranges->len; j++) {
-+            VaddrRange *var =3D &g_array_index(vaddr_ranges, VaddrRange, =
-j);
-+            uint64_t vaddr =3D qemu_plugin_insn_vaddr(insn);
-+            if (var->start <=3D vaddr && vaddr < var->end) {
-+                qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                    insn, QEMU_PLUGIN_INLINE_ADD_U64, var->hits, 1);
-+            }
-+        }
-     }
- }
-=20
-@@ -246,6 +263,19 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-=20
-     g_array_free(matches, TRUE);
-     g_array_free(sizes, TRUE);
-+
-+    for (i =3D 0; i < vaddr_ranges->len; ++i) {
-+        VaddrRange *var =3D &g_array_index(vaddr_ranges, VaddrRange, i);
-+        uint64_t hits =3D qemu_plugin_u64_sum(var->hits);
-+
-+        g_string_printf(out, "Vaddr range [0x%08lx, 0x%08lx): %"PRId64" h=
-its\n",
-+                        var->start, var->end, hits);
-+        qemu_plugin_outs(out->str);
-+        qemu_plugin_scoreboard_free(var->hits.score);
-+    }
-+
-+
-+    g_array_free(vaddr_ranges, TRUE);
- }
-=20
-=20
-@@ -258,6 +288,48 @@ static void parse_match(char *match)
-     g_array_append_val(matches, new_match);
- }
-=20
-+/* Returns true on success. If parsing is unsuccessful or vaddr bounds ar=
-e incorrect, returns false. */
-+static bool parse_vaddr(const char *arg)
-+{
-+    g_autofree char *vaddr =3D g_strdup(arg);
-+    char *endptr;
-+    uint64_t start =3D 0, len =3D 0;
-+    g_auto(GStrv) tokens =3D g_strsplit(vaddr, "+", 2);
-+
-+    if (tokens && tokens[0] && tokens[1]) {
-+        start =3D g_ascii_strtoull(tokens[0], &endptr, 16);
-+        if (start =3D=3D G_MAXUINT64 /* uint64_t overflow */
-+            || endptr =3D=3D tokens[0] /* conversion failed */
-+            || endptr !=3D tokens[0] + strlen(tokens[0]) /* garbage data =
-at the end */) {
-+            fprintf(stderr, "vaddr usage: vaddr=3Dstart+count (both base =
-16!). 'start' address invalid or overflow\n");
-+            return false;
-+        }
-+        len =3D g_ascii_strtoull(tokens[1], &endptr, 16);
-+        if (len =3D=3D G_MAXUINT64 || endptr =3D=3D tokens[1] || endptr !=
-=3D tokens[1] + strlen(tokens[1])) {
-+            fprintf(stderr, "vaddr usage: vaddr=3Dstart+count (both base =
-16!). 'count' invalid or overflow\n");
-+            return false;
-+        }
-+    } else {
-+        fprintf(stderr, "vaddr usage: vaddr=3Dstart+count (both base 16!)=
-\n");
-+        return false;
-+    }
-+
-+    if (UINT64_MAX - start < len) {
-+        fprintf(stderr, "integer overflow in vaddr end address calculatio=
-n."
-+                        " Specified vaddr=3Dstart+count incorrect.\n");
-+        return false;
-+    }
-+
-+    VaddrRange new_vaddrrange =3D {
-+        .start =3D start,
-+        .end =3D start + len,
-+        .hits =3D qemu_plugin_scoreboard_u64(
-+            qemu_plugin_scoreboard_new(sizeof(uint64_t))) };
-+    g_array_append_val(vaddr_ranges, new_vaddrrange);
-+
-+    return true;
-+}
-+
- QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info,
-                                            int argc, char **argv)
-@@ -265,6 +337,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin=
-_id_t id,
-     matches =3D g_array_new(false, true, sizeof(Match));
-     /* null terminated so 0 is not a special case */
-     sizes =3D g_array_new(true, true, sizeof(unsigned long));
-+    vaddr_ranges =3D g_array_new(false, true, sizeof(VaddrRange));
-=20
-     for (int i =3D 0; i < argc; i++) {
-         char *opt =3D argv[i];
-@@ -281,6 +354,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugi=
-n_id_t id,
-             }
-         } else if (g_strcmp0(tokens[0], "match") =3D=3D 0) {
-             parse_match(tokens[1]);
-+        } else if (g_strcmp0(tokens[0], "vaddr") =3D=3D 0) {
-+            if (!parse_vaddr(tokens[1])) {
-+                return -1;
-+            }
-         } else if (g_strcmp0(tokens[0], "trace") =3D=3D 0) {
-             if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &do_trace))=
- {
-                 fprintf(stderr, "boolean argument parsing failed: %s\n", =
-opt);
-@@ -292,6 +369,20 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugi=
-n_id_t id,
-         }
-     }
-=20
-+    /* Check for invalid parameter combinations */
-+    if (vaddr_ranges->len > 0) {
-+        if (matches->len > 0) {
-+            fprintf(stderr, "match=3D... and vaddr=3D... are incompatible=
-."
-+                            " Use only one of them.\n");
-+            return -1;
-+        }
-+
-+        if (!do_inline) {
-+            fprintf(stderr, "vaddr=3D... is only supported in conjunction=
- with inline.\n");
-+            return -1;
-+        }
-+    }
-+
-     insn_count =3D qemu_plugin_scoreboard_u64(
-         qemu_plugin_scoreboard_new(sizeof(uint64_t)));
-=20
-=2D-=20
-2.47.2
+sure, thanks!
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 
 
