@@ -4,22 +4,22 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A515DC5B543
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0807C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJXm9-0008TY-7O; Mon, 26 May 2025 09:21:57 -0400
+	id 1uJXm9-0008Tc-NQ; Mon, 26 May 2025 09:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm4-0008Sk-TZ; Mon, 26 May 2025 09:21:53 -0400
+ id 1uJXm2-0008SC-Em; Mon, 26 May 2025 09:21:50 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm1-0000HU-5U; Mon, 26 May 2025 09:21:51 -0400
+ id 1uJXm0-0000HL-J7; Mon, 26 May 2025 09:21:50 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 7E88B4450D;
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 603B044556;
  Mon, 26 May 2025 15:21:45 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
@@ -28,10 +28,13 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v3 00/24] block: do not drain while holding the graph lock
-Date: Mon, 26 May 2025 15:21:16 +0200
-Message-Id: <20250526132140.1641377-1-f.ebner@proxmox.com>
+Subject: [PATCH v3 02/24] block: move drain outside of read-locked
+ bdrv_reopen_queue_child()
+Date: Mon, 26 May 2025 15:21:18 +0200
+Message-Id: <20250526132140.1641377-3-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250526132140.1641377-1-f.ebner@proxmox.com>
+References: <20250526132140.1641377-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
@@ -57,136 +60,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previous discussions:
-v2: [0]
-v1: [1]
+This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
 
-Changes in v3:
-* Also add bdrv_drain_all_begin() and bdrv_drain_all() as
-  GRAPH_UNLOCKED.
-* Extend drained section in bdrv_try_change_aio_context() until after
-  the transaction is finalized.
-* Also mark definition of static bdrv_change_aio_context() as
-  GRAPH_RDLOCK, not only the declaration.
-* Add comments for bdrv_{child,parent}_change_aio_context() and
-  change_aio_ctx().
-* Improve commit messages: typos/language/clarification.
+More granular draining is not trivially possible, because
+bdrv_reopen_queue_child() can recursively call itself.
 
-Changes in v2:
-* Split the big patch moving the drain outside of
-  bdrv_change_aio_context(), mark functions along the way with graph
-  lock annotations.
-* In {internal,external}_snapshot_action, check that associated bs did
-  not change after drain and re-acquiring the lock.
-* Improve error handling using goto where appropriate.
-* Add bdrv_graph_wrlock_drained() convenience wrapper rather than
-  adding a flag argument.
-* Don't use atomics to access bs->quiesce_counter field, add a patch
-  to adapt the two existing places that used atomics.
-* Re-use 'top' image for graph-changes-while-io test case and rename
-  the other image to 'mid'. Remove the image files after the test.
-* Use "must be" instead of "needs to be" in documentation, use single
-  line comments where possible.
-* Remove yet another outdated comment.
-* I did not add Kevin's R-b for the patch marking bdrv_drained_begin()
-  GRAPH_RDLOCK, as the earlier patches/preconditions changed.
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+---
 
-This series is an attempt to fix a deadlock issue reported by Andrey
-here [2].
+No changes in v3.
 
-bdrv_drained_begin() polls and is not allowed to be called with the
-block graph lock held. Mark the function as GRAPH_UNLOCKED.
+ block.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-This alone does not catch the issue reported by Andrey, because there
-is a bdrv_graph_rdunlock_main_loop() before bdrv_drained_begin() in
-the function bdrv_change_aio_context(). That unlock is of course
-ineffective if the exclusive lock is held, but it prevents TSA from
-finding the issue.
-
-Thus the bdrv_drained_begin() call from inside
-bdrv_change_aio_context() needs to be moved up the call stack before
-acquiring the locks. This is the bulk of the series.
-
-Granular draining is not trivially possible, because many of the
-affected functions can recursively call themselves.
-
-In place where bdrv_drained_begin() calls were removed, assertions
-are added, checking the quiesced_counter to ensure that the nodes
-already got drained further up in the call stack.
-
-NOTE:
-there are pre-existing test failures on current master, e.g. '240' for
-all formats, '295 296 inactive-node-nbd luks-detached-header' for luks
-and 'mirror-sparse' for raw. For me, the failures do not change after
-this series. The 'mirror-sparse' failure is setup-specific and there
-is already a patch available [3].
-
-[0]: https://lore.kernel.org/qemu-devel/20250520103012.424311-1-f.ebner@proxmox.com/
-[1]: https://lore.kernel.org/qemu-devel/20250508140936.3344485-1-f.ebner@proxmox.com/
-[2]: https://lore.kernel.org/qemu-devel/73839c04-7616-407e-b057-80ca69e63f51@virtuozzo.com/
-[3]: https://lore.kernel.org/qemu-devel/20250523163041.2548675-7-eblake@redhat.com/
-
-Andrey Drobyshev (1):
-  iotests/graph-changes-while-io: add test case with removal of lower
-    snapshot
-
-Fiona Ebner (23):
-  block: remove outdated comments about AioContext locking
-  block: move drain outside of read-locked bdrv_reopen_queue_child()
-  block/snapshot: move drain outside of read-locked
-    bdrv_snapshot_delete()
-  block: move drain outside of read-locked bdrv_inactivate_recurse()
-  block: mark bdrv_parent_change_aio_context() GRAPH_RDLOCK
-  block: mark change_aio_ctx() callback and instances as
-    GRAPH_RDLOCK(_PTR)
-  block: mark bdrv_child_change_aio_context() GRAPH_RDLOCK
-  block: move drain outside of bdrv_change_aio_context() and mark
-    GRAPH_RDLOCK
-  block: move drain outside of bdrv_try_change_aio_context()
-  block: move drain outside of bdrv_attach_child_common(_abort)()
-  block: move drain outside of bdrv_set_backing_hd_drained()
-  block: move drain outside of bdrv_root_attach_child()
-  block: move drain outside of bdrv_attach_child()
-  block: move drain outside of quorum_add_child()
-  block: move drain outside of bdrv_root_unref_child()
-  block: move drain outside of quorum_del_child()
-  blockdev: drain while unlocked in internal_snapshot_action()
-  blockdev: drain while unlocked in external_snapshot_action()
-  block: mark bdrv_drained_begin() and friends as GRAPH_UNLOCKED
-  iotests/graph-changes-while-io: remove image file after test
-  block/io: remove duplicate GLOBAL_STATE_CODE() in
-    bdrv_do_drained_end()
-  block: never use atomics to access bs->quiesce_counter
-  block: add bdrv_graph_wrlock_drained() convenience wrapper
-
- block.c                                       | 184 +++++++++++-------
- block/backup.c                                |   2 +-
- block/blklogwrites.c                          |   4 +-
- block/blkverify.c                             |   2 +-
- block/block-backend.c                         |  10 +-
- block/commit.c                                |   2 +-
- block/graph-lock.c                            |  40 +++-
- block/io.c                                    |   8 +-
- block/mirror.c                                |   2 +-
- block/qcow2.c                                 |   2 +-
- block/quorum.c                                |   4 +-
- block/replication.c                           |   4 +-
- block/snapshot.c                              |  28 +--
- block/stream.c                                |   8 +-
- block/vmdk.c                                  |  10 +-
- blockdev.c                                    |  78 ++++++--
- blockjob.c                                    |  10 +-
- include/block/block-global-state.h            |  19 +-
- include/block/block-io.h                      |   2 +-
- include/block/block_int-common.h              |  20 +-
- include/block/graph-lock.h                    |  11 ++
- qemu-img.c                                    |   2 +
- .../qemu-iotests/tests/graph-changes-while-io | 102 +++++++++-
- .../tests/graph-changes-while-io.out          |   4 +-
- tests/unit/test-bdrv-drain.c                  |  22 +--
- tests/unit/test-bdrv-graph-mod.c              |  10 +-
- 26 files changed, 412 insertions(+), 178 deletions(-)
-
+diff --git a/block.c b/block.c
+index a5399888ba..3065d5c91e 100644
+--- a/block.c
++++ b/block.c
+@@ -4358,7 +4358,7 @@ bdrv_recurse_has_child(BlockDriverState *bs, BlockDriverState *child)
+  * returns a pointer to bs_queue, which is either the newly allocated
+  * bs_queue, or the existing bs_queue being used.
+  *
+- * bs is drained here and undrained by bdrv_reopen_queue_free().
++ * bs must be drained.
+  */
+ static BlockReopenQueue * GRAPH_RDLOCK
+ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+@@ -4377,12 +4377,7 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+ 
+     GLOBAL_STATE_CODE();
+ 
+-    /*
+-     * Strictly speaking, draining is illegal under GRAPH_RDLOCK. We know that
+-     * we've been called with bdrv_graph_rdlock_main_loop(), though, so it's ok
+-     * in practice.
+-     */
+-    bdrv_drained_begin(bs);
++    assert(bs->quiesce_counter > 0);
+ 
+     if (bs_queue == NULL) {
+         bs_queue = g_new0(BlockReopenQueue, 1);
+@@ -4522,6 +4517,12 @@ BlockReopenQueue *bdrv_reopen_queue(BlockReopenQueue *bs_queue,
+                                     QDict *options, bool keep_old_opts)
+ {
+     GLOBAL_STATE_CODE();
++
++    if (bs_queue == NULL) {
++        /* Paired with bdrv_drain_all_end() in bdrv_reopen_queue_free(). */
++        bdrv_drain_all_begin();
++    }
++
+     GRAPH_RDLOCK_GUARD_MAINLOOP();
+ 
+     return bdrv_reopen_queue_child(bs_queue, bs, options, NULL, 0, false,
+@@ -4534,12 +4535,14 @@ void bdrv_reopen_queue_free(BlockReopenQueue *bs_queue)
+     if (bs_queue) {
+         BlockReopenQueueEntry *bs_entry, *next;
+         QTAILQ_FOREACH_SAFE(bs_entry, bs_queue, entry, next) {
+-            bdrv_drained_end(bs_entry->state.bs);
+             qobject_unref(bs_entry->state.explicit_options);
+             qobject_unref(bs_entry->state.options);
+             g_free(bs_entry);
+         }
+         g_free(bs_queue);
++
++        /* Paired with bdrv_drain_all_begin() in bdrv_reopen_queue(). */
++        bdrv_drain_all_end();
+     }
+ }
+ 
 -- 
 2.39.5
 
