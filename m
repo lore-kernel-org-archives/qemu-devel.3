@@ -4,93 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F323AC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8D7C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJUWm-0006vh-Br; Mon, 26 May 2025 05:53:52 -0400
+	id 1uJUXM-0007ej-QY; Mon, 26 May 2025 05:54:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJUWj-0006rJ-LM
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:53:49 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uJUXK-0007eE-Lg
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:54:26 -0400
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJUWh-0007Bt-Ck
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:53:49 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3a3758b122cso1230593f8f.1
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:53:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748253224; x=1748858024; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=85HDzICi/6ar20bBTGjSM63t/lJ0Q1zjjkaB0LM00M0=;
- b=edFwPYBe5zeeNJkToZ/uuOqvB8pN5dX37+MDuayfctU3CnyQj1YM+1UwU+cajBT3NP
- 0PDwzqV5Ea+eF02Cp+IC3GM5tv7O9rGpbzpsOz87C8bcqMn7fiviS/rBmWAdoUN/nVv2
- KlM4SQjMMT+CrTWTvE/f3Cm7x0ezCSt8bNRBEArmCYo9GbQoEpKCq17FByxjDfHFi/a4
- zcbyM/Y1eN4DvUch+ymphSjM+zTciLHd7Z55KQ6eQKbuoc1XF6qa1frI3ws7VwBzvdhg
- f4qINBHPk8Tw2MoaxUVvjIcvePteaYPakEDuRvbj+yeR6kkm2KqZq6LM0le6uSO3vh9X
- njVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748253224; x=1748858024;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=85HDzICi/6ar20bBTGjSM63t/lJ0Q1zjjkaB0LM00M0=;
- b=GHF7mbE0X4YsSoDeHVQcXmriZGuQLRnCIYcHJySLxoq5h3ABqxUhUPBHs4s5EABTtZ
- +v4WdQyPOKurnSY+AmuXJvTdZoolsAUB8RdL+9fhUvcesxg8ni8EJZ057RP9nl1OBVgH
- Jr54XBS9Q4Rqv4B1y33j9MTeylwEmZmw6LeU3y0pzosBaNrc+bbKyhUupEdVBNhYC0nl
- bmr+yiT6KTNJ+HRrQKAv4JpicBH94n2WFsf93map9AoCWopt/ioDvVLsbQql0W3bE+JE
- HhAdcZKqD9rVrlnXerCIzWKxUIPSA5wuPE6FqwlISD3W3K0wZoH1bRmdHSHUcGdY38vO
- 5a4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGzvXs70KIvxfgEB4k0qmtHEuEcPuLwE1zHjCKmiD7TP/dTb0iY79XJI4F6vKt791joc8cl36wEwFX@nongnu.org
-X-Gm-Message-State: AOJu0Yy55Nn3PQRcKhvETSVrW4q1GSZSqPFBvhSOvrD18PsB1QRX8NFS
- s8c08Mh1WVchkQOlx054W0aL9+jKQea57mfcABj7W4r6fodv/sCfW7trbbsAQdiXvWI=
-X-Gm-Gg: ASbGnct4wDw353SqE73Lk6izo6f/9zOnf7cS4xFknZyO0O4PJa22uuE5rBiSkay6J+w
- 4x8K/HfgP5PLboDbbALSZCv9qk4ga7dQ1J9i5IxyNTaD2Q29kwPaKoE5PiaN+gTmBlFTHaJ7Hc6
- UT74sKxJn/09L7yssmbSbaBjoJyTrjPzJaQUNU/vI28062/eaeKZv2HHlF/aVgl/ChWkyUPTEVp
- szxolZYonk3sPem0o56JzktSxhBhrXAdd61T5qXTlMqg6Ic2wZIRr5dCubRLqmBd8Me32N7t/wr
- xoADxV7zDmusJA1ukN5L5f/kzj3ePplJ3ieLQUkzP8g+DwyInhS/UQG5CI0Gc9uepe67iFtW4I9
- 6Khnw1Q4ezV8iCU9ymR8gagKq
-X-Google-Smtp-Source: AGHT+IFY+RK7CtLVqOmChjcupJxLU0JzHdNsoc4ubNdkbQoIRuVY3Kf5d+xCOB/ceMYHHaoDPvDX4A==
-X-Received: by 2002:a05:6000:248a:b0:3a4:dd02:f724 with SMTP id
- ffacd0b85a97d-3a4dd02fa8dmr989808f8f.43.1748253224245; 
- Mon, 26 May 2025 02:53:44 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4d3332c01sm4579866f8f.92.2025.05.26.02.53.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 02:53:43 -0700 (PDT)
-Message-ID: <467e47ca-9cec-4c07-aeb6-4ac94c00563c@linaro.org>
-Date: Mon, 26 May 2025 11:53:42 +0200
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uJUXI-0007DV-QL
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:54:26 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 0B775180140
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 11:54:21 +0200 (CEST)
+Received: (qmail 8157 invoked by uid 990); 26 May 2025 09:54:20 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Mon, 26 May 2025 11:54:20 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] single-binary: build target common libraries with
- dependencies
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, thuth@redhat.com, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250521223414.248276-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250521223414.248276-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Date: Mon, 26 May 2025 09:54:20 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <001e4427e1c1eb53a8c9b4017bda790b34b5cdcc@nut.email>
+TLS-Required: No
+Subject: Re: [PATCH v5 05/25] target/alpha: call plugin trap callbacks
+To: "Richard Henderson" <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org, "David Hildenbrand" <david@redhat.com>
+In-Reply-To: <d90dd6ad-71c7-4720-a07f-8504f7fdfece@linaro.org>
+References: <cover.1747666625.git.neither@nut.email>
+ <a5ec8863418a946530d167677184d40319470af2.1747666625.git.neither@nut.email>
+ <f140b06d-53c7-4d32-ab95-1327d2659a37@linaro.org>
+ <3626834acffdaf2f6f2504c1dbb2c457601964f2@nut.email>
+ <d90dd6ad-71c7-4720-a07f-8504f7fdfece@linaro.org>
+X-Rspamd-Bar: /
+X-Rspamd-Report: BAYES_HAM(-0.283774) MIME_GOOD(-0.1)
+X-Rspamd-Score: -0.383774
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:subject:date;
+ bh=rvhkquX/dA3qZ09XL6grudUmEEE4N226AM7Eh1gOmLg=;
+ b=CJy62dyzCaqHguqgm2KoVqsZjEHLaXpV0/Q7F/S0Qcgaj6z/pPXREYtlSehBUUMpbzM9xIj0iz
+ t6p6pajzBhd21r3HxXqzeiYKQ2jeCiCUm6niktOfQrJU5FKpUUjwDXExxXIv0OOq9jUOIXuAVL+9
+ vbwNzCR7sgn5X1jGc752kwgArds6K6eq7FoT1kwEH5Ha7QGBSoTzcP6v1VV/U5qb1KTBHPX8j/yG
+ YH1FttyHMz2xRuU59FQoZ+DtgOt9/g7f0oALE46BqM1R6Tkjk6yRdaB+pVCfuwMkclk1jg1RFLGV
+ M5Eo1ZxL3D05xz6vAZDV/iutQgxXhcu03D372V5Ab8Vc5a7aCUhSflFHqjSmhoT8X+YSrii2H2BR
+ OrlJKMktIboC3O5+YRCLwtxFKOEPo2c+CfiGtBojVc2KBWI4MiOiIXOEvYJ1RRUgmh+MXE5HRdq7
+ Rw1Zr+DbUCesGBrG0CoF3xdf8fbuX8h+1Kcw7WgWiQbgIS5s8DwWDEtTNTDfMH79gtmG94sdKDGn
+ yjUv5m+OL5hQijxscnr/j25DXUu0TwGMCIiKsVbDF4yKZ1fXR0rvG4RA4czqQVrjks0xc5vY5u95
+ InmnR0dGXnfncSOdAt1NKAV+P9jyhUWPdwcxUq78qisk9EpcgGUytVYSi6JAvY8Lonkc1kkostCE
+ o=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,17 +83,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/5/25 00:34, Pierrick Bouvier wrote:
+Hi Richard,
 
-> Pierrick Bouvier (7):
->    meson: build target libraries with common dependencies
->    hw/arm: remove explicit dependencies listed
->    target/arm: remove explicit dependencies listed
->    meson: apply target config for picking files from lib{system, user}
->    meson: merge lib{system, user}_ss with {system, user}_ss
->    meson: remove lib{system, user}_ss aliases
->    meson: merge hw_common_arch in target_common_system_arch
+May 26, 2025 at 11:01 AM, Richard Henderson wrote:
+> On 5/25/25 21:16, Julian Ganz wrote:
+> > Also, some targets such as tricore only have a dummy/stub do_interrup=
+t
+> >  and handle exceptions differently inside non-returning functions. Fo=
+r
+> >  those, we would call the hooks directly from there as we do now?
+> >=20
+>=20It may be only tricore. And you're right, it would be a non-trivial r=
+eorg to make tricore fall in line with other implementations. So retainin=
+g the separate qemu_plugin_vcpu_exception_cb will be required in the shor=
+t term.
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Yes, tricore (and hexagon, which I decided to not support) are the only
+ones that don't have a do_interrupt at all.
 
+Note that x86, and maybe other targets as well, may not return from its
+do_interrupt but call cpu_loop_exit_restore or something similar,
+arbitrarily deep in their call stack. But as far as I can tell that's
+also exclusively for exceptions.
+
+Regards,
+Julian
 
