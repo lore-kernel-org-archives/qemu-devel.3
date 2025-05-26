@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F79C54FB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883E2C5AD49
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:24:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJXnd-0002IE-EL; Mon, 26 May 2025 09:23:31 -0400
+	id 1uJXmP-00009v-OH; Mon, 26 May 2025 09:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXmf-0000KE-4s; Mon, 26 May 2025 09:22:30 -0400
+ id 1uJXmB-0008VO-Ir; Mon, 26 May 2025 09:21:59 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXmW-0000K2-1I; Mon, 26 May 2025 09:22:25 -0400
+ id 1uJXm7-0000Ip-5a; Mon, 26 May 2025 09:21:57 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 547184456A;
- Mon, 26 May 2025 15:21:49 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 88825445EE;
+ Mon, 26 May 2025 15:21:48 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,9 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v3 20/24] iotests/graph-changes-while-io: remove image file
- after test
-Date: Mon, 26 May 2025 15:21:36 +0200
-Message-Id: <20250526132140.1641377-21-f.ebner@proxmox.com>
+Subject: [PATCH v3 16/24] block: move drain outside of quorum_del_child()
+Date: Mon, 26 May 2025 15:21:32 +0200
+Message-Id: <20250526132140.1641377-17-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250526132140.1641377-1-f.ebner@proxmox.com>
 References: <20250526132140.1641377-1-f.ebner@proxmox.com>
@@ -60,27 +59,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
+The quorum_del_child() callback runs under the graph lock, so it is
+not allowed to drain. It is only called as the .bdrv_del_child()
+callback, which is only called in the bdrv_del_child() function, which
+also runs under the graph lock.
+
+The bdrv_del_child() function is called by qmp_x_blockdev_change().
+A drained section was already introduced there by commit "block: move
+drain out of quorum_add_child()".
+
+This finally finishes moving out the drain to places that are not
+under the graph lock started in "block: move draining out of
+bdrv_change_aio_context() and mark GRAPH_RDLOCK".
+
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
 
 No changes in v3.
 
- tests/qemu-iotests/tests/graph-changes-while-io | 1 +
- 1 file changed, 1 insertion(+)
+ block/quorum.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/graph-changes-while-io b/tests/qemu-iotests/tests/graph-changes-while-io
-index 194fda500e..35489e3b5e 100755
---- a/tests/qemu-iotests/tests/graph-changes-while-io
-+++ b/tests/qemu-iotests/tests/graph-changes-while-io
-@@ -57,6 +57,7 @@ class TestGraphChangesWhileIO(QMPTestCase):
+diff --git a/block/quorum.c b/block/quorum.c
+index 81407a38ee..cc3bc5f4e7 100644
+--- a/block/quorum.c
++++ b/block/quorum.c
+@@ -1147,9 +1147,7 @@ quorum_del_child(BlockDriverState *bs, BdrvChild *child, Error **errp)
+             (s->num_children - i - 1) * sizeof(BdrvChild *));
+     s->children = g_renew(BdrvChild *, s->children, --s->num_children);
  
-     def tearDown(self) -> None:
-         self.qsd.stop()
-+        os.remove(top)
+-    bdrv_drain_all_begin();
+     bdrv_unref_child(bs, child);
+-    bdrv_drain_all_end();
  
-     def test_blockdev_add_while_io(self) -> None:
-         # Run qemu-img bench in the background
+     quorum_refresh_flags(bs);
+ }
 -- 
 2.39.5
 
