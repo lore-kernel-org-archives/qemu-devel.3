@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D2FC5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 646A2C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJWQD-00023P-Rg; Mon, 26 May 2025 07:55:13 -0400
+	id 1uJWSC-0003NJ-Au; Mon, 26 May 2025 07:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uJWQB-00021J-FY
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:55:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uJWSA-0003N2-5h
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:57:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uJWQ8-0005nn-Ve
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:55:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uJWS7-0006BL-Ud
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:57:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748260507;
+ s=mimecast20190719; t=1748260630;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Kgjwt4iSGYzl4DmzKKhriwtTPJ+SFky7WXkUgOVEEl8=;
- b=Gq2aGC2FDbwLSYaSzkyad7CQnjS/wJnDGVWvq8KFpmxjxm9Ht/3RVurJs5LYEkBSuZxZ0F
- iidI7ExTh8EZvQrjXv0futdYih1b1j4c8CbPKNp374IAfIYpSBJ5LBsHoBatCaqUyeS0nc
- 3sAHMkHpmnXT0J6B+yTdKoOvTe537OU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hYaw4nDZ82KlmNJgvcmabAhSKcPDqiLbCaDCeAxFGDA=;
+ b=bnYO2xHEXnHT/VZtiV6pqn9nJIx8Q8ifvWKAajAk9kkLQ7Q7VLSEtwbZ5Sy00GXGqrhRWm
+ MzggHX9TXzs9ptGJKLlfsSLLF+gx80rt4M6QwkNkuvYsz2xEI3MV6GSQExlG8JmL2NRG+b
+ 4flkpGVQU23QnkA+uZMBAOCQJWJcHxw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28-6YFg87kPMtaUAQrF85uLVg-1; Mon, 26 May 2025 07:55:05 -0400
-X-MC-Unique: 6YFg87kPMtaUAQrF85uLVg-1
-X-Mimecast-MFC-AGG-ID: 6YFg87kPMtaUAQrF85uLVg_1748260504
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4d81f7adeso666600f8f.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 04:55:04 -0700 (PDT)
+ us-mta-621-TDdMCIIZMQ2MJDo_CxQl3w-1; Mon, 26 May 2025 07:57:08 -0400
+X-MC-Unique: TDdMCIIZMQ2MJDo_CxQl3w-1
+X-Mimecast-MFC-AGG-ID: TDdMCIIZMQ2MJDo_CxQl3w_1748260628
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a3683aa00eso1024705f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 04:57:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748260504; x=1748865304;
+ d=1e100.net; s=20230601; t=1748260628; x=1748865428;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Kgjwt4iSGYzl4DmzKKhriwtTPJ+SFky7WXkUgOVEEl8=;
- b=xQsXk2S3zmUZDUMmFtmJETxLiRWf9b1ENTrC6kJFDtPcS5hj6ipLlUm7dULfxRcxi0
- fton0jCWbl8XYxl0tEPHJ0aHWXLt40oYxBUA+IBRF1cMPViXUC4z5uaB06OUpOVevMQU
- 9TE+zAVOEQDICVR+pBaMsqpNnkr3gziw+COb015Sp02eFoH5Tnqk9ZIV2V+ypUXe2khv
- eRkSc6Y7Qj/lG/gBny/vQgIoEdeArPtmm4j9yVhtaqT7VUfjYXjxAUxgFwlUESLgj5Ak
- L0iy8UA7y3XW46ONTId04Nv3I2td81zY0/q41t+7wilG4C8nMQcgZ04fBcvAqEKvFK7O
- I4Kw==
+ bh=hYaw4nDZ82KlmNJgvcmabAhSKcPDqiLbCaDCeAxFGDA=;
+ b=lWX1Nov/OlwEv30bNFX5PU68hVZTSzgibM3kBhJ2IG2iiA7BtCt1J9ljfbD1h3gO+J
+ PjVKF2DS0zXFYP4b8R9ExutKZLuEhOh/SXGhgI0WvpeJ2D2U4KadoTK+obFSXz4DQBGE
+ 8SKRCOpJzi8glvyY0yUHNqC+rTexeQfZ22UPyPxr7NLgUnBeM13NdiZPXPGIQUaxGU1q
+ 1mPRUR1RZ29+d9qdDOlJiNcoVoYA7EJzifj5zDrEVZ4Ah4P+gBXOx+Vi1qOvoHY5Ctb4
+ 89YhRet36xRKVgozDZV4/gS+loIesT6RZTaHgGWOd3tIfSMubNEXjSaKMBKhnGsEfWEe
+ k+lA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGN727MVpzOwn6iXe8Vv8F9vsNrZorKY29ZJtQLCQm5qoaJd+4jIQpvDwW2W5P4JHIQYv033FbT4+v@nongnu.org
-X-Gm-Message-State: AOJu0YxM6ObA3Cc+RDhSYLpR7e9NJ2/dI4breTnHM4IrYGV+vPAdVUZs
- DmoHGKtD0eQDGZ6DN0BV6HUtpc0TjytbCl4O5JiiI7Jvk+YYK8tEBMohVFmCEntpHuarPV6WkZQ
- 0BXrnVcNwuJnQDelgnMmIvK/rfxd2sBHi7uG3IFA7xyQi9soSB239SyvQ
-X-Gm-Gg: ASbGnctpp7s1nN4bRVD+ONoAiSoZJ+ggMZnyv81X1jx8Tyr0u9eTaqEdc/IxWoCPqq9
- N0IN1oG4tr/64ZluRrMQ+k/59bTsErAeln8IkypKwtiVtVKQSYIHkVLU3ntXnnkgxCBSTp2XE/1
- 29dWKB5CvO/1QKb2RsnOe7yyVF62YbX7Ei1W16wdcz/aoHXLrUIxFA8kSkAxhZxdEjRRfvvxqGx
- 6xcj0XOMX3gxho6rhUkYxzfJ+CYy3uqmBBWORGT/8f1OPSDFE1cK0QzIfYmk61DtF3m4/iCMkj+
- cG+XqKXf75V8PLGV+ArFwmrCC/Y+1GJ40VAG
-X-Received: by 2002:a05:6000:2503:b0:3a4:d048:124d with SMTP id
- ffacd0b85a97d-3a4d04812ddmr6186704f8f.26.1748260503868; 
- Mon, 26 May 2025 04:55:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxULWMU8iwh4mGgWO6eZLC9oAatKM3WdnttM7fQ+xTA7SJJSh1TcWZ2WvnilMccYd7bWcpBA==
-X-Received: by 2002:a05:6000:2503:b0:3a4:d048:124d with SMTP id
- ffacd0b85a97d-3a4d04812ddmr6186683f8f.26.1748260503479; 
- Mon, 26 May 2025 04:55:03 -0700 (PDT)
+ AJvYcCVBLuREqOVtuFvvtJphHshvX1GZ8IBX7+Zmd4IW71WlfIgs6u9L9gCHpjje2inKTJkVattEysQoqNhV@nongnu.org
+X-Gm-Message-State: AOJu0YwodxXP7Lo697GbNBRBc7EkydYh6xYBkhcgKe2dp7ZsNMZSNDZF
+ cBHRlf7ceffaMEvwFsLnozAVFNYdMbT1NHVyEkHpnHruvttL+8cRiTwUNfhO9GhDFEkTv2sBYWs
+ PIpuS9pIXnl2766kZjWfeRgWDfH/YyA/2Ik/104n1Ia9BGOpiuLu6aBH/
+X-Gm-Gg: ASbGncvTDNM5QkEbSu+gGVTqMM8DKVjKP7FTK909x/c1K+dERn9Gfs5Lb9b5+BDGYL0
+ f0cM/tDWXsFsot1aT/98Ww3Yu8pRr0Qv8n7B82Scx/IcQYxQNb9iCCJmZuNAcDkjzX3JbFT6B0J
+ STWgQq6rkpxyZBlisJ4WXYWATB13MAZmHPAtNk+Bzyp6UAXrgXOddZURPgWeIzxz39pM+IpiKAX
+ ZPhvOQdYVCXJHY6q+pW/mPdEDWkCX5eoW8DBVM0gEfkHQyUar6+T78Qmtmu+7//3c1PT7+1DhFK
+ hmL7VsV/0Rj/AFGKsst/sNubPIFor/YC/Qfk
+X-Received: by 2002:adf:e742:0:b0:3a4:c963:5fe6 with SMTP id
+ ffacd0b85a97d-3a4c9636045mr6135173f8f.19.1748260627758; 
+ Mon, 26 May 2025 04:57:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkYfq9IZShWP+DXu2iFvMyREQwaJ89VHUOQWFs1APQ4rmDS/RKDD+ZVQ/gd5HMxuwmajCrhQ==
+X-Received: by 2002:adf:e742:0:b0:3a4:c963:5fe6 with SMTP id
+ ffacd0b85a97d-3a4c9636045mr6135146f8f.19.1748260627320; 
+ Mon, 26 May 2025 04:57:07 -0700 (PDT)
 Received: from [10.33.192.219] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4d2c0c299sm4933593f8f.28.2025.05.26.04.55.02
+ 5b1f17b1804b1-447f74cce5bsm230308885e9.24.2025.05.26.04.57.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 04:55:03 -0700 (PDT)
-Message-ID: <0e64cd2b-e42a-40f6-bdd3-c2cf303da3b6@redhat.com>
-Date: Mon, 26 May 2025 13:55:02 +0200
+ Mon, 26 May 2025 04:57:06 -0700 (PDT)
+Message-ID: <7d228cfd-660f-421e-aa6d-2185f2c687e9@redhat.com>
+Date: Mon, 26 May 2025 13:57:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/3] hw/acpi: Build IPMI stubs when ACPI is disabled
+From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -88,7 +89,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Ani Sinha <anisinha@redhat.com>
 References: <20250526112346.48744-1-philmd@linaro.org>
  <20250526112346.48744-2-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <0e64cd2b-e42a-40f6-bdd3-c2cf303da3b6@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -132,10 +133,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250526112346.48744-2-philmd@linaro.org>
+In-Reply-To: <0e64cd2b-e42a-40f6-bdd3-c2cf303da3b6@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -144,7 +145,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,58 +161,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/05/2025 13.23, Philippe Mathieu-Daudé wrote:
-> When ACPI is disabled, no ACPI code depends on IPMI,
-> so we don't need the stubs.
+On 26/05/2025 13.55, Thomas Huth wrote:
+> On 26/05/2025 13.23, Philippe Mathieu-Daudé wrote:
+>> When ACPI is disabled, no ACPI code depends on IPMI,
+>> so we don't need the stubs.
+>>
+>> We need them when IPMI is enabled and ACPI disabled,
+>> otherwise when using '--without-default-devices' we
+>> get:
+>>
+>>    Undefined symbols for architecture arm64:
+>>      "_build_ipmi_dev_aml", referenced from:
+>>          _isa_ipmi_bt_class_init in hw_ipmi_isa_ipmi_bt.c.o
+>>    ld: symbol(s) not found for architecture arm64
+>>
+>> Split the source set list to avoid a too long line.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/acpi/meson.build | 10 ++++++++--
+>>   1 file changed, 8 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+>> index 73f02b96912..76948cdd00d 100644
+>> --- a/hw/acpi/meson.build
+>> +++ b/hw/acpi/meson.build
+>> @@ -26,12 +26,18 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: 
+>> files('acpi-pci-hotplug-stub.c'
+>>   acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
+>>   acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 
+>> 'ich9_tco.c', 'ich9_timer.c'))
+>>   acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
+>> -acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: 
+>> files('ipmi-stub.c'))
+>> +acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'))
+>>   acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
+>>   if have_tpm
+>>     acpi_ss.add(files('tpm.c'))
+>>   endif
+>> -system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml- 
+>> build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
+>> +system_ss.add(when: 'CONFIG_ACPI', if_false: files(
+>> +  'acpi-stub.c',
+>> +  'acpi_interface.c',
 > 
-> We need them when IPMI is enabled and ACPI disabled,
-> otherwise when using '--without-default-devices' we
-> get:
-> 
->    Undefined symbols for architecture arm64:
->      "_build_ipmi_dev_aml", referenced from:
->          _isa_ipmi_bt_class_init in hw_ipmi_isa_ipmi_bt.c.o
->    ld: symbol(s) not found for architecture arm64
-> 
-> Split the source set list to avoid a too long line.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/acpi/meson.build | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-> index 73f02b96912..76948cdd00d 100644
-> --- a/hw/acpi/meson.build
-> +++ b/hw/acpi/meson.build
-> @@ -26,12 +26,18 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'
->   acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
->   acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
->   acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
-> -acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
-> +acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'))
->   acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
->   if have_tpm
->     acpi_ss.add(files('tpm.c'))
->   endif
-> -system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
-> +system_ss.add(when: 'CONFIG_ACPI', if_false: files(
-> +  'acpi-stub.c',
-> +  'acpi_interface.c',
+> While you're at it, I think acpi_interface.c is always needed (it's also 
+> added earlier in this file already when CONFIG_ACPI is enabled), so I think 
+> this should rather go to a separate "system_ss.add(...)" line?
 
-While you're at it, I think acpi_interface.c is always needed (it's also 
-added earlier in this file already when CONFIG_ACPI is enabled), so I think 
-this should rather go to a separate "system_ss.add(...)" line?
+Or maybe it could rather get removed from the list here? ... it does not 
+look like it's really needed for the build at a quick glance...
 
   Thomas
-
-
-> +  'aml-build-stub.c',
-> +  'ghes-stub.c',
-> +  'ipmi-stub.c',
-> +))
->   system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
->   system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
->   system_ss.add(files('acpi-qmp-cmds.c'))
 
 
