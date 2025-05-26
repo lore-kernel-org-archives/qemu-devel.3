@@ -4,205 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCB1C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6CFDC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 09:30:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJU8j-0006D1-W5; Mon, 26 May 2025 05:29:02 -0400
+	id 1uJU9g-0006oS-EV; Mon, 26 May 2025 05:30:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1uJU8i-0006A3-4F
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:29:00 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1uJU8f-0004AS-8Z
- for qemu-devel@nongnu.org; Mon, 26 May 2025 05:28:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748251737; x=1779787737;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=hrLzIbHNq0h+/C0mS+EVnu/TGJ3yRBz1tTKY76Ec2Ss=;
- b=OGK/rcetA/iBdwqVRk71G/iXwMTdW4Qq6EBUwjZH0ZwXsUrd5jByUveZ
- +bQnoBK/Q+pHKIQED8JpwZJ2rCdi4Sq6K7NhTz3IqsUSGIlM0EfNg6aCT
- 2P7So4mRkbbt9Uk3y+iolyXfVQgNXMO5VirIvv+Yd4/L4wSVYmlPYWC9K
- 7oIFTAXU2CzTh+YWZvokEltC34QjczDegYoYDMHVsdGNtm939+Am0XKuD
- pQC95HkD2+jpS+fUBIXAJ/aQv1gVKRFVgFV27JBBiejjbFMuzMcOb29CJ
- WozHxqId7BwPg/WMGzjcQPRjvx2IsKlAzbh79oyFrat9QL0aKOJ9EzoNI A==;
-X-CSE-ConnectionGUID: vouXCGS3Sniogcq6v0Y0tg==
-X-CSE-MsgGUID: m/wcZbsjTdyEMBZfVX4uQw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11444"; a="61576255"
-X-IronPort-AV: E=Sophos;i="6.15,315,1739865600"; d="scan'208";a="61576255"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 May 2025 02:28:53 -0700
-X-CSE-ConnectionGUID: MfFVt/QqTS6HkCOXb1aVxg==
-X-CSE-MsgGUID: UQ24e2RhS8+Lm+nrlcW3XQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,315,1739865600"; d="scan'208";a="143243479"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 May 2025 02:28:53 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Mon, 26 May 2025 02:28:52 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Mon, 26 May 2025 02:28:52 -0700
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (40.107.100.61)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.55; Mon, 26 May 2025 02:28:52 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QKINnc6Q71s5t9JmxeIZFSmE+BdbvWVIiynxdTyDhMiSz9nd86S7LxB6Xo3G9rpKvvvNdY+Ql9Zk/hNMSlWSd4eY4NW2G4sqinxHQrvUZcT6P7dgCEfakZtlmZdGvEvw6mfTSIDcAtRBVgn410yrcfLQJX0uO1F7fkt+t1nrQz8OqeFuhEzLTtZZoqgyWP+q47UYOUjVqUkHrW5aHakp1r1aObVsCSQ54Zsb6AUmToKuLOtpgAritnosJCQQ3h1UAwJFkyi702HayH78y9zIsNKqwTNxDP1hOuDres6K82kzjCQBodpf07RZ6emN+pFvjzPue/uGxA+2IaeFmXVSdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LOYEF+aDU0jMtBkMw5iJY21YsiadEl23iSa/wJbrN/8=;
- b=FKRYit3OYcyz67W12W8pa2pLkSvxYZDXEm74XBz+gODOcDvRHaJrK+zOW0ty9kn5YCazjKsp112BzaOrEzb/mgHLyBGq6CwGMDvDwobWwmmH1o67K6cx0jP9vBOz5Vf59ZgIr6BfrFI1f8wM4adbocpQiGhVWWXpGP/atNjf2fYfggXQDpFGgt7GeerWRxkzYAWHLqq6rwZkp9JpCqY41TZ5SW5yfquFiUea8tHozbASPelI/lqhNzHTe55KRojmbZuVB1mCTTcNwpmfQnCo7jr6fP+q4O0SWY2Y6tUnACm0VRF6iTETV3NvFBGeW6qzxjkfNHy4D3rIGHI3yhCAbg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- CY8PR11MB7315.namprd11.prod.outlook.com (2603:10b6:930:9e::15) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8769.26; Mon, 26 May 2025 09:28:22 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.8769.022; Mon, 26 May 2025
- 09:28:22 +0000
-Message-ID: <0bc65b4f-f28c-4198-8693-1810c9d11c9b@intel.com>
-Date: Mon, 26 May 2025 17:28:12 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/10] ram-block-attribute: Introduce RamBlockAttribute
- to manage RAMBlock with guest_memfd
-To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, 
- Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
- <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>, Baolu Lu
- <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>, Xu Yilun
- <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-References: <20250520102856.132417-1-chenyi.qiang@intel.com>
- <20250520102856.132417-5-chenyi.qiang@intel.com>
- <e2e5c4ef-6647-49b2-a044-0634abd6a74e@redhat.com>
-Content-Language: en-US
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-In-Reply-To: <e2e5c4ef-6647-49b2-a044-0634abd6a74e@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2PR01CA0031.apcprd01.prod.exchangelabs.com
- (2603:1096:4:192::11) To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJU9f-0006oJ-9M
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:29:59 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJU9d-0004Dr-Gk
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 05:29:59 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb94so28536125e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 02:29:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748251795; x=1748856595; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=BIE1tsHAC5bOg2rTrmfJi9vPEFVbj/k5P/3qkGkou7k=;
+ b=Y5K6V7bviBorKO1wFwEJ7yYw51EhCkJfjl4ehxj/T3C3MixewwtRbTwywniMMtVaxs
+ tlZPSG5jENui2wSC5AaeR/2DwPigveJvzmmw+ewzR99ADhqXz1j3FQ586AKUCCnt+ZoD
+ 5BMfPhel96zAMApYKWvmXaG2rz6gtenohkrrZ52hN86g/TYDj7GshuMLAcSoPax5JCaI
+ j1xCNtNOSw4Wd6EuMTVJXPYYli/w75U6etPZfC4ZCLdI2qpYhgJCiTPWvhF5zWLR2F+q
+ 3MWnJSAJZS/YGtcDHNLyAmu7uHhSX8S9jMjMLQULeEbuCFvTdU66R7voxGpW6DEX1ZJ4
+ QdaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748251795; x=1748856595;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BIE1tsHAC5bOg2rTrmfJi9vPEFVbj/k5P/3qkGkou7k=;
+ b=qYj9ZbAK5k2uQdjp2Rrnx0XXT9UgDQY/b568WqTLC/kr1ZZXLNh4fgXuGsvWyHcOtI
+ gi8sA0sbk4kOLdYE21XNIxSpqL+lI9kxOMvPSovaVy4ruR2gwhAqlsBLnlmxqZyEzkfT
+ iHpTWe1wqjke2riIav6vkjXRgcqx5V2ZCmXt/jWNWojfj6qSem4lPoV5FS2W5muqCmz4
+ 4FTSuemZ2jPjVmkjYoWzv7Bo2fzNc3Zd3eLbC+ILHGU70ClD4gO8WMxWbnCUmxjCoxtc
+ h1oeDfL+BJaMOHlX6CqTmAuiUKYZEKJbZ6dw7fQcPl9TRxkrgFq/dLZ1GqDHkVFkGeli
+ uoTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQKQdsdszAdWFfozk2TcNwwgIHkXQe0sN3vLr3oX7UJz1p/jCpY4dKYNT60DMjdDQ2xz1pyeN6bI3m@nongnu.org
+X-Gm-Message-State: AOJu0YwQ/inORhvfMzChuqh1KJsbHAXXByqUbJgbVevOV4QEoYu9kGWX
+ fHApIgJOf7HRQcu1TCcCXc2CuBj7YXLqgQDFpl051LvyyxyFUBYGb5zKz/mEQ3Hqy9Q=
+X-Gm-Gg: ASbGncuhMyVMVCzfkLVoHA3q5+gNaayy6OY9vKyDasDT46/0GIt8UWiY6j5OjUJ6YcZ
+ w3zvh0abZ2hwUhZDwfB1hK9WkLrny6ABd9etQzJ1wJq8vVl4fQdH8EdVwCVY6SWmoLNr7tKLmCM
+ IlKBephFkuafa+Q2juEzABqJig6QsVlKzIVylAjCKlNbjc62r8j/gxaZ4rpulYVb7XLqdIK37cY
+ L4kb5qMNtPOl/hp/cGOTWObt6WX+wlOPIJ4Vm3g0jwbJ9T3asEZEFBdYB2WFktI7MvjtVzZ9MkE
+ 5XlDLdWGfr20lwFHWDJNYiVvm2f9QshhnRXcJbbV9YFOiVes8Mv+JBzluhhwziKcty/gHmH5RIB
+ T23xLC362oQbflL7fwgZibMq2
+X-Google-Smtp-Source: AGHT+IH8JxhBc/HUx9zeS11/dffWL5pnFY4oBQzZmgB3Q147l03pZsLFvqthO2aHH+fNWV9L9ETVeg==
+X-Received: by 2002:a05:600c:4f42:b0:442:dc6f:4a07 with SMTP id
+ 5b1f17b1804b1-44c917f3f5fmr77244055e9.4.1748251794442; 
+ Mon, 26 May 2025 02:29:54 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4d1ed8740sm4855426f8f.83.2025.05.26.02.29.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 May 2025 02:29:54 -0700 (PDT)
+Message-ID: <eb4b90f7-eeff-4491-8b9b-3545aa87ff00@linaro.org>
+Date: Mon, 26 May 2025 11:29:53 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|CY8PR11MB7315:EE_
-X-MS-Office365-Filtering-Correlation-Id: da715e48-2480-4ffd-2c8e-08dd9c37a874
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7416014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aFhxcXZyejJSZXA3Ykc4RGIrUjExTE1HbCtQTzRCdGVTNW9jZjA0dnMvVThS?=
- =?utf-8?B?VE90NFgzK1I2dnBBQnB5eGNhalJuTWt4SEZUcTE4eVBPLzVCalRWYTFnT2JQ?=
- =?utf-8?B?OTk0KzBod1FZd2VJNE1BKysvR0kxb21kTTF2dU52cWkzWU1OcjRzNlNSUnNB?=
- =?utf-8?B?eFpiNWdyQ3ZaTzBpbjgrV2M0RkZPcFZxL3dqOGFiYXNWY1c3b1lKZ2d2OFJJ?=
- =?utf-8?B?dURRK2VsSjU3ZXltbmlIcGhOak5MOTlZZURjY2lSd3VUemdwaG1wMzdTNmdz?=
- =?utf-8?B?R0VJRnFSMmcveW9oMEEwajY0OHZuUUhPU1huc1ZxNmx2R09HVVZ1Z3N2MnVY?=
- =?utf-8?B?OG9NSEt2S28rbVNKYks2SDBhNFE1N3FvMzIweFpVOVhabUh1dnlKVE10K3Za?=
- =?utf-8?B?QnFhT0NYRDJza2NZZTVNb0lsT3ZxNFRDYW9XaVdHMVltVEo0clVzNllwTVZ0?=
- =?utf-8?B?VTg3RCtsOVl4MlRrU2pwZWpKMDFqM21hb2VvMSt5R3JodXhiNHdWWUE1TUgw?=
- =?utf-8?B?cjRoWHYvMThYaXlrR3UrN3NlZ3dDdWxSV1ZFRWxIWU9ZM3h3ZXFZRkF3VGNK?=
- =?utf-8?B?ejFBUUJNdUZndFVRNXNDWUpQMnJFOVFpSExHbDlXL0NPRlljNEFFeVdmb1NB?=
- =?utf-8?B?Z2pDN3ZWVktvY0JlOXJlMHdTRlNzV09HYmtoQ2JaYjdFcU8zWlFXeG9lZkVZ?=
- =?utf-8?B?YnB1MGlnMENxcm9HRk1YT2FlemlUaWd0Y1E3RGpGbm9nUEhITDdxZk5lOHZZ?=
- =?utf-8?B?V1ZZWWx6OHUrWUI3d2lvdGpVU1V5eS9BaUJ0UnpuQWRJamI4ZC9ZQm1mdUhW?=
- =?utf-8?B?MFBHV0N6aTJvTVFvTUZYMXljUkJYTlNaTDlRbk5PRmg3bnZ5SlpwZXB6aHdE?=
- =?utf-8?B?amVtOFVYUzRRZVA4Q3ZVckJsZ20zMnlqQ3huKzJXK1BXamk4VDcwSVExOExE?=
- =?utf-8?B?d09wdXMvOEJWVUJTcm1yMHZoS2hCNTNVTFpLSU10VXE1RHpSR0hyWC9NVUxQ?=
- =?utf-8?B?SVVRQ0lHcUxDMS8rZkpYdVBITzNERDM4RExxbytTV1k0VFREcGF2cHhNUzB1?=
- =?utf-8?B?VjdWcyt1aS9VNDZQR2kwOFZEeTRsQUd3SGxQbGZZeUZoK0FGQVIvRGh4UWlW?=
- =?utf-8?B?Z2tkNWtDNm5PajBveFB4dHMyK2FUUG9mdjhNMTdvYWY0dVNwZ01CQ1BXQkZh?=
- =?utf-8?B?SkF0R0U0NkQ2U2JUZVVCb0JjMThOWVRFSHBRS0pSZzdmRklueTZSV2FaYklm?=
- =?utf-8?B?bUdIYXV1QUVOWTlrR1FuL3M4cnBRK2RBRDl1UGNxZ05ENDhRamduV01SUGQy?=
- =?utf-8?B?dWYvOUdabmFnSjBubGFXU0V2RWhBMmwvT09rellpek9JSTJ5SEhCMHRIZnRQ?=
- =?utf-8?B?RmpvWVFHVklWcU0yN0tQZDlrOC90b0Y2RTZtaWxaMmlualJzNW52VE9TTW1r?=
- =?utf-8?B?azBTQzZORXNjYUtscndYbFdIMWlRbE02YUhpMGs0S1dXMmNXYy9FMkJvYWVH?=
- =?utf-8?B?Wjd3LythZlJrNUN1ZlVIdkFVRTJ0aGJadzhOUjZKcXR1V3haNDhaeEFTaktN?=
- =?utf-8?B?U1l2U0xOZHdvTno1QzEvakdFWFVTd0x1cGlFaTNkMnc4Uy9hc0FLbmQweUJ0?=
- =?utf-8?B?SjV6VFoyRVZteVlKNDE4dzVMcHlFaXhHeTIwTGdHWDAreSt6cjMydjYvalZt?=
- =?utf-8?B?Y1VSTHY0S2ZwQkhiaDY0bUF5aDNDN21CcEFqaTBrZDhTT3NXVU5iV1R6ckxX?=
- =?utf-8?B?eElPcG92OStQTGxtY0doREI2bGcyVTlsZWw5WU16T2lUMkJYemdsL1dnbnlZ?=
- =?utf-8?B?bkNSWHpBVUExZElMNHA2eWhCblRYMjlhb2ZsU3AvZ1RPN1k5RlY0aTFLYU5T?=
- =?utf-8?B?OGw3dXA1S3k1QjAxWnExbjZoMWgycXczT1lnaW5WSXdzYWhSRit0UmVMOHdz?=
- =?utf-8?Q?7kJxxJI8nrw=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(7416014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UGhPZC82d0QvcTJJQzBjdzFzalU4U0szZGViTkpXNFhGMGhPQTZya0ZmZDVJ?=
- =?utf-8?B?d09yUHdBUG50dXJ4K3J1T1djdGtiNEIwa0RZWHFtbGFwN1Q2UGRWdkQ4d2Ex?=
- =?utf-8?B?YVNKUmVCdFZpMk5qaFpUeElrT2dhd01xN005RUZicldVK2VDK3l3NDl0eXFD?=
- =?utf-8?B?MVF3Tm4rMlRaREh4MWRPTmcwdmpEWnFOZ28zWDdVdzgySERpMElwbFZUTkJx?=
- =?utf-8?B?UTlQUEJ5TFM0TnVCYXNEYytBK283S1V6UHU4WUgzbVMrWHA2ZDJOMGVmRXc1?=
- =?utf-8?B?S2NWejRJQStEUG1GRHIzQmw4ZElyOTk2UEI5YWMrZE1RdGFiU1FNeDFWN3B4?=
- =?utf-8?B?cWZlczJrUUhrYm9MVDZVV1piNHZWV1BSajJRaDlqODl3T2ZTaXZOY2xwVkZB?=
- =?utf-8?B?M2diOEgxS21aRDB2cWFVelRITkNBbjJPZWwwVThWTHUzTzBUN1EyR3lHNjBu?=
- =?utf-8?B?Y3ZFOGJTYjFlWlovM0xkZ2t3OENDM3pBWFVzN0lrc2VwY0tmVmJ4VEdzazBY?=
- =?utf-8?B?UlU0bmVaZTMvbCt0VTM0d3VNc3JjenJJUW9QNkJXdUtkTVdnamt1aklWL1pK?=
- =?utf-8?B?OWRubEFDbllLWnEvK0E4NG81OEY2aklKbmczMzN2cHNyUlR6WU8wVGQ3Y2M5?=
- =?utf-8?B?VkRHS0IxcExmVDRCaWMrV0R2QXMxQnRzQXZweUpKMzJyZThLTU0zNWUvMHJC?=
- =?utf-8?B?U3VFeDlwSFhvOXY4SWY1ak1HUUxVbFdZYWNJc3FjVXU0RUlKdjJ1VWMyZzFN?=
- =?utf-8?B?WlFUdm8yNDhxcEk3RzBZcUFaUytBbzZhSktJdEVZVzVyblJOeUQydlgxUTNU?=
- =?utf-8?B?QVQ1UVJ3T3FZU3orbUF0cUROeWFNSG1OSzF1WGxvY3NpNldwSDA2TW1BaTRt?=
- =?utf-8?B?NmsrbmhsZFVaNThoNHgySFArS29jWW5hZkNnSVZEWHU2ZDhHS2lwUFBiVFh6?=
- =?utf-8?B?c0x0cXVwb3NYNjhGRW9KVHUwOEZkUjZGcXZCNHAxVXB3OS9ZTDZnZC9iK2lz?=
- =?utf-8?B?VTZ0Z2JYVGNmRHRxeGxZU3RlZjF0K2MvUWYxSWVNYUlyZzZwQmlBWmNHVHlT?=
- =?utf-8?B?R3BVUzdtSGJnLzRRQnNyZFVaMnlsNTdGUTNVOHNqVDhPcENuaE9nM2c1S3dw?=
- =?utf-8?B?dGJ0eFJmK1VxUFQzUVUrSnBETUlXYU00MXNBU1l2MkEwOE9YSzZkaXl2Mm1H?=
- =?utf-8?B?eHJSbTFGeTEzNEdRYUd1Y0pJV1puS2VaN1RvaS9UNXhTeWgybWU4dmxScFlQ?=
- =?utf-8?B?d25tUEhtQVNDZDdQaENINEw5ajNrbmxrcDBHb2M2aEhBeTRVUjJuNzhsYlU5?=
- =?utf-8?B?TEhxalZHTDl3bFliWlpmRWdXSVg2dmc0b0NaQWw0ZDI1ZGFFK0ttMFBIWk5q?=
- =?utf-8?B?Vm1WRFVPVVdoZnRGRldXQk5NckJlSFNZK1haSm1tSmFOdlJ2UUZKNVBXTUVv?=
- =?utf-8?B?ck9wOWZ5RGZCaWcxTEFEOTd4eXEyWi8zVm85U24yaFBaZzlXdG5WZkpnRlFk?=
- =?utf-8?B?NmphRHRtUk93TzRzSTUrSk1PNzFEL0hVLytQUUlnakQxKytIaVpEUUxVYitH?=
- =?utf-8?B?cHA2QnRPRXpBZXQ5R3dYV0dJRi85M0dydHMzdHQyV0F4MVp3blB3Y3hWUUFq?=
- =?utf-8?B?aFQ1K2dRbFlHU3pIVW5JUklWRzNkYklyVjJWQ1JBTkRHMWNSMW94NFMxVnRP?=
- =?utf-8?B?MFdDOFFmbGYrMXpxS1ppdGpuODZMMVRnblA1RmJYYnJ0RHlWbFpXN01VL1ZQ?=
- =?utf-8?B?VTlaRlNFSmxySmZtSzlnRWNzWk4vbElacmIyZlMwWU9JL0lUelY3TzMvUk5K?=
- =?utf-8?B?dCtiUGVzL1R4dE84Q3dkY3RIbUVHbjd3Q05aWENRT3pFNU16NFhEMlFHbWJa?=
- =?utf-8?B?cFRyazdlSTljK3JMeGExRjJNejN0Z0pCbG1TL1hOOVlYZFFSVE50WHhlaGZK?=
- =?utf-8?B?SklteWl1d1hrRUh5SVJVWlg1OXUvdlhLWjN4R3JMQ1JYczVwaHU3b2QxOFBs?=
- =?utf-8?B?V1ZXc2gwV3QvY3BMT2cwMHpqcWVkMXBBazF0L1JkSS83QmZJcDBSNmtLOHlZ?=
- =?utf-8?B?TjdUcFlSL1NNbm4rUnBrdXhyQ1FLL0pTdVdTZEdoMDZyUmljY0NIOFV4SHcx?=
- =?utf-8?B?NEdXVzlTSDNIalp3SngvTU5PdGR3REFMOGIrZU16S1dkQjVnUlhIQXNnSEVW?=
- =?utf-8?B?THc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: da715e48-2480-4ffd-2c8e-08dd9c37a874
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2025 09:28:22.2937 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CscDStKCaC9iHTah7q9U+oYerwMzbsvRBN2u8jjNN6TimXCOVWWqTWiIZDe+ZN6zgGeyqbkqWvFN9Ssvth7E/A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR11MB7315
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -72
-X-Spam_score: -7.3
-X-Spam_bar: -------
-X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 11/11] hw/display/apple-gfx: Replace QemuSemaphore with
+ QemuEvent
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
+ devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
+ <20250526-event-v4-11-5b784cc8e1de@daynix.com>
+ <8905dbb0-a6b0-42e3-98e6-095ac2b9e8d7@linaro.org>
+Content-Language: en-US
+In-Reply-To: <8905dbb0-a6b0-42e3-98e6-095ac2b9e8d7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -219,170 +110,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 26/5/25 11:27, Philippe Mathieu-Daudé wrote:
+> On 26/5/25 07:29, Akihiko Odaki wrote:
+>> sem in AppleGFXReadMemoryJob is an one-shot event so it can be converted
+>> into QemuEvent, which is more specialized for such a use case.
 
+BTW it would be nice to document that in "qemu/thread.h" API.
 
-On 5/26/2025 5:01 PM, David Hildenbrand wrote:
-> On 20.05.25 12:28, Chenyi Qiang wrote:
->> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
->> discard") highlighted that subsystems like VFIO may disable RAM block
->> discard. However, guest_memfd relies on discard operations for page
->> conversion between private and shared memory, potentially leading to
->> stale IOMMU mapping issue when assigning hardware devices to
->> confidential VMs via shared memory. To address this and allow shared
->> device assignement, it is crucial to ensure VFIO system refresh its
->> IOMMU mappings.
 >>
->> RamDiscardManager is an existing interface (used by virtio-mem) to
->> adjust VFIO mappings in relation to VM page assignment. Effectively page
->> conversion is similar to hot-removing a page in one mode and adding it
->> back in the other. Therefore, similar actions are required for page
->> conversion events. Introduce the RamDiscardManager to guest_memfd to
->> facilitate this process.
->>
->> Since guest_memfd is not an object, it cannot directly implement the
->> RamDiscardManager interface. Implementing it in HostMemoryBackend is
->> not appropriate because guest_memfd is per RAMBlock, and some RAMBlocks
->> have a memory backend while others do not. Notably, virtual BIOS
->> RAMBlocks using memory_region_init_ram_guest_memfd() do not have a
->> backend.
->>
->> To manage RAMBlocks with guest_memfd, define a new object named
->> RamBlockAttribute to implement the RamDiscardManager interface. This
->> object can store the guest_memfd information such as bitmap for shared
->> memory, and handles page conversion notification. In the context of
->> RamDiscardManager, shared state is analogous to populated and private
->> state is treated as discard. The memory state is tracked at the host
->> page size granularity, as minimum memory conversion size can be one page
->> per request. Additionally, VFIO expects the DMA mapping for a specific
->> iova to be mapped and unmapped with the same granularity. Confidential
->> VMs may perform partial conversions, such as conversions on small
->> regions within larger regions. To prevent such invalid cases and until
->> cut_mapping operation support is available, all operations are performed
->> with 4K granularity.
->>
->> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 >> ---
->> Changes in v5:
->>      - Revert to use RamDiscardManager interface instead of introducing
->>        new hierarchy of class to manage private/shared state, and keep
->>        using the new name of RamBlockAttribute compared with the
->>        MemoryAttributeManager in v3.
->>      - Use *simple* version of object_define and object_declare since the
->>        state_change() function is changed as an exported function instead
->>        of a virtual function in later patch.
->>      - Move the introduction of RamBlockAttribute field to this patch and
->>        rename it to ram_shared. (Alexey)
->>      - call the exit() when register/unregister failed. (Zhao)
->>      - Add the ram-block-attribute.c to Memory API related part in
->>        MAINTAINERS.
->>
->> Changes in v4:
->>      - Change the name from memory-attribute-manager to
->>        ram-block-attribute.
->>      - Implement the newly-introduced PrivateSharedManager instead of
->>        RamDiscardManager and change related commit message.
->>      - Define the new object in ramblock.h instead of adding a new file.
->>
->> Changes in v3:
->>      - Some rename (bitmap_size->shared_bitmap_size,
->>        first_one/zero_bit->first_bit, etc.)
->>      - Change shared_bitmap_size from uint32_t to unsigned
->>      - Return mgr->mr->ram_block->page_size in get_block_size()
->>      - Move set_ram_discard_manager() up to avoid a g_free() in failure
->>        case.
->>      - Add const for the memory_attribute_manager_get_block_size()
->>      - Unify the ReplayRamPopulate and ReplayRamDiscard and related
->>        callback.
->>
->> Changes in v2:
->>      - Rename the object name to MemoryAttributeManager
->>      - Rename the bitmap to shared_bitmap to make it more clear.
->>      - Remove block_size field and get it from a helper. In future, we
->>        can get the page_size from RAMBlock if necessary.
->>      - Remove the unncessary "struct" before GuestMemfdReplayData
->>      - Remove the unncessary g_free() for the bitmap
->>      - Add some error report when the callback failure for
->>        populated/discarded section.
->>      - Move the realize()/unrealize() definition to this patch.
->> ---
->>   MAINTAINERS                  |   1 +
->>   include/system/ramblock.h    |  20 +++
->>   system/meson.build           |   1 +
->>   system/ram-block-attribute.c | 311 +++++++++++++++++++++++++++++++++++
->>   4 files changed, 333 insertions(+)
->>   create mode 100644 system/ram-block-attribute.c
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 6dacd6d004..3b4947dc74 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -3149,6 +3149,7 @@ F: system/memory.c
->>   F: system/memory_mapping.c
->>   F: system/physmem.c
->>   F: system/memory-internal.h
->> +F: system/ram-block-attribute.c
->>   F: scripts/coccinelle/memory-region-housekeeping.cocci
->>     Memory devices
->> diff --git a/include/system/ramblock.h b/include/system/ramblock.h
->> index d8a116ba99..09255e8495 100644
->> --- a/include/system/ramblock.h
->> +++ b/include/system/ramblock.h
->> @@ -22,6 +22,10 @@
->>   #include "exec/cpu-common.h"
->>   #include "qemu/rcu.h"
->>   #include "exec/ramlist.h"
->> +#include "system/hostmem.h"
->> +
->> +#define TYPE_RAM_BLOCK_ATTRIBUTE "ram-block-attribute"
->> +OBJECT_DECLARE_SIMPLE_TYPE(RamBlockAttribute, RAM_BLOCK_ATTRIBUTE)
->>     struct RAMBlock {
->>       struct rcu_head rcu;
->> @@ -42,6 +46,8 @@ struct RAMBlock {
->>       int fd;
->>       uint64_t fd_offset;
->>       int guest_memfd;
->> +    /* 1-setting of the bitmap in ram_shared represents ram is shared */
+>>   hw/display/apple-gfx.m | 10 +++++-----
+>>   1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> That comment looks misplaced, and the variable misnamed.
-> 
-> The commet should go into RamBlockAttribute and the variable should
-> likely be named "attributes".
-> 
-> Also, "ram_shared" is not used at all in this patch, it should be moved
-> into the corresponding patch.
-
-I thought we only manage the private and shared attribute, so name it as
-ram_shared. And in the future if managing other attributes, then rename
-it to attributes. It seems I overcomplicated things.
-
-> 
->> +    RamBlockAttribute *ram_shared;
->>       size_t page_size;
->>       /* dirty bitmap used during migration */
->>       unsigned long *bmap;
->> @@ -91,4 +97,18 @@ struct RAMBlock {
->>       ram_addr_t postcopy_length;
->>   };
->>   +struct RamBlockAttribute {
-> 
-> Should this actually be "RamBlockAttributes" ?
-
-Yes. To match with variable name "attributes", it can be renamed as
-RamBlockAttributes.
-
-> 
->> +    Object parent;
->> +
->> +    MemoryRegion *mr;
-> 
-> 
-> Should we link to the parent RAMBlock instead, and lookup the MR from
-> there?
-
-Good suggestion! It can also help to reduce the long arrow operation in
-ram_block_attribute_get_block_size().
-
-> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
 
 
