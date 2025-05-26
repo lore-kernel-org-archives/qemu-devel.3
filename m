@@ -4,75 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6127CC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 07:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB234C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 07:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJSOq-0006xD-SA; Mon, 26 May 2025 03:37:32 -0400
+	id 1uJSWJ-0008Cd-Iv; Mon, 26 May 2025 03:45:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJSOl-0006wq-8A
- for qemu-devel@nongnu.org; Mon, 26 May 2025 03:37:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJSOf-0007VV-Q1
- for qemu-devel@nongnu.org; Mon, 26 May 2025 03:37:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748245039;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KkA6+Nd4ZvZzE5Ua8P0slhwXy1/6ZcHBx+o2BvW8t3k=;
- b=i0ygS9uqkY4/wCKTnfvW8QD5jfah8Ez2VUxHt+MebsovkvfQvjzkhPnnZyRvhqPXeAuV0k
- XZ/UH+88kxLBhM37AdPzd42LcH8f46G4wnVLka36P5ScHWLDcwubF5a11aDI6Zlvx+aC84
- fIrugqYQQtR9VfZsmIDfve/YPlPxbBc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-gxe5H_wyM--lYB0Vh3TCLQ-1; Mon,
- 26 May 2025 03:37:17 -0400
-X-MC-Unique: gxe5H_wyM--lYB0Vh3TCLQ-1
-X-Mimecast-MFC-AGG-ID: gxe5H_wyM--lYB0Vh3TCLQ_1748245036
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3BB43195608D; Mon, 26 May 2025 07:37:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A16D519560AB; Mon, 26 May 2025 07:37:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DFE2621E675E; Mon, 26 May 2025 09:37:12 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 07/13] migration: Introduce new MigrationConfig
- structure
-In-Reply-To: <87ldqn5twe.fsf@suse.de> (Fabiano Rosas's message of "Fri, 23 May
- 2025 10:38:41 -0300")
-References: <20250411191443.22565-1-farosas@suse.de>
- <20250411191443.22565-8-farosas@suse.de> <87jz7idk97.fsf@pond.sub.org>
- <87ldqn5twe.fsf@suse.de>
-Date: Mon, 26 May 2025 09:37:12 +0200
-Message-ID: <87cybvbz6f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>) id 1uJSW0-00087z-Hu
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 03:44:56 -0400
+Received: from [218.76.62.146] (helo=ultrarisc.com)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <xb@ultrarisc.com>) id 1uJSVx-0008IQ-Ah
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 03:44:56 -0400
+Received: from xb$ultrarisc.com ( [192.168.100.1] ) by
+ ajax-webmail-localhost.localdomain (Coremail) ; Mon, 26 May 2025 15:45:52
+ +0800 (GMT+08:00)
+X-Originating-IP: [192.168.100.1]
+Date: Mon, 26 May 2025 15:45:52 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?6LCi5rOi?= <xb@ultrarisc.com>
+To: qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, palmer@dabbelt.com, pbonzini@redhat.com,
+ anup@brainfault.org, anup.patel@wdc.com
+Subject: Re: [PATCH V2] target/riscv/kvm/kvm-cpu: Fixed the issue of resume
+ after QEMU+KVM migration
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
+ 20240625(a75f206e) Copyright (c) 2002-2025 www.mailtech.cn
+ mispb-8cc425bc-7df6-4523-bb46-a48cc1a964e6-ultrarisc.com
+In-Reply-To: <58a08318.d0.196e7eb9068.Coremail.xb@ultrarisc.com>
+References: <58a08318.d0.196e7eb9068.Coremail.xb@ultrarisc.com>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: frK7t2Zvb3Rlcl90eHQ9NTMyNjo4NDA=
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+Message-ID: <7a1f4eee.1a1.1970b8e1ccb.Coremail.xb@ultrarisc.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: AQAAfwDXUNAwHDRoYycFAA--.372W
+X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQAOB2gzxloAJwAAso
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW3Jw
+ CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+ daVFxhVjvjDU=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
+Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
+ helo=ultrarisc.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,168 +72,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
-
-> Markus Armbruster <armbru@redhat.com> writes:
->
-> Markus, sorry for the delay here. I had vacations and holidays, plus a
-> pile of patches to review.
-
-No problem.  Hope you enjoyed your time off!
-
->> Fabiano Rosas <farosas@suse.de> writes:
->>
->>> Add a new migration structure to consolidate the capabilities and
->>> parameters. This structure will be used in place of the s->parameters
->>> and s->capabilities data structures in the next few patches.
->>>
->>> The QAPI migration types now look like this:
->>>
->>> /* options previously known as parameters */
->>
->> Configuration previously known as parameters less the TLS stuff.
->>
->>> { 'struct': 'MigrationConfigBase',
->>>   'data': {
->>>       <parameters>
->>> } }
->>>
->>>
->>> /* for compat with query-migrate-parameters */
->>> { 'struct': 'MigrationParameters',
->>>   'base': 'MigrationConfigBase',
->>>   'data': {
->>>       <TLS options in 'str' format>
->>> } }
->>>
->>> /* for compat with migrate-set-parameters */
->>> { 'struct': 'MigrateSetParameters',
->>>   'base': 'MigrationConfigBase',
->>>   'data': {
->>>       <TLS options in 'StrOrNull' format>
->>> } }
->>
->> Yes, this is the state since PATCH 05.
->>
->>> /* to replace MigrationParameters in the MigrationState */
->>> { 'struct': 'MigrationConfig',
->>>   'base': 'MigrationConfigBase'
->>>   'data': {
->>>     <TLS options in 'str' format>
->>> } }
->>
->> This is new in this patch.
->>
->> Your description doesn't cover optionalness.  Here's my understanding:
->>
->> * MigrationSetParameters has optional members, because
->>   migrate-set-parameters needs that.
->>
->
-> Yes.
->
->> * MigrationParameters would ideally have these members non-optional,
->>   because query-migrate-parameters wants that.
->>
->
-> Yes.
->
->> * But to enable sharing via common base type MigrationConfigBase, we
->>   accept unwanted optional in MigrationParameters and thus
->>   query-migrate-parameters.
->>
->
-> Yes.
->
->> * This doesn't apply to the non-shared members of MigrationParameters,
->>   so you made them non-optional.  These are @tls-creds, @tls-hostname,
->>   @tls-authz.
->>
->
-> Yes.
->
->> * But in MigrationConfig they're optional again, because "empty string
->>   means absent" is silly; we want "NULL means absent".
->>
->
-> Yes. But mostly because MigrationConfig will become the type for the new
-> '*config' argument to migrate/migrate_incoming (patches 12 & 13) and we
-> want to keep all members optional. Otherwise the user would have to pass
-> all ~50 migration options in every migrate command, which is bad IMO.
-
-Got it.
-
->> Correct?
->>
->> Up to here, this enables cleanup of some "empty string means absent"
->> silliness in later patches.
->>
->> The remainder is about unifying capabilities into parameters.  I'd split
->> the patch (but I'm a compulsive patch splitter).
->>
->>> The above keeps the query/set-parameters commands stable. For the
->>> capabilities as well as the options added in the future, we have a
->>> choice of where to put them:
->>>
->>> 1) In MigrationConfigBase, this means that the existing
->>>    query/set-parameters commands will be updated to deal with
->>>    capabilities/new options.
->>>
->>>   { 'struct': 'MigrationConfigBase',
->>>     'data': {
->>>       <parameters>
->>>       <capabilities>
->>>       <new opts>
->>>   } }
->>>
->>>   { 'struct': 'MigrationConfig',
->>>     'base': 'MigrationConfigBase'
->>>     'data': {
->>>       <TLS options in 'str' format>
->>>   } }
->>>
->>> 2) In MigrationConfig, this means that the existing commands will be
->>>    frozen in time.
->>>
->>>   { 'struct': 'MigrationConfigBase',
->>>     'data': {
->>>       <parameters>
->>>   } }
->>>
->>>   { 'struct': 'MigrationConfig',
->>>     'base': 'MigrationConfigBase'
->>>     'data': {
->>>       <TLS options in 'str' format>
->>>       <capabilities>
->>>       <new opts>
->>>   } }
->>>
->>> For now, I've chosen the option 1, all capabilities and new options go
->>> into MigrationConfigBase. This gives the option to keep the existing
->>> commands for as long as we'd like.
->>
->> Perhaps this would be slightly easier to digest for the reader if you
->> talked just about capabilities at first.  Once that's understood,
->> mention we have the same choice for new configuration bits.
->>
->
-> Ok, I'll reorganize, along with the other comments you've made.
->
->>> Note that the query/set capabilities commands will have to go, we can
->>> treat parameters as generic configuration options, but capabilities
->>> are just too different.
->>
->> I think the argument is that migration capabilities are a pointless
->> interface complication.  One mechanism (parameters) is better than two
->> (parameters and capabilities).
->>
->
-> Yes, that's the main point indeed.
-
-Perhaps you can make this point more prominently.
-
->>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-
-[...]
-
+VGhpcyBpcyB2MiBvZiB0aGlzIHBhdGNoIHdpdGggbm8gZnVuY3Rpb25hbCBjaGFuZ2VzOyBhZGRp
+bmcgQ0MuCgotLS0KIHRhcmdldC9yaXNjdi9rdm0va3ZtLWNwdS5jIHwgMjMgKysrKysrKysrKysr
+KysrKysrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCAyMyBpbnNlcnRpb25zKCspCgotLS0gYS90YXJn
+ZXQvcmlzY3Yva3ZtL2t2bS1jcHUuYworKysgYi90YXJnZXQvcmlzY3Yva3ZtL2t2bS1jcHUuYwpA
+QCAtNTc2LDYgKzU3NiwxNCBAQCBzdGF0aWMgaW50IGt2bV9yaXNjdl9nZXRfcmVnc19jb3JlKENQ
+VVN0YXRlICpjcykKICAgICB9CiAgICAgZW52LT5wYyA9IHJlZzsKCisgICAgLyogUmVzdG9yZSBn
+dWVzdCBwcml2aWxlZ2UgbGV2ZWwgYWZ0ZXIgbWlncmF0aW9uICovCisgICAgcmV0ID0ga3ZtX2dl
+dF9vbmVfcmVnKGNzLCBSSVNDVl9DT1JFX1JFRyhlbnYsIG1vZGUpLCAmcmVnKTsKKyAgICBpZiAo
+cmV0KSB7CisgICAgICAgIHJldHVybiByZXQ7CisgICAgfQorICAgIGlmIChyZWcgIT0gMykgewor
+ICAgICAgICBlbnYtPnByaXYgPSByZWc7CisgICAgfQoKICAgICBmb3IgKGkgPSAxOyBpIDwgMzI7
+IGkrKykgewogICAgICAgICB1aW50NjRfdCBpZCA9IGt2bV9yaXNjdl9yZWdfaWRfdWxvbmcoZW52
+LCBLVk1fUkVHX1JJU0NWX0NPUkUsIGkpOwogICAgICAgICByZXQgPSBrdm1fZ2V0X29uZV9yZWco
+Y3MsIGlkLCAmcmVnKTsKQEAgLTYwMSw2ICs2MDksMTUgQEAgc3RhdGljIGludCBrdm1fcmlzY3Zf
+cHV0X3JlZ3NfY29yZShDUFVTdGF0ZSAqY3MpCiAgICAgICAgIHJldHVybiByZXQ7CiAgICAgfQoK
+KyAgICAvKiBTYXZlIGd1ZXN0IHByaXZpbGVnZSBsZXZlbCBiZWZvcmUgbWlncmF0aW9uICovCisg
+ICAgcmVnID0gZW52LT5wcml2OworICAgIGlmIChyZWcgIT0gMykgeworICAgICAgICByZXQgPSBr
+dm1fc2V0X29uZV9yZWcoY3MsIFJJU0NWX0NPUkVfUkVHKGVudiwgbW9kZSksICZyZWcpOworICAg
+ICAgICBpZiAocmV0KSB7CisgICAgICAgICAgICByZXR1cm4gcmV0OworICAgICAgICB9CisgICAg
+fQorCiAgICAgZm9yIChpID0gMTsgaSA8IDMyOyBpKyspIHsKICAgICAgICAgdWludDY0X3QgaWQg
+PSBrdm1fcmlzY3ZfcmVnX2lkX3Vsb25nKGVudiwgS1ZNX1JFR19SSVNDVl9DT1JFLCBpKTsKICAg
+ICAgICAgcmVnID0gZW52LT5ncHJbaV07CkBAIC0xMjg5LDYgKzEzMDYsMTIgQEAgaW50IGt2bV9h
+cmNoX3B1dF9yZWdpc3RlcnMoQ1BVU3RhdGUgKmNzLCBpbnQgbGV2ZWwsIEVycm9yICoqZXJycCkK
+ICAgICAgICAgcmV0dXJuIHJldDsKICAgICB9CgorICAgIC8qIEVuc3VyZSBhbGwgbm9uLWNvcmUg
+MCBDUFVzIGFyZSBydW5uYWJsZSBhZnRlciBtaWdyYXRpb24gKi8KKyAgICBpZiAoKGxldmVsID09
+IEtWTV9QVVRfRlVMTF9TVEFURSkgJiYgKGNzLT5jcHVfaW5kZXggIT0gMCkpIHsKKyAgICAgICAg
+UklTQ1ZDUFUgKmNwdSA9IFJJU0NWX0NQVShjcyk7CisgICAgICAgIHJldCA9IGt2bV9yaXNjdl9z
+eW5jX21wc3RhdGVfdG9fa3ZtKGNwdSwgS1ZNX01QX1NUQVRFX1JVTk5BQkxFKTsKKyAgICAgICAg
+aWYgKHJldCkgeworICAgICAgICAgICAgcmV0dXJuIHJldDsKKyAgICAgICAgfQorICAgIH0KCiAg
+ICAgaWYgKEtWTV9QVVRfUkVTRVRfU1RBVEUgPT0gbGV2ZWwpIHsKICAgICAgICAgUklTQ1ZDUFUg
+KmNwdSA9IFJJU0NWX0NQVShjcyk7CiAgICAgICAgIGlmIChjcy0+Y3B1X2luZGV4ID09IDApIHsK
+LS0gCjIuMzQuMQoKCgoKPiAtLS0tLeWOn+Wni+mCruS7ti0tLS0tCj4g5Y+R5Lu25Lq6OiDosKLm
+s6IgPHhiQHVsdHJhcmlzYy5jb20+Cj4g5Y+R6YCB5pe26Ze0OjIwMjUtMDUtMTkgMTc6NDE6MzYg
+KOaYn+acn+S4gCkKPiDmlLbku7bkuro6IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZwo+IOaKhOmAgTog
+YWxpc3RhaXIuZnJhbmNpc0B3ZGMuY29tLCBwYWxtZXJAZGFiYmVsdC5jb20sIHBib256aW5pQHJl
+ZGhhdC5jb20KPiDkuLvpopg6IFtQQVRDSF0gdGFyZ2V0L3Jpc2N2L2t2bS9rdm0tY3B1OiBGaXhl
+ZCB0aGUgaXNzdWUgb2YgcmVzdW1lIGFmdGVyIFFFTVUrS1ZNIG1pZ3JhdGlvbgo+IAo+IFRoaXMg
+cGF0Y2ggZml4ZXMgdHdvIGNyaXRpY2FsIGlzc3VlcyBpbiBRRU1VIHdpdGggS1ZNOgo+IAo+IDEu
+IFBvc3QtTWlncmF0aW9uIEZhaWx1cmUgaW4gVXNlciBNb2RlOiBXaGVuIFFFTVUgd2l0aCBLVk0g
+aXMgcnVubmluZyBpbiB1c2VyIG1vZGUsIHRoZSBndWVzdCBtYXkgZmFpbCB0byBmdW5jdGlvbiBj
+b3JyZWN0bHkgYWZ0ZXIgbWlncmF0aW9uIGR1ZSB0byBpbmNvcnJlY3QgcHJpdmlsZWdlIHN0YXRl
+IHJlc3RvcmF0aW9uLgo+IAo+IDIuIE11bHRpLUNvcmUgR3Vlc3QgSW5jb25zaXN0ZW5jeTogQWZ0
+ZXIgbWlncmF0aW9uLCBvbmx5IHRoZSBmaXJzdCBDUFUgKGNvcmUgMCkgcmVtYWlucyBmdW5jdGlv
+bmFsLCB3aGlsZSBhbGwgb3RoZXIgY29yZXMgYmVjb21lIHVucmVzcG9uc2l2ZS4gVGhpcyBwYXRj
+aCBlbnN1cmVzIGFsbCBjb3JlcyBhcmUgcHJvcGVybHkgc2V0IHRvIHJ1bm5hYmxlIHN0YXRlIGFm
+dGVyIG1pZ3JhdGlvbi4KPiAKPiBDaGFuZ2VzIGluY2x1ZGU6Cj4gLSBQcm9wZXJseSByZXN0b3Jp
+bmcgZ3Vlc3QgcHJpdmlsZWdlZCBzdGF0ZSBkdXJpbmcgcmVnaXN0ZXIgc3luY2hyb25pemF0aW9u
+Lgo+IC0gQ29ycmVjdGx5IHVwZGF0aW5nIG11bHRpLWNvcmUgc3RhdGUgYWZ0ZXIgbWlncmF0aW9u
+IHRvIGVuc3VyZSBhbGwgY29yZXMgYXJlIGFjdGl2ZS4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBYaWUg
+Qm8gPHhiQHVsdHJhcmlzYy5jb20+Cj4gCj4gLS0tCj4gIHRhcmdldC9yaXNjdi9rdm0va3ZtLWNw
+dS5jIHwgMjMgKysrKysrKysrKysrKysrKysrKysrKysKPiAgMSBmaWxlIGNoYW5nZWQsIDIzIGlu
+c2VydGlvbnMoKykKPiAKPiAtLS0gYS90YXJnZXQvcmlzY3Yva3ZtL2t2bS1jcHUuYwo+ICsrKyBi
+L3RhcmdldC9yaXNjdi9rdm0va3ZtLWNwdS5jCj4gQEAgLTU3Niw2ICs1NzYsMTQgQEAgc3RhdGlj
+IGludCBrdm1fcmlzY3ZfZ2V0X3JlZ3NfY29yZShDUFVTdGF0ZSAqY3MpCj4gICAgICB9Cj4gICAg
+ICBlbnYtPnBjID0gcmVnOwo+IAo+ICsgICAgLyogUmVzdG9yZSBndWVzdCBwcml2aWxlZ2UgbGV2
+ZWwgYWZ0ZXIgbWlncmF0aW9uICovCj4gKyAgICByZXQgPSBrdm1fZ2V0X29uZV9yZWcoY3MsIFJJ
+U0NWX0NPUkVfUkVHKGVudiwgbW9kZSksICZyZWcpOwo+ICsgICAgaWYgKHJldCkgewo+ICsgICAg
+ICAgIHJldHVybiByZXQ7Cj4gKyAgICB9Cj4gKyAgICBpZiAocmVnICE9IDMpIHsKPiArICAgICAg
+ICBlbnYtPnByaXYgPSByZWc7Cj4gKyAgICB9Cj4gCj4gICAgICBmb3IgKGkgPSAxOyBpIDwgMzI7
+IGkrKykgewo+ICAgICAgICAgIHVpbnQ2NF90IGlkID0ga3ZtX3Jpc2N2X3JlZ19pZF91bG9uZyhl
+bnYsIEtWTV9SRUdfUklTQ1ZfQ09SRSwgaSk7Cj4gICAgICAgICAgcmV0ID0ga3ZtX2dldF9vbmVf
+cmVnKGNzLCBpZCwgJnJlZyk7Cj4gQEAgLTYwMSw2ICs2MDksMTUgQEAgc3RhdGljIGludCBrdm1f
+cmlzY3ZfcHV0X3JlZ3NfY29yZShDUFVTdGF0ZSAqY3MpCj4gICAgICAgICAgcmV0dXJuIHJldDsK
+PiAgICAgIH0KPiAKPiArICAgIC8qIFNhdmUgZ3Vlc3QgcHJpdmlsZWdlIGxldmVsIGJlZm9yZSBt
+aWdyYXRpb24gKi8KPiArICAgIHJlZyA9IGVudi0+cHJpdjsKPiArICAgIGlmIChyZWcgIT0gMykg
+ewo+ICsgICAgICAgIHJldCA9IGt2bV9zZXRfb25lX3JlZyhjcywgUklTQ1ZfQ09SRV9SRUcoZW52
+LCBtb2RlKSwgJnJlZyk7Cj4gKyAgICAgICAgaWYgKHJldCkgewo+ICsgICAgICAgICAgICByZXR1
+cm4gcmV0Owo+ICsgICAgICAgIH0KPiArICAgIH0KPiArCj4gICAgICBmb3IgKGkgPSAxOyBpIDwg
+MzI7IGkrKykgewo+ICAgICAgICAgIHVpbnQ2NF90IGlkID0ga3ZtX3Jpc2N2X3JlZ19pZF91bG9u
+ZyhlbnYsIEtWTV9SRUdfUklTQ1ZfQ09SRSwgaSk7Cj4gICAgICAgICAgcmVnID0gZW52LT5ncHJb
+aV07Cj4gQEAgLTEyODksNiArMTMwNiwxMiBAQCBpbnQga3ZtX2FyY2hfcHV0X3JlZ2lzdGVycyhD
+UFVTdGF0ZSAqY3MsIGludCBsZXZlbCwgRXJyb3IgKiplcnJwKQo+ICAgICAgICAgIHJldHVybiBy
+ZXQ7Cj4gICAgICB9Cj4gCj4gKyAgICAvKiBFbnN1cmUgYWxsIG5vbi1jb3JlIDAgQ1BVcyBhcmUg
+cnVubmFibGUgYWZ0ZXIgbWlncmF0aW9uICovCj4gKyAgICBpZiAoKGxldmVsID09IEtWTV9QVVRf
+RlVMTF9TVEFURSkgJiYgKGNzLT5jcHVfaW5kZXggIT0gMCkpIHsKPiArICAgICAgICBSSVNDVkNQ
+VSAqY3B1ID0gUklTQ1ZfQ1BVKGNzKTsKPiArICAgICAgICByZXQgPSBrdm1fcmlzY3Zfc3luY19t
+cHN0YXRlX3RvX2t2bShjcHUsIEtWTV9NUF9TVEFURV9SVU5OQUJMRSk7Cj4gKyAgICAgICAgaWYg
+KHJldCkgewo+ICsgICAgICAgICAgICByZXR1cm4gcmV0Owo+ICsgICAgICAgIH0KPiArICAgIH0K
+PiAKPiAgICAgIGlmIChLVk1fUFVUX1JFU0VUX1NUQVRFID09IGxldmVsKSB7Cj4gICAgICAgICAg
+UklTQ1ZDUFUgKmNwdSA9IFJJU0NWX0NQVShjcyk7Cj4gICAgICAgICAgaWYgKGNzLT5jcHVfaW5k
+ZXggPT0gMCkgewo+IC0tIAo+IDIuMzQuMQo+IAo+IF9fX19fX19fX19fX19fX19fX19fX193d3cu
+dWx0cmFyaXNjLmNvbQo+IOmHjeimgeaPkOekuu+8muacrOmCruS7tuWMheaLrOmZhOS7tueahOWG
+heWuueaYr+WPl+azleW+i+S/neaKpOeahOS/neWvhuS/oeaBr++8jOWmguaenOaCqOS4jeaYr+aM
+h+WumuaUtuS7tuS6uu+8jOivt+eri+WNs+WwhuacrOmCruS7tuWIoOmZpO+8jOazleW+i+emgeat
+ouS7u+S9lemdnuazleeahOaKq+mcsuOAgeWkjeWItuOAgeS8oOaSreaIluS7peS7u+S9leaWueW8
+j+S9v+eUqOacrOmCruS7tuOAguacrOmCruS7tuS4reWMheWQq+eahOaEj+ingeOAgeW7uuiuruaY
+r+WfuuS6juaIluWPl+WIsOaIkeaWueihqOi+vuWSjOWumuS5ieeahOadoeasvuWPiuadoeS7tuea
+hOmZkOWumu+8jOWmguaXoOaIkeaWueeahOato+W8j+S5pumdoua+hOa4heaIluaOiOadg++8jOS4
+jeWPr+iiq+WNleeLrOS9nOS4uuS7u+S9leaDheW9ouS4i+eahOivgeaNruaIluS+neaNruOAguaE
+n+iwouaCqOeahOeQhuino+S4jumFjeWQiOOAgueJiOadg+aJgOacieOAgklNUE9SVEFOVCBOT1RJ
+Q0U6IFRoaXMgZW1haWwsIGluY2x1ZGluZyBpdHMgYXR0YWNobWVudCBpZiBhbnksIGlzIGNvbmZp
+ZGVudGlhbC4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVudCwgcGxlYXNlIGRl
+bGV0ZSBpdCBmcm9tIHlvdXIgY29tcHV0ZXIgaW1tZWRpYXRlbHkuIEFueSBkaXNjbG9zdXJlLCBj
+b3B5aW5nLCBvciBkaXN0cmlidXRpb24gb2YgdGhpcyBtZXNzYWdlLCBvciB0YWtpbmcgb2YgYW55
+IGFjdGlvbiBiYXNlZCBvbiBpdCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiAgQW55IG9waW5pb25z
+IGFuZCBzdWdnZXN0aW9ucyBjb250YWluZWQgaW4gdGhpcyBlbWFpbCBhcmUgc3ViamVjdCB0byB0
+aGUgdGVybXMgYW5kIGNvbmRpdGlvbnMgZXhwcmVzc2VkIGFuZCBkZWZpbmVkIGJ5IHVzIGFuZCBz
+aG91bGQgbm90IGJlIHJlbGllZCB1cG9uIHVuY29uZGl0aW9uYWxseSB1bmRlciBhbnkgY2lyY3Vt
+c3RhbmNlcyB1bmxlc3MgdGhleSBhcmUgY29uZmlybWVkIGluIG9mZmljaWFsIHdyaXR0ZW4gY2xh
+cmlmaWNhdGlvbiBvciBhdXRob3JpemF0aW9uIGZyb20gdXMuICBUaGFuayB5b3UgZm9yIHlvdXIg
+dW5kZXJzdGFuZGluZyBhbmQgY29vcGVyYXRpb24uQWxsIHJpZ2h0cyByZXNlcnZlZC4KDQoNCl9f
+X19fX19fX19fX19fX19fX19fX193d3cudWx0cmFyaXNjLmNvbQ0K6YeN6KaB5o+Q56S677ya5pys
+6YKu5Lu25YyF5ous6ZmE5Lu255qE5YaF5a655piv5Y+X5rOV5b6L5L+d5oqk55qE5L+d5a+G5L+h
+5oGv77yM5aaC5p6c5oKo5LiN5piv5oyH5a6a5pS25Lu25Lq677yM6K+356uL5Y2z5bCG5pys6YKu
+5Lu25Yig6Zmk77yM5rOV5b6L56aB5q2i5Lu75L2V6Z2e5rOV55qE5oqr6Zyy44CB5aSN5Yi244CB
+5Lyg5pKt5oiW5Lul5Lu75L2V5pa55byP5L2/55So5pys6YKu5Lu244CC5pys6YKu5Lu25Lit5YyF
+5ZCr55qE5oSP6KeB44CB5bu66K6u5piv5Z+65LqO5oiW5Y+X5Yiw5oiR5pa56KGo6L6+5ZKM5a6a
+5LmJ55qE5p2h5qy+5Y+K5p2h5Lu255qE6ZmQ5a6a77yM5aaC5peg5oiR5pa555qE5q2j5byP5Lmm
+6Z2i5r6E5riF5oiW5o6I5p2D77yM5LiN5Y+v6KKr5Y2V54us5L2c5Li65Lu75L2V5oOF5b2i5LiL
+55qE6K+B5o2u5oiW5L6d5o2u44CC5oSf6LCi5oKo55qE55CG6Kej5LiO6YWN5ZCI44CC54mI5p2D
+5omA5pyJ44CCSU1QT1JUQU5UIE5PVElDRTogVGhpcyBlbWFpbCwgaW5jbHVkaW5nIGl0cyBhdHRh
+Y2htZW50IGlmIGFueSwgaXMgY29uZmlkZW50aWFsLiBJZiB5b3UgYXJlIG5vdCB0aGUgaW50ZW5k
+ZWQgcmVjaXBpZW50LCBwbGVhc2UgZGVsZXRlIGl0IGZyb20geW91ciBjb21wdXRlciBpbW1lZGlh
+dGVseS4gQW55IGRpc2Nsb3N1cmUsIGNvcHlpbmcsIG9yIGRpc3RyaWJ1dGlvbiBvZiB0aGlzIG1l
+c3NhZ2UsIG9yIHRha2luZyBvZiBhbnkgYWN0aW9uIGJhc2VkIG9uIGl0IGlzIHN0cmljdGx5IHBy
+b2hpYml0ZWQuICBBbnkgb3BpbmlvbnMgYW5kIHN1Z2dlc3Rpb25zIGNvbnRhaW5lZCBpbiB0aGlz
+IGVtYWlsIGFyZSBzdWJqZWN0IHRvIHRoZSB0ZXJtcyBhbmQgY29uZGl0aW9ucyBleHByZXNzZWQg
+YW5kIGRlZmluZWQgYnkgdXMgYW5kIHNob3VsZCBub3QgYmUgcmVsaWVkIHVwb24gdW5jb25kaXRp
+b25hbGx5IHVuZGVyIGFueSBjaXJjdW1zdGFuY2VzIHVubGVzcyB0aGV5IGFyZSBjb25maXJtZWQg
+aW4gb2ZmaWNpYWwgd3JpdHRlbiBjbGFyaWZpY2F0aW9uIG9yIGF1dGhvcml6YXRpb24gZnJvbSB1
+cy4gIFRoYW5rIHlvdSBmb3IgeW91ciB1bmRlcnN0YW5kaW5nIGFuZCBjb29wZXJhdGlvbi5BbGwg
+cmlnaHRzIHJlc2VydmVkLg==
 
