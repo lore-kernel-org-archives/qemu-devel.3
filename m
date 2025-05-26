@@ -4,105 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4E97C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 10:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA30DC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 10:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJUxL-0007rf-HS; Mon, 26 May 2025 06:21:19 -0400
+	id 1uJUyG-0000j7-IJ; Mon, 26 May 2025 06:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uJUxJ-0007rJ-SE
- for qemu-devel@nongnu.org; Mon, 26 May 2025 06:21:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uJUyF-0000ir-9u
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 06:22:15 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uJUxG-0002Ln-T7
- for qemu-devel@nongnu.org; Mon, 26 May 2025 06:21:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748254872;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=D2r2NJt7gr1iPEVYKtZXa/2g3jnOxC9qXFGu7EwA7rI=;
- b=Zl1u63PLI9xPO6OKW9IPNwrdvl1AcUzuZ+hpAMQXUlabc6WERu2f6ruBKwPnuJEpgKoKT0
- iRgOW0DM22FjeBjxqPWX/4L2NOUs2+9DJ31VD+0Yj2oYWF5WtA5GU2RvUJ0FUKdrCi/87K
- yxNJbM4dEw475QGX1HLTQctg5eJfRfU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-_baR-G7kPNKQZMr1PgA1gQ-1; Mon, 26 May 2025 06:21:10 -0400
-X-MC-Unique: _baR-G7kPNKQZMr1PgA1gQ-1
-X-Mimecast-MFC-AGG-ID: _baR-G7kPNKQZMr1PgA1gQ_1748254869
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-442cdf07ad9so11393115e9.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 03:21:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748254869; x=1748859669;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D2r2NJt7gr1iPEVYKtZXa/2g3jnOxC9qXFGu7EwA7rI=;
- b=Uo6bAm//eUPmRANO9PJV7bHZo0guULNkxrNW1o86y49AWFLDZHaHH+3o9u1j5D56o4
- tWDylzJjyciNv7HEK3TrTwIizhM1EZ2HgcTlANtuCOSFVgFR4bymjQQai/BOTyFsAcvO
- 4Spq5a8JwFCWmnJQJ0FJ4j9HF9a02kK4o1f9B2HLy8uQ8yhpig3/+4qIS4snFQzowzLc
- hy7b+sAwCI0QtdjLYjrdk57tGeHtOAjQme8XZ6CRTgoVurEbujRxQd4MkVKknFm8cvR0
- Xo+8IyC+8rlJUX1NRyL54h9AaW6fnSOldu4w9oWu1uaU25D4WxzeevMYct3GDteB8CnU
- Rh9w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/whXqV86xYogPB1jnD7Z+npg42YVRRh9hU4bI5zYiMhX+A256tr62Tq0sNqQVipfNS66/fVjk54RN@nongnu.org
-X-Gm-Message-State: AOJu0YwrgesIVioPcBrHGs5cRv+icALTHj33+UrysA2k8jIMuub4HBOX
- BP9Dl2O5q4wDQy53bLee/p8l24AsujNIMR/Npz+EyoXdvb65BkRBTfU1zGEn06EfKeCkE9HDUnK
- QWcWRKFGyjsBr0c/B8XUo6bfycB61+OJa04/8yy+ss3mc/Qx5gz0/jjVG
-X-Gm-Gg: ASbGncukahYrqIZj8no0xaRdF2FQntIE8Zh15q6GZDR9syXacL90wSR2pZevrNy95QT
- SsOCMf0XQ+i6rwcdEg9BIQuaS/HpUtQr7ctV8mod5hsSzlGpAOP9VvPmja0pZiuhB2z3lakBmUE
- wKWIQ+CDWcm006lqdzffEWb9a8uJNzz9cJf+hsv4QTrcrqc02f3V+WkrdK6ab6RaRAlGiOfjTKD
- X0vDYHH0+15h6IUmCIdhqBDGHjLQxKmxXTPpmtl/64hc79ozkYMx5tZiWWMCxecZ4ub+oYhL/K6
- foab8FBFPukxSZxAuhvnhSQeqtV1UzlLXZlLO2H126ak/qdM8XWNgOEcUbY=
-X-Received: by 2002:a05:600c:64ca:b0:43d:46de:b0eb with SMTP id
- 5b1f17b1804b1-44c935dcaecmr69828615e9.12.1748254869120; 
- Mon, 26 May 2025 03:21:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaWPNtZCgdd1aWK94g/ddOVQ1pYnNiUS+ZPBOEeb6YcvsVZpbsL2I3t+/QK/xfaOiCk9oqRw==
-X-Received: by 2002:a05:600c:64ca:b0:43d:46de:b0eb with SMTP id
- 5b1f17b1804b1-44c935dcaecmr69828295e9.12.1748254868701; 
- Mon, 26 May 2025 03:21:08 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442ebd8b9absm215122685e9.1.2025.05.26.03.21.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 03:21:08 -0700 (PDT)
-Message-ID: <2fe04c2b-d631-4ea5-9703-d44e50e13016@redhat.com>
-Date: Mon, 26 May 2025 12:21:06 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uJUyC-0002Q3-QX
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 06:22:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748254933; x=1779790933;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=L3eOz5qtm9KR+K7vRCGqwaItQHT65Ctnwfw88SnKogM=;
+ b=b8vPPG0EcjeVMsg64kDUF2fEnf1rTnUIIsOQzBnyzYaIEcbs5XdY3+/b
+ +6KUVHXogz56o0aEXVZ00LtY2EXIkGXm4aXoDa3xWLMcy7DIHwlYr6Qym
+ Up/Ir55xvYB+8pVtx9ahvnvM85C/Zv5hikQ0xdgUnroaMnLpgm5NLoltV
+ sCCwOnT/KS1UyUcF8yAx7Wbia9TjYzCITLvmOHZ8kZ45N2mmKdkdWRB3X
+ tYjEgy7tXVC00hOWlLDw7KW/ReYnWhSPEyYspXIlKU4C8u85GER0QklRm
+ B9fdBm4JYalCecPcjHehn0enDGPfqZhb90ThaPQ4KF0zSiFzAAfWgGZ6C A==;
+X-CSE-ConnectionGUID: kqzO1UGtR0Wsu0i/Wo9fyg==
+X-CSE-MsgGUID: Mnm1M/o2R8SdmhII1m2HNg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11444"; a="67635525"
+X-IronPort-AV: E=Sophos;i="6.15,315,1739865600"; d="scan'208";a="67635525"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 May 2025 03:22:09 -0700
+X-CSE-ConnectionGUID: oQ/RNkOrRC6GSa5JhBwIPQ==
+X-CSE-MsgGUID: 26v7HLneQoCcSP81N4ptDA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,315,1739865600"; d="scan'208";a="147076354"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 May 2025 03:22:09 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Mon, 26 May 2025 03:22:08 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Mon, 26 May 2025 03:22:08 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (40.107.236.86)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.55; Mon, 26 May 2025 03:22:08 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=y9+RVlKeLmMooyQZiHTkwwbp6gC/mYHpHv9JvRYn7emheIkyzZLe41OCwKC5nCW1F5RTFjI3xTvbnwgG1Boh2yT/NRh9KjHfjFdqtqmaM3pxeSG0i2SknkRn3Bdcq4Wcvpz07J4ENoOKpvO/l3+P0wC3zrbilUpQq/KTBZg0ZCinW4hKZ/HMf5l9hVTnZI9HChtvPK0bppoLG5jwiAefSj6wgL+jT5xAbjTQTT1e93LCdcAGcRN8MMEOwIBsQ7bm2ryulWtm8En8gINZjD6wqZJ3RyucJXRqWn2uD4tagE96UiducnRfFs1B9tIYuo8ZiOI30J88YJ+XuaOmQLVLVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aLP54ku+DeeMcK05tHW2tqfeZdJhXvC3eCcKZ4u+INI=;
+ b=G5dR62GeT0aE/kbSXDaPU9koy5JTHJWkMyDyI0cQrSWqYnaWm3DJIsYp0dgQ9vXWpfPa8hfeKFHZhbt9lAi4XZSbHMNOhau3yNQ5VkB0ZDA1rTHfsOkP5zjaMC6EwfVfmH7pHb1EI+3j0IHZECvWDtlLs/XlkL46nICRXhPs8cAvsV1/PvuX/jEI90QNl7EMBxUhdE7zG4hgyWuzg23K52CpuzGhII5ylm2N9Cd52LbS4GUuud/EXTayn7r02yuWERCsxxVmyF9ityGeMxB5RVaLqGCgcX8O6AYZQZmXfOB5pWbeQsuqLVC3xUzkmjluNMY5ot/aGfAO2p0tsEUJZg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ CH3PR11MB8315.namprd11.prod.outlook.com (2603:10b6:610:17e::8) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8769.24; Mon, 26 May 2025 10:22:06 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.8769.022; Mon, 26 May 2025
+ 10:22:06 +0000
+Message-ID: <b7bc6ce6-fdf4-43f7-b4b3-de0b3924f0fc@intel.com>
+Date: Mon, 26 May 2025 18:21:55 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/22] ACPI PCI Hotplug support on ARM
+Subject: Re: [PATCH v5 03/10] memory: Unify the definiton of
+ ReplayRamPopulate() and ReplayRamDiscard()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "David
+ Hildenbrand" <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, Peter Xu
+ <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>, Baolu Lu
+ <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>, Xu Yilun
+ <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+References: <20250520102856.132417-1-chenyi.qiang@intel.com>
+ <20250520102856.132417-4-chenyi.qiang@intel.com>
+ <dca6ed89-e704-44ce-b9f1-deb3c6dd8dc3@linaro.org>
 Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com,
- shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org
-References: <20250514170431.2786231-1-eric.auger@redhat.com>
- <6b7b0e20-546b-4b72-9489-4468fafb76ba@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <6b7b0e20-546b-4b72-9489-4468fafb76ba@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+In-Reply-To: <dca6ed89-e704-44ce-b9f1-deb3c6dd8dc3@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
+X-ClientProxiedBy: KL1P15301CA0056.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:820:3d::9) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|CH3PR11MB8315:EE_
+X-MS-Office365-Filtering-Correlation-Id: 74aa65ad-0391-4053-d3c1-08dd9c3f29fe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eVRUNnFWb2VTT1pHb3RLZkJKMnVtd09Ca2FhcnZ4YjU0ck95WXlJeXFGN2lq?=
+ =?utf-8?B?OEJWdC9yMWIrZk9XSzR3dE0xU0RhTElJM3crR1A1UjBPQXZtTlQ1a0l3S1Rv?=
+ =?utf-8?B?ZHBZZHZTclRSN3JMcEcvZEJ6SzI0ZjdYeXNCejV1TDJBa1JzWUNocFBXRkxu?=
+ =?utf-8?B?OVIrbjAzaVZ5R01LUm1OQVlSR1pkU042NHJYMldmZ05ISW0zR3hIYnBtSk45?=
+ =?utf-8?B?ZzNBd01iWXhBbHFXbEl3d2FES3NsZWc4d1lBUXZwVUM1RFoyOU1VMnU3aEtl?=
+ =?utf-8?B?NXgwUnE3eEtlN2NZWTV5bDZuRk1lQnNod2dTTTBxVHRUVnBzanVRRWxMUzRB?=
+ =?utf-8?B?Y2tvczAxYVo3Y2Q1ekE4NkxYQjduWGF3c0o1eEc2WTRLUko0dllPU2thK0tw?=
+ =?utf-8?B?bUJ1Z1hEenBlWVJDYThtQXRlZ1EzUGdxRDJWWTFUOEpEbGV1K3p0bktxdEJ5?=
+ =?utf-8?B?QUlnM2N6SERjT1VNbW1Iem5vb2tFTmJWdFhMNmNwWFBXdkRrOWdiTytZSjRn?=
+ =?utf-8?B?R25nT2R0QWFDU0lzRUpMYTl6R1IwcGpZeXpOYTBaUUkzKzJIcGlGTmdBUUUv?=
+ =?utf-8?B?YjQwZFVEb3BsbUJTNElMemRFcUM4clljV000S2NQOEZGamRPaDhVVGV0QTcy?=
+ =?utf-8?B?RDdGYXY0U0tMdnkzTy8zMityL0xleU1nQS9EVllWRVJnQXZrdFZjejRDQ2Qy?=
+ =?utf-8?B?dmhPR3ZYV2VHSFg4UmhDbjNKS1c5OHZJbHJXQjhSbUlyUldjSHlMODc5dXpz?=
+ =?utf-8?B?VHdxN0tlQ0V2YkNvMXNsRGxhV3VHZUppM3VHd29iMkR5VlRLdnJ6dEJuWTdN?=
+ =?utf-8?B?UGxHMGhReHk5TXk0Wi8xQytRbU5BcjNoYUIrSVVIbjdrK2J6OXBtYXhJUkwr?=
+ =?utf-8?B?cDl1NFdrWklWUEdFbHZZRWRVK3hWbDhtMFhnakhaVmY2bVl5NXVVTTE1bk5h?=
+ =?utf-8?B?NkUwZzZiZVB6ZlQwNGNTdVN4TjAvQk9DU0JvWVc5cDAvOHdkc25HSHpLVEJw?=
+ =?utf-8?B?SkdPUEZWTVNKUmdqT3B6NUZ4aUladnp2d0duM21rb0I5SFJRc0tpZVlWUFM2?=
+ =?utf-8?B?NE9pd2hxdVFXaG9tcWhPd3VTTnJqeDBPcENhbEpSTDVIR09KVjMvOUg3dVZS?=
+ =?utf-8?B?RWwzZ01KVUFuR1JWUVg5b3NCRHJZM1k3NHZ3N2dkZ3lSeDg5NVhWZUwyaWFx?=
+ =?utf-8?B?QkQ1V0dCVGdraFc1M2lVY2h2Wk9qa2haaG5LcVowNDRBYld5L0Q0bGZBQlJv?=
+ =?utf-8?B?TTE1eXBsZVIrNTQrNlIzcVE4OU1hSzhXeVpDY3VjcXk1MnVoSEFwRlcrSVlx?=
+ =?utf-8?B?WVN3dFpzaVdnbDNhNllSNzYyTWprMTJIT2ZLOU5pWDRtM1J0aWwzYnkvMkla?=
+ =?utf-8?B?VjJhVU9INnZzT0JJcmJ5OThHWEF2U2p6ZnI1aDhDdHJKVytuT05oYWVLS3VC?=
+ =?utf-8?B?U1AySnBzc3JzdFNpWE1VeVd1ZTVXc1NZV1JYNmxZSkVxUTI3S01Yc2hHMlkx?=
+ =?utf-8?B?Z3NJTk1zYmlNSFM0NDFxcEovbVRaTlJpbkczSjNwSE9yM0wvUDZRRHkxaSs5?=
+ =?utf-8?B?YUMvWVg4VHJTRGdlbjRvazFEMTFRUDcwUVVkcll2WkNHek1JeDZLamw1ajRJ?=
+ =?utf-8?B?R1JnRVBwZHAzSy9WZkorNTNsVUJBeXhxbHZzV05nU1M1OXprcDBaREFHYXo4?=
+ =?utf-8?B?dzRFKzdaVFBlODJuRzVRZ0d1RHBQaEk0bnI5aWZmdW9rb1pWclFPYWFVeGVp?=
+ =?utf-8?B?OENZZFlMMDlqQlRuVC9WNSsvWTRSemN0NXpZdmw4Zi9vSUhXUUxaTm9JZktk?=
+ =?utf-8?B?ZVhlZUw5MXR3b1g4Tm8xZjczYjBpYmY0cWx1OHdzdU1CcGlnRXlPck9uMjEz?=
+ =?utf-8?B?QUhLVmtSaExaTVFiNWhXWTl5c25ZTEt0R2xyREFNeWl2UVZ4NlNJRklhbGN3?=
+ =?utf-8?Q?/8PZgOBspPM=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(7416014)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TjFSa2pMZ1ZSdGM1RTdDbUV0b2o0UW9Jc2dQY3lqOThvY3NEa3RocDdvQ0VJ?=
+ =?utf-8?B?ZC9Tdk5kMHVDNjI2TURGVG1NaHBjRWJEcUxjY2hFK2laY1pwK2w3UCtMTmFO?=
+ =?utf-8?B?V2FObVBLd2VmTnVteDc1b0ZFZXVQZVV3c3loYjFWVlJNTXRFZXhkTFFiT0hS?=
+ =?utf-8?B?QUh2QmJ4R3NXVjZZWExlTFV6cUlxTDZJYU53MXArblo1YUhJaXdqbUtLWWNm?=
+ =?utf-8?B?aTZpV29qUDhvYTVTbTk1anJleERNZWtnSUxzdlAyNFFkRVE3UHJZbWY5T1l1?=
+ =?utf-8?B?S3pzTFVyMzJyKzhZOEZKUG5URFhzaW5vUFlZVitnQUljaTljd0NzdGx4SHNV?=
+ =?utf-8?B?NkJUbVBUcmVQWVZwOEdvQTIzd0hrVTh0VTUyNDNkWXBOR1JYUzR4ZnV6N056?=
+ =?utf-8?B?clBIS3Vuc3pHZkliZjd5WEVBYWVtd3V6MC9RZE1qZ25nbDJ3R0F6QW9PNWNa?=
+ =?utf-8?B?MjJPeFYxVnJScW1sMVJ0cFk5Y2NTaCtZK0daaEM1c1hYbGNwQUh6bDdoVEdE?=
+ =?utf-8?B?cEdVZEhOMTZzQTBISEJQNGFBOWp3QndzWDNJTSt0VTNjczJZQ2g3TW5zSFhp?=
+ =?utf-8?B?aHBLWUdHKzA1R3pGZTNTNmpTQlhGb0tnNE43UC9laGJZNW45YWdBNVlGSXZx?=
+ =?utf-8?B?dkF3cVA1alpUODZCdTNuL1VrYm52QmxjbjdqUjBqYTZOaEdFRk50a1dTWlFS?=
+ =?utf-8?B?RDYzZWptbGhFYXUvQW9GWVVtdVBGTkphYjNIVStoc0N1QmdpSWJkblZyWGdL?=
+ =?utf-8?B?eTlsM2UxWFBzKyttUFN1WGpaZWZLQXBELzIwSXI3Ryt6YTgyamg5NDF2TjBp?=
+ =?utf-8?B?T0J5djBKUUxyYituemo5WFNDR1dnUFNvRC9zSEtEa1pQajJxUHhQRGh3N2hm?=
+ =?utf-8?B?ZWxUZVdoSVAvY1BxYlpxY2JNL1RudVcvY0d0NFZ2eUM5YUdPMk5EcDNXcmRR?=
+ =?utf-8?B?T1pBVm43ZnZOenNNTnF0QmY2QlRhekExRFRKM2VRbGliSUlxRm45L1lVSXlC?=
+ =?utf-8?B?a2JEbDNzTU1tSGFWZEZ6MHlxeWZrZStXTDJGK3lNOVZrZE8zQmFITThEWVJQ?=
+ =?utf-8?B?SER6bnVHQklIVTdjVDk2bXdGVnhVQ1Fsa0Zhb3UvSlZaVmNpKzFXVWcrZm5u?=
+ =?utf-8?B?WXd2eG9yRnZPRlVWS2ppZUF4dEZsaGtlVENzT3RSQjl1UVdEQU93VFZJV0Z3?=
+ =?utf-8?B?U1BQUEdMbjgxRENJNTZURmtNSCtJUTY3UkNnclZuNDl4SVRSb0t3Q2tUVFFB?=
+ =?utf-8?B?VWQrM1VpMkJGRTBML1VSamZZWGdrQ0FxVE8wUFRzaXR6K1ZwK2N6YklmUUJE?=
+ =?utf-8?B?eEw2Y3ZGVlpiTXVWcTYxelhQTThFdWpsR1puY3lxbkM5K2RLeWEzcnhheGlK?=
+ =?utf-8?B?WWVBbDdWOGUxN1JpZW9jLzNLZnRsRHl0UHFIYWdkY2VheDNiWVFDblorNWVt?=
+ =?utf-8?B?M1Z2eXlUYVgyKzBSZjBHLzg0SEhEZVhyMUoyL0Z6aW9KVmNlK09nUzd5WGNq?=
+ =?utf-8?B?d09DN3dIT05aKys1clBpa3V4MmlrSkZyL3lqa0VrUVhCc0s4dlFnZjBBV3Aw?=
+ =?utf-8?B?b3JJTlRnWE5naHlqSWh2SlJ6bFcwWktXZHdmSFVrSUpkMWhEUkU4Q0pVbFRa?=
+ =?utf-8?B?ZWk4Z2txaHpqS1BPRElxOWtIaXdZREQzUEcyM2Ura0lRTHJNWG9ucjBtQWM2?=
+ =?utf-8?B?NG1pcUxZOEtScVZwZ1l4eUNlMUxFa1Q0bkNSN1BlWU5lTHJIWGdUaEdsK3hm?=
+ =?utf-8?B?SHRyY1ZIRXNzYVVOVWpNWGcydDNKUGlyT1J6U2RKczJtZER0eHgwWTFSa0Qx?=
+ =?utf-8?B?a3N0UXY3Vm1vVDlYdFRvOUprODRIclFVRDQ5VG5KME9OMld3akZDZFZ2dzk4?=
+ =?utf-8?B?ZFJibEVPNnBiWjdIUXNld3poVzBmb2RnSytVR3NjdFBnSXppREdDbXliK2d5?=
+ =?utf-8?B?cWxGM3R1OXJhTUp3enMrSjdOL2M2bWM4TDhTVzhrRExhUmlZQ3EyWkxUMDd0?=
+ =?utf-8?B?N3QvenVlZ3UxYXc1UjZkN1ltNytJbjJVZmVIblZDL2dpbVBoclRqdk1xTXhZ?=
+ =?utf-8?B?ZklEdDdpMkpaZlhmRjE4Q3B0RE9VQnVGYmFYaTB6Q3hJZkpzc3JFTVZDVHNr?=
+ =?utf-8?B?NFVWa1dpU0hpR29Xa25tNEVTd0d1cWJ1c1ZXK3RlSnJSSmhyMWEyeml5WENL?=
+ =?utf-8?B?Vmc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 74aa65ad-0391-4053-d3c1-08dd9c3f29fe
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2025 10:22:06.1229 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6yJgtO8JqGx6OufqyFe8krXuy5OpJsAW0OM5j3za68D0a9b6n9lswJO0yj7j8Mefvniw4hKbcip06UxkehAOZQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8315
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.10;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,145 +216,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gustavo,
-
-On 5/26/25 7:55 AM, Gustavo Romero wrote:
-> Hi Eric,
->
-> On 5/14/25 14:00, Eric Auger wrote:
->> This series enables ACPI PCI hotplug/hotunplug on ARM
->> and makes it default for 10.1 machine type. This aligns with
->> x86 q35 machine. Expected benefits should be similar to
->> those listed in [1].
->>
->> It is still possible to disable it using a virt machine
->> option: virt,acpi-pcihp=off and restore the legacy behavior.
->>
->> The infrastructure used in x86 is heavily reused and a
->> huge part of the series consists in moving code from
->> hw/i386/acpi-build.c to a generic place and slightly
->> adapting it to make it usable on ARM. The DSDT table is
->> augmented to support ACPI PCI hotplug elements.
->>
->> On ARM we use use a GED event to notify the OS about
->> hotplug events.
->>
->> I have not noticed any tests/qtest/bios-tables-test failures
->> neither on x86 nor ARM. x86 DSDT table has not changed.
->> ARM DSDT table definitively has but there are no tests
->> impacted. ARM misses hotplug tests that do exist on x86. This
->> most probably should be considered in the future.
->
-> I've just posted a v1 for a acpi-pcihp=on test:
->
-> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05824.html
->
-> The odd thing is that I noticed failures in the existing aarch64
-> acpi tests in tests/qtest/bios-tables-test. At least the rename
-> of the variable 'CTRL' to 'Local0' in the _OSC method should cause
-> a mismatch against the current base DSDT? So I had to handle it
-> via patches 1/5, 2/5, and 3/5. The diff is in the 3/5 commit body.
-
-Thank you for contributing those tests.
-
-Hum I think my mistake was to have executed the existing tests in KVM
-acceleration mode only using
-QTEST_QEMU_BINARY=qemu-system-aarch64 tests/qtest/bios-tables-test
-direct execution.
-
-The failing tests belong to the TCG category I think.
-
-I will review your tests and if you allow me I may need to include
-patches 1 and 3 in my series to prevent existing tests from failing, of
-course with all your credits.
-
-Thank you again for reporting the issue!
-
-Eric
 
 
+On 5/26/2025 5:35 PM, Philippe Mathieu-Daudé wrote:
+> Hi Chenyi Qiang,
+> 
+> On 20/5/25 12:28, Chenyi Qiang wrote:
+>> Update ReplayRamDiscard() function to return the result and unify the
+>> ReplayRamPopulate() and ReplayRamDiscard() to ReplayRamDiscardState() at
+>> the same time due to their identical definitions. This unification
+>> simplifies related structures, such as VirtIOMEMReplayData, which makes
+>> it cleaner.
+>>
+>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>> ---
+>> Changes in v5:
+>>      - Rename ReplayRamStateChange to ReplayRamDiscardState (David)
+>>      - return data->fn(s, data->opaque) instead of 0 in
+>>        virtio_mem_rdm_replay_discarded_cb(). (Alexey)
+>>
+>> Changes in v4:
+>>      - Modify the commit message. We won't use Replay() operation when
+>>        doing the attribute change like v3.
+>>
+>> Changes in v3:
+>>      - Newly added.
+>> ---
+>>   hw/virtio/virtio-mem.c  | 21 ++++++++++-----------
+>>   include/system/memory.h | 36 +++++++++++++++++++-----------------
+>>   migration/ram.c         |  5 +++--
+>>   system/memory.c         | 12 ++++++------
+>>   4 files changed, 38 insertions(+), 36 deletions(-)
+> 
+> 
+>> diff --git a/include/system/memory.h b/include/system/memory.h
+>> index 896948deb1..83b28551c4 100644
+>> --- a/include/system/memory.h
+>> +++ b/include/system/memory.h
+>> @@ -575,8 +575,8 @@ static inline void
+>> ram_discard_listener_init(RamDiscardListener *rdl,
+>>       rdl->double_discard_supported = double_discard_supported;
+>>   }
+>>   -typedef int (*ReplayRamPopulate)(MemoryRegionSection *section, void
+>> *opaque);
+>> -typedef void (*ReplayRamDiscard)(MemoryRegionSection *section, void
+>> *opaque);
+>> +typedef int (*ReplayRamDiscardState)(MemoryRegionSection *section,
+>> +                                     void *opaque);
+> 
+> While changing this prototype, please add a documentation comment.
 
+[...]
 
->
-> Cheers,
-> Gustavo
->
->> Best Regards
->>
->> Eric
->>
->> This series can be found at:
->> https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v1
->>
->> previous RFC:
->> https://github.com/eauger/qemu/tree/arm-acpi-pcihp-rfc
->>
->> History:
->> RFC -> v1:
->> - First 3 trivial patches were pulled separately
->> - Fix of the register region size (0x18), ie. ACPI_PCIHP_SIZE
->> - addition of aml_pci_edsm which was not called in RFC
->> - acpi-index feature is now fixed. vms->bus was not set on
->>    acpi_pcihp_init. The init sequence is still hacky though. Suggestions
->>    appreciated.
->>
->> [1] [PATCH v6 0/6] Use ACPI PCI hot-plug for Q35
->> https://lore.kernel.org/all/20210713004205.775386-1-jusual@redhat.com/
->>
->>
->> Eric Auger (22):
->>    hw/i386/acpi-build: Make aml_pci_device_dsm() static
->>    hw/arm/virt: Introduce machine state acpi pcihp flags and props
->>    hw/acpi: Rename and move build_x86_acpi_pci_hotplug to pcihp
->>    hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
->>      acpi_dsdt_add_pci_osc
->>    hw/pci-host/gpex-acpi: Split host bridge OSC and DSM generation
->>    hw/pci-host/gpex-acpi: Propagate hotplug type info from virt machine
->>      downto gpex
->>    hw/i386/acpi-build: Turn build_q35_osc_method into a generic method
->>    hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method
->>    hw/i386/acpi-build: Introduce build_append_pcihp_resources() helper
->>    hw/acpi/pcihp: Add an AmlRegionSpace arg to build_acpi_pci_hotplug
->>    hw/i386/acpi-build: Move build_append_notification_callback to pcihp
->>    hw/i386/acpi-build: Move build_append_pci_bus_devices/pcihp_slots to
->>      pcihp
->>    hw/i386/acpi-build: Introduce and use acpi_get_pci_host
->>    hw/i386/acpi-build: Move aml_pci_edsm to a generic place
->>    hw/arm/virt-acpi-build: Modify the DSDT ACPI table to enable ACPI PCI
->>      hotplug
->>    hw/acpi/ged: Prepare the device to react to PCI hotplug events
->>    hw/acpi/ged: Call pcihp plug callbacks in hotplug handler
->>      implementation
->>    hw/acpi/ged: Support migration of AcpiPciHpState
->>    hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
->>    hw/arm/virt: Let virt support pci hotplug/unplug GED event
->>    hw/arm/virt: Plug pcihp hotplug/hotunplug callbacks
->>    hw/arm/virt: Use ACPI PCI hotplug by default
->>
->>   hw/i386/acpi-build.h                   |   4 -
->>   include/hw/acpi/aml-build.h            |   2 +
->>   include/hw/acpi/generic_event_device.h |   5 +
->>   include/hw/acpi/pci.h                  |   4 +-
->>   include/hw/acpi/pcihp.h                |  19 +-
->>   include/hw/arm/virt.h                  |   4 +
->>   include/hw/pci-host/gpex.h             |   1 +
->>   include/hw/sysbus.h                    |   1 +
->>   hw/acpi/aml-build.c                    |  50 +++
->>   hw/acpi/generic_event_device.c         |  55 +++
->>   hw/acpi/pci.c                          |  20 +
->>   hw/acpi/pcihp.c                        | 482 ++++++++++++++++++++-
->>   hw/arm/virt-acpi-build.c               |  27 ++
->>   hw/arm/virt.c                          | 107 ++++-
->>   hw/core/sysbus.c                       |  11 +
->>   hw/i386/acpi-build.c                   | 552 +------------------------
->>   hw/pci-host/gpex-acpi.c                |  75 +---
->>   hw/arm/Kconfig                         |   2 +
->>   18 files changed, 806 insertions(+), 615 deletions(-)
->>
->
+> 
+>>   /*
+>>    * RamDiscardManagerClass:
+>> @@ -650,36 +650,38 @@ struct RamDiscardManagerClass {
+>>       /**
+>>        * @replay_populated:
+>>        *
+>> -     * Call the #ReplayRamPopulate callback for all populated parts
+>> within the
+>> -     * #MemoryRegionSection via the #RamDiscardManager.
+>> +     * Call the #ReplayRamDiscardState callback for all populated
+>> parts within
+>> +     * the #MemoryRegionSection via the #RamDiscardManager.
+>>        *
+>>        * In case any call fails, no further calls are made.
+>>        *
+>>        * @rdm: the #RamDiscardManager
+>>        * @section: the #MemoryRegionSection
+>> -     * @replay_fn: the #ReplayRamPopulate callback
+>> +     * @replay_fn: the #ReplayRamDiscardState callback
+>>        * @opaque: pointer to forward to the callback
+>>        *
+>>        * Returns 0 on success, or a negative error if any notification
+>> failed.
+>>        */
+>>       int (*replay_populated)(const RamDiscardManager *rdm,
+>>                               MemoryRegionSection *section,
+>> -                            ReplayRamPopulate replay_fn, void *opaque);
+>> +                            ReplayRamDiscardState replay_fn, void
+>> *opaque);
+>>         /**
+>>        * @replay_discarded:
+>>        *
+>> -     * Call the #ReplayRamDiscard callback for all discarded parts
+>> within the
+>> -     * #MemoryRegionSection via the #RamDiscardManager.
+>> +     * Call the #ReplayRamDiscardState callback for all discarded
+>> parts within
+>> +     * the #MemoryRegionSection via the #RamDiscardManager.
+>>        *
+>>        * @rdm: the #RamDiscardManager
+>>        * @section: the #MemoryRegionSection
+>> -     * @replay_fn: the #ReplayRamDiscard callback
+>> +     * @replay_fn: the #ReplayRamDiscardState callback
+>>        * @opaque: pointer to forward to the callback
+>> +     *
+>> +     * Returns 0 on success, or a negative error if any notification
+>> failed.
+>>        */
+>> -    void (*replay_discarded)(const RamDiscardManager *rdm,
+>> -                             MemoryRegionSection *section,
+>> -                             ReplayRamDiscard replay_fn, void *opaque);
+>> +    int (*replay_discarded)(const RamDiscardManager *rdm,
+>> +                            MemoryRegionSection *section,
+>> +                            ReplayRamDiscardState replay_fn, void
+>> *opaque);
+>>         /**
+>>        * @register_listener:
+>> @@ -722,13 +724,13 @@ bool ram_discard_manager_is_populated(const
+>> RamDiscardManager *rdm,
+>>     int ram_discard_manager_replay_populated(const RamDiscardManager
+>> *rdm,
+>>                                            MemoryRegionSection *section,
+>> -                                         ReplayRamPopulate replay_fn,
+>> +                                         ReplayRamDiscardState
+>> replay_fn,
+>>                                            void *opaque);
+>>   -void ram_discard_manager_replay_discarded(const RamDiscardManager
+>> *rdm,
+>> -                                          MemoryRegionSection *section,
+>> -                                          ReplayRamDiscard replay_fn,
+>> -                                          void *opaque);
+>> +int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+>> +                                         MemoryRegionSection *section,
+>> +                                         ReplayRamDiscardState
+>> replay_fn,
+>> +                                         void *opaque);
+> 
+> Similar for ram_discard_manager_replay_populated() and
+> ram_discard_manager_replay_discarded(), since you understood
+> what they do :)
+
+Sure, will do. Thanks!
+
+> 
+> Thanks!
+> 
+> Phil.
+> 
 
 
