@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54BECC5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 14:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 198B4C5B543
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 14:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJYjW-0002GN-3e; Mon, 26 May 2025 10:23:18 -0400
+	id 1uJYlJ-0002tU-RS; Mon, 26 May 2025 10:25:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uJYjK-0002FO-3H
- for qemu-devel@nongnu.org; Mon, 26 May 2025 10:23:08 -0400
+ id 1uJYlE-0002s5-RR
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 10:25:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uJYjG-0007Vd-73
- for qemu-devel@nongnu.org; Mon, 26 May 2025 10:23:04 -0400
+ id 1uJYlC-0007di-QI
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 10:25:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748269379;
+ s=mimecast20190719; t=1748269501;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=bxqeLQVo0Kujn36yDQudboPctz4ZtJ/9EVd+TOLjtVs=;
- b=eULhoSJgYwKBorUNVy3fxD2W8BiFsHY+tXsouq37faZruu+FypTTs0KI1C4fIT0p1cSqC3
- fDeqI/SZEN1KhD2jgfztE85VJF4N/oDJJn/vIqQe5kBEgteV1aqlgzgqsMU3wDv03vH2rm
- Gk67OroQ9bO0qqwpjwyRgey5Ym54nys=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=utt74FEHUZ6lFbnGNCeLg5d8BeYlcHDkUK83oW1XuqU=;
+ b=SLIk1DfPUP7i21HE949IRSkireccZlVBvq5OSQUYDfVNLp24ONw+zFkRGt98sKAZPv6Udk
+ 1NoEj8UnxTPezUwWoAVgiVasaPMZGZlsjJlN8ZCKz1hGk0S/Q5q6rXFhN0CcIKhjY1h0yJ
+ 0cdG/FvaWj/B7E9jbgSd5pcaB3WhttY=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-rzWMJkp3Pn-DEojKl0c_gw-1; Mon, 26 May 2025 10:22:57 -0400
-X-MC-Unique: rzWMJkp3Pn-DEojKl0c_gw-1
-X-Mimecast-MFC-AGG-ID: rzWMJkp3Pn-DEojKl0c_gw_1748269377
+ us-mta-107-HKYP0O2jMhWDo5ec2xj0jA-1; Mon, 26 May 2025 10:24:59 -0400
+X-MC-Unique: HKYP0O2jMhWDo5ec2xj0jA-1
+X-Mimecast-MFC-AGG-ID: HKYP0O2jMhWDo5ec2xj0jA_1748269499
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a3696a0d3aso844482f8f.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 07:22:57 -0700 (PDT)
+ ffacd0b85a97d-39ee4b91d1cso1527558f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 07:24:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748269376; x=1748874176;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bxqeLQVo0Kujn36yDQudboPctz4ZtJ/9EVd+TOLjtVs=;
- b=i487sNufjvLFAHY/RVNEhzt01cjutwF6kA9f9oE3+zd8VerV5LQ/05kS5tjOA44QSl
- 8MmlcJgyIppnxwohbhEiTGPFuyJeWLEywZeFjDfXQZq0ssHiWcgH/cGZPuLpkV4fMjsO
- pgK5NTXFfO+9x5QMVsc3NRH+YxqZfmQVWp3RRonL4M/GNFEYP5yc4FnWt0fnRC6lzCup
- 2PC48Wc1kI3ssqaz3nJdzDKmN9Kj4oiGa5yf412DE7mC8UmIJ9cIL11kDdQCY7bezLvT
- kLFXHMtp7w0f1/Ac7HOKgqMGIDwz5pvue7Qp5SCblI09R63MMyYZJwGrV2eS8njSG7VK
- 7O5Q==
-X-Gm-Message-State: AOJu0YxTP0p4RSuZMQQHAtmL1gNWd2x3z7CDnkHgCZ9SsJLOCfVNrXSY
- IoGSVVtVH+7UusAv+oAupSeoCQbSytsC5DLmhbEn1vDtEQ0LJV28bCixZeE0PvXY7SqR+H8A5BO
- ODcZiUZYDIHoB5gTLxlzcIji6Z1eCSjaeBpn40V5ld1SC1Ninv6R/Q0mAx2NMN6Hibj2BqPD52V
- Hacxj2aaX1ElqpmU+diggc6lFAJVQyzwcUmMJe9bnC
-X-Gm-Gg: ASbGncuJsQ9I7H2qh9J609PDv+QgS8Y2ju/i1iKhM7/EbJeliahbPex/zCQVegQGeDr
- ozxupxjBYmDLG+T+z/htLk2htZn7pE5lLgcWuZDj/Zo3wqV5ygBt+9T8hpFSsNv8uyLJCRMxdbp
- pnw/2Gzrrrqkn740xaJW27tTNiXrg2iUE0EQgGEkDlwYZwb69osgcziavf+r+OPoTwuWhFgP0ww
- bSxXuo8v8QbDOHm7J5D6PWI1Sth8LCqtz7BeSwCM2oP0scwvJ5uuL3sPFMxTSXngKkrr/eq/+l7
- g86yA2iEz9iymA==
-X-Received: by 2002:a05:6000:288a:b0:3a4:ddde:13e4 with SMTP id
- ffacd0b85a97d-3a4ddde1605mr1611347f8f.58.1748269376299; 
- Mon, 26 May 2025 07:22:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEipE+xjfIR3h8GU+SFkEC155OoBGi7oAMHcd52anCIJBBRtukxUVqn30Rgr2Ti0l2JLt+3mg==
-X-Received: by 2002:a05:6000:288a:b0:3a4:ddde:13e4 with SMTP id
- ffacd0b85a97d-3a4ddde1605mr1611326f8f.58.1748269375839; 
- Mon, 26 May 2025 07:22:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748269497; x=1748874297;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=utt74FEHUZ6lFbnGNCeLg5d8BeYlcHDkUK83oW1XuqU=;
+ b=SvM3DH3NwNoaagG6dJmoyIiorfRD5vxhiJoYsH4nUi5mr1sWN8K1bYti4iwUaMIS0W
+ xPaO+rhIHH6Wg26wdudBE17IirtciYckhhDik54RuSczQE6Lite6dk9aRoHTss/RTt+z
+ u9H9oYJivTBolzPD4NhNY2CpTu/fTpeytx6RdgHiLNGwLhSE4D74Xk1eSlzH4Q4R0etC
+ m2JNYL/Fn/JZjCfJ5TkrZDIql5f3BL0lVFU+kJAPbSeLCx1Pij+sIPVQ8WaGT5uKZzse
+ 2qXdOiAb2SwgGFAB7o3ea7tz/8o4Uic3HVyb1HkiVDbfsvYz0qKfu5PpTRHsbD226DBp
+ 5O8w==
+X-Gm-Message-State: AOJu0YwDpqxtW9XZcnHcqo9okZzKvs7VmjB29jk7vKyBijzLPto36ZGa
+ e1gHmU+1sxOALNNA5YRgFcnahy4UMsASk/UCLNn+yt+8WGC+jYekkln15UJ8DTUxe/74rSL/4rX
+ 6t34+x/V0siuAGsOvViAznU8WHT4VhK5iXKtdG2nrWr1uBHMVbWmZHOuVKZ8D5MiCqP2f+T+fD8
+ +oMBEYWKWABaDtjloqsXPHLm7P+rpDnF9b9gcREtWj
+X-Gm-Gg: ASbGncsdYbNaZxUuePI3zsVy/3P9kyieEl2nyMJv/W6KHLSnynEmNtUNzbEpzMngn8q
+ 8cyr/8nBVMSEyh8kmeyB8z/+ujckenKv6Sgh853rVJ/fPFNR+0Y4mEIt5/L3eu3cMqoeltwrTjt
+ NowXbMtY0oCDVlJPCoxSwe+VABnPZZB0KLu/5x8d22qvpLj6+VblCsz00k+ZuVOHTDvUBwvRjNV
+ Da8ZtWeby41mkOsmIJjGRohQ6+OzIByY1iZWuCrIvXq8SLjoWGHNZ/IowOOD3A26gNPL2E7M/v3
+ mxRRqUAeYWdm4g==
+X-Received: by 2002:a5d:64c6:0:b0:3a1:f724:eb15 with SMTP id
+ ffacd0b85a97d-3a4ca123bf1mr8629112f8f.2.1748269497091; 
+ Mon, 26 May 2025 07:24:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGpyKmq/vMA252LfD05Ppt1m+ZziqiFpHTleVgk+do5+ZJxWzz0YA1GzozXYYRsfq57BlsAug==
+X-Received: by 2002:a5d:64c6:0:b0:3a1:f724:eb15 with SMTP id
+ ffacd0b85a97d-3a4ca123bf1mr8629088f8f.2.1748269496702; 
+ Mon, 26 May 2025 07:24:56 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.46.79])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4c7afa815sm9340890f8f.63.2025.05.26.07.22.55
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-3a35ca88957sm35291467f8f.75.2025.05.26.07.24.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 May 2025 07:22:55 -0700 (PDT)
+ Mon, 26 May 2025 07:24:56 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 00/12] rust: bindings for Error
-Date: Mon, 26 May 2025 16:22:42 +0200
-Message-ID: <20250526142254.1061009-1-pbonzini@redhat.com>
+Cc: armbru@redhat.com,
+	qemu-rust@nongnu.org
+Subject: [PATCH 01/12] rust: make declaration of dependent crates more
+ consistent
+Date: Mon, 26 May 2025 16:24:44 +0200
+Message-ID: <20250526142455.1061519-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250526142254.1061009-1-pbonzini@redhat.com>
+References: <20250526142254.1061009-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -88,7 +94,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,82 +110,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This was one of the first bindings that I wrote in
-https://lore.kernel.org/qemu-devel/20240701145853.1394967-1-pbonzini@redhat.com/T/,
-but there were a few obstacles to clear before including them:
+Crates like "bilge" and "libc" can be shared by more than one directory,
+so declare them directly in rust/meson.build.  While at it, make their
+variable names end with "_rs" and always add a subproject() statement
+(as that pinpoints the error better if the subproject is missing and
+cannot be downloaded).
 
-1) cleaning up the *foreign*() functions (patches 3-4 from the above
-series) or deciding not to use them.  The functions are now part of
-their own crate, available on crates.io and imported in this series.
-For this series I am including them, but if people prefer to stick
-to "normal" Rust FFI I'm open to that as well.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/char/pl011/meson.build   | 12 +++---------
+ rust/meson.build                 | 16 ++++++++++++++++
+ rust/qemu-api-macros/meson.build | 14 +++-----------
+ rust/qemu-api/meson.build        |  4 +---
+ 4 files changed, 23 insertions(+), 23 deletions(-)
 
-2) cleaning up the "cause" member.  This series uses the anyhow
-crate instead of Box<dyn std::error::Error>.
-
-3) cleaning up &error_abort, because Rust does not have a NULL-terminated
-filename and does not have an equivalent to __func__ at all.  The
-preliminary code did not pass file and line at all, while now I am
-using #[track_caller] and making the C code collaborate with Rust
-(see patches 5-6 of the series).
-
-The final driver for fixing all this was to enable the removal
-of BqlCell<> from HPETState::num_timers.
-
-Integration tests for the new class are still missing.
-
-Markus... this is your first exposure to Rust in QEMU.  You may find some
-information at https://www.qemu.org/docs/master/devel/rust.html but just
-to be clear, there are no stupid questions, only stupid answers. :)
-
-Paolo
-
-Paolo Bonzini (12):
-  rust: make declaration of dependent crates more consistent
-  subprojects: add the anyhow crate
-  subprojects: add the foreign crate
-  util/error: expose Error definition to Rust code
-  util/error: allow non-NUL-terminated err->src
-  util/error: make func optional
-  qemu-api: add bindings to Error
-  rust: qdev: support returning errors from realize
-  rust/hpet: change timer of num_timers to usize
-  hpet: return errors from realize if properties are incorrect
-  rust/hpet: return errors from realize if properties are incorrect
-
-Zhao Liu (12):
-  rust/hpet: Drop BqlCell wrapper for num_timers
-
- include/qapi/error-internal.h                 |  27 ++
- rust/wrapper.h                                |   1 +
- hw/timer/hpet.c                               |  15 +-
- util/error.c                                  |  24 +-
- rust/Cargo.lock                               |  17 ++
- rust/Cargo.toml                               |   1 +
- rust/hw/char/pl011/meson.build                |  12 +-
- rust/hw/char/pl011/src/device.rs              |   5 +-
- rust/hw/timer/hpet/src/fw_cfg.rs              |   7 +-
- rust/hw/timer/hpet/src/hpet.rs                |  62 ++--
- rust/meson.build                              |  20 ++
- rust/qemu-api-macros/meson.build              |  14 +-
- rust/qemu-api/Cargo.toml                      |   2 +
- rust/qemu-api/meson.build                     |   5 +-
- rust/qemu-api/src/error.rs                    | 273 ++++++++++++++++++
- rust/qemu-api/src/lib.rs                      |   3 +
- rust/qemu-api/src/qdev.rs                     |  10 +-
- subprojects/.gitignore                        |   2 +
- subprojects/anyhow-1.0-rs.wrap                |   7 +
- subprojects/foreign-0.2-rs.wrap               |   7 +
- .../packagefiles/anyhow-1.0-rs/meson.build    |  33 +++
- .../packagefiles/foreign-0.2-rs/meson.build   |  26 ++
- 22 files changed, 488 insertions(+), 85 deletions(-)
- create mode 100644 include/qapi/error-internal.h
- create mode 100644 rust/qemu-api/src/error.rs
- create mode 100644 subprojects/anyhow-1.0-rs.wrap
- create mode 100644 subprojects/foreign-0.2-rs.wrap
- create mode 100644 subprojects/packagefiles/anyhow-1.0-rs/meson.build
- create mode 100644 subprojects/packagefiles/foreign-0.2-rs/meson.build
-
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+index 547cca5a96f..494b6c123cc 100644
+--- a/rust/hw/char/pl011/meson.build
++++ b/rust/hw/char/pl011/meson.build
+@@ -1,17 +1,11 @@
+-subproject('bilge-0.2-rs', required: true)
+-subproject('bilge-impl-0.2-rs', required: true)
+-
+-bilge_dep = dependency('bilge-0.2-rs')
+-bilge_impl_dep = dependency('bilge-impl-0.2-rs')
+-
+ _libpl011_rs = static_library(
+   'pl011',
+   files('src/lib.rs'),
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   dependencies: [
+-    bilge_dep,
+-    bilge_impl_dep,
++    bilge_rs,
++    bilge_impl_rs,
+     qemu_api,
+     qemu_api_macros,
+   ],
+@@ -21,6 +15,6 @@ rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
+   link_whole: [_libpl011_rs],
+   # Putting proc macro crates in `dependencies` is necessary for Meson to find
+   # them when compiling the root per-target static rust lib.
+-  dependencies: [bilge_impl_dep, qemu_api_macros],
++  dependencies: [bilge_impl_rs, qemu_api_macros],
+   variables: {'crate': 'pl011'},
+ )])
+diff --git a/rust/meson.build b/rust/meson.build
+index 91e52b8fb8e..1f0dcce7d04 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -1,3 +1,19 @@
++subproject('bilge-0.2-rs', required: true)
++subproject('bilge-impl-0.2-rs', required: true)
++subproject('libc-0.2-rs', required: true)
++
++bilge_rs = dependency('bilge-0.2-rs')
++bilge_impl_rs = dependency('bilge-impl-0.2-rs')
++libc_rs = dependency('libc-0.2-rs')
++
++subproject('proc-macro2-1-rs', required: true)
++subproject('quote-1-rs', required: true)
++subproject('syn-2-rs', required: true)
++
++quote_rs_native = dependency('quote-1-rs', native: true)
++syn_rs_native = dependency('syn-2-rs', native: true)
++proc_macro2_rs_native = dependency('proc-macro2-1-rs', native: true)
++
+ subdir('qemu-api-macros')
+ subdir('qemu-api')
+ 
+diff --git a/rust/qemu-api-macros/meson.build b/rust/qemu-api-macros/meson.build
+index 6f94a4bb3c2..8610ce1c844 100644
+--- a/rust/qemu-api-macros/meson.build
++++ b/rust/qemu-api-macros/meson.build
+@@ -1,11 +1,3 @@
+-subproject('proc-macro2-1-rs', required: true)
+-subproject('quote-1-rs', required: true)
+-subproject('syn-2-rs', required: true)
+-
+-quote_dep = dependency('quote-1-rs', native: true)
+-syn_dep = dependency('syn-2-rs', native: true)
+-proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
+-
+ _qemu_api_macros_rs = rust.proc_macro(
+   'qemu_api_macros',
+   files('src/lib.rs'),
+@@ -16,9 +8,9 @@ _qemu_api_macros_rs = rust.proc_macro(
+     '--cfg', 'feature="proc-macro"',
+   ],
+   dependencies: [
+-    proc_macro2_dep,
+-    quote_dep,
+-    syn_dep,
++    proc_macro2_rs_native,
++    quote_rs_native,
++    syn_rs_native,
+   ],
+ )
+ 
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 1696df705bf..1ea86b8bbf1 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -2,8 +2,6 @@ _qemu_api_cfg = run_command(rustc_args,
+   '--config-headers', config_host_h, '--features', files('Cargo.toml'),
+   capture: true, check: true).stdout().strip().splitlines()
+ 
+-libc_dep = dependency('libc-0.2-rs')
+-
+ # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
+ if get_option('debug_mutex')
+   _qemu_api_cfg += ['--cfg', 'feature="debug_cell"']
+@@ -37,7 +35,7 @@ _qemu_api_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _qemu_api_cfg,
+-  dependencies: [libc_dep, qemu_api_macros],
++  dependencies: [libc_rs, qemu_api_macros],
+ )
+ 
+ rust.test('rust-qemu-api-tests', _qemu_api_rs,
 -- 
 2.49.0
 
