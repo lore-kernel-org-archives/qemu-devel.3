@@ -4,104 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00FBAC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C19C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:44:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJW92-00045I-Ft; Mon, 26 May 2025 07:37:28 -0400
+	id 1uJWEs-0004wy-JP; Mon, 26 May 2025 07:43:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=EASY=YK=kaod.org=clg@ozlabs.org>)
- id 1uJW91-000456-4F
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:37:27 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJWEn-0004wl-HW
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:43:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=EASY=YK=kaod.org=clg@ozlabs.org>)
- id 1uJW8x-0003Sr-S6
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:37:26 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4b5Ydp4Q66z4wd0;
- Mon, 26 May 2025 21:37:18 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJWEh-00047p-QE
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:43:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748259796;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3Nf1EwpaMQJ9eurpSk4Y2/D/g648qq3m1SyR1llBZHw=;
+ b=e+yX+gP+z7ld9EU35Gxkorvv+itLrRSBNQ8Kb+aW/ACvmKJWc+aQ6BxzdZHDuu2KVeWCtu
+ q4mtxMYkO1S0lpU+QecfekfkJ0Ntd0Ps0QuFB65d1WdaXh8qVynSkavbJ/apkDwKxavAB5
+ Spwcyv9XEmgqq+N2yr+wP3YRmc/5XSM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-3ovvTQb0PZagNXDoOKev2g-1; Mon,
+ 26 May 2025 07:43:15 -0400
+X-MC-Unique: 3ovvTQb0PZagNXDoOKev2g-1
+X-Mimecast-MFC-AGG-ID: 3ovvTQb0PZagNXDoOKev2g_1748259793
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4b5Ydh3xJJz4wy6;
- Mon, 26 May 2025 21:37:11 +1000 (AEST)
-Message-ID: <7283f8f2-a9d9-4e7d-bfbd-3854b3d1736e@kaod.org>
-Date: Mon, 26 May 2025 13:37:07 +0200
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7CB2C1800256; Mon, 26 May 2025 11:43:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.150])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07E7219560AB; Mon, 26 May 2025 11:43:01 +0000 (UTC)
+Date: Mon, 26 May 2025 13:42:59 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
+ hreitz@redhat.com, stefanha@redhat.com, eblake@redhat.com,
+ jsnow@redhat.com, vsementsov@yandex-team.ru,
+ xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
+ fam@euphon.net, ari@tuxera.com
+Subject: Re: [PATCH v2 03/24] block/snapshot: move drain outside of
+ read-locked bdrv_snapshot_delete()
+Message-ID: <aDRTw0XMLog7vAOh@redhat.com>
+References: <20250520103012.424311-1-f.ebner@proxmox.com>
+ <20250520103012.424311-4-f.ebner@proxmox.com>
+ <4fdff680-5e77-40f2-812b-70697ad8ae64@virtuozzo.com>
+ <aDQwDbJLqPYVxgCN@redhat.com>
+ <6c640f56-31b8-408d-b747-6f75cdfa7592@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/10] Enable shared device assignment
-To: Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
- Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
- 'Alex Williamson' <alex.williamson@redhat.com>
-References: <20250520102856.132417-1-chenyi.qiang@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250520102856.132417-1-chenyi.qiang@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=EASY=YK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6c640f56-31b8-408d-b747-6f75cdfa7592@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,186 +91,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/25 12:28, Chenyi Qiang wrote:
-> This is the v5 series of the shared device assignment support.
+Am 26.05.2025 um 12:33 hat Fiona Ebner geschrieben:
+> Am 26.05.25 um 11:10 schrieb Kevin Wolf:
+> > Am 23.05.2025 um 20:12 hat Andrey Drobyshev geschrieben:
+> >> Okay, I've got a very simple and naive question to ask.  We've got this
+> >> pattern recurring throughout the series:
+> >>
+> >>> GLOBAL_STATE_CODE();
+> >>> bdrv_drain_all_begin();
+> >>> bdrv_graph_rdlock_main_loop();
+> >>>
+> >>> ...
+> >>>
+> >>> bdrv_graph_rdunlock_main_loop();
+> >>> bdrv_drain_all_end();
+> >>
+> >> bdrv_graph_rdlock_main_loop() doesn't actually take any locks, it
+> >> asserts that we're running in the main thread and not in a coroutine.
+> >> bdrv_graph_rdunlock_main_loop() does the same.
+> >> GRAPH_RDLOCK_GUARD_MAINLOOP() does both those calls, in the beginning of
+> >> a function and when leaving its scope, so essentially it also just does
+> >> assert(qemu_in_main_thread() && !qemu_in_coroutine()).
+> >>
+> >> Therefore:
+> >>
+> >> 1. Is there any real benefit from using those
+> >> {rdlock/rdunlock}_main_loop() constructions, or they're here due to
+> >> historical reasons only?
+> > 
+> > It's the price we pay for the compiler to verify our locking rules.
+> > 
+> >> 2. Would it hurt if we only leave GRAPH_RDLOCK_GUARD_MAINLOOP() in all
+> >> such occurrences?  At least when it's obvious we can't get out of the
+> >> main thread.  That would simply deliver us from performing same checks
+> >> several times, similar to what's done in commit 22/24 ("block/io: remove
+> >> duplicate GLOBAL_STATE_CODE() in bdrv_do_drained_end()").
+> > 
+> > Once bdrv_drain_all_begin() is marked GRAPH_UNLOCKED, calling it after
+> > GRAPH_RDLOCK_GUARD_MAINLOOP() would be wrong according to TSA rules
+> > (which don't know anything about this being only a fake lock) and the
+> > build would fail.
 > 
-> As discussed in the v4 series [1], the GenericStateManager parent class
-> and PrivateSharedManager child interface were deemed to be in the wrong
-> direction. This series reverts back to the original single
-> RamDiscardManager interface and puts it as future work to allow the
-> co-existence of multiple pairs of state management. For example, if we
-> want to have virtio-mem co-exist with guest_memfd, it will need a new
-> framework to combine the private/shared/discard states [2].
-> 
-> Another change since the last version is the error handling of memory
-> conversion. Currently, the failure of kvm_convert_memory() causes QEMU
-> to quit instead of resuming the guest. The complex rollback operation
-> doesn't add value and merely adds code that is difficult to test.
-> Although in the future, it is more likely to encounter more errors on
-> conversion paths like unmap failure on shared to private in-place
-> conversion. This series keeps complex error handling out of the picture
-> for now and attaches related handling at the end of the series for
-> future extension.
-> 
-> Apart from the above two parts with future work, there's some
-> optimization work in the future, i.e., using other more memory-efficient
-> mechanism to track ranges of contiguous states instead of a bitmap [3].
-> This series still uses a bitmap for simplicity.
->   
-> The overview of this series:
-> - Patch 1-3: Preparation patches. These include function exposure and
->    some definition changes to return values.
-> - Patch 4-5: Introduce a new object to implement RamDiscardManager
->    interface and a helper to notify the shared/private state change.
-> - Patch 6: Store the new object including guest_memfd information in
->    RAMBlock. Register the RamDiscardManager instance to the target
->    RAMBlock's MemoryRegion so that the RamDiscardManager users can run in
->    the specific path.
-> - Patch 7: Unlock the coordinate discard so that the shared device
->    assignment (VFIO) can work with guest_memfd. After this patch, the
->    basic device assignement functionality can work properly.
-> - Patch 8-9: Some cleanup work. Move the state change handling into a
->    RamDiscardListener so that it can be invoked together with the VFIO
->    listener by the state_change() call. This series dropped the priority
->    support in v4 which is required by in-place conversions, because the
->    conversion path will likely change.
-> - Patch 10: More complex error handing including rollback and mixture
->    states conversion case.
-> 
-> More small changes or details can be found in the individual patches.
-> 
-> ---
-> Original cover letter:
-> 
-> Background
-> ==========
-> Confidential VMs have two classes of memory: shared and private memory.
-> Shared memory is accessible from the host/VMM while private memory is
-> not. Confidential VMs can decide which memory is shared/private and
-> convert memory between shared/private at runtime.
-> 
-> "guest_memfd" is a new kind of fd whose primary goal is to serve guest
-> private memory. In current implementation, shared memory is allocated
-> with normal methods (e.g. mmap or fallocate) while private memory is
-> allocated from guest_memfd. When a VM performs memory conversions, QEMU
-> frees pages via madvise or via PUNCH_HOLE on memfd or guest_memfd from
-> one side, and allocates new pages from the other side. This will cause a
-> stale IOMMU mapping issue mentioned in [4] when we try to enable shared
-> device assignment in confidential VMs.
-> 
-> Solution
-> ========
-> The key to enable shared device assignment is to update the IOMMU mappings
-> on page conversion. RamDiscardManager, an existing interface currently
-> utilized by virtio-mem, offers a means to modify IOMMU mappings in
-> accordance with VM page assignment. Although the required operations in
-> VFIO for page conversion are similar to memory plug/unplug, the states of
-> private/shared are different from discard/populated. We want a similar
-> mechanism with RamDiscardManager but used to manage the state of private
-> and shared.
-> 
-> This series introduce a new parent abstract class to manage a pair of
-> opposite states with RamDiscardManager as its child to manage
-> populate/discard states, and introduce a new child class,
-> PrivateSharedManager, which can also utilize the same infrastructure to
-> notify VFIO of page conversions.
-> 
-> Relationship with in-place page conversion
-> ==========================================
-> To support 1G page support for guest_memfd [5], the current direction is to
-> allow mmap() of guest_memfd to userspace so that both private and shared
-> memory can use the same physical pages as the backend. This in-place page
-> conversion design eliminates the need to discard pages during shared/private
-> conversions. However, device assignment will still be blocked because the
-> in-place page conversion will reject the conversion when the page is pinned
-> by VFIO.
-> 
-> To address this, the key difference lies in the sequence of VFIO map/unmap
-> operations and the page conversion. It can be adjusted to achieve
-> unmap-before-conversion-to-private and map-after-conversion-to-shared,
-> ensuring compatibility with guest_memfd.
-> 
-> Limitation
-> ==========
-> One limitation is that VFIO expects the DMA mapping for a specific IOVA
-> to be mapped and unmapped with the same granularity. The guest may
-> perform partial conversions, such as converting a small region within a
-> larger region. To prevent such invalid cases, all operations are
-> performed with 4K granularity. This could be optimized after the
-> cut_mapping operation[6] is introduced in future. We can alway perform a
-> split-before-unmap if partial conversions happen. If the split succeeds,
-> the unmap will succeed and be atomic. If the split fails, the unmap
-> process fails.
-> 
-> Testing
-> =======
-> This patch series is tested based on TDX patches available at:
-> KVM: https://github.com/intel/tdx/tree/kvm-coco-queue-snapshot/kvm-coco-queue-snapshot-20250408
-> QEMU: https://github.com/intel-staging/qemu-tdx/tree/tdx-upstream-snapshot-2025-05-20
-> 
-> Because the new features like cut_mapping operation will only be support in iommufd.
-> It is recommended to use the iommufd-backed VFIO with the qemu command:
+> Note that I did not mark bdrv_drain_all_begin() as GRAPH_UNLOCKED in the
+> series yet. The reason is that I wasn't fully sure if that is okay,
+> given that it also can be called from a coroutine and does
+> bdrv_co_yield_to_drain() then. But I suppose that doesn't do anything
+> with the graph lock, so I'll add the GRAPH_UNLOCKED marker in v3.
 
-Is it recommended or required ? If the VFIO IOMMU type1 backend is not
-supported for confidential VMs, QEMU should fail to start.
+I think it's still GRAPH_UNLOCKED even when called from a coroutine,
+because otherwise the polling could wait for the calling coroutine to
+make progress and release the lock, resulting in a deadlock.
 
-Please add Alex Williamson and I to the Cc: list.
-
-Thanks,
-
-C.
-
-> qemu-system-x86_64 [...]
->      -object iommufd,id=iommufd0 \
->      -device vfio-pci,host=XX:XX.X,iommufd=iommufd0
-> 
-> Following the bootup of the TD guest, the guest's IP address becomes
-> visible, and iperf is able to successfully send and receive data.
-> 
-> Related link
-> ============
-> [1] https://lore.kernel.org/qemu-devel/20250407074939.18657-1-chenyi.qiang@intel.com/
-> [2] https://lore.kernel.org/qemu-devel/d1a71e00-243b-4751-ab73-c05a4e090d58@redhat.com/
-> [3] https://lore.kernel.org/qemu-devel/96ab7fa9-bd7a-444d-aef8-8c9c30439044@redhat.com/
-> [4] https://lore.kernel.org/qemu-devel/20240423150951.41600-54-pbonzini@redhat.com/
-> [5] https://lore.kernel.org/kvm/cover.1747264138.git.ackerleytng@google.com/
-> [6] https://lore.kernel.org/linux-iommu/0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com/
-> 
-> 
-> Chenyi Qiang (10):
->    memory: Export a helper to get intersection of a MemoryRegionSection
->      with a given range
->    memory: Change memory_region_set_ram_discard_manager() to return the
->      result
->    memory: Unify the definiton of ReplayRamPopulate() and
->      ReplayRamDiscard()
->    ram-block-attribute: Introduce RamBlockAttribute to manage RAMBlock
->      with guest_memfd
->    ram-block-attribute: Introduce a helper to notify shared/private state
->      changes
->    memory: Attach RamBlockAttribute to guest_memfd-backed RAMBlocks
->    RAMBlock: Make guest_memfd require coordinate discard
->    memory: Change NotifyRamDiscard() definition to return the result
->    KVM: Introduce RamDiscardListener for attribute changes during memory
->      conversions
->    ram-block-attribute: Add more error handling during state changes
-> 
->   MAINTAINERS                                 |   1 +
->   accel/kvm/kvm-all.c                         |  79 ++-
->   hw/vfio/listener.c                          |   6 +-
->   hw/virtio/virtio-mem.c                      |  83 ++--
->   include/system/confidential-guest-support.h |   9 +
->   include/system/memory.h                     |  76 ++-
->   include/system/ramblock.h                   |  22 +
->   migration/ram.c                             |  33 +-
->   system/memory.c                             |  22 +-
->   system/meson.build                          |   1 +
->   system/physmem.c                            |  18 +-
->   system/ram-block-attribute.c                | 514 ++++++++++++++++++++
->   target/i386/kvm/tdx.c                       |   1 +
->   target/i386/sev.c                           |   1 +
->   14 files changed, 770 insertions(+), 96 deletions(-)
->   create mode 100644 system/ram-block-attribute.c
-> 
+Kevin
 
 
