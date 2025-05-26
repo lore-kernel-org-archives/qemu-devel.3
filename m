@@ -4,146 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4272C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 12:16:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5B46C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 12:18:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJWk4-0008G5-Ee; Mon, 26 May 2025 08:15:44 -0400
+	id 1uJWlz-0000KX-Fe; Mon, 26 May 2025 08:17:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJWk0-0008Fw-Sx
- for qemu-devel@nongnu.org; Mon, 26 May 2025 08:15:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uJWlf-0000IF-IB
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 08:17:31 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJWjm-0008GI-VE
- for qemu-devel@nongnu.org; Mon, 26 May 2025 08:15:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748261724;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xO526LJ2vdB0zr25IS+Y6O8/PNTGO6HEBjKHok9NYXQ=;
- b=X6Z98Zct4gS6Rl6w0B0jhegZoNbrdCl2qbA4QswsYGe3sGuC88EK0lnQCeNtoXBvnPD6pZ
- iHIXdGn+Mo2Sw+MiCd+kVyiFVPQ9eKlj3yW9GY6LAGXtI/uzD9jcTe9dYwBkoXGBvI8JNu
- HXa+2rcHPUSdzzpMD406xVc+wayRzHo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-BbnNBFtLPVOhDhk_X_uiVw-1; Mon, 26 May 2025 08:15:22 -0400
-X-MC-Unique: BbnNBFtLPVOhDhk_X_uiVw-1
-X-Mimecast-MFC-AGG-ID: BbnNBFtLPVOhDhk_X_uiVw_1748261721
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cf5196c25so12859355e9.0
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 05:15:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748261721; x=1748866521;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xO526LJ2vdB0zr25IS+Y6O8/PNTGO6HEBjKHok9NYXQ=;
- b=OlEp0vz7ptrcClvJQmb9LagAnWcpHcon2C6Z0tqWnwXAqYDsCGOLQfmTY4gj1ko7qW
- YK+p0+NEsvQjpuJV6Qdx7CitxJ7pSNI5CN1cbh8i+PGbVEXaAsSOlRm16hIkZ120KcSR
- 3WDTYSUOViy071QCNMJ4yP3tMSzs2d1p9+f5YAqO8kPIYJiSFlAm7sZFx1VghrUvzN+e
- 2iM06m7MyTNSVuBoSL3Fv/Rikkmch25lDMI2vxN900p9ta+ufWpr5raD5IxIzxTI59hE
- Y4ExzMDeTxYdFfTQ1Gm028/A5m03uqnpAu07fUZPleSV88g49KK18/FeLlsiN8NULlDm
- AozQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWvCIWUp0S03/CJxYIRLmUNMPWe2iVyXihN+Gw1Ga5/TKBU6UgWj4wp9w4sHr77w0M2rLybbcpcIRG5@nongnu.org
-X-Gm-Message-State: AOJu0YwLEeKsvb5SWzsooLEgAX2g/x1I9ZDI+riSA7mlWEYbntpG4hUy
- HKZpXMGxTtMTmTvrh+WCRsfZmf1GxPBqEwi0zr2cCCppx7WqpWjVxgFunALTQRyB7Kpd8FoViJm
- NLWIz5Cteni/Hdi0eaZZZVEaws9RZq48k/wJMKiA58Ir20TyCwXIM9KUp
-X-Gm-Gg: ASbGncuszHHXplUz5leOiHcY8i2nNQt02ZvV9FhpvxIzemlzgKopLAaNz5b7rNaVEcr
- yU7Cmtt2k0saOmQoAExz7M7pjo/P3wqLP3qUMqu6t8tId7ZSdRb0q2xM+pxs2N0b93BEqK45a0S
- dB+0LahiV2ioAwXAHzHdbXEIlAGLQKER4v74iqKR6bRQBMRhXs3kHy+wR8nyaONPmN/QZ78PlHN
- AOYD6hviintl0SLNU7/w/tMNsCvowK/GqBaOkVXJgXKkrSVODxIYURtiMhobuJ+Bwyrt9GnYOB+
- MqnH3wkkwxmWF3a/bRzBKBEr44xOWW3APAxoH5QlpKxShMU2XA==
-X-Received: by 2002:a05:600c:4e45:b0:442:f4a3:8c5c with SMTP id
- 5b1f17b1804b1-44c919e13ddmr98352845e9.10.1748261721378; 
- Mon, 26 May 2025 05:15:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHvxyphRGhlo0Fj93nMBQXLnEBNafODVVMvdT1TYrqS8WlnSa2T2VMfP8947SfUB8IO1I2GPQ==
-X-Received: by 2002:a05:600c:4e45:b0:442:f4a3:8c5c with SMTP id
- 5b1f17b1804b1-44c919e13ddmr98352335e9.10.1748261720959; 
- Mon, 26 May 2025 05:15:20 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a35ca5a79asm34533968f8f.25.2025.05.26.05.15.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 05:15:20 -0700 (PDT)
-Message-ID: <0212e796-9869-47ea-bcab-0d86bae2580e@redhat.com>
-Date: Mon, 26 May 2025 14:15:19 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uJWlZ-0008PR-Ok
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 08:17:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748261838; x=1779797838;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=CFPPwCC4aMOzrgxIq3aFF0o66t82kjFza920lEv7Gfw=;
+ b=AQX6/esnDIEFcz17y63Y7vOX1fWfNhICZOYcu6vtY662h/rKZHVAXp8g
+ uQ6EY62emN7EdDZhg78NzEbRuHH4LtxxezcGPJtxjUNwPLZLLDbC0qdOO
+ KuVZlXzVar6ww4Slj0R06W7zO8oNJzM07ZmXjRRm7se3EkD4nFu8iuWlI
+ 3rYbTy1I1rhIQ8y0fxuqxUVRIqIghczwMBV33pbE6zB4v0CmsjD3TU0OK
+ 6cW3OUHKXXl2QSAdVTXBWflQRwUG3Eaq3bPY3zfNzp+cB/gw6G879xvs2
+ VWt3Yb1RYUWqBnI1BdgmXXQlxc0OnisWjkxJFbnCsk7CNv7tmTDgezw8l w==;
+X-CSE-ConnectionGUID: tZnA1z27RuK6F8Y29gv74A==
+X-CSE-MsgGUID: UZ/BeGr3QUqM1tD1Md2rew==
+X-IronPort-AV: E=McAfee;i="6700,10204,11445"; a="61294059"
+X-IronPort-AV: E=Sophos;i="6.15,315,1739865600"; d="scan'208";a="61294059"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 May 2025 05:17:11 -0700
+X-CSE-ConnectionGUID: IKyaqBVNQpGGgZXV+7rfGg==
+X-CSE-MsgGUID: njGM885LRq+r8SF0FUw4Og==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,315,1739865600"; d="scan'208";a="165539237"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 May 2025 05:17:10 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Mon, 26 May 2025 05:17:09 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Mon, 26 May 2025 05:17:09 -0700
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (40.107.243.51)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.55; Mon, 26 May 2025 05:17:09 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pKsZVQlKkOxCywBAPTZJdAMIFKrF99PWsT02tW4Hb+RkpwsApMQUvFwjaG57uCcTSWJWkvjg28XTie8f0WZHJgUKri4PlcoftaPTr8/BjP2sBjvO5IIOP2D6heHqTE0s7MYEIpenFjeIoXTLZ3cbhlmNtPAGnM0lxwTE3gZVcWWr4HpIK8VyPeKWZGi7o3le/xprCgyfgRwKXmrOMTCiR25aVCRBKMiofn+fuNE0ldJ4xo9DCpXyRlz5pQrdYbo/NnC+3JTW/BH4NNun9Tjm8cV5ksSe0adHnvg1Lcd8hRW6YWMx4p9Uuq3e4qeO/I0hcwTeVmxQLF9PjZszSldQJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UuOVo7wMzAROHYO0tnI32b9luNwBKLc3c2/TD6ujI/E=;
+ b=DcXfyzs1Rz83RaU3SFhR3DVx1MuaTakEdoww7QXeKZVsAYhf0vGZ8QzFgQncm6VTwCoJ8IdSI2/sb3Caq5Wga9sdrqoBifUREI21omlaP0h2PWtG6dxOIHi1hBjyGGEZY+Ux6GOL5bbli7HmPL3R1rGBIjK6qFj8xImWXucqJUpr7EV00HeLPutpTToEbHCwkorpOKlxLFjYcfqq0k7Kd75sCXRD+4tRvFSLssy1bY1SUoWqGno//Ai8tinHFA/A7hO0jtltCFR5sRQxk2LDfG2vyPg/qZPtfpEC88Wium0hjd4nYazgYtEh0fIrB0bnT/M9Fo5cMt0II2YfVXoY9Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ MW6PR11MB8411.namprd11.prod.outlook.com (2603:10b6:303:23c::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.24; Mon, 26 May
+ 2025 12:17:06 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.8769.022; Mon, 26 May 2025
+ 12:17:06 +0000
+Message-ID: <faa1f415-4c12-4082-abdb-7bdd637a4d36@intel.com>
+Date: Mon, 26 May 2025 20:16:55 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv3 05/21] vfio/iommufd: Save vendor specific device info
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
- <20250521111452.3316354-6-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250521111452.3316354-6-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
+Subject: Re: [PATCH v5 00/10] Enable shared device assignment
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, David Hildenbrand
+ <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, Peter Xu
+ <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>, Baolu Lu
+ <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>, Xu Yilun
+ <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>, 'Alex Williamson'
+ <alex.williamson@redhat.com>
+References: <20250520102856.132417-1-chenyi.qiang@intel.com>
+ <7283f8f2-a9d9-4e7d-bfbd-3854b3d1736e@kaod.org>
+Content-Language: en-US
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+In-Reply-To: <7283f8f2-a9d9-4e7d-bfbd-3854b3d1736e@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: KL1PR0401CA0012.apcprd04.prod.outlook.com
+ (2603:1096:820:f::17) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|MW6PR11MB8411:EE_
+X-MS-Office365-Filtering-Correlation-Id: 77e4825b-c93f-453d-2070-08dd9c4f3acd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?enRsYVZIQ21UV1M3dXY5WFJaUzZNRWNxNGpTaXhydXdmUkkzM2FzaXNHVDNm?=
+ =?utf-8?B?MExQNUtmOG4wMzRNWFdCZU1XR3BrditLNnFVTXd1blpKYXR1c1lHTW9EUklq?=
+ =?utf-8?B?RmZNSU9xY041WjdMV3lzWi85WW0vRXRFajF1M3Bwa3dMbDhmZkdlZi9rc1pm?=
+ =?utf-8?B?OGs0NWwwOG5aZXBQSUpnbCtmWUdNN3RHamxqWW96U0NsdTY2Tlh4dDhyeFE3?=
+ =?utf-8?B?WE9iNW8xUkx6dTBISjdCR2p2MTF1dXU5TnlTaGRha2w3V0RsNXIxUjlIaEJJ?=
+ =?utf-8?B?TjdzeUZRTHhtVm4zc3hDWmkyRWtaclNyMjZoK3NFcUZSSkFVVEYxSFFianQy?=
+ =?utf-8?B?VjNDc3NpdHo1Sm00akVYaDVGNmlNeUxlemJQZ28wVit4TnQyUFIzS0Jtb0xv?=
+ =?utf-8?B?WVZZc2MzNnloQ01iNVVIOTBGR1pHWS9UQmF0Q2NyMUlDUzBZWXhKMWFRUURF?=
+ =?utf-8?B?cnlvZnN3YndvNUpTQVplY1JGRDZZcTNGdjQrTFA4YnZkMzFDbGN4dFhaUkYv?=
+ =?utf-8?B?cUZabUdKOVg3YTBIcVdPNFR1enRKS3N4ZUFGZ0lkdjU2NGNTdDBBUms1TWF2?=
+ =?utf-8?B?Q2UwUWZaWS9ad1FjaVZrazY0NUdaQlYvK2RabEE4anU0UkwyMWo1ZTR0aEMw?=
+ =?utf-8?B?K3Q5SFZZZ0dCVnM4SlNvUkQ1UGNGVXN5RWQwVjVPdlNoNGNxT1BMOG1EelZu?=
+ =?utf-8?B?M2NiZjZ4dnEwQloxWmxPOWtNZnlYMXgydGM3R3p2TFhWYUlOYStaazc3czB4?=
+ =?utf-8?B?d3NxakhQblkzS1h0OC81R1B0dTJvYXdpbzl5V2ExTnV0S0g0Q3NJQnZtS3dL?=
+ =?utf-8?B?QjNxcFJialUySDdhTWxrc0xoQWRmTEFvUStDbktkY3ZvaDNXMjVJZEFlZnNs?=
+ =?utf-8?B?M2pBbjZ5T0NuREpnNzBQNDN6K2tUTEY3WGZHYnJKdXh1K09sZnA3RWFtMGdL?=
+ =?utf-8?B?dXBxVlEycEdtVVd4L1BUMDdnVjJpVkE2NVRVU0NRTjdRZm1pVUNmS2hoRFZS?=
+ =?utf-8?B?VUlVR2VzQ0VUZzFjcnRtRFZ4YTBxVllBUjQyRm5UeS9mTHFpbHFSUHplUzZv?=
+ =?utf-8?B?SGVDUFJMcXpyWE11SFNtaTFiUlpXNjN6NCt1S2trNzJZVW9HN1JtRjRZdzJG?=
+ =?utf-8?B?OXozNE5HMVlnVkhOWWpIa2RkSlN1MTR6VFRCZzJZK0dwTmErNldDUjJueTgx?=
+ =?utf-8?B?NXRlWEdKSyswMnZSNFNMbWVsSEJvaDliRGVzR29uSHRDT2o1MWhLQU1menl4?=
+ =?utf-8?B?QllDZDY5SlgzSWtGTStZcVpNZkZCYkFUck9PbWFIRHRGWE44dCt1dHpyQ3Iv?=
+ =?utf-8?B?RWE1Yjl6KzcvQ1J2ZUhWWFhNRkV5QnRkdnpuYnpGSjRYaUxwUDRKdmZGQUtV?=
+ =?utf-8?B?Tk1ZUitRRDhnT2x4ckw1aWtJKzc1TDhVQS9TK3h3cXgvcUVTa1ZIaGdpbU5O?=
+ =?utf-8?B?dnkzM0g2Vk5FZnBQTktBK0xOSG4xaXdqckQyUWlhV1hoVEl3MDZZN2hhdko1?=
+ =?utf-8?B?QlhFa0hzd2h3OWdXejkwbHY4UFdndDIrQjF1VzVudzRpREtIbmZTaXNrL2Ra?=
+ =?utf-8?B?dk0wMFJmcnczZmNvSGdoTVlhMEJxRWc4ajBBR2dyTERLSGd4MkZPbHdZWGw4?=
+ =?utf-8?B?ek5CamNPWlB2N2dGWDF3SFZEdndmK3dnUkQ1MjZhc0NFYzhjaDYvWnhSYmRN?=
+ =?utf-8?B?WXdsdnFGa2JCdk1ZVE5FOHdGSzdCV2V1cWRGUFI0T29EOEpOeVZNcG5tRmxa?=
+ =?utf-8?B?cjVtOWh1UDB1cTNOdmNid0podGdDcnNhOGlvaGc4eXpGQzF3cXMvS0lsZ3Q0?=
+ =?utf-8?B?cGdadThCa0tpbmVWT3d3VzlXVVcxZmJCalRqUTU4dXhtYVJPN255WFBZTFR3?=
+ =?utf-8?B?amkrdk5aTlArb3Y4VE15V1YvRXVoZjl5NlJwVjJYOHl1ZW9Ib2ZQYkpuUlJR?=
+ =?utf-8?Q?b8bsy2mRlG8NN2uG9AscvreGLIcnNjkY?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MDA2YkU4aHhCUUx5bWVpNm5jbEdyaVhlU3hyNVZqblNVZk5Wd05pc3hFSi9O?=
+ =?utf-8?B?UFExelFnOVEweXhIS3VDUWhvMnE3ZVMzWVJwNy9GUFJlc0Q0dUhkd1htU2Iv?=
+ =?utf-8?B?NThkbGpEbWd3YWlZYVUvZWljKzZSSndPWkl4MnJoNWM5OEM2aEpTbWo4bXYx?=
+ =?utf-8?B?RnlocHQvMU1tdEtkT3NjUnpXZWdtMjhmTWN3UlNJbXc0R3JoT0NSbWp1N0JF?=
+ =?utf-8?B?MnJoQmZqd1htek94ellpTm9IcVZDU09sQm02ZHFzRExDd1l3U3ZZM1NKRzIz?=
+ =?utf-8?B?R1h6ditCdFBkSjJQOTYrTHVwTjYwOHBKbElxOXlzbUFSWFNEYkdEY0ZxQ24w?=
+ =?utf-8?B?YzM1bXNMTGlhOTZOZEg4c1BQZW9kU3puT3VIVmpVRnFENkhVNUk1aWtGMXZi?=
+ =?utf-8?B?S0ZBYUxESmJCNE1FL1ZvWE5vNTBRQllJVVdkK1NaOFhUcjB1VzBoc1RoT2RF?=
+ =?utf-8?B?R3h3VjY0RFp6Mncya2NUZkJjbTBseFAvYmY0cStRUXlkYXA5b3hGTWovZUxs?=
+ =?utf-8?B?WlJHOGtFOVlYcUYvYVBsMG1NcmJqTEpGdFdObENnQ2Z2cTQ2dDNwSGZCUjNV?=
+ =?utf-8?B?SGhaMzRicVlaSW5uTkVoblByZ1pENml3MVVhaWw4eGhOM3hybnJzbFlpaXZQ?=
+ =?utf-8?B?dy9TcFFNSmtWc242Q1VEMzBod0J2b25oOGUvYjNla0V5VnVURmpvNXBOQkFP?=
+ =?utf-8?B?Zm5WOWtnaER5VjVEamFPMjJZU2phcG03MjZPazhHaEZTdkovN1JTM0tSbHgr?=
+ =?utf-8?B?VkJTc2k4dW1UaUZFQWNoWnFQcFJ2RGh2Nnl1NDV1Znhod2ZjellNNWVIVjAw?=
+ =?utf-8?B?RmdoeHMrVnQrUTQ5RXFaRWcxdXBnSHcybGgwT3dtVlExbGpoaDVqSzVSSU93?=
+ =?utf-8?B?UW9DNmFxOWkxaXZYTU52eEF1QzZLdWtDdlhVSkNKTFp3TysyNW1lTWFJOHpS?=
+ =?utf-8?B?UnpQaFRwUEJoTEJSZFB4eXNZQS96c08xQXdzTzRyNE0xbzZVZzBvSmU1R05p?=
+ =?utf-8?B?NEpJbm53NXpsL0wrbTllTmMzeFdEcGtXWStxL2Q4T1MraC9VajdLcGZOd1hT?=
+ =?utf-8?B?YXNub0VJZDNXV2JnM2xtcnMwRWoxbUpXU05ZdFN1K2lvTVBsWDR1ZitIUCt1?=
+ =?utf-8?B?UXpaUlZRTUNjcVV5YUx0QXJad2lheVF4L1p3UWtQRnorV09SdGZvbnliT0Zj?=
+ =?utf-8?B?ajYvZ0VaWXREclVkZFo5WU56M05XUWtZYWE4YU00TlcxcmxmNU5ibCtPM1E2?=
+ =?utf-8?B?N05vUHJMNmJmNURZRGJ4ZUp4N1lWdjBtRG9vdzZiSGdkeVVLK0JnUmZSdG9u?=
+ =?utf-8?B?TGtxSVZ3UE44cC9neVU4TDdCelFOT2tLaDlJL0JiSmRLVHRIbXdLREhzREtJ?=
+ =?utf-8?B?UkgwUWJoTHo1NDByT2l0Q3RrYlZzNldoamMvRlR2VkxMOGc4MDBIemFUckh5?=
+ =?utf-8?B?QmdEbEJXRHZ3bEhZNFBRSXJPclZDdWp5QVNyS2gxQnJnK3oxM1FtK1hEbW5D?=
+ =?utf-8?B?aWNUNEZwM05UR09iZXM1TENXS3M1ODl6Z1pmbGIraXBYSHVFOWN2NE5aWTZE?=
+ =?utf-8?B?cHRJelNHSHBidWdEaEkwekhnYWJDZVRNY2hlbFdmdzJXOHh4UkFVUFNaR3A1?=
+ =?utf-8?B?bXVyY05IaUdKZjlQWUNYWTQ1Rm14Ny9pbThqb1dZYmFLMnN2Zkw2M1QxNHFq?=
+ =?utf-8?B?L0lxOEFKR1JOblJXc3JKU0NjMllTR1BhZkk5MGZUVWNZbllmb05FQ1laVUhx?=
+ =?utf-8?B?N3NtNUNMcktJS2JibzRrdm5BZGcwZHpPRnpYUmdidDNiMFFEYnJqWDlxdVBJ?=
+ =?utf-8?B?WHpnTW13bFJLZUVEU0R1L0h2ZXJyV3JtSktpaHNGc0IySWNGdWdLMkdQWHpG?=
+ =?utf-8?B?eXRrcFQzWWVWNzlaYksvaWduNWluOStjZFNjMlAzWWNpSXMydm9OWEZZbytn?=
+ =?utf-8?B?Zk5RSGd1M0pLVzRMaTFTQnBNODkvMVFCU1l6b1ZvZHJBZXdtdTZwRk8xSXdr?=
+ =?utf-8?B?L1JrL3lVaXpNSnVQM3UyYzJVdXN2N1kzUzh2L1RyaVVGMmkyMUMxQndTWjE2?=
+ =?utf-8?B?ODA4d2xZZm1pblRFUW81b0hoVDNMV2pON1FXa2FiT2JDSTdna0duMHUzSzJE?=
+ =?utf-8?B?Wlp4MkhwV1JnNGF2ZjdpbU05cGpVV0V4dUN1VVlRbDZ6dTFQdk9nNUVzRE5X?=
+ =?utf-8?B?bHc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 77e4825b-c93f-453d-2070-08dd9c4f3acd
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2025 12:17:06.2482 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: N/bEHGZM4IDz0EhhbWRAM2m53DXXWckZh9SZQIxuFWRf5jrV3dzpysGV/yUIC+PY4PLgmySywPBdRyWouBLUxg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR11MB8411
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.13;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,94 +219,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Zhenzhong,
 
-On 5/21/25 13:14, Zhenzhong Duan wrote:
-> Some device information returned by ioctl(IOMMU_GET_HW_INFO) are vendor
-> specific. Save them all in a new defined structure mirroring that vendor
-> IOMMU's structure, then get_cap() can query those information for
-> capability.
+
+On 5/26/2025 7:37 PM, Cédric Le Goater wrote:
+> On 5/20/25 12:28, Chenyi Qiang wrote:
+>> This is the v5 series of the shared device assignment support.
+>>
+>> As discussed in the v4 series [1], the GenericStateManager parent class
+>> and PrivateSharedManager child interface were deemed to be in the wrong
+>> direction. This series reverts back to the original single
+>> RamDiscardManager interface and puts it as future work to allow the
+>> co-existence of multiple pairs of state management. For example, if we
+>> want to have virtio-mem co-exist with guest_memfd, it will need a new
+>> framework to combine the private/shared/discard states [2].
+>>
+>> Another change since the last version is the error handling of memory
+>> conversion. Currently, the failure of kvm_convert_memory() causes QEMU
+>> to quit instead of resuming the guest. The complex rollback operation
+>> doesn't add value and merely adds code that is difficult to test.
+>> Although in the future, it is more likely to encounter more errors on
+>> conversion paths like unmap failure on shared to private in-place
+>> conversion. This series keeps complex error handling out of the picture
+>> for now and attaches related handling at the end of the series for
+>> future extension.
+>>
+>> Apart from the above two parts with future work, there's some
+>> optimization work in the future, i.e., using other more memory-efficient
+>> mechanism to track ranges of contiguous states instead of a bitmap [3].
+>> This series still uses a bitmap for simplicity.
+>>   The overview of this series:
+>> - Patch 1-3: Preparation patches. These include function exposure and
+>>    some definition changes to return values.
+>> - Patch 4-5: Introduce a new object to implement RamDiscardManager
+>>    interface and a helper to notify the shared/private state change.
+>> - Patch 6: Store the new object including guest_memfd information in
+>>    RAMBlock. Register the RamDiscardManager instance to the target
+>>    RAMBlock's MemoryRegion so that the RamDiscardManager users can run in
+>>    the specific path.
+>> - Patch 7: Unlock the coordinate discard so that the shared device
+>>    assignment (VFIO) can work with guest_memfd. After this patch, the
+>>    basic device assignement functionality can work properly.
+>> - Patch 8-9: Some cleanup work. Move the state change handling into a
+>>    RamDiscardListener so that it can be invoked together with the VFIO
+>>    listener by the state_change() call. This series dropped the priority
+>>    support in v4 which is required by in-place conversions, because the
+>>    conversion path will likely change.
+>> - Patch 10: More complex error handing including rollback and mixture
+>>    states conversion case.
+>>
+>> More small changes or details can be found in the individual patches.
+>>
+>> ---
+>> Original cover letter:
+>>
+>> Background
+>> ==========
+>> Confidential VMs have two classes of memory: shared and private memory.
+>> Shared memory is accessible from the host/VMM while private memory is
+>> not. Confidential VMs can decide which memory is shared/private and
+>> convert memory between shared/private at runtime.
+>>
+>> "guest_memfd" is a new kind of fd whose primary goal is to serve guest
+>> private memory. In current implementation, shared memory is allocated
+>> with normal methods (e.g. mmap or fallocate) while private memory is
+>> allocated from guest_memfd. When a VM performs memory conversions, QEMU
+>> frees pages via madvise or via PUNCH_HOLE on memfd or guest_memfd from
+>> one side, and allocates new pages from the other side. This will cause a
+>> stale IOMMU mapping issue mentioned in [4] when we try to enable shared
+>> device assignment in confidential VMs.
+>>
+>> Solution
+>> ========
+>> The key to enable shared device assignment is to update the IOMMU
+>> mappings
+>> on page conversion. RamDiscardManager, an existing interface currently
+>> utilized by virtio-mem, offers a means to modify IOMMU mappings in
+>> accordance with VM page assignment. Although the required operations in
+>> VFIO for page conversion are similar to memory plug/unplug, the states of
+>> private/shared are different from discard/populated. We want a similar
+>> mechanism with RamDiscardManager but used to manage the state of private
+>> and shared.
+>>
+>> This series introduce a new parent abstract class to manage a pair of
+>> opposite states with RamDiscardManager as its child to manage
+>> populate/discard states, and introduce a new child class,
+>> PrivateSharedManager, which can also utilize the same infrastructure to
+>> notify VFIO of page conversions.
+>>
+>> Relationship with in-place page conversion
+>> ==========================================
+>> To support 1G page support for guest_memfd [5], the current direction
+>> is to
+>> allow mmap() of guest_memfd to userspace so that both private and shared
+>> memory can use the same physical pages as the backend. This in-place page
+>> conversion design eliminates the need to discard pages during shared/
+>> private
+>> conversions. However, device assignment will still be blocked because the
+>> in-place page conversion will reject the conversion when the page is
+>> pinned
+>> by VFIO.
+>>
+>> To address this, the key difference lies in the sequence of VFIO map/
+>> unmap
+>> operations and the page conversion. It can be adjusted to achieve
+>> unmap-before-conversion-to-private and map-after-conversion-to-shared,
+>> ensuring compatibility with guest_memfd.
+>>
+>> Limitation
+>> ==========
+>> One limitation is that VFIO expects the DMA mapping for a specific IOVA
+>> to be mapped and unmapped with the same granularity. The guest may
+>> perform partial conversions, such as converting a small region within a
+>> larger region. To prevent such invalid cases, all operations are
+>> performed with 4K granularity. This could be optimized after the
+>> cut_mapping operation[6] is introduced in future. We can alway perform a
+>> split-before-unmap if partial conversions happen. If the split succeeds,
+>> the unmap will succeed and be atomic. If the split fails, the unmap
+>> process fails.
+>>
+>> Testing
+>> =======
+>> This patch series is tested based on TDX patches available at:
+>> KVM: https://github.com/intel/tdx/tree/kvm-coco-queue-snapshot/kvm-
+>> coco-queue-snapshot-20250408
+>> QEMU: https://github.com/intel-staging/qemu-tdx/tree/tdx-upstream-
+>> snapshot-2025-05-20
+>>
+>> Because the new features like cut_mapping operation will only be
+>> support in iommufd.
+>> It is recommended to use the iommufd-backed VFIO with the qemu command:
 > 
-> We can't use the vendor IOMMU's structure directly because they are in
-> linux/iommufd.h which breaks build on windows.
+> Is it recommended or required ? If the VFIO IOMMU type1 backend is not
+> supported for confidential VMs, QEMU should fail to start.
+
+VFIO IOMMU type1 backend is also supported but need to increase the
+dma_entry_limit parameter, as this series currently do the map/unmap
+with 4K granularity.
+
 > 
-> Suggested-by: Eric Auger <eric.auger@redhat.com>
-> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   include/system/host_iommu_device.h | 12 ++++++++++++
->   hw/vfio/iommufd.c                  | 12 ++++++++++++
->   2 files changed, 24 insertions(+)
+> Please add Alex Williamson and I to the Cc: list.
+
+Sure, will do in next version.
+
 > 
-> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-> index 809cced4ba..908bfe32c7 100644
-> --- a/include/system/host_iommu_device.h
-> +++ b/include/system/host_iommu_device.h
-> @@ -15,6 +15,17 @@
->   #include "qom/object.h"
->   #include "qapi/error.h"
->   
-> +/* This is mirror of struct iommu_hw_info_vtd */
-> +typedef struct Vtd_Caps {
-
-please name the struct VtdCaps instead.
-
-
-Thanks,
-
-C.
-
-
-
-> +    uint32_t flags;
-> +    uint64_t cap_reg;
-> +    uint64_t ecap_reg;
-> +} Vtd_Caps;
-> +
-> +typedef union VendorCaps {
-> +    Vtd_Caps vtd;
-> +} VendorCaps;
-> +
->   /**
->    * struct HostIOMMUDeviceCaps - Define host IOMMU device capabilities.
->    *
-> @@ -26,6 +37,7 @@
->   typedef struct HostIOMMUDeviceCaps {
->       uint32_t type;
->       uint64_t hw_caps;
-> +    VendorCaps vendor_caps;
->   } HostIOMMUDeviceCaps;
->   
->   #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index d661737c17..5c740222e5 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -834,6 +834,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->       VFIODevice *vdev = opaque;
->       HostIOMMUDeviceIOMMUFD *idev;
->       HostIOMMUDeviceCaps *caps = &hiod->caps;
-> +    VendorCaps *vendor_caps = &caps->vendor_caps;
->       enum iommu_hw_info_type type;
->       union {
->           struct iommu_hw_info_vtd vtd;
-> @@ -852,6 +853,17 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->       caps->type = type;
->       caps->hw_caps = hw_caps;
->   
-> +    switch (type) {
-> +    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
-> +        vendor_caps->vtd.flags = data.vtd.flags;
-> +        vendor_caps->vtd.cap_reg = data.vtd.cap_reg;
-> +        vendor_caps->vtd.ecap_reg = data.vtd.ecap_reg;
-> +        break;
-> +    case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
-> +    case IOMMU_HW_INFO_TYPE_NONE:
-> +        break;
-> +    }
-> +
->       idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
->       idev->iommufd = vdev->iommufd;
->       idev->devid = vdev->devid;
-
+> Thanks,
+> 
+> C.
+> 
 
