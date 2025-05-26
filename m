@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4796C5AD49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5F9C5B542
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 18:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJcCW-0002zi-Oe; Mon, 26 May 2025 14:05:28 -0400
+	id 1uJcDK-00036u-PG; Mon, 26 May 2025 14:06:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uJcCS-0002yR-0d
- for qemu-devel@nongnu.org; Mon, 26 May 2025 14:05:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uJcCO-0004mS-Kr
- for qemu-devel@nongnu.org; Mon, 26 May 2025 14:05:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748282717;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IBFnDzcR7mTX5Jx/Ur1m0hZi37CL9PCQAI6KEXQ6wEU=;
- b=H/itcLKjc6AQCCaEZyo7vpUkSsVTg+U4Y1h+ufFmpSupkj10jL8DlOBS42oMPwrFP1jMcb
- eyUQi6eeea7pG9PDSPPv/84PxuDokQJfl6yIWq9bouMEddxu6YRqlsH8lyimQcXfsOle6L
- JQkFMPuRbpGM95VwQeRgLtOr4bLbmvI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-zaK26mV2OgWOkFCi0gtGeA-1; Mon,
- 26 May 2025 14:05:15 -0400
-X-MC-Unique: zaK26mV2OgWOkFCi0gtGeA-1
-X-Mimecast-MFC-AGG-ID: zaK26mV2OgWOkFCi0gtGeA_1748282714
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44CD719560B5; Mon, 26 May 2025 18:05:14 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.9])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 787411956095; Mon, 26 May 2025 18:05:13 +0000 (UTC)
-Date: Mon, 26 May 2025 14:05:11 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PULL 00/39] aspeed queue
-Message-ID: <20250526180511.GA12355@fedora>
-References: <20250526080512.1697528-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcD9-00035O-DX
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 14:06:07 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcD5-0004oe-31
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 14:06:07 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43d0618746bso20040175e9.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 11:06:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748282760; x=1748887560; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hE4u9DqrVkOFxf3CMUX+T2PBWRw3eyPSmguG7jTFS18=;
+ b=gfAGPvO2YcUop9hBX2lsoon4wxsEv21IFbuoVWV+5tZvBupfRjQBZsTnudB7IvJdM6
+ 4FgqI8kkBsr8CS7XZEt70nyf8yJyNO/cD/c7JOfmV5ouP9BhEcNfpMwxW2YhwX1cCBbc
+ 1SB6pln1udhZEXh7dUxb3xQB7cfx/y8FRNEIlimfPpJlOcPSwKKxAiU/X2buNeY/J4Ez
+ 90o98vORgHnMaCIsYSTDbBUrQ1P1WvO4LKR5wrmwLD1fKbfyuM5qZfKDJ9+3dV9BX0ln
+ 9C3lrY5GmsEio9fX8YgPcStCwwchRYgKtQG390XdK3PZtpddyUpl4Cpjf+pqTe12zSW0
+ +DtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748282760; x=1748887560;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hE4u9DqrVkOFxf3CMUX+T2PBWRw3eyPSmguG7jTFS18=;
+ b=bwOToHgKouM5mdSwiYFAIxVJiTx29xs7F1wfalSOtc+aKSTMIJ+wtrYa3GLjcSQJWq
+ AbOWxlYcy0z1efXQQhyw26flHFa5yH/A6PW81zyjG7RQXUg/zBB0/XNtBq25KVR6adsV
+ Rq0iTRFZLuDJ7AYWyNK7Ddpi8iAXVKKkwvxVcOwXoFIgJBzLkOzDzbaIp0j0jKiZMrV0
+ aKlj8V7/KkaRL9rmwFH2MZITK/NplrwvMbj2BEENOss0zdgIiKZ4FAJbgVI6A3dtiSQx
+ zOe+xVE7HGVgjJfAvxh5WEIIe5bif+xOa7tJkm9C40zqeRhDL0iAufq/v2yFAlUQbwO3
+ 6WPg==
+X-Gm-Message-State: AOJu0Yxk0zZ/3wP2sxpE9FnSvTSYppq6neeoEc9sBGLfpwZYC3PHga75
+ lpuhR4LG1eUwLwjF6L8shXicTnrWUQeiAZaRSMPccvRHWBrHZmh88ggttHA3+lKgSebmAd+BgVJ
+ LrVCH7gY=
+X-Gm-Gg: ASbGncs/qV+I/VQ0qLPgzyJHZJE9kJXKUH9sNCO445PlJldIX82MwVBFQyTfkWUriU+
+ QhcSqM19kgHoqycHEC4mrhVjB5YlrSRvOdjlZg6oyfgcTqpLAmv346yyU/plvPOuSimNWeWiaj/
+ g09aFyaS9r7VQdqYjZOmjY8VGuGtUDZivzkdv6/tK3HQKiJi64OSt6YZLwWXhNMGSzrVJ+gUSu/
+ axJ9WzEQmhmYJ7X8XfR7LKtmeVEqBbpyL29qhKSuJLJKNCbGAYJ1essICwsQGH6EYROgOPNyC61
+ +720yjOtTX74wRs60z/OL9yQ3I1kT3+0QmKj44tSi9L3sbLh10BI/XEciiGp94RBmosVleewYU8
+ qn6s9tF8tXRNjz/xWfGSvPBfO+b90Zvc=
+X-Google-Smtp-Source: AGHT+IFmZjlg6hHfzYy3Ryf+U4j3zkXN5lh5z+BoS/BxGiFEf1EdXwS9/tVB7rR6c0S7f44Spet/xQ==
+X-Received: by 2002:a05:600c:64ca:b0:43d:46de:b0eb with SMTP id
+ 5b1f17b1804b1-44c935dcaecmr84888305e9.12.1748282760107; 
+ Mon, 26 May 2025 11:06:00 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f38142b8sm240601545e9.30.2025.05.26.11.05.59
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 26 May 2025 11:05:59 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH 0/2] hw/ide/ahci: Delay a bit before completing reset
+Date: Mon, 26 May 2025 20:05:56 +0200
+Message-ID: <20250526180558.65613-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="amirXvl1P2ShuEIR"
-Content-Disposition: inline
-In-Reply-To: <20250526080512.1697528-1-clg@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +100,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Intented to help SeaBIOS development; untested there
+(except with QEMU test suite).
 
---amirXvl1P2ShuEIR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Jiaxun, is it helpful to you?
 
-Applied, thanks.
+Philippe Mathieu-Daudé (2):
+  hw/ide/ahci: Introduce ahci_reset_delayed() and ahci_reset_complete()
+  hw/ide/ahci: Delay a bit before completing reset
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+ include/hw/ide/ahci.h   |  1 +
+ hw/ide/ahci.c           | 70 ++++++++++++++++++++++++++++++++++++++---
+ tests/qtest/ahci-test.c |  4 +++
+ hw/ide/trace-events     |  1 +
+ 4 files changed, 71 insertions(+), 5 deletions(-)
 
---amirXvl1P2ShuEIR
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmg0rVcACgkQnKSrs4Gr
-c8juxAf6AzWIgRck7KW7wrqoXVkhmpnui8VlBhOdnUGf6oQGhRxnR8ODaIC4W4th
-fuugOqOD3DbwnWDD4FAgogi1w5CQ7imOPyvKdF9mjce9PjY6+2pWQbLmCHyKubOR
-m55nfXkRU7Rm0X3LFt5aPmiUUM6g3J2hTXieX2eoWW7TXGF3UneQPIiIIUv4W+vv
-lU4YyBXbZPBokFHiyU5QE4yQJJpUvKAaYuoaYo3Z/bySQyK9qxMqBrFDdGXyHI1Y
-lS4PV81zlXUwgVwqlcX9jv9/af5nqZFJhJaAPCMyTDjZUg039bCVx7BthfRpyf9R
-/+Ls5FxFU7o6AhI0Y3US7HZtMQSkOQ==
-=Zh2o
------END PGP SIGNATURE-----
-
---amirXvl1P2ShuEIR--
+-- 
+2.47.1
 
 
