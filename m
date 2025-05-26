@@ -4,131 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E27C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 16:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948F9C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 16:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJb3Y-0000Ys-Vp; Mon, 26 May 2025 12:52:09 -0400
+	id 1uJb8U-0002BE-83; Mon, 26 May 2025 12:57:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uJb3U-0000Uy-4F
- for qemu-devel@nongnu.org; Mon, 26 May 2025 12:52:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJb8S-0002AO-W4
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 12:57:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uJb3R-00032v-HF
- for qemu-devel@nongnu.org; Mon, 26 May 2025 12:52:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uJb8Q-0003gY-QR
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 12:57:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748278319;
+ s=mimecast20190719; t=1748278629;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RiK/DV2LcoBhJt46PDdr6ReoA8KaR1GFNX+5XNS7QmI=;
- b=iDkZ8az2dOBO9aLtULAG+T7SIz9D/P98G0FRZoezRNqbQ4YHamkYEzwkIJJxNm3PrDLf7M
- jvzwQnbIJWQZvTVwX9XeROtU3EuyExQ18SqDeemCuW7xIvzKYGUPpQIBUpcbVPaSugHNf+
- dKR2v/SWoGqazgzDYcQP+QsWgqfsGxw=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XMvOBl4JBvP9rxwQP13NOL9Dl2rE+GAhZKC88UlUQtg=;
+ b=d6CuKs6Ehsax2ke1MGUe81dIT8uvcU+w7Trql2XXGioyy7Y69RKQRCaF4W29VNVMLdc6BM
+ c4RPlXRTvcYJK3qIjsL3FC3Md0Ei+59OBYkooU+iyrEf8snTJBamlKHgrIGRKkfMmy7C8L
+ yIxe2LhgqmJacMDRi+FVgaRMUuT0QsU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-rMlBN1oCOkutKIsAxQT5IQ-1; Mon, 26 May 2025 12:51:57 -0400
-X-MC-Unique: rMlBN1oCOkutKIsAxQT5IQ-1
-X-Mimecast-MFC-AGG-ID: rMlBN1oCOkutKIsAxQT5IQ_1748278316
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ad54ada24ffso226207466b.3
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 09:51:57 -0700 (PDT)
+ us-mta-634-gQjxPzBFM_2OMbwqNfFY7g-1; Mon, 26 May 2025 12:57:07 -0400
+X-MC-Unique: gQjxPzBFM_2OMbwqNfFY7g-1
+X-Mimecast-MFC-AGG-ID: gQjxPzBFM_2OMbwqNfFY7g_1748278627
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a371fb826cso974444f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 09:57:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748278316; x=1748883116;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RiK/DV2LcoBhJt46PDdr6ReoA8KaR1GFNX+5XNS7QmI=;
- b=BqqGTiEw45Lsg3vaydv+Gs7MLs9a9r6M129m/BnhsFW4CZhDP+HbsHb6zDXPzO/M+Q
- MPHbcZzMpU/3VSHqISmLoRuQcy9byGGXJlqUbOdTp1LZoDYdgMTO9QfM2uVmjPlqxY+u
- SaVUF0XU7KSJb/5hVAvhX/V5NtEpp9iXhCg+BV96O1roWVWxNiX8ovKlRpFJEAjMAfk6
- jeDe5zodwok1Bdoce6ElclcUk4QQjNpQWH4fTH48H9nKCjX9uh4pT13HDS7YIlY0m5m6
- DPJZcqgisuyGFPMYR0RY2WIyjRdwCbq3gzbDyETMRX56SSMvPKcm1fVLyTSNns9JAf5Z
- 1DvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVYIL6iqseEJDC5/xIxBKA/qXk0cR3HgF08C2jUppwqPxeLLFfi/0xF1HNhfcvhTOHUfSVVip/lxwOF@nongnu.org
-X-Gm-Message-State: AOJu0Yz1Sdfgzp8yAxW2dkQHjafLoTJ0xlaS5YX7i54+rE39KjUFyumd
- muwNLCe2wkW10845elcrI1AtYfVxiJ7+9owpdimZ+M1M0SE5Va7WkkJzApXZDfl77Pn8qBykz2D
- 56BdppQk+VGz0EAQFj06/FPsu3YNU5IK2zaU0TkcBSNmY1Bw37PD+x3ke
-X-Gm-Gg: ASbGncvpYZ+TU/5p2hQQMqy+oLJsfdnE42e7LsqSMPcG3iNV4fG6RZzZguRgjj/WweB
- Bz9+UQdy7VQlodtVkwe7l4fxZ2DVAP4tm7LKC6H+MArNk1GDbruSHSXFQm/agUjcDju6yJD4d0K
- BfkRfiJW5sIu1sYn0gFImyudNkSpTVYH276k1hfJmYXNUGe/P0tbT5jBj21Q9JDr+0zqPdzudJr
- nhLvVbtdr2d0ici3hfhJj6VbjBPyv3qQrnREKE55wsRAPjNiSWha6fpzBjVda38qf/rMbY+R15h
- aYZ4W/WLd5BrZA0n
-X-Received: by 2002:a17:907:3f96:b0:ad5:5210:749c with SMTP id
- a640c23a62f3a-ad85b0e0f05mr780983266b.22.1748278316417; 
- Mon, 26 May 2025 09:51:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFf5/Rd+lOrMXP3AzsqQu1WlSeB/D6xHox72Th7huCa0+jJMyO1X2MxWgBCzzDl2GumOVe7IQ==
-X-Received: by 2002:a17:907:3f96:b0:ad5:5210:749c with SMTP id
- a640c23a62f3a-ad85b0e0f05mr780981866b.22.1748278316026; 
- Mon, 26 May 2025 09:51:56 -0700 (PDT)
-Received: from [192.168.182.123] ([151.95.46.79])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ad52d441fb5sm1726441566b.108.2025.05.26.09.51.54
+ d=1e100.net; s=20230601; t=1748278626; x=1748883426;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XMvOBl4JBvP9rxwQP13NOL9Dl2rE+GAhZKC88UlUQtg=;
+ b=WrkrHYAr7UfQKjnXjT/ysrRhj797LiNqFWEpgdiWICZu6uYCHslau5GQpsmVTPhubJ
+ QpfphUUHG5hic1g24T+o6LzObgzA/RRerWl3olx6BBmFuYfsaCmyGh7LyqWDEKGGqZI2
+ 3kUN1gWbdA5Yu0yko3x3DZ12LphoPWzS1W/GpEWiX/fi2zicT/4hvTAd7ahnsPBlu/b+
+ FSknkYzjxAh8SJZgqmK+h2fOURHnE3wTp0V3dO0fzKY8bb0xttPhHq5I8r0RDkbnAQZO
+ 0hRfmO1qbqL5qBs59nLGGmJfaH99ZwqkxtEtnsiZzjSCmzP7KMYwTUHEqE6EQkuGVcoy
+ LhEQ==
+X-Gm-Message-State: AOJu0YydJ3tIjsG+yVi/Qnsl4tutzizk+d5QJ+XnPRQbSx0MWDqkjck9
+ ZXLlkCBupSVCiyC/6iwbGdSGV9q3N2AUvlZ0tqgOjR6/vZFRwYJxe9ZMm6/93Y0Nt1sdVJtusI2
+ DDNWYQS8Zkgn6l2+WRcnpl+dnh6eJVeK8JloBsvoiQwtqNpQSfB63enRQ
+X-Gm-Gg: ASbGnctU+VS3Hl2Y5NXytIIsX718g+zbho20SZ8VbHLO+1SLwWtLAZTF2MWNOjzm837
+ pCXjlgR3Tl9wV0UjdLuh9exjHZok57N5BPkRDfidY58MxkuiF3bs6nxUw1gzt4zrMg71M9N/If8
+ RNmFAblqoTgQm83IpVK7NezMGD+kXmpSsA4wEPSQo6769+tcEiTB3U14buBcQwboPQpGmo1nsd8
+ JHIx9YmyMPRQvqNu7Ts29hdsL67Z64etkfXRtk/k+jFrDbcd7yLciI1TBetPmoB52BFISoLqe2K
+ 4PBUcLhEOSd3ZU29LPLJC0ky345DOYE8fc8QXlgUzcUjOLm/Vw==
+X-Received: by 2002:a05:6000:3103:b0:3a4:c81:a075 with SMTP id
+ ffacd0b85a97d-3a4cb49dde4mr7165575f8f.45.1748278626527; 
+ Mon, 26 May 2025 09:57:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNI52F//zq18dl2306MvKO/2UjaZ08mBOUCXxQPEK31tH4VPYLPh7MY22AcFp/jt5t6N8i1A==
+X-Received: by 2002:a05:6000:3103:b0:3a4:c81:a075 with SMTP id
+ ffacd0b85a97d-3a4cb49dde4mr7165555f8f.45.1748278626030; 
+ Mon, 26 May 2025 09:57:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4c9dd7c27sm8507288f8f.45.2025.05.26.09.57.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 09:51:55 -0700 (PDT)
-Message-ID: <9461fc05-3c1d-4236-a0b7-99f39781f278@redhat.com>
-Date: Mon, 26 May 2025 18:51:53 +0200
+ Mon, 26 May 2025 09:57:05 -0700 (PDT)
+Message-ID: <22265d1d-207b-4e84-bd4d-7a2f56cb1348@redhat.com>
+Date: Mon, 26 May 2025 18:57:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/11] Improve futex usage
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Stefan Weil <sw@weilnetz.de>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
- devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
+Subject: Re: [PATCH v2] vfio/igd: Fix incorrect error propagation in
+ vfio_pci_igd_opregion_detect()
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
+ <c.koehne@beckhoff.com>, edmund.raile@proton.me,
+ Edmund Raile <edmund.raile@protonmail.com>
+References: <20250522151636.20001-1-tomitamoeko@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250522151636.20001-1-tomitamoeko@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -153,99 +156,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/25 07:29, Akihiko Odaki wrote:
-> Changes in v4:
-> - Added patch "qemu-thread: Remove qatomic_read() in qemu_event_set()".
-
-Hi Akihiko,
-
-I'm not so confident about putting this patch before the other changes;
-I'm referring basically to this hunk:
-
-diff --git a/util/event.c b/util/event.c
-index 366c77c90cf..663b7042b17 100644
---- a/util/event.c
-+++ b/util/event.c
-@@ -48,22 +48,9 @@ void qemu_event_set(QemuEvent *ev)
-      assert(ev->initialized);
-  
-  #ifdef HAVE_FUTEX
--    /*
--     * Pairs with both qemu_event_reset() and qemu_event_wait().
--     *
--     * qemu_event_set has release semantics, but because it *loads*
--     * ev->value we need a full memory barrier here.
--     */
--    smp_mb();
--    if (qatomic_read(&ev->value) != EV_SET) {
--        int old = qatomic_xchg(&ev->value, EV_SET);
--
--        /* Pairs with memory barrier in kernel futex_wait system call.  */
--        smp_mb__after_rmw();
--        if (old == EV_BUSY) {
--            /* There were waiters, wake them up.  */
--            qemu_futex_wake_all(ev);
--        }
-+    if (qatomic_xchg(&ev->value, EV_SET) == EV_BUSY) {
-+        /* There were waiters, wake them up.  */
-+        qemu_futex_wake_all(ev);
-      }
-  #else
-      pthread_mutex_lock(&ev->lock);
+On 5/22/25 17:16, Tomita Moeko wrote:
+> In vfio_pci_igd_opregion_detect(), errp will be set when the device does
+> not have OpRegion or is hotplugged. This errp will be propagated to
+> pci_qdev_realize(), which interprets it as failure, causing unexpected
+> termination on devices without OpRegion like SR-IOV VFs or discrete
+> GPUs. Fix it by not setting errp in vfio_pci_igd_opregion_detect().
+> 
+> This patch also checks if the device has OpRegion before hotplug status
+> to prevent unwanted warning messages on non-IGD devices.
+> 
+> Fixes: c0273e77f2d7 ("vfio/igd: Detect IGD device by OpRegion")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2968
+> Reported-by: Edmund Raile <edmund.raile@protonmail.com>
+> Link: https://lore.kernel.org/qemu-devel/30044d14-17ec-46e3-b9c3-63d27a5bde27@gmail.com
+> Tested-by: Edmund Raile <edmund.raile@protonmail.com>
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> ---
+> v2:
+> * Add Tested-by from Edmund Raile. Thanks for the contribution.
+> * Rebased on vfio-next
+> * Fix typos.
 
 
-... feel free to resubmit that separately, also because it's missing
-a smp_mb__before_rmw().
+Edmund, Alex,
+
+Could you please send a R-b ?
+
+Thanks,
+
+C.
 
 
-Also, I'm not sure what was your opinion of the more optimized version
-of qemu_event_reset:
 
-diff --git a/util/event.c b/util/event.c
-index 366c77c90cf..663b7042b17 100644
---- a/util/event.c
-+++ b/util/event.c
-@@ -78,6 +78,7 @@ void qemu_event_reset(QemuEvent *ev)
-  {
-      assert(ev->initialized);
-  
-+#ifdef HAVE_FUTEX
-      /*
-       * If there was a concurrent reset (or even reset+wait),
-       * do nothing.  Otherwise change EV_SET->EV_FREE.
-@@ -86,6 +87,28 @@ void qemu_event_reset(QemuEvent *ev)
-       */
-      smp_mb__after_rmw();
-+#else
-+    /*
-+     * If futexes are not available, there are no EV_FREE->EV_BUSY
-+     * transitions because wakeups are done entirely through the
-+     * condition variable.  Since qatomic_set() only writes EV_FREE,
-+     * the load seems useless but in reality, the acquire synchronizes
-+     * with qemu_event_set()'s store release: if qemu_event_reset()
-+     * sees EV_SET here, then the caller will certainly see a
-+     * successful condition and skip qemu_event_wait():
-+     *
-+     * done = 1;                 if (done == 0)
-+     * qemu_event_set() {          qemu_event_reset() {
-+     *   lock();
-+     *   ev->value = EV_SET ----->     load ev->value
-+     *                                 ev->value = old value | EV_FREE
-+     *   cond_broadcast()
-+     *   unlock();                 }
-+     * }                           if (done == 0)
-+     *                               // qemu_event_wait() not called
-+     */
-+    qatomic_set(&ev->value, qatomic_load_acquire(&ev->value) | EV_FREE);
-+#endif
-  }
-  
-  void qemu_event_wait(QemuEvent *ev)
-
-
-Do you think it's incorrect?  I'll wait for your answer before sending
-out the actual pull request.
-
-Paolo
+>   hw/vfio/igd.c | 22 ++++++++++------------
+>   1 file changed, 10 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 5b6341c5bf..e7a9d1ffc1 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -187,23 +187,21 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>   }
+>   
+>   static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice *vdev,
+> -                                         struct vfio_region_info **opregion,
+> -                                         Error **errp)
+> +                                         struct vfio_region_info **opregion)
+>   {
+>       int ret;
+>   
+> -    /* Hotplugging is not supported for opregion access */
+> -    if (vdev->pdev.qdev.hotplugged) {
+> -        error_setg(errp, "IGD OpRegion is not supported on hotplugged device");
+> -        return false;
+> -    }
+> -
+>       ret = vfio_device_get_region_info_type(&vdev->vbasedev,
+>                       VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+>                       VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, opregion);
+>       if (ret) {
+> -        error_setg_errno(errp, -ret,
+> -                         "Device does not support IGD OpRegion feature");
+> +        return false;
+> +    }
+> +
+> +    /* Hotplugging is not supported for opregion access */
+> +    if (vdev->pdev.qdev.hotplugged) {
+> +        warn_report("IGD device detected, but OpRegion is not supported "
+> +                    "on hotplugged device.");
+>           return false;
+>       }
+>   
+> @@ -524,7 +522,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>       }
+>   
+>       /* IGD device always comes with OpRegion */
+> -    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
+> +    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
+>           return true;
+>       }
+>       info_report("OpRegion detected on Intel display %x.", vdev->device_id);
+> @@ -695,7 +693,7 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>           return true;
+>       }
+>   
+> -    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
+> +    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
+>           /* Should never reach here, KVMGT always emulates OpRegion */
+>           return false;
+>       }
 
 
