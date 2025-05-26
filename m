@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCC4C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 18:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B077C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 18:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJcMD-00087D-6m; Mon, 26 May 2025 14:15:29 -0400
+	id 1uJcNU-0000KZ-D5; Mon, 26 May 2025 14:16:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcM1-000867-MF
- for qemu-devel@nongnu.org; Mon, 26 May 2025 14:15:17 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcNS-0000KG-Ql
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 14:16:46 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcLy-0006Hg-5v
- for qemu-devel@nongnu.org; Mon, 26 May 2025 14:15:17 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43ce71582e9so23001465e9.1
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 11:15:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcNR-0006aa-25
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 14:16:46 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-44a57d08bbfso18910435e9.2
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 11:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748283312; x=1748888112; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748283403; x=1748888203; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DRWTXK6F0TtjftMzftbtG1pBhONz9R1WrCmvSecwMds=;
- b=i3FQYXsnk27YbhT0qOGWCWf9LOhTzmr/y5QaIZxQkncTFbiZybd6kTMp2tkZfJIiQm
- M5sbDKH8/aQ01CTAJctnzDK9pM0+NPXKQjxjbBSKczPOtyVjN1iUYXymcF3c6v8cseAK
- HFoqyyohUUrXqB6mtxeB4ihniUG3JQaoWYD29w4BacgRgWV0sysVWGYxK1Ssz+15SC47
- 8nfCceDH8bHgMcaRyapgrfSO1Acf2c6YJRRxdYBxz7jZR6v5LCM0CXubxROjkJ+KLhNw
- fbt4sAIh6Qu6R6HpZ0vYogl04lf8wUryT/diyrprMzrRD+ThrfacSLPrB0mAHIEp8U7e
- NpVw==
+ bh=jKLwdwro/mVPpscoQYxiX/J6E6d2FavrO+/L+vO9WYA=;
+ b=c9k+zv+14gZl/mzMaweNDu18QztqzyF2xxCWkR7AAI5AWO+8iQGxNKKhsrxYRjpNbO
+ G0nSawb08JEfPPmgYUuZwJv/0hZEg0ic8HalWVxntKlw1praBKfaZAAGGMeIgU2wGkDC
+ 8WbHtxzre9nShNbRpDUv3Q455H/wPKqodXm8yNyGfy4mxti3S4UMFfaixo6k4Zw2wlrA
+ +q9zY6mqsUgp2wSzo8pQmtkXjj+9v8nRSJPJ3IsvRZ0socIrLAdKXWGkNDZvV0k9gc3n
+ G4MNiIquTZZ1LTAn+OBzOyzZFsdOu71Vp0hzG/l0c8GYpFaGSqTyecWtKAb4UdJkKvAZ
+ XHlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748283312; x=1748888112;
+ d=1e100.net; s=20230601; t=1748283403; x=1748888203;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DRWTXK6F0TtjftMzftbtG1pBhONz9R1WrCmvSecwMds=;
- b=sGEawZ7N1ObYi76BWSpGagzbAApKof+snwm/q8aIZhX5GiACcyovoAsRuI/fCV83wm
- YoeE1UHcT1yCVZCPsjAla2Wr+0xOJMUa94Xo2i1sw0GdmQHIJmtyQu8pHWqgNMdqqiFi
- S+c0SRL+H2D68ZANhv+5r41JZPmOkexbVd1dIBN+IMJ9jR4wKg2fBONJHFRgrsGVYyNW
- lTQQwqkyzOgt/yjcxIOAeNdxp6NucUGz5eBDghX6jmvwRPbbuUZ0d1Pivmh5j+sLniyc
- fmTsUw2GmbbL+Y9J05MgiGl3PqWdcz1pBBTzJeG41bgr07J/80TYi2sp36zGGDl2xVOe
- i3Ig==
+ bh=jKLwdwro/mVPpscoQYxiX/J6E6d2FavrO+/L+vO9WYA=;
+ b=igwwX6v9z0aBQPhvjHtHxL2Ss30RIVHiFEzt+BYnvk+0wvbRGl7NcgaxC6eSWqPnTv
+ 1Zkrks/9ausFzVfb55eVyZQI/dA9zjkUrj0YZB3TUYdrQznQEflVhaJK0HY5Y47+Qvsv
+ 5q1osaGb2OLsLsgAgtMZ7XSLfijgVuj6DJdBD6DQHfNGCq4hUpq/MtL7mNF1e0rXcCyJ
+ anAXgxy2n749iWKOYIlPMj0kFiUJLXMDi7tNdoeBi8q5u4fxMmnmON80oxGZcJfSGsHD
+ sreN7NRdGJSgxg8ZSESAdN4QGaaF0USW942LOBw0dhglPJVNW2Ob8NwRaiVpwUxGXYO2
+ 14DQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbiqPmEJf8+zWhM+Eyj2dG4F3FOOILAFWsdSgTF8ruD4BH3gF2lu4s3u4Pee8J0knQMu8Xyc4NWRh8@nongnu.org
-X-Gm-Message-State: AOJu0YxEx23tonEcSp7oKvaAorqwJJbUmQU0E5SR3U/+oO2rQCtufofH
- 1obl4eGwBntcJ5iMi3DZOcNMzzv13TZ3ZkN5MCii6Rre5b0T2D4IkuvNSHYn63nvKlY=
-X-Gm-Gg: ASbGncuu6KRSN2g12ipp2QY0c7H04BfHJ7jX4Sz30Yud8D30GWD1vgQw0mkEy/Gegnw
- W4GhfrEiIuN/lhNasJ/PO4DuAJ4jb/lOGEa9CJDFQC0KhEf4BjU/RwYC5Y6YC/CrYBC5kSHCWFs
- ec4Dt2KsTOWbki4MRkE51XKlJExrq0n5IZ9rRNDESzBL/jMecrBjiGRgtumtfgV4tN6oJBSfge4
- d+2UvuIYUCYFFyWAZNwrqPR+C+iNo38cdWpA1unsuECSmvuzBjURa5Sfx9nJvBdCzCuc1k4F3hj
- GVV8Rcgpuml9L07u7ijCpyeAPD/ZxEIGNWV4XibCs/4HyrtC1VP2+FhnY4oNQCh46CoVL/RWQX7
- wuGi02BQwiPycByujESh13OtR
-X-Google-Smtp-Source: AGHT+IFMxQLEv2ZxU9/LVdfnpCq8u5a8B+HuHh+1TvK7xwqy3AysJaI9Pf+HCtXIdzFj458BI+2Veg==
-X-Received: by 2002:a05:600c:8189:b0:43c:f050:fed3 with SMTP id
- 5b1f17b1804b1-44c919e13f3mr80705585e9.11.1748283311925; 
- Mon, 26 May 2025 11:15:11 -0700 (PDT)
+ AJvYcCV0Ni5Zx+4x/lO/biUH1rOLd3u2jm+SKeJd3H47D/TF6jpzEmgLLX26y10txsjnJyazdLTk1f29xa2V@nongnu.org
+X-Gm-Message-State: AOJu0Yz1KflPaFa4CkswfuV/5pBTAWU+hE3I8yICnMaoi7GgWCgDwt9a
+ 5GkN2KQoSKUwgEvhhLM3JzSOIQ10q/CruaMinrv4dMsx0Dlj1p7rUvxxlJrRA9elAsM=
+X-Gm-Gg: ASbGncu1ym3GO35EBd6yZeb8cs+8bCSby5Df0jZ5XB2Bt7pI6W9legm3PQWRlRwBc+j
+ EG9IXlQS/KqjtxwK0UgwSS5wJeEmf6TInBfibTO82vvJvuWyVpu5ldTEnX3glB4JZT8alPqujZh
+ +URbe/MpL+0+UwMw1wQAP+0onAYINJIxZOV9KmNKMmK8dsK1pKmbQnca0ObCv8uvs9sX06XV4Oz
+ wC8Qghp+jQUsvhATQ050356F7DJqcTgvGHD4yRvDB3I3HapqC2Ke7DL+z8LFXd9v0gJxePxuXJn
+ 0pGVZTwWPjXGO+cVUJLLeeeFbJCUVOp4+qK3skCE2pyGIrExUtFgE7UiReOvuheZlA8z7MVdI6B
+ Zhlzvn8DJVoLGun9UzreCzqsq
+X-Google-Smtp-Source: AGHT+IGRQJCVNDHorTCTMdhoyFpq8GIbMyurbkLvgDepU6sCOr7YYeIbigbhUeU22DMzVCXzEx/Zjg==
+X-Received: by 2002:a05:6000:4203:b0:3a3:71cb:f0bd with SMTP id
+ ffacd0b85a97d-3a4cb452b6amr8795925f8f.23.1748283403414; 
+ Mon, 26 May 2025 11:16:43 -0700 (PDT)
 Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4d5deae4dsm4827908f8f.2.2025.05.26.11.15.11
+ ffacd0b85a97d-3a4de9c9853sm1456351f8f.27.2025.05.26.11.16.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 May 2025 11:15:11 -0700 (PDT)
-Message-ID: <f1fc4726-8b87-4995-a874-60e0c969b633@linaro.org>
-Date: Mon, 26 May 2025 20:15:10 +0200
+ Mon, 26 May 2025 11:16:42 -0700 (PDT)
+Message-ID: <bf4f6f32-3c46-4fbf-b305-cd023c1c916f@linaro.org>
+Date: Mon, 26 May 2025 20:16:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/12] target/riscv: Fill in TCGCPUOps.pointer_wrap
+Subject: Re: [PATCH 10/12] target/s390x: Fill in TCGCPUOps.pointer_wrap
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: foss@percivaleng.com, qemu-riscv@nongnu.org
+Cc: foss@percivaleng.com, qemu-s390x@nongnu.org
 References: <20250504205714.3432096-1-richard.henderson@linaro.org>
- <20250504205714.3432096-10-richard.henderson@linaro.org>
- <e8db1ec3-fcb3-42d1-a488-cf55d6060904@linaro.org>
- <702b4c82-653d-4782-8805-c4ff9a1155ae@linaro.org>
+ <20250504205714.3432096-11-richard.henderson@linaro.org>
+ <9aebfbbc-ff29-4af7-8afe-8e0d82c62557@linaro.org>
+ <aa4579d9-4e15-409a-9cf9-232b94aa7f7d@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <702b4c82-653d-4782-8805-c4ff9a1155ae@linaro.org>
+In-Reply-To: <aa4579d9-4e15-409a-9cf9-232b94aa7f7d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,54 +104,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 20:59, Richard Henderson wrote:
-> On 5/5/25 09:47, Philippe Mathieu-Daudé wrote:
+On 5/5/25 18:16, Richard Henderson wrote:
+> On 5/5/25 07:41, Philippe Mathieu-Daudé wrote:
 >> On 4/5/25 22:57, Richard Henderson wrote:
->>> Check 32 vs 64-bit and pointer masking state.
+>>> Use the existing wrap_address function.
 >>>
->>> Cc: qemu-riscv@nongnu.org
+>>> Cc: qemu-s390x@nongnu.org
 >>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 >>> ---
->>>   target/riscv/tcg/tcg-cpu.c | 26 ++++++++++++++++++++++++++
->>>   1 file changed, 26 insertions(+)
+>>>   target/s390x/cpu.c | 9 +++++++++
+>>>   1 file changed, 9 insertions(+)
 >>>
->>> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
->>> index 55e00972b7..267186e5e3 100644
->>> --- a/target/riscv/tcg/tcg-cpu.c
->>> +++ b/target/riscv/tcg/tcg-cpu.c
->>> @@ -237,6 +237,31 @@ static void riscv_restore_state_to_opc(CPUState 
->>> *cs,
->>>       env->excp_uw2 = data[2];
+>>> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+>>> index 9c1158ebcc..f05ce317da 100644
+>>> --- a/target/s390x/cpu.c
+>>> +++ b/target/s390x/cpu.c
+>>> @@ -347,6 +347,14 @@ static TCGTBCPUState 
+>>> s390x_get_tb_cpu_state(CPUState *cs)
+>>>       };
 >>>   }
 >>> +#ifndef CONFIG_USER_ONLY
->>> +static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
->>> +                                vaddr result, vaddr base)
+>>> +static vaddr s390_pointer_wrap(CPUState *cs, int mmu_idx,
+>>> +                               vaddr result, vaddr base)
 >>> +{
->>> +    CPURISCVState *env = cpu_env(cs);
->>> +    uint32_t pm_len;
->>> +    bool pm_signext;
+>>> +    return wrap_address(cpu_env(cs), result);
+>>> +}
+>>> +#endif
 >>> +
->>> +    if (cpu_address_xl(env) == MXL_RV32) {
->>> +        return (uint32_t)result;
->>> +    }
->>> +
->>> +    pm_len = riscv_pm_get_pmlen(riscv_pm_get_pmm(env));
->>> +    if (pm_len == 0) {
->>> +        return result;
->>> +    }
->>> +
->>> +    pm_signext = riscv_cpu_virt_mem_enabled(env);
->>> +    if (pm_signext) {
->>> +        return sextract64(result, 0, 64 - pm_len);
->>> +    }
->>> +    return extract64(result, 0, 64 - pm_len);
+>>>   static const TCGCPUOps s390_tcg_ops = {
+>>>       .mttcg_supported = true,
+>>>       .precise_smc = true,
+>>> @@ -367,6 +375,7 @@ static const TCGCPUOps s390_tcg_ops = {
+>>>       .record_sigbus = s390_cpu_record_sigbus,
+>>>   #else
+>>>       .tlb_fill = s390_cpu_tlb_fill,
+>>> +    .pointer_wrap = s390_pointer_wrap,
 >>
->> Is this safe for MXL_RV128?
+>> As future cleanup, we might now remove the wrap_address() calls
+>> in target/s390x/tcg/crypto_helper.c, and target/s390x/tcg/vec_helper.c,
+>> is that correct?
+>>
+>> Also some uses in target/s390x/tcg/mem_helper.c.
 > 
-> The RV128 implementation only uses 64-bit pointers, so, yes.
+> No, not correct.
+> 
+> The new pointer_wrap hook is only used for unaligned accesses that cross 
+> page boundaries. It does not apply to a sequence of individual accesses 
+> like we have in the s390x helpers.
 
-Thanks.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Ah, now I understand, thanks!
 
 
