@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883E2C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E656CC5B543
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:24:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJXmP-00009v-OH; Mon, 26 May 2025 09:22:13 -0400
+	id 1uJXnB-00017r-OE; Mon, 26 May 2025 09:23:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXmB-0008VO-Ir; Mon, 26 May 2025 09:21:59 -0400
+ id 1uJXma-0000Ew-5b; Mon, 26 May 2025 09:22:24 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm7-0000Ip-5a; Mon, 26 May 2025 09:21:57 -0400
+ id 1uJXmV-0000Jd-Ul; Mon, 26 May 2025 09:22:22 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 88825445EE;
- Mon, 26 May 2025 15:21:48 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 02871445F6;
+ Mon, 26 May 2025 15:21:49 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,9 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v3 16/24] block: move drain outside of quorum_del_child()
-Date: Mon, 26 May 2025 15:21:32 +0200
-Message-Id: <20250526132140.1641377-17-f.ebner@proxmox.com>
+Subject: [PATCH v3 19/24] block: mark bdrv_drained_begin() and friends as
+ GRAPH_UNLOCKED
+Date: Mon, 26 May 2025 15:21:35 +0200
+Message-Id: <20250526132140.1641377-20-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250526132140.1641377-1-f.ebner@proxmox.com>
 References: <20250526132140.1641377-1-f.ebner@proxmox.com>
@@ -59,41 +60,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The quorum_del_child() callback runs under the graph lock, so it is
-not allowed to drain. It is only called as the .bdrv_del_child()
-callback, which is only called in the bdrv_del_child() function, which
-also runs under the graph lock.
+All of bdrv_drain_all_begin(), bdrv_drain_all() and
+bdrv_drained_begin() poll and are not allowed to be called with the
+block graph lock held. Mark the function as such.
 
-The bdrv_del_child() function is called by qmp_x_blockdev_change().
-A drained section was already introduced there by commit "block: move
-drain out of quorum_add_child()".
-
-This finally finishes moving out the drain to places that are not
-under the graph lock started in "block: move draining out of
-bdrv_change_aio_context() and mark GRAPH_RDLOCK".
-
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
 
-No changes in v3.
+Changes in v3:
+* Also mark bdrv_drain_all_begin() and bdrv_drain_all() as
+  GRAPH_UNLOCKED.
 
- block/quorum.c | 2 --
- 1 file changed, 2 deletions(-)
+ include/block/block-global-state.h | 4 ++--
+ include/block/block-io.h           | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block/quorum.c b/block/quorum.c
-index 81407a38ee..cc3bc5f4e7 100644
---- a/block/quorum.c
-+++ b/block/quorum.c
-@@ -1147,9 +1147,7 @@ quorum_del_child(BlockDriverState *bs, BdrvChild *child, Error **errp)
-             (s->num_children - i - 1) * sizeof(BdrvChild *));
-     s->children = g_renew(BdrvChild *, s->children, --s->num_children);
+diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
+index 91f249b5ad..84a2a4ecd5 100644
+--- a/include/block/block-global-state.h
++++ b/include/block/block-global-state.h
+@@ -192,10 +192,10 @@ int bdrv_inactivate_all(void);
  
--    bdrv_drain_all_begin();
-     bdrv_unref_child(bs, child);
--    bdrv_drain_all_end();
+ int bdrv_flush_all(void);
+ void bdrv_close_all(void);
+-void bdrv_drain_all_begin(void);
++void GRAPH_UNLOCKED bdrv_drain_all_begin(void);
+ void bdrv_drain_all_begin_nopoll(void);
+ void bdrv_drain_all_end(void);
+-void bdrv_drain_all(void);
++void GRAPH_UNLOCKED bdrv_drain_all(void);
  
-     quorum_refresh_flags(bs);
- }
+ void bdrv_aio_cancel(BlockAIOCB *acb);
+ 
+diff --git a/include/block/block-io.h b/include/block/block-io.h
+index b99cc98d26..4cf83fb367 100644
+--- a/include/block/block-io.h
++++ b/include/block/block-io.h
+@@ -431,7 +431,7 @@ bdrv_drain_poll(BlockDriverState *bs, BdrvChild *ignore_parent,
+  *
+  * This function can be recursive.
+  */
+-void bdrv_drained_begin(BlockDriverState *bs);
++void GRAPH_UNLOCKED bdrv_drained_begin(BlockDriverState *bs);
+ 
+ /**
+  * bdrv_do_drained_begin_quiesce:
 -- 
 2.39.5
 
