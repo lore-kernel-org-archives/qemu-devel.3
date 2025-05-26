@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB3EC54FC6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 05:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD07C5B542
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 05:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJQPD-000723-Ra; Mon, 26 May 2025 01:29:47 -0400
+	id 1uJQPK-00073F-UM; Mon, 26 May 2025 01:29:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uJQP9-000711-Cd
- for qemu-devel@nongnu.org; Mon, 26 May 2025 01:29:43 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1uJQPI-00072w-63
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 01:29:52 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uJQP7-0001yC-8z
- for qemu-devel@nongnu.org; Mon, 26 May 2025 01:29:43 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-b1396171fb1so825779a12.2
- for <qemu-devel@nongnu.org>; Sun, 25 May 2025 22:29:40 -0700 (PDT)
+ id 1uJQPG-0001yy-B4
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 01:29:51 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-23428770e1fso8239625ad.0
+ for <qemu-devel@nongnu.org>; Sun, 25 May 2025 22:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748237379; x=1748842179;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748237388; x=1748842188;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HaTVJl5X/iMHZrzBG8WLsBUCVEErv5uxJdxFT0AP/9o=;
- b=BgtiJlcOjpn6aLN2WW86qQbjmQjZBUsBEY7gUiXHi3Y5COWVzzWezO/zogXhQSOwgA
- YHZ6YSitxkIctiMvX04ZPyFMCZN2VZnGAK5+9+niAL14Pta3ZfdpXAWF40MzWxYOzybi
- WHCAqxVRp0c1tR5BvUkBteHjs8oIOcaSAhh8z/ttwXdJ8DfjeUKBjbwTCpV/259pjkUv
- 7K56yx5VKy//glrv8cPX0DZnPBbZ02tk5owzEkl5FBHKRsDlx2HbBrl/vtFqyO2UfAkL
- IisVvUrZHXaGecQc6yRHixfkpf2+34tgq53lvdoKKRbndff2ooocGaIMj0LY4dsfYBy0
- l+fQ==
+ :reply-to; bh=tpEeShMgw5miBNRuoBOGCybk4Qn7aitvfKahD59h2tI=;
+ b=OTgSycgq6dGaoV/G2Tq2gDzIBdBxY+kSMcIyowI/jetZTBabAWioSPO6Lkt+/o6GRp
+ AulvXMjt2aGTi/+mbWvvxt2hlUXB1H/Bk9mr7xzc44eeHRF6fuOGvQzjrIPQhxQFzTen
+ HQLIxKuydVnIQRG8go4pTvdFbgUTVZ/U9S+5m5e6EC9p073BJI/7eFY9B4Sg9UB3yW31
+ zTQgSASAUHjgOxO7N4jZLzGjxpCpCPtqpfQLZo1Nn/lFWwdrO2TbXlBSGWmYd6V+n9je
+ owTetqxPtoek9zTIwZBl7k90fi2XepTw/wsM5+qpLgSM9mopTHchHCiyOiksJZwCoZ41
+ gQAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748237379; x=1748842179;
+ d=1e100.net; s=20230601; t=1748237388; x=1748842188;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HaTVJl5X/iMHZrzBG8WLsBUCVEErv5uxJdxFT0AP/9o=;
- b=OIcpDPbIKeEoahMZ7Sfa10IRAQaUsjAZ3OM/kV5SJWrGgxBuy7NKiZr++CzZHfQJ0i
- c3M7pCG57cM5TNZv0YOJ54mn+Xod4lYIVENCcp6ZIIhM4cDaEtZ8Iq7k6DKtTpKVEHMu
- FffBUKHA2JL9lX5VdPQW3zpHUZMku0Ct9R2oFTgudVLB1KMrXR40awCOkAMf/vQzUfMH
- d8f/uiphJ8umY9hP5+z93QCW1ikMa4Nd2VjeMoUsF9YAyr/7X2uLWYRWCMuvoZi3XWLA
- aweFTgBoStP2RlmGtl+INCqTi2YydRy/UG6tgkw0IJ+XnT1S96BGUCqq3NNr/565U6Xu
- 8T+A==
+ bh=tpEeShMgw5miBNRuoBOGCybk4Qn7aitvfKahD59h2tI=;
+ b=U/YjyYTWo8ZhNK6mFweoXIjViRz/u48/K9Pj0IS3GIgXr284OzN6MOr8sCZhVPpZwn
+ 9diGHvEfjyCoa+FSIPDO/HfZHvOozFIUjS2paFsr1nNvtKfjO9Zch8La4/Hy9yPyOHkq
+ DoflY2a0NXTLBUKkD6j1p/5OGG4armZBTUU+F74bbTXjuupLzE7MokSFPYhdkVa3k/5O
+ 9g9lREf97x+U0Gzez7YCR6JwwJ8txJPd7YCaDcvOo169aI0dozl83LYZsUy//aPIMpqg
+ 6Vr7w7RRMnnKmbmjQxmCsLrVtUrH8cMTeWWlEWIPqFW4l+YfalCMc+MY9Bm85j59uvDz
+ NoxA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWedI36aYERfr68Wu6D/xL1hn3Gff4CuMRVLLYVJ7pk4Q0lmc+z6XKWohWck9vjZeskEJD7y5ocUAmn@nongnu.org
-X-Gm-Message-State: AOJu0YzIPUHuI43Vd4HGhftEQkU9D7izFVhWSYZ4c6ZNwC+4cTEa8YgN
- vYp8eXzUk9aJDNwMjVszqiaonHXJCP2KTo1cEromk2ZxI6V6CjxfV1CBPZWZniU19jIimnsZIiU
- kqARd
-X-Gm-Gg: ASbGnctnck2IcsvZqkY5Xzg6r/JclOUHCITxXSQE4ttz72kzMrLzxvpq6+qM9Fl5kTl
- 2UGoKA1I/Vg6spUn9mRp4gkwt1t/u+a5q9/nxXlZBnR0bT+5rrp90Lg3uuBoFtwLMJKL1eyHxgz
- lL096KrXncsT1PrtBOhBKHG+zMy5oJOipWx9SKgOKiUoQOLQoF0yO9aXx1fZEI935i8xpMfsU5f
- YKtn5NLaFkJs29qd5ZMw9ODy8p8WZGgeVlWpffV420ioee8PKepuT6yeduAqC+afgKCntTvhrBw
- ILVdd+o5SUN/JnWmQdg0FZxB739/sQReeO3Z7gkM01suh5nT2Qhl
-X-Google-Smtp-Source: AGHT+IH03++i2pmBxdfeS59pJcyBNoHbez51/FuB8e50sXU/AfQ63FMq6wGaB5wsS6XToYgKVo/g7g==
-X-Received: by 2002:a17:90b:3c90:b0:2ef:31a9:95c6 with SMTP id
- 98e67ed59e1d1-3110f30f0d6mr14311900a91.14.1748237379145; 
- Sun, 25 May 2025 22:29:39 -0700 (PDT)
+ AJvYcCUpZWTZ/aHk5zif+QVpw8dvgtJQ2COo0BuTN4RLni2gpWPRLyuhNSYbvlBUCFycuKfNwXHHbD213Gf+@nongnu.org
+X-Gm-Message-State: AOJu0YxFxvOtrRglILjEKNHrGQcl2rx35MQpNqOGEBG7jaCfb2KCnn+A
+ 8qJCaDwxyDBXyn2PVI4lFK2McL4R+B5kHjmPWvhrfP+ALp9Iihh3oSbvu8z7sFlSt/fl+jsUg5h
+ 6osCy
+X-Gm-Gg: ASbGncsKCErmKM6XHKTAxSp66hLt2mWWDtifClZZ/cMI5+fiGddxn+2oqkVT8zlMYfj
+ MAAyxfFK8jqrrIUTcRtHJ9a+eallKnDzoLGsMonaGYFPFSxRvslO0twtRcVZGwP2csMczIpE/Vq
+ vx3jgJjIlQv62lEHlqu09+V9Xi117AS3P2j6NN3kZLT9F0pZuzJIIESF2N/mCKLeU7qXfWKjbLs
+ Wn4WZYISqMFPEX3/IIbTTL48PyBPldVkQ2ihA4I6osYmHnKnF+ZvlfiMc+C9SDCMuis2Vq+cPHZ
+ 0oICypY5BeZ2ijCOGK+0CYEzX4vLq/6ixzr734lg5NUQUSXPOM67X1UX3PLY7WI=
+X-Google-Smtp-Source: AGHT+IF6WmjZSaw/GAef5CH/6zOASqT9GmonH8ySxMIVaI06S7WghtXQ/SA9TE/UNx6hvTZoZr4uwA==
+X-Received: by 2002:a17:902:da47:b0:234:854:20ba with SMTP id
+ d9443c01a7336-23414fc8775mr131458255ad.40.1748237388681; 
+ Sun, 25 May 2025 22:29:48 -0700 (PDT)
 Received: from localhost ([157.82.128.1]) by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-3111f4647dasm3379133a91.48.2025.05.25.22.29.36
+ 98e67ed59e1d1-30f364907d4sm11457853a91.24.2025.05.25.22.29.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 May 2025 22:29:38 -0700 (PDT)
+ Sun, 25 May 2025 22:29:48 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 26 May 2025 14:29:15 +0900
-Subject: [PATCH v4 05/11] qemu-thread: Avoid futex abstraction for
- non-Linux
+Date: Mon, 26 May 2025 14:29:17 +0900
+Subject: [PATCH v4 07/11] qemu-thread: Use futex if available for QemuLockCnt
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250526-event-v4-5-5b784cc8e1de@daynix.com>
+Message-Id: <20250526-event-v4-7-5b784cc8e1de@daynix.com>
 References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
 In-Reply-To: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
@@ -85,8 +84,8 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,116 +107,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu-thread used to abstract pthread primitives into futex for the
-QemuEvent implementation of POSIX systems other than Linux. However,
-this abstraction has one key difference: unlike futex, pthread
-primitives require an explicit destruction, and it must be ordered after
-wait and wake operations.
-
-It would be easier to perform destruction if a wait operation ensures
-the corresponding wake operation finishes as POSIX semaphore does, but
-that requires to protect state accesses in qemu_event_set() and
-qemu_event_wait() with a mutex. On the other hand, real futex does not
-need such a protection but needs complex barrier and atomic operations
-to ensure ordering between the two functions.
-
-Add special implementations of qemu_event_set() and qemu_event_wait()
-using pthread primitives. qemu_event_wait() will ensure qemu_event_set()
-finishes, and these functions will avoid complex barrier and atomic
-operations to ensure ordering between them.
+This unlocks the futex-based implementation of QemuLockCnt to Windows.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- util/qemu-thread-posix.c | 41 ++++++++++++++++-------------------------
- 1 file changed, 16 insertions(+), 25 deletions(-)
+ include/qemu/lockcnt.h | 2 +-
+ util/lockcnt.c         | 7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index 0d6344f4d216..be7f25f9b31d 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -319,28 +319,6 @@ void qemu_sem_wait(QemuSemaphore *sem)
+diff --git a/include/qemu/lockcnt.h b/include/qemu/lockcnt.h
+index f4b62a3f7011..5a2800e3f182 100644
+--- a/include/qemu/lockcnt.h
++++ b/include/qemu/lockcnt.h
+@@ -17,7 +17,7 @@
+ typedef struct QemuLockCnt QemuLockCnt;
  
- #ifdef CONFIG_LINUX
- #include "qemu/futex.h"
--#else
--static inline void qemu_futex_wake(QemuEvent *ev, int n)
--{
--    assert(ev->initialized);
--    pthread_mutex_lock(&ev->lock);
--    if (n == 1) {
--        pthread_cond_signal(&ev->cond);
--    } else {
--        pthread_cond_broadcast(&ev->cond);
--    }
--    pthread_mutex_unlock(&ev->lock);
--}
--
--static inline void qemu_futex_wait(QemuEvent *ev, unsigned val)
--{
--    assert(ev->initialized);
--    pthread_mutex_lock(&ev->lock);
--    if (ev->value == val) {
--        pthread_cond_wait(&ev->cond, &ev->lock);
--    }
--    pthread_mutex_unlock(&ev->lock);
--}
+ struct QemuLockCnt {
+-#ifndef CONFIG_LINUX
++#ifndef HAVE_FUTEX
+     QemuMutex mutex;
  #endif
+     unsigned count;
+diff --git a/util/lockcnt.c b/util/lockcnt.c
+index ca27d8e61a5c..92c9f8ceca88 100644
+--- a/util/lockcnt.c
++++ b/util/lockcnt.c
+@@ -12,10 +12,11 @@
+ #include "qemu/atomic.h"
+ #include "trace.h"
  
- /* Valid transitions:
-@@ -386,10 +364,17 @@ void qemu_event_set(QemuEvent *ev)
- {
-     assert(ev->initialized);
+-#ifdef CONFIG_LINUX
+-#include "qemu/futex.h"
++#ifdef HAVE_FUTEX
  
-+#ifdef CONFIG_LINUX
-     if (qatomic_xchg(&ev->value, EV_SET) == EV_BUSY) {
-         /* There were waiters, wake them up.  */
-         qemu_futex_wake_all(ev);
-     }
-+#else
-+    pthread_mutex_lock(&ev->lock);
-+    qatomic_store_release(&ev->value, EV_SET);
-+    pthread_cond_broadcast(&ev->cond);
-+    pthread_mutex_unlock(&ev->lock);
-+#endif
- }
- 
- void qemu_event_reset(QemuEvent *ev)
-@@ -411,17 +396,16 @@ void qemu_event_reset(QemuEvent *ev)
- 
- void qemu_event_wait(QemuEvent *ev)
- {
--    unsigned value;
--
-     assert(ev->initialized);
- 
-+#ifdef CONFIG_LINUX
-     while (true) {
-         /*
-          * qemu_event_wait must synchronize with qemu_event_set even if it does
-          * not go down the slow path, so this load-acquire is needed that
-          * synchronizes with the store-release in qemu_event_set().
-          */
--        value = qatomic_load_acquire(&ev->value);
-+        unsigned value = qatomic_load_acquire(&ev->value);
-         if (value == EV_SET) {
-             break;
-         }
-@@ -445,6 +429,13 @@ void qemu_event_wait(QemuEvent *ev)
- 
-         qemu_futex_wait(ev, EV_BUSY);
-     }
-+#else
-+    pthread_mutex_lock(&ev->lock);
-+    while (qatomic_read(&ev->value) != EV_SET) {
-+        pthread_cond_wait(&ev->cond, &ev->lock);
-+    }
-+    pthread_mutex_unlock(&ev->lock);
-+#endif
- }
- 
- static __thread NotifierList thread_exit;
+-/* On Linux, bits 0-1 are a futex-based lock, bits 2-31 are the counter.
++/*
++ * When futex is available, bits 0-1 are a futex-based lock, bits 2-31 are the
++ * counter.
+  * For the mutex algorithm see Ulrich Drepper's "Futexes Are Tricky" (ok,
+  * this is not the most relaxing citation I could make...).  It is similar
+  * to mutex2 in the paper.
 
 -- 
 2.49.0
