@@ -4,102 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A76EC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 15:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C94DC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 15:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJZwD-00019a-5O; Mon, 26 May 2025 11:40:29 -0400
+	id 1uJZxT-0001jz-FR; Mon, 26 May 2025 11:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJZwA-00018o-LH
- for qemu-devel@nongnu.org; Mon, 26 May 2025 11:40:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uJZw8-0000Vw-RI
- for qemu-devel@nongnu.org; Mon, 26 May 2025 11:40:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748274022;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uJZxD-0001aD-RI
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 11:41:39 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uJZx9-0000oz-GS
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 11:41:29 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id CF9601F793;
+ Mon, 26 May 2025 15:41:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748274085; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=D/wvTctol1P0mccm5ZAnlhxiLvJHfLYo8ZTV+OEL/fQ=;
- b=hQjMsWsJIofyvCEG3wuhrSjNxkwpQKgOvhVSIk1mBf+ONhyA53n31hfLbk3uhUdokzfsSt
- G61ANcgCQKgpx0wsgc/VCJs6MxasteABi6bgZutBa67FHrdR2NZVV0ASOs2Q84qhHvLRVL
- C220AQ/bsYOGmTX1zXzm+iLhBFG7uTY=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-LssafCHPNu-9JHBPkuyC1Q-1; Mon, 26 May 2025 11:40:20 -0400
-X-MC-Unique: LssafCHPNu-9JHBPkuyC1Q-1
-X-Mimecast-MFC-AGG-ID: LssafCHPNu-9JHBPkuyC1Q_1748274020
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7caee988153so433391285a.1
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 08:40:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748274020; x=1748878820;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=D/wvTctol1P0mccm5ZAnlhxiLvJHfLYo8ZTV+OEL/fQ=;
- b=AG6227yhGdlvAjOQQcT4rcF1X7O1eH3R+SLZ/2pXg4h9nAXri1XLOatNNOpIzcxjAU
- XHO4pYaHZdRU84ku2u4OPK7gUM7ckC12y9tN4JA1w+30PlKwzrJxYwU791D3LAbY0KUG
- L/KGKyyLsFoUbwja+ZY0aA7G1RnddJarxFLUqWHSAozaBhyNLxqOpLpHPWZVMEYkEopk
- 6I3oR+eoF1F53O8Lp5SUeaGTKqPMFfXuj46MGT9bCE8o3PsxGWzSmx/cqM3KOEFSBeln
- Ryin1aSeNCw1Z1cEhQ9P8+b/CKD5AXpxXKVYpfRfmxK6I7TdVMjIm/iODduz0htgqg2A
- fLLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7Sxc/HTuGR0YMgwAYsmcqDrtJ+BYLaxQVY0g985wcXVsqOTB2eWJS/+EHo9vwsyVoyhc+F/a8OamV@nongnu.org
-X-Gm-Message-State: AOJu0Yyl2vQVCsEdJzmf0BVJ3+LeCNVN5AAJO0PI/F/kWxNJMilAm750
- EY4wVc+cf4RE/jkorNXzy9p7Ik68Tg6Tao6ihfwN4zxVW+8K7S3c5y/x4tcw8vSwdQGhp+GvA/O
- 7vY388pKxcxL4Zzbdvk//78h0HkPTOHIokJIzoDpVi7E5mxOgzPDNXA51
-X-Gm-Gg: ASbGncu2EX1W77XmeSsr7ibcRjLVAgYEm1LpS5O89EGZgV+7kCllT5Eeea10vKNrjGk
- Cu2sue+qWr45UfHYpPNX58FHcNjCKSA4jwtk5F7xVjiI1Mf/dFmD8xETTIYn6QswiUb14WW9FlD
- DBRKPLImS30HvQl2zyKglkyydFw9byfVh5cTJZiligD6JP4RBbDYs2JCN5nvbUmztNQei4r/n+2
- fFSijxCYhXLGUdwb+dSCMRnHKdLU3l56PYvRjju644NMGSMEvT5mosvIfRVXo7Ylk/2vgc6vUUs
- JUU=
-X-Received: by 2002:a05:622a:124e:b0:494:abde:2aa3 with SMTP id
- d75a77b69052e-49f46a3b249mr191853891cf.18.1748274020274; 
- Mon, 26 May 2025 08:40:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkToBLRvFVmOI2AsL1NNaRBEigEZUItSTpZj86LK7bAvn7qc529Fo5gmd7NRcl53P/7fKs+g==
-X-Received: by 2002:a05:622a:124e:b0:494:abde:2aa3 with SMTP id
- d75a77b69052e-49f46a3b249mr191853571cf.18.1748274019997; 
- Mon, 26 May 2025 08:40:19 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-494ae501e0fsm151233981cf.63.2025.05.26.08.40.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 May 2025 08:40:19 -0700 (PDT)
-Date: Mon, 26 May 2025 11:40:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 2/2] migration/hmp: Add "info migrate -a", reorg the
- dump
-Message-ID: <aDSLXqCAEor3YJE2@x1.local>
-References: <20250514200137.581935-1-peterx@redhat.com>
- <20250514200137.581935-3-peterx@redhat.com>
- <26d8a22f-adfb-4990-8015-c24fd1304c8c@fujitsu.com>
- <aC3dJvwXK9eW1YO6@x1.local> <aC4_-nMc7FwsMf9p@gallifrey>
- <80ff85f3-1e75-43f9-aeff-99e5033e6090@fujitsu.com>
- <aC8jkx-PnaJsuUB5@x1.local>
- <7e3b7343-fbfc-43a4-a0c6-eb9c037da4d3@fujitsu.com>
+ bh=54DQ8GLRLwDJCoTzR7hP5UC5ovQvIMqSOdT+v7wuRYk=;
+ b=NmhegAKpfjBXWJZa/qI1NQ1+ltOvPwzRngGUuO2j3L6++uoYcAVD3o4f6gvqkwJm1jpVAg
+ QT6sJQ9M7ISNGO/vEtKCkVSwTQ1YMgHhLpix4Q+I3nJiAPdZxSrWTv17+3zK0EExJd4CzX
+ ZQ3UQe7PFuAQQppVY6J0vGLGDM4CsfE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748274085;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=54DQ8GLRLwDJCoTzR7hP5UC5ovQvIMqSOdT+v7wuRYk=;
+ b=IkWZCOIIYNZQaHz8vMT/b0spxx79w9YCtr4ta+/Wa+icEFzmG/qfMMK9//XYCiRRorTeJK
+ qgNVElZB8TEy1sCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748274084; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=54DQ8GLRLwDJCoTzR7hP5UC5ovQvIMqSOdT+v7wuRYk=;
+ b=bmXgKlar6lJHvAxNl7jSrlRPX2cHBG4/027AK2tRTTDgkWqXUAe9rcPf+aykij/+xhhc+S
+ exnJeE3VKoomDujCg58cgQ6L4ln0O/RJvo9S8P1o7E4czVr1QYK1XwG1BfF9x+P+RlzNk8
+ RPh2zhnO2wWH4tlXMd8tF/gi5gPkcgk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748274084;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=54DQ8GLRLwDJCoTzR7hP5UC5ovQvIMqSOdT+v7wuRYk=;
+ b=C4OsWGUa80zfn2ZcqrAXhQiOWHW2PQowUQ2dMzdyFHe5rYmzXRFKC84dmwcxu5w8UJr5tw
+ PycoycRaWouTRlBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 47B861397F;
+ Mon, 26 May 2025 15:41:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id UNnFAaSLNGhNZgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 26 May 2025 15:41:24 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 04/13] migration: Fix parameter validation
+In-Reply-To: <aDRoFH-oXq_AiJCP@x1.local>
+References: <20250411191443.22565-1-farosas@suse.de>
+ <20250411191443.22565-5-farosas@suse.de> <aCZVolkNMBZb5KvC@x1.local>
+ <87r00g61n5.fsf@suse.de> <87o6vk5yu3.fsf@suse.de>
+ <aDRoFH-oXq_AiJCP@x1.local>
+Date: Mon, 26 May 2025 12:41:21 -0300
+Message-ID: <87bjrfv0pq.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7e3b7343-fbfc-43a4-a0c6-eb9c037da4d3@fujitsu.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,31 +118,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 23, 2025 at 02:06:42AM +0000, Zhijian Li (Fujitsu) wrote:
-> 
-> 
-> On 22/05/2025 21:16, Peter Xu wrote:
-> > I followed up with Dave's idea, but then added all entries into it, below.
-> > 
-> >    Status: postcopy-active
-> >    Time (ms): total=40504, setup=14, down=145
-> >    RAM info:
-> >      Throughput (Mbps): 6102.65
-> >      Sizes (KiB):        pagesize=4, total=16777992
-> >      Transfers (KiB):    transferred=37673019, remain=2136404
-> >        Channels (KiB):   precopy=3, multifd=26108780, postcopy=11563855
-> >        Page Types:       normal=9394288, zero=600672
-> >      Page Rates (pps):   transfer_rate=185875, dirty_rate=278378
-> 
-> 
-> Regarding the "transfer_rate" and "dirty_rate" fields:
-> Would it be clearer to drop the "_rate" suffix since the category header
-> "Page Rates (pps)" already implies they are rate metrics?
+Peter Xu <peterx@redhat.com> writes:
 
-I made it verbose to be clear while still suitable in a line.  I don't feel
-strongly - I can drop them when proposing the patch, thanks.
+> On Thu, May 22, 2025 at 02:39:48PM -0300, Fabiano Rosas wrote:
+>> Actually, this doesn't work...
+>> 
+>> The migrate-set-* commands have optional fields, so we need some form of
+>> checking has_* to know which fields the user is setting. Otherwise
+>> MigrationSetParameters will have zeros all over that will trip the
+>> check.
+>> 
+>> Then, we need some form of checking has_* to be able to enventually get
+>> the values into s->config (former s->parameters/capabilities), otherwise
+>> we'll overwrite the already-set values with the potentially empty ones
+>> coming from QAPI.
+>> 
+>> Then there's also the issue of knowing whether a value is 0 because the
+>> user set it 0 or because it was never set.
+>> 
+>> We also can't apply an invalid value to s->config and validate it after
+>> because some parameters are allowed to be changed during migration.
+>
+> What I meant was we only conditionally ignore the has_* fields in below:
+>
+>   (1) migrate_params_check(), so that QEMU always checks all parameters in
+>       the MigrationParameters* specified when invoking the function.
+>
 
--- 
-Peter Xu
+Yes, I realised later that's what you meant. I'm looking into
+it. Hitting some issues with the block_bitmap_mapping option, which
+seems to be able to become NULL even if has_block_bitmap_mapping is
+true. According to commit 3cba22c9ad ("migration: Fix
+block_bitmap_mapping migration").
+
+>   (2) MigrationState.parameters, so that as long as the parameters are
+>       applied (it should only happen after sanity check all pass..) then we
+>       ignore these has_* fields (until MigrationState.parameters can have a
+>       better struct to not include these has_* fields).
+>
+> We can keep the has_* checks in migrate_params_test_apply() and
+> migrate_params_apply(), so that we won't touch the ones the user didn't
+> specify in the QMP commands as you said.
+>
+> The benefits of having above 1/2 ignoring has_* is some code removal where
+> we assume has_* always are TRUEs.
+>
+> This can be still a bit confusing, but at least we don't need to init has_*
+> fields in migrate_params_init() anymore as they'll be all ignored, then
+> there's no chance we forget set TRUEs to any new params either.
 
 
