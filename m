@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0807C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7D5C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJXm9-0008Tc-NQ; Mon, 26 May 2025 09:21:59 -0400
+	id 1uJXmp-0000cP-Ou; Mon, 26 May 2025 09:22:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm2-0008SC-Em; Mon, 26 May 2025 09:21:50 -0400
+ id 1uJXmZ-0000Eb-48; Mon, 26 May 2025 09:22:23 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm0-0000HL-J7; Mon, 26 May 2025 09:21:50 -0400
+ id 1uJXmU-0000Jz-QU; Mon, 26 May 2025 09:22:20 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 603B044556;
- Mon, 26 May 2025 15:21:45 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 89E8144576;
+ Mon, 26 May 2025 15:21:49 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v3 02/24] block: move drain outside of read-locked
- bdrv_reopen_queue_child()
-Date: Mon, 26 May 2025 15:21:18 +0200
-Message-Id: <20250526132140.1641377-3-f.ebner@proxmox.com>
+Subject: [PATCH v3 18/24] blockdev: drain while unlocked in
+ external_snapshot_action()
+Date: Mon, 26 May 2025 15:21:34 +0200
+Message-Id: <20250526132140.1641377-19-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250526132140.1641377-1-f.ebner@proxmox.com>
 References: <20250526132140.1641377-1-f.ebner@proxmox.com>
@@ -62,74 +62,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
 
-More granular draining is not trivially possible, because
-bdrv_reopen_queue_child() can recursively call itself.
-
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
 
 No changes in v3.
 
- block.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ blockdev.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/block.c b/block.c
-index a5399888ba..3065d5c91e 100644
---- a/block.c
-+++ b/block.c
-@@ -4358,7 +4358,7 @@ bdrv_recurse_has_child(BlockDriverState *bs, BlockDriverState *child)
-  * returns a pointer to bs_queue, which is either the newly allocated
-  * bs_queue, or the existing bs_queue being used.
-  *
-- * bs is drained here and undrained by bdrv_reopen_queue_free().
-+ * bs must be drained.
-  */
- static BlockReopenQueue * GRAPH_RDLOCK
- bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
-@@ -4377,12 +4377,7 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+diff --git a/blockdev.c b/blockdev.c
+index 506755bef1..2e7fda6780 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -1377,9 +1377,10 @@ static void external_snapshot_action(TransactionAction *action,
+     const char *new_image_file;
+     ExternalSnapshotState *state = g_new0(ExternalSnapshotState, 1);
+     uint64_t perm, shared;
++    BlockDriverState *check_bs;
  
-     GLOBAL_STATE_CODE();
+     /* TODO We'll eventually have to take a writer lock in this function */
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
++    bdrv_graph_rdlock_main_loop();
  
--    /*
--     * Strictly speaking, draining is illegal under GRAPH_RDLOCK. We know that
--     * we've been called with bdrv_graph_rdlock_main_loop(), though, so it's ok
--     * in practice.
--     */
--    bdrv_drained_begin(bs);
-+    assert(bs->quiesce_counter > 0);
+     tran_add(tran, &external_snapshot_drv, state);
  
-     if (bs_queue == NULL) {
-         bs_queue = g_new0(BlockReopenQueue, 1);
-@@ -4522,6 +4517,12 @@ BlockReopenQueue *bdrv_reopen_queue(BlockReopenQueue *bs_queue,
-                                     QDict *options, bool keep_old_opts)
- {
-     GLOBAL_STATE_CODE();
-+
-+    if (bs_queue == NULL) {
-+        /* Paired with bdrv_drain_all_end() in bdrv_reopen_queue_free(). */
-+        bdrv_drain_all_begin();
-+    }
-+
-     GRAPH_RDLOCK_GUARD_MAINLOOP();
+@@ -1412,11 +1413,25 @@ static void external_snapshot_action(TransactionAction *action,
  
-     return bdrv_reopen_queue_child(bs_queue, bs, options, NULL, 0, false,
-@@ -4534,12 +4535,14 @@ void bdrv_reopen_queue_free(BlockReopenQueue *bs_queue)
-     if (bs_queue) {
-         BlockReopenQueueEntry *bs_entry, *next;
-         QTAILQ_FOREACH_SAFE(bs_entry, bs_queue, entry, next) {
--            bdrv_drained_end(bs_entry->state.bs);
-             qobject_unref(bs_entry->state.explicit_options);
-             qobject_unref(bs_entry->state.options);
-             g_free(bs_entry);
-         }
-         g_free(bs_queue);
-+
-+        /* Paired with bdrv_drain_all_begin() in bdrv_reopen_queue(). */
-+        bdrv_drain_all_end();
+     state->old_bs = bdrv_lookup_bs(device, node_name, errp);
+     if (!state->old_bs) {
++        bdrv_graph_rdunlock_main_loop();
+         return;
      }
- }
  
++    /* Need to drain while unlocked. */
++    bdrv_graph_rdunlock_main_loop();
+     /* Paired with .clean() */
+     bdrv_drained_begin(state->old_bs);
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    /* Make sure the associated bs did not change with the drain. */
++    check_bs = bdrv_lookup_bs(device, node_name, errp);
++    if (state->old_bs != check_bs) {
++        if (check_bs) {
++            error_setg(errp, "Block node of device '%s' unexpectedly changed",
++                       device);
++        } /* else errp is already set */
++        return;
++    }
+ 
+     if (!bdrv_is_inserted(state->old_bs)) {
+         error_setg(errp, "Device '%s' has no medium",
 -- 
 2.39.5
 
