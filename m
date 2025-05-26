@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DEB6C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35280C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJXmF-00005W-9M; Mon, 26 May 2025 09:22:04 -0400
+	id 1uJXn6-0000xM-MW; Mon, 26 May 2025 09:22:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm8-0008TT-PU; Mon, 26 May 2025 09:21:56 -0400
+ id 1uJXmZ-0000Ec-4F; Mon, 26 May 2025 09:22:23 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm4-0000I3-Va; Mon, 26 May 2025 09:21:55 -0400
+ id 1uJXmU-0000Jc-Af; Mon, 26 May 2025 09:22:20 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id A1DB54459D;
- Mon, 26 May 2025 15:21:46 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 91DB1445EF;
+ Mon, 26 May 2025 15:21:48 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v3 06/24] block: mark change_aio_ctx() callback and instances
- as GRAPH_RDLOCK(_PTR)
-Date: Mon, 26 May 2025 15:21:22 +0200
-Message-Id: <20250526132140.1641377-7-f.ebner@proxmox.com>
+Subject: [PATCH v3 17/24] blockdev: drain while unlocked in
+ internal_snapshot_action()
+Date: Mon, 26 May 2025 15:21:33 +0200
+Message-Id: <20250526132140.1641377-18-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250526132140.1641377-1-f.ebner@proxmox.com>
 References: <20250526132140.1641377-1-f.ebner@proxmox.com>
@@ -60,100 +60,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a small step in preparation to mark bdrv_drained_begin() as
-GRAPH_UNLOCKED. More concretely, it is in preparation to move the
-drain out of bdrv_change_aio_context() and marking that function as
-GRAPH_RDLOCK.
+This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
 
-Changes in v3:
-* Fix typo in commit message.
+No changes in v3.
 
-Checkpatch seems to report a false positive here, but it's the same
-for other callbacks in that header file:
+ blockdev.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-ERROR: space prohibited between function name and open parenthesis '('
-#86: FILE: include/block/block_int-common.h:986:
-+    bool GRAPH_RDLOCK_PTR (*change_aio_ctx)(BdrvChild *child, AioContext *ctx,
-
- block.c                          | 7 ++++---
- block/block-backend.c            | 6 +++---
- blockjob.c                       | 6 +++---
- include/block/block_int-common.h | 6 +++---
- 4 files changed, 13 insertions(+), 12 deletions(-)
-
-diff --git a/block.c b/block.c
-index 7207978e53..01144c895e 100644
---- a/block.c
-+++ b/block.c
-@@ -1226,9 +1226,10 @@ static int bdrv_child_cb_inactivate(BdrvChild *child)
-     return 0;
- }
+diff --git a/blockdev.c b/blockdev.c
+index bd5ca77619..506755bef1 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -1208,7 +1208,7 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
+     Error *local_err = NULL;
+     const char *device;
+     const char *name;
+-    BlockDriverState *bs;
++    BlockDriverState *bs, *check_bs;
+     QEMUSnapshotInfo old_sn, *sn;
+     bool ret;
+     int64_t rt;
+@@ -1216,7 +1216,7 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
+     int ret1;
  
--static bool bdrv_child_cb_change_aio_ctx(BdrvChild *child, AioContext *ctx,
--                                         GHashTable *visited, Transaction *tran,
--                                         Error **errp)
-+static bool GRAPH_RDLOCK
-+bdrv_child_cb_change_aio_ctx(BdrvChild *child, AioContext *ctx,
-+                             GHashTable *visited, Transaction *tran,
-+                             Error **errp)
- {
-     BlockDriverState *bs = child->opaque;
-     return bdrv_change_aio_context(bs, ctx, visited, tran, errp);
-diff --git a/block/block-backend.c b/block/block-backend.c
-index a402db13f2..6a6949edeb 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -136,9 +136,9 @@ static void blk_root_drained_end(BdrvChild *child);
- static void blk_root_change_media(BdrvChild *child, bool load);
- static void blk_root_resize(BdrvChild *child);
+     GLOBAL_STATE_CODE();
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
++    bdrv_graph_rdlock_main_loop();
  
--static bool blk_root_change_aio_ctx(BdrvChild *child, AioContext *ctx,
--                                    GHashTable *visited, Transaction *tran,
--                                    Error **errp);
-+static bool GRAPH_RDLOCK
-+blk_root_change_aio_ctx(BdrvChild *child, AioContext *ctx, GHashTable *visited,
-+                        Transaction *tran, Error **errp);
+     tran_add(tran, &internal_snapshot_drv, state);
  
- static char *blk_root_get_parent_desc(BdrvChild *child)
- {
-diff --git a/blockjob.c b/blockjob.c
-index 32007f31a9..34185d7715 100644
---- a/blockjob.c
-+++ b/blockjob.c
-@@ -144,9 +144,9 @@ static TransactionActionDrv change_child_job_context = {
-     .clean = g_free,
- };
+@@ -1225,14 +1225,29 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
  
--static bool child_job_change_aio_ctx(BdrvChild *c, AioContext *ctx,
--                                     GHashTable *visited, Transaction *tran,
--                                     Error **errp)
-+static bool GRAPH_RDLOCK
-+child_job_change_aio_ctx(BdrvChild *c, AioContext *ctx, GHashTable *visited,
-+                         Transaction *tran, Error **errp)
- {
-     BlockJob *job = c->opaque;
-     BdrvStateChildJobContext *s;
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 2982dd3118..37466c7841 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -983,9 +983,9 @@ struct BdrvChildClass {
-                            bool backing_mask_protocol,
-                            Error **errp);
+     bs = qmp_get_root_bs(device, errp);
+     if (!bs) {
++        bdrv_graph_rdunlock_main_loop();
+         return;
+     }
  
--    bool (*change_aio_ctx)(BdrvChild *child, AioContext *ctx,
--                           GHashTable *visited, Transaction *tran,
--                           Error **errp);
-+    bool GRAPH_RDLOCK_PTR (*change_aio_ctx)(BdrvChild *child, AioContext *ctx,
-+                                            GHashTable *visited,
-+                                            Transaction *tran, Error **errp);
+     state->bs = bs;
  
-     /*
-      * I/O API functions. These functions are thread-safe.
++    /* Need to drain while unlocked. */
++    bdrv_graph_rdunlock_main_loop();
+     /* Paired with .clean() */
+     bdrv_drained_begin(bs);
+ 
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    /* Make sure the root bs did not change with the drain. */
++    check_bs = qmp_get_root_bs(device, errp);
++    if (bs != check_bs) {
++        if (check_bs) {
++            error_setg(errp, "Block node of device '%s' unexpectedly changed",
++                       device);
++        } /* else errp is already set */
++        return;
++    }
++
+     if (bdrv_op_is_blocked(bs, BLOCK_OP_TYPE_INTERNAL_SNAPSHOT, errp)) {
+         return;
+     }
 -- 
 2.39.5
 
