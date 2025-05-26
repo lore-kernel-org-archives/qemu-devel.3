@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E2AC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 18:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EFFBC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 18:11:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJcDn-0003QW-Bx; Mon, 26 May 2025 14:06:49 -0400
+	id 1uJcHv-0006D7-8R; Mon, 26 May 2025 14:11:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcDB-00035v-B2
- for qemu-devel@nongnu.org; Mon, 26 May 2025 14:06:12 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcHu-0006CJ-1Y
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 14:11:02 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcD8-0004p2-SZ
- for qemu-devel@nongnu.org; Mon, 26 May 2025 14:06:08 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43cf257158fso21645195e9.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 11:06:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJcHs-0005f6-Aw
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 14:11:01 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-442f5b3c710so23848105e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 11:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748282765; x=1748887565; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NhBBZquPEa6qQqozAiO207w2d4gpZ5Cgam5MtutTPKg=;
- b=qyxctcRiDPUZgc5HL8+M4RLu9f0ddjKLxiQx5nkBSnBK/i1b/MU+owDadwfc6+hFTV
- wIYunoeDxge5BoVPfsDKo97RhF/X0pqbs8rovI32mnuCtEE4PTjIS0PVeZ0hfenPWOAW
- unZmPj8NJPPcXxcl/c4MoBcV8CPU07l/X0JgXoodf700COYczbVUal6eVsEQVQzAsuCD
- DAo6oxJjac35OqcMhszwdD5F4YjSIlXkp5p7bZ/65bMkyRTGGp75lBfVkr90R9Ium6xV
- LdttSo7613/0UuMWlU5nFA0nnHD3ADhjNNI9wqHD6Oi1W8Pv6RORMX04FLR0ezN9xBn4
- NMOw==
+ d=linaro.org; s=google; t=1748283058; x=1748887858; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4hX3H0nQ/uRGryOBXGKaAFz/GEsqKixCKRGKQGRw0Nw=;
+ b=nT81NrpGXVdccROxwdR8gos0NNTFq/bs4zKeNjJOswOV67wZTP6RIL8/VlK1fOdTI2
+ tlKSMolL+MvkNOjHYsqAWfYf6xcv8CJjDi5y9BpLL2XPstjylyevyxET5+TBTWCbJcNo
+ gOWzW0xrVcvtOXnQaByleuTx0ZlbUlm5G3dHlvjDqgvs3pbMXUdSgG6ua4qrxvf13h9J
+ ws1K139Q29fyhh816CacIkXpbEb4JkxkEEBlAlAXxKey5fcZ4nSxxNNpQMH0qBiMCerv
+ 1jwIzNPKGcbFkZ7iyB1Fr2x+izP+gygQrwC3OOdj6KwtnwKOThySl8LSYcGmFo9iP7zm
+ b8SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748282765; x=1748887565;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NhBBZquPEa6qQqozAiO207w2d4gpZ5Cgam5MtutTPKg=;
- b=hqOllDvvS4oqPo4v3HZzGu2fzUzmkuAGEp5tCTzYYq9DF9M9CWSM4CXJc3pONA6oyZ
- FEL1aXoPG/JB8mhyuURsa46IPt9WumBp16GyF+JJIASPdS0zwJEwpj9iRMDUMn7AewWm
- ff728LGg+7HUogLdbL881snG8ROJpRwrAR511oqK02LptFnx+WTzxHlUNimI35pbqM1X
- 4axwHKxLzXe6Fvcn6ZHfUQ4aF7f9kE7cHnB931Z84IFMh34s1FNPr9G6eDlHxOWtc1cH
- rIFX+gBEDU2JRHUYzJc+Ty9sb7Q5KS16Bes34UVgJJ9MPhZkN3ov72gpRr8mktB0+ZiG
- 8BVw==
-X-Gm-Message-State: AOJu0Yxk3WiqWfLTsjyrQokklhTdM9v9u07dHZ2jafCanOCYWEUt7V6N
- 2/d+UXS8MpL031nOgsVN6YEA4Q+y7mmz6i6KLIlGCMoK6ifkrJ81k/w6fywCMRR3GqCy/+Ltj5D
- /0jQfydY=
-X-Gm-Gg: ASbGncvJ4/siS1DwjY/um66PO6IwdIk4BS8qCCv6uXslAbacpafCP6sbFJ8xNAuQ82l
- 6sD80EAkMlzmqgiHfP6j1RMw4iXrr0jO5RUnuzesruGC1HsvkgDYxtaRwV60NZiChsXSw2ikyol
- QTnAqh7T/c2PLCGwsuClVXUCnInKiLJeRU5CRb44/ZnbouPPiL49MntzTCDw6QGluxMvg4yFRB6
- oAYn4Kx3iMIgsbGhi3cYWQAP3pRIUqRnb2Iq3nIsfGpvrqOfa90rUFIpeSoHZsUZ/FIl950lxRM
- mEDt2M6sZIICLSvP++O9gFo+LG3YYxQnwUvqYt0gYMbhXwtQyItL+YioBJJcRF0LyXG8bYx2Eca
- R8XtUpbcNvr6kuGuuwboguHgRZcpvsZI=
-X-Google-Smtp-Source: AGHT+IG3/bXEOeWaouYhu1+H8iDVpJgTeEJK125Fkr72MMn8pa2fC+Va1h7OyrcGZjk0j/4YBwE5fQ==
-X-Received: by 2002:a05:600c:1f91:b0:43c:ea1a:720a with SMTP id
- 5b1f17b1804b1-44c9301659dmr75581475e9.1.1748282765013; 
- Mon, 26 May 2025 11:06:05 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1748283058; x=1748887858;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4hX3H0nQ/uRGryOBXGKaAFz/GEsqKixCKRGKQGRw0Nw=;
+ b=DFru7ajbwvbQJnOUGtkV9TCzDpy+KVUQCFfAQY6QqdRXjMTfHEbECSIPotPizYGUqp
+ /vkDDGoN3LZ0S+n655MEq9v6sRV/VTpDWAZClmkh23LTCdOcyYdfgh2feQYrDqyCwoxa
+ A+TMp7fllPfSg5jOv4v+QrBcydOOsdJ72R8N9sLQokvRmxScqgbdD/oiRoUYH6tTgye5
+ P2+aYqsyistC97x2zpXlK9RFAtq6qMNXff1Veycl1GcaT/swtvv3T6zLGpzOeVhRvSsp
+ 2W7Sz8hoaTQU6kJ83s5cnjFdC5moDX924n0yWdB8kSiOAym/jvMXTg+ZedZ2jBJ/Ka/c
+ E+kg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQZWKj+I25/376Rs94W0qpPELjKYAemXDGx0cREEOi3AAzmix5lOz0VwPlrwixITgaocpT7rI9Uwu3@nongnu.org
+X-Gm-Message-State: AOJu0YxkuWrrugauMLATSx2cEW1HoE07RP3S1Z1EK1OGtDQKy4VScrpO
+ GXg/Gx5ivcpoJs1/AsBkbsdc+gO3q/7epMOEtvg3rXun0L3NYyE3XMyymLN0qh1Apz3/bEhXwrv
+ 0GmzSsb0=
+X-Gm-Gg: ASbGnctKrQXLCWbohawEX9rxFmYoEpFlOjwnKn6C1Mcd9CMUnd8DcSegDRL84wjWwR6
+ xJV8MyNSnd9smz4o8waHaCUs3qcyW8PXGj6XuvqYjRGE2E1ot1pwsyXjh5lqF8qrhmdKH2Ouq+o
+ tz3kTeLpRAHB9qem676jyrlxR93gHD5U39NkDF8DEQqqwvRfucKRoxrDDgWt9V3XyUvqC1tlW0t
+ gHUBLuo4bgByvpKnYPSm2YvNS+MnFxtcNw82/x3NAug2ILVON9qENDSRqsWNH3v3z2x/u0B3Gef
+ dAeB0yXvFXs2jiz+Gt1VPfS/LWxK5DPBQzGaQGEZv3UzfNvRpwTcMCYOPsnI/8Fy8fM0jGjD3Kc
+ j884xjKtxtSeZvnFqnicqkYBF
+X-Google-Smtp-Source: AGHT+IFFgr/ne1qcBJDMbJQAu1YEVf6uq+N/Ex3btwBHU7LvVD1MvYujkqcNtnDbggk9BtKqdPocFQ==
+X-Received: by 2002:a05:600c:3849:b0:439:6118:c188 with SMTP id
+ 5b1f17b1804b1-44c91dd166bmr82436095e9.19.1748283058397; 
+ Mon, 26 May 2025 11:10:58 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4cfbf2644sm7294056f8f.59.2025.05.26.11.06.04
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 May 2025 11:06:04 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 1/2] hw/ide/ahci: Introduce ahci_reset_delayed() and
- ahci_reset_complete()
-Date: Mon, 26 May 2025 20:05:57 +0200
-Message-ID: <20250526180558.65613-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250526180558.65613-1-philmd@linaro.org>
-References: <20250526180558.65613-1-philmd@linaro.org>
+ 5b1f17b1804b1-447f38142f1sm243665085e9.31.2025.05.26.11.10.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 May 2025 11:10:57 -0700 (PDT)
+Message-ID: <3a7386f9-a4ba-4268-a3fe-45c18360d878@linaro.org>
+Date: Mon, 26 May 2025 20:10:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/xen: Fix trace_xs_node_read() params
+To: Liam Merwick <liam.merwick@oracle.com>, dwmw@amazon.co.uk,
+ anthony.perard@vates.tech, roger.pau@citrix.com,
+ xen-devel@lists.xenproject.org, qemu-devel@nongnu.org
+References: <20250523160134.218997-1-liam.merwick@oracle.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250523160134.218997-1-liam.merwick@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,99 +103,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AHCI reset is not instantaneous in physical world, and software
-might poll the reset bits of port and host control registers to
-detect completion (see chapter 14 of AHCI spec).
+On 23/5/25 18:01, Liam Merwick wrote:
+> When the '--enable-trace-backends=syslog' build option is configured,
+> the following compilation error is encountered.
+> 
+> In file included from /usr/include/sys/syslog.h:207,
+>                   from /usr/include/syslog.h:1,
+>                   from ./trace/trace-hw_xen.h:224,
+>                   from ../hw/xen/trace.h:1,
+>                   from ../hw/xen/xen-bus-helper.c:13:
+> In function ‘syslog’,
+>      inlined from ‘_nocheck__trace_xs_node_read’ at ../hw/xen/trace-events:41:9,
+>      inlined from ‘trace_xs_node_read’ at trace/trace-hw_xen.h:903:9,
+>      inlined from ‘xs_node_read’ at ../hw/xen/xen-bus-helper.c:154:5:
+> /usr/include/bits/syslog.h:45:3: error: ‘%s’ directive argument is null [-Werror=format-overflow=]
+>     45 |   __syslog_chk (__pri, __USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+>        |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> Add a check that 'value' is not null before passing it to trace_xs_node_read().
+> 
+> Fixes: e6cdeee95990 ("hw/xen: Add xs_node_read() helper function")
+> Signed-off-by: Liam Merwick <liam.merwick@oracle.com>
+> ---
+>   hw/xen/xen-bus-helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/xen/xen-bus-helper.c b/hw/xen/xen-bus-helper.c
+> index 288fad422be3..1087a585cc71 100644
+> --- a/hw/xen/xen-bus-helper.c
+> +++ b/hw/xen/xen-bus-helper.c
+> @@ -151,7 +151,7 @@ char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
+>       va_end(ap);
+>   
+>       value = qemu_xen_xs_read(h, tid, path, len);
+> -    trace_xs_node_read(path, value);
+> +    trace_xs_node_read(path, value ? value : "<null>");
+>       if (!value) {
+>           error_setg_errno(errp, errno, "failed to read from '%s'", path);
+>       }
 
-In preparation of adding a timed reset, split ahci_reset()
-as ahci_reset_delayed() which keeps the reset bits and
-ahci_reset_complete() which resets them.
+Alternatively, since this is an error path:
 
-No logical changes so far.
+-- >8 --
+diff --git a/hw/xen/xen-bus-helper.c b/hw/xen/xen-bus-helper.c
+index 288fad422be..1e49e60e147 100644
+--- a/hw/xen/xen-bus-helper.c
++++ b/hw/xen/xen-bus-helper.c
+@@ -143,7 +143,8 @@ char *xs_node_read(struct qemu_xs_handle *h, 
+xs_transaction_t tid,
+                     unsigned int *len, Error **errp,
+                     const char *path_fmt, ...)
+  {
+-    char *path, *value;
++    g_autofree char *value;
++    char *path;
+      va_list ap;
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+      va_start(ap, path_fmt);
+@@ -151,12 +152,11 @@ char *xs_node_read(struct qemu_xs_handle *h, 
+xs_transaction_t tid,
+      va_end(ap);
+
+      value = qemu_xen_xs_read(h, tid, path, len);
+-    trace_xs_node_read(path, value);
+      if (!value) {
+          error_setg_errno(errp, errno, "failed to read from '%s'", path);
++        return NULL;
+      }
+-
+-    g_free(path);
++    trace_xs_node_read(path, value);
+
+      return value;
+  }
 ---
- hw/ide/ahci.c       | 31 ++++++++++++++++++++++++++++---
- hw/ide/trace-events |  1 +
- 2 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 1303c21cb70..7e586c7a0a4 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -46,6 +46,7 @@ static bool ahci_map_clb_address(AHCIDevice *ad);
- static bool ahci_map_fis_address(AHCIDevice *ad);
- static void ahci_unmap_clb_address(AHCIDevice *ad);
- static void ahci_unmap_fis_address(AHCIDevice *ad);
-+static void ahci_reset_delayed(AHCIState *s, bool immediate);
- 
- static const char *AHCIHostReg_lookup[AHCI_HOST_REG__COUNT] = {
-     [AHCI_HOST_REG_CAP]        = "CAP",
-@@ -1623,7 +1624,22 @@ void ahci_uninit(AHCIState *s)
-     g_free(s->dev);
- }
- 
--void ahci_reset(AHCIState *s)
-+static void ahci_reset_complete(void *opaque)
-+{
-+    AHCIState *s = opaque;
-+
-+    trace_ahci_reset_done(s);
-+
-+    for (unsigned i = 0; i < s->ports; i++) {
-+        AHCIPortRegs *pr;
-+
-+        pr = &s->dev[i].port_regs;
-+        pr->cmd &= ~PORT_CMD_LIST_ON;
-+    }
-+    s->control_regs.ghc &= ~HOST_CTL_RESET;
-+}
-+
-+static void ahci_reset_delayed(AHCIState *s, bool immediate)
- {
-     AHCIPortRegs *pr;
-     int i;
-@@ -1639,16 +1655,25 @@ void ahci_reset(AHCIState *s)
-      *
-      * We set HOST_CAP_AHCI so we must enable AHCI at reset.
-      */
--    s->control_regs.ghc = HOST_CTL_AHCI_EN;
-+    s->control_regs.ghc = HOST_CTL_RESET | HOST_CTL_AHCI_EN;
- 
-     for (i = 0; i < s->ports; i++) {
-         pr = &s->dev[i].port_regs;
-         pr->irq_stat = 0;
-         pr->irq_mask = 0;
-         pr->scr_ctl = 0;
--        pr->cmd = PORT_CMD_SPIN_UP | PORT_CMD_POWER_ON;
-+        pr->cmd = PORT_CMD_SPIN_UP | PORT_CMD_POWER_ON | PORT_CMD_LIST_ON;
-         ahci_reset_port(s, i);
-     }
-+
-+    if (immediate) {
-+        ahci_reset_complete(s);
-+    }
-+}
-+
-+void ahci_reset(AHCIState *s)
-+{
-+    ahci_reset_delayed(s, false);
- }
- 
- static const VMStateDescription vmstate_ncq_tfs = {
-diff --git a/hw/ide/trace-events b/hw/ide/trace-events
-index 57042cafddc..979145c58b8 100644
---- a/hw/ide/trace-events
-+++ b/hw/ide/trace-events
-@@ -82,6 +82,7 @@ ahci_mem_write_host(void *s, unsigned size, const char *reg, uint64_t addr, uint
- ahci_mem_write_unimpl(void *s, unsigned size, uint64_t addr, uint64_t val) "ahci(%p): write%u to unknown register 0x%"PRIx64": 0x%016"PRIx64
- ahci_set_signature(void *s, int port, uint8_t nsector, uint8_t sector, uint8_t lcyl, uint8_t hcyl, uint32_t sig) "ahci(%p)[%d]: set signature sector:0x%02x nsector:0x%02x lcyl:0x%02x hcyl:0x%02x (cumulatively: 0x%08x)"
- ahci_reset_port(void *s, int port) "ahci(%p)[%d]: reset port"
-+ahci_reset_done(void *s) "ahci(%p): reset done"
- ahci_unmap_fis_address_null(void *s, int port) "ahci(%p)[%d]: Attempt to unmap NULL FIS address"
- ahci_unmap_clb_address_null(void *s, int port) "ahci(%p)[%d]: Attempt to unmap NULL CLB address"
- ahci_populate_sglist(void *s, int port) "ahci(%p)[%d]"
--- 
-2.47.1
+But your patch isn't wrong, so:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
