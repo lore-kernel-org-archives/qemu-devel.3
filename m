@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2518C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F5BC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 13:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJXmJ-000074-5g; Mon, 26 May 2025 09:22:07 -0400
+	id 1uJXmE-0008WS-EF; Mon, 26 May 2025 09:22:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm8-0008TQ-OB; Mon, 26 May 2025 09:21:56 -0400
+ id 1uJXm2-0008SB-9Q; Mon, 26 May 2025 09:21:51 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uJXm5-0000IH-2f; Mon, 26 May 2025 09:21:55 -0400
+ id 1uJXm0-0000HH-FU; Mon, 26 May 2025 09:21:50 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 98ACC445CE;
- Mon, 26 May 2025 15:21:47 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id E51F64454F;
+ Mon, 26 May 2025 15:21:44 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v3 11/24] block: move drain outside of
- bdrv_set_backing_hd_drained()
-Date: Mon, 26 May 2025 15:21:27 +0200
-Message-Id: <20250526132140.1641377-12-f.ebner@proxmox.com>
+Subject: [PATCH v3 01/24] block: remove outdated comments about AioContext
+ locking
+Date: Mon, 26 May 2025 15:21:17 +0200
+Message-Id: <20250526132140.1641377-2-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250526132140.1641377-1-f.ebner@proxmox.com>
 References: <20250526132140.1641377-1-f.ebner@proxmox.com>
@@ -60,89 +60,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is part of resolving the deadlock mentioned in commit "block:
-move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
-
-The function bdrv_set_backing_hd_drained() holds the graph lock, so it
-is not allowed to drain. It is called by:
-1. bdrv_set_backing_hd(), where a drained section is introduced,
-   replacing the previously present bs-specific drains.
-2. stream_prepare(), where a drained section is introduced replacing
-   the previously present bs-specific drains.
+AioContext locking was removed in commit b49f4755c7 ("block: remove
+AioContext locking").
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
 
 No changes in v3.
 
- block.c        | 6 ++----
- block/stream.c | 6 ++----
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ block.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/block.c b/block.c
-index 64db71e38d..75322789b5 100644
+index f222e1a50a..a5399888ba 100644
 --- a/block.c
 +++ b/block.c
-@@ -3569,7 +3569,6 @@ int bdrv_set_backing_hd_drained(BlockDriverState *bs,
-         assert(bs->backing->bs->quiesce_counter > 0);
-     }
- 
--    bdrv_drain_all_begin();
-     ret = bdrv_set_file_or_backing_noperm(bs, backing_hd, true, tran, errp);
-     if (ret < 0) {
-         goto out;
-@@ -3578,7 +3577,6 @@ int bdrv_set_backing_hd_drained(BlockDriverState *bs,
-     ret = bdrv_refresh_perms(bs, tran, errp);
- out:
-     tran_finalize(tran, ret);
--    bdrv_drain_all_end();
-     return ret;
+@@ -4359,8 +4359,6 @@ bdrv_recurse_has_child(BlockDriverState *bs, BlockDriverState *child)
+  * bs_queue, or the existing bs_queue being used.
+  *
+  * bs is drained here and undrained by bdrv_reopen_queue_free().
+- *
+- * To be called with bs->aio_context locked.
+  */
+ static BlockReopenQueue * GRAPH_RDLOCK
+ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+@@ -4519,7 +4517,6 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+     return bs_queue;
  }
  
-@@ -3594,11 +3592,11 @@ int bdrv_set_backing_hd(BlockDriverState *bs, BlockDriverState *backing_hd,
-     bdrv_graph_rdunlock_main_loop();
- 
-     bdrv_ref(drain_bs);
--    bdrv_drained_begin(drain_bs);
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     ret = bdrv_set_backing_hd_drained(bs, backing_hd, errp);
-     bdrv_graph_wrunlock();
--    bdrv_drained_end(drain_bs);
-+    bdrv_drain_all_end();
-     bdrv_unref(drain_bs);
- 
-     return ret;
-diff --git a/block/stream.c b/block/stream.c
-index 999d9e56d4..6ba49cffd3 100644
---- a/block/stream.c
-+++ b/block/stream.c
-@@ -80,11 +80,10 @@ static int stream_prepare(Job *job)
-      * may end up working with the wrong base node (or it might even have gone
-      * away by the time we want to use it).
-      */
--    bdrv_drained_begin(unfiltered_bs);
-     if (unfiltered_bs_cow) {
-         bdrv_ref(unfiltered_bs_cow);
--        bdrv_drained_begin(unfiltered_bs_cow);
-     }
-+    bdrv_drain_all_begin();
- 
-     bdrv_graph_rdlock_main_loop();
-     base = bdrv_filter_or_cow_bs(s->above_base);
-@@ -123,11 +122,10 @@ static int stream_prepare(Job *job)
-     }
- 
- out:
-+    bdrv_drain_all_end();
-     if (unfiltered_bs_cow) {
--        bdrv_drained_end(unfiltered_bs_cow);
-         bdrv_unref(unfiltered_bs_cow);
-     }
--    bdrv_drained_end(unfiltered_bs);
-     return ret;
+-/* To be called with bs->aio_context locked */
+ BlockReopenQueue *bdrv_reopen_queue(BlockReopenQueue *bs_queue,
+                                     BlockDriverState *bs,
+                                     QDict *options, bool keep_old_opts)
+@@ -7278,10 +7275,6 @@ bool bdrv_op_blocker_is_empty(BlockDriverState *bs)
+     return true;
  }
  
+-/*
+- * Must not be called while holding the lock of an AioContext other than the
+- * current one.
+- */
+ void bdrv_img_create(const char *filename, const char *fmt,
+                      const char *base_filename, const char *base_fmt,
+                      char *options, uint64_t img_size, int flags, bool quiet,
 -- 
 2.39.5
 
