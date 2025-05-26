@@ -4,70 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC81C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 10:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC50C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 10:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJUhR-0003K5-Fi; Mon, 26 May 2025 06:04:53 -0400
+	id 1uJUjv-000475-7e; Mon, 26 May 2025 06:07:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uJUhL-0003Je-4d
- for qemu-devel@nongnu.org; Mon, 26 May 2025 06:04:49 -0400
-Received: from mailgate02.uberspace.is ([185.26.156.114])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJUjt-00046P-1m
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 06:07:25 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uJUhJ-0008V9-7C
- for qemu-devel@nongnu.org; Mon, 26 May 2025 06:04:46 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 50AC9180240
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 12:04:42 +0200 (CEST)
-Received: (qmail 6370 invoked by uid 990); 26 May 2025 10:04:42 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 26 May 2025 12:04:42 +0200
-From: Julian Ganz <neither@nut.email>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Julian Ganz <neither@nut.email>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 15/25] target/ppc: call plugin trap callbacks
-Date: Mon, 26 May 2025 12:04:32 +0200
-Message-ID: <20250526100434.140715-1-neither@nut.email>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <8879f07b-7d4b-4013-b798-a59d6a69bb48@linaro.org>
-References: <cover.1747666625.git.neither@nut.email>
- <bc32d3f37c3e8d33e7f1c4f0d08b858d934f1ecf.1747666625.git.neither@nut.email>
- <8879f07b-7d4b-4013-b798-a59d6a69bb48@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJUjo-0000R8-Qm
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 06:07:24 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-440685d6afcso26189175e9.0
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 03:07:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748254039; x=1748858839; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UeWDwAIij9m4P5yCgviVByHQv/VRO+qlqUjNrp5s81Y=;
+ b=keyOla8TBUjjebCptlITw65RiD4rf3p9KQU0N3hWSb6UeYigCd9U41aCA0qbUO5U5l
+ hghq31V+Oo0GS0vZfE+bS95RNANPZ2/Sq2AzcxJ+aj9+nRU6g++qV2U/M3ibZIogXimv
+ +Giu8zM3UMEFnDIwgJU3LX4lNHjOz+LtqYSzPztcX1vizjtMEu5Ur2P7GDMExPGVJ0i4
+ alWupVWvhTiVDFlPllE5mSJ4YOO/KwxZW81CUxwq5eRlcz0EJthqAjN68SbuSGczMuFy
+ TF1qMA/rkMDn6E5ENY2Zd2PPZ82O1dYV1X3NCrri1z3rHgHuCmR4KHJjanOyjRVy5rSW
+ xvxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748254039; x=1748858839;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UeWDwAIij9m4P5yCgviVByHQv/VRO+qlqUjNrp5s81Y=;
+ b=UB2S7F+vJmTzMdL9KqABTZ8d/mQne5Y4S53Ozkztc0QE1c1oqcL4k2mChU6MdVhhp+
+ G7oeDbFKbD6YCQz4OEr9tQCgUfpUe9KZOgjYBY3/KgqiEWsczY354L8S/jAYGbfNWhmz
+ txXy1AUD6Pdc4HepddtgnRbP8qsgLqEQhM7jyqWK50hu6a65aJi2FmprXTBxBxHpKG21
+ xQAR6V7L5zhT5zddQ6CEhRtHIs+dtYlBQ5qlmjmF11s+i89mk3Pv0O9cTXdFQiF9Rmma
+ kLaKmjl9IoTTGK3N0Er0ZklVNjJITlYQaMtoKSLzc4N7M4X8oh+d1ghZDxvC8ipyu7R+
+ NeWg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXNwthZhy0MSFRVaJw1+v7yl9opBro2rd5WVEejWK7RyDMmCIe3N6DRUvrZQ+UJYa3se5Tckbz8Cq93@nongnu.org
+X-Gm-Message-State: AOJu0YwrVPa9YY0VERxptESr6c9YUTr195ncc45on+AZXzWVH/7yW86Q
+ 5BN8QZZs1dJsyROe0cMM5N45+4Wc9XlAVnB8m3FOaKakleBNNQg1BH6in31QE9wPd9c=
+X-Gm-Gg: ASbGncsMgQ/0ltIFrvNsKR0Q0N/bwEevVld4JTBkgPWiNuZAcy/m01yCVZd8FpzxzOe
+ 5cZuMZaiHQmSU/KDevQ73jK5QVtPCF+9Rp56It/8gecEemgnU46+GQMzitdy0G84qaAJEdRWbSx
+ YpZC0N7rs72vbvVySAAOYzRxReSVtyFBlHSREUxIJIyoe1Ldxw4dim1wayfKbpnDewSrCAIJheJ
+ GY+bCBGNkofvW48viNtNM0U2DCAybzRJh0s02vU1jaaJl0PWNzfwFBA6BYIZv8jPk+xb7BEzr3n
+ 9IzjDDziGeBZHTHReYxgyFVpizTjdw5EzohFQG02730ypIEDP+/UUopp4juMhopWDtFr1KTfrHX
+ NDoeUjJbHkfVJbmupHFyf7SBW
+X-Google-Smtp-Source: AGHT+IE6xJlSgvyBMrkFwk/bvUzspZwflqpVzWji54kK0D9NZKfwYWo23bk+AA61wcCDcpmfSMliuw==
+X-Received: by 2002:a05:600c:4684:b0:43c:f87c:24ce with SMTP id
+ 5b1f17b1804b1-44c955dc476mr70458015e9.21.1748254038651; 
+ Mon, 26 May 2025 03:07:18 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-447f18251adsm239618765e9.2.2025.05.26.03.07.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 May 2025 03:07:17 -0700 (PDT)
+Message-ID: <be8c1d4d-b68e-42b1-9466-3698ded1be10@linaro.org>
+Date: Mon, 26 May 2025 12:07:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: /
-X-Rspamd-Report: MID_CONTAINS_FROM(1) BAYES_HAM(-0.250626) MIME_GOOD(-0.1)
-X-Rspamd-Score: 0.649373
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=L9cYxMQEcBKvIk7TTralNnFUYqOHlx13RG1PHZiLQRQ=;
- b=m0autTUuqFQZBWxA4gaTFp2aZxS0PWm44ozuiU+Ws6vbIGUMKM2KnoxaOpFm0PpWjo9GNHqsan
- rBj5hgMUMPyATOAsUZsThoqGYdqfD1Uy7zmGJtF+ypqwzh9cowZMxzz/GSOFdujyzHm9jGPM4W0R
- ulHo3yxPcZUe5v1gcrcmeS7+4+Ts7chIOLbnzToesriX2d/KJnMwK7qIFDX16Vc21PqCHAUHzabv
- OXQcFuNGbTx3kwHQBMHiuPll5vU9yqjORaxlksWWaULaEJyrBwTQKH6aJsEQ3tFqAuaXs2wdyj8l
- 1yDdf61zAvpgSAl13SsJYAC18ZwryW+yA6dmM0Ft0yQp/e7VXcaurqumMoKMPbF+jcZKu36OBUIt
- 7Y5TyC3v+8Wve0FUU/r/c3W0ZiKQdPpPixrHMEhCfqGAng6oANBTz8HI28zJWN/aabqmvHbG9fT8
- 8jzo2cmxFjbq6jhvPQL+Ul8soEpXIM+37F/7o5usdqT5JiTIt/gHARnh/v1WTFjX1Z7L1QByDP/S
- k+apmkXK42zNWKY+BPQH6gt2f55RcJx/tQAp69EpC3rrbMWJV8Y8zGC1Zw2p48D7t5ujl/L8kemt
- cXevZs3glZD6lHyPAgM3EAtjzGacLU7JOvrGoX6losTH8wqQ5GjbBga/6byaON0a8UEGJlQE61Ze
- 8=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 1/4] acpi: Add machine option to disable SPCR table
+To: Li Chen <me@linux.beauty>, Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
+ qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>
+References: <87msberqzi.wl-me@linux.beauty> <87ldqyrqqo.wl-me@linux.beauty>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87ldqyrqqo.wl-me@linux.beauty>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,25 +110,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+Hi Li,
 
-sorry for the late reply to this mail in particular. I needed my memory to be
-refreshed.
-
-On 5/19/25 16:19, Julian Ganz wrote:
-> > @@ -758,6 +787,7 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-> >           if (lev == 1 && cpu->vhyp) {
-> >               cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
-> >               powerpc_reset_excp_state(cpu);
-> > +            qemu_plugin_vcpu_hostcall_cb(env_cpu(env), last_pc);
+On 15/5/25 14:41, Li Chen wrote:
+> From: Li Chen <chenl311@chinatelecom.cn>
 > 
-> Err... I think you need to be more specific about what you mean by "hostcall".  Certainly 
-> this isn't the same thing as semihosting.
+> The ACPI SPCR (Serial Port Console Redirection) table allows firmware
+> to specify a preferred serial console device to the operating system.
+> On ARM64 systems, Linux by default respects this table: even if the
+> kernel command line does not include a hardware serial console (e.g.,
+> "console=ttyAMA0"), the kernel still register the serial device
+> referenced by SPCR as a printk console.
+> 
+> While this behavior is standard-compliant, it can lead to situations
+> where guest console behavior is influenced by platform firmware rather
+> than user-specified configuration. To make guest console behavior more
+> predictable and under user control, this patch introduces a machine
+> option to explicitly disable SPCR table exposure:
+> 
+>      -machine spcr=off
+> 
+> By default, the option is enabled (spcr=on), preserving existing
+> behavior. When disabled, QEMU will omit the SPCR table from the guest's
+> ACPI namespace, ensuring that only consoles explicitly declared in the
+> kernel command line are registered.
+> 
+> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> ---
 
-We count as a hostcall anything that is handled by code which execution is not
-visible to plugins through the exec_insn callbacks. I believe that this is the
-case hee, but I might be wrong.
 
-Regards,
-Julian
+> diff --git a/include/hw/boards.h b/include/hw/boards.h
+> index 765dc8dd35..089104d54b 100644
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -444,6 +444,7 @@ struct MachineState {
+>       SmpCache smp_cache;
+>       struct NVDIMMState *nvdimms_state;
+>       struct NumaState *numa_state;
+> +    bool enable_spcr;
+
+This structure is used by all machines. Can we be more
+descriptive, maybe naming as "acpi_spcr_enabled"?
+
+Thanks,
+
+Phil.
+
 
