@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C59BDC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3239C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 11:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJVw0-0006Fr-BD; Mon, 26 May 2025 07:24:00 -0400
+	id 1uJVw9-0006Nt-CG; Mon, 26 May 2025 07:24:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJVvx-0006Eu-H0
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:23:57 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJVw6-0006HN-Ay
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:24:06 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJVvv-0001pL-KC
- for qemu-devel@nongnu.org; Mon, 26 May 2025 07:23:57 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3a36efcadb8so2082211f8f.0
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 04:23:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJVw4-0001qZ-JI
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 07:24:06 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3a4d877dfb3so1008403f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 26 May 2025 04:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748258633; x=1748863433; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748258642; x=1748863442; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jNvIkaGWqwIyyf3qPO21sauAQBsDAgapC08M3PdrX3U=;
- b=kIroOeabYqKJve8r3aKCpOjFzOlOpNwZcvtiIGBF9WEj2vOYPlRoVC6CnlqnPnFzol
- QqCvWMKmdVYjGNWej5qccFwGjHYiUKcv2fDk1tq/LU2J1MLqsiF5l75ff+Y33uhg+Zvs
- 2coAttz0uCs7r1X1bBORVb8AkOyADYIEAb6LkCz+tid0yKdfLyCb1cq9ldwOvSDJaDYf
- GJJ3zQRpF/DBMV7MPl/Wxm3O6PzwM3Bx6VU67MM5nuuc20SAWCJhsxJpqdeLJAXw1snw
- bS/VklvSpOdFo4+rXMxrip1KW7RxbYONFHwDWqx9kzzz07NDVysMchMUShWYa8mstdjc
- KVOw==
+ bh=ELCLDmiYgPuDHAGlIm5WFjN8VBeP03kfHU9C8of95Hc=;
+ b=Nfsl29ia8jPOzsHMHnTwNY2JbyR0wHDCdPoW0MpXUhu1oPCffLBdh8A6MjfxGuk/db
+ ja062goDkLmUjiO82hMB84nhfGaAevnQ15+DjeA3GoualCvZ8MKlXCakEd03RIImLkmB
+ ehaR9DDRvV4D+DiHpx4CohbQ80tIckE0mh0z3Wr9+oO+EQg8jr51ZzmyYPt2UNXnHvv0
+ +FS1Veux8MqOBAikV+xWx28q90Bj6JmuuaTV5pCwkHcXdNB06kT7wCfJ5VX/IjWTDGBN
+ Fql8oPlYPFyYuhwVfFmHPkU6UqLA0L011Z9GmcL4N4rbj+NPpB/jN8ccpVzCeHKco16b
+ MYHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748258633; x=1748863433;
+ d=1e100.net; s=20230601; t=1748258642; x=1748863442;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jNvIkaGWqwIyyf3qPO21sauAQBsDAgapC08M3PdrX3U=;
- b=A0iy832W2DM5s0bu330CZTZo4nbiG5J4xaFgISY71YWoCMSg06RA0JpHi7KOYZ/Ptj
- EHSBxm9/B0Xg+wqoEiKzyxbdrpvO/SOVL5IY5KDAeIqle7GN4wyqOhpupBeMwW27Gyaq
- /ULS80u8El78coBjzkK/Wkg4dSaPgkI+Y/nwl26iCgmS2QLN9tdCW0XpBeD+QRBRs2v+
- g6wKzKpPB16S4bknK3rTthscQqXUfC/f0bOVT/zCta60oJj47w6WFMPVHD4OT8LgueR9
- nAMi9JsYQqB4EP9yYEn3CPYaNwqdhTgM5sc9yU5S8jxw3SSfe/oZCxfeBurD5i+IbUzd
- Rm2A==
-X-Gm-Message-State: AOJu0YzhfkgrYFBUm/yW2iDQTprZ7nbLOcF3nOIg4trIOfqGtoVLZtWs
- TOPzwK8GZ4m1kY7TqrAqEutbPvXUhoNT9aqGQj8mEKstp1glEVAKtwKiaMlfRAiK8mtoZ3qR1lY
- kqyKaxUC7Ow==
-X-Gm-Gg: ASbGncvb/to9DBVl4QJjnGJfUG6mn6K+mnWlIAsDhVOlTq2TpasFSaUPBnpEw32PZ+u
- 3V42Rd12WjlwvAJP7J6xlOvEGyyuzJBncIY4nG+Z4d+g0yBOC6J/X+1OwvVyDFNb6YTV9sv9pU/
- 3leNuGPGPl8rdQFO/7dGJehdb84Z+mHiAzZNUL7uMS0plQWsWj7o3fNMdsYc7lcvnteWS519XLA
- tQzE2MKoaCvdDyOH8fkH+NaMTR77lqh8Q/FDXQ7xw46D70ZcED/twuKpYhxs16/gKkdiRBEEz4f
- z4LZTnp3mlyjZYCRcexutIobNTwjLRfjkIV5dIkq+XY8yYZj7GzveVSocaX3ADGVycgXR+CAb+3
- 13IGGbLLVRka8FNRFTnykyrPLXcL+oeM=
-X-Google-Smtp-Source: AGHT+IH8CZLUa85gQ0EPaSVJ+MfCxlPTUfLUVJUNZ/3XwuupnTyP4vJBF3aDXu5tvhZU+LvO49YX6w==
-X-Received: by 2002:adf:f0cc:0:b0:3a4:d02e:84ac with SMTP id
- ffacd0b85a97d-3a4d02e8731mr4434127f8f.13.1748258632991; 
- Mon, 26 May 2025 04:23:52 -0700 (PDT)
+ bh=ELCLDmiYgPuDHAGlIm5WFjN8VBeP03kfHU9C8of95Hc=;
+ b=r3aHBZYrDf36uPg+tzvzeQyZZxY91sST+cymSuCsEpRJenKF51Dsp7nzevF8Klf/5M
+ 9QwVey3HSZ0HymXO3FmzxMgi1TQqkBhPbn3YePLiQtqoXKNx1qeJOIgWEYuFWyo50Wgo
+ fe7zMgWxLeG7iEWweEhMLd/lmlxUuu/ZdDOC8EQ3WXtOXS+/hTiNg6GCmouJ+NY5eWoZ
+ xmiO3EnNBNVzDr1k99X+tyV58FB4F9UPN0+w6KFLXkHbgNLvfpskakwpsbO8oGb3smxF
+ RWZyoLm09LJIybvKPMFjYMfS/sfZIbnTGYkX5T91QDATfsdoePzq8qVsuA5fng6omxEt
+ uJuQ==
+X-Gm-Message-State: AOJu0YznkqYfL3BpYJ3urYuvkY0Mt9an2qER0gDjqn8FP7WChfW2MgS3
+ Vs7hHGT5wXpqVs+1BgtUjajKxvnXN9Qe/OTp/Tq+lylXyBSIqeataq2EAwIV1AjCC9yYDhyzrMm
+ spvZTEr8fhQ==
+X-Gm-Gg: ASbGncv51IVU8vF7wzQ5EEw3jzDAZrnG9QHWKh0v9kf/0OqjqRUf438NNd+sT7lQbJw
+ XbnI8kGzsduxf/y3fL7pdsTQ4FG7xLMxGn59aDrIoJskMvoz/o6xg7aSaO73S8gGsiyKSOkvMOf
+ iegPJ4DkdaDsD/fy+UcsvHBZ4TSrcUtOb8J3cLMvCOvLEFQDC5nxaevT8RT8Wbi88qhsXkAd9aU
+ DlzOQRE7P7tljDGlIGSpVw4k0bUl7P3I+r+oa1YM94cL31KcZQpp2qUrfvHCIJBPlLge3Ytgmxq
+ gVR0RZjuasAou/5rvgUNgXtBfAsVfizbbRud1f9oIXMOdk67DS48VB8C88NN8jrZG39YP0V3kI6
+ TXxqkFjrAd9x88TN9cgt1PshGf9As3Wc=
+X-Google-Smtp-Source: AGHT+IHk6BXJp9xgqQztiA3nhi4npvFes8NekY1N1GE1nODKEDT0H0V1NojsYSYhAU9rM40r88+fpg==
+X-Received: by 2002:a5d:64cb:0:b0:3a1:fa6c:4735 with SMTP id
+ ffacd0b85a97d-3a4cb474157mr7616249f8f.35.1748258642576; 
+ Mon, 26 May 2025 04:24:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4de9c9853sm549909f8f.27.2025.05.26.04.23.52
+ ffacd0b85a97d-3a4d8ea9520sm2841634f8f.70.2025.05.26.04.24.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 May 2025 04:23:52 -0700 (PDT)
+ Mon, 26 May 2025 04:24:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,18 +72,19 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/3] hw/acpi: Build IPMI stubs when ACPI is disabled
-Date: Mon, 26 May 2025 13:23:44 +0200
-Message-ID: <20250526112346.48744-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 3/3] hw/ppc: Add stub for pnv_chip_find_core()
+Date: Mon, 26 May 2025 13:23:46 +0200
+Message-ID: <20250526112346.48744-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250526112346.48744-1-philmd@linaro.org>
 References: <20250526112346.48744-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,50 +107,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When ACPI is disabled, no ACPI code depends on IPMI,
-so we don't need the stubs.
-
-We need them when IPMI is enabled and ACPI disabled,
-otherwise when using '--without-default-devices' we
-get:
+Since commit 9808ce6d5cb, building QEMU configured with
+'--without-default-devices' fails:
 
   Undefined symbols for architecture arm64:
-    "_build_ipmi_dev_aml", referenced from:
-        _isa_ipmi_bt_class_init in hw_ipmi_isa_ipmi_bt.c.o
+    "_pnv_chip_find_core", referenced from:
+        _helper_load_sprd in target_ppc_misc_helper.c.o
+        _helper_store_sprd in target_ppc_misc_helper.c.o
   ld: symbol(s) not found for architecture arm64
+  clang: error: linker command failed with exit code 1
 
-Split the source set list to avoid a too long line.
+Fix by adding a stub when CONFIG_POWERNV is not available.
 
+Reported-by: Thomas Huth <thuth@redhat.com>
+Fixes: 9808ce6d5cb ("target/ppc: Big-core scratch register fix")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/acpi/meson.build | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ hw/ppc/pnv_stub.c  | 15 +++++++++++++++
+ hw/ppc/meson.build |  3 ++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+ create mode 100644 hw/ppc/pnv_stub.c
 
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index 73f02b96912..76948cdd00d 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -26,12 +26,18 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'
- acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
--acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
-+acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'))
- acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
- if have_tpm
-   acpi_ss.add(files('tpm.c'))
- endif
--system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
-+system_ss.add(when: 'CONFIG_ACPI', if_false: files(
-+  'acpi-stub.c',
-+  'acpi_interface.c',
-+  'aml-build-stub.c',
-+  'ghes-stub.c',
-+  'ipmi-stub.c',
-+))
- system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
- system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
- system_ss.add(files('acpi-qmp-cmds.c'))
+diff --git a/hw/ppc/pnv_stub.c b/hw/ppc/pnv_stub.c
+new file mode 100644
+index 00000000000..8d11c8b65bb
+--- /dev/null
++++ b/hw/ppc/pnv_stub.c
+@@ -0,0 +1,15 @@
++/*
++ * QEMU PowerPC PowerNV stubs
++ *
++ *  Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/ppc/pnv.h"
++
++PnvCore *pnv_chip_find_core(PnvChip *chip, uint32_t core_id)
++{
++    g_assert_not_reached();
++}
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index 9893f8adebb..02f248f5f46 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -55,7 +55,8 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+   'pnv_pnor.c',
+   'pnv_nest_pervasive.c',
+   'pnv_n1_chiplet.c',
+-))
++), if_false: files('pnv_stub.c'))
++
+ # PowerPC 4xx boards
+ ppc_ss.add(when: 'CONFIG_PPC440', if_true: files(
+   'ppc440_bamboo.c',
 -- 
 2.47.1
 
