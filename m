@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BAA1C54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 08:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CB0C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 09:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJq9Q-0000dJ-1A; Tue, 27 May 2025 04:59:12 -0400
+	id 1uJqB9-0001zH-NB; Tue, 27 May 2025 05:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uJq9O-0000d5-0I
- for qemu-devel@nongnu.org; Tue, 27 May 2025 04:59:10 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uJq9L-0002oY-Jh
- for qemu-devel@nongnu.org; Tue, 27 May 2025 04:59:09 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 772D612568E
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 11:58:58 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A45F321743A
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 11:59:02 +0300 (MSK)
-Message-ID: <04f1cf26-696d-4825-bdae-771e17ae0cf5@tls.msk.ru>
-Date: Tue, 27 May 2025 11:59:02 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uJqB2-0001yP-S8
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 05:00:54 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uJqB0-0002yo-TR
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 05:00:52 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-442ccf0e1b3so42743095e9.3
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 02:00:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748336448; x=1748941248; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SUxGAa1RGBs7P/A67C3rZhqFuFMxhvGERAvJoihvuwI=;
+ b=lc+77JdcMFMJoaxI0+7C8QtAP5oK3Rk+zhZ2w1Tg+pQmnOc4CA2Rc8XvAwwdiHsG2o
+ vw6G0NNjMwrHaFKHu/6JbzvhIpnGGMBqJ2auv9F79r+OWVXSlbiufovEGjma9KFSnuvL
+ 4c1KVLTyhokb3W7LK21d2abTGdkqTMpyYOVW9/yv9I8L2ECaeJOmwWqg9KMXmp9Og4FO
+ bjdWFUdC1NVsbIJCLa8LPMhqz6hbZUJNBcQUhJSICOkHcElE4zbhD2q56VIhLuSEYFYk
+ X4WjXVIHzDSpyG6Gc/PmqnbduYR00mSUg3NrTpJGwK0PuvzT71ZQvOgxJJKKoJ9HPCus
+ VzzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748336448; x=1748941248;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SUxGAa1RGBs7P/A67C3rZhqFuFMxhvGERAvJoihvuwI=;
+ b=ZDg/L3k6i16+Kzrr2nIlH2anurZFECuv7bc7R93lrcXZwo4CpuUE5zbvC6Wz8Xv3U4
+ kyem6YGh304WtIoLXvOdciMipT0OsIOtRBighgv70fsQ5ef7dMPxJYpa/pe1//KZmyAf
+ +ZZ/lbGYwcheZ3+5Xq3/ItQ1Da3/9gPiLJZ8a59rGdZDMlrxqLHAeGqfq1mDeu292jR+
+ WI6nW71mtPvE8aLXbI837U1zcUQTbuvLCS6RmFyr9MZRWKb32tLBX3+oaWQJh/ClkS5T
+ 1A22/1ZxHNpRMKR1w+FCy99A1EevH8h1s6Qi/qY/75PXrjAHDKlFMeDgoLBUqwSMx6ya
+ Ehag==
+X-Gm-Message-State: AOJu0Yyyw1nmSBL9WQCM6QoJA3ssWhVzz1Xkq1T3HWSY0qnB4qOJ4tAI
+ jJ0NIUIZSXLB74iEaFVzr4wOSy2Vlf/44uzkh3WbgBiq8TzblV+s9Z0UTQGHCPeiJFWZKd/s7ZR
+ 5ML0DXLrrJA==
+X-Gm-Gg: ASbGnctuZqFVbcgPcAipEJ7IoIjTtsENCQuJM53Sy5UWNF53Ty35ErZgvM4efS8sr/q
+ ySDAF59bJteP65cGIWoV4U9G4vY2mSe1KC9DOAPRuyRovXs1Wu3y51yOzNIJTO2p+GzvcorzNDZ
+ 1NQRrtEcOrVBMpIyC8Jo1iZWgbxeD9O9ZD/q20fsDF9Cw9PIH6s2323SQCejaXUqVbio2oJN4ZR
+ brwBIDQZKQxk+4j/ywVxKCYGaC7Zg8WOSIqxLLJQ37pUEDy4tUlcxnqgr/tDFXndZBEiW4ucqts
+ lt7+f3fVPb0vGU3vaIMv8HUAHKxUoM5oR3CTIJ1txbbJEa1ob/IKs3Dnjx3IzUzA2Q==
+X-Google-Smtp-Source: AGHT+IGHkP5ftYZfoavsboZJHTF/+VyHcoTRQKMNGpQbyrL1Hf2PPHa+WEPTEyABd9mUCGKg+rQj7g==
+X-Received: by 2002:a05:6000:2408:b0:3a4:d0dc:184f with SMTP id
+ ffacd0b85a97d-3a4d0dc1cfcmr8181879f8f.39.1748336447929; 
+ Tue, 27 May 2025 02:00:47 -0700 (PDT)
+Received: from [172.16.25.47] ([195.53.115.74])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a37fb452e5sm19630010f8f.20.2025.05.27.02.00.47
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 May 2025 02:00:47 -0700 (PDT)
+Message-ID: <aa2b9b07-3a5c-422e-8b8b-c6e82f3ab2a2@linaro.org>
+Date: Tue, 27 May 2025 10:00:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: qemu-devel <qemu-devel@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: FWIW: current qemu-user can't be built statically on debian bookworm
- arm64 with capstone anymore
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
+Subject: Re: [PATCH] linux-user: implement pgid field of /proc/self/stat
+To: qemu-devel@nongnu.org
+References: <mvmfrgzcr4m.fsf@suse.de>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <mvmfrgzcr4m.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,31 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FWIW, and maybe a heads-up, but:
+On 5/20/25 15:07, Andreas Schwab wrote:
+> Signed-off-by: Andreas Schwab <schwab@suse.de>
+> ---
+>   linux-user/syscall.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 8820ca4dfd..5536e364dc 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -8235,6 +8235,9 @@ static int open_self_stat(CPUArchState *cpu_env, int fd)
+>           } else if (i == 3) {
+>               /* ppid */
+>               g_string_printf(buf, FMT_pid " ", getppid());
+> +        } else if (i == 4) {
+> +            /* pgid */
+> +            g_string_printf(buf, FMT_pid " ", getpgrp());
+>           } else if (i == 19) {
+>               /* num_threads */
+>               int cpus = 0;
 
-Current qemu (git master) can't be built on debian stable (bookworm) on arm64
-statically, when capstone is used.
+Queued, thanks.
 
-./configure --static --enable-capstone --target-list=aarch64-linux-user
-
-this fails at link stage:
-
-/usr/lib/gcc/aarch64-linux-gnu/12/../../../aarch64-linux-gnu/libc.a(setlocale.o): in function `_nl_locale_subfreeres':
-(__libc_freeres_fn+0x124): relocation truncated to fit: R_AARCH64_LD64_GOTPAGE_LO15 against symbol `_nl_C_LC_COLLATE' defined in .data.rel.ro.local 
-section in /usr/lib/gcc/aarch64-linux-gnu/12/../../../aarch64-linux-gnu/libc.a(C-collate.o)
-/usr/bin/ld: (__libc_freeres_fn+0x124): warning: too many GOT entries for -fpic, please recompile with -fPIC
-collect2: error: ld returned 1 exit status
-
-Apparently some code/data size has become too large.
-
-Only aarch64 target on aarch64 is affected, so far.
-
-When building with capstone disabled, it fits and hence links
-successfully.
-
-I'm disabling capstone on debian build for bookworm-backports on arm64 for qemu-user.
-
-Thanks,
-
-/mjt
+r~
 
