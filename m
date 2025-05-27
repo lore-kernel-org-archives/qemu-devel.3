@@ -4,92 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBEEC54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBF9C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJoox-00023A-LO; Tue, 27 May 2025 03:33:59 -0400
+	id 1uJoqq-00030Z-Gt; Tue, 27 May 2025 03:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uJoow-000230-MN
- for qemu-devel@nongnu.org; Tue, 27 May 2025 03:33:58 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uJoon-00077p-0U
- for qemu-devel@nongnu.org; Tue, 27 May 2025 03:33:58 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3a35c894313so2984373f8f.2
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 00:33:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748331224; x=1748936024; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Qtx6hs3oMoJyKfla6vTtXDeD5yxOX/zNXnxSsXN/A8A=;
- b=ynTAcDGZ0jdRv+UdEuzf6Rp8AJ+j0LswnvZgiouzrHaWXNAIp9Bj4g9l+cvs8z/SYG
- bm5oiWP/m1mMcL1yao3qzQSewPYkG8M94OT5Po/B4I6WgvN5HstpkSjrR8wGOLggEpyQ
- EK8xdhxjAl8115c8zPTA78CU234a5Nfk94aRNnHyx4dge1rZpu+U6W8YZVHVbaI86qDs
- 9C7s3LGN/LcV0+1PRqA++s7plc2wj29enDtSSFVaT7DOO0XkmJrz7zrFZOjOBhNmfAG5
- H3FQW8Jwpc6nbjypBWL7KhmgjjQue53Ez2WgegQkYTXU21z0BPLIOFPrnu7p8B4I8MyY
- ddzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748331224; x=1748936024;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Qtx6hs3oMoJyKfla6vTtXDeD5yxOX/zNXnxSsXN/A8A=;
- b=wD0gJfQadXvUYrZqITT7MCylezwRlMUt9fdg/8ccGAOFVozsybVDpDZBeN5HOfgaRv
- 2Yk9HU49oNKH7qhm/7BwBO6g1qf8oj/C5ZJFY7BxVFALxW1/2utBqv6FMkZXq6UhmkRR
- CDZuSo1YWWyljmH3+wXtZi+R/M3MWiZxFA6iIZobXu3TeHppVniUARg3vNbqx+ELKk01
- j7NSVgVgI5aAI8KHDUmRNe35XyUD5++yVcJ2eY9gPhyv6xdZnWPuUESNCI/rhqU4pZWp
- OTlBTs3dMSuVlv4pMk9y07O+kRp+oHlvqqhfBT2oj0m+BPRptESwWc2FCvKznkjynhLC
- 0Y1Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWI5PZeRd18Q35GNza8g9wAXEwaX8iNLcWXRpROL14/RYT94HLJqGOyMayLf6ekiNgA9fv7e9Sp4XAm@nongnu.org
-X-Gm-Message-State: AOJu0YzFiUrjTwy08ixSw0VT6iFmiXr+T+VcIbNBhYJlHsrcvgk4P/e9
- kPYn+blNfXPhXjlg2w8i8svmi166+L6dlwyX5BCr5/KdydQVGy1iDvKMmzSHtayYqQY=
-X-Gm-Gg: ASbGncsPOVvBnJLudf4l0xScqPt2afA3cJZ4lIr3N4sO9RODjCYa5naBH+NZ5yeS+ku
- nbfizUTO85OH39N1dKOQ+EAvxL8wXPb59u+OLsiQKnRXiR4kdKqj3O9zq05E63wSVg0ovAyJpvd
- Kgsnm/OO7un7l2Et7beJosSorf59UjdTGd05HN324yqtDoR6sD7tAIHUb46cM/rwQNx1CKP+SUI
- jtuk9ViqZT/PMWVsaQzHemzEvYLbHpOjeHJW2xmMmsNFUh+Iayijh3XCu65+oiX2REGKHgTo+aX
- TMRiEqrsumrIxT2LMnesEIKdqCWr1bHSqfovC9wAoG0eBWBEVquKuGZjncKsh9AgUg==
-X-Google-Smtp-Source: AGHT+IFzrHAT7O/1U9vrbNqPmWZgHUYuri2sMq+uvO6Vodm++3vULWIZPM8XjBS/ZasbiNjQwFeS+Q==
-X-Received: by 2002:a05:6000:2481:b0:3a4:d738:f98c with SMTP id
- ffacd0b85a97d-3a4d738fb73mr4772965f8f.30.1748331223820; 
- Tue, 27 May 2025 00:33:43 -0700 (PDT)
-Received: from [172.16.25.47] ([195.53.115.74])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4d47c0684sm6706179f8f.44.2025.05.27.00.33.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 May 2025 00:33:43 -0700 (PDT)
-Message-ID: <ae9e0a75-bafe-4d66-a8f2-9c3371315279@linaro.org>
-Date: Tue, 27 May 2025 08:33:40 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/12] target/arm: Fill in TCGCPUOps.pointer_wrap
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: foss@percivaleng.com, qemu-arm@nongnu.org,
- Gustavo Romero <gustavo.romero@linaro.org>
-References: <20250504205714.3432096-1-richard.henderson@linaro.org>
- <20250504205714.3432096-5-richard.henderson@linaro.org>
- <e8176be8-dbe9-4cf4-a23c-a6100d530c0b@linaro.org>
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1uJoqn-000308-T1
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 03:35:53 -0400
+Received: from mail-mw2nam12on20605.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::605]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1uJoqZ-0007P2-Ek
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 03:35:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SxtYmj7Psh/nnpp8sjJ+16qWiIDKxT/rif+CHRM59Tvc+IC83XNp8uo6rG4f9SlsjqtfiBQKzFzQ7o0C246zU67pbGRRdivFroUKC+0DBQSYpVkCsh2ub0MSyjBw7QfTfjcl/CV0DVXFnQb6vZkIpkLTUzF8WqfZib/qHUfeYcMS5pjpgzWEp0CL8n5ivFGGH4nsmHrQfe7zJ5wyeo8dPJZabPr2SftzBglD2FVo4GcQKRUa8+ZchCmkPcGzbLZYZxV6T3NHOMjiZHtMq3Ss30h7XtqfYGZ+g1gtMivrWpejQGzltqlNObjqDUHnt1o2CxEFK96AhCXxzB4WVV7pTQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4eoDLy0iJyZXL+O8ZBi/qDcZFcLFNR5JlRPtMOqhQTM=;
+ b=GOnajJbsus3TnEpG5gvNEwKfbZEcTy5Hn7zm2hxmvwmstdj7KqyiyMAVwE9RxGXHTBVQTkxK1uzFKlWaXPV11PfCDDG++Vi/waMJyi+qGvp/3dIdfh4O63mpMrpO8H1yNSO6hFP1v93CsSD+YmA+uQNESgvFxOhR46D9vATfk5TiKkwdEjRMGyor4p48x7ruJnQsekLNHvNGVJp2UPgr36pqvqUYJiv/EB9APl2EG5eIPryh6dtPZhssM/aeu2OZno2/EMcckfIFvZWmNwtV0nlkJtAI0q7pGOZT55847mOaKqPehcvrtvY1Rq+iPguZ4WWNL53MSmHBkEL8cA9x4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4eoDLy0iJyZXL+O8ZBi/qDcZFcLFNR5JlRPtMOqhQTM=;
+ b=op68rUkg/ywjQbkO1lJTTAGnYWOzAfQ6T7GjRo69D/1DH+qiK9upMPyQYWzA/HfTFrP+sDVhqbubEL82NSe3TGs0i+1SUonZW1xesYVGpFzdWjEnYMpL44izLGa/Qr4a6oo+wiWT5Du/2xfoqOfF/WR2qdqU0+hJ/OZfYEV+8+E=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
+ by SA1PR12MB7175.namprd12.prod.outlook.com (2603:10b6:806:2b2::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.28; Tue, 27 May
+ 2025 07:35:22 +0000
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8769.022; Tue, 27 May 2025
+ 07:35:21 +0000
+Message-ID: <952ff8ef-815e-484f-a319-3416dd3c03e8@amd.com>
+Date: Tue, 27 May 2025 17:35:14 +1000
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH v5 05/10] ram-block-attribute: Introduce a helper to
+ notify shared/private state changes
+To: Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+References: <20250520102856.132417-1-chenyi.qiang@intel.com>
+ <20250520102856.132417-6-chenyi.qiang@intel.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <e8176be8-dbe9-4cf4-a23c-a6100d530c0b@linaro.org>
+From: Alexey Kardashevskiy <aik@amd.com>
+In-Reply-To: <20250520102856.132417-6-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SYAPR01CA0034.ausprd01.prod.outlook.com (2603:10c6:1:1::22)
+ To CH3PR12MB9194.namprd12.prod.outlook.com
+ (2603:10b6:610:19f::7)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|SA1PR12MB7175:EE_
+X-MS-Office365-Filtering-Correlation-Id: a4319c44-9707-4cbe-b9ce-08dd9cf10955
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OXd5L3dHVmRjUnQrUFZ1VUJaaDR4TGc0dUZMRHZYWHh4ZWt5OGtUbTVubGNn?=
+ =?utf-8?B?NXFIamFFYnlxSk5XcWwzYzRSN0xvZDZMYzFUMW1qN0FINmNqS1NVbkFlanc4?=
+ =?utf-8?B?anBEWEgrN3ZHd3Z2K1VlbGxuNER6MGx0TU0zUmxobGhFbktJSkJNVUlNWEdT?=
+ =?utf-8?B?OGRRVHdHTDFUcXB5eVd4VnBsOG54MDdqdzk5OGVvZjhoQ2VxaDNWeTBreCtu?=
+ =?utf-8?B?dHRHV3JuVCtlbTgxVjdhMytra3Z2ZnpIbmdCUlBJWXlYYkprazRwL0twOE9P?=
+ =?utf-8?B?Z21Yc2Y4Q2VoRDBxMUZnY2JUV0ZqSWlNRWlmM3lCcGRLdXVRNG1OTXB0WHpj?=
+ =?utf-8?B?cHQvU2RPZ0VzK2d4R1BtN1JUUzd5L1lIU1gwelQzajloQ2ZqVlVHYldndG5w?=
+ =?utf-8?B?OVBRbTJiQmU2NEpMdnpDT0IrQTdvbkxLTDZIQm1RSmhGVFM0QXYwanVOd3pa?=
+ =?utf-8?B?ZzBKWnJsck5DM3lmYm1VOWpRamZFbi9FaTBMOU8yUFdPSk5WQnphdXlWd2Rz?=
+ =?utf-8?B?cTJGWHlGVHJvWUR1SVBSU0dlQ2dyN3JoOGlCcUk0UWJ1S0hBQWJhOTJmeXZn?=
+ =?utf-8?B?NWFXd1dFVVFyM2NtbHExb3Y5eGRKdHE5bEN0S0lId3V4Um5mZ2pTZDdjVm9M?=
+ =?utf-8?B?SGxQM1lBbTNid1VCSTJ2V2hBdWw5K0xscml3STYxZ1ZGYlE1VklndlNudDdv?=
+ =?utf-8?B?THVGMFVjZXVwMnIxeE5kL1VNRlY2RHpkNnZjcTBxWUVwTmt0MGpGWXlCcFY5?=
+ =?utf-8?B?SVJkMHl2OHQ3K1RiTTRvdWp3aEMrQWFHOEZFYi83SVVmWU5waU9Dc0dpMThJ?=
+ =?utf-8?B?RjJiejEwN1ZrUFBnL2FuUFJpNGh0NDlzZ3ZETUE2bFB1QmVJbHBxbTViUzRq?=
+ =?utf-8?B?bXhOL2QwWm82UDMwRUJhS0hHbjV5emxaRGRxQjMvOTV2UjJqQTJTeGdjYzVy?=
+ =?utf-8?B?QytDUzZWeDdYdXFzRzl5b2U1eW9xK1JScWtoaDlhMHFFV1A0ZGhoZGlETnM2?=
+ =?utf-8?B?VlA2MzN1ZWdwK2J6dlhUYkJTUG9LWFpUWWxKc2lmcDZIUHYwYnp4RGlxblds?=
+ =?utf-8?B?MXpETGhtS0pYUG9FNmwvaHgvZVA1LzFZZ3BBekp5a2szWUQ4Sk9YRmwxb0kr?=
+ =?utf-8?B?RmZtbFNLbndtZWY0VlJldktLRVIzYlBNVzlxaFg3ajlmNERPWjZicDVIS1dS?=
+ =?utf-8?B?VlJoQWs2RDJBN1dmdERDekp3aEo5aUxPUFFudEI2eUZvRlJIY0YvTDIzdFpx?=
+ =?utf-8?B?dU41U3BaMStrcS82YlFQNXZQQi9hMWY1L1JaWFFvSGdWV2ZDKzFpV3FwZ2Ni?=
+ =?utf-8?B?djVmNnpKMXd3STFXNEMwZ1VETDZTamM4SGI5Q2kvVGxVb0JJNWh2eXJNVVhQ?=
+ =?utf-8?B?blJEeEVpTmlqUG9kT2krZStiVlBUK1JtRnVwTDVxcXN3M2VGZjRVTEhGVlNK?=
+ =?utf-8?B?b1UyUDRNKzhPQ1VzZ0liWDg2S2hmZnoxSFpWeWovZkM5aDNZNVlDVk9SaEFn?=
+ =?utf-8?B?b0JvZk1hcnJpS2p1ZisyakJOSVMzTDZyK21OeWs4aVlGT0ptT0lEcWxQMGNy?=
+ =?utf-8?B?WWtzS2RjNWZVT3hMZ3RhS2JIdFowNnBtQXNOd2JNbDR4bzdzWGRURDl1VkE5?=
+ =?utf-8?B?QUtna2pONmZWeStBTmdJM2NRUnBiT3FEVGV0YVJCMDNUZGJmREpmY2YySlFo?=
+ =?utf-8?B?MnR3Rk5uVnUzalMxUzAvbThNMzhIeDVSc0RET0xtUzNYdU5ySEVMY3h6Ri9B?=
+ =?utf-8?B?ZDRJb1RPUkQzaVptQktaRnpZeG9FRGhmVXpxNlVSNkFxakc3RkNMTU01azBv?=
+ =?utf-8?B?SFBYWmEvcXhHY0YyYXo4akpsRVIvTXNOZWNqRkg2Nld4YzFKcmVqM2h4Y0FR?=
+ =?utf-8?Q?Oi4J9VqW5FFHo?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YkpUbnRjaWhYQUI1MWVSTy9BaE9ncVFMNDNHaVVqQ2xrVmRncVNXTTY5c2Vi?=
+ =?utf-8?B?d3VFSDN1VEJuQ1A3eEpNN29yaDlYZUlYK0s0V3IyZmt4czQ2MGphZitJRmN3?=
+ =?utf-8?B?KzlPRFVJZjBpMDdENjFoZ205ZFJ3QmJmZmRWZ3JEeVJHcEtQYlJHM2tHdi9D?=
+ =?utf-8?B?Z2xHYUFHUkE1WmpOZlJXb3c5S3lPTjdYZmVMd0t6aHNHTzgxS0Fna21IWEhq?=
+ =?utf-8?B?ZFlhM20yVUVHNFBQSGJCWnllUDFzNzlpMlhtRmRhTWZGbFdzeWhERlg2c09Z?=
+ =?utf-8?B?NDRwNFFhbmVwRFBRcWVhY0g3eUg5RXdEWDRxMmZweTNEd3g2R2tpL3VCclZO?=
+ =?utf-8?B?K2FZbXUxOXdERnJuVzBmQ3UyTFBwNDdGdk5Yc3VIZ3R4NVBrUWl3aVRIcjJ5?=
+ =?utf-8?B?bG04RTRTN2JvZERacGdJdFRick9LRUsvVWhXOGFSSGJ6NFdVSWpmSG9PQXBs?=
+ =?utf-8?B?NXI5eFpNSWlXSklRQlJBZC82Zm8rN0lCdTAwN2NZc0pHVjFvK0J4SGpmazhS?=
+ =?utf-8?B?TzZidWppYi9MSWVsVjhPQnY3aVREN0t1dFBjNWl2OWtuUVo0L3ZOeEpIQmFR?=
+ =?utf-8?B?TDJiVWxMMXZWWFE3allLbVhFMSsxdEZTZ3ZmZjRSeFRMU080YWpqU093QlJl?=
+ =?utf-8?B?QkNRSDFxWVpGZGN5cGh4WWxiRjhKZU5CTjdzK0Y2TVpHTW1ackxwb3NvaFE1?=
+ =?utf-8?B?UlZhTEsvUTFhYTNQTlhva0JyTGxVclpsMU5mSnFNM2VMR1VTY0hRMTBrT0Nt?=
+ =?utf-8?B?UU5vWFAvOEl2RnJxdkdyOEc4R2tKV1l3cDFkV3dDUzh1WGkxMEgxWER4T1VI?=
+ =?utf-8?B?bTNWSGxoemJFT0dUYU9EcEJPSDRwR0xvcG50WkJwdVN5SnlhRzUzOE5JMGo5?=
+ =?utf-8?B?MGlOU3YxcmRKYWlGVzVNejI2OEE3SU9XT0Q4YXV4bmZCeDNBNGE4bzYzamJH?=
+ =?utf-8?B?NzNOcFFBcGsrSE9qcDNBS1E2VXpzU3hmK1BwTHV3ajZFSFYxeDFDT29BT3JU?=
+ =?utf-8?B?a2dpOVN6cXhXSldzNC8zREFoOS9oUTFOS3B0cDkveVlseGFDa2JMMmhBSGN0?=
+ =?utf-8?B?MWVCVURzUWhKaUdZbUFJTWpQcUdLQ0c0MEFIODlvSUs0ckVXdGdpSUo5ZzI3?=
+ =?utf-8?B?U29jcmZNcTJRTWU1MTh0Q3JKUFZXK1dmK1FkL1QwbHJ6NTFRSTJ5UzZ6WFFy?=
+ =?utf-8?B?RTJXeGtFd1BpTTdLOEVvb0lvdU0rc24zUVRDQ3VVbHZRcGpjQTZHYUJnemxE?=
+ =?utf-8?B?ZzlMQzhPaVlJb2tNcG1CNEV1b1J6YUY3b3MxbGh2REZ0YkxaZlYxZjAyNERw?=
+ =?utf-8?B?eVdXSkFyOWNQQkJwWHV4di9nOU03bzhGRHJKdlhlR01WVll2d3Y3eDI1UVha?=
+ =?utf-8?B?Nkx0QTFWcVZ5M2VlRE13VVVJODlFL3p3UGdNUXVsSGJRZldidFVrNjluc0ZF?=
+ =?utf-8?B?SFJOQ3haOTk4SkpNWjQyNmgrV0FQc3VWbGRaOG1ON3NKQ1lEd0ZrSFpMOTQw?=
+ =?utf-8?B?aVBjUllldWxzWG9BczlVbHdMOXlia3JOY2Z5R1RrcVBXQkVPTFBITHpVWWtw?=
+ =?utf-8?B?QkZUZ2dNTitwQUFzb2lGdjl3akFjd25jejNGOWZyMzU0Mk9HOVQvUXFOYWdp?=
+ =?utf-8?B?UDAxU2JwOVpTdlE4UFdTRDFjSk1aZFlEUllqOGFQTUhsMENuZ1RORXJGeG1q?=
+ =?utf-8?B?blc0NTRlSUJXbHNHbUFEN3NIcFUzNXVMMEtldjRmeHJJZ2xkazEyRE5OeFFM?=
+ =?utf-8?B?bTVjM3MvcmFWbm1ZMTNlRG9BN1BnVlI1eUcwL2h3RExzTCszMXNxRzVvbHdW?=
+ =?utf-8?B?YTBSTGZQY2FYM2Yvd1M2N1FGNk9mMzJLUUl2VWZLZmpLNVB0dUdJYWVrZjdt?=
+ =?utf-8?B?VkdMNEh0VnhWYmZydHNoVTJMWDVtY0xhSm9OaVlWbkQ4M0JHY24waFZiVGov?=
+ =?utf-8?B?cXhUbHdIMEt2RmxGam9yQWpNVS94RmdKZkxvTHBNOFBWMDJ4a0FYNFRIdytX?=
+ =?utf-8?B?YkJNY0JtNjBDbldBaE1Hbmx1ZjJ6TUpUc0JXVEMxazFaYlpJeG5KMllnZS9F?=
+ =?utf-8?B?R0twSmgzd29tY2NHMWtPTzFCbmhVa2ZCSERibnpTd0gzbU1OQnhBMkY4TkQy?=
+ =?utf-8?Q?9SG6mBkTRPqkgjluToENJqryF?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a4319c44-9707-4cbe-b9ce-08dd9cf10955
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2025 07:35:21.7594 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 27ch86IyCEkd54H0kX8uA2Q701+4QSenk0Rii5bpWjrNS5IKRC48i5Xf0JbWZDkt/0GvbkFRhkl3vhsZ/ksQ4A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7175
+Received-SPF: permerror client-ip=2a01:111:f403:200a::605;
+ envelope-from=Alexey.Kardashevskiy@amd.com;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,69 +186,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/25 19:21, Philippe Mathieu-Daudé wrote:
-> +Gustavo
+
+
+On 20/5/25 20:28, Chenyi Qiang wrote:
+> A new state_change() helper is introduced for RamBlockAttribute
+> to efficiently notify all registered RamDiscardListeners, including
+> VFIO listeners, about memory conversion events in guest_memfd. The VFIO
+> listener can dynamically DMA map/unmap shared pages based on conversion
+> types:
+> - For conversions from shared to private, the VFIO system ensures the
+>    discarding of shared mapping from the IOMMU.
+> - For conversions from private to shared, it triggers the population of
+>    the shared mapping into the IOMMU.
 > 
-> On 4/5/25 22:57, Richard Henderson wrote:
->> For a-profile, check A32 vs A64 state.
->> For m-profile, use cpu_pointer_wrap_uint32.
->>
->> Cc: qemu-arm@nongnu.org
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/cpu.c         | 24 ++++++++++++++++++++++++
->>   target/arm/tcg/cpu-v7m.c |  1 +
->>   2 files changed, 25 insertions(+)
->>
->> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
->> index 45cb6fd7ee..18edcf49c6 100644
->> --- a/target/arm/cpu.c
->> +++ b/target/arm/cpu.c
->> @@ -2710,6 +2710,29 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
->>   #endif
->>   #ifdef CONFIG_TCG
->> +#ifndef CONFIG_USER_ONLY
->> +static vaddr aprofile_pointer_wrap(CPUState *cs, int mmu_idx,
->> +                                   vaddr result, vaddr base)
->> +{
->> +    /*
->> +     * The Stage2 and Phys indexes are only used for ptw on arm32,
->> +     * and all pte's are aligned, so we never produce a wrap for these.
->> +     * Double check that we're not truncating a 40-bit physical address.
->> +     */
->> +    assert((unsigned)mmu_idx < (ARMMMUIdx_Stage2_S & ARM_MMU_IDX_COREIDX_MASK));
->> +
->> +    if (!is_a64(cpu_env(cs))) {
->> +        return (uint32_t)result;
->> +    }
->> +
->> +    /*
->> +     * TODO: For FEAT_CPA2, decide how to we want to resolve
->> +     * Unpredictable_CPACHECK in AddressIncrement.
->> +     */
->> +    return result;
->> +}
->> +#endif /* !CONFIG_USER_ONLY */
->> +
->>   static const TCGCPUOps arm_tcg_ops = {
->>       .mttcg_supported = true,
->>       /* ARM processors have a weak memory model */
->> @@ -2729,6 +2752,7 @@ static const TCGCPUOps arm_tcg_ops = {
->>       .untagged_addr = aarch64_untagged_addr,
->>   #else
->>       .tlb_fill_align = arm_cpu_tlb_fill_align,
->> +    .pointer_wrap = aprofile_pointer_wrap,
+> Currently, memory conversion failures cause QEMU to quit instead of
+> resuming the guest or retrying the operation. It would be a future work
+> to add more error handling or rollback mechanisms once conversion
+> failures are allowed. For example, in-place conversion of guest_memfd
+> could retry the unmap operation during the conversion from shared to
+> private. However, for now, keep the complex error handling out of the
+> picture as it is not required:
 > 
-> IIUC this is also used by non A-profiles (R-profiles and
-> non Cortex cores).
+> - If a conversion request is made for a page already in the desired
+>    state, the helper simply returns success.
+> - For requests involving a range partially in the desired state, there
+>    is no such scenario in practice at present. Simply return error.
+> - If a conversion request is declined by other systems, such as a
+>    failure from VFIO during notify_to_populated(), the failure is
+>    returned directly. As for notify_to_discard(), VFIO cannot fail
+>    unmap/unpin, so no error is returned.
+> 
+> Note that the bitmap status is updated before callbacks, allowing
+> listeners to handle memory based on the latest status.
+> 
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> ---
+> Change in v5:
+>      - Move the state_change() back to a helper instead of a callback of
+>        the class since there's no child for the RamBlockAttributeClass.
+>      - Remove the error handling and move them to an individual patch for
+>        simple management.
+> 
+> Changes in v4:
+>      - Add the state_change() callback in PrivateSharedManagerClass
+>        instead of the RamBlockAttribute.
+> 
+> Changes in v3:
+>      - Move the bitmap update before notifier callbacks.
+>      - Call the notifier callbacks directly in notify_discard/populate()
+>        with the expectation that the request memory range is in the
+>        desired attribute.
+>      - For the case that only partial range in the desire status, handle
+>        the range with block_size granularity for ease of rollback
+>        (https://lore.kernel.org/qemu-devel/812768d7-a02d-4b29-95f3-fb7a125cf54e@redhat.com/)
+> 
+> Changes in v2:
+>      - Do the alignment changes due to the rename to MemoryAttributeManager
+>      - Move the state_change() helper definition in this patch.
+> ---
+>   include/system/ramblock.h    |   2 +
+>   system/ram-block-attribute.c | 134 +++++++++++++++++++++++++++++++++++
+>   2 files changed, 136 insertions(+)
+> 
+> diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+> index 09255e8495..270dffb2f3 100644
+> --- a/include/system/ramblock.h
+> +++ b/include/system/ramblock.h
+> @@ -108,6 +108,8 @@ struct RamBlockAttribute {
+>       QLIST_HEAD(, RamDiscardListener) rdl_list;
+>   };
+>   
+> +int ram_block_attribute_state_change(RamBlockAttribute *attr, uint64_t offset,
+> +                                     uint64_t size, bool to_private);
 
-Yes, r-profile is mostly a-profile.  Those non-cortex cores are also a-profile: armv[456].
+Not sure about the "to_private" name. I'd think private/shared is something KVM operates with and here, in RamBlock, it is discarded/populated.
 
-The point is the separation between m-profile and not. In particular, the mmu indexes are 
-different between A and M (see ARM_MMU_IDX_TYPE_MASK). The assert would not be valid for 
-m-profile. We can avoid a check vs ARM_FEATURE_M by only using this function for 
-not-m-profile.
+>   RamBlockAttribute *ram_block_attribute_create(MemoryRegion *mr);
+>   void ram_block_attribute_destroy(RamBlockAttribute *attr);
+>   
+> diff --git a/system/ram-block-attribute.c b/system/ram-block-attribute.c
+> index 8d4a24738c..f12dd4b881 100644
+> --- a/system/ram-block-attribute.c
+> +++ b/system/ram-block-attribute.c
+> @@ -253,6 +253,140 @@ ram_block_attribute_rdm_replay_discard(const RamDiscardManager *rdm,
+>                                               ram_block_attribute_rdm_replay_cb);
+>   }
+>   
+> +static bool ram_block_attribute_is_valid_range(RamBlockAttribute *attr,
+> +                                               uint64_t offset, uint64_t size)
+> +{
+> +    MemoryRegion *mr = attr->mr;
+> +
+> +    g_assert(mr);
+> +
+> +    uint64_t region_size = memory_region_size(mr);
+> +    int block_size = ram_block_attribute_get_block_size(attr);
 
+It is size_t, not int.
 
-r~
+> +
+> +    if (!QEMU_IS_ALIGNED(offset, block_size)) {
+
+Does not the @size have to be aligned too?
+
+> +        return false;
+> +    }
+> +    if (offset + size < offset || !size) {
+
+This could be just (offset + size <= offset).
+(these overflow checks always blow up my little brain)
+
+> +        return false;
+> +    }
+> +    if (offset >= region_size || offset + size > region_size) {
+
+Just (offset + size > region_size) should do.
+
+> +        return false;
+> +    }
+> +    return true;
+> +}
+> +
+> +static void ram_block_attribute_notify_to_discard(RamBlockAttribute *attr,
+> +                                                  uint64_t offset,
+> +                                                  uint64_t size)
+> +{
+> +    RamDiscardListener *rdl;
+> +
+> +    QLIST_FOREACH(rdl, &attr->rdl_list, next) {
+> +        MemoryRegionSection tmp = *rdl->section;
+> +
+> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+> +            continue;
+> +        }
+> +        rdl->notify_discard(rdl, &tmp);
+> +    }
+> +}
+> +
+> +static int
+> +ram_block_attribute_notify_to_populated(RamBlockAttribute *attr,
+> +                                        uint64_t offset, uint64_t size)
+> +{
+> +    RamDiscardListener *rdl;
+> +    int ret = 0;
+> +
+> +    QLIST_FOREACH(rdl, &attr->rdl_list, next) {
+> +        MemoryRegionSection tmp = *rdl->section;
+> +
+> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+> +            continue;
+> +        }
+> +        ret = rdl->notify_populate(rdl, &tmp);
+> +        if (ret) {
+> +            break;
+> +        }
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+> +static bool ram_block_attribute_is_range_populated(RamBlockAttribute *attr,
+> +                                                   uint64_t offset,
+> +                                                   uint64_t size)
+> +{
+> +    const int block_size = ram_block_attribute_get_block_size(attr);
+
+size_t.
+
+> +    const unsigned long first_bit = offset / block_size;
+> +    const unsigned long last_bit = first_bit + (size / block_size) - 1;
+> +    unsigned long found_bit;
+> +
+> +    /* We fake a shorter bitmap to avoid searching too far. */
+
+What is "fake" about it? We truthfully check here that every bit in [first_bit, last_bit] is set.
+
+> +    found_bit = find_next_zero_bit(attr->bitmap, last_bit + 1,
+> +                                   first_bit);
+> +    return found_bit > last_bit;
+> +}
+> +
+> +static bool
+> +ram_block_attribute_is_range_discard(RamBlockAttribute *attr,
+> +                                     uint64_t offset, uint64_t size)
+> +{
+> +    const int block_size = ram_block_attribute_get_block_size(attr);
+
+size_t.
+
+> +    const unsigned long first_bit = offset / block_size;
+> +    const unsigned long last_bit = first_bit + (size / block_size) - 1;
+> +    unsigned long found_bit;
+> +
+> +    /* We fake a shorter bitmap to avoid searching too far. */
+> +    found_bit = find_next_bit(attr->bitmap, last_bit + 1, first_bit);
+> +    return found_bit > last_bit;
+> +}
+> +
+> +int ram_block_attribute_state_change(RamBlockAttribute *attr, uint64_t offset,
+> +                                     uint64_t size, bool to_private)
+> +{
+> +    const int block_size = ram_block_attribute_get_block_size(attr);
+
+size_t.
+
+> +    const unsigned long first_bit = offset / block_size;
+> +    const unsigned long nbits = size / block_size;
+> +    int ret = 0;
+> +
+> +    if (!ram_block_attribute_is_valid_range(attr, offset, size)) {
+> +        error_report("%s, invalid range: offset 0x%lx, size 0x%lx",
+> +                     __func__, offset, size);
+> +        return -1;
+
+May be -EINVAL?
+
+> +    }
+> +
+> +    /* Already discard/populated */
+> +    if ((ram_block_attribute_is_range_discard(attr, offset, size) &&
+> +         to_private) ||
+> +        (ram_block_attribute_is_range_populated(attr, offset, size) &&
+> +         !to_private)) {
+
+A tracepoint would be useful here imho.
+
+> +        return 0;
+> +    }
+> +
+> +    /* Unexpected mixture */
+> +    if ((!ram_block_attribute_is_range_populated(attr, offset, size) &&
+> +         to_private) ||
+> +        (!ram_block_attribute_is_range_discard(attr, offset, size) &&
+> +         !to_private)) {
+> +        error_report("%s, the range is not all in the desired state: "
+> +                     "(offset 0x%lx, size 0x%lx), %s",
+> +                     __func__, offset, size,
+> +                     to_private ? "private" : "shared");
+> +        return -1;
+
+-EBUSY?
+
+> +    }
+> +
+> +    if (to_private) {
+> +        bitmap_clear(attr->bitmap, first_bit, nbits);
+> +        ram_block_attribute_notify_to_discard(attr, offset, size);
+> +    } else {
+> +        bitmap_set(attr->bitmap, first_bit, nbits);
+> +        ret = ram_block_attribute_notify_to_populated(attr, offset, size);
+> +    }
+
+and a successful tracepoint here may be?
+
+> +
+> +    return ret;
+> +}
+> +
+>   RamBlockAttribute *ram_block_attribute_create(MemoryRegion *mr)
+>   {
+>       uint64_t bitmap_size;
+
+-- 
+Alexey
+
 
