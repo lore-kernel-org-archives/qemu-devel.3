@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148E8C54ED1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB24C5B542
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 21:59:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK2KL-0004ks-Df; Tue, 27 May 2025 17:59:17 -0400
+	id 1uK2KQ-0004lZ-8E; Tue, 27 May 2025 17:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK2KH-0004kB-JZ
- for qemu-devel@nongnu.org; Tue, 27 May 2025 17:59:13 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK2KI-0004kj-VX
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 17:59:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK2KF-000883-8k
- for qemu-devel@nongnu.org; Tue, 27 May 2025 17:59:12 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK2KH-00088H-CP
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 17:59:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748383150;
+ s=mimecast20190719; t=1748383152;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8rjaoMtmxWqZHgcZh3j5/e8hA4MGM0+maUVVcU22C5c=;
- b=J3lEv090EyQ59BixTBinxHdTZ+HpUiB1bz1xwAVyWtYASvCibC+ZZo6tt77gygvDZBkgL2
- XUoPr/BOYeMGhYGMmKNdd6zTLNVrs73jzn3JPCh2pnS2TujlSpDaq2fUfWh/JMgLrJOkhw
- SqPqoKahB35XHStSyZqndY/HVRwhZYA=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ow9XZwvFSPaA1YRoz79EY6e13wTkk7fPGrMeCj5AqlA=;
+ b=HUWyYebxsV+bscClle1EJBgvVze70agUCFUUqVyWFWOwZNlnnliLwgg7Tg/ukKetM9UgYM
+ E7VA5iVAHd28REtGkLBW61kUgbcYheQVTcvLd3v/mD1RJq72n+1wFA+TsDBwu4JuylJ5w/
+ sNwZaGBfMuvuv5ofFCeqQ2JStX2pxu0=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-339-JMWAE2HrOwGaZ7EHSY1MRA-1; Tue, 27 May 2025 17:59:09 -0400
-X-MC-Unique: JMWAE2HrOwGaZ7EHSY1MRA-1
-X-Mimecast-MFC-AGG-ID: JMWAE2HrOwGaZ7EHSY1MRA_1748383149
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6faa9ffe50fso40638956d6.3
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 14:59:09 -0700 (PDT)
+ us-mta-263-HCNP35QMOh2IcZFEqTFahg-1; Tue, 27 May 2025 17:59:10 -0400
+X-MC-Unique: HCNP35QMOh2IcZFEqTFahg-1
+X-Mimecast-MFC-AGG-ID: HCNP35QMOh2IcZFEqTFahg_1748383150
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6f50edda19eso56597766d6.1
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 14:59:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748383148; x=1748987948;
+ d=1e100.net; s=20230601; t=1748383150; x=1748987950;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8rjaoMtmxWqZHgcZh3j5/e8hA4MGM0+maUVVcU22C5c=;
- b=DMgI/MEBzsEqJLKHOrFmOBP6a45BEA42nvp65ntMyb+JYIBCk9IWVEt3Nnbh0ZN/FN
- J2mi91ItTQMerTnaVQPFrKDDNdYsJl6fBH5lz9l3z4BsbaeeN2WaiDXIRg6XqoJGW/gn
- g7Bomvg3uiZhXWHpMaogc93NgBi2ZAOXkLd7mAUWpyHnydHRMRLllA5J+8mqn6HpfcVZ
- 2ib0O+GWGSrtXAiOleiSdZa8VV3XdgAnyXyyqmodURtrraJz1Rx9igWcLtYWRaCw4p4d
- N4AEJL4ELqQjgphqe2BdPi2MjcL0emP828ep9zDWP/z5R16vHYhgV0ytODJ88+Gsh6yU
- ANyw==
-X-Gm-Message-State: AOJu0YyHFd/N7L+2tjiv95tx/eyUr82AKQbQkQTUVFOBJc9ZSo9XuajI
- 3S+7MsiCJzHKoIv6HOhOkQqFQoT67ZG52AdG638jQ7+qEviym/zLp7zbi+TbhaIme+a1E1ANzUO
- AXGvdtbG9aMiM58ilruCfAqsFK0Mj6V4PfWN+rJxwQZgGZc+bXN8rvPJBat6XejRzAksaItP0HM
- FJZBD+NfSBZwrElEU7tBUXcHGdkKbmhW6fSDLlog==
-X-Gm-Gg: ASbGncuoI60fWOSq0T3WfU6GXeupfjVsNZ1ltWK1QRALwAwVQfjIur3EUGgBfZBEjd5
- EFsy3xkzR7vkh9i29p3Fz1qH31gK2/UJhQfTi2Sb8OjFE0UH6g4H8kZvz++G1gOLsCABaptaURE
- DiomsAgXaelV0uvBtKDVcFG0u3JaUFZS5K0aSQA6M4iZltsnBagMN0rF4bfME8F6bTGtkaKQNnD
- 3DzcCdJbpAzyMuAOg6taqiWmOQY5U9/jvqU1+ucXCwlGN8iTZVeAsszrtoT7QrDuzIcXdASLKHj
-X-Received: by 2002:a05:6214:3013:b0:6f8:f21a:233c with SMTP id
- 6a1803df08f44-6fa9d2de23emr254270376d6.42.1748383148250; 
- Tue, 27 May 2025 14:59:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/q7bRHYU/X0tpI+yPhbBZ/yMv3mKAs+U9IPe1zUljY5U9Lu2zVvyNAIjtaDi5ABoHYPS3qQ==
-X-Received: by 2002:a05:6214:3013:b0:6f8:f21a:233c with SMTP id
- 6a1803df08f44-6fa9d2de23emr254270076d6.42.1748383147863; 
- Tue, 27 May 2025 14:59:07 -0700 (PDT)
+ bh=ow9XZwvFSPaA1YRoz79EY6e13wTkk7fPGrMeCj5AqlA=;
+ b=wmnRfFBulI7R8061etwW9FWVO60XaWaF/PjZfBcUEjE03n/yO8TYGw+GapFk6/XPah
+ iKTKybU22Ez1TG6uAabJyUBhqq2JMHCiFjZH98ebBdaq6WE3zzID3iJJLDoXj7Ax6YXw
+ trbchDmqWOENil1sjBbuWoCbIHwzY6BZw8mhCWvpqAghujs4P85HjcAc1+iV0o4zF9YP
+ dABLN8CUWotzU4eG89FaZyLDeP3G8OxMuaNB2aRFHPoB04sjBOy6AHkxr9JaKSesW0q4
+ bygQKwZajb+5JWtyqoE9I10hYttyaSOTfk4JUKF8reoiXroAtT9F7+HKPU82xZ3oo6QL
+ a1gw==
+X-Gm-Message-State: AOJu0YzlfJJQpJZRomqjgF+VU5yDgqjOCuAay4MSbfaWgc16n12Rmhii
+ xXIFovCfSCeeq6rgwGoXQ/otrkcriaFVNcb4mgpEPpWoVnGvinM/Ct8ZNhPx5vpUFNn9dFrvbH+
+ WCECy+IG6W9tWdanbXJCaxKEgWo77TIo7z5D2oeEXUd/mKU6q/BfatBXzAue+8bA3HbBuHU4UMU
+ ijcES1pV1OuVzG4gQZS2YmnMG+/UbPdVkA/bTIEg==
+X-Gm-Gg: ASbGnctylbCuYNRUsZWwCwVPzaTig6Bhn9HSDb+BzG5ghr8vI20L8+TRzgo3/vd2Goi
+ RRC6czjVrf3Dj5cJa7OIPg2dMxyKv+75Ud9/hJfop+gC6DQ58GUVFa6txMluj/Ju+uwCHoRBm3f
+ n5ySOlkPvldUQqm7tIbxGBHMns38iShFMHPwXwDSDIAlFE6xy351tNCTEa6mpV0SRp5YCJR/WF2
+ jx1pHQst7NHNpNvJDbMFxUnJa7bRWhuulPZ4ktHKXlELxwg1IjhdMw/65FB/JBOUDTAdxS+2yCP
+X-Received: by 2002:a05:6214:1d0d:b0:6f5:f83:1cf8 with SMTP id
+ 6a1803df08f44-6fa9cfe9a16mr248859066d6.7.1748383149725; 
+ Tue, 27 May 2025 14:59:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEERYoWgEOp7ygcCxwDSWKMlmRyOV4jZWAiqDgES13PXu/QctQIcmzedy4Z2V19a3Lq1B54JA==
+X-Received: by 2002:a05:6214:1d0d:b0:6f5:f83:1cf8 with SMTP id
+ 6a1803df08f44-6fa9cfe9a16mr248858726d6.7.1748383149336; 
+ Tue, 27 May 2025 14:59:09 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fabe4f27cdsm914516d6.49.2025.05.27.14.59.06
+ 6a1803df08f44-6fabe4f27cdsm914516d6.49.2025.05.27.14.59.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 14:59:07 -0700 (PDT)
+ Tue, 27 May 2025 14:59:08 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>,
- "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 10/11] migration: Rewrite the migration complete detect logic
-Date: Tue, 27 May 2025 17:58:49 -0400
-Message-ID: <20250527215850.1271072-11-peterx@redhat.com>
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Yanfei Xu <yanfei.xu@bytedance.com>
+Subject: [PATCH 11/11] migration/postcopy: Avoid clearing dirty bitmap for
+ postcopy too
+Date: Tue, 27 May 2025 17:58:50 -0400
+Message-ID: <20250527215850.1271072-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527215850.1271072-1-peterx@redhat.com>
 References: <20250527215850.1271072-1-peterx@redhat.com>
@@ -106,164 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There're a few things off here in that logic, rewrite it.  When at it, add
-rich comment to explain each of the decisions.
+This is a follow up on the other commit "migration/ram: avoid to do log
+clear in the last round" but for postcopy.
 
-Since this is very sensitive path for migration, below are the list of
-things changed with their reasonings.
+https://lore.kernel.org/r/20250514115827.3216082-1-yanfei.xu@bytedance.com
 
-  (1) Exact pending size is only needed for precopy not postcopy
+I can observe more than 10% reduction of average page fault latency during
+postcopy phase with this optimization:
 
-      Fundamentally it's because "exact" version only does one more deep
-      sync to fetch the pending results, while in postcopy's case it's
-      never going to sync anything more than estimate as the VM on source
-      is stopped.
+  Before: 268.00us (+-1.87%)
+  After:  232.67us (+-2.01%)
 
-  (2) Do _not_ rely on threshold_size anymore to decide whether postcopy
-      should complete
+The test was done with a 16GB VM with 80 vCPUs, running a workload that
+busy random writes to 13GB memory.
 
-      threshold_size was calculated from the expected downtime and
-      bandwidth only during precopy as an efficient way to decide when to
-      switchover.  It's not sensible to rely on threshold_size in postcopy.
-
-      For precopy, if switchover is decided, the migration will complete
-      soon.  It's not true for postcopy.  Logically speaking, postcopy
-      should only complete the migration if all pending data is flushed.
-
-      Here it used to work because save_complete() used to implicitly
-      contain save_live_iterate() when there's pending size.
-
-      Even if that looks benign, having RAMs to be migrated in postcopy's
-      save_complete() has other bad side effects:
-
-      (a) Since save_complete() needs to be run once at a time, it means
-      when moving RAM there's no way moving other things (rather than
-      round-robin iterating the vmstate handlers like what we do with
-      ITERABLE phase).  Not an immediate concern, but it may stop working
-      in the future when there're more than one iterables (e.g. vfio
-      postcopy).
-
-      (b) postcopy recovery, unfortunately, only works during ITERABLE
-      phase. IOW, if src QEMU moves RAM during postcopy's save_complete()
-      and network failed, then it'll crash both QEMUs... OTOH if it failed
-      during iteration it'll still be recoverable.  IOW, this change should
-      further reduce the window QEMU split brain and crash in extreme cases.
-
-      If we enable the ram_save_complete() tracepoints, we'll see this
-      before this patch:
-
-      1267959@1748381938.294066:ram_save_complete dirty=9627, done=0
-      1267959@1748381938.308884:ram_save_complete dirty=0, done=1
-
-      It means in this migration there're 9627 pages migrated at complete()
-      of postcopy phase.
-
-      After this change, all the postcopy RAM should be migrated in iterable
-      phase, rather than save_complete():
-
-      1267959@1748381938.294066:ram_save_complete dirty=0, done=0
-      1267959@1748381938.308884:ram_save_complete dirty=0, done=1
-
-  (3) Adjust when to decide to switch to postcopy
-
-      This shouldn't be super important, the movement makes sure there's
-      only one in_postcopy check, then we are clear on what we do with the
-      two completely differnt use cases (precopy v.s. postcopy).
-
-  (4) Trivial touch up on threshold_size comparision
-
-  Which changes:
-
-  "(!pending_size || pending_size < s->threshold_size)"
-
-  into:
-
-  "(pending_size <= s->threshold_size)"
-
+Cc: Yanfei Xu <yanfei.xu@bytedance.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 56 +++++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 15 deletions(-)
+ migration/ram.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 7bd78dd524..e542c09755 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3439,33 +3439,59 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-     Error *local_err = NULL;
-     bool in_postcopy = s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE;
-     bool can_switchover = migration_can_switchover(s);
-+    bool complete_ready;
- 
-+    /* Fast path - get the estimated amount of pending data */
-     qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
-     pending_size = must_precopy + can_postcopy;
-     trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
- 
--    if (pending_size < s->threshold_size) {
--        qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
--        pending_size = must_precopy + can_postcopy;
--        trace_migrate_pending_exact(pending_size, must_precopy, can_postcopy);
-+    if (in_postcopy) {
-+        /*
-+         * Iterate in postcopy until all pending data flushed.  Note that
-+         * postcopy completion doesn't rely on can_switchover, because when
-+         * POSTCOPY_ACTIVE it means switchover already happened.
-+         */
-+        complete_ready = !pending_size;
-+    } else {
-+        /*
-+         * Exact pending reporting is only needed for precopy.  Taking RAM
-+         * as example, there'll be no extra dirty information after
-+         * postcopy started, so ESTIMATE should always match with EXACT
-+         * during postcopy phase.
-+         */
-+        if (pending_size < s->threshold_size) {
-+            qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
-+            pending_size = must_precopy + can_postcopy;
-+            trace_migrate_pending_exact(pending_size, must_precopy, can_postcopy);
-+        }
-+
-+        /* Should we switch to postcopy now? */
-+        if (must_precopy <= s->threshold_size &&
-+            can_switchover && qatomic_read(&s->start_postcopy)) {
-+            if (postcopy_start(s, &local_err)) {
-+                migrate_set_error(s, local_err);
-+                error_report_err(local_err);
-+            }
-+            return MIG_ITERATE_SKIP;
-+        }
-+
-+        /*
-+         * For precopy, migration can complete only if:
-+         *
-+         * (1) Switchover is acknowledged by destination
-+         * (2) Pending size is no more than the threshold specified
-+         *     (which was calculated from expected downtime)
-+         */
-+        complete_ready = can_switchover && (pending_size <= s->threshold_size);
-     }
- 
--    if ((!pending_size || pending_size < s->threshold_size) && can_switchover) {
-+    if (complete_ready) {
-         trace_migration_thread_low_pending(pending_size);
-         migration_completion(s);
-         return MIG_ITERATE_BREAK;
-     }
- 
--    /* Still a significant amount to transfer */
--    if (!in_postcopy && must_precopy <= s->threshold_size && can_switchover &&
--        qatomic_read(&s->start_postcopy)) {
--        if (postcopy_start(s, &local_err)) {
--            migrate_set_error(s, local_err);
--            error_report_err(local_err);
--        }
--        return MIG_ITERATE_SKIP;
--    }
--
-     /* Just another iteration step */
-     qemu_savevm_state_iterate(s->to_dst_file, in_postcopy);
-     return MIG_ITERATE_RESUME;
+diff --git a/migration/ram.c b/migration/ram.c
+index a1d0e8ada2..cd4aafd15c 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -835,8 +835,10 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
+      * protections isn't needed as we know there will be either (1) no
+      * further writes if migration will complete, or (2) migration fails
+      * at last then tracking isn't needed either.
++     *
++     * Do the same for postcopy due to the same reason.
+      */
+-    if (!rs->last_stage) {
++    if (!rs->last_stage && !migration_in_postcopy()) {
+         /*
+          * Clear dirty bitmap if needed.  This _must_ be called before we
+          * send any of the page in the chunk because we need to make sure
 -- 
 2.49.0
 
