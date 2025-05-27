@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292FAC54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 16:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A58C54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 16:53:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJxWi-0000Zt-PO; Tue, 27 May 2025 12:51:44 -0400
+	id 1uJxXp-00011i-ET; Tue, 27 May 2025 12:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uJxWc-0000ZT-CR
- for qemu-devel@nongnu.org; Tue, 27 May 2025 12:51:39 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uJxWX-0004hu-9O
- for qemu-devel@nongnu.org; Tue, 27 May 2025 12:51:38 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-234b440afa7so4825305ad.0
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 09:51:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748364688; x=1748969488; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QUZetYv3OXczGvVhpoXJW+0CDSkyqQZirzQKomHGUFc=;
- b=WXxZpqA6+16VQ2QivKvgOGQpfSmVWT0ROvJCVpBPJ+ITmfIddL58Olqx0jYHj8RWGo
- 6U7Yth4kle00EP58tXwUN5i9WnNzVPgCy4QocKh27CJfPDQmUBmOYST+r09bh6t/UTAB
- EXZ771rkP6kHGOhvwC5fae9FKAoNHwyYpXixT6k0YxfTRm8nrb2qmzxaicvh3lADWbRI
- XXZzaIcDblEBn++DQIVqgekDPPl074OzR+RzEjcwawiBL+NvoK+vaqVA8EmZjizYh5Yk
- Tp5gGn41cNROgJQCKDSnoY6P4BfV0Q7EyzySnOcih7WOqlxNUVfx9fDGCCw9+PJJvqSn
- mFuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748364688; x=1748969488;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QUZetYv3OXczGvVhpoXJW+0CDSkyqQZirzQKomHGUFc=;
- b=seKOGjrMRjHOsqbpeRT6caBDGuEpi7qDjQ5tC+cs6mP5yuSjOpwXvZm+Xtoa3hcAbT
- O8L+7UaQSoZBIi7L2r6V0TOhNz09MZeWfL9T1BYuxbT0D+2/3heO1LFhmDer/I4Bs6T7
- gBgi8FtrS+MyleR058BqBiRJ3AeympIK+YClB0GJKXaEjuk9NfOibb+VOAI4CHTjGpmi
- s1zMFfnQSyGeDlJeQhDMtWtcGcKE+W4cnsnqfzbXW+FYEf04YzvCbqmP3gUDuO5njjEh
- i2w69NavKS1jh2Y5cyOSmInuLvcQNwPb5OF8qAwfUYZQxEHd2NIDzKlZO2KSak0IOzc6
- AO2A==
-X-Gm-Message-State: AOJu0YwrQBayqEcr5p8FHw04gKdYLFxrAtEDZpTHXBxOc8JQ138R38yL
- eNNYhVxCOzYMXECcF9tHY89gb7x91p+HUhBxNak8hckpt/O+bHe8ClP6kZOxbCEY+BI=
-X-Gm-Gg: ASbGncsW9SB4Luate8qkZ5zNyMvecQesbgjGdS35U8fdbd/7OQWmk0lPr0y4ZtD97SF
- eKGENwhfMvZ7074wOowaYyeuYiphAlJj0pQGyOXTdK+UkwmhITxmtE2Ou7qakU+YMb+KqK1n6BV
- 4U38sqbZW2ydvuHOJgRcu7lCfyV3gpNsnhaoXAlGQ1CxiU7KYejDmk0hB4NBvzvnBTe/QKmO9wm
- 55TbSF1CI8qPfGAeNRYzsmGxWAri2Ry6BtvJ4pSTwenHSM8BKA8ETJk/54WPaj59Bx+UKeXV43Y
- dGV9xibS6/kfZ1Xml0bgdZSHC+J82Oy7Fvh8N1tkYElMKEqBDiNO03X5QqlfBsPN
-X-Google-Smtp-Source: AGHT+IHqUcNZAdZq619fXAC2IIJB+38GZ6GGjFqJMT8KXOG0w95YM5cd4jckktOmC8iK5kDC7dtE9g==
-X-Received: by 2002:a17:902:d4c4:b0:234:a139:1217 with SMTP id
- d9443c01a7336-234a13914camr33952495ad.18.1748364688583; 
- Tue, 27 May 2025 09:51:28 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23414e86538sm62521225ad.184.2025.05.27.09.51.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 May 2025 09:51:28 -0700 (PDT)
-Message-ID: <d2666050-5ff3-4807-87cf-dfaf43ae9c9f@linaro.org>
-Date: Tue, 27 May 2025 09:51:27 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/15] qapi: remove all TARGET_* conditionals from the
- schema
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, thuth@redhat.com,
- pbonzini@redhat.com, richard.henderson@linaro.org, peter.maydell@linaro.org,
- berrange@redhat.com, philmd@linaro.org
-References: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
- <87frgqnr79.fsf@pond.sub.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87frgqnr79.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1uJxXl-0000yf-F6; Tue, 27 May 2025 12:52:49 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1uJxXi-0004wd-SR; Tue, 27 May 2025 12:52:49 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 4CDE6614BF;
+ Tue, 27 May 2025 16:52:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025AFC4CEE9;
+ Tue, 27 May 2025 16:52:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1748364764;
+ bh=Bt4JVL3Ubk1mgBtVSBYDxQXRmjiIs5L9++W1pZpayhk=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=XjQmzOvuQHmuPS8iC69A6FwUqcD/9aIP3CYmVPfFs/sqPUoZsl2MvvcwM0AqANqpz
+ Eo15s15z4A/ETEbnqX+hUyldI47pMYeS+MCtR+VS5ASndQS8B/mMzjGatfL/rPuOaf
+ ySIvxwPkfj1OL3LESs5mpgAFMTp6d8TnDbeQovCD8iacRnSWGlhmrM+Pb9AZEP8MHN
+ zqJho4bGibnInfN5Hif8fdVIqFVOPu/LkIbbi7PTefEgSerRZOKHyiE+REEn/IDEnP
+ uowoHumPCLNps3henuTCNdffLipgsbHwHXxyolxesxZoIPRPrGDGzqzr9khnQ43pC+
+ sqNIKd2YXzTmw==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1uJxXd-000wKE-RG;
+ Tue, 27 May 2025 17:52:41 +0100
+Date: Tue, 27 May 2025 17:52:41 +0100
+Message-ID: <86frgqdmhy.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Miguel Luis <miguel.luis@oracle.com>
+Cc: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "gkulkarni@amperecomputing.com"
+ <gkulkarni@amperecomputing.com>, "gankulkarni@os.amperecomputing.com"
+ <gankulkarni@os.amperecomputing.com>
+Subject: Re: [PATCH v5 0/5] ARM Nested Virt Support
+In-Reply-To: <A3872288-67B7-4C99-84F0-19812758FCF0@oracle.com>
+References: <20250527062534.1186004-1-eric.auger@redhat.com>
+ <86msayec3a.wl-maz@kernel.org>
+ <63FE2592-DF4D-4CCF-BC76-D8656C9EFA0A@oracle.com>
+ <86jz62dzxa.wl-maz@kernel.org>
+ <A5135210-4984-4532-B0AF-9CDC8255CBD0@oracle.com>
+ <86iklmdv4d.wl-maz@kernel.org>
+ <A3872288-67B7-4C99-84F0-19812758FCF0@oracle.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: miguel.luis@oracle.com, eric.auger@redhat.com,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=maz@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) DKIMWL_WL_HIGH=-2.907, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,31 +97,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/25 6:00 AM, Markus Armbruster wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-> 
->> This series exposes all qmp commands for any target unconditionally, allowing to
->> compile QAPI generated code without any TARGET conditionals.
->>
->> Based on original RFC from Daniel P. Berrangé:
->> https://lore.kernel.org/qemu-devel/20250508135816.673087-1-berrange@redhat.com/
-> 
-> I picked a few nits.  I'm happy to address them in my tree without a
-> respin.  If you object to any, please let me know.
-> 
+On Tue, 27 May 2025 16:55:32 +0100,
+Miguel Luis <miguel.luis@oracle.com> wrote:
+>=20
+> Hi Marc,
+>=20
+> > On 27 May 2025, at 13:46, Marc Zyngier <maz@kernel.org> wrote:
+> >=20
+> > On Tue, 27 May 2025 14:24:31 +0100,
+> > Miguel Luis <miguel.luis@oracle.com> wrote:
+> >>=20
+> >>=20
+> >>=20
+> >>> On 27 May 2025, at 12:02, Marc Zyngier <maz@kernel.org> wrote:
+> >>>=20
+> >>> On Tue, 27 May 2025 12:40:35 +0100,
+> >>> Miguel Luis <miguel.luis@oracle.com> wrote:
+> >>>>=20
+> >>>> Hi Marc,
+> >>>>=20
+> >>>>> On 27 May 2025, at 07:39, Marc Zyngier <maz@kernel.org> wrote:
+> >>>>>=20
+> >>>>> Hi Eric,
+> >>>>>=20
+> >>>>> On Tue, 27 May 2025 07:24:32 +0100,
+> >>>>> Eric Auger <eric.auger@redhat.com> wrote:
+> >>>>>>=20
+> >>>>>> Now that ARM nested virt has landed in kvm/next, let's turn the se=
+ries
+> >>>>>> into a PATCH series. The linux header update was made against kvm/=
+next.
+> >>>>>>=20
+> >>>>>> For gaining virt functionality in KVM accelerated L1, The host nee=
+ds to
+> >>>>>> be booted with "kvm-arm.mode=3Dnested" option and qemu needs to be=
+ invoked
+> >>>>>> with: -machine virt,virtualization=3Don.
+> >>>>>=20
+> >>>>> Thanks for respinning this series.
+> >>>>>=20
+> >>>>> Do you have any plan to support the non-VHE version of the NV suppo=
+rt
+> >>>>> (as advertised by KVM_CAP_ARM_EL2_E2H0)? It would allow running les=
+ser
+> >>>>> hypervisors (such as *cough* Xen *cough*), which completely rely on
+> >>>>> HCR_EL2.E2H being 0?
+> >>>>>=20
+> >>>>=20
+> >>>> Something that pops up is early_kvm_mode_cfg trying to handle nested=
+ mode
+> >>>> while KVM_ARM_VCPU_HAS_EL2_E2H0 is set.
+> >>>=20
+> >>> Care to elaborate?
+> >>>=20
+> >>=20
+> >> Say host is booted in nested mode (kvm-arm.mode=3Dnested) and host's K=
+VM supports
+> >> both KVM_CAP_ARM_EL2 and KVM_CAP_ARM_E2H0.
+> >>=20
+> >> A L1 guest boots setting both KVM_ARM_VCPU_HAS_EL2 and
+> >> KVM_ARM_VCPU_HAS_EL2_E2H0 and guest kernel's command line state
+> >> kvm-arm.mode=3Dnested.
+> >>=20
+> >> This splats the kernel from early_kvm_mode_cfg along a malformed early=
+ option
+> >> message.
+> >=20
+> > BEBKAC. You are asking for nested on a (virtual) machine that doesn't
+> > support it, and the kernel tells you so with a warning. Try the same
+> > thing on a physical machine that doesn't have NV, and observe the
+> > result.
+> >=20
+>=20
+> Ack.
+>=20
+> I find trying them a great way to improve resilience.
+> I=E2=80=99ve tried the scenarios below which have similar results on the =
+guest:
+>=20
+> 1.
+> Host: kvm-arm.mode=3Dnested
+>=20
+> L1 Guest: kvm-arm.mode=3Dnvhe setting both
+> KVM_ARM_VCPU_HAS_EL2 and KVM_ARM_VCPU_HAS_EL2_E2H0
+>=20
+> Result on the guest: No early_kvm_mode_cfg splat, boot proceeds, ends up =
+in a hard lockup splat.
 
-I'm ok if you want to take that in your tree, and address them directly.
-All the comments change requested are ok for me.
-I'll answer on individual commits for your questions.
+Setting kvm-arm.mode=3Dnvhe when KVM_ARM_VCPU_HAS_EL2_E2H0 is set is a
+tautology. The very definition of nVHE is that HCR_EL2.E2H=3D0.
 
-If you expect a respin on my side, let me know (from what I understand, 
-it's not expected at this point).
+>
+> 2.
+> Host: kvm-arm.mode=3Dnested
+>=20
+> L1 Guest: kvm-arm.mode=3Dnested setting both
+> KVM_ARM_VCPU_HAS_EL2 and KVM_ARM_VCPU_HAS_EL2_E2H0
+>=20
+> Result on the guest: Splat at early_kvm_mode_cfg, boot proceeds, ends up =
+in hard lockup splat.
 
-Thanks,
-Pierrick
+I don't see any of these lockups with kvmtool. See this:
 
-> Series:
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> 
+	https://pastebin.com/uyYzsBHc
 
+for an example of a boot with both capabilities set and the nonsense
+"nested" on the command-line (your #2).
+
+> Does this means there=E2=80=99s a default fallback mode in which nv gets =
+on when=20
+> kvm-arm.mode fed to the guest kernel cmdline differs from the expected?
+
+I don't understand your question. We have two modes of operation:
+
+- HAS_EL2 enables NV on the host, and additionally enables recursive
+  NV. As a consequence, HCR_EL2.E2H is RES1. This is how NV will be
+  supported long term.
+
+- HAS_EL2_E2H0 restricts the above by not exposing NV to the guest,
+  and enforcing HCR_EL2.E2H to be RES0. I expect this to gradually be
+  removed from implementations, and eventually disappear.
+
+As you can see, there is no "fallback mode". You pick the mode you
+want based on the guest you want to run and the capabilities of the
+hardware.
+
+	M.
+
+--=20
+Without deviation from the norm, progress is not possible.
 
