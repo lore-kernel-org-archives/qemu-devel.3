@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E47DAC54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E43FC54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 18:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJyTZ-0008KV-9J; Tue, 27 May 2025 13:52:33 -0400
+	id 1uJyg1-0004pA-RF; Tue, 27 May 2025 14:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJyTX-0008JZ-Fg
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:52:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJyTV-0004Ei-KZ
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:52:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748368348;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UGtT7XQUxJvwZsRHG0Z/aopUzjU2NEnI6PxokTXGqrw=;
- b=SMdw5x6oquU9y/NuvpZ8/5Q9uVZP06EjpcA+ASr/huL5QY2r0Zf962A45EfYvZ3lWunNJd
- 8Al+zNDEITxWnRrWJErKsiR0QvBs3StyoJvVE7iO7TI5tXAhbCJYT/XZ2MR6JJHFFbw+Pd
- 2GgNd3gPhICgbCWrkrPwh+oyg3KHFsM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-wxdy9hpcPnWd0BZMqqtKlg-1; Tue,
- 27 May 2025 13:52:25 -0400
-X-MC-Unique: wxdy9hpcPnWd0BZMqqtKlg-1
-X-Mimecast-MFC-AGG-ID: wxdy9hpcPnWd0BZMqqtKlg_1748368343
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7B2971800373; Tue, 27 May 2025 17:52:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.34.20])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A83001955F1B; Tue, 27 May 2025 17:52:16 +0000 (UTC)
-Date: Tue, 27 May 2025 19:52:13 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, hreitz@redhat.com,
- stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
- vsementsov@yandex-team.ru, xiechanglong.d@gmail.com,
- wencongyang2@huawei.com, berto@igalia.com, fam@euphon.net, ari@tuxera.com
-Subject: Re: [PATCH v3 16/24] block: move drain outside of quorum_del_child()
-Message-ID: <aDX7zTjkSvbcu4kX@redhat.com>
-References: <20250526132140.1641377-1-f.ebner@proxmox.com>
- <20250526132140.1641377-17-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uJyfr-0004oh-Ms
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 14:05:16 -0400
+Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uJyfq-0006Kh-1O
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 14:05:15 -0400
+Received: by mail-qt1-x82c.google.com with SMTP id
+ d75a77b69052e-4769f3e19a9so20620781cf.0
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 11:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748369112; x=1748973912; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E+2k/8Znizkb8hgO2S4nj+hwaYXmmgyB//kiTkJb/As=;
+ b=mvSS27lsjANsYBVVsP6x8LuFY7lo4WlDlLJxsYAB8z1MO92bLzpkANPBiAlaftbtO6
+ 91EYU6QHBNjdAKJ5xBN4O+mQRg+wK+zLpLrorFFsIb1v7OVmf85QnnTMSq+FzFVWsnW/
+ apJPZAus+M5a0zoERlWC7mzA2jRr+gFmjmiZtq+035Wd/eZ0WMuRAgPLTnwlHEEFNWLn
+ qOKkcny6rU85CzsglYOTxK71ciujzWDgcijE4VgvRVaaD72JmvYT+FcNzh4+uvtW8k3D
+ s12nFgOP3JyNiRvGko4H7iaDyHfFbCzewJNdJJkkRHVntjRC6ShGmFh1bVMwWh2xsMJP
+ BGTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748369112; x=1748973912;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=E+2k/8Znizkb8hgO2S4nj+hwaYXmmgyB//kiTkJb/As=;
+ b=vbq7hRWluzcoEJPI/R2uhDhTrK8EiJOP3OsFkvuN3zrEhj+lyqAg2pSLGWWduPBD/a
+ 9dqwIA3Hf207Yw+gglOZH7gbuOVLm96Ub+IcfGJQjvjMZUuTXC/8QLhAIo28fiGFq3hS
+ Cut41bxUZKt7623u0jx/mIdOuHvo8CPvdqvWYYuJwaaPz+QWY3yUCbYIPTKnXyz9ONFl
+ UUJOXsDIdlP2jLmT+R/oAueSjd4cKFZeVQNs3RSc/f3fFHpUE0zggPdUxCse1NYLmRmy
+ unk8RGF0gYZLj6Tu9bwN3inLntXuwjk/RD4cvam1RBFFc1LodzEJcXPAcnCUoT54hhgp
+ hMNg==
+X-Gm-Message-State: AOJu0Yz6OVvx4BYYg0j3jRozqEujyURJePOfjsmrQ7SfxSPvzqTNPceG
+ uEmLfxWBUmmcron6upU2PXW3KrKRxlkQr3J0nuW0/wehPW+ljKlbnmCWteTIUeDUfuTbL/5gQoc
+ A03Uyg2zB4Bi+6/3NirjZmEh6ck+5UFQYixjZ34jLxw==
+X-Gm-Gg: ASbGncsulHMhMImKNDSOmT0eSJquTtx2Fefd91Du8d+XRfV7HVJIkKaaoSNCp29kQvL
+ NVZVb/mMWz370Mqy7kfVm2C1Kb/c1yhPWYj4+/gCG0BNgHmtCjoJbzNCO8JZb7GXDCv4u9J7/yY
+ hH0AgmYxa1190Um4c0YYld/+LvLbeyXTidAMY=
+X-Google-Smtp-Source: AGHT+IE3ELvHrvD+3R35QJdJtReyV7xoqA66rLg72KZne2LwnUzDhxAe3KVd7Lc20uKWMshcpHmpmK3+SwX636ZRaYE=
+X-Received: by 2002:a05:622a:4c83:b0:476:a949:ceb6 with SMTP id
+ d75a77b69052e-49f480c8ea6mr259663301cf.44.1748369111812; Tue, 27 May 2025
+ 11:05:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250526132140.1641377-17-f.ebner@proxmox.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250521151616.3951178-1-jmarcin@redhat.com>
+In-Reply-To: <20250521151616.3951178-1-jmarcin@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 27 May 2025 20:04:46 +0200
+X-Gm-Features: AX0GCFtoG1BbnlbSC9b7P4JpaIa81ngp1o2qGv4pAXvHlexvLRbXsEkQIDkXdXA
+Message-ID: <CAJ+F1C+wEgf8dVF40wJqBWN0vGCNYBv6wx=F3MkF4ua7WTBnbQ@mail.gmail.com>
+Subject: Re: [PATCH] ui/vnc: Update display update interval when VM state
+ changes to RUNNING
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, kraxel@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,24 +94,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 26.05.2025 um 15:21 hat Fiona Ebner geschrieben:
-> The quorum_del_child() callback runs under the graph lock, so it is
-> not allowed to drain. It is only called as the .bdrv_del_child()
-> callback, which is only called in the bdrv_del_child() function, which
-> also runs under the graph lock.
-> 
-> The bdrv_del_child() function is called by qmp_x_blockdev_change().
-> A drained section was already introduced there by commit "block: move
-> drain out of quorum_add_child()".
-> 
-> This finally finishes moving out the drain to places that are not
-> under the graph lock started in "block: move draining out of
-> bdrv_change_aio_context() and mark GRAPH_RDLOCK".
-> 
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+On Wed, May 21, 2025 at 5:18=E2=80=AFPM Juraj Marcin <jmarcin@redhat.com> w=
+rote:
+>
+> From: Juraj Marcin <jmarcin@redhat.com>
+>
+> If a virtual machine is paused for an extended period time, for example,
+> due to an incoming migration, there are also no changes on the screen.
+> VNC in such case increases the display update interval by
+> VNC_REFRESH_INTERVAL_INC (50 ms). The update interval can then grow up
+> to VNC_REFRESH_INTERVAL_MAX (3000 ms).
+>
+> When the machine resumes, it can then take up to 3 seconds for the first
+> display update. Furthermore, the update interval is then halved with
+> each display update with changes on the screen. If there are moving
+> elements on the screen, such as a video, this can be perceived as
+> freezing and stuttering for few seconds before the movement is smooth
+> again.
+>
+> This patch resolves this issue, by adding a listener to VM state changes
+> and changing the update interval when the VM state changes to RUNNING.
+> The update_displaychangelistener() function updates the internal timer,
+> and the display is refreshed immediately if the timer is expired.
+>
+> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
 
-With the usual comments added:
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  ui/vnc.c | 12 ++++++++++++
+>  ui/vnc.h |  2 ++
+>  2 files changed, 14 insertions(+)
+>
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index 9e097dc4b4..32f8bfd1f9 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+> @@ -3384,6 +3384,16 @@ static const DisplayChangeListenerOps dcl_ops =3D =
+{
+>      .dpy_cursor_define    =3D vnc_dpy_cursor_define,
+>  };
+>
+> +static void vmstate_change_handler(void *opaque, bool running, RunState =
+state)
+> +{
+> +    VncDisplay *vd =3D opaque;
+> +
+> +    if (state !=3D RUN_STATE_RUNNING) {
+> +        return;
+> +    }
+> +    update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
+> +}
+> +
+>  void vnc_display_init(const char *id, Error **errp)
+>  {
+>      VncDisplay *vd;
+> @@ -3420,6 +3430,8 @@ void vnc_display_init(const char *id, Error **errp)
+>      vd->dcl.ops =3D &dcl_ops;
+>      register_displaychangelistener(&vd->dcl);
+>      vd->kbd =3D qkbd_state_init(vd->dcl.con);
+> +    vd->vmstate_handler_entry =3D qemu_add_vm_change_state_handler(
+> +        &vmstate_change_handler, vd);
+>  }
+>
+>
+> diff --git a/ui/vnc.h b/ui/vnc.h
+> index acc53a2cc1..3bb23acd34 100644
+> --- a/ui/vnc.h
+> +++ b/ui/vnc.h
+> @@ -185,6 +185,8 @@ struct VncDisplay
+>  #endif
+>
+>      AudioState *audio_state;
+> +
+> +    VMChangeStateEntry *vmstate_handler_entry;
+>  };
+>
+>  typedef struct VncTight {
+> --
+> 2.49.0
+>
+>
 
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
