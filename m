@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C216C54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 12:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B01CAC54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 12:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJt1x-0003eK-OF; Tue, 27 May 2025 08:03:42 -0400
+	id 1uJt2X-00044t-Mv; Tue, 27 May 2025 08:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uJt1u-0003dW-8z; Tue, 27 May 2025 08:03:38 -0400
+ id 1uJt2C-0003o3-Mh; Tue, 27 May 2025 08:04:00 -0400
 Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uJt1m-00057z-0l; Tue, 27 May 2025 08:03:38 -0400
+ id 1uJt28-00059k-Bp; Tue, 27 May 2025 08:03:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
- Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=yima1nGxODtmOyU6SbGTW9h9zw+/b2Gwa6neFo8mOxg=; b=afPSkjfWnOsNWuivbpN6o6WTyB
- 3Bb0lG9AsZEcVcab+TXasSs9NDgs4ZQQf/9NHK+yakpyE2u13OkKuMkWtZTcHDrfEMKLh5PNfKkaY
- ODe/uOU4ZUt/ToA14R3dG2JfaoUsRPPP7b+C1obtd9LV28+4wi5OSB2dX1Sa3RBZrKRsxEZg7PuZx
- xpEto3j+ZV4RPPOwuv82Ck/dZmUuD5fYKLwTfDjNVCbPOTvedpr8uhvd9xXc72P0JcPkamCUSvYZk
- nnH0kyuXwtHeRCDBxxCwJ0Uiw6MbGGeQ3FzThZFzWk5zv6h6jVS63Hsi7/mZeNqYaA3HOW+LcbYtv
- ewpZakAg==;
+ MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+ Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=6g+z7h1BI3Q3nVBJKSxYxj9wOsOlY/F6nZVLQbnQBLE=; b=UL9H8GAQSlGKYhLplA+dKU4dO0
+ D+RDSobmxzxCIPzmQn8Tb9NAmfnt85TAOI4UjKytQMzwUewJdtxAQGo+c8AqQNZ9WgLM57AUERMoH
+ UfgdeeLZAu5SAnOSF78Iesc9hp/s+gKHC3p8D/AYJUqvqRdstubbp8ws2kWs6VqS2DZfXBFoW10v+
+ WvO6ThPuqMHrptIy6qPaLWjmHP7qa5KN44oDdqyyftg2pNumDO7hzJW+k7e3KugQDChgRyDKeGS4u
+ U90TighUUC/ORku6Isvt/Wa3Tb+v0qyqbWi5AH3dSAvpwHt5qhaa86p/3OeMPQD7HKyl2+YmGeWE8
+ J2U3F69A==;
 Received: from [167.98.27.226] (helo=rainbowdash)
  by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uJsQ9-002w7a-NH; Tue, 27 May 2025 12:24:38 +0100
+ id 1uJsQ9-002w7Y-Hk; Tue, 27 May 2025 12:24:38 +0100
 Received: from ben by rainbowdash with local (Exim 4.98.2)
- (envelope-from <ben@rainbowdash>) id 1uJsQA-00000001DqM-1GQC;
+ (envelope-from <ben@rainbowdash>) id 1uJsQA-00000001DqB-0v9M;
  Tue, 27 May 2025 12:24:38 +0100
 From: Ben Dooks <ben.dooks@codethink.co.uk>
 To: nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
@@ -43,12 +43,10 @@ To: nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
  zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
 Cc: ben.dooks@codethink.co.uk,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 3/3] hw/riscv: set cva6 to use TYPE_RISCV_CPU_CVA6
-Date: Tue, 27 May 2025 12:24:37 +0100
-Message-Id: <20250527112437.291445-4-ben.dooks@codethink.co.uk>
+Subject: Add initial CVA6 implementaiton
+Date: Tue, 27 May 2025 12:24:34 +0100
+Message-Id: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
 X-Mailer: git-send-email 2.37.2.352.g3c44437643
-In-Reply-To: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
-References: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=188.40.203.114;
@@ -75,28 +73,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change to using TYPE_RISCV_CPU_CVA6 once this is merged.
+This implements the CVA6 (the corev_apu from the fpga) model.
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
----
- hw/riscv/cva6.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+v2:
+- fixed whitespace and rebased patches
 
-diff --git a/hw/riscv/cva6.c b/hw/riscv/cva6.c
-index 3adfa8b5cc..e6fd0ebafc 100644
---- a/hw/riscv/cva6.c
-+++ b/hw/riscv/cva6.c
-@@ -83,8 +83,7 @@ static void cva6_machine_class_init(ObjectClass *oc, const void *data)
-     mc->init = cva6_machine_init;
-     mc->max_cpus = 1;
-     mc->default_ram_id = "cva6.ram";
--    /* start with "max" cpu type until we sort out CVA6 type */
--    mc->default_cpu_type = TYPE_RISCV_CPU_MAX;
-+    mc->default_cpu_type = TYPE_RISCV_CPU_CVA6;
-     mc->default_ram_size = cva6_memmap[CVA6_DRAM].size;
- };
- 
--- 
-2.37.2.352.g3c44437643
 
 
