@@ -4,91 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF21C54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 19:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A761C54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 19:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJzsa-0005Jr-TJ; Tue, 27 May 2025 15:22:28 -0400
+	id 1uJzxU-0008PU-C1; Tue, 27 May 2025 15:27:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uJzsS-0005J1-2Z
- for qemu-devel@nongnu.org; Tue, 27 May 2025 15:22:22 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uJzxO-0008Ow-WA
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 15:27:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uJzsN-0007vd-NM
- for qemu-devel@nongnu.org; Tue, 27 May 2025 15:22:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=m8bEWoUXls00jnm5oLmkQjOeYFyjKBwb2vYpSvweXk4=; b=p0WgScbNNBu2NYvRqvQnsGz2Mq
- zcYVXyaf5zrK9UusLsm/sUaH9PEafas7npLHku23/uwe75norEI13r9f2oEKWOhXD2yO4avmsqdwJ
- TXe8zSnI00u8SB3+yU1m2WkYINtnZitQaSOrlj0gH3HBhDFy5kIfMF+vW4mH/dPJjtgqDDXMB9GpM
- MKtKeMmsmNuQ8FQTJ4IgxH0DTlhsFZAAnqPXPNUmHF37cf7neFqyS5pAXtry+8HujZZ2hohIGAwIk
- OghG8f2mOgx8oRqUbDbH+uV3PiJ3TgC/8p8Gdx8VbVljf3lEhDPoZoW/Np34gHPOUs/4DDwobh1ta
- x+aiw7ppNP26fE0ewzJ1goSmnJaQclkT6QE33TqNNCA3M7GmKTBkJE8kj78YxxzuAYauugILObR6H
- HXQ51lojEgYuGgqhXjTzM5A2vUP2isS6U0pcjz0Wmued8L7z/X9XcR1Mh1qX5pkMeAFKrdta/UwHr
- wNJpbbMLdfMvgKkJ5BNItK5uNz+aUZwl139t28gsc6y5LZYKdOpLaC9lWK4FV0JUPzeCrCGn8rpdc
- T6LEspvByMbrVvvbxRggdPC1R30hQwsOr8dO2Pj0WJZov5HBKUM0UzvUZqlLwTlFJBwsej/Rb0qL6
- iTdUtglnTgNDLVej1Mc8jXQMRpGTP1oLXmIKVVFvs=;
-Received: from [2a02:8012:2f01:0:7607:4cc5:5176:1da8]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uJzqy-000229-O3; Tue, 27 May 2025 20:20:49 +0100
-Message-ID: <aed43e5f-21a0-49a8-a779-e4619d1e9fde@ilande.co.uk>
-Date: Tue, 27 May 2025 20:22:07 +0100
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uJzxJ-0000Gc-Ot
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 15:27:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748374040;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RXx3v+DXIAcyYjVSFCYdDn1uiGz1UHLHgy10KqHuS28=;
+ b=KVg9EhLuo83UBmrJDe9TXhl4ItbscFw+XZEc/hBTNrbE3mU0LA737B0tiAa3j+qhbu3d/b
+ pTICokP1KEIN8l4v6sTWnB+LIUG3JUBgbUhuLKT0vKeoN3cmTWNzfoaFqestsXFnK3w6L9
+ j6HsalvCT6vXHIZkZizxqPL194rXvUg=
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
+ [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-407-nc-qqhxtPRyHu5ytQ5k75Q-1; Tue, 27 May 2025 15:27:18 -0400
+X-MC-Unique: nc-qqhxtPRyHu5ytQ5k75Q-1
+X-Mimecast-MFC-AGG-ID: nc-qqhxtPRyHu5ytQ5k75Q_1748374038
+Received: by mail-il1-f199.google.com with SMTP id
+ e9e14a558f8ab-3da7648c031so4382935ab.1
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 12:27:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748374038; x=1748978838;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RXx3v+DXIAcyYjVSFCYdDn1uiGz1UHLHgy10KqHuS28=;
+ b=n6D10dQvHO8n3J1F/LNzG4YM/OBTSETdzud+5qQYT55+dpaRNZRRePY3+W/UKfqTBo
+ DTl7obz8rpXzMEwyOOOUG4wT/zoJ68kJh+zlcu6TDREZCWOmw19xZXmRbPl8b+fSBYLm
+ rx1AXg4xW+uP3K7+L8lQXgWLj/Vu6QBlhBGPiAQ7eQm8IuOw3oMXVaKuZoqGt+QoasCh
+ okWdHZN/0RuxxmCx+UXHZA5P1AFnLBARQjpbKvCxtV0bI4KoW76OWp/le2wNZbGX+a+B
+ AfyTcl29qPuKIhmhomz7Qoum6uxUnqPh6OjfhIZxRW2KLPFHynkllp7vOCAQXX7Nykfw
+ VKfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrP1CWx+LPjPanPNgRtHrCRWC9QJDI7z5A+8QpU6GNldUJeAmsubcrukOWb3aqw2MOoWYLvdeXHZOv@nongnu.org
+X-Gm-Message-State: AOJu0Yxgumj5Ss79oXx8Xk+QuaNpbNsz26rbK/P8yqCjHdaAGKqJsUJw
+ OdPOmj9R3DHc92foYfA7Nb9mOiaDDDjLzLx0O+allUnXl1SRpzZtApb/t1kz3TOVjyotTLRMN1O
+ 8aXUbgGz2x916TBFb3eAvftmZ96mjP0JTO/Zvhr2Bcy3c/OrHP0umA9/f
+X-Gm-Gg: ASbGncv1rc7dd1VmmomfjJbtTJKr8NXmi/111RXg5mlZ6MHrhGXT7P9BacbptgG7lJA
+ FngO03oe5dPEAEQ+EPCK5OCp4H8tJAiaf1Sm85oueLJwHcVfP4daGZUk7uwr6IbXlFGKuGLldWl
+ W7ksXTZT/sftNQUgWseyBokpC1cn2dyT3SQgqcFTHE9JjXtjaPtKZLLoMYaQo4jM6H59a9l6i7R
+ npV3vWB6T014ja4DshVQPeu4WISJjw18wAX0aUdEREUcMyB4GN9TMCb9D/vDz0zdTYnYQWwt7n4
+ ME3CoFSD+qSRKN4=
+X-Received: by 2002:a05:6e02:160b:b0:3dc:7fa4:81f with SMTP id
+ e9e14a558f8ab-3dc9b6db3ffmr35262945ab.4.1748374037837; 
+ Tue, 27 May 2025 12:27:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzKn/KPNZy5ECQyv9yRwqSX9hkGnn2GHFVu/31GniN0rx9/HmcJu/J2ehDmsdvbeGV9VZIxg==
+X-Received: by 2002:a05:6e02:160b:b0:3dc:7fa4:81f with SMTP id
+ e9e14a558f8ab-3dc9b6db3ffmr35262855ab.4.1748374037357; 
+ Tue, 27 May 2025 12:27:17 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3dc83f3d0f3sm38016475ab.22.2025.05.27.12.27.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 May 2025 12:27:16 -0700 (PDT)
+Date: Tue, 27 May 2025 13:27:14 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
+ qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?= <c.koehne@beckhoff.com>,
+ edmund.raile@proton.me, Edmund Raile <edmund.raile@protonmail.com>
+Subject: Re: [PATCH v2] vfio/igd: Fix incorrect error propagation in
+ vfio_pci_igd_opregion_detect()
+Message-ID: <20250527132714.45a9d6b4.alex.williamson@redhat.com>
+In-Reply-To: <20250522151636.20001-1-tomitamoeko@gmail.com>
+References: <20250522151636.20001-1-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-Cc: atar4qemu@gmail.com
-References: <20250425093513.863289-1-chigot@adacore.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20250425093513.863289-1-chigot@adacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:7607:4cc5:5176:1da8
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/sparc: don't set FSR_NVA when comparing unordered
- floats
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,39 +113,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/04/2025 10:35, Clément Chigot wrote:
+On Thu, 22 May 2025 23:16:36 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-> FSR_NVA should be set when one of the operands is a signaling NaN or
-> when using FCMPEx instructions. But those cases are already handled
-> within check_ieee_exception or floatxx_compare functions.
-> Otherwise, it should be left untouched.
+> In vfio_pci_igd_opregion_detect(), errp will be set when the device does
+> not have OpRegion or is hotplugged. This errp will be propagated to
+> pci_qdev_realize(), which interprets it as failure, causing unexpected
+> termination on devices without OpRegion like SR-IOV VFs or discrete
+> GPUs. Fix it by not setting errp in vfio_pci_igd_opregion_detect().
 > 
-> FTR, this was detected by inf-compare-[5678] tests within gcc
-> testsuites.
+> This patch also checks if the device has OpRegion before hotplug status
+> to prevent unwanted warning messages on non-IGD devices.
 > 
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
+> Fixes: c0273e77f2d7 ("vfio/igd: Detect IGD device by OpRegion")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2968
+> Reported-by: Edmund Raile <edmund.raile@protonmail.com>
+> Link: https://lore.kernel.org/qemu-devel/30044d14-17ec-46e3-b9c3-63d27a5bde27@gmail.com
+> Tested-by: Edmund Raile <edmund.raile@protonmail.com>
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > ---
->   target/sparc/fop_helper.c | 1 -
->   1 file changed, 1 deletion(-)
+> v2:
+> * Add Tested-by from Edmund Raile. Thanks for the contribution.
+> * Rebased on vfio-next
+> * Fix typos.
 > 
-> diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
-> index c25097d07f..b57da7c9ea 100644
-> --- a/target/sparc/fop_helper.c
-> +++ b/target/sparc/fop_helper.c
-> @@ -446,7 +446,6 @@ static uint32_t finish_fcmp(CPUSPARCState *env, FloatRelation r, uintptr_t ra)
->       case float_relation_greater:
->           return 2;
->       case float_relation_unordered:
-> -        env->fsr |= FSR_NVA;
->           return 3;
->       }
->       g_assert_not_reached();
+>  hw/vfio/igd.c | 22 ++++++++++------------
+>  1 file changed, 10 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 5b6341c5bf..e7a9d1ffc1 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -187,23 +187,21 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>  }
+>  
+>  static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice *vdev,
+> -                                         struct vfio_region_info **opregion,
+> -                                         Error **errp)
+> +                                         struct vfio_region_info **opregion)
+>  {
+>      int ret;
+>  
+> -    /* Hotplugging is not supported for opregion access */
+> -    if (vdev->pdev.qdev.hotplugged) {
+> -        error_setg(errp, "IGD OpRegion is not supported on hotplugged device");
+> -        return false;
+> -    }
+> -
+>      ret = vfio_device_get_region_info_type(&vdev->vbasedev,
+>                      VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+>                      VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, opregion);
+>      if (ret) {
+> -        error_setg_errno(errp, -ret,
+> -                         "Device does not support IGD OpRegion feature");
+> +        return false;
+> +    }
+> +
+> +    /* Hotplugging is not supported for opregion access */
+> +    if (vdev->pdev.qdev.hotplugged) {
+> +        warn_report("IGD device detected, but OpRegion is not supported "
+> +                    "on hotplugged device.");
+>          return false;
+>      }
+>  
+> @@ -524,7 +522,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>      }
+>  
+>      /* IGD device always comes with OpRegion */
+> -    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
+> +    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
+>          return true;
+>      }
+>      info_report("OpRegion detected on Intel display %x.", vdev->device_id);
+> @@ -695,7 +693,7 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>          return true;
+>      }
+>  
+> -    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
+> +    if (!vfio_pci_igd_opregion_detect(vdev, &opregion)) {
+>          /* Should never reach here, KVMGT always emulates OpRegion */
+>          return false;
+>      }
 
-Thanks! I've added Richard's R-B and applied this to my qemu-sparc branch.
+LGTM
 
-
-ATB,
-
-Mark.
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 
 
