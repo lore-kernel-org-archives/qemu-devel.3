@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1B7C54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E98C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJxj0-0005hy-Vp; Tue, 27 May 2025 13:04:27 -0400
+	id 1uJxpx-00037D-U0; Tue, 27 May 2025 13:11:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uJxiy-0005gZ-NY
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:04:24 -0400
+ id 1uJxpt-00036a-3C
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 13:11:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uJxiw-0006hk-Su
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:04:24 -0400
+ id 1uJxpr-0007vD-Ih
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 13:11:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748365462;
+ s=mimecast20190719; t=1748365890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=P8BpKjEJltmzcm/OLNaNl+hh0ixQXBWzKCZWpkn3gDY=;
- b=KVzQMfAQ1IIPnC3nL2QfveK9ekMpvk0TZb9goDFwW/k9vuYQM19z1UNKeg4vJkRup7wx50
- DfQQmlCtt9IBIMUSvFnPAHVXzZlD44fU/nre46choWYBGKj5ZrY3N1Hryw1HqdQOYs+peK
- qiuZ2JdNUowKkm9KBWrrbJ2ACEj7I5c=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=ANwbqX+GPhJL2ywYhaI5v5xREWX/7od7GSpNgQw0K3VEFblSAgRaRdxCF8VBlYKVeMMm49
+ T1LQgCpWmNsyy/dLt2/duN9yZCaV8GJOg59mVIa2kuZz5d55GjSdsO8tGnIq7TT5Bhd2Tq
+ 2cB7wZ7qJnVzD7RVcixrQN70WYxc54I=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-539-4bXJiNk-Ol27uMS0vmdbEw-1; Tue, 27 May 2025 13:04:20 -0400
-X-MC-Unique: 4bXJiNk-Ol27uMS0vmdbEw-1
-X-Mimecast-MFC-AGG-ID: 4bXJiNk-Ol27uMS0vmdbEw_1748365456
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ad51ceda1d9so3651566b.1
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 10:04:16 -0700 (PDT)
+ us-mta-199-G5IFN-OUPR6TGa02ChoqNw-1; Tue, 27 May 2025 13:11:25 -0400
+X-MC-Unique: G5IFN-OUPR6TGa02ChoqNw-1
+X-Mimecast-MFC-AGG-ID: G5IFN-OUPR6TGa02ChoqNw_1748365883
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-602df3e7adcso4083347a12.1
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 10:11:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748365455; x=1748970255;
+ d=1e100.net; s=20230601; t=1748365883; x=1748970683;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=P8BpKjEJltmzcm/OLNaNl+hh0ixQXBWzKCZWpkn3gDY=;
- b=dwr1QQ/rxdzrLNCHiRxPhUJQtwBKmpF3i+vcSxIuU+Zp7n7Ii/iXgmisElw7VD97NS
- 9cS7GAYlggflmx+XekFs2ajjQkdo4Uj/zBpXVjagtkxCZ0ZRs3wPHiGnx6Ag4Q909uOY
- gKMcpcNqeK6mD22CQxLVQ0AabrxKBC6pCe+i//cCAyEtlBTKnxThP0gxKm/d02wM2gML
- 7/tGZyWDEM5RjSlSmHJUtUwor7xq4WS8ADOqP4RKazrYNRUY9NMnOO/K3aAGFupPQkZt
- zFXVZtEwoFui99V4+RwmreH/xwBSlCiR/SnHStjRnmNxd6TYXarE9kgrbjY2MYKOf0qQ
- 4oSg==
-X-Gm-Message-State: AOJu0Yz8z4Qlx8q3yPN2MjAevTPJK2j35M05ba7x+yNbKQo5as5IkTdA
- UuooPpxQc+oOmlKe5zi05pCOYBaOSGN9EenPAmAJY7ioZSNpCmO7n57oPIRAyP7n14btij1CQiO
- WUHL5bP2C7thCBC//SCZM4qKZmV2kVO/aPvrSl78/ZLr8s/VNJNPc96axwQtrOiGGowXVKtOXNj
- U1VGHZDw89xptHULdMI/0TF7rLWgumpOTnaV/yvirA
-X-Gm-Gg: ASbGncsuRk3AUiO+SXsKcEpYnQBjCIWZ+HdVIjH1T9rqa2eUQ+OMes6uuSkqLrG340I
- HvpFhUJBzvQx84Uq5TwwUc3A/N6QDsa1DgzKM3eDahrrdrthACgmaZMTiCZTTo+JscjxOnG68MT
- KR/EwK22KRv9DKzUG8y1pv8P/voldsPAVw09nsEYe3TLKxywpaU5DWC4SWgwQjkKszpFxcCUt81
- UvqZrKxBYREm8NTVmiPG7zDkK3e9CE/WWMHIWopbuqKZE5UFejU7Shgb9dSsfHB0Yj6YAV0ucQq
- dIP2Uk4PF2vcKQ==
-X-Received: by 2002:a17:907:c1e:b0:ad8:55d8:38b7 with SMTP id
- a640c23a62f3a-ad89888d678mr161594266b.7.1748365455260; 
- Tue, 27 May 2025 10:04:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE0deVlRLi5YZvAYmuPNc+rsjSmR4hrl2Qq6DmZN5KnWkgeeSH+5FB9M1l5cPVAl4NLDtac2Q==
-X-Received: by 2002:a17:907:c1e:b0:ad8:55d8:38b7 with SMTP id
- a640c23a62f3a-ad89888d678mr161588866b.7.1748365454765; 
- Tue, 27 May 2025 10:04:14 -0700 (PDT)
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=BzYfaEHH+9fpTbJhvWXxBHGJSF8jhAhfbJwjjmoIuPR4i7q9cMWzI8RZheEvyZB2yM
+ zaM/H5qfBLmlihF6TEtUfnitXslHPX4a0JWgHyX/XID6m+YkTHbzz9tiU583aZJzieRw
+ AT3Cns8uJsrTOxxsEM13w/PCthVCZ72RyNVm6NFeFmWIF+Jl9Ox1l9D4c7Ze9w6c+5og
+ 6093pgRYEKrwIEM5Obal3VhVgUbwpxYMGd21eUvmgHqogZx/BpSbY34FkR/X9RMFzf6u
+ FKMEcYg6B3iIkU4FBp9knTnl/XcUE8AZvQ16u7g2kgerK9IXqqHcSY07hopIKq/5NUwK
+ NYRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8mJbevvG5K+O6MmplD5YofjPMJR2o/vhwslQM6l0yTV/5QZm75NfoPuwba8jasnTpeWvChwy6Du57@nongnu.org
+X-Gm-Message-State: AOJu0YzDXMMGnUHvXTzt0rXOFRT142x8PKrhvp9nWg7RYPuq5ep5rVtM
+ NW/qe0FoZ7kz+vzgMmwz9WRJFTkfo89nIE4ywZPo0bPg+G1cyZu9mbEYKhRPxP5MoZXTZTA/FWA
+ iX72FZAqC93EkwtCyT5Wam4SkhlIIr2MSSJ32aLXo7eXHha4ZO54yOyvmjiELneyP
+X-Gm-Gg: ASbGncu8gzj4oU3TDQYNSybqOZvMiyyZIwV07LfVKspgBjPqwBCmYfBzhVD/cGKr0QL
+ Z+4eqchfhh+iUEVTFvRPIWeqnchV6+Ft5QYe+uLrrKEw5gvEDdxqmQXpqQLgFDx+T15dyIFVeBU
+ NuNisJizlkx/6m2hTXxzlP6M55mTRSLCAMKtWflUE6M5lg8zHARVMA9sjXf5HFuXbuju56JXydi
+ Q9lVHS9Fk8HzBnV3G0juZZ+x0yIo2XpDTPWkg0kpFHiIGEQTO5O0dYHcDHxmLjM82a7mfyJ3KHa
+ 7KRnC+6x1GFjLA==
+X-Received: by 2002:a05:6402:354e:b0:602:14f8:9a2c with SMTP id
+ 4fb4d7f45d1cf-602da8dc68fmr11848659a12.30.1748365882865; 
+ Tue, 27 May 2025 10:11:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2bN8EfaeSSnLgsU8wZOU7fJNtqLJ+TleDPtD3RopSmXupny3FLXsImJ1bktJ5gTCqZqqpHQ==
+X-Received: by 2002:a05:6402:354e:b0:602:14f8:9a2c with SMTP id
+ 4fb4d7f45d1cf-602da8dc68fmr11848640a12.30.1748365882482; 
+ Tue, 27 May 2025 10:11:22 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.46.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad8954b1601sm84478766b.64.2025.05.27.10.04.11
+ 4fb4d7f45d1cf-602e336e990sm5411571a12.67.2025.05.27.10.11.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 10:04:11 -0700 (PDT)
+ Tue, 27 May 2025 10:11:21 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org
-Subject: [PATCH 4/6] rust: add qemu-api doctests to "meson test"
-Date: Tue, 27 May 2025 19:04:02 +0200
-Message-ID: <20250527170404.1580482-5-pbonzini@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-trivial@nongnu.org, qemu-devel@nongnu.org, mjt@tls.msk.ru,
+ laurent@vivier.eu, pbonzini@redhat.com, richard.henderson@linaro.org,
+ eduardo@habkost.net
+Subject: Re: [PATCH] target/i386/tcg/helper-tcg: fix file references in
+ comments
+Date: Tue, 27 May 2025 19:11:20 +0200
+Message-ID: <20250527171120.1581468-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250527170404.1580482-1-pbonzini@redhat.com>
-References: <20250527170404.1580482-1-pbonzini@redhat.com>
+In-Reply-To: <20250526114447.1243840-1-f.ebner@proxmox.com>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -108,105 +112,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Doctests are weird.  They are essentially integration tests, but they're
-"ran" by executing rustdoc --test, which takes a compiler-ish
-command line.  This is supported by Meson 1.8.0.
+Queued, thanks.
 
-Because they run the linker and need all the .o files, run them in the
-build jobs rather than the test jobs.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- docs/devel/rust.rst                 |  2 ++
- .gitlab-ci.d/buildtest-template.yml |  3 ++-
- .gitlab-ci.d/buildtest.yml          | 11 +++--------
- rust/qemu-api/meson.build           |  9 +++++++++
- 4 files changed, 16 insertions(+), 9 deletions(-)
-
-diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 11328c05b45..f66f2bef60b 100644
---- a/docs/devel/rust.rst
-+++ b/docs/devel/rust.rst
-@@ -66,6 +66,8 @@ be run via ``meson test`` or ``make``::
- 
-    make check-rust
- 
-+Note that doctests require all ``.o`` files from the build to be available.
-+
- Supported tools
- '''''''''''''''
- 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 118371e377d..fea4e8da2f1 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -76,7 +76,8 @@
-       fi
-     - section_end buildenv
-     - section_start test "Running tests"
--    - $MAKE NINJA=":" $MAKE_CHECK_ARGS
-+    # doctests need all the compilation artifacts
-+    - $MAKE NINJA=":" MTESTARGS="--no-suite doc" $MAKE_CHECK_ARGS
-     - section_end test
- 
- .native_test_job_template:
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 248aaed1370..0fdde54bf8e 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -41,7 +41,7 @@ build-system-ubuntu:
-     IMAGE: ubuntu2204
-     CONFIGURE_ARGS: --enable-docs --enable-rust
-     TARGETS: alpha-softmmu microblazeel-softmmu mips64el-softmmu
--    MAKE_CHECK_ARGS: check-build
-+    MAKE_CHECK_ARGS: check-build check-doc
- 
- check-system-ubuntu:
-   extends: .native_test_job_template
-@@ -115,7 +115,7 @@ build-system-fedora:
-     CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs --enable-crypto-afalg --enable-rust
-     TARGETS: microblaze-softmmu mips-softmmu
-       xtensa-softmmu m68k-softmmu riscv32-softmmu ppc-softmmu sparc64-softmmu
--    MAKE_CHECK_ARGS: check-build
-+    MAKE_CHECK_ARGS: check-build check-doc
- 
- build-system-fedora-rust-nightly:
-   extends:
-@@ -127,12 +127,7 @@ build-system-fedora-rust-nightly:
-     IMAGE: fedora-rust-nightly
-     CONFIGURE_ARGS: --disable-docs --enable-rust --enable-strict-rust-lints
-     TARGETS: aarch64-softmmu
--    MAKE_CHECK_ARGS: check-build
--  after_script:
--    - source scripts/ci/gitlab-ci-section
--    - section_start test "Running Rust doctests"
--    - cd build
--    - pyvenv/bin/meson devenv -w ../rust ${CARGO-cargo} test --doc -p qemu_api
-+    MAKE_CHECK_ARGS: check-build check-doc
- 
-   allow_failure: true
- 
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index c647493f712..10e8210f30f 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -44,6 +44,15 @@ rust.test('rust-qemu-api-tests', _qemu_api_rs,
- qemu_api = declare_dependency(link_with: [_qemu_api_rs],
-   dependencies: [qemuutil_rs, qemu_api_macros, qom, hwcore, chardev, migration])
- 
-+# Doctests are essentially integration tests, so they need the same dependencies.
-+# Note that running them requires the object files for C code, so place them
-+# in a separate suite that is run by the "build" CI jobs rather than "check".
-+rust.doctest('rust-qemu-api-doctests',
-+     _qemu_api_rs,
-+     protocol: 'rust',
-+     dependencies: qemu_api,
-+     suite: ['doc', 'rust'])
-+
- test('rust-qemu-api-integration',
-     executable(
-         'rust-qemu-api-integration',
--- 
-2.49.0
+Paolo
 
 
