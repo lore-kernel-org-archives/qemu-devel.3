@@ -4,81 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88648C54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 04:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE05C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 04:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJlvC-0003oB-An; Tue, 27 May 2025 00:28:14 -0400
+	id 1uJm9l-0005n9-R6; Tue, 27 May 2025 00:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJlvA-0003o1-9c
- for qemu-devel@nongnu.org; Tue, 27 May 2025 00:28:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dancer@debian.org>) id 1uJlf5-0007mo-E1
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 00:11:35 -0400
+Received: from mx2.netfort.gr.jp ([153.126.132.118])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJlv8-0007NC-6q
- for qemu-devel@nongnu.org; Tue, 27 May 2025 00:28:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748320087;
+ (Exim 4.90_1) (envelope-from <dancer@debian.org>) id 1uJlf3-0005Fu-LS
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 00:11:35 -0400
+Received: from localhost.localdomain (localhost [IPv6:::1])
+ by mx2.netfort.gr.jp (Postfix) with ESMTP id 3FD1B5FACE;
+ Tue, 27 May 2025 13:11:25 +0900 (JST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=debian.org; s=selector1;
+ t=1748319085;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=g2/YrwlvZsq7+WWHYoQrrt0Mo4CmgOLW02oO+FtHWF0=;
- b=NQeX/UHRAYA9jsHCMPu34UsP7H8tTUUUxq/Wp1kaxSb8F7KNnsCfCeu3dzs5Y+okbJN+ur
- 2WcE7DQl2NJWL8iUvUDaE1gJdQFJbHa7trW2fqHhEvT150ylFhx3EkedlD6XM4bo41YJjh
- T8kTAiXeieiFGSVHxUsJLWq3GXlka4Q=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-nTHphncVOq-TTXuOZfamwg-1; Tue,
- 27 May 2025 00:28:03 -0400
-X-MC-Unique: nTHphncVOq-TTXuOZfamwg-1
-X-Mimecast-MFC-AGG-ID: nTHphncVOq-TTXuOZfamwg_1748320082
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E3A3180045B; Tue, 27 May 2025 04:28:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25D1A30001A1; Tue, 27 May 2025 04:28:01 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 73FF921E66C3; Tue, 27 May 2025 06:27:58 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9?=
- <berrange@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  "Michael S.
- Tsirkin" <mst@redhat.com>,  Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,  kvm@vger.kernel.org,
- qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Zhao
- Liu <zhao1.liu@intel.com>,  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v9 00/55] QEMU TDX support
-In-Reply-To: <792cbff4-6d25-4f39-8a18-3f7affdfe5cd@intel.com> (Xiaoyao Li's
- message of "Tue, 27 May 2025 09:30:53 +0800")
-References: <20250508150002.689633-1-xiaoyao.li@intel.com>
- <e994b189-d155-44d0-ae7d-78e72f3ae0de@redhat.com>
- <792cbff4-6d25-4f39-8a18-3f7affdfe5cd@intel.com>
-Date: Tue, 27 May 2025 06:27:58 +0200
-Message-ID: <87a56ywucx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3v7be1f/CX26xwm33bkMhE4PM2rqH6kLl8sWw3wQMng=;
+ b=yYnS8vmNPhh6e4ObGS8nOaNmgubtvDv3hyYS9NbQFe1oAfmImln9146Buas7qEAdwd7o8W
+ IdeJIfkc0GzML5Gv9o09wdkAfUrOPsnFhxnbhS7jnkXzO99rSmz+LxfepsC6E4ipxG8Qp1
+ BVN+sOZ6maEiDjo/SlY1/IdaImYeS8s=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=debian.org;
+ s=selector1; t=1748319085;
+ h=from:from:sender:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:references; bh=3v7be1f/CX26xwm33bkMhE4PM2rqH6kLl8sWw3wQMng=;
+ b=JYClznlIQ7csvSvFJ3NaFAADvvywCvtVBgCMb1GnITrwb21qkWlquWot/baXhE2EhV5FHp
+ 7jJa4zYZ/gdlmERx0G9pqeozJgK+hlovRrj3DfZia6Ei/xuMpecryCMjRIRbeVXF0Noyl7
+ Gm937LIte9S3JTHLxS8IVhU5VjHr+G8=
+ARC-Authentication-Results: i=1;
+	mx2.netfort.gr.jp;
+	none
+ARC-Seal: i=1; s=selector1; d=debian.org; t=1748319085; a=rsa-sha256; cv=none;
+ b=jT2pSYX+oNqT0xrqXfCfTd5QfZoLdU0lTXT+TL5Y3Yb0GN6gukNJWHZ4H0+aq5fEighz06
+ 2q4qvxU/ZPafxak8Azrc5wWVyeTUGm3pR4nNowQjXgg8jeSpk1yauWpAni11sIdcVcG4tU
+ A0XC/amUvDK3L+K/lw8XtaPEZ6Gzi9I=
+From: dancer@debian.org
+To: mst@redhat.com
+Cc: qemu-devel@nongnu.org, adelva@google.com, uekawa@chromium.org,
+ linux-kernel@vger.kernel.org, virtualization@lists.linux.dev,
+ kvm@vger.kernel.org
+Subject: [PATCH] Fix comment for virtio-9p
+Date: Tue, 27 May 2025 13:11:23 +0900
+Message-Id: <20250527041123.840063-1-dancer@debian.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=153.126.132.118; envelope-from=dancer@debian.org;
+ helo=mx2.netfort.gr.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 27 May 2025 00:43:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,37 +82,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Xiaoyao Li <xiaoyao.li@intel.com> writes:
+From: Junichi Uekawa <uekawa@chromium.org>
 
-> On 5/27/2025 12:12 AM, Paolo Bonzini wrote:
->> On 5/8/25 16:59, Xiaoyao Li wrote:
->>> This is the v9 series of TDX QEMU enabling. The series is also available
->>> at github:
->>> https://github.com/intel-staging/qemu-tdx/tree/tdx-qemu-upstream-v9
->>>
->>> Note, this series has a dependency on
->>> https://lore.kernel.org/qemu-devel/20241217123932.948789-1- xiaoyao.li@intel.com/
->>>
->>> =============
->>> Changes in v9
->>>
->>> Comparing to v8, no big change in v9.
->>>
->>> V9 mainly collects Reviewed-by tags from Daniel and Zhao Liu (Thanks to
->>> their review!) and v9 does some small change according to the review
->>> feedback of them. Please see the individual patch for the detailed
->>> change history.
->>
->> Queued, thanks for your patience - this was a huge effort.
+virtio-9p is not a console protocol, it's a file sharing protocol. Seems
+like an artifact of old copy-and-paste error.
 
-Started late fall 2023?  That's perseverance!
+Fixes: 3ca4f5ca7305 ("virtio: add virtio IDs file")
+Signed-off-by: Junichi Uekawa <uekawa@chromium.org>
+---
+ include/uapi/linux/virtio_ids.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->> I'll wait until the kernel side is picked up and then send the pull request.
->
-> Thanks, Paolo!
->
-> And thanks to Gerd Hoffmann, Daniel, Markus, Zhao Liu, ... and all the people who helped review and provided valuable feedback.
-
-You're welcome!
+diff --git a/include/uapi/linux/virtio_ids.h b/include/uapi/linux/virtio_ids.h
+index 7aa2eb766205..deb9dfa52944 100644
+--- a/include/uapi/linux/virtio_ids.h
++++ b/include/uapi/linux/virtio_ids.h
+@@ -37,7 +37,7 @@
+ #define VIRTIO_ID_IOMEM			6 /* virtio ioMemory */
+ #define VIRTIO_ID_RPMSG			7 /* virtio remote processor messaging */
+ #define VIRTIO_ID_SCSI			8 /* virtio scsi */
+-#define VIRTIO_ID_9P			9 /* 9p virtio console */
++#define VIRTIO_ID_9P			9 /* virtio 9p */
+ #define VIRTIO_ID_MAC80211_WLAN		10 /* virtio WLAN MAC */
+ #define VIRTIO_ID_RPROC_SERIAL		11 /* virtio remoteproc serial link */
+ #define VIRTIO_ID_CAIF			12 /* Virtio caif */
+-- 
+2.49.0.1164.gab81da1b16-goog
 
 
