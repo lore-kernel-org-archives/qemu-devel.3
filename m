@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DEE1C54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 15:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C15C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 15:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJvop-0005Nu-F8; Tue, 27 May 2025 11:02:20 -0400
+	id 1uJvog-0005Mt-I5; Tue, 27 May 2025 11:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uJvom-0005NZ-4u
- for qemu-devel@nongnu.org; Tue, 27 May 2025 11:02:16 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uJvoe-0005Mk-QS
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 11:02:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uJvof-0006Al-Iz
- for qemu-devel@nongnu.org; Tue, 27 May 2025 11:02:15 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uJvoX-0006AU-0i
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 11:02:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748358122;
+ s=mimecast20190719; t=1748358120;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JC0odE6qVln2tSU/zVV919W5R6mFRzSh7NwSc0WiKoQ=;
- b=fkrRhWAjGZU2FKtFkPWjC8GgODgtMoFl7dPHhTOVeVM03/RhKVjZ4tYX2y8lsewpnb/org
- Ry4zJecfNR8UTk42EFypplQRLpese36qyBtHLxbrcW7mK7lZVE4OampZMYcy+G6pg1LjGz
- hEQsQo0HUex0E2PoNQADGgi6Wkv2TnM=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=V+8mwCdL3hOJ7OEayJ1t/Dy9QXniV1Y+r8+4rSFbNcs=;
+ b=Gu3f/MeSfjC5eSMna2v/psvZkjzR8Qau1NLYMBYsCL11QdgZMHgl6KHaGrOdD4UIR4w3gs
+ TX1tGP4gXaqKW6TyVQcIB69x4NNyhGOqCn82AW3EXvcZsabTNf5UHVUol5BFDmkUVmp1qu
+ YL8Cd5vdGRjR7vg3jQ16tCk9yxhtQvQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-156-dXSp74LFOny0UY7tvLlRPA-1; Tue, 27 May 2025 11:02:01 -0400
-X-MC-Unique: dXSp74LFOny0UY7tvLlRPA-1
-X-Mimecast-MFC-AGG-ID: dXSp74LFOny0UY7tvLlRPA_1748358120
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-b1fa2cad5c9so2024316a12.2
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 08:02:01 -0700 (PDT)
+ us-mta-468-0JivRReNPrKf8f_wxS6yLA-1; Tue, 27 May 2025 11:01:58 -0400
+X-MC-Unique: 0JivRReNPrKf8f_wxS6yLA-1
+X-Mimecast-MFC-AGG-ID: 0JivRReNPrKf8f_wxS6yLA_1748358116
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4d00e44fdso1421752f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 08:01:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748358120; x=1748962920;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JC0odE6qVln2tSU/zVV919W5R6mFRzSh7NwSc0WiKoQ=;
- b=hwoq3VU8PMUUe4svrl+jHUFoiHUVhUz0PAnHRZyF5F5DVkKlVZG3IoK0USpw/ZdkXB
- VHERL+tNxluZ6yZYIY/Gcy7gl85CtDtnEo64dqWMMzDfzREVmxeWG3Gj8R7yh6l4GblI
- Mx8vLHVuGRYlaRx81imX7YJRdLwuzZPmMfwmhwczAI9AClDPvFPxKRrvFNBpHUjEUoab
- v4CpU+FRITfJXOTqca2pTmoi+txTMo1XcAf0QA5GtyeT4FiODN9tVokoEq+IJFP37B4B
- PJKaDWAvO3oWQfY2FZQOH7KPtvDJF93NKB7YP7QpCM1cF4XcT4XEgGoUyjyrFUASkor+
- jkfg==
-X-Gm-Message-State: AOJu0YyFqA3k5mAFsRVcxmfKLYhHJwDoM/fW5YtcZxjFJyDingUH05xT
- Bg6TkFHa6/2Db6ptD6F+1JBsEBHuxXOatG9MOwT6HDpVYAJfPPvA5EbQcJjh9QDLLgWZ6yuuYOm
- efHotQx99SA+D4Z8N1cx5KpQoMNogVHa5/F103N9Dm3ZZkmD8+E5By93sd1AL4XzUpUcoIo0ViR
- NtpsiqVa2OeJp9vzMV3iXuQFrt2stPQRA=
-X-Gm-Gg: ASbGncvOtltJB81POJ68ZD3bzHeyfkv6No4iN5E8BqBSWCFr1+/9fXguiGFCi5RYOPm
- PTL7EvRkvO6sYDSaYSpweP1ASF4kgHcjoAb237I8OQzrVhSScfV1dZmGUXpyAX3MZEpngT2cH5n
- w+cT+ggQHaPVYJCgc5y7J0QdBJ
-X-Received: by 2002:a17:90b:2d81:b0:311:af76:35b2 with SMTP id
- 98e67ed59e1d1-311af7638ddmr3604446a91.30.1748358113158; 
- Tue, 27 May 2025 08:01:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9/c+EmNApuFv63HFJ/5bVQ23ICeoNcNXsrbYr1Kq+5i/pKkYzenN1vB3lZRydmNOreNMk42BahUgpUn0OrNA=
-X-Received: by 2002:a17:90b:2d81:b0:311:af76:35b2 with SMTP id
- 98e67ed59e1d1-311af7638ddmr3603873a91.30.1748358106704; Tue, 27 May 2025
- 08:01:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748358116; x=1748962916;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=V+8mwCdL3hOJ7OEayJ1t/Dy9QXniV1Y+r8+4rSFbNcs=;
+ b=YiVLlHyxvlv+D+PWYtZO1GpI0LzkUW+vKx3/4ebaEAmuK6XzOYrnX3K0bOFSwi54F0
+ OvYepAOLEXxbwfQf6Tb7nxho5/wQF6/eDtlUlbm6TVFnSv1+HJi59yiZY1ZuJTWnSHJS
+ KWfvqYkDYxPQYBiRRbDoTFD7PSPRbEx7XMTWGsZWY22H4m4f/mMaDgjpktwdDpYbQZ8V
+ kndA+fK4K8P6zd569BjPaP8ntU/S8JqhnRBsgvK+NfSbuProf9v+kZ1aN1TiRCBhrRga
+ dhOvU1RlIHJcHr8VLAWE7fkLubU9CldJjiRT5FmoksJDqgUfsJR0L6gZIojVzdVIAewx
+ cdcA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX3nj08kHrOAlKiTtEPROGhZbSXMKOJRosX0gvIPTE7ChUdJtjlPMwz+jkz8m8Ne3M7ISqFKivb8mq3@nongnu.org
+X-Gm-Message-State: AOJu0Yw43v9frPS2Wd3vSFy8KhjT2nL8d10AH5Dc7U27u5jrX8RB61bD
+ lCGqw9lC9dvfcttIPDOcOlr/TZceQuqmE9Lme5D4xlOTRLUfHqDuDuKfy6M8UsO71i2L4Ye9+gn
+ blJqwNGUZ6g/HKkTi5OnOx0Rn01TytiTfYF9+gAb+O1ue7gJ4pkfrc8G6ccdIdvOtavSbh/scyq
+ GUNmsCQmodZNBHpPoLFAI4TZZ+LphMGzc=
+X-Gm-Gg: ASbGncuFp92aCUP86V2hPkMh4Csl/kkCAW88X7gT16EocpE7kS1U1lC3Dv9qI8vSPgD
+ 6jpHaTJMp2wXC/mX/PoLFge1BKssO2F0Olg8KRhlB9voh9uMoUo9fYMMjzXEBHTwsvxE=
+X-Received: by 2002:a5d:588a:0:b0:3a4:dbac:2db6 with SMTP id
+ ffacd0b85a97d-3a4dbac2f5cmr4949471f8f.49.1748358116000; 
+ Tue, 27 May 2025 08:01:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3c7P6mMQlzsCWzr9zsQ9H8pcEsfm6l8wGv51zN9lNjPLRD5Uyjmx60lIOm5fkeuYug5m22h5t7uimoWPglfU=
+X-Received: by 2002:a5d:588a:0:b0:3a4:dbac:2db6 with SMTP id
+ ffacd0b85a97d-3a4dbac2f5cmr4949429f8f.49.1748358115474; Tue, 27 May 2025
+ 08:01:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250519170055.3693275-1-jsnow@redhat.com>
- <CAJSP0QUT+rtmBKXa6Ve7oV_rWB4aGwTU3=xBmQTDWv0GT4zRDA@mail.gmail.com>
-In-Reply-To: <CAJSP0QUT+rtmBKXa6Ve7oV_rWB4aGwTU3=xBmQTDWv0GT4zRDA@mail.gmail.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 27 May 2025 11:01:35 -0400
-X-Gm-Features: AX0GCFtKxn2kG1aa8wMJCicY6vz8WPJyKHfgM4gYgFYeEHaFKy5S5Hk8KMl5RUI
-Message-ID: <CAFn=p-bwkEXC1xqGVyYZhk2gXBo6rMDqNviivioPGFD0mwiz8w@mail.gmail.com>
-Subject: Re: [PULL 0/6] Python patches
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000e4f30a06361f5706"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
+ <9461fc05-3c1d-4236-a0b7-99f39781f278@redhat.com>
+ <a8d508a2-7369-4ccd-a6a7-7c74b38c962a@daynix.com>
+In-Reply-To: <a8d508a2-7369-4ccd-a6a7-7c74b38c962a@daynix.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 27 May 2025 17:01:40 +0200
+X-Gm-Features: AX0GCFvHzNZdcbfcrgnweE5lQu0rTsv3ZDglahSFuk3Jh62fmOCyB_S9g3TTK_8
+Message-ID: <CABgObfbh+VOvjWBM-NdTWnuSzgkmjLN=nfskLrxL8-NBtJwUTQ@mail.gmail.com>
+Subject: Re: [PATCH v4 00/11] Improve futex usage
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Stefan Weil <sw@weilnetz.de>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org, 
+ devel@daynix.com,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
 X-Spam_bar: -----
 X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,197 +112,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e4f30a06361f5706
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, May 27, 2025 at 5:01=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
+> I'd like to submit it with "[PATCH v4 05/11] qemu-thread: Avoid futex
+> abstraction for non-Linux" because it aligns the implementations of
+> Linux and non-Linux versions to rely on a store-release of EV_SET in
+> qemu_event_set().
 
-On Fri, May 23, 2025 at 3:45=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.com=
-> wrote:
+Ok, I see what you mean - you would like the xchg to be an
+xchg_release essentially.
 
-> On Mon, May 19, 2025 at 1:03=E2=80=AFPM John Snow <jsnow@redhat.com> wrot=
-e:
-> >
-> > The following changes since commit
-> 757a34115e7491744a63dfc3d291fd1de5297ee2:
-> >
-> >   Merge tag 'pull-nvme-20250515' of https://gitlab.com/birkelund/qemu
-> into staging (2025-05-15 13:42:27 -0400)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/jsnow/qemu.git tags/python-pull-request
-> >
-> > for you to fetch changes up to 818060c02a53df4b27bc86cbac3a26009996b6a4=
-:
-> >
-> >   qapi: delete un-needed python static analysis configs (2025-05-19
-> 12:44:01 -0400)
-> >
-> > ----------------------------------------------------------------
-> > Python PR
-> >
-> > Add scripts/qapi and docs/sphinx/*qapi* to the Python static analysis
-> checks
-> >
-> > ----------------------------------------------------------------
+There is actually one case in which skipping the xchg has an effect.
+If you have the following:
+
+- one side does
+
+  s.foo =3D 1;
+  qemu_event_set(&s.ev);
+
+- the other side never reaches the qemu_event_reset(&s.ev)
+
+then skipping the xchg might allow the cacheline for ev to remain
+shared. This is unlikely to *make* a difference, though it does
+*exist* as a difference, so I will review the patch, but I really
+prefer to place it last.  It's safer to take a known-working
+algorithm, apply it to all OSes (or at least Linux and Windows), and
+only then you refine it. It also makes my queue shorter.
+
+> > Do you think it's incorrect?  I'll wait for your answer before sending
+> > out the actual pull request.
 >
-> Please take a look at this CI failure:
-> https://gitlab.com/qemu-project/qemu/-/jobs/10135225231#L448
-
-
-Well, that's interesting. Maybe something changed in the interim ...
-investigating now, thank you - I will send a v2 PR if appropriate when I
-identify the cause.
-
-Thanks!
-~js
-
-
+> It's correct, but I don't think it's worthwhile.
 >
+> This code path is only used by platforms without a futex wrapper.
+> Currently we only have one for Linux and this series adds one for
+> Windows, but FreeBSD[1] and OpenBSD[2] have their own futex. macOS also
+> gained one with version 14.4.[3] We can add wrappers for them too if
+> their performance really matters.
+> So the only platforms listed in docs/about/build-platforms.rst that
+> require the non-futex version are macOS older than 14.4 and NetBSD.
+> macOS older than 14.4 will not be supported after June 5 since macOS 14
+> was released June 5, 2023 and docs/about/build-platforms.rst says:
 >
-> Thanks,
-> Stefan
->
-> >
-> > John Snow (5):
-> >   qapi: Add some pylint ignores
-> >   docs/qapidoc: linting fixes
-> >   python: update missing dependencies from minreqs
-> >   python: add qapi static analysis tests
-> >   qapi: delete un-needed python static analysis configs
-> >
-> > Markus Armbruster (1):
-> >   python: Drop redundant warn_unused_configs =3D True
-> >
-> >  docs/sphinx/qapi_domain.py  | 25 ++++++++++++++-----------
-> >  docs/sphinx/qapidoc.py      |  5 +++--
-> >  python/setup.cfg            |  2 +-
-> >  python/tests/minreqs.txt    | 25 +++++++++++++++++++++++++
-> >  python/tests/qapi-flake8.sh |  4 ++++
-> >  python/tests/qapi-isort.sh  |  6 ++++++
-> >  python/tests/qapi-mypy.sh   |  2 ++
-> >  python/tests/qapi-pylint.sh |  6 ++++++
-> >  scripts/qapi/.flake8        |  3 ---
-> >  scripts/qapi/.isort.cfg     |  7 -------
-> >  scripts/qapi/backend.py     |  2 ++
-> >  scripts/qapi/mypy.ini       |  4 ----
-> >  scripts/qapi/pylintrc       |  1 +
-> >  13 files changed, 64 insertions(+), 28 deletions(-)
-> >  create mode 100755 python/tests/qapi-flake8.sh
-> >  create mode 100755 python/tests/qapi-isort.sh
-> >  create mode 100755 python/tests/qapi-mypy.sh
-> >  create mode 100755 python/tests/qapi-pylint.sh
-> >  delete mode 100644 scripts/qapi/.flake8
-> >  delete mode 100644 scripts/qapi/.isort.cfg
-> >  delete mode 100644 scripts/qapi/mypy.ini
-> >
-> > --
-> > 2.48.1
-> >
-> >
-> >
->
->
+> There are too few relevant platforms to justify the effort potentially
+> needed for quality assurance.
 
---000000000000e4f30a06361f5706
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Ok, nice.  So it's really just NetBSD in the end.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 23,=
- 2025 at 3:45=E2=80=AFPM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gma=
-il.com">stefanha@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">On Mon, May 19, 2025 at 1:03=E2=80=AFPM John Snow=
- &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank">jsnow@redhat.com=
-</a>&gt; wrote:<br>
-&gt;<br>
-&gt; The following changes since commit 757a34115e7491744a63dfc3d291fd1de52=
-97ee2:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0Merge tag &#39;pull-nvme-20250515&#39; of <a href=3D"https=
-://gitlab.com/birkelund/qemu" rel=3D"noreferrer" target=3D"_blank">https://=
-gitlab.com/birkelund/qemu</a> into staging (2025-05-15 13:42:27 -0400)<br>
-&gt;<br>
-&gt; are available in the Git repository at:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0<a href=3D"https://gitlab.com/jsnow/qemu.git" rel=3D"noref=
-errer" target=3D"_blank">https://gitlab.com/jsnow/qemu.git</a> tags/python-=
-pull-request<br>
-&gt;<br>
-&gt; for you to fetch changes up to 818060c02a53df4b27bc86cbac3a26009996b6a=
-4:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0qapi: delete un-needed python static analysis configs (202=
-5-05-19 12:44:01 -0400)<br>
-&gt;<br>
-&gt; ----------------------------------------------------------------<br>
-&gt; Python PR<br>
-&gt;<br>
-&gt; Add scripts/qapi and docs/sphinx/*qapi* to the Python static analysis =
-checks<br>
-&gt;<br>
-&gt; ----------------------------------------------------------------<br>
-<br>
-Please take a look at this CI failure:<br>
-<a href=3D"https://gitlab.com/qemu-project/qemu/-/jobs/10135225231#L448" re=
-l=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/j=
-obs/10135225231#L448</a></blockquote><div><br></div><div>Well, that&#39;s i=
-nteresting. Maybe something changed in the interim ... investigating now, t=
-hank you - I will send a v2 PR if appropriate when I identify the cause.</d=
-iv><div><br></div><div>Thanks!</div><div>~js</div><div>=C2=A0</div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex"><br>
-<br>
-Thanks,<br>
-Stefan<br>
-<br>
-&gt;<br>
-&gt; John Snow (5):<br>
-&gt;=C2=A0 =C2=A0qapi: Add some pylint ignores<br>
-&gt;=C2=A0 =C2=A0docs/qapidoc: linting fixes<br>
-&gt;=C2=A0 =C2=A0python: update missing dependencies from minreqs<br>
-&gt;=C2=A0 =C2=A0python: add qapi static analysis tests<br>
-&gt;=C2=A0 =C2=A0qapi: delete un-needed python static analysis configs<br>
-&gt;<br>
-&gt; Markus Armbruster (1):<br>
-&gt;=C2=A0 =C2=A0python: Drop redundant warn_unused_configs =3D True<br>
-&gt;<br>
-&gt;=C2=A0 docs/sphinx/qapi_domain.py=C2=A0 | 25 ++++++++++++++-----------<=
-br>
-&gt;=C2=A0 docs/sphinx/qapidoc.py=C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 +++--<br>
-&gt;=C2=A0 python/setup.cfg=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=
-=A0 2 +-<br>
-&gt;=C2=A0 python/tests/minreqs.txt=C2=A0 =C2=A0 | 25 +++++++++++++++++++++=
-++++<br>
-&gt;=C2=A0 python/tests/qapi-flake8.sh |=C2=A0 4 ++++<br>
-&gt;=C2=A0 python/tests/qapi-isort.sh=C2=A0 |=C2=A0 6 ++++++<br>
-&gt;=C2=A0 python/tests/qapi-mypy.sh=C2=A0 =C2=A0|=C2=A0 2 ++<br>
-&gt;=C2=A0 python/tests/qapi-pylint.sh |=C2=A0 6 ++++++<br>
-&gt;=C2=A0 scripts/qapi/.flake8=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 ---<br=
->
-&gt;=C2=A0 scripts/qapi/.isort.cfg=C2=A0 =C2=A0 =C2=A0|=C2=A0 7 -------<br>
-&gt;=C2=A0 scripts/qapi/backend.py=C2=A0 =C2=A0 =C2=A0|=C2=A0 2 ++<br>
-&gt;=C2=A0 scripts/qapi/mypy.ini=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 4 ----<b=
-r>
-&gt;=C2=A0 scripts/qapi/pylintrc=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
-&gt;=C2=A0 13 files changed, 64 insertions(+), 28 deletions(-)<br>
-&gt;=C2=A0 create mode 100755 python/tests/qapi-flake8.sh<br>
-&gt;=C2=A0 create mode 100755 python/tests/qapi-isort.sh<br>
-&gt;=C2=A0 create mode 100755 python/tests/qapi-mypy.sh<br>
-&gt;=C2=A0 create mode 100755 python/tests/qapi-pylint.sh<br>
-&gt;=C2=A0 delete mode 100644 scripts/qapi/.flake8<br>
-&gt;=C2=A0 delete mode 100644 scripts/qapi/.isort.cfg<br>
-&gt;=C2=A0 delete mode 100644 scripts/qapi/mypy.ini<br>
-&gt;<br>
-&gt; --<br>
-&gt; 2.48.1<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-<br>
-</blockquote></div></div>
+> Moreover, qemu_event_reset() is often followed by qemu_event_wait() or
+> other barriers so probably relaxing ordering here does not affect the
+> overall ordering constraint (and performance) much.
 
---000000000000e4f30a06361f5706--
+Understood.  For me it wasn't really about performance, but more about
+understanding exactly which reorderings can happen and what
+synchronizes with what. Load-acquire/store-release are simpler to
+understand in that respect, especially since this use of condvar,
+without the mutex in reset, is different from everything else that
+I've ever seen.
+
+Paolo
 
 
