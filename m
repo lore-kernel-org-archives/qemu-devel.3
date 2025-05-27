@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B16C54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 15:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F7A9C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 15:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJvpU-0005aA-BG; Tue, 27 May 2025 11:03:00 -0400
+	id 1uJvpS-0005Sz-NR; Tue, 27 May 2025 11:02:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uJvpS-0005Sv-FM
- for qemu-devel@nongnu.org; Tue, 27 May 2025 11:02:58 -0400
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ id 1uJvpQ-0005RI-AM
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 11:02:56 -0400
+Received: from mail-vs1-xe41.google.com ([2607:f8b0:4864:20::e41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uJvpP-0006EA-HS
- for qemu-devel@nongnu.org; Tue, 27 May 2025 11:02:58 -0400
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-87decd1c427so939406241.2
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 08:02:54 -0700 (PDT)
+ id 1uJvpN-0006E1-5e
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 11:02:55 -0400
+Received: by mail-vs1-xe41.google.com with SMTP id
+ ada2fe7eead31-4dfa2aeec86so1251686137.1
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 08:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748358172; x=1748962972; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748358170; x=1748962970; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RniEF1mf7TN4jF60DdYm0zWLKlVKKpJMW1uo5Rs5HEQ=;
- b=zMPIA1jSo2iSblif6zL8CjztKbijl0L9jjETGHd1Me6mJDt3fT408NBuotwu3Z7r2r
- 2nVBoV8xbgHdQjqVzRTqt9oCleE7YiyLciCOqMs+z6eWPa6j9L89izQKQULDik19nIBo
- 5RN5vQrFHCrtad79Syu8QDxGiTZYc250/K0GRNVnVAeCsccYKDwICpmKLzRJhTtcUKBa
- /frwY7IlrkU3OnTvtzxIWUOLp78QsB6msm/EkbSAkZOcy6CzqnWyfoVYEVsQJiq5TsE6
- /B6E5R5Yn5SsF8BxhPLq+CdADdAgbs+MySNtkRFTIpgJ7zt3HVFeAwuLZzLaGXbn2np2
- oXhQ==
+ bh=agFWYYCKCVq6mVFbehNZ8ax/fZ1A0ibvbnP/23upHzI=;
+ b=BAYeOfEGgjcNJXZq59AfBetmjGF5pmV7TEwOXXtMk194ISMz8htOnu3cbea7FAnbp8
+ TpRP8hm/ZywfBM9eBoCxiVbVA/ZoIr2Il1gLepj2E9qlNqsiUY5Mlw/Zz3BOdfxo/+FL
+ yO2jzNZC/DgRs1d9q+kl++HDj/FrqDRugzToH6fE/AfWUR1wzoHvNQ07U0UaSHwalYVV
+ 404gvr2XhSM09IUO4Q48AEJfYCXa3qxsuvHYs62BHPFWZ5cEPIRG69AiwB8is+FoXrvo
+ D/4QVV903G75hyAwxMSmO4LKkvjINYX+WGC/oOKXf1MWcNOgGHWjBpVmnN0gdQgeM4ru
+ Z8xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748358172; x=1748962972;
+ d=1e100.net; s=20230601; t=1748358170; x=1748962970;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RniEF1mf7TN4jF60DdYm0zWLKlVKKpJMW1uo5Rs5HEQ=;
- b=YSexNXqTZA+O+MPWp2HVtssXi5/wtLy53+sKHcOL1Fdo7yGq65CLDb6CM1aYwBExAT
- k0QsC7jpkVM2xUKYiiIlqAdK1vgSEBeKcZHLQYV53FX4pd9diBeuvgCIFYQQAhw62+Vr
- GTgiH2jPbp0tbGuU0hCn5cAo+nI0vimJYlpRyTI7ddiexW3bzlJ7L2mOWpuBxwDRc8BS
- +Pgp7FyMGky8KbpmHG8sBp6lbhnIG9o6LbKxO+462J7NC3tiTPV+6jvY5wxT9N157dSp
- I22uHKVVCJ8c6ItFfbbJNszxm8UvQR709kgVZlr4FUklabRdkUmsVhdvo+Zmo4kK+7aG
- RjBA==
-X-Gm-Message-State: AOJu0YzJH3Kb2+5vb+xe7M2vTCec2mwishv73GJd+S9+s/g90FH8asqR
- M/r6fT2cn7PhMvlgjX8ddNe+mtitoIC0tusPciiYGbUK1J18rORDN0uxJY1ZaVk9OmHHW8GBgCl
- kB3jTqRU=
-X-Gm-Gg: ASbGncsjAvHsyeSD4fa3s2iKhUFPyx4pepPD/jSjh2D83/808gPofnqwjvQH02GT1bY
- rSIhjMqNtIyc9lcX2GbLl1uLJAipbpdIkeOXSAngB65tOtD/rrFEThzD8uggy9cvZwfbIHt2iKJ
- B0e5tDXuXTTWgOi9v9wM5Kn7jANwF3iFJaoEhddLYzS6tMXMPMhaHTsg9YHW7gEApb/dqx/Hw2w
- J6W3VEYgzI0qT2WRc8WyBF57W2MjB2bWNxgh+fvcDXWMWYKP8Ms0o3GuFhxzNsyjKCVRJF8d8YT
- J9wY+Ckjt78oMQVRgMiP5NANGrJl60swDu0HvWSXaWlPTxiQQcGz3hNlxylF+qdLNWBExiT7V33
- 00mPY6PcMB4TItUn2NiXEsA==
-X-Google-Smtp-Source: AGHT+IEamKsspQzXxNvrx0hfrbFiwI9Yy1dIhoMMXDOZHKjNKDNxlne+0y+H39wK8Qh/YB1E5p1ejQ==
-X-Received: by 2002:a05:6102:3590:b0:4cb:5d6c:9946 with SMTP id
- ada2fe7eead31-4e4240a654cmr10360291137.10.1748358172339; 
- Tue, 27 May 2025 08:02:52 -0700 (PDT)
+ bh=agFWYYCKCVq6mVFbehNZ8ax/fZ1A0ibvbnP/23upHzI=;
+ b=je5+5mZbrhiIDWOX6ZdZylO6Somzl7zpMqMa1wPU8sspSRqr3pd7qfMhsVF4a42ct+
+ gO1eSelIhb/Hmp4Bu6pBKEZ8soNeVm7nB4YxFSPt6pN6n9uuGEOPAPe2Qv5MyX5KYN2J
+ pj0pwH6aZSF0qoJmMB72aiWu7/lcLP3AsZm3B5T5mB+igalr2uK+E2tR5k/AXir5nEhn
+ Ylfs/aHnTbCvlc1RIqVWvxUZb7oLq2IE7/naje0PVCjm3LFzgMGV+ylFD9mHTOlLss0D
+ Dd1Tmtnp5nQafGoMOVJDSgqZ0oi4jCoYg17F9xaV9FDt9UAWQi8nwMZRlQxmSkHilCQB
+ f+pg==
+X-Gm-Message-State: AOJu0Yy2u53H20OnjVYxfKVck8G1aTjbGe3xH2NUnUV6OeJi0RlWM3Na
+ 6vR5p03VdZmtr5r8mL4AjIJ74jNjTb9gHNkKa07rVY9bWYuKVNL6OsF0UNyT1eBW9IsnWvuJqrI
+ aVzTa1zXtSA==
+X-Gm-Gg: ASbGncsm1ReKJG7LJ6EWx00K2yXql2TnlTvM81ScT1kvNeohiua4PajcqX2uXko6hAH
+ s8RBH4o6aAPRVBRHeL4G5T8Z9jnEGrgEMOSoFcOlwzJhOHwr+kl/Znny5IF6bbzHV6L5sanLnId
+ AAA736+awRvSf8kfnMzBKiFIIUpMig/qZdw1+fQEviSEJW+uAo2WX70v9KTb/DPgFkqm1MfO1lO
+ a4/h+PNMjdLAIS+8InsPsfhrKwmJjdaSMotnDuiJh9BdNwWzhWohnL78q2wjI3ryOMBANyfJoLJ
+ d7/okztDpQB2DfnXSuhgwrGsIs8ZnTLqUb0VLMmx/MmqUCX9b/s3JO3whhwAtgz7zauluA4zmNy
+ nfgBvy0KpBPZjvqFe7DBZrg==
+X-Google-Smtp-Source: AGHT+IFZ72oGyj6zqgb1m6S3CDOn0dykaUi1s3nbhFSi839o4SCP7fdLWsZJM+ZNdDJjfzgl9obcHg==
+X-Received: by 2002:a05:6102:370b:b0:4af:c519:4e7f with SMTP id
+ ada2fe7eead31-4e4241af472mr9779721137.18.1748358169635; 
+ Tue, 27 May 2025 08:02:49 -0700 (PDT)
 Received: from gromero0.. (200-100-75-183.dial-up.telesp.net.br.
  [200.100.75.183]) by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-4e51e94c9c2sm2189649137.23.2025.05.27.08.02.49
+ ada2fe7eead31-4e51e94c9c2sm2189649137.23.2025.05.27.08.02.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 08:02:51 -0700 (PDT)
+ Tue, 27 May 2025 08:02:48 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org,
 	eric.auger@redhat.com
 Cc: qemu-arm@nongnu.org, thuth@redhat.com, gustavo.romero@linaro.org,
  alex.bennee@linaro.org
-Subject: [PATCH 2/2] tests/functional/test_aarch64_hotplug_pci: Add test for
- ACPI PCI hotplug
-Date: Tue, 27 May 2025 15:02:29 +0000
-Message-Id: <20250527150229.1617074-3-gustavo.romero@linaro.org>
+Subject: [PATCH 1/2] tests/functional/test_aarch64_hotplug_pci: Update SHA
+Date: Tue, 27 May 2025 15:02:28 +0000
+Message-Id: <20250527150229.1617074-2-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250527150229.1617074-1-gustavo.romero@linaro.org>
 References: <20250527150229.1617074-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=gustavo.romero@linaro.org; helo=mail-ua1-x92e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e41;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-vs1-xe41.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,60 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, test_aarch64_hotplug_pci only tests PCI hotplug using the
-native PCI hotplug mechanism. Now that aarch64 supports PCI hotplug via
-the ACPI mechanism it's time to support it in the test as well.
+Update SHA for 'linux' and 'initrd.gz' images.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- tests/functional/test_aarch64_hotplug_pci.py | 24 +++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ tests/functional/test_aarch64_hotplug_pci.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
-index bb2c121503..862bb6746b 100755
+index fa1bb62c8f..bb2c121503 100755
 --- a/tests/functional/test_aarch64_hotplug_pci.py
 +++ b/tests/functional/test_aarch64_hotplug_pci.py
-@@ -27,11 +27,26 @@ class HotplugPCI(LinuxKernelTest):
+@@ -20,12 +20,12 @@ class HotplugPCI(LinuxKernelTest):
+     ASSET_KERNEL = Asset(
+         ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
+          'current/images/netboot/debian-installer/arm64/linux'),
+-        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b2')
++         'd92a60392ce1e379ca198a1a820899f8f0d39a62d047c41ab79492f81541a9d9')
+ 
+     ASSET_INITRD = Asset(
+         ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
           'current/images/netboot/debian-installer/arm64/initrd.gz'),
-         '9f817f76951f3237bca8216bee35267bfb826815687f4b2fcdd5e6c2a917790c')
+-        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
++        '9f817f76951f3237bca8216bee35267bfb826815687f4b2fcdd5e6c2a917790c')
  
--    def test_hotplug_pci(self):
-+    def run_vm_and_test_hotplug_pci(self, use_acpi_pci_hotplug=False):
-+        """
-+        Run an aarch64 VM and test the PCI hotplug mechanism by plugging and
-+        unplugging a PCI network adapter to the VM. Proper plug and unplug of
-+        the adapter is verified by checking if the network device is correctly
-+        added and removed in Linux.
-+
-+        Parameters
-+        ----------
-+        use_acpi_pci_hotplug : bool
-+            If true the ACPI PCI hotplug mechanim is used, otherwise the
-+            Native PCIe Hotplug mechanism is used.
-+        """
-+
-+        acpi_pci_hotplug = "on" if use_acpi_pci_hotplug else "off"
+     def test_hotplug_pci(self):
  
-         self.set_machine('virt')
-         self.vm.add_args('-m', '512M')
-         self.vm.add_args('-cpu', 'cortex-a57')
-+        self.vm.add_args('-machine', f"acpi-pcihp={acpi_pci_hotplug}")
-         self.vm.add_args('-append',
-                          'console=ttyAMA0,115200 init=/bin/sh')
-         self.vm.add_args('-device',
-@@ -70,5 +85,12 @@ def test_hotplug_pci(self):
-                                           'ls -l /sys/class/net | wc -l',
-                                           '2')
- 
-+    def test_native_pci_hotplug(self):
-+        self.run_vm_and_test_hotplug_pci(use_acpi_pci_hotplug=False)
-+
-+    def test_acpi_pci_hotplug(self):
-+        self.run_vm_and_test_hotplug_pci(use_acpi_pci_hotplug=True)
-+
-+
- if __name__ == '__main__':
-     LinuxKernelTest.main()
 -- 
 2.34.1
 
