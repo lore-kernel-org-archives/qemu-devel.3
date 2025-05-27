@@ -4,122 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 075E9C54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 20:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA0BBC54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 20:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK1HD-00076X-Ev; Tue, 27 May 2025 16:51:59 -0400
+	id 1uK1M6-00084Q-30; Tue, 27 May 2025 16:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uK1HC-00076N-FU
- for qemu-devel@nongnu.org; Tue, 27 May 2025 16:51:58 -0400
-Received: from mail-ej1-f68.google.com ([209.85.218.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uK1H9-0006zm-RM
- for qemu-devel@nongnu.org; Tue, 27 May 2025 16:51:58 -0400
-Received: by mail-ej1-f68.google.com with SMTP id
- a640c23a62f3a-ad883afdf0cso354104166b.0
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 13:51:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748379114; x=1748983914;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:cc:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=t+7EfBQBe2Oe4RgSsSAp2l98cjKy022EhLrTU1yEwOI=;
- b=INj2SpMv/kV7uB0VJdHtAPca5fYOv78MAsbkSB53tbTat8Lr/bkDSfCt5sWEur8qCh
- +16/a8EcRnI4iy9BpRkZoyPB0umVKqnNapLrjibZ6S2LBBN2Bt4yEDJ/Nw3h27E7Cm+J
- dbtId2feEdR7VY2Pc2BTbE7aL0igd2gjIbqLM2ts1lr9BHVZDHi1dVJwNXtB3fTOUlCg
- LWRpn+9OmZgcXaxIxEeb65esVv/a+YLefJuKZp13zXP5t+yRscPwRpWuq2rdJrG6NauP
- iyzqiFh5UQGDpldMVureY+VbC9GFxNb/ivLiRMifT06qBOvq/xJoYLWSuSeYsVUNpaJ8
- QJaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpxWNzGvIxH/MeSJ6UWnOHqwy1dw2gFLu30kzUxu9NKvTWr2F01KXX3H8F5HEwrZSsW9prv06zhAH/@nongnu.org
-X-Gm-Message-State: AOJu0YyXAfgwTUuiDQVqpvU+Vav2wDVbWUk4noKFp735C48ccBq7ofY2
- 42A+pqFtUcvWzojX1ttFJ8T9HIUCk/lEB+5/jUm9wxCdMdRpu68YDXyF
-X-Gm-Gg: ASbGncv+PLPbrq6Z7X8SVv6EY2PQlGO6lK2NHYtx4dyhh6IKFpsZN2ydM6q3z+Dwaw2
- NMBfbKvFGlXnx1z/bMhedFgQM3r/i3WJlIHig0zSSpojbE6gUd3sF54avw0ztsm66x4PzszlXa1
- 2EFPJptvGdD7PNcFAB9EeX64lgKRIzvBjS11FwbRmfe42AYSRs40eaunRp+e9pBunlcU6h7aCaw
- RBjgK1BV3wkWvyU7OsmMqe2Rul4fD2ElF/FBsiY7vW9gGKuVwdZwlrGjb+1B098G59ukCqUI8bG
- /20qouazd3LB6S5OZq0dpcTOdYUEX128waWnfn8UyIDCxDSSBvo2NRLrwtQfpCLSlolwCUinlHm
- C0gTWAj6RUhgBjLlgkg==
-X-Google-Smtp-Source: AGHT+IF14qYYe7UGRqFhWOaKcx/X3bqWbwNYLYdTgGFD2R7FpDh3pvYkykciizmdD/+OwhWuT503Rw==
-X-Received: by 2002:a17:907:d0a:b0:ad2:40a1:7894 with SMTP id
- a640c23a62f3a-ad85b20acadmr1398605566b.41.1748379113309; 
- Tue, 27 May 2025 13:51:53 -0700 (PDT)
-Received: from [192.168.88.252] (194-212-251-179.customers.tmcz.cz.
- [194.212.251.179]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad89f2261easm9055366b.97.2025.05.27.13.51.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 May 2025 13:51:52 -0700 (PDT)
-Message-ID: <61e3c8f5-623d-4480-9ed4-5d7a897c2a02@ovn.org>
-Date: Tue, 27 May 2025 22:51:51 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: i.maximets@ovn.org, Anton Protopopov <aspsk@isovalent.com>
-Subject: Re: [PATCH v2] net/af-xdp: Support pinned map path for AF_XDP sockets
-To: Daniel Borkmann <daniel@iogearbox.net>, qemu-devel@nongnu.org
-References: <20250512160621.550062-1-daniel@iogearbox.net>
-Content-Language: en-US
-From: Ilya Maximets <i.maximets@ovn.org>
-Autocrypt: addr=i.maximets@ovn.org; keydata=
- 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
-In-Reply-To: <20250512160621.550062-1-daniel@iogearbox.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.218.68;
- envelope-from=i.maximets.ovn@gmail.com; helo=mail-ej1-f68.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uK1M3-00083y-Gd
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 16:57:00 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uK1M1-0007qP-PC
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 16:56:59 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54RKtqZ7001488;
+ Tue, 27 May 2025 20:56:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2025-04-25; bh=Ea+5EYi8
+ Tx/9RZm/d1wDYlyZ2nDP47w8FHLAWrrkJ5w=; b=dLIVnP2ZURWJROVX36BVLGDO
+ 788HVM55ar+5DGXbIe9eMHh/MK+yLTFHtdgyx3SknwvRHhCTYWCvbI6Tx+k9+9Ob
+ Ks5MV4FxXfPyxWzHu5pHMX73USxwZ1SBulo3MA+hbjBVZa+d5kDQBCZU7SupvDI9
+ 21hVY43QaGRJP+l1Szj+OfDo/EAE3enRdnmGthAUfvgga828l9FIYbnB/FHXigxB
+ +jwuilp1Dv8DhhwYrYH7P6ejgk3CqxWi9gu4ppfs4in/04ApF55G2JFLi2l25QG/
+ OoGmrOq1I4YZzYtynyTrjDyQjd1YvB+UwyulK0v2b/rxWBk0kVhHgBptouFdvQ==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v46tvdc5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 27 May 2025 20:56:54 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54RJdXd4024640; Tue, 27 May 2025 20:56:53 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46u4j9sgun-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 27 May 2025 20:56:53 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54RKurI0003524;
+ Tue, 27 May 2025 20:56:53 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 46u4j9sgu0-1; Tue, 27 May 2025 20:56:53 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Cedric Le Goater <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH] vfio/pci: vfio_pci_put_device on failure
+Date: Tue, 27 May 2025 13:56:52 -0700
+Message-Id: <1748379412-150475-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-27_10,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ adultscore=0 spamscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2505270176
+X-Proofpoint-GUID: 9PL77Kj5StpSrcGhiEODWiS_PoGFuez-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDE3NiBTYWx0ZWRfXygLv1NzbkNiB
+ Z1kbIz/Zc0F5wSGJuv/Twgq9Zvjh6+F3HkSYAHZhJjZM0sh6Qxmd5ZpyanCxF1xcOgdz9Fmx7+A
+ vyi/xLpU0zucAfzed9XikS6p+SRJKEM5E1VSeqVeC1UKilHo+FvyNx+wWfYrNRA000iNsZE57Qc
+ NqZbiuMqq+n7vq90G/OC7QS2DGtQ4A5TLl7iN6AnbGqo3A4pudIhiyGMpnlBO9IOHVuVbaUtuSL
+ MnzGP/uJZotttoHWWzvxMTQt2ngA9I98vaw03w2pRNGXqCpf7CtEddo9s7uar5GjPZRgTQk4Nut
+ cfE7WRh8SW0FTaS1n1zI8feo4INAz4rfS/xqv/loU/yafgoeI/huj3X+mEkQBV4ffTnFquNZbxX
+ TavygCHWWFBi7vox6qa2dQhl55YVKVSnt68JFCUTEJK8gVqNCh8t4AGbw2r/ABBRuUZvfTJV
+X-Authority-Analysis: v=2.4 cv=VskjA/2n c=1 sm=1 tr=0 ts=68362717 b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=eD10S8Hqz9QlufsINnwA:9 cc=ntf
+ awl=host:13206
+X-Proofpoint-ORIG-GUID: 9PL77Kj5StpSrcGhiEODWiS_PoGFuez-
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -137,328 +107,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/25 6:06 PM, Daniel Borkmann wrote:
-> Extend 'inhibit=on' setting with the option to specify a pinned XSK map
-> path along with a starting index (default 0) to push the created XSK
-> sockets into. Example usage:
-> 
->   # ./build/qemu-system-x86_64 [...] \
->    -netdev af-xdp,ifname=enp2s0f0np0,id=net0,mode=native,queues=2,start-queue=14,inhibit=on,map-path=/sys/fs/bpf/xsks_map,map-start-index=14 \
->    -device virtio-net-pci,netdev=net0 [...]
-> 
-> This is useful for the case where an existing XDP program with XSK map
-> is present on the AF_XDP supported phys device and the XSK map is not
-> yet populated. For example, the former could have been pre-loaded onto
-> the netdevice by a control plane, which later launches qemu to populate
-> it with XSK sockets.
-> 
-> Normally, the main idea behind 'inhibit=on' is that the qemu instance
-> doesn't need to have a lot of privileges to use the pre-loaded program
-> and the pre-created sockets, but this mentioned use-case here is different
-> where qemu still needs privileges to create the sockets.
-> 
-> The 'map-start-index' parameter is optional and defaults to 0. It allows
-> flexible placement of the XSK sockets, and is up to the user to specify
-> when the XDP program with XSK map was already preloaded. In the simplest
-> case the queue-to-map-slot mapping is just 1:1 based on ctx->rx_queue_index
-> but the user might as well have a different scheme (or smaller map size,
-> e.g. ctx->rx_queue_index % max_size) to push the inbound traffic to one
-> of the XSK sockets.
-> 
-> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-> Cc: Ilya Maximets <i.maximets@ovn.org>
-> Cc: Anton Protopopov <aspsk@isovalent.com>
-> ---
->  net/af-xdp.c    | 65 +++++++++++++++++++++++++++++++++++++++++++------
->  qapi/net.json   | 24 ++++++++++++------
->  qemu-options.hx |  3 +++
->  3 files changed, 77 insertions(+), 15 deletions(-)
+If vfio_realize fails after vfio_device_attach, it should call
+vfio_device_detach during error recovery.  If it fails after
+vfio_device_get_name, it should free vbasedev->name.  If it fails
+after vfio_pci_config_setup, it should free vdev->msix.
 
-Hi, Daniel.  Thanks for v2 and sorry for delayed response.
+To fix all, call vfio_pci_put_device().
 
-I tried it out for myself and the change does indeed work as expected.
-And it's quite nice!  So I looked closely at the code this time.  See some
-comments below.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ hw/vfio/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> 
-> diff --git a/net/af-xdp.c b/net/af-xdp.c
-> index 01c5fb914e..494b894706 100644
-> --- a/net/af-xdp.c
-> +++ b/net/af-xdp.c
-> @@ -51,6 +51,8 @@ typedef struct AFXDPState {
->  
->      uint32_t             n_queues;
->      uint32_t             xdp_flags;
-> +    char                 *map_path;
-> +    uint32_t             map_start_index;
->      bool                 inhibit;
->  } AFXDPState;
->  
-> @@ -261,6 +263,7 @@ static void af_xdp_send(void *opaque)
->  static void af_xdp_cleanup(NetClientState *nc)
->  {
->      AFXDPState *s = DO_UPCAST(AFXDPState, nc, nc);
-> +    int pin_fd, idx;
->  
->      qemu_purge_queued_packets(nc);
->  
-> @@ -282,6 +285,22 @@ static void af_xdp_cleanup(NetClientState *nc)
->                  "af-xdp: unable to remove XDP program from '%s', ifindex: %d\n",
->                  s->ifname, s->ifindex);
->      }
-
-I'd add an empty line here.  The statements above and below are not
-really related.
-
-> +    if (s->map_path) {
-> +        pin_fd = bpf_obj_get(s->map_path);
-> +        if (pin_fd < 0) {
-> +            fprintf(stderr,
-> +                "af-xdp: unable to remove %s's XSK sockets from '%s', ifindex: %d\n",
-> +                s->ifname, s->map_path, s->ifindex);
-
-Maybe it makes more sense to just not close it?  i.e. keep the open file
-descriptor in the AFXDPState and use and close it on cleanup.  This way we
-can be sure that the map doesn't just go away underneath us and so we can
-guarantee a proper cleanup.  WDYT?
-
-Also, the ifindex isn't really part of this operation, so it may be
-reasonable to not print it here saving some line length.
-
-> +        } else {
-> +            idx = nc->queue_index;
-> +            if (s->map_start_index > 0) {
-
-Should probably check the has_ just in case.
-
-> +                idx += s->map_start_index;
-> +            }
-> +            bpf_map_delete_elem(pin_fd, &idx);
-
-The uAPI says that this call can also fail.  We should warn the user about
-this failure.
-
-> +            close(pin_fd);
-> +        }
-> +    }
-> +    g_free(s->map_path);
->  }
->  
->  static int af_xdp_umem_create(AFXDPState *s, int sock_fd, Error **errp)
-> @@ -343,7 +362,7 @@ static int af_xdp_socket_create(AFXDPState *s,
->          .bind_flags = XDP_USE_NEED_WAKEUP,
->          .xdp_flags = XDP_FLAGS_UPDATE_IF_NOEXIST,
->      };
-> -    int queue_id, error = 0;
-> +    int queue_id, pin_fd, xsk_fd, idx, error = 0;
->  
->      s->inhibit = opts->has_inhibit && opts->inhibit;
->      if (s->inhibit) {
-> @@ -384,6 +403,23 @@ static int af_xdp_socket_create(AFXDPState *s,
->          }
->      }
->  
-> +    if (!error && s->map_path) {
-> +        pin_fd = bpf_obj_get(s->map_path);
-> +        if (pin_fd < 0) {
-> +            error = errno;
-> +        } else {
-> +            xsk_fd = xsk_socket__fd(s->xsk);
-> +            idx = s->nc.queue_index;
-> +            if (s->map_start_index) {
-> +                idx += s->map_start_index;
-> +            }
-> +            if (bpf_map_update_elem(pin_fd, &idx, &xsk_fd, 0)) {
-> +                error = errno;
-> +            }
-> +            close(pin_fd);
-> +        }
-> +    }
-> +
-
-This part doesn't seem to belong in this function.  It may be better if we
-just create sockets here and create a separate function af_xdp_update_bpf_map
-or something like that and call it from the main net_init_af_xdp.
-
-Main reasons for that are mostly related to the error path:
-
-1. The error message below is a bit misleading and doesn't really tell what
-   happened.  For example, if the map_path is incorrect, then we get:
-     "failed to create AF_XDP socket ... : No such path or directory".
-   There is no mention of the map path that we tried to open and failed and
-   the information is kinda wrong as we did actually create the socket.
-
-2. It's better if have xdp_flags properly initialized when the socket is
-   actually created and not error out of this function early.  This may not
-   matter today, but seems cleaner and may save us from some headaches in
-   the future.
-
->      if (error) {
->          error_setg_errno(errp, error,
->                           "failed to create AF_XDP socket for %s queue_id: %d",
-> @@ -465,8 +501,12 @@ int net_init_af_xdp(const Netdev *netdev,
->          return -1;
->      }
->  
-> -    if ((opts->has_inhibit && opts->inhibit) != !!opts->sock_fds) {
-> -        error_setg(errp, "'inhibit=on' requires 'sock-fds' and vice versa");
-> +    if ((opts->has_inhibit && opts->inhibit) != !!(opts->sock_fds || opts->map_path)) {
-> +        if (opts->has_inhibit && opts->inhibit) {
-> +            error_setg(errp, "'inhibit=on' requires setting 'sock-fds' or 'map-path'");
-> +        } else {
-> +            error_setg(errp, "'sock-fds' or 'map-path' requires setting 'inhibit=on'");
-> +        }
->          return -1;
->      }
-
-This is getting a little hard to navigate even after the re-wording, I think.
-And we also need to cover more cases now.  So, I'd suggest to just bite the
-bullet and spell out every case separately, e.g.:
-
-    inhibit = opts->has_inhibit && opts->inhibit;
-    if (inhibit && !opts->sock_fds && !opts->map_path) {
-        error_setg(errp, "'inhibit=on' requires 'sock-fds' or 'map-path'");
-        return -1;
-    }
-    if (!inhibit && (opts->sock_fds || opts->map_path)) {
-        error_setg(errp, "'sock-fds' and 'map-path' require 'inhibit=on'");
-        return -1;
-    }
-    if (opts->sock_fds && opts->map_path) {
-        error_setg(errp, "'sock-fds' and 'map-path' are mutually exclusive");
-        return -1;
-    }
-
-This should be easier to understand and also saves some line lengths.  WDYT?
-
-The exclusivity check here is because we expect the file descriptors in the
-sock-fds to be already in the map.  It would be an awkward configuration if
-we have the fds and the map, so it might be better to just prohibit this.
-
-We'll also need a check that map-start-index requires the map-path.
-
->  
-> @@ -491,6 +531,12 @@ int net_init_af_xdp(const Netdev *netdev,
->          pstrcpy(s->ifname, sizeof(s->ifname), opts->ifname);
->          s->ifindex = ifindex;
->          s->n_queues = queues;
-
-I'd put an empty line here.
-
-> +        if (opts->map_path) {
-
-This check doesn't seem necessary, g_strdup is NULL-safe.
-
-> +            s->map_path = g_strdup(opts->map_path);
-> +            if (opts->has_map_start_index && opts->map_start_index > 0) {
-> +                s->map_start_index = opts->map_start_index;
-> +            }
-> +        }
->  
->          if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, errp)
->              || af_xdp_socket_create(s, opts, errp)) {
-> @@ -504,10 +550,15 @@ int net_init_af_xdp(const Netdev *netdev,
->      if (nc0) {
->          s = DO_UPCAST(AFXDPState, nc, nc0);
->          if (bpf_xdp_query_id(s->ifindex, s->xdp_flags, &prog_id) || !prog_id) {
-> -            error_setg_errno(errp, errno,
-> -                             "no XDP program loaded on '%s', ifindex: %d",
-> -                             s->ifname, s->ifindex);
-> -            goto err;
-> +            if (!s->inhibit) {
-
-The s->inhibit is set as a side effect of af_xdp_socket_create().  It was a right
-decision when the socket creation and the cleanup were the only users.  But since
-we're using it now here, we should move setting of this value to the loop above.
-
-> +                error_setg_errno(errp, errno,
-> +                                 "no XDP program loaded on '%s', ifindex: %d",
-> +                                 s->ifname, s->ifindex);
-> +                goto err;
-> +            } else {
-> +                warn_report("no XDP program loaded yet on '%s', ifindex: %d",
-> +                            s->ifname, s->ifindex);
-> +            }
->          }
->      }
->  
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 310cc4fd19..66a1fcf6ae 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -454,7 +454,7 @@
->  #     (default: 0).
->  #
->  # @inhibit: Don't load a default XDP program, use one already loaded
-> -#     to the interface (default: false).  Requires @sock-fds.
-> +#     to the interface (default: false).  Requires @sock-fds or @map-path.
->  #
->  # @sock-fds: A colon (:) separated list of file descriptors for
->  #     already open but not bound AF_XDP sockets in the queue order.
-> @@ -462,17 +462,25 @@
->  #     into XDP socket map for corresponding queues.  Requires
->  #     @inhibit.
->  #
-> +# @map-path: The path to a pinned xsk map to push file descriptors
-> +#     for bound AF_XDP sockets into. Requires @inhibit. (Since 10.1)
-> +#
-> +# @map-start-index: Use @map-path to insert xsk sockets starting from
-> +#     this index number (default: 0). Requires @map-path. (Since 10.1)
-
-The doc uses double spaces between sentences.  Also, may mention that
-map-path and sock-fds are mutually exclusive.  For both options.
-
-> +#
->  # Since: 8.2
->  ##
->  { 'struct': 'NetdevAFXDPOptions',
->    'data': {
-> -    'ifname':       'str',
-> -    '*mode':        'AFXDPMode',
-> -    '*force-copy':  'bool',
-> -    '*queues':      'int',
-> -    '*start-queue': 'int',
-> -    '*inhibit':     'bool',
-> -    '*sock-fds':    'str' },
-> +    'ifname':           'str',
-> +    '*mode':            'AFXDPMode',
-> +    '*force-copy':      'bool',
-> +    '*queues':          'int',
-> +    '*start-queue':     'int',
-> +    '*inhibit':         'bool',
-> +    '*sock-fds':        'str',
-> +    '*map-path':        'str',
-> +    '*map-start-index': 'int' },
->    'if': 'CONFIG_AF_XDP' }
->  
->  ##
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index dc694a99a3..50fc592f5d 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -2909,6 +2909,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->  #ifdef CONFIG_AF_XDP
->      "-netdev af-xdp,id=str,ifname=name[,mode=native|skb][,force-copy=on|off]\n"
->      "         [,queues=n][,start-queue=m][,inhibit=on|off][,sock-fds=x:y:...:z]\n"
-> +    "         [,map-path=/path/to/socket/map][,map-start-index=i]\n"
->      "                attach to the existing network interface 'name' with AF_XDP socket\n"
->      "                use 'mode=MODE' to specify an XDP program attach mode\n"
->      "                use 'force-copy=on|off' to force XDP copy mode even if device supports zero-copy (default: off)\n"
-> @@ -2916,6 +2917,8 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->      "                with inhibit=on,\n"
->      "                  use 'sock-fds' to provide file descriptors for already open AF_XDP sockets\n"
->      "                  added to a socket map in XDP program.  One socket per queue.\n"
-> +    "                  use 'map-path' to provide the socket map location to populate AF_XDP sockets with\n"
-> +    "                  beginning from the 'map-start-index' specified index (default: 0) (Since 10.1)\n"
->      "                use 'queues=n' to specify how many queues of a multiqueue interface should be used\n"
->      "                use 'start-queue=m' to specify the first queue that should be used\n"
->  #endif
-
-There is another section below with all the options listed and some
-examples.  It will need an update.  Not sure if we need an example
-for this new use case, but if you can make a small one with just
-using bpftool, that maight be useful.
-
-Best regards, Ilya Maximets.
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index a1bfdfe..7d3b9ff 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3296,6 +3296,7 @@ out_teardown:
+     vfio_bars_exit(vdev);
+ error:
+     error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
++    vfio_pci_put_device(vdev);
+ }
+ 
+ static void vfio_instance_finalize(Object *obj)
+-- 
+1.8.3.1
 
 
