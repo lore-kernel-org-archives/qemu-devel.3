@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC7EC54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD949C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJozV-0002pt-HP; Tue, 27 May 2025 03:44:57 -0400
+	id 1uJp1A-0006fE-NP; Tue, 27 May 2025 03:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uJoxp-00016Q-RK
- for qemu-devel@nongnu.org; Tue, 27 May 2025 03:43:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uJoyh-0001xr-2Q
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 03:44:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uJoxk-00009I-OY
- for qemu-devel@nongnu.org; Tue, 27 May 2025 03:43:09 -0400
+ id 1uJoyZ-0000Lu-3g
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 03:44:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748331783;
+ s=mimecast20190719; t=1748331833;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Wrvy28pHwDCbg0kHEoTqG1YGxSvjesAGWYyufHKiGqE=;
- b=Ov2MOOnJSjMFn4NENY7g7wF4lVA+V0rWkRYKyJn2qU20MDJMGH+todUE6w2BmMSJbKCUye
- IdOH2XhXQf7hdEWGTT/2SVUSqJgShGlbrQDY7QFie3jm1APcHXt/1WAUNhgTLheKx33QmC
- zVcw/51MoXhcsNxbtYLOeLj+mAJ2eyc=
+ bh=ynMjCFkKq4avL2xQUuTd4QN6DUjSo6c9gEotr/SPDLI=;
+ b=IfYx3o6HsDn5/dGyfMeKr8SUZ17cIvwO3pBPzOVy1QsMMUQuy0yhTM2bfXS5SG+r7TacdI
+ eLXrPsIAkYqpskriM+7j/F6XE98B8mXNLZAXLRE648j7LjQs500r8v/X9/ePeR6nMx6hkK
+ K0AQEGk9vYb7r4ZSUtiaiq13bn53pXI=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-358-RCp5wuVEPYK5KNGCRPLgPA-1; Tue,
- 27 May 2025 03:43:00 -0400
-X-MC-Unique: RCp5wuVEPYK5KNGCRPLgPA-1
-X-Mimecast-MFC-AGG-ID: RCp5wuVEPYK5KNGCRPLgPA_1748331778
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-177-SiwzEGkCPN28ABHyCD0f0A-1; Tue,
+ 27 May 2025 03:43:50 -0400
+X-MC-Unique: SiwzEGkCPN28ABHyCD0f0A-1
+X-Mimecast-MFC-AGG-ID: SiwzEGkCPN28ABHyCD0f0A_1748331829
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88E961800446; Tue, 27 May 2025 07:42:58 +0000 (UTC)
+ id E168E1800373; Tue, 27 May 2025 07:43:48 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.45.224.201])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2922919560AA; Tue, 27 May 2025 07:42:53 +0000 (UTC)
+ id 7C1AA19560AA; Tue, 27 May 2025 07:43:44 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -54,16 +54,16 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  shannon.zhaosl@gmail.com
 Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
  alex.bennee@linaro.org
-Subject: [PATCH v2 05/25] hw/pci-host/gpex-acpi: Split host bridge OSC and DSM
- generation
-Date: Tue, 27 May 2025 09:40:07 +0200
-Message-ID: <20250527074224.1197793-6-eric.auger@redhat.com>
+Subject: [PATCH v2 15/25] hw/i386/acpi-build: Introduce and use
+ acpi_get_pci_host
+Date: Tue, 27 May 2025 09:40:17 +0200
+Message-ID: <20250527074224.1197793-16-eric.auger@redhat.com>
 In-Reply-To: <20250527074224.1197793-1-eric.auger@redhat.com>
 References: <20250527074224.1197793-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -88,96 +88,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-acpi_dsdt_add_pci_osc() name is confusing as it gives the impression
-it appends the _OSC method but in fact it also appends the _DSM method
-for the host bridge. Let's split the function into two separate ones
-and let them return the method Aml pointer instead. This matches the
-way it is done on x86 (build_q35_osc_method). In a subsequent patch
-we will replace the gpex method by the q35 implementation that will
-become shared between ARM and x86.
+pcihp acpi_set_pci_info() generic code currently uses
+acpi_get_i386_pci_host() to retrieve the pci host bridge.
 
-acpi_dsdt_add_host_bridge_methods is a new top helper that generates
-both the _OSC and _DSM methods.
+Let's rename acpi_get_i386_pci_host into acpi_get_pci_host and
+move it in pci generic code.
+
+The helper is augmented with the support of ARM GPEX.
+
+Also instead of using the machine child property to retrieve
+the PCI host bridge, we search for the actual object type using
+object_resolve_type_unambiguous().
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- hw/pci-host/gpex-acpi.c | 31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-index f34b7cf25e..1aa2d12026 100644
---- a/hw/pci-host/gpex-acpi.c
-+++ b/hw/pci-host/gpex-acpi.c
-@@ -50,13 +50,10 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
-     }
- }
+---
+
+v1 -> v2
+- described the fact we changed the implementation of
+  acpi_get_pci_host() in the commit msg.
+---
+ include/hw/acpi/pci.h |  2 ++
+ hw/acpi/pci.c         | 20 ++++++++++++++++++++
+ hw/acpi/pcihp.c       |  3 ++-
+ hw/i386/acpi-build.c  | 24 ++++--------------------
+ 4 files changed, 28 insertions(+), 21 deletions(-)
+
+diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
+index 4dca22c0e2..310cbd02db 100644
+--- a/include/hw/acpi/pci.h
++++ b/include/hw/acpi/pci.h
+@@ -41,4 +41,6 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
  
--static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
-+static Aml *build_host_bridge_osc(bool enable_native_pcie_hotplug)
- {
--    Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
-+    Aml *method, *UUID, *ifctx, *ifctx1, *elsectx;
+ void build_srat_generic_affinity_structures(GArray *table_data);
  
--    /* Declare an _OSC (OS Control Handoff) method */
--    aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
--    aml_append(dev, aml_name_decl("CTRL", aml_int(0)));
-     method = aml_method("_OSC", 4, AML_NOTSERIALIZED);
-     aml_append(method,
-         aml_create_dword_field(aml_arg(3), aml_int(0), "CDW1"));
-@@ -103,9 +100,13 @@ static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
-                                aml_name("CDW1")));
-     aml_append(elsectx, aml_return(aml_arg(3)));
-     aml_append(method, elsectx);
--    aml_append(dev, method);
-+    return method;
-+}
- 
--    method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
-+static Aml *build_host_bridge_dsm(void)
-+{
-+    Aml *method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
-+    Aml *UUID, *ifctx, *ifctx1, *buf;
- 
-     /* PCI Firmware Specification 3.0
-      * 4.6.1. _DSM for PCI Express Slot Information
-@@ -124,7 +125,17 @@ static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
-     byte_list[0] = 0;
-     buf = aml_buffer(1, byte_list);
-     aml_append(method, aml_return(buf));
--    aml_append(dev, method);
-+    return method;
-+}
++Object *acpi_get_pci_host(void);
 +
-+static void acpi_dsdt_add_host_bridge_methods(Aml *dev,
-+                                              bool enable_native_pcie_hotplug)
+ #endif
+diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
+index d511a85029..4191886ebe 100644
+--- a/hw/acpi/pci.c
++++ b/hw/acpi/pci.c
+@@ -26,6 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qom/object_interfaces.h"
++#include "qom/object.h"
+ #include "qapi/error.h"
+ #include "hw/boards.h"
+ #include "hw/acpi/aml-build.h"
+@@ -33,6 +34,9 @@
+ #include "hw/pci/pci_bridge.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/pci/pcie_host.h"
++#include "hw/pci-host/i440fx.h"
++#include "hw/pci-host/q35.h"
++#include "hw/pci-host/gpex.h"
+ 
+ /*
+  * PCI Firmware Specification, Revision 3.0
+@@ -301,3 +305,19 @@ void build_srat_generic_affinity_structures(GArray *table_data)
+     object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
+                                    table_data);
+ }
++
++Object *acpi_get_pci_host(void)
 +{
-+    aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
-+    aml_append(dev, aml_name_decl("CTRL", aml_int(0)));
-+    /* Declare an _OSC (OS Control Handoff) method */
-+    aml_append(dev, build_host_bridge_osc(enable_native_pcie_hotplug));
-+    aml_append(dev, build_host_bridge_dsm());
++    Object *host;
++
++    host = object_resolve_type_unambiguous(TYPE_I440FX_PCI_HOST_BRIDGE, NULL);
++    if (host) {
++        return host;
++    }
++    host = object_resolve_type_unambiguous(TYPE_Q35_HOST_DEVICE, NULL);
++    if (host) {
++        return host;
++    }
++    host = object_resolve_type_unambiguous(TYPE_GPEX_HOST, NULL);
++    return host;
++}
+diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+index 942669ea89..d800371ddc 100644
+--- a/hw/acpi/pcihp.c
++++ b/hw/acpi/pcihp.c
+@@ -36,6 +36,7 @@
+ #include "hw/pci-bridge/xio3130_downstream.h"
+ #include "hw/i386/acpi-build.h"
+ #include "hw/acpi/acpi.h"
++#include "hw/acpi/pci.h"
+ #include "hw/pci/pci_bus.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+@@ -102,7 +103,7 @@ static void *acpi_set_bsel(PCIBus *bus, void *opaque)
+ static void acpi_set_pci_info(bool has_bridge_hotplug)
+ {
+     static bool bsel_is_set;
+-    Object *host = acpi_get_i386_pci_host();
++    Object *host = acpi_get_pci_host();
+     PCIBus *bus;
+     BSELInfo info = { .bsel_alloc = ACPI_PCIHP_BSEL_DEFAULT,
+                       .has_bridge_hotplug = has_bridge_hotplug };
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index fe8bc62c03..6feb99e9eb 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -269,27 +269,11 @@ static void acpi_get_misc_info(AcpiMiscInfo *info)
+ #endif
  }
  
- void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-@@ -193,7 +204,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-             if (is_cxl) {
-                 build_cxl_osc_method(dev);
-             } else {
--                acpi_dsdt_add_pci_osc(dev, true);
-+                acpi_dsdt_add_host_bridge_methods(dev, true);
-             }
+-/*
+- * Because of the PXB hosts we cannot simply query TYPE_PCI_HOST_BRIDGE.
+- * On i386 arch we only have two pci hosts, so we can look only for them.
+- */
+-Object *acpi_get_i386_pci_host(void)
+-{
+-    PCIHostState *host;
+-
+-    host = PCI_HOST_BRIDGE(object_resolve_path("/machine/i440fx", NULL));
+-    if (!host) {
+-        host = PCI_HOST_BRIDGE(object_resolve_path("/machine/q35", NULL));
+-    }
+-
+-    return OBJECT(host);
+-}
+-
+ static void acpi_get_pci_holes(Range *hole, Range *hole64)
+ {
+     Object *pci_host;
  
-             aml_append(scope, dev);
-@@ -268,7 +279,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+-    pci_host = acpi_get_i386_pci_host();
++    pci_host = acpi_get_pci_host();
+ 
+     if (!pci_host) {
+         return;
+@@ -1245,7 +1229,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+ 
+     sb_scope = aml_scope("\\_SB");
+     {
+-        Object *pci_host = acpi_get_i386_pci_host();
++        Object *pci_host = acpi_get_pci_host();
+ 
+         if (pci_host) {
+             PCIBus *pbus = PCI_HOST_BRIDGE(pci_host)->bus;
+@@ -1306,7 +1290,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+     if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
+         bool has_pcnt;
+ 
+-        Object *pci_host = acpi_get_i386_pci_host();
++        Object *pci_host = acpi_get_pci_host();
+         PCIBus *b = PCI_HOST_BRIDGE(pci_host)->bus;
+ 
+         scope = aml_scope("\\_SB.PCI0");
+@@ -1946,7 +1930,7 @@ static bool acpi_get_mcfg(AcpiMcfgInfo *mcfg)
+     Object *pci_host;
+     QObject *o;
+ 
+-    pci_host = acpi_get_i386_pci_host();
++    pci_host = acpi_get_pci_host();
+     if (!pci_host) {
+         return false;
      }
-     aml_append(dev, aml_name_decl("_CRS", rbuf));
- 
--    acpi_dsdt_add_pci_osc(dev, true);
-+    acpi_dsdt_add_host_bridge_methods(dev, true);
- 
-     Aml *dev_res0 = aml_device("%s", "RES0");
-     aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
 -- 
 2.49.0
 
