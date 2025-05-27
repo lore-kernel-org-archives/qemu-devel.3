@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B99C3C54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 23:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4EEEC5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 23:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK3Tr-0003ID-H6; Tue, 27 May 2025 19:13:11 -0400
+	id 1uK3Tu-0003JN-3j; Tue, 27 May 2025 19:13:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK3Tq-0003I5-6S
- for qemu-devel@nongnu.org; Tue, 27 May 2025 19:13:10 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK3Ts-0003Ig-Vi
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 19:13:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK3To-0001DG-QJ
- for qemu-devel@nongnu.org; Tue, 27 May 2025 19:13:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK3Tr-0001E7-GB
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 19:13:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748387588;
+ s=mimecast20190719; t=1748387591;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0Y53I0D3GZiFTm9LYMIu17qA08t/JehTcfVK9hw98nA=;
- b=DXCY5xbB+faIQkX/OU25Y9MYSCsq0SHeKEEsAXAfB8ToqjEQTdgAF04OvB2MiSYYPok9Au
- GgVifw1XCZGJXbeYTVjCO65mqZX0SiNf1BPDLywUPiSqIK+k/sGX5NM6ppvTNAInIW/Qv7
- spUxfaCP+ZdNH5ROmlPdGjmhBCyDO+k=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e0bhbecsmzeOLXe9dkL8LSOz4qm8m26wuFzD/NSoKEY=;
+ b=Mej4WPp7j9hKCyM4+GM0eJd+8lbUgfP9umRirYyw5qY3nuKkFFlY7fOSL6yMqPeGQDfcKh
+ dDIZhLYctLWtEH5Xoj+p50MNHt7YQlA+rfrx2af3UKWQBJHtEx3v6Yeee/UYcHPQCO9a5G
+ 1WTZQQgM7Y/SAG6ufwkPj9kgS1z+1Tg=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-552-YwTxTaKFPFGk3_WoukrV7w-1; Tue, 27 May 2025 19:13:07 -0400
-X-MC-Unique: YwTxTaKFPFGk3_WoukrV7w-1
-X-Mimecast-MFC-AGG-ID: YwTxTaKFPFGk3_WoukrV7w_1748387586
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-400b3a7e434so2888769b6e.0
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 16:13:06 -0700 (PDT)
+ us-mta-76-J9W93IK8Pdy-O3yLCUTJww-1; Tue, 27 May 2025 19:13:09 -0400
+X-MC-Unique: J9W93IK8Pdy-O3yLCUTJww-1
+X-Mimecast-MFC-AGG-ID: J9W93IK8Pdy-O3yLCUTJww_1748387589
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4768d63b1dcso5496611cf.1
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 16:13:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748387585; x=1748992385;
+ d=1e100.net; s=20230601; t=1748387589; x=1748992389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0Y53I0D3GZiFTm9LYMIu17qA08t/JehTcfVK9hw98nA=;
- b=gFnOQHtaeVwt1ZxPm11431tvBIoRAnUD7K/RVDcqnG+CRXiRrfqKI0IDvGHPg+eTZH
- 3F3lo5BE9URObwRhkFRjIVgrVbzC42EuQ1jVFnTn28Y3RVt5Qcv70MQGVKD2Byv27o9X
- SBTKRzzbwjJr1X70cuiF7q3qRNnpWhl15IiR7yVd//M6GlzSHLUgGhWQNzpxEuk8n5bo
- Sn2P4Rl19IbUV70+CpUj2FFUARKFCwEgHjNOXcrghMdu05RQal1uDbyjbguPVfQ9bSjR
- 3IlDYaW3ZC2fsG7vHISjeHJCZTHPKwBzXzrRP8NEiNIjUmlQbBIGjO4XEsfCTPGyF/FP
- uNnQ==
-X-Gm-Message-State: AOJu0YzrwGWieiCnKLgBgvoArXp7qJ+1Ea2Kxl18PeXlW/dGtDGpo9eV
- WPtwzN66fe6tO/wxZ1i58EEKCVUTAM+D0qB5L3gI8hVdDx4CTiEY9A7xwo0pswaMLGaXf9cpBcY
- S9cmUq/KBaQym1wW2z53noaF/bVGNRSECBD/lHd0kin3t66Q1vWr3Hk+UyaYv/0NV17HADT3qRN
- ExCQsMkAXW7oieBZC8YwrPSY3oHjrfo6ijvcm1YA==
-X-Gm-Gg: ASbGncu0C7UBQwUrIyV359I04rF1BESayQKnCQdlmoQz1QuAHi1/3CYeZkQ7H9mkr/O
- zhilpdLP0rwhoiS7ClbhUbFvtEz7hU16mJp/Swc043f2y/cZToZEYja1J9ZfvKFnZze3QeiB00m
- NoRLSX+4dcDPey6RmbhBxGXAj/js54yKTeedZHDJCArZEB7aZPfZU6WCIvhTCqJdHZDxJNggPfr
- hY+pyGOiMw47iy+6QF9+WsWXjsqL3pCquiFQDray7tGg77wydOXQb6YC88suW7+Svw+8Y6Flloz
-X-Received: by 2002:a05:6808:318f:b0:403:3814:b2b1 with SMTP id
- 5614622812f47-4064682751dmr8762698b6e.10.1748387585270; 
- Tue, 27 May 2025 16:13:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEP9asC+b1CGOqCs53Y2ROuUFZ4oTQhVTQ2s7c+MiaL48nwy8im1wz38Im1fnvPR4snHD/OXg==
-X-Received: by 2002:a05:622a:4248:b0:490:8fdf:3df with SMTP id
- d75a77b69052e-49f485aa63emr248990761cf.32.1748387574318; 
- Tue, 27 May 2025 16:12:54 -0700 (PDT)
+ bh=e0bhbecsmzeOLXe9dkL8LSOz4qm8m26wuFzD/NSoKEY=;
+ b=U/5mdQQTS0JgwhR/pAs3p8eYBTCyas3ruXFqX0w60NlvZd9vkFCwlAdRcKgCBWrXhB
+ iRtnoXwa36BQL8AWDINfRQU83vS+oV8wQabFOK+haiqEl/rNJYRGMjkF7i5Tn4BTlqyI
+ 75cfgMh8fbMCAbT3yUZqvIXRU/4FZzhtP6+z8x+xlM8gKB0pcPjBWUeOmF5tLcSDu4qJ
+ 8zBBZaX1RzxlX4Eihiwg0mrhgWxaHVIYlXQJTNuhLFbBpol0VQPUmaNc7qbsApbuxCSz
+ aHe20gCvGo0u49+/p8jJSGxzUrXUUvbyCl4z5cf5O+YvucAEERA8VSiJk1I00wYhuB+u
+ JGVA==
+X-Gm-Message-State: AOJu0YzTB0fnzpVHJ9ZKLDUBfgkVx5DQhUjIf2vVmrWmywno2jOYP2op
+ sZOjUd+8jM/ChndqEr0nPztMwoGlf635Ie2G7U6XxTcX7Rnc1J4FcDz63//77URpNzYU5s7eeFo
+ RvWgchyDlvXS/Fukn8kaNqPOVsoWgf40mTS0otEbAvCOJRss9k/A0KkzAN9CEWH7Ty4ToDzsbXb
+ yCuJDZ44kE6fOcqEOqOI05Up6fALAjsL0csPqnRw==
+X-Gm-Gg: ASbGnct76ujHvoeUXeI0Hz9EekXimuhCMyY7Zr07ve4/aHZv/shzXrn0afBycRywnN9
+ uIwk0tPtBADbtMqSYIEDCW6fDNUByt/G62d8tYdynsk5XhsbvPPm9B+w3eyN7uTLWZournz/3uo
+ 1f0X60SjHmO9v91MB7MwO/qPYdPxvAynHveJ0801iyxGWNApMf6xsEV+efOEG3GFeTqZev9BRgu
+ w3S3Flfsx/lHtbSp6agWHjiwp1bydMp6q46NIwS9XwVkdcBbhh8+Yfi25EgDvLerAhYDset1zab
+X-Received: by 2002:a05:622a:244c:b0:48d:66ee:662a with SMTP id
+ d75a77b69052e-4a2f52fcd28mr42988451cf.26.1748387589025; 
+ Tue, 27 May 2025 16:13:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLs72MzepzXmA3vk1RLSkqhrEba0KURDIVug8ClPX+AubGrlpgj3ljrU4tUmG7AiE6XDWKow==
+X-Received: by 2002:a05:622a:244c:b0:48d:66ee:662a with SMTP id
+ d75a77b69052e-4a2f52fcd28mr42988001cf.26.1748387588640; 
+ Tue, 27 May 2025 16:13:08 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a2f939cad3sm1984441cf.79.2025.05.27.16.12.52
+ d75a77b69052e-4a2f939cad3sm1984441cf.79.2025.05.27.16.13.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 16:12:53 -0700 (PDT)
+ Tue, 27 May 2025 16:13:07 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com,
  Alexey Perevalov <a.perevalov@samsung.com>,
  Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH 01/13] migration: Add option to set postcopy-blocktime
-Date: Tue, 27 May 2025 19:12:36 -0400
-Message-ID: <20250527231248.1279174-2-peterx@redhat.com>
+Subject: [PATCH 09/13] migration/postcopy: Initialize blocktime context only
+ until listen
+Date: Tue, 27 May 2025 19:12:44 -0400
+Message-ID: <20250527231248.1279174-10-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527231248.1279174-1-peterx@redhat.com>
 References: <20250527231248.1279174-1-peterx@redhat.com>
@@ -106,26 +107,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a global property to allow enabling postcopy-blocktime feature.
+Before this patch, the blocktime context can be created very early, because
+postcopy_ram_supported_by_host() <- migrate_caps_check() can happen during
+migration object init.
+
+The trick here is the blocktime context needs system vCPU information,
+which seems to be possible to change after that point.  I didn't verify it,
+but it doesn't sound right.
+
+Now move it out and initialize the context only when postcopy listen
+starts.  That is already during a migration so it should be guaranteed the
+vCPU topology can never change on both sides.
+
+While at it, assert that the ctx isn't created instead this time; the old
+"if" trick isn't needed when we're sure it will only happen once now.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/options.c | 2 ++
- 1 file changed, 2 insertions(+)
+ migration/postcopy-ram.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 162c72cda4..4e923a2e07 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -187,6 +187,8 @@ const Property migration_properties[] = {
-     DEFINE_PROP_MIG_CAP("x-postcopy-ram", MIGRATION_CAPABILITY_POSTCOPY_RAM),
-     DEFINE_PROP_MIG_CAP("x-postcopy-preempt",
-                         MIGRATION_CAPABILITY_POSTCOPY_PREEMPT),
-+    DEFINE_PROP_MIG_CAP("postcopy-blocktime",
-+                        MIGRATION_CAPABILITY_POSTCOPY_BLOCKTIME),
-     DEFINE_PROP_MIG_CAP("x-colo", MIGRATION_CAPABILITY_X_COLO),
-     DEFINE_PROP_MIG_CAP("x-release-ram", MIGRATION_CAPABILITY_RELEASE_RAM),
-     DEFINE_PROP_MIG_CAP("x-return-path", MIGRATION_CAPABILITY_RETURN_PATH),
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 2aca41b3d7..e73f5d1cc7 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -324,13 +324,13 @@ static bool ufd_check_and_apply(int ufd, MigrationIncomingState *mis,
+     }
+ 
+ #ifdef UFFD_FEATURE_THREAD_ID
++    /*
++     * Postcopy blocktime conditionally needs THREAD_ID feature (introduced
++     * to Linux in 2017). Always try to enable it when QEMU is compiled
++     * with such environment.
++     */
+     if (UFFD_FEATURE_THREAD_ID & supported_features) {
+         asked_features |= UFFD_FEATURE_THREAD_ID;
+-        if (migrate_postcopy_blocktime()) {
+-            if (!mis->blocktime_ctx) {
+-                mis->blocktime_ctx = blocktime_context_new();
+-            }
+-        }
+     }
+ #endif
+ 
+@@ -1238,6 +1238,11 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+         return -1;
+     }
+ 
++    if (migrate_postcopy_blocktime()) {
++        assert(mis->blocktime_ctx == NULL);
++        mis->blocktime_ctx = blocktime_context_new();
++    }
++
+     /* Now an eventfd we use to tell the fault-thread to quit */
+     mis->userfault_event_fd = eventfd(0, EFD_CLOEXEC);
+     if (mis->userfault_event_fd == -1) {
 -- 
 2.49.0
 
