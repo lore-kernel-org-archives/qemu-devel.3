@@ -4,193 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46C56C54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 10:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC68FC54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 10:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJrAn-000524-2o; Tue, 27 May 2025 06:04:41 -0400
+	id 1uJrBo-0005VU-VM; Tue, 27 May 2025 06:05:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uJrAc-00051K-KN
- for qemu-devel@nongnu.org; Tue, 27 May 2025 06:04:31 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uJrAW-0005iq-NP
- for qemu-devel@nongnu.org; Tue, 27 May 2025 06:04:29 -0400
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54R09X0U027840;
- Tue, 27 May 2025 03:04:20 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=40kMS7Zf5G+axU/oLvYQWx5QsKOYXBoFakbEydM94
- m8=; b=MS0bVDui11OaKAkUpdUmVvV7vv2BDhz/MIk+89enoQ5wJVJZhAmzwnzkJ
- kAAvdk2QnFQjSz0gv2ksbOHf+g2LJgQqRyyYpEyY61el57DecS6zkuQAyFxXqZjv
- AD33SfZTVDH6FuOfI2Ztx6EW23BAwrNI1Zxg0VuLccvDoL7j09H9eW9yWGw1WI44
- koPFPyYP+SEtLsy0Qjo4t0T50jOplXUVqu0dg6EE7r0Gv32DiQm5yWpNnn90AZ5X
- uzGwOyYI+IUWMcyjuxXUwAbFwFynylgPv6UKgC6rYbAcKNLvDrrzw68FiWjp7wis
- acrYPp95qaxcEaADdiz0/83OVnigA==
-Received: from nam12-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam12lp2041.outbound.protection.outlook.com [104.47.66.41])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 46udec5bp2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 May 2025 03:04:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pk1WCaGdMeqLYppalzIIFQd7upIgNCyCGO+6mE38st/HzVZqyu1XIMV2smUKg7Xdz4KAtt40ay1x8faZHlVjTfLIL8qeieMa9yGP2CbrCGbAgh1sw5WnkOrsEE10tWQobqXqrDJt5JJul1sq6yTaKZB8ZG4JTGhcEyuAQv8l2yvtPD8eUY2pVi2/sZ0SCRllv8AO/9LTq0XJQTbC1ov6iRTyVQojMuT4u29b+5ZW8cx6Fxh3YEhS0MypEulLXOMjpvczN7ic6KuVw7/dcSd3v95Svrhb6wjUkaONYunOblbO/L5rPXhVe0jPrq7HJRMPWcoM2a+nT8ctSnKRZrChAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EOhaYO8bnk2SXioBOYTlRU0Q1cugygogeodgzKL/4IU=;
- b=gdFrZJq9vg5G4IFLxX0bD+KNx7ZF8BgXg6yERZBTdwQcPMP1cj7NRkMTT+nKuJpcr8KM4h3bop6Iq4oi4MaE78bAF3zteAo6yseOyfAANvXvtmx9YzxKH1mtEOhyDGINocaOb96he9uEZrfmFMe9dk7noaYOKXezKYmg8qkfR0Sx7mskBbhcrs5knFeHskXDkrO8h3O5L4yWCO+uT1bY4jTiPQSix3vZFs1M0NiH3kfrH4ooHzwpn9e/5fvvOrZI4xHoyXeriaGviLR96RMBCKRyHnSVVZXQobc2FjCQbQI0PQFqiCeTfZylaxixOHrUFaufFA+o1f7admafH8srBA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EOhaYO8bnk2SXioBOYTlRU0Q1cugygogeodgzKL/4IU=;
- b=vNSnuItCxcybLti67kdJn2nWBVdV6ihdGw8KwWDqJaoKxmqws/vpCFK/exI1DK1jVjcWd93b3VS3SndrHVFCIcsr4OWEhmCDeudJtKtlanmQiLwO9pty+IrDb9v4BfMnJCh0YLC/Gljq65lqZpaSErcaVh9DWhJdeThPwzK6Wg5qiveQQF68kxnTLtwYC0qfPzAFckhVMUZXy++3vtanrVYNInRJLUVNvXZ3yAAK6wQN7KXbFiDYVLCy3/TJIaCcSZBANR+KLpsCY+bOMpR6PBbqTfpFnVbA9FZqlWq7ODmtf58upUgaBrSdtlIN40XN2yCeCBHbrlxs0t1giymF3g==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by PH0PR02MB7541.namprd02.prod.outlook.com (2603:10b6:510:58::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.20; Tue, 27 May
- 2025 10:04:15 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8769.019; Tue, 27 May 2025
- 10:04:15 +0000
-Date: Tue, 27 May 2025 11:04:10 +0100
-From: John Levon <john.levon@nutanix.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-Subject: Re: [PATCH v2 00/29] vfio-user client
-Message-ID: <aDWOGrQ7Qf7BfBjm@lent>
-References: <20250520150419.2172078-1-john.levon@nutanix.com>
- <ef917520-09c6-40c0-b432-b500f030a2c4@redhat.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ef917520-09c6-40c0-b432-b500f030a2c4@redhat.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: AS4P189CA0026.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:20b:5db::13) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uJrBm-0005SR-6X
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 06:05:43 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uJrBj-0006C4-Pi
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 06:05:41 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-ad572ba1347so540397566b.1
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 03:05:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748340336; x=1748945136; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2lNELs6OMqCjWJuC9hCis0gVJZeKPx9DuvpLtLQxhFw=;
+ b=yTD66A9m4ixxlxdfPg2CvyIXcDHkzQHmHhKn8+qk443PUCIl7L9b+2lV4EDv82KD4a
+ A4OGmGIW13OnGDK7djPwBH5vQAB38OknUGSvrDz98gpAW9ihtTG6L/ihwI72eTWu2JaO
+ 9KmCXyTlBGhXyjEFhT9K3rJmDojwBnhb0UXEqs5CTnCSGR5DU7aNdEONt0yqcaGHmksT
+ /Dm8SuKt8doInCXsl+56bE6nIUSSr0DjB7ZyF8NSB6PPxbvWm0rxdgFFhZgYK5g6djcq
+ +EIjt8OT3uz8c35PdIdpLPrfqiVHjlG1LJ/K0bIYKxaLmDCYwT/a3FuC8oW5yzT2ZUJT
+ QqFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748340336; x=1748945136;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2lNELs6OMqCjWJuC9hCis0gVJZeKPx9DuvpLtLQxhFw=;
+ b=O4+LDBQrjQ9J6b+w5w4GTlVeGEMTN25mCPynDeR032ZV+/EogUuNvX4ApvyXzKAMlV
+ NJ9ZmDPEjfYdiMbhyx23tz5ElcUE6pefB/hSvgGi91kenF+2dDNuBGjsrQi2IxN7KOKR
+ QUIiXMLKqGMKQEfToDTneWswlJtEOggov9OtN+TSjZdkdrLVsUWU2DNfadONA37ymYGM
+ rU56AtnOUjBApOcWWbaQNhcYevu5Wl5s3+gWnSjQyYHra09mEm6Dd11RYYu9trt5S92j
+ ovCBDDz1VoEy9rGL37iUhiFFSp3yLVoc3SE8wjyKVwX4yo2koaRTG1A+uhRr+jrP//G9
+ YKLw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVx9CDj/LUTxUkbJLpq5k99Ps6IVXNz0xgenezNrxKzxEQI6b+bK/IpMFHBR6FHDl5PNVdQ1VlcZAwZ@nongnu.org
+X-Gm-Message-State: AOJu0YyqzQkZAgaYq3+XMSbaQj0P3i2pTINeEl/a1k6vgYP+WrpqEsZr
+ 44sFDf2ggui7PjotOl2802Qe3mLiQfLFMJJv6XORgbdkCMVwHnzZVc9Is9gEFpLT3NcZlmZA//L
+ ibatTJrM=
+X-Gm-Gg: ASbGncu4RuR2Y0U25ZJUwvWXDHe64eKMxPJqhmeJAmyURn1dDMqaMHF9KglcJGOv21J
+ FZV8WycrRoo2wyiTRlfMpksLHRhYcB0rdkEvaZaGziPHL4fD2/F8/9RVDr9EOrXQGisDyOdPZax
+ vTNs/LGPi7Uq3lqVy7EWPm9StEI4Uo77u/MY8nY+zXD+PGa+GIetv7PE4vz9v1PuLUGOQ+9nxe9
+ VjWN2kmrOswjf584DMd6R+Xpzr90Tb6LPxgq3OoXZnJw+FhOPtk1HtURUJLNNRc80Qn108iMSjK
+ taqYqdPqOXQ9Jj7s+XeyeLZY+o118uRqHFym66tx465T474Y8Es2
+X-Google-Smtp-Source: AGHT+IGLoSGJ3wkV0R0aHw+XDcYwpds2bqUBBIc7cKDxPep72NFiCAYsn3vhHYYr3blTR93TaQjmHA==
+X-Received: by 2002:a17:907:1c10:b0:ad2:e683:a77e with SMTP id
+ a640c23a62f3a-ad85b2122cdmr1048079766b.53.1748340335646; 
+ Tue, 27 May 2025 03:05:35 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad88acd2576sm109698866b.79.2025.05.27.03.05.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 May 2025 03:05:35 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4A3DD5F80B;
+ Tue, 27 May 2025 11:05:34 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Peter Xu
+ <peterx@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Markus Armbruster
+ <armbru@redhat.com>,  David Hildenbrand <david@redhat.com>,  Laurent
+ Vivier <lvivier@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Sriram Yagnaraman
+ <sriram.yagnaraman@ericsson.com>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  Gustavo Romero
+ <gustavo.romero@linaro.org>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v3 12/20] virtio-gpu: fix hang under TCG when unmapping
+ blob
+In-Reply-To: <d5c429eb-d583-4b9d-85c1-b0636e789e9c@daynix.com> (Akihiko
+ Odaki's message of "Thu, 22 May 2025 18:54:21 +0900")
+References: <20250521164250.135776-1-alex.bennee@linaro.org>
+ <20250521164250.135776-13-alex.bennee@linaro.org>
+ <4d300cca-3ac2-4072-a35c-0b6aef970b26@daynix.com>
+ <87bjrl87p5.fsf@draig.linaro.org>
+ <83945c43-bfb2-4469-90bd-e3a7c2ca5d89@daynix.com>
+ <CAAjaMXZ8acKBSGHvcQOcOnzBDCjFU1SOjse7pHtHWxNeREc2gg@mail.gmail.com>
+ <199e7486-7d05-459b-ad51-cb9b130f299f@daynix.com>
+ <875xht805w.fsf@draig.linaro.org>
+ <d5c429eb-d583-4b9d-85c1-b0636e789e9c@daynix.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Tue, 27 May 2025 11:05:34 +0100
+Message-ID: <871psanzbl.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB7541:EE_
-X-MS-Office365-Filtering-Correlation-Id: af48cb0a-cad6-4bdc-0905-08dd9d05d602
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?hUPnkdGfVQA9Bf8SUqKWNTte8tpx84d5r6boLK2yMN6XPKQtsYGVM0nSFB?=
- =?iso-8859-1?Q?y9TVXmgX0XyVuH+DB4/Sbp7+keG9zPmYoWCVTg+3CEUIbF21WCpIyRM7DA?=
- =?iso-8859-1?Q?7uHHfFnsbOO3xaTN0Q9rbPSj8FKO4KLxGpAVmI2GOlHPT/KL0Zl2fmO7e6?=
- =?iso-8859-1?Q?AQmiWtQcBvFX6jIKcYi38y062fqIk7rE3smEyWW1bSnAzF+IiOCHpfot2h?=
- =?iso-8859-1?Q?Aaxbj5vjGrbpQQSTlQ6SsOs7NZyJKKOSAQKd7Hktugg2CbxAISp9NuwId1?=
- =?iso-8859-1?Q?PtW1x33IVhSQKIg/vEoHGrJY/UbJPhoswIxHwhPeMUTG+e/jlj+n9e3usV?=
- =?iso-8859-1?Q?PC0lz8qEZwm4FSDQ3qUqElSZWGjj8jgzbS+Q3I0hoEnfwDCKBgcp6vBJAi?=
- =?iso-8859-1?Q?mEz3tEtxRgBKWq8X0VEEkryjBUkzAiyU86yTGQPt6WWbFlTlrfq4ok/UD5?=
- =?iso-8859-1?Q?57FzD7/BYd40aK8FRUk7LXrNrvJy31tOc4AtUuADoB5B1aCXU1d9nJ0y9a?=
- =?iso-8859-1?Q?KqdETYXxijMScumZpNi1MKjGikxtxiz2NGDfC85JVFZ93OatxLNuFt2wto?=
- =?iso-8859-1?Q?abQ89Rf/ik3dhKEi8IVlb4w44kQuFggs2LkvbCJ5kMJfGFYe9yOQZDo11S?=
- =?iso-8859-1?Q?u3k4PY0q8irCYngAYHWd9bQTqZmV3FdYHu1IkARyIcxYI/qEpEqkmyV7w6?=
- =?iso-8859-1?Q?CZiliqZOcpOEb/0hwHI5Tsyl9bUk7KOAjYlMOdJeR7pWlAy08I6IVqSrGM?=
- =?iso-8859-1?Q?9ddUdYm8LlI5S3XV656U/HccaRU8PLGrDeoOoipkl5fDgzszDvk+Ln8ohc?=
- =?iso-8859-1?Q?7zzSgP9NREzfGVGR8d7AQ3mrd5ivNLiap7NJPfTDAHxwLwjte5lo0w7VOG?=
- =?iso-8859-1?Q?V8DU0h9+3s12du4ZkDKuqpbmvJ9nhcULdq1njxVsMDJsPruD4N5+Va/k6Q?=
- =?iso-8859-1?Q?uxKgoARfTiasQA7bwQbNJYIxO2SNW4vBFD9fGZ5Ytv6nLj/gNGQdrrbcTJ?=
- =?iso-8859-1?Q?bMCEjWWwIndY9VkMMu6v6WNoPntt2/suutSCsTOQfaFJjBlVdEzSbSznio?=
- =?iso-8859-1?Q?C7N3smrl6984+t8ZDsFzQy6whqrT2voh1Qel8NBf3CIG2dmCyjXAUIjTJH?=
- =?iso-8859-1?Q?mCt6nGM0cTSSdfwJQYTuW4W9ZerLrUo5Qn3mkyUdwG4fP+w2tt37JqpMvv?=
- =?iso-8859-1?Q?GI4Zr+k56TyV5tASV6JJWnVfL2qlBMKGeAVjZjqBMt2HGIrWK9ZktAcVxt?=
- =?iso-8859-1?Q?Lh0vByd2hK/4CzQQEI+w0u9o5wVuxTzZNz5aXdB3un6YGH0jik+0MlTDFm?=
- =?iso-8859-1?Q?oQ29cFPV+O4ouVLlqqUUs9Dt6OoR/ROkApfwbb2PhsugptjZKymsbjLHvP?=
- =?iso-8859-1?Q?raGS6mVK/w5NZee8bLE5wnbJx7Pp6KujFzkQ3JjmNa/vRfSfPi/rf8eAXf?=
- =?iso-8859-1?Q?lVwSQTrQ2ov3JCtNXre6HlSPogB0uHJXDCxa5YUzey+UYZKQD88a0WWWEs?=
- =?iso-8859-1?Q?Q=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?eN5oOvrZ2+P9VVSjgfqGZasZTmr9axCEm9HTV66dCuboGd7Vcna7Tvr4W8?=
- =?iso-8859-1?Q?krn1PP54EJFqT7QdsNFIAz2ZmqTNGOAXRXUpg9EYkRII5y3UhL0Ag9awU0?=
- =?iso-8859-1?Q?V+RAeSiNNcWmfHGjC/SzwqFch4KPbrKO10XG77t5VX8UUO9DzhO30V2v6I?=
- =?iso-8859-1?Q?0TpeYBmDS3qc2qgg3o7IwMnznxr2+tmr6lfA+lH2GOqNTNki2/ZIF4tu5+?=
- =?iso-8859-1?Q?mQdcRunxcNnjDZL7KIBhbFg0fp7l4VYhys1uzP5/D0uC8hozRIRIDXSykv?=
- =?iso-8859-1?Q?Kyy6FgNThHcjwTP+WkUm78nyBv0KaM9DnmnMy6oRB+a1shlZ0UTddx5GYc?=
- =?iso-8859-1?Q?UG62cGknPDbcUR+1dB+bbCQSZ+76l9gIzRvPiM1Vud4bywcIOG/es2qV8C?=
- =?iso-8859-1?Q?YRobQLJq3eb/x1IL6l5+ZTcF8YF7cPOaZDRAGRarygxDaLP6iPaeZbP44b?=
- =?iso-8859-1?Q?tV8Pw+7EgY3QLockkknMVTDa0L93eq6trtAAcvhN3H4kw05txuJvjg25Z2?=
- =?iso-8859-1?Q?1i1jZ61fQEfUpRObDL0dVLUDTkH2ch0aCvK/AtrumQOGc0mNOMOxQD3D59?=
- =?iso-8859-1?Q?pgvZlIBxCm46Wu1DphEqzxEOt3LrWCVHcyQr3S+oD93/NSZ/2l4J9MDWcA?=
- =?iso-8859-1?Q?J/4Dz2U8tZNrMllEFOqQtL+T+WI8Ntpzj2LCay/wZ4InDxP9dx60tZMckW?=
- =?iso-8859-1?Q?3Ws/ZLxJiYbi46BxAO/a520nXmqLTPArczRG/xUI/5oZlhUceUcYaUvv+Q?=
- =?iso-8859-1?Q?MjggOAg/TpuifY25iw2s221ospzXlypHbnirEaI11uyNvId5uwG92VrTzP?=
- =?iso-8859-1?Q?S3zzY2WPPYUuN28ZHcCvPWCMXDUz3VrLGnvg6RfBzRBQ35Af0NY0r4yZfs?=
- =?iso-8859-1?Q?C9J6ox9jNnwdUE0ASZc61I3rR760ZSiCdXCnOWCPCpxcQRgWQofXJQyNia?=
- =?iso-8859-1?Q?RieDKYRujQ1/aGejx3cSbrBCNacdxW9z1re7EAD2bHqZSRg2dBYmQdxbBo?=
- =?iso-8859-1?Q?b+QMqGi6g/eg+dKZXBnC1AKSzrDmcA01qrCThTka0DDOrwgtxox6+occsq?=
- =?iso-8859-1?Q?dpjT7W1doDt5qgM96PK1xU3GyU5qmNoRQFQpVGqEE/CyggSMSlRJhH7DRF?=
- =?iso-8859-1?Q?sgxG7FoQy0qaVVfNRLEacBQq5/CfsnkYgqaCjsTdEqm/c67eOMyB9S+rsX?=
- =?iso-8859-1?Q?Ri1kqvAGgmGn0kjjUCPv2/14UxxLE8OW27V/U5lXmaM/ruIfJJMB3DbWSw?=
- =?iso-8859-1?Q?3TPSutyXK+RMVbC7+ByHHrBXnokjlljbLhrgIR5bKnWRlPpYn1IRiRM7Nt?=
- =?iso-8859-1?Q?lp+Vx+IJeMXp0F2E5G7yCOkREkmBYNWeLPDJAlLP58O7OAdL8gpE4WSNPn?=
- =?iso-8859-1?Q?SwtcgJzHxiANaizDW/3haySjd9p2uiKhkHuRl6HdposWGG3jIk0PxuF4wO?=
- =?iso-8859-1?Q?qy9zra7XvPOqPdEzXaJ5xOsyuSLl5t8EUiWsiqgAGnUSTGJ/5xWdkz/zPT?=
- =?iso-8859-1?Q?QnRntbwPoV1BVgY8K1GriiNSbr/ekji4MdQi8usYfVW6RM19h/tBJo2h79?=
- =?iso-8859-1?Q?wkIEXpFYvUE2YDP/0Rnijd21isK0aLEHe8eObeAVd0v0yJB4T0U0IqJQD9?=
- =?iso-8859-1?Q?Wl2dfNH8rzBEswMpNW0d4aVVA31Ftsa86z?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: af48cb0a-cad6-4bdc-0905-08dd9d05d602
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2025 10:04:14.8824 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: X4sKYmy8nfQXfKIfbKUlbbWv+uD0xJ+ls3ibulu7Zo3BRztdiTiZGK5u+iFVGmT80PAmVSx1PjRiqYlqMAJ6hA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB7541
-X-Proofpoint-GUID: GI7_XGPVQcN5EZ5WSSdrMyyouwE_GVtZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDA4MiBTYWx0ZWRfX6XPsICGsiPq2
- pBzMeFv/VwJ+Mwj+OhE+qCCzVfgHwTKXR49UUZbNYiLHJHiasPWShisuTKCU7bAp1He6P+55P2v
- uxaDRsP4mz4vjz4iAm4njNm3Yzew8AJ+shiHf+uaIeXSNjA1wLkCNksoFjam0eUio2OIvvoGEIy
- 86vblEv6+d6mkfIHGn9hgp0qrZrsveApNDc0yRgNWQzJmPkHnEleVUxld+PPbcMz/OcU4RrK0j+
- KAGLx53LIXEVvuCZHdEJ7ddkFLJuosbKnFcU4jf0m40kVA9B3u5s96B31+O9grvFs7N/6GIIqiH
- a6ZH3ztEEAJg787JmFx0DD9SIpUC3Sa3eEgAgT+39uULgQbFodFiGA5GBRm+07FHLQHEBp0xDbj
- 2KFnFfMbWJuugjyE0xO3vC0ZeDmAr6qutvKEiyM8Kc6o+9eHUQBiFDgfSG47dUy1/yXMLc6v
-X-Authority-Analysis: v=2.4 cv=e5gGSbp/ c=1 sm=1 tr=0 ts=68358e24 cx=c_pps
- a=7lEIVCGJCL/qymYIH7Lzhw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=dt9VzEwgFbYA:10 a=0kUYKlekyDsA:10
- a=JtJhbtMZq-o181L33MQA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
-X-Proofpoint-ORIG-GUID: GI7_XGPVQcN5EZ5WSSdrMyyouwE_GVtZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-27_05,2025-05-26_02,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -206,18 +130,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 27, 2025 at 11:39:48AM +0200, Cédric Le Goater wrote:
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-> On 5/20/25 17:03, John Levon wrote:
-> > The series contains an implement of a vfio-user client in QEMU, along with a few
-> > more preparatory patches.
-> 
-> I am planning to take first patches 2,3,4 in vfio-next. The rest
-> either requires rework or conflicts with the live update series.
-> Tell me if you are ok with that.
+> On 2025/05/22 18:28, Alex Benn=C3=A9e wrote:
+>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>>=20
+>>> On 2025/05/22 16:31, Manos Pitsidianakis wrote:
+>>>> On Thu, May 22, 2025 at 10:03=E2=80=AFAM Akihiko Odaki <akihiko.odaki@=
+daynix.com> wrote:
+>>>>>
+>>>>> On 2025/05/22 15:45, Alex Benn=C3=A9e wrote:
+>>>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>>>>>>
+>>>>>>> On 2025/05/22 1:42, Alex Benn=C3=A9e wrote:
+>>>>>>>> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+<snip>
+>>>>> In such a case, a bug should be fixed minimizing the regression and t=
+he
+>>>>> documentation of the regression should be left in the code.
+>>>>>
+>>>>> In particular, this patch can cause use-after-free whether TCG is used
+>>>>> or not. Instead, I suggest to avoid freeing memory regions at all on
+>>>>> TCG. It will surely leak memory, but won't result in use-after-free at
+>>>>> least and the other accelerators will be unaffected.
+>>>>>
+>>>>> Regards,
+>>>>> Akihiko Odaki
+>>>> We tested this fix with ASAN and didn't see anything. Do you have a
+>>>> test case in mind that can reproduce this use-after-free? It'd help
+>>>> make a certain decision on whether to drop this patch or not. I'm not
+>>>> doubting that this can cause a use-after-free by the way, it's just
+>>>> that it is hypothetical only. If it causes a use-after-free for sure
+>>>> we should definitely drop it.
+>>>
+>>> No, I don't have a test case and it should rarely occur. More
+>>> concretely, a UAF occurs if the guest accesses the memory region while
+>>> trying to unmap it. It is just a theory indeed, but the theory says
+>>> the UAF is possible.
+>> I have a test case this fixes which I think trumps a theoretical UAF
+>> without a test case.
+>> Why would the guest attempt to access after triggering the free
+>> itself?
+>> Wouldn't it be correct to fault the guest for violating its own memory
+>> safety rules?
+>
+> docs/devel/secure-coding-practices.rst says "Unexpected accesses must
+> not cause memory corruption or leaks in QEMU".
 
-Sure, I'm fine with that.
+Agreed.
 
-thanks
-john
+> I'm not completely sure whether it is safe without concurrent accesses
+> either. In particular, KVM does not immediately update the guest
+> memory mapping, so it may result in a time window where the guest
+> memory is mapped to an unmapped host memory region, and I suspect that
+> could cause a problem. That also motivates limiting the scope of the
+> change to TCG.
+
+Surely it does:
+
+        memory_region_set_enabled(mr, false);
+        memory_region_del_subregion(&b->hostmem, mr);
+
+will trigger a rebuilding of the flatview - so after the memory region
+is deleted any guest access should trigger a fault to the guest. Only
+then do we unparent the memory region and finish the clean-up.
+
+I don't think we want to have different paths for KVM and TCG here as it
+will further complicate already complicated code.=20
+
+>>>>> Instead, I suggest to avoid freeing memory regions at all on
+>>>>> TCG. It will surely leak memory, but won't result in use-after-free at
+>>>>> least and the other accelerators will be unaffected.
+>>>> Leaking memory for blob objects is also not ideal, since they are
+>>>> frequently allocated. It's memory-safe but the leak can accumulate
+>>>> over time.
+>>>>
+>>>
+>>> Memory safety and leak free cannot be compatible unless RCU is fixed.
+>>> We need to choose either of them.
+>> How can the guest access something that is now unmapped? The RCU
+>> should
+>> only run after the flatview has been updated.
+>
+> This patch bypasses RCU. That's why it solves the hang even though the
+> RCU itself is not fixed.
+>
+> Let me summarize the theory and the actual behavior below:
+>
+> The theory is that RCU satisfies the common requirement of concurrent
+> algorithms. More concretely:
+> 1) It is race-free; for RCU, it means it prevents use-after-free.
+> 2) It does not prevent forward progress.
+>
+> The patch message suggests 2) is not satisfied. A proper fix would be
+> to change RCU to satisfy 2).
+
+Its mutually incompatible with virglrenderer - we have to block all
+commands until the virgl resource is freed and we can't do that until
+the memory region is unplugged.
+
+So yes we do bypass RCU for this but by explicitly un-parenting the
+resource once the mapping has been removed.
+
+> However, this patch workarounds the problem by circumventing RCU,
+> which solves 2) but it regresses 1).
+
+I'm still not seeing how this happens and without a test case to
+demonstrate it happening I can't hold this patch in limbo forever.
+
+> My suggestion is to document and to limit the impact of 1) by:
+> a) Limiting the scope of the change to TCG.
+> b) Not freeing memory regions, which will prevent use-after-free while
+> leaking memory.
+>
+> Manos said b) can be problematic because mappings are frequently
+> created. Whether b) makes sense or not depends on the probability and
+> impact of UAF and memory leak
+
+Not freeing memory regions would lead to a DoS attack instead. I don't
+think we can just accumulate region like that.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
