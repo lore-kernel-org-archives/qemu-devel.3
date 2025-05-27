@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D65ADC54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBEEC54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJodd-0000Lm-PO; Tue, 27 May 2025 03:22:17 -0400
+	id 1uJoox-00023A-LO; Tue, 27 May 2025 03:33:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uJodb-0000Ld-AF
- for qemu-devel@nongnu.org; Tue, 27 May 2025 03:22:15 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1uJoow-000230-MN
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 03:33:58 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uJodX-0004wa-J0
- for qemu-devel@nongnu.org; Tue, 27 May 2025 03:22:15 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-442eb5d143eso32140015e9.0
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 00:22:10 -0700 (PDT)
+ id 1uJoon-00077p-0U
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 03:33:58 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a35c894313so2984373f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 00:33:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748330528; x=1748935328; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748331224; x=1748936024; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JmuEUmzHdfHVsWs2Fnb68DnEH/4Pyo0nzrEYHMsAIEA=;
- b=ojygOE5P3TBhklD3zuf0peLhF8Id8+oH/tp8cGV9tK6ZnWLwWIHhAlkdePLqwaqGIj
- moXaDmj8NFlnoaFyQZsdJKJ/4wpeXFiMwwuz2/TjlN9xUYLKPoVtzQ50eVy2WHJxxHxc
- VIykoedETjTiGZz1cMQYPBKzNqZSam6uxFhKaDklvGCzMwfn9UFztmyex6Xx0KPmGUk3
- dtrJ3k/9mWHnLUpAcauG+ix+QMWHLQGvKU+5oE1rkzBU9QcXr1oqtnceRj0ERgWzL7E0
- pvAP5KwrAmNLe+DpZlpi3d5cTf60eCpu4whFQwYN6fQXvPsQTQjLocxRBc2x2u+4DVSN
- rdGA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Qtx6hs3oMoJyKfla6vTtXDeD5yxOX/zNXnxSsXN/A8A=;
+ b=ynTAcDGZ0jdRv+UdEuzf6Rp8AJ+j0LswnvZgiouzrHaWXNAIp9Bj4g9l+cvs8z/SYG
+ bm5oiWP/m1mMcL1yao3qzQSewPYkG8M94OT5Po/B4I6WgvN5HstpkSjrR8wGOLggEpyQ
+ EK8xdhxjAl8115c8zPTA78CU234a5Nfk94aRNnHyx4dge1rZpu+U6W8YZVHVbaI86qDs
+ 9C7s3LGN/LcV0+1PRqA++s7plc2wj29enDtSSFVaT7DOO0XkmJrz7zrFZOjOBhNmfAG5
+ H3FQW8Jwpc6nbjypBWL7KhmgjjQue53Ez2WgegQkYTXU21z0BPLIOFPrnu7p8B4I8MyY
+ ddzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748330528; x=1748935328;
+ d=1e100.net; s=20230601; t=1748331224; x=1748936024;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JmuEUmzHdfHVsWs2Fnb68DnEH/4Pyo0nzrEYHMsAIEA=;
- b=WUGIkcyL+nyWHvnycX0Hh1DWsHvz+cjB/Cok4xGFvT5lMtIPvHrtKoYaN8pbwTWPg2
- N1WCaPtOXX95WanbGaGdvgAe991s6rwl/UPL7gWnhjA7c/0o3ejn0kkKLZcvTs56UEbe
- 5JreynT88TAhnVoZ7bTNOMLZAAUh2oMjDyTNUjiJM9g9kjtTKsv5jBT/UuI6of52VMMV
- bn74A7wDXMQpzg4eK7yXpat2vrpup2jnww0zsdeVR89GPigSog/8hoGFmUp0pX0gUklz
- Sx1popdmlFg0Wr3wF0pntOQO6FJ1ZqxwQQPHH5JoUSm3j1O+I/KmBG5bkv594ynCai6S
- yIEg==
-X-Gm-Message-State: AOJu0YzYb1YN6ZT6et9B1UJ9LCWtSpfiEjVOQO2rrMUiged1lHYy+iFy
- Rp9r19eBp9xs3n7oTV5KUV9Kur8xbPz/RlNNQVLvuV/SIx1wMqm9y1nhx2etWa8oWaHHm719pxP
- p/YAF0/n94A==
-X-Gm-Gg: ASbGncvO6/ySc8xAAjEMYsLwa7B+KkP2/qj563Jg7B1qrqML3Gf0fNyBfO7ZTN09paD
- B8xsDqx3Pj+Ot18VObL2b1P+ze62GdQQi6wWlV9IPsOYMTQgjnLvOaC+lEupTFnjQbnKmbNuOhZ
- hE59ca+mTe2O2+PgzblxA7ehd5XQUht2esruKEgSnkwivmqh+zO6e/XlVfinjQBy5kyCLusZFK5
- ZIipPSZf0H9UiCpzMPEG7xXBqyBJ24Ncw8Pbcpbkxrc1KZY7E3XQ0rPBjeWVKUCxrHHX+Iv3mnB
- v/3ICXEp1JHR3b2IjW3UlWMv0im6HiItCe14DotNNeuRemGpQpFta6q0PqIfZLnh1g==
-X-Google-Smtp-Source: AGHT+IEeiayBOKuHvaDqtMtsVi3bRNyOlTPMhVngFSfbxjY4c3rQHeSLiIyB4QsXLQIaY/ckpf3biw==
-X-Received: by 2002:a05:600c:37c4:b0:442:e109:3027 with SMTP id
- 5b1f17b1804b1-44c92d351e0mr91509935e9.24.1748330527952; 
- Tue, 27 May 2025 00:22:07 -0700 (PDT)
+ bh=Qtx6hs3oMoJyKfla6vTtXDeD5yxOX/zNXnxSsXN/A8A=;
+ b=wD0gJfQadXvUYrZqITT7MCylezwRlMUt9fdg/8ccGAOFVozsybVDpDZBeN5HOfgaRv
+ 2Yk9HU49oNKH7qhm/7BwBO6g1qf8oj/C5ZJFY7BxVFALxW1/2utBqv6FMkZXq6UhmkRR
+ CDZuSo1YWWyljmH3+wXtZi+R/M3MWiZxFA6iIZobXu3TeHppVniUARg3vNbqx+ELKk01
+ j7NSVgVgI5aAI8KHDUmRNe35XyUD5++yVcJ2eY9gPhyv6xdZnWPuUESNCI/rhqU4pZWp
+ OTlBTs3dMSuVlv4pMk9y07O+kRp+oHlvqqhfBT2oj0m+BPRptESwWc2FCvKznkjynhLC
+ 0Y1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWI5PZeRd18Q35GNza8g9wAXEwaX8iNLcWXRpROL14/RYT94HLJqGOyMayLf6ekiNgA9fv7e9Sp4XAm@nongnu.org
+X-Gm-Message-State: AOJu0YzFiUrjTwy08ixSw0VT6iFmiXr+T+VcIbNBhYJlHsrcvgk4P/e9
+ kPYn+blNfXPhXjlg2w8i8svmi166+L6dlwyX5BCr5/KdydQVGy1iDvKMmzSHtayYqQY=
+X-Gm-Gg: ASbGncsPOVvBnJLudf4l0xScqPt2afA3cJZ4lIr3N4sO9RODjCYa5naBH+NZ5yeS+ku
+ nbfizUTO85OH39N1dKOQ+EAvxL8wXPb59u+OLsiQKnRXiR4kdKqj3O9zq05E63wSVg0ovAyJpvd
+ Kgsnm/OO7un7l2Et7beJosSorf59UjdTGd05HN324yqtDoR6sD7tAIHUb46cM/rwQNx1CKP+SUI
+ jtuk9ViqZT/PMWVsaQzHemzEvYLbHpOjeHJW2xmMmsNFUh+Iayijh3XCu65+oiX2REGKHgTo+aX
+ TMRiEqrsumrIxT2LMnesEIKdqCWr1bHSqfovC9wAoG0eBWBEVquKuGZjncKsh9AgUg==
+X-Google-Smtp-Source: AGHT+IFzrHAT7O/1U9vrbNqPmWZgHUYuri2sMq+uvO6Vodm++3vULWIZPM8XjBS/ZasbiNjQwFeS+Q==
+X-Received: by 2002:a05:6000:2481:b0:3a4:d738:f98c with SMTP id
+ ffacd0b85a97d-3a4d738fb73mr4772965f8f.30.1748331223820; 
+ Tue, 27 May 2025 00:33:43 -0700 (PDT)
 Received: from [172.16.25.47] ([195.53.115.74])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-447f6b29672sm271338315e9.3.2025.05.27.00.22.07
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-3a4d47c0684sm6706179f8f.44.2025.05.27.00.33.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 May 2025 00:22:07 -0700 (PDT)
-Message-ID: <a5ca62bb-9cfd-4ae4-be96-58e43bb53fe1@linaro.org>
-Date: Tue, 27 May 2025 08:22:05 +0100
+ Tue, 27 May 2025 00:33:43 -0700 (PDT)
+Message-ID: <ae9e0a75-bafe-4d66-a8f2-9c3371315279@linaro.org>
+Date: Tue, 27 May 2025 08:33:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/xen: Fix trace_xs_node_read() params
-To: qemu-devel@nongnu.org
-References: <20250523160134.218997-1-liam.merwick@oracle.com>
- <3a7386f9-a4ba-4268-a3fe-45c18360d878@linaro.org>
+Subject: Re: [PATCH 04/12] target/arm: Fill in TCGCPUOps.pointer_wrap
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: foss@percivaleng.com, qemu-arm@nongnu.org,
+ Gustavo Romero <gustavo.romero@linaro.org>
+References: <20250504205714.3432096-1-richard.henderson@linaro.org>
+ <20250504205714.3432096-5-richard.henderson@linaro.org>
+ <e8176be8-dbe9-4cf4-a23c-a6100d530c0b@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <3a7386f9-a4ba-4268-a3fe-45c18360d878@linaro.org>
+In-Reply-To: <e8176be8-dbe9-4cf4-a23c-a6100d530c0b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,35 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/25 19:10, Philippe Mathieu-Daudé wrote:
-> Alternatively, since this is an error path:
+On 5/26/25 19:21, Philippe Mathieu-Daudé wrote:
+> +Gustavo
 > 
-> -- >8 --
-> diff --git a/hw/xen/xen-bus-helper.c b/hw/xen/xen-bus-helper.c
-> index 288fad422be..1e49e60e147 100644
-> --- a/hw/xen/xen-bus-helper.c
-> +++ b/hw/xen/xen-bus-helper.c
-> @@ -143,7 +143,8 @@ char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
->                      unsigned int *len, Error **errp,
->                      const char *path_fmt, ...)
->   {
-> -    char *path, *value;
-> +    g_autofree char *value;
-> +    char *path;
->       va_list ap;
+> On 4/5/25 22:57, Richard Henderson wrote:
+>> For a-profile, check A32 vs A64 state.
+>> For m-profile, use cpu_pointer_wrap_uint32.
+>>
+>> Cc: qemu-arm@nongnu.org
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/cpu.c         | 24 ++++++++++++++++++++++++
+>>   target/arm/tcg/cpu-v7m.c |  1 +
+>>   2 files changed, 25 insertions(+)
+>>
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index 45cb6fd7ee..18edcf49c6 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -2710,6 +2710,29 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
+>>   #endif
+>>   #ifdef CONFIG_TCG
+>> +#ifndef CONFIG_USER_ONLY
+>> +static vaddr aprofile_pointer_wrap(CPUState *cs, int mmu_idx,
+>> +                                   vaddr result, vaddr base)
+>> +{
+>> +    /*
+>> +     * The Stage2 and Phys indexes are only used for ptw on arm32,
+>> +     * and all pte's are aligned, so we never produce a wrap for these.
+>> +     * Double check that we're not truncating a 40-bit physical address.
+>> +     */
+>> +    assert((unsigned)mmu_idx < (ARMMMUIdx_Stage2_S & ARM_MMU_IDX_COREIDX_MASK));
+>> +
+>> +    if (!is_a64(cpu_env(cs))) {
+>> +        return (uint32_t)result;
+>> +    }
+>> +
+>> +    /*
+>> +     * TODO: For FEAT_CPA2, decide how to we want to resolve
+>> +     * Unpredictable_CPACHECK in AddressIncrement.
+>> +     */
+>> +    return result;
+>> +}
+>> +#endif /* !CONFIG_USER_ONLY */
+>> +
+>>   static const TCGCPUOps arm_tcg_ops = {
+>>       .mttcg_supported = true,
+>>       /* ARM processors have a weak memory model */
+>> @@ -2729,6 +2752,7 @@ static const TCGCPUOps arm_tcg_ops = {
+>>       .untagged_addr = aarch64_untagged_addr,
+>>   #else
+>>       .tlb_fill_align = arm_cpu_tlb_fill_align,
+>> +    .pointer_wrap = aprofile_pointer_wrap,
 > 
->       va_start(ap, path_fmt);
-> @@ -151,12 +152,11 @@ char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
->       va_end(ap);
-> 
->       value = qemu_xen_xs_read(h, tid, path, len);
-> -    trace_xs_node_read(path, value);
->       if (!value) {
->           error_setg_errno(errp, errno, "failed to read from '%s'", path);
-> +        return NULL;
->       }
+> IIUC this is also used by non A-profiles (R-profiles and
+> non Cortex cores).
 
-Auto-free variables must be initialized.
+Yes, r-profile is mostly a-profile.  Those non-cortex cores are also a-profile: armv[456].
+
+The point is the separation between m-profile and not. In particular, the mmu indexes are 
+different between A and M (see ARM_MMU_IDX_TYPE_MASK). The assert would not be valid for 
+m-profile. We can avoid a check vs ARM_FEATURE_M by only using this function for 
+not-m-profile.
 
 
 r~
