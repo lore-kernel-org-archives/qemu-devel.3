@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CA52C54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 08:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BAA1C54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 08:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJq9F-0000cB-On; Tue, 27 May 2025 04:59:01 -0400
+	id 1uJq9Q-0000dJ-1A; Tue, 27 May 2025 04:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uJq9E-0000br-AW
- for qemu-devel@nongnu.org; Tue, 27 May 2025 04:59:00 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uJq9O-0000d5-0I
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 04:59:10 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uJq99-0002nI-20
- for qemu-devel@nongnu.org; Tue, 27 May 2025 04:58:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748336335; x=1779872335;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=2gCAULFo/IOpFtt61/UupNVGk18dcBLikbAW8DfnHl4=;
- b=jxswlBpNm6kjzmL1VqcD2hnVu8jFgmw8KkvXC/376T/rKecW9nFSBqT7
- wjb52pPb1RSW36Su1bwTpk1nFM10n353PNWHz+Xrjqsl1ftQq9c+Q0aua
- XRxi9vTkIQum08IBGTuGEWuffdbGgp8ZJVlfbwKOQQ2Gp6KF+iCz3vZ7E
- Mj4Xh2lvdHFE3zMObgKp4lq7hrB+Jw1W8Vjrl/zpsVTYAZFzM2zxIWQax
- HQyRduaKg7KAJN9UWAr1bZ3cvYd83ukt1ABXV1/V32gLzjo72Tlt2ObQO
- ERdE8p6Dm79OX46rMlWhSnTRI4v9eR5TQBu8HigGzX4CFC8ApvFGnwW5R Q==;
-X-CSE-ConnectionGUID: owS10EikTfiCZGVdhGELZg==
-X-CSE-MsgGUID: yncD7CsoSQCQx4ChJn4ZKg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11445"; a="50473441"
-X-IronPort-AV: E=Sophos;i="6.15,318,1739865600"; d="scan'208";a="50473441"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 01:58:52 -0700
-X-CSE-ConnectionGUID: JDtiriPCQa2w8bN8MvuNTA==
-X-CSE-MsgGUID: Jqgwy1lvR2iu/TnDJffqmA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,318,1739865600"; d="scan'208";a="165919442"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 27 May 2025 01:58:49 -0700
-Date: Tue, 27 May 2025 17:19:59 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Babu Moger <babu.moger@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Tejus GK <tejus.gk@nutanix.com>, Jason Zeng <jason.zeng@intel.com>,
- Manish Mishra <manish.mishra@nutanix.com>,
- Tao Su <tao1.su@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC 00/10] i386/cpu: Cache CPUID fixup, Intel cache model &
- topo CPUID enhencement
-Message-ID: <aDWDvygfMR/cHJx2@intel.com>
-References: <20250423114702.1529340-1-zhao1.liu@intel.com>
- <c3ecc32c-badd-487e-a2df-0594661bc65e@zhaoxin.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uJq9L-0002oY-Jh
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 04:59:09 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 772D612568E
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 11:58:58 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A45F321743A
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 11:59:02 +0300 (MSK)
+Message-ID: <04f1cf26-696d-4825-bdae-771e17ae0cf5@tls.msk.ru>
+Date: Tue, 27 May 2025 11:59:02 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c3ecc32c-badd-487e-a2df-0594661bc65e@zhaoxin.com>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: qemu-devel <qemu-devel@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: FWIW: current qemu-user can't be built statically on debian bookworm
+ arm64 with capstone anymore
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,35 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 26, 2025 at 06:52:41PM +0800, Ewan Hai wrote:
-> Date: Mon, 26 May 2025 18:52:41 +0800
-> From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-> Subject: Re: [RFC 00/10] i386/cpu: Cache CPUID fixup, Intel cache model &
->  topo CPUID enhencement
-> 
-> 
-> 
-> On 4/23/25 7:46 PM, Zhao Liu wrote:
-> > Hi all,
-> > 
-> > (Since patches 1 and 2 involve changes to x86 vendors other than Intel,
-> > I have also cc'd friends from AMD and Zhaoxin.)
-> > 
-> > These are the ones I was going to clean up a long time ago:
-> >   * Fixup CPUID 0x80000005 & 0x80000006 for Intel (and Zhaoxin now).
-> >   * Add cache model for Intel CPUs.
-> >   * Enable 0x1f CPUID leaf for specific Intel CPUs, which already have
-> >     this leaf on host by default.
-> 
-> If you run into vendor specific branches while refactoring the
-> topology-related code, please feel free to treat Intel and Zhaoxin as one
-> class. For every topology CPUID leaf(0x0B, 0x1F, ...) so far, Zhaoxin has
-> followed the Intel SDM definition exactly.
+FWIW, and maybe a heads-up, but:
 
-Thank you for your confirmation. I'll post v2 soon (If things go well,
-it'll be in the next two weeks. :-) )
+Current qemu (git master) can't be built on debian stable (bookworm) on arm64
+statically, when capstone is used.
 
-Regards,
-Zhao
+./configure --static --enable-capstone --target-list=aarch64-linux-user
 
+this fails at link stage:
+
+/usr/lib/gcc/aarch64-linux-gnu/12/../../../aarch64-linux-gnu/libc.a(setlocale.o): in function `_nl_locale_subfreeres':
+(__libc_freeres_fn+0x124): relocation truncated to fit: R_AARCH64_LD64_GOTPAGE_LO15 against symbol `_nl_C_LC_COLLATE' defined in .data.rel.ro.local 
+section in /usr/lib/gcc/aarch64-linux-gnu/12/../../../aarch64-linux-gnu/libc.a(C-collate.o)
+/usr/bin/ld: (__libc_freeres_fn+0x124): warning: too many GOT entries for -fpic, please recompile with -fPIC
+collect2: error: ld returned 1 exit status
+
+Apparently some code/data size has become too large.
+
+Only aarch64 target on aarch64 is affected, so far.
+
+When building with capstone disabled, it fits and hence links
+successfully.
+
+I'm disabling capstone on debian build for bookworm-backports on arm64 for qemu-user.
+
+Thanks,
+
+/mjt
 
