@@ -4,102 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A22C54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 13:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD34BC54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 13:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJu6i-0001dr-RO; Tue, 27 May 2025 09:12:40 -0400
+	id 1uJu71-00023a-Ho; Tue, 27 May 2025 09:13:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uJu6g-0001a6-H8
- for qemu-devel@nongnu.org; Tue, 27 May 2025 09:12:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uJu6a-0006Ry-Qw
- for qemu-devel@nongnu.org; Tue, 27 May 2025 09:12:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748351551;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=t0EGlLQOUrnPgaLzPYuuDb8X9EtxgT6a9liNWMqncXU=;
- b=Ei5LD2kTCQGrDFdBxsHPRhJ6MXsUGAJOC1haah0Be/1qZ8g/CkE5KIT6DVcy1rBFWvQtMr
- BBuuEP0n1mL+O60N0OmJiaLTKkp02oziHpNLj7v5Jrp8EYk+nBvBf7pZue7xmje/f8RMzb
- C+zH7Sji6hEYVaSNVZAj+yD08jZUarQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-492-jEuU5dY8M4SCUHhGuZpr_Q-1; Tue, 27 May 2025 09:12:24 -0400
-X-MC-Unique: jEuU5dY8M4SCUHhGuZpr_Q-1
-X-Mimecast-MFC-AGG-ID: jEuU5dY8M4SCUHhGuZpr_Q_1748351542
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-440667e7f92so18081175e9.3
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 06:12:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1uJu6z-0001xb-CN
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 09:12:57 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1uJu6w-0006Vo-2i
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 09:12:56 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-310f082a677so2495648a91.2
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 06:12:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748351570; x=1748956370; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:from:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=EAjg3F/wNl2gtmVdLmcw+xR8YyJ/5xspSeH7Ru3RjsM=;
+ b=XJhuPhK5pRZqhd8SJJCBSqwq94zAZ64hf65eVleMIZ2XFePequtXhISGJRdLllG9ic
+ b0VjFqmtQ+zBn0FcStF8enHTa9Nahevs3nOWjU3y2MnPHrAOxW339RSBMwEOolb3orv/
+ brH8duGLoqE2zDFmxEiS++zr26hXmJB4s6TL6OAfBWLikJbHne9Erb4F8YF+7GNXspYt
+ DzlAq9gLBvPeYnct2v3SRad2uls9JlvA52gjbAzwWX0CRuin3oi4Yn7yZPTz3x64fPns
+ WWAEGxwjLfrgZEpym8ND5udsBnWA7C04nj8AuHM5EtOBxw0hA8ik/clQiQ8bSf3ovQFp
+ GQtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748351542; x=1748956342;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t0EGlLQOUrnPgaLzPYuuDb8X9EtxgT6a9liNWMqncXU=;
- b=dlp3SPRx0OpFzALLZ9GstA57zz+16y/xQfy1l1EWrXLnPVBsq+8XrBV9lpkxFpz5dk
- 5n7ET2S+QE4+r1ODYmn0Zy3vW581uD5CfQoM9Ycf+fquJ0JLU3OOX5cWBs04ddVQ2xV6
- Dg2wjoSksXq1h61zpboZmasieOOfo0QXI4u/QeXIjv8Q7QdkK7lwkT7T+UhM+EpCGaRS
- kCSHFrLV16fs3MpmrZOtiE6O/QwIddrvCz9Sp0uCKb7O3kxdgkjBdURM9SM4Ur0I/wrU
- wHElia2Majfl/6QDfKJHLI/tqVWRMemM7Blh3qFS+Y3w66Kpbg+z9hDFdoIIJVSN80rh
- CIqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlRjPPLD7o34VyhvVLjFNyoC2TtHJZJkm4ACfYqGvhTbrEHS8m5d5lXhvmY7q9VaL1CC7CpeKswty2@nongnu.org
-X-Gm-Message-State: AOJu0Yw/NcuFtbCn44bwqWn0PBDQtHaHz5FY+9eZSsV0ry77Qoao76Iw
- k89mt1rKmavneAtgTU2J9tI5nunHqzpP2IPorWBpiDprnbP9HNyIRiPXw4semoL1eIr7XM4iyVN
- MuaXui3gqJ/fRJUqabRRUV5uKo70YAOoLzlQBQzIxstfgn8/Qn+Tu/5tA
-X-Gm-Gg: ASbGncvCtD+gbwU51tsPoVbNGytnWZvZQzPZk0+uIjh0V84s7V6UwjFkjs7VJv3tPJa
- +8XZV6qMu/WiBX18UbrNC0Q8+TL0jobPceZO5AUP6lTFWai8kIw9mbcaa3IozNS+a8flOKTHHMh
- znclgPaPn3ATczVAEQNS+Q/d9TEIpcraUddAerEwZJLL4JKSz2nDal6l9/Ks+1h+p65TyarkRXa
- s47WxLQuCN85CNSLteWxiC9D2fG65VESfb+2/nlO7CjqNkAIWNAuvaSp+4DCN4w0QESkWhP/X2J
- vxHvGbsP4/MdjhjoPYWCE7daWWGsrDaB
-X-Received: by 2002:a05:600c:6285:b0:43c:ea1a:720c with SMTP id
- 5b1f17b1804b1-44c91dd127bmr118895065e9.18.1748351542412; 
- Tue, 27 May 2025 06:12:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+mj/AFvGNpiJR7EJI4CFUj6gAE1r8GYIbhcrsz694kSdZoN7ZGpbwBfau7sjYhjn0N43ItA==
-X-Received: by 2002:a05:600c:6285:b0:43c:ea1a:720c with SMTP id
- 5b1f17b1804b1-44c91dd127bmr118894665e9.18.1748351541958; 
- Tue, 27 May 2025 06:12:21 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ d=1e100.net; s=20230601; t=1748351570; x=1748956370;
+ h=content-transfer-encoding:to:subject:from:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EAjg3F/wNl2gtmVdLmcw+xR8YyJ/5xspSeH7Ru3RjsM=;
+ b=H14gVrDdDbe40pJfYkvFpyzfPRKP1WoLxzSR80RMYdAvcqam0AYIfm8MqXIfSR47+3
+ PNcRhdT/2UrtM9RxjjgVGyvGkcU4oNLGP/UebBkbcWljtKpx4WtKqUhx3M3BAIUGEiVR
+ IjQLpv9IlZpM0WmpZ4FmFCX9+Kn3GXekZvJOMaXommvHXhokEbPkxybKa4GuTGrLn/2W
+ gJ4iOsptwI755VV8O6m8/k1jnWESIHPbMD3FuXOytEE8IJR9YYCv5ZW5368OLw83vQrd
+ nqQ/aDgXCZtWMLuJU3GbtiwQOxIz+4z/wPiVrI3eilCYlgy3cCoQypDgVL34Moyayav3
+ UEZw==
+X-Gm-Message-State: AOJu0Yx1XzH397uUYqGETWMt0dXdXrs47vh8Q/isD+eoZviwvUPlZqir
+ 2bWNh6kpX2q1E6HUHSRSGeVZpOBVtTHfYz0b7prAZuCdrNkoPnvm1GsKDPfwBw==
+X-Gm-Gg: ASbGncu/rtQ9R3YxE1gVta9xW10XHCQrrgcEwbKZSA8xka5U8+FMwDz7T1uun4wktLA
+ aO3prv/KCMUfPG70gDXq+JVYnWAKsxBzBCeWLrdCmRAWhAXT8ZJ741QxjtBGF3QgBn9HeWgEGt0
+ RsdtevRBGdewnCF2HhNsBHXMCvHsMQYR41/ODPYGNcTIjvxbbK5CWM3/Wmhg8+ewTIRD+lGYfVz
+ mSJsc18wjdceZvKJbRapf31NxVJzhiUqe/q5wgcmOcDA5wKQ8SvxHAkmrFP5wnpFt/BUUvPDCJE
+ uq9ShQ6TsZmAIH0VR62+3TSNSBmahfCIS7scfk2GEkRpUU10pAXWTgE/VjvK6h/Xl3o=
+X-Google-Smtp-Source: AGHT+IHxHYx0T9FAAHiiabHwYImDQovM1p3fmyP1sWcD+0M9kjkCx47EAHBRAGLqXU1OFPXQ+k1RqA==
+X-Received: by 2002:a17:90b:390e:b0:30e:9349:2da2 with SMTP id
+ 98e67ed59e1d1-3110f0fa6a1mr21466533a91.4.1748351569875; 
+ Tue, 27 May 2025 06:12:49 -0700 (PDT)
+Received: from [10.3.2.14] ([221.216.117.153])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4d8d945e0sm6246509f8f.94.2025.05.27.06.12.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 06:12:21 -0700 (PDT)
-Date: Tue, 27 May 2025 15:12:19 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [PATCH v2 12/25] hw/acpi/pcihp: Add an AmlRegionSpace arg to
- build_acpi_pci_hotplug
-Message-ID: <20250527151219.7957b7a8@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250527074224.1197793-13-eric.auger@redhat.com>
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-13-eric.auger@redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ 98e67ed59e1d1-311b00c6403sm1335599a91.28.2025.05.27.06.12.48
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 May 2025 06:12:49 -0700 (PDT)
+Message-ID: <37889706-8576-476c-8fea-c1a3a2858b1e@gmail.com>
+Date: Tue, 27 May 2025 21:12:26 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+From: Zheng Huang <hz1624917200@gmail.com>
+Subject: [PATCH] hw/scsi/esp: fix assertion error in fifo8_push
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,103 +97,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 May 2025 09:40:14 +0200
-Eric Auger <eric.auger@redhat.com> wrote:
+This patch add validation checks on FIFO structures in esp_post_load() to
+avoid assertion error `assert(fifo->num < fifo->capacity);` in fifo8_push(),
+which can occur if the inbound migration stream is malformed. By performing 
+these checks during post-load, we can catch and handle such issues earlier, 
+avoiding crashes due to corrupted state.
 
-> On ARM we will put the operation regions in AML_SYSTEM_MEMORY.
-> So let's allow this configuration.
-> 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
+---
+ hw/scsi/esp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  include/hw/acpi/pcihp.h | 3 ++-
->  hw/acpi/pcihp.c         | 8 ++++----
->  hw/i386/acpi-build.c    | 4 ++--
->  3 files changed, 8 insertions(+), 7 deletions(-)
-> 
-> diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
-> index 8a46a414cc..253ac6e483 100644
-> --- a/include/hw/acpi/pcihp.h
-> +++ b/include/hw/acpi/pcihp.h
-> @@ -28,6 +28,7 @@
->  #define HW_ACPI_PCIHP_H
->  
->  #include "hw/acpi/acpi.h"
-> +#include "hw/acpi/aml-build.h"
->  #include "hw/hotplug.h"
->  
->  #define ACPI_PCIHP_IO_BASE_PROP "acpi-pcihp-io-base"
-> @@ -73,7 +74,7 @@ void acpi_pcihp_device_unplug_request_cb(HotplugHandler *hotplug_dev,
->                                           AcpiPciHpState *s, DeviceState *dev,
->                                           Error **errp);
->  
-> -void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr);
-> +void build_acpi_pci_hotplug(Aml *table, AmlRegionSpace rs, uint64_t pcihp_addr);
->  void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar);
->  void build_append_pcihp_resources(Aml *table,
->                                    uint64_t io_addr, uint64_t io_len);
-> diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-> index fb54c31f77..310a5c54bd 100644
-> --- a/hw/acpi/pcihp.c
-> +++ b/hw/acpi/pcihp.c
-> @@ -629,7 +629,7 @@ static Aml *aml_pci_pdsm(void)
->      return method;
->  }
->  
-> -void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr)
-> +void build_acpi_pci_hotplug(Aml *table, AmlRegionSpace rs, uint64_t pcihp_addr)
->  {
->      Aml *scope;
->      Aml *field;
-> @@ -638,21 +638,21 @@ void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr)
->      scope =  aml_scope("_SB.PCI0");
->  
->      aml_append(scope,
-> -        aml_operation_region("PCST", AML_SYSTEM_IO, aml_int(pcihp_addr), 0x08));
-> +        aml_operation_region("PCST", rs, aml_int(pcihp_addr), 0x08));
->      field = aml_field("PCST", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
->      aml_append(field, aml_named_field("PCIU", 32));
->      aml_append(field, aml_named_field("PCID", 32));
->      aml_append(scope, field);
->  
->      aml_append(scope,
-> -        aml_operation_region("SEJ", AML_SYSTEM_IO,
-> +        aml_operation_region("SEJ", rs,
->                               aml_int(pcihp_addr + ACPI_PCIHP_SEJ_BASE), 0x04));
->      field = aml_field("SEJ", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
->      aml_append(field, aml_named_field("B0EJ", 32));
->      aml_append(scope, field);
->  
->      aml_append(scope,
-> -        aml_operation_region("BNMR", AML_SYSTEM_IO,
-> +        aml_operation_region("BNMR", rs,
->                               aml_int(pcihp_addr + ACPI_PCIHP_BNMR_BASE), 0x08));
->      field = aml_field("BNMR", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
->      aml_append(field, aml_named_field("BNUM", 32));
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 52cef834ed..6ca2b34ef8 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -1172,7 +1172,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->          aml_append(dsdt, sb_scope);
->  
->          if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
-> -            build_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
-> +            build_acpi_pci_hotplug(dsdt, AML_SYSTEM_IO, pm->pcihp_io_base);
->          }
->          build_piix4_pci0_int(dsdt);
->      } else if (q35) {
-> @@ -1216,7 +1216,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->          aml_append(dsdt, sb_scope);
->  
->          if (pm->pcihp_bridge_en) {
-> -            build_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
-> +            build_acpi_pci_hotplug(dsdt, AML_SYSTEM_IO, pm->pcihp_io_base);
->          }
->          build_q35_pci0_int(dsdt);
->      }
-
+diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+index ac841dc32e..ba77017087 100644
+--- a/hw/scsi/esp.c
++++ b/hw/scsi/esp.c
+@@ -1350,11 +1350,17 @@ static int esp_post_load(void *opaque, int version_id)
+         /* Migrate ti_buf to fifo */
+         len = s->mig_ti_wptr - s->mig_ti_rptr;
+         for (i = 0; i < len; i++) {
++            if (&s->fifo.num >= &s->fifo.capacity) {
++                return -1;
++            }
+             fifo8_push(&s->fifo, s->mig_ti_buf[i]);
+         }
+ 
+         /* Migrate cmdbuf to cmdfifo */
+         for (i = 0; i < s->mig_cmdlen; i++) {
++            if (&s->cmdfifo.num >= &s->cmdfifo.capacity) {
++                return -1;
++            }
+             fifo8_push(&s->cmdfifo, s->mig_cmdbuf[i]);
+         }
+     }
+-- 
+2.34.1
 
