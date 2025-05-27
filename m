@@ -4,62 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219ACC54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 11:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F235C54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 11:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJsuX-0007BG-2N; Tue, 27 May 2025 07:56:01 -0400
+	id 1uJswv-00007B-DW; Tue, 27 May 2025 07:58:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uJsuT-0007AK-Ra; Tue, 27 May 2025 07:55:58 -0400
-Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uJswt-00006P-Vw
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 07:58:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uJsuO-00046c-82; Tue, 27 May 2025 07:55:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
- Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=m2JUxGkrZdW2tRzhuZ763F0RNB86dX5geWxez4bNuVE=; b=63hzP8Cb9PMk063BwoGHiGptGS
- /thuGeYrtlCuRG0WSpKOwgPUj9Q6gz2H2wBIiNP61hRmLmJj8vT2TwyDc3K1gvgghMfdPbWherT11
- t4mUxu2n/CubY7+nqKVWeuxCgK4JKZPrlziK0/hDZxCmg5BTdWUy2DYgLcDOjWUplO4qW443Qj1S3
- N7sY7nesTNcSSPAXDygoE+LWq6anzSmS3wYzn158yprXTcyjBUkDa1nSMGyHGkxjFKa67Zd8rrGzd
- Xdo8vZjpjt4kIc3L2LRaimgtFA9AevL628EGHaoeh13KTjVaq8yXLCgm5u8iI9ksEyJ5LIXw8Njgy
- 51XvcT3A==;
-Received: from [167.98.27.226] (helo=rainbowdash)
- by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uJsQA-004yi7-Hp; Tue, 27 May 2025 12:24:38 +0100
-Received: from ben by rainbowdash with local (Exim 4.98.2)
- (envelope-from <ben@rainbowdash>) id 1uJsQA-00000001DqE-139S;
- Tue, 27 May 2025 12:24:38 +0100
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-To: nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
- fran.redondo@codethink.co.uk, lawrence.hunter@codethink.co.uk,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
-Cc: ben.dooks@codethink.co.uk,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 1/3] hw/riscv: add CVA6 machine
-Date: Tue, 27 May 2025 12:24:35 +0100
-Message-Id: <20250527112437.291445-2-ben.dooks@codethink.co.uk>
-X-Mailer: git-send-email 2.37.2.352.g3c44437643
-In-Reply-To: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
-References: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uJswp-0004PG-8Y
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 07:58:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748347099;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dHqXEgaQTrxB4IKRGQZjKBkcdlkshcKYt4h4/GTe1W4=;
+ b=H7I0mAEN1BvzzdjV99PjOF8rb4PFeMx/5nlo+YaE3UtfwmnoNH7BTyGcX92uceVrqUTA+P
+ N4z02PgNU6LciYScRCGFk7bjEqU5Hb84b6mEWw2qI+1wjT9+yfEqCaGRx3SJmjUWLvGryN
+ HQjjbgox36/RkvvpsgidHaIkwPguwxY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-255-2uzNu-ZqND-zPMw10D06jQ-1; Tue, 27 May 2025 07:58:17 -0400
+X-MC-Unique: 2uzNu-ZqND-zPMw10D06jQ-1
+X-Mimecast-MFC-AGG-ID: 2uzNu-ZqND-zPMw10D06jQ_1748347096
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a360d01518so2142513f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 04:58:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748347096; x=1748951896;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dHqXEgaQTrxB4IKRGQZjKBkcdlkshcKYt4h4/GTe1W4=;
+ b=Wa7Ik+bd9XMGPujZB92RXT2YyI68xsnHEJc1BCB6e+/klqjgzJ4oZX3Fxe7adHs+7a
+ 6xr9blOAzh1KgTwTEaLEUOtOkvE/+SBspnQae8LgmQ6VqwNxIAjzUJCmU1wGx+5orvr6
+ BJC+4X4b4gUSvcNHfVhKdQITxCLrH8sbRZ4xnB+J5Eut5a5TjEIhv4zUgtv4loujwN35
+ MFsxEZvzMgomQMDA4/saunFNtJHtDsBqSYt+0CASsQDz+F7GIbhWP+bVQnF7mt/u93L2
+ +neXoW47x9M5gZv+gaoPS+GKyPDediG4eeyHYa+kx0IlV/KKIc/27hZ001cQRhs152WM
+ FZ/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMC2+ShsFIM6y4IhJSn4nhXJr+LNRMi9OSrW316RvG455YvYhmtEr0nYDIrPNrcTn+CQstaauF/RMI@nongnu.org
+X-Gm-Message-State: AOJu0YzxXwobVZ8ZMDNrQBfA5kcM6PCOpgoYVb6ZWJtXMSCL5A9cbvqE
+ qrmHN4RmXEJULyQoNaHuWo0eX5WJvvDr/q0DbM64Bs0gw+croRhgv5u5iOcigNN7QNnIYc3AIK3
+ K4z24T5Ni7iJ1bUckC7VYsfMU+nACItvmM0r9EFKqFTxRqrZpJYtvHVH+
+X-Gm-Gg: ASbGncsRugnWGObSXcV3DYu//4DiAwE5bDZoneteDY81x2CBl2CEXmG1meZbjBGJMZr
+ NeXqwHoTPyp6IOI65Mz9sfwaa+04adyS0MdU9rImGwDVY2E4HWG4oiN8GpkAE5DiBrfEb4KSoLl
+ lfVqNmsZyt9aC2qdjwrn4PBQ0MmYNjv+w9SmscnVjjHEeWV6ZC9mF+4vDIne0oDj1iZbWH9YbTs
+ KZc36roDj+JWox0fnE7lkeMuT01GOxCBqLWdbLtePC7GZdEi2MWmTVtsqw+kdBlxdXaUfzpyBXu
+ aGgTKaZvISHZWQPkh9UXm/1VReWpv7N1
+X-Received: by 2002:a05:6000:26c9:b0:3a4:de02:208 with SMTP id
+ ffacd0b85a97d-3a4de0204a6mr3238324f8f.25.1748347096457; 
+ Tue, 27 May 2025 04:58:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFg2S45A0q+Bkz6bjGpepTsVbPjp5Zk/wfFuxEcNt+w+HiMdX/WfpqNoLTrLej+kFaLGreMVg==
+X-Received: by 2002:a05:6000:26c9:b0:3a4:de02:208 with SMTP id
+ ffacd0b85a97d-3a4de0204a6mr3238291f8f.25.1748347096010; 
+ Tue, 27 May 2025 04:58:16 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4d6c9faffsm6715489f8f.74.2025.05.27.04.58.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 May 2025 04:58:15 -0700 (PDT)
+Date: Tue, 27 May 2025 13:58:13 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v2 02/25] hw/arm/virt: Introduce machine state acpi
+ pcihp flags and props
+Message-ID: <20250527135813.2d6cde91@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250527074224.1197793-3-eric.auger@redhat.com>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-3-eric.auger@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=78.40.148.171;
- envelope-from=srv_ts003@codethink.com; helo=imap5.colo.codethink.co.uk
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,390 +115,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a (currently Genesy2 based) CVA6 machine.
+On Tue, 27 May 2025 09:40:04 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
 
-Has SPI and UART, the GPIO and Ethernet are currently black-holed
-as there is no hardware model for them (lowRISC ethernet and Xilinx
-GPIO)
+> acpi_pcihp VirtMachineClass state flag will allow
+> to opt in for acpi pci hotplug. This is guarded by a
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
----
-v2:
-- whitespace fixes
-- use g_autofree on plic
-v1:
-- squashed in fixes for sd-card and new qemu init
-- move to spdx for cva6 machine
-- code cleanups missed in first review
----
- hw/riscv/Kconfig        |  10 ++
- hw/riscv/cva6.c         | 229 ++++++++++++++++++++++++++++++++++++++++
- hw/riscv/meson.build    |   1 +
- include/hw/riscv/cva6.h |  85 +++++++++++++++
- 4 files changed, 325 insertions(+)
- create mode 100644 hw/riscv/cva6.c
- create mode 100644 include/hw/riscv/cva6.h
+> class no_acpi_pcihp flag to manage compats (<= 10.0
+> machine types will not support ACPI PCI hotplug).
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index e6a0ac1fa1..b96f6fa014 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -9,6 +9,16 @@ config IBEX
- 
- # RISC-V machines in alphabetical order
- 
-+config CVA6
-+    bool
-+    default y
-+    depends on RISCV32 || RISCV64
-+    select DEVICE_TREE
-+    select SIFIVE_PLIC
-+    select XILINX_SPI
-+    select RISCV_ACLINT
-+    select UNIMP
-+
- config MICROCHIP_PFSOC
-     bool
-     default y
-diff --git a/hw/riscv/cva6.c b/hw/riscv/cva6.c
-new file mode 100644
-index 0000000000..3adfa8b5cc
---- /dev/null
-+++ b/hw/riscv/cva6.c
-@@ -0,0 +1,229 @@
-+/*
-+ * QEMU RISC-V Board for OpenHW CVA6 SoC
-+ *
-+ * Copyright (c) 2025 Codethink Ltd
-+ * Ben Dooks <ben.dooks@codethink.co.uk>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "qapi/visitor.h"
-+#include "hw/boards.h"
-+#include "hw/irq.h"
-+#include "hw/loader.h"
-+#include "hw/sysbus.h"
-+#include "hw/misc/unimp.h"
-+
-+#include "hw/sd/sd.h"
-+#include "hw/ssi/ssi.h"
-+
-+#include "hw/riscv/cva6.h"
-+#include "hw/riscv/boot.h"
-+#include "hw/intc/riscv_aclint.h"
-+
-+#include "system/system.h"
-+
-+#include <libfdt.h>
-+
-+#define CVA6_ROM_BASE  0x10000
-+
-+static const MemMapEntry cva6_memmap[] = {
-+    [CVA6_DEBUG] =              {  0x0000000,  0x1000 },
-+    [CVA6_ROM] =                { CVA6_ROM_BASE, 0x10000 },
-+    [CVA6_CLINT] =              {  0x2000000, 0xC0000 },
-+    [CVA6_PLIC] =               {  0xC000000, 0x4000000 },
-+    [CVA6_UART] =               { 0x10000000, 0x1000 },
-+    [CVA6_TIMER] =              { 0x18000000, 0x10000 },
-+    [CVA6_SPI] =                { 0x20000000, 0x800000 },
-+    [CVA6_ETHERNET] =           { 0x30000000, 0x10000 },
-+    [CVA6_GPIO] =               { 0x40000000, 0x1000 },
-+    [CVA6_DRAM] =               { 0x80000000, 0x40000000 },
-+};
-+
-+static void cva6_machine_init(MachineState *machine)
-+{
-+    MachineClass *mc = MACHINE_GET_CLASS(machine);
-+    MemoryRegion *sys_mem = get_system_memory();
-+    hwaddr dram_addr = cva6_memmap[CVA6_DRAM].base;
-+    CVA6State *s = CVA6_MACHINE(machine);
-+    RISCVBootInfo boot_info;
-+
-+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RISCV_CVA6);
-+    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
-+
-+    if (machine->ram_size > mc->default_ram_size) {
-+        error_report("RAM size is too big for DRAM area");
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    memory_region_add_subregion(sys_mem, dram_addr, machine->ram);
-+    riscv_boot_info_init(&boot_info, &s->soc.cpus);
-+
-+    if (machine->firmware) {
-+         hwaddr firmware_load_addr = cva6_memmap[CVA6_ROM].base;
-+         riscv_load_firmware(machine->firmware, &firmware_load_addr, NULL);
-+    }
-+
-+     if (machine->kernel_filename) {
-+         /* note - we've not tested just loading the kernel w/o uboot */
-+         riscv_load_kernel(machine, &boot_info, dram_addr, false, NULL);
-+    }
-+
-+}
-+
-+static void cva6_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "RISC-V board for CVA6";
-+    mc->init = cva6_machine_init;
-+    mc->max_cpus = 1;
-+    mc->default_ram_id = "cva6.ram";
-+    /* start with "max" cpu type until we sort out CVA6 type */
-+    mc->default_cpu_type = TYPE_RISCV_CPU_MAX;
-+    mc->default_ram_size = cva6_memmap[CVA6_DRAM].size;
-+};
-+
-+static void cva6_soc_init(Object *obj)
-+{
-+    CVA6SoCState *s = RISCV_CVA6(obj);
-+
-+    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
-+}
-+
-+static void cva6_add_spi(CVA6SoCState *s, const MemMapEntry *map)
-+{
-+    DriveInfo *dinfo;
-+    BlockBackend *blk;
-+    DeviceState *card_dev;
-+    qemu_irq sd_cs;
-+    DeviceState *sddev;
-+    SysBusDevice *busdev;
-+    DeviceState *spi_dev;
-+    SSIBus *spi;
-+
-+    spi_dev = qdev_new("xlnx.xps-spi");
-+    qdev_prop_set_uint8(spi_dev, "num-ss-bits", 1);
-+    qdev_prop_set_string(spi_dev, "endianness", "little");
-+
-+    busdev = SYS_BUS_DEVICE(spi_dev);
-+    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_mmio_map(busdev, 0, map->base);
-+    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(DEVICE(s->plic), CVA6_SPI_IRQ));
-+
-+    spi = (SSIBus *)qdev_get_child_bus(spi_dev, "spi");
-+
-+    sddev = ssi_create_peripheral(spi, "ssi-sd");
-+    sd_cs = qdev_get_gpio_in_named(sddev, SSI_GPIO_CS, 0);
-+    sysbus_connect_irq(busdev, 1, sd_cs);
-+
-+    dinfo = drive_get(IF_SD, 0, 0);
-+    blk = dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
-+    card_dev = qdev_new(TYPE_SD_CARD_SPI);
-+    qdev_prop_set_drive_err(card_dev, "drive", blk, &error_fatal);
-+
-+    qdev_realize_and_unref(card_dev, qdev_get_child_bus(sddev, "sd-bus"), &error_fatal);
-+}
-+
-+static void not_implemented(const char *name, const MemMapEntry *map)
-+{
-+    create_unimplemented_device(name, map->base, map->size);
-+}
-+
-+static void cva6_soc_realize(DeviceState *dev_soc, Error **errp)
-+{
-+    MemoryRegion *system_memory = get_system_memory();
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    CVA6SoCState *s = RISCV_CVA6(dev_soc);
-+    const MemMapEntry *memmap = cva6_memmap;
-+    MemoryRegion *rom = g_new(MemoryRegion, 1);
-+    g_autofree char *plic_hart_config;
-+
-+    object_property_set_str(OBJECT(&s->cpus), "cpu-type", ms->cpu_type,
-+                            &error_abort);
-+    object_property_set_int(OBJECT(&s->cpus), "num-harts", ms->smp.cpus,
-+                            &error_abort);
-+    object_property_set_int(OBJECT(&s->cpus), "resetvec", CVA6_ROM_BASE,
-+                            &error_abort);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
-+
-+    /* boot rom */
-+    memory_region_init_rom(rom, OBJECT(dev_soc), "riscv.cva6.bootrom",
-+                           memmap[CVA6_ROM].size, &error_fatal);
-+    memory_region_add_subregion(system_memory, memmap[CVA6_ROM].base,
-+                                rom);
-+
-+    /* create PLIC hart topology configuration string */
-+    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-+
-+    /* MMIO */
-+    s->plic = sifive_plic_create(memmap[CVA6_PLIC].base,
-+        plic_hart_config, ms->smp.cpus, 0,
-+        CVA6_PLIC_NUM_SOURCES,
-+        CVA6_PLIC_NUM_PRIORITIES,
-+        CVA6_PLIC_PRIORITY_BASE,
-+        CVA6_PLIC_PENDING_BASE,
-+        CVA6_PLIC_ENABLE_BASE,
-+        CVA6_PLIC_ENABLE_STRIDE,
-+        CVA6_PLIC_CONTEXT_BASE,
-+        CVA6_PLIC_CONTEXT_STRIDE,
-+        memmap[CVA6_PLIC].size);
-+
-+    riscv_aclint_swi_create(memmap[CVA6_CLINT].base, 0,
-+                            ms->smp.cpus, false);
-+
-+    riscv_aclint_mtimer_create(
-+        memmap[CVA6_CLINT].base + RISCV_ACLINT_SWI_SIZE,
-+        RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
-+        RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
-+        CLINT_TIMEBASE_FREQ, true);
-+
-+    /* something in cva6-sdk uboot seems to prod the debug
-+     * unit by accident, so make it not implemented */
-+    not_implemented("debug", &memmap[CVA6_DEBUG]);
-+
-+    /* 16550 uart, one 32bit register per 32bit word */
-+
-+    serial_mm_init(system_memory, memmap[CVA6_UART].base, 2,
-+                   qdev_get_gpio_in(DEVICE(s->plic), CVA6_UART_IRQ),
-+                   50*1000*10000,
-+                   serial_hd(0), DEVICE_LITTLE_ENDIAN);
-+
-+    /* just unimplement the timers, network and gpio here for now.
-+     * no-one seems to be using the apb timer block anyway*/
-+    not_implemented("net", &memmap[CVA6_ETHERNET]);
-+    not_implemented("gpio", &memmap[CVA6_GPIO]);
-+    not_implemented("timer", &memmap[CVA6_TIMER]);
-+
-+    /* connect xilinx spi block here */
-+    cva6_add_spi(s, &memmap[CVA6_SPI]);
-+}
-+
-+static void cva6_soc_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    dc->realize = cva6_soc_realize;
-+    dc->user_creatable = false;
-+};
-+
-+static const TypeInfo cva6_types[] = {
-+    {
-+        .name           = TYPE_RISCV_CVA6,
-+        .parent         = TYPE_DEVICE,
-+        .instance_size  = sizeof(CVA6SoCState),
-+        .instance_init  = cva6_soc_init,
-+        .class_init     = cva6_soc_class_init,
-+    }, {
-+        .name           = TYPE_CVA6_MACHINE,
-+        .parent         = TYPE_MACHINE,
-+        .instance_size  = sizeof(CVA6State),
-+        .class_init     = cva6_machine_class_init,
-+    }
-+};
-+
-+DEFINE_TYPES(cva6_types)
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index c22f3a7216..a32fffab63 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -2,6 +2,7 @@ riscv_ss = ss.source_set()
- riscv_ss.add(files('boot.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
- riscv_ss.add(files('riscv_hart.c'))
-+riscv_ss.add(when: 'CONFIG_CVA6', if_true: files('cva6.c'))
- riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
- riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
-diff --git a/include/hw/riscv/cva6.h b/include/hw/riscv/cva6.h
-new file mode 100644
-index 0000000000..8f6172e8b8
---- /dev/null
-+++ b/include/hw/riscv/cva6.h
-@@ -0,0 +1,85 @@
-+/*
-+ * QEMU RISC-V Board for OpenHW CVA6 SoC
-+ * https://github.com/openhwgroup/cva6/tree/master/corev_apu
-+ *
-+ * Copyright (c) 2025 Codethink Ltd
-+ * Ben Dooks <ben.dooks@codethink.co.uk>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_CVA6_H
-+#define HW_CVA6_H
-+
-+#include "hw/riscv/riscv_hart.h"
-+#include "hw/intc/sifive_plic.h"
-+#include "hw/char/serial-mm.h"
-+
-+#include "hw/boards.h"
-+#include "hw/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_RISCV_CVA6 "riscv.cva6.soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(CVA6SoCState, RISCV_CVA6)
-+
-+typedef struct CVA6SoCState {
-+    /*< private >*/
-+    DeviceState parent_obj;
-+
-+    /*< public >*/
-+    RISCVHartArrayState cpus;
-+    DeviceState *plic;
-+    MemoryRegion rom;
-+
-+    uint32_t resetvec;
-+} CVA6SoCState;
-+
-+#define TYPE_CVA6_MACHINE MACHINE_TYPE_NAME("cva6")
-+OBJECT_DECLARE_SIMPLE_TYPE(CVA6State, CVA6_MACHINE)
-+
-+typedef struct CVA6State {
-+    /*< private >*/
-+    MachineState parent_obj;
-+
-+    /*< public >*/
-+    CVA6SoCState soc;
-+}
-+CVA6State;
-+
-+enum {
-+    CVA6_DEBUG,
-+    CVA6_ROM,
-+    CVA6_CLINT,
-+    CVA6_PLIC,
-+    CVA6_UART,
-+    CVA6_TIMER,
-+    CVA6_SPI,
-+    CVA6_ETHERNET,
-+    CVA6_GPIO,
-+    CVA6_DRAM,
-+};
-+
-+enum {
-+    CVA6_UART_IRQ       = 1,
-+    CVA6_SPI_IRQ        = 2,
-+    CVA6_ETH_IRQ        = 3,
-+    CVA6_TIMER0_OVF_IRQ = 4,
-+    CVA6_TIMER0_CMP_IRQ = 5,
-+    CVA6_TIMER1_OVF_IRQ = 6,
-+    CVA6_TIMER1_CMP_IRQ = 7,
-+};
-+
-+#define CLINT_TIMEBASE_FREQ 25000000
-+
-+/* plic register interface in corev_apu/rv_plic/rtl/plic_regmap.sv */
-+
-+#define CVA6_PLIC_NUM_SOURCES           32
-+#define CVA6_PLIC_NUM_PRIORITIES        7
-+#define CVA6_PLIC_PRIORITY_BASE         0x0000
-+#define CVA6_PLIC_PENDING_BASE          0x1000
-+#define CVA6_PLIC_ENABLE_BASE           0x2000
-+#define CVA6_PLIC_ENABLE_STRIDE         0x80
-+#define CVA6_PLIC_CONTEXT_BASE          0x200000
-+#define CVA6_PLIC_CONTEXT_STRIDE        0x1000
-+
-+#endif /* HW_CVA6_H */
--- 
-2.37.2.352.g3c44437643
+there is no reason to put an effort in force disabling it
+on old machines, as long as code works when explicitly
+enabled property on CLI.
+
+See comment below on how to deal with it 
+
+> 
+> Machine state acpi_pcihp flag must be set before the creation
+> of the GED device which will use it.
+> 
+> Currently the ACPI PCI HP is turned off by default. This will
+> change later on for 10.1 machine type.
+
+one thing to note, is that turning it on by default might
+cause change of NIC naming in guest as this brings in
+new "_Sxx" slot naming. /so configs tied to nic  go down the drain/
+
+Naming, we have, also happens to be broken wrt spec
+(it should be unique system wide, there was a gitlab issue for that,
+there is no easy fix that though)
+
+So I'd leave it disabled by default and let users to turn
+it on explicitly when needed. 
+
+> 
+> We also introduce properties to allow disabling it.
+> 
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>  include/hw/arm/virt.h |  2 ++
+>  hw/arm/virt.c         | 27 +++++++++++++++++++++++++++
+>  2 files changed, 29 insertions(+)
+> 
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index 9a1b0f53d2..10ea581f06 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -129,6 +129,7 @@ struct VirtMachineClass {
+>      bool no_tcg_lpa2;
+>      bool no_ns_el2_virt_timer_irq;
+>      bool no_nested_smmu;
+> +    bool no_acpi_pcihp;
+>  };
+>  
+>  struct VirtMachineState {
+> @@ -150,6 +151,7 @@ struct VirtMachineState {
+>      bool mte;
+>      bool dtb_randomness;
+>      bool second_ns_uart_present;
+> +    bool acpi_pcihp;
+>      OnOffAuto acpi;
+>      VirtGICType gic_version;
+>      VirtIOMMUType iommu;
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 9a6cd085a3..a0deeaf2b3 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2397,8 +2397,10 @@ static void machvirt_init(MachineState *machine)
+>      create_pcie(vms);
+>  
+>      if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+> +        vms->acpi_pcihp &= !vmc->no_acpi_pcihp;
+
+I don't particularly like no_foo naming as it makes code harder to read
+and combined with 'duplicated' field in machine state it make even things worse.
+(if I recall right Philippe was cleaning mess similar flags usage
+have introduced with ITS)
+
+instead of adding machine property (both class and state),
+I'd suggest adding the only property to GPE device (akin to what we have in x86 world)
+And then one can meddle with defaults using hw_compat_xxx
+
+
+>          vms->acpi_dev = create_acpi_ged(vms);
+>      } else {
+> +        vms->acpi_pcihp = false;
+>          create_gpio_devices(vms, VIRT_GPIO, sysmem);
+>      }
+>  
+> @@ -2593,6 +2595,20 @@ static void virt_set_its(Object *obj, bool value, Error **errp)
+>      vms->its = value;
+>  }
+>  
+> +static bool virt_get_acpi_pcihp(Object *obj, Error **errp)
+> +{
+> +    VirtMachineState *vms = VIRT_MACHINE(obj);
+> +
+> +    return vms->acpi_pcihp;
+> +}
+> +
+> +static void virt_set_acpi_pcihp(Object *obj, bool value, Error **errp)
+> +{
+> +    VirtMachineState *vms = VIRT_MACHINE(obj);
+> +
+> +    vms->acpi_pcihp = value;
+> +}
+> +
+>  static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+>  {
+>      VirtMachineState *vms = VIRT_MACHINE(obj);
+> @@ -3310,6 +3326,10 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+>                                            "in ACPI table header."
+>                                            "The string may be up to 8 bytes in size");
+>  
+> +    object_class_property_add_bool(oc, "acpi-pcihp",
+> +                                   virt_get_acpi_pcihp, virt_set_acpi_pcihp);
+> +    object_class_property_set_description(oc, "acpi-pcihp",
+> +                                          "Force ACPI PCI hotplug");
+>  }
+>  
+>  static void virt_instance_init(Object *obj)
+> @@ -3344,6 +3364,9 @@ static void virt_instance_init(Object *obj)
+>          vms->tcg_its = true;
+>      }
+>  
+> +    /* default disallows ACPI PCI hotplug */
+> +    vms->acpi_pcihp = false;
+> +
+>      /* Default disallows iommu instantiation */
+>      vms->iommu = VIRT_IOMMU_NONE;
+>  
+> @@ -3394,8 +3417,12 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
+>  
+>  static void virt_machine_10_0_options(MachineClass *mc)
+>  {
+> +    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+> +
+>      virt_machine_10_1_options(mc);
+>      compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
+> +    /* 10.0 and earlier do not support ACPI PCI hotplug */
+> +    vmc->no_acpi_pcihp = true;
+>  }
+>  DEFINE_VIRT_MACHINE(10, 0)
+>  
 
 
