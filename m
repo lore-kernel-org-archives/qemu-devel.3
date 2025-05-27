@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380EFC54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 11:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A8EEC54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 11:34:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJsRz-0007Pf-Od; Tue, 27 May 2025 07:26:31 -0400
+	id 1uJsYD-000105-3r; Tue, 27 May 2025 07:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJsRt-0007P7-7k
- for qemu-devel@nongnu.org; Tue, 27 May 2025 07:26:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJsXv-0000y7-Dj
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 07:32:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJsRq-0000fr-Cn
- for qemu-devel@nongnu.org; Tue, 27 May 2025 07:26:24 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJsXk-0001Tu-Nj
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 07:32:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748345179;
+ s=mimecast20190719; t=1748345545;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=keouVtNDLt3Vrg6EA9R6TxBKEn3jgNstk9s8BTzlCS0=;
- b=Vrak63MEiPmuy6OUh0KmSuB7bBRocyIjVA8MPgTWAtQ4MNkaFItrqVilS1REG/tuTd7ozf
- KfF1rFg9TBckt1CTysirNx6TJi17MzUenPKjjRLFZEdk2flJlfJMP6nY/KOmUb2RWoF+md
- q6t0Mfvtg06DArNMu/02jh1r7C9d5ws=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MQiCNQFJOinvn66rLR/m9nW9VwVq2V6O256INkb9Fio=;
+ b=MrGDa9+nCrVcBD22MoOBi3NFCl4CroCxz7GA77UMjsKjoXS6NyZbVKx6CrVE4obKmqnR73
+ WzY1Z7oBWFbw/I5c9DPcblxQ9+qru8L8ivUFQIOR56rYhQkXPRmVctt1JvOgb0JZ7V76oJ
+ 9p1Zsl8qIQ2bupWUfXSR5F0wrwCy19M=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-Ptw3IMF8OqO4kSpfHSK2aQ-1; Tue,
- 27 May 2025 07:26:18 -0400
-X-MC-Unique: Ptw3IMF8OqO4kSpfHSK2aQ-1
-X-Mimecast-MFC-AGG-ID: Ptw3IMF8OqO4kSpfHSK2aQ_1748345177
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-8QKmGH9FORWlIuesE8RYeQ-1; Tue,
+ 27 May 2025 07:32:21 -0400
+X-MC-Unique: 8QKmGH9FORWlIuesE8RYeQ-1
+X-Mimecast-MFC-AGG-ID: 8QKmGH9FORWlIuesE8RYeQ_1748345540
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D44EC180035C; Tue, 27 May 2025 11:26:16 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD06D180036E; Tue, 27 May 2025 11:32:19 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F53E180049D; Tue, 27 May 2025 11:26:16 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92E6419560AB; Tue, 27 May 2025 11:32:19 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BFC2C21E675E; Tue, 27 May 2025 13:26:13 +0200 (CEST)
+ id E279421E6757; Tue, 27 May 2025 13:32:16 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: qemu-devel@nongnu.org,  michael.roth@amd.com,  thuth@redhat.com,
  pbonzini@redhat.com,  richard.henderson@linaro.org,
  peter.maydell@linaro.org,  berrange@redhat.com,  philmd@linaro.org
-Subject: Re: [PATCH v4 02/15] qapi: expand docs for SEV commands
-In-Reply-To: <20250522190542.588267-3-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Thu, 22 May 2025 12:05:29 -0700")
+Subject: Re: [PATCH v4 08/15] qapi: Make
+ CpuModelExpansionInfo::deprecated-props optional and generic
+In-Reply-To: <20250522190542.588267-9-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Thu, 22 May 2025 12:05:35 -0700")
 References: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
- <20250522190542.588267-3-pierrick.bouvier@linaro.org>
-Date: Tue, 27 May 2025 13:26:13 +0200
-Message-ID: <87h616qoq2.fsf@pond.sub.org>
+ <20250522190542.588267-9-pierrick.bouvier@linaro.org>
+Date: Tue, 27 May 2025 13:32:16 +0200
+Message-ID: <87bjreqofz.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -91,111 +92,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 >
-> This gives some more context about the behaviour of the commands in
-> unsupported guest configuration or platform scenarios.
+> We'd like to have some unified QAPI schema. Having a structure field
+> conditional to a target being built in is not very practical.
+>
+> While @deprecated-props is only used by s390x target, it is generic
+> enough and could be used by other targets (assuming we expand
+> CpuModelExpansionType enum values).
+>
+> Let's always include this field, regardless of the target, but make it
+> optional. This is not a compatibility break only because the field
+> remains present always on S390x.
 >
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->  qapi/misc-target.json | 43 ++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 36 insertions(+), 7 deletions(-)
+>  qapi/machine-target.json | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
 >
-> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-> index c5f9f6be7e1..6b857efc1cc 100644
-> --- a/qapi/misc-target.json
-> +++ b/qapi/misc-target.json
-> @@ -110,7 +110,11 @@
+> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+> index 426ce4ee82d..d8dbda4b508 100644
+> --- a/qapi/machine-target.json
+> +++ b/qapi/machine-target.json
+> @@ -244,19 +244,18 @@
+>  #
+>  # @model: the expanded CpuModelInfo.
+>  #
+> -# @deprecated-props: a list of properties that are flagged as
+> +# @deprecated-props: an optional list of properties that are flagged as
+>  #     deprecated by the CPU vendor.  The list depends on the
+>  #     CpuModelExpansionType: "static" properties are a subset of the
+>  #     enabled-properties for the expanded model; "full" properties are
+>  #     a set of properties that are deprecated across all models for
+> -#     the architecture.  (since: 9.1).
+> +#     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
+>  #
+>  # Since: 2.8
 >  ##
->  # @query-sev:
->  #
-> -# Returns information about SEV
-> +# Returns information about SEV/SEV-ES/SEV-SNP.
-> +#
-> +# If unavailable due to an incompatible configuration the
-> +# returned @enabled field will be set to 'false' and the
-> +# state of all other fields is undefined.
->  #
->  # Returns: @SevInfo
->  #
-> @@ -141,7 +145,16 @@
->  ##
->  # @query-sev-launch-measure:
->  #
-> -# Query the SEV guest launch information.
-> +# Query the SEV/SEV-ES guest launch information.
-> +#
-> +# This is only valid on x86 machines configured with KVM and the
-> +# 'sev-guest' confidential virtualization object. The launch
+>  { 'struct': 'CpuModelExpansionInfo',
+>    'data': { 'model': 'CpuModelInfo',
+> -            'deprecated-props' : { 'type': ['str'],
+> -                                   'if': 'TARGET_S390X' } },
+> +            '*deprecated-props' : ['str'] },
+>    'if': { 'any': [ 'TARGET_S390X',
+>                     'TARGET_I386',
+>                     'TARGET_ARM',
 
-Humor me, please: separate sentences with two spaces for consistency.
+[Copied from review of prior posts]
 
-> +# measurement for SEV-SNP guests is only available within
-> +# the guest.
-> +#
-> +# This will return an error if the launch measurement is
-> +# unavailable, either due to an invalid guest configuration
-> +# or if the guest has not reached the required SEV state.
->  #
->  # Returns: The @SevLaunchMeasureInfo for the guest
->  #
-> @@ -185,8 +198,9 @@
->  ##
->  # @query-sev-capabilities:
->  #
-> -# This command is used to get the SEV capabilities, and is supported
-> -# on AMD X86 platforms only.
-> +# This command is used to get the SEV capabilities, and is only
-> +# supported on AMD X86 platforms with KVM enabled. If SEV is not
-> +# available on the platform an error will be returned.
->  #
->  # Returns: SevCapability objects.
->  #
-> @@ -205,7 +219,15 @@
->  ##
->  # @sev-inject-launch-secret:
->  #
-> -# This command injects a secret blob into memory of SEV guest.
-> +# This command injects a secret blob into memory of a SEV/SEV-ES guest.
-> +#
-> +# This is only valid on x86 machines configured with KVM and the
-> +# 'sev-guest' confidential virtualization object. SEV-SNP guests
-> +# do not support launch secret injection
+When I see "optional array", I wonder about the difference between
+"absent" and "present and empty".  The doc comment doesn't quite explain
+it.  I figure "present and empty" means empty, while "absent" means we
+don't know / not implemented.
 
-Missing period at the end of sentence.
+Is the difference useful?
 
-> +#
-> +# This will return an error if launch secret injection is not possible,
-> +# either due to an invalid guest configuration, or if the guest has not
-> +# reached the required SEV state.
+Daniel doubts it is.
 
-Slightly long lines.  docs/devel/qapi-code-gen.rst:
+[end of copy]
 
-    For legibility, wrap text paragraphs so every line is at most 70
-    characters long.
-
->  #
->  # @packet-header: the launch secret packet header encoded in base64
->  #
-> @@ -236,8 +258,15 @@
->  ##
->  # @query-sev-attestation-report:
->  #
-> -# This command is used to get the SEV attestation report, and is
-> -# supported on AMD X86 platforms only.
-> +# This command is used to get the SEV attestation report.
-> +#
-> +# This is only valid on x86 machines configured with KVM and the
-> +# 'sev-guest' confidential virtualization object. The attestation
-> +# report for SEV-SNP guests is only available within the guest.
-> +#
-> +# This will return an error if the attestation report is
-> +# unavailable, either due to an invalid guest configuration
-> +# or if the guest has not reached the required SEV state.
->  #
->  # @mnonce: a random 16 bytes value encoded in base64 (it will be
->  #     included in report)
+Let's take with this patch as is.  If we prefer to remove the
+difference, we can do so on top.
 
 
