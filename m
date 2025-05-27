@@ -4,51 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B825EC54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 19:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBBCC54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 20:00:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK0AP-0003qw-6v; Tue, 27 May 2025 15:40:53 -0400
+	id 1uK0SN-0005sM-F7; Tue, 27 May 2025 15:59:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uK0AI-0003qY-B6
- for qemu-devel@nongnu.org; Tue, 27 May 2025 15:40:48 -0400
+ id 1uK0SK-0005qE-4l; Tue, 27 May 2025 15:59:24 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uK0AC-0005uk-N9
- for qemu-devel@nongnu.org; Tue, 27 May 2025 15:40:45 -0400
+ id 1uK0SI-0008ID-Hp; Tue, 27 May 2025 15:59:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=T6LyI4TzEvSkrgJBEh5vI8/4Kw/PzlaKOSSmSvlQxOE=; b=T+y7swfxuT0dofGKDbPHxgZBjB
- 3ZUxm57qd7crXVG67QbIeah6nzhOl4ly8xKwAT5zbrMJIyD2DnSE0jLR2kfPRDVc0+b5X8De/gDDm
- jWGd5PsyD80B1CuMJEMjl91BESqRd5jwytC+OZG4myG1w9Rde9kMJPpMZeNcemjBfDS0Gq0IgAi0N
- XgKFW2C4NpNE7p87rcAKg0oXRMZD1MtAZegkluRL4LSfFqY4E351XnI2e1LCYEaWrN9swSu17Illn
- IewHOG7TGl15CAxVvIg063L9hHedKnbsN8eiueOo3m7hVFdGjBIfk41KNcyJ2HGdmfd/Eld4Kf+/x
- 7XTajC7OvtQZ6qjJ2oXzVFILMyYmAj7VSgzdF/7qIPrSIYEUasnHGChpvzgv+jrghdT7wCyzoWLwD
- 3Umq5MxLCtMUpsFKZP5FZg4xtmBcRWLtqjyhymZHYPJhbNnbkfJx2XeK/R5uz6Scu2M+NVHYcmBEZ
- aKnED+BGH/DdUToUTl0nB2V8Frn/LwVZwL8VmkapPOyC77K+LzqHn7U/mhYKLsRhpA2a+283KWIjB
- F1yhq/0BydDtUUDhpysIvHz0MD0U1ghIxNFsnpuJbehuXtstYk7CuX8E/97FQJRTYY1K2tUD5mDzX
- yS043hkxMQCFH4JW5D0WMu0ipCxbL4DnDYPIR4eTk=;
+ bh=EYv02Ky4PXRW5O2EteWhHjZhVhM+4bZnTHcaxsZhGGg=; b=z36UkeFubvixjW2P3PnCltdZKW
+ 7HVL2e5r5AfNLR6d+S3Ix7jQ57OAVuLFzMoEjMwvy1eKkx7zcAUjbHJi/lRebeI7BSiVUJxcbHoTn
+ l9gnMfFRxHoiODWwoB9G3YyDrZm2/u+iU02d1H/31bZUpbTSs+dmdStwBqDDa7HdXRn8pbSVYUB9o
+ aghgx/SYZ8oUSFJ8h1iUPs6qiJ9Iw4cxtQRW7OehMWEcnjMSDpBC2sc/K0yPtWmRZo+0fR3DG/OlG
+ jTFI1BKFAzQgNehumQjVb+iKueJkMl1EQvblwDU2Yb1lER3qGl/WVCMvYIDUM4Je9hUc2PLd4tAYZ
+ jiUer2o9qofz4CGJ1UKPMR4bunQcPX1KjQUf14KoCEEcdKd0HGJOH64XUnATYgnzqCwlxvkHIdVnx
+ 7PK5mFV/NTrAdUzxqqlnZLI37MVpHnSiTu75sD3vu0/96BMVWox7BJjS3GBPFEaJjwuOiy5HjxY6d
+ u1KCurWDNsNQRUYFAZhh2R/mWQSinPWzJV77Bp76r4tebCW1ukiESJYFoNuOcQ6xxKfA0/2dlF/W/
+ o3an6Vqp59OY+qVH3K81tIka4DLNzEbz4dYDBOFVo+WG5+uNBmKoA/NUKxoXGw44M+Y20POOH8BdU
+ LeJ5DDArdPkRHXo4UZ3uxV4Kw0svdcqByFfj1fLos=;
 Received: from [2a02:8012:2f01:0:7607:4cc5:5176:1da8]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uK08o-00027g-7U; Tue, 27 May 2025 20:39:14 +0100
-Message-ID: <6dd914b1-2a2f-4a4c-bd2b-54e8302d1a75@ilande.co.uk>
-Date: Tue, 27 May 2025 20:40:35 +0100
+ id 1uK0Qg-0002Au-U9; Tue, 27 May 2025 20:57:43 +0100
+Message-ID: <3e1c9618-35ce-46f5-ad35-afc26449a935@ilande.co.uk>
+Date: Tue, 27 May 2025 20:59:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zheng Huang <hz1624917200@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <37889706-8576-476c-8fea-c1a3a2858b1e@gmail.com>
- <684885a4-0022-4de8-98aa-07c9fe4a11c7@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-ppc@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>, Alexander Graf <agraf@csgraf.de>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250526130006.49817-1-philmd@linaro.org>
+ <1c9f8e9d-1ee6-b2d9-98d6-5640f59f0e4a@eik.bme.hu>
+ <649e4c91-fb4c-4cb2-9810-b1ee885ffea3@linaro.org>
+ <0af36d26-5509-4601-8e16-e420b0e4c53e@redhat.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -75,12 +84,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <684885a4-0022-4de8-98aa-07c9fe4a11c7@linaro.org>
+In-Reply-To: <0af36d26-5509-4601-8e16-e420b0e4c53e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:7607:4cc5:5176:1da8
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] hw/scsi/esp: fix assertion error in fifo8_push
+Subject: Re: [PATCH 0/3] hw/boards: Remove field
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,60 +115,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/05/2025 14:59, Philippe Mathieu-Daudé wrote:
+On 27/05/2025 18:19, Paolo Bonzini wrote:
 
-> Hi,
-> 
-> Cc'ing maintainers:
-> 
-> $ ./scripts/get_maintainer.pl -f hw/scsi/esp.c
-> Paolo Bonzini <pbonzini@redhat.com> (supporter:SCSI)
-> Fam Zheng <fam@euphon.net> (reviewer:SCSI)
-> $ ./scripts/get_maintainer.pl -f migration/
-> Peter Xu <peterx@redhat.com> (maintainer:Migration)
-> Fabiano Rosas <farosas@suse.de> (maintainer:Migration)
-> 
-> On 27/5/25 15:12, Zheng Huang wrote:
->> This patch add validation checks on FIFO structures in esp_post_load() to
->> avoid assertion error `assert(fifo->num < fifo->capacity);` in fifo8_push(),
->> which can occur if the inbound migration stream is malformed. By performing
->> these checks during post-load, we can catch and handle such issues earlier,
->> avoiding crashes due to corrupted state.
-> 
-> How can that happen? Can you share a reproducer?
-> 
+> On 5/26/25 16:20, Philippe Mathieu-Daudé wrote:
+>> On 26/5/25 15:18, BALATON Zoltan wrote:
+>>> On Mon, 26 May 2025, Philippe Mathieu-Daudé wrote:
+>>>> Only add default devices checking defaults_enabled().
+>>>> Remove the unused usb_disabled field in MachineState.
+>>>
+>>> At least for Mac machines this may be more complex. I think there is a - usb 
+>>> switch to enable/disable USB independently of defaults and due to some bugs some 
+>>> MacOS versions may need this to boot so maybe it's used.
 >>
->> Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
->> ---
->>   hw/scsi/esp.c | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
->> index ac841dc32e..ba77017087 100644
->> --- a/hw/scsi/esp.c
->> +++ b/hw/scsi/esp.c
->> @@ -1350,11 +1350,17 @@ static int esp_post_load(void *opaque, int version_id)
->>           /* Migrate ti_buf to fifo */
->>           len = s->mig_ti_wptr - s->mig_ti_rptr;
->>           for (i = 0; i < len; i++) {
->> +            if (&s->fifo.num >= &s->fifo.capacity) {
->> +                return -1;
->> +            }
->>               fifo8_push(&s->fifo, s->mig_ti_buf[i]);
->>           }
->>           /* Migrate cmdbuf to cmdfifo */
->>           for (i = 0; i < s->mig_cmdlen; i++) {
->> +            if (&s->cmdfifo.num >= &s->cmdfifo.capacity) {
->> +                return -1;
->> +            }
->>               fifo8_push(&s->cmdfifo, s->mig_cmdbuf[i]);
->>           }
->>       }
+>> If the user asks -usb off, we shouldn't re-enable it in the shadow.
+> 
+> And if the user asks -usb on, you shouldn't disable it.  My
+> understanding is that adding
+> 
+> -        if (!has_adb || machine_arch == ARCH_MAC99_U3) {
+> +        if ((!has_adb || machine_arch == ARCH_MAC99_U3) && defaults_enabled()) {
+> 
+> disables USB completely when -nodefaults.
+> 
+> If you want to remove usb_disabled, change machine->usb to ON_OFF_AUTO
+> and query
+> 
+> static inline bool machine_usb_enabled(MachineState *ms)
+> {
+>          return (defaults_enabled()
+>                  ? machine->usb != ON_OFF_AUTO_OFF
+>                  : machine->usb == ON_OFF_AUTO_ON);
+> }
+> 
+> instead of machine->usb (even better, change the name of the field so that
+> it causes a compilation error).
 
-This seems odd: this logic in esp_post_load() is for converting from pre-Fifo8 code 
-to the current Fifo8 code, so why wouldn't we want to assert() for the case when the 
-migration stream is intentionally malformed? Is there a case whereby the old code 
-could generate an invalid migration stream like this?
+I have a feeling that this logic was added a while back to allow a build 
+--without-default-devices to work? However disabling USB doesn't actually make sense 
+for New World Macs, since the presence of USB ports is one of the ways of 
+guaranteeing we have a New World Mac. I'm fairly sure I've seen (BSD?) kernel crashes 
+if the USB ports are not present on the mac99 machine.
+
+If MachineState::usb_disabled is removed completely, is it still possible to always 
+have the USB ports enabled and the keyboard/mouse plugged into the mac99 machine?
 
 
 ATB,
