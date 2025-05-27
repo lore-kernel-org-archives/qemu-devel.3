@@ -4,81 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E43FC54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 18:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E54C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 18:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJyg1-0004pA-RF; Tue, 27 May 2025 14:05:25 -0400
+	id 1uJzI8-0006hJ-7f; Tue, 27 May 2025 14:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uJyfr-0004oh-Ms
- for qemu-devel@nongnu.org; Tue, 27 May 2025 14:05:16 -0400
-Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uJyfq-0006Kh-1O
- for qemu-devel@nongnu.org; Tue, 27 May 2025 14:05:15 -0400
-Received: by mail-qt1-x82c.google.com with SMTP id
- d75a77b69052e-4769f3e19a9so20620781cf.0
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 11:05:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748369112; x=1748973912; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E+2k/8Znizkb8hgO2S4nj+hwaYXmmgyB//kiTkJb/As=;
- b=mvSS27lsjANsYBVVsP6x8LuFY7lo4WlDlLJxsYAB8z1MO92bLzpkANPBiAlaftbtO6
- 91EYU6QHBNjdAKJ5xBN4O+mQRg+wK+zLpLrorFFsIb1v7OVmf85QnnTMSq+FzFVWsnW/
- apJPZAus+M5a0zoERlWC7mzA2jRr+gFmjmiZtq+035Wd/eZ0WMuRAgPLTnwlHEEFNWLn
- qOKkcny6rU85CzsglYOTxK71ciujzWDgcijE4VgvRVaaD72JmvYT+FcNzh4+uvtW8k3D
- s12nFgOP3JyNiRvGko4H7iaDyHfFbCzewJNdJJkkRHVntjRC6ShGmFh1bVMwWh2xsMJP
- BGTw==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uJzI7-0006h5-Bk
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 14:44:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uJzI4-0002m3-Iw
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 14:44:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748371481;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8XiULHF74Ovmz3Q8cXZyaidbCYJBenNBgcJ7e9q2zNk=;
+ b=gfBhPJ09kONGoqCssuvVkhBODBVglXhzJWMOkTE31hxufQmIJemeERtyWgKZGWgbAUjSIZ
+ 93rbrJxXg09u6KDBI19IvrpfvON5uXVOo2NSY1XSJR6RM50ejyIO68JEj7/D3/54FqWGqR
+ o93+HwDBu4iQ0/UtXLsk6YXSSTXNnk0=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-389-i_MEyeoCOXqmFR5mfVk63A-1; Tue, 27 May 2025 14:44:39 -0400
+X-MC-Unique: i_MEyeoCOXqmFR5mfVk63A-1
+X-Mimecast-MFC-AGG-ID: i_MEyeoCOXqmFR5mfVk63A_1748371479
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-85b45e94b08so43068939f.0
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 11:44:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748369112; x=1748973912;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1748371478; x=1748976278;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E+2k/8Znizkb8hgO2S4nj+hwaYXmmgyB//kiTkJb/As=;
- b=vbq7hRWluzcoEJPI/R2uhDhTrK8EiJOP3OsFkvuN3zrEhj+lyqAg2pSLGWWduPBD/a
- 9dqwIA3Hf207Yw+gglOZH7gbuOVLm96Ub+IcfGJQjvjMZUuTXC/8QLhAIo28fiGFq3hS
- Cut41bxUZKt7623u0jx/mIdOuHvo8CPvdqvWYYuJwaaPz+QWY3yUCbYIPTKnXyz9ONFl
- UUJOXsDIdlP2jLmT+R/oAueSjd4cKFZeVQNs3RSc/f3fFHpUE0zggPdUxCse1NYLmRmy
- unk8RGF0gYZLj6Tu9bwN3inLntXuwjk/RD4cvam1RBFFc1LodzEJcXPAcnCUoT54hhgp
- hMNg==
-X-Gm-Message-State: AOJu0Yz6OVvx4BYYg0j3jRozqEujyURJePOfjsmrQ7SfxSPvzqTNPceG
- uEmLfxWBUmmcron6upU2PXW3KrKRxlkQr3J0nuW0/wehPW+ljKlbnmCWteTIUeDUfuTbL/5gQoc
- A03Uyg2zB4Bi+6/3NirjZmEh6ck+5UFQYixjZ34jLxw==
-X-Gm-Gg: ASbGncsulHMhMImKNDSOmT0eSJquTtx2Fefd91Du8d+XRfV7HVJIkKaaoSNCp29kQvL
- NVZVb/mMWz370Mqy7kfVm2C1Kb/c1yhPWYj4+/gCG0BNgHmtCjoJbzNCO8JZb7GXDCv4u9J7/yY
- hH0AgmYxa1190Um4c0YYld/+LvLbeyXTidAMY=
-X-Google-Smtp-Source: AGHT+IE3ELvHrvD+3R35QJdJtReyV7xoqA66rLg72KZne2LwnUzDhxAe3KVd7Lc20uKWMshcpHmpmK3+SwX636ZRaYE=
-X-Received: by 2002:a05:622a:4c83:b0:476:a949:ceb6 with SMTP id
- d75a77b69052e-49f480c8ea6mr259663301cf.44.1748369111812; Tue, 27 May 2025
- 11:05:11 -0700 (PDT)
+ bh=8XiULHF74Ovmz3Q8cXZyaidbCYJBenNBgcJ7e9q2zNk=;
+ b=L8FNdbWVFJ5yiu38iDbrvG16APAnFUfTfe+LtmiCEdbnVOa8ua/UGJDlcCs4yYhpfn
+ J7cOVHreEhz96u0PVYfo6Kdc6JirmS9fd4c4cbVw6B7mmfnTpmuMFG8Yq/rZSDxRGVPK
+ 4AVnmqL+vdyHigXzPo9/i61Wa77KlhWQr8x1cHzYHvo5NGH4vOCeLa/ymEmjTqIhyeKN
+ NPwcyO2JrHhTs4h2qEapP04+Yq28WkRP4+UC7aZpn4f+FyEUkWKgelZsw8uUww5SkdyG
+ pzcZOrtvY+srP5AhCbnuqirXIHV319kSAVyRL8a6F2hB9KAyBdWwCONWQE7TwTZlx7qL
+ DxCg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgBR1TfDfPwjxJgw63FKaeqxMhwHdTiUXtH/kaQaj/mFkvStAN+B5x+EYZl5HryQSsurMu9emQ50db@nongnu.org
+X-Gm-Message-State: AOJu0Yw1l1nebQwr/9TTXT1BcQnO+eokqAh3ox7ZhOB840o6GU3a84Uu
+ asFlEbFyUq8ld9u9DrN0y4RUfPnNxjkEZTvTjaK/S+dRTt2TmudSawe8rURmKQEqyb4ik1wYj6t
+ 103dcRV5q0Dn6UqMte8ztbE/twM47ImhxHZwPXU9GrRb2Y3bv2/hrPUHH
+X-Gm-Gg: ASbGncvScU4r2OHRKz/7mVz3lQpsePJV8AGI/jq8kv4LjI+15r2FhPdn1SaKVxyx17b
+ 2537peF/2vjcgnmnjjQa5hspgITOFxebz4XFJUq1dEtYcPszXKU4A5JUFkBhb1UIp89SsK0FFfl
+ b6MJh+5tVB4zXamjglxhtM0UyEktImIk0lZrPiLyUiSk93ynHsZO7JZnGNiF2R9jw/b0JfsS7QB
+ ptrz3igu9hxnH8XB9jZUYZPjrX9Gt9Oq5UxoRyvLEmPjoTY+x7eajiWE4RfsCVXs9vXF4GUAwug
+ YxVYXXSpKmsmVug=
+X-Received: by 2002:a05:6e02:160b:b0:3dc:7ba2:7a2e with SMTP id
+ e9e14a558f8ab-3dc9b6e51d4mr35280105ab.3.1748371478597; 
+ Tue, 27 May 2025 11:44:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHB/2EtU54VkxztbMQx8DzxGDZD6yvXNFJVd0Ea+ChAE3ohzOS5m/8z3l/avFd7n1TH6dXzrA==
+X-Received: by 2002:a05:6e02:160b:b0:3dc:7ba2:7a2e with SMTP id
+ e9e14a558f8ab-3dc9b6e51d4mr35280025ab.3.1748371478189; 
+ Tue, 27 May 2025 11:44:38 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3dca0d1d00esm20197595ab.13.2025.05.27.11.44.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 May 2025 11:44:37 -0700 (PDT)
+Date: Tue, 27 May 2025 12:44:35 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vfio/pci: Introduce x-pci-class-code option
+Message-ID: <20250527124435.4a0201c7.alex.williamson@redhat.com>
+In-Reply-To: <20250524153102.19747-1-tomitamoeko@gmail.com>
+References: <20250524153102.19747-1-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20250521151616.3951178-1-jmarcin@redhat.com>
-In-Reply-To: <20250521151616.3951178-1-jmarcin@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 27 May 2025 20:04:46 +0200
-X-Gm-Features: AX0GCFtoG1BbnlbSC9b7P4JpaIa81ngp1o2qGv4pAXvHlexvLRbXsEkQIDkXdXA
-Message-ID: <CAJ+F1C+wEgf8dVF40wJqBWN0vGCNYBv6wx=F3MkF4ua7WTBnbQ@mail.gmail.com>
-Subject: Re: [PATCH] ui/vnc: Update display update interval when VM state
- changes to RUNNING
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, kraxel@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,89 +110,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 21, 2025 at 5:18=E2=80=AFPM Juraj Marcin <jmarcin@redhat.com> w=
-rote:
->
-> From: Juraj Marcin <jmarcin@redhat.com>
->
-> If a virtual machine is paused for an extended period time, for example,
-> due to an incoming migration, there are also no changes on the screen.
-> VNC in such case increases the display update interval by
-> VNC_REFRESH_INTERVAL_INC (50 ms). The update interval can then grow up
-> to VNC_REFRESH_INTERVAL_MAX (3000 ms).
->
-> When the machine resumes, it can then take up to 3 seconds for the first
-> display update. Furthermore, the update interval is then halved with
-> each display update with changes on the screen. If there are moving
-> elements on the screen, such as a video, this can be perceived as
-> freezing and stuttering for few seconds before the movement is smooth
-> again.
->
-> This patch resolves this issue, by adding a listener to VM state changes
-> and changing the update interval when the VM state changes to RUNNING.
-> The update_displaychangelistener() function updates the internal timer,
-> and the display is refreshed immediately if the timer is expired.
->
-> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+On Sat, 24 May 2025 23:31:02 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Introduce x-pci-class-code option to allow users to override PCI class
+> code of a device, similar to the existing x-pci-vendor-id option. Only
+> the lower 24 bits of this option are used, though a uint32 is used here
+> for determining whether the value is valid and set by user.
+> 
+> This is mainly intended for IGD devices that expose themselves either
+> as VGA controller (primary display) or Display controller (non-primary
+> display). The UEFI GOP driver depends on the device reporting a VGA
+> controller class code (0x030000).
 
+Seems like a tricky one.  Arguably it's no more crazy than allowing
+vendor and device ID overrides.  We're probably safe in the fact that
+this is an experimental option (user keeps the pieces when it breaks)
+and the obscurity of raw class values means it's unlikely to enter any
+kind of common usage.
+
+But, vfio_populate_vga() only cares that the device has a VGA region
+because these only exist on VGA class devices.  With this we can assign
+a VGA device, override the class code to Display, use x-vga=on, and now
+we've got a mess of VGA access to a non-VGA device that doesn't make
+any sense.  vfio_populate_vga() needs to care about the exposed class
+code now too.  Thanks,
+
+Alex
+
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > ---
->  ui/vnc.c | 12 ++++++++++++
->  ui/vnc.h |  2 ++
->  2 files changed, 14 insertions(+)
->
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 9e097dc4b4..32f8bfd1f9 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -3384,6 +3384,16 @@ static const DisplayChangeListenerOps dcl_ops =3D =
-{
->      .dpy_cursor_define    =3D vnc_dpy_cursor_define,
->  };
->
-> +static void vmstate_change_handler(void *opaque, bool running, RunState =
-state)
-> +{
-> +    VncDisplay *vd =3D opaque;
-> +
-> +    if (state !=3D RUN_STATE_RUNNING) {
-> +        return;
+>  hw/vfio/pci.c        | 17 +++++++++++++++++
+>  hw/vfio/pci.h        |  1 +
+>  hw/vfio/trace-events |  1 +
+>  3 files changed, 19 insertions(+)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index a1bfdfe375..879347a54e 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3062,6 +3062,21 @@ static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
+>                                                vdev->sub_device_id);
+>      }
+>  
+> +    /*
+> +     * Class code is a 24-bit value at config space 0x09. Allow overriding it
+> +     * with any 24-bit value.
+> +     */
+> +    if (vdev->class_code != PCI_ANY_ID) {
+> +        if (vdev->class_code > 0xffffff) {
+> +            error_setg(errp, "invalid PCI class code provided");
+> +            return false;
+> +        }
+> +        /* Higher 24 bits of PCI_CLASS_REVISION are class code */
+> +        vfio_add_emulated_long(vdev, PCI_CLASS_REVISION,
+> +                               vdev->class_code << 8, ~0xff);
+> +        trace_vfio_pci_emulated_class_code(vbasedev->name, vdev->class_code);
 > +    }
-> +    update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-> +}
 > +
->  void vnc_display_init(const char *id, Error **errp)
->  {
->      VncDisplay *vd;
-> @@ -3420,6 +3430,8 @@ void vnc_display_init(const char *id, Error **errp)
->      vd->dcl.ops =3D &dcl_ops;
->      register_displaychangelistener(&vd->dcl);
->      vd->kbd =3D qkbd_state_init(vd->dcl.con);
-> +    vd->vmstate_handler_entry =3D qemu_add_vm_change_state_handler(
-> +        &vmstate_change_handler, vd);
->  }
->
->
-> diff --git a/ui/vnc.h b/ui/vnc.h
-> index acc53a2cc1..3bb23acd34 100644
-> --- a/ui/vnc.h
-> +++ b/ui/vnc.h
-> @@ -185,6 +185,8 @@ struct VncDisplay
->  #endif
->
->      AudioState *audio_state;
-> +
-> +    VMChangeStateEntry *vmstate_handler_entry;
->  };
->
->  typedef struct VncTight {
-> --
-> 2.49.0
->
->
+>      /* QEMU can change multi-function devices to single function, or reverse */
+>      vdev->emulated_config_bits[PCI_HEADER_TYPE] =
+>                                                PCI_HEADER_TYPE_MULTI_FUNCTION;
+> @@ -3482,6 +3497,8 @@ static const Property vfio_pci_dev_properties[] = {
+>                         sub_vendor_id, PCI_ANY_ID),
+>      DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
+>                         sub_device_id, PCI_ANY_ID),
+> +    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
+> +                       class_code, PCI_ANY_ID),
+>      DEFINE_PROP_UINT32("x-igd-gms", VFIOPCIDevice, igd_gms, 0),
+>      DEFINE_PROP_UNSIGNED_NODEFAULT("x-nv-gpudirect-clique", VFIOPCIDevice,
+>                                     nv_gpudirect_clique,
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index 5ce0fb916f..587eb8cc9a 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -156,6 +156,7 @@ struct VFIOPCIDevice {
+>      uint32_t device_id;
+>      uint32_t sub_vendor_id;
+>      uint32_t sub_device_id;
+> +    uint32_t class_code;
+>      uint32_t features;
+>  #define VFIO_FEATURE_ENABLE_VGA_BIT 0
+>  #define VFIO_FEATURE_ENABLE_VGA (1 << VFIO_FEATURE_ENABLE_VGA_BIT)
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index e90ec9bff8..d0b006aa29 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -46,6 +46,7 @@ vfio_pci_emulated_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
+>  vfio_pci_emulated_device_id(const char *name, uint16_t val) "%s 0x%04x"
+>  vfio_pci_emulated_sub_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
+>  vfio_pci_emulated_sub_device_id(const char *name, uint16_t val) "%s 0x%04x"
+> +vfio_pci_emulated_class_code(const char *name, uint16_t val) "%s 0x%06x"
+>  
+>  # pci-quirks.c
+>  vfio_quirk_rom_in_denylist(const char *name, uint16_t vid, uint16_t did) "%s %04x:%04x"
 
-
---=20
-Marc-Andr=C3=A9 Lureau
 
