@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB24C5B542
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 21:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F5D1C5B542
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 22:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK2KQ-0004lZ-8E; Tue, 27 May 2025 17:59:22 -0400
+	id 1uK2K6-0004hJ-Mz; Tue, 27 May 2025 17:59:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK2KI-0004kj-VX
- for qemu-devel@nongnu.org; Tue, 27 May 2025 17:59:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK2K5-0004gs-9H
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 17:59:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK2KH-00088H-CP
- for qemu-devel@nongnu.org; Tue, 27 May 2025 17:59:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uK2K1-00085s-Rp
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 17:59:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748383152;
+ s=mimecast20190719; t=1748383136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ow9XZwvFSPaA1YRoz79EY6e13wTkk7fPGrMeCj5AqlA=;
- b=HUWyYebxsV+bscClle1EJBgvVze70agUCFUUqVyWFWOwZNlnnliLwgg7Tg/ukKetM9UgYM
- E7VA5iVAHd28REtGkLBW61kUgbcYheQVTcvLd3v/mD1RJq72n+1wFA+TsDBwu4JuylJ5w/
- sNwZaGBfMuvuv5ofFCeqQ2JStX2pxu0=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=SzjMwRn1rvI6Q4SnN2ASTrwfZT8jwIWDMFe811+Mqqw=;
+ b=NhfmkiAeHLm1xNNfKQ1shrxYDtRE9jZOfYPpaM+GFgbbnkZMixVeUofsHCnSg8GF4BlWC0
+ YJ2oeHsC6Tli0hVXl44uku/t0VZnuG+yUoRVH5qH6AmGOMh2WA/W5mOhfFEWGjt4VJYCDW
+ s+6xFMy5bLfaSSLz4sEg2O27NKrwg8A=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-263-HCNP35QMOh2IcZFEqTFahg-1; Tue, 27 May 2025 17:59:10 -0400
-X-MC-Unique: HCNP35QMOh2IcZFEqTFahg-1
-X-Mimecast-MFC-AGG-ID: HCNP35QMOh2IcZFEqTFahg_1748383150
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6f50edda19eso56597766d6.1
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 14:59:10 -0700 (PDT)
+ us-mta-121-ceLBQOMrOAukz1--Ry3n8w-1; Tue, 27 May 2025 17:58:55 -0400
+X-MC-Unique: ceLBQOMrOAukz1--Ry3n8w-1
+X-Mimecast-MFC-AGG-ID: ceLBQOMrOAukz1--Ry3n8w_1748383134
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6faa9ffe50fso40636566d6.3
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 14:58:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748383150; x=1748987950;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ow9XZwvFSPaA1YRoz79EY6e13wTkk7fPGrMeCj5AqlA=;
- b=wmnRfFBulI7R8061etwW9FWVO60XaWaF/PjZfBcUEjE03n/yO8TYGw+GapFk6/XPah
- iKTKybU22Ez1TG6uAabJyUBhqq2JMHCiFjZH98ebBdaq6WE3zzID3iJJLDoXj7Ax6YXw
- trbchDmqWOENil1sjBbuWoCbIHwzY6BZw8mhCWvpqAghujs4P85HjcAc1+iV0o4zF9YP
- dABLN8CUWotzU4eG89FaZyLDeP3G8OxMuaNB2aRFHPoB04sjBOy6AHkxr9JaKSesW0q4
- bygQKwZajb+5JWtyqoE9I10hYttyaSOTfk4JUKF8reoiXroAtT9F7+HKPU82xZ3oo6QL
- a1gw==
-X-Gm-Message-State: AOJu0YzlfJJQpJZRomqjgF+VU5yDgqjOCuAay4MSbfaWgc16n12Rmhii
- xXIFovCfSCeeq6rgwGoXQ/otrkcriaFVNcb4mgpEPpWoVnGvinM/Ct8ZNhPx5vpUFNn9dFrvbH+
- WCECy+IG6W9tWdanbXJCaxKEgWo77TIo7z5D2oeEXUd/mKU6q/BfatBXzAue+8bA3HbBuHU4UMU
- ijcES1pV1OuVzG4gQZS2YmnMG+/UbPdVkA/bTIEg==
-X-Gm-Gg: ASbGnctylbCuYNRUsZWwCwVPzaTig6Bhn9HSDb+BzG5ghr8vI20L8+TRzgo3/vd2Goi
- RRC6czjVrf3Dj5cJa7OIPg2dMxyKv+75Ud9/hJfop+gC6DQ58GUVFa6txMluj/Ju+uwCHoRBm3f
- n5ySOlkPvldUQqm7tIbxGBHMns38iShFMHPwXwDSDIAlFE6xy351tNCTEa6mpV0SRp5YCJR/WF2
- jx1pHQst7NHNpNvJDbMFxUnJa7bRWhuulPZ4ktHKXlELxwg1IjhdMw/65FB/JBOUDTAdxS+2yCP
-X-Received: by 2002:a05:6214:1d0d:b0:6f5:f83:1cf8 with SMTP id
- 6a1803df08f44-6fa9cfe9a16mr248859066d6.7.1748383149725; 
- Tue, 27 May 2025 14:59:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEERYoWgEOp7ygcCxwDSWKMlmRyOV4jZWAiqDgES13PXu/QctQIcmzedy4Z2V19a3Lq1B54JA==
-X-Received: by 2002:a05:6214:1d0d:b0:6f5:f83:1cf8 with SMTP id
- 6a1803df08f44-6fa9cfe9a16mr248858726d6.7.1748383149336; 
- Tue, 27 May 2025 14:59:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748383134; x=1748987934;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SzjMwRn1rvI6Q4SnN2ASTrwfZT8jwIWDMFe811+Mqqw=;
+ b=BKWIERNdMCWVZx77d1NccN3BGA+4huJxSsAfq8pYKGAuy8ubJWJVMTZcfz1fZ0MYe4
+ Xu4nCpz1C7ElqDE0S2XKhbSoeEdz9xsCKVXIdydPi6WS8B3AzjKVDWKwZGFnJmvmwddW
+ B+hWJlevCV1F/L+fxIVT2Ud6asKY3mYn/Y36084IMmjRfxO/fwDC7ZvrSdksWkoYBUUX
+ A5CWUOE/Fb55WOtMXFIfjHTAXvTehlKPHWQYLzuWKRsiYOCQ7SvfekMuV1iaOhirufBy
+ K5CXf7/uV8tS27fuilFCHfeLQKDUmAu3ZF1vbLRPWNFh/0AYZEZ4CXjyYyzvU/apH8Kv
+ gZMg==
+X-Gm-Message-State: AOJu0YyRNgaXXS2zDCacVJ1O074dzuPVhmrjyBj2B8qXHaLH0VjFvfE/
+ RrkJJn8UPT0UAEnS9vor+5GZ2FZ2+g1wgBrnufeb5TEKvPZQN/WLGEtsnKikmTFeP/Y0Y/NxY8a
+ TOVrGIKAqCe4FEHddOaHDW+rxrzaFJWeVElAhNbf4KOA2cDfhF/0eV+jNkQ8pVz9MlMI+r97pZC
+ Kh31NwYH6Ft+CldVNz0DiwktBGQRP2B08KmUJxHA==
+X-Gm-Gg: ASbGncs0OLBXWH8HmZr8eTmdojP96eSt0MDB3BD2YL9AdY/V38ISEnECgDhuAUu0h3B
+ panBGR4hUpzSOckEueZujw3psQAgJcknafR/nYNV2k1ZuDDh1DSebsQUUGhMuts9DEKsczO+8t2
+ C8i/bd8GOG2MgOrgBmCRfaGcYSYUo56B2FbvrdnA4ZO7AgqWg6vGxxdCuObNawQegY3Rz0BCxtq
+ EMEs/RSf6s22wWj6iGeQNIADDWTGMaxkRVUcNi/P7ro81xFm1s3hZxv0jjdL0chmKckbdeAx0yX
+X-Received: by 2002:ad4:5bad:0:b0:6e8:f4e2:26e1 with SMTP id
+ 6a1803df08f44-6fa9d1533b1mr219451696d6.20.1748383134245; 
+ Tue, 27 May 2025 14:58:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGeaCABUqaf5MVlesW1vYIdCLtoyAjhVHecMAIk9t8tVQpMbO8JK4QI2QvzkrXF/qdbavxSxQ==
+X-Received: by 2002:ad4:5bad:0:b0:6e8:f4e2:26e1 with SMTP id
+ 6a1803df08f44-6fa9d1533b1mr219451386d6.20.1748383133845; 
+ Tue, 27 May 2025 14:58:53 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fabe4f27cdsm914516d6.49.2025.05.27.14.59.08
+ 6a1803df08f44-6fabe4f27cdsm914516d6.49.2025.05.27.14.58.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 14:59:08 -0700 (PDT)
+ Tue, 27 May 2025 14:58:53 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Yanfei Xu <yanfei.xu@bytedance.com>
-Subject: [PATCH 11/11] migration/postcopy: Avoid clearing dirty bitmap for
- postcopy too
-Date: Tue, 27 May 2025 17:58:50 -0400
-Message-ID: <20250527215850.1271072-12-peterx@redhat.com>
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH 00/11] migration: Some enhancements and cleanups for 10.1
+Date: Tue, 27 May 2025 17:58:39 -0400
+Message-ID: <20250527215850.1271072-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250527215850.1271072-1-peterx@redhat.com>
-References: <20250527215850.1271072-1-peterx@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -108,42 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a follow up on the other commit "migration/ram: avoid to do log
-clear in the last round" but for postcopy.
+The series is based on a small patch from Yanfei Xu here:
 
+Based-on: <20250514115827.3216082-1-yanfei.xu@bytedance.com>
 https://lore.kernel.org/r/20250514115827.3216082-1-yanfei.xu@bytedance.com
 
-I can observe more than 10% reduction of average page fault latency during
-postcopy phase with this optimization:
+This is a series that collected many of either enhancements or cleanups I
+got for QEMU 10.1, which almost came from when working on the last patch.
 
-  Before: 268.00us (+-1.87%)
-  After:  232.67us (+-2.01%)
+The last patch, which is a oneliner, can further reduce 10% postcopy page
+fault latency with preempt mode enabled.
 
-The test was done with a 16GB VM with 80 vCPUs, running a workload that
-busy random writes to 13GB memory.
+      Before: 268.00us (+-1.87%)
+      After:  232.67us (+-2.01%)
 
-Cc: Yanfei Xu <yanfei.xu@bytedance.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/ram.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+The patch layout is as following:
 
-diff --git a/migration/ram.c b/migration/ram.c
-index a1d0e8ada2..cd4aafd15c 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -835,8 +835,10 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
-      * protections isn't needed as we know there will be either (1) no
-      * further writes if migration will complete, or (2) migration fails
-      * at last then tracking isn't needed either.
-+     *
-+     * Do the same for postcopy due to the same reason.
-      */
--    if (!rs->last_stage) {
-+    if (!rs->last_stage && !migration_in_postcopy()) {
-         /*
-          * Clear dirty bitmap if needed.  This _must_ be called before we
-          * send any of the page in the chunk because we need to make sure
+Patch 1:         A follow up of HMP change for "info migrate", per
+                 suggestion from Dave
+Patch 2:         Yet another HMP fix for blocktime displays
+Patch 3-10:      Cleanups everywhere, especially please take a look at
+                 patch 10 which changes the core switchover decision logic
+Patch 11:        The one-liner optimization
+
+Comments welcomed, thanks.
+
+Peter Xu (11):
+  migration/hmp: Reorg "info migrate" once more
+  migration/hmp: Fix postcopy-blocktime per-vCPU results
+  migration/docs: Move docs for postcopy blocktime feature
+  migration/bg-snapshot: Do not check for SKIP in iterator
+  migration: Drop save_live_complete_postcopy hook
+  migration: Rename save_live_complete_precopy to save_complete
+  migration: qemu_savevm_complete*() helpers
+  migration/ram: One less indent for ram_find_and_save_block()
+  migration/ram: Add tracepoints for ram_save_complete()
+  migration: Rewrite the migration complete detect logic
+  migration/postcopy: Avoid clearing dirty bitmap for postcopy too
+
+ docs/devel/migration/postcopy.rst | 36 +++++++-------
+ include/migration/register.h      | 26 ++++------
+ hw/ppc/spapr.c                    |  2 +-
+ hw/s390x/s390-stattrib.c          |  2 +-
+ hw/vfio/migration.c               |  2 +-
+ migration/block-dirty-bitmap.c    |  3 +-
+ migration/migration-hmp-cmds.c    | 82 ++++++++++++++++--------------
+ migration/migration.c             | 61 ++++++++++++++++-------
+ migration/ram.c                   | 32 +++++++-----
+ migration/savevm.c                | 83 +++++++++++++++++--------------
+ migration/trace-events            |  1 +
+ 11 files changed, 185 insertions(+), 145 deletions(-)
+
 -- 
 2.49.0
 
