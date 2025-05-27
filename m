@@ -4,67 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F4EFC54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D07C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJp0Y-0003ob-FB; Tue, 27 May 2025 03:45:58 -0400
+	id 1uJouK-00041X-VN; Tue, 27 May 2025 03:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uJoyl-000294-Q6
- for qemu-devel@nongnu.org; Tue, 27 May 2025 03:44:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJouJ-00040k-J5
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 03:39:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uJoyj-0000Ny-1B
- for qemu-devel@nongnu.org; Tue, 27 May 2025 03:44:07 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJouF-0007r9-EP
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 03:39:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748331843;
+ s=mimecast20190719; t=1748331565;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1eVB/3yTM8t3rU6zRyP8dyAWqxoevMw86hNW+Tlbtnw=;
- b=bTW4ZzpqqYJaikGUz5WP21idRAZBzvhfuba5wiVs6fIYe2iXaIaGS5MYRb/ZYQgcyHWr1u
- wtLV0+EWVZ0ccsnFXO3SHXLL+kRCsicUWdaBk+c/MDKnUIK6KuX7ql9msgraPTa0WTE3VU
- 9m6/Xyf1FNh/LRJGov/QVPpIDwmapLI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rTCpHezVaWawe0D6ROo+zGOmqiwfq843Ti5PzOcC6Vw=;
+ b=jRvUyCyWTaGGUcKoyBQrbmyOesM6wQwKOfGeQN3PdRnPt2DnLnAR5QqQpgIxKTiNtaN191
+ M0gUOLGjRKyWja3oO782f/fq6SHyg/YCRP+G60uE6sU6e/g1oJdTbUarzgHlN7JmZRMaL9
+ Bbbsv3sbKESqz0en1Miniau9K4w32a4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-nZhXOfc-OpyNSiYgaQFN2w-1; Tue,
- 27 May 2025 03:44:00 -0400
-X-MC-Unique: nZhXOfc-OpyNSiYgaQFN2w-1
-X-Mimecast-MFC-AGG-ID: nZhXOfc-OpyNSiYgaQFN2w_1748331839
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-gGgAcXZyM_GLC8qE7A1jog-1; Tue,
+ 27 May 2025 03:39:23 -0400
+X-MC-Unique: gGgAcXZyM_GLC8qE7A1jog-1
+X-Mimecast-MFC-AGG-ID: gGgAcXZyM_GLC8qE7A1jog_1748331562
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D660D18002A5; Tue, 27 May 2025 07:43:58 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.45.224.201])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 79DA11944DFF; Tue, 27 May 2025 07:43:54 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- gustavo.romero@linaro.org, anisinha@redhat.com, mst@redhat.com,
- shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
- alex.bennee@linaro.org
-Subject: [PATCH v2 17/25] hw/arm/virt-acpi-build: Modify the DSDT ACPI table
- to enable ACPI PCI hotplug
-Date: Tue, 27 May 2025 09:40:19 +0200
-Message-ID: <20250527074224.1197793-18-eric.auger@redhat.com>
-In-Reply-To: <20250527074224.1197793-1-eric.auger@redhat.com>
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7D1611800EC8; Tue, 27 May 2025 07:39:22 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 30C0630001A1; Tue, 27 May 2025 07:39:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 33C2A21E66BC; Tue, 27 May 2025 09:39:16 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: eblake@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
+ vsementsov@yandex-team.ru, qemu-block@nongnu.org,
+ David Hildenbrand <david@redhat.com>
+Subject: [PATCH 05/13] qapi: Drop a problematic (Since: 2.11) from
+ query-hotpluggable-cpus
+Date: Tue, 27 May 2025 09:39:08 +0200
+Message-ID: <20250527073916.1243024-6-armbru@redhat.com>
+In-Reply-To: <20250527073916.1243024-1-armbru@redhat.com>
+References: <20250527073916.1243024-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
 X-Spam_bar: -----
@@ -72,7 +70,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,100 +86,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modify the DSDT ACPI table to enable ACPI PCI hotplug.
+There is a (Since: 2.11) in a query-hotpluggable-cpus example.
+Versioning information ought to be in the command description, not
+examples.  The command description is basically empty (there is a TODO
+about it).
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
+What exactly didn't work before 2.11 is not quite clear from the
+documentation.  The example was added in commit 4dc3b151882 (s390x:
+implement query-hotpluggable-cpus), which suggests the command failed
+for the s390x target until then.  This was almost eight years ago, and
+I doubt anyone still cares about this detail.  Simply delete
+the problematic (Since: 2.11).
+
+Cc: David Hildenbrand <david@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/hw/arm/virt.h    |  1 +
- hw/arm/virt-acpi-build.c | 21 +++++++++++++++++++++
- hw/arm/virt.c            |  1 +
- hw/arm/Kconfig           |  2 ++
- 4 files changed, 25 insertions(+)
+ qapi/machine.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 10ea581f06..1b2e2e1284 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -79,6 +79,7 @@ enum {
-     VIRT_ACPI_GED,
-     VIRT_NVDIMM_ACPI,
-     VIRT_PVTIME,
-+    VIRT_ACPI_PCIHP,
-     VIRT_LOWMEMMAP_LAST,
- };
- 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index be5e00a56e..9d88ffc318 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -34,6 +34,7 @@
- #include "hw/core/cpu.h"
- #include "hw/acpi/acpi-defs.h"
- #include "hw/acpi/acpi.h"
-+#include "hw/acpi/pcihp.h"
- #include "hw/nvram/fw_cfg_acpi.h"
- #include "hw/acpi/bios-linker-loader.h"
- #include "hw/acpi/aml-build.h"
-@@ -836,6 +837,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                          (irqmap[VIRT_MMIO] + ARM_SPI_BASE),
-                          0, NUM_VIRTIO_TRANSPORTS);
-     acpi_dsdt_add_pci(scope, memmap, irqmap[VIRT_PCIE] + ARM_SPI_BASE, vms);
-+
-     if (vms->acpi_dev) {
-         build_ged_aml(scope, "\\_SB."GED_DEVICE,
-                       HOTPLUG_HANDLER(vms->acpi_dev),
-@@ -864,6 +866,25 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
- 
-     aml_append(dsdt, scope);
- 
-+    if (vms->acpi_pcihp) {
-+        Aml *pci0_scope = aml_scope("\\_SB.PCI0");
-+
-+        aml_append(pci0_scope, aml_pci_edsm());
-+        build_acpi_pci_hotplug(dsdt, AML_SYSTEM_MEMORY,
-+                               memmap[VIRT_ACPI_PCIHP].base);
-+        build_append_pcihp_resources(pci0_scope,
-+                                     memmap[VIRT_ACPI_PCIHP].base,
-+                                     memmap[VIRT_ACPI_PCIHP].size);
-+
-+        /* Scan all PCI buses. Generate tables to support hotplug. */
-+        build_append_pci_bus_devices(pci0_scope, vms->bus);
-+        if (object_property_find(OBJECT(vms->bus), ACPI_PCIHP_PROP_BSEL)) {
-+            build_append_pcihp_slots(pci0_scope, vms->bus);
-+        }
-+        build_append_notification_callback(pci0_scope, vms->bus);
-+        aml_append(dsdt, pci0_scope);
-+    }
-+
-     /* copy AML table into ACPI tables blob */
-     g_array_append_vals(table_data, dsdt->buf->data, dsdt->buf->len);
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a0deeaf2b3..4aa40c8e8b 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -183,6 +183,7 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
-     [VIRT_PVTIME] =             { 0x090a0000, 0x00010000 },
-     [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
-+    [VIRT_ACPI_PCIHP] =         { 0x090c0000, 0x00001000 },
-     [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
-     /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
-     [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index a55b44d7bd..572b4dabd5 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -34,6 +34,8 @@ config ARM_VIRT
-     select ACPI_HW_REDUCED
-     select ACPI_APEI
-     select ACPI_VIOT
-+    select ACPI_PCIHP
-+    select ACPI_PCI_BRIDGE
-     select VIRTIO_MEM_SUPPORTED
-     select ACPI_CXL
-     select ACPI_HMAT
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 47e915a2e3..ab4e0585f8 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1089,7 +1089,7 @@
+ #    :annotated:
+ #
+ #    For s390x-virtio-ccw machine type started with
+-#    ``-smp 1,maxcpus=2 -cpu qemu`` (Since: 2.11)::
++#    ``-smp 1,maxcpus=2 -cpu qemu``::
+ #
+ #     -> { "execute": "query-hotpluggable-cpus" }
+ #     <- {"return": [
 -- 
-2.49.0
+2.48.1
 
 
