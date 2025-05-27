@@ -4,173 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18628C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 06:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92AEBC54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 07:00:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJoFC-0002Bj-5W; Tue, 27 May 2025 02:57:02 -0400
+	id 1uJoHe-0003ae-RH; Tue, 27 May 2025 02:59:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1uJoF7-000271-VW
- for qemu-devel@nongnu.org; Tue, 27 May 2025 02:56:59 -0400
-Received: from mail-bn7nam10on2061a.outbound.protection.outlook.com
- ([2a01:111:f403:2009::61a]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <SRS0=kr5U=YL=kaod.org=clg@ozlabs.org>)
+ id 1uJoHd-0003Zp-BL; Tue, 27 May 2025 02:59:33 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1uJoF4-0001Jx-4I
- for qemu-devel@nongnu.org; Tue, 27 May 2025 02:56:57 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zJjjJvBnCNeIHFfNybUnOde25Zx0j1QHjkIaTnv2afP5zklrn070ukTm8BifiJc2BPJER6XsmaPLysBb0y0+eYEAIr432ARPnr35Mo4Wyj5opWL8Zqsr0G4lOTUNp8PHYcYAN1TMBhvN6adnkyIr5oqiAWws5LHJmW2Nti41OFMXhXEElFKHV18vuptJ/+qFK5qPzMfmkGI9QW4YAJ1kVLWjGcrfWn6arCyB3AQzxf4ZtGk2cHDkdzjMzE0WCvvSccgkqob9qAjLNdyfQzk8MrhKBzmvYwdb2HD0cftoJEttZ2HXkjCcToDBplXhFlEUe6WI8BsRGV7xQ+vafkDBUQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZnhkSXswu0GTWmjjModNh7vTl5d/zmdDcLB3scCHfAc=;
- b=PIKta1RqEFOmTbXulBCFW2+1mq9zuPA+eIBczTd7akSq4U2b97jAwKxUoOJPfqkicr1otVcjJXF9q+CN9t1BvTbNuMvPE354mgdTEdEP6i0h4dCZrwj6NPYo2M5eVNgjWdSgYzgabk+cr0Dy2Kj1xf+T4XXgx1qRCXzygZB0egQgKKss9p9aIuVswcnxKr6FLsQUaMYKCFLGYUeholSvU9fTKE9jV1gcX7A9m4PRrD4K8iOQhNSJMF8V5mCV6LYj7JXdzqszyF3TjZ4aFt2DfLmsCgDt6Hvgydbl+v5THV8SRbakHlwpYVTy/s8HQdlTtTpQnKctud6OVl3GMgimjQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZnhkSXswu0GTWmjjModNh7vTl5d/zmdDcLB3scCHfAc=;
- b=26qTIZR8GmxASJZN5sV4EPE99vQvpn8GH8U67QpWiVahZaacqZDoSqGwU74N7ceY84YX429G2PD/xGILugiP53NEgHjLI7jsQWoYVYw4Ojtb2tPasEti+JPiRbWmvrUedv9hWdHz2qIS9NIDqUSQsdWmBqP51afyFpk7Iz6WYko=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
- by SA1PR12MB6752.namprd12.prod.outlook.com (2603:10b6:806:259::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Tue, 27 May
- 2025 06:56:45 +0000
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8769.022; Tue, 27 May 2025
- 06:56:44 +0000
-Message-ID: <001c8e69-4a12-416a-8c47-4112cd18ff06@amd.com>
-Date: Tue, 27 May 2025 16:56:36 +1000
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v5 03/10] memory: Unify the definiton of
- ReplayRamPopulate() and ReplayRamDiscard()
-To: Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-References: <20250520102856.132417-1-chenyi.qiang@intel.com>
- <20250520102856.132417-4-chenyi.qiang@intel.com>
-Content-Language: en-US
-From: Alexey Kardashevskiy <aik@amd.com>
-In-Reply-To: <20250520102856.132417-4-chenyi.qiang@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SY6PR01CA0087.ausprd01.prod.outlook.com
- (2603:10c6:10:110::20) To CH3PR12MB9194.namprd12.prod.outlook.com
- (2603:10b6:610:19f::7)
+ (Exim 4.90_1) (envelope-from <SRS0=kr5U=YL=kaod.org=clg@ozlabs.org>)
+ id 1uJoHZ-0001WD-A2; Tue, 27 May 2025 02:59:33 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4b63Qd0Cdpz4x0t;
+ Tue, 27 May 2025 16:59:21 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4b63QY236jz4wy6;
+ Tue, 27 May 2025 16:59:14 +1000 (AEST)
+Message-ID: <d3b2f128-58ab-4efc-a48d-b42ad4407f9b@kaod.org>
+Date: Tue, 27 May 2025 08:59:11 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|SA1PR12MB6752:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3e33b9fa-783d-4317-e570-08dd9ceba441
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|7416014|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RENoc2UrbTBoM1VNNW9xUUk0WlB4cG40dHVyOFpFQjhTYmZ1VVhlVHdkWE9Z?=
- =?utf-8?B?UzVJSmVTWWw0aDRKUjM0RUhXcWpwTkJRUWl0UDlXYmdDS2s3S1RPVXlpd2R0?=
- =?utf-8?B?enNKM1VHalBRbmpTRVU3UmNUTS9xc1Q2Q1NvdGUzT0phaTNjZzNXT1BVdnQy?=
- =?utf-8?B?YU0xOG9ENThPUjA2ckFteXJmZTNzU1ExVFZ3cGwzN1lxQUpFRFJ4aExpNHhV?=
- =?utf-8?B?OVVZcS9jeVFnbWJzVGN2M3VIR3ZkdHF5NFRoK0VjLzJRazRndEZzRUt6Vkgr?=
- =?utf-8?B?eWlJcW5yL2x4UzNTSDlSbStEaldad0VvV3p4WUtoQ2thOWowSVdJdVAxWlJq?=
- =?utf-8?B?VE4yd0pGdEdZOGUxc0VZTGtkbTFlMHVVR0dLMG03MzR6QlM1WTlXQ3plTkNP?=
- =?utf-8?B?SFd6blQ3VVUzK3VzeUtsQXdjai8rdjV4ZU50S3VFdHNHbHd5eHp5N1F1WW1K?=
- =?utf-8?B?MzFTQlRxUG1nS2FJcUhOYmJuTEx5YWZmZWlkNm5WSlJWMjI3OS93SXJpVENx?=
- =?utf-8?B?Q2dCbzFRL3BDdkVkektiSVVkNFc1NmxLY3hQYTZpTXNPaEgyTzVZcDF1TWtl?=
- =?utf-8?B?eWRGR0Z2VEYrMFFYOHhFZzFLTytYSkhWT3ozN2pvbGZ6WE9RYWZZeHkxS09y?=
- =?utf-8?B?aDRYNjRGeHY2bzRlcldSL3BhVDdPVTR1SDcvaDhadjFYYnB5SmpycEUyV0U0?=
- =?utf-8?B?WW1lLzQ3N2dTQjNuVURvNWxFeFdpc3o5cjc5a3JSbDhTZmxVQURoN09WVXFO?=
- =?utf-8?B?QkxidkJmS0dzL1ptSkhjWXBCYzdLK0pVWFJMbDVKb1pWWmUxUW1PczZtaVdX?=
- =?utf-8?B?VDcyS3FTUVB1Zk5ERWE1OSszeXNwblJ3V2pCakdSZlNoRWFzT25yYzczbXZH?=
- =?utf-8?B?eFZ2eVNWY1R5ajk5MXhVMnpydnVBVUhlQWk5bDA2eENQUnBVNXduRFlQNmpY?=
- =?utf-8?B?MHFxamxiUFVTTGIwUkRwMVE5aFJzd3pFeDFOTk05NUt0aUFidVlCMWE0THFy?=
- =?utf-8?B?SlV0V1h4ZDlyQnFSVE5zWlQ5THAxN3I1dk9KSHowNDZDQ3M2ejlxcG13ck1G?=
- =?utf-8?B?aHRnbCtyZm5JM2htc2pndWZnMUE3V2tUVTd1WkhjdEp2STNWTU03MXl3WW4x?=
- =?utf-8?B?QWoyVjN3ZS90RTUza3BaODVzZUlhTFRCUzVKYWF0WWdiV3gzajBNbTZyMVBz?=
- =?utf-8?B?OC9Yc0hqcGwvZXFtSFkxSmgxeHNXcGcwS2NwVjBXdHlMNG4yM0l4NU5XK1Y3?=
- =?utf-8?B?cC9jb2VuTkVIbFhXSWRPemtXY3hUUCt4c1ZZTW5vbGw4c1FBRW1JL2tVMi9P?=
- =?utf-8?B?Z3BTK2pQbkdZK1JodE5hc2hnQnMwYnU4SldJUERNb1NnMExzbGVLcDVBK3FY?=
- =?utf-8?B?Y29kNDJLSWJLSExrbU54WHlOejNHOG8rbmVoeEQ5YjNhdnRIVTBuTWMwWDlP?=
- =?utf-8?B?UkJBMFpmUzZlSzcraHRxdGpPTXZBOGExck1sMEd1dnp3bXJUdFhzYXdBaEUw?=
- =?utf-8?B?aUJzQ0oxdDhOWXZtMGN6cXh0Qm52OEZSV2JqcnJKa25xMzdnc2RRbmRrVndr?=
- =?utf-8?B?N1lEWTlpNjlhR1hiNHFrb0t5clRhcjdyWGFCcSs0ekhqK1dFYTZ6RTg0ZTlz?=
- =?utf-8?B?YXVLZWRYWUVwN1hsOUcweExzeXd0bVNrYnp0NzBHT0pSeGd0RU1heGlYWnA3?=
- =?utf-8?B?MkJzdmg5cTBjSmpNK1BxRisvNEo4Z2ZuNktXdWZseTZZZ2VYVWEveTRQSnVZ?=
- =?utf-8?B?Z0MvamtIMzd0bzlUM2h0Wi9ObUNDZnJFbURxY3lvSXVpV3BERmtFKzhiemVr?=
- =?utf-8?B?TWdUd3Vlak9ncjZsbWVPdm42THVFSEkvN1hMdFJMVmJyQ0x4MEtBVkZxSkp3?=
- =?utf-8?B?SHpJYkJac1oyY1EwYzVQQWx1M0JXL0FrRzZSN2ZaYk9kVnJDR3NxSHNOME95?=
- =?utf-8?Q?xh9tRiLYIhU=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(7416014)(1800799024)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c3NnVGRMMXpXMVVzN0p1UXJ0YlZLOUg1YUhUbitoOTkzeXR3L3haT2dTcHIv?=
- =?utf-8?B?N0xZUnlNRUk1b0tDN1RKcG9kY2plY1lvWk42SlVWZHp5bUl2dU4xdDhUNTVP?=
- =?utf-8?B?SE5DeXpxY29ZUXNvdy9KNTRQMzhNUzVLYzhWNElJM2NocUZhYkZnekM2dFVh?=
- =?utf-8?B?bGNUTHJiQkx0MDhQOWlYSko1d3VPL1hsK1M3cXQvaXhCeVNMUzhKWkhSTUR6?=
- =?utf-8?B?V0ROcmxMYnV5bWRJcE9Ob3JXZVdac0hWZllhQTI5RVd5cVU4blFqVlZkWnh1?=
- =?utf-8?B?bGY4WlIweWMxb0lXSE1STGFMYzRxTnVRQk5wM0FGZW5tNnN2UzNsZjVPdk4x?=
- =?utf-8?B?c2FPai9kVzlXZjJLQlF2bEtsTUpMSjRQZEpiTHF6eFpDRnZUZE1kcUdZeUFz?=
- =?utf-8?B?SHArWUJjSG1lUmEyNndVK2ZoWTNIWU9sbG0rSHBFLzZ2cjBrYWVwVDRQT1lP?=
- =?utf-8?B?Y1d2RHRXNnB4T2tsWXFJeXdEalNYRjVUUjBJYktoMGN5dHYyU092RHZsck1o?=
- =?utf-8?B?RVJHMktLZGxYUGN2MGNZODNuaEZrWHp0Q05XV05XN1hwT2JmdFFPN3lVSVlZ?=
- =?utf-8?B?U3hKK0xjeitMdW9Mem5hSXZ2aTI0WXVUeE92bmtzNThDeEtCc2ZnSlYvWnJD?=
- =?utf-8?B?WThFSjkvUHNoNmhVU1huclRzWml1V2FQcWxhOWdvYmZTRjBGUFA5VTh5SDl0?=
- =?utf-8?B?QTZrUTJsREFaQ0lZeE5sQ3BtR3hVbkNIcG9PVnNQWDJuWkNpdDNLT3VvL1gr?=
- =?utf-8?B?d1RDMjdRQlNPN0FEdlRuSGkvbFordHRsY2hlNHRDM29YOVJzWGswdSsrbWVv?=
- =?utf-8?B?VXE3R2lLU0NMOHZaSEhnOEU3S281VmlLQnhkUlFBMjVCNWVhbzl2SjZSNC8y?=
- =?utf-8?B?a1lrNDRydHdFUzBqeUFZbXNhcTRSVkE3U1pPaWxGZ1RZYU9ucjFRbTRUL1ZD?=
- =?utf-8?B?OWtvSWJ5bUFjdzQxeG9Bb3ZhdW53cGRwTjY2eE5yQ1g4MVhUanlBS25zbmE3?=
- =?utf-8?B?bmwyVi93eFJOc3o5TWZyN0M5QXBEUTFKSjl1TDN0RmpCc2xYb1g4Z3B2aXV4?=
- =?utf-8?B?TGRzbXZJaUpkUEJUenlNMjRDbzBucnZ4YmJKWHFGV21BTXR0emdRSXBPT1pn?=
- =?utf-8?B?NU40dGRhWGQxQytMT1B1TTZYUjlFM1lOYUxBR0h4RXcyRGJRTGszL3Q3bVNO?=
- =?utf-8?B?V0cySXluamZaS3ZSWG4rcHF0U24rMU40WXpJRzJrSEZUN0N5SDl1aXhFUjgw?=
- =?utf-8?B?TitKZkJ5ZFNSeDVnazR3bjNhTVRHejI0K3ozUUNEVmtUM244QnBCZFJtcFl6?=
- =?utf-8?B?Qk9YVEpDNHloenFiQmZGRnNEeUtzN1F4bENJQzI2WnppZWtOVy9ZMmJncGVU?=
- =?utf-8?B?dm1mVEg3OVduelRheGlmd0tHeEdXREh2d09QanJqNmI5NnFsY3hqdy9qTnZP?=
- =?utf-8?B?Q0t3bkRuUlRVWThhd01vRm5kZUFFSEZsUmJCNm1tWWVja1BBaFcyOUpIWVY2?=
- =?utf-8?B?K1ZGR2ZXMTl4ay9sY1BmR1JMVW5SaWgxRDhBLytneEV3SXhMS3dtc1NEdjBZ?=
- =?utf-8?B?cDlEaEpzVndsMGFOOFJtaTNkS25mcXBOeHFvaUtLT0lUMzRCQlRPR3JtcTVv?=
- =?utf-8?B?YzdBMTMwdUE4aVFBUVlnRmltejUzdFlIaHJlSmdtSTJQeS9kaFEwZFVyTW1R?=
- =?utf-8?B?K1RucFcyWCtUcmpETWN1aVdnMHVSRW5wcGxOQkdKMzJUWHh5ck80dUdEVzZV?=
- =?utf-8?B?RHI3a0dWMmNsN1RGUi9oWUFGaVN0eXFmd1NOemxmd2ozL1lXTEVqc2RCUUJC?=
- =?utf-8?B?S0lQYitvUWllVXk5NmlaaGNlMUpLMmlKOVN5dmtjZ3FoaU5NeGxlcGo1eUla?=
- =?utf-8?B?V2puc1JGaEh5NS80SDlkYXRtdUlaUkMrL3pVWmlZQjhIblFXN3JPQkxBRzZw?=
- =?utf-8?B?NWwvOXI3MHJia2s0YUswUzRzWmlGeEIwWjB6aUV2RFVqTHBDMmJDYVRVVVNz?=
- =?utf-8?B?b1NyL1RTTllvdjc4d0RIM21Ka21Ic0sxN3M4Sms1OGdKbWtHL25yTXptaGFw?=
- =?utf-8?B?TGl5WUNuWGlHakdwWjV0S2trZHlTcndCRnpxQ1JjT1lKNmdJWjFQYzlZUEhz?=
- =?utf-8?Q?bxM5g7qVzcbXZR4k5ZdIYvixl?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3e33b9fa-783d-4317-e570-08dd9ceba441
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2025 06:56:44.8024 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dvAbO00u375MhmE/wyLEvmQicvjCgRDcBN+XgUAR9X4zo6bFYE3fs/rt+PT33mYti9EcV0JjTamFzrh4FYDB2Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6752
-Received-SPF: permerror client-ip=2a01:111:f403:2009::61a;
- envelope-from=Alexey.Kardashevskiy@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/3] hw/misc/aspeed_otp: Add ASPEED OTP memory device
+ model
+To: Kane Chen <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250512091014.3454083-1-kane_chen@aspeedtech.com>
+ <20250512091014.3454083-2-kane_chen@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250512091014.3454083-2-kane_chen@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=kr5U=YL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -187,239 +114,342 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Kane
 
-
-On 20/5/25 20:28, Chenyi Qiang wrote:
-> Update ReplayRamDiscard() function to return the result and unify the
-> ReplayRamPopulate() and ReplayRamDiscard() to ReplayRamDiscardState() at
-> the same time due to their identical definitions. This unification
-> simplifies related structures, such as VirtIOMEMReplayData, which makes
-> it cleaner.
+On 5/12/25 11:10, Kane Chen wrote:
+> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-
-Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
-
+> Introduce a QEMU model for ASPEED One-Time Programmable (OTP) memory.
+> 
+> This device provides:
+> - Bit-level irreversible programming (0→1 for even, 1→0 for odd)
+> - Read, program, and default-value initialization interfaces
+> - File-backed OTP content via machine parameter
+> - Trace support for bit conflict debugging
+> - Error propagation via QEMU's Error** interface
+> 
+> The OTP backend is designed to integrate with SoCs requiring secure fuse storage
+> or secure boot features.
+> 
+> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > ---
-> Changes in v5:
->      - Rename ReplayRamStateChange to ReplayRamDiscardState (David)
->      - return data->fn(s, data->opaque) instead of 0 in
->        virtio_mem_rdm_replay_discarded_cb(). (Alexey)
-> 
-> Changes in v4:
->      - Modify the commit message. We won't use Replay() operation when
->        doing the attribute change like v3.
-> 
-> Changes in v3:
->      - Newly added.
-> ---
->   hw/virtio/virtio-mem.c  | 21 ++++++++++-----------
->   include/system/memory.h | 36 +++++++++++++++++++-----------------
->   migration/ram.c         |  5 +++--
->   system/memory.c         | 12 ++++++------
->   4 files changed, 38 insertions(+), 36 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-> index 2e491e8c44..c46f6f9c3e 100644
-> --- a/hw/virtio/virtio-mem.c
-> +++ b/hw/virtio/virtio-mem.c
-> @@ -1732,7 +1732,7 @@ static bool virtio_mem_rdm_is_populated(const RamDiscardManager *rdm,
->   }
->   
->   struct VirtIOMEMReplayData {
-> -    void *fn;
-> +    ReplayRamDiscardState fn;
->       void *opaque;
->   };
->   
-> @@ -1740,12 +1740,12 @@ static int virtio_mem_rdm_replay_populated_cb(MemoryRegionSection *s, void *arg)
->   {
->       struct VirtIOMEMReplayData *data = arg;
->   
-> -    return ((ReplayRamPopulate)data->fn)(s, data->opaque);
-> +    return data->fn(s, data->opaque);
->   }
->   
->   static int virtio_mem_rdm_replay_populated(const RamDiscardManager *rdm,
->                                              MemoryRegionSection *s,
-> -                                           ReplayRamPopulate replay_fn,
-> +                                           ReplayRamDiscardState replay_fn,
->                                              void *opaque)
->   {
->       const VirtIOMEM *vmem = VIRTIO_MEM(rdm);
-> @@ -1764,14 +1764,13 @@ static int virtio_mem_rdm_replay_discarded_cb(MemoryRegionSection *s,
->   {
->       struct VirtIOMEMReplayData *data = arg;
->   
-> -    ((ReplayRamDiscard)data->fn)(s, data->opaque);
-> -    return 0;
-> +    return data->fn(s, data->opaque);
->   }
->   
-> -static void virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
-> -                                            MemoryRegionSection *s,
-> -                                            ReplayRamDiscard replay_fn,
-> -                                            void *opaque)
-> +static int virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
-> +                                           MemoryRegionSection *s,
-> +                                           ReplayRamDiscardState replay_fn,
-> +                                           void *opaque)
->   {
->       const VirtIOMEM *vmem = VIRTIO_MEM(rdm);
->       struct VirtIOMEMReplayData data = {
-> @@ -1780,8 +1779,8 @@ static void virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
->       };
->   
->       g_assert(s->mr == &vmem->memdev->mr);
-> -    virtio_mem_for_each_unplugged_section(vmem, s, &data,
-> -                                          virtio_mem_rdm_replay_discarded_cb);
-> +    return virtio_mem_for_each_unplugged_section(vmem, s, &data,
-> +                                                 virtio_mem_rdm_replay_discarded_cb);
->   }
->   
->   static void virtio_mem_rdm_register_listener(RamDiscardManager *rdm,
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 896948deb1..83b28551c4 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -575,8 +575,8 @@ static inline void ram_discard_listener_init(RamDiscardListener *rdl,
->       rdl->double_discard_supported = double_discard_supported;
->   }
->   
-> -typedef int (*ReplayRamPopulate)(MemoryRegionSection *section, void *opaque);
-> -typedef void (*ReplayRamDiscard)(MemoryRegionSection *section, void *opaque);
-> +typedef int (*ReplayRamDiscardState)(MemoryRegionSection *section,
-> +                                     void *opaque);
->   
->   /*
->    * RamDiscardManagerClass:
-> @@ -650,36 +650,38 @@ struct RamDiscardManagerClass {
->       /**
->        * @replay_populated:
->        *
-> -     * Call the #ReplayRamPopulate callback for all populated parts within the
-> -     * #MemoryRegionSection via the #RamDiscardManager.
-> +     * Call the #ReplayRamDiscardState callback for all populated parts within
-> +     * the #MemoryRegionSection via the #RamDiscardManager.
->        *
->        * In case any call fails, no further calls are made.
->        *
->        * @rdm: the #RamDiscardManager
->        * @section: the #MemoryRegionSection
-> -     * @replay_fn: the #ReplayRamPopulate callback
-> +     * @replay_fn: the #ReplayRamDiscardState callback
->        * @opaque: pointer to forward to the callback
->        *
->        * Returns 0 on success, or a negative error if any notification failed.
->        */
->       int (*replay_populated)(const RamDiscardManager *rdm,
->                               MemoryRegionSection *section,
-> -                            ReplayRamPopulate replay_fn, void *opaque);
-> +                            ReplayRamDiscardState replay_fn, void *opaque);
->   
->       /**
->        * @replay_discarded:
->        *
-> -     * Call the #ReplayRamDiscard callback for all discarded parts within the
-> -     * #MemoryRegionSection via the #RamDiscardManager.
-> +     * Call the #ReplayRamDiscardState callback for all discarded parts within
-> +     * the #MemoryRegionSection via the #RamDiscardManager.
->        *
->        * @rdm: the #RamDiscardManager
->        * @section: the #MemoryRegionSection
-> -     * @replay_fn: the #ReplayRamDiscard callback
-> +     * @replay_fn: the #ReplayRamDiscardState callback
->        * @opaque: pointer to forward to the callback
-> +     *
-> +     * Returns 0 on success, or a negative error if any notification failed.
->        */
-> -    void (*replay_discarded)(const RamDiscardManager *rdm,
-> -                             MemoryRegionSection *section,
-> -                             ReplayRamDiscard replay_fn, void *opaque);
-> +    int (*replay_discarded)(const RamDiscardManager *rdm,
-> +                            MemoryRegionSection *section,
-> +                            ReplayRamDiscardState replay_fn, void *opaque);
->   
->       /**
->        * @register_listener:
-> @@ -722,13 +724,13 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
->   
->   int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
->                                            MemoryRegionSection *section,
-> -                                         ReplayRamPopulate replay_fn,
-> +                                         ReplayRamDiscardState replay_fn,
->                                            void *opaque);
->   
-> -void ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-> -                                          MemoryRegionSection *section,
-> -                                          ReplayRamDiscard replay_fn,
-> -                                          void *opaque);
-> +int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-> +                                         MemoryRegionSection *section,
-> +                                         ReplayRamDiscardState replay_fn,
-> +                                         void *opaque);
->   
->   void ram_discard_manager_register_listener(RamDiscardManager *rdm,
->                                              RamDiscardListener *rdl,
-> diff --git a/migration/ram.c b/migration/ram.c
-> index e12913b43e..c004f37060 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -848,8 +848,8 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
->       return ret;
->   }
->   
-> -static void dirty_bitmap_clear_section(MemoryRegionSection *section,
-> -                                       void *opaque)
-> +static int dirty_bitmap_clear_section(MemoryRegionSection *section,
-> +                                      void *opaque)
->   {
->       const hwaddr offset = section->offset_within_region;
->       const hwaddr size = int128_get64(section->size);
-> @@ -868,6 +868,7 @@ static void dirty_bitmap_clear_section(MemoryRegionSection *section,
->       }
->       *cleared_bits += bitmap_count_one_with_offset(rb->bmap, start, npages);
->       bitmap_clear(rb->bmap, start, npages);
-> +    return 0;
->   }
->   
->   /*
-> diff --git a/system/memory.c b/system/memory.c
-> index b45b508dce..de45fbdd3f 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -2138,7 +2138,7 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
->   
->   int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
->                                            MemoryRegionSection *section,
-> -                                         ReplayRamPopulate replay_fn,
-> +                                         ReplayRamDiscardState replay_fn,
->                                            void *opaque)
->   {
->       RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_GET_CLASS(rdm);
-> @@ -2147,15 +2147,15 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
->       return rdmc->replay_populated(rdm, section, replay_fn, opaque);
->   }
->   
-> -void ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-> -                                          MemoryRegionSection *section,
-> -                                          ReplayRamDiscard replay_fn,
-> -                                          void *opaque)
-> +int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-> +                                         MemoryRegionSection *section,
-> +                                         ReplayRamDiscardState replay_fn,
-> +                                         void *opaque)
->   {
->       RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_GET_CLASS(rdm);
->   
->       g_assert(rdmc->replay_discarded);
-> -    rdmc->replay_discarded(rdm, section, replay_fn, opaque);
-> +    return rdmc->replay_discarded(rdm, section, replay_fn, opaque);
->   }
->   
->   void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+>   hw/misc/aspeed_otpmem.c         | 198 ++++++++++++++++++++++++++++++++
+>   hw/misc/meson.build             |   1 +
+>   hw/misc/trace-events            |   5 +
+>   include/hw/misc/aspeed_otpmem.h |  39 +++++++
 
--- 
-Alexey
+please include in your .git/config
+
+[diff]
+	orderFile = /path/to/qemu/scripts/git.orderfile
+
+>   4 files changed, 243 insertions(+)
+>   create mode 100644 hw/misc/aspeed_otpmem.c
+>   create mode 100644 include/hw/misc/aspeed_otpmem.h
+> 
+> diff --git a/hw/misc/aspeed_otpmem.c b/hw/misc/aspeed_otpmem.c
+> new file mode 100644
+> index 0000000000..4c1dee8782
+> --- /dev/null
+> +++ b/hw/misc/aspeed_otpmem.c
+> @@ -0,0 +1,198 @@
+> +/*
+> + *  ASPEED OTP (One-Time Programmable) memory
+> + *
+> + *  Copyright (C) 2025 Aspeed
+> + *
+> + * This code is licensed under the GPL version 2 or later.  See
+> + * the COPYING file in the top-level directory.
+
+Replace the license boiler plate with :
+
+       SPDX-License-Identifier: GPL-2.0-or-later
+
+
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "qapi/error.h"
+> +#include "trace.h"
+> +#include "hw/misc/aspeed_otpmem.h"
+> +
+> +void aspeed_otpmem_set_backend(AspeedOTPMemState *s, const char *path)
+> +{
+> +    g_free(s->otpmem_img_path);
+> +    s->otpmem_img_path = g_strdup(path);
+> +}
+> +
+> +static void aspeed_otpmem_sync_region(AspeedOTPMemState *s,
+> +                                      hwaddr offset, hwaddr size)
+> +{
+> +    memory_region_msync(&s->iomem, offset, size);
+> +}
+> +
+> +static uint32_t aspeed_otpmem_read(AspeedOtpmemState *s,
+> +                                   uint32_t addr, Error **errp)
+> +{
+> +    uint32_t val = 0;
+> +    MemTxResult ret;
+> +
+> +    ret = address_space_read(&s->as, addr, MEMTXATTRS_UNSPECIFIED,
+> +                             (uint8_t *)&val, sizeof(val));
+> +    if (ret != MEMTX_OK) {
+> +        error_setg(errp, "Failed to read data from 0x%x", addr);
+> +        return OTPMEM_ERR_MAGIC;
+> +    }
+> +    return val;
+> +}
+> +
+> +static bool valid_program_data(uint32_t otp_addr,
+> +                                 uint32_t value, uint32_t prog_bit)
+> +{
+> +    uint32_t programmed_bits, has_programmable_bits;
+> +    bool is_odd = otp_addr & 1;
+> +
+> +    /*
+> +     * prog_bit uses 0s to indicate target bits to program:
+> +     *   - if OTP word is even-indexed, programmed bits flip 0->1
+> +     *   - if odd, bits flip 1->0
+> +     * Bit programming is one-way only and irreversible.
+> +     */
+> +    if (is_odd) {
+> +        programmed_bits = ~value & prog_bit;
+> +    } else {
+> +        programmed_bits = value & (~prog_bit);
+> +    }
+> +
+> +    /* If any bit can be programmed, accept the request */
+> +    has_programmable_bits = value ^ (~prog_bit);
+> +
+> +    if (programmed_bits) {
+> +        trace_aspeed_otpmem_prog_conflict(otp_addr, programmed_bits);
+> +        for (int i = 0; i < 32; ++i) {
+> +            if (programmed_bits & (1U << i)) {
+> +                trace_aspeed_otpmem_prog_bit(i);
+> +            }
+> +        }
+> +    }
+> +
+> +    return has_programmable_bits != 0;
+> +}
+> +
+> +static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
+> +                             uint32_t prog_bit, uint32_t *value)
+> +{
+> +    AspeedOTPMemState *s = ASPEED_OTPMEM(opaque);
+> +    bool is_odd = otp_addr & 1;
+> +    uint32_t otp_offset = otp_addr << 2;
+> +    MemTxResult ret;
+> +
+> +    ret = address_space_read(&s->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
+> +                             value, sizeof(uint32_t));
+> +    if (ret != MEMTX_OK) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Failed to read data 0x%x\n",
+> +                      otp_offset);
+> +        return false;
+> +    }
+> +
+> +    if (!valid_program_data(otp_addr, *value, prog_bit)) {
+> +        return false;
+> +    }
+> +
+> +    if (is_odd) {
+> +        *value &= ~prog_bit;
+> +    } else {
+> +        *value |= ~prog_bit;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static void aspeed_otpmem_prog(AspeedOtpmemState *s, uint32_t otp_addr,
+> +                               uint32_t val, Error **errp)
+> +{
+> +    uint32_t otp_offset, value;
+> +    MemTxResult ret;
+> +
+> +    if (!program_otpmem_data(s, otp_addr, val, &value)) {
+> +        error_setg(errp, "Failed to program data");
+> +        return;
+> +    }
+> +
+> +    otp_offset = otp_addr << 2;
+> +    ret = address_space_write(&s->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
+> +                              (uint8_t *)&value, sizeof(value));
+> +    if (ret != MEMTX_OK) {
+> +        error_setg(errp, "Failed to write %x to OTP [%x]", val, otp_addr);
+> +        return;
+> +    }
+> +    trace_aspeed_otpmem_prog(otp_offset, value, val);
+> +    aspeed_otpmem_sync_region(s, otp_offset, sizeof(value));
+> +}
+> +
+> +static void aspeed_otpmem_set_default(AspeedOtpmemState *s, uint32_t otp_offset,
+> +                                      uint32_t val, Error **errp)
+> +{
+> +    MemTxResult ret;
+> +
+> +    ret = address_space_write(&s->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
+> +                              (uint8_t *)&val, sizeof(val));
+> +    if (ret != MEMTX_OK) {
+> +        error_setg(errp, "Failed to set value %x to OTP [%x]", val, otp_offset);
+> +        return;
+> +    }
+> +    aspeed_otpmem_sync_region(s, otp_offset, sizeof(val));
+> +}
+> +
+> +static const AspeedOTPMemOps aspeed_otpmem_default_ops = {
+> +    .read = aspeed_otpmem_read,
+> +    .prog = aspeed_otpmem_prog,
+> +    .set_default = aspeed_otpmem_set_default,
+> +};> +
+> +const AspeedOTPMemOps *aspeed_otpmem_get_ops(AspeedOTPMemState *s)
+> +{
+> +    return s->ops;
+> +}
+> +
+> +static void aspeed_otpmem_realize(DeviceState *dev, Error **errp)
+> +{
+> +    AspeedOTPMemState *s = ASPEED_OTPMEM(dev);
+> +    struct stat st;
+> +
+> +    s->size = OTPMEM_SIZE;
+> +    s->ops = &aspeed_otpmem_default_ops;
+> +
+> +    if (s->otpmem_img_path && strlen(s->otpmem_img_path)) {
+> +        if (stat(s->otpmem_img_path, &st) < 0) {
+> +            error_setg(errp, "Failed to open %s",
+> +                       s->otpmem_img_path);
+> +            return;
+> +        }
+> +        if (st.st_size != OTPMEM_SIZE) {
+> +            error_setg(errp, "Invalid OTP size %ld",
+> +                       st.st_size);
+> +            return;
+> +        }
+> +        memory_region_init_ram_from_file(&s->iomem, OBJECT(dev),
+> +                "aspeed.otpmem.backend", s->size, s->size,
+> +                RAM_SHARED, s->otpmem_img_path, 0, errp);
+> +        address_space_init(&s->as, &s->iomem, NULL);
+> +    }
+> +}
+> +
+> +static void aspeed_otpmem_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    dc->realize = aspeed_otpmem_realize;
+> +    dc->user_creatable = false;
+> +}
+
+IIRC, I thought the AspeedOTPMemState model would have a drive property ?
+See pnv_pnor.c for a simple example.
+
+static const Property aspeed_otpmem_info_properties[] = {
+     DEFINE_PROP_INT64("size", AspeedOTPMemState, size, 64 * KiB),
+     DEFINE_PROP_DRIVE("drive", AspeedOTPMemState, blk),
+};
+
+
+
+> +
+> +static const TypeInfo aspeed_otpmem_info = {
+> +    .name          = TYPE_ASPEED_OTPMEM,
+> +    .parent        = TYPE_DEVICE,
+> +    .instance_size = sizeof(AspeedOTPMemState),
+> +    .class_init    = aspeed_otpmem_class_init,
+> +};
+> +
+> +static void aspeed_otpmem_register_types(void)
+> +{
+> +    type_register_static(&aspeed_otpmem_info);
+> +}
+> +
+> +type_init(aspeed_otpmem_register_types)
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index 6d47de482c..ed1eaaa2ad 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -136,6 +136,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+>     'aspeed_sbc.c',
+>     'aspeed_sdmc.c',
+>     'aspeed_xdma.c',
+> +  'aspeed_otpmem.c',
+>     'aspeed_peci.c',
+>     'aspeed_sli.c'))
+>   
+> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+> index 4383808d7a..e9df349f6d 100644
+> --- a/hw/misc/trace-events
+> +++ b/hw/misc/trace-events
+> @@ -90,6 +90,11 @@ slavio_sysctrl_mem_readl(uint32_t ret) "Read system control 0x%08x"
+>   slavio_led_mem_writew(uint32_t val) "Write diagnostic LED 0x%04x"
+>   slavio_led_mem_readw(uint32_t ret) "Read diagnostic LED 0x%04x"
+>   
+> +# aspeed_otpmem.c
+> +aspeed_otpmem_prog(uint32_t addr, uint32_t prog_value, uint32_t value) "OTP Memory program: addr 0x%" PRIx32 " prog_value 0x%" PRIx32 " value 0x%" PRIx32
+> +aspeed_otpmem_prog_conflict(uint32_t addr, uint32_t bits) "Conflict at addr=0x%x, bits=0x%08x"
+> +aspeed_otpmem_prog_bit(int bit) "Programmed bit %d"
+> +
+>   # aspeed_scu.c
+>   aspeed_scu_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+>   aspeed_scu_read(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+> diff --git a/include/hw/misc/aspeed_otpmem.h b/include/hw/misc/aspeed_otpmem.h
+> new file mode 100644
+> index 0000000000..f50f4cebf1
+> --- /dev/null
+> +++ b/include/hw/misc/aspeed_otpmem.h
+> @@ -0,0 +1,39 @@
+> +/*
+> + *  ASPEED OTP (One-Time Programmable) memory
+> + *
+> + *  Copyright (C) 2025 Aspeed
+> + *
+> + * This code is licensed under the GPL version 2 or later.  See
+> + * the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef ASPEED_OTPMMEM_H
+> +#define ASPEED_OTPMMEM_H
+> +
+> +#include "system/memory.h"
+> +
+> +#define OTPMEM_SIZE 0x4000
+> +#define OTPMEM_ERR_MAGIC 0x45727200
+> +#define TYPE_ASPEED_OTPMEM "aspeed.otpmem"
+> +OBJECT_DECLARE_SIMPLE_TYPE(AspeedOTPMemState, ASPEED_OTPMEM)
+> +
+> +typedef struct AspeedOTPMemOps {
+> +    uint32_t (*read)(AspeedOTPMemState *s, uint32_t addr, Error **errp);
+> +    void (*prog)(AspeedOTPMemState *s, uint32_t addr, uint32_t val, Error **errp);
+> +    void (*set_default)(AspeedOTPMemState *s, uint32_t addr, uint32_t val, Error **errp);
+> +} AspeedOTPMemOps;
+
+I fail to understand how these ops are useful. See comments on patch 2.
+
+> +
+> +typedef struct AspeedOTPMemState {
+> +    DeviceState parent_obj;
+> +
+> +    MemoryRegion iomem;
+> +    AddressSpace as;
+> +    size_t size;
+
+may be add a property for size too.
+
+Thanks,
+
+C.
+
+
+> +
+> +    const AspeedOTPMemOps *ops;
+> +    char *otpmem_img_path;
+> +} AspeedOtpmemState;
+> +
+> +const AspeedOTPMemOps *aspeed_otpmem_get_ops(AspeedOTPMemState *s);
+> +void aspeed_otpmem_set_backend(AspeedOTPMemState *s, const char *path);
+> +#endif /* ASPEED_OTPMMEM_H */
 
 
