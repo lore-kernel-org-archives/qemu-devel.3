@@ -4,67 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 284C3C54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 13:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A933C54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 13:04:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJtwa-0005I0-8T; Tue, 27 May 2025 09:02:12 -0400
+	id 1uJtyb-00061x-88; Tue, 27 May 2025 09:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJtwY-0005Hf-9T
- for qemu-devel@nongnu.org; Tue, 27 May 2025 09:02:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uJtyY-00061J-5S
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 09:04:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uJtwQ-0004fK-Tr
- for qemu-devel@nongnu.org; Tue, 27 May 2025 09:02:10 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uJtyQ-0004vI-8J
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 09:04:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748350912;
+ s=mimecast20190719; t=1748351043;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GJP2qYwGmw3Y23WHWlj+mKFOZl0tTVZVIHqTLgIwQFc=;
- b=RaRLqaQevkRiHh8Qg+YesP8xm15gb2s0Lq3gfnYp9Y56zFW8gP4rmS+Lavv3hdFJVPmvkT
- A9hA8CDupO29HZZpX0A7eY2shx7K9z5jTwYks8KEPQnfV0mC0gO1gWIirGY9xJs4AWbni5
- DzxlgEV88XV6id4OrV2vArWNLzUkxFE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-xYe_iVnaOnmLNDL9FjNXEQ-1; Tue,
- 27 May 2025 09:01:19 -0400
-X-MC-Unique: xYe_iVnaOnmLNDL9FjNXEQ-1
-X-Mimecast-MFC-AGG-ID: xYe_iVnaOnmLNDL9FjNXEQ_1748350861
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38E8F18007E1; Tue, 27 May 2025 13:01:01 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E39D418004A7; Tue, 27 May 2025 13:01:00 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4DE9321E675E; Tue, 27 May 2025 15:00:58 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  michael.roth@amd.com,  thuth@redhat.com,
- pbonzini@redhat.com,  richard.henderson@linaro.org,
- peter.maydell@linaro.org,  berrange@redhat.com,  philmd@linaro.org
-Subject: Re: [PATCH v4 00/15] qapi: remove all TARGET_* conditionals from
- the schema
-In-Reply-To: <20250522190542.588267-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Thu, 22 May 2025 12:05:27 -0700")
-References: <20250522190542.588267-1-pierrick.bouvier@linaro.org>
-Date: Tue, 27 May 2025 15:00:58 +0200
-Message-ID: <87frgqnr79.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=8jv5YnKPw0bgkQ99ybognjGNgreUEbk+OwbloSvQAio=;
+ b=h+ietowVnvp/lvYvuPCoEwbZdGMaiPzh+JXJogSTwC8YoYPlACbSIDHhJL32b4tRetN5IW
+ VAwDHUksoll6xtvemjNVidIe2goeeMdGco7M1DmS4CybhWNfhNZvNF+50PdfiUlVSLvY0x
+ 0oxhY5NasFiehOJoRXB6Dez5KTi+lfk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-477-A1Goj21gPOGyfCTqKM35RQ-1; Tue, 27 May 2025 09:04:02 -0400
+X-MC-Unique: A1Goj21gPOGyfCTqKM35RQ-1
+X-Mimecast-MFC-AGG-ID: A1Goj21gPOGyfCTqKM35RQ_1748351041
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43cf5196c25so19300425e9.0
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 06:04:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748351041; x=1748955841;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8jv5YnKPw0bgkQ99ybognjGNgreUEbk+OwbloSvQAio=;
+ b=Mp3LcqTfwNdf6itBd4UlAdJqAe4uHzfLbvyQb9l3rTvb+POeqwQxI6pFjeAAnO7gp+
+ 5gfMvlnKI0jTUE7UEo9EQQblJfjYrxTGKwp0K4b356Bs8dwjDZjEuvFVs+uG5krFna1a
+ Mv56s4rZJRKQen3qMexEhL5rfPz6FUQowzF2Ev4fXI5JEwySzRX3G7ZFAB7r85QmCYp3
+ DCWRhB+D854GIks/KgGyMQbzUH/wM4DH3XasZ4+wZfCvIBuyS4ZDhI2+RvlPtuHS+tZQ
+ K2Dtj4nx/e/MdcR8kwV7hEOPBX/f1LQtbiXHhbaR3Fh4kzqK+k3KRKaS5UqxqrxPOKHw
+ R1Wg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7AP+ogxz4xxxTBSKeVLaSSYLt+KPiJOmYjdr7DsPdhvuB77E5lxv4nIjuVbliqaK7j3u+GCU1ILkq@nongnu.org
+X-Gm-Message-State: AOJu0YydSYElVjmL1LAQE4GOgbTG/C7m+mjBbYxKIwSSWYne6EIcz44L
+ mClZ3O6i20Kcs/h5gavdQR/MBGJtdQjrxhVTL0YlZ3rmtC9p24cKcW4jkqDVE9wxakgfmsxv8d0
+ /iEMHmRfLaS49B/adZNa282fQeUUjvBE90tzeTDz+SCFB22Jez5o3DfPj
+X-Gm-Gg: ASbGncsDAfxbK4XesL/Ybz8F+OLE2cfbFYAqinQ1+mHhYehA6zpNjAPIToDkWJJQ1Gp
+ YCtzpi6F6C6sdOyp5bxE219js30YyYB2XS/+MGd7oca2BfTR0weIdRjZvLRk/tffbP0KdD2Mcpb
+ /HhjDEXjt+9hvT6lf5mKW5FyUZEZllSicJp4/wRG/HsSIASPwfBAmyam7q84p3jYFbDO5Ez7o+E
+ n5VzBLAdsLLybr3um0fh426vR9T+tCZMfjRQAYDlhsCPNggqROxAYsfEKFvIwA1ydijrSXD+zDz
+ kLJoAvBYYJWTCUEjV9LxG+eu2/HBemRx
+X-Received: by 2002:a05:600c:648a:b0:43c:fa3f:8e5d with SMTP id
+ 5b1f17b1804b1-44c9141ab42mr129018225e9.2.1748351041079; 
+ Tue, 27 May 2025 06:04:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGygNu+IYItu+LRzcSI0psE4MrQWx5AHjAShOjnRGSgvcGdTCLXCg4LURFTpYi/aoc5orxbFg==
+X-Received: by 2002:a05:600c:648a:b0:43c:fa3f:8e5d with SMTP id
+ 5b1f17b1804b1-44c9141ab42mr129017335e9.2.1748351040342; 
+ Tue, 27 May 2025 06:04:00 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-44804e89c42sm277960545e9.21.2025.05.27.06.03.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 May 2025 06:03:59 -0700 (PDT)
+Date: Tue, 27 May 2025 15:03:57 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v2 08/25] tests/qtest/bios-tables-test: Prepare for
+ changes in the DSDT table
+Message-ID: <20250527150357.03bfab2c@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250527143816.39c0dfab@imammedo.users.ipa.redhat.com>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-9-eric.auger@redhat.com>
+ <20250527143816.39c0dfab@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -73,7 +100,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,20 +116,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On Tue, 27 May 2025 14:38:16 +0200
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-> This series exposes all qmp commands for any target unconditionally, allo=
-wing to
-> compile QAPI generated code without any TARGET conditionals.
->
-> Based on original RFC from Daniel P. Berrang=C3=A9:
-> https://lore.kernel.org/qemu-devel/20250508135816.673087-1-berrange@redha=
-t.com/
+> On Tue, 27 May 2025 09:40:10 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
+> 
+> > From: Gustavo Romero <gustavo.romero@linaro.org>
+> > 
+> > This commit adds DSDT blobs to the whilelist in the prospect to
+> > allow changes in the GPEX _OSC method.
+> > 
+> > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> > Signed-off-by: Eric Auger <eric.auger@redhat.com>  
+> 
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+I take it back,
 
-I picked a few nits.  I'm happy to address them in my tree without a
-respin.  If you object to any, please let me know.
+test with x86 enabled breaks on microvm,
+so it's missing some DSTDs here
 
-Series:
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
+> 
+> > ---
+> >  tests/qtest/bios-tables-test-allowed-diff.h | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> > 
+> > diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> > index dfb8523c8b..abe00ad4ee 100644
+> > --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> > +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> > @@ -1 +1,6 @@
+> >  /* List of comma-separated changed AML files to ignore */
+> > +"tests/data/acpi/aarch64/virt/DSDT",
+> > +"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
+> > +"tests/data/acpi/aarch64/virt/DSDT.memhp",
+> > +"tests/data/acpi/aarch64/virt/DSDT.pxb",
+> > +"tests/data/acpi/aarch64/virt/DSDT.topology",  
+> 
 
 
