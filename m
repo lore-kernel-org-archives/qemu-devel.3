@@ -4,117 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC68FC54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 10:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D604C54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 10:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJrBo-0005VU-VM; Tue, 27 May 2025 06:05:45 -0400
+	id 1uJrDO-0006aI-Lk; Tue, 27 May 2025 06:07:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uJrBm-0005SR-6X
- for qemu-devel@nongnu.org; Tue, 27 May 2025 06:05:43 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uJrBj-0006C4-Pi
- for qemu-devel@nongnu.org; Tue, 27 May 2025 06:05:41 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-ad572ba1347so540397566b.1
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 03:05:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748340336; x=1748945136; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2lNELs6OMqCjWJuC9hCis0gVJZeKPx9DuvpLtLQxhFw=;
- b=yTD66A9m4ixxlxdfPg2CvyIXcDHkzQHmHhKn8+qk443PUCIl7L9b+2lV4EDv82KD4a
- A4OGmGIW13OnGDK7djPwBH5vQAB38OknUGSvrDz98gpAW9ihtTG6L/ihwI72eTWu2JaO
- 9KmCXyTlBGhXyjEFhT9K3rJmDojwBnhb0UXEqs5CTnCSGR5DU7aNdEONt0yqcaGHmksT
- /Dm8SuKt8doInCXsl+56bE6nIUSSr0DjB7ZyF8NSB6PPxbvWm0rxdgFFhZgYK5g6djcq
- +EIjt8OT3uz8c35PdIdpLPrfqiVHjlG1LJ/K0bIYKxaLmDCYwT/a3FuC8oW5yzT2ZUJT
- QqFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748340336; x=1748945136;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2lNELs6OMqCjWJuC9hCis0gVJZeKPx9DuvpLtLQxhFw=;
- b=O4+LDBQrjQ9J6b+w5w4GTlVeGEMTN25mCPynDeR032ZV+/EogUuNvX4ApvyXzKAMlV
- NJ9ZmDPEjfYdiMbhyx23tz5ElcUE6pefB/hSvgGi91kenF+2dDNuBGjsrQi2IxN7KOKR
- QUIiXMLKqGMKQEfToDTneWswlJtEOggov9OtN+TSjZdkdrLVsUWU2DNfadONA37ymYGM
- rU56AtnOUjBApOcWWbaQNhcYevu5Wl5s3+gWnSjQyYHra09mEm6Dd11RYYu9trt5S92j
- ovCBDDz1VoEy9rGL37iUhiFFSp3yLVoc3SE8wjyKVwX4yo2koaRTG1A+uhRr+jrP//G9
- YKLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVx9CDj/LUTxUkbJLpq5k99Ps6IVXNz0xgenezNrxKzxEQI6b+bK/IpMFHBR6FHDl5PNVdQ1VlcZAwZ@nongnu.org
-X-Gm-Message-State: AOJu0YyqzQkZAgaYq3+XMSbaQj0P3i2pTINeEl/a1k6vgYP+WrpqEsZr
- 44sFDf2ggui7PjotOl2802Qe3mLiQfLFMJJv6XORgbdkCMVwHnzZVc9Is9gEFpLT3NcZlmZA//L
- ibatTJrM=
-X-Gm-Gg: ASbGncu4RuR2Y0U25ZJUwvWXDHe64eKMxPJqhmeJAmyURn1dDMqaMHF9KglcJGOv21J
- FZV8WycrRoo2wyiTRlfMpksLHRhYcB0rdkEvaZaGziPHL4fD2/F8/9RVDr9EOrXQGisDyOdPZax
- vTNs/LGPi7Uq3lqVy7EWPm9StEI4Uo77u/MY8nY+zXD+PGa+GIetv7PE4vz9v1PuLUGOQ+9nxe9
- VjWN2kmrOswjf584DMd6R+Xpzr90Tb6LPxgq3OoXZnJw+FhOPtk1HtURUJLNNRc80Qn108iMSjK
- taqYqdPqOXQ9Jj7s+XeyeLZY+o118uRqHFym66tx465T474Y8Es2
-X-Google-Smtp-Source: AGHT+IGLoSGJ3wkV0R0aHw+XDcYwpds2bqUBBIc7cKDxPep72NFiCAYsn3vhHYYr3blTR93TaQjmHA==
-X-Received: by 2002:a17:907:1c10:b0:ad2:e683:a77e with SMTP id
- a640c23a62f3a-ad85b2122cdmr1048079766b.53.1748340335646; 
- Tue, 27 May 2025 03:05:35 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad88acd2576sm109698866b.79.2025.05.27.03.05.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 03:05:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4A3DD5F80B;
- Tue, 27 May 2025 11:05:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Peter Xu
- <peterx@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>,  Markus Armbruster
- <armbru@redhat.com>,  David Hildenbrand <david@redhat.com>,  Laurent
- Vivier <lvivier@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Sriram Yagnaraman
- <sriram.yagnaraman@ericsson.com>,  Dmitry Osipenko
- <dmitry.osipenko@collabora.com>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v3 12/20] virtio-gpu: fix hang under TCG when unmapping
- blob
-In-Reply-To: <d5c429eb-d583-4b9d-85c1-b0636e789e9c@daynix.com> (Akihiko
- Odaki's message of "Thu, 22 May 2025 18:54:21 +0900")
-References: <20250521164250.135776-1-alex.bennee@linaro.org>
- <20250521164250.135776-13-alex.bennee@linaro.org>
- <4d300cca-3ac2-4072-a35c-0b6aef970b26@daynix.com>
- <87bjrl87p5.fsf@draig.linaro.org>
- <83945c43-bfb2-4469-90bd-e3a7c2ca5d89@daynix.com>
- <CAAjaMXZ8acKBSGHvcQOcOnzBDCjFU1SOjse7pHtHWxNeREc2gg@mail.gmail.com>
- <199e7486-7d05-459b-ad51-cb9b130f299f@daynix.com>
- <875xht805w.fsf@draig.linaro.org>
- <d5c429eb-d583-4b9d-85c1-b0636e789e9c@daynix.com>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Tue, 27 May 2025 11:05:34 +0100
-Message-ID: <871psanzbl.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uJrDF-0006ZT-UR
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 06:07:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uJrDD-0006Hs-SZ
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 06:07:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748340429;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HknLfGhWrCtmGXx/VCFJmPd/NUIKIcmMxx6r3LCgYjI=;
+ b=b6kVTcTso6aMvbSLLtobCUh3ODl0mtn272OgTgK3VCZLVCEe0bufo5QE6PDisFpW0x1qbW
+ rNk/JeY5F7idDC7iFWhIJMapW4p/9ytyJNVp4YeaLn8imCNcyC2AXYKwlIBUdwBU47GemF
+ wRPInDaPlt4lw79jAR57BRQM8eIk1as=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-4AEKlbMTN5ObR0CfXOENTQ-1; Tue,
+ 27 May 2025 06:07:05 -0400
+X-MC-Unique: 4AEKlbMTN5ObR0CfXOENTQ-1
+X-Mimecast-MFC-AGG-ID: 4AEKlbMTN5ObR0CfXOENTQ_1748340424
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D94B180036F; Tue, 27 May 2025 10:07:02 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.9])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B217630001A1; Tue, 27 May 2025 10:06:59 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "maz@kernel.org"
+ <maz@kernel.org>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "sebott@redhat.com" <sebott@redhat.com>, "armbru@redhat.com"
+ <armbru@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>, "jdenemar@redhat.com"
+ <jdenemar@redhat.com>
+Cc: "agraf@csgraf.de" <agraf@csgraf.de>, "shahuang@redhat.com"
+ <shahuang@redhat.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>
+Subject: RE: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+In-Reply-To: <87bjrfbkyz.fsf@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20250414163849.321857-1-cohuck@redhat.com>
+ <de7db6bc22ad4f0a8ac1fac718c810a1@huawei.com> <87bjrfbkyz.fsf@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Tue, 27 May 2025 12:06:57 +0200
+Message-ID: <878qmibc5a.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,127 +103,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+On Mon, May 26 2025, Cornelia Huck <cohuck@redhat.com> wrote:
 
-> On 2025/05/22 18:28, Alex Benn=C3=A9e wrote:
->> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>=20
->>> On 2025/05/22 16:31, Manos Pitsidianakis wrote:
->>>> On Thu, May 22, 2025 at 10:03=E2=80=AFAM Akihiko Odaki <akihiko.odaki@=
-daynix.com> wrote:
->>>>>
->>>>> On 2025/05/22 15:45, Alex Benn=C3=A9e wrote:
->>>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>>>
->>>>>>> On 2025/05/22 1:42, Alex Benn=C3=A9e wrote:
->>>>>>>> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-<snip>
->>>>> In such a case, a bug should be fixed minimizing the regression and t=
-he
->>>>> documentation of the regression should be left in the code.
->>>>>
->>>>> In particular, this patch can cause use-after-free whether TCG is used
->>>>> or not. Instead, I suggest to avoid freeing memory regions at all on
->>>>> TCG. It will surely leak memory, but won't result in use-after-free at
->>>>> least and the other accelerators will be unaffected.
->>>>>
->>>>> Regards,
->>>>> Akihiko Odaki
->>>> We tested this fix with ASAN and didn't see anything. Do you have a
->>>> test case in mind that can reproduce this use-after-free? It'd help
->>>> make a certain decision on whether to drop this patch or not. I'm not
->>>> doubting that this can cause a use-after-free by the way, it's just
->>>> that it is hypothetical only. If it causes a use-after-free for sure
->>>> we should definitely drop it.
->>>
->>> No, I don't have a test case and it should rarely occur. More
->>> concretely, a UAF occurs if the guest accesses the memory region while
->>> trying to unmap it. It is just a theory indeed, but the theory says
->>> the UAF is possible.
->> I have a test case this fixes which I think trumps a theoretical UAF
->> without a test case.
->> Why would the guest attempt to access after triggering the free
->> itself?
->> Wouldn't it be correct to fault the guest for violating its own memory
->> safety rules?
+> On Fri, May 23 2025, Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com> wrote:
 >
-> docs/devel/secure-coding-practices.rst says "Unexpected accesses must
-> not cause memory corruption or leaks in QEMU".
-
-Agreed.
-
-> I'm not completely sure whether it is safe without concurrent accesses
-> either. In particular, KVM does not immediately update the guest
-> memory mapping, so it may result in a time window where the guest
-> memory is mapped to an unmapped host memory region, and I suspect that
-> could cause a problem. That also motivates limiting the scope of the
-> change to TCG.
-
-Surely it does:
-
-        memory_region_set_enabled(mr, false);
-        memory_region_del_subregion(&b->hostmem, mr);
-
-will trigger a rebuilding of the flatview - so after the memory region
-is deleted any guest access should trigger a fault to the guest. Only
-then do we unparent the memory region and finish the clean-up.
-
-I don't think we want to have different paths for KVM and TCG here as it
-will further complicate already complicated code.=20
-
->>>>> Instead, I suggest to avoid freeing memory regions at all on
->>>>> TCG. It will surely leak memory, but won't result in use-after-free at
->>>>> least and the other accelerators will be unaffected.
->>>> Leaking memory for blob objects is also not ideal, since they are
->>>> frequently allocated. It's memory-safe but the leak can accumulate
->>>> over time.
->>>>
->>>
->>> Memory safety and leak free cannot be compatible unless RCU is fixed.
->>> We need to choose either of them.
->> How can the guest access something that is now unmapped? The RCU
->> should
->> only run after the flatview has been updated.
+>> Hi,
+>>
+>>> -----Original Message-----
+>>> From: Cornelia Huck <cohuck@redhat.com>
+>>> Sent: Monday, April 14, 2025 5:39 PM
+>>> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
+>>> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
+>>> peter.maydell@linaro.org; richard.henderson@linaro.org;
+>>> alex.bennee@linaro.org; maz@kernel.org; oliver.upton@linux.dev;
+>>> sebott@redhat.com; Shameerali Kolothum Thodi
+>>> <shameerali.kolothum.thodi@huawei.com>; armbru@redhat.com;
+>>> berrange@redhat.com; abologna@redhat.com; jdenemar@redhat.com
+>>> Cc: agraf@csgraf.de; shahuang@redhat.com; mark.rutland@arm.com;
+>>> philmd@linaro.org; pbonzini@redhat.com; Cornelia Huck
+>>> <cohuck@redhat.com>
+>>> Subject: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
+>>> host model
+>>
+>> [..]
+>>
+>> )
+>>> 
+>>> Code also available at
+>>> https://gitlab.com/cohuck/qemu/-/tree/arm-cpu-model-
+>>> rfcv3?ref_type=heads
+>>
+>> I had a spin with the above branch, but Qemu boot fails,
+>>
+>> ERROR:../target/arm/cpu64.c:57:get_sysreg_idx: code should not be reached
+>> Bail out! ERROR:../target/arm/cpu64.c:57:get_sysreg_idx: code should not be reached
+>>
+>> From a quick debug, it looks like the below path results in an invalid ID idx.
+>>
+>> kvm_arm_expose_idreg_properties()
+>>  kvm_idx_to_idregs_idx(0)
+>>   get_sysreg_idx(0xc000)  --> id_register seems to start at 0xc008
+>>
+>> Haven't debugged further.
+>>
+>> I am running against a 6.15-rc1 kernel after updating the Qemu branch by,
+>> ./update-aarch64-sysreg-code.sh  path_to_6.15-rc1
+>>
+>> Not sure I am  missing anything. Please check and let me know.
 >
-> This patch bypasses RCU. That's why it solves the hang even though the
-> RCU itself is not fixed.
->
-> Let me summarize the theory and the actual behavior below:
->
-> The theory is that RCU satisfies the common requirement of concurrent
-> algorithms. More concretely:
-> 1) It is race-free; for RCU, it means it prevents use-after-free.
-> 2) It does not prevent forward progress.
->
-> The patch message suggests 2) is not satisfied. A proper fix would be
-> to change RCU to satisfy 2).
+> Thanks for trying this out; I'll try to re-create this here.
+> (I think I've messed up those conversion functions often enough...)
 
-Its mutually incompatible with virglrenderer - we have to block all
-commands until the virgl resource is freed and we can't do that until
-the memory region is unplugged.
+The conversion functions are not at fault here, but we're missing
+registers. If we have MIDR and friends writable, they show up in the
+masks returned by the kernel, but they are not present in the kernel's
+sysreg file where we generate our definitions from, and
+kvm_idx_to_idregs_idx() asserts instead of returning an error, which is
+kind of suboptimal...
 
-So yes we do bypass RCU for this but by explicitly un-parenting the
-resource once the mapping has been removed.
+So I see two possible ways to fix this:
+- add MIDR and friends to the kernel's sysreg file
+- add MIDR and friends in QEMU's cpu-sysregs.h.inc file, and only append
+  generated definitions there
 
-> However, this patch workarounds the problem by circumventing RCU,
-> which solves 2) but it regresses 1).
+First option means one more round trip, second options has more
+potential for messing things up if we keep stuff local to QEMU.
 
-I'm still not seeing how this happens and without a test case to
-demonstrate it happening I can't hold this patch in limbo forever.
-
-> My suggestion is to document and to limit the impact of 1) by:
-> a) Limiting the scope of the change to TCG.
-> b) Not freeing memory regions, which will prevent use-after-free while
-> leaking memory.
->
-> Manos said b) can be problematic because mappings are frequently
-> created. Whether b) makes sense or not depends on the probability and
-> impact of UAF and memory leak
-
-Not freeing memory regions would lead to a DoS attack instead. I don't
-think we can just accumulate region like that.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
