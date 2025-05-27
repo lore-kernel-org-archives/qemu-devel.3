@@ -4,101 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A6EC54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 15:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6B2C54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 15:22:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJw0X-0005nc-Uj; Tue, 27 May 2025 11:14:25 -0400
+	id 1uJw7l-0007VZ-LW; Tue, 27 May 2025 11:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uJw0V-0005nO-U9
- for qemu-devel@nongnu.org; Tue, 27 May 2025 11:14:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uJw0Q-0007eQ-2D
- for qemu-devel@nongnu.org; Tue, 27 May 2025 11:14:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748358855;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8apzc3hKBADlByrGAcTgFkrtIBoYZ8sDMVLHX0c8uCA=;
- b=aUIhlsO1tyR7Z2mDtPsxElqeZ9LqBT24L+pPk6Ica2X2YHiuicus6b4sxCPy8Oj794cFZ8
- sxt3moukZ8JZ1wPLu9gyiUlHFuxTNd4FX2MyTy3Rx9RQCZ0OVpjDp525cAyv4h7ui2e9dX
- DhxN2uuDmCm1K3djiY508MqnyY7KGws=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-Zkki0u7_O8CTkhnLBVRLVQ-1; Tue, 27 May 2025 11:14:12 -0400
-X-MC-Unique: Zkki0u7_O8CTkhnLBVRLVQ-1
-X-Mimecast-MFC-AGG-ID: Zkki0u7_O8CTkhnLBVRLVQ_1748358851
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4e6d426b1so16505f8f.1
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 08:14:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJw7k-0007Un-3D
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 11:21:52 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uJw7Z-0000QE-Uk
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 11:21:51 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3a4cad7d6bdso2315768f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 08:21:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748359297; x=1748964097; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DjHiHOQO6JIJa796okapzVVnNBoIzDrjt8TCX2d77YA=;
+ b=Lr5tt7wxKvNByKZsCtd7WZbEiVrxvUZfR5jsHSW/rw3k4uDUeFZ/HvgZhVeDiXCrKL
+ RcjG7NFqq3gL78oW0YYL8Dmk25PwdU+fJ27KPemalEULpGkhFcNp+GFZ4UgI8iG8HUB7
+ 2GyuK9ZUZ9SFdf2L3JvBDdlT+FkEO8ZUtj42Y1cFJwxIvgzJZEKqoZqgf+KXxiJOAEAR
+ CUBUfJYrxKAb2+dvmc0PWsblNcfexJKHRnpOYpXf1rRs75VfTEYf9FSSJ8AXYlGePEPp
+ ViTxy878iTcFXOEA2HCYFXcuiaudxjAyht+kE1wos51Nxn2FR3/ETk3ZQGyDrwg98XZJ
+ s7iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748358851; x=1748963651;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8apzc3hKBADlByrGAcTgFkrtIBoYZ8sDMVLHX0c8uCA=;
- b=uH4NstqaVjuSusSuAeM4R1zNM4SfVh/jDl39PcHF+NIFpO/YekIf1XHnbo1X5AFsEz
- V5Dv9QHnn0V5UiQL4BbvewbkHmUgZQDBLd0KCwWWAEglF+t1jWQ4Zo/+/1EOQYsb86y3
- rEpHCSuvmLHUrturZ+X5VXe4pGkQ3uKVhBBcieZAA6CRvasz7vNrL2U7pLOnXlW83M+K
- /38qYkwTYTTYulBE0FZrzCtf8OD7BRdW7nbGQ1/o3mGS8f/CCDXW3l4KeX6aB6gilKEE
- CEHtg5GE1v9hsgthfc4AFFnpWougBZc79WD1kWt4ina03Ntw9HJ2L5XWP4enHMSqbHCz
- HWDg==
+ d=1e100.net; s=20230601; t=1748359297; x=1748964097;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DjHiHOQO6JIJa796okapzVVnNBoIzDrjt8TCX2d77YA=;
+ b=QorkrkQFXzGotcosKtsSDUMPSKBzqq+ZIiFu8tjK25GU/Rs6Dqii9JTsRHfhF/RWNK
+ Cn6eo1ZIC0SPosorYPwqJRvgszlqRI0ZB7UZJCNX0CkNL37rDyiZQ25TAfP8XdQ1/Dau
+ A8NBmuTmsJdef3cRdX/mLkp0xLFYYOhGm9TUYTiapVuHWbv/Dbo0YknAVa6HJQ7dVM39
+ PSAO4Edpo98qSustvsTSHQXOi1yAKHsQ3RaFHQmu7Y1mQCF71LEqXmA6ox4m6+nwBZ0X
+ OAbEU91c5d0s+XqTGZIi4LSIfexockGp/Tr1WOo0Gtg1yBujk6hcfx1nSTZW3SlDFVcA
+ TwxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXjiLHYoxjsJIaZKwECHy1VK1q0g4nrA9BRQ4I90Ih8p3DhFn16Mh4MtKj6eGCr3r/6/qpFNZ4KEmA1@nongnu.org
-X-Gm-Message-State: AOJu0YwQ99ShZFnq+SIlR17fguI7dpuEhELKAySkZBhujK5ITiNKd59R
- UQsqlAF9w1v2T5cvuqLhQ52mIQIPJudyJXFemQbKDVFZOecidXiRkxnNP4UFaMfwcERPz0nr2Nn
- e1IaYdV1SRXfwlAO9BUKHOrzoqS8CUBriBIIldSsro4L44Cjeg4Uu0v/5Xq6o/CPY5TE=
-X-Gm-Gg: ASbGnct1hhmapypbQE1JyVO6oAhgfs0WC5spOcfXf1gU8o7u0dWK94yEMEFn9z0zTME
- 9taXxe+d6YxpluFcrMgiF8Bw1/ec3dR2ClCdmKoFA7P19rVfwm8QtEjZwIocLJ+cCJIfthjQgHW
- muOjds2hQpQiV4+SJj016VxcxEsEkG5KWM/gQ1397J+deGtrRx+tAcTQYijESCNzyHEZacmX7ar
- exkCXTqrrPR+fp2+enf45jlOIIp+nM/bozxZ5YOzP61eusiSyVefpClj/oF98ft7Pv4ZUv8bshe
- UNcv1FWHISUKWjT6ccm1J2ULniX+9hA1
-X-Received: by 2002:a05:6000:4006:b0:3a3:7816:3e17 with SMTP id
- ffacd0b85a97d-3a4e5e8f81emr995574f8f.8.1748358850688; 
- Tue, 27 May 2025 08:14:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqGZWvY5PDzZ3XuOSmdcVPw9TShlR3sH9ZrMNaws4CU0lehkUsOKulHdomABBaynjBkfrAjQ==
-X-Received: by 2002:a05:6000:4006:b0:3a3:7816:3e17 with SMTP id
- ffacd0b85a97d-3a4e5e8f81emr995545f8f.8.1748358850337; 
- Tue, 27 May 2025 08:14:10 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4d5deae4dsm7410998f8f.2.2025.05.27.08.14.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 08:14:09 -0700 (PDT)
-Date: Tue, 27 May 2025 17:14:07 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [PATCH v2 20/25] hw/acpi/ged: Support migration of AcpiPciHpState
-Message-ID: <20250527171407.364f68ff@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250527074224.1197793-21-eric.auger@redhat.com>
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-21-eric.auger@redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ AJvYcCXDBa2lUG7n52Q/rVZTB+8iUFaBofSDGW0ZP/Gp6+fYGgAjaNAdqINTZ7qM+iSIavbvv3Ovba2EF1bR@nongnu.org
+X-Gm-Message-State: AOJu0Yw00URO3+KbWxok9sOXfpIhIq1RHPaNAzYQtOqR1mTx4xEBqGQz
+ OyYkpeLMKX1Muia7lFlHWQ5/7Dw1UzAhR+4FgJyQTILshWZVj87mPseYoQD/PS/WqdU=
+X-Gm-Gg: ASbGncuDnf2MxtQd+XLCjZ6mcB2I/ew1x6JC0tjYnpDc5VTeheXlkokM059CO3YwFvo
+ cjrbtHCiAlZ0c8GFOKSfDSLh2LATrGDeOr0TsJmroA+IIGkYAggf5oVHyI/6rBsxNRCUblECips
+ UeaXVqURT5NhtyKvHJay42gK0HIR1ttD4u27dNR1mwB1kwSj3BYjw9IxtII6leJKh90SMDdbgqG
+ aW7XQvKz/qQp3VVo0hzGteDcK/MfhdbR+tt5NATozD7/2d8WC952Kag2P2ZZa9SytpqWgbc0zpt
+ bpzU5j07f49sBVJ2UlnA4UFH+ua44Wtuh0FeTVx3VD7JelrVk+j38EWYIJ+3V7bIHMuzwgUu5OS
+ XH7JbMljjPNvmkP4ienB4mPSE
+X-Google-Smtp-Source: AGHT+IElDK0J0n2yRQ5HB79NN8pg4YJ5E2nr//72TnfMYHApQlBkraltrMwwN+h/2UmQafNlULxjUA==
+X-Received: by 2002:a05:6000:290b:b0:3a4:df8c:dd3 with SMTP id
+ ffacd0b85a97d-3a4e5e9e458mr1072697f8f.21.1748359296676; 
+ Tue, 27 May 2025 08:21:36 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4c9cd023csm11704586f8f.10.2025.05.27.08.21.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 May 2025 08:21:36 -0700 (PDT)
+Message-ID: <04a1bb03-5823-4c6e-9f0a-10882b96a6b4@linaro.org>
+Date: Tue, 27 May 2025 17:21:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 22/25] hw/arm/virt: Let virt support pci hotplug/unplug
+ GED event
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ imammedo@redhat.com, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com,
+ Bernhard Beschow <shentey@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, alex.bennee@linaro.org
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-23-eric.auger@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250527074224.1197793-23-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,56 +108,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 May 2025 09:40:22 +0200
-Eric Auger <eric.auger@redhat.com> wrote:
+Hi Eric,
 
-> Add a subsection to migrate the AcpiPciHpState state.
+On 27/5/25 09:40, Eric Auger wrote:
+> Set up the IO registers used to communicate between QEMU
+> and ACPI.
+> 
+> Move the create_pcie() call after the creation of the acpi
+> ged device since hotplug callbacks will soon be called on gpex
+> realize and will require the acpi pcihp state to be initialized.
+> 
+> The hacky thing is the root bus has not yet been created on
+> acpi_pcihp_init() call so it is set later after the gpex realize.
+> 
+> How to fix this chicken & egg issue?
+
+FYI I have this question tagged since v1, I will try to look at it in
+some days...
+
 > 
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  hw/acpi/generic_event_device.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
 > 
-> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> index c0dbf9b358..9334249cf5 100644
-> --- a/hw/acpi/generic_event_device.c
-> +++ b/hw/acpi/generic_event_device.c
-> @@ -415,6 +415,25 @@ static const VMStateDescription vmstate_ghes_state = {
->      }
->  };
->  
-> +static bool pcihp_needed(void *opaque)
-> +{
-> +    AcpiGedState *s = opaque;
-> +    return s->pcihp_state.use_acpi_hotplug_bridge;
-> +}
-> +
-> +static const VMStateDescription vmstate_pcihp_state = {
-> +    .name = "acpi-ged/pcihp",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = pcihp_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_PCI_HOTPLUG(pcihp_state,
-> +                            AcpiGedState,
-> +                            NULL, NULL),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static const VMStateDescription vmstate_acpi_ged = {
->      .name = "acpi-ged",
->      .version_id = 1,
-> @@ -427,6 +446,7 @@ static const VMStateDescription vmstate_acpi_ged = {
->          &vmstate_memhp_state,
->          &vmstate_cpuhp_state,
->          &vmstate_ghes_state,
-> +        &vmstate_pcihp_state,
->          NULL
->      }
->  };
+> ---
+> 
+> v1 -> v2:
+> - use ACPI_PCIHP_REGION_NAME
+> ---
+>   include/hw/arm/virt.h    |  1 +
+>   hw/arm/virt-acpi-build.c |  1 +
+>   hw/arm/virt.c            | 42 +++++++++++++++++++++++++++++++++++-----
+>   3 files changed, 39 insertions(+), 5 deletions(-)
 
 
