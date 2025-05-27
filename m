@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E54C54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 18:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7943DC54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 19:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJzI8-0006hJ-7f; Tue, 27 May 2025 14:44:48 -0400
+	id 1uJznV-0002qd-5o; Tue, 27 May 2025 15:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1uJzI7-0006h5-Bk
- for qemu-devel@nongnu.org; Tue, 27 May 2025 14:44:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1uJzI4-0002m3-Iw
- for qemu-devel@nongnu.org; Tue, 27 May 2025 14:44:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748371481;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8XiULHF74Ovmz3Q8cXZyaidbCYJBenNBgcJ7e9q2zNk=;
- b=gfBhPJ09kONGoqCssuvVkhBODBVglXhzJWMOkTE31hxufQmIJemeERtyWgKZGWgbAUjSIZ
- 93rbrJxXg09u6KDBI19IvrpfvON5uXVOo2NSY1XSJR6RM50ejyIO68JEj7/D3/54FqWGqR
- o93+HwDBu4iQ0/UtXLsk6YXSSTXNnk0=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-389-i_MEyeoCOXqmFR5mfVk63A-1; Tue, 27 May 2025 14:44:39 -0400
-X-MC-Unique: i_MEyeoCOXqmFR5mfVk63A-1
-X-Mimecast-MFC-AGG-ID: i_MEyeoCOXqmFR5mfVk63A_1748371479
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-85b45e94b08so43068939f.0
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 11:44:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uJznG-0002q2-BC
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 15:17:04 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uJznC-0007KH-LN
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 15:16:57 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-52dbcd398f9so89492e0c.0
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 12:16:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748373413; x=1748978213; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=IAsDWGx8Uo9EscDRhlxrXFB/Hp9p99WkK4bk9lATPmA=;
+ b=gNMd6kMLwFveSED575/thwzx94BksmBXJZDn7aGhXyRCDUh3RyymxxSmRF5lLSV0M9
+ LCZiflpTnl4kz6vzKu4CaktTZtmODLiRETNkBkiPCii0k9kYZtzJSNakstFkr6uXThog
+ ZqXUmVRDjYu8D50/7dWGkHLrVdK3Q896/nRZ5eA+oMkDwjSCXaB/cpFqKLkrVXRLMAFx
+ Ym5mosnR5VdEnBlJ5/hlmq01FMoSOm5TIWdsSy0flwYRtBfpGG+UZTZlmwt33qbwNuxq
+ n9NkiCzXrYbUyJEbzzh2gM/yZQJ5ObmF2T7YaPKX8Jyxz0K5E7XXx84ZooMmyA6mSI3U
+ tpVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748371478; x=1748976278;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8XiULHF74Ovmz3Q8cXZyaidbCYJBenNBgcJ7e9q2zNk=;
- b=L8FNdbWVFJ5yiu38iDbrvG16APAnFUfTfe+LtmiCEdbnVOa8ua/UGJDlcCs4yYhpfn
- J7cOVHreEhz96u0PVYfo6Kdc6JirmS9fd4c4cbVw6B7mmfnTpmuMFG8Yq/rZSDxRGVPK
- 4AVnmqL+vdyHigXzPo9/i61Wa77KlhWQr8x1cHzYHvo5NGH4vOCeLa/ymEmjTqIhyeKN
- NPwcyO2JrHhTs4h2qEapP04+Yq28WkRP4+UC7aZpn4f+FyEUkWKgelZsw8uUww5SkdyG
- pzcZOrtvY+srP5AhCbnuqirXIHV319kSAVyRL8a6F2hB9KAyBdWwCONWQE7TwTZlx7qL
- DxCg==
+ d=1e100.net; s=20230601; t=1748373413; x=1748978213;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IAsDWGx8Uo9EscDRhlxrXFB/Hp9p99WkK4bk9lATPmA=;
+ b=wsqK4WgOQFXuzK2WyrQmZqfT49f9B9tobOdwYSQjs6ExZtcTvUnEng2AvDYds7IGdC
+ 1fhhdU+42PTVShXLmohODOHsIi6m4rIgThLKf+jxPPRbvFK0bqqkzDSrDYOYogd5UHL4
+ KPows886dF0EVAxt9UYtIQQr7IURGV8Z35dzuL2buuRusamsHluC07bh/6FJIXQT4x8M
+ FsWjfu7pvlm4Bi0Reov0mks6LaaFIIOubutMupJLbJleuKFWPoCBMAx/qP2MSyP1byyS
+ D1OqM0sMQg4Y2RqaDD4or8iJhXDYL4R5hX7wKVEGneuHqRK4JcbpWW7QvU7BzNIoL3Bb
+ iP/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgBR1TfDfPwjxJgw63FKaeqxMhwHdTiUXtH/kaQaj/mFkvStAN+B5x+EYZl5HryQSsurMu9emQ50db@nongnu.org
-X-Gm-Message-State: AOJu0Yw1l1nebQwr/9TTXT1BcQnO+eokqAh3ox7ZhOB840o6GU3a84Uu
- asFlEbFyUq8ld9u9DrN0y4RUfPnNxjkEZTvTjaK/S+dRTt2TmudSawe8rURmKQEqyb4ik1wYj6t
- 103dcRV5q0Dn6UqMte8ztbE/twM47ImhxHZwPXU9GrRb2Y3bv2/hrPUHH
-X-Gm-Gg: ASbGncvScU4r2OHRKz/7mVz3lQpsePJV8AGI/jq8kv4LjI+15r2FhPdn1SaKVxyx17b
- 2537peF/2vjcgnmnjjQa5hspgITOFxebz4XFJUq1dEtYcPszXKU4A5JUFkBhb1UIp89SsK0FFfl
- b6MJh+5tVB4zXamjglxhtM0UyEktImIk0lZrPiLyUiSk93ynHsZO7JZnGNiF2R9jw/b0JfsS7QB
- ptrz3igu9hxnH8XB9jZUYZPjrX9Gt9Oq5UxoRyvLEmPjoTY+x7eajiWE4RfsCVXs9vXF4GUAwug
- YxVYXXSpKmsmVug=
-X-Received: by 2002:a05:6e02:160b:b0:3dc:7ba2:7a2e with SMTP id
- e9e14a558f8ab-3dc9b6e51d4mr35280105ab.3.1748371478597; 
- Tue, 27 May 2025 11:44:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHB/2EtU54VkxztbMQx8DzxGDZD6yvXNFJVd0Ea+ChAE3ohzOS5m/8z3l/avFd7n1TH6dXzrA==
-X-Received: by 2002:a05:6e02:160b:b0:3dc:7ba2:7a2e with SMTP id
- e9e14a558f8ab-3dc9b6e51d4mr35280025ab.3.1748371478189; 
- Tue, 27 May 2025 11:44:38 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3dca0d1d00esm20197595ab.13.2025.05.27.11.44.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 May 2025 11:44:37 -0700 (PDT)
-Date: Tue, 27 May 2025 12:44:35 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] vfio/pci: Introduce x-pci-class-code option
-Message-ID: <20250527124435.4a0201c7.alex.williamson@redhat.com>
-In-Reply-To: <20250524153102.19747-1-tomitamoeko@gmail.com>
-References: <20250524153102.19747-1-tomitamoeko@gmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCWjizYhAA+/r7BItKf5HVFm6NsUD/eYRr41gq0PaPrYZY4gbC2AgYK+HRHAOm8ycDZCN93qj+PtKOU0@nongnu.org
+X-Gm-Message-State: AOJu0YzdmLw7J/tDhqx+TuyybKX3ySr/KdIovLvB8MjAdUMCs9yF9rIh
+ +f03WXO5IebRgkWW0ovrHA12pzDY0/5r11cZxPr1sJcUWGR91gFiVeIb6Z1XbIhsLEg=
+X-Gm-Gg: ASbGncu9VE2b0xrssYoftt+cgQrFkSdip6QKTLu+rScQY3bSaQlrWyoIRZo751f/rvw
+ GJPBAi3bYwA+FIjNGwnc5CG1aXb4DZkHLyEJgUckl3N100Mg3PPxpC9OPwlz9mLXy8Fzk+TYrQH
+ 4eRD0p1LptcHLEE+YyyDAuOpSt0l1kUIOCbqkbLMFRekw2J1zh1aIFHC0KO0pznV0BAlCCJ0jkX
+ gdWgSJ77dUWr4pDZLbP72XCMqIVvvIyNmWLmWTXtBbYQ3UrdIDgqSgnPKRTSdFNiTL4qzEoxB+8
+ sUlUsttbEe3fUw9DeeBkxFays61cySR+iKIRy6wJ91ztTVWMMOeqSzCqSx3jzibAPtYAIETJraQ
+ HpWPMY1+czA3T273N2nUblqrh/ax69A==
+X-Google-Smtp-Source: AGHT+IEDsBo4x6SURdUzmQi6TIN3SQXrxD2ldezqbYa060W7TF7WT49djWBNdn27V12vFhi7ptL7xg==
+X-Received: by 2002:a05:6122:3d15:b0:520:4806:a422 with SMTP id
+ 71dfb90a1353d-5305fdd335bmr2336966e0c.3.1748373412987; 
+ Tue, 27 May 2025 12:16:52 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:b402:6ba2:2066:dacd:9134:8586?
+ ([2804:7f0:b402:6ba2:2066:dacd:9134:8586])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-52dbab6b42esm20112458e0c.40.2025.05.27.12.16.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 May 2025 12:16:51 -0700 (PDT)
+Message-ID: <8b27d199-7bfa-48f2-b534-42a3a975fbf3@linaro.org>
+Date: Tue, 27 May 2025 16:16:48 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 22/25] hw/arm/virt: Let virt support pci hotplug/unplug
+ GED event
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: Igor Mammedov <imammedo@redhat.com>, Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, anisinha@redhat.com, mst@redhat.com,
+ shannon.zhaosl@gmail.com, pbonzini@redhat.com, Jonathan.Cameron@huawei.com,
+ philmd@linaro.org, alex.bennee@linaro.org
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-23-eric.auger@redhat.com>
+ <20250527175649.5d276bc8@imammedo.users.ipa.redhat.com>
+ <363b7862-84b3-4bd1-85d6-781eb9ecf161@linaro.org>
+Content-Language: en-US
+In-Reply-To: <363b7862-84b3-4bd1-85d6-781eb9ecf161@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,99 +111,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 24 May 2025 23:31:02 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-> Introduce x-pci-class-code option to allow users to override PCI class
-> code of a device, similar to the existing x-pci-vendor-id option. Only
-> the lower 24 bits of this option are used, though a uint32 is used here
-> for determining whether the value is valid and set by user.
+
+On 5/27/25 13:44, Gustavo Romero wrote:
+> Hi folks,
 > 
-> This is mainly intended for IGD devices that expose themselves either
-> as VGA controller (primary display) or Display controller (non-primary
-> display). The UEFI GOP driver depends on the device reporting a VGA
-> controller class code (0x030000).
-
-Seems like a tricky one.  Arguably it's no more crazy than allowing
-vendor and device ID overrides.  We're probably safe in the fact that
-this is an experimental option (user keeps the pieces when it breaks)
-and the obscurity of raw class values means it's unlikely to enter any
-kind of common usage.
-
-But, vfio_populate_vga() only cares that the device has a VGA region
-because these only exist on VGA class devices.  With this we can assign
-a VGA device, override the class code to Display, use x-vga=on, and now
-we've got a mess of VGA access to a non-VGA device that doesn't make
-any sense.  vfio_populate_vga() needs to care about the exposed class
-code now too.  Thanks,
-
-Alex
-
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> ---
->  hw/vfio/pci.c        | 17 +++++++++++++++++
->  hw/vfio/pci.h        |  1 +
->  hw/vfio/trace-events |  1 +
->  3 files changed, 19 insertions(+)
+> On 5/27/25 12:56, Igor Mammedov wrote:
+>> On Tue, 27 May 2025 09:40:24 +0200
+>> Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>>> Set up the IO registers used to communicate between QEMU
+>>> and ACPI.
+>>
+>>
+>>
+>>> Move the create_pcie() call after the creation of the acpi
+>>> ged device since hotplug callbacks will soon be called on gpex
+>>> realize and will require the acpi pcihp state to be initialized.
+>>>
+>>> The hacky thing is the root bus has not yet been created on
+>>> acpi_pcihp_init() call so it is set later after the gpex realize.
+>>
+>> can you elaborate on this, preferably with call expected call flows?
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index a1bfdfe375..879347a54e 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3062,6 +3062,21 @@ static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
->                                                vdev->sub_device_id);
->      }
->  
-> +    /*
-> +     * Class code is a 24-bit value at config space 0x09. Allow overriding it
-> +     * with any 24-bit value.
-> +     */
-> +    if (vdev->class_code != PCI_ANY_ID) {
-> +        if (vdev->class_code > 0xffffff) {
-> +            error_setg(errp, "invalid PCI class code provided");
-> +            return false;
-> +        }
-> +        /* Higher 24 bits of PCI_CLASS_REVISION are class code */
-> +        vfio_add_emulated_long(vdev, PCI_CLASS_REVISION,
-> +                               vdev->class_code << 8, ~0xff);
-> +        trace_vfio_pci_emulated_class_code(vbasedev->name, vdev->class_code);
-> +    }
-> +
->      /* QEMU can change multi-function devices to single function, or reverse */
->      vdev->emulated_config_bits[PCI_HEADER_TYPE] =
->                                                PCI_HEADER_TYPE_MULTI_FUNCTION;
-> @@ -3482,6 +3497,8 @@ static const Property vfio_pci_dev_properties[] = {
->                         sub_vendor_id, PCI_ANY_ID),
->      DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
->                         sub_device_id, PCI_ANY_ID),
-> +    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
-> +                       class_code, PCI_ANY_ID),
->      DEFINE_PROP_UINT32("x-igd-gms", VFIOPCIDevice, igd_gms, 0),
->      DEFINE_PROP_UNSIGNED_NODEFAULT("x-nv-gpudirect-clique", VFIOPCIDevice,
->                                     nv_gpudirect_clique,
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 5ce0fb916f..587eb8cc9a 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -156,6 +156,7 @@ struct VFIOPCIDevice {
->      uint32_t device_id;
->      uint32_t sub_vendor_id;
->      uint32_t sub_device_id;
-> +    uint32_t class_code;
->      uint32_t features;
->  #define VFIO_FEATURE_ENABLE_VGA_BIT 0
->  #define VFIO_FEATURE_ENABLE_VGA (1 << VFIO_FEATURE_ENABLE_VGA_BIT)
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index e90ec9bff8..d0b006aa29 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -46,6 +46,7 @@ vfio_pci_emulated_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
->  vfio_pci_emulated_device_id(const char *name, uint16_t val) "%s 0x%04x"
->  vfio_pci_emulated_sub_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
->  vfio_pci_emulated_sub_device_id(const char *name, uint16_t val) "%s 0x%04x"
-> +vfio_pci_emulated_class_code(const char *name, uint16_t val) "%s 0x%06x"
->  
->  # pci-quirks.c
->  vfio_quirk_rom_in_denylist(const char *name, uint16_t vid, uint16_t did) "%s %04x:%04x"
+> The way I'm understanding it is: because the GED and GPEX are created
+> in virt.c, so at the machine "level" (and so a machine hotplug handler is
+> used instead of a device hotplug handler, like it's done in PIIX4 and ICH9
+> controller in the x86 machines), and they need to be created in that
+> order because of dependecy of GPEX of GED, the flow is:
+> 
+> 1) create_acpi_ged() -> calls acpi_pcihp_init(), which by its turn will inspect the root bus to generate the ACPI code
+> 2) create_pcie() -> just in realize the root bus will be created
+> 
+> and the sequence has to be 1 -> 2, because GED will be used in the GPEX callbacks on hotplug.
+> 
+> So here we're following a different design from the current one in x86,
+> which handles the hotplug at the PCI controller "level".
+
+... where this chicken & egg doesn't exist, I meant.
+
+So one option would be follow the ICH9 design, i.e.,
+the call to acpi_pcihp_init() would be from a gpex_root_class_realize() (to be created)
+and set in gpex_root_class_init(), like  k->realize = gpex_root_class_realize.
+AcpiPciHpState would then be part of GPEXRootState struct. TYPE_GPEX_ROOT_DEVICE would
+also define the interfaces TYPE_HOTPLUG_HANDLER and TYPE_ACPI_DEVICE_IF, and
+gpex_root_class_init() will set callbacks on these interfaces, for instance:
+
+hc->pre_plug = gpex_device_pre_plug_cb;
+hc->plug = gpex_device_plug_cb;
+hc->unplug_request = gpex_device_unplug_request_cb;
+hc->unplug = gpex_device_unplug_cb;
+hc->is_hotpluggable_bus = gpex_is_hotpluggable_bus;
+
+adevc->send_event = gpex_root_acpi_send_event;
+
+
+Cheers,
+Gustavo
+
+> 
+> Cheers,
+> Gustavo
+> 
+>>> How to fix this chicken & egg issue?
+>>>
+>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>>
+>>> ---
+>>>
+>>> v1 -> v2:
+>>> - use ACPI_PCIHP_REGION_NAME
+>>> ---
+>>>   include/hw/arm/virt.h    |  1 +
+>>>   hw/arm/virt-acpi-build.c |  1 +
+>>>   hw/arm/virt.c            | 42 +++++++++++++++++++++++++++++++++++-----
+>>>   3 files changed, 39 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+>>> index 1b2e2e1284..a4c4e3a67a 100644
+>>> --- a/include/hw/arm/virt.h
+>>> +++ b/include/hw/arm/virt.h
+>>> @@ -35,6 +35,7 @@
+>>>   #include "hw/boards.h"
+>>>   #include "hw/arm/boot.h"
+>>>   #include "hw/arm/bsa.h"
+>>> +#include "hw/acpi/pcihp.h"
+>>>   #include "hw/block/flash.h"
+>>>   #include "system/kvm.h"
+>>>   #include "hw/intc/arm_gicv3_common.h"
+>>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+>>> index 9d88ffc318..cd49f67d60 100644
+>>> --- a/hw/arm/virt-acpi-build.c
+>>> +++ b/hw/arm/virt-acpi-build.c
+>>> @@ -44,6 +44,7 @@
+>>>   #include "hw/acpi/generic_event_device.h"
+>>>   #include "hw/acpi/tpm.h"
+>>>   #include "hw/acpi/hmat.h"
+>>> +#include "hw/acpi/pcihp.h"
+>>>   #include "hw/pci/pcie_host.h"
+>>>   #include "hw/pci/pci.h"
+>>>   #include "hw/pci/pci_bus.h"
+>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>>> index 4aa40c8e8b..cdcff0a984 100644
+>>> --- a/hw/arm/virt.c
+>>> +++ b/hw/arm/virt.c
+>>> @@ -682,6 +682,8 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+>>>   {
+>>>       DeviceState *dev;
+>>>       MachineState *ms = MACHINE(vms);
+>>> +    SysBusDevice *sbdev;
+>>> +
+>>>       int irq = vms->irqmap[VIRT_ACPI_GED];
+>>>       uint32_t event = ACPI_GED_PWR_DOWN_EVT;
+>>> @@ -693,12 +695,28 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+>>>           event |= ACPI_GED_NVDIMM_HOTPLUG_EVT;
+>>>       }
+>>> +    if (vms->acpi_pcihp) {
+>>> +        event |= ACPI_GED_PCI_HOTPLUG_EVT;
+>>> +    }
+>>> +
+>>>       dev = qdev_new(TYPE_ACPI_GED);
+>>>       qdev_prop_set_uint32(dev, "ged-event", event);
+>>> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>> +    sbdev = SYS_BUS_DEVICE(dev);
+>>> +    sysbus_realize_and_unref(sbdev, &error_fatal);
+>>> -    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, vms->memmap[VIRT_ACPI_GED].base);
+>>> -    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
+>>> +    sysbus_mmio_map(sbdev, 0, vms->memmap[VIRT_ACPI_GED].base);
+>>> +    sysbus_mmio_map(sbdev, 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
+>>
+>>
+>> Perhaps move out sbdev renaming into a separate patch, as it's not really related.
+>>
+>>> +    if (vms->acpi_pcihp) {
+>>> +        AcpiGedState *acpi_ged_state = ACPI_GED(dev);
+>>> +        int i;
+>>> +
+>>> +        i = sysbus_mmio_map_name(sbdev, ACPI_PCIHP_REGION_NAME,
+>>> +                                 vms->memmap[VIRT_ACPI_PCIHP].base);
+>>
+>> I don't like mix of old way (index based) above and new name based mapping,
+>> can we use the same, please?
+>>
+>>> +        assert(i >= 0);
+>> g_assert(sysbus_mmio_map_name...) to get more meaning-full crash
+>> that is not compiled out.
+>>
+>>> +        acpi_pcihp_init(OBJECT(dev), &acpi_ged_state->pcihp_state,
+>>> +                        vms->bus, sysbus_mmio_get_region(sbdev, i), 0);
+>>
+>> hmm, looks broken..
+>>   region mapping must happen after acpi_pcihp_init().
+>>
+>> if we after making sysbus_mmio_map() sane and easier to use
+>> (which is a bit on tangent to this series).
+>> We could feed sysbus owner device a memory map (ex: name based),
+>> and then use [pre_]plug handlers on sysbus to map children
+>> automatically.
+>> That will alleviate need to do all mapping manually in every board.
+>> (frankly speaking it deserves its own series, with tree wide cleanup).
+>>
+>> As it is I'd use old index based approach like the rest.
+>> (unless you feel adventurous about sysbus refactoring)
+>>
+>>
+>>> +        acpi_ged_state->pcihp_state.use_acpi_hotplug_bridge = true;
+>>> +    }
+>>>       sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(vms->gic, irq));
+>>>       return dev;
+>>> @@ -1758,6 +1776,13 @@ void virt_machine_done(Notifier *notifier, void *data)
+>>>       pci_bus_add_fw_cfg_extra_pci_roots(vms->fw_cfg, vms->bus,
+>>>                                          &error_abort);
+>>
+>>
+>>> +
+>>> +    if (vms->acpi_pcihp) {
+>>> +        AcpiGedState *acpi_ged_state = ACPI_GED(vms->acpi_dev);
+>>> +
+>>> +        acpi_pcihp_reset(&acpi_ged_state->pcihp_state);
+>>> +    }
+>>> +
+>>>       virt_acpi_setup(vms);
+>>>       virt_build_smbios(vms);
+>>>   }
+>>> @@ -2395,8 +2420,6 @@ static void machvirt_init(MachineState *machine)
+>>>       create_rtc(vms);
+>>> -    create_pcie(vms);
+>>> -
+>>>       if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+>>>           vms->acpi_pcihp &= !vmc->no_acpi_pcihp;
+>>>           vms->acpi_dev = create_acpi_ged(vms);
+>>> @@ -2405,6 +2428,15 @@ static void machvirt_init(MachineState *machine)
+>>>           create_gpio_devices(vms, VIRT_GPIO, sysmem);
+>>>       }
+>>> +    create_pcie(vms);
+>>> +
+>>> +    if (vms->acpi_dev) {
+>>> +        AcpiGedState *acpi_ged_state = ACPI_GED(vms->acpi_dev);
+>>> +
+>>> +        acpi_ged_state = ACPI_GED(vms->acpi_dev);
+>>> +        acpi_ged_state->pcihp_state.root = vms->bus;
+>>> +    }
+>>> +
+>>>       if (vms->secure && !vmc->no_secure_gpio) {
+>>>           create_gpio_devices(vms, VIRT_SECURE_GPIO, secure_sysmem);
+>>>       }
+>>
+>> I don't like pulling acpi_pcihp_init()/reset (and issues it causes) into board code,
+>> on x86 it's a part of host bridge device model.
+>> The same should apply to GED device.
+>>
+>> The only thing board has to do is map regions into IO space like we do
+>> everywhere else.
+>>
+>> with current code, may be add link<pci_bus> property to GED,
+>> and set it before GED realize in create_acpi_ged(),
+>> then just follow existing sysbus_mmio_map() pattern.
+>>
+> 
 
 
