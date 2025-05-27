@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C46C54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:19:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A42C54F30
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJxxe-0006fo-0l; Tue, 27 May 2025 13:19:34 -0400
+	id 1uJxxO-0006ah-7D; Tue, 27 May 2025 13:19:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uJxxb-0006dy-OA
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:19:31 -0400
+ id 1uJxxM-0006a5-Gk
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 13:19:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uJxxZ-0000RO-Rf
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:19:31 -0400
+ id 1uJxxK-0000QY-SX
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 13:19:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748366368;
+ s=mimecast20190719; t=1748366353;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
  bh=8XjI8PUrGTVgjcxSY+wJwP09QeVT6XEtNZ5AwPPMdSM=;
- b=LWrlTr4ne9hEUUZXpbs5WbY5XQeEzLK4U8NT2226S0RLO9PYsbS3ml1S1L6s6EAhA+6mjv
- fpCu7keqPeqrIlBfDBokvPdJ5IRZ5UnUZ2Fwapm4CuzIoAlRpsFRvZUmxjcucV9emfKX1K
- /djST8eLdNeJdPgPKIT3YdY/al5s2No=
+ b=QzSYbdAt3KbhlB2a5QyoklX35vsL9Zc9TeWKBI2FI0lMfhk3wNjf7ye15p0xXv2NZ0XNhF
+ N4z5wlM7nJL/NZCfEtII9BsqjmkY0T7e5lwm/MO0+mJ7B55qZGRNRoD4SwqJOUmdwL2LKC
+ p033YLB85YlVE4PG/RhlZ0gmcBeBKPQ=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-HEDEf2G8MGGjiB8SUOfuxA-1; Tue, 27 May 2025 13:19:26 -0400
-X-MC-Unique: HEDEf2G8MGGjiB8SUOfuxA-1
-X-Mimecast-MFC-AGG-ID: HEDEf2G8MGGjiB8SUOfuxA_1748366363
+ us-mta-630-nVLEP2j8MEKekyQI-oyBlw-1; Tue, 27 May 2025 13:19:12 -0400
+X-MC-Unique: nVLEP2j8MEKekyQI-oyBlw-1
+X-Mimecast-MFC-AGG-ID: nVLEP2j8MEKekyQI-oyBlw_1748366351
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ac6ce5fe9bfso338327866b.1
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 10:19:24 -0700 (PDT)
+ a640c23a62f3a-acf16746a74so272746866b.0
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 10:19:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748366363; x=1748971163;
+ d=1e100.net; s=20230601; t=1748366351; x=1748971151;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
  bh=8XjI8PUrGTVgjcxSY+wJwP09QeVT6XEtNZ5AwPPMdSM=;
- b=WGPfnF7Gm/3bTjuQUwY7uUh/0lC38Og6ThYr8IQAwf1i+MzyAmMiEaAknAKB+XlT1u
- TCHpagneR0sRjc2VyC0SscJUMD6Gc8C9N92Bkt48fUI1aYVlaCp3iZJfUrZ1UsmuUUkg
- i2ilsWceEsbQ5sHqc4J1keAakQonG22tv0fBjAW6NktMKGQgAG6PC6DDHTmlcs/lplqH
- SKKvyyWQdyEbz89neTwf0BgsFjkiv37MhHJo9SNsK3RgGTbLZNH/t1qtH8zUGzB4Okrx
- JuWsb4IEYUPXf6uSgPcAEWSCSDKvkX5zndIuvmz6KV36YiiY9+fS6RsbGkiqcSzaOJ9Q
- xovg==
-X-Gm-Message-State: AOJu0Ywo+YcewpPp02Mc1LG4C+dhkxJtSfK/mSJI6lae3NSJJKcmcR8t
- CzwT5IkXngIPdAaGVccgzSUp5Ztd2G/NJCGSis/YUycY5LCTqNTPW0Oe7zM+hZKA0VoegWPamoh
- nwp5vqPlFSTpN+tDE6n0vaKp/TM08pZzJNTAl2JFil4ZxHNfvZzRmcQTi
-X-Gm-Gg: ASbGncvSz34gZX2UEYLUntRnRstiF6DsI4c2u076/8xbeWhKs1l4xToIpvIYv/yLoDY
- gcYn7TjfdQUIEdVM3276wjHZWFORDKzaXWNQMCcZWY8AOE8mabUaQx5stcWNK+Ai+GtVU880Zxp
- uRx1F3qTfJqdIEOAWgPkEPFGHJNe7fM/eTKPFL/3c/Vyfv6EZ+7QXXcwSpzK3KyEJvUB8FaYWQL
- dPrJKhFN9pFX2SXVg+8lbayvG93VCCXK/WVY48rK0NYlP6JSEIgOq00P+jAd1n1vDwoLOdDlxdd
- +t4CYtB4JKIc9A==
-X-Received: by 2002:a17:907:9723:b0:ad5:57e0:c3b1 with SMTP id
- a640c23a62f3a-ad85b0e0ef2mr1248934366b.23.1748366362803; 
- Tue, 27 May 2025 10:19:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENBN7WKZFiYKIyGkEoGHvbwDew0nHHtIY3nvAcYNtWzFq4E12q7cyh9gFC2bFJqAHHv5MwOA==
-X-Received: by 2002:a17:907:9723:b0:ad5:57e0:c3b1 with SMTP id
- a640c23a62f3a-ad85b0e0ef2mr1248932066b.23.1748366362421; 
- Tue, 27 May 2025 10:19:22 -0700 (PDT)
+ b=GT7a55NVpaj4sGKkET8WLW86zNRimlMBDYaHHcgGVoWTMAqWX4PSbwVv6rKE0+Vyre
+ J6TTXSF7lBibe6F+kDs/ZV+OQVqiLzF3XOwJSQj9F9kcnIHgyXb2hT34kiObU0NG+SnU
+ 6FlIfYw+43FAlHnmm5lVYSA37Yu5bOzfHeM4+p+emsOjubaEALL4dBSdiBWwxpY16Qel
+ jvJcCw0cU2cAZp0cI8ZajbuLu9Q/kns6LXwjo36EXEFaXG5SfXKXwaDeWlYYpNsewn+A
+ g1WhXNiCN0lEE2wmECX6YYwHxN7W1NoQ8jNfRjA6SHEbs5FKGjN7h4RoUF9wGsVXKpUz
+ 5Klw==
+X-Gm-Message-State: AOJu0YwSfqYAU8GHr53iUHZ2bhUkQvTpdUGzsd2scMl+ey140kE2RtSO
+ dIe6G9HB4F7hpjlBRWVi8YYuYKzTmdjIYPUvTyxI/DHOx9kVlGNor3KEf2lrrUtKOTGdv7fZKAR
+ ynHSjZ+ZL+uLRlubAYvdeTh4HxbLfpa9W2G24d20cha1fdLJAVAUYxyYU
+X-Gm-Gg: ASbGncuAvWNpnI/XcridM8rQyZwtnuqkBaSpYb5FcE2l6gJrV6suEP902gWiCUsGC97
+ l1XmhXNOkH7rX92jziO72iPDxLoB1FQIyr04+sVPJ4Iotq2++b2K1Grao/f3VxVEatsKBZHnoei
+ JbmYJ1EPbQt1IUyQuvv4x4OUlZM3xNkOxj/R63gI3eFJOsckx/KJ7w+nwoFrz23lq182jjnJKEi
+ iAuW6Q4kCSUiCew/z/gNGXOFpBaU/iY87qMS7jLO6y0U5QPmtmY85PwFwXPqZWiecXjWkO9y2Lw
+ r4XKvXa7jWMAgw==
+X-Received: by 2002:a17:907:3d8c:b0:ad5:5127:873 with SMTP id
+ a640c23a62f3a-ad85b28293amr1367775666b.61.1748366350599; 
+ Tue, 27 May 2025 10:19:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7XBS/DR/RUTAQSFnTmI5GEGVnE9J9IMqe/ajoDLRqsNbpgzKpE97eIrHWB1i407djcV81/Q==
+X-Received: by 2002:a17:907:3d8c:b0:ad5:5127:873 with SMTP id
+ a640c23a62f3a-ad85b28293amr1367772766b.61.1748366350169; 
+ Tue, 27 May 2025 10:19:10 -0700 (PDT)
 Received: from [192.168.10.27] ([151.95.46.79])
  by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ad5572f6402sm1642359066b.178.2025.05.27.10.19.20
+ a640c23a62f3a-ad89375e73csm104441166b.90.2025.05.27.10.19.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 May 2025 10:19:21 -0700 (PDT)
-Message-ID: <c7218963-6e04-41ff-85b5-dfa1e106eb56@redhat.com>
-Date: Tue, 27 May 2025 19:19:20 +0200
+ Tue, 27 May 2025 10:19:08 -0700 (PDT)
+Message-ID: <0af36d26-5509-4601-8e16-e420b0e4c53e@redhat.com>
+Date: Tue, 27 May 2025 19:19:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/3] hw/boards: Remove MachineState::usb_disabled field
