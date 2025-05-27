@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14343C54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5417DC54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJxzB-0008QI-Ia; Tue, 27 May 2025 13:21:12 -0400
+	id 1uJy1h-00017B-Dt; Tue, 27 May 2025 13:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJxyw-0008NW-TV
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:20:54 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJy1f-00014R-23
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 13:23:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJxyv-0000kx-HQ
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:20:54 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJy1d-0000vf-1w
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 13:23:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748366452;
+ s=mimecast20190719; t=1748366619;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/nnZyN6GhGbkhhomdoptaiFR97XzYCUJHgmhoRi89AA=;
- b=Am6TN3oWiNpp1HmhpgX18u2RGBJTNvoaJTyaG1/evtMwdibKtKFlSXAQHIzIkmcp0cIQcF
- 4UYpCmyNivS733lxRnbhfJB7/kXluZ7srpYhepOo0WFTelzrCOumihgu5qpsA61iWifaKn
- l8lipAYXxeBzkf43/wTKUGtHtfbD6tI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=2Fr4KP/w+ew6NVMzGi9V//f2p+cYP+KfRyvIRcgzr9U=;
+ b=EANryRCCgZCif+tnOs6mvn4beioLf6u6HJyxiCMo2ECOIUM8oAOOoO/bqoz6IWSlJ7P5p4
+ RE//zn6mW9MUwqk8N7jf8j1BCQxsVbIpAfmbyxkqwS2k3taICWrAwMgud/jiyqSO0qaCb/
+ PAeYBW7mjH+WOEOyKhSJ86YyFy5Oms0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-5TznExwePcOWJJEU6Mtd1g-1; Tue,
- 27 May 2025 13:20:49 -0400
-X-MC-Unique: 5TznExwePcOWJJEU6Mtd1g-1
-X-Mimecast-MFC-AGG-ID: 5TznExwePcOWJJEU6Mtd1g_1748366447
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-292-SH_nK-L8NeC0VhaTVC7i7A-1; Tue,
+ 27 May 2025 13:23:38 -0400
+X-MC-Unique: SH_nK-L8NeC0VhaTVC7i7A-1
+X-Mimecast-MFC-AGG-ID: SH_nK-L8NeC0VhaTVC7i7A_1748366616
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7B211955DAB; Tue, 27 May 2025 17:20:46 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF00A180045C; Tue, 27 May 2025 17:23:30 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.34.20])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D09719560AA; Tue, 27 May 2025 17:20:39 +0000 (UTC)
-Date: Tue, 27 May 2025 19:20:37 +0200
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 037F919560A3; Tue, 27 May 2025 17:23:25 +0000 (UTC)
+Date: Tue, 27 May 2025 19:23:23 +0200
 From: Kevin Wolf <kwolf@redhat.com>
 To: Fiona Ebner <f.ebner@proxmox.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
@@ -52,15 +52,15 @@ Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
  stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
  vsementsov@yandex-team.ru, xiechanglong.d@gmail.com,
  wencongyang2@huawei.com, berto@igalia.com, fam@euphon.net, ari@tuxera.com
-Subject: Re: [PATCH v3 13/24] block: move drain outside of bdrv_attach_child()
-Message-ID: <aDX0ZdeDTeb8x_tT@redhat.com>
+Subject: Re: [PATCH v3 14/24] block: move drain outside of quorum_add_child()
+Message-ID: <aDX1C8HPLOMyPgOR@redhat.com>
 References: <20250526132140.1641377-1-f.ebner@proxmox.com>
- <20250526132140.1641377-14-f.ebner@proxmox.com>
+ <20250526132140.1641377-15-f.ebner@proxmox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250526132140.1641377-14-f.ebner@proxmox.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+In-Reply-To: <20250526132140.1641377-15-f.ebner@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
@@ -90,23 +90,19 @@ Am 26.05.2025 um 15:21 hat Fiona Ebner geschrieben:
 > This is part of resolving the deadlock mentioned in commit "block:
 > move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
 > 
-> The function bdrv_attach_child() runs under the graph lock, so it is
-> not allowed to drain. It is called by:
-> 1. replication_start()
-> 2. quorum_add_child()
-> 3. bdrv_open_child_common()
-> 4. Throughout test-bdrv-graph-mod.c and test-bdrv-drain.c unit tests.
+> The quorum_add_child() callback runs under the graph lock, so it is
+> not allowed to drain. It is only called as the .bdrv_add_child()
+> callback, which is only called in the bdrv_add_child() function, which
+> also runs under the graph lock.
 > 
-> In all callers, a drained section is introduced.
-> 
-> The function quorum_add_child() runs under the graph lock, so it is
-> not actually allowed to drain. This will be addressed by the following
-> commit.
+> The bdrv_add_child() function is called by qmp_x_blockdev_change(),
+> where a drained section is introduced.
 > 
 > Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 
-You won't be surprised that bdrv_attach_child() should have a comment
-stating the draining requirement, too. With this fixed:
+Here we should have the documentation about the draining requirement on
+both BlockDriver.bdrv_add_child() and the bdrv_add_child() wrapper. With
+the added comments:
 
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 
