@@ -4,88 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D79C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 May 2025 20:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E231BC5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 00:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJeah-0005U9-KJ; Mon, 26 May 2025 16:38:35 -0400
+	id 1uJied-0000hv-L8; Mon, 26 May 2025 20:58:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uJeag-0005Tz-5z
- for qemu-devel@nongnu.org; Mon, 26 May 2025 16:38:34 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uJeae-0003Fc-Jq
- for qemu-devel@nongnu.org; Mon, 26 May 2025 16:38:33 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ad1d1f57a01so526862566b.2
- for <qemu-devel@nongnu.org>; Mon, 26 May 2025 13:38:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748291910; x=1748896710; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LPXHECAissZnEw+lEAzkB8iRvv3z5heujH7hDxNB0NY=;
- b=DXTLziP8lqeGe8OJNBx4Oa/8xRHmJ5ilKXq5FDlptWj/AcjRtiK4iE8FmgRYWUH2J3
- he04F+X7OtSSXFYs/KiVj0FM9FFICKBD8+mmq1edhra3aNq00voaDu0rJNQRZcHHhf46
- 1c/VwUCxFXY25QQkTt3lNEK5we/hig7OU10NYXuxaZmmx1HRAc4pyqXhBUTFcSFdUgzS
- uuHfZWWmSC9ABVTrwowcU1ysYaJ1Dj5kba6CvYvEi4czS56Mx2NMI7ADQ4i1CYK7PwHo
- OaAn11tEC7DDdJjLQiRB91/aNyBskLGfIIcOqA8gWtlDTL9ZuiEp2k7BAV+AmK/B7HHz
- RkRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748291910; x=1748896710;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LPXHECAissZnEw+lEAzkB8iRvv3z5heujH7hDxNB0NY=;
- b=YFWWShyYTrIzxFjNT8uUeIc4XfJo04UB73CHyezsmOMw7lPSyjNwXsWCi/ThTsYqSK
- kaNqLQELzUT+bczbmqvPhd0B6ClJwYAMyyVoFcGJpiItSrnPrvLfE8Y0lAGLiCwwjaZg
- g/TGFAaEH2d6hxda4Vu4ulhbdpIca54bMH6nXlCh1toVShR9ITV+Ce3RXEgGEquFifU2
- MoLkKJbMgbU/nnkr/Zwlp6iwF7+QGz7lbm6ppyBFjBUygtBYYr8nW0fbbvjpW/m705q7
- Qcsj2OgDXV6BbeKRZdrQSaPo6PIAR5+WvXa73HPdEaqXld6vDp+8XEMe56LdTIBV+spY
- N/qQ==
-X-Gm-Message-State: AOJu0YyB6sQTRQPwJi6CtZM3yb0il5yiaypdqKkXW2yzd94ePYWOwElb
- MWfJjQrG2fSAmRqfHR8hsvEXWGC92EkMfmVK1t5kjQum6/xZmZNZeeIiGzB1TK3b
-X-Gm-Gg: ASbGnctspwZQjrxblwuKBVxxtTZX6+UJGRKHON7DL1Ef16zuAQYbN/niT8zrRxLI8TA
- qhhOgMXY7j1HLqwDz+oy3DV+esusaAxut3UY7wsz+crYWSsJ3Fg95EjlkhXNgluguT6XlIvMNze
- GBJKwJR7GVbfTvt/6sJqTI8rFKCIbHS8rrMK6z2p6hkk+h8+OKRgTlVS/lW7aYqtX8rBCKS7VzC
- dYYp1VFamTYn/IudfI6JtR+TUUejA1heKBfL3+gwWcVSt825X8jyNO8S8YIK3Wd7SN91y7SsBGU
- 6Z9NY20WzXWC2Fybe8i0zqkddPDWzs+Efgk8LzLLFObm7PLYHOgpW5kyUpKMDnNEuY3AQwe3tLW
- UZVeDqdLBdju8Qt1Ptv5ZCfPqsa5IcPPlT8uNUDc1z4/TgNhOJ8GTyc+tPv7Wxf6O/vNn1kU=
-X-Google-Smtp-Source: AGHT+IHcibaMZlrD2lSNNh45tDWMB4AoFWiwMl9PVdV5QhehVvS1SbPZo2FJk1ov+SW84BjTCoP5mA==
-X-Received: by 2002:a17:907:9715:b0:ad8:8835:f794 with SMTP id
- a640c23a62f3a-ad88835f7bbmr110854466b.32.1748291909721; 
- Mon, 26 May 2025 13:38:29 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-2e3c-a000-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:2e3c:a000:219:99ff:feb2:2458])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad52d4ea8aesm1740919966b.179.2025.05.26.13.38.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 May 2025 13:38:29 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PATCH v2] hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
-Date: Mon, 26 May 2025 22:38:20 +0200
-Message-ID: <20250526203820.1853-1-shentey@gmail.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uJieZ-0000he-Od
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 20:58:51 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uJieX-0003Zz-IC
+ for qemu-devel@nongnu.org; Mon, 26 May 2025 20:58:51 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx12k_DjVocp39AA--.15487S3;
+ Tue, 27 May 2025 08:58:40 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxHcU8DjVoKQ70AA--.38038S3;
+ Tue, 27 May 2025 08:58:38 +0800 (CST)
+Subject: Re: [PATCH 06/12] target/loongarch: Fill in TCGCPUOps.pointer_wrap
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: foss@percivaleng.com, Song Gao <gaosong@loongson.cn>
+References: <20250504205714.3432096-1-richard.henderson@linaro.org>
+ <20250504205714.3432096-7-richard.henderson@linaro.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <02f59cef-f1f6-3ea5-2d9b-2860e9aa1b33@loongson.cn>
+Date: Tue, 27 May 2025 08:57:23 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20250504205714.3432096-7-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMBxHcU8DjVoKQ70AA--.38038S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWrur48Ww1rtF1fGFW3WFW7trc_yoW8JrW3pr
+ y7Z3W5KF4kta9xt3ykJa4Yvrn8Xr17Gry29a1xt3sakrs8XF18XF4kta4qyF4kCay8Ww12
+ vF4Fk3W5Xa1UtabCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QV
+ y3UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.385,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,48 +82,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 56b1f50e3c10 ("hw/i386/pc: Wire RTC ISA IRQs in south bridges")
-attempted to refactor RTC IRQ wiring which was previously done in
-pc_basic_device_init() but forgot about the isapc machine. Fix this by
-wiring in the code section dedicated exclusively to the isapc machine.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2961
-Fixes: 56b1f50e3c10 ("hw/i386/pc: Wire RTC ISA IRQs in south bridges")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
----
-v2:
-* add ISA_DEVICE() QOM cast as a safety check (Mark)
----
- hw/i386/pc_piix.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 0dce512f18..6b6359ef65 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -285,6 +285,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
-         pcms->idebus[0] = qdev_get_child_bus(dev, "ide.0");
-         pcms->idebus[1] = qdev_get_child_bus(dev, "ide.1");
-     } else {
-+        uint32_t irq;
-+
-         isa_bus = isa_bus_new(NULL, system_memory, system_io,
-                               &error_abort);
-         isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
-@@ -292,6 +294,9 @@ static void pc_init1(MachineState *machine, const char *pci_type)
-         x86ms->rtc = isa_new(TYPE_MC146818_RTC);
-         qdev_prop_set_int32(DEVICE(x86ms->rtc), "base_year", 2000);
-         isa_realize_and_unref(x86ms->rtc, isa_bus, &error_fatal);
-+        irq = object_property_get_uint(OBJECT(x86ms->rtc), "irq",
-+                                       &error_fatal);
-+        isa_connect_gpio_out(ISA_DEVICE(x86ms->rtc), 0, irq);
- 
-         i8257_dma_init(OBJECT(machine), isa_bus, 0);
-         pcms->hpet_enabled = false;
--- 
-2.49.0
+On 2025/5/5 上午4:57, Richard Henderson wrote:
+> Check va32 state.
+> 
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/loongarch/cpu.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index f7535d1be7..abad84c054 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -334,6 +334,12 @@ static bool loongarch_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+>       }
+>       return false;
+>   }
+> +
+> +static vaddr loongarch_pointer_wrap(CPUState *cs, int mmu_idx,
+> +                                    vaddr result, vaddr base)
+> +{
+> +    return is_va32(cpu_env(cs)) ? (uint32_t)result : result;
+> +}
+>   #endif
+>   
+>   static TCGTBCPUState loongarch_get_tb_cpu_state(CPUState *cs)
+> @@ -889,6 +895,7 @@ static const TCGCPUOps loongarch_tcg_ops = {
+>   
+>   #ifndef CONFIG_USER_ONLY
+>       .tlb_fill = loongarch_cpu_tlb_fill,
+> +    .pointer_wrap = loongarch_pointer_wrap,
+>       .cpu_exec_interrupt = loongarch_cpu_exec_interrupt,
+>       .cpu_exec_halt = loongarch_cpu_has_work,
+>       .cpu_exec_reset = cpu_reset,
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
