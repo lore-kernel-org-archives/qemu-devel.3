@@ -4,96 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9345EC54ED1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3BF1C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 17:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJxu3-0004x7-GQ; Tue, 27 May 2025 13:15:51 -0400
+	id 1uJxul-0005BS-Km; Tue, 27 May 2025 13:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uJxu1-0004wh-VG
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:15:50 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uJxu0-0008U2-5X
- for qemu-devel@nongnu.org; Tue, 27 May 2025 13:15:49 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-74019695377so2305958b3a.3
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 10:15:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748366145; x=1748970945; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TGa7/OAikUHlVl4F/tVkt/cibk7ms1BaLldKIyX8LvM=;
- b=b0U345Q+s2bE31cojYeq78eLLm63q7k6GmjBTW4pqcKmNbcd3zxYUzctUAd5Rovq0l
- i+oD2hf2Kp4OEVMeThDn2b+Z3JsdK+PHXUnViv89dVzeX26B5816A1MY70vB6F4tG+zv
- JeB+LbRG2ZqD7/qZw5FS9Jm9c8PydjnbbdU0jSmChVdymbV0dh2Twz0n1cAN+Gycl7mv
- IGFRGjV48O4MWEgvpG9PJ5YsgoSz/CMu+RBnspp1FEvPUX1cbaxo4gq83FHZiKdXeUDs
- U3wO2dDyExRYXzFpOI2y4DSkiK6v0wUa2aQAVrXiCYwfn2ZF2ZWo4v+QbV5viThqs8jk
- 4vmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748366145; x=1748970945;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TGa7/OAikUHlVl4F/tVkt/cibk7ms1BaLldKIyX8LvM=;
- b=KyjkfCSzYs4JQYVkEl6pcTRz72nUgw2jsjdQAMYHEgn6IuHuyXMGldbJdTyk0QdDiV
- QIVN4Za1JPoKZ/049DzjT+YrBp39I+yscX4RyfRFIMxCVhD+35YphS09XBDlyuIDRebi
- TLmY42X1w4xZT6Rybs03+aLWSKOLEh7odZs1BmuS7mT2LFyZ6EVVKPe5+QgaMtzacL1d
- j59wlUnrICYzxE67dWjkSw5gWLGQ2nZafc2jXJSzy0TuX23m3dI7w4cc1VkTG+R953m8
- Te2OhaXihcTjjiViQw8riSpryiUtfY6jQ0zcSi+g/Ry+fJlDL3IEMmq6uRIzis0GTtz8
- E/Rg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW7CKuYhKHr77MOZeOPHg7bXU2SrFoWlfzqvR5OcGJ17MftA7nHpGl+HFkOruMwKPrdp95e+hDyUeLa@nongnu.org
-X-Gm-Message-State: AOJu0Ywe/wlO0ERUdEFmZqBqej6uMRnBXu3ncuEEDw6dkItMEiGQagMp
- CFdWreoBvsQN5AxuICGEuGM329lYogg3RiicOgQzJonFjADdy9xcoB9XfPodQYNbDQM=
-X-Gm-Gg: ASbGncv3f/NaQ4Qk2s/+QlhWuN+WGPucF9UBfugk+/T99H62A8u11cYFp6jZw2KGWBQ
- vkwQcmFLmbt5uVcZMrT0d3d+Rt83uFgZ2ThKKKos+Dz2FyN7IPnawT37N1lrjfZqEYRFqN2XuVa
- DQsgPadT/ThL3ed6/VKXMoGIJ/qj/fXuFeFBxpoS8ybtZ0JHfhEy4kr8gmTZ4NvUTPvWzNcTVpH
- rXV6pMwrZbpnWUO7MC3Q8KtCWiF6s1MoZLiwZwiEUPrxw8wH9UYi/uV9Nd8xngKREPkZCz8Nc18
- q21VZBNVCCzjvsJD1yjuigVuXQpMg+Wn8asjqqwDxH8XFYyHse6k6iYq/CKvVpwE
-X-Google-Smtp-Source: AGHT+IEoIUSPLtc1VAm1fVaShrF/8RvM4p5M3WhG06UewZCFu4/4vLS7a7uQARVUY6jhVi5D1/C4hg==
-X-Received: by 2002:a05:6a00:1495:b0:742:a7a8:4135 with SMTP id
- d2e1a72fcca58-745fe0c9616mr23246920b3a.24.1748366145514; 
- Tue, 27 May 2025 10:15:45 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-742a98a1b3esm18994841b3a.157.2025.05.27.10.15.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 May 2025 10:15:45 -0700 (PDT)
-Message-ID: <55ef7adb-2c56-4638-8b9b-13d45f7890a1@linaro.org>
-Date: Tue, 27 May 2025 10:15:44 -0700
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJxuj-0005BD-F6
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 13:16:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uJxuh-0000Fl-VR
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 13:16:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748366191;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/8c7l4S5iOZvNRcjeWhcg//w7t2pWjrAaT+CAOXWQDI=;
+ b=hBs5iJvNz9nMU1G88BxFrPu1rvCPOEBYczCPU44sVMtafCF1QF1IkXhGVMnEj+sH43U4SH
+ 7F5swXXOUS6wZJoLY8PKHJLZWVzF4hMu5ZARE3w6z0qIFwudi4iY4Vs/7MWRzEgiyfI4gI
+ danzNuE52YMODNH7lo28cd9RSB0hvO8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-WfqNrG-UN3eOqehHHJAj4A-1; Tue,
+ 27 May 2025 13:16:27 -0400
+X-MC-Unique: WfqNrG-UN3eOqehHHJAj4A-1
+X-Mimecast-MFC-AGG-ID: WfqNrG-UN3eOqehHHJAj4A_1748366185
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 57A8D195608C; Tue, 27 May 2025 17:16:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.20])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C6E8F30001B0; Tue, 27 May 2025 17:16:17 +0000 (UTC)
+Date: Tue, 27 May 2025 19:16:14 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, hreitz@redhat.com,
+ stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
+ vsementsov@yandex-team.ru, xiechanglong.d@gmail.com,
+ wencongyang2@huawei.com, berto@igalia.com, fam@euphon.net, ari@tuxera.com
+Subject: Re: [PATCH v3 12/24] block: move drain outside of
+ bdrv_root_attach_child()
+Message-ID: <aDXzXj1cbh6eFkLw@redhat.com>
+References: <20250526132140.1641377-1-f.ebner@proxmox.com>
+ <20250526132140.1641377-13-f.ebner@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] single-binary: build target common libraries with
- dependencies
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, thuth@redhat.com, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250521223414.248276-1-pierrick.bouvier@linaro.org>
- <467e47ca-9cec-4c07-aeb6-4ac94c00563c@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <467e47ca-9cec-4c07-aeb6-4ac94c00563c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250526132140.1641377-13-f.ebner@proxmox.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,29 +87,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/25 2:53 AM, Philippe Mathieu-Daudé wrote:
-> On 22/5/25 00:34, Pierrick Bouvier wrote:
+Am 26.05.2025 um 15:21 hat Fiona Ebner geschrieben:
+> This is part of resolving the deadlock mentioned in commit "block:
+> move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
 > 
->> Pierrick Bouvier (7):
->>     meson: build target libraries with common dependencies
->>     hw/arm: remove explicit dependencies listed
->>     target/arm: remove explicit dependencies listed
->>     meson: apply target config for picking files from lib{system, user}
->>     meson: merge lib{system, user}_ss with {system, user}_ss
->>     meson: remove lib{system, user}_ss aliases
->>     meson: merge hw_common_arch in target_common_system_arch
+> The function bdrv_root_attach_child() runs under the graph lock, so it
+> is not allowed to drain. It is called by:
+> 1. blk_insert_bs(), where a drained section is introduced.
+> 2. block_job_add_bdrv(), which holds the graph lock itself.
 > 
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> block_job_add_bdrv() is called by:
+> 1. mirror_start_job()
+> 2. stream_start()
+> 3. commit_start()
+> 4. backup_job_create()
+> 5. block_job_create()
+> 6. In the test_blockjob_common_drain_node() unit test
 > 
+> In all callers, a drained section is introduced.
+> 
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 
-Thanks to you and Thomas for raising the issues this series fixed:
-- dependencies for target common libraries
-- apply config for target common libraries
-We should be good and complete in terms of build system for the single 
-binary now.
-(last step left will be to create the single binary itself, which I have 
-a patch for, but it will come later, no need to worry people with a new 
-mysterious binary :)).
+Same thing as in previous patches with comments. With that fixed:
 
-Pierrick
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+
 
