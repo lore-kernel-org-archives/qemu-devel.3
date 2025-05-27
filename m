@@ -4,67 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A8AC54F30
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 09:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BC5C54ED1
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 May 2025 09:53:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uJqyM-0000uL-AM; Tue, 27 May 2025 05:51:51 -0400
+	id 1uJqzi-0001T9-4u; Tue, 27 May 2025 05:53:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uJqyJ-0000u2-PU
- for qemu-devel@nongnu.org; Tue, 27 May 2025 05:51:47 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uJqzf-0001Qa-42
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 05:53:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uJqyG-00041U-1l
- for qemu-devel@nongnu.org; Tue, 27 May 2025 05:51:47 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b67F85JQRz6DB5p;
- Tue, 27 May 2025 17:51:24 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id A18A4140433;
- Tue, 27 May 2025 17:51:25 +0800 (CST)
-Received: from localhost (10.47.70.225) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 27 May
- 2025 11:51:24 +0200
-Date: Tue, 27 May 2025 10:51:21 +0100
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: <qemu-devel@nongnu.org>, <anisinha@redhat.com>, <imammedo@redhat.com>,
- <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>,
- <peter.maydell@linaro.org>, <prime.zeng@hisilicon.com>,
- <shameerali.kolothum.thodi@huawei.com>, <wangyanan55@huawei.com>,
- <yangyicong@hisilicon.com>
-Subject: Re: [PATCH v4 3/4] hw/acpi/aml-build: Build a root node in the PPTT
- table
-Message-ID: <20250527105121.00005a5f.alireza.sanaee@huawei.com>
-In-Reply-To: <20250524063700-mutt-send-email-mst@kernel.org>
-References: <20250424122439.550-1-alireza.sanaee@huawei.com>
- <20250424122439.550-4-alireza.sanaee@huawei.com>
- <20250511140938-mutt-send-email-mst@kernel.org>
- <20250519095551.0000525d.alireza.sanaee@huawei.com>
- <20250524063700-mutt-send-email-mst@kernel.org>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uJqza-00049M-F1
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 05:53:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748339583;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=HcOZWNq4tyb6y2JY7jepOLnfzaZcgBlZDJbnYi/E6Vc=;
+ b=A30KhTOUwAHf3SxMxMn8Xjn4Mk5Gwk1N8qLhi4YukYu+d/TFaBpb+1Tsg2k6lUcy+sZjYj
+ NeAZm5kQJIyIe5AZV430QSn3WtnjctNa0eiRvUWfGwT96/wiRCf8+p0ceiFwfh15rWrTV1
+ fwXx9eKFg/vQNiPEQCFHOb9R7zL36NY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-OCAtm_32Pg6bepKE5LiqRg-1; Tue, 27 May 2025 05:53:02 -0400
+X-MC-Unique: OCAtm_32Pg6bepKE5LiqRg-1
+X-Mimecast-MFC-AGG-ID: OCAtm_32Pg6bepKE5LiqRg_1748339581
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a364394fa8so1172689f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 02:53:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748339581; x=1748944381;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HcOZWNq4tyb6y2JY7jepOLnfzaZcgBlZDJbnYi/E6Vc=;
+ b=IPtxIbTReFUyisNZEj1nA+O3g2LyW06YaMYEGspA619KmETK/rdqGUGeh6j022p04f
+ VcTpnJ//Q11ysF7AJd7CPbW4tPJFA+wIJvdvy+mNYGFm3chDf4nfMVm0Qxwx9HGzFTOE
+ 46j8B1hoDeYwBszczBhaWocuXVVOyATUNQFJ76jypmKiA1LT+DAP6xmGvMfJAI03Jihq
+ Ny+aHGVIBYhg7NkFzdbG5QmQC/45CHUzQxs9HEE+sHKxxPYPxZxeEYg2ztJ8jxIZqR7D
+ GyPZL9HwSb3B91vhkjifaGvfOooZl+hm3ypyqn06vGKsP2f2a+ghb6o+LpqY8bA8JXMY
+ A37Q==
+X-Gm-Message-State: AOJu0YwlcydmOPt4Qx9qjJoxoTqi5Ac0yP2IHqHCCKDiT5HDT7G3TEhT
+ oSz2PBumTFiplT0dgTIIJ6cYkxfbhT7C8mHpDS55EDSmlmOiqim7CoR1Aga58xU8KzgdLmyGf/Q
+ iWO2goMo6pbHWvi8kDK1o1xTmvFJXaPEUNyNzTZY+1tKHWoPsmelp4pdQ
+X-Gm-Gg: ASbGncsKfVZJ4CGujlO2vyyIjgQs6c6jk205tYFY+KDKsNHza4gGpSpw3xYzB60jwm6
+ lAMCpiHhXqU11+HDTUoh73kE9DR8GnzKpqsQAQpEalM9pUc+XjfvHm2q8nViiDzw284tiz/3mdu
+ 8/cScfeWnGbD8JrMv+poYbDDsCHLOLGPb0y0J88Pk26gXkNhgYtEH+lGUXz1AqmNyhbsKwHdl7J
+ yvfBg0j5phWVh+8oterKaLtLT/F5VMCyM78S6NHMwB3Y2CBQDJ+7XzJV43CzAjGorvqTZs9fO8B
+ X8iuSYD4bGoF/g==
+X-Received: by 2002:a05:6000:1881:b0:3a4:c6bc:995b with SMTP id
+ ffacd0b85a97d-3a4cb47b7f7mr10217709f8f.35.1748339581339; 
+ Tue, 27 May 2025 02:53:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFeOy5DtPQ2Rvkdkjrgdw9D8dDPIvQcSRA7SuewZkU8qHhYUsqMurFfl5LvteN/fBilZbh3oA==
+X-Received: by 2002:a05:6000:1881:b0:3a4:c6bc:995b with SMTP id
+ ffacd0b85a97d-3a4cb47b7f7mr10217692f8f.35.1748339580980; 
+ Tue, 27 May 2025 02:53:00 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.46.79])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-3a4d50f96easm7070123f8f.79.2025.05.27.02.53.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 May 2025 02:53:00 -0700 (PDT)
+Message-ID: <642b5707-bef4-4110-b211-fde34179a6be@redhat.com>
+Date: Tue, 27 May 2025 11:52:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/12] subprojects: add the anyhow crate
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, qemu-rust@nongnu.org
+References: <20250526142254.1061009-1-pbonzini@redhat.com>
+ <20250526142455.1061519-2-pbonzini@redhat.com> <aDWJrNpRbKjpKqOi@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <aDWJrNpRbKjpKqOi@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.47.70.225]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- frapeml500003.china.huawei.com (7.182.85.28)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.903,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,100 +143,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 24 May 2025 06:37:07 -0400
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+On 5/27/25 11:45, Zhao Liu wrote:
+> On Mon, May 26, 2025 at 04:24:45PM +0200, Paolo Bonzini wrote:
+>> Date: Mon, 26 May 2025 16:24:45 +0200
+>> From: Paolo Bonzini <pbonzini@redhat.com>
+>> Subject: [PATCH 02/12] subprojects: add the anyhow crate
+>> X-Mailer: git-send-email 2.49.0
+>>
+>> This is a standard replacement for Box<dyn Error> which is more efficient (it only
+>> occcupies one word) and provides a backtrace of the error.  This could be plumbed
+>> into &error_abort in the future.
+>>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   rust/meson.build                              |  2 ++
+>>   subprojects/.gitignore                        |  1 +
+>>   subprojects/anyhow-1.0-rs.wrap                |  7 ++++
+>>   .../packagefiles/anyhow-1.0-rs/meson.build    | 33 +++++++++++++++++++
+>>   4 files changed, 43 insertions(+)
+>>   create mode 100644 subprojects/anyhow-1.0-rs.wrap
+>>   create mode 100644 subprojects/packagefiles/anyhow-1.0-rs/meson.build
+> 
+> Missed to change scripts/archive-source.sh & scripts/make-release?
 
-> On Mon, May 19, 2025 at 09:55:51AM +0100, Alireza Sanaee wrote:
-> > On Sun, 11 May 2025 14:10:46 -0400
-> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >   
-> > > On Thu, Apr 24, 2025 at 01:24:38PM +0100, Alireza Sanaee wrote:  
-> > > > From: Yicong Yang <yangyicong@hisilicon.com>
-> > > > 
-> > > > Currently we build the PPTT starting from the socket node and
-> > > > each socket will be a separate tree. For a multi-socket system
-> > > > it'll be hard for the OS to know the whole system is
-> > > > homogeneous or not (actually we're in the current
-> > > > implementation) since no parent node to telling the identical
-> > > > implementation informentation. Add a root node for indicating
-> > > > this.
-> > > > 
-> > > > Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-> > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> > > > ---
-> > > >  hw/acpi/aml-build.c | 15 ++++++++++++++-
-> > > >  1 file changed, 14 insertions(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> > > > index 560cee12a24b..3010325ca423 100644
-> > > > --- a/hw/acpi/aml-build.c
-> > > > +++ b/hw/acpi/aml-build.c
-> > > > @@ -2153,12 +2153,25 @@ void build_pptt(GArray *table_data,
-> > > > BIOSLinker *linker, MachineState *ms, int64_t socket_id = -1,
-> > > > cluster_id = -1, core_id = -1; uint32_t socket_offset = 0,
-> > > > cluster_offset = 0, core_offset = 0; uint32_t pptt_start =
-> > > > table_data->len;
-> > > > +    uint32_t root_offset;
-> > > >      int n;
-> > > >      AcpiTable table = { .sig = "PPTT", .rev = 2,
-> > > >                          .oem_id = oem_id, .oem_table_id =
-> > > > oem_table_id }; 
-> > > >      acpi_table_begin(&table, table_data);
-> > > >  
-> > > > +    /*
-> > > > +     * Build a root node for all the processor nodes. Otherwise
-> > > > when
-> > > > +     * building a multi-socket system each socket tree are
-> > > > separated    
-> > > 
-> > > is separated  
-> > Hi Michael,
-> > 
-> > Happy to send another version for this issue, or maybe you can
-> > fix this when pulling, if that's the only problem? Up to you :)
-> > 
-> > Alireza  
-> 
-> resend pls.
-Thanks, I already have.
+Yes, also the wrap name should be anyhow-1-rs because only the "0" 
+version gets an extra component.
 
-v5: https://lore.kernel.org/all/20250523102654.1719-1-alireza.sanaee@huawei.com/
-> 
-> > >   
-> > > > +     * and will be hard for the OS like Linux to know whether
-> > > > the
-> > > > +     * system is homogeneous.
-> > > > +     */
-> > > > +    root_offset = table_data->len - pptt_start;
-> > > > +    build_processor_hierarchy_node(table_data,
-> > > > +        (1 << 0) | /* Physical package */
-> > > > +        (1 << 4), /* Identical Implementation */
-> > > > +        0, 0, NULL, 0);
-> > > > +
-> > > >      /*
-> > > >       * This works with the assumption that cpus[n].props.*_id
-> > > > has been
-> > > >       * sorted from top to down levels in
-> > > > mc->possible_cpu_arch_ids(). @@ -2175,7 +2188,7 @@ void
-> > > > build_pptt(GArray *table_data, BIOSLinker *linker, MachineState
-> > > > *ms, build_processor_hierarchy_node(table_data, (1 << 0) | /*
-> > > > Physical package */ (1 << 4), /* Identical Implementation */
-> > > > -                0, socket_id, NULL, 0);
-> > > > +                root_offset, socket_id, NULL, 0);
-> > > >          }
-> > > >  
-> > > >          if (mc->smp_props.clusters_supported &&
-> > > > mc->smp_props.has_clusters) { -- 
-> > > > 2.34.1    
-> > > 
-> > >   
-> 
-> 
+Paolo
 
 
