@@ -4,141 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6510CC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4D59C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:50:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKEJp-0001FH-QP; Wed, 28 May 2025 06:47:35 -0400
+	id 1uKEM6-0002Nx-UN; Wed, 28 May 2025 06:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uKEJg-0001BS-9N
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:47:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uKEM3-0002Kx-3e
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:49:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uKEJd-0006WG-Er
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:47:23 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uKEM0-0006gT-Vl
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:49:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748429239;
+ s=mimecast20190719; t=1748429388;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cJxQ30O1brdNnVN+LO2wNj/GWFyyylvnxOhzZ2b03pM=;
- b=XGjewiAKfeKdxnYppFdijUXr3MD6RArAclT2gWhQ++T5T8ZZXxilDlXdYFYKprF7Kq3lfu
- cmTYN53ii/v0PruG9YfMVsbWRJFviuNg/UyJl64HFHaLxt0S1RyPHYAJBP8l0dhHjCc77p
- 6f31yCF23WmIalt+Z7FpacLGKD3GC0Q=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=eo7JgcWIfIt948do3LlLVcHxwolSgQoURAGIxncUInI=;
+ b=GDCmINvVMMa8mWkzok3nAzulfyoWAtkk3Bj5mTpAbK08KTrp4n8l1QeOZFlIE6bkUsXN+X
+ tPPBeP/xHkHK0285fdp1nOqXuz0Z/MG6BCU0gzGgR6adNYdob3q8+PKlZZ0InFB5A6g5Z8
+ j5Nc5wCQRSI1ymjU4mQVXxUhuLAs7dk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-U3HOFEc3Phy0L-0Ga0-hdg-1; Wed, 28 May 2025 06:47:17 -0400
-X-MC-Unique: U3HOFEc3Phy0L-0Ga0-hdg-1
-X-Mimecast-MFC-AGG-ID: U3HOFEc3Phy0L-0Ga0-hdg_1748429237
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4c8c60c5eso2653582f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 03:47:17 -0700 (PDT)
+ us-mta-480-KhWthrI0PwyUNTlLYOSohg-1; Wed, 28 May 2025 06:49:46 -0400
+X-MC-Unique: KhWthrI0PwyUNTlLYOSohg-1
+X-Mimecast-MFC-AGG-ID: KhWthrI0PwyUNTlLYOSohg_1748429385
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-441c96c1977so26849975e9.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 03:49:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748429237; x=1749034037;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cJxQ30O1brdNnVN+LO2wNj/GWFyyylvnxOhzZ2b03pM=;
- b=YzFvEzhvxSwmPtRZPUSLgVwMGHqh0MJzQQrwXodibN/FsBNzsI8E23Vys5eaZR677S
- SwdlZrL1ORci677Tp5n/JzWtbVe8kWi479XAaE68Nbf5dd1jcBeGxAHRFT+FvWu0fZt5
- auD+4WblfFlRmK/BQdZQSVmc6oVVeW70tuNo/pQzCn6K0LrkWlHOXYkYPB1yMU1TVSMp
- fdxxEhh4Iv1bvbEJokS3TBTuIOGi2VRmCGhCNFnWa9wZLJG2WVhYei2isbq5hLQTz4b6
- vriffKdcWEcrm3nSyVGyzC4CaXyI3oD4UeL6Yd3WZxId5pofZWzr2FgliF1mDPL1vzPS
- 4biQ==
+ d=1e100.net; s=20230601; t=1748429385; x=1749034185;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eo7JgcWIfIt948do3LlLVcHxwolSgQoURAGIxncUInI=;
+ b=j/9AE0qss8+GZ+ToQFiX/57OKr1vND24AhTyCOVIdxU+NR1SogTzJjpqo56WCByhKa
+ 1dEZEKN5bcZS2rvVMxVL8VDzVje+eUKPxNBK2K7Ug3BCDH0U1utsmFu6Gt90NidXyhYH
+ nm/t7SQnRFA8ZC0DaeSl9TsqtUCHklyg1sTdjyE3weF1MaRlpXx0urLy7lm+gK7itVEV
+ All4bU8EUrFQkbhvu4qNfjGpTtMupPPi9kbp4Qxa8Q87fNSAj4kyYYkjsFIu7u52kjcU
+ 0PRKhQggoiG5qcLrezTJt409sxCyUOZcdHU7qx/5jCCkskkCNen9n/2EFGK3yUTJvt0b
+ tKEg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7ccM7jtTPON7lgp1yLwHndtifUiVHd/BjVk1t8WTyZ4n9n4+dIPEeqIjOV1LVk236Gu/zL/QJEBIs@nongnu.org
-X-Gm-Message-State: AOJu0Ywn1o67P90MTpBZjvKU/orREM2y08GzSE0evNBp/58NyUaSTXDY
- mDR1WSyZD7naptqvgOWRyjXlerxaTKTz1FJC2LhNrwlvT8X6Dqfx6IbHPA5t7As2DLOHmXJ3Yr2
- WvBzgRh0UYlnxW+UcNFU5jImbz2qBlUl38K8sdy5Ub3dWCXp2I3jLXLhU
-X-Gm-Gg: ASbGncttMhQpghdsriYBay3L3Ctb7N69AZZR6TKxGz/FQb3zBPJJC+mM7VNGMGs6afh
- YQ8RnX9n2oVRHFlI9ji5826T/nsFKiWoF+FyATZIZ80m7IQpT7u3vraqKH283cEKHsnieDdIXqb
- aSN9RlrcKtnL1DWTr7nHPg2GfpFSRNDUdgDiaYG1LDRSxHCtbBZ/SOS2XRoUS5aorvucl53Fmf1
- yaFxIvzG6/Om4bhQktOxMkEqD43pxc1wVh69vDpBYrCZLvBlAgt09RxbO8lsXN/6xSV32p6cvkz
- b+1wqQ==
-X-Received: by 2002:adf:f682:0:b0:3a4:cc90:85ea with SMTP id
- ffacd0b85a97d-3a4cc908670mr12028123f8f.11.1748429236609; 
- Wed, 28 May 2025 03:47:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+1NPiFtsRo7xajrABLkt9VlA8TEK3NnBdyHz1/DTS013UqrVBZ1e277CUgBHh9KfjwOAWLA==
-X-Received: by 2002:adf:f682:0:b0:3a4:cc90:85ea with SMTP id
- ffacd0b85a97d-3a4cc908670mr12028091f8f.11.1748429236159; 
- Wed, 28 May 2025 03:47:16 -0700 (PDT)
-Received: from [10.0.5.211] ([91.126.222.130])
+ AJvYcCUD4Bd7pXzpIHAW50FeyFlcoY3rYt0rvhOcNuZXWRNvCFvQv7OxhprHksrpbeyKoMuBe5kQAnYIVrGv@nongnu.org
+X-Gm-Message-State: AOJu0Yy6hTCo3Pj4JTdz8G6r4G4KrfdbuYor4fkv4GPaIrz9WpMrtEWo
+ 12mTOkzq9TXvFiGKoHc0nMwcCgNsM6zOR7sJ3LTYSlvK3CmlE+uQZj3wVGzNyH1Uvcbx/r5EI3g
+ SyYcn+eIoEhRzk/pyYOqIXBVjHUt1Tkbf27OYWU/6MUq+pqdOWBne6NX5
+X-Gm-Gg: ASbGncuEMO7RsLQ891VwjVkZgkyxin2UoxnOooRoJwK4KrJqSr+px2cnBeKeXIl7WPp
+ 9J6a1PzWuf5dYqeg8JRO9cPKf5z/XLfAq5WBLLnGxHUDnH6aUS7Fg+PJbTGk+8yPRWSe0QkJhAl
+ 866waUIavSno0MWbQV715UnmkMkYsFeC9g4kdkbj42CGZCtlAr+hAcV/DAgK/pEMeCO5Dv3DvbT
+ LTr65UHtz4PP+9nI7MTg6KzHFDhx5JrImDPgmwjhKWgxAkddPswLzDzQsuOkZKC+HsrhY3B/lbg
+ oPxe0W0+3HeNNEio6ZahQwScbdhEevOd
+X-Received: by 2002:a05:6000:18ad:b0:3a4:d994:be4b with SMTP id
+ ffacd0b85a97d-3a4d994bfa2mr10275449f8f.1.1748429385174; 
+ Wed, 28 May 2025 03:49:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8sKOF7yPrvUxEoRddkV6M+gSz4jdvQ9zIPf0wudDQkmUFgjb3FBPGXsfCtlFLA2DnnQiA2g==
+X-Received: by 2002:a05:6000:18ad:b0:3a4:d994:be4b with SMTP id
+ ffacd0b85a97d-3a4d994bfa2mr10275431f8f.1.1748429384773; 
+ Wed, 28 May 2025 03:49:44 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4eac7db82sm1104417f8f.24.2025.05.28.03.47.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 May 2025 03:47:15 -0700 (PDT)
-Message-ID: <96b8cd22-df17-4c3a-b28e-cf75268b6451@redhat.com>
-Date: Wed, 28 May 2025 12:47:14 +0200
+ 5b1f17b1804b1-450064a133csm17695005e9.11.2025.05.28.03.49.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 May 2025 03:49:44 -0700 (PDT)
+Date: Wed, 28 May 2025 12:49:43 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v2 24/25] tests/qtest/bios-tables-test: Keep ACPI PCI
+ hotplug off
+Message-ID: <20250528124943.45ee502e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <fd44ef37-ef02-4e60-817d-1362c76433b0@redhat.com>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-25-eric.auger@redhat.com>
+ <20250528113813.47086516@imammedo.users.ipa.redhat.com>
+ <fd44ef37-ef02-4e60-817d-1362c76433b0@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 6/6] iommufd: Implement query of host VTD IOMMU's
- capability
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20250528060409.3710008-1-zhenzhong.duan@intel.com>
- <20250528060409.3710008-7-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250528060409.3710008-7-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -147,7 +101,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,130 +117,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/25 08:04, Zhenzhong Duan wrote:
-> Implement query of HOST_IOMMU_DEVICE_CAP_[NESTING|FS1GP|ERRATA] for IOMMUFD
-> backed host VTD IOMMU device.
+On Wed, 28 May 2025 11:48:20 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
+
+> Hi Igor,
 > 
-> Query on these capabilities is not supported for legacy backend because there
-> is no plan to support nesting with legacy backend backed host device.
+> On 5/28/25 11:38 AM, Igor Mammedov wrote:
+> > On Tue, 27 May 2025 09:40:26 +0200
+> > Eric Auger <eric.auger@redhat.com> wrote:
+> >  
+> >> From: Gustavo Romero <gustavo.romero@linaro.org>
+> >>
+> >> ACPI PCI hotplug is now turned on by default so we need to change the
+> >> existing tests to keep it off. However, even setting the ACPI PCI
+> >> hotplug off in the existing tests, there will be changes in the ACPI
+> >> tables because the _OSC method was modified, hence in the next patch of
+> >> this series the blobs are updated accordingly.
+> >>
+> >> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>  
+> > it would be better to test whatever default we end up with.
+> > (like x86)  
 > 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/i386/intel_iommu_internal.h     |  1 +
->   include/system/host_iommu_device.h |  7 ++++++
->   backends/iommufd.c                 | 39 ++++++++++++++++++++++++++++--
->   3 files changed, 45 insertions(+), 2 deletions(-)
+> See my question on patch 2's comment. We intended to have tests for both
+> modes (legacy and acpi pcihp). Gustavo added some new tests for the new
+> default, namely acpi pcihp. Now I did not really understand your point
+> about keeping legacy mode as a default.
+
+default legacy wrt tests are orthogonal things.
+Just decide what default should be in #2 and then make sure existing tests
+work with that.
+Default (majority) tests shouldn't include CLI option a for a feature 'acpi-pcihp',
+only legacy tests should have it.
+
+Given bios-tables-test is heavy load on CI for x86 we have only few
+test cases to check no pcihp (legacy), the same should be done for ARM.
+
+
+Then on top add a few acpi hotplug tests to snapshot DSDT with
+hotplug hierarchy built in.
+
+ex: test_acpi_piix4_tcg_bridge or test_acpi_piix4_no_acpi_pci_hotplug.
+ 
 > 
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index e8b211e8b0..2cda744786 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -191,6 +191,7 @@
->   #define VTD_ECAP_PT                 (1ULL << 6)
->   #define VTD_ECAP_SC                 (1ULL << 7)
->   #define VTD_ECAP_MHMV               (15ULL << 20)
-> +#define VTD_ECAP_NEST               (1ULL << 26)
->   #define VTD_ECAP_SRS                (1ULL << 31)
->   #define VTD_ECAP_PASID              (1ULL << 40)
->   #define VTD_ECAP_SMTS               (1ULL << 43)
-> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-> index 10fccc10be..c2770cb469 100644
-> --- a/include/system/host_iommu_device.h
-> +++ b/include/system/host_iommu_device.h
-> @@ -29,6 +29,10 @@ typedef union VendorCaps {
->    *
->    * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this represents
->    *           the @out_capabilities value returned from IOMMU_GET_HW_INFO ioctl)
-> + *
-> + * @vendor_caps: host platform IOMMU vendor specific capabilities (e.g. on
-> + *               IOMMUFD this represents raw vendor data from data_uptr
-> + *               buffer returned from IOMMU_GET_HW_INFO ioctl)
->    */
->   typedef struct HostIOMMUDeviceCaps {
->       uint32_t type;
-> @@ -116,6 +120,9 @@ struct HostIOMMUDeviceClass {
->    */
->   #define HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE        0
->   #define HOST_IOMMU_DEVICE_CAP_AW_BITS           1
-> +#define HOST_IOMMU_DEVICE_CAP_NESTING           2
-> +#define HOST_IOMMU_DEVICE_CAP_FS1GP             3
-> +#define HOST_IOMMU_DEVICE_CAP_ERRATA            4
->   
->   #define HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX       64
->   #endif
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index b114fb08e7..63209659f3 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -21,6 +21,7 @@
->   #include "hw/vfio/vfio-device.h"
->   #include <sys/ioctl.h>
->   #include <linux/iommufd.h>
-> +#include "hw/i386/intel_iommu_internal.h"
->   
->   static void iommufd_backend_init(Object *obj)
->   {
-> @@ -364,6 +365,41 @@ bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
->       return idevc->detach_hwpt(idev, errp);
->   }
->   
-> +static int hiod_iommufd_get_vtd_cap(HostIOMMUDevice *hiod, int cap,
-> +                                    Error **errp)
-> +{
-> +    struct iommu_hw_info_vtd *caps = &hiod->caps.vendor_caps.vtd;
-> +
-> +    switch (cap) {
-> +    case HOST_IOMMU_DEVICE_CAP_NESTING:
-> +        return !!(caps->ecap_reg & VTD_ECAP_NEST);
-> +    case HOST_IOMMU_DEVICE_CAP_FS1GP:
-> +        return !!(caps->cap_reg & VTD_CAP_FS1GP);
-> +    case HOST_IOMMU_DEVICE_CAP_ERRATA:
-> +        return caps->flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17;
-> +    default:
-> +        error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
-> +        return -EINVAL;
-> +    }
-> +}
-
-
-This is intel specific. Why not handle these capabilities directly from
-vtd_check_hiod() under hw/i386/intel_iommu.c ?
-
-
-Thanks,
-
-C.
-
-
-> +static int hiod_iommufd_get_vendor_cap(HostIOMMUDevice *hiod, int cap,
-> +                                       Error **errp)
-> +{
-> +    enum iommu_hw_info_type type = hiod->caps.type;
-> +
-> +    switch (type) {
-> +    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
-> +        return hiod_iommufd_get_vtd_cap(hiod, cap, errp);
-> +    case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
-> +    case IOMMU_HW_INFO_TYPE_NONE:
-> +        break;
-> +    }
-> +
-> +    error_setg(errp, "%s: unsupported capability type %x", hiod->name, type);
-> +    return -EINVAL;
-> +}
-> +
->   static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
->   {
->       HostIOMMUDeviceCaps *caps = &hiod->caps;
-> @@ -374,8 +410,7 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
->       case HOST_IOMMU_DEVICE_CAP_AW_BITS:
->           return vfio_device_get_aw_bits(hiod->agent);
->       default:
-> -        error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
-> -        return -EINVAL;
-> +        return hiod_iommufd_get_vendor_cap(hiod, cap, errp);
->       }
->   }
->   
+> Thanks
+> 
+> Eric
+> >  
+> >> ---
+> >>
+> >> [Eric] also added acpi-pcihp=off to test_acpi_aarch64_virt_tcg_numamem
+> >> ---
+> >>  tests/qtest/bios-tables-test.c | 13 +++++++++----
+> >>  1 file changed, 9 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+> >> index 0a333ec435..6379dba714 100644
+> >> --- a/tests/qtest/bios-tables-test.c
+> >> +++ b/tests/qtest/bios-tables-test.c
+> >> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
+> >>      };
+> >>  
+> >>      data.variant = ".memhp";
+> >> -    test_acpi_one(" -machine nvdimm=on"
+> >> +    test_acpi_one(" -machine nvdimm=on,acpi-pcihp=off"
+> >>                    " -cpu cortex-a57"
+> >>                    " -m 256M,slots=3,maxmem=1G"
+> >>                    " -object memory-backend-ram,id=ram0,size=128M"
+> >> @@ -1747,7 +1747,8 @@ static void test_acpi_aarch64_virt_tcg_numamem(void)
+> >>      };
+> >>  
+> >>      data.variant = ".numamem";
+> >> -    test_acpi_one(" -cpu cortex-a57"
+> >> +    test_acpi_one(" -machine acpi-pcihp=off"
+> >> +                  " -cpu cortex-a57"
+> >>                    " -object memory-backend-ram,id=ram0,size=128M"
+> >>                    " -numa node,memdev=ram0",
+> >>                    &data);
+> >> @@ -1775,7 +1776,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
+> >>       * to solve the conflicts.
+> >>       */
+> >>      data.variant = ".pxb";
+> >> -    test_acpi_one(" -device pcie-root-port,chassis=1,id=pci.1"
+> >> +    test_acpi_one(" -machine acpi-pcihp=off"
+> >> +                  " -device pcie-root-port,chassis=1,id=pci.1"
+> >>                    " -device virtio-scsi-pci,id=scsi0,bus=pci.1"
+> >>                    " -drive file="
+> >>                    "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2,"
+> >> @@ -1846,7 +1848,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
+> >>  
+> >>      data.variant = ".acpihmatvirt";
+> >>  
+> >> -    test_acpi_one(" -machine hmat=on"
+> >> +    test_acpi_one(" -machine hmat=on,acpi-pcihp=off"
+> >>                    " -cpu cortex-a57"
+> >>                    " -smp 4,sockets=2"
+> >>                    " -m 384M"
+> >> @@ -2123,6 +2125,7 @@ static void test_acpi_aarch64_virt_tcg(void)
+> >>      data.smbios_cpu_max_speed = 2900;
+> >>      data.smbios_cpu_curr_speed = 2700;
+> >>      test_acpi_one("-cpu cortex-a57 "
+> >> +                  "-machine acpi-pcihp=off "
+> >>                    "-smbios type=4,max-speed=2900,current-speed=2700", &data);
+> >>      free_test_data(&data);
+> >>  }
+> >> @@ -2142,6 +2145,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+> >>      };
+> >>  
+> >>      test_acpi_one("-cpu cortex-a57 "
+> >> +                  "-machine acpi-pcihp=off "
+> >>                    "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
+> >>      free_test_data(&data);
+> >>  }
+> >> @@ -2227,6 +2231,7 @@ static void test_acpi_aarch64_virt_viot(void)
+> >>      };
+> >>  
+> >>      test_acpi_one("-cpu cortex-a57 "
+> >> +                  "-machine acpi-pcihp=off "
+> >>                    "-device virtio-iommu-pci", &data);
+> >>      free_test_data(&data);
+> >>  }  
+> 
 
 
