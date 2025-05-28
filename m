@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 992A8C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 21:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E75C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 21:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKNuO-0002yg-AM; Wed, 28 May 2025 17:01:56 -0400
+	id 1uKNvc-0003mz-GS; Wed, 28 May 2025 17:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKNuM-0002xn-9q
- for qemu-devel@nongnu.org; Wed, 28 May 2025 17:01:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKNvZ-0003is-RD
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 17:03:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKNuK-0006QF-9h
- for qemu-devel@nongnu.org; Wed, 28 May 2025 17:01:54 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKNvX-0006cg-4F
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 17:03:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748466108;
+ s=mimecast20190719; t=1748466185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0zFBE8SAJDDngh2zXzBJrZt3oJ0f6yCA1JCf3Pe2RTk=;
- b=cqSpp5K2ofzjgYwXgW69JBAuWLO+Ny5zQKMoSuRyUS3EurxzI5zE/50JG3sZOTkKrcVg0Z
- 3IbVJ6Fi77zt8wO7OqR4c0phdQ/BQ+3MFoaXPjAxk2gBAeK2Kp3RRifwQEaSlxpE3lXTY1
- bMXc51I6wClbu/ggunQjYzKkZR6KMFo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Xs9OdtO0xitp8geiMv3kalP40RCuEoCixar+ve+44Zw=;
+ b=LfQMOylVZHxdqQ2PwxxpsFuTEJUw459kj7a0JitgUMFyOkmJ09grpu/dt4Zkfw4twsMyHd
+ QTR5C3A6b5OcgBGdInyVLJAvLg9V6L72Sn7m/jwlNzE28zvu+8f9iHFkdzMqGoGX7p0TG0
+ M/2LsPZs/Y8M3OBZyQsE0N2RYOzrxTk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-tywb6C0FOUObzySjb5x0Wg-1; Wed,
- 28 May 2025 17:01:44 -0400
-X-MC-Unique: tywb6C0FOUObzySjb5x0Wg-1
-X-Mimecast-MFC-AGG-ID: tywb6C0FOUObzySjb5x0Wg_1748466103
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-M2h2v7PTNvSII5shURJvXQ-1; Wed,
+ 28 May 2025 17:03:02 -0400
+X-MC-Unique: M2h2v7PTNvSII5shURJvXQ-1
+X-Mimecast-MFC-AGG-ID: M2h2v7PTNvSII5shURJvXQ_1748466181
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 53D4F1800256; Wed, 28 May 2025 21:01:43 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35F38195608D; Wed, 28 May 2025 21:03:01 +0000 (UTC)
 Received: from redhat.com (unknown [10.2.16.48])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 417CF1956096; Wed, 28 May 2025 21:01:40 +0000 (UTC)
-Date: Wed, 28 May 2025 16:01:38 -0500
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 41ED318001D8; Wed, 28 May 2025 21:02:58 +0000 (UTC)
+Date: Wed, 28 May 2025 16:02:56 -0500
 From: Eric Blake <eblake@redhat.com>
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hibriansong@gmail.com, 
  Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
-Subject: Re: [RFC 04/11] aio-posix: integrate fdmon into glib event loop
-Message-ID: <d6etturmeqhdesowvvsuelbiq2xe2xon7ikldhnguaa5gkl4gj@asvzkuwajicn>
+Subject: Re: [RFC 05/11] aio: remove aio_context_use_g_source()
+Message-ID: <wlduxvs22zdbgfjfn5nnljsnpkw2gi3oq7jvcsruoqmdsqdf3t@q4nueraxkk4g>
 References: <20250528190916.35864-1-stefanha@redhat.com>
- <20250528190916.35864-5-stefanha@redhat.com>
+ <20250528190916.35864-6-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250528190916.35864-5-stefanha@redhat.com>
+In-Reply-To: <20250528190916.35864-6-stefanha@redhat.com>
 User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -84,66 +84,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 28, 2025 at 03:09:09PM -0400, Stefan Hajnoczi wrote:
-> AioContext's glib integration only supports ppoll(2) file descriptor
-> monitoring. epoll(7) and io_uring(7) disable themselves and switch back
-> to ppoll(2) when the glib event loop is used. The main loop thread
-> cannot use epoll(7) or io_uring(7) because it always uses the glib event
-> loop.
-> 
-> Future QEMU features may require io_uring(7). One example is uring_cmd
-> support in FUSE exports. Each feature could create its own io_uring(7)
-> context and integrate it into the event loop, but this is inefficient
-> due to extra syscalls. It would be more efficient to reuse the
-> AioContext's existing fdmon-io_uring.c io_uring(7) context because
-> fdmon-io_uring.c will already be active on systems where Linux io_uring
-> is available.
-> 
-> In order to keep fdmon-io_uring.c's AioContext operational even when the
-> glib event loop is used, extend FDMonOps with an API similar to
-> GSourceFuncs so that file descriptor monitoring can integrate into the
-> glib event loop.
-> 
-> A quick summary of the GSourceFuncs API:
-> - prepare() is called each event loop iteration before waiting for file
->   descriptors and timers.
-> - check() is called to determine whether events are ready to be
->   dispatched after waiting.
-> - dispatch() is called to process events.
-> 
-> More details here: https://docs.gtk.org/glib/struct.SourceFuncs.html
-> 
-> Move the ppoll(2)-specific code from aio-posix.c into fdmon-poll.c and
-> also implement epoll(7)- and io_uring(7)-specific file descriptor
-> monitoring code for glib event loops.
-> 
-> Note that it's still faster to use aio_poll() rather than the glib event
-> loop since glib waits for file descriptor activity with ppoll(2) and
-> does not support adaptive polling. But at least epoll(7) and io_uring(7)
-> now work in glib event loops.
-
-Nice.
-
-> 
-> Splitting this into multiple commits without temporarily breaking
-> AioContext proved difficult so this commit makes all the changes. The
-> next commit will remove the aio_context_use_g_source() API because it is
-> no longer needed.
-
-Resulting in a big patch, but I agree that there's no easier way to do
-it more incrementally.
-
+On Wed, May 28, 2025 at 03:09:10PM -0400, Stefan Hajnoczi wrote:
+> There is no need for aio_context_use_g_source() now that epoll(7) and
+> io_uring(7) file descriptor monitoring works with the glib event loop.
+> AioContext doesn't need to be notified that GSource is being used.
 > 
 > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 > ---
->  include/block/aio.h   | 36 ++++++++++++++++++
->  util/aio-posix.h      |  5 +++
->  tests/unit/test-aio.c |  7 +++-
->  util/aio-posix.c      | 69 ++++++++-------------------------
->  util/fdmon-epoll.c    | 52 ++++++++++++++++++++++---
->  util/fdmon-io_uring.c | 44 +++++++++++++++++++++-
->  util/fdmon-poll.c     | 88 ++++++++++++++++++++++++++++++++++++++++++-
->  7 files changed, 239 insertions(+), 62 deletions(-)
 
 Reviewed-by: Eric Blake <eblake@redhat.com>
 
