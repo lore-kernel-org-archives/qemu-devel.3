@@ -4,100 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F00C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 09:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2519DC5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 09:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKDEx-0006kO-8H; Wed, 28 May 2025 05:38:27 -0400
+	id 1uKDLy-0008Qt-9q; Wed, 28 May 2025 05:45:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uKDEs-0006jX-Ry
- for qemu-devel@nongnu.org; Wed, 28 May 2025 05:38:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1uKDLw-0008Pq-DR
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 05:45:40 -0400
+Received: from sender4-op-o15.zoho.com ([136.143.188.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uKDEq-0002qc-7g
- for qemu-devel@nongnu.org; Wed, 28 May 2025 05:38:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748425098;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=krFMIC+eTZXcDknndge0Xr7QUcgAcGAFRiTpmtefKt0=;
- b=Yl27hQYKwgQ9D/1VP4I70Zj0qvX3OM68JGVRBvD7+rObZ64mtjgriP16hfViLsbWQxc4W8
- jRClmctyLeZTVWJldFP3n/rY8b+vLKLqCOs0oknjLSpFGJ/nf/T8u/hmxciuLsypoz++Jj
- A28HvbjDHcfvoFJI7unvJlu+BD1pNgE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-84RQUfydOByoW_R-m19Qmg-1; Wed, 28 May 2025 05:38:16 -0400
-X-MC-Unique: 84RQUfydOByoW_R-m19Qmg-1
-X-Mimecast-MFC-AGG-ID: 84RQUfydOByoW_R-m19Qmg_1748425096
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-442dc6f0138so21875115e9.0
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 02:38:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748425095; x=1749029895;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=krFMIC+eTZXcDknndge0Xr7QUcgAcGAFRiTpmtefKt0=;
- b=jT1RPmXb/Lo1vLNUyKiiXYS6vAiQ7as9HGSganOGb/OhhrIs6ZZBOGubBwLB8U/k1c
- 4qG3P+i68HCYN+b0lCD8nnYEd+906qy0y2b0JI1ugwbPN+oJQHojsdULYhMpOLC4Y1EH
- 2mTqqZUgu2/+Ygt9GdgwtA07EW7E5DMlDZ1uC8VGYkTKOStP+R5jlkDaXopFDziL2upt
- INawwUfhK7tBgskZFRaSEj4VTf4kKWMjfaEVKdbxVultoaNIZZRpdac4C/JcpGa5Ygx9
- Qb++TehMaovu/zNe/r216JDXOLsVIyFNGskQzy7cq9KU6uaTlRK3j39B5Lia9rKk3VES
- El/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUm+fJmLJnCDbi6rlXbemz3uIFMmZpx72pdVvYizwX/ARxWGoXh7glD0U/fYZ18KiwLZ1tsYHle9vJO@nongnu.org
-X-Gm-Message-State: AOJu0Yw798viwSdv0MXJ6JbRVlb7l8rbaWvadJIPvpG9O4nHgYZZ234D
- USX/NidDuddnXvIuS4XSrcJ4ZWdCQ16yHNkBTmS4tREIz4w/WA1UyN3iCpPeCkPIC1hl5hmB4HV
- l42mRPspBxM7ItwXU/RpiTEv4sy2M+SdqXQQ17eVFHWE9aBQF1WoRVdOo
-X-Gm-Gg: ASbGnct7CjmDbVfBjBh87BsRH/QsVbPCOt/U7jhYgKmp6FuhFaa+Ylw+CpDjfLiEZMb
- NFCnE6/Xbp/VLy3nNdmooZmeTY+cWEDXIKAj2yyTmidsg0nXvVYhleGP5SqHnJhuCASzsMTirdv
- sNM9MMhLhblhJVKzMdJkc3YR/uvVry/pRU3BghHKQCHrAsTv2Y7fdfPcGnK8JnZs9cm6Dxw2L9S
- hNCmnGYOC/BqQmUU5xj7W70bzuv9jQt9e8lO5rSQ7cB6ybW1k18oijuGi160/MEr3LKaWSKDvS/
- 5eq6dd8jSzu0bFvQypxjxD5zxq5mXtMR
-X-Received: by 2002:a05:600c:46c3:b0:441:d4e8:76c6 with SMTP id
- 5b1f17b1804b1-44c9301912cmr162783205e9.30.1748425095468; 
- Wed, 28 May 2025 02:38:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG8gr64tZwEGsTohMi3Ythi1JtTkkppU+1vJw3jk+NmRjeosMnhnaL4pnixKLZB8mbRqAfpPQ==
-X-Received: by 2002:a05:600c:46c3:b0:441:d4e8:76c6 with SMTP id
- 5b1f17b1804b1-44c9301912cmr162783005e9.30.1748425095057; 
- Wed, 28 May 2025 02:38:15 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4500e1d3c6asm15262575e9.26.2025.05.28.02.38.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 02:38:14 -0700 (PDT)
-Date: Wed, 28 May 2025 11:38:13 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [PATCH v2 24/25] tests/qtest/bios-tables-test: Keep ACPI PCI
- hotplug off
-Message-ID: <20250528113813.47086516@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250527074224.1197793-25-eric.auger@redhat.com>
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-25-eric.auger@redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1uKDLs-0004Fs-Pp
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 05:45:39 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1748425533; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=gB0PfFsMRszum4py+n24CdZDDr1aPxgN0xoa5hzGJ+ti+mhps9VU/7s7Jc1uvJIFOFSDK+I2mvaVy39r+stAzxGKpbxDpopBFWnHjLJDpYzpmCWY7J8x6q9w900+dfJj3DYNHDYsKeT8YC3mQs3V+ZttS+jTiryHulecBXchxX4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1748425533;
+ h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc;
+ bh=PYG7cWDAcmD49KHbWKt7tJfsrtrQo8SbsjcTRbu9ZxY=; 
+ b=bopHIfQ4+kstEBHKEmOTnyhMHY6v2/M2rH29JaerUSoJHMhppATkL4vWKawo9C1D044+lvBTQO1Nr8tpnKRUkx2Yd4zbIWxWS9MDxqHRxFGzRQyp11MYRqiA4syqHmAq6Eh4NzNr/SFEqueVYM613q8hKt/nfZ3losTwcguYPdQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1748425533; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:From:From:To:To:Message-ID:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+ bh=PYG7cWDAcmD49KHbWKt7tJfsrtrQo8SbsjcTRbu9ZxY=;
+ b=gVqqBLC2lgQ87/M2o2RuwvWF/LeCyMIDMjsEbKLHiSibKc/sHorTYNurKW1ko8de
+ LZc1KJc5h5/r/cKN8NLo//gTOWi6/KoDkBy2+OTwBCMk7EozVIWq1LmsYzJUwCgG2yG
+ vuk/b2/D0PTehku8a7fsgXAPyByzqE9Wi9jQKz4A=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1748425531539242.44862166913617;
+ Wed, 28 May 2025 02:45:31 -0700 (PDT)
+Date: Wed, 28 May 2025 17:45:31 +0800
+From: Li Chen <me@linux.beauty>
+To: "Qemu devel" <qemu-devel@nongnu.org>
+Message-ID: <1971648603b.dce1f5d22901195.6702025346547333607@linux.beauty>
+In-Reply-To: 
+Subject: Get "Message headers fail syntax check" error when using
+ git-send-email
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) DKIMWL_WL_HIGH=-2.907, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@linux.beauty;
+ helo=sender4-op-o15.zoho.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -115,96 +78,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 May 2025 09:40:26 +0200
-Eric Auger <eric.auger@redhat.com> wrote:
+Hi,
 
-> From: Gustavo Romero <gustavo.romero@linaro.org>
-> 
-> ACPI PCI hotplug is now turned on by default so we need to change the
-> existing tests to keep it off. However, even setting the ACPI PCI
-> hotplug off in the existing tests, there will be changes in the ACPI
-> tables because the _OSC method was modified, hence in the next patch of
-> this series the blobs are updated accordingly.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+My emails to the qemu-devel, qemu-riscv, and qemu-arm mailing lists regarding the 
+"[PATCH v4 0/4] acpi: Add machine option to disable SPCR table" series are being 
+rejected by these mailing lists, while other recipients are unaffected. 
+This issue didn't occur with versions v1-v3, which I sent via Zoho webmail instead of git-send-email. 
+The error messages are:
 
-it would be better to test whatever default we end up with.
-(like x86)
+```
+This message was created automatically by mail delivery software.
+A message that you sent could not be delivered to one or more of its recipients. This is a permanent error.
 
-> 
-> ---
-> 
-> [Eric] also added acpi-pcihp=off to test_acpi_aarch64_virt_tcg_numamem
-> ---
->  tests/qtest/bios-tables-test.c | 13 +++++++++----
->  1 file changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index 0a333ec435..6379dba714 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
->      };
->  
->      data.variant = ".memhp";
-> -    test_acpi_one(" -machine nvdimm=on"
-> +    test_acpi_one(" -machine nvdimm=on,acpi-pcihp=off"
->                    " -cpu cortex-a57"
->                    " -m 256M,slots=3,maxmem=1G"
->                    " -object memory-backend-ram,id=ram0,size=128M"
-> @@ -1747,7 +1747,8 @@ static void test_acpi_aarch64_virt_tcg_numamem(void)
->      };
->  
->      data.variant = ".numamem";
-> -    test_acpi_one(" -cpu cortex-a57"
-> +    test_acpi_one(" -machine acpi-pcihp=off"
-> +                  " -cpu cortex-a57"
->                    " -object memory-backend-ram,id=ram0,size=128M"
->                    " -numa node,memdev=ram0",
->                    &data);
-> @@ -1775,7 +1776,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
->       * to solve the conflicts.
->       */
->      data.variant = ".pxb";
-> -    test_acpi_one(" -device pcie-root-port,chassis=1,id=pci.1"
-> +    test_acpi_one(" -machine acpi-pcihp=off"
-> +                  " -device pcie-root-port,chassis=1,id=pci.1"
->                    " -device virtio-scsi-pci,id=scsi0,bus=pci.1"
->                    " -drive file="
->                    "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2,"
-> @@ -1846,7 +1848,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
->  
->      data.variant = ".acpihmatvirt";
->  
-> -    test_acpi_one(" -machine hmat=on"
-> +    test_acpi_one(" -machine hmat=on,acpi-pcihp=off"
->                    " -cpu cortex-a57"
->                    " -smp 4,sockets=2"
->                    " -m 384M"
-> @@ -2123,6 +2125,7 @@ static void test_acpi_aarch64_virt_tcg(void)
->      data.smbios_cpu_max_speed = 2900;
->      data.smbios_cpu_curr_speed = 2700;
->      test_acpi_one("-cpu cortex-a57 "
-> +                  "-machine acpi-pcihp=off "
->                    "-smbios type=4,max-speed=2900,current-speed=2700", &data);
->      free_test_data(&data);
->  }
-> @@ -2142,6 +2145,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
->      };
->  
->      test_acpi_one("-cpu cortex-a57 "
-> +                  "-machine acpi-pcihp=off "
->                    "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
->      free_test_data(&data);
->  }
-> @@ -2227,6 +2231,7 @@ static void test_acpi_aarch64_virt_viot(void)
->      };
->  
->      test_acpi_one("-cpu cortex-a57 "
-> +                  "-machine acpi-pcihp=off "
->                    "-device virtio-iommu-pci", &data);
->      free_test_data(&data);
->  }
+qemu-devel@nongnu.org, ERROR CODE :550 - Message headers fail syntax check
+(... qemu-riscv/qemu-arm ...)
 
+Reporting-MTA: dns; mx.zohomail.com
+Arrival-Date: Wed, 28 May 2025 16:09:36 +0800
+
+Original-Recipient: rfc822; qemu-devel@nongnu.org
+Final-Recipient: rfc822; qemu-devel@nongnu.org
+Status: 550
+Action: failed
+Last-Attempt-Date: 28 May 2025 08:11:19 GMT
+Diagnostic-Code: Message headers fail syntax check
+Remote-MTA: dns; eggs.gnu.org
+(... qemu-riscv/qemu-arm ...)
+```
+
+And below is the email header:
+
+```
+Received: by mx.zohomail.com with SMTPS id 1748419823397138.51964085412385;
+	Wed, 28 May 2025 01:10:23 -0700 (PDT)
+From: Li Chen <me@linux.beauty>
+To: "Peter Maydell" <peter.maydell@linaro.org>,
+	"Shannon Zhao" <shannon.zhaosl@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Igor Mammedov" <imammedo@redhat.com>,
+	"Ani Sinha" <anisinha@redhat.com>,
+	"Eduardo Habkost" <eduardo@habkost.net>,
+	"Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	"Yanan Wang" <wangyanan55@huawei.com>,
+	"Zhao Liu" <zhao1.liu@intel.com>,
+	"Song Gao" <gaosong@loongson.cn>,
+	"Jiaxun Yang" <jiaxun.yang@flygoat.com>,
+	"Sunil V L" <sunilvl@ventanamicro.com>,
+	"Palmer Dabbelt" <palmer@dabbelt.com>,
+	"Alistair Francis" <alistair.francis@wdc.com>,
+	"Weiwei Li" <liwei1518@gmail.com>,
+	"qemu-arm" <qemu-arm@nongnu.org>,
+	"qemu-devel" <qemu-devel@nongnu.org>,
+	"qemu-riscv" " <qemu-riscv@nongnu.org>
+Cc: Li Chen <chenl311@chinatelecom.cn>
+Bcc: peter.maydell@linaro.org, shannon.zhaosl@gmail.com, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com, sunilvl@ventanamicro.com, palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v4 0/4] acpi: Add machine option to disable SPCR table
+Date: Wed, 28 May 2025 16:09:36 +0800
+Message-ID: <20250528080950.443075-1-me@linux.beauty>
+X-Mailer: git-send-email 2.49.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+
+(...subject and body...)
+```
+
+Any ideas what caused this syntax check failure? Thanks!
+
+Regards,
+Li
 
