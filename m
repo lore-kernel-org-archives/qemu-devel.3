@@ -4,84 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAFF8C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 15:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CFD8C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 16:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKJ8d-0005vR-Vf; Wed, 28 May 2025 11:56:20 -0400
+	id 1uKJKr-0003BH-Qt; Wed, 28 May 2025 12:08:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uKJ8c-0005v3-Ns
- for qemu-devel@nongnu.org; Wed, 28 May 2025 11:56:18 -0400
-Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1uKJKp-0003B6-Fs
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 12:08:55 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uKJ8a-0000uW-UE
- for qemu-devel@nongnu.org; Wed, 28 May 2025 11:56:18 -0400
-Received: by mail-pj1-x1044.google.com with SMTP id
- 98e67ed59e1d1-31118251071so2952852a91.1
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 08:56:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1uKJKm-0002aq-V9
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 12:08:55 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-604e2a2f200so5339621a12.1
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 09:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748447773; x=1749052573; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=NyTwWlT35h762q2znPKQtKWn5WvVU53R3yV7crEc5XY=;
- b=YzsZ//pCoEZXPbfXlmCOuOalglSMEiASqjhjo29LWBkQ7qtsW1DHlaoXe+bCIFXCss
- ShDhMIhmeMk9TWHBwrEe1+J/2UCFj1uuj6+24XFnK+rVoGx/Q/n7v5ZWTRXHfMJHE38s
- vdOSEfgE8VcbUJpgmj2pkXjb8rl1Xlmiwai5PuPkOm0HSCUZyCtrQv6ayqYJEu1W4Aa+
- 5T1A0TBHewXa39/vDwI54kvUWajPXPRrucEIqUie0Et1JiURNzGnu47eRxQYp4lTZW6F
- 28N8iVF35jJhNboHAK0XkO0+obnbaxVrcJjgjwaYoUoMOjM5xFA8LNBRkppFRICnDG1a
- OmGA==
+ d=chromium.org; s=google; t=1748448530; x=1749053330; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=G09kR4unYSd9E6kTmOjGfizXBhTtP2c6s2m/AZv8wQU=;
+ b=Ku2gwu4bqBZxbYbLNhpYx0yeGslva9TXEgs8teWIy4E0RDSn4xy+2zT10RghfByg5X
+ 76uAz9+G1XaS/EhEiFNQBvRSVuDjxLnQMRwlpXwsbSDEvfmvR7ErMKnVRoWUhqjYF9XS
+ Hfr4gy64CokQEIkmVzFNCWJkkMlglG1qBPsGE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748447773; x=1749052573;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1748448530; x=1749053330;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NyTwWlT35h762q2znPKQtKWn5WvVU53R3yV7crEc5XY=;
- b=aARbMF1cFnWJ+RLSUa65u/P0NhE65j69IAXlFxDqpStMS8QnE+zXLwu4KUkoqBacVI
- ms0dhPSGndO9bivO1e65QC3P20XcEOcXR/wHEMsRLIwHH9twbp4emTl+FsLUxIutcl4/
- 4C/QVKR1kJNBvv0kpoaJapV5KXGshrZo1Y+KYLBHoBa5oI2zSMxA5R858lqHRIYQBh3x
- yqrJI2bOAMgn82sQUgHbIdugSD+Bf72/32HTFFccR1oWxN/t9HSJwQ8feRlmXl22wNSY
- q+uXr5/66MfREYUOpyrLEmWIZy1foDGLA4BEf5RYeWAVIf2mroBnFc1+3AeCm/G8RfVi
- w2Tg==
+ bh=G09kR4unYSd9E6kTmOjGfizXBhTtP2c6s2m/AZv8wQU=;
+ b=E5TJvAlE37BF7hXJXjNiUW2Ow9HyqJthGEiADEXFKEVhWSHkphteJaO02vKyEx+Ou9
+ nbZB4d/y9ZwTs8XFNbeS6Rv3r8Wpf/LGZrqRuLI3kqBeSRU6epbD5h2EcSAAUPjoifsR
+ lS8Xx1N4S2nZIxBvrT19EcQ7wqXDkmF3vlcwGoXojpuXgKNPKV3XtFU9lz8P2bFO1IK2
+ ogSUL1zGl4BTqU6CirOSY4go8LXEJellImtsdiCga6zPTfYViHgyW7SjAWCSBiK8bPDL
+ 6/taCxdAaMr+2r6lLYpxgWY2Fn7pWYqza/C/oOz3THXtCTRKUCGAs38z73uJ8SOZQNAQ
+ 8v+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBYNCfJNTYQKKjHP0G+FTrtAZEdSAW8omTbEyH7R7PL+f8SVh7XkZnzQxnSFG3suoUFA0hwCB1BItB@nongnu.org
-X-Gm-Message-State: AOJu0Yz9UTcaqc3kj1iT9hHLH5qR6X+hNSlXsVObmWm5fCwiUuajvIqv
- 9+1Gil58PWay5jyID4BkFHSE2202CHM+sYvjLDM0wCXEz2tV8o3Jqwg=
-X-Gm-Gg: ASbGncs1FPRQkdB8BPn2b1K9c+Wv4WqbDDzZKMHdj7Z3PsZdWUdAp7ansLSsBuVohqj
- 3GNk6YhqpEB3TzCSB6YMMIgTJK0rFcgAarVJmifDiSeOzPTX5hbV927aB1JdNBfSI14MzkW8DQu
- v4LbIKgrgHDrzPgNcbpERvKHGh4mJZ+l8xorreLj4zGucKLdBwJR+lLOObZ0lN85OyYMxXWHQMu
- sHu6KZc6FWqzbCDvugM+9lKmvyBHWzPKmjcFTALmePvpKT1i3y73SgnQeiQlldSvHWdu+DKNxiu
- LmIfBmNFzwRNzec5UtmPWLqs48KHqo7spXYJQxORhVZlJ8u90bEsd1WtUqEzG5Hb
-X-Google-Smtp-Source: AGHT+IEU4Lnn1KXzqOv9DhKN/pYO7xqOm/UTAGs2zALh747qwGK6hN2QSmyWMX4wIFuDLXWxhENHog==
-X-Received: by 2002:a17:90b:1997:b0:311:a314:c2dc with SMTP id
- 98e67ed59e1d1-311a314c453mr11729096a91.14.1748447772580; 
- Wed, 28 May 2025 08:56:12 -0700 (PDT)
-Received: from localhost.localdomain ([139.227.17.74])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-311e9b45d8dsm1322079a91.1.2025.05.28.08.56.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 08:56:12 -0700 (PDT)
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: Tomita Moeko <tomitamoeko@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2] vfio/pci: Introduce x-pci-class-code option
-Date: Wed, 28 May 2025 23:55:48 +0800
-Message-ID: <20250528155548.29344-1-tomitamoeko@gmail.com>
-X-Mailer: git-send-email 2.47.2
+ AJvYcCXdWkfWMnT36MUx2C1R1xMt5svVbplqLFzxiFXDUQz9WNBJn/A4Za7yRUCvndZ6Yh+/LnNplExztK7J@nongnu.org
+X-Gm-Message-State: AOJu0Yy+YsmyJgZ2QK55LvhJlZBh3VH+a0C8KRcyEg5g917tIlwk3ei3
+ xhBjgZAl93HxsqOOL+aZts6HBFU4gWIi1PYTebF2TljhfvWIb5KL8w9x1bHpOAbABfBp9eQ3lDW
+ QoRxTIav1BSNldfd/wDIT//XvOe7C/Mm9gWb9tldN
+X-Gm-Gg: ASbGnctTCX5/3khe9vF4ccUUUmV62A8R2V60+q57VWU72s5X6ymHl3sWkD1ntf7cjjf
+ Eua8lrij/8qwYuc4ULqWemzF46IAiKv46F+Uy04kXzuyvlBpQiAAprd1jYh+4ejuHQolh3/9gP8
+ Zjno8eIovVN87Jo8WHtiWy5jns5elbkUg=
+X-Google-Smtp-Source: AGHT+IGIBXiR5qr0ODdDrcBuyL/J03Zu1vZeE59hlz1XpZDKPy6PY+sa/D4jNneqgjahfi7lqAc3apYN1I/iTVuyA6k=
+X-Received: by 2002:a05:6402:358f:b0:5ff:f524:90e0 with SMTP id
+ 4fb4d7f45d1cf-602d9163253mr13905547a12.11.1748448530103; Wed, 28 May 2025
+ 09:08:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1044.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20250528123236.1138632-1-sjg@chromium.org>
+ <20250528142521.GW100073@bill-the-cat>
+ <CAFLszTiHxdkoGbdOg8rzmn9kUmt925LZvZNxSXQC5Y4A=s2Vig@mail.gmail.com>
+ <20250528151927.GB100073@bill-the-cat>
+In-Reply-To: <20250528151927.GB100073@bill-the-cat>
+From: Simon Glass <sjg@chromium.org>
+Date: Wed, 28 May 2025 17:08:38 +0100
+X-Gm-Features: AX0GCFsc-ZYsE2R_mTjr2KvvoIFxZ5wHHChatx1sp4dLogIlpo9HVlDXoOb-BwE
+Message-ID: <CAFLszTh3WDhn_ZSRsBMTpD8i5AyNLFGiV0cbPhOfCUAud1_WOg@mail.gmail.com>
+Subject: Re: [PATCH v5 00/25] passage: Define a standard for firmware data flow
+To: Tom Rini <trini@konsulko.com>
+Cc: U-Boot Mailing List <u-boot@lists.denx.de>,
+ =?UTF-8?Q?Fran=C3=A7ois_Ozog?= <francois.ozog@linaro.org>, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ Bill Mills <bill.mills@linaro.org>, 
+ Raymond Mao <raymond.mao@linaro.org>, Heinrich Schuchardt <xypron.glpk@gmx.de>,
+ Andrew Phelps <andrew.phelps@canonical.com>, Alexander Graf <agraf@csgraf.de>, 
+ Boyan Karatotev <boyan.karatotev@arm.com>,
+ Evgeny Bachinin <EABachinin@salutedevices.com>, 
+ Fabio Estevam <festevam@gmail.com>, Harrison Mutai <harrison.mutai@arm.com>, 
+ Jonas Karlman <jonas@kwiboo.se>, Liviu Dudau <liviu.dudau@foss.arm.com>, 
+ Liya Huang <1425075683@qq.com>, =?UTF-8?B?TWFyZWsgQmVow7pu?= <kabel@kernel.org>,
+ =?UTF-8?B?TWFyZWsgTW9qw61r?= <marek.mojik@nic.cz>, 
+ Marek Vasut <marex@denx.de>, Matthias Brugger <mbrugger@suse.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ Nathan Barrett-Morrison <nathan.morrison@timesys.com>,
+ Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 
+ Patrick Delaunay <patrick.delaunay@foss.st.com>, 
+ Patrick Rudolph <patrick.rudolph@9elements.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Rasmus Villemoes <ravi@prevas.dk>,
+ Rayagonda Kokatanur <rayagonda.kokatanur@broadcom.com>, 
+ Sean Anderson <seanga2@gmail.com>, Stefan Roese <sr@denx.de>,
+ Stefano Babic <sbabic@nabladev.com>, 
+ Sughosh Ganu <sughosh.ganu@linaro.org>, Svyatoslav Ryhel <clamor95@gmail.com>, 
+ Tuomas Tynkkynen <tuomas.tynkkynen@iki.fi>,
+ =?UTF-8?Q?Vincent_Stehl=C3=A9?= <vincent.stehle@arm.com>, 
+ Xu Zhang <423756212@qq.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=sjg@chromium.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,107 +117,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce x-pci-class-code option to allow users to override PCI class
-code of a device, similar to the existing x-pci-vendor-id option. Only
-the lower 24 bits of this option are used, though a uint32 is used here
-for determining whether the value is valid and set by user.
+Hi Tom,
 
-Additionally, to prevent exposing VGA ranges on non-VGA devices, the
-x-vga=on option requires x-pci-class-code is either unset or set to
-VGA controller class.
+On Wed, 28 May 2025 at 16:19, Tom Rini <trini@konsulko.com> wrote:
+>
+> On Wed, May 28, 2025 at 03:32:12PM +0100, Simon Glass wrote:
+> > Hi Tom,
+> >
+> > On Wed, 28 May 2025 at 15:25, Tom Rini <trini@konsulko.com> wrote:
+> > >
+> > > On Wed, May 28, 2025 at 06:32:02AM -0600, Simon Glass wrote:
+> > > >
+> > > > This series adds a standard way of passing information between different
+> > > > firmware phases. This already exists in U-Boot at a very basic level, in
+> > > > the form of a bloblist containing an spl_handoff structure, but the intent
+> > > > here is to define something useful across projects.
+> > > >
+> > > > The need for this is growing as firmware fragments into multiple binaries
+> > > > each with its own purpose. Without any run-time connection, we must rely
+> > > > on build-time settings which are brittle and painful to keep in sync.
+> > > >
+> > > > This feature is named 'standard passage' since the name is more unique
+> > > > than many others that could be chosen, it is a passage in the sense that
+> > > > information is flowing from one place to another and it is standard,
+> > > > because that is what we want to create.
+> > > >
+> > > > The implementation is mostly a pointer to a bloblist in a register, with
+> > > > an extra register to point to a devicetree, for more complex data. This
+> > > > should cover all cases (small memory footprint as well as complex data
+> > > > flow) and be easy enough to implement on all architectures.
+> > > >
+> > > > The emphasis is on enabling open communcation between binaries, not
+> > > > enabling passage of secret, undocumented data, although this is possible
+> > > > in a private environment.
+> > > >
+> > > > To try this out:
+> > > >
+> > > > $ ./scripts/build-qemu -a arm -rsx
+> > > >
+> > > > This will build and run QEMU for arm64 and you should see the standdard
+> > > > passage working:
+> > > >
+> > > >    Core:  49 devices, 13 uclasses, devicetree: passage
+> > > >
+> > > > This series is available at u-boot-dm/pass-working
+> > > >
+> > > > Changes in v5:
+> > > > - Add RFC for test script
+> > >
+> > > And this is why I question if you are working in good faith. I've
+> > > rejected this countless times. I'm still rejecting it. Stop including
+> > > it. Point at the version you could easily be maintaining in the contrib
+> > > repository where you have write access and no one will be telling you to
+> > > not do something. People would even review the patches since it would be
+> > > against mainline.
+> >
+> > I fully understand that you don't want the script and I'm only
+> > including (as an RFC) so people can actually try this series out. I
+> > didn't want to point to my tree as I thought that would annoy you. I
+> > already went through why the contrib tree is not suitable for me.
+>
+> So I have to take changes that I disagree with, but you can't work with
+> a tree for your tooling where the community would be happy to provide
+> feedback? That does not sound like compromise. Again, I have trouble
+> believing that you are working in good faith to resolve the differences
+> here.
 
-This is mainly intended for IGD devices that expose themselves either
-as VGA controller (primary display) or Display controller (non-primary
-display). The UEFI GOP driver depends on the device reporting a VGA
-controller class code (0x030000).
+Yes, as mentioned before I would like you to take changes you disagree
+with, at least once we have discussed alternatives and I'm sure that's
+the way I want to go. It would save a lot of grief if you could do
+that.
 
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
----
-v2:
-* Add vdev class code check in vfio_populate_vga().
-* Fix type in trace-events.
-Link: https://lore.kernel.org/all/20250524153102.19747-1-tomitamoeko@gmail.com/
+I could use your contrib/ repo but there isn't a lot of point, since I
+have to have my own tree anyway, due to rejected / changes-requested
+patches. It's just lots of fiddling around for no gain. I'm fine with
+your not having the scripts in your tree and I'm fine with maintaining
+the Python tools in my tree. Basically it seems my tree is the dumping
+ground for the stuff you don't want in 'pure U-Boot', or don't want
+yet. If you would like me to sync my scripts to the contrib/ tree
+every now and then, yes I can do that. I don't see much point since we
+can't reference them in docs or test them in CI, but I'm willing to do
+it.
 
- hw/vfio/pci.c        | 25 +++++++++++++++++++++++++
- hw/vfio/pci.h        |  1 +
- hw/vfio/trace-events |  1 +
- 3 files changed, 27 insertions(+)
+But I do want to post patches so I can get feedback from people who
+are interested. Perhaps we could set up an 'experimental' mailing list
+for that, since you seem really unhappy when I send them to the U-Boot
+mailing list?
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index b1250d85bf..d57cb7356e 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2726,6 +2726,14 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-         return false;
-     }
- 
-+    /* vdev class should be either unmodified (PCI_ANY_ID), or VGA controller */
-+    if ((vdev->class_code != PCI_ANY_ID) &&
-+        (vdev->class_code != (PCI_CLASS_DISPLAY_VGA << 8)) &&
-+        (vdev->class_code != (PCI_CLASS_NOT_DEFINED_VGA << 8))) {
-+        error_setg(errp, "vdev is not a VGA device");
-+        return false;
-+    }
-+
-     if (!(reg_info->flags & VFIO_REGION_INFO_FLAG_READ) ||
-         !(reg_info->flags & VFIO_REGION_INFO_FLAG_WRITE) ||
-         reg_info->size < 0xbffff + 1) {
-@@ -3092,6 +3100,21 @@ static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
-                                               vdev->sub_device_id);
-     }
- 
-+    /*
-+     * Class code is a 24-bit value at config space 0x09. Allow overriding it
-+     * with any 24-bit value.
-+     */
-+    if (vdev->class_code != PCI_ANY_ID) {
-+        if (vdev->class_code > 0xffffff) {
-+            error_setg(errp, "invalid PCI class code provided");
-+            return false;
-+        }
-+        /* Higher 24 bits of PCI_CLASS_REVISION are class code */
-+        vfio_add_emulated_long(vdev, PCI_CLASS_REVISION,
-+                               vdev->class_code << 8, ~0xff);
-+        trace_vfio_pci_emulated_class_code(vbasedev->name, vdev->class_code);
-+    }
-+
-     /* QEMU can change multi-function devices to single function, or reverse */
-     vdev->emulated_config_bits[PCI_HEADER_TYPE] =
-                                               PCI_HEADER_TYPE_MULTI_FUNCTION;
-@@ -3489,6 +3512,8 @@ static const Property vfio_pci_dev_properties[] = {
-                        sub_vendor_id, PCI_ANY_ID),
-     DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
-                        sub_device_id, PCI_ANY_ID),
-+    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
-+                       class_code, PCI_ANY_ID),
-     DEFINE_PROP_UINT32("x-igd-gms", VFIOPCIDevice, igd_gms, 0),
-     DEFINE_PROP_UNSIGNED_NODEFAULT("x-nv-gpudirect-clique", VFIOPCIDevice,
-                                    nv_gpudirect_clique,
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 5ce0fb916f..587eb8cc9a 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -156,6 +156,7 @@ struct VFIOPCIDevice {
-     uint32_t device_id;
-     uint32_t sub_vendor_id;
-     uint32_t sub_device_id;
-+    uint32_t class_code;
-     uint32_t features;
- #define VFIO_FEATURE_ENABLE_VGA_BIT 0
- #define VFIO_FEATURE_ENABLE_VGA (1 << VFIO_FEATURE_ENABLE_VGA_BIT)
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index e90ec9bff8..e8d585b49a 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -46,6 +46,7 @@ vfio_pci_emulated_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
- vfio_pci_emulated_device_id(const char *name, uint16_t val) "%s 0x%04x"
- vfio_pci_emulated_sub_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
- vfio_pci_emulated_sub_device_id(const char *name, uint16_t val) "%s 0x%04x"
-+vfio_pci_emulated_class_code(const char *name, uint32_t val) "%s 0x%06x"
- 
- # pci-quirks.c
- vfio_quirk_rom_in_denylist(const char *name, uint16_t vid, uint16_t did) "%s %04x:%04x"
--- 
-2.47.2
+Re your 'good faith' thing, I'm really just trying to make progress
+and I wish there was less 'email overhead' and more action. If you
+have concerns, it would be better to discuss a resolution f2f or on a
+VC, not endless email threads which don't relate to the patches I'm
+sending. The series we are discussing here was sent in 2021 based on
+bloblist from 2018! [1]. It is why Firmware Handoff happened. Give me
+some credit for foresight, at least.
 
+Regards,
+Simon
+
+[1] https://patchwork.ozlabs.org/project/uboot/cover/20211101011734.1614781-1-sjg@chromium.org/
 
