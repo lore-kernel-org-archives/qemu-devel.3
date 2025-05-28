@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B553C54F30
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 02:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D9AC54ED1
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 02:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK6qV-0000mp-7E; Tue, 27 May 2025 22:48:47 -0400
+	id 1uK6qn-0001L8-5Z; Tue, 27 May 2025 22:49:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK6qT-0000jT-0l; Tue, 27 May 2025 22:48:45 -0400
+ id 1uK6ql-0001Kd-OB; Tue, 27 May 2025 22:49:03 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK6qR-0004jQ-DC; Tue, 27 May 2025 22:48:44 -0400
+ id 1uK6qk-0004kR-0e; Tue, 27 May 2025 22:49:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748400524; x=1779936524;
+ t=1748400542; x=1779936542;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=T1egsXdwQ6eEc6+AHhmbvzrCF13DU/0nFK70B7lPMCg=;
- b=llVkv+uQ0X12udRcP6Kkg6W9HCF96Ntj23acrKgCGsksV4ctWqbr8JGb
- C1uETU6eu+BOLnYSEZliZEpF1U0Hv+0zS1YBc3Vs+Mz8acRhgehqSVz6p
- la4IC2UJ+Kz8RbtBip+Nv0fDuTPe4wsqXKgieho12Em/Vovr4KKjXuyDD
- 1N3eQx5+/+2PzmJn8ubv8mA0ZMLGq3a1VyHZSUUSb8xSgDEWIluP8ACr6
- H2ZFDVsHU5RKxBCkqT9QNqRi1OJRvCEs150j9AgvylDzgvxuMZcdwkuqb
- ha6rtzc8FmhHQ2wrnb0Un2TzQamSrhL3EEk9og3q+ETvBkQAU74bDIZrL g==;
-X-CSE-ConnectionGUID: 6I+CI1YARrmUrE3pwKYbtA==
-X-CSE-MsgGUID: ar6n2Z9lSjCFyqWFzI07UA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="67823651"
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="67823651"
+ bh=vCRmBI1/OM9T4WZ0Tj3q0GOlruyPsJsgf25xqRCm8C8=;
+ b=k9cpm8Q2EnHgjofAIIS7xR5MtdKUtlHrf8XATRCNOi94CT6XmH/K/Gic
+ aiBaCQ7de/bjkiTkukiDSRgPEPt9bIA6Ro7UQGAgJw59c16nL+/+a4rE4
+ pCtddptw+cQHx+wnhUSGSRaLZKxgKy8dlwseDa2G3nG71KUPQ7ircvhma
+ b+hw7o/MRnSRcGj2vTZX8WIgpslBM0tR2YkJNhPqNYHUPBWoYFybWBKSg
+ qN9A23j7ujARMtV7AYOSs/3w79uic5Z/50b+dHWRVWhicwSORUs3QWeDn
+ 0lq9b7g4EzrmkPMuaasR390vtbcdNMmbNLww9zZXRbY0dMZz30gCfkC5K g==;
+X-CSE-ConnectionGUID: LclRdHpqRIW8IyDTERXTfg==
+X-CSE-MsgGUID: ZM7iUQdqS76JgwKQ2I5DLg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="67823695"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="67823695"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 19:48:42 -0700
-X-CSE-ConnectionGUID: ixTncbOUSFKTd8zN7h2DBw==
-X-CSE-MsgGUID: sWyW7EIlR2iM1gCrTrGrYw==
+ 27 May 2025 19:49:00 -0700
+X-CSE-ConnectionGUID: GHJltKoiTvivghewkVU0xg==
+X-CSE-MsgGUID: HCl9+y9GQ/idb1Y0++dOUQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="148112486"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="148112530"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 19:48:37 -0700
-Message-ID: <d9cce88e-b293-43b0-b3f7-1760d845275b@intel.com>
-Date: Wed, 28 May 2025 10:48:33 +0800
+ 27 May 2025 19:48:55 -0700
+Message-ID: <b73a044a-2333-40e5-93e5-4373dbf75786@intel.com>
+Date: Wed, 28 May 2025 10:48:50 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 18/19] hw/net/vmxnet3: Remove
- VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
+Subject: Re: [PATCH v4 19/19] hw/net/vmxnet3: Merge DeviceRealize in
+ InstanceInit
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -65,10 +65,10 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250512083948.39294-1-philmd@linaro.org>
- <20250512083948.39294-19-philmd@linaro.org>
+ <20250512083948.39294-20-philmd@linaro.org>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250512083948.39294-19-philmd@linaro.org>
+In-Reply-To: <20250512083948.39294-20-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.10; envelope-from=xiaoyao.li@intel.com;
@@ -97,10 +97,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/2025 4:39 PM, Philippe Mathieu-Daudé wrote:
-> VMXNET3_COMPAT_FLAG_DISABLE_PCIE was only used by the
-> hw_compat_2_5[] array, via the 'x-disable-pcie=on' property.
-> We removed all machines using that array, lets remove all the
-> code around VMXNET3_COMPAT_FLAG_DISABLE_PCIE.
+> Simplify merging vmxnet3_realize() within vmxnet3_instance_init(),
+> removing the need for device_class_set_parent_realize().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
@@ -109,44 +107,52 @@ On 5/12/2025 4:39 PM, Philippe Mathieu-Daudé wrote:
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
 > ---
->   hw/net/vmxnet3.c | 11 +----------
->   1 file changed, 1 insertion(+), 10 deletions(-)
+>   hw/net/vmxnet3.c | 15 +--------------
+>   1 file changed, 1 insertion(+), 14 deletions(-)
 > 
 > diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-> index 3cf5d71f478..d080fe9b38a 100644
+> index d080fe9b38a..7c0ca56b7c0 100644
 > --- a/hw/net/vmxnet3.c
 > +++ b/hw/net/vmxnet3.c
-> @@ -41,11 +41,6 @@
->   #define PCI_DEVICE_ID_VMWARE_VMXNET3_REVISION 0x1
->   #define VMXNET3_MSIX_BAR_SIZE 0x2000
+> @@ -2238,6 +2238,7 @@ static void vmxnet3_instance_init(Object *obj)
+>       device_add_bootindex_property(obj, &s->conf.bootindex,
+>                                     "bootindex", "/ethernet-phy@0",
+>                                     DEVICE(obj));
+> +    PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
+>   }
 >   
-> -/* Compatibility flags for migration */
-> -#define VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT 1
-> -#define VMXNET3_COMPAT_FLAG_DISABLE_PCIE \
-> -    (1 << VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT)
-> -
->   #define VMXNET3_EXP_EP_OFFSET (0x48)
->   #define VMXNET3_MSI_OFFSET    (0x84)
->   #define VMXNET3_MSIX_OFFSET   (0x9c)
-> @@ -2466,8 +2461,6 @@ static const VMStateDescription vmstate_vmxnet3 = {
->   
->   static const Property vmxnet3_properties[] = {
+>   static void vmxnet3_pci_uninit(PCIDevice *pci_dev)
+> @@ -2463,22 +2464,10 @@ static const Property vmxnet3_properties[] = {
 >       DEFINE_NIC_PROPERTIES(VMXNET3State, conf),
-> -    DEFINE_PROP_BIT("x-disable-pcie", VMXNET3State, compat_flags,
-> -                    VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT, false),
 >   };
 >   
->   static void vmxnet3_realize(DeviceState *qdev, Error **errp)
-> @@ -2476,9 +2469,7 @@ static void vmxnet3_realize(DeviceState *qdev, Error **errp)
->       PCIDevice *pci_dev = PCI_DEVICE(qdev);
->       VMXNET3State *s = VMXNET3(qdev);
+> -static void vmxnet3_realize(DeviceState *qdev, Error **errp)
+> -{
+> -    VMXNET3Class *vc = VMXNET3_DEVICE_GET_CLASS(qdev);
+> -    PCIDevice *pci_dev = PCI_DEVICE(qdev);
+> -    VMXNET3State *s = VMXNET3(qdev);
+> -
+> -    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+> -
+> -    vc->parent_dc_realize(qdev, errp);
+> -}
+> -
+>   static void vmxnet3_class_init(ObjectClass *class, const void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(class);
+>       PCIDeviceClass *c = PCI_DEVICE_CLASS(class);
+> -    VMXNET3Class *vc = VMXNET3_DEVICE_CLASS(class);
 >   
-> -    if (!(s->compat_flags & VMXNET3_COMPAT_FLAG_DISABLE_PCIE)) {
-> -        pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
-> -    }
-> +    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
->   
->       vc->parent_dc_realize(qdev, errp);
->   }
+>       c->realize = vmxnet3_pci_realize;
+>       c->exit = vmxnet3_pci_uninit;
+> @@ -2489,8 +2478,6 @@ static void vmxnet3_class_init(ObjectClass *class, const void *data)
+>       c->class_id = PCI_CLASS_NETWORK_ETHERNET;
+>       c->subsystem_vendor_id = PCI_VENDOR_ID_VMWARE;
+>       c->subsystem_id = PCI_DEVICE_ID_VMWARE_VMXNET3;
+> -    device_class_set_parent_realize(dc, vmxnet3_realize,
+> -                                    &vc->parent_dc_realize);
+>       dc->desc = "VMWare Paravirtualized Ethernet v3";
+>       device_class_set_legacy_reset(dc, vmxnet3_qdev_reset);
+>       dc->vmsd = &vmstate_vmxnet3;
 
 
