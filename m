@@ -4,58 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EFAFC5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 21:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19387C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 22:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKOmc-00076z-R3; Wed, 28 May 2025 17:57:58 -0400
+	id 1uKP0r-00023s-JW; Wed, 28 May 2025 18:12:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1uKOma-00073g-Da
- for qemu-devel@nongnu.org; Wed, 28 May 2025 17:57:56 -0400
-Received: from out-171.mta1.migadu.com ([2001:41d0:203:375::ab])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKP0h-00023J-4Y
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 18:12:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1uKOmY-0006Nq-7y
- for qemu-devel@nongnu.org; Wed, 28 May 2025 17:57:56 -0400
-Date: Thu, 29 May 2025 06:57:29 +0900
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1748469461;
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKP0c-0008Uj-L5
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 18:12:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748470344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=IOgFgxDVW4e8YNF+tF2RPQouWl/LD9fTsDV5T6HR/rY=;
- b=Ttl8rRzk7C+szOrbcV5t3kUDkIrWyXWkGKUPUgmRKpoi/04YlxlV0kaChi6V7XsFV/R7IJ
- v1OFgM5LZQRKnuJgk6nOZ2pKN/xttAsitb8uucU4boLQWVNZ/aXfdzJjXhJYW5IVu38nwU
- +gEP6smE+q8LhRq1YWpqF+/OzP3gi9A=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Itaru Kitayama <itaru.kitayama@linux.dev>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
- Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
- linuxarm@huawei.com, linux-cxl@vger.kernel.org, qemu-arm@nongnu.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Alireza Sanaee <alireza.sanaee@huawei.com>
-Subject: Re: [PATCH v14 0/5] arm/virt: CXL support via pxb_cxl
-Message-ID: <aDeGyRM7qVYkHZrl@vm4>
-References: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
+ bh=DPqKi5dR3CLxPrSgr5C6RvHqLljlDUU7YZ05KWggBs8=;
+ b=WJchyzgouUja8w03d4xEf3MmkrehoGuyDkmGNi7BoKT315iJKVElfkFb6lmAN7YFDt0La1
+ LgR71Q/5QPFIDPGIOf4orc+Rs+oGdnxJFdVGgYsQQX6lpNIDKqDyjeUC0s3jHWwWS9mdpg
+ odBo7Qy6jz5xwF8CE3n6Hilrr2KaZZU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-358-GkwVZR8oNXeGOofaq62d8g-1; Wed,
+ 28 May 2025 18:12:21 -0400
+X-MC-Unique: GkwVZR8oNXeGOofaq62d8g-1
+X-Mimecast-MFC-AGG-ID: GkwVZR8oNXeGOofaq62d8g_1748470340
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 42A8819560AA; Wed, 28 May 2025 22:12:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.48])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9E691956096; Wed, 28 May 2025 22:12:17 +0000 (UTC)
+Date: Wed, 28 May 2025 17:12:14 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hibriansong@gmail.com, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Subject: Re: [RFC 08/11] aio-posix: gracefully handle io_uring_queue_init()
+ failure
+Message-ID: <xamle7lt6fxiphzjkjhzlc7vgid3r4s3k6nqufipruwepb6ef6@l4xjldx5ztuj>
+References: <20250528190916.35864-1-stefanha@redhat.com>
+ <20250528190916.35864-9-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::ab;
- envelope-from=itaru.kitayama@linux.dev; helo=out-171.mta1.migadu.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <20250528190916.35864-9-stefanha@redhat.com>
+User-Agent: NeoMutt/20250404
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) DKIMWL_WL_HIGH=-2.904, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,128 +85,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
+On Wed, May 28, 2025 at 03:09:13PM -0400, Stefan Hajnoczi wrote:
+> io_uring may not be available at runtime due to system policies (e.g.
+> the io_uring_disabled sysctl) or creation could fail due to file
+> descriptor resource limits.
+> 
+> Handle failure scenarios as follows:
+> 
+> If another AioContext already has io_uring, then fail AioContext
+> creation so that the aio_add_sqe() API is available uniformly from all
+> QEMU threads. Otherwise fall back to epoll(7) if io_uring is
+> unavailable.
+> 
+> Notes:
+> - Update the comment about selecting the fastest fdmon implementation.
+>   At this point it's not about speed anymore, it's about aio_add_sqe()
+>   API availability.
+> - Uppercase the error message when converting from error_report() to
+>   error_setg_errno() for consistency (but there are instances of
+>   lowercase in the codebase).
+> - It's easier to move the #ifdefs from aio-posix.h to aio-posix.c.
+> 
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  util/aio-posix.h      | 12 ++----------
+>  util/aio-posix.c      | 29 ++++++++++++++++++++++++++---
+>  util/fdmon-io_uring.c |  8 ++++----
+>  3 files changed, 32 insertions(+), 17 deletions(-)
+> 
+> diff --git a/util/aio-posix.h b/util/aio-posix.h
+> index f9994ed79e..6f9d97d866 100644
+> --- a/util/aio-posix.h
+> +++ b/util/aio-posix.h
+> @@ -18,6 +18,7 @@
+>  #define AIO_POSIX_H
+>  
+>  #include "block/aio.h"
+> +#include "qapi/error.h"
+>  
+>  struct AioHandler {
+>      GPollFD pfd;
+> @@ -72,17 +73,8 @@ static inline void fdmon_epoll_disable(AioContext *ctx)
+>  #endif /* !CONFIG_EPOLL_CREATE1 */
+>  
+>  #ifdef CONFIG_LINUX_IO_URING
+> -bool fdmon_io_uring_setup(AioContext *ctx);
+> +void fdmon_io_uring_setup(AioContext *ctx, Error **errp);
 
-On Wed, May 28, 2025 at 12:07:21PM +0100, Jonathan Cameron wrote:
-> v14: Simplifications suggeseted by Itaru (and some extra simplifications
->      that became apparent) and gather tags.
->      See individual patches for more information.
+Why change the return type to void?  That forces you to have to check
+errp.  If you still return bool (true for errp unchanged, false when
+errp set), callers might have a simpler interface.
 
-I think the suggestion was made by Zhi jian or Fan? who enaged in the
-rewview of your proposed series v13.
+>  void fdmon_io_uring_destroy(AioContext *ctx);
+> -#else
+> -static inline bool fdmon_io_uring_setup(AioContext *ctx)
+> -{
+> -    return false;
+> -}
+> -
+> -static inline void fdmon_io_uring_destroy(AioContext *ctx)
+> -{
+> -}
+>  #endif /* !CONFIG_LINUX_IO_URING */
+>  
+>  #endif /* AIO_POSIX_H */
+> diff --git a/util/aio-posix.c b/util/aio-posix.c
+> index fa047fc7ad..44b3df61f9 100644
+> --- a/util/aio-posix.c
+> +++ b/util/aio-posix.c
+> @@ -16,6 +16,7 @@
+>  #include "qemu/osdep.h"
+>  #include "block/block.h"
+>  #include "block/thread-pool.h"
+> +#include "qapi/error.h"
+>  #include "qemu/main-loop.h"
+>  #include "qemu/lockcnt.h"
+>  #include "qemu/rcu.h"
+> @@ -717,17 +718,39 @@ void aio_context_setup(AioContext *ctx, Error **errp)
+>      ctx->epollfd = -1;
+>      ctx->epollfd_tag = NULL;
+>  
+> -    /* Use the fastest fd monitoring implementation if available */
+> -    if (fdmon_io_uring_setup(ctx)) {
+> -        return;
+> +#ifdef CONFIG_LINUX_IO_URING
+> +    {
+> +        static bool need_io_uring;
+> +        Error *local_err = NULL; /* ERRP_GUARD() doesn't handle error_abort */
 
-Itaru.
+Really? I thought that was part of why we added ERRP_GUARD, so that
+error_abort is pinned closer to the spot where the error is triggered
+rather than where it was chained.  But your use of errp is a bit
+different than usual here, so you may be correct that it doesn't
+handle error_abort in the way that you want (allowing a graceful
+downgrade to epoll if it is the first failure, but aborting if it is
+the second AioContext that fails).
 
-> 
-> Updated cover letter
-> 
-> Richard Henderson has posted a pull request with a fix for the TCG TLB
-> issue which will hopefully merge shortly (Thanks Richard!).
-> 
-> Back in 2022, this series stalled on the absence of a solution to device
-> tree support for PCI Expander Bridges (PXB) and we ended up only having
-> x86 support upstream. I've been carrying the arm64 support out of tree
-> since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
-> a few weeks ago) and a fair number of fiddly rebases.
-> gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
-> series.
-> 
-> A recent discussion with Peter Maydell indicated that there are various
-> other ACPI only features now, so in general he might be more relaxed
-> about DT support being necessary. The upcoming vSMMUv3 support would
-> run into this problem as well.
-> 
-> I presented the background to the PXB issue at Linaro connect 2022. In
-> short the issue is that PXBs steal MMIO space from the main PCI root
-> bridge. The challenge is knowing how much to steal.
-> 
-> On ACPI platforms, we can rely on EDK2 to perform an enumeration and
-> configuration of the PCI topology and QEMU can update the ACPI tables
-> after EDK2 has done this when it can simply read the space used by the
-> root ports. On device tree, there is no entity to figure out that
-> enumeration so we don't know how to size the stolen region.
-> 
-> Three approaches were discussed:
-> 1) Enumerating in QEMU. Horribly complex and the last thing we want is a
->    3rd enumeration implementation that ends up out of sync with EDK2 and
->    the kernel (there are frequent issues because of how those existing
->    implementations differ.
-> 2) Figure out how to enumerate in kernel. I never put a huge amount of work
->    into this, but it seemed likely to involve a nasty dance with similar
->    very specific code to that EDK2 is carrying and would very challenging
->    to upstream (given the lack of clarity on real use cases for PXBs and
->    DT).
-> 3) Hack it based on the control we have which is bus numbers.
->    No one liked this but it worked :)
-> 
-> The other little wrinkle would be the need to define full bindings for CXL
-> on DT + implement a fairly complex kernel stack as equivalent in ACPI
-> involves a static table, CEDT, new runtime queries via _DSM and a description
-> of various components. Doable, but so far there is no interest on physical
-> platforms. Worth noting that for now, the QEMU CXL emulation is all about
-> testing and developing the OS stack, not about virtualization (performance
-> is terrible except in some very contrived situations!)
-> 
-> There is only a very simple test in here, because my intent is not to
-> duplicate what we have on x86, but just to do a smoke test that everything
-> is hooked up.  In general we need much more comprehensive end to end CXL
-> tests but that requires a reaonsably stable guest software stack. A few
-> people have expressed interest in working on that, but we aren't there yet.
-> 
-> Note that this series has a very different use case to that in the proposed
-> SBSA-ref support:
-> https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
-> 
-> SBSA-ref is a good choice if you want a relatively simple mostly fixed
-> configuration.  That works well with the limited host system
-> discoverability etc as EDK2 can be build against a known configuration.
-> 
-> My interest with this support in arm/virt is support host software stack
-> development (we have a wide range of contributors, most of whom are working
-> on emulation + the kernel support). I care about the weird corners. As such
-> I need to be able to bring up variable numbers of host bridges, multiple CXL
-> Fixed Memory Windows with varying characteristics (interleave etc), complex
-> NUMA topologies with wierd performance characteristics etc. We can do that
-> on x86 upstream today, or my gitlab tree. Note that we need arm support
-> for some arch specific features in the near future (cache flushing).
-> Doing kernel development with this need for flexibility on SBSA-ref is not
-> currently practical. SBSA-ref CXL support is an excellent thing, just
-> not much use to me for this work.
-> 
-> Also, we are kicking off some work on DCD virtualization, particularly to
-> support inter-host shared memory being presented up into a VM. That
-> will need upstream support on arm64 as it is built on top of the existing
-> CXL emulation to avoid the need for a separate guest software stack.
-> 
-> Note this is TCG only - it is possible to support limited use with KVM but
-> that needs additional patches not yet ready for upstream.  The challenge
-> is interleave - and the solution is don't interleave if you want to run
-> with KVM.
-> 
-> Jonathan Cameron (5):
->   hw/cxl-host: Add an index field to CXLFixedMemoryWindow
->   hw/cxl: Make the CXL fixed memory windows devices.
->   hw/cxl-host: Allow split of establishing memory address and mmio
->     setup.
->   hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
->     pxb-cxl
->   qtest/cxl: Add aarch64 virt test for CXL
-> 
->  include/hw/arm/virt.h     |   4 +
->  include/hw/cxl/cxl.h      |   4 +
->  include/hw/cxl/cxl_host.h |   6 +-
->  hw/acpi/cxl.c             |  76 +++++++--------
->  hw/arm/virt-acpi-build.c  |  34 +++++++
->  hw/arm/virt.c             |  29 ++++++
->  hw/cxl/cxl-host-stubs.c   |   8 +-
->  hw/cxl/cxl-host.c         | 190 ++++++++++++++++++++++++++++++++------
->  hw/i386/pc.c              |  51 +++++-----
->  tests/qtest/cxl-test.c    |  59 +++++++++---
->  tests/qtest/meson.build   |   1 +
->  11 files changed, 353 insertions(+), 109 deletions(-)
-> 
+> +
+> +        /* io_uring takes precedence because it provides aio_add_sqe() support */
+> +        fdmon_io_uring_setup(ctx, &local_err);
+> +        if (!local_err) {
+> +            /*
+> +             * If one AioContext gets io_uring, then all AioContexts need io_uring
+> +             * so that aio_add_sqe() support is available across all threads.
+> +             */
+> +            need_io_uring = true;
+> +            return;
+> +        }
+> +        if (need_io_uring) {
+> +            error_propagate(errp, local_err);
+> +            return;
+> +        }
+> +
+> +        warn_report_err_once(local_err); /* frees local_err */
+> +        local_err = NULL;
+>      }
+> +#endif /* CONFIG_LINUX_IO_URING */
+>  
+>      fdmon_epoll_setup(ctx);
+>  }
+>  
+>  void aio_context_destroy(AioContext *ctx)
+>  {
+> +#ifdef CONFIG_LINUX_IO_URING
+>      fdmon_io_uring_destroy(ctx);
+> +#endif
+>  
+>      qemu_lockcnt_lock(&ctx->list_lock);
+>      fdmon_epoll_disable(ctx);
+> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+> index 2092d08d24..ef1a866a03 100644
+> --- a/util/fdmon-io_uring.c
+> +++ b/util/fdmon-io_uring.c
+> @@ -45,6 +45,7 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include <poll.h>
+> +#include "qapi/error.h"
+>  #include "qemu/rcu_queue.h"
+>  #include "aio-posix.h"
+>  
+> @@ -361,7 +362,7 @@ static const FDMonOps fdmon_io_uring_ops = {
+>      .gsource_dispatch = fdmon_io_uring_gsource_dispatch,
+>  };
+>  
+> -bool fdmon_io_uring_setup(AioContext *ctx)
+> +void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+>  {
+>      int ret;
+>  
+> @@ -369,15 +370,14 @@ bool fdmon_io_uring_setup(AioContext *ctx)
+>  
+>      ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
+>      if (ret != 0) {
+> -        return false;
+> +        error_setg_errno(errp, -ret, "Failed to initialize io_uring");
+> +        return;
+
+This is where I question whether you should still return bool.
+
+>      }
+>  
+>      QSLIST_INIT(&ctx->submit_list);
+>      ctx->fdmon_ops = &fdmon_io_uring_ops;
+>      ctx->io_uring_fd_tag = g_source_add_unix_fd(&ctx->source,
+>              ctx->fdmon_io_uring.ring_fd, G_IO_IN);
+> -
+> -    return true;
+>  }
+>  
+>  void fdmon_io_uring_destroy(AioContext *ctx)
 > -- 
-> 2.48.1
+> 2.49.0
 > 
 > 
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
