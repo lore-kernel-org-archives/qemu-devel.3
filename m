@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D99C3ABB2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CEBEC5AD49
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 18:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKLlK-0006S4-2Y; Wed, 28 May 2025 14:44:27 -0400
+	id 1uKLlO-0006Uy-Gs; Wed, 28 May 2025 14:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uKLlB-0006Mr-Ru
+ id 1uKLlD-0006N8-BN
  for qemu-devel@nongnu.org; Wed, 28 May 2025 14:44:20 -0400
-Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uKLl9-0000Mw-3I
- for qemu-devel@nongnu.org; Wed, 28 May 2025 14:44:17 -0400
-Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-52d9a275c27so40578e0c.0
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 11:44:14 -0700 (PDT)
+ id 1uKLlB-0000NH-Nd
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 14:44:19 -0400
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-5259331b31eso32113e0c.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 11:44:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1748457853; x=1749062653; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=J9vaYbI6OPKjlA89Q/NPDKgmHC6DQpntnN6kslToiNE=;
- b=kGPJS81ZgE2US4VQ5ISwret1gPWSAd56MonPbXhKPBq4tdUc9hl++16IvF5VgwlULT
- 3MacGrIrTKxIyXw/ClmRJ7WCU/v1y/lzh2RkiJZ+fYdMuVAQ91j49i7fgloomIMj4RtQ
- fqdynbSkiT6AmGozMF4QXKrtJByofh0qd5tZLH+yFmdnU4SDJivITUEEXG1a8iKK5agZ
- dGCFOfbZQnrlKejRAp7t6pPMPrHD/c9enSiqiWSFSz+UqKzHiylODS5iIgHe41x/ZweC
- 0HoFgD+pRmfPItO1IphF8UL3HKa7kWuTrl/hbPrwFki7qJZ5Aq2u+Q6kilGzxO/1GEPv
- ABWQ==
+ d=ventanamicro.com; s=google; t=1748457856; x=1749062656; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N1EvtJG5mNTqGGcNevZ83Z0Oy3cFvMJyHR4hO17x8rQ=;
+ b=muuGdoASU6EQL6LZpMZy7CNxcnQXGB7lxVcHPsXIsJ/MZhTqyWSierFP2HEcfelYcs
+ neEFuMMgzkVSda3yjmWWndlYvBMhAxT3Ujy2EE7okivh4D1N+p+5TzXqjPS6CAqSqam7
+ uZMB6ioWQuWwz1UDfTMqIy9tkukDaCXu0pXqc3L7JIEAeNG05Ur+6l/Kcxb7Io2DqVMR
+ 3Wmm9BZJQvnEdUpwdm0QM7g9rMgTaG2HnjT4+tkFpLFWGUop3XYn1vd+rv+BfxdxInSf
+ GnQbCUbAdIjL4f3KVcOWqcMidNyqzgr+7C9oyZEBrjws1U8kSxPl8bi1pDD0P/zlEkAu
+ MIQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748457853; x=1749062653;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=J9vaYbI6OPKjlA89Q/NPDKgmHC6DQpntnN6kslToiNE=;
- b=d2B4vSItqv0S4Oylb0E647prTJtpTlAQTmAxzExbL1sSUmJ8tGzxcLH81rXRbupVa5
- hdBeYPZR53ymmEErIM9T6VQ6wxPCoyYN+J7zdpBGocgEz3pl4r4BuUMJY4xcjnIJk7dO
- GqdIk1vV3GT8qGILfaS/ZYeIVJo1+fQzrb6+H4FdM9S/1zm8nimPuaRIqRHYOUsVKUmZ
- U9NVvYF4RV3IpeH9LX5VWCvvQ0+SNgM6AoOOyVUDm3WIW3SboDxVE9Goml45GksiWnpJ
- TrjLdf7ZnhVAFSVCui6Xca0Jv28DsZqm7wDKZg2cXpvgFeZZ7/TODDCdIP9kuW3dJHgd
- 0zGQ==
-X-Gm-Message-State: AOJu0Yx3ujX9mbhIdX3qygCx777c4KOZFloVzdaGw/LJdrVWs9BmX0pP
- 0FggwXcno2NUoEgLDkaP7YQ+9p5xtQUobY9KkYpcpYLi8fS4A0ci15rSbvIqlqQntHUgwglPbYE
- f3tIh
-X-Gm-Gg: ASbGnctRmBsB2NWSq3BQS0UOJMntfXR48wICf9JmgQkX9ZSzTufV/DCiIXprjoBNmfV
- thjxRFQaqCuIEZxUuwlD3zWkJG42em3oK6kymnek+C3ge8+o4iG7lZ7/ddIaZ2d00xVHseDabQt
- ZiLaRAAX+L4ZA5C15ovnLKsLRWTtDBZL0b2i09QrkWr5vsJ4PlpUTK+VuOhfZRIo7XA94b8NhtG
- 0HDZRXhkAy42G1YbTueTpUyIpuIVL8EqMNs2uRDnOBNHSvby/1q7zIV1z0xtpM93OfqRcJN0//v
- IxAM8euDPV+MXrLPBsta3F5rgbFEFURgY5gLRUyAAZ6YXqJt1EpcHw==
-X-Google-Smtp-Source: AGHT+IGQcwdtslO8BLogosCuE9TiA0NR3W7EulBylE+bfm252+jO8AwZl2Dgu/wgFbFmMtvJeyAd2g==
-X-Received: by 2002:a05:6122:4d88:b0:530:5680:b48c with SMTP id
- 71dfb90a1353d-5305680e16bmr7409693e0c.3.1748457852835; 
- Wed, 28 May 2025 11:44:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748457856; x=1749062656;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=N1EvtJG5mNTqGGcNevZ83Z0Oy3cFvMJyHR4hO17x8rQ=;
+ b=EwMGyXxE3VjhuIx+cxI//2RJNeZs1bvbE7d4DS3tSjyJ2+i+EWan7WRkUYk6zcMmxy
+ cJJrkQm3dTeRnaguhWgBJLufnWZIPZX4e5QCPfog2h1slMxAlbQaXWGsURbbZJRva+t0
+ yn9b9HDwI0SWrLb15+FGHG3QU7pdxepb+xCIa+Bxqu9+gCJTSBEyDY38buHBYzH9+Qfn
+ 99ii9sFfJfkRTrjrL8E0cv/NobPv/++Qq/VYi4OrKg3fMHGPoj/H24WPqmFBd0ceLPh6
+ XRRopP2nKrhovYbLhFZHYtq2aV00H1hNAvAM+bDE2xNbBi7wqblWjT8vChKMwkc0PBPu
+ 4xDA==
+X-Gm-Message-State: AOJu0YwzMrYzCCgEAHNjWEUM/ImDjc97ob6hczmPW4IFw3LTk+YSOZbg
+ a/dEnw01F7c80LR69X7BAsozEUuYNjeTqe8wBA1qZ1d5ugNhGK8hHMwAtSqgbWalkBlVNGHVYvU
+ re5qc
+X-Gm-Gg: ASbGncsxFKQRqkxEVwPMjLjEGh55CeBc3jfAaI23QK83cAYQOhHL9aJHnLmpJDRDQSu
+ B8PzU0azuTfmC7vIqOTBu3+AwVjUuUEa9CIe7bB2UeGnTE8Yf2sNJNj0RgyctJPbRvn4XU3JJGf
+ BcLGGtYzGMgLiDhhbDySFBFjg9Ob7HYwWvrEFGuBUlbdw/SRkPFwduiLjJ/nIabTTtd5/5HV3IR
+ lI3GWtcdKo6TJvilFPsgVaD50JV0PZY/07LsSaes+A7fph1HPB3yAJhU8XJSx2S69z5uVn3Kll4
+ XgItOH3NOt7MuYzdwcfZ1lZTNEh7MgCa7267dtQROl04CGDE7hWnng==
+X-Google-Smtp-Source: AGHT+IEZsqzOu2500pJHUdm7HK5pcS8IkH0h3efbu7mqBCrgxiKayChMsFZfot6DUH6UBJR9vFmMtA==
+X-Received: by 2002:a05:6122:6799:b0:52f:bef8:deee with SMTP id
+ 71dfb90a1353d-52fbef8df52mr6343782e0c.8.1748457856087; 
+ Wed, 28 May 2025 11:44:16 -0700 (PDT)
 Received: from grind.. ([191.255.35.190]) by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-53066945971sm1568512e0c.30.2025.05.28.11.44.10
+ 71dfb90a1353d-53066945971sm1568512e0c.30.2025.05.28.11.44.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 11:44:12 -0700 (PDT)
+ Wed, 28 May 2025 11:44:15 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, ajones@ventanamicro.com,
  bjorn@rivosinc.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 0/3] target/riscv: profile handling fixes
-Date: Wed, 28 May 2025 15:44:04 -0300
-Message-ID: <20250528184407.1451983-1-dbarboza@ventanamicro.com>
+Subject: [PATCH v2 1/3] target/riscv/tcg: restrict satp_mode changes in
+ cpu_set_profile
+Date: Wed, 28 May 2025 15:44:05 -0300
+Message-ID: <20250528184407.1451983-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250528184407.1451983-1-dbarboza@ventanamicro.com>
+References: <20250528184407.1451983-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-vk1-xa33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-vk1-xa35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,29 +102,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+We're changing 'mmu' to true regardless of whether the profile is
+being enabled or not, and at the same time we're changing satp_mode to
+profile->enabled.
 
-In this version I removed an extra signed-off-by in patch 3.
+This will promote a situation where we'll set mmu=on without a virtual
+memory mode, which is a mistake.
 
-No other changes made. Patches based on alistair/riscv-to-apply.next.
+Only touch 'mmu' and satp_mode if the profile is being enabled.
 
-All patches acked.
+Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+Fixes: 55398025e7 ("target/riscv: add satp_mode profile support")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Tested-by: Björn Töpel <bjorn@rivosinc.com>
+---
+ target/riscv/tcg/tcg-cpu.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-Changes from v1:
-- patch 3:
-  - removed a duplicated Signed-off-by tag
-- v1 link: https://lore.kernel.org/qemu-riscv/20250520172336.759708-1-dbarboza@ventanamicro.com/
-
-Daniel Henrique Barboza (3):
-  target/riscv/tcg: restrict satp_mode changes in cpu_set_profile
-  target/riscv/tcg: decouple profile enablement from user prop
-  target/riscv: add profile->present flag
-
- target/riscv/cpu.h            |  15 ++++
- target/riscv/riscv-qmp-cmds.c |   2 +-
- target/riscv/tcg/tcg-cpu.c    | 138 +++++++++++++++++-----------------
- 3 files changed, 86 insertions(+), 69 deletions(-)
-
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index a84cca48fc..857c625580 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1339,16 +1339,16 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
+ 
+     if (profile->enabled) {
+         cpu->env.priv_ver = profile->priv_spec;
+-    }
+ 
+ #ifndef CONFIG_USER_ONLY
+-    if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
+-        object_property_set_bool(obj, "mmu", true, NULL);
+-        const char *satp_prop = satp_mode_str(profile->satp_mode,
+-                                              riscv_cpu_is_32bit(cpu));
+-        object_property_set_bool(obj, satp_prop, profile->enabled, NULL);
+-    }
++        if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
++            object_property_set_bool(obj, "mmu", true, NULL);
++            const char *satp_prop = satp_mode_str(profile->satp_mode,
++                                                  riscv_cpu_is_32bit(cpu));
++            object_property_set_bool(obj, satp_prop, true, NULL);
++        }
+ #endif
++    }
+ 
+     for (i = 0; misa_bits[i] != 0; i++) {
+         uint32_t bit = misa_bits[i];
 -- 
 2.49.0
 
