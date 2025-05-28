@@ -4,81 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DA6C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6510CC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:47:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKEHq-0008Jr-Ki; Wed, 28 May 2025 06:45:30 -0400
+	id 1uKEJp-0001FH-QP; Wed, 28 May 2025 06:47:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKEHo-0008H7-On
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:45:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uKEJg-0001BS-9N
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:47:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKEHm-0006OF-HY
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:45:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uKEJd-0006WG-Er
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:47:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748429125;
+ s=mimecast20190719; t=1748429239;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FbJGsf/BPlAPaDf1UQOhGi1bSvtcA0GL20e9/wB23g8=;
- b=GENcKgxBRmEAPpTLmqkXKB4aqvUsb5QjF4xQJ0X83HYPk2xElfjeevXd/WCVT3daE4W5oh
- tBwdCbbLFi1RZU8Oll4CApFhx0++7Rw7GTqiHGwwjXS2LIb6p/77+/StoYqGniSYJfAanp
- ODWfsijGjNpT4zVrQLDKtcWKjWt+oII=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=cJxQ30O1brdNnVN+LO2wNj/GWFyyylvnxOhzZ2b03pM=;
+ b=XGjewiAKfeKdxnYppFdijUXr3MD6RArAclT2gWhQ++T5T8ZZXxilDlXdYFYKprF7Kq3lfu
+ cmTYN53ii/v0PruG9YfMVsbWRJFviuNg/UyJl64HFHaLxt0S1RyPHYAJBP8l0dhHjCc77p
+ 6f31yCF23WmIalt+Z7FpacLGKD3GC0Q=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-186-ReIbJq88M9-OxI1NNEQiCA-1; Wed, 28 May 2025 06:45:24 -0400
-X-MC-Unique: ReIbJq88M9-OxI1NNEQiCA-1
-X-Mimecast-MFC-AGG-ID: ReIbJq88M9-OxI1NNEQiCA_1748429123
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a3696a0d3aso1965042f8f.2
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 03:45:23 -0700 (PDT)
+ us-mta-625-U3HOFEc3Phy0L-0Ga0-hdg-1; Wed, 28 May 2025 06:47:17 -0400
+X-MC-Unique: U3HOFEc3Phy0L-0Ga0-hdg-1
+X-Mimecast-MFC-AGG-ID: U3HOFEc3Phy0L-0Ga0-hdg_1748429237
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4c8c60c5eso2653582f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 03:47:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748429123; x=1749033923;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FbJGsf/BPlAPaDf1UQOhGi1bSvtcA0GL20e9/wB23g8=;
- b=S4H6vMZLPWwLfCWtWrwbtIf8IpPk4u5hWTL85G2o6W1j9N0n0idAH5J7UFeUVmfZlZ
- asORhOjDQTUtnUqwUtxbOQJa0Z9tg0kgOMB9quTx6JRaf1p5pTFw2NbQxSyz34ovCTU7
- MSoEjklL3jf93mX69LxYvseD0mejQOyizgwC1s/NcZ7isGhFdscidB8PVfMyxy7Sh/8D
- Y6y+FOfE91tBo4wlYD79DDL5FoL9faTpYYhwp/GH9waSlOtgR7XwOfWU1j97c1Sdkqna
- MfLK+m8NPVeggmUImFhRbtBMJN1mwZhTInHcmSguYDS1JLvQ9/fzWVIsrf0zj3nZ2+o/
- 4Iaw==
-X-Gm-Message-State: AOJu0YzfwifWPzepaPlmYhHEMVc2Q5pQBM6/zgk/T1TxrosKvdnft6MD
- cWDcCl61uWBKUW9IHCQgTlo+HNbFE8EsTfH7kb7Mli0zCL8udWFMP1TrR8OeL5Me/23ONo6gyG0
- 1D3184A7Fbq+xD9hVX/o90ybWfDbZV7Fya3DurUWbtkFiQ8BX4r+3poAu9Fjwt37IdA/29+ydII
- 7DhWqPTV1qn8QuEtQLB6tuqHeH4r1XfIU=
-X-Gm-Gg: ASbGnctIpF9Tyb4b0VcTKJdlFh/tpfDECtyDGyE0L7KepjaAM5JKP4sM42N6v2vKXYI
- gyGPSrbRU+cq/0MjyH2hS33w1o7L979EK9qHJkKdW0U/paW/mncn2Q86M7fomzFQedsA=
-X-Received: by 2002:a05:6000:40c9:b0:3a3:6a9a:5ebf with SMTP id
- ffacd0b85a97d-3a4cb436e22mr12782315f8f.20.1748429122672; 
- Wed, 28 May 2025 03:45:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFlcvTmwcuezeMmvzGMTP7yH2OK2CHbvC4M5dm3ehEjnAbR3pbJtTzyur1WOKFAXxtJOiYtoKXsmEWLcdeWf1w=
-X-Received: by 2002:a05:6000:40c9:b0:3a3:6a9a:5ebf with SMTP id
- ffacd0b85a97d-3a4cb436e22mr12782288f8f.20.1748429122178; Wed, 28 May 2025
- 03:45:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748429237; x=1749034037;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cJxQ30O1brdNnVN+LO2wNj/GWFyyylvnxOhzZ2b03pM=;
+ b=YzFvEzhvxSwmPtRZPUSLgVwMGHqh0MJzQQrwXodibN/FsBNzsI8E23Vys5eaZR677S
+ SwdlZrL1ORci677Tp5n/JzWtbVe8kWi479XAaE68Nbf5dd1jcBeGxAHRFT+FvWu0fZt5
+ auD+4WblfFlRmK/BQdZQSVmc6oVVeW70tuNo/pQzCn6K0LrkWlHOXYkYPB1yMU1TVSMp
+ fdxxEhh4Iv1bvbEJokS3TBTuIOGi2VRmCGhCNFnWa9wZLJG2WVhYei2isbq5hLQTz4b6
+ vriffKdcWEcrm3nSyVGyzC4CaXyI3oD4UeL6Yd3WZxId5pofZWzr2FgliF1mDPL1vzPS
+ 4biQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7ccM7jtTPON7lgp1yLwHndtifUiVHd/BjVk1t8WTyZ4n9n4+dIPEeqIjOV1LVk236Gu/zL/QJEBIs@nongnu.org
+X-Gm-Message-State: AOJu0Ywn1o67P90MTpBZjvKU/orREM2y08GzSE0evNBp/58NyUaSTXDY
+ mDR1WSyZD7naptqvgOWRyjXlerxaTKTz1FJC2LhNrwlvT8X6Dqfx6IbHPA5t7As2DLOHmXJ3Yr2
+ WvBzgRh0UYlnxW+UcNFU5jImbz2qBlUl38K8sdy5Ub3dWCXp2I3jLXLhU
+X-Gm-Gg: ASbGncttMhQpghdsriYBay3L3Ctb7N69AZZR6TKxGz/FQb3zBPJJC+mM7VNGMGs6afh
+ YQ8RnX9n2oVRHFlI9ji5826T/nsFKiWoF+FyATZIZ80m7IQpT7u3vraqKH283cEKHsnieDdIXqb
+ aSN9RlrcKtnL1DWTr7nHPg2GfpFSRNDUdgDiaYG1LDRSxHCtbBZ/SOS2XRoUS5aorvucl53Fmf1
+ yaFxIvzG6/Om4bhQktOxMkEqD43pxc1wVh69vDpBYrCZLvBlAgt09RxbO8lsXN/6xSV32p6cvkz
+ b+1wqQ==
+X-Received: by 2002:adf:f682:0:b0:3a4:cc90:85ea with SMTP id
+ ffacd0b85a97d-3a4cc908670mr12028123f8f.11.1748429236609; 
+ Wed, 28 May 2025 03:47:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+1NPiFtsRo7xajrABLkt9VlA8TEK3NnBdyHz1/DTS013UqrVBZ1e277CUgBHh9KfjwOAWLA==
+X-Received: by 2002:adf:f682:0:b0:3a4:cc90:85ea with SMTP id
+ ffacd0b85a97d-3a4cc908670mr12028091f8f.11.1748429236159; 
+ Wed, 28 May 2025 03:47:16 -0700 (PDT)
+Received: from [10.0.5.211] ([91.126.222.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4eac7db82sm1104417f8f.24.2025.05.28.03.47.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 May 2025 03:47:15 -0700 (PDT)
+Message-ID: <96b8cd22-df17-4c3a-b28e-cf75268b6451@redhat.com>
+Date: Wed, 28 May 2025 12:47:14 +0200
 MIME-Version: 1.0
-References: <20250526142254.1061009-1-pbonzini@redhat.com>
- <20250526142455.1061519-7-pbonzini@redhat.com>
- <87o6vddpzm.fsf@pond.sub.org>
-In-Reply-To: <87o6vddpzm.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 28 May 2025 12:45:10 +0200
-X-Gm-Features: AX0GCFudh73BgKiAasxsLiOOOuCtBM5_3CxTaZotJMqApJPFUuKzj7oEIKF7OKo
-Message-ID: <CABgObfY1tAEEy70RSW78Tn+s+xRPw9xXSRmFU-QVYLRLe20SYQ@mail.gmail.com>
-Subject: Re: [PATCH 07/12] qemu-api: add bindings to Error
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 6/6] iommufd: Implement query of host VTD IOMMU's
+ capability
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20250528060409.3710008-1-zhenzhong.duan@intel.com>
+ <20250528060409.3710008-7-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250528060409.3710008-7-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -87,7 +147,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,313 +163,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 28, 2025 at 11:49=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
-om> wrote:
-> > diff --git a/rust/qemu-api/src/error.rs b/rust/qemu-api/src/error.rs
-> > new file mode 100644
-> > index 00000000000..f08fed81028
-> > --- /dev/null
-> > +++ b/rust/qemu-api/src/error.rs
-> > @@ -0,0 +1,273 @@
-> > +// SPDX-License-Identifier: GPL-2.0-or-later
-> > +
-> > +//! Error class for QEMU Rust code
-> > +//!
-> > +//! @author Paolo Bonzini
-> > +
-> > +use std::{
-> > +    borrow::Cow,
-> > +    ffi::{c_char, c_int, c_void, CStr},
-> > +    fmt::{self, Display},
-> > +    panic, ptr,
-> > +};
-> > +
-> > +use foreign::{prelude::*, OwnedPointer};
-> > +
-> > +use crate::{
-> > +    bindings,
-> > +    bindings::{error_free, error_get_pretty},
-> > +};
-> > +
-> > +pub type Result<T> =3D std::result::Result<T, Error>;
-> > +
-> > +#[derive(Debug, Default)]
-> > +pub struct Error {
->
-> We're defining a custom error type Error for use with Result<>.  This
-> requires implementing a number of traits.  For trait Debug, we take the
-> auto-generated solution here.  Other traits are implemented below, in
-> particular Display.
->
-> I don't yet understand the role of trait Default.
-
-It defines an Error without any frills attached. It is used below but
-on the other hand it results in those "unknown error"s that you
-rightly despised.
-
-> Does the name Error risk confusion with std::error::Error?
-
-Maybe, but as you can see from e.g. ayhow::Error it's fairly common to
-have each crate or module define its own Error type. In the end you
-always convert them to another type with "?" or ".into()".
-
-> This is the Rust equivalent to C struct Error.  High-level differences:
->
-> * No @err_class.  It's almost always ERROR_CLASS_GENERIC_ERROR in C
->   nowadays.  You're hardcoding that value in Rust for now.  Good.
->
-> * @cause, optional.  This is the bridge to idiomatic Rust error types.
->
-> * @msg is optional.  This is so you can wrap a @cause without having to
->   add some useless message.
->
-> Is having Errors with neither @msg nor @cause a good idea?
-
-It makes for slightly nicer code, and avoids having to worry about
-panics from ".unwrap()" in error handling code (where panicking
-probably won't help much). Otherwise it's probably not a good idea,
-but also not something that people will use since (see later patches)
-it's easier to return a decent error message than an empty Error.
-
-> Needed for what?  Oh, method description() is deprecated since 1.42.0:
-> "use the Display impl or to_string()".  I figure we need it because the
-> new way doesn't work with our oldest supported Rust version.  Could
-> perhaps use a comment to help future garbage collectors.
->
-> > +    fn description(&self) -> &str {
-> > +        self.msg
-> > +            .as_deref()
-> > +            .or_else(|| self.cause.as_deref().map(std::error::Error::d=
-escription))
-> > +            .unwrap_or("error")
->
-> This gives us @msg, or else @cause, or else "error".
->
-> Is it a good idea to ignore @cause when we have @msg?
-
-> > +impl Display for Error {
-> > +    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-> > ...
-> > +    }
->
-> This combines @msg and @cause:
->
-> Differs from description().  Why?
-
-Because description() cannot build a dynamically-allocated string, it
-must return something that is already available in the Error. That
-limitation is probably why it was deprecated.
-
-Since it's deprecated we can expect that it won't be used and not
-worry too much.
-
-> > +    fn from(msg: String) -> Self {
-> > +        let location =3D panic::Location::caller();
-> > +        Error {
-> > +            msg: Some(Cow::Owned(msg)),
-> > +            file: location.file(),
-> > +            line: location.line(),
-> > +            ..Default::default()
->
-> I don't understand this line, I'm afraid.
-
-It says "every other field comes from "..Default::default()". I can
-replace it with "cause: None", and likewise below.
-
-> > +}
-> > +
-> > +impl From<&'static str> for Error {
-> > +    #[track_caller]
-> > +    fn from(msg: &'static str) -> Self {
-> > +        let location =3D panic::Location::caller();
-> > +        Error {
-> > +            msg: Some(Cow::Borrowed(msg)),
-> > +            file: location.file(),
-> > +            line: location.line(),
-> > +            ..Default::default()
-> > +        }
-> > +    }
-> > +}
->
-> Same for another string type.
-
-Yes, this is for strings that are not allocated and are always
-valid---such as string constants.
-
-> Is there a way to create an Error with neither @msg nor @cause?
-
-Yes, Default::default()
-
-> > +        errp: *mut *mut bindings::Error,
-> > +    ) -> Option<T> {
-> > +        let Err(err) =3D result else {
-> > +            return result.ok();
-> > +        };
-> > +
-> > +        // SAFETY: caller guarantees errp is valid
-> > +        unsafe {
-> > +            err.propagate(errp);
-> > +        }
-> > +        None
->
-> @result is an Error.  Propagate it, and return None.
->
-> This is indeed like self.ok() with propagation added.
-
-Alternatively:
-
-    result
-       .map_err(|err| unsafe { err.propagate(errp) })
-       .ok()
-
-Shorter, but the functional style can be off putting. What do you prefer?
-
-> > +    }
-> > +
-> > +    /// Equivalent of the C function `error_propagate`.  Fill `*errp`
-> > +    /// with the information container in `result` if `errp` is not NU=
-LL;
-> > +    /// then consume it.
->
-> Note error_propagate() has the arguments in the opposite order.
-
-Yeah, here "self" must be first so that you use it as a method.
-Though, s/result/self/ as you noted.
-
-> > +    /// # Safety
-> > +    ///
-> > +    /// `errp` must be valid; typically it is received from C code
->
-> What does "valid" mean exactly?
-
-I will copy from `error_propagate` in v2.
-
-> Brief switch to the design level...
->
-> In C, you're almost always better off with ERRP_GUARD().  Would you like
-> me to elaborate?
->
-> You still have to use error_propagate() to accumulate multiple errors so
-> that the first one wins.  That's commonly a dumb idea.  Should we avoid
-> this pattern in Rust?
-
-In Rust there are three kinds of functions that use errors. Two are in qemu=
-_api:
-
-(1) bridges from C to Rust function pointers. They receive a Result<>
-from Rust functions and use error_propagate() (probably via functions
-such as ok_or_propagate, bool_or_propagate, etc.) to prepare a C
-return value.
-
-(2) bridges from Rust to C functions. They pass an Error** to the C
-function and use err_or_else() or err_or_unit() to prepare a Rust
-return value
-
-Functions of kind (1) are like functions in C that do a single call
-and just pass down errp, for example user_creatable_add_qapi(). These
-do not need ERRP_GUARD() because:
-
-* the conversion from Result<> to C is pretty much a necessity, and
-it's done with functions that guarantee the propagation
-
-* the conversion function *consumes* the Result<>, guaranteeing that
-you do not propagate more than once with tragic results
-
-Function of kind (2) do not need ERRP_GUARD() because they do not take
-an Error** at all. They pass one down to C, but they return a
-Result<>.
-
-The third kind is Rust functions that are called from (1) and that
-themselves call (2). These are where ERRP_GUARD() would be used in C,
-but in Rust these do not see Error** at all. The "?" operator has the
-same effect as ERRP_GUARD(), i.e. it handles passing the error from
-called function to return value. What in C would be
-
-   ERRP_GUARD();
-   if (!func_that_returns_bool(...)) { return; }
-
-In Rust is
-
-   func_that_returns_result(...)?;
-
-which is a bit disconcerting in the beginning but grows on you.
-(Generally I find that to be the experience with Rust. It's downright
-weird, but unlike C++ the good parts outweigh the weirdness).
-
-> > +    pub unsafe fn err_or_unit(c_error: *mut bindings::Error) -> Result=
-<()> {
-> > +        // SAFETY: caller guarantees c_error is valid
-> > +        unsafe { Self::err_or_else(c_error, || ()) }
-> > +    }
-> > +
-> > +    /// Convert a C `Error*` into a Rust `Result`, calling `f()` to
-> > +    /// obtain an `Ok` value if `c_error` is NULL.
-> > +    ///
-> > +    /// # Safety
-> > +    ///
-> > +    /// `c_error` must be valid; typically it has been filled by a C
-> > +    /// function.
-> > +    pub unsafe fn err_or_else<T, F: FnOnce() -> T>(
-> > +        c_error: *mut bindings::Error,
-> > +        f: F,
-> > +    ) -> Result<T> {
-> > +        // SAFETY: caller guarantees c_error is valid
-> > +        let err =3D unsafe { Option::<Self>::from_foreign(c_error) };
-> > +        match err {
-> > +            None =3D> Ok(f()),
-> > +            Some(err) =3D> Err(err),
-> > +        }
-> > +    }
-> > +}
->
-> Getting tired...
-
-No problem. While this is kinda important, it's not used yet. The
-clients would look like this:
-
-fn type_get_or_load_by_name(name: &str) -> Result<&TypeImpl> {
-   unsafe {
-       let err: *mut bindings::Error =3D ptr::null_mut();
-       let typ: *mut TypeImpl =3D bindings::type_get_or_load_by_name(
-           name.clone_to_foreign().as_ptr(), &mut err);
-       // on success, "typ" can be accessed safely
-       // on failure, turn the Error* into a qemu_api::Error and free it
-       Result::err_or_else(err, || &*typ)
-}
-
-This is why I need to write tests.
-
-> > +impl CloneToForeign for Error {
-> > +    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
-> > +        // SAFETY: all arguments are controlled by this function
-> > +        unsafe {
-> > +            let err: *mut c_void =3D libc::malloc(std::mem::size_of::<=
-bindings::Error>());
-> > +            let err: &mut bindings::Error =3D &mut *err.cast();
-> > +            *err =3D bindings::Error {
-> > +                msg: format!("{self}").clone_to_foreign_ptr(),
-> > +                err_class: bindings::ERROR_CLASS_GENERIC_ERROR,
-> > +                src_len: self.file.len() as isize,
-> > +                src: self.file.as_ptr().cast::<c_char>(),
-> > +                line: self.line as c_int,
-> > +                func: ptr::null_mut(),
-> > +                hint: ptr::null_mut(),
-> > +            };
-> > +            OwnedPointer::new(err)
-> > +        }
-> > +    }
-> > +}
->
-> Plausible to this Rust ignoramus :)
-
-Good, since these *Foreign traits are not part of the standard
-library, but rather something that I concocted and published outside
-QEMU. If you had no problems understanding how they were used (e.g.
-stuff like into_native or clone_to_foreign_ptr), that is good.
-
-Paolo
+On 5/28/25 08:04, Zhenzhong Duan wrote:
+> Implement query of HOST_IOMMU_DEVICE_CAP_[NESTING|FS1GP|ERRATA] for IOMMUFD
+> backed host VTD IOMMU device.
+> 
+> Query on these capabilities is not supported for legacy backend because there
+> is no plan to support nesting with legacy backend backed host device.
+> 
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   hw/i386/intel_iommu_internal.h     |  1 +
+>   include/system/host_iommu_device.h |  7 ++++++
+>   backends/iommufd.c                 | 39 ++++++++++++++++++++++++++++--
+>   3 files changed, 45 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+> index e8b211e8b0..2cda744786 100644
+> --- a/hw/i386/intel_iommu_internal.h
+> +++ b/hw/i386/intel_iommu_internal.h
+> @@ -191,6 +191,7 @@
+>   #define VTD_ECAP_PT                 (1ULL << 6)
+>   #define VTD_ECAP_SC                 (1ULL << 7)
+>   #define VTD_ECAP_MHMV               (15ULL << 20)
+> +#define VTD_ECAP_NEST               (1ULL << 26)
+>   #define VTD_ECAP_SRS                (1ULL << 31)
+>   #define VTD_ECAP_PASID              (1ULL << 40)
+>   #define VTD_ECAP_SMTS               (1ULL << 43)
+> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
+> index 10fccc10be..c2770cb469 100644
+> --- a/include/system/host_iommu_device.h
+> +++ b/include/system/host_iommu_device.h
+> @@ -29,6 +29,10 @@ typedef union VendorCaps {
+>    *
+>    * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this represents
+>    *           the @out_capabilities value returned from IOMMU_GET_HW_INFO ioctl)
+> + *
+> + * @vendor_caps: host platform IOMMU vendor specific capabilities (e.g. on
+> + *               IOMMUFD this represents raw vendor data from data_uptr
+> + *               buffer returned from IOMMU_GET_HW_INFO ioctl)
+>    */
+>   typedef struct HostIOMMUDeviceCaps {
+>       uint32_t type;
+> @@ -116,6 +120,9 @@ struct HostIOMMUDeviceClass {
+>    */
+>   #define HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE        0
+>   #define HOST_IOMMU_DEVICE_CAP_AW_BITS           1
+> +#define HOST_IOMMU_DEVICE_CAP_NESTING           2
+> +#define HOST_IOMMU_DEVICE_CAP_FS1GP             3
+> +#define HOST_IOMMU_DEVICE_CAP_ERRATA            4
+>   
+>   #define HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX       64
+>   #endif
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index b114fb08e7..63209659f3 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -21,6 +21,7 @@
+>   #include "hw/vfio/vfio-device.h"
+>   #include <sys/ioctl.h>
+>   #include <linux/iommufd.h>
+> +#include "hw/i386/intel_iommu_internal.h"
+>   
+>   static void iommufd_backend_init(Object *obj)
+>   {
+> @@ -364,6 +365,41 @@ bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+>       return idevc->detach_hwpt(idev, errp);
+>   }
+>   
+> +static int hiod_iommufd_get_vtd_cap(HostIOMMUDevice *hiod, int cap,
+> +                                    Error **errp)
+> +{
+> +    struct iommu_hw_info_vtd *caps = &hiod->caps.vendor_caps.vtd;
+> +
+> +    switch (cap) {
+> +    case HOST_IOMMU_DEVICE_CAP_NESTING:
+> +        return !!(caps->ecap_reg & VTD_ECAP_NEST);
+> +    case HOST_IOMMU_DEVICE_CAP_FS1GP:
+> +        return !!(caps->cap_reg & VTD_CAP_FS1GP);
+> +    case HOST_IOMMU_DEVICE_CAP_ERRATA:
+> +        return caps->flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17;
+> +    default:
+> +        error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+> +        return -EINVAL;
+> +    }
+> +}
 
 
-Paolo
+This is intel specific. Why not handle these capabilities directly from
+vtd_check_hiod() under hw/i386/intel_iommu.c ?
+
+
+Thanks,
+
+C.
+
+
+> +static int hiod_iommufd_get_vendor_cap(HostIOMMUDevice *hiod, int cap,
+> +                                       Error **errp)
+> +{
+> +    enum iommu_hw_info_type type = hiod->caps.type;
+> +
+> +    switch (type) {
+> +    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
+> +        return hiod_iommufd_get_vtd_cap(hiod, cap, errp);
+> +    case IOMMU_HW_INFO_TYPE_ARM_SMMUV3:
+> +    case IOMMU_HW_INFO_TYPE_NONE:
+> +        break;
+> +    }
+> +
+> +    error_setg(errp, "%s: unsupported capability type %x", hiod->name, type);
+> +    return -EINVAL;
+> +}
+> +
+>   static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+>   {
+>       HostIOMMUDeviceCaps *caps = &hiod->caps;
+> @@ -374,8 +410,7 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+>       case HOST_IOMMU_DEVICE_CAP_AW_BITS:
+>           return vfio_device_get_aw_bits(hiod->agent);
+>       default:
+> -        error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+> -        return -EINVAL;
+> +        return hiod_iommufd_get_vendor_cap(hiod, cap, errp);
+>       }
+>   }
+>   
 
 
