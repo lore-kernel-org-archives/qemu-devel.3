@@ -4,61 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296F7C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3071DC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKGP4-0007Xn-I0; Wed, 28 May 2025 09:01:09 -0400
+	id 1uKGQn-0008E8-RM; Wed, 28 May 2025 09:02:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKGOk-0007SU-9i
- for qemu-devel@nongnu.org; Wed, 28 May 2025 09:00:47 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uKGQl-0008A7-Dj
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 09:02:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKGOh-0002wB-Lq
- for qemu-devel@nongnu.org; Wed, 28 May 2025 09:00:45 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uKGQj-0003Lb-8b
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 09:02:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748437241;
+ s=mimecast20190719; t=1748437367;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8fC/fU2wds07m+i/gGccRD1da/gu5a2V1OyxtYYgsNk=;
- b=NNga0RxqnEE4kel8qkdNEgBBXdpwfg9o/Es3IBNENo9MIFpVWr8gggbdh7INMdFGL4qR6X
- 5f+cmzduDdYiFXdvoOgE0UpLozDSKjni2knOmo0gAI2w1+sfnHbMRmKKeB6AUPl7xBLmkr
- HD3k6CDSsAxRB1Dh4gmt2qF31Gaodm8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-k7Xenp4ONqCQK23Vp4GgnQ-1; Wed,
- 28 May 2025 09:00:37 -0400
-X-MC-Unique: k7Xenp4ONqCQK23Vp4GgnQ-1
-X-Mimecast-MFC-AGG-ID: k7Xenp4ONqCQK23Vp4GgnQ_1748437236
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58F301955E79; Wed, 28 May 2025 13:00:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.48])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E94C51956095; Wed, 28 May 2025 13:00:33 +0000 (UTC)
-Date: Wed, 28 May 2025 08:00:30 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, devel@daynix.com
-Subject: Re: [PATCH] file-posix: Tolerate unaligned hole at middle
-Message-ID: <wh5wbm4cfu6jxt3lchkktqnduxyxctpn7byeilmvdt7li4jllp@ol7geqo2t76q>
-References: <20250528-dio-v1-1-633066a71b8c@daynix.com>
+ bh=2zTYLE6MSys4OmtzSZ6e/+XfZzBtahBlti+qgIKKXxs=;
+ b=biKio2iIwrd6OQja/azrX24ZxCXOmtlqVMEvoVwnY+b47OXyJPChcrBhPnArVj6bFxwi3Y
+ AECMlNwzqkjjrKgFx+zf2pi+FH7LRUxegUDdX/j+8BPaBl0JE0y4dThuJY4qZpZdDDec/u
+ 1n2fet6srU/oAmjsC8E7BEIU4fXnCh0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-558-zkDBhmrIMsibF99E36z4VQ-1; Wed, 28 May 2025 09:02:45 -0400
+X-MC-Unique: zkDBhmrIMsibF99E36z4VQ-1
+X-Mimecast-MFC-AGG-ID: zkDBhmrIMsibF99E36z4VQ_1748437365
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4d95f197dso2105848f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 06:02:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748437364; x=1749042164;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2zTYLE6MSys4OmtzSZ6e/+XfZzBtahBlti+qgIKKXxs=;
+ b=CTRy5ITH8r0M7bHUJZIZmX+0EPczDQvAY4cr6IhArT9GRSk5dVz/AE49a/pbyuH7W8
+ ORzQPO2xc7EZFoiGNg+66mhMjDEkknsoavdCA4kdHZZOZMmyOaRvcLTUJ5TV1JO+1JyP
+ pJp3bYI46erKwVEJJyYTl8BDVC7085bH3IPtjWDD/G5a+8n64baoLEe1dPf9Fkdpw1K5
+ dKqO++AC/7aWWIEhAngzO+h4tD8aPFqX0/xF2byVNeKV/QlfqCDQfhWk7eO9Kw/URAR3
+ WzSZK2X6HhTkrwyLlaqrRek2H4ZgdL9FtcrCuPYil2KuYOVxOpB9lI48njYrTFdZrdD4
+ Nufg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4Je5J5Vm1ebo+6EWXf0RLa4GPb5gAHK9/AE4/rb5kAB7qbdft48J1zpJYTHi9J8b8/yDsWXuAFBWT@nongnu.org
+X-Gm-Message-State: AOJu0YwHEguAjpv0/M6zrOMGfy2p/vSqy6dAq4nRqPoUvmpeCXSD3Xdc
+ 8JF7skGG3yWBvTwM9x5Zhajyw93Z5+T4In/kFq6COueUSn0QtMzd30urKbrNAC6T7hVeNlGmW0j
+ /tYjILl82+0uXQL18RL3AbR2Xai4suaAZGbziC/K902BcvXyjsn81sqKo
+X-Gm-Gg: ASbGncuMRgQ63TLQPwt0FoTfHwEKgpGNWWgITiPxUeHBSnb05jVKJM5xzRgsXNk/iry
+ B8wk7gHoAd+hwPDfZu1A7wlYZltj4z602jLmjB0hHFMb//KJzs3kxdJ4TkJptBqv5no/d/cgeoH
+ O0sOrgAKE7pfnXrzDswOaPvf81q+iIj9mfyM+vAf+jNYM2qrwaemdKb6Cj9gQHI19SNbk2wShYc
+ GWIwTnofjXn/+P/7MrMJTN7XTEoACxMUh4HTk2bFLMmLbvzrBJJ/zMwI7tw0+dpDK8abYXGsN3p
+ /Vq3HYtNM0Qd7P6e+duR9KZc11KI2p+x
+X-Received: by 2002:a05:6000:2dc1:b0:3a4:dfc1:ecb8 with SMTP id
+ ffacd0b85a97d-3a4dfc1ed20mr7176336f8f.53.1748437363767; 
+ Wed, 28 May 2025 06:02:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHugJgHlM0Vpj60zdOilrkSc0PXc4GX760uO6ixkmaC5ppG/M5YTtZnO4PIKJNH99Zu97/0lQ==
+X-Received: by 2002:a05:6000:2dc1:b0:3a4:dfc1:ecb8 with SMTP id
+ ffacd0b85a97d-3a4dfc1ed20mr7176063f8f.53.1748437361535; 
+ Wed, 28 May 2025 06:02:41 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4eac6ed58sm1433023f8f.8.2025.05.28.06.02.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 May 2025 06:02:41 -0700 (PDT)
+Date: Wed, 28 May 2025 15:02:39 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
+ pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
+ alex.bennee@linaro.org
+Subject: Re: [PATCH v2 24/25] tests/qtest/bios-tables-test: Keep ACPI PCI
+ hotplug off
+Message-ID: <20250528150239.5f6b63d0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <375cfbd6-e585-4b6d-bf10-6571aa40370e@linaro.org>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-25-eric.auger@redhat.com>
+ <20250528113813.47086516@imammedo.users.ipa.redhat.com>
+ <375cfbd6-e585-4b6d-bf10-6571aa40370e@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250528-dio-v1-1-633066a71b8c@daynix.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -83,155 +118,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 28, 2025 at 08:30:05PM +0900, Akihiko Odaki wrote:
-> file-posix used to assume that existing holes satisfy the requested
-> alignment, which equals to the estimated direct I/O alignment
-> requirement if direct I/O is requested, and assert the assumption
-> unless it is at EOF.
+On Wed, 28 May 2025 09:41:15 -0300
+Gustavo Romero <gustavo.romero@linaro.org> wrote:
+
+> Hi Igor,
 > 
-> However, the estimation of direct I/O alignment requirement is sometimes
-> inexact and can be overly strict. For example, I observed that QEMU
-> estimated the alignment requirement as 16K while the real requirement
-> is 4K when Btrfs is used on Linux 6.14.6 and the host page size is 16K.
+> On 5/28/25 06:38, Igor Mammedov wrote:
+> > On Tue, 27 May 2025 09:40:26 +0200
+> > Eric Auger <eric.auger@redhat.com> wrote:
+> >   
+> >> From: Gustavo Romero <gustavo.romero@linaro.org>
+> >>
+> >> ACPI PCI hotplug is now turned on by default so we need to change the
+> >> existing tests to keep it off. However, even setting the ACPI PCI
+> >> hotplug off in the existing tests, there will be changes in the ACPI
+> >> tables because the _OSC method was modified, hence in the next patch of
+> >> this series the blobs are updated accordingly.
+> >>
+> >> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>  
+> > 
+> > it would be better to test whatever default we end up with.
+> > (like x86)  
 > 
-> For direct I/O alignment, open(2) sugguests as follows:
-> > Since Linux 6.1, O_DIRECT support and alignment restrictions for a
-> > file can be queried using statx(2), using the STATX_DIOALIGN flag.
-> > Support for STATX_DIOALIGN varies by filesystem; see statx(2).
+> hmm maybe there is a confusion here, Igor. We are actually planning what you
 
-We really should be using statx() in the block/ subdirectory (even
-though we aren't yet) - over time, more and more filesystems WILL
-support it, and it is a more precise answer than anything else.
+perhaps, see my reply to Eric about my expectations wrt tests.
+(i.e. default tests shouldn't have any explicit CLI options,
+instead it should follow whitelist blobs/set new default patch/update blobs pattern)
 
-> >
-> > Some filesystems provide their own interfaces for querying O_DIRECT
-> > alignment restrictions, for example the XFS_IOC_DIOINFO operation in
-> > xfsctl(3). STATX_DIOALIGN should be used instead when it is available.
-> >
-> > If none of the above is available, then direct I/O support and
-> > alignment restrictions can only be assumed from known characteristics
-> > of the filesystem, the individual file, the underlying storage
-> > device(s), and the kernel version. In Linux 2.4, most filesystems
-> > based on block devices require that the file offset and the length and
-> > memory address of all I/O segments be multiples of the filesystem
-> > block size (typically 4096 bytes). In Linux 2.6.0, this was relaxed to
-> > the logical block size of the block device (typically 512 bytes). A
-> > block device's logical block size can be determined using the ioctl(2)
-> > BLKSSZGET operation or from the shell using the command:
+> said. This patch and the other two in this series related to the bios-tables-test
+> (i.e., patches 8/25 and 10/25) are for actually making the current (legacy) test pass,
+> since the new default as per this series will be acpi-pcihp=on. That's why here we're
+> adapting the current test here to have acpi-pcihp=off.
 > 
-> Apparently Btrfs doesn't support STATX_DIOALIGN nor provide its own
-> interface for querying the requirement. Using BLKSSZGET brings another
-> problem to determine the underlying block device, which also involves
-> heuristics.
+> The new test that will test for acpi-pcihp=on (the new default) is not in this series
+> and we decided to merge it separate. It's in the patch 4/5 and 5/5 of the follow series:
 > 
-> Moreover, even if we could figure out the direct I/O alignment
-> requirement, I could not find a documentation saying it will exactly
-> matche with the alignment of holes.
-
-s/matche/match/
-
-> 
-> So stop asserting the assumption on the holes and tolerate them being
-> unaligned.
-
-Tolerating unaligned holes is wise, even if we can improve our probing
-to be more accurate in other patches.  That said...
-
-> 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  block/file-posix.c | 19 +++++++++----------
->  1 file changed, 9 insertions(+), 10 deletions(-)
-> 
-> diff --git a/block/file-posix.c b/block/file-posix.c
-> index ec95b748696b..7b686ce6817d 100644
-> --- a/block/file-posix.c
-> +++ b/block/file-posix.c
-> @@ -3307,22 +3307,21 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
->          *pnum = bytes;
->          ret = BDRV_BLOCK_DATA;
->      } else if (data == offset) {
-> -        /* On a data extent, compute bytes to the end of the extent,
-> -         * possibly including a partial sector at EOF. */
-> +        /* On a data extent, compute bytes to the end of the extent. */
->          *pnum = hole - offset;
->  
->          /*
-> +         * We may have allocation unaligned with the requested alignment due to
-> +         * the following reaons:
-> +         * - unaligned file size
-> +         * - inexact direct I/O alignment requirement estimation
-> +         * - mismatches between the allocation size and
-> +         *   direct I/O alignment requirement.
-> +         *
->           * We are not allowed to return partial sectors, though, so
->           * round up if necessary.
->           */
-> -        if (!QEMU_IS_ALIGNED(*pnum, bs->bl.request_alignment)) {
-> -            int64_t file_length = raw_getlength(bs);
-> -            if (file_length > 0) {
-> -                /* Ignore errors, this is just a safeguard */
-> -                assert(hole == file_length);
-> -            }
-> -            *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
-> -        }
-> +        *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
->  
->          ret = BDRV_BLOCK_DATA;
-
-...rounding data extent sizes up to the alignment that the rest of the
-block layer sees is always safe.  But I would expect some symmetry -
-anywhere we are rounding up to report data instead of hole, there
-either needs to be counterpart code on the holes or else a good reason
-why the holes don't need matching code, where unaligned holes are
-rounded down to alignment boundaries (and if that rounds down to 0,
-report data instead).  That way, you can't get different answers based
-on where in the sector you are asking the question.  We do know that
-the block layer is supposed to only be asking the question at the
-start of an alignment boundary (even when our alignment boundaries are
-too large, such as your mention of 16k alignment when the filesystem
-supports 4k holes).  At best, it may just be a matter of adding
-comments to document why we are safe, but I'm not sure that is
-sufficient for this patch.
-
-Restated visually, if we have | at 16k boundaries (what qemu picked as
-the dio alignment), + at 4k boundaries (the granularity of holes that
-the fs supports), and the following file structure with Data and Holes
-marked:
-
-|+++|+++|+++|+++|+++|
-DDDDDHHHHDDHDDDDHHHH
-
-Then the claim is that the block layer will only ever ask for status
-at the | points (and not at the +), and the results that it should see
-after rounding are as follows (where lowercase respresents changed
-results due to rounding to alignment):
-
-|+++|+++|+++|+++|+++|
-DDDDDHHHHDDHDDDDHHHH
-DDDDDddddDDdDDDDHHHH
-        ^
-
-But the important question I don't see in your patch is whether you
-handle a block_status query at the point of ^ correctly (it lands in a
-hole, but since there is data also present in that alignment boundary,
-you have to report the entire 16k as data).
-
->      } else {
-> 
-> ---
-> base-commit: f0737158b483e7ec2b2512145aeab888b85cc1f7
-> change-id: 20250528-dio-db04a66a7848
-> 
-> Best regards,
-> -- 
-> Akihiko Odaki <akihiko.odaki@daynix.com>
+> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05828.html 4/5
+> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05827.html 5/5
 > 
 > 
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+> Cheers,
+> Gustavo
+> 
+> >>
+> >> ---
+> >>
+> >> [Eric] also added acpi-pcihp=off to test_acpi_aarch64_virt_tcg_numamem
+> >> ---
+> >>   tests/qtest/bios-tables-test.c | 13 +++++++++----
+> >>   1 file changed, 9 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+> >> index 0a333ec435..6379dba714 100644
+> >> --- a/tests/qtest/bios-tables-test.c
+> >> +++ b/tests/qtest/bios-tables-test.c
+> >> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
+> >>       };
+> >>   
+> >>       data.variant = ".memhp";
+> >> -    test_acpi_one(" -machine nvdimm=on"
+> >> +    test_acpi_one(" -machine nvdimm=on,acpi-pcihp=off"
+> >>                     " -cpu cortex-a57"
+> >>                     " -m 256M,slots=3,maxmem=1G"
+> >>                     " -object memory-backend-ram,id=ram0,size=128M"
+> >> @@ -1747,7 +1747,8 @@ static void test_acpi_aarch64_virt_tcg_numamem(void)
+> >>       };
+> >>   
+> >>       data.variant = ".numamem";
+> >> -    test_acpi_one(" -cpu cortex-a57"
+> >> +    test_acpi_one(" -machine acpi-pcihp=off"
+> >> +                  " -cpu cortex-a57"
+> >>                     " -object memory-backend-ram,id=ram0,size=128M"
+> >>                     " -numa node,memdev=ram0",
+> >>                     &data);
+> >> @@ -1775,7 +1776,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
+> >>        * to solve the conflicts.
+> >>        */
+> >>       data.variant = ".pxb";
+> >> -    test_acpi_one(" -device pcie-root-port,chassis=1,id=pci.1"
+> >> +    test_acpi_one(" -machine acpi-pcihp=off"
+> >> +                  " -device pcie-root-port,chassis=1,id=pci.1"
+> >>                     " -device virtio-scsi-pci,id=scsi0,bus=pci.1"
+> >>                     " -drive file="
+> >>                     "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2,"
+> >> @@ -1846,7 +1848,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
+> >>   
+> >>       data.variant = ".acpihmatvirt";
+> >>   
+> >> -    test_acpi_one(" -machine hmat=on"
+> >> +    test_acpi_one(" -machine hmat=on,acpi-pcihp=off"
+> >>                     " -cpu cortex-a57"
+> >>                     " -smp 4,sockets=2"
+> >>                     " -m 384M"
+> >> @@ -2123,6 +2125,7 @@ static void test_acpi_aarch64_virt_tcg(void)
+> >>       data.smbios_cpu_max_speed = 2900;
+> >>       data.smbios_cpu_curr_speed = 2700;
+> >>       test_acpi_one("-cpu cortex-a57 "
+> >> +                  "-machine acpi-pcihp=off "
+> >>                     "-smbios type=4,max-speed=2900,current-speed=2700", &data);
+> >>       free_test_data(&data);
+> >>   }
+> >> @@ -2142,6 +2145,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+> >>       };
+> >>   
+> >>       test_acpi_one("-cpu cortex-a57 "
+> >> +                  "-machine acpi-pcihp=off "
+> >>                     "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
+> >>       free_test_data(&data);
+> >>   }
+> >> @@ -2227,6 +2231,7 @@ static void test_acpi_aarch64_virt_viot(void)
+> >>       };
+> >>   
+> >>       test_acpi_one("-cpu cortex-a57 "
+> >> +                  "-machine acpi-pcihp=off "
+> >>                     "-device virtio-iommu-pci", &data);
+> >>       free_test_data(&data);
+> >>   }  
+> >   
+> 
 
 
