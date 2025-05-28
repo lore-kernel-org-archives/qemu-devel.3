@@ -4,56 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48129C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 11:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8890C5B543
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 11:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKFOd-0001J4-Rh; Wed, 28 May 2025 07:56:35 -0400
+	id 1uKFOe-0001Jo-30; Wed, 28 May 2025 07:56:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=7BZW=YM=cmp.felk.cvut.cz=pisa@fel.cvut.cz>)
- id 1uKFOa-0001In-Vh
- for qemu-devel@nongnu.org; Wed, 28 May 2025 07:56:33 -0400
+ id 1uKFOb-0001Iv-Vl
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 07:56:34 -0400
 Received: from smtpx1.feld.cvut.cz ([147.32.210.191])
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=7BZW=YM=cmp.felk.cvut.cz=pisa@fel.cvut.cz>)
- id 1uKFOX-0000ZN-Aq
- for qemu-devel@nongnu.org; Wed, 28 May 2025 07:56:31 -0400
+ id 1uKFOW-0000ZP-0T
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 07:56:33 -0400
 Received: from smtpx.fel.cvut.cz (smtpx.feld.cvut.cz [147.32.210.153])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
  (No client certificate requested)
- by smtpx1.feld.cvut.cz (Postfix) with ESMTPS id 5DB312691C;
+ by smtpx1.feld.cvut.cz (Postfix) with ESMTPS id 424FF266D9;
  Wed, 28 May 2025 13:50:50 +0200 (CEST)
 Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id 53E9E2D331;
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id 3F65E2D583;
  Wed, 28 May 2025 13:50:50 +0200 (CEST)
 X-Virus-Scanned: IMAP STYX AMAVIS
 Received: from smtpx.fel.cvut.cz ([192.168.200.2])
  by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id S2Yhmy3VvUoM; Wed, 28 May 2025 13:50:48 +0200 (CEST)
+ with ESMTP id wR3p2DiwMXqX; Wed, 28 May 2025 13:50:48 +0200 (CEST)
 Received: from fel.cvut.cz (unknown [147.32.86.213])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 180AA2D0C7;
- Wed, 28 May 2025 13:39:16 +0200 (CEST)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id D5B982D1CA;
+ Wed, 28 May 2025 13:38:57 +0200 (CEST)
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Gustavo Romero <gustavo.romero@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Oliver Hartkopp <socketcan@hartkopp.net>,
  Ondrej Ille <ondrej.ille@gmail.com>, Jiri Novak <jnovak@fel.cvut.cz>,
  Pavel Pisa <pisa@cmp.felk.cvut.cz>
-Subject: [PATCH v1 3/3] hw/net/can: CTU CAN FD IP mapping enabled for
- Microchip PolarFire SoC Icicle Kit
-Date: Wed, 28 May 2025 13:39:30 +0200
-Message-Id: <c611b12d907089f748b1d162655ec379f13c7e9e.1748432169.git.pisa@cmp.felk.cvut.cz>
+Subject: [PATCH v1 0/3] CTU CAN FD IP core mapping to the platform bus
+Date: Wed, 28 May 2025 13:39:27 +0200
+Message-Id: <cover.1748432169.git.pisa@cmp.felk.cvut.cz>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <cover.1748432169.git.pisa@cmp.felk.cvut.cz>
-References: <cover.1748432169.git.pisa@cmp.felk.cvut.cz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=147.32.210.191;
@@ -82,24 +79,66 @@ From:  Pavel Pisa via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
----
- hw/riscv/microchip_pfsoc.c | 2 ++
- 1 file changed, 2 insertions(+)
+Hello Peter, Gustavo and others,
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 2e74783fce..f87bdc300d 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -718,6 +718,8 @@ static void microchip_icicle_kit_machine_class_init(ObjectClass *oc,
-     mc->default_ram_id = "microchip.icicle.kit.ram";
-     mc->auto_create_sdcard = true;
- 
-+    machine_class_allow_dynamic_sysbus_dev(mc, "ctucan_mm");
-+
-     /*
-      * Map 513 MiB high memory, the minimum required high memory size, because
-      * HSS will do memory test against the high memory address range regardless
+our CTU CAN FD IP core is used on many FPGA platforms
+and has been even tapeout on some other university
+and even prototypes of the massive production chips
+(support for that organized by our former student
+in his company).
+
+But actual QEMU emulation targets only PCI/PCIe mapping in
+
+  hw/net/can/ctucan_pci.c
+
+its use is described for example by Mateusz Szafoni for the NuttX
+development there
+
+  https://railab.me/posts/2025/5/host-based-dev-with-nuttx-can-network/
+
+But possibility to map the CTU CAN FD core
+
+  hw/net/can/ctucan_core.c
+  https://canbus.pages.fel.cvut.cz/
+
+onto bus of FPGA based devices as well onto integrated SoCs
+is getting important now. We have developed CAN stack for RTEMS
+
+  https://docs.rtems.org/docs/main/bsp-howto/can.html
+
+which is tested on real Zynq 7000 and even on PCIe x86 under
+mainline QEMU and with proposed patches on Zynq 7000. The next
+target on the table is Microchip PolarFire SoC, again under RTEMS
+and Linux.
+
+But there is arising another target, Espressif announced mass production
+of ESP32-C5 which has integrated CTU CAN FD IP core, the ESP32-H4 is
+on horizon and there areplans to use our IP core on future devices as well.
+
+Thanks for review in advance, I expect that you would prefer to move
+define of TYPE_CTUCAN_MM_DEV = "ctucan_mm" somewhere in headers
+or may it be evech nage the type name. So please, specify where
+and how.
+
+I have even questions about better way to process and combine IRQ
+sources even on PCI/PCIe boards in past. But because there has been
+no result how it could be changed. On the other hand, current solution
+works and proposed extension enhances its value for embedded
+development for broader community a lot.
+
+Pavel Pisa (3):
+  hw/net/can: CTU CAN FD IP core mapping to the platform bus
+  hw/net/can: CTU CAN FD IP platform bus mapping enabled for Xilinx Zynq
+  hw/net/can: CTU CAN FD IP mapping enabled for Microchip PolarFire SoC
+    Icicle Kit
+
+ hw/arm/xilinx_zynq.c       |   1 +
+ hw/net/can/ctucan_mm.c     | 258 +++++++++++++++++++++++++++++++++++++
+ hw/net/can/meson.build     |   1 +
+ hw/riscv/microchip_pfsoc.c |   2 +
+ 4 files changed, 262 insertions(+)
+ create mode 100644 hw/net/can/ctucan_mm.c
+
 -- 
 2.39.5
 
