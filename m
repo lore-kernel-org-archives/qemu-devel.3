@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E70C54ED1
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 02:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E94D1C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 02:22:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK6Py-0001CZ-C6; Tue, 27 May 2025 22:21:22 -0400
+	id 1uK6QM-0001GP-F7; Tue, 27 May 2025 22:21:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK6Pw-0001CM-BC; Tue, 27 May 2025 22:21:20 -0400
+ id 1uK6QH-0001Fd-7a; Tue, 27 May 2025 22:21:41 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK6Pu-0006NH-CO; Tue, 27 May 2025 22:21:20 -0400
+ id 1uK6QF-0006OA-Lr; Tue, 27 May 2025 22:21:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748398878; x=1779934878;
+ t=1748398900; x=1779934900;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=8IwlVEM667PsmO0DTWsLfsWkSFQbyW5Vn+jrTbcAZ7Y=;
- b=VsrL2IeTWI2WqUEI5+8Z2cyxBYMMYTtWDkL0MoRaHJHRUauAfqVfdKPZ
- XOjXvCU5c6p8FZsDGfNoB+rZho9vt7QmZ5v+rvvutrdQpxsWPt4iXski6
- ZpMl/BGbPmCt0pLc2knFRwjKA5O6q6sRAK3xfw+AHF0SnUIFposkegiN7
- tJxR6uzDQdaR6zCxOHnDG3qBa32XgWJkghx8cTCPA4vdgoxLxxIEV9ANo
- Jm8LNba2ZuUcuRxNjCdg6TYb/Xqyem4j1QvQ03QSeMdTlMcRZe5Z/cEcd
- yAcm02OPZBhw/a1FQqK/SARNrzQmPiYmRDpZ5nKqKDm1nF7XpwPRFAFzN A==;
-X-CSE-ConnectionGUID: eyCbqfz8T7yGoYCp1CAo6A==
-X-CSE-MsgGUID: fvx9RWapTmaA06uhZHm5wA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="49524469"
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="49524469"
+ bh=iBU3z5qZlJT7vNeKtI75qxKgKQeoolmxL/DPdmy7sws=;
+ b=ALJNjMN/MFHkrtZ4m6hE54Z9jznU/gj3Z/5G5EoL6HMsrm7NMNttk9XA
+ eOx2Fhnrj6q31LSsA72/R6PrisuUUlGmvg30SULBjw6JZoqRI0alHRFln
+ MdHwnd8E4qSyF8Ja3aB+j32cFzj/d1/hINqlQ4qZ2gyp/8Jf2wwaEBC7d
+ U/6XpAR/uzAMoe02OYMboRrWv+/K2335XEqQbm69HQGZgWjJPv+mKBiwr
+ ELZdys8gEFNXcs/hniBhVy+JdYMmwu56fg1t2qyyM3LD3xOosKriSK0gX
+ Gd37irVTUCjH7eg2doV2RDSeeqJVd1L6RgAbgoCPXB6qKMB8JRa6O9b3p A==;
+X-CSE-ConnectionGUID: QNOhZgQKTFC6Dkro8I4mJQ==
+X-CSE-MsgGUID: N4hdo8kQR/aZbsnvcQ5TEQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="49524501"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="49524501"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 19:21:16 -0700
-X-CSE-ConnectionGUID: veOp9BXOTRK2Z8XaugFMiA==
-X-CSE-MsgGUID: tQ0HXw06QCOSIc6fNzsDhQ==
+ 27 May 2025 19:21:38 -0700
+X-CSE-ConnectionGUID: 0KLCa/2HSEGoYynE9MQ0KA==
+X-CSE-MsgGUID: 2Ce566nTQRGwMtdyWzy7hw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="173959788"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="173959880"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 19:21:10 -0700
-Message-ID: <094792b7-7bc2-416a-8efa-27510d995689@intel.com>
-Date: Wed, 28 May 2025 10:21:07 +0800
+ 27 May 2025 19:21:31 -0700
+Message-ID: <96a74d4a-f90a-4352-a9d1-92d8c726c15a@intel.com>
+Date: Wed, 28 May 2025 10:21:29 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/19] hw/i386/pc: Remove deprecated pc-q35-2.5 and
- pc-i440fx-2.5 machines
+Subject: Re: [PATCH v4 10/19] hw/i386/x86: Remove
+ X86MachineClass::save_tsc_khz field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -63,12 +63,13 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, John Snow <jsnow@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
 References: <20250512083948.39294-1-philmd@linaro.org>
- <20250512083948.39294-10-philmd@linaro.org>
+ <20250512083948.39294-11-philmd@linaro.org>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250512083948.39294-10-philmd@linaro.org>
+In-Reply-To: <20250512083948.39294-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
@@ -97,18 +98,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/2025 4:39 PM, Philippe Mathieu-Daudé wrote:
-> These machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") they can now be removed.
-> 
-> Remove the now unused empty pc_compat_2_5[] array.
+> The X86MachineClass::save_tsc_khz boolean was only used
+> by the pc-q35-2.5 and pc-i440fx-2.5 machines, which got
+> removed. Remove it and simplify tsc_khz_needed().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
-
 
