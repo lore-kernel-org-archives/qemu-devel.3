@@ -4,68 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C630C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 11:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D9FFC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 11:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKEYC-00026n-2V; Wed, 28 May 2025 07:02:24 -0400
+	id 1uKEdX-0003ql-S6; Wed, 28 May 2025 07:07:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1uKEXr-000251-Td
- for qemu-devel@nongnu.org; Wed, 28 May 2025 07:02:07 -0400
-Received: from sender4-op-o15.zoho.com ([136.143.188.15])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uKEdN-0003pX-0h; Wed, 28 May 2025 07:07:45 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1uKEXm-0000EY-9L
- for qemu-devel@nongnu.org; Wed, 28 May 2025 07:02:01 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1748430109; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=dczlbXCtHutwmBPHRcJ1+RsizEDAapsPdthpNH1tpaUbP8+X5qUKanFH6QThZHpRkNvD7AAhgwctTifCZH3jW73N0MVFrvpt3x/tTm26ND7TOPZ058zZZNA1ouucpCSUHHDU0MMUtCZ7FmfFCQ4wnccnqJsCKAaBOsC3sz06o6U=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1748430109;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=uaYnYSNPBkzXrvW5M/63L1bxyIYPFwzX+ssH5+Y5Zyo=; 
- b=AVX9thqKNqkLAhZFWwR5xcAKQXDu23hPAaR3AtSPlKO4MhUJMxzA7a+4/PPkJGycEwNYs1kYQywxAqHGErvOBmmIocIAVpGKoqmNZ+oaqpyB4i1AfJB46qTo3OPga9PYhKlg4VXvBFP0lmTHV1muGl4yeljjCvmDXkFBh1eiQkA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=linux.beauty;
- spf=pass  smtp.mailfrom=me@linux.beauty;
- dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1748430109; 
- s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=uaYnYSNPBkzXrvW5M/63L1bxyIYPFwzX+ssH5+Y5Zyo=;
- b=flpe8XTirdDI8c19lcIEJ2HjnS6GY2NxgdwveonmHmiuODEYnGuHBG1KPTf6ELUK
- ygGMX063h6QvjZXm+UH+pdLrBtngVgkGTzsONAlchiMPy04mAMU8mOMRiOMz/I2yskd
- jesVEAzwRLcc/Zt9XLg9ghhlv+7t26IKUni5ucGY=
-Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 1748430107024905.4658507757017;
- Wed, 28 May 2025 04:01:47 -0700 (PDT)
-Date: Wed, 28 May 2025 19:01:46 +0800
-From: Li Chen <me@linux.beauty>
-To: "Thomas Huth" <thuth@redhat.com>
-Cc: "Qemu devel" <qemu-devel@nongnu.org>
-Message-ID: <197168e316f.1218d3d6f2931175.5928950932058477287@linux.beauty>
-In-Reply-To: <e58a98e5-c6ae-456f-aaa5-c55924517665@redhat.com>
-References: <1971648603b.dce1f5d22901195.6702025346547333607@linux.beauty>
- <e58a98e5-c6ae-456f-aaa5-c55924517665@redhat.com>
-Subject: Re: Get "Message headers fail syntax check" error when using
- git-send-email
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uKEdJ-0001QT-Cp; Wed, 28 May 2025 07:07:44 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b6ms32hZ1z6L4xp;
+ Wed, 28 May 2025 19:06:15 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id D7DAD1402F5;
+ Wed, 28 May 2025 19:07:27 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 28 May 2025 13:07:27 +0200
+To: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <mst@redhat.com>
+CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>, 
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>, Itaru Kitayama
+ <itaru.kitayama@linux.dev>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Alireza Sanaee <alireza.sanaee@huawei.com>
+Subject: [PATCH v14 0/5] arm/virt: CXL support via pxb_cxl
+Date: Wed, 28 May 2025 12:07:21 +0100
+Message-ID: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@linux.beauty;
- helo=sender4-op-o15.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,71 +67,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomos,
+v14: Simplifications suggeseted by Itaru (and some extra simplifications
+     that became apparent) and gather tags.
+     See individual patches for more information.
 
- ---- On Wed, 28 May 2025 17:52:50 +0800  Thomas Huth <thuth@redhat.com> wrote --- 
- > On 28/05/2025 11.45, Li Chen wrote:
- > > Hi,
- > > 
- > > My emails to the qemu-devel, qemu-riscv, and qemu-arm mailing lists regarding the
- > > "[PATCH v4 0/4] acpi: Add machine option to disable SPCR table" series are being
- > > rejected by these mailing lists, while other recipients are unaffected.
- > > This issue didn't occur with versions v1-v3, which I sent via Zoho webmail instead of git-send-email.
- > > The error messages are:
- > > 
- > > ```
- > > This message was created automatically by mail delivery software.
- > > A message that you sent could not be delivered to one or more of its recipients. This is a permanent error.
- > > 
- > > qemu-devel@nongnu.org, ERROR CODE :550 - Message headers fail syntax check
- > > (... qemu-riscv/qemu-arm ...)
- > > 
- > > Reporting-MTA: dns; mx.zohomail.com
- > > Arrival-Date: Wed, 28 May 2025 16:09:36 +0800
- > > 
- > > Original-Recipient: rfc822; qemu-devel@nongnu.org
- > > Final-Recipient: rfc822; qemu-devel@nongnu.org
- > > Status: 550
- > > Action: failed
- > > Last-Attempt-Date: 28 May 2025 08:11:19 GMT
- > > Diagnostic-Code: Message headers fail syntax check
- > > Remote-MTA: dns; eggs.gnu.org
- > > (... qemu-riscv/qemu-arm ...)
- > > ```
- > > 
- > > And below is the email header:
- > > 
- > > ```
- > > Received: by mx.zohomail.com with SMTPS id 1748419823397138.51964085412385;
- > >     Wed, 28 May 2025 01:10:23 -0700 (PDT)
- > > From: Li Chen <me@linux.beauty>
- > > To: "Peter Maydell" <peter.maydell@linaro.org>,
- > >     "Shannon Zhao" <shannon.zhaosl@gmail.com>,
- > >     "Michael S. Tsirkin" <mst@redhat.com>,
- > >     "Igor Mammedov" <imammedo@redhat.com>,
- > >     "Ani Sinha" <anisinha@redhat.com>,
- > >     "Eduardo Habkost" <eduardo@habkost.net>,
- > >     "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
- > >     =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- > >     "Yanan Wang" <wangyanan55@huawei.com>,
- > >     "Zhao Liu" <zhao1.liu@intel.com>,
- > >     "Song Gao" <gaosong@loongson.cn>,
- > >     "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
- > >     "Sunil V L" <sunilvl@ventanamicro.com>,
- > >     "Palmer Dabbelt" <palmer@dabbelt.com>,
- > >     "Alistair Francis" <alistair.francis@wdc.com>,
- > >     "Weiwei Li" <liwei1518@gmail.com>,
- > >     "qemu-arm" <qemu-arm@nongnu.org>,
- > >     "qemu-devel" <qemu-devel@nongnu.org>,
- > >     "qemu-riscv" " <qemu-riscv@nongnu.org>
- > 
- > Blind guess: You've got a stray " in above qemu-riscv line.
+Updated cover letter
 
-Nice Catch! I repost this series after removing the redundant " and it just works! Thanks a lot!
+Richard Henderson has posted a pull request with a fix for the TCG TLB
+issue which will hopefully merge shortly (Thanks Richard!).
 
-Regards,
-Li 
+Back in 2022, this series stalled on the absence of a solution to device
+tree support for PCI Expander Bridges (PXB) and we ended up only having
+x86 support upstream. I've been carrying the arm64 support out of tree
+since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
+a few weeks ago) and a fair number of fiddly rebases.
+gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
+series.
+
+A recent discussion with Peter Maydell indicated that there are various
+other ACPI only features now, so in general he might be more relaxed
+about DT support being necessary. The upcoming vSMMUv3 support would
+run into this problem as well.
+
+I presented the background to the PXB issue at Linaro connect 2022. In
+short the issue is that PXBs steal MMIO space from the main PCI root
+bridge. The challenge is knowing how much to steal.
+
+On ACPI platforms, we can rely on EDK2 to perform an enumeration and
+configuration of the PCI topology and QEMU can update the ACPI tables
+after EDK2 has done this when it can simply read the space used by the
+root ports. On device tree, there is no entity to figure out that
+enumeration so we don't know how to size the stolen region.
+
+Three approaches were discussed:
+1) Enumerating in QEMU. Horribly complex and the last thing we want is a
+   3rd enumeration implementation that ends up out of sync with EDK2 and
+   the kernel (there are frequent issues because of how those existing
+   implementations differ.
+2) Figure out how to enumerate in kernel. I never put a huge amount of work
+   into this, but it seemed likely to involve a nasty dance with similar
+   very specific code to that EDK2 is carrying and would very challenging
+   to upstream (given the lack of clarity on real use cases for PXBs and
+   DT).
+3) Hack it based on the control we have which is bus numbers.
+   No one liked this but it worked :)
+
+The other little wrinkle would be the need to define full bindings for CXL
+on DT + implement a fairly complex kernel stack as equivalent in ACPI
+involves a static table, CEDT, new runtime queries via _DSM and a description
+of various components. Doable, but so far there is no interest on physical
+platforms. Worth noting that for now, the QEMU CXL emulation is all about
+testing and developing the OS stack, not about virtualization (performance
+is terrible except in some very contrived situations!)
+
+There is only a very simple test in here, because my intent is not to
+duplicate what we have on x86, but just to do a smoke test that everything
+is hooked up.  In general we need much more comprehensive end to end CXL
+tests but that requires a reaonsably stable guest software stack. A few
+people have expressed interest in working on that, but we aren't there yet.
+
+Note that this series has a very different use case to that in the proposed
+SBSA-ref support:
+https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
+
+SBSA-ref is a good choice if you want a relatively simple mostly fixed
+configuration.  That works well with the limited host system
+discoverability etc as EDK2 can be build against a known configuration.
+
+My interest with this support in arm/virt is support host software stack
+development (we have a wide range of contributors, most of whom are working
+on emulation + the kernel support). I care about the weird corners. As such
+I need to be able to bring up variable numbers of host bridges, multiple CXL
+Fixed Memory Windows with varying characteristics (interleave etc), complex
+NUMA topologies with wierd performance characteristics etc. We can do that
+on x86 upstream today, or my gitlab tree. Note that we need arm support
+for some arch specific features in the near future (cache flushing).
+Doing kernel development with this need for flexibility on SBSA-ref is not
+currently practical. SBSA-ref CXL support is an excellent thing, just
+not much use to me for this work.
+
+Also, we are kicking off some work on DCD virtualization, particularly to
+support inter-host shared memory being presented up into a VM. That
+will need upstream support on arm64 as it is built on top of the existing
+CXL emulation to avoid the need for a separate guest software stack.
+
+Note this is TCG only - it is possible to support limited use with KVM but
+that needs additional patches not yet ready for upstream.  The challenge
+is interleave - and the solution is don't interleave if you want to run
+with KVM.
+
+Jonathan Cameron (5):
+  hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+  hw/cxl: Make the CXL fixed memory windows devices.
+  hw/cxl-host: Allow split of establishing memory address and mmio
+    setup.
+  hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
+    pxb-cxl
+  qtest/cxl: Add aarch64 virt test for CXL
+
+ include/hw/arm/virt.h     |   4 +
+ include/hw/cxl/cxl.h      |   4 +
+ include/hw/cxl/cxl_host.h |   6 +-
+ hw/acpi/cxl.c             |  76 +++++++--------
+ hw/arm/virt-acpi-build.c  |  34 +++++++
+ hw/arm/virt.c             |  29 ++++++
+ hw/cxl/cxl-host-stubs.c   |   8 +-
+ hw/cxl/cxl-host.c         | 190 ++++++++++++++++++++++++++++++++------
+ hw/i386/pc.c              |  51 +++++-----
+ tests/qtest/cxl-test.c    |  59 +++++++++---
+ tests/qtest/meson.build   |   1 +
+ 11 files changed, 353 insertions(+), 109 deletions(-)
+
+-- 
+2.48.1
+
 
