@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72B4C54F30
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 02:47:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3028EC54ED1
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 02:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK6pT-00080P-9J; Tue, 27 May 2025 22:47:43 -0400
+	id 1uK6q1-00005h-J4; Tue, 27 May 2025 22:48:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK6pQ-0007yk-FG; Tue, 27 May 2025 22:47:40 -0400
+ id 1uK6pv-0008Sd-K2; Tue, 27 May 2025 22:48:11 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK6pO-0004hC-ND; Tue, 27 May 2025 22:47:40 -0400
+ id 1uK6pt-0004iF-S8; Tue, 27 May 2025 22:48:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748400459; x=1779936459;
+ t=1748400490; x=1779936490;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=bQBbm1xvTKP1sB0RAGArzmT+6/4UWfJArFTaUv1UOkE=;
- b=Ip6GMkr00/ywQRcUaSbPISshfjDBVe6wp5WPJpLBou2i4X0aijTxVqdX
- MH4UIv73rFTOxd/ZuQQzCoTktP2Oea1a/PKKw2MGtMZynNTHnaMsPzcyG
- TZu7Z+U63RFgG4E26NpU7M0wv3Dc89aZUrO/nRS4adGVS2djW/vh4eWio
- Ksueu02Kt0KV4i3NzASOUMaTpVT9zQHnR13RPofvs2YpfllaQUXWXHBsF
- lFrc6Eu30dPZxNFtswJvrf+TFaays5EaLg3CAOmj50N8ERmQUsLlvCGkK
- 4dhwVMXfLnu6/5C+UBbCP0Ofz0opDT5AUILuN9C+sWW6AeuA9dlLPJvtE A==;
-X-CSE-ConnectionGUID: xIz6V0ebSuu9b4gtNExqzg==
-X-CSE-MsgGUID: y9c+mn4PSrmhBepsXymjcg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="54218597"
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="54218597"
+ bh=87MZXERdmn+bRyCDGJmocHYjWGj14nJn8uA6reJm+ns=;
+ b=IvIU7ptGgU5QAsrMgrko4DL8bOnxeX8vMtkrgrwKyXdCjFD/AR7dFU0t
+ KaYHondotJn9ZhyI45gtbk8gW5SiBfQUXDKuEvXAqCzAEPyMglVAMBIoO
+ RsHtGKXhg8DMVUAmm2tXmZjwh0d0rZWBKlDZfmsgfuYWXciEJetVXWVAA
+ SFpQrq2x4ymmbJ7bVIGfh8fOydem6jYO8gWMii2tIWW4Vsnfi39wxFHgn
+ 2EkCDoMdR5OjrcSwgYcQsTWM2UQcOGMs5rtaMcJZSfAlMHYbNfktGE+8z
+ yGeWXXAabFhArMCAdTLBPxj+7Ls7/QoGkSpdlAP7PHsNKq9R/O7kLICzo g==;
+X-CSE-ConnectionGUID: CSvWK+8aRBaJS6fWWKy1MQ==
+X-CSE-MsgGUID: f/H6VJu/RMmZnazc6PihYQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="54218622"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="54218622"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 19:47:37 -0700
-X-CSE-ConnectionGUID: lhZAjDejT9KW/H/itvGP2A==
-X-CSE-MsgGUID: ypBtRh4GRmuHHvdVAcH+1Q==
+ 27 May 2025 19:48:08 -0700
+X-CSE-ConnectionGUID: NpgtjjxdRQCbTzOnsjxtwA==
+X-CSE-MsgGUID: 5nLhJQyETFKLjcCmb9ElFg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="147943581"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="147943628"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 19:47:30 -0700
-Message-ID: <0ac27033-abfe-422c-b0cb-0fae16950795@intel.com>
-Date: Wed, 28 May 2025 10:47:27 +0800
+ 27 May 2025 19:48:02 -0700
+Message-ID: <b97d6748-7ec7-4f5f-b882-6cc23a0a94f6@intel.com>
+Date: Wed, 28 May 2025 10:47:59 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 15/19] hw/scsi/vmw_pvscsi: Remove
- PVSCSI_COMPAT_DISABLE_PCIE_BIT definition
+Subject: Re: [PATCH v4 16/19] hw/scsi/vmw_pvscsi: Convert DeviceRealize ->
+ InstanceInit
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -63,13 +63,12 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, John Snow <jsnow@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250512083948.39294-1-philmd@linaro.org>
- <20250512083948.39294-16-philmd@linaro.org>
+ <20250512083948.39294-17-philmd@linaro.org>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250512083948.39294-16-philmd@linaro.org>
+In-Reply-To: <20250512083948.39294-17-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
@@ -98,100 +97,63 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/2025 4:39 PM, Philippe Mathieu-Daudé wrote:
-> PVSCSI_COMPAT_DISABLE_PCIE_BIT was only used by the
-> hw_compat_2_5[] array, via the 'x-disable-pcie=on' property.
-> We removed all machines using that array, lets remove all the
-> code around PVSCSI_COMPAT_DISABLE_PCIE_BIT, including the now
-> unused PVSCSIState::compat_flags field.
+> Simplify replacing pvscsi_realize() by pvscsi_instance_init(),
+> removing the need for device_class_set_parent_realize().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
 > ---
->   hw/scsi/vmw_pvscsi.c | 30 +-----------------------------
->   1 file changed, 1 insertion(+), 29 deletions(-)
+>   hw/scsi/vmw_pvscsi.c | 13 +++----------
+>   1 file changed, 3 insertions(+), 10 deletions(-)
 > 
 > diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-> index 34de59a7cf6..e163023d14c 100644
+> index e163023d14c..7c98b1b8ea6 100644
 > --- a/hw/scsi/vmw_pvscsi.c
 > +++ b/hw/scsi/vmw_pvscsi.c
-> @@ -68,11 +68,6 @@ struct PVSCSIClass {
->   OBJECT_DECLARE_TYPE(PVSCSIState, PVSCSIClass, PVSCSI)
->   
->   
-> -/* Compatibility flags for migration */
-> -#define PVSCSI_COMPAT_DISABLE_PCIE_BIT 1
-> -#define PVSCSI_COMPAT_DISABLE_PCIE \
-> -    (1 << PVSCSI_COMPAT_DISABLE_PCIE_BIT)
-> -
->   #define PVSCSI_MSI_OFFSET    (0x7c)
->   #define PVSCSI_EXP_EP_OFFSET (0x40)
->   
-> @@ -123,8 +118,6 @@ struct PVSCSIState {
->       uint8_t msi_used;                    /* For migration compatibility      */
->       PVSCSIRingInfo rings;                /* Data transfer rings manager      */
->       uint32_t resetting;                  /* Reset in progress                */
-> -
-> -    uint32_t compat_flags;
->   };
->   
->   typedef struct PVSCSIRequest {
-> @@ -1224,21 +1217,8 @@ pvscsi_post_load(void *opaque, int version_id)
->       return 0;
->   }
->   
-> -static bool pvscsi_vmstate_need_pcie_device(void *opaque)
-> -{
-> -    PVSCSIState *s = PVSCSI(opaque);
-> -
-> -    return !(s->compat_flags & PVSCSI_COMPAT_DISABLE_PCIE);
-> -}
-> -
-> -static bool pvscsi_vmstate_test_pci_device(void *opaque, int version_id)
-> -{
-> -    return !pvscsi_vmstate_need_pcie_device(opaque);
-> -}
-> -
->   static const VMStateDescription vmstate_pvscsi_pcie_device = {
->       .name = "pvscsi/pcie",
-> -    .needed = pvscsi_vmstate_need_pcie_device,
->       .fields = (const VMStateField[]) {
->           VMSTATE_PCI_DEVICE(parent_obj, PVSCSIState),
->           VMSTATE_END_OF_LIST()
-> @@ -1252,9 +1232,6 @@ static const VMStateDescription vmstate_pvscsi = {
->       .pre_save = pvscsi_pre_save,
->       .post_load = pvscsi_post_load,
->       .fields = (const VMStateField[]) {
-> -        VMSTATE_STRUCT_TEST(parent_obj, PVSCSIState,
-> -                            pvscsi_vmstate_test_pci_device, 0,
-> -                            vmstate_pci_device, PCIDevice),
->           VMSTATE_UINT8(msi_used, PVSCSIState),
->           VMSTATE_UINT32(resetting, PVSCSIState),
->           VMSTATE_UINT64(reg_interrupt_status, PVSCSIState),
-> @@ -1288,19 +1265,14 @@ static const VMStateDescription vmstate_pvscsi = {
->   
->   static const Property pvscsi_properties[] = {
+> @@ -1267,21 +1267,15 @@ static const Property pvscsi_properties[] = {
 >       DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
-> -    DEFINE_PROP_BIT("x-disable-pcie", PVSCSIState, compat_flags,
-> -                    PVSCSI_COMPAT_DISABLE_PCIE_BIT, false),
 >   };
 >   
->   static void pvscsi_realize(DeviceState *qdev, Error **errp)
+> -static void pvscsi_realize(DeviceState *qdev, Error **errp)
+> +static void pvscsi_instance_init(Object *obj)
 >   {
->       PVSCSIClass *pvs_c = PVSCSI_GET_CLASS(qdev);
->       PCIDevice *pci_dev = PCI_DEVICE(qdev);
-> -    PVSCSIState *s = PVSCSI(qdev);
->   
-> -    if (!(s->compat_flags & PVSCSI_COMPAT_DISABLE_PCIE)) {
-> -        pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
-> -    }
-> +    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
->   
->       pvs_c->parent_dc_realize(qdev, errp);
+> -    PVSCSIClass *pvs_c = PVSCSI_GET_CLASS(qdev);
+> -    PCIDevice *pci_dev = PCI_DEVICE(qdev);
+> -
+> -    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+> -
+> -    pvs_c->parent_dc_realize(qdev, errp);
+> +    PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
 >   }
+>   
+>   static void pvscsi_class_init(ObjectClass *klass, const void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+> -    PVSCSIClass *pvs_k = PVSCSI_CLASS(klass);
+>       HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
+>   
+>       k->realize = pvscsi_realizefn;
+> @@ -1290,8 +1284,6 @@ static void pvscsi_class_init(ObjectClass *klass, const void *data)
+>       k->device_id = PCI_DEVICE_ID_VMWARE_PVSCSI;
+>       k->class_id = PCI_CLASS_STORAGE_SCSI;
+>       k->subsystem_id = 0x1000;
+> -    device_class_set_parent_realize(dc, pvscsi_realize,
+> -                                    &pvs_k->parent_dc_realize);
+>       device_class_set_legacy_reset(dc, pvscsi_reset);
+>       dc->vmsd = &vmstate_pvscsi;
+>       device_class_set_props(dc, pvscsi_properties);
+> @@ -1306,6 +1298,7 @@ static const TypeInfo pvscsi_info = {
+>       .class_size    = sizeof(PVSCSIClass),
+>       .instance_size = sizeof(PVSCSIState),
+>       .class_init    = pvscsi_class_init,
+> +    .instance_init = pvscsi_instance_init,
+>       .interfaces = (const InterfaceInfo[]) {
+>           { TYPE_HOTPLUG_HANDLER },
+>           { INTERFACE_PCIE_DEVICE },
 
 
