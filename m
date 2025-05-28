@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDBDC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10222C5AE59
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKDg7-0004Jr-8X; Wed, 28 May 2025 06:06:33 -0400
+	id 1uKDfT-0003jc-6u; Wed, 28 May 2025 06:05:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDfv-00045C-Bo
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDfQ-0003iM-P1
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:05:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDft-0007Et-LO
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:18 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDfO-0007Dm-Am
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:05:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748426768;
+ s=mimecast20190719; t=1748426745;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r4CRIfygZP0HnBH0FX1cjWd/jykjn/umfziO5ttUVTw=;
- b=IMJZyiFhitC99OQ5KIAkppZ7NUWbF5YkhcmTRKSDYpYkHqFnhVBFhZdZ9r0lFV8YECu5VA
- pE3Tz6pSfD9Pjk+NPmpKMAAGSUtv94X0yrqJvaiYvaC123wOVFxj2UH5Sg9WHa1/WlLztU
- F+Vb4eZokQrOaGKZ9i7I/2cq04UtI+I=
+ bh=P4BcFeHZdhTzXIhCu3ar2uLEb5iCDSRwkE8Rgxvkcgk=;
+ b=gLOEN6F0nB8h8yaxacxGwD/3+i14WrCFnsavqVFRORjkNpjKdiPOqQ4bAN9HBZhmMZkcVA
+ Nf0VSo4BBvtYRK3rM2lLwXE2tPHEt824Xd6XcL2tZcoG8nP270GDk5oT2urzJsQopaA4KL
+ pkktEsbpUcutEdf619gABM7ftTfGECo=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-mwy9T-8hNeaa_nk0yAgZNg-1; Wed,
- 28 May 2025 06:06:04 -0400
-X-MC-Unique: mwy9T-8hNeaa_nk0yAgZNg-1
-X-Mimecast-MFC-AGG-ID: mwy9T-8hNeaa_nk0yAgZNg_1748426763
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-pMATDg3INvygN3Hne6Dhmw-1; Wed,
+ 28 May 2025 06:05:44 -0400
+X-MC-Unique: pMATDg3INvygN3Hne6Dhmw-1
+X-Mimecast-MFC-AGG-ID: pMATDg3INvygN3Hne6Dhmw_1748426743
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE41D1800373; Wed, 28 May 2025 10:06:03 +0000 (UTC)
+ id C4D8E1800373; Wed, 28 May 2025 10:05:42 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.110])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EF10A180049D; Wed, 28 May 2025 10:06:00 +0000 (UTC)
+ id 30970180049D; Wed, 28 May 2025 10:05:39 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 16/27] hw/virtio/virtio-pci: Remove
- VIRTIO_PCI_FLAG_DISABLE_PCIE definition
-Date: Wed, 28 May 2025 12:04:56 +0200
-Message-ID: <20250528100507.313906-17-thuth@redhat.com>
+Subject: [PULL 10/27] hw/i386/pc: Remove deprecated pc-q35-2.4 and
+ pc-i440fx-2.4 machines
+Date: Wed, 28 May 2025 12:04:50 +0200
+Message-ID: <20250528100507.313906-11-thuth@redhat.com>
 In-Reply-To: <20250528100507.313906-1-thuth@redhat.com>
 References: <20250528100507.313906-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,69 +88,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-VIRTIO_PCI_FLAG_DISABLE_PCIE was only used by the hw_compat_2_4[]
-array, via the 'x-disable-pcie=false' property. We removed all
-machines using that array, lets remove all the code around
-VIRTIO_PCI_FLAG_DISABLE_PCIE (see commit 9a4c0e220d8 for similar
-VIRTIO_PCI_FLAG_* enum removal).
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
+
+Remove the qtest in test-x86-cpuid-compat.c file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-ID: <20250512083948.39294-9-philmd@linaro.org>
+Message-ID: <20250512083948.39294-2-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/virtio/virtio-pci.h | 4 ----
- hw/virtio/virtio-pci.c         | 5 +----
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ hw/i386/pc_piix.c                   | 13 -------------
+ hw/i386/pc_q35.c                    | 13 -------------
+ tests/qtest/test-x86-cpuid-compat.c | 14 --------------
+ 3 files changed, 40 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index eb22ed0a1d9..eab5394898d 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -33,7 +33,6 @@ enum {
-     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
-     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
-     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
--    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
-     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
-     VIRTIO_PCI_FLAG_ATS_BIT,
-     VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
-@@ -53,9 +52,6 @@ enum {
-  * vcpu thread using ioeventfd for some devices. */
- #define VIRTIO_PCI_FLAG_USE_IOEVENTFD   (1 << VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT)
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 0dce512f184..04213b45b44 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -791,19 +791,6 @@ static void pc_i440fx_machine_2_5_options(MachineClass *m)
  
--/* virtio version flags */
--#define VIRTIO_PCI_FLAG_DISABLE_PCIE (1 << VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT)
+ DEFINE_I440FX_MACHINE(2, 5);
+ 
+-static void pc_i440fx_machine_2_4_options(MachineClass *m)
+-{
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
 -
- /* have pio notification for modern device ? */
- #define VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY \
-     (1 << VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT)
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index f52fac663c2..e62ae1e5e07 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2363,8 +2363,6 @@ static const Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
-     DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
--    DEFINE_PROP_BIT("x-disable-pcie", VirtIOPCIProxy, flags,
--                    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT, false),
-     DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
-     DEFINE_PROP_BOOL("x-ignore-backend-features", VirtIOPCIProxy,
-@@ -2393,8 +2391,7 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
-     VirtIOPCIProxy *proxy = VIRTIO_PCI(qdev);
-     PCIDevice *pci_dev = &proxy->pci_dev;
+-    pc_i440fx_machine_2_5_options(m);
+-    m->hw_version = "2.4.0";
+-    pcmc->broken_reserved_end = true;
+-    compat_props_add(m->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+-    compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
+-}
+-
+-DEFINE_I440FX_MACHINE(2, 4);
+-
+ #ifdef CONFIG_ISAPC
+ static void isapc_machine_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index c538b3d05b4..47e12602413 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -685,16 +685,3 @@ static void pc_q35_machine_2_5_options(MachineClass *m)
+ }
  
--    if (!(proxy->flags & VIRTIO_PCI_FLAG_DISABLE_PCIE) &&
--        virtio_pci_modern(proxy)) {
-+    if (virtio_pci_modern(proxy)) {
-         pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+ DEFINE_Q35_MACHINE(2, 5);
+-
+-static void pc_q35_machine_2_4_options(MachineClass *m)
+-{
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_q35_machine_2_5_options(m);
+-    m->hw_version = "2.4.0";
+-    pcmc->broken_reserved_end = true;
+-    compat_props_add(m->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+-    compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
+-}
+-
+-DEFINE_Q35_MACHINE(2, 4);
+diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
+index c9de47bb269..456e2af6657 100644
+--- a/tests/qtest/test-x86-cpuid-compat.c
++++ b/tests/qtest/test-x86-cpuid-compat.c
+@@ -365,20 +365,6 @@ int main(int argc, char **argv)
+                        "level", 10);
      }
  
+-    /*
+-     * xlevel doesn't have any feature that triggers auto-level
+-     * code on old machine-types.  Just check that the compat code
+-     * is working correctly:
+-     */
+-    if (qtest_has_machine("pc-i440fx-2.4")) {
+-        add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-off",
+-                       "SandyBridge", NULL, "pc-i440fx-2.4",
+-                       "xlevel", 0x80000008);
+-        add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-on",
+-                       "SandyBridge", "svm=on,npt=on", "pc-i440fx-2.4",
+-                       "xlevel", 0x80000008);
+-    }
+-
+     /* Test feature parsing */
+     add_feature_test("x86/cpuid/features/plus",
+                      "486", "+arat",
 -- 
 2.49.0
 
