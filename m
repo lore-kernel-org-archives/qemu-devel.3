@@ -4,104 +4,226 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CFD8C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 16:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95CDFC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 16:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKJKr-0003BH-Qt; Wed, 28 May 2025 12:08:57 -0400
+	id 1uKJNJ-00049L-8Z; Wed, 28 May 2025 12:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1uKJKp-0003B6-Fs
- for qemu-devel@nongnu.org; Wed, 28 May 2025 12:08:55 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1uKJKm-0002aq-V9
- for qemu-devel@nongnu.org; Wed, 28 May 2025 12:08:55 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-604e2a2f200so5339621a12.1
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 09:08:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uKJNH-000493-7x
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 12:11:27 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uKJNE-00031w-PZ
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 12:11:27 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SCqZTb024180;
+ Wed, 28 May 2025 16:11:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=6+y+wWgoRIE1Onu2sGjsW9b4YEOdZayvjaNe7DmvobE=; b=
+ ladvPMY2Gojv2Q9Gtm8viLNTSQpPMfsPg36r7fGs//pnITpShOHlPX7NCPbs45vF
+ g5AW4ofTgF/UlnOfvhYGPVb7zILNAboHREUV2mg6fkBHijylZH2b8Jw1hvXjJ+7z
+ bj+vl4OHnryYNWrlYvLrKNVUg/eM0fI1K6cAFRF5i1BaC/J1hHvAqymt1j3uhdW3
+ yoE7RI52D77NfrRqKSBSET1vwevA3nJxKENwMWAmoewzDZGf9i8e8VSas4qIRcNr
+ UxTiSy3mr74S+MXU8xvBosFuilSiKSUsuzL7c2qhQ0R+VsxDjetlxE3HI0fCqGD1
+ 6HrOy7EQe4dk4nqPLtdLNA==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v33mxbtw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 May 2025 16:11:20 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54SFcsAL035812; Wed, 28 May 2025 16:11:20 GMT
+Received: from nam12-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam12on2073.outbound.protection.outlook.com [40.107.237.73])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46u4jbkvm2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 May 2025 16:11:20 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=el47ua3CIL4bDUioS++3yvLVJSlFoqp2kbNk4qBwnzC2fckRb+4HaobqtxiezWa3l3CRI5SkcYKi1NuCmI8qMyaEiCcEeFAdFyIKoDSaZi0bEH/r0YT8/IP9D3R6eWk9HIDDLoU+tKnnNTlgXD8FqTqdzPlkFKqlTy0o8ijbmFmuuJrnvL0LFm7BZPp1PFz2jQwgcb79XTpxx0qtPaK4WrzQlG6/d9wb2s6l9ISNn4qS2Jrg/xOxCVtRl6tCPfUzwi0XiiwjqwQo8uKkXO+STkJnwuGYcko0tiVzu3iNBieOsCM8xT66h1/unl2cccZufnr5hGQK1be3rUOrC9dklA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6+y+wWgoRIE1Onu2sGjsW9b4YEOdZayvjaNe7DmvobE=;
+ b=LTO8dTqQ3OlTr62L5T5/bMs1CNdKWAIf0nPKwx/b6Q17LvNeIL6kOSqaFfUqmOuz9rnneC92y0C2N7wNQbaztoWcljjAVX5A9LqdTLhK+Z+xfflvJlKgXV4jnu8xLVUp8o6lkrIr5Cn+WvDcEWN0EmEQGXhomCP4NNggaN507bmUOlBPkPwMgInLJYfgnNQOBF3kcDjfdxXCjJdesXpqVDPj47LEDXMXGzrJTcMpKWU8VnSosJDGZ/VXzT0xict15lPzQVdVwE6XlS8t09FtPVHNuQgP6mIlHHu3TL26YEHwSG2odycbt1X7PiU+ChFuhO/9GHCjygRN3opHNeNt4Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1748448530; x=1749053330; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=G09kR4unYSd9E6kTmOjGfizXBhTtP2c6s2m/AZv8wQU=;
- b=Ku2gwu4bqBZxbYbLNhpYx0yeGslva9TXEgs8teWIy4E0RDSn4xy+2zT10RghfByg5X
- 76uAz9+G1XaS/EhEiFNQBvRSVuDjxLnQMRwlpXwsbSDEvfmvR7ErMKnVRoWUhqjYF9XS
- Hfr4gy64CokQEIkmVzFNCWJkkMlglG1qBPsGE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748448530; x=1749053330;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=G09kR4unYSd9E6kTmOjGfizXBhTtP2c6s2m/AZv8wQU=;
- b=E5TJvAlE37BF7hXJXjNiUW2Ow9HyqJthGEiADEXFKEVhWSHkphteJaO02vKyEx+Ou9
- nbZB4d/y9ZwTs8XFNbeS6Rv3r8Wpf/LGZrqRuLI3kqBeSRU6epbD5h2EcSAAUPjoifsR
- lS8Xx1N4S2nZIxBvrT19EcQ7wqXDkmF3vlcwGoXojpuXgKNPKV3XtFU9lz8P2bFO1IK2
- ogSUL1zGl4BTqU6CirOSY4go8LXEJellImtsdiCga6zPTfYViHgyW7SjAWCSBiK8bPDL
- 6/taCxdAaMr+2r6lLYpxgWY2Fn7pWYqza/C/oOz3THXtCTRKUCGAs38z73uJ8SOZQNAQ
- 8v+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdWkfWMnT36MUx2C1R1xMt5svVbplqLFzxiFXDUQz9WNBJn/A4Za7yRUCvndZ6Yh+/LnNplExztK7J@nongnu.org
-X-Gm-Message-State: AOJu0Yy+YsmyJgZ2QK55LvhJlZBh3VH+a0C8KRcyEg5g917tIlwk3ei3
- xhBjgZAl93HxsqOOL+aZts6HBFU4gWIi1PYTebF2TljhfvWIb5KL8w9x1bHpOAbABfBp9eQ3lDW
- QoRxTIav1BSNldfd/wDIT//XvOe7C/Mm9gWb9tldN
-X-Gm-Gg: ASbGnctTCX5/3khe9vF4ccUUUmV62A8R2V60+q57VWU72s5X6ymHl3sWkD1ntf7cjjf
- Eua8lrij/8qwYuc4ULqWemzF46IAiKv46F+Uy04kXzuyvlBpQiAAprd1jYh+4ejuHQolh3/9gP8
- Zjno8eIovVN87Jo8WHtiWy5jns5elbkUg=
-X-Google-Smtp-Source: AGHT+IGIBXiR5qr0ODdDrcBuyL/J03Zu1vZeE59hlz1XpZDKPy6PY+sa/D4jNneqgjahfi7lqAc3apYN1I/iTVuyA6k=
-X-Received: by 2002:a05:6402:358f:b0:5ff:f524:90e0 with SMTP id
- 4fb4d7f45d1cf-602d9163253mr13905547a12.11.1748448530103; Wed, 28 May 2025
- 09:08:50 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6+y+wWgoRIE1Onu2sGjsW9b4YEOdZayvjaNe7DmvobE=;
+ b=ePxvjigLwDIFkccTzDoVd2V4dXMkCJWl6OQBuSWCdJSK8w+2TO73x36EW7q/XpLYN/FNsYkM2U8L5qsqFucnz2lVbF07DL974gnOdrv8+0KoFPgJaqJ91hvB2dJdUtIa34ADCSqUtKAkzYTNbbLC41RClOaFd3tYxDJo9SwAobI=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by DM4PR10MB6813.namprd10.prod.outlook.com (2603:10b6:8:10b::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.32; Wed, 28 May
+ 2025 16:11:16 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8746.031; Wed, 28 May 2025
+ 16:11:16 +0000
+Message-ID: <3c693fc1-b17b-481f-b1ff-b5d5eda31a28@oracle.com>
+Date: Wed, 28 May 2025 12:11:12 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 14/42] pci: skip reset during cpr
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
+ Alex Williamson <alex.williamson@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+ <1747063973-124548-15-git-send-email-steven.sistare@oracle.com>
+ <c0aa3971-85bd-4e69-bb13-4e13349794b8@redhat.com>
+ <20250524053413-mutt-send-email-mst@kernel.org>
+ <061a43b2-b96e-4d32-9e81-f5d50824fb12@oracle.com>
+ <20250527165128-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <20250527165128-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR03CA0122.namprd03.prod.outlook.com
+ (2603:10b6:a03:33c::7) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-References: <20250528123236.1138632-1-sjg@chromium.org>
- <20250528142521.GW100073@bill-the-cat>
- <CAFLszTiHxdkoGbdOg8rzmn9kUmt925LZvZNxSXQC5Y4A=s2Vig@mail.gmail.com>
- <20250528151927.GB100073@bill-the-cat>
-In-Reply-To: <20250528151927.GB100073@bill-the-cat>
-From: Simon Glass <sjg@chromium.org>
-Date: Wed, 28 May 2025 17:08:38 +0100
-X-Gm-Features: AX0GCFsc-ZYsE2R_mTjr2KvvoIFxZ5wHHChatx1sp4dLogIlpo9HVlDXoOb-BwE
-Message-ID: <CAFLszTh3WDhn_ZSRsBMTpD8i5AyNLFGiV0cbPhOfCUAud1_WOg@mail.gmail.com>
-Subject: Re: [PATCH v5 00/25] passage: Define a standard for firmware data flow
-To: Tom Rini <trini@konsulko.com>
-Cc: U-Boot Mailing List <u-boot@lists.denx.de>,
- =?UTF-8?Q?Fran=C3=A7ois_Ozog?= <francois.ozog@linaro.org>, 
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- Bill Mills <bill.mills@linaro.org>, 
- Raymond Mao <raymond.mao@linaro.org>, Heinrich Schuchardt <xypron.glpk@gmx.de>,
- Andrew Phelps <andrew.phelps@canonical.com>, Alexander Graf <agraf@csgraf.de>, 
- Boyan Karatotev <boyan.karatotev@arm.com>,
- Evgeny Bachinin <EABachinin@salutedevices.com>, 
- Fabio Estevam <festevam@gmail.com>, Harrison Mutai <harrison.mutai@arm.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Liviu Dudau <liviu.dudau@foss.arm.com>, 
- Liya Huang <1425075683@qq.com>, =?UTF-8?B?TWFyZWsgQmVow7pu?= <kabel@kernel.org>,
- =?UTF-8?B?TWFyZWsgTW9qw61r?= <marek.mojik@nic.cz>, 
- Marek Vasut <marex@denx.de>, Matthias Brugger <mbrugger@suse.com>,
- Max Filippov <jcmvbkbc@gmail.com>, 
- Nathan Barrett-Morrison <nathan.morrison@timesys.com>,
- Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 
- Patrick Delaunay <patrick.delaunay@foss.st.com>, 
- Patrick Rudolph <patrick.rudolph@9elements.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Rasmus Villemoes <ravi@prevas.dk>,
- Rayagonda Kokatanur <rayagonda.kokatanur@broadcom.com>, 
- Sean Anderson <seanga2@gmail.com>, Stefan Roese <sr@denx.de>,
- Stefano Babic <sbabic@nabladev.com>, 
- Sughosh Ganu <sughosh.ganu@linaro.org>, Svyatoslav Ryhel <clamor95@gmail.com>, 
- Tuomas Tynkkynen <tuomas.tynkkynen@iki.fi>,
- =?UTF-8?Q?Vincent_Stehl=C3=A9?= <vincent.stehle@arm.com>, 
- Xu Zhang <423756212@qq.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=sjg@chromium.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|DM4PR10MB6813:EE_
+X-MS-Office365-Filtering-Correlation-Id: d90ecf79-a9ed-433a-4b39-08dd9e024655
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?WE5NaFFpY3VLTVc0MC9Rc1ozT3ZzV3J5a2syT2tBM0Y3dml6cUc1ajJGcnBz?=
+ =?utf-8?B?b3RNODVhUW9CNFduU1hoZnY4VG1QOHgyejlPb0lCMU5sL2hxb1hneldYU2gx?=
+ =?utf-8?B?QWx2ZDMxZVJlODAxZFNkakVFMzZRT3hIeTh6NXhPWHZYMlpOaHlsc2FMMTJp?=
+ =?utf-8?B?WjRNNXFyNFJ5L3NKTUNVeWFqL20rZkxrd0tGcHhlT3hmdjNVMnA0RElKdXBy?=
+ =?utf-8?B?ZkZuOGUrVndsWVo2VHdoOCt4aE5JMUUwbU9yL3dHUlBMUXlNc1NscnhIMm93?=
+ =?utf-8?B?NTdCekpTV295cjF4ckpSRkxXczQydVNvemtoRmdqcUthY0ZvaXVxd2YzQy84?=
+ =?utf-8?B?ckFodWx2TVg1T2lEREZvUW14N2lPSW9obEVuRnhVQ2k0bm9PRWN6UWptMi9G?=
+ =?utf-8?B?UlIva3k4SjYwckRuS0FyZVFKZEZ2bVZka2FWYVpWbjMrQ201dkJaMHRlTlht?=
+ =?utf-8?B?Qmk0K1dwcWhObDZWMVNqMzhTY0RtVjg3RnNOcFJvQXhHV1dLQ0ZUOG9ObkJk?=
+ =?utf-8?B?NnlKN0pkU3h5cjI5UVJMc1pRSWRkNlBMRVFqQjlMV0MwQnF2Uk0vbkx4cENT?=
+ =?utf-8?B?bGg3V1JHVkdKSVl3TVJNY3cwN2pnSDU1L2tJSVVERGhNdjNMT3B0SGR4cUVj?=
+ =?utf-8?B?MmIzNDFLM2FHNXBPNmJxS2ltMWRRN1IreXlydTJLS242Q2lWWitFRDRRSzE2?=
+ =?utf-8?B?a21yekNYaVdNeHU0YlFBT01ueE1KS1JhdWRDWE9CelB4QTduVHJvWTBmSlZo?=
+ =?utf-8?B?d2F0L1ZIaFUybUkzeGdoYTZhOXFUb05kekFTekQrQ24yMEVYWmJPb2JwREg2?=
+ =?utf-8?B?Ry95b3lKTk1HTGRyTFMzWnZTNUcrQkhuVWh6RUJ3aXRVdTdWNjFyQ0IxQmY2?=
+ =?utf-8?B?Vk9INWJodm5tQjhmQUpPbUJ2TFAyUU9XajYweEtLNm5wRlFXeU5iczZPeGFU?=
+ =?utf-8?B?SjNoUEJ1Z1Z4Qm5ObkkwN2lMT1VLQng4Q2Q5YklIRmlMRC9lQlhjSzREZlZu?=
+ =?utf-8?B?Y0pPaktVN1NkWVJwU2VPdG5lYlRYTWs2RmNSSjJtYjJtUzh3ZURJODBaZXdw?=
+ =?utf-8?B?cFcwSjY1aFNKV05JbDdMdlUwTUlNbXpOa3JBRTQwZGEzNXU1YUpGSWZvenQx?=
+ =?utf-8?B?bVFod05QaVBpc0d2K1JKSGRMTlFyMXFBamw1NGc5VUkrR0l6T2lFQ0VoNEJP?=
+ =?utf-8?B?ZFB6NEhBbldDcTZPdE8zSHRiU1hZays4KzJaOHFoZC9jcUFrc3RGWHcyV01T?=
+ =?utf-8?B?aHZ5eDdVVkVTeXlKdDZnbjEwQWJRbmdpTFhxNitxVXpZZ2kzdDlNS3lZNFA2?=
+ =?utf-8?B?dE9PSDh4bE1KdVVnMXMrR3NLcUFrT1ZNSElCY2p1U0xlNmxmZ2prVXBqZGlI?=
+ =?utf-8?B?U0ZMZjkrUW90VnpjbUlWRjB6eENWU2NGYXNHTzYxSnZka1FuVFlKaml1bVdW?=
+ =?utf-8?B?RSt4MlM3SHA1SEJVVkZBOGJKOWhlVjY3aURWL29RNm5JSWFkZ2xOVXMyRUFa?=
+ =?utf-8?B?YjFpMUxDNHdiTnNBMHlZTkVZT0FsSlJ3OVlaaFNYQ2UvY1BOSUxvUkFpTnN5?=
+ =?utf-8?B?NGZaOTJzSUpkMHVhY2N5bDdJVzcxV3doemRqM1E0SkhvaHFYZkJ2RVZmOTlJ?=
+ =?utf-8?B?WGEzQXdidXRpektVUG1ZeWtNUy83MEhaM0dMY3lGUjBSN1kyclJ6STdGTUla?=
+ =?utf-8?B?L1RvbnI1WTdZeEQ2bDN3WW8xU0w2dmdESklLd3NLWFgzYlQ1WDBYaFhVV0tE?=
+ =?utf-8?B?c1d3ei92WXJtRTFkOVJIS0xDeVFTK1BDeGxwUGxKdWpidnFOZklBQ3p6eEkr?=
+ =?utf-8?B?THV1UWJmMEdudjN4U0JrQUhBQ0ZzZnFaTk9JSE4xNmlsN1BiaDVSWGV4dHEy?=
+ =?utf-8?B?SmxUN1pJQ3BJT0RnZXNuL1JuK1NoUGRyNitvQzBwcXJmT0h0MlRwQzVraHVL?=
+ =?utf-8?Q?kOl2ZTtynBE=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TmlaMlI2d0ZMc21QM21FS1lZR0xyb3FlcDNMSmNIRWw3YnorbnppRFgzdEFT?=
+ =?utf-8?B?K2pGcVA1Z1Nxd200ZnQ1UlIzVTAwcDJnMHZ2KzgvNXkzczlLVER1Q1dLRzVP?=
+ =?utf-8?B?Ty8zQVFCQzJYMnJvUG1FSGV1SjFmV1M2bUhMTm1DNE9KaVhiTWlOL3hQbDRu?=
+ =?utf-8?B?MmFFb1pRN3dSTkdLK1NBWk5IUjZMS2JmSkJQVnpKTjBCbitYVEdLUFRMV3pn?=
+ =?utf-8?B?ekJzaVBlVXNCNzZPVVk4aUFyZnN0cGJHUmNoZHJQL1EwYXQyMERmU1BPcldW?=
+ =?utf-8?B?TmFac3NReDBTL043VjdaUHpzMndobEFxUk91TVNQRDBqNUxqVC9ReXZwSlg1?=
+ =?utf-8?B?ZEoyWnY3a1FvM1hHTGQvcDdmRUYvMnBQeC92bTBIakFzZHMxR2dRWHQvRFJM?=
+ =?utf-8?B?UEExOU9mcHBVSXpIV0tPWlk0Skw5aVZEUjNjTk1ic3lJWmlaWm1PcisvZkYx?=
+ =?utf-8?B?emVJdDhQWkI0WlJjK0ZnSFBveVpJS2FjNWVLeDlsSDVVRWJPcmlyY1dnVkh1?=
+ =?utf-8?B?dzk2eUNzdkkzOHYvZTkwcXBoanU0eFdYWnNPZDR1NnJybGV2SjdMSm5mcmdr?=
+ =?utf-8?B?ZVJNMFNhaUU3b1ZqRkNQN2xYNUFJKzNkRHA1akJjRFpHS2hSMlQ4T25IcDZs?=
+ =?utf-8?B?cGdJWnFEMHhtM3FYM3ZoL21XWmZRdVNPN3VOQldIYkJaY3djOGt3Y0tQNGtu?=
+ =?utf-8?B?aHlzMEtlcDNQT2VuWnJaQlJGaGVJaVMxeHV3aUlSK1VucHhaeVBGaXNKOEtM?=
+ =?utf-8?B?ZDZqeVJsU1NEZ3Jja1l0ZHBNQ0JGWGdvTmJYc3FsOU9pRnR3SWxRUHowZUl3?=
+ =?utf-8?B?cHJLTjNlT2wvWVVGY2s5N0dUSVJTUW5OTHRwN1k1UUlHSDRtN2YxK2QxeVJX?=
+ =?utf-8?B?eTdQU2pialRuVTNJZUpQNjg0QW1jMiszbS9rY0ZuTU1JOEI1UC9XNkMzVkx1?=
+ =?utf-8?B?WjgxTkVqdDJKNVE4K1N3YXRDYjBHbDJkMXVsQjNvQ1NkajJUWFhIVTl0Nlp5?=
+ =?utf-8?B?MGNvUVZEYUVHTWhoRjV2YjlVdkVlQ0FpZWlnNks3a1dxS0Y3Q3ByWFV3Qy9K?=
+ =?utf-8?B?bjZaTkd0bFQ1Ym8vLzREZWltQUd6dmFEd3lqOEQzb0JPU093Y212VVlkR3BO?=
+ =?utf-8?B?N3M3MWQ2WGp3TC9waEdZelErajd5K00wMVBZYXgrMGoyWmhZUEliTzVLdXVM?=
+ =?utf-8?B?YXRmTzIySFlOMHhoNVRNYzdOckpWU2FaTWxWb3BlUHI5MVdNUlJ4R3QrNTFW?=
+ =?utf-8?B?dEFCWXRRVlRVa2twMmxsY2pya0ZyS2JVVWlRRXFiVE05S1hxN3hPTldnY2pE?=
+ =?utf-8?B?SVJ4TjNOanJzM2pYTGlIMWlCL0tpUVAvOXk0LzcrVGE1MFl4QlY2TUJPZVJF?=
+ =?utf-8?B?RzZqdDJuNGo4cm1mbWZFd2tleEdXR3FMcG1JTER1a1ZwMEliUW5ucWNLeFBh?=
+ =?utf-8?B?SWpDNWRuNmlaNlJaakhZR0FzRE80K0xYakg2czZURmEyYWh0ZDlJYktPQjhm?=
+ =?utf-8?B?aTRPVElnUENGZmtpZXdTOTdyK0hiZ0hsSXhzN0hRWHNYVHdrVXhrN3p1clly?=
+ =?utf-8?B?WHpUeVVzT3RZOFlTVUpMbWUycHZqdjg1VEw2SGtjRFRQVm5IRlpvMCt0bzlm?=
+ =?utf-8?B?RmpNVDJjeERyM2JCRi9NZHNvT1RCK3h6M2hoVDQ4ODBORCtESFdQRUQyRDJM?=
+ =?utf-8?B?K2ZKOHcvN1NQMTZxTk1ZSnVVT0hrc2x1dmoyeXB0WEJ3U3M5aFA0N2VPdmtQ?=
+ =?utf-8?B?NTZaV2RlM3ZGWUlYd3Zidklkbk5zcituNWNmZG02Z3JkWmdxRFRPWlpqYk9t?=
+ =?utf-8?B?Z2hsQWVtb09WdUxvbjhBN2pic2l0TDRQZmxlY0V1ZEMyN0wzTWFLeG1ybk5J?=
+ =?utf-8?B?OTlrUDl1M1FoTTlvbUU1N2pQTkVzWFIwS2VxTFBhV0Z1clZubS9Eb3ZGY1Zh?=
+ =?utf-8?B?WjQ0YTdodUExWEZIM29ncS92V2JmNE9qSjhFS2xGWEpCclhsSXoyVm0vOG5D?=
+ =?utf-8?B?clN0TDU0RmN1NDFnektrTGljYU5jbmpORDVYYWcxZmJNTGRGUy9NRGpDZU9M?=
+ =?utf-8?B?M2k4UllacUwzKzdwUVVHWkxzZ0FXRGNmQUY4SlJ4REdQYmdtc1FVQXMxUTZl?=
+ =?utf-8?B?L2lVeUM5NmRYY0Q4Y04zYmNEcFVIYjduby9GN3lYZzZwU0dVcDEyTTB3aU5h?=
+ =?utf-8?B?U0E9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: xoOuOXmu0csnCPDT/ga1Je+mSgG8z4P0C61RY2pM+vwD/uhO50ltsw1tPHVyz+wk9urOlMek/+0QsA85KG9JAmUMlU6cl1IgCsBi1YiFzlqCpCfZL1F78Un0NSgHUB6MxL0tkZS5oiySlVZ09Si0CjDVxLl7an/ow6Za+yVZvEgwt7gikv43j+LoqSckHJPnmOtRz6iFZ/ijPD8phixT0A7glrLHJRZnJ5SBPBFmhypJvRQ8RcGPN3tTIK2ZBV0AocnIC993r1GMsJQh1Lz0OTb58XsSPaxU2lVZVxUhXF2vz9EqZJ1TRj/+ph0pmzTovyMSe7XeZ9YTIdhQWU4Gh+Ye2Fr1GwSzQ2F/9vHRLIGB7zGrup3prXC6T1LvpfDHxpTqpkbh8QdrGoD2IWJxtFGx+aAPLU+ZCuXaab2XT+TzT2BNC9XfS4w5WlQuPAX+JxtSP8fb/gFsg+8+pgXP5lybdEe3ZconubntcleuyGz65JyTar0c+ezPnwURuo6xMd6qvMCSH3aLvIdx+dCt9WVLx/n1pMgEY1f4EVBIueEKfVZZuPiUIc4MkrLKx2aSpmOhbjXH9W1bLlnnZT53e9CEYuepqhIYDFiAEhYMo+M=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d90ecf79-a9ed-433a-4b39-08dd9e024655
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 16:11:16.5924 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: O1PAewZdaiaGzZSIToXnBkfzd9gPFRrwie+YBDq832P+qlelnFQKaZd3ZDPADDfTLyun8HHDfk1IHzYH8bARqRyOUB6e7m//uKnlABxvY9k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR10MB6813
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_08,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ mlxlogscore=999
+ phishscore=0 malwarescore=0 bulkscore=0 adultscore=0 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505160000 definitions=main-2505280140
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE0MCBTYWx0ZWRfX5IBZbLL+bEE+
+ X2qzCBNxHYLVr8AAmM+wQO08qp0rx2b3cTpxwlVyy+cpXL0E98nGt1MMaMb/JdmUi1XlL7Bl3wB
+ 8AiPgdGI6OQP2QJiF/n4o7BSoQgsN/QOCBRoyyaeFybjJIpMg2yUeDeIeqNVVzrt1vTjfisU0rH
+ gUZKOmAZf1VaGq14KcLLNfa/qkmkM7d7JpsxTQXTPFE/+a3SxmQXaVpYEwaV9E0k8+hbHh8GuxX
+ 5nGR4efy8UI7lc2pqViN8LapjzG7mdwMEfdWxM9+Ly4U5ce1u4CaE+b7y9TI2Q/rxEIBvfSKVlf
+ 5ScH+y5Z0OnPDFbFcmZvvITa/80uuhqnQIM8JxXnEeoGV0hl3rgqkzLPs54/SPeyPVAjpdpckUQ
+ htswW0i2K7mSK/THWqrUB0NCG0wFVJ6fU5K7G0XL9iO6KlyzgDvYaB4kmoVcO7os2Gy+a7jW
+X-Proofpoint-GUID: 3nPN7vKqrwsbfPnxkhkFGKwmEXqh9tPt
+X-Authority-Analysis: v=2.4 cv=aO/wqa9m c=1 sm=1 tr=0 ts=683735a8 cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=75KstJEBSeGgGG1p4KoA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 3nPN7vKqrwsbfPnxkhkFGKwmEXqh9tPt
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,103 +239,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tom,
+On 5/27/2025 5:03 PM, Michael S. Tsirkin wrote:
+> On Tue, May 27, 2025 at 04:42:16PM -0400, Steven Sistare wrote:
+>> On 5/24/2025 5:34 AM, Michael S. Tsirkin wrote:
+>>> On Fri, May 16, 2025 at 10:19:09AM +0200, Cédric Le Goater wrote:
+>>>> On 5/12/25 17:32, Steve Sistare wrote:
+>>>>> Do not reset a vfio-pci device during CPR.
+>>>>>
+>>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>>> ---
+>>>>>     hw/pci/pci.c | 13 +++++++++++++
+>>>>>     1 file changed, 13 insertions(+)
+>>>>>
+>>>>> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>>>>> index fe38c4c..2ba2e0f 100644
+>>>>> --- a/hw/pci/pci.c
+>>>>> +++ b/hw/pci/pci.c
+>>>>> @@ -32,6 +32,8 @@
+>>>>>     #include "hw/pci/pci_host.h"
+>>>>>     #include "hw/qdev-properties.h"
+>>>>>     #include "hw/qdev-properties-system.h"
+>>>>> +#include "migration/cpr.h"
+>>>>> +#include "migration/misc.h"
+>>>>>     #include "migration/qemu-file-types.h"
+>>>>>     #include "migration/vmstate.h"
+>>>>>     #include "net/net.h"
+>>>>> @@ -537,6 +539,17 @@ static void pci_reset_regions(PCIDevice *dev)
+>>>>>     static void pci_do_device_reset(PCIDevice *dev)
+>>>>>     {
+>>>>> +    /*
+>>>>> +     * A PCI device that is resuming for cpr is already configured, so do
+>>>>> +     * not reset it here when we are called from qemu_system_reset prior to
+>>>>> +     * cpr load, else interrupts may be lost for vfio-pci devices.  It is
+>>>>> +     * safe to skip this reset for all PCI devices, because vmstate load will
+>>>>> +     * set all fields that would have been set here.
+>>>>> +     */
+>>>>> +    if (cpr_is_incoming()) {
+>>>>
+>>>> Why can't we use cpr_is_incoming() in vfio instead of using an heuristic
+>>>> on saved fds?
+>>>>
+>>>> Thanks,
+>>>>
+>>>> C.
+>>>
+>>> Think I agree.
+>>
+>> OK.  I will delete the "reused" variable everywhere, and use cpr_is_incoming.
+>>
+>> Michael, since I already use cpr_is_incoming in this pci patch, can I have
+>> your RB or ack?
+>>
+>> - Steve
+> 
+> My problem is not with cpr_is_incoming as such.
+> 
+> First this comment is a very low level thing to say in common pci code.
+> vfio will change and we will not remember to keep this up to date.
+> 
+> Second, do we really know vmload for all devices sets all fields as
+> opposed to assume that qemu_system_reset cleared them?  If not this
+> introduces an information leak.
+> 
+> It feels safer to just add a way for VFIO to opt out of
+> (all or part of) reset, instead.
 
-On Wed, 28 May 2025 at 16:19, Tom Rini <trini@konsulko.com> wrote:
->
-> On Wed, May 28, 2025 at 03:32:12PM +0100, Simon Glass wrote:
-> > Hi Tom,
-> >
-> > On Wed, 28 May 2025 at 15:25, Tom Rini <trini@konsulko.com> wrote:
-> > >
-> > > On Wed, May 28, 2025 at 06:32:02AM -0600, Simon Glass wrote:
-> > > >
-> > > > This series adds a standard way of passing information between different
-> > > > firmware phases. This already exists in U-Boot at a very basic level, in
-> > > > the form of a bloblist containing an spl_handoff structure, but the intent
-> > > > here is to define something useful across projects.
-> > > >
-> > > > The need for this is growing as firmware fragments into multiple binaries
-> > > > each with its own purpose. Without any run-time connection, we must rely
-> > > > on build-time settings which are brittle and painful to keep in sync.
-> > > >
-> > > > This feature is named 'standard passage' since the name is more unique
-> > > > than many others that could be chosen, it is a passage in the sense that
-> > > > information is flowing from one place to another and it is standard,
-> > > > because that is what we want to create.
-> > > >
-> > > > The implementation is mostly a pointer to a bloblist in a register, with
-> > > > an extra register to point to a devicetree, for more complex data. This
-> > > > should cover all cases (small memory footprint as well as complex data
-> > > > flow) and be easy enough to implement on all architectures.
-> > > >
-> > > > The emphasis is on enabling open communcation between binaries, not
-> > > > enabling passage of secret, undocumented data, although this is possible
-> > > > in a private environment.
-> > > >
-> > > > To try this out:
-> > > >
-> > > > $ ./scripts/build-qemu -a arm -rsx
-> > > >
-> > > > This will build and run QEMU for arm64 and you should see the standdard
-> > > > passage working:
-> > > >
-> > > >    Core:  49 devices, 13 uclasses, devicetree: passage
-> > > >
-> > > > This series is available at u-boot-dm/pass-working
-> > > >
-> > > > Changes in v5:
-> > > > - Add RFC for test script
-> > >
-> > > And this is why I question if you are working in good faith. I've
-> > > rejected this countless times. I'm still rejecting it. Stop including
-> > > it. Point at the version you could easily be maintaining in the contrib
-> > > repository where you have write access and no one will be telling you to
-> > > not do something. People would even review the patches since it would be
-> > > against mainline.
-> >
-> > I fully understand that you don't want the script and I'm only
-> > including (as an RFC) so people can actually try this series out. I
-> > didn't want to point to my tree as I thought that would annoy you. I
-> > already went through why the contrib tree is not suitable for me.
->
-> So I have to take changes that I disagree with, but you can't work with
-> a tree for your tooling where the community would be happy to provide
-> feedback? That does not sound like compromise. Again, I have trouble
-> believing that you are working in good faith to resolve the differences
-> here.
+Thanks very much for the feedback.  How about:
 
-Yes, as mentioned before I would like you to take changes you disagree
-with, at least once we have discussed alternatives and I'm sure that's
-the way I want to go. It would save a lot of grief if you could do
-that.
+hw/vfio/pci.c
+vfio_instance_init()
+     /*
+      * A device that is resuming for cpr is already configured, so do not
+      * reset it during qemu_system_reset prior to cpr load, else interrupts
+      * may be lost.
+      */
+     pci_dev->skip_reset_on_cpr = true
 
-I could use your contrib/ repo but there isn't a lot of point, since I
-have to have my own tree anyway, due to rejected / changes-requested
-patches. It's just lots of fiddling around for no gain. I'm fine with
-your not having the scripts in your tree and I'm fine with maintaining
-the Python tools in my tree. Basically it seems my tree is the dumping
-ground for the stuff you don't want in 'pure U-Boot', or don't want
-yet. If you would like me to sync my scripts to the contrib/ tree
-every now and then, yes I can do that. I don't see much point since we
-can't reference them in docs or test them in CI, but I'm willing to do
-it.
+hw/pci/pci.c
+pci_do_device_reset()
+     if (dev->skip_reset_on_cpr && cpr_is_incoming()) {
+         return;
+     }
 
-But I do want to post patches so I can get feedback from people who
-are interested. Perhaps we could set up an 'experimental' mailing list
-for that, since you seem really unhappy when I send them to the U-Boot
-mailing list?
+- Steve
 
-Re your 'good faith' thing, I'm really just trying to make progress
-and I wish there was less 'email overhead' and more action. If you
-have concerns, it would be better to discuss a resolution f2f or on a
-VC, not endless email threads which don't relate to the patches I'm
-sending. The series we are discussing here was sent in 2021 based on
-bloblist from 2018! [1]. It is why Firmware Handoff happened. Give me
-some credit for foresight, at least.
-
-Regards,
-Simon
-
-[1] https://patchwork.ozlabs.org/project/uboot/cover/20211101011734.1614781-1-sjg@chromium.org/
 
