@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A54C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 22:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96FA9C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 22:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKP60-0003A7-40; Wed, 28 May 2025 18:18:00 -0400
+	id 1uKP6J-0003FI-LM; Wed, 28 May 2025 18:18:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uKP5v-00039T-Ac
- for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:55 -0400
+ id 1uKP5z-0003Ai-PV
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 18:18:00 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uKP5o-0000wz-EW
- for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:55 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SIN2Sf016719;
- Wed, 28 May 2025 22:17:27 GMT
+ id 1uKP5n-0000xC-Vk
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:58 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SIN0Su008656;
+ Wed, 28 May 2025 22:17:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=+IzyZ
- We4Dth+7UIPZZsjEeVCKcuiOXMbHTkTOc62ePE=; b=VzFaggbV6XI3xJsD0tLN8
- FHalUTZbMOjt0Dp6+cyUbyvZSj68qE8gUt4yEVVyV2WM+NKfViOAPTGjrUsc/733
- 6Nuzm7zK/OlGOEF2njKeDxilXLBhCvzE3ISPaaCoCTmuHROedSPgp84nF5tYn8t5
- rZ0qH2vVlX0zYX4qVO3Ay056u3f5WjGl+3TjYHmWmb0o5IZRue3tNXqpGuCxfNQ3
- km3Zbj1PoMglireU6CyJyxIcjWL4HhjIXmioajOOqznRLp34c7NhpRqac9JYTvjH
- eQYlWRlP9Z2aqRpm3ZReEg7kppr4eUUGeQYMjXDW41J7jEpYcZGpVvhQzL9vpFu3
- Q==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=xoaod
+ ebjDpIOvPap0NvvnVV5FCuu/94S3gWgc+lEQ08=; b=hld2qR+9J8FezpholuJ+K
+ o/EbQTrwl2gFEkXN/3wyKLPe/9lxM7ikpNUgkXAOkgsZ28UJbFGXxU8SmJxfrsUC
+ 4C1o/wdQak5X5JpvhaWzA3WoF+JdW1QatT3n+VZhp8hMwJ+ZE2XZhWhM9d38Cshr
+ 6xA2bD1fyexzr43HpmpOT+2FqBrSeIHmk19Wu4Hr4WlfMH49B9yGeh6cNSJo6m1j
+ Y589aRshFMzfwmpR1KB6xxkMOCNJ1u0fp8iXAfyTUEegzZZkXF4nKRsz4qIFTf8c
+ opERfcdck6nr0LSiamomSMmC0JQVlnZQuzDLJuseF9rwwHL0z9Ee1g4YuoSbGpws
+ w==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v21s6wvr-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v0g2f4bc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 May 2025 22:17:27 +0000 (GMT)
+ Wed, 28 May 2025 22:17:31 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54SKQ3sc024356; Wed, 28 May 2025 22:17:27 GMT
+ with ESMTP id 54SKYaPt024426; Wed, 28 May 2025 22:17:30 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jb86uk-1
+ 46u4jb86wa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 May 2025 22:17:27 +0000
+ Wed, 28 May 2025 22:17:30 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54SMHQsR018695;
- Wed, 28 May 2025 22:17:26 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54SMHQsf018695;
+ Wed, 28 May 2025 22:17:30 GMT
 Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
  (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.254.235])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 46u4jb86u3-2; Wed, 28 May 2025 22:17:26 +0000
+ 46u4jb86u3-9; Wed, 28 May 2025 22:17:30 +0000
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, pbonzini@redhat.com, mjt@tls.msk.ru,
@@ -64,10 +64,9 @@ Cc: mst@redhat.com, pbonzini@redhat.com, mjt@tls.msk.ru,
  suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
  sarunkod@amd.com, joao.m.martins@oracle.com,
  boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
-Subject: [PATCH v2 1/7] amd_iommu: Fix Miscellanous Information Register 0
- offsets
-Date: Wed, 28 May 2025 22:17:18 +0000
-Message-ID: <20250528221725.3554040-2-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH v2 7/7] amd_iommu: Remove duplicated definitions
+Date: Wed, 28 May 2025 22:17:25 +0000
+Message-ID: <20250528221725.3554040-9-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250528221725.3554040-1-alejandro.j.jimenez@oracle.com>
 References: <20250528221725.3554040-1-alejandro.j.jimenez@oracle.com>
@@ -81,20 +80,19 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  suspectscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505280194
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE5MyBTYWx0ZWRfX9FLB4k7nUiaG
- 7vPyz5prRelkA3cQ6kuP6UrPZgleNHybt+3hEdXQn08T+3RXPYdHMIWL6GegCwvtMMjohqzVuIp
- Uc/cilAxN0nTdSy6rQyqp4HY5UpVtZCz/SerNxjO6vyIMK9fqPtK+tG+7eKPAzYVT2QBXZ+yLMh
- cg76x/XqpYqQXhRtWdAKG8Gz1pRbiahYSIWA94m+XDnO/f7AiAmrQC+QHACsttwUAEbkl5hhGEc
- W2S5u+Gc42+XZqwLjp174Dw4vii323E32TM45RWoIWEusHu2l3xKulmLhDUb9mXuEI7ue0mW3mY
- 5WD0wuZ5i//wK5BwP/az4PT89tgQkuv6Y5fkFzTFqGYUf3SWRDqFCICkHOgfL7aV+2WW9U8Mg/N
- f3fnLogGpIcC/CwC+oJ+e+BKskmpjxPaqtneu38xtw9zFiU7cN27+3fSfhiAmLxrMIBXkMOT
-X-Proofpoint-GUID: g1fmd8Rikfi2WWQpgCaCnZDHnm0yqfXq
-X-Authority-Analysis: v=2.4 cv=UvhjN/wB c=1 sm=1 tr=0 ts=68378b77 b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE5NCBTYWx0ZWRfX/IkAn6DefiES
+ M8WZ//QKsYQWt2OfQpfWTHFgRKHxSOhOF6QhyPO87tRUyDvSJy0yRvo8SaWhiq7UgMYeiHh4a5+
+ La8apcmyaeOIl0fXVrjwJPNUTl45gUvuYJgy4ARKK/bff99RjPub1Qg/Stp9XOQUpBSKhzQxqIN
+ 6CO8LmDOa137zxvedxCFR1/m8k0t+rJyBpLPjWruA544KmpeMLj/2zfea92dov2ctW7b9vihXMU
+ RaXX5H5ln1/oI/Pl9s7wgLclM2wmj8OU7mj17A5ETyfrL+esskwysqpNGt9lbkOEItbFuUbK2B+
+ zVwwL4YcKJbaUQ+mXwo+MMBknc8ZPT04RqbM9A/Ay9/Y1KhADsHjaeVUQ3dFzuKkCIq1YL5SO3t
+ RavKchHaAlmzuQBv1KeL+JFwdaOag8STw4N9PHIjqjSc8U+wFfTkKkxFkMYhik0kc3ViLePZ
+X-Authority-Analysis: v=2.4 cv=NJLV+16g c=1 sm=1 tr=0 ts=68378b7b b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
- a=dt9VzEwgFbYA:10 a=69wJf7TsAAAA:8 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8
- a=wxXrq957UH6JcMcBEt4A:9
- a=Fg1AiH1G6rFz08G2ETeA:22 cc=ntf awl=host:13206
-X-Proofpoint-ORIG-GUID: g1fmd8Rikfi2WWQpgCaCnZDHnm0yqfXq
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=LyhGpKROpydgPnGzpJcA:9 cc=ntf
+ awl=host:13206
+X-Proofpoint-ORIG-GUID: ExmBXqFJDi1-R7cRYdcPppFJC3HsrH58
+X-Proofpoint-GUID: ExmBXqFJDi1-R7cRYdcPppFJC3HsrH58
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -13
@@ -120,35 +118,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The definitions encoding the maximum Virtual, Physical, and Guest Virtual
-Address sizes supported by the IOMMU are using incorrect offsets i.e. the
-VASize and GVASize offsets are switched.
+No functional change.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 ---
- hw/i386/amd_iommu.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/i386/amd_iommu.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 5672bdef89071..75a01eff468f5 100644
+index 1836b7061d848..31e473924fa20 100644
 --- a/hw/i386/amd_iommu.h
 +++ b/hw/i386/amd_iommu.h
-@@ -196,9 +196,9 @@
- #define AMDVI_PAGE_SHIFT_4K 12
- #define AMDVI_PAGE_MASK_4K  (~((1ULL << AMDVI_PAGE_SHIFT_4K) - 1))
- 
--#define AMDVI_MAX_VA_ADDR          (48UL << 5)
--#define AMDVI_MAX_PH_ADDR          (40UL << 8)
--#define AMDVI_MAX_GVA_ADDR         (48UL << 15)
-+#define AMDVI_MAX_GVA_ADDR      (48UL << 5)
-+#define AMDVI_MAX_PH_ADDR       (40UL << 8)
-+#define AMDVI_MAX_VA_ADDR       (48UL << 15)
- 
+@@ -206,10 +206,6 @@
  /* Completion Wait data size */
  #define AMDVI_COMPLETION_DATA_SIZE    8
+ 
+-#define AMDVI_COMMAND_SIZE   16
+-/* Completion Wait data size */
+-#define AMDVI_COMPLETION_DATA_SIZE    8
+-
+ #define AMDVI_COMMAND_SIZE   16
+ 
+ #define AMDVI_INT_ADDR_FIRST    0xfee00000
 -- 
 2.43.5
 
