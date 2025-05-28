@@ -4,119 +4,230 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4874C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 17:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE6E6C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 17:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKKDw-0006Ee-Eo; Wed, 28 May 2025 13:05:52 -0400
+	id 1uKKOT-0000jr-I2; Wed, 28 May 2025 13:16:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
- id 1uKKDs-0006Ct-04
- for qemu-devel@nongnu.org; Wed, 28 May 2025 13:05:48 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
- id 1uKKDl-0001uv-4W
- for qemu-devel@nongnu.org; Wed, 28 May 2025 13:05:45 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-2c873231e7bso26949fac.3
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 10:05:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uKKOQ-0000jG-It
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 13:16:43 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uKKON-0003pF-Tv
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 13:16:42 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SCq5a7006801;
+ Wed, 28 May 2025 17:16:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=ENhuhcD07eINT3U0X+2JiL2aohBWFxzXBn2iVCwoGiw=; b=
+ ag0lKNunQADTu4oFC4H5/reZ8bQhe9GMrfsNbkr8sTRy1mHHaaNL5w6WGVXj6ndP
+ +Kt4XBpk2/Fn3hmaD3QertVzD84QnD2aATynBCEe0HBxB6KbcawKNT8OqX+Rh4J1
+ 21b9Kcb1g+KBZejdMC0qBZn4o3GnfziktUmiTAASBnX/o07bKv9sA69fXQwd661T
+ 5vYBVk0ah9cQIqf+FS1oGxWC8UfRwjkmNKbKyEQzcnhfluqTDgHoznFHuvixLYBH
+ LtJoqWim+Pn68OpamkI7UsaRLUWCsGLkM3Y1NwePAL/zQdr1PmluFq3M8qf/2pT1
+ IzaW+AyL30WBu4zN/rqdhw==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46wjbcjh2j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 May 2025 17:16:36 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54SGLr8X023271; Wed, 28 May 2025 17:16:36 GMT
+Received: from nam12-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12on2060.outbound.protection.outlook.com [40.107.243.60])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46u4janx58-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 May 2025 17:16:36 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MWysQvTv01v2tTq7MP29lGg+CCQK8A2BM86hlS+z8EKscNqevQSniWbEzdtaob8whWOEtXvDDA+1iKtupn7gxEtvVa6NemB42+86QaFQf9IVdmoWddQGzh/exmG6+6tpsC3QUtzOq0TY2dBduHBgrEIvlHE8aKwyS5UYerzyI6tOPw604nMRKjp3/AX0M3CyluYBLBZN7ePd8yfLG+Py0tCYAzHuRdeAfQEChn4ujCEXETJn5HObX9mzvn8Wg+5K1+I5q/YvY4Gmedz3ByBefCvt2M6VPa5r/JyXTjTssu2WJqaZS4xFCcX1kmwJwKW+L9WX4vlL0eb4fFx46xsmkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ENhuhcD07eINT3U0X+2JiL2aohBWFxzXBn2iVCwoGiw=;
+ b=Yv+PIirRi3d1Ba4JcqV82LeJglYrWInDZi/y/NtSn1u8nvZLh6PXpuuNkIUaqmRfQtiBstRXMJsUT4+V/CDH4wNZ7d7AA+Ziv97H0NBw7TZgdeUQrsTEkM1kzwX7CzsAG5FVFSp0qxRDKL3BYzUKff29MhjVs4fNfHqOIMXl0ClvTcbcTk1Ru6AeK4KDLGaFchU5oIWtDw0xPzGi80d9xrjnzeZGf7TQU49A/pcuclNYNwA5o0iZvg97mBTmnZRacVHrTqEWdxOehsm8qMn4a/Fix/KL6KRFwN/ASRuWuJ6qbjEaogzJ5vfDqeP/2I0v1uLD2NpVClrzGn2FTlX/NA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=konsulko.com; s=google; t=1748451938; x=1749056738; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=t/yAv5kPWMuG89DIVHklSZkFE6BdGUjYUE7Um0QfmUI=;
- b=tmHo7ye3aNmaYEXLWLpkmfK6eWlAi/i7hMyl+7UMQQZnlaj2LgenEbQuCKZUCk5Kdc
- SGhnwl2T8bPBcm0whs4LLQ2oMR4xaI/HyQYfZCuiLpQl352LHSO8jWq0w1Lrz7wwgcxE
- 6he7BbZ0MkKqrOUiUPprxjcyRtWfoNLWKnlOA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748451938; x=1749056738;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=t/yAv5kPWMuG89DIVHklSZkFE6BdGUjYUE7Um0QfmUI=;
- b=veRvA+88f9R5k9fn40FN9cnMhXGFgbcFAKFDNcVn5ch/R1Igsqq4AIywmFcCF5Rky0
- vOhtNdkjqhg0mf96Aj4YTFgqqrgnZeblMw8r9411NDja9UE2NtYG2vrDNlpW94Ay5MpY
- qXPQS0s+j9I/ThJSxYsN4GCcgieIyBkIaZRx+O6tx7SbvGAyc0pTcDite/1w4lYlKszW
- DTN7yLEkY4nzul1guABk7z+/kn5JthKBOKmTD/am3KTb/QHw5muFvCCeWkvvItgGVchZ
- NwvR9xpTo2sVuRfRbAE26KjxfJ+Ax0TSarwwfw8I6GPz3sNYDsHfRjR1kBfv4a5COvtV
- jyUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLxuGRSuF9/gBQLlUPOG5tAkZzkM5qntcYhpv7r3/OAqWjARSP3H0IbvGUqppQHPMldyoHYcy116Ce@nongnu.org
-X-Gm-Message-State: AOJu0YyKxxlyhAscKKz8m89/5+tZuwVOcdqtfpuDjMEMSBOMA3AXaAuv
- 9w+uj4BTVzWoLTTjo0GK8+csxRwq7vFa16eEmUpJusY/9P3Drkdn3cgf3oRB7zopXFM=
-X-Gm-Gg: ASbGnctg/e0+DjHPj6XRxmDcMLUDkaeuJwa/Nmh7HxDTNLwkYymlibU5nmoAcJ3bexL
- 5TzXoU88GhTmVAFxT0ywMyrkHQ3yg40o7spWC9PoVJtXmRb7pfvqVXyPp2tojJ2SFSypzbRp89j
- z7BWBye0z1hUN3tjCOX6Ijfb8bWDvrCIwLxta4mPsgPZ662fonDQUUqI2euXsfAhJO6ObwYwkmu
- i8eDPfIqub+hq1A622Yeand5h2/H/JVdLtcqo2ymQUEXIXhM5ERDjTmMl/E6QDnn5n0Px2aqyZq
- vPVovf8mpzL6M99g7pyuNVXo3JiWzqN+xaLV+J/EoxTc0ABwFTstIVgu1mI2yiytftSKFQVOydc
- E3kLSszpXw19O
-X-Google-Smtp-Source: AGHT+IEscc4t72F00UPULHXQsCH/1TqK2kzc60h7uB3JBTi2x2GwBnsdOiviB3vkuVn+0xG6jW/WgQ==
-X-Received: by 2002:a05:6870:d294:b0:2d4:c19a:94e5 with SMTP id
- 586e51a60fabf-2e862106460mr7296301fac.39.1748451938084; 
- Wed, 28 May 2025 10:05:38 -0700 (PDT)
-Received: from bill-the-cat (fixed-189-203-100-42.totalplay.net.
- [189.203.100.42]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2e8e1a3782fsm312213fac.38.2025.05.28.10.05.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 10:05:37 -0700 (PDT)
-Date: Wed, 28 May 2025 11:05:33 -0600
-From: Tom Rini <trini@konsulko.com>
-To: Simon Glass <sjg@chromium.org>
-Cc: U-Boot Mailing List <u-boot@lists.denx.de>,
- =?iso-8859-1?Q?Fran=E7ois?= Ozog <francois.ozog@linaro.org>,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- Bill Mills <bill.mills@linaro.org>, Raymond Mao <raymond.mao@linaro.org>,
- Heinrich Schuchardt <xypron.glpk@gmx.de>,
- Andrew Phelps <andrew.phelps@canonical.com>,
- Alexander Graf <agraf@csgraf.de>,
- Boyan Karatotev <boyan.karatotev@arm.com>,
- Evgeny Bachinin <EABachinin@salutedevices.com>,
- Fabio Estevam <festevam@gmail.com>,
- Harrison Mutai <harrison.mutai@arm.com>, Jonas Karlman <jonas@kwiboo.se>,
- Liviu Dudau <liviu.dudau@foss.arm.com>, Liya Huang <1425075683@qq.com>,
- Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
- Marek =?iso-8859-1?Q?Moj=EDk?= <marek.mojik@nic.cz>,
- Marek Vasut <marex@denx.de>, Matthias Brugger <mbrugger@suse.com>,
- Max Filippov <jcmvbkbc@gmail.com>,
- Nathan Barrett-Morrison <nathan.morrison@timesys.com>,
- Nobuhiro Iwamatsu <iwamatsu@nigauri.org>,
- Patrick Delaunay <patrick.delaunay@foss.st.com>,
- Patrick Rudolph <patrick.rudolph@9elements.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Rasmus Villemoes <ravi@prevas.dk>,
- Rayagonda Kokatanur <rayagonda.kokatanur@broadcom.com>,
- Sean Anderson <seanga2@gmail.com>, Stefan Roese <sr@denx.de>,
- Stefano Babic <sbabic@nabladev.com>,
- Sughosh Ganu <sughosh.ganu@linaro.org>,
- Svyatoslav Ryhel <clamor95@gmail.com>,
- Tuomas Tynkkynen <tuomas.tynkkynen@iki.fi>,
- Vincent =?iso-8859-1?Q?Stehl=E9?= <vincent.stehle@arm.com>,
- Xu Zhang <423756212@qq.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 00/25] passage: Define a standard for firmware data flow
-Message-ID: <20250528170533.GE100073@bill-the-cat>
-References: <20250528123236.1138632-1-sjg@chromium.org>
- <20250528142521.GW100073@bill-the-cat>
- <CAFLszTiHxdkoGbdOg8rzmn9kUmt925LZvZNxSXQC5Y4A=s2Vig@mail.gmail.com>
- <20250528151927.GB100073@bill-the-cat>
- <CAFLszTh3WDhn_ZSRsBMTpD8i5AyNLFGiV0cbPhOfCUAud1_WOg@mail.gmail.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ENhuhcD07eINT3U0X+2JiL2aohBWFxzXBn2iVCwoGiw=;
+ b=N0sfXq1RfFgjOB4d1Ns7EtLuDeUgK0HKnu+nLgoAlNXlg8w8t0o2YK6K6xwfJgFjNz7sPbkI/3oSE8WKuWWjJAtigkzm7TLKmWkFazHGBzudGoTBE7Hy4KwprfCcGdBE54eTccQw3eR0YoJ8lqokun9oFAuLirJvzzyoWvBdPFI=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by IA1PR10MB5994.namprd10.prod.outlook.com (2603:10b6:208:3ee::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.35; Wed, 28 May
+ 2025 17:16:33 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8746.031; Wed, 28 May 2025
+ 17:16:33 +0000
+Message-ID: <4b6d6c6e-5e57-455d-95b6-05a0fe562241@oracle.com>
+Date: Wed, 28 May 2025 13:16:32 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/29] vfio: enable per-IRQ MSI-X masking
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+References: <20250520150419.2172078-1-john.levon@nutanix.com>
+ <20250520150419.2172078-7-john.levon@nutanix.com>
+ <19e2b44d-0dcc-424a-904d-a7519e25d93e@redhat.com>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <19e2b44d-0dcc-424a-904d-a7519e25d93e@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BLAPR05CA0018.namprd05.prod.outlook.com
+ (2603:10b6:208:36e::13) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Xp7Z45B7ao1e4WIh"
-Content-Disposition: inline
-In-Reply-To: <CAFLszTh3WDhn_ZSRsBMTpD8i5AyNLFGiV0cbPhOfCUAud1_WOg@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=trini@konsulko.com; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|IA1PR10MB5994:EE_
+X-MS-Office365-Filtering-Correlation-Id: 54b027a6-335c-4f9e-cfa4-08dd9e0b64eb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QU1xMUJIaDJWaEtPNFUvUkRaU0VHK1Z5RXNxbGdoSWYwK3MzUG5BYzBCS3Z0?=
+ =?utf-8?B?MkM1LytPOXJHOU53ZGhnbGZwYzJKRVJsVStlSi9GMy8xWmZ3RVhSNWRFV2dz?=
+ =?utf-8?B?QmwvbFJGZTV4WElBcnlvODE0VjdvZEhqbnl3TXF0ODQ5TjhHUUhqNklsdXJK?=
+ =?utf-8?B?T090ci9KVVEzTmRBTFlTSUFMbzJsTEFLOXk4b2V4eWF3WmQ4ZUpFR1BUWHFm?=
+ =?utf-8?B?bHZsZ2YxazVrNUREWFZseTZjdUFObEtIWGVkVDBVM2NtQktoeHpnRzdsaEU0?=
+ =?utf-8?B?NW9NRW5Uc2ViOWcxRitUZWYzSmJLd2t3VWNYQmNpcUptWWowWkhXUnVVcXR0?=
+ =?utf-8?B?V2VDbWZQbXhuNnlIVTlETHIxZU9IOERNbTBJYlo5azRCdzZ0dUIvZEpJdE5N?=
+ =?utf-8?B?b2t6TVlhdUVudmlKU1VVZXRORm8xYUZHTThrRTNHTCs1bkhLd01OT2g1SVdH?=
+ =?utf-8?B?UDYvZ2ZBdUpEakdlR205ejJXODJPNlZvdGJmb1QxcUZZS2Q0ZllEcU5MQVFT?=
+ =?utf-8?B?TjRjT0hTZEx3N1JQWVBaWUJsSFl2endTVStaaUdMSHNscDZVUTFIZEZuZGtz?=
+ =?utf-8?B?ZG1OSldIMzh2a251V01zcUpvY0hIeGtDR0hEbDJjQjRpWDBUNEU2OTE1SnBI?=
+ =?utf-8?B?aGIwREFDY0JTaStWdU52U2UzM0wrSWhzSFVGalN4Snl3M0FxUGlTRXpYTVFH?=
+ =?utf-8?B?NlpGeDYxdVA2RkJPM1l4cjhlRHozemFub1VDTDNjb2lzUEMyZGZpaHRWUDJO?=
+ =?utf-8?B?d0U4aVB0VXUrMkVFL1JKOVR6WnZRYVF0TVBXcEtDZkpGNkJWNUhBZmhvOEZS?=
+ =?utf-8?B?QnJ5a2o0aHNHNFdmK1JwRlN5R3U4dk9ObWlRMVo0aGNka2lwb245LzdiZmFk?=
+ =?utf-8?B?OXdjaUdsaUNMd3RwV3RiV2VodWNURzJ4d0pCV2pqWGxYSTFtWTRYamVzMGRO?=
+ =?utf-8?B?aTNXTmowUCtzUDduMWJjeDVpUXlBK3RueFQxUStGRFA4NU9JNWxjQ3NoeU9W?=
+ =?utf-8?B?aWxXZjFKby9naFZwQWc1bEJGT3EzRk5maGs5Y0pCMURaMGI1MG5MRDRPZndL?=
+ =?utf-8?B?VFl6clhJcy9aTW9pcVlmaEp1SVVrbjRCNi9XZmpjNlk2aTZRT0JrVVZHMlNN?=
+ =?utf-8?B?SzFvWmZNQjNlZDErQWxqUDA0Y3N0N3hML1lTT2hpalRYQThiOGZmOG1RaU1E?=
+ =?utf-8?B?azczZCtxOUtQVVd5SWcwYzV1UU1oQUpsN2NVRDUyam82akxYM25ESlloekRs?=
+ =?utf-8?B?dWVidUlvTDFzSHVsN1cvaWNlUlNHVDJqV2tpT1lGU2MyVC9KdGNFckk1M0hu?=
+ =?utf-8?B?ZDZDei9RbnVRR05reFdhN2doOGRTTmY3cEVUa1czSmJTYlRJUFN1WjdUVk1V?=
+ =?utf-8?B?V2EyRXNMdG00bGE5VVIvcGE4MWxkWG9HclFxQVdqaHMwZExmTVNyeitsY1l4?=
+ =?utf-8?B?T010NHJQM21FWkVXa1NYN21FM0kzYytoeDNhbEc0YXIzVW53SU1nSzJwRVAv?=
+ =?utf-8?B?dnhwYXpOT1lZM3cxWVh0aittNERMQXNpTW5WbE5GbjA4cU9KckNWSnFET0tt?=
+ =?utf-8?B?M2dHWjFaOWlSTG5OQTBoRDQ0N1lncDd4UG13UTRkU2NsQ2tQTEVRTEVSNWhT?=
+ =?utf-8?B?bFpjak5LdnlUcytUM0l1Tk9OU1JFR3ZtUUYzVXMrRDJCL29sWmxDV2tqUk9u?=
+ =?utf-8?B?a21JQWk2a2g0VUZ2MDBXRGFuREFBRDdmVlVIdSs4US9zT0c1SnRnVEJGUDZ1?=
+ =?utf-8?B?VEVnU0VIZmh0bTVmakkrMXRJTVRYTjhERTY4NHliZEs2QWxLdUxhYmZpVUNC?=
+ =?utf-8?B?UlVkSEJ0cEtSZjR5a2ZjaHBicDNlUHZ6NG5qRGhhNEU5Skk2SENmQlhJQURj?=
+ =?utf-8?B?bDcrRjVKMXRUTW9YdmNOWVM3N1BBTDJXSlo4Vlc1Y05Bb0V4TTlVNHp4amUx?=
+ =?utf-8?Q?QPTK4TZa5+Y=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(7416014)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eHVGZnh4RFYrL0ptL3J6MURlOEdCMEZmL0UwQXlKMDZjdkN3UHJ0b3NyZlRF?=
+ =?utf-8?B?MDJDUDVOWlhRbzNBSXpLSzVCRDkrcE9Wd29LZEljTjk1S2IyNE5oWVhKYm1H?=
+ =?utf-8?B?MzVIbHdlWWxkQ3VjOGI2RVRkYW5tR0VSSElCNFJKWSs1NjZ4VUdmRG5zU1BJ?=
+ =?utf-8?B?SGlUTEVzYXE2TVU5dzJBcldLSXNxVnBLZmNTT0dQUHZVZ0M5SFFUN3lwa0J1?=
+ =?utf-8?B?OWYwUGJDQ1YzVmhmRjkwcmZUbmI5aHhqMlNMS3JPSnRtU1dGRDJxbDBXcG9V?=
+ =?utf-8?B?QThjZzBNcUxOazhnaVdPQ2pxNzU2aFVpVGp3VlB5M2U5bjhoM3J1eTZHSVBW?=
+ =?utf-8?B?QUplTTBtSUVFYy84dnpEMktXemhBMTEvcG9WZHkvcU50aHBXS1lBeDJpTDJW?=
+ =?utf-8?B?Q2poRWJsT2pMRDFDM3lPQTlKU25GME5vbUhSeXpHTDIxZG5LaXM5dzNvVzFu?=
+ =?utf-8?B?Q1NmanZ2Q0J5ODJyeVFoRnNqNTgzaThBQ2c3bEltN2U0dHNvdGhQYUV1UytL?=
+ =?utf-8?B?Ylk4NzBGWFhZdktCN05mQzg1NFB0cXRWVklJMDB2dWxhNDYxU0w0b0g4YUZx?=
+ =?utf-8?B?ZU5pZitUY1RFVmlGejBmaGNoUmRHZXNab09ORUxVNGZVdVdIM1NvYjBONkNR?=
+ =?utf-8?B?QkUycjdGamcrNXFDbmw2Z2l5Sk1JS2pPcGk4RjhoTmgvL3dIK2RSZFZ2VHhY?=
+ =?utf-8?B?ZWdsYlF3TGJxKzNHaGxNS2ZFR2EyWWMrY1RQL2pTTk9VQlgxbnFrdjRMU3Vy?=
+ =?utf-8?B?ekZmaUhtTkN6YmtjK3VoK0s3N3VCS3hGdzRzUnJ6cEJlR094UXk3ZytRZ0k4?=
+ =?utf-8?B?YUZlTmQzSjBPVVVRTGk2Y3ptdklTSHQ3Wk1uL29YUks0UWl1aFpUbWpsTzRn?=
+ =?utf-8?B?SDhpT2M0Z1pFRXppRHVMRWphT0hwbXhGcXU2c2lYSWZsbTVEdGdHS2N0UDBI?=
+ =?utf-8?B?OS9XRkQ3dTFxQWN6bjgzMGQyTEV4dzY1VUZ1WXFNcU1lSnhDeEFvQTdNZUoy?=
+ =?utf-8?B?cVRmSHJMdWhmTkk2WHpzbjVzeFQyNW9zMUIzaEM1ODdqN01tNDlhM2dySjBw?=
+ =?utf-8?B?bGo1Z3RVcC96WHhqaEJkdXJIYXRKVUh4MVVjYVhHNmIzMnVQR28vWkxQTGpi?=
+ =?utf-8?B?TkRBVlk3UWJUbGk2V2ZPWHNiTlc3b2hmVVEyNUxQQmFoek5ZR1I2Yy8yWld1?=
+ =?utf-8?B?WGp4TmtVZWZ6SnpjbDNLSDVnbVRwU2pOQkR4ZEZ3TitiMEdlV1Y3NTVCMjFs?=
+ =?utf-8?B?K29ib0FzTmRld0ttdmZQZzRNcGZjRE5hcTRUbmkyTVlEWjZxV0xkNkphYXFM?=
+ =?utf-8?B?UTFkNm5zNnNMQXhrVDdmelFOZGJZMDRXUEUrdUhTaHVKNmpIR1poMnZrNW9K?=
+ =?utf-8?B?V1NhREZoRW10YXNFUE9SVEtkRzFOdGtrY21mSlRiaVY2eHgrL2Z5b29MY0Fy?=
+ =?utf-8?B?dzVnbTBHaHZkQUE1eFFnL3poZllNdXRJK2hTM2dOOGJOUXFxUlF1ZUN0MjVY?=
+ =?utf-8?B?amd2dmlyRjZXZXl6Q1R4cFdQMnlLL3pGQmFHUDNibGlWNGpPVjBySzJLSHpp?=
+ =?utf-8?B?eEgyYlFGVU51VjdIU3JRZWptSk16bndxL3BqbVNsTVpyZXRWODJabkNuRWVz?=
+ =?utf-8?B?NDVrQUlCYld4U0xFNnBJcUNpMFF3NkQ2SVllLzJ0Y2dRMUVqNW9QbzZHT01V?=
+ =?utf-8?B?VjR5VkNRWTRHZ0RISnZzbEhXL0ppTklsRTd6ZmxnTElIK3FnZFhYUG0xeFow?=
+ =?utf-8?B?NVV4Yll3bVdxSEZsNnVaczVvWjROT0lSb0svK2dkcVVlT3M1eGVhM3lUMXNn?=
+ =?utf-8?B?MXZ5eVlvWitWT0hUK2JqNjhDQW9HSWZiemJia0JjdGZlRVQ4czBlMVR1S0Zr?=
+ =?utf-8?B?YWxTUURIV3VJQ3JERlUvL3lnOXBJemw0aURDTVk2YnBUVkNvTnZTSDI1RHNu?=
+ =?utf-8?B?YzhBSGN1UUh5allqODM3Qk55akIrcGtPeDV3RGwyekRrMkpVOEFkaWsyS0lz?=
+ =?utf-8?B?ZVozUG56T3hXU3JqRXVUQmcvUHpYQS9sWS9ZeU1uRTdKYmhxM1Jxc3JncWhn?=
+ =?utf-8?B?TUZnZ3k0c2Y0YnpQRVRxaFFNSHREM3NCREpFY1l5d3NzWUpJSC9JK3JvVmZO?=
+ =?utf-8?B?d3lUZXNNYnEvVlg5WDF4YjdYdmJTZEdCcE9qYWhpKzZJN2ZYVi8rZjNiU0pu?=
+ =?utf-8?B?Z0E9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: +oSF2ER42hcCXJ3ss6iRktuWCpj46HtcwEko0Hi5U0xU/tYqFoGGAHUAx3da4Ca6wcMT4vxd5CECy5IYYeRsBmxLH+JSidh65eNqHmnpWY59YeXh04EiZGTdyB9K4WZc0+w+LpZYZlLm1TuCCjaZidLEUu6UxovJt00pI0JQF1RMphuG+fJCkFThFOFJjFITAo/ql/UsKAkkcvd2nuucMBNN9OvEaf0oD/kISoOZ2EHHbqQVcMbvUIr0IedaR63rajtQV11gtfg1qAXXXIuQylRVr/no++29lw5ggRLjytM7tog9KbI5KtBe8Q73sNJ+5kL2PxZur+gP1vqaDxqvI9cMjw2cMqZGjpIu2vIbV4ScFrFA68bq6LPbyYAoE1nhMJe8iDJhimFkdjvrGKpSuD2pfit5oJ0UAhmsEB5I0IIqdidswR3wiV7Vh+TXFTCd+/hIe9Bp7PEJPCgIkBQEoPxAD196nqeFh+qafspOtBrw/y0QpF7ZJSeGar5EHvOPLI0uY8ZaVdG9LGvvxtz2gLYYyiCOYIe4I6356WhHERFYIiXUgaF0CI6U/Tzca6g5JlI0HIOSNnErb817ry1WdGAYoBf4wHHgJ6cCWSNPAc4=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54b027a6-335c-4f9e-cfa4-08dd9e0b64eb
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 17:16:33.4153 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: j7d9tjqPdeAIPA0QTLdfZbV6NCfTt3jp62vlvQBRhx59XHAZuFPieLB8k8uu6uSwhxL2qlE/h23elugMdU5SM0UMBXbU2WC207EAnnOPPGY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB5994
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_08,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ phishscore=0 mlxlogscore=999
+ bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2505280149
+X-Proofpoint-GUID: xZ1QVIa4_S8XwktFt7TKHz5DiScHVVQZ
+X-Proofpoint-ORIG-GUID: xZ1QVIa4_S8XwktFt7TKHz5DiScHVVQZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE0OSBTYWx0ZWRfX8MdB9/ksbsHH
+ VXU0NuGPqDuFsXS/FHHoO+dOVKl3ftyVbIi+/LJNUJt/vvFkRD1EDbDMbBzmLVdQf6f87NCzk0Z
+ bpMRokn518I+XDab1Cbn+pbEaNztZMxvIgeqgHOk4yZRd+lXGAohdzZ56FeNeNykr+eudkn3N6G
+ CiBrYkSXmNuGy7mmQSA7wtiQp2XAUUTPdqGwX4M0gFuobQfmkLCTQkHe5dDySY28DdJj0rB+GME
+ LWZyhPyM/11hfXepFE+b6NSRgjPCyYgKnA6rc8c6chRHIc9TZyyhbaspkY0m4bmTyeUyW7MLFSb
+ KHbmnIBBFPgqLvQLOHS6unHbDbma6OY4kah5oJPnN+8mpuj7fY+En1Jsj/jSJhsJYfF2U1Qe+Np
+ IgHdZJcmi7OIzzMvI8y7Nae1OcUXoT5pquyb5DyoK2tQvrNIfPFXv/LcUf+/lEk1dJPa1gyF
+X-Authority-Analysis: v=2.4 cv=c8qrQQ9l c=1 sm=1 tr=0 ts=683744f5 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8
+ a=64Cc0HZtAAAA:8 a=b05e_kYNWjHwrR9JnMEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ cc=ntf awl=host:14714
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,156 +243,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/21/2025 3:29 AM, Cédric Le Goater wrote:
+> +Sẗeven
+> 
+> On 5/20/25 17:03, John Levon wrote:
+>> If VFIO_IRQ_INFO_MASKABLE is set for VFIO_PCI_MSIX_IRQ_INDEX, record
+>> this in ->can_mask_msix, and use it to individually mask MSI-X
+>> interrupts as needed.
+>>
+>> Originally-by: John Johnson <john.g.johnson@oracle.com>
+>> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+>> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+>> Signed-off-by: John Levon <john.levon@nutanix.com>
+> 
+> This one conflicts with the "live update" series. We will address it later.
 
---Xp7Z45B7ao1e4WIh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+AFAICT there is only a trivial conflict versus my patch
 
-On Wed, May 28, 2025 at 05:08:38PM +0100, Simon Glass wrote:
-> Hi Tom,
->=20
-> On Wed, 28 May 2025 at 16:19, Tom Rini <trini@konsulko.com> wrote:
-> >
-> > On Wed, May 28, 2025 at 03:32:12PM +0100, Simon Glass wrote:
-> > > Hi Tom,
-> > >
-> > > On Wed, 28 May 2025 at 15:25, Tom Rini <trini@konsulko.com> wrote:
-> > > >
-> > > > On Wed, May 28, 2025 at 06:32:02AM -0600, Simon Glass wrote:
-> > > > >
-> > > > > This series adds a standard way of passing information between di=
-fferent
-> > > > > firmware phases. This already exists in U-Boot at a very basic le=
-vel, in
-> > > > > the form of a bloblist containing an spl_handoff structure, but t=
-he intent
-> > > > > here is to define something useful across projects.
-> > > > >
-> > > > > The need for this is growing as firmware fragments into multiple =
-binaries
-> > > > > each with its own purpose. Without any run-time connection, we mu=
-st rely
-> > > > > on build-time settings which are brittle and painful to keep in s=
-ync.
-> > > > >
-> > > > > This feature is named 'standard passage' since the name is more u=
-nique
-> > > > > than many others that could be chosen, it is a passage in the sen=
-se that
-> > > > > information is flowing from one place to another and it is standa=
-rd,
-> > > > > because that is what we want to create.
-> > > > >
-> > > > > The implementation is mostly a pointer to a bloblist in a registe=
-r, with
-> > > > > an extra register to point to a devicetree, for more complex data=
-=2E This
-> > > > > should cover all cases (small memory footprint as well as complex=
- data
-> > > > > flow) and be easy enough to implement on all architectures.
-> > > > >
-> > > > > The emphasis is on enabling open communcation between binaries, n=
-ot
-> > > > > enabling passage of secret, undocumented data, although this is p=
-ossible
-> > > > > in a private environment.
-> > > > >
-> > > > > To try this out:
-> > > > >
-> > > > > $ ./scripts/build-qemu -a arm -rsx
-> > > > >
-> > > > > This will build and run QEMU for arm64 and you should see the sta=
-nddard
-> > > > > passage working:
-> > > > >
-> > > > >    Core:  49 devices, 13 uclasses, devicetree: passage
-> > > > >
-> > > > > This series is available at u-boot-dm/pass-working
-> > > > >
-> > > > > Changes in v5:
-> > > > > - Add RFC for test script
-> > > >
-> > > > And this is why I question if you are working in good faith. I've
-> > > > rejected this countless times. I'm still rejecting it. Stop includi=
-ng
-> > > > it. Point at the version you could easily be maintaining in the con=
-trib
-> > > > repository where you have write access and no one will be telling y=
-ou to
-> > > > not do something. People would even review the patches since it wou=
-ld be
-> > > > against mainline.
-> > >
-> > > I fully understand that you don't want the script and I'm only
-> > > including (as an RFC) so people can actually try this series out. I
-> > > didn't want to point to my tree as I thought that would annoy you. I
-> > > already went through why the contrib tree is not suitable for me.
-> >
-> > So I have to take changes that I disagree with, but you can't work with
-> > a tree for your tooling where the community would be happy to provide
-> > feedback? That does not sound like compromise. Again, I have trouble
-> > believing that you are working in good faith to resolve the differences
-> > here.
->=20
-> Yes, as mentioned before I would like you to take changes you disagree
-> with, at least once we have discussed alternatives and I'm sure that's
-> the way I want to go. It would save a lot of grief if you could do
-> that.
->=20
-> I could use your contrib/ repo but there isn't a lot of point, since I
-> have to have my own tree anyway, due to rejected / changes-requested
-> patches. It's just lots of fiddling around for no gain. I'm fine with
-> your not having the scripts in your tree and I'm fine with maintaining
-> the Python tools in my tree. Basically it seems my tree is the dumping
-> ground for the stuff you don't want in 'pure U-Boot', or don't want
-> yet. If you would like me to sync my scripts to the contrib/ tree
-> every now and then, yes I can do that. I don't see much point since we
-> can't reference them in docs or test them in CI, but I'm willing to do
-> it.
->=20
-> But I do want to post patches so I can get feedback from people who
-> are interested. Perhaps we could set up an 'experimental' mailing list
-> for that, since you seem really unhappy when I send them to the U-Boot
-> mailing list?
->=20
-> Re your 'good faith' thing, I'm really just trying to make progress
-> and I wish there was less 'email overhead' and more action. If you
-> have concerns, it would be better to discuss a resolution f2f or on a
-> VC, not endless email threads which don't relate to the patches I'm
-> sending. The series we are discussing here was sent in 2021 based on
-> bloblist from 2018! [1]. It is why Firmware Handoff happened. Give me
-> some credit for foresight, at least.
+   vfio/pci: vfio_vector_init
+   https://lore.kernel.org/qemu-devel/1747063973-124548-17-git-send-email-steven.sistare@oracle.com/
 
-You need to decide if it's more important to work with the community or
-have your way every time. You cannot have both. You need to accept that
-some things you think are good ideas have been rejected or you need to
-fork off from U-Boot. Or you can ask the community to take over as the
-project head. If the community wants you to run things, I will step
-down and just be an individual contributor again. Five months of this
-experiment shows me that it's not working at all and will only be a
-bigger problem as time goes on.
+because I extract a handful of lines from vfio_msix_vector_do_use into a
+subroutine, at the same place vfio-user has added a local variable new_vec,
+but the new code will simply be:
 
---=20
-Tom
+vfio_msix_vector_do_use
+     if (!vector->use) {
+         new_vec = true;
+         vfio_pci_vector_init(vdev, nr);
+     }
 
---Xp7Z45B7ao1e4WIh
-Content-Type: application/pgp-signature; name="signature.asc"
+Also, for now I am assuming that if vfio-user is being used, then I will add
+a CPR blocker.  Thus I do not have to account for per-IRQ masking in the
+cpr load path, for now.
 
------BEGIN PGP SIGNATURE-----
+- Steve
 
-iQGzBAABCgAdFiEEGjx/cOCPqxcHgJu/FHw5/5Y0tywFAmg3Ql0ACgkQFHw5/5Y0
-tyyVDwv+LlUHM6bp8YMtrImHtYTBJRv1I9sZ8I+MItxNvHa/Uawx7eA7IOUQ5iNf
-0Pjn3Wz4Al83EfMC3Ez1eSUt6tQKwsgJ4NsGXdDURx6FqLBC/XUK3kLVbeEXYUu1
-++bXeAZ5/CtgiWHTg3WH8FlVNNqMwBmYG82Lef9w03QCO7F8qr3wK1M+rISrZKfK
-ppAXbJx56lNfxHfNp6Dr0mDCAb+9gnacBQ+nv4XDNT9V0rPYNIuxREDknxpXBKor
-w2vXSt2okINwoNcYn7m/rzexStz1ClCmiodIpJS6C1ciBe8LRXfqELTLFuP0ejh5
-JxOgdm6PsWT+VxWnAR+FI1SkU/m2/KSSzxRsboFYzAZqvlHrHzmccnDfXe+WOwTo
-BJPGdlSPeuDtAS1oJHHSloh9zF43ySc4HfaKzko4aV7mQamzHaA7Ti8xTmHN3hmt
-usU+yEfmE9S/z53mDhEx5SBL0AdA1SQSV34Qahj/HoKn37WC65RllkcxplCLuOIi
-nX24LAzf
-=nStp
------END PGP SIGNATURE-----
+>> ---
+>>   hw/vfio/pci.h                 |  1 +
+>>   include/hw/vfio/vfio-device.h |  2 ++
+>>   hw/vfio/device.c              | 26 +++++++++++++++++++
+>>   hw/vfio/pci.c                 | 47 ++++++++++++++++++++++++++++++-----
+>>   4 files changed, 70 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+>> index 61fa385ddb..43c2d72b84 100644
+>> --- a/hw/vfio/pci.h
+>> +++ b/hw/vfio/pci.h
+>> @@ -191,6 +191,7 @@ struct VFIOPCIDevice {
+>>       bool defer_kvm_irq_routing;
+>>       bool clear_parent_atomics_on_exit;
+>>       bool skip_vsc_check;
+>> +    bool can_mask_msix;
+>>       VFIODisplay *dpy;
+>>       Notifier irqchip_change_notifier;
+>>   };
+>> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+>> index 8bcb3c19f6..923f9cd116 100644
+>> --- a/include/hw/vfio/vfio-device.h
+>> +++ b/include/hw/vfio/vfio-device.h
+>> @@ -133,7 +133,9 @@ struct VFIODeviceOps {
+>>       (ret < 0 ? strerror(-ret) : "short write")
+>>   void vfio_device_irq_disable(VFIODevice *vbasedev, int index);
+>> +void vfio_device_irq_unmask_single(VFIODevice *vbasedev, int index, int irq);
+>>   void vfio_device_irq_unmask(VFIODevice *vbasedev, int index);
+>> +void vfio_device_irq_mask_single(VFIODevice *vbasedev, int index, int irq);
+>>   void vfio_device_irq_mask(VFIODevice *vbasedev, int index);
+>>   bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex,
+>>                                      int action, int fd, Error **errp);
+>> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+>> index 9fba2c7272..d0068086ae 100644
+>> --- a/hw/vfio/device.c
+>> +++ b/hw/vfio/device.c
+>> @@ -85,6 +85,19 @@ void vfio_device_irq_disable(VFIODevice *vbasedev, int index)
+>>       vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+>>   }
+>> +void vfio_device_irq_unmask_single(VFIODevice *vbasedev, int index, int irq)
+>> +{
+>> +    struct vfio_irq_set irq_set = {
+>> +        .argsz = sizeof(irq_set),
+>> +        .flags = VFIO_IRQ_SET_DATA_NONE | VFIO_IRQ_SET_ACTION_UNMASK,
+>> +        .index = index,
+>> +        .start = irq,
+>> +        .count = 1,
+>> +    };
+>> +
+>> +    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+>> +}
+>> +
+>>   void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
+>>   {
+>>       struct vfio_irq_set irq_set = {
+>> @@ -98,6 +111,19 @@ void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
+>>       vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+>>   }
+>> +void vfio_device_irq_mask_single(VFIODevice *vbasedev, int index, int irq)
+>> +{
+>> +    struct vfio_irq_set irq_set = {
+>> +        .argsz = sizeof(irq_set),
+>> +        .flags = VFIO_IRQ_SET_DATA_NONE | VFIO_IRQ_SET_ACTION_MASK,
+>> +        .index = index,
+>> +        .start = irq,
+>> +        .count = 1,
+>> +    };
+>> +
+>> +    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+>> +}
+>> +
+>>   void vfio_device_irq_mask(VFIODevice *vbasedev, int index)
+>>   {
+>>       struct vfio_irq_set irq_set = {
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index 5159198bdb..ef38b4692a 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -535,6 +535,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+>>   {
+>>       VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
+>>       VFIOMSIVector *vector;
+>> +    bool new_vec = false;
+>>       int ret;
+>>       bool resizing = !!(vdev->nr_vectors < nr + 1);
+>> @@ -549,6 +550,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+>>               error_report("vfio: Error: event_notifier_init failed");
+>>           }
+>>           vector->use = true;
+>> +        new_vec = true;
+>>           msix_vector_use(pdev, nr);
+>>       }
+>> @@ -575,6 +577,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+>>                   kvm_irqchip_commit_route_changes(&vfio_route_change);
+>>                   vfio_connect_kvm_msi_virq(vector);
+>>               }
+>> +            new_vec = true;
+>>           }
+>>       }
+>> @@ -584,6 +587,9 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+>>        * in use, so we shutdown and incrementally increase them as needed.
+>>        * nr_vectors represents the total number of vectors allocated.
+>>        *
+>> +     * Otherwise, unmask the vector if the vector is already setup (and we can
+>> +     * do so) or send the fd if not.
+>> +     *
+>>        * When dynamic allocation is supported, let the host only allocate
+>>        * and enable a vector when it is in use in guest. nr_vectors represents
+>>        * the upper bound of vectors being enabled (but not all of the ranges
+>> @@ -594,13 +600,20 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+>>       }
+>>       if (!vdev->defer_kvm_irq_routing) {
+>> -        if (vdev->msix->noresize && resizing) {
+>> -            vfio_device_irq_disable(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX);
+>> -            ret = vfio_enable_vectors(vdev, true);
+>> -            if (ret) {
+>> -                error_report("vfio: failed to enable vectors, %s",
+>> -                             strerror(-ret));
+>> +        if (resizing) {
+>> +            if (vdev->msix->noresize) {
+>> +                vfio_device_irq_disable(&vdev->vbasedev,
+>> +                                        VFIO_PCI_MSIX_IRQ_INDEX);
+>> +                ret = vfio_enable_vectors(vdev, true);
+>> +                if (ret) {
+>> +                    error_report("vfio: failed to enable vectors, %d", ret);
+>> +                }
+>> +            } else {
+>> +                set_irq_signalling(&vdev->vbasedev, vector, nr);
+>>               }
+>> +        } else if (vdev->can_mask_msix && !new_vec) {
+>> +            vfio_device_irq_unmask_single(&vdev->vbasedev,
+>> +                                          VFIO_PCI_MSIX_IRQ_INDEX, nr);
+>>           } else {
+>>               set_irq_signalling(&vdev->vbasedev, vector, nr);
+>>           }
+>> @@ -630,6 +643,13 @@ static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
+>>       trace_vfio_msix_vector_release(vdev->vbasedev.name, nr);
+>> +    /* just mask vector if peer supports it */
+>> +    if (vdev->can_mask_msix) {
+>> +        vfio_device_irq_mask_single(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
+>> +                                    nr);
+>> +        return;
+>> +    }
+>> +
+>>       /*
+>>        * There are still old guests that mask and unmask vectors on every
+>>        * interrupt.  If we're using QEMU bypass with a KVM irqfd, leave all of
+>> @@ -702,6 +722,13 @@ static void vfio_msix_enable(VFIOPCIDevice *vdev)
+>>               error_report("vfio: failed to enable vectors, %s",
+>>                            strerror(-ret));
+>>           }
+>> +    } else if (vdev->can_mask_msix) {
+>> +        /*
+>> +         * If we can use single irq masking, send an invalid fd on vector 0
+>> +         * to enable MSI-X without any vectors enabled.
+>> +         */
+>> +        vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
+>> +                                      0, VFIO_IRQ_SET_ACTION_TRIGGER, -1, NULL);
+>>       } else {
+>>           /*
+>>            * Some communication channels between VF & PF or PF & fw rely on the
+>> @@ -2842,6 +2869,14 @@ bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
+>>           }
+>>       }
+>> +    ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
+>> +                                   &irq_info);
+>> +    if (ret == 0 && (irq_info.flags & VFIO_IRQ_INFO_MASKABLE)) {
+>> +        vdev->can_mask_msix = true;
+>> +    } else {
+>> +        vdev->can_mask_msix = false;
+>> +    }
+>> +
+>>       ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_ERR_IRQ_INDEX, &irq_info);
+>>       if (ret) {
+>>           /* This can fail for an old kernel or legacy PCI dev */
+> 
 
---Xp7Z45B7ao1e4WIh--
 
