@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FCFC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 19:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92902C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 19:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKMA1-0007JO-OM; Wed, 28 May 2025 15:10:00 -0400
+	id 1uKM9i-00073s-IQ; Wed, 28 May 2025 15:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uKM9w-0007Dw-MV
- for qemu-devel@nongnu.org; Wed, 28 May 2025 15:09:52 -0400
+ id 1uKM9f-00072W-VH
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 15:09:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uKM9p-0004J6-0b
- for qemu-devel@nongnu.org; Wed, 28 May 2025 15:09:48 -0400
+ id 1uKM9b-0004Eo-HI
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 15:09:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748459384;
+ s=mimecast20190719; t=1748459370;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/dexP7CnZJ0HOlxCTzoIreLMCTF03PkpTaW6LVKEJ2Q=;
- b=J9y4brELoe2LLpppbIcq/efhhOdXR0i0TsxfNeFZdE2uH0/Hxc314JW1441uhnLVxQFerX
- ucaKcFmhT9rLMWfAk6gka+ec3zImlonQVT91TBLn7Ho86L5FPDJnBpdvrSaR0FnL0XqMwN
- ZbrCgk4TbTys5aVhQLncw6DGjolIAJk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rm9DpdREqD0E/3TzSVOGx5T4VW1GmsOty41ut3OFwxE=;
+ b=Ry72hU3LjHpOIruK2zldxGV1LsEcDt8ajfvQssArOMTQz2PoHvrTK7ScTOvcTazWSYsiGK
+ 2gV4n1G7Wj5PXfuqyWzoRNqozJ85DABlLTWi8qxVWizkQqttyJoLe6Wcbt3s1S1sfQZxcS
+ lbulMlIFflbgMWGYS6JBXGEqYjf5k1A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-LLgZwdrjNeCUUgdaYw6mEg-1; Wed,
- 28 May 2025 15:09:42 -0400
-X-MC-Unique: LLgZwdrjNeCUUgdaYw6mEg-1
-X-Mimecast-MFC-AGG-ID: LLgZwdrjNeCUUgdaYw6mEg_1748459381
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-3Y6avezYPjqmBGSxzzhc8A-1; Wed,
+ 28 May 2025 15:09:28 -0400
+X-MC-Unique: 3Y6avezYPjqmBGSxzzhc8A-1
+X-Mimecast-MFC-AGG-ID: 3Y6avezYPjqmBGSxzzhc8A_1748459367
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 659B519560A0; Wed, 28 May 2025 19:09:41 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 343F01956080; Wed, 28 May 2025 19:09:27 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.178])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AEA6C19560AF; Wed, 28 May 2025 19:09:40 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A526319560AA; Wed, 28 May 2025 19:09:26 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  hibriansong@gmail.com, Kevin Wolf <kwolf@redhat.com>,
  Hanna Czenczek <hreitz@redhat.com>
-Subject: [RFC 11/11] block/io_uring: use aio_add_sqe()
-Date: Wed, 28 May 2025 15:09:16 -0400
-Message-ID: <20250528190916.35864-12-stefanha@redhat.com>
+Subject: [RFC 04/11] aio-posix: integrate fdmon into glib event loop
+Date: Wed, 28 May 2025 15:09:09 -0400
+Message-ID: <20250528190916.35864-5-stefanha@redhat.com>
 In-Reply-To: <20250528190916.35864-1-stefanha@redhat.com>
 References: <20250528190916.35864-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -85,915 +85,578 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AioContext has its own io_uring instance for file descriptor monitoring.
-The disk I/O io_uring code was developed separately. Originally I
-thought the characteristics of file descriptor monitoring and disk I/O
-were too different, requiring separate io_uring instances.
+AioContext's glib integration only supports ppoll(2) file descriptor
+monitoring. epoll(7) and io_uring(7) disable themselves and switch back
+to ppoll(2) when the glib event loop is used. The main loop thread
+cannot use epoll(7) or io_uring(7) because it always uses the glib event
+loop.
 
-Now it has become clear to me that it's feasible to share a single
-io_uring instance for file descriptor monitoring and disk I/O. We're not
-using io_uring's IOPOLL feature or anything else that would require a
-separate instance.
+Future QEMU features may require io_uring(7). One example is uring_cmd
+support in FUSE exports. Each feature could create its own io_uring(7)
+context and integrate it into the event loop, but this is inefficient
+due to extra syscalls. It would be more efficient to reuse the
+AioContext's existing fdmon-io_uring.c io_uring(7) context because
+fdmon-io_uring.c will already be active on systems where Linux io_uring
+is available.
 
-Unify block/io_uring.c and util/fdmon-io_uring.c using the new
-aio_add_sqe() API that allows user-defined io_uring sqe submission. Now
-block/io_uring.c just needs to submit readv/writev/fsync and most of the
-io_uring-specific logic is handled by fdmon-io_uring.c.
+In order to keep fdmon-io_uring.c's AioContext operational even when the
+glib event loop is used, extend FDMonOps with an API similar to
+GSourceFuncs so that file descriptor monitoring can integrate into the
+glib event loop.
 
-There are two immediate advantages:
-1. Fewer system calls. There is no need to monitor the disk I/O io_uring
-   ring fd from the file descriptor monitoring io_uring instance. Disk
-   I/O completions are now picked up directly. Also, sqes are
-   accumulated in the sq ring until the end of the event loop iteration
-   and there are fewer io_uring_enter(2) syscalls.
-2. Less code duplication.
+A quick summary of the GSourceFuncs API:
+- prepare() is called each event loop iteration before waiting for file
+  descriptors and timers.
+- check() is called to determine whether events are ready to be
+  dispatched after waiting.
+- dispatch() is called to process events.
+
+More details here: https://docs.gtk.org/glib/struct.SourceFuncs.html
+
+Move the ppoll(2)-specific code from aio-posix.c into fdmon-poll.c and
+also implement epoll(7)- and io_uring(7)-specific file descriptor
+monitoring code for glib event loops.
+
+Note that it's still faster to use aio_poll() rather than the glib event
+loop since glib waits for file descriptor activity with ppoll(2) and
+does not support adaptive polling. But at least epoll(7) and io_uring(7)
+now work in glib event loops.
+
+Splitting this into multiple commits without temporarily breaking
+AioContext proved difficult so this commit makes all the changes. The
+next commit will remove the aio_context_use_g_source() API because it is
+no longer needed.
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- include/block/aio.h     |   7 -
- include/block/raw-aio.h |   5 -
- block/file-posix.c      |  38 ++--
- block/io_uring.c        | 489 ++++++++++------------------------------
- stubs/io_uring.c        |  32 ---
- util/async.c            |  35 ---
- util/fdmon-io_uring.c   |   6 +
- block/trace-events      |  12 +-
- stubs/meson.build       |   3 -
- util/trace-events       |   4 +
- 10 files changed, 139 insertions(+), 492 deletions(-)
- delete mode 100644 stubs/io_uring.c
+ include/block/aio.h   | 36 ++++++++++++++++++
+ util/aio-posix.h      |  5 +++
+ tests/unit/test-aio.c |  7 +++-
+ util/aio-posix.c      | 69 ++++++++-------------------------
+ util/fdmon-epoll.c    | 52 ++++++++++++++++++++++---
+ util/fdmon-io_uring.c | 44 +++++++++++++++++++++-
+ util/fdmon-poll.c     | 88 ++++++++++++++++++++++++++++++++++++++++++-
+ 7 files changed, 239 insertions(+), 62 deletions(-)
 
 diff --git a/include/block/aio.h b/include/block/aio.h
-index 95beef28c3..fbb45cca74 100644
+index 99ff48420b..39ed86d14d 100644
 --- a/include/block/aio.h
 +++ b/include/block/aio.h
-@@ -291,8 +291,6 @@ struct AioContext {
-     struct LinuxAioState *linux_aio;
- #endif
- #ifdef CONFIG_LINUX_IO_URING
--    LuringState *linux_io_uring;
--
+@@ -106,6 +106,38 @@ typedef struct {
+      * Returns: true if ->wait() should be called, false otherwise.
+      */
+     bool (*need_wait)(AioContext *ctx);
++
++    /*
++     * gsource_prepare:
++     * @ctx: the AioContext
++     *
++     * Prepare for the glib event loop to wait for events instead of the usual
++     * ->wait() call. See glib's GSourceFuncs->prepare().
++     */
++    void (*gsource_prepare)(AioContext *ctx);
++
++    /*
++     * gsource_check:
++     * @ctx: the AioContext
++     *
++     * Called by the glib event loop from glib's GSourceFuncs->check() after
++     * waiting for events.
++     *
++     * Returns: true when ready to be dispatched.
++     */
++    bool (*gsource_check)(AioContext *ctx);
++
++    /*
++     * gsource_dispatch:
++     * @ctx: the AioContext
++     * @ready_list: list for handlers that become ready
++     *
++     * Place ready AioHandlers on ready_list. Called as part of the glib event
++     * loop from glib's GSourceFuncs->dispatch().
++     *
++     * Called with list_lock incremented.
++     */
++    void (*gsource_dispatch)(AioContext *ctx, AioHandlerList *ready_list);
+ } FDMonOps;
+ 
+ /*
+@@ -222,6 +254,7 @@ struct AioContext {
      /* State for file descriptor monitoring using Linux io_uring */
      struct io_uring fdmon_io_uring;
      AioHandlerSList submit_list;
-@@ -597,11 +595,6 @@ struct LinuxAioState *aio_setup_linux_aio(AioContext *ctx, Error **errp);
- /* Return the LinuxAioState bound to this AioContext */
- struct LinuxAioState *aio_get_linux_aio(AioContext *ctx);
- 
--/* Setup the LuringState bound to this AioContext */
--LuringState *aio_setup_linux_io_uring(AioContext *ctx, Error **errp);
--
--/* Return the LuringState bound to this AioContext */
--LuringState *aio_get_linux_io_uring(AioContext *ctx);
- /**
-  * aio_timer_new_with_attrs:
-  * @ctx: the aio context
-diff --git a/include/block/raw-aio.h b/include/block/raw-aio.h
-index 6570244496..30e5fc9a9f 100644
---- a/include/block/raw-aio.h
-+++ b/include/block/raw-aio.h
-@@ -74,15 +74,10 @@ static inline bool laio_has_fua(void)
++    gpointer io_uring_fd_tag;
  #endif
- /* io_uring.c - Linux io_uring implementation */
- #ifdef CONFIG_LINUX_IO_URING
--LuringState *luring_init(Error **errp);
--void luring_cleanup(LuringState *s);
--
- /* luring_co_submit: submit I/O requests in the thread's current AioContext. */
- int coroutine_fn luring_co_submit(BlockDriverState *bs, int fd, uint64_t offset,
-                                   QEMUIOVector *qiov, int type,
-                                   BdrvRequestFlags flags);
--void luring_detach_aio_context(LuringState *s, AioContext *old_context);
--void luring_attach_aio_context(LuringState *s, AioContext *new_context);
- bool luring_has_fua(void);
+ 
+     /* TimerLists for calling timers - one per clock type.  Has its own
+@@ -254,6 +287,9 @@ struct AioContext {
+     /* epoll(7) state used when built with CONFIG_EPOLL */
+     int epollfd;
+ 
++    /* The GSource unix fd tag for epollfd */
++    gpointer epollfd_tag;
++
+     const FDMonOps *fdmon_ops;
+ };
+ 
+diff --git a/util/aio-posix.h b/util/aio-posix.h
+index 82a0201ea4..f9994ed79e 100644
+--- a/util/aio-posix.h
++++ b/util/aio-posix.h
+@@ -47,9 +47,14 @@ void aio_add_ready_handler(AioHandlerList *ready_list, AioHandler *node,
+ 
+ extern const FDMonOps fdmon_poll_ops;
+ 
++/* Switch back to poll(2). list_lock must be held. */
++void fdmon_poll_downgrade(AioContext *ctx);
++
+ #ifdef CONFIG_EPOLL_CREATE1
+ bool fdmon_epoll_try_upgrade(AioContext *ctx, unsigned npfd);
+ void fdmon_epoll_setup(AioContext *ctx);
++
++/* list_lock must be held */
+ void fdmon_epoll_disable(AioContext *ctx);
  #else
- static inline bool luring_has_fua(void)
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 9b5f08ccb2..d1f1fc3a77 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -755,14 +755,23 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
-     }
- #endif /* !defined(CONFIG_LINUX_AIO) */
+ static inline bool fdmon_epoll_try_upgrade(AioContext *ctx, unsigned npfd)
+diff --git a/tests/unit/test-aio.c b/tests/unit/test-aio.c
+index e77d86be87..010d65b79a 100644
+--- a/tests/unit/test-aio.c
++++ b/tests/unit/test-aio.c
+@@ -527,7 +527,12 @@ static void test_source_bh_delete_from_cb(void)
+     g_assert_cmpint(data1.n, ==, data1.max);
+     g_assert(data1.bh == NULL);
  
--#ifndef CONFIG_LINUX_IO_URING
-     if (s->use_linux_io_uring) {
-+#ifdef CONFIG_LINUX_IO_URING
-+        if (!aio_has_io_uring()) {
-+            error_setg(errp, "aio=io_uring was specified, but is not "
-+                             "available (disabled via io_uring_disabled "
-+                             "sysctl or blocked by container runtime "
-+                             "seccomp policy?)");
-+            ret = -EINVAL;
-+            goto fail;
-+        }
-+#else
-         error_setg(errp, "aio=io_uring was specified, but is not supported "
-                          "in this build.");
-         ret = -EINVAL;
-         goto fail;
+-    assert(g_main_context_iteration(NULL, false));
++    /*
++     * There may be up to one more iteration due to the aio_notify
++     * EventNotifier.
++     */
++    g_main_context_iteration(NULL, false);
++
+     assert(!g_main_context_iteration(NULL, false));
+ }
+ 
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index 2439cf0feb..dd135c7baa 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -70,15 +70,6 @@ static AioHandler *find_aio_handler(AioContext *ctx, int fd)
+ 
+ static bool aio_remove_fd_handler(AioContext *ctx, AioHandler *node)
+ {
+-    /* If the GSource is in the process of being destroyed then
+-     * g_source_remove_poll() causes an assertion failure.  Skip
+-     * removal in that case, because glib cleans up its state during
+-     * destruction anyway.
+-     */
+-    if (!g_source_is_destroyed(&ctx->source)) {
+-        g_source_remove_poll(&ctx->source, &node->pfd);
 -    }
- #endif /* !defined(CONFIG_LINUX_IO_URING) */
-+    }
+-
+     node->pfd.revents = 0;
+     node->poll_ready = false;
  
-     s->has_discard = true;
-     s->has_write_zeroes = true;
-@@ -2522,27 +2531,6 @@ static bool bdrv_qiov_is_aligned(BlockDriverState *bs, QEMUIOVector *qiov)
+@@ -153,7 +144,6 @@ void aio_set_fd_handler(AioContext *ctx,
+         } else {
+             new_node->pfd = node->pfd;
+         }
+-        g_source_add_poll(&ctx->source, &new_node->pfd);
+ 
+         new_node->pfd.events = (io_read ? G_IO_IN | G_IO_HUP | G_IO_ERR : 0);
+         new_node->pfd.events |= (io_write ? G_IO_OUT | G_IO_ERR : 0);
+@@ -267,37 +257,13 @@ bool aio_prepare(AioContext *ctx)
+     poll_set_started(ctx, &ready_list, false);
+     /* TODO what to do with this list? */
+ 
++    ctx->fdmon_ops->gsource_prepare(ctx);
+     return false;
+ }
+ 
+ bool aio_pending(AioContext *ctx)
+ {
+-    AioHandler *node;
+-    bool result = false;
+-
+-    /*
+-     * We have to walk very carefully in case aio_set_fd_handler is
+-     * called while we're walking.
+-     */
+-    qemu_lockcnt_inc(&ctx->list_lock);
+-
+-    QLIST_FOREACH_RCU(node, &ctx->aio_handlers, node) {
+-        int revents;
+-
+-        /* TODO should this check poll ready? */
+-        revents = node->pfd.revents & node->pfd.events;
+-        if (revents & (G_IO_IN | G_IO_HUP | G_IO_ERR) && node->io_read) {
+-            result = true;
+-            break;
+-        }
+-        if (revents & (G_IO_OUT | G_IO_ERR) && node->io_write) {
+-            result = true;
+-            break;
+-        }
+-    }
+-    qemu_lockcnt_dec(&ctx->list_lock);
+-
+-    return result;
++    return ctx->fdmon_ops->gsource_check(ctx);
+ }
+ 
+ static void aio_free_deleted_handlers(AioContext *ctx)
+@@ -390,10 +356,6 @@ static bool aio_dispatch_handler(AioContext *ctx, AioHandler *node)
+     return progress;
+ }
+ 
+-/*
+- * If we have a list of ready handlers then this is more efficient than
+- * scanning all handlers with aio_dispatch_handlers().
+- */
+ static bool aio_dispatch_ready_handlers(AioContext *ctx,
+                                         AioHandlerList *ready_list,
+                                         int64_t block_ns)
+@@ -417,24 +379,18 @@ static bool aio_dispatch_ready_handlers(AioContext *ctx,
+     return progress;
+ }
+ 
+-/* Slower than aio_dispatch_ready_handlers() but only used via glib */
+-static bool aio_dispatch_handlers(AioContext *ctx)
+-{
+-    AioHandler *node, *tmp;
+-    bool progress = false;
+-
+-    QLIST_FOREACH_SAFE_RCU(node, &ctx->aio_handlers, node, tmp) {
+-        progress = aio_dispatch_handler(ctx, node) || progress;
+-    }
+-
+-    return progress;
+-}
+-
+ void aio_dispatch(AioContext *ctx)
+ {
++    AioHandlerList ready_list = QLIST_HEAD_INITIALIZER(ready_list);
++
+     qemu_lockcnt_inc(&ctx->list_lock);
+     aio_bh_poll(ctx);
+-    aio_dispatch_handlers(ctx);
++
++    ctx->fdmon_ops->gsource_dispatch(ctx, &ready_list);
++
++    /* block_ns is 0 because polling is disabled in the glib event loop */
++    aio_dispatch_ready_handlers(ctx, &ready_list, 0);
++
+     aio_free_deleted_handlers(ctx);
+     qemu_lockcnt_dec(&ctx->list_lock);
+ 
+@@ -759,6 +715,7 @@ void aio_context_setup(AioContext *ctx)
+ {
+     ctx->fdmon_ops = &fdmon_poll_ops;
+     ctx->epollfd = -1;
++    ctx->epollfd_tag = NULL;
+ 
+     /* Use the fastest fd monitoring implementation if available */
+     if (fdmon_io_uring_setup(ctx)) {
+@@ -771,7 +728,11 @@ void aio_context_setup(AioContext *ctx)
+ void aio_context_destroy(AioContext *ctx)
+ {
+     fdmon_io_uring_destroy(ctx);
++
++    qemu_lockcnt_lock(&ctx->list_lock);
+     fdmon_epoll_disable(ctx);
++    qemu_lockcnt_unlock(&ctx->list_lock);
++
+     aio_free_deleted_handlers(ctx);
+ }
+ 
+diff --git a/util/fdmon-epoll.c b/util/fdmon-epoll.c
+index 9fb8800dde..0e78baa634 100644
+--- a/util/fdmon-epoll.c
++++ b/util/fdmon-epoll.c
+@@ -19,8 +19,12 @@ void fdmon_epoll_disable(AioContext *ctx)
+         ctx->epollfd = -1;
+     }
+ 
+-    /* Switch back */
+-    ctx->fdmon_ops = &fdmon_poll_ops;
++    if (ctx->epollfd_tag) {
++        g_source_remove_unix_fd(&ctx->source, ctx->epollfd_tag);
++        ctx->epollfd_tag = NULL;
++    }
++
++    fdmon_poll_downgrade(ctx);
+ }
+ 
+ static inline int epoll_events_from_pfd(int pfd_events)
+@@ -93,10 +97,47 @@ out:
+     return ret;
+ }
+ 
++static void fdmon_epoll_gsource_prepare(AioContext *ctx)
++{
++    /* Do nothing */
++}
++
++static bool fdmon_epoll_gsource_check(AioContext *ctx)
++{
++    return g_source_query_unix_fd(&ctx->source, ctx->epollfd_tag) & G_IO_IN;
++}
++
++static void fdmon_epoll_gsource_dispatch(AioContext *ctx,
++                                         AioHandlerList *ready_list)
++{
++    AioHandler *node;
++    int ret;
++    struct epoll_event events[128];
++
++    /* Collect events and process them */
++    ret = epoll_wait(ctx->epollfd, events, ARRAY_SIZE(events), 0);
++    if (ret <= 0) {
++        return;
++    }
++    for (int i = 0; i < ret; i++) {
++        int ev = events[i].events;
++        int revents = (ev & EPOLLIN ? G_IO_IN : 0) |
++                      (ev & EPOLLOUT ? G_IO_OUT : 0) |
++                      (ev & EPOLLHUP ? G_IO_HUP : 0) |
++                      (ev & EPOLLERR ? G_IO_ERR : 0);
++
++        node = events[i].data.ptr;
++        aio_add_ready_handler(ready_list, node, revents);
++    }
++}
++
+ static const FDMonOps fdmon_epoll_ops = {
+     .update = fdmon_epoll_update,
+     .wait = fdmon_epoll_wait,
+     .need_wait = aio_poll_disabled,
++    .gsource_prepare = fdmon_epoll_gsource_prepare,
++    .gsource_check = fdmon_epoll_gsource_check,
++    .gsource_dispatch = fdmon_epoll_gsource_dispatch,
+ };
+ 
+ static bool fdmon_epoll_try_enable(AioContext *ctx)
+@@ -118,6 +159,8 @@ static bool fdmon_epoll_try_enable(AioContext *ctx)
+     }
+ 
+     ctx->fdmon_ops = &fdmon_epoll_ops;
++    ctx->epollfd_tag = g_source_add_unix_fd(&ctx->source, ctx->epollfd,
++                                            G_IO_IN);
      return true;
  }
  
--#ifdef CONFIG_LINUX_IO_URING
--static inline bool raw_check_linux_io_uring(BDRVRawState *s)
--{
--    Error *local_err = NULL;
--    AioContext *ctx;
--
--    if (!s->use_linux_io_uring) {
--        return false;
--    }
--
--    ctx = qemu_get_current_aio_context();
--    if (unlikely(!aio_setup_linux_io_uring(ctx, &local_err))) {
--        error_reportf_err(local_err, "Unable to use linux io_uring, "
--                                     "falling back to thread pool: ");
--        s->use_linux_io_uring = false;
--        return false;
--    }
--    return true;
--}
--#endif
--
- #ifdef CONFIG_LINUX_AIO
- static inline bool raw_check_linux_aio(BDRVRawState *s)
- {
-@@ -2595,7 +2583,7 @@ static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
-     if (s->needs_alignment && !bdrv_qiov_is_aligned(bs, qiov)) {
-         type |= QEMU_AIO_MISALIGNED;
- #ifdef CONFIG_LINUX_IO_URING
--    } else if (raw_check_linux_io_uring(s)) {
-+    } else if (s->use_linux_io_uring) {
-         assert(qiov->size == bytes);
-         ret = luring_co_submit(bs, s->fd, offset, qiov, type, flags);
-         goto out;
-@@ -2692,7 +2680,7 @@ static int coroutine_fn raw_co_flush_to_disk(BlockDriverState *bs)
-     };
- 
- #ifdef CONFIG_LINUX_IO_URING
--    if (raw_check_linux_io_uring(s)) {
-+    if (s->use_linux_io_uring) {
-         return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
+@@ -139,12 +182,11 @@ bool fdmon_epoll_try_upgrade(AioContext *ctx, unsigned npfd)
      }
- #endif
-diff --git a/block/io_uring.c b/block/io_uring.c
-index dd4f304910..dd930ee57e 100644
---- a/block/io_uring.c
-+++ b/block/io_uring.c
-@@ -11,28 +11,20 @@
- #include "qemu/osdep.h"
- #include <liburing.h>
- #include "block/aio.h"
--#include "qemu/queue.h"
- #include "block/block.h"
- #include "block/raw-aio.h"
- #include "qemu/coroutine.h"
--#include "qemu/defer-call.h"
--#include "qapi/error.h"
- #include "system/block-backend.h"
- #include "trace.h"
  
--/* Only used for assertions.  */
--#include "qemu/coroutine_int.h"
+     ok = fdmon_epoll_try_enable(ctx);
 -
--/* io_uring ring size */
--#define MAX_ENTRIES 128
+-    qemu_lockcnt_inc_and_unlock(&ctx->list_lock);
 -
--typedef struct LuringAIOCB {
-+typedef struct {
-     Coroutine *co;
--    struct io_uring_sqe sqeq;
--    ssize_t ret;
-     QEMUIOVector *qiov;
--    bool is_read;
--    QSIMPLEQ_ENTRY(LuringAIOCB) next;
-+    uint64_t offset;
-+    ssize_t ret;
-+    int type;
-+    int fd;
-+    BdrvRequestFlags flags;
- 
-     /*
-      * Buffered reads may require resubmission, see
-@@ -40,36 +32,51 @@ typedef struct LuringAIOCB {
-      */
-     int total_read;
-     QEMUIOVector resubmit_qiov;
--} LuringAIOCB;
- 
--typedef struct LuringQueue {
--    unsigned int in_queue;
--    unsigned int in_flight;
--    bool blocked;
--    QSIMPLEQ_HEAD(, LuringAIOCB) submit_queue;
--} LuringQueue;
-+    CqeHandler cqe_handler;
-+} LuringRequest;
- 
--struct LuringState {
--    AioContext *aio_context;
--
--    struct io_uring ring;
--
--    /* No locking required, only accessed from AioContext home thread */
--    LuringQueue io_q;
--
--    QEMUBH *completion_bh;
--};
--
--/**
-- * luring_resubmit:
-- *
-- * Resubmit a request by appending it to submit_queue.  The caller must ensure
-- * that ioq_submit() is called later so that submit_queue requests are started.
-- */
--static void luring_resubmit(LuringState *s, LuringAIOCB *luringcb)
-+static void luring_prep_sqe(struct io_uring_sqe *sqe, void *opaque)
- {
--    QSIMPLEQ_INSERT_TAIL(&s->io_q.submit_queue, luringcb, next);
--    s->io_q.in_queue++;
-+    LuringRequest *req = opaque;
-+    QEMUIOVector *qiov = req->qiov;
-+    uint64_t offset = req->offset;
-+    int fd = req->fd;
-+    BdrvRequestFlags flags = req->flags;
+     if (!ok) {
+         fdmon_epoll_disable(ctx);
+     }
 +
-+    switch (req->type) {
-+    case QEMU_AIO_WRITE:
-+#ifdef HAVE_IO_URING_PREP_WRITEV2
-+    {
-+        int luring_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
-+        io_uring_prep_writev2(sqe, fd, qiov->iov,
-+                              qiov->niov, offset, luring_flags);
-+    }
-+#else
-+        assert(flags == 0);
-+        io_uring_prep_writev(sqe, fd, qiov->iov, qiov->niov, offset);
-+#endif
-+        break;
-+    case QEMU_AIO_ZONE_APPEND:
-+        io_uring_prep_writev(sqe, fd, qiov->iov, qiov->niov, offset);
-+        break;
-+    case QEMU_AIO_READ:
-+    {
-+        if (req->resubmit_qiov.iov != NULL) {
-+            qiov = &req->resubmit_qiov;
-+        }
-+        io_uring_prep_readv(sqe, fd, qiov->iov, qiov->niov,
-+                            offset + req->total_read);
-+        break;
-+    }
-+    case QEMU_AIO_FLUSH:
-+        io_uring_prep_fsync(sqe, fd, IORING_FSYNC_DATASYNC);
-+        break;
-+    default:
-+        fprintf(stderr, "%s: invalid AIO request type, aborting 0x%x.\n",
-+                        __func__, req->type);
-+        abort();
-+    }
++    qemu_lockcnt_inc_and_unlock(&ctx->list_lock);
+     return ok;
  }
  
- /**
-@@ -78,385 +85,115 @@ static void luring_resubmit(LuringState *s, LuringAIOCB *luringcb)
-  * Short reads are rare but may occur. The remaining read request needs to be
-  * resubmitted.
-  */
--static void luring_resubmit_short_read(LuringState *s, LuringAIOCB *luringcb,
--                                       int nread)
-+static void luring_resubmit_short_read(LuringRequest *req, int nread)
- {
-     QEMUIOVector *resubmit_qiov;
-     size_t remaining;
- 
--    trace_luring_resubmit_short_read(s, luringcb, nread);
-+    trace_luring_resubmit_short_read(req, nread);
- 
-     /* Update read position */
--    luringcb->total_read += nread;
--    remaining = luringcb->qiov->size - luringcb->total_read;
-+    req->total_read += nread;
-+    remaining = req->qiov->size - req->total_read;
- 
-     /* Shorten qiov */
--    resubmit_qiov = &luringcb->resubmit_qiov;
-+    resubmit_qiov = &req->resubmit_qiov;
-     if (resubmit_qiov->iov == NULL) {
--        qemu_iovec_init(resubmit_qiov, luringcb->qiov->niov);
-+        qemu_iovec_init(resubmit_qiov, req->qiov->niov);
-     } else {
-         qemu_iovec_reset(resubmit_qiov);
-     }
--    qemu_iovec_concat(resubmit_qiov, luringcb->qiov, luringcb->total_read,
--                      remaining);
-+    qemu_iovec_concat(resubmit_qiov, req->qiov, req->total_read, remaining);
- 
--    /* Update sqe */
--    luringcb->sqeq.off += nread;
--    luringcb->sqeq.addr = (uintptr_t)luringcb->resubmit_qiov.iov;
--    luringcb->sqeq.len = luringcb->resubmit_qiov.niov;
--
--    luring_resubmit(s, luringcb);
-+    aio_add_sqe(luring_prep_sqe, req, &req->cqe_handler);
- }
- 
--/**
-- * luring_process_completions:
-- * @s: AIO state
-- *
-- * Fetches completed I/O requests, consumes cqes and invokes their callbacks
-- * The function is somewhat tricky because it supports nested event loops, for
-- * example when a request callback invokes aio_poll().
-- *
-- * Function schedules BH completion so it  can be called again in a nested
-- * event loop.  When there are no events left  to complete the BH is being
-- * canceled.
-- *
-- */
--static void luring_process_completions(LuringState *s)
-+static void luring_cqe_handler(CqeHandler *cqe_handler)
- {
--    struct io_uring_cqe *cqes;
--    int total_bytes;
-+    LuringRequest *req = container_of(cqe_handler, LuringRequest, cqe_handler);
-+    int ret = cqe_handler->cqe.res;
- 
--    defer_call_begin();
-+    trace_luring_cqe_handler(req, ret);
- 
--    /*
--     * Request completion callbacks can run the nested event loop.
--     * Schedule ourselves so the nested event loop will "see" remaining
--     * completed requests and process them.  Without this, completion
--     * callbacks that wait for other requests using a nested event loop
--     * would hang forever.
--     *
--     * This workaround is needed because io_uring uses poll_wait, which
--     * is woken up when new events are added to the uring, thus polling on
--     * the same uring fd will block unless more events are received.
--     *
--     * Other leaf block drivers (drivers that access the data themselves)
--     * are networking based, so they poll sockets for data and run the
--     * correct coroutine.
--     */
--    qemu_bh_schedule(s->completion_bh);
--
--    while (io_uring_peek_cqe(&s->ring, &cqes) == 0) {
--        LuringAIOCB *luringcb;
--        int ret;
--
--        if (!cqes) {
--            break;
-+    if (ret < 0) {
-+        /*
-+         * Only writev/readv/fsync requests on regular files or host block
-+         * devices are submitted. Therefore -EAGAIN is not expected but it's
-+         * known to happen sometimes with Linux SCSI. Submit again and hope
-+         * the request completes successfully.
-+         *
-+         * For more information, see:
-+         * https://lore.kernel.org/io-uring/20210727165811.284510-3-axboe@kernel.dk/T/#u
-+         *
-+         * If the code is changed to submit other types of requests in the
-+         * future, then this workaround may need to be extended to deal with
-+         * genuine -EAGAIN results that should not be resubmitted
-+         * immediately.
-+         */
-+        if (ret == -EINTR || ret == -EAGAIN) {
-+            aio_add_sqe(luring_prep_sqe, req, &req->cqe_handler);
-+            return;
-         }
--
--        luringcb = io_uring_cqe_get_data(cqes);
--        ret = cqes->res;
--        io_uring_cqe_seen(&s->ring, cqes);
--        cqes = NULL;
--
--        /* Change counters one-by-one because we can be nested. */
--        s->io_q.in_flight--;
--        trace_luring_process_completion(s, luringcb, ret);
--
-+    } else if (req->qiov) {
-         /* total_read is non-zero only for resubmitted read requests */
--        total_bytes = ret + luringcb->total_read;
-+        int total_bytes = ret + req->total_read;
- 
--        if (ret < 0) {
--            /*
--             * Only writev/readv/fsync requests on regular files or host block
--             * devices are submitted. Therefore -EAGAIN is not expected but it's
--             * known to happen sometimes with Linux SCSI. Submit again and hope
--             * the request completes successfully.
--             *
--             * For more information, see:
--             * https://lore.kernel.org/io-uring/20210727165811.284510-3-axboe@kernel.dk/T/#u
--             *
--             * If the code is changed to submit other types of requests in the
--             * future, then this workaround may need to be extended to deal with
--             * genuine -EAGAIN results that should not be resubmitted
--             * immediately.
--             */
--            if (ret == -EINTR || ret == -EAGAIN) {
--                luring_resubmit(s, luringcb);
--                continue;
--            }
--        } else if (!luringcb->qiov) {
--            goto end;
--        } else if (total_bytes == luringcb->qiov->size) {
-+        if (total_bytes == req->qiov->size) {
-             ret = 0;
--        /* Only read/write */
-         } else {
-             /* Short Read/Write */
--            if (luringcb->is_read) {
-+            if (req->type == QEMU_AIO_READ) {
-                 if (ret > 0) {
--                    luring_resubmit_short_read(s, luringcb, ret);
--                    continue;
--                } else {
--                    /* Pad with zeroes */
--                    qemu_iovec_memset(luringcb->qiov, total_bytes, 0,
--                                      luringcb->qiov->size - total_bytes);
--                    ret = 0;
-+                    luring_resubmit_short_read(req, ret);
-+                    return;
-                 }
-+
-+                /* Pad with zeroes */
-+                qemu_iovec_memset(req->qiov, total_bytes, 0,
-+                                  req->qiov->size - total_bytes);
-+                ret = 0;
-             } else {
-                 ret = -ENOSPC;
-             }
-         }
--end:
--        luringcb->ret = ret;
--        qemu_iovec_destroy(&luringcb->resubmit_qiov);
--
--        /*
--         * If the coroutine is already entered it must be in ioq_submit()
--         * and will notice luringcb->ret has been filled in when it
--         * eventually runs later. Coroutines cannot be entered recursively
--         * so avoid doing that!
--         */
--        assert(luringcb->co->ctx == s->aio_context);
--        if (!qemu_coroutine_entered(luringcb->co)) {
--            aio_co_wake(luringcb->co);
--        }
-     }
- 
--    qemu_bh_cancel(s->completion_bh);
-+    req->ret = ret;
-+    qemu_iovec_destroy(&req->resubmit_qiov);
- 
--    defer_call_end();
--}
--
--static int ioq_submit(LuringState *s)
--{
--    int ret = 0;
--    LuringAIOCB *luringcb, *luringcb_next;
--
--    while (s->io_q.in_queue > 0) {
--        /*
--         * Try to fetch sqes from the ring for requests waiting in
--         * the overflow queue
--         */
--        QSIMPLEQ_FOREACH_SAFE(luringcb, &s->io_q.submit_queue, next,
--                              luringcb_next) {
--            struct io_uring_sqe *sqes = io_uring_get_sqe(&s->ring);
--            if (!sqes) {
--                break;
--            }
--            /* Prep sqe for submission */
--            *sqes = luringcb->sqeq;
--            QSIMPLEQ_REMOVE_HEAD(&s->io_q.submit_queue, next);
--        }
--        ret = io_uring_submit(&s->ring);
--        trace_luring_io_uring_submit(s, ret);
--        /* Prevent infinite loop if submission is refused */
--        if (ret <= 0) {
--            if (ret == -EAGAIN || ret == -EINTR) {
--                continue;
--            }
--            break;
--        }
--        s->io_q.in_flight += ret;
--        s->io_q.in_queue  -= ret;
--    }
--    s->io_q.blocked = (s->io_q.in_queue > 0);
--
--    if (s->io_q.in_flight) {
--        /*
--         * We can try to complete something just right away if there are
--         * still requests in-flight.
--         */
--        luring_process_completions(s);
--    }
--    return ret;
--}
--
--static void luring_process_completions_and_submit(LuringState *s)
--{
--    luring_process_completions(s);
--
--    if (s->io_q.in_queue > 0) {
--        ioq_submit(s);
-+    /*
-+     * If the coroutine is already entered it must be in luring_co_submit() and
-+     * will notice req->ret has been filled in when it eventually runs later.
-+     * Coroutines cannot be entered recursively so avoid doing that!
-+     */
-+    if (!qemu_coroutine_entered(req->co)) {
-+        aio_co_wake(req->co);
-     }
- }
- 
--static void qemu_luring_completion_bh(void *opaque)
-+int coroutine_fn luring_co_submit(BlockDriverState *bs, int fd,
-+                                  uint64_t offset, QEMUIOVector *qiov,
-+                                  int type, BdrvRequestFlags flags)
- {
--    LuringState *s = opaque;
--    luring_process_completions_and_submit(s);
--}
--
--static void qemu_luring_completion_cb(void *opaque)
--{
--    LuringState *s = opaque;
--    luring_process_completions_and_submit(s);
--}
--
--static bool qemu_luring_poll_cb(void *opaque)
--{
--    LuringState *s = opaque;
--
--    return io_uring_cq_ready(&s->ring);
--}
--
--static void qemu_luring_poll_ready(void *opaque)
--{
--    LuringState *s = opaque;
--
--    luring_process_completions_and_submit(s);
--}
--
--static void ioq_init(LuringQueue *io_q)
--{
--    QSIMPLEQ_INIT(&io_q->submit_queue);
--    io_q->in_queue = 0;
--    io_q->in_flight = 0;
--    io_q->blocked = false;
--}
--
--static void luring_deferred_fn(void *opaque)
--{
--    LuringState *s = opaque;
--    trace_luring_unplug_fn(s, s->io_q.blocked, s->io_q.in_queue,
--                           s->io_q.in_flight);
--    if (!s->io_q.blocked && s->io_q.in_queue > 0) {
--        ioq_submit(s);
--    }
--}
--
--/**
-- * luring_do_submit:
-- * @fd: file descriptor for I/O
-- * @luringcb: AIO control block
-- * @s: AIO state
-- * @offset: offset for request
-- * @type: type of request
-- *
-- * Fetches sqes from ring, adds to pending queue and preps them
-- *
-- */
--static int luring_do_submit(int fd, LuringAIOCB *luringcb, LuringState *s,
--                            uint64_t offset, int type, BdrvRequestFlags flags)
--{
--    int ret;
--    struct io_uring_sqe *sqes = &luringcb->sqeq;
--
--    switch (type) {
--    case QEMU_AIO_WRITE:
--#ifdef HAVE_IO_URING_PREP_WRITEV2
--    {
--        int luring_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
--        io_uring_prep_writev2(sqes, fd, luringcb->qiov->iov,
--                              luringcb->qiov->niov, offset, luring_flags);
--    }
--#else
--        assert(flags == 0);
--        io_uring_prep_writev(sqes, fd, luringcb->qiov->iov,
--                             luringcb->qiov->niov, offset);
--#endif
--        break;
--    case QEMU_AIO_ZONE_APPEND:
--        io_uring_prep_writev(sqes, fd, luringcb->qiov->iov,
--                             luringcb->qiov->niov, offset);
--        break;
--    case QEMU_AIO_READ:
--        io_uring_prep_readv(sqes, fd, luringcb->qiov->iov,
--                            luringcb->qiov->niov, offset);
--        break;
--    case QEMU_AIO_FLUSH:
--        io_uring_prep_fsync(sqes, fd, IORING_FSYNC_DATASYNC);
--        break;
--    default:
--        fprintf(stderr, "%s: invalid AIO request type, aborting 0x%x.\n",
--                        __func__, type);
--        abort();
--    }
--    io_uring_sqe_set_data(sqes, luringcb);
--
--    QSIMPLEQ_INSERT_TAIL(&s->io_q.submit_queue, luringcb, next);
--    s->io_q.in_queue++;
--    trace_luring_do_submit(s, s->io_q.blocked, s->io_q.in_queue,
--                           s->io_q.in_flight);
--    if (!s->io_q.blocked) {
--        if (s->io_q.in_flight + s->io_q.in_queue >= MAX_ENTRIES) {
--            ret = ioq_submit(s);
--            trace_luring_do_submit_done(s, ret);
--            return ret;
--        }
--
--        defer_call(luring_deferred_fn, s);
--    }
--    return 0;
--}
--
--int coroutine_fn luring_co_submit(BlockDriverState *bs, int fd, uint64_t offset,
--                                  QEMUIOVector *qiov, int type,
--                                  BdrvRequestFlags flags)
--{
--    int ret;
--    AioContext *ctx = qemu_get_current_aio_context();
--    LuringState *s = aio_get_linux_io_uring(ctx);
--    LuringAIOCB luringcb = {
-+    LuringRequest req = {
-         .co         = qemu_coroutine_self(),
--        .ret        = -EINPROGRESS,
-         .qiov       = qiov,
--        .is_read    = (type == QEMU_AIO_READ),
-+        .ret        = -EINPROGRESS,
-+        .type       = type,
-+        .fd         = fd,
-+        .offset     = offset,
-+        .flags      = flags,
-     };
--    trace_luring_co_submit(bs, s, &luringcb, fd, offset, qiov ? qiov->size : 0,
--                           type);
--    ret = luring_do_submit(fd, &luringcb, s, offset, type, flags);
- 
--    if (ret < 0) {
--        return ret;
--    }
-+    req.cqe_handler.cb = luring_cqe_handler;
- 
--    if (luringcb.ret == -EINPROGRESS) {
-+    trace_luring_co_submit(bs, &req, fd, offset, qiov ? qiov->size : 0, type);
-+    aio_add_sqe(luring_prep_sqe, &req, &req.cqe_handler);
-+
-+    if (req.ret == -EINPROGRESS) {
-         qemu_coroutine_yield();
-     }
--    return luringcb.ret;
--}
--
--void luring_detach_aio_context(LuringState *s, AioContext *old_context)
--{
--    aio_set_fd_handler(old_context, s->ring.ring_fd,
--                       NULL, NULL, NULL, NULL, s);
--    qemu_bh_delete(s->completion_bh);
--    s->aio_context = NULL;
--}
--
--void luring_attach_aio_context(LuringState *s, AioContext *new_context)
--{
--    s->aio_context = new_context;
--    s->completion_bh = aio_bh_new(new_context, qemu_luring_completion_bh, s);
--    aio_set_fd_handler(s->aio_context, s->ring.ring_fd,
--                       qemu_luring_completion_cb, NULL,
--                       qemu_luring_poll_cb, qemu_luring_poll_ready, s);
--}
--
--LuringState *luring_init(Error **errp)
--{
--    int rc;
--    LuringState *s = g_new0(LuringState, 1);
--    struct io_uring *ring = &s->ring;
--
--    trace_luring_init_state(s, sizeof(*s));
--
--    rc = io_uring_queue_init(MAX_ENTRIES, ring, 0);
--    if (rc < 0) {
--        error_setg_errno(errp, -rc, "failed to init linux io_uring ring");
--        g_free(s);
--        return NULL;
--    }
--
--    ioq_init(&s->io_q);
--    return s;
--
--}
--
--void luring_cleanup(LuringState *s)
--{
--    io_uring_queue_exit(&s->ring);
--    trace_luring_cleanup_state(s);
--    g_free(s);
-+    return req.ret;
- }
- 
- bool luring_has_fua(void)
-diff --git a/stubs/io_uring.c b/stubs/io_uring.c
-deleted file mode 100644
-index 622d1e4648..0000000000
---- a/stubs/io_uring.c
-+++ /dev/null
-@@ -1,32 +0,0 @@
--/*
-- * Linux io_uring support.
-- *
-- * Copyright (C) 2009 IBM, Corp.
-- * Copyright (C) 2009 Red Hat, Inc.
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- */
--#include "qemu/osdep.h"
--#include "block/aio.h"
--#include "block/raw-aio.h"
--
--void luring_detach_aio_context(LuringState *s, AioContext *old_context)
--{
--    abort();
--}
--
--void luring_attach_aio_context(LuringState *s, AioContext *new_context)
--{
--    abort();
--}
--
--LuringState *luring_init(Error **errp)
--{
--    abort();
--}
--
--void luring_cleanup(LuringState *s)
--{
--    abort();
--}
-diff --git a/util/async.c b/util/async.c
-index bba9622e97..d66575acd2 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -383,14 +383,6 @@ aio_ctx_finalize(GSource     *source)
-     }
- #endif
- 
--#ifdef CONFIG_LINUX_IO_URING
--    if (ctx->linux_io_uring) {
--        luring_detach_aio_context(ctx->linux_io_uring, ctx);
--        luring_cleanup(ctx->linux_io_uring);
--        ctx->linux_io_uring = NULL;
--    }
--#endif
--
-     assert(QSLIST_EMPTY(&ctx->scheduled_coroutines));
-     qemu_bh_delete(ctx->co_schedule_bh);
- 
-@@ -465,29 +457,6 @@ LinuxAioState *aio_get_linux_aio(AioContext *ctx)
- }
- #endif
- 
--#ifdef CONFIG_LINUX_IO_URING
--LuringState *aio_setup_linux_io_uring(AioContext *ctx, Error **errp)
--{
--    if (ctx->linux_io_uring) {
--        return ctx->linux_io_uring;
--    }
--
--    ctx->linux_io_uring = luring_init(errp);
--    if (!ctx->linux_io_uring) {
--        return NULL;
--    }
--
--    luring_attach_aio_context(ctx->linux_io_uring, ctx);
--    return ctx->linux_io_uring;
--}
--
--LuringState *aio_get_linux_io_uring(AioContext *ctx)
--{
--    assert(ctx->linux_io_uring);
--    return ctx->linux_io_uring;
--}
--#endif
--
- void aio_notify(AioContext *ctx)
- {
-     /*
-@@ -611,10 +580,6 @@ AioContext *aio_context_new(Error **errp)
-     ctx->linux_aio = NULL;
- #endif
- 
--#ifdef CONFIG_LINUX_IO_URING
--    ctx->linux_io_uring = NULL;
--#endif
--
-     ctx->thread_pool = NULL;
-     qemu_rec_mutex_init(&ctx->lock);
-     timerlistgroup_init(&ctx->tlg, aio_timerlist_notify, ctx);
 diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index 03a07a4caf..2c64f80e5f 100644
+index 6cd665e565..2092d08d24 100644
 --- a/util/fdmon-io_uring.c
 +++ b/util/fdmon-io_uring.c
-@@ -48,6 +48,7 @@
- #include "qapi/error.h"
- #include "qemu/rcu_queue.h"
- #include "aio-posix.h"
-+#include "trace.h"
+@@ -268,6 +268,11 @@ static int process_cq_ring(AioContext *ctx, AioHandlerList *ready_list)
+     unsigned num_ready = 0;
+     unsigned head;
  
- enum {
-     FDMON_IO_URING_ENTRIES  = 128, /* sq/cq ring size */
-@@ -174,6 +175,9 @@ static void fdmon_io_uring_add_sqe(AioContext *ctx,
- 
-     prep_sqe(sqe, opaque);
-     io_uring_sqe_set_data(sqe, cqe_handler);
++    /* If the CQ overflowed then fetch CQEs with a syscall */
++    if (io_uring_cq_has_overflow(ring)) {
++        io_uring_get_events(ring);
++    }
 +
-+    trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd, sqe->off,
-+                                 cqe_handler);
+     io_uring_for_each_cqe(ring, head, cqe) {
+         if (process_cqe(ctx, ready_list, cqe)) {
+             num_ready++;
+@@ -280,6 +285,30 @@ static int process_cq_ring(AioContext *ctx, AioHandlerList *ready_list)
+     return num_ready;
  }
  
- static void fdmon_special_cqe_handler(CqeHandler *cqe_handler)
-@@ -290,6 +294,8 @@ static void cqe_handler_bh(void *opaque)
- 
-         QSIMPLEQ_REMOVE_HEAD(ready_list, next);
- 
-+        trace_fdmon_io_uring_cqe_handler(ctx, cqe_handler,
-+                                         cqe_handler->cqe.res);
-         cqe_handler->cb(cqe_handler);
-     }
- 
-diff --git a/block/trace-events b/block/trace-events
-index 8e789e1f12..c9b4736ff8 100644
---- a/block/trace-events
-+++ b/block/trace-events
-@@ -62,15 +62,9 @@ qmp_block_stream(void *bs) "bs %p"
- file_paio_submit(void *acb, void *opaque, int64_t offset, int count, int type) "acb %p opaque %p offset %"PRId64" count %d type %d"
- 
- # io_uring.c
--luring_init_state(void *s, size_t size) "s %p size %zu"
--luring_cleanup_state(void *s) "%p freed"
--luring_unplug_fn(void *s, int blocked, int queued, int inflight) "LuringState %p blocked %d queued %d inflight %d"
--luring_do_submit(void *s, int blocked, int queued, int inflight) "LuringState %p blocked %d queued %d inflight %d"
--luring_do_submit_done(void *s, int ret) "LuringState %p submitted to kernel %d"
--luring_co_submit(void *bs, void *s, void *luringcb, int fd, uint64_t offset, size_t nbytes, int type) "bs %p s %p luringcb %p fd %d offset %" PRId64 " nbytes %zd type %d"
--luring_process_completion(void *s, void *aiocb, int ret) "LuringState %p luringcb %p ret %d"
--luring_io_uring_submit(void *s, int ret) "LuringState %p ret %d"
--luring_resubmit_short_read(void *s, void *luringcb, int nread) "LuringState %p luringcb %p nread %d"
-+luring_cqe_handler(void *req, int ret) "req %p ret %d"
-+luring_co_submit(void *bs, void *req, int fd, uint64_t offset, size_t nbytes, int type) "bs %p req %p fd %d offset %" PRId64 " nbytes %zd type %d"
-+luring_resubmit_short_read(void *req, int nread) "req %p nread %d"
- 
- # qcow2.c
- qcow2_add_task(void *co, void *bs, void *pool, const char *action, int cluster_type, uint64_t host_offset, uint64_t offset, uint64_t bytes, void *qiov, size_t qiov_offset) "co %p bs %p pool %p: %s: cluster_type %d file_cluster_offset %" PRIu64 " offset %" PRIu64 " bytes %" PRIu64 " qiov %p qiov_offset %zu"
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 63392f5e78..d157b06273 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -32,9 +32,6 @@ if have_block or have_ga
-   stub_ss.add(files('cpus-virtual-clock.c'))
-   stub_ss.add(files('icount.c'))
-   stub_ss.add(files('graph-lock.c'))
--  if linux_io_uring.found()
--    stub_ss.add(files('io_uring.c'))
--  endif
-   if libaio.found()
-     stub_ss.add(files('linux-aio.c'))
-   endif
-diff --git a/util/trace-events b/util/trace-events
-index bd8f25fb59..540d662507 100644
---- a/util/trace-events
-+++ b/util/trace-events
-@@ -24,6 +24,10 @@ buffer_move_empty(const char *buf, size_t len, const char *from) "%s: %zd bytes
- buffer_move(const char *buf, size_t len, const char *from) "%s: %zd bytes from %s"
- buffer_free(const char *buf, size_t len) "%s: capacity %zd"
- 
-+# fdmon-io_uring.c
-+fdmon_io_uring_add_sqe(void *ctx, void *opaque, int opcode, int fd, uint64_t off, void *cqe_handler) "ctx %p opaque %p opcode %d fd %d off %"PRId64" cqe_handler %p"
-+fdmon_io_uring_cqe_handler(void *ctx, void *cqe_handler, int cqe_res) "ctx %p cqe_handler %p cqe_res %d"
++/* This is where SQEs are submitted in the glib event loop */
++static void fdmon_io_uring_gsource_prepare(AioContext *ctx)
++{
++    fill_sq_ring(ctx);
++    if (io_uring_sq_ready(&ctx->fdmon_io_uring)) {
++        while (io_uring_submit(&ctx->fdmon_io_uring) == -EINTR) {
++            /* Keep trying if syscall was interrupted */
++        }
++    }
++}
 +
- # filemonitor-inotify.c
- qemu_file_monitor_add_watch(void *mon, const char *dirpath, const char *filename, void *cb, void *opaque, int64_t id) "File monitor %p add watch dir='%s' file='%s' cb=%p opaque=%p id=%" PRId64
- qemu_file_monitor_remove_watch(void *mon, const char *dirpath, int64_t id) "File monitor %p remove watch dir='%s' id=%" PRId64
++static bool fdmon_io_uring_gsource_check(AioContext *ctx)
++{
++    gpointer tag = ctx->io_uring_fd_tag;
++    return g_source_query_unix_fd(&ctx->source, tag) & G_IO_IN;
++}
++
++/* This is where CQEs are processed in the glib event loop */
++static void fdmon_io_uring_gsource_dispatch(AioContext *ctx,
++                                            AioHandlerList *ready_list)
++{
++    process_cq_ring(ctx, ready_list);
++}
++
+ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
+                                int64_t timeout)
+ {
+@@ -327,12 +356,17 @@ static const FDMonOps fdmon_io_uring_ops = {
+     .update = fdmon_io_uring_update,
+     .wait = fdmon_io_uring_wait,
+     .need_wait = fdmon_io_uring_need_wait,
++    .gsource_prepare = fdmon_io_uring_gsource_prepare,
++    .gsource_check = fdmon_io_uring_gsource_check,
++    .gsource_dispatch = fdmon_io_uring_gsource_dispatch,
+ };
+ 
+ bool fdmon_io_uring_setup(AioContext *ctx)
+ {
+     int ret;
+ 
++    ctx->io_uring_fd_tag = NULL;
++
+     ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
+     if (ret != 0) {
+         return false;
+@@ -340,6 +374,9 @@ bool fdmon_io_uring_setup(AioContext *ctx)
+ 
+     QSLIST_INIT(&ctx->submit_list);
+     ctx->fdmon_ops = &fdmon_io_uring_ops;
++    ctx->io_uring_fd_tag = g_source_add_unix_fd(&ctx->source,
++            ctx->fdmon_io_uring.ring_fd, G_IO_IN);
++
+     return true;
+ }
+ 
+@@ -364,6 +401,11 @@ void fdmon_io_uring_destroy(AioContext *ctx)
+             QSLIST_REMOVE_HEAD_RCU(&ctx->submit_list, node_submitted);
+         }
+ 
+-        ctx->fdmon_ops = &fdmon_poll_ops;
++        g_source_remove_unix_fd(&ctx->source, ctx->io_uring_fd_tag);
++        ctx->io_uring_fd_tag = NULL;
++
++        qemu_lockcnt_lock(&ctx->list_lock);
++        fdmon_poll_downgrade(ctx);
++        qemu_lockcnt_unlock(&ctx->list_lock);
+     }
+ }
+diff --git a/util/fdmon-poll.c b/util/fdmon-poll.c
+index 17df917cf9..f91dc54944 100644
+--- a/util/fdmon-poll.c
++++ b/util/fdmon-poll.c
+@@ -72,6 +72,11 @@ static int fdmon_poll_wait(AioContext *ctx, AioHandlerList *ready_list,
+ 
+     /* epoll(7) is faster above a certain number of fds */
+     if (fdmon_epoll_try_upgrade(ctx, npfd)) {
++        QLIST_FOREACH_RCU(node, &ctx->aio_handlers, node) {
++            if (!QLIST_IS_INSERTED(node, node_deleted) && node->pfd.events) {
++                g_source_remove_poll(&ctx->source, &node->pfd);
++            }
++        }
+         npfd = 0; /* we won't need pollfds[], reset npfd */
+         return ctx->fdmon_ops->wait(ctx, ready_list, timeout);
+     }
+@@ -97,11 +102,92 @@ static void fdmon_poll_update(AioContext *ctx,
+                               AioHandler *old_node,
+                               AioHandler *new_node)
+ {
+-    /* Do nothing, AioHandler already contains the state we'll need */
++    if (old_node && !new_node) {
++        /*
++         * If the GSource is in the process of being destroyed then
++         * g_source_remove_poll() causes an assertion failure.  Skip removal in
++         * that case, because glib cleans up its state during destruction
++         * anyway.
++         */
++        if (!g_source_is_destroyed(&ctx->source)) {
++            g_source_remove_poll(&ctx->source, &old_node->pfd);
++        }
++    }
++
++    if (!old_node && new_node) {
++        g_source_add_poll(&ctx->source, &new_node->pfd);
++    }
++}
++
++static void fdmon_poll_gsource_prepare(AioContext *ctx)
++{
++    /* Do nothing */
++}
++
++static bool fdmon_poll_gsource_check(AioContext *ctx)
++{
++    AioHandler *node;
++    bool result = false;
++
++    /*
++     * We have to walk very carefully in case aio_set_fd_handler is
++     * called while we're walking.
++     */
++    qemu_lockcnt_inc(&ctx->list_lock);
++
++    QLIST_FOREACH_RCU(node, &ctx->aio_handlers, node) {
++        int revents = node->pfd.revents & node->pfd.events;
++
++        if (revents & (G_IO_IN | G_IO_HUP | G_IO_ERR) && node->io_read) {
++            result = true;
++            break;
++        }
++        if (revents & (G_IO_OUT | G_IO_ERR) && node->io_write) {
++            result = true;
++            break;
++        }
++    }
++
++    qemu_lockcnt_dec(&ctx->list_lock);
++
++    return result;
++}
++
++static void fdmon_poll_gsource_dispatch(AioContext *ctx,
++                                        AioHandlerList *ready_list)
++{
++    AioHandler *node;
++
++    QLIST_FOREACH_RCU(node, &ctx->aio_handlers, node) {
++        int revents;
++
++        revents = node->pfd.revents & node->pfd.events;
++        if (revents & (G_IO_IN | G_IO_HUP | G_IO_ERR) && node->io_read) {
++            aio_add_ready_handler(ready_list, node, revents);
++        } else if (revents & (G_IO_OUT | G_IO_ERR) && node->io_write) {
++            aio_add_ready_handler(ready_list, node, revents);
++        }
++    }
+ }
+ 
+ const FDMonOps fdmon_poll_ops = {
+     .update = fdmon_poll_update,
+     .wait = fdmon_poll_wait,
+     .need_wait = aio_poll_disabled,
++    .gsource_prepare = fdmon_poll_gsource_prepare,
++    .gsource_check = fdmon_poll_gsource_check,
++    .gsource_dispatch = fdmon_poll_gsource_dispatch,
+ };
++
++void fdmon_poll_downgrade(AioContext *ctx)
++{
++    AioHandler *node;
++
++    ctx->fdmon_ops = &fdmon_poll_ops;
++
++    QLIST_FOREACH_RCU(node, &ctx->aio_handlers, node) {
++        if (!QLIST_IS_INSERTED(node, node_deleted) && node->pfd.events) {
++            g_source_add_poll(&ctx->source, &node->pfd);
++        }
++    }
++}
 -- 
 2.49.0
 
