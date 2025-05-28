@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46177C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B23C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:20:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKBwv-0000II-28; Wed, 28 May 2025 04:15:47 -0400
+	id 1uKByg-00032g-8m; Wed, 28 May 2025 04:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBvj-0007w6-IC
- for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:31 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1uKBwC-000877-BI
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 04:15:02 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBvh-0005FR-VS
- for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:31 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-442fda876a6so39615345e9.0
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:29 -0700 (PDT)
+ id 1uKBvq-0005Gp-LF
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:45 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-441d1ed82dbso48162275e9.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748420068; x=1749024868; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748420075; x=1749024875; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mpLbuX6w3ui4OqkcJtXbZ2uIaATf5Ym/Qv+poSMA20U=;
- b=FDl5QbRJANd50sGwPMyzSQYkQDA4d3oiWA+jNSzXyt3ZXl9vfG4/BpbPi0oqdfOeMv
- SnV7rWG8cf2GeobDwqb/NbCk4/LmxcIltXkmvvBB7gIUabwZLR/3vvkt1Ve6Xo3VZ34n
- xTn2CAQoO40BRmp6e+6WftO5CtUn433+Vcnc4QF7rsED0xzk9y0HAYCRss2iBjB+12/X
- e6BEksHrAyXQjSNttg2A8YnF+8WYOhR+qCjDf/Bxpij5exVMgiSRz5X6pV8Lz62equi5
- GmXFKMvqAUjh6qK4HSK5d78apnHGyPgDKMludiu8haa43BjnJkVgqYyIrfj0Gn+nIKDO
- dErw==
+ bh=4yxK7itilT3E8IopdplzU4z6K9yD5rCY6HX2ZBd1VtI=;
+ b=ryQECT1m0cGU7opE+bp8DRO2m0GzEAlVTle/rK9ujRKcie7/WJZi3QfOz/ykI3DuBF
+ 3zrnsqAya753SOsG20Csx3+MN775VgLKfNqkXLVmR3c8S9WkI1LtXsswHjStDbpthONg
+ k43g0Yzmqt+BMquJzp7yIvbyxZ6bgSgDkZYven2tMoYJHbn1uJ7RuEJkmC9ndUmqM1Vf
+ Jv5JiuO1cMNlYCIrCU9npOagDJzsUAPTM3fsinD7sk6DVHwjiEJlpKgGz2TA/mejan5l
+ aHmDirOEkjJK1cD/UbjaxfZmgiMSBKcRtNcw0Vgc4vI1iEfEjqi9ZDfCcgwDB8ScrHKC
+ 3kdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748420068; x=1749024868;
+ d=1e100.net; s=20230601; t=1748420075; x=1749024875;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mpLbuX6w3ui4OqkcJtXbZ2uIaATf5Ym/Qv+poSMA20U=;
- b=pKb7CZ/3oNS7NM7t0Lkhrftxbn3YCRviSH2K+Tz7A0dEfIS+/8yjOIFS4EL7K0g7Ze
- LTnGI3XxrWr1v54UHllMeovgTauXgqJNCRlzWMNtE/0i84/0z2VqLBfXRlKnqXODKo/7
- 1FboAKVcX27xm8GNVsw/mJ3oxfEnjjH2TIxWMGZNvKnb3glLXJ2tnLQEB+Up64l5lcnY
- SOsA5Sfpt4ypbPtdvO7j5q0jbiz7jM6Pv08AO/uwIngbnq57ilObeYh/7aPxCGcrrK+v
- /fQ1shg9Uwb3SOf5KkL9mweZVEgZm0VO7TrTsW25SnOacMxbtWRYHF0Mmf4y/7CdPN9e
- tppw==
-X-Gm-Message-State: AOJu0YwQIMcvzRO76ZCDBHekFCFflWGWtlEmSV5+4wE8cYrFcU29By4f
- rW6qyXSDtSiSig15RyMywMvQXc0RMrSgE74cIYcB69ExzzRMbvNHas1L/roYwHYu8pL347nhmpE
- s0hgCjq5U0Q==
-X-Gm-Gg: ASbGncu2YPZ3Fd7v/xnCuEYGl1GQOnU7hy3e4nr9SrQQq16HPFxDhFDrb8HNMRYodI9
- 3YE5qflmqbuI+LZPB2AUPRTXY+gddNTcSE9FUvNepXK8ldkpyyVWbA2WPvcCKQGsEIxxgW6cJ1I
- 2dyH6lYWxM621dZ3lsjYk4Rldb1dL9p4MMn4Nj7yF9bxhuVGSP7drKEVCzdrsWRY4qexeoFdmjN
- sItFaOWgVALgaWOhmpOdi9fDI3LHJcJihXFYYHXJqRtHQ6HUAlaytE9S7RgLabauAoaFXRpyK1i
- YhAdMj56WrwTVTo8kRYeul0AgKMAkzre2A3vTZcDCAO6U+GwYsDrAsH/vbEgwNxgptU=
-X-Google-Smtp-Source: AGHT+IF7FAN6iJHUetgK8qAjC4cGoCe7dEZfTyttsPJvzYDJOKHvbgUYes7BdxzKGvNkasjDqnzZsg==
-X-Received: by 2002:a05:600c:c0c1:b0:450:c9e3:995c with SMTP id
- 5b1f17b1804b1-450c9e39ce5mr5302325e9.12.1748420068503; 
- Wed, 28 May 2025 01:14:28 -0700 (PDT)
+ bh=4yxK7itilT3E8IopdplzU4z6K9yD5rCY6HX2ZBd1VtI=;
+ b=KwDR5N9eFMp8TlqSaU1TWau5YTVZHJWaqscZ4PnVeN3gc46insnJsgnT16h3S0XwUr
+ Uw5ZiO0iR4ivAjfp35e5RMykuQflSy42GtWNM+CIzwUz+wL3jDTDsCSDSDX3m42J588u
+ 3MjbzejPDF9GhwUEjxIv2Q+PPA+yIKKU+BAo3AgNWa+TW1KS1qO7Awe2rPcy97KU7i+u
+ MjPryU/lFYoAn0YG9RzeNVGVj15MSt3KqD+Tfv0SClrUrUQsAblIMPQ/mCbu7dBTYOz/
+ xsLa0tRrAXDeCmVbJppTLsrkte5tf0pMyT3pxn28STtzlDbE9sGFiTywPqxiar4eYDLr
+ SolA==
+X-Gm-Message-State: AOJu0YwPGHYmGOubtQBop+Zm4QshtSh8iaJPat9Y4UBgNTjkaY5hJOyC
+ dp7wFPXDbPqeKlDAAuCMXZhrA3H0gPgGljFLAtdxuDTlSSrWE1aij//zwy3y4jLAlWwQMxPz7t4
+ muH+KmzqHAQ==
+X-Gm-Gg: ASbGncur84ph9mPZP2iB0K9D0NxlEsILMh1ddAXOh8XI3tDRPlOAACJ/Ss+UJF16JEQ
+ Ggxn7ZSoNbCQ22obdpWn5b5Td52+0BKtoxdNb1iY7+RI30YJBB4FCBkJyW+LjLUwjS2eOquGxJx
+ SkCucLeZ2G81Xd2Xswv5TrVFNCGIQ5gXj5OgSlENi7CeRGCCyZHvB29CJv5ZpbnO7jkgtamHeYk
+ Kad/olhUeWgtWDjVM/7tsFY3474GRpYsnbL++yx+6oRr2XtAaz2lTbudwXQZavzWn8pfkrvKN9B
+ 6C+l13maeYsV2+KmRAZx+Apmfz84yfEbfUMXx193Ssp3R4iAgCI826Cj
+X-Google-Smtp-Source: AGHT+IH3zMt3Dl8EYQHCB/IclC65udXelNeZ7YbKbdbANnLm0CTbXO9DlRN2j5O7xrzmEwDCbnvpjA==
+X-Received: by 2002:a05:600c:c1c8:10b0:43d:4686:5cfb with SMTP id
+ 5b1f17b1804b1-44cc0725a12mr80596445e9.27.1748420075199; 
+ Wed, 28 May 2025 01:14:35 -0700 (PDT)
 Received: from stoup.. ([195.53.115.74]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.27
+ 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 01:14:27 -0700 (PDT)
+ Wed, 28 May 2025 01:14:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL 11/28] target/microblaze: Use TARGET_LONG_BITS == 32 for system
- mode
-Date: Wed, 28 May 2025 09:13:53 +0100
-Message-ID: <20250528081410.157251-12-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 17/28] accel/tcg: Add TCGCPUOps.pointer_wrap
+Date: Wed, 28 May 2025 09:13:59 +0100
+Message-ID: <20250528081410.157251-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250528081410.157251-1-richard.henderson@linaro.org>
 References: <20250528081410.157251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
@@ -98,40 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that the extended address instructions are handled separately
-from virtual addresses, we can narrow the emulation to 32-bit.
-
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- configs/targets/microblaze-softmmu.mak   | 4 +---
- configs/targets/microblazeel-softmmu.mak | 4 +---
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ include/accel/tcg/cpu-ops.h | 7 +++++++
+ accel/tcg/cputlb.c          | 6 ++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/configs/targets/microblaze-softmmu.mak b/configs/targets/microblaze-softmmu.mak
-index 23457d0ae6..bab7b498c2 100644
---- a/configs/targets/microblaze-softmmu.mak
-+++ b/configs/targets/microblaze-softmmu.mak
-@@ -3,6 +3,4 @@ TARGET_BIG_ENDIAN=y
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
--# System mode can address up to 64 bits via lea/sea instructions.
--# TODO: These bypass the mmu, so we could emulate these differently.
--TARGET_LONG_BITS=64
-+TARGET_LONG_BITS=32
-diff --git a/configs/targets/microblazeel-softmmu.mak b/configs/targets/microblazeel-softmmu.mak
-index c82c509623..8aee7ebc5c 100644
---- a/configs/targets/microblazeel-softmmu.mak
-+++ b/configs/targets/microblazeel-softmmu.mak
-@@ -2,6 +2,4 @@ TARGET_ARCH=microblaze
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
--# System mode can address up to 64 bits via lea/sea instructions.
--# TODO: These bypass the mmu, so we could emulate these differently.
--TARGET_LONG_BITS=64
-+TARGET_LONG_BITS=32
+diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+index cd22e5d5b9..83b2c2c864 100644
+--- a/include/accel/tcg/cpu-ops.h
++++ b/include/accel/tcg/cpu-ops.h
+@@ -222,6 +222,13 @@ struct TCGCPUOps {
+     bool (*tlb_fill)(CPUState *cpu, vaddr address, int size,
+                      MMUAccessType access_type, int mmu_idx,
+                      bool probe, uintptr_t retaddr);
++    /**
++     * @pointer_wrap:
++     *
++     * We have incremented @base to @result, resulting in a page change.
++     * For the current cpu state, adjust @result for possible overflow.
++     */
++    vaddr (*pointer_wrap)(CPUState *cpu, int mmu_idx, vaddr result, vaddr base);
+     /**
+      * @do_transaction_failed: Callback for handling failed memory transactions
+      * (ie bus faults or external aborts; not MMU faults)
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 86d0deb08c..81ff725cbc 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1773,6 +1773,12 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+         l->page[1].size = l->page[0].size - size0;
+         l->page[0].size = size0;
+ 
++        if (cpu->cc->tcg_ops->pointer_wrap) {
++            l->page[1].addr = cpu->cc->tcg_ops->pointer_wrap(cpu, l->mmu_idx,
++                                                             l->page[1].addr,
++                                                             addr);
++        }
++
+         /*
+          * Lookup both pages, recognizing exceptions from either.  If the
+          * second lookup potentially resized, refresh first CPUTLBEntryFull.
 -- 
 2.43.0
 
