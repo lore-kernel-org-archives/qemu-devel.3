@@ -4,63 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B35D9C5B552
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 12:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2397C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 12:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKFk3-00060u-TK; Wed, 28 May 2025 08:18:44 -0400
+	id 1uKFk7-00062S-Fb; Wed, 28 May 2025 08:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKFji-0005xP-QG
- for qemu-devel@nongnu.org; Wed, 28 May 2025 08:18:24 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKFjm-0005yR-Od
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 08:18:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKFjf-0004G0-HA
- for qemu-devel@nongnu.org; Wed, 28 May 2025 08:18:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKFjj-0004GN-9U
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 08:18:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748434697;
+ s=mimecast20190719; t=1748434698;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sO4Tv0mQVhPZX+Q4JcE3C3FL0Yv3t6jZpx5FpNpy500=;
- b=Kl5npw4hAlTiCz2k0rh7EHMKUn3tjIA+1Qkj3QXUoBa13fkgXUs0RfmB432Q5LC2kbj2lC
- ZsQ5FI4LylyohfHQsiWqJ7a/GWV9ZyEc5H9VA7y8XDkQx6BBTch6lKa3V63bVwSfFo6dGS
- Kx7Cj4RcB1EpKwnj9MpC9p/zvTJA2BY=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zPqPScJpRADVrCh0IYtsJQtzDsimtpA4yZoxgpiqffo=;
+ b=CgWAEuasM1iyVOt9WzZYcVTnir8yXyx2KNEdT4lmgYYg7SlSa5febYlw46quVpzWREtcU0
+ /XZTakB/DPxLIDDd5EbwBsC8W0AYV2sk39aI3x40sqReJ5m6IODLPFEUOaFNKYEJkTG1Hm
+ rI8YrDQZcqbQ7Ps7b8qQfde19VTSNcg=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-CfipY_YeN4GJu-2kAffhmQ-1; Wed,
- 28 May 2025 08:18:16 -0400
-X-MC-Unique: CfipY_YeN4GJu-2kAffhmQ-1
-X-Mimecast-MFC-AGG-ID: CfipY_YeN4GJu-2kAffhmQ_1748434695
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-uyM3uCQAMOWE0LTUCCDljA-1; Wed,
+ 28 May 2025 08:18:17 -0400
+X-MC-Unique: uyM3uCQAMOWE0LTUCCDljA-1
+X-Mimecast-MFC-AGG-ID: uyM3uCQAMOWE0LTUCCDljA_1748434696
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D750E180045B
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 12:18:15 +0000 (UTC)
+ id D061318002A5
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 12:18:16 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8FA04195608D
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 12:18:15 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C7C919560B0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 12:18:16 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DBCC921E66AB; Wed, 28 May 2025 14:11:43 +0200 (CEST)
+ id D9BCE21E66C5; Wed, 28 May 2025 14:11:43 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com
-Subject: [PULL 1/4] docs/about: Belatedly document tightening of QMP
- device_add checking
-Date: Wed, 28 May 2025 14:11:40 +0200
-Message-ID: <20250528121143.2208075-2-armbru@redhat.com>
-In-Reply-To: <20250528121143.2208075-1-armbru@redhat.com>
-References: <20250528121143.2208075-1-armbru@redhat.com>
+Subject: [PULL 0/4] Miscellaneous patches for 2025-05-28
+Date: Wed, 28 May 2025 14:11:39 +0200
+Message-ID: <20250528121143.2208075-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
@@ -86,66 +82,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 4d8b0f0a9536 (v6.2.0) deprecated incorrectly typed device_add
-arguments.  Commit be93fd53723c (qdev-monitor: avoid QemuOpts in QMP
-device_add) fixed them for v9.2.0, but neglected to update
-documentation.  Do that now.
+The following changes since commit 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e:
 
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250521063711.29840-2-armbru@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-[Commit message typo corrected]
----
- docs/about/deprecated.rst       | 14 --------------
- docs/about/removed-features.rst |  9 +++++++++
- 2 files changed, 9 insertions(+), 14 deletions(-)
+  Merge tag 'pull-aspeed-20250526' of https://github.com/legoater/qemu into staging (2025-05-26 10:16:59 -0400)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 44d3427e98..9665bc6fcf 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -187,20 +187,6 @@ threads (for example, it only reports source side of multifd threads,
- without reporting any destination threads, or non-multifd source threads).
- For debugging purpose, please use ``-name $VM,debug-threads=on`` instead.
- 
--Incorrectly typed ``device_add`` arguments (since 6.2)
--''''''''''''''''''''''''''''''''''''''''''''''''''''''
--
--Due to shortcomings in the internal implementation of ``device_add``, QEMU
--incorrectly accepts certain invalid arguments: Any object or list arguments are
--silently ignored. Other argument types are not checked, but an implicit
--conversion happens, so that e.g. string values can be assigned to integer
--device properties or vice versa.
--
--This is a bug in QEMU that will be fixed in the future so that previously
--accepted incorrect commands will return an error. Users should make sure that
--all arguments passed to ``device_add`` are consistent with the documented
--property types.
--
- Host Architectures
- ------------------
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 063284d4f8..92b5ba6218 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -722,6 +722,15 @@ Use ``multifd-channels`` instead.
- 
- Use ``multifd-compression`` instead.
- 
-+Incorrectly typed ``device_add`` arguments (since 9.2)
-+''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+Due to shortcomings in the internal implementation of ``device_add``,
-+QEMU used to incorrectly accept certain invalid arguments. Any object
-+or list arguments were silently ignored. Other argument types were not
-+checked, but an implicit conversion happened, so that e.g. string
-+values could be assigned to integer device properties or vice versa.
-+
- QEMU Machine Protocol (QMP) events
- ----------------------------------
- 
+are available in the Git repository at:
+
+  https://repo.or.cz/qemu/armbru.git tags/pull-misc-2025-05-28
+
+for you to fetch changes up to 662b85aae131e7cb8dd8b03c9e44a95bc87573ca:
+
+  docs/about/removed-features: Move removal notes to tidy up order (2025-05-28 06:53:59 +0200)
+
+----------------------------------------------------------------
+Miscellaneous patches for 2025-05-28
+
+----------------------------------------------------------------
+Markus Armbruster (4):
+      docs/about: Belatedly document tightening of QMP device_add checking
+      qapi/migration: Deprecate migrate argument @detach
+      docs/about/deprecated: Move deprecation notes to tidy up order
+      docs/about/removed-features: Move removal notes to tidy up order
+
+ docs/about/deprecated.rst       | 47 ++++++++++++----------------
+ docs/about/removed-features.rst | 69 +++++++++++++++++++++++------------------
+ qapi/migration.json             | 18 +++++------
+ 3 files changed, 67 insertions(+), 67 deletions(-)
+
 -- 
 2.48.1
 
