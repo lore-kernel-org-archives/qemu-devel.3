@@ -4,100 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77311C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77147C5AE59
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKDeP-0002vZ-Um; Wed, 28 May 2025 06:04:46 -0400
+	id 1uKDfP-0003hX-VL; Wed, 28 May 2025 06:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1uKDeK-0002tj-Mm
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:04:40 -0400
-Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDfJ-0003gH-P0
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:05:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1uKDeI-0006kX-Qx
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:04:40 -0400
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id EE2521140119;
- Wed, 28 May 2025 06:04:34 -0400 (EDT)
-Received: from phl-imap-08 ([10.202.2.84])
- by phl-compute-06.internal (MEProxy); Wed, 28 May 2025 06:04:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1748426674;
- x=1748513074; bh=n1PjCzJbRqMmKmrT5Xf405DSGFhgs1F5DNO5tqJqYCI=; b=
- nf0j7z98Zy0yAEBXDFBr62JJEDOIjU1GcOEkrtIF2i8kCnYk1RU4d/2FSYn0Zg+r
- i9BbhuTVywtWpBJbPDNNbE61ZAzNgpfQLQYoIRSaCJp5xxIZ+7QH0Ico//YpmMyQ
- PYYfVN7Mc/EDuUm3Eb3CE9VnXM243DGzEsP3G2SDPzy9RU0UBVDCM0SYX+ki4JYQ
- i6mvC94JdbwEOEO4+uVrfdmSqWiDOuagZGTNBRbjtaXkzeWUpkYtC53MTebDTqMV
- NbAd0f+gQC6mSp7D/UH0zBEprbXh6Pi2bfrKl87pC2aEjwwIbgST3g76/FmLm6uD
- z6Bzr6juU65hkA8gmzsc4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748426674; x=
- 1748513074; bh=n1PjCzJbRqMmKmrT5Xf405DSGFhgs1F5DNO5tqJqYCI=; b=W
- Bb/wVgfjCXxWWCCo5avZYVVxRqRf3HQXfTgPI//770QVdcd5RI4OBYAsaJ3BFq6o
- o+sanKfe0USqakTxuw8UiyMmhGr19HBwlgBPO258ghm/qokbW/SO/wFYBkqDRiH4
- 7s+s/fZBwyFQcJPyuA4EBKw0YjNGRSOZ5sPCfoC7axzX8++b6tOHCYrgp1Jo9OU/
- KpIq9bmuLpVv/dFEbRiaUoCNssQAWYWhUxTOdV5zPovy9EbpALT0rbsmf8pxWLOI
- bcz3jlC7J+h9qdQPScxcMWW4glhmC8f32P5o0nDpdQH94VgvO8ck023I8qJZXuQg
- HBVs84IO+TCwZ2/d1SDdg==
-X-ME-Sender: <xms:st82aHrqkGIVhigTJ25Y0WTtLrZzlGB3cMQE4wWNY6hQUFN99U43qw>
- <xme:st82aBqOy2YJdKEeQJI9ZMOqxhogp9uMKmq3UhiE5rfjIuOgqgAbRCHq1vfbqg7fV
- Mdv0e1Sx9X23AvGMwo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvvdelkeculddtuddrgeefvddrtd
- dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
- fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
- dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefk
- jghfufgtgfesthhqredtredtjeenucfhrhhomhepfdflihgrgihunhcujggrnhhgfdcuoe
- hjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqeenucggtffrrghtthgvrhhn
- peejheefuddvtdfggfdvffekteehhfelgfdvvedvkeeuffefkeehheegvefhveetjeenuc
- evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihu
- nhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvg
- epshhmthhpohhuthdprhgtphhtthhopegthhgvnhhhuhgrtggriheskhgvrhhnvghlrdho
- rhhgpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhope
- hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:st82aEM1ryky6_K5b6QEkUjj4PL_OC7pINrB7I8Czsw38fJ7yK7Jeg>
- <xmx:st82aK5LG6LsUA92Cs24eX3G7bSlYYiaku3HGF8RX0y8UYvbWdqTzg>
- <xmx:st82aG5RSXBlWB1pGg7vcPTkkCbEb0Ind2wg1m9EpVFawjA2nmj51A>
- <xmx:st82aCgcr6Q3i_WFcfCIalALPTlW9tS2N967a0ZzLv74z_plBx-cDA>
- <xmx:st82aENHvRPID1Dp4vvDFCqTuTh2SYbhVDH6ssnLjczpkJ7D8cZoH30P>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id A135B2CE005F; Wed, 28 May 2025 06:04:34 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDfH-0007DK-8W
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:05:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748426738;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jlUQHTAuaVqvF8kv3Q5QXyGqMwCukrz0+7JZaW9TJ50=;
+ b=ODiIQ2UUSiyXQZGQBmZ+aImNEOm/NME7CKtyYI/zZquUntS5jAed+nU0GrkbZWTwoj4+MI
+ ya/4y4oUZyCd+4M/JU/VXbBJ9NxDNb+ZDTzqFN+FNxunIZtDAzwk7y4ucesblEQlm9oWhz
+ XUagXJAw0RFlmaS/orASNsv7JaTWGu0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-l2KDWkhqNCaJmQKl93HbLg-1; Wed,
+ 28 May 2025 06:05:35 -0400
+X-MC-Unique: l2KDWkhqNCaJmQKl93HbLg-1
+X-Mimecast-MFC-AGG-ID: l2KDWkhqNCaJmQKl93HbLg_1748426734
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0EB9E180036F; Wed, 28 May 2025 10:05:34 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.34.110])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7B69318004A7; Wed, 28 May 2025 10:05:30 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 07/27] tests/functional: Test both microblaze s3adsp1800
+ endianness variants
+Date: Wed, 28 May 2025 12:04:47 +0200
+Message-ID: <20250528100507.313906-8-thuth@redhat.com>
+In-Reply-To: <20250528100507.313906-1-thuth@redhat.com>
+References: <20250528100507.313906-1-thuth@redhat.com>
 MIME-Version: 1.0
-X-ThreadId: T86cbbd2d33d83f19
-Date: Wed, 28 May 2025 11:04:13 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "Huacai Chen" <chenhuacai@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Message-Id: <71237b8f-bd04-44dd-8d60-b09f7882721d@app.fastmail.com>
-In-Reply-To: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
-References: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
-Subject: Re: [PATCH 0/5] hw/pci-host/bonito: Improve various emulation
- functions
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.157;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a6-smtp.messagingengine.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) DKIMWL_WL_HIGH=-2.907, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,53 +84,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Thomas Huth <thuth@redhat.com>
 
+Now that the endianness of the petalogix-s3adsp1800 can be configured,
+we should test that the cross-endianness also works as expected, thus
+test the big endian variant on the little endian target and vice versa.
+(based on an original idea from Philippe Mathieu-Daudé)
 
-=E5=9C=A82025=E5=B9=B45=E6=9C=888=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=
-=8D=883:46=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
-> Hi all,
->
-> This series addressed a couple of missing Bonito functionalities
-> I found when I was trying to test NetBSD against QEMU.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250515132019.569365-3-thuth@redhat.com>
+---
+ tests/functional/test_microblaze_s3adsp1800.py | 18 +++++++++++++-----
+ .../functional/test_microblazeel_s3adsp1800.py |  6 +++++-
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
-Hi Philippe,
+diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
+index c93fa14232b..f093b162c0a 100755
+--- a/tests/functional/test_microblaze_s3adsp1800.py
++++ b/tests/functional/test_microblaze_s3adsp1800.py
+@@ -25,12 +25,14 @@ class MicroblazeMachine(QemuSystemTest):
+         ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+         'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
+ 
+-    def do_ballerina_be_test(self, machine):
+-        self.set_machine(machine)
++    def do_ballerina_be_test(self, force_endianness=False):
++        self.set_machine('petalogix-s3adsp1800')
+         self.archive_extract(self.ASSET_IMAGE_BE)
+         self.vm.set_console()
+         self.vm.add_args('-kernel',
+                          self.scratch_file('day17', 'ballerina.bin'))
++        if force_endianness:
++            self.vm.add_args('-M', 'endianness=big')
+         self.vm.launch()
+         wait_for_console_pattern(self, 'This architecture does not have '
+                                        'kernel memory protection')
+@@ -39,12 +41,14 @@ def do_ballerina_be_test(self, machine):
+         # message, that's why we don't test for a later string here. This
+         # needs some investigation by a microblaze wizard one day...
+ 
+-    def do_xmaton_le_test(self, machine):
++    def do_xmaton_le_test(self, force_endianness=False):
+         self.require_netdev('user')
+-        self.set_machine(machine)
++        self.set_machine('petalogix-s3adsp1800')
+         self.archive_extract(self.ASSET_IMAGE_LE)
+         self.vm.set_console()
+         self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
++        if force_endianness:
++            self.vm.add_args('-M', 'endianness=little')
+         tftproot = self.scratch_file('day13')
+         self.vm.add_args('-nic', f'user,tftp={tftproot}')
+         self.vm.launch()
+@@ -59,9 +63,13 @@ def do_xmaton_le_test(self, machine):
+ class MicroblazeBigEndianMachine(MicroblazeMachine):
+ 
+     ASSET_IMAGE_BE = MicroblazeMachine.ASSET_IMAGE_BE
++    ASSET_IMAGE_LE = MicroblazeMachine.ASSET_IMAGE_LE
+ 
+     def test_microblaze_s3adsp1800_legacy_be(self):
+-        self.do_ballerina_be_test('petalogix-s3adsp1800')
++        self.do_ballerina_be_test()
++
++    def test_microblaze_s3adsp1800_legacy_le(self):
++        self.do_xmaton_le_test(force_endianness=True)
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
+index ab59941d57a..915902d48bd 100755
+--- a/tests/functional/test_microblazeel_s3adsp1800.py
++++ b/tests/functional/test_microblazeel_s3adsp1800.py
+@@ -13,9 +13,13 @@
+ class MicroblazeLittleEndianMachine(MicroblazeMachine):
+ 
+     ASSET_IMAGE_LE = MicroblazeMachine.ASSET_IMAGE_LE
++    ASSET_IMAGE_BE = MicroblazeMachine.ASSET_IMAGE_BE
+ 
+     def test_microblaze_s3adsp1800_legacy_le(self):
+-        self.do_xmaton_le_test('petalogix-s3adsp1800')
++        self.do_xmaton_le_test()
++
++    def test_microblaze_s3adsp1800_legacy_be(self):
++        self.do_ballerina_be_test(force_endianness=True)
+ 
+ 
+ if __name__ == '__main__':
+-- 
+2.49.0
 
-A gentle ping :-)
-
-Do you have bandwidth on MIPS recently?
-
-I'm planning to respin my CPS SMP series as well.
-
-Thanks
-Jiaxun
-
->
-> Please review.
->
-> Thanks
-> Jiaxun
->
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
-> Jiaxun Yang (5):
->       hw/pci-host/bonito: Implement ICU
->       hw/pci-host/bonito: Implement PCIMAP register
->       hw/pci-host/bonito: Implement DMA address translation
->       hw/pci-host/bonito: Rework PCI config space accessor
->       hw/pci-host/bonito: Add comments about documentation
->
->  hw/pci-host/bonito.c     | 453 +++++++++++++++++++++++++++++---------=
----------
->  hw/pci-host/trace-events |   3 -
->  2 files changed, 284 insertions(+), 172 deletions(-)
-> ---
-> base-commit: c5e2c4042e3c50b96cc5eaa9683325c5a96913b0
-> change-id: 20250507-bonito-482759b2b52f
->
-> Best regards,
-> --=20
-> Jiaxun Yang <jiaxun.yang@flygoat.com>
-
---=20
-- Jiaxun
 
