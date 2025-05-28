@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48BC9C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 22:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15017C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 22:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKP5w-00039r-MI; Wed, 28 May 2025 18:17:56 -0400
+	id 1uKP6B-0003Dp-Ev; Wed, 28 May 2025 18:18:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uKP5t-000393-VF
- for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:54 -0400
+ id 1uKP5y-0003AL-Em
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:59 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uKP5o-0000xI-GQ
- for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:53 -0400
+ id 1uKP5n-0000x6-Al
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:57 -0400
 Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SINFOx016557;
- Wed, 28 May 2025 22:17:32 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SINGNg016566;
+ Wed, 28 May 2025 22:17:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=5xLy6
- sphNSR3sEGiWhHFRd/mLRl+6eUEjK379NlJVlg=; b=gxPowbU1bf7bPPh1eB3TE
- c2S1zRek0VVim5W242kFWri9p3eIEPwKRdC62/YWWtZ1uZ+eEx82fAsmO+Z28sXM
- JRPJPUcW/brQSnQJlGPhFTVkttlcI83ymlJgDvsTKKchTArbm+EsvxMy+emmTop5
- 1oTnBnUvi50VZpDVotcLQNkIjNus2I2ObRmBESK8h045kOerB1YXF+whkyihQULP
- H0FkCkOySF30OrxYLdtaGVByNxYIIOIvW/x0X7X18k6O6+BVYVXDUNfecVykz8N3
- JYFLpNJZAG+CEHnOAMfVOzy9SbDAIr1/wIMgH4yT8EK6OgujpyvWozYu+IledvsX
- A==
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=Egc+IEAK8xK9d1mFEWcQ3F87RLNH8
+ TDRBsX2no6+Mz8=; b=ZbeU9PpKqijE1W/qpd5P1rqkBSaY5nJYi5NONh9HbBbOF
+ gyr4NfAUnH8nkGYII5CT2souu/AOkg8ApBoQNQ0aQ/KVEowgC6rnDaVx9K30Amap
+ lFq9zBy3uyK81tT1xXVD2Ow4JNw6uPiFdD6Sipsyi9Y4AmzVsaqjO4en2rDeU1Dz
+ xMxR7U2KVNdwC4Ts5pygjiX0PweYOzPw0gb32+2oY2Jxw0CIDdB3x6CpVLbSRZ1Z
+ zjHE1G7M/bH8DCMhNKILHHL3Ax2IhGu5DAv+m4omFni6cFuYsEU8yj4YMQaBNRid
+ rD2Pz79N3YBXS+Tw45aWFbG7QnYKvO3g6N34sVOIA==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v33my2jj-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v33my2jf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 May 2025 22:17:31 +0000 (GMT)
+ Wed, 28 May 2025 22:17:28 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54SLBaiL024391; Wed, 28 May 2025 22:17:30 GMT
+ with ESMTP id 54SKQgOV024586; Wed, 28 May 2025 22:17:26 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jb86vy-1
+ 46u4jb86ua-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 May 2025 22:17:30 +0000
+ Wed, 28 May 2025 22:17:26 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54SMHQsd018695;
- Wed, 28 May 2025 22:17:29 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54SMHQsP018695;
+ Wed, 28 May 2025 22:17:26 GMT
 Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
  (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.254.235])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 46u4jb86u3-8; Wed, 28 May 2025 22:17:29 +0000
+ 46u4jb86u3-1; Wed, 28 May 2025 22:17:25 +0000
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, pbonzini@redhat.com, mjt@tls.msk.ru,
@@ -64,12 +63,10 @@ Cc: mst@redhat.com, pbonzini@redhat.com, mjt@tls.msk.ru,
  suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
  sarunkod@amd.com, joao.m.martins@oracle.com,
  boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
-Subject: [PATCH v2 6/7] amd_iommu: Fix the calculation for Device Table size
-Date: Wed, 28 May 2025 22:17:24 +0000
-Message-ID: <20250528221725.3554040-8-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH v2 0/7] amd_iommu: Fixes to align with AMDVi specification
+Date: Wed, 28 May 2025 22:17:17 +0000
+Message-ID: <20250528221725.3554040-1-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250528221725.3554040-1-alejandro.j.jimenez@oracle.com>
-References: <20250528221725.3554040-1-alejandro.j.jimenez@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -80,20 +77,19 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  suspectscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505280194
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE5NCBTYWx0ZWRfX4cOecFZHB/4b
- oGj2AXH9UmExN1pGrC5wrfvL4K+hiSdpgeYY9biLJT3d9NK508w6HlmxcJjUVmhiIO8a4s7f7mb
- Vk1hHlb5ORZ63dqdFpU9tYGSsD2sW6jmRkh9F8gz4u7j7XKYCvEkkJJ5jUEDHkU4VU26qs0yKVa
- asVGRsseTYhzXSOKWD16lsA3jZhrNdyKyjNHANCUdLIryctEKLTwupPCmHXoMiFR7ymI1OiIcC0
- 2599xuo/2KtR+jsxR1sp3R4TZfhhulQeBVdC+Lw1noRkwZQO4RWVICVU90VJjZAQpRYp3O/IywD
- 7nsUVNAy2dag2rnS5kT/7BRxQvSKLO/UJ408/HUGM/G79tEv4j+hdmQKp/VMSYhdWlLzV1PrZhE
- a4sfYnEuRkdVcl/lSv/FcrwWj3B7+Ltvnzza+p3F6GL7XsBX1Nf2Sylr8OMZVnVyOvtgRjEQ
-X-Proofpoint-GUID: 87m3PKG3b-Amb0wZDjgdtPx32iC9m2KU
-X-Authority-Analysis: v=2.4 cv=aO/wqa9m c=1 sm=1 tr=0 ts=68378b7b b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE5NCBTYWx0ZWRfXyaIbU8Ic5/gI
+ Ha0DaJTdLPLsbOzKcbfxhtws7Qt9MwX9RdT/Kofl7W9gOqfIMGva8RaYYgng8GR30F3p8beWBpJ
+ qa/Lo5fCS/2z5mr5DSlinZhmBTDRNPxuIdbRAUycYw43SIgYoQDtYEoliegyczhYKmTPrWD2hE9
+ we+04N90OutWmuma901Jbn+ZVmhVXyc/sAyxBsBL6X5A6QidBciUmHE0xtswZa/9KZxYvaJgYmr
+ Z+OPZxt423dF2uVsDL8Jkhys/HipBv75wwyrJrjx0sXjF0i+8amkC/I3cCXdfcA1IUvha6hV7bU
+ qb/FZPwV7o53M6+ZkyIygbsj9L/nUmNso9WTaVZA4ltKKtpacua+lKV2LVjrF23/WNWg2r2E+p5
+ 7AAsWVlMrMH5TmOl29DB5V1VChxFRuDEQgMK/z/7yvnmGyEkxOrFWXufHPcEpcYX0keuEkeV
+X-Proofpoint-GUID: Y3G7OdfaYnmWgVKYXB-nrClzbUAbpU5t
+X-Authority-Analysis: v=2.4 cv=aO/wqa9m c=1 sm=1 tr=0 ts=68378b78 b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
- a=dt9VzEwgFbYA:10 a=69wJf7TsAAAA:8 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8
- a=r9zmrm_j51NoiylAmAIA:9
- a=Fg1AiH1G6rFz08G2ETeA:22 cc=ntf awl=host:13206
-X-Proofpoint-ORIG-GUID: 87m3PKG3b-Amb0wZDjgdtPx32iC9m2KU
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8 a=WbZ-VVUJ9A6HQNJnBWEA:9
+ cc=ntf awl=host:13206
+X-Proofpoint-ORIG-GUID: Y3G7OdfaYnmWgVKYXB-nrClzbUAbpU5t
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -13
@@ -119,32 +115,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Correctly calculate the Device Table size using the format encoded in the
-Device Table Base Address Register (MMIO Offset 0000h).
+Correct mistakes in bitmasks, offsets, decoding of fields, and behavior that
+do not match the latest AMD I/O Virtualization Technology (IOMMU)
+Specification. These bugs do not trigger problems today in the limited mode
+of operation supported by the AMD vIOMMU (passthrough), but upcoming
+functionality and tests will require them (and additional fixes).
 
-Cc: qemu-stable@nongnu.org
-Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
----
- hw/i386/amd_iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+These are all minor and hopefully not controversial fixes, so I am sending
+them separately rather than including them on the DMA remap support
+series[0].
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index cc47ba9249990..6a68f0f6068a0 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -665,8 +665,8 @@ static inline void amdvi_handle_devtab_write(AMDVIState *s)
-     uint64_t val = amdvi_readq(s, AMDVI_MMIO_DEVICE_TABLE);
-     s->devtab = (val & AMDVI_MMIO_DEVTAB_BASE_MASK);
- 
--    /* set device table length */
--    s->devtab_len = ((val & AMDVI_MMIO_DEVTAB_SIZE_MASK) + 1 *
-+    /* set device table length (i.e. number of entries table can hold) */
-+    s->devtab_len = (((val & AMDVI_MMIO_DEVTAB_SIZE_MASK) + 1) *
-                     (AMDVI_MMIO_DEVTAB_SIZE_UNIT /
-                      AMDVI_MMIO_DEVTAB_ENTRY_SIZE));
- }
+It is unclear how relevant these changes will be to stable releases
+considering the state of the AMD vIOMMU, but the fixes on this series should
+be simple enough to apply, so I Cc'd stable for consideration.
+
+Changes since v1[1]:
+- Added R-b's from Vasant on PATCH 1-3, 5.
+- P3: Match the spec, although vIOMMU case does not use DTE[3] (Vasant)
+- P4: Fix more definitions using GENMASK64 for consistency. (Sairaj, Vasant)
+- Dropped PATCH 6 from v1 and included it in DMA remap series[0] (Vasant: I
+didn't want to assume approval so I dropped your R-b for this patch when
+moving it to the other series).
+- Fix issue with mask that retrieves the IRT pointer from DTE.
+- Remove duplicated code. Although trivial, I didn't want to sneak this into
+other unrelated commits.
+
+Tested booting guest with AMD vIOMMU and guest kernel in passthrough mode.
+
+Thank you,
+Alejandro
+
+[0] https://lore.kernel.org/qemu-devel/20250502021605.1795985-20-alejandro.j.jimenez@oracle.com/
+[1] https://lore.kernel.org/all/20250311152446.45086-1-alejandro.j.jimenez@oracle.com/
+
+Alejandro Jimenez (7):
+  amd_iommu: Fix Miscellanous Information Register 0 offsets
+  amd_iommu: Fix Device ID decoding for INVALIDATE_IOTLB_PAGES command
+  amd_iommu: Update bitmasks representing DTE reserved fields
+  amd_iommu: Fix masks for various IOMMU MMIO Registers
+  amd_iommu: Fix mask to retrieve Interrupt Table Root Pointer from DTE
+  amd_iommu: Fix the calculation for Device Table size
+  amd_iommu: Remove duplicated definitions
+
+ hw/i386/amd_iommu.c | 15 ++++++------
+ hw/i386/amd_iommu.h | 59 ++++++++++++++++++++++-----------------------
+ 2 files changed, 37 insertions(+), 37 deletions(-)
+
+
+base-commit: 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e
 -- 
 2.43.5
 
