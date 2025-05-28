@@ -4,129 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56198C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 09:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BE5C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKDT5-0003oF-PD; Wed, 28 May 2025 05:53:03 -0400
+	id 1uKDZZ-0006il-0h; Wed, 28 May 2025 05:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDT1-0003nP-KK
- for qemu-devel@nongnu.org; Wed, 28 May 2025 05:52:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uKDZV-0006hy-1S
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 05:59:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDSz-000570-HY
- for qemu-devel@nongnu.org; Wed, 28 May 2025 05:52:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uKDZS-00062j-RR
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 05:59:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748425975;
+ s=mimecast20190719; t=1748426376;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=enKiLFxyxDjrKV9PUnTTYCjcb5Z6w+jRFSDf9ZRUJdw=;
- b=T4/o8V1oz8oDHwoRHIvH54SziQPRLg2vcH8N5thKn4KWIR4PopJJQ807nVEq4kDS1fRCbx
- ycJClBNCtt66Gdm3thuAG3TikDyDPIrLUb6AkYf304Vp6ppG8rZwDJ4qMGm2DqC025vyq+
- jO74oApJDPdIyXcXHUPHoWaCkhld00M=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Dahe3dLhd+sJ98TnE710M5fLANUTVKeTTSA8S61gmBA=;
+ b=K4QXGhS9mZPGm5fxtQiHn4aU3DDkAX8SFQ495W8beXTNwXIlFaGFhsL7dJmpVS7/2adAHU
+ jL6u4Sba8HTB0a1DB04/ZwSKuYCVeMXNmn8jxSvUgUEkfVzcwkcIotqlH6YySDZRQfIFt5
+ gkdPaYrDOVhUtwB0ZmlAC62imnc+5WM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-531-uDF9vtfmMoGae1mkFP8h1Q-1; Wed, 28 May 2025 05:52:54 -0400
-X-MC-Unique: uDF9vtfmMoGae1mkFP8h1Q-1
-X-Mimecast-MFC-AGG-ID: uDF9vtfmMoGae1mkFP8h1Q_1748425973
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-445135eb689so26500775e9.2
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 02:52:53 -0700 (PDT)
+ us-mta-94-DjBDX0VDORWR4VQxOZKQxA-1; Wed, 28 May 2025 05:59:34 -0400
+X-MC-Unique: DjBDX0VDORWR4VQxOZKQxA-1
+X-Mimecast-MFC-AGG-ID: DjBDX0VDORWR4VQxOZKQxA_1748426373
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4eb9c80deso168828f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 02:59:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748425973; x=1749030773;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=enKiLFxyxDjrKV9PUnTTYCjcb5Z6w+jRFSDf9ZRUJdw=;
- b=tgsTlOInhTzTu/bQeoouOXBihV5wJBw0OOiT+NGfLlcSRWyCG+TvWZ2Q66eE3hbjq3
- Eg2hK9MV+ycpDJzp0OzFW370gEpym/1iiJ631uuXHhmCShcAKHIAE1AKLoysSWGW7PVZ
- hJl7ZQHZaNF9DUBT4Vv9zvKlEnWZInsufqRfzG2+DzB8Nr2p+n7TTEF/lPmiLIoV4xn1
- gk3waamwvqiB8wmcLsGdC5OnqWQOWEwDuzPolyaWp2NvmXwdMZYgscSIBjxSRNEtm/os
- IRVuy0EzfrGGAvOv95OQlVrw4lplhE57ZCyglN3+V/FsUt2zTXa8katG7m4k154HNXKk
- YT3Q==
+ d=1e100.net; s=20230601; t=1748426368; x=1749031168;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Dahe3dLhd+sJ98TnE710M5fLANUTVKeTTSA8S61gmBA=;
+ b=MTIBtFn2o2+dXIEbSpaCh+nts1mCScwvBZI5jLBGWkHpfwsE1dM2C6l0KqqWdlyaKv
+ K54qqH3GwiFBoWPjolLpi7oUJOmqG+6X28V+Bg+TvBOZ+QrLEMi7VdrsMBHXe7e1FnwW
+ X94eO3VH8WpVe/Su4BhWJ6eYmZkGwX7Ff2qNrc7EVnEyqsyfmlq2oI62mIEFKC2wxsAm
+ SOrqAPtOT3VgHYxqECt1JxloziwqUW8JTL1/EjGb7h6XQtW5Kdd4KWg6I5Aq3zibYQPC
+ I0gEQEhavFWD1qO1cf9ZxgN7P2BKtqEMb0obyHPBBHzu/alUdaInamblvaJBK3MWKSlW
+ 8NJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVV2O5lWO4QCkmUIrHcaQItx9/bVnF5VQXkLr0TbV9goRBHDC2CXEH12eubKWC0SEKA45PltFNZRZAt@nongnu.org
-X-Gm-Message-State: AOJu0Yy+LbutmH+n8fE4y1ZRifk6tXLwsK5kfGDws6OtemHSv1QVEZJ6
- x58WQ788Ku5QHOJdwPwpporhHFsYoOiREzC44JwNyMjFf9eNvxrOoFOo2buCV1ePt7Nwq9iZqSJ
- 9JCTw6TnTB306LBAy/PFguPJ51PkJu9LaVwbsF/L8qW3cCkYGuDOksNQ6ia/EncwcS+k=
-X-Gm-Gg: ASbGnculZM2CMhb4ETSuyWZUB635Z2ynjftp35n/ZIAd4pXySV6kiNuqQzNcfPKrgHo
- OlUm1RkcNvOjqkENgxo3AmqShCFqMcrVIyMyijfjVQ6D7jo7G2/fYOXBMACh1g9nVUZr8bC9VOH
- VTGlb31d0868WLivlDlMOqa5Dt3Dl/Hszl/kFZ0PmWSrYVvhwLG6cpv3jWXvmhASjmBSYrbzDRQ
- yZny+pqAjq4rZI4ldPQA3N5kKvqf3LTAVJGbSYTGhREp3Yi9OPlSKecnZzp/EgTmfdcTD3QxvyN
- sfSz6RpN+WaQomt4ihEEijJibkrPoe6N8TzCgVN8VbEA/gsUpD9K
-X-Received: by 2002:a05:600c:5396:b0:43c:fe5e:f040 with SMTP id
- 5b1f17b1804b1-45077e36cc8mr12591215e9.23.1748425972927; 
- Wed, 28 May 2025 02:52:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoLsVmGGDtxyAgt33GOiyPFeYz4TEj0o1ir0tuKc+VPzjxofpnxfSg13fAeGM4Dgx+CgqCLQ==
-X-Received: by 2002:a05:600c:5396:b0:43c:fe5e:f040 with SMTP id
- 5b1f17b1804b1-45077e36cc8mr12590945e9.23.1748425972473; 
- Wed, 28 May 2025 02:52:52 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-112-237.pools.arcor-ip.net.
- [47.64.112.237]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4500e1ddaeesm15621915e9.35.2025.05.28.02.52.51
+ AJvYcCVWPfz65oGVJjb4JC9yAJVMTFfpfNTAac3X1b7ZlO0jxLND6Jgi/zMv6VBLvbFGaVujRuP5YoJs/q18@nongnu.org
+X-Gm-Message-State: AOJu0YxBlFCJUuuLhBWMGwNnl6us/X+Ku5cAQKJs7IylWSW19YDw7JUy
+ 1qOdF7ootiFLNZAWIe8zSxg0c39isYzaCEWQR/HC4tbom17Iu06qhcABkUulp0hicWQNugxzTbo
+ nhSM0zGA+7KwtuwRPVSn6PgHTduVBvGELP3LO8hX35QfhMCYjI/j8fy9D
+X-Gm-Gg: ASbGncuw1fyreGtKYMMUrLvJrDah0i+0Rk9uX4ePFgwoQpGGBFdCyqzW+Jr5ZIw4He1
+ vZFixo1h9OMvQ9ox7Uw9vNB0eHqfd0fGkvJ/KjgoFD/aey2luGUYLeCe4UgwT+ZKL+SDvYxE4af
+ I9YXCRz9WClQ9iP6r43x6o2qy7svLPfl2O+G+xpR3bpxUWmQaDkPY21nATx+aQHwcXQ3Ky19D79
+ TwividJn5rgabDaLN0A4W13Pv8YkZhP2ffn9bsFaiGp6kMttngxGXn3dPzKy1ErtvjxpaZGpQdt
+ GnvQVw==
+X-Received: by 2002:a05:6000:1888:b0:3a4:ead4:5ea4 with SMTP id
+ ffacd0b85a97d-3a4ead45f69mr1024094f8f.24.1748426367818; 
+ Wed, 28 May 2025 02:59:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcoe84qjKmg5vOfUhLNnzh7CU9JM9BUivi+ee1D46boo0OaQzfZSjYU+Tu4l538DPPi5hNfg==
+X-Received: by 2002:a05:6000:1888:b0:3a4:ead4:5ea4 with SMTP id
+ ffacd0b85a97d-3a4ead45f69mr1024071f8f.24.1748426367356; 
+ Wed, 28 May 2025 02:59:27 -0700 (PDT)
+Received: from [10.0.5.211] ([91.126.222.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4eac6e354sm1049729f8f.10.2025.05.28.02.59.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 May 2025 02:52:52 -0700 (PDT)
-Message-ID: <e58a98e5-c6ae-456f-aaa5-c55924517665@redhat.com>
-Date: Wed, 28 May 2025 11:52:50 +0200
+ Wed, 28 May 2025 02:59:26 -0700 (PDT)
+Message-ID: <538e848b-148a-49f1-bf06-f534ff44bf87@redhat.com>
+Date: Wed, 28 May 2025 11:59:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Get "Message headers fail syntax check" error when using
- git-send-email
-To: Li Chen <me@linux.beauty>, Qemu devel <qemu-devel@nongnu.org>
-References: <1971648603b.dce1f5d22901195.6702025346547333607@linux.beauty>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <1971648603b.dce1f5d22901195.6702025346547333607@linux.beauty>
+Subject: Re: [PATCH v1 1/6] backends/iommufd: Add a helper to invalidate
+ user-managed HWPT
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20250528060409.3710008-1-zhenzhong.duan@intel.com>
+ <20250528060409.3710008-2-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250528060409.3710008-2-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -151,65 +159,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/05/2025 11.45, Li Chen wrote:
-> Hi,
-> 
-> My emails to the qemu-devel, qemu-riscv, and qemu-arm mailing lists regarding the
-> "[PATCH v4 0/4] acpi: Add machine option to disable SPCR table" series are being
-> rejected by these mailing lists, while other recipients are unaffected.
-> This issue didn't occur with versions v1-v3, which I sent via Zoho webmail instead of git-send-email.
-> The error messages are:
-> 
-> ```
-> This message was created automatically by mail delivery software.
-> A message that you sent could not be delivered to one or more of its recipients. This is a permanent error.
-> 
-> qemu-devel@nongnu.org, ERROR CODE :550 - Message headers fail syntax check
-> (... qemu-riscv/qemu-arm ...)
-> 
-> Reporting-MTA: dns; mx.zohomail.com
-> Arrival-Date: Wed, 28 May 2025 16:09:36 +0800
-> 
-> Original-Recipient: rfc822; qemu-devel@nongnu.org
-> Final-Recipient: rfc822; qemu-devel@nongnu.org
-> Status: 550
-> Action: failed
-> Last-Attempt-Date: 28 May 2025 08:11:19 GMT
-> Diagnostic-Code: Message headers fail syntax check
-> Remote-MTA: dns; eggs.gnu.org
-> (... qemu-riscv/qemu-arm ...)
-> ```
-> 
-> And below is the email header:
-> 
-> ```
-> Received: by mx.zohomail.com with SMTPS id 1748419823397138.51964085412385;
-> 	Wed, 28 May 2025 01:10:23 -0700 (PDT)
-> From: Li Chen <me@linux.beauty>
-> To: "Peter Maydell" <peter.maydell@linaro.org>,
-> 	"Shannon Zhao" <shannon.zhaosl@gmail.com>,
-> 	"Michael S. Tsirkin" <mst@redhat.com>,
-> 	"Igor Mammedov" <imammedo@redhat.com>,
-> 	"Ani Sinha" <anisinha@redhat.com>,
-> 	"Eduardo Habkost" <eduardo@habkost.net>,
-> 	"Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
-> 	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-> 	"Yanan Wang" <wangyanan55@huawei.com>,
-> 	"Zhao Liu" <zhao1.liu@intel.com>,
-> 	"Song Gao" <gaosong@loongson.cn>,
-> 	"Jiaxun Yang" <jiaxun.yang@flygoat.com>,
-> 	"Sunil V L" <sunilvl@ventanamicro.com>,
-> 	"Palmer Dabbelt" <palmer@dabbelt.com>,
-> 	"Alistair Francis" <alistair.francis@wdc.com>,
-> 	"Weiwei Li" <liwei1518@gmail.com>,
-> 	"qemu-arm" <qemu-arm@nongnu.org>,
-> 	"qemu-devel" <qemu-devel@nongnu.org>,
-> 	"qemu-riscv" " <qemu-riscv@nongnu.org>
+Hello Zhenzhong,
 
-Blind guess: You've got a stray " in above qemu-riscv line.
+On 5/28/25 08:04, Zhenzhong Duan wrote:
+> This helper passes cache invalidation request from guest to invalidate
+> stage-1 page table cache in host hardware.
+> 
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   include/system/iommufd.h |  4 ++++
+>   backends/iommufd.c       | 33 +++++++++++++++++++++++++++++++++
+>   backends/trace-events    |  1 +
+>   3 files changed, 38 insertions(+)
+> 
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index cbab75bfbf..5399519626 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -61,6 +61,10 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+>                                         uint64_t iova, ram_addr_t size,
+>                                         uint64_t page_size, uint64_t *data,
+>                                         Error **errp);
+> +bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+> +                                      uint32_t data_type, uint32_t entry_len,
+> +                                      uint32_t *entry_num, void *data_ptr,
+> +                                      Error **errp);
+>   
+>   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+>   #endif
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index b73f75cd0b..c8788a6438 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -311,6 +311,39 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>       return true;
+>   }
+>   
+> +bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+> +                                      uint32_t data_type, uint32_t entry_len,
+> +                                      uint32_t *entry_num, void *data_ptr,
+> +                                      Error **errp)
+> +{
+> +    int ret, fd = be->fd;
+> +    uint32_t total_entries = *entry_num;
+> +    struct iommu_hwpt_invalidate cache = {
+> +        .size = sizeof(cache),
+> +        .hwpt_id = id,
+> +        .data_type = data_type,
+> +        .entry_len = entry_len,
+> +        .entry_num = total_entries,
+> +        .data_uptr = (uintptr_t)data_ptr,
 
-  HTH,
-   Thomas
+Minor, other helpers use a 'data' variable name.
 
+> +    };
+> +
+> +    ret = ioctl(fd, IOMMU_HWPT_INVALIDATE, &cache);
+> +    trace_iommufd_backend_invalidate_cache(fd, id, data_type, entry_len,
+> +                                           total_entries, cache.entry_num,
+> +                                           (uintptr_t)data_ptr,
+> +                                           ret ? errno : 0);
+> +    if (ret) {
+> +        *entry_num = cache.entry_num;
+> +        error_setg_errno(errp, errno, "IOMMU_HWPT_INVALIDATE failed:"
+> +                         " totally %d entries, processed %d entries",
+> +                         total_entries, cache.entry_num);
+> +    } else {
+> +        g_assert(total_entries == cache.entry_num);
+
+Killing the VMM because a kernel device ioctl failed is brute force.
+Can't we update the 'Error *' parameter instead to report that the
+invalidation is partial or something went wrong ?
+
+What kind of errors are we trying to catch ?
+
+Looking at the kernel iommufd_hwpt_invalidate() routine and
+intel_nested_cache_invalidate_user(), it doesn't seem possible to
+return a different number of cache entries. Are you anticipating
+other implementations (sMMU) ?
+
+Thanks,
+
+C.
 
 
