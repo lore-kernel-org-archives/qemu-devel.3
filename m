@@ -4,62 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35B9C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57969C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKDhe-0000a1-Mo; Wed, 28 May 2025 06:08:08 -0400
+	id 1uKDga-0005ev-Mr; Wed, 28 May 2025 06:07:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDhV-0000H7-9n
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:08:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDgL-0004bE-FB
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDhR-0007QT-Vj
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:07:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDgB-0007Ib-0z
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748426872;
+ s=mimecast20190719; t=1748426793;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=syN9efIB0hNvD8iCymDl24Tj7OZV+bCEsnzxf8NWRq8=;
- b=ITmfqU2hqIk7mIBxbyEdYWfeHIztR+qjcoX+pO6ZbefGPHwjirAMBbw8i6YNypwaVCajEk
- vzUlmva9RpMQCnaudjnzLtwjVozLNy4O22Gj+cvDv8vBOc/cD8zYOad6kmCP63QyF06eWJ
- xcYF1X/uprPzr7JLPEDM0rT8ZtBnL8s=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=hVA012VkzcvdoDUkAdfR2+pJ3HkG0N8iDqVKF3jHfxo=;
+ b=QUNzhrqJrSYQUfj7bZ5eS5pcaWFsjG2h0DEXhVGVFMaHhYceEiKwI3CFODfPfl69tnzZIW
+ gftTlwmqjT4Inkg/6GSPR61yDdNUfotPV685J1Eiad7czxd9xJEES0gfyD0KRnQhpx/HLO
+ JfYAqG8kBOSOClPYqs1bedA6yDZceUg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-29m2Hoe8PBSBrOA6R8DIyA-1; Wed,
- 28 May 2025 06:06:45 -0400
-X-MC-Unique: 29m2Hoe8PBSBrOA6R8DIyA-1
-X-Mimecast-MFC-AGG-ID: 29m2Hoe8PBSBrOA6R8DIyA_1748426805
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-b4_s_PnAMDWa7gKSOXsZTw-1; Wed,
+ 28 May 2025 06:05:29 -0400
+X-MC-Unique: b4_s_PnAMDWa7gKSOXsZTw-1
+X-Mimecast-MFC-AGG-ID: b4_s_PnAMDWa7gKSOXsZTw_1748426728
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F37C41800446; Wed, 28 May 2025 10:06:44 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E38851800374; Wed, 28 May 2025 10:05:27 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.110])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2C775180049D; Wed, 28 May 2025 10:06:41 +0000 (UTC)
+ id 8CF5118004A7; Wed, 28 May 2025 10:05:24 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 27/27] tests/unit/test-util-sockets: fix mem-leak on error
- object
-Date: Wed, 28 May 2025 12:05:07 +0200
-Message-ID: <20250528100507.313906-28-thuth@redhat.com>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PULL 05/27] tests/functional: add memlock tests
+Date: Wed, 28 May 2025 12:04:45 +0200
+Message-ID: <20250528100507.313906-6-thuth@redhat.com>
 In-Reply-To: <20250528100507.313906-1-thuth@redhat.com>
 References: <20250528100507.313906-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -84,39 +82,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 
-The test fails with --enable-asan as the error struct is never freed.
-In the case where the test expects a success but it fails, let's also
-report the error for debugging (it will be freed internally).
+Add new tests to check the correctness of the `-overcommit memlock`
+option (possible values: off, on, on-fault) by using
+`/proc/{qemu_pid}/status` file to check in VmSize, VmRSS and VmLck
+values:
 
-Fixes 316e8ee8d6 ("util/qemu-sockets: Refactor inet_parse() to use QemuOpts")
+* if `memlock=off`, then VmLck = 0;
+* if `memlock=on`, then VmLck > 0 and almost all memory is resident;
+* if `memlock=on-fault`, then VmLck > 0 and only few memory is resident.
 
-Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Message-ID: <518d94c7db20060b2a086cf55ee9bffab992a907.1748280011.git.matheus.bernardino@oss.qualcomm.com>
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Message-ID: <20250525070737.54267-3-dtalexundeer@yandex-team.ru>
+[thuth: improved the text in a comment]
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/unit/test-util-sockets.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tests/functional/meson.build     |  1 +
+ tests/functional/test_memlock.py | 79 ++++++++++++++++++++++++++++++++
+ 2 files changed, 80 insertions(+)
+ create mode 100755 tests/functional/test_memlock.py
 
-diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
-index 8492f4d68f2..ee66d727c38 100644
---- a/tests/unit/test-util-sockets.c
-+++ b/tests/unit/test-util-sockets.c
-@@ -341,8 +341,12 @@ static void inet_parse_test_helper(const char *str,
-     int rc = inet_parse(&addr, str, &error);
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 52b4706cfe8..13079f58b66 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -68,6 +68,7 @@ tests_generic_system = [
+   'empty_cpu_model',
+   'info_usernet',
+   'version',
++  'memlock',
+ ]
  
-     if (success) {
-+        if (error) {
-+            error_report_err(error);
-+        }
-         g_assert_cmpint(rc, ==, 0);
-     } else {
-+        error_free(error);
-         g_assert_cmpint(rc, <, 0);
-     }
-     if (exp_addr != NULL) {
+ tests_generic_linuxuser = [
+diff --git a/tests/functional/test_memlock.py b/tests/functional/test_memlock.py
+new file mode 100755
+index 00000000000..8910cb6da33
+--- /dev/null
++++ b/tests/functional/test_memlock.py
+@@ -0,0 +1,79 @@
++#!/usr/bin/env python3
++#
++# Functional test that check overcommit memlock options
++#
++# Copyright (c) Yandex Technologies LLC, 2025
++#
++# Author:
++#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import re
++
++from typing import Dict
++
++from qemu_test import QemuSystemTest
++from qemu_test import skipLockedMemoryTest
++
++
++STATUS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
++
++
++@skipLockedMemoryTest(2_097_152)  # 2GB
++class MemlockTest(QemuSystemTest):
++    """
++    Runs a guest with memlock options.
++    Then verify, that this options is working correctly
++    by checking the smaps of the QEMU process.
++    """
++
++    def common_vm_setup_with_memlock(self, memlock):
++        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
++        self.vm.launch()
++
++    def test_memlock_off(self):
++        self.common_vm_setup_with_memlock('off')
++
++        status = self.get_process_status_values(self.vm.get_pid())
++
++        self.assertTrue(status['VmLck'] == 0)
++
++    def test_memlock_on(self):
++        self.common_vm_setup_with_memlock('on')
++
++        status = self.get_process_status_values(self.vm.get_pid())
++
++        # VmLck > 0 kB and almost all memory is resident
++        self.assertTrue(status['VmLck'] > 0)
++        self.assertTrue(status['VmRSS'] >= status['VmSize'] * 0.70)
++
++    def test_memlock_onfault(self):
++        self.common_vm_setup_with_memlock('on-fault')
++
++        status = self.get_process_status_values(self.vm.get_pid())
++
++        # VmLck > 0 kB and only few memory is resident
++        self.assertTrue(status['VmLck'] > 0)
++        self.assertTrue(status['VmRSS'] <= status['VmSize'] * 0.30)
++
++    def get_process_status_values(self, pid: int) -> Dict[str, int]:
++        result = {}
++        raw_status = self._get_raw_process_status(pid)
++
++        for line in raw_status.split('\n'):
++            if m := STATUS_VALUE_PATTERN.match(line):
++                result[m.group(1)] = int(m.group(2))
++
++        return result
++
++    def _get_raw_process_status(self, pid: int) -> str:
++        try:
++            with open(f'/proc/{pid}/status', 'r') as f:
++                return f.read()
++        except FileNotFoundError:
++            self.skipTest("Can't open status file of the process")
++
++
++if __name__ == '__main__':
++    MemlockTest.main()
 -- 
 2.49.0
 
