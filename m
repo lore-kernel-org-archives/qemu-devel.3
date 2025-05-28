@@ -4,65 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A38FC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 06:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28455C5AE59
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 06:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKA0M-0003gj-RG; Wed, 28 May 2025 02:11:10 -0400
+	id 1uKAGO-0000Gb-5H; Wed, 28 May 2025 02:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKA0I-0003gE-RK
- for qemu-devel@nongnu.org; Wed, 28 May 2025 02:11:07 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKAGK-0000GT-Mu
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 02:27:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKA0F-0001Od-KB
- for qemu-devel@nongnu.org; Wed, 28 May 2025 02:11:06 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKAGG-0003tu-6W
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 02:27:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748412662;
+ s=mimecast20190719; t=1748413653;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=APQEGYqPTd5AKjX8aZTXGo++DT571wQerKqkm3AODg8=;
- b=h3f8iDshonbeJWjZKUS8W0pyfLu3IgFb5+VOr+2ju1ROmlof+qUfYcD+0ZaWO82hk53cOl
- 9Oc75TYVDDW3179HMFl73izocX0tKYwsRGpzvhfzrcLsrnr1YNQhdO/A7yAbk51va6+bdL
- KyT7okZvow8DQqhYxcKmKGRZDz7Xv40=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=VXtSg9WBFgp4qV4aCgF7346HieNMOOTUPk14uioSezc=;
+ b=auadEuWL6W/wKrUoWaSjvzZl+insndhTnFdiWt7pr5dl9NElL+lWGkJIryHEkV3Psx1KFn
+ RrbHx03lERq/iYHyReBk9YzQLjWHN4WWCblcF/4cFK6aVSvVnkf1iCgkgPOo08aAaKzZWK
+ bd54RswI+064GEB0vjMzDE4F2mEAh04=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-VjL6SCpnOnajVwhk062i7w-1; Wed,
- 28 May 2025 02:11:00 -0400
-X-MC-Unique: VjL6SCpnOnajVwhk062i7w-1
-X-Mimecast-MFC-AGG-ID: VjL6SCpnOnajVwhk062i7w_1748412659
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-9kT_fB2yOCea59fCb5lPJA-1; Wed,
+ 28 May 2025 02:27:29 -0400
+X-MC-Unique: 9kT_fB2yOCea59fCb5lPJA-1
+X-Mimecast-MFC-AGG-ID: 9kT_fB2yOCea59fCb5lPJA_1748413649
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91D67180045B; Wed, 28 May 2025 06:10:59 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8CA1A1955DB3; Wed, 28 May 2025 06:27:28 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10BEB1956095; Wed, 28 May 2025 06:10:59 +0000 (UTC)
+ id F108E1956095; Wed, 28 May 2025 06:27:27 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5475C21E6768; Wed, 28 May 2025 08:10:56 +0200 (CEST)
+ id 636B021E6768; Wed, 28 May 2025 08:27:25 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: "Richard W.M. Jones" <rjones@redhat.com>,  qemu-devel@nongnu.org,
- qemu-block@nongnu.org,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH v2 1/4] nbd: Add multi-conn option
-In-Reply-To: <e5qupmbs4innc4d5fqi5wjgc4xs3dzng2h22uqdpprshm7zfsf@zddd3w6jefoj>
- (Eric Blake's message of "Tue, 27 May 2025 17:01:18 -0500")
-References: <20250428185246.492388-6-eblake@redhat.com>
- <20250428185246.492388-7-eblake@redhat.com>
- <877c33qzzn.fsf@pond.sub.org> <20250429091422.GG1450@redhat.com>
- <87wmb3jkoh.fsf@pond.sub.org> <20250429111958.GI1450@redhat.com>
- <87o6wfnqzj.fsf@pond.sub.org>
- <e5qupmbs4innc4d5fqi5wjgc4xs3dzng2h22uqdpprshm7zfsf@zddd3w6jefoj>
-Date: Wed, 28 May 2025 08:10:56 +0200
-Message-ID: <87ecw9jmdr.fsf@pond.sub.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,  Juraj Marcin <jmarcin@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Alexey Perevalov <a.perevalov@samsung.com>
+Subject: Re: [PATCH 02/11] migration/hmp: Fix postcopy-blocktime per-vCPU
+ results
+In-Reply-To: <20250527215850.1271072-3-peterx@redhat.com> (Peter Xu's message
+ of "Tue, 27 May 2025 17:58:41 -0400")
+References: <20250527215850.1271072-1-peterx@redhat.com>
+ <20250527215850.1271072-3-peterx@redhat.com>
+Date: Wed, 28 May 2025 08:27:25 +0200
+Message-ID: <878qmhjlma.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -92,73 +88,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eric Blake <eblake@redhat.com> writes:
+Peter Xu <peterx@redhat.com> writes:
 
-> On Tue, Apr 29, 2025 at 01:31:44PM +0200, Markus Armbruster wrote:
->> > In the context of qemu that might suggest having separate
->> > multi_conn_requested and multi_conn fields, where the latter can be
->> > queried over QMP to find out what is actually going on.  Could even
->> > add multi_conn_max to allow MAX_MULTI_CONN constant to be read out.
->>
->> You decide what to do with my feedback :)
+> Unfortunately, it was never correctly shown..
 >
-> I've got a local patch that adds the ability for
-> query-named-block-nodes (and query-block) to output image-specific
-> information for NBD that includes how many connections are actually in
-> use.  But now I've got a QMP question:
+> This is only found when I started to look into making the blocktime feature
+> more useful (so as to avoid using bpftrace, even though I'm not sure which
+> one will be harder to use..).
 >
-> My patch, as written, makes the output look like this:
+> So the old dump would look like this:
 >
-> "format-specific": {"mode": "extended", "type": "nbd", "connections": 1}},
+>   Postcopy vCPU Blocktime: 0-1,4,10,21,33,46,48,59
 >
-> by changing block-core.json like this (partial patch shown):
+> Even though there're actually 40 vcpus, and the string will merge same
+> elements and also sort them.
 >
-> @@ -208,10 +223,12 @@
->  #
->  # @file: Since 8.0
->  #
-> +# @nbd: Since 10.1
-> +#
->  # Since: 1.7
->  ##
->  { 'enum': 'ImageInfoSpecificKind',
-> -  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file' ] }
-> +  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file', 'nbd' ] }
+> To fix it, simply loop over the uint32List manually.  Now it looks like:
 >
->  ##
->  # @ImageInfoSpecificQCow2Wrapper:
-> @@ -284,7 +301,8 @@
->        'luks': 'ImageInfoSpecificLUKSWrapper',
->        'rbd': 'ImageInfoSpecificRbdWrapper',
-> -      'file': 'ImageInfoSpecificFileWrapper'
-> +      'file': 'ImageInfoSpecificFileWrapper',
-> +      'nbd': 'ImageInfoSpecificNbd'
->    } }
+>   Postcopy vCPU Blocktime (ms):
+>    [15, 0, 0, 43, 29, 34, 36, 29, 37, 41,
+>     33, 37, 45, 52, 50, 38, 40, 37, 40, 49,
+>     40, 35, 35, 35, 81, 19, 18, 19, 18, 30,
+>     22, 3, 0, 0, 0, 0, 0, 0, 0, 0]
 >
-> But that is different from all of the other image modes, where the
-> output looks more like:
+> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> Cc: Alexey Perevalov <a.perevalov@samsung.com>
+> Cc: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/migration-hmp-cmds.c | 23 ++++++++++++++---------
+>  1 file changed, 14 insertions(+), 9 deletions(-)
 >
-> "format-specific": {"type": "rbd", "data": {"encryption-format":"..."}}},
->
-> note the extra layer of nesting, due to historical reasons of being
-> added in a time when the QMP generator was not as nice on supporting
-> flatter union-style coding.
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 367ff6037f..3cf890b887 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -208,15 +208,20 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+>      }
+>  
+>      if (info->has_postcopy_vcpu_blocktime) {
+> -        Visitor *v;
+> -        char *str;
+> -        v = string_output_visitor_new(false, &str);
+> -        visit_type_uint32List(v, NULL, &info->postcopy_vcpu_blocktime,
+> -                              &error_abort);
+> -        visit_complete(v, &str);
+> -        monitor_printf(mon, "Postcopy vCPU Blocktime: %s\n", str);
+> -        g_free(str);
+> -        visit_free(v);
+> +        uint32List *item = info->postcopy_vcpu_blocktime;
+> +        int count = 0;
+> +
+> +        monitor_printf(mon, "Postcopy vCPU Blocktime (ms): \n [");
+> +
+> +        while (item) {
+> +            monitor_printf(mon, "%"PRIu32", ", item->value);
+> +            item = item->next;
+> +            /* Each line 10 vcpu results, newline if there's more */
 
-Correct, this is an artifact of development history, specifically
-"simple" unions and their elimination.
+The list can be arbitrarily long?
 
-> Must I create an ImageInfoSpecificNbdWrapper type, with the sole
-> purpose of having the same (pointless, IMO) "data":{} wrapper as all
-> the other branches of the union type, or am I okay with my addition
-> using the flatter style?
+> +            if ((++count % 10 == 0) && item) {
+> +                monitor_printf(mon, "\n  ");
+> +            }
+> +        }
+> +        monitor_printf(mon, "\b\b]\n");
 
-I dislike these wrappers, possibly more than is reasonable.  Still, I
-think local consistency is more important.
+Uh, backspace?
 
-Precedence: commit 7f36a50ab4e (block/file: Add file-specific image
-info) added a new branch with a wrapper well after we eliminated
-"simple" unions.
+I usually do something like
 
-I think you should add the silly wrapper.
+    sep = "";
+    for (...) {
+        printf("%s...", sep, ...);
+        sep = ", "
+    }
+
+To add line breaks, I'd use something like
+
+        sep = ... ? ", " : ",\n";
+
+>      }
+>  
+>  out:
+
+The less the string visitors are used, the happier I am.
 
 
