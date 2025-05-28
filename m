@@ -4,68 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBB8EC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 07:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80A9C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 07:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKBgr-0001fh-1r; Wed, 28 May 2025 03:59:09 -0400
+	id 1uKBhX-0002Ka-5C; Wed, 28 May 2025 03:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uKBgo-0001et-Rg; Wed, 28 May 2025 03:59:06 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <elisey.konstantinov@icloud.com>)
+ id 1uKBhV-0002KF-WD
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 03:59:50 -0400
+Received: from p-east3-cluster2-host8-snip4-10.eps.apple.com ([57.103.87.211]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uKBgm-0002i7-F0; Wed, 28 May 2025 03:59:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748419144; x=1779955144;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=9rDHtWPUg/MosXmpkGkMSUu6rsT8SpDCjTYfvSpiacw=;
- b=MdW+d1r+dVh83MPcUxJXl9KI1nMHCmRcn7uQ3mLtCfxTF+DVtrOHwYAy
- spkBoZDd1MpdJT5IPSnhNvd9w7SaHl+q3pyspt62hiKdCYAfWFgq8o2fw
- v9/rViMccIXPQrOpnuGvbiZrBDaWi3lcbOUpxiFe9aG7QWXIwP0FGKA+K
- /ZwOD/eBZZ9RVWnNmjH5pEzLaO4WVNoKTglpHO4bS3W20ZDk9TNsKT1yV
- MRSCNhV/utc99OKO+97ZvjNTpyK0wYSwHgPftD8rtE6TzpNUG+MdG/iAq
- DRZ58DYd/kjn4CWIa/htwMj/XamNh5IpIwpaimFj2kDE8OGy/qc6dudhA g==;
-X-CSE-ConnectionGUID: bWn8YiQETkKrkwdqKptYAw==
-X-CSE-MsgGUID: 1OTpE1N6T4KurqEHmbUP5g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="50319262"
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="50319262"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 May 2025 00:59:00 -0700
-X-CSE-ConnectionGUID: bN7RlZ/9Q6SETWDrzc0SCg==
-X-CSE-MsgGUID: SBqhHIFOQqaluconM7yFFw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="143146571"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 28 May 2025 00:58:58 -0700
-Date: Wed, 28 May 2025 16:20:08 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, qemu-rust@nongnu.org
-Subject: Re: [PATCH 06/12] util/error: make func optional
-Message-ID: <aDbHONQNGrXBxmuL@intel.com>
-References: <20250526142254.1061009-1-pbonzini@redhat.com>
- <20250526142455.1061519-6-pbonzini@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250526142455.1061519-6-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) DKIMWL_WL_HIGH=-2.907, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <elisey.konstantinov@icloud.com>)
+ id 1uKBhU-0002tf-8g
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 03:59:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+ s=1a1hai; bh=Awqfq+dVWCScwexE6cs0aWELoN4bTg32k2Y70iLJjpA=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=rEkvSdRn0NffXWR8RTSkXhZ/zCnuQa+8eohPYlTv95GKuOdeafw2D/wFpGq75WV5C
+ JucNuxVJOga2oBNpJgf1IPtZ0sgD2j95fArrM8j/c5tJCnkgS/Ag9lUOGJzsyPS38Y
+ uJ9fQTpewW9Q2GYRW53P56l3yB3PyVzJ2vPSY5eclwkv4KjRH14v/VfTOu1H1JZKFw
+ 7FGtAPjr2qRhulJYDaVFvcrqRQ5vytFUP/MUGk3S9wNrKM+Aoy3RWrhyZ0As249Jxz
+ t5gwgxiygmZyRIySnotWkAk3wPSuYBVbwzYkh+/mSJdEpqCph6804p/KCQR113v4Xk
+ UEI5LLixl75FQ==
+Received: from outbound.qs.icloud.com (localhost [127.0.0.1])
+ by outbound.qs.icloud.com (Postfix) with ESMTPS id 3DBC8180029A;
+ Wed, 28 May 2025 07:59:37 +0000 (UTC)
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by outbound.qs.icloud.com (Postfix) with ESMTPSA id C0C0518002A4;
+ Wed, 28 May 2025 07:59:35 +0000 (UTC)
+From: elisey.konstantinov@icloud.com
+Message-Id: <242C7401-E5C7-465D-AA2F-6664C4496254@icloud.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_FBCC503C-AC72-4DEF-AC13-248B2E2B5907"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH] Revert "i386/cpu: Set up CPUID_HT in
+ x86_cpu_expand_features() instead of cpu_x86_cpuid()"
+Date: Wed, 28 May 2025 10:59:04 +0300
+In-Reply-To: <aDaCJTkoDYsdJFmJ@intel.com>
+Cc: elisey.konstantinov@icloud.com, Zhao Liu <zhao1.liu@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, pbonzini@redhat.com
+To: qemu-devel@nongnu.org
+References: <0C532D10-33ED-41F5-BBA7-13C64AA0633D@icloud.com>
+ <aDaCJTkoDYsdJFmJ@intel.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-Proofpoint-GUID: wu7oea3CgXiTRB9asys1FNZAfod1mhOs
+X-Proofpoint-ORIG-GUID: wu7oea3CgXiTRB9asys1FNZAfod1mhOs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_04,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ malwarescore=0 suspectscore=0 clxscore=1011 adultscore=0 mlxlogscore=999
+ spamscore=0 mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2503310001 definitions=main-2505280068
+Received-SPF: pass client-ip=57.103.87.211;
+ envelope-from=elisey.konstantinov@icloud.com; helo=outbound.qs.icloud.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,29 +86,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 26, 2025 at 04:24:49PM +0200, Paolo Bonzini wrote:
-> Date: Mon, 26 May 2025 16:24:49 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 06/12] util/error: make func optional
-> X-Mailer: git-send-email 2.49.0
-> 
-> The function name is not available in Rust, so make it optional.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  util/error.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
 
-panic::Location does not provide function name information. Although
-there are macros that could print function names [*] (as I'm sure you've
-noticed :) ), that way - printing the information based on some macros -
-would definitely require some wrapping or modification of Err().
+--Apple-Mail=_FBCC503C-AC72-4DEF-AC13-248B2E2B5907
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-Comparing with that, current implementation looks better in general.
+Hi Zhao,
 
-[*]: https://stackoverflow.com/a/63904992/24336517
+Thanks again for the info!
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+You're right =E2=80=94 I just tested the latest master (including =
+commits 5979f50fa9fd and 7a4861230676), and the issue is indeed fixed =
+there. macOS guests now boot successfully with TCG and multiple vCPUs, =
+without needing my patch.
 
+I=E2=80=99ll go ahead and drop the revert then =E2=80=94 great to see it =
+resolved upstream!
 
+Best regards,
+Elisey=
+
+--Apple-Mail=_FBCC503C-AC72-4DEF-AC13-248B2E2B5907
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;"><p =
+data-start=3D"659" data-end=3D"667" style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);">Hi Zhao,</p><p data-start=3D"669" data-end=3D"695" =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">Thanks again =
+for the info!</p><p data-start=3D"697" data-end=3D"927" =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">You're right =
+=E2=80=94 I just tested the latest&nbsp;<code data-start=3D"737" =
+data-end=3D"745">master</code>&nbsp;(including commits&nbsp;<code =
+data-start=3D"765" =
+data-end=3D"779">5979f50fa9fd</code>&nbsp;and&nbsp;<code =
+data-start=3D"784" data-end=3D"798">7a4861230676</code>), and the issue =
+is indeed fixed there. macOS guests now boot successfully with TCG and =
+multiple vCPUs, without needing my patch.</p><p data-start=3D"929" =
+data-end=3D"1004" style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);">I=E2=80=99ll go ahead and drop the revert then =E2=80=94 great to =
+see it resolved upstream!</p><p data-start=3D"1006" data-end=3D"1028" =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">Best =
+regards,<br data-start=3D"1019" data-end=3D"1022">Elisey</p></body></html>=
+
+--Apple-Mail=_FBCC503C-AC72-4DEF-AC13-248B2E2B5907--
 
