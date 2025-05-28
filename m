@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71CCC5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 20:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1932C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 20:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKN5V-0001pN-7Z; Wed, 28 May 2025 16:09:21 -0400
+	id 1uKN5G-0001lK-H8; Wed, 28 May 2025 16:09:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uKN5R-0001nk-S5
- for qemu-devel@nongnu.org; Wed, 28 May 2025 16:09:17 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ id 1uKN5D-0001jS-Kt
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 16:09:03 -0400
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uKN5N-0006NI-4D
- for qemu-devel@nongnu.org; Wed, 28 May 2025 16:09:17 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-70e5d953c0bso3526127b3.1
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 13:09:12 -0700 (PDT)
+ id 1uKN54-0006K2-VU
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 16:09:02 -0400
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-7c55500d08cso14592185a.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 13:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1748462951; x=1749067751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q75wCLLWuB7OvinkOcqG/BYvN2MthuDZnMoql8kakbM=;
- b=S0xar/gerRZo4bn05X/CODS38KzIrTrX6Gg7TRe9XSPtylCveaZCqAh9cEEDP1KZy9
- 0gn3oIKeY6owpmpEjOb0fvj19zPbgibeLaHNPcg1sV0ZGgIx/DgSfzSza5bGmYisSPWu
- jvX2PjSUVNsX0hm1MM4LZKrhRcILOkyyDfHrJfID0MtuZ74rg4Xr/j9k924kHU+zibm6
- X/wzRRuRl+gPCosK6leeqqZvOaR0FI5Xk/LuzLdNK/N+cvSqOqfC/8kUKsCixQAJurb+
- 1zqcnmCsddGp98WgnxANzy6i1LMtU8qGvo8AO3jcPKSfesTIJPeV60Ssf8bIZZM1XTF2
- 1jkQ==
+ d=ventanamicro.com; s=google; t=1748462933; x=1749067733; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=92UfK6LGb3e655cwJB8Y8Grjmr6zbigcWGXqhl/iC2E=;
+ b=gK+5d1arufb8sLLUHTtkpG8ruHgJCLPkjJttHkAgrPsEXo86Tslah9x89ruUXH1xTA
+ 0Zl1FeZAwHFtxVq8jpxZj/VGXu81FymtcJ1kR5caK318cN+daJrs44Fkg4oA1dnzqRQc
+ AKlLWWMRiQTEDdgkXk9HdXkddDcMwkYF+V2420Sci2umVvK4GtQJaJhndmt1x+w7P6XA
+ 7/jKUA14MgfNFWywUremfPw7EmFPh3txNPKcnLqfC+aabAuOeQ4GX4LiBVSjj/04bK/z
+ rgNWeTmA/+PXkYCZd4UA0b9CTbRWwhzKI5GiUnlTXfNm49Sb7J7ZXDVgXSNcv3Zkbr1N
+ fwSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748462951; x=1749067751;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q75wCLLWuB7OvinkOcqG/BYvN2MthuDZnMoql8kakbM=;
- b=F9TM9msjmp6tIJlmyF9DDL2oh6KXmeUuEkNLhvCx2CP3y2ZtGAi3/WZ9Mb1dnz9MLd
- s1lVI9IBOX++m1ufHKazhm10BTmlxHzbLfN9EZj7a9NOdwlBmBBmgX5Azi+QK5CsZI/E
- qtf112LOWD7P17hRayeO7lE9FIrjynTAWrAhhhcW6kGRl6Wea5RfnIagvGwA6yZytNJ5
- ZpCCMEdh3hI2lkjS94EBBlS8TXPw0rqLhp+vLldoTUKQcQ8c8jHhyYwjZDl1MIQfmV2V
- vjGRTM2yDab8CE9qDT9SZKQQe4amkQwPf5olptn6zXcmNSYtY1Cz4TpC0BO1Fufi0a2w
- wnNQ==
-X-Gm-Message-State: AOJu0YxR/UtEjDQ7h00nJup3F/G/nAqTe1lsH1D2mCdQ6P6ZyYt1ZDar
- ccbgfJxTfcjxGOuuV2Ks6T29pyoYBl93QVbJtpH8IIMDYdund48KOA4mscBXHNVyincKo0MdW1L
- osh8M
-X-Gm-Gg: ASbGncvukqdTNM7N2rMlVB9/FDM+yGZ+Y7rFuFE1FKzqoL/kLHDXtZTJcbTvsLNHrOD
- NY21A7lG6J1zgoLhacfO72iyfwjoGAcVp92Kt9BB7RnTHOTG7w1jxqIGaRdKE2nu/lL2VMSe0wv
- 9jhufUfpSnCm5izibTwbmwi+7ZP02g6WO7f9MFdNaZlood+4JiJ7B2GORia/ggsn9gSXPwb+Xvg
- uYUROSVxvJtjOmENEExhob657R/WATgJgQfSKw4ZtvaQMolkjbnbdooVAc0nJEq6NX25qj25Zls
- 4YA8si8wrNktDYXekH3WkbN2yqEXtRF2CIcqIBip0JJX+Y8xD2EAx7q8mrnVkix9orm2j2FJ+lA
- U5bUCRxccIdXaEg==
-X-Google-Smtp-Source: AGHT+IGluCsb2Vs7swpWUN18rUbgPCDEsX3yvQtgG8cJoAHquuW8ReHmLnmm6r98YJYpfUaLaBYmyw==
-X-Received: by 2002:a05:6102:3a08:b0:4de:d08f:672a with SMTP id
- ada2fe7eead31-4e4240bc571mr14731267137.15.1748462509531; 
- Wed, 28 May 2025 13:01:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748462933; x=1749067733;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=92UfK6LGb3e655cwJB8Y8Grjmr6zbigcWGXqhl/iC2E=;
+ b=awaBKqN7JgdYbWLIkDimP51TcKdUJHKoqoZMmnvKajfxLOO3CECSAAHIjvRehbT8Do
+ rc5F/PJq6FqnJXcX05CjRxvOnQb9gFV1bJckUS4ru8riXKbEy9NDuEMnccDUGDMK4xLr
+ Dvh30SwlUtZp9kvOpEtFmiOSB97NUb1ke2vw43wucafIg5Xt0jwn1oTBYCJeTjbvYm1J
+ m9SATACnTaMXGKhnk4x+R3zhkAfZLvv0gVcssNWjb/2k650m9bs2gyHHAhwsInKWxtL3
+ cy9J6hr9BBvonfK/RI+EyRJGuefBxXsFaPmAaBymxq1HYgXoa/QEYkcvK0u9uNvUGc7o
+ +xKA==
+X-Gm-Message-State: AOJu0Yzd2HWoJKFICwlHSVfyB8wwFA1Cc04jvPK707eGRo7uWTLmGP2V
+ m18X9ZpFVr5ve/XtuMIKs0Jlk4SWuUWc08jVgOlXmYJIbIO1gRWF7NSgUpVSnenlKz47xEp0wBP
+ fNlXy
+X-Gm-Gg: ASbGncsL1u8AS5L0OHFJxrJAt0zz9+fcSDTdaQe07jV69ghe2zQ825JmNrbbmfFVPyW
+ Rzqq9Sm55M0kqnUdUpia2kek/LSWFAm0DNSWtgy+1L2IDdFxSSrSn71/GYFPu1KivUXHNzlPtMY
+ yRIUoT9nfxcIH1QOEShyWAtFG23BLd0KzFKtXbdXhY1gO6vIbSvNex1blhA5YXHMUH2bz0/HYiN
+ JPq7dFk1A/WP/dMYTUXT6JZuhS0Hg8kw6nUv8p+LkyvY9s/ounMhncdxzh2JKKPtoB6UzPj9rU3
+ 4WxzaoMLSihbXzoYn6jrbhmLnKw7xgDXGbQdRlquC/+9nxKk5WTibjoW2vexXlojvzSEWUwxhL2
+ lTCc=
+X-Google-Smtp-Source: AGHT+IEtxgMee3F8cEwS588/Oq+FsB429d091JlwGdPDXrh8xMU/PSNcrI8Jjf7H6Gjvny+Zdq5vOA==
+X-Received: by 2002:a05:6102:c07:b0:4e5:a309:85e8 with SMTP id
+ ada2fe7eead31-4e5a309874cmr3339660137.7.1748462503816; 
+ Wed, 28 May 2025 13:01:43 -0700 (PDT)
 Received: from grind.dc1.ventanamicro.com ([191.255.35.190])
  by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-4e59fc11a95sm1393736137.3.2025.05.28.13.01.46
+ ada2fe7eead31-4e59fc11a95sm1393736137.3.2025.05.28.13.01.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 13:01:49 -0700 (PDT)
+ Wed, 28 May 2025 13:01:43 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, ajones@ventanamicro.com,
- Fei Wu <wu.fei9@sanechips.com.cn>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v3 2/4] target/riscv: Add server platform reference cpu
-Date: Wed, 28 May 2025 17:01:27 -0300
-Message-ID: <20250528200129.1548259-3-dbarboza@ventanamicro.com>
+Subject: [PATCH v3 0/4] hw/riscv: Add Server Platform Reference Board
+Date: Wed, 28 May 2025 17:01:25 -0300
+Message-ID: <20250528200129.1548259-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250528200129.1548259-1-dbarboza@ventanamicro.com>
-References: <20250528200129.1548259-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-yw1-x1129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x72c.google.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
@@ -102,55 +98,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fei Wu <wu.fei9@sanechips.com.cn>
+Hi,
 
-The harts requirements of RISC-V server platform [1] require RVA23 ISA
-profile support, plus Sv48, Svadu, H, Sscofmpf etc. This patch provides
-a virt CPU type (rvsp-ref) as compliant as possible.
+This is my attempt to ressurect the Server SoC Platform reference work
+that has been buried for an year. The last posting was made an year ago
+[1]. 
 
-[1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
+Most of the changes were made due to upstream differences from one year
+ago. Patch 1 is an example of that.
 
-Signed-off-by: Fei Wu <fei2.wu@intel.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 11 +++++++++++
- 2 files changed, 12 insertions(+)
+In patch 2 (former 1), the main difference is the new CPU is rva23s64
+compliant. This wasn't possible in May 2024 because we didn't have this
+support back then.
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 1ee05eb393..70978fd53c 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -55,6 +55,7 @@
- #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
- #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
- #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
-+#define TYPE_RISCV_CPU_RVSP_REF         RISCV_CPU_TYPE_NAME("rvsp-ref")
- #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
- 
- OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 4a30cf8444..ec2fbc0e78 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3166,6 +3166,17 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.max_satp_mode = VM_1_10_SV39,
-     ),
- 
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSP_REF, TYPE_RISCV_VENDOR_CPU,
-+        .misa_mxl_max = MXL_RV64,
-+        .profile = &RVA23S64,
-+
-+        /* ISA extensions */
-+        .cfg.ext_zkr = true,
-+        .cfg.ext_svadu = true,
-+
-+        .cfg.max_satp_mode = VM_1_10_SV57,
-+    ),
-+
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
-         .cfg.max_satp_mode = VM_1_10_SV57,
+Patch 3 consists mostly of code base changes rather than functional
+changes. There was a discussion about whether we should supply fdts in
+this machine back in the v2 review [2]. The answer is yes: machine mode
+requires fdt to work, and we want to be flexible enough to generate our
+own fdt instead of relying on EDK2 to supply them. Note that we can also
+supply an EDK2-generated fdt via command line, bypassing the fdt created
+by QEMU, if desired.
+
+Patch 4 adds a riscv-iommu-sys device to the board. This wasn't possible
+back then because we didn't have the required upstream support for it.
+
+Patches based on alistair/riscv-to-apply.next.
+
+
+Changes from v2:
+- patch 1 (new):
+  - allow CPUs other than 'bare' to assign profiles
+- patch 2 (former 1):
+  - added RVA23 profile support in the rvsp-ref CPU
+- patch 3 (former 2):
+  - hw/riscv/Kconfig changes:
+    * added 'default y' in hw/riscv/Kconfig to build the board by default
+    * added 'depends on RISCV64' to prevent the board to be built for qemu-system-riscv32
+
+  - HMP qtest fixes:
+    * added rvsp_aclint_allowed(). Use it instead of (!tcg_enabled()) when checking aclint support
+
+  - changes in rvsp_ref_machine_done():
+    * added 'RISCVBootInfo boot_info' struct
+    * changed riscv_find_and_load_firmware(), riscv_calc_kernel_start_addr(),
+      riscv_load_kernel() and riscv_compute_fdt_addr() to use boot_info
+
+  - added "hw/char/serial-mm.h" include
+  - changed 'addr' mem variables to 'hwaddr'
+  - use HWADDR_PRIx format with 'addr' variables
+  - changed GPEX_NUM_IRQS to PCI_NUM_PINS
+
+- patch 4 (new):
+  - add riscv-iommu-sys platform device
+- v2 link: https://lore.kernel.org/qemu-riscv/20240312135222.3187945-1-fei2.wu@intel.com/
+
+
+[1] https://lore.kernel.org/qemu-riscv/20240312135222.3187945-1-fei2.wu@intel.com/
+[2] https://lore.kernel.org/qemu-riscv/CAHBxVyG186Zo7nAm7o8=vhBtzU+x8ry4_mWwHxuaZ8BasnDyPg@mail.gmail.com/
+
+Daniel Henrique Barboza (2):
+  target/riscv/cpu.c: remove 'bare' condition for .profile
+  hw/riscv/server_platform_ref.c: add riscv-iommu-sys
+
+Fei Wu (2):
+  target/riscv: Add server platform reference cpu
+  hw/riscv: Add server platform reference machine
+
+ configs/devices/riscv64-softmmu/default.mak |    1 +
+ hw/riscv/Kconfig                            |   15 +
+ hw/riscv/meson.build                        |    1 +
+ hw/riscv/server_platform_ref.c              | 1346 +++++++++++++++++++
+ target/riscv/cpu-qom.h                      |    1 +
+ target/riscv/cpu.c                          |   12 +-
+ 6 files changed, 1375 insertions(+), 1 deletion(-)
+ create mode 100644 hw/riscv/server_platform_ref.c
+
 -- 
 2.49.0
 
