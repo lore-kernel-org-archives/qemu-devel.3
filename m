@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66AE0C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240B6C5AE59
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKByB-0002Cg-PS; Wed, 28 May 2025 04:17:04 -0400
+	id 1uKBxt-0001hr-BX; Wed, 28 May 2025 04:16:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBwO-0008NC-BZ
+ id 1uKBwO-0008NF-Dy
  for qemu-devel@nongnu.org; Wed, 28 May 2025 04:15:12 -0400
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBwE-0005KR-M8
- for qemu-devel@nongnu.org; Wed, 28 May 2025 04:15:05 -0400
+ id 1uKBwE-0005Jm-TJ
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 04:15:07 -0400
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cfe63c592so54819115e9.2
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:52 -0700 (PDT)
+ 5b1f17b1804b1-43edb40f357so36111235e9.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748420091; x=1749024891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748420087; x=1749024887; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FicFVtTidumCbshSOZECWTGWhp6SCdWIg1qF5oag2Hw=;
- b=ve/uq9FYet/ZZT8+FO5I+5nVtWMonENdakJsbP0cOqchfnRnJz1cBeFUoRPZ7FhDaA
- 3lJaid4VJ/1X8SAm5QZN+2QWEvKfIbBffCb5kv70Nj8fsrw93Qav1yIZZYyItSO8vwpX
- oCiLGg4gplOOXJUUt5AEWslQMCW2eyo5ABbMspfP1Mi514HePNAB4ivUWWpXPlLWXCFA
- XomfUZ6AMHu/xFLAjLmGcujVJ3y9234N6wyREyo2g17i1GjY2sFi2ImjWwIHarXTMsFs
- 3mp1j2FPiq6LsxvpQWo4frpR7I/WQ5fUXgXZAUkCjW8Sd6qP56Or+D9xTPTS/qlD2zJU
- 4orw==
+ bh=GYj9gZK7rwvghXe4/pGvPJxZVsy5pAC3NZqaoEu66Ig=;
+ b=sI+22Ttqm0xTBGeAYuXWszdGpoCfrn7Xbf7cfxm2btEjNtRBztx4lfHzSQYlXKhMwt
+ spiI7n232K1iMz8mujZeFKrN4w+OEj1f9qW6lBzjcRO5/HKEc1jJLQYdIaaPsyH7czMX
+ 9kjljYdHiZTp6lgAg45ht+Kj+fn9Fg/HZcwNqDx5CwGVMIYoSzmRYyenWzo/i2gla7KQ
+ Oqum9sg1N9yVsz0xOadG6JPs5eFHwjuDejV59LeGtTLR/Cmts+8dZsrWKgv1OTWafybT
+ 4G+ID7dqhW75k6zjS/21EOBaWFdEjX4AU+qqIjJzvlhgMj+co4Ko6NGFgoEissnB/2L4
+ wMwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748420091; x=1749024891;
+ d=1e100.net; s=20230601; t=1748420087; x=1749024887;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FicFVtTidumCbshSOZECWTGWhp6SCdWIg1qF5oag2Hw=;
- b=sal5yfjOJ0lm3bcbYAledj1m+r8ks7Lj/hdH2H3oV8Um2R+nEcHRqH+xs27MNjZMEM
- 8/u3jtunuWjFRFLXms5lUNdT3Vk3S/3fZybEV5y8xiiewZtM2SPKpXCtWKW9XZpAY41Q
- D+eJYZebYb8PAugfbzHtc+f/M9rrpXm69wHZ1+Dnhb0RTA/79J5/tUONwgnqozZY/9DA
- tIcftRwi/WXEzqPWkgE+6bC3oUqkBKkm3rgzVfcE/IghEv+R0GogInDLLMN1+ruufp4k
- Ld4iBAigwEnD1Gi+HWXy79CTpkRkGh62fprJLq4WmzA12oEh88/VZXd6JZhlvJEfTO1k
- IuUQ==
-X-Gm-Message-State: AOJu0YzAaZ5nff6Bky4Nkatjuy2zgATRjjeLjCuyEsBGXaqTnto26wgF
- qZtPBZ6b+J6kLHWhmRF3IZV3Kjp7qehKtDacTGkYPENiRhiYLG+DuGenlu+BigVRFP2XPsM/odI
- UFT9qXChe+g==
-X-Gm-Gg: ASbGnctjMwEeDtTM13H0mh33bF7p6Yv5C1JE3lbXZecKbrgOx/p5cmGaqx1+Tid/NFm
- YJMgl1n72Px+QBARMTP5VsWdqERndt75Dla5Ms6g7av+2BDeVk4TRDx20yB95WjGSRTbSAZJ9E2
- lxDXXFacnNlOrDKGGjaWGSvysJvmMPSUqLEOHV22EOC1RWoJlyhrovYhSA+eJQRGzFGR4OgwO4q
- AnyCtHW90aOXZ7/396Rcyqh00D3t1qYVW1O2BpEzNatQIhu6JWiNt7pP0/Iiz2evpLQrh7PuVdG
- tzNAtCjYrW08AT3VP21UNHnMCX9kh49f1GnRJxVp1RNl4xmrvwivDARn
-X-Google-Smtp-Source: AGHT+IHo5ewz5hLTGfzugL9r70kwsnfcWNtMLb9irQYw4DAdLDRrINJ9IkThtHFUFM985gibBpJHgA==
-X-Received: by 2002:a05:600c:a46:b0:442:f4a3:9338 with SMTP id
- 5b1f17b1804b1-44c92d351ebmr120968745e9.21.1748420090917; 
- Wed, 28 May 2025 01:14:50 -0700 (PDT)
+ bh=GYj9gZK7rwvghXe4/pGvPJxZVsy5pAC3NZqaoEu66Ig=;
+ b=FmQODPbL4plD1zNC7OTipK3Ci+i3b5+8PNJxwIPI3QPeLaCyYdDRAZZRod/LDfDIKo
+ WgJab3mluIqCXIv6vBeQ2sshldVcrlhgAaW9AM1GeF5DNnavOxZF5EINNWDX8/nhb4Qf
+ jSrZN17bE254k7FS2TT1jGVgicbXTU77Y9lQ++gxmac8/drlFnBuf6GCFBtQVB6hycNo
+ Y1pRF/pUopT9VDh+JgJMhfOQklITPLO4BEoQXKYQgIK7RCAj9xEZz1L9MYb5v+CcUYGk
+ D4/Wih/eUMtT+Vju0VUMQndwuX6yVlrgOJWDypbHI3KZJRdagzf3pQmt+D+/A1aZYeKg
+ AbxQ==
+X-Gm-Message-State: AOJu0YzadWaC8cSf3KaFEnSiy44voG0oKY6pVftYYRo77WoaOUniTY1q
+ XrW2jGgKB4a7pkaQGVFAu3fPqgOK3ndWpum3hmDwkanpleHZq2W0tdfrAiuHlVQJv29X4NrPlit
+ YEIY3H7bu1w==
+X-Gm-Gg: ASbGncvdEO75qf7uvsP7Ti9x9iOAW32MEaeKqM8fDoWkYZaCCUc2LfsnLSW8CBtk3da
+ jO6sWlka5OJKBYptURGSlWkWz78u7Ifi7UObT6WdG2IXb6j4Mga0iAvXFr02dbQYe8CBUUwyp+P
+ GXrMA18QMO5D679vLCaUh0cmYGa70fnWIWHtsYZIuO8ifqOWRconDIswIia8TYlBc793/VIQDzQ
+ Yx79XlOGBCUa1SPAGIKidHMFdervFovXiqxGsZg3TopbGpd7RGVBIOfay8L3ISKgz17riLLK/ta
+ Che35SMXDmjWk2OJP+HWoomwecpcRPDidCVc5H8xf0Sfq8iF7kYSZ/c+
+X-Google-Smtp-Source: AGHT+IFRz6SC9HM9VeqUQg3aGeuBc3TfWqiHb9vq4070cTkkX1MEe3O7JPA6czuWbq5DhNdJVipM1A==
+X-Received: by 2002:a05:600c:8711:b0:43c:fceb:91a with SMTP id
+ 5b1f17b1804b1-44c919e141bmr138579005e9.11.1748420086846; 
+ Wed, 28 May 2025 01:14:46 -0700 (PDT)
 Received: from stoup.. ([195.53.115.74]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.50
+ 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 01:14:50 -0700 (PDT)
+ Wed, 28 May 2025 01:14:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 28/28] accel/tcg: Assert TCGCPUOps.pointer_wrap is set
-Date: Wed, 28 May 2025 09:14:10 +0100
-Message-ID: <20250528081410.157251-29-richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 25/28] target/riscv: Fill in TCGCPUOps.pointer_wrap
+Date: Wed, 28 May 2025 09:14:07 +0100
+Message-ID: <20250528081410.157251-26-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250528081410.157251-1-richard.henderson@linaro.org>
 References: <20250528081410.157251-1-richard.henderson@linaro.org>
@@ -98,46 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All targets now provide the function, so we can
-make the call unconditional.
+Check 32 vs 64-bit and pointer masking state.
 
+Cc: qemu-riscv@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cpu-exec.c | 1 +
- accel/tcg/cputlb.c   | 7 ++-----
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ target/riscv/tcg/tcg-cpu.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index cc5f362305..713bdb2056 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -1039,6 +1039,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-         assert(tcg_ops->cpu_exec_halt);
-         assert(tcg_ops->cpu_exec_interrupt);
-         assert(tcg_ops->cpu_exec_reset);
-+        assert(tcg_ops->pointer_wrap);
- #endif /* !CONFIG_USER_ONLY */
-         assert(tcg_ops->translate_code);
-         assert(tcg_ops->get_tb_cpu_state);
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index a734859396..87e14bde4f 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1773,11 +1773,8 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-         l->page[1].size = l->page[0].size - size0;
-         l->page[0].size = size0;
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 305912b8dd..55fd9e5584 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -237,6 +237,31 @@ static void riscv_restore_state_to_opc(CPUState *cs,
+     env->excp_uw2 = data[2];
+ }
  
--        if (cpu->cc->tcg_ops->pointer_wrap) {
--            l->page[1].addr = cpu->cc->tcg_ops->pointer_wrap(cpu, l->mmu_idx,
--                                                             l->page[1].addr,
--                                                             addr);
--        }
-+        l->page[1].addr = cpu->cc->tcg_ops->pointer_wrap(cpu, l->mmu_idx,
-+                                                         l->page[1].addr, addr);
++#ifndef CONFIG_USER_ONLY
++static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
++                                vaddr result, vaddr base)
++{
++    CPURISCVState *env = cpu_env(cs);
++    uint32_t pm_len;
++    bool pm_signext;
++
++    if (cpu_address_xl(env) == MXL_RV32) {
++        return (uint32_t)result;
++    }
++
++    pm_len = riscv_pm_get_pmlen(riscv_pm_get_pmm(env));
++    if (pm_len == 0) {
++        return result;
++    }
++
++    pm_signext = riscv_cpu_virt_mem_enabled(env);
++    if (pm_signext) {
++        return sextract64(result, 0, 64 - pm_len);
++    }
++    return extract64(result, 0, 64 - pm_len);
++}
++#endif
++
+ const TCGCPUOps riscv_tcg_ops = {
+     .mttcg_supported = true,
+     .guest_default_memory_order = 0,
+@@ -250,6 +275,7 @@ const TCGCPUOps riscv_tcg_ops = {
  
-         /*
-          * Lookup both pages, recognizing exceptions from either.  If the
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = riscv_cpu_tlb_fill,
++    .pointer_wrap = riscv_pointer_wrap,
+     .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
+     .cpu_exec_halt = riscv_cpu_has_work,
+     .cpu_exec_reset = cpu_reset,
 -- 
 2.43.0
 
