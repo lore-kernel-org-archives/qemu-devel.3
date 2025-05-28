@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1067C5AE59
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 05:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E270AC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 05:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK9hz-000153-3U; Wed, 28 May 2025 01:52:11 -0400
+	id 1uK9kT-0002Tp-26; Wed, 28 May 2025 01:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1uK9hw-00014N-Cc
- for qemu-devel@nongnu.org; Wed, 28 May 2025 01:52:08 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1uK9kR-0002Ta-Oj
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 01:54:43 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1uK9hu-00075o-Ja
- for qemu-devel@nongnu.org; Wed, 28 May 2025 01:52:08 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7399838db7fso484858b3a.0
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 22:52:05 -0700 (PDT)
+ id 1uK9kP-0007Jg-QZ
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 01:54:43 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-3109f106867so4133777a91.1
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 22:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748411524; x=1749016324; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1748411680; x=1749016480; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:references:cc:to:subject:from
  :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VKnYbYjlcHTGbH5BiY/ODXHsRg4VDMa+90rlfnMsFFE=;
- b=IOXVI+qDEGjhSalTLbpm9mnK7u4zDKOYCDB8CCGBiXaEoRhf9t+z09NwyrVoPi6vPc
- SQvd/XFednvgYWHennWgcCAsW/aHvfKVZqJyLn9TCtWWtqSs0jxZwwwzTznnzxl45zAb
- sFEa9pbnHf/fMYLoQTsDnaPobeZ3t1fm3f6fteyJey0ftkqrniHyHwQ+dAqPNlneP1tQ
- 99NSCB+SyhUgX4mY11M7ZydqdSlWZaFtSq+A+eQcW0TMk7+JfmdP4nCJbivG4E0w/ux3
- kWFC+6ZF0vEV7Kbu8KQVKc2+VOk38MKMzU/f97o9uMjJ1Est+F56m5Hg9/QIVbqPYkYt
- Sfrg==
+ bh=cpM1neZjj6clKOY84wyLtWwXrmWhj6K3+6B2sjDbMtY=;
+ b=ZBGpYDjf/JBol5IOkF5uPbaiEZwYQtMJplJKGBV0KsV/ZrKzn+Dy/MjX0ugRxXJiy2
+ yZGbV5nHlSleR8UKRlqwQBr9Cp2BW6I34JY/u7i0y3PxiASupc6uta+e8havTdJpugNz
+ m3/HpIYun5KKMzy0zP6RASDy0MoafZVAZyqiuG17EkYYbAgLrw45SRUvcGXX3LbCHhMQ
+ gSGSgXMnfnFVqExM5z2AS98Rqy5Rmv/5mjqKqXUB/NWKpnl5SvrzlyQqGnqEET9mOiNT
+ Iqr2Io5PtyGbjQ+jP9FiKm92DpM2IbPhCgNABgcCeerCDKfhkD9rUVYovclaRrB7HYhs
+ fdtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748411524; x=1749016324;
+ d=1e100.net; s=20230601; t=1748411680; x=1749016480;
  h=content-transfer-encoding:in-reply-to:references:cc:to:subject:from
  :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=VKnYbYjlcHTGbH5BiY/ODXHsRg4VDMa+90rlfnMsFFE=;
- b=XHNcngaNGgAGGDGpIGKfP52iSpV+SbAbTvLR7c5vf+vmEQnI1aah/Cc6CKpIeW2HGF
- vgVYLalmVFOfj7/k05Oor7+6+r/pk+U+endGcgZbbn2ld+oKQbMk3mNVQowucvyPtP1H
- fonLUAKAhvFMFCZNkTXLaUCeZ951H3JKQVB+Xa3x7sGLcJu3Gt6MQtDHgq5DbwAG0wqw
- QEIVFtkEAEqOSPlwRW52trlBFhMhONGuJ3LHKPrwbzeidaNU5OeN7+gf+K+1vuR8Qyl7
- 1q7L5l0JY1MyMTplryitiC+R/et3OYPT5mWl8PxpM/ILsQavD48ORRUoPiS/HRlm4oAG
- XQPA==
+ bh=cpM1neZjj6clKOY84wyLtWwXrmWhj6K3+6B2sjDbMtY=;
+ b=keTrGVnWkAL5iwmbNlv3Ys6gAdWxPbC017M4Nw57dv453fOfVMrc+LIHZh6Wa0yap+
+ XrVbCLur/796HESgPMRhNaoExWTmIaixuadY9sWVgk6vEV+85/gKwXZvgs4YbdYZtcHz
+ EM5t1jc4jddT1g1UqAletgJ+jXCfzNwIqcu5VxedutUcA2OT3VZAn9nLxPrw5ivcw6IT
+ Mpn8ENoorSD7oESyYNFCHFDuCo+1wqJwZ5or/mRL5QtjvvGT6u2PJ7L2a6plcImyfeoT
+ RdVLLByqxYd8NO4yu70o8s903Ro6S8qTy+TalhSxnlhtLKmIePeGHy3m16e1J9Svq6wP
+ 3PiQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMRSZ7dkx0kuTvIAwD/nznzwWexOqpWcTkDoyNaJe2Aumi+Wk4xwvDzqTB7DpFKnCD7e+s7T4/mY/l@nongnu.org
-X-Gm-Message-State: AOJu0YyJ1FL+u9xmmy3wQBnrHCg1DlPo0L9N71xeJjl302ZooMbCxgrk
- WVz4SMVKL3M0prX0vjphIjwgLGOmrOrRwAfZeYnb2FNdpWtpFz4n+NhW
-X-Gm-Gg: ASbGncsuQG2HmiHlc5ARyDSaw6aWQd1ftlQ69ZD1T5Djf1YJRtu5N2YLYbbwfcIEmW2
- E8KY0ZVGpoBZfWh2WlT0tarL/J3YyiqE/W5Rom+SQ+gsOyruB7OYsFLX6Bnim2y8vnuScYR9WDS
- orUvazk3vMxuC8jxj7JxTHxcT9GZfWzTpQsgbHbOzZsThfob+LoF5Nr9+9V/6BKqEft90TIXPez
- NavIw5l9MzZQtV+JjFRI72vMVtgkfMy01TFgGwT9Hrw5SrRLT2pXcicJqqv76gsJpPO6IRlZxeQ
- RLUiM/JYW9r2H3DDDeHgfj7Ze7xW9Y2I8rBfGnwKsmBOQQa6E0iL4lLLNOHNLVOc0Y4=
-X-Google-Smtp-Source: AGHT+IH6PErQ2HR2fK2O3/VhOYna/H5KBKEycTWLCjrZ4bZ67YcbQt1nbT+IXHT9G6gaV1wIgE1Bpg==
-X-Received: by 2002:a05:6a21:118e:b0:215:d1dd:df4c with SMTP id
- adf61e73a8af0-218cc9a4b1amr5782738637.6.1748411524497; 
- Tue, 27 May 2025 22:52:04 -0700 (PDT)
+ AJvYcCX5q1yzA9ubT+mrHECGl6VPFytmydMiK7f+bWXYPO8xAmLkPk+Hd8U19kNNhYBejP3ENmSyB+389B/o@nongnu.org
+X-Gm-Message-State: AOJu0YxxSDJuY2kqiHNxfzm5aLQFiTsM/iIPrprG/1xDicYXNnCNgByB
+ SXWgrMNksUVOy22fQIgDguaOumRLF2+KTyYzEM3yVTHVClaQDvSlWevC
+X-Gm-Gg: ASbGnctkFZU5v3XyjmoFgn/l7zciPUQRFVeOTkYFbiniGJWECF0Qe2s4YcsCxCQeDPI
+ PgojhOlOSt/89BT4LPcsfjT2JlvHnl/TWsbOONUZ/8pSLPlb5fWSc38slAA65WlUkazmOIHbocl
+ lHNl6JxKJXdrPtU2qZhCnJ32Rrf3H86vFB0L/FmKUpHSTSMNV9O54bYDqSwVOvCe706v4LgALGP
+ Rf9b7V9EhldP0Ew1SufW10xgk2f1bXfPVlc6qF/JIeIR2uSq7r3MyEdiysjHKM/kG+gehP+7Wca
+ 6jdDBDlyy0PruSF1Zau78Fz4Y59ESLybALAlVmWo9tFia8GKDX6ydYzo4BphvwqP7xM=
+X-Google-Smtp-Source: AGHT+IG07r9VmAgZRamQ8e3rwWzmbQJ/F3ibjGikqnkRKpcnHB0q21RC+zoON72b3bbfNHArx9ALQQ==
+X-Received: by 2002:a17:90b:2318:b0:311:a314:c2c5 with SMTP id
+ 98e67ed59e1d1-311a314c39bmr8098996a91.16.1748411680047; 
+ Tue, 27 May 2025 22:54:40 -0700 (PDT)
 Received: from [10.3.2.14] ([221.216.117.254])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-746d60481c0sm457845b3a.48.2025.05.27.22.52.01
+ 98e67ed59e1d1-311e3024459sm638131a91.0.2025.05.27.22.54.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 May 2025 22:52:04 -0700 (PDT)
-Message-ID: <7e4a9c92-b33f-4bc9-968d-e726c6151a9d@gmail.com>
-Date: Wed, 28 May 2025 13:51:59 +0800
+ Tue, 27 May 2025 22:54:39 -0700 (PDT)
+Message-ID: <7adc70a2-e99f-42c5-825c-901554e91d1b@gmail.com>
+Date: Wed, 28 May 2025 13:54:36 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Zheng Huang <hz1624917200@gmail.com>
@@ -83,8 +83,8 @@ References: <37889706-8576-476c-8fea-c1a3a2858b1e@gmail.com>
 In-Reply-To: <6dd914b1-2a2f-4a4c-bd2b-54e8302d1a75@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=hz1624917200@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -181,7 +181,6 @@ Also, I would appreciate your opinion on how we should handle such "malformed mi
 more generally, if there are more severe issues than assertion error, such as FPE, UAF, etc.? Should
 QEMU adopt a more systematic “post_load” validation pattern—verifying all critical fields across every
 migration handler—to harden the migration subsystem against any tampering of the migration image?
-
 
 Best regards,
 
