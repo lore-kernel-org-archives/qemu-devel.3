@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3028EC54ED1
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 02:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3788DC54ED1
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 02:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK6q1-00005h-J4; Tue, 27 May 2025 22:48:17 -0400
+	id 1uK6qL-0000WU-B8; Tue, 27 May 2025 22:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK6pv-0008Sd-K2; Tue, 27 May 2025 22:48:11 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ id 1uK6qJ-0000Rb-Jr; Tue, 27 May 2025 22:48:35 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK6pt-0004iF-S8; Tue, 27 May 2025 22:48:11 -0400
+ id 1uK6qD-0004iq-Al; Tue, 27 May 2025 22:48:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748400490; x=1779936490;
+ t=1748400509; x=1779936509;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=87MZXERdmn+bRyCDGJmocHYjWGj14nJn8uA6reJm+ns=;
- b=IvIU7ptGgU5QAsrMgrko4DL8bOnxeX8vMtkrgrwKyXdCjFD/AR7dFU0t
- KaYHondotJn9ZhyI45gtbk8gW5SiBfQUXDKuEvXAqCzAEPyMglVAMBIoO
- RsHtGKXhg8DMVUAmm2tXmZjwh0d0rZWBKlDZfmsgfuYWXciEJetVXWVAA
- SFpQrq2x4ymmbJ7bVIGfh8fOydem6jYO8gWMii2tIWW4Vsnfi39wxFHgn
- 2EkCDoMdR5OjrcSwgYcQsTWM2UQcOGMs5rtaMcJZSfAlMHYbNfktGE+8z
- yGeWXXAabFhArMCAdTLBPxj+7Ls7/QoGkSpdlAP7PHsNKq9R/O7kLICzo g==;
-X-CSE-ConnectionGUID: CSvWK+8aRBaJS6fWWKy1MQ==
-X-CSE-MsgGUID: f/H6VJu/RMmZnazc6PihYQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="54218622"
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="54218622"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 19:48:08 -0700
-X-CSE-ConnectionGUID: NpgtjjxdRQCbTzOnsjxtwA==
-X-CSE-MsgGUID: 5nLhJQyETFKLjcCmb9ElFg==
+ bh=/mB2ul1Gqto+Xf/FSjpg/QPfENR6Vzj21K682X09bY4=;
+ b=FfaluwcmBRkTbkAwg+Vx46ht2dpr0lkno1jxurcZM8vBs68xWpSuSuLV
+ 2vDbDIYOs/CxS5iJJxDdihI6nDLYSH/dln6kpOH5Oqh8gtyCX5FCs96jB
+ jz/qqBsF9DoK1i3lJN/PLa83UalgMj74XTZxUgiQLRAOAPjQt62kuZCY/
+ Tku16TUzIlQGTEqtF/Zmywka3Wq3WgUfjy3vlHRpUmiRZyuT3MGHnBboc
+ dY0e/hnWvE0ZrDmFErHPZbh32QNCzzewIrh6sL7TtcTza+CYT9n4LGSAQ
+ QWVAxNM03rWB+VIt4C0R/FfapTc7rGW7sjb+j9V6FhvIeqNyduHqjS2Rs A==;
+X-CSE-ConnectionGUID: vVpADY2tS1ecNxJYPpNUAw==
+X-CSE-MsgGUID: WekY11pfQimZ4/Hdxf2Iwg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="50469659"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="50469659"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2025 19:48:26 -0700
+X-CSE-ConnectionGUID: ut1N558oQsmXdFGS4xfi0A==
+X-CSE-MsgGUID: SIpGLZqcScyZr62FBVASFA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="147943628"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="143700158"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 19:48:02 -0700
-Message-ID: <b97d6748-7ec7-4f5f-b882-6cc23a0a94f6@intel.com>
-Date: Wed, 28 May 2025 10:47:59 +0800
+ by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2025 19:48:18 -0700
+Message-ID: <3ac98968-81ce-4adf-ad85-0ba5cad852f4@intel.com>
+Date: Wed, 28 May 2025 10:48:15 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 16/19] hw/scsi/vmw_pvscsi: Convert DeviceRealize ->
- InstanceInit
+Subject: Re: [PATCH v4 17/19] hw/net/vmxnet3: Remove
+ VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS definition
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -65,13 +65,13 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250512083948.39294-1-philmd@linaro.org>
- <20250512083948.39294-17-philmd@linaro.org>
+ <20250512083948.39294-18-philmd@linaro.org>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250512083948.39294-17-philmd@linaro.org>
+In-Reply-To: <20250512083948.39294-18-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -62
 X-Spam_score: -6.3
@@ -97,8 +97,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/2025 4:39 PM, Philippe Mathieu-Daudé wrote:
-> Simplify replacing pvscsi_realize() by pvscsi_instance_init(),
-> removing the need for device_class_set_parent_realize().
+> VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS was only used by the
+> hw_compat_2_5[] array, via the 'x-old-msi-offsets=on' property.
+> We removed all machines using that array, lets remove all the
+> code around VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
@@ -107,53 +109,72 @@ On 5/12/2025 4:39 PM, Philippe Mathieu-Daudé wrote:
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
 > ---
->   hw/scsi/vmw_pvscsi.c | 13 +++----------
->   1 file changed, 3 insertions(+), 10 deletions(-)
+>   hw/net/vmxnet3.c | 20 ++++++--------------
+>   1 file changed, 6 insertions(+), 14 deletions(-)
 > 
-> diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-> index e163023d14c..7c98b1b8ea6 100644
-> --- a/hw/scsi/vmw_pvscsi.c
-> +++ b/hw/scsi/vmw_pvscsi.c
-> @@ -1267,21 +1267,15 @@ static const Property pvscsi_properties[] = {
->       DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
+> diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+> index 83d942af179..3cf5d71f478 100644
+> --- a/hw/net/vmxnet3.c
+> +++ b/hw/net/vmxnet3.c
+> @@ -42,18 +42,13 @@
+>   #define VMXNET3_MSIX_BAR_SIZE 0x2000
+>   
+>   /* Compatibility flags for migration */
+> -#define VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS_BIT 0
+> -#define VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS \
+> -    (1 << VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS_BIT)
+>   #define VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT 1
+>   #define VMXNET3_COMPAT_FLAG_DISABLE_PCIE \
+>       (1 << VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT)
+>   
+>   #define VMXNET3_EXP_EP_OFFSET (0x48)
+> -#define VMXNET3_MSI_OFFSET(s) \
+> -    ((s)->compat_flags & VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS ? 0x50 : 0x84)
+> -#define VMXNET3_MSIX_OFFSET(s) \
+> -    ((s)->compat_flags & VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS ? 0 : 0x9c)
+> +#define VMXNET3_MSI_OFFSET    (0x84)
+> +#define VMXNET3_MSIX_OFFSET   (0x9c)
+>   #define VMXNET3_DSN_OFFSET     (0x100)
+>   
+>   #define VMXNET3_BAR0_IDX      (0)
+> @@ -61,8 +56,7 @@
+>   #define VMXNET3_MSIX_BAR_IDX  (2)
+>   
+>   #define VMXNET3_OFF_MSIX_TABLE (0x000)
+> -#define VMXNET3_OFF_MSIX_PBA(s) \
+> -    ((s)->compat_flags & VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS ? 0x800 : 0x1000)
+> +#define VMXNET3_OFF_MSIX_PBA   (0x1000)
+>   
+>   /* Link speed in Mbps should be shifted by 16 */
+>   #define VMXNET3_LINK_SPEED      (1000 << 16)
+> @@ -2122,8 +2116,8 @@ vmxnet3_init_msix(VMXNET3State *s)
+>                           &s->msix_bar,
+>                           VMXNET3_MSIX_BAR_IDX, VMXNET3_OFF_MSIX_TABLE,
+>                           &s->msix_bar,
+> -                        VMXNET3_MSIX_BAR_IDX, VMXNET3_OFF_MSIX_PBA(s),
+> -                        VMXNET3_MSIX_OFFSET(s), NULL);
+> +                        VMXNET3_MSIX_BAR_IDX, VMXNET3_OFF_MSIX_PBA,
+> +                        VMXNET3_MSIX_OFFSET, NULL);
+>   
+>       if (0 > res) {
+>           VMW_WRPRN("Failed to initialize MSI-X, error %d", res);
+> @@ -2221,7 +2215,7 @@ static void vmxnet3_pci_realize(PCIDevice *pci_dev, Error **errp)
+>       /* Interrupt pin A */
+>       pci_dev->config[PCI_INTERRUPT_PIN] = 0x01;
+>   
+> -    ret = msi_init(pci_dev, VMXNET3_MSI_OFFSET(s), VMXNET3_MAX_NMSIX_INTRS,
+> +    ret = msi_init(pci_dev, VMXNET3_MSI_OFFSET, VMXNET3_MAX_NMSIX_INTRS,
+>                      VMXNET3_USE_64BIT, VMXNET3_PER_VECTOR_MASK, NULL);
+>       /* Any error other than -ENOTSUP(board's MSI support is broken)
+>        * is a programming error. Fall back to INTx silently on -ENOTSUP */
+> @@ -2472,8 +2466,6 @@ static const VMStateDescription vmstate_vmxnet3 = {
+>   
+>   static const Property vmxnet3_properties[] = {
+>       DEFINE_NIC_PROPERTIES(VMXNET3State, conf),
+> -    DEFINE_PROP_BIT("x-old-msi-offsets", VMXNET3State, compat_flags,
+> -                    VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS_BIT, false),
+>       DEFINE_PROP_BIT("x-disable-pcie", VMXNET3State, compat_flags,
+>                       VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT, false),
 >   };
->   
-> -static void pvscsi_realize(DeviceState *qdev, Error **errp)
-> +static void pvscsi_instance_init(Object *obj)
->   {
-> -    PVSCSIClass *pvs_c = PVSCSI_GET_CLASS(qdev);
-> -    PCIDevice *pci_dev = PCI_DEVICE(qdev);
-> -
-> -    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
-> -
-> -    pvs_c->parent_dc_realize(qdev, errp);
-> +    PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
->   }
->   
->   static void pvscsi_class_init(ObjectClass *klass, const void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
->       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-> -    PVSCSIClass *pvs_k = PVSCSI_CLASS(klass);
->       HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
->   
->       k->realize = pvscsi_realizefn;
-> @@ -1290,8 +1284,6 @@ static void pvscsi_class_init(ObjectClass *klass, const void *data)
->       k->device_id = PCI_DEVICE_ID_VMWARE_PVSCSI;
->       k->class_id = PCI_CLASS_STORAGE_SCSI;
->       k->subsystem_id = 0x1000;
-> -    device_class_set_parent_realize(dc, pvscsi_realize,
-> -                                    &pvs_k->parent_dc_realize);
->       device_class_set_legacy_reset(dc, pvscsi_reset);
->       dc->vmsd = &vmstate_pvscsi;
->       device_class_set_props(dc, pvscsi_properties);
-> @@ -1306,6 +1298,7 @@ static const TypeInfo pvscsi_info = {
->       .class_size    = sizeof(PVSCSIClass),
->       .instance_size = sizeof(PVSCSIState),
->       .class_init    = pvscsi_class_init,
-> +    .instance_init = pvscsi_instance_init,
->       .interfaces = (const InterfaceInfo[]) {
->           { TYPE_HOTPLUG_HANDLER },
->           { INTERFACE_PCIE_DEVICE },
 
 
