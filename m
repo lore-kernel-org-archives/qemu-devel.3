@@ -4,68 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D7EC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C630C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 11:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKEVC-0000rz-8G; Wed, 28 May 2025 06:59:18 -0400
+	id 1uKEYC-00026n-2V; Wed, 28 May 2025 07:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1uKEV8-0000hX-Og; Wed, 28 May 2025 06:59:15 -0400
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1uKEXr-000251-Td
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 07:02:07 -0400
 Received: from sender4-op-o15.zoho.com ([136.143.188.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1uKEV6-00081a-Nb; Wed, 28 May 2025 06:59:14 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1748429686; cv=none; 
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1uKEXm-0000EY-9L
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 07:02:01 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1748430109; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=UE+TB4jHcUlvosDMs8f3decNIk1hBhBc/1P7uAL1phTTqbvFbM8b5wjt9NHAvbwnZ0SCS7tjBWElgXo3UJ2MWDT+Js6Bc2y2dk9uwmaO8AuzvdaECcs6N1a1ddW3deS7/D3glrlRfxe+Gp/aoCseAaNtbSCQb2kx+xXdggXMf5U=
+ b=dczlbXCtHutwmBPHRcJ1+RsizEDAapsPdthpNH1tpaUbP8+X5qUKanFH6QThZHpRkNvD7AAhgwctTifCZH3jW73N0MVFrvpt3x/tTm26ND7TOPZ058zZZNA1ouucpCSUHHDU0MMUtCZ7FmfFCQ4wnccnqJsCKAaBOsC3sz06o6U=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1748429686;
+ s=zohoarc; t=1748430109;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=QieK8ummDzYSt1d8R3ZdIk/G5jCHT48ZJ1lngca8f9o=; 
- b=MxDHEIjDYvRRRJ1BmLI4fauex03bTHc6zc4/tkXjYq6A+T2mueUA5AQfEXPCsZkorodM7SjPCJboCQFr1yT/pTVORmdSlQ2gk5QOyva1L4uF87tAa021/tDlQqoN9C/RYGRmAI3ghvanNhphVDBisEuYgWHdE1kCpGh+UXatMgs=
+ bh=uaYnYSNPBkzXrvW5M/63L1bxyIYPFwzX+ssH5+Y5Zyo=; 
+ b=AVX9thqKNqkLAhZFWwR5xcAKQXDu23hPAaR3AtSPlKO4MhUJMxzA7a+4/PPkJGycEwNYs1kYQywxAqHGErvOBmmIocIAVpGKoqmNZ+oaqpyB4i1AfJB46qTo3OPga9PYhKlg4VXvBFP0lmTHV1muGl4yeljjCvmDXkFBh1eiQkA=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=linux.beauty;
  spf=pass  smtp.mailfrom=me@linux.beauty;
  dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1748429686; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1748430109; 
  s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=QieK8ummDzYSt1d8R3ZdIk/G5jCHT48ZJ1lngca8f9o=;
- b=ks1Rg9j6TiuitsJxmDpQSOy+2u1SpNhbimuVWyb0MF08vloewPCPdENKgLpYS0W0
- F0OBzalltA7jc+GovLrl3ur1UDX19kSwSEsbHk0zeEvddCEE0Oad8QJupWaKYn0mlD0
- 1DAj0H57mgg5ggUZE4r/sI4XL+A+8Ena6lxHK3x4=
-Received: by mx.zohomail.com with SMTPS id 1748429685035790.013264683852;
- Wed, 28 May 2025 03:54:45 -0700 (PDT)
+ h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=uaYnYSNPBkzXrvW5M/63L1bxyIYPFwzX+ssH5+Y5Zyo=;
+ b=flpe8XTirdDI8c19lcIEJ2HjnS6GY2NxgdwveonmHmiuODEYnGuHBG1KPTf6ELUK
+ ygGMX063h6QvjZXm+UH+pdLrBtngVgkGTzsONAlchiMPy04mAMU8mOMRiOMz/I2yskd
+ jesVEAzwRLcc/Zt9XLg9ghhlv+7t26IKUni5ucGY=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1748430107024905.4658507757017;
+ Wed, 28 May 2025 04:01:47 -0700 (PDT)
+Date: Wed, 28 May 2025 19:01:46 +0800
 From: Li Chen <me@linux.beauty>
-To: "Peter Maydell" <peter.maydell@linaro.org>,
- "Shannon Zhao" <shannon.zhaosl@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
- "Eduardo Habkost" <eduardo@habkost.net>,
- "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Yanan Wang" <wangyanan55@huawei.com>, "Zhao Liu" <zhao1.liu@intel.com>,
- "Song Gao" <gaosong@loongson.cn>, "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
- "Sunil V L" <sunilvl@ventanamicro.com>,
- "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Alistair Francis" <alistair.francis@wdc.com>,
- "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
- "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>
-Cc: Li Chen <chenl311@chinatelecom.cn>
-Subject: [PATCH REPOST v4 4/4] acpi/virt: suppress UART device & SPCR when
- guest has no serial hardware
-Date: Wed, 28 May 2025 18:53:38 +0800
-Message-ID: <20250528105404.457729-5-me@linux.beauty>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250528105404.457729-1-me@linux.beauty>
-References: <20250528105404.457729-1-me@linux.beauty>
+To: "Thomas Huth" <thuth@redhat.com>
+Cc: "Qemu devel" <qemu-devel@nongnu.org>
+Message-ID: <197168e316f.1218d3d6f2931175.5928950932058477287@linux.beauty>
+In-Reply-To: <e58a98e5-c6ae-456f-aaa5-c55924517665@redhat.com>
+References: <1971648603b.dce1f5d22901195.6702025346547333607@linux.beauty>
+ <e58a98e5-c6ae-456f-aaa5-c55924517665@redhat.com>
+Subject: Re: Get "Message headers fail syntax check" error when using
+ git-send-email
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@linux.beauty;
  helo=sender4-op-o15.zoho.com
 X-Spam_score_int: -20
@@ -91,170 +81,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Chen <chenl311@chinatelecom.cn>
+Hi Thomos,
 
-The virt machines always instantiate a PL011/16550 at UART0 and
-describe it in ACPI (DSDT device node plus optional SPCR table).  When
-the command line contains “-serial none” there is no backend attached to
-that UART, yet the guest still discovers it via ACPI and may try to use
-it as a console, causing unexpected results.
+ ---- On Wed, 28 May 2025 17:52:50 +0800  Thomas Huth <thuth@redhat.com> wrote --- 
+ > On 28/05/2025 11.45, Li Chen wrote:
+ > > Hi,
+ > > 
+ > > My emails to the qemu-devel, qemu-riscv, and qemu-arm mailing lists regarding the
+ > > "[PATCH v4 0/4] acpi: Add machine option to disable SPCR table" series are being
+ > > rejected by these mailing lists, while other recipients are unaffected.
+ > > This issue didn't occur with versions v1-v3, which I sent via Zoho webmail instead of git-send-email.
+ > > The error messages are:
+ > > 
+ > > ```
+ > > This message was created automatically by mail delivery software.
+ > > A message that you sent could not be delivered to one or more of its recipients. This is a permanent error.
+ > > 
+ > > qemu-devel@nongnu.org, ERROR CODE :550 - Message headers fail syntax check
+ > > (... qemu-riscv/qemu-arm ...)
+ > > 
+ > > Reporting-MTA: dns; mx.zohomail.com
+ > > Arrival-Date: Wed, 28 May 2025 16:09:36 +0800
+ > > 
+ > > Original-Recipient: rfc822; qemu-devel@nongnu.org
+ > > Final-Recipient: rfc822; qemu-devel@nongnu.org
+ > > Status: 550
+ > > Action: failed
+ > > Last-Attempt-Date: 28 May 2025 08:11:19 GMT
+ > > Diagnostic-Code: Message headers fail syntax check
+ > > Remote-MTA: dns; eggs.gnu.org
+ > > (... qemu-riscv/qemu-arm ...)
+ > > ```
+ > > 
+ > > And below is the email header:
+ > > 
+ > > ```
+ > > Received: by mx.zohomail.com with SMTPS id 1748419823397138.51964085412385;
+ > >     Wed, 28 May 2025 01:10:23 -0700 (PDT)
+ > > From: Li Chen <me@linux.beauty>
+ > > To: "Peter Maydell" <peter.maydell@linaro.org>,
+ > >     "Shannon Zhao" <shannon.zhaosl@gmail.com>,
+ > >     "Michael S. Tsirkin" <mst@redhat.com>,
+ > >     "Igor Mammedov" <imammedo@redhat.com>,
+ > >     "Ani Sinha" <anisinha@redhat.com>,
+ > >     "Eduardo Habkost" <eduardo@habkost.net>,
+ > >     "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ > >     =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ > >     "Yanan Wang" <wangyanan55@huawei.com>,
+ > >     "Zhao Liu" <zhao1.liu@intel.com>,
+ > >     "Song Gao" <gaosong@loongson.cn>,
+ > >     "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
+ > >     "Sunil V L" <sunilvl@ventanamicro.com>,
+ > >     "Palmer Dabbelt" <palmer@dabbelt.com>,
+ > >     "Alistair Francis" <alistair.francis@wdc.com>,
+ > >     "Weiwei Li" <liwei1518@gmail.com>,
+ > >     "qemu-arm" <qemu-arm@nongnu.org>,
+ > >     "qemu-devel" <qemu-devel@nongnu.org>,
+ > >     "qemu-riscv" " <qemu-riscv@nongnu.org>
+ > 
+ > Blind guess: You've got a stray " in above qemu-riscv line.
 
-And also explicitly add "-serial stdio" in bios-tables-test.c to allow
-serial device creation, otherwise DSDT assert would get failure because
-"-nodefaults" will not create uart device by default:
+Nice Catch! I repost this series after removing the redundant " and it just works! Thanks a lot!
 
-```
-stderr:
-acpi-test: Warning! DSDT binary file mismatch. Actual [aml:/tmp/aml-BMOL72], Expected [aml:tests/data/acpi/aarch64/virt/DSDT].
-See source file tests/qtest/bios-tables-test.c for instructions on how to update expected files.
-acpi-test: Warning! DSDT mismatch. Actual [asl:/tmp/asl-RNOL72.dsl, aml:/tmp/aml-BMOL72], Expected [asl:/tmp/asl-ZVQL72.dsl, aml:tests/data/acpi/aarch64/virt/DS
-DT].
-```
-
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
----
-
-Notes:
-    Changes since v3: 1. Add Reviewed-by from Sunil V L <sunilvl@ventanamicro.com>
-                      2. Explicitly add "-serial stdio" to pass DSDT assert
-
- hw/arm/virt-acpi-build.c       | 15 +++++++++------
- hw/riscv/virt-acpi-build.c     |  7 +++++--
- include/system/system.h        |  2 ++
- system/vl.c                    |  5 +++++
- tests/qtest/bios-tables-test.c |  5 +++--
- 5 files changed, 24 insertions(+), 10 deletions(-)
-
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index d77d16cbd3..c26aedb1b1 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -59,6 +59,7 @@
- #include "hw/acpi/viot.h"
- #include "hw/virtio/virtio-acpi.h"
- #include "target/arm/multiprocessing.h"
-+#include "system/system.h"
- 
- #define ARM_SPI_BASE 32
- 
-@@ -821,11 +822,13 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-      */
-     scope = aml_scope("\\_SB");
-     acpi_dsdt_add_cpus(scope, vms);
--    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
--                       (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
--    if (vms->second_ns_uart_present) {
--        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
--                           (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
-+    if (serial_exist()) {
-+        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
-+                           (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
-+        if (vms->second_ns_uart_present) {
-+            acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
-+                               (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
-+        }
-     }
-     if (vmc->acpi_expose_flash) {
-         acpi_dsdt_add_flash(scope, &memmap[VIRT_FLASH]);
-@@ -937,7 +940,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
- 
-     acpi_add_table(table_offsets, tables_blob);
- 
--    if (ms->acpi_spcr_enabled) {
-+    if (ms->acpi_spcr_enabled && serial_exist()) {
-         spcr_setup(tables_blob, tables->linker, vms);
-     }
- 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index ee1416d264..80bf3c3cec 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -39,6 +39,7 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "system/reset.h"
-+#include "system/system.h"
- 
- #define ACPI_BUILD_TABLE_SIZE             0x20000
- #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
-@@ -474,7 +475,9 @@ static void build_dsdt(GArray *table_data,
-                                  memmap[VIRT_APLIC_S].size, "RSCV0002");
-     }
- 
--    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-+    if (serial_exist())
-+        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-+
-     if (virt_is_iommu_sys_enabled(s)) {
-         acpi_dsdt_add_iommu_sys(scope, &memmap[VIRT_IOMMU_SYS], IOMMU_SYS_IRQ);
-     }
-@@ -895,7 +898,7 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
- 
-     acpi_add_table(table_offsets, tables_blob);
- 
--    if (ms->acpi_spcr_enabled) {
-+    if (ms->acpi_spcr_enabled && serial_exist()) {
-         spcr_setup(tables_blob, tables->linker, s);
-     }
- 
-diff --git a/include/system/system.h b/include/system/system.h
-index a7effe7dfd..ca1af38432 100644
---- a/include/system/system.h
-+++ b/include/system/system.h
-@@ -75,6 +75,8 @@ extern unsigned int nb_prom_envs;
- /* Return the Chardev for serial port i, or NULL if none */
- Chardev *serial_hd(int i);
- 
-+bool serial_exist(void);
-+
- /* parallel ports */
- 
- #define MAX_PARALLEL_PORTS 3
-diff --git a/system/vl.c b/system/vl.c
-index fd402b8ff8..e340ee3a95 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1485,6 +1485,11 @@ Chardev *serial_hd(int i)
-     return NULL;
- }
- 
-+bool serial_exist(void)
-+{
-+    return serial_hd(0) ? true : false;
-+}
-+
- static bool parallel_parse(const char *devname, Error **errp)
- {
-     static int index = 0;
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 44de152a36..452566fa86 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -824,10 +824,11 @@ static char *test_acpi_create_args(test_data *data, const char *params)
-         /*
-          * TODO: convert '-drive if=pflash' to new syntax (see e33763be7cd3)
-          * when arm/virt boad starts to support it.
-+         * NOTE: Explicitly add "-serial stdio" to enable uart in DSDT.
-          */
-         if (data->cd) {
-             args = g_strdup_printf("-machine %s%s %s -accel tcg "
--                "-nodefaults -nographic "
-+                "-nodefaults -serial stdio -nographic "
-                 "-drive if=pflash,format=raw,file=%s,readonly=on "
-                 "-drive if=pflash,format=raw,file=%s,snapshot=on -cdrom %s %s",
-                 data->machine, data->machine_param ?: "",
-@@ -835,7 +836,7 @@ static char *test_acpi_create_args(test_data *data, const char *params)
-                 data->uefi_fl1, data->uefi_fl2, data->cd, params ? params : "");
-         } else {
-             args = g_strdup_printf("-machine %s%s %s -accel tcg "
--                "-nodefaults -nographic "
-+                "-nodefaults -serial stdio -nographic "
-                 "-drive if=pflash,format=raw,file=%s,readonly=on "
-                 "-drive if=pflash,format=raw,file=%s,snapshot=on %s",
-                 data->machine, data->machine_param ?: "",
--- 
-2.49.0
-
+Regards,
+Li 
 
