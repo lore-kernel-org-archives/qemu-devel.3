@@ -4,97 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B99B3C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 18:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D99C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 18:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKLjz-0005qr-Tx; Wed, 28 May 2025 14:43:03 -0400
+	id 1uKLlK-0006S4-2Y; Wed, 28 May 2025 14:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLjy-0005qT-Ab
- for qemu-devel@nongnu.org; Wed, 28 May 2025 14:43:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLjw-0000IV-VT
- for qemu-devel@nongnu.org; Wed, 28 May 2025 14:43:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748457779;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4RGAKMVp0K0p4p6YGKPOWEyNxxdo1Jt0sV/VxaFZDwU=;
- b=g+2IfJ7YiUsnFmIzonOVfDGRxcMYuwUdN4LLjrPX5f3arORILKbqf0tc5uzUSmLDlEV4XW
- z2IIhz7WHd3f+vM5YghD3MBzEb/eaesjr5TIltfWwBH0i+T87DMvf0Y89gKUZGPMuZrNqo
- byXe/vo7N3OhVld0AnrccgpC1PdLArQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-cPH1qPjzPGeMF4wMmnmaEA-1; Wed,
- 28 May 2025 14:42:56 -0400
-X-MC-Unique: cPH1qPjzPGeMF4wMmnmaEA-1
-X-Mimecast-MFC-AGG-ID: cPH1qPjzPGeMF4wMmnmaEA_1748457774
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92FDF195423C; Wed, 28 May 2025 18:42:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E7B319560AA; Wed, 28 May 2025 18:42:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 98E0D21E6757; Wed, 28 May 2025 20:42:49 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Fan Ni <fan.ni@samsung.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Kashyap Chamarthy <kchamart@redhat.com>,  "Michael
- S. Tsirkin" <mst@redhat.com>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  qemu-block@nongnu.org,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Jonathan Cameron
- <jonathan.cameron@huawei.com>,  Ani Sinha <anisinha@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Zhenwei Pi <pizhenwei@bytedance.com>,
- Jason Wang <jasowang@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Fabiano Rosas <farosas@suse.de>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Alex Williamson
- <alex.williamson@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Igor
- Mammedov <imammedo@redhat.com>,  "Gonglei (Arei)"
- <arei.gonglei@huawei.com>,  Eric Blake <eblake@redhat.com>,  Gerd Hoffmann
- <kraxel@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Michael Roth
- <michael.roth@amd.com>,  Yanan Wang <wangyanan55@huawei.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Lukas Straub
- <lukasstraub2@web.de>,
- Stefano Garzarella <sgarzare@redhat.com>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  Mads Ynddal <mads@ynddal.dk>,  Konstantin
- Kostiuk <kkostiuk@redhat.com>,  Peter Xu <peterx@redhat.com>,  Eduardo
- Habkost <eduardo@habkost.net>,  Kevin Wolf <kwolf@redhat.com>,  Cleber
- Rosa <crosa@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Subject: Re: [PATCH 0/3] docs: remove legacy qapidoc
-In-Reply-To: <20250522170219.58058-1-jsnow@redhat.com> (John Snow's message of
- "Thu, 22 May 2025 13:02:16 -0400")
-References: <20250522170219.58058-1-jsnow@redhat.com>
-Date: Wed, 28 May 2025 20:42:49 +0200
-Message-ID: <87bjrcvaom.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uKLlB-0006Mr-Ru
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 14:44:20 -0400
+Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uKLl9-0000Mw-3I
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 14:44:17 -0400
+Received: by mail-vk1-xa33.google.com with SMTP id
+ 71dfb90a1353d-52d9a275c27so40578e0c.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 11:44:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1748457853; x=1749062653; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=J9vaYbI6OPKjlA89Q/NPDKgmHC6DQpntnN6kslToiNE=;
+ b=kGPJS81ZgE2US4VQ5ISwret1gPWSAd56MonPbXhKPBq4tdUc9hl++16IvF5VgwlULT
+ 3MacGrIrTKxIyXw/ClmRJ7WCU/v1y/lzh2RkiJZ+fYdMuVAQ91j49i7fgloomIMj4RtQ
+ fqdynbSkiT6AmGozMF4QXKrtJByofh0qd5tZLH+yFmdnU4SDJivITUEEXG1a8iKK5agZ
+ dGCFOfbZQnrlKejRAp7t6pPMPrHD/c9enSiqiWSFSz+UqKzHiylODS5iIgHe41x/ZweC
+ 0HoFgD+pRmfPItO1IphF8UL3HKa7kWuTrl/hbPrwFki7qJZ5Aq2u+Q6kilGzxO/1GEPv
+ ABWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748457853; x=1749062653;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J9vaYbI6OPKjlA89Q/NPDKgmHC6DQpntnN6kslToiNE=;
+ b=d2B4vSItqv0S4Oylb0E647prTJtpTlAQTmAxzExbL1sSUmJ8tGzxcLH81rXRbupVa5
+ hdBeYPZR53ymmEErIM9T6VQ6wxPCoyYN+J7zdpBGocgEz3pl4r4BuUMJY4xcjnIJk7dO
+ GqdIk1vV3GT8qGILfaS/ZYeIVJo1+fQzrb6+H4FdM9S/1zm8nimPuaRIqRHYOUsVKUmZ
+ U9NVvYF4RV3IpeH9LX5VWCvvQ0+SNgM6AoOOyVUDm3WIW3SboDxVE9Goml45GksiWnpJ
+ TrjLdf7ZnhVAFSVCui6Xca0Jv28DsZqm7wDKZg2cXpvgFeZZ7/TODDCdIP9kuW3dJHgd
+ 0zGQ==
+X-Gm-Message-State: AOJu0Yx3ujX9mbhIdX3qygCx777c4KOZFloVzdaGw/LJdrVWs9BmX0pP
+ 0FggwXcno2NUoEgLDkaP7YQ+9p5xtQUobY9KkYpcpYLi8fS4A0ci15rSbvIqlqQntHUgwglPbYE
+ f3tIh
+X-Gm-Gg: ASbGnctRmBsB2NWSq3BQS0UOJMntfXR48wICf9JmgQkX9ZSzTufV/DCiIXprjoBNmfV
+ thjxRFQaqCuIEZxUuwlD3zWkJG42em3oK6kymnek+C3ge8+o4iG7lZ7/ddIaZ2d00xVHseDabQt
+ ZiLaRAAX+L4ZA5C15ovnLKsLRWTtDBZL0b2i09QrkWr5vsJ4PlpUTK+VuOhfZRIo7XA94b8NhtG
+ 0HDZRXhkAy42G1YbTueTpUyIpuIVL8EqMNs2uRDnOBNHSvby/1q7zIV1z0xtpM93OfqRcJN0//v
+ IxAM8euDPV+MXrLPBsta3F5rgbFEFURgY5gLRUyAAZ6YXqJt1EpcHw==
+X-Google-Smtp-Source: AGHT+IGQcwdtslO8BLogosCuE9TiA0NR3W7EulBylE+bfm252+jO8AwZl2Dgu/wgFbFmMtvJeyAd2g==
+X-Received: by 2002:a05:6122:4d88:b0:530:5680:b48c with SMTP id
+ 71dfb90a1353d-5305680e16bmr7409693e0c.3.1748457852835; 
+ Wed, 28 May 2025 11:44:12 -0700 (PDT)
+Received: from grind.. ([191.255.35.190]) by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-53066945971sm1568512e0c.30.2025.05.28.11.44.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 May 2025 11:44:12 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, ajones@ventanamicro.com,
+ bjorn@rivosinc.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v2 0/3] target/riscv: profile handling fixes
+Date: Wed, 28 May 2025 15:44:04 -0300
+Message-ID: <20250528184407.1451983-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-vk1-xa33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,15 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Hi,
 
-> This series is RFC-ish and based on python-qapi-linting-v4, which I
-> think ... should show up in origin/master soon(?).
+In this version I removed an extra signed-off-by in patch 3.
 
-Please use
+No other changes made. Patches based on alistair/riscv-to-apply.next.
 
-Based-on: <message-id>
+All patches acked.
 
-Out of time for today, or I'd hunt for the exact base myself.
+Changes from v1:
+- patch 3:
+  - removed a duplicated Signed-off-by tag
+- v1 link: https://lore.kernel.org/qemu-riscv/20250520172336.759708-1-dbarboza@ventanamicro.com/
+
+Daniel Henrique Barboza (3):
+  target/riscv/tcg: restrict satp_mode changes in cpu_set_profile
+  target/riscv/tcg: decouple profile enablement from user prop
+  target/riscv: add profile->present flag
+
+ target/riscv/cpu.h            |  15 ++++
+ target/riscv/riscv-qmp-cmds.c |   2 +-
+ target/riscv/tcg/tcg-cpu.c    | 138 +++++++++++++++++-----------------
+ 3 files changed, 86 insertions(+), 69 deletions(-)
+
+-- 
+2.49.0
 
 
