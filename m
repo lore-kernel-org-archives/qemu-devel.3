@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C327C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B59C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKBvi-0007vF-TA; Wed, 28 May 2025 04:14:30 -0400
+	id 1uKBwE-00086d-Ve; Wed, 28 May 2025 04:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBvb-0007u1-PT
- for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:24 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1uKBvd-0007uW-5s
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:25 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBvY-0005D7-NL
- for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:23 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cec5cd73bso33407345e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:17 -0700 (PDT)
+ id 1uKBva-0005DY-BG
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:24 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3a3771c0f8cso3017361f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748420057; x=1749024857; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748420061; x=1749024861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zh/urG861ozt+kR4uVLI4zuKmsrdPyReVEilzcFUTzo=;
- b=bQrqDkASf3NL4gF+KnPRkG3kK7ZmfZrctqoREtH1aL9wvzEKEHAPf+KcUXL+Kd8PGQ
- ABG0c9cQLthYwx+i6i2PGZoxKDTfee3sIvNO7kiFDXVfQUobsaCtHoxF5/uq7smbgzN2
- 9nwGXLgGQFUhvnncELVd2rjlavcaEV1WfAvhuNGVSZm7kwLCRyx/eUHtjfBlUMBRM0Bz
- 3PAnmO3pRfUHxbjOEaQk3sHhTMyMK5RSUx22hwnYhiSRcnLolGNjsb7Tw4BiikTYPUSs
- yeTwMINM6v3qOBrL+l9w5SBgio0RWl9tthrJw9lV0MUQ1lou6FOnBNcPodN4W2FDMEQf
- nn6w==
+ bh=Bhe7gTBV4OnhfdghdltDpo0UDe7FOL4IHQZxPqBae80=;
+ b=UD5OIJKUzV0vCCaRA5/OaM/dv5BltA8HtpXpr8g6keNa/bsDSZRXIGJ2rDO3sQbcKi
+ zZLAujcF1Hx6asihX8ANYOe2xmorSSq8uMaw5RWljfSWDNFBEeWWErC3MHtVfduh8yD1
+ d93MJv7E/bxCmtQcA7QavtT0qTJzYBZvmfiTb/W0CymjiKk8i6JxgG0pPyigwCL/MYGN
+ sWxETEnGrkFGrCwN1Sz8gqEMQyNSKC2Hzfu7akzGrIpHwC8HzpPKcyKsHhEmSXHMPDLs
+ aXixzqPwP7WQJ6BgLnlOXTmWO26un9vNmRF1Aa8FfdYscI8wx08JqH3VRZoPkgzq8Klu
+ La5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748420057; x=1749024857;
+ d=1e100.net; s=20230601; t=1748420061; x=1749024861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zh/urG861ozt+kR4uVLI4zuKmsrdPyReVEilzcFUTzo=;
- b=tUcA44msHVA1Vn3EK1sIfC2O0G+hL1zqGGbtcJwHPbq5oQ5vrJwvZReMbSPFr5dlVP
- LFWwoTrpnTXvunLjOKBD+EKyweozQeG7ZR/DbfjXfUH8kiA2S52mCwLhWTLSsp/fr5de
- K1gQaA0UGNrtt2h3vBXXez7RNQhg6k38SlVJ7+9PHDEXQafSr78MT5SZMnIdXpz8Ohs1
- d9OUx+eNGTgD2qPIb0yqfd65/c7uOaxC861NAIoCuSbzFXRRBGV8gx+jUsoSN9pYhrGN
- y8jyLtP2zv2MjN0NdqJSy2/Fw50HXKnwfd7hqBgaEgc6Ve9cSj79I2dnkkU3HEdtq27E
- fujw==
-X-Gm-Message-State: AOJu0YzCGikcRCIn+2LSs/voCm8d+4Mkr9vk6iA25xT0BxwsK2HPWrWt
- V+lAJH/eHcKeDERl5KbYj9A7O4yVcynSEnUTFTo4RAlyEiLymWux5vLeETa4pkiBNjLmkOiZw3V
- dDIHarRpN7A==
-X-Gm-Gg: ASbGncumwjerGsBGCNEUGD98S5dxyGFCVAmgT7Ya1vG8nZ6w8WFC7AQqzBarbescoyV
- zNt6JuFz6D1rE9x/ar4odKjLdHoVBWBo8YPiepLH+rDC5jk/rJv5MeBwcyOO/LG2ANsKg0oczmk
- T+6qPyb0a0+/mas/V/zi0ptovvHpTnEl3VIr5s+k0Pp8sBxqWlIUifZgHKk34ev4LHo6kIDEIEe
- Dh+QpAz54VgFf53SfArer6QmlxD0zI91+jY43SCJXt1zl5+DHVMv0U+xu5lPgWN4/7/yo29AbvN
- X638YuKPueRMVSoLELVxtoY8SWbfgSRPz5n1YtmBlcSfgSJQbN6nNhGSkvSDSin5tGo=
-X-Google-Smtp-Source: AGHT+IG2E1wS89Ifzu1qiB+DAvK2csEF4Z8QODJH+LVNlX8jj4QsenAmbjskM85XnBZVKvXhbDJ3WQ==
-X-Received: by 2002:a05:600c:8189:b0:442:c98e:79ab with SMTP id
- 5b1f17b1804b1-44c919e143cmr141928085e9.9.1748420056632; 
- Wed, 28 May 2025 01:14:16 -0700 (PDT)
+ bh=Bhe7gTBV4OnhfdghdltDpo0UDe7FOL4IHQZxPqBae80=;
+ b=R226QT7imaPrFy3jcCpytWGATwmadZPfp/IV6rI2MF4WmRbA3c2C364WveJUYPQBSB
+ /XLQy+EOPp9CeEVt/H+fXOaXWZuZ48UTqBVB7vyOD1XtfvzLoid8qE7AxkirlY7Yk0Cs
+ EShLRg7OcJA5kDr5ap80UyWHfj5PSUPrFt/TnA1f8uKTwcseCWKbIibrrzMCT/WFF4jJ
+ IliXIBA3/lvdHPfjOL6eC9WfP/uR8XX5AZbVWHrrBoUamZhUXXaiPU8oR375IdJa76w2
+ XHVkmIwAM0luZ5lr3KXDpfd1kXmoG1Up5MRQ6QDnEKFu+6gg4zXBYtGrSXpxk5R+kgqi
+ HaiA==
+X-Gm-Message-State: AOJu0YwVXaZDxsmjy4atc/h5sElf+mjC2QCcHGCRJccfoe3s/3P/6skf
+ HrXSsRvMp//TC/cEbKDXrqxQTWnZUSMknCkSWt4OrOO63GFFmTWJYvgNWF96g5ElNtRbeKbDIWa
+ +VckOtIhJLQ==
+X-Gm-Gg: ASbGncu+NycMWNJHDD1IOyoXSzFjVkZdDhAxnNppUkRWMtRUKAPmi5LYaTmC7GOPk/0
+ tzeKOMv3HMxf+AN5o/VVaQsJ6eGu3menprGh2JXvkKOTqpwGPEyWaZe0gBIn+D0pRx67Lu2piBz
+ IyXNwPv8DP8m3TKFRLoeC8lhiX6o3mpk2C+MPOUF+8jy3JG06jZgmouyARsRQe8gJy9IbKLDpC9
+ sDZD+aYhlpLATTo/s8l8q1NTuZXbIP9kI5MJ/0SPV1k54ONnm6Q8Bz+D4v9g/wOCr8hxDr2mhKU
+ eyvGRV5FoLbJwMX8RKynV8y38IriZu7v8VHoFF6nBOmNQhx/kiGfp1Co
+X-Google-Smtp-Source: AGHT+IEgySZhOngGkq3oASTqwG+hBWUByFPV6JS6+HGFtFoFq1oI0+kwIwMirad7gcy4aKFyAH+HnA==
+X-Received: by 2002:a05:6000:2082:b0:3a1:f68b:57c9 with SMTP id
+ ffacd0b85a97d-3a4cb407b33mr11670938f8f.6.1748420060730; 
+ Wed, 28 May 2025 01:14:20 -0700 (PDT)
 Received: from stoup.. ([195.53.115.74]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.15
+ 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 01:14:16 -0700 (PDT)
+ Wed, 28 May 2025 01:14:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Andreas Schwab <schwab@suse.de>
-Subject: [PULL 03/28] linux-user: implement pgid field of /proc/self/stat
-Date: Wed, 28 May 2025 09:13:45 +0100
-Message-ID: <20250528081410.157251-4-richard.henderson@linaro.org>
+Cc: "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PULL 06/28] target/microblaze: Split out
+ mb_transaction_failed_internal
+Date: Wed, 28 May 2025 09:13:48 +0100
+Message-ID: <20250528081410.157251-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250528081410.157251-1-richard.henderson@linaro.org>
 References: <20250528081410.157251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
@@ -97,30 +98,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andreas Schwab <schwab@suse.de>
+Use an explicit 64-bit type for the address to store in EAR.
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <mvmfrgzcr4m.fsf@suse.de>
 ---
- linux-user/syscall.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/microblaze/op_helper.c | 70 +++++++++++++++++++++--------------
+ 1 file changed, 42 insertions(+), 28 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 23b901b713..fc37028597 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8235,6 +8235,9 @@ static int open_self_stat(CPUArchState *cpu_env, int fd)
-         } else if (i == 3) {
-             /* ppid */
-             g_string_printf(buf, FMT_pid " ", getppid());
-+        } else if (i == 4) {
-+            /* pgid */
-+            g_string_printf(buf, FMT_pid " ", getpgrp());
-         } else if (i == 19) {
-             /* num_threads */
-             int cpus = 0;
+diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+index 9e838dfa15..4c39207a55 100644
+--- a/target/microblaze/op_helper.c
++++ b/target/microblaze/op_helper.c
+@@ -393,38 +393,52 @@ void helper_mmu_write(CPUMBState *env, uint32_t ext, uint32_t rn, uint32_t v)
+     mmu_write(env, ext, rn, v);
+ }
+ 
++static void mb_transaction_failed_internal(CPUState *cs, hwaddr physaddr,
++                                           uint64_t addr, unsigned size,
++                                           MMUAccessType access_type,
++                                           uintptr_t retaddr)
++{
++    CPUMBState *env = cpu_env(cs);
++    MicroBlazeCPU *cpu = env_archcpu(env);
++    const char *access_name = "INVALID";
++    bool take = env->msr & MSR_EE;
++    uint32_t esr = ESR_EC_DATA_BUS;
++
++    switch (access_type) {
++    case MMU_INST_FETCH:
++        access_name = "INST_FETCH";
++        esr = ESR_EC_INSN_BUS;
++        take &= cpu->cfg.iopb_bus_exception;
++        break;
++    case MMU_DATA_LOAD:
++        access_name = "DATA_LOAD";
++        take &= cpu->cfg.dopb_bus_exception;
++        break;
++    case MMU_DATA_STORE:
++        access_name = "DATA_STORE";
++        take &= cpu->cfg.dopb_bus_exception;
++        break;
++    }
++
++    qemu_log_mask(CPU_LOG_INT, "Transaction failed: addr 0x%" PRIx64
++                  "physaddr 0x" HWADDR_FMT_plx " size %d access-type %s (%s)\n",
++                  addr, physaddr, size, access_name,
++                  take ? "TAKEN" : "DROPPED");
++
++    if (take) {
++        env->esr = esr;
++        env->ear = addr;
++        cs->exception_index = EXCP_HW_EXCP;
++        cpu_loop_exit_restore(cs, retaddr);
++    }
++}
++
+ void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+                                unsigned size, MMUAccessType access_type,
+                                int mmu_idx, MemTxAttrs attrs,
+                                MemTxResult response, uintptr_t retaddr)
+ {
+-    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+-    CPUMBState *env = &cpu->env;
+-
+-    qemu_log_mask(CPU_LOG_INT, "Transaction failed: vaddr 0x%" VADDR_PRIx
+-                  " physaddr 0x" HWADDR_FMT_plx " size %d access type %s\n",
+-                  addr, physaddr, size,
+-                  access_type == MMU_INST_FETCH ? "INST_FETCH" :
+-                  (access_type == MMU_DATA_LOAD ? "DATA_LOAD" : "DATA_STORE"));
+-
+-    if (!(env->msr & MSR_EE)) {
+-        return;
+-    }
+-
+-    if (access_type == MMU_INST_FETCH) {
+-        if (!cpu->cfg.iopb_bus_exception) {
+-            return;
+-        }
+-        env->esr = ESR_EC_INSN_BUS;
+-    } else {
+-        if (!cpu->cfg.dopb_bus_exception) {
+-            return;
+-        }
+-        env->esr = ESR_EC_DATA_BUS;
+-    }
+-
+-    env->ear = addr;
+-    cs->exception_index = EXCP_HW_EXCP;
+-    cpu_loop_exit_restore(cs, retaddr);
++    mb_transaction_failed_internal(cs, physaddr, addr, size,
++                                   access_type, retaddr);
+ }
+ #endif
 -- 
 2.43.0
 
