@@ -4,71 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D39A0C54ED1
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 03:28:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A3BC54ED1
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 03:30:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK7SN-0002do-S8; Tue, 27 May 2025 23:27:56 -0400
+	id 1uK7Uo-0003lQ-8s; Tue, 27 May 2025 23:30:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uK7SL-0002cq-N2
- for qemu-devel@nongnu.org; Tue, 27 May 2025 23:27:53 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uK7SK-0004gm-1S
- for qemu-devel@nongnu.org; Tue, 27 May 2025 23:27:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748402872; x=1779938872;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=tGjR23fGXaCK8j8WbOigsq7unGkxhXGSj0KgbbcVxuo=;
- b=kssI1fkGzHg0rfTBriwgK/j7ste9eK6QvmgmTkTefN/hQJmHdsyJ814h
- v2EWycTYJ2VZfyjGY5URvynwsyBv4pArqnt55qQ7pHhkJ+q6jolH6xj90
- KDHMpU+/m4vAzWKV2/sz1J2jr7xDiz/q7kJot4CUMPCDuFxFqLhuO+lon
- 8wd12imJn7KA/IH7ICvmX0MuQa1j74Ci9caagTMVKEcib8n1Cs31gdt2W
- SvJQuzZh/JQ2ic4g4DGZX8XaZKTcUKfx/J9Wyp1nrRBkma+0uM2QT1vD9
- kOs/EJ0ClVjjoqkdbhT7/9W5EDCm+87y1qFvD1yTk+SE8fRTmKECIQQ6U Q==;
-X-CSE-ConnectionGUID: 6UblzC+1QeGaUlTlWYfBHw==
-X-CSE-MsgGUID: LXtvaLTyTv6K5K5IBbQWog==
-X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="50520210"
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="50520210"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 20:27:50 -0700
-X-CSE-ConnectionGUID: rHaT7rz5QFCXAd4XepDqcQ==
-X-CSE-MsgGUID: 86UveVlgTrO7JBG70JGq+A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="147955799"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 27 May 2025 20:27:49 -0700
-Date: Wed, 28 May 2025 11:48:58 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: elisey.konstantinov@icloud.com, qemu-devel@nongnu.org, pbonzini@redhat.com
-Subject: Re: [PATCH] Revert "i386/cpu: Set up CPUID_HT in
- x86_cpu_expand_features() instead of cpu_x86_cpuid()"
-Message-ID: <aDaHqhiuowgjMtXK@intel.com>
-References: <0C532D10-33ED-41F5-BBA7-13C64AA0633D@icloud.com>
- <aDaCJTkoDYsdJFmJ@intel.com>
- <bbeba807-ef49-4bd1-abfe-dce8b2a5f9a3@intel.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uK7Um-0003l7-9s
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 23:30:24 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uK7Uk-0005HQ-DF
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 23:30:24 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-232059c0b50so34455725ad.2
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 20:30:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748403020; x=1749007820;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NigIgNOlkNGkpxclfR4AgQ+TnVmaAhtTHOhKfV1ebzE=;
+ b=1RQhjvIXbfOa43CLPqpMv6+9OCuH0YGoGPr6xT9VjjvnA74BJHjeKg53RnpfDlEbOr
+ 3bHT7IyffczGVVIoYvTUJiQRO0ArDqJeGwKh8qmg6DjSuf9zslAcbVhUH98oYuOp46V3
+ qT4EcInOl01bdQgad/ldyfBt4kCDfVyD9bjDhCvVOf2vnksIcUVo7NvKyTr0IgN/Pf7E
+ +UYhTnIE5xpi/9uC4FZvWK9LkttOgzPmPHXCRIXeGhsyAqY4Kzub3oTR7EECNPAcSH8N
+ nFRn+PM4Uf7oT0mjsTc7hh8pmldMU8D51xtwo924jrVndGioCa4RXVxbNU3xg2aUGmu5
+ 7LQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748403020; x=1749007820;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NigIgNOlkNGkpxclfR4AgQ+TnVmaAhtTHOhKfV1ebzE=;
+ b=isCMlb4/DSudvhhBl1+WaCX91opCGIlOtZbFRNJmhZBap04b3hdeTR6axOrMdeejk8
+ acMfZw7nrJ0U1aGafc9iOMsLlHgW9OX8UxUjlyMDNMuQQnb+vrX8hSfhacN39GgeWx77
+ wkRiSzHU5sseDwlNs/8AHWNC3GjT0nrcps5Bate6jVkKUb1/CK4TDCqdN9OT+sTxtcAs
+ I3gdQ/C2/9uAC6OgsEVqUKFQ8vRlzDjtX1LeRbQcNxuNqWFKoqgUDHh9bb/U+7CcfKui
+ qSxjjUJ+JmKDUNrJslgvce1mCX0vvGIyqjP7mq6KIhUpWHGLVlKeMaqXDM5oeQScnJw/
+ 3tjQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgjgfic1ezuwAj5F2kreETiz1RFq4+Ywi4xtoyitesbalDolFa/nxflelUw+CdRtpThrCQ0vUXS1S2@nongnu.org
+X-Gm-Message-State: AOJu0YzSzk155QJo1pHAfxDXT7B/ts0uL4NqFpi32EqtRBDv7DYxEgG/
+ k+3EU+HaJs5CzTw2i9v/9+tKsogS8ruF7Nd6GCjvMgAL/aCZpMgZ9jQYeuzRaCdtKn7MpnIyikK
+ kc0M3
+X-Gm-Gg: ASbGncvYg8ZWj9Zxpudat1HD9+7eJzs7hE3WCNB/Gdr6HswIIYcKYqQyF+gbdF3u5nv
+ b2xBMxY0gyUrYdruKJDvOnmaiEfvZUr2vBH66weL1l6AO/NZuv1zcbA8drHEh26nEKZKF2i5R2C
+ 3q4e+8xJ3QHLamSxevNqRAozeMaTZP/jRr/tJRK15HCikWVSovNFZviNJbbYWmYeiYRxnDIBkKb
+ nKNfww9Ru2GiK0+yuCi7riatwf2XnM13QQ8pJfFAGM3GsO9YRjEqOgR49rs5eaiVbSVH2QjymzV
+ HOMuIerMaRE7IUuP29raA0eouTAdafwXBl9FWTqCtQQ1QExpzwXt4wsw5SuTEg==
+X-Google-Smtp-Source: AGHT+IF8VeDAJqhzlIj3gRGOOwy9aeFJacSDaL/RyFDxk2AhnVsMmC66f8rQUdgrp8Vjb2tqT8mYvw==
+X-Received: by 2002:a17:902:efd5:b0:234:a139:11ec with SMTP id
+ d9443c01a7336-234a1391521mr41394995ad.20.1748403020553; 
+ Tue, 27 May 2025 20:30:20 -0700 (PDT)
+Received: from [10.100.116.185] ([157.82.128.1])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-234d2fd24a8sm2015515ad.7.2025.05.27.20.30.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 May 2025 20:30:20 -0700 (PDT)
+Message-ID: <f510a84d-8f3b-46a5-914c-98e9bb44c8d9@daynix.com>
+Date: Wed, 28 May 2025 12:30:18 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bbeba807-ef49-4bd1-abfe-dce8b2a5f9a3@intel.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -72
-X-Spam_score: -7.3
-X-Spam_bar: -------
-X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/11] Improve futex usage
+To: Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Fabiano Rosas <farosas@suse.de>, Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
+ devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
+ <aDR_J5iYsSlBTDJm@x1.local> <ceac6afc-a300-4ca8-a14e-7f60b31b75a0@daynix.com>
+ <aDXCI2Xo3sNM27DG@x1.local>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <aDXCI2Xo3sNM27DG@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,26 +111,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 28, 2025 at 11:22:57AM +0800, Xiaoyao Li wrote:
-> Date: Wed, 28 May 2025 11:22:57 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH] Revert "i386/cpu: Set up CPUID_HT in
->  x86_cpu_expand_features() instead of cpu_x86_cpuid()"
+On 2025/05/27 22:46, Peter Xu wrote:
+> On Tue, May 27, 2025 at 11:09:08AM +0900, Akihiko Odaki wrote:
+>> On 2025/05/26 23:48, Peter Xu wrote:
+>>> On Mon, May 26, 2025 at 02:29:10PM +0900, Akihiko Odaki wrote:
+>>>> Akihiko Odaki (11):
+>>>>         futex: Check value after qemu_futex_wait()
+>>>>         futex: Support Windows
+>>>>         qemu-thread: Remove qatomic_read() in qemu_event_set()
+>>>>         qemu-thread: Replace __linux__ with CONFIG_LINUX
+>>>>         qemu-thread: Avoid futex abstraction for non-Linux
+>>>>         qemu-thread: Use futex for QemuEvent on Windows
+>>>>         qemu-thread: Use futex if available for QemuLockCnt
+>>>>         migration: Replace QemuSemaphore with QemuEvent
+>>>>         migration/colo: Replace QemuSemaphore with QemuEvent
+>>>>         migration/postcopy: Replace QemuSemaphore with QemuEvent
+>>>
+>>> In case it makes things easier.. I queued the three migration patches;
+>>> AFAIU they look like standalone to go even without prior patches, meanwhile
+>>> it shouldn't be an issue if they're queued in two pulls.
+>>>
+>>> I am still not sure whether patch 1 is needed at all, but I'll leave that
+>>> to others to decide.
+>>
+>> The migration patches shouldn't be applied before patches "futex: Check
+>> value after qemu_futex_wait()" and "qemu-thread: Avoid futex abstraction for
+>> non-Linux" as they fix QemuEvent. Merging migration patches earlier can
+>> trigger bugs just like one we faced with hw/display/apple-gfx*
 > 
-> On 5/28/2025 11:25 AM, Zhao Liu wrote:
-> > Hi Elisey,
-> > 
-> > Thank you for your patch! I'm sorry I previously noticed #2894 [*] but
-> > missed your report.
-> > 
-> > Recently there's a fix (commit 5979f50fa9fd ("i386/tcg: Make CPUID_HT
-> > and CPUID_EXT3_CMP_LEG supported")). Does that fix address this bug?
-> > 
-> > [*]: https://lore.kernel.org/qemu-devel/aCWdhIqZiu4q+UJi@intel.com/
-> 
-> It should be the next one for hvf accelerator in this series that helps.
-> Because the regression reported is on macOS.
+> I didn't see anything like it mentioned in either cover letter or the
+> apple-gfx patch.  Could you provide a pointer?
+The previous email had a URL at the bottom:
+https://lore.kernel.org/qemu-devel/a8b4472c-8741-4f80-87e5-b406c56d1acd@daynix.com/
 
-From Elisey's cli example, this case is using TCG ("-accel tcg").
+This thread discussed a bug of QemuEvent and reached to a conclusion to 
+use QemuSemaphore instead to avoid it. This patch series intends to fix it.
 
+Regards,
+Akihiko Odaki
 
