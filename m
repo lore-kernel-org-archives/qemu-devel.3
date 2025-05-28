@@ -4,105 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3071DC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CCE2C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKGQn-0008E8-RM; Wed, 28 May 2025 09:02:53 -0400
+	id 1uKGVD-0001L3-RB; Wed, 28 May 2025 09:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uKGQl-0008A7-Dj
- for qemu-devel@nongnu.org; Wed, 28 May 2025 09:02:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uKGQj-0003Lb-8b
- for qemu-devel@nongnu.org; Wed, 28 May 2025 09:02:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748437367;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uKGV4-0001KL-Qd
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 09:07:19 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uKGV2-0004Up-5I
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 09:07:18 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 04EA221995;
+ Wed, 28 May 2025 13:07:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748437634; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2zTYLE6MSys4OmtzSZ6e/+XfZzBtahBlti+qgIKKXxs=;
- b=biKio2iIwrd6OQja/azrX24ZxCXOmtlqVMEvoVwnY+b47OXyJPChcrBhPnArVj6bFxwi3Y
- AECMlNwzqkjjrKgFx+zf2pi+FH7LRUxegUDdX/j+8BPaBl0JE0y4dThuJY4qZpZdDDec/u
- 1n2fet6srU/oAmjsC8E7BEIU4fXnCh0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-558-zkDBhmrIMsibF99E36z4VQ-1; Wed, 28 May 2025 09:02:45 -0400
-X-MC-Unique: zkDBhmrIMsibF99E36z4VQ-1
-X-Mimecast-MFC-AGG-ID: zkDBhmrIMsibF99E36z4VQ_1748437365
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4d95f197dso2105848f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 06:02:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748437364; x=1749042164;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2zTYLE6MSys4OmtzSZ6e/+XfZzBtahBlti+qgIKKXxs=;
- b=CTRy5ITH8r0M7bHUJZIZmX+0EPczDQvAY4cr6IhArT9GRSk5dVz/AE49a/pbyuH7W8
- ORzQPO2xc7EZFoiGNg+66mhMjDEkknsoavdCA4kdHZZOZMmyOaRvcLTUJ5TV1JO+1JyP
- pJp3bYI46erKwVEJJyYTl8BDVC7085bH3IPtjWDD/G5a+8n64baoLEe1dPf9Fkdpw1K5
- dKqO++AC/7aWWIEhAngzO+h4tD8aPFqX0/xF2byVNeKV/QlfqCDQfhWk7eO9Kw/URAR3
- WzSZK2X6HhTkrwyLlaqrRek2H4ZgdL9FtcrCuPYil2KuYOVxOpB9lI48njYrTFdZrdD4
- Nufg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4Je5J5Vm1ebo+6EWXf0RLa4GPb5gAHK9/AE4/rb5kAB7qbdft48J1zpJYTHi9J8b8/yDsWXuAFBWT@nongnu.org
-X-Gm-Message-State: AOJu0YwHEguAjpv0/M6zrOMGfy2p/vSqy6dAq4nRqPoUvmpeCXSD3Xdc
- 8JF7skGG3yWBvTwM9x5Zhajyw93Z5+T4In/kFq6COueUSn0QtMzd30urKbrNAC6T7hVeNlGmW0j
- /tYjILl82+0uXQL18RL3AbR2Xai4suaAZGbziC/K902BcvXyjsn81sqKo
-X-Gm-Gg: ASbGncuMRgQ63TLQPwt0FoTfHwEKgpGNWWgITiPxUeHBSnb05jVKJM5xzRgsXNk/iry
- B8wk7gHoAd+hwPDfZu1A7wlYZltj4z602jLmjB0hHFMb//KJzs3kxdJ4TkJptBqv5no/d/cgeoH
- O0sOrgAKE7pfnXrzDswOaPvf81q+iIj9mfyM+vAf+jNYM2qrwaemdKb6Cj9gQHI19SNbk2wShYc
- GWIwTnofjXn/+P/7MrMJTN7XTEoACxMUh4HTk2bFLMmLbvzrBJJ/zMwI7tw0+dpDK8abYXGsN3p
- /Vq3HYtNM0Qd7P6e+duR9KZc11KI2p+x
-X-Received: by 2002:a05:6000:2dc1:b0:3a4:dfc1:ecb8 with SMTP id
- ffacd0b85a97d-3a4dfc1ed20mr7176336f8f.53.1748437363767; 
- Wed, 28 May 2025 06:02:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHugJgHlM0Vpj60zdOilrkSc0PXc4GX760uO6ixkmaC5ppG/M5YTtZnO4PIKJNH99Zu97/0lQ==
-X-Received: by 2002:a05:6000:2dc1:b0:3a4:dfc1:ecb8 with SMTP id
- ffacd0b85a97d-3a4dfc1ed20mr7176063f8f.53.1748437361535; 
- Wed, 28 May 2025 06:02:41 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4eac6ed58sm1433023f8f.8.2025.05.28.06.02.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 06:02:41 -0700 (PDT)
-Date: Wed, 28 May 2025 15:02:39 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
- pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
- alex.bennee@linaro.org
-Subject: Re: [PATCH v2 24/25] tests/qtest/bios-tables-test: Keep ACPI PCI
- hotplug off
-Message-ID: <20250528150239.5f6b63d0@imammedo.users.ipa.redhat.com>
-In-Reply-To: <375cfbd6-e585-4b6d-bf10-6571aa40370e@linaro.org>
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-25-eric.auger@redhat.com>
- <20250528113813.47086516@imammedo.users.ipa.redhat.com>
- <375cfbd6-e585-4b6d-bf10-6571aa40370e@linaro.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ bh=5Hn0gFEKSVeQN3mcY8nwLkyuXKtoqS9V57cD5UtpoGk=;
+ b=qmhYuY+Vso17c7CBQ1QRn+JNSKvuuEhesf9wrypevFvEYaLJX7aimm1O2ngGHhuxlr0Q6M
+ KLOOjrKjhgwSe9Td4EdXTn8QUJPJR2q7IwS61BWuLZZ3+dT+6DV/m5Br+B5k+I4CIbR5XI
+ Y77+R3MWUZkYWwYzLQnvSUMFswx1Iok=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748437634;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Hn0gFEKSVeQN3mcY8nwLkyuXKtoqS9V57cD5UtpoGk=;
+ b=sbL8ulMrMnsULO2wj0BNFBpELfTdTSBld28HbYwB0WkXqEWslDlFpBJoxUFmhdU5Je0DE/
+ UBR1ui8jbbbheuAg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qmhYuY+V;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=sbL8ulMr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748437634; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Hn0gFEKSVeQN3mcY8nwLkyuXKtoqS9V57cD5UtpoGk=;
+ b=qmhYuY+Vso17c7CBQ1QRn+JNSKvuuEhesf9wrypevFvEYaLJX7aimm1O2ngGHhuxlr0Q6M
+ KLOOjrKjhgwSe9Td4EdXTn8QUJPJR2q7IwS61BWuLZZ3+dT+6DV/m5Br+B5k+I4CIbR5XI
+ Y77+R3MWUZkYWwYzLQnvSUMFswx1Iok=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748437634;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Hn0gFEKSVeQN3mcY8nwLkyuXKtoqS9V57cD5UtpoGk=;
+ b=sbL8ulMrMnsULO2wj0BNFBpELfTdTSBld28HbYwB0WkXqEWslDlFpBJoxUFmhdU5Je0DE/
+ UBR1ui8jbbbheuAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 722C1136E0;
+ Wed, 28 May 2025 13:07:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id D3tDDIEKN2hcMwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 28 May 2025 13:07:13 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Zheng Huang <hz1624917200@gmail.com>, Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, Peter
+ Xu <peterx@redhat.com>, peter.maydell@linaro.org
+Subject: Re: [PATCH] hw/scsi/esp: fix assertion error in fifo8_push
+In-Reply-To: <7e4a9c92-b33f-4bc9-968d-e726c6151a9d@gmail.com>
+References: <37889706-8576-476c-8fea-c1a3a2858b1e@gmail.com>
+ <684885a4-0022-4de8-98aa-07c9fe4a11c7@linaro.org>
+ <6dd914b1-2a2f-4a4c-bd2b-54e8302d1a75@ilande.co.uk>
+ <7e4a9c92-b33f-4bc9-968d-e726c6151a9d@gmail.com>
+Date: Wed, 28 May 2025 10:07:10 -0300
+Message-ID: <87tt54994x.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,gitlab.com:url,euphon.net:email,gnu.org:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FREEMAIL_TO(0.00)[gmail.com,ilande.co.uk,linaro.org,nongnu.org];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_SEVEN(0.00)[8]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, suse.de:dkim, suse.de:mid,
+ suse.de:email, gnu.org:url]
+X-Rspamd-Queue-Id: 04EA221995
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,125 +137,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 May 2025 09:41:15 -0300
-Gustavo Romero <gustavo.romero@linaro.org> wrote:
+Zheng Huang <hz1624917200@gmail.com> writes:
 
-> Hi Igor,
-> 
-> On 5/28/25 06:38, Igor Mammedov wrote:
-> > On Tue, 27 May 2025 09:40:26 +0200
-> > Eric Auger <eric.auger@redhat.com> wrote:
-> >   
-> >> From: Gustavo Romero <gustavo.romero@linaro.org>
-> >>
-> >> ACPI PCI hotplug is now turned on by default so we need to change the
-> >> existing tests to keep it off. However, even setting the ACPI PCI
-> >> hotplug off in the existing tests, there will be changes in the ACPI
-> >> tables because the _OSC method was modified, hence in the next patch of
-> >> this series the blobs are updated accordingly.
-> >>
-> >> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>  
-> > 
-> > it would be better to test whatever default we end up with.
-> > (like x86)  
-> 
-> hmm maybe there is a confusion here, Igor. We are actually planning what you
+> On 2025/5/28 03:40, Mark Cave-Ayland wrote:
+>> On 27/05/2025 14:59, Philippe Mathieu-Daud=C3=A9 wrote:
+>>=20
+>>> Hi,
+>>>
+>>> Cc'ing maintainers:
+>>>
+>>> $ ./scripts/get_maintainer.pl -f hw/scsi/esp.c
+>>> Paolo Bonzini <pbonzini@redhat.com> (supporter:SCSI)
+>>> Fam Zheng <fam@euphon.net> (reviewer:SCSI)
+>>> $ ./scripts/get_maintainer.pl -f migration/
+>>> Peter Xu <peterx@redhat.com> (maintainer:Migration)
+>>> Fabiano Rosas <farosas@suse.de> (maintainer:Migration)
+>>>
+>>> On 27/5/25 15:12, Zheng Huang wrote:
+>>>> This patch add validation checks on FIFO structures in esp_post_load()=
+ to
+>>>> avoid assertion error `assert(fifo->num < fifo->capacity);` in fifo8_p=
+ush(),
+>>>> which can occur if the inbound migration stream is malformed. By perfo=
+rming
+>>>> these checks during post-load, we can catch and handle such issues ear=
+lier,
+>>>> avoiding crashes due to corrupted state.
+>>>
+>>> How can that happen? Can you share a reproducer?
+>>>
+>>>>
+>>>> Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
+>>>> ---
+>>>> =C2=A0 hw/scsi/esp.c | 6 ++++++
+>>>> =C2=A0 1 file changed, 6 insertions(+)
+>>>>
+>>>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+>>>> index ac841dc32e..ba77017087 100644
+>>>> --- a/hw/scsi/esp.c
+>>>> +++ b/hw/scsi/esp.c
+>>>> @@ -1350,11 +1350,17 @@ static int esp_post_load(void *opaque, int ver=
+sion_id)
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Migrate ti_b=
+uf to fifo */
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 len =3D s->mig_=
+ti_wptr - s->mig_ti_rptr;
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D 0; i=
+ < len; i++) {
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if=
+ (&s->fifo.num >=3D &s->fifo.capacity) {
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 return -1;
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 fifo8_push(&s->fifo, s->mig_ti_buf[i]);
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Migrate cmdb=
+uf to cmdfifo */
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D 0; i=
+ < s->mig_cmdlen; i++) {
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if=
+ (&s->cmdfifo.num >=3D &s->cmdfifo.capacity) {
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 return -1;
+>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 fifo8_push(&s->cmdfifo, s->mig_cmdbuf[i]);
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>=20
+>> This seems odd: this logic in esp_post_load() is for converting from pre=
+-Fifo8 code to the current Fifo8 code, so why wouldn't we want to assert() =
+for the case when the migration stream is intentionally malformed? Is there=
+ a case whereby the old code could generate an invalid migration stream lik=
+e this?
+>>=20
+>>=20
+>> ATB,
+>>=20
+>> Mark.
+>>=20
+>
+> Hi Mark,
+>
+> The malformed migration stream in question originates from QEMU itself=E2=
+=80=94either accidentally, due to=20
+> a bug, or maliciously crafted. If we allow unchecked data through in esp_=
+post_load(), an attacker
+> controlling the migration source could send crafted values that trigger u=
+ndefined behavior.
+> The commit https://gitlab.com/qemu-project/qemu/-/commit/b88cfee90268cad3=
+76682da8f99ccf024d7aa304
+> also check the migration stream integrity in post_load handler, which is =
+suggested by Peter Maydell in
+> https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg00099.html, 'to =
+prevent the division-by-zero
+> in the "malicious inbound migration state" case'.
+>
+> Also, I would appreciate your opinion on how we should handle such "malfo=
+rmed migration stream" case
+> more generally, if there are more severe issues than assertion error, suc=
+h as FPE, UAF, etc.? Should
+> QEMU adopt a more systematic =E2=80=9Cpost_load=E2=80=9D validation patte=
+rn=E2=80=94verifying all critical fields across every
+> migration handler=E2=80=94to harden the migration subsystem against any t=
+ampering of the migration image?
+>
 
-perhaps, see my reply to Eric about my expectations wrt tests.
-(i.e. default tests shouldn't have any explicit CLI options,
-instead it should follow whitelist blobs/set new default patch/update blobs pattern)
+From the migration perspective it does make sense to validate the values
+and return error. The migration stream should indeed be considered
+untrusted.
 
-> said. This patch and the other two in this series related to the bios-tables-test
-> (i.e., patches 8/25 and 10/25) are for actually making the current (legacy) test pass,
-> since the new default as per this series will be acpi-pcihp=on. That's why here we're
-> adapting the current test here to have acpi-pcihp=off.
-> 
-> The new test that will test for acpi-pcihp=on (the new default) is not in this series
-> and we decided to merge it separate. It's in the patch 4/5 and 5/5 of the follow series:
-> 
-> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05828.html 4/5
-> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05827.html 5/5
-> 
-> 
-> Cheers,
-> Gustavo
-> 
-> >>
-> >> ---
-> >>
-> >> [Eric] also added acpi-pcihp=off to test_acpi_aarch64_virt_tcg_numamem
-> >> ---
-> >>   tests/qtest/bios-tables-test.c | 13 +++++++++----
-> >>   1 file changed, 9 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> >> index 0a333ec435..6379dba714 100644
-> >> --- a/tests/qtest/bios-tables-test.c
-> >> +++ b/tests/qtest/bios-tables-test.c
-> >> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
-> >>       };
-> >>   
-> >>       data.variant = ".memhp";
-> >> -    test_acpi_one(" -machine nvdimm=on"
-> >> +    test_acpi_one(" -machine nvdimm=on,acpi-pcihp=off"
-> >>                     " -cpu cortex-a57"
-> >>                     " -m 256M,slots=3,maxmem=1G"
-> >>                     " -object memory-backend-ram,id=ram0,size=128M"
-> >> @@ -1747,7 +1747,8 @@ static void test_acpi_aarch64_virt_tcg_numamem(void)
-> >>       };
-> >>   
-> >>       data.variant = ".numamem";
-> >> -    test_acpi_one(" -cpu cortex-a57"
-> >> +    test_acpi_one(" -machine acpi-pcihp=off"
-> >> +                  " -cpu cortex-a57"
-> >>                     " -object memory-backend-ram,id=ram0,size=128M"
-> >>                     " -numa node,memdev=ram0",
-> >>                     &data);
-> >> @@ -1775,7 +1776,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
-> >>        * to solve the conflicts.
-> >>        */
-> >>       data.variant = ".pxb";
-> >> -    test_acpi_one(" -device pcie-root-port,chassis=1,id=pci.1"
-> >> +    test_acpi_one(" -machine acpi-pcihp=off"
-> >> +                  " -device pcie-root-port,chassis=1,id=pci.1"
-> >>                     " -device virtio-scsi-pci,id=scsi0,bus=pci.1"
-> >>                     " -drive file="
-> >>                     "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2,"
-> >> @@ -1846,7 +1848,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
-> >>   
-> >>       data.variant = ".acpihmatvirt";
-> >>   
-> >> -    test_acpi_one(" -machine hmat=on"
-> >> +    test_acpi_one(" -machine hmat=on,acpi-pcihp=off"
-> >>                     " -cpu cortex-a57"
-> >>                     " -smp 4,sockets=2"
-> >>                     " -m 384M"
-> >> @@ -2123,6 +2125,7 @@ static void test_acpi_aarch64_virt_tcg(void)
-> >>       data.smbios_cpu_max_speed = 2900;
-> >>       data.smbios_cpu_curr_speed = 2700;
-> >>       test_acpi_one("-cpu cortex-a57 "
-> >> +                  "-machine acpi-pcihp=off "
-> >>                     "-smbios type=4,max-speed=2900,current-speed=2700", &data);
-> >>       free_test_data(&data);
-> >>   }
-> >> @@ -2142,6 +2145,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
-> >>       };
-> >>   
-> >>       test_acpi_one("-cpu cortex-a57 "
-> >> +                  "-machine acpi-pcihp=off "
-> >>                     "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
-> >>       free_test_data(&data);
-> >>   }
-> >> @@ -2227,6 +2231,7 @@ static void test_acpi_aarch64_virt_viot(void)
-> >>       };
-> >>   
-> >>       test_acpi_one("-cpu cortex-a57 "
-> >> +                  "-machine acpi-pcihp=off "
-> >>                     "-device virtio-iommu-pci", &data);
-> >>       free_test_data(&data);
-> >>   }  
-> >   
-> 
-
+But I agree that it would be nice to have some sort of reproducer. I
+don't think it's practical to go around adding code to handle every
+single hypothetical scenario. That creates some churn in the codebase
+that might introduce bugs by itself.
 
