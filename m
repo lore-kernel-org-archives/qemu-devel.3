@@ -4,97 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2ADC5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 12:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED17C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 12:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKG6E-0000tX-9p; Wed, 28 May 2025 08:41:38 -0400
+	id 1uKGMM-0006RH-PY; Wed, 28 May 2025 08:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uKG6A-0000n4-C4
- for qemu-devel@nongnu.org; Wed, 28 May 2025 08:41:35 -0400
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uKGLu-0006PU-HD
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 08:57:51 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uKG63-0007kA-Ll
- for qemu-devel@nongnu.org; Wed, 28 May 2025 08:41:32 -0400
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-4e58e0175ceso530488137.2
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 05:41:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748436081; x=1749040881; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qV2ty7xeuAzjkeJYG9BdgdDp/4wFSsxmItOkHU0K0M8=;
- b=R68//JljmBfJ9g7UMMQVq6zrTKxMiTCBEXg1CuFZ0kSNW3pzwFUsgCvZLFzIvWmSWU
- L+s4B7p1XZlS49VF2OSO3u11sVd4JhToku6Nfe030fqqW3kTTlW6DmEVwwr708cMS64Y
- fYwYHHv/4m72URtwWuRI0Nvn0lKlGB3SMg9djQVqZNO2dqpRc0ArMi26J4VcgBA2PbCF
- ApooWFQ+JHGWA5vIfv3IkqcKzCJIchIDrUqolkJ69Df5+wfH+CIrLP9M8BszfvUFVRFw
- uw0k5L/F+zFRfA01deAUqGIzvT5SJE6+OFQ9AjtyPZgrIEDVSOM5Jv+sCxV7w3XBwoBh
- WDRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748436081; x=1749040881;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qV2ty7xeuAzjkeJYG9BdgdDp/4wFSsxmItOkHU0K0M8=;
- b=egrwV0LXrG/csdRFlm4ftXexQFsrcIaz+5T4vAAaNMl5pC/NuH7VUk3st0T46aR4u7
- KUmAu/UUmMt9VXfdWTWYm2akOdGiTxi41qghoq6kbE0p92l1dqCh+T9NV0QwahMUcVab
- CP+JzIV3kAKO//nPA3F7Ft9jIeKXTs/oyQL178uSBT1xYRcoe6sceImoO39mPSoykRfT
- bYaGnl8MoyS0ZdSvPJGofiVGRj2XC1zEVaLkbhHwvKe2pyEvobt85e9RxQM9NpXSx1YE
- uV5eUZiVTxkoNbH3hbGnn2YzM3HubSvFLQb3vyxwP4t4SQUHjE1piyvlZjF79xX3olJZ
- hkRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7WRk+S9dxpGMK++lb5NG/by/s2CUWsn2w4KyZp6iK3cmcZX1EBn6iSYJIEuveJJQlNKzIXgQcIL2c@nongnu.org
-X-Gm-Message-State: AOJu0YyTGBGuKDHVdAMSIXqWqGx82Wo48EB6PTHzzRK4LH2CeW4NhYNG
- rBbj9JaGuoECHOkxmW+qr+gm/C6fnd7FKB5MbFFzMoCG1efhzQKVHeuc6wu5pQJywVg=
-X-Gm-Gg: ASbGncuodIUr+sn0Ece5UdaJULbLFKZPv9BToC5ZLjV7xnawnR3SkK5sgJ6exiPNOXn
- DLhDMx+FxT9C+rTf1BlnlolUD2nKh51CvWz2jIf7Y//QIw8ezTf5EmXswhVeiZRtPoDnysfsk9s
- 5Wj3ZwX0EsN4nVxtsYQ4TLB7OHXvrjrGXeIOSxgjMABcjso9e9OnrHE/I7WlCcTFLBz68juBUa7
- /XpHIOmzZwcBS3l1aYOYbSNrxYBXwxU/pBM5zRP4Pld/sS2Ff+TgCFQlpaZimufgpj52UDWjC92
- aEAiTlnfd6Yk8QVeie2ZSKcWzofSKpjGbswZc6Sxsj88zjbYENo0qWIr8uvtUwn0uxXdLOpiWeM
- vdcjZtlsq2urCLgJuCb80EIOYfa537w==
-X-Google-Smtp-Source: AGHT+IH6XUj9DClPMfpVzSs/2eJ4sQC0Oz/YvRsC9nib8fAkxK9DpOvU+mWlaNISE+I8Ku8qlOtaaw==
-X-Received: by 2002:a05:6102:510d:b0:4e5:9e92:a267 with SMTP id
- ada2fe7eead31-4e59e92a960mr1008995137.4.1748436081509; 
- Wed, 28 May 2025 05:41:21 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:b402:6ba2:2066:dacd:9134:8586?
- ([2804:7f0:b402:6ba2:2066:dacd:9134:8586])
- by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-87e1f0db868sm738539241.26.2025.05.28.05.41.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 May 2025 05:41:20 -0700 (PDT)
-Message-ID: <375cfbd6-e585-4b6d-bf10-6571aa40370e@linaro.org>
-Date: Wed, 28 May 2025 09:41:15 -0300
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uKGLs-0001wJ-2Y
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 08:57:50 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D75C41F7A3;
+ Wed, 28 May 2025 12:57:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748437066; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pp6QIvVKvAnaPmCv5k7DZzg1V5GmKdOOss9Jq+9Aw9c=;
+ b=JOd4ohYE7ZdZavWVs6wv7dxWaWzCj4BG2ZVsJbkiXllue1xSDKZvqAshTJX26208kYu5VE
+ zlfakRRN+/xNE+b/J+xYS1AVIp1rNaH40O0pkfx6ORJpvLPstO3KGwj4D6pRMRnzUH/M7E
+ TmJqJJMHig6BedR+WuKXZfbwx+/0Iks=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748437066;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pp6QIvVKvAnaPmCv5k7DZzg1V5GmKdOOss9Jq+9Aw9c=;
+ b=eGhw/sv29IfiHZ+SDfp4lYWFfYT86cvfCOXyFfb0rfGfjS67rQ2aS+DLmDv4LIuZ/Rioq9
+ 0xNZutk4vb4w5LAQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748437065; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pp6QIvVKvAnaPmCv5k7DZzg1V5GmKdOOss9Jq+9Aw9c=;
+ b=mBYm1QVAle+uvyq4ofO+GJdCViuwK7BTiGnUv956R9PdUdi2f6IxcpFBqGfhbCEl9+sokm
+ zS1rUpk45O5vwzhNS8auSxleGIbKCT/ZKo8k8H89mahBi1mW60GTScqHypkevcKqXxIzok
+ CiW0/c9WXb6LOM4vXPPGS/VaLKQSssM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748437065;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pp6QIvVKvAnaPmCv5k7DZzg1V5GmKdOOss9Jq+9Aw9c=;
+ b=5EEeeiz0y7SKj9CsPlR4fCE9PMnAhLVm9IhiG5u0Pw1qYLMv/NXsepKHZDAkTZ5XbNKd+I
+ lyDRQ3I5bh74BGCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4E3CC136E0;
+ Wed, 28 May 2025 12:57:45 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 59duA0kIN2g5MAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 28 May 2025 12:57:45 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Nikita Shubin <nikita.shubin@maquefel.me>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis
+ <alistair@alistair23.me>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>, Laurent Vivier
+ <lvivier@redhat.com>, Ilya Chichkov <i.chichkov@yadro.com>, Nikita Shubin
+ <n.shubin@yadro.com>
+Subject: Re: [PATCH v2 3/3] tests/qtest: add qtests for STM32 DMA
+In-Reply-To: <20250523113647.4388-4-nikita.shubin@maquefel.me>
+References: <20250523113647.4388-1-nikita.shubin@maquefel.me>
+ <20250523113647.4388-4-nikita.shubin@maquefel.me>
+Date: Wed, 28 May 2025 09:57:42 -0300
+Message-ID: <87wma099kp.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 24/25] tests/qtest/bios-tables-test: Keep ACPI PCI
- hotplug off
-To: Igor Mammedov <imammedo@redhat.com>, Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, anisinha@redhat.com, mst@redhat.com,
- shannon.zhaosl@gmail.com, pbonzini@redhat.com, Jonathan.Cameron@huawei.com,
- philmd@linaro.org, alex.bennee@linaro.org
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-25-eric.auger@redhat.com>
- <20250528113813.47086516@imammedo.users.ipa.redhat.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250528113813.47086516@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
- envelope-from=gustavo.romero@linaro.org; helo=mail-vs1-xe34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.98%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,116 +120,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+Nikita Shubin <nikita.shubin@maquefel.me> writes:
 
-On 5/28/25 06:38, Igor Mammedov wrote:
-> On Tue, 27 May 2025 09:40:26 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
-> 
->> From: Gustavo Romero <gustavo.romero@linaro.org>
->>
->> ACPI PCI hotplug is now turned on by default so we need to change the
->> existing tests to keep it off. However, even setting the ACPI PCI
->> hotplug off in the existing tests, there will be changes in the ACPI
->> tables because the _OSC method was modified, hence in the next patch of
->> this series the blobs are updated accordingly.
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> 
-> it would be better to test whatever default we end up with.
-> (like x86)
+> From: Nikita Shubin <n.shubin@yadro.com>
+>
+> Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
 
-hmm maybe there is a confusion here, Igor. We are actually planning what you
-said. This patch and the other two in this series related to the bios-tables-test
-(i.e., patches 8/25 and 10/25) are for actually making the current (legacy) test pass,
-since the new default as per this series will be acpi-pcihp=on. That's why here we're
-adapting the current test here to have acpi-pcihp=off.
-
-The new test that will test for acpi-pcihp=on (the new default) is not in this series
-and we decided to merge it separate. It's in the patch 4/5 and 5/5 of the follow series:
-
-https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05828.html 4/5
-https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05827.html 5/5
-
-
-Cheers,
-Gustavo
-
->>
->> ---
->>
->> [Eric] also added acpi-pcihp=off to test_acpi_aarch64_virt_tcg_numamem
->> ---
->>   tests/qtest/bios-tables-test.c | 13 +++++++++----
->>   1 file changed, 9 insertions(+), 4 deletions(-)
->>
->> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
->> index 0a333ec435..6379dba714 100644
->> --- a/tests/qtest/bios-tables-test.c
->> +++ b/tests/qtest/bios-tables-test.c
->> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
->>       };
->>   
->>       data.variant = ".memhp";
->> -    test_acpi_one(" -machine nvdimm=on"
->> +    test_acpi_one(" -machine nvdimm=on,acpi-pcihp=off"
->>                     " -cpu cortex-a57"
->>                     " -m 256M,slots=3,maxmem=1G"
->>                     " -object memory-backend-ram,id=ram0,size=128M"
->> @@ -1747,7 +1747,8 @@ static void test_acpi_aarch64_virt_tcg_numamem(void)
->>       };
->>   
->>       data.variant = ".numamem";
->> -    test_acpi_one(" -cpu cortex-a57"
->> +    test_acpi_one(" -machine acpi-pcihp=off"
->> +                  " -cpu cortex-a57"
->>                     " -object memory-backend-ram,id=ram0,size=128M"
->>                     " -numa node,memdev=ram0",
->>                     &data);
->> @@ -1775,7 +1776,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
->>        * to solve the conflicts.
->>        */
->>       data.variant = ".pxb";
->> -    test_acpi_one(" -device pcie-root-port,chassis=1,id=pci.1"
->> +    test_acpi_one(" -machine acpi-pcihp=off"
->> +                  " -device pcie-root-port,chassis=1,id=pci.1"
->>                     " -device virtio-scsi-pci,id=scsi0,bus=pci.1"
->>                     " -drive file="
->>                     "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2,"
->> @@ -1846,7 +1848,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
->>   
->>       data.variant = ".acpihmatvirt";
->>   
->> -    test_acpi_one(" -machine hmat=on"
->> +    test_acpi_one(" -machine hmat=on,acpi-pcihp=off"
->>                     " -cpu cortex-a57"
->>                     " -smp 4,sockets=2"
->>                     " -m 384M"
->> @@ -2123,6 +2125,7 @@ static void test_acpi_aarch64_virt_tcg(void)
->>       data.smbios_cpu_max_speed = 2900;
->>       data.smbios_cpu_curr_speed = 2700;
->>       test_acpi_one("-cpu cortex-a57 "
->> +                  "-machine acpi-pcihp=off "
->>                     "-smbios type=4,max-speed=2900,current-speed=2700", &data);
->>       free_test_data(&data);
->>   }
->> @@ -2142,6 +2145,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
->>       };
->>   
->>       test_acpi_one("-cpu cortex-a57 "
->> +                  "-machine acpi-pcihp=off "
->>                     "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
->>       free_test_data(&data);
->>   }
->> @@ -2227,6 +2231,7 @@ static void test_acpi_aarch64_virt_viot(void)
->>       };
->>   
->>       test_acpi_one("-cpu cortex-a57 "
->> +                  "-machine acpi-pcihp=off "
->>                     "-device virtio-iommu-pci", &data);
->>       free_test_data(&data);
->>   }
-> 
-
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
