@@ -4,117 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C945DC5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 15:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FE6C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 15:35:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKIZC-0003Vq-Pp; Wed, 28 May 2025 11:19:42 -0400
+	id 1uKInt-0007T6-Lt; Wed, 28 May 2025 11:34:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
- id 1uKIZA-0003VR-U3
- for qemu-devel@nongnu.org; Wed, 28 May 2025 11:19:41 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
- id 1uKIZ5-0006uA-2o
- for qemu-devel@nongnu.org; Wed, 28 May 2025 11:19:40 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-60b8a9be972so968637eaf.1
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 08:19:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=konsulko.com; s=google; t=1748445572; x=1749050372; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=qA9Udb9eBCGzXFBNz6INRTeAqdTkugi7lKHtWO4Oe4Q=;
- b=YPKInl5rP9oHC4P7EfinlkH9od1Fvsk98yucyUExDKk/Hc+OmIGf7ygPnymp/V+sx4
- tAca+M3mkcQZKHH1ic0nzjPQwKRXJLv8racp45jUcJTLaNM6ijQG6ydnJv/D/rSmhuNb
- DGQh9hi27slMztNCdONiIlkmbO4Czulp18bVs=
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uKInq-0007Su-5V
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 11:34:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uKInn-0005yn-QJ
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 11:34:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748446483;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fmTsV0BLM+0nrLdyv6i+dQpfoxiVI6uodJ/W5avPfhQ=;
+ b=LAgbM2CEyh+14OM5T55MJo6q1nrxSry+GN4919Kr8Y9unsD5i9LVARkcYfv2dEBA0YCJnd
+ OFRdky8x9eWYkpJxjt0rGDCF9skcmd8O9XMcr7Krgzn6wM3y+EiWXA7b9QKQO5LXqNH3to
+ Tfj4fzw2tK3AfrWZp2pappDzpnJsDyo=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-563-Vp3KjSqvPUathkpBinZkWg-1; Wed, 28 May 2025 11:34:41 -0400
+X-MC-Unique: Vp3KjSqvPUathkpBinZkWg-1
+X-Mimecast-MFC-AGG-ID: Vp3KjSqvPUathkpBinZkWg_1748446481
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6faaa900d82so17758646d6.1
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 08:34:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748445572; x=1749050372;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qA9Udb9eBCGzXFBNz6INRTeAqdTkugi7lKHtWO4Oe4Q=;
- b=H4whEb4gkb0Hy97InZzRA8aZ+IiokQoR8T3Wb51JR6k/orjjKeGbwXvtQVbgMK6IVC
- icQ3Ya1XPClsHfgVIY58D0w1Z5dvNTjG1dfK12pKxHC0JX6pZ3+O2BBMB+HlK78Mg739
- +j6kP/zH2XsRRtDkKkgcwAjiVI+6FUsmAZYICgXZlxIliUuWGQFXfxdpHAerAzQhdxGf
- wNCnUjDZNX8XTPN/ODMU+Xx775p+7kXvF9iQbN8/c/HMq/++dR+aDVPQH90ybRS9mjXt
- NZRYcINOiqY3jacETy6JkVlhxp0cAOLcriVuAbh5hgUvaG8b0prnbFBl8IzLYGJq3w/N
- CpJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXEKz1wV2jgVZWf2fJNQsdYwkdtJbNPM/i3wl7cCuereXz5y2E7uuz8Wtr3A8cpg6+bZwHnT27YgTdR@nongnu.org
-X-Gm-Message-State: AOJu0Ywn0tWaX8i6TqrJg0eI39Ekyk+0wRl+PZAaTtDUburwAmeU34pQ
- 2N7PeK1zE+UnqZ9CnLs6em0e/g1thCFANopCBc3DTRW0BbrU0A4pXyksNpGpiJIEqtk=
-X-Gm-Gg: ASbGncscs84V5m9+V4pTxDHxIrj5Oa5NdyeBOmKr5x6OuBK9i1UiiWDIB1P9JU7FKIQ
- R2UWcNPUrz4IxNEmtf7DiknMGC01INSEQULK+B7cc86387NLvlL8GXWV0q/mhmDuA+mFv6Wm/h7
- 3c7GEQGp3ORyqxhmDc6gyedqW1SEhZEIicFjaivJUEx0pvAMbtl5gmn9NvUwa/fQ4nQ34V8x0Ij
- 92y11GCyq7pOlX2nzUiKMSZecEjeREw8zLB4MSaGHI3WJPdlznW9Gw0jGDLjQAPrEcn28L/Z3ix
- 4oTNZtnZ3DfomVuxRfPxYVEa/yTjDkg1RZijggfesvBpZgzRjy6sP52lJVEecHrWAYRdoUUfMnv
- QJNSWwMxHaI7O
-X-Google-Smtp-Source: AGHT+IHt1y6uP140FCGPwCd1umQRJ7YqsoFH9gV1I+QHkB7k6n+FRsNvH7As5n07PcZGswyJHhXqmA==
-X-Received: by 2002:a05:6870:4008:b0:2e8:f5d4:6077 with SMTP id
- 586e51a60fabf-2e8f5d46ec1mr434331fac.38.1748445571801; 
- Wed, 28 May 2025 08:19:31 -0700 (PDT)
-Received: from bill-the-cat (fixed-189-203-100-42.totalplay.net.
- [189.203.100.42]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2e8e176b4f7sm263557fac.27.2025.05.28.08.19.28
+ d=1e100.net; s=20230601; t=1748446480; x=1749051280;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fmTsV0BLM+0nrLdyv6i+dQpfoxiVI6uodJ/W5avPfhQ=;
+ b=nLM/6iL3HVvF9Yt+lkShAWEufRPmXoYAaQSl3l9vIlaVHrzkTftpdbP84hsqQgjoYX
+ q0f7IpcI/V4oslsdDfjL47GJEJijTTk/n4Zw1JrjSCnSU/gIrNDig+j//3Y1wOrXrGPF
+ S422fLQkLGz5Zin+xptVNys9+BWjwer1mBo60OGFRCFaluFQU3WFN21MkY2uY4Iyf7V2
+ jra8oEgaHUjZoCN8AHZF0mvl23Fn6mVyt1kQBptZ81nc1HjTiczc+b5PC+A8lieoXUpV
+ tlOZV+S6FvcUxT2WXrbPVMjeAOVDsnyON45QyJrPPEWDdMhbYgpbYaMLoUVxQlERdm/z
+ 27cA==
+X-Gm-Message-State: AOJu0Yy0CTMUv+Nep7eNZg5U6iepp7nq9io21hDQ3PDIUZDzuMXmAwcM
+ 0SLjUdukG6mKiCpNW4lNO/2dLs2gkLaMKKl3IV9nLP0xsASJeJcQkhz3ggR3AgUJflj60WdKH+/
+ FmmLdVDy179v4+NjKs1udXZn3XzRlTnuohYq6x2SXhpvVD49fcGR7taJbo3aENLrW
+X-Gm-Gg: ASbGncu+nbPC62Ear5ZQC970S41qXiq7ZkP9S6Prv6RsaUKpRxaUtOTGzVCcYkqpwpz
+ B7AMJX5Ox3fNs8PYDY/FtgThlbPe7er0fHPHPhur/WbUQd+yfzSI8E3hkvRlhNgsxtxSRrlJ7Y1
+ S/YqHtdSAystIneSyWiBbWEFIDGZ0bEhr7HN4McjCLMxTtKHDOFUCoem5/0TSzHhQtIkGACHgjW
+ W41DQUcrxbU/Pch/Ed5lebmqldP8BuxZC28azG/Hx7CNi1Wpl/8g6Cg0/l4MfM8ZEU84tkNDBbJ
+ qAk=
+X-Received: by 2002:a05:6214:d44:b0:6fa:b68a:99ed with SMTP id
+ 6a1803df08f44-6fab9eb0c44mr74944206d6.13.1748446480151; 
+ Wed, 28 May 2025 08:34:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHD9AEIiBdtACftTAXGw9NRovRtdDidMwCwnbKUv/8/HWPbRejOxkVbx5LuLwpFsaw9/fTv7A==
+X-Received: by 2002:a05:6214:d44:b0:6fa:b68a:99ed with SMTP id
+ 6a1803df08f44-6fab9eb0c44mr74943816d6.13.1748446479728; 
+ Wed, 28 May 2025 08:34:39 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fac0b289c8sm7675076d6.47.2025.05.28.08.34.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 08:19:30 -0700 (PDT)
-Date: Wed, 28 May 2025 09:19:27 -0600
-From: Tom Rini <trini@konsulko.com>
-To: Simon Glass <sjg@chromium.org>
-Cc: U-Boot Mailing List <u-boot@lists.denx.de>,
- =?iso-8859-1?Q?Fran=E7ois?= Ozog <francois.ozog@linaro.org>,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- Bill Mills <bill.mills@linaro.org>, Raymond Mao <raymond.mao@linaro.org>,
- Heinrich Schuchardt <xypron.glpk@gmx.de>,
- Andrew Phelps <andrew.phelps@canonical.com>,
- Alexander Graf <agraf@csgraf.de>,
- Boyan Karatotev <boyan.karatotev@arm.com>,
- Evgeny Bachinin <EABachinin@salutedevices.com>,
- Fabio Estevam <festevam@gmail.com>,
- Harrison Mutai <harrison.mutai@arm.com>, Jonas Karlman <jonas@kwiboo.se>,
- Liviu Dudau <liviu.dudau@foss.arm.com>, Liya Huang <1425075683@qq.com>,
- Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
- Marek =?iso-8859-1?Q?Moj=EDk?= <marek.mojik@nic.cz>,
- Marek Vasut <marex@denx.de>, Matthias Brugger <mbrugger@suse.com>,
- Max Filippov <jcmvbkbc@gmail.com>,
- Nathan Barrett-Morrison <nathan.morrison@timesys.com>,
- Nobuhiro Iwamatsu <iwamatsu@nigauri.org>,
- Patrick Delaunay <patrick.delaunay@foss.st.com>,
- Patrick Rudolph <patrick.rudolph@9elements.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Rasmus Villemoes <ravi@prevas.dk>,
- Rayagonda Kokatanur <rayagonda.kokatanur@broadcom.com>,
- Sean Anderson <seanga2@gmail.com>, Stefan Roese <sr@denx.de>,
- Stefano Babic <sbabic@nabladev.com>,
- Sughosh Ganu <sughosh.ganu@linaro.org>,
- Svyatoslav Ryhel <clamor95@gmail.com>,
- Tuomas Tynkkynen <tuomas.tynkkynen@iki.fi>,
- Vincent =?iso-8859-1?Q?Stehl=E9?= <vincent.stehle@arm.com>,
- Xu Zhang <423756212@qq.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 00/25] passage: Define a standard for firmware data flow
-Message-ID: <20250528151927.GB100073@bill-the-cat>
-References: <20250528123236.1138632-1-sjg@chromium.org>
- <20250528142521.GW100073@bill-the-cat>
- <CAFLszTiHxdkoGbdOg8rzmn9kUmt925LZvZNxSXQC5Y4A=s2Vig@mail.gmail.com>
+ Wed, 28 May 2025 08:34:39 -0700 (PDT)
+Date: Wed, 28 May 2025 11:34:35 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: virsh migrate fails when --copy-storage-all option is given!
+Message-ID: <aDctC8i7U2J5bmyw@x1.local>
+References: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="FQ8O+vMEqOogGsJJ"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFLszTiHxdkoGbdOg8rzmn9kUmt925LZvZNxSXQC5Y4A=s2Vig@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=trini@konsulko.com; helo=mail-oo1-xc34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,104 +106,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Copy Kevin.
 
---FQ8O+vMEqOogGsJJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, May 28, 2025 at 07:21:12PM +0530, Anushree Mathur wrote:
+> Hi all,
+> 
+> 
+> When I am trying to migrate the guest from host1 to host2 with the command
+> line as follows:
+> 
+> date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
+> --undefinesource --persistent --auto-converge --postcopy
+> --copy-storage-all;date
+> 
+> and it fails with the following error message-
+> 
+> error: internal error: unable to execute QEMU command 'block-export-add':
+> Block node is read-only
+> 
+> HOST ENV:
+> 
+> qemu : QEMU emulator version 9.2.2
+> libvirt : libvirtd (libvirt) 11.1.0
+> Seen with upstream qemu also
+> 
+> Steps to reproduce:
+> 1) Start the guest1
+> 2) Migrate it with the command as
+> 
+> date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
+> --undefinesource --persistent --auto-converge --postcopy
+> --copy-storage-all;date
+> 
+> 3) It fails as follows:
+> error: internal error: unable to execute QEMU command 'block-export-add':
+> Block node is read-only
+> 
+> Things I analyzed-
+> 1) This issue is not happening if I give --unsafe option in the virsh
+> migrate command
+> 
+> 2) O/P of qemu-monitor command also shows ro as false
+> 
+> virsh qemu-monitor-command guest1 --pretty --cmd '{ "execute": "query-block"
+> }'
+> {
+>   "return": [
+>     {
+>       "io-status": "ok",
+>       "device": "",
+>       "locked": false,
+>       "removable": false,
+>       "inserted": {
+>         "iops_rd": 0,
+>         "detect_zeroes": "off",
+>         "image": {
+>           "virtual-size": 21474836480,
+>           "filename": "/home/Anu/guest_anu.qcow2",
+>           "cluster-size": 65536,
+>           "format": "qcow2",
+>           "actual-size": 5226561536,
+>           "format-specific": {
+>             "type": "qcow2",
+>             "data": {
+>               "compat": "1.1",
+>               "compression-type": "zlib",
+>               "lazy-refcounts": false,
+>               "refcount-bits": 16,
+>               "corrupt": false,
+>               "extended-l2": false
+>             }
+>           },
+>           "dirty-flag": false
+>         },
+>         "iops_wr": 0,
+>         "ro": false,
+>         "node-name": "libvirt-1-format",
+>         "backing_file_depth": 0,
+>         "drv": "qcow2",
+>         "iops": 0,
+>         "bps_wr": 0,
+>         "write_threshold": 0,
+>         "encrypted": false,
+>         "bps": 0,
+>         "bps_rd": 0,
+>         "cache": {
+>           "no-flush": false,
+>           "direct": false,
+>           "writeback": true
+>         },
+>         "file": "/home/Anu/guest_anu.qcow2"
+>       },
+>       "qdev": "/machine/peripheral/virtio-disk0/virtio-backend",
+>       "type": "unknown"
+>     }
+>   ],
+>   "id": "libvirt-26"
+> }
+> 
+> 
+> 3) Guest doesn't have any readonly
+> 
+> virsh dumpxml guest1 | grep readonly
+> 
+> 4) Tried giving the proper permissions also
+> 
+> -rwxrwxrwx. 1 qemu qemu 4.9G Apr 28 15:06 guest_anu.qcow2
+> 
+> 5) Checked for the permission of the pool also that is also proper!
+> 
+> 6) Found 1 older bug similar to this, pasting the link for reference:
+> 
+> 
+> https://patchwork.kernel.org/project/qemu-devel/patch/20170811164854.GG4162@localhost.localdomain/
+> 
+> 
+> 
+> Thanks,
+> Anushree-Mathur
+> 
+> 
 
-On Wed, May 28, 2025 at 03:32:12PM +0100, Simon Glass wrote:
-> Hi Tom,
->=20
-> On Wed, 28 May 2025 at 15:25, Tom Rini <trini@konsulko.com> wrote:
-> >
-> > On Wed, May 28, 2025 at 06:32:02AM -0600, Simon Glass wrote:
-> > >
-> > > This series adds a standard way of passing information between differ=
-ent
-> > > firmware phases. This already exists in U-Boot at a very basic level,=
- in
-> > > the form of a bloblist containing an spl_handoff structure, but the i=
-ntent
-> > > here is to define something useful across projects.
-> > >
-> > > The need for this is growing as firmware fragments into multiple bina=
-ries
-> > > each with its own purpose. Without any run-time connection, we must r=
-ely
-> > > on build-time settings which are brittle and painful to keep in sync.
-> > >
-> > > This feature is named 'standard passage' since the name is more unique
-> > > than many others that could be chosen, it is a passage in the sense t=
-hat
-> > > information is flowing from one place to another and it is standard,
-> > > because that is what we want to create.
-> > >
-> > > The implementation is mostly a pointer to a bloblist in a register, w=
-ith
-> > > an extra register to point to a devicetree, for more complex data. Th=
-is
-> > > should cover all cases (small memory footprint as well as complex data
-> > > flow) and be easy enough to implement on all architectures.
-> > >
-> > > The emphasis is on enabling open communcation between binaries, not
-> > > enabling passage of secret, undocumented data, although this is possi=
-ble
-> > > in a private environment.
-> > >
-> > > To try this out:
-> > >
-> > > $ ./scripts/build-qemu -a arm -rsx
-> > >
-> > > This will build and run QEMU for arm64 and you should see the standda=
-rd
-> > > passage working:
-> > >
-> > >    Core:  49 devices, 13 uclasses, devicetree: passage
-> > >
-> > > This series is available at u-boot-dm/pass-working
-> > >
-> > > Changes in v5:
-> > > - Add RFC for test script
-> >
-> > And this is why I question if you are working in good faith. I've
-> > rejected this countless times. I'm still rejecting it. Stop including
-> > it. Point at the version you could easily be maintaining in the contrib
-> > repository where you have write access and no one will be telling you to
-> > not do something. People would even review the patches since it would be
-> > against mainline.
->=20
-> I fully understand that you don't want the script and I'm only
-> including (as an RFC) so people can actually try this series out. I
-> didn't want to point to my tree as I thought that would annoy you. I
-> already went through why the contrib tree is not suitable for me.
+-- 
+Peter Xu
 
-So I have to take changes that I disagree with, but you can't work with
-a tree for your tooling where the community would be happy to provide
-feedback? That does not sound like compromise. Again, I have trouble
-believing that you are working in good faith to resolve the differences
-here.
-
---=20
-Tom
-
---FQ8O+vMEqOogGsJJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCgAdFiEEGjx/cOCPqxcHgJu/FHw5/5Y0tywFAmg3KX8ACgkQFHw5/5Y0
-tywxHAwAlA/ak9ngBDCz8F+HvYRXP/qq+ol4YYHDMH/7rPTc1zwhnFXtZcx5aJi6
-3v9wP4+ihX/zE9rIvmY7rX/1hPKTE1M5U9A1vCaJpnJHs5ciR53nJgDXjYfgu48m
-cFSpMl567NyfzC7auYDGR6k1sRULszDAXB7LGc5WBlSrSIofcqZv5dUWLMVe4jp/
-eMVwpIwSBRt80Ik63SXhO2byeXGVz9gnRZm35/uHIBIMxZMVLbhA2Zl50hzsJ6Ld
-uQuRuP/JwaO8Et96S4cmiVTJ9t7KlY0RBJzgKAwW28DNXPl7/1ujwYCOuqrxZcNb
-5m8siF0PlOf3UErAxTMpAkWsZLJLgLV981lwEC0FEcxpsh9fWR81LBysJ32f76hW
-X5lEi/d1XyhJoejf194E4lUG27wVeyAGXkCLsoxmGamCaCM8awkNdF0RykM50CMQ
-Elt1JVUbUvtkIeuwJi37ktrtMMKwNd/oRMMqZbVXhN4nuk0ejPg1UMSWKYa1wwcK
-obyFFlaL
-=X2ej
------END PGP SIGNATURE-----
-
---FQ8O+vMEqOogGsJJ--
 
