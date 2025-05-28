@@ -4,67 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5442C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DA6C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKEHF-0007jP-HU; Wed, 28 May 2025 06:44:54 -0400
+	id 1uKEHq-0008Jr-Ki; Wed, 28 May 2025 06:45:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKEHD-0007iF-0f
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:44:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uKEHo-0008H7-On
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:45:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKEHA-00068s-78
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:44:50 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uKEHm-0006OF-HY
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:45:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748429087;
+ s=mimecast20190719; t=1748429125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L3M8RQ6pt554/5XiE3EJ8AM/i9Osw4wci+Lrks8oazM=;
- b=EWzswZ7HK3Z+Oim2pgyxs6JV7xr4aZ+KJrWhSXbMrvZ2pqE4FEFWEIaElNQ2YrsI4Wh9sz
- 6cyxcANmo18U3SCIqr6SPKxCujm/OEeyr4XmMWJ/MXHiDJ+uNtIM+8dj3DVfeZCivG3v4H
- wjOOk4CLEYmy/IyfLJ8hnGHg9mxjbSk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-Hw-j0QqvNgiBj8nWtpvkkQ-1; Wed,
- 28 May 2025 06:44:45 -0400
-X-MC-Unique: Hw-j0QqvNgiBj8nWtpvkkQ-1
-X-Mimecast-MFC-AGG-ID: Hw-j0QqvNgiBj8nWtpvkkQ_1748429085
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C47771955E79; Wed, 28 May 2025 10:44:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F8D918001D8; Wed, 28 May 2025 10:44:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7C5E221E6757; Wed, 28 May 2025 12:44:41 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-rust@nongnu.org
-Subject: Re: [PATCH 05/12] util/error: allow non-NUL-terminated err->src
-In-Reply-To: <feb8251e-715f-4de7-a390-eb5b053de0f6@redhat.com> (Paolo
- Bonzini's message of "Tue, 27 May 2025 16:34:11 +0200")
-References: <20250526142254.1061009-1-pbonzini@redhat.com>
- <20250526142455.1061519-5-pbonzini@redhat.com>
- <87sekqmapy.fsf@pond.sub.org>
- <feb8251e-715f-4de7-a390-eb5b053de0f6@redhat.com>
-Date: Wed, 28 May 2025 12:44:41 +0200
-Message-ID: <87y0uhc8va.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=FbJGsf/BPlAPaDf1UQOhGi1bSvtcA0GL20e9/wB23g8=;
+ b=GENcKgxBRmEAPpTLmqkXKB4aqvUsb5QjF4xQJ0X83HYPk2xElfjeevXd/WCVT3daE4W5oh
+ tBwdCbbLFi1RZU8Oll4CApFhx0++7Rw7GTqiHGwwjXS2LIb6p/77+/StoYqGniSYJfAanp
+ ODWfsijGjNpT4zVrQLDKtcWKjWt+oII=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-186-ReIbJq88M9-OxI1NNEQiCA-1; Wed, 28 May 2025 06:45:24 -0400
+X-MC-Unique: ReIbJq88M9-OxI1NNEQiCA-1
+X-Mimecast-MFC-AGG-ID: ReIbJq88M9-OxI1NNEQiCA_1748429123
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a3696a0d3aso1965042f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 03:45:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748429123; x=1749033923;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FbJGsf/BPlAPaDf1UQOhGi1bSvtcA0GL20e9/wB23g8=;
+ b=S4H6vMZLPWwLfCWtWrwbtIf8IpPk4u5hWTL85G2o6W1j9N0n0idAH5J7UFeUVmfZlZ
+ asORhOjDQTUtnUqwUtxbOQJa0Z9tg0kgOMB9quTx6JRaf1p5pTFw2NbQxSyz34ovCTU7
+ MSoEjklL3jf93mX69LxYvseD0mejQOyizgwC1s/NcZ7isGhFdscidB8PVfMyxy7Sh/8D
+ Y6y+FOfE91tBo4wlYD79DDL5FoL9faTpYYhwp/GH9waSlOtgR7XwOfWU1j97c1Sdkqna
+ MfLK+m8NPVeggmUImFhRbtBMJN1mwZhTInHcmSguYDS1JLvQ9/fzWVIsrf0zj3nZ2+o/
+ 4Iaw==
+X-Gm-Message-State: AOJu0YzfwifWPzepaPlmYhHEMVc2Q5pQBM6/zgk/T1TxrosKvdnft6MD
+ cWDcCl61uWBKUW9IHCQgTlo+HNbFE8EsTfH7kb7Mli0zCL8udWFMP1TrR8OeL5Me/23ONo6gyG0
+ 1D3184A7Fbq+xD9hVX/o90ybWfDbZV7Fya3DurUWbtkFiQ8BX4r+3poAu9Fjwt37IdA/29+ydII
+ 7DhWqPTV1qn8QuEtQLB6tuqHeH4r1XfIU=
+X-Gm-Gg: ASbGnctIpF9Tyb4b0VcTKJdlFh/tpfDECtyDGyE0L7KepjaAM5JKP4sM42N6v2vKXYI
+ gyGPSrbRU+cq/0MjyH2hS33w1o7L979EK9qHJkKdW0U/paW/mncn2Q86M7fomzFQedsA=
+X-Received: by 2002:a05:6000:40c9:b0:3a3:6a9a:5ebf with SMTP id
+ ffacd0b85a97d-3a4cb436e22mr12782315f8f.20.1748429122672; 
+ Wed, 28 May 2025 03:45:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlcvTmwcuezeMmvzGMTP7yH2OK2CHbvC4M5dm3ehEjnAbR3pbJtTzyur1WOKFAXxtJOiYtoKXsmEWLcdeWf1w=
+X-Received: by 2002:a05:6000:40c9:b0:3a3:6a9a:5ebf with SMTP id
+ ffacd0b85a97d-3a4cb436e22mr12782288f8f.20.1748429122178; Wed, 28 May 2025
+ 03:45:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250526142254.1061009-1-pbonzini@redhat.com>
+ <20250526142455.1061519-7-pbonzini@redhat.com>
+ <87o6vddpzm.fsf@pond.sub.org>
+In-Reply-To: <87o6vddpzm.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 28 May 2025 12:45:10 +0200
+X-Gm-Features: AX0GCFudh73BgKiAasxsLiOOOuCtBM5_3CxTaZotJMqApJPFUuKzj7oEIKF7OKo
+Message-ID: <CABgObfY1tAEEy70RSW78Tn+s+xRPw9xXSRmFU-QVYLRLe20SYQ@mail.gmail.com>
+Subject: Re: [PATCH 07/12] qemu-api: add bindings to Error
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -73,7 +87,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,82 +103,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> On 5/27/25 15:42, Markus Armbruster wrote:
->> Paolo Bonzini <pbonzini@redhat.com> writes:
->>=20
->>> Rust makes the current file available as a statically-allocated string,
->>> but without a NUL terminator.  Allow this by storing an optional maximum
->>> length in the Error.
->>>
->>> Note that for portability I am not relying on fprintf's precision
->>> specifier not accessing memory beyond what will be printed.
->> Can you elaborate on the portability problem?  I figure ...
->>=20
->>>   {
->>>       if (errp =3D=3D &error_abort) {
->>> +        const char *src =3D err->src;
->>> +        if (err->src_len >=3D 0) {
->>> +            /* No need to free it, the program will abort very soon...=
-  */
->>> +            src =3D g_strndup(err->src, err->src_len);
->>> +        }
->>>           fprintf(stderr, "Unexpected error in %s() at %s:%d:\n",
->>> -                err->func, err->src, err->line);
->>> +                err->func, src, err->line);
->> ... you're avoiding the simpler
->>             fprintf(stderr, "Unexpected error in %s() at %.*s:%d:\n",
->>                     err->func, err->src_len, err->src, err->line);
->> because of it.
+On Wed, May 28, 2025 at 11:49=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+> > diff --git a/rust/qemu-api/src/error.rs b/rust/qemu-api/src/error.rs
+> > new file mode 100644
+> > index 00000000000..f08fed81028
+> > --- /dev/null
+> > +++ b/rust/qemu-api/src/error.rs
+> > @@ -0,0 +1,273 @@
+> > +// SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +//! Error class for QEMU Rust code
+> > +//!
+> > +//! @author Paolo Bonzini
+> > +
+> > +use std::{
+> > +    borrow::Cow,
+> > +    ffi::{c_char, c_int, c_void, CStr},
+> > +    fmt::{self, Display},
+> > +    panic, ptr,
+> > +};
+> > +
+> > +use foreign::{prelude::*, OwnedPointer};
+> > +
+> > +use crate::{
+> > +    bindings,
+> > +    bindings::{error_free, error_get_pretty},
+> > +};
+> > +
+> > +pub type Result<T> =3D std::result::Result<T, Error>;
+> > +
+> > +#[derive(Debug, Default)]
+> > +pub struct Error {
 >
-> I couldn't find anything that says %s is allowed to not be NUL-terminated=
- if a precision is given.  That is, whether something like this:
+> We're defining a custom error type Error for use with Result<>.  This
+> requires implementing a number of traits.  For trait Debug, we take the
+> auto-generated solution here.  Other traits are implemented below, in
+> particular Display.
 >
->    char foo[] =3D {'H', 'e', 'l', 'l', 'o'};
->    printf("%.5s\n", foo);
+> I don't yet understand the role of trait Default.
+
+It defines an Error without any frills attached. It is used below but
+on the other hand it results in those "unknown error"s that you
+rightly despised.
+
+> Does the name Error risk confusion with std::error::Error?
+
+Maybe, but as you can see from e.g. ayhow::Error it's fairly common to
+have each crate or module define its own Error type. In the end you
+always convert them to another type with "?" or ".into()".
+
+> This is the Rust equivalent to C struct Error.  High-level differences:
 >
-> is guaranteed to work.
-
-From ISO/IEC 9899:1999 =C2=A77.19.6.1 "The fprintf function":
-
-       [#8] The conversion specifiers and their meanings are:
-       [...]
-       s       If  no  l  length  modifier is present, the argument
-               shall be a pointer to  the  initial  element  of  an
-               array of character  type.237)  Characters  from  the
-               array  are  written  up  to  (but not including) the
-               terminating null character.   If  the  precision  is
-               specified, no more than that many bytes are written.
--->            If the precision is not specified or is greater than
--->            the  size  of  the  array, the array shall contain a
--->            null character.
-
-       ____________________
-
-       237No  special provisions are made for multibyte characters.
-
-This clearly implies that the string need not be null-terminated when a
-suitable precision is specified.  Which it is here.
-
-> This is opposed to:
+> * No @err_class.  It's almost always ERROR_CLASS_GENERIC_ERROR in C
+>   nowadays.  You're hardcoding that value in Rust for now.  Good.
 >
-> 1) strnlen (https://pubs.opengroup.org/onlinepubs/9699919799/functions/st=
-rnlen.html), which is guaranteed to examine no more than the number of byte=
-s given by the second character;
+> * @cause, optional.  This is the bridge to idiomatic Rust error types.
 >
-> 2) strndup, for which I found at least a clarification at https://www.aus=
-tingroupbugs.net/view.php?id=3D1397.
+> * @msg is optional.  This is so you can wrap a @cause without having to
+>   add some useless message.
 >
-> 3) g_strndup, which guarantees that the allocated block is of length n+1 =
-and padded with NULs (though in the case above there will be just one NUL a=
-nyway)
->
-> And also, for strndup/g_strndup it would be quite asinine to implement it=
- using some kind of min(strlen(s), n) but for printf the complexity is grea=
-ter so you never know.  I erred on the side of caution because avoiding an =
-allocation before an abort() isn't particularly interesting.
+> Is having Errors with neither @msg nor @cause a good idea?
 
-Keeping the code simple is always interesting, though :)
+It makes for slightly nicer code, and avoids having to worry about
+panics from ".unwrap()" in error handling code (where panicking
+probably won't help much). Otherwise it's probably not a good idea,
+but also not something that people will use since (see later patches)
+it's easier to return a decent error message than an empty Error.
+
+> Needed for what?  Oh, method description() is deprecated since 1.42.0:
+> "use the Display impl or to_string()".  I figure we need it because the
+> new way doesn't work with our oldest supported Rust version.  Could
+> perhaps use a comment to help future garbage collectors.
+>
+> > +    fn description(&self) -> &str {
+> > +        self.msg
+> > +            .as_deref()
+> > +            .or_else(|| self.cause.as_deref().map(std::error::Error::d=
+escription))
+> > +            .unwrap_or("error")
+>
+> This gives us @msg, or else @cause, or else "error".
+>
+> Is it a good idea to ignore @cause when we have @msg?
+
+> > +impl Display for Error {
+> > +    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+> > ...
+> > +    }
+>
+> This combines @msg and @cause:
+>
+> Differs from description().  Why?
+
+Because description() cannot build a dynamically-allocated string, it
+must return something that is already available in the Error. That
+limitation is probably why it was deprecated.
+
+Since it's deprecated we can expect that it won't be used and not
+worry too much.
+
+> > +    fn from(msg: String) -> Self {
+> > +        let location =3D panic::Location::caller();
+> > +        Error {
+> > +            msg: Some(Cow::Owned(msg)),
+> > +            file: location.file(),
+> > +            line: location.line(),
+> > +            ..Default::default()
+>
+> I don't understand this line, I'm afraid.
+
+It says "every other field comes from "..Default::default()". I can
+replace it with "cause: None", and likewise below.
+
+> > +}
+> > +
+> > +impl From<&'static str> for Error {
+> > +    #[track_caller]
+> > +    fn from(msg: &'static str) -> Self {
+> > +        let location =3D panic::Location::caller();
+> > +        Error {
+> > +            msg: Some(Cow::Borrowed(msg)),
+> > +            file: location.file(),
+> > +            line: location.line(),
+> > +            ..Default::default()
+> > +        }
+> > +    }
+> > +}
+>
+> Same for another string type.
+
+Yes, this is for strings that are not allocated and are always
+valid---such as string constants.
+
+> Is there a way to create an Error with neither @msg nor @cause?
+
+Yes, Default::default()
+
+> > +        errp: *mut *mut bindings::Error,
+> > +    ) -> Option<T> {
+> > +        let Err(err) =3D result else {
+> > +            return result.ok();
+> > +        };
+> > +
+> > +        // SAFETY: caller guarantees errp is valid
+> > +        unsafe {
+> > +            err.propagate(errp);
+> > +        }
+> > +        None
+>
+> @result is an Error.  Propagate it, and return None.
+>
+> This is indeed like self.ok() with propagation added.
+
+Alternatively:
+
+    result
+       .map_err(|err| unsafe { err.propagate(errp) })
+       .ok()
+
+Shorter, but the functional style can be off putting. What do you prefer?
+
+> > +    }
+> > +
+> > +    /// Equivalent of the C function `error_propagate`.  Fill `*errp`
+> > +    /// with the information container in `result` if `errp` is not NU=
+LL;
+> > +    /// then consume it.
+>
+> Note error_propagate() has the arguments in the opposite order.
+
+Yeah, here "self" must be first so that you use it as a method.
+Though, s/result/self/ as you noted.
+
+> > +    /// # Safety
+> > +    ///
+> > +    /// `errp` must be valid; typically it is received from C code
+>
+> What does "valid" mean exactly?
+
+I will copy from `error_propagate` in v2.
+
+> Brief switch to the design level...
+>
+> In C, you're almost always better off with ERRP_GUARD().  Would you like
+> me to elaborate?
+>
+> You still have to use error_propagate() to accumulate multiple errors so
+> that the first one wins.  That's commonly a dumb idea.  Should we avoid
+> this pattern in Rust?
+
+In Rust there are three kinds of functions that use errors. Two are in qemu=
+_api:
+
+(1) bridges from C to Rust function pointers. They receive a Result<>
+from Rust functions and use error_propagate() (probably via functions
+such as ok_or_propagate, bool_or_propagate, etc.) to prepare a C
+return value.
+
+(2) bridges from Rust to C functions. They pass an Error** to the C
+function and use err_or_else() or err_or_unit() to prepare a Rust
+return value
+
+Functions of kind (1) are like functions in C that do a single call
+and just pass down errp, for example user_creatable_add_qapi(). These
+do not need ERRP_GUARD() because:
+
+* the conversion from Result<> to C is pretty much a necessity, and
+it's done with functions that guarantee the propagation
+
+* the conversion function *consumes* the Result<>, guaranteeing that
+you do not propagate more than once with tragic results
+
+Function of kind (2) do not need ERRP_GUARD() because they do not take
+an Error** at all. They pass one down to C, but they return a
+Result<>.
+
+The third kind is Rust functions that are called from (1) and that
+themselves call (2). These are where ERRP_GUARD() would be used in C,
+but in Rust these do not see Error** at all. The "?" operator has the
+same effect as ERRP_GUARD(), i.e. it handles passing the error from
+called function to return value. What in C would be
+
+   ERRP_GUARD();
+   if (!func_that_returns_bool(...)) { return; }
+
+In Rust is
+
+   func_that_returns_result(...)?;
+
+which is a bit disconcerting in the beginning but grows on you.
+(Generally I find that to be the experience with Rust. It's downright
+weird, but unlike C++ the good parts outweigh the weirdness).
+
+> > +    pub unsafe fn err_or_unit(c_error: *mut bindings::Error) -> Result=
+<()> {
+> > +        // SAFETY: caller guarantees c_error is valid
+> > +        unsafe { Self::err_or_else(c_error, || ()) }
+> > +    }
+> > +
+> > +    /// Convert a C `Error*` into a Rust `Result`, calling `f()` to
+> > +    /// obtain an `Ok` value if `c_error` is NULL.
+> > +    ///
+> > +    /// # Safety
+> > +    ///
+> > +    /// `c_error` must be valid; typically it has been filled by a C
+> > +    /// function.
+> > +    pub unsafe fn err_or_else<T, F: FnOnce() -> T>(
+> > +        c_error: *mut bindings::Error,
+> > +        f: F,
+> > +    ) -> Result<T> {
+> > +        // SAFETY: caller guarantees c_error is valid
+> > +        let err =3D unsafe { Option::<Self>::from_foreign(c_error) };
+> > +        match err {
+> > +            None =3D> Ok(f()),
+> > +            Some(err) =3D> Err(err),
+> > +        }
+> > +    }
+> > +}
+>
+> Getting tired...
+
+No problem. While this is kinda important, it's not used yet. The
+clients would look like this:
+
+fn type_get_or_load_by_name(name: &str) -> Result<&TypeImpl> {
+   unsafe {
+       let err: *mut bindings::Error =3D ptr::null_mut();
+       let typ: *mut TypeImpl =3D bindings::type_get_or_load_by_name(
+           name.clone_to_foreign().as_ptr(), &mut err);
+       // on success, "typ" can be accessed safely
+       // on failure, turn the Error* into a qemu_api::Error and free it
+       Result::err_or_else(err, || &*typ)
+}
+
+This is why I need to write tests.
+
+> > +impl CloneToForeign for Error {
+> > +    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
+> > +        // SAFETY: all arguments are controlled by this function
+> > +        unsafe {
+> > +            let err: *mut c_void =3D libc::malloc(std::mem::size_of::<=
+bindings::Error>());
+> > +            let err: &mut bindings::Error =3D &mut *err.cast();
+> > +            *err =3D bindings::Error {
+> > +                msg: format!("{self}").clone_to_foreign_ptr(),
+> > +                err_class: bindings::ERROR_CLASS_GENERIC_ERROR,
+> > +                src_len: self.file.len() as isize,
+> > +                src: self.file.as_ptr().cast::<c_char>(),
+> > +                line: self.line as c_int,
+> > +                func: ptr::null_mut(),
+> > +                hint: ptr::null_mut(),
+> > +            };
+> > +            OwnedPointer::new(err)
+> > +        }
+> > +    }
+> > +}
+>
+> Plausible to this Rust ignoramus :)
+
+Good, since these *Foreign traits are not part of the standard
+library, but rather something that I concocted and published outside
+QEMU. If you had no problems understanding how they were used (e.g.
+stuff like into_native or clone_to_foreign_ptr), that is good.
+
+Paolo
+
+
+Paolo
 
 
