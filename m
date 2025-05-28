@@ -4,71 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3374BC5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 15:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAFF8C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 15:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKIyX-0003HD-Qk; Wed, 28 May 2025 11:45:53 -0400
+	id 1uKJ8d-0005vR-Vf; Wed, 28 May 2025 11:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKIyS-0003G1-Vg
- for qemu-devel@nongnu.org; Wed, 28 May 2025 11:45:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKIyQ-0007nK-TB
- for qemu-devel@nongnu.org; Wed, 28 May 2025 11:45:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748447145;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ID7PnL5IGvdgp7kG+lasWihv2vm2JLmaXVpofG9E8sg=;
- b=bo6veu2k7YGWAkE9oDJtTdsDo7mGPsjBFAwYzqtKt5JY3pR6Mk7D4raaRT//gvLUQsqZt6
- u7RlTEvFB3DK+qApjipm5Yrmi0FHSbKXLEBiTIdt3Zd6P67fGf+6QP51wcUx4qToHM/VdD
- M3ixGL9TlQyMZMEe+aMZjE2JtsvsYjc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-t0rwGOioO-21TmCIPi4bfQ-1; Wed,
- 28 May 2025 11:45:42 -0400
-X-MC-Unique: t0rwGOioO-21TmCIPi4bfQ-1
-X-Mimecast-MFC-AGG-ID: t0rwGOioO-21TmCIPi4bfQ_1748447141
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9358D1800570; Wed, 28 May 2025 15:45:40 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.48])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7221130001B0; Wed, 28 May 2025 15:45:38 +0000 (UTC)
-Date: Wed, 28 May 2025 10:45:35 -0500
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, f.ebner@proxmox.com, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 2/3] iotests: Improve mirror-sparse on ext4
-Message-ID: <ibn5a3mq4co2h5rpslkq42hir4ka4dz5fsgcbmuwqnoiwarhmf@5qlu3ssskquc>
-References: <20250523163041.2548675-5-eblake@redhat.com>
- <20250523163041.2548675-7-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1uKJ8c-0005v3-Ns
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 11:56:18 -0400
+Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1uKJ8a-0000uW-UE
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 11:56:18 -0400
+Received: by mail-pj1-x1044.google.com with SMTP id
+ 98e67ed59e1d1-31118251071so2952852a91.1
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 08:56:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748447773; x=1749052573; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NyTwWlT35h762q2znPKQtKWn5WvVU53R3yV7crEc5XY=;
+ b=YzsZ//pCoEZXPbfXlmCOuOalglSMEiASqjhjo29LWBkQ7qtsW1DHlaoXe+bCIFXCss
+ ShDhMIhmeMk9TWHBwrEe1+J/2UCFj1uuj6+24XFnK+rVoGx/Q/n7v5ZWTRXHfMJHE38s
+ vdOSEfgE8VcbUJpgmj2pkXjb8rl1Xlmiwai5PuPkOm0HSCUZyCtrQv6ayqYJEu1W4Aa+
+ 5T1A0TBHewXa39/vDwI54kvUWajPXPRrucEIqUie0Et1JiURNzGnu47eRxQYp4lTZW6F
+ 28N8iVF35jJhNboHAK0XkO0+obnbaxVrcJjgjwaYoUoMOjM5xFA8LNBRkppFRICnDG1a
+ OmGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748447773; x=1749052573;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NyTwWlT35h762q2znPKQtKWn5WvVU53R3yV7crEc5XY=;
+ b=aARbMF1cFnWJ+RLSUa65u/P0NhE65j69IAXlFxDqpStMS8QnE+zXLwu4KUkoqBacVI
+ ms0dhPSGndO9bivO1e65QC3P20XcEOcXR/wHEMsRLIwHH9twbp4emTl+FsLUxIutcl4/
+ 4C/QVKR1kJNBvv0kpoaJapV5KXGshrZo1Y+KYLBHoBa5oI2zSMxA5R858lqHRIYQBh3x
+ yqrJI2bOAMgn82sQUgHbIdugSD+Bf72/32HTFFccR1oWxN/t9HSJwQ8feRlmXl22wNSY
+ q+uXr5/66MfREYUOpyrLEmWIZy1foDGLA4BEf5RYeWAVIf2mroBnFc1+3AeCm/G8RfVi
+ w2Tg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBYNCfJNTYQKKjHP0G+FTrtAZEdSAW8omTbEyH7R7PL+f8SVh7XkZnzQxnSFG3suoUFA0hwCB1BItB@nongnu.org
+X-Gm-Message-State: AOJu0Yz9UTcaqc3kj1iT9hHLH5qR6X+hNSlXsVObmWm5fCwiUuajvIqv
+ 9+1Gil58PWay5jyID4BkFHSE2202CHM+sYvjLDM0wCXEz2tV8o3Jqwg=
+X-Gm-Gg: ASbGncs1FPRQkdB8BPn2b1K9c+Wv4WqbDDzZKMHdj7Z3PsZdWUdAp7ansLSsBuVohqj
+ 3GNk6YhqpEB3TzCSB6YMMIgTJK0rFcgAarVJmifDiSeOzPTX5hbV927aB1JdNBfSI14MzkW8DQu
+ v4LbIKgrgHDrzPgNcbpERvKHGh4mJZ+l8xorreLj4zGucKLdBwJR+lLOObZ0lN85OyYMxXWHQMu
+ sHu6KZc6FWqzbCDvugM+9lKmvyBHWzPKmjcFTALmePvpKT1i3y73SgnQeiQlldSvHWdu+DKNxiu
+ LmIfBmNFzwRNzec5UtmPWLqs48KHqo7spXYJQxORhVZlJ8u90bEsd1WtUqEzG5Hb
+X-Google-Smtp-Source: AGHT+IEU4Lnn1KXzqOv9DhKN/pYO7xqOm/UTAGs2zALh747qwGK6hN2QSmyWMX4wIFuDLXWxhENHog==
+X-Received: by 2002:a17:90b:1997:b0:311:a314:c2dc with SMTP id
+ 98e67ed59e1d1-311a314c453mr11729096a91.14.1748447772580; 
+ Wed, 28 May 2025 08:56:12 -0700 (PDT)
+Received: from localhost.localdomain ([139.227.17.74])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-311e9b45d8dsm1322079a91.1.2025.05.28.08.56.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 May 2025 08:56:12 -0700 (PDT)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: Tomita Moeko <tomitamoeko@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2] vfio/pci: Introduce x-pci-class-code option
+Date: Wed, 28 May 2025 23:55:48 +0800
+Message-ID: <20250528155548.29344-1-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250523163041.2548675-7-eblake@redhat.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1044.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,49 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 23, 2025 at 11:27:22AM -0500, Eric Blake wrote:
-> Fiona reported that an ext4 filesystem on top of LVM can sometimes
-> report over-allocation to du (based on the hueristics the filesystem
-> is making while observing the contents being mirrored); even though
-> the contents and actual size matched, about 50% of the time the size
-> reported by disk_usage was too large by 4k, failing the test.  In
-> auditing other iotests, this is a common problem we've had to deal
-> with.
-> 
-> Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-> Fixes: c0ddcb2c ("tests: Add iotest mirror-sparse for recent patches")
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-> 
-> ---
-> v2: Drop sync for ZFS
-> ---
->  tests/qemu-iotests/tests/mirror-sparse | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+Introduce x-pci-class-code option to allow users to override PCI class
+code of a device, similar to the existing x-pci-vendor-id option. Only
+the lower 24 bits of this option are used, though a uint32 is used here
+for determining whether the value is valid and set by user.
 
-Squashing this in since Markus is reporting failures even with this
-patch applied, and I'm lacking enough context to see what else might
-be interfering:
+Additionally, to prevent exposing VGA ranges on non-VGA devices, the
+x-vga=on option requires x-pci-class-code is either unset or set to
+VGA controller class.
 
-diff --git i/tests/qemu-iotests/tests/mirror-sparse w/tests/qemu-iotests/tests/mirror-sparse
-index 39e3196c811..a30e52de41d 100755
---- i/tests/qemu-iotests/tests/mirror-sparse
-+++ w/tests/qemu-iotests/tests/mirror-sparse
-@@ -105,7 +105,7 @@ if test $result -lt $((3*1024*1024)); then
- elif test $result -gt $((19*1024*1024)); then
-     actual=full
- else
--    actual=unknown
-+    actual="unexpected size ($result)"
- fi
- echo "Destination is $actual; expected $expected"
- }
+This is mainly intended for IGD devices that expose themselves either
+as VGA controller (primary display) or Display controller (non-primary
+display). The UEFI GOP driver depends on the device reporting a VGA
+controller class code (0x030000).
 
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+v2:
+* Add vdev class code check in vfio_populate_vga().
+* Fix type in trace-events.
+Link: https://lore.kernel.org/all/20250524153102.19747-1-tomitamoeko@gmail.com/
 
+ hw/vfio/pci.c        | 25 +++++++++++++++++++++++++
+ hw/vfio/pci.h        |  1 +
+ hw/vfio/trace-events |  1 +
+ 3 files changed, 27 insertions(+)
+
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index b1250d85bf..d57cb7356e 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2726,6 +2726,14 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+         return false;
+     }
+ 
++    /* vdev class should be either unmodified (PCI_ANY_ID), or VGA controller */
++    if ((vdev->class_code != PCI_ANY_ID) &&
++        (vdev->class_code != (PCI_CLASS_DISPLAY_VGA << 8)) &&
++        (vdev->class_code != (PCI_CLASS_NOT_DEFINED_VGA << 8))) {
++        error_setg(errp, "vdev is not a VGA device");
++        return false;
++    }
++
+     if (!(reg_info->flags & VFIO_REGION_INFO_FLAG_READ) ||
+         !(reg_info->flags & VFIO_REGION_INFO_FLAG_WRITE) ||
+         reg_info->size < 0xbffff + 1) {
+@@ -3092,6 +3100,21 @@ static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
+                                               vdev->sub_device_id);
+     }
+ 
++    /*
++     * Class code is a 24-bit value at config space 0x09. Allow overriding it
++     * with any 24-bit value.
++     */
++    if (vdev->class_code != PCI_ANY_ID) {
++        if (vdev->class_code > 0xffffff) {
++            error_setg(errp, "invalid PCI class code provided");
++            return false;
++        }
++        /* Higher 24 bits of PCI_CLASS_REVISION are class code */
++        vfio_add_emulated_long(vdev, PCI_CLASS_REVISION,
++                               vdev->class_code << 8, ~0xff);
++        trace_vfio_pci_emulated_class_code(vbasedev->name, vdev->class_code);
++    }
++
+     /* QEMU can change multi-function devices to single function, or reverse */
+     vdev->emulated_config_bits[PCI_HEADER_TYPE] =
+                                               PCI_HEADER_TYPE_MULTI_FUNCTION;
+@@ -3489,6 +3512,8 @@ static const Property vfio_pci_dev_properties[] = {
+                        sub_vendor_id, PCI_ANY_ID),
+     DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
+                        sub_device_id, PCI_ANY_ID),
++    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
++                       class_code, PCI_ANY_ID),
+     DEFINE_PROP_UINT32("x-igd-gms", VFIOPCIDevice, igd_gms, 0),
+     DEFINE_PROP_UNSIGNED_NODEFAULT("x-nv-gpudirect-clique", VFIOPCIDevice,
+                                    nv_gpudirect_clique,
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 5ce0fb916f..587eb8cc9a 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -156,6 +156,7 @@ struct VFIOPCIDevice {
+     uint32_t device_id;
+     uint32_t sub_vendor_id;
+     uint32_t sub_device_id;
++    uint32_t class_code;
+     uint32_t features;
+ #define VFIO_FEATURE_ENABLE_VGA_BIT 0
+ #define VFIO_FEATURE_ENABLE_VGA (1 << VFIO_FEATURE_ENABLE_VGA_BIT)
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index e90ec9bff8..e8d585b49a 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -46,6 +46,7 @@ vfio_pci_emulated_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
+ vfio_pci_emulated_device_id(const char *name, uint16_t val) "%s 0x%04x"
+ vfio_pci_emulated_sub_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
+ vfio_pci_emulated_sub_device_id(const char *name, uint16_t val) "%s 0x%04x"
++vfio_pci_emulated_class_code(const char *name, uint32_t val) "%s 0x%06x"
+ 
+ # pci-quirks.c
+ vfio_quirk_rom_in_denylist(const char *name, uint16_t vid, uint16_t did) "%s %04x:%04x"
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.47.2
 
 
