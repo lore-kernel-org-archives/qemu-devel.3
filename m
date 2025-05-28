@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B23C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:20:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36EB1C5AE59
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKByg-00032g-8m; Wed, 28 May 2025 04:17:40 -0400
+	id 1uKBwz-0000YP-Hb; Wed, 28 May 2025 04:15:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBwC-000877-BI
- for qemu-devel@nongnu.org; Wed, 28 May 2025 04:15:02 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1uKBvn-0007wk-EC
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:36 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBvq-0005Gp-LF
- for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:45 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-441d1ed82dbso48162275e9.0
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:36 -0700 (PDT)
+ id 1uKBvk-0005Fp-O8
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:34 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43cec5cd73bso33409265e9.3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748420075; x=1749024875; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748420069; x=1749024869; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4yxK7itilT3E8IopdplzU4z6K9yD5rCY6HX2ZBd1VtI=;
- b=ryQECT1m0cGU7opE+bp8DRO2m0GzEAlVTle/rK9ujRKcie7/WJZi3QfOz/ykI3DuBF
- 3zrnsqAya753SOsG20Csx3+MN775VgLKfNqkXLVmR3c8S9WkI1LtXsswHjStDbpthONg
- k43g0Yzmqt+BMquJzp7yIvbyxZ6bgSgDkZYven2tMoYJHbn1uJ7RuEJkmC9ndUmqM1Vf
- Jv5JiuO1cMNlYCIrCU9npOagDJzsUAPTM3fsinD7sk6DVHwjiEJlpKgGz2TA/mejan5l
- aHmDirOEkjJK1cD/UbjaxfZmgiMSBKcRtNcw0Vgc4vI1iEfEjqi9ZDfCcgwDB8ScrHKC
- 3kdw==
+ bh=NpxUd17c3m77ey9D/1drD1plUrvJ4iXwsNR9pLccurE=;
+ b=dBBZbx8Awrpf0rIIvubizVtTY7VVptc97iVUO9ct2lY55IHJcaBW8XNN1e706vwLwy
+ VkeHy67MJHGmqqMcJfZc3sNuMK+1Bl+CY7WhzVxylW++g9HgqYWyriCHWpMKh6XHdCyh
+ guTqxlzOaQmCHybCvROXxQG7AT8sE3zO97tY/swfu9xBSDWZFP3G7hGVzqUOFFPd2abE
+ Mh8Z8+WdugevH7p92S61PyfJDCtwVvjQFgTakEHiIa8m02L2Y5rbTNUC1G+xougokSsn
+ 6sC7opVvy+nkj5F7TvPFXptQ1uPx24jcufx9Zr2zBqGqgSROeGJAERVO/mcwePbeRk2d
+ LykA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748420075; x=1749024875;
+ d=1e100.net; s=20230601; t=1748420069; x=1749024869;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4yxK7itilT3E8IopdplzU4z6K9yD5rCY6HX2ZBd1VtI=;
- b=KwDR5N9eFMp8TlqSaU1TWau5YTVZHJWaqscZ4PnVeN3gc46insnJsgnT16h3S0XwUr
- Uw5ZiO0iR4ivAjfp35e5RMykuQflSy42GtWNM+CIzwUz+wL3jDTDsCSDSDX3m42J588u
- 3MjbzejPDF9GhwUEjxIv2Q+PPA+yIKKU+BAo3AgNWa+TW1KS1qO7Awe2rPcy97KU7i+u
- MjPryU/lFYoAn0YG9RzeNVGVj15MSt3KqD+Tfv0SClrUrUQsAblIMPQ/mCbu7dBTYOz/
- xsLa0tRrAXDeCmVbJppTLsrkte5tf0pMyT3pxn28STtzlDbE9sGFiTywPqxiar4eYDLr
- SolA==
-X-Gm-Message-State: AOJu0YwPGHYmGOubtQBop+Zm4QshtSh8iaJPat9Y4UBgNTjkaY5hJOyC
- dp7wFPXDbPqeKlDAAuCMXZhrA3H0gPgGljFLAtdxuDTlSSrWE1aij//zwy3y4jLAlWwQMxPz7t4
- muH+KmzqHAQ==
-X-Gm-Gg: ASbGncur84ph9mPZP2iB0K9D0NxlEsILMh1ddAXOh8XI3tDRPlOAACJ/Ss+UJF16JEQ
- Ggxn7ZSoNbCQ22obdpWn5b5Td52+0BKtoxdNb1iY7+RI30YJBB4FCBkJyW+LjLUwjS2eOquGxJx
- SkCucLeZ2G81Xd2Xswv5TrVFNCGIQ5gXj5OgSlENi7CeRGCCyZHvB29CJv5ZpbnO7jkgtamHeYk
- Kad/olhUeWgtWDjVM/7tsFY3474GRpYsnbL++yx+6oRr2XtAaz2lTbudwXQZavzWn8pfkrvKN9B
- 6C+l13maeYsV2+KmRAZx+Apmfz84yfEbfUMXx193Ssp3R4iAgCI826Cj
-X-Google-Smtp-Source: AGHT+IH3zMt3Dl8EYQHCB/IclC65udXelNeZ7YbKbdbANnLm0CTbXO9DlRN2j5O7xrzmEwDCbnvpjA==
-X-Received: by 2002:a05:600c:c1c8:10b0:43d:4686:5cfb with SMTP id
- 5b1f17b1804b1-44cc0725a12mr80596445e9.27.1748420075199; 
- Wed, 28 May 2025 01:14:35 -0700 (PDT)
+ bh=NpxUd17c3m77ey9D/1drD1plUrvJ4iXwsNR9pLccurE=;
+ b=Weqa1DCl9qZ18M2znhQiEz8M45+c7fsylKp2Jk0jYhmpwp623D2EKFu3okuEZAz6aB
+ Sf3D4ZgqBNnXAY/sBWCg/mQSO7aX+BKBgzlgG5rXpZOzUn9NybgTE8BfJodEwKZrqzg8
+ IRGv6Zvc7luNaMlki7397ZUlezzFKxQ4pZYYqOc0KdSzTc9Sl4m0CoE5h0DUR/oSykQR
+ mbiS5hqLZ6SpYcCA3+nULFu8W8Tz+cGg/I5UMQOSKwj1wChop1gUzQuDpTgW5A0YcAcO
+ vlxPvh+VhwEVx+TxjbOmaZf1uVZFyKj0Usxkb64Y9mwsODQ6glOmS25j6VWi5+IZO7hq
+ tBlw==
+X-Gm-Message-State: AOJu0Yz+jSyBNQPRJ0LSksv1w6a5ZYIj6YSkI5mCtaqSUg1+Jkk2V0fX
+ /bC8f+XQEGmC13ZuLLcnYWu3iBAfuEkX+uXsxFN18MYkss8D9ogwQkT7APdLPqnpoH3wZ1SAccP
+ BLPobbMCNsQ==
+X-Gm-Gg: ASbGnctP11qIxIEPY0pfxGyuyuV+p9nBsOtu0orZMWoLlA2Vw6K6ZSUeSCZM8eNJqED
+ Y+3/gLsRUqHLoS0va4eAgPhHRlNZTDLpH66VPO+Uh4sWUrfAoGtWy50VVrKDTBIxwM/Ng0H2qan
+ nAxnNJ4K34lq3hC382+SBsQQD+bcOakTwZDXRLJMs4RugPeubOUOl0V/OKaTI5f8SXx9ULFA5W4
+ pl2usZFjTOjAattVPlxKHPYZIEqCpy86eVrw1FOpC86mjTaXwz1FM5L36PNVCbSoV4xkCf/bfhY
+ DnGyhOhs/OGBq5x2XubqESWk8tVxEZFyhFlniOmwyyP38DGSTUqAEOxjy9RRs/GyDO0=
+X-Google-Smtp-Source: AGHT+IEpSh9fNapISHmkVCos9ZhjoYIWbfSdsiJkY+kIV+5oTk2q2kgVFvjrwSwssBRSBHVFQ1NuDg==
+X-Received: by 2002:a05:600c:46cb:b0:43d:94:2d1e with SMTP id
+ 5b1f17b1804b1-44c919e16a8mr134054495e9.13.1748420069536; 
+ Wed, 28 May 2025 01:14:29 -0700 (PDT)
 Received: from stoup.. ([195.53.115.74]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.34
+ 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 01:14:34 -0700 (PDT)
+ Wed, 28 May 2025 01:14:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 17/28] accel/tcg: Add TCGCPUOps.pointer_wrap
-Date: Wed, 28 May 2025 09:13:59 +0100
-Message-ID: <20250528081410.157251-18-richard.henderson@linaro.org>
+Cc: "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PULL 12/28] target/microblaze: Drop DisasContext.r0
+Date: Wed, 28 May 2025 09:13:54 +0100
+Message-ID: <20250528081410.157251-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250528081410.157251-1-richard.henderson@linaro.org>
 References: <20250528081410.157251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
@@ -98,48 +97,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Return a constant 0 from reg_for_read, and a new
+temporary from reg_for_write.
+
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/tcg/cpu-ops.h | 7 +++++++
- accel/tcg/cputlb.c          | 6 ++++++
- 2 files changed, 13 insertions(+)
+ target/microblaze/translate.c | 24 ++----------------------
+ 1 file changed, 2 insertions(+), 22 deletions(-)
 
-diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
-index cd22e5d5b9..83b2c2c864 100644
---- a/include/accel/tcg/cpu-ops.h
-+++ b/include/accel/tcg/cpu-ops.h
-@@ -222,6 +222,13 @@ struct TCGCPUOps {
-     bool (*tlb_fill)(CPUState *cpu, vaddr address, int size,
-                      MMUAccessType access_type, int mmu_idx,
-                      bool probe, uintptr_t retaddr);
-+    /**
-+     * @pointer_wrap:
-+     *
-+     * We have incremented @base to @result, resulting in a page change.
-+     * For the current cpu state, adjust @result for possible overflow.
-+     */
-+    vaddr (*pointer_wrap)(CPUState *cpu, int mmu_idx, vaddr result, vaddr base);
-     /**
-      * @do_transaction_failed: Callback for handling failed memory transactions
-      * (ie bus faults or external aborts; not MMU faults)
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 86d0deb08c..81ff725cbc 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1773,6 +1773,12 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-         l->page[1].size = l->page[0].size - size0;
-         l->page[0].size = size0;
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index dc597b36e6..047d97e2c5 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -63,9 +63,6 @@ typedef struct DisasContext {
+     DisasContextBase base;
+     const MicroBlazeCPUConfig *cfg;
  
-+        if (cpu->cc->tcg_ops->pointer_wrap) {
-+            l->page[1].addr = cpu->cc->tcg_ops->pointer_wrap(cpu, l->mmu_idx,
-+                                                             l->page[1].addr,
-+                                                             addr);
-+        }
-+
-         /*
-          * Lookup both pages, recognizing exceptions from either.  If the
-          * second lookup potentially resized, refresh first CPUTLBEntryFull.
+-    TCGv_i32 r0;
+-    bool r0_set;
+-
+     /* Decoder.  */
+     uint32_t ext_imm;
+     unsigned int tb_flags;
+@@ -179,14 +176,7 @@ static TCGv_i32 reg_for_read(DisasContext *dc, int reg)
+     if (likely(reg != 0)) {
+         return cpu_R[reg];
+     }
+-    if (!dc->r0_set) {
+-        if (dc->r0 == NULL) {
+-            dc->r0 = tcg_temp_new_i32();
+-        }
+-        tcg_gen_movi_i32(dc->r0, 0);
+-        dc->r0_set = true;
+-    }
+-    return dc->r0;
++    return tcg_constant_i32(0);
+ }
+ 
+ static TCGv_i32 reg_for_write(DisasContext *dc, int reg)
+@@ -194,10 +184,7 @@ static TCGv_i32 reg_for_write(DisasContext *dc, int reg)
+     if (likely(reg != 0)) {
+         return cpu_R[reg];
+     }
+-    if (dc->r0 == NULL) {
+-        dc->r0 = tcg_temp_new_i32();
+-    }
+-    return dc->r0;
++    return tcg_temp_new_i32();
+ }
+ 
+ static bool do_typea(DisasContext *dc, arg_typea *arg, bool side_effects,
+@@ -1635,8 +1622,6 @@ static void mb_tr_init_disas_context(DisasContextBase *dcb, CPUState *cs)
+     dc->cfg = &cpu->cfg;
+     dc->tb_flags = dc->base.tb->flags;
+     dc->ext_imm = dc->base.tb->cs_base;
+-    dc->r0 = NULL;
+-    dc->r0_set = false;
+     dc->mem_index = cpu_mmu_index(cs, false);
+     dc->jmp_cond = dc->tb_flags & D_FLAG ? TCG_COND_ALWAYS : TCG_COND_NEVER;
+     dc->jmp_dest = -1;
+@@ -1675,11 +1660,6 @@ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+         trap_illegal(dc, true);
+     }
+ 
+-    if (dc->r0) {
+-        dc->r0 = NULL;
+-        dc->r0_set = false;
+-    }
+-
+     /* Discard the imm global when its contents cannot be used. */
+     if ((dc->tb_flags & ~dc->tb_flags_to_set) & IMM_FLAG) {
+         tcg_gen_discard_i32(cpu_imm);
 -- 
 2.43.0
 
