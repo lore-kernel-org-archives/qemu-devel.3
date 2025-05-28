@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E80C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 18:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BE9C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 18:35:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKLZq-0002fA-4p; Wed, 28 May 2025 14:32:34 -0400
+	id 1uKLZo-0002dI-2q; Wed, 28 May 2025 14:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLZV-0002ME-TW
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLZV-0002MD-TU
  for qemu-devel@nongnu.org; Wed, 28 May 2025 14:32:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLZR-00072M-EK
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLZP-00072W-Hg
  for qemu-devel@nongnu.org; Wed, 28 May 2025 14:32:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1748457122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FTS2Y+wU+Xs4KfeT9aobMkZD6kSP2Ljeaav42ei1A4w=;
- b=DhTvNVlKqLHbNkQDT5Jjc6EOlEvHC2eJP037gxhBy8tvwAz95Cy2c6mbUE4o+Pr5GoYiXc
- fjRlqUrEXA8S7VH11GFxmkSPUYH4ASYhxd25oSFotYF1+4EULvDq89iPoqrr3hzfWz27lj
- 636WPKvDrJdCBvEMnGe2tXuU/J5pT9U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=9r8Of7xYH1J89v6IaADSjy6QMDkayHuOqdn5lJMJqYk=;
+ b=cBzXPO3GV4NPpldvm1ROMUcKQsPWH3vtRcDPHrx6QZFAWk8i3aca/WFU5XodPolTJb5RYi
+ uIAPhXVJ+S2gRlM3+G3qGKza609/wrKKmbVwkt2mJPqC1HXrC5cdSkDC/EQDmSGC4TX6Z3
+ aDOGTm1cpKyMJvXOSSHDQp8XAA1+Ugc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-7rlswJc2M1KROQyxyw1rMQ-1; Wed,
- 28 May 2025 14:32:00 -0400
-X-MC-Unique: 7rlswJc2M1KROQyxyw1rMQ-1
-X-Mimecast-MFC-AGG-ID: 7rlswJc2M1KROQyxyw1rMQ_1748457119
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-N8FDF0atOmiGqxvd5Kjypw-1; Wed,
+ 28 May 2025 14:31:58 -0400
+X-MC-Unique: N8FDF0atOmiGqxvd5Kjypw-1
+X-Mimecast-MFC-AGG-ID: N8FDF0atOmiGqxvd5Kjypw_1748457117
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73ECE180048E; Wed, 28 May 2025 18:31:59 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D35301956094; Wed, 28 May 2025 18:31:57 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 282AA1956096; Wed, 28 May 2025 18:31:59 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A24C18001DB; Wed, 28 May 2025 18:31:57 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BD41921E65FE; Wed, 28 May 2025 20:31:51 +0200 (CEST)
+ id A7D0121E65E0; Wed, 28 May 2025 20:31:51 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 12/13] qapi: make all generated files common
-Date: Wed, 28 May 2025 20:31:50 +0200
-Message-ID: <20250528183151.2839034-13-armbru@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 07/13] qapi: remove the misc-target.json file
+Date: Wed, 28 May 2025 20:31:45 +0200
+Message-ID: <20250528183151.2839034-8-armbru@redhat.com>
 In-Reply-To: <20250528183151.2839034-1-armbru@redhat.com>
 References: <20250528183151.2839034-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
@@ -84,72 +87,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Monolithic files (qapi_nonmodule_outputs) can now be compiled just
-once, so we can remove qapi_util_outputs logic.
-This removes the need for any specific_ss file.
+This file is now empty and can thus be removed.
 
+Observe the pre-existing bug with s390-skeys.c and target/i386/monitor.c
+both including qapi-commands-misc-target.h despite not requiring it.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20250522190542.588267-13-pierrick.bouvier@linaro.org>
+Message-ID: <20250522190542.588267-8-pierrick.bouvier@linaro.org>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/meson.build | 23 ++++-------------------
- 1 file changed, 4 insertions(+), 19 deletions(-)
+ qapi/misc-target.json | 3 ---
+ qapi/qapi-schema.json | 1 -
+ hw/s390x/s390-skeys.c | 1 -
+ target/i386/monitor.c | 1 -
+ qapi/meson.build      | 1 -
+ 5 files changed, 7 deletions(-)
+ delete mode 100644 qapi/misc-target.json
 
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+deleted file mode 100644
+index c9ea1ab23e..0000000000
+--- a/qapi/misc-target.json
++++ /dev/null
+@@ -1,3 +0,0 @@
+-# -*- Mode: Python -*-
+-# vim: filetype=python
+-#
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index e96bff8d38..d8eb79cfda 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -63,7 +63,6 @@
+ { 'include': 'misc.json' }
+ { 'include': 'misc-arm.json' }
+ { 'include': 'misc-i386.json' }
+-{ 'include': 'misc-target.json' }
+ { 'include': 'audio.json' }
+ { 'include': 'acpi.json' }
+ { 'include': 'pci.json' }
+diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
+index aedb62b2d3..8eeecfd58f 100644
+--- a/hw/s390x/s390-skeys.c
++++ b/hw/s390x/s390-skeys.c
+@@ -17,7 +17,6 @@
+ #include "hw/s390x/storage-keys.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-machine.h"
+-#include "qapi/qapi-commands-misc-target.h"
+ #include "qobject/qdict.h"
+ #include "qemu/error-report.h"
+ #include "system/memory_mapping.h"
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index 3ea92b066e..3c9b6ca62f 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -29,7 +29,6 @@
+ #include "monitor/hmp.h"
+ #include "qobject/qdict.h"
+ #include "qapi/error.h"
+-#include "qapi/qapi-commands-misc-target.h"
+ #include "qapi/qapi-commands-misc.h"
+ 
+ /* Perform linear address sign extension */
 diff --git a/qapi/meson.build b/qapi/meson.build
-index 7582c2b5bc..3b035aea33 100644
+index 5e93e6b8cf..ffe44f9e0b 100644
 --- a/qapi/meson.build
 +++ b/qapi/meson.build
-@@ -85,8 +85,7 @@ qapi_nonmodule_outputs = [
-   'qapi-emit-events.c', 'qapi-emit-events.h',
- ]
- 
--# First build all sources
--qapi_util_outputs = [
-+qapi_outputs = qapi_nonmodule_outputs + [
-   'qapi-builtin-types.c', 'qapi-builtin-visit.c',
-   'qapi-builtin-types.h', 'qapi-builtin-visit.h',
- ]
-@@ -109,20 +108,17 @@ foreach module : qapi_all_modules
-       'qapi-commands-@0@.trace-events'.format(module),
-     ]
-   endif
--  qapi_util_outputs += qapi_module_outputs
-+  qapi_outputs += qapi_module_outputs
- endforeach
- 
- qapi_files = custom_target('shared QAPI source files',
--  output: qapi_util_outputs + qapi_nonmodule_outputs,
-+  output: qapi_outputs,
-   input: [ files('qapi-schema.json') ],
-   command: [ qapi_gen, '-o', 'qapi', '-b', '@INPUT0@' ],
-   depend_files: [ qapi_inputs, qapi_gen_depends ])
- 
--# Now go through all the outputs and add them to the right sourceset.
--# These loops must be synchronized with the output of the above custom target.
--
- i = 0
--foreach output : qapi_util_outputs
-+foreach output : qapi_outputs
-   if output.endswith('.h')
-     genh += qapi_files[i]
-   endif
-@@ -132,14 +128,3 @@ foreach output : qapi_util_outputs
-   util_ss.add(qapi_files[i])
-   i = i + 1
- endforeach
--
--foreach output : qapi_nonmodule_outputs
--  if output.endswith('.h')
--    genh += qapi_files[i]
--  endif
--  if output.endswith('.trace-events')
--    qapi_trace_events += qapi_files[i]
--  endif
--  specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: qapi_files[i])
--  i = i + 1
--endforeach
+@@ -42,7 +42,6 @@ qapi_all_modules = [
+   'machine-target',
+   'migration',
+   'misc',
+-  'misc-target',
+   'net',
+   'pragma',
+   'qom',
 -- 
 2.48.1
 
