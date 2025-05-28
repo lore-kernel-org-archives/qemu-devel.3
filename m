@@ -4,84 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FE6C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 15:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA2DC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 15:40:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKInt-0007T6-Lt; Wed, 28 May 2025 11:34:53 -0400
+	id 1uKItC-0000GK-Va; Wed, 28 May 2025 11:40:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uKInq-0007Su-5V
- for qemu-devel@nongnu.org; Wed, 28 May 2025 11:34:50 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKItA-0000Fy-Ne
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 11:40:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uKInn-0005yn-QJ
- for qemu-devel@nongnu.org; Wed, 28 May 2025 11:34:49 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKIt8-0006mc-85
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 11:40:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748446483;
+ s=mimecast20190719; t=1748446816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fmTsV0BLM+0nrLdyv6i+dQpfoxiVI6uodJ/W5avPfhQ=;
- b=LAgbM2CEyh+14OM5T55MJo6q1nrxSry+GN4919Kr8Y9unsD5i9LVARkcYfv2dEBA0YCJnd
- OFRdky8x9eWYkpJxjt0rGDCF9skcmd8O9XMcr7Krgzn6wM3y+EiWXA7b9QKQO5LXqNH3to
- Tfj4fzw2tK3AfrWZp2pappDzpnJsDyo=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-Vp3KjSqvPUathkpBinZkWg-1; Wed, 28 May 2025 11:34:41 -0400
-X-MC-Unique: Vp3KjSqvPUathkpBinZkWg-1
-X-Mimecast-MFC-AGG-ID: Vp3KjSqvPUathkpBinZkWg_1748446481
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6faaa900d82so17758646d6.1
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 08:34:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748446480; x=1749051280;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fmTsV0BLM+0nrLdyv6i+dQpfoxiVI6uodJ/W5avPfhQ=;
- b=nLM/6iL3HVvF9Yt+lkShAWEufRPmXoYAaQSl3l9vIlaVHrzkTftpdbP84hsqQgjoYX
- q0f7IpcI/V4oslsdDfjL47GJEJijTTk/n4Zw1JrjSCnSU/gIrNDig+j//3Y1wOrXrGPF
- S422fLQkLGz5Zin+xptVNys9+BWjwer1mBo60OGFRCFaluFQU3WFN21MkY2uY4Iyf7V2
- jra8oEgaHUjZoCN8AHZF0mvl23Fn6mVyt1kQBptZ81nc1HjTiczc+b5PC+A8lieoXUpV
- tlOZV+S6FvcUxT2WXrbPVMjeAOVDsnyON45QyJrPPEWDdMhbYgpbYaMLoUVxQlERdm/z
- 27cA==
-X-Gm-Message-State: AOJu0Yy0CTMUv+Nep7eNZg5U6iepp7nq9io21hDQ3PDIUZDzuMXmAwcM
- 0SLjUdukG6mKiCpNW4lNO/2dLs2gkLaMKKl3IV9nLP0xsASJeJcQkhz3ggR3AgUJflj60WdKH+/
- FmmLdVDy179v4+NjKs1udXZn3XzRlTnuohYq6x2SXhpvVD49fcGR7taJbo3aENLrW
-X-Gm-Gg: ASbGncu+nbPC62Ear5ZQC970S41qXiq7ZkP9S6Prv6RsaUKpRxaUtOTGzVCcYkqpwpz
- B7AMJX5Ox3fNs8PYDY/FtgThlbPe7er0fHPHPhur/WbUQd+yfzSI8E3hkvRlhNgsxtxSRrlJ7Y1
- S/YqHtdSAystIneSyWiBbWEFIDGZ0bEhr7HN4McjCLMxTtKHDOFUCoem5/0TSzHhQtIkGACHgjW
- W41DQUcrxbU/Pch/Ed5lebmqldP8BuxZC28azG/Hx7CNi1Wpl/8g6Cg0/l4MfM8ZEU84tkNDBbJ
- qAk=
-X-Received: by 2002:a05:6214:d44:b0:6fa:b68a:99ed with SMTP id
- 6a1803df08f44-6fab9eb0c44mr74944206d6.13.1748446480151; 
- Wed, 28 May 2025 08:34:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHD9AEIiBdtACftTAXGw9NRovRtdDidMwCwnbKUv/8/HWPbRejOxkVbx5LuLwpFsaw9/fTv7A==
-X-Received: by 2002:a05:6214:d44:b0:6fa:b68a:99ed with SMTP id
- 6a1803df08f44-6fab9eb0c44mr74943816d6.13.1748446479728; 
- Wed, 28 May 2025 08:34:39 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fac0b289c8sm7675076d6.47.2025.05.28.08.34.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 08:34:39 -0700 (PDT)
-Date: Wed, 28 May 2025 11:34:35 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: virsh migrate fails when --copy-storage-all option is given!
-Message-ID: <aDctC8i7U2J5bmyw@x1.local>
-References: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
+ bh=4IKf1V/zacoq/d0V0xrfU5pS5ODEp4a7a2v+YDxrlRk=;
+ b=Uw1Xm6KOQOZI1e6fOotRNvn8RK+WSST3K+IAN041i9PvaiRJx5M5+cCqT1KWp75HT9skzu
+ i5jUYwEz/ZaIEUpgmc+vIeXQJLFBmmn6nchz1sHW5uKJt/pz7qAH4ThlsSE7KuxUPiSUe3
+ yUzeijImON0amAzmIoIjy2Kul5KrnCQ=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-IxE9MbPaOw6RHYBoNw4dxg-1; Wed,
+ 28 May 2025 11:40:14 -0400
+X-MC-Unique: IxE9MbPaOw6RHYBoNw4dxg-1
+X-Mimecast-MFC-AGG-ID: IxE9MbPaOw6RHYBoNw4dxg_1748446813
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C7141956095; Wed, 28 May 2025 15:40:13 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.48])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99DD618004A7; Wed, 28 May 2025 15:40:10 +0000 (UTC)
+Date: Wed, 28 May 2025 10:40:07 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Subject: Re: [PULL 13/14] tests: Add iotest mirror-sparse for recent patches
+Message-ID: <5o7qspgmmjktoah6yoq5zp4uemhyultohiswqwvib7dqbh53ez@2ctslprvuxxx>
+References: <20250515022904.575509-16-eblake@redhat.com>
+ <20250515022904.575509-29-eblake@redhat.com>
+ <874ix5ezgy.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <874ix5ezgy.fsf@pond.sub.org>
+User-Agent: NeoMutt/20250404
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -106,128 +86,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Copy Kevin.
+On Wed, May 28, 2025 at 01:39:25PM +0200, Markus Armbruster wrote:
+> Eric Blake <eblake@redhat.com> writes:
+> 
+> > Prove that blockdev-mirror can now result in sparse raw destination
+> > files, regardless of whether the source is raw or qcow2.  By making
+> > this a separate test, it was possible to test effects of individual
+> > patches for the various pieces that all have to work together for a
+> > sparse mirror to be successful.
+> >
 
-On Wed, May 28, 2025 at 07:21:12PM +0530, Anushree Mathur wrote:
-> Hi all,
+> Fails for me:
 > 
+>     TAP version 13
+>     # QEMU          -- "/work/armbru/qemu/bld/qemu-system-x86_64" -nodefaults -display none -accel qtest
+>     # QEMU_IMG      -- "/work/armbru/qemu/bld/qemu-img" 
+>     # QEMU_IO       -- "/work/armbru/qemu/bld/qemu-io" --cache writeback --aio threads -f qcow2
+>     # QEMU_NBD      -- "/work/armbru/qemu/bld/qemu-nbd" 
+>     # IMGFMT        -- qcow2
+>     # IMGPROTO      -- file
+>     # PLATFORM      -- Linux/x86_64 dusky 6.12.7-200.fc41.x86_64
+>     # TEST_DIR      -- /work/armbru/qemu/bld-x86/scratch
+
+Which filesystem is TEST_DIR on?
+
+>     # SOCK_DIR      -- /tmp/qemu-iotests-nqettsyq
+>     # GDB_OPTIONS   -- 
+>     # VALGRIND_QEMU -- 
+>     # PRINT_QEMU_OUTPUT -- 
+>     # 
+>     1..1
+>     # running qcow2 mirror-sparse
+>     not ok qcow2 mirror-sparse
+>     --- /work/armbru/qemu/tests/qemu-iotests/tests/mirror-sparse.out
+>     +++ /work/armbru/qemu/bld-x86/scratch/qcow2-file-mirror-sparse/mirror-sparse.out.bad
+>     @@ -140,7 +140,7 @@
+>      {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job2"}}
+>      {"return": {}}
+>      Images are identical.
+>     -Destination is sparse; expected sparse
+>     +Destination is unknown; expected sparse
+
+> > Looks like the same failure Fiona reported; does this fix it?
+> >
+> > https://lists.gnu.org/archive/html/qemu-devel/2025-05/msg05567.html
 > 
-> When I am trying to migrate the guest from host1 to host2 with the command
-> line as follows:
-> 
-> date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
-> --undefinesource --persistent --auto-converge --postcopy
-> --copy-storage-all;date
-> 
-> and it fails with the following error message-
-> 
-> error: internal error: unable to execute QEMU command 'block-export-add':
-> Block node is read-only
-> 
-> HOST ENV:
-> 
-> qemu : QEMU emulator version 9.2.2
-> libvirt : libvirtd (libvirt) 11.1.0
-> Seen with upstream qemu also
-> 
-> Steps to reproduce:
-> 1) Start the guest1
-> 2) Migrate it with the command as
-> 
-> date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
-> --undefinesource --persistent --auto-converge --postcopy
-> --copy-storage-all;date
-> 
-> 3) It fails as follows:
-> error: internal error: unable to execute QEMU command 'block-export-add':
-> Block node is read-only
-> 
-> Things I analyzed-
-> 1) This issue is not happening if I give --unsafe option in the virsh
-> migrate command
-> 
-> 2) O/P of qemu-monitor command also shows ro as false
-> 
-> virsh qemu-monitor-command guest1 --pretty --cmd '{ "execute": "query-block"
-> }'
-> {
->   "return": [
->     {
->       "io-status": "ok",
->       "device": "",
->       "locked": false,
->       "removable": false,
->       "inserted": {
->         "iops_rd": 0,
->         "detect_zeroes": "off",
->         "image": {
->           "virtual-size": 21474836480,
->           "filename": "/home/Anu/guest_anu.qcow2",
->           "cluster-size": 65536,
->           "format": "qcow2",
->           "actual-size": 5226561536,
->           "format-specific": {
->             "type": "qcow2",
->             "data": {
->               "compat": "1.1",
->               "compression-type": "zlib",
->               "lazy-refcounts": false,
->               "refcount-bits": 16,
->               "corrupt": false,
->               "extended-l2": false
->             }
->           },
->           "dirty-flag": false
->         },
->         "iops_wr": 0,
->         "ro": false,
->         "node-name": "libvirt-1-format",
->         "backing_file_depth": 0,
->         "drv": "qcow2",
->         "iops": 0,
->         "bps_wr": 0,
->         "write_threshold": 0,
->         "encrypted": false,
->         "bps": 0,
->         "bps_rd": 0,
->         "cache": {
->           "no-flush": false,
->           "direct": false,
->           "writeback": true
->         },
->         "file": "/home/Anu/guest_anu.qcow2"
->       },
->       "qdev": "/machine/peripheral/virtio-disk0/virtio-backend",
->       "type": "unknown"
->     }
->   ],
->   "id": "libvirt-26"
-> }
-> 
-> 
-> 3) Guest doesn't have any readonly
-> 
-> virsh dumpxml guest1 | grep readonly
-> 
-> 4) Tried giving the proper permissions also
-> 
-> -rwxrwxrwx. 1 qemu qemu 4.9G Apr 28 15:06 guest_anu.qcow2
-> 
-> 5) Checked for the permission of the pool also that is also proper!
-> 
-> 6) Found 1 older bug similar to this, pasting the link for reference:
-> 
-> 
-> https://patchwork.kernel.org/project/qemu-devel/patch/20170811164854.GG4162@localhost.localdomain/
-> 
-> 
-> 
-> Thanks,
-> Anushree-Mathur
-> 
-> 
+> It does not.
+
+Since my patch for Fiona is not working for you, I will tweak it
+slightly to output the actual du output (in addition to "unknown") for
+the cases where the size is neither -lt 3M or -gt 19M.  The test is
+dealing with a 20M image containing 2M of data, so du reporting
+something in between 3 and 19 is unexpected.  Could it be the result
+of du reporting smaller numbers on a compressed filesystem?  But even
+then, my followup series was trying to filter out any filesystem where
+-o preallocation=full of 5M results in a du report of < 4M on the
+grounds that it would catch compression artifacts as rendering the
+test unreliable.
 
 -- 
-Peter Xu
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
