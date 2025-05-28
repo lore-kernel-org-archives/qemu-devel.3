@@ -4,124 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CCE2C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:08:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53929C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKGVD-0001L3-RB; Wed, 28 May 2025 09:07:28 -0400
+	id 1uKGXQ-0002oA-6o; Wed, 28 May 2025 09:09:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uKGV4-0001KL-Qd
- for qemu-devel@nongnu.org; Wed, 28 May 2025 09:07:19 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uKGV2-0004Up-5I
- for qemu-devel@nongnu.org; Wed, 28 May 2025 09:07:18 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 04EA221995;
- Wed, 28 May 2025 13:07:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1748437634; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5Hn0gFEKSVeQN3mcY8nwLkyuXKtoqS9V57cD5UtpoGk=;
- b=qmhYuY+Vso17c7CBQ1QRn+JNSKvuuEhesf9wrypevFvEYaLJX7aimm1O2ngGHhuxlr0Q6M
- KLOOjrKjhgwSe9Td4EdXTn8QUJPJR2q7IwS61BWuLZZ3+dT+6DV/m5Br+B5k+I4CIbR5XI
- Y77+R3MWUZkYWwYzLQnvSUMFswx1Iok=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1748437634;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5Hn0gFEKSVeQN3mcY8nwLkyuXKtoqS9V57cD5UtpoGk=;
- b=sbL8ulMrMnsULO2wj0BNFBpELfTdTSBld28HbYwB0WkXqEWslDlFpBJoxUFmhdU5Je0DE/
- UBR1ui8jbbbheuAg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qmhYuY+V;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=sbL8ulMr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1748437634; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5Hn0gFEKSVeQN3mcY8nwLkyuXKtoqS9V57cD5UtpoGk=;
- b=qmhYuY+Vso17c7CBQ1QRn+JNSKvuuEhesf9wrypevFvEYaLJX7aimm1O2ngGHhuxlr0Q6M
- KLOOjrKjhgwSe9Td4EdXTn8QUJPJR2q7IwS61BWuLZZ3+dT+6DV/m5Br+B5k+I4CIbR5XI
- Y77+R3MWUZkYWwYzLQnvSUMFswx1Iok=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1748437634;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5Hn0gFEKSVeQN3mcY8nwLkyuXKtoqS9V57cD5UtpoGk=;
- b=sbL8ulMrMnsULO2wj0BNFBpELfTdTSBld28HbYwB0WkXqEWslDlFpBJoxUFmhdU5Je0DE/
- UBR1ui8jbbbheuAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 722C1136E0;
- Wed, 28 May 2025 13:07:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id D3tDDIEKN2hcMwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 28 May 2025 13:07:13 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Zheng Huang <hz1624917200@gmail.com>, Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, Peter
- Xu <peterx@redhat.com>, peter.maydell@linaro.org
-Subject: Re: [PATCH] hw/scsi/esp: fix assertion error in fifo8_push
-In-Reply-To: <7e4a9c92-b33f-4bc9-968d-e726c6151a9d@gmail.com>
-References: <37889706-8576-476c-8fea-c1a3a2858b1e@gmail.com>
- <684885a4-0022-4de8-98aa-07c9fe4a11c7@linaro.org>
- <6dd914b1-2a2f-4a4c-bd2b-54e8302d1a75@ilande.co.uk>
- <7e4a9c92-b33f-4bc9-968d-e726c6151a9d@gmail.com>
-Date: Wed, 28 May 2025 10:07:10 -0300
-Message-ID: <87tt54994x.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uKGXH-0002m4-S9; Wed, 28 May 2025 09:09:36 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uKGXE-0004iQ-Lc; Wed, 28 May 2025 09:09:35 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 07BB240F5B;
+ Wed, 28 May 2025 15:09:27 +0200 (CEST)
+Message-ID: <71ee9ce4-706c-4314-9872-761cc2189efa@proxmox.com>
+Date: Wed, 28 May 2025 15:09:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,gitlab.com:url,euphon.net:email,gnu.org:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_TO(0.00)[gmail.com,ilande.co.uk,linaro.org,nongnu.org];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_SEVEN(0.00)[8]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, suse.de:dkim, suse.de:mid,
- suse.de:email, gnu.org:url]
-X-Rspamd-Queue-Id: 04EA221995
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 11/24] block: move drain outside of
+ bdrv_set_backing_hd_drained()
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, hreitz@redhat.com, stefanha@redhat.com,
+ eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
+ xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
+ fam@euphon.net, ari@tuxera.com
+References: <20250526132140.1641377-1-f.ebner@proxmox.com>
+ <20250526132140.1641377-12-f.ebner@proxmox.com> <aDXaW_Xr5etQejUd@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <aDXaW_Xr5etQejUd@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,119 +63,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zheng Huang <hz1624917200@gmail.com> writes:
+Am 27.05.25 um 17:29 schrieb Kevin Wolf:
+> Am 26.05.2025 um 15:21 hat Fiona Ebner geschrieben:
+>> @@ -3578,7 +3577,6 @@ int bdrv_set_backing_hd_drained(BlockDriverState *bs,
+>>      ret = bdrv_refresh_perms(bs, tran, errp);
+>>  out:
+>>      tran_finalize(tran, ret);
+>> -    bdrv_drain_all_end();
+>>      return ret;
+>>  }
+> 
+> Do we need to update the comment for bdrv_set_backing_hd_drained()?
+> 
+>  * If a backing child is already present (i.e. we're detaching a node), that
+>  * child node must be drained.
+> 
+> Same as in the previous patch, this is now probably all nodes.
 
-> On 2025/5/28 03:40, Mark Cave-Ayland wrote:
->> On 27/05/2025 14:59, Philippe Mathieu-Daud=C3=A9 wrote:
->>=20
->>> Hi,
->>>
->>> Cc'ing maintainers:
->>>
->>> $ ./scripts/get_maintainer.pl -f hw/scsi/esp.c
->>> Paolo Bonzini <pbonzini@redhat.com> (supporter:SCSI)
->>> Fam Zheng <fam@euphon.net> (reviewer:SCSI)
->>> $ ./scripts/get_maintainer.pl -f migration/
->>> Peter Xu <peterx@redhat.com> (maintainer:Migration)
->>> Fabiano Rosas <farosas@suse.de> (maintainer:Migration)
->>>
->>> On 27/5/25 15:12, Zheng Huang wrote:
->>>> This patch add validation checks on FIFO structures in esp_post_load()=
- to
->>>> avoid assertion error `assert(fifo->num < fifo->capacity);` in fifo8_p=
-ush(),
->>>> which can occur if the inbound migration stream is malformed. By perfo=
-rming
->>>> these checks during post-load, we can catch and handle such issues ear=
-lier,
->>>> avoiding crashes due to corrupted state.
->>>
->>> How can that happen? Can you share a reproducer?
->>>
->>>>
->>>> Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
->>>> ---
->>>> =C2=A0 hw/scsi/esp.c | 6 ++++++
->>>> =C2=A0 1 file changed, 6 insertions(+)
->>>>
->>>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
->>>> index ac841dc32e..ba77017087 100644
->>>> --- a/hw/scsi/esp.c
->>>> +++ b/hw/scsi/esp.c
->>>> @@ -1350,11 +1350,17 @@ static int esp_post_load(void *opaque, int ver=
-sion_id)
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Migrate ti_b=
-uf to fifo */
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 len =3D s->mig_=
-ti_wptr - s->mig_ti_rptr;
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D 0; i=
- < len; i++) {
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if=
- (&s->fifo.num >=3D &s->fifo.capacity) {
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 return -1;
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 fifo8_push(&s->fifo, s->mig_ti_buf[i]);
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Migrate cmdb=
-uf to cmdfifo */
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D 0; i=
- < s->mig_cmdlen; i++) {
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if=
- (&s->cmdfifo.num >=3D &s->cmdfifo.capacity) {
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 return -1;
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 fifo8_push(&s->cmdfifo, s->mig_cmdbuf[i]);
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->>=20
->> This seems odd: this logic in esp_post_load() is for converting from pre=
--Fifo8 code to the current Fifo8 code, so why wouldn't we want to assert() =
-for the case when the migration stream is intentionally malformed? Is there=
- a case whereby the old code could generate an invalid migration stream lik=
-e this?
->>=20
->>=20
->> ATB,
->>=20
->> Mark.
->>=20
->
-> Hi Mark,
->
-> The malformed migration stream in question originates from QEMU itself=E2=
-=80=94either accidentally, due to=20
-> a bug, or maliciously crafted. If we allow unchecked data through in esp_=
-post_load(), an attacker
-> controlling the migration source could send crafted values that trigger u=
-ndefined behavior.
-> The commit https://gitlab.com/qemu-project/qemu/-/commit/b88cfee90268cad3=
-76682da8f99ccf024d7aa304
-> also check the migration stream integrity in post_load handler, which is =
-suggested by Peter Maydell in
-> https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg00099.html, 'to =
-prevent the division-by-zero
-> in the "malicious inbound migration state" case'.
->
-> Also, I would appreciate your opinion on how we should handle such "malfo=
-rmed migration stream" case
-> more generally, if there are more severe issues than assertion error, suc=
-h as FPE, UAF, etc.? Should
-> QEMU adopt a more systematic =E2=80=9Cpost_load=E2=80=9D validation patte=
-rn=E2=80=94verifying all critical fields across every
-> migration handler=E2=80=94to harden the migration subsystem against any t=
-ampering of the migration image?
->
+Yes, and even in case no backing child is already present.
 
-From the migration perspective it does make sense to validate the values
-and return error. The migration stream should indeed be considered
-untrusted.
+>> @@ -3594,11 +3592,11 @@ int bdrv_set_backing_hd(BlockDriverState *bs, BlockDriverState *backing_hd,
+>>      bdrv_graph_rdunlock_main_loop();
+>>  
+>>      bdrv_ref(drain_bs);
+>> -    bdrv_drained_begin(drain_bs);
+>> +    bdrv_drain_all_begin();
+>>      bdrv_graph_wrlock();
+>>      ret = bdrv_set_backing_hd_drained(bs, backing_hd, errp);
+>>      bdrv_graph_wrunlock();
+>> -    bdrv_drained_end(drain_bs);
+>> +    bdrv_drain_all_end();
+>>      bdrv_unref(drain_bs);
+> 
+> The only thing we do with drain_bs now is finding it, bdrv_ref() and
+> immediately bdrv_unref(). I don't think it should exist any more after
+> the change to drain_all.
 
-But I agree that it would be nice to have some sort of reproducer. I
-don't think it's practical to go around adding code to handle every
-single hypothetical scenario. That creates some churn in the codebase
-that might introduce bugs by itself.
+I'll drop it in v4.
+
+I now noticed that bdrv_set_backing_hd() is required to be
+GRAPH_UNLOCKED, because it calls bdrv_drain_all_begin(), but is not
+marked as such yet. Adding that annotation requires adapting some
+callers of bdrv_set_backing_hd() first. I'll try to add some more
+patches at the end of the series for this.
+
+At least the caller in block/mirror.c seems to be better of using
+bdrv_set_backing_hd_drained() and bdrv_graph_wrlock_drained() itself, so
+the section can cover more related calls like
+"unfiltered_target = bdrv_skip_filters(target_bs);"
+
+Best Regards,
+Fiona
+
 
