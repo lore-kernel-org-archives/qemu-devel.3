@@ -4,62 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A085C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 19:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4625EC5AE59
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 19:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKM9j-00075Q-WC; Wed, 28 May 2025 15:09:40 -0400
+	id 1uKM9a-0006xc-91; Wed, 28 May 2025 15:09:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uKM9i-00073q-D3
- for qemu-devel@nongnu.org; Wed, 28 May 2025 15:09:38 -0400
+ id 1uKM9V-0006wO-M9
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 15:09:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uKM9g-0004Fy-Do
- for qemu-devel@nongnu.org; Wed, 28 May 2025 15:09:38 -0400
+ id 1uKM9T-0004DS-5C
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 15:09:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748459375;
+ s=mimecast20190719; t=1748459361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HStRn09SDnQ2rx+ji7nQGXhi2TqDjYgUUMWPO9PJpK4=;
- b=Ii/nfNyzc4omtSGuY4vV+y4a8lc5YOLm6eOWDR2RjzwOU1bKE+BZQbJFv9buR8US6Hsr1w
- cvfKg6s+xyiMxB/wQ9c6ElWEk96WvLPV672id/nh4e5ZzHddlj4QbRM9G5652KK4Mo6WK6
- vy+O/vqtwDNfGB1aXOJD6gi8tPqyeiI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=iD8wBt9WieeMEs9yrEtl+kC+UcMchGOWI0bzzK8AXEw=;
+ b=N36/3Pggnn5IERGpR2HR/H3WK0N3tzBLhuG+9EvrP2b6EKjrgUEIbnwZs3R2kIYYEGJ6VH
+ VE+SfN2FRNhyG3g0JI/X63ztbzmLjRyfWanVH4NhkYhq3GXbjtLumxasQk49niTvXXgYQr
+ +zg3ycXYcmdQ7/GdeB23JIhOoXkB9u4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-249-aIRGlIAwMOuhqKxvI9EqcA-1; Wed,
- 28 May 2025 15:09:31 -0400
-X-MC-Unique: aIRGlIAwMOuhqKxvI9EqcA-1
-X-Mimecast-MFC-AGG-ID: aIRGlIAwMOuhqKxvI9EqcA_1748459371
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-weVGtFUsMtGcRxS3tHTZxQ-1; Wed,
+ 28 May 2025 15:09:19 -0400
+X-MC-Unique: weVGtFUsMtGcRxS3tHTZxQ-1
+X-Mimecast-MFC-AGG-ID: weVGtFUsMtGcRxS3tHTZxQ_1748459359
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D93701800876; Wed, 28 May 2025 19:09:30 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC27F1955E79; Wed, 28 May 2025 19:09:18 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.178])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 80B2319560AA; Wed, 28 May 2025 19:09:30 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EF3CF180049D; Wed, 28 May 2025 19:09:17 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  hibriansong@gmail.com, Kevin Wolf <kwolf@redhat.com>,
  Hanna Czenczek <hreitz@redhat.com>
-Subject: [RFC 06/11] aio: free AioContext when aio_context_new() fails
-Date: Wed, 28 May 2025 15:09:11 -0400
-Message-ID: <20250528190916.35864-7-stefanha@redhat.com>
-In-Reply-To: <20250528190916.35864-1-stefanha@redhat.com>
-References: <20250528190916.35864-1-stefanha@redhat.com>
+Subject: [RFC 00/11] aio: add the aio_add_sqe() io_uring API
+Date: Wed, 28 May 2025 15:09:05 -0400
+Message-ID: <20250528190916.35864-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -85,85 +83,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-g_source_destroy() only removes the GSource from the GMainContext it's
-attached to, if any. It does not free it.
+This patch series contains io_uring improvements:
 
-Use g_source_unref() instead so that the AioContext (which embeds a
-GSource) is freed. There is no need to call g_source_destroy() in
-aio_context_new() because the GSource isn't attached to a GMainContext
-yet.
+1. Support the glib event loop in fdmon-io_uring.
+   - aio-posix: fix polling mode with fdmon-io_uring
+   - aio-posix: keep polling enabled with fdmon-io_uring.c
+   - tests/unit: skip test-nested-aio-poll with io_uring
+   - aio-posix: integrate fdmon into glib event loop
 
-aio_ctx_finalize() expects everything to be set up already, so introduce
-the new ctx->initialized boolean and do nothing when called with
-!initialized. This also requires moving aio_context_setup() down after
-event_notifier_init() since aio_ctx_finalize() won't release any
-resources that aio_context_setup() acquired.
+2. Enable fdmon-io_uring on hosts where io_uring is available at runtime.
+   Otherwise continue using ppoll(2) or epoll(7).
+   - aio: remove aio_context_use_g_source()
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- include/block/aio.h |  3 +++
- util/async.c        | 12 ++++++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+3. Add the new aio_add_sqe() API for submitting io_uring requests in the QEMU
+   event loop.
+   - aio: free AioContext when aio_context_new() fails
+   - aio: add errp argument to aio_context_setup()
+   - aio-posix: gracefully handle io_uring_queue_init() failure
+   - aio-posix: add aio_add_sqe() API for user-defined io_uring requests
+   - aio-posix: avoid EventNotifier for cqe_handler_bh
 
-diff --git a/include/block/aio.h b/include/block/aio.h
-index 1657740a0e..2760f308f5 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -291,6 +291,9 @@ struct AioContext {
-     gpointer epollfd_tag;
- 
-     const FDMonOps *fdmon_ops;
-+
-+    /* Was aio_context_new() successful? */
-+    bool initialized;
- };
- 
- /**
-diff --git a/util/async.c b/util/async.c
-index a39410d675..bc841eeb4f 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -369,6 +369,10 @@ aio_ctx_finalize(GSource     *source)
-     QEMUBH *bh;
-     unsigned flags;
- 
-+    if (!ctx->initialized) {
-+        return;
-+    }
-+
-     thread_pool_free_aio(ctx->thread_pool);
- 
- #ifdef CONFIG_LINUX_AIO
-@@ -579,13 +583,15 @@ AioContext *aio_context_new(Error **errp)
-     ctx = (AioContext *) g_source_new(&aio_source_funcs, sizeof(AioContext));
-     QSLIST_INIT(&ctx->bh_list);
-     QSIMPLEQ_INIT(&ctx->bh_slice_list);
--    aio_context_setup(ctx);
- 
-     ret = event_notifier_init(&ctx->notifier, false);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Failed to initialize event notifier");
-         goto fail;
-     }
-+
-+    aio_context_setup(ctx);
-+
-     g_source_set_can_recurse(&ctx->source, true);
-     qemu_lockcnt_init(&ctx->list_lock);
- 
-@@ -619,9 +625,11 @@ AioContext *aio_context_new(Error **errp)
- 
-     register_aiocontext(ctx);
- 
-+    ctx->initialized = true;
-+
-     return ctx;
- fail:
--    g_source_destroy(&ctx->source);
-+    g_source_unref(&ctx->source);
-     return NULL;
- }
- 
+4. Use aio_add_sqe() in block/io_uring.c instead of creating a dedicated
+   io_uring context for --blockdev aio=io_uring. This simplifies the code,
+   reduces the number of file descriptors, and demonstrates the aio_add_sqe()
+   API.
+   - block/io_uring: use aio_add_sqe()
+
+The highlight is aio_add_sqe(), which is needed for the FUSE-over-io_uring
+Google Summer of Code project and other future QEMU features that natively use
+Linux io_uring functionality.
+
+I'm not happy with performance yet. This is why I've marked the series as
+Request For Comments:
+rw        bs iodepth aio    iothread before after  diff
+randread  4k       1 native        0  76281 79707  +4.5%
+randread  4k      64 native        0 255078 247293 -3.1%
+randwrite 4k       1 native        0 132706 123337 -7.1%
+randwrite 4k      64 native        0 275589 245192 -11%
+randread  4k       1 io_uring      0  75284 78023  +3.5%
+randread  4k      64 io_uring      0 254637 248222 -2.5%
+randwrite 4k       1 io_uring      0 126519 128641 +1.7%
+randwrite 4k      64 io_uring      0 258967 249266 -3.7%
+randread  4k       1 native        1  90557 88436  -2.3%
+randread  4k      64 native        1 290673 280456 -3.5%
+randwrite 4k       1 native        1 183015 169106 -7.6%
+randwrite 4k      64 native        1 281316 280078 -0.4%
+randread  4k       1 io_uring      1  92479 86983  -5.9%
+randread  4k      64 io_uring      1 304229 257730 -15.3%
+randwrite 4k       1 io_uring      1 183983 157425 -14.4%
+randwrite 4k      64 io_uring      1 299979 264156 -11.9%
+
+Overall the performance decreases, so I need to continue profiling the
+iodepth=64 cases with aio=native and aio=io_uring.
+
+This series replaces the following older series that were held off from merging
+until the QEMU 10.1 development window opened and the performance results were
+collected:
+- "[PATCH 0/3] [RESEND] block: unify block and fdmon io_uring"
+- "[PATCH 0/4] aio-posix: integrate fdmon into glib event loop"
+
+Stefan Hajnoczi (11):
+  aio-posix: fix polling mode with fdmon-io_uring
+  aio-posix: keep polling enabled with fdmon-io_uring.c
+  tests/unit: skip test-nested-aio-poll with io_uring
+  aio-posix: integrate fdmon into glib event loop
+  aio: remove aio_context_use_g_source()
+  aio: free AioContext when aio_context_new() fails
+  aio: add errp argument to aio_context_setup()
+  aio-posix: gracefully handle io_uring_queue_init() failure
+  aio-posix: add aio_add_sqe() API for user-defined io_uring requests
+  aio-posix: avoid EventNotifier for cqe_handler_bh
+  block/io_uring: use aio_add_sqe()
+
+ meson.build                       |   2 +-
+ include/block/aio.h               | 134 +++++++-
+ include/block/raw-aio.h           |   5 -
+ util/aio-posix.h                  |  18 +-
+ block/file-posix.c                |  38 +--
+ block/io_uring.c                  | 489 +++++++-----------------------
+ stubs/io_uring.c                  |  32 --
+ tests/unit/test-aio.c             |   7 +-
+ tests/unit/test-nested-aio-poll.c |  13 +-
+ util/aio-posix.c                  | 134 ++++----
+ util/aio-win32.c                  |   6 +-
+ util/async.c                      |  53 +---
+ util/fdmon-epoll.c                |  52 +++-
+ util/fdmon-io_uring.c             | 218 ++++++++++---
+ util/fdmon-poll.c                 |  88 +++++-
+ block/trace-events                |  12 +-
+ stubs/meson.build                 |   3 -
+ util/trace-events                 |   4 +
+ 18 files changed, 668 insertions(+), 640 deletions(-)
+ delete mode 100644 stubs/io_uring.c
+
 -- 
 2.49.0
 
