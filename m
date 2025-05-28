@@ -4,104 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C86AC5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAEBC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKH0I-0006qd-9C; Wed, 28 May 2025 09:39:34 -0400
+	id 1uKHBm-00020M-LM; Wed, 28 May 2025 09:51:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1uKGvD-00049c-8g; Wed, 28 May 2025 09:34:22 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1uKHBg-0001yt-S2
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 09:51:21 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1uKGv7-0000FP-9E; Wed, 28 May 2025 09:34:18 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54S5ZK7r007582;
- Wed, 28 May 2025 13:34:07 GMT
+ id 1uKHBe-0002oa-LO
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 09:51:20 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54S62Lql017452;
+ Wed, 28 May 2025 13:51:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=QljXPgNS3zb4qHEe2/u0MdQlcacM
- PXRmaem8M9pZP8I=; b=eKa4fOw/7zK5wd7H8IFHdUGLZ86zk4/b8U+y1jG6aAQ2
- VKHaWyCOMSCXXMUmsn/fEF6jngi837U2HfGfzP+bjG6yFGd9/yjF4ni1RW/M8b9k
- GzqLtCNUHv2T0CeGcnSfChj1RrLMW0i45g98lIimxvHTwiWpLBEXGByO6VRvOlR5
- ylLUmv2B64MOPmtkOOuM1dyOmSfxwZyDi9sCOl3miFqZrhNXUbVpFE9g3tW285cg
- zg/FBbq9MKdBVHBHEUjibY3wUmA8nDSyHcLX8lj/S0HQN7UvkjLJUWFfPsxoDBAM
- QIYTWWFSZxmFu4TdcQxQ0AX0U/xdM8ANIBHDeDQfwQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46wvfb25bn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 May 2025 13:34:07 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 54SDBfwV006531;
- Wed, 28 May 2025 13:34:07 GMT
+ :mime-version:subject:to; s=pp1; bh=cni9JkzC16V/IWleAx9RTfmkIVhK
+ c7RDuEE+QsojQsg=; b=hQ2LnGPtwHPuRcOqT25U65NEXJ8oNxS5XcEhZmgiX29T
+ lafXHEpX4s0CM3u98j8UsHWHSYoCbn4uur91nEC15vpPCJEcg54Mn4I6cRVXO+N4
+ 6wCDKZNBJPuLTlny5Eo/KkQOye1M2d8NmYYVIy0xuKEEGSckXKJm54Pn34eQNBic
+ 2YGEPtfaoyLO1W8T7MwscyOvVp0iM7eClb5Op7vTRwgGJUFIkh+6hmOFJlN9mxZC
+ rt+Q3cnPXcMh4ogrmNYewZah/+kNtWRcemcCwEziRouHPY70J6ls9kluo6zBI4pY
+ xSe6FNEJknvRVQR/O8bxn46h7Erj4eL4ff980YYCuw==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46wvfb25bh-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46wgsgn643-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 May 2025 13:34:07 +0000 (GMT)
+ Wed, 28 May 2025 13:51:16 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54SAZY5T016121;
- Wed, 28 May 2025 13:34:06 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 46ureufw0h-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 54SAQBtq016114;
+ Wed, 28 May 2025 13:51:15 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 46ureufxq5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 May 2025 13:34:06 +0000
+ Wed, 28 May 2025 13:51:15 +0000
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 54SDY1QS24445530
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 54SDpEpU38077028
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 May 2025 13:34:01 GMT
+ Wed, 28 May 2025 13:51:14 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 723DA5805E;
- Wed, 28 May 2025 13:34:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D7CD65805B;
+ Wed, 28 May 2025 13:51:14 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7866B5805C;
- Wed, 28 May 2025 13:34:03 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B251758058;
+ Wed, 28 May 2025 13:51:13 +0000 (GMT)
 Received: from [9.61.247.249] (unknown [9.61.247.249])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 28 May 2025 13:34:03 +0000 (GMT)
-Message-ID: <96ce3e34-6d4e-4d92-a852-6eee5063140d@linux.ibm.com>
-Date: Wed, 28 May 2025 19:04:01 +0530
+ Wed, 28 May 2025 13:51:13 +0000 (GMT)
+Message-ID: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
+Date: Wed, 28 May 2025 19:21:12 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Content-Language: en-US
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: richard.henderson@linaro.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de
 From: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Subject: CPU hotplug crashed the guest when using virt-type as qemu!
+Subject: virsh migrate fails when --copy-storage-all option is given!
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDExOSBTYWx0ZWRfX8gaEwT/p7jXz
- qNmklYmxl1oItlbNBDNN9Vs7F9tfHhaY1BM62D1ElfIYbiqzbp5uiZK3MPdHpjDGQs1QF7tXXZm
- DxIepMYNvqU/4wX++fGNlQaLYDIj4u+JFExqjn9nOVVegSK1jn9EoCR4gwKkx5p61SvUsrm5tvj
- NEf+rGKNovLuq0zXTb6DNrw9IT6UoMBIJrXt5TquMux/2Yd2TH58FeeF+mSc6bijEL3KdOcxqGg
- UAuGyFxOhrNAkgOMQx7KuEPkUnppc4yPXAqg0Ogp1TCfELdMdMt66dWvAznorX3X7z3a8CN7QIv
- CDXHKcysGB+hoDqsAJJKgCMHogFdK1WgXoqKIZJ4MwXrSlQ+Runq1HorwrSgm6wo08G03joXeqx
- qRbfRdVvLGJEIa3WeJqAfWpZY3smhtWiBvvt+HsFuEz+PKAYVZOC8xaRAD62d1U5+mi31TO4
-X-Proofpoint-ORIG-GUID: yOEgPz_3EUwNa3BtXxm8RMPOtDR0HdV_
-X-Authority-Analysis: v=2.4 cv=bt5MBFai c=1 sm=1 tr=0 ts=683710cf cx=c_pps
+X-Proofpoint-ORIG-GUID: Ky9maYG_-AUabzHTwh5-gP4tSYzw2Jg0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDExOSBTYWx0ZWRfX3d/gcTSAo1Ag
+ xagERNU9H4FMD4NaipmjNVRUsSuDwFljyx1lsrEXYN7QeEM0e+jprieaydZW7EHFL83A/pr3RoX
+ VBT8nEGlaGWj+uhrgmIiJvpBkHpEsOqPc2Rv7iGTjo+34HOHE2JCHOAk+6eb4S9mza8mML+eP0R
+ 2B0gug1CtrpOy2Zx6zuSKCBGHRXdR5gzbt3jHTcxB3R+Ojpk3FSCwG1CUR1jazJ8c/BCyvS26a2
+ iSWIruD0VkKpl5OfcyBjvxvYCSGFDPdYrEfy8e7MyY7TVa+NahiB5h8ACRk+jm7GtAqcqlsLTKA
+ pSOgh/ETsuVQbj7A9mDSQUP3A7LJ89csSA8hWx1xKrZ1uc2r0bM4mvmOEluQ67Zv1caGzreHGuB
+ coIXAyDsZNo2HOcgMG7/jg7KzCk5gPZhca3aXUQs7zBNLE4Vx6oelxqnGXYSriWzEct5xRS1
+X-Authority-Analysis: v=2.4 cv=bZRrUPPB c=1 sm=1 tr=0 ts=683714d4 cx=c_pps
  a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=p0WdMEafAAAA:8 a=S8Nqp2tqgMMLoWVdoMUA:9
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=B96gFoYMLmXjU1mJQAgA:9
  a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: QS4us7QXAGEuagAXdaviXQczuQsaBuqb
+X-Proofpoint-GUID: Ky9maYG_-AUabzHTwh5-gP4tSYzw2Jg0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-28_06,2025-05-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999
- impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 priorityscore=1501 phishscore=0 mlxscore=0
- clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
+ clxscore=1011 adultscore=0
+ mlxscore=0 suspectscore=0 impostorscore=0 bulkscore=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=991 malwarescore=0 spamscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
  definitions=main-2505280119
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=anushree.mathur@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=anushree.mathur@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -109,9 +103,8 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 28 May 2025 09:39:33 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -127,107 +120,120 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi all,
-I have reported this issue on gitlab at 
-https://gitlab.com/qemu-project/qemu/-/issues/2984.
+
+
+When I am trying to migrate the guest from host1 to host2 with the 
+command line as follows:
+
+date;virsh migrate --live --domain guest1 qemu+ssh://dest/system 
+--verbose --undefinesource --persistent --auto-converge --postcopy 
+--copy-storage-all;date
+
+and it fails with the following error message-
+
+error: internal error: unable to execute QEMU command 
+'block-export-add': Block node is read-only
+
+HOST ENV:
+
+qemu : QEMU emulator version 9.2.2
+libvirt : libvirtd (libvirt) 11.1.0
+Seen with upstream qemu also
 
 Steps to reproduce:
+1) Start the guest1
+2) Migrate it with the command as
 
-1) Start a guest with virt-type as qemu
-<domain type='qemu'>
-   <name>linux</name>
-   <uuid>cba9037f-2a62-41f9-98c1-0780b2ff49b9</uuid>
-   <maxMemory slots='16' unit='KiB'>419430400</maxMemory>
-   <memory unit='KiB'>20971520</memory>
-   <currentMemory unit='KiB'>10485760</currentMemory>
-   <memoryBacking>
-     <locked/>
-   </memoryBacking>
-   <vcpu placement='static' current='4'>1024</vcpu>
+date;virsh migrate --live --domain guest1 qemu+ssh://dest/system 
+--verbose --undefinesource --persistent --auto-converge --postcopy 
+--copy-storage-all;date
 
+3) It fails as follows:
+error: internal error: unable to execute QEMU command 
+'block-export-add': Block node is read-only
 
-2) lscpu on host:
-lscpu
-Architecture:             ppc64le
-   Byte Order:             Little Endian
-CPU(s):                   40
-   On-line CPU(s) list:    0-39
-Model name:               POWER10 (architected), altivec supported
-   Model:                  2.0 (pvr 0080 0200)
-   Thread(s) per core:     8
-   Core(s) per socket:     5
-   Socket(s):              1
-   Physical sockets:       4
-   Physical chips:         1
-   Physical cores/chip:    12
+Things I analyzed-
+1) This issue is not happening if I give --unsafe option in the virsh 
+migrate command
 
-3) [On host] virsh setvcpus linux 800
-error: Unable to read from monitor: Connection reset by peer
+2) O/P of qemu-monitor command also shows ro as false
 
-4) Guest is getting into shutoff state
-
-5) I am seeing this issue on upstream qemu also
-
-
-
-Tried reproducing while attaching gdb shows below backtrace which 
-happened after hotplugging 249 CPUs in TCG mode:
-
-Thread 261 "CPU 249/TCG" received signal SIGABRT, Aborted.
-[Switching to Thread 0x7ff97c00ea20 (LWP 51567)]
-0x00007fff84cac3e8 in __pthread_kill_implementation () from 
-target:/lib64/glibc-hwcaps/power10/libc.so.6
-(gdb) bt
-#0  0x00007fff84cac3e8 in __pthread_kill_implementation () from 
-target:/lib64/glibc-hwcaps/power10/libc.so.6
-#1  0x00007fff84c46ba0 in raise () from 
-target:/lib64/glibc-hwcaps/power10/libc.so.6
-#2  0x00007fff84c29354 in abort () from 
-target:/lib64/glibc-hwcaps/power10/libc.so.6
-#3  0x00007fff850f1e30 in g_assertion_message () from 
-target:/lib64/libglib-2.0.so.0
-#4  0x00007fff850f1ebc in g_assertion_message_expr () from 
-target:/lib64/libglib-2.0.so.0
-#5  0x00000001376c6f00 in tcg_region_initial_alloc__locked 
-(s=0x7fff7c000f30) at ../tcg/region.c:396
-#6  0x00000001376c6fa8 in tcg_region_initial_alloc (s=0x7fff7c000f30) at 
-../tcg/region.c:402
-#7  0x00000001376dae08 in tcg_register_thread () at ../tcg/tcg.c:1011
-#8  0x000000013768b7e4 in mttcg_cpu_thread_fn (arg=0x143e884f0) at 
-../accel/tcg/tcg-accel-ops-mttcg.c:77
-#9  0x0000000137bbb2d0 in qemu_thread_start (args=0x143b4aff0) at 
-../util/qemu-thread-posix.c:542
-#10 0x00007fff84ca9be0 in start_thread () from 
-target:/lib64/glibc-hwcaps/power10/libc.so.6
-#11 0x00007fff84d4ef3c in __clone3 () from 
-target:/lib64/glibc-hwcaps/power10/libc.so.6
-(gdb)
-
-
-which points to below code:
-
-/*
-  * Perform a context's first region allocation.
-  * This function does _not_ increment region.agg_size_full.
-  */
-static void tcg_region_initial_alloc__locked(TCGContext *s)
+virsh qemu-monitor-command guest1 --pretty --cmd '{ "execute": 
+"query-block" }'
 {
-     bool err = tcg_region_alloc__locked(s);
-     g_assert(!err);
-}
-
-Here, tcg_region_alloc__locked is defined as below:
-
-
-static bool tcg_region_alloc__locked(TCGContext *s)
-{
-     if (region.current == region.n) {
-         return true;
+   "return": [
+     {
+       "io-status": "ok",
+       "device": "",
+       "locked": false,
+       "removable": false,
+       "inserted": {
+         "iops_rd": 0,
+         "detect_zeroes": "off",
+         "image": {
+           "virtual-size": 21474836480,
+           "filename": "/home/Anu/guest_anu.qcow2",
+           "cluster-size": 65536,
+           "format": "qcow2",
+           "actual-size": 5226561536,
+           "format-specific": {
+             "type": "qcow2",
+             "data": {
+               "compat": "1.1",
+               "compression-type": "zlib",
+               "lazy-refcounts": false,
+               "refcount-bits": 16,
+               "corrupt": false,
+               "extended-l2": false
+             }
+           },
+           "dirty-flag": false
+         },
+         "iops_wr": 0,
+         "ro": false,
+         "node-name": "libvirt-1-format",
+         "backing_file_depth": 0,
+         "drv": "qcow2",
+         "iops": 0,
+         "bps_wr": 0,
+         "write_threshold": 0,
+         "encrypted": false,
+         "bps": 0,
+         "bps_rd": 0,
+         "cache": {
+           "no-flush": false,
+           "direct": false,
+           "writeback": true
+         },
+         "file": "/home/Anu/guest_anu.qcow2"
+       },
+       "qdev": "/machine/peripheral/virtio-disk0/virtio-backend",
+       "type": "unknown"
      }
-     tcg_region_assign(s, region.current);
-     region.current++;
-     return false;
+   ],
+   "id": "libvirt-26"
 }
+
+
+3) Guest doesn't have any readonly
+
+virsh dumpxml guest1 | grep readonly
+
+4) Tried giving the proper permissions also
+
+-rwxrwxrwx. 1 qemu qemu 4.9G Apr 28 15:06 guest_anu.qcow2
+
+5) Checked for the permission of the pool also that is also proper!
+
+6) Found 1 older bug similar to this, pasting the link for reference:
+
+
+https://patchwork.kernel.org/project/qemu-devel/patch/20170811164854.GG4162@localhost.localdomain/
+
+
 
 Thanks,
 Anushree-Mathur
+
+
 
