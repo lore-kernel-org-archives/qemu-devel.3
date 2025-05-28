@@ -4,74 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FCBC54ED1
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 03:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8596AC54ED1
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 03:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK7Nq-0001DB-42; Tue, 27 May 2025 23:23:14 -0400
+	id 1uK7Rc-0001z2-Op; Tue, 27 May 2025 23:27:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK7Nj-0001Ba-RV
- for qemu-devel@nongnu.org; Tue, 27 May 2025 23:23:09 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uK7Ng-0003Ub-QU
- for qemu-devel@nongnu.org; Tue, 27 May 2025 23:23:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748402585; x=1779938585;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=uJGFr7bCe9XZZzxhbwX+BGLNmyXG1OyrjsdWt3QvlfA=;
- b=bnf8k7BUMoV7zfFu07HDrTKubXtWm24qBZ3R9RlCzRrZaC2+1DrlTk9d
- ROnh8Y+aCHsHxDBNFIJ9gUSM6EcsIRHsZXDtPzDG9NvyrP29Wcc0LAZWZ
- ZGwv4RXrar4vRyq1zqm0M3uFqynACO0Y69STcsKCF8ie8Ho3tfFr0MICJ
- yFU+uaubmfVcjZcNdUa1UBm9g0yB6jjkS+NE+HIhzUWG4JIr2pA5+mItI
- dx7mgH8dEyyz5co/KUt05S4tDDEltmAdQm9Kn4A2J2mcJAmGNrxLsyPAP
- +UG7XPUFEcy/xJ3rwmyPBycy/jXwdPOnrZCNmupu4X7yh2SnkjqaszGO5 A==;
-X-CSE-ConnectionGUID: RJfm5wT1R6iafN0lTaYetQ==
-X-CSE-MsgGUID: nRiGiL6SRmiPn3BlSU4vPA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="50291666"
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="50291666"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 20:23:01 -0700
-X-CSE-ConnectionGUID: Gjc0qwmxQaaxA/r2ra9IGg==
-X-CSE-MsgGUID: p7EcRkv+R2e1+uQSV9Dc5g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="174076329"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 20:23:00 -0700
-Message-ID: <bbeba807-ef49-4bd1-abfe-dce8b2a5f9a3@intel.com>
-Date: Wed, 28 May 2025 11:22:57 +0800
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uK7Ra-0001yu-Ce
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 23:27:06 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uK7RY-0004bG-D5
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 23:27:06 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7426c44e014so3117839b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 20:27:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748402823; x=1749007623;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uCFjXR5zgfKX0SKS8i98rNTyKMt9pJNvZ6PgDDYJjY8=;
+ b=tZJQTq6ohkgGWrKmNtD+LGrOCi6cCmnR2lgVz/Js+wnUzZP8HbFacjtgUeMBcOpj/u
+ X+NkMrwe9DtrVoSadNgs5vVqGqK0q0FI4j9d5kLmoMDsv0djxQlqWDF3Wh9D2qgQd6tQ
+ /arpkFDAQyS/+RykKqHnKoNVF3/VHqGKQVngyFDn8s5mtaAX0Y2gUuZM3fyMLhy0WpaT
+ XiDmu7FFXNax7J077ieR3CAh0ZkFRS4YkTXrzt9KqTUW9Gxn2H9wh4B8P4FPVqsWLgKj
+ rR9CIN9MQ5SrKjstN0g2GUqyOyREa2Dr65iJTCEaAMvW7W9xy31cNJnPtC/ziU8AVY+T
+ oLSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748402823; x=1749007623;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uCFjXR5zgfKX0SKS8i98rNTyKMt9pJNvZ6PgDDYJjY8=;
+ b=wS0uCAy1hU7ACedPSwoSVQjX7vTe8ZKv55uv7FAS9Kx2Os740GGZ56W2xLd2SWX69m
+ tVFLHtIOVfbB1POTs/6WCWvLmzzuh5VFPpqutv9ES0RrkeNqW7c/utktWFOnsbVUMVZG
+ ISpD225DB00W1LkdrFIRixK4MT9v80kXoCjs4dFjopUT9RfICDJGKgvqCJaEyg3LE2Sb
+ BcwquPD/4abWgSa6dU8FIEaY32sf9rTzErUMgS2iyhplVhgYHqttTvwCG3vJOwDaUEtP
+ yMCjH1ob11W0E5LHKRDkBwhe9t0iQVUcKVTyBEwhU70xDQ+PsLJQw+6UyhUySfZjd3+j
+ UnGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCIquOqMFt6iiMan21hFqRLcTuFN5g1fT4JVraWWq21NRcDGf4qBSqd4ZAT3HV2BS3sURvNpNFxcNa@nongnu.org
+X-Gm-Message-State: AOJu0Yx9XQ/edQ3w17XiwPQiDz0N3a8h/ZSP//bVfP1+5KLtMFwZYhAa
+ 6NmUGd4U+397rtVMJaDyfaHGXUdm56TtiGXHoUDfwHxYB76fQsh4U+BnNqg/RCSxOdw=
+X-Gm-Gg: ASbGncveuEAVitkZthztlYqlF3otgZX42fsvaJEIkI562BulTPfcdqDIaRHxO4qXA+Y
+ TaVYhyqi/mFoRLjH6craDCC7VxeD4dMZ2TvTNmFJS5a2LGHDMqVGyE+YJphFyrX4fiT9QHknDLO
+ JHG0uT8LEJwZAv8+cJvRuqMIl+vjFSSJ5qygAXgAoOapqwLWlHUPH64PNYY//fzN0aGg6b2ihHx
+ myBUXShi6mdF/NjQ/17a+lO1QcwzGxXObiJJtF3PorSep+rdHEDQNYOEZQ4kdTvFfyqoUnaOrYZ
+ 8aCbRatD8NM8tVOKAMNTG0A6Mc9vgbPQz+/6PREB7K+JjEYbO48Ubc+lrUOtgjoaQwXHy6si
+X-Google-Smtp-Source: AGHT+IG9blmonXPSH3djRpbEzvIprHVSrUZNAmsThoxzfVi1YRZEXQewSo5NvKQGjUl5IZaIKCI0Dw==
+X-Received: by 2002:a05:6a20:9f08:b0:215:e1a0:805f with SMTP id
+ adf61e73a8af0-21aad937af0mr975781637.31.1748402822649; 
+ Tue, 27 May 2025 20:27:02 -0700 (PDT)
+Received: from [10.100.116.185] ([157.82.128.1])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-746e3442729sm236389b3a.155.2025.05.27.20.27.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 May 2025 20:27:02 -0700 (PDT)
+Message-ID: <feb0d8ee-ae0e-44f3-ac79-dde785de6463@daynix.com>
+Date: Wed, 28 May 2025 12:26:59 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "i386/cpu: Set up CPUID_HT in
- x86_cpu_expand_features() instead of cpu_x86_cpuid()"
-To: Zhao Liu <zhao1.liu@intel.com>, elisey.konstantinov@icloud.com
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
-References: <0C532D10-33ED-41F5-BBA7-13C64AA0633D@icloud.com>
- <aDaCJTkoDYsdJFmJ@intel.com>
+Subject: Re: [PATCH v4 00/11] Improve futex usage
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Stefan Weil <sw@weilnetz.de>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
+ devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250526-event-v4-0-5b784cc8e1de@daynix.com>
+ <9461fc05-3c1d-4236-a0b7-99f39781f278@redhat.com>
+ <a8d508a2-7369-4ccd-a6a7-7c74b38c962a@daynix.com>
+ <CABgObfbh+VOvjWBM-NdTWnuSzgkmjLN=nfskLrxL8-NBtJwUTQ@mail.gmail.com>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aDaCJTkoDYsdJFmJ@intel.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CABgObfbh+VOvjWBM-NdTWnuSzgkmjLN=nfskLrxL8-NBtJwUTQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -62
-X-Spam_score: -6.3
-X-Spam_bar: ------
-X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,96 +111,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/28/2025 11:25 AM, Zhao Liu wrote:
-> Hi Elisey,
+On 2025/05/28 0:01, Paolo Bonzini wrote:
+> On Tue, May 27, 2025 at 5:01 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>> I'd like to submit it with "[PATCH v4 05/11] qemu-thread: Avoid futex
+>> abstraction for non-Linux" because it aligns the implementations of
+>> Linux and non-Linux versions to rely on a store-release of EV_SET in
+>> qemu_event_set().
 > 
-> Thank you for your patch! I'm sorry I previously noticed #2894 [*] but
-> missed your report.
+> Ok, I see what you mean - you would like the xchg to be an
+> xchg_release essentially.
 > 
-> Recently there's a fix (commit 5979f50fa9fd ("i386/tcg: Make CPUID_HT
-> and CPUID_EXT3_CMP_LEG supported")). Does that fix address this bug?
+> There is actually one case in which skipping the xchg has an effect.
+> If you have the following:
 > 
-> [*]: https://lore.kernel.org/qemu-devel/aCWdhIqZiu4q+UJi@intel.com/
-
-It should be the next one for hvf accelerator in this series that helps. 
-Because the regression reported is on macOS.
-
-It's merged as commit 7a4861230676 ("i386/hvf: Make CPUID_HT supported") 
-for qemu/master
-
-and it should be in qemu stable 10.0.1:
-https://lore.kernel.org/qemu-devel/20250525120818.273372-28-mjt@tls.msk.ru/
-
-> Regards,
-> Zhao
+> - one side does
 > 
-> On Tue, May 27, 2025 at 07:10:27PM +0300, elisey.konstantinov@icloud.com wrote:
->> Date: Tue, 27 May 2025 19:10:27 +0300
->> From: elisey.konstantinov@icloud.com
->> Subject: [PATCH] Revert "i386/cpu: Set up CPUID_HT in
->>   x86_cpu_expand_features() instead of cpu_x86_cpuid()"
->> X-Mailer: Apple Mail (2.3826.600.51.1.1)
->>
->>  From e2f3eab60e9b9787c5c8f87bea5d1bd7079d982e Mon Sep 17 00:00:00 2001
->> From: Elisey <elisey.konstantinov@icloud.com>
->> Date: Tue, 27 May 2025 17:17:35 +0300
->> Subject: [PATCH] Revert "i386/cpu: Set up CPUID_HT in x86_cpu_expand_features() instead of cpu_x86_cpuid()"
->>
->> This reverts commit c6bd2dd634208ca717b6dc010064fe34d1359080.
->>
->> The original change caused a regression where macOS guests (XNU kernel)
->> would panic during boot with a divide error (type=0) when using SMP
->> configuration. This affects multiple macOS versions from 10.6 to 10.14
->> and possibly others.
->>
->> The issue occurs during kernel TSC initialization and can be worked
->> around by using single-core configuration (-smp 1), but reverting this
->> change restores proper multi-core functionality.
->>
->> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2933
->> Tested-by: Elisey Konstantinov <elisey.konstantinov@icloud.com>
->> Signed-off-by: Elisey Konstantinov <elisey.konstantinov@icloud.com>
->> ---
->> target/i386/cpu.c | 15 +--------------
->> 1 file changed, 1 insertion(+), 14 deletions(-)
->>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index 9689f6374e..c648a1cf04 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -6859,6 +6859,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->>          *edx = env->features[FEAT_1_EDX];
->>          if (threads_per_pkg > 1) {
->>              *ebx |= threads_per_pkg << 16;
->> +            *edx |= CPUID_HT;
->>          }
->>          if (!cpu->enable_pmu) {
->>              *ecx &= ~CPUID_EXT_PDCM;
->> @@ -7838,20 +7839,6 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
->>          }
->>      }
->>
->> -    if (x86_threads_per_pkg(&env->topo_info) > 1) {
->> -        env->features[FEAT_1_EDX] |= CPUID_HT;
->> -
->> -        /*
->> -         * The Linux kernel checks for the CMPLegacy bit and
->> -         * discards multiple thread information if it is set.
->> -         * So don't set it here for Intel (and other processors
->> -         * following Intel's behavior) to make Linux guests happy.
->> -         */
->> -        if (!IS_INTEL_CPU(env) && !IS_ZHAOXIN_CPU(env)) {
->> -            env->features[FEAT_8000_0001_ECX] |= CPUID_EXT3_CMP_LEG;
->> -        }
->> -    }
->> -
->>      for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
->>          FeatureDep *d = &feature_dependencies[i];
->>          if (!(env->features[d->from.index] & d->from.mask)) {
->> -- 
->> 2.39.5 (Apple Git-154)
->>
->>
+>    s.foo = 1;
+>    qemu_event_set(&s.ev);
 > 
+> - the other side never reaches the qemu_event_reset(&s.ev)
+> 
+> then skipping the xchg might allow the cacheline for ev to remain
+> shared. This is unlikely to *make* a difference, though it does
+> *exist* as a difference, so I will review the patch, but I really
+> prefer to place it last.  It's safer to take a known-working
+> algorithm, apply it to all OSes (or at least Linux and Windows), and
+> only then you refine it. It also makes my queue shorter.
 
+Compilers and processors are free to make such an optimization so the 
+contract between us and them does not change in that sense.
+
+On the other hand, the removal of smb_mb() does change the contract; now 
+compilers and processors are free to reorder loads and stores specified 
+before qemu_event_set() after the load of ev->value, which was not 
+possible in the past.
+
+I'm confident that the change of the contract is safe, but it makes 
+sense to pay extra caution.  I'll reorder the patches with the next version.
+
+Regards,
+Akihiko Odaki
 
