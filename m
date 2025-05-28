@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29E0C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E872C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKDgg-0006Bi-Ha; Wed, 28 May 2025 06:07:06 -0400
+	id 1uKDgd-0005p8-3S; Wed, 28 May 2025 06:07:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDge-00061q-0w
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:07:04 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDgO-0004rG-Iz
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDgc-0007M5-18
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:07:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDgI-0007Iy-Ni
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748426821;
+ s=mimecast20190719; t=1748426795;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dEb4Kr7OH9mfQyQBPGxtAjcpcZHJ1m3zlbwT48wH6rM=;
- b=DR0xxjVfzrIsiUUWwK6Rdj8V+4LBzTD1HCTUI+xn4AWyMxJs2eICC4qvF35zQUMrSfxyRS
- nkpljgbsiHuixojXjqrXAFKpGnlfb/D1NfJw9mgz2u7MbSBGqT0TAA6Kp+M58BWgI6bocv
- GZeVdNAf5c7m1gzOIQ1l4kzheQu+aTY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=0LUMQ2s0adqb0824GaQ5lu0r6aD3qTFWNdBDBR5nDao=;
+ b=ac4xDmL2+iDgtmGiRwklVyzFapuQ2+YzfY88fEdaoFWtM4/JanmNuEWDSZHhFmwYPZmXU0
+ BBc589xBBldk110keZa8B9uP8uiK41Dse4ZkhvAudspX+AYQJgH4NXoefyzcaxGF8452Qn
+ r8Y8ueNQd6Bwex4VYlFnypK1WK0tNaE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-W53lTc3zPyWFYmElZ9ko9w-1; Wed,
- 28 May 2025 06:05:31 -0400
-X-MC-Unique: W53lTc3zPyWFYmElZ9ko9w-1
-X-Mimecast-MFC-AGG-ID: W53lTc3zPyWFYmElZ9ko9w_1748426730
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-LWuLtyb_N0y3oYho6EwZVg-1; Wed,
+ 28 May 2025 06:06:31 -0400
+X-MC-Unique: LWuLtyb_N0y3oYho6EwZVg-1
+X-Mimecast-MFC-AGG-ID: LWuLtyb_N0y3oYho6EwZVg_1748426790
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 813731955D93; Wed, 28 May 2025 10:05:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E38551800258; Wed, 28 May 2025 10:06:29 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.110])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7229B180049D; Wed, 28 May 2025 10:05:28 +0000 (UTC)
+ id D6EB7180049D; Wed, 28 May 2025 10:06:26 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 06/27] hw/microblaze: Add endianness property to the
- petalogix_s3adsp1800 machine
-Date: Wed, 28 May 2025 12:04:46 +0200
-Message-ID: <20250528100507.313906-7-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 23/27] hw/scsi/vmw_pvscsi: Convert DeviceRealize -> InstanceInit
+Date: Wed, 28 May 2025 12:05:03 +0200
+Message-ID: <20250528100507.313906-24-thuth@redhat.com>
 In-Reply-To: <20250528100507.313906-1-thuth@redhat.com>
 References: <20250528100507.313906-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,104 +85,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Since the microblaze target can now handle both endianness, big and
-little, we should provide a config knob for the user to select the
-desired endianness.
+Simplify replacing pvscsi_realize() by pvscsi_instance_init(),
+removing the need for device_class_set_parent_realize().
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Message-ID: <20250512083948.39294-17-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250515132019.569365-2-thuth@redhat.com>
 ---
- hw/microblaze/petalogix_s3adsp1800_mmu.c | 41 +++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 5 deletions(-)
+ hw/scsi/vmw_pvscsi.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index 032f6f70eac..edc5d0dcfd0 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -58,9 +58,20 @@
- #define TYPE_PETALOGIX_S3ADSP1800_MACHINE \
-             MACHINE_TYPE_NAME("petalogix-s3adsp1800")
+diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
+index e163023d14c..7c98b1b8ea6 100644
+--- a/hw/scsi/vmw_pvscsi.c
++++ b/hw/scsi/vmw_pvscsi.c
+@@ -1267,21 +1267,15 @@ static const Property pvscsi_properties[] = {
+     DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
+ };
  
-+struct S3Adsp1800MachineState {
-+    MachineState parent_class;
-+
-+    EndianMode endianness;
-+};
-+
-+OBJECT_DECLARE_TYPE(S3Adsp1800MachineState, MachineClass,
-+                    PETALOGIX_S3ADSP1800_MACHINE)
-+
-+
- static void
- petalogix_s3adsp1800_init(MachineState *machine)
+-static void pvscsi_realize(DeviceState *qdev, Error **errp)
++static void pvscsi_instance_init(Object *obj)
  {
-+    S3Adsp1800MachineState *psms = PETALOGIX_S3ADSP1800_MACHINE(machine);
-     ram_addr_t ram_size = machine->ram_size;
-     DeviceState *dev;
-     MicroBlazeCPU *cpu;
-@@ -71,13 +82,12 @@ petalogix_s3adsp1800_init(MachineState *machine)
-     MemoryRegion *phys_ram = g_new(MemoryRegion, 1);
-     qemu_irq irq[32];
-     MemoryRegion *sysmem = get_system_memory();
--    EndianMode endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG
--                                              : ENDIAN_MODE_LITTLE;
-+    EndianMode endianness = psms->endianness;
- 
-     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
-     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
-     object_property_set_bool(OBJECT(cpu), "little-endian",
--                             !TARGET_BIG_ENDIAN, &error_abort);
-+                             endianness == ENDIAN_MODE_LITTLE, &error_abort);
-     qdev_realize(DEVICE(cpu), NULL, &error_abort);
- 
-     /* Attach emulated BRAM through the LMB.  */
-@@ -135,20 +145,41 @@ petalogix_s3adsp1800_init(MachineState *machine)
- 
-     create_unimplemented_device("xps_gpio", GPIO_BASEADDR, 0x10000);
- 
--    microblaze_load_kernel(cpu, !TARGET_BIG_ENDIAN, ddr_base, ram_size,
--                           machine->initrd_filename,
-+    microblaze_load_kernel(cpu, endianness == ENDIAN_MODE_LITTLE, ddr_base,
-+                           ram_size, machine->initrd_filename,
-                            BINARY_DEVICE_TREE_FILE,
-                            NULL);
+-    PVSCSIClass *pvs_c = PVSCSI_GET_CLASS(qdev);
+-    PCIDevice *pci_dev = PCI_DEVICE(qdev);
+-
+-    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+-
+-    pvs_c->parent_dc_realize(qdev, errp);
++    PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
  }
  
-+static int machine_get_endianness(Object *obj, Error **errp G_GNUC_UNUSED)
-+{
-+    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
-+    return ms->endianness;
-+}
-+
-+static void machine_set_endianness(Object *obj, int endianness, Error **errp)
-+{
-+    S3Adsp1800MachineState *ms = PETALOGIX_S3ADSP1800_MACHINE(obj);
-+    ms->endianness = endianness;
-+}
-+
- static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
-                                                     const void *data)
+ static void pvscsi_class_init(ObjectClass *klass, const void *data)
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-+    ObjectProperty *prop;
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-    PVSCSIClass *pvs_k = PVSCSI_CLASS(klass);
+     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
  
-     mc->desc = "PetaLogix linux refdesign for xilinx Spartan 3ADSP1800";
-     mc->init = petalogix_s3adsp1800_init;
-     mc->is_default = true;
-+
-+    prop = object_class_property_add_enum(oc, "endianness", "EndianMode",
-+                                          &EndianMode_lookup,
-+                                          machine_get_endianness,
-+                                          machine_set_endianness);
-+    object_property_set_default_str(prop, TARGET_BIG_ENDIAN ? "big" : "little");
-+    object_class_property_set_description(oc, "endianness",
-+            "Defines whether the machine runs in big or little endian mode");
- }
- 
- static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
+     k->realize = pvscsi_realizefn;
+@@ -1290,8 +1284,6 @@ static void pvscsi_class_init(ObjectClass *klass, const void *data)
+     k->device_id = PCI_DEVICE_ID_VMWARE_PVSCSI;
+     k->class_id = PCI_CLASS_STORAGE_SCSI;
+     k->subsystem_id = 0x1000;
+-    device_class_set_parent_realize(dc, pvscsi_realize,
+-                                    &pvs_k->parent_dc_realize);
+     device_class_set_legacy_reset(dc, pvscsi_reset);
+     dc->vmsd = &vmstate_pvscsi;
+     device_class_set_props(dc, pvscsi_properties);
+@@ -1306,6 +1298,7 @@ static const TypeInfo pvscsi_info = {
+     .class_size    = sizeof(PVSCSIClass),
+     .instance_size = sizeof(PVSCSIState),
+     .class_init    = pvscsi_class_init,
++    .instance_init = pvscsi_instance_init,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_HOTPLUG_HANDLER },
+         { INTERFACE_PCIE_DEVICE },
 -- 
 2.49.0
 
