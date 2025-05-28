@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 688B4C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C327C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 08:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKBvk-0007w7-EK; Wed, 28 May 2025 04:14:33 -0400
+	id 1uKBvi-0007vF-TA; Wed, 28 May 2025 04:14:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBvb-0007u2-Po
+ id 1uKBvb-0007u1-PT
  for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:24 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uKBvY-0005Cw-OS
+ id 1uKBvY-0005D7-NL
  for qemu-devel@nongnu.org; Wed, 28 May 2025 04:14:23 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-44b1f5b917fso25867515e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:16 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43cec5cd73bso33407345e9.3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 01:14:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748420055; x=1749024855; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748420057; x=1749024857; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=azdm+UxBkdRxIzgKmwhwW+GH3cYuHoEtpkJtFbR5x4c=;
- b=eCDfRk0jEnnEzUB7olLHyzPhQw7xnrF6qgBuqWmx397UMcnMYVHLelgYnyqVBfpKAh
- bHiHCoA8kgUotg3MJY8LLQm2pY1iZ93BZfRCupjLTqh/BIp5n7B2N1yJKqVMaAqgzFe6
- 5igG37QxY6e5QxgcrIGYeTWXIIEG4Zym97xIavlPh3VFBp55+OMQCbnXE+wy8Z3n9tNw
- lROmHISvKVHQpBlajbCSSWBLqRflfJmw2/0J6DZUAJdO1N4GCPL3uYgEnzA+SJLqzNmR
- 8D9j0gwNxCgsbn8zOpijqGJsw+SShCBKY7I6mEPs8gYx64wU+yc/lFzV6pAf9Ob8TAyb
- DyaQ==
+ bh=zh/urG861ozt+kR4uVLI4zuKmsrdPyReVEilzcFUTzo=;
+ b=bQrqDkASf3NL4gF+KnPRkG3kK7ZmfZrctqoREtH1aL9wvzEKEHAPf+KcUXL+Kd8PGQ
+ ABG0c9cQLthYwx+i6i2PGZoxKDTfee3sIvNO7kiFDXVfQUobsaCtHoxF5/uq7smbgzN2
+ 9nwGXLgGQFUhvnncELVd2rjlavcaEV1WfAvhuNGVSZm7kwLCRyx/eUHtjfBlUMBRM0Bz
+ 3PAnmO3pRfUHxbjOEaQk3sHhTMyMK5RSUx22hwnYhiSRcnLolGNjsb7Tw4BiikTYPUSs
+ yeTwMINM6v3qOBrL+l9w5SBgio0RWl9tthrJw9lV0MUQ1lou6FOnBNcPodN4W2FDMEQf
+ nn6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748420055; x=1749024855;
+ d=1e100.net; s=20230601; t=1748420057; x=1749024857;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=azdm+UxBkdRxIzgKmwhwW+GH3cYuHoEtpkJtFbR5x4c=;
- b=cs586kZNrNCi9O9NCUZUP62tZzxr4hCTBmk1spf4pv1r3GBnRU3nGvHOjehlw7luew
- BzgNxz1g2IgQUc+6njnAyk8RNuI/AxXqgHJrISJWRh+jXMakZga4VrjNiXevbdh+Ru9L
- L7BJIIrSMQBqNaiRLiR6dI6T19aiCa1jb50q2TnbdFLL8QHgIN99stL+1CFhDCU6rIid
- Rav7+8yQG/jWfzn7F2F8YP8YPW8JbNMvU+M0GAstK/Qh5ICNZe6o8Gyz7uX4+3xmTNKW
- V9cJPb+isBx8ocdwuNMiqKy0kqe8l6mrrchtvzxl4PswAaoJ7fwP5sIheoUedzqcUgj8
- vYwg==
-X-Gm-Message-State: AOJu0Yx1JCv4hWRw1u2+K6b1eg+MHA7z3YUgs1zGJsqKJMYp1nkg6seg
- TK/OyNg/vIpJ5zlflMLteO4BH5Y/Rp2dnzfXhV+7fDwMXtRwdCjFSYHY1010go+TXhX12l0n04P
- +9awBgWdOAQ==
-X-Gm-Gg: ASbGnctvS5KU8FV7T3/kTPRgQOLUk8+XQddn0O1IkF23GJNbYRi4Fsmv6W7Jyw1LLef
- HviPMjKySd6pDYE+NvGUn+6M4xPd+ZaR05GHrQa3uC1KWJqn0wqE2vgN2KlD46R7Z22J7F3VNu9
- nm9vD7U6Zl/bqNOjfaRghvbXRrMjgqHN1z0Oa0VxH+RDdqeUzfnRZOrlfnErLj1G3Cw/6xG2hpK
- WHWoNbI078lTBkeO6sS9r/FVjXq8naCeHengfhDUOSn+Rmzic/dID6aq7TKUAXhdRkqmhg9LKBg
- RykxTTs/vdoHny3RX9ZWcZDITyk1x5NE1/RRho4ggbSI884sEDXIjp34
-X-Google-Smtp-Source: AGHT+IEitChxRskBOpckNlAeKZTGyH6lERsUE1B1sRmN0bJZFD/naYVMvVwy1aaSn5ZrBZHr38cAIw==
-X-Received: by 2002:a05:600c:6308:b0:43d:2313:7b4a with SMTP id
- 5b1f17b1804b1-44c9141ac4emr179687875e9.3.1748420055508; 
- Wed, 28 May 2025 01:14:15 -0700 (PDT)
+ bh=zh/urG861ozt+kR4uVLI4zuKmsrdPyReVEilzcFUTzo=;
+ b=tUcA44msHVA1Vn3EK1sIfC2O0G+hL1zqGGbtcJwHPbq5oQ5vrJwvZReMbSPFr5dlVP
+ LFWwoTrpnTXvunLjOKBD+EKyweozQeG7ZR/DbfjXfUH8kiA2S52mCwLhWTLSsp/fr5de
+ K1gQaA0UGNrtt2h3vBXXez7RNQhg6k38SlVJ7+9PHDEXQafSr78MT5SZMnIdXpz8Ohs1
+ d9OUx+eNGTgD2qPIb0yqfd65/c7uOaxC861NAIoCuSbzFXRRBGV8gx+jUsoSN9pYhrGN
+ y8jyLtP2zv2MjN0NdqJSy2/Fw50HXKnwfd7hqBgaEgc6Ve9cSj79I2dnkkU3HEdtq27E
+ fujw==
+X-Gm-Message-State: AOJu0YzCGikcRCIn+2LSs/voCm8d+4Mkr9vk6iA25xT0BxwsK2HPWrWt
+ V+lAJH/eHcKeDERl5KbYj9A7O4yVcynSEnUTFTo4RAlyEiLymWux5vLeETa4pkiBNjLmkOiZw3V
+ dDIHarRpN7A==
+X-Gm-Gg: ASbGncumwjerGsBGCNEUGD98S5dxyGFCVAmgT7Ya1vG8nZ6w8WFC7AQqzBarbescoyV
+ zNt6JuFz6D1rE9x/ar4odKjLdHoVBWBo8YPiepLH+rDC5jk/rJv5MeBwcyOO/LG2ANsKg0oczmk
+ T+6qPyb0a0+/mas/V/zi0ptovvHpTnEl3VIr5s+k0Pp8sBxqWlIUifZgHKk34ev4LHo6kIDEIEe
+ Dh+QpAz54VgFf53SfArer6QmlxD0zI91+jY43SCJXt1zl5+DHVMv0U+xu5lPgWN4/7/yo29AbvN
+ X638YuKPueRMVSoLELVxtoY8SWbfgSRPz5n1YtmBlcSfgSJQbN6nNhGSkvSDSin5tGo=
+X-Google-Smtp-Source: AGHT+IG2E1wS89Ifzu1qiB+DAvK2csEF4Z8QODJH+LVNlX8jj4QsenAmbjskM85XnBZVKvXhbDJ3WQ==
+X-Received: by 2002:a05:600c:8189:b0:442:c98e:79ab with SMTP id
+ 5b1f17b1804b1-44c919e143cmr141928085e9.9.1748420056632; 
+ Wed, 28 May 2025 01:14:16 -0700 (PDT)
 Received: from stoup.. ([195.53.115.74]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.14
+ 5b1f17b1804b1-4500e1d85b5sm13178645e9.32.2025.05.28.01.14.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 01:14:14 -0700 (PDT)
+ Wed, 28 May 2025 01:14:16 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 02/28] system/main: comment lock rationale
-Date: Wed, 28 May 2025 09:13:44 +0100
-Message-ID: <20250528081410.157251-3-richard.henderson@linaro.org>
+Cc: Andreas Schwab <schwab@suse.de>
+Subject: [PULL 03/28] linux-user: implement pgid field of /proc/self/stat
+Date: Wed, 28 May 2025 09:13:45 +0100
+Message-ID: <20250528081410.157251-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250528081410.157251-1-richard.henderson@linaro.org>
 References: <20250528081410.157251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
@@ -97,42 +97,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Andreas Schwab <schwab@suse.de>
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Andreas Schwab <schwab@suse.de>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250515174641.4000309-1-pierrick.bouvier@linaro.org>
+Message-ID: <mvmfrgzcr4m.fsf@suse.de>
 ---
- system/main.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ linux-user/syscall.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/system/main.c b/system/main.c
-index 1c02206734..b8f7157cc3 100644
---- a/system/main.c
-+++ b/system/main.c
-@@ -69,8 +69,21 @@ int (*qemu_main)(void) = os_darwin_cfrunloop_main;
- int main(int argc, char **argv)
- {
-     qemu_init(argc, argv);
-+
-+    /*
-+     * qemu_init acquires the BQL and replay mutex lock. BQL is acquired when
-+     * initializing cpus, to block associated threads until initialization is
-+     * complete. Replay_mutex lock is acquired on initialization, because it
-+     * must be held when configuring icount_mode.
-+     *
-+     * On MacOS, qemu main event loop runs in a background thread, as main
-+     * thread must be reserved for UI. Thus, we need to transfer lock ownership,
-+     * and the simplest way to do that is to release them, and reacquire them
-+     * from qemu_default_main.
-+     */
-     bql_unlock();
-     replay_mutex_unlock();
-+
-     if (qemu_main) {
-         QemuThread main_loop_thread;
-         qemu_thread_create(&main_loop_thread, "qemu_main",
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 23b901b713..fc37028597 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8235,6 +8235,9 @@ static int open_self_stat(CPUArchState *cpu_env, int fd)
+         } else if (i == 3) {
+             /* ppid */
+             g_string_printf(buf, FMT_pid " ", getppid());
++        } else if (i == 4) {
++            /* pgid */
++            g_string_printf(buf, FMT_pid " ", getpgrp());
+         } else if (i == 19) {
+             /* num_threads */
+             int cpus = 0;
 -- 
 2.43.0
 
