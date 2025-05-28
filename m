@@ -4,77 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C139C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90009C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 13:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKGaw-0003vf-Pr; Wed, 28 May 2025 09:13:22 -0400
+	id 1uKGgp-0006cz-LA; Wed, 28 May 2025 09:19:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKGas-0003ux-0h
- for qemu-devel@nongnu.org; Wed, 28 May 2025 09:13:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1uKA3J-000534-UL; Wed, 28 May 2025 02:14:13 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKGak-0005NV-4z
- for qemu-devel@nongnu.org; Wed, 28 May 2025 09:13:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748437988;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eSyq00FxFp/uB3JwzlqpcOQEDruq/lkLgFqqcLgJeBk=;
- b=ZsfYDTOY8vLuenzzUxNYcCu/rn70zG8UK+mzbGti+M7XmiKFmVcls1WXLOUJ26oN4oyn7R
- dCLVfneQjTHFOHfmuvmjRz+kNhltXDki4f6i+i8JEEpSl27ZAO7+88VwehEkSwaqOyPjiI
- lEMlNvIqom7C8EE8MYb7oqTfpuUWnMw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-TVa7NnUBPLiOzzrkIjzr1w-1; Wed,
- 28 May 2025 09:13:03 -0400
-X-MC-Unique: TVa7NnUBPLiOzzrkIjzr1w-1
-X-Mimecast-MFC-AGG-ID: TVa7NnUBPLiOzzrkIjzr1w_1748437982
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 309D41800256; Wed, 28 May 2025 13:13:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 772CA1944B05; Wed, 28 May 2025 13:13:01 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 97F3A21E675E; Wed, 28 May 2025 15:12:58 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-rust@nongnu.org
-Subject: Re: [PATCH 07/12] qemu-api: add bindings to Error
-In-Reply-To: <CABgObfY1tAEEy70RSW78Tn+s+xRPw9xXSRmFU-QVYLRLe20SYQ@mail.gmail.com>
- (Paolo Bonzini's message of "Wed, 28 May 2025 12:45:10 +0200")
-References: <20250526142254.1061009-1-pbonzini@redhat.com>
- <20250526142455.1061519-7-pbonzini@redhat.com>
- <87o6vddpzm.fsf@pond.sub.org>
- <CABgObfY1tAEEy70RSW78Tn+s+xRPw9xXSRmFU-QVYLRLe20SYQ@mail.gmail.com>
-Date: Wed, 28 May 2025 15:12:58 +0200
-Message-ID: <87o6vcdgkl.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1uKA3G-0001hg-9g; Wed, 28 May 2025 02:14:13 -0400
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 54S6Dg32076354
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 May 2025 14:13:42 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from ethan84-VirtualBox (10.0.12.74) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 28 May 2025
+ 14:13:42 +0800
+Date: Wed, 28 May 2025 14:13:41 +0800
+To: Alistair Francis <alistair23@gmail.com>
+CC: <qemu-devel@nongnu.org>, <richard.henderson@linaro.org>,
+ <pbonzini@redhat.com>, <palmer@dabbelt.com>,
+ <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
+ <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
+ <peterx@redhat.com>, <david@redhat.com>, <philmd@linaro.org>,
+ <qemu-riscv@nongnu.org>
+Subject: Re: [PATCH v11 8/8] hw/riscv/virt: Add IOPMP support
+Message-ID: <aDaplfE9HeBhfrk1@ethan84-VirtualBox>
+References: <20250312093735.1517740-1-ethan84@andestech.com>
+ <20250312093735.1517740-9-ethan84@andestech.com>
+ <CAKmqyKMwfjYbYeCNHdVcCcfEUQZyE12isetwmky0V9WbPjabJw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKmqyKMwfjYbYeCNHdVcCcfEUQZyE12isetwmky0V9WbPjabJw@mail.gmail.com>
+User-Agent: Mutt/2.1.4 (2021-12-11)
+X-Originating-IP: [10.0.12.74]
+X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 54S6Dg32076354
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, PDS_RDNS_DYNAMIC_FP=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 28 May 2025 09:19:18 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,370 +72,326 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Thu, May 22, 2025 at 11:24:28AM +1000, Alistair Francis wrote:
+> [EXTERNAL MAIL]
+> 
+> On Wed, Mar 12, 2025 at 7:43 PM Ethan Chen via <qemu-devel@nongnu.org> wrote:
+> >
+> > - Add 'iopmp=on' option to enable IOPMP. It adds iopmp devices virt machine
+> >   to protect all regions of system memory.
+> >
+> > Signed-off-by: Ethan Chen <ethan84@andestech.com>
+> > ---
+> >  docs/specs/index.rst       |  1 +
+> >  docs/specs/riscv-iopmp.rst | 60 ++++++++++++++++++++++++++++++
+> >  docs/system/riscv/virt.rst |  9 +++++
+> >  hw/riscv/Kconfig           |  1 +
+> >  hw/riscv/virt.c            | 75 ++++++++++++++++++++++++++++++++++++++
+> >  include/hw/riscv/virt.h    |  3 ++
+> >  6 files changed, 149 insertions(+)
+> >  create mode 100644 docs/specs/riscv-iopmp.rst
+> >
+> > diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+> > index f19d73c9f6..0871c17b8f 100644
+> > --- a/docs/specs/index.rst
+> > +++ b/docs/specs/index.rst
+> > @@ -39,3 +39,4 @@ guest hardware that is specific to QEMU.
+> >     riscv-iommu
+> >     riscv-aia
+> >     aspeed-intc
+> > +   riscv-iopmp
+> > diff --git a/docs/specs/riscv-iopmp.rst b/docs/specs/riscv-iopmp.rst
+> > new file mode 100644
+> > index 0000000000..36a395e552
+> > --- /dev/null
+> > +++ b/docs/specs/riscv-iopmp.rst
+> > @@ -0,0 +1,60 @@
+> > +.. _riscv-iopmp:
+> > +
+> > +RISC-V IOPMP support for RISC-V machines
+> > +========================================
+> > +
+> > +IOPMP support is based on `IOPMP specification version 0.7`_. The device is
+> > +available on the RISC-V virt machine but is disabled by default. To enable
+> > +iopmp device, use the 'iopmp' machine option
+> > +
+> > +.. code-block:: bash
+> > +
+> > +  $ qemu-system-riscv64 -M virt,iopmp=on
+> > +
+> > +On the virt board, the number of IOPMP device is fixed at 1, and its protect
+> > +region is fixed to 0x0~0xFFFFFFFF.
+> > +
+> > +To configure IOPMP device, modify gloal driver property
+> > +
+> > +.. code-block:: bash
+> > +
+> > +  -global driver=riscv_iopmp, property=<property>, value=<value>
+> > +
+> > +Below are the IOPMP device properties and their default values:
+> > +
+> > +- mdcfg_fmt: 1 (Options: 0/1/2)
+> > +- srcmd_fmt: 0 (Options: 0/1/2)
+> > +- tor_en: true (Options: true/false)
+> > +- sps_en: false (Options: true/false)
+> > +- prient_prog: true (Options: true/false)
+> > +- rrid_transl_en: false (Options: true/false)
+> > +- rrid_transl_prog: false (Options: true/false)
+> > +- chk_x: true (Options: true/false)
+> > +- no_x: false (Options: true/false)
+> > +- no_w: false (Options: true/false)
+> > +- stall_en: false (Options: true/false)
+> > +- peis: true (Options: true/false)
+> > +- pees: true (Options: true/false)
+> > +- mfr_en: true (Options: true/false)
+> > +- md_entry_num: 5 (IMP: Valid only for mdcfg_fmt 1/2)
+> > +- md_num: 8 (Range: 0-63)
+> > +- rrid_num: 16 (Range: srcmd_fmt ≠ 2: 0-65535, srcmd_fmt = 2: 0-32)
+> > +- entry_num: 48 (Range: 0-IMP. For mdcfg_fmt = 1,
+> > +  it is fixed as md_num * (md_entry_num + 1).
+> > +  Entry registers must not overlap with other registers.)
+> > +- prio_entry: 65535 (Range: 0-IMP. If prio_entry > entry_num,
+> > +  it will be set to entry_num.)
+> > +- rrid_transl: 0x0 (Range: 0-65535)
+> > +- entry_offset: 0x4000 (IMP: Entry registers must not overlap
+> > +  with other registers.)
+> > +- err_rdata: 0x0 (uint32. Specifies the value used in responses to
+> > +  read transactions when errors are suppressed)
+> > +- msi_en: false (Options: true/false)
+> > +- msidata: 12 (Range: 1-1023)
+> > +- stall_violation_en: true (Options: true/false)
+> > +- err_msiaddr: 0x24000000 (lower-part 32-bit address)
+> > +- err_msiaddrh: 0x0 (higher-part 32-bit address)
+> > +- msi_rrid: 0 (Range: 0-65535. Specifies the rrid used by the IOPMP to send
+> > +  the MSI.)
+> 
+> I'm not sure this is clear to a user, what are people supposed to do
+> with all these values?
+> 
+> Alistair
 
-> On Wed, May 28, 2025 at 11:49=E2=80=AFAM Markus Armbruster <armbru@redhat=
-.com> wrote:
->> > diff --git a/rust/qemu-api/src/error.rs b/rust/qemu-api/src/error.rs
->> > new file mode 100644
->> > index 00000000000..f08fed81028
->> > --- /dev/null
->> > +++ b/rust/qemu-api/src/error.rs
->> > @@ -0,0 +1,273 @@
->> > +// SPDX-License-Identifier: GPL-2.0-or-later
->> > +
->> > +//! Error class for QEMU Rust code
->> > +//!
->> > +//! @author Paolo Bonzini
->> > +
->> > +use std::{
->> > +    borrow::Cow,
->> > +    ffi::{c_char, c_int, c_void, CStr},
->> > +    fmt::{self, Display},
->> > +    panic, ptr,
->> > +};
->> > +
->> > +use foreign::{prelude::*, OwnedPointer};
->> > +
->> > +use crate::{
->> > +    bindings,
->> > +    bindings::{error_free, error_get_pretty},
->> > +};
->> > +
->> > +pub type Result<T> =3D std::result::Result<T, Error>;
->> > +
->> > +#[derive(Debug, Default)]
->> > +pub struct Error {
->>
->> We're defining a custom error type Error for use with Result<>.  This
->> requires implementing a number of traits.  For trait Debug, we take the
->> auto-generated solution here.  Other traits are implemented below, in
->> particular Display.
->>
->> I don't yet understand the role of trait Default.
->
-> It defines an Error without any frills attached. It is used below but
-> on the other hand it results in those "unknown error"s that you
-> rightly despised.
+These parameters are defined by the IOPMP specification and are intended
+for hardware designers. By adjusting these values, designers can modify
+the mapping model between IOPMP tables and rules, configure support for
+specific features, control the response to rule violations, and optimize
+trade-offs such as gate count and latency to meet their design
+objectives.
 
-I think I understand how this works now.
+QEMU supports user-defined configuration of these parameters to accurately
+replicate the behavior of the target hardware.
 
->> Does the name Error risk confusion with std::error::Error?
->
-> Maybe, but as you can see from e.g. ayhow::Error it's fairly common to
-> have each crate or module define its own Error type. In the end you
-> always convert them to another type with "?" or ".into()".
+Ethan Chen
 
-Fair enough.
-
->> This is the Rust equivalent to C struct Error.  High-level differences:
->>
->> * No @err_class.  It's almost always ERROR_CLASS_GENERIC_ERROR in C
->>   nowadays.  You're hardcoding that value in Rust for now.  Good.
->>
->> * @cause, optional.  This is the bridge to idiomatic Rust error types.
->>
->> * @msg is optional.  This is so you can wrap a @cause without having to
->>   add some useless message.
->>
->> Is having Errors with neither @msg nor @cause a good idea?
->
-> It makes for slightly nicer code, and avoids having to worry about
-> panics from ".unwrap()" in error handling code (where panicking
-> probably won't help much). Otherwise it's probably not a good idea,
-> but also not something that people will use since (see later patches)
-> it's easier to return a decent error message than an empty Error.
-
-I accept that making "need at least one of @msg, @cause" an invariant
-could complicate the code a bit.
-
-Having a way to create an Error with neither bothers me, even when it's
-obscure.  Making an interface hard to misuse is good.  Making it
-impossible to misuse is better.
-
->> Needed for what?  Oh, method description() is deprecated since 1.42.0:
->> "use the Display impl or to_string()".  I figure we need it because the
->> new way doesn't work with our oldest supported Rust version.  Could
->> perhaps use a comment to help future garbage collectors.
->>
->> > +    fn description(&self) -> &str {
->> > +        self.msg
->> > +            .as_deref()
->> > +            .or_else(|| self.cause.as_deref().map(std::error::Error::=
-description))
->> > +            .unwrap_or("error")
->>
->> This gives us @msg, or else @cause, or else "error".
->>
->> Is it a good idea to ignore @cause when we have @msg?
->
->> > +impl Display for Error {
->> > +    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
->> > ...
->> > +    }
->>
->> This combines @msg and @cause:
->>
->> Differs from description().  Why?
->
-> Because description() cannot build a dynamically-allocated string, it
-> must return something that is already available in the Error. That
-> limitation is probably why it was deprecated.
->
-> Since it's deprecated we can expect that it won't be used and not
-> worry too much.
-
-Could we somehow get away with not implementing it?
-
->> > +    fn from(msg: String) -> Self {
->> > +        let location =3D panic::Location::caller();
->> > +        Error {
->> > +            msg: Some(Cow::Owned(msg)),
->> > +            file: location.file(),
->> > +            line: location.line(),
->> > +            ..Default::default()
->>
->> I don't understand this line, I'm afraid.
->
-> It says "every other field comes from "..Default::default()". I can
-> replace it with "cause: None", and likewise below.
-
-I've since learned a bit more about Default.  Since the only field being
-defaulted is @cause, I guess I'd use "cause: None" myself for
-simplicity.  Matter of taste, you choose.
-
-However, if this is the only real reason for Error having the Default
-trait, I'd suggest to kill the trait with fire, because ...
-
->> > +}
->> > +
->> > +impl From<&'static str> for Error {
->> > +    #[track_caller]
->> > +    fn from(msg: &'static str) -> Self {
->> > +        let location =3D panic::Location::caller();
->> > +        Error {
->> > +            msg: Some(Cow::Borrowed(msg)),
->> > +            file: location.file(),
->> > +            line: location.line(),
->> > +            ..Default::default()
->> > +        }
->> > +    }
->> > +}
->>
->> Same for another string type.
->
-> Yes, this is for strings that are not allocated and are always
-> valid---such as string constants.
->
->> Is there a way to create an Error with neither @msg nor @cause?
->
-> Yes, Default::default()
-
-... I do dislike being able to create such Errors :)
-
->> > +        errp: *mut *mut bindings::Error,
->> > +    ) -> Option<T> {
->> > +        let Err(err) =3D result else {
->> > +            return result.ok();
->> > +        };
->> > +
->> > +        // SAFETY: caller guarantees errp is valid
->> > +        unsafe {
->> > +            err.propagate(errp);
->> > +        }
->> > +        None
->>
->> @result is an Error.  Propagate it, and return None.
->>
->> This is indeed like self.ok() with propagation added.
->
-> Alternatively:
->
->     result
->        .map_err(|err| unsafe { err.propagate(errp) })
->        .ok()
->
-> Shorter, but the functional style can be off putting. What do you prefer?
-
-I'm fine with the functional style, and I like brevity.
-
->> > +    }
->> > +
->> > +    /// Equivalent of the C function `error_propagate`.  Fill `*errp`
->> > +    /// with the information container in `result` if `errp` is not N=
-ULL;
->> > +    /// then consume it.
->>
->> Note error_propagate() has the arguments in the opposite order.
->
-> Yeah, here "self" must be first so that you use it as a method.
-> Though, s/result/self/ as you noted.
->
->> > +    /// # Safety
->> > +    ///
->> > +    /// `errp` must be valid; typically it is received from C code
->>
->> What does "valid" mean exactly?
->
-> I will copy from `error_propagate` in v2.
->
->> Brief switch to the design level...
->>
->> In C, you're almost always better off with ERRP_GUARD().  Would you like
->> me to elaborate?
->>
->> You still have to use error_propagate() to accumulate multiple errors so
->> that the first one wins.  That's commonly a dumb idea.  Should we avoid
->> this pattern in Rust?
->
-> In Rust there are three kinds of functions that use errors. Two are in qe=
-mu_api:
->
-> (1) bridges from C to Rust function pointers. They receive a Result<>
-> from Rust functions and use error_propagate() (probably via functions
-> such as ok_or_propagate, bool_or_propagate, etc.) to prepare a C
-> return value.
-
-We received an idiomatic Rust Result<>.  We want to pass it to a C-like
-caller, i.e. satisfy the contract "on success, return a value and leave
-argument @errp alone; on error, return an error value and store an Error
-object in @errp".
-
-(I'm ignoring void values for brevity)
-
-The functions you mentioned split up the Result<>, do the storing, and
-return the value to be returned.
-
-> (2) bridges from Rust to C functions. They pass an Error** to the C
-> function and use err_or_else() or err_or_unit() to prepare a Rust
-> return value
-
-We received a return value and possibly a C Error object.  We want to
-pass it to a Rust caller, i.e. return an idiomatic Result<>.
-
-The functions you mentioned assemble the Result<> from the two values.
-
-There's difference between Result<> and what we do in C: Result<> is
-either a success value or an Error value.  I.e. we have a success value
-on success, an Error on failure.  In C, we have a success value on
-success, and both an error value and an Error on failure.
-
-The (1) functions need to make up the missing error value.  That's fine,
-it's what we do in C, too.
-
-The (2) functions throw away the error value.  Usually, there's exactly
-one error value, so no information is thrown away.  But not necessarily.
-
-I think it's okay to design for the common case now.
-
-> Functions of kind (1) are like functions in C that do a single call
-> and just pass down errp, for example user_creatable_add_qapi(). These
-> do not need ERRP_GUARD() because:
->
-> * the conversion from Result<> to C is pretty much a necessity, and
-> it's done with functions that guarantee the propagation
->
-> * the conversion function *consumes* the Result<>, guaranteeing that
-> you do not propagate more than once with tragic results
->
-> Function of kind (2) do not need ERRP_GUARD() because they do not take
-> an Error** at all. They pass one down to C, but they return a
-> Result<>.
->
-> The third kind is Rust functions that are called from (1) and that
-> themselves call (2). These are where ERRP_GUARD() would be used in C,
-> but in Rust these do not see Error** at all. The "?" operator has the
-> same effect as ERRP_GUARD(), i.e. it handles passing the error from
-> called function to return value. What in C would be
->
->    ERRP_GUARD();
->    if (!func_that_returns_bool(...)) { return; }
->
-> In Rust is
->
->    func_that_returns_result(...)?;
->
-> which is a bit disconcerting in the beginning but grows on you.
-> (Generally I find that to be the experience with Rust. It's downright
-> weird, but unlike C++ the good parts outweigh the weirdness).
->
->> > +    pub unsafe fn err_or_unit(c_error: *mut bindings::Error) -> Resul=
-t<()> {
->> > +        // SAFETY: caller guarantees c_error is valid
->> > +        unsafe { Self::err_or_else(c_error, || ()) }
->> > +    }
->> > +
->> > +    /// Convert a C `Error*` into a Rust `Result`, calling `f()` to
->> > +    /// obtain an `Ok` value if `c_error` is NULL.
->> > +    ///
->> > +    /// # Safety
->> > +    ///
->> > +    /// `c_error` must be valid; typically it has been filled by a C
->> > +    /// function.
->> > +    pub unsafe fn err_or_else<T, F: FnOnce() -> T>(
->> > +        c_error: *mut bindings::Error,
->> > +        f: F,
->> > +    ) -> Result<T> {
->> > +        // SAFETY: caller guarantees c_error is valid
->> > +        let err =3D unsafe { Option::<Self>::from_foreign(c_error) };
->> > +        match err {
->> > +            None =3D> Ok(f()),
->> > +            Some(err) =3D> Err(err),
->> > +        }
->> > +    }
->> > +}
->>
->> Getting tired...
->
-> No problem. While this is kinda important, it's not used yet. The
-> clients would look like this:
->
-> fn type_get_or_load_by_name(name: &str) -> Result<&TypeImpl> {
->    unsafe {
->        let err: *mut bindings::Error =3D ptr::null_mut();
->        let typ: *mut TypeImpl =3D bindings::type_get_or_load_by_name(
->            name.clone_to_foreign().as_ptr(), &mut err);
->        // on success, "typ" can be accessed safely
->        // on failure, turn the Error* into a qemu_api::Error and free it
->        Result::err_or_else(err, || &*typ)
-> }
->
-> This is why I need to write tests.
->
->> > +impl CloneToForeign for Error {
->> > +    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
->> > +        // SAFETY: all arguments are controlled by this function
->> > +        unsafe {
->> > +            let err: *mut c_void =3D libc::malloc(std::mem::size_of::=
-<bindings::Error>());
->> > +            let err: &mut bindings::Error =3D &mut *err.cast();
->> > +            *err =3D bindings::Error {
->> > +                msg: format!("{self}").clone_to_foreign_ptr(),
->> > +                err_class: bindings::ERROR_CLASS_GENERIC_ERROR,
->> > +                src_len: self.file.len() as isize,
->> > +                src: self.file.as_ptr().cast::<c_char>(),
->> > +                line: self.line as c_int,
->> > +                func: ptr::null_mut(),
->> > +                hint: ptr::null_mut(),
->> > +            };
->> > +            OwnedPointer::new(err)
->> > +        }
->> > +    }
->> > +}
->>
->> Plausible to this Rust ignoramus :)
->
-> Good, since these *Foreign traits are not part of the standard
-> library, but rather something that I concocted and published outside
-> QEMU. If you had no problems understanding how they were used (e.g.
-> stuff like into_native or clone_to_foreign_ptr), that is good.
-
-"Understanding" is a bit strong.  I relied on my voodoo-programming
-skills.
-
-Thank you!
-
+> 
+> > +
+> > +.. _IOPMP specification version 0.7: https://github.com/riscv-non-isa/iopmp-spec/releases/download/v0.7/iopmp-v0.7.pdf
+> > diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+> > index 60850970ce..77c8d386d5 100644
+> > --- a/docs/system/riscv/virt.rst
+> > +++ b/docs/system/riscv/virt.rst
+> > @@ -146,6 +146,15 @@ The following machine-specific options are supported:
+> >
+> >    Enables the riscv-iommu-sys platform device. Defaults to 'off'.
+> >
+> > +- iopmp=[on|off]
+> > +
+> > +  When this option is "on", IOPMP devices are added to machine. IOPMP checks
+> > +  memory transcations in system memory. This option is assumed to be "off". To
+> > +  enable the CPU to perform transactions with a specified RRID, use the CPU
+> > +  option "-cpu <cpu>,iopmp=true,iopmp_rrid=<rrid>"
+> > +
+> > +  See :ref:`riscv-iopmp` for configurations of IOPMP
+> > +
+> >  Running Linux kernel
+> >  --------------------
+> >
+> > diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> > index e6a0ac1fa1..637438af2c 100644
+> > --- a/hw/riscv/Kconfig
+> > +++ b/hw/riscv/Kconfig
+> > @@ -68,6 +68,7 @@ config RISCV_VIRT
+> >      select PLATFORM_BUS
+> >      select ACPI
+> >      select ACPI_PCI
+> > +    select RISCV_IOPMP
+> >
+> >  config SHAKTI_C
+> >      bool
+> > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> > index dae46f4733..0d62e7786c 100644
+> > --- a/hw/riscv/virt.c
+> > +++ b/hw/riscv/virt.c
+> > @@ -57,6 +57,8 @@
+> >  #include "hw/acpi/aml-build.h"
+> >  #include "qapi/qapi-visit-common.h"
+> >  #include "hw/virtio/virtio-iommu.h"
+> > +#include "hw/misc/riscv_iopmp.h"
+> > +#include "hw/misc/riscv_iopmp_dispatcher.h"
+> >
+> >  /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+> >  static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+> > @@ -94,6 +96,7 @@ static const MemMapEntry virt_memmap[] = {
+> >      [VIRT_UART0] =        { 0x10000000,         0x100 },
+> >      [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
+> >      [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
+> > +    [VIRT_IOPMP] =        { 0x10200000,      0x100000 },
+> >      [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
+> >      [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+> >      [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+> > @@ -102,6 +105,11 @@ static const MemMapEntry virt_memmap[] = {
+> >      [VIRT_DRAM] =         { 0x80000000,           0x0 },
+> >  };
+> >
+> > +static const MemMapEntry iopmp_protect_memmap[] = {
+> > +    /* IOPMP protect all regions by default */
+> > +    {0x0, 0xFFFFFFFF},
+> > +};
+> > +
+> >  /* PCIe high mmio is fixed for RV32 */
+> >  #define VIRT32_HIGH_PCIE_MMIO_BASE  0x300000000ULL
+> >  #define VIRT32_HIGH_PCIE_MMIO_SIZE  (4 * GiB)
+> > @@ -1118,6 +1126,24 @@ static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
+> >                             bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
+> >  }
+> >
+> > +static void create_fdt_iopmp(RISCVVirtState *s, const MemMapEntry *memmap,
+> > +                             uint32_t irq_mmio_phandle) {
+> > +    g_autofree char *name = NULL;
+> > +    MachineState *ms = MACHINE(s);
+> > +
+> > +    name = g_strdup_printf("/soc/iopmp@%lx", (long)memmap[VIRT_IOPMP].base);
+> > +    qemu_fdt_add_subnode(ms->fdt, name);
+> > +    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "riscv_iopmp");
+> > +    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0, memmap[VIRT_IOPMP].base,
+> > +        0x0, memmap[VIRT_IOPMP].size);
+> > +    qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq_mmio_phandle);
+> > +    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
+> > +        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", IOPMP_IRQ);
+> > +    } else {
+> > +        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", IOPMP_IRQ, 0x4);
+> > +    }
+> > +}
+> > +
+> >  static void finalize_fdt(RISCVVirtState *s)
+> >  {
+> >      uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
+> > @@ -1142,6 +1168,10 @@ static void finalize_fdt(RISCVVirtState *s)
+> >      create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
+> >
+> >      create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
+> > +
+> > +    if (s->have_iopmp) {
+> > +        create_fdt_iopmp(s, virt_memmap, irq_mmio_phandle);
+> > +    }
+> >  }
+> >
+> >  static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+> > @@ -1532,6 +1562,8 @@ static void virt_machine_init(MachineState *machine)
+> >      DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+> >      int i, base_hartid, hart_count;
+> >      int socket_count = riscv_socket_count(machine);
+> > +    DeviceState *iopmp_dev, *iopmp_disp_dev;
+> > +    StreamSink *iopmp_ss, *iopmp_disp_ss;
+> >
+> >      /* Check socket count limit */
+> >      if (VIRT_SOCKETS_MAX < socket_count) {
+> > @@ -1713,6 +1745,29 @@ static void virt_machine_init(MachineState *machine)
+> >      }
+> >      virt_flash_map(s, system_memory);
+> >
+> > +    if (s->have_iopmp) {
+> > +        iopmp_dev = iopmp_create(memmap[VIRT_IOPMP].base,
+> > +            qdev_get_gpio_in(DEVICE(mmio_irqchip), IOPMP_IRQ));
+> > +
+> > +        iopmp_setup_system_memory(iopmp_dev, &iopmp_protect_memmap[0], 1, 0);
+> > +
+> > +        iopmp_disp_dev = qdev_new(TYPE_RISCV_IOPMP_DISP);
+> > +        qdev_prop_set_uint32(DEVICE(iopmp_disp_dev), "target-num", 1);
+> > +        qdev_prop_set_uint32(DEVICE(iopmp_disp_dev), "stage-num", 1);
+> > +        qdev_realize(DEVICE(iopmp_disp_dev), NULL, &error_fatal);
+> > +
+> > +        /* Add memmap inforamtion to dispatcher */
+> > +        iopmp_ss = (StreamSink *)&(RISCV_IOPMP(iopmp_dev)->txn_info_sink);
+> > +        iopmp_dispatcher_add_target(DEVICE(iopmp_disp_dev), iopmp_ss,
+> > +                                    iopmp_protect_memmap[0].base,
+> > +                                    iopmp_protect_memmap[0].size,
+> > +                                    0, 0);
+> > +
+> > +        iopmp_disp_ss =
+> > +            (StreamSink *)&(RISCV_IOPMP_DISP(iopmp_disp_dev)->txn_info_sink);
+> > +        iopmp_setup_sink(iopmp_dev, iopmp_disp_ss);
+> > +    }
+> > +
+> >      /* load/create device tree */
+> >      if (machine->dtb) {
+> >          machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
+> > @@ -1848,6 +1903,20 @@ static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
+> >      visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
+> >  }
+> >
+> > +static bool virt_get_iopmp(Object *obj, Error **errp)
+> > +{
+> > +    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
+> > +
+> > +    return s->have_iopmp;
+> > +}
+> > +
+> > +static void virt_set_iopmp(Object *obj, bool value, Error **errp)
+> > +{
+> > +    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
+> > +
+> > +    s->have_iopmp = value;
+> > +}
+> > +
+> >  bool virt_is_acpi_enabled(RISCVVirtState *s)
+> >  {
+> >      return s->acpi != ON_OFF_AUTO_OFF;
+> > @@ -1975,6 +2044,12 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+> >                                NULL, NULL);
+> >      object_class_property_set_description(oc, "iommu-sys",
+> >                                            "Enable IOMMU platform device");
+> > +
+> > +    object_class_property_add_bool(oc, "iopmp", virt_get_iopmp,
+> > +                                   virt_set_iopmp);
+> > +    object_class_property_set_description(oc, "iopmp",
+> > +                                          "Set on/off to enable/disable "
+> > +                                          "iopmp device");
+> >  }
+> >
+> >  static const TypeInfo virt_machine_typeinfo = {
+> > diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+> > index 48a14bea2e..cf1e5bd872 100644
+> > --- a/include/hw/riscv/virt.h
+> > +++ b/include/hw/riscv/virt.h
+> > @@ -55,6 +55,7 @@ struct RISCVVirtState {
+> >
+> >      int fdt_size;
+> >      bool have_aclint;
+> > +    bool have_iopmp;
+> >      RISCVVirtAIAType aia_type;
+> >      int aia_guests;
+> >      char *oem_id;
+> > @@ -87,11 +88,13 @@ enum {
+> >      VIRT_PLATFORM_BUS,
+> >      VIRT_PCIE_ECAM,
+> >      VIRT_IOMMU_SYS,
+> > +    VIRT_IOPMP,
+> >  };
+> >
+> >  enum {
+> >      UART0_IRQ = 10,
+> >      RTC_IRQ = 11,
+> > +    IOPMP_IRQ = 12,
+> >      VIRTIO_IRQ = 1, /* 1 to 8 */
+> >      VIRTIO_COUNT = 8,
+> >      PCIE_IRQ = 0x20, /* 32 to 35 */
+> > --
+> > 2.34.1
+> >
+> >
 
