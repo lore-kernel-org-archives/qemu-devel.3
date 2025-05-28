@@ -4,70 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19387C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 22:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48BC9C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 22:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKP0r-00023s-JW; Wed, 28 May 2025 18:12:41 -0400
+	id 1uKP5w-00039r-MI; Wed, 28 May 2025 18:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKP0h-00023J-4Y
- for qemu-devel@nongnu.org; Wed, 28 May 2025 18:12:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uKP5t-000393-VF
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:54 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKP0c-0008Uj-L5
- for qemu-devel@nongnu.org; Wed, 28 May 2025 18:12:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748470344;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DPqKi5dR3CLxPrSgr5C6RvHqLljlDUU7YZ05KWggBs8=;
- b=WJchyzgouUja8w03d4xEf3MmkrehoGuyDkmGNi7BoKT315iJKVElfkFb6lmAN7YFDt0La1
- LgR71Q/5QPFIDPGIOf4orc+Rs+oGdnxJFdVGgYsQQX6lpNIDKqDyjeUC0s3jHWwWS9mdpg
- odBo7Qy6jz5xwF8CE3n6Hilrr2KaZZU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-358-GkwVZR8oNXeGOofaq62d8g-1; Wed,
- 28 May 2025 18:12:21 -0400
-X-MC-Unique: GkwVZR8oNXeGOofaq62d8g-1
-X-Mimecast-MFC-AGG-ID: GkwVZR8oNXeGOofaq62d8g_1748470340
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42A8819560AA; Wed, 28 May 2025 22:12:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.48])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9E691956096; Wed, 28 May 2025 22:12:17 +0000 (UTC)
-Date: Wed, 28 May 2025 17:12:14 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hibriansong@gmail.com, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
-Subject: Re: [RFC 08/11] aio-posix: gracefully handle io_uring_queue_init()
- failure
-Message-ID: <xamle7lt6fxiphzjkjhzlc7vgid3r4s3k6nqufipruwepb6ef6@l4xjldx5ztuj>
-References: <20250528190916.35864-1-stefanha@redhat.com>
- <20250528190916.35864-9-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uKP5o-0000xI-GQ
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 18:17:53 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SINFOx016557;
+ Wed, 28 May 2025 22:17:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=5xLy6
+ sphNSR3sEGiWhHFRd/mLRl+6eUEjK379NlJVlg=; b=gxPowbU1bf7bPPh1eB3TE
+ c2S1zRek0VVim5W242kFWri9p3eIEPwKRdC62/YWWtZ1uZ+eEx82fAsmO+Z28sXM
+ JRPJPUcW/brQSnQJlGPhFTVkttlcI83ymlJgDvsTKKchTArbm+EsvxMy+emmTop5
+ 1oTnBnUvi50VZpDVotcLQNkIjNus2I2ObRmBESK8h045kOerB1YXF+whkyihQULP
+ H0FkCkOySF30OrxYLdtaGVByNxYIIOIvW/x0X7X18k6O6+BVYVXDUNfecVykz8N3
+ JYFLpNJZAG+CEHnOAMfVOzy9SbDAIr1/wIMgH4yT8EK6OgujpyvWozYu+IledvsX
+ A==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v33my2jj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 May 2025 22:17:31 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54SLBaiL024391; Wed, 28 May 2025 22:17:30 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46u4jb86vy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 May 2025 22:17:30 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54SMHQsd018695;
+ Wed, 28 May 2025 22:17:29 GMT
+Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
+ (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.254.235])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 46u4jb86u3-8; Wed, 28 May 2025 22:17:29 +0000
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, pbonzini@redhat.com, mjt@tls.msk.ru,
+ marcel.apfelbaum@gmail.com, richard.henderson@linaro.org,
+ eduardo@habkost.net, vasant.hegde@amd.com,
+ suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
+ sarunkod@amd.com, joao.m.martins@oracle.com,
+ boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
+Subject: [PATCH v2 6/7] amd_iommu: Fix the calculation for Device Table size
+Date: Wed, 28 May 2025 22:17:24 +0000
+Message-ID: <20250528221725.3554040-8-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250528221725.3554040-1-alejandro.j.jimenez@oracle.com>
+References: <20250528221725.3554040-1-alejandro.j.jimenez@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250528190916.35864-9-stefanha@redhat.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) DKIMWL_WL_HIGH=-2.904, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_11,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ adultscore=0 spamscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2505280194
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE5NCBTYWx0ZWRfX4cOecFZHB/4b
+ oGj2AXH9UmExN1pGrC5wrfvL4K+hiSdpgeYY9biLJT3d9NK508w6HlmxcJjUVmhiIO8a4s7f7mb
+ Vk1hHlb5ORZ63dqdFpU9tYGSsD2sW6jmRkh9F8gz4u7j7XKYCvEkkJJ5jUEDHkU4VU26qs0yKVa
+ asVGRsseTYhzXSOKWD16lsA3jZhrNdyKyjNHANCUdLIryctEKLTwupPCmHXoMiFR7ymI1OiIcC0
+ 2599xuo/2KtR+jsxR1sp3R4TZfhhulQeBVdC+Lw1noRkwZQO4RWVICVU90VJjZAQpRYp3O/IywD
+ 7nsUVNAy2dag2rnS5kT/7BRxQvSKLO/UJ408/HUGM/G79tEv4j+hdmQKp/VMSYhdWlLzV1PrZhE
+ a4sfYnEuRkdVcl/lSv/FcrwWj3B7+Ltvnzza+p3F6GL7XsBX1Nf2Sylr8OMZVnVyOvtgRjEQ
+X-Proofpoint-GUID: 87m3PKG3b-Amb0wZDjgdtPx32iC9m2KU
+X-Authority-Analysis: v=2.4 cv=aO/wqa9m c=1 sm=1 tr=0 ts=68378b7b b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+ a=dt9VzEwgFbYA:10 a=69wJf7TsAAAA:8 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8
+ a=r9zmrm_j51NoiylAmAIA:9
+ a=Fg1AiH1G6rFz08G2ETeA:22 cc=ntf awl=host:13206
+X-Proofpoint-ORIG-GUID: 87m3PKG3b-Amb0wZDjgdtPx32iC9m2KU
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) DKIMWL_WL_MED=-0.498, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -85,184 +119,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 28, 2025 at 03:09:13PM -0400, Stefan Hajnoczi wrote:
-> io_uring may not be available at runtime due to system policies (e.g.
-> the io_uring_disabled sysctl) or creation could fail due to file
-> descriptor resource limits.
-> 
-> Handle failure scenarios as follows:
-> 
-> If another AioContext already has io_uring, then fail AioContext
-> creation so that the aio_add_sqe() API is available uniformly from all
-> QEMU threads. Otherwise fall back to epoll(7) if io_uring is
-> unavailable.
-> 
-> Notes:
-> - Update the comment about selecting the fastest fdmon implementation.
->   At this point it's not about speed anymore, it's about aio_add_sqe()
->   API availability.
-> - Uppercase the error message when converting from error_report() to
->   error_setg_errno() for consistency (but there are instances of
->   lowercase in the codebase).
-> - It's easier to move the #ifdefs from aio-posix.h to aio-posix.c.
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  util/aio-posix.h      | 12 ++----------
->  util/aio-posix.c      | 29 ++++++++++++++++++++++++++---
->  util/fdmon-io_uring.c |  8 ++++----
->  3 files changed, 32 insertions(+), 17 deletions(-)
-> 
-> diff --git a/util/aio-posix.h b/util/aio-posix.h
-> index f9994ed79e..6f9d97d866 100644
-> --- a/util/aio-posix.h
-> +++ b/util/aio-posix.h
-> @@ -18,6 +18,7 @@
->  #define AIO_POSIX_H
->  
->  #include "block/aio.h"
-> +#include "qapi/error.h"
->  
->  struct AioHandler {
->      GPollFD pfd;
-> @@ -72,17 +73,8 @@ static inline void fdmon_epoll_disable(AioContext *ctx)
->  #endif /* !CONFIG_EPOLL_CREATE1 */
->  
->  #ifdef CONFIG_LINUX_IO_URING
-> -bool fdmon_io_uring_setup(AioContext *ctx);
-> +void fdmon_io_uring_setup(AioContext *ctx, Error **errp);
+Correctly calculate the Device Table size using the format encoded in the
+Device Table Base Address Register (MMIO Offset 0000h).
 
-Why change the return type to void?  That forces you to have to check
-errp.  If you still return bool (true for errp unchanged, false when
-errp set), callers might have a simpler interface.
+Cc: qemu-stable@nongnu.org
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+---
+ hw/i386/amd_iommu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
->  void fdmon_io_uring_destroy(AioContext *ctx);
-> -#else
-> -static inline bool fdmon_io_uring_setup(AioContext *ctx)
-> -{
-> -    return false;
-> -}
-> -
-> -static inline void fdmon_io_uring_destroy(AioContext *ctx)
-> -{
-> -}
->  #endif /* !CONFIG_LINUX_IO_URING */
->  
->  #endif /* AIO_POSIX_H */
-> diff --git a/util/aio-posix.c b/util/aio-posix.c
-> index fa047fc7ad..44b3df61f9 100644
-> --- a/util/aio-posix.c
-> +++ b/util/aio-posix.c
-> @@ -16,6 +16,7 @@
->  #include "qemu/osdep.h"
->  #include "block/block.h"
->  #include "block/thread-pool.h"
-> +#include "qapi/error.h"
->  #include "qemu/main-loop.h"
->  #include "qemu/lockcnt.h"
->  #include "qemu/rcu.h"
-> @@ -717,17 +718,39 @@ void aio_context_setup(AioContext *ctx, Error **errp)
->      ctx->epollfd = -1;
->      ctx->epollfd_tag = NULL;
->  
-> -    /* Use the fastest fd monitoring implementation if available */
-> -    if (fdmon_io_uring_setup(ctx)) {
-> -        return;
-> +#ifdef CONFIG_LINUX_IO_URING
-> +    {
-> +        static bool need_io_uring;
-> +        Error *local_err = NULL; /* ERRP_GUARD() doesn't handle error_abort */
-
-Really? I thought that was part of why we added ERRP_GUARD, so that
-error_abort is pinned closer to the spot where the error is triggered
-rather than where it was chained.  But your use of errp is a bit
-different than usual here, so you may be correct that it doesn't
-handle error_abort in the way that you want (allowing a graceful
-downgrade to epoll if it is the first failure, but aborting if it is
-the second AioContext that fails).
-
-> +
-> +        /* io_uring takes precedence because it provides aio_add_sqe() support */
-> +        fdmon_io_uring_setup(ctx, &local_err);
-> +        if (!local_err) {
-> +            /*
-> +             * If one AioContext gets io_uring, then all AioContexts need io_uring
-> +             * so that aio_add_sqe() support is available across all threads.
-> +             */
-> +            need_io_uring = true;
-> +            return;
-> +        }
-> +        if (need_io_uring) {
-> +            error_propagate(errp, local_err);
-> +            return;
-> +        }
-> +
-> +        warn_report_err_once(local_err); /* frees local_err */
-> +        local_err = NULL;
->      }
-> +#endif /* CONFIG_LINUX_IO_URING */
->  
->      fdmon_epoll_setup(ctx);
->  }
->  
->  void aio_context_destroy(AioContext *ctx)
->  {
-> +#ifdef CONFIG_LINUX_IO_URING
->      fdmon_io_uring_destroy(ctx);
-> +#endif
->  
->      qemu_lockcnt_lock(&ctx->list_lock);
->      fdmon_epoll_disable(ctx);
-> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-> index 2092d08d24..ef1a866a03 100644
-> --- a/util/fdmon-io_uring.c
-> +++ b/util/fdmon-io_uring.c
-> @@ -45,6 +45,7 @@
->  
->  #include "qemu/osdep.h"
->  #include <poll.h>
-> +#include "qapi/error.h"
->  #include "qemu/rcu_queue.h"
->  #include "aio-posix.h"
->  
-> @@ -361,7 +362,7 @@ static const FDMonOps fdmon_io_uring_ops = {
->      .gsource_dispatch = fdmon_io_uring_gsource_dispatch,
->  };
->  
-> -bool fdmon_io_uring_setup(AioContext *ctx)
-> +void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
->  {
->      int ret;
->  
-> @@ -369,15 +370,14 @@ bool fdmon_io_uring_setup(AioContext *ctx)
->  
->      ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
->      if (ret != 0) {
-> -        return false;
-> +        error_setg_errno(errp, -ret, "Failed to initialize io_uring");
-> +        return;
-
-This is where I question whether you should still return bool.
-
->      }
->  
->      QSLIST_INIT(&ctx->submit_list);
->      ctx->fdmon_ops = &fdmon_io_uring_ops;
->      ctx->io_uring_fd_tag = g_source_add_unix_fd(&ctx->source,
->              ctx->fdmon_io_uring.ring_fd, G_IO_IN);
-> -
-> -    return true;
->  }
->  
->  void fdmon_io_uring_destroy(AioContext *ctx)
-> -- 
-> 2.49.0
-> 
-> 
-
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index cc47ba9249990..6a68f0f6068a0 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -665,8 +665,8 @@ static inline void amdvi_handle_devtab_write(AMDVIState *s)
+     uint64_t val = amdvi_readq(s, AMDVI_MMIO_DEVICE_TABLE);
+     s->devtab = (val & AMDVI_MMIO_DEVTAB_BASE_MASK);
+ 
+-    /* set device table length */
+-    s->devtab_len = ((val & AMDVI_MMIO_DEVTAB_SIZE_MASK) + 1 *
++    /* set device table length (i.e. number of entries table can hold) */
++    s->devtab_len = (((val & AMDVI_MMIO_DEVTAB_SIZE_MASK) + 1) *
+                     (AMDVI_MMIO_DEVTAB_SIZE_UNIT /
+                      AMDVI_MMIO_DEVTAB_ENTRY_SIZE));
+ }
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.43.5
 
 
