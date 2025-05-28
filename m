@@ -4,46 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FC6BC5AE59
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 07:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E37C5AE59
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 07:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKBcK-0006yG-Su; Wed, 28 May 2025 03:54:30 -0400
+	id 1uKBdp-00009n-L1; Wed, 28 May 2025 03:56:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uKBcG-0006xW-R9; Wed, 28 May 2025 03:54:24 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uKBdo-00009H-3P
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 03:56:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uKBcE-0001zj-Es; Wed, 28 May 2025 03:54:24 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D3C53125B4E;
- Wed, 28 May 2025 10:54:06 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9E33E21846A;
- Wed, 28 May 2025 10:54:12 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [Stable-10.0.2] Revert "Drop support for Python 3.8"
-Date: Wed, 28 May 2025 10:53:44 +0300
-Message-Id: <20250528075408.34066-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-10.0.2-20250528105127@cover.tls.msk.ru>
-References: <qemu-stable-10.0.2-20250528105127@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uKBdj-0002Qp-BD
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 03:55:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748418953;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AvyhNMJ0uimp/khsNIVEufDaCxJFL+7kBmJ3nVozSFQ=;
+ b=KXItPhwJswepPEkq/80q95kdWCoMXl0vBRwBIS2Lqq/fb/ABcB3XkRoNhPVYPGIyR3h7wV
+ G9JfYWU6vhrrujp5Tqp07/D/+d1rhVLnhIoT6fLr7TKKbzDoWPwgDqXhHVGr9m7kkJUY1v
+ bTraCVvhDs4uPK3923Zr9dLQH6IRFq4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-nalGzvt9O3KLW12qzoxM-Q-1; Wed, 28 May 2025 03:55:51 -0400
+X-MC-Unique: nalGzvt9O3KLW12qzoxM-Q-1
+X-Mimecast-MFC-AGG-ID: nalGzvt9O3KLW12qzoxM-Q_1748418951
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4d00e44fdso1786251f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 00:55:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748418950; x=1749023750;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AvyhNMJ0uimp/khsNIVEufDaCxJFL+7kBmJ3nVozSFQ=;
+ b=C7msM2yEWO1nHgBXbglCjwJWleGrGex0RLHVr7CW08LqUJgTU5d3duP1ty+wUBuBun
+ Ar8ZWW7WCbNOPSI2wq6DsaaM1gjxTlbIkzDQBlDEJbayooSYD6c+mTOIVb+pwZmgEkQW
+ Uf4EgWbeRQTC/6xi/N6kgw0te0adLqph+T93Wxzg5nhAdFADcFEobwTqCaV8jDi1LHmi
+ qcEVHM5jXG63agcsvI7+Fgj1sXLlFIQzBd3Ym43GUeklOfG0AUFuJaQKojRLH75nG3ea
+ CxEkVxocNxE+F0IwYrmppkTAQR7y6Bn8heia8PoQ/z3jrWBH71L1Oenp79cmOzJR16Ud
+ jM5Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXME7GMphUJTgkpuSuGVimVA3TKLxeyC8gFsdNUTjCu0K1XQGQYBKqCGRHs84euLGwWCa8mGLB5dyi+@nongnu.org
+X-Gm-Message-State: AOJu0Yz4Aa7h9eGWbuveCIKv17jItMxGUoy4SPnuckKgxEv+gUfvgduE
+ JsQYQXrlmqJgtZ7v1UbQd3LUMzI1rP7laZo/0uat7qvGXz8TmfbX8No4JRPYud5Qq2Un2XauY2Y
+ Vz7Ei/R95GrgIPDI/SPzC6G0TyrUUFuJTlytpSeb0S4//Y4xfFJlsjk7LV3nYqCapcme1dvgmhb
+ fx+uduAcZNnqgqsopNOvXIJuRwbYkTkLE=
+X-Gm-Gg: ASbGncs3KRPpXX4EKKFa7sP0xlk35f2of+p1Odf8dtUvTZ+NR2WPuQ7miki+eJEf+OK
+ K5bxpeGdA7MQU6tih+qO0EnhLMLQA5EUwiaasA9bN+dG8DF56sDEBpM84TMK1YK+Uazk=
+X-Received: by 2002:a05:6000:430a:b0:3a4:d0fe:42af with SMTP id
+ ffacd0b85a97d-3a4e944dc36mr1003915f8f.33.1748418950447; 
+ Wed, 28 May 2025 00:55:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAeriPCZKqOJVDOtmAoRES/aOzpR/++wArAnrx/FYKfgm+/FrZNbZ7W3KJqNQB+SmccY6SzirxAU7+2fM11jk=
+X-Received: by 2002:a05:6000:430a:b0:3a4:d0fe:42af with SMTP id
+ ffacd0b85a97d-3a4e944dc36mr1003882f8f.33.1748418949933; Wed, 28 May 2025
+ 00:55:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) RCVD_IN_DNSWL_HI=-5,
+References: <20250508222132.748479-1-nabihestefan@google.com>
+ <20250508222132.748479-2-nabihestefan@google.com>
+ <87cycibagm.fsf@pond.sub.org> <aB207Rl-vZxfuJBM@redhat.com>
+In-Reply-To: <aB207Rl-vZxfuJBM@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 28 May 2025 09:55:38 +0200
+X-Gm-Features: AX0GCFvmLaOtrFRsE6pWNNO_rqiSGIttG-eQpxpdgBvuAVAnZd0Lxk-XgUsDwb8
+Message-ID: <CABgObfaOtK7W3CqR8+Dm3R71kGp3_mVkKVDaHa=SX8G0HZExMg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] util: fix msan findings in keyval
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Nabih Estefan <nabihestefan@google.com>, 
+ qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Peter Foley <pefoley@google.com>
+Content-Type: multipart/alternative; boundary="0000000000006e005206362d820a"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) DKIMWL_WL_HIGH=-2.907, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -61,178 +107,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 3d5b2f81fbc6b96b70271af1820674731a441ff7.
+--0000000000006e005206362d820a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It should not be in 10.0.x branch, since we do support python 3.8
-in 10.0.
+Il ven 9 mag 2025, 09:58 Daniel P. Berrang=C3=A9 <berrange@redhat.com> ha
+scritto:
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> On Fri, May 09, 2025 at 07:48:57AM +0200, Markus Armbruster wrote:
+> > Nabih Estefan <nabihestefan@google.com> writes:
+> >
+> > > From: Peter Foley <pefoley@google.com>
+> > >
+> > > e.g.
+> > > I   2025-02-28 09:51:05.240071-0800         624     stream.go:47
+> qemu: Uninitialized value was created by an allocation of 'key_in_cur.i' =
+in
+> the stack frame
+> > > I   2025-02-28 09:51:05.240187-0800         624     stream.go:47
+> qemu: #0 0xaaaac49f489c in keyval_parse_one
+> third_party/qemu/util/keyval.c:190:5
+> > >
+> > > Signed-off-by: Peter Foley <pefoley@google.com>
+> > > Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> > > ---
+> > >  util/keyval.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > > diff --git a/util/keyval.c b/util/keyval.c
+> > > index a70629a481..f33c64079d 100644
+> > > --- a/util/keyval.c
+> > > +++ b/util/keyval.c
+> > > @@ -187,7 +187,7 @@ static const char *keyval_parse_one(QDict *qdict,
+> const char *params,
+> > >  {
+> > >      const char *key, *key_end, *val_end, *s, *end;
+> > >      size_t len;
+> > > -    char key_in_cur[128];
+> > > +    char key_in_cur[128] =3D {};
+> > >      QDict *cur;
+> > >      int ret;
+> > >      QObject *next;
+> >
+> > Prior review of Peter's patch concluded this must be false positive:
+> >
+> https://lore.kernel.org/qemu-devel/14168384-ecdb-4c05-8267-ac5ef1c46fe9@r=
+edhat.com/
+>
+> While I agree with Paolo's reasoning, I think it is still worth adding an
+> explicit initializer, because it makes it easier for both humans and
+> machines
+> to reason about correctless.
+>
 
-diff --git a/configure b/configure
-index a2f5597fa0..02f1dd2311 100755
---- a/configure
-+++ b/configure
-@@ -540,17 +540,17 @@ if test -n "$linux_arch" && ! test -d "$source_path/linux-headers/asm-$linux_arc
- fi
- 
- check_py_version() {
--    # We require python >= 3.9.
-+    # We require python >= 3.8.
-     # NB: a True python conditional creates a non-zero return code (Failure)
--    "$1" -c 'import sys; sys.exit(sys.version_info < (3,9))'
-+    "$1" -c 'import sys; sys.exit(sys.version_info < (3,8))'
- }
- 
- first_python=
- if test -z "${PYTHON}"; then
-     # A bare 'python' is traditionally python 2.x, but some distros
-     # have it as python 3.x, so check in both places.
--    for binary in python3 python python3.13 python3.12 python3.11 \
--                          python3.10 python3.9 ; do
-+    for binary in python3 python python3.12 python3.11 \
-+                          python3.10 python3.9 python3.8; do
-         if has "$binary"; then
-             python=$(command -v "$binary")
-             if check_py_version "$python"; then
-@@ -933,7 +933,7 @@ then
-     # If first_python is set, there was a binary somewhere even though
-     # it was not suitable.  Use it for the error message.
-     if test -n "$first_python"; then
--        error_exit "Cannot use '$first_python', Python >= 3.9 is required." \
-+        error_exit "Cannot use '$first_python', Python >= 3.8 is required." \
-             "Use --python=/path/to/python to specify a supported Python."
-     else
-         error_exit "Python not found. Use --python=/path/to/python"
-@@ -941,11 +941,11 @@ then
- fi
- 
- if ! check_py_version "$python"; then
--  error_exit "Cannot use '$python', Python >= 3.9 is required." \
-+  error_exit "Cannot use '$python', Python >= 3.8 is required." \
-              "Use --python=/path/to/python to specify a supported Python." \
-              "Maybe try:" \
-              "  openSUSE Leap 15.3+: zypper install python39" \
--             "  CentOS: dnf install python3.12"
-+             "  CentOS 8: dnf install python38"
- fi
- 
- # Resolve PATH
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index c352a99544..1552b1a704 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -101,7 +101,7 @@ Python runtime
-   option of the ``configure`` script to point QEMU to a supported
-   version of the Python runtime.
- 
--  As of QEMU |version|, the minimum supported version of Python is 3.9.
-+  As of QEMU |version|, the minimum supported version of Python is 3.8.
- 
- Python build dependencies
-   Some of QEMU's build dependencies are written in Python.  Usually these
-diff --git a/python/Makefile b/python/Makefile
-index 764b79ccb2..1fa4ba2498 100644
---- a/python/Makefile
-+++ b/python/Makefile
-@@ -9,13 +9,13 @@ help:
- 	@echo "make check-minreqs:"
- 	@echo "    Run tests in the minreqs virtual environment."
- 	@echo "    These tests use the oldest dependencies."
--	@echo "    Requires: Python 3.9"
--	@echo "    Hint (Fedora): 'sudo dnf install python3.9'"
-+	@echo "    Requires: Python 3.8"
-+	@echo "    Hint (Fedora): 'sudo dnf install python3.8'"
- 	@echo ""
- 	@echo "make check-tox:"
- 	@echo "    Run tests against multiple python versions."
- 	@echo "    These tests use the newest dependencies."
--	@echo "    Requires: Python 3.9 - 3.11, and tox."
-+	@echo "    Requires: Python 3.8 - 3.11, and tox."
- 	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.11'"
- 	@echo "    The variable QEMU_TOX_EXTRA_ARGS can be use to pass extra"
- 	@echo "    arguments to tox".
-@@ -59,7 +59,7 @@ PIP_INSTALL = pip install --disable-pip-version-check
- min-venv: $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate
- $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate: setup.cfg tests/minreqs.txt
- 	@echo "VENV $(QEMU_MINVENV_DIR)"
--	@python3.9 -m venv $(QEMU_MINVENV_DIR)
-+	@python3.8 -m venv $(QEMU_MINVENV_DIR)
- 	@(								\
- 		echo "ACTIVATE $(QEMU_MINVENV_DIR)";			\
- 		. $(QEMU_MINVENV_DIR)/bin/activate;			\
-diff --git a/python/setup.cfg b/python/setup.cfg
-index c48dff280a..cf5af7e664 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -14,6 +14,7 @@ classifiers =
-     Natural Language :: English
-     Operating System :: OS Independent
-     Programming Language :: Python :: 3 :: Only
-+    Programming Language :: Python :: 3.8
-     Programming Language :: Python :: 3.9
-     Programming Language :: Python :: 3.10
-     Programming Language :: Python :: 3.11
-@@ -22,7 +23,7 @@ classifiers =
-     Typing :: Typed
- 
- [options]
--python_requires = >= 3.9
-+python_requires = >= 3.8
- packages =
-     qemu.qmp
-     qemu.machine
-@@ -77,7 +78,7 @@ exclude = __pycache__,
- 
- [mypy]
- strict = True
--python_version = 3.9
-+python_version = 3.8
- warn_unused_configs = True
- namespace_packages = True
- warn_unused_ignores = False
-@@ -185,7 +186,7 @@ multi_line_output=3
- # of python available on your system to run this test.
- 
- [tox:tox]
--envlist = py39, py310, py311, py312, py313
-+envlist = py38, py39, py310, py311, py312, py313
- skip_missing_interpreters = true
- 
- [testenv]
-diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
-index 6445407ba8..a3f423efd8 100644
---- a/python/tests/minreqs.txt
-+++ b/python/tests/minreqs.txt
-@@ -1,5 +1,5 @@
- # This file lists the ***oldest possible dependencies*** needed to run
--# "make check" successfully under ***Python 3.9***. It is used primarily
-+# "make check" successfully under ***Python 3.8***. It is used primarily
- # by GitLab CI to ensure that our stated minimum versions in setup.cfg
- # are truthful and regularly validated.
- #
-diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
-index c9dbcec2db..8109470a03 100644
---- a/scripts/qapi/mypy.ini
-+++ b/scripts/qapi/mypy.ini
-@@ -1,4 +1,4 @@
- [mypy]
- strict = True
- disallow_untyped_calls = False
--python_version = 3.9
-+python_version = 3.8
-diff --git a/tests/docker/dockerfiles/python.docker b/tests/docker/dockerfiles/python.docker
-index 59e70a0248..8f0af9ef25 100644
---- a/tests/docker/dockerfiles/python.docker
-+++ b/tests/docker/dockerfiles/python.docker
-@@ -15,6 +15,7 @@ ENV PACKAGES \
-     python3.11 \
-     python3.12 \
-     python3.13 \
-+    python3.8 \
-     python3.9
- 
- RUN dnf install -y $PACKAGES
--- 
-2.39.5
+The problem is that, in the exact same (impossible) case there would have
+to be another uninitialized variable, s. So the patch ends up making it
+harder to understand what are the invariants of the function.
+
+One should fix the compiler instead.
+
+Paolo
+
+
+> To reinforce that we don't have an actual bug though, also note that qemu
+> unconditionally builds with -ftrivial-auto-var-init=3Dzero. So if we happ=
+en
+> to forget any, it won't cause a bug in the common case of a
+> zero-initializer.
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-
+> https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-
+> https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-
+> https://www.instagram.com/dberrange :|
+>
+>
+
+--0000000000006e005206362d820a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il ven 9 mag 2025, 09:58 Daniel P. Berrang=C3=A9 &lt;<=
+a href=3D"mailto:berrange@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
+berrange@redhat.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">On Fri, May 09, 2025 at 07:48:57AM +0200, Markus Ar=
+mbruster wrote:<br>
+&gt; Nabih Estefan &lt;<a href=3D"mailto:nabihestefan@google.com" rel=3D"no=
+referrer noreferrer" target=3D"_blank">nabihestefan@google.com</a>&gt; writ=
+es:<br>
+&gt; <br>
+&gt; &gt; From: Peter Foley &lt;<a href=3D"mailto:pefoley@google.com" rel=
+=3D"noreferrer noreferrer" target=3D"_blank">pefoley@google.com</a>&gt;<br>
+&gt; &gt;<br>
+&gt; &gt; e.g.<br>
+&gt; &gt; I=C2=A0 =C2=A02025-02-28 09:51:05.240071-0800=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0624=C2=A0 =C2=A0 =C2=A0stream.go:47=C2=A0 =C2=A0 qemu: Uninit=
+ialized value was created by an allocation of &#39;key_in_cur.i&#39; in the=
+ stack frame<br>
+&gt; &gt; I=C2=A0 =C2=A02025-02-28 09:51:05.240187-0800=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0624=C2=A0 =C2=A0 =C2=A0stream.go:47=C2=A0 =C2=A0 qemu: #0 0xa=
+aaac49f489c in keyval_parse_one third_party/qemu/util/keyval.c:190:5<br>
+&gt; &gt;<br>
+&gt; &gt; Signed-off-by: Peter Foley &lt;<a href=3D"mailto:pefoley@google.c=
+om" rel=3D"noreferrer noreferrer" target=3D"_blank">pefoley@google.com</a>&=
+gt;<br>
+&gt; &gt; Signed-off-by: Nabih Estefan &lt;<a href=3D"mailto:nabihestefan@g=
+oogle.com" rel=3D"noreferrer noreferrer" target=3D"_blank">nabihestefan@goo=
+gle.com</a>&gt;<br>
+&gt; &gt; ---<br>
+&gt; &gt;=C2=A0 util/keyval.c | 2 +-<br>
+&gt; &gt;=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
+&gt; &gt;<br>
+&gt; &gt; diff --git a/util/keyval.c b/util/keyval.c<br>
+&gt; &gt; index a70629a481..f33c64079d 100644<br>
+&gt; &gt; --- a/util/keyval.c<br>
+&gt; &gt; +++ b/util/keyval.c<br>
+&gt; &gt; @@ -187,7 +187,7 @@ static const char *keyval_parse_one(QDict *qd=
+ict, const char *params,<br>
+&gt; &gt;=C2=A0 {<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 const char *key, *key_end, *val_end, *s, *end=
+;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 size_t len;<br>
+&gt; &gt; -=C2=A0 =C2=A0 char key_in_cur[128];<br>
+&gt; &gt; +=C2=A0 =C2=A0 char key_in_cur[128] =3D {};<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 QDict *cur;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 int ret;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 QObject *next;<br>
+&gt; <br>
+&gt; Prior review of Peter&#39;s patch concluded this must be false positiv=
+e:<br>
+&gt; <a href=3D"https://lore.kernel.org/qemu-devel/14168384-ecdb-4c05-8267-=
+ac5ef1c46fe9@redhat.com/" rel=3D"noreferrer noreferrer noreferrer" target=
+=3D"_blank">https://lore.kernel.org/qemu-devel/14168384-ecdb-4c05-8267-ac5e=
+f1c46fe9@redhat.com/</a><br>
+<br>
+While I agree with Paolo&#39;s reasoning, I think it is still worth adding =
+an<br>
+explicit initializer, because it makes it easier for both humans and machin=
+es<br>
+to reason about correctless.<br></blockquote></div></div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">The problem is that, in the exact same (impossi=
+ble) case there would have to be another uninitialized variable, s. So the =
+patch ends up making it harder to understand what are the invariants of the=
+ function.</div><div dir=3D"auto"><br></div><div dir=3D"auto">One should fi=
+x the compiler instead.</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmai=
+l_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+To reinforce that we don&#39;t have an actual bug though, also note that qe=
+mu<br>
+unconditionally builds with -ftrivial-auto-var-init=3Dzero. So if we happen=
+<br>
+to forget any, it won&#39;t cause a bug in the common case of a zero-initia=
+lizer.<br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer noreferrer=
+" target=3D"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =
+=C2=A0 <a href=3D"https://www.flickr.com/photos/dberrange" rel=3D"noreferre=
+r noreferrer noreferrer" target=3D"_blank">https://www.flickr.com/photos/db=
+errange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer noreferrer"=
+ target=3D"_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0-o-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138=
+.berrange.com" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">h=
+ttps://fstop138.berrange.com</a> :|<br>
+|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer noreferrer nore=
+ferrer" target=3D"_blank">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=
+=C2=A0 =C2=A0 <a href=3D"https://www.instagram.com/dberrange" rel=3D"norefe=
+rrer noreferrer noreferrer" target=3D"_blank">https://www.instagram.com/dbe=
+rrange</a> :|<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000006e005206362d820a--
 
 
