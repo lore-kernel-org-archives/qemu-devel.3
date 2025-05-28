@@ -4,66 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B57C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 18:33:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D4FC5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 18:33:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKLZl-0002d6-R9; Wed, 28 May 2025 14:32:29 -0400
+	id 1uKLZk-0002bI-K6; Wed, 28 May 2025 14:32:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLZV-0002MC-Tc
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLZV-0002MB-TG
  for qemu-devel@nongnu.org; Wed, 28 May 2025 14:32:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLZR-00072f-Dl
- for qemu-devel@nongnu.org; Wed, 28 May 2025 14:32:12 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKLZL-00071q-OP
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 14:32:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748457123;
+ s=mimecast20190719; t=1748457119;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bzGbDPuPtKL3+PVyexgER43w1lPw+++eS9Pps+0kaZA=;
- b=cRX4tn1Ak7WpywVMjlfeGPMMZ27l8O72XlYaE5vT+eA4povNgY+bh/X/m7iYqOWTii0NLj
- GIqOsUwlRNNLNJM1oYOnUcgFtfwBmsiTrwRRKaVGlEls2MrxISFfBAiRMv1dnR9K6cbRDT
- q/Awzj/lJlgz3n66NMKBo4vAsgxSVH4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jbyjZxxaAUVh41vjvoPNgeKxdedSNQw+vJHgyay37to=;
+ b=ZRCQkCY0GjtBS8i1xGN2BTioHX1mmB8dJCnFRSPFhNP+AO6w1Be2VqWJH2Mk3ha1cMOoIY
+ yt30MUou9f1JGIXtI8LwkCwn4wCIIygyMnHWsxmUUBtOVA5ejYTE223cr1WumZhFQB5bXD
+ bRP5VhIQBDGPDeW6BarJEwwJHxKbdYo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-vMXuYm5kOryv72DEcEFobA-1; Wed,
- 28 May 2025 14:31:59 -0400
-X-MC-Unique: vMXuYm5kOryv72DEcEFobA-1
-X-Mimecast-MFC-AGG-ID: vMXuYm5kOryv72DEcEFobA_1748457118
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-191-o5sT6JhaOLCURXK4pio2vw-1; Wed,
+ 28 May 2025 14:31:56 -0400
+X-MC-Unique: o5sT6JhaOLCURXK4pio2vw-1
+X-Mimecast-MFC-AGG-ID: o5sT6JhaOLCURXK4pio2vw_1748457114
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8329E1955D93; Wed, 28 May 2025 18:31:58 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8FF351956089
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 18:31:54 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38B9619560B0; Wed, 28 May 2025 18:31:58 +0000 (UTC)
+ id 4690D19560B3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 18:31:54 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AC38621E65E7; Wed, 28 May 2025 20:31:51 +0200 (CEST)
+ id 8CB7C21E6768; Wed, 28 May 2025 20:31:51 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 08/13] qapi: Make CpuModelExpansionInfo::deprecated-props
- optional and generic
-Date: Wed, 28 May 2025 20:31:46 +0200
-Message-ID: <20250528183151.2839034-9-armbru@redhat.com>
-In-Reply-To: <20250528183151.2839034-1-armbru@redhat.com>
-References: <20250528183151.2839034-1-armbru@redhat.com>
+Cc: stefanha@redhat.com
+Subject: [PULL 00/13] QAPI patches patches for 2025-05-28
+Date: Wed, 28 May 2025 20:31:38 +0200
+Message-ID: <20250528183151.2839034-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -88,55 +83,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The following changes since commit 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e:
 
-We'd like to have some unified QAPI schema. Having a structure field
-conditional to a target being built in is not very practical.
+  Merge tag 'pull-aspeed-20250526' of https://github.com/legoater/qemu into staging (2025-05-26 10:16:59 -0400)
 
-While @deprecated-props is only used by s390x target, it is generic
-enough and could be used by other targets (assuming we expand
-CpuModelExpansionType enum values).
+are available in the Git repository at:
 
-Let's always include this field, regardless of the target, but make it
-optional. This is not a compatibility break only because the field
-remains present always on S390x.
+  https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2025-05-28
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20250522190542.588267-9-pierrick.bouvier@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
----
- qapi/machine-target.json | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+for you to fetch changes up to e1a80c3241631ee0e7a687a54f71407b6d3828b7:
 
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index 426ce4ee82..d8dbda4b50 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -244,19 +244,18 @@
- #
- # @model: the expanded CpuModelInfo.
- #
--# @deprecated-props: a list of properties that are flagged as
-+# @deprecated-props: an optional list of properties that are flagged as
- #     deprecated by the CPU vendor.  The list depends on the
- #     CpuModelExpansionType: "static" properties are a subset of the
- #     enabled-properties for the expanded model; "full" properties are
- #     a set of properties that are deprecated across all models for
--#     the architecture.  (since: 9.1).
-+#     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
- #
- # Since: 2.8
- ##
- { 'struct': 'CpuModelExpansionInfo',
-   'data': { 'model': 'CpuModelInfo',
--            'deprecated-props' : { 'type': ['str'],
--                                   'if': 'TARGET_S390X' } },
-+            '*deprecated-props' : ['str'] },
-   'if': { 'any': [ 'TARGET_S390X',
-                    'TARGET_I386',
-                    'TARGET_ARM',
+  qapi: use imperative style in documentation (2025-05-28 18:59:12 +0200)
+
+----------------------------------------------------------------
+QAPI patches patches for 2025-05-28
+
+----------------------------------------------------------------
+Daniel P. Berrangé (9):
+      qapi: expose rtc-reset-reinjection command unconditionally
+      qapi: expand docs for SEV commands
+      qapi: make SEV commands unconditionally available
+      qapi: expose query-gic-capability command unconditionally
+      qapi: make SGX commands unconditionally available
+      qapi: make Xen event commands unconditionally available
+      qapi: remove the misc-target.json file
+      qapi: make most CPU commands unconditionally available
+      qapi: make s390x specific CPU commands unconditionally available
+
+Philippe Mathieu-Daudé (1):
+      qapi: Make CpuModelExpansionInfo::deprecated-props optional and generic
+
+Pierrick Bouvier (3):
+      qapi: remove qapi_specific_outputs from meson.build
+      qapi: make all generated files common
+      qapi: use imperative style in documentation
+
+ MAINTAINERS                               |   1 -
+ qapi/audio.json                           |   2 +-
+ qapi/block.json                           |   2 +-
+ qapi/char.json                            |   4 +-
+ qapi/control.json                         |   2 +-
+ qapi/cryptodev.json                       |   2 +-
+ qapi/dump.json                            |   2 +-
+ qapi/machine-s390x.json                   | 121 +++++++
+ qapi/machine-target.json                  | 523 ------------------------------
+ qapi/machine.json                         | 371 ++++++++++++++++++++-
+ qapi/migration.json                       |  10 +-
+ qapi/misc-arm.json                        |  49 +++
+ qapi/{misc-target.json => misc-i386.json} | 165 ++++------
+ qapi/misc.json                            |   2 +-
+ qapi/qapi-schema.json                     |   5 +-
+ qapi/ui.json                              |  10 +-
+ qapi/virtio.json                          |   2 +-
+ include/hw/s390x/cpu-topology.h           |   2 +-
+ hw/i386/kvm/xen-stubs.c                   |  13 -
+ hw/i386/kvm/xen_evtchn.c                  |   2 +-
+ hw/i386/monitor.c                         |   2 +-
+ hw/i386/sgx-stub.c                        |   2 +-
+ hw/i386/sgx.c                             |   2 +-
+ hw/s390x/cpu-topology.c                   |   4 +-
+ hw/s390x/s390-skeys.c                     |   1 -
+ stubs/monitor-arm-gic.c                   |  12 +
+ stubs/monitor-cpu-s390x-kvm.c             |  22 ++
+ stubs/monitor-cpu-s390x.c                 |  23 ++
+ stubs/monitor-cpu.c                       |  21 ++
+ stubs/monitor-i386-rtc.c                  |  12 +
+ stubs/monitor-i386-sev.c                  |  36 ++
+ stubs/monitor-i386-sgx.c                  |  17 +
+ stubs/monitor-i386-xen.c                  |  16 +
+ target/arm/arm-qmp-cmds.c                 |   4 +-
+ target/i386/cpu-system.c                  |   2 +-
+ target/i386/cpu.c                         |   2 +-
+ target/i386/monitor.c                     |   1 -
+ target/i386/sev-system-stub.c             |  32 --
+ target/i386/sev.c                         |   2 +-
+ target/loongarch/loongarch-qmp-cmds.c     |   2 +-
+ target/mips/system/mips-qmp-cmds.c        |  12 +-
+ target/ppc/ppc-qmp-cmds.c                 |  12 +-
+ target/riscv/riscv-qmp-cmds.c             |   2 +-
+ target/s390x/cpu_models_system.c          |   2 +-
+ tests/qtest/qmp-cmd-test.c                |   1 +
+ qapi/meson.build                          |  33 +-
+ stubs/meson.build                         |   8 +
+ 47 files changed, 842 insertions(+), 733 deletions(-)
+ create mode 100644 qapi/machine-s390x.json
+ delete mode 100644 qapi/machine-target.json
+ create mode 100644 qapi/misc-arm.json
+ rename qapi/{misc-target.json => misc-i386.json} (75%)
+ create mode 100644 stubs/monitor-arm-gic.c
+ create mode 100644 stubs/monitor-cpu-s390x-kvm.c
+ create mode 100644 stubs/monitor-cpu-s390x.c
+ create mode 100644 stubs/monitor-cpu.c
+ create mode 100644 stubs/monitor-i386-rtc.c
+ create mode 100644 stubs/monitor-i386-sev.c
+ create mode 100644 stubs/monitor-i386-sgx.c
+ create mode 100644 stubs/monitor-i386-xen.c
+
 -- 
 2.48.1
 
