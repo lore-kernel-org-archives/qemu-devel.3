@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B508C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 20:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEB9C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 20:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKNRZ-0001f0-FR; Wed, 28 May 2025 16:32:10 -0400
+	id 1uKNSE-0001nb-Ao; Wed, 28 May 2025 16:32:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uKNRV-0001eB-Q9
- for qemu-devel@nongnu.org; Wed, 28 May 2025 16:32:06 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uKNRw-0001k9-DQ
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 16:32:39 -0400
+Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uKNRO-0001sP-64
- for qemu-devel@nongnu.org; Wed, 28 May 2025 16:32:02 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-527b70bd90dso59964e0c.3
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 13:31:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uKNRm-0001tm-BF
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 16:32:30 -0400
+Received: by mail-qv1-xf34.google.com with SMTP id
+ 6a1803df08f44-6fa956f0f16so3287926d6.3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 13:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748464315; x=1749069115; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jXTDwR7pk9WsuiUd+vIU5n7dRKgQi6hQX7UWMGnJ2vY=;
- b=RsVg8SBTCbCYR7nVIkEnkwzmcEnxjOHUzpQN3sKyeKWxCG+N3Dh6RpFff8mdOQHuYP
- 1fovceEn7jvAhbmM3PbUuG4bqk2V46z4rKPDsVqcV4BKOpksscwsej++gy7WCzFbtTS2
- VllVkKLzXjT1eLSmAmYRvZO19IuAEr0tSvHeMX2eV5tEsUxvyHML6E93qZ3ZiQ6Whwmj
- GGPG+ZLNZEHyrqF2vgDnvia0mCSNXjGvpLHeQpHnfp+8+KkZ5uHv3lboOyqAAmEgVQWb
- kcWF3g18bk/0HZgrgfnI50mFE6SsjjPIivuPe0LaiC14N4wJSFiWpypRr1u3mzBuQudv
- aBmQ==
+ d=ventanamicro.com; s=google; t=1748464340; x=1749069140; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1YismayB4SIJR2QTxoRpMlz0MW7faH8SO3fEZ+tMWWY=;
+ b=KlB2SPvfRxa7UXfCTRFAw/yUaZaVpDRzpM/M2l87RWfyUtqESLcO6SfkG4zhlcjrVk
+ 2ZflOZLx87L5gzqEcCd6YS2401S5iTACnTc0Ga187kuAHMpbD9CszTNn96PItkSdZr+4
+ 4StGSnYg4CkNbx2GlLocvHvJzBdgh/FwSwU/F20QkYOwFPmm1tALvAs+UCeAITz9WuIo
+ z8eWLj5Jzt2oB6N4VVCPLqR23QQF2WlDRWOy2Iga1zE9UrEXiN1K4VubEy5UXveuCA99
+ pn0xumOvPIYYEELnJ2JJHngpNnQw1xLKVU5imFAY9R9OWFf6GQY8NadBrYrXTwiAquKg
+ 8gCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748464315; x=1749069115;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jXTDwR7pk9WsuiUd+vIU5n7dRKgQi6hQX7UWMGnJ2vY=;
- b=arKxxqDORVLw01vGX67aiSdWf8JdGlImXGiUjaA8QOEN6SXtsUfqS+TiM9F0LLleUw
- 4nVZIEq51gv0rQFZxCiXyie8A58c5aSbvVv1t05bCWjeUhgdjtkwuIrkxsb9aDFrw8jU
- cW3wM224Be0IUSQaoGu7Mdt3K2QtJ2y+JhRfb0hzsJQfBEQkQ+4ifaTAxQygPlgQ95Ih
- esoM2BtYXJQm4aamEnPZHq4n4XaZ47nX6OaREAbD3snNW5cYwLzKXLXTG/pW6DNfJCbR
- FCfTaSFJzet5cxdNkX1xIb25bxwJO1py80WQGdCpzPEqvSDklKKZdKsQoJaZES/7Q0cI
- Wczw==
-X-Gm-Message-State: AOJu0Yx6XrycpzIyGlydddg5w0kp4l7yHqLL6xPMctpAI67bIEtmSXPY
- iBsXnNoSI1ta2L5xvcolijbo4edCfOSjM/MsSaiHKBPKc+bvcnb4WPMPA44hwS7Qr84MjWepuAL
- mG0qx
-X-Gm-Gg: ASbGncub/F2o9Pvt/ueiAXFCohTP93imafUlPsHtpMuvjzyzAE+eQmlIBk6vwrxsAK8
- 7mDWMR78H3sluFJGNKMTI1uJuDWuAXmRtDigotWusxe3zDYoWbURDaQtdwr7voAp53onYIpdeTO
- wURdTTscs1i9SOtEYQcUb89LGTvd0qWOmjXvi0dqtWJ4yAF6z33PXfd1vzHTlmR9qGoySr2clDo
- 2FscAJd2N40MWODGkdGok9aoNd2dwzzHDhyvP6j8h0wHgvrqVZUvBwjkdJQIdFHgGju359azP+0
- GyDCcRa4slcYrXlykJatiJm7hr+KJ2wYfsTvsMro6YWqaeRwqrzIgeyWa01zLwo4+z/vSca3JG5
- WKva2VnvVQBqMpe2xxh6nW9I9UqnWoYvN
-X-Google-Smtp-Source: AGHT+IH7+pdPVUVbM+DljZpA4XTau9zkPij4FNcTrJoI3xLHYDK2UX4Sn8A6fU+T0yZ4xBnk6pYiGA==
-X-Received: by 2002:a05:6122:a23:b0:520:3536:feb5 with SMTP id
- 71dfb90a1353d-52f2c5ab85emr15703239e0c.11.1748464315489; 
- Wed, 28 May 2025 13:31:55 -0700 (PDT)
-Received: from gromero0.. (200-100-75-183.dial-up.telesp.net.br.
- [200.100.75.183]) by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-53066864d8esm1773050e0c.20.2025.05.28.13.31.53
+ d=1e100.net; s=20230601; t=1748464340; x=1749069140;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1YismayB4SIJR2QTxoRpMlz0MW7faH8SO3fEZ+tMWWY=;
+ b=kUmPSpaSt0xg3BKHlCVKC8z9hwxJs56HH+RYFxK0ZhXekbRMMLYBgc7jG01cMQCTuC
+ YjN1jNve5hC1F9Fohri4hT/d12lyNHNgKY6gpgGkBAuf5QLZBLbaalONisLum/BFB4TP
+ Axx4g7X7Ngkj8t7+SC/OaVhAl5Q5jBngCaS7FJTUGbHPfwuJeYh8xOPioCGyLG/mx7lm
+ U5tNR7WYrk8DgUdSCw16MXfMZyBLUEJVw9aEuDGYs+DWjWz97U9sCxZT9gkapiTAwypt
+ E69Xa2OkKEHG4/W4donf/M7eBDTSUrXdJR/nXp+Ibyj9XyyepZBVfvS7zW7UuSxHE6bC
+ xswA==
+X-Gm-Message-State: AOJu0YwDf2C4GHYDK3UN8i63IJ8sMJFhWBzp/692yH77z2GgBFbv3NAD
+ lECV38mXcnNoXtcj9MHrESu5Ju7288lwSWsU+KrlyTN17HpU++NFqxkD/H8tUbNDeZQdFN6oz4w
+ 0mlXN
+X-Gm-Gg: ASbGncuVneNfNyezYj8Q3AUGqn03v1gbWFpGLbYBBWV5xm7TQ7UK2k10eoQlrx47qTk
+ UJkMm2PTPWRdcctP1TSD0m7BdglI84HZZpYt41F4YHlODDwI5l/OuvBESUduiOjv+MXuex4SgpC
+ BdxlVqaWOsPgOwxaOPLbJXKFOH6c5aeR7LXt7hV1ECPOMP/+RDh7Cm1v2ybnILi1trZTq3b0j7j
+ lIczi48mbGZ3cm3o4NM/le1oISG20i0hQM8RVlPOEh2d7tOOTeWUojUme4Oq/kfFfzNizOJhW2G
+ MgqIKJYA1+35usMvIxhp/yCO99HXWuFTdvw0eXLm+p7WAHwgDCaIqo9bURNYudead8pUtQTojqJ
+ UO0U=
+X-Google-Smtp-Source: AGHT+IEamB1HaY/n+6OTkUesbtkkbClAPzjOE5WGp30xeCumaYwhwWDMjhqeN7S0DtEZv5Rr1ffOxw==
+X-Received: by 2002:a05:6102:2912:b0:4e5:a83a:3cee with SMTP id
+ ada2fe7eead31-4e5a83a402dmr2679193137.14.1748462506598; 
+ Wed, 28 May 2025 13:01:46 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([191.255.35.190])
+ by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-4e59fc11a95sm1393736137.3.2025.05.28.13.01.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 May 2025 13:31:54 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org,
-	alex.bennee@linaro.org
-Cc: qemu-arm@nongnu.org, thuth@redhat.com, gustavo.romero@linaro.org,
- eric.auger@redhat.com, berrange@redhat.com
-Subject: [PATCH v5] tests/functional: Add PCI hotplug test for aarch64
-Date: Wed, 28 May 2025 20:31:37 +0000
-Message-Id: <20250528203137.1654964-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ Wed, 28 May 2025 13:01:46 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, ajones@ventanamicro.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v3 1/4] target/riscv/cpu.c: remove 'bare' condition for
+ .profile
+Date: Wed, 28 May 2025 17:01:26 -0300
+Message-ID: <20250528200129.1548259-2-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250528200129.1548259-1-dbarboza@ventanamicro.com>
+References: <20250528200129.1548259-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=gustavo.romero@linaro.org; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf34.google.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,129 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
-hot-unplug on arm64.
+We want to configure other CPU types to use profiles as an alternative
+to adding every profile extension explicitly, i.e. a profile is nothing
+more than an extension bundle.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
+This means that a vendor CPU can set .profile=rva23s64 while having the
+same handling as any other vendor CPU. Same thing with all other CPU
+types.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- MAINTAINERS                                  |  6 ++
- tests/functional/meson.build                 |  1 +
- tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
- 3 files changed, 81 insertions(+)
- create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
+ target/riscv/cpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7060cf49b9..818d7b9d5f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2078,6 +2078,12 @@ S: Supported
- F: include/hw/pci/pcie_doe.h
- F: hw/pci/pcie_doe.c
- 
-+ARM PCI Hotplug
-+M: Gustavo Romero <gustavo.romero@linaro.org>
-+L: qemu-arm@nongnu.org
-+S: Supported
-+F: tests/functional/test_aarch64_hotplug_pci.py
-+
- ACPI/SMBIOS
- M: Michael S. Tsirkin <mst@redhat.com>
- M: Igor Mammedov <imammedo@redhat.com>
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 52b4706cfe..2d68840fa2 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -83,6 +83,7 @@ tests_aarch64_system_quick = [
- tests_aarch64_system_thorough = [
-   'aarch64_aspeed_ast2700',
-   'aarch64_aspeed_ast2700fc',
-+  'aarch64_hotplug_pci',
-   'aarch64_imx8mp_evk',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
-new file mode 100755
-index 0000000000..2cf5c28b9f
---- /dev/null
-+++ b/tests/functional/test_aarch64_hotplug_pci.py
-@@ -0,0 +1,74 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# The test hotplugs a PCI device and checks it on a Linux guest.
-+#
-+# Copyright (c) 2025 Linaro Ltd.
-+#
-+# Author:
-+#  Gustavo Romero <gustavo.romero@linaro.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import BUILD_DIR
-+
-+class HotplugPCI(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
-+         '20230607+deb12u11/images/netboot/debian-installer/arm64/linux'),
-+         'd92a60392ce1e379ca198a1a820899f8f0d39a62d047c41ab79492f81541a9d9')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
-+         '20230607+deb12u11/images/netboot/debian-installer/arm64/initrd.gz'),
-+         '9f817f76951f3237bca8216bee35267bfb826815687f4b2fcdd5e6c2a917790c')
-+
-+    def test_hotplug_pci(self):
-+
-+        self.set_machine('virt')
-+        self.vm.add_args('-m', '512M')
-+        self.vm.add_args('-cpu', 'cortex-a57')
-+        self.vm.add_args('-append',
-+                         'console=ttyAMA0,115200 init=/bin/sh')
-+        self.vm.add_args('-device',
-+                         'pcie-root-port,bus=pcie.0,chassis=1,slot=1,id=pcie.1')
-+        self.vm.add_args('-bios', self.build_file('pc-bios',
-+                                                  'edk2-aarch64-code.fd'))
-+
-+        # BusyBox prompt
-+        prompt = "~ #"
-+        self.launch_kernel(self.ASSET_KERNEL.fetch(),
-+                           self.ASSET_INITRD.fetch(),
-+                           wait_for=prompt)
-+
-+        # Check for initial state: 2 network adapters, lo and enp0s1.
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls -l /sys/class/net | wc -l',
-+                                          '2')
-+
-+        # Hotplug one network adapter to the root port, i.e. pcie.1 bus.
-+        self.vm.cmd('device_add',
-+                    driver='virtio-net-pci',
-+                    bus='pcie.1',
-+                    addr=0,
-+                    id='na')
-+        # Wait for the kernel to recognize the new device.
-+        self.wait_for_console_pattern('virtio-pci')
-+        self.wait_for_console_pattern('virtio_net')
-+
-+        # Check if there is a new network adapter.
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls -l /sys/class/net | wc -l',
-+                                          '3')
-+
-+        self.vm.cmd('device_del', id='na')
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls -l /sys/class/net | wc -l',
-+                                          '2')
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index fe21e0fb44..4a30cf8444 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2713,7 +2713,6 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+         mcc->def->bare |= def->bare;
+         if (def->profile) {
+             assert(profile_extends(def->profile, mcc->def->profile));
+-            assert(mcc->def->bare);
+             mcc->def->profile = def->profile;
+         }
+         if (def->misa_mxl_max) {
 -- 
-2.34.1
+2.49.0
 
 
