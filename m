@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF840C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 12:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20272C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 12:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKFaj-0007k1-K6; Wed, 28 May 2025 08:09:09 -0400
+	id 1uKFb4-000837-Go; Wed, 28 May 2025 08:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uKFZo-0007In-Rt; Wed, 28 May 2025 08:08:14 -0400
+ id 1uKFaA-0007UF-9M; Wed, 28 May 2025 08:08:34 -0400
 Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uKFZi-0002pA-Sf; Wed, 28 May 2025 08:08:08 -0400
+ id 1uKFa5-0002pA-TE; Wed, 28 May 2025 08:08:29 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qoyAjVKBvRhZsR8hMDcRCX1MKFwTLa+0BY5DfIRl4TQVFnaOMLlAT0anwLwmtfdYhfghrbbToIJx5zBsfWr1X8mol/zIlYxaN7bwooebYCax5pIDCsuiqeKHW6r7qXimQIw7AGiKwgGzmC9Qo/LXotMrXzd7zDkD8VAQk4hNPbn8pLSBqog47k8lDOfdobO1hkQ2TEN938ZookkBVNHpGHziAnzjnvYnWwoCx+1ccK95RgN0khGpeZTRgsJY41PSY4191DPzIHl4kY/sSaE6DA5X1rE0oBF6mlB/PR+FjpcjUd3Iwfn0euIhyzAKIqxzqBTVYZ+D2bZVf5Bnosqk0Q==
+ b=rbiF+LfAm8nSMinXtRZoXSZELouH2w2cOqEg3ICNnRPGiJKmGQVMxB3W1BwNODuZR0tDwDLPyO7N4crZW6JY0seOHygVNncLLS0pjWVA31MAeghoFWdDecanJWTaKtkmxjWmp2qQ/Mo1lhBJjzQJDTDwvdjtIz1kmzVAnHdhbXp99oHaX+zfRQLLZxZwvBWLWFXwnOGU6IjDl7Y/MKjJrd9+N0PenGdBQ4uXUOV1PJOgz3amGgR13bv8oiXbeLSl//Fg4BVrLLfNEng4arZfjdT7a+zNCb9XB+JNxay/7MAIGBcvNHKh807ki7Mc529yNywnUE0u6PPTG4nEK6NrIw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Js0YLZ3HXoUUrkw10iena8B0SXj+m+OP5HqgpgEV3hs=;
- b=U8TjsPFL3xHHv96BrmAcJCFyDf6nIl6+M+imMD31MSx/izkUFxlbPGPpG/mYd8bD0lGYlOerdvrupZoJrJmU1ik5b6MRsHdCTXEdIv5JUSc49xs5r7+mgL7QXkOgonZyuirgfrTuqShZ1SozTsj8tiVxXDIP36s5fPq0j9mgFMKnzul0ry4OK62YDUmFFUbs5qR7k3+oVHuPpjLojrp9QlNogYoIy+oe1FMk9zqAKbI7fLuIGE2lL5Ek3JS+xorzosG8hUEHGF6iHRC7Ccy1THuKj601/h/kepwAf9JfwnzYxi8jBRpcG1H8nwORCxqWyYgFtFJ7AAXk53cWOnDqsg==
+ bh=U5kXyUg8kfAOe7FoTUI2XKQfaM6zNy/ZUZxKY8hWyTA=;
+ b=ffjdBXKfrn+cKq91ZFY5s5uhVA0oz0L1Qm9XGPYRxtNVbWtM4VeZb109vMJHHk24FkvlhP1LQMInq3i41U/e3nc6ZhLelTvDoId4ZsEMKjnJ1lUd8m+OU5x7BB9RIRq9T+3Co/fKOP70JFPxvtGE1RkjeWRJu/C0im3oDoo9gZBV+mpqYs1rNJCpN9OuNy+7ukimqqZf/FJTQpiXskcKYsPKZQfGsaOiTqr+fTu1C+IpmgVunvE5r+DRzxq0gExBFePmq5HDATU/vT1/ZIIQ60rYcUdotfZg6DZT/qxIzls18Z5gV1lGtgG/kB6n7LfqqcrertIlJxr38loZIbZ4Mg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Js0YLZ3HXoUUrkw10iena8B0SXj+m+OP5HqgpgEV3hs=;
- b=RbYf/3WyH3szpRizGT4DthODOdPX0g9D47f5Zynt7YDSuX+240MC+E0LEytNVobTqse1GS9wMe3BK3D+g8MFvqqekl6PTRMFX3II/BWCfL2g9+uBwpk2tVgt8FJNhw1YDweyw83L6iJz1lg7VS98F+4vycAESff6VAhVZZYS4rY5hlmmDvh0Fu2ShgM/SAzJMcRdzdFEPMDkmZBSCVkhhvGEv41VkIb1JElnTODClROB0+rLNiiwPncA/LyHrOTYiRzrjcGQp75OPVUEUfhMcL+p/54pXDH2J248Mv5WaOWOTpm10cp37S0RC3V6+8k3YY77qhQn3H0Ln7FzK4xhkg==
+ bh=U5kXyUg8kfAOe7FoTUI2XKQfaM6zNy/ZUZxKY8hWyTA=;
+ b=e6GmWYnrH8DecVDDQ32uErj4t8VgB+IrSKkiqxtEcLQQQ5W9wyXr7ZLtCY3cTuKuJ9PaRT7K9ICLZXrfq9Zjm5bTOtbRjG6TzIfqL5RCd3uubK4diE26jn5UXeIswiPqhUjtjIf/9kX3AJER2iCPViofNZkxeaK9xWWsO5UJ4qY5KKj4gNUYKMNchCwFsbQbo14xxAVoqnr34O4zfm2W/X+JyDMyQ6Ivi3IEnLHLypIXAaM1vMg5RV9ovvdE9Tb+ejql+OtqRSOlcmb5Mrmy6EeNU2KuPPZYnNIsm5gTXBkm2ovV5OnQF8IemsDMXBWUPBd+7V75qAugU3FsoLPUOw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from AM8PR08MB5732.eurprd08.prod.outlook.com (2603:10a6:20b:1d4::16)
  by GV2PR08MB9277.eurprd08.prod.outlook.com (2603:10a6:150:d5::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.26; Wed, 28 May
- 2025 12:07:50 +0000
+ 2025 12:07:53 +0000
 Received: from AM8PR08MB5732.eurprd08.prod.outlook.com
  ([fe80::e543:a83c:a260:602b]) by AM8PR08MB5732.eurprd08.prod.outlook.com
  ([fe80::e543:a83c:a260:602b%5]) with mapi id 15.20.8769.025; Wed, 28 May 2025
- 12:07:50 +0000
+ 12:07:53 +0000
 From: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 To: vsementsov@yandex-team.ru,
 	eblake@redhat.com
 Cc: qemu-block@nongnu.org, jsnow@redhat.com, kwolf@redhat.com,
  hreitz@redhat.com, qemu-devel@nongnu.org, andrey.drobyshev@virtuozzo.com,
  den@virtuozzo.com
-Subject: [PATCH v2 0/4] improve block_status() for cbw + snapshot setup
-Date: Wed, 28 May 2025 14:07:27 +0200
-Message-ID: <20250528120732.2247150-1-andrey.zhadchenko@virtuozzo.com>
+Subject: [PATCH v2 3/4] block/copy-before-write: inverse access bitmap
+Date: Wed, 28 May 2025 14:07:30 +0200
+Message-ID: <20250528120732.2247150-4-andrey.zhadchenko@virtuozzo.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250528120732.2247150-1-andrey.zhadchenko@virtuozzo.com>
+References: <20250528120732.2247150-1-andrey.zhadchenko@virtuozzo.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: FR2P281CA0173.DEUP281.PROD.OUTLOOK.COM
@@ -63,88 +65,88 @@ X-ClientProxiedBy: FR2P281CA0173.DEUP281.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AM8PR08MB5732:EE_|GV2PR08MB9277:EE_
-X-MS-Office365-Filtering-Correlation-Id: ad7f29c2-47ff-46a5-3eec-08dd9de044a4
+X-MS-Office365-Filtering-Correlation-Id: bd53365f-1313-4253-7186-08dd9de045c4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|1800799024|366016|52116014|376014|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?iFabNdwrlb5EiEQks1h7dUI9o0itFUZPauBTxByp2SNgvxdsvtsg3mVXbzgE?=
- =?us-ascii?Q?r3lmsxJIUOE9hwkjvxySCU2dmZ1bGXDMLrYtOHuj99uTTh8MLT6mSaYdv29a?=
- =?us-ascii?Q?1/znShQZAIWvjRcX2TX360TSNTY9u+tmT9NIbDYf1Pkwm1zTqe9vUp2txbpA?=
- =?us-ascii?Q?dv4niZJB3PDKYOxQhyHrCBtdq9m5SnzDjdDOjGbVq+PdOxh3FYOIQMg4UMae?=
- =?us-ascii?Q?07/uXheWPyuXS3IHRfZWyGma5/CH4GAK1zy3c4NvZAiaBeIBui8YBHoPUFLS?=
- =?us-ascii?Q?V45ufxtFSUQW2kxOC7g4fWTWe+AVyKQuRXb4K2XNjZKyFXAfIcZXUzn4+iuL?=
- =?us-ascii?Q?ZLav8yU745DymALRL/pSmcwTD6AlmxHgyqT5EpArzyuJffxKMIx5nFF1SV8k?=
- =?us-ascii?Q?363eFgqt6L7v0XM337k4tfI052apG1EguRh788Qet5NyiuS52FyL6rDzQ3FT?=
- =?us-ascii?Q?pe4bTZXJuPV8ZjDauIsF6vPvbckU7g5X1hHOQTAJBKd2CFcqfsxWnW25YYiy?=
- =?us-ascii?Q?8+0citajo44mClBhIWRG7Xv085zBF9ytHZvgnz96Kc2k2mbG5SAaaP9yl92P?=
- =?us-ascii?Q?SNQxC3c2RwBypr7Y/VCjid7CvTmtaJn0Z75YhiHWwZKOkZTQixa9SWo4yQvb?=
- =?us-ascii?Q?YEXWNGsDzcvErZqen4eJPc2HZOCUEPq7ki9kwTMZgfqNjKFx/LbtghRt37Zu?=
- =?us-ascii?Q?NedruB0+oaf4EbeZY+6XOF6+PekXGVHiCkxv4+MSXRYooVEcUKzPL7J/nfgz?=
- =?us-ascii?Q?cF6Bt7pDoL7W2/MkVpVGBadB0beuaqdComvZE2ghBHrCr4EdKAfLR8mRYaS+?=
- =?us-ascii?Q?XebWc9BK+O4aM2p2ct36jN1Hra6df3wF3+7wXAKENC9vRw4lchYqPOnvkBP/?=
- =?us-ascii?Q?wQ9T6njE4SbEoqiWunDRQDP+HWd2xx+M8BwG6UGBTDxQ2r6qjx0JcXFW19v/?=
- =?us-ascii?Q?X21+ANYcop+FfwucZvOr0sF3Kcei6JbZzYP5wYnmpcc3l1EPS9+FHtiN/3yp?=
- =?us-ascii?Q?j/7dWmqM+9E8HAfn3JVUUIfVFag+z0AuHvmUHzoxf5MHTOJnf2qsrnJDkB8N?=
- =?us-ascii?Q?femauDLdrJLTjqo2L816OXgntW/mw0yz4Z5uDF0oOFQw/IONM98FBTiEkuhp?=
- =?us-ascii?Q?pJ9iSYaiIv3cNMll6FFxmF/QB6XUpaL+vd+KD6F9NcMdBTSEzK4AVaQaP+s3?=
- =?us-ascii?Q?a1TcwgPWpGsPFW1zS9gPC8VAG24xg8C0fqOfCR09IW7Dv99K8+7nPWCRU4SX?=
- =?us-ascii?Q?upWmTejBAAV5Rc9wKOunSTkvNUvTaCzmNo3/7vV8UPiIdf1du+5tWjgDo9kf?=
- =?us-ascii?Q?p3VdxsPWWIQEchsGz+sejZQqMWpsXESEcMYVgVx/rkbDNTIpJ9szA0hrBoDh?=
- =?us-ascii?Q?AZqSKfHIBd8/RPTVzf/kq+C0dYKFzg2pj68sI5jrlJTIrrP0LTbkgAIeHhIS?=
- =?us-ascii?Q?l7rqZXaiZ0YtBcD4xMKOw1pYanP4xF71InLq/r2ioTa1F+VOxGbFhg=3D=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?3M4hSuC9v2yj9ZiGAVPosC+f8fXLKSgH/3uhj9vaf/aVsXsTTJkiFeclq0uf?=
+ =?us-ascii?Q?GC9+KBfPBxbkh/5CNvgL7/xFWOhJfymQ4Jx502JUI+JIGcSWH21QJUbbmvt0?=
+ =?us-ascii?Q?f75WMf/94iVAJ0tF2qe410G+/ITo3f0Vc4RiMEL0Mo5IEwocuZH2uKdj0EP+?=
+ =?us-ascii?Q?8wuc7YMwPl2ID0b9ahsQlFFI4toQTrvjkNpwhPfVsPwkWTKj1jBCztJ4y85X?=
+ =?us-ascii?Q?SdRG+3oePGsBf7681YhRFyTUZohIEaF2yv5cPa7X4QG4eIoH9tNoJ6/EQY2j?=
+ =?us-ascii?Q?q2Yk315dAz1iy/584uAfGRYtD6hpvu3xSrFuWmz7twvrx5d0W8C3ZkA6ar/5?=
+ =?us-ascii?Q?cFzNv+Z6zl5nq1wK+SaNqrcHtV5Oo+8SBG0WlKs5UAKN2HLkVOMSB85Q0F1U?=
+ =?us-ascii?Q?KrbOi0ThhUfyoCM2Kpsp8F7fx5TS9KW5HEYIx6rG8wAIAFRKbP69U8V0XPYU?=
+ =?us-ascii?Q?gvdRicHz3MeK4GTwgu/J76isPaUOyyznhBKnEFBxhq9MkwdiTHlwuTra8Vjn?=
+ =?us-ascii?Q?VmOS1j1c4sBX85sHJYyrcGHI4gisj07qtp2M3Hfhg1cC85oxea2pY7YF9k5w?=
+ =?us-ascii?Q?DsrmK0NjuCt7ciIxOTHp+hFdnH7gPvlP339PDs5ju3c9+dWBaOPaUzJJpOb8?=
+ =?us-ascii?Q?Z28JrsVHVmI45C9X8pQcXTCKT3ZZuvCkEP+kQZejuPkNplGWu6q+arlYpNrY?=
+ =?us-ascii?Q?QxcaqztgRAaJhcvUIUgTu7jqljDFYkWZKYZrrdncg7FfIW2jApOdn3x9ZEzI?=
+ =?us-ascii?Q?tv0inpg7Qet34bLq8caTIMjqNbz6xeQvHFNLZZCesmyU1/p34zbUu9lwRgQA?=
+ =?us-ascii?Q?EQ6t5WLP9T/Q+3qONoCuTmrcGyFuXCA6eHUoJXBBo3uELnll+e+AOrzXuDmu?=
+ =?us-ascii?Q?uXiBNsGzO1OaIhXVY4IpYlm1qBTuOqdoYvsegnwJ0eHzLbLcFnJOLAZNH6h4?=
+ =?us-ascii?Q?xORcaxuosf/ahSojuvLWEt/0A3RTfsrZfKyxoGlVopDacR3xsQnAH9FgWBlt?=
+ =?us-ascii?Q?5qK0jtc99NsppzWabVTGzjJxuRpYFKKKcK6rwQ1+7hOWDFQeIzDHO5IyWWHO?=
+ =?us-ascii?Q?38rAoD6s80bcmib3ZsOSVHoAvYUbEZ8P01CmhO/9S+BlqWX+Owbq17cejiJu?=
+ =?us-ascii?Q?9m3aAXEJ8i8m1Fg3h7s+lQqUo+CPV5WQJXo1kz8jZFJB/tvD+f/4uttxwRV+?=
+ =?us-ascii?Q?rktBacPRyTb4+DmMtn6pO/u4f5wFR7beHZgBNcfTb2FWNqIu0VkewE4YZFtN?=
+ =?us-ascii?Q?SXSqO8BNQe8VXx54fWTlWC4qFqZUBob3VAYgjDyxEzdLV7W8chQ94hEYcZ6Q?=
+ =?us-ascii?Q?0T9vHvjgRExT3iB4TVVB5UaH5U9wlKpqCCG4Fr4BQtCk8Tmsu0vDDxxnZ5DI?=
+ =?us-ascii?Q?odS2gjSkH070yHiTE8pvbBF8YUbJi4xts+ksWox5vSpzt853ZBXARs8DPu7y?=
+ =?us-ascii?Q?nU/bo0GdvGj22PmH82pqk5INbyvg86JeHASM0jJE1R1Y1ilY8sio0Q=3D=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM8PR08MB5732.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(52116014)(376014)(38350700014); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?mt7AmmW2PiRLBBnDnwrzt0jgfqT4R4gsodqcNplAa9u/YARVwfoYaFQo65Lv?=
- =?us-ascii?Q?RwsaKdwK40PZE97XiXAy3Xin+mfL99nsIw4e24koGiEQMieY5VVa5o0Afr5E?=
- =?us-ascii?Q?2WK2vPIzsE980CuG0NUhh/fYZaLAly7DsTFV6aHgBPUDGqh2Vi8DNBtCXB/0?=
- =?us-ascii?Q?DUjDCM2oxYojv7MOH3zcfzh7tjH84ikyTSIKfJowRCuDHvG0Xm2kihqWmyD1?=
- =?us-ascii?Q?k62MQIHD+Ntb8/atfNoXnd4m1Qgq6ci96Yg50+lr8zeLPKCHsBpN6pXrUAGX?=
- =?us-ascii?Q?slESCLyPmns1YzeqMTtkzoRRvgqUHvCt8Of3HjClWxxF1ytDq1D7FiSsreNE?=
- =?us-ascii?Q?i2Vzij3mTe2hsIfTqOhN4d8H6PlD/dX4R7txtXN3k3HjHI/mjntoE+bhQHy8?=
- =?us-ascii?Q?zZEwuLua/EELYQWcbPHf/nZrIMYpFxTjA069LdpprBa/dEmf8Tw6K0wgl2rQ?=
- =?us-ascii?Q?OB1nARQjOuZmAwqQQxd6KV1Yxi1Wkk7Zo+ENY0Vv4kS+/KJyJmzOgZxcc+Oy?=
- =?us-ascii?Q?Qk2nR00SSVWnZ/WDICd99POgB/kSOt8HkqReqLr288vi3QGp5JXIEkKtISzm?=
- =?us-ascii?Q?bxzBE4S+OUOgzogRSJhyvkSOO+uo0Funuq8CGc5iN8VQc6X8GJxlclE/Fp2r?=
- =?us-ascii?Q?aRLKRgZaD0ppk6s7iJIrW5oNwawW44tqRDxs+2gcrxJkcrChFxOrGPZVSHzV?=
- =?us-ascii?Q?wSMKRXzpk7qf3LhsYTO7IwK3Gclkjxr2Cta0cnpjWWd/MGIASAI1oqw/VmZO?=
- =?us-ascii?Q?j3mwQgh6S+wRqh+6DeoLfES7zdzbYXCQ1lIk6Myf/bINbK4UPXKfPkj3vy/U?=
- =?us-ascii?Q?cnKF8tw/4kQ464KurmdLzmNLs9pic7XHum4WVvi3q1rxBkQe+Vz6YHs/N8YM?=
- =?us-ascii?Q?Re35UZFMaJzEFOsSViDHMbNVF8iJ95h0CKD4aKdYUeitWs2LrLLwTqhls1p/?=
- =?us-ascii?Q?W+rmNAD9oiM1JpIAz3Co2NvvlXsPqBV0Y7rw4Aco8XHEwEoe1VTPQrK8H1tF?=
- =?us-ascii?Q?5fLuoP4cQXDHybQVanNMfJSGsxyZ0O7Pckfxu3+u4t4kcueVpiZE86ejHnPS?=
- =?us-ascii?Q?rZ4BpfH3lPZZDVWuQCNJK4MTwrko5HaK8U5YBiem5XwAbXZE1Bj5o7XRgjST?=
- =?us-ascii?Q?jisYLeI8wEvxqxy5k7pz/Lx07r0/cH7e9fXZGEChGBl4voPGuy8OWZmpUCez?=
- =?us-ascii?Q?mdw2jz2e6vLI34WxGTj9fFfeVL38GhpoiWmZRvaBfiv2L9fdh6ILc2fCgmsU?=
- =?us-ascii?Q?+PGPVPvvE7IaeIdERry6G+KtaAJ1zN9XkYVM8QexO1B2aOYqzWJD60gCrZ1s?=
- =?us-ascii?Q?MotKm2sDVl+7GmqWOtgFzVmmN/MhQTOTyZltqlRWrmtYXXNbtJpw2ZOm6i7A?=
- =?us-ascii?Q?PvLp0LmX7yA6L2VYvPEoD62r4o1iYcBQuBK4tHnRFFN93syedIMnDTnyNjmq?=
- =?us-ascii?Q?PZG0A7e3x8l1p1EM+WY5Nk8fpB74JyAzVF55N50TmjpmRAN7OFq+XE9USuz/?=
- =?us-ascii?Q?CrpCR/0b0VAXnNvbz5YZwu+LCPHgIiBX8HaLov13Mu27CKHZSaDM1KpsZog2?=
- =?us-ascii?Q?SA5zQeETgmt86iQQrFxMYcLsW8lmWzGZ6gGCmA8+zZESU3Xl55LU+gMPV9V9?=
- =?us-ascii?Q?XQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RDqDbtcxEA/7+496SBkuwLaFgxq1v7tF+73IFZoSDmGYHwlAmZUSLs13h3D5?=
+ =?us-ascii?Q?tPXn2JMEy6grXdyw5BtkWMJoqSpnYwnKbc3ATtnGj8zHB31U6E90x9Qu8eGp?=
+ =?us-ascii?Q?6BKhqdxg1RM8Cmcdaxd11Mh0f56/Xns8wGZxZKUcEvOw/B3G0lrqVKnma6fF?=
+ =?us-ascii?Q?8xImn2DXTLUgxKp0uZGZebzUmgrgDFs2CAc60F4LcMTEBBFK6dG05egXTcF9?=
+ =?us-ascii?Q?S96+tzxrXw297J4BXnQ7JKUWbJbrnydvLZY+AVxQRCTXBSTp4kotCrmMyEyM?=
+ =?us-ascii?Q?STCEodJKKprMIsinUlCmbSjMX3PkgPkAlloKSCShw0QR/usf2maE8DQObM+6?=
+ =?us-ascii?Q?TFfiaOMFYeq7KmdZMgn24X3TadZFYAxVgRf+A1RViPCV/PEt84QZ4t3m2con?=
+ =?us-ascii?Q?LI5XGjjHNYken1Rrwz9EmtTx6jYl68Ma10WZqkHWvmEu5feHfwj7Z0QJxg+u?=
+ =?us-ascii?Q?HYbwsjs3D76TmRhF9nDgF5EOaOjA4XCSBh1TvVmGoOq8z0pq5VXseX0ZnC5R?=
+ =?us-ascii?Q?dByz9VwmdyaLwwAEpJLUrj4wc7GV0aqT/S/EXBjM4H3e158RHC0HCcK5Is0c?=
+ =?us-ascii?Q?cND6ZbThKtGBaD08gxbiQ0J0dCAQyZwBGdxEpQdYmG77ozhTrad2kLEoEJ6b?=
+ =?us-ascii?Q?v6EIxdERp56siXL2KjKwTV5LwVooINjoDUYqgBjyaZigFWa/tI/psmSdpDlh?=
+ =?us-ascii?Q?nysenuXIw3045LfCal4hr04z0QsPnJHikrBGDSrp6dU8EXLtuHlgiVhRctZl?=
+ =?us-ascii?Q?ThyEzju/2Y1laKYFkxFiYnDTR904+VCgcwxCHOeG8HQKLtJCe5FbJEXAnsrI?=
+ =?us-ascii?Q?xOKzjayJqmMPpvA0C7yhC66F5HhIliiipi2cw2EentLFfYSttKVcxaQ1+tqE?=
+ =?us-ascii?Q?b4dRTps8meMIRbeOBt3n43REdmrHpSQfLrHd7W2irXTnYAyDv7jUzYAWS/CJ?=
+ =?us-ascii?Q?pVqIwQiCZjq9TnzACIUSc5MKSA1aJTpDUFjMtpkB9QteXw0raRKaEsCyvnKh?=
+ =?us-ascii?Q?tTWF4lvitzRKzn6iwshXr3IwE1ElXx4qzihqj511QTsfIbEF88LnBtfXyMim?=
+ =?us-ascii?Q?7u7qzxw73LWg4ejdf2BSD6x32R4kHi6vwkXg3nvEcigbK30o2sXzbN8mzKJT?=
+ =?us-ascii?Q?+N2r7bKxxeK0ffqS6rEEkcszkTm3tt3WC527Qye/JlWPMWxEikr9tTCisQSd?=
+ =?us-ascii?Q?w6Fvii92Q6MoqsmBdBIBHxCfm6U/pVtUec1e+UiKCUzZDaCxYdSyxTkmhP5S?=
+ =?us-ascii?Q?Sg0yZmCWW/wEES5hSVb2agZweQzhqy9CpDafHqVyKV61MoVboHrxJE+7zWqh?=
+ =?us-ascii?Q?cclaiiU448av9/xK3Pko6WLQoaAXOFzMHgPQzJvY2GHL0E1PFVANinMHVjPO?=
+ =?us-ascii?Q?/09AnHTHcZJY9Wv4LiuIkhMI+ItyfI+RTY9y5zsHz7nK4BteSCifR6hhBNZ7?=
+ =?us-ascii?Q?xo18JjHkJAbo6SdllvZJW4AIUNnPAkfEOv3td/+7Gmm+VeCG1F8feCODgtNX?=
+ =?us-ascii?Q?LA3ivpBeldimL+FQPSwmGbVpRStWRjX2QM92PTMVrGSuyd5aj1HvtwAeOftj?=
+ =?us-ascii?Q?zl4Cq+guwyBQCJTUguq81W9GqTRFIXiPy9RLjlPSW6hjQOLlrygWL7QQp4iB?=
+ =?us-ascii?Q?Nw=3D=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ad7f29c2-47ff-46a5-3eec-08dd9de044a4
+X-MS-Exchange-CrossTenant-Network-Message-Id: bd53365f-1313-4253-7186-08dd9de045c4
 X-MS-Exchange-CrossTenant-AuthSource: AM8PR08MB5732.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 12:07:50.7792 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 12:07:52.6560 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mSkjQn87erssZvodv6ShFMASX9v5HL7Iyz9//XPqUukAUpR5C4shMZyU6gtX1il5/QUfMSolEgPrgIsvLx9Ga6IG8Eu8XWufIsSSg9QferQ=
+X-MS-Exchange-CrossTenant-UserPrincipalName: OcPA36EfY/i2c/iDBiwUdUE6yMrchBk4Xv1QaaealhLbsctJBUZMf995LSbUjGMvDOHx0fd7ntxBJFB6883LmtGAAuwCfr/6PYLrLlUouuQ=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR08MB9277
 Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
  envelope-from=andrey.zhadchenko@virtuozzo.com;
  helo=PA4PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,69 +162,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recently we had some reports about stuck full backups: running backup
-job had 0 progress for more than an hour. This reproduced only on big
-images, at least 30TB of allocated space.
-We are using snapshot filter + cbw filter + blockdev-backup. The
-discovered problem lies in access bitmap in cbw filter.
-To build bcs bitmap for backup, the job repeatedly asks for block
-status with a range (X, virtual_size). As we are accessing the disk
-via snapshot filter, we end up in cbw_co_snapshot_block_status()->
-cbw_snapshot_read_lock(). Here we check that access bitmap does not
-have any zeroes in this range. After that, we ask the disk.
-Firstly, we always look for zero in access bitmap for the whole
-range. This is rather slow, because it is full and we need to scan
-every bit in a lower level. Secondly, the following block status call
-to the disk may return not-very-high amount of continious clusters,
-for example 512 (empirical value, guessing for the 'full' image it is
-4K/clu_addr_size for qcow2 driver).
-This way we are doomed to re-scan access bitmap on the next block
-status request (X + 512, virtual_size).
+HBitmaps allow us to search set bits pretty fast. On the contrary,
+when searching zeroes, we may be forced to fully traverse the lower
+level.
+When we run blockdev-backup with mode=full on top of snapshot filter
++ cbw filter, the job fills copy bitmap by calling block_status()
+with range (X, virtual_size). The problem is that we check for zeroes
+in this whole range. We also hit the worst case here, as access
+bitmap is fully set and we need to scan the entire lowest level.
+After scanning the full bitmap we actually ask the block status of
+original image, which may return significantly lower amount of empty
+clusters.
+Beacuse of this, the backup job 'hangs' on block copy initializaiton
+for a long time with 100% CPU.
 
-perf tracing example:
-  96.67%          9581  qemu-kvm         qemu-kvm                    [.] hbitmap_next_zero
-   0.33%            32  qemu-kvm         qemu-kvm                    [.] qcow2_cache_do_get.lto_priv.0
-   0.10%            10  qemu-kvm         [kernel.vmlinux]            [k] perf_adjust_freq_unthr_context
-   0.08%             8  qemu-kvm         qemu-kvm                    [.] qcow2_get_host_offset
+Example copy bitmap buildup time for image with clu_size=65536 and
+preallocated metadata
+size                 10T   11T
+blockdev-backup      52s   57s
+cbw + snap           325s  413s
+cbw + snap + patch   55s   61s
 
-This can be clearly observed on the image with small clu_size=65536
-and preallocated metadata.
-size                   10T   11T
-blockdev-backup        52s   57s
-cbw + snap             325s  413s
-cbw + snap + patches   55s   61s
+To fix it, inverse the access bitmap in cbw filter: rather set it
+when the user is not allowed to read the cluster.
 
-The growth is also non-linear in this case, +10% size results in
-+20% time.
+Update qemu-iotest 257: now access bitmap have count 0 instead of
+the image size 67108864
 
-This patchset changes access-bitmap into 'deny' bitmap by reversing
-the bits within and making the code look for set bits. It is much
-faster due to hbitmap levels.
+Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
+---
+ block/copy-before-write.c  | 17 ++++++++++-------
+ tests/qemu-iotests/257.out | 28 ++++++++++++++--------------
+ 2 files changed, 24 insertions(+), 21 deletions(-)
 
-Also
- - update iotest 257: now access bitmap on the cbw filter is empty,
-so count is 0 instead of 67108864 (which is the image size)
- - remove meta betmap leftovers
- - report block_status() until the end of accessible section to
-snapshot filter, instead of returning EINVAL on big requests
-
-v2:
- - use 'inverse' instead of reverse, add an example 
-
-Andrey Zhadchenko (4):
-  hbitmap: drop meta bitmap leftovers
-  hbitmap: introduce hbitmap_inverse()
-  block/copy-before-write: inverse access bitmap
-  block/copy-before-write: report partial block status to snapshot
-
- block/copy-before-write.c    | 33 +++++++++++++++++++++------------
- block/dirty-bitmap.c         |  9 +++++++++
- include/block/block_int-io.h |  1 +
- include/qemu/hbitmap.h       |  8 ++++++++
- tests/qemu-iotests/257.out   | 28 ++++++++++++++--------------
- util/hbitmap.c               | 32 +++++++++++++++++---------------
- 6 files changed, 70 insertions(+), 41 deletions(-)
-
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index fd470f5f92..7e074ad569 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -53,7 +53,7 @@ typedef struct BDRVCopyBeforeWriteState {
+     CoMutex lock;
+ 
+     /*
+-     * @access_bitmap: represents areas allowed for reading by fleecing user.
++     * @access_bitmap: represents areas disallowed for reading by fleecing user.
+      * Reading from non-dirty areas leads to -EACCES.
+      */
+     BdrvDirtyBitmap *access_bitmap;
+@@ -220,7 +220,7 @@ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
+         return NULL;
+     }
+ 
+-    if (bdrv_dirty_bitmap_next_zero(s->access_bitmap, offset, bytes) != -1) {
++    if (bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes) != -1) {
+         g_free(req);
+         return NULL;
+     }
+@@ -338,8 +338,8 @@ cbw_co_pdiscard_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes)
+     aligned_bytes = aligned_end - aligned_offset;
+ 
+     WITH_QEMU_LOCK_GUARD(&s->lock) {
+-        bdrv_reset_dirty_bitmap(s->access_bitmap, aligned_offset,
+-                                aligned_bytes);
++        bdrv_set_dirty_bitmap(s->access_bitmap, aligned_offset,
++                              aligned_bytes);
+     }
+ 
+     block_copy_reset(s->bcs, aligned_offset, aligned_bytes);
+@@ -501,9 +501,12 @@ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
+         return -EINVAL;
+     }
+     bdrv_disable_dirty_bitmap(s->access_bitmap);
+-    bdrv_dirty_bitmap_merge_internal(s->access_bitmap,
+-                                     block_copy_dirty_bitmap(s->bcs), NULL,
+-                                     true);
++    if (bitmap) {
++        bdrv_dirty_bitmap_merge_internal(s->access_bitmap,
++                                         block_copy_dirty_bitmap(s->bcs), NULL,
++                                         true);
++        bdrv_dirty_bitmap_inverse(s->access_bitmap);
++    }
+ 
+     qemu_co_mutex_init(&s->lock);
+     QLIST_INIT(&s->frozen_read_reqs);
+diff --git a/tests/qemu-iotests/257.out b/tests/qemu-iotests/257.out
+index c33dd7f3a9..55efb418e6 100644
+--- a/tests/qemu-iotests/257.out
++++ b/tests/qemu-iotests/257.out
+@@ -109,7 +109,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -585,7 +585,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -854,7 +854,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -1330,7 +1330,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -1599,7 +1599,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -2075,7 +2075,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -2344,7 +2344,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -2820,7 +2820,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -3089,7 +3089,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -3565,7 +3565,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -3834,7 +3834,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -4310,7 +4310,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -4579,7 +4579,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
+@@ -5055,7 +5055,7 @@ write -P0x67 0x3fe0000 0x20000
+     "backup-top": [
+       {
+         "busy": false,
+-        "count": 67108864,
++        "count": 0,
+         "granularity": 65536,
+         "persistent": false,
+         "recording": false
 -- 
 2.43.0
 
