@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C7E3C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 20:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D2FC5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 20:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKNKa-0007dD-0I; Wed, 28 May 2025 16:24:56 -0400
+	id 1uKNPH-0000gE-C8; Wed, 28 May 2025 16:29:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKNKY-0007cU-AX
- for qemu-devel@nongnu.org; Wed, 28 May 2025 16:24:54 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKNPG-0000fp-7J
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 16:29:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKNKV-0000k1-OB
- for qemu-devel@nongnu.org; Wed, 28 May 2025 16:24:54 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKNP4-0001Sw-G2
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 16:29:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748463889;
+ s=mimecast20190719; t=1748464170;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=OEWQgffj3zTNH2SRHeYqdcuHBI0SR41b8SIftSswMHw=;
- b=bjqyLfONXm0newkba/oRYbZORloceojyohlCMg3vns5iYGkZiOI0MkGyv7ah/ydNPtygzA
- emJRDPPymR8WbtK2UY+VEMz6iZnpwomiuUgdU+b9yssZU8RRedczJwBwbcKsMgyOjv4tnY
- fet4QR/qP2w0WEPmyJ945B/66Rj6UE0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ in-reply-to:in-reply-to:references:references;
+ bh=bkr6+iBmmHfk0QiCNLnCqL1qxBlypnRx3Gd6Xn+mMTU=;
+ b=UY7Sga58Ubkobsc2gbDa1QndNnUAaL46Yf6aj452nv2OBwq2YW0Uw+zh1XrPlujNztanxt
+ 3D9qWT7wyWQU28ibNOiZP57NnMSQUAmUJRrSA0neE/q/+TVqF3WN4/2luKj/4WfpwoJ5rf
+ Rmvjt7l5h0AOKoxE7JyB3y7dyIcBuCM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-546-q2okUeU3M3-XbdOfYB-0VA-1; Wed,
- 28 May 2025 16:24:47 -0400
-X-MC-Unique: q2okUeU3M3-XbdOfYB-0VA-1
-X-Mimecast-MFC-AGG-ID: q2okUeU3M3-XbdOfYB-0VA_1748463887
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-klXmRwEUO_OsDyujvo_z4g-1; Wed,
+ 28 May 2025 16:29:27 -0400
+X-MC-Unique: klXmRwEUO_OsDyujvo_z4g-1
+X-Mimecast-MFC-AGG-ID: klXmRwEUO_OsDyujvo_z4g_1748464166
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C3EA719560B1
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 20:24:46 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.55])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C1DE41956094; Wed, 28 May 2025 20:24:44 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL v2 00/25] Functional tests,
- Microblaze endianness & pc/q35 cleanups
-Date: Wed, 28 May 2025 22:24:42 +0200
-Message-ID: <20250528202442.18315-1-thuth@redhat.com>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17386195608A; Wed, 28 May 2025 20:29:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.48])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5BA130001B0; Wed, 28 May 2025 20:29:23 +0000 (UTC)
+Date: Wed, 28 May 2025 15:29:20 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hibriansong@gmail.com, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Subject: Re: [RFC 01/11] aio-posix: fix polling mode with fdmon-io_uring
+Message-ID: <mequ24eyekrec6eha4wu3yi442r7k55dtkj7wrqd7ek67dugjo@z4nwhz4bus5p>
+References: <20250528190916.35864-1-stefanha@redhat.com>
+ <20250528190916.35864-2-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250528190916.35864-2-stefanha@redhat.com>
+User-Agent: NeoMutt/20250404
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -81,90 +84,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi Stefan!
+On Wed, May 28, 2025 at 03:09:06PM -0400, Stefan Hajnoczi wrote:
+> The io_uring(7) file descriptor monitor cannot enter polling mode
+> because it needs to submit a POLL_ADD SQE every time a file descriptor
+> becomes active. Submitting SQEs only happens in FDMonOps->wait() outside
+> of polling mode.
+> 
+> Fix this using the multi-shot mechanism introduced in Linux 5.13 and
+> liburing 2.1. Stable and enterprise Linux distros ship 5.14+ as of March
+> 2025, so it is safe to require this. Note that fdmon-io_uring is
+> currently not enabled at runtime and is not essential, so QEMU can still
+> be built without it on older hosts.
+> 
+> In multi-shot mode, a POLL_ADD SQE remains active until canceled with
+> POLL_REMOVE. This avoids the need to submit a new SQE every time a file
+> descriptor becomes active.
+> 
+> When POLL_REMOVE is processed by the host kernel, the multi-shot
+> POLL_ADD operation completes with -ECANCELED. Adjust the code slightly
+> to take this into account.
+> 
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
 
-The following changes since commit 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e:
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
-  Merge tag 'pull-aspeed-20250526' of https://github.com/legoater/qemu into staging (2025-05-26 10:16:59 -0400)
-
-are available in the Git repository at:
-
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2025-05-28v2
-
-for you to fetch changes up to 51c214b7c27096e3516aedf6befd69dc6d75b4ac:
-
-  tests/unit/test-util-sockets: fix mem-leak on error object (2025-05-28 22:16:26 +0200)
-
-----------------------------------------------------------------
-* Functional tests improvements
-* Endianness improvements/clean-ups for the Microblaze machines
-* Remove obsolete -2.4 and -2.5 i440fx and q35 machine types and related code
-
-v2: Dropped the memlock test patches
-
-----------------------------------------------------------------
-Matheus Tavares Bernardino (1):
-      tests/unit/test-util-sockets: fix mem-leak on error object
-
-Philippe Mathieu-Daudé (17):
-      hw/i386/pc: Remove deprecated pc-q35-2.4 and pc-i440fx-2.4 machines
-      hw/i386/pc: Remove PCMachineClass::broken_reserved_end field
-      hw/i386/pc: Remove pc_compat_2_4[] array
-      hw/core/machine: Remove hw_compat_2_4[] array
-      hw/net/e1000: Remove unused E1000_FLAG_MAC flag
-      hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_MIGRATE_EXTRA definition
-      hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_DISABLE_PCIE definition
-      hw/i386/pc: Remove deprecated pc-q35-2.5 and pc-i440fx-2.5 machines
-      hw/i386/x86: Remove X86MachineClass::save_tsc_khz field
-      hw/nvram/fw_cfg: Remove legacy FW_CFG_ORDER_OVERRIDE
-      hw/core/machine: Remove hw_compat_2_5[] array
-      hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_OLD_PCI_CONFIGURATION definition
-      hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_DISABLE_PCIE_BIT definition
-      hw/scsi/vmw_pvscsi: Convert DeviceRealize -> InstanceInit
-      hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS definition
-      hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
-      hw/net/vmxnet3: Merge DeviceRealize in InstanceInit
-
-Thomas Huth (7):
-      tests/functional/test_sparc64_tuxrun: Explicitly set the 'sun4u' machine
-      tests/functional/test_mips_malta: Re-enable the check for the PCI host bridge
-      tests/functional/test_mem_addr_space: Use set_machine() to select the machine
-      hw/microblaze: Add endianness property to the petalogix_s3adsp1800 machine
-      tests/functional: Test both microblaze s3adsp1800 endianness variants
-      hw/microblaze: Remove the big-endian variants of ml605 and xlnx-zynqmp-pmu
-      docs: Deprecate the qemu-system-microblazeel binary
-
- docs/about/deprecated.rst                        |  19 ++--
- docs/about/removed-features.rst                  |   9 ++
- include/hw/boards.h                              |   9 +-
- include/hw/i386/pc.h                             |   7 --
- include/hw/i386/x86.h                            |   5 --
- include/hw/loader.h                              |   2 -
- include/hw/nvram/fw_cfg.h                        |  10 ---
- include/hw/virtio/virtio-pci.h                   |   8 --
- hw/core/loader.c                                 |  14 ---
- hw/core/machine.c                                |  18 ----
- hw/i386/pc.c                                     |  42 ++-------
- hw/i386/pc_piix.c                                |  26 ------
- hw/i386/pc_q35.c                                 |  26 ------
- hw/i386/x86.c                                    |   1 -
- hw/microblaze/petalogix_ml605_mmu.c              |  15 +---
- hw/microblaze/petalogix_s3adsp1800_mmu.c         |  41 +++++++--
- hw/microblaze/xlnx-zynqmp-pmu.c                  |   7 +-
- hw/net/e1000.c                                   |  95 +++++++++-----------
- hw/net/vmxnet3.c                                 |  44 ++-------
- hw/nvram/fw_cfg.c                                | 110 ++---------------------
- hw/scsi/vmw_pvscsi.c                             |  67 +++-----------
- hw/virtio/virtio-pci.c                           |  11 +--
- system/vl.c                                      |   5 --
- target/i386/machine.c                            |   5 +-
- tests/qtest/test-x86-cpuid-compat.c              |  14 ---
- tests/unit/test-util-sockets.c                   |   4 +
- tests/functional/test_mem_addr_space.py          |  63 ++++++-------
- tests/functional/test_microblaze_s3adsp1800.py   |  18 ++--
- tests/functional/test_microblazeel_s3adsp1800.py |   6 +-
- tests/functional/test_mips_malta.py              |   6 +-
- tests/functional/test_sparc64_tuxrun.py          |   1 +
- 31 files changed, 197 insertions(+), 511 deletions(-)
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
