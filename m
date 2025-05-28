@@ -4,102 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE87C54ED1
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 03:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FCBC54ED1
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 03:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK76d-0007GA-BJ; Tue, 27 May 2025 23:05:27 -0400
+	id 1uK7Nq-0001DB-42; Tue, 27 May 2025 23:23:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uK76U-0007Eh-ST
- for qemu-devel@nongnu.org; Tue, 27 May 2025 23:05:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uK7Nj-0001Ba-RV
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 23:23:09 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uK76S-000700-PS
- for qemu-devel@nongnu.org; Tue, 27 May 2025 23:05:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748401513;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f1mP4/9Zk66AF1FfmhdSuToq0KetzH2Qqm/1TisdoP4=;
- b=ipS+eMRWPBs4M9PjcfPDcVY54dDjjGr0d1AlzOJ1PwkR7u1iuglftiyFstB9aA+jy1pPya
- 03qOkd7ycvbqobN+/3LUyCnKts55jfNrxuXu0WKK6qTPhfK5o365d+IuuLq4/vmJ3Suw5b
- Ajb0ljrABP75YmhvArEzUjHTOoxMJfs=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-LTzb_m5KOmS0bTdLEWU8gw-1; Tue, 27 May 2025 23:05:12 -0400
-X-MC-Unique: LTzb_m5KOmS0bTdLEWU8gw-1
-X-Mimecast-MFC-AGG-ID: LTzb_m5KOmS0bTdLEWU8gw_1748401511
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-acb66d17be4so313693066b.2
- for <qemu-devel@nongnu.org>; Tue, 27 May 2025 20:05:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748401511; x=1749006311;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=f1mP4/9Zk66AF1FfmhdSuToq0KetzH2Qqm/1TisdoP4=;
- b=b8N/N3yd7aPBIZ+j/lXOCKQ6pGOUzfAklYT9C3oKwRacSGO1A+HcO29p3lBjufDhyA
- Gt4TtHmV/zROoMNfbixL79oM+Z2Mevzl/akWjSbwq49/TXU6YTPLCx18Df4i/EBzv7fj
- 1TYH9vZEAbxe0KfQJIJEl2eu8CA7/QhA+b7nOPMjYUSku0uSEqEi/AiE6nx6/DU429dK
- meomSFE/wYj9OvOdDIL0cnZTMg+ZU4usGoFK2ZmqhO7DsZ961ChO0wN2hceVBRbLw+ab
- ZGUnX9Lz9osfg8lqn7yItP/DQgUmLRMuHOTVtaMLtKAi+aqvLw2IysTfKLvZ1jGrpMkS
- q79Q==
-X-Gm-Message-State: AOJu0YzcpzBBfBpluLbnnTC2N+dbQ5lFmx0Zpwly/mSQ/aXa2bYFsBvF
- p/N7qhCGHpbKWcOdhZxDLS0mQku8Juj6SuXbVDHhPosZFVOQqh83OXt7D/vu+xKFIzKDucrW+H3
- 7Y++MDcuiCSAhbFDDF1Y4qNzxEy8r5ouCt6Dnx3wHncbPRrBzi8r3T5/iEJcbfjokWOqeZcdK0S
- 9Z+DnHhYM6PiayulHAjdTaM5EEjyHxl2o=
-X-Gm-Gg: ASbGnctRH9Y1Tt+aOa3WcrYpa4PfG9pUHkqy5KffF+tguVeofpSkfiQqnNR3hrulv4K
- r2Q/7R/dz6za/6PsiJ14BFcRhFC/6ezF7ryiqJhTq25BED2CUJvg6hOD4qcLjEAFO7tzguQ==
-X-Received: by 2002:a17:906:dc8b:b0:ad8:8efe:31fc with SMTP id
- a640c23a62f3a-ad88efe3ddamr459347766b.41.1748401510757; 
- Tue, 27 May 2025 20:05:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdu9IJZCwFMw85XC+wGssG1IzVZyjRF6vafJ0cZHoZkZsqnRAbgLOC4dWlSH8+C1seZ9lRN/8ViI/uwfIaWcw=
-X-Received: by 2002:a17:906:dc8b:b0:ad8:8efe:31fc with SMTP id
- a640c23a62f3a-ad88efe3ddamr459346766b.41.1748401510420; Tue, 27 May 2025
- 20:05:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uK7Ng-0003Ub-QU
+ for qemu-devel@nongnu.org; Tue, 27 May 2025 23:23:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748402585; x=1779938585;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=uJGFr7bCe9XZZzxhbwX+BGLNmyXG1OyrjsdWt3QvlfA=;
+ b=bnf8k7BUMoV7zfFu07HDrTKubXtWm24qBZ3R9RlCzRrZaC2+1DrlTk9d
+ ROnh8Y+aCHsHxDBNFIJ9gUSM6EcsIRHsZXDtPzDG9NvyrP29Wcc0LAZWZ
+ ZGwv4RXrar4vRyq1zqm0M3uFqynACO0Y69STcsKCF8ie8Ho3tfFr0MICJ
+ yFU+uaubmfVcjZcNdUa1UBm9g0yB6jjkS+NE+HIhzUWG4JIr2pA5+mItI
+ dx7mgH8dEyyz5co/KUt05S4tDDEltmAdQm9Kn4A2J2mcJAmGNrxLsyPAP
+ +UG7XPUFEcy/xJ3rwmyPBycy/jXwdPOnrZCNmupu4X7yh2SnkjqaszGO5 A==;
+X-CSE-ConnectionGUID: RJfm5wT1R6iafN0lTaYetQ==
+X-CSE-MsgGUID: nRiGiL6SRmiPn3BlSU4vPA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="50291666"
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="50291666"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2025 20:23:01 -0700
+X-CSE-ConnectionGUID: Gjc0qwmxQaaxA/r2ra9IGg==
+X-CSE-MsgGUID: p7EcRkv+R2e1+uQSV9Dc5g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="174076329"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2025 20:23:00 -0700
+Message-ID: <bbeba807-ef49-4bd1-abfe-dce8b2a5f9a3@intel.com>
+Date: Wed, 28 May 2025 11:22:57 +0800
 MIME-Version: 1.0
-References: <cover.1747825544.git.pabeni@redhat.com>
- <87d85cd2c276a43d0f7ed2d27e00427b8f4a8243.1747825544.git.pabeni@redhat.com>
- <f824d42a-6b4e-4624-874c-bb8eddf663e2@daynix.com>
-In-Reply-To: <f824d42a-6b4e-4624-874c-bb8eddf663e2@daynix.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Wed, 28 May 2025 11:04:33 +0800
-X-Gm-Features: AX0GCFs8taL60GWquPJSn6lIMT2G1PfTK5dyutqVFDaz3-3gkztl1PI9RTyOPuU
-Message-ID: <CAPpAL=wJNPnmvBE55K3+UZtnw1ZybffkJnwS0vdRKJ6f71sH+w@mail.gmail.com>
-Subject: Re: [PATCH RFC 16/16] net: make vhost-net aware of GSO over UDP
- tunnel hdr layout
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, 
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Revert "i386/cpu: Set up CPUID_HT in
+ x86_cpu_expand_features() instead of cpu_x86_cpuid()"
+To: Zhao Liu <zhao1.liu@intel.com>, elisey.konstantinov@icloud.com
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+References: <0C532D10-33ED-41F5-BBA7-13C64AA0633D@icloud.com>
+ <aDaCJTkoDYsdJFmJ@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aDaCJTkoDYsdJFmJ@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -62
+X-Spam_score: -6.3
+X-Spam_bar: ------
+X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,53 +87,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested this series of patches with vhost-net regression tests,
-everything works fine.
+On 5/28/2025 11:25 AM, Zhao Liu wrote:
+> Hi Elisey,
+> 
+> Thank you for your patch! I'm sorry I previously noticed #2894 [*] but
+> missed your report.
+> 
+> Recently there's a fix (commit 5979f50fa9fd ("i386/tcg: Make CPUID_HT
+> and CPUID_EXT3_CMP_LEG supported")). Does that fix address this bug?
+> 
+> [*]: https://lore.kernel.org/qemu-devel/aCWdhIqZiu4q+UJi@intel.com/
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+It should be the next one for hvf accelerator in this series that helps. 
+Because the regression reported is on macOS.
 
-On Fri, May 23, 2025 at 4:24=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> On 2025/05/21 20:34, Paolo Abeni wrote:
-> > When the GSO over UDP tunnel offload is enabled, the virtio net
-> > header includes additional fields to support such offload.
-> >
-> > The vhost backend must be aware of the exact header layout, to
-> > copy it correctly. The tunnel-related field are present if either
-> > the guest or the host negotiated any UDP tunnel related feature:
-> > add them to host kernel supported features list, to allow qemu
-> > transder to such backend the needed information.
->
-> s/transder/transfer/
->
-> This patch should be squashed into the previous patch ("[PATCH RFC
-> 15/16] net: implement tnl feature offloading") as QEMU only with the
-> previous patch will incorrectly enable tunnel offloading even when vhost
-> doesn't support it.
->
-> >
-> > Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-> > ---
-> >   hw/net/vhost_net.c | 4 ++++
-> >   1 file changed, 4 insertions(+)
-> >
-> > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-> > index 58d7619fc8..c8e02d1732 100644
-> > --- a/hw/net/vhost_net.c
-> > +++ b/hw/net/vhost_net.c
-> > @@ -52,6 +52,10 @@ static const int kernel_feature_bits[] =3D {
-> >       VIRTIO_F_NOTIFICATION_DATA,
-> >       VIRTIO_NET_F_RSC_EXT,
-> >       VIRTIO_NET_F_HASH_REPORT,
-> > +#ifdef CONFIG_INT128
-> > +    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
-> > +    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
-> > +#endif
-> >       VHOST_INVALID_FEATURE_BIT
-> >   };
-> >
->
->
+It's merged as commit 7a4861230676 ("i386/hvf: Make CPUID_HT supported") 
+for qemu/master
+
+and it should be in qemu stable 10.0.1:
+https://lore.kernel.org/qemu-devel/20250525120818.273372-28-mjt@tls.msk.ru/
+
+> Regards,
+> Zhao
+> 
+> On Tue, May 27, 2025 at 07:10:27PM +0300, elisey.konstantinov@icloud.com wrote:
+>> Date: Tue, 27 May 2025 19:10:27 +0300
+>> From: elisey.konstantinov@icloud.com
+>> Subject: [PATCH] Revert "i386/cpu: Set up CPUID_HT in
+>>   x86_cpu_expand_features() instead of cpu_x86_cpuid()"
+>> X-Mailer: Apple Mail (2.3826.600.51.1.1)
+>>
+>>  From e2f3eab60e9b9787c5c8f87bea5d1bd7079d982e Mon Sep 17 00:00:00 2001
+>> From: Elisey <elisey.konstantinov@icloud.com>
+>> Date: Tue, 27 May 2025 17:17:35 +0300
+>> Subject: [PATCH] Revert "i386/cpu: Set up CPUID_HT in x86_cpu_expand_features() instead of cpu_x86_cpuid()"
+>>
+>> This reverts commit c6bd2dd634208ca717b6dc010064fe34d1359080.
+>>
+>> The original change caused a regression where macOS guests (XNU kernel)
+>> would panic during boot with a divide error (type=0) when using SMP
+>> configuration. This affects multiple macOS versions from 10.6 to 10.14
+>> and possibly others.
+>>
+>> The issue occurs during kernel TSC initialization and can be worked
+>> around by using single-core configuration (-smp 1), but reverting this
+>> change restores proper multi-core functionality.
+>>
+>> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2933
+>> Tested-by: Elisey Konstantinov <elisey.konstantinov@icloud.com>
+>> Signed-off-by: Elisey Konstantinov <elisey.konstantinov@icloud.com>
+>> ---
+>> target/i386/cpu.c | 15 +--------------
+>> 1 file changed, 1 insertion(+), 14 deletions(-)
+>>
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index 9689f6374e..c648a1cf04 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -6859,6 +6859,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>>          *edx = env->features[FEAT_1_EDX];
+>>          if (threads_per_pkg > 1) {
+>>              *ebx |= threads_per_pkg << 16;
+>> +            *edx |= CPUID_HT;
+>>          }
+>>          if (!cpu->enable_pmu) {
+>>              *ecx &= ~CPUID_EXT_PDCM;
+>> @@ -7838,20 +7839,6 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>>          }
+>>      }
+>>
+>> -    if (x86_threads_per_pkg(&env->topo_info) > 1) {
+>> -        env->features[FEAT_1_EDX] |= CPUID_HT;
+>> -
+>> -        /*
+>> -         * The Linux kernel checks for the CMPLegacy bit and
+>> -         * discards multiple thread information if it is set.
+>> -         * So don't set it here for Intel (and other processors
+>> -         * following Intel's behavior) to make Linux guests happy.
+>> -         */
+>> -        if (!IS_INTEL_CPU(env) && !IS_ZHAOXIN_CPU(env)) {
+>> -            env->features[FEAT_8000_0001_ECX] |= CPUID_EXT3_CMP_LEG;
+>> -        }
+>> -    }
+>> -
+>>      for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
+>>          FeatureDep *d = &feature_dependencies[i];
+>>          if (!(env->features[d->from.index] & d->from.mask)) {
+>> -- 
+>> 2.39.5 (Apple Git-154)
+>>
+>>
+> 
 
 
