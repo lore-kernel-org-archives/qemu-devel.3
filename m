@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD53C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 16:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4418FC5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 16:52:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKJsm-0001HM-A0; Wed, 28 May 2025 12:44:00 -0400
+	id 1uKK0E-0003Uy-Is; Wed, 28 May 2025 12:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
- id 1uKJsl-0001HD-DP
- for qemu-devel@nongnu.org; Wed, 28 May 2025 12:43:59 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uKK0A-0003Ue-TC
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 12:51:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
- id 1uKJsj-0007kq-Nx
- for qemu-devel@nongnu.org; Wed, 28 May 2025 12:43:59 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SCq5pp028798;
- Wed, 28 May 2025 16:38:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=ac6kO
- eH89eYR2GEbVsxCjN4yoWwGYSLrITsjZygt6+Q=; b=HBRLKlhENkjZvuZQfwUpM
- zdtguW8N5z6r6pJu6ZuebwWsZAjkQecHVCzAXsXuG3E1Dxai0H3kXsIfVKjBOua1
- fO2bmlULBXVDYuZqK9Xnj/1JHVhLsE8EK//lsIeUkCndN32Np9xWTmll99vTL22O
- /JawlNTTC+BCtlbuWm4raDFgLT1+xrVGndgsw71fpBEYqvThbn4ZEVnrulN2FfGp
- Dc+cjhrHc4uW9IaP1290PASkmj0IQMwO8Um3kkK+Jenq2Bvx3fyyp/m1peUU/DsO
- 1dUD9EYQKRv0/oy1RIA+SeAAEZNXrt9xzFoI1LVwxTH9jOuRZDq4/vw4tdFqB0Kv
- A==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v21s6a29-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 May 2025 16:38:47 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54SFa7VR028607; Wed, 28 May 2025 16:38:46 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4janmrx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 May 2025 16:38:46 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54SGZv1U004464;
- Wed, 28 May 2025 16:38:46 GMT
-Received: from localhost.localdomain (dhcp-10-43-12-51.usdhcp.oraclecorp.com
- [10.43.12.51])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 46u4janmp6-1; Wed, 28 May 2025 16:38:46 +0000
-From: Annie Li <annie.li@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, slp@redhat.com, eblake@redhat.com,
- armbru@redhat.com, annie.li@oracle.com, miguel.luis@oracle.com
-Subject: [PATCH 01/13] acpi: Implement control method sleep button
-Date: Wed, 28 May 2025 12:38:34 -0400
-Message-ID: <20250528163835.2151-1-annie.li@oracle.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20250528163545.2143-1-annie.li@oracle.com>
-References: <20250528163545.2143-1-annie.li@oracle.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uKK08-0000F1-D0
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 12:51:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748451094;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=k5VZagvfLSiQsGu/T8LCazDrj1as7y9CALFlWSRvbrM=;
+ b=IfjH4hIHpqjZlE18yk6Fom6eOTs8Jmqz/xGBYdJZ84hONm31mgQvpK8X4wfLmWa3qLdouw
+ ZSwltpaBDBEw9KdVhHvW0N9wMQneKPLvVc2q0kwKDuyoSyiK7xpNV3pr/LCbBfHguQdref
+ kUQv7ITcMrIP91f0C1PPVbEm/87Zmgg=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-262-j3Vunx0jNkGnGmHG2MJ_vg-1; Wed, 28 May 2025 12:51:33 -0400
+X-MC-Unique: j3Vunx0jNkGnGmHG2MJ_vg-1
+X-Mimecast-MFC-AGG-ID: j3Vunx0jNkGnGmHG2MJ_vg_1748451092
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6fab3aaa03fso1406406d6.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 09:51:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748451092; x=1749055892;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k5VZagvfLSiQsGu/T8LCazDrj1as7y9CALFlWSRvbrM=;
+ b=d06Q99ErJFvTylKEr3hAG47gwfPqPUizDVDoayM9KO8OmPzkB4xkxRd4xZek4eHFKB
+ F+8EZCQbblyh+wjWLrkMn8U+xd3M0s2AeRAkSGM/OCAa0/eOTIjt2wTvmqsYVNuRxWMU
+ AEA86LDW5PtfcG9B3GoPTpNd53FltW6weSARrmkG7wv5XR6iIYjoqFKkOnxRA2eFlmo8
+ u3itVGSGnwt62wQZ73XlUaLFESTno+x2sxFbBmGib7Du8Z6zAcifHoXJ+j8UYt7Ispbu
+ SsSIN8vyzW7Kg2+9Tjqi4q7zZiL++Shs6plrMFMpFuRZAO2TuIo6hMmY8MY2WElGArrZ
+ utQg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJWBUDEQNZcVnFXWzxq7CrjcpJWUYGT/wnEUwUIxzzDUtd9x/OAePBNyXZvQ0jsRajxUwXxnlHp6r+@nongnu.org
+X-Gm-Message-State: AOJu0YyrYI7eWRlaQnKXzasKY6i7oEITvY+Kd2H7d4RZdv1nz/Se3wJc
+ 2wBDNYbfA/Iou0sVW7c8iU3yUwtqBJywRqGkSKSonAjVy4ET/JgK6lumFD+VmmRPQk1PzeZDQhF
+ /a84wo3wogdkZhqT4FG2ZsTT603IsIKqVD7HxsT1tbJYSNKp/x9u0Ldou
+X-Gm-Gg: ASbGncuo3G/udJVtHmxjpZ3nK2HE6B/FS5cj6DvZOuRP1iBpYUZa/tre9Rip3Nrfj2J
+ tKpfmfKYq75ghfgVeY0Ogm/DNjx58vcxJV5a4CNR+A8+Z9CpD6NOHVvwcVuFc9kR+Pgwgv09a9V
+ 4yLpczl+GK0QjprU7Oqo9sQqnHPIDP8UsbVNB33rovefAkiSFjRAth34zA6qnEUAEGcPJ4ffnB+
+ g88ZZQTpqxrbLvLAqEzZUL3B4iE/YlUHN++HQeOs0CcGeDi14hTGDB9dEILDumL5ZQlFrgipNvZ
+ TrQ=
+X-Received: by 2002:ad4:5748:0:b0:6fa:acc1:f077 with SMTP id
+ 6a1803df08f44-6fabf328d52mr40834456d6.35.1748451092509; 
+ Wed, 28 May 2025 09:51:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7N2S2uQSa5N1V9Gi+VwBZ/JfylNuvYqjHmoxte2ew0im/E2AOOdsw9V6YFb/NErj09kTaKw==
+X-Received: by 2002:ad4:5748:0:b0:6fa:acc1:f077 with SMTP id
+ 6a1803df08f44-6fabf328d52mr40834256d6.35.1748451092170; 
+ Wed, 28 May 2025 09:51:32 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fac0bb99d8sm8427296d6.86.2025.05.28.09.51.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 May 2025 09:51:31 -0700 (PDT)
+Date: Wed, 28 May 2025 12:51:28 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alexey Perevalov <a.perevalov@samsung.com>
+Subject: Re: [PATCH 02/11] migration/hmp: Fix postcopy-blocktime per-vCPU
+ results
+Message-ID: <aDc_ELugLDXPgRhr@x1.local>
+References: <20250527215850.1271072-1-peterx@redhat.com>
+ <20250527215850.1271072-3-peterx@redhat.com>
+ <878qmhjlma.fsf@pond.sub.org> <aDcm9turgPlQ75BO@gallifrey>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-28_08,2025-05-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- phishscore=0 suspectscore=0
- adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2505280145
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE0NSBTYWx0ZWRfX5scameJKD5tx
- 5aoroJRMymBLqrCGswZlLPLnzI9QicKOqN098Ojbi3dmkl07erSuCkjFnH98dZUUc2sld7SXpmp
- 7uBU48PCfF/y6iOMWuujmPYpZK14gPw1NBCpUiLkYxEyVHR8f0Cu0JXoS5H1ygcrHgQFJ5QA27g
- nn2/q1GFEk/JH1zgZtlnRcgB4tZYdYtH4zeBgp8cB/OEJMYEiwXBiHPN5oRCW7VtdIu25Cx3wBG
- 8lv4nuJn2pawGnO/kJPh/yOjNWHz/O7m139ZHVJR+6O17be0/YNU6KUAiOhFqViclyvCnxlTTJX
- 4/x2wieyh76iumLLpzC5ZXT4zhuQfni3ZTzSkuWbiwUgfThYA7Mov5lItjBf/mhp3dB1Q9FAhqC
- 4DNhkJ0DzbjQv1r9Rz+dCoorFjdwqoGUtUppuvZO2zXRV9hpn5I9Fs3CWFoTYQatnRb9W8lW
-X-Proofpoint-GUID: sy7Wn9zCBmnBPc57lhvd_wRE6vG1RRRO
-X-Authority-Analysis: v=2.4 cv=UvhjN/wB c=1 sm=1 tr=0 ts=68373c17 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=sPl2G_jGVtvQ9U5vArsA:9
-X-Proofpoint-ORIG-GUID: sy7Wn9zCBmnBPc57lhvd_wRE6vG1RRRO
-Received-SPF: pass client-ip=205.220.177.32; envelope-from=annie.li@oracle.com;
- helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.498,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aDcm9turgPlQ75BO@gallifrey>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,103 +110,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fixed hardware sleep button isn't appropriate for hardware
-reduced platform. This patch implements the control method sleep
-button in a separate source file so that the button can be added
-for various platforms.
+On Wed, May 28, 2025 at 03:08:38PM +0000, Dr. David Alan Gilbert wrote:
+> * Markus Armbruster (armbru@redhat.com) wrote:
+> > Peter Xu <peterx@redhat.com> writes:
+> > 
+> > > Unfortunately, it was never correctly shown..
+> > >
+> > > This is only found when I started to look into making the blocktime feature
+> > > more useful (so as to avoid using bpftrace, even though I'm not sure which
+> > > one will be harder to use..).
+> > >
+> > > So the old dump would look like this:
+> > >
+> > >   Postcopy vCPU Blocktime: 0-1,4,10,21,33,46,48,59
+> > >
+> > > Even though there're actually 40 vcpus, and the string will merge same
+> > > elements and also sort them.
+> > >
+> > > To fix it, simply loop over the uint32List manually.  Now it looks like:
+> > >
+> > >   Postcopy vCPU Blocktime (ms):
+> > >    [15, 0, 0, 43, 29, 34, 36, 29, 37, 41,
+> > >     33, 37, 45, 52, 50, 38, 40, 37, 40, 49,
+> > >     40, 35, 35, 35, 81, 19, 18, 19, 18, 30,
+> > >     22, 3, 0, 0, 0, 0, 0, 0, 0, 0]
+> > >
+> > > Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> > > Cc: Alexey Perevalov <a.perevalov@samsung.com>
+> > > Cc: Markus Armbruster <armbru@redhat.com>
+> > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > ---
+> > >  migration/migration-hmp-cmds.c | 23 ++++++++++++++---------
+> > >  1 file changed, 14 insertions(+), 9 deletions(-)
+> > >
+> > > diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> > > index 367ff6037f..3cf890b887 100644
+> > > --- a/migration/migration-hmp-cmds.c
+> > > +++ b/migration/migration-hmp-cmds.c
+> > > @@ -208,15 +208,20 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+> > >      }
+> > >  
+> > >      if (info->has_postcopy_vcpu_blocktime) {
+> > > -        Visitor *v;
+> > > -        char *str;
+> > > -        v = string_output_visitor_new(false, &str);
+> > > -        visit_type_uint32List(v, NULL, &info->postcopy_vcpu_blocktime,
+> > > -                              &error_abort);
+> > > -        visit_complete(v, &str);
+> > > -        monitor_printf(mon, "Postcopy vCPU Blocktime: %s\n", str);
+> > > -        g_free(str);
+> > > -        visit_free(v);
+> > > +        uint32List *item = info->postcopy_vcpu_blocktime;
+> > > +        int count = 0;
+> > > +
+> > > +        monitor_printf(mon, "Postcopy vCPU Blocktime (ms): \n [");
+> > > +
+> > > +        while (item) {
+> > > +            monitor_printf(mon, "%"PRIu32", ", item->value);
+> > > +            item = item->next;
+> > > +            /* Each line 10 vcpu results, newline if there's more */
+> > 
+> > The list can be arbitrarily long?
+> 
+> One per vCPU, so a small arbitrary.
+> 
+> > > +            if ((++count % 10 == 0) && item) {
+> > > +                monitor_printf(mon, "\n  ");
+> > > +            }
+> > > +        }
+> > > +        monitor_printf(mon, "\b\b]\n");
+> > 
+> > Uh, backspace?
+> 
+> Agreed!
 
-Co-developed-by: Miguel Luis <miguel.luis@oracle.com>
-Signed-off-by: Annie Li <annie.li@oracle.com>
----
- hw/acpi/control_method_device.c         | 38 +++++++++++++++++++++++++
- hw/acpi/meson.build                     |  1 +
- include/hw/acpi/control_method_device.h | 21 ++++++++++++++
- 3 files changed, 60 insertions(+)
+Agreed on.. using backspace? :)
 
-diff --git a/hw/acpi/control_method_device.c b/hw/acpi/control_method_device.c
-new file mode 100644
-index 0000000000..f8d691ee04
---- /dev/null
-+++ b/hw/acpi/control_method_device.c
-@@ -0,0 +1,38 @@
-+/*
-+ * Control Method Device
-+ *
-+ * Copyright (c) 2023 Oracle and/or its affiliates.
-+ *
-+ *
-+ * Authors:
-+ *     Annie Li <annie.li@oracle.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/acpi/control_method_device.h"
-+#include "hw/acpi/aml-build.h"
-+
-+/*
-+ * The control method sleep button[ACPI v6.5 Section 4.8.2.2.2.2]
-+ * resides in generic hardware address spaces. The sleep button
-+ * is defined as _HID("PNP0C0E") that associates with device "SLPB".
-+ */
-+void acpi_dsdt_add_sleep_button(Aml *scope)
-+{
-+    Aml *dev = aml_device(ACPI_SLEEP_BUTTON_DEVICE);
-+    aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0C0E")));
-+    /*
-+     * No _PRW, the sleep button device is always tied to GPE L07
-+     * event handler for x86 platform, or a GED event for other
-+     * platforms such as virt, ARM, microvm, etc.
-+     */
-+    aml_append(dev, aml_operation_region("\\SLP", AML_SYSTEM_IO,
-+                                         aml_int(0x201), 0x1));
-+    Aml *field = aml_field("\\SLP", AML_BYTE_ACC, AML_NOLOCK,
-+                           AML_WRITE_AS_ZEROS);
-+    aml_append(field, aml_named_field("SBP", 1));
-+    aml_append(dev, field);
-+    aml_append(scope, dev);
-+}
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index 73f02b9691..a62e625cef 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -17,6 +17,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: files('c
- acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_VMCLOCK', if_true: files('vmclock.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_device.c'))
-+acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('control_method_device.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: files('ghes-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PIIX4', if_true: files('piix4.c'))
-diff --git a/include/hw/acpi/control_method_device.h b/include/hw/acpi/control_method_device.h
-new file mode 100644
-index 0000000000..079f1a74dd
---- /dev/null
-+++ b/include/hw/acpi/control_method_device.h
-@@ -0,0 +1,21 @@
-+/*
-+ * Control Method Device
-+ *
-+ * Copyright (c) 2023 Oracle and/or its affiliates.
-+ *
-+ *
-+ * Authors:
-+ *     Annie Li <annie.li@oracle.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+
-+#ifndef HW_ACPI_CONTROL_METHOD_DEVICE_H
-+#define HW_ACPI_CONTROL_NETHOD_DEVICE_H
-+
-+#define ACPI_SLEEP_BUTTON_DEVICE "SLPB"
-+
-+void acpi_dsdt_add_sleep_button(Aml *scope);
-+
-+#endif
+> 
+> Dave
+> 
+> > I usually do something like
+> > 
+> >     sep = "";
+> >     for (...) {
+> >         printf("%s...", sep, ...);
+> >         sep = ", "
+> >     }
+> > 
+> > To add line breaks, I'd use something like
+> > 
+> >         sep = ... ? ", " : ",\n";
+
+Thanks for the suggestion!  Definitely better..
+
+I'll squash below into this patch when repost, comments on top always
+welcomed.
+
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 3cf890b887..6c36e202a0 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -209,19 +209,18 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+ 
+     if (info->has_postcopy_vcpu_blocktime) {
+         uint32List *item = info->postcopy_vcpu_blocktime;
++        const char *sep = "";
+         int count = 0;
+ 
+         monitor_printf(mon, "Postcopy vCPU Blocktime (ms): \n [");
+ 
+         while (item) {
+-            monitor_printf(mon, "%"PRIu32", ", item->value);
++            monitor_printf(mon, "%s%"PRIu32, sep, item->value);
+             item = item->next;
+             /* Each line 10 vcpu results, newline if there's more */
+-            if ((++count % 10 == 0) && item) {
+-                monitor_printf(mon, "\n  ");
+-            }
++            sep = ((++count % 10 == 0) && item) ? ",\n  " : ", ";
+         }
+-        monitor_printf(mon, "\b\b]\n");
++        monitor_printf(mon, "]\n");
+     }
+
 -- 
-2.43.5
+Peter Xu
 
 
