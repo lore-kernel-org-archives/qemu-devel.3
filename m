@@ -4,58 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC43C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCC0C5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKDgi-0006Id-2e; Wed, 28 May 2025 06:07:08 -0400
+	id 1uKDmy-0002Zr-Qf; Wed, 28 May 2025 06:13:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDgO-0004sB-TI
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:49 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1uKDmx-0002Zj-8P
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:13:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDgL-0007J8-9W
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:48 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1uKDay-0006SW-Pt
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:01:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748426796;
+ s=mimecast20190719; t=1748426472;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=CwiQ9+rI03ALRl6vMNbiq7w9FI72pW4D0SVMDjr9o7E=;
- b=PdR5qqJpvHJQ+l7CV/jrC7th9smoxBh8Wv9swC18dJI7i3iga+ICzmQbQJMmdsVriHaxSP
- Pg/1ww77RsuQfJWxuOI8nlhodsrrqLEfUrJDrVibuSMBfGCAFTYHBVSMXu847Wu7RaIAzg
- AOgwkOpDGnbyOXHN5EVXJifDnb7oecc=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dxkn4qLxCfduF+Ckn9JcjV37FeKi59jt7wAnZKjHoMM=;
+ b=IUj/u1E2uRG6NWGgDsHlPw175P0ESK5/ziLHPJ++r0ta0G5Q/7xEKesKf5F4sPW/rzEIi5
+ SInNmzq3szYLkVsOWh5bjIxEOaZbE5iDJv3l+mw04pH1YX9SHmhSuLD3vb9N6b9cCpt5uy
+ 9NWdOH65tkjrDEzVeaISd94pI2Id+Tw=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-260-ZmW0wPuqNgiUG4O_8waYqw-1; Wed,
- 28 May 2025 06:05:12 -0400
-X-MC-Unique: ZmW0wPuqNgiUG4O_8waYqw-1
-X-Mimecast-MFC-AGG-ID: ZmW0wPuqNgiUG4O_8waYqw_1748426711
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-2Zthm1B9P2OxX2rA2hXFdQ-1; Wed,
+ 28 May 2025 06:01:08 -0400
+X-MC-Unique: 2Zthm1B9P2OxX2rA2hXFdQ-1
+X-Mimecast-MFC-AGG-ID: 2Zthm1B9P2OxX2rA2hXFdQ_1748426467
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C7B9180034A
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 10:05:11 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.34.110])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B29F7180049D; Wed, 28 May 2025 10:05:09 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 00/27] Functional tests, Microblaze endianness & pc/q35 cleanups
-Date: Wed, 28 May 2025 12:04:40 +0200
-Message-ID: <20250528100507.313906-1-thuth@redhat.com>
+ id 3ECA4180098D; Wed, 28 May 2025 10:01:07 +0000 (UTC)
+Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.65])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C873919560AF; Wed, 28 May 2025 10:01:01 +0000 (UTC)
+From: Gavin Shan <gshan@redhat.com>
+To: qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com,
+ mchehab+huawei@kernel.org, mst@redhat.com, imammedo@redhat.com,
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, shan.gavin@gmail.com
+Subject: [PATCH v2 3/3] target/arm/kvm: Support multiple memory CPERs injection
+Date: Wed, 28 May 2025 20:00:33 +1000
+Message-ID: <20250528100033.159576-4-gshan@redhat.com>
+In-Reply-To: <20250528100033.159576-1-gshan@redhat.com>
+References: <20250528100033.159576-1-gshan@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -80,97 +85,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi!
+In the combination of 64KB host and 4KB guest, a problematic host page
+affects 16x guest pages. In this specific case, it's reasonable to
+push 16 consecutive memory CPERs. Otherwise, QEMU can run into core
+dump due to the current error can't be delivered as the previous error
+isn't acknoledges. It's caused by the nature the host page can be
+accessed in parallel due to the mismatched host and guest page sizes.
 
-The following changes since commit 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e:
+Imporve push_ghes_memory_errors() to push 16x consecutive memory CPERs
+for this specific case. The maximal error block size is bumped to 4KB,
+providing enough storage space for those 16x memory CPERs.
 
-  Merge tag 'pull-aspeed-20250526' of https://github.com/legoater/qemu into staging (2025-05-26 10:16:59 -0400)
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+---
+ hw/acpi/ghes.c   |  2 +-
+ target/arm/kvm.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 46 insertions(+), 2 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2025-05-28
-
-for you to fetch changes up to 9c2da02e184fddfa7cd7d7813455c2306daae99a:
-
-  tests/unit/test-util-sockets: fix mem-leak on error object (2025-05-28 11:59:47 +0200)
-
-----------------------------------------------------------------
-* Functional tests improvements
-* Endianness improvements/clean-ups for the Microblaze machines
-* Remove obsolete -2.4 and -2.5 i440fx and q35 machine types and related code
-
-----------------------------------------------------------------
-Alexandr Moshkov (2):
-      tests/functional: add skipLockedMemoryTest decorator
-      tests/functional: add memlock tests
-
-Matheus Tavares Bernardino (1):
-      tests/unit/test-util-sockets: fix mem-leak on error object
-
-Philippe Mathieu-Daudé (17):
-      hw/i386/pc: Remove deprecated pc-q35-2.4 and pc-i440fx-2.4 machines
-      hw/i386/pc: Remove PCMachineClass::broken_reserved_end field
-      hw/i386/pc: Remove pc_compat_2_4[] array
-      hw/core/machine: Remove hw_compat_2_4[] array
-      hw/net/e1000: Remove unused E1000_FLAG_MAC flag
-      hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_MIGRATE_EXTRA definition
-      hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_DISABLE_PCIE definition
-      hw/i386/pc: Remove deprecated pc-q35-2.5 and pc-i440fx-2.5 machines
-      hw/i386/x86: Remove X86MachineClass::save_tsc_khz field
-      hw/nvram/fw_cfg: Remove legacy FW_CFG_ORDER_OVERRIDE
-      hw/core/machine: Remove hw_compat_2_5[] array
-      hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_OLD_PCI_CONFIGURATION definition
-      hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_DISABLE_PCIE_BIT definition
-      hw/scsi/vmw_pvscsi: Convert DeviceRealize -> InstanceInit
-      hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS definition
-      hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
-      hw/net/vmxnet3: Merge DeviceRealize in InstanceInit
-
-Thomas Huth (7):
-      tests/functional/test_sparc64_tuxrun: Explicitly set the 'sun4u' machine
-      tests/functional/test_mips_malta: Re-enable the check for the PCI host bridge
-      tests/functional/test_mem_addr_space: Use set_machine() to select the machine
-      hw/microblaze: Add endianness property to the petalogix_s3adsp1800 machine
-      tests/functional: Test both microblaze s3adsp1800 endianness variants
-      hw/microblaze: Remove the big-endian variants of ml605 and xlnx-zynqmp-pmu
-      docs: Deprecate the qemu-system-microblazeel binary
-
- docs/about/deprecated.rst                        |  19 ++--
- docs/about/removed-features.rst                  |   9 ++
- include/hw/boards.h                              |   9 +-
- include/hw/i386/pc.h                             |   7 --
- include/hw/i386/x86.h                            |   5 --
- include/hw/loader.h                              |   2 -
- include/hw/nvram/fw_cfg.h                        |  10 ---
- include/hw/virtio/virtio-pci.h                   |   8 --
- hw/core/loader.c                                 |  14 ---
- hw/core/machine.c                                |  18 ----
- hw/i386/pc.c                                     |  42 ++-------
- hw/i386/pc_piix.c                                |  26 ------
- hw/i386/pc_q35.c                                 |  26 ------
- hw/i386/x86.c                                    |   1 -
- hw/microblaze/petalogix_ml605_mmu.c              |  15 +---
- hw/microblaze/petalogix_s3adsp1800_mmu.c         |  41 +++++++--
- hw/microblaze/xlnx-zynqmp-pmu.c                  |   7 +-
- hw/net/e1000.c                                   |  95 +++++++++-----------
- hw/net/vmxnet3.c                                 |  44 ++-------
- hw/nvram/fw_cfg.c                                | 110 ++---------------------
- hw/scsi/vmw_pvscsi.c                             |  67 +++-----------
- hw/virtio/virtio-pci.c                           |  11 +--
- system/vl.c                                      |   5 --
- target/i386/machine.c                            |   5 +-
- tests/qtest/test-x86-cpuid-compat.c              |  14 ---
- tests/unit/test-util-sockets.c                   |   4 +
- tests/functional/meson.build                     |   1 +
- tests/functional/qemu_test/__init__.py           |   2 +-
- tests/functional/qemu_test/decorators.py         |  18 ++++
- tests/functional/test_mem_addr_space.py          |  63 ++++++-------
- tests/functional/test_memlock.py                 |  79 ++++++++++++++++
- tests/functional/test_microblaze_s3adsp1800.py   |  18 ++--
- tests/functional/test_microblazeel_s3adsp1800.py |   6 +-
- tests/functional/test_mips_malta.py              |   6 +-
- tests/functional/test_sparc64_tuxrun.py          |   1 +
- 35 files changed, 296 insertions(+), 512 deletions(-)
- create mode 100755 tests/functional/test_memlock.py
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 34ff682048..43d52f5e2e 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -33,7 +33,7 @@
+ #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
+ 
+ /* The max size in bytes for one error block */
+-#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
++#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
+ 
+ /* Generic Hardware Error Source version 2 */
+ #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index e31fcde797..c346bd7b49 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -11,6 +11,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/units.h"
+ #include <sys/ioctl.h>
+ 
+ #include <linux/kvm.h>
+@@ -2337,10 +2338,53 @@ static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
+                                     uint64_t paddr)
+ {
+     GArray *addresses = g_array_new(false, false, sizeof(paddr));
++    uint64_t val, start, end, guest_pgsz, host_pgsz;
+     int ret;
+ 
+     kvm_cpu_synchronize_state(c);
+-    g_array_append_vals(addresses, &paddr, 1);
++
++    /*
++     * Sort out the guest page size from TCR_EL1, which can be modified
++     * by the guest from time to time. So we have to sort it out dynamically.
++     */
++    ret = read_sys_reg64(c->kvm_fd, &val, ARM64_SYS_REG(3, 0, 2, 0, 2));
++    if (ret) {
++        goto error;
++    }
++
++    switch (extract64(val, 14, 2)) {
++    case 0:
++        guest_pgsz = 4 * KiB;
++        break;
++    case 1:
++        guest_pgsz = 64 * KiB;
++        break;
++    case 2:
++        guest_pgsz = 16 * KiB;
++        break;
++    default:
++        error_report("unknown page size from TCR_EL1 (0x%" PRIx64 ")", val);
++        goto error;
++    }
++
++    host_pgsz = qemu_real_host_page_size();
++    start = paddr & ~(host_pgsz - 1);
++    end = start + host_pgsz;
++    while (start < end) {
++        /*
++         * The precise physical address is provided for the affected
++         * guest page that contains @paddr. Otherwise, the starting
++         * address of the guest page is provided.
++         */
++        if (paddr >= start && paddr < (start + guest_pgsz)) {
++            g_array_append_vals(addresses, &paddr, 1);
++        } else {
++            g_array_append_vals(addresses, &start, 1);
++        }
++
++        start += guest_pgsz;
++    }
++
+     ret = acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses);
+     if (ret) {
+         goto error;
+-- 
+2.49.0
 
 
