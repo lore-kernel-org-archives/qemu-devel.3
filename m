@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F23C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 06:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A38FC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 06:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uK9xj-0007kL-8x; Wed, 28 May 2025 02:08:27 -0400
+	id 1uKA0M-0003gj-RG; Wed, 28 May 2025 02:11:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uK9xa-0007Vu-KR
- for qemu-devel@nongnu.org; Wed, 28 May 2025 02:08:19 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKA0I-0003gE-RK
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 02:11:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uK9xX-0000mi-Rd
- for qemu-devel@nongnu.org; Wed, 28 May 2025 02:08:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748412496; x=1779948496;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Qms8gWgZTbPWCsNrXc1g5v9D9gqBsNbzKGKEj46mU3I=;
- b=fI+BvKct4g8jMYryzonpb9vrTPNks0B1pXXjNyQRc9gCOOlNGRkbX4Ni
- j3eHtvyAdRTIBLJGL441wYmXVi0S0tSPrzNgmi4PBGPRplItMMfv8fXTP
- 4V4V3PpQaexGLsIMhrpLpEOAQ6NA4K62Lmz4vEQTPTFLPgZJ8SY801kH4
- Oo1JzgAyKAHzY5+XsYqGWr+0/XbkuDGESC8kO7IE2qcnVD1i1/qoJQILA
- 4o+iIijopbMdAE6etuFruJ3GiXsVF2VqSCwWq6iBnLxbutbybJg17vO5G
- vFmPKAZW3z0ssqPaiiE4CQM+AIcLbBJ2e262o/tKJajUVu8D7klbX630r A==;
-X-CSE-ConnectionGUID: wQI0jHsZSDK6kOst8uaFtg==
-X-CSE-MsgGUID: NMPIs2DsSAWLfjV+ww9eyA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11446"; a="60678992"
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="60678992"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 23:08:16 -0700
-X-CSE-ConnectionGUID: oJ3lvtVdTdK6W4+hzM2ZqQ==
-X-CSE-MsgGUID: Ri0Xu+vKQguXlowBOKY8/Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,320,1739865600"; d="scan'208";a="143165160"
-Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2025 23:08:11 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
- jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v1 4/6] vfio/iommufd: Implement [at|de]tach_hwpt handlers
-Date: Wed, 28 May 2025 14:04:07 +0800
-Message-Id: <20250528060409.3710008-5-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250528060409.3710008-1-zhenzhong.duan@intel.com>
-References: <20250528060409.3710008-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKA0F-0001Od-KB
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 02:11:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748412662;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=APQEGYqPTd5AKjX8aZTXGo++DT571wQerKqkm3AODg8=;
+ b=h3f8iDshonbeJWjZKUS8W0pyfLu3IgFb5+VOr+2ju1ROmlof+qUfYcD+0ZaWO82hk53cOl
+ 9Oc75TYVDDW3179HMFl73izocX0tKYwsRGpzvhfzrcLsrnr1YNQhdO/A7yAbk51va6+bdL
+ KyT7okZvow8DQqhYxcKmKGRZDz7Xv40=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-VjL6SCpnOnajVwhk062i7w-1; Wed,
+ 28 May 2025 02:11:00 -0400
+X-MC-Unique: VjL6SCpnOnajVwhk062i7w-1
+X-Mimecast-MFC-AGG-ID: VjL6SCpnOnajVwhk062i7w_1748412659
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 91D67180045B; Wed, 28 May 2025 06:10:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10BEB1956095; Wed, 28 May 2025 06:10:59 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5475C21E6768; Wed, 28 May 2025 08:10:56 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: "Richard W.M. Jones" <rjones@redhat.com>,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
+ <hreitz@redhat.com>
+Subject: Re: [PATCH v2 1/4] nbd: Add multi-conn option
+In-Reply-To: <e5qupmbs4innc4d5fqi5wjgc4xs3dzng2h22uqdpprshm7zfsf@zddd3w6jefoj>
+ (Eric Blake's message of "Tue, 27 May 2025 17:01:18 -0500")
+References: <20250428185246.492388-6-eblake@redhat.com>
+ <20250428185246.492388-7-eblake@redhat.com>
+ <877c33qzzn.fsf@pond.sub.org> <20250429091422.GG1450@redhat.com>
+ <87wmb3jkoh.fsf@pond.sub.org> <20250429111958.GI1450@redhat.com>
+ <87o6wfnqzj.fsf@pond.sub.org>
+ <e5qupmbs4innc4d5fqi5wjgc4xs3dzng2h22uqdpprshm7zfsf@zddd3w6jefoj>
+Date: Wed, 28 May 2025 08:10:56 +0200
+Message-ID: <87ecw9jmdr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.11;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -72
-X-Spam_score: -7.3
-X-Spam_bar: -------
-X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,60 +92,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement [at|de]tach_hwpt handlers in VFIO subsystem. vIOMMU
-utilizes them to attach to or detach from hwpt on host side.
+Eric Blake <eblake@redhat.com> writes:
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/vfio/iommufd.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+> On Tue, Apr 29, 2025 at 01:31:44PM +0200, Markus Armbruster wrote:
+>> > In the context of qemu that might suggest having separate
+>> > multi_conn_requested and multi_conn fields, where the latter can be
+>> > queried over QMP to find out what is actually going on.  Could even
+>> > add multi_conn_max to allow MAX_MULTI_CONN constant to be read out.
+>>
+>> You decide what to do with my feedback :)
+>
+> I've got a local patch that adds the ability for
+> query-named-block-nodes (and query-block) to output image-specific
+> information for NBD that includes how many connections are actually in
+> use.  But now I've got a QMP question:
+>
+> My patch, as written, makes the output look like this:
+>
+> "format-specific": {"mode": "extended", "type": "nbd", "connections": 1}},
+>
+> by changing block-core.json like this (partial patch shown):
+>
+> @@ -208,10 +223,12 @@
+>  #
+>  # @file: Since 8.0
+>  #
+> +# @nbd: Since 10.1
+> +#
+>  # Since: 1.7
+>  ##
+>  { 'enum': 'ImageInfoSpecificKind',
+> -  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file' ] }
+> +  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file', 'nbd' ] }
+>
+>  ##
+>  # @ImageInfoSpecificQCow2Wrapper:
+> @@ -284,7 +301,8 @@
+>        'luks': 'ImageInfoSpecificLUKSWrapper',
+>        'rbd': 'ImageInfoSpecificRbdWrapper',
+> -      'file': 'ImageInfoSpecificFileWrapper'
+> +      'file': 'ImageInfoSpecificFileWrapper',
+> +      'nbd': 'ImageInfoSpecificNbd'
+>    } }
+>
+> But that is different from all of the other image modes, where the
+> output looks more like:
+>
+> "format-specific": {"type": "rbd", "data": {"encryption-format":"..."}}},
+>
+> note the extra layer of nesting, due to historical reasons of being
+> added in a time when the QMP generator was not as nice on supporting
+> flatter union-style coding.
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 5fde2b633a..d661737c17 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -810,6 +810,24 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
-     vioc->query_dirty_bitmap = iommufd_query_dirty_bitmap;
- };
- 
-+static bool
-+host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-+                                           uint32_t hwpt_id, Error **errp)
-+{
-+    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
-+
-+    return !iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
-+}
-+
-+static bool
-+host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-+                                           Error **errp)
-+{
-+    VFIODevice *vbasedev = HOST_IOMMU_DEVICE(idev)->agent;
-+
-+    return iommufd_cdev_detach_ioas_hwpt(vbasedev, errp);
-+}
-+
- static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-                                       Error **errp)
- {
-@@ -864,10 +882,14 @@ hiod_iommufd_vfio_get_page_size_mask(HostIOMMUDevice *hiod)
- static void hiod_iommufd_vfio_class_init(ObjectClass *oc, const void *data)
- {
-     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
-+    HostIOMMUDeviceIOMMUFDClass *idevc = HOST_IOMMU_DEVICE_IOMMUFD_CLASS(oc);
- 
-     hiodc->realize = hiod_iommufd_vfio_realize;
-     hiodc->get_iova_ranges = hiod_iommufd_vfio_get_iova_ranges;
-     hiodc->get_page_size_mask = hiod_iommufd_vfio_get_page_size_mask;
-+
-+    idevc->attach_hwpt = host_iommu_device_iommufd_vfio_attach_hwpt;
-+    idevc->detach_hwpt = host_iommu_device_iommufd_vfio_detach_hwpt;
- };
- 
- static const TypeInfo types[] = {
--- 
-2.34.1
+Correct, this is an artifact of development history, specifically
+"simple" unions and their elimination.
+
+> Must I create an ImageInfoSpecificNbdWrapper type, with the sole
+> purpose of having the same (pointless, IMO) "data":{} wrapper as all
+> the other branches of the union type, or am I okay with my addition
+> using the flatter style?
+
+I dislike these wrappers, possibly more than is reasonable.  Still, I
+think local consistency is more important.
+
+Precedence: commit 7f36a50ab4e (block/file: Add file-specific image
+info) added a new branch with a wrapper well after we eliminated
+"simple" unions.
+
+I think you should add the silly wrapper.
 
 
