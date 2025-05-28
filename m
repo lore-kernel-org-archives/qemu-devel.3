@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10222C5AE59
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E9AC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 10:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKDfT-0003jc-6u; Wed, 28 May 2025 06:05:51 -0400
+	id 1uKDgM-0004dK-7B; Wed, 28 May 2025 06:06:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDfQ-0003iM-P1
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:05:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDg0-0004C6-1B
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDfO-0007Dm-Am
- for qemu-devel@nongnu.org; Wed, 28 May 2025 06:05:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKDfw-0007FU-Nn
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 06:06:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748426745;
+ s=mimecast20190719; t=1748426779;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=P4BcFeHZdhTzXIhCu3ar2uLEb5iCDSRwkE8Rgxvkcgk=;
- b=gLOEN6F0nB8h8yaxacxGwD/3+i14WrCFnsavqVFRORjkNpjKdiPOqQ4bAN9HBZhmMZkcVA
- Nf0VSo4BBvtYRK3rM2lLwXE2tPHEt824Xd6XcL2tZcoG8nP270GDk5oT2urzJsQopaA4KL
- pkktEsbpUcutEdf619gABM7ftTfGECo=
+ bh=9oxiy6QyXCRbn4OaTPJfAU7LRxuueKmzLgzP08rUVe4=;
+ b=MxklaE0TNr/Tw/SUz4I9IpgFoljVOxXl8gD51hnptePn+aIf7BS0YzAf+0r+UwuDYSuM4S
+ 6i59zgTpZEToRnCs42FHnvMOxrxSzArqdrYM5KcxK8KMaeOcsgDt65MjmD4IOVeJc3kZq+
+ yBqnvIClcrRnmsA2rz8gF6kHhuF5yTQ=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-pMATDg3INvygN3Hne6Dhmw-1; Wed,
- 28 May 2025 06:05:44 -0400
-X-MC-Unique: pMATDg3INvygN3Hne6Dhmw-1
-X-Mimecast-MFC-AGG-ID: pMATDg3INvygN3Hne6Dhmw_1748426743
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-167-3a330jvCMGOMq6nfsJqVyQ-1; Wed,
+ 28 May 2025 06:05:15 -0400
+X-MC-Unique: 3a330jvCMGOMq6nfsJqVyQ-1
+X-Mimecast-MFC-AGG-ID: 3a330jvCMGOMq6nfsJqVyQ_1748426714
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4D8E1800373; Wed, 28 May 2025 10:05:42 +0000 (UTC)
+ id 48556180036E; Wed, 28 May 2025 10:05:14 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.110])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 30970180049D; Wed, 28 May 2025 10:05:39 +0000 (UTC)
+ id 285C9180049D; Wed, 28 May 2025 10:05:11 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 10/27] hw/i386/pc: Remove deprecated pc-q35-2.4 and
- pc-i440fx-2.4 machines
-Date: Wed, 28 May 2025 12:04:50 +0200
-Message-ID: <20250528100507.313906-11-thuth@redhat.com>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 01/27] tests/functional/test_sparc64_tuxrun: Explicitly set the
+ 'sun4u' machine
+Date: Wed, 28 May 2025 12:04:41 +0200
+Message-ID: <20250528100507.313906-2-thuth@redhat.com>
 In-Reply-To: <20250528100507.313906-1-thuth@redhat.com>
 References: <20250528100507.313906-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -86,98 +84,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.
+Use self.set_machine() to set the machine instead of relying on the
+default machine of the binary. This way the test can be skipped in
+case the machine has not been compiled into the QEMU binary.
 
-Remove the qtest in test-x86-cpuid-compat.c file.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-ID: <20250512083948.39294-2-philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250521145112.142222-1-thuth@redhat.com>
 ---
- hw/i386/pc_piix.c                   | 13 -------------
- hw/i386/pc_q35.c                    | 13 -------------
- tests/qtest/test-x86-cpuid-compat.c | 14 --------------
- 3 files changed, 40 deletions(-)
+ tests/functional/test_sparc64_tuxrun.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 0dce512f184..04213b45b44 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -791,19 +791,6 @@ static void pc_i440fx_machine_2_5_options(MachineClass *m)
+diff --git a/tests/functional/test_sparc64_tuxrun.py b/tests/functional/test_sparc64_tuxrun.py
+index 3be08d6102b..0d7b43dd74c 100755
+--- a/tests/functional/test_sparc64_tuxrun.py
++++ b/tests/functional/test_sparc64_tuxrun.py
+@@ -24,6 +24,7 @@ class TuxRunSparc64Test(TuxRunBaselineTest):
+         '479c3dc104c82b68be55e2c0c5c38cd473d0b37ad4badccde4775bb88ce34611')
  
- DEFINE_I440FX_MACHINE(2, 5);
- 
--static void pc_i440fx_machine_2_4_options(MachineClass *m)
--{
--    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
--
--    pc_i440fx_machine_2_5_options(m);
--    m->hw_version = "2.4.0";
--    pcmc->broken_reserved_end = true;
--    compat_props_add(m->compat_props, hw_compat_2_4, hw_compat_2_4_len);
--    compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
--}
--
--DEFINE_I440FX_MACHINE(2, 4);
--
- #ifdef CONFIG_ISAPC
- static void isapc_machine_options(MachineClass *m)
- {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index c538b3d05b4..47e12602413 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -685,16 +685,3 @@ static void pc_q35_machine_2_5_options(MachineClass *m)
- }
- 
- DEFINE_Q35_MACHINE(2, 5);
--
--static void pc_q35_machine_2_4_options(MachineClass *m)
--{
--    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
--
--    pc_q35_machine_2_5_options(m);
--    m->hw_version = "2.4.0";
--    pcmc->broken_reserved_end = true;
--    compat_props_add(m->compat_props, hw_compat_2_4, hw_compat_2_4_len);
--    compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
--}
--
--DEFINE_Q35_MACHINE(2, 4);
-diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
-index c9de47bb269..456e2af6657 100644
---- a/tests/qtest/test-x86-cpuid-compat.c
-+++ b/tests/qtest/test-x86-cpuid-compat.c
-@@ -365,20 +365,6 @@ int main(int argc, char **argv)
-                        "level", 10);
-     }
- 
--    /*
--     * xlevel doesn't have any feature that triggers auto-level
--     * code on old machine-types.  Just check that the compat code
--     * is working correctly:
--     */
--    if (qtest_has_machine("pc-i440fx-2.4")) {
--        add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-off",
--                       "SandyBridge", NULL, "pc-i440fx-2.4",
--                       "xlevel", 0x80000008);
--        add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-on",
--                       "SandyBridge", "svm=on,npt=on", "pc-i440fx-2.4",
--                       "xlevel", 0x80000008);
--    }
--
-     /* Test feature parsing */
-     add_feature_test("x86/cpuid/features/plus",
-                      "486", "+arat",
+     def test_sparc64(self):
++        self.set_machine('sun4u')
+         self.root='sda'
+         self.wait_for_shutdown=False
+         self.common_tuxrun(kernel_asset=self.ASSET_SPARC64_KERNEL,
 -- 
 2.49.0
 
