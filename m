@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28455C5AE59
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 06:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75E34C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 06:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKAGO-0000Gb-5H; Wed, 28 May 2025 02:27:44 -0400
+	id 1uKAUZ-0002sM-A9; Wed, 28 May 2025 02:42:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKAGK-0000GT-Mu
- for qemu-devel@nongnu.org; Wed, 28 May 2025 02:27:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uKAGG-0003tu-6W
- for qemu-devel@nongnu.org; Wed, 28 May 2025 02:27:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748413653;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VXtSg9WBFgp4qV4aCgF7346HieNMOOTUPk14uioSezc=;
- b=auadEuWL6W/wKrUoWaSjvzZl+insndhTnFdiWt7pr5dl9NElL+lWGkJIryHEkV3Psx1KFn
- RrbHx03lERq/iYHyReBk9YzQLjWHN4WWCblcF/4cFK6aVSvVnkf1iCgkgPOo08aAaKzZWK
- bd54RswI+064GEB0vjMzDE4F2mEAh04=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-9kT_fB2yOCea59fCb5lPJA-1; Wed,
- 28 May 2025 02:27:29 -0400
-X-MC-Unique: 9kT_fB2yOCea59fCb5lPJA-1
-X-Mimecast-MFC-AGG-ID: 9kT_fB2yOCea59fCb5lPJA_1748413649
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CA1A1955DB3; Wed, 28 May 2025 06:27:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F108E1956095; Wed, 28 May 2025 06:27:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 636B021E6768; Wed, 28 May 2025 08:27:25 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,  Juraj Marcin <jmarcin@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  "Dr . David Alan Gilbert" <dave@treblig.org>,
- Alexey Perevalov <a.perevalov@samsung.com>
-Subject: Re: [PATCH 02/11] migration/hmp: Fix postcopy-blocktime per-vCPU
- results
-In-Reply-To: <20250527215850.1271072-3-peterx@redhat.com> (Peter Xu's message
- of "Tue, 27 May 2025 17:58:41 -0400")
-References: <20250527215850.1271072-1-peterx@redhat.com>
- <20250527215850.1271072-3-peterx@redhat.com>
-Date: Wed, 28 May 2025 08:27:25 +0200
-Message-ID: <878qmhjlma.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uKAUX-0002s8-7r
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 02:42:21 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uKAUV-0005iK-Iz
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 02:42:20 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a36f26584bso2528726f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 27 May 2025 23:42:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748414536; x=1749019336; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Gh+KW/eukMcAFW/xleg7ksiDaY7hWmk+kL8GTBQvtvk=;
+ b=nCspr4zBtEBWxZtrnNTfjUFvXcF+wZ31cC81roB4ZKiR7FvbXdNSyi3ms0BLThD3mS
+ wr1bg9fXQuDkzmK++vsHp9D1bcmoSQJH2aDHwWX5eJPuyxinmiy96W/w6KR/V4XJCg7B
+ jotnQL6HFbCV4tYCxNkgM5aJReT9+yuKU1RqFrEYIZARNOYiNJCoUA7SUjIJJUf3oAWZ
+ jmSbdV2800/0uDWJbi02Ef4L+Lxi/gS9QYVPkqd+5qwomKa4OkgnjRvNbpQCt+kygKxq
+ kpTIjSWwwLu9kZ3pwEKPhjz5BQbgW7D4xce9I/77IYhI/Tuee+1gZJHABQ8Pvbp8Y17A
+ du+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748414536; x=1749019336;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gh+KW/eukMcAFW/xleg7ksiDaY7hWmk+kL8GTBQvtvk=;
+ b=WmmK9o49iu/UVt+1/QbFV1LMkpnFz9Z2fa8LUFIAkcWXUpDaI2xqEzqtN+gy9Qszcc
+ QpljijlaPQ/dQA8NmgJCRvKPR3u7nqa6oOn3ll2Qnlnr8MMyWQ+NOdRgEtkdxxmKT7Ku
+ E8Y2iTUSDXR23Kk8UL0iNdJlCIYCPeRy29tOU453m7X3isdwOQbCaggx34nGL8FhgqMm
+ Zkvh1+SebipbEXUUkeMHsqLVcSE5yg+o7pvDZVx0XOhiPKtVsBONOQ/j1vKXnH2Ainnk
+ YAIAY015NwnwrZUIp4m6Dx0uuXAKd5UhG4WeLWbNTjYrWOQdGrpgCxw6hKVD6UBg0U+Z
+ rBzg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXr40JaSpkDefKB+rUT2uKlxeqspzMGeWbniiznN7UIlnKVEPSFyA9Im/6PiLXwS0BXQ5wIu/3g1Wms@nongnu.org
+X-Gm-Message-State: AOJu0Yy9tU+fby+Pfyefboe4YUxrlVS90cDy6ceuVdVoF9KkOqO9eMuh
+ sy4Losh49lUKn6sE+lp0Sm3lYSeZGunzMYX72oA6GJgr1iMOSA7M7ZqxUPz6W2f/lobnnbS/3H+
+ AvNhkS3uGAA==
+X-Gm-Gg: ASbGncvUX61Uka/b/3hrRlkbNVvSOZIoOWbYIlHmhiA6xoHy+Lf35Obc1dgOf3n9FTY
+ VdatlWiaz4sodv+99jv2vT7Jl6K6Bj0sHj4BT6xg5MnyRkhyfVdAlTB6SlLfbty3uVYQ4iIv3mD
+ Od4MyBTyTzxNSOGngtn0rTHMRRdLKI4F/jN+0GzJ4Sa2kFhVcKCraJATcCB/yHh3uUqI7ys0fcw
+ lbie4bDlbeUFJp1U8uIMN4ujhzHh3NNB2uvXE1eQsTR1HnOydT/RCx+q3B6oCns3VVkugYxS8Ic
+ 8FqUsTpvncePqgj/qL5b6svWrcgJ+7JvzkBnWqbk7rpAGbNCjQUG2lkd+du5k9Heig==
+X-Google-Smtp-Source: AGHT+IHV/lGVXLFz31cZh7CJt15bGQhU89RDIshWNAjKvY9aAcfyaxw4LGjwNvXOwWYGMMUr+6FOWQ==
+X-Received: by 2002:a05:6000:22c8:b0:3a4:dbdf:7147 with SMTP id
+ ffacd0b85a97d-3a4dbdf7452mr8368091f8f.54.1748414536233; 
+ Tue, 27 May 2025 23:42:16 -0700 (PDT)
+Received: from [172.16.25.47] ([195.53.115.74])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450064a1b96sm10985855e9.13.2025.05.27.23.42.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 May 2025 23:42:15 -0700 (PDT)
+Message-ID: <bb371110-1561-4e38-8783-c6ba3073a0ad@linaro.org>
+Date: Wed, 28 May 2025 07:42:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/tcg: Fix atomic_mmu_lookup vs TLB_FORCE_SLOW
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <20250524144031.49810-1-richard.henderson@linaro.org>
+ <23fce516-74ca-44ca-9cfb-e3b632a977c9@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <23fce516-74ca-44ca-9cfb-e3b632a977c9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,90 +104,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 5/27/25 21:45, Pierrick Bouvier wrote:
+> On 5/24/25 7:40 AM, Richard Henderson wrote:
+>> When we moved TLB_MMIO and TLB_DISCARD_WRITE to TLB_SLOW_FLAGS_MASK,
+>> we failed to update atomic_mmu_lookup to properly reconstruct flags.
+>>
+>> Fixes: 24b5e0fdb543 ("include/exec: Move TLB_MMIO, TLB_DISCARD_WRITE to slow flags")
+>> Reported-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   accel/tcg/cputlb.c | 15 ++++++++-------
+>>   1 file changed, 8 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+>> index 5f6d7c601c..86d0deb08c 100644
+>> --- a/accel/tcg/cputlb.c
+>> +++ b/accel/tcg/cputlb.c
+> 
+> [...]
+> 
+>> @@ -1882,13 +1886,12 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, 
+>> MemOpIdx oi,
+>>       }
+>>       hostaddr = (void *)((uintptr_t)addr + tlbe->addend);
+>> -    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
+>>       if (unlikely(tlb_addr & TLB_NOTDIRTY)) {
+>>           notdirty_write(cpu, addr, size, full, retaddr);
+>>       }
+>> -    if (unlikely(tlb_addr & TLB_FORCE_SLOW)) {
+>> +    if (unlikely(tlb_addr & TLB_WATCHPOINT)) {
+>>           int wp_flags = 0;
+>>           if (full->slow_flags[MMU_DATA_STORE] & TLB_WATCHPOINT) {
+>> @@ -1897,10 +1900,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, 
+>> MemOpIdx oi,
+>>           if (full->slow_flags[MMU_DATA_LOAD] & TLB_WATCHPOINT) {
+>>               wp_flags |= BP_MEM_READ;
+>>           }
+>> -        if (wp_flags) {
+>> -            cpu_check_watchpoint(cpu, addr, size,
+>> -                                 full->attrs, wp_flags, retaddr);
+>> -        }
+>> +        cpu_check_watchpoint(cpu, addr, size,
+>> +                             full->attrs, wp_flags, retaddr);
+>>       }
+>>       return hostaddr;
+> 
+> The watchpoint part is an additional cleanup, (BP_MEM_READ or BP_MEM_WRITE implies 
+> TLB_WATCHPOINT is set). No problem to include it though, it might just be confusing for 
+> the reviewer.
 
-> Unfortunately, it was never correctly shown..
->
-> This is only found when I started to look into making the blocktime feature
-> more useful (so as to avoid using bpftrace, even though I'm not sure which
-> one will be harder to use..).
->
-> So the old dump would look like this:
->
->   Postcopy vCPU Blocktime: 0-1,4,10,21,33,46,48,59
->
-> Even though there're actually 40 vcpus, and the string will merge same
-> elements and also sort them.
->
-> To fix it, simply loop over the uint32List manually.  Now it looks like:
->
->   Postcopy vCPU Blocktime (ms):
->    [15, 0, 0, 43, 29, 34, 36, 29, 37, 41,
->     33, 37, 45, 52, 50, 38, 40, 37, 40, 49,
->     40, 35, 35, 35, 81, 19, 18, 19, 18, 30,
->     22, 3, 0, 0, 0, 0, 0, 0, 0, 0]
->
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Cc: Alexey Perevalov <a.perevalov@samsung.com>
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration-hmp-cmds.c | 23 ++++++++++++++---------
->  1 file changed, 14 insertions(+), 9 deletions(-)
->
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 367ff6037f..3cf890b887 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -208,15 +208,20 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
->      }
->  
->      if (info->has_postcopy_vcpu_blocktime) {
-> -        Visitor *v;
-> -        char *str;
-> -        v = string_output_visitor_new(false, &str);
-> -        visit_type_uint32List(v, NULL, &info->postcopy_vcpu_blocktime,
-> -                              &error_abort);
-> -        visit_complete(v, &str);
-> -        monitor_printf(mon, "Postcopy vCPU Blocktime: %s\n", str);
-> -        g_free(str);
-> -        visit_free(v);
-> +        uint32List *item = info->postcopy_vcpu_blocktime;
-> +        int count = 0;
-> +
-> +        monitor_printf(mon, "Postcopy vCPU Blocktime (ms): \n [");
-> +
-> +        while (item) {
-> +            monitor_printf(mon, "%"PRIu32", ", item->value);
-> +            item = item->next;
-> +            /* Each line 10 vcpu results, newline if there's more */
+The watchpoint cleanup is required, since I remove TLB_FORCE_SLOW from the flags.  I 
+suppose *that* isn't strictly necessary, but it's what we do elsewhere while combining 
+"fast" and slow_flags.
 
-The list can be arbitrarily long?
 
-> +            if ((++count % 10 == 0) && item) {
-> +                monitor_printf(mon, "\n  ");
-> +            }
-> +        }
-> +        monitor_printf(mon, "\b\b]\n");
-
-Uh, backspace?
-
-I usually do something like
-
-    sep = "";
-    for (...) {
-        printf("%s...", sep, ...);
-        sep = ", "
-    }
-
-To add line breaks, I'd use something like
-
-        sep = ... ? ", " : ",\n";
-
->      }
->  
->  out:
-
-The less the string visitors are used, the happier I am.
-
+r~
 
