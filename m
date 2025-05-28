@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20272C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 12:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0056C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 12:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKFb4-000837-Go; Wed, 28 May 2025 08:09:27 -0400
+	id 1uKFbg-0008N1-Js; Wed, 28 May 2025 08:10:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uKFaA-0007UF-9M; Wed, 28 May 2025 08:08:34 -0400
+ id 1uKFaI-0007ba-Pz; Wed, 28 May 2025 08:08:44 -0400
 Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uKFa5-0002pA-TE; Wed, 28 May 2025 08:08:29 -0400
+ id 1uKFaG-0002rr-Qa; Wed, 28 May 2025 08:08:38 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rbiF+LfAm8nSMinXtRZoXSZELouH2w2cOqEg3ICNnRPGiJKmGQVMxB3W1BwNODuZR0tDwDLPyO7N4crZW6JY0seOHygVNncLLS0pjWVA31MAeghoFWdDecanJWTaKtkmxjWmp2qQ/Mo1lhBJjzQJDTDwvdjtIz1kmzVAnHdhbXp99oHaX+zfRQLLZxZwvBWLWFXwnOGU6IjDl7Y/MKjJrd9+N0PenGdBQ4uXUOV1PJOgz3amGgR13bv8oiXbeLSl//Fg4BVrLLfNEng4arZfjdT7a+zNCb9XB+JNxay/7MAIGBcvNHKh807ki7Mc529yNywnUE0u6PPTG4nEK6NrIw==
+ b=N7vJPU1+38B5akR1OWGykOAlU+OeirhHE2xHx3/JvKVgrRKLvJWxBfJS2YD8F8c1FKTnn+dz6uxbSOWOaJt8XCMRBvE9yx2vr35Hj2v1ZJfRTKk/zDgv6lV1v3TyFFhGonKFQIkSx651apfY3XDzGoEDm3CawOZcpaHXB+UI95DrPQqeSvp/10m4RGA0lm5hgafPgI1HGTft4pi8zpyDGmu3We+t2ROc995zIPzlk8VWMHtJOHAJjDhQLvz/HVrrh2aPlvEp+XGMINDh8TAlZ8hx83/3S5AR6qC8HZw18sUnw527NfAJAiOQooTbPod1SntDtg+pal4zRMZuFpfrfg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U5kXyUg8kfAOe7FoTUI2XKQfaM6zNy/ZUZxKY8hWyTA=;
- b=ffjdBXKfrn+cKq91ZFY5s5uhVA0oz0L1Qm9XGPYRxtNVbWtM4VeZb109vMJHHk24FkvlhP1LQMInq3i41U/e3nc6ZhLelTvDoId4ZsEMKjnJ1lUd8m+OU5x7BB9RIRq9T+3Co/fKOP70JFPxvtGE1RkjeWRJu/C0im3oDoo9gZBV+mpqYs1rNJCpN9OuNy+7ukimqqZf/FJTQpiXskcKYsPKZQfGsaOiTqr+fTu1C+IpmgVunvE5r+DRzxq0gExBFePmq5HDATU/vT1/ZIIQ60rYcUdotfZg6DZT/qxIzls18Z5gV1lGtgG/kB6n7LfqqcrertIlJxr38loZIbZ4Mg==
+ bh=yE5x+6tUdpFOQQzXQCu+7y6SMrxcYjq76xzhp0+Vrpk=;
+ b=i74uXqe7CyOoVNGIOJgvZxpmP0gFoQOcjb0Tl/PCYDS9TDf6GFuW1N5s2vZoS8T0HT/06lUUxlvT/ixciVCDRIngRZh6mf4Fg1ey44/y64XbKX77oPZN3jRWuyi7SZwGHbSDmwH2o4UjILLlmAE4pSsF5W0G/XEAKY7Bjnzkaz5SowDCKntMulr7RxoYXUi+TOnLGdFDwXCoFX7cAScj+KyMFl3sxIGBkgkshyF4Rik8RAYavq2QNBYP5R00v/oFBXiEoORAvGJ1Sz/ilhO6z5/IUvjNCDUpr9IxQkiEF1g2Hnlt3jX2pkBZ4zWONXGO8vG7QzROCjnYVr88wfS65Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U5kXyUg8kfAOe7FoTUI2XKQfaM6zNy/ZUZxKY8hWyTA=;
- b=e6GmWYnrH8DecVDDQ32uErj4t8VgB+IrSKkiqxtEcLQQQ5W9wyXr7ZLtCY3cTuKuJ9PaRT7K9ICLZXrfq9Zjm5bTOtbRjG6TzIfqL5RCd3uubK4diE26jn5UXeIswiPqhUjtjIf/9kX3AJER2iCPViofNZkxeaK9xWWsO5UJ4qY5KKj4gNUYKMNchCwFsbQbo14xxAVoqnr34O4zfm2W/X+JyDMyQ6Ivi3IEnLHLypIXAaM1vMg5RV9ovvdE9Tb+ejql+OtqRSOlcmb5Mrmy6EeNU2KuPPZYnNIsm5gTXBkm2ovV5OnQF8IemsDMXBWUPBd+7V75qAugU3FsoLPUOw==
+ bh=yE5x+6tUdpFOQQzXQCu+7y6SMrxcYjq76xzhp0+Vrpk=;
+ b=Z2EwrxZ64LKjjYzSYst+rHQNbbySBYDx4Ykm1iuqtBtmYzKJYrOdnkqVTFS19DVVwHcTybCqf0zmFe1s27lJEqZtInEaQWPAlGhHYvXcjTQFk/r2ViV0+6qRsN8MEavqsNV4eZVYMmQRETfAN2MDclgTXQvyw1rFbyfozHW+cBdVuapa0xzo30+CJhbSVkeaQHSYAeJn5nDiwCliQs9LofmAl9AQ4aiw5JdFCQtTHBP+DhvLFw7TnBw3o+m8+WgdXA9w/ayDwwlAlGhoVGOroSk2MQp3aWdh9whdTtNW6c/8rNYYPyp5nrgJI8TccaGCSpzoazmhZopYjCMYDcVKNg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from AM8PR08MB5732.eurprd08.prod.outlook.com (2603:10a6:20b:1d4::16)
  by GV2PR08MB9277.eurprd08.prod.outlook.com (2603:10a6:150:d5::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.26; Wed, 28 May
- 2025 12:07:53 +0000
+ 2025 12:07:54 +0000
 Received: from AM8PR08MB5732.eurprd08.prod.outlook.com
  ([fe80::e543:a83c:a260:602b]) by AM8PR08MB5732.eurprd08.prod.outlook.com
  ([fe80::e543:a83c:a260:602b%5]) with mapi id 15.20.8769.025; Wed, 28 May 2025
- 12:07:53 +0000
+ 12:07:54 +0000
 From: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 To: vsementsov@yandex-team.ru,
 	eblake@redhat.com
 Cc: qemu-block@nongnu.org, jsnow@redhat.com, kwolf@redhat.com,
  hreitz@redhat.com, qemu-devel@nongnu.org, andrey.drobyshev@virtuozzo.com,
  den@virtuozzo.com
-Subject: [PATCH v2 3/4] block/copy-before-write: inverse access bitmap
-Date: Wed, 28 May 2025 14:07:30 +0200
-Message-ID: <20250528120732.2247150-4-andrey.zhadchenko@virtuozzo.com>
+Subject: [PATCH v2 4/4] block/copy-before-write: report partial block status
+ to snapshot
+Date: Wed, 28 May 2025 14:07:31 +0200
+Message-ID: <20250528120732.2247150-5-andrey.zhadchenko@virtuozzo.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250528120732.2247150-1-andrey.zhadchenko@virtuozzo.com>
 References: <20250528120732.2247150-1-andrey.zhadchenko@virtuozzo.com>
@@ -65,78 +66,78 @@ X-ClientProxiedBy: FR2P281CA0173.DEUP281.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AM8PR08MB5732:EE_|GV2PR08MB9277:EE_
-X-MS-Office365-Filtering-Correlation-Id: bd53365f-1313-4253-7186-08dd9de045c4
+X-MS-Office365-Filtering-Correlation-Id: 20f3cef6-1f45-4fb0-61dd-08dd9de0463f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|1800799024|366016|52116014|376014|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?3M4hSuC9v2yj9ZiGAVPosC+f8fXLKSgH/3uhj9vaf/aVsXsTTJkiFeclq0uf?=
- =?us-ascii?Q?GC9+KBfPBxbkh/5CNvgL7/xFWOhJfymQ4Jx502JUI+JIGcSWH21QJUbbmvt0?=
- =?us-ascii?Q?f75WMf/94iVAJ0tF2qe410G+/ITo3f0Vc4RiMEL0Mo5IEwocuZH2uKdj0EP+?=
- =?us-ascii?Q?8wuc7YMwPl2ID0b9ahsQlFFI4toQTrvjkNpwhPfVsPwkWTKj1jBCztJ4y85X?=
- =?us-ascii?Q?SdRG+3oePGsBf7681YhRFyTUZohIEaF2yv5cPa7X4QG4eIoH9tNoJ6/EQY2j?=
- =?us-ascii?Q?q2Yk315dAz1iy/584uAfGRYtD6hpvu3xSrFuWmz7twvrx5d0W8C3ZkA6ar/5?=
- =?us-ascii?Q?cFzNv+Z6zl5nq1wK+SaNqrcHtV5Oo+8SBG0WlKs5UAKN2HLkVOMSB85Q0F1U?=
- =?us-ascii?Q?KrbOi0ThhUfyoCM2Kpsp8F7fx5TS9KW5HEYIx6rG8wAIAFRKbP69U8V0XPYU?=
- =?us-ascii?Q?gvdRicHz3MeK4GTwgu/J76isPaUOyyznhBKnEFBxhq9MkwdiTHlwuTra8Vjn?=
- =?us-ascii?Q?VmOS1j1c4sBX85sHJYyrcGHI4gisj07qtp2M3Hfhg1cC85oxea2pY7YF9k5w?=
- =?us-ascii?Q?DsrmK0NjuCt7ciIxOTHp+hFdnH7gPvlP339PDs5ju3c9+dWBaOPaUzJJpOb8?=
- =?us-ascii?Q?Z28JrsVHVmI45C9X8pQcXTCKT3ZZuvCkEP+kQZejuPkNplGWu6q+arlYpNrY?=
- =?us-ascii?Q?QxcaqztgRAaJhcvUIUgTu7jqljDFYkWZKYZrrdncg7FfIW2jApOdn3x9ZEzI?=
- =?us-ascii?Q?tv0inpg7Qet34bLq8caTIMjqNbz6xeQvHFNLZZCesmyU1/p34zbUu9lwRgQA?=
- =?us-ascii?Q?EQ6t5WLP9T/Q+3qONoCuTmrcGyFuXCA6eHUoJXBBo3uELnll+e+AOrzXuDmu?=
- =?us-ascii?Q?uXiBNsGzO1OaIhXVY4IpYlm1qBTuOqdoYvsegnwJ0eHzLbLcFnJOLAZNH6h4?=
- =?us-ascii?Q?xORcaxuosf/ahSojuvLWEt/0A3RTfsrZfKyxoGlVopDacR3xsQnAH9FgWBlt?=
- =?us-ascii?Q?5qK0jtc99NsppzWabVTGzjJxuRpYFKKKcK6rwQ1+7hOWDFQeIzDHO5IyWWHO?=
- =?us-ascii?Q?38rAoD6s80bcmib3ZsOSVHoAvYUbEZ8P01CmhO/9S+BlqWX+Owbq17cejiJu?=
- =?us-ascii?Q?9m3aAXEJ8i8m1Fg3h7s+lQqUo+CPV5WQJXo1kz8jZFJB/tvD+f/4uttxwRV+?=
- =?us-ascii?Q?rktBacPRyTb4+DmMtn6pO/u4f5wFR7beHZgBNcfTb2FWNqIu0VkewE4YZFtN?=
- =?us-ascii?Q?SXSqO8BNQe8VXx54fWTlWC4qFqZUBob3VAYgjDyxEzdLV7W8chQ94hEYcZ6Q?=
- =?us-ascii?Q?0T9vHvjgRExT3iB4TVVB5UaH5U9wlKpqCCG4Fr4BQtCk8Tmsu0vDDxxnZ5DI?=
- =?us-ascii?Q?odS2gjSkH070yHiTE8pvbBF8YUbJi4xts+ksWox5vSpzt853ZBXARs8DPu7y?=
- =?us-ascii?Q?nU/bo0GdvGj22PmH82pqk5INbyvg86JeHASM0jJE1R1Y1ilY8sio0Q=3D=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?iWmcjTv+kJX6BO+XRY8CtoEWxci0eZRGpekEjZaiJoP8NXZ874RFDLl9b1K7?=
+ =?us-ascii?Q?z6rL5Nv7WspQOAyHprBl1MRiHVFtVqL2dq3IZ+ZqT0gm0VMBH1Hy0xnssswz?=
+ =?us-ascii?Q?Y974msFewVeeQC4J5wMLOEawf/AICbl1E4CE926f+HNp8DTXEHSp2DE20M2L?=
+ =?us-ascii?Q?deimXnryOC/nvzn0Be/LRy/1iwKam7GJpJT4rHkuebvHCforXK++aX+EG6VI?=
+ =?us-ascii?Q?XYdByKG635ksYF8KHBQwck6cKYNEqfac/HebFXimO6+IQwdWRXueuIKSClOE?=
+ =?us-ascii?Q?JnOzLvOlBjjWeWb2HGGlfeV70NksIjCV3vLG7bDrYq4urKgD/a1xrEi/c1HY?=
+ =?us-ascii?Q?ZDyqpqSyGJRMgS4oMZDXsczDagpkiZ5EuiWO74zdoENQCX2fD3dFPK4LzXxC?=
+ =?us-ascii?Q?c2wxuRElI7VZ2Z6GtGU2bE3sLZlfFZgW9v3JCkOdMyG18TFjQOGZcuyqVxC0?=
+ =?us-ascii?Q?x+EsM7NbL+/VsmzThpGGvjImIq2uLFWB53M31vLYZ8dX/fliqACSvFJ8lHyg?=
+ =?us-ascii?Q?vNi8Y1wFX7ZJ6x5kM3KLJ8fj4JF3xj8lx785bOTJu728M68bPTIkMZfdEzos?=
+ =?us-ascii?Q?PQMZKGMere6IlIO8fy83bHdyHsPv4cLlNIX62el0Y6qVS+xd6d49guqaEkv2?=
+ =?us-ascii?Q?dar+VFggLuUbg9Jt/teO1GMBAbSPin2Of84+vm6tOiCQOT4N/fg5FiRohScl?=
+ =?us-ascii?Q?BQbA9f5YQpAySwHToj5+zcTvQiTqAb3q4aSD90H03NONQ4y6lrSC956b7pa8?=
+ =?us-ascii?Q?p58GFr613oYFPFeHVmG52I5qkAmXwaoCoIRsvUBjBe4pY1RhZ2EcvtXKX0nE?=
+ =?us-ascii?Q?hgKOUnYdubPLOn2Zi/3n0GljbaoUPZaKEoTqVim74tHp41SGgT8uZPoIMGFd?=
+ =?us-ascii?Q?7yOhjikwSXLt8Ej6Crq/5bnFsmTw8cBRnv9Sayvt7trh1AsfCINc1gB21xMm?=
+ =?us-ascii?Q?/txCkjcRQxsbQh3nvuAZAPBt0smjVL+qxwFzVa6AsoeF0eKQCjLkoH2NgTA0?=
+ =?us-ascii?Q?QP/2er6iNKEuFkvnaAV8e8jIxuTv2iTd2g0vzPB2FUb76GiSL/+2EE7x+K9X?=
+ =?us-ascii?Q?puiNPRZmw872JtyRAugVmYKXdiNXcwzIQ+xXo5hiNtNvhIINwJOf1OKgRIYu?=
+ =?us-ascii?Q?0bAYrzOQYPSzelGI2sPIpaiue+HVnL+DOQXdST4oXq0C5l0zt6pUGYs/pV+c?=
+ =?us-ascii?Q?SM452vMpau2X7qBH9iXAnEgkaGPxZZxPVPBLAi0Cr6cDakB4jNjN+yqscQGJ?=
+ =?us-ascii?Q?DoGmLxQP7vCnYgsS4w7zorgE7PlJArqXgTAwHh7ZkGtqQrPFwWl2AI8US83/?=
+ =?us-ascii?Q?YBlLDsmtYGx7pyojyH3OMAP9vFEeVXesHUieBc7rYb2Jly0EgZx2U4Hxxwuc?=
+ =?us-ascii?Q?kq/WOYGXBJGDjTlD2rPZITptf9jsvJ67Lct3FytxVEq3sRypWcPVcStxAs4h?=
+ =?us-ascii?Q?lA4ik5Jlhb+Sw4ntC/nJEwyXHdWgUeWzOB7hElORPh16ijJnC2UWjg=3D=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM8PR08MB5732.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(52116014)(376014)(38350700014); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RDqDbtcxEA/7+496SBkuwLaFgxq1v7tF+73IFZoSDmGYHwlAmZUSLs13h3D5?=
- =?us-ascii?Q?tPXn2JMEy6grXdyw5BtkWMJoqSpnYwnKbc3ATtnGj8zHB31U6E90x9Qu8eGp?=
- =?us-ascii?Q?6BKhqdxg1RM8Cmcdaxd11Mh0f56/Xns8wGZxZKUcEvOw/B3G0lrqVKnma6fF?=
- =?us-ascii?Q?8xImn2DXTLUgxKp0uZGZebzUmgrgDFs2CAc60F4LcMTEBBFK6dG05egXTcF9?=
- =?us-ascii?Q?S96+tzxrXw297J4BXnQ7JKUWbJbrnydvLZY+AVxQRCTXBSTp4kotCrmMyEyM?=
- =?us-ascii?Q?STCEodJKKprMIsinUlCmbSjMX3PkgPkAlloKSCShw0QR/usf2maE8DQObM+6?=
- =?us-ascii?Q?TFfiaOMFYeq7KmdZMgn24X3TadZFYAxVgRf+A1RViPCV/PEt84QZ4t3m2con?=
- =?us-ascii?Q?LI5XGjjHNYken1Rrwz9EmtTx6jYl68Ma10WZqkHWvmEu5feHfwj7Z0QJxg+u?=
- =?us-ascii?Q?HYbwsjs3D76TmRhF9nDgF5EOaOjA4XCSBh1TvVmGoOq8z0pq5VXseX0ZnC5R?=
- =?us-ascii?Q?dByz9VwmdyaLwwAEpJLUrj4wc7GV0aqT/S/EXBjM4H3e158RHC0HCcK5Is0c?=
- =?us-ascii?Q?cND6ZbThKtGBaD08gxbiQ0J0dCAQyZwBGdxEpQdYmG77ozhTrad2kLEoEJ6b?=
- =?us-ascii?Q?v6EIxdERp56siXL2KjKwTV5LwVooINjoDUYqgBjyaZigFWa/tI/psmSdpDlh?=
- =?us-ascii?Q?nysenuXIw3045LfCal4hr04z0QsPnJHikrBGDSrp6dU8EXLtuHlgiVhRctZl?=
- =?us-ascii?Q?ThyEzju/2Y1laKYFkxFiYnDTR904+VCgcwxCHOeG8HQKLtJCe5FbJEXAnsrI?=
- =?us-ascii?Q?xOKzjayJqmMPpvA0C7yhC66F5HhIliiipi2cw2EentLFfYSttKVcxaQ1+tqE?=
- =?us-ascii?Q?b4dRTps8meMIRbeOBt3n43REdmrHpSQfLrHd7W2irXTnYAyDv7jUzYAWS/CJ?=
- =?us-ascii?Q?pVqIwQiCZjq9TnzACIUSc5MKSA1aJTpDUFjMtpkB9QteXw0raRKaEsCyvnKh?=
- =?us-ascii?Q?tTWF4lvitzRKzn6iwshXr3IwE1ElXx4qzihqj511QTsfIbEF88LnBtfXyMim?=
- =?us-ascii?Q?7u7qzxw73LWg4ejdf2BSD6x32R4kHi6vwkXg3nvEcigbK30o2sXzbN8mzKJT?=
- =?us-ascii?Q?+N2r7bKxxeK0ffqS6rEEkcszkTm3tt3WC527Qye/JlWPMWxEikr9tTCisQSd?=
- =?us-ascii?Q?w6Fvii92Q6MoqsmBdBIBHxCfm6U/pVtUec1e+UiKCUzZDaCxYdSyxTkmhP5S?=
- =?us-ascii?Q?Sg0yZmCWW/wEES5hSVb2agZweQzhqy9CpDafHqVyKV61MoVboHrxJE+7zWqh?=
- =?us-ascii?Q?cclaiiU448av9/xK3Pko6WLQoaAXOFzMHgPQzJvY2GHL0E1PFVANinMHVjPO?=
- =?us-ascii?Q?/09AnHTHcZJY9Wv4LiuIkhMI+ItyfI+RTY9y5zsHz7nK4BteSCifR6hhBNZ7?=
- =?us-ascii?Q?xo18JjHkJAbo6SdllvZJW4AIUNnPAkfEOv3td/+7Gmm+VeCG1F8feCODgtNX?=
- =?us-ascii?Q?LA3ivpBeldimL+FQPSwmGbVpRStWRjX2QM92PTMVrGSuyd5aj1HvtwAeOftj?=
- =?us-ascii?Q?zl4Cq+guwyBQCJTUguq81W9GqTRFIXiPy9RLjlPSW6hjQOLlrygWL7QQp4iB?=
- =?us-ascii?Q?Nw=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?PFH3mErEyelgdLjAxJHFU+rYyMeF3Qixb03nAfJyuTjIzkSckTSM0sHDoHE/?=
+ =?us-ascii?Q?Q8aKOAu3Na0Um01aNT6Uf79d5qph84pRzj/WJ3OOepkm5KjQcPvoMQXewkLm?=
+ =?us-ascii?Q?ra65EuxntgMbsAShMehDry8+5CaZvEnDWNuk6ZOHLybytAfPf5cubs+NSpzN?=
+ =?us-ascii?Q?B/Rzv/30I+E2g85F8ikJmWdq5Yuezq4kh4HFTFD5s7THpKR/DJhushPcGRP0?=
+ =?us-ascii?Q?H0tnCFXSksp623sWn/+UDvtijzKD3moC52Usv+Ar1Ciy/L1PBJugD1TiQI8t?=
+ =?us-ascii?Q?9bEzEY8SWDglNRGuIO0YWRPoM1sp96sfhACRk3xX0ztJzP7cijMpXgqi71mY?=
+ =?us-ascii?Q?GApaIWM9Vn2cYWfHKq53wRM5tsJXbJPF42ZXVX5oU4ZIPdcyZhrOzeAO3ZvS?=
+ =?us-ascii?Q?jUGD3B8zHNXjFDsQ1yu2Mx+MBK1GwRegJL8qgzMs1v1oCJ3Bg+ihasFXKGRa?=
+ =?us-ascii?Q?X7A54MK43IQc77j6Guuqbe9SJlD9ygx4KgmmpXVKe6pp6Gb0NmBiq25qpK9z?=
+ =?us-ascii?Q?djZbctWFO645qNq3jejoPp+4daAiJZMypbySYs6TSDNMtWbGygUUek/tCAAQ?=
+ =?us-ascii?Q?E6TOamlRRyxl2/jrsL+TzTnXKidDu2ljkqCJF8KTqXyT9IJa0l5uPUBFjl8w?=
+ =?us-ascii?Q?7nY086vMsknw2w3CeWjIy20FRtRbtSbOIX4YnmVpWE3k+H9xxIl6AEE8ShMX?=
+ =?us-ascii?Q?Gj9zKe/BH83z74orTPyC/fVvnVOelyhwMipjAgu5THcoQsgTn3ZN9t3Ygtfa?=
+ =?us-ascii?Q?iLU4pa4bqUX1RXuHFWQ/Mcp9tq0dcEiZYUr3dylsDQ0NHwtuVfd3QchLXoJ6?=
+ =?us-ascii?Q?eGnBq+ylciXZGjDOE1TBN77nFrO84v8l8IHRO+OA/SPArsctzaGBfyu7pdqQ?=
+ =?us-ascii?Q?6c5Vtl0gtc8oaVhVJFlIfH/vlHI6E7WvHPdSnO9APHHJ1GFdXs/GXtcEBWQg?=
+ =?us-ascii?Q?Xl4BzFW3eWxPTnUHMimi7eveTTImwQK2uS9doOW2wJtHpWcZKFAcBiDCc/qG?=
+ =?us-ascii?Q?nXIpYOnVLNejZ776dVqRyEmfj0qhODsrg9Mvv5RaP32tbbYO4gOJkogaYQUy?=
+ =?us-ascii?Q?JmiQ9hYn8G/4MbcYSng6jRONTlHy1KHCc1PA6KrTw/f+DaTzaVFPqGFwwSe/?=
+ =?us-ascii?Q?p4Oyb15T8PzAI3f3dU/ATvX+eTCbKvv5p5TE4Dkxs7aCy2sRZPEaalpVofdD?=
+ =?us-ascii?Q?1KqkbDXDuInrLGyMNX8WZfsAmTqkrJAZecUBtJUfgAgKjUm/3+W+kRcl8DO1?=
+ =?us-ascii?Q?MW9sM59lf+TpZc0Q4Hur80hGDDlPnOOouemd93eL2McjMlouwUfngkjr4zQm?=
+ =?us-ascii?Q?Z04lPWMWuLNh1cr/LzRzd+5NPUIKVlUAjwJ1yxAvkwKc/h0ZpJbwUDwmEOkW?=
+ =?us-ascii?Q?QIEU8KpzuoWm/QrPDty8myyFLg2e4rXNZQzoYLiRl3qfgFmM7BXJKhrQdk/8?=
+ =?us-ascii?Q?JpnFBR5p9cx8IMxg7dBbhBliAcLvtoSYZHZR4W8NRhfVbSyZh+zDLirHg+Nt?=
+ =?us-ascii?Q?BxREdYyjvAQP7EVVNUbQNjB3bozZ9opbqJy+uURn5wL3MItAq7hLxEdBllJj?=
+ =?us-ascii?Q?W7nqYuzWQrjv43rtBGGKoTLdopqgyk9qPvaaFk+Fiv4Xwbok4IaDlvxRCkcW?=
+ =?us-ascii?Q?hw=3D=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bd53365f-1313-4253-7186-08dd9de045c4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 20f3cef6-1f45-4fb0-61dd-08dd9de0463f
 X-MS-Exchange-CrossTenant-AuthSource: AM8PR08MB5732.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 12:07:52.6560 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 12:07:53.4793 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OcPA36EfY/i2c/iDBiwUdUE6yMrchBk4Xv1QaaealhLbsctJBUZMf995LSbUjGMvDOHx0fd7ntxBJFB6883LmtGAAuwCfr/6PYLrLlUouuQ=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 24fN8IDzJEdKkpc35x7kqRQV4YLqoxTMJvmJfvipNM29p56+dDuF7DrDvRTqxWIB4NeRxfAh2xpMAtY6Ueu9MLl5HfHvJqAsU/+Iqj+oyH4=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR08MB9277
 Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
  envelope-from=andrey.zhadchenko@virtuozzo.com;
@@ -162,218 +163,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HBitmaps allow us to search set bits pretty fast. On the contrary,
-when searching zeroes, we may be forced to fully traverse the lower
-level.
-When we run blockdev-backup with mode=full on top of snapshot filter
-+ cbw filter, the job fills copy bitmap by calling block_status()
-with range (X, virtual_size). The problem is that we check for zeroes
-in this whole range. We also hit the worst case here, as access
-bitmap is fully set and we need to scan the entire lowest level.
-After scanning the full bitmap we actually ask the block status of
-original image, which may return significantly lower amount of empty
-clusters.
-Beacuse of this, the backup job 'hangs' on block copy initializaiton
-for a long time with 100% CPU.
-
-Example copy bitmap buildup time for image with clu_size=65536 and
-preallocated metadata
-size                 10T   11T
-blockdev-backup      52s   57s
-cbw + snap           325s  413s
-cbw + snap + patch   55s   61s
-
-To fix it, inverse the access bitmap in cbw filter: rather set it
-when the user is not allowed to read the cluster.
-
-Update qemu-iotest 257: now access bitmap have count 0 instead of
-the image size 67108864
+until the non-accessible area
 
 Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
 ---
- block/copy-before-write.c  | 17 ++++++++++-------
- tests/qemu-iotests/257.out | 28 ++++++++++++++--------------
- 2 files changed, 24 insertions(+), 21 deletions(-)
+ block/copy-before-write.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index fd470f5f92..7e074ad569 100644
+index 7e074ad569..c5e6e1c112 100644
 --- a/block/copy-before-write.c
 +++ b/block/copy-before-write.c
-@@ -53,7 +53,7 @@ typedef struct BDRVCopyBeforeWriteState {
-     CoMutex lock;
+@@ -207,10 +207,11 @@ static int coroutine_fn GRAPH_RDLOCK cbw_co_flush(BlockDriverState *bs)
+  */
+ static BlockReq * coroutine_fn GRAPH_RDLOCK
+ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
+-                       int64_t *pnum, BdrvChild **file)
++                       int64_t *pnum, BdrvChild **file, bool query)
+ {
+     BDRVCopyBeforeWriteState *s = bs->opaque;
+     BlockReq *req = g_new(BlockReq, 1);
++    int64_t next_dirty;
+     bool done;
  
-     /*
--     * @access_bitmap: represents areas allowed for reading by fleecing user.
-+     * @access_bitmap: represents areas disallowed for reading by fleecing user.
-      * Reading from non-dirty areas leads to -EACCES.
-      */
-     BdrvDirtyBitmap *access_bitmap;
-@@ -220,7 +220,7 @@ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
+     QEMU_LOCK_GUARD(&s->lock);
+@@ -220,9 +221,13 @@ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
          return NULL;
      }
  
--    if (bdrv_dirty_bitmap_next_zero(s->access_bitmap, offset, bytes) != -1) {
-+    if (bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes) != -1) {
-         g_free(req);
-         return NULL;
-     }
-@@ -338,8 +338,8 @@ cbw_co_pdiscard_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes)
-     aligned_bytes = aligned_end - aligned_offset;
- 
-     WITH_QEMU_LOCK_GUARD(&s->lock) {
--        bdrv_reset_dirty_bitmap(s->access_bitmap, aligned_offset,
--                                aligned_bytes);
-+        bdrv_set_dirty_bitmap(s->access_bitmap, aligned_offset,
-+                              aligned_bytes);
+-    if (bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes) != -1) {
+-        g_free(req);
+-        return NULL;
++    next_dirty = bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes);
++    if (next_dirty != -1) {
++        if (!query || next_dirty == offset) {
++            g_free(req);
++            return NULL;
++        }
++        bytes = offset + bytes - next_dirty;
      }
  
-     block_copy_reset(s->bcs, aligned_offset, aligned_bytes);
-@@ -501,9 +501,12 @@ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
-         return -EINVAL;
-     }
-     bdrv_disable_dirty_bitmap(s->access_bitmap);
--    bdrv_dirty_bitmap_merge_internal(s->access_bitmap,
--                                     block_copy_dirty_bitmap(s->bcs), NULL,
--                                     true);
-+    if (bitmap) {
-+        bdrv_dirty_bitmap_merge_internal(s->access_bitmap,
-+                                         block_copy_dirty_bitmap(s->bcs), NULL,
-+                                         true);
-+        bdrv_dirty_bitmap_inverse(s->access_bitmap);
-+    }
+     done = bdrv_dirty_bitmap_status(s->done_bitmap, offset, bytes, pnum);
+@@ -270,7 +275,8 @@ cbw_co_preadv_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes,
+     while (bytes) {
+         int64_t cur_bytes;
  
-     qemu_co_mutex_init(&s->lock);
-     QLIST_INIT(&s->frozen_read_reqs);
-diff --git a/tests/qemu-iotests/257.out b/tests/qemu-iotests/257.out
-index c33dd7f3a9..55efb418e6 100644
---- a/tests/qemu-iotests/257.out
-+++ b/tests/qemu-iotests/257.out
-@@ -109,7 +109,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -585,7 +585,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -854,7 +854,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -1330,7 +1330,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -1599,7 +1599,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -2075,7 +2075,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -2344,7 +2344,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -2820,7 +2820,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -3089,7 +3089,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -3565,7 +3565,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -3834,7 +3834,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -4310,7 +4310,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -4579,7 +4579,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
-@@ -5055,7 +5055,7 @@ write -P0x67 0x3fe0000 0x20000
-     "backup-top": [
-       {
-         "busy": false,
--        "count": 67108864,
-+        "count": 0,
-         "granularity": 65536,
-         "persistent": false,
-         "recording": false
+-        req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &file);
++        req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &file,
++                                     false);
+         if (!req) {
+             return -EACCES;
+         }
+@@ -302,7 +308,7 @@ cbw_co_snapshot_block_status(BlockDriverState *bs,
+     int64_t cur_bytes;
+     BdrvChild *child;
+ 
+-    req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &child);
++    req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &child, true);
+     if (!req) {
+         return -EACCES;
+     }
 -- 
 2.43.0
 
