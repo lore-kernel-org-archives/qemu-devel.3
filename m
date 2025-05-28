@@ -4,58 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D086CC5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 11:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB273C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 May 2025 11:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKEfp-00074Q-ML; Wed, 28 May 2025 07:10:17 -0400
+	id 1uKEzB-0003di-KJ; Wed, 28 May 2025 07:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uKEfi-00071r-Pk; Wed, 28 May 2025 07:10:11 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uKEff-0001nw-Cp; Wed, 28 May 2025 07:10:09 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b6msL0ZN6z6L5Fw;
- Wed, 28 May 2025 19:06:30 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 530DD14034D;
- Wed, 28 May 2025 19:10:03 +0800 (CST)
-Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 28 May 2025 13:10:02 +0200
-To: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
- <peter.maydell@linaro.org>, <mst@redhat.com>
-CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>, 
- Yuquan Wang <wangyuquan1236@phytium.com.cn>, Itaru Kitayama
- <itaru.kitayama@linux.dev>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Alireza Sanaee <alireza.sanaee@huawei.com>
-Subject: [PATCH v14 5/5] qtest/cxl: Add aarch64 virt test for CXL
-Date: Wed, 28 May 2025 12:07:26 +0100
-Message-ID: <20250528110726.226389-6-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
-References: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uKEz9-0003b6-4I
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 07:30:15 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uKEz5-0005Bm-IL
+ for qemu-devel@nongnu.org; Wed, 28 May 2025 07:30:14 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-311e993f49aso396134a91.0
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 04:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748431809; x=1749036609;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q64yR4b+sL+fRICLpPHKDY1Z961O7A8a+ehK3Bc9Lnk=;
+ b=HYnp4nP5X+co/knGov6+ttYukmZaQyvfm0hu2RkFj54pOykKK+VlZpARaFD9CdniJh
+ wmSV0IA0emQrqrTL5JZ5vYzqZCvc4+ccK4lZcUDpDHlcWx4qEXb4z7RCJVPb4LiqRVhr
+ MTZTw26GubwAcjjVP+aRaZ1LaKFiKtOZ37/0W1ykaCumX5DctizWnTjRSNs0kaztAnQl
+ LB8aI5qu37keGXLNkDhop/briDJ5nQXTdsD0Sqir8fUMG3PnVRdgUT3Bb/K6xoOtz0Fd
+ V4eFWDbIgtfH2P8arVMsnYwPp3JiZUoiMLgflP0JkTJ+aRn6HbDOKI05iydAZYgNmWhj
+ kWPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748431809; x=1749036609;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Q64yR4b+sL+fRICLpPHKDY1Z961O7A8a+ehK3Bc9Lnk=;
+ b=LmRWKWrflNymSPPJU0hd0qPIJMqrMseBWwx7WdPJI89bpjazki/5Ub6IuUUb4CYsqn
+ HkCUPVPMh66rVGAxFXS0xS3kb2xYB+dq3slrqXSrMaSXoeEq1SwZUbkzGLaBBIl4CEhg
+ MTTJPaWWWLp5wobqEBKNQ1AqddRQ6ioLQW+bIdpizUgJdZuTxpt9Xyc5h5paaEl7AJrU
+ 1+2UdKkMjwXZZ42lwLoXDB7aEVfDpGFSxiGSh1m9yDwe8zC9GEUfP/Ih0GmGM0zU7Bvk
+ h1LW1xB1K+tblf9nrnUbRaBILL7itvgzwb0zu0lKNw70pq65X/EAnkFSBEgOVS5nQuUO
+ TioA==
+X-Gm-Message-State: AOJu0YyWbeLCLvwGR1GWLQxxXgbL7A4An4ydVU/rCRxvUqk9Lykiy/Mg
+ BqjdT6yo14IT8OFmiEikSF+HrvcLocVDS1O0u5sAqHqTfhBrDpXSSJl6FzHI7wa/bDc=
+X-Gm-Gg: ASbGncvKuCEH9PBSui0F08sqSYMuU+mLsNKmpyqdL2xbtgGW2GLr8WAlHKbQ/wUthNO
+ mgWrZrC0cPRKu0t7jzKeP17yefvoPlFy9Sejl3IFacX0kxsUojvg4ylp62AiuQBj47sCK0OuPte
+ 45FYvtzXbl+1k2NzKmbIjV3uPxNhLRE4idiNnNA1GW6mgupZ7/xCw4clbizGxu6vGR5dxJ5P+vK
+ BExIFHd6Illw9Vc9oJ/rK8bKVrU0/yeolW2dCkMCsnA6WRMUGuL3vRCLojfuEKtaoAAhm3IVITL
+ emK1YtXtiTbmflXsJMaXtkMjnV2qhrQ+r6JONkxbyLF7rRAmZYcc
+X-Google-Smtp-Source: AGHT+IEJ4dpoLh0sCQU1eEAtFlg0H9jMKH1QrrJzvSYbxQy6fbzLFPYxLHeJdB9ZDKEqEUTobziWaQ==
+X-Received: by 2002:a17:90b:3dc3:b0:311:e8cc:424c with SMTP id
+ 98e67ed59e1d1-311e8cc462emr2997197a91.25.1748431809144; 
+ Wed, 28 May 2025 04:30:09 -0700 (PDT)
+Received: from localhost ([157.82.128.1]) by smtp.gmail.com with UTF8SMTPSA id
+ 98e67ed59e1d1-311e9c28e01sm954581a91.31.2025.05.28.04.30.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 May 2025 04:30:08 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Wed, 28 May 2025 20:30:05 +0900
+Subject: [PATCH] file-posix: Tolerate unaligned hole at middle
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250528-dio-v1-1-633066a71b8c@daynix.com>
+X-B4-Tracking: v=1; b=H4sIALzzNmgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDUyML3ZTMfN2UJAOTRDOzRHMLEwsloMqCotS0zAqwKdGxtbUAU0WYjVU
+ AAAA=
+X-Change-ID: 20250528-dio-db04a66a7848
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ qemu-block@nongnu.org, devel@daynix.com, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.15-dev-edae6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,122 +98,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a single complex case for aarch64 virt machine.
-Given existing much more comprehensive tests for x86 cover the
-common functionality, a single test should be enough to verify
-that the aarch64 part continue to work.
+file-posix used to assume that existing holes satisfy the requested
+alignment, which equals to the estimated direct I/O alignment
+requirement if direct I/O is requested, and assert the assumption
+unless it is at EOF.
 
-Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+However, the estimation of direct I/O alignment requirement is sometimes
+inexact and can be overly strict. For example, I observed that QEMU
+estimated the alignment requirement as 16K while the real requirement
+is 4K when Btrfs is used on Linux 6.14.6 and the host page size is 16K.
+
+For direct I/O alignment, open(2) sugguests as follows:
+> Since Linux 6.1, O_DIRECT support and alignment restrictions for a
+> file can be queried using statx(2), using the STATX_DIOALIGN flag.
+> Support for STATX_DIOALIGN varies by filesystem; see statx(2).
+>
+> Some filesystems provide their own interfaces for querying O_DIRECT
+> alignment restrictions, for example the XFS_IOC_DIOINFO operation in
+> xfsctl(3). STATX_DIOALIGN should be used instead when it is available.
+>
+> If none of the above is available, then direct I/O support and
+> alignment restrictions can only be assumed from known characteristics
+> of the filesystem, the individual file, the underlying storage
+> device(s), and the kernel version. In Linux 2.4, most filesystems
+> based on block devices require that the file offset and the length and
+> memory address of all I/O segments be multiples of the filesystem
+> block size (typically 4096 bytes). In Linux 2.6.0, this was relaxed to
+> the logical block size of the block device (typically 512 bytes). A
+> block device's logical block size can be determined using the ioctl(2)
+> BLKSSZGET operation or from the shell using the command:
+
+Apparently Btrfs doesn't support STATX_DIOALIGN nor provide its own
+interface for querying the requirement. Using BLKSSZGET brings another
+problem to determine the underlying block device, which also involves
+heuristics.
+
+Moreover, even if we could figure out the direct I/O alignment
+requirement, I could not find a documentation saying it will exactly
+matche with the alignment of holes.
+
+So stop asserting the assumption on the holes and tolerate them being
+unaligned.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ block/file-posix.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/block/file-posix.c b/block/file-posix.c
+index ec95b748696b..7b686ce6817d 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -3307,22 +3307,21 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
+         *pnum = bytes;
+         ret = BDRV_BLOCK_DATA;
+     } else if (data == offset) {
+-        /* On a data extent, compute bytes to the end of the extent,
+-         * possibly including a partial sector at EOF. */
++        /* On a data extent, compute bytes to the end of the extent. */
+         *pnum = hole - offset;
+ 
+         /*
++         * We may have allocation unaligned with the requested alignment due to
++         * the following reaons:
++         * - unaligned file size
++         * - inexact direct I/O alignment requirement estimation
++         * - mismatches between the allocation size and
++         *   direct I/O alignment requirement.
++         *
+          * We are not allowed to return partial sectors, though, so
+          * round up if necessary.
+          */
+-        if (!QEMU_IS_ALIGNED(*pnum, bs->bl.request_alignment)) {
+-            int64_t file_length = raw_getlength(bs);
+-            if (file_length > 0) {
+-                /* Ignore errors, this is just a safeguard */
+-                assert(hole == file_length);
+-            }
+-            *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
+-        }
++        *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
+ 
+         ret = BDRV_BLOCK_DATA;
+     } else {
 
 ---
-v14: Tags only.
----
- tests/qtest/cxl-test.c  | 59 ++++++++++++++++++++++++++++++++---------
- tests/qtest/meson.build |  1 +
- 2 files changed, 47 insertions(+), 13 deletions(-)
+base-commit: f0737158b483e7ec2b2512145aeab888b85cc1f7
+change-id: 20250528-dio-db04a66a7848
 
-diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
-index a600331843..c7189d6222 100644
---- a/tests/qtest/cxl-test.c
-+++ b/tests/qtest/cxl-test.c
-@@ -19,6 +19,12 @@
-     "-device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=53 " \
-     "-M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=4G "
- 
-+#define QEMU_VIRT_2PXB_CMD \
-+    "-machine virt,cxl=on -cpu max " \
-+    "-device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=52 " \
-+    "-device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=53 " \
-+    "-M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=4G "
-+
- #define QEMU_RP \
-     "-device cxl-rp,id=rp0,bus=cxl.0,chassis=0,slot=0 "
- 
-@@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
-     qtest_end();
-     rmdir(tmpfs);
- }
-+
-+static void cxl_virt_2pxb_4rp_4t3d(void)
-+{
-+    g_autoptr(GString) cmdline = g_string_new(NULL);
-+    char template[] = "/tmp/cxl-test-XXXXXX";
-+    const char *tmpfs;
-+
-+    tmpfs = mkdtemp(template);
-+
-+    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
-+                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
-+                    tmpfs, tmpfs);
-+
-+    qtest_start(cmdline->str);
-+    qtest_end();
-+    rmdir(tmpfs);
-+}
- #endif /* CONFIG_POSIX */
- 
- int main(int argc, char **argv)
- {
--    g_test_init(&argc, &argv, NULL);
-+    const char *arch = qtest_get_arch();
- 
--    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
--    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
--    qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window);
--    qtest_add_func("/pci/cxl/pxb_x2_with_window", cxl_2pxb_with_window);
--    qtest_add_func("/pci/cxl/rp", cxl_root_port);
--    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
-+    g_test_init(&argc, &argv, NULL);
-+    if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-+        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
-+        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
-+        qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window);
-+        qtest_add_func("/pci/cxl/pxb_x2_with_window", cxl_2pxb_with_window);
-+        qtest_add_func("/pci/cxl/rp", cxl_root_port);
-+        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
- #ifdef CONFIG_POSIX
--    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
--    qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
--    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
--    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", cxl_t3d_volatile_lsa);
--    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
--    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", cxl_2pxb_4rp_4t3d);
-+        qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
-+        qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
-+        qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
-+        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", cxl_t3d_volatile_lsa);
-+        qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
-+        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
-+                       cxl_2pxb_4rp_4t3d);
- #endif
-+    } else if (strcmp(arch, "aarch64") == 0) {
-+#ifdef CONFIG_POSIX
-+        qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
-+                       cxl_virt_2pxb_4rp_4t3d);
-+#endif
-+    }
-+
-     return g_test_run();
- }
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 43e5a86699..3145c7b5fb 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -259,6 +259,7 @@ qtests_aarch64 = \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
-+  qtests_cxl +                                                                                  \
-   ['arm-cpu-features',
-    'numa-test',
-    'boot-serial-test',
+Best regards,
 -- 
-2.48.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
