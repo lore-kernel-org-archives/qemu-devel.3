@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B098C54FB3
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 05:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA83CC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 05:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKVct-0007zF-RK; Thu, 29 May 2025 01:16:24 -0400
+	id 1uKVcl-0007x0-8C; Thu, 29 May 2025 01:16:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uKVck-0007xQ-MS
- for qemu-devel@nongnu.org; Thu, 29 May 2025 01:16:15 -0400
+ id 1uKVcd-0007wS-2o
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 01:16:07 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uKVci-0008GJ-0E
- for qemu-devel@nongnu.org; Thu, 29 May 2025 01:16:14 -0400
+ id 1uKVcZ-0008Dw-Bp
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 01:16:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748495772; x=1780031772;
+ t=1748495763; x=1780031763;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=cxAatodOAORzZ95kPaQtugcUFXjQS+idcd+I3ZMbUoI=;
- b=axZ7UMVvlgtUbpWqF4AFT8L+GCfsjpV/BUcgGQ2G18lIZ/wpvXMrRAYu
- hMCMi+PyVJMjB2zaQ1xg9eUMPu0CaWSmMh/ElTG7FoY5ULF36OVm0cj+m
- uLn7PBWtvAfxTAbcsxZyPTsGdhJtr1pgN0otoyL1gmTFTee26AOgCpcIW
- GPFC18AzV7HHdHbSlKM9wBLyzh3IFwNcuZAUApJWgG6nCZrgykzD0UG6i
- Jz//D5vmLGRrIEnf+tr/soft2PpZpxWuchGaS4wtw+fZEILyvfOK41fYD
- iq6a/9zz2goGcZqd2yqGVZVEDYN4BwVR9Sq9eJ0fL1M3B6xfiy7JlxCq2 A==;
-X-CSE-ConnectionGUID: oT4qYxZaTWKD4T+a1asieg==
-X-CSE-MsgGUID: Od/0aaYTSnuaCM9ZKU2E6w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="50241913"
-X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="50241913"
+ bh=aW7kRDP25+lv2HiCRNargvEymgnLi11KpxE9EQ5BBs0=;
+ b=JPowpbUGU//IuAgbLAj18yMiuveS71ulz60nbmwAH5a7ETGqfpa76bDw
+ POHhwz7PdkQRYjf9aKr6iq+hLz19c8bjIiPUEhtCsEBiFUFqzxQaJXmrX
+ vmWbTmWnbsdfbYRa6EwQyU05sxvSQ2fZTe96XvGPwnH7CMDlaNWPPpC8e
+ HT34JgSM79qZ5llaja/naoK7V5IzSEjMN9dn7vlLneRQdNJ9kPQ71Wuno
+ Txs2kMbgGh0Yz1fKSZIcqS3jjI7ZQYAdz5vTqUjYArow77s4sZSPehT6Y
+ a/0x6cmXmxPpkaYBJEbzedyAuY8wDt0obdbkDr1K0hPwMNyTCT9+jLr+f g==;
+X-CSE-ConnectionGUID: nXEi8z1CSxaT02E6cc2jPg==
+X-CSE-MsgGUID: mSxrHPZgRcqx5BsuHkQA9g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="50241893"
+X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="50241893"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 May 2025 22:15:27 -0700
-X-CSE-ConnectionGUID: A91srPbvSLeJwLUQxkZsBQ==
-X-CSE-MsgGUID: wh7Vo0hxR2GYXoXXa20tvA==
+ 28 May 2025 22:15:26 -0700
+X-CSE-ConnectionGUID: nJ1bGDZhTKKrDBWmHtibVw==
+X-CSE-MsgGUID: 6KQOh+WdQ82nkhTK6aTcuQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="174455354"
+X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="174455339"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 May 2025 22:15:27 -0700
+ 28 May 2025 22:15:26 -0700
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
@@ -54,10 +54,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>,
  Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Subject: [PATCH v5 7/7] ui/spice: Blit the scanout texture if its memory
- layout is not linear
-Date: Wed, 28 May 2025 22:11:18 -0700
-Message-ID: <20250529051352.1409904-8-vivek.kasireddy@intel.com>
+Subject: [PATCH v5 3/7] ui/spice: Enable gl=on option for non-local or remote
+ clients
+Date: Wed, 28 May 2025 22:11:14 -0700
+Message-ID: <20250529051352.1409904-4-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250529051352.1409904-1-vivek.kasireddy@intel.com>
 References: <20250529051352.1409904-1-vivek.kasireddy@intel.com>
@@ -89,12 +89,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In cases where the scanout buffer is provided as a texture (e.g. Virgl)
-we need to check to see if it has a linear memory layout or not. If
-it doesn't have a linear layout, then blitting it onto the texture
-associated with the display surface (which already has a linear layout)
-seems to ensure that there is no corruption seen regardless of which
-encoder or decoder is used.
+Newer versions of Spice server should be able to accept dmabuf
+fds from Qemu for clients that are connected via the network.
+In other words, when this option is enabled, Qemu would share
+a dmabuf fd with Spice which would encode and send the data
+associated with the fd to a client that could be located on
+a different machine.
 
 Cc: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
@@ -104,144 +104,53 @@ Cc: Dongwon Kim <dongwon.kim@intel.com>
 Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- include/ui/spice-display.h |  3 ++
- ui/spice-display.c         | 81 +++++++++++++++++++++++++++++++++++---
- 2 files changed, 78 insertions(+), 6 deletions(-)
+ include/ui/spice-display.h | 1 +
+ ui/spice-core.c            | 4 ++++
+ ui/spice-display.c         | 1 +
+ 3 files changed, 6 insertions(+)
 
 diff --git a/include/ui/spice-display.h b/include/ui/spice-display.h
-index 9bdde78266..690ece7380 100644
+index e1a9b36185..6c55f38c8b 100644
 --- a/include/ui/spice-display.h
 +++ b/include/ui/spice-display.h
-@@ -132,6 +132,9 @@ struct SimpleSpiceDisplay {
-     egl_fb guest_fb;
-     egl_fb blit_fb;
-     egl_fb cursor_fb;
-+    bool backing_y_0_top;
-+    bool blit_scanout_texture;
-+    bool new_scanout_texture;
-     bool have_hot;
- #endif
+@@ -151,6 +151,7 @@ struct SimpleSpiceCursor {
  };
+ 
+ extern bool spice_opengl;
++extern bool spice_remote_client;
+ 
+ int qemu_spice_rect_is_empty(const QXLRect* r);
+ void qemu_spice_rect_union(QXLRect *dest, const QXLRect *r);
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 907b0e9a81..f92dd55392 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -848,9 +848,13 @@ static void qemu_spice_init(void)
+ #ifdef HAVE_SPICE_GL
+     if (qemu_opt_get_bool(opts, "gl", 0)) {
+         if ((port != 0) || (tls_port != 0)) {
++#if SPICE_SERVER_VERSION >= 0x000f03 /* release 0.15.3 */
++            spice_remote_client = 1;
++#else
+             error_report("SPICE GL support is local-only for now and "
+                          "incompatible with -spice port/tls-port");
+             exit(1);
++#endif
+         }
+         egl_init(qemu_opt_get(opts, "rendernode"), DISPLAY_GL_MODE_ON, &error_fatal);
+         spice_opengl = 1;
 diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 854a97c198..9ce622cefc 100644
+index 9c39d2c5c8..0fb72f6d6f 100644
 --- a/ui/spice-display.c
 +++ b/ui/spice-display.c
-@@ -1086,7 +1086,7 @@ static void qemu_spice_gl_scanout_texture(DisplayChangeListener *dcl,
+@@ -31,6 +31,7 @@
+ #include "standard-headers/drm/drm_fourcc.h"
+ 
+ bool spice_opengl;
++bool spice_remote_client;
+ 
+ int qemu_spice_rect_is_empty(const QXLRect* r)
  {
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
-     EGLint offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES], fourcc = 0;
--    int fd[DMABUF_MAX_PLANES], num_planes;
-+    int fd[DMABUF_MAX_PLANES], num_planes, i;
-     uint64_t modifier;
- 
-     assert(tex_id);
-@@ -1098,11 +1098,26 @@ static void qemu_spice_gl_scanout_texture(DisplayChangeListener *dcl,
- 
-     trace_qemu_spice_gl_scanout_texture(ssd->qxl.id, w, h, fourcc);
- 
--    /* note: spice server will close the fd */
--    spice_server_gl_scanout(&ssd->qxl, fd, backing_width, backing_height,
--                            (uint32_t *)offset, (uint32_t *)stride, num_planes,
--                            fourcc, modifier, y_0_top);
--    qemu_spice_gl_monitor_config(ssd, x, y, w, h);
-+    if (spice_remote_client && modifier != DRM_FORMAT_MOD_LINEAR) {
-+        egl_fb_destroy(&ssd->guest_fb);
-+        egl_fb_setup_for_tex(&ssd->guest_fb,
-+                             backing_width, backing_height,
-+                             tex_id, false);
-+        ssd->backing_y_0_top = y_0_top;
-+        ssd->blit_scanout_texture = true;
-+        ssd->new_scanout_texture = true;
-+
-+        for (i = 0; i < num_planes; i++) {
-+            close(fd[i]);
-+        }
-+    } else {
-+        /* note: spice server will close the fd */
-+        spice_server_gl_scanout(&ssd->qxl, fd, backing_width, backing_height,
-+                                (uint32_t *)offset, (uint32_t *)stride,
-+                                num_planes, fourcc, modifier, y_0_top);
-+        qemu_spice_gl_monitor_config(ssd, x, y, w, h);
-+    }
-+
-     ssd->have_surface = false;
-     ssd->have_scanout = true;
- }
-@@ -1168,6 +1183,50 @@ static void qemu_spice_gl_release_dmabuf(DisplayChangeListener *dcl,
-     egl_dmabuf_release_texture(dmabuf);
- }
- 
-+static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd,
-+                                          egl_fb *scanout_tex_fb)
-+{
-+    uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_PLANES];
-+    int fds[DMABUF_MAX_PLANES], num_planes, fourcc;
-+    uint64_t modifier;
-+    bool ret;
-+
-+    egl_fb_destroy(scanout_tex_fb);
-+    egl_fb_setup_for_tex(scanout_tex_fb,
-+                         surface_width(ssd->ds), surface_height(ssd->ds),
-+                         ssd->ds->texture, false);
-+    egl_fb_blit(scanout_tex_fb, &ssd->guest_fb, false);
-+    glFlush();
-+
-+    if (!ssd->new_scanout_texture) {
-+        return true;
-+    }
-+
-+    ret = egl_dmabuf_export_texture(ssd->ds->texture,
-+                                    fds,
-+                                    (EGLint *)offsets,
-+                                    (EGLint *)strides,
-+                                    &fourcc,
-+                                    &num_planes,
-+                                    &modifier);
-+    if (!ret) {
-+        error_report("spice: failed to get fd for texture");
-+        return false;
-+    }
-+
-+    spice_server_gl_scanout(&ssd->qxl, fds,
-+                            surface_width(ssd->ds),
-+                            surface_height(ssd->ds),
-+                            (uint32_t *)offsets, (uint32_t *)strides,
-+                            num_planes, fourcc, modifier,
-+                            ssd->backing_y_0_top);
-+    qemu_spice_gl_monitor_config(ssd, 0, 0,
-+                                 surface_width(ssd->ds),
-+                                 surface_height(ssd->ds));
-+    ssd->new_scanout_texture = false;
-+    return true;
-+}
-+
- static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-                                  uint32_t x, uint32_t y, uint32_t w, uint32_t h)
- {
-@@ -1175,6 +1234,7 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     EGLint fourcc = 0;
-     bool render_cursor = false;
-     bool y_0_top = false; /* FIXME */
-+    bool ret;
-     uint32_t width, height, texture;
- 
-     if (!ssd->have_scanout) {
-@@ -1269,6 +1329,15 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-         glFlush();
-     }
- 
-+    if (spice_remote_client && ssd->blit_scanout_texture) {
-+        egl_fb scanout_tex_fb;
-+
-+        ret = spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
-+        if (!ret) {
-+            return;
-+        }
-+    }
-+
-     trace_qemu_spice_gl_update(ssd->qxl.id, w, h, x, y);
-     qemu_spice_gl_block(ssd, true);
-     glFlush();
 -- 
 2.49.0
 
