@@ -4,79 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28A56C54FB3
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 08:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D163C54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 08:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKYNN-0002Eb-Gw; Thu, 29 May 2025 04:12:33 -0400
+	id 1uKYTd-00049G-3U; Thu, 29 May 2025 04:19:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1uKYNL-0002ER-QF
- for qemu-devel@nongnu.org; Thu, 29 May 2025 04:12:31 -0400
-Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1uKYNJ-0002JX-Ku
- for qemu-devel@nongnu.org; Thu, 29 May 2025 04:12:31 -0400
-Received: by mail-qt1-x836.google.com with SMTP id
- d75a77b69052e-4947635914aso7041181cf.3
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 01:12:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748506348; x=1749111148;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rnM/Z8H2fHXMXVyQJKbHOTYSPT700wIA+x6GI3WO/rk=;
- b=B8lvqWz6d1AodP1JKi8m58uuhUGM7+dAg6ZqQ6zDt0FikjrzNfxxh2pHbnCLia1UUh
- mRNng0hLmKGL2XMAqexidfRChep4tMsaqgWaRJXDJ8K2kriUR2vK8WYyKjVJ0pno0Osi
- 84MkJ5MhLf8aUoKdb4nuUWAVw4h16QOSOrtZAx5iEcdy7+KWt1Aol3L83VuN/vRpwoqc
- y7bmjXujlyiN4NHfRmwJCawrHownZ8JueszO+gYAIyFk1Cnv13nWQXMV17TBYFVnurbp
- Lql/i6ueq1BxieJBq97FoOnipeuuE36jaWtmWxdLSwudE8kWFbVZPqIFMJFPtAtP5mUG
- zdkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748506348; x=1749111148;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rnM/Z8H2fHXMXVyQJKbHOTYSPT700wIA+x6GI3WO/rk=;
- b=C0q0dSHxBU/0kSvB8Fym10ukQriaDSrdHksqreqJ7DwhoFVmKS1YFyF3f1eGsPmyfe
- V7W7pEoiZ4fnfcCTF6npUivKR9G4r5RoXD/JgzRomW64Alq0PNYlq9uPk+S4lfOLZfZS
- tr5NEPhoiYOku+1TlS/peZbuO0KOxweKwmB/bFSJKezrocFFcWhCDERRB5paFuQMkKxE
- q8KEPIDGHytk817edXBfDmaipj/N9OZSJGe2dEpxk8T6T5q+ltdjF6l1fE7z7YVjXziG
- lISSUfSyDRzXCcmcyvclj/vKTGFC3qbHZnHlE/ovpeKnMEeQ10JFDVNFBr+aNbUDRNmP
- +0Mg==
-X-Gm-Message-State: AOJu0YygtTTfVNPLvjTvIC8ie5rr85i1FYd1HBCif5r5Ab1d2OPfyaed
- qj2tMXA5mkgBnza/TD7h0sdY8zwHKxtqM4QOYeQgjzXuVmnmFgtQfD7BMoNc5s17pQ/bb9aNuAQ
- k98WdOGI8E4G7M6l5E35YPGRTdAiqLPFNzjhJPiTmFAC4FWfP9JlyENk=
-X-Gm-Gg: ASbGnctpQGO4By9slsd5WNZP8ZVVnJmm6NHTbyhvZuqDhoqaPARH64k1Yx6gAdhpxiK
- ygDEHALz8lhMbi6EkQAGXkt/qjsji9gVwizL8zN42q0reCFlzKgRILfE3nLSCXzPBgS/0orLVH8
- 4+oYnWINGe7tQQxaOOCkXJut8UlhgN2E0t0JBkp7rEPc9JjrPgQPV8e+fyY04hH/Aayb8=
-X-Google-Smtp-Source: AGHT+IEm1RfNtZd0HEZexQHgLMUyI2hmGLQ1MaMXhBneUz3hQNZLGnJ/W4I7CroK46bp2gFIUi4CZojem+dyQELfrr4=
-X-Received: by 2002:a05:622a:4cc4:b0:494:9fce:28f7 with SMTP id
- d75a77b69052e-4a4370eeb90mr17143621cf.17.1748506347804; Thu, 29 May 2025
- 01:12:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uKYTU-00048x-Vf; Thu, 29 May 2025 04:18:53 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uKYTT-0003LG-0a; Thu, 29 May 2025 04:18:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748506731; x=1780042731;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=C/nexojcTe7uHbvjxWgehErvKjWU1QW8iPN7loyIIcw=;
+ b=nUHMxDzfGgmGSyWb2lNn0F0RtHZcUJZv5HMqEQiME+nqaEsH0Q6Mjouj
+ C+YCrih5kxylsFynW5IAHLNOyvfkHbC3JI3yAm24h6yRIkUU0d3rQH0kK
+ uoqgWBMBnOv03XnOGo+V1jlQuXmtBxj+XuoDIroES5BCW6D0uvUcbjdDE
+ YpGDvEqcvcWbuCVw1I3JmFkwsmwRxXILoUkacJOk7YzfO5PABWXBu0nM8
+ PljkKu7hl/R3Xu1LP50YacL+WPwaJpR33NQ3akXiLarACQiRKw1PL3GVl
+ MTe/7pgH6QKf5xiwadFBt8ymFhvscWHFifbxmIALuwpKTsN1fv6TzGgyD g==;
+X-CSE-ConnectionGUID: CMomnTPnQuSP/unh347uoQ==
+X-CSE-MsgGUID: iryhsolhTU+7t/fbgbFfEA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="61218309"
+X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="61218309"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 May 2025 01:18:47 -0700
+X-CSE-ConnectionGUID: 922KB3qYSrGaxbTxUhkf8Q==
+X-CSE-MsgGUID: MBOMIGy7RM2vT9nzYfv/Yw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="166654277"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa002.fm.intel.com with ESMTP; 29 May 2025 01:18:46 -0700
+Date: Thu, 29 May 2025 16:39:56 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, qemu-rust@nongnu.org
+Subject: Re: [PATCH 10/12] hpet: return errors from realize if properties are
+ incorrect
+Message-ID: <aDgdXLrpOqGN3ZPo@intel.com>
+References: <20250526142254.1061009-1-pbonzini@redhat.com>
+ <20250526142455.1061519-10-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20250515063237.808293-1-yuri.benditovich@daynix.com>
-In-Reply-To: <20250515063237.808293-1-yuri.benditovich@daynix.com>
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
-Date: Thu, 29 May 2025 11:12:17 +0300
-X-Gm-Features: AX0GCFumf1MgKzM0I8a9p0Qq-GbNlmwQYCAOwtleKymyOiN_kVIj8xPDyM91lkg
-Message-ID: <CAOEp5OegzUevfFit=qHzhjzSq9FPWq45kYjEgriFB0W111aAtw@mail.gmail.com>
-Subject: Re: [PATCH] virtio: check for validity of indirect descriptors
-To: qemu-devel@nongnu.org, mst@redhat.com
-Cc: devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
- envelope-from=yuri.benditovich@daynix.com; helo=mail-qt1-x836.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250526142455.1061519-10-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.904,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,70 +82,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping
-
-
-On Thu, May 15, 2025 at 9:32=E2=80=AFAM Yuri Benditovich
-<yuri.benditovich@daynix.com> wrote:
->
-> virtio processes indirect descriptors even if the respected
-> feature VIRTIO_RING_F_INDIRECT_DESC was not negotiated.
-> If qemu is used with reduced set of features to emulate the
-> hardware device that does not support indirect descriptors,
-> the will probably trigger problematic flows on the hardware
-> setup but do not reveal the  mistake on qemu.
-> Add LOG_GUEST_ERROR for such case. This will issue logs with
-> '-d guest_errors' in the command line
->
-> Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+On Mon, May 26, 2025 at 04:24:53PM +0200, Paolo Bonzini wrote:
+> Date: Mon, 26 May 2025 16:24:53 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 10/12] hpet: return errors from realize if properties are
+>  incorrect
+> X-Mailer: git-send-email 2.49.0
+> 
+> Do not silently adjust num_timers, and fail if intcap is 0.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/virtio/virtio.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 480c2e5036..8d185f282a 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -205,6 +205,15 @@ static const char *virtio_id_to_name(uint16_t device=
-_id)
->      return name;
->  }
->
-> +static void virtio_check_indirect_feature(VirtIODevice *vdev)
-> +{
-> +    if (!virtio_vdev_has_feature(vdev, VIRTIO_RING_F_INDIRECT_DESC)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "Device %s: indirect_desc was not negotiated!\n",
-> +                      vdev->name);
-> +    }
-> +}
-> +
->  /* Called within call_rcu().  */
->  static void virtio_free_region_cache(VRingMemoryRegionCaches *caches)
->  {
-> @@ -1733,6 +1742,7 @@ static void *virtqueue_split_pop(VirtQueue *vq, siz=
-e_t sz)
->              virtio_error(vdev, "Invalid size for indirect buffer table")=
-;
->              goto done;
->          }
-> +        virtio_check_indirect_feature(vdev);
->
->          /* loop over the indirect descriptor table */
->          len =3D address_space_cache_init(&indirect_desc_cache, vdev->dma=
-_as,
-> @@ -1870,6 +1880,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, si=
-ze_t sz)
->              virtio_error(vdev, "Invalid size for indirect buffer table")=
-;
->              goto done;
->          }
-> +        virtio_check_indirect_feature(vdev);
->
->          /* loop over the indirect descriptor table */
->          len =3D address_space_cache_init(&indirect_desc_cache, vdev->dma=
-_as,
-> --
-> 2.40.1
->
+>  hw/timer/hpet.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
