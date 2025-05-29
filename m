@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFA1C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 392D0C5AD49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKisq-0004L8-UD; Thu, 29 May 2025 15:25:46 -0400
+	id 1uKisj-0004IG-EZ; Thu, 29 May 2025 15:25:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisR-0004Dn-Nv
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:19 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1uKisO-0004BE-1W
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:17 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisQ-0000Te-1c
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:19 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfwxV003896;
- Thu, 29 May 2025 19:25:15 GMT
+ id 1uKisL-0000Er-1x
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:15 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfxVc022106;
+ Thu, 29 May 2025 19:25:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=RUPU+p5R3zovx4aXmSFKcy70vmSFig/SCMfwIUf7W8c=; b=
- d8b6dFNhoIm2kEw4srWBxAvPhwOETU94Ghk7dpmOGNj+UOMsSAlGH1HO9GyqMHpc
- 8s1PpNKDqrtkqNUyCFptVEBeJVdTHf3v/N3Z9byQwrOcA+WxFTNSsLwAunWc+xtE
- lL0QEMGwHMGbmnOl1xy+vAktBmQZN5sdhu5rlavZJ/i7MS99TgiFr2tGgfSVe8Ay
- nSer9y9H8cZmBuNLA45syZn2U22xg+JG44z3swNLuGNGV/nUBc3SMiitVwYux8s9
- kP8o+5NXTNMvpvDp0ILVdM3e3qB73njY0ecu0qWsXfOebXxN06pj6dqxT5q3+HpN
- iLCQde51+ebndgsfuRVcbw==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=wVmxSb/QsH2g+njbyyKOqqQwLouNbsEf6/q0N95Orsc=; b=
+ FzTNh205UkteFIAOmaoNoRvGfRs91lorx52wS3kdMK8CeFkrBkYYBQLnlVR3LDoR
+ jrN1gR+pmb8I/JFcT7OQ32kz03csgqRfGmByAP89oVtEaHjegTH4IdlAJhYr9wXl
+ J8ElXDktVyfqhMDHN3dbSZDfJbiAHS+wPmCAneRSzaU1oP6qj2q9V9b797z3XiHc
+ D8vIx5sGtOQYP1s0JsdR64ON/nxQq57DTonwjlgU6Uv/w+JlB1+ns6X9JRbUHmvT
+ 3pi5hfWfc8bOk+Vrp6ZYtgxNkEY2fV0nGzohzmJo51yZ1QdVeNAldw4riSwrGO+u
+ J39940cqRescPtLHPmOqhQ==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v2pf0n0t-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v0ym12jm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:25:15 +0000 (GMT)
+ Thu, 29 May 2025 19:25:00 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54TJKdNu020323; Thu, 29 May 2025 19:25:14 GMT
+ with ESMTP id 54TJOTSp020393; Thu, 29 May 2025 19:24:59 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jc4wab-1
+ 46u4jc4vv8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:25:14 +0000
+ Thu, 29 May 2025 19:24:59 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeS7022158;
- Thu, 29 May 2025 19:25:13 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeRV022158;
+ Thu, 29 May 2025 19:24:58 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46u4jc4vjq-41; Thu, 29 May 2025 19:25:13 +0000
+ ESMTP id 46u4jc4vjq-23; Thu, 29 May 2025 19:24:58 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,12 +64,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 40/43] vfio/iommufd: reconstruct hwpt
-Date: Thu, 29 May 2025 12:24:36 -0700
-Message-Id: <1748546679-154091-41-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 22/43] vfio/pci: vfio_notifier_cleanup
+Date: Thu, 29 May 2025 12:24:18 -0700
+Message-Id: <1748546679-154091-23-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-29_09,2025-05-29_01,2025-03-28_01
@@ -77,20 +81,22 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505290189
-X-Proofpoint-ORIG-GUID: ljLxeQ5Ks-k1LhLHsKAUM236HSinxYqE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX3L3epmdCSKj/
- eVuLVlYsm4LqUH9CkussGjlx7RpM72pRIwjH+3D8WVfu6WFy2PNyzYoY9JAb+83Ll7c1PgNad19
- /EFN6kvMpS1GlEUXO2pLzHrJrXf6ulrQHPPL0+2NEgc3b2YF/QMusrvCFe7spaOCLXP6iIMP66t
- ABMFOfHoQWRwHjk4agjGcMbjwhSiN0SXAPA2Y4wuB4/SZJIy1qVN/1kPIAOZY5FPDT+KJAFdK4K
- FpPg1fsS9Gf7Ccolu110IUA5FDqmshQb85uvlZ0q4aiETHWWjIe9Ea6QrNeILaGB3KfAitcldcW
- 2b+DNQ/CUbQ0hd4oEGCrl0QMl/kmqrj/QEqKeaATxRAQV/bLaLn3EfyXgPaC4Ugb4Aole/MbD0r
- GRrSDM7Kc0b2avkjiVyRrXV0hgrzXmOBeKpg6f1LKPOb2hMeoDwk+F/vnuiJH1ZisnnHwUGx
-X-Proofpoint-GUID: ljLxeQ5Ks-k1LhLHsKAUM236HSinxYqE
-X-Authority-Analysis: v=2.4 cv=TdeWtQQh c=1 sm=1 tr=0 ts=6838b49b cx=c_pps
+X-Proofpoint-GUID: thvO5PaIOKHQypeYksCO5wJUZGFtM6Zw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfXxjGosm8Z5EnD
+ 20H0KnHec4WjsNvCSl7qmRXZq3mZlJdfnb8xrt1Qjn2vEDzPT5qAP0a8I+kIP5EZ32jQvIJAYEg
+ PwUpC2xTmioIuUC0ILnnKJofH3SSJlaPE95gSbC+NKhmP/XxWBowtrWgJKEHrBo9Ad4cdXfOm4Z
+ uHC6POuO7DSpAjKmtNUdgEJNdQQRAHG1+WKCdcH/GizqnH5JMnWCUSUtKThCtn5H64SuYWhmuy7
+ /dCbc9RQFJuSp4wsz6l2Ag866f7ySTWhO17/SLZP0ANmMQ3oKFvVrcXFhmUuBdkL/6ksH74fbBH
+ TU/tKYjimwqeaaK44R9hReBH95JmutQiXBYZGg8/Qxcjjx1mGusJxo0RpwHXXdc/PXS1N0To8Xn
+ H0UTKvGIOvlNHiUjFp+kH/munBieAoJRXSnKHkCxgURTkxwFO3xy4Nl2k0HWK1tqtqxH6vBK
+X-Proofpoint-ORIG-GUID: thvO5PaIOKHQypeYksCO5wJUZGFtM6Zw
+X-Authority-Analysis: v=2.4 cv=N7MpF39B c=1 sm=1 tr=0 ts=6838b48c cx=c_pps
  a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=fSzQx-hFMApC99kTtbcA:9
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
+ a=IkFk1TLp8wMIHN6MFjYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
@@ -114,81 +120,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Skip allocation of, and attachment to, hwpt_id.  Recover it from CPR state.
+Move event_notifier_cleanup calls to a helper vfio_notifier_cleanup.
+This version is trivial, and does not yet use the vdev and nr parameters.
+No functional change.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/iommufd.c | 30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ hw/vfio/pci.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 5119c17..f0abd41 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -332,7 +332,14 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index b776793..6aa37fe 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -68,6 +68,12 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
+     return !ret;
+ }
  
-     /* Try to find a domain */
-     QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
--        ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
-+        if (!cpr_is_incoming()) {
-+            ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
-+        } else if (vbasedev->cpr.hwpt_id == hwpt->hwpt_id) {
-+            ret = 0;
-+        } else {
-+            continue;
-+        }
++static void vfio_notifier_cleanup(VFIOPCIDevice *vdev, EventNotifier *e,
++                                  const char *name, int nr)
++{
++    event_notifier_cleanup(e);
++}
 +
-         if (ret) {
-             /* -EINVAL means the domain is incompatible with the device. */
-             if (ret == -EINVAL) {
-@@ -349,6 +356,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-             return false;
-         } else {
-             vbasedev->hwpt = hwpt;
-+            vbasedev->cpr.hwpt_id = hwpt->hwpt_id;
-             QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
-             vbasedev->iommu_dirty_tracking = iommufd_hwpt_dirty_tracking(hwpt);
-             return true;
-@@ -371,6 +379,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-         flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+ /*
+  * Disabling BAR mmaping can be slow, but toggling it around INTx can
+  * also be a huge overhead.  We try to get the best of both worlds by
+@@ -180,7 +186,7 @@ fail_vfio:
+     kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, &vdev->intx.interrupt,
+                                           vdev->intx.route.irq);
+ fail_irqfd:
+-    event_notifier_cleanup(&vdev->intx.unmask);
++    vfio_notifier_cleanup(vdev, &vdev->intx.unmask, "intx-unmask", 0);
+ fail:
+     qemu_set_fd_handler(irq_fd, vfio_intx_interrupt, NULL, vdev);
+     vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+@@ -212,7 +218,7 @@ static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
      }
  
-+    if (cpr_is_incoming()) {
-+        hwpt_id = vbasedev->cpr.hwpt_id;
-+        goto skip_alloc;
-+    }
-+
-     if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
-                                     container->ioas_id, flags,
-                                     IOMMU_HWPT_DATA_NONE, 0, NULL,
-@@ -378,19 +391,20 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+     /* We only need to close the eventfd for VFIO to cleanup the kernel side */
+-    event_notifier_cleanup(&vdev->intx.unmask);
++    vfio_notifier_cleanup(vdev, &vdev->intx.unmask, "intx-unmask", 0);
+ 
+     /* QEMU starts listening for interrupt events. */
+     qemu_set_fd_handler(event_notifier_get_fd(&vdev->intx.interrupt),
+@@ -311,7 +317,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+     if (!vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
+                                 VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
+         qemu_set_fd_handler(fd, NULL, NULL, vdev);
+-        event_notifier_cleanup(&vdev->intx.interrupt);
++        vfio_notifier_cleanup(vdev, &vdev->intx.interrupt, "intx-interrupt", 0);
          return false;
      }
  
-+    ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
-+    if (ret) {
-+        iommufd_backend_free_id(container->be, hwpt_id);
-+        return false;
-+    }
-+
-+skip_alloc:
-     hwpt = g_malloc0(sizeof(*hwpt));
-     hwpt->hwpt_id = hwpt_id;
-     hwpt->hwpt_flags = flags;
-     QLIST_INIT(&hwpt->device_list);
+@@ -338,7 +344,7 @@ static void vfio_intx_disable(VFIOPCIDevice *vdev)
  
--    ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
--    if (ret) {
--        iommufd_backend_free_id(container->be, hwpt->hwpt_id);
--        g_free(hwpt);
--        return false;
--    }
--
-     vbasedev->hwpt = hwpt;
-+    vbasedev->cpr.hwpt_id = hwpt->hwpt_id;
-     vbasedev->iommu_dirty_tracking = iommufd_hwpt_dirty_tracking(hwpt);
-     QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
-     QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
+     fd = event_notifier_get_fd(&vdev->intx.interrupt);
+     qemu_set_fd_handler(fd, NULL, NULL, vdev);
+-    event_notifier_cleanup(&vdev->intx.interrupt);
++    vfio_notifier_cleanup(vdev, &vdev->intx.interrupt, "intx-interrupt", 0);
+ 
+     vdev->interrupt = VFIO_INT_NONE;
+ 
+@@ -501,7 +507,7 @@ static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
+     return;
+ 
+ fail_kvm:
+-    event_notifier_cleanup(&vector->kvm_interrupt);
++    vfio_notifier_cleanup(vector->vdev, &vector->kvm_interrupt, name, nr);
+ fail_notifier:
+     kvm_irqchip_release_virq(kvm_state, vector->virq);
+     vector->virq = -1;
+@@ -514,7 +520,7 @@ static void vfio_remove_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+                                           vector->virq);
+     kvm_irqchip_release_virq(kvm_state, vector->virq);
+     vector->virq = -1;
+-    event_notifier_cleanup(&vector->kvm_interrupt);
++    vfio_notifier_cleanup(vdev, &vector->kvm_interrupt, "kvm_interrupt", nr);
+ }
+ 
+ static void vfio_update_kvm_msi_virq(VFIOMSIVector *vector, MSIMessage msg,
+@@ -832,7 +838,7 @@ static void vfio_msi_disable_common(VFIOPCIDevice *vdev)
+             }
+             qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
+                                 NULL, NULL, NULL);
+-            event_notifier_cleanup(&vector->interrupt);
++            vfio_notifier_cleanup(vdev, &vector->interrupt, "interrupt", i);
+         }
+     }
+ 
+@@ -2938,7 +2944,7 @@ static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
+                                        VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
+         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+         qemu_set_fd_handler(fd, NULL, NULL, vdev);
+-        event_notifier_cleanup(&vdev->err_notifier);
++        vfio_notifier_cleanup(vdev, &vdev->err_notifier, "err_notifier", 0);
+         vdev->pci_aer = false;
+     }
+ }
+@@ -2957,7 +2963,7 @@ static void vfio_unregister_err_notifier(VFIOPCIDevice *vdev)
+     }
+     qemu_set_fd_handler(event_notifier_get_fd(&vdev->err_notifier),
+                         NULL, NULL, vdev);
+-    event_notifier_cleanup(&vdev->err_notifier);
++    vfio_notifier_cleanup(vdev, &vdev->err_notifier, "err_notifier", 0);
+ }
+ 
+ static void vfio_req_notifier_handler(void *opaque)
+@@ -3005,7 +3011,7 @@ static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
+                                        VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
+         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+         qemu_set_fd_handler(fd, NULL, NULL, vdev);
+-        event_notifier_cleanup(&vdev->req_notifier);
++        vfio_notifier_cleanup(vdev, &vdev->req_notifier, "req_notifier", 0);
+     } else {
+         vdev->req_enabled = true;
+     }
+@@ -3025,7 +3031,7 @@ static void vfio_unregister_req_notifier(VFIOPCIDevice *vdev)
+     }
+     qemu_set_fd_handler(event_notifier_get_fd(&vdev->req_notifier),
+                         NULL, NULL, vdev);
+-    event_notifier_cleanup(&vdev->req_notifier);
++    vfio_notifier_cleanup(vdev, &vdev->req_notifier, "req_notifier", 0);
+ 
+     vdev->req_enabled = false;
+ }
 -- 
 1.8.3.1
 
