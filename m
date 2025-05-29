@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72A9C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0835EC5B543
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKis4-0003zo-Ty; Thu, 29 May 2025 15:24:56 -0400
+	id 1uKisP-0004C2-M2; Thu, 29 May 2025 15:25:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKirz-0003xq-L9
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:24:51 -0400
+ id 1uKisH-00046N-2j
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:09 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKirx-0000C8-KO
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:24:51 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfsD7022014;
- Thu, 29 May 2025 19:24:47 GMT
+ id 1uKisE-0000E9-MP
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:08 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfuZG009750;
+ Thu, 29 May 2025 19:24:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=FfGaPWkw5+fA+BbPzNjjZN7wkjCtFXBTDQqfy4/oqCU=; b=
- QnBlxrdWyrCcTt9OO9ovgQ+ElRvDYdJ7IUzoODZAtUrimJypg3oxELSYNKWLvMOX
- K+7o2Il0lPuDDuQLoTpmD1kJksSLPuQ3OPXWZZWsMg6SzfSbzTzkEmZkSiClREkv
- aRtXcHoa0ko246v3dJr+2bEPeLtEuekZm/tqnYNhokLULlt1L6cvpJfT4cVNKP2Z
- vEGXCC0Uz6zOshSdPX3PXp5ZUzUNQP62KW+mG5vNW+Nh+HaEgb03jvFc3aVUvSbh
- Jv7wMWDqr6oZD3HPvUsSGaFROuoUB69skqEvzma4tNJ5+d6QR2w2bdEg0w0ViBAL
- jXshOQh5ctCUzIsadP5SGA==
+ corp-2025-04-25; bh=AHfRRIyR8YCML/A7SHtFAv/JqCdZ7sYkJ4qx4/ujCDk=; b=
+ kYdXijv1xqkFqOdPlvloH3j8tkyPhYOMEno1dDcKRZ41sez8rtIJWAt0tD4jVdsq
+ cDPUXmJiGABYB6caPH4BonueRKfhNGsMsQaEL33kTWHU3lEDEXtN0DM5FQeVQRvA
+ I9PhyRgA8rsBw/vQa8FLDs7K80Ev3SOuHbPcKFCXnMGuOobhjsarF4TAh32aptCY
+ jtaLqErpnNhlhtw1Oaiu1NtvZFyyNiEx3gFmlaem11eFYfq5SJJM3EtzGZMG9oUE
+ +uTdPgTBekbn9YvT6v6wqvSsKBxhzjFXMGaFn9/eDJiUuztFUTeAnO4xJFHxNSU9
+ EkofLBCpeWkRgl384wf+5w==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v0ym12j1-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v46u0yub-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:24:47 +0000 (GMT)
+ Thu, 29 May 2025 19:24:54 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54THfAdJ020441; Thu, 29 May 2025 19:24:46 GMT
+ with ESMTP id 54THg2av020361; Thu, 29 May 2025 19:24:53 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jc4vnv-1
+ 46u4jc4vst-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:24:46 +0000
+ Thu, 29 May 2025 19:24:53 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeQx022158;
- Thu, 29 May 2025 19:24:45 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeRH022158;
+ Thu, 29 May 2025 19:24:53 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46u4jc4vjq-7; Thu, 29 May 2025 19:24:45 +0000
+ ESMTP id 46u4jc4vjq-16; Thu, 29 May 2025 19:24:53 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 06/43] migration: lower handler priority
-Date: Thu, 29 May 2025 12:24:02 -0700
-Message-Id: <1748546679-154091-7-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 15/43] pci: export msix_is_pending
+Date: Thu, 29 May 2025 12:24:11 -0700
+Message-Id: <1748546679-154091-16-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
@@ -77,18 +77,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505290189
-X-Proofpoint-GUID: 6gZuCshl2P95IBGE_XggaBzrgsadqNSX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX8KPrfELRUcA7
- bFjOJRY0/cnOJw4B8Xtrmy57zpTBRoGxKmGuaZ7VLbAcaRGn9FgpQvUcLv4foKwg6nZNWmoWUBi
- N8z66k66NBBKeLQZic7+3lNbejAISCCGugtIITXpssMCZ111MVpAZtn1pSRRJQiyx28bRel99eC
- eS+hilNoURzEgXz346GgWEo84ptNOwW18l0xxbcyjnMZ31AO7de+kZ1RsExrM94ivco8CGec+9C
- moFbBCeOjlyotvxtRcRh06ZMg4RxhlM+4kPW9J12DVW6rn+G62uMIp3/JfqyPI54zZTxydC7sSw
- BAV32PZBX4DFIjC8erk2beO/bpHkcjycjkenx7oplUuPd3OgMhckjojLBBkmnYEkin8ybU5CpGq
- WkQEpsm/H7PvlNMWUXra18RzlXzHLo3Kcm+QTpbr3uap7AJCAQgojkl3nO7yA/cezoKCY7/P
-X-Proofpoint-ORIG-GUID: 6gZuCshl2P95IBGE_XggaBzrgsadqNSX
-X-Authority-Analysis: v=2.4 cv=N7MpF39B c=1 sm=1 tr=0 ts=6838b47f cx=c_pps
+X-Proofpoint-GUID: lJKGOk92paCyST7ypwwEswbB391L70LJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX9O+mIGDHhK+q
+ znPanX1AS5dXQqTaqD2O0Zesk2H9PFwS+7QAyPuSMAQ6wUoKU+aPPnVOQzyQGSgUpXlO1KNbYVp
+ bEdy8Mkis9S9hrCfxo+yP36GVYkHdS3LE2JZhflIGRV1Yn7lHT64E3aKmk8BhmSBWqRh2g4h229
+ Vw7z9R2qYwEOcgVZxodBmO9y65pZIFudBoCFfqtn2GMn4npEZIw9fFZAUZlHDSQK5+NtkRbjecD
+ t7zKZF/2vDDPFavOnoLXzgGbqrdzsgQLI8zSy2dpBeafR5g+tSvzxtxxPrt+2pkOiYCJ3Pv5wOm
+ pw+Mgt3QmZ8wMJk4R/mxlgWZDtt6IQ8HhMxeK8y7XJ9jZvTFJutDunELcfSITXGJIMDFsQXsAgL
+ taF3t+nllkreqZI/A6d7UhwosxXjjDylfWJPzy5wN4GIHLdYeqhQqL+Bo40L1D05s74E0g0a
+X-Authority-Analysis: v=2.4 cv=VskjA/2n c=1 sm=1 tr=0 ts=6838b486 cx=c_pps
  a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=AmUmXUaXWCDEmLEOI0wA:9
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=b0qJq_d53OdcEBA1QiMA:9
+X-Proofpoint-ORIG-GUID: lJKGOk92paCyST7ypwwEswbB391L70LJ
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -114,60 +114,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define a vmstate priority that is lower than the default, so its handlers
-run after all default priority handlers.  Since 0 is no longer the default
-priority, translate an uninitialized priority of 0 to MIG_PRI_DEFAULT.
-
-CPR for vfio will use this to install handlers for containers that run
-after handlers for the devices that they contain.
+Export msix_is_pending for use by cpr.  No functional change.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/migration/vmstate.h | 6 +++++-
- migration/savevm.c          | 4 ++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ include/hw/pci/msix.h | 1 +
+ hw/pci/msix.c         | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index a1dfab4..1ff7bd9 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -155,7 +155,11 @@ enum VMStateFlags {
- };
+diff --git a/include/hw/pci/msix.h b/include/hw/pci/msix.h
+index 0e6f257..11ef945 100644
+--- a/include/hw/pci/msix.h
++++ b/include/hw/pci/msix.h
+@@ -32,6 +32,7 @@ int msix_present(PCIDevice *dev);
+ bool msix_is_masked(PCIDevice *dev, unsigned vector);
+ void msix_set_pending(PCIDevice *dev, unsigned vector);
+ void msix_clr_pending(PCIDevice *dev, int vector);
++int msix_is_pending(PCIDevice *dev, unsigned vector);
  
- typedef enum {
--    MIG_PRI_DEFAULT = 0,
-+    MIG_PRI_UNINITIALIZED = 0,  /* An uninitialized priority field maps to */
-+                                /* MIG_PRI_DEFAULT in save_state_priority */
-+
-+    MIG_PRI_LOW,                /* Must happen after default */
-+    MIG_PRI_DEFAULT,
-     MIG_PRI_IOMMU,              /* Must happen before PCI devices */
-     MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
-     MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 006514c..7e87815 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -266,7 +266,7 @@ typedef struct SaveState {
+ void msix_vector_use(PCIDevice *dev, unsigned vector);
+ void msix_vector_unuse(PCIDevice *dev, unsigned vector);
+diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+index 66f27b9..8c7f670 100644
+--- a/hw/pci/msix.c
++++ b/hw/pci/msix.c
+@@ -72,7 +72,7 @@ static uint8_t *msix_pending_byte(PCIDevice *dev, int vector)
+     return dev->msix_pba + vector / 8;
+ }
  
- static SaveState savevm_state = {
-     .handlers = QTAILQ_HEAD_INITIALIZER(savevm_state.handlers),
--    .handler_pri_head = { [MIG_PRI_DEFAULT ... MIG_PRI_MAX] = NULL },
-+    .handler_pri_head = { [0 ... MIG_PRI_MAX] = NULL },
-     .global_section_id = 0,
- };
- 
-@@ -737,7 +737,7 @@ static int calculate_compat_instance_id(const char *idstr)
- 
- static inline MigrationPriority save_state_priority(SaveStateEntry *se)
+-static int msix_is_pending(PCIDevice *dev, int vector)
++int msix_is_pending(PCIDevice *dev, unsigned int vector)
  {
--    if (se->vmsd) {
-+    if (se->vmsd && se->vmsd->priority) {
-         return se->vmsd->priority;
-     }
-     return MIG_PRI_DEFAULT;
+     return *msix_pending_byte(dev, vector) & msix_pending_mask(vector);
+ }
 -- 
 1.8.3.1
 
