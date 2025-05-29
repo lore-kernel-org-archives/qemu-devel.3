@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D163C54FB3
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 08:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D483C5AD49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 08:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKYTd-00049G-3U; Thu, 29 May 2025 04:19:07 -0400
+	id 1uKYxx-0001Yc-OT; Thu, 29 May 2025 04:50:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uKYTU-00048x-Vf; Thu, 29 May 2025 04:18:53 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ id 1uKYxt-0001Xc-OC; Thu, 29 May 2025 04:50:18 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uKYTT-0003LG-0a; Thu, 29 May 2025 04:18:52 -0400
+ id 1uKYxr-0006fq-9K; Thu, 29 May 2025 04:50:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748506731; x=1780042731;
+ t=1748508615; x=1780044615;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=C/nexojcTe7uHbvjxWgehErvKjWU1QW8iPN7loyIIcw=;
- b=nUHMxDzfGgmGSyWb2lNn0F0RtHZcUJZv5HMqEQiME+nqaEsH0Q6Mjouj
- C+YCrih5kxylsFynW5IAHLNOyvfkHbC3JI3yAm24h6yRIkUU0d3rQH0kK
- uoqgWBMBnOv03XnOGo+V1jlQuXmtBxj+XuoDIroES5BCW6D0uvUcbjdDE
- YpGDvEqcvcWbuCVw1I3JmFkwsmwRxXILoUkacJOk7YzfO5PABWXBu0nM8
- PljkKu7hl/R3Xu1LP50YacL+WPwaJpR33NQ3akXiLarACQiRKw1PL3GVl
- MTe/7pgH6QKf5xiwadFBt8ymFhvscWHFifbxmIALuwpKTsN1fv6TzGgyD g==;
-X-CSE-ConnectionGUID: CMomnTPnQuSP/unh347uoQ==
-X-CSE-MsgGUID: iryhsolhTU+7t/fbgbFfEA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="61218309"
-X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="61218309"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 May 2025 01:18:47 -0700
-X-CSE-ConnectionGUID: 922KB3qYSrGaxbTxUhkf8Q==
-X-CSE-MsgGUID: MBOMIGy7RM2vT9nzYfv/Yw==
+ bh=Mvcy7k4AYPgRD7u2Sb9mK6YSW4GcuGLVMXyZN6T8CyM=;
+ b=jBUyVdIACy1/aOvfsPn3bcG5rhYt/yoaxLEeaGLTLYaY8dayl0IRizp5
+ W7YrJWOlDSjjo+WNeftVPoMkieyUZH5pZAIb+1XExgFaJhoFVCklD7aIp
+ NZOaE0IxpMC7AQ5WDff9G3sZS9E0cM86hKIYTdY0UrDBeFJqqsvBNIzEs
+ 7fJWSQZRqsg7UErLmHBMIm4Lt1/9MvOB0torX4ucUnu9qFNedKYa/CFCH
+ KyOo9e6CxtB7XuO+rcJ8CzqvoxkXXQ1sUg4HTfjAk5bFfhL0CNlgwCe5D
+ QkQ9+9qvHjau60f6YmB2YMG2GiUpu5KuFk6J+WXK1zRQdk6NlgDlaQZqO g==;
+X-CSE-ConnectionGUID: Ozad9zDjSbCrHRVXeZzxoA==
+X-CSE-MsgGUID: eVRIgK9nS5KF0MFJ13bflg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="54356444"
+X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="54356444"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 May 2025 01:50:12 -0700
+X-CSE-ConnectionGUID: F48YEoAPTBOWEBOHBLuecg==
+X-CSE-MsgGUID: cVStmxhuRoqyreWZMV1MRQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="166654277"
+X-IronPort-AV: E=Sophos;i="6.15,323,1739865600"; d="scan'208";a="148272072"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 29 May 2025 01:18:46 -0700
-Date: Thu, 29 May 2025 16:39:56 +0800
+ by orviesa003.jf.intel.com with ESMTP; 29 May 2025 01:50:11 -0700
+Date: Thu, 29 May 2025 17:11:21 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, armbru@redhat.com, qemu-rust@nongnu.org
-Subject: Re: [PATCH 10/12] hpet: return errors from realize if properties are
- incorrect
-Message-ID: <aDgdXLrpOqGN3ZPo@intel.com>
+Subject: Re: [PATCH 09/12] rust/hpet: change timer of num_timers to usize
+Message-ID: <aDgkuQ0Jo9mX9bGp@intel.com>
 References: <20250526142254.1061009-1-pbonzini@redhat.com>
- <20250526142455.1061519-10-pbonzini@redhat.com>
+ <20250526142455.1061519-9-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250526142455.1061519-10-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250526142455.1061519-9-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -72
 X-Spam_score: -7.3
@@ -82,19 +81,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 26, 2025 at 04:24:53PM +0200, Paolo Bonzini wrote:
-> Date: Mon, 26 May 2025 16:24:53 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 10/12] hpet: return errors from realize if properties are
->  incorrect
-> X-Mailer: git-send-email 2.49.0
-> 
-> Do not silently adjust num_timers, and fail if intcap is 0.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  hw/timer/hpet.c | 15 ++++++++-------
->  1 file changed, 8 insertions(+), 7 deletions(-)
+> @@ -1016,16 +1016,16 @@ impl ObjectImpl for HPETState {
+>  static VMSTATE_HPET: VMStateDescription = VMStateDescription {
+>      name: c"hpet".as_ptr(),
+>      version_id: 2,
+> -    minimum_version_id: 1,
+> +    minimum_version_id: 2,
+>      pre_save: Some(hpet_pre_save),
+>      post_load: Some(hpet_post_load),
+>      fields: vmstate_fields! {
+>          vmstate_of!(HPETState, config),
+>          vmstate_of!(HPETState, int_status),
+>          vmstate_of!(HPETState, counter),
+> -        vmstate_of!(HPETState, num_timers_save).with_version_id(2),
+> +        vmstate_of!(HPETState, num_timers_save),
+>          vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
+> -        vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER, BqlRefCell<HPETTimer>, HPETState::validate_num_timers).with_version_id(0),
+> +        vmstate_struct!(HPETState, timers[0 .. num_timers_save], &VMSTATE_HPET_TIMER, BqlRefCell<HPETTimer>, HPETState::validate_num_timers).with_version_id(0),
+>      },
+
+Here Rust and C take slightly different paths.
+
+Either changes should be made in the C version as well, or the
+"functional\ [#issues]_ replacements" issue note in docs/devel/rust.rst
+needs to be updated as well. I think the former is simpler!
+
+Otherwise,
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
