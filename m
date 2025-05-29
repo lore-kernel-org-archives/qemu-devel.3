@@ -4,86 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB93C54FB3
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 05:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F00C2C54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 05:14:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKVT5-0004gF-LC; Thu, 29 May 2025 01:06:17 -0400
+	id 1uKVaa-00070L-Hr; Thu, 29 May 2025 01:14:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uKVSr-0004ew-F3; Thu, 29 May 2025 01:06:02 -0400
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uKVSW-000734-3o; Thu, 29 May 2025 01:05:47 -0400
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-87def66dbceso155367241.3; 
- Wed, 28 May 2025 22:05:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748495138; x=1749099938; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BDdjDqrwvSx9vos/R1zmrNhFh/3sAzjs3J72cMBB4KM=;
- b=S0ei4BylkTJxatiOyqc1HWz8Vh+4vxHN+p5vjqiKAjYBP8me0dfer/MdfCYmNU3YVb
- PTnseyzWBlq8tPz+s74IpaLSifU4XLN477p3MOjQhASZBPPAiS7/g9vmr4rJ035dHwUr
- /cUasrsTRXb93Raln8znT+gANMpZ4G1T4CvJTwr8kweo57Qhdv8uP/VxnONaCeldfCwl
- ACO9f6ZrkJqyOFMj8SSmZvQobnEg2mwXvwv86UJlPruXuIetZ70DuyDJLRRwSK/7ibl/
- P5e61pmjtF9ucKLc3GnutanEPmAxVs/j83fVy3HUIf+7KUmSstZNs/3uNTe0QT+X10eQ
- +BNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748495138; x=1749099938;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BDdjDqrwvSx9vos/R1zmrNhFh/3sAzjs3J72cMBB4KM=;
- b=ktq4O2KXMulohcQ/tA2MabOMTpAPyEL2AQI8LO1hA/GjF9XLoYIlZBUxo9U0P1LCee
- gQ0I8Kt0L2Bpy2WSzpceav868rp5CIjuzQfyMZRMnYZkl7O+xTG6+oHsO+4izPBpWGz+
- ii6zL0jevg0h/xQkmOk8ALIphTrYHqZXKfqn566KEQcVqs5qJ20Uvl3z7EJgHgoOyVN4
- kGEBTKceRIttcSB6316TYwDDDn3ECPGv8XD+UulyyZ124kCeYE5cZS/5pCQyQhiuMmvh
- 3Z0A75LoqQaF0qTFAh/qVuOBZ9B4QKGpCLGgOmkPOOP8LNE6+RCqwDFGekLnLgcTiPA7
- cszw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEd94JSI4MC63aBGjWLdYuxYlHCvarIEETVWWo1Hb6GWEZKAm/3YBU3xgM8NInIeZZEbwuQxyJ0oN+@nongnu.org
-X-Gm-Message-State: AOJu0Yx5zSS1y8hRGRCyiOt0NeM+K8Dt7BYwf3YpoXoPvKktVwhGjzR+
- VeMQqZOt5xRRxsU1abfnCqLGJjc4ezelG8l1xqF1pae9QMNtpmENTtld9gkG1bSoHtuG9OdMv0I
- v0giHRNeJO8euBCtgf+WCSOYXpcK+2NM=
-X-Gm-Gg: ASbGncvtfOO0rHDublMNquUNV/qLjbCoSNXtys+89MCpuJ6N52bqHsOYYHjht+isp2G
- mX/KFpy7RAsbTbSye1huIiBdFx2hfgHgQRrTDDjwFmmRyNBi7G0H29jB/wun+j5cw9Cn9p+RXc+
- Laj1m1MBKAhcbVqrBgIcJ/TX9PKQOGbPC678sj/gNIcUEM+UNKqr2iF++goz3HruY=
-X-Google-Smtp-Source: AGHT+IGryHiW4ENcSLjQdP7q2Eby8NCm94qt8Vv/Y8L8zZvllZZKE5kqz3takhY3PqnN6fJEMlklz41eM0zV8W+Id3U=
-X-Received: by 2002:a05:6122:8c0c:b0:526:2210:5b64 with SMTP id
- 71dfb90a1353d-530669b6963mr4307095e0c.9.1748495137665; Wed, 28 May 2025
- 22:05:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uKVaY-00070A-It
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 01:13:58 -0400
+Received: from out-178.mta0.migadu.com ([91.218.175.178])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uKVaP-0007ut-UJ
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 01:13:58 -0400
+Date: Thu, 29 May 2025 14:13:30 +0900
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1748495620;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ft5agwKDm8mVsjeLDhOw5RT0PS9jra2LFUmmBHo9PzE=;
+ b=YMikC+Lt8WyYOzjn3zlw0vWqHTGW1zCE2G6beXc++FC/N1ZK4RytW87EtTmHQp/9ZefJNv
+ 8GSKMe+uPmC1wWA7cxxXzjWUYUgdB+fQVzJpWzGGXOTRporoy0vxi/emfirt/H7r1NINB3
+ +qtBmZG7Q1tuZKXF4bP4EAuRQYUbZpo=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ linuxarm@huawei.com, linux-cxl@vger.kernel.org, qemu-arm@nongnu.org,
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>
+Subject: Re: [PATCH v14 0/5] arm/virt: CXL support via pxb_cxl
+Message-ID: <aDfs+gIkK5ekKBXx@vm4>
+References: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-References: <20250522081236.4050-1-jay.chang@sifive.com>
- <20250522081236.4050-3-jay.chang@sifive.com>
-In-Reply-To: <20250522081236.4050-3-jay.chang@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 29 May 2025 15:05:11 +1000
-X-Gm-Features: AX0GCFvmkSoCG-kPCn6h9_QIqnXBZC2O_t1eZGnrBbLoSF5-6SaJmkLOYUg_W9g
-Message-ID: <CAKmqyKN8P=7nLoarF2HfPEUFP73YxaKLOxivzqqbaFs5eK5N_g@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] target/riscv: Make PMP region count configurable
-To: Jay Chang <jay.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Frank Chang <frank.chang@sifive.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=91.218.175.178;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-178.mta0.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,379 +73,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 22, 2025 at 6:14=E2=80=AFPM Jay Chang <jay.chang@sifive.com> wr=
-ote:
->
-> Previously, the number of PMP regions was hardcoded to 16 in QEMU.
-> This patch replaces the fixed value with a new `pmp_regions` field,
-> allowing platforms to configure the number of PMP regions.
->
-> If no specific value is provided, the default number of PMP regions
-> remains 16 to preserve the existing behavior.
->
-> A new CPU parameter num-pmp-regions has been introduced to the QEMU
-> command line. For example:
->
->         -cpu rv64, g=3Dtrue, c=3Dtrue, pmp=3Dtrue, num-pmp-regions=3D8
->
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+On Wed, May 28, 2025 at 12:07:21PM +0100, Jonathan Cameron wrote:
+> v14: Simplifications suggeseted by Itaru (and some extra simplifications
+>      that became apparent) and gather tags.
+>      See individual patches for more information.
+> 
+> Updated cover letter
+> 
+> Richard Henderson has posted a pull request with a fix for the TCG TLB
+> issue which will hopefully merge shortly (Thanks Richard!).
+> 
+> Back in 2022, this series stalled on the absence of a solution to device
+> tree support for PCI Expander Bridges (PXB) and we ended up only having
+> x86 support upstream. I've been carrying the arm64 support out of tree
+> since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
+> a few weeks ago) and a fair number of fiddly rebases.
+> gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
+> series.
+> 
+> A recent discussion with Peter Maydell indicated that there are various
+> other ACPI only features now, so in general he might be more relaxed
+> about DT support being necessary. The upcoming vSMMUv3 support would
+> run into this problem as well.
+> 
+> I presented the background to the PXB issue at Linaro connect 2022. In
+> short the issue is that PXBs steal MMIO space from the main PCI root
+> bridge. The challenge is knowing how much to steal.
+> 
+> On ACPI platforms, we can rely on EDK2 to perform an enumeration and
+> configuration of the PCI topology and QEMU can update the ACPI tables
+> after EDK2 has done this when it can simply read the space used by the
+> root ports. On device tree, there is no entity to figure out that
+> enumeration so we don't know how to size the stolen region.
+> 
+> Three approaches were discussed:
+> 1) Enumerating in QEMU. Horribly complex and the last thing we want is a
+>    3rd enumeration implementation that ends up out of sync with EDK2 and
+>    the kernel (there are frequent issues because of how those existing
+>    implementations differ.
+> 2) Figure out how to enumerate in kernel. I never put a huge amount of work
+>    into this, but it seemed likely to involve a nasty dance with similar
+>    very specific code to that EDK2 is carrying and would very challenging
+>    to upstream (given the lack of clarity on real use cases for PXBs and
+>    DT).
+> 3) Hack it based on the control we have which is bus numbers.
+>    No one liked this but it worked :)
+> 
+> The other little wrinkle would be the need to define full bindings for CXL
+> on DT + implement a fairly complex kernel stack as equivalent in ACPI
+> involves a static table, CEDT, new runtime queries via _DSM and a description
+> of various components. Doable, but so far there is no interest on physical
+> platforms. Worth noting that for now, the QEMU CXL emulation is all about
+> testing and developing the OS stack, not about virtualization (performance
+> is terrible except in some very contrived situations!)
+> 
+> There is only a very simple test in here, because my intent is not to
+> duplicate what we have on x86, but just to do a smoke test that everything
+> is hooked up.  In general we need much more comprehensive end to end CXL
+> tests but that requires a reaonsably stable guest software stack. A few
+> people have expressed interest in working on that, but we aren't there yet.
+> 
+> Note that this series has a very different use case to that in the proposed
+> SBSA-ref support:
+> https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
+> 
+> SBSA-ref is a good choice if you want a relatively simple mostly fixed
+> configuration.  That works well with the limited host system
+> discoverability etc as EDK2 can be build against a known configuration.
+> 
+> My interest with this support in arm/virt is support host software stack
+> development (we have a wide range of contributors, most of whom are working
+> on emulation + the kernel support). I care about the weird corners. As such
+> I need to be able to bring up variable numbers of host bridges, multiple CXL
+> Fixed Memory Windows with varying characteristics (interleave etc), complex
+> NUMA topologies with wierd performance characteristics etc. We can do that
+> on x86 upstream today, or my gitlab tree. Note that we need arm support
+> for some arch specific features in the near future (cache flushing).
+> Doing kernel development with this need for flexibility on SBSA-ref is not
+> currently practical. SBSA-ref CXL support is an excellent thing, just
+> not much use to me for this work.
+> 
+> Also, we are kicking off some work on DCD virtualization, particularly to
+> support inter-host shared memory being presented up into a VM. That
+> will need upstream support on arm64 as it is built on top of the existing
+> CXL emulation to avoid the need for a separate guest software stack.
+> 
+> Note this is TCG only - it is possible to support limited use with KVM but
+> that needs additional patches not yet ready for upstream.  The challenge
+> is interleave - and the solution is don't interleave if you want to run
+> with KVM.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Series applied cleanly on top of today's QEMU. And I confirm that
+qtest-aarch64/cxl-test passes the test as it should and ndctl cxl test
+suite ran fine 11 out of 12 (1 SKIP) on this series again this time tracing
+subsystem enabled as Alison suggested. Used the Intel folk cxl/next
+kernel.
 
-Alistair
+Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com>
 
-> ---
->  target/riscv/cpu.c                | 54 +++++++++++++++++++++++++++++--
->  target/riscv/cpu.h                |  3 +-
->  target/riscv/cpu_cfg_fields.h.inc |  1 +
->  target/riscv/csr.c                |  5 ++-
->  target/riscv/machine.c            |  3 +-
->  target/riscv/pmp.c                | 28 ++++++++++------
->  6 files changed, 80 insertions(+), 14 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 629ac37501..8e32252c11 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1117,6 +1117,7 @@ static void riscv_cpu_init(Object *obj)
->      cpu->cfg.cbom_blocksize =3D 64;
->      cpu->cfg.cbop_blocksize =3D 64;
->      cpu->cfg.cboz_blocksize =3D 64;
-> +    cpu->cfg.pmp_regions =3D 16;
->      cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
->      cpu->cfg.max_satp_mode =3D -1;
->
-> @@ -1568,6 +1569,46 @@ static const PropertyInfo prop_pmp =3D {
->      .set =3D prop_pmp_set,
->  };
->
-> +static void prop_num_pmp_regions_set(Object *obj, Visitor *v, const char=
- *name,
-> +                                     void *opaque, Error **errp)
-> +{
-> +    RISCVCPU *cpu =3D RISCV_CPU(obj);
-> +    uint8_t value;
-> +
-> +    visit_type_uint8(v, name, &value, errp);
-> +
-> +    if (cpu->cfg.pmp_regions !=3D value && riscv_cpu_is_vendor(obj)) {
-> +        cpu_set_prop_err(cpu, name, errp);
-> +        return;
-> +    }
-> +
-> +    if (cpu->env.priv_ver < PRIV_VERSION_1_12_0 && value > OLD_MAX_RISCV=
-_PMPS) {
-> +        error_setg(errp, "Number of PMP regions exceeds maximum availabl=
-e");
-> +        return;
-> +    } else if (value > MAX_RISCV_PMPS) {
-> +        error_setg(errp, "Number of PMP regions exceeds maximum availabl=
-e");
-> +        return;
-> +    }
-> +
-> +    cpu_option_add_user_setting(name, value);
-> +    cpu->cfg.pmp_regions =3D value;
-> +}
-> +
-> +static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char=
- *name,
-> +                                     void *opaque, Error **errp)
-> +{
-> +    uint8_t value =3D RISCV_CPU(obj)->cfg.pmp_regions;
-> +
-> +    visit_type_uint8(v, name, &value, errp);
-> +}
-> +
-> +static const PropertyInfo prop_num_pmp_regions =3D {
-> +    .type =3D "uint8",
-> +    .description =3D "num-pmp-regions",
-> +    .get =3D prop_num_pmp_regions_get,
-> +    .set =3D prop_num_pmp_regions_set,
-> +};
-> +
->  static int priv_spec_from_str(const char *priv_spec_str)
->  {
->      int priv_version =3D -1;
-> @@ -2567,6 +2608,7 @@ static const Property riscv_cpu_properties[] =3D {
->
->      {.name =3D "mmu", .info =3D &prop_mmu},
->      {.name =3D "pmp", .info =3D &prop_pmp},
-> +    {.name =3D "num-pmp-regions", .info =3D &prop_num_pmp_regions},
->
->      {.name =3D "priv_spec", .info =3D &prop_priv_spec},
->      {.name =3D "vext_spec", .info =3D &prop_vext_spec},
-> @@ -2891,6 +2933,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->      DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_DYNAMIC_CPU, TYPE_RISCV_CPU,
->          .cfg.mmu =3D true,
->          .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8,
->          .priv_spec =3D PRIV_VERSION_LATEST,
->      ),
->
-> @@ -2937,7 +2980,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.max_satp_mode =3D VM_1_10_MBARE,
->          .cfg.ext_zifencei =3D true,
->          .cfg.ext_zicsr =3D true,
-> -        .cfg.pmp =3D true
-> +        .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8
->      ),
->
->      DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U, TYPE_RISCV_VENDOR=
-_CPU,
-> @@ -2948,7 +2992,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.ext_zifencei =3D true,
->          .cfg.ext_zicsr =3D true,
->          .cfg.mmu =3D true,
-> -        .cfg.pmp =3D true
-> +        .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8
->      ),
->
->  #if defined(TARGET_RISCV32) || \
-> @@ -2966,6 +3011,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.ext_zifencei =3D true,
->          .cfg.ext_zicsr =3D true,
->          .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8,
->          .cfg.ext_smepmp =3D true,
->
->          .cfg.ext_zba =3D true,
-> @@ -3040,6 +3086,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.ext_xtheadmempair =3D true,
->          .cfg.ext_xtheadsync =3D true,
->          .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8,
->
->          .cfg.mvendorid =3D THEAD_VENDOR_ID,
->
-> @@ -3063,6 +3110,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.rvv_ta_all_1s =3D true,
->          .cfg.misa_w =3D true,
->          .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8,
->          .cfg.cbom_blocksize =3D 64,
->          .cfg.cbop_blocksize =3D 64,
->          .cfg.cboz_blocksize =3D 64,
-> @@ -3119,6 +3167,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.ext_zifencei =3D true,
->          .cfg.ext_zicsr =3D true,
->          .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8,
->          .cfg.ext_zicbom =3D true,
->          .cfg.cbom_blocksize =3D 64,
->          .cfg.cboz_blocksize =3D 64,
-> @@ -3163,6 +3212,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->
->          .cfg.mmu =3D true,
->          .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8,
->
->          .cfg.max_satp_mode =3D VM_1_10_SV39,
->      ),
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 229ade9ed9..67323a7d9d 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -159,7 +159,8 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_impli=
-ed_rules[];
->
->  #define MMU_USER_IDX 3
->
-> -#define MAX_RISCV_PMPS (16)
-> +#define MAX_RISCV_PMPS (64)
-> +#define OLD_MAX_RISCV_PMPS (16)
->
->  #if !defined(CONFIG_USER_ONLY)
->  #include "pmp.h"
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
-lds.h.inc
-> index 59f134a419..33c4f9bac8 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -163,6 +163,7 @@ TYPED_FIELD(uint16_t, elen, 0)
->  TYPED_FIELD(uint16_t, cbom_blocksize, 0)
->  TYPED_FIELD(uint16_t, cbop_blocksize, 0)
->  TYPED_FIELD(uint16_t, cboz_blocksize, 0)
-> +TYPED_FIELD(uint8_t,  pmp_regions, 0)
->
->  TYPED_FIELD(int8_t, max_satp_mode, -1)
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index d6cd441133..6296ecd1e1 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -738,7 +738,10 @@ static RISCVException dbltrp_hmode(CPURISCVState *en=
-v, int csrno)
->  static RISCVException pmp(CPURISCVState *env, int csrno)
->  {
->      if (riscv_cpu_cfg(env)->pmp) {
-> -        if (csrno <=3D CSR_PMPCFG3) {
-> +        int max_pmpcfg =3D (env->priv_ver >=3D PRIV_VERSION_1_12_0) ?
-> ++                              CSR_PMPCFG15 : CSR_PMPCFG3;
-> +
-> +        if (csrno <=3D max_pmpcfg) {
->              uint32_t reg_index =3D csrno - CSR_PMPCFG0;
->
->              /* TODO: RV128 restriction check */
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index c97e9ce9df..1600ec44f0 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -36,8 +36,9 @@ static int pmp_post_load(void *opaque, int version_id)
->      RISCVCPU *cpu =3D opaque;
->      CPURISCVState *env =3D &cpu->env;
->      int i;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
-> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +    for (i =3D 0; i < pmp_regions; i++) {
->          pmp_update_rule_addr(env, i);
->      }
->      pmp_update_rule_nums(env);
-> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-> index 5af295e410..3540327c9a 100644
-> --- a/target/riscv/pmp.c
-> +++ b/target/riscv/pmp.c
-> @@ -122,7 +122,9 @@ uint32_t pmp_get_num_rules(CPURISCVState *env)
->   */
->  static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_inde=
-x)
->  {
-> -    if (pmp_index < MAX_RISCV_PMPS) {
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
-> +
-> +    if (pmp_index < pmp_regions) {
->          return env->pmp_state.pmp[pmp_index].cfg_reg;
->      }
->
-> @@ -136,7 +138,9 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env=
-, uint32_t pmp_index)
->   */
->  static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_=
-t val)
->  {
-> -    if (pmp_index < MAX_RISCV_PMPS) {
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
-> +
-> +    if (pmp_index < pmp_regions) {
->          if (env->pmp_state.pmp[pmp_index].cfg_reg =3D=3D val) {
->              /* no change */
->              return false;
-> @@ -236,9 +240,10 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32=
-_t pmp_index)
->  void pmp_update_rule_nums(CPURISCVState *env)
->  {
->      int i;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
->      env->pmp_state.num_rules =3D 0;
-> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +    for (i =3D 0; i < pmp_regions; i++) {
->          const uint8_t a_field =3D
->              pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg);
->          if (PMP_AMATCH_OFF !=3D a_field) {
-> @@ -332,6 +337,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr ad=
-dr,
->      int pmp_size =3D 0;
->      hwaddr s =3D 0;
->      hwaddr e =3D 0;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
->      /* Short cut if no rules */
->      if (0 =3D=3D pmp_get_num_rules(env)) {
-> @@ -356,7 +362,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr ad=
-dr,
->       * 1.10 draft priv spec states there is an implicit order
->       * from low to high
->       */
-> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +    for (i =3D 0; i < pmp_regions; i++) {
->          s =3D pmp_is_in_range(env, i, addr);
->          e =3D pmp_is_in_range(env, i, addr + pmp_size - 1);
->
-> @@ -527,8 +533,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
-ddr_index,
->  {
->      trace_pmpaddr_csr_write(env->mhartid, addr_index, val);
->      bool is_next_cfg_tor =3D false;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
-> -    if (addr_index < MAX_RISCV_PMPS) {
-> +    if (addr_index < pmp_regions) {
->          if (env->pmp_state.pmp[addr_index].addr_reg =3D=3D val) {
->              /* no change */
->              return;
-> @@ -538,7 +545,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
-ddr_index,
->           * In TOR mode, need to check the lock bit of the next pmp
->           * (if there is a next).
->           */
-> -        if (addr_index + 1 < MAX_RISCV_PMPS) {
-> +        if (addr_index + 1 < pmp_regions) {
->              uint8_t pmp_cfg =3D env->pmp_state.pmp[addr_index + 1].cfg_r=
-eg;
->              is_next_cfg_tor =3D PMP_AMATCH_TOR =3D=3D pmp_get_a_field(pm=
-p_cfg);
->
-> @@ -573,8 +580,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
-ddr_index,
->  target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
->  {
->      target_ulong val =3D 0;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
-> -    if (addr_index < MAX_RISCV_PMPS) {
-> +    if (addr_index < pmp_regions) {
->          val =3D env->pmp_state.pmp[addr_index].addr_reg;
->          trace_pmpaddr_csr_read(env->mhartid, addr_index, val);
->      } else {
-> @@ -592,6 +600,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulo=
-ng val)
->  {
->      int i;
->      uint64_t mask =3D MSECCFG_MMWP | MSECCFG_MML;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->      /* Update PMM field only if the value is valid according to Zjpm v1.=
-0 */
->      if (riscv_cpu_cfg(env)->ext_smmpm &&
->          riscv_cpu_mxl(env) =3D=3D MXL_RV64 &&
-> @@ -603,7 +612,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulo=
-ng val)
->
->      /* RLB cannot be enabled if it's already 0 and if any regions are lo=
-cked */
->      if (!MSECCFG_RLB_ISSET(env)) {
-> -        for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +        for (i =3D 0; i < pmp_regions; i++) {
->              if (pmp_is_locked(env, i)) {
->                  val &=3D ~MSECCFG_RLB;
->                  break;
-> @@ -659,6 +668,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwa=
-ddr addr)
->      hwaddr tlb_sa =3D addr & ~(TARGET_PAGE_SIZE - 1);
->      hwaddr tlb_ea =3D tlb_sa + TARGET_PAGE_SIZE - 1;
->      int i;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
->      /*
->       * If PMP is not supported or there are no PMP rules, the TLB page w=
-ill not
-> @@ -669,7 +679,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwa=
-ddr addr)
->          return TARGET_PAGE_SIZE;
->      }
->
-> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +    for (i =3D 0; i < pmp_regions; i++) {
->          if (pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg) =3D=3D PMP_AM=
-ATCH_OFF) {
->              continue;
->          }
-> --
+Thanks,
+Itaru.
+
+> 
+> Jonathan Cameron (5):
+>   hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+>   hw/cxl: Make the CXL fixed memory windows devices.
+>   hw/cxl-host: Allow split of establishing memory address and mmio
+>     setup.
+>   hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
+>     pxb-cxl
+>   qtest/cxl: Add aarch64 virt test for CXL
+> 
+>  include/hw/arm/virt.h     |   4 +
+>  include/hw/cxl/cxl.h      |   4 +
+>  include/hw/cxl/cxl_host.h |   6 +-
+>  hw/acpi/cxl.c             |  76 +++++++--------
+>  hw/arm/virt-acpi-build.c  |  34 +++++++
+>  hw/arm/virt.c             |  29 ++++++
+>  hw/cxl/cxl-host-stubs.c   |   8 +-
+>  hw/cxl/cxl-host.c         | 190 ++++++++++++++++++++++++++++++++------
+>  hw/i386/pc.c              |  51 +++++-----
+>  tests/qtest/cxl-test.c    |  59 +++++++++---
+>  tests/qtest/meson.build   |   1 +
+>  11 files changed, 353 insertions(+), 109 deletions(-)
+> 
+> -- 
 > 2.48.1
->
->
+> 
 
