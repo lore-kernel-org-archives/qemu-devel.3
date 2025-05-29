@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE7AC5B543
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51D24C5AD49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKixm-0001rT-PG; Thu, 29 May 2025 15:30:50 -0400
+	id 1uKixm-0001rN-NV; Thu, 29 May 2025 15:30:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uKixZ-0001Mv-NP
+ id 1uKixZ-0001Mb-JD
  for qemu-devel@nongnu.org; Thu, 29 May 2025 15:30:38 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uKixU-0001Ei-ES
+ id 1uKixU-0001En-Eb
  for qemu-devel@nongnu.org; Thu, 29 May 2025 15:30:35 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfx59003915;
- Thu, 29 May 2025 19:30:27 GMT
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfsbY028801;
+ Thu, 29 May 2025 19:30:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=6w8lc
- 8uwVkcsZ44yUBLqPwjDfl/iXA+3yeIb/VWXrIo=; b=STDhsQi8rw+sMZgGylA/3
- nhjT6tSMWDJqnhITszTRn/hMrT+E+9Syyajio6U6Ai/WaKbDaNZmei+M9ZKCxJL7
- 1Jt6sOXZnUst7d2+VvwD/fTcYJWb2vFg1pv5dFLQPF6pBB22Xcq7wjcWItUxSKtJ
- kXajEGIKabWiBF6ofUgRoFAUyC1KK6edrLA912jP+ctG96nTZRSxT9JJ/2itPVfb
- bMmwaU0PIlxhGQ4D3WFY3Qb2zIzmMZpCaX9TGuiaOTFFDCeWpVJsaH/mAYK8bNfY
- mbKgYfU6ik6ggckvWdDDtO1O1d+kF/zc25ydcCoZqIPY6SUSYjzD71s7X7LB1LCs
- g==
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=mYS068UBWcZqwke51ll5PH+5wr7OO
+ nGFQ4vmK8X2Nt8=; b=CFDbLdROEOAG9Y2fn5gO8ojyIbvuFCj+k/cO57LpATce3
+ LQbQpcJfBhWuZPdilyhEYMLdkg7I5byEDbxBir/DZehmIoeHq6rGiy8TiuwD1xls
+ 8kvYin8xLmv9ZaWmws09WiCZWGXmo2OtfTMkQ8BNmIqVYV/HFOvO1WDk5LX6m4WY
+ dSVtRNALtXNYeJQoS5NXywUV9ijA766S/G84i0zdf1ZmoH0NUZgFgtAzMdyBi76s
+ MivVbi5rePd8dPsk9oh1sld7Xt4dkMwv1ehWlm1caJKMmlfVdjqvZjrBVAsIStZ1
+ eEJR4qJ3YMRN0O3KCmEWxZ+hHGGvm0KcVXKqHkdCw==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v2pf0nbu-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v3pd8r7n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:30:27 +0000 (GMT)
+ Thu, 29 May 2025 19:30:26 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54THeh1G019225; Thu, 29 May 2025 19:30:26 GMT
+ with ESMTP id 54TJSsCK019346; Thu, 29 May 2025 19:30:25 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jccs0d-1
+ 46u4jccry7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:30:26 +0000
+ Thu, 29 May 2025 19:30:25 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJUOV9005039;
- Thu, 29 May 2025 19:30:25 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJUOV5005039;
+ Thu, 29 May 2025 19:30:24 GMT
 Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
  (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.254.235])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 46u4jccrx6-3; Thu, 29 May 2025 19:30:25 +0000
+ 46u4jccrx6-1; Thu, 29 May 2025 19:30:24 +0000
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, pbonzini@redhat.com, mjt@tls.msk.ru,
@@ -64,13 +63,10 @@ Cc: mst@redhat.com, pbonzini@redhat.com, mjt@tls.msk.ru,
  suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
  sarunkod@amd.com, brijesh.singh@amd.com, joao.m.martins@oracle.com,
  boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
-Subject: [PATCH v3 2/7] amd_iommu: Fix Device ID decoding for
- INVALIDATE_IOTLB_PAGES command
-Date: Thu, 29 May 2025 19:30:18 +0000
-Message-ID: <20250529193023.3590780-3-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH v3 0/7] amd_iommu: Fixes to align with AMDVi specification
+Date: Thu, 29 May 2025 19:30:16 +0000
+Message-ID: <20250529193023.3590780-1-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250529193023.3590780-1-alejandro.j.jimenez@oracle.com>
-References: <20250529193023.3590780-1-alejandro.j.jimenez@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -81,22 +77,21 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  suspectscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505290190
-X-Proofpoint-ORIG-GUID: cNGxpxmsXuo-A7v9nCfPLGS1q_TvxGXG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE5MCBTYWx0ZWRfX9/YThrV3Lxaa
- Om8r5wGIZ1H1DwD+gmOWvTU5tiaXkFsj4bu5rA8sLe3gwf+OFeMrNK8egl/8b8+V7NBQtVRg1w9
- L6kEriO5z3vrDGNk2H8KAi3ETZCuXdv0bTrl9K3ZAJitsvfJGNm1IOgntKhCoH9FttAW5OnuNhd
- 5ZbMYX/OHhZc9CA+Fi1mDZZlj6m2yJslt9ssT9899e2qDsuVCZUg/4QXWdYOUp9gYndeVn3zIqU
- obRhWDVphsg57UZwlI+ewgN8QFMaEG453okDtRx73gFXX3IDQ+Jxonx0xdRnQbHkVOCvIo0Uy39
- pRxNH5ZGSvK9LkhovkwT5FYuAGi1K7xmJuPhQfD2RUTnHFBrdLniRzirIqX/A55wsjOKg9spnNe
- 1Nl3KZe5VeXUlwPX97Edgza9F/szn3pKT/MTKv0mTvd7RsOs57RWYjmPVB/L0zKued2up4fg
-X-Proofpoint-GUID: cNGxpxmsXuo-A7v9nCfPLGS1q_TvxGXG
-X-Authority-Analysis: v=2.4 cv=TdeWtQQh c=1 sm=1 tr=0 ts=6838b5d3 b=1 cx=c_pps
+X-Proofpoint-ORIG-GUID: GkA5CQPi9FAYpJDhTcayO4PLJPkhjnqM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE5MCBTYWx0ZWRfX5rs2M7HSY1b3
+ bx7BfNYBhNXwiPrnR5wVdUmT/r6BCsjFfd86r+/U5nNZV7+FlRq0YOiLD17/vdRjmw0nVKPkwpb
+ 3oZHGxz1JGg+CDqd4my9IjskUa5xzT/mA98Y+/0IZWEmvLIhZ7000xY0QFHNcz3rpLA4nCJvUAs
+ X/0KVZ0zb6vU3Go6iasyMjKey0MLk4OBfw2pKfhrv/hRwJDogBgm2FVnzBbVM8FfS7CvPEMhcnE
+ EHvT9QG9Ey/lotrXi+9kpkOKlvJDWzsnUDQhMuLl3B60m801sGgQtOVJhWhIQWEMrBkpwI+Carp
+ EAtzjXWCe2Hgc8zMFZVwygOjIPfkF4cPW03PQQ3PUVxyyAWhdl+CK0BS3jkoZI5uzS7dKWZdpeC
+ yvhkb3aLeXEQ14vOQJGzxpGJvxtFlpAOCwqMk1sFtQFFylDHPbBzcvhIa8QlhIqfK/+c36iW
+X-Authority-Analysis: v=2.4 cv=UZNRSLSN c=1 sm=1 tr=0 ts=6838b5d2 b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
- a=dt9VzEwgFbYA:10 a=69wJf7TsAAAA:8 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8
- a=r9zmrm_j51NoiylAmAIA:9
- a=Fg1AiH1G6rFz08G2ETeA:22 cc=ntf awl=host:13206
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8 a=Xi8gk91kliggzhbz9PoA:9
+ cc=ntf awl=host:13206
+X-Proofpoint-GUID: GkA5CQPi9FAYpJDhTcayO4PLJPkhjnqM
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
@@ -120,40 +115,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The DeviceID bits are extracted using an incorrect offset in the call to
-amdvi_iotlb_remove_page(). This field is read (correctly) earlier, so use
-the value already retrieved for devid.
+The main reason for sending this new revision so soon is that v2 included a
+duplicated [PATCH 5/7]. I fixed a typo in the commit subject and missed
+removing the old patch. Apologies for the mistake.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
----
- hw/i386/amd_iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Additional changes in v3:
+- Fixed typo on [PATCH 1/7] subject line (s/Miscellanous/Miscellaneous/).
+- Added 'Fixes:' tag to [PATCH 5/7].
+- Added Vasant's R-b to patches 4,5,7.
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 0775c8f3bba8f..55202eb9ef7d6 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -508,7 +508,7 @@ static void amdvi_inval_inttable(AMDVIState *s, uint64_t *cmd)
- static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
- {
- 
--    uint16_t devid = extract64(cmd[0], 0, 16);
-+    uint16_t devid = cpu_to_le16(extract64(cmd[0], 0, 16));
-     if (extract64(cmd[1], 1, 1) || extract64(cmd[1], 3, 1) ||
-         extract64(cmd[1], 6, 6)) {
-         amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
-@@ -521,7 +521,7 @@ static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
-                                     &devid);
-     } else {
-         amdvi_iotlb_remove_page(s, cpu_to_le64(extract64(cmd[1], 12, 52)) << 12,
--                                cpu_to_le16(extract64(cmd[1], 0, 16)));
-+                                devid);
-     }
-     trace_amdvi_iotlb_inval();
- }
+Thank you,
+Alejandro
+
+v2:
+https://lore.kernel.org/qemu-devel/20250528221725.3554040-1-alejandro.j.jimenez@oracle.com/
+
+v1:
+https://lore.kernel.org/all/20250311152446.45086-1-alejandro.j.jimenez@oracle.com/
+
+
+Alejandro Jimenez (7):
+  amd_iommu: Fix Miscellaneous Information Register 0 offsets
+  amd_iommu: Fix Device ID decoding for INVALIDATE_IOTLB_PAGES command
+  amd_iommu: Update bitmasks representing DTE reserved fields
+  amd_iommu: Fix masks for various IOMMU MMIO Registers
+  amd_iommu: Fix mask to retrieve Interrupt Table Root Pointer from DTE
+  amd_iommu: Fix the calculation for Device Table size
+  amd_iommu: Remove duplicated definitions
+
+ hw/i386/amd_iommu.c | 15 ++++++------
+ hw/i386/amd_iommu.h | 59 ++++++++++++++++++++++-----------------------
+ 2 files changed, 37 insertions(+), 37 deletions(-)
+
+
+base-commit: 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e
 -- 
 2.43.5
 
