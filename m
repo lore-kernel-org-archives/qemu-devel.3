@@ -4,55 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51784C54FB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 647A1C5B543
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 12:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKck8-0004if-KB; Thu, 29 May 2025 08:52:21 -0400
+	id 1uKckA-0004ie-HZ; Thu, 29 May 2025 08:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1uKb8y-0000PQ-3S; Thu, 29 May 2025 07:09:52 -0400
-Received: from mxhk.zte.com.cn ([63.216.63.40])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1uKb8u-0005Ti-A8; Thu, 29 May 2025 07:09:50 -0400
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4b7NtP3LpFz8R039;
- Thu, 29 May 2025 19:09:33 +0800 (CST)
-Received: from xaxapp02.zte.com.cn ([10.88.97.241])
- by mse-fl1.zte.com.cn with SMTP id 54TB9ODb027625;
- Thu, 29 May 2025 19:09:24 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp01[null]) by mapi (Zmail) with MAPI id mid32;
- Thu, 29 May 2025 19:09:27 +0800 (CST)
-Date: Thu, 29 May 2025 19:09:27 +0800 (CST)
-X-Zmail-TransId: 2af968384067048-5a408
-X-Mailer: Zmail v1.0
-Message-ID: <20250529190927602l5laXr0T8mBWNeGuGixJp@zte.com.cn>
+ (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
+ id 1uKZXr-0003R9-Hc
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 05:27:27 -0400
+Received: from sg-1-30.ptr.blmpb.com ([118.26.132.30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
+ id 1uKZXn-0002jz-A9
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 05:27:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1748510828;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=cfUuzY8O5t9PwOW0P7Ys3TjZf/rdbS8I8bh0pKYOtWQ=;
+ b=A1QF8N8vRsuUMI+WemKSZkqJZDyIYxcxTwJC3YB7cUeT0rCdjuFsiHSt/6FqLXvg15hCm7
+ bZWREa4hIiSJ+IPhjXVYgBGNH8xeOrFJCEXIt0we7UBsEZiE+lvrnd799iRJnwmav1oi4x
+ +v5PNlD+15NaV8eBy9iMGYkH9WnOi870qrS878AQoRCl+T6jbONRMo+56w5qi64L3jPfUk
+ 7lpcK0tgvsV4sBvrJbDErVXal4BTKymHgYfCY3on+Z5mcVV9TWvBH2PwC4D9CPvXxqHHFQ
+ ALctWqV9gtkSfUw0Q6MtzieTyyA0chbD24YL9+z4uSHNPsG4wssxbYrHgstsQQ==
+Content-Transfer-Encoding: 7bit
+To: "Palmer Dabbelt" <palmer@dabbelt.com>, 
+ "Alistair Francis" <alistair.francis@wdc.com>, 
+ "Weiwei Li" <liwei1518@gmail.com>, 
+ "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
+ "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, 
+ "Tomasz Jeznach" <tjeznach@rivosinc.com>, 
+ "Richard Henderson" <richard.henderson@linaro.org>, 
+ <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+Message-Id: <20250529092632.4367-1-liujingqi@lanxincomputing.com>
+X-Lms-Return-Path: <lba+268382869+7e291e+nongnu.org+liujingqi@lanxincomputing.com>
+Cc: "Nutty Liu" <liujingqi@lanxincomputing.com>
+X-Mailer: git-send-email 2.49.0.windows.1
+Received: from localhost.localdomain ([180.165.20.212]) by smtp.feishu.cn with
+ ESMTP; Thu, 29 May 2025 17:27:04 +0800
+Subject: [PATCH] hw/riscv/riscv-iommu: Fix PPN field of Translation-reponse
+ register
 Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: =?UTF-8?B?W1BBVENIIHYzXSBtaWdyYXRpb246IEZpeCBtaWdyYXRpb24gZmFpbHVyZSB3aGVuIGFpYSBpcyBjb25maWd1cmVkIGFzCgogYXBsaWMtaW1zaWM=?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl1.zte.com.cn 54TB9ODb027625
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6838406D.000/4b7NtP3LpFz8R039
-Received-SPF: pass client-ip=63.216.63.40; envelope-from=liu.xuemei1@zte.com.cn;
- helo=mxhk.zte.com.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Original-From: Nutty Liu <liujingqi@lanxincomputing.com>
+Content-Type: text/plain; charset=UTF-8
+From: "Nutty Liu" <liujingqi@lanxincomputing.com>
+Date: Thu, 29 May 2025 17:26:32 +0800
+Received-SPF: pass client-ip=118.26.132.30;
+ envelope-from=liujingqi@lanxincomputing.com; helo=sg-1-30.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 29 May 2025 08:52:18 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,80 +77,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Date: Mon, 12 May 2025 17:03:38 +0800
+The original implementation incorrectly performed a bitwise AND
+operation between the PPN of iova and PPN Mask, leading to an
+incorrect PPN field in Translation-reponse register.
 
-Address an error in migration when aia is configured as 'aplic-imsic' in
-riscv kvm vm by adding riscv_aplic_state_needed() and
-riscv_imsic_state_needed() to determine whether the corresponding sates are
-needed.
+The PPN of iova should be set entirely in the PPN field of
+Translation-reponse register.
 
-Previously, the fields in the vmsds of 'riscv_aplic' and 'riscv_imsic' can
-only be initialized under certain special conditions in commit 95a97b3fd2.
-However, the corresponding ses of these vmsds are inserted into the
-savevm_state.handlers unconditionally. This led to migration failure
-characterized by uninitialized fields when save vm state:
-qemu-system-riscv64: ../migration/vmstate.c:433: vmstate_save_state_v:
-Assertion 'first_elem || !n_elems || !size' failed.
-
-Fixes: 95a97b3fd2 ("target/riscv: update APLIC and IMSIC to support KVM AIA")
-
-Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+Signed-off-by: Nutty Liu <liujingqi@lanxincomputing.com>
 ---
- Changes in v3:
- - Increase version_id and minimum_version_id
+ hw/riscv/riscv-iommu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
- hw/intc/riscv_aplic.c | 12 ++++++++++--
- hw/intc/riscv_imsic.c | 10 ++++++++--
- 2 files changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 8bcd9f4697..4fa5f7597b 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -962,10 +962,18 @@ static const Property riscv_aplic_properties[] = {
-     DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
- };
-
-+static bool riscv_aplic_state_needed(void *opaque)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    return riscv_use_emulated_aplic(aplic->msimode);
-+}
-+
- static const VMStateDescription vmstate_riscv_aplic = {
-     .name = "riscv_aplic",
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-+    .needed = riscv_aplic_state_needed,
-     .fields = (const VMStateField[]) {
-             VMSTATE_UINT32(domaincfg, RISCVAPLICState),
-             VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-index 2169988167..6174e1a05d 100644
---- a/hw/intc/riscv_imsic.c
-+++ b/hw/intc/riscv_imsic.c
-@@ -398,10 +398,16 @@ static const Property riscv_imsic_properties[] = {
-     DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
- };
-
-+static bool riscv_imsic_state_needed(void *opaque)
-+{
-+    return !kvm_irqchip_in_kernel();
-+}
-+
- static const VMStateDescription vmstate_riscv_imsic = {
-     .name = "riscv_imsic",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-+    .needed = riscv_imsic_state_needed,
-     .fields = (const VMStateField[]) {
-             VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
-                                   num_pages, 0,
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index a877e5da84..f529a6a3d7 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1935,8 +1935,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
+             iova = RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault) << 10);
+         } else {
+             iova = iotlb.translated_addr & ~iotlb.addr_mask;
+-            iova >>= TARGET_PAGE_BITS;
+-            iova &= RISCV_IOMMU_TR_RESPONSE_PPN;
++            iova = set_field(0, RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN(iova));
+ 
+             /* We do not support superpages (> 4kbs) for now */
+             iova &= ~RISCV_IOMMU_TR_RESPONSE_S;
 -- 
-2.27.0
+2.49.0.windows.1
 
