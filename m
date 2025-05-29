@@ -4,86 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CFCC5B543
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 11:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095BEC5AD49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 12:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKbsC-0007gk-3M; Thu, 29 May 2025 07:56:36 -0400
+	id 1uKc9L-0003ij-4f; Thu, 29 May 2025 08:14:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uKbs5-0007g7-Sq
- for qemu-devel@nongnu.org; Thu, 29 May 2025 07:56:31 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uKbs3-0003YP-G6
- for qemu-devel@nongnu.org; Thu, 29 May 2025 07:56:29 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43edecbfb94so9132235e9.1
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 04:56:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1748519785; x=1749124585; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=7mWMNOiewFH0KOD+eh1/kf1jNm9uWTWLWCR8uU/CijY=;
- b=B+qnaE+HYI7vUG5NkKqgwZNbBwNYKJWicayTq/F2sKVeNHhkG+Yrbej+wZfYSygzLW
- ztPtbC3UjYe3gBKmpP0KTkLKt6LDfLoBVdInAxOcfpJRS5/x+JgdJt7zMX7LeABUOJZb
- SPgUId2WVslzd6EvS0Jup4El9NGxbkuBR04KivpOmqbu+T+Gx2yjbNE3RxEZV52hmURf
- tpgA3yTf7K3q6AI9gue520E8rnMM6DFCmG8xqEySGoN6xvfIqinzfmlL7F+rKVEhwAMp
- 9GVn9Gj08Z3SrTqM7CDB4xoAxXjg/esb/jRY60QGlFTwH7k2vYiZJZdrMLhNlQMf1H7m
- lsoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748519785; x=1749124585;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7mWMNOiewFH0KOD+eh1/kf1jNm9uWTWLWCR8uU/CijY=;
- b=EBgGIF5FH5U/yrDme1CVDpgGBKwwmt6pc5Cgg2Ni8b5IW0gSmE5hphIUlpcQI9UvGs
- gWxG9v5uFxKfxZW3t37f1R3u/kMYyRw2iUdkzL/Qqe6ESrazDHqHrSDfiBS75NOsgNe3
- OOxtBa3dMt2aHO01wH4uY7o+Xjimv2/i2GIFYvEGeYIzVSQx0BmJ5tcectg2/Zw68+sb
- 3n/dDl6BfBISBGZ+Op/X9ojq3nCWQWZHulyDCA8rcSUFI7D8ot5jUlG28xy2vhW2mFXP
- GtlO83cRWZ1vx3fZ6VB2pnJFAE/QdB6SDInnhjNgUNevHglsIqq/QQHlcee6uOLjk7Ue
- Q3cQ==
-X-Gm-Message-State: AOJu0Yx3yDMJtTNhkdA0cE27gPsEz/dVDcEJ2CL13mnJnZn+VW+J55KR
- Myovo634cHHWVy/F299DFQ+SWbCiYlr3/yZSrxwLwZyq+juo6BX0dWus1NYlnH4bDuM=
-X-Gm-Gg: ASbGncuOMRcrACqb+VuD1Q0P71SwiJY5bpElzaxLQE5hGlwgO+0yEQozYDw66Hhj8FE
- SkeEFmPmhwoGAkrp3B2DOeigVoBVHWHpbarNIBUszl6HKcU7lxezaDhwA8g+alR7EL473Lvo9nZ
- /lDDrs7/J5gh3reFTiZzfJr7RErL39aXg98LXclHrRgCQXN60iKwEPne/ENrJoPKZEOZ6JDXRV2
- tRJlUqdQffw3IgMkPrE/nkQBwtT2JU7PO9krlgyL+h3aHyIs5csuZFv4H6ljqZBrJn+KJUWkJJG
- Pdf+vrQjCHA2mWbtLfD3PB2dFmUaA3mBL0WGDe2/zdu2clX29w==
-X-Google-Smtp-Source: AGHT+IEVL4IdjrTarXTh7wvxU6OZY2L6myoxPIKhOIPXAC5jRhtZ89lc2Uk3PSu/hiUJKf8S2D9UCQ==
-X-Received: by 2002:a05:6000:4014:b0:3a4:ed2f:e80c with SMTP id
- ffacd0b85a97d-3a4ed2fea0amr3980139f8f.31.1748519785342; 
- Thu, 29 May 2025 04:56:25 -0700 (PDT)
-Received: from localhost ([2a02:8308:a00c:e200::ce80])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe5b887sm1853198f8f.18.2025.05.29.04.56.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 May 2025 04:56:24 -0700 (PDT)
-Date: Thu, 29 May 2025 13:56:24 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- Fei Wu <wu.fei9@sanechips.com.cn>
-Subject: Re: [PATCH v3 2/4] target/riscv: Add server platform reference cpu
-Message-ID: <20250529-9c1e4e13c8dad55fddbd31e3@orel>
-References: <20250528200129.1548259-1-dbarboza@ventanamicro.com>
- <20250528200129.1548259-3-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uKc9H-0003iP-VM
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 08:14:16 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uKc9B-0005GZ-Au
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 08:14:14 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b7QJZ509Kz6M4tD;
+ Thu, 29 May 2025 20:13:50 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id BD27C140432;
+ Thu, 29 May 2025 20:13:54 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 29 May
+ 2025 14:13:54 +0200
+Date: Thu, 29 May 2025 13:13:52 +0100
+To: Vinayak Holikatti <vinayak.kh@samsung.com>
+CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
+ <vishak.g@samsung.com>, <krish.reddy@samsung.com>,
+ <a.manzanares@samsung.com>, <alok.rathore@samsung.com>
+Subject: Re: [PATCH] Add support for FMAPI Get Mutliheaded Head info opcode
+ (5501h)
+Message-ID: <20250529131352.00007aaf@huawei.com>
+In-Reply-To: <20250522063135.366295-1-vinayak.kh@samsung.com>
+References: <CGME20250522063149epcas5p13719600aa8f59313ff3dc2570c996aec@epcas5p1.samsung.com>
+ <20250522063135.366295-1-vinayak.kh@samsung.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250528200129.1548259-3-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,72 +72,175 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 28, 2025 at 05:01:27PM -0300, Daniel Henrique Barboza wrote:
-> From: Fei Wu <wu.fei9@sanechips.com.cn>
+On Thu, 22 May 2025 12:01:35 +0530
+Vinayak Holikatti <vinayak.kh@samsung.com> wrote:
+
+> CXL spec 3.2 section 7.6.7.5.2  describes Get Head Info.
 > 
-> The harts requirements of RISC-V server platform [1] require RVA23 ISA
-> profile support, plus Sv48, Svadu, H, Sscofmpf etc. This patch provides
-> a virt CPU type (rvsp-ref) as compliant as possible.
-> 
-> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
-> 
-> Signed-off-by: Fei Wu <fei2.wu@intel.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+
+Hi Vinayak,
+
+Some code simplification suggestions below.
+
 > ---
->  target/riscv/cpu-qom.h |  1 +
->  target/riscv/cpu.c     | 11 +++++++++++
->  2 files changed, 12 insertions(+)
+> This patch is generated against Jonathan Cameron's branch cxl-2025-03-20
 > 
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 1ee05eb393..70978fd53c 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -55,6 +55,7 @@
->  #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
->  #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
->  #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
-> +#define TYPE_RISCV_CPU_RVSP_REF         RISCV_CPU_TYPE_NAME("rvsp-ref")
->  #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
->  
->  OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 4a30cf8444..ec2fbc0e78 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -3166,6 +3166,17 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->          .cfg.max_satp_mode = VM_1_10_SV39,
->      ),
->  
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSP_REF, TYPE_RISCV_VENDOR_CPU,
-> +        .misa_mxl_max = MXL_RV64,
-> +        .profile = &RVA23S64,
-> +
-> +        /* ISA extensions */
-> +        .cfg.ext_zkr = true,
-> +        .cfg.ext_svadu = true,
-> +
-> +        .cfg.max_satp_mode = VM_1_10_SV57,
-
-This is still missing several extensions required by the platform spec.
-
-Sdtrig
-Sdext
-Ssccfg
-Ssstrict
-Ssaia
-
-Thanks,
-drew
-
-> +    ),
-> +
->  #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
->      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
->          .cfg.max_satp_mode = VM_1_10_SV57,
-> -- 
-> 2.49.0
+>  hw/cxl/cxl-mailbox-utils.c  | 21 +++++++++
+>  hw/cxl/mhsld/mhsld.c        | 92 ++++++++++++++++++++++++++++++++++++-
+>  hw/cxl/mhsld/mhsld.h        | 26 +++++++++++
+>  include/hw/cxl/cxl_device.h |  6 +++
+>  4 files changed, 144 insertions(+), 1 deletion(-)
 > 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index a02d130926..4f25caecea 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+
+> diff --git a/hw/cxl/mhsld/mhsld.c b/hw/cxl/mhsld/mhsld.c
+> index 9f633b3bed..981546b5ff 100644
+> --- a/hw/cxl/mhsld/mhsld.c
+> +++ b/hw/cxl/mhsld/mhsld.c
+> @@ -61,9 +61,57 @@ static CXLRetCode cmd_mhd_get_info(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> +/*
+> + * CXL r3.2 section 7.6.7.5.2 - Get Head Info (Opcode 5501h)
+> + *
+> + * This command retrieves the number of heads, number of supported LDs,
+> + * and Head-to-LD mapping of a Multi-Headed device.
+> + */
+> +static CXLRetCode cmd_mhd_get_head_info(const struct cxl_cmd *cmd,
+> +                                        uint8_t *payload_in, size_t len_in,
+> +                                        uint8_t *payload_out, size_t *len_out,
+> +                                        CXLCCI *cci)
+> +{
+> +    CXLMHSLDState *s = CXL_MHSLD(cci->d);
+> +    MHDGetHeadInfoInput *input = (void *)payload_in;
+> +    MHDGetHeadInfoOutput *output = (void *)payload_out;
+> +    int i = 0;
+> +
+> +    if (input->start_head > MHSLD_HEADS) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    output->nr_heads = MIN((MHSLD_HEADS - input->start_head), input->nr_heads);
+> +    for (i = input->start_head; i < input->start_head + output->nr_heads; i++) {
+
+Can we get away with a memcpy()?  Any endian issues on any of these?
+
+> +        output->head_info_list[i].port_number =
+> +                                 s->mhd_state->head_info_blocks[i].port_number;
+> +        output->head_info_list[i].max_link_width =
+> +                              s->mhd_state->head_info_blocks[i].max_link_width;
+> +        output->head_info_list[i].nego_link_width =
+> +                             s->mhd_state->head_info_blocks[i].nego_link_width;
+> +        output->head_info_list[i].supp_link_speeds_vector =
+> +                     s->mhd_state->head_info_blocks[i].supp_link_speeds_vector;
+> +        output->head_info_list[i].max_link_speed =
+> +                              s->mhd_state->head_info_blocks[i].max_link_speed;
+> +        output->head_info_list[i].current_link_speed =
+> +                          s->mhd_state->head_info_blocks[i].current_link_speed;
+> +        output->head_info_list[i].ltssm_state =
+> +                                 s->mhd_state->head_info_blocks[i].ltssm_state;
+> +        output->head_info_list[i].first_nego_lane_num =
+> +                         s->mhd_state->head_info_blocks[i].first_nego_lane_num;
+> +        output->head_info_list[i].link_state_flags =
+> +                            s->mhd_state->head_info_blocks[i].link_state_flags;
+> +    }
+> +
+> +    *len_out = sizeof(*output) + output->nr_heads * sizeof(MHDHeadInfoBlock);
+> +    return CXL_MBOX_SUCCESS;
+> +}
+
+>  static const Property cxl_mhsld_props[] = {
+> @@ -166,6 +214,47 @@ static void cxl_mhsld_state_initialize(CXLMHSLDState *s, size_t dc_size)
+>      s->mhd_state->nr_blocks = dc_size / MHSLD_BLOCK_SZ;
+>  }
+>  
+> +
+> +static void cxl_mhsld_init_head_info(CXLMHSLDState *s, PCIDevice *pdev)
+> +{
+> +    uint16_t lnksta = 0;
+
+No need to initialize when they are always set below.
+
+> +    uint16_t current_link_speed = 0;
+> +    uint16_t negotiated_link_width = 0;
+> +    uint16_t lnkcap = 0, lnkcap2 = 0;
+> +    uint16_t max_link_width = 0;
+> +    uint16_t max_link_speed = 0;
+
+Once you drop the unnecessary init combine width and speed on one line.
+Or as below, get rid of most of these local variables entirely.
+
+> +    uint16_t supported_link_speeds_vector = 0;
+> +
+> +    lnksta = pdev->config_read(pdev,
+> +                               pdev->exp.exp_cap + PCI_EXP_LNKSTA,
+> +                               sizeof(lnksta));
+> +    lnkcap = pdev->config_read(pdev,
+> +                               pdev->exp.exp_cap + PCI_EXP_LNKCAP,
+> +                               sizeof(lnkcap));
+> +    lnkcap2 = pdev->config_read(pdev,
+> +                                pdev->exp.exp_cap + PCI_EXP_LNKCAP2,
+> +                                sizeof(lnkcap2));
+> +    supported_link_speeds_vector = (lnkcap2 & 0xFE) >> 1;
+Worth considering adding defines for that to incluw/hw/pci/pcie_regs.h
+
+> +    max_link_width = (lnkcap & PCI_EXP_LNKCAP_MLW) >> 4;
+
+Use PCI_EXP_LNK_MLW_SHIFT to extract that.
+(we should also tidy this up in physical port state.
+
+
+> +    max_link_speed = lnkcap & PCI_EXP_LNKCAP_SLS;
+> +    current_link_speed = lnksta & PCI_EXP_LNKSTA_CLS;
+> +    negotiated_link_width = (lnksta & PCI_EXP_LNKSTA_NLW) >> 4;
+Similar - there should be a suitable define for that shift.
+> +
+> +    s->mhd_state->head_info_blocks[s->mhd_head].port_number = s->mhd_head;
+
+I would use something like
+
+    s->mhd_state->head_info_blocks[s->mhd_head] = (MHDHeadInfoBlock) {
+        .max_link_width = lnkcap & PCI_EXP_LNKCAP_SLS,
+        .nego_link_width = (lnksta & PCI_EXP_LNKSTA_NLW) >> 4, //with the define
+        .supp_link_speeds_vector = (lnkcap2 & 0xFE) >> 1,
+etc
+    };
+> +    s->mhd_state->head_info_blocks[s->mhd_head].max_link_width = max_link_width;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].nego_link_width =
+> +                                                          negotiated_link_width;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].supp_link_speeds_vector =
+> +                                                   supported_link_speeds_vector;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].max_link_speed =
+> +                                                                 max_link_speed;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].current_link_speed =
+> +                                                             current_link_speed;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].ltssm_state = 0x7;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].first_nego_lane_num = 0;
+> +    s->mhd_state->head_info_blocks[s->mhd_head].link_state_flags = 0;
+> +}
+> +
+>  /* Returns starting index of region in MHD map. */
+>  static inline size_t cxl_mhsld_find_dc_region_start(PCIDevice *d,
+>                                                      CXLDCRegion *r)
+> @@ -376,7 +465,7 @@ static void cxl_mhsld_realize(PCIDevice *pci_dev, Error **errp)
+>      }
+>  
+>      cxl_mhsld_state_initialize(s, dc_size);
+> -
+> +    cxl_mhsld_init_head_info(s, pci_dev);
+Avoid the white space noise by leaving a blank line here.
+
+>      /* Set the LD ownership for this head to this system */
+>      s->mhd_state->ldmap[s->mhd_head] = s->mhd_head;
+>      return;
 
