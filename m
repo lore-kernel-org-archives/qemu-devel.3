@@ -4,72 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFF2DC5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 12:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51784C54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 12:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKcU5-0000Sg-3O; Thu, 29 May 2025 08:35:45 -0400
+	id 1uKck8-0004if-KB; Thu, 29 May 2025 08:52:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uKcTv-0000Q6-RB
- for qemu-devel@nongnu.org; Thu, 29 May 2025 08:35:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1uKb8y-0000PQ-3S; Thu, 29 May 2025 07:09:52 -0400
+Received: from mxhk.zte.com.cn ([63.216.63.40])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uKcTq-0007ba-TZ
- for qemu-devel@nongnu.org; Thu, 29 May 2025 08:35:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748522128;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IRDVRpB8OFZSrpPv4F9sDjcuQCj2wEAeUF+AqcWuAN0=;
- b=VgcNM+2iACEo6D4cGe5moJLa75k4sgwbjAasjm4oQbKAyiezxwl4cqta3jv1z4SH6vfj5s
- shik+omYJ2tfIHdNHsx8X56zeXJG7b1/Q8t3mZmHgLlpbYHuM6yjUjU/9wm7SFC6hH/zme
- s8ScTHsjq1pWQRzcwBvD5GA9qchtHLI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-CiNMwXxuMY-nchBVYIWIgw-1; Thu,
- 29 May 2025 08:35:26 -0400
-X-MC-Unique: CiNMwXxuMY-nchBVYIWIgw-1
-X-Mimecast-MFC-AGG-ID: CiNMwXxuMY-nchBVYIWIgw_1748522126
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1uKb8u-0005Ti-A8; Thu, 29 May 2025 07:09:50 -0400
+Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA26D1800570; Thu, 29 May 2025 12:35:25 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.100])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2247319560A7; Thu, 29 May 2025 12:35:24 +0000 (UTC)
-Date: Thu, 29 May 2025 08:35:23 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 0/1] qemu-sparc queue 20250527
-Message-ID: <20250529123523.GA55766@fedora>
-References: <20250527214605.350903-1-mark.cave-ayland@ilande.co.uk>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="vMGh+baLXUDgifjK"
-Content-Disposition: inline
-In-Reply-To: <20250527214605.350903-1-mark.cave-ayland@ilande.co.uk>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4b7NtP3LpFz8R039;
+ Thu, 29 May 2025 19:09:33 +0800 (CST)
+Received: from xaxapp02.zte.com.cn ([10.88.97.241])
+ by mse-fl1.zte.com.cn with SMTP id 54TB9ODb027625;
+ Thu, 29 May 2025 19:09:24 +0800 (+08)
+ (envelope-from liu.xuemei1@zte.com.cn)
+Received: from mapi (xaxapp01[null]) by mapi (Zmail) with MAPI id mid32;
+ Thu, 29 May 2025 19:09:27 +0800 (CST)
+Date: Thu, 29 May 2025 19:09:27 +0800 (CST)
+X-Zmail-TransId: 2af968384067048-5a408
+X-Mailer: Zmail v1.0
+Message-ID: <20250529190927602l5laXr0T8mBWNeGuGixJp@zte.com.cn>
+Mime-Version: 1.0
+From: <liu.xuemei1@zte.com.cn>
+To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
+ <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>
+Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: =?UTF-8?B?W1BBVENIIHYzXSBtaWdyYXRpb246IEZpeCBtaWdyYXRpb24gZmFpbHVyZSB3aGVuIGFpYSBpcyBjb25maWd1cmVkIGFzCgogYXBsaWMtaW1zaWM=?=
+Content-Type: text/plain;
+	charset="UTF-8"
+X-MAIL: mse-fl1.zte.com.cn 54TB9ODb027625
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6838406D.000/4b7NtP3LpFz8R039
+Received-SPF: pass client-ip=63.216.63.40; envelope-from=liu.xuemei1@zte.com.cn;
+ helo=mxhk.zte.com.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 29 May 2025 08:52:18 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,30 +69,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Date: Mon, 12 May 2025 17:03:38 +0800
 
---vMGh+baLXUDgifjK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Address an error in migration when aia is configured as 'aplic-imsic' in
+riscv kvm vm by adding riscv_aplic_state_needed() and
+riscv_imsic_state_needed() to determine whether the corresponding sates are
+needed.
 
-Applied, thanks.
+Previously, the fields in the vmsds of 'riscv_aplic' and 'riscv_imsic' can
+only be initialized under certain special conditions in commit 95a97b3fd2.
+However, the corresponding ses of these vmsds are inserted into the
+savevm_state.handlers unconditionally. This led to migration failure
+characterized by uninitialized fields when save vm state:
+qemu-system-riscv64: ../migration/vmstate.c:433: vmstate_save_state_v:
+Assertion 'first_elem || !n_elems || !size' failed.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+Fixes: 95a97b3fd2 ("target/riscv: update APLIC and IMSIC to support KVM AIA")
 
---vMGh+baLXUDgifjK
-Content-Type: application/pgp-signature; name=signature.asc
+Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+---
+ Changes in v3:
+ - Increase version_id and minimum_version_id
 
------BEGIN PGP SIGNATURE-----
+ hw/intc/riscv_aplic.c | 12 ++++++++++--
+ hw/intc/riscv_imsic.c | 10 ++++++++--
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmg4VIsACgkQnKSrs4Gr
-c8gZOggApIU0lYnU4EhzfzL4w0e3HJNLKgrJ3Y/D2ZO6Dt+TufokHmm+8esK8pFt
-pw7LCDAkpkR0HpldXgYddzDG0axFpBjlB7K8hqDzl81P+ymE5xO+UmqzkCI3f+M6
-0jVQmsBvmOeOxqLa9n7nfqSE81sIvnOr/KrIWGJHsDJaeaIoR076+6W2ZfrEhRtj
-OOwXdLplCHgpKlLbJ2pxNM3Jwr2J2ojmsyDEfAQ2nZCcFm+3gEHYe04kvB/YIxRN
-15Eb6nW4rJjJ0aAcvR1h9nDN8EWwa16xKYD9SYoPRtIN3RSaFf9+kyQcEJot2w0a
-dFmHbzspqopA0oQ9GM+zSEoMU6i74g==
-=o8Nb
------END PGP SIGNATURE-----
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 8bcd9f4697..4fa5f7597b 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -962,10 +962,18 @@ static const Property riscv_aplic_properties[] = {
+     DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
+ };
 
---vMGh+baLXUDgifjK--
++static bool riscv_aplic_state_needed(void *opaque)
++{
++    RISCVAPLICState *aplic = opaque;
++
++    return riscv_use_emulated_aplic(aplic->msimode);
++}
++
+ static const VMStateDescription vmstate_riscv_aplic = {
+     .name = "riscv_aplic",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
++    .version_id = 3,
++    .minimum_version_id = 3,
++    .needed = riscv_aplic_state_needed,
+     .fields = (const VMStateField[]) {
+             VMSTATE_UINT32(domaincfg, RISCVAPLICState),
+             VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index 2169988167..6174e1a05d 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -398,10 +398,16 @@ static const Property riscv_imsic_properties[] = {
+     DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
+ };
 
++static bool riscv_imsic_state_needed(void *opaque)
++{
++    return !kvm_irqchip_in_kernel();
++}
++
+ static const VMStateDescription vmstate_riscv_imsic = {
+     .name = "riscv_imsic",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
++    .needed = riscv_imsic_state_needed,
+     .fields = (const VMStateField[]) {
+             VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
+                                   num_pages, 0,
+-- 
+2.27.0
 
