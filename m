@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8893C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E87C54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:28:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKist-0004MJ-5s; Thu, 29 May 2025 15:25:47 -0400
+	id 1uKis1-0003yh-HV; Thu, 29 May 2025 15:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisS-0004ER-KE
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:21 -0400
+ id 1uKirz-0003xT-Au
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:24:51 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisQ-0000R3-Vy
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:20 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfxVf022106;
- Thu, 29 May 2025 19:25:06 GMT
+ id 1uKirw-0000Bw-Av
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:24:51 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfuZB009750;
+ Thu, 29 May 2025 19:24:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=fxDcFwFeZtL4RvB4l4f1LNOH5ChDVZEc60qqlx6krBw=; b=
- G+Ba+jWIcb2BU+qxyheJMhdvV1odBLyfVlwksY6CRkNPRDRBCdgbxIQ2kgJ1EpzM
- fCMYcj7iOMo0yYT8unawUwxJqlAYWMB1ysss9yxnz7Hn/j8qYe936MOUCzFD/7D0
- 3dFEY9tEuSbCNm9oIzyNcrYlzetb5E5cO1QJrIHq/cuE3uYxaUEWEZ1/JHmf4lOP
- Q8aNVL3EB0PSpAN3JAWzh2RooHX4G8vC53qCBOHmK7v4u+lDlCx1JW49W00ZPd9R
- cpBbQlQCOTIi1obk+m9gQAYTm3mvaZPcKrWgsYeTkLO8P2+paJluzT6XrWPaWdW+
- bfCxwyhcSGlB/i2qFTJ8Gw==
+ corp-2025-04-25; bh=Ea+5EYi8Tx/9RZm/d1wDYlyZ2nDP47w8FHLAWrrkJ5w=; b=
+ q6y2zFnJxARhM3h1ZaC1MgMKzsaTcyNwk/VfGlav61b7zvs/8kltqNlMeIuIQLMf
+ c9xsM0P36fBoN6DCSNPhR4VZtctrY3Xc+7N1fJ0VNho2BFp4wdTRC51J8kppeAg9
+ Sn7mxRbYVAjZv2xaSov7LTZL28SXmjv0tQsc1XAkqNHHjel6pc6k4Z/EJbfA46Pf
+ CNvzx70qv4gQNHKTfOEQixujtEPYugBWIW0RRgw19YTX8BQ0sVTQUWdkM+QV+w0X
+ lT3wEkNvxQ4kq6KKsRS1CY0jK+6gd8hwRUJkSfW5rEIiN4MVDdIKkaf4Jw9K1IXY
+ 0D1k1lPTG3o9CBw8HfVlfA==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v0ym12k7-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v46u0ytt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:25:06 +0000 (GMT)
+ Thu, 29 May 2025 19:24:45 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54THfAdT020441; Thu, 29 May 2025 19:25:05 GMT
+ with ESMTP id 54THgPjo020337; Thu, 29 May 2025 19:24:44 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jc4w20-1
+ 46u4jc4vn1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:25:05 +0000
+ Thu, 29 May 2025 19:24:44 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeRl022158;
- Thu, 29 May 2025 19:25:05 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeQt022158;
+ Thu, 29 May 2025 19:24:44 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46u4jc4vjq-31; Thu, 29 May 2025 19:25:05 +0000
+ ESMTP id 46u4jc4vjq-5; Thu, 29 May 2025 19:24:44 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 30/43] physmem: qemu_ram_get_fd_offset
-Date: Thu, 29 May 2025 12:24:26 -0700
-Message-Id: <1748546679-154091-31-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 04/43] vfio/pci: vfio_pci_put_device on failure
+Date: Thu, 29 May 2025 12:24:00 -0700
+Message-Id: <1748546679-154091-5-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
@@ -77,19 +77,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505290189
-X-Proofpoint-GUID: wWIGb6kdZOne-9SKDqJSKyffL86N0GYY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfXyXZHIjg7qfkP
- xg+eq2nGURmr+wcGKgW0COPcLiHClVQiWDw7zzQxxc/mTGo0ZBeGuUY3llX14SahJ3BCwdBBd2q
- JISlXNPGlyPU6LOFaLZ55ktfvz2WONPNKSyyBCsTode5bII+JfgQPo4+Tq3zCMQd+8qUkTg2IaO
- E6aelYc49lxvmEtaYiVUarz7pIWlZS7GEC0w/t3ik+PseKxBQlun/lVoOA9W/vhfBN77v4URB/K
- NElaOUnvjCDwV39+svCIGzeOVRHSMM8OUdb+vPMOorBRg62OqEnymr8zT/dJVCjsZo2WL0p8mq7
- 37A9rWCmSD5kYKImYio+xrEhxJeRQc3rTrrKIkiqyB4PDp1aCH7G4K54GXv5SCYo8qWFoNWVvdY
- YDU+yEI/BiUIagzPktE10boY1koFEql8LywvcO1KHC1K/Dza45PXI6NwLy0kiU9AQIcZaxbU
-X-Proofpoint-ORIG-GUID: wWIGb6kdZOne-9SKDqJSKyffL86N0GYY
-X-Authority-Analysis: v=2.4 cv=N7MpF39B c=1 sm=1 tr=0 ts=6838b492 cx=c_pps
+X-Proofpoint-GUID: 3dMEcp5MNlMgw9l3f-v9RKACLYHGWAeE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX9h4n0s4FTDRL
+ P9kc5a1Z0kjbPSpIrxbGba/GYK1deqtXVcwKf5oGQxIuRdmveLVprQE3nMKbYE8shzXfsMCSa4V
+ K5HKDXFhRCGj/7kTB/cs0Hx1jm8jBZoa0jhUTsJeJoWOAiRDuirXIEAVAnXrjMW8vvPGm8cfjKo
+ rJUSqW8cFDFeN+R7QzaxhspvJwlW8XAPWuHYube0/pQmU4SSX7eYAwkWBdaiIEEISoTfX/EOWbG
+ dLQlwiyzwoTLLZ6pfudWsbSDArEEP0mGU+ZYh1vqyJ/G/vjA8PRuCdusRbMBZVFF2pGAET7HIjG
+ JwQ5dENTexFaiPwils1iEEtgZRk5Bsn7cM2ZqkoA/03qR4OwgucF2iFLuFGGNTXrF01x9kODrsj
+ QWMs/zY+RD3Y6OZZLklEEqCaPhNRj8Rf2L1ZOnXNqfaFUH8fz/yc9wKI2GP0v3PTDFXZ0FER
+X-Authority-Analysis: v=2.4 cv=VskjA/2n c=1 sm=1 tr=0 ts=6838b47d cx=c_pps
  a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8
- a=s_ck3szjhOtuhh_aLR8A:9
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=eD10S8Hqz9QlufsINnwA:9
+X-Proofpoint-ORIG-GUID: 3dMEcp5MNlMgw9l3f-v9RKACLYHGWAeE
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -115,45 +114,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define qemu_ram_get_fd_offset, so CPR can map a memory region using
-IOMMU_IOAS_MAP_FILE in a subsequent patch.
+If vfio_realize fails after vfio_device_attach, it should call
+vfio_device_detach during error recovery.  If it fails after
+vfio_device_get_name, it should free vbasedev->name.  If it fails
+after vfio_pci_config_setup, it should free vdev->msix.
+
+To fix all, call vfio_pci_put_device().
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/exec/cpu-common.h | 1 +
- system/physmem.c          | 5 +++++
- 2 files changed, 6 insertions(+)
+ hw/vfio/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index a684855..9b658a3 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -85,6 +85,7 @@ void qemu_ram_unset_idstr(RAMBlock *block);
- const char *qemu_ram_get_idstr(RAMBlock *rb);
- void *qemu_ram_get_host_addr(RAMBlock *rb);
- ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
- ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
- bool qemu_ram_is_shared(RAMBlock *rb);
-diff --git a/system/physmem.c b/system/physmem.c
-index a8a9ca3..18684a4 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1593,6 +1593,11 @@ ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
-     return rb->offset;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index a1bfdfe..7d3b9ff 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3296,6 +3296,7 @@ out_teardown:
+     vfio_bars_exit(vdev);
+ error:
+     error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
++    vfio_pci_put_device(vdev);
  }
  
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
-+{
-+    return rb->fd_offset;
-+}
-+
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
- {
-     return rb->used_length;
+ static void vfio_instance_finalize(Object *obj)
 -- 
 1.8.3.1
 
