@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8218EC54FB3
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 17:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D15C5AD49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 17:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKgzR-0008Eb-05; Thu, 29 May 2025 13:24:25 -0400
+	id 1uKh21-00010v-TF; Thu, 29 May 2025 13:27:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uKgzE-0008BS-EI
- for qemu-devel@nongnu.org; Thu, 29 May 2025 13:24:14 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uKgzA-0003Fi-4b
- for qemu-devel@nongnu.org; Thu, 29 May 2025 13:24:12 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-234e48b736aso15249905ad.3
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 10:24:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748539447; x=1749144247; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kEyH62zNAebqEqtp3fTh4mOcudMflb/GkOdJm5SLEDk=;
- b=MZ7apDHEV+cVOAUWn2ksXEsgdlWFdNhPJMLZk4UTVDpNk6A8f6AZQviruv0xtC/f3E
- BirGJNSvdYF5N658TwKluvuraSh1Q7Vet+5b5POYhL6iYL7Exzgj42e2U9b4ICDjf56B
- j9RNvcDiAYpunmGrPxpNsRfuinGgymVTiSSEYDPjrysFBP5OlK5feq3gg2vUr/O8ette
- fgRuyqL5LBh2tCN6/xgvxIurvg+vIFL79G9748H9XBby2rBU/KBsLsdQRc/VYMoVR9aJ
- mxA09sH3Ez0T22361d4eyVOcS9M8a0+m7wYBzIWMj8PMgR5ia9pa9tasxly3wdCGBzM8
- 48iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748539447; x=1749144247;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kEyH62zNAebqEqtp3fTh4mOcudMflb/GkOdJm5SLEDk=;
- b=CRKbGtLk16EmhyjuKePj+I5gmybJKWkZZ1Radp0VUH5wwajIcDd23dBFKb254QKQnk
- Nxh9DQwPYqmPctZ04qP+GBXsbrJa/SuFMuEzY42GdzjyNt3jK0gnSOpJdmDkigsv7sIg
- MBS0rdH4UD0L+ItNys2FAwd819mk6DYzFiggKkdfp7cKvtF/kuUv5AGb+7cbsUx0vLB9
- XGloEICdqiqcpHcHwynAyS2sj66pakRS9XKhWAMeZwnDB6zUDAhNjDX0t1o1Xj3bwGFc
- h2BtUD083iYkhIG8FVQbl1nEpblKRsNW3pAs4KY8INgOjure6+DI04F4Y+eGSMyU/3hV
- p3vw==
-X-Gm-Message-State: AOJu0YwU0wQTjgqY1l6K8bhS1IO6px5ozEoK1cDSRxXaLAa+15SVAxY4
- OlXoATUbWUtAsklksTwT753I/QuST2KBK8T6apJUNSD+ciHpXd/1CCDm
-X-Gm-Gg: ASbGncs5LadpXe15R3Q5WSwIr0cJPa8/+Nw+fIPdKzz1L+nMTKiN4rdVGP2pXOLBwmn
- 4ZjyfcQ3cUx0Frm2RZRB2rF5QjMrFG/tQuVFwH3rhJiGX503LTf7XAh4kiEZrhwGoqbiOvCtwn0
- 6EtUD+5b9R7J3AogbAuqOnC+o3sV+/5abJTrOunPWci3nBtgHYqFiSAXupUv85EI7O7Lg81zhGf
- b3TXFjmImocT71Vo1jtM+XcqB60nXn3alaDZEX5ami26S/Aa9Nyh/Eg/hkJ9Qs5oSNs0okKQh9x
- MnRqc/myXu1S56PAT0yH9jDxyZaQKUVW/cS8WG49JttmsJ04mivbkmE=
-X-Google-Smtp-Source: AGHT+IGi5cGGCBmBiq+PkmtAJs3wjt1VsFTAILjcCXfRmlpkbOd8nC8FKlVdDZKj1HMFeYrFw5JuzQ==
-X-Received: by 2002:a17:902:c952:b0:235:779:edfe with SMTP id
- d9443c01a7336-23529a11512mr5031775ad.43.1748539446636; 
- Thu, 29 May 2025 10:24:06 -0700 (PDT)
-Received: from smc-140338-bm01 ([149.97.161.244])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23506bc8863sm14826385ad.19.2025.05.29.10.24.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 May 2025 10:24:06 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Thu, 29 May 2025 17:24:04 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, linux-cxl@vger.kernel.org,
- linuxarm@huawei.com
-Subject: Re: [PATCH qemu] hw/cxl: Fix register block locator size
-Message-ID: <aDiYNDGscGVVz6BB@smc-140338-bm01>
-References: <20250529134828.403049-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1uKh20-00010X-Cb
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 13:27:04 -0400
+Received: from terminus.zytor.com ([2607:7c80:54:3::136] helo=mail.zytor.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1uKh1y-0003fH-3j
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 13:27:04 -0400
+Received: from [192.168.7.202] ([71.202.166.45]) (authenticated bits=0)
+ by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 54THQvgt1998028
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+ Thu, 29 May 2025 10:26:57 -0700
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 54THQvgt1998028
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+ s=2025052101; t=1748539618;
+ bh=qAB+UgGyCkDrEJXrr281HaFRWYXwlzoL12NSo8gEu3U=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=GSwvLmFTHZhSizI1D2+FN8qU75f3BH1I8J+L6PoC+YyZGUH792+x8BH3ntkKgUCsz
+ xtOsuRhW0GcSrcs4k9tbSKOIU3HBOtz47a8ncWJhqVDBrrC36wgEBSynFRMZRcqq4H
+ RelUDrNjOTwM2K/JOmlDoHAk8pKPw7CH31Aq3JRs1vGZaAJslaKKTXxbWPyN7yFbal
+ NouJBZZKrSwEzExMZoyx/HhBcNLE+I7eY9Pb0leB16ks3p6cFwdYzIVnG2qEMn92v0
+ mVb9DtimD0eANHpOh9Ra5f4iK1X98p+wG+mLRxuOaYaKk0rjlhflKsflw81l4DYI0U
+ h3t6vNl/c0HUg==
+Message-ID: <46d569a2-b3b1-44a0-949f-3601fdb35d05@zytor.com>
+Date: Thu, 29 May 2025 10:26:56 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250529134828.403049-1-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x634.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] target/i386: Add a new CPU feature word for
+ CPUID.7.1.ECX
+To: Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ qemu-devel@nongnu.org
+Cc: mtosatti@redhat.com, xin3.li@intel.com
+References: <20250103084827.1820007-1-xin@zytor.com>
+ <20250103084827.1820007-3-xin@zytor.com>
+ <859d17d7-2f5f-456c-887e-7a50134a205d@intel.com>
+ <e63cbab9-3a9b-4556-aa44-3783573df32c@redhat.com>
+Content-Language: en-US
+From: Xin Li <xin@zytor.com>
+Autocrypt: addr=xin@zytor.com; keydata=
+ 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
+ l75w1xInsg==
+In-Reply-To: <e63cbab9-3a9b-4556-aa44-3783573df32c@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:7c80:54:3::136; envelope-from=xin@zytor.com;
+ helo=mail.zytor.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,38 +108,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 29, 2025 at 02:48:28PM +0100, Jonathan Cameron wrote:
-> This has been wrong from day 1.  For now we only have
-> two entries (component and device registers).
+On 5/29/2025 12:13 AM, Paolo Bonzini wrote:
+> On 5/26/25 05:47, Xiaoyao Li wrote:
+>> On 1/3/2025 4:48 PM, Xin Li (Intel) wrote:
+>>> @@ -1133,6 +1134,25 @@ FeatureWordInfo 
+>>> feature_word_info[FEATURE_WORDS] = {
+>>>           },
+>>>           .tcg_features = TCG_7_1_EAX_FEATURES,
+>>>       },
+>>> +    [FEAT_7_1_ECX] = {
+>>> +        .type = CPUID_FEATURE_WORD,
+>>> +        .feat_names = {
+>>> +            NULL, NULL, NULL, NULL,
+>>> +            NULL, NULL, NULL, NULL,
+>>> +            NULL, NULL, NULL, NULL,
+>>> +            NULL, NULL, NULL, NULL,
+>>> +            NULL, NULL, NULL, NULL,
+>>> +            NULL, NULL, NULL, NULL,
+>>> +            NULL, NULL, NULL, NULL,
+>>> +            NULL, NULL, NULL, NULL,
+>>
+>> This looks silly, and the size of feat_names[] was changed from 32 to 
+>> 64. Just explicitly assign the first 32 entries with NULL doesn't make 
+>> any sense after the size change.
 > 
-> The wrong size could lead to arbitrary data off the stack being presented
-> in PCIe config space.
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
-
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
->  include/hw/cxl/cxl_pci.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/cxl/cxl_pci.h b/include/hw/cxl/cxl_pci.h
-> index d0855ed78b..3bb882ce89 100644
-> --- a/include/hw/cxl/cxl_pci.h
-> +++ b/include/hw/cxl/cxl_pci.h
-> @@ -31,7 +31,7 @@
->  #define PCIE_CXL3_FLEXBUS_PORT_DVSEC_LENGTH 0x20
->  #define PCIE_CXL3_FLEXBUS_PORT_DVSEC_REVID  2
->  
-> -#define REG_LOC_DVSEC_LENGTH 0x24
-> +#define REG_LOC_DVSEC_LENGTH 0x1C
->  #define REG_LOC_DVSEC_REVID  0
->  
->  enum {
-> -- 
-> 2.48.1
+> 64 is just for MSR features.  This is a bit silly, I agree, but it is 
+> consistent with existing feature words and ultimately it becomes more 
+> compact after just 9 features.  So I'm queuing Xin's patches as they are.
 > 
 
--- 
-Fan Ni (From gmail)
+Paolo, thanks a lot!
+     Xin
+
 
