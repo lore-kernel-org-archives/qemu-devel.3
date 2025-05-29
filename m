@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40834C54FB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B0DC5B543
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 20:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKjmn-00046A-SX; Thu, 29 May 2025 16:23:33 -0400
+	id 1uKjmn-00046D-ST; Thu, 29 May 2025 16:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uKjmj-00045L-OG
- for qemu-devel@nongnu.org; Thu, 29 May 2025 16:23:30 -0400
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
+ id 1uKjmj-00045I-NC
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 16:23:29 -0400
+Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uKjmf-00065s-Ba
- for qemu-devel@nongnu.org; Thu, 29 May 2025 16:23:27 -0400
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-4e6d911daeaso269274137.1
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 13:23:23 -0700 (PDT)
+ id 1uKjmg-00066B-MW
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 16:23:29 -0400
+Received: by mail-vs1-xe2f.google.com with SMTP id
+ ada2fe7eead31-4e45a626663so351973137.0
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 13:23:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1748550202; x=1749155002; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gfHuZ0E99LVLJfXThl3w1NwekVMKfh+8f/1cLy/B10I=;
- b=QflPa/uPMpovIdHoSNRs9MPpFnOCqXChw7hRqXlE0T0YiFL9Khj1RomtYrHj4mZC7L
- u8xbIuXE57piiAyQYKtHpm04QKwI5ht4Rk0kQWDU18kcSW2NG3URXjxsFhDzN0f5AP/3
- grpkpMc1gcFcVU47ttxmr/ay+DZfcvBF49dGosLIKqVRpgJGtNb7/1W2k90O6dVRMUnV
- RzEMv2X341TQkvnJiHS7M7ZPYOomrkkKQ8Jnc70Eo5OnUka8/AXlS36edTHoI+yOOPjy
- Bn+kXFfFXIi+YSGsoTOh24McmHYRuMGDtBmKYmwelEKnT6liE85FGIrSrFn07GVU7vw9
- hLLw==
+ d=ventanamicro.com; s=google; t=1748550205; x=1749155005; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nKU8+wgagP2xmhSVKthNu0gF9sPW1lHUddlhIztOA9Y=;
+ b=dUooKqHl4FkN5tD1Sg7NSkLrbi8pssPxL6GAmw5g3bfBo+h2be+ySEkV7OHR9JFVRV
+ W5KcisBTvyIDnWJohXAZrg+gdu3w1N8QvjvJGLpqkpNgzDyERdT37aFMpkq9sIaO5Wme
+ LLccGnpgbFZZXxpmPEMDVArc8cp59M25ELkXTd2SV/dydf/upmi9jb+6X7TlfW2XSbYf
+ A8cSuoVwq2V6SHHNwO6hp6WERuFlusaZkEWIIjdChM5hlp7WmsQDTd5xXEL4FXr0aDi8
+ H0rgGYgb2WsHyFXmYmY6tHGZoqq3cPJaw66yOL2g6TihVQDQ907M1pw0HOlFMtP+7/b0
+ 8s0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748550202; x=1749155002;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gfHuZ0E99LVLJfXThl3w1NwekVMKfh+8f/1cLy/B10I=;
- b=S4pXDlGsLxRToHfCR0aiGPguUufqxFthJuYO/2L1Z/tnZUTwHAWjpej/p96EAcWch4
- G8yLMp6iDm1iO9zLDKDIxAC6adUg1YVJk98VYUA700OH637z0EjSP4PGT8LJQmknF+QU
- V1SYMvbhZfRTYGZRNivZSeLU9NLQ4xzy8MrxrKecH6aesQs/AobCv4ZHadStcX/G34wU
- 3AKayqylPgJgfJI8DfXx21DKm3s6GvtN1vHnmTVM1tJnP0G942v1QJQ5FjC3nQI+5yZ+
- dxvw238IE071akfVFmisAqHlEMDxwsgukXwAASOlItIxinazf9UMrrt5vavuBHOzIUCM
- D9mA==
-X-Gm-Message-State: AOJu0YzgqGbdSuBSZYjpl4nnvn2vuRvbNbZQlqgDZkN++Ak9C2mFptS9
- 7MUP4VKv3HB4Tbro4K8jDoEdNo8yA/kYXp7wWLqDr/3XjkqzwyafEjxvvEB774Vc6uQp02ABw8E
- gPvJZ
-X-Gm-Gg: ASbGnct7nkbxq4ZSACCpXb1KB+IJCkCvXWwFgaux9qDakVk3PCqbXpzEhq2MtbzBuN9
- KsAyIk695pmnGYnVtlls155qrcZsjy+cLTenP5MRlSTkYWaGn4a2xgLUzMBlTtSEEYID9rBtR9J
- Jdj4lHPVA04hvpAynwBIIy3xAzB50pqG7w5XWk31rBPKam+bSm7XFwwauC+8GU9IxM8tYTf4nkd
- ymVrFbratPEEkCMV8h7Ea04C1NQsZbHy/vqR7icI4DYp4BeivXkMFHppmQL9EdY8OCh/wl9NtJv
- wxyhhei8MiOOMIjc3pB/AGluC1Qw6F3i9YWKVjrTIS7/yHnREat3YFHJ2qnh0ch/nFDq2e0LdAz
- lBzTpVC2z/3u0Fw==
-X-Google-Smtp-Source: AGHT+IEf+EffzzQ73XC42MasVF/lbCg6Kl7q1clWdM2/5GhEayA7l119ar/KI02nyQCjSDSEettBLQ==
-X-Received: by 2002:a05:6102:38ce:b0:4e5:93f5:e834 with SMTP id
- ada2fe7eead31-4e6e41b2ec2mr1485431137.24.1748550201956; 
- Thu, 29 May 2025 13:23:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748550205; x=1749155005;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nKU8+wgagP2xmhSVKthNu0gF9sPW1lHUddlhIztOA9Y=;
+ b=wkZgZ4n0w9SY3sPVTAC3why/6Tzij3gZ69Ni2+jTLtqLMR/hX4FR7EJYLb4hVJ7Zpy
+ UYbgNG39CelUVWSrv6WsaYd3GylQ9QoXTSwj1CeaCs22XvuVqmaXskoYEGBD4slnGt79
+ q9Whwid3kin5gOWhSgKsj9GXfh+E63LPhdUf7vXYcmxoLp1k6EEVr0Qy5CKt+Js8Twmf
+ IP7uO4yiBF7eBrIgfaqInlYMNlmkWOMJFtFtFhLyAJ1xAXI7U7A7SW7W9Hik6yKCJBdK
+ V2nsZyo1Q6tRgvqFvOCysu2ZxZ85xKjlwAX9po8iEdNpA1jXB5LsJ+JoxA5HvAvAV5pO
+ SFPA==
+X-Gm-Message-State: AOJu0YzjgdVw32jGEf7p7IMRpY7ibYO5WNLxJxu1aaIpCIugHlgYUB6x
+ bZAHO/CYk2oRKqs//ZrTYmrozO2qvYc8bB3NeSrhLdQHYMfqpGEkPle9/NZ1rUxq42EHyBhxF4H
+ 7hUS8
+X-Gm-Gg: ASbGncsD6yzN2bxCjNlZ7lMUzJ2v8PBr12GB4G9s/smlRRpdZceNV79bBMbGAb6ROAv
+ gXE2BMf3/o3km5VBLNecJRGjm73apJtyKkTPqAf9kGlcbvZNI2UUyrWCcfHlxRS8oAXrapxKtIx
+ nZ+F+MVFgkuU4O74Xd9z0UIMri5WJV5VPILDCi5aXN/icEEPrY87dez8bcdMU9RhQrmAP1VcUPY
+ /z6Af+Vh+ge8HueEXumFyMBYBmwj+4wdWM/6iGpRHEOvgJ8kgWD1B/nzF2QKD/EcNUTC9up7wQQ
+ ZHDtOy/YDJFhFZBGAIbePbYCeN58vyzUf5kvYD+jUy4XFTssbU7RzkZcwG2djGzOcd0yL7//9+6
+ 4khEu6qpx50x4Pw==
+X-Google-Smtp-Source: AGHT+IFE6QryUIxLXTBvg58qdiEV4IAAFz2Kqqr4oOfrDQsmtUyI/7RGrDXn9ok2z9/49XlBtiy1JQ==
+X-Received: by 2002:a05:6102:38d0:b0:4e4:5ed0:19b2 with SMTP id
+ ada2fe7eead31-4e6e40f6e8dmr1401725137.9.1748550204856; 
+ Thu, 29 May 2025 13:23:24 -0700 (PDT)
 Received: from grind.dc1.ventanamicro.com ([191.255.35.190])
  by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-87e2a2c774asm1647137241.20.2025.05.29.13.23.19
+ a1e0cc1a2514c-87e2a2c774asm1647137241.20.2025.05.29.13.23.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 May 2025 13:23:21 -0700 (PDT)
+ Thu, 29 May 2025 13:23:24 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [qemu PATCH 0/3] target/riscv: add missing named features
-Date: Thu, 29 May 2025 17:23:12 -0300
-Message-ID: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
+Subject: [qemu PATCH 1/3] target/riscv/cpu.c: add 'sdtrig' in riscv,isa
+Date: Thu, 29 May 2025 17:23:13 -0300
+Message-ID: <20250529202315.1684198-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
+References: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-vs1-xe2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-vs1-xe2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,22 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+We have support for sdtrig for awhile but we are not advertising it. It
+is enabled by default via the 'debug' flag. Use the same flag to also
+advertise sdtrig.
 
-These simple patches add two missing named features in riscv,isa.  Third
-patch is a doc change I figured was worth doing.
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Drew, as far as Server SoC Reference platform goes, we don't have
-'sdext'. I guess we'll have to postpone the Server Soc Ref work for now.
-
-Daniel Henrique Barboza (3):
-  target/riscv/cpu.c: add 'sdtrig' in riscv,isa
-  target/riscv/cpu.c: add 'ssstrict' to riscv,isa
-  target/riscv/cpu.c: do better with 'named features' doc
-
- target/riscv/cpu.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
-
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index fe21e0fb44..9d6fae72b2 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -189,6 +189,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
++    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
+     ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
+     ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
 -- 
 2.49.0
 
