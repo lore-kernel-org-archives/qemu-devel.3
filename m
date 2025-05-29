@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C723C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 07:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C6DC54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 07:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKXeU-0005Ax-CW; Thu, 29 May 2025 03:26:10 -0400
+	id 1uKXhm-00078a-P7; Thu, 29 May 2025 03:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uKXeS-0005AK-Hu; Thu, 29 May 2025 03:26:08 -0400
+ id 1uKXhk-00077n-Dc; Thu, 29 May 2025 03:29:32 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uKXeQ-0005J6-H1; Thu, 29 May 2025 03:26:08 -0400
+ id 1uKXhi-0005Yj-IV; Thu, 29 May 2025 03:29:32 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F27A812611A;
- Thu, 29 May 2025 10:25:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C02A126122;
+ Thu, 29 May 2025 10:29:20 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 53019218C08;
- Thu, 29 May 2025 10:26:03 +0300 (MSK)
-Message-ID: <f5d8c3ef-d667-4849-8ff6-55a8b594b3dd@tls.msk.ru>
-Date: Thu, 29 May 2025 10:26:03 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 80791218C0A;
+ Thu, 29 May 2025 10:29:27 +0300 (MSK)
+Message-ID: <6e6f3084-3ee4-4498-aea6-77b2d2c1bce7@tls.msk.ru>
+Date: Thu, 29 May 2025 10:29:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] audio related fixes for 10.1
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <0bb1a55e-70f1-410b-8b59-78eed7f4c8f7@t-online.de>
+Subject: Re: [PATCH v3 00/28] Fix incorrect hash results on AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,9 +84,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <0bb1a55e-70f1-410b-8b59-78eed7f4c8f7@t-online.de>
+In-Reply-To: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -110,22 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.05.2025 08:42, Volker Rümelin wrote:
-> A few audio related fixes for 10.1.
-> 
-> The virtio-sound device is the first QEMU audio front end that supports floating point samples. The audio subsystem is only partially prepared for this. The commit message of patch 7/7 "audio: add float sample endianness converters" has the details. The new code paths in patch 7/7 are only compile tested. I don't have a big endian host to test.
-..
-> Volker Rümelin (7):
->    tests/functional: use 'none' audio driver for q800 tests
->    audio: fix SIGSEGV in AUD_get_buffer_size_out()
->    audio: fix size calculation in AUD_get_buffer_size_out()
->    hw/audio/asc: fix SIGSEGV in asc_realize()
->    hw/audio/asc: replace g_malloc0() with g_malloc()
->    audio/mixeng: remove unnecessary pointer type casts
->    audio: add float sample endianness converters
+On 15.05.2025 11:09, Jamin Lin via wrote:
 
-Is there anything here which is worth to apply to qemu-stable?
-(10.0.x is supposed to be an LTS series).
+> This patchset resolves incorrect hash results reported on the AST2700 platform.
+> This update addresses the following kernel warnings and test failures related to
+> the crypto self-test framework:
+..
+> Jamin Lin (28):
+>    hw/misc/aspeed_hace: Remove unused code for better readability
+>    hw/misc/aspeed_hace: Improve readability and consistency in variable
+>      naming
+>    hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to prevent firmware
+>      hang
+>    hw/misc/aspeed_hace: Extract direct mode hash buffer setup into helper
+>      function
+>    hw/misc/aspeed_hace: Extract SG-mode hash buffer setup into helper
+>      function
+>    hw/misc/aspeed_hace: Extract digest write and iov unmap into helper
+>      function
+>    hw/misc/aspeed_hace: Extract non-accumulation hash execution into
+>      helper function
+>    hw/misc/aspeed_hace: Extract accumulation-mode hash execution into
+>      helper function
+>    hw/misc/aspeed_hace: Introduce 64-bit hash source address helper
+>      function
+>    hw/misc/aspeed_hace: Rename R_HASH_DEST to R_HASH_DIGEST and introduce
+>      64-bit hash digest address helper
+>    hw/misc/aspeed_hace: Support accumulative mode for direct access mode
+>    hw/misc/aspeed_hace: Move register size to instance class and
+>      dynamically allocate regs
+>    hw/misc/aspeed_hace: Add support for source, digest, key buffer 64 bit
+>      addresses
+>    hw/misc/aspeed_hace: Support DMA 64 bits dram address
+>    hw/misc/aspeed_hace: Add trace-events for better debugging
+>    hw/misc/aspeed_hace: Support to dump plaintext and digest for better
+>      debugging
+>    tests/qtest: Reorder aspeed test list
+>    test/qtest: Introduce a new aspeed-hace-utils.c to place common
+>      testcases
+>    test/qtest/hace: Specify explicit array sizes for test vectors and
+>      hash results
+>    test/qtest/hace: Adjust test address range for AST1030 due to SRAM
+>      limitations
+>    test/qtest/hace: Add SHA-384 test cases for ASPEED HACE model
+>    test/qtest/hace: Add SHA-384 tests for AST2600
+>    test/qtest/hace: Add tests for AST1030
+>    test/qtest/hace: Update source data and digest data type to 64-bit
+>    test/qtest/hace: Support 64-bit source and digest addresses for
+>      AST2700
+>    test/qtest/hace: Support to test upper 32 bits of digest and source
+>      addresses
+>    test/qtest/hace: Support to validate 64-bit hmac key buffer addresses
+>    test/qtest/hace: Add tests for AST2700
+
+Is there anything here which is worth to apply to qemu-stable
+(10.0.x is supposed to be LTS series)?
 
 Thanks,
 
