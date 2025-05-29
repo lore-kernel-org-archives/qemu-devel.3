@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAE38C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9788C54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKisQ-0004Cv-JN; Thu, 29 May 2025 15:25:18 -0400
+	id 1uKisw-0004cl-Cr; Thu, 29 May 2025 15:25:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisJ-00047u-BH
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:11 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1uKisW-0004FI-0D
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:25 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisF-0000QL-7r
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:10 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfpx7022094;
- Thu, 29 May 2025 19:25:04 GMT
+ id 1uKisT-0000Rn-Jw
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:23 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfuul022092;
+ Thu, 29 May 2025 19:25:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=ZBnuRiGNb3IW9ufqKm9Mzf1gmIUYumg/Y7/g89K/NSs=; b=
- ZP7blGGDKXBAWRNH1Mj/+/hVCpSZ7VlMITQZfEe19PX0wVbWDFKpGqDuTt20lHry
- 3d0zMy6o9ZUxS2M6evsuXyM7z3Y6OAVz/+nq/F7YrGuNU8ewcgj1I1fIHicojbl1
- YNbAcI4hAQfRBvbChXSMp+U/YNcLASVlMW3F0CfhACPaomCOV2U+YgpvVVnckz8R
- YpABqSmEvWkq097JDXBKfOdIPU46doVP1qAe5wVV3Sm/Nzzulna85pyGqIle8HT3
- 77N5ydp5Z3OrLgCuVFNb8largYZGixf63Wm/f0C0IFMAowXUbD4OKo+zrPNQbJEJ
- mJ1Wo83MozZxpDrcgXAsSw==
+ corp-2025-04-25; bh=RAS+UZC/WGBW5cnJMIdMxQqfQASxRnZ2idO9jx4/bnU=; b=
+ SsVi6vc76FREQQYBCCAl240IYGq3AdxD/x/ln2qSaxUtSsrhFssL3ZnJvy9+sANB
+ BSYBa+ZWD8ZKX4+6c+0yc+HSHDXeudxKfH7Fl5XaHpAxg5qGUm7vuBT4gA7F4bTD
+ /bho1Q41KCBkuLphQXTeF0uA50GK5S6enLYnuDHTGst8DQY91HmAeRdXwKqBGTdR
+ 7GcRLHZXaH2LmQEfF5Nr0RJ4IilAQ3OsdPV3A7wWheWh9zqNzCdXZ/jPaU3Gp6wK
+ hvX2bHxHIWYUSzCtoIMb/zxR016LYG7yFFQliAIKwHOO5ax5JdRn+ycQKcKM+/tx
+ qGxxAwEJLsZoJbHg9JoBWQ==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v0g2h185-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v0ym12k9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:25:04 +0000 (GMT)
+ Thu, 29 May 2025 19:25:08 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54TJLPvE020301; Thu, 29 May 2025 19:25:03 GMT
+ with ESMTP id 54THgPjx020337; Thu, 29 May 2025 19:25:07 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jc4vyr-1
+ 46u4jc4w3p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:25:03 +0000
+ Thu, 29 May 2025 19:25:07 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeRf022158;
- Thu, 29 May 2025 19:25:02 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeRp022158;
+ Thu, 29 May 2025 19:25:06 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46u4jc4vjq-28; Thu, 29 May 2025 19:25:02 +0000
+ ESMTP id 46u4jc4vjq-33; Thu, 29 May 2025 19:25:06 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 27/43] migration: cpr_get_fd_param helper
-Date: Thu, 29 May 2025 12:24:23 -0700
-Message-Id: <1748546679-154091-28-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 32/43] vfio/iommufd: invariant device name
+Date: Thu, 29 May 2025 12:24:28 -0700
+Message-Id: <1748546679-154091-33-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
@@ -77,20 +77,20 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505290189
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX8xDk5cWyC2kQ
- 9nLmn0EzeY28a2FyfJJLp5dcBTyNaCuqSfeDYT2lPg3yRVwWM3zi/Zt15Wj+i3FvIGUiD9Z8mGb
- cQxdVqxdWoOOUcjn29AwMy1AfHpNxZHTYMiGt+HGPtc8Rf5KmuLllZQvguP431kzpcWrSo5XfHJ
- 31Q9EtsTwhNkzsBIbFjCneP1rZ1mPkt3v7Rcl2DH5whUPEnBnddc8Sf0z7MyKaoZRk8eQ0mNBCB
- d1ujw+4M22xpLiE4fqcWnzIcVDF19svlI8EZvoTIpqg0o0UZvBndSkFfYMwvoP+qdPLZBp1jJVN
- nKIuyJ7yLOGQ4fntuld1Ozfky384GkVJeNBQABHwEjVCb4/nGOf47msHu1jewG0fMrkSZzWN0v+
- /lioKdBk/j9kjEhJYfUXAbuI82D+azWwNKyGOVrnjn2n/lhUdtSxN7fz4xiiQ9NSvK3DJwJG
-X-Authority-Analysis: v=2.4 cv=NJLV+16g c=1 sm=1 tr=0 ts=6838b490 cx=c_pps
+X-Proofpoint-GUID: jkLymqR4VJId90nizxDALZIEQo08jTq9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX/HTHR1zQQZCd
+ u6vkim5jbZrTAtVmoPUuEk2MFOEsnkke0ckOMMdOZm+Vm5fnxAYiX00ORFZci+698dIOWsZkDqj
+ lsdQqg5DwHTW5cJfHnB3R4uFicA6wP70+6OL9LKsWM3KE6EWfpuKSvH4PQXpL9bVg/aO2Ja/2/N
+ 0XgsxNojwXfe6/TQUzaT6mz4hEJXTLB//vdhi3euS773BH3fz3C5kdyR05ZhZkfpvRt82oBbfYC
+ vewM8AuHn44FiECsDFWHMaKWTPRj2mjw8pJqhWIWucVW5XnBxgA+sklQXFayV3TDx8jpfsctCD3
+ fC5lyAJk9krLRUaFDaZ/tVdIKqcX2t4dq0zhHWZMRssSjBqiuknipRMnIy9xowoD55/y1Nx5EyP
+ wL2/aJJ4U+GvVg0Ro+9Ez9UQBidT4LrECkJVDbQ2lQHzVcXmXmDIpT+IwbWLJK4svPwauBAm
+X-Proofpoint-ORIG-GUID: jkLymqR4VJId90nizxDALZIEQo08jTq9
+X-Authority-Analysis: v=2.4 cv=N7MpF39B c=1 sm=1 tr=0 ts=6838b494 cx=c_pps
  a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=xj5pLq7tU-gV2qsf3bMA:9
-X-Proofpoint-ORIG-GUID: 65WZ-QqrgIMM_mv1p7G1uoR0TgRKcsWn
-X-Proofpoint-GUID: 65WZ-QqrgIMM_mv1p7G1uoR0TgRKcsWn
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=3QIz5wLK-XFPp17kOLYA:9
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
@@ -114,94 +114,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the helper function cpr_get_fd_param, to use when preserving
-a file descriptor that is opened externally and passed to QEMU.
-cpr_get_fd_param returns a descriptor number either from a QEMU
-command-line parameter, from a getfd command, or from CPR state.
+cpr-transfer will use the device name as a key to find the value
+of the device descriptor in new QEMU.  However, if the descriptor
+number is specified by a command-line fd parameter, then
+vfio_device_get_name creates a name that includes the fd number.
+This causes a chicken-and-egg problem: new QEMU must know the fd
+number to construct a name to find the fd number.
 
-When a descriptor is passed to new QEMU via SCM_RIGHTS, its number
-changes.  Hence, during CPR, the command-line parameter is ignored
-in new QEMU, and over-ridden by the value found in CPR state.
-
-Similarly, if the descriptor was originally specified by a getfd
-command in old QEMU, the fd number is not known outside of QEMU,
-and it changes when sent to new QEMU via SCM_RIGHTS.  Hence the
-user cannot send getfd to new QEMU, but when the user sends a
-hotplug command that references the fd, cpr_get_fd_param finds
-its value in CPR state.
+To fix, create an invariant name based on the id command-line parameter,
+if id is defined.  The user will need to provide such an id to use CPR.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/migration/cpr.h |  2 ++
- migration/cpr.c         | 37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ hw/vfio/device.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index d09b657..7fd8065 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -33,6 +33,8 @@ struct QIOChannel *cpr_state_ioc(void);
- 
- bool cpr_incoming_needed(void *opaque);
- void cpr_kvm_close(void);
-+int cpr_get_fd_param(const char *name, const char *fdname, int index,
-+                     Error **errp);
- 
- void cpr_transfer_init(void);
- QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
-diff --git a/migration/cpr.c b/migration/cpr.c
-index 49fb0a5..4574608 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -14,6 +14,7 @@
- #include "migration/qemu-file.h"
- #include "migration/savevm.h"
- #include "migration/vmstate.h"
-+#include "monitor/monitor.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
- #include "trace.h"
-@@ -272,3 +273,39 @@ void cpr_kvm_close(void)
-     kvm_close();
-     vfio_kvm_device_close();
- }
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 9fba2c7..71fa9f4 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -300,12 +300,17 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
+             error_setg(errp, "Use FD passing only with iommufd backend");
+             return false;
+         }
+-        /*
+-         * Give a name with fd so any function printing out vbasedev->name
+-         * will not break.
+-         */
+         if (!vbasedev->name) {
+-            vbasedev->name = g_strdup_printf("VFIO_FD%d", vbasedev->fd);
 +
-+/*
-+ * cpr_get_fd_param: find a descriptor and return its value.
-+ *
-+ * @name: CPR name for the descriptor
-+ * @fdname: An integer-valued string, or a name passed to a getfd command
-+ * @index: CPR index of the descriptor
-+ * @errp: returned error message
-+ *
-+ * If CPR is not being performed, then use @fdname to find the fd.
-+ * If CPR is being performed, then ignore @fdname, and look for @name
-+ * and @index in CPR state.
-+ *
-+ * On success returns the fd value, else returns -1.
-+ */
-+int cpr_get_fd_param(const char *name, const char *fdname, int index,
-+                     Error **errp)
-+{
-+    ERRP_GUARD();
-+    int fd;
-+
-+    if (cpr_is_incoming()) {
-+        fd = cpr_find_fd(name, index);
-+        if (fd < 0) {
-+            error_setg(errp, "cannot find saved value for fd %s", fdname);
-+        }
-+    } else {
-+        fd = monitor_fd_param(monitor_cur(), fdname, errp);
-+        if (fd >= 0) {
-+            cpr_save_fd(name, index, fd);
-+        } else {
-+            error_prepend(errp, "Could not parse object fd %s:", fdname);
-+        }
-+    }
-+    return fd;
-+}
++            if (vbasedev->dev->id) {
++                vbasedev->name = g_strdup(vbasedev->dev->id);
++                return true;
++            } else {
++                /*
++                 * Assign a name so any function printing it will not break.
++                 */
++                vbasedev->name = g_strdup_printf("VFIO_FD%d", vbasedev->fd);
++            }
+         }
+     }
+ 
 -- 
 1.8.3.1
 
