@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 109E6C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 22:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACF4C54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 23:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKlKu-0005b5-T4; Thu, 29 May 2025 18:02:53 -0400
+	id 1uKmLs-0004mN-ID; Thu, 29 May 2025 19:07:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKlKt-0005aF-6T
- for qemu-devel@nongnu.org; Thu, 29 May 2025 18:02:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKlKr-0002aj-DZ
- for qemu-devel@nongnu.org; Thu, 29 May 2025 18:02:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748556168;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=trLlnZ7xN6wN3xsvXNehE4gJcK9/Aq7r+pfz0MLrc2g=;
- b=NnlLouhr8k8hrDnBu/CHfQAxVGhz2uXP1pMLSLRIFrNpVjTYQQWV3FL/Owudszn9LQoc64
- MYcoWvRo+crzbX1px7oqS/lHqHMybNchytE1BXNGZKsU26eAhiTc/h6UOCMsUYcsWeOrV7
- 2WYZp0eAAPDtiuVd2soQpoVq8MCkJ7w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-29m3TvenMRCflAEIbsfPVw-1; Thu,
- 29 May 2025 18:02:46 -0400
-X-MC-Unique: 29m3TvenMRCflAEIbsfPVw-1
-X-Mimecast-MFC-AGG-ID: 29m3TvenMRCflAEIbsfPVw_1748556165
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B88E1800447; Thu, 29 May 2025 22:02:45 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.48])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E0BD619560A7; Thu, 29 May 2025 22:02:43 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PULL 6/6] iotests: Filter out ZFS in several tests
-Date: Thu, 29 May 2025 17:02:13 -0500
-Message-ID: <20250529220228.1187563-14-eblake@redhat.com>
-In-Reply-To: <20250529220228.1187563-8-eblake@redhat.com>
-References: <20250529220228.1187563-8-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uKmLq-0004m5-6x; Thu, 29 May 2025 19:07:54 -0400
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uKmLo-0004nm-Mp; Thu, 29 May 2025 19:07:53 -0400
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-525da75d902so433457e0c.3; 
+ Thu, 29 May 2025 16:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748560071; x=1749164871; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XA3WbUPKYypPg3U/frQttAvme9NxPp9qOD20cCwC3Kc=;
+ b=gpz61bHh4jMrOJfYKnZlNkp/x7ZaxVenmj7yh1riiJ8CGB3Ravl6lZUmLyoOp6IdVT
+ BzCwLm5xd6EBkWn13Q29w9qq6+kjbqXi8OHlHO1BPfTxuKFZdWLAG6GZ/M1oUepnk6O+
+ CrY7L66UUxhEn4BlkST9Hl+4PZ4k8lQWy5bMo66OAUvYL1nbUZxGJ8+1g4fNB0ewdw4D
+ Tw2YDpL1JcyxqO3p+kfzfAX95TM3JRlZeqx84J3hljdjjaZG9NitlvGqzUeJN/+iHb6A
+ SvVFzPcGJ9WmES2j9a0/SVlTElbA0Caly7d5nHXVD7mwdauk3uYUNcyUgDRjnhPBBMwR
+ HJrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748560071; x=1749164871;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XA3WbUPKYypPg3U/frQttAvme9NxPp9qOD20cCwC3Kc=;
+ b=VVf7YZElmJSqhqT1ltJuKgv0JLRNG1enGim1enuddaVlw+T/qtaBIZ+ij25WagrhKZ
+ IbbQ76RV+KoE2IkUyxa7K85PSd+cOUORiIsRNyh3lMD+r2E9HHGp+/rYJZAgv/80CDMD
+ EtgF9kjApNlWx1hwcJdzeEygaEfhi4CfLMI7NY1Ik1+aAcAsP8uC7dQiqNE3g1gsAavj
+ DRn1b56QTiWV5mj82ZlazE0lG47NiXuZMfqvW5qMamKtjX3cmuVoDtTqLzTQpVm2W7Dp
+ 2w6X3+EGxAfSakYVZBBh+4FMbLtVNQ/NnUmjQivsZSU2GM5+2g6Q8uecqlI/lOdzMVS7
+ afsw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/noz9OIAb7lOI9NazMyc4iz0fB6L4rugosSpj/MSZ+8vu+12Y8DoHnNV3ghxDc8WFZ0iWd+tGMOkT@nongnu.org
+X-Gm-Message-State: AOJu0YzY2qucURFpF+kR+nwdeWKdRO3oFLdPjMCC7SNmPK7nXj/HdHST
+ 7OZsqy+PADGq+lNpyaB/UpTSSNy7+nIL0PYZ6XxjRQzFzrOrIj6eWG6E0fJWxsjmcc2ctg1F9Av
+ zv5mhrX289SuGVhAEBRnr48NqGjjTtjc=
+X-Gm-Gg: ASbGncsQd9lYCxbnOOa17EfLBFAH4NX3+26Kea/tfNrbOgG5nDm/+eU8X28JFBJ2wlf
+ keMcTVlDTr6zoAAkilXC7jxGT8tbttgO8Fliq5xeeH2wLPZk8FBYdB2nLnu4KG4LgZmHRjSt+67
+ OSyylv2C0mHmS6w6w8/PSIyLW/FglC+sIEitNjoyIuIzdzxcQdmaO3ItUGpe49FYAy8hFQFzqcw
+ g==
+X-Google-Smtp-Source: AGHT+IGzAnUFb54ieWCYQAJ0qdcx1PeKfiVf+17fSA/Qsf+ZQlCQJU5MiK07ElUvKIM+X2YwXmVUaBeKydd+EzHBfW0=
+X-Received: by 2002:a05:6122:790:b0:52a:7787:53d7 with SMTP id
+ 71dfb90a1353d-5308109f849mr1676966e0c.6.1748560071117; Thu, 29 May 2025
+ 16:07:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250522081236.4050-1-jay.chang@sifive.com>
+In-Reply-To: <20250522081236.4050-1-jay.chang@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 30 May 2025 09:07:25 +1000
+X-Gm-Features: AX0GCFs8QVsWw5gXshylmO1pdoosxJYqXHcAh__StM9MZq-3rmDwsAUWyjsRXqI
+Message-ID: <CAKmqyKOCcyoPWbDJyWvZKeeWfBi7yPDSn9R4k3rwtz4HiZv6ig@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] Extend and configure PMP region count
+To: Jay Chang <jay.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,166 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fiona reported that ZFS makes sparse file testing awkward, since:
-- it has asynchronous allocation (not even 'fsync $file' makes du see
-  the desired size; it takes the slower 'fsync -f $file' which is not
-  appropriate for the tests)
-- for tests of fully allocated files, ZFS with compression enabled
-  still reports smaller disk usage
+On Thu, May 22, 2025 at 6:14=E2=80=AFPM Jay Chang <jay.chang@sifive.com> wr=
+ote:
+>
+> The first patch extends the number of PMP regions supported up to 64,
+> following the RISC-V Privileged Specification (version >1.12), where
+> RV32 can have up to 64 PMP regions configured through 16 CSRs.
+>
+> The second patch makes the PMP region count configurable via a new
+> CPU parameter `num-pmp-regions`. This allows platforms to adjust
+> the number of PMP regions without relying on a fixed default value.
+> If unspecified, the default remains 16 to preserve compatibility.
+>
+> Change log:
+>   V4:
+>   * Changed `pmp_regions` type from `uint16_t` to `uint8_t`
+>   * Introduced `OLD_MAX_RISCV_PMPS` macro
+>
+> Jay Chang (2):
+>   target/riscv: Extend PMP region up to 64
+>   target/riscv: Make PMP region count configurable
 
-Add a new _require_disk_usage that quickly probes whether an attempt
-to create a sparse 5M file shows as less than 1M usage, while the same
-file with -o preallocation=full shows as more than 4M usage without
-sync, which should filter out ZFS behavior.  Then use it in various
-affected tests.
+Thanks!
 
-This does not add the new filter on all tests that Fiona is seeing ZFS
-failures on, but only those where I could quickly spot that there is
-at least one place where the test depends on the output of 'du -b' or
-'stat -c %b'.
+Applied to riscv-to-apply.next
 
-Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20250523163041.2548675-8-eblake@redhat.com>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
----
- tests/qemu-iotests/common.rc                | 30 +++++++++++++++++++++
- tests/qemu-iotests/106                      |  1 +
- tests/qemu-iotests/175                      |  1 +
- tests/qemu-iotests/221                      |  1 +
- tests/qemu-iotests/253                      |  1 +
- tests/qemu-iotests/308                      |  1 +
- tests/qemu-iotests/tests/mirror-sparse      |  1 +
- tests/qemu-iotests/tests/write-zeroes-unmap |  1 +
- 8 files changed, 37 insertions(+)
+Alistair
 
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 237f746af88..e977cb4eb61 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -996,6 +996,36 @@ _require_large_file()
-     rm "$FILENAME"
- }
-
-+# Check whether disk_usage can be reliably used.
-+_require_disk_usage()
-+{
-+    local unusable=false
-+    # ZFS triggers known failures on this front; it does not immediately
-+    # allocate files, and then aggressively compresses writes even when full
-+    # allocation was requested.
-+    if [ -z "$TEST_IMG_FILE" ]; then
-+        FILENAME="$TEST_IMG"
-+    else
-+        FILENAME="$TEST_IMG_FILE"
-+    fi
-+    if [ -e "FILENAME" ]; then
-+        echo "unwilling to overwrite existing file"
-+        exit 1
-+    fi
-+    $QEMU_IMG create -f raw "$FILENAME" 5M > /dev/null
-+    if [ $(disk_usage "$FILENAME") -gt $((1024*1024)) ]; then
-+        unusable=true
-+    fi
-+    $QEMU_IMG create -f raw -o preallocation=full "$FILENAME" 5M > /dev/null
-+    if [ $(disk_usage "$FILENAME") -lt $((4*1024*1024)) ]; then
-+        unusable=true
-+    fi
-+    rm -f "$FILENAME"
-+    if $unusable; then
-+        _notrun "file system on $TEST_DIR does not handle sparse files nicely"
-+    fi
-+}
-+
- # Check that a set of devices is available in the QEMU binary
- #
- _require_devices()
-diff --git a/tests/qemu-iotests/106 b/tests/qemu-iotests/106
-index ae0fc466910..55548439aad 100755
---- a/tests/qemu-iotests/106
-+++ b/tests/qemu-iotests/106
-@@ -40,6 +40,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt raw
- _supported_proto file fuse
- _supported_os Linux
-+_require_disk_usage
-
- # in kB
- CREATION_SIZE=128
-diff --git a/tests/qemu-iotests/175 b/tests/qemu-iotests/175
-index f74f053b719..bbbf550a5af 100755
---- a/tests/qemu-iotests/175
-+++ b/tests/qemu-iotests/175
-@@ -77,6 +77,7 @@ _supported_os Linux
-
- _default_cache_mode none
- _supported_cache_modes none directsync
-+_require_disk_usage
-
- size=$((1 * 1024 * 1024))
-
-diff --git a/tests/qemu-iotests/221 b/tests/qemu-iotests/221
-index c463fd4b113..eba00b80adb 100755
---- a/tests/qemu-iotests/221
-+++ b/tests/qemu-iotests/221
-@@ -41,6 +41,7 @@ _supported_os Linux
-
- _default_cache_mode writeback
- _supported_cache_modes writeback writethrough unsafe
-+_require_disk_usage
-
- echo
- echo "=== Check mapping of unaligned raw image ==="
-diff --git a/tests/qemu-iotests/253 b/tests/qemu-iotests/253
-index 35039d20a89..6da85e6a113 100755
---- a/tests/qemu-iotests/253
-+++ b/tests/qemu-iotests/253
-@@ -41,6 +41,7 @@ _supported_os Linux
-
- _default_cache_mode none
- _supported_cache_modes none directsync
-+_require_disk_usage
-
- echo
- echo "=== Check mapping of unaligned raw image ==="
-diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
-index 437a9014da5..6eced3aefb9 100755
---- a/tests/qemu-iotests/308
-+++ b/tests/qemu-iotests/308
-@@ -51,6 +51,7 @@ _unsupported_fmt vpc
-
- _supported_proto file # We create the FUSE export manually
- _supported_os Linux # We need /dev/urandom
-+_require_disk_usage
-
- # $1: Export ID
- # $2: Options (beyond the node-name and ID)
-diff --git a/tests/qemu-iotests/tests/mirror-sparse b/tests/qemu-iotests/tests/mirror-sparse
-index 11418c08713..cfcaa600ab4 100755
---- a/tests/qemu-iotests/tests/mirror-sparse
-+++ b/tests/qemu-iotests/tests/mirror-sparse
-@@ -40,6 +40,7 @@ cd ..
- _supported_fmt qcow2 raw  # Format of the source. dst is always raw file
- _supported_proto file
- _supported_os Linux
-+_require_disk_usage
-
- echo
- echo "=== Initial image setup ==="
-diff --git a/tests/qemu-iotests/tests/write-zeroes-unmap b/tests/qemu-iotests/tests/write-zeroes-unmap
-index 7cfeeaf8391..f90fb8e8d27 100755
---- a/tests/qemu-iotests/tests/write-zeroes-unmap
-+++ b/tests/qemu-iotests/tests/write-zeroes-unmap
-@@ -32,6 +32,7 @@ cd ..
- _supported_fmt raw
- _supported_proto file
- _supported_os Linux
-+_require_disk_usage
-
- create_test_image() {
-     _make_test_img -f $IMGFMT 1m
--- 
-2.49.0
-
+>
+>  target/riscv/cpu.c                |  54 ++++++++++++-
+>  target/riscv/cpu.h                |   3 +-
+>  target/riscv/cpu_bits.h           |  60 ++++++++++++++
+>  target/riscv/cpu_cfg_fields.h.inc |   1 +
+>  target/riscv/csr.c                | 129 +++++++++++++++++++++++++++++-
+>  target/riscv/machine.c            |   3 +-
+>  target/riscv/pmp.c                |  28 ++++---
+>  7 files changed, 262 insertions(+), 16 deletions(-)
+>
+> --
+> 2.48.1
+>
+>
 
