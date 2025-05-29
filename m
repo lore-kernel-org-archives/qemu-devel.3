@@ -4,94 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527C9C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 16:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08CA1C54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 17:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKgRT-00083S-Gw; Thu, 29 May 2025 12:49:19 -0400
+	id 1uKgjf-0004QD-Fh; Thu, 29 May 2025 13:08:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uKgRC-00080f-4A
- for qemu-devel@nongnu.org; Thu, 29 May 2025 12:49:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uKgjT-0004PI-96
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 13:07:56 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uKgRA-0007P3-F8
- for qemu-devel@nongnu.org; Thu, 29 May 2025 12:49:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748537339;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zXxOUbDvoOps0OVa9sDqkeu/6zFOhv8DA5lhrLbf0g4=;
- b=BEBwyUkV/3Yzym8kv+wz/716ljnE7XVD5ti5Lvz7TMaISYb6YH4oj3GjEWhknB6WlBchtO
- 0vhKDEDSYtOhvvGcJbAgGYsltJCHbtgCFyKXWUZtJLZC+ydRg9hn3/LXFaErPYirtIPw1z
- M8iv9Egxu8+7dt8qVrdhcJNXtyQ/Rd0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-g1ODFCaGM5CeRyDCG6Sw_w-1; Thu, 29 May 2025 12:48:58 -0400
-X-MC-Unique: g1ODFCaGM5CeRyDCG6Sw_w-1
-X-Mimecast-MFC-AGG-ID: g1ODFCaGM5CeRyDCG6Sw_w_1748537337
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f6cc5332so211535f8f.2
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 09:48:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748537337; x=1749142137;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zXxOUbDvoOps0OVa9sDqkeu/6zFOhv8DA5lhrLbf0g4=;
- b=Re+1eZ2YnqxMIKKQmKVTfNq3EokfMGHjfBVOdxzff5TiQJeZg0VsAJZopDCihy9oa7
- mzPPvZsHwqUPw3xgEhSyAXFuLDdGt1H5UD6DqrluInFucLoZ/FWKJCDmy/4Ay7KkoEvd
- ZqrHaEIpFspSVbnzohSEiVXrDx2TsfA6H4Ui9GmYNXS/d2lhf5OJ4EIh+7ZI95y3HgRN
- FZu+1DMryRSWsM3xNYWKadbBi4X/SgW2BkxEWrccJXfl4XeVQRmzfHm6Bln3Zxm7EDOk
- l/tHhTpKjtKtuZNAINfvsMeO5gaRUgBZYGRXqa3Dp0N8jBb9+TvJXHUjoHzXXGB1dbzJ
- 3k8Q==
-X-Gm-Message-State: AOJu0YyvnebXoBUr3nr486qWtRT6k/aZ2tFQs/185AeXq5C36cS4tcqD
- 3eTVIL/00UtYQWsnrUyYfmy8aEqmqa8UYqjzDIn7QFXmlNWZ9mIe4dUMMoUWMourAT1U1LKod8Q
- DU2eG/kbJvZ8++sxWYhxqjRxPAsUpsZHqwRG1Zzl2grShBbPHZYGFbGFC
-X-Gm-Gg: ASbGncvD34xFf0p3UQcv++DAO3GL0gTMGm5Qygs94ut1009qsTcyDSVfUPg/VRTbM1g
- 1qpNrcYCkkzYBeYt1QH3NhAsE0FQhwdRZ+qPUEQHetHfbbQqb/mtXxL8XbMsxdddLBKTQJirBfZ
- m5y2Qdsut9IB/tzoKenihn0xKmC4/0pd44Xt9HPVqCHQH5FCJ0y7cf5yG+CIKK+LwOAMBlfJ5sk
- o/AOa80NaNwb5h9nsx/OQnt9doHRV+g9fCbkd2t+Yph3APqvn8IaOGLuSu6XQxOA2lvBxPNuBEQ
-X-Received: by 2002:a05:6000:188c:b0:3a0:a0d1:1131 with SMTP id
- ffacd0b85a97d-3a4f7a23d97mr1816f8f.7.1748537336921; 
- Thu, 29 May 2025 09:48:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHatOyXqY9KJG9JnSruTp79/hBXsvSz/ybFW9+yfjzt/4QzqfAcj32XM6YpKsHzgqUgptlT+Q==
-X-Received: by 2002:a05:6000:188c:b0:3a0:a0d1:1131 with SMTP id
- ffacd0b85a97d-3a4f7a23d97mr1798f8f.7.1748537336444; 
- Thu, 29 May 2025 09:48:56 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe5b7f8sm2455006f8f.3.2025.05.29.09.48.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 May 2025 09:48:56 -0700 (PDT)
-Date: Thu, 29 May 2025 18:48:54 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH 10/11] migration: Rewrite the migration complete detect
- logic
-Message-ID: <jqyhfpkut5fbi5b7crmhvl63wakdm4wb5jz7xt5aztpyj3bigq@zvygzh6nxxxc>
-References: <20250527215850.1271072-1-peterx@redhat.com>
- <20250527215850.1271072-11-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uKgjO-0001Jd-Vv
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 13:07:55 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b7Xp40Zp2z6K9LY;
+ Fri, 30 May 2025 01:06:20 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 218D8140595;
+ Fri, 30 May 2025 01:07:36 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 29 May
+ 2025 19:07:35 +0200
+Date: Thu, 29 May 2025 18:07:34 +0100
+To: <nifan.cxl@gmail.com>, <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <anisa.su887@gmail.com>, <gourry@gourry.net>, <fan.ni@samsung.com>
+Subject: Re: [Qemu PATCH v2] hw/cxl: fix DC extent capacity tracking
+Message-ID: <20250529180734.00001197@huawei.com>
+In-Reply-To: <20250529163925.2916725-1-nifan.cxl@gmail.com>
+References: <20250529163925.2916725-1-nifan.cxl@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250527215850.1271072-11-peterx@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,89 +69,185 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-05-27 17:58, Peter Xu wrote:
-> There're a few things off here in that logic, rewrite it.  When at it, add
-> rich comment to explain each of the decisions.
-> 
-> Since this is very sensitive path for migration, below are the list of
-> things changed with their reasonings.
-> 
->   (1) Exact pending size is only needed for precopy not postcopy
-> 
->       Fundamentally it's because "exact" version only does one more deep
->       sync to fetch the pending results, while in postcopy's case it's
->       never going to sync anything more than estimate as the VM on source
->       is stopped.
-> 
->   (2) Do _not_ rely on threshold_size anymore to decide whether postcopy
->       should complete
-> 
->       threshold_size was calculated from the expected downtime and
->       bandwidth only during precopy as an efficient way to decide when to
->       switchover.  It's not sensible to rely on threshold_size in postcopy.
-> 
->       For precopy, if switchover is decided, the migration will complete
->       soon.  It's not true for postcopy.  Logically speaking, postcopy
->       should only complete the migration if all pending data is flushed.
-> 
->       Here it used to work because save_complete() used to implicitly
->       contain save_live_iterate() when there's pending size.
-> 
->       Even if that looks benign, having RAMs to be migrated in postcopy's
->       save_complete() has other bad side effects:
-> 
->       (a) Since save_complete() needs to be run once at a time, it means
->       when moving RAM there's no way moving other things (rather than
->       round-robin iterating the vmstate handlers like what we do with
->       ITERABLE phase).  Not an immediate concern, but it may stop working
->       in the future when there're more than one iterables (e.g. vfio
->       postcopy).
-> 
->       (b) postcopy recovery, unfortunately, only works during ITERABLE
->       phase. IOW, if src QEMU moves RAM during postcopy's save_complete()
->       and network failed, then it'll crash both QEMUs... OTOH if it failed
->       during iteration it'll still be recoverable.  IOW, this change should
->       further reduce the window QEMU split brain and crash in extreme cases.
-> 
->       If we enable the ram_save_complete() tracepoints, we'll see this
->       before this patch:
-> 
->       1267959@1748381938.294066:ram_save_complete dirty=9627, done=0
->       1267959@1748381938.308884:ram_save_complete dirty=0, done=1
-> 
->       It means in this migration there're 9627 pages migrated at complete()
->       of postcopy phase.
-> 
->       After this change, all the postcopy RAM should be migrated in iterable
->       phase, rather than save_complete():
-> 
->       1267959@1748381938.294066:ram_save_complete dirty=0, done=0
->       1267959@1748381938.308884:ram_save_complete dirty=0, done=1
-> 
->   (3) Adjust when to decide to switch to postcopy
-> 
->       This shouldn't be super important, the movement makes sure there's
->       only one in_postcopy check, then we are clear on what we do with the
->       two completely differnt use cases (precopy v.s. postcopy).
-> 
->   (4) Trivial touch up on threshold_size comparision
-> 
->   Which changes:
-> 
->   "(!pending_size || pending_size < s->threshold_size)"
-> 
->   into:
-> 
->   "(pending_size <= s->threshold_size)"
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration.c | 56 +++++++++++++++++++++++++++++++------------
->  1 file changed, 41 insertions(+), 15 deletions(-)
+On Thu, 29 May 2025 16:34:25 +0000
+nifan.cxl@gmail.com wrote:
 
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> From: Fan Ni <fan.ni@samsung.com>
+> 
+> Per cxl r3.2 Section 9.13.3.3, extent capacity tracking should include
+> extents in different states including added, pending, etc.
+> 
+> Before the change, for the in-device extent number tracking purpose, we only
+> have "total_extent_count" defined, which only tracks the number of
+> extents accepted. However, we need to track number of extents in other
+> states also, for now it is extents pending-to-add.
+> 
+> To fix that, we introduce a new counter for dynamic capacity
+> "nr_extents_accepted" which explicitly tracks number of the extents
+> accepted by the hosts, and fix "total_extent_count" to include
+> both accepted and pending extents counting.
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+Thanks.  Michael, would you mind picking this up directly if
+you are happy with it?   It is an esoteric corner case but
+we should emulate resource exhaustion for tracking extents correctly.
+
+I don't have many fixes queued up at the moment to make it worth
+me bundling them up into a little series.  There is just this one
+and the one for Register Locator capability size I posted
+earlier today (Fan can you take a look at that one?)
+
+> ---
+> v2:
+> 1) No functional changes;
+> 2) Rebased the code to ToT of master branch;
+> 3) Picked up tag;
+> 
+> v1:
+> https://lore.kernel.org/linux-cxl/20250520195741.789841-1-nifan.cxl@gmail.com/
+> ---
+>  hw/cxl/cxl-mailbox-utils.c  | 26 ++++++++++++++++++--------
+>  hw/mem/cxl_type3.c          |  1 +
+>  include/hw/cxl/cxl_device.h |  3 ++-
+>  3 files changed, 21 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 299f232f26..0b615ea37a 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -2750,7 +2750,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
+>      uint16_t out_pl_len, size;
+>      CXLDCExtent *ent;
+>  
+> -    if (start_extent_id > ct3d->dc.total_extent_count) {
+> +    if (start_extent_id > ct3d->dc.nr_extents_accepted) {
+>          return CXL_MBOX_INVALID_INPUT;
+>      }
+>  
+> @@ -2761,7 +2761,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
+>      out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
+>  
+>      stl_le_p(&out->count, record_count);
+> -    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
+> +    stl_le_p(&out->total_extents, ct3d->dc.nr_extents_accepted);
+>      stl_le_p(&out->generation_num, ct3d->dc.ext_list_gen_seq);
+>  
+>      if (record_count > 0) {
+> @@ -2883,16 +2883,20 @@ void cxl_extent_group_list_insert_tail(CXLDCExtentGroupList *list,
+>      QTAILQ_INSERT_TAIL(list, group, node);
+>  }
+>  
+> -void cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list)
+> +uint32_t cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list)
+>  {
+>      CXLDCExtent *ent, *ent_next;
+>      CXLDCExtentGroup *group = QTAILQ_FIRST(list);
+> +    uint32_t extents_deleted = 0;
+>  
+>      QTAILQ_REMOVE(list, group, node);
+>      QTAILQ_FOREACH_SAFE(ent, &group->list, node, ent_next) {
+>          cxl_remove_extent_from_extent_list(&group->list, ent);
+> +        extents_deleted++;
+>      }
+>      g_free(group);
+> +
+> +    return extents_deleted;
+>  }
+>  
+>  /*
+> @@ -3011,7 +3015,7 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+>      CXLUpdateDCExtentListInPl *in = (void *)payload_in;
+>      CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+>      CXLDCExtentList *extent_list = &ct3d->dc.extents;
+> -    uint32_t i;
+> +    uint32_t i, num;
+>      uint64_t dpa, len;
+>      CXLRetCode ret;
+>  
+> @@ -3020,7 +3024,8 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+>      }
+>  
+>      if (in->num_entries_updated == 0) {
+> -        cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
+> +        num = cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
+> +        ct3d->dc.total_extent_count -= num;
+>          return CXL_MBOX_SUCCESS;
+>      }
+>  
+> @@ -3051,10 +3056,12 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+>  
+>          cxl_insert_extent_to_extent_list(extent_list, dpa, len, NULL, 0);
+>          ct3d->dc.total_extent_count += 1;
+> +        ct3d->dc.nr_extents_accepted += 1;
+>          ct3_set_region_block_backed(ct3d, dpa, len);
+>      }
+>      /* Remove the first extent group in the pending list */
+> -    cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
+> +    num = cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
+> +    ct3d->dc.total_extent_count -= num;
+>  
+>      return CXL_MBOX_SUCCESS;
+>  }
+> @@ -3160,7 +3167,7 @@ free_and_exit:
+>          }
+>          *updated_list_size = 0;
+>      } else {
+> -        *updated_list_size = ct3d->dc.total_extent_count + cnt_delta;
+> +        *updated_list_size = ct3d->dc.nr_extents_accepted + cnt_delta;
+>      }
+>  
+>      return ret;
+> @@ -3222,7 +3229,10 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+>          ct3_set_region_block_backed(ct3d, ent->start_dpa, ent->len);
+>          cxl_remove_extent_from_extent_list(&updated_list, ent);
+>      }
+> -    ct3d->dc.total_extent_count = updated_list_size;
+> +    ct3d->dc.total_extent_count += (updated_list_size -
+> +                                    ct3d->dc.nr_extents_accepted);
+> +
+> +    ct3d->dc.nr_extents_accepted = updated_list_size;
+>  
+>      return CXL_MBOX_SUCCESS;
+>  }
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 94e7274912..f283178d88 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -2076,6 +2076,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
+>      }
+>      if (group) {
+>          cxl_extent_group_list_insert_tail(&dcd->dc.extents_pending, group);
+> +        dcd->dc.total_extent_count += num_extents;
+>      }
+>  
+>      /*
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index ed6cd50c67..a151e19da8 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -618,6 +618,7 @@ struct CXLType3Dev {
+>          CXLDCExtentList extents;
+>          CXLDCExtentGroupList extents_pending;
+>          uint32_t total_extent_count;
+> +        uint32_t nr_extents_accepted;
+>          uint32_t ext_list_gen_seq;
+>  
+>          uint8_t num_regions; /* 0-8 regions */
+> @@ -696,7 +697,7 @@ CXLDCExtentGroup *cxl_insert_extent_to_extent_group(CXLDCExtentGroup *group,
+>                                                      uint16_t shared_seq);
+>  void cxl_extent_group_list_insert_tail(CXLDCExtentGroupList *list,
+>                                         CXLDCExtentGroup *group);
+> -void cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list);
+> +uint32_t cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list);
+>  void ct3_set_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+>                                   uint64_t len);
+>  void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
 
 
