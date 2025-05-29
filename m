@@ -4,104 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7156C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 12:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B27CC54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 12:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKcCW-0004Z1-3O; Thu, 29 May 2025 08:17:36 -0400
+	id 1uKcQF-0006wE-6B; Thu, 29 May 2025 08:31:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=uImW=YN=kaod.org=clg@ozlabs.org>)
- id 1uKcCQ-0004YB-6i; Thu, 29 May 2025 08:17:30 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=uImW=YN=kaod.org=clg@ozlabs.org>)
- id 1uKcCN-0005dT-Bi; Thu, 29 May 2025 08:17:29 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4b7QNd71VVz4x5c;
- Thu, 29 May 2025 22:17:21 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4b7QNX0bbXz4wxx;
- Thu, 29 May 2025 22:17:14 +1000 (AEST)
-Message-ID: <e1b0a8ba-06e7-44ea-82ff-e5c2e8025548@kaod.org>
-Date: Thu, 29 May 2025 14:17:11 +0200
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uKcQD-0006vi-G1
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 08:31:45 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uKcQA-0006z8-Qh
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 08:31:45 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43cec5cd73bso5371495e9.3
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 05:31:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1748521901; x=1749126701; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=sdMCRkZJ14d7JDtYzX+jGxLo05g5/Mqwv1+UJpJUbj4=;
+ b=JOE4DX7cg+eqN7KWOyenp/cQcLEtzc/yHKpt5eVN1p8d1KSEFvvV4cS+rrCT3kN8sC
+ yZY2SDrY4wx1Rq6L86dEEkJzIfoC7xPajoF/kfirTSnEIhR4dahIxRBkgi/8Lp6F6O8h
+ 4lUPhYmWy4j2Ioxb/lIHKXcevsAPvt/s1KVh/UYpi+9kTcfXF5auWa6bC3FzwD6dsEmd
+ gXE6PL6eVskS67tgenVeVRmwKuZ3oTUBiP2fNs7tz14CZLnri7HsRYZJUsEJR0mZCOze
+ AA+kX8tVY3N95MgqhbXYRs2t8vl4ndjkVbf26Dy0k5l15liCZH3dvn5Ze9IX9pMWWeHk
+ KH5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748521901; x=1749126701;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sdMCRkZJ14d7JDtYzX+jGxLo05g5/Mqwv1+UJpJUbj4=;
+ b=VpBQ/61iXxcRlHd6Y5qrZyQlmYppUSuAxcQ3anBCUzz+0FfgmXxz45IRrQ9cY0Ln0c
+ a5pQbmCrVrf4IWztjeiCQTF6Y1+s+JS8uxQNmgq2gHT8xTeuRMEcO1vn4EGuLofBfeek
+ 6ReBfzchvPwSZ6XBbQbUXic1Ic+BEmGVFk/rbpVv6vpAqoTvorrpj6BtLEY04BEFE3qT
+ hCF9DWSUiuHne+OWNcu/lpCAHCnhBqSMC7eYdw/AAtVtbSnRjxy7j1TM9JrhazT1O4xq
+ rimMRGaGyJ6cJTqECHDEYXX42thLGEbX5bRll/+H/B0Lp1KyefeiMp/iVdZ8bxcjv4Wc
+ Vx+A==
+X-Gm-Message-State: AOJu0Yx+457orZIpM6pJcSwzs8MfWbtc57t4xDCCxOsW/v/ojsJLdDp9
+ 8ExqxQTax9/+W3EehqPzCBSFdPxWpB0F5/NIIX+u8Fmldx1hA3pKBCmIu4zPRFWVOvQ=
+X-Gm-Gg: ASbGncsn3M36EpR1TQLnRNndJ8zke6kE60FY2JVOh1Yt6HaAWaRP5eulH+UguJqqUe4
+ UETKhnnEGUSzimjqBF89TsnzfPYDwoNwJKFis+sS2XwM0IspXUOc87JtqCSA/42klOeQOR1SCPR
+ Hyq1Hglz/22jr3MoPPzgbiaSAfMUp/eyDkVrYRHDZMuNqelRrYsetUTB9wgj0zBs2O+SBzPabUz
+ PKVmWDI5icJVr+yvawS7BqX+50EqHGTMa7qJefjUwkiSBfZVthKMfbTtf7C9Y98giy3r6m+DC+G
+ yXDtwQU04Qc9oqENv1qWe/4QASJc9t96oWgnHcc=
+X-Google-Smtp-Source: AGHT+IEXzmlts1LsP2xTvM/T6epuHDAK664NQ/UhGb3L2LaQHe5bv9DFZBfdr7qhtIoYTfsWz+XXRg==
+X-Received: by 2002:a05:600c:3b9c:b0:43c:ec4c:25b1 with SMTP id
+ 5b1f17b1804b1-450d054da8amr18618995e9.23.1748521900714; 
+ Thu, 29 May 2025 05:31:40 -0700 (PDT)
+Received: from localhost ([2a02:8308:a00c:e200::ce80])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450cfbf42c1sm19327445e9.3.2025.05.29.05.31.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 May 2025 05:31:40 -0700 (PDT)
+Date: Thu, 29 May 2025 14:31:38 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
+ Fei Wu <wu.fei9@sanechips.com.cn>
+Subject: Re: [PATCH v3 3/4] hw/riscv: Add server platform reference machine
+Message-ID: <20250529-f556ccdcd6a7ea100bd80d1a@orel>
+References: <20250528200129.1548259-1-dbarboza@ventanamicro.com>
+ <20250528200129.1548259-4-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/28] Fix incorrect hash results on AST2700
-To: Michael Tokarev <mjt@tls.msk.ru>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250515081008.583578-1-jamin_lin@aspeedtech.com>
- <6e6f3084-3ee4-4498-aea6-77b2d2c1bce7@tls.msk.ru>
- <b0e01786-2f70-4331-b5c5-fb979f7e088c@kaod.org>
- <SI2PR06MB5041C06629D643329DB6A5C0FC66A@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <6fae9cac-2ecd-42ab-b328-97820b865b4a@tls.msk.ru>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <6fae9cac-2ecd-42ab-b328-97820b865b4a@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=uImW=YN=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250528200129.1548259-4-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,38 +100,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/29/25 09:45, Michael Tokarev wrote:
-> On 29.05.2025 10:40, Jamin Lin wrote:
-> ..
->>>> Is there anything here which is worth to apply to qemu-stable (10.0.x
->>>> is supposed to be LTS series)?
->>>
->>> The candidates would be these two :
->>>
->>>     hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to
->>>     hw/arm/aspeed_ast27x0: Fix RAM size detection failure on
->>>
->>> Jamin,
->>>
->>> Do you agree ?
->>>
->>
->> Agree
->> Thanks-Jamin
+On Wed, May 28, 2025 at 05:01:28PM -0300, Daniel Henrique Barboza wrote:
+> From: Fei Wu <wu.fei9@sanechips.com.cn>
 > 
-> That's what I picked up too, yes.
+> The RISC-V Server Platform specification[1] defines a standardized set
+> of hardware and software capabilities, that portable system software,
+> such as OS and hypervisors can rely on being present in a RISC-V server
+> platform.
 > 
-> Thank you!
+> A corresponding Qemu RISC-V server platform reference (rvsp-ref for
+> short) machine type is added to provide a environment for firmware/OS
+> development and testing. The main features included in rvsp-ref are:
 > 
-> Please keep Cc: qemu-stable@ for anything else which is worth fixing :)
-> 
-Yeah. My patch flow is still a bit manual for fixes. I should probably
-add a 'Cc: qemu-stable@' trailer to patches before sending a PR.
+>  - Based on riscv virt machine type
+>  - A new memory map as close as virt machine as possible
+>  - A new virt CPU type rvsp-ref-cpu for server platform compliance
+>  - AIA
+>  - PCIe AHCI
+>  - PCIe NIC
+>  - No virtio device
+>  - No fw_cfg device
+>  - No ACPI table provided
+>  - Only minimal device tree nodes
 
+The server platform spec requires BRS-I (see FIRM_010). BRS-I requires
+ACPI, and even some specific ACPI tables, e.g. PPTT (see Chapter 6 of
+the BRS spec). However, I think the idea is we're suppose to generate
+a DT here and then leave it to edk2 to generate ACPI tables from that
+DT.
+
+> 
+> [1] https://github.com/riscv-non-isa/riscv-server-platform
+> 
+> Signed-off-by: Fei Wu <fei2.wu@intel.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  configs/devices/riscv64-softmmu/default.mak |    1 +
+>  hw/riscv/Kconfig                            |   14 +
+>  hw/riscv/meson.build                        |    1 +
+>  hw/riscv/server_platform_ref.c              | 1276 +++++++++++++++++++
+>  4 files changed, 1292 insertions(+)
+>  create mode 100644 hw/riscv/server_platform_ref.c
+> 
+> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
+> index 39ed3a0061..0c4893b708 100644
+> --- a/configs/devices/riscv64-softmmu/default.mak
+> +++ b/configs/devices/riscv64-softmmu/default.mak
+> @@ -9,5 +9,6 @@
+>  # CONFIG_SIFIVE_E=n
+>  # CONFIG_SIFIVE_U=n
+>  # CONFIG_RISCV_VIRT=n
+> +# CONFIG_SERVER_PLATFORM_REF=n
+>  # CONFIG_MICROCHIP_PFSOC=n
+>  # CONFIG_SHAKTI_C=n
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index e6a0ac1fa1..f626774c52 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -69,6 +69,20 @@ config RISCV_VIRT
+>      select ACPI
+>      select ACPI_PCI
+>  
+> +config SERVER_PLATFORM_REF
+> +    bool
+> +    default y
+> +    depends on RISCV64
+> +    select RISCV_NUMA
+> +    select GOLDFISH_RTC
+> +    select PCI
+> +    select PCI_EXPRESS_GENERIC_BRIDGE
+> +    select PFLASH_CFI01
+> +    select SERIAL
+> +    select RISCV_ACLINT
+
+We shouldn't need ACLINT.
+
+> +    select RISCV_APLIC
+> +    select RISCV_IMSIC
+> +
+>  config SHAKTI_C
+>      bool
+>      default y
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index c22f3a7216..7a663fac64 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -4,6 +4,7 @@ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+>  riscv_ss.add(files('riscv_hart.c'))
+>  riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+>  riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+> +riscv_ss.add(when: 'CONFIG_SERVER_PLATFORM_REF', if_true: files('server_platform_ref.c'))
+>  riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+>  riscv_ss.add(when: 'CONFIG_SIFIVE_E', if_true: files('sifive_e.c'))
+>  riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
+> diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
+> new file mode 100644
+> index 0000000000..5102286103
+> --- /dev/null
+> +++ b/hw/riscv/server_platform_ref.c
+> @@ -0,0 +1,1276 @@
+
+Missing SPDX
+
+> +/*
+> + * QEMU RISC-V Server Platform (RVSP) Reference Board
+> + *
+> + * Copyright (c) 2024 Intel, Inc.
+> + * Copyright (c) 2025 Ventana Micro Systems Inc.
+> + *
+> + * This board is compliant RISC-V Server platform specification and leveraging
+> + * a lot of riscv virt code.
+
+This board provides a reference implementation of the RISC-V Server
+Platform specification. 
+
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+
+Can be dropped, since we want SPDX instead.
+
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/guest-random.h"
+> +#include "qapi/error.h"
+> +#include "qapi/qapi-visit-common.h"
+> +#include "hw/boards.h"
+> +#include "hw/loader.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/char/serial.h"
+> +#include "hw/block/flash.h"
+> +#include "hw/ide/pci.h"
+> +#include "hw/ide/ahci-pci.h"
+> +#include "hw/pci/pci.h"
+> +#include "hw/pci-host/gpex.h"
+> +#include "hw/core/sysbus-fdt.h"
+> +#include "hw/riscv/riscv_hart.h"
+> +#include "hw/riscv/boot.h"
+> +#include "hw/riscv/numa.h"
+> +#include "hw/intc/riscv_aclint.h"
+> +#include "hw/intc/riscv_aplic.h"
+> +#include "hw/intc/riscv_imsic.h"
+> +#include "chardev/char.h"
+> +#include "hw/char/serial-mm.h"
+> +#include "system/device_tree.h"
+> +#include "system/runstate.h"
+> +#include "system/system.h"
+> +#include "system/tcg.h"
+> +#include "system/qtest.h"
+> +#include "target/riscv/cpu.h"
+> +#include "target/riscv/pmu.h"
+> +#include "net/net.h"
+> +
+> +#define RVSP_CPUS_MAX_BITS             9
+> +#define RVSP_CPUS_MAX                  (1 << RVSP_CPUS_MAX_BITS)
+> +#define RVSP_SOCKETS_MAX_BITS          2
+> +#define RVSP_SOCKETS_MAX               (1 << RVSP_SOCKETS_MAX_BITS)
+> +
+> +#define RVSP_IRQCHIP_NUM_MSIS 255
+> +#define RVSP_IRQCHIP_NUM_SOURCES 96
+> +#define RVSP_IRQCHIP_NUM_PRIO_BITS 3
+> +#define RVSP_IRQCHIP_MAX_GUESTS_BITS 3
+> +#define RVSP_IRQCHIP_MAX_GUESTS ((1U << RVSP_IRQCHIP_MAX_GUESTS_BITS) - 1U)
+> +
+> +#define FDT_PCI_ADDR_CELLS    3
+> +#define FDT_PCI_INT_CELLS     1
+> +#define FDT_APLIC_INT_CELLS   2
+> +#define FDT_IMSIC_INT_CELLS   0
+> +#define FDT_MAX_INT_CELLS     2
+> +#define FDT_MAX_INT_MAP_WIDTH (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS + \
+> +                                 1 + FDT_MAX_INT_CELLS)
+> +#define FDT_APLIC_INT_MAP_WIDTH (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS + \
+> +                                 1 + FDT_APLIC_INT_CELLS)
+> +
+> +#define NUM_SATA_PORTS  6
+> +
+> +#define SYSCON_RESET     0x1
+> +#define SYSCON_POWEROFF  0x2
+
+nit: should align all the above defines
+
+> +
+> +#define TYPE_RVSP_REF_MACHINE MACHINE_TYPE_NAME("rvsp-ref")
+> +OBJECT_DECLARE_SIMPLE_TYPE(RVSPMachineState, RVSP_REF_MACHINE)
+> +
+> +struct RVSPMachineState {
+> +    /*< private >*/
+> +    MachineState parent;
+> +
+> +    /*< public >*/
+> +    Notifier machine_done;
+> +    RISCVHartArrayState soc[RVSP_SOCKETS_MAX];
+> +    DeviceState *irqchip[RVSP_SOCKETS_MAX];
+> +    PFlashCFI01 *flash[2];
+> +
+> +    int fdt_size;
+> +    int aia_guests;
+
+This can be hard coded to 5, as required by the server-soc spec.
 
 Thanks,
-
-C.
-
-
+drew
 
