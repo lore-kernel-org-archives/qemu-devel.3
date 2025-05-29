@@ -4,64 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5413BC5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 15:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31AA1C5B549
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 15:38:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKfA0-0007a9-8M; Thu, 29 May 2025 11:27:12 -0400
+	id 1uKfKl-0002Gz-PW; Thu, 29 May 2025 11:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uKf9w-0007Zc-9j
- for qemu-devel@nongnu.org; Thu, 29 May 2025 11:27:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uKfKj-0002DO-Vc
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 11:38:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uKf9t-00063h-Jq
- for qemu-devel@nongnu.org; Thu, 29 May 2025 11:27:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uKfKh-0007MA-PH
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 11:38:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748532423;
+ s=mimecast20190719; t=1748533092;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=htQn01KOhxmpTz1AldYE6MzJycG5atucJKOhZwHbOaM=;
- b=gdaSMfgXLX3IFxdHurAWC+2HLAhPmgzRNb2YkDwZTm45kCc6yJYHSilpU6TkhM7BVomqU+
- 0OBjd7NyJO4wuK552jogTkGgWkGWBfhsW70zzGR0SlTBV+53qKSdTqHZFzQPjKeStYv8wm
- SljJtCL3z3LX2Q6jWCSV6+H7LG/dFWc=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-_BJ_JDyROuejESeyunWS8A-1; Thu,
- 29 May 2025 11:27:01 -0400
-X-MC-Unique: _BJ_JDyROuejESeyunWS8A-1
-X-Mimecast-MFC-AGG-ID: _BJ_JDyROuejESeyunWS8A_1748532420
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66A7B19560B1
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 15:27:00 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.100])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D769B19560A7; Thu, 29 May 2025 15:26:59 +0000 (UTC)
-Date: Thu, 29 May 2025 11:26:58 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL v2 00/25] Functional tests, Microblaze endianness & pc/q35
- cleanups
-Message-ID: <20250529152658.GA62516@fedora>
-References: <20250528202442.18315-1-thuth@redhat.com>
+ bh=0jIH4b8p4YnvmK9bYlT7Quz1yUT3ho3PCx89bNdAbgI=;
+ b=EVu7iC0Mwsh0runXfinS8oiYqpowx+u/qagzccXDKeG75D1/hhEc6ZK5m8gppnimxUARV3
+ o5HjjMhFcHfULqr751RRNLwoeUYfWdBUFCvJBtPSWvS9DUlTeTjTVHU2/cuST6lSFGG3tb
+ Hb1H3KYgUgy3eS7hsERRuihmwrxnnfY=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-223-rlwsmAvHO1CKnDFsd5F8Ng-1; Thu, 29 May 2025 11:38:09 -0400
+X-MC-Unique: rlwsmAvHO1CKnDFsd5F8Ng-1
+X-Mimecast-MFC-AGG-ID: rlwsmAvHO1CKnDFsd5F8Ng_1748533089
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7d0981315c8so123176085a.0
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 08:38:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748533088; x=1749137888;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0jIH4b8p4YnvmK9bYlT7Quz1yUT3ho3PCx89bNdAbgI=;
+ b=lk3WTNaTguTTEqLwITogR6PNHoVqxtK1fvgQ7ui3B2adSmf4lOF/f5OA3jvvOjWMmY
+ GDoc+Z1BijsIqwop7rvIXw3Xvpurh0KZd/Rxcbw0skSouUJj0OD0+5rCf5KJyKRaLfhZ
+ 5ef/CcYYZ2h/eldEodhwFE8f6KdSc6uzCBwliyvnJr3ZqGNDUGSFy2VNdQNRk+Aq3ar0
+ fP6GR6U+i0fREuTM0zDFQTJJBMQnQR1rXuhPQ6Jb+ayAaImxvj0RWabF6XZ2h5Kkpi5J
+ kyd2dlw64UM5UI2U1nczJSGVqhlkCEqB0o4x3hckLi2pI47Rgrj6tsDQsKPBYaSzdCOp
+ CuOQ==
+X-Gm-Message-State: AOJu0Yz2uh+81p0UHGU408zhAwkdrtpWk+SPEjzjC9Cutdy+cyQabX4V
+ znrtFlBqiLney3JaP8sIjrXMzCWPdWIKKaCNXmAzcWo463fFYzbDiMmEPJ76nQeUQC60nW2iTY0
+ vBg/EuPDSDS5i1iljy/A0QdrxObZ9lc9RQ708DdYUF326A3U8wVRQGiHh0AgTZHX8
+X-Gm-Gg: ASbGncvU+p/lsea3Er3o5SfthDKJ9+XfepGS0S7gvmv2gIH+fF6le01yQDIBw2w2nBk
+ 0erhupT5j1swch2C5D6p3aqq95+sFZjdO2O0Gveea+wMYeJbkAaalVOTfV0e7WaSPPY5UfagpaE
+ Mgdf20hgtLdpP4THumVEbx8+7aW9oFjwLDCfK3up2LSaI4kGPrZR7OzdrekZh/L+k9JX5pwL5iG
+ CgAeeRYh1OZ7l4y3Dhu9wfP1HaJ1R0TrgnOW4Ko9y7ezpIpfeidtKLl1Q5QWOTU3hsXt7JfOzyS
+ EDg=
+X-Received: by 2002:a05:620a:1917:b0:7d0:a119:23e7 with SMTP id
+ af79cd13be357-7d0a1192630mr110279385a.1.1748533088422; 
+ Thu, 29 May 2025 08:38:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6C32VBgmDyFHO8FRlOhrE7IJ9pfkquFfvb7tFRoKBVU9wnYPwXhvfuSuHVe+Mjxovcr9F8A==
+X-Received: by 2002:a05:620a:1917:b0:7d0:a119:23e7 with SMTP id
+ af79cd13be357-7d0a1192630mr110274485a.1.1748533087925; 
+ Thu, 29 May 2025 08:38:07 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7d09a0e3fa9sm106459085a.24.2025.05.29.08.38.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 May 2025 08:38:07 -0700 (PDT)
+Date: Thu, 29 May 2025 11:38:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 05/11] migration: Drop save_live_complete_postcopy hook
+Message-ID: <aDh_XCVUJnnAuuQy@x1.local>
+References: <20250527215850.1271072-1-peterx@redhat.com>
+ <20250527215850.1271072-6-peterx@redhat.com>
+ <tew2ucyvg2z37rn6fvzwg6kj44crycegpc5jt4kd7unnyy3oqw@qaqb6towtfev>
+ <hvfstra4oagwc5m6vojy5lpe5ro3qhjp7mr7sbawjwds7dxuyc@w656gwmgvs4i>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="O4V2xphXjmjVq0Qo"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250528202442.18315-1-thuth@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <hvfstra4oagwc5m6vojy5lpe5ro3qhjp7mr7sbawjwds7dxuyc@w656gwmgvs4i>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -86,167 +107,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, May 29, 2025 at 04:48:41PM +0200, Juraj Marcin wrote:
+> On 2025-05-29 16:42, Juraj Marcin wrote:
+> > Hi Peter
 
---O4V2xphXjmjVq0Qo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hey, Juraj!
 
-On Wed, May 28, 2025 at 10:24:42PM +0200, Thomas Huth wrote:
->  Hi Stefan!
->=20
-> The following changes since commit 80db93b2b88f9b3ed8927ae7ac74ca30e643a8=
-3e:
->=20
->   Merge tag 'pull-aspeed-20250526' of https://github.com/legoater/qemu in=
-to staging (2025-05-26 10:16:59 -0400)
->=20
-> are available in the Git repository at:
->=20
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2025-05-28v2
->=20
-> for you to fetch changes up to 51c214b7c27096e3516aedf6befd69dc6d75b4ac:
->=20
->   tests/unit/test-util-sockets: fix mem-leak on error object (2025-05-28 =
-22:16:26 +0200)
->=20
-> ----------------------------------------------------------------
-> * Functional tests improvements
-> * Endianness improvements/clean-ups for the Microblaze machines
-> * Remove obsolete -2.4 and -2.5 i440fx and q35 machine types and related =
-code
->=20
-> v2: Dropped the memlock test patches
+> > 
+> > On 2025-05-27 17:58, Peter Xu wrote:
+> > > The hook is only defined in two vmstate users ("ram" and "block dirty
+> > > bitmap"), meanwhile both of them define the hook exactly the same as the
+> > > precopy version.  Hence, this postcopy version isn't needed.
+> > > 
+> > > No functional change intended.
+> > 
+> > Could be some future users, that would benefit from separate hooks for
+> > precopy and postcopy?
 
-Please take a look at the following CI failure:
+There's nothing that I'm aware of.  Normally we should only provide
+separate hook until that comes, and then review the hook together with the
+use case.
 
-ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1 QTEST=
-_QEMU_BINARY=3D./qemu-system-microblaze QTEST_QEMU_IMG=3D./qemu-img UBSAN_O=
-PTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:print_stack=
-trace=3D1 G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/E8PpwMky/0/qemu-p=
-roject/qemu/tests/dbus-vmstate-daemon.sh MSAN_OPTIONS=3Dhalt_on_error=3D1:a=
-bort_on_error=3D1:print_summary=3D1:print_stacktrace=3D1 RUST_BACKTRACE=3D1=
- QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-daemon PY=
-THON=3D/home/gitlab-runner/builds/E8PpwMky/0/qemu-project/qemu/build/pyvenv=
-/bin/python3 MALLOC_PERTURB_=3D57 MESON_TEST_ITERATION=3D1 /home/gitlab-run=
-ner/builds/E8PpwMky/0/qemu-project/qemu/build/tests/qtest/test-netfilter --=
-tap -k
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95
-stderr:
-munmap_chunk(): invalid pointer
-=2E./tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from signa=
-l 6 (Aborted) (core dumped)
-(test program exited with status code -6)
+> > 
+> > In case we are going to drop it, I think the '_precopy' suffix could be
+> > dropped too, as the handler would be used for postcopy too.
+> 
+> Never mind, just noticed it's in the next patch...
 
-More info here:
-https://gitlab.com/qemu-project/qemu/-/jobs/10190886460#L5038
+Yep.  I can squash that into this one; it's pretty small so maybe it's
+fine.  I'll keep it separate as of now, but if anyone thinks it better I
+can squash them.
 
-Thanks!
-
-Stefan
-
->=20
-> ----------------------------------------------------------------
-> Matheus Tavares Bernardino (1):
->       tests/unit/test-util-sockets: fix mem-leak on error object
->=20
-> Philippe Mathieu-Daud=C3=A9 (17):
->       hw/i386/pc: Remove deprecated pc-q35-2.4 and pc-i440fx-2.4 machines
->       hw/i386/pc: Remove PCMachineClass::broken_reserved_end field
->       hw/i386/pc: Remove pc_compat_2_4[] array
->       hw/core/machine: Remove hw_compat_2_4[] array
->       hw/net/e1000: Remove unused E1000_FLAG_MAC flag
->       hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_MIGRATE_EXTRA definiti=
-on
->       hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_DISABLE_PCIE definition
->       hw/i386/pc: Remove deprecated pc-q35-2.5 and pc-i440fx-2.5 machines
->       hw/i386/x86: Remove X86MachineClass::save_tsc_khz field
->       hw/nvram/fw_cfg: Remove legacy FW_CFG_ORDER_OVERRIDE
->       hw/core/machine: Remove hw_compat_2_5[] array
->       hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_OLD_PCI_CONFIGURATION defi=
-nition
->       hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_DISABLE_PCIE_BIT definition
->       hw/scsi/vmw_pvscsi: Convert DeviceRealize -> InstanceInit
->       hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS definiti=
-on
->       hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
->       hw/net/vmxnet3: Merge DeviceRealize in InstanceInit
->=20
-> Thomas Huth (7):
->       tests/functional/test_sparc64_tuxrun: Explicitly set the 'sun4u' ma=
-chine
->       tests/functional/test_mips_malta: Re-enable the check for the PCI h=
-ost bridge
->       tests/functional/test_mem_addr_space: Use set_machine() to select t=
-he machine
->       hw/microblaze: Add endianness property to the petalogix_s3adsp1800 =
-machine
->       tests/functional: Test both microblaze s3adsp1800 endianness varian=
-ts
->       hw/microblaze: Remove the big-endian variants of ml605 and xlnx-zyn=
-qmp-pmu
->       docs: Deprecate the qemu-system-microblazeel binary
->=20
->  docs/about/deprecated.rst                        |  19 ++--
->  docs/about/removed-features.rst                  |   9 ++
->  include/hw/boards.h                              |   9 +-
->  include/hw/i386/pc.h                             |   7 --
->  include/hw/i386/x86.h                            |   5 --
->  include/hw/loader.h                              |   2 -
->  include/hw/nvram/fw_cfg.h                        |  10 ---
->  include/hw/virtio/virtio-pci.h                   |   8 --
->  hw/core/loader.c                                 |  14 ---
->  hw/core/machine.c                                |  18 ----
->  hw/i386/pc.c                                     |  42 ++-------
->  hw/i386/pc_piix.c                                |  26 ------
->  hw/i386/pc_q35.c                                 |  26 ------
->  hw/i386/x86.c                                    |   1 -
->  hw/microblaze/petalogix_ml605_mmu.c              |  15 +---
->  hw/microblaze/petalogix_s3adsp1800_mmu.c         |  41 +++++++--
->  hw/microblaze/xlnx-zynqmp-pmu.c                  |   7 +-
->  hw/net/e1000.c                                   |  95 +++++++++--------=
----
->  hw/net/vmxnet3.c                                 |  44 ++-------
->  hw/nvram/fw_cfg.c                                | 110 ++---------------=
-------
->  hw/scsi/vmw_pvscsi.c                             |  67 +++-----------
->  hw/virtio/virtio-pci.c                           |  11 +--
->  system/vl.c                                      |   5 --
->  target/i386/machine.c                            |   5 +-
->  tests/qtest/test-x86-cpuid-compat.c              |  14 ---
->  tests/unit/test-util-sockets.c                   |   4 +
->  tests/functional/test_mem_addr_space.py          |  63 ++++++-------
->  tests/functional/test_microblaze_s3adsp1800.py   |  18 ++--
->  tests/functional/test_microblazeel_s3adsp1800.py |   6 +-
->  tests/functional/test_mips_malta.py              |   6 +-
->  tests/functional/test_sparc64_tuxrun.py          |   1 +
->  31 files changed, 197 insertions(+), 511 deletions(-)
->=20
-
---O4V2xphXjmjVq0Qo
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmg4fMIACgkQnKSrs4Gr
-c8h8uAgAtfR6i4iMDYGY2m73iaJar0EwdCQeTk/0UXaF8uyY8MBawktvK7loRfOa
-YAdty4XW5xR8EE1jUopfhPKpXxa6criLyavzcCiOrMQJ8URNIj5rVarY2JAwCYm7
-a/Oj+FwHXX0awh1//OtawKHYU2/qNgxblZZpmkPnwCFGLjXOEeqiX/6zUdN5fcv8
-5Uox8FaE0PjH3RIX1RFgeJ97sL3g0vbZd+LMbRakx4lCXxzao15mGYK8ETxou0+h
-5qKeLGv49bqOKdQH6MBmnNCM4/3j3pCZruWrubgVOikN8qX4KJ3Nn4803uc7GrHk
-IlHWXsWkd0mkAhMa/OnIk2fAwUKFnQ==
-=crwb
------END PGP SIGNATURE-----
-
---O4V2xphXjmjVq0Qo--
+-- 
+Peter Xu
 
 
