@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC4BC5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39FF5C5AD49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:26:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKiso-0004Jx-3H; Thu, 29 May 2025 15:25:42 -0400
+	id 1uKisv-0004ZY-O4; Thu, 29 May 2025 15:25:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisM-0004AZ-0c
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:15 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uKisV-0004FG-EK
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:24 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisJ-0000ES-5p
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:12 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGftrw031409;
- Thu, 29 May 2025 19:24:58 GMT
+ id 1uKisS-0000Ud-Nb
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:22 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGg7VP004866;
+ Thu, 29 May 2025 19:25:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=e1CDHnPsbm8Z76OLge2rElNsu1+Qpsx4e6R27vVw0Sw=; b=
- UdtfU8UWb3/IOp3zFL1l9JFuj1PpEe93YUFs+GmZPvdpIOm/WH9pA+OmVs9Nw3Jj
- Xsu1PLkANJKmzmKeMJHzzOMpXnWBIkhfvccrgrgfhT1wDa777t840V/TBgXjWuj/
- 6EzwOrY7CCM0v2g1rW84Af1eOuD8H1lswEOE/7iE6TukrG0vvPgkNRX8s2lKcAgV
- oVDwBCdvx3L3gRZIZq5oewO1puLdYgLBl6uTZiD7bSq8GFN0J0nSjbfOXbKbinSe
- skPJwjSyjdRrdT+9FwoynNjbuQDqHyP7fo4kTClF88URM2SS4GlsP/L1hXmPC3Gn
- KCBAlwe2iLPBkAjq6/D4bQ==
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=VJ1vCYMMJIn0h3H36c41RmlCgZ0lxWBB4m2cZlDO0/8=; b=
+ SCkptm5JNuvFoZtZdKonPy/c6YM+n46405OThEGOpqQlqxq/XiRJCPH7AgSBmMJA
+ iMJkeKJU/VXZTEuUy3MIaLgGRZZNJZHKu7gqQbBowbiY4lbFk4LIkGnQSPJtE6WO
+ 1NDt27P5eumC2ewzPDFV/c9A1jKZXomVAZjcCJZ2e7hM4hxxU9xmEAAq7DcXqD5K
+ RXRzulCBP8K4URxUQ8R1rQowiwflJQ1UmMQVps2y8AkTRcAMPHRRFAcXlZTtEt99
+ zmQnFrXe1kd9+xB3ttLfFni7/7Xo714WgZ0V/MkwFFqlQaecmJNpH2Ps+qKu2ATF
+ l5hHDFFXft2GanwfXuB1/Q==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v33n0ycj-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v2pf0n0w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:24:58 +0000 (GMT)
+ Thu, 29 May 2025 19:25:17 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54THe8Cu020394; Thu, 29 May 2025 19:24:57 GMT
+ with ESMTP id 54THfFHk020324; Thu, 29 May 2025 19:25:16 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jc4vum-1
+ 46u4jc4wby-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:24:57 +0000
+ Thu, 29 May 2025 19:25:16 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeRR022158;
- Thu, 29 May 2025 19:24:57 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeSD022158;
+ Thu, 29 May 2025 19:25:16 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46u4jc4vjq-21; Thu, 29 May 2025 19:24:56 +0000
+ ESMTP id 46u4jc4vjq-44; Thu, 29 May 2025 19:25:16 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -64,15 +63,12 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 20/43] vfio/pci: pass vector to virq functions
-Date: Thu, 29 May 2025 12:24:16 -0700
-Message-Id: <1748546679-154091-21-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 43/43] vfio/container: delete old cpr register
+Date: Thu, 29 May 2025 12:24:39 -0700
+Message-Id: <1748546679-154091-44-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-29_09,2025-05-29_01,2025-03-28_01
@@ -81,22 +77,20 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505290189
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX+B5IrHFWvl+U
- WMApojthbjaeio8i6YcpCwO3MXYRmEf0okbE/uQtF67xajeAM/BA/QLxveQN7mgYbOdrdKPS8eB
- lSyrVyZmn56bvkSQ+vAePAGOgjXskM6y+MZRMtVo7l9TX36rTW50mftivCYI0nelJ5S32rwXBXO
- j5H1251YfrlSY6i2AnAiTbXZgeWkOCynjKAjpsz6Ije7T632UeFm9eb+7qOxIK81zUd4ofjNBtd
- kKzRKs1rw7sfEfXhqBtvYRm8f5zUd5Huh6goSNXPVYQPruHF7rpNwrYpTSc4jrhZZklplTBQT8s
- Zs5mCSHBdVHAOwnpBd0jRcHacnkzuijVVggevGSj6HTeZI7n0Zo45zSuYAMoJzEIfZJbz6zOuxZ
- VOBPY+nVBIEWffeT7bmdxzlWrFYKp5lilOY1l7loV6Cu8AG1tknnPCzxYlfEl3nNvA32NUxV
-X-Proofpoint-GUID: fHztKDy9usH_gIXLois36nJ1x31tDtUu
-X-Authority-Analysis: v=2.4 cv=aO/wqa9m c=1 sm=1 tr=0 ts=6838b48a cx=c_pps
+X-Proofpoint-ORIG-GUID: rrbqgRn5R9k7jxwRTXEBBojJW_I9TMRD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX1n/cQbMu4mzm
+ gwyU0hmiKoY7eMLotegfBeQbKSMoY6qwqJLwjQwLvlM3rLYFA6GDVB6jTHfAB8HRPrTwLORN13P
+ 58r7jmbx1qdyJibPDRezF3bhh3ELP/fCboOydKCx58RVl7U7zTjqTBpdo4jKvCnartliKUlgqYl
+ 3RDVQAoLtQznlgXrKNd+JbYVLm1phzqjv1bpkhOko3zQWoRiUMKdlaKkAKwdUGaNF8sh4ezyDUQ
+ 0Nn1Ls8iacu2aYOtHE49MneGK5nXmw9sODjr1wCFHTek8QZQrO3y4TJHESBaQqGO6OUwOxDfxBF
+ qhAZQkaoONB56gW0Q9BaMvZu9iaKlYPqc8IMgfSw/2IQdm8/FiFEfbFt0Yr/k1NoYn5zFQi/EPH
+ Nq+x2FeScPFP10XYBbJZ7jJat+gVbgs66F4XeedCxipiV0NTJ4/iWLgEQ+z1FRyCPrYMtaWx
+X-Proofpoint-GUID: rrbqgRn5R9k7jxwRTXEBBojJW_I9TMRD
+X-Authority-Analysis: v=2.4 cv=TdeWtQQh c=1 sm=1 tr=0 ts=6838b49d cx=c_pps
  a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
- a=KuRfteT1783q8DwuiuAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: fHztKDy9usH_gIXLois36nJ1x31tDtUu
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=wb1fy916W68PL7SXvpoA:9
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
@@ -120,75 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the vector number to vfio_connect_kvm_msi_virq and
-vfio_remove_kvm_msi_virq, so it can be passed to their subroutines in
-a subsequent patch.  No functional change.
+vfio_cpr_[un]register_container is no longer used since they were
+subsumed by container type-specific registration.  Delete them.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ include/hw/vfio/vfio-cpr.h |  4 ----
+ hw/vfio/cpr.c              | 13 -------------
+ 2 files changed, 17 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 12386a8..fa0601c 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -478,7 +478,7 @@ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
-                                              vector_n, &vdev->pdev);
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index f88e4ba..5b6c960 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -44,10 +44,6 @@ void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
+ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
+                              Error **errp);
+ 
+-bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
+-                                 Error **errp);
+-void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
+-
+ bool vfio_iommufd_cpr_register_container(struct VFIOIOMMUFDContainer *container,
+                                          Error **errp);
+ void vfio_iommufd_cpr_unregister_container(
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index f5555ca..c97e467 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -29,19 +29,6 @@ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+     return 0;
  }
  
--static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector)
-+static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
- {
-     const char *name = "kvm_interrupt";
+-bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
+-{
+-    migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
+-                                vfio_cpr_reboot_notifier,
+-                                MIG_MODE_CPR_REBOOT);
+-    return true;
+-}
+-
+-void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
+-{
+-    migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
+-}
+-
+ #define STRDUP_VECTOR_FD_NAME(vdev, name)   \
+     g_strdup_printf("%s_%s", (vdev)->vbasedev.name, (name))
  
-@@ -504,7 +504,8 @@ fail_notifier:
-     vector->virq = -1;
- }
- 
--static void vfio_remove_kvm_msi_virq(VFIOMSIVector *vector)
-+static void vfio_remove_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
-+                                     int nr)
- {
-     kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, &vector->kvm_interrupt,
-                                           vector->virq);
-@@ -562,7 +563,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-      */
-     if (vector->virq >= 0) {
-         if (!msg) {
--            vfio_remove_kvm_msi_virq(vector);
-+            vfio_remove_kvm_msi_virq(vdev, vector, nr);
-         } else {
-             vfio_update_kvm_msi_virq(vector, *msg, pdev);
-         }
-@@ -574,7 +575,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-                 vfio_route_change = kvm_irqchip_begin_route_changes(kvm_state);
-                 vfio_add_kvm_msi_virq(vdev, vector, nr, true);
-                 kvm_irqchip_commit_route_changes(&vfio_route_change);
--                vfio_connect_kvm_msi_virq(vector);
-+                vfio_connect_kvm_msi_virq(vector, nr);
-             }
-         }
-     }
-@@ -682,7 +683,7 @@ static void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
-     kvm_irqchip_commit_route_changes(&vfio_route_change);
- 
-     for (i = 0; i < vdev->nr_vectors; i++) {
--        vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i]);
-+        vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i], i);
-     }
- }
- 
-@@ -822,7 +823,7 @@ static void vfio_msi_disable_common(VFIOPCIDevice *vdev)
-         VFIOMSIVector *vector = &vdev->msi_vectors[i];
-         if (vdev->msi_vectors[i].use) {
-             if (vector->virq >= 0) {
--                vfio_remove_kvm_msi_virq(vector);
-+                vfio_remove_kvm_msi_virq(vdev, vector, i);
-             }
-             qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
-                                 NULL, NULL, NULL);
 -- 
 1.8.3.1
 
