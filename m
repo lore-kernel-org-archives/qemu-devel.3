@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED19AC5B549
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 05:47:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14D0C5B552
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 05:47:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKW5m-0002wW-6z; Thu, 29 May 2025 01:46:14 -0400
+	id 1uKW5w-00030U-Jd; Thu, 29 May 2025 01:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uKW5g-0002ve-Fg
- for qemu-devel@nongnu.org; Thu, 29 May 2025 01:46:08 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uKW5t-0002zN-3x
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 01:46:22 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uKW5a-00039B-L0
- for qemu-devel@nongnu.org; Thu, 29 May 2025 01:46:08 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-74264d1832eso477466b3a.0
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 22:46:01 -0700 (PDT)
+ id 1uKW5r-0003Bc-J4
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 01:46:20 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-234f17910d8so5319125ad.3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 22:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748497560; x=1749102360;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748497578; x=1749102378;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5MQNLV1SbvkmWGBHZePeaWM00yWHooS2WBWQz3++P/w=;
- b=u5zTzJrvPXyfHiYab2I9VEy3rvshFT43h7fq///nbfthcgkmRe7yanwjuIPUcZ6yE8
- LnT9qvkomKHd2xLIRT8RGuO95SBHzEIgqkEbWRysZrfItrHBARBsPAkWI5zSLT/8J5+S
- kcnETDsNa8t8U+8puWy43lG+erPRpi3GU0fjL752HNCaQLEP1VVEWuYpF2pMS6n5EJ8o
- M/6d/FWLOovI6j0As+rYG7Sre1zw0Z/hkuL4m/xNc2OgNSHlPLb/5NANchlrtuiENFWs
- FaOS4xGW2KmEOMsUELEp6CT3Xw7RmcFySmnrJ9F1rzYpaDVMx/k6XSxPxWoEj63m2mOF
- 2CXw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=tpEeShMgw5miBNRuoBOGCybk4Qn7aitvfKahD59h2tI=;
+ b=eZ9bDppiwoM1SXYSHxH/qfzffpg4O4OmM6zv6X54LCadYOfg48WsldW959gq2zUOAP
+ vwyt9RJE+O+fhcQnFpBDqKCxRtlVd21BNUlzrLzC5US9uGDyI6yAeJR5V/hSUn4/c10S
+ dlBxynmaXjkl42DdH++BwZMLomERrsS9YjEQ5aTWmpkq2IujtL9+L5Xcf8xHgNIdS3iq
+ jqRvZ5ECcSWo5XzfA1ZrxAuGT1Wq8BZ8IH652PXGGmqeEbL7p0Jb3Og/F5vL5rVBkDrp
+ pcGSn6mJlmRBJVFa5uD4fv4T3ibtdJaudXIMtLBxvF5lAhOgYEV4edTCJN7pyaQX89sP
+ Zy+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748497560; x=1749102360;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5MQNLV1SbvkmWGBHZePeaWM00yWHooS2WBWQz3++P/w=;
- b=BWh1bK03sBR2xYDRJ0Lb9aNacRhzsIPqz+V+JpcA/n7qMkMUO2B0AD73hjDdn9xzU+
- CVZauBcN1l7bzc3N8Hg9LQGEKt2w+MpHLjgc/T9PV0XSNe8O/vL5t9+yyYU2gteZkyK5
- yoJJhP9aTtuxDFClqjIlCNCbZk1SzL4LpxCxOWAv0Dg05TlspQwap94mGYBpBGowCG6x
- yi9NRqxYWaLzFEW6dKB8gwJcLy0ze5LLjcI0pkr8/t9MpNiG8jOhFP4IMqRAnfXIw6oC
- SgiBDMzoGIxuZJD7xwkBlobLg3ChibeNjphs0QxNiHgG8IrLK1nwuy39wulLkdDn8Fgw
- khGQ==
+ d=1e100.net; s=20230601; t=1748497578; x=1749102378;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tpEeShMgw5miBNRuoBOGCybk4Qn7aitvfKahD59h2tI=;
+ b=ueNjd0WmkRFiI4+4TtDDdR+Mggh/s6RMdy86oraGfc/taPVr90gSTYxTaSp7WpY6J0
+ 3IlAvs5y1pY6RMZgzSslzKzJpfjPsFu7/C+Iwwcw6HRsV7lLiHp6snGd5xdrCqyGquq+
+ B9wEParXLxIfgeW9NKf8DgFHcfN2b2fOwOTyZhinXK7YXnh3uD7HbvOAq+IUn/DZMcyc
+ O5qmC/cd4U+8r+/GaPrRBXOdqyhOQk2y9lw1KDYO/7+GfQdAmyCYjm1s4nHq1fLw7RcE
+ +uXzNYUb+h27uxRE8jQpuPSHGYmMEFNY9vHQU3fwfoCPx3jFhjhLNRrivhW4d/MtZNO7
+ eJoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNkhre1JAfQRtYV/PKrxuZC3dqq0m9XTV1CRzTmq+zjphvnviA9yMNnI5hzfgrNHY6VpYWYSi8lTY2@nongnu.org
-X-Gm-Message-State: AOJu0YxuWOygWUJkKkQyka2Mo6wup7SYiFarOWNRFsV0Xa+otNY0SNbL
- mBvEo/MXEyYiHzl5nr6sV1w1TQC/r/5+CxNhhi3ZmN2XWLZDAqf204MOqjW1NAicubg=
-X-Gm-Gg: ASbGncvHeeH3mjW2fHnGH76XXcOvjVeMClq5m2j8yaFy8QgAjqSS8oqiEv+MWfH8gwy
- 7NeglJ+2ELGwBrJwR7v7OVrIWR/6qn9WPaxStHerdKCxeAPAgJg7J+z1YmAA1v769PJCpZZcaYp
- 0LaSHmpzwskGOAeqPpouxsDcS8eiYOp93Oaaf4n76UR3UC0xsMr0EEC2Am/dEyvFk5Hg2ZQMA+s
- 12JDnOI62L0peMQdEQaAT5VNTQ+bFoAJxV24vksxYcC//Y5LMEcOAX7Uq+gs631ZuflpVGWwWVn
- LQU4hNK3bqjNITM2+h0XR8KojIWNdOZ5IBP/i1elWQCRVKdTICLWtfC4Wl/2EBI=
-X-Google-Smtp-Source: AGHT+IEBkCYof5DYaP7xucctYbxZ0dc6PMoubeh+39P2PJNSXBb9Ipbu/Klo8uZPwzqA2lFHinZJ4A==
-X-Received: by 2002:a05:6a00:2443:b0:742:b3a6:db16 with SMTP id
- d2e1a72fcca58-745fe058d5amr29426870b3a.20.1748497559910; 
- Wed, 28 May 2025 22:45:59 -0700 (PDT)
+ AJvYcCVBr0B8efgzWMVYrnmnppyxG2WR9xfITxGV1pzejZZX19HhumcU75q2cgTN/Rnnu4YZIHDk5OPsSTwm@nongnu.org
+X-Gm-Message-State: AOJu0Yy1Yg4xJ3GXft4fNJi6vkg8ospxZLRE2IQ66McVAlNqnExdWHx+
+ R5H2s61lpfLvCey5as+VogLCf1fmMxmQCam4+v0aZ5h6hZoHLDtqac6TKf0aK/wrGta/6ZFffZx
+ gGXHq
+X-Gm-Gg: ASbGnctlJKN88nLZrNj1N4RT0h09rfF3eaXna606Sp0Fk4FnzW7NrVCtgRrQAb79mU9
+ 2eGQhr/Scst1Lx/jdVUmaRj660FnfHM1HsDL+5uCkzo0vzVF8T9QfBRqlr1He66NiGEGq6iqStz
+ ZghZzUlDBijvNByWUHhbyM93WxA+AyBne2nGYturulUOyEQqLontktJu6ZsY0CFWDkXZdPjWx11
+ 4VwoLh5zBOU+PL1TYpAtKpi0ZOtC/7YXoQF6DYq8loYtI2kYAzx9gJ9N9arni2Ht7ZqvBvZnnj4
+ F/lEZ9IpTA61/60xRc3FRJoTfz6KMjTWEtI+j1Wkto5PruLQCIv3
+X-Google-Smtp-Source: AGHT+IFGFfwYtfqqoWbUrux+PrgQ6ADwgdosJvR7J44Erx/OzxG3ES6qAdWdge204GhlPL32ivvf7g==
+X-Received: by 2002:a17:903:15c7:b0:235:2e0:aa9 with SMTP id
+ d9443c01a7336-23502e00e47mr33557045ad.14.1748497578152; 
+ Wed, 28 May 2025 22:46:18 -0700 (PDT)
 Received: from localhost ([157.82.128.1]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-747afff73fbsm544998b3a.162.2025.05.28.22.45.57
+ d9443c01a7336-23506bdb532sm5078045ad.81.2025.05.28.22.46.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 May 2025 22:45:59 -0700 (PDT)
+ Wed, 28 May 2025 22:46:17 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v5 00/13] Improve futex usage
-Date: Thu, 29 May 2025 14:45:49 +0900
-Message-Id: <20250529-event-v5-0-53b285203794@daynix.com>
+Date: Thu, 29 May 2025 14:45:55 +0900
+Subject: [PATCH v5 06/13] qemu-thread: Use futex if available for QemuLockCnt
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAI30N2gC/2XQTQ7CIBAF4KsY1mJggIKuvIdxQWGqLGyVVlJje
- nfxh6Smy0fme5nhSXqMAXuyWz1JxBT60LU5qPWKuLNtT0iDz5kAA8mZ4BQTtgPVRllomPdWWpJ
- nrxGbMH56Dsecz6Efuvj41Cb+fv02AKhfQ+KUUauMM74SWGu29/bRhnHjugt5VyQoTDHFWWGQm
- d4qwbV2yGuzYGLOyr5JZNboptqC1F4wsWByxqAqTGamam2kcwa5xz82fQ+PeLvnfxt+10/TCy6
- YkDJVAQAA
-X-Change-ID: 20241031-event-785a2f0dda4a
+Message-Id: <20250529-event-v5-6-53b285203794@daynix.com>
+References: <20250529-event-v5-0-53b285203794@daynix.com>
+In-Reply-To: <20250529-event-v5-0-53b285203794@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
  Hailiang Zhang <zhanghailiang@xfusion.com>
@@ -87,8 +84,8 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -110,107 +107,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In a recent discussion, Phil Dennis-Jordan pointed out a quirk in
-QemuEvent destruction due to futex-like abstraction, which prevented
-the usage of QemuEvent in new and existing code[1]. With some more
-thoughts after this discussion, I also found other problem and room
-of improvement in futex usage. Here is a stack of patches to resolve
-them.
-
-Patch "futex: Check value after qemu_futex_wait()" ensures
-qemu_futex_wait() is used in loops as suggested in the man page.
-
-Patch "futex: Support Windows" implements futex functions for Windows.
-
-Patch "qemu-thread: Avoid futex abstraction for non-Linux" and
-"qemu-thread: Use futex for QemuEvent on Windows" enable destroying
-QemuEvent immediately after qemu_event_wait().
-
-Patch "qemu-thread: Use futex for QemuEvent on Windows" and
-"qemu-thread: Use futex if available for QemuLockCnt" make the use of
-futex functions added for Windows.
-
-Patches "migration: Replace QemuSemaphore with QemuEvent",
-"migration/colo: Replace QemuSemaphore with QemuEvent",
-"migration/postcopy: Replace QemuSemaphore with QemuEvent", and
-"hw/display/apple-gfx: Replace QemuSemaphore with QemuEvent" replace
-some QemuSemaphores with QemuEvents, which can utilize futex. Some of
-them rely on that QemuEvent can be destroyed immediately after
-qemu_event_wait().
-
-[1]: https://lore.kernel.org/r/CAAibmn3HZeDeK8FrYhHa1GGwc+N8rBuB2VvMRm7LCt0mUGmsYQ@mail.gmail.com
+This unlocks the futex-based implementation of QemuLockCnt to Windows.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v5:
-- Updated the documentation of the state transitions for the non-futex
-  variant.
-- Placed patch "qemu-thread: Remove qatomic_read() in qemu_event_set()"
-  after all other code changes.
-- Added patches "qemu-thread: Document QemuEvent" and
-  "qemu-thread: Document QemuEvent memory ordering".
-- Link to v4: https://lore.kernel.org/qemu-devel/20250526-event-v4-0-5b784cc8e1de@daynix.com
+ include/qemu/lockcnt.h | 2 +-
+ util/lockcnt.c         | 7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-Changes in v4:
-- Added patch "qemu-thread: Remove qatomic_read() in qemu_event_set()".
-- Renamed patch "futex: Replace __linux__ with CONFIG_LINUX" to
-  "qemu-thread: Replace __linux__ with CONFIG_LINUX".
-- Reverted changes to convert rp_pong_acks to QemuEvent.
-- Link to v3: https://lore.kernel.org/qemu-devel/20250511-event-v3-0-f7f69247d303@daynix.com
+diff --git a/include/qemu/lockcnt.h b/include/qemu/lockcnt.h
+index f4b62a3f7011..5a2800e3f182 100644
+--- a/include/qemu/lockcnt.h
++++ b/include/qemu/lockcnt.h
+@@ -17,7 +17,7 @@
+ typedef struct QemuLockCnt QemuLockCnt;
+ 
+ struct QemuLockCnt {
+-#ifndef CONFIG_LINUX
++#ifndef HAVE_FUTEX
+     QemuMutex mutex;
+ #endif
+     unsigned count;
+diff --git a/util/lockcnt.c b/util/lockcnt.c
+index ca27d8e61a5c..92c9f8ceca88 100644
+--- a/util/lockcnt.c
++++ b/util/lockcnt.c
+@@ -12,10 +12,11 @@
+ #include "qemu/atomic.h"
+ #include "trace.h"
+ 
+-#ifdef CONFIG_LINUX
+-#include "qemu/futex.h"
++#ifdef HAVE_FUTEX
+ 
+-/* On Linux, bits 0-1 are a futex-based lock, bits 2-31 are the counter.
++/*
++ * When futex is available, bits 0-1 are a futex-based lock, bits 2-31 are the
++ * counter.
+  * For the mutex algorithm see Ulrich Drepper's "Futexes Are Tricky" (ok,
+  * this is not the most relaxing citation I could make...).  It is similar
+  * to mutex2 in the paper.
 
-Changes in v3:
-- Fixed race between qemu_event_reset() and qemu_event_set().
-- Prepared for spurious pthread_cond_wait() wakeups.
-- Added patch "futex: Replace __linux__ with CONFIG_LINUX".
-- Link to v2: https://lore.kernel.org/qemu-devel/20250510-event-v2-0-7953177ce1b8@daynix.com
-
-Changes in v2:
-- Rebased.
-- Added patch
-  "hw/display/apple-gfx: Replace QemuSemaphore with QemuEvent".
-- Link to v1: https://lore.kernel.org/r/20241225-event-v1-0-a58c8d63eb70@daynix.com
-
----
-Akihiko Odaki (13):
-      futex: Check value after qemu_futex_wait()
-      futex: Support Windows
-      qemu-thread: Replace __linux__ with CONFIG_LINUX
-      qemu-thread: Avoid futex abstraction for non-Linux
-      qemu-thread: Use futex for QemuEvent on Windows
-      qemu-thread: Use futex if available for QemuLockCnt
-      migration: Replace QemuSemaphore with QemuEvent
-      migration/colo: Replace QemuSemaphore with QemuEvent
-      migration/postcopy: Replace QemuSemaphore with QemuEvent
-      hw/display/apple-gfx: Replace QemuSemaphore with QemuEvent
-      qemu-thread: Remove qatomic_read() in qemu_event_set()
-      qemu-thread: Document QemuEvent
-      qemu-thread: Document QemuEvent memory ordering
-
- meson.build                       |   2 +
- include/qemu/futex.h              |  44 +++++++++++-
- include/qemu/lockcnt.h            |   2 +-
- include/qemu/thread-posix.h       |   9 ---
- include/qemu/thread-win32.h       |   6 --
- include/qemu/thread.h             |  40 ++++++++++-
- migration/migration.h             |  12 ++--
- migration/colo.c                  |  20 +++---
- migration/migration.c             |  21 +++---
- migration/postcopy-ram.c          |  10 +--
- migration/savevm.c                |   2 +-
- tests/unit/test-aio-multithread.c |   6 +-
- util/event.c                      | 139 +++++++++++++++++++++++++++++++++++
- util/lockcnt.c                    |   9 +--
- util/qemu-thread-posix.c          | 148 --------------------------------------
- util/qemu-thread-win32.c          | 129 ---------------------------------
- hw/display/apple-gfx.m            |  10 +--
- util/meson.build                  |   3 +-
- 18 files changed, 269 insertions(+), 343 deletions(-)
----
-base-commit: f0737158b483e7ec2b2512145aeab888b85cc1f7
-change-id: 20241031-event-785a2f0dda4a
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.49.0
 
 
